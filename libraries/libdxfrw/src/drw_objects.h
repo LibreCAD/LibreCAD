@@ -963,6 +963,9 @@ public:
     }
 protected:
     bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    bool encodeDwg(DRW::Version version, dwgBufferW *buf,
+                   dwgBufferW *strBuf = nullptr,
+                   dwgBufferW *handleBuf = nullptr) const;
 public:
     int m_cloning = 0; /*!< duplicate-record handling, code 280 */
     std::vector<DRW_Variant> m_values;

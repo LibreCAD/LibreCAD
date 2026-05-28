@@ -64,6 +64,10 @@ public:
                              dwgBufferW* buf) {
         return e.encodeDwg(v, buf);
     }
+    static bool encodeXRecord(const DRW_XRecord& e, DRW::Version v,
+                               dwgBufferW* buf) {
+        return e.encodeDwg(v, buf);
+    }
     static dint16 oType(const DRW_TableEntry& e) { return e.oType; }
     static void setNumReactors(DRW_TableEntry& e, dint32 n) { e.numReactors = n; }
     static void setXDictFlag(DRW_TableEntry& e, duint8 f) { e.xDictFlag = f; }
@@ -631,4 +635,123 @@ TEST_CASE("DRW_Group::encodeDwg round-trips description + entity handles",
     REQUIRE(dst.m_entityHandles[1] == 0x801u);
     REQUIRE(dst.m_entityHandles[2] == 0x802u);
     REQUIRE(static_cast<duint32>(dst.parentHandle) == 0xCu);
+}
+
+// XRECORD encoder round-trip (ODA §20.4.105 — typed-pair payload).  Covers
+// every type bucket the parser recognises: string (TV), point (3RD), double
+// (RD), int16 (RS), int32 (RL), int64 (RLL), bool (RC), byte (RC), binary
+// (RC+bytes), and data-block handle (RS code + RLL).  The post-body handle
+// stream carries common prefix (parent + reactors + xdic) followed by a
+// pair of soft-pointer handle refs the parser stores with code 0.
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("DRW_XRecord::encodeDwg round-trips every value type bucket",
+          "[dwg-write][object-encode][xrecord]") {
+    DRW_XRecord src;
+    src.handle       = 0x800;
+    src.parentHandle = 0xC;
+    src.m_cloning    = 1;
+    DrwObjectEncodeTestAccess::setNumReactors(src, 0);
+    DrwObjectEncodeTestAccess::setXDictFlag(src, 1);   // no xdic
+
+    // Data-block values, one per type bucket.  Codes hand-picked from the
+    // xRecordCodeIs* predicates to cover every branch.
+    src.m_values.emplace_back(1,   UTF8STRING("hello"));               // string
+    src.m_values.emplace_back(10,  DRW_Coord{1.0, 2.0, 3.0});           // 3D point
+    src.m_values.emplace_back(40,  3.14159);                            // double
+    src.m_values.emplace_back(70,  static_cast<dint32>(-5));            // int16
+    src.m_values.emplace_back(90,  static_cast<dint32>(0x12345678));    // int32
+    src.m_values.emplace_back(160, static_cast<dint64>(0x1122334455667788LL)); // int64
+    src.m_values.emplace_back(290, static_cast<dint32>(1));             // bool
+    src.m_values.emplace_back(280, static_cast<dint32>(7));             // byte
+    src.m_values.emplace_back(310, std::vector<duint8>{0xDE, 0xAD, 0xBE, 0xEF}); // binary
+
+    // Data-block handle — code 330 is in xRecordCodeIsHandle range; parser
+    // stores the low 32 bits.
+    src.m_handleValues.emplace_back(330, 0x1234u);
+
+    // Handle-stream refs (code 0 marks handle-stream origin per parser).
+    src.m_handleValues.emplace_back(0, 0xA1u);
+    src.m_handleValues.emplace_back(0, 0xA2u);
+
+    // AC1018 (R2004) — strings still inline (R2007 is the split point) and
+    // the preamble's xDictFlag bit is honored, matching what the encoder
+    // emits at the head of the handle stream.
+    DRW::Version ver = DRW::AC1018;
+    dwgBufferW w;
+    emitObjectPreamble(w, ver, /*oType=*/79 /* XRECORD */, src.handle,
+                       /*numReactors=*/0, /*xDictFlag=*/1);
+    REQUIRE(DrwObjectEncodeTestAccess::encodeXRecord(src, ver, &w));
+
+    auto bytes = snapshot(w);
+    dwgBuffer r(bytes.data(), bytes.size());
+    DRW_XRecord dst;
+    REQUIRE(DrwObjectEncodeTestAccess::parse(dst, ver, &r));
+
+    REQUIRE(dst.m_cloning == 1);
+    REQUIRE(static_cast<duint32>(dst.parentHandle) == 0xCu);
+    REQUIRE(dst.m_values.size() == 9u);
+
+    // String
+    REQUIRE(dst.m_values[0].code() == 1);
+    REQUIRE(dst.m_values[0].type() == DRW_Variant::STRING);
+    REQUIRE(std::string(dst.m_values[0].c_str()) == "hello");
+
+    // 3D point
+    REQUIRE(dst.m_values[1].code() == 10);
+    REQUIRE(dst.m_values[1].type() == DRW_Variant::COORD);
+    DRW_Coord* p = dst.m_values[1].coord();
+    REQUIRE(p != nullptr);
+    REQUIRE(p->x == Approx(1.0));
+    REQUIRE(p->y == Approx(2.0));
+    REQUIRE(p->z == Approx(3.0));
+
+    // Double
+    REQUIRE(dst.m_values[2].code() == 40);
+    REQUIRE(dst.m_values[2].type() == DRW_Variant::DOUBLE);
+    REQUIRE(dst.m_values[2].d_val() == Approx(3.14159));
+
+    // Int16 (stored as INTEGER)
+    REQUIRE(dst.m_values[3].code() == 70);
+    REQUIRE(dst.m_values[3].type() == DRW_Variant::INTEGER);
+    // Parser reads RS as unsigned then casts via static_cast<int>; -5 (0xFFFB)
+    // round-trips back as 0xFFFB / 65531 in unsigned representation.
+    REQUIRE(static_cast<duint16>(dst.m_values[3].i_val() & 0xFFFF) == 0xFFFBu);
+
+    // Int32
+    REQUIRE(dst.m_values[4].code() == 90);
+    REQUIRE(dst.m_values[4].type() == DRW_Variant::INTEGER);
+    REQUIRE(static_cast<duint32>(dst.m_values[4].i_val()) == 0x12345678u);
+
+    // Int64 (160-169)
+    REQUIRE(dst.m_values[5].code() == 160);
+    REQUIRE(dst.m_values[5].type() == DRW_Variant::INTEGER64);
+    REQUIRE(dst.m_values[5].i64_val() == 0x1122334455667788LL);
+
+    // Bool
+    REQUIRE(dst.m_values[6].code() == 290);
+    REQUIRE(dst.m_values[6].type() == DRW_Variant::INTEGER);
+    REQUIRE(dst.m_values[6].i_val() == 1);
+
+    // Byte
+    REQUIRE(dst.m_values[7].code() == 280);
+    REQUIRE(dst.m_values[7].type() == DRW_Variant::INTEGER);
+    REQUIRE(dst.m_values[7].i_val() == 7);
+
+    // Binary
+    REQUIRE(dst.m_values[8].code() == 310);
+    REQUIRE(dst.m_values[8].type() == DRW_Variant::BINARY);
+    const std::vector<duint8>* raw = dst.m_values[8].binary();
+    REQUIRE(raw != nullptr);
+    REQUIRE(raw->size() == 4u);
+    REQUIRE((*raw)[0] == 0xDE);
+    REQUIRE((*raw)[3] == 0xEF);
+
+    // Handles: 1 data-block (code 330) + 2 handle-stream (code 0) = 3.
+    REQUIRE(dst.m_handleValues.size() == 3u);
+    REQUIRE(dst.m_handleValues[0].first  == 330);
+    REQUIRE(dst.m_handleValues[0].second == 0x1234u);
+    REQUIRE(dst.m_handleValues[1].first  == 0);
+    REQUIRE(dst.m_handleValues[1].second == 0xA1u);
+    REQUIRE(dst.m_handleValues[2].first  == 0);
+    REQUIRE(dst.m_handleValues[2].second == 0xA2u);
 }

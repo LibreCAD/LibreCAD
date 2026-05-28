@@ -2759,6 +2759,157 @@ bool DRW_XRecord::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     return true;
 }
 
+// Mirror of readXRecordText.  Emits the on-disk form of a single string
+// XRECORD value (excluding the leading RS group code, which the caller
+// writes).  For R2007+ uses a UTF-16LE char-count + chars * 2 bytes; for
+// earlier versions uses a byte-length + code-page byte + bytes.  No
+// trailing null is appended — matches the parser's null-trim behavior.
+static void writeXRecordText(DRW::Version version, dwgBufferW *buf,
+                              const UTF8STRING& s) {
+    if (version > DRW::AC1018) {
+        // UTF-16LE encoding for R2007+ — mirror dwgBufferW::putUCSText
+        // logic, but with the char count emitted via RS (raw short) and
+        // without a trailing 0-terminator.
+        std::vector<duint16> units;
+        for (size_t i = 0; i < s.size(); ) {
+            unsigned char c = static_cast<unsigned char>(s[i]);
+            duint32 cp = 0;
+            if (c < 0x80) {
+                cp = c; ++i;
+            } else if ((c & 0xE0) == 0xC0 && i + 1 < s.size()) {
+                cp = (c & 0x1F);
+                cp = (cp << 6) | (static_cast<unsigned char>(s[i+1]) & 0x3F);
+                i += 2;
+            } else if ((c & 0xF0) == 0xE0 && i + 2 < s.size()) {
+                cp = (c & 0x0F);
+                cp = (cp << 6) | (static_cast<unsigned char>(s[i+1]) & 0x3F);
+                cp = (cp << 6) | (static_cast<unsigned char>(s[i+2]) & 0x3F);
+                i += 3;
+            } else {
+                cp = c; ++i;
+            }
+            units.push_back(static_cast<duint16>(cp & 0xFFFF));
+        }
+        buf->putRawShort16(static_cast<duint16>(units.size()));
+        for (duint16 u : units) {
+            buf->putRawChar8(static_cast<duint8>(u & 0xFF));
+            buf->putRawChar8(static_cast<duint8>((u >> 8) & 0xFF));
+        }
+    } else {
+        // Pre-R2007: byte-length + code-page byte + bytes.  Pass-through
+        // UTF-8 here; the round-trip test owns the encoding choice.
+        const auto& bytes = s;
+        buf->putRawShort16(static_cast<duint16>(bytes.size()));
+        buf->putRawChar8(0);                     // code page (0 = default)
+        if (!bytes.empty())
+            buf->putBytes(reinterpret_cast<const duint8*>(bytes.data()),
+                          bytes.size());
+    }
+}
+
+// XRECORD (AcDbXrecord) encoder.  Inverts parseDwg above.  Body: BL
+// numDataBytes + variable typed-pair sequence + (R2000+) BS cloning.
+// Handle stream: common prefix (parentHandle + reactors + xdic) + handles
+// from m_handleValues where the recorded DXF code is 0 (the post-body
+// handle refs the parser appends with code 0 to flag their stream origin).
+// Data-block handles (entries in m_handleValues with code != 0) are
+// emitted inside the data block at their position derived from order:
+// they are interleaved with the m_values vector via the original code
+// ordering preserved by the parser, but as the parser only records
+// the value-vs-handle dichotomy (not strict ordering between them), the
+// encoder emits all m_values in order first, then all data-block
+// handles (code != 0).  Matches the parser's iteration-until-dataEnd
+// loop which doesn't enforce code ordering either.
+bool DRW_XRecord::encodeDwg(DRW::Version version, dwgBufferW *buf,
+                             dwgBufferW *strBuf,
+                             dwgBufferW *handleBuf) const {
+    if (buf == nullptr) return false;
+    (void)strBuf;                                // XRECORD uses inline strings
+    dwgBufferW *hb = (handleBuf != nullptr && version > DRW::AC1018)
+        ? handleBuf : buf;
+
+    // Build the data block into a scratch buffer first so we can prefix
+    // it with its size in bytes (a BL count).  The scratch buffer starts
+    // byte-aligned; emitting bit-bound primitives into it would skew the
+    // byte count, but XRECORD's data section uses raw* primitives only,
+    // so the scratch byte size is exactly what the parser's dataEnd
+    // arithmetic expects.
+    dwgBufferW data;
+
+    auto emitValue = [&](const DRW_Variant& v) {
+        const int code = v.code();
+        data.putRawShort16(static_cast<duint16>(code));
+        if (xRecordCodeIsString(code)) {
+            const char *p = (v.type() == DRW_Variant::STRING) ? v.c_str() : "";
+            writeXRecordText(version, &data, std::string(p));
+        } else if (xRecordCodeIsPoint3D(code)) {
+            DRW_Coord *c = v.coord();
+            data.putRawDouble(c ? c->x : 0.0);
+            data.putRawDouble(c ? c->y : 0.0);
+            data.putRawDouble(c ? c->z : 0.0);
+        } else if (xRecordCodeIsDouble(code)) {
+            data.putRawDouble(v.d_val());
+        } else if (xRecordCodeIsByte(code)) {
+            data.putRawChar8(static_cast<duint8>(v.i_val() & 0xFF));
+        } else if (xRecordCodeIsBool(code)) {
+            data.putRawChar8(v.i_val() ? 1 : 0);
+        } else if (xRecordCodeIsInt16(code)) {
+            data.putRawShort16(static_cast<duint16>(v.i_val() & 0xFFFF));
+        } else if (xRecordCodeIsInt32(code)) {
+            data.putRawLong32(static_cast<duint32>(v.i_val()));
+        } else if (code >= 160 && code <= 169) {
+            data.putRawLong64(static_cast<duint64>(v.i64_val()));
+        } else if (xRecordCodeIsBinary(code)) {
+            const std::vector<duint8>* raw = v.binary();
+            duint8 len = raw ? static_cast<duint8>(raw->size() & 0xFF) : 0;
+            data.putRawChar8(len);
+            if (raw && !raw->empty())
+                data.putBytes(raw->data(), raw->size());
+        } else {
+            // Unhandled — emit zero bytes so the size still matches.  The
+            // parser logs the same case and bails out.
+        }
+    };
+
+    for (const auto& v : m_values)
+        emitValue(v);
+
+    // Data-block handles — entries in m_handleValues with non-zero code.
+    // The parser reads these via RLL (8 bytes) and stores the low 32 bits.
+    for (const auto& hv : m_handleValues) {
+        if (hv.first == 0)
+            continue;                            // belongs to handle stream
+        data.putRawShort16(static_cast<duint16>(hv.first));
+        data.putRawLong64(static_cast<duint64>(hv.second));
+    }
+
+    // Emit numDataBytes then the accumulated data section.
+    buf->putBitLong(static_cast<dint32>(data.size()));
+    if (data.size() > 0)
+        buf->putBytes(data.data().data(), data.size());
+
+    // Cloning short (R2000+).
+    if (version > DRW::AC1014)
+        buf->putBitShort(static_cast<dint16>(m_cloning));
+
+    // Common handle prefix per object base spec.
+    hb->putHandle(makeSoftOwnerW(static_cast<duint32>(parentHandle)));
+    for (dint32 i = 0; i < numReactors; ++i)
+        hb->putHandle(makeSoftOwnerW(0));
+    if (xDictFlag != 1)
+        hb->putHandle(makeSoftOwnerW(0));
+
+    // Trailing handle refs — those m_handleValues entries the parser
+    // tagged with code 0 (handle-stream origin).  Emit as soft pointers
+    // so getOffsetHandle in the parser resolves to the same ref.
+    for (const auto& hv : m_handleValues) {
+        if (hv.first != 0)
+            continue;
+        hb->putHandle(makeSoftOwnerW(hv.second));
+    }
+    return true;
+}
+
 bool DRW_Field::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     dwgBuffer sBuff = *buf;
     dwgBuffer *sBuf = buf;
