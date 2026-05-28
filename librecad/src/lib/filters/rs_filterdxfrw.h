@@ -106,6 +106,7 @@ public:
     void addVport(const DRW_Vport& data) override;
     void addView(const DRW_View &data) override;
     void addUCS(const DRW_UCS &data) override;
+    void addVisualStyle(const DRW_VisualStyle& data) override;
 public:
     struct TableFallbackRenderSummary {
         size_t gridEntityCount = 0;

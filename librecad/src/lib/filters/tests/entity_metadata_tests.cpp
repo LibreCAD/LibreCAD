@@ -1653,6 +1653,107 @@ TEST_CASE("DWG advanced metadata maps VIEW UCS and VPORT document items",
         LC_DwgAdvancedMetadata::ReplayState::ReplayInvalidated);
 }
 
+TEST_CASE("DWG advanced metadata summarizes visual and light records",
+          "[entity_metadata][dwg_metadata][view]") {
+  LC_DwgAdvancedMetadata metadata;
+
+  DRW_View view;
+  view.name = "Camera Summary";
+  view.handle = 0x610u;
+  view.parentHandle = 0x601u;
+  view.m_backgroundHandle = 0x630u;
+  view.m_visualStyleHandle = 0x620u;
+  view.m_sunHandle = 0x640u;
+  view.m_liveSectionHandle = 0x631u;
+  metadata.addView(view);
+
+  DRW_Vport vport;
+  vport.name = "*ACTIVE";
+  vport.handle = 0x611u;
+  vport.parentHandle = 0x602u;
+  vport.backgroundHandle = 0x632u;
+  vport.visualStyleHandle = 0x620u;
+  vport.m_sunHandle = 0x640u;
+  metadata.addVport(vport);
+
+  DRW_VisualStyle visualStyle;
+  visualStyle.name = "Conceptual";
+  visualStyle.desc = "Stub visual style";
+  visualStyle.handle = 0x620u;
+  visualStyle.parentHandle = 0x603u;
+  visualStyle.type = 4u;
+  metadata.addVisualStyle(visualStyle);
+
+  DRW_Light light;
+  light.handle = 0x650u;
+  light.parentHandle = 0x604u;
+  light.m_name = "Key";
+  light.m_type = 2u;
+  light.m_status = true;
+  light.m_intensity = 3.25;
+  light.m_color = 0x0A0B0Cu;
+  metadata.addLight(light);
+
+  DRW_Sun sun;
+  sun.handle = 0x640u;
+  sun.parentHandle = 0x605u;
+  sun.m_isOn = true;
+  sun.m_intensity = 1.5;
+  sun.m_color = 0x00FFFFu;
+  sun.m_julianDay = 2451545;
+  sun.m_milliseconds = 43200000;
+  metadata.addSun(sun);
+
+  const auto summaries = metadata.visualMetadataSummaries();
+  REQUIRE(summaries.size() == 5u);
+
+  const auto ownerSummaries =
+      metadata.findVisualSummariesByOwner(summaries, 0x601u);
+  REQUIRE(ownerSummaries.size() == 1u);
+  CHECK(ownerSummaries.front()->sourceType ==
+        LC_DwgAdvancedMetadata::VisualMetadataSource::View);
+  CHECK(ownerSummaries.front()->referencedVisualStyleHandle == 0x620u);
+  CHECK(ownerSummaries.front()->referencedSunHandle == 0x640u);
+  CHECK(ownerSummaries.front()->unresolvedReferenceCount == 2u);
+
+  const auto styleSummary =
+      std::find_if(summaries.begin(), summaries.end(), [](const auto& record) {
+        return record.sourceType ==
+               LC_DwgAdvancedMetadata::VisualMetadataSource::VisualStyle;
+      });
+  REQUIRE(styleSummary != summaries.end());
+  CHECK(styleSummary->displayName == "Conceptual");
+  CHECK(styleSummary->lightOrSunType == 4u);
+  CHECK(styleSummary->specCoverage ==
+        LC_DwgAdvancedMetadata::VisualMetadataSpecCoverage::RawOnly);
+
+  const auto sunSummary =
+      std::find_if(summaries.begin(), summaries.end(), [](const auto& record) {
+        return record.sourceType ==
+               LC_DwgAdvancedMetadata::VisualMetadataSource::Sun;
+      });
+  REQUIRE(sunSummary != summaries.end());
+  CHECK(sunSummary->lightOrSunEnabled);
+  CHECK(sunSummary->julianDay == 2451545);
+  CHECK(sunSummary->milliseconds == 43200000);
+
+  const auto counts = metadata.visualMetadataSummaryCounts();
+  CHECK(counts.view == 1u);
+  CHECK(counts.vport == 1u);
+  CHECK(counts.visualStyle == 1u);
+  CHECK(counts.light == 1u);
+  CHECK(counts.sun == 1u);
+  CHECK(counts.odaCovered == 2u);
+  CHECK(counts.crossReferenceSourced == 2u);
+  CHECK(counts.rawOnly == 1u);
+  CHECK(counts.ownerMapped == 5u);
+  CHECK(counts.unresolvedReferences == 3u);
+
+  metadata.invalidateViewGraphForHandle(0x620u);
+  const auto invalidatedCounts = metadata.visualMetadataSummaryCounts();
+  CHECK(invalidatedCounts.invalidated == 2u);
+}
+
 TEST_CASE("DWG advanced metadata invalidates TABLECONTENT raw replay",
           "[entity_metadata][dwg_metadata][table]") {
   LC_DwgAdvancedMetadata metadata;

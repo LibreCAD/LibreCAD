@@ -240,6 +240,20 @@ public:
         Vport
     };
 
+    enum class VisualMetadataSource {
+        View,
+        Vport,
+        VisualStyle,
+        Light,
+        Sun
+    };
+
+    enum class VisualMetadataSpecCoverage {
+        OdaCovered,
+        CrossReferenceSourced,
+        RawOnly
+    };
+
     struct RawObjectRecord {
         int objectType = 0;
         duint32 handle = 0;
@@ -707,6 +721,54 @@ public:
         size_t unresolvedReferences = 0;
         size_t invalidated = 0;
         size_t replaced = 0;
+    };
+
+    struct VisualStyleRecord {
+        duint32 handle = 0;
+        duint32 parentHandle = 0;
+        std::string name;
+        std::string description;
+        duint16 type = 0;
+        ReplayState replayState = ReplayState::ReplayAllowed;
+    };
+
+    struct VisualMetadataSummaryRecord {
+        VisualMetadataSource sourceType = VisualMetadataSource::View;
+        VisualMetadataSpecCoverage specCoverage =
+            VisualMetadataSpecCoverage::OdaCovered;
+        std::string displayName;
+        duint32 handle = 0;
+        duint32 ownerHandle = 0;
+        duint32 layoutHandle = 0;
+        duint32 lightOrSunType = 0;
+        bool lightOrSunEnabled = false;
+        double intensity = 0.0;
+        duint32 color = 0;
+        dint32 julianDay = 0;
+        dint32 milliseconds = 0;
+        bool daylightSavings = false;
+        duint32 referencedSunHandle = 0;
+        duint32 referencedVisualStyleHandle = 0;
+        duint32 referencedBackgroundHandle = 0;
+        duint32 referencedLiveSectionHandle = 0;
+        size_t unresolvedReferenceCount = 0;
+        ReplayState replayState = ReplayState::ReplayAllowed;
+    };
+
+    struct VisualMetadataSummaryCounts {
+        size_t view = 0;
+        size_t vport = 0;
+        size_t visualStyle = 0;
+        size_t light = 0;
+        size_t sun = 0;
+        size_t odaCovered = 0;
+        size_t crossReferenceSourced = 0;
+        size_t rawOnly = 0;
+        size_t invalidated = 0;
+        size_t replaced = 0;
+        size_t unresolvedReferences = 0;
+        size_t ownerMapped = 0;
+        size_t layoutMapped = 0;
     };
 
     struct LightRecord {
@@ -1628,6 +1690,17 @@ public:
         upsertDocumentMapping(documentMappingFromVport(record, -1));
     }
 
+    void addVisualStyle(const DRW_VisualStyle& visualStyle) {
+        VisualStyleRecord record;
+        record.handle = visualStyle.handle;
+        record.parentHandle = visualStyle.parentHandle;
+        record.name = visualStyle.name;
+        record.description = visualStyle.desc;
+        record.type = visualStyle.type;
+        m_visualStyles.push_back(record);
+        refreshDocumentMappingUnresolvedReferenceCounts();
+    }
+
     void addLight(const DRW_Light& light) {
         LightRecord record;
         record.handle = light.handle;
@@ -2323,6 +2396,9 @@ public:
     const std::vector<VportRecord>& vports() const { return m_vports; }
     const std::vector<DocumentMappingRecord>& documentMappings() const {
         return m_documentMappings;
+    }
+    const std::vector<VisualStyleRecord>& visualStyles() const {
+        return m_visualStyles;
     }
     const std::vector<LightRecord>& lights() const { return m_lights; }
     const std::vector<SunRecord>& suns() const { return m_suns; }
@@ -3652,6 +3728,15 @@ public:
         }
         return nullptr;
     }
+    const VisualStyleRecord* findVisualStyleByHandle(duint32 handle) const {
+        if (handle == 0)
+            return nullptr;
+        for (const VisualStyleRecord& record : m_visualStyles) {
+            if (record.handle == handle)
+                return &record;
+        }
+        return nullptr;
+    }
     std::vector<const ViewRecord*> findViewsReferencingHandle(duint32 handle) const {
         std::vector<const ViewRecord*> result;
         if (handle == 0)
@@ -3754,6 +3839,65 @@ public:
                 ++counts.replaced;
         }
         return counts;
+    }
+    std::vector<VisualMetadataSummaryRecord> visualMetadataSummaries() const {
+        std::vector<VisualMetadataSummaryRecord> result;
+        result.reserve(m_views.size() + m_vports.size() + m_visualStyles.size()
+                       + m_lights.size() + m_suns.size());
+        for (const ViewRecord& record : m_views)
+            result.push_back(visualSummaryFromView(record));
+        for (const VportRecord& record : m_vports)
+            result.push_back(visualSummaryFromVport(record));
+        for (const VisualStyleRecord& record : m_visualStyles)
+            result.push_back(visualSummaryFromVisualStyle(record));
+        for (const LightRecord& record : m_lights)
+            result.push_back(visualSummaryFromLight(record));
+        for (const SunRecord& record : m_suns)
+            result.push_back(visualSummaryFromSun(record));
+        return result;
+    }
+    VisualMetadataSummaryCounts visualMetadataSummaryCounts() const {
+        VisualMetadataSummaryCounts counts;
+        for (const VisualMetadataSummaryRecord& record :
+             visualMetadataSummaries()) {
+            incrementVisualMetadataSourceCount(counts, record.sourceType);
+            incrementVisualMetadataSpecCoverageCount(
+                counts, record.specCoverage);
+            if (record.replayState == ReplayState::ReplayInvalidated)
+                ++counts.invalidated;
+            if (record.replayState == ReplayState::ReplayReplaced)
+                ++counts.replaced;
+            if (record.ownerHandle != 0)
+                ++counts.ownerMapped;
+            if (record.layoutHandle != 0)
+                ++counts.layoutMapped;
+            counts.unresolvedReferences += record.unresolvedReferenceCount;
+        }
+        return counts;
+    }
+    std::vector<const VisualMetadataSummaryRecord*> findVisualSummariesByOwner(
+        const std::vector<VisualMetadataSummaryRecord>& summaries,
+        duint32 ownerHandle) const {
+        std::vector<const VisualMetadataSummaryRecord*> result;
+        if (ownerHandle == 0)
+            return result;
+        for (const VisualMetadataSummaryRecord& record : summaries) {
+            if (record.ownerHandle == ownerHandle)
+                result.push_back(&record);
+        }
+        return result;
+    }
+    std::vector<const VisualMetadataSummaryRecord*> findVisualSummariesByLayout(
+        const std::vector<VisualMetadataSummaryRecord>& summaries,
+        duint32 layoutHandle) const {
+        std::vector<const VisualMetadataSummaryRecord*> result;
+        if (layoutHandle == 0)
+            return result;
+        for (const VisualMetadataSummaryRecord& record : summaries) {
+            if (record.layoutHandle == layoutHandle)
+                result.push_back(&record);
+        }
+        return result;
     }
     const LightRecord* findLightByHandle(duint32 handle) const {
         if (handle == 0)
@@ -5074,6 +5218,144 @@ private:
         return false;
     }
 
+private:
+    VisualMetadataSummaryRecord visualSummaryFromView(
+        const ViewRecord& record) const {
+        VisualMetadataSummaryRecord summary;
+        summary.sourceType = VisualMetadataSource::View;
+        summary.specCoverage = VisualMetadataSpecCoverage::OdaCovered;
+        summary.displayName = record.name;
+        summary.handle = record.handle;
+        summary.ownerHandle = record.parentHandle;
+        summary.referencedSunHandle = record.sunHandle;
+        summary.referencedVisualStyleHandle = record.visualStyleHandle;
+        summary.referencedBackgroundHandle = record.backgroundHandle;
+        summary.referencedLiveSectionHandle = record.liveSectionHandle;
+        summary.unresolvedReferenceCount =
+            visualSummaryUnresolvedReferenceCount(summary);
+        summary.replayState = record.replayState;
+        return summary;
+    }
+
+    VisualMetadataSummaryRecord visualSummaryFromVport(
+        const VportRecord& record) const {
+        VisualMetadataSummaryRecord summary;
+        summary.sourceType = VisualMetadataSource::Vport;
+        summary.specCoverage = VisualMetadataSpecCoverage::OdaCovered;
+        summary.displayName = record.name;
+        summary.handle = record.handle;
+        summary.ownerHandle = record.parentHandle;
+        summary.referencedSunHandle = record.sunHandle;
+        summary.referencedVisualStyleHandle = record.visualStyleHandle;
+        summary.referencedBackgroundHandle = record.backgroundHandle;
+        summary.unresolvedReferenceCount =
+            visualSummaryUnresolvedReferenceCount(summary);
+        summary.replayState = record.replayState;
+        return summary;
+    }
+
+    static VisualMetadataSummaryRecord visualSummaryFromVisualStyle(
+        const VisualStyleRecord& record) {
+        VisualMetadataSummaryRecord summary;
+        summary.sourceType = VisualMetadataSource::VisualStyle;
+        summary.specCoverage = VisualMetadataSpecCoverage::RawOnly;
+        summary.displayName = !record.name.empty() ? record.name : record.description;
+        summary.handle = record.handle;
+        summary.ownerHandle = record.parentHandle;
+        summary.lightOrSunType = record.type;
+        summary.replayState = record.replayState;
+        return summary;
+    }
+
+    static VisualMetadataSummaryRecord visualSummaryFromLight(
+        const LightRecord& record) {
+        VisualMetadataSummaryRecord summary;
+        summary.sourceType = VisualMetadataSource::Light;
+        summary.specCoverage = VisualMetadataSpecCoverage::CrossReferenceSourced;
+        summary.displayName = record.name;
+        summary.handle = record.handle;
+        summary.ownerHandle = record.parentHandle;
+        summary.lightOrSunType = record.type;
+        summary.lightOrSunEnabled = record.status;
+        summary.intensity = record.intensity;
+        summary.color = record.color;
+        summary.replayState = record.replayState;
+        return summary;
+    }
+
+    static VisualMetadataSummaryRecord visualSummaryFromSun(
+        const SunRecord& record) {
+        VisualMetadataSummaryRecord summary;
+        summary.sourceType = VisualMetadataSource::Sun;
+        summary.specCoverage = VisualMetadataSpecCoverage::CrossReferenceSourced;
+        summary.displayName = "SUN";
+        summary.handle = record.handle;
+        summary.ownerHandle = record.parentHandle;
+        summary.lightOrSunEnabled = record.isOn;
+        summary.intensity = record.intensity;
+        summary.color = record.color;
+        summary.julianDay = record.julianDay;
+        summary.milliseconds = record.milliseconds;
+        summary.daylightSavings = record.isDaylightSavings;
+        summary.replayState = record.replayState;
+        return summary;
+    }
+
+    size_t visualSummaryUnresolvedReferenceCount(
+        const VisualMetadataSummaryRecord& record) const {
+        size_t count = 0;
+        if (record.referencedSunHandle != 0
+            && findSunByHandle(record.referencedSunHandle) == nullptr) {
+            ++count;
+        }
+        if (record.referencedVisualStyleHandle != 0
+            && findVisualStyleByHandle(record.referencedVisualStyleHandle) == nullptr) {
+            ++count;
+        }
+        if (record.referencedBackgroundHandle != 0)
+            ++count;
+        if (record.referencedLiveSectionHandle != 0)
+            ++count;
+        return count;
+    }
+
+    static void incrementVisualMetadataSourceCount(
+        VisualMetadataSummaryCounts& counts, VisualMetadataSource source) {
+        switch (source) {
+            case VisualMetadataSource::View:
+                ++counts.view;
+                break;
+            case VisualMetadataSource::Vport:
+                ++counts.vport;
+                break;
+            case VisualMetadataSource::VisualStyle:
+                ++counts.visualStyle;
+                break;
+            case VisualMetadataSource::Light:
+                ++counts.light;
+                break;
+            case VisualMetadataSource::Sun:
+                ++counts.sun;
+                break;
+        }
+    }
+
+    static void incrementVisualMetadataSpecCoverageCount(
+        VisualMetadataSummaryCounts& counts,
+        VisualMetadataSpecCoverage coverage) {
+        switch (coverage) {
+            case VisualMetadataSpecCoverage::OdaCovered:
+                ++counts.odaCovered;
+                break;
+            case VisualMetadataSpecCoverage::CrossReferenceSourced:
+                ++counts.crossReferenceSourced;
+                break;
+            case VisualMetadataSpecCoverage::RawOnly:
+                ++counts.rawOnly;
+                break;
+        }
+    }
+
     DocumentMappingRecord documentMappingFromView(
         const ViewRecord& record, int documentItemIndex) const {
         DocumentMappingRecord mapping;
@@ -6203,6 +6485,7 @@ private:
         invalidateMatching(m_ucsRecords, predicate);
         invalidateMatching(m_vports, predicate);
         invalidateMatching(m_documentMappings, predicate);
+        invalidateMatching(m_visualStyles, predicate);
         invalidateMatching(m_lights, predicate);
         invalidateMatching(m_suns, predicate);
         invalidateMatching(m_modelerGeometry, predicate);
@@ -6280,6 +6563,7 @@ private:
     std::vector<UcsRecord> m_ucsRecords;
     std::vector<VportRecord> m_vports;
     std::vector<DocumentMappingRecord> m_documentMappings;
+    std::vector<VisualStyleRecord> m_visualStyles;
     std::vector<LightRecord> m_lights;
     std::vector<SunRecord> m_suns;
     std::vector<ModelerGeometryRecord> m_modelerGeometry;

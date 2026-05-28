@@ -253,6 +253,11 @@ Completed in the 2026-05-27 implementation pass:
   owner/reference handles, document list indices for mapped VIEW/UCS items,
   unresolved-reference counts, lookup helpers, and invalidation hooks without
   changing UI panels or native view writers.
+- Ready Detail E2a read-only visual/light summaries advanced: metadata now
+  exposes summary records and aggregate counts for VIEW, VPORT, VISUALSTYLE,
+  LIGHT, and SUN, including owner handles, visual/sun/background/live-section
+  references, stale replay state, spec-coverage source, and unresolved visual
+  reference counts without rendering or UI integration.
 
 Still incomplete:
 
@@ -1973,7 +1978,7 @@ Stop before UI panel changes.
 
 Purpose: expose visual metadata safely to future UI without rendering it.
 
-Status: ready as metadata summary only. This slice must not render lighting,
+Status: complete as metadata summary only. This slice must not render lighting,
 materials, or visual styles.
 
 Spec basis: ODA text covers VIEW/UCS/VPORT and layout visual-style handles, but

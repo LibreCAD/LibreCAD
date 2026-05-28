@@ -965,6 +965,11 @@ void RS_FilterDXFRW::addView(const DRW_View &data) {
     RS_DEBUG->print("RS_FilterDXF::addView: OK");
 }
 
+void RS_FilterDXFRW::addVisualStyle(const DRW_VisualStyle& data) {
+    if (m_graphic != nullptr)
+        m_graphic->dwgAdvancedMetadata().addVisualStyle(data);
+}
+
 /**
  * Implementation of the method which handles blocks.
  *
