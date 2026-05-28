@@ -394,6 +394,16 @@ bool dwgRW::writeDimension(DRW_Dimension *ent) {
     return writer->encodeEntity(ent);
 }
 
+bool dwgRW::writeTolerance(DRW_Tolerance *ent) {
+    if (writer == nullptr || ent == nullptr) return false;
+    return writer->encodeEntity(ent);
+}
+
+bool dwgRW::writeLight(DRW_Light *ent) {
+    if (writer == nullptr || ent == nullptr) return false;
+    return writer->encodeEntity(ent);
+}
+
 bool dwgRW::writeMLine(DRW_MLine *ent) {
     if (writer == nullptr || ent == nullptr) return false;
     return writer->encodeEntity(ent);
@@ -510,6 +520,49 @@ bool dwgRW::addAppId(DRW_AppId *ent) {
     if (w == nullptr) return false;
     w->addAppId(*ent);
     return true;
+}
+
+bool dwgRW::writeAcDbPlaceholder(DRW_AcDbPlaceholder *object) {
+    if (object == nullptr)
+        return false;
+    auto *w = asWriter15(writer);
+    if (w == nullptr)
+        return false;
+    return w->writeAcDbPlaceholder(*object);
+}
+
+bool dwgRW::registerSunObjectClass(DRW_Sun *object) {
+    if (object == nullptr || writer == nullptr)
+        return false;
+    if (object->handle != 0)
+        writer->reserveHandle(object->handle);
+    return writer->registerSunObjectClass(object->handle);
+}
+
+bool dwgRW::writeSun(DRW_Sun *object) {
+    if (object == nullptr)
+        return false;
+    auto *w = asWriter15(writer);
+    if (w == nullptr)
+        return false;
+    return w->writeSun(*object);
+}
+
+bool dwgRW::registerMLeaderStyleObjectClass(DRW_MLeaderStyle *object) {
+    if (object == nullptr || writer == nullptr)
+        return false;
+    if (object->handle != 0)
+        writer->reserveHandle(object->handle);
+    return writer->registerMLeaderStyleObjectClass(object->handle);
+}
+
+bool dwgRW::writeMLeaderStyle(DRW_MLeaderStyle *object) {
+    if (object == nullptr)
+        return false;
+    auto *w = asWriter15(writer);
+    if (w == nullptr)
+        return false;
+    return w->writeMLeaderStyle(*object);
 }
 
 bool dwgRW::registerRawDwgObjectClass(const DRW_UnsupportedObject *object) {

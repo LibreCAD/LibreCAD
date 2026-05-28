@@ -29,6 +29,16 @@ dwgHandle makeSoftOwnerW(duint32 ref) {
     for (duint32 t = ref; t; t >>= 8) ++h.size;
     return h;
 }
+dwgHandle makeHardPtrW(duint32 ref) {
+    dwgHandle h; h.code = ref ? 4 : 0; h.ref = ref; h.size = 0;
+    for (duint32 t = ref; t; t >>= 8) ++h.size;
+    return h;
+}
+dwgHandle writeHandleOrHardPtr(const dwgHandle& handle) {
+    if (handle.ref != 0 && handle.code == 0)
+        return makeHardPtrW(handle.ref);
+    return handle;
+}
 dwgHandle makeNullHandleW() { dwgHandle h; h.code = 0; h.size = 0; h.ref = 0; return h; }
 
 void seekObjectHandleStream(DRW::Version version, dwgBuffer *buf, duint32 objSize) {
@@ -3132,9 +3142,97 @@ bool DRW_MLeaderStyle::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs
         topAttachment       = buf->getBitShort();
         bottomAttachment    = buf->getBitShort();
     }
+    if (version >= DRW::AC1027) {
+        textExtended = buf->getBit() != 0;
+    }
+
+    dwgBuffer hBuff = *buf;
+    dwgBuffer *hBuf = (version > DRW::AC1018) ? &hBuff : buf;
+    if (version > DRW::AC1018) {
+        seekObjectHandleStream(version, &hBuff, objSize);
+        readCommonObjectHandles(&hBuff, handle, numReactors, xDictFlag,
+                                &parentHandle);
+    }
+    leaderLineTypeHandle.ref = readObjectHandleRef(hBuf);
+    arrowHeadBlockHandle.ref = readObjectHandleRef(hBuf);
+    textStyleHandle.ref = readObjectHandleRef(hBuf);
+    blockHandle.ref = readObjectHandleRef(hBuf);
+
     DRW_DBG("mleader style version: "); DRW_DBG(styleVersion);
     DRW_DBG(" contentType: "); DRW_DBG(contentType);
     DRW_DBG(" name: "); DRW_DBG(name); DRW_DBG("\n");
+    return buf->isGood() && (!sBuf || sBuf->isGood())
+        && (!hBuf || hBuf->isGood());
+}
+
+bool DRW_MLeaderStyle::encodeDwg(DRW::Version version, dwgBufferW *buf,
+                                 dwgBufferW *strBuf,
+                                 dwgBufferW *handleBuf) const {
+    if (buf == nullptr || version < DRW::AC1021)
+        return false;
+
+    dwgBufferW *sb = (strBuf != nullptr && version > DRW::AC1018)
+        ? strBuf
+        : buf;
+    dwgBufferW *hb = (handleBuf != nullptr && version > DRW::AC1018)
+        ? handleBuf
+        : buf;
+
+    if (version >= DRW::AC1024)
+        buf->putBitShort(static_cast<dint16>(styleVersion));
+    buf->putBitShort(static_cast<dint16>(contentType));
+    buf->putBitShort(static_cast<dint16>(drawMLeaderOrder));
+    buf->putBitShort(static_cast<dint16>(drawLeaderOrder));
+    buf->putBitLong(maxLeaderPoints);
+    buf->putBitDouble(firstSegmentAngle);
+    buf->putBitDouble(secondSegmentAngle);
+    buf->putBitShort(static_cast<dint16>(leaderType));
+    buf->putCmColor(version, static_cast<duint16>(leaderColor));
+    buf->putBitLong(leaderLineWeight);
+    buf->putBit(landingEnabled ? 1 : 0);
+    buf->putBitDouble(landingGap);
+    buf->putBit(autoIncludeLanding ? 1 : 0);
+    buf->putBitDouble(landingDistance);
+    sb->putVariableText(version, description);
+    buf->putBitDouble(arrowHeadSize);
+    sb->putVariableText(version, textDefault);
+    buf->putBitShort(static_cast<dint16>(leftAttachment));
+    buf->putBitShort(static_cast<dint16>(rightAttachment));
+    if (version >= DRW::AC1024)
+        buf->putBitShort(static_cast<dint16>(textAngleType));
+    buf->putBitShort(static_cast<dint16>(textAlignmentType));
+    buf->putCmColor(version, static_cast<duint16>(textColor));
+    buf->putBitDouble(textHeight);
+    buf->putBit(textFrameEnabled ? 1 : 0);
+    if (version >= DRW::AC1024)
+        buf->putBit(alwaysAlignTextLeft ? 1 : 0);
+    buf->putBitDouble(alignSpace);
+    buf->putCmColor(version, static_cast<duint16>(blockColor));
+    buf->putBitDouble(blockScale.x);
+    buf->putBitDouble(blockScale.y);
+    buf->putBitDouble(blockScale.z);
+    buf->putBit(blockScaleEnabled ? 1 : 0);
+    buf->putBitDouble(blockRotation);
+    buf->putBit(blockRotationEnabled ? 1 : 0);
+    buf->putBitShort(static_cast<dint16>(blockConnectionType));
+    buf->putBitDouble(scaleFactor);
+    buf->putBit(propertyChanged ? 1 : 0);
+    buf->putBit(isAnnotative ? 1 : 0);
+    buf->putBitDouble(breakSize);
+    if (version >= DRW::AC1024) {
+        buf->putBitShort(static_cast<dint16>(attachmentDirection));
+        buf->putBitShort(static_cast<dint16>(topAttachment));
+        buf->putBitShort(static_cast<dint16>(bottomAttachment));
+    }
+    if (version >= DRW::AC1027)
+        buf->putBit(textExtended ? 1 : 0);
+
+    hb->putHandle(makeSoftOwnerW(static_cast<duint32>(parentHandle)));
+    hb->putHandle(makeSoftOwnerW(0));  // XDic null
+    hb->putHandle(writeHandleOrHardPtr(leaderLineTypeHandle));
+    hb->putHandle(writeHandleOrHardPtr(arrowHeadBlockHandle));
+    hb->putHandle(writeHandleOrHardPtr(textStyleHandle));
+    hb->putHandle(writeHandleOrHardPtr(blockHandle));
     return true;
 }
 
@@ -3538,6 +3636,19 @@ bool DRW_AcDbPlaceholder::parseDwg(DRW::Version version, dwgBuffer *buf, duint32
     return ret;
 }
 
+bool DRW_AcDbPlaceholder::encodeDwg(DRW::Version version, dwgBufferW *buf,
+                                    dwgBufferW *handleBuf) const {
+    if (buf == nullptr)
+        return false;
+
+    dwgBufferW *hb = (handleBuf != nullptr && version > DRW::AC1018)
+        ? handleBuf
+        : buf;
+    hb->putHandle(makeSoftOwnerW(static_cast<duint32>(parentHandle)));
+    hb->putHandle(makeSoftOwnerW(0));  // XDic null
+    return true;
+}
+
 bool DRW_Sun::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     dwgBuffer sBuff = *buf;
     dwgBuffer *sBuf = version > DRW::AC1018 ? &sBuff : buf;
@@ -3565,6 +3676,32 @@ bool DRW_Sun::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     DRW_UNUSED(sBuf);
     DRW_DBG("SUN on: "); DRW_DBG(m_isOn ? 1 : 0); DRW_DBG("\n");
     return ret;
+}
+
+bool DRW_Sun::encodeDwg(DRW::Version version, dwgBufferW *buf,
+                        dwgBufferW *handleBuf) const {
+    if (buf == nullptr || version < DRW::AC1021)
+        return false;
+
+    dwgBufferW *hb = (handleBuf != nullptr && version > DRW::AC1018)
+        ? handleBuf
+        : buf;
+
+    buf->putBitLong(static_cast<dint32>(m_classVersion));
+    buf->putBit(m_isOn ? 1 : 0);
+    buf->putCmColor(version, static_cast<duint16>(m_color));
+    buf->putBitDouble(m_intensity);
+    buf->putBit(m_hasShadow ? 1 : 0);
+    buf->putBitLong(m_julianDay);
+    buf->putBitLong(m_milliseconds);
+    buf->putBit(m_isDaylightSavings ? 1 : 0);
+    buf->putBitLong(static_cast<dint32>(m_shadowType));
+    buf->putBitShort(static_cast<dint16>(m_shadowMapSize));
+    buf->putRawChar8(m_shadowSoftness);
+
+    hb->putHandle(makeSoftOwnerW(static_cast<duint32>(parentHandle)));
+    hb->putHandle(makeSoftOwnerW(0));  // XDic null
+    return true;
 }
 
 bool DRW_AssociativeObject::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){

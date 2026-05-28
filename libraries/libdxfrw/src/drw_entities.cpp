@@ -2704,6 +2704,57 @@ bool DRW_Light::parseDwg(DRW::Version v, dwgBuffer *buf, duint32 bs){
     return ret;
 }
 
+bool DRW_Light::encodeDwg(DRW::Version v, dwgBufferW *buf, duint32 bs,
+                          dwgBufferW *strBuf, dwgBufferW *handleBuf) {
+    (void)bs;
+    if (v < DRW::AC1021)
+        return false;
+
+    oType = kDwgClassNum;
+    if (!encodeDwgCommon(v, buf, strBuf))
+        return false;
+
+    dwgBufferW *sb = strBuf ? strBuf : buf;
+    buf->putBitLong(m_classVersion);
+    sb->putVariableText(v, m_name);
+    buf->putBitLong(m_type);
+    buf->putBit(m_status ? 1 : 0);
+    buf->putCmColor(v, static_cast<duint16>(m_color));
+    buf->putBit(m_plotGlyph ? 1 : 0);
+    buf->putBitDouble(m_intensity);
+    buf->put3BitDouble(m_position);
+    buf->put3BitDouble(m_target);
+    buf->putBitLong(m_attenuationType);
+    buf->putBit(m_useAttenuationLimits ? 1 : 0);
+    buf->putBitDouble(m_attenuationStartLimit);
+    buf->putBitDouble(m_attenuationEndLimit);
+    buf->putBitDouble(m_hotspotAngle);
+    buf->putBitDouble(m_falloffAngle);
+    buf->putBit(m_castShadows ? 1 : 0);
+    buf->putBitLong(m_shadowType);
+    buf->putBitShort(m_shadowMapSize);
+    buf->putRawChar8(m_shadowMapSoftness);
+
+    buf->putBit(m_hasPhotometricData ? 1 : 0);
+    if (m_hasPhotometricData) {
+        buf->putBit(m_hasWebFile ? 1 : 0);
+        sb->putVariableText(v, m_webFile);
+        buf->putBitShort(m_physicalIntensityMethod);
+        buf->putBitDouble(m_physicalIntensity);
+        buf->putBitDouble(m_illuminanceDistance);
+        buf->putBitShort(m_lampColorType);
+        buf->putBitDouble(m_lampColorTemperature);
+        buf->putBitShort(m_lampColorPreset);
+        buf->put3BitDouble(m_webRotation);
+        buf->putBitShort(m_extendedLightShape);
+        buf->putBitDouble(m_extendedLightLength);
+        buf->putBitDouble(m_extendedLightWidth);
+        buf->putBitDouble(m_extendedLightRadius);
+    }
+
+    return encodeDwgEntHandle(v, buf, handleBuf);
+}
+
 bool DRW_Tolerance::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
     switch (code) {
     case 1:
@@ -2746,10 +2797,64 @@ bool DRW_Tolerance::parseCode(int code, const std::unique_ptr<dxfReader>& reader
 }
 
 bool DRW_Tolerance::parseDwg(DRW::Version v, dwgBuffer *buf, duint32 bs){
-    (void) v;
-    (void) buf;
-    (void) bs;
-    DRW_DBG("\n********************** parsing TOLERANCE from DWG is not yet implemented **************************\n");
+    dwgBuffer sBuff = *buf;
+    dwgBuffer *sBuf = buf;
+    if (v > DRW::AC1018)
+        sBuf = &sBuff;
+
+    bool ret = DRW_Entity::parseDwg(v, buf, sBuf, bs);
+    if (!ret)
+        return ret;
+
+    DRW_DBG("\n***************************** parsing tolerance *********************************************\n");
+    if (v < DRW::AC1015) {
+        DRW_DBG("unknown R13/R14 short: "); DRW_DBG(buf->getBitShort()); DRW_DBG("\n");
+        DRW_DBG("height at creation: "); DRW_DBG(buf->getBitDouble()); DRW_DBG("\n");
+        DRW_DBG("dimgap/dimscale at creation: "); DRW_DBG(buf->getBitDouble()); DRW_DBG("\n");
+    }
+
+    insertionPoint = buf->get3BitDouble();
+    DRW_DBG("insertionPoint: "); DRW_DBGPT(insertionPoint.x, insertionPoint.y, insertionPoint.z);
+    xAxisDirectionVector = buf->get3BitDouble();
+    DRW_DBG("\nxAxisDirectionVector: ");
+    DRW_DBGPT(xAxisDirectionVector.x, xAxisDirectionVector.y, xAxisDirectionVector.z);
+    extPoint = buf->get3BitDouble();
+    DRW_DBG("\nextPoint: "); DRW_DBGPT(extPoint.x, extPoint.y, extPoint.z);
+    text = sBuf->getVariableText(v, false);
+    DRW_DBG("\ntolerance text: "); DRW_DBG(text.c_str()); DRW_DBG("\n");
+
+    ret = DRW_Entity::parseDwgEntHandle(v, buf);
+    if (!ret)
+        return ret;
+    dimStyleH = buf->getHandle();
+    DRW_DBG("dim style Handle: ");
+    DRW_DBGHL(dimStyleH.code, dimStyleH.size, dimStyleH.ref); DRW_DBG("\n");
+    return buf->isGood();
+}
+
+bool DRW_Tolerance::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs,
+                              dwgBufferW *strBuf, dwgBufferW *handleBuf) {
+    (void)bs;
+    oType = 46;
+    if (!encodeDwgCommon(version, buf, strBuf))
+        return false;
+
+    if (version < DRW::AC1015) {
+        buf->putBitShort(0);
+        buf->putBitDouble(0.0);
+        buf->putBitDouble(0.0);
+    }
+
+    buf->put3BitDouble(insertionPoint);
+    buf->put3BitDouble(xAxisDirectionVector);
+    buf->put3BitDouble(extPoint);
+    (strBuf ? strBuf : buf)->putVariableText(version, text);
+
+    if (!encodeDwgEntHandle(version, buf, handleBuf))
+        return false;
+
+    dwgBufferW *hb = handleBuf ? handleBuf : buf;
+    putHardPointerHandle(hb, (dimStyleH.ref == 0) ? 0x15 : dimStyleH.ref);
     return true;
 }
 
@@ -3878,6 +3983,103 @@ static bool consumeEmbeddedMTextHandles(DRW::Version version, dwgBuffer *buf,
     if (info.m_hasAnnotativeAppHandle) buf->getHandle();
     return buf->isGood();
 }
+
+static bool encodeEmbeddedMTextEntityMode(DRW::Version version, dwgBufferW *buf,
+                                          const DRW_MText& mtext) {
+    if (version < DRW::AC1032)
+        return false;
+
+    // Embedded MTEXT begins at AcDbEntity mode, not with an object type,
+    // object size, own handle, EED, or graphics data.
+    buf->put2Bits(2);                       // modelspace, no owner handle
+    buf->putBitLong(0);                     // no reactors
+    buf->putBit(1);                         // xDictFlag=1, no xdict handle
+    buf->putBit(1);                         // no prev/next links
+    buf->putEnColor(version, static_cast<duint16>(mtext.color));
+    buf->putBitDouble(mtext.ltypeScale);
+    buf->put2Bits(0);                       // linetype by layer
+    buf->put2Bits(0);                       // plotstyle by layer
+    buf->put2Bits(0);                       // material inherit
+    buf->putRawChar8(0);                    // shadow flags
+    buf->putBit(0);                         // no full visual style
+    buf->putBit(0);                         // no face visual style
+    buf->putBit(0);                         // no edge visual style
+    buf->putBitShort(0);                    // visible
+    buf->putRawChar8(static_cast<duint8>(mtext.lWeight));
+    return true;
+}
+
+static bool encodeEmbeddedMTextDwg(DRW::Version version, dwgBufferW *buf,
+                                   dwgBufferW *strBuf, dwgBufferW *handleBuf,
+                                   const DRW_MText& mtext) {
+    if (!encodeEmbeddedMTextEntityMode(version, buf, mtext))
+        return false;
+
+    buf->put3BitDouble(mtext.basePoint);
+    buf->put3BitDouble(mtext.extPoint);
+    buf->put3BitDouble(mtext.secPoint);
+    buf->putBitDouble(mtext.widthscale);
+    buf->putBitDouble(mtext.m_r2018RectHeight);
+    buf->putBitDouble(mtext.height);
+    buf->putBitShort(static_cast<duint16>(mtext.textgen));
+    buf->putBitShort(static_cast<duint16>(mtext.alignH));
+    buf->putBitDouble(mtext.m_r2018ExtentsHeight);
+    buf->putBitDouble(mtext.m_r2018ExtentsWidth);
+    (strBuf ? strBuf : buf)->putVariableText(version, mtext.text);
+
+    buf->putBitShort(0);                    // linespacing style
+    buf->putBitDouble(mtext.interlin);
+    buf->putBit(0);
+    buf->putBitLong(mtext.m_backgroundFlags);
+    if ((mtext.m_backgroundFlags & 0x01)
+        || (mtext.m_backgroundFlags & 0x10)) {
+        buf->putBitLong(mtext.m_backgroundScale);
+        buf->putCmColor(version, static_cast<duint16>(mtext.m_backgroundColor));
+        buf->putBitLong(mtext.m_backgroundTransparency);
+    }
+
+    buf->putBit(mtext.m_r2018IsNotAnnotative ? 1 : 0);
+    if (mtext.m_r2018IsNotAnnotative) {
+        buf->putBitShort(mtext.m_r2018Version);
+        buf->putBit(mtext.m_r2018DefaultFlag ? 1 : 0);
+        buf->putBitLong(mtext.m_r2018Attachment);
+        buf->put3BitDouble(mtext.m_r2018XAxisDir);
+        buf->put3BitDouble(mtext.m_r2018InsertionPoint);
+        buf->putBitDouble(mtext.m_r2018RectWidth);
+        buf->putBitDouble(mtext.m_r2018RectHeight);
+        buf->putBitDouble(mtext.m_r2018ExtentsHeight);
+        buf->putBitDouble(mtext.m_r2018ExtentsWidth);
+        buf->putBitShort(mtext.m_r2018ColumnType);
+        if (mtext.m_r2018ColumnType != 0) {
+            dint32 columnCount = mtext.m_r2018ColumnCount;
+            if (!mtext.m_r2018ColumnAutoHeight && mtext.m_r2018ColumnType == 2
+                && !mtext.m_r2018ColumnHeights.empty()) {
+                columnCount = static_cast<dint32>(mtext.m_r2018ColumnHeights.size());
+            }
+            buf->putBitLong(columnCount);
+            buf->putBitDouble(mtext.m_r2018ColumnWidth);
+            buf->putBitDouble(mtext.m_r2018ColumnGutter);
+            buf->putBit(mtext.m_r2018ColumnAutoHeight ? 1 : 0);
+            buf->putBit(mtext.m_r2018ColumnFlowReversed ? 1 : 0);
+            if (!mtext.m_r2018ColumnAutoHeight && mtext.m_r2018ColumnType == 2) {
+                for (dint32 i = 0; i < columnCount; ++i) {
+                    const double columnHeight = static_cast<size_t>(i) < mtext.m_r2018ColumnHeights.size()
+                        ? mtext.m_r2018ColumnHeights[static_cast<size_t>(i)]
+                        : 0.0;
+                    buf->putBitDouble(columnHeight);
+                }
+            }
+        }
+    }
+
+    buf->putBitShort(0);                    // no annotative payload
+
+    dwgBufferW *hb = handleBuf ? handleBuf : buf;
+    putHardPointerHandle(hb, (mtext.styleH.ref == 0) ? 0x13 : mtext.styleH.ref);
+    if (mtext.m_r2018IsNotAnnotative)
+        putHardPointerHandle(hb, (mtext.m_r2018AppIdHandle == 0) ? 0x14 : mtext.m_r2018AppIdHandle);
+    return true;
+}
 }
 
 bool DRW_Attrib::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
@@ -4036,10 +4238,11 @@ bool DRW_Attrib::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
 
 bool DRW_Attrib::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {
     (void)bs;
-    if (version >= DRW::AC1024 && (attVersion != 0 || mtext))
+    if (version >= DRW::AC1024 && version < DRW::AC1032 && (attVersion != 0 || mtext))
         return false;
     const duint8 attributeType = (m_attributeType == 0) ? 1 : m_attributeType;
-    if (version >= DRW::AC1032 && attributeType != 1)
+    const bool hasEmbeddedMText = version >= DRW::AC1032 && attributeType != 1;
+    if (hasEmbeddedMText && !mtext)
         return false;
 
     oType = 2;  // ATTRIB class id — see dwgreader.cpp:1148
@@ -4067,10 +4270,15 @@ bool DRW_Attrib::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dw
     buf->putBitShort(static_cast<duint16>(alignV));   // vert align BS
 
     if (version >= DRW::AC1024) {
-        buf->putRawChar8(attVersion);       // R2010+ ATTRIB version byte
+        buf->putRawChar8(hasEmbeddedMText && attVersion == 0 ? 1 : attVersion);
     }
     if (version >= DRW::AC1032) {
-        buf->putRawChar8(attributeType);     // embedded MTEXT is blocked above
+        buf->putRawChar8(attributeType);
+    }
+
+    if (hasEmbeddedMText) {
+        if (!encodeEmbeddedMTextDwg(version, buf, strBuf, handleBuf, *mtext))
+            return false;
     }
 
     // ATTRIB-specific tail
@@ -4213,10 +4421,11 @@ bool DRW_Attdef::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
 
 bool DRW_Attdef::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {
     (void)bs;
-    if (version >= DRW::AC1024 && (attVersion != 0 || mtext))
+    if (version >= DRW::AC1024 && version < DRW::AC1032 && (attVersion != 0 || mtext))
         return false;
     const duint8 attributeType = (m_attributeType == 0) ? 1 : m_attributeType;
-    if (version >= DRW::AC1032 && attributeType != 1)
+    const bool hasEmbeddedMText = version >= DRW::AC1032 && attributeType != 1;
+    if (hasEmbeddedMText && !mtext)
         return false;
 
     oType = 3;  // ATTDEF class id — see dwgreader.cpp:1185
@@ -4242,10 +4451,15 @@ bool DRW_Attdef::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dw
     buf->putBitShort(static_cast<duint16>(alignV));
 
     if (version >= DRW::AC1024) {
-        buf->putRawChar8(attVersion);
+        buf->putRawChar8(hasEmbeddedMText && attVersion == 0 ? 1 : attVersion);
     }
     if (version >= DRW::AC1032) {
-        buf->putRawChar8(attributeType);     // embedded MTEXT is blocked above
+        buf->putRawChar8(attributeType);
+    }
+
+    if (hasEmbeddedMText) {
+        if (!encodeEmbeddedMTextDwg(version, buf, strBuf, handleBuf, *mtext))
+            return false;
     }
 
     sb->putVariableText(version, tag);
@@ -5105,18 +5319,22 @@ bool DRW_Hatch::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwg
     oType = 78;  // HATCH class id — see dwgreader.cpp:1380
     if (!encodeDwgCommon(version, buf)) return false;
 
-    // R2004+ gradient section (parser reads this for version > AC1015).
-    // We always write non-gradient (isGradient=0) with 0 colors.
     dwgBufferW *sb = strBuf ? strBuf : buf;
     if (version > DRW::AC1015) {
-        buf->putBitLong(0);               // isGradient = 0
-        buf->putBitLong(0);               // gradReserved
-        buf->putBitDouble(0.0);           // gradAngle
-        buf->putBitDouble(0.0);           // gradShift
-        buf->putBitLong(0);               // singleColor
-        buf->putBitDouble(0.0);           // gradTint
-        buf->putBitLong(0);               // numColors = 0
-        sb->putVariableText(version, std::string{});  // gradName ""
+        buf->putBitLong(isGradient);
+        buf->putBitLong(gradReserved);
+        buf->putBitDouble(gradAngle);
+        buf->putBitDouble(gradShift);
+        buf->putBitLong(singleColor);
+        buf->putBitDouble(gradTint);
+        buf->putBitLong(static_cast<dint32>(gradColors.size()));
+        for (const GradientStop& stop : gradColors) {
+            buf->putBitDouble(stop.value);
+            buf->putBitShort(static_cast<duint16>(stop.aciColor));
+            buf->putBitLong(static_cast<duint32>(stop.rgb));
+            buf->putRawChar8(0);
+        }
+        sb->putVariableText(version, gradName);
     }
 
     buf->putBitDouble(basePoint.z);            // BD: elevation

@@ -1868,7 +1868,10 @@ bool dwgReader::readDwgObject(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                     if (rn == "MLEADERSTYLE") {
                         DRW_MLeaderStyle e;
                         ret = e.parseDwg(version, &buff, bs);
-                        intfa.addMLeaderStyle(&e);
+                        if (ret) {
+                            intfa.addMLeaderStyle(&e);
+                            intfa.addUnsupportedObject(makeRawObject(oType, cit->second));
+                        }
                         break;
                     }
                     // recName is the DXF CLASSES section record name (code 1),

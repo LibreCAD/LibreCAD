@@ -39,8 +39,9 @@ namespace recno {
 /// Section emission order matches LibreDWG (encode.c §3144 ff):
 ///   HEADER → CLASSES → OBJECTS body → HANDLES → 2NDHEADER.
 /// AUXHEADER / TEMPLATE / PREVIEW are optional and emit only if
-/// the input document carries them (v1: PREVIEW only, as an empty
-/// stub; AUXHEADER + TEMPLATE deferred to v2).
+/// the input document carries them.  Fresh R2000 writes include the
+/// AcDb:AuxHeader locator and stream so section layout matches
+/// ACadSharp/ODA expectations.
 class dwgWriter15 : public dwgWriter {
 public:
     dwgWriter15(std::ofstream *stream, DRW_Header *header)
@@ -87,6 +88,9 @@ public:
     void addDimstyle(const DRW_Dimstyle& ds);
     void addAppId(const DRW_AppId& ai);
     bool replayRawObject(const DRW_UnsupportedObject& object);
+    bool writeAcDbPlaceholder(const DRW_AcDbPlaceholder& placeholder);
+    bool writeSun(const DRW_Sun& sun);
+    bool writeMLeaderStyle(const DRW_MLeaderStyle& style);
 
 protected:
     /// Begin a new object in the object stream (the unsentinel'd byte
@@ -154,6 +158,10 @@ protected:
     void emitVportRecord(duint32 handle, const DRW_Vport& vp);
     void emitAppIdRecord(duint32 handle, const DRW_AppId& ai);
     void emitDimstyleRecord(duint32 handle, const DRW_Dimstyle& ds);
+    void emitAcDbPlaceholderObject(duint32 handle,
+                                   const DRW_AcDbPlaceholder& placeholder);
+    void emitSunObject(duint32 handle, const DRW_Sun& sun);
+    void emitMLeaderStyleObject(duint32 handle, const DRW_MLeaderStyle& style);
 
 protected:
     /// Populate m_header's ctrl-handle fields with canonical reserved values
@@ -219,10 +227,10 @@ private:
     /// `writeFileHeaderStub`.
     duint32 m_recordsOffset {0};
 
-    /// Number of section-locator records emitted (typically 5 for an
-    /// empty document — HEADER, CLASSES, HANDLES, UNKNOWN, AUXHEADER —
-    /// or 6 if TEMPLATE present).  v1 emits 5.
-    duint8 m_numSections {5};
+    /// Number of section-locator records emitted.  R2000 writes the
+    /// canonical HEADER, CLASSES, HANDLES, ObjFreeSpace, Template, and
+    /// AuxHeader records.
+    duint8 m_numSections {6};
 
     /// Block_Record handles for user-defined blocks (from defineBlock).
     /// Consumed by emitDeferredBlockControl to populate BLOCK_CONTROL's

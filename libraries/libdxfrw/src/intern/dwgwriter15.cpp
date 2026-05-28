@@ -15,6 +15,7 @@
 
 #include <algorithm>
 #include <cctype>
+#include <cmath>
 #include <cstring>
 
 #include "../drw_base.h"
@@ -123,6 +124,101 @@ dwgHandle makeNullHandle() {
     h.size = 0;
     h.ref  = 0;
     return h;
+}
+
+void putAuxRL(std::vector<duint8>& v, duint32 x) {
+    v.push_back(static_cast<duint8>(x));
+    v.push_back(static_cast<duint8>(x >> 8));
+    v.push_back(static_cast<duint8>(x >> 16));
+    v.push_back(static_cast<duint8>(x >> 24));
+}
+
+void putAuxRS(std::vector<duint8>& v, duint16 x) {
+    v.push_back(static_cast<duint8>(x));
+    v.push_back(static_cast<duint8>(x >> 8));
+}
+
+double headerDoubleVar(const DRW_Header *header, const std::string& key) {
+    if (header == nullptr)
+        return 0.0;
+    auto it = header->vars.find(key);
+    if (it == header->vars.end() || it->second == nullptr
+        || it->second->type() != DRW_Variant::DOUBLE) {
+        return 0.0;
+    }
+    return it->second->d_val();
+}
+
+void splitAuxDate(double stored, dint32& day, dint32& msec) {
+    day = static_cast<dint32>(stored);
+    double frac = stored - static_cast<double>(day);
+    if (frac == 0.0) {
+        msec = 0;
+        return;
+    }
+    for (int i = 0; i < 10; ++i) {
+        frac *= 10.0;
+        const double rounded = std::round(frac);
+        if (std::abs(frac - rounded) < 1e-9 && rounded != 0.0) {
+            msec = static_cast<dint32>(rounded);
+            return;
+        }
+    }
+    msec = static_cast<dint32>(std::round(frac));
+}
+
+void putAuxDate(std::vector<duint8>& v, double stored) {
+    dint32 day = 0;
+    dint32 msec = 0;
+    splitAuxDate(stored, day, msec);
+    putAuxRL(v, static_cast<duint32>(day));
+    putAuxRL(v, static_cast<duint32>(msec));
+}
+
+std::vector<duint8> buildR2000AuxHeaderContent(const DRW_Header *header) {
+    constexpr duint16 rawVersion = 23;  // AC1015
+    std::vector<duint8> v;
+    v.reserve(111);
+    v.push_back(0xff);
+    v.push_back(0x77);
+    v.push_back(0x01);
+    putAuxRS(v, rawVersion);
+    putAuxRS(v, 0);                     // maintenance version
+    putAuxRL(v, 1);                     // number of saves
+    putAuxRL(v, static_cast<duint32>(-1));
+    putAuxRS(v, 1);                     // saves part 1
+    putAuxRS(v, 0);                     // saves part 2
+    putAuxRL(v, 0);
+    putAuxRS(v, rawVersion);
+    putAuxRS(v, 0);
+    putAuxRS(v, rawVersion);
+    putAuxRS(v, 0);
+    putAuxRS(v, 0x0005);
+    putAuxRS(v, 0x0893);
+    putAuxRS(v, 0x0005);
+    putAuxRS(v, 0x0893);
+    putAuxRS(v, 0);
+    putAuxRS(v, 1);
+    for (int i = 0; i < 5; ++i)
+        putAuxRL(v, 0);
+
+    putAuxDate(v, headerDoubleVar(header, "TDCREATE"));
+    putAuxDate(v, headerDoubleVar(header, "TDUPDATE"));
+
+    const duint32 handSeed = header ? header->getHandSeed() : 0;
+    putAuxRL(v, handSeed <= 0x7fffffffu ? handSeed : static_cast<duint32>(-1));
+    putAuxRL(v, 0);                     // educational plot stamp
+    putAuxRS(v, 0);
+    putAuxRS(v, 1);
+    putAuxRL(v, 0);
+    putAuxRL(v, 0);
+    putAuxRL(v, 0);
+    putAuxRL(v, 1);                     // number of saves
+    putAuxRL(v, 0);
+    putAuxRL(v, 0);
+    putAuxRL(v, 0);
+    putAuxRL(v, 0);
+    return v;
 }
 
 /// Build a soft-owner (code 3) handle — the form used for the XDic
@@ -722,6 +818,86 @@ void dwgWriter15::emitDimstyleRecord(duint32 handle, const DRW_Dimstyle& ds) {
     finishObject();
 }
 
+void dwgWriter15::emitAcDbPlaceholderObject(
+    duint32 handle, const DRW_AcDbPlaceholder& placeholder) {
+    dwgBufferW& body = beginObject(handle);
+    dwgBufferW *sb, *hb;
+    emitRecordPreamble(body, m_version, 80, handle,
+                       m_objectStrings, m_objectHandles, sb, hb);
+    DRW_UNUSED(sb);
+    placeholder.encodeDwg(m_version, &body, hb);
+    finishObject();
+}
+
+bool dwgWriter15::writeAcDbPlaceholder(
+    const DRW_AcDbPlaceholder& placeholder) {
+    if (m_version < DRW::AC1021)
+        return false;
+
+    DRW_AcDbPlaceholder object = placeholder;
+    if (object.handle == 0) {
+        object.handle = m_handles.next();
+    } else {
+        m_handles.reserve(object.handle);
+    }
+    emitAcDbPlaceholderObject(object.handle, object);
+    return true;
+}
+
+void dwgWriter15::emitSunObject(duint32 handle, const DRW_Sun& sun) {
+    dwgBufferW& body = beginObject(handle);
+    dwgBufferW *sb, *hb;
+    emitRecordPreamble(body, m_version, DRW_Sun::kDwgClassNum, handle,
+                       m_objectStrings, m_objectHandles, sb, hb);
+    DRW_UNUSED(sb);
+    sun.encodeDwg(m_version, &body, hb);
+    finishObject();
+}
+
+bool dwgWriter15::writeSun(const DRW_Sun& sun) {
+    if (m_version < DRW::AC1021)
+        return false;
+
+    DRW_Sun object = sun;
+    if (object.handle == 0) {
+        object.handle = m_handles.next();
+    } else {
+        m_handles.reserve(object.handle);
+    }
+    if (!registerSunObjectClass(object.handle))
+        return false;
+
+    emitSunObject(object.handle, object);
+    return true;
+}
+
+void dwgWriter15::emitMLeaderStyleObject(duint32 handle,
+                                         const DRW_MLeaderStyle& style) {
+    dwgBufferW& body = beginObject(handle);
+    dwgBufferW *sb, *hb;
+    emitRecordPreamble(body, m_version, DRW_MLeaderStyle::kDwgClassNum, handle,
+                       m_objectStrings, m_objectHandles, sb, hb);
+    style.encodeDwg(m_version, &body, sb, hb);
+    finishObject();
+}
+
+bool dwgWriter15::writeMLeaderStyle(const DRW_MLeaderStyle& style) {
+    if (m_version < DRW::AC1021)
+        return false;
+
+    DRW_MLeaderStyle object = style;
+    if (object.handle == 0) {
+        object.handle = m_handles.next();
+    } else {
+        m_handles.reserve(object.handle);
+    }
+    if (!registerMLeaderStyleObjectClass(object.handle))
+        return false;
+
+    emitMLeaderStyleObject(object.handle, object);
+    return true;
+}
+
 // --- add*() methods: register user table records for deferred emission -----
 
 void dwgWriter15::addLType(const DRW_LType& lt) {
@@ -1099,11 +1275,11 @@ bool dwgWriter15::writeDwgHandles() {
 }
 
 bool dwgWriter15::writeSecondHeader() {
-    // v1: skip the 2NDHEADER section entirely.  AutoCAD treats this
-    // section as optional metadata recovery; libdxfrw's reader does
-    // not emit a warning when it is absent (sections[2NDHEADER].Id<0
-    // path is silently tolerated).  Phase 3 may add a minimal stub
-    // here once we measure how third-party readers behave.
+    const std::vector<duint8> auxHeader = buildR2000AuxHeaderContent(m_header);
+    m_sectionOffsets[recno::AUXHEADER] = static_cast<duint32>(m_buf.size());
+    if (!auxHeader.empty())
+        m_buf.putBytes(auxHeader.data(), auxHeader.size());
+    m_sectionSizes[recno::AUXHEADER] = static_cast<duint32>(auxHeader.size());
     return true;
 }
 

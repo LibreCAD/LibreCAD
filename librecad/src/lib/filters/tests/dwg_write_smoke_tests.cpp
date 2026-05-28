@@ -39,6 +39,7 @@
 #include <cstring>
 #include <filesystem>
 #include <fstream>
+#include <memory>
 #include <vector>
 
 #include <QCoreApplication>
@@ -131,6 +132,11 @@ std::vector<duint8> slurp(const std::string& path) {
 }
 
 /// Decode little-endian u32 at an offset.
+duint16 readLE16(const std::vector<duint8>& buf, size_t off) {
+    return static_cast<duint16>(buf[off]) |
+           (static_cast<duint16>(buf[off + 1]) << 8);
+}
+
 duint32 readLE32(const std::vector<duint8>& buf, size_t off) {
     return static_cast<duint32>(buf[off]) |
            (static_cast<duint32>(buf[off + 1]) << 8) |
@@ -193,7 +199,7 @@ TEST_CASE("dwgRW::write produces a syntactically valid empty R2000 file",
 
     // Bytes 0x15-0x18: RL num_sections LE.
     duint32 numSections = readLE32(bytes, 0x15);
-    REQUIRE(numSections == 5);
+    REQUIRE(numSections == 6);
 
     // (d) FILE_HEADER_END sentinel at offset (0x19 + 9N + 2).
     size_t sentinelOffset = 0x19 + 9 * numSections + 2;
@@ -223,6 +229,18 @@ TEST_CASE("dwgRW::write produces a syntactically valid empty R2000 file",
     // (10 control objects + terminator page).  Floor of 4 = empty terminator.
     duint32 handlesSize = readLE32(bytes, 0x19 + 2 * 9 + 5);
     REQUIRE(handlesSize >= 4);
+
+    // AuxHeader section record (recno=5) — native R2000 writes now include
+    // AcDb:AuxHeader instead of advertising only the first five locators.
+    duint32 auxAddr = readLE32(bytes, 0x19 + 5 * 9 + 1);
+    duint32 auxSize = readLE32(bytes, 0x19 + 5 * 9 + 5);
+    REQUIRE(auxAddr > 0);
+    REQUIRE(auxSize >= 111);
+    REQUIRE(auxAddr + auxSize <= bytes.size());
+    REQUIRE(bytes[auxAddr + 0] == 0xff);
+    REQUIRE(bytes[auxAddr + 1] == 0x77);
+    REQUIRE(bytes[auxAddr + 2] == 0x01);
+    REQUIRE(readLE16(bytes, auxAddr + 3) == 23);
 
     std::remove(path.c_str());
 }
@@ -703,6 +721,10 @@ public:
         leader.landingDistance = 2.5;
         leader.defaultArrowHeadSize = 0.75;
         leader.styleContentType = 2;
+        leader.styleHandle.ref = 0x830u;
+        leader.leaderLineTypeHandle.ref = 0x14u;
+        leader.arrowHeadHandle.ref = 0x15u;
+        leader.styleTextStyleHandle.ref = 0x13u;
         leader.scaleFactor = 1.0;
 
         DRW_MLeaderRoot root;
@@ -721,6 +743,8 @@ public:
         line.color = 2;
         line.lineWeight = 29;
         line.arrowSize = 0.75;
+        line.lineTypeHandle.ref = 0x14u;
+        line.arrowHandle.ref = 0x15u;
         root.leaderLines.push_back(line);
         leader.context.roots.push_back(root);
 
@@ -733,6 +757,7 @@ public:
         leader.context.styleRightAttach = 1;
         leader.context.hasTextContents = true;
         leader.context.textLabel = "Native MLeader";
+        leader.context.textStyleHandle.ref = 0x13u;
         leader.context.textNormal = DRW_Coord{0.0, 0.0, 1.0};
         leader.context.textLocation = DRW_Coord{20.0, 5.0, 0.0};
         leader.context.textDirection = DRW_Coord{1.0, 0.0, 0.0};
@@ -754,6 +779,314 @@ public:
     void addMLeader(const DRW_MLeader *leader) override {
         if (leader != nullptr)
             m_mleaders.push_back(*leader);
+    }
+};
+
+class MLeaderStyleRoundTripIface : public EmptyIface {
+public:
+    dwgRW *m_writer {nullptr};
+    DRW_MLeaderStyle m_style;
+    std::vector<DRW_MLeaderStyle> m_styles;
+    std::vector<DRW_UnsupportedObject> m_rawObjects;
+
+    MLeaderStyleRoundTripIface() {
+        m_style.handle = 0x830u;
+        m_style.name = "CodexStyle";
+        m_style.styleVersion = 2u;
+        m_style.contentType = 2u;
+        m_style.drawMLeaderOrder = 1u;
+        m_style.drawLeaderOrder = 0u;
+        m_style.maxLeaderPoints = 7;
+        m_style.firstSegmentAngle = 0.25;
+        m_style.secondSegmentAngle = 0.5;
+        m_style.leaderType = 1u;
+        m_style.leaderColor = 3;
+        m_style.leaderLineTypeHandle.ref = 0x14u;
+        m_style.leaderLineWeight = 29;
+        m_style.landingEnabled = true;
+        m_style.landingGap = 0.125;
+        m_style.autoIncludeLanding = true;
+        m_style.landingDistance = 2.25;
+        m_style.description = "Round-trip MLeader style";
+        m_style.arrowHeadBlockHandle.ref = 0x15u;
+        m_style.arrowHeadSize = 0.75;
+        m_style.textDefault = "Default leader text";
+        m_style.textStyleHandle.ref = 0x13u;
+        m_style.leftAttachment = 1u;
+        m_style.rightAttachment = 2u;
+        m_style.textAngleType = 1u;
+        m_style.textAlignmentType = 2u;
+        m_style.textColor = 5;
+        m_style.textHeight = 2.5;
+        m_style.textFrameEnabled = true;
+        m_style.alwaysAlignTextLeft = true;
+        m_style.alignSpace = 0.2;
+        m_style.blockHandle.ref = 0x17u;
+        m_style.blockColor = 6;
+        m_style.blockScale = DRW_Coord{1.0, 2.0, 3.0};
+        m_style.blockScaleEnabled = true;
+        m_style.blockRotation = 0.75;
+        m_style.blockRotationEnabled = true;
+        m_style.blockConnectionType = 1u;
+        m_style.scaleFactor = 1.5;
+        m_style.propertyChanged = true;
+        m_style.isAnnotative = true;
+        m_style.breakSize = 0.375;
+        m_style.attachmentDirection = 1u;
+        m_style.topAttachment = 3u;
+        m_style.bottomAttachment = 4u;
+        m_style.textExtended = true;
+    }
+
+    void writeDwgClasses() override {
+        if (m_writer != nullptr)
+            REQUIRE(m_writer->registerMLeaderStyleObjectClass(&m_style));
+    }
+
+    void writeObjects() override {
+        if (m_writer != nullptr)
+            REQUIRE(m_writer->writeMLeaderStyle(&m_style));
+    }
+
+    void addMLeaderStyle(const DRW_MLeaderStyle *style) override {
+        if (style != nullptr)
+            m_styles.push_back(*style);
+    }
+
+    void addUnsupportedObject(const DRW_UnsupportedObject& object) override {
+        m_rawObjects.push_back(object);
+    }
+};
+
+class ToleranceRoundTripIface : public EmptyIface {
+public:
+    dwgRW *m_writer {nullptr};
+    std::vector<DRW_Tolerance> m_tolerances;
+
+    void writeEntities() override {
+        if (m_writer == nullptr)
+            return;
+
+        DRW_Tolerance tolerance;
+        tolerance.color = 3;
+        tolerance.insertionPoint = DRW_Coord{12.0, 34.0, 0.0};
+        tolerance.xAxisDirectionVector = DRW_Coord{1.0, 0.25, 0.0};
+        tolerance.extPoint = DRW_Coord{0.0, 0.0, 1.0};
+        tolerance.text = "{\\Fgdt;j}%%v0.05{\\Fgdt;m}A";
+        REQUIRE(m_writer->writeTolerance(&tolerance));
+    }
+
+    void addTolerance(const DRW_Tolerance& tolerance) override {
+        m_tolerances.push_back(tolerance);
+    }
+};
+
+class HatchGradientRoundTripIface : public EmptyIface {
+public:
+    dwgRW *m_writer {nullptr};
+    std::vector<DRW_Hatch> m_hatches;
+
+    void writeEntities() override {
+        if (m_writer == nullptr)
+            return;
+
+        DRW_Hatch hatch;
+        hatch.color = 5;
+        hatch.solid = 1;
+        hatch.name = "SOLID";
+        hatch.extPoint = DRW_Coord{0.0, 0.0, 1.0};
+        hatch.isGradient = 1;
+        hatch.gradReserved = 0;
+        hatch.gradAngle = 0.75;
+        hatch.gradShift = 0.25;
+        hatch.singleColor = 0;
+        hatch.gradTint = 0.5;
+        hatch.gradName = "LINEAR";
+        DRW_Hatch::GradientStop first;
+        first.value = 0.0;
+        first.rgb = 0x00ff0000;
+        first.aciColor = 1;
+        hatch.gradColors.push_back(first);
+        DRW_Hatch::GradientStop second;
+        second.value = 1.0;
+        second.rgb = 0x000000ff;
+        second.aciColor = 5;
+        hatch.gradColors.push_back(second);
+        REQUIRE(m_writer->writeHatch(&hatch));
+    }
+
+    void addHatch(const DRW_Hatch *hatch) override {
+        if (hatch != nullptr)
+            m_hatches.push_back(*hatch);
+    }
+};
+
+class MultilineAttributeWriteIface : public EmptyIface {
+public:
+    dwgRW *m_writer {nullptr};
+
+    static std::unique_ptr<DRW_MText> makeMText(const char *value) {
+        auto mtext = std::make_unique<DRW_MText>();
+        mtext->basePoint = DRW_Coord{1.0, 2.0, 0.0};
+        mtext->extPoint = DRW_Coord{0.0, 0.0, 1.0};
+        mtext->secPoint = DRW_Coord{1.0, 0.0, 0.0};
+        mtext->widthscale = 20.0;
+        mtext->height = 2.5;
+        mtext->textgen = 1;
+        mtext->alignH = DRW_Text::HLeft;
+        mtext->interlin = 1.0;
+        mtext->text = value;
+        mtext->m_r2018IsNotAnnotative = true;
+        mtext->m_r2018Version = 4;
+        mtext->m_r2018DefaultFlag = true;
+        mtext->m_r2018Attachment = DRW_MText::TopLeft;
+        mtext->m_r2018XAxisDir = DRW_Coord{1.0, 0.0, 0.0};
+        mtext->m_r2018InsertionPoint = mtext->basePoint;
+        mtext->m_r2018RectWidth = 20.0;
+        mtext->m_r2018RectHeight = 4.0;
+        mtext->m_r2018ExtentsWidth = 20.0;
+        mtext->m_r2018ExtentsHeight = 4.0;
+        mtext->m_r2018AppIdHandle = 0x14u;
+        return mtext;
+    }
+
+    void writeEntities() override {
+        if (m_writer == nullptr)
+            return;
+
+        DRW_Attrib attrib;
+        attrib.basePoint = DRW_Coord{4.0, 5.0, 0.0};
+        attrib.secPoint = attrib.basePoint;
+        attrib.extPoint = DRW_Coord{0.0, 0.0, 1.0};
+        attrib.height = 2.5;
+        attrib.widthscale = 1.0;
+        attrib.text = "line 1";
+        attrib.tag = "ML_ATTRIB";
+        attrib.attVersion = 1;
+        attrib.m_attributeType = 2;
+        attrib.mtext = makeMText("line 1\\Pline 2");
+        REQUIRE(m_writer->writeAttrib(&attrib));
+
+        DRW_Attdef attdef;
+        attdef.basePoint = DRW_Coord{8.0, 9.0, 0.0};
+        attdef.secPoint = attdef.basePoint;
+        attdef.extPoint = DRW_Coord{0.0, 0.0, 1.0};
+        attdef.height = 2.5;
+        attdef.widthscale = 1.0;
+        attdef.text = "default";
+        attdef.tag = "ML_ATTDEF";
+        attdef.prompt = "Prompt";
+        attdef.attVersion = 1;
+        attdef.m_attributeType = 4;
+        attdef.mtext = makeMText("default\\Pvalue");
+        REQUIRE(m_writer->writeAttdef(&attdef));
+    }
+};
+
+class LightRoundTripIface : public EmptyIface {
+public:
+    dwgRW *m_writer {nullptr};
+    std::vector<DRW_Light> m_lights;
+
+    void writeEntities() override {
+        if (m_writer == nullptr)
+            return;
+
+        DRW_Light light;
+        light.m_classVersion = 1;
+        light.m_name = "Key light";
+        light.m_type = 2;
+        light.m_status = true;
+        light.m_color = 3;
+        light.m_plotGlyph = true;
+        light.m_intensity = 4.5;
+        light.m_position = DRW_Coord{1.0, 2.0, 3.0};
+        light.m_target = DRW_Coord{4.0, 5.0, 6.0};
+        light.m_attenuationType = 1;
+        light.m_useAttenuationLimits = true;
+        light.m_attenuationStartLimit = 7.0;
+        light.m_attenuationEndLimit = 8.0;
+        light.m_hotspotAngle = 0.25;
+        light.m_falloffAngle = 0.5;
+        light.m_castShadows = true;
+        light.m_shadowType = 2;
+        light.m_shadowMapSize = 256;
+        light.m_shadowMapSoftness = 3;
+        light.m_hasPhotometricData = true;
+        light.m_hasWebFile = true;
+        light.m_webFile = "lamp.ies";
+        light.m_physicalIntensityMethod = 1;
+        light.m_physicalIntensity = 9.0;
+        light.m_illuminanceDistance = 10.0;
+        light.m_lampColorType = 2;
+        light.m_lampColorTemperature = 6500.0;
+        light.m_lampColorPreset = 5;
+        light.m_webRotation = DRW_Coord{0.0, 1.0, 0.0};
+        light.m_extendedLightShape = 4;
+        light.m_extendedLightLength = 11.0;
+        light.m_extendedLightWidth = 12.0;
+        light.m_extendedLightRadius = 13.0;
+        REQUIRE(m_writer->writeLight(&light));
+    }
+
+    void addLight(const DRW_Light& light) override {
+        m_lights.push_back(light);
+    }
+};
+
+class SunRoundTripIface : public EmptyIface {
+public:
+    dwgRW *m_writer {nullptr};
+    DRW_Sun m_sun;
+    std::vector<DRW_Sun> m_suns;
+
+    SunRoundTripIface() {
+        m_sun.handle = 0x780u;
+        m_sun.m_classVersion = 1u;
+        m_sun.m_isOn = true;
+        m_sun.m_color = 4u;
+        m_sun.m_intensity = 2.75;
+        m_sun.m_hasShadow = true;
+        m_sun.m_julianDay = 2460001;
+        m_sun.m_milliseconds = 43210000;
+        m_sun.m_isDaylightSavings = true;
+        m_sun.m_shadowType = 1u;
+        m_sun.m_shadowMapSize = 512u;
+        m_sun.m_shadowSoftness = 6u;
+    }
+
+    void writeDwgClasses() override {
+        if (m_writer != nullptr)
+            REQUIRE(m_writer->registerSunObjectClass(&m_sun));
+    }
+
+    void writeObjects() override {
+        if (m_writer != nullptr)
+            REQUIRE(m_writer->writeSun(&m_sun));
+    }
+
+    void addSun(const DRW_Sun& sun) override {
+        m_suns.push_back(sun);
+    }
+};
+
+class PlaceholderRoundTripIface : public EmptyIface {
+public:
+    dwgRW *m_writer {nullptr};
+    DRW_AcDbPlaceholder m_placeholder;
+    std::vector<DRW_AcDbPlaceholder> m_placeholders;
+
+    PlaceholderRoundTripIface() {
+        m_placeholder.handle = 0x790u;
+    }
+
+    void writeObjects() override {
+        if (m_writer != nullptr)
+            REQUIRE(m_writer->writeAcDbPlaceholder(&m_placeholder));
+    }
+
+    void addAcDbPlaceholder(const DRW_AcDbPlaceholder& placeholder) override {
+        m_placeholders.push_back(placeholder);
     }
 };
 
@@ -925,9 +1258,283 @@ TEST_CASE("dwgRW writes native text MLEADER entities",
         REQUIRE(leader.context.roots[0].leaderLines.size() == 1);
         REQUIRE(leader.context.roots[0].leaderLines[0].points.size() == 2);
         REQUIRE(leader.context.roots[0].leaderLines[0].points[1].x == 10.0);
+        REQUIRE(leader.context.roots[0].leaderLines[0].lineTypeHandle.ref == 0x14u);
+        REQUIRE(leader.context.roots[0].leaderLines[0].arrowHandle.ref == 0x15u);
         REQUIRE(leader.context.textLocation.x == 20.0);
+        REQUIRE(leader.context.textStyleHandle.ref == 0x13u);
+        REQUIRE(leader.styleHandle.ref == 0x830u);
+        REQUIRE(leader.leaderLineTypeHandle.ref == 0x14u);
+        REQUIRE(leader.arrowHeadHandle.ref == 0x15u);
+        REQUIRE(leader.styleTextStyleHandle.ref == 0x13u);
         REQUIRE(leader.styleContentType == 2);
         REQUIRE(leader.defaultArrowHeadSize == 0.75);
+
+        std::remove(path.c_str());
+    }
+}
+
+TEST_CASE("dwgRW writes and reads MLEADERSTYLE metadata",
+          "[dwg-write][mleaderstyle]") {
+    const DRW::Version versions[] = {DRW::AC1024, DRW::AC1027, DRW::AC1032};
+
+    for (DRW::Version version : versions) {
+        const std::string path = tempPath("native_mleaderstyle.dwg");
+        MLeaderStyleRoundTripIface sourceIface;
+        {
+            dwgRW writer(path.c_str());
+            sourceIface.m_writer = &writer;
+            REQUIRE(writer.write(&sourceIface, version, /*bin=*/false));
+        }
+
+        MLeaderStyleRoundTripIface readIface;
+        {
+            dwgRW reader(path.c_str());
+            REQUIRE(reader.read(&readIface, /*ext=*/false));
+            REQUIRE(reader.getVersion() == version);
+            REQUIRE(reader.getError() == DRW::BAD_NONE);
+        }
+
+        REQUIRE(readIface.m_styles.size() == 1);
+        const DRW_MLeaderStyle& style = readIface.m_styles.front();
+        CHECK(style.handle == 0x830u);
+        CHECK(style.styleVersion == 2u);
+        CHECK(style.contentType == 2u);
+        CHECK(style.drawMLeaderOrder == 1u);
+        CHECK(style.maxLeaderPoints == 7);
+        CHECK(style.leaderColor == 3);
+        CHECK(style.leaderLineTypeHandle.ref == 0x14u);
+        CHECK(style.leaderLineWeight == 29);
+        CHECK(style.landingEnabled);
+        CHECK(style.landingDistance == 2.25);
+        CHECK(style.description == "Round-trip MLeader style");
+        CHECK(style.arrowHeadBlockHandle.ref == 0x15u);
+        CHECK(style.arrowHeadSize == 0.75);
+        CHECK(style.textDefault == "Default leader text");
+        CHECK(style.textStyleHandle.ref == 0x13u);
+        CHECK(style.textColor == 5);
+        CHECK(style.textHeight == 2.5);
+        CHECK(style.textFrameEnabled);
+        CHECK(style.blockHandle.ref == 0x17u);
+        CHECK(style.blockColor == 6);
+        CHECK(style.blockScale.x == 1.0);
+        CHECK(style.blockScale.y == 2.0);
+        CHECK(style.blockScale.z == 3.0);
+        CHECK(style.scaleFactor == 1.5);
+        CHECK(style.isAnnotative);
+        CHECK(style.breakSize == 0.375);
+        CHECK(style.attachmentDirection == 1u);
+        CHECK(style.topAttachment == 3u);
+        CHECK(style.bottomAttachment == 4u);
+        CHECK(style.textExtended == (version >= DRW::AC1027));
+
+        bool foundRawStyle = false;
+        for (const DRW_UnsupportedObject& object : readIface.m_rawObjects) {
+            if (object.m_recordName == "MLEADERSTYLE" && object.m_handle == 0x830u) {
+                foundRawStyle = true;
+                break;
+            }
+        }
+        CHECK(foundRawStyle);
+
+        std::remove(path.c_str());
+    }
+}
+
+TEST_CASE("dwgRW writes and reads TOLERANCE entities",
+          "[dwg-write][tolerance]") {
+    const DRW::Version versions[] = {DRW::AC1015, DRW::AC1024, DRW::AC1032};
+
+    for (DRW::Version version : versions) {
+        const std::string path = tempPath("native_tolerance.dwg");
+        {
+            dwgRW writer(path.c_str());
+            ToleranceRoundTripIface iface;
+            iface.m_writer = &writer;
+            REQUIRE(writer.write(&iface, version, /*bin=*/false));
+        }
+
+        ToleranceRoundTripIface readIface;
+        {
+            dwgRW reader(path.c_str());
+            REQUIRE(reader.read(&readIface, /*ext=*/false));
+            REQUIRE(reader.getVersion() == version);
+            REQUIRE(reader.getError() == DRW::BAD_NONE);
+        }
+
+        REQUIRE(readIface.m_tolerances.size() == 1);
+        const DRW_Tolerance& tolerance = readIface.m_tolerances.front();
+        CHECK(tolerance.insertionPoint.x == 12.0);
+        CHECK(tolerance.insertionPoint.y == 34.0);
+        CHECK(tolerance.xAxisDirectionVector.x == 1.0);
+        CHECK(tolerance.xAxisDirectionVector.y == 0.25);
+        CHECK(tolerance.extPoint.z == 1.0);
+        CHECK(tolerance.text == "{\\Fgdt;j}%%v0.05{\\Fgdt;m}A");
+        CHECK(tolerance.dimStyleH.ref == 0x15);
+
+        std::remove(path.c_str());
+    }
+}
+
+TEST_CASE("dwgRW preserves HATCH gradient fields",
+          "[dwg-write][hatch][gradient]") {
+    const DRW::Version versions[] = {DRW::AC1018, DRW::AC1024, DRW::AC1032};
+
+    for (DRW::Version version : versions) {
+        const std::string path = tempPath("gradient_hatch.dwg");
+        {
+            dwgRW writer(path.c_str());
+            HatchGradientRoundTripIface iface;
+            iface.m_writer = &writer;
+            REQUIRE(writer.write(&iface, version, /*bin=*/false));
+        }
+
+        HatchGradientRoundTripIface readIface;
+        {
+            dwgRW reader(path.c_str());
+            REQUIRE(reader.read(&readIface, /*ext=*/false));
+            REQUIRE(reader.getVersion() == version);
+            REQUIRE(reader.getError() == DRW::BAD_NONE);
+        }
+
+        REQUIRE(readIface.m_hatches.size() == 1);
+        const DRW_Hatch& hatch = readIface.m_hatches.front();
+        CHECK(hatch.isGradient == 1);
+        CHECK(hatch.gradAngle == 0.75);
+        CHECK(hatch.gradShift == 0.25);
+        CHECK(hatch.singleColor == 0);
+        CHECK(hatch.gradTint == 0.5);
+        CHECK(hatch.gradName == "LINEAR");
+        REQUIRE(hatch.gradColors.size() == 2);
+        CHECK(hatch.gradColors[0].value == 0.0);
+        CHECK(hatch.gradColors[0].rgb == 0x00ff0000);
+        CHECK(hatch.gradColors[1].value == 1.0);
+        CHECK(hatch.gradColors[1].rgb == 0x000000ff);
+
+        std::remove(path.c_str());
+    }
+}
+
+TEST_CASE("dwgRW writes AC1032 multiline ATTRIB and ATTDEF payloads",
+          "[dwg-write][attrib][ac1032]") {
+    const std::string path = tempPath("multiline_attrib_ac1032.dwg");
+    {
+        dwgRW writer(path.c_str());
+        MultilineAttributeWriteIface iface;
+        iface.m_writer = &writer;
+        REQUIRE(writer.write(&iface, DRW::AC1032, /*bin=*/false));
+    }
+    {
+        dwgRW reader(path.c_str());
+        EmptyIface iface;
+        REQUIRE(reader.read(&iface, /*ext=*/false));
+        REQUIRE(reader.getVersion() == DRW::AC1032);
+        REQUIRE(reader.getError() == DRW::BAD_NONE);
+    }
+    std::remove(path.c_str());
+}
+
+TEST_CASE("dwgRW writes and reads LIGHT metadata",
+          "[dwg-write][light]") {
+    const DRW::Version versions[] = {DRW::AC1024, DRW::AC1027, DRW::AC1032};
+
+    for (DRW::Version version : versions) {
+        const std::string path = tempPath("native_light.dwg");
+        {
+            dwgRW writer(path.c_str());
+            LightRoundTripIface iface;
+            iface.m_writer = &writer;
+            REQUIRE(writer.write(&iface, version, /*bin=*/false));
+        }
+
+        LightRoundTripIface readIface;
+        {
+            dwgRW reader(path.c_str());
+            REQUIRE(reader.read(&readIface, /*ext=*/false));
+            REQUIRE(reader.getVersion() == version);
+            REQUIRE(reader.getError() == DRW::BAD_NONE);
+        }
+
+        REQUIRE(readIface.m_lights.size() == 1);
+        const DRW_Light& light = readIface.m_lights.front();
+        CHECK(light.m_name == "Key light");
+        CHECK(light.m_type == 2);
+        CHECK(light.m_status);
+        CHECK(light.m_color == 3);
+        CHECK(light.m_intensity == 4.5);
+        CHECK(light.m_position.x == 1.0);
+        CHECK(light.m_target.z == 6.0);
+        CHECK(light.m_hasPhotometricData);
+        CHECK(light.m_hasWebFile);
+        CHECK(light.m_webFile == "lamp.ies");
+        CHECK(light.m_lampColorTemperature == 6500.0);
+        CHECK(light.m_extendedLightRadius == 13.0);
+
+        std::remove(path.c_str());
+    }
+}
+
+TEST_CASE("dwgRW writes and reads SUN metadata",
+          "[dwg-write][sun]") {
+    const DRW::Version versions[] = {DRW::AC1024, DRW::AC1027, DRW::AC1032};
+
+    for (DRW::Version version : versions) {
+        const std::string path = tempPath("native_sun.dwg");
+        {
+            dwgRW writer(path.c_str());
+            SunRoundTripIface iface;
+            iface.m_writer = &writer;
+            REQUIRE(writer.write(&iface, version, /*bin=*/false));
+        }
+
+        SunRoundTripIface readIface;
+        {
+            dwgRW reader(path.c_str());
+            REQUIRE(reader.read(&readIface, /*ext=*/false));
+            REQUIRE(reader.getVersion() == version);
+            REQUIRE(reader.getError() == DRW::BAD_NONE);
+        }
+
+        REQUIRE(readIface.m_suns.size() == 1);
+        const DRW_Sun& sun = readIface.m_suns.front();
+        CHECK(sun.m_classVersion == 1u);
+        CHECK(sun.m_isOn);
+        CHECK(sun.m_color == 4u);
+        CHECK(sun.m_intensity == 2.75);
+        CHECK(sun.m_hasShadow);
+        CHECK(sun.m_julianDay == 2460001);
+        CHECK(sun.m_milliseconds == 43210000);
+        CHECK(sun.m_isDaylightSavings);
+        CHECK(sun.m_shadowType == 1u);
+        CHECK(sun.m_shadowMapSize == 512u);
+        CHECK(sun.m_shadowSoftness == 6u);
+
+        std::remove(path.c_str());
+    }
+}
+
+TEST_CASE("dwgRW writes and reads ACDBPLACEHOLDER metadata",
+          "[dwg-write][placeholder]") {
+    const DRW::Version versions[] = {DRW::AC1024, DRW::AC1027, DRW::AC1032};
+
+    for (DRW::Version version : versions) {
+        const std::string path = tempPath("native_placeholder.dwg");
+        {
+            dwgRW writer(path.c_str());
+            PlaceholderRoundTripIface iface;
+            iface.m_writer = &writer;
+            REQUIRE(writer.write(&iface, version, /*bin=*/false));
+        }
+
+        PlaceholderRoundTripIface readIface;
+        {
+            dwgRW reader(path.c_str());
+            REQUIRE(reader.read(&readIface, /*ext=*/false));
+            REQUIRE(reader.getVersion() == version);
+            REQUIRE(reader.getError() == DRW::BAD_NONE);
+        }
+
+        REQUIRE(readIface.m_placeholders.size() == 1);
+        CHECK(readIface.m_placeholders.front().handle == 0x790u);
 
         std::remove(path.c_str());
     }

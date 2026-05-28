@@ -1267,12 +1267,18 @@ public:
 class DRW_MLeaderStyle : public DRW_TableEntry {
     SETOBJFRIENDS
 public:
+    static constexpr duint16 kDwgClassNum = 504;
+
     DRW_MLeaderStyle() {
         tType = DRW::MLEADERSTYLE;
     }
 protected:
     bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
 public:
+    bool encodeDwg(DRW::Version version, dwgBufferW *buf,
+                   dwgBufferW *strBuf = nullptr,
+                   dwgBufferW *handleBuf = nullptr) const;
+
     /* Per §20.4.87.  Names follow the spec column for traceability. */
     duint16 styleVersion = 2;          /*!< code 179, R2010+ */
     duint16 contentType = 2;           /*!< code 170: 0=None,1=Block,2=MText,3=Tolerance */
@@ -1318,6 +1324,7 @@ public:
     duint16 attachmentDirection = 0;   /*!< code 271 */
     duint16 topAttachment = 0;         /*!< code 273 */
     duint16 bottomAttachment = 0;      /*!< code 272 */
+    bool textExtended = false;         /*!< code 298, R2013+ */
 };
 
 //! Class to handle DBCOLOR (AcDbColor) — custom-class object §20.4.
@@ -1470,18 +1477,27 @@ public:
 
 protected:
     bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+
+public:
+    bool encodeDwg(DRW::Version version, dwgBufferW *buf,
+                   dwgBufferW *handleBuf = nullptr) const;
 };
 
 //! SUN object metadata used by R2007+ view/vport lighting.
 class DRW_Sun : public DRW_TableEntry {
     SETOBJFRIENDS
 public:
+    static constexpr duint16 kDwgClassNum = 503;
+
     DRW_Sun() { tType = DRW::SUN; }
 
 protected:
     bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
 
 public:
+    bool encodeDwg(DRW::Version version, dwgBufferW *buf,
+                   dwgBufferW *handleBuf = nullptr) const;
+
     duint32 m_classVersion = 0;
     bool m_isOn = false;
     duint32 m_color = 0;

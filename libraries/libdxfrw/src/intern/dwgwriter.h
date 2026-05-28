@@ -153,6 +153,8 @@ public:
                           "ARC_DIMENSION", false, 0x1F2});
         registerDwgClass({501, 0x401, "ACAD",
                           "AcDbMLeader", "MULTILEADER", false, 0x1F2});
+        registerDwgClass({502, 0x401, "ACAD",
+                          "AcDbLight", "LIGHT", false, 0x1F2});
     }
 
     virtual ~dwgWriter() = default;
@@ -262,6 +264,38 @@ public:
         return registerDwgClass(definition);
     }
 
+    bool registerSunObjectClass(duint32 handle = 0) {
+        DwgClassDefinition definition;
+        definition.m_classNum = DRW_Sun::kDwgClassNum;
+        definition.m_proxyFlag = 0x401;
+        definition.m_appName = "SCENEOE";
+        definition.m_className = "AcDbSun";
+        definition.m_recordName = "SUN";
+        definition.m_entityFlagRaw = 0;
+        if (handle != 0
+            && m_rawClassInstanceHandles.insert({definition.m_classNum,
+                                                 handle}).second) {
+            definition.m_instanceCount = 1;
+        }
+        return registerDwgClass(definition);
+    }
+
+    bool registerMLeaderStyleObjectClass(duint32 handle = 0) {
+        DwgClassDefinition definition;
+        definition.m_classNum = DRW_MLeaderStyle::kDwgClassNum;
+        definition.m_proxyFlag = 0x401;
+        definition.m_appName = "ACDB_MLEADERSTYLE_CLASS";
+        definition.m_className = "AcDbMLeaderStyle";
+        definition.m_recordName = "MLEADERSTYLE";
+        definition.m_entityFlagRaw = 0;
+        if (handle != 0
+            && m_rawClassInstanceHandles.insert({definition.m_classNum,
+                                                 handle}).second) {
+            definition.m_instanceCount = 1;
+        }
+        return registerDwgClass(definition);
+    }
+
     bool hasDwgClassDefinition(duint16 classNum) const {
         return std::any_of(m_dwgClassDefinitions.begin(), m_dwgClassDefinitions.end(),
                            [classNum](const DwgClassDefinition& definition) {
@@ -278,6 +312,19 @@ protected:
             && left.m_className == right.m_className
             && left.m_appName == right.m_appName
             && left.m_entityFlagRaw == right.m_entityFlagRaw;
+    }
+
+    bool isDwgClassEnabled(const DwgClassDefinition& definition) const {
+        // AcDbLight is a modern visualisation entity.  Advertising its custom
+        // class in AC1015/AC1018 files makes older writer smoke files fail
+        // reader compatibility even when no LIGHT entity is present.
+        if (definition.m_classNum == 502)
+            return m_version >= DRW::AC1021;
+        if (definition.m_classNum == DRW_Sun::kDwgClassNum)
+            return m_version >= DRW::AC1021;
+        if (definition.m_classNum == DRW_MLeaderStyle::kDwgClassNum)
+            return m_version >= DRW::AC1021;
+        return true;
     }
 
     bool registerDwgClass(const DwgClassDefinition& definition) {
@@ -298,7 +345,12 @@ protected:
     }
 
     std::vector<DwgClassDefinition> sortedDwgClassDefinitions() const {
-        auto definitions = m_dwgClassDefinitions;
+        std::vector<DwgClassDefinition> definitions;
+        definitions.reserve(m_dwgClassDefinitions.size());
+        for (const DwgClassDefinition& definition : m_dwgClassDefinitions) {
+            if (isDwgClassEnabled(definition))
+                definitions.push_back(definition);
+        }
         std::sort(definitions.begin(), definitions.end(),
                   [](const DwgClassDefinition& left,
                      const DwgClassDefinition& right) {
@@ -333,6 +385,8 @@ protected:
     duint16 maxDwgClassNumber() const {
         duint16 maxClass = 499;
         for (const auto& definition : m_dwgClassDefinitions) {
+            if (!isDwgClassEnabled(definition))
+                continue;
             if (definition.m_classNum > maxClass)
                 maxClass = definition.m_classNum;
         }

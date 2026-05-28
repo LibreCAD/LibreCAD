@@ -330,15 +330,48 @@ public:
         std::string name;
         duint16 styleVersion = 0;
         duint16 contentType = 0;
+        duint16 drawMLeaderOrder = 0;
+        duint16 drawLeaderOrder = 0;
+        dint32 maxLeaderPoints = 0;
+        double firstSegmentAngle = 0.0;
+        double secondSegmentAngle = 0.0;
         duint16 leaderType = 0;
+        int leaderColor = 0;
         duint32 leaderLineTypeHandle = 0;
+        dint32 leaderLineWeight = 0;
+        bool landingEnabled = false;
+        double landingGap = 0.0;
+        bool autoIncludeLanding = false;
+        double landingDistance = 0.0;
+        std::string description;
         duint32 arrowHeadBlockHandle = 0;
         duint32 textStyleHandle = 0;
         duint32 blockHandle = 0;
         double arrowHeadSize = 0.0;
+        std::string textDefault;
+        duint16 leftAttachment = 0;
+        duint16 rightAttachment = 0;
+        duint16 textAngleType = 0;
+        duint16 textAlignmentType = 0;
+        int textColor = 0;
         double textHeight = 0.0;
+        bool textFrameEnabled = false;
+        bool alwaysAlignTextLeft = false;
+        double alignSpace = 0.0;
+        int blockColor = 0;
+        DRW_Coord blockScale{1.0, 1.0, 1.0};
+        bool blockScaleEnabled = false;
+        double blockRotation = 0.0;
+        bool blockRotationEnabled = false;
+        duint16 blockConnectionType = 0;
         double scaleFactor = 1.0;
+        bool propertyChanged = false;
         bool isAnnotative = false;
+        double breakSize = 0.0;
+        duint16 attachmentDirection = 0;
+        duint16 topAttachment = 0;
+        duint16 bottomAttachment = 0;
+        bool textExtended = false;
         ReplayState replayState = ReplayState::ReplayAllowed;
     };
 
@@ -794,15 +827,48 @@ public:
         record.name = style.name;
         record.styleVersion = style.styleVersion;
         record.contentType = style.contentType;
+        record.drawMLeaderOrder = style.drawMLeaderOrder;
+        record.drawLeaderOrder = style.drawLeaderOrder;
+        record.maxLeaderPoints = style.maxLeaderPoints;
+        record.firstSegmentAngle = style.firstSegmentAngle;
+        record.secondSegmentAngle = style.secondSegmentAngle;
         record.leaderType = style.leaderType;
+        record.leaderColor = style.leaderColor;
         record.leaderLineTypeHandle = style.leaderLineTypeHandle.ref;
+        record.leaderLineWeight = style.leaderLineWeight;
+        record.landingEnabled = style.landingEnabled;
+        record.landingGap = style.landingGap;
+        record.autoIncludeLanding = style.autoIncludeLanding;
+        record.landingDistance = style.landingDistance;
+        record.description = style.description;
         record.arrowHeadBlockHandle = style.arrowHeadBlockHandle.ref;
         record.textStyleHandle = style.textStyleHandle.ref;
         record.blockHandle = style.blockHandle.ref;
         record.arrowHeadSize = style.arrowHeadSize;
+        record.textDefault = style.textDefault;
+        record.leftAttachment = style.leftAttachment;
+        record.rightAttachment = style.rightAttachment;
+        record.textAngleType = style.textAngleType;
+        record.textAlignmentType = style.textAlignmentType;
+        record.textColor = style.textColor;
         record.textHeight = style.textHeight;
+        record.textFrameEnabled = style.textFrameEnabled;
+        record.alwaysAlignTextLeft = style.alwaysAlignTextLeft;
+        record.alignSpace = style.alignSpace;
+        record.blockColor = style.blockColor;
+        record.blockScale = style.blockScale;
+        record.blockScaleEnabled = style.blockScaleEnabled;
+        record.blockRotation = style.blockRotation;
+        record.blockRotationEnabled = style.blockRotationEnabled;
+        record.blockConnectionType = style.blockConnectionType;
         record.scaleFactor = style.scaleFactor;
+        record.propertyChanged = style.propertyChanged;
         record.isAnnotative = style.isAnnotative;
+        record.breakSize = style.breakSize;
+        record.attachmentDirection = style.attachmentDirection;
+        record.topAttachment = style.topAttachment;
+        record.bottomAttachment = style.bottomAttachment;
+        record.textExtended = style.textExtended;
         m_mleaderStyles.push_back(record);
         for (MLeaderRecord& mleader : m_mleaders)
             resolveMLeaderStyle(mleader, record);
@@ -971,12 +1037,48 @@ public:
         }
         return nullptr;
     }
+    const ViewRecord* findViewByHandle(duint32 handle) const {
+        if (handle == 0)
+            return nullptr;
+        for (const ViewRecord& record : m_views) {
+            if (record.handle == handle)
+                return &record;
+        }
+        return nullptr;
+    }
+    const LightRecord* findLightByHandle(duint32 handle) const {
+        if (handle == 0)
+            return nullptr;
+        for (const LightRecord& record : m_lights) {
+            if (record.handle == handle)
+                return &record;
+        }
+        return nullptr;
+    }
+    std::vector<const LightRecord*> findLightsByParentHandle(duint32 parentHandle) const {
+        std::vector<const LightRecord*> result;
+        if (parentHandle == 0)
+            return result;
+        for (const LightRecord& record : m_lights) {
+            if (record.parentHandle == parentHandle)
+                result.push_back(&record);
+        }
+        return result;
+    }
     const SunRecord* findSunByHandle(duint32 handle) const {
         for (const SunRecord& record : m_suns) {
             if (record.handle == handle)
                 return &record;
         }
         return nullptr;
+    }
+    const SunRecord* findSunForViewName(const std::string& name) const {
+        const ViewRecord* view = findViewByName(name);
+        return view == nullptr ? nullptr : findSunByHandle(view->sunHandle);
+    }
+    const SunRecord* findSunForViewHandle(duint32 handle) const {
+        const ViewRecord* view = findViewByHandle(handle);
+        return view == nullptr ? nullptr : findSunByHandle(view->sunHandle);
     }
 
     static ReplayBlocker rawReplayBlocker(const RawObjectRecord& record) {

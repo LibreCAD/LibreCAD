@@ -27,6 +27,7 @@
 #include <array>
 #include<cstdlib>
 #include <cmath>
+#include <set>
 #include <stack>
 #include<utility>
 
@@ -189,6 +190,115 @@ DRW_UnsupportedObject rawObjectFromMetadata(
     object.m_className = record.className;
     object.m_rawBytes = record.rawBytes;
     return object;
+}
+
+bool isSunRawObject(const LC_DwgAdvancedMetadata::RawObjectRecord& record) {
+    return record.recordName == "SUN" || record.className == "AcDbSun";
+}
+
+bool isAcDbPlaceholderRawObject(
+    const LC_DwgAdvancedMetadata::RawObjectRecord& record) {
+    return record.objectType == 80 || record.recordName == "ACDBPLACEHOLDER"
+        || record.className == "AcDbPlaceHolder";
+}
+
+bool isMLeaderStyleRawObject(
+    const LC_DwgAdvancedMetadata::RawObjectRecord& record) {
+    return record.recordName == "MLEADERSTYLE"
+        || record.className == "AcDbMLeaderStyle";
+}
+
+bool hasReplayableRawMLeaderStyle(const LC_DwgAdvancedMetadata& metadata,
+                                  duint32 handle) {
+    if (handle == 0)
+        return false;
+    for (const auto& record : metadata.rawObjects()) {
+        if (record.handle == handle && isMLeaderStyleRawObject(record)
+            && LC_DwgAdvancedMetadata::rawReplayBlocker(record)
+                   == LC_DwgAdvancedMetadata::ReplayBlocker::None) {
+            return true;
+        }
+    }
+    return false;
+}
+
+DRW_AcDbPlaceholder placeholderFromMetadata(
+    const LC_DwgAdvancedMetadata::PlaceholderRecord& record) {
+    DRW_AcDbPlaceholder placeholder;
+    placeholder.handle = record.handle;
+    placeholder.parentHandle = static_cast<int>(record.parentHandle);
+    return placeholder;
+}
+
+DRW_Sun sunFromMetadata(const LC_DwgAdvancedMetadata::SunRecord& record) {
+    DRW_Sun sun;
+    sun.handle = record.handle;
+    sun.parentHandle = static_cast<int>(record.parentHandle);
+    sun.m_classVersion = record.classVersion;
+    sun.m_isOn = record.isOn;
+    sun.m_color = record.color;
+    sun.m_intensity = record.intensity;
+    sun.m_hasShadow = record.hasShadow;
+    sun.m_julianDay = record.julianDay;
+    sun.m_milliseconds = record.milliseconds;
+    sun.m_isDaylightSavings = record.isDaylightSavings;
+    sun.m_shadowType = record.shadowType;
+    sun.m_shadowMapSize = record.shadowMapSize;
+    sun.m_shadowSoftness = record.shadowSoftness;
+    return sun;
+}
+
+DRW_MLeaderStyle mleaderStyleFromMetadata(
+    const LC_DwgAdvancedMetadata::MLeaderStyleRecord& record) {
+    DRW_MLeaderStyle style;
+    style.handle = record.handle;
+    style.parentHandle = static_cast<int>(record.parentHandle);
+    style.name = record.name;
+    style.styleVersion = record.styleVersion != 0 ? record.styleVersion : 2;
+    style.contentType = record.contentType;
+    style.drawMLeaderOrder = record.drawMLeaderOrder;
+    style.drawLeaderOrder = record.drawLeaderOrder;
+    style.maxLeaderPoints = record.maxLeaderPoints;
+    style.firstSegmentAngle = record.firstSegmentAngle;
+    style.secondSegmentAngle = record.secondSegmentAngle;
+    style.leaderType = record.leaderType;
+    style.leaderColor = record.leaderColor;
+    style.leaderLineTypeHandle.ref = record.leaderLineTypeHandle;
+    style.leaderLineWeight = record.leaderLineWeight;
+    style.landingEnabled = record.landingEnabled;
+    style.landingGap = record.landingGap;
+    style.autoIncludeLanding = record.autoIncludeLanding;
+    style.landingDistance = record.landingDistance;
+    style.description = record.description;
+    style.arrowHeadBlockHandle.ref = record.arrowHeadBlockHandle;
+    style.arrowHeadSize = record.arrowHeadSize;
+    style.textDefault = record.textDefault;
+    style.textStyleHandle.ref = record.textStyleHandle;
+    style.leftAttachment = record.leftAttachment;
+    style.rightAttachment = record.rightAttachment;
+    style.textAngleType = record.textAngleType;
+    style.textAlignmentType = record.textAlignmentType;
+    style.textColor = record.textColor;
+    style.textHeight = record.textHeight;
+    style.textFrameEnabled = record.textFrameEnabled;
+    style.alwaysAlignTextLeft = record.alwaysAlignTextLeft;
+    style.alignSpace = record.alignSpace;
+    style.blockHandle.ref = record.blockHandle;
+    style.blockColor = record.blockColor;
+    style.blockScale = record.blockScale;
+    style.blockScaleEnabled = record.blockScaleEnabled;
+    style.blockRotation = record.blockRotation;
+    style.blockRotationEnabled = record.blockRotationEnabled;
+    style.blockConnectionType = record.blockConnectionType;
+    style.scaleFactor = record.scaleFactor;
+    style.propertyChanged = record.propertyChanged;
+    style.isAnnotative = record.isAnnotative;
+    style.breakSize = record.breakSize;
+    style.attachmentDirection = record.attachmentDirection;
+    style.topAttachment = record.topAttachment;
+    style.bottomAttachment = record.bottomAttachment;
+    style.textExtended = record.textExtended;
+    return style;
 }
 
 std::unique_ptr<LC_SplinePoints> approximateDrwSpline(
@@ -3831,8 +3941,8 @@ void RS_FilterDXFRW::addWipeout(const DRW_Image *data) {
  * MLEADER carries a multi-root callout structure plus either text or block
  * content.  This conversion captures the geometric structure (roots →
  * leader lines → points) and content reference.  Style-handle resolution
- * (against LC_MLeaderStyleList) is deferred to Phase 7; for now we copy
- * the entity-level overrides as effective values.
+ * (against LC_MLeaderStyleList) is still metadata-only, but we preserve the
+ * DWG handle references needed for native re-export.
  */
 void RS_FilterDXFRW::addMLeader(const DRW_MLeader *data) {
   RS_DEBUG->print("RS_FilterDXFRW::addMLeader");
@@ -3901,6 +4011,15 @@ void RS_FilterDXFRW::addMLeader(const DRW_MLeader *data) {
   md.doglegEnabled = data->doglegEnabled;
   md.contentType = data->styleContentType;
   md.scaleFactor = data->scaleFactor;
+  md.dwgStyleHandle = data->styleHandle.ref;
+  md.dwgLeaderLineTypeHandle = data->leaderLineTypeHandle.ref;
+  md.dwgArrowHeadHandle = data->arrowHeadHandle.ref;
+  md.dwgTextStyleHandle = data->styleTextStyleHandle.ref != 0
+                              ? data->styleTextStyleHandle.ref
+                              : data->context.textStyleHandle.ref;
+  md.dwgBlockHandle = data->styleBlockHandle.ref != 0
+                          ? data->styleBlockHandle.ref
+                          : data->context.blockTableRecordHandle.ref;
 
   auto m = std::make_unique<LC_MLeader>(m_currentContainer, std::move(md));
   setEntityAttributes(m.get(), data);
@@ -4532,11 +4651,42 @@ void RS_FilterDXFRW::writeDwgClasses() {
 #ifdef DWGSUPPORT
     if (m_dwgW == nullptr || m_graphic == nullptr)
         return;
-    for (const auto& record : m_graphic->dwgAdvancedMetadata().rawObjects()) {
+    const auto& metadata = m_graphic->dwgAdvancedMetadata();
+    const bool canWriteModernObjects = m_dwgW->getVersion() >= DRW::AC1021;
+    std::set<duint32> nativeSunHandles;
+    std::set<duint32> nativeMLeaderStyleHandles;
+    if (canWriteModernObjects) {
+        for (const auto& record : metadata.suns()) {
+            if (record.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                || record.handle == 0) {
+                continue;
+            }
+            DRW_Sun sun = sunFromMetadata(record);
+            if (m_dwgW->registerSunObjectClass(&sun))
+                nativeSunHandles.insert(record.handle);
+        }
+        for (const auto& record : metadata.mleaderStyles()) {
+            if (record.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                || record.handle == 0
+                || hasReplayableRawMLeaderStyle(metadata, record.handle)) {
+                continue;
+            }
+            DRW_MLeaderStyle style = mleaderStyleFromMetadata(record);
+            if (m_dwgW->registerMLeaderStyleObjectClass(&style))
+                nativeMLeaderStyleHandles.insert(record.handle);
+        }
+    }
+
+    for (const auto& record : metadata.rawObjects()) {
         if (record.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
             || !record.isCustomClass) {
             continue;
         }
+        if (nativeSunHandles.count(record.handle) != 0 && isSunRawObject(record))
+            continue;
+        if (nativeMLeaderStyleHandles.count(record.handle) != 0
+            && isMLeaderStyleRawObject(record))
+            continue;
         DRW_UnsupportedObject object = rawObjectFromMetadata(record);
         m_dwgW->registerRawDwgObjectClass(&object);
     }
@@ -5316,6 +5466,35 @@ void RS_FilterDXFRW::prepareDRWDimStyle(DRW_Dimstyle &d, LC_DimStyle* ds) {
 void RS_FilterDXFRW::writeObjects() {
     if (m_dwgW) {
         const auto& metadata = m_graphic->dwgAdvancedMetadata();
+        const bool canWriteModernObjects = m_dwgW->getVersion() >= DRW::AC1021;
+        std::set<duint32> nativeSunHandles;
+        std::set<duint32> nativePlaceholderHandles;
+        std::set<duint32> nativeMLeaderStyleHandles;
+        int nativeSunObjects = 0;
+        int nativePlaceholderObjects = 0;
+        int nativeMLeaderStyleObjects = 0;
+        if (canWriteModernObjects) {
+            for (const auto& record : metadata.suns()) {
+                if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                    && record.handle != 0) {
+                    nativeSunHandles.insert(record.handle);
+                }
+            }
+            for (const auto& record : metadata.placeholders()) {
+                if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                    && record.handle != 0) {
+                    nativePlaceholderHandles.insert(record.handle);
+                }
+            }
+            for (const auto& record : metadata.mleaderStyles()) {
+                if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                    && record.handle != 0
+                    && !hasReplayableRawMLeaderStyle(metadata, record.handle)) {
+                    nativeMLeaderStyleHandles.insert(record.handle);
+                }
+            }
+        }
+
         bool hasBlockedReplay = false;
         int blockedInvalidated = 0;
         int blockedReplaced = 0;
@@ -5325,6 +5504,23 @@ void RS_FilterDXFRW::writeObjects() {
         int blockedWriterRejected = 0;
         int replayedObjects = 0;
         for (const auto& record : metadata.rawObjects()) {
+            if (nativeSunHandles.count(record.handle) != 0 && isSunRawObject(record)) {
+                hasBlockedReplay = true;
+                ++blockedReplaced;
+                continue;
+            }
+            if (nativePlaceholderHandles.count(record.handle) != 0
+                && isAcDbPlaceholderRawObject(record)) {
+                hasBlockedReplay = true;
+                ++blockedReplaced;
+                continue;
+            }
+            if (nativeMLeaderStyleHandles.count(record.handle) != 0
+                && isMLeaderStyleRawObject(record)) {
+                hasBlockedReplay = true;
+                ++blockedReplaced;
+                continue;
+            }
             const LC_DwgAdvancedMetadata::ReplayBlocker blocker =
                 LC_DwgAdvancedMetadata::rawReplayBlocker(record);
             if (blocker != LC_DwgAdvancedMetadata::ReplayBlocker::None) {
@@ -5349,11 +5545,70 @@ void RS_FilterDXFRW::writeObjects() {
                 ++blockedWriterRejected;
             }
         }
+        if (canWriteModernObjects) {
+            for (const auto& record : metadata.placeholders()) {
+                if (record.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                    || record.handle == 0) {
+                    continue;
+                }
+                DRW_AcDbPlaceholder placeholder = placeholderFromMetadata(record);
+                if (m_dwgW->writeAcDbPlaceholder(&placeholder)) {
+                    ++nativePlaceholderObjects;
+                } else {
+                    hasBlockedReplay = true;
+                    ++blockedWriterRejected;
+                }
+            }
+            for (const auto& record : metadata.suns()) {
+                if (record.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                    || record.handle == 0) {
+                    continue;
+                }
+                DRW_Sun sun = sunFromMetadata(record);
+                if (m_dwgW->writeSun(&sun)) {
+                    ++nativeSunObjects;
+                } else {
+                    hasBlockedReplay = true;
+                    ++blockedWriterRejected;
+                }
+            }
+            for (const auto& record : metadata.mleaderStyles()) {
+                if (nativeMLeaderStyleHandles.count(record.handle) == 0)
+                    continue;
+                DRW_MLeaderStyle style = mleaderStyleFromMetadata(record);
+                if (m_dwgW->writeMLeaderStyle(&style)) {
+                    ++nativeMLeaderStyleObjects;
+                } else {
+                    hasBlockedReplay = true;
+                    ++blockedWriterRejected;
+                }
+            }
+        }
         if (replayedObjects > 0) {
             RS_DEBUG->print("RS_FilterDXFRW::writeObjects: replayed %d raw DWG objects",
                             replayedObjects);
         }
-        const size_t semanticOnlyRecords = metadata.semanticOnlyRecordCount();
+        if (nativeSunObjects > 0) {
+            RS_DEBUG->print("RS_FilterDXFRW::writeObjects: wrote %d native SUN objects",
+                            nativeSunObjects);
+        }
+        if (nativePlaceholderObjects > 0) {
+            RS_DEBUG->print(
+                "RS_FilterDXFRW::writeObjects: wrote %d native ACDBPLACEHOLDER objects",
+                nativePlaceholderObjects);
+        }
+        if (nativeMLeaderStyleObjects > 0) {
+            RS_DEBUG->print(
+                "RS_FilterDXFRW::writeObjects: wrote %d native MLEADERSTYLE objects",
+                nativeMLeaderStyleObjects);
+        }
+        const size_t nativeSemanticRecords =
+            static_cast<size_t>(nativeSunObjects + nativePlaceholderObjects
+                                + nativeMLeaderStyleObjects);
+        const size_t semanticOnlyRecords =
+            metadata.semanticOnlyRecordCount() > nativeSemanticRecords
+                ? metadata.semanticOnlyRecordCount() - nativeSemanticRecords
+                : 0;
         const bool hasSemanticOnlyReplayable = semanticOnlyRecords > 0;
         if (hasBlockedReplay || hasSemanticOnlyReplayable) {
             RS_DEBUG->print(
@@ -5435,9 +5690,9 @@ void RS_FilterDXFRW::writeEntities(){
   // MLINE; the rest fall through to the normal write path.
   std::set<RS_Entity *> consumed;
   reconstructPolylineSidecars(m_graphic, consumed);
-  // DWG writer has no MLINE/UNDERLAY — skip reconstruction passes.
+  reconstructMLines(m_graphic, consumed);
+  // DWG writer has no UNDERLAY encoder yet — keep that reconstruction DXF-only.
   if (!m_dwgW) {
-    reconstructMLines(m_graphic, consumed);
     reconstructUnderlays(m_graphic, consumed);
   }
   for (RS_Entity *e :
@@ -6100,7 +6355,10 @@ void RS_FilterDXFRW::reconstructMLines(RS_EntityContainer *container,
       ml.vertlist.push_back(std::move(v));
     }
 
-    m_dxfW->writeMLine(&ml);
+    if (m_dwgW)
+      m_dwgW->writeMLine(&ml);
+    else if (m_dxfW)
+      m_dxfW->writeMLine(&ml);
     for (const auto &m : entries)
       consumed.insert(m.entity);
   }
@@ -6162,6 +6420,9 @@ void RS_FilterDXFRW::writeEntity(RS_Entity* e){
         break;
     case RS2::EntityDimLeader:
         writeLeader(static_cast<RS_Leader*>(e));
+        break;
+    case RS2::EntityTolerance:
+        writeTolerance(static_cast<LC_Tolerance*>(e));
         break;
     case RS2::EntityHatch:
         writeHatch(static_cast<RS_Hatch*>(e));
@@ -7072,6 +7333,30 @@ void RS_FilterDXFRW::writeDimension(RS_Dimension* d) {
     delete dim;
 }
 
+void RS_FilterDXFRW::writeTolerance(LC_Tolerance* t) {
+    if (t == nullptr)
+        return;
+
+    DRW_Tolerance tol;
+    getEntityAttributes(&tol, t);
+    const LC_ToleranceData data = t->getData();
+    tol.insertionPoint = DRW_Coord(data.m_insertionPoint.x,
+                                   data.m_insertionPoint.y, 0.0);
+    tol.xAxisDirectionVector = DRW_Coord(data.m_directionVector.x,
+                                         data.m_directionVector.y, 0.0);
+    tol.extPoint = DRW_Coord(0.0, 0.0, 1.0);
+    tol.text = toDxfString(data.m_textCode).toUtf8().constData();
+    const QString style = data.m_dimStyleName.isEmpty()
+        ? m_dimStyle
+        : data.m_dimStyleName;
+    tol.dimStyleName = style.toUtf8().constData();
+
+    if (m_dwgW) {
+        m_dwgW->writeTolerance(&tol);
+        return;
+    }
+}
+
 /**
  * Writes the given leader entity to the file.
  */
@@ -7482,6 +7767,19 @@ void RS_FilterDXFRW::writeMLeader(LC_MLeader *m) {
   e.context.basePoint = DRW_Coord(d.basePoint.x, d.basePoint.y, d.basePoint.z);
   e.context.baseDirection = DRW_Coord(1.0, 0.0, 0.0);
   e.context.baseVertical = DRW_Coord(0.0, 1.0, 0.0);
+  e.styleHandle.ref = d.dwgStyleHandle;
+  e.leaderLineTypeHandle.ref = d.dwgLeaderLineTypeHandle;
+  e.arrowHeadHandle.ref = d.dwgArrowHeadHandle;
+  e.styleTextStyleHandle.ref = d.dwgTextStyleHandle;
+  e.styleBlockHandle.ref = d.dwgBlockHandle;
+  e.context.textStyleHandle.ref = d.dwgTextStyleHandle;
+  e.context.blockTableRecordHandle.ref = d.dwgBlockHandle;
+  for (DRW_MLeaderRoot &root : e.context.roots) {
+    for (DRW_MLeaderLeaderLine &line : root.leaderLines) {
+      line.lineTypeHandle.ref = d.dwgLeaderLineTypeHandle;
+      line.arrowHandle.ref = d.dwgArrowHeadHandle;
+    }
+  }
   if (m_dwgW) {
     if (m_version >= 1024 && d.hasTextContents && !d.textLabel.isEmpty()
         && m_dwgW->writeMLeader(&e)) {

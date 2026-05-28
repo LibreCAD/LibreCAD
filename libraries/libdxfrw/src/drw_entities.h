@@ -540,6 +540,7 @@ public:
 class DRW_Light : public DRW_Entity {
     SETENTFRIENDS
 public:
+    static constexpr duint16 kDwgClassNum = 502;
     DRW_Light() {
         eType = DRW::LIGHT;
     }
@@ -547,6 +548,9 @@ public:
 
 protected:
     bool parseDwg(DRW::Version v, dwgBuffer *buf, duint32 bs=0) override;
+    bool encodeDwg(DRW::Version v, dwgBufferW *buf, duint32 bs=0,
+                   dwgBufferW *strBuf=nullptr,
+                   dwgBufferW *handleBuf=nullptr) override;
 
 public:
     duint32 m_classVersion = 0;
@@ -603,10 +607,12 @@ public:
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     virtual bool parseDwg(DRW::Version v, dwgBuffer *buf, duint32 bs=0) override;
+    virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs=0, dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
 
 public:
     UTF8STRING text;                  /*!< Visual representation of the tolerance, code 1 */
     UTF8STRING dimStyleName;          /*!< Dim-style name, code 3 */
+    dwgHandle dimStyleH;              /*!< Dimension-style handle, DWG hard pointer */
     DRW_Coord insertionPoint;         /*!< Insertion point, codes 10/20/30 */
     DRW_Coord xAxisDirectionVector;   /*!< X-axis direction in WCS, codes 11/21/31 */
     DRW_Coord extPoint;               /*!< Extrusion direction, codes 210/220/230 */

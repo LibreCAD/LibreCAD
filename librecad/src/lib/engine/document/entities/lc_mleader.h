@@ -83,6 +83,13 @@ struct LC_MLeaderData {
   bool doglegEnabled = true;
   int contentType = 2; /*!< 0=None,1=Block,2=MText,3=Tolerance */
   double scaleFactor = 1.0;
+
+  /* DWG-only references preserved for native MLEADER re-export. */
+  unsigned int dwgStyleHandle = 0;
+  unsigned int dwgLeaderLineTypeHandle = 0;
+  unsigned int dwgArrowHeadHandle = 0;
+  unsigned int dwgTextStyleHandle = 0;
+  unsigned int dwgBlockHandle = 0;
 };
 
 /**

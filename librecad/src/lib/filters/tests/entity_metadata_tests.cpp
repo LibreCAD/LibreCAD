@@ -232,15 +232,48 @@ TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
   style.name = "CalloutStyle";
   style.styleVersion = 2u;
   style.contentType = 2u;
+  style.drawMLeaderOrder = 1u;
+  style.drawLeaderOrder = 2u;
+  style.maxLeaderPoints = 9;
+  style.firstSegmentAngle = 0.25;
+  style.secondSegmentAngle = 0.5;
   style.leaderType = 1u;
+  style.leaderColor = 3;
   style.leaderLineTypeHandle.ref = 0xA2u;
+  style.leaderLineWeight = 29;
+  style.landingEnabled = true;
+  style.landingGap = 0.125;
+  style.autoIncludeLanding = true;
+  style.landingDistance = 2.25;
+  style.description = "Callout description";
   style.arrowHeadBlockHandle.ref = 0xA3u;
   style.textStyleHandle.ref = 0xA4u;
   style.blockHandle.ref = 0xA5u;
   style.arrowHeadSize = 0.75;
+  style.textDefault = "Default text";
+  style.leftAttachment = 1u;
+  style.rightAttachment = 2u;
+  style.textAngleType = 3u;
+  style.textAlignmentType = 4u;
+  style.textColor = 5;
   style.textHeight = 2.5;
+  style.textFrameEnabled = true;
+  style.alwaysAlignTextLeft = true;
+  style.alignSpace = 0.2;
+  style.blockColor = 6;
+  style.blockScale = DRW_Coord{1.0, 2.0, 3.0};
+  style.blockScaleEnabled = true;
+  style.blockRotation = 0.75;
+  style.blockRotationEnabled = true;
+  style.blockConnectionType = 7u;
   style.scaleFactor = 3.0;
+  style.propertyChanged = true;
   style.isAnnotative = true;
+  style.breakSize = 0.375;
+  style.attachmentDirection = 8u;
+  style.topAttachment = 9u;
+  style.bottomAttachment = 10u;
+  style.textExtended = true;
   metadata.addMLeaderStyle(style);
 
   DRW_MLeader mleader;
@@ -551,6 +584,8 @@ TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
   CHECK(foundView->useDefaultLights == false);
   CHECK(foundView->defaultLightingType == 2u);
   CHECK(foundView->ambientColor == 7u);
+  CHECK(metadata.findViewByHandle(0x90u) == foundView);
+  CHECK(metadata.findViewByHandle(0u) == nullptr);
 
   REQUIRE(metadata.lights().size() == 1);
   const auto& capturedLight = metadata.lights().front();
@@ -568,6 +603,10 @@ TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
   CHECK(capturedLight.lampColorTemperature == 6500.0);
   CHECK(capturedLight.webRotation.y == 1.0);
   CHECK(capturedLight.extendedLightRadius == 13.0);
+  CHECK(metadata.findLightByHandle(0x98u) == &capturedLight);
+  const auto lightsForOwner = metadata.findLightsByParentHandle(0x99u);
+  REQUIRE(lightsForOwner.size() == 1);
+  CHECK(lightsForOwner.front() == &capturedLight);
 
   REQUIRE(metadata.suns().size() == 1);
   const auto& capturedSun = metadata.suns().front();
@@ -582,6 +621,8 @@ TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
   CHECK(capturedSun.shadowMapSize == 512u);
   CHECK(capturedSun.shadowSoftness == 6u);
   REQUIRE(metadata.findSunByHandle(0x9Au) != nullptr);
+  CHECK(metadata.findSunForViewName("Camera A") == &capturedSun);
+  CHECK(metadata.findSunForViewHandle(0x90u) == &capturedSun);
 
   REQUIRE(metadata.mleaderStyles().size() == 1);
   const auto& capturedStyle = metadata.mleaderStyles().front();
@@ -589,12 +630,27 @@ TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
   CHECK(capturedStyle.parentHandle == 0xA1u);
   CHECK(capturedStyle.name == "CalloutStyle");
   CHECK(capturedStyle.contentType == 2u);
+  CHECK(capturedStyle.drawMLeaderOrder == 1u);
+  CHECK(capturedStyle.drawLeaderOrder == 2u);
+  CHECK(capturedStyle.maxLeaderPoints == 9);
+  CHECK(capturedStyle.leaderColor == 3);
   CHECK(capturedStyle.textStyleHandle == 0xA4u);
   CHECK(capturedStyle.blockHandle == 0xA5u);
+  CHECK(capturedStyle.leaderLineWeight == 29);
+  CHECK(capturedStyle.landingEnabled);
+  CHECK(capturedStyle.description == "Callout description");
   CHECK(capturedStyle.arrowHeadSize == 0.75);
+  CHECK(capturedStyle.textDefault == "Default text");
+  CHECK(capturedStyle.textColor == 5);
   CHECK(capturedStyle.textHeight == 2.5);
+  CHECK(capturedStyle.textFrameEnabled);
+  CHECK(capturedStyle.blockColor == 6);
+  CHECK(capturedStyle.blockScale.y == 2.0);
   CHECK(capturedStyle.scaleFactor == 3.0);
+  CHECK(capturedStyle.propertyChanged);
   CHECK(capturedStyle.isAnnotative);
+  CHECK(capturedStyle.breakSize == 0.375);
+  CHECK(capturedStyle.textExtended);
 
   REQUIRE(metadata.mleaders().size() == 1);
   const auto& capturedMLeader = metadata.mleaders().front();
@@ -947,6 +1003,11 @@ TEST_CASE("DWG fixture manifest is valid JSON and optional by default",
   CHECK(first.value("path").toString().contains("${HOME}"));
   CHECK(!first.value("targetVersion").toString().isEmpty());
   CHECK(first.value("tags").toArray().contains(QJsonValue(QStringLiteral("table"))));
+  CHECK(first.value("tags").toArray().contains(QJsonValue(QStringLiteral("mleader"))));
+  CHECK(first.value("tags").toArray().contains(QJsonValue(QStringLiteral("acis"))));
+  CHECK(first.value("tags").toArray().contains(QJsonValue(QStringLiteral("dynamic-block"))));
+  CHECK(first.value("tags").toArray().contains(QJsonValue(QStringLiteral("r2018-text"))));
+  CHECK(first.value("tags").toArray().contains(QJsonValue(QStringLiteral("advanced-entities"))));
   CHECK(first.value("expectedCallbacks").toArray().contains(
       QJsonValue(QStringLiteral("addTableContent"))));
   CHECK(first.value("expectedUnsupportedDiagnostics").isArray());

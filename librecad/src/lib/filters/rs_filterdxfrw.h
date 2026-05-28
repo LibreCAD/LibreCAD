@@ -47,6 +47,7 @@ class LC_Hyperbola;
 class LC_MLeader;
 class LC_Parabola;
 class LC_SplinePoints;
+class LC_Tolerance;
 class LC_Wipeout;
 class RS_Arc;
 class RS_Circle;
@@ -236,6 +237,7 @@ public:
     void writeMLeader(LC_MLeader *m);
     void writeLeader(RS_Leader* l);
     void writeDimension(RS_Dimension* d);
+    void writeTolerance(LC_Tolerance* t);
     void writePolyline(RS_Polyline* p);
 
     /*	void writeEntityContainer(DL_WriterA& dw, RS_EntityContainer* con,

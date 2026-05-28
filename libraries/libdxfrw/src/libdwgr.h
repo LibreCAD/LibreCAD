@@ -71,6 +71,8 @@ public:
     bool writeAttdef(DRW_Attdef *ent);
     bool writeHatch(DRW_Hatch *ent);
     bool writeDimension(DRW_Dimension *ent);
+    bool writeTolerance(DRW_Tolerance *ent);
+    bool writeLight(DRW_Light *ent);
     bool writeMLine(DRW_MLine *ent);
     bool writePolyline(DRW_Polyline *ent);
     bool writeLeader(DRW_Leader *ent);
@@ -98,6 +100,11 @@ public:
     bool addVport(DRW_Vport *ent);
     bool addDimstyle(DRW_Dimstyle *ent);
     bool addAppId(DRW_AppId *ent);
+    bool writeAcDbPlaceholder(DRW_AcDbPlaceholder *object);
+    bool registerSunObjectClass(DRW_Sun *object);
+    bool writeSun(DRW_Sun *object);
+    bool registerMLeaderStyleObjectClass(DRW_MLeaderStyle *object);
+    bool writeMLeaderStyle(DRW_MLeaderStyle *object);
     bool registerRawDwgObjectClass(const DRW_UnsupportedObject *object);
     bool writeRawDwgObject(DRW_UnsupportedObject *object);
 
