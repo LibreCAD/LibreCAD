@@ -345,6 +345,14 @@ public:
         size_t rowStyleCount = 0;
         size_t cellStyleCount = 0;
         size_t borderCount = 0;
+        size_t m_tableContentFormatCount = 0;
+        size_t m_tableNamedCellStyleCount = 0;
+        size_t m_tableVisibleBorderCount = 0;
+        size_t m_tableMarginStyleCount = 0;
+        int m_tableFlowDirection = 0;
+        int m_tableFlags = 0;
+        double m_tableHorizontalCellMargin = 0.0;
+        double m_tableVerticalCellMargin = 0.0;
         bool titleSuppressed = false;
         bool headerSuppressed = false;
         bool hasTextContent = false;
@@ -365,6 +373,11 @@ public:
         std::vector<duint32> textStyleHandles;
         std::vector<duint32> lineTypeHandles;
         std::vector<duint32> geometryHandles;
+        std::vector<int> m_tableStyleIds;
+        std::vector<std::string> m_tableStyleNames;
+        std::vector<double> m_tableTextHeights;
+        std::vector<int> m_tableAlignments;
+        std::vector<int> m_tableColors;
         std::vector<TableMergedRangeRecord> mergedRanges;
         std::vector<TableCellRecord> cells;
         ReplayState replayState = ReplayState::ReplayAllowed;
@@ -823,20 +836,28 @@ public:
         record.handle = style.handle;
         record.parentHandle = style.parentHandle;
         record.recordName = style.m_name;
+        record.m_tableFlowDirection = style.m_flowDirection;
+        record.m_tableFlags = style.m_flags;
+        record.m_tableHorizontalCellMargin = style.m_horizontalCellMargin;
+        record.m_tableVerticalCellMargin = style.m_verticalCellMargin;
         record.rowStyleCount = style.m_rowStyles.size();
         record.cellStyleCount = style.m_cellStyles.size();
         record.borderCount = style.m_tableCellStyle.m_borders.size();
         collectTableStyleCellHandles(record, style.m_tableCellStyle);
+        collectTableStyleCellSummary(record, style.m_tableCellStyle);
         for (const DRW_TableStyleRowStyle& rowStyle : style.m_rowStyles) {
             record.borderCount += rowStyle.m_borders.size();
             collectTableStyleRowHandles(record, rowStyle);
+            collectTableStyleRowSummary(record, rowStyle);
         }
         for (const DRW_TableStyleCellStyle& cellStyle : style.m_cellStyles) {
             record.borderCount += cellStyle.m_borders.size();
             collectTableStyleCellHandles(record, cellStyle);
+            collectTableStyleCellSummary(record, cellStyle);
         }
         record.textStyleHandleCount = record.textStyleHandles.size();
         record.lineTypeHandleCount = record.lineTypeHandles.size();
+        record.m_tableNamedCellStyleCount = record.m_tableStyleNames.size();
         record.titleSuppressed = style.m_titleSuppressed;
         record.headerSuppressed = style.m_headerSuppressed;
         record.semanticParsed = true;
@@ -2125,6 +2146,25 @@ private:
             record.lineTypeHandles.push_back(border.m_lineTypeHandle);
     }
 
+    static void collectTableStyleBorderSummary(TableRecord& record,
+                                               const DRW_TableStyleBorder& border) {
+        if (border.m_visible != 0)
+            ++record.m_tableVisibleBorderCount;
+        if (border.m_color != 0)
+            record.m_tableColors.push_back(border.m_color);
+    }
+
+    static void collectTableStyleContentSummary(
+        TableRecord& record, const DRW_TableStyleContentFormat& format) {
+        ++record.m_tableContentFormatCount;
+        if (format.m_textHeight > 0.0)
+            record.m_tableTextHeights.push_back(format.m_textHeight);
+        if (format.m_cellAlignment != 0)
+            record.m_tableAlignments.push_back(format.m_cellAlignment);
+        if (format.m_contentColor != 0)
+            record.m_tableColors.push_back(format.m_contentColor);
+    }
+
     static void collectTableStyleCellHandles(TableRecord& record,
                                              const DRW_TableStyleCellStyle& cellStyle) {
         if (cellStyle.m_contentFormat.m_textStyleHandle != 0)
@@ -2134,12 +2174,47 @@ private:
             collectTableStyleBorderHandle(record, border);
     }
 
+    static void collectTableStyleCellSummary(TableRecord& record,
+                                             const DRW_TableStyleCellStyle& cellStyle) {
+        if (cellStyle.m_id != 0)
+            record.m_tableStyleIds.push_back(cellStyle.m_id);
+        if (!cellStyle.m_name.empty())
+            record.m_tableStyleNames.push_back(cellStyle.m_name);
+        if (cellStyle.m_backgroundColor != 0)
+            record.m_tableColors.push_back(cellStyle.m_backgroundColor);
+        if (cellStyle.m_verticalMargin != 0.0
+            || cellStyle.m_horizontalMargin != 0.0
+            || cellStyle.m_bottomMargin != 0.0
+            || cellStyle.m_rightMargin != 0.0
+            || cellStyle.m_marginHorizontalSpacing != 0.0
+            || cellStyle.m_marginVerticalSpacing != 0.0) {
+            ++record.m_tableMarginStyleCount;
+        }
+        collectTableStyleContentSummary(record, cellStyle.m_contentFormat);
+        for (const DRW_TableStyleBorder& border : cellStyle.m_borders)
+            collectTableStyleBorderSummary(record, border);
+    }
+
     static void collectTableStyleRowHandles(TableRecord& record,
                                             const DRW_TableStyleRowStyle& rowStyle) {
         if (rowStyle.m_textStyleHandle != 0)
             record.textStyleHandles.push_back(rowStyle.m_textStyleHandle);
         for (const DRW_TableStyleBorder& border : rowStyle.m_borders)
             collectTableStyleBorderHandle(record, border);
+    }
+
+    static void collectTableStyleRowSummary(TableRecord& record,
+                                            const DRW_TableStyleRowStyle& rowStyle) {
+        if (rowStyle.m_textHeight > 0.0)
+            record.m_tableTextHeights.push_back(rowStyle.m_textHeight);
+        if (rowStyle.m_textAlignment != 0)
+            record.m_tableAlignments.push_back(rowStyle.m_textAlignment);
+        if (rowStyle.m_textColor != 0)
+            record.m_tableColors.push_back(rowStyle.m_textColor);
+        if (rowStyle.m_fillColor != 0)
+            record.m_tableColors.push_back(rowStyle.m_fillColor);
+        for (const DRW_TableStyleBorder& border : rowStyle.m_borders)
+            collectTableStyleBorderSummary(record, border);
     }
 
     void resolveTableStyle(TableRecord& record) const {

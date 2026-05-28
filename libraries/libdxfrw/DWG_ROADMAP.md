@@ -471,6 +471,407 @@ These roadmap items should remain deferred until the listed contract exists:
 - VIEW/UCS/LIGHT/SUN UI integration: metadata lookup can proceed, but rendering
   behavior requires a LibreCAD UI/design decision.
 
+## Detailed Forward Implementation Plan
+
+This section is the implementation-grade plan for the remaining broad feature
+areas. It supersedes the short "not ready" bullets above and refines Slices
+5-16 into source-backed phases that can be converted into small ready slices.
+
+Reference sources for this section:
+
+- ACadSharp table model and writers:
+  `../ACadSharp/src/ACadSharp/Entities/TableEntity*.cs`,
+  `../ACadSharp/src/ACadSharp/Objects/Table*.cs`,
+  `../ACadSharp/src/ACadSharp/IO/DWG/DwgStreamWriters/DwgObjectWriter.*.cs`.
+- ACadSharp modeler geometry:
+  `../ACadSharp/src/ACadSharp/Entities/ModelerGeometry*.cs`,
+  `../ACadSharp/src/ACadSharp/IO/DWG/DwgStreamReaders/DwgObjectReader.cs`,
+  `../ACadSharp/src/ACadSharp/IO/DWG/DwgStreamWriters/DwgObjectWriter.Entities.cs`.
+- ACadSharp associative/evaluation objects:
+  `../ACadSharp/src/ACadSharp/Objects/DimensionAssociation*.cs` and
+  `../ACadSharp/src/ACadSharp/Objects/Evaluations/*.cs`.
+- libreDWG layouts:
+  `../libreDWG/src/dwg.spec`, `../libreDWG/src/dwg2.spec`,
+  `../libreDWG/src/acds.spec`, `../libreDWG/src/classes.inc`.
+- Current LibreCAD/libdxfrw implementation:
+  `libraries/libdxfrw/src/drw_entities.*`,
+  `libraries/libdxfrw/src/drw_objects.*`,
+  `libraries/libdxfrw/src/intern/dwgreader.cpp`,
+  `libraries/libdxfrw/src/intern/dwgwriter*.{h,cpp}`,
+  `libraries/libdxfrw/src/libdwgr.*`,
+  `librecad/src/lib/engine/document/lc_dwgadvancedmetadata.h`,
+  `librecad/src/lib/filters/rs_filterdxfrw.*`.
+
+### Forward A: Native TABLE Writing and Rendering Policy
+
+Goal: make TABLE/TABLECONTENT visible and exportable without pretending that
+LibreCAD has a full native table editor.
+
+Current local state:
+
+- libdxfrw parses TABLE, TABLECONTENT, TABLESTYLE, CELLSTYLEMAP, and
+  TABLEGEOMETRY into metadata-rich shells.
+- `LC_DwgAdvancedMetadata` has table/style lookup, cell lookup, reference
+  lookup, graph invalidation, raw replay invalidation, and writer blocker
+  diagnostics.
+- 2026-05-28 progress: TABLESTYLE metadata now surfaces parsed flow/flag/
+  margin values, named cell style IDs/names, content-format counts, text
+  heights, alignments, colors, visible-border counts, and margin-style counts
+  for fallback rendering and writer-blocker decisions.
+- No native TABLE/TABLECONTENT writer exists. No LibreCAD rendering policy
+  attaches fallback geometry back to the native table record.
+
+Phase A1 - complete semantic metadata prerequisites:
+
+1. Compare current `DRW_TableContent`, `DRW_Table`, `DRW_TableStyle`,
+   `DRW_CellStyleMap`, and `DRW_TableGeometry` against ACadSharp table
+   templates and libreDWG `TABLECONTENT_fields`, `CellStyle_fields`,
+   `CellStyleMap`, and `TableGeometry` layouts.
+2. Add missing non-rendering metadata before any writer work: named cell
+   style IDs/names, margins, text height, alignment, colors, border
+   visibility, and content-format counts are surfaced. Remaining metadata
+   work: row/column style inheritance, border lineweight/double-line details,
+   break metadata, override masks, and complete CELLSTYLEMAP linkage.
+3. Preserve all unknown table sub-record byte ranges with count, offset,
+   version gate, and parse-complete flags.
+4. Add metadata tests that synthetic table cells retain text, FIELD, block,
+   attribute, style, geometry, border, and override summaries.
+
+Phase A2 - fallback rendering policy:
+
+1. Introduce a metadata-owned fallback group ID for each imported semantic
+   table. Fallback line/text entities generated from the table must store the
+   table handle and cell coordinate they came from.
+2. Render only stable 2D primitives: grid lines from row/column sizes, text
+   cells from available content/style summaries, and placeholder text for
+   FIELD, block, formula, and unknown cell content.
+3. Treat edited fallback entities as edits to the table facade, not as proof
+   that native table semantics can be regenerated. Mark the semantic table and
+   matching raw payload invalidated when any fallback entity changes.
+4. Add export diagnostics for unchanged raw replay, fallback edited/no native
+   writer, incomplete table parse, unresolved TABLESTYLE, FIELD content, block
+   content, attribute content, geometry cell, override cell, and unsupported
+   break/style data.
+5. Keep fallback geometry optional during import until UI ownership and entity
+   selection behavior are tested.
+
+Phase A3 - minimal native writer subset:
+
+1. Define a strict writer contract: AC1021+ only, table has complete style
+   handle, rectangular row/column model, text-only cells, no FIELD, no block
+   content, no formulas, no unsupported overrides, no unresolved attributes,
+   and no edited fallback geometry outside the table facade.
+2. Register required custom classes through the writer class registry with
+   deterministic instance counts.
+3. Emit TABLE/TABLECONTENT in the same ownership/dictionary path ACadSharp
+   uses, with version-gated payloads from ODA/libreDWG.
+4. Preserve or replay TABLESTYLE/CELLSTYLEMAP only when unchanged or when the
+   metadata writer can emit every referenced style handle.
+5. Refuse native writing with explicit blocker counts when any contract item
+   fails; never flatten a semantic table silently.
+
+Validation for Forward A:
+
+- `[entity_metadata]` tests for cell/style/reference/fallback invalidation.
+- `[dwg-write]` smoke for unchanged raw replay and one text-only native table
+  subset after the writer exists.
+- Optional fixture comparison against ACadSharp/libreDWG dumps for
+  TABLECONTENT cell counts, style handles, and writer blocker reduction.
+
+Stop line:
+
+- Do not implement a spreadsheet-like editor, formula evaluator, block-cell
+  editor, or complex table regeneration until LibreCAD has a table editing
+  model. Use fallback rendering plus diagnostics until then.
+
+### Forward B: ACIS and Modeler Geometry Interpretation
+
+Goal: turn BODY/REGION/3DSOLID payloads into inspectable, safely preserved
+modeler records and optional fallback geometry without building an ACIS
+kernel inside LibreCAD.
+
+Current local state:
+
+- REGION, 3DSOLID, and BODY are parsed as `DRW_ModelerGeometry` shells.
+- Metadata preserves raw bytes, body/handle-stream split, payload marker
+  category, marker offset/length, history handles, and split diagnostics.
+- Native ACIS interpretation, SAT/SAB sub-block indexing, wireframe fallback,
+  silhouette extraction, and modeler writing are not implemented.
+
+Phase B1 - byte container indexing:
+
+1. Compare `DRW_ModelerGeometry::parseDwg()` with ACadSharp
+   `readModelerGeometryData`, `readWire`, `readSolid3D`, libreDWG
+   `COMMON_3DSOLID`, and `acds.spec`.
+2. Record modeler kind, raw data format, block-size fields, modeler version,
+   SAT/SAB marker text, byte ranges for SAT/SAB data, history block ranges,
+   wire block ranges, silhouette block ranges, and unknown tails.
+3. Bounds-check every size before scanning. Unknown or inconsistent records
+   must stay raw-preserved with a diagnostic.
+4. Add tests for synthetic SAT, SAB, history, empty body, inconsistent split,
+   and unknown payloads.
+
+Phase B2 - non-kernel fallback summaries:
+
+1. Decode only container-level wire/silhouette records when libreDWG/ACadSharp
+   identify stable counts and coordinate payloads.
+2. Store fallback edge/polyline summaries in `LC_DwgAdvancedMetadata`; do not
+   modify the native modeler raw payload.
+3. Render fallback wire/silhouette geometry as non-authoritative preview
+   entities only after the same attachment/invalidation policy used for table
+   fallback entities exists.
+4. Mark the modeler raw payload invalidated if fallback preview geometry is
+   edited, because LibreCAD cannot regenerate ACIS bodies from edited curves.
+
+Phase B3 - write and replay policy:
+
+1. Continue raw replay for unchanged modeler OBJECT/ENTITY records only where
+   owner/block membership and class metadata are preserved.
+2. For edited modeler fallback geometry, export only the fallback curves with
+   an explicit diagnostic that native ACIS regeneration is unavailable.
+3. Add optional hooks for a future external ACIS/SAT/SAB backend, but keep the
+   default build backend-free.
+4. Do not attempt to infer solid topology or Boolean/history semantics from
+   SAT/SAB strings.
+
+Validation for Forward B:
+
+- `[entity_metadata]` tests for byte ranges, fallback summaries, and raw
+  invalidation.
+- `[dwg-write]` diagnostics for unchanged raw replay versus edited fallback.
+- Optional fixture checks that ACadSharp/libreDWG still report the same
+  modeler class/kind and payload category after round-trip when unchanged.
+
+Stop line:
+
+- Do not implement native 3D solid editing, ACIS Boolean evaluation, or SAT/SAB
+  rewriting in this roadmap. That requires a separate geometry-kernel design.
+
+### Forward C: Associative Graph Evaluation
+
+Goal: decode ACDBASSOC/evaluation/action/history objects into a dependency
+graph that can be invalidated and diagnosed, then evaluate only deliberately
+chosen simple cases.
+
+Current local state:
+
+- DIMASSOC, EVALUATION_GRAPH, ACDBASSOC*, ACSH*, and related records have raw
+  shells, family classification, kind names, dependency/reference lookup,
+  prefix/value-param accounting, graph invalidation, and export diagnostics.
+- Constraint solving, dynamic-block action evaluation, regeneration of
+  associative objects, and UI editing semantics are not implemented.
+
+Phase C1 - typed graph decode:
+
+1. Compare local shells with ACadSharp `DimensionAssociation`,
+   `EvaluationGraph`, dynamic-block evaluation objects, and libreDWG
+   `AcDbAssoc*`, `AcDbEvalExpr`, and `AcDbShHistoryNode` layouts.
+2. Add typed node IDs, owning network/action handles, dependency handles,
+   dependent-on object handles, action-body handles, value-param summaries,
+   point/osnap references, compound/path/action-param prefixes, and
+   parent/child history links.
+3. Store every decoded graph edge in metadata as `(source handle, edge kind,
+   target handle, confidence, raw range)`.
+4. Keep raw replay metadata linked to the typed record so invalidating a graph
+   node invalidates the preserved raw payload for the same handle/class.
+5. Add tests for DIMASSOC, EVALUATION_GRAPH, ASSOCNETWORK, ASSOCACTION,
+   ASSOCDEPENDENCY, GEOMDEPENDENCY, vertex action param, osnap point ref, and
+   ACSH history node synthetic records.
+
+Phase C2 - invalidation and edit policy:
+
+1. Any edit to a referenced entity, block, parameter, dimension, table,
+   mleader, or modeler body must mark dependent associative records stale.
+2. Raw replay must consult stale graph state before writing; stale associative
+   payloads are diagnostic-only.
+3. Expose aggregate diagnostics by family: preserved unchanged, invalidated,
+   unsupported action body, unsupported value-param, unsupported dynamic-block
+   evaluator, missing dependency target, and malformed prefix.
+4. Keep object-context records metadata-only until a consumer needs them.
+
+Phase C3 - limited evaluation:
+
+1. Start with non-mutating graph inspection: dependency lists, affected
+   handles, and dynamic-block parameter summaries.
+2. Add optional evaluation only for cases with deterministic 2D output and no
+   hidden solver requirement, such as simple DIMASSOC handle tracing or
+   visibility lookup summaries.
+3. Do not regenerate ACDBASSOC objects after geometry edits until a tested
+   writer contract exists for every node and dependency touched by that edit.
+4. Any unsupported evaluated case must degrade to stale/raw-preserved
+   diagnostics, not partial graph rewriting.
+
+Validation for Forward C:
+
+- `[entity_metadata]` tests for edge construction, dependency invalidation,
+  stale raw suppression, and aggregate diagnostics.
+- Fixture diagnostics proving known ACDBASSOC/ACSH classes are no longer
+  anonymous raw records where layouts are implemented.
+- Optional reference dump comparison for node/edge counts against
+  ACadSharp/libreDWG.
+
+Stop line:
+
+- Do not implement a geometric constraint solver, dynamic-block evaluator, or
+  associative graph writer until the invalidation and typed-edge layers are
+  complete and fixture-backed.
+
+### Forward D: Advanced Entity Writers
+
+Goal: add DWG writers for remaining ACadSharp-supported entity families only
+when the local data model, class registration, owner handles, and downgrade
+rules are complete.
+
+Current local state:
+
+- TOLERANCE, HATCH gradient fields, MLINE export reconstruction, LIGHT, SUN,
+  MLEADERSTYLE, text-content MLEADER subsets, and many core entities are
+  covered by native writers or metadata diagnostics.
+- MESH/SubDMesh, SHAPE, OLE2FRAME, raster image, WIPEOUT/ImageDefinition/
+  ImageDefinitionReactor/RasterVariables, and underlay definition/reference
+  writing remain incomplete.
+
+Phase D1 - writer readiness inventory:
+
+1. For each candidate entity, compare the local `DRW_*` struct, parser, and
+   LibreCAD consumer with ACadSharp writer methods and libreDWG layouts.
+2. Mark each field as one of: local editable geometry, imported metadata,
+   raw-only payload, computed writer field, unsupported required field, or
+   version-gated optional field.
+3. Add per-family writer blocker counts before native writing.
+4. Keep raw replay and fallback export diagnostics active for incomplete
+   families.
+
+Phase D2 - MESH/SubDMesh:
+
+1. Complete metadata for vertices, faces, edge/crease data, subdivision level,
+   and version-specific flags.
+2. Add fallback rendering as mesh/polyline preview where LibreCAD has no
+   editable native mesh.
+3. Add native DWG writing only for complete, unchanged or metadata-complete
+   mesh records with valid owner handles and class registration.
+4. Add downgrade diagnostics for versions that cannot carry the mesh payload.
+
+Phase D3 - raster, wipeout, image, and underlay:
+
+1. Complete ImageDefinition, ImageDefinitionReactor, RasterVariables,
+   UnderlayDefinition, and UnderlayReference metadata, including file path,
+   clipping, brightness, contrast, fade, display flags, definition handles,
+   and reactor handles.
+2. Keep file-path policy explicit: preserve path strings, do not copy external
+   files, and diagnose missing local assets.
+3. Write Wipeout/Image/Underlay only when definitions, reactors, owner handles,
+   and clipping boundaries are complete.
+4. Add tests for rectangular, polygonal, and no-boundary clipping; definition
+   handle resolution; and missing-definition diagnostics.
+
+Phase D4 - SHAPE and OLE2FRAME:
+
+1. Implement SHAPE metadata and writer fields: shape file/style handle, shape
+   name/index, insertion point, scale, rotation, oblique, width factor, and
+   extrusion where version-gated.
+2. Implement OLE2FRAME as raw-preserved frame metadata first: placement,
+   display extents, payload byte range, and unchanged replay.
+3. Do not regenerate OLE binary payloads. Edited OLE frames export as fallback
+   frame geometry plus diagnostics unless a full payload is preserved.
+
+Phase D5 - writer integration:
+
+1. Register any needed custom classes in one place and verify instance counts.
+2. Add `dwgRW` writer APIs only after libdxfrw writer support is tested.
+3. Wire LibreCAD export through `RS_FilterDXFRW` with diagnostics for blocked
+   entities.
+4. Add one smoke test per family and one export diagnostic test per blocker
+   bucket.
+
+Validation for Forward D:
+
+- `[dwg-write]` smoke tests per family.
+- `[entity_metadata]` blocker/metadata tests.
+- qmake6 build after public API changes.
+- Optional fixture round-trip through local reader plus ACadSharp/libreDWG
+  count comparison.
+
+Stop line:
+
+- Do not add a writer that silently drops required fields or emits a payload
+  ACadSharp/libreDWG cannot read. Add diagnostics first, then narrow native
+  writer subsets.
+
+### Forward E: UI and Rendering Integration for Visual, UCS, Light, and Sun Metadata
+
+Goal: connect imported DWG visual metadata to LibreCAD document/UI concepts
+without promising unsupported 3D rendering.
+
+Current local state:
+
+- libdxfrw and metadata store VIEW, VPORT/VIEWPORT, UCS, VISUALSTYLE, LIGHT,
+  and SUN records with handle lookup and dependency invalidation support.
+- Native LIGHT and metadata-complete SUN writing exist for AC1024+.
+- LibreCAD has view/UCS lists and 2D viewport/rendering infrastructure, but no
+  photometric lighting or visual-style renderer.
+
+Phase E1 - document mapping:
+
+1. Map named UCS records into `LC_UCSList` with original DWG handle, origin,
+   axes, elevation, orthographic type, and unresolved handle diagnostics.
+2. Map named VIEW records into `LC_ViewList` or metadata-backed view records
+   with center/target/direction, view height/width, twist, clipping, UCS
+   reference, visual-style reference, background reference, and sun reference.
+3. Keep VPORT/VIEWPORT layout settings in metadata unless there is an existing
+   LibreCAD layout viewport consumer.
+4. Add import-order independent resolution tests for view-to-UCS,
+   view-to-visual-style, view-to-sun, and light-owner links.
+
+Phase E2 - rendering policy:
+
+1. Treat VISUALSTYLE, LIGHT, and SUN as metadata and UI-inspectable properties,
+   not as active 3D shading inputs.
+2. Map only safe 2D-affecting fields into current rendering: view extents,
+   twist where supported, named UCS orientation where supported, and viewport
+   clipping when LibreCAD already has a matching concept.
+3. Display unsupported lighting/visual-style effects through metadata panels or
+   diagnostics, not approximate geometry.
+4. Preserve original handles and raw payloads so unchanged records can be
+   replayed or regenerated.
+
+Phase E3 - UI integration:
+
+1. Add a document-level metadata access path for named views, UCSs, lights,
+   sun, and visual styles so UI panels do not scan raw metadata vectors.
+2. Surface read-only light/sun/visual-style summaries first: name, type, owner,
+   intensity, color, shadow flags, sun status, date/time, and referenced view.
+3. Add edit support only for fields that have a writer and invalidation policy.
+   Editing any unsupported referenced field must mark the matching raw payload
+   stale.
+4. Keep UI strings and controls consistent with LibreCAD's existing view/UCS
+   patterns; do not invent a new DWG-only editor surface unless necessary.
+
+Phase E4 - export policy:
+
+1. Regenerate named VIEW/UCS/LIGHT/SUN records only when metadata is complete
+   and all referenced handles are resolved or intentionally zero.
+2. Replay unchanged raw VISUALSTYLE and VPORT/VIEWPORT metadata where native
+   writers are incomplete.
+3. Diagnose invalidated visual/light metadata by handle and reason: edited
+   referenced UCS, visual style, sun, owner/layout, background, or live-section
+   handle.
+4. Add smoke tests that view/UCS/light/sun metadata survives read/write when
+   unchanged and is suppressed with diagnostics when stale.
+
+Validation for Forward E:
+
+- `[entity_metadata]` tests for view/UCS/light/sun lookup, invalidation, and
+  UI-facing summaries.
+- `[dwg-write]` smoke for native LIGHT/SUN and VIEW/UCS records.
+- UI-level tests only after a stable document-list integration point exists.
+
+Stop line:
+
+- Do not implement photometric rendering, materials, shadows, or visual-style
+  shaded display in this roadmap. Keep those as future renderer projects unless
+  LibreCAD gains a 3D/rendering backend.
+
 ## Step-by-Step Implementation Queue
 
 This queue is optimized for small, buildable changes. Each slice should be a
