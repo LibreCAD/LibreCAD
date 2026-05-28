@@ -1769,6 +1769,85 @@ TEST_CASE("DWG advanced metadata indexes modeler raw byte splits",
   CHECK(counts.inconsistentSplit == 0u);
   CHECK(counts.markerInBody == 0u);
   CHECK(counts.markerInHandleStream == 1u);
+  CHECK(counts.rangeCount == 2u);
+  CHECK(counts.unknownTailRanges == 1u);
+  CHECK(counts.handleStreamRanges == 1u);
+}
+
+TEST_CASE("DWG advanced metadata indexes modeler payload ranges",
+          "[entity_metadata][dwg_metadata][modeler]") {
+  const std::vector<duint8> sabTerminated = {
+      'x', 'x', 'A', 'C', 'I', 'S', ' ', 'B', 'i', 'n', 'a', 'r', 'y',
+      'F', 'i', 'l', 'e', 0x01u, 'E', 'n', 'd', 0x0Eu, 0x02u, 'o',
+      'f', 0x0Eu, 0x04u, 'A', 'C', 'I', 'S', 0x0Du, 0x04u, 'd',
+      'a', 't', 'a', 't', 'a', 'i', 'l'};
+  const std::vector<LC_DwgAdvancedMetadata::ModelerPayloadRangeRecord>
+      sabRanges = LC_DwgAdvancedMetadata::scanModelerPayloadRanges(
+          sabTerminated, 328u);
+  REQUIRE(sabRanges.size() == 3u);
+  CHECK(sabRanges[0].kind ==
+        LC_DwgAdvancedMetadata::ModelerPayloadRangeKind::UnknownTail);
+  CHECK(sabRanges[0].offset == 0u);
+  CHECK(sabRanges[0].length == 2u);
+  CHECK(sabRanges[1].kind ==
+        LC_DwgAdvancedMetadata::ModelerPayloadRangeKind::Sab);
+  CHECK(sabRanges[1].offset == 2u);
+  CHECK(sabRanges[1].length == 35u);
+  CHECK(sabRanges[1].markerText == "ACIS BinaryFile");
+  CHECK(sabRanges[1].consistency ==
+        LC_DwgAdvancedMetadata::ModelerPayloadRangeConsistency::Exact);
+  CHECK(sabRanges[1].confidence ==
+        LC_DwgAdvancedMetadata::ModelerPayloadRangeConfidence::Marker);
+  CHECK(sabRanges[2].kind ==
+        LC_DwgAdvancedMetadata::ModelerPayloadRangeKind::UnknownTail);
+  CHECK(sabRanges[2].offset == 37u);
+  CHECK(sabRanges[2].length == 4u);
+  CHECK(std::string(LC_DwgAdvancedMetadata::modelerPayloadRangeKindName(
+            sabRanges[1].kind)) == "SAB");
+  CHECK(std::string(
+            LC_DwgAdvancedMetadata::modelerPayloadRangeConsistencyName(
+                sabRanges[1].consistency)) == "exact");
+
+  const std::vector<LC_DwgAdvancedMetadata::ModelerPayloadRangeRecord>
+      historyRanges = LC_DwgAdvancedMetadata::scanModelerPayloadRanges(
+          {'h', 'd', 'r', 'B', 'e', 'g', 'i', 'n', '-', 'o', 'f', '-',
+           'A', 'C', 'I', 'S', '-', 'H', 'i', 's', 't', 'o', 'r', 'y',
+           '\n', 'd', 'a', 't', 'a'},
+          0u);
+  REQUIRE(historyRanges.size() == 2u);
+  CHECK(historyRanges[0].kind ==
+        LC_DwgAdvancedMetadata::ModelerPayloadRangeKind::UnknownTail);
+  CHECK(historyRanges[1].kind ==
+        LC_DwgAdvancedMetadata::ModelerPayloadRangeKind::History);
+  CHECK(historyRanges[1].offset == 3u);
+  CHECK(historyRanges[1].markerText == "Begin-of-ACIS-History");
+
+  const std::vector<LC_DwgAdvancedMetadata::ModelerPayloadRangeRecord>
+      truncatedRanges = LC_DwgAdvancedMetadata::scanModelerPayloadRanges(
+          {'A', 'C', 'I', 'S', ' ', 'B', 'i', 'n', 'a', 'r', 'y', 'F',
+           'i', 'l', 'e'},
+          256u);
+  REQUIRE(truncatedRanges.size() == 1u);
+  CHECK(truncatedRanges[0].kind ==
+        LC_DwgAdvancedMetadata::ModelerPayloadRangeKind::Sab);
+  CHECK(truncatedRanges[0].declaredByteSize == 32u);
+  CHECK(truncatedRanges[0].length == 15u);
+  CHECK(truncatedRanges[0].consistency ==
+        LC_DwgAdvancedMetadata::ModelerPayloadRangeConsistency::Truncated);
+
+  LC_DwgAdvancedMetadata metadata;
+  DRW_ModelerGeometry modelerGeometry(DRW::E3DSOLID);
+  modelerGeometry.handle = 0x5B0u;
+  modelerGeometry.m_bodyBitSize = 328u;
+  modelerGeometry.m_rawBytes = sabTerminated;
+  metadata.addModelerGeometry(modelerGeometry);
+  const LC_DwgAdvancedMetadata::ModelerPayloadCounts counts =
+      metadata.modelerPayloadCounts();
+  CHECK(counts.rangeCount == 3u);
+  CHECK(counts.sabRanges == 1u);
+  CHECK(counts.unknownTailRanges == 2u);
+  CHECK(counts.exactRanges == 3u);
+  CHECK(counts.truncatedRanges == 0u);
 }
 
 TEST_CASE("DWG advanced metadata classifies associative object names",

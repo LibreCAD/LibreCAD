@@ -512,6 +512,48 @@ public:
 
 };
 
+//! Byte range hint for opaque ACIS/SAB modeler payload sections.
+struct DRW_ModelerPayloadRange {
+    enum class Kind {
+        Sat,
+        Sab,
+        History,
+        Wire,
+        Silhouette,
+        UnknownTail,
+        HandleStream
+    };
+
+    enum class Section {
+        Body,
+        HandleStream,
+        Unknown
+    };
+
+    enum class Consistency {
+        Unknown,
+        Exact,
+        Truncated,
+        Overrun
+    };
+
+    enum class Confidence {
+        Unknown,
+        Marker,
+        DeclaredSize,
+        Inferred
+    };
+
+    Kind m_kind = Kind::UnknownTail;
+    Section m_section = Section::Unknown;
+    size_t m_offset = 0;
+    size_t m_length = 0;
+    size_t m_declaredByteSize = 0;
+    Consistency m_consistency = Consistency::Unknown;
+    Confidence m_confidence = Confidence::Unknown;
+    std::string m_markerText;
+};
+
 //! Opaque ACIS/SAB modeler geometry entity shell (REGION, 3DSOLID, BODY).
 class DRW_ModelerGeometry : public DRW_Entity {
     SETENTFRIENDS
@@ -534,6 +576,7 @@ public:
     bool m_hasWireframe = false;
     duint32 m_historyHandle = 0;
     std::vector<duint8> m_rawBytes;
+    std::vector<DRW_ModelerPayloadRange> m_payloadRanges;
 };
 
 //! LIGHT entity shell. LibreCAD does not render lights, but preserves metadata.

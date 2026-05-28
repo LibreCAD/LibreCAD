@@ -66,6 +66,30 @@ public:
         HandleStream
     };
 
+    enum class ModelerPayloadRangeKind {
+        Sat,
+        Sab,
+        History,
+        Wire,
+        Silhouette,
+        UnknownTail,
+        HandleStream
+    };
+
+    enum class ModelerPayloadRangeConsistency {
+        Unknown,
+        Exact,
+        Truncated,
+        Overrun
+    };
+
+    enum class ModelerPayloadRangeConfidence {
+        Unknown,
+        Marker,
+        DeclaredSize,
+        Inferred
+    };
+
     enum class RawObjectFamily {
         Unknown,
         Associative,
@@ -238,6 +262,19 @@ public:
         ReplayState replayState = ReplayState::ReplayAllowed;
     };
 
+    struct ModelerPayloadRangeRecord {
+        ModelerPayloadRangeKind kind = ModelerPayloadRangeKind::UnknownTail;
+        ModelerPayloadSection section = ModelerPayloadSection::Unknown;
+        size_t offset = 0;
+        size_t length = 0;
+        size_t declaredByteSize = 0;
+        ModelerPayloadRangeConsistency consistency =
+            ModelerPayloadRangeConsistency::Unknown;
+        ModelerPayloadRangeConfidence confidence =
+            ModelerPayloadRangeConfidence::Unknown;
+        std::string markerText;
+    };
+
     struct ModelerGeometryRecord {
         duint32 handle = 0;
         duint32 parentHandle = 0;
@@ -262,6 +299,7 @@ public:
         duint32 historyHandle = 0;
         size_t rawByteCount = 0;
         std::vector<duint8> rawBytes;
+        std::vector<ModelerPayloadRangeRecord> payloadRanges;
         ReplayState replayState = ReplayState::ReplayAllowed;
     };
 
@@ -469,6 +507,17 @@ public:
         size_t sat = 0;
         size_t sab = 0;
         size_t unknown = 0;
+        size_t rangeCount = 0;
+        size_t satRanges = 0;
+        size_t sabRanges = 0;
+        size_t historyRanges = 0;
+        size_t wireRanges = 0;
+        size_t silhouetteRanges = 0;
+        size_t unknownTailRanges = 0;
+        size_t handleStreamRanges = 0;
+        size_t exactRanges = 0;
+        size_t truncatedRanges = 0;
+        size_t overrunRanges = 0;
         size_t inconsistentSplit = 0;
         size_t markerInBody = 0;
         size_t markerInHandleStream = 0;
@@ -1054,6 +1103,9 @@ public:
         record.rawHandleByteCount = split.handleByteCount;
         record.markerSection = modelerPayloadSectionForMarker(
             marker, split, record.rawByteCount);
+        record.payloadRanges = scanModelerPayloadRanges(
+            geometry.m_rawBytes, geometry.m_bodyBitSize,
+            geometry.m_hasWireframe);
         record.rawBytes = geometry.m_rawBytes;
         m_modelerGeometry.push_back(std::move(record));
     }
@@ -1751,6 +1803,13 @@ public:
                 ++counts.markerInBody;
             else if (record.markerSection == ModelerPayloadSection::HandleStream)
                 ++counts.markerInHandleStream;
+            for (const ModelerPayloadRangeRecord& range :
+                 record.payloadRanges) {
+                ++counts.rangeCount;
+                incrementModelerPayloadRangeKindCount(counts, range.kind);
+                incrementModelerPayloadRangeConsistencyCount(
+                    counts, range.consistency);
+            }
         }
         return counts;
     }
@@ -1947,6 +2006,56 @@ public:
         }
     }
 
+    static const char* modelerPayloadRangeKindName(ModelerPayloadRangeKind kind) {
+        switch (kind) {
+            case ModelerPayloadRangeKind::Sat:
+                return "SAT";
+            case ModelerPayloadRangeKind::Sab:
+                return "SAB";
+            case ModelerPayloadRangeKind::History:
+                return "history";
+            case ModelerPayloadRangeKind::Wire:
+                return "wire";
+            case ModelerPayloadRangeKind::Silhouette:
+                return "silhouette";
+            case ModelerPayloadRangeKind::HandleStream:
+                return "handle-stream";
+            case ModelerPayloadRangeKind::UnknownTail:
+            default:
+                return "unknown-tail";
+        }
+    }
+
+    static const char* modelerPayloadRangeConsistencyName(
+        ModelerPayloadRangeConsistency consistency) {
+        switch (consistency) {
+            case ModelerPayloadRangeConsistency::Exact:
+                return "exact";
+            case ModelerPayloadRangeConsistency::Truncated:
+                return "truncated";
+            case ModelerPayloadRangeConsistency::Overrun:
+                return "overrun";
+            case ModelerPayloadRangeConsistency::Unknown:
+            default:
+                return "unknown";
+        }
+    }
+
+    static const char* modelerPayloadRangeConfidenceName(
+        ModelerPayloadRangeConfidence confidence) {
+        switch (confidence) {
+            case ModelerPayloadRangeConfidence::Marker:
+                return "marker";
+            case ModelerPayloadRangeConfidence::DeclaredSize:
+                return "declared-size";
+            case ModelerPayloadRangeConfidence::Inferred:
+                return "inferred";
+            case ModelerPayloadRangeConfidence::Unknown:
+            default:
+                return "unknown";
+        }
+    }
+
     struct ModelerPayloadMarker {
         ModelerPayloadKind kind = ModelerPayloadKind::Unknown;
         size_t offset = 0;
@@ -1998,6 +2107,95 @@ public:
         return scanModelerPayloadMarker(bytes).kind;
     }
 
+    static std::vector<ModelerPayloadRangeRecord> scanModelerPayloadRanges(
+        const std::vector<duint8>& bytes, duint32 bodyBitSize,
+        bool hasWireframe = false) {
+        std::vector<ModelerPayloadRangeRecord> ranges;
+        if (bytes.empty())
+            return ranges;
+
+        const ModelerRawByteSplit split =
+            splitModelerRawBytes(bodyBitSize, bytes.size());
+        const size_t bodyByteCount =
+            split.known ? split.bodyByteCount : bytes.size();
+        const size_t declaredBodyByteCount =
+            bodyBitSize == 0u ? bodyByteCount :
+                                (static_cast<size_t>(bodyBitSize) + 7u) / 8u;
+        const ModelerPayloadRangeConsistency bodyConsistency =
+            split.known && !split.consistent ?
+                ModelerPayloadRangeConsistency::Truncated :
+                ModelerPayloadRangeConsistency::Exact;
+        const ModelerPayloadMarker marker =
+            scanModelerPayloadMarkerInRange(bytes, 0u, bodyByteCount);
+
+        if (marker.kind == ModelerPayloadKind::Sab) {
+            appendUnknownModelerRange(ranges, 0u, marker.offset,
+                                      declaredBodyByteCount, bodyConsistency);
+            const std::vector<duint8> terminator =
+                sabTerminatorBytes();
+            const size_t terminatorOffset = findByteSequence(
+                bytes, terminator, marker.offset + marker.length,
+                bodyByteCount);
+            size_t rangeEnd = bodyByteCount;
+            ModelerPayloadRangeConsistency consistency =
+                bodyConsistency;
+            ModelerPayloadRangeConfidence confidence =
+                ModelerPayloadRangeConfidence::Marker;
+            if (terminatorOffset != npos()) {
+                rangeEnd = terminatorOffset + terminator.size();
+                consistency = ModelerPayloadRangeConsistency::Exact;
+            } else if (bodyConsistency == ModelerPayloadRangeConsistency::Exact) {
+                confidence = ModelerPayloadRangeConfidence::Inferred;
+            }
+            appendModelerRange(ranges, ModelerPayloadRangeKind::Sab,
+                               ModelerPayloadSection::Body, marker.offset,
+                               rangeEnd - marker.offset,
+                               declaredBodyByteCount, consistency, confidence,
+                               marker.text);
+            if (rangeEnd < bodyByteCount) {
+                appendModelerRange(
+                    ranges, ModelerPayloadRangeKind::UnknownTail,
+                    ModelerPayloadSection::Body, rangeEnd,
+                    bodyByteCount - rangeEnd, declaredBodyByteCount,
+                    ModelerPayloadRangeConsistency::Exact,
+                    ModelerPayloadRangeConfidence::Inferred, std::string());
+            }
+        } else if (marker.kind == ModelerPayloadKind::Sat) {
+            appendUnknownModelerRange(ranges, 0u, marker.offset,
+                                      declaredBodyByteCount, bodyConsistency);
+            const ModelerPayloadRangeKind kind =
+                marker.text == "Begin-of-ACIS-History" ?
+                    ModelerPayloadRangeKind::History :
+                    ModelerPayloadRangeKind::Sat;
+            appendModelerRange(ranges, kind, ModelerPayloadSection::Body,
+                               marker.offset, bodyByteCount - marker.offset,
+                               declaredBodyByteCount, bodyConsistency,
+                               ModelerPayloadRangeConfidence::Marker,
+                               marker.text);
+        } else if (bodyByteCount != 0u) {
+            appendModelerRange(
+                ranges,
+                hasWireframe ? ModelerPayloadRangeKind::Wire :
+                               ModelerPayloadRangeKind::UnknownTail,
+                ModelerPayloadSection::Body, 0u, bodyByteCount,
+                declaredBodyByteCount, bodyConsistency,
+                hasWireframe ? ModelerPayloadRangeConfidence::Inferred :
+                               ModelerPayloadRangeConfidence::Unknown,
+                std::string());
+        }
+
+        if (split.known && split.handleByteCount != 0u) {
+            appendModelerRange(ranges, ModelerPayloadRangeKind::HandleStream,
+                               ModelerPayloadSection::HandleStream,
+                               split.bodyByteCount, split.handleByteCount,
+                               split.handleByteCount,
+                               ModelerPayloadRangeConsistency::Exact,
+                               ModelerPayloadRangeConfidence::DeclaredSize,
+                               std::string());
+        }
+        return ranges;
+    }
+
 private:
     static ModelerPayloadSection modelerPayloadSectionForMarker(
         const ModelerPayloadMarker& marker, const ModelerRawByteSplit& split,
@@ -2044,6 +2242,119 @@ private:
             }
         }
         return result;
+    }
+
+    static constexpr size_t npos() {
+        return static_cast<size_t>(-1);
+    }
+
+    static ModelerPayloadMarker scanModelerPayloadMarkerInRange(
+        const std::vector<duint8>& bytes, size_t start, size_t end) {
+        const ModelerPayloadMarker sab = findModelerPayloadMarkerInRange(
+            bytes, "ACIS BinaryFile", ModelerPayloadKind::Sab, start, end);
+        if (sab.kind != ModelerPayloadKind::Unknown)
+            return sab;
+        const ModelerPayloadMarker satHistory =
+            findModelerPayloadMarkerInRange(
+                bytes, "Begin-of-ACIS-History", ModelerPayloadKind::Sat,
+                start, end);
+        if (satHistory.kind != ModelerPayloadKind::Unknown)
+            return satHistory;
+        return findModelerPayloadMarkerInRange(
+            bytes, "ACIS", ModelerPayloadKind::Sat, start, end);
+    }
+
+    static ModelerPayloadMarker findModelerPayloadMarkerInRange(
+        const std::vector<duint8>& bytes, const char* marker,
+        ModelerPayloadKind kind, size_t start, size_t end) {
+        ModelerPayloadMarker result;
+        if (marker == nullptr || marker[0] == '\0' || start >= bytes.size())
+            return result;
+        end = std::min(end, bytes.size());
+        if (start >= end)
+            return result;
+        size_t markerSize = 0;
+        while (marker[markerSize] != '\0')
+            ++markerSize;
+        if (markerSize == 0 || end - start < markerSize)
+            return result;
+        for (size_t offset = start; offset + markerSize <= end; ++offset) {
+            bool matched = true;
+            for (size_t index = 0; index < markerSize; ++index) {
+                if (bytes[offset + index] !=
+                    static_cast<duint8>(marker[index])) {
+                    matched = false;
+                    break;
+                }
+            }
+            if (matched) {
+                result.kind = kind;
+                result.offset = offset;
+                result.length = markerSize;
+                result.text.assign(marker, markerSize);
+                return result;
+            }
+        }
+        return result;
+    }
+
+    static std::vector<duint8> sabTerminatorBytes() {
+        return {'E', 'n', 'd', 0x0Eu, 0x02u, 'o', 'f', 0x0Eu, 0x04u,
+                'A', 'C', 'I', 'S', 0x0Du, 0x04u, 'd', 'a', 't', 'a'};
+    }
+
+    static size_t findByteSequence(const std::vector<duint8>& bytes,
+                                   const std::vector<duint8>& marker,
+                                   size_t start, size_t end) {
+        if (marker.empty() || start >= bytes.size())
+            return npos();
+        end = std::min(end, bytes.size());
+        if (start >= end || end - start < marker.size())
+            return npos();
+        for (size_t offset = start; offset + marker.size() <= end; ++offset) {
+            bool matched = true;
+            for (size_t index = 0; index < marker.size(); ++index) {
+                if (bytes[offset + index] != marker[index]) {
+                    matched = false;
+                    break;
+                }
+            }
+            if (matched)
+                return offset;
+        }
+        return npos();
+    }
+
+    static void appendModelerRange(
+        std::vector<ModelerPayloadRangeRecord>& ranges,
+        ModelerPayloadRangeKind kind, ModelerPayloadSection section,
+        size_t offset, size_t length, size_t declaredByteSize,
+        ModelerPayloadRangeConsistency consistency,
+        ModelerPayloadRangeConfidence confidence,
+        const std::string& markerText) {
+        if (length == 0u)
+            return;
+        ModelerPayloadRangeRecord range;
+        range.kind = kind;
+        range.section = section;
+        range.offset = offset;
+        range.length = length;
+        range.declaredByteSize = declaredByteSize;
+        range.consistency = consistency;
+        range.confidence = confidence;
+        range.markerText = markerText;
+        ranges.push_back(std::move(range));
+    }
+
+    static void appendUnknownModelerRange(
+        std::vector<ModelerPayloadRangeRecord>& ranges, size_t offset,
+        size_t length, size_t declaredByteSize,
+        ModelerPayloadRangeConsistency consistency) {
+        appendModelerRange(ranges, ModelerPayloadRangeKind::UnknownTail,
+                           ModelerPayloadSection::Body, offset, length,
+                           declaredByteSize, consistency,
+                           ModelerPayloadRangeConfidence::Inferred,
+                           std::string());
     }
 
 public:
@@ -3267,6 +3578,53 @@ private:
     static bool containsSubstring(const std::string& value, const char* needle) {
         return needle != nullptr && needle[0] != '\0'
                && value.find(needle) != std::string::npos;
+    }
+
+    static void incrementModelerPayloadRangeKindCount(
+        ModelerPayloadCounts& counts, ModelerPayloadRangeKind kind) {
+        switch (kind) {
+            case ModelerPayloadRangeKind::Sat:
+                ++counts.satRanges;
+                return;
+            case ModelerPayloadRangeKind::Sab:
+                ++counts.sabRanges;
+                return;
+            case ModelerPayloadRangeKind::History:
+                ++counts.historyRanges;
+                return;
+            case ModelerPayloadRangeKind::Wire:
+                ++counts.wireRanges;
+                return;
+            case ModelerPayloadRangeKind::Silhouette:
+                ++counts.silhouetteRanges;
+                return;
+            case ModelerPayloadRangeKind::HandleStream:
+                ++counts.handleStreamRanges;
+                return;
+            case ModelerPayloadRangeKind::UnknownTail:
+            default:
+                ++counts.unknownTailRanges;
+                return;
+        }
+    }
+
+    static void incrementModelerPayloadRangeConsistencyCount(
+        ModelerPayloadCounts& counts,
+        ModelerPayloadRangeConsistency consistency) {
+        switch (consistency) {
+            case ModelerPayloadRangeConsistency::Exact:
+                ++counts.exactRanges;
+                return;
+            case ModelerPayloadRangeConsistency::Truncated:
+                ++counts.truncatedRanges;
+                return;
+            case ModelerPayloadRangeConsistency::Overrun:
+                ++counts.overrunRanges;
+                return;
+            case ModelerPayloadRangeConsistency::Unknown:
+            default:
+                return;
+        }
     }
 
     static void incrementRawObjectFamilyCount(

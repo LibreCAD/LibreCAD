@@ -219,6 +219,10 @@ Completed in the 2026-05-27 implementation pass:
 - Ready F modeler raw split diagnostics advanced: preserved modeler payloads
   now expose body/handle-stream byte split metadata, marker section
   classification, split consistency checks, and export-time payload summaries.
+- Ready Detail B1a ACIS container range indexing advanced: modeler metadata
+  now exposes bounded SAT/SAB/history/unknown-tail/handle-stream byte ranges,
+  SAB terminator detection, declared-size consistency, and aggregate range
+  diagnostics while keeping the raw payload uninterpreted and replayable.
 - Ready G associative shell diagnostics advanced: ACDBASSOC/ACSH shell
   metadata now reports per-kind counts, value-param parse accounting,
   action-param prefix accounting, and export-time graph summaries.
@@ -1337,9 +1341,11 @@ fixture resolving it.
 
 Purpose: expose modeler sub-block byte ranges without interpreting geometry.
 
-Status: ready as byte/range metadata only. This slice must preserve raw bytes
-exactly and may add range summaries, but it must not interpret SAT/SAB topology
-or synthesize geometry.
+Status: completed for range metadata on 2026-05-28. The metadata layer now
+records bounded SAT/SAB/history/unknown-tail/handle-stream byte ranges,
+declared-size consistency, SAB terminator-based exact ranges, marker-derived
+confidence, and aggregate range counts. It deliberately does not interpret
+ACIS topology or synthesize geometry.
 
 Spec basis: ODA 20.4.41. The scanner must preserve the ACIS empty bit,
 unknown bit, version, R2007+ history handle, version-1 SAT block chunks,
