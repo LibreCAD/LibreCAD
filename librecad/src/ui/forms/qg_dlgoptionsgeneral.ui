@@ -1067,6 +1067,16 @@
             </property>
            </widget>
           </item>
+          <item>
+           <widget class="QCheckBox" name="cbArchitecturalInput">
+            <property name="toolTip">
+             <string>Enable architectural feet-inch distance input in the Direct Line tool (e.g. 10-3 = 10 ft 3 in).</string>
+            </property>
+            <property name="text">
+             <string>Architectural feet-inch input (e.g. 10-3 = 10 ft 3 in)</string>
+            </property>
+           </widget>
+          </item>
          </layout>
         </widget>
        </item>

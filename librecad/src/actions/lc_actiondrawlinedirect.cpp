@@ -35,6 +35,8 @@
 #include "lc_linemath.h"
 #include "lc_abstractactiondrawline.h"
 #include "lc_actiondrawlinedirect.h"
+#include "lc_archparser.h"
+#include "rs_settings.h"
 
 LC_ActionDrawLineDirect::LC_ActionDrawLineDirect(
     RS_EntityContainer &container,
@@ -285,9 +287,20 @@ bool LC_ActionDrawLineDirect::doProcessCommandValue(RS_CommandEvent *e, const QS
         case SetDirection:
             break;
         case SetPoint: {
-            // Typed distance in free-aim mode: compute endpoint along current mouse direction
+            // Typed distance in free-aim mode: compute endpoint along current mouse direction.
+            // When architectural input is enabled, try the arch parser first; fall back to eval.
             bool ok = false;
-            double distance = RS_Math::eval(c, &ok);
+            double distance = 0.0;
+            {
+                auto guard = RS_SETTINGS->beginGroupGuard("/Defaults");
+                bool archEnabled = RS_SETTINGS->readNumEntry("/ArchitecturalInput", 0) != 0;
+                if (archEnabled) {
+                    distance = LC_ArchParser::parse(c, &ok);
+                }
+            }
+            if (!ok) {
+                distance = RS_Math::eval(c, &ok);
+            }
             if (ok && LC_LineMath::isMeaningful(distance) && isNonZeroLine(lastSnapPoint)){
                 double aimAngle = (lastSnapPoint - pPoints->data.startpoint).angle();
                 pPoints->data.endpoint = pPoints->data.startpoint.relative(distance, aimAngle);
