@@ -276,6 +276,8 @@ public:
         size_t blockHandleCount = 0;
         size_t fieldHandleCount = 0;
         size_t attributeHandleCount = 0;
+        size_t textStyleHandleCount = 0;
+        size_t lineTypeHandleCount = 0;
         size_t mergedRangeCount = 0;
         size_t overrideCellCount = 0;
         size_t geometryCellCount = 0;
@@ -299,6 +301,8 @@ public:
         std::vector<duint32> blockHandles;
         std::vector<duint32> fieldHandles;
         std::vector<duint32> attributeHandles;
+        std::vector<duint32> textStyleHandles;
+        std::vector<duint32> lineTypeHandles;
         std::vector<duint32> geometryHandles;
         std::vector<TableMergedRangeRecord> mergedRanges;
         std::vector<TableCellRecord> cells;
@@ -742,10 +746,17 @@ public:
         record.rowStyleCount = style.m_rowStyles.size();
         record.cellStyleCount = style.m_cellStyles.size();
         record.borderCount = style.m_tableCellStyle.m_borders.size();
-        for (const DRW_TableStyleRowStyle& rowStyle : style.m_rowStyles)
+        collectTableStyleCellHandles(record, style.m_tableCellStyle);
+        for (const DRW_TableStyleRowStyle& rowStyle : style.m_rowStyles) {
             record.borderCount += rowStyle.m_borders.size();
-        for (const DRW_TableStyleCellStyle& cellStyle : style.m_cellStyles)
+            collectTableStyleRowHandles(record, rowStyle);
+        }
+        for (const DRW_TableStyleCellStyle& cellStyle : style.m_cellStyles) {
             record.borderCount += cellStyle.m_borders.size();
+            collectTableStyleCellHandles(record, cellStyle);
+        }
+        record.textStyleHandleCount = record.textStyleHandles.size();
+        record.lineTypeHandleCount = record.lineTypeHandles.size();
         record.titleSuppressed = style.m_titleSuppressed;
         record.headerSuppressed = style.m_headerSuppressed;
         record.semanticParsed = true;
@@ -1144,6 +1155,17 @@ public:
                 return &record;
         }
         return nullptr;
+    }
+    std::vector<const TableRecord*> findTableStylesReferencingHandle(
+        duint32 handle) const {
+        std::vector<const TableRecord*> result;
+        if (handle == 0)
+            return result;
+        for (const TableRecord& record : m_tables) {
+            if (isTableStyleRecord(record) && tableRecordReferences(record, handle))
+                result.push_back(&record);
+        }
+        return result;
     }
     std::vector<const TableRecord*> findTablesUsingStyle(duint32 styleHandle) const {
         std::vector<const TableRecord*> result;
@@ -1732,6 +1754,10 @@ private:
                 record.attributeCount += cell.m_attributes.size();
                 if (cell.m_styleId != 0)
                     record.cellStyleIds.push_back(cell.m_styleId);
+                if (cell.m_textStyleHandle != 0)
+                    record.textStyleHandles.push_back(cell.m_textStyleHandle);
+                if (cell.m_textStyleOverrideHandle != 0)
+                    record.textStyleHandles.push_back(cell.m_textStyleOverrideHandle);
                 if (cell.m_valueHandle != 0) {
                     ++record.valueHandleCount;
                     record.valueHandles.push_back(cell.m_valueHandle);
@@ -1793,6 +1819,7 @@ private:
         record.fieldHandleCount = record.fieldHandles.size();
         record.blockHandleCount = record.blockHandles.size();
         record.attributeHandleCount = record.attributeHandles.size();
+        record.textStyleHandleCount = record.textStyleHandles.size();
     }
 
     static bool isTableStyleRecord(const TableRecord& record) {
@@ -1801,6 +1828,29 @@ private:
                && record.recordName != "TABLECONTENT"
                && record.semanticParsed
                && record.styleResolved;
+    }
+
+    static void collectTableStyleBorderHandle(TableRecord& record,
+                                              const DRW_TableStyleBorder& border) {
+        if (border.m_lineTypeHandle != 0)
+            record.lineTypeHandles.push_back(border.m_lineTypeHandle);
+    }
+
+    static void collectTableStyleCellHandles(TableRecord& record,
+                                             const DRW_TableStyleCellStyle& cellStyle) {
+        if (cellStyle.m_contentFormat.m_textStyleHandle != 0)
+            record.textStyleHandles.push_back(
+                cellStyle.m_contentFormat.m_textStyleHandle);
+        for (const DRW_TableStyleBorder& border : cellStyle.m_borders)
+            collectTableStyleBorderHandle(record, border);
+    }
+
+    static void collectTableStyleRowHandles(TableRecord& record,
+                                            const DRW_TableStyleRowStyle& rowStyle) {
+        if (rowStyle.m_textStyleHandle != 0)
+            record.textStyleHandles.push_back(rowStyle.m_textStyleHandle);
+        for (const DRW_TableStyleBorder& border : rowStyle.m_borders)
+            collectTableStyleBorderHandle(record, border);
     }
 
     void resolveTableStyle(TableRecord& record) const {
@@ -1859,6 +1909,14 @@ private:
         }
         for (duint32 attributeHandle : record.attributeHandles) {
             if (attributeHandle == handle)
+                return true;
+        }
+        for (duint32 textStyleHandle : record.textStyleHandles) {
+            if (textStyleHandle == handle)
+                return true;
+        }
+        for (duint32 lineTypeHandle : record.lineTypeHandles) {
+            if (lineTypeHandle == handle)
                 return true;
         }
         for (duint32 geometryHandle : record.geometryHandles) {

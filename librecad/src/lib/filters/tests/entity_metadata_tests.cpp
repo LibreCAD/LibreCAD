@@ -439,11 +439,17 @@ TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
   tableStyle.m_titleSuppressed = true;
   tableStyle.m_headerSuppressed = false;
   tableStyle.m_tableCellStyle.m_borders.resize(1);
+  tableStyle.m_tableCellStyle.m_contentFormat.m_textStyleHandle = 0x108u;
+  tableStyle.m_tableCellStyle.m_borders[0].m_lineTypeHandle = 0x109u;
   DRW_TableStyleRowStyle rowStyle;
   rowStyle.m_borders.resize(2);
+  rowStyle.m_textStyleHandle = 0x10Au;
+  rowStyle.m_borders[0].m_lineTypeHandle = 0x10Bu;
   tableStyle.m_rowStyles.push_back(rowStyle);
   DRW_TableStyleCellStyle cellStyle;
   cellStyle.m_borders.resize(3);
+  cellStyle.m_contentFormat.m_textStyleHandle = 0x10Cu;
+  cellStyle.m_borders[0].m_lineTypeHandle = 0x10Du;
   tableStyle.m_cellStyles.push_back(cellStyle);
   metadata.addTableStyle(tableStyle);
 
@@ -797,10 +803,20 @@ TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
   CHECK(capturedTableStyle.rowStyleCount == 1u);
   CHECK(capturedTableStyle.cellStyleCount == 1u);
   CHECK(capturedTableStyle.borderCount == 6u);
+  CHECK(capturedTableStyle.textStyleHandleCount == 3u);
+  CHECK(capturedTableStyle.lineTypeHandleCount == 3u);
   CHECK(capturedTableStyle.titleSuppressed);
   CHECK_FALSE(capturedTableStyle.headerSuppressed);
   CHECK(capturedTableStyle.styleResolved);
   CHECK(metadata.findTableStyleByHandle(0xFCu) == &capturedTableStyle);
+  const auto tableStylesByTextStyle =
+      metadata.findTableStylesReferencingHandle(0x10Cu);
+  REQUIRE(tableStylesByTextStyle.size() == 1u);
+  CHECK(tableStylesByTextStyle.front() == &capturedTableStyle);
+  const auto tableStylesByLineType =
+      metadata.findTableStylesReferencingHandle(0x10Du);
+  REQUIRE(tableStylesByLineType.size() == 1u);
+  CHECK(tableStylesByLineType.front() == &capturedTableStyle);
 
   const auto& capturedTableContent = metadata.tables().back();
   CHECK(capturedTableContent.handle == 0xFEu);
@@ -1107,6 +1123,41 @@ TEST_CASE("DWG advanced metadata invalidates TABLECONTENT raw replay",
         LC_DwgAdvancedMetadata::ReplayBlocker::Invalidated);
   CHECK(LC_DwgAdvancedMetadata::rawReplayBlocker(metadata.rawObjects().back()) ==
         LC_DwgAdvancedMetadata::ReplayBlocker::None);
+}
+
+TEST_CASE("DWG advanced metadata invalidates TABLESTYLE raw replay",
+          "[entity_metadata][dwg_metadata][table]") {
+  LC_DwgAdvancedMetadata metadata;
+
+  DRW_UnsupportedObject rawTableStyle;
+  rawTableStyle.m_objectType = 514;
+  rawTableStyle.m_handle = 0x450u;
+  rawTableStyle.m_isCustomClass = true;
+  rawTableStyle.m_recordName = "TABLESTYLE";
+  rawTableStyle.m_className = "AcDbTableStyle";
+  rawTableStyle.m_rawBytes = {0x01u, 0x02u};
+  metadata.addUnsupportedObject(rawTableStyle);
+
+  DRW_TableStyle tableStyle;
+  tableStyle.handle = 0x450u;
+  tableStyle.m_name = "HandleStyle";
+  tableStyle.m_tableCellStyle.m_contentFormat.m_textStyleHandle = 0x451u;
+  tableStyle.m_tableCellStyle.m_borders.resize(1);
+  tableStyle.m_tableCellStyle.m_borders[0].m_lineTypeHandle = 0x452u;
+  metadata.addTableStyle(tableStyle);
+
+  const auto stylesByLineType = metadata.findTableStylesReferencingHandle(0x452u);
+  REQUIRE(stylesByLineType.size() == 1u);
+  CHECK(stylesByLineType.front()->handle == 0x450u);
+
+  metadata.invalidateTableGraphForHandle(0x452u);
+
+  REQUIRE(metadata.tables().size() == 1u);
+  CHECK(metadata.tables().front().replayState ==
+        LC_DwgAdvancedMetadata::ReplayState::ReplayInvalidated);
+  REQUIRE(metadata.rawObjects().size() == 1u);
+  CHECK(LC_DwgAdvancedMetadata::rawReplayBlocker(metadata.rawObjects().front()) ==
+        LC_DwgAdvancedMetadata::ReplayBlocker::Invalidated);
 }
 
 TEST_CASE("DWG advanced metadata classifies modeler payload markers",

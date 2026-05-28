@@ -180,6 +180,10 @@ Completed in the 2026-05-27 implementation pass:
   now preserve referenced handles, participate in cell/table dependency
   lookups, invalidate semantic/raw table replay when edited, and are counted
   in native table writer blocker diagnostics.
+- Slice 5 table style handle graph advanced: TABLESTYLE text-style and border
+  linetype handles are now preserved in metadata, exposed through style
+  reference lookup, and invalidate matching semantic/raw TABLESTYLE replay
+  when edited.
 - Slice 6 table export diagnostics advanced: metadata exposes native table
   writer blocker counts and DWG export logs fallback, incomplete parse,
   unresolved style, FIELD, block, attribute, override, and geometry blockers.
@@ -389,6 +393,8 @@ Completed:
   handle.
 - Table attribute handles are included in cell/table reference lookups and
   native writer blocker diagnostics.
+- TABLESTYLE text-style and border linetype handles are included in style
+  reference lookups and replay invalidation.
 - Table graph invalidation marks dependent TABLE/TABLECONTENT records stale
   when a referenced handle changes.
 - Table graph invalidation also marks matching preserved raw table payloads
