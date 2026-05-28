@@ -840,6 +840,8 @@ void RS_FilterDXFRW::addDimStyle(const DRW_Dimstyle& data){
  * Implementation of the method which handles vports.
  */
 void RS_FilterDXFRW::addVport(const DRW_Vport &data) {
+    if (m_graphic != nullptr)
+        m_graphic->dwgAdvancedMetadata().addVport(data);
     QString name = QString::fromStdString(data.name);
     if (name.toLower() == "*active") {
         data.grid == 1? m_graphic->setGridOn(true):m_graphic->setGridOn(false);
@@ -867,7 +869,12 @@ void RS_FilterDXFRW::addUCS(const DRW_UCS &data) {
     RS_DEBUG->print("RS_FilterDXF::addUCS: creating ucs");
 
     QString name = QString::fromUtf8(data.name.c_str());
+    if (m_graphic != nullptr)
+        m_graphic->dwgAdvancedMetadata().addUcs(data);
     if (!name.isEmpty() && m_graphic->findNamedUCS(name) != nullptr) {
+        const int existingIndex = m_graphic->getUCSList()->getIndex(name);
+        m_graphic->dwgAdvancedMetadata().mapUcsToDocumentItem(
+            data.handle, data.name, existingIndex);
         return;
     }
 
@@ -889,6 +896,9 @@ void RS_FilterDXFRW::addUCS(const DRW_UCS &data) {
 
     RS_DEBUG->print("RS_FilterDXF::addUCS: add ucs to graphic");
     m_graphic->addUCS(ucs);
+    const int documentItemIndex = m_graphic->getUCSList()->getIndex(name);
+    m_graphic->dwgAdvancedMetadata().mapUcsToDocumentItem(
+        data.handle, data.name, documentItemIndex);
     RS_DEBUG->print("RS_FilterDXF::addUCS: OK");
 }
 
@@ -902,6 +912,9 @@ void RS_FilterDXFRW::addView(const DRW_View &data) {
     }
     QString name = QString::fromUtf8(data.name.c_str());
     if (!name.isEmpty() && m_graphic->findNamedView(name) != nullptr) {
+        const int existingIndex = m_graphic->getViewList()->getIndex(name);
+        m_graphic->dwgAdvancedMetadata().mapViewToDocumentItem(
+            data.handle, data.name, existingIndex);
         return;
     }
     auto* view = new LC_View(name);
@@ -946,6 +959,9 @@ void RS_FilterDXFRW::addView(const DRW_View &data) {
 
     RS_DEBUG->print("RS_FilterDXF::addView: add view to graphic");
     m_graphic->addNamedView(view);
+    const int documentItemIndex = m_graphic->getViewList()->getIndex(name);
+    m_graphic->dwgAdvancedMetadata().mapViewToDocumentItem(
+        data.handle, data.name, documentItemIndex);
     RS_DEBUG->print("RS_FilterDXF::addView: OK");
 }
 

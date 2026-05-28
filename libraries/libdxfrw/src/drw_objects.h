@@ -622,6 +622,9 @@ public:
 	        gridBehavior = 7;
 	        visualStyleHandle = 0;
 	        m_sunHandle = 0;
+            backgroundHandle = 0;
+            namedUcsHandle = 0;
+            baseUcsHandle = 0;
 	        DRW_TableEntry::reset();
 	    }
 
@@ -664,6 +667,9 @@ public:
     **/
 	    duint32 visualStyleHandle = 0; /*!< R2007+ visual-style ref (DWG-only) */
 	    duint32 m_sunHandle = 0;         /*!< R2007+ SUN hard-owner ref (DWG-only) */
+        duint32 backgroundHandle = 0;  /*!< R2007+ background ref (DWG-only) */
+        duint32 namedUcsHandle = 0;    /*!< R2000+ named UCS ref (DWG-only) */
+        duint32 baseUcsHandle = 0;     /*!< R2000+ base UCS ref (DWG-only) */
 };
 
 

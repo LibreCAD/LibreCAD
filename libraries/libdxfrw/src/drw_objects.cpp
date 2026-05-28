@@ -1846,6 +1846,7 @@ bool DRW_Vport::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
         DRW_DBG("\nRemaining bytes: "); DRW_DBG(buf->numRemainingBytes());
         if (version > DRW::AC1018) { //2007+
             dwgHandle bkgrdH = buf->getHandle();
+            backgroundHandle = bkgrdH.ref;
             DRW_DBG(" background Handle: "); DRW_DBGHL(bkgrdH.code, bkgrdH.size, bkgrdH.ref);
             DRW_DBG("\nRemaining bytes: "); DRW_DBG(buf->numRemainingBytes());
             dwgHandle visualStH = buf->getHandle();
@@ -1858,9 +1859,11 @@ bool DRW_Vport::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
             DRW_DBG("\nRemaining bytes: "); DRW_DBG(buf->numRemainingBytes());
         }
         dwgHandle namedUCSH = buf->getHandle();
+        namedUcsHandle = namedUCSH.ref;
         DRW_DBG(" named UCS Handle: "); DRW_DBGHL(namedUCSH.code, namedUCSH.size, namedUCSH.ref);
         DRW_DBG("\nRemaining bytes: "); DRW_DBG(buf->numRemainingBytes());
         dwgHandle baseUCSH = buf->getHandle();
+        baseUcsHandle = baseUCSH.ref;
         DRW_DBG(" base UCS Handle: "); DRW_DBGHL(baseUCSH.code, baseUCSH.size, baseUCSH.ref);
     }
 

@@ -234,6 +234,12 @@ public:
         Malformed
     };
 
+    enum class DocumentMappingSource {
+        View,
+        Ucs,
+        Vport
+    };
+
     struct RawObjectRecord {
         int objectType = 0;
         duint32 handle = 0;
@@ -629,6 +635,78 @@ public:
         double contrast = 0.0;
         duint32 ambientColor = 0;
         ReplayState replayState = ReplayState::ReplayAllowed;
+    };
+
+    struct UcsRecord {
+        duint32 handle = 0;
+        duint32 parentHandle = 0;
+        std::string name;
+        DRW_Coord origin;
+        DRW_Coord xAxisDirection;
+        DRW_Coord yAxisDirection;
+        DRW_Coord orthoOrigin;
+        double elevation = 0.0;
+        int orthoType = 0;
+        ReplayState replayState = ReplayState::ReplayAllowed;
+    };
+
+    struct VportRecord {
+        duint32 handle = 0;
+        duint32 parentHandle = 0;
+        std::string name;
+        DRW_Coord center;
+        DRW_Coord viewTarget;
+        DRW_Coord viewDirection;
+        double height = 0.0;
+        double ratio = 0.0;
+        int viewMode = 0;
+        int grid = 0;
+        int snap = 0;
+        int gridBehavior = 0;
+        duint32 backgroundHandle = 0;
+        duint32 visualStyleHandle = 0;
+        duint32 sunHandle = 0;
+        duint32 namedUcsHandle = 0;
+        duint32 baseUcsHandle = 0;
+        ReplayState replayState = ReplayState::ReplayAllowed;
+    };
+
+    struct DocumentMappingRecord {
+        duint32 handle = 0;
+        duint32 parentHandle = 0;
+        duint32 sourceHandle = 0;
+        DocumentMappingSource sourceType = DocumentMappingSource::View;
+        std::string sourceName;
+        std::string documentItemName;
+        int documentItemIndex = -1;
+        duint32 ownerHandle = 0;
+        duint32 layoutHandle = 0;
+        duint32 associatedUcsHandle = 0;
+        duint32 baseUcsHandle = 0;
+        duint32 namedUcsHandle = 0;
+        duint32 plotViewHandle = 0;
+        duint32 backgroundHandle = 0;
+        duint32 visualStyleHandle = 0;
+        duint32 sunHandle = 0;
+        duint32 liveSectionHandle = 0;
+        duint32 viewportHeaderHandle = 0;
+        duint32 layoutBlockRecordHandle = 0;
+        size_t unresolvedReferenceCount = 0;
+        ReplayState replayState = ReplayState::ReplayAllowed;
+
+        bool isMappedToDocumentItem() const {
+            return documentItemIndex >= 0;
+        }
+    };
+
+    struct DocumentMappingCounts {
+        size_t viewMappings = 0;
+        size_t ucsMappings = 0;
+        size_t vportMappings = 0;
+        size_t mappedDocumentItems = 0;
+        size_t unresolvedReferences = 0;
+        size_t invalidated = 0;
+        size_t replaced = 0;
     };
 
     struct LightRecord {
@@ -1508,6 +1586,46 @@ public:
         record.contrast = view.m_contrast;
         record.ambientColor = view.m_ambientColor;
         m_views.push_back(record);
+        upsertDocumentMapping(documentMappingFromView(record, -1));
+    }
+
+    void addUcs(const DRW_UCS& ucs) {
+        UcsRecord record;
+        record.handle = ucs.handle;
+        record.parentHandle = ucs.parentHandle;
+        record.name = ucs.name;
+        record.origin = ucs.origin;
+        record.xAxisDirection = ucs.xAxisDirection;
+        record.yAxisDirection = ucs.yAxisDirection;
+        record.orthoOrigin = ucs.orthoOrigin;
+        record.elevation = ucs.elevation;
+        record.orthoType = ucs.orthoType;
+        m_ucsRecords.push_back(record);
+        upsertDocumentMapping(documentMappingFromUcs(record, -1));
+        refreshDocumentMappingUnresolvedReferenceCounts();
+    }
+
+    void addVport(const DRW_Vport& vport) {
+        VportRecord record;
+        record.handle = vport.handle;
+        record.parentHandle = vport.parentHandle;
+        record.name = vport.name;
+        record.center = vport.center;
+        record.viewTarget = vport.viewTarget;
+        record.viewDirection = vport.viewDir;
+        record.height = vport.height;
+        record.ratio = vport.ratio;
+        record.viewMode = vport.viewMode;
+        record.grid = vport.grid;
+        record.snap = vport.snap;
+        record.gridBehavior = vport.gridBehavior;
+        record.backgroundHandle = vport.backgroundHandle;
+        record.visualStyleHandle = vport.visualStyleHandle;
+        record.sunHandle = vport.m_sunHandle;
+        record.namedUcsHandle = vport.namedUcsHandle;
+        record.baseUcsHandle = vport.baseUcsHandle;
+        m_vports.push_back(record);
+        upsertDocumentMapping(documentMappingFromVport(record, -1));
     }
 
     void addLight(const DRW_Light& light) {
@@ -1570,6 +1688,7 @@ public:
             if (view.sunHandle == record.handle)
                 view.sunResolved = true;
         }
+        refreshDocumentMappingUnresolvedReferenceCounts();
     }
 
     void addModelerGeometry(const DRW_ModelerGeometry& geometry) {
@@ -2200,6 +2319,11 @@ public:
 
     const std::vector<RawObjectRecord>& rawObjects() const { return m_rawObjects; }
     const std::vector<ViewRecord>& views() const { return m_views; }
+    const std::vector<UcsRecord>& ucsRecords() const { return m_ucsRecords; }
+    const std::vector<VportRecord>& vports() const { return m_vports; }
+    const std::vector<DocumentMappingRecord>& documentMappings() const {
+        return m_documentMappings;
+    }
     const std::vector<LightRecord>& lights() const { return m_lights; }
     const std::vector<SunRecord>& suns() const { return m_suns; }
     const std::vector<ModelerGeometryRecord>& modelerGeometry() const { return m_modelerGeometry; }
@@ -3503,6 +3627,31 @@ public:
         }
         return nullptr;
     }
+    const UcsRecord* findUcsByName(const std::string& name) const {
+        for (const UcsRecord& record : m_ucsRecords) {
+            if (record.name == name)
+                return &record;
+        }
+        return nullptr;
+    }
+    const UcsRecord* findUcsByHandle(duint32 handle) const {
+        if (handle == 0)
+            return nullptr;
+        for (const UcsRecord& record : m_ucsRecords) {
+            if (record.handle == handle)
+                return &record;
+        }
+        return nullptr;
+    }
+    const VportRecord* findVportByHandle(duint32 handle) const {
+        if (handle == 0)
+            return nullptr;
+        for (const VportRecord& record : m_vports) {
+            if (record.handle == handle)
+                return &record;
+        }
+        return nullptr;
+    }
     std::vector<const ViewRecord*> findViewsReferencingHandle(duint32 handle) const {
         std::vector<const ViewRecord*> result;
         if (handle == 0)
@@ -3512,6 +3661,99 @@ public:
                 result.push_back(&record);
         }
         return result;
+    }
+    const DocumentMappingRecord* findDocumentMappingBySourceHandle(
+        duint32 handle) const {
+        if (handle == 0)
+            return nullptr;
+        for (const DocumentMappingRecord& record : m_documentMappings) {
+            if (record.sourceHandle == handle)
+                return &record;
+        }
+        return nullptr;
+    }
+    std::vector<const DocumentMappingRecord*> findDocumentMappingsByName(
+        DocumentMappingSource sourceType, const std::string& name) const {
+        std::vector<const DocumentMappingRecord*> result;
+        for (const DocumentMappingRecord& record : m_documentMappings) {
+            if (record.sourceType == sourceType
+                && (record.documentItemName == name || record.sourceName == name)) {
+                result.push_back(&record);
+            }
+        }
+        return result;
+    }
+    std::vector<const DocumentMappingRecord*> findDocumentMappingsByOwner(
+        duint32 ownerHandle) const {
+        std::vector<const DocumentMappingRecord*> result;
+        if (ownerHandle == 0)
+            return result;
+        for (const DocumentMappingRecord& record : m_documentMappings) {
+            if (record.ownerHandle == ownerHandle)
+                result.push_back(&record);
+        }
+        return result;
+    }
+    std::vector<const DocumentMappingRecord*> findDocumentMappingsByLayout(
+        duint32 layoutHandle) const {
+        std::vector<const DocumentMappingRecord*> result;
+        if (layoutHandle == 0)
+            return result;
+        for (const DocumentMappingRecord& record : m_documentMappings) {
+            if (record.layoutHandle == layoutHandle)
+                result.push_back(&record);
+        }
+        return result;
+    }
+    void mapViewToDocumentItem(
+        duint32 handle, const std::string& name, int documentItemIndex) {
+        mapDocumentItem(
+            DocumentMappingSource::View, handle, name, documentItemIndex);
+    }
+    void mapUcsToDocumentItem(
+        duint32 handle, const std::string& name, int documentItemIndex) {
+        mapDocumentItem(
+            DocumentMappingSource::Ucs, handle, name, documentItemIndex);
+    }
+    bool invalidateDocumentMappingByItem(
+        DocumentMappingSource sourceType, const std::string& name) {
+        bool invalidated = false;
+        for (DocumentMappingRecord& record : m_documentMappings) {
+            if (record.sourceType != sourceType)
+                continue;
+            if (record.documentItemName != name && record.sourceName != name)
+                continue;
+            if (record.replayState == ReplayState::ReplayAllowed) {
+                record.replayState = ReplayState::ReplayInvalidated;
+                invalidated = true;
+            }
+            invalidateByHandle(record.sourceHandle);
+        }
+        return invalidated;
+    }
+    DocumentMappingCounts documentMappingCounts() const {
+        DocumentMappingCounts counts;
+        for (const DocumentMappingRecord& record : m_documentMappings) {
+            switch (record.sourceType) {
+                case DocumentMappingSource::View:
+                    ++counts.viewMappings;
+                    break;
+                case DocumentMappingSource::Ucs:
+                    ++counts.ucsMappings;
+                    break;
+                case DocumentMappingSource::Vport:
+                    ++counts.vportMappings;
+                    break;
+            }
+            if (record.isMappedToDocumentItem())
+                ++counts.mappedDocumentItems;
+            counts.unresolvedReferences += record.unresolvedReferenceCount;
+            if (record.replayState == ReplayState::ReplayInvalidated)
+                ++counts.invalidated;
+            if (record.replayState == ReplayState::ReplayReplaced)
+                ++counts.replaced;
+        }
+        return counts;
     }
     const LightRecord* findLightByHandle(duint32 handle) const {
         if (handle == 0)
@@ -4102,8 +4344,20 @@ public:
         for (ViewRecord& record : m_views) {
             if (record.replayState != ReplayState::ReplayAllowed)
                 continue;
-            if (viewRecordReferences(record, dependentHandle))
+            if (viewRecordReferences(record, dependentHandle)) {
                 record.replayState = ReplayState::ReplayInvalidated;
+                invalidateDocumentMappingForSource(
+                    DocumentMappingSource::View, record.handle);
+            }
+        }
+        for (VportRecord& record : m_vports) {
+            if (record.replayState != ReplayState::ReplayAllowed)
+                continue;
+            if (vportRecordReferences(record, dependentHandle)) {
+                record.replayState = ReplayState::ReplayInvalidated;
+                invalidateDocumentMappingForSource(
+                    DocumentMappingSource::Vport, record.handle);
+            }
         }
     }
 
@@ -4820,6 +5074,181 @@ private:
         return false;
     }
 
+    DocumentMappingRecord documentMappingFromView(
+        const ViewRecord& record, int documentItemIndex) const {
+        DocumentMappingRecord mapping;
+        mapping.sourceHandle = record.handle;
+        mapping.handle = record.handle;
+        mapping.sourceType = DocumentMappingSource::View;
+        mapping.sourceName = record.name;
+        mapping.documentItemName = record.name;
+        mapping.documentItemIndex = documentItemIndex;
+        mapping.ownerHandle = record.parentHandle;
+        mapping.parentHandle = record.parentHandle;
+        mapping.associatedUcsHandle = record.hasUcs ? record.namedUcsHandle : 0;
+        mapping.baseUcsHandle = record.baseUcsHandle;
+        mapping.namedUcsHandle = record.namedUcsHandle;
+        mapping.backgroundHandle = record.backgroundHandle;
+        mapping.visualStyleHandle = record.visualStyleHandle;
+        mapping.sunHandle = record.sunHandle;
+        mapping.liveSectionHandle = record.liveSectionHandle;
+        mapping.unresolvedReferenceCount =
+            documentMappingUnresolvedReferenceCount(mapping);
+        mapping.replayState = record.replayState;
+        return mapping;
+    }
+
+    DocumentMappingRecord documentMappingFromUcs(
+        const UcsRecord& record, int documentItemIndex) const {
+        DocumentMappingRecord mapping;
+        mapping.sourceHandle = record.handle;
+        mapping.handle = record.handle;
+        mapping.sourceType = DocumentMappingSource::Ucs;
+        mapping.sourceName = record.name;
+        mapping.documentItemName = record.name;
+        mapping.documentItemIndex = documentItemIndex;
+        mapping.ownerHandle = record.parentHandle;
+        mapping.parentHandle = record.parentHandle;
+        mapping.unresolvedReferenceCount =
+            documentMappingUnresolvedReferenceCount(mapping);
+        mapping.replayState = record.replayState;
+        return mapping;
+    }
+
+    DocumentMappingRecord documentMappingFromVport(
+        const VportRecord& record, int documentItemIndex) const {
+        DocumentMappingRecord mapping;
+        mapping.sourceHandle = record.handle;
+        mapping.handle = record.handle;
+        mapping.sourceType = DocumentMappingSource::Vport;
+        mapping.sourceName = record.name;
+        mapping.documentItemName = record.name;
+        mapping.documentItemIndex = documentItemIndex;
+        mapping.ownerHandle = record.parentHandle;
+        mapping.parentHandle = record.parentHandle;
+        mapping.baseUcsHandle = record.baseUcsHandle;
+        mapping.namedUcsHandle = record.namedUcsHandle;
+        mapping.backgroundHandle = record.backgroundHandle;
+        mapping.visualStyleHandle = record.visualStyleHandle;
+        mapping.sunHandle = record.sunHandle;
+        mapping.unresolvedReferenceCount =
+            documentMappingUnresolvedReferenceCount(mapping);
+        mapping.replayState = record.replayState;
+        return mapping;
+    }
+
+    void upsertDocumentMapping(DocumentMappingRecord mapping) {
+        for (DocumentMappingRecord& record : m_documentMappings) {
+            if (record.sourceHandle != 0
+                && record.sourceHandle == mapping.sourceHandle) {
+                if (mapping.documentItemIndex < 0) {
+                    mapping.documentItemIndex = record.documentItemIndex;
+                    if (mapping.documentItemName.empty())
+                        mapping.documentItemName = record.documentItemName;
+                }
+                record = std::move(mapping);
+                return;
+            }
+        }
+        m_documentMappings.push_back(std::move(mapping));
+    }
+
+    void mapDocumentItem(DocumentMappingSource sourceType, duint32 handle,
+                         const std::string& name, int documentItemIndex) {
+        for (DocumentMappingRecord& record : m_documentMappings) {
+            if (record.sourceType != sourceType)
+                continue;
+            if ((handle != 0 && record.sourceHandle == handle)
+                || (!name.empty() && record.sourceName == name)) {
+                record.documentItemName = name;
+                record.documentItemIndex = documentItemIndex;
+                record.unresolvedReferenceCount =
+                    documentMappingUnresolvedReferenceCount(record);
+                return;
+            }
+        }
+        DocumentMappingRecord mapping;
+        mapping.sourceHandle = handle;
+        mapping.handle = handle;
+        mapping.sourceType = sourceType;
+        mapping.sourceName = name;
+        mapping.documentItemName = name;
+        mapping.documentItemIndex = documentItemIndex;
+        mapping.unresolvedReferenceCount =
+            documentMappingUnresolvedReferenceCount(mapping);
+        m_documentMappings.push_back(std::move(mapping));
+    }
+
+    void refreshDocumentMappingUnresolvedReferenceCounts() {
+        for (DocumentMappingRecord& record : m_documentMappings) {
+            record.unresolvedReferenceCount =
+                documentMappingUnresolvedReferenceCount(record);
+        }
+    }
+
+    void invalidateDocumentMappingForSource(
+        DocumentMappingSource sourceType, duint32 handle) {
+        if (handle == 0)
+            return;
+        for (DocumentMappingRecord& record : m_documentMappings) {
+            if (record.sourceType == sourceType && record.sourceHandle == handle
+                && record.replayState == ReplayState::ReplayAllowed) {
+                record.replayState = ReplayState::ReplayInvalidated;
+            }
+        }
+    }
+
+    size_t documentMappingUnresolvedReferenceCount(
+        const DocumentMappingRecord& record) const {
+        size_t count = 0;
+        std::vector<duint32> unresolvedHandles;
+        appendUnresolvedUcsReference(
+            unresolvedHandles, record.associatedUcsHandle);
+        appendUnresolvedUcsReference(unresolvedHandles, record.baseUcsHandle);
+        appendUnresolvedUcsReference(unresolvedHandles, record.namedUcsHandle);
+        appendUnresolvedOpaqueReference(unresolvedHandles, record.plotViewHandle);
+        appendUnresolvedOpaqueReference(unresolvedHandles, record.backgroundHandle);
+        appendUnresolvedOpaqueReference(unresolvedHandles, record.visualStyleHandle);
+        appendUnresolvedSunReference(unresolvedHandles, record.sunHandle);
+        appendUnresolvedOpaqueReference(unresolvedHandles, record.liveSectionHandle);
+        appendUnresolvedOpaqueReference(
+            unresolvedHandles, record.viewportHeaderHandle);
+        appendUnresolvedOpaqueReference(
+            unresolvedHandles, record.layoutBlockRecordHandle);
+        for (duint32 handle : unresolvedHandles) {
+            if (handle != 0 && !containsValue(unresolvedHandles, handle, count))
+                ++count;
+        }
+        return count;
+    }
+
+    void appendUnresolvedUcsReference(
+        std::vector<duint32>& unresolvedHandles, duint32 handle) const {
+        if (handle != 0 && findUcsByHandle(handle) == nullptr)
+            unresolvedHandles.push_back(handle);
+    }
+
+    void appendUnresolvedSunReference(
+        std::vector<duint32>& unresolvedHandles, duint32 handle) const {
+        if (handle != 0 && findSunByHandle(handle) == nullptr)
+            unresolvedHandles.push_back(handle);
+    }
+
+    static void appendUnresolvedOpaqueReference(
+        std::vector<duint32>& unresolvedHandles, duint32 handle) {
+        if (handle != 0)
+            unresolvedHandles.push_back(handle);
+    }
+
+    static bool containsValue(
+        const std::vector<duint32>& values, duint32 value, size_t limit) {
+        for (size_t i = 0; i < limit && i < values.size(); ++i) {
+            if (values[i] == value)
+                return true;
+        }
+        return false;
+    }
+
     static bool viewRecordReferences(const ViewRecord& record, duint32 handle) {
         if (handle == 0)
             return false;
@@ -4829,6 +5258,16 @@ private:
                || record.visualStyleHandle == handle
                || record.sunHandle == handle
                || record.liveSectionHandle == handle;
+    }
+
+    static bool vportRecordReferences(const VportRecord& record, duint32 handle) {
+        if (handle == 0)
+            return false;
+        return record.namedUcsHandle == handle
+               || record.baseUcsHandle == handle
+               || record.backgroundHandle == handle
+               || record.visualStyleHandle == handle
+               || record.sunHandle == handle;
     }
 
     static bool mleaderStyleRecordReferences(const MLeaderStyleRecord& record,
@@ -5761,6 +6200,9 @@ private:
     void invalidateMatching(Predicate predicate) {
         invalidateMatching(m_rawObjects, predicate);
         invalidateMatching(m_views, predicate);
+        invalidateMatching(m_ucsRecords, predicate);
+        invalidateMatching(m_vports, predicate);
+        invalidateMatching(m_documentMappings, predicate);
         invalidateMatching(m_lights, predicate);
         invalidateMatching(m_suns, predicate);
         invalidateMatching(m_modelerGeometry, predicate);
@@ -5835,6 +6277,9 @@ private:
 
     std::vector<RawObjectRecord> m_rawObjects;
     std::vector<ViewRecord> m_views;
+    std::vector<UcsRecord> m_ucsRecords;
+    std::vector<VportRecord> m_vports;
+    std::vector<DocumentMappingRecord> m_documentMappings;
     std::vector<LightRecord> m_lights;
     std::vector<SunRecord> m_suns;
     std::vector<ModelerGeometryRecord> m_modelerGeometry;

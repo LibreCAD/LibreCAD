@@ -1569,6 +1569,90 @@ TEST_CASE("DWG advanced metadata invalidates VIEW dependencies",
         LC_DwgAdvancedMetadata::ReplayState::ReplayInvalidated);
 }
 
+TEST_CASE("DWG advanced metadata maps VIEW UCS and VPORT document items",
+          "[entity_metadata][dwg_metadata][view]") {
+  LC_DwgAdvancedMetadata metadata;
+
+  DRW_View view;
+  view.name = "Plan View";
+  view.handle = 0x510u;
+  view.parentHandle = 0x501u;
+  view.hasUCS = true;
+  view.namedUCS_ID = 0x520u;
+  view.baseUCS_ID = 0x521u;
+  view.m_backgroundHandle = 0x530u;
+  view.m_visualStyleHandle = 0x531u;
+  view.m_sunHandle = 0x540u;
+  view.m_liveSectionHandle = 0x532u;
+  metadata.addView(view);
+
+  DRW_UCS ucs;
+  ucs.name = "Plan UCS";
+  ucs.handle = 0x520u;
+  ucs.parentHandle = 0x502u;
+  ucs.origin = DRW_Coord{1.0, 2.0, 0.0};
+  ucs.xAxisDirection = DRW_Coord{1.0, 0.0, 0.0};
+  ucs.yAxisDirection = DRW_Coord{0.0, 1.0, 0.0};
+  metadata.addUcs(ucs);
+
+  DRW_Sun sun;
+  sun.handle = 0x540u;
+  sun.parentHandle = 0x503u;
+  metadata.addSun(sun);
+
+  DRW_Vport vport;
+  vport.name = "*ACTIVE";
+  vport.handle = 0x550u;
+  vport.parentHandle = 0x504u;
+  vport.backgroundHandle = 0x530u;
+  vport.visualStyleHandle = 0x531u;
+  vport.m_sunHandle = 0x540u;
+  vport.namedUcsHandle = 0x520u;
+  vport.baseUcsHandle = 0x521u;
+  metadata.addVport(vport);
+
+  metadata.mapViewToDocumentItem(view.handle, view.name, 2);
+  metadata.mapUcsToDocumentItem(ucs.handle, ucs.name, 1);
+
+  REQUIRE(metadata.ucsRecords().size() == 1u);
+  CHECK(metadata.findUcsByHandle(0x520u)->name == "Plan UCS");
+  REQUIRE(metadata.vports().size() == 1u);
+  CHECK(metadata.findVportByHandle(0x550u)->visualStyleHandle == 0x531u);
+
+  const auto* viewMapping =
+      metadata.findDocumentMappingBySourceHandle(view.handle);
+  REQUIRE(viewMapping != nullptr);
+  CHECK(viewMapping->sourceType ==
+        LC_DwgAdvancedMetadata::DocumentMappingSource::View);
+  CHECK(viewMapping->documentItemIndex == 2);
+  CHECK(viewMapping->documentItemName == "Plan View");
+  CHECK(viewMapping->namedUcsHandle == 0x520u);
+  CHECK(viewMapping->sunHandle == 0x540u);
+  CHECK(viewMapping->unresolvedReferenceCount == 4u);
+
+  const auto ucsMappings = metadata.findDocumentMappingsByName(
+      LC_DwgAdvancedMetadata::DocumentMappingSource::Ucs, "Plan UCS");
+  REQUIRE(ucsMappings.size() == 1u);
+  CHECK(ucsMappings.front()->documentItemIndex == 1);
+
+  CHECK(metadata.findDocumentMappingsByOwner(0x501u).size() == 1u);
+  const auto counts = metadata.documentMappingCounts();
+  CHECK(counts.viewMappings == 1u);
+  CHECK(counts.ucsMappings == 1u);
+  CHECK(counts.vportMappings == 1u);
+  CHECK(counts.mappedDocumentItems == 2u);
+  CHECK(counts.unresolvedReferences == 7u);
+
+  CHECK(metadata.invalidateDocumentMappingByItem(
+      LC_DwgAdvancedMetadata::DocumentMappingSource::View, "Plan View"));
+  REQUIRE(metadata.findViewByHandle(0x510u) != nullptr);
+  CHECK(metadata.findViewByHandle(0x510u)->replayState ==
+        LC_DwgAdvancedMetadata::ReplayState::ReplayInvalidated);
+  REQUIRE(metadata.findDocumentMappingBySourceHandle(0x510u) != nullptr);
+  CHECK(metadata.findDocumentMappingBySourceHandle(0x510u)->replayState ==
+        LC_DwgAdvancedMetadata::ReplayState::ReplayInvalidated);
+}
+
 TEST_CASE("DWG advanced metadata invalidates TABLECONTENT raw replay",
           "[entity_metadata][dwg_metadata][table]") {
   LC_DwgAdvancedMetadata metadata;

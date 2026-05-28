@@ -248,6 +248,11 @@ Completed in the 2026-05-27 implementation pass:
   OLE2FRAME entity parsing now surfaces shape indices/style handles and
   bounded OLE payload diagnostics into LibreCAD metadata and export blocker
   summaries without rendering SHX glyphs or regenerating OLE data.
+- Ready Detail E1a VIEW/UCS document mapping advanced: imported VIEW, UCS,
+  and VPORT records now populate metadata-side document mapping records with
+  owner/reference handles, document list indices for mapped VIEW/UCS items,
+  unresolved-reference counts, lookup helpers, and invalidation hooks without
+  changing UI panels or native view writers.
 
 Still incomplete:
 
@@ -1917,7 +1922,7 @@ Acceptance:
 Purpose: connect metadata to existing LibreCAD view/UCS lists in a reversible
 way.
 
-Status: ready as document mapping metadata. This slice may connect imported
+Status: complete as document mapping metadata. This slice connects imported
 VIEW/UCS records to existing document lists but must not change visible UI
 panels or native view writers.
 
