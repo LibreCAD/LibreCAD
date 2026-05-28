@@ -1006,6 +1006,16 @@ TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
   CHECK(capturedAssoc.actionParamPrefixParsed);
   CHECK(capturedAssoc.singleDependencyActionParamParsed);
   CHECK_FALSE(capturedAssoc.compoundActionParamParsed);
+  const LC_DwgAdvancedMetadata::AssociativeShellCounts associativeShells =
+      metadata.associativeShellCounts();
+  CHECK(associativeShells.recordCount == 1u);
+  CHECK(associativeShells.vertexActionParam == 1u);
+  CHECK(associativeShells.valueParamRecords == 1u);
+  CHECK(associativeShells.parsedValueParamRecords == 1u);
+  CHECK(associativeShells.actionParamRecords == 1u);
+  CHECK(associativeShells.parsedActionParamPrefixes == 1u);
+  CHECK(associativeShells.singleDependencyActionParamPrefixes == 1u);
+  CHECK(associativeShells.compoundActionParamPrefixes == 0u);
   CHECK(capturedAssoc.ownedParamHandles.size() == 2u);
   CHECK(capturedAssoc.ownedActionHandles.front() == 0xEFu);
   CHECK(capturedAssoc.dependencyHandle == 0xF0u);
@@ -1365,6 +1375,24 @@ TEST_CASE("DWG advanced metadata stores associative prefix accounting",
   CHECK(capturedOsnap.actionParamPrefixParsed);
   CHECK_FALSE(capturedOsnap.singleDependencyActionParamParsed);
   CHECK(capturedOsnap.compoundActionParamParsed);
+
+  const LC_DwgAdvancedMetadata::AssociativeShellCounts counts =
+      metadata.associativeShellCounts();
+  CHECK(counts.recordCount == 2u);
+  CHECK(counts.action == 1u);
+  CHECK(counts.osnapPointRefActionParam == 1u);
+  CHECK(LC_DwgAdvancedMetadata::associativeShellKindCount(
+            counts, LC_DwgAdvancedMetadata::AssociativeKind::Action) == 1u);
+  CHECK(LC_DwgAdvancedMetadata::associativeShellKindCount(
+            counts,
+            LC_DwgAdvancedMetadata::AssociativeKind::OsnapPointRefActionParam)
+        == 1u);
+  CHECK(counts.valueParamRecords == 1u);
+  CHECK(counts.parsedValueParamRecords == 1u);
+  CHECK(counts.actionParamRecords == 1u);
+  CHECK(counts.parsedActionParamPrefixes == 1u);
+  CHECK(counts.singleDependencyActionParamPrefixes == 0u);
+  CHECK(counts.compoundActionParamPrefixes == 1u);
 }
 
 TEST_CASE("DWG advanced metadata classifies raw object families",

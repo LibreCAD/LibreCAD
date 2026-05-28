@@ -5511,6 +5511,8 @@ void RS_FilterDXFRW::writeObjects() {
             metadata.mleaderWriterBlockerCounts();
         const LC_DwgAdvancedMetadata::ModelerPayloadCounts modelerPayloads =
             metadata.modelerPayloadCounts();
+        const LC_DwgAdvancedMetadata::AssociativeShellCounts associativeShells =
+            metadata.associativeShellCounts();
         for (const auto& record : metadata.rawObjects()) {
             if (nativeSunHandles.count(record.handle) != 0 && isSunRawObject(record)) {
                 hasBlockedReplay = true;
@@ -5636,6 +5638,25 @@ void RS_FilterDXFRW::writeObjects() {
                 static_cast<int>(modelerPayloads.inconsistentSplit),
                 static_cast<int>(modelerPayloads.markerInBody),
                 static_cast<int>(modelerPayloads.markerInHandleStream));
+        }
+        if (associativeShells.recordCount > 0) {
+            RS_DEBUG->print(
+                "DWG associative/action shells: records=%d network=%d action=%d "
+                "dependency=%d geom-dependency=%d action-param=%d value-param=%d/%d "
+                "prefix=%d/%d single-dep=%d compound=%d unknown=%d",
+                static_cast<int>(associativeShells.recordCount),
+                static_cast<int>(associativeShells.network),
+                static_cast<int>(associativeShells.action),
+                static_cast<int>(associativeShells.dependency),
+                static_cast<int>(associativeShells.geometryDependency),
+                static_cast<int>(associativeShells.actionParamRecords),
+                static_cast<int>(associativeShells.parsedValueParamRecords),
+                static_cast<int>(associativeShells.valueParamRecords),
+                static_cast<int>(associativeShells.parsedActionParamPrefixes),
+                static_cast<int>(associativeShells.actionParamRecords),
+                static_cast<int>(associativeShells.singleDependencyActionParamPrefixes),
+                static_cast<int>(associativeShells.compoundActionParamPrefixes),
+                static_cast<int>(associativeShells.unknown));
         }
         if (tableBlockers.tableCount > 0 && tableBlockers.totalBlockers() > 0) {
             RS_DEBUG->print(

@@ -301,6 +301,25 @@ public:
         size_t markerInHandleStream = 0;
     };
 
+    struct AssociativeShellCounts {
+        size_t recordCount = 0;
+        size_t unknown = 0;
+        size_t network = 0;
+        size_t action = 0;
+        size_t dependency = 0;
+        size_t geometryDependency = 0;
+        size_t persistentSubentityManager = 0;
+        size_t alignedDimensionActionBody = 0;
+        size_t vertexActionParam = 0;
+        size_t osnapPointRefActionParam = 0;
+        size_t valueParamRecords = 0;
+        size_t parsedValueParamRecords = 0;
+        size_t actionParamRecords = 0;
+        size_t parsedActionParamPrefixes = 0;
+        size_t singleDependencyActionParamPrefixes = 0;
+        size_t compoundActionParamPrefixes = 0;
+    };
+
     struct TableRecord {
         duint32 handle = 0;
         duint32 parentHandle = 0;
@@ -1322,6 +1341,29 @@ public:
         }
         return counts;
     }
+    AssociativeShellCounts associativeShellCounts() const {
+        AssociativeShellCounts counts;
+        for (const AssociativeRecord& record : m_associativeObjects) {
+            ++counts.recordCount;
+            incrementAssociativeKindCount(counts, record.kind);
+            if (record.valueParamCount != 0) {
+                ++counts.valueParamRecords;
+                if (record.valueParamsParsed)
+                    ++counts.parsedValueParamRecords;
+            }
+            if (record.kind == AssociativeKind::VertexActionParam
+                || record.kind == AssociativeKind::OsnapPointRefActionParam) {
+                ++counts.actionParamRecords;
+                if (record.actionParamPrefixParsed)
+                    ++counts.parsedActionParamPrefixes;
+            }
+            if (record.singleDependencyActionParamParsed)
+                ++counts.singleDependencyActionParamPrefixes;
+            if (record.compoundActionParamParsed)
+                ++counts.compoundActionParamPrefixes;
+        }
+        return counts;
+    }
     const TableCellRecord* findTableCell(duint32 tableHandle, int row, int column) const {
         const TableRecord* table = findTableByHandle(tableHandle);
         if (table == nullptr || row < 0 || column < 0)
@@ -1792,6 +1834,31 @@ public:
             case RawObjectFamily::ObjectContext:
                 return counts.objectContext;
             case RawObjectFamily::Unknown:
+            default:
+                return counts.unknown;
+        }
+    }
+
+    static size_t associativeShellKindCount(
+        const AssociativeShellCounts& counts, AssociativeKind kind) {
+        switch (kind) {
+            case AssociativeKind::Network:
+                return counts.network;
+            case AssociativeKind::Action:
+                return counts.action;
+            case AssociativeKind::Dependency:
+                return counts.dependency;
+            case AssociativeKind::GeometryDependency:
+                return counts.geometryDependency;
+            case AssociativeKind::PersistentSubentityManager:
+                return counts.persistentSubentityManager;
+            case AssociativeKind::AlignedDimensionActionBody:
+                return counts.alignedDimensionActionBody;
+            case AssociativeKind::VertexActionParam:
+                return counts.vertexActionParam;
+            case AssociativeKind::OsnapPointRefActionParam:
+                return counts.osnapPointRefActionParam;
+            case AssociativeKind::Unknown:
             default:
                 return counts.unknown;
         }
@@ -2389,6 +2456,40 @@ private:
                 && predicate(record.handle, record.parentHandle)) {
                 record.replayState = ReplayState::ReplayInvalidated;
             }
+        }
+    }
+
+    static void incrementAssociativeKindCount(
+        AssociativeShellCounts& counts, AssociativeKind kind) {
+        switch (kind) {
+            case AssociativeKind::Network:
+                ++counts.network;
+                break;
+            case AssociativeKind::Action:
+                ++counts.action;
+                break;
+            case AssociativeKind::Dependency:
+                ++counts.dependency;
+                break;
+            case AssociativeKind::GeometryDependency:
+                ++counts.geometryDependency;
+                break;
+            case AssociativeKind::PersistentSubentityManager:
+                ++counts.persistentSubentityManager;
+                break;
+            case AssociativeKind::AlignedDimensionActionBody:
+                ++counts.alignedDimensionActionBody;
+                break;
+            case AssociativeKind::VertexActionParam:
+                ++counts.vertexActionParam;
+                break;
+            case AssociativeKind::OsnapPointRefActionParam:
+                ++counts.osnapPointRefActionParam;
+                break;
+            case AssociativeKind::Unknown:
+            default:
+                ++counts.unknown;
+                break;
         }
     }
 

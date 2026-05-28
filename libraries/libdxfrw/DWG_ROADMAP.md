@@ -219,6 +219,9 @@ Completed in the 2026-05-27 implementation pass:
 - Ready F modeler raw split diagnostics advanced: preserved modeler payloads
   now expose body/handle-stream byte split metadata, marker section
   classification, split consistency checks, and export-time payload summaries.
+- Ready G associative shell diagnostics advanced: ACDBASSOC/ACSH shell
+  metadata now reports per-kind counts, value-param parse accounting,
+  action-param prefix accounting, and export-time graph summaries.
 
 Still incomplete:
 
@@ -231,7 +234,7 @@ Still incomplete:
   writer blocker diagnostics for block/tolerance/override cases.
 - Slice 11-12 ACIS/modeler and associative/action/history graph expansion has
   queryable shell records; the next safe work is bounded sub-block counts and
-  graph diagnostics, not ACIS interpretation or action evaluation.
+  typed payload summaries, not ACIS interpretation or action evaluation.
 - Slice 14 remaining advanced entities: MESH, SHAPE, OLE2FRAME, raster/image/
   underlay DWG writing, and fuller HATCH semantics beyond gradients.
 - Slice 15-16 remaining object metadata writers and VIEW/UCS/lighting UI
@@ -415,6 +418,37 @@ Acceptance:
 
 Stop before parsing ACIS sub-blocks, interpreting SAT/SAB geometry, or
 rewriting modeler entities natively.
+
+### Ready G: Associative Shell Diagnostics
+
+Why ready: `DRW_AssociativeObject` already exposes associative kind,
+value-param counts, action-param prefix parse status, dependency handles, and
+raw replay state. The safe next step is an aggregate diagnostic layer; graph
+evaluation remains out of scope.
+
+Status: complete in the current implementation pass. This reports the shell
+decode queue only; it does not evaluate constraints or regenerate
+ACDBASSOC/action objects.
+
+Implementation steps:
+
+1. Add `AssociativeShellCounts` to `LC_DwgAdvancedMetadata`.
+2. Count records by `AssociativeKind`, value-param records vs parsed
+   value-param records, action-param records vs parsed prefixes, and the
+   single-dependency/compound prefix variants.
+3. Add a helper for querying a count by associative kind.
+4. Log aggregate shell diagnostics from DWG object writing.
+5. Extend `[entity_metadata]` tests for synthetic action and action-param
+   shells.
+
+Acceptance:
+
+- `[entity_metadata]` proves per-kind and prefix/value-param counts.
+- `[dwg-write]` remains green because export diagnostics changed.
+- qmake6 remains green.
+
+Stop before decoding dynamic-block actions, evaluating constraints, or writing
+native ACDBASSOC graph objects.
 
 ### Not Ready As One-Shot Work
 
@@ -849,6 +883,8 @@ Completed:
   ACSH-by-handle, and ACSH-by-owner lookups.
 - Preserved raw records are classified into associative, evaluation-graph,
   dynamic-block, object-context, or unknown families.
+- Metadata exposes associative shell aggregate counts for known classes,
+  value-param parse accounting, and action-param prefix accounting.
 
 Remaining:
 
