@@ -816,6 +816,7 @@ TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
   CHECK(capturedTableContent.valueHandleCount == 1u);
   CHECK(capturedTableContent.blockHandleCount == 2u);
   CHECK(capturedTableContent.fieldHandleCount == 3u);
+  CHECK(capturedTableContent.attributeHandleCount == 1u);
   CHECK(capturedTableContent.mergedRangeCount == 1u);
   CHECK(capturedTableContent.overrideCellCount == 1u);
   CHECK(capturedTableContent.geometryCellCount == 1u);
@@ -838,6 +839,8 @@ TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
   CHECK(capturedTableContent.cellTexts.front() == "Cell text");
   REQUIRE(capturedTableContent.attributeTexts.size() == 1u);
   CHECK(capturedTableContent.attributeTexts.front() == "A1");
+  REQUIRE(capturedTableContent.attributeHandles.size() == 1u);
+  CHECK(capturedTableContent.attributeHandles.front() == 0x104u);
   REQUIRE(capturedTableContent.valueHandles.size() == 1u);
   CHECK(capturedTableContent.valueHandles.front() == 0x102u);
   REQUIRE(capturedTableContent.geometryHandles.size() == 1u);
@@ -859,10 +862,13 @@ TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
   CHECK(firstCell.contentCount == 1u);
   CHECK(firstCell.textContentCount == 1u);
   CHECK(firstCell.attributeCount == 1u);
+  CHECK(firstCell.attributeHandleCount == 1u);
   REQUIRE(firstCell.texts.size() == 1u);
   CHECK(firstCell.texts.front() == "Cell text");
   REQUIRE(firstCell.attributeTexts.size() == 1u);
   CHECK(firstCell.attributeTexts.front() == "A1");
+  REQUIRE(firstCell.attributeHandles.size() == 1u);
+  CHECK(firstCell.attributeHandles.front() == 0x104u);
   const auto& secondCell = capturedTableContent.cells.back();
   CHECK(secondCell.row == 0);
   CHECK(secondCell.column == 1);
@@ -878,6 +884,9 @@ TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
   const auto cellsByValue = metadata.findTableCellsReferencingHandle(0x102u);
   REQUIRE(cellsByValue.size() == 1u);
   CHECK(cellsByValue.front() == &firstCell);
+  const auto cellsByAttribute = metadata.findTableCellsReferencingHandle(0x104u);
+  REQUIRE(cellsByAttribute.size() == 1u);
+  CHECK(cellsByAttribute.front() == &firstCell);
   const auto cellsByBlockContent = metadata.findTableCellsReferencingHandle(0x106u);
   REQUIRE(cellsByBlockContent.size() == 1u);
   CHECK(cellsByBlockContent.front() == &secondCell);
@@ -892,9 +901,10 @@ TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
   CHECK(tableBlockers.tableCount == 1u);
   CHECK(tableBlockers.fieldContent == 1u);
   CHECK(tableBlockers.blockContent == 1u);
+  CHECK(tableBlockers.attributeContent == 1u);
   CHECK(tableBlockers.overrideCells == 1u);
   CHECK(tableBlockers.geometryCells == 1u);
-  CHECK(tableBlockers.totalBlockers() == 4u);
+  CHECK(tableBlockers.totalBlockers() == 5u);
   CHECK(capturedTableContent.replayState ==
         LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed);
   metadata.invalidateTableGraphForHandle(0x106u);
@@ -1082,7 +1092,7 @@ TEST_CASE("DWG advanced metadata invalidates TABLECONTENT raw replay",
   DRW_TableRow row;
   row.m_height = 1.0;
   DRW_TableCell cell;
-  cell.m_valueHandle = 0x442u;
+  cell.m_attributes.push_back({0x442u, 1, "Attribute text"});
   row.m_cells.push_back(cell);
   tableContent.m_content.m_rows.push_back(row);
   metadata.addTableContent(tableContent);

@@ -234,9 +234,11 @@ public:
         size_t fieldContentCount = 0;
         size_t blockContentCount = 0;
         size_t attributeCount = 0;
+        size_t attributeHandleCount = 0;
         std::vector<std::string> texts;
         std::vector<std::string> attributeTexts;
         std::vector<duint32> contentHandles;
+        std::vector<duint32> attributeHandles;
     };
 
     struct TableWriterBlockerCounts {
@@ -246,12 +248,14 @@ public:
         size_t unresolvedStyle = 0;
         size_t fieldContent = 0;
         size_t blockContent = 0;
+        size_t attributeContent = 0;
         size_t overrideCells = 0;
         size_t geometryCells = 0;
 
         size_t totalBlockers() const {
             return fallbackRendered + incompleteSemanticParse + unresolvedStyle
-                   + fieldContent + blockContent + overrideCells + geometryCells;
+                   + fieldContent + blockContent + attributeContent
+                   + overrideCells + geometryCells;
         }
     };
 
@@ -271,6 +275,7 @@ public:
         size_t valueHandleCount = 0;
         size_t blockHandleCount = 0;
         size_t fieldHandleCount = 0;
+        size_t attributeHandleCount = 0;
         size_t mergedRangeCount = 0;
         size_t overrideCellCount = 0;
         size_t geometryCellCount = 0;
@@ -293,6 +298,7 @@ public:
         std::vector<duint32> valueHandles;
         std::vector<duint32> blockHandles;
         std::vector<duint32> fieldHandles;
+        std::vector<duint32> attributeHandles;
         std::vector<duint32> geometryHandles;
         std::vector<TableMergedRangeRecord> mergedRanges;
         std::vector<TableCellRecord> cells;
@@ -1175,6 +1181,8 @@ public:
                 ++counts.fieldContent;
             if (record.blockContentCount != 0 || record.hasBlockContent)
                 ++counts.blockContent;
+            if (record.attributeCount != 0 || record.attributeHandleCount != 0)
+                ++counts.attributeContent;
             if (record.overrideCellCount != 0)
                 ++counts.overrideCells;
             if (record.geometryCellCount != 0)
@@ -1742,11 +1750,16 @@ private:
                         record.geometryHandles.push_back(cell.m_geometryHandle);
                 }
                 for (const DRW_TableCellAttribute& attribute : cell.m_attributes) {
+                    if (attribute.m_attdefHandle != 0) {
+                        record.attributeHandles.push_back(attribute.m_attdefHandle);
+                        cellRecord.attributeHandles.push_back(attribute.m_attdefHandle);
+                    }
                     if (!attribute.m_text.empty()) {
                         record.attributeTexts.push_back(attribute.m_text);
                         cellRecord.attributeTexts.push_back(attribute.m_text);
                     }
                 }
+                cellRecord.attributeHandleCount = cellRecord.attributeHandles.size();
                 for (const DRW_TableCellContent& cellContent : cell.m_contents) {
                     if (!cellContent.m_text.empty()) {
                         ++record.textContentCount;
@@ -1779,6 +1792,7 @@ private:
         }
         record.fieldHandleCount = record.fieldHandles.size();
         record.blockHandleCount = record.blockHandles.size();
+        record.attributeHandleCount = record.attributeHandles.size();
     }
 
     static bool isTableStyleRecord(const TableRecord& record) {
@@ -1819,6 +1833,10 @@ private:
             if (contentHandle == handle)
                 return true;
         }
+        for (duint32 attributeHandle : cell.attributeHandles) {
+            if (attributeHandle == handle)
+                return true;
+        }
         return false;
     }
 
@@ -1837,6 +1855,10 @@ private:
         }
         for (duint32 fieldHandle : record.fieldHandles) {
             if (fieldHandle == handle)
+                return true;
+        }
+        for (duint32 attributeHandle : record.attributeHandles) {
+            if (attributeHandle == handle)
                 return true;
         }
         for (duint32 geometryHandle : record.geometryHandles) {

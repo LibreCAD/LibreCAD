@@ -5620,13 +5620,15 @@ void RS_FilterDXFRW::writeObjects() {
             RS_DEBUG->print(
                 RS_Debug::D_WARNING,
                 "Native DWG table writing blocked: tables=%d fallback=%d incomplete=%d "
-                "unresolved-style=%d field=%d block=%d overrides=%d geometry=%d",
+                "unresolved-style=%d field=%d block=%d attributes=%d "
+                "overrides=%d geometry=%d",
                 static_cast<int>(tableBlockers.tableCount),
                 static_cast<int>(tableBlockers.fallbackRendered),
                 static_cast<int>(tableBlockers.incompleteSemanticParse),
                 static_cast<int>(tableBlockers.unresolvedStyle),
                 static_cast<int>(tableBlockers.fieldContent),
                 static_cast<int>(tableBlockers.blockContent),
+                static_cast<int>(tableBlockers.attributeContent),
                 static_cast<int>(tableBlockers.overrideCells),
                 static_cast<int>(tableBlockers.geometryCells));
         }

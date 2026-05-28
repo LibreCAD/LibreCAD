@@ -176,9 +176,13 @@ Completed in the 2026-05-27 implementation pass:
   TABLE/TABLECONTENT records now also invalidate matching preserved raw table
   objects so stale raw payloads are not replayed after a dependent handle is
   edited.
+- Slice 5 table attribute graph advanced: TABLE/TABLECONTENT cell attributes
+  now preserve referenced handles, participate in cell/table dependency
+  lookups, invalidate semantic/raw table replay when edited, and are counted
+  in native table writer blocker diagnostics.
 - Slice 6 table export diagnostics advanced: metadata exposes native table
   writer blocker counts and DWG export logs fallback, incomplete parse,
-  unresolved style, FIELD, block, override, and geometry blockers.
+  unresolved style, FIELD, block, attribute, override, and geometry blockers.
 - Slice 11-12 shell graph lookup support advanced: modeler geometry, ACDBASSOC
   shells, and ACSH history records now expose handle/reference lookup helpers
   and associative kind names/lookups so follow-up decoders can connect ACIS
@@ -383,6 +387,8 @@ Completed:
   attribute summaries instead of only aggregate table counts.
 - Metadata exposes table-cell coordinate lookup and cell-reference lookup by
   handle.
+- Table attribute handles are included in cell/table reference lookups and
+  native writer blocker diagnostics.
 - Table graph invalidation marks dependent TABLE/TABLECONTENT records stale
   when a referenced handle changes.
 - Table graph invalidation also marks matching preserved raw table payloads
