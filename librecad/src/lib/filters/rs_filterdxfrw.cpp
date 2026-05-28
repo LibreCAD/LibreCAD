@@ -5671,7 +5671,8 @@ void RS_FilterDXFRW::writeObjects() {
                 RS_Debug::D_WARNING,
                 "Native DWG table writing blocked: tables=%d fallback=%d incomplete=%d "
                 "unresolved-style=%d field=%d block=%d attributes=%d "
-                "overrides=%d geometry=%d",
+                "overrides=%d geometry=%d unknown-ranges=%d incomplete-ranges=%d "
+                "override-masks=%d break-ranges=%d geometry-ranges=%d",
                 static_cast<int>(tableBlockers.tableCount),
                 static_cast<int>(tableBlockers.fallbackRendered),
                 static_cast<int>(tableBlockers.incompleteSemanticParse),
@@ -5680,7 +5681,12 @@ void RS_FilterDXFRW::writeObjects() {
                 static_cast<int>(tableBlockers.blockContent),
                 static_cast<int>(tableBlockers.attributeContent),
                 static_cast<int>(tableBlockers.overrideCells),
-                static_cast<int>(tableBlockers.geometryCells));
+                static_cast<int>(tableBlockers.geometryCells),
+                static_cast<int>(tableBlockers.unknownRanges),
+                static_cast<int>(tableBlockers.incompleteRanges),
+                static_cast<int>(tableBlockers.overrideMasks),
+                static_cast<int>(tableBlockers.breakRanges),
+                static_cast<int>(tableBlockers.tableGeometryTailRanges));
         }
         if (mleaderBlockers.mleaderCount > 0 && mleaderBlockers.totalBlockers() > 0) {
             RS_DEBUG->print(

@@ -882,7 +882,7 @@ Forward A-E tracks toward native support.
 
 Purpose: finish the table style metadata layer before fallback rendering.
 
-Status: implementation started on 2026-05-28. CELLSTYLEMAP objects are now
+Status: completed for the metadata/replay layer on 2026-05-28. CELLSTYLEMAP objects are now
 forwarded from `RS_FilterDXFRW` into `LC_DwgAdvancedMetadata`, stored as
 dedicated records, searchable by handle/style ID/referenced handle, and
 participate in table raw replay invalidation. Remaining work in this slice is
@@ -924,6 +924,15 @@ Stop before fallback geometry or native writing.
 ### Ready Detail A1b: Table Unknown-Range and Override Metadata
 
 Purpose: make table parsing observable where semantics are still incomplete.
+
+Status: completed for current skipped-table regions on 2026-05-28. The reader
+now records best-effort bit ranges for skipped TABLE/TABLECONTENT/TABLESTYLE
+and CELLSTYLEMAP subrecords, including content formats, cell styles, R2007
+table and cell overrides, table cell geometry tails, TABLE break data, and row
+range tails. LibreCAD metadata now summarizes unknown, incomplete, override,
+break, and geometry-tail ranges and includes those buckets in native table
+writer diagnostics. Future decoding work can consume the recorded ranges
+without changing reader cursor behavior.
 
 Files:
 

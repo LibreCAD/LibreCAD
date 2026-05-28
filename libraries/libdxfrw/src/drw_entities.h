@@ -773,6 +773,7 @@ struct DRW_TableContent {
     std::vector<duint32> m_fieldHandles;
     std::vector<DRW_TableMergedRange> m_mergedRanges;
     duint32 m_tableStyleHandle = 0;
+    std::vector<DRW_DwgSubrecordRange> m_subrecordRanges;
 };
 
 //! Class to handle ACAD_TABLE (AcDbTable).

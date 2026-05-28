@@ -50,6 +50,19 @@ duint64 currentDwgBit(const dwgBuffer *buf) {
     return buf->getPosition() * 8 + buf->getBitPos();
 }
 
+DRW_DwgSubrecordRange makeDwgSubrecordRange(const char *name, duint64 startBit,
+                                            duint64 endBit, DRW::Version version,
+                                            duint32 count, bool parseComplete) {
+    DRW_DwgSubrecordRange range;
+    range.m_name = name;
+    range.m_startBit = startBit;
+    range.m_bitSize = endBit >= startBit ? endBit - startBit : 0;
+    range.m_version = version;
+    range.m_count = count;
+    range.m_parseComplete = parseComplete;
+    return range;
+}
+
 bool isValidSplineDegree(int degree) {
     return degree >= 1 && degree <= kMaxSplineDegree;
 }
@@ -309,7 +322,9 @@ void readTableCmColor(DRW::Version version, dwgBuffer *buf, dwgBuffer *strBuf) {
 
 bool skipR2007TableCellOverrides(DRW::Version version, dwgBuffer *buf,
                                  dwgBuffer *strBuf, dwgBuffer *hdlBuf,
-                                 DRW_TableCell& cell) {
+                                 DRW_TableCell& cell,
+                                 std::vector<DRW_DwgSubrecordRange> *ranges) {
+    const duint64 startBit = currentDwgBit(buf);
     cell.m_overrideFlags = static_cast<duint32>(buf->getBitLong());
     cell.m_virtualEdgeFlags = buf->getRawChar8();
 
@@ -350,11 +365,18 @@ bool skipR2007TableCellOverrides(DRW::Version version, dwgBuffer *buf,
     if (cell.m_overrideFlags & 0x20000)
         buf->getBitShort();
 
-    return buf->isGood() && (!strBuf || strBuf->isGood()) && (!hdlBuf || hdlBuf->isGood());
+    const bool good = buf->isGood() && (!strBuf || strBuf->isGood()) && (!hdlBuf || hdlBuf->isGood());
+    if (ranges != nullptr) {
+        ranges->push_back(makeDwgSubrecordRange(
+            "r2007-table-cell-overrides", startBit, currentDwgBit(buf),
+            version, cell.m_overrideFlags, good));
+    }
+    return good;
 }
 
 bool parseR2007TableCell(DRW::Version version, dwgBuffer *buf, dwgBuffer *strBuf,
-                         dwgBuffer *hdlBuf, DRW_TableCell& cell) {
+                         dwgBuffer *hdlBuf, DRW_TableCell& cell,
+                         std::vector<DRW_DwgSubrecordRange> *ranges) {
     dwgBuffer *textBuf = strBuf ? strBuf : buf;
     cell.m_type = buf->getBitShort();
     cell.m_edgeFlags = buf->getRawChar8();
@@ -396,7 +418,8 @@ bool parseR2007TableCell(DRW::Version version, dwgBuffer *buf, dwgBuffer *strBuf
         cell.m_contents.push_back(content);
     }
 
-    if (buf->getBit() != 0 && !skipR2007TableCellOverrides(version, buf, strBuf, hdlBuf, cell))
+    if (buf->getBit() != 0
+        && !skipR2007TableCellOverrides(version, buf, strBuf, hdlBuf, cell, ranges))
         return false;
 
     if (version > DRW::AC1018) {
@@ -416,9 +439,13 @@ bool parseR2007TableCell(DRW::Version version, dwgBuffer *buf, dwgBuffer *strBuf
 }
 
 bool skipR2007TableOverrides(DRW::Version version, dwgBuffer *buf,
-                             dwgBuffer *strBuf, dwgBuffer *hdlBuf) {
+                             dwgBuffer *strBuf, dwgBuffer *hdlBuf,
+                             std::vector<DRW_DwgSubrecordRange> *ranges = nullptr) {
+    const duint64 startBit = currentDwgBit(buf);
+    duint32 maskCount = 0;
     if (buf->getBit() != 0) {
         const duint32 flags = static_cast<duint32>(buf->getBitLong());
+        ++maskCount;
         if (flags & 0x000001)
             buf->getBit();
         if (flags & 0x000004)
@@ -467,6 +494,7 @@ bool skipR2007TableOverrides(DRW::Version version, dwgBuffer *buf,
 
     if (buf->getBit() != 0) {
         const duint32 flags = static_cast<duint32>(buf->getBitLong());
+        ++maskCount;
         for (int i = 0; i < 18; ++i) {
             if (flags & (1u << i))
                 readTableCmColor(version, buf, strBuf);
@@ -475,6 +503,7 @@ bool skipR2007TableOverrides(DRW::Version version, dwgBuffer *buf,
 
     if (buf->getBit() != 0) {
         const duint32 flags = static_cast<duint32>(buf->getBitLong());
+        ++maskCount;
         for (int i = 0; i < 18; ++i) {
             if (flags & (1u << i))
                 buf->getBitShort();
@@ -483,17 +512,26 @@ bool skipR2007TableOverrides(DRW::Version version, dwgBuffer *buf,
 
     if (buf->getBit() != 0) {
         const duint32 flags = static_cast<duint32>(buf->getBitLong());
+        ++maskCount;
         for (int i = 0; i < 18; ++i) {
             if (flags & (1u << i))
                 buf->getBitShort();
         }
     }
 
-    return buf->isGood() && (!strBuf || strBuf->isGood()) && (!hdlBuf || hdlBuf->isGood());
+    const bool good = buf->isGood() && (!strBuf || strBuf->isGood()) && (!hdlBuf || hdlBuf->isGood());
+    if (ranges != nullptr && (maskCount != 0 || currentDwgBit(buf) != startBit)) {
+        ranges->push_back(makeDwgSubrecordRange(
+            "r2007-table-overrides", startBit, currentDwgBit(buf),
+            version, maskCount, good));
+    }
+    return good;
 }
 
 bool skipTableContentFormat(DRW::Version version, dwgBuffer *buf,
-                            dwgBuffer *strBuf, dwgBuffer *hdlBuf) {
+                            dwgBuffer *strBuf, dwgBuffer *hdlBuf,
+                            std::vector<DRW_DwgSubrecordRange> *ranges = nullptr) {
+    const duint64 startBit = currentDwgBit(buf);
     dwgBuffer *textBuf = strBuf ? strBuf : buf;
     buf->getBitLong();  // property override flags
     buf->getBitLong();  // property flags
@@ -509,15 +547,29 @@ bool skipTableContentFormat(DRW::Version version, dwgBuffer *buf,
     buf->getCmColor(version, &rgb, textBuf, &name, &book);
     readTableHandle(hdlBuf); // text style
     buf->getBitDouble(); // text height
-    return buf->isGood() && (!strBuf || strBuf->isGood()) && (!hdlBuf || hdlBuf->isGood());
+    const bool good = buf->isGood() && (!strBuf || strBuf->isGood()) && (!hdlBuf || hdlBuf->isGood());
+    if (ranges != nullptr) {
+        ranges->push_back(makeDwgSubrecordRange(
+            "table-content-format", startBit, currentDwgBit(buf),
+            version, 1, good));
+    }
+    return good;
 }
 
 bool skipTableCellStyle(DRW::Version version, dwgBuffer *buf,
-                        dwgBuffer *strBuf, dwgBuffer *hdlBuf) {
+                        dwgBuffer *strBuf, dwgBuffer *hdlBuf,
+                        std::vector<DRW_DwgSubrecordRange> *ranges = nullptr) {
+    const duint64 startBit = currentDwgBit(buf);
     buf->getBitLong(); // style type
     const bool hasData = buf->getBitShort() != 0;
-    if (!hasData)
+    if (!hasData) {
+        if (ranges != nullptr) {
+            ranges->push_back(makeDwgSubrecordRange(
+                "table-cell-style", startBit, currentDwgBit(buf),
+                version, 0, buf->isGood()));
+        }
         return buf->isGood();
+    }
 
     buf->getBitLong(); // property override flags
     buf->getBitLong(); // merge flags
@@ -527,7 +579,7 @@ bool skipTableCellStyle(DRW::Version version, dwgBuffer *buf,
     dwgBuffer *textBuf = strBuf ? strBuf : buf;
     buf->getCmColor(version, &rgb, textBuf, &name, &book);
     buf->getBitLong(); // content layout
-    if (!skipTableContentFormat(version, buf, strBuf, hdlBuf))
+    if (!skipTableContentFormat(version, buf, strBuf, hdlBuf, ranges))
         return false;
 
     const duint16 marginFlags = buf->getBitShort();
@@ -554,11 +606,18 @@ bool skipTableCellStyle(DRW::Version version, dwgBuffer *buf,
         buf->getBitDouble(); // double line spacing
     }
 
-    return buf->isGood() && (!strBuf || strBuf->isGood()) && (!hdlBuf || hdlBuf->isGood());
+    const bool good = buf->isGood() && (!strBuf || strBuf->isGood()) && (!hdlBuf || hdlBuf->isGood());
+    if (ranges != nullptr) {
+        ranges->push_back(makeDwgSubrecordRange(
+            "table-cell-style", startBit, currentDwgBit(buf),
+            version, borders, good));
+    }
+    return good;
 }
 
 bool parseTableCell(DRW::Version version, dwgBuffer *buf, dwgBuffer *strBuf,
-                    dwgBuffer *hdlBuf, DRW_TableCell& cell) {
+                    dwgBuffer *hdlBuf, DRW_TableCell& cell,
+                    std::vector<DRW_DwgSubrecordRange> *ranges) {
     dwgBuffer *textBuf = strBuf ? strBuf : buf;
     cell.m_flags = buf->getBitLong();
     cell.m_toolTip = readTableText(version, textBuf);
@@ -621,19 +680,21 @@ bool parseTableCell(DRW::Version version, dwgBuffer *buf, dwgBuffer *strBuf,
         }
 
         const bool hasContentFormat = buf->getBitShort() != 0;
-        if (hasContentFormat && !skipTableContentFormat(version, buf, strBuf, hdlBuf)) {
+        if (hasContentFormat
+            && !skipTableContentFormat(version, buf, strBuf, hdlBuf, ranges)) {
             DRW_DBG("TABLE cell content format parse incomplete\n");
             return false;
         }
         cell.m_contents.push_back(content);
     }
 
-    if (!skipTableCellStyle(version, buf, strBuf, hdlBuf)) {
+    if (!skipTableCellStyle(version, buf, strBuf, hdlBuf, ranges)) {
         DRW_DBG("TABLE cell style override parse incomplete\n");
         return false;
     }
 
     cell.m_styleId = buf->getBitLong();
+    const duint64 geometryStartBit = currentDwgBit(buf);
     const duint32 hasGeometry = buf->getBitLong();
     if (hasGeometry != 0) {
         buf->getBitLong(); // unknown AC1027+ geometry marker
@@ -649,6 +710,12 @@ bool parseTableCell(DRW::Version version, dwgBuffer *buf, dwgBuffer *strBuf,
             cell.m_geometryWidth = buf->getBitDouble();
             cell.m_geometryHeight = buf->getBitDouble();
             cell.m_geometryRecordFlags = buf->getBitLong();
+        }
+        if (ranges != nullptr) {
+            const bool geometryGood = buf->isGood() && (!hdlBuf || hdlBuf->isGood());
+            ranges->push_back(makeDwgSubrecordRange(
+                "table-cell-geometry-tail", geometryStartBit, currentDwgBit(buf),
+                version, cell.m_geometryFlags, geometryGood));
         }
     }
 
@@ -686,7 +753,8 @@ bool parseTableContent(DRW::Version version, dwgBuffer *buf, dwgBuffer *strBuf,
                 return false;
             }
         }
-        if (!skipTableCellStyle(version, buf, strBuf, hdlBuf)) {
+        if (!skipTableCellStyle(version, buf, strBuf, hdlBuf,
+                                &content.m_subrecordRanges)) {
             DRW_DBG("TABLECONTENT column cell style parse incomplete\n");
             return false;
         }
@@ -712,7 +780,8 @@ bool parseTableContent(DRW::Version version, dwgBuffer *buf, dwgBuffer *strBuf,
         row.m_cells.reserve(cells);
         for (duint32 cellIndex = 0; cellIndex < cells; ++cellIndex) {
             DRW_TableCell cell;
-            if (!parseTableCell(version, buf, strBuf, hdlBuf, cell)) {
+            if (!parseTableCell(version, buf, strBuf, hdlBuf, cell,
+                                &content.m_subrecordRanges)) {
                 DRW_DBG("TABLECONTENT cell parse incomplete at row "); DRW_DBG(rowIndex);
                 DRW_DBG(" cell "); DRW_DBG(cellIndex); DRW_DBG("\n");
                 return false;
@@ -732,7 +801,8 @@ bool parseTableContent(DRW::Version version, dwgBuffer *buf, dwgBuffer *strBuf,
                 return false;
             }
         }
-        if (!skipTableCellStyle(version, buf, strBuf, hdlBuf)) {
+        if (!skipTableCellStyle(version, buf, strBuf, hdlBuf,
+                                &content.m_subrecordRanges)) {
             DRW_DBG("TABLECONTENT row cell style parse incomplete\n");
             return false;
         }
@@ -754,7 +824,8 @@ bool parseTableContent(DRW::Version version, dwgBuffer *buf, dwgBuffer *strBuf,
             content.m_fieldHandles.push_back(ref);
     }
 
-    if (!skipTableCellStyle(version, buf, strBuf, hdlBuf)) {
+    if (!skipTableCellStyle(version, buf, strBuf, hdlBuf,
+                            &content.m_subrecordRanges)) {
         DRW_DBG("TABLECONTENT table cell style parse incomplete\n");
         return false;
     }
@@ -3097,6 +3168,7 @@ bool DRW_Table::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
         buf->getBitShort();
         m_horizontalDirection = buf->get3BitDouble();
 
+        const duint64 breakStartBit = currentDwgBit(buf);
         const bool hasBreakData = buf->getBitLong() != 0;
         if (hasBreakData) {
             buf->getBitLong();
@@ -3105,15 +3177,23 @@ bool DRW_Table::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
             buf->getBitLong();
             buf->getBitLong();
             const duint32 manualPositions = buf->getBitLong();
-            if (manualPositions > kMaxTableItems)
+            if (manualPositions > kMaxTableItems) {
+                m_content.m_subrecordRanges.push_back(makeDwgSubrecordRange(
+                    "table-break-data", breakStartBit, currentDwgBit(buf),
+                    version, manualPositions, false));
                 return true;
+            }
             for (duint32 i = 0; i < manualPositions; ++i) {
                 buf->get3BitDouble();
                 buf->getBitDouble();
                 buf->getBitLong();
             }
+            m_content.m_subrecordRanges.push_back(makeDwgSubrecordRange(
+                "table-break-data", breakStartBit, currentDwgBit(buf),
+                version, manualPositions, buf->isGood()));
         }
 
+        const duint64 rowRangeStartBit = currentDwgBit(buf);
         const duint32 rowRanges = buf->getBitLong();
         if (rowRanges <= kMaxTableItems) {
             for (duint32 i = 0; i < rowRanges; ++i) {
@@ -3121,6 +3201,15 @@ bool DRW_Table::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
                 buf->getBitLong();
                 buf->getBitLong();
             }
+            if (rowRanges != 0) {
+                m_content.m_subrecordRanges.push_back(makeDwgSubrecordRange(
+                    "table-row-ranges", rowRangeStartBit, currentDwgBit(buf),
+                    version, rowRanges, buf->isGood()));
+            }
+        } else {
+            m_content.m_subrecordRanges.push_back(makeDwgSubrecordRange(
+                "table-row-ranges", rowRangeStartBit, currentDwgBit(buf),
+                version, rowRanges, false));
         }
 
         return true;
@@ -3157,7 +3246,9 @@ bool DRW_Table::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     m_semanticContentComplete = true;
     for (duint32 row = 0; row < rows && m_semanticContentComplete; ++row) {
         for (duint32 column = 0; column < columns; ++column) {
-            if (!parseR2007TableCell(version, buf, sBuf, &hBuff, m_content.m_rows[row].m_cells[column])) {
+            if (!parseR2007TableCell(version, buf, sBuf, &hBuff,
+                                     m_content.m_rows[row].m_cells[column],
+                                     &m_content.m_subrecordRanges)) {
                 m_semanticContentComplete = false;
                 break;
             }
@@ -3165,7 +3256,8 @@ bool DRW_Table::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     }
 
     if (m_semanticContentComplete)
-        m_semanticContentComplete = skipR2007TableOverrides(version, buf, sBuf, &hBuff);
+        m_semanticContentComplete = skipR2007TableOverrides(
+            version, buf, sBuf, &hBuff, &m_content.m_subrecordRanges);
     if (!m_semanticContentComplete)
         DRW_DBG("R2007 TABLE cell parse incomplete; anonymous block insert kept\n");
 

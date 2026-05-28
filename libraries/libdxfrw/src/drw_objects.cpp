@@ -149,6 +149,23 @@ constexpr dint32 kMaxAssocItems = 100000;
 constexpr dint32 kMaxAssocValueParams = 10000;
 constexpr duint32 kMaxAcShBlobBytes = 16 * 1024 * 1024;
 
+duint64 currentObjectDwgBit(const dwgBuffer *buf) {
+    return buf->getPosition() * 8 + buf->getBitPos();
+}
+
+DRW_DwgSubrecordRange makeObjectSubrecordRange(const char *name, duint64 startBit,
+                                               duint64 endBit, DRW::Version version,
+                                               duint32 count, bool parseComplete) {
+    DRW_DwgSubrecordRange range;
+    range.m_name = name;
+    range.m_startBit = startBit;
+    range.m_bitSize = endBit >= startBit ? endBit - startBit : 0;
+    range.m_version = version;
+    range.m_count = count;
+    range.m_parseComplete = parseComplete;
+    return range;
+}
+
 duint32 readObjectHandleRef(dwgBuffer *hdlBuf) {
     if (hdlBuf == nullptr || !hdlBuf->isGood())
         return 0;
@@ -441,7 +458,9 @@ std::vector<double> readObject4x3Matrix(dwgBuffer *buf) {
 
 bool readTableStyleContentFormat(DRW::Version version, dwgBuffer *buf,
                                  dwgBuffer *strBuf, dwgBuffer *hdlBuf,
-                                 DRW_TableStyleContentFormat& format) {
+                                 DRW_TableStyleContentFormat& format,
+                                 std::vector<DRW_DwgSubrecordRange> *ranges = nullptr) {
+    const duint64 startBit = currentObjectDwgBit(buf);
     dwgBuffer *textBuf = strBuf ? strBuf : buf;
     format.m_propertyOverrideFlags = static_cast<duint32>(buf->getBitLong());
     format.m_propertyFlags = static_cast<duint32>(buf->getBitLong());
@@ -454,22 +473,37 @@ bool readTableStyleContentFormat(DRW::Version version, dwgBuffer *buf,
     format.m_contentColor = readObjectCmColor(version, buf, strBuf);
     format.m_textStyleHandle = readObjectHandleRef(hdlBuf);
     format.m_textHeight = buf->getBitDouble();
-    return buf->isGood() && (!strBuf || strBuf->isGood()) && (!hdlBuf || hdlBuf->isGood());
+    const bool good = buf->isGood() && (!strBuf || strBuf->isGood()) && (!hdlBuf || hdlBuf->isGood());
+    if (ranges != nullptr) {
+        ranges->push_back(makeObjectSubrecordRange(
+            "table-style-content-format", startBit, currentObjectDwgBit(buf),
+            version, 1, good));
+    }
+    return good;
 }
 
 bool readTableStyleCellStyle(DRW::Version version, dwgBuffer *buf,
                              dwgBuffer *strBuf, dwgBuffer *hdlBuf,
-                             DRW_TableStyleCellStyle& style) {
+                             DRW_TableStyleCellStyle& style,
+                             std::vector<DRW_DwgSubrecordRange> *ranges = nullptr) {
+    const duint64 startBit = currentObjectDwgBit(buf);
     style.m_type = buf->getBitLong();
     style.m_hasData = buf->getBitShort() != 0;
-    if (!style.m_hasData)
+    if (!style.m_hasData) {
+        if (ranges != nullptr) {
+            ranges->push_back(makeObjectSubrecordRange(
+                "table-style-cell-style", startBit, currentObjectDwgBit(buf),
+                version, 0, buf->isGood()));
+        }
         return buf->isGood();
+    }
 
     style.m_propertyOverrideFlags = static_cast<duint32>(buf->getBitLong());
     style.m_mergeFlags = static_cast<duint32>(buf->getBitLong());
     style.m_backgroundColor = readObjectCmColor(version, buf, strBuf);
     style.m_contentLayout = static_cast<duint32>(buf->getBitLong());
-    if (!readTableStyleContentFormat(version, buf, strBuf, hdlBuf, style.m_contentFormat))
+    if (!readTableStyleContentFormat(version, buf, strBuf, hdlBuf,
+                                     style.m_contentFormat, ranges))
         return false;
 
     style.m_marginOverrideFlags = buf->getBitShort();
@@ -483,8 +517,14 @@ bool readTableStyleCellStyle(DRW::Version version, dwgBuffer *buf,
     }
 
     const duint32 borderCount = static_cast<duint32>(buf->getBitLong());
-    if (borderCount > 6)
+    if (borderCount > 6) {
+        if (ranges != nullptr) {
+            ranges->push_back(makeObjectSubrecordRange(
+                "table-style-cell-style", startBit, currentObjectDwgBit(buf),
+                version, borderCount, false));
+        }
         return false;
+    }
     style.m_borders.clear();
     style.m_borders.reserve(borderCount);
     for (duint32 i = 0; i < borderCount; ++i) {
@@ -502,7 +542,13 @@ bool readTableStyleCellStyle(DRW::Version version, dwgBuffer *buf,
         style.m_borders.push_back(border);
     }
 
-    return buf->isGood() && (!strBuf || strBuf->isGood()) && (!hdlBuf || hdlBuf->isGood());
+    const bool good = buf->isGood() && (!strBuf || strBuf->isGood()) && (!hdlBuf || hdlBuf->isGood());
+    if (ranges != nullptr) {
+        ranges->push_back(makeObjectSubrecordRange(
+            "table-style-cell-style", startBit, currentObjectDwgBit(buf),
+            version, borderCount, good));
+    }
+    return good;
 }
 
 bool readLegacyTableStyleRowStyle(DRW::Version version, dwgBuffer *buf,
@@ -2909,7 +2955,8 @@ bool DRW_TableStyle::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
         buf->getBitLong();
         m_unknownHandle = readObjectHandleRef(hBuf);
 
-        if (!readTableStyleCellStyle(version, buf, sBuf, hBuf, m_tableCellStyle)) {
+        if (!readTableStyleCellStyle(version, buf, sBuf, hBuf,
+                                     m_tableCellStyle, &m_subrecordRanges)) {
             DRW_DBG("TABLESTYLE table cell style parse incomplete\n");
             return true;
         }
@@ -2926,7 +2973,8 @@ bool DRW_TableStyle::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
         for (duint32 i = 0; i < cellStyleCount; ++i) {
             buf->getBitLong();
             DRW_TableStyleCellStyle style;
-            if (!readTableStyleCellStyle(version, buf, sBuf, hBuf, style)) {
+            if (!readTableStyleCellStyle(version, buf, sBuf, hBuf,
+                                         style, &m_subrecordRanges)) {
                 DRW_DBG("TABLESTYLE custom cell style parse incomplete\n");
                 return true;
             }
@@ -2990,7 +3038,8 @@ bool DRW_CellStyleMap::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs
     m_cellStyles.reserve(cellStyleCount);
     for (duint32 i = 0; i < cellStyleCount; ++i) {
         DRW_TableStyleCellStyle style;
-        if (!readTableStyleCellStyle(version, buf, sBuf, hBuf, style)) {
+        if (!readTableStyleCellStyle(version, buf, sBuf, hBuf,
+                                     style, &m_subrecordRanges)) {
             DRW_DBG("CELLSTYLEMAP cell style parse incomplete\n");
             return true;
         }

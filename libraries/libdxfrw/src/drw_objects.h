@@ -84,6 +84,15 @@ namespace DRW {
 //PLACEHOLDER, PLOTSETTINGS, SPATIAL_INDEX,
 }
 
+struct DRW_DwgSubrecordRange {
+    UTF8STRING m_name;
+    duint64 m_startBit = 0;
+    duint64 m_bitSize = 0;
+    DRW::Version m_version = DRW::UNKNOWNV;
+    duint32 m_count = 0;
+    bool m_parseComplete = true;
+};
+
 class dwgBufferW;
 
 #define SETOBJFRIENDS  friend class dxfRW; \
@@ -1162,6 +1171,7 @@ public:
         m_tableCellStyle = DRW_TableStyleCellStyle();
         m_rowStyles.clear();
         m_cellStyles.clear();
+        m_subrecordRanges.clear();
         DRW_TableEntry::reset();
     }
 protected:
@@ -1178,6 +1188,7 @@ public:
     DRW_TableStyleCellStyle m_tableCellStyle;
     std::vector<DRW_TableStyleRowStyle> m_rowStyles;
     std::vector<DRW_TableStyleCellStyle> m_cellStyles;
+    std::vector<DRW_DwgSubrecordRange> m_subrecordRanges;
 };
 
 //! Class to handle CELLSTYLEMAP (AcDbCellStyleMap).
@@ -1188,12 +1199,14 @@ public:
     void reset(){
         tType = DRW::CELLSTYLEMAP;
         m_cellStyles.clear();
+        m_subrecordRanges.clear();
         DRW_TableEntry::reset();
     }
 protected:
     bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
 public:
     std::vector<DRW_TableStyleCellStyle> m_cellStyles;
+    std::vector<DRW_DwgSubrecordRange> m_subrecordRanges;
 };
 
 //! Class to handle Layout (ODA spec sec 19.4.85 fixed type 82)

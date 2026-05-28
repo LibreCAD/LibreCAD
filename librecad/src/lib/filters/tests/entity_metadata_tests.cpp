@@ -477,6 +477,13 @@ TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
   cellStyle.m_borders[0].m_visible = 1;
   cellStyle.m_borders[0].m_color = 15;
   tableStyle.m_cellStyles.push_back(cellStyle);
+  DRW_DwgSubrecordRange tableStyleRange;
+  tableStyleRange.m_name = "table-style-cell-style";
+  tableStyleRange.m_startBit = 0;
+  tableStyleRange.m_bitSize = 32;
+  tableStyleRange.m_version = DRW::AC1027;
+  tableStyleRange.m_count = 1;
+  tableStyle.m_subrecordRanges.push_back(tableStyleRange);
   metadata.addTableStyle(tableStyle);
 
   DRW_CellStyleMap cellStyleMap;
@@ -497,6 +504,13 @@ TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
   mapStyle.m_borders[0].m_visible = 1;
   mapStyle.m_borders[0].m_color = 23;
   cellStyleMap.m_cellStyles.push_back(mapStyle);
+  DRW_DwgSubrecordRange cellStyleMapRange;
+  cellStyleMapRange.m_name = "table-style-cell-style";
+  cellStyleMapRange.m_startBit = 0;
+  cellStyleMapRange.m_bitSize = 48;
+  cellStyleMapRange.m_version = DRW::AC1027;
+  cellStyleMapRange.m_count = 1;
+  cellStyleMap.m_subrecordRanges.push_back(cellStyleMapRange);
   metadata.addCellStyleMap(cellStyleMap);
 
   DRW_TableContentObject tableContent;
@@ -531,6 +545,35 @@ TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
   fieldContent.m_handle = 0x107u;
   semanticRow.m_cells[1].m_contents.push_back(fieldContent);
   tableContent.m_content.m_rows.push_back(semanticRow);
+  DRW_DwgSubrecordRange tableContentFormatRange;
+  tableContentFormatRange.m_name = "table-content-format";
+  tableContentFormatRange.m_startBit = 0;
+  tableContentFormatRange.m_bitSize = 64;
+  tableContentFormatRange.m_version = DRW::AC1027;
+  tableContentFormatRange.m_count = 1;
+  tableContent.m_content.m_subrecordRanges.push_back(tableContentFormatRange);
+  DRW_DwgSubrecordRange tableOverrideRange;
+  tableOverrideRange.m_name = "table-cell-overrides";
+  tableOverrideRange.m_startBit = 64;
+  tableOverrideRange.m_bitSize = 24;
+  tableOverrideRange.m_version = DRW::AC1027;
+  tableOverrideRange.m_count = 1;
+  tableContent.m_content.m_subrecordRanges.push_back(tableOverrideRange);
+  DRW_DwgSubrecordRange tableGeometryRange;
+  tableGeometryRange.m_name = "table-cell-geometry-tail";
+  tableGeometryRange.m_startBit = 88;
+  tableGeometryRange.m_bitSize = 40;
+  tableGeometryRange.m_version = DRW::AC1027;
+  tableGeometryRange.m_count = 1;
+  tableContent.m_content.m_subrecordRanges.push_back(tableGeometryRange);
+  DRW_DwgSubrecordRange tableBreakRange;
+  tableBreakRange.m_name = "table-break-data";
+  tableBreakRange.m_startBit = 128;
+  tableBreakRange.m_bitSize = 16;
+  tableBreakRange.m_version = DRW::AC1027;
+  tableBreakRange.m_count = 1;
+  tableBreakRange.m_parseComplete = false;
+  tableContent.m_content.m_subrecordRanges.push_back(tableBreakRange);
   metadata.addTableContent(tableContent);
 
   DRW_ModelerGeometry modelerGeometry(DRW::E3DSOLID);
@@ -865,6 +908,8 @@ TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
   CHECK(capturedTableStyle.m_tableNamedCellStyleCount == 1u);
   CHECK(capturedTableStyle.m_tableVisibleBorderCount == 3u);
   CHECK(capturedTableStyle.m_tableMarginStyleCount == 2u);
+  CHECK(capturedTableStyle.m_unknownRangeCount == 1u);
+  CHECK(capturedTableStyle.m_incompleteRangeCount == 0u);
   CHECK(capturedTableStyle.textStyleHandleCount == 3u);
   CHECK(capturedTableStyle.lineTypeHandleCount == 3u);
   REQUIRE(capturedTableStyle.m_tableStyleIds.size() == 1u);
@@ -915,6 +960,11 @@ TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
   CHECK(capturedTableContent.mergedRangeCount == 1u);
   CHECK(capturedTableContent.overrideCellCount == 1u);
   CHECK(capturedTableContent.geometryCellCount == 1u);
+  CHECK(capturedTableContent.m_unknownRangeCount == 4u);
+  CHECK(capturedTableContent.m_incompleteRangeCount == 1u);
+  CHECK(capturedTableContent.m_overrideMaskCount == 1u);
+  CHECK(capturedTableContent.m_breakRangeCount == 1u);
+  CHECK(capturedTableContent.m_tableGeometryTailRangeCount == 1u);
   CHECK(capturedTableContent.hasTextContent);
   CHECK(capturedTableContent.hasBlockContent);
   CHECK(capturedTableContent.semanticParsed);
@@ -987,6 +1037,8 @@ TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
   CHECK(capturedCellStyleMap.m_namedCellStyleCount == 1u);
   CHECK(capturedCellStyleMap.m_visibleBorderCount == 1u);
   CHECK(capturedCellStyleMap.m_marginStyleCount == 1u);
+  CHECK(capturedCellStyleMap.m_unknownRangeCount == 1u);
+  CHECK(capturedCellStyleMap.m_incompleteRangeCount == 0u);
   REQUIRE(capturedCellStyleMap.m_styleIds.size() == 1u);
   CHECK(capturedCellStyleMap.m_styleIds.front() == 77);
   REQUIRE(capturedCellStyleMap.m_styleClasses.size() == 1u);
@@ -1029,7 +1081,12 @@ TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
   CHECK(tableBlockers.attributeContent == 1u);
   CHECK(tableBlockers.overrideCells == 1u);
   CHECK(tableBlockers.geometryCells == 1u);
-  CHECK(tableBlockers.totalBlockers() == 5u);
+  CHECK(tableBlockers.unknownRanges == 1u);
+  CHECK(tableBlockers.incompleteRanges == 1u);
+  CHECK(tableBlockers.overrideMasks == 1u);
+  CHECK(tableBlockers.breakRanges == 1u);
+  CHECK(tableBlockers.tableGeometryTailRanges == 1u);
+  CHECK(tableBlockers.totalBlockers() == 10u);
   CHECK(capturedTableContent.replayState ==
         LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed);
   metadata.invalidateTableGraphForHandle(0x106u);

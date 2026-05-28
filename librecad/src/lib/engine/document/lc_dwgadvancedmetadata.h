@@ -266,11 +266,18 @@ public:
         size_t attributeContent = 0;
         size_t overrideCells = 0;
         size_t geometryCells = 0;
+        size_t unknownRanges = 0;
+        size_t incompleteRanges = 0;
+        size_t overrideMasks = 0;
+        size_t breakRanges = 0;
+        size_t tableGeometryTailRanges = 0;
 
         size_t totalBlockers() const {
             return fallbackRendered + incompleteSemanticParse + unresolvedStyle
                    + fieldContent + blockContent + attributeContent
-                   + overrideCells + geometryCells;
+                   + overrideCells + geometryCells + unknownRanges
+                   + incompleteRanges + overrideMasks + breakRanges
+                   + tableGeometryTailRanges;
         }
     };
 
@@ -350,6 +357,11 @@ public:
         size_t m_tableNamedCellStyleCount = 0;
         size_t m_tableVisibleBorderCount = 0;
         size_t m_tableMarginStyleCount = 0;
+        size_t m_unknownRangeCount = 0;
+        size_t m_incompleteRangeCount = 0;
+        size_t m_overrideMaskCount = 0;
+        size_t m_breakRangeCount = 0;
+        size_t m_tableGeometryTailRangeCount = 0;
         int m_tableFlowDirection = 0;
         int m_tableFlags = 0;
         double m_tableHorizontalCellMargin = 0.0;
@@ -393,6 +405,8 @@ public:
         size_t m_namedCellStyleCount = 0;
         size_t m_visibleBorderCount = 0;
         size_t m_marginStyleCount = 0;
+        size_t m_unknownRangeCount = 0;
+        size_t m_incompleteRangeCount = 0;
         std::vector<int> m_styleIds;
         std::vector<int> m_styleClasses;
         std::vector<std::string> m_styleNames;
@@ -861,6 +875,7 @@ public:
         record.m_tableFlags = style.m_flags;
         record.m_tableHorizontalCellMargin = style.m_horizontalCellMargin;
         record.m_tableVerticalCellMargin = style.m_verticalCellMargin;
+        collectTableSubrecordRangeSummary(record, style.m_subrecordRanges);
         record.rowStyleCount = style.m_rowStyles.size();
         record.cellStyleCount = style.m_cellStyles.size();
         record.borderCount = style.m_tableCellStyle.m_borders.size();
@@ -929,6 +944,7 @@ public:
         record.m_cellStyleCount = map.m_cellStyles.size();
         for (const DRW_TableStyleCellStyle& cellStyle : map.m_cellStyles)
             collectCellStyleMapSummary(record, cellStyle);
+        collectCellStyleMapSubrecordRangeSummary(record, map.m_subrecordRanges);
         record.m_namedCellStyleCount = record.m_styleNames.size();
         m_cellStyleMaps.push_back(std::move(record));
     }
@@ -1393,6 +1409,16 @@ public:
                 ++counts.overrideCells;
             if (record.geometryCellCount != 0)
                 ++counts.geometryCells;
+            if (record.m_unknownRangeCount != 0)
+                ++counts.unknownRanges;
+            if (record.m_incompleteRangeCount != 0)
+                ++counts.incompleteRanges;
+            if (record.m_overrideMaskCount != 0)
+                ++counts.overrideMasks;
+            if (record.m_breakRangeCount != 0)
+                ++counts.breakRanges;
+            if (record.m_tableGeometryTailRangeCount != 0)
+                ++counts.tableGeometryTailRanges;
         }
         return counts;
     }
@@ -2116,6 +2142,7 @@ private:
         record.fieldHandleCount = content.m_fieldHandles.size();
         record.fieldHandles = content.m_fieldHandles;
         record.mergedRangeCount = content.m_mergedRanges.size();
+        collectTableSubrecordRangeSummary(record, content.m_subrecordRanges);
         record.columnWidths.reserve(content.m_columns.size());
         for (const DRW_TableColumn& column : content.m_columns)
             record.columnWidths.push_back(column.m_width);
@@ -2341,6 +2368,36 @@ private:
             if (border.m_color != 0)
                 record.m_colors.push_back(border.m_color);
         }
+    }
+
+    static void collectTableSubrecordRangeSummary(
+        TableRecord& record, const std::vector<DRW_DwgSubrecordRange>& ranges) {
+        for (const DRW_DwgSubrecordRange& range : ranges) {
+            ++record.m_unknownRangeCount;
+            if (!range.m_parseComplete)
+                ++record.m_incompleteRangeCount;
+            if (rangeNameContains(range, "override"))
+                ++record.m_overrideMaskCount;
+            if (rangeNameContains(range, "break"))
+                ++record.m_breakRangeCount;
+            if (rangeNameContains(range, "geometry"))
+                ++record.m_tableGeometryTailRangeCount;
+        }
+    }
+
+    static void collectCellStyleMapSubrecordRangeSummary(
+        CellStyleMapRecord& record,
+        const std::vector<DRW_DwgSubrecordRange>& ranges) {
+        record.m_unknownRangeCount += ranges.size();
+        for (const DRW_DwgSubrecordRange& range : ranges) {
+            if (!range.m_parseComplete)
+                ++record.m_incompleteRangeCount;
+        }
+    }
+
+    static bool rangeNameContains(const DRW_DwgSubrecordRange& range,
+                                  const char *needle) {
+        return range.m_name.find(needle) != UTF8STRING::npos;
     }
 
     void resolveTableStyle(TableRecord& record) const {
