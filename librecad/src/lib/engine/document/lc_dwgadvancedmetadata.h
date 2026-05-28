@@ -771,6 +771,44 @@ public:
         size_t layoutMapped = 0;
     };
 
+    struct VisualMetadataReplayEligibility {
+        VisualMetadataSource sourceType = VisualMetadataSource::View;
+        duint32 handle = 0;
+        bool hasSemanticRecord = false;
+        bool hasRawPayload = false;
+        bool rawReplayable = false;
+        bool nativeWriterAvailable = false;
+        bool unsupportedNativeWriter = false;
+        ReplayBlocker rawBlocker = ReplayBlocker::SemanticOnly;
+        ReplayState replayState = ReplayState::ReplayAllowed;
+    };
+
+    struct VisualMetadataWriterBlockerCounts {
+        size_t recordCount = 0;
+        size_t rawPayloads = 0;
+        size_t replayableRawPayloads = 0;
+        size_t suppressedRawPayloads = 0;
+        size_t unresolvedUcs = 0;
+        size_t unresolvedBaseUcs = 0;
+        size_t unresolvedVisualStyle = 0;
+        size_t unresolvedSun = 0;
+        size_t unresolvedBackground = 0;
+        size_t unresolvedLiveSection = 0;
+        size_t missingOwnerOrLayout = 0;
+        size_t invalidatedRawPayload = 0;
+        size_t replacedNativeUnavailablePayload = 0;
+        size_t unsupportedVisualStyleWriter = 0;
+
+        size_t totalBlockers() const {
+            return unresolvedUcs + unresolvedBaseUcs + unresolvedVisualStyle
+                   + unresolvedSun + unresolvedBackground
+                   + unresolvedLiveSection + missingOwnerOrLayout
+                   + invalidatedRawPayload
+                   + replacedNativeUnavailablePayload
+                   + unsupportedVisualStyleWriter;
+        }
+    };
+
     struct LightRecord {
         duint32 handle = 0;
         duint32 parentHandle = 0;
@@ -3899,6 +3937,74 @@ public:
         }
         return result;
     }
+    VisualMetadataWriterBlockerCounts visualMetadataWriterBlockerCounts(
+        DRW::Version version) const {
+        VisualMetadataWriterBlockerCounts counts;
+        const std::vector<VisualMetadataSummaryRecord> summaries =
+            visualMetadataSummaries();
+        counts.recordCount = summaries.size();
+        for (const VisualMetadataSummaryRecord& summary : summaries) {
+            if (summary.ownerHandle == 0 && summary.layoutHandle == 0)
+                ++counts.missingOwnerOrLayout;
+            if (summary.sourceType == VisualMetadataSource::VisualStyle) {
+                const VisualMetadataReplayEligibility eligibility =
+                    visualMetadataReplayEligibility(summary.handle, version);
+                if (eligibility.unsupportedNativeWriter)
+                    ++counts.unsupportedVisualStyleWriter;
+            }
+        }
+        for (const ViewRecord& record : m_views)
+            accumulateVisualReferenceBlockers(counts, record);
+        for (const VportRecord& record : m_vports)
+            accumulateVisualReferenceBlockers(counts, record);
+        for (const RawObjectRecord& record : m_rawObjects) {
+            if (!isVisualMetadataRawObject(record))
+                continue;
+            ++counts.rawPayloads;
+            const ReplayBlocker blocker = rawReplayBlocker(record);
+            if (blocker == ReplayBlocker::None) {
+                ++counts.replayableRawPayloads;
+                continue;
+            }
+            ++counts.suppressedRawPayloads;
+            if (blocker == ReplayBlocker::Invalidated)
+                ++counts.invalidatedRawPayload;
+            else if (blocker == ReplayBlocker::Replaced)
+                ++counts.replacedNativeUnavailablePayload;
+        }
+        return counts;
+    }
+    VisualMetadataReplayEligibility visualMetadataReplayEligibility(
+        duint32 handle, DRW::Version version) const {
+        VisualMetadataReplayEligibility eligibility;
+        eligibility.handle = handle;
+        for (const VisualMetadataSummaryRecord& summary :
+             visualMetadataSummaries()) {
+            if (summary.handle != handle)
+                continue;
+            eligibility.sourceType = summary.sourceType;
+            eligibility.hasSemanticRecord = true;
+            eligibility.replayState = summary.replayState;
+            eligibility.nativeWriterAvailable =
+                visualMetadataNativeWriterAvailable(summary.sourceType, version);
+            eligibility.unsupportedNativeWriter =
+                summary.sourceType == VisualMetadataSource::VisualStyle
+                && !eligibility.nativeWriterAvailable;
+            break;
+        }
+        for (const RawObjectRecord& record : m_rawObjects) {
+            if (record.handle != handle || !isVisualMetadataRawObject(record))
+                continue;
+            eligibility.hasRawPayload = true;
+            eligibility.rawBlocker = rawReplayBlocker(record);
+            eligibility.rawReplayable =
+                eligibility.rawBlocker == ReplayBlocker::None;
+            if (eligibility.rawReplayable)
+                eligibility.unsupportedNativeWriter = false;
+            break;
+        }
+        return eligibility;
+    }
     const LightRecord* findLightByHandle(duint32 handle) const {
         if (handle == 0)
             return nullptr;
@@ -4492,6 +4598,7 @@ public:
                 record.replayState = ReplayState::ReplayInvalidated;
                 invalidateDocumentMappingForSource(
                     DocumentMappingSource::View, record.handle);
+                invalidateRawVisualMetadataObject(record.handle);
             }
         }
         for (VportRecord& record : m_vports) {
@@ -4501,6 +4608,7 @@ public:
                 record.replayState = ReplayState::ReplayInvalidated;
                 invalidateDocumentMappingForSource(
                     DocumentMappingSource::Vport, record.handle);
+                invalidateRawVisualMetadataObject(record.handle);
             }
         }
     }
@@ -5356,6 +5464,67 @@ private:
         }
     }
 
+    void accumulateVisualReferenceBlockers(
+        VisualMetadataWriterBlockerCounts& counts,
+        const ViewRecord& record) const {
+        if (record.namedUcsHandle != 0
+            && findUcsByHandle(record.namedUcsHandle) == nullptr) {
+            ++counts.unresolvedUcs;
+        }
+        if (record.baseUcsHandle != 0
+            && findUcsByHandle(record.baseUcsHandle) == nullptr) {
+            ++counts.unresolvedBaseUcs;
+        }
+        if (record.visualStyleHandle != 0
+            && findVisualStyleByHandle(record.visualStyleHandle) == nullptr) {
+            ++counts.unresolvedVisualStyle;
+        }
+        if (record.sunHandle != 0 && findSunByHandle(record.sunHandle) == nullptr)
+            ++counts.unresolvedSun;
+        if (record.backgroundHandle != 0)
+            ++counts.unresolvedBackground;
+        if (record.liveSectionHandle != 0)
+            ++counts.unresolvedLiveSection;
+    }
+
+    void accumulateVisualReferenceBlockers(
+        VisualMetadataWriterBlockerCounts& counts,
+        const VportRecord& record) const {
+        if (record.namedUcsHandle != 0
+            && findUcsByHandle(record.namedUcsHandle) == nullptr) {
+            ++counts.unresolvedUcs;
+        }
+        if (record.baseUcsHandle != 0
+            && findUcsByHandle(record.baseUcsHandle) == nullptr) {
+            ++counts.unresolvedBaseUcs;
+        }
+        if (record.visualStyleHandle != 0
+            && findVisualStyleByHandle(record.visualStyleHandle) == nullptr) {
+            ++counts.unresolvedVisualStyle;
+        }
+        if (record.sunHandle != 0 && findSunByHandle(record.sunHandle) == nullptr)
+            ++counts.unresolvedSun;
+        if (record.backgroundHandle != 0)
+            ++counts.unresolvedBackground;
+    }
+
+    static bool visualMetadataNativeWriterAvailable(
+        VisualMetadataSource sourceType, DRW::Version version) {
+        if (version == DRW::UNKNOWNV)
+            return false;
+        switch (sourceType) {
+            case VisualMetadataSource::Light:
+                return version >= DRW::AC1024;
+            case VisualMetadataSource::Sun:
+                return version >= DRW::AC1021;
+            case VisualMetadataSource::View:
+            case VisualMetadataSource::Vport:
+            case VisualMetadataSource::VisualStyle:
+            default:
+                return false;
+        }
+    }
+
     DocumentMappingRecord documentMappingFromView(
         const ViewRecord& record, int documentItemIndex) const {
         DocumentMappingRecord mapping;
@@ -5637,6 +5806,21 @@ private:
                || record.className == "AcDbMLeaderStyle";
     }
 
+    static bool isVisualMetadataRawObject(const RawObjectRecord& record) {
+        return record.recordName == "VIEW"
+               || record.recordName == "VPORT"
+               || record.recordName == "UCS"
+               || record.recordName == "VISUALSTYLE"
+               || record.recordName == "SUN"
+               || record.recordName == "LIGHT"
+               || record.className == "AcDbViewTableRecord"
+               || record.className == "AcDbViewportTableRecord"
+               || record.className == "AcDbUCSTableRecord"
+               || record.className == "AcDbVisualStyle"
+               || record.className == "AcDbSun"
+               || record.className == "AcDbLight";
+    }
+
     static bool isTableRawObject(const RawObjectRecord& record) {
         return record.recordName == "ACAD_TABLE"
                || record.recordName == "TABLECONTENT"
@@ -5655,6 +5839,17 @@ private:
             if (record.replayState != ReplayState::ReplayAllowed)
                 continue;
             if (record.handle == handle && isTableRawObject(record))
+                record.replayState = ReplayState::ReplayInvalidated;
+        }
+    }
+
+    void invalidateRawVisualMetadataObject(duint32 handle) {
+        if (handle == 0)
+            return;
+        for (RawObjectRecord& record : m_rawObjects) {
+            if (record.replayState != ReplayState::ReplayAllowed)
+                continue;
+            if (record.handle == handle && isVisualMetadataRawObject(record))
                 record.replayState = ReplayState::ReplayInvalidated;
         }
     }

@@ -1754,6 +1754,74 @@ TEST_CASE("DWG advanced metadata summarizes visual and light records",
   CHECK(invalidatedCounts.invalidated == 2u);
 }
 
+TEST_CASE("DWG visual metadata reports export policy blockers",
+          "[entity_metadata][dwg_metadata][view][dwg-write]") {
+  LC_DwgAdvancedMetadata metadata;
+
+  DRW_UnsupportedObject rawView;
+  rawView.m_objectType = 300;
+  rawView.m_handle = 0x710u;
+  rawView.m_recordName = "VIEW";
+  rawView.m_className = "AcDbViewTableRecord";
+  rawView.m_rawBytes = {0x01u, 0x02u, 0x03u};
+  metadata.addUnsupportedObject(rawView);
+
+  DRW_View view;
+  view.name = "Visual Policy";
+  view.handle = 0x710u;
+  view.parentHandle = 0x701u;
+  view.hasUCS = true;
+  view.namedUCS_ID = 0x711u;
+  view.baseUCS_ID = 0x712u;
+  view.m_visualStyleHandle = 0x720u;
+  view.m_sunHandle = 0x730u;
+  view.m_backgroundHandle = 0x740u;
+  view.m_liveSectionHandle = 0x741u;
+  metadata.addView(view);
+
+  DRW_VisualStyle visualStyle;
+  visualStyle.name = "Unwritten Style";
+  visualStyle.handle = 0x750u;
+  metadata.addVisualStyle(visualStyle);
+
+  auto eligibility =
+      metadata.visualMetadataReplayEligibility(0x710u, DRW::AC1027);
+  CHECK(eligibility.hasSemanticRecord);
+  CHECK(eligibility.hasRawPayload);
+  CHECK(eligibility.rawReplayable);
+  CHECK(eligibility.rawBlocker == LC_DwgAdvancedMetadata::ReplayBlocker::None);
+
+  const auto styleEligibility =
+      metadata.visualMetadataReplayEligibility(0x750u, DRW::AC1027);
+  CHECK(styleEligibility.hasSemanticRecord);
+  CHECK_FALSE(styleEligibility.hasRawPayload);
+  CHECK(styleEligibility.unsupportedNativeWriter);
+
+  auto counts = metadata.visualMetadataWriterBlockerCounts(DRW::AC1027);
+  CHECK(counts.recordCount == 2u);
+  CHECK(counts.rawPayloads == 1u);
+  CHECK(counts.replayableRawPayloads == 1u);
+  CHECK(counts.unresolvedUcs == 1u);
+  CHECK(counts.unresolvedBaseUcs == 1u);
+  CHECK(counts.unresolvedVisualStyle == 1u);
+  CHECK(counts.unresolvedSun == 1u);
+  CHECK(counts.unresolvedBackground == 1u);
+  CHECK(counts.unresolvedLiveSection == 1u);
+  CHECK(counts.missingOwnerOrLayout == 1u);
+  CHECK(counts.unsupportedVisualStyleWriter == 1u);
+
+  metadata.invalidateViewGraphForHandle(0x720u);
+  eligibility = metadata.visualMetadataReplayEligibility(0x710u, DRW::AC1027);
+  CHECK_FALSE(eligibility.rawReplayable);
+  CHECK(eligibility.rawBlocker ==
+        LC_DwgAdvancedMetadata::ReplayBlocker::Invalidated);
+
+  counts = metadata.visualMetadataWriterBlockerCounts(DRW::AC1027);
+  CHECK(counts.replayableRawPayloads == 0u);
+  CHECK(counts.suppressedRawPayloads == 1u);
+  CHECK(counts.invalidatedRawPayload == 1u);
+}
+
 TEST_CASE("DWG advanced metadata invalidates TABLECONTENT raw replay",
           "[entity_metadata][dwg_metadata][table]") {
   LC_DwgAdvancedMetadata metadata;

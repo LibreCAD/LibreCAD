@@ -5754,6 +5754,9 @@ void RS_FilterDXFRW::writeObjects() {
             metadata.externalReferenceCounts();
         const LC_DwgAdvancedMetadata::ShapeOleWriterBlockerCounts shapeOleBlockers =
             metadata.shapeOleWriterBlockerCounts();
+        const LC_DwgAdvancedMetadata::VisualMetadataWriterBlockerCounts
+            visualBlockers =
+                metadata.visualMetadataWriterBlockerCounts(m_dwgW->getVersion());
         const LC_DwgAdvancedMetadata::AssociativeShellCounts associativeShells =
             metadata.associativeShellCounts();
         const LC_DwgAdvancedMetadata::AssociativePrefixCounts associativePrefixes =
@@ -6105,6 +6108,31 @@ void RS_FilterDXFRW::writeObjects() {
                 static_cast<int>(shapeOleBlockers.incompleteRawRange),
                 static_cast<int>(shapeOleBlockers.invalidated),
                 static_cast<int>(shapeOleBlockers.replaced));
+        }
+        if (visualBlockers.recordCount > 0 || visualBlockers.rawPayloads > 0) {
+            RS_DEBUG->print(
+                visualBlockers.totalBlockers() > 0
+                    ? RS_Debug::D_WARNING
+                    : RS_Debug::D_DEBUGGING,
+                "DWG visual metadata export policy: records=%d raw=%d "
+                "raw-replayable=%d raw-suppressed=%d ucs=%d base-ucs=%d "
+                "visual-style=%d sun=%d background=%d live-section=%d "
+                "owner-layout=%d raw-invalidated=%d raw-replaced=%d "
+                "unsupported-visual-style=%d",
+                static_cast<int>(visualBlockers.recordCount),
+                static_cast<int>(visualBlockers.rawPayloads),
+                static_cast<int>(visualBlockers.replayableRawPayloads),
+                static_cast<int>(visualBlockers.suppressedRawPayloads),
+                static_cast<int>(visualBlockers.unresolvedUcs),
+                static_cast<int>(visualBlockers.unresolvedBaseUcs),
+                static_cast<int>(visualBlockers.unresolvedVisualStyle),
+                static_cast<int>(visualBlockers.unresolvedSun),
+                static_cast<int>(visualBlockers.unresolvedBackground),
+                static_cast<int>(visualBlockers.unresolvedLiveSection),
+                static_cast<int>(visualBlockers.missingOwnerOrLayout),
+                static_cast<int>(visualBlockers.invalidatedRawPayload),
+                static_cast<int>(visualBlockers.replacedNativeUnavailablePayload),
+                static_cast<int>(visualBlockers.unsupportedVisualStyleWriter));
         }
         if (advancedEntityBlockers.recordCount > 0
             && advancedEntityBlockers.totalBlockers() > 0) {

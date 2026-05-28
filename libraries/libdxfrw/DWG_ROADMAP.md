@@ -258,6 +258,11 @@ Completed in the 2026-05-27 implementation pass:
   LIGHT, and SUN, including owner handles, visual/sun/background/live-section
   references, stale replay state, spec-coverage source, and unresolved visual
   reference counts without rendering or UI integration.
+- Ready Detail E4a visual metadata export diagnostics advanced: VIEW, VPORT,
+  VISUALSTYLE, LIGHT, and SUN metadata now reports export blocker counts,
+  unresolved visual/UCS/sun/background/live-section references, raw replay
+  eligibility, and suppressed stale raw payloads during DWG object writing
+  without enabling VISUALSTYLE regeneration or rendering integration.
 
 Still incomplete:
 
@@ -2030,8 +2035,9 @@ Stop before rendering, material, or lighting UI work.
 
 Purpose: make VIEW/UCS/LIGHT/SUN/VISUALSTYLE export policy explicit.
 
-Status: ready after E1a/E2a. Diagnostics only unless an unchanged raw payload
-is already replayable by existing raw replay machinery.
+Status: complete as export diagnostics only. Unchanged raw payloads remain
+eligible for existing raw replay, stale raw visual payloads are suppressed with
+counts, and VISUALSTYLE regeneration remains deferred.
 
 Spec basis: ODA handle relationships for VIEW/UCS/VPORT/layouts must drive
 unresolved-reference buckets; LIGHT/SUN/VISUALSTYLE byte writing remains
