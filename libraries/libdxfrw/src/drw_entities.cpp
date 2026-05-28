@@ -2722,6 +2722,81 @@ bool DRW_ModelerGeometry::parseDwg(DRW::Version v, dwgBuffer *buf, duint32 bs){
     return ret;
 }
 
+bool DRW_Shape::parseDwg(DRW::Version v, dwgBuffer *buf, duint32 bs){
+    m_bodyBitSize = bs;
+    bool ret = DRW_Entity::parseDwg(v, buf, nullptr, bs);
+    if (!ret)
+        return ret;
+    DRW_DBG("\n***************************** parsing SHAPE *****************************\n");
+
+    m_insertionPoint = buf->get3BitDouble();
+    m_scale = buf->getBitDouble();
+    m_rotation = buf->getBitDouble();
+    m_widthFactor = buf->getBitDouble();
+    m_oblique = buf->getBitDouble();
+    m_thickness = buf->getBitDouble();
+    m_shapeIndex = buf->getBitShort();
+    m_extrusion = buf->get3BitDouble();
+
+    ret = DRW_Entity::parseDwgEntHandle(v, buf);
+    if (ret && buf->numRemainingBytes() > 2) {
+        dwgHandle shapeFileH = buf->getHandle();
+        m_shapeFileHandle = shapeFileH.ref;
+        DRW_DBG(" SHAPEFILE Handle: ");
+        DRW_DBGHL(shapeFileH.code, shapeFileH.size, shapeFileH.ref);
+        DRW_DBG("\n");
+    }
+    return ret && buf->isGood();
+}
+
+bool DRW_Ole2Frame::parseDwg(DRW::Version v, dwgBuffer *buf, duint32 bs){
+    m_bodyBitSize = bs;
+    bool ret = DRW_Entity::parseDwg(v, buf, nullptr, bs);
+    if (!ret)
+        return ret;
+    DRW_DBG("\n***************************** parsing OLE2FRAME ************************\n");
+
+    m_flags = buf->getBitShort();
+    if (v > DRW::AC1014)
+        m_mode = buf->getBitShort();
+    m_declaredPayloadLength = buf->getBitLong();
+    m_payloadStartBit = currentDwgBit(buf);
+    const duint64 currentBit = currentDwgBit(buf);
+    const duint64 bodyRemainingBits =
+        (v > DRW::AC1018 && objSize > currentBit)
+            ? objSize - currentBit
+            : static_cast<duint64>(buf->numRemainingBytes()) * 8u;
+    const duint32 remainingBytes =
+        static_cast<duint32>(std::min<duint64>(
+            bodyRemainingBits / 8u,
+            static_cast<duint64>(std::numeric_limits<duint32>::max())));
+    if (m_declaredPayloadLength > kMaxOlePayloadBytes) {
+        m_payloadTooLarge = true;
+        return false;
+    }
+    if (m_declaredPayloadLength > static_cast<duint32>(remainingBytes)) {
+        m_payloadTruncated = true;
+        m_payloadByteCount = remainingBytes;
+        return false;
+    }
+
+    m_payloadPresent = m_declaredPayloadLength > 0;
+    m_payloadByteCount = m_declaredPayloadLength;
+    if (m_declaredPayloadLength > 0
+        && !buf->moveBitPos(static_cast<dint32>(m_declaredPayloadLength * 8u))) {
+        m_payloadTruncated = true;
+        return false;
+    }
+
+    if (v > DRW::AC1014 && buf->numRemainingBytes() > 0) {
+        m_hasR2000TrailingByte = true;
+        m_r2000TrailingByte = buf->getRawChar8();
+    }
+
+    ret = DRW_Entity::parseDwgEntHandle(v, buf);
+    return ret && buf->isGood();
+}
+
 bool DRW_Light::parseDwg(DRW::Version v, dwgBuffer *buf, duint32 bs){
     dwgBuffer sBuff = *buf;
     dwgBuffer *sBuf = v > DRW::AC1018 ? &sBuff : buf;

@@ -26,6 +26,7 @@
 
 #include <catch2/catch_test_macros.hpp>
 
+#include <algorithm>
 #include <cstdio>
 #include <filesystem>
 #include <fstream>
@@ -2594,6 +2595,83 @@ TEST_CASE("DWG external reference metadata tracks image and underlay links",
         .size() == 1u);
   CHECK(metadata.findUnderlaysByDefinitionHandle(underlayDefinition.handle)
         .size() == 1u);
+}
+
+TEST_CASE("DWG shape and OLE metadata reports writer blockers",
+          "[entity_metadata][dwg_metadata][shape-ole]") {
+  LC_DwgAdvancedMetadata metadata;
+
+  DRW_Shape shape;
+  shape.handle = 0x7A0u;
+  shape.parentHandle = 0x20u;
+  shape.m_shapeFileHandle = 0x301u;
+  shape.m_shapeIndex = 7u;
+  shape.m_scale = 2.0;
+  shape.m_rotation = 0.25;
+  shape.m_widthFactor = 0.8;
+  shape.m_oblique = 0.1;
+  shape.m_thickness = 0.0;
+  shape.m_insertionPoint = DRW_Coord{3.0, 4.0, 0.0};
+  shape.m_extrusion = DRW_Coord{0.0, 0.0, 1.0};
+  shape.m_rawBytes = {1u, 2u, 3u};
+  metadata.addShape(shape);
+
+  DRW_Shape missingStyleShape;
+  missingStyleShape.handle = 0x7A1u;
+  missingStyleShape.m_shapeIndex = 3u;
+  metadata.addShape(missingStyleShape);
+
+  DRW_Ole2Frame ole2Frame;
+  ole2Frame.handle = 0x7A2u;
+  ole2Frame.parentHandle = 0x20u;
+  ole2Frame.m_flags = 2u;
+  ole2Frame.m_mode = 1u;
+  ole2Frame.m_declaredPayloadLength = 16u;
+  ole2Frame.m_payloadByteCount = 16u;
+  ole2Frame.m_payloadPresent = true;
+  ole2Frame.m_hasR2000TrailingByte = true;
+  ole2Frame.m_r2000TrailingByte = 0u;
+  ole2Frame.m_rawBytes = {4u, 5u, 6u};
+  metadata.addOle2Frame(ole2Frame);
+
+  DRW_Ole2Frame truncatedOle2Frame;
+  truncatedOle2Frame.handle = 0x7A3u;
+  truncatedOle2Frame.m_declaredPayloadLength =
+      DRW_Ole2Frame::kMaxOlePayloadBytes + 1u;
+  truncatedOle2Frame.m_payloadTooLarge = true;
+  truncatedOle2Frame.m_payloadTruncated = true;
+  metadata.addOle2Frame(truncatedOle2Frame);
+
+  const LC_DwgAdvancedMetadata::ShapeOleWriterBlockerCounts blockers =
+      metadata.shapeOleWriterBlockerCounts();
+  CHECK(blockers.shapeCount == 2u);
+  CHECK(blockers.ole2FrameCount == 2u);
+  CHECK(blockers.missingStyleHandle == 1u);
+  CHECK(blockers.missingOlePayload == 1u);
+  CHECK(blockers.truncatedOlePayload == 1u);
+  CHECK(blockers.oversizedOlePayload == 1u);
+  CHECK(blockers.unsupportedOlePayloadRegeneration == 2u);
+  CHECK(blockers.missingRawRange == 2u);
+
+  REQUIRE(metadata.findShapeByHandle(shape.handle) != nullptr);
+  CHECK(metadata.findShapesByShapeFileHandle(shape.m_shapeFileHandle).size()
+        == 1u);
+  REQUIRE(metadata.findOle2FrameByHandle(ole2Frame.handle) != nullptr);
+
+  const std::vector<LC_DwgAdvancedMetadata::AdvancedEntityWriterReadiness>
+      ledger = metadata.advancedEntityWriterLedger(DRW::AC1027);
+  CHECK(std::count_if(
+            ledger.begin(), ledger.end(),
+            [](const LC_DwgAdvancedMetadata::AdvancedEntityWriterReadiness& r) {
+              return r.family
+                  == LC_DwgAdvancedMetadata::AdvancedEntityWriterFamily::Shape;
+            }) == 2);
+  CHECK(std::count_if(
+            ledger.begin(), ledger.end(),
+            [](const LC_DwgAdvancedMetadata::AdvancedEntityWriterReadiness& r) {
+              return r.family
+                  == LC_DwgAdvancedMetadata::AdvancedEntityWriterFamily::Ole2Frame;
+            }) == 2);
 }
 
 TEST_CASE("DWG advanced metadata invalidates associative raw replay",

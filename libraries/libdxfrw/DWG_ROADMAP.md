@@ -244,6 +244,10 @@ Completed in the 2026-05-27 implementation pass:
   UNDERLAYDEFINITION metadata now expose path, clip, definition/reactor, and
   export-policy diagnostics without copying files or writing native image/
   underlay records.
+- Ready Detail D4a SHAPE/OLE2FRAME metadata shells advanced: SHAPE and
+  OLE2FRAME entity parsing now surfaces shape indices/style handles and
+  bounded OLE payload diagnostics into LibreCAD metadata and export blocker
+  summaries without rendering SHX glyphs or regenerating OLE data.
 
 Still incomplete:
 
@@ -1854,7 +1858,9 @@ Acceptance:
 
 Purpose: classify two remaining advanced entity families before writer work.
 
-Status: ready after D1a. Shell parsing and metadata only.
+Status: complete in the current implementation pass as shell parsing and
+metadata only. SHX glyph rendering and OLE payload regeneration remain
+explicitly out of scope.
 
 Spec basis: SHAPE is ODA 20.4.37; OLE2FRAME is ODA 20.4.88. OLE payload bytes
 remain opaque.
@@ -1896,6 +1902,15 @@ Implementation:
    length is bounds-checked and no payload allocation is unbounded.
 
 Stop before OLE payload regeneration.
+
+Acceptance:
+
+- `[entity_metadata]` covers SHAPE style/index metadata, raw range status,
+  OLE declared payload length/presence/truncation/oversize diagnostics, lookup
+  helpers, and advanced writer readiness ledger entries.
+- OLE2FRAME parsing bounds-checks declared payload lengths before skipping
+  bytes and does not allocate the opaque payload; raw entity bytes remain
+  available through the unsupported-object receiver for future replay policy.
 
 ### Ready Detail E1a: VIEW/UCS Document Mapping Adapter
 

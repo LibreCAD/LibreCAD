@@ -1398,6 +1398,17 @@ bool dwgReader::readDwgEntity(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                 intfa.addTrace(e);
             }
             break; }
+        case 33: {
+            DRW_Shape e;
+            if (entryParse(e, buff, bs, ret)) {
+                e.m_objectSize = static_cast<duint32>(size);
+                e.m_rawBytes = tmpByteStr;
+                intfa.addShape(e);
+                intfa.addUnsupportedObject(makeRawEntity(oType));
+            } else {
+                intfa.addUnsupportedObject(makeRawEntity(oType));
+            }
+            break; }
         case 34: {
             DRW_Viewport e;
             if (entryParse( e, buff, bs, ret)) {
@@ -1430,6 +1441,17 @@ bool dwgReader::readDwgEntity(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
             DRW_Xline e;
             if (entryParse( e, buff, bs, ret)) {
                 intfa.addXline(e);
+            }
+            break; }
+        case 74: {
+            DRW_Ole2Frame e;
+            if (entryParse(e, buff, bs, ret)) {
+                e.m_objectSize = static_cast<duint32>(size);
+                e.m_rawBytes = tmpByteStr;
+                intfa.addOle2Frame(e);
+                intfa.addUnsupportedObject(makeRawEntity(oType));
+            } else {
+                intfa.addUnsupportedObject(makeRawEntity(oType));
             }
             break; }
         case 101: {

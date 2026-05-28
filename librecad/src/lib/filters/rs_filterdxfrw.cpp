@@ -1632,6 +1632,22 @@ void RS_FilterDXFRW::linkUnderlay(const DRW_UnderlayDefinition *d) {
     m_graphic->dwgAdvancedMetadata().addUnderlayDefinition(*d);
 }
 
+void RS_FilterDXFRW::addShape(const DRW_Shape &data) {
+  if (m_graphic != nullptr)
+    m_graphic->dwgAdvancedMetadata().addShape(data);
+  RS_DEBUG->print("RS_FilterDXFRW::addShape: index %d style %d",
+                  static_cast<int>(data.m_shapeIndex),
+                  static_cast<int>(data.m_shapeFileHandle));
+}
+
+void RS_FilterDXFRW::addOle2Frame(const DRW_Ole2Frame &data) {
+  if (m_graphic != nullptr)
+    m_graphic->dwgAdvancedMetadata().addOle2Frame(data);
+  RS_DEBUG->print("RS_FilterDXFRW::addOle2Frame: bytes %d declared %d",
+                  static_cast<int>(data.m_payloadByteCount),
+                  static_cast<int>(data.m_declaredPayloadLength));
+}
+
 /**
  * Implementation of the UNDERLAY entity callback (PDFUNDERLAY/DGNUNDERLAY/
  * DWFUNDERLAY).  Decomposes the underlay into a single closed RS_Polyline
@@ -5715,6 +5731,8 @@ void RS_FilterDXFRW::writeObjects() {
             metadata.meshWriterBlockerCounts();
         const LC_DwgAdvancedMetadata::ExternalReferenceCounts externalRefs =
             metadata.externalReferenceCounts();
+        const LC_DwgAdvancedMetadata::ShapeOleWriterBlockerCounts shapeOleBlockers =
+            metadata.shapeOleWriterBlockerCounts();
         const LC_DwgAdvancedMetadata::AssociativeShellCounts associativeShells =
             metadata.associativeShellCounts();
         const LC_DwgAdvancedMetadata::AssociativePrefixCounts associativePrefixes =
@@ -6041,6 +6059,31 @@ void RS_FilterDXFRW::writeObjects() {
                 static_cast<int>(externalRefs.malformedClips),
                 static_cast<int>(externalRefs.invertedClips),
                 static_cast<int>(externalRefs.hiddenFrames));
+        }
+        if (shapeOleBlockers.shapeCount > 0
+            || shapeOleBlockers.ole2FrameCount > 0) {
+            RS_DEBUG->print(
+                shapeOleBlockers.totalBlockers() > 0
+                    ? RS_Debug::D_WARNING
+                    : RS_Debug::D_DEBUGGING,
+                "DWG shape/OLE writer blockers: shapes=%d ole2=%d "
+                "missing-style=%d unresolved-style=%d missing-ole=%d "
+                "truncated-ole=%d oversized-ole=%d edited-preview=%d "
+                "unsupported-ole=%d raw-missing=%d raw-incomplete=%d "
+                "invalidated=%d replaced=%d",
+                static_cast<int>(shapeOleBlockers.shapeCount),
+                static_cast<int>(shapeOleBlockers.ole2FrameCount),
+                static_cast<int>(shapeOleBlockers.missingStyleHandle),
+                static_cast<int>(shapeOleBlockers.unresolvedShapeStyle),
+                static_cast<int>(shapeOleBlockers.missingOlePayload),
+                static_cast<int>(shapeOleBlockers.truncatedOlePayload),
+                static_cast<int>(shapeOleBlockers.oversizedOlePayload),
+                static_cast<int>(shapeOleBlockers.editedPreviewFrame),
+                static_cast<int>(shapeOleBlockers.unsupportedOlePayloadRegeneration),
+                static_cast<int>(shapeOleBlockers.missingRawRange),
+                static_cast<int>(shapeOleBlockers.incompleteRawRange),
+                static_cast<int>(shapeOleBlockers.invalidated),
+                static_cast<int>(shapeOleBlockers.replaced));
         }
         if (advancedEntityBlockers.recordCount > 0
             && advancedEntityBlockers.totalBlockers() > 0) {

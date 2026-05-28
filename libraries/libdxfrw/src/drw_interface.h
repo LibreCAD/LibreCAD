@@ -141,6 +141,10 @@ public:
      *  must defer filename resolution.
      */
     virtual void addUnderlay(const DRW_Underlay* data) { (void)data; }
+    /** Called for every SHAPE entity. Default no-op; LibreCAD stores metadata. */
+    virtual void addShape(const DRW_Shape& data) { (void)data; }
+    /** Called for every OLE2FRAME entity. Default no-op; payload is opaque. */
+    virtual void addOle2Frame(const DRW_Ole2Frame& data) { (void)data; }
 
     /** Called for every UNDERLAYDEFINITION (Pdf/Dgn/Dwf) object.
      *  Carries the filename + sheet name that UNDERLAY entities reference

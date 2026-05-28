@@ -132,6 +132,8 @@ public:
     void addMLineStyle(const DRW_MLineStyle &data) override;
     void addUnderlay(const DRW_Underlay *data) override;
     void linkUnderlay(const DRW_UnderlayDefinition *data) override;
+    void addShape(const DRW_Shape &data) override;
+    void addOle2Frame(const DRW_Ole2Frame &data) override;
     void addText(const DRW_Text& data) override;
     void addPolyline(const DRW_Polyline& data) override;
     void addSpline(const DRW_Spline* data) override;

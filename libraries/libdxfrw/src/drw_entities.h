@@ -66,14 +66,14 @@ namespace DRW {
         MLEADER,
         MTEXT,
 //        OLEFRAME,
-//        OLE2FRAME,
+        OLE2FRAME,
         POINT,
         POLYLINE,
         RAY,
         REGION,
 //        SECTION,
         SEQEND,
-//        SHAPE,
+        SHAPE,
         SOLID,
         SPLINE,
 //        SURFACE, //encrypted proprietary data can be four types
@@ -577,6 +577,63 @@ public:
     duint32 m_historyHandle = 0;
     std::vector<duint8> m_rawBytes;
     std::vector<DRW_ModelerPayloadRange> m_payloadRanges;
+};
+
+//! SHAPE entity shell. The SHX glyph itself is not interpreted here.
+class DRW_Shape : public DRW_Entity {
+    SETENTFRIENDS
+public:
+    DRW_Shape() {
+        eType = DRW::SHAPE;
+    }
+    void applyExtrusion() override {}
+
+protected:
+    bool parseDwg(DRW::Version v, dwgBuffer *buf, duint32 bs=0) override;
+
+public:
+    DRW_Coord m_insertionPoint;
+    double m_scale = 1.0;
+    double m_rotation = 0.0;
+    double m_widthFactor = 1.0;
+    double m_oblique = 0.0;
+    double m_thickness = 0.0;
+    duint16 m_shapeIndex = 0;
+    DRW_Coord m_extrusion {0.0, 0.0, 1.0};
+    duint32 m_shapeFileHandle = 0;
+    duint32 m_objectSize = 0;
+    duint32 m_bodyBitSize = 0;
+    std::vector<duint8> m_rawBytes;
+};
+
+//! OLE2FRAME entity shell. The OLE compound payload remains opaque.
+class DRW_Ole2Frame : public DRW_Entity {
+    SETENTFRIENDS
+public:
+    static constexpr duint32 kMaxOlePayloadBytes = 128u * 1024u * 1024u;
+
+    DRW_Ole2Frame() {
+        eType = DRW::OLE2FRAME;
+    }
+    void applyExtrusion() override {}
+
+protected:
+    bool parseDwg(DRW::Version v, dwgBuffer *buf, duint32 bs=0) override;
+
+public:
+    duint16 m_flags = 0;
+    duint16 m_mode = 0;
+    duint32 m_declaredPayloadLength = 0;
+    duint32 m_payloadByteCount = 0;
+    duint64 m_payloadStartBit = 0;
+    bool m_payloadPresent = false;
+    bool m_payloadTruncated = false;
+    bool m_payloadTooLarge = false;
+    bool m_hasR2000TrailingByte = false;
+    duint8 m_r2000TrailingByte = 0;
+    duint32 m_objectSize = 0;
+    duint32 m_bodyBitSize = 0;
+    std::vector<duint8> m_rawBytes;
 };
 
 //! LIGHT entity shell. LibreCAD does not render lights, but preserves metadata.

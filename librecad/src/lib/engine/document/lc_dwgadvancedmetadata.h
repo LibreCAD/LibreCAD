@@ -533,6 +533,66 @@ public:
         }
     };
 
+    struct ShapeRecord {
+        duint32 handle = 0;
+        duint32 parentHandle = 0;
+        duint32 shapeFileHandle = 0;
+        duint16 shapeIndex = 0;
+        DRW_Coord insertionPoint;
+        DRW_Coord extrusion;
+        double scale = 1.0;
+        double rotation = 0.0;
+        double oblique = 0.0;
+        double widthFactor = 1.0;
+        double thickness = 0.0;
+        size_t rawByteCount = 0;
+        MeshRawRangeStatus rawRangeStatus = MeshRawRangeStatus::Unknown;
+        ReplayState replayState = ReplayState::ReplayAllowed;
+    };
+
+    struct Ole2FrameRecord {
+        duint32 handle = 0;
+        duint32 parentHandle = 0;
+        duint16 flags = 0;
+        duint16 mode = 0;
+        duint32 declaredPayloadLength = 0;
+        duint32 payloadByteCount = 0;
+        duint64 payloadStartBit = 0;
+        bool payloadPresent = false;
+        bool payloadTruncated = false;
+        bool payloadTooLarge = false;
+        bool hasR2000TrailingByte = false;
+        duint8 r2000TrailingByte = 0;
+        size_t rawByteCount = 0;
+        bool previewFrameAvailable = false;
+        bool previewFrameInvalidated = false;
+        ReplayState replayState = ReplayState::ReplayAllowed;
+    };
+
+    struct ShapeOleWriterBlockerCounts {
+        size_t shapeCount = 0;
+        size_t ole2FrameCount = 0;
+        size_t missingStyleHandle = 0;
+        size_t unresolvedShapeStyle = 0;
+        size_t missingOlePayload = 0;
+        size_t truncatedOlePayload = 0;
+        size_t oversizedOlePayload = 0;
+        size_t editedPreviewFrame = 0;
+        size_t unsupportedOlePayloadRegeneration = 0;
+        size_t missingRawRange = 0;
+        size_t incompleteRawRange = 0;
+        size_t invalidated = 0;
+        size_t replaced = 0;
+
+        size_t totalBlockers() const {
+            return missingStyleHandle + unresolvedShapeStyle
+                   + missingOlePayload + truncatedOlePayload
+                   + oversizedOlePayload + editedPreviewFrame
+                   + unsupportedOlePayloadRegeneration + missingRawRange
+                   + incompleteRawRange + invalidated + replaced;
+        }
+    };
+
     struct ViewRecord {
         duint32 handle = 0;
         duint32 parentHandle = 0;
@@ -1383,6 +1443,8 @@ public:
         m_underlays.clear();
         m_underlayDefinitions.clear();
         m_rasterVariables.clear();
+        m_shapes.clear();
+        m_ole2Frames.clear();
         m_imageDefinitionReactors.clear();
         m_spatialFilters.clear();
         m_geoData.clear();
@@ -2060,6 +2122,44 @@ public:
         m_underlays.push_back(record);
     }
 
+    void addShape(const DRW_Shape& shape) {
+        ShapeRecord record;
+        record.handle = shape.handle;
+        record.parentHandle = shape.parentHandle;
+        record.shapeFileHandle = shape.m_shapeFileHandle;
+        record.shapeIndex = shape.m_shapeIndex;
+        record.insertionPoint = shape.m_insertionPoint;
+        record.extrusion = shape.m_extrusion;
+        record.scale = shape.m_scale;
+        record.rotation = shape.m_rotation;
+        record.oblique = shape.m_oblique;
+        record.widthFactor = shape.m_widthFactor;
+        record.thickness = shape.m_thickness;
+        record.rawByteCount = shape.m_rawBytes.size();
+        record.rawRangeStatus =
+            shape.m_rawBytes.empty() ? MeshRawRangeStatus::Missing
+                                     : MeshRawRangeStatus::Complete;
+        m_shapes.push_back(record);
+    }
+
+    void addOle2Frame(const DRW_Ole2Frame& ole2Frame) {
+        Ole2FrameRecord record;
+        record.handle = ole2Frame.handle;
+        record.parentHandle = ole2Frame.parentHandle;
+        record.flags = ole2Frame.m_flags;
+        record.mode = ole2Frame.m_mode;
+        record.declaredPayloadLength = ole2Frame.m_declaredPayloadLength;
+        record.payloadByteCount = ole2Frame.m_payloadByteCount;
+        record.payloadStartBit = ole2Frame.m_payloadStartBit;
+        record.payloadPresent = ole2Frame.m_payloadPresent;
+        record.payloadTruncated = ole2Frame.m_payloadTruncated;
+        record.payloadTooLarge = ole2Frame.m_payloadTooLarge;
+        record.hasR2000TrailingByte = ole2Frame.m_hasR2000TrailingByte;
+        record.r2000TrailingByte = ole2Frame.m_r2000TrailingByte;
+        record.rawByteCount = ole2Frame.m_rawBytes.size();
+        m_ole2Frames.push_back(record);
+    }
+
     void addGeoData(const DRW_GeoData& geoData) {
         GeoDataRecord record;
         record.handle = geoData.handle;
@@ -2136,6 +2236,8 @@ public:
     const std::vector<RasterVariablesRecord>& rasterVariables() const {
         return m_rasterVariables;
     }
+    const std::vector<ShapeRecord>& shapes() const { return m_shapes; }
+    const std::vector<Ole2FrameRecord>& ole2Frames() const { return m_ole2Frames; }
     const std::vector<SpatialFilterRecord>& spatialFilters() const { return m_spatialFilters; }
     const std::vector<GeoDataRecord>& geoData() const { return m_geoData; }
     const std::vector<TableGeometryRecord>& tableGeometry() const { return m_tableGeometry; }
@@ -2483,6 +2585,41 @@ public:
         }
         return counts;
     }
+    ShapeOleWriterBlockerCounts shapeOleWriterBlockerCounts() const {
+        ShapeOleWriterBlockerCounts counts;
+        counts.shapeCount = m_shapes.size();
+        counts.ole2FrameCount = m_ole2Frames.size();
+        for (const ShapeRecord& record : m_shapes) {
+            if (record.shapeFileHandle == 0)
+                ++counts.missingStyleHandle;
+            if (record.rawRangeStatus == MeshRawRangeStatus::Missing)
+                ++counts.missingRawRange;
+            else if (record.rawRangeStatus == MeshRawRangeStatus::Incomplete)
+                ++counts.incompleteRawRange;
+            if (record.replayState == ReplayState::ReplayInvalidated)
+                ++counts.invalidated;
+            else if (record.replayState == ReplayState::ReplayReplaced)
+                ++counts.replaced;
+        }
+        for (const Ole2FrameRecord& record : m_ole2Frames) {
+            if (!record.payloadPresent || record.declaredPayloadLength == 0)
+                ++counts.missingOlePayload;
+            if (record.payloadTruncated)
+                ++counts.truncatedOlePayload;
+            if (record.payloadTooLarge)
+                ++counts.oversizedOlePayload;
+            if (record.previewFrameInvalidated)
+                ++counts.editedPreviewFrame;
+            ++counts.unsupportedOlePayloadRegeneration;
+            if (record.rawByteCount == 0)
+                ++counts.missingRawRange;
+            if (record.replayState == ReplayState::ReplayInvalidated)
+                ++counts.invalidated;
+            else if (record.replayState == ReplayState::ReplayReplaced)
+                ++counts.replaced;
+        }
+        return counts;
+    }
     AssociativeShellCounts associativeShellCounts() const {
         AssociativeShellCounts counts;
         for (const AssociativeRecord& record : m_associativeObjects) {
@@ -2579,6 +2716,11 @@ public:
             result.push_back(advancedEntityWriterReadinessFromMLeader(mleader, version));
         for (const MeshRecord& mesh : m_meshes)
             result.push_back(advancedEntityWriterReadinessFromMesh(mesh, version));
+        for (const ShapeRecord& shape : m_shapes)
+            result.push_back(advancedEntityWriterReadinessFromShape(shape, version));
+        for (const Ole2FrameRecord& ole2Frame : m_ole2Frames)
+            result.push_back(
+                advancedEntityWriterReadinessFromOle2Frame(ole2Frame, version));
         return result;
     }
 
@@ -2827,6 +2969,38 @@ public:
                 result.push_back(&record);
         }
         return result;
+    }
+
+    const ShapeRecord* findShapeByHandle(duint32 handle) const {
+        if (handle == 0)
+            return nullptr;
+        for (const ShapeRecord& record : m_shapes) {
+            if (record.handle == handle)
+                return &record;
+        }
+        return nullptr;
+    }
+
+    std::vector<const ShapeRecord*> findShapesByShapeFileHandle(
+        duint32 shapeFileHandle) const {
+        std::vector<const ShapeRecord*> result;
+        if (shapeFileHandle == 0)
+            return result;
+        for (const ShapeRecord& record : m_shapes) {
+            if (record.shapeFileHandle == shapeFileHandle)
+                result.push_back(&record);
+        }
+        return result;
+    }
+
+    const Ole2FrameRecord* findOle2FrameByHandle(duint32 handle) const {
+        if (handle == 0)
+            return nullptr;
+        for (const Ole2FrameRecord& record : m_ole2Frames) {
+            if (record.handle == handle)
+                return &record;
+        }
+        return nullptr;
     }
 
     const AssociativeRecord* findAssociativeObjectByHandle(duint32 handle) const {
@@ -3797,7 +3971,8 @@ public:
             + m_breakPointRefs.size() + m_groups.size()
             + m_rasterImages.size() + m_imageDefinitions.size()
             + m_underlays.size() + m_underlayDefinitions.size()
-            + m_rasterVariables.size()
+            + m_rasterVariables.size() + m_shapes.size()
+            + m_ole2Frames.size()
             + m_imageDefinitionReactors.size() + m_spatialFilters.size()
             + m_geoData.size() + m_tableGeometry.size() + m_placeholders.size();
     }
@@ -3823,6 +3998,8 @@ public:
             || hasReplayable(m_underlays)
             || hasReplayable(m_underlayDefinitions)
             || hasReplayable(m_rasterVariables)
+            || hasReplayable(m_shapes)
+            || hasReplayable(m_ole2Frames)
             || hasReplayable(m_imageDefinitionReactors)
             || hasReplayable(m_spatialFilters)
             || hasReplayable(m_geoData)
@@ -3970,6 +4147,8 @@ public:
         invalidateContainer(m_underlays);
         invalidateContainer(m_underlayDefinitions);
         invalidateContainer(m_rasterVariables);
+        invalidateContainer(m_shapes);
+        invalidateContainer(m_ole2Frames);
         invalidateContainer(m_imageDefinitionReactors);
         invalidateContainer(m_spatialFilters);
         invalidateContainer(m_geoData);
@@ -5216,6 +5395,51 @@ private:
         return record;
     }
 
+    static AdvancedEntityWriterReadiness advancedEntityWriterReadinessFromShape(
+        const ShapeRecord& shape, DRW::Version version) {
+        AdvancedEntityWriterReadiness record;
+        record.family = AdvancedEntityWriterFamily::Shape;
+        record.odaCoverage = AdvancedEntityWriterOdaCoverage::Complete;
+        record.handle = shape.handle;
+        record.recordName = "SHAPE";
+        record.className = "AcDbShape";
+        record.nativeWriterAvailable =
+            advancedEntityNativeWriterAvailable(record.family, version);
+        record.rawReplayAvailable = false;
+        record.fallbackAvailable = false;
+        record.editedFallbackInvalidated =
+            shape.replayState != ReplayState::ReplayAllowed;
+        record.missingRequiredMetadata =
+            shape.shapeFileHandle == 0 || shape.shapeIndex == 0;
+        record.missingPayloadBytes =
+            shape.rawRangeStatus == MeshRawRangeStatus::Missing;
+        record.unsupportedAdvancedContent = !record.nativeWriterAvailable;
+        return record;
+    }
+
+    static AdvancedEntityWriterReadiness advancedEntityWriterReadinessFromOle2Frame(
+        const Ole2FrameRecord& ole2Frame, DRW::Version version) {
+        AdvancedEntityWriterReadiness record;
+        record.family = AdvancedEntityWriterFamily::Ole2Frame;
+        record.odaCoverage = AdvancedEntityWriterOdaCoverage::Complete;
+        record.handle = ole2Frame.handle;
+        record.recordName = "OLE2FRAME";
+        record.className = "AcDbOle2Frame";
+        record.nativeWriterAvailable =
+            advancedEntityNativeWriterAvailable(record.family, version);
+        record.rawReplayAvailable = false;
+        record.fallbackAvailable = ole2Frame.previewFrameAvailable;
+        record.editedFallbackInvalidated =
+            ole2Frame.previewFrameInvalidated
+            || ole2Frame.replayState != ReplayState::ReplayAllowed;
+        record.missingRequiredMetadata =
+            !ole2Frame.payloadPresent || ole2Frame.payloadTruncated
+            || ole2Frame.payloadTooLarge;
+        record.missingPayloadBytes = ole2Frame.rawByteCount == 0;
+        record.unsupportedAdvancedContent = !record.nativeWriterAvailable;
+        return record;
+    }
+
     static bool advancedEntityNativeWriterAvailable(
         AdvancedEntityWriterFamily family, DRW::Version version) {
         if (version == DRW::UNKNOWNV)
@@ -5556,6 +5780,8 @@ private:
         invalidateMatching(m_underlays, predicate);
         invalidateMatching(m_underlayDefinitions, predicate);
         invalidateMatching(m_rasterVariables, predicate);
+        invalidateMatching(m_shapes, predicate);
+        invalidateMatching(m_ole2Frames, predicate);
         invalidateMatching(m_imageDefinitionReactors, predicate);
         invalidateMatching(m_spatialFilters, predicate);
         invalidateMatching(m_geoData, predicate);
@@ -5632,6 +5858,8 @@ private:
     std::vector<UnderlayRecord> m_underlays;
     std::vector<UnderlayDefinitionRecord> m_underlayDefinitions;
     std::vector<RasterVariablesRecord> m_rasterVariables;
+    std::vector<ShapeRecord> m_shapes;
+    std::vector<Ole2FrameRecord> m_ole2Frames;
     std::vector<ImageDefinitionReactorRecord> m_imageDefinitionReactors;
     std::vector<SpatialFilterRecord> m_spatialFilters;
     std::vector<GeoDataRecord> m_geoData;
