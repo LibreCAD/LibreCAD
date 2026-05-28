@@ -16,6 +16,7 @@
 
 #include <algorithm>
 #include <cstddef>
+#include <fstream>
 #include <string>
 #include <utility>
 #include <vector>
@@ -214,6 +215,25 @@ public:
         Incomplete
     };
 
+    enum class ExternalReferencePathStatus {
+        Unknown,
+        Empty,
+        Relative,
+        AbsolutePresent,
+        AbsoluteMissing,
+        External,
+        UnsupportedScheme,
+        CaseMismatchCandidate
+    };
+
+    enum class ClipBoundaryStatus {
+        Unknown,
+        NoBoundary,
+        Rectangular,
+        Polygonal,
+        Malformed
+    };
+
     struct RawObjectRecord {
         int objectType = 0;
         duint32 handle = 0;
@@ -395,6 +415,121 @@ public:
                    + fallbackOnlyPreview + editedFallback
                    + missingOwnerOrClassHandle + malformedCountRelationships
                    + invalidated + replaced;
+        }
+    };
+
+    struct ExternalReferencePathDiagnostic {
+        std::string path;
+        ExternalReferencePathStatus status =
+            ExternalReferencePathStatus::Unknown;
+        bool caseMismatchCandidate = false;
+    };
+
+    struct RasterImageRecord {
+        duint32 handle = 0;
+        duint32 parentHandle = 0;
+        bool isWipeout = false;
+        duint32 definitionHandle = 0;
+        DRW_Coord basePoint;
+        DRW_Coord uVector;
+        DRW_Coord vVector;
+        double sizeU = 0.0;
+        double sizeV = 0.0;
+        int clip = 0;
+        int brightness = 50;
+        int contrast = 50;
+        int fade = 0;
+        bool clipMode = false;
+        size_t clipVertexCount = 0;
+        ClipBoundaryStatus clipStatus = ClipBoundaryStatus::Unknown;
+        bool invertedClip = false;
+        bool frameVisible = true;
+        bool hasDefinitionHandle = false;
+        bool hasReactorHandle = false;
+        ReplayState replayState = ReplayState::ReplayAllowed;
+    };
+
+    struct ImageDefinitionRecord {
+        duint32 handle = 0;
+        duint32 parentHandle = 0;
+        std::string path;
+        int classVersion = 0;
+        double imageSizeU = 0.0;
+        double imageSizeV = 0.0;
+        double pixelSizeU = 0.0;
+        double pixelSizeV = 0.0;
+        int loaded = 0;
+        int resolution = 0;
+        std::vector<duint32> reactorHandles;
+        ExternalReferencePathDiagnostic pathDiagnostic;
+        bool hasReactorHandle = false;
+        ReplayState replayState = ReplayState::ReplayAllowed;
+    };
+
+    struct UnderlayRecord {
+        duint32 handle = 0;
+        duint32 parentHandle = 0;
+        duint32 definitionHandle = 0;
+        int kind = 0;
+        DRW_Coord position;
+        DRW_Coord scale;
+        double rotation = 0.0;
+        duint8 flags = 0;
+        duint8 contrast = 0;
+        duint8 fade = 0;
+        size_t clipVertexCount = 0;
+        ClipBoundaryStatus clipStatus = ClipBoundaryStatus::Unknown;
+        bool frameVisible = true;
+        bool fallbackPreviewGenerated = false;
+        bool fallbackInvalidated = false;
+        ReplayState replayState = ReplayState::ReplayAllowed;
+    };
+
+    struct UnderlayDefinitionRecord {
+        duint32 handle = 0;
+        duint32 parentHandle = 0;
+        int kind = 0;
+        std::string path;
+        std::string sheetName;
+        ExternalReferencePathDiagnostic pathDiagnostic;
+        ReplayState replayState = ReplayState::ReplayAllowed;
+    };
+
+    struct RasterVariablesRecord {
+        duint32 handle = 0;
+        duint32 parentHandle = 0;
+        int classVersion = 0;
+        int imageFrame = 0;
+        int imageQuality = 0;
+        int units = 0;
+        ReplayState replayState = ReplayState::ReplayAllowed;
+    };
+
+    struct ExternalReferenceCounts {
+        size_t imageEntities = 0;
+        size_t wipeouts = 0;
+        size_t imageDefinitions = 0;
+        size_t underlays = 0;
+        size_t underlayDefinitions = 0;
+        size_t rasterVariables = 0;
+        size_t emptyPaths = 0;
+        size_t relativePaths = 0;
+        size_t absoluteMissingPaths = 0;
+        size_t externalPaths = 0;
+        size_t unsupportedSchemes = 0;
+        size_t caseMismatchCandidates = 0;
+        size_t missingDefinitionHandles = 0;
+        size_t definitionsWithoutEntities = 0;
+        size_t noBoundaryClips = 0;
+        size_t rectangularClips = 0;
+        size_t polygonalClips = 0;
+        size_t malformedClips = 0;
+        size_t invertedClips = 0;
+        size_t hiddenFrames = 0;
+
+        size_t totalPathIssues() const {
+            return emptyPaths + absoluteMissingPaths + unsupportedSchemes
+                   + caseMismatchCandidates;
         }
     };
 
@@ -1243,6 +1378,11 @@ public:
         m_breakData.clear();
         m_breakPointRefs.clear();
         m_groups.clear();
+        m_rasterImages.clear();
+        m_imageDefinitions.clear();
+        m_underlays.clear();
+        m_underlayDefinitions.clear();
+        m_rasterVariables.clear();
         m_imageDefinitionReactors.clear();
         m_spatialFilters.clear();
         m_geoData.clear();
@@ -1809,6 +1949,10 @@ public:
         record.parentHandle = reactor.parentHandle;
         record.classVersion = reactor.m_classVersion;
         m_imageDefinitionReactors.push_back(record);
+        for (ImageDefinitionRecord& imageDefinition : m_imageDefinitions) {
+            if (imageDefinition.handle == record.parentHandle)
+                imageDefinition.hasReactorHandle = true;
+        }
     }
 
     void addSpatialFilter(const DRW_SpatialFilter& filter) {
@@ -1822,6 +1966,98 @@ public:
         record.frontDistance = filter.m_frontDistance;
         record.backDistance = filter.m_backDistance;
         m_spatialFilters.push_back(record);
+    }
+
+    void addRasterVariables(const DRW_RasterVariables& rasterVariables) {
+        RasterVariablesRecord record;
+        record.handle = rasterVariables.handle;
+        record.parentHandle = rasterVariables.parentHandle;
+        record.classVersion = rasterVariables.m_classVersion;
+        record.imageFrame = rasterVariables.m_imageFrame;
+        record.imageQuality = rasterVariables.m_imageQuality;
+        record.units = rasterVariables.m_units;
+        m_rasterVariables.push_back(record);
+    }
+
+    void addImageDefinition(const DRW_ImageDef& imageDefinition) {
+        ImageDefinitionRecord record;
+        record.handle = imageDefinition.handle;
+        record.parentHandle = imageDefinition.parentHandle;
+        record.path = imageDefinition.name;
+        record.classVersion = imageDefinition.imgVersion;
+        record.imageSizeU = imageDefinition.u;
+        record.imageSizeV = imageDefinition.v;
+        record.pixelSizeU = imageDefinition.up;
+        record.pixelSizeV = imageDefinition.vp;
+        record.loaded = imageDefinition.loaded;
+        record.resolution = imageDefinition.resolution;
+        for (const auto& reactor : imageDefinition.reactors) {
+            const duint32 handle = parseHexHandle(reactor.first);
+            if (handle != 0)
+                record.reactorHandles.push_back(handle);
+        }
+        record.pathDiagnostic = externalReferencePathDiagnostic(record.path);
+        record.hasReactorHandle = !record.reactorHandles.empty();
+        m_imageDefinitions.push_back(record);
+    }
+
+    void addRasterImage(const DRW_Image& image, bool isWipeout) {
+        RasterImageRecord record;
+        record.handle = image.handle;
+        record.parentHandle = image.parentHandle;
+        record.isWipeout = isWipeout;
+        record.definitionHandle = image.ref;
+        record.basePoint = image.basePoint;
+        record.uVector = image.secPoint;
+        record.vVector = image.vVector;
+        record.sizeU = image.sizeu;
+        record.sizeV = image.sizev;
+        record.clip = image.clip;
+        record.brightness = image.brightness;
+        record.contrast = image.contrast;
+        record.fade = image.fade;
+        record.clipMode = image.clipMode;
+        record.clipVertexCount = image.clipPath.size();
+        record.clipStatus = clipBoundaryStatus(
+            image.clip, image.clipPath.size(), isWipeout);
+        record.invertedClip = image.clipMode;
+        record.frameVisible = image.clip != 0;
+        record.hasDefinitionHandle = image.ref != 0;
+        record.hasReactorHandle =
+            image.ref != 0 && findImageDefinitionByHandle(image.ref) != nullptr;
+        m_rasterImages.push_back(record);
+    }
+
+    void addUnderlayDefinition(const DRW_UnderlayDefinition& definition) {
+        UnderlayDefinitionRecord record;
+        record.handle = definition.handle;
+        record.parentHandle = definition.parentHandle;
+        record.kind = static_cast<int>(definition.kind);
+        record.path = definition.filename;
+        record.sheetName = definition.sheetName;
+        record.pathDiagnostic = externalReferencePathDiagnostic(record.path);
+        m_underlayDefinitions.push_back(record);
+    }
+
+    void addUnderlay(const DRW_Underlay& underlay,
+                     bool fallbackPreviewGenerated) {
+        UnderlayRecord record;
+        record.handle = underlay.handle;
+        record.parentHandle = underlay.parentHandle;
+        record.definitionHandle = underlay.definitionHandle;
+        record.kind = static_cast<int>(underlay.kind);
+        record.position = underlay.position;
+        record.scale = underlay.scale;
+        record.rotation = underlay.rotation;
+        record.flags = underlay.flags;
+        record.contrast = underlay.contrast;
+        record.fade = underlay.fade;
+        record.clipVertexCount = underlay.clipBoundary.size();
+        record.clipStatus = underlayClipBoundaryStatus(
+            underlay.clipBoundary.size());
+        record.frameVisible = (underlay.flags & 2u) != 0;
+        record.fallbackPreviewGenerated = fallbackPreviewGenerated;
+        m_underlays.push_back(record);
     }
 
     void addGeoData(const DRW_GeoData& geoData) {
@@ -1888,6 +2124,17 @@ public:
     const std::vector<GroupRecord>& groups() const { return m_groups; }
     const std::vector<ImageDefinitionReactorRecord>& imageDefinitionReactors() const {
         return m_imageDefinitionReactors;
+    }
+    const std::vector<RasterImageRecord>& rasterImages() const { return m_rasterImages; }
+    const std::vector<ImageDefinitionRecord>& imageDefinitions() const {
+        return m_imageDefinitions;
+    }
+    const std::vector<UnderlayRecord>& underlays() const { return m_underlays; }
+    const std::vector<UnderlayDefinitionRecord>& underlayDefinitions() const {
+        return m_underlayDefinitions;
+    }
+    const std::vector<RasterVariablesRecord>& rasterVariables() const {
+        return m_rasterVariables;
     }
     const std::vector<SpatialFilterRecord>& spatialFilters() const { return m_spatialFilters; }
     const std::vector<GeoDataRecord>& geoData() const { return m_geoData; }
@@ -2198,6 +2445,44 @@ public:
         }
         return counts;
     }
+    ExternalReferenceCounts externalReferenceCounts() const {
+        ExternalReferenceCounts counts;
+        counts.imageDefinitions = m_imageDefinitions.size();
+        counts.underlayDefinitions = m_underlayDefinitions.size();
+        counts.rasterVariables = m_rasterVariables.size();
+        for (const RasterImageRecord& record : m_rasterImages) {
+            if (record.isWipeout)
+                ++counts.wipeouts;
+            else
+                ++counts.imageEntities;
+            if (record.definitionHandle == 0)
+                ++counts.missingDefinitionHandles;
+            incrementClipBoundaryCounts(counts, record.clipStatus);
+            if (record.invertedClip)
+                ++counts.invertedClips;
+            if (!record.frameVisible)
+                ++counts.hiddenFrames;
+        }
+        for (const UnderlayRecord& record : m_underlays) {
+            ++counts.underlays;
+            if (record.definitionHandle == 0)
+                ++counts.missingDefinitionHandles;
+            incrementClipBoundaryCounts(counts, record.clipStatus);
+            if (!record.frameVisible)
+                ++counts.hiddenFrames;
+        }
+        for (const ImageDefinitionRecord& record : m_imageDefinitions) {
+            incrementPathStatusCounts(counts, record.pathDiagnostic);
+            if (findRasterImagesByDefinitionHandle(record.handle).empty())
+                ++counts.definitionsWithoutEntities;
+        }
+        for (const UnderlayDefinitionRecord& record : m_underlayDefinitions) {
+            incrementPathStatusCounts(counts, record.pathDiagnostic);
+            if (findUnderlaysByDefinitionHandle(record.handle).empty())
+                ++counts.definitionsWithoutEntities;
+        }
+        return counts;
+    }
     AssociativeShellCounts associativeShellCounts() const {
         AssociativeShellCounts counts;
         for (const AssociativeRecord& record : m_associativeObjects) {
@@ -2449,6 +2734,99 @@ public:
                 return &record;
         }
         return nullptr;
+    }
+
+    const RasterImageRecord* findRasterImageByHandle(duint32 handle) const {
+        if (handle == 0)
+            return nullptr;
+        for (const RasterImageRecord& record : m_rasterImages) {
+            if (record.handle == handle)
+                return &record;
+        }
+        return nullptr;
+    }
+
+    const ImageDefinitionRecord* findImageDefinitionByHandle(
+        duint32 handle) const {
+        if (handle == 0)
+            return nullptr;
+        for (const ImageDefinitionRecord& record : m_imageDefinitions) {
+            if (record.handle == handle)
+                return &record;
+        }
+        return nullptr;
+    }
+
+    std::vector<const RasterImageRecord*> findRasterImagesByDefinitionHandle(
+        duint32 definitionHandle) const {
+        std::vector<const RasterImageRecord*> result;
+        if (definitionHandle == 0)
+            return result;
+        for (const RasterImageRecord& record : m_rasterImages) {
+            if (record.definitionHandle == definitionHandle)
+                result.push_back(&record);
+        }
+        return result;
+    }
+
+    std::vector<const ImageDefinitionReactorRecord*>
+    findImageDefinitionReactorsByDefinitionHandle(duint32 definitionHandle) const {
+        std::vector<const ImageDefinitionReactorRecord*> result;
+        if (definitionHandle == 0)
+            return result;
+        for (const ImageDefinitionReactorRecord& record :
+             m_imageDefinitionReactors) {
+            if (record.parentHandle == definitionHandle)
+                result.push_back(&record);
+        }
+        return result;
+    }
+
+    const UnderlayDefinitionRecord* findUnderlayDefinitionByHandle(
+        duint32 handle) const {
+        if (handle == 0)
+            return nullptr;
+        for (const UnderlayDefinitionRecord& record : m_underlayDefinitions) {
+            if (record.handle == handle)
+                return &record;
+        }
+        return nullptr;
+    }
+
+    std::vector<const UnderlayRecord*> findUnderlaysByDefinitionHandle(
+        duint32 definitionHandle) const {
+        std::vector<const UnderlayRecord*> result;
+        if (definitionHandle == 0)
+            return result;
+        for (const UnderlayRecord& record : m_underlays) {
+            if (record.definitionHandle == definitionHandle)
+                result.push_back(&record);
+        }
+        return result;
+    }
+
+    std::vector<const ImageDefinitionRecord*> findImageDefinitionsByPath(
+        const std::string& path) const {
+        std::vector<const ImageDefinitionRecord*> result;
+        if (path.empty())
+            return result;
+        for (const ImageDefinitionRecord& record : m_imageDefinitions) {
+            if (record.path == path)
+                result.push_back(&record);
+        }
+        return result;
+    }
+
+    std::vector<const UnderlayDefinitionRecord*> findUnderlayDefinitionsByPath(
+        const std::string& path) const {
+        std::vector<const UnderlayDefinitionRecord*> result;
+        if (path.empty())
+            return result;
+        for (const UnderlayDefinitionRecord& record : m_underlayDefinitions) {
+            if (record.path == path)
+                result.push_back(&record);
+        }
+        return result;
     }
 
     const AssociativeRecord* findAssociativeObjectByHandle(duint32 handle) const {
@@ -3417,6 +3795,9 @@ public:
             + m_mleaderStyles.size() + m_detailViewStyles.size()
             + m_sectionViewStyles.size() + m_breakData.size()
             + m_breakPointRefs.size() + m_groups.size()
+            + m_rasterImages.size() + m_imageDefinitions.size()
+            + m_underlays.size() + m_underlayDefinitions.size()
+            + m_rasterVariables.size()
             + m_imageDefinitionReactors.size() + m_spatialFilters.size()
             + m_geoData.size() + m_tableGeometry.size() + m_placeholders.size();
     }
@@ -3437,6 +3818,11 @@ public:
             || hasReplayable(m_breakData)
             || hasReplayable(m_breakPointRefs)
             || hasReplayable(m_groups)
+            || hasReplayable(m_rasterImages)
+            || hasReplayable(m_imageDefinitions)
+            || hasReplayable(m_underlays)
+            || hasReplayable(m_underlayDefinitions)
+            || hasReplayable(m_rasterVariables)
             || hasReplayable(m_imageDefinitionReactors)
             || hasReplayable(m_spatialFilters)
             || hasReplayable(m_geoData)
@@ -3579,6 +3965,11 @@ public:
         invalidateContainer(m_breakData);
         invalidateContainer(m_breakPointRefs);
         invalidateContainer(m_groups);
+        invalidateContainer(m_rasterImages);
+        invalidateContainer(m_imageDefinitions);
+        invalidateContainer(m_underlays);
+        invalidateContainer(m_underlayDefinitions);
+        invalidateContainer(m_rasterVariables);
         invalidateContainer(m_imageDefinitionReactors);
         invalidateContainer(m_spatialFilters);
         invalidateContainer(m_geoData);
@@ -5017,6 +5408,131 @@ private:
             && record.preservedVertexCount != expectedVertexCount;
     }
 
+    static duint32 parseHexHandle(const std::string& text) {
+        if (text.empty())
+            return 0;
+        try {
+            return static_cast<duint32>(std::stoul(text, nullptr, 16));
+        } catch (...) {
+            return 0;
+        }
+    }
+
+    static ExternalReferencePathDiagnostic externalReferencePathDiagnostic(
+        const std::string& path) {
+        ExternalReferencePathDiagnostic diagnostic;
+        diagnostic.path = path;
+        if (path.empty()) {
+            diagnostic.status = ExternalReferencePathStatus::Empty;
+            return diagnostic;
+        }
+        const size_t schemePos = path.find("://");
+        if (schemePos != std::string::npos) {
+            const std::string scheme = path.substr(0, schemePos);
+            if (scheme == "http" || scheme == "https" || scheme == "file")
+                diagnostic.status = ExternalReferencePathStatus::External;
+            else
+                diagnostic.status = ExternalReferencePathStatus::UnsupportedScheme;
+            return diagnostic;
+        }
+        if (!isAbsolutePath(path)) {
+            diagnostic.status = ExternalReferencePathStatus::Relative;
+            return diagnostic;
+        }
+        std::ifstream file(path);
+        diagnostic.status = file.good()
+                                ? ExternalReferencePathStatus::AbsolutePresent
+                                : ExternalReferencePathStatus::AbsoluteMissing;
+        return diagnostic;
+    }
+
+    static bool isAbsolutePath(const std::string& path) {
+        if (path.empty())
+            return false;
+        if (path.front() == '/' || path.front() == '\\')
+            return true;
+        return path.size() > 2
+            && ((path[0] >= 'A' && path[0] <= 'Z')
+                || (path[0] >= 'a' && path[0] <= 'z'))
+            && path[1] == ':';
+    }
+
+    static ClipBoundaryStatus clipBoundaryStatus(
+        int clip, size_t vertexCount, bool isWipeout) {
+        if (clip == 0 && !isWipeout)
+            return ClipBoundaryStatus::NoBoundary;
+        if (vertexCount == 0)
+            return isWipeout ? ClipBoundaryStatus::Malformed
+                             : ClipBoundaryStatus::NoBoundary;
+        if (vertexCount == 2)
+            return ClipBoundaryStatus::Rectangular;
+        if (vertexCount >= 3)
+            return ClipBoundaryStatus::Polygonal;
+        return ClipBoundaryStatus::Malformed;
+    }
+
+    static ClipBoundaryStatus underlayClipBoundaryStatus(size_t vertexCount) {
+        if (vertexCount == 0)
+            return ClipBoundaryStatus::NoBoundary;
+        if (vertexCount == 2)
+            return ClipBoundaryStatus::Rectangular;
+        if (vertexCount >= 3)
+            return ClipBoundaryStatus::Polygonal;
+        return ClipBoundaryStatus::Malformed;
+    }
+
+    static void incrementClipBoundaryCounts(
+        ExternalReferenceCounts& counts, ClipBoundaryStatus status) {
+        switch (status) {
+            case ClipBoundaryStatus::NoBoundary:
+                ++counts.noBoundaryClips;
+                return;
+            case ClipBoundaryStatus::Rectangular:
+                ++counts.rectangularClips;
+                return;
+            case ClipBoundaryStatus::Polygonal:
+                ++counts.polygonalClips;
+                return;
+            case ClipBoundaryStatus::Malformed:
+                ++counts.malformedClips;
+                return;
+            case ClipBoundaryStatus::Unknown:
+            default:
+                return;
+        }
+    }
+
+    static void incrementPathStatusCounts(
+        ExternalReferenceCounts& counts,
+        const ExternalReferencePathDiagnostic& diagnostic) {
+        switch (diagnostic.status) {
+            case ExternalReferencePathStatus::Empty:
+                ++counts.emptyPaths;
+                break;
+            case ExternalReferencePathStatus::Relative:
+                ++counts.relativePaths;
+                break;
+            case ExternalReferencePathStatus::AbsoluteMissing:
+                ++counts.absoluteMissingPaths;
+                break;
+            case ExternalReferencePathStatus::External:
+                ++counts.externalPaths;
+                break;
+            case ExternalReferencePathStatus::UnsupportedScheme:
+                ++counts.unsupportedSchemes;
+                break;
+            case ExternalReferencePathStatus::CaseMismatchCandidate:
+                ++counts.caseMismatchCandidates;
+                break;
+            case ExternalReferencePathStatus::AbsolutePresent:
+            case ExternalReferencePathStatus::Unknown:
+            default:
+                break;
+        }
+        if (diagnostic.caseMismatchCandidate)
+            ++counts.caseMismatchCandidates;
+    }
+
     template<typename Predicate>
     void invalidateMatching(Predicate predicate) {
         invalidateMatching(m_rawObjects, predicate);
@@ -5035,6 +5551,11 @@ private:
         invalidateMatching(m_breakData, predicate);
         invalidateMatching(m_breakPointRefs, predicate);
         invalidateMatching(m_groups, predicate);
+        invalidateMatching(m_rasterImages, predicate);
+        invalidateMatching(m_imageDefinitions, predicate);
+        invalidateMatching(m_underlays, predicate);
+        invalidateMatching(m_underlayDefinitions, predicate);
+        invalidateMatching(m_rasterVariables, predicate);
         invalidateMatching(m_imageDefinitionReactors, predicate);
         invalidateMatching(m_spatialFilters, predicate);
         invalidateMatching(m_geoData, predicate);
@@ -5106,6 +5627,11 @@ private:
     std::vector<BreakDataRecord> m_breakData;
     std::vector<BreakPointRefRecord> m_breakPointRefs;
     std::vector<GroupRecord> m_groups;
+    std::vector<RasterImageRecord> m_rasterImages;
+    std::vector<ImageDefinitionRecord> m_imageDefinitions;
+    std::vector<UnderlayRecord> m_underlays;
+    std::vector<UnderlayDefinitionRecord> m_underlayDefinitions;
+    std::vector<RasterVariablesRecord> m_rasterVariables;
     std::vector<ImageDefinitionReactorRecord> m_imageDefinitionReactors;
     std::vector<SpatialFilterRecord> m_spatialFilters;
     std::vector<GeoDataRecord> m_geoData;

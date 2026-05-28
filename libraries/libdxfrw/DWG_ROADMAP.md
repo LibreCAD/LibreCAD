@@ -235,6 +235,15 @@ Completed in the 2026-05-27 implementation pass:
   dependency, geom-dependency, network, action-param, eval-expression,
   history-node, and action-body sections, including bit spans, count overflow,
   decoded handle/value counts, and source-assumption metadata.
+- Ready Detail D2a MESH/SubDMesh metadata completeness advanced: imported
+  polygon mesh previews now preserve mesh counts, raw range status, generated
+  sidecar lookup by source handle and fallback entity id, and native mesh
+  writer blocker diagnostics without enabling a native SubDMesh writer.
+- Ready Detail D3a external reference link graph advanced: IMAGE/WIPEOUT,
+  IMAGEDEF/IMAGEDEFREACTOR, RASTERVARIABLES, UNDERLAY, and
+  UNDERLAYDEFINITION metadata now expose path, clip, definition/reactor, and
+  export-policy diagnostics without copying files or writing native image/
+  underlay records.
 
 Still incomplete:
 
@@ -1779,8 +1788,9 @@ Acceptance:
 
 Purpose: make external-reference entities export-safe.
 
-Status: ready as metadata/link diagnostics. This slice should not copy files or
-write new native image/underlay records.
+Status: complete in the current implementation pass as metadata/link
+diagnostics. This slice does not copy files or write new native image/underlay
+records.
 
 Spec basis: IMAGE/IMAGEDEF/IMAGEDEFREACTOR are covered by ODA 20.4.80-20.4.82.
 Underlay and RasterVariables details must still be sourced from
@@ -1831,6 +1841,14 @@ Implementation:
    - no file copying in this slice.
 
 Stop before copying files or writing native underlay/image records.
+
+Acceptance:
+
+- `[entity_metadata]` covers IMAGE to IMAGEDEF, IMAGEDEF to
+  IMAGEDEFREACTOR, UNDERLAY to UNDERLAYDEFINITION, path diagnostics,
+  raster-variable storage, and clip diagnostics.
+- DWG export diagnostics summarize external-reference path/link/clip policy
+  without native image, wipeout, or underlay regeneration.
 
 ### Ready Detail D4a: SHAPE and OLE2FRAME Metadata Shells
 

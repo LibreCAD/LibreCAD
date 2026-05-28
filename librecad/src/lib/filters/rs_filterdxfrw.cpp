@@ -1628,6 +1628,8 @@ void RS_FilterDXFRW::linkUnderlay(const DRW_UnderlayDefinition *d) {
     return;
   RS_DEBUG->print("RS_FilterDXFRW::linkUnderlay: %s", d->filename.c_str());
   m_underlayDefMap[d->handle] = *d;
+  if (m_graphic != nullptr)
+    m_graphic->dwgAdvancedMetadata().addUnderlayDefinition(*d);
 }
 
 /**
@@ -1650,6 +1652,7 @@ void RS_FilterDXFRW::addUnderlay(const DRW_Underlay *data) {
   // 2D extrusion (extPoint == (0,0,1)), OCS == WCS modulo position +
   // scale + rotation. LibreCAD is 2D so we project z-up regardless.
   std::vector<RS_Vector> verts;
+  const bool fallbackPreviewGenerated = true;
   if (data->clipBoundary.size() >= 3) {
     verts.reserve(data->clipBoundary.size());
     for (const auto &v : data->clipBoundary) {
@@ -1711,6 +1714,9 @@ void RS_FilterDXFRW::addUnderlay(const DRW_Underlay *data) {
   ext.push_back(std::make_shared<DRW_Variant>(1070, dint32{data->fade}));
   polyline->setDrwExtData(std::move(ext));
 
+  if (m_graphic != nullptr)
+    m_graphic->dwgAdvancedMetadata().addUnderlay(
+        *data, fallbackPreviewGenerated);
   m_currentContainer->addEntity(polyline);
 }
 
@@ -4048,6 +4054,8 @@ void RS_FilterDXFRW::addHatch(const DRW_Hatch *data) {
  */
 void RS_FilterDXFRW::addImage(const DRW_Image *data) {
     RS_DEBUG->print("RS_FilterDXF::addImage");
+    if (m_graphic != nullptr && data != nullptr)
+        m_graphic->dwgAdvancedMetadata().addRasterImage(*data, false);
 
     RS_Vector ip(data->basePoint.x, data->basePoint.y);
     RS_Vector uv(data->secPoint.x, data->secPoint.y);
@@ -4078,6 +4086,8 @@ void RS_FilterDXFRW::addImage(const DRW_Image *data) {
  */
 void RS_FilterDXFRW::addWipeout(const DRW_Image *data) {
   RS_DEBUG->print("RS_FilterDXFRW::addWipeout");
+  if (m_graphic != nullptr && data != nullptr)
+    m_graphic->dwgAdvancedMetadata().addRasterImage(*data, true);
   if (data == nullptr || data->clipPath.empty()) {
     return;
   }
@@ -4262,6 +4272,16 @@ void RS_FilterDXFRW::addImageDefinitionReactor(const DRW_ImageDefinitionReactor 
                   static_cast<int>(data.m_classVersion));
 }
 
+void RS_FilterDXFRW::addRasterVariables(const DRW_RasterVariables &data) {
+  if (m_graphic != nullptr) {
+    m_graphic->dwgAdvancedMetadata().addRasterVariables(data);
+  }
+  RS_DEBUG->print("RS_FilterDXFRW::addRasterVariables: frame %d quality %d units %d",
+                  data.m_imageFrame,
+                  data.m_imageQuality,
+                  data.m_units);
+}
+
 void RS_FilterDXFRW::addSpatialFilter(const DRW_SpatialFilter &data) {
   if (m_graphic != nullptr) {
     m_graphic->dwgAdvancedMetadata().addSpatialFilter(data);
@@ -4366,6 +4386,8 @@ void RS_FilterDXFRW::addAcShHistoryObject(const DRW_AcShHistoryObject &data) {
  */
 void RS_FilterDXFRW::linkImage(const DRW_ImageDef *data) {
     RS_DEBUG->print("RS_FilterDXFRW::linkImage");
+    if (m_graphic != nullptr && data != nullptr)
+        m_graphic->dwgAdvancedMetadata().addImageDefinition(*data);
 
     int handle = data->handle;
     QString sfile(QString::fromUtf8(data->name.c_str()));
@@ -5691,6 +5713,8 @@ void RS_FilterDXFRW::writeObjects() {
             metadata.modelerPayloadCounts();
         const LC_DwgAdvancedMetadata::MeshWriterBlockerCounts meshBlockers =
             metadata.meshWriterBlockerCounts();
+        const LC_DwgAdvancedMetadata::ExternalReferenceCounts externalRefs =
+            metadata.externalReferenceCounts();
         const LC_DwgAdvancedMetadata::AssociativeShellCounts associativeShells =
             metadata.associativeShellCounts();
         const LC_DwgAdvancedMetadata::AssociativePrefixCounts associativePrefixes =
@@ -5980,6 +6004,43 @@ void RS_FilterDXFRW::writeObjects() {
                 static_cast<int>(meshBlockers.malformedCountRelationships),
                 static_cast<int>(meshBlockers.invalidated),
                 static_cast<int>(meshBlockers.replaced));
+        }
+        if (externalRefs.imageEntities > 0 || externalRefs.wipeouts > 0
+            || externalRefs.underlays > 0
+            || externalRefs.imageDefinitions > 0
+            || externalRefs.underlayDefinitions > 0) {
+            const bool hasExternalIssues =
+                externalRefs.totalPathIssues() > 0
+                || externalRefs.missingDefinitionHandles > 0
+                || externalRefs.malformedClips > 0;
+            RS_DEBUG->print(
+                hasExternalIssues ? RS_Debug::D_WARNING
+                                  : RS_Debug::D_DEBUGGING,
+                "DWG external references: images=%d wipeouts=%d image-defs=%d "
+                "underlays=%d underlay-defs=%d raster-vars=%d path-empty=%d "
+                "path-relative=%d path-missing=%d external=%d scheme=%d "
+                "case-candidate=%d missing-def=%d orphan-def=%d clip-none=%d "
+                "clip-rect=%d clip-poly=%d clip-bad=%d inverted=%d hidden-frame=%d",
+                static_cast<int>(externalRefs.imageEntities),
+                static_cast<int>(externalRefs.wipeouts),
+                static_cast<int>(externalRefs.imageDefinitions),
+                static_cast<int>(externalRefs.underlays),
+                static_cast<int>(externalRefs.underlayDefinitions),
+                static_cast<int>(externalRefs.rasterVariables),
+                static_cast<int>(externalRefs.emptyPaths),
+                static_cast<int>(externalRefs.relativePaths),
+                static_cast<int>(externalRefs.absoluteMissingPaths),
+                static_cast<int>(externalRefs.externalPaths),
+                static_cast<int>(externalRefs.unsupportedSchemes),
+                static_cast<int>(externalRefs.caseMismatchCandidates),
+                static_cast<int>(externalRefs.missingDefinitionHandles),
+                static_cast<int>(externalRefs.definitionsWithoutEntities),
+                static_cast<int>(externalRefs.noBoundaryClips),
+                static_cast<int>(externalRefs.rectangularClips),
+                static_cast<int>(externalRefs.polygonalClips),
+                static_cast<int>(externalRefs.malformedClips),
+                static_cast<int>(externalRefs.invertedClips),
+                static_cast<int>(externalRefs.hiddenFrames));
         }
         if (advancedEntityBlockers.recordCount > 0
             && advancedEntityBlockers.totalBlockers() > 0) {

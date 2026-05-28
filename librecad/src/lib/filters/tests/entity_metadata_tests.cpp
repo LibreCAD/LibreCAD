@@ -2495,6 +2495,107 @@ TEST_CASE("DWG mesh writer blockers diagnose incomplete SubDMesh metadata",
   CHECK(ledger.front().unsupportedAdvancedContent);
 }
 
+TEST_CASE("DWG external reference metadata tracks image and underlay links",
+          "[entity_metadata][dwg_metadata][external-ref]") {
+  LC_DwgAdvancedMetadata metadata;
+
+  DRW_RasterVariables rasterVariables;
+  rasterVariables.handle = 0x790u;
+  rasterVariables.m_classVersion = 1;
+  rasterVariables.m_imageFrame = 2;
+  rasterVariables.m_imageQuality = 1;
+  rasterVariables.m_units = 5;
+  metadata.addRasterVariables(rasterVariables);
+
+  DRW_ImageDef imageDefinition;
+  imageDefinition.handle = 0x791u;
+  imageDefinition.parentHandle = 0x20u;
+  imageDefinition.name = "textures/example.png";
+  imageDefinition.imgVersion = 0;
+  imageDefinition.u = 640.0;
+  imageDefinition.v = 480.0;
+  imageDefinition.up = 0.25;
+  imageDefinition.vp = 0.25;
+  imageDefinition.loaded = 1;
+  imageDefinition.resolution = 5;
+  metadata.addImageDefinition(imageDefinition);
+
+  DRW_ImageDefinitionReactor reactor;
+  reactor.handle = 0x792u;
+  reactor.parentHandle = imageDefinition.handle;
+  reactor.m_classVersion = 2;
+  metadata.addImageDefinitionReactor(reactor);
+
+  DRW_Image image;
+  image.handle = 0x793u;
+  image.parentHandle = 0x21u;
+  image.ref = imageDefinition.handle;
+  image.sizeu = 640.0;
+  image.sizev = 480.0;
+  image.clip = 1;
+  image.clipMode = true;
+  image.clipPath = {DRW_Coord{0.0, 0.0, 0.0},
+                    DRW_Coord{1.0, 1.0, 0.0}};
+  metadata.addRasterImage(image, false);
+
+  DRW_Image malformedWipeout;
+  malformedWipeout.handle = 0x794u;
+  malformedWipeout.parentHandle = 0x21u;
+  malformedWipeout.ref = 0;
+  malformedWipeout.clip = 1;
+  malformedWipeout.clipPath = {DRW_Coord{0.0, 0.0, 0.0}};
+  metadata.addRasterImage(malformedWipeout, true);
+
+  DRW_UnderlayDefinition underlayDefinition;
+  underlayDefinition.handle = 0x795u;
+  underlayDefinition.parentHandle = 0x20u;
+  underlayDefinition.kind = DRW_UnderlayDefinition::PDF;
+  underlayDefinition.filename = "/definitely/missing/librecad-test.pdf";
+  underlayDefinition.sheetName = "Sheet";
+  metadata.addUnderlayDefinition(underlayDefinition);
+
+  DRW_Underlay underlay;
+  underlay.handle = 0x796u;
+  underlay.parentHandle = 0x21u;
+  underlay.definitionHandle = underlayDefinition.handle;
+  underlay.kind = DRW_Underlay::PDF;
+  underlay.flags = 0;
+  underlay.clipBoundary = {DRW_Coord{0.0, 0.0, 0.0},
+                           DRW_Coord{1.0, 0.0, 0.0},
+                           DRW_Coord{1.0, 1.0, 0.0}};
+  metadata.addUnderlay(underlay, true);
+
+  const LC_DwgAdvancedMetadata::ExternalReferenceCounts counts =
+      metadata.externalReferenceCounts();
+  CHECK(counts.imageEntities == 1u);
+  CHECK(counts.wipeouts == 1u);
+  CHECK(counts.imageDefinitions == 1u);
+  CHECK(counts.underlays == 1u);
+  CHECK(counts.underlayDefinitions == 1u);
+  CHECK(counts.rasterVariables == 1u);
+  CHECK(counts.relativePaths == 1u);
+  CHECK(counts.absoluteMissingPaths == 1u);
+  CHECK(counts.missingDefinitionHandles == 1u);
+  CHECK(counts.rectangularClips == 1u);
+  CHECK(counts.polygonalClips == 1u);
+  CHECK(counts.malformedClips == 1u);
+  CHECK(counts.invertedClips == 1u);
+  CHECK(counts.hiddenFrames == 1u);
+
+  REQUIRE(metadata.findImageDefinitionByHandle(imageDefinition.handle) != nullptr);
+  CHECK(metadata.findImageDefinitionsByPath(imageDefinition.name).size() == 1u);
+  CHECK(metadata.findRasterImagesByDefinitionHandle(imageDefinition.handle).size()
+        == 1u);
+  CHECK(metadata.findImageDefinitionReactorsByDefinitionHandle(
+            imageDefinition.handle).size() == 1u);
+  REQUIRE(metadata.findUnderlayDefinitionByHandle(underlayDefinition.handle)
+          != nullptr);
+  CHECK(metadata.findUnderlayDefinitionsByPath(underlayDefinition.filename)
+        .size() == 1u);
+  CHECK(metadata.findUnderlaysByDefinitionHandle(underlayDefinition.handle)
+        .size() == 1u);
+}
+
 TEST_CASE("DWG advanced metadata invalidates associative raw replay",
           "[entity_metadata][dwg_metadata][raw-replay]") {
   LC_DwgAdvancedMetadata metadata;
