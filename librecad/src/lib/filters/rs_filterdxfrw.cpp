@@ -5505,6 +5505,8 @@ void RS_FilterDXFRW::writeObjects() {
         int replayedObjects = 0;
         const LC_DwgAdvancedMetadata::RawObjectFamilyCounts rawFamilyCounts =
             metadata.rawObjectFamilyCounts();
+        const LC_DwgAdvancedMetadata::TableWriterBlockerCounts tableBlockers =
+            metadata.tableWriterBlockerCounts();
         for (const auto& record : metadata.rawObjects()) {
             if (nativeSunHandles.count(record.handle) != 0 && isSunRawObject(record)) {
                 hasBlockedReplay = true;
@@ -5613,6 +5615,20 @@ void RS_FilterDXFRW::writeObjects() {
             RS_DEBUG->print(
                 "RS_FilterDXFRW::writeObjects: wrote %d native MLEADERSTYLE objects",
                 nativeMLeaderStyleObjects);
+        }
+        if (tableBlockers.tableCount > 0 && tableBlockers.totalBlockers() > 0) {
+            RS_DEBUG->print(
+                RS_Debug::D_WARNING,
+                "Native DWG table writing blocked: tables=%d fallback=%d incomplete=%d "
+                "unresolved-style=%d field=%d block=%d overrides=%d geometry=%d",
+                static_cast<int>(tableBlockers.tableCount),
+                static_cast<int>(tableBlockers.fallbackRendered),
+                static_cast<int>(tableBlockers.incompleteSemanticParse),
+                static_cast<int>(tableBlockers.unresolvedStyle),
+                static_cast<int>(tableBlockers.fieldContent),
+                static_cast<int>(tableBlockers.blockContent),
+                static_cast<int>(tableBlockers.overrideCells),
+                static_cast<int>(tableBlockers.geometryCells));
         }
         const size_t nativeSemanticRecords =
             static_cast<size_t>(nativeSunObjects + nativePlaceholderObjects

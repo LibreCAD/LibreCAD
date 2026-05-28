@@ -1,0 +1,52 @@
+{
+  "version": 1,
+  "description": "Optional DWG interoperability fixture manifest for local ACadSharp/libreDWG comparison runs.",
+  "fixtures": [
+    {
+      "name": "external-local-dwg-suite",
+      "path": "${HOME}/doc/dwg/fixtures",
+      "optional": true,
+      "targetVersion": "mixed",
+      "tags": [
+        "dwg",
+        "visual",
+        "table",
+        "assoc",
+        "dynamic-block",
+        "modeler",
+        "acis",
+        "mleader",
+        "light-sun",
+        "raster-underlay",
+        "r2018-text",
+        "advanced-entities"
+      ],
+      "expectedCallbacks": [
+        "addUnsupportedObject",
+        "addView",
+        "addTableContent",
+        "addAssociativeObject",
+        "addModelerGeometry",
+        "addMLeader",
+        "addLight",
+        "addSun"
+      ],
+      "expectedUnsupportedDiagnostics": [],
+      "expectedRawFamilies": [
+        "associative",
+        "evaluation graph",
+        "dynamic block",
+        "object context"
+      ],
+      "expectedRawReplayCount": 0,
+      "references": {
+        "acadSharp": "",
+        "libreDwg": ""
+      },
+      "expect": {
+        "load": true,
+        "preserveRawUnsupported": true
+      }
+    }
+  ]
+}

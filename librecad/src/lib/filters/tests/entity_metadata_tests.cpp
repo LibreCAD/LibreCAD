@@ -654,6 +654,11 @@ TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
   CHECK(capturedStyle.isAnnotative);
   CHECK(capturedStyle.breakSize == 0.375);
   CHECK(capturedStyle.textExtended);
+  CHECK(metadata.findMLeaderStyleByHandle(0xA0u) == &capturedStyle);
+  const auto mleaderStylesByArrow =
+      metadata.findMLeaderStylesReferencingHandle(0xA3u);
+  REQUIRE(mleaderStylesByArrow.size() == 1u);
+  CHECK(mleaderStylesByArrow.front() == &capturedStyle);
 
   REQUIRE(metadata.mleaders().size() == 1);
   const auto& capturedMLeader = metadata.mleaders().front();
@@ -698,6 +703,24 @@ TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
   CHECK(capturedMLeader.hasTextLabel);
   CHECK(capturedMLeader.hasTextContent);
   CHECK(capturedMLeader.hasBlockContent);
+  CHECK(metadata.findMLeaderByHandle(0xA6u) == &capturedMLeader);
+  const auto mleadersUsingStyle = metadata.findMLeadersUsingStyle(0xA0u);
+  REQUIRE(mleadersUsingStyle.size() == 1u);
+  CHECK(mleadersUsingStyle.front() == &capturedMLeader);
+  const auto mleadersByStyle = metadata.findMLeadersReferencingHandle(0xA0u);
+  REQUIRE(mleadersByStyle.size() == 1u);
+  CHECK(mleadersByStyle.front() == &capturedMLeader);
+  const auto mleadersByArrowOverride =
+      metadata.findMLeadersReferencingHandle(0xACu);
+  REQUIRE(mleadersByArrowOverride.size() == 1u);
+  CHECK(mleadersByArrowOverride.front() == &capturedMLeader);
+  CHECK(metadata.findMLeadersReferencingHandle(0xDEADBEEFu).empty());
+  metadata.invalidateMLeaderGraphForHandle(0xACu);
+  CHECK(capturedMLeader.replayState ==
+        LC_DwgAdvancedMetadata::ReplayState::ReplayInvalidated);
+  metadata.invalidateMLeaderGraphForHandle(0xA3u);
+  CHECK(capturedStyle.replayState ==
+        LC_DwgAdvancedMetadata::ReplayState::ReplayInvalidated);
 
   REQUIRE(metadata.detailViewStyles().size() == 1);
   const auto& capturedDetail = metadata.detailViewStyles().front();
@@ -804,6 +827,9 @@ TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
   const auto tablesUsingStyle = metadata.findTablesUsingStyle(0xFCu);
   REQUIRE(tablesUsingStyle.size() == 1u);
   CHECK(tablesUsingStyle.front() == &capturedTableContent);
+  const auto tablesByStyleHandle = metadata.findTablesReferencingHandle(0xFCu);
+  REQUIRE(tablesByStyleHandle.size() == 1u);
+  CHECK(tablesByStyleHandle.front() == &capturedTableContent);
   REQUIRE(capturedTableContent.columnWidths.size() == 2u);
   CHECK(capturedTableContent.columnWidths[0] == 12.5);
   REQUIRE(capturedTableContent.rowHeights.size() == 1u);
@@ -846,6 +872,34 @@ TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
   REQUIRE(secondCell.contentHandles.size() == 2u);
   CHECK(secondCell.contentHandles.front() == 0x106u);
   CHECK(secondCell.contentHandles.back() == 0x107u);
+  CHECK(metadata.findTableCell(0xFEu, 0, 0) == &firstCell);
+  CHECK(metadata.findTableCell(0xFEu, 0, 1) == &secondCell);
+  CHECK(metadata.findTableCell(0xFEu, 1, 0) == nullptr);
+  const auto cellsByValue = metadata.findTableCellsReferencingHandle(0x102u);
+  REQUIRE(cellsByValue.size() == 1u);
+  CHECK(cellsByValue.front() == &firstCell);
+  const auto cellsByBlockContent = metadata.findTableCellsReferencingHandle(0x106u);
+  REQUIRE(cellsByBlockContent.size() == 1u);
+  CHECK(cellsByBlockContent.front() == &secondCell);
+  const auto tablesByBlockContent = metadata.findTablesReferencingHandle(0x106u);
+  REQUIRE(tablesByBlockContent.size() == 1u);
+  CHECK(tablesByBlockContent.front() == &capturedTableContent);
+  const auto cellsByMissingHandle = metadata.findTableCellsReferencingHandle(0xDEADBEEFu);
+  CHECK(cellsByMissingHandle.empty());
+  CHECK(metadata.findTablesReferencingHandle(0xDEADBEEFu).empty());
+  const LC_DwgAdvancedMetadata::TableWriterBlockerCounts tableBlockers =
+      metadata.tableWriterBlockerCounts();
+  CHECK(tableBlockers.tableCount == 1u);
+  CHECK(tableBlockers.fieldContent == 1u);
+  CHECK(tableBlockers.blockContent == 1u);
+  CHECK(tableBlockers.overrideCells == 1u);
+  CHECK(tableBlockers.geometryCells == 1u);
+  CHECK(tableBlockers.totalBlockers() == 4u);
+  CHECK(capturedTableContent.replayState ==
+        LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed);
+  metadata.invalidateTableGraphForHandle(0x106u);
+  CHECK(capturedTableContent.replayState ==
+        LC_DwgAdvancedMetadata::ReplayState::ReplayInvalidated);
 
   REQUIRE(metadata.modelerGeometry().size() == 1);
   const auto& capturedModeler = metadata.modelerGeometry().front();
@@ -995,6 +1049,54 @@ TEST_CASE("DWG advanced metadata resolves TABLESTYLE after TABLECONTENT import",
   const auto tablesUsingLateStyle = metadata.findTablesUsingStyle(0x420u);
   REQUIRE(tablesUsingLateStyle.size() == 1u);
   CHECK(tablesUsingLateStyle.front() == resolvedContent);
+}
+
+TEST_CASE("DWG advanced metadata invalidates TABLECONTENT raw replay",
+          "[entity_metadata][dwg_metadata][table]") {
+  LC_DwgAdvancedMetadata metadata;
+
+  DRW_UnsupportedObject rawTableContent;
+  rawTableContent.m_objectType = 512;
+  rawTableContent.m_handle = 0x440u;
+  rawTableContent.m_isCustomClass = true;
+  rawTableContent.m_recordName = "TABLECONTENT";
+  rawTableContent.m_className = "AcDbTableContent";
+  rawTableContent.m_rawBytes = {0x01u, 0x02u, 0x03u};
+  metadata.addUnsupportedObject(rawTableContent);
+
+  DRW_UnsupportedObject unrelatedRawObject;
+  unrelatedRawObject.m_objectType = 513;
+  unrelatedRawObject.m_handle = 0x441u;
+  unrelatedRawObject.m_isCustomClass = true;
+  unrelatedRawObject.m_recordName = "RAW_REPLAY_TEST";
+  unrelatedRawObject.m_className = "AcDbRawReplayTest";
+  unrelatedRawObject.m_rawBytes = {0x04u};
+  metadata.addUnsupportedObject(unrelatedRawObject);
+
+  DRW_TableContentObject tableContent;
+  tableContent.handle = 0x440u;
+  tableContent.m_parseComplete = true;
+  DRW_TableColumn column;
+  column.m_width = 2.0;
+  tableContent.m_content.m_columns.push_back(column);
+  DRW_TableRow row;
+  row.m_height = 1.0;
+  DRW_TableCell cell;
+  cell.m_valueHandle = 0x442u;
+  row.m_cells.push_back(cell);
+  tableContent.m_content.m_rows.push_back(row);
+  metadata.addTableContent(tableContent);
+
+  metadata.invalidateTableGraphForHandle(0x442u);
+
+  REQUIRE(metadata.tables().size() == 1u);
+  CHECK(metadata.tables().front().replayState ==
+        LC_DwgAdvancedMetadata::ReplayState::ReplayInvalidated);
+  REQUIRE(metadata.rawObjects().size() == 2u);
+  CHECK(LC_DwgAdvancedMetadata::rawReplayBlocker(metadata.rawObjects().front()) ==
+        LC_DwgAdvancedMetadata::ReplayBlocker::Invalidated);
+  CHECK(LC_DwgAdvancedMetadata::rawReplayBlocker(metadata.rawObjects().back()) ==
+        LC_DwgAdvancedMetadata::ReplayBlocker::None);
 }
 
 TEST_CASE("DWG advanced metadata classifies modeler payload markers",
@@ -1194,6 +1296,34 @@ TEST_CASE("DWG advanced metadata resolves MLEADERSTYLE after MLEADER import",
   CHECK(capturedMLeader.effectiveArrowHeadHandle == 0x322u);
   CHECK(capturedMLeader.effectiveTextStyleHandle == 0x323u);
   CHECK(capturedMLeader.effectiveBlockHandle == 0x324u);
+}
+
+TEST_CASE("DWG advanced metadata invalidates MLEADERSTYLE raw replay",
+          "[entity_metadata][dwg_metadata][mleader]") {
+  LC_DwgAdvancedMetadata metadata;
+
+  DRW_UnsupportedObject rawStyle;
+  rawStyle.m_objectType = 511;
+  rawStyle.m_handle = 0x330u;
+  rawStyle.m_isCustomClass = true;
+  rawStyle.m_recordName = "MLEADERSTYLE";
+  rawStyle.m_className = "AcDbMLeaderStyle";
+  rawStyle.m_rawBytes = {0x01u, 0x02u, 0x03u};
+  metadata.addUnsupportedObject(rawStyle);
+
+  DRW_MLeaderStyle style;
+  style.handle = 0x330u;
+  style.arrowHeadBlockHandle.ref = 0x331u;
+  metadata.addMLeaderStyle(style);
+
+  metadata.invalidateMLeaderGraphForHandle(0x331u);
+
+  REQUIRE(metadata.mleaderStyles().size() == 1u);
+  CHECK(metadata.mleaderStyles().front().replayState ==
+        LC_DwgAdvancedMetadata::ReplayState::ReplayInvalidated);
+  REQUIRE(metadata.rawObjects().size() == 1u);
+  CHECK(LC_DwgAdvancedMetadata::rawReplayBlocker(metadata.rawObjects().front()) ==
+        LC_DwgAdvancedMetadata::ReplayBlocker::Invalidated);
 }
 
 TEST_CASE("DWG fixture manifest is valid JSON and optional by default",

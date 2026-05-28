@@ -239,6 +239,22 @@ public:
         std::vector<duint32> contentHandles;
     };
 
+    struct TableWriterBlockerCounts {
+        size_t tableCount = 0;
+        size_t fallbackRendered = 0;
+        size_t incompleteSemanticParse = 0;
+        size_t unresolvedStyle = 0;
+        size_t fieldContent = 0;
+        size_t blockContent = 0;
+        size_t overrideCells = 0;
+        size_t geometryCells = 0;
+
+        size_t totalBlockers() const {
+            return fallbackRendered + incompleteSemanticParse + unresolvedStyle
+                   + fieldContent + blockContent + overrideCells + geometryCells;
+        }
+    };
+
     struct TableRecord {
         duint32 handle = 0;
         duint32 parentHandle = 0;
@@ -1133,6 +1149,113 @@ public:
         }
         return result;
     }
+    std::vector<const TableRecord*> findTablesReferencingHandle(duint32 handle) const {
+        std::vector<const TableRecord*> result;
+        if (handle == 0)
+            return result;
+        for (const TableRecord& record : m_tables) {
+            if (!isTableStyleRecord(record) && tableRecordReferences(record, handle))
+                result.push_back(&record);
+        }
+        return result;
+    }
+    TableWriterBlockerCounts tableWriterBlockerCounts() const {
+        TableWriterBlockerCounts counts;
+        for (const TableRecord& record : m_tables) {
+            if (isTableStyleRecord(record))
+                continue;
+            ++counts.tableCount;
+            if (record.fallbackRendered)
+                ++counts.fallbackRendered;
+            if (!record.semanticParsed)
+                ++counts.incompleteSemanticParse;
+            if (record.tableStyleHandle != 0 && !record.styleResolved)
+                ++counts.unresolvedStyle;
+            if (record.fieldContentCount != 0)
+                ++counts.fieldContent;
+            if (record.blockContentCount != 0 || record.hasBlockContent)
+                ++counts.blockContent;
+            if (record.overrideCellCount != 0)
+                ++counts.overrideCells;
+            if (record.geometryCellCount != 0)
+                ++counts.geometryCells;
+        }
+        return counts;
+    }
+    const TableCellRecord* findTableCell(duint32 tableHandle, int row, int column) const {
+        const TableRecord* table = findTableByHandle(tableHandle);
+        if (table == nullptr || row < 0 || column < 0)
+            return nullptr;
+        for (const TableCellRecord& cell : table->cells) {
+            if (cell.row == row && cell.column == column)
+                return &cell;
+        }
+        return nullptr;
+    }
+    std::vector<const TableCellRecord*> findTableCellsReferencingHandle(duint32 handle) const {
+        std::vector<const TableCellRecord*> result;
+        if (handle == 0)
+            return result;
+        for (const TableRecord& table : m_tables) {
+            if (isTableStyleRecord(table))
+                continue;
+            for (const TableCellRecord& cell : table.cells) {
+                if (tableCellReferences(cell, handle))
+                    result.push_back(&cell);
+            }
+        }
+        return result;
+    }
+
+    const MLeaderRecord* findMLeaderByHandle(duint32 handle) const {
+        if (handle == 0)
+            return nullptr;
+        for (const MLeaderRecord& record : m_mleaders) {
+            if (record.handle == handle)
+                return &record;
+        }
+        return nullptr;
+    }
+    const MLeaderStyleRecord* findMLeaderStyleByHandle(duint32 handle) const {
+        if (handle == 0)
+            return nullptr;
+        for (const MLeaderStyleRecord& record : m_mleaderStyles) {
+            if (record.handle == handle)
+                return &record;
+        }
+        return nullptr;
+    }
+    std::vector<const MLeaderRecord*> findMLeadersUsingStyle(duint32 styleHandle) const {
+        std::vector<const MLeaderRecord*> result;
+        if (styleHandle == 0)
+            return result;
+        for (const MLeaderRecord& record : m_mleaders) {
+            if (record.styleHandle == styleHandle)
+                result.push_back(&record);
+        }
+        return result;
+    }
+    std::vector<const MLeaderRecord*> findMLeadersReferencingHandle(duint32 handle) const {
+        std::vector<const MLeaderRecord*> result;
+        if (handle == 0)
+            return result;
+        for (const MLeaderRecord& record : m_mleaders) {
+            if (mleaderRecordReferences(record, handle))
+                result.push_back(&record);
+        }
+        return result;
+    }
+    std::vector<const MLeaderStyleRecord*> findMLeaderStylesReferencingHandle(
+        duint32 handle) const {
+        std::vector<const MLeaderStyleRecord*> result;
+        if (handle == 0)
+            return result;
+        for (const MLeaderStyleRecord& record : m_mleaderStyles) {
+            if (mleaderStyleRecordReferences(record, handle))
+                result.push_back(&record);
+        }
+        return result;
+    }
 
     const ModelerGeometryRecord* findModelerGeometryByHandle(duint32 handle) const {
         if (handle == 0)
@@ -1505,6 +1628,38 @@ public:
         }
     }
 
+    void invalidateTableGraphForHandle(duint32 dependentHandle) {
+        if (dependentHandle == 0)
+            return;
+        for (TableRecord& record : m_tables) {
+            if (record.replayState != ReplayState::ReplayAllowed)
+                continue;
+            if (tableRecordReferences(record, dependentHandle)) {
+                record.replayState = ReplayState::ReplayInvalidated;
+                invalidateRawTableObject(record.handle);
+            }
+        }
+    }
+
+    void invalidateMLeaderGraphForHandle(duint32 dependentHandle) {
+        if (dependentHandle == 0)
+            return;
+        for (MLeaderRecord& record : m_mleaders) {
+            if (record.replayState != ReplayState::ReplayAllowed)
+                continue;
+            if (mleaderRecordReferences(record, dependentHandle))
+                record.replayState = ReplayState::ReplayInvalidated;
+        }
+        for (MLeaderStyleRecord& record : m_mleaderStyles) {
+            if (record.replayState != ReplayState::ReplayAllowed)
+                continue;
+            if (mleaderStyleRecordReferences(record, dependentHandle)) {
+                record.replayState = ReplayState::ReplayInvalidated;
+                invalidateRawMLeaderStyle(record.handle);
+            }
+        }
+    }
+
     void invalidateAllReplayable() {
         invalidateContainer(m_rawObjects);
         invalidateContainer(m_views);
@@ -1650,6 +1805,86 @@ private:
         return true;
     }
 
+    static bool tableCellReferences(const TableCellRecord& cell, duint32 handle) {
+        if (handle == 0)
+            return false;
+        if (cell.valueHandle == handle
+            || cell.textStyleHandle == handle
+            || cell.textStyleOverrideHandle == handle
+            || cell.blockHandle == handle
+            || cell.geometryHandle == handle) {
+            return true;
+        }
+        for (duint32 contentHandle : cell.contentHandles) {
+            if (contentHandle == handle)
+                return true;
+        }
+        return false;
+    }
+
+    static bool tableRecordReferences(const TableRecord& record, duint32 handle) {
+        if (handle == 0)
+            return false;
+        if (record.tableStyleHandle == handle)
+            return true;
+        for (duint32 valueHandle : record.valueHandles) {
+            if (valueHandle == handle)
+                return true;
+        }
+        for (duint32 blockHandle : record.blockHandles) {
+            if (blockHandle == handle)
+                return true;
+        }
+        for (duint32 fieldHandle : record.fieldHandles) {
+            if (fieldHandle == handle)
+                return true;
+        }
+        for (duint32 geometryHandle : record.geometryHandles) {
+            if (geometryHandle == handle)
+                return true;
+        }
+        for (const TableCellRecord& cell : record.cells) {
+            if (tableCellReferences(cell, handle))
+                return true;
+        }
+        return false;
+    }
+
+    static bool mleaderRecordReferences(const MLeaderRecord& record, duint32 handle) {
+        if (handle == 0)
+            return false;
+        if (record.styleHandle == handle
+            || record.leaderLineTypeHandle == handle
+            || record.arrowHeadHandle == handle
+            || record.textStyleHandle == handle
+            || record.blockHandle == handle
+            || record.effectiveLeaderLineTypeHandle == handle
+            || record.effectiveArrowHeadHandle == handle
+            || record.effectiveTextStyleHandle == handle
+            || record.effectiveBlockHandle == handle) {
+            return true;
+        }
+        for (duint32 arrowHandle : record.arrowHeadOverrideHandles) {
+            if (arrowHandle == handle)
+                return true;
+        }
+        for (duint32 attributeHandle : record.blockAttributeDefinitionHandles) {
+            if (attributeHandle == handle)
+                return true;
+        }
+        return false;
+    }
+
+    static bool mleaderStyleRecordReferences(const MLeaderStyleRecord& record,
+                                             duint32 handle) {
+        if (handle == 0)
+            return false;
+        return record.leaderLineTypeHandle == handle
+               || record.arrowHeadBlockHandle == handle
+               || record.textStyleHandle == handle
+               || record.blockHandle == handle;
+    }
+
     template<typename Container>
     static bool hasReplayable(const Container& container) {
         for (const auto& record : container) {
@@ -1713,6 +1948,45 @@ private:
             if (record.replayState != ReplayState::ReplayAllowed)
                 continue;
             if (record.handle == handle && isAssociativeRawObject(record))
+                record.replayState = ReplayState::ReplayInvalidated;
+        }
+    }
+
+    static bool isMLeaderStyleRawObject(const RawObjectRecord& record) {
+        return record.recordName == "MLEADERSTYLE"
+               || record.recordName == "ACDB_MLEADERSTYLE"
+               || record.className == "AcDbMLeaderStyle";
+    }
+
+    static bool isTableRawObject(const RawObjectRecord& record) {
+        return record.recordName == "ACAD_TABLE"
+               || record.recordName == "TABLECONTENT"
+               || record.recordName == "TABLESTYLE"
+               || record.recordName == "CELLSTYLEMAP"
+               || record.className == "AcDbTable"
+               || record.className == "AcDbTableContent"
+               || record.className == "AcDbTableStyle"
+               || record.className == "AcDbCellStyleMap";
+    }
+
+    void invalidateRawTableObject(duint32 handle) {
+        if (handle == 0)
+            return;
+        for (RawObjectRecord& record : m_rawObjects) {
+            if (record.replayState != ReplayState::ReplayAllowed)
+                continue;
+            if (record.handle == handle && isTableRawObject(record))
+                record.replayState = ReplayState::ReplayInvalidated;
+        }
+    }
+
+    void invalidateRawMLeaderStyle(duint32 handle) {
+        if (handle == 0)
+            return;
+        for (RawObjectRecord& record : m_rawObjects) {
+            if (record.replayState != ReplayState::ReplayAllowed)
+                continue;
+            if (record.handle == handle && isMLeaderStyleRawObject(record))
                 record.replayState = ReplayState::ReplayInvalidated;
         }
     }
