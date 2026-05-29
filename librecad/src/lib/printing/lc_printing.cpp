@@ -129,15 +129,15 @@ void LC_Printing::Print(QC_MDIWindow &mdiWindow, PrinterType printerType)
     }
     // qDebug()<<"paper size=("<<printer.paperSize(QPrinter::Millimeter).width()<<", "<<printer.paperSize(QPrinter::Millimeter).height()<<")";
     printer.setPageOrientation(landscape ? QPageLayout::Landscape : QPageLayout::Portrait);
-    // PR 11 — pull margins from the active LayoutRecord when one is set,
-    // otherwise fall back to the document singleton via activeLayoutMargins().
-    // Argument order mirrors the legacy call site (left, right, top, bottom)
-    // — not Qt's canonical (left, top, right, bottom) — to keep the print
-    // path byte-identical for documents without an active layout.
+    // PR 12 — straightened argument order to match Qt's canonical
+    // QMarginsF(left, top, right, bottom) signature. Pre-PR 12 the call
+    // site passed (left, right, top, bottom) — a swap masked by the
+    // symmetric default margins most documents ship with. activeLayoutMargins()
+    // returns {left, top, right, bottom}; pass elements in the same order.
     const auto printMargins = graphic->activeLayoutMargins();
     QMarginsF paperMargins{printMargins[0],   // left
-                           printMargins[2],   // right
                            printMargins[1],   // top
+                           printMargins[2],   // right
                            printMargins[3]};  // bottom
     printer.setPageMargins(paperMargins, QPageLayout::Millimeter);
 
