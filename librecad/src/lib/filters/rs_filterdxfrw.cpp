@@ -294,6 +294,14 @@ bool isXRecordRawObject(
         || record.className == "AcDbXrecord";
 }
 
+// LAYOUT raw-object predicate.  Fixed type 82 + recordName/className
+// fallback for vendor extensions.
+bool isLayoutRawObject(
+    const LC_DwgAdvancedMetadata::RawObjectRecord& record) {
+    return record.objectType == 82 || record.recordName == "LAYOUT"
+        || record.className == "AcDbLayout";
+}
+
 bool hasReplayableRawMLeaderStyle(const LC_DwgAdvancedMetadata& metadata,
                                   duint32 handle) {
     if (handle == 0)
@@ -343,6 +351,69 @@ DRW_XRecord xrecordFromMetadata(
     xrecord.m_values = record.values;
     xrecord.m_handleValues = record.handleValues;
     return xrecord;
+}
+
+DRW_Layout layoutFromMetadata(
+    const LC_DwgAdvancedMetadata::LayoutRecord& record) {
+    DRW_Layout layout;
+    layout.handle = record.handle;
+    layout.parentHandle = static_cast<int>(record.parentHandle);
+    // PlotSettings prefix.
+    layout.pageSetupName = record.pageSetupName;
+    layout.printerConfig = record.printerConfig;
+    layout.plotLayoutFlags = record.plotLayoutFlags;
+    layout.marginLeft = record.marginLeft;
+    layout.marginBottom = record.marginBottom;
+    layout.marginRight = record.marginRight;
+    layout.marginTop = record.marginTop;
+    layout.paperWidth = record.paperWidth;
+    layout.paperHeight = record.paperHeight;
+    layout.paperSize = record.paperSize;
+    layout.plotOriginX = record.plotOriginX;
+    layout.plotOriginY = record.plotOriginY;
+    layout.paperUnits = record.paperUnits;
+    layout.plotRotation = record.plotRotation;
+    layout.plotType = record.plotType;
+    layout.windowMinX = record.windowMinX;
+    layout.windowMinY = record.windowMinY;
+    layout.windowMaxX = record.windowMaxX;
+    layout.windowMaxY = record.windowMaxY;
+    layout.plotViewName = record.plotViewName;
+    layout.realWorldUnits = record.realWorldUnits;
+    layout.drawingUnits = record.drawingUnits;
+    layout.currentStyleSheet = record.currentStyleSheet;
+    layout.scaleType = record.scaleType;
+    layout.scaleFactor = record.scaleFactor;
+    layout.paperImageOriginX = record.paperImageOriginX;
+    layout.paperImageOriginY = record.paperImageOriginY;
+    layout.shadePlotMode = record.shadePlotMode;
+    layout.shadePlotResLevel = record.shadePlotResLevel;
+    layout.shadePlotCustomDPI = record.shadePlotCustomDPI;
+    // Layout-specific.
+    layout.name = record.name;
+    layout.layoutFlags = record.layoutFlags;
+    layout.tabOrder = record.tabOrder;
+    layout.ucsOrigin = record.ucsOrigin;
+    layout.limMinX = record.limMinX;
+    layout.limMinY = record.limMinY;
+    layout.limMaxX = record.limMaxX;
+    layout.limMaxY = record.limMaxY;
+    layout.insPoint = record.insPoint;
+    layout.ucsXAxis = record.ucsXAxis;
+    layout.ucsYAxis = record.ucsYAxis;
+    layout.elevation = record.elevation;
+    layout.orthoViewType = record.orthoViewType;
+    layout.extMin = record.extMin;
+    layout.extMax = record.extMax;
+    layout.viewportCount = record.viewportCount;
+    layout.plotViewHandle.ref = record.plotViewHandle;
+    layout.visualStyleHandle.ref = record.visualStyleHandle;
+    layout.paperSpaceBlockRecordHandle.ref = record.paperSpaceBlockRecordHandle;
+    layout.lastActiveViewportHandle.ref = record.lastActiveViewportHandle;
+    layout.baseUcsHandle.ref = record.baseUcsHandle;
+    layout.namedUcsHandle.ref = record.namedUcsHandle;
+    layout.viewportHandles = record.viewportHandles;
+    return layout;
 }
 
 DRW_Sun sunFromMetadata(const LC_DwgAdvancedMetadata::SunRecord& record) {
@@ -4462,6 +4533,16 @@ void RS_FilterDXFRW::addXRecord(const DRW_XRecord &data) {
                   static_cast<int>(data.m_values.size()));
 }
 
+void RS_FilterDXFRW::addLayout(const DRW_Layout &data) {
+  if (m_graphic != nullptr) {
+    m_graphic->dwgAdvancedMetadata().addLayout(data);
+  }
+  RS_DEBUG->print("RS_FilterDXFRW::addLayout: handle %d name=%s viewports=%d",
+                  static_cast<int>(data.handle),
+                  data.name.c_str(),
+                  static_cast<int>(data.viewportHandles.size()));
+}
+
 void RS_FilterDXFRW::addAssociativeObject(const DRW_AssociativeObject &data) {
   // TODO: Reconstruct associative dimension/dynamic-block relationship graphs
   // from these shell objects after native consumers exist.
@@ -5771,11 +5852,13 @@ void RS_FilterDXFRW::writeObjects() {
         std::set<duint32> nativeMLeaderStyleHandles;
         std::set<duint32> nativeDictionaryHandles;
         std::set<duint32> nativeXRecordHandles;
+        std::set<duint32> nativeLayoutHandles;
         int nativeSunObjects = 0;
         int nativePlaceholderObjects = 0;
         int nativeMLeaderStyleObjects = 0;
         int nativeDictionaryObjects = 0;
         int nativeXRecordObjects = 0;
+        int nativeLayoutObjects = 0;
         if (canWriteModernObjects) {
             for (const auto& record : metadata.suns()) {
                 if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
@@ -5810,6 +5893,12 @@ void RS_FilterDXFRW::writeObjects() {
                 if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
                     && record.handle != 0) {
                     nativeXRecordHandles.insert(record.handle);
+                }
+            }
+            for (const auto& record : metadata.layouts()) {
+                if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                    && record.handle != 0) {
+                    nativeLayoutHandles.insert(record.handle);
                 }
             }
         }
@@ -5874,6 +5963,12 @@ void RS_FilterDXFRW::writeObjects() {
             }
             if (nativeXRecordHandles.count(record.handle) != 0
                 && isXRecordRawObject(record)) {
+                hasBlockedReplay = true;
+                ++blockedReplaced;
+                continue;
+            }
+            if (nativeLayoutHandles.count(record.handle) != 0
+                && isLayoutRawObject(record)) {
                 hasBlockedReplay = true;
                 ++blockedReplaced;
                 continue;
@@ -5962,6 +6057,17 @@ void RS_FilterDXFRW::writeObjects() {
                     ++blockedWriterRejected;
                 }
             }
+            for (const auto& record : metadata.layouts()) {
+                if (nativeLayoutHandles.count(record.handle) == 0)
+                    continue;
+                DRW_Layout layout = layoutFromMetadata(record);
+                if (m_dwgW->writeLayout(&layout)) {
+                    ++nativeLayoutObjects;
+                } else {
+                    hasBlockedReplay = true;
+                    ++blockedWriterRejected;
+                }
+            }
         }
         if (replayedObjects > 0) {
             RS_DEBUG->print("RS_FilterDXFRW::writeObjects: replayed %d raw DWG objects",
@@ -6000,6 +6106,11 @@ void RS_FilterDXFRW::writeObjects() {
             RS_DEBUG->print(
                 "RS_FilterDXFRW::writeObjects: wrote %d native XRECORD objects",
                 nativeXRecordObjects);
+        }
+        if (nativeLayoutObjects > 0) {
+            RS_DEBUG->print(
+                "RS_FilterDXFRW::writeObjects: wrote %d native LAYOUT objects",
+                nativeLayoutObjects);
         }
         if (modelerPayloads.recordCount > 0) {
             const RS_Debug::RS_DebugLevel level =
@@ -6298,7 +6409,8 @@ void RS_FilterDXFRW::writeObjects() {
             static_cast<size_t>(nativeSunObjects + nativePlaceholderObjects
                                 + nativeMLeaderStyleObjects
                                 + nativeDictionaryObjects
-                                + nativeXRecordObjects);
+                                + nativeXRecordObjects
+                                + nativeLayoutObjects);
         const size_t semanticOnlyRecords =
             metadata.semanticOnlyRecordCount() > nativeSemanticRecords
                 ? metadata.semanticOnlyRecordCount() - nativeSemanticRecords

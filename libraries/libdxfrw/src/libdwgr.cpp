@@ -583,6 +583,15 @@ bool dwgRW::writeXRecord(DRW_XRecord *object) {
     return w->writeXRecord(*object);
 }
 
+bool dwgRW::writeLayout(DRW_Layout *object) {
+    if (object == nullptr)
+        return false;
+    auto *w = asWriter15(writer);
+    if (w == nullptr)
+        return false;
+    return w->writeLayout(*object);
+}
+
 bool dwgRW::registerRawDwgObjectClass(const DRW_UnsupportedObject *object) {
     if (object == nullptr || writer == nullptr)
         return false;

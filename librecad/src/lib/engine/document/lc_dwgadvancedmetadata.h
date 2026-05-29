@@ -1629,6 +1629,73 @@ public:
         ReplayState replayState = ReplayState::ReplayAllowed;
     };
 
+    /// LAYOUT (paper-space layout, ODA fixed type 82, §20.4.84).  Round-trip
+    /// grade — captures every PlotSettings-prefix field AND every Layout-
+    /// specific field consumed by DRW_Layout::encodeDwg.  Surfaces in
+    /// LibreCAD's UI via PR 9-11 (RS_Graphic::layouts() — thin view over
+    /// this record).
+    struct LayoutRecord {
+        duint32 handle = 0;
+        duint32 parentHandle = 0;
+        // PlotSettings prefix (ODA §20.4.84 embeds these inline in LAYOUT).
+        std::string pageSetupName;
+        std::string printerConfig;
+        int plotLayoutFlags = 0;
+        double marginLeft = 0.0;
+        double marginBottom = 0.0;
+        double marginRight = 0.0;
+        double marginTop = 0.0;
+        double paperWidth = 0.0;
+        double paperHeight = 0.0;
+        std::string paperSize;
+        double plotOriginX = 0.0;
+        double plotOriginY = 0.0;
+        int paperUnits = 0;
+        int plotRotation = 0;
+        int plotType = 0;
+        double windowMinX = 0.0;
+        double windowMinY = 0.0;
+        double windowMaxX = 0.0;
+        double windowMaxY = 0.0;
+        std::string plotViewName;
+        double realWorldUnits = 1.0;
+        double drawingUnits = 1.0;
+        std::string currentStyleSheet;
+        int scaleType = 0;
+        double scaleFactor = 1.0;
+        double paperImageOriginX = 0.0;
+        double paperImageOriginY = 0.0;
+        int shadePlotMode = 0;
+        int shadePlotResLevel = 0;
+        int shadePlotCustomDPI = 0;
+        // Layout-specific fields.
+        std::string name;
+        int layoutFlags = 0;
+        int tabOrder = 0;
+        DRW_Coord ucsOrigin;
+        double limMinX = 0.0;
+        double limMinY = 0.0;
+        double limMaxX = 0.0;
+        double limMaxY = 0.0;
+        DRW_Coord insPoint;
+        DRW_Coord ucsXAxis{1.0, 0.0, 0.0};
+        DRW_Coord ucsYAxis{0.0, 1.0, 0.0};
+        double elevation = 0.0;
+        int orthoViewType = 0;
+        DRW_Coord extMin;
+        DRW_Coord extMax;
+        dint32 viewportCount = 0;
+        // Handle refs.
+        duint32 plotViewHandle = 0;
+        duint32 visualStyleHandle = 0;
+        duint32 paperSpaceBlockRecordHandle = 0;
+        duint32 lastActiveViewportHandle = 0;
+        duint32 baseUcsHandle = 0;
+        duint32 namedUcsHandle = 0;
+        std::vector<duint32> viewportHandles;
+        ReplayState replayState = ReplayState::ReplayAllowed;
+    };
+
     void clear() {
         m_rawObjects.clear();
         m_views.clear();
@@ -1661,6 +1728,7 @@ public:
         m_placeholders.clear();
         m_dictionaries.clear();
         m_xrecords.clear();
+        m_layouts.clear();
     }
 
     void addUnsupportedObject(const DRW_UnsupportedObject& object) {
@@ -2488,6 +2556,68 @@ public:
         m_xrecords.push_back(std::move(record));
     }
 
+    void addLayout(const DRW_Layout& layout) {
+        LayoutRecord record;
+        record.handle = layout.handle;
+        record.parentHandle = layout.parentHandle;
+        // PlotSettings prefix.
+        record.pageSetupName = layout.pageSetupName;
+        record.printerConfig = layout.printerConfig;
+        record.plotLayoutFlags = layout.plotLayoutFlags;
+        record.marginLeft = layout.marginLeft;
+        record.marginBottom = layout.marginBottom;
+        record.marginRight = layout.marginRight;
+        record.marginTop = layout.marginTop;
+        record.paperWidth = layout.paperWidth;
+        record.paperHeight = layout.paperHeight;
+        record.paperSize = layout.paperSize;
+        record.plotOriginX = layout.plotOriginX;
+        record.plotOriginY = layout.plotOriginY;
+        record.paperUnits = layout.paperUnits;
+        record.plotRotation = layout.plotRotation;
+        record.plotType = layout.plotType;
+        record.windowMinX = layout.windowMinX;
+        record.windowMinY = layout.windowMinY;
+        record.windowMaxX = layout.windowMaxX;
+        record.windowMaxY = layout.windowMaxY;
+        record.plotViewName = layout.plotViewName;
+        record.realWorldUnits = layout.realWorldUnits;
+        record.drawingUnits = layout.drawingUnits;
+        record.currentStyleSheet = layout.currentStyleSheet;
+        record.scaleType = layout.scaleType;
+        record.scaleFactor = layout.scaleFactor;
+        record.paperImageOriginX = layout.paperImageOriginX;
+        record.paperImageOriginY = layout.paperImageOriginY;
+        record.shadePlotMode = layout.shadePlotMode;
+        record.shadePlotResLevel = layout.shadePlotResLevel;
+        record.shadePlotCustomDPI = layout.shadePlotCustomDPI;
+        // Layout-specific.
+        record.name = layout.name;
+        record.layoutFlags = layout.layoutFlags;
+        record.tabOrder = layout.tabOrder;
+        record.ucsOrigin = layout.ucsOrigin;
+        record.limMinX = layout.limMinX;
+        record.limMinY = layout.limMinY;
+        record.limMaxX = layout.limMaxX;
+        record.limMaxY = layout.limMaxY;
+        record.insPoint = layout.insPoint;
+        record.ucsXAxis = layout.ucsXAxis;
+        record.ucsYAxis = layout.ucsYAxis;
+        record.elevation = layout.elevation;
+        record.orthoViewType = layout.orthoViewType;
+        record.extMin = layout.extMin;
+        record.extMax = layout.extMax;
+        record.viewportCount = layout.viewportCount;
+        record.plotViewHandle = layout.plotViewHandle.ref;
+        record.visualStyleHandle = layout.visualStyleHandle.ref;
+        record.paperSpaceBlockRecordHandle = layout.paperSpaceBlockRecordHandle.ref;
+        record.lastActiveViewportHandle = layout.lastActiveViewportHandle.ref;
+        record.baseUcsHandle = layout.baseUcsHandle.ref;
+        record.namedUcsHandle = layout.namedUcsHandle.ref;
+        record.viewportHandles = layout.viewportHandles;
+        m_layouts.push_back(std::move(record));
+    }
+
     const std::vector<RawObjectRecord>& rawObjects() const { return m_rawObjects; }
     const std::vector<ViewRecord>& views() const { return m_views; }
     const std::vector<UcsRecord>& ucsRecords() const { return m_ucsRecords; }
@@ -2542,6 +2672,7 @@ public:
     const std::vector<PlaceholderRecord>& placeholders() const { return m_placeholders; }
     const std::vector<DictionaryRecord>& dictionaries() const { return m_dictionaries; }
     const std::vector<XRecordRecord>& xrecords() const { return m_xrecords; }
+    const std::vector<LayoutRecord>& layouts() const { return m_layouts; }
 
     RawObjectFamilyCounts rawObjectFamilyCounts() const {
         RawObjectFamilyCounts counts;
@@ -6853,6 +6984,7 @@ private:
     std::vector<PlaceholderRecord> m_placeholders;
     std::vector<DictionaryRecord> m_dictionaries;
     std::vector<XRecordRecord> m_xrecords;
+    std::vector<LayoutRecord> m_layouts;
 };
 
 #endif

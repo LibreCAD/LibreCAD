@@ -1158,6 +1158,78 @@ public:
     }
 };
 
+// LAYOUT round-trip — populates a paper-space layout with PlotSettings
+// prefix + Layout-specific fields, asserts every field survives the
+// writeLayout / parseDwg pair.  Mirrors PR 8c.
+class LayoutRoundTripIface : public EmptyIface {
+public:
+    dwgRW *m_writer {nullptr};
+    DRW_Layout m_layout;
+    std::vector<DRW_Layout> m_layouts;
+
+    LayoutRoundTripIface() {
+        m_layout.handle = 0x7C0u;
+        m_layout.parentHandle = 0xCu;
+        // PlotSettings prefix.
+        m_layout.pageSetupName = "MyPageSetup";
+        m_layout.printerConfig = "MyPrinter.pc3";
+        m_layout.plotLayoutFlags = 0x44;
+        m_layout.marginLeft = 7.5;
+        m_layout.marginBottom = 20.0;
+        m_layout.marginRight = 7.5;
+        m_layout.marginTop = 20.0;
+        m_layout.paperWidth = 297.0;
+        m_layout.paperHeight = 210.0;
+        m_layout.paperSize = "ISO_A4_(210.00_x_297.00_MM)";
+        m_layout.plotOriginX = 0.0;
+        m_layout.plotOriginY = 0.0;
+        m_layout.paperUnits = 0;
+        m_layout.plotRotation = 1;
+        m_layout.plotType = 1;
+        m_layout.windowMinX = 0.0;
+        m_layout.windowMinY = 0.0;
+        m_layout.windowMaxX = 12.0;
+        m_layout.windowMaxY = 9.0;
+        m_layout.realWorldUnits = 1.0;
+        m_layout.drawingUnits = 1.0;
+        m_layout.currentStyleSheet = "monochrome.ctb";
+        m_layout.scaleType = 16;
+        m_layout.scaleFactor = 1.0;
+        m_layout.paperImageOriginX = 0.0;
+        m_layout.paperImageOriginY = 0.0;
+        m_layout.shadePlotMode = 0;
+        m_layout.shadePlotResLevel = 2;
+        m_layout.shadePlotCustomDPI = 300;
+        // Layout-specific.
+        m_layout.name = "Layout1";
+        m_layout.layoutFlags = 0x01;
+        m_layout.tabOrder = 1;
+        m_layout.ucsOrigin = DRW_Coord{0.0, 0.0, 0.0};
+        m_layout.limMinX = 0.0;
+        m_layout.limMinY = 0.0;
+        m_layout.limMaxX = 12.0;
+        m_layout.limMaxY = 9.0;
+        m_layout.insPoint = DRW_Coord{0.0, 0.0, 0.0};
+        m_layout.ucsXAxis = DRW_Coord{1.0, 0.0, 0.0};
+        m_layout.ucsYAxis = DRW_Coord{0.0, 1.0, 0.0};
+        m_layout.elevation = 0.0;
+        m_layout.orthoViewType = 0;
+        m_layout.extMin = DRW_Coord{-100.0, -50.0, 0.0};
+        m_layout.extMax = DRW_Coord{100.0, 50.0, 0.0};
+        m_layout.viewportCount = 0;
+        m_layout.paperSpaceBlockRecordHandle.ref = 0x7C1u;
+    }
+
+    void writeObjects() override {
+        if (m_writer != nullptr)
+            REQUIRE(m_writer->writeLayout(&m_layout));
+    }
+
+    void addLayout(const DRW_Layout& layout) override {
+        m_layouts.push_back(layout);
+    }
+};
+
 } // namespace
 
 TEST_CASE("dwgRW writes POINT/LINE/CIRCLE/ARC and reader recovers them",
@@ -1697,6 +1769,72 @@ TEST_CASE("dwgRW writes and reads XRECORD metadata",
             }
         }
         CHECK(foundHandleStreamRef);
+
+        std::remove(path.c_str());
+    }
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("dwgRW writes and reads LAYOUT metadata",
+          "[dwg-write][layout]") {
+    const DRW::Version versions[] = {DRW::AC1024, DRW::AC1027, DRW::AC1032};
+
+    for (DRW::Version version : versions) {
+        const std::string path = tempPath("native_layout.dwg");
+        {
+            dwgRW writer(path.c_str());
+            LayoutRoundTripIface iface;
+            iface.m_writer = &writer;
+            REQUIRE(writer.write(&iface, version, /*bin=*/false));
+        }
+
+        LayoutRoundTripIface readIface;
+        {
+            dwgRW reader(path.c_str());
+            REQUIRE(reader.read(&readIface, /*ext=*/false));
+            REQUIRE(reader.getVersion() == version);
+            REQUIRE(reader.getError() == DRW::BAD_NONE);
+        }
+
+        const DRW_Layout* found = nullptr;
+        for (const DRW_Layout& l : readIface.m_layouts) {
+            if (l.handle == 0x7C0u) {
+                found = &l;
+                break;
+            }
+        }
+        REQUIRE(found != nullptr);
+        // PlotSettings prefix.
+        CHECK(found->pageSetupName == "MyPageSetup");
+        CHECK(found->printerConfig == "MyPrinter.pc3");
+        CHECK(found->plotLayoutFlags == 0x44);
+        CHECK(found->marginLeft == 7.5);
+        CHECK(found->marginBottom == 20.0);
+        CHECK(found->marginRight == 7.5);
+        CHECK(found->marginTop == 20.0);
+        CHECK(found->paperWidth == 297.0);
+        CHECK(found->paperHeight == 210.0);
+        CHECK(found->paperSize == "ISO_A4_(210.00_x_297.00_MM)");
+        CHECK(found->paperUnits == 0);
+        CHECK(found->plotRotation == 1);
+        CHECK(found->plotType == 1);
+        CHECK(found->windowMaxX == 12.0);
+        CHECK(found->windowMaxY == 9.0);
+        CHECK(found->currentStyleSheet == "monochrome.ctb");
+        CHECK(found->scaleType == 16);
+        CHECK(found->scaleFactor == 1.0);
+        CHECK(found->shadePlotResLevel == 2);
+        CHECK(found->shadePlotCustomDPI == 300);
+        // Layout-specific.
+        CHECK(found->name == "Layout1");
+        CHECK(found->layoutFlags == 0x01);
+        CHECK(found->tabOrder == 1);
+        CHECK(found->limMaxX == 12.0);
+        CHECK(found->limMaxY == 9.0);
+        CHECK(found->extMin.x == -100.0);
+        CHECK(found->extMax.x == 100.0);
+        CHECK(found->viewportCount == 0);
+        CHECK(found->paperSpaceBlockRecordHandle.ref == 0x7C1u);
 
         std::remove(path.c_str());
     }

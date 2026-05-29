@@ -949,6 +949,29 @@ bool dwgWriter15::writeXRecord(const DRW_XRecord& xrecord) {
     return true;
 }
 
+// LAYOUT (ODA fixed type 82, §20.4.84) — no class registration required.
+// Encoder needs both string and handle buffers (AC1018+ split, inline
+// pre-AC1018).
+void dwgWriter15::emitLayoutObject(duint32 handle, const DRW_Layout& layout) {
+    dwgBufferW& body = beginObject(handle);
+    dwgBufferW *sb, *hb;
+    emitRecordPreamble(body, m_version, 82, handle,
+                       m_objectStrings, m_objectHandles, sb, hb);
+    layout.encodeDwg(m_version, &body, sb, hb);
+    finishObject();
+}
+
+bool dwgWriter15::writeLayout(const DRW_Layout& layout) {
+    DRW_Layout object = layout;
+    if (object.handle == 0) {
+        object.handle = m_handles.next();
+    } else {
+        m_handles.reserve(object.handle);
+    }
+    emitLayoutObject(object.handle, object);
+    return true;
+}
+
 // --- add*() methods: register user table records for deferred emission -----
 
 void dwgWriter15::addLType(const DRW_LType& lt) {

@@ -93,6 +93,7 @@ public:
     bool writeMLeaderStyle(const DRW_MLeaderStyle& style);
     bool writeDictionary(const DRW_Dictionary& dictionary);
     bool writeXRecord(const DRW_XRecord& xrecord);
+    bool writeLayout(const DRW_Layout& layout);
 
 protected:
     /// Begin a new object in the object stream (the unsentinel'd byte
@@ -166,6 +167,7 @@ protected:
     void emitMLeaderStyleObject(duint32 handle, const DRW_MLeaderStyle& style);
     void emitDictionaryObject(duint32 handle, const DRW_Dictionary& dictionary);
     void emitXRecordObject(duint32 handle, const DRW_XRecord& xrecord);
+    void emitLayoutObject(duint32 handle, const DRW_Layout& layout);
 
 protected:
     /// Populate m_header's ctrl-handle fields with canonical reserved values
