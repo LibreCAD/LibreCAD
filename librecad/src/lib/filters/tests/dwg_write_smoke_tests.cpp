@@ -2354,7 +2354,12 @@ TEST_CASE("dwgRW writes and reads LAYOUT metadata",
 // NOLINTNEXTLINE(readability-identifier-naming)
 TEST_CASE("dwgRW writes and reads GROUP metadata",
           "[dwg-write][group]") {
-    const DRW::Version versions[] = {DRW::AC1024, DRW::AC1027, DRW::AC1032};
+    // PR 13b — GROUP encoder has no version-gated fields; string-buffer
+    // routing on version > AC1018 is the only branch.  Extend smoke
+    // coverage to the AC1015/AC1018 range so the filter-side gate can
+    // drop for fixed type 72 alongside DICTIONARY/XRECORD.
+    const DRW::Version versions[] = {DRW::AC1015, DRW::AC1018,
+                                     DRW::AC1024, DRW::AC1027, DRW::AC1032};
 
     for (DRW::Version version : versions) {
         const std::string path = tempPath("native_group.dwg");

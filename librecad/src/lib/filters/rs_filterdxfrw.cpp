@@ -6447,12 +6447,14 @@ void RS_FilterDXFRW::writeObjects() {
     if (m_dwgW) {
         const auto& metadata = m_graphic->dwgAdvancedMetadata();
         const bool canWriteModernObjects = m_dwgW->getVersion() >= DRW::AC1021;
-        // PR 13a — DICTIONARY (ODA fixed type 42) and XRECORD (type 79) are
-        // universally available since R2000.  Encoder smoke tests cover
-        // AC1015/AC1018/AC1024/AC1027/AC1032 round-trip (see
-        // `[dictionary]` / `[xrecord]` cases).  Broaden the dispatch gate
-        // for these two families from AC1021+ to AC1015+ ahead of the
-        // long-tail families which still need their own validation.
+        // PR 13a/b — DICTIONARY (ODA fixed type 42), XRECORD (type 79),
+        // and GROUP (type 72) are universally available since R2000.
+        // Their encoders are version-clean (no AC1018+-only fields, only
+        // string-buffer routing on version > AC1018).  Encoder smoke
+        // tests cover AC1015/AC1018/AC1024/AC1027/AC1032 round-trip (see
+        // `[dictionary]` / `[xrecord]` / `[group]` cases).  Broaden the
+        // dispatch gate for these families from AC1021+ to AC1015+ ahead
+        // of the long-tail families which still need their own validation.
         const bool canWriteFixedTypeObjects =
             m_dwgW->getVersion() >= DRW::AC1015;
         std::set<duint32> nativeSunHandles;
@@ -6526,15 +6528,8 @@ void RS_FilterDXFRW::writeObjects() {
                     nativeLayoutHandles.insert(record.handle);
                 }
             }
-            // GROUP (ODA fixed type 72) — round-trip-grade GroupRecord
-            // already captures every encoder field (description, isUnnamed,
-            // selectable, entityHandles).  PR 8d.1.
-            for (const auto& record : metadata.groups()) {
-                if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
-                    && record.handle != 0) {
-                    nativeGroupHandles.insert(record.handle);
-                }
-            }
+            // GROUP (ODA fixed type 72) handle-set construction moved
+            // below to the broadened block (PR 13b).
             // RASTERVARIABLES (AcDbRasterVariables, custom class 505) —
             // round-trip-grade RasterVariablesRecord captures every encoder
             // field (classVersion, imageFrame, imageQuality, units).  PR 8d.1.
@@ -6621,9 +6616,10 @@ void RS_FilterDXFRW::writeObjects() {
                 }
             }
         }
-        // PR 13a — DICTIONARY / XRECORD handle-set construction sits in its
-        // own broadened block (≥ AC1015) so the raw-replay blocker (below)
-        // skips raw bytes for these handles at AC1015/AC1018 too.
+        // PR 13a/b — DICTIONARY / XRECORD / GROUP handle-set construction
+        // sits in its own broadened block (≥ AC1015) so the raw-replay
+        // blocker (below) skips raw bytes for these handles at
+        // AC1015/AC1018 too.
         if (canWriteFixedTypeObjects) {
             for (const auto& record : metadata.dictionaries()) {
                 if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
@@ -6635,6 +6631,12 @@ void RS_FilterDXFRW::writeObjects() {
                 if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
                     && record.handle != 0) {
                     nativeXRecordHandles.insert(record.handle);
+                }
+            }
+            for (const auto& record : metadata.groups()) {
+                if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                    && record.handle != 0) {
+                    nativeGroupHandles.insert(record.handle);
                 }
             }
         }
@@ -6864,17 +6866,7 @@ void RS_FilterDXFRW::writeObjects() {
                     ++blockedWriterRejected;
                 }
             }
-            for (const auto& record : metadata.groups()) {
-                if (nativeGroupHandles.count(record.handle) == 0)
-                    continue;
-                DRW_Group group = groupFromMetadata(record);
-                if (m_dwgW->writeGroup(&group)) {
-                    ++nativeGroupObjects;
-                } else {
-                    hasBlockedReplay = true;
-                    ++blockedWriterRejected;
-                }
-            }
+            // GROUP dispatch moved below to broadened block (PR 13b).
             for (const auto& record : metadata.rasterVariables()) {
                 if (nativeRasterVariablesHandles.count(record.handle) == 0)
                     continue;
@@ -7011,12 +7003,13 @@ void RS_FilterDXFRW::writeObjects() {
                 }
             }
         }
-        // PR 13a — DICTIONARY / XRECORD native dispatch.  Gate broadened from
-        // AC1021+ to AC1015+ now that the encoder smoke tests cover the
-        // full AC1015/AC1018/AC1024/AC1027/AC1032 range (see
-        // `[dwg-write][dictionary]` and `[dwg-write][xrecord]` cases).
-        // Sits outside the `if (canWriteModernObjects)` block so the
-        // broadened gate also applies at AC1015/AC1018.
+        // PR 13a/b — DICTIONARY / XRECORD / GROUP native dispatch.  Gate
+        // broadened from AC1021+ to AC1015+ now that the encoder smoke
+        // tests cover the full AC1015/AC1018/AC1024/AC1027/AC1032 range
+        // (see `[dwg-write][dictionary]`, `[dwg-write][xrecord]`, and
+        // `[dwg-write][group]` cases).  Sits outside the
+        // `if (canWriteModernObjects)` block so the broadened gate also
+        // applies at AC1015/AC1018.
         if (canWriteFixedTypeObjects) {
             for (const auto& record : metadata.dictionaries()) {
                 if (nativeDictionaryHandles.count(record.handle) == 0)
@@ -7035,6 +7028,17 @@ void RS_FilterDXFRW::writeObjects() {
                 DRW_XRecord xrecord = xrecordFromMetadata(record);
                 if (m_dwgW->writeXRecord(&xrecord)) {
                     ++nativeXRecordObjects;
+                } else {
+                    hasBlockedReplay = true;
+                    ++blockedWriterRejected;
+                }
+            }
+            for (const auto& record : metadata.groups()) {
+                if (nativeGroupHandles.count(record.handle) == 0)
+                    continue;
+                DRW_Group group = groupFromMetadata(record);
+                if (m_dwgW->writeGroup(&group)) {
+                    ++nativeGroupObjects;
                 } else {
                     hasBlockedReplay = true;
                     ++blockedWriterRejected;
