@@ -948,6 +948,8 @@ public:
 class DRW_DictionaryVar : public DRW_TableEntry {
     SETOBJFRIENDS
 public:
+    static constexpr duint16 kDwgClassNum = 512;
+
     DRW_DictionaryVar() { reset(); }
     void reset(){
         tType = DRW::DICTIONARYVAR;
@@ -1541,6 +1543,8 @@ public:
 class DRW_Scale : public DRW_TableEntry {
     SETOBJFRIENDS
 public:
+    static constexpr duint16 kDwgClassNum = 508;
+
     DRW_Scale() {
         tType = DRW::SCALE;
     }
@@ -1977,6 +1981,8 @@ public:
 class DRW_IDBuffer : public DRW_TableEntry {
     SETOBJFRIENDS
 public:
+    static constexpr duint16 kDwgClassNum = 509;
+
     DRW_IDBuffer() { reset(); }
     void reset() {
         tType = DRW::IDBUFFER;
@@ -2008,6 +2014,8 @@ struct DRW_LayerIndexEntry {
 class DRW_LayerIndex : public DRW_TableEntry {
     SETOBJFRIENDS
 public:
+    static constexpr duint16 kDwgClassNum = 510;
+
     DRW_LayerIndex() { reset(); }
     void reset() {
         tType = DRW::LAYERINDEX;
@@ -2037,6 +2045,8 @@ public:
 class DRW_SpatialIndex : public DRW_TableEntry {
     SETOBJFRIENDS
 public:
+    static constexpr duint16 kDwgClassNum = 511;
+
     DRW_SpatialIndex() { reset(); }
     void reset() {
         tType = DRW::SPATIALINDEX;

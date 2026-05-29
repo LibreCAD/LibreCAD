@@ -344,6 +344,89 @@ public:
         return registerDwgClass(definition);
     }
 
+    // PR 8d.2a — five small no-storage OBJECTS families.  All are custom-class
+    // (≥ 500); recName / className strings follow the dwgreader.cpp dispatch
+    // (case-sensitive look-up against classesmap).
+    bool registerScaleObjectClass(duint32 handle = 0) {
+        DwgClassDefinition definition;
+        definition.m_classNum = DRW_Scale::kDwgClassNum;
+        definition.m_proxyFlag = 0x401;
+        definition.m_appName = "ACAD";
+        definition.m_className = "AcDbScale";
+        definition.m_recordName = "SCALE";
+        definition.m_entityFlagRaw = 0;
+        if (handle != 0
+            && m_rawClassInstanceHandles.insert({definition.m_classNum,
+                                                 handle}).second) {
+            definition.m_instanceCount = 1;
+        }
+        return registerDwgClass(definition);
+    }
+
+    bool registerIDBufferObjectClass(duint32 handle = 0) {
+        DwgClassDefinition definition;
+        definition.m_classNum = DRW_IDBuffer::kDwgClassNum;
+        definition.m_proxyFlag = 0x401;
+        definition.m_appName = "ACAD";
+        definition.m_className = "AcDbIdBuffer";
+        definition.m_recordName = "IDBUFFER";
+        definition.m_entityFlagRaw = 0;
+        if (handle != 0
+            && m_rawClassInstanceHandles.insert({definition.m_classNum,
+                                                 handle}).second) {
+            definition.m_instanceCount = 1;
+        }
+        return registerDwgClass(definition);
+    }
+
+    bool registerLayerIndexObjectClass(duint32 handle = 0) {
+        DwgClassDefinition definition;
+        definition.m_classNum = DRW_LayerIndex::kDwgClassNum;
+        definition.m_proxyFlag = 0x401;
+        definition.m_appName = "ACAD";
+        definition.m_className = "AcDbLayerIndex";
+        definition.m_recordName = "LAYER_INDEX";
+        definition.m_entityFlagRaw = 0;
+        if (handle != 0
+            && m_rawClassInstanceHandles.insert({definition.m_classNum,
+                                                 handle}).second) {
+            definition.m_instanceCount = 1;
+        }
+        return registerDwgClass(definition);
+    }
+
+    bool registerSpatialIndexObjectClass(duint32 handle = 0) {
+        DwgClassDefinition definition;
+        definition.m_classNum = DRW_SpatialIndex::kDwgClassNum;
+        definition.m_proxyFlag = 0x401;
+        definition.m_appName = "ACAD";
+        definition.m_className = "AcDbSpatialIndex";
+        definition.m_recordName = "SPATIAL_INDEX";
+        definition.m_entityFlagRaw = 0;
+        if (handle != 0
+            && m_rawClassInstanceHandles.insert({definition.m_classNum,
+                                                 handle}).second) {
+            definition.m_instanceCount = 1;
+        }
+        return registerDwgClass(definition);
+    }
+
+    bool registerDictionaryVarObjectClass(duint32 handle = 0) {
+        DwgClassDefinition definition;
+        definition.m_classNum = DRW_DictionaryVar::kDwgClassNum;
+        definition.m_proxyFlag = 0x401;
+        definition.m_appName = "ACAD";
+        definition.m_className = "AcDbDictionaryVar";
+        definition.m_recordName = "DICTIONARYVAR";
+        definition.m_entityFlagRaw = 0;
+        if (handle != 0
+            && m_rawClassInstanceHandles.insert({definition.m_classNum,
+                                                 handle}).second) {
+            definition.m_instanceCount = 1;
+        }
+        return registerDwgClass(definition);
+    }
+
     bool hasDwgClassDefinition(duint16 classNum) const {
         return std::any_of(m_dwgClassDefinitions.begin(), m_dwgClassDefinitions.end(),
                            [classNum](const DwgClassDefinition& definition) {

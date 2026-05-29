@@ -652,6 +652,93 @@ bool dwgRW::writeSpatialFilter(DRW_SpatialFilter *object) {
     return w->writeSpatialFilter(*object);
 }
 
+// PR 8d.2a — five small no-storage OBJECTS families.  Same wrapper shape as
+// the PR 8d.1b/c/d trio (RasterVariables/GeoData/SpatialFilter).
+bool dwgRW::registerScaleObjectClass(DRW_Scale *object) {
+    if (object == nullptr || writer == nullptr)
+        return false;
+    if (object->handle != 0)
+        writer->reserveHandle(object->handle);
+    return writer->registerScaleObjectClass(object->handle);
+}
+
+bool dwgRW::writeScale(DRW_Scale *object) {
+    if (object == nullptr)
+        return false;
+    auto *w = asWriter15(writer);
+    if (w == nullptr)
+        return false;
+    return w->writeScale(*object);
+}
+
+bool dwgRW::registerIDBufferObjectClass(DRW_IDBuffer *object) {
+    if (object == nullptr || writer == nullptr)
+        return false;
+    if (object->handle != 0)
+        writer->reserveHandle(object->handle);
+    return writer->registerIDBufferObjectClass(object->handle);
+}
+
+bool dwgRW::writeIDBuffer(DRW_IDBuffer *object) {
+    if (object == nullptr)
+        return false;
+    auto *w = asWriter15(writer);
+    if (w == nullptr)
+        return false;
+    return w->writeIDBuffer(*object);
+}
+
+bool dwgRW::registerLayerIndexObjectClass(DRW_LayerIndex *object) {
+    if (object == nullptr || writer == nullptr)
+        return false;
+    if (object->handle != 0)
+        writer->reserveHandle(object->handle);
+    return writer->registerLayerIndexObjectClass(object->handle);
+}
+
+bool dwgRW::writeLayerIndex(DRW_LayerIndex *object) {
+    if (object == nullptr)
+        return false;
+    auto *w = asWriter15(writer);
+    if (w == nullptr)
+        return false;
+    return w->writeLayerIndex(*object);
+}
+
+bool dwgRW::registerSpatialIndexObjectClass(DRW_SpatialIndex *object) {
+    if (object == nullptr || writer == nullptr)
+        return false;
+    if (object->handle != 0)
+        writer->reserveHandle(object->handle);
+    return writer->registerSpatialIndexObjectClass(object->handle);
+}
+
+bool dwgRW::writeSpatialIndex(DRW_SpatialIndex *object) {
+    if (object == nullptr)
+        return false;
+    auto *w = asWriter15(writer);
+    if (w == nullptr)
+        return false;
+    return w->writeSpatialIndex(*object);
+}
+
+bool dwgRW::registerDictionaryVarObjectClass(DRW_DictionaryVar *object) {
+    if (object == nullptr || writer == nullptr)
+        return false;
+    if (object->handle != 0)
+        writer->reserveHandle(object->handle);
+    return writer->registerDictionaryVarObjectClass(object->handle);
+}
+
+bool dwgRW::writeDictionaryVar(DRW_DictionaryVar *object) {
+    if (object == nullptr)
+        return false;
+    auto *w = asWriter15(writer);
+    if (w == nullptr)
+        return false;
+    return w->writeDictionaryVar(*object);
+}
+
 bool dwgRW::registerRawDwgObjectClass(const DRW_UnsupportedObject *object) {
     if (object == nullptr || writer == nullptr)
         return false;

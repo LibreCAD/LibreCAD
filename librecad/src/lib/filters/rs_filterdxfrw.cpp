@@ -332,6 +332,39 @@ bool isSpatialFilterRawObject(
         || record.className == "AcDbSpatialFilter";
 }
 
+// PR 8d.2a — five small no-storage OBJECTS families.  All custom-class
+// (no fixed ODA type); recordName / className strings must match the
+// dwgreader.cpp dispatch (case-sensitive).
+bool isScaleRawObject(
+    const LC_DwgAdvancedMetadata::RawObjectRecord& record) {
+    return record.recordName == "SCALE"
+        || record.className == "AcDbScale";
+}
+
+bool isIDBufferRawObject(
+    const LC_DwgAdvancedMetadata::RawObjectRecord& record) {
+    return record.recordName == "IDBUFFER"
+        || record.className == "AcDbIdBuffer";
+}
+
+bool isLayerIndexRawObject(
+    const LC_DwgAdvancedMetadata::RawObjectRecord& record) {
+    return record.recordName == "LAYER_INDEX"
+        || record.className == "AcDbLayerIndex";
+}
+
+bool isSpatialIndexRawObject(
+    const LC_DwgAdvancedMetadata::RawObjectRecord& record) {
+    return record.recordName == "SPATIAL_INDEX"
+        || record.className == "AcDbSpatialIndex";
+}
+
+bool isDictionaryVarRawObject(
+    const LC_DwgAdvancedMetadata::RawObjectRecord& record) {
+    return record.recordName == "DICTIONARYVAR"
+        || record.className == "AcDbDictionaryVar";
+}
+
 bool hasReplayableRawMLeaderStyle(const LC_DwgAdvancedMetadata& metadata,
                                   duint32 handle) {
     if (handle == 0)
@@ -530,6 +563,69 @@ DRW_SpatialFilter spatialFilterFromMetadata(
     sf.m_inverseInsertTransform = record.inverseInsertTransform;
     sf.m_insertTransform = record.insertTransform;
     return sf;
+}
+
+// PR 8d.2a — five small no-storage OBJECTS families.  Flat field-copy
+// builders matching the addX captures above.
+DRW_Scale scaleFromMetadata(
+    const LC_DwgAdvancedMetadata::ScaleRecord& record) {
+    DRW_Scale s;
+    s.handle = record.handle;
+    s.parentHandle = static_cast<int>(record.parentHandle);
+    s.name = record.name;
+    s.flag = record.flag;
+    s.paperUnits = record.paperUnits;
+    s.drawingUnits = record.drawingUnits;
+    s.isUnitScale = record.isUnitScale;
+    return s;
+}
+
+DRW_IDBuffer idBufferFromMetadata(
+    const LC_DwgAdvancedMetadata::IDBufferRecord& record) {
+    DRW_IDBuffer b;
+    b.handle = record.handle;
+    b.parentHandle = static_cast<int>(record.parentHandle);
+    b.classVersion = record.classVersion;
+    b.objIds = record.objIds;
+    return b;
+}
+
+DRW_LayerIndex layerIndexFromMetadata(
+    const LC_DwgAdvancedMetadata::LayerIndexRecord& record) {
+    DRW_LayerIndex li;
+    li.handle = record.handle;
+    li.parentHandle = static_cast<int>(record.parentHandle);
+    li.timestamp1 = record.timestamp1;
+    li.timestamp2 = record.timestamp2;
+    li.entries.reserve(record.entries.size());
+    for (const auto& er : record.entries) {
+        DRW_LayerIndexEntry e;
+        e.indexLong = er.indexLong;
+        e.name = er.name;
+        e.entryHandle = er.entryHandle;
+        li.entries.push_back(std::move(e));
+    }
+    return li;
+}
+
+DRW_SpatialIndex spatialIndexFromMetadata(
+    const LC_DwgAdvancedMetadata::SpatialIndexRecord& record) {
+    DRW_SpatialIndex si;
+    si.handle = record.handle;
+    si.parentHandle = static_cast<int>(record.parentHandle);
+    si.timestamp1 = record.timestamp1;
+    si.timestamp2 = record.timestamp2;
+    return si;
+}
+
+DRW_DictionaryVar dictionaryVarFromMetadata(
+    const LC_DwgAdvancedMetadata::DictionaryVarRecord& record) {
+    DRW_DictionaryVar dv;
+    dv.handle = record.handle;
+    dv.parentHandle = static_cast<int>(record.parentHandle);
+    dv.m_schema = record.schema;
+    dv.m_value = record.value;
+    return dv;
 }
 
 DRW_Sun sunFromMetadata(const LC_DwgAdvancedMetadata::SunRecord& record) {
@@ -4659,6 +4755,56 @@ void RS_FilterDXFRW::addLayout(const DRW_Layout &data) {
                   static_cast<int>(data.viewportHandles.size()));
 }
 
+// PR 8d.2a — five small no-storage OBJECTS families.  All custom-class
+// (≥ 500); the filter routes each call into round-trip-grade metadata
+// storage so RS_FilterDXFRW::writeObjects can dispatch the native writer.
+void RS_FilterDXFRW::addScale(const DRW_Scale &data) {
+  if (m_graphic != nullptr) {
+    m_graphic->dwgAdvancedMetadata().addScale(data);
+  }
+  RS_DEBUG->print("RS_FilterDXFRW::addScale: handle %d name=%s factor=%f",
+                  static_cast<int>(data.handle),
+                  data.name.c_str(),
+                  data.scaleFactor());
+}
+
+void RS_FilterDXFRW::addIDBuffer(const DRW_IDBuffer &data) {
+  if (m_graphic != nullptr) {
+    m_graphic->dwgAdvancedMetadata().addIDBuffer(data);
+  }
+  RS_DEBUG->print("RS_FilterDXFRW::addIDBuffer: handle %d ids=%d",
+                  static_cast<int>(data.handle),
+                  static_cast<int>(data.objIds.size()));
+}
+
+void RS_FilterDXFRW::addLayerIndex(const DRW_LayerIndex &data) {
+  if (m_graphic != nullptr) {
+    m_graphic->dwgAdvancedMetadata().addLayerIndex(data);
+  }
+  RS_DEBUG->print("RS_FilterDXFRW::addLayerIndex: handle %d entries=%d",
+                  static_cast<int>(data.handle),
+                  static_cast<int>(data.entries.size()));
+}
+
+void RS_FilterDXFRW::addSpatialIndex(const DRW_SpatialIndex &data) {
+  if (m_graphic != nullptr) {
+    m_graphic->dwgAdvancedMetadata().addSpatialIndex(data);
+  }
+  RS_DEBUG->print("RS_FilterDXFRW::addSpatialIndex: handle %d ts=%u/%u",
+                  static_cast<int>(data.handle),
+                  static_cast<unsigned>(data.timestamp1),
+                  static_cast<unsigned>(data.timestamp2));
+}
+
+void RS_FilterDXFRW::addDictionaryVar(const DRW_DictionaryVar &data) {
+  if (m_graphic != nullptr) {
+    m_graphic->dwgAdvancedMetadata().addDictionaryVar(data);
+  }
+  RS_DEBUG->print("RS_FilterDXFRW::addDictionaryVar: handle %d schema=%d",
+                  static_cast<int>(data.handle),
+                  data.m_schema);
+}
+
 void RS_FilterDXFRW::addAssociativeObject(const DRW_AssociativeObject &data) {
   // TODO: Reconstruct associative dimension/dynamic-block relationship graphs
   // from these shell objects after native consumers exist.
@@ -5154,6 +5300,11 @@ void RS_FilterDXFRW::writeDwgClasses() {
     std::set<duint32> nativeRasterVariablesHandles;
     std::set<duint32> nativeGeoDataHandles;
     std::set<duint32> nativeSpatialFilterHandles;
+    std::set<duint32> nativeScaleHandles;
+    std::set<duint32> nativeIDBufferHandles;
+    std::set<duint32> nativeLayerIndexHandles;
+    std::set<duint32> nativeSpatialIndexHandles;
+    std::set<duint32> nativeDictionaryVarHandles;
     if (canWriteModernObjects) {
         for (const auto& record : metadata.suns()) {
             if (record.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
@@ -5206,6 +5357,54 @@ void RS_FilterDXFRW::writeDwgClasses() {
             if (m_dwgW->registerSpatialFilterObjectClass(&sf))
                 nativeSpatialFilterHandles.insert(record.handle);
         }
+        // PR 8d.2a — five small no-storage OBJECTS families.  Each must be
+        // registered BEFORE writeDwgClasses() emits the CLASSES section so
+        // the reader can map oType (508-512) back to its parser.
+        for (const auto& record : metadata.scales()) {
+            if (record.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                || record.handle == 0) {
+                continue;
+            }
+            DRW_Scale s = scaleFromMetadata(record);
+            if (m_dwgW->registerScaleObjectClass(&s))
+                nativeScaleHandles.insert(record.handle);
+        }
+        for (const auto& record : metadata.idBuffers()) {
+            if (record.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                || record.handle == 0) {
+                continue;
+            }
+            DRW_IDBuffer b = idBufferFromMetadata(record);
+            if (m_dwgW->registerIDBufferObjectClass(&b))
+                nativeIDBufferHandles.insert(record.handle);
+        }
+        for (const auto& record : metadata.layerIndexes()) {
+            if (record.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                || record.handle == 0) {
+                continue;
+            }
+            DRW_LayerIndex li = layerIndexFromMetadata(record);
+            if (m_dwgW->registerLayerIndexObjectClass(&li))
+                nativeLayerIndexHandles.insert(record.handle);
+        }
+        for (const auto& record : metadata.spatialIndexes()) {
+            if (record.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                || record.handle == 0) {
+                continue;
+            }
+            DRW_SpatialIndex si = spatialIndexFromMetadata(record);
+            if (m_dwgW->registerSpatialIndexObjectClass(&si))
+                nativeSpatialIndexHandles.insert(record.handle);
+        }
+        for (const auto& record : metadata.dictionaryVars()) {
+            if (record.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                || record.handle == 0) {
+                continue;
+            }
+            DRW_DictionaryVar dv = dictionaryVarFromMetadata(record);
+            if (m_dwgW->registerDictionaryVarObjectClass(&dv))
+                nativeDictionaryVarHandles.insert(record.handle);
+        }
     }
 
     for (const auto& record : metadata.rawObjects()) {
@@ -5226,6 +5425,22 @@ void RS_FilterDXFRW::writeDwgClasses() {
             continue;
         if (nativeSpatialFilterHandles.count(record.handle) != 0
             && isSpatialFilterRawObject(record))
+            continue;
+        // PR 8d.2a — five small no-storage OBJECTS families.
+        if (nativeScaleHandles.count(record.handle) != 0
+            && isScaleRawObject(record))
+            continue;
+        if (nativeIDBufferHandles.count(record.handle) != 0
+            && isIDBufferRawObject(record))
+            continue;
+        if (nativeLayerIndexHandles.count(record.handle) != 0
+            && isLayerIndexRawObject(record))
+            continue;
+        if (nativeSpatialIndexHandles.count(record.handle) != 0
+            && isSpatialIndexRawObject(record))
+            continue;
+        if (nativeDictionaryVarHandles.count(record.handle) != 0
+            && isDictionaryVarRawObject(record))
             continue;
         DRW_UnsupportedObject object = rawObjectFromMetadata(record);
         m_dwgW->registerRawDwgObjectClass(&object);
@@ -6017,6 +6232,12 @@ void RS_FilterDXFRW::writeObjects() {
         std::set<duint32> nativeRasterVariablesHandles;
         std::set<duint32> nativeGeoDataHandles;
         std::set<duint32> nativeSpatialFilterHandles;
+        // PR 8d.2a — five small no-storage OBJECTS families.
+        std::set<duint32> nativeScaleHandles;
+        std::set<duint32> nativeIDBufferHandles;
+        std::set<duint32> nativeLayerIndexHandles;
+        std::set<duint32> nativeSpatialIndexHandles;
+        std::set<duint32> nativeDictionaryVarHandles;
         int nativeSunObjects = 0;
         int nativePlaceholderObjects = 0;
         int nativeMLeaderStyleObjects = 0;
@@ -6027,6 +6248,11 @@ void RS_FilterDXFRW::writeObjects() {
         int nativeRasterVariablesObjects = 0;
         int nativeGeoDataObjects = 0;
         int nativeSpatialFilterObjects = 0;
+        int nativeScaleObjects = 0;
+        int nativeIDBufferObjects = 0;
+        int nativeLayerIndexObjects = 0;
+        int nativeSpatialIndexObjects = 0;
+        int nativeDictionaryVarObjects = 0;
         if (canWriteModernObjects) {
             for (const auto& record : metadata.suns()) {
                 if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
@@ -6105,6 +6331,37 @@ void RS_FilterDXFRW::writeObjects() {
                 if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
                     && record.handle != 0) {
                     nativeSpatialFilterHandles.insert(record.handle);
+                }
+            }
+            // PR 8d.2a — five small no-storage OBJECTS families.
+            for (const auto& record : metadata.scales()) {
+                if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                    && record.handle != 0) {
+                    nativeScaleHandles.insert(record.handle);
+                }
+            }
+            for (const auto& record : metadata.idBuffers()) {
+                if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                    && record.handle != 0) {
+                    nativeIDBufferHandles.insert(record.handle);
+                }
+            }
+            for (const auto& record : metadata.layerIndexes()) {
+                if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                    && record.handle != 0) {
+                    nativeLayerIndexHandles.insert(record.handle);
+                }
+            }
+            for (const auto& record : metadata.spatialIndexes()) {
+                if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                    && record.handle != 0) {
+                    nativeSpatialIndexHandles.insert(record.handle);
+                }
+            }
+            for (const auto& record : metadata.dictionaryVars()) {
+                if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                    && record.handle != 0) {
+                    nativeDictionaryVarHandles.insert(record.handle);
                 }
             }
         }
@@ -6199,6 +6456,37 @@ void RS_FilterDXFRW::writeObjects() {
             }
             if (nativeSpatialFilterHandles.count(record.handle) != 0
                 && isSpatialFilterRawObject(record)) {
+                hasBlockedReplay = true;
+                ++blockedReplaced;
+                continue;
+            }
+            // PR 8d.2a — five small no-storage OBJECTS families.
+            if (nativeScaleHandles.count(record.handle) != 0
+                && isScaleRawObject(record)) {
+                hasBlockedReplay = true;
+                ++blockedReplaced;
+                continue;
+            }
+            if (nativeIDBufferHandles.count(record.handle) != 0
+                && isIDBufferRawObject(record)) {
+                hasBlockedReplay = true;
+                ++blockedReplaced;
+                continue;
+            }
+            if (nativeLayerIndexHandles.count(record.handle) != 0
+                && isLayerIndexRawObject(record)) {
+                hasBlockedReplay = true;
+                ++blockedReplaced;
+                continue;
+            }
+            if (nativeSpatialIndexHandles.count(record.handle) != 0
+                && isSpatialIndexRawObject(record)) {
+                hasBlockedReplay = true;
+                ++blockedReplaced;
+                continue;
+            }
+            if (nativeDictionaryVarHandles.count(record.handle) != 0
+                && isDictionaryVarRawObject(record)) {
                 hasBlockedReplay = true;
                 ++blockedReplaced;
                 continue;
@@ -6342,6 +6630,62 @@ void RS_FilterDXFRW::writeObjects() {
                     ++blockedWriterRejected;
                 }
             }
+            // PR 8d.2a — five small no-storage OBJECTS families.
+            for (const auto& record : metadata.scales()) {
+                if (nativeScaleHandles.count(record.handle) == 0)
+                    continue;
+                DRW_Scale s = scaleFromMetadata(record);
+                if (m_dwgW->writeScale(&s)) {
+                    ++nativeScaleObjects;
+                } else {
+                    hasBlockedReplay = true;
+                    ++blockedWriterRejected;
+                }
+            }
+            for (const auto& record : metadata.idBuffers()) {
+                if (nativeIDBufferHandles.count(record.handle) == 0)
+                    continue;
+                DRW_IDBuffer b = idBufferFromMetadata(record);
+                if (m_dwgW->writeIDBuffer(&b)) {
+                    ++nativeIDBufferObjects;
+                } else {
+                    hasBlockedReplay = true;
+                    ++blockedWriterRejected;
+                }
+            }
+            for (const auto& record : metadata.layerIndexes()) {
+                if (nativeLayerIndexHandles.count(record.handle) == 0)
+                    continue;
+                DRW_LayerIndex li = layerIndexFromMetadata(record);
+                if (m_dwgW->writeLayerIndex(&li)) {
+                    ++nativeLayerIndexObjects;
+                } else {
+                    hasBlockedReplay = true;
+                    ++blockedWriterRejected;
+                }
+            }
+            for (const auto& record : metadata.spatialIndexes()) {
+                if (nativeSpatialIndexHandles.count(record.handle) == 0)
+                    continue;
+                DRW_SpatialIndex si = spatialIndexFromMetadata(record);
+                if (m_dwgW->writeSpatialIndex(&si)) {
+                    ++nativeSpatialIndexObjects;
+                } else {
+                    hasBlockedReplay = true;
+                    ++blockedWriterRejected;
+                }
+            }
+            for (const auto& record : metadata.dictionaryVars()) {
+                if (nativeDictionaryVarHandles.count(record.handle) == 0)
+                    continue;
+                DRW_DictionaryVar dv = dictionaryVarFromMetadata(record);
+                if (m_dwgW->writeDictionaryVar(&dv)) {
+                    ++nativeDictionaryVarObjects;
+                } else {
+                    hasBlockedReplay = true;
+                    ++blockedWriterRejected;
+                }
+            }
         }
         if (replayedObjects > 0) {
             RS_DEBUG->print("RS_FilterDXFRW::writeObjects: replayed %d raw DWG objects",
@@ -6405,6 +6749,32 @@ void RS_FilterDXFRW::writeObjects() {
             RS_DEBUG->print(
                 "RS_FilterDXFRW::writeObjects: wrote %d native SPATIAL_FILTER objects",
                 nativeSpatialFilterObjects);
+        }
+        // PR 8d.2a — five small no-storage OBJECTS families.
+        if (nativeScaleObjects > 0) {
+            RS_DEBUG->print(
+                "RS_FilterDXFRW::writeObjects: wrote %d native SCALE objects",
+                nativeScaleObjects);
+        }
+        if (nativeIDBufferObjects > 0) {
+            RS_DEBUG->print(
+                "RS_FilterDXFRW::writeObjects: wrote %d native IDBUFFER objects",
+                nativeIDBufferObjects);
+        }
+        if (nativeLayerIndexObjects > 0) {
+            RS_DEBUG->print(
+                "RS_FilterDXFRW::writeObjects: wrote %d native LAYER_INDEX objects",
+                nativeLayerIndexObjects);
+        }
+        if (nativeSpatialIndexObjects > 0) {
+            RS_DEBUG->print(
+                "RS_FilterDXFRW::writeObjects: wrote %d native SPATIAL_INDEX objects",
+                nativeSpatialIndexObjects);
+        }
+        if (nativeDictionaryVarObjects > 0) {
+            RS_DEBUG->print(
+                "RS_FilterDXFRW::writeObjects: wrote %d native DICTIONARYVAR objects",
+                nativeDictionaryVarObjects);
         }
         if (modelerPayloads.recordCount > 0) {
             const RS_Debug::RS_DebugLevel level =

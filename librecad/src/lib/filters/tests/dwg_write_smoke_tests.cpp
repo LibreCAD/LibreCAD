@@ -1410,6 +1410,171 @@ public:
     }
 };
 
+// SCALE round-trip — populates an annotation-scale entry (1:50 paper-to-world)
+// and asserts every field survives the writeScale / parseDwg pair.  Exercises
+// PR 8d.2a's class registration + dispatch + the wrapper-emits-common-prefix
+// wrinkle (SCALE encoder writes body only).
+class ScaleRoundTripIface : public EmptyIface {
+public:
+    dwgRW *m_writer {nullptr};
+    DRW_Scale m_scale;
+    std::vector<DRW_Scale> m_scaleObjects;
+
+    ScaleRoundTripIface() {
+        m_scale.handle = 0x810u;
+        m_scale.parentHandle = 0xCu;
+        m_scale.name = "1:50";
+        m_scale.flag = 0;
+        m_scale.paperUnits = 1.0;
+        m_scale.drawingUnits = 50.0;
+        m_scale.isUnitScale = false;
+    }
+
+    void writeDwgClasses() override {
+        if (m_writer != nullptr)
+            REQUIRE(m_writer->registerScaleObjectClass(&m_scale));
+    }
+
+    void writeObjects() override {
+        if (m_writer != nullptr)
+            REQUIRE(m_writer->writeScale(&m_scale));
+    }
+
+    void addScale(const DRW_Scale& s) override {
+        m_scaleObjects.push_back(s);
+    }
+};
+
+// IDBUFFER round-trip — populates a list of object handles (used by selection
+// filters and LAYER_INDEX).  Asserts every encoded field survives.
+class IDBufferRoundTripIface : public EmptyIface {
+public:
+    dwgRW *m_writer {nullptr};
+    DRW_IDBuffer m_idBuffer;
+    std::vector<DRW_IDBuffer> m_idBufferObjects;
+
+    IDBufferRoundTripIface() {
+        m_idBuffer.handle = 0x820u;
+        m_idBuffer.parentHandle = 0xCu;
+        m_idBuffer.classVersion = 0;
+        m_idBuffer.objIds = {0x1001u, 0x1002u, 0x1003u};
+    }
+
+    void writeDwgClasses() override {
+        if (m_writer != nullptr)
+            REQUIRE(m_writer->registerIDBufferObjectClass(&m_idBuffer));
+    }
+
+    void writeObjects() override {
+        if (m_writer != nullptr)
+            REQUIRE(m_writer->writeIDBuffer(&m_idBuffer));
+    }
+
+    void addIDBuffer(const DRW_IDBuffer& b) override {
+        m_idBufferObjects.push_back(b);
+    }
+};
+
+// LAYER_INDEX round-trip — populates a per-layer index with two layer entries,
+// each pointing at an IDBUFFER handle.
+class LayerIndexRoundTripIface : public EmptyIface {
+public:
+    dwgRW *m_writer {nullptr};
+    DRW_LayerIndex m_layerIndex;
+    std::vector<DRW_LayerIndex> m_layerIndexObjects;
+
+    LayerIndexRoundTripIface() {
+        m_layerIndex.handle = 0x830u;
+        m_layerIndex.parentHandle = 0xCu;
+        m_layerIndex.timestamp1 = 0x25A1F0u;
+        m_layerIndex.timestamp2 = 0x4B0u;
+        DRW_LayerIndexEntry e1;
+        e1.indexLong = 1;
+        e1.name = "0";
+        e1.entryHandle = 0x1100u;
+        m_layerIndex.entries.push_back(e1);
+        DRW_LayerIndexEntry e2;
+        e2.indexLong = 2;
+        e2.name = "DETAILS";
+        e2.entryHandle = 0x1101u;
+        m_layerIndex.entries.push_back(e2);
+    }
+
+    void writeDwgClasses() override {
+        if (m_writer != nullptr)
+            REQUIRE(m_writer->registerLayerIndexObjectClass(&m_layerIndex));
+    }
+
+    void writeObjects() override {
+        if (m_writer != nullptr)
+            REQUIRE(m_writer->writeLayerIndex(&m_layerIndex));
+    }
+
+    void addLayerIndex(const DRW_LayerIndex& li) override {
+        m_layerIndexObjects.push_back(li);
+    }
+};
+
+// SPATIAL_INDEX round-trip — only timestamps are encoded (body beyond is
+// opaque per ODA spec); the round-trip asserts the timestamps survive.
+class SpatialIndexRoundTripIface : public EmptyIface {
+public:
+    dwgRW *m_writer {nullptr};
+    DRW_SpatialIndex m_spatialIndex;
+    std::vector<DRW_SpatialIndex> m_spatialIndexObjects;
+
+    SpatialIndexRoundTripIface() {
+        m_spatialIndex.handle = 0x840u;
+        m_spatialIndex.parentHandle = 0xCu;
+        m_spatialIndex.timestamp1 = 0x25A201u;
+        m_spatialIndex.timestamp2 = 0x9C4u;
+    }
+
+    void writeDwgClasses() override {
+        if (m_writer != nullptr)
+            REQUIRE(m_writer->registerSpatialIndexObjectClass(&m_spatialIndex));
+    }
+
+    void writeObjects() override {
+        if (m_writer != nullptr)
+            REQUIRE(m_writer->writeSpatialIndex(&m_spatialIndex));
+    }
+
+    void addSpatialIndex(const DRW_SpatialIndex& si) override {
+        m_spatialIndexObjects.push_back(si);
+    }
+};
+
+// DICTIONARYVAR round-trip — populates a typed dictionary variable (schema +
+// value pair stored under a named-object dictionary entry).
+class DictionaryVarRoundTripIface : public EmptyIface {
+public:
+    dwgRW *m_writer {nullptr};
+    DRW_DictionaryVar m_dictionaryVar;
+    std::vector<DRW_DictionaryVar> m_dictionaryVarObjects;
+
+    DictionaryVarRoundTripIface() {
+        m_dictionaryVar.handle = 0x850u;
+        m_dictionaryVar.parentHandle = 0xCu;
+        m_dictionaryVar.m_schema = 0;
+        m_dictionaryVar.m_value = "Standard";
+    }
+
+    void writeDwgClasses() override {
+        if (m_writer != nullptr)
+            REQUIRE(m_writer->registerDictionaryVarObjectClass(&m_dictionaryVar));
+    }
+
+    void writeObjects() override {
+        if (m_writer != nullptr)
+            REQUIRE(m_writer->writeDictionaryVar(&m_dictionaryVar));
+    }
+
+    void addDictionaryVar(const DRW_DictionaryVar& dv) override {
+        m_dictionaryVarObjects.push_back(dv);
+    }
+};
+
 } // namespace
 
 TEST_CASE("dwgRW writes POINT/LINE/CIRCLE/ARC and reader recovers them",
@@ -2216,6 +2381,206 @@ TEST_CASE("dwgRW writes and reads GEODATA metadata",
         CHECK(found->m_faces[0].m_index1 == 0);
         CHECK(found->m_faces[0].m_index2 == 1);
         CHECK(found->m_faces[0].m_index3 == 0);
+
+        std::remove(path.c_str());
+    }
+}
+
+// PR 8d.2a smoke tests — five small no-storage OBJECTS families.
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("dwgRW writes and reads SCALE metadata",
+          "[dwg-write][scale]") {
+    const DRW::Version versions[] = {DRW::AC1024, DRW::AC1027, DRW::AC1032};
+
+    for (DRW::Version version : versions) {
+        const std::string path = tempPath("native_scale.dwg");
+        {
+            dwgRW writer(path.c_str());
+            ScaleRoundTripIface iface;
+            iface.m_writer = &writer;
+            REQUIRE(writer.write(&iface, version, /*bin=*/false));
+        }
+
+        ScaleRoundTripIface readIface;
+        {
+            dwgRW reader(path.c_str());
+            REQUIRE(reader.read(&readIface, /*ext=*/false));
+            REQUIRE(reader.getVersion() == version);
+            REQUIRE(reader.getError() == DRW::BAD_NONE);
+        }
+
+        const DRW_Scale* found = nullptr;
+        for (const DRW_Scale& s : readIface.m_scaleObjects) {
+            if (s.handle == 0x810u) {
+                found = &s;
+                break;
+            }
+        }
+        REQUIRE(found != nullptr);
+        CHECK(found->name == "1:50");
+        CHECK(found->flag == 0);
+        CHECK(found->paperUnits == Catch::Approx(1.0));
+        CHECK(found->drawingUnits == Catch::Approx(50.0));
+        CHECK(found->isUnitScale == false);
+
+        std::remove(path.c_str());
+    }
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("dwgRW writes and reads IDBUFFER metadata",
+          "[dwg-write][idbuffer]") {
+    const DRW::Version versions[] = {DRW::AC1024, DRW::AC1027, DRW::AC1032};
+
+    for (DRW::Version version : versions) {
+        const std::string path = tempPath("native_idbuffer.dwg");
+        {
+            dwgRW writer(path.c_str());
+            IDBufferRoundTripIface iface;
+            iface.m_writer = &writer;
+            REQUIRE(writer.write(&iface, version, /*bin=*/false));
+        }
+
+        IDBufferRoundTripIface readIface;
+        {
+            dwgRW reader(path.c_str());
+            REQUIRE(reader.read(&readIface, /*ext=*/false));
+            REQUIRE(reader.getVersion() == version);
+            REQUIRE(reader.getError() == DRW::BAD_NONE);
+        }
+
+        const DRW_IDBuffer* found = nullptr;
+        for (const DRW_IDBuffer& b : readIface.m_idBufferObjects) {
+            if (b.handle == 0x820u) {
+                found = &b;
+                break;
+            }
+        }
+        REQUIRE(found != nullptr);
+        CHECK(found->classVersion == 0);
+        REQUIRE(found->objIds.size() == 3);
+        CHECK(found->objIds[0] == 0x1001u);
+        CHECK(found->objIds[1] == 0x1002u);
+        CHECK(found->objIds[2] == 0x1003u);
+
+        std::remove(path.c_str());
+    }
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("dwgRW writes and reads LAYER_INDEX metadata",
+          "[dwg-write][layer-index]") {
+    const DRW::Version versions[] = {DRW::AC1024, DRW::AC1027, DRW::AC1032};
+
+    for (DRW::Version version : versions) {
+        const std::string path = tempPath("native_layer_index.dwg");
+        {
+            dwgRW writer(path.c_str());
+            LayerIndexRoundTripIface iface;
+            iface.m_writer = &writer;
+            REQUIRE(writer.write(&iface, version, /*bin=*/false));
+        }
+
+        LayerIndexRoundTripIface readIface;
+        {
+            dwgRW reader(path.c_str());
+            REQUIRE(reader.read(&readIface, /*ext=*/false));
+            REQUIRE(reader.getVersion() == version);
+            REQUIRE(reader.getError() == DRW::BAD_NONE);
+        }
+
+        const DRW_LayerIndex* found = nullptr;
+        for (const DRW_LayerIndex& li : readIface.m_layerIndexObjects) {
+            if (li.handle == 0x830u) {
+                found = &li;
+                break;
+            }
+        }
+        REQUIRE(found != nullptr);
+        CHECK(found->timestamp1 == 0x25A1F0u);
+        CHECK(found->timestamp2 == 0x4B0u);
+        REQUIRE(found->entries.size() == 2);
+        CHECK(found->entries[0].indexLong == 1);
+        CHECK(found->entries[0].name == "0");
+        CHECK(found->entries[0].entryHandle == 0x1100u);
+        CHECK(found->entries[1].indexLong == 2);
+        CHECK(found->entries[1].name == "DETAILS");
+        CHECK(found->entries[1].entryHandle == 0x1101u);
+
+        std::remove(path.c_str());
+    }
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("dwgRW writes and reads SPATIAL_INDEX metadata",
+          "[dwg-write][spatial-index]") {
+    const DRW::Version versions[] = {DRW::AC1024, DRW::AC1027, DRW::AC1032};
+
+    for (DRW::Version version : versions) {
+        const std::string path = tempPath("native_spatial_index.dwg");
+        {
+            dwgRW writer(path.c_str());
+            SpatialIndexRoundTripIface iface;
+            iface.m_writer = &writer;
+            REQUIRE(writer.write(&iface, version, /*bin=*/false));
+        }
+
+        SpatialIndexRoundTripIface readIface;
+        {
+            dwgRW reader(path.c_str());
+            REQUIRE(reader.read(&readIface, /*ext=*/false));
+            REQUIRE(reader.getVersion() == version);
+            REQUIRE(reader.getError() == DRW::BAD_NONE);
+        }
+
+        const DRW_SpatialIndex* found = nullptr;
+        for (const DRW_SpatialIndex& si : readIface.m_spatialIndexObjects) {
+            if (si.handle == 0x840u) {
+                found = &si;
+                break;
+            }
+        }
+        REQUIRE(found != nullptr);
+        CHECK(found->timestamp1 == 0x25A201u);
+        CHECK(found->timestamp2 == 0x9C4u);
+
+        std::remove(path.c_str());
+    }
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("dwgRW writes and reads DICTIONARYVAR metadata",
+          "[dwg-write][dictionary-var]") {
+    const DRW::Version versions[] = {DRW::AC1024, DRW::AC1027, DRW::AC1032};
+
+    for (DRW::Version version : versions) {
+        const std::string path = tempPath("native_dictionary_var.dwg");
+        {
+            dwgRW writer(path.c_str());
+            DictionaryVarRoundTripIface iface;
+            iface.m_writer = &writer;
+            REQUIRE(writer.write(&iface, version, /*bin=*/false));
+        }
+
+        DictionaryVarRoundTripIface readIface;
+        {
+            dwgRW reader(path.c_str());
+            REQUIRE(reader.read(&readIface, /*ext=*/false));
+            REQUIRE(reader.getVersion() == version);
+            REQUIRE(reader.getError() == DRW::BAD_NONE);
+        }
+
+        const DRW_DictionaryVar* found = nullptr;
+        for (const DRW_DictionaryVar& dv : readIface.m_dictionaryVarObjects) {
+            if (dv.handle == 0x850u) {
+                found = &dv;
+                break;
+            }
+        }
+        REQUIRE(found != nullptr);
+        CHECK(found->m_schema == 0);
+        CHECK(found->m_value == "Standard");
 
         std::remove(path.c_str());
     }

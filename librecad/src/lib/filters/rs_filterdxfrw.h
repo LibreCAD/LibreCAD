@@ -188,6 +188,12 @@ public:
     void addDictionary(const DRW_Dictionary &data) override;
     void addXRecord(const DRW_XRecord &data) override;
     void addLayout(const DRW_Layout &data) override;
+    // PR 8d.2a — five small no-storage OBJECTS families.
+    void addScale(const DRW_Scale &data) override;
+    void addIDBuffer(const DRW_IDBuffer &data) override;
+    void addLayerIndex(const DRW_LayerIndex &data) override;
+    void addSpatialIndex(const DRW_SpatialIndex &data) override;
+    void addDictionaryVar(const DRW_DictionaryVar &data) override;
     void addAssociativeObject(const DRW_AssociativeObject &data) override;
     void addAcShHistoryObject(const DRW_AcShHistoryObject &data) override;
 

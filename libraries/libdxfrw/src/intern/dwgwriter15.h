@@ -98,6 +98,12 @@ public:
     bool writeRasterVariables(const DRW_RasterVariables& rasterVariables);
     bool writeGeoData(const DRW_GeoData& geoData);
     bool writeSpatialFilter(const DRW_SpatialFilter& filter);
+    // PR 8d.2a — five small no-storage OBJECTS families.
+    bool writeScale(const DRW_Scale& scale);
+    bool writeIDBuffer(const DRW_IDBuffer& idBuffer);
+    bool writeLayerIndex(const DRW_LayerIndex& layerIndex);
+    bool writeSpatialIndex(const DRW_SpatialIndex& spatialIndex);
+    bool writeDictionaryVar(const DRW_DictionaryVar& dictionaryVar);
 
 protected:
     /// Begin a new object in the object stream (the unsentinel'd byte
@@ -178,6 +184,15 @@ protected:
     void emitGeoDataObject(duint32 handle, const DRW_GeoData& geoData);
     void emitSpatialFilterObject(duint32 handle,
                                  const DRW_SpatialFilter& filter);
+    // PR 8d.2a — five small no-storage OBJECTS families.
+    void emitScaleObject(duint32 handle, const DRW_Scale& scale);
+    void emitIDBufferObject(duint32 handle, const DRW_IDBuffer& idBuffer);
+    void emitLayerIndexObject(duint32 handle,
+                              const DRW_LayerIndex& layerIndex);
+    void emitSpatialIndexObject(duint32 handle,
+                                const DRW_SpatialIndex& spatialIndex);
+    void emitDictionaryVarObject(duint32 handle,
+                                 const DRW_DictionaryVar& dictionaryVar);
 
 protected:
     /// Populate m_header's ctrl-handle fields with canonical reserved values

@@ -1094,6 +1094,168 @@ bool dwgWriter15::writeSpatialFilter(const DRW_SpatialFilter& filter) {
     return true;
 }
 
+// SCALE (AcDbScale, custom class 508) — class registration required.  The
+// SCALE encoder writes body fields ONLY (no common handle prefix and no
+// type-specific tail handles, matching its parser which intentionally leaves
+// the trailing handle stream "to the caller").  The wrapper therefore emits
+// the common handle prefix (parentHandle + reactors + xdic) itself after
+// encodeDwg returns.  This is the inverse of the usual pattern.  PR 8d.2a.
+void dwgWriter15::emitScaleObject(duint32 handle, const DRW_Scale& scale) {
+    dwgBufferW& body = beginObject(handle);
+    dwgBufferW *sb, *hb;
+    emitRecordPreamble(body, m_version, DRW_Scale::kDwgClassNum, handle,
+                       m_objectStrings, m_objectHandles, sb, hb);
+    scale.encodeDwg(m_version, &body, sb);
+    // Emit the common handle prefix that the SCALE encoder skips.
+    hb->putHandle(makeSoftOwner(static_cast<duint32>(scale.parentHandle)));
+    for (dint32 i = 0; i < scale.numReactors; ++i)
+        hb->putHandle(makeSoftOwner(0));
+    if (scale.xDictFlag != 1)
+        hb->putHandle(makeSoftOwner(0));
+    finishObject();
+}
+
+bool dwgWriter15::writeScale(const DRW_Scale& scale) {
+    if (m_version < DRW::AC1021)
+        return false;
+
+    DRW_Scale object = scale;
+    if (object.handle == 0) {
+        object.handle = m_handles.next();
+    } else {
+        m_handles.reserve(object.handle);
+    }
+    if (!registerScaleObjectClass(object.handle))
+        return false;
+
+    emitScaleObject(object.handle, object);
+    return true;
+}
+
+// IDBUFFER (AcDbIdBuffer, custom class 509) — class registration required.
+// Standard preamble + DRW_IDBuffer::encodeDwg sandwich.  Encoder owns its
+// common-handle prefix + object-id handles in hb.  PR 8d.2a.
+void dwgWriter15::emitIDBufferObject(duint32 handle, const DRW_IDBuffer& idBuffer) {
+    dwgBufferW& body = beginObject(handle);
+    dwgBufferW *sb, *hb;
+    emitRecordPreamble(body, m_version, DRW_IDBuffer::kDwgClassNum, handle,
+                       m_objectStrings, m_objectHandles, sb, hb);
+    DRW_UNUSED(sb);
+    idBuffer.encodeDwg(m_version, &body, nullptr, hb);
+    finishObject();
+}
+
+bool dwgWriter15::writeIDBuffer(const DRW_IDBuffer& idBuffer) {
+    if (m_version < DRW::AC1021)
+        return false;
+
+    DRW_IDBuffer object = idBuffer;
+    if (object.handle == 0) {
+        object.handle = m_handles.next();
+    } else {
+        m_handles.reserve(object.handle);
+    }
+    if (!registerIDBufferObjectClass(object.handle))
+        return false;
+
+    emitIDBufferObject(object.handle, object);
+    return true;
+}
+
+// LAYER_INDEX (AcDbLayerIndex, custom class 510) — class registration
+// required.  Standard preamble + DRW_LayerIndex::encodeDwg sandwich.  Encoder
+// writes entry names through sb (TV); per-entry handles + common prefix go
+// to hb.  PR 8d.2a.
+void dwgWriter15::emitLayerIndexObject(duint32 handle,
+                                       const DRW_LayerIndex& layerIndex) {
+    dwgBufferW& body = beginObject(handle);
+    dwgBufferW *sb, *hb;
+    emitRecordPreamble(body, m_version, DRW_LayerIndex::kDwgClassNum, handle,
+                       m_objectStrings, m_objectHandles, sb, hb);
+    layerIndex.encodeDwg(m_version, &body, sb, hb);
+    finishObject();
+}
+
+bool dwgWriter15::writeLayerIndex(const DRW_LayerIndex& layerIndex) {
+    if (m_version < DRW::AC1021)
+        return false;
+
+    DRW_LayerIndex object = layerIndex;
+    if (object.handle == 0) {
+        object.handle = m_handles.next();
+    } else {
+        m_handles.reserve(object.handle);
+    }
+    if (!registerLayerIndexObjectClass(object.handle))
+        return false;
+
+    emitLayerIndexObject(object.handle, object);
+    return true;
+}
+
+// SPATIAL_INDEX (AcDbSpatialIndex, custom class 511) — class registration
+// required.  Standard preamble + DRW_SpatialIndex::encodeDwg sandwich.
+// Encoder writes timestamps to the body and the common-handle prefix to hb
+// (the latter only at R2007+; gated to AC1021+ anyway).  PR 8d.2a.
+void dwgWriter15::emitSpatialIndexObject(duint32 handle,
+                                         const DRW_SpatialIndex& spatialIndex) {
+    dwgBufferW& body = beginObject(handle);
+    dwgBufferW *sb, *hb;
+    emitRecordPreamble(body, m_version, DRW_SpatialIndex::kDwgClassNum, handle,
+                       m_objectStrings, m_objectHandles, sb, hb);
+    DRW_UNUSED(sb);
+    spatialIndex.encodeDwg(m_version, &body, nullptr, hb);
+    finishObject();
+}
+
+bool dwgWriter15::writeSpatialIndex(const DRW_SpatialIndex& spatialIndex) {
+    if (m_version < DRW::AC1021)
+        return false;
+
+    DRW_SpatialIndex object = spatialIndex;
+    if (object.handle == 0) {
+        object.handle = m_handles.next();
+    } else {
+        m_handles.reserve(object.handle);
+    }
+    if (!registerSpatialIndexObjectClass(object.handle))
+        return false;
+
+    emitSpatialIndexObject(object.handle, object);
+    return true;
+}
+
+// DICTIONARYVAR (AcDbDictionaryVar, custom class 512) — class registration
+// required.  Standard preamble + DRW_DictionaryVar::encodeDwg sandwich.
+// Encoder owns its common-handle prefix; the m_value string goes through
+// sb at AC1018+.  PR 8d.2a.
+void dwgWriter15::emitDictionaryVarObject(duint32 handle,
+                                          const DRW_DictionaryVar& dictionaryVar) {
+    dwgBufferW& body = beginObject(handle);
+    dwgBufferW *sb, *hb;
+    emitRecordPreamble(body, m_version, DRW_DictionaryVar::kDwgClassNum, handle,
+                       m_objectStrings, m_objectHandles, sb, hb);
+    dictionaryVar.encodeDwg(m_version, &body, sb, hb);
+    finishObject();
+}
+
+bool dwgWriter15::writeDictionaryVar(const DRW_DictionaryVar& dictionaryVar) {
+    if (m_version < DRW::AC1021)
+        return false;
+
+    DRW_DictionaryVar object = dictionaryVar;
+    if (object.handle == 0) {
+        object.handle = m_handles.next();
+    } else {
+        m_handles.reserve(object.handle);
+    }
+    if (!registerDictionaryVarObjectClass(object.handle))
+        return false;
+
+    emitDictionaryVarObject(object.handle, object);
+    return true;
+}
+
 // --- add*() methods: register user table records for deferred emission -----
 
 void dwgWriter15::addLType(const DRW_LType& lt) {

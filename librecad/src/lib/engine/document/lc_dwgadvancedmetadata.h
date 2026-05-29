@@ -1728,6 +1728,70 @@ public:
         ReplayState replayState = ReplayState::ReplayAllowed;
     };
 
+    /// PR 8d.2a — five small no-storage OBJECTS families.  All round-trip-grade
+    /// (capture every field DRW_X::encodeDwg consumes).
+
+    /// SCALE (AcDbScale, custom class 508) — annotation-scale entry.
+    /// Body fields: flag + name (in DRW_TableEntry) + paperUnits + drawingUnits
+    /// + isUnitScale.  The SCALE encoder leaves the common-handle prefix to
+    /// the wrapper (see dwgWriter15::emitScaleObject).
+    struct ScaleRecord {
+        duint32 handle = 0;
+        duint32 parentHandle = 0;
+        std::string name;
+        duint16 flag = 0;
+        double paperUnits = 1.0;
+        double drawingUnits = 1.0;
+        bool isUnitScale = false;
+        ReplayState replayState = ReplayState::ReplayAllowed;
+    };
+
+    /// IDBUFFER (AcDbIdBuffer, custom class 509) — list of object handles
+    /// (used by selection filters and LAYER_INDEX entries).
+    struct IDBufferRecord {
+        duint32 handle = 0;
+        duint32 parentHandle = 0;
+        int classVersion = 0;
+        std::vector<duint32> objIds;
+        ReplayState replayState = ReplayState::ReplayAllowed;
+    };
+
+    /// LAYER_INDEX (AcDbLayerIndex, custom class 510) — per-layer entity index
+    /// for partial-load drawings.
+    struct LayerIndexEntryRecord {
+        int indexLong = 0;
+        std::string name;
+        duint32 entryHandle = 0;
+    };
+    struct LayerIndexRecord {
+        duint32 handle = 0;
+        duint32 parentHandle = 0;
+        duint32 timestamp1 = 0;
+        duint32 timestamp2 = 0;
+        std::vector<LayerIndexEntryRecord> entries;
+        ReplayState replayState = ReplayState::ReplayAllowed;
+    };
+
+    /// SPATIAL_INDEX (AcDbSpatialIndex, custom class 511) — spatial entity
+    /// index.  Only timestamps are parsed (body beyond is opaque per ODA spec).
+    struct SpatialIndexRecord {
+        duint32 handle = 0;
+        duint32 parentHandle = 0;
+        duint32 timestamp1 = 0;
+        duint32 timestamp2 = 0;
+        ReplayState replayState = ReplayState::ReplayAllowed;
+    };
+
+    /// DICTIONARYVAR (AcDbDictionaryVar, custom class 512) — schema + value
+    /// pair stored under a named-object dictionary entry.
+    struct DictionaryVarRecord {
+        duint32 handle = 0;
+        duint32 parentHandle = 0;
+        int schema = 0;
+        std::string value;
+        ReplayState replayState = ReplayState::ReplayAllowed;
+    };
+
     void clear() {
         m_rawObjects.clear();
         m_views.clear();
@@ -1761,6 +1825,11 @@ public:
         m_dictionaries.clear();
         m_xrecords.clear();
         m_layouts.clear();
+        m_scales.clear();
+        m_idBuffers.clear();
+        m_layerIndexes.clear();
+        m_spatialIndexes.clear();
+        m_dictionaryVars.clear();
     }
 
     void addUnsupportedObject(const DRW_UnsupportedObject& object) {
@@ -2684,6 +2753,64 @@ public:
         m_layouts.push_back(std::move(record));
     }
 
+    // PR 8d.2a — five small no-storage OBJECTS families.  Round-trip-grade
+    // capture mirroring the DRW_X::encodeDwg field set.
+    void addScale(const DRW_Scale& scale) {
+        ScaleRecord record;
+        record.handle = scale.handle;
+        record.parentHandle = scale.parentHandle;
+        record.name = scale.name;
+        record.flag = scale.flag;
+        record.paperUnits = scale.paperUnits;
+        record.drawingUnits = scale.drawingUnits;
+        record.isUnitScale = scale.isUnitScale;
+        m_scales.push_back(std::move(record));
+    }
+
+    void addIDBuffer(const DRW_IDBuffer& idBuffer) {
+        IDBufferRecord record;
+        record.handle = idBuffer.handle;
+        record.parentHandle = idBuffer.parentHandle;
+        record.classVersion = idBuffer.classVersion;
+        record.objIds = idBuffer.objIds;
+        m_idBuffers.push_back(std::move(record));
+    }
+
+    void addLayerIndex(const DRW_LayerIndex& layerIndex) {
+        LayerIndexRecord record;
+        record.handle = layerIndex.handle;
+        record.parentHandle = layerIndex.parentHandle;
+        record.timestamp1 = layerIndex.timestamp1;
+        record.timestamp2 = layerIndex.timestamp2;
+        record.entries.reserve(layerIndex.entries.size());
+        for (const DRW_LayerIndexEntry& e : layerIndex.entries) {
+            LayerIndexEntryRecord er;
+            er.indexLong = e.indexLong;
+            er.name = e.name;
+            er.entryHandle = e.entryHandle;
+            record.entries.push_back(std::move(er));
+        }
+        m_layerIndexes.push_back(std::move(record));
+    }
+
+    void addSpatialIndex(const DRW_SpatialIndex& spatialIndex) {
+        SpatialIndexRecord record;
+        record.handle = spatialIndex.handle;
+        record.parentHandle = spatialIndex.parentHandle;
+        record.timestamp1 = spatialIndex.timestamp1;
+        record.timestamp2 = spatialIndex.timestamp2;
+        m_spatialIndexes.push_back(std::move(record));
+    }
+
+    void addDictionaryVar(const DRW_DictionaryVar& dictionaryVar) {
+        DictionaryVarRecord record;
+        record.handle = dictionaryVar.handle;
+        record.parentHandle = dictionaryVar.parentHandle;
+        record.schema = dictionaryVar.m_schema;
+        record.value = dictionaryVar.m_value;
+        m_dictionaryVars.push_back(std::move(record));
+    }
+
     const std::vector<RawObjectRecord>& rawObjects() const { return m_rawObjects; }
     const std::vector<ViewRecord>& views() const { return m_views; }
     const std::vector<UcsRecord>& ucsRecords() const { return m_ucsRecords; }
@@ -2739,6 +2866,12 @@ public:
     const std::vector<DictionaryRecord>& dictionaries() const { return m_dictionaries; }
     const std::vector<XRecordRecord>& xrecords() const { return m_xrecords; }
     const std::vector<LayoutRecord>& layouts() const { return m_layouts; }
+    // PR 8d.2a — five small no-storage OBJECTS families.
+    const std::vector<ScaleRecord>& scales() const { return m_scales; }
+    const std::vector<IDBufferRecord>& idBuffers() const { return m_idBuffers; }
+    const std::vector<LayerIndexRecord>& layerIndexes() const { return m_layerIndexes; }
+    const std::vector<SpatialIndexRecord>& spatialIndexes() const { return m_spatialIndexes; }
+    const std::vector<DictionaryVarRecord>& dictionaryVars() const { return m_dictionaryVars; }
 
     RawObjectFamilyCounts rawObjectFamilyCounts() const {
         RawObjectFamilyCounts counts;
@@ -7051,6 +7184,12 @@ private:
     std::vector<DictionaryRecord> m_dictionaries;
     std::vector<XRecordRecord> m_xrecords;
     std::vector<LayoutRecord> m_layouts;
+    // PR 8d.2a — five small no-storage OBJECTS families.
+    std::vector<ScaleRecord> m_scales;
+    std::vector<IDBufferRecord> m_idBuffers;
+    std::vector<LayerIndexRecord> m_layerIndexes;
+    std::vector<SpatialIndexRecord> m_spatialIndexes;
+    std::vector<DictionaryVarRecord> m_dictionaryVars;
 };
 
 #endif

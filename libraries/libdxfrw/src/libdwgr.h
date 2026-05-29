@@ -115,6 +115,17 @@ public:
     bool writeGeoData(DRW_GeoData *object);
     bool registerSpatialFilterObjectClass(DRW_SpatialFilter *object);
     bool writeSpatialFilter(DRW_SpatialFilter *object);
+    // PR 8d.2a — five small no-storage OBJECTS families.
+    bool registerScaleObjectClass(DRW_Scale *object);
+    bool writeScale(DRW_Scale *object);
+    bool registerIDBufferObjectClass(DRW_IDBuffer *object);
+    bool writeIDBuffer(DRW_IDBuffer *object);
+    bool registerLayerIndexObjectClass(DRW_LayerIndex *object);
+    bool writeLayerIndex(DRW_LayerIndex *object);
+    bool registerSpatialIndexObjectClass(DRW_SpatialIndex *object);
+    bool writeSpatialIndex(DRW_SpatialIndex *object);
+    bool registerDictionaryVarObjectClass(DRW_DictionaryVar *object);
+    bool writeDictionaryVar(DRW_DictionaryVar *object);
     bool registerRawDwgObjectClass(const DRW_UnsupportedObject *object);
     bool writeRawDwgObject(DRW_UnsupportedObject *object);
 
