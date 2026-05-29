@@ -1002,10 +1002,19 @@ void QG_DlgOptionsDrawing::setupPaperTab() {
     leMarginTop->blockSignals(block);
     leMarginBottom->blockSignals(block);
 
-    leMarginLeft->setText(QString::number(m_graphic->getMarginLeftInUnits()));
-    leMarginTop->setText(QString::number(m_graphic->getMarginTopInUnits()));
-    leMarginRight->setText(QString::number(m_graphic->getMarginRightInUnits()));
-    leMarginBottom->setText(QString::number(m_graphic->getMarginBottomInUnits()));
+    // PR 11 — pull margins from the active LayoutRecord when one is set
+    // (DWG with paper-space layouts), otherwise fall back to the document
+    // singleton via activeLayoutMargins() so DXF imports stay byte-identical.
+    const auto activeMargins = m_graphic->activeLayoutMargins();
+    const RS2::Unit graphicUnit = m_graphic->getUnit();
+    leMarginLeft->setText(QString::number(
+        RS_Units::convert(activeMargins[0], RS2::Millimeter, graphicUnit)));
+    leMarginTop->setText(QString::number(
+        RS_Units::convert(activeMargins[1], RS2::Millimeter, graphicUnit)));
+    leMarginRight->setText(QString::number(
+        RS_Units::convert(activeMargins[2], RS2::Millimeter, graphicUnit)));
+    leMarginBottom->setText(QString::number(
+        RS_Units::convert(activeMargins[3], RS2::Millimeter, graphicUnit)));
 
     block = false;
     leMarginLeft->blockSignals(block);
@@ -1505,11 +1514,22 @@ void QG_DlgOptionsDrawing::validatePaperTab() {
         rbLandscape->setChecked(landscape);
     }
 
-    // Pager margins:
-    m_graphic->setMarginsInUnits(RS_Math::eval(leMarginLeft->text()),
-                                 RS_Math::eval(leMarginTop->text()),
-                                 RS_Math::eval(leMarginRight->text()),
-                                 RS_Math::eval(leMarginBottom->text()));
+    // Pager margins — PR 11: route to the active LayoutRecord when one is
+    // set, fall back to the document singleton otherwise.  Convert the
+    // user-entered values from graphic units to millimeters here so the
+    // RS_Graphic API stays unit-agnostic (matches setMarginsInUnits).
+    {
+        const RS2::Unit graphicUnit = m_graphic->getUnit();
+        const double leftMm  = RS_Units::convert(
+            RS_Math::eval(leMarginLeft->text()), graphicUnit, RS2::Millimeter);
+        const double topMm   = RS_Units::convert(
+            RS_Math::eval(leMarginTop->text()), graphicUnit, RS2::Millimeter);
+        const double rightMm = RS_Units::convert(
+            RS_Math::eval(leMarginRight->text()), graphicUnit, RS2::Millimeter);
+        const double bottomMm = RS_Units::convert(
+            RS_Math::eval(leMarginBottom->text()), graphicUnit, RS2::Millimeter);
+        m_graphic->setActiveLayoutMargins(leftMm, topMm, rightMm, bottomMm);
+    }
     // Number of pages:
     m_graphic->setPagesNum(sbPagesNumH->value(),
                            sbPagesNumV->value());
@@ -1847,18 +1867,23 @@ void QG_DlgOptionsDrawing::updatePaperPreview() {
     int previewW = gvPaperPreview->width() - 10;
     int previewH = gvPaperPreview->height() - 10;
     double scale = qMin(previewW / paperW, previewH / paperH);
+    // PR 11 — fallback (text parse failed) reads from the active layout
+    // via activeLayoutMargins() so the preview reflects the same source
+    // the read path above already populated.
+    const auto previewMargins = m_graphic->activeLayoutMargins();
+    const RS2::Unit previewUnit = m_graphic->getUnit();
     int lMargin = qRound(RS_Math::eval(leMarginLeft->text(),-1) * scale);
     if (lMargin < 0.0)
-        lMargin = m_graphic->getMarginLeftInUnits();
+        lMargin = RS_Units::convert(previewMargins[0], RS2::Millimeter, previewUnit);
     int tMargin = qRound(RS_Math::eval(leMarginTop->text(),-1) * scale);
     if (tMargin < 0.0)
-        tMargin = m_graphic->getMarginTopInUnits();
+        tMargin = RS_Units::convert(previewMargins[1], RS2::Millimeter, previewUnit);
     int rMargin = qRound(RS_Math::eval(leMarginRight->text(),-1) * scale);
     if (rMargin < 0.0)
-        rMargin = m_graphic->getMarginRightInUnits();
+        rMargin = RS_Units::convert(previewMargins[2], RS2::Millimeter, previewUnit);
     int bMargin = qRound(RS_Math::eval(leMarginBottom->text(),-1) * scale);
     if (bMargin < 0.0)
-        bMargin = m_graphic->getMarginBottomInUnits();
+        bMargin = RS_Units::convert(previewMargins[3], RS2::Millimeter, previewUnit);
     int printAreaW = qRound(paperW*scale) - lMargin - rMargin;
     int printAreaH = qRound(paperH*scale) - tMargin - bMargin;
     m_paperScene->clear();

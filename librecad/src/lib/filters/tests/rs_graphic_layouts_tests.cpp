@@ -227,3 +227,116 @@ TEST_CASE("RS_Graphic::layouts() is a live view over dwgAdvancedMetadata",
     REQUIRE(graphic.layouts().size() == 2);
     REQUIRE(graphic.layouts().back().name == "Layout1");
 }
+
+// ---- PR 11 — active-layout margin accessors --------------------------------
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("RS_Graphic::activeLayoutMargins falls back to legacy when handle is 0",
+          "[rs_graphic][layouts]") {
+    ensureQtContext();
+    RS_Graphic graphic;
+    // No layouts loaded (DXF or fresh document) — activeLayoutHandle() is
+    // 0 by construction; activeLayoutMargins() must return the document
+    // singleton so the existing plot dialog read path is byte-identical.
+    graphic.setMargins(7.0, 8.0, 9.0, 10.0);
+    const auto margins = graphic.activeLayoutMargins();
+    REQUIRE(margins[0] == 7.0);
+    REQUIRE(margins[1] == 8.0);
+    REQUIRE(margins[2] == 9.0);
+    REQUIRE(margins[3] == 10.0);
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("RS_Graphic::activeLayoutMargins prefers active LayoutRecord when set",
+          "[rs_graphic][layouts]") {
+    ensureQtContext();
+    RS_Graphic graphic;
+    graphic.setMargins(1.0, 2.0, 3.0, 4.0);
+    auto& metadata = graphic.dwgAdvancedMetadata();
+    metadata.addLayout(makeLayout(0x20, "Layout1", 11.0, 22.0, 33.0, 44.0));
+    graphic.setActiveLayoutHandle(0x20);
+
+    const auto margins = graphic.activeLayoutMargins();
+    REQUIRE(margins[0] == 11.0);
+    REQUIRE(margins[1] == 22.0);
+    REQUIRE(margins[2] == 33.0);
+    REQUIRE(margins[3] == 44.0);
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("RS_Graphic::activeLayoutMargins falls back when handle has no match",
+          "[rs_graphic][layouts]") {
+    // Defensive — if the active handle is stale (layout removed, etc.)
+    // the read path must not segfault and must surface usable legacy
+    // margins so the plot dialog still has something to display.
+    ensureQtContext();
+    RS_Graphic graphic;
+    graphic.setMargins(5.0, 6.0, 7.0, 8.0);
+    graphic.setActiveLayoutHandle(0x99);  // no matching record
+
+    const auto margins = graphic.activeLayoutMargins();
+    REQUIRE(margins[0] == 5.0);
+    REQUIRE(margins[1] == 6.0);
+    REQUIRE(margins[2] == 7.0);
+    REQUIRE(margins[3] == 8.0);
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("RS_Graphic::setActiveLayoutMargins writes through to LayoutRecord",
+          "[rs_graphic][layouts]") {
+    ensureQtContext();
+    RS_Graphic graphic;
+    auto& metadata = graphic.dwgAdvancedMetadata();
+    metadata.addLayout(makeLayout(0x20, "Layout1", 5.0, 5.0, 5.0, 5.0));
+    graphic.setActiveLayoutHandle(0x20);
+    graphic.setModified(false);
+
+    graphic.setActiveLayoutMargins(10.0, 20.0, 30.0, 40.0);
+    const auto margins = graphic.activeLayoutMargins();
+    REQUIRE(margins[0] == 10.0);
+    REQUIRE(margins[1] == 20.0);
+    REQUIRE(margins[2] == 30.0);
+    REQUIRE(margins[3] == 40.0);
+    REQUIRE(graphic.isModified());
+
+    // Legacy singletons must remain untouched — they're independent
+    // storage for the DXF / no-layout fallback path.
+    REQUIRE(graphic.getMarginLeft() == 0.0);
+    REQUIRE(graphic.getMarginTop() == 0.0);
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("RS_Graphic::setActiveLayoutMargins falls back to setMargins for DXF",
+          "[rs_graphic][layouts]") {
+    // DXF or no-layout drawings have activeLayoutHandle()==0; the setter
+    // must transparently write to the legacy singletons so the existing
+    // plot pipeline observes the user's edit.
+    ensureQtContext();
+    RS_Graphic graphic;
+    graphic.setActiveLayoutMargins(11.0, 22.0, 33.0, 44.0);
+
+    REQUIRE(graphic.getMarginLeft() == 11.0);
+    REQUIRE(graphic.getMarginTop() == 22.0);
+    REQUIRE(graphic.getMarginRight() == 33.0);
+    REQUIRE(graphic.getMarginBottom() == 44.0);
+    REQUIRE(graphic.activeLayoutMargins()[0] == 11.0);
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("RS_Graphic::setActiveLayoutMargins skips negative components",
+          "[rs_graphic][layouts]") {
+    // Mirrors setMargins / setLayoutMargins convention — negative means
+    // "leave this side alone".
+    ensureQtContext();
+    RS_Graphic graphic;
+    auto& metadata = graphic.dwgAdvancedMetadata();
+    metadata.addLayout(makeLayout(0x20, "Layout1", 5.0, 5.0, 5.0, 5.0));
+    graphic.setActiveLayoutHandle(0x20);
+
+    graphic.setActiveLayoutMargins(11.0, -1.0, -1.0, -1.0);
+    const auto margins = graphic.activeLayoutMargins();
+    REQUIRE(margins[0] == 11.0);
+    REQUIRE(margins[1] == 5.0);
+    REQUIRE(margins[2] == 5.0);
+    REQUIRE(margins[3] == 5.0);
+}

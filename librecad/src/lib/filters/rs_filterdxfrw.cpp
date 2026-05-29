@@ -4861,6 +4861,19 @@ void RS_FilterDXFRW::addXRecord(const DRW_XRecord &data) {
 void RS_FilterDXFRW::addLayout(const DRW_Layout &data) {
   if (m_graphic != nullptr) {
     m_graphic->dwgAdvancedMetadata().addLayout(data);
+    // PR 11 — populate activeLayoutHandle on first import.  AutoCAD uses
+    // tabOrder=0 for the default-visible paper-space layout; if no layout
+    // carries tabOrder=0 (rare — most DWGs have one), fall back to the
+    // first layout added so the UI still has a non-zero handle to display.
+    // setActiveLayoutHandle bumps the modified flag only on actual change,
+    // so re-loading the same DWG idempotently leaves the dirty state alone.
+    if (m_graphic->activeLayoutHandle() == 0u && data.handle != 0u) {
+        const bool isDefaultTab = data.tabOrder == 0;
+        const bool isFirstLayout = m_graphic->layouts().size() == 1;
+        if (isDefaultTab || isFirstLayout) {
+            m_graphic->setActiveLayoutHandle(data.handle);
+        }
+    }
   }
   RS_DEBUG->print("RS_FilterDXFRW::addLayout: handle %d name=%s viewports=%d",
                   static_cast<int>(data.handle),

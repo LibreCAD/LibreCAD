@@ -890,6 +890,27 @@ bool RS_Graphic::setLayoutMargins(duint32 handle,
     return false;
 }
 
+std::array<double, 4> RS_Graphic::activeLayoutMargins() const {
+    if (m_activeLayoutHandle != 0) {
+        if (const LC_Layout* match = findLayout(m_activeLayoutHandle)) {
+            return {match->marginLeft, match->marginTop,
+                    match->marginRight, match->marginBottom};
+        }
+    }
+    return {marginLeft, marginTop, marginRight, marginBottom};
+}
+
+void RS_Graphic::setActiveLayoutMargins(double left, double top,
+                                        double right, double bottom) {
+    if (m_activeLayoutHandle != 0
+        && setLayoutMargins(m_activeLayoutHandle, left, top, right, bottom)) {
+        return;
+    }
+    // Fall through to document-singleton margins for DXF / no-layout
+    // documents and for active handles that don't match a stored record.
+    setMargins(left, top, right, bottom);
+}
+
 void RS_Graphic::setPagesNum(const QString &horizXvert) {
     if (horizXvert.contains('x')) {
         bool ok1 = false;

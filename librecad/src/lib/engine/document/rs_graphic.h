@@ -24,6 +24,7 @@
 #ifndef RS_GRAPHIC_H
 #define RS_GRAPHIC_H
 
+#include <array>
 #include <memory>
 #include <QDateTime>
 
@@ -125,6 +126,26 @@ public:
     bool setLayoutMargins(duint32 handle,
                           double left, double top,
                           double right, double bottom);
+
+    /**
+     * Active layout's paper margins in millimeters (left/top/right/bottom).
+     *
+     * When activeLayoutHandle() resolves to a stored LayoutRecord, returns
+     * that record's PlotSettings margins.  Otherwise (DXF / no layouts
+     * loaded / unmatched handle) falls back to the legacy document-level
+     * getMarginLeft/Top/Right/Bottom — preserving the existing plot dialog
+     * behavior for DXF documents.
+     */
+    std::array<double, 4> activeLayoutMargins() const;
+
+    /**
+     * Active layout's paper margin setter — writes to the matching
+     * LayoutRecord when activeLayoutHandle() resolves, falls back to
+     * setMargins() otherwise.  Negative components are skipped to mirror
+     * the legacy setMargins() / setLayoutMargins() convention.
+     */
+    void setActiveLayoutMargins(double left, double top,
+                                double right, double bottom);
     // Wrappers for Layer functions:
     void clearLayers() {layerList.clear();}
     unsigned countLayers() const {return layerList.count();}
