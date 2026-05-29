@@ -1256,6 +1256,135 @@ bool dwgWriter15::writeDictionaryVar(const DRW_DictionaryVar& dictionaryVar) {
     return true;
 }
 
+// DICTIONARYWDFLT (AcDbDictionaryWithDefault, custom class 513) — class
+// registration required.  The encoder delegates to
+// DRW_Dictionary::encodeDwg for the body + per-entry handle list, then
+// appends the single default-entry handle at the tail (mirroring its
+// parser).  Standard preamble + encoder sandwich.  PR 8d.2b.
+void dwgWriter15::emitDictionaryWithDefaultObject(duint32 handle,
+                                                   const DRW_DictionaryWithDefault& dictionary) {
+    dwgBufferW& body = beginObject(handle);
+    dwgBufferW *sb, *hb;
+    emitRecordPreamble(body, m_version,
+                       DRW_DictionaryWithDefault::kDwgClassNum, handle,
+                       m_objectStrings, m_objectHandles, sb, hb);
+    dictionary.encodeDwg(m_version, &body, sb, hb);
+    finishObject();
+}
+
+bool dwgWriter15::writeDictionaryWithDefault(const DRW_DictionaryWithDefault& dictionary) {
+    if (m_version < DRW::AC1021)
+        return false;
+
+    DRW_DictionaryWithDefault object = dictionary;
+    if (object.handle == 0) {
+        object.handle = m_handles.next();
+    } else {
+        m_handles.reserve(object.handle);
+    }
+    if (!registerDictionaryWithDefaultObjectClass(object.handle))
+        return false;
+
+    emitDictionaryWithDefaultObject(object.handle, object);
+    return true;
+}
+
+// SORTENTSTABLE (AcDbSortentsTable, custom class 514) — class registration
+// required.  Standard preamble + DRW_SortEntsTable::encodeDwg sandwich.
+// Encoder inverts the usual "all handles in handle stream" convention: per-
+// entry sort handles go inline in the body section BEFORE the common
+// prefix; block-owner + entity handles follow in the handle stream.
+// PR 8d.2b.
+void dwgWriter15::emitSortEntsTableObject(duint32 handle,
+                                           const DRW_SortEntsTable& sortEntsTable) {
+    dwgBufferW& body = beginObject(handle);
+    dwgBufferW *sb, *hb;
+    emitRecordPreamble(body, m_version, DRW_SortEntsTable::kDwgClassNum,
+                       handle, m_objectStrings, m_objectHandles, sb, hb);
+    DRW_UNUSED(sb);
+    sortEntsTable.encodeDwg(m_version, &body, nullptr, hb);
+    finishObject();
+}
+
+bool dwgWriter15::writeSortEntsTable(const DRW_SortEntsTable& sortEntsTable) {
+    if (m_version < DRW::AC1021)
+        return false;
+
+    DRW_SortEntsTable object = sortEntsTable;
+    if (object.handle == 0) {
+        object.handle = m_handles.next();
+    } else {
+        m_handles.reserve(object.handle);
+    }
+    if (!registerSortEntsTableObjectClass(object.handle))
+        return false;
+
+    emitSortEntsTableObject(object.handle, object);
+    return true;
+}
+
+// FIELDLIST (AcDbFieldList, custom class 515) — class registration
+// required.  Standard preamble + DRW_FieldList::encodeDwg sandwich.
+// Encoder owns common-handle prefix + per-field handle list in hb.  No
+// strings.  PR 8d.2b.
+void dwgWriter15::emitFieldListObject(duint32 handle, const DRW_FieldList& fieldList) {
+    dwgBufferW& body = beginObject(handle);
+    dwgBufferW *sb, *hb;
+    emitRecordPreamble(body, m_version, DRW_FieldList::kDwgClassNum, handle,
+                       m_objectStrings, m_objectHandles, sb, hb);
+    DRW_UNUSED(sb);
+    fieldList.encodeDwg(m_version, &body, nullptr, hb);
+    finishObject();
+}
+
+bool dwgWriter15::writeFieldList(const DRW_FieldList& fieldList) {
+    if (m_version < DRW::AC1021)
+        return false;
+
+    DRW_FieldList object = fieldList;
+    if (object.handle == 0) {
+        object.handle = m_handles.next();
+    } else {
+        m_handles.reserve(object.handle);
+    }
+    if (!registerFieldListObjectClass(object.handle))
+        return false;
+
+    emitFieldListObject(object.handle, object);
+    return true;
+}
+
+// FIELD (AcDbField, custom class 516) — class registration required.
+// Standard preamble + DRW_Field::encodeDwg sandwich.  Encoder writes
+// evaluator/code/format/messages through sb (TV), CadValue + child values
+// through buf+sb, and common-prefix + child handles + object handles
+// inline through hb.  PR 8d.2b.
+void dwgWriter15::emitFieldObject(duint32 handle, const DRW_Field& field) {
+    dwgBufferW& body = beginObject(handle);
+    dwgBufferW *sb, *hb;
+    emitRecordPreamble(body, m_version, DRW_Field::kDwgClassNum, handle,
+                       m_objectStrings, m_objectHandles, sb, hb);
+    field.encodeDwg(m_version, &body, sb, hb);
+    finishObject();
+}
+
+bool dwgWriter15::writeField(const DRW_Field& field) {
+    if (m_version < DRW::AC1021)
+        return false;
+
+    DRW_Field object = field;
+    if (object.handle == 0) {
+        object.handle = m_handles.next();
+    } else {
+        m_handles.reserve(object.handle);
+    }
+    if (!registerFieldObjectClass(object.handle))
+        return false;
+
+    emitFieldObject(object.handle, object);
+    return true;
+}
+
 // --- add*() methods: register user table records for deferred emission -----
 
 void dwgWriter15::addLType(const DRW_LType& lt) {

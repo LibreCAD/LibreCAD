@@ -1792,6 +1792,89 @@ public:
         ReplayState replayState = ReplayState::ReplayAllowed;
     };
 
+    /// PR 8d.2b — four larger no-storage OBJECTS families.  Round-trip-grade
+    /// capture mirroring the DRW_X::encodeDwg field set.
+
+    /// DICTIONARYWDFLT (AcDbDictionaryWithDefault, custom class 513) — a
+    /// regular dictionary plus a single fallback handle returned when a
+    /// lookup misses.  Stores the full dictionary state plus the default.
+    struct DictionaryWithDefaultEntryRecord {
+        std::string name;
+        duint32 handle = 0;
+    };
+    struct DictionaryWithDefaultRecord {
+        duint32 handle = 0;
+        duint32 parentHandle = 0;
+        int cloning = 0;
+        int hardOwner = 0;
+        std::string name;
+        std::vector<DictionaryWithDefaultEntryRecord> entries;
+        duint32 defaultEntryHandle = 0;
+        ReplayState replayState = ReplayState::ReplayAllowed;
+    };
+
+    /// SORTENTSTABLE (AcDbSortentsTable, custom class 514) — per-block draw-
+    /// order override.  Stores parallel sort + entity handle lists plus the
+    /// block-owner handle.
+    struct SortEntsTableRecord {
+        duint32 handle = 0;
+        duint32 parentHandle = 0;
+        std::vector<duint32> sortHandles;
+        duint32 blockOwnerHandle = 0;
+        std::vector<duint32> entityHandles;
+        ReplayState replayState = ReplayState::ReplayAllowed;
+    };
+
+    /// FIELDLIST (AcDbFieldList, custom class 515) — handle list of FIELD
+    /// children plus the "unknown" bit captured by the parser.
+    struct FieldListRecord {
+        duint32 handle = 0;
+        duint32 parentHandle = 0;
+        int unknown = 0;
+        std::vector<duint32> fieldHandles;
+        ReplayState replayState = ReplayState::ReplayAllowed;
+    };
+
+    /// FIELD (AcDbField, custom class 516) — typed value with child field +
+    /// object references and a CadValue payload.  We mirror the on-wire
+    /// DRW_CadValue + ChildValue structs verbatim so the encoder can
+    /// round-trip without lossy normalisation.
+    struct CadValueRecord {
+        int formatFlags = 0;
+        int dataType = 0;
+        duint32 dataSize = 0;
+        int unitType = 0;
+        DRW_Variant value;
+        std::string formatString;
+        std::string valueString;
+        duint32 handle = 0;
+        std::vector<duint8> rawData;
+    };
+    struct FieldChildValueRecord {
+        std::string key;
+        CadValueRecord value;
+    };
+    struct FieldRecord {
+        duint32 handle = 0;
+        duint32 parentHandle = 0;
+        std::string evaluatorId;
+        std::string fieldCode;
+        std::string formatString;
+        int evaluationOptionFlags = 0;
+        int filingOptionFlags = 0;
+        int fieldStateFlags = 0;
+        int evaluationStatusFlags = 0;
+        int evaluationErrorCode = 0;
+        std::string evaluationErrorMessage;
+        CadValueRecord value;
+        std::string valueString;
+        int valueStringLength = 0;
+        std::vector<duint32> childHandles;
+        std::vector<duint32> objectHandles;
+        std::vector<FieldChildValueRecord> childValues;
+        ReplayState replayState = ReplayState::ReplayAllowed;
+    };
+
     void clear() {
         m_rawObjects.clear();
         m_views.clear();
@@ -1830,6 +1913,10 @@ public:
         m_layerIndexes.clear();
         m_spatialIndexes.clear();
         m_dictionaryVars.clear();
+        m_dictionariesWithDefault.clear();
+        m_sortEntsTables.clear();
+        m_fieldLists.clear();
+        m_fields.clear();
     }
 
     void addUnsupportedObject(const DRW_UnsupportedObject& object) {
@@ -2811,6 +2898,86 @@ public:
         m_dictionaryVars.push_back(std::move(record));
     }
 
+    // PR 8d.2b — four larger no-storage OBJECTS families.
+    void addDictionaryWithDefault(const DRW_DictionaryWithDefault& dictionary) {
+        DictionaryWithDefaultRecord record;
+        record.handle = dictionary.handle;
+        record.parentHandle = dictionary.parentHandle;
+        record.cloning = dictionary.cloning;
+        record.hardOwner = dictionary.hardOwner;
+        record.name = dictionary.name;
+        record.entries.reserve(dictionary.m_entries.size());
+        for (const auto& e : dictionary.m_entries) {
+            DictionaryWithDefaultEntryRecord er;
+            er.name = e.m_name;
+            er.handle = e.m_handle;
+            record.entries.push_back(std::move(er));
+        }
+        record.defaultEntryHandle = dictionary.m_defaultEntryHandle;
+        m_dictionariesWithDefault.push_back(std::move(record));
+    }
+
+    void addSortEntsTable(const DRW_SortEntsTable& sortEntsTable) {
+        SortEntsTableRecord record;
+        record.handle = sortEntsTable.handle;
+        record.parentHandle = sortEntsTable.parentHandle;
+        record.sortHandles = sortEntsTable.m_sortHandles;
+        record.blockOwnerHandle = sortEntsTable.m_blockOwnerHandle;
+        record.entityHandles = sortEntsTable.m_entityHandles;
+        m_sortEntsTables.push_back(std::move(record));
+    }
+
+    void addFieldList(const DRW_FieldList& fieldList) {
+        FieldListRecord record;
+        record.handle = fieldList.handle;
+        record.parentHandle = fieldList.parentHandle;
+        record.unknown = fieldList.m_unknown;
+        record.fieldHandles = fieldList.m_fieldHandles;
+        m_fieldLists.push_back(std::move(record));
+    }
+
+    static CadValueRecord cadValueFromDrw(const DRW_CadValue& v) {
+        CadValueRecord c;
+        c.formatFlags = v.m_formatFlags;
+        c.dataType = v.m_dataType;
+        c.dataSize = v.m_dataSize;
+        c.unitType = v.m_unitType;
+        c.value = v.m_value;
+        c.formatString = v.m_formatString;
+        c.valueString = v.m_valueString;
+        c.handle = v.m_handle;
+        c.rawData = v.m_rawData;
+        return c;
+    }
+
+    void addField(const DRW_Field& field) {
+        FieldRecord record;
+        record.handle = field.handle;
+        record.parentHandle = field.parentHandle;
+        record.evaluatorId = field.m_evaluatorId;
+        record.fieldCode = field.m_fieldCode;
+        record.formatString = field.m_formatString;
+        record.evaluationOptionFlags = field.m_evaluationOptionFlags;
+        record.filingOptionFlags = field.m_filingOptionFlags;
+        record.fieldStateFlags = field.m_fieldStateFlags;
+        record.evaluationStatusFlags = field.m_evaluationStatusFlags;
+        record.evaluationErrorCode = field.m_evaluationErrorCode;
+        record.evaluationErrorMessage = field.m_evaluationErrorMessage;
+        record.value = cadValueFromDrw(field.m_value);
+        record.valueString = field.m_valueString;
+        record.valueStringLength = field.m_valueStringLength;
+        record.childHandles = field.m_childHandles;
+        record.objectHandles = field.m_objectHandles;
+        record.childValues.reserve(field.m_childValues.size());
+        for (const auto& cv : field.m_childValues) {
+            FieldChildValueRecord cvr;
+            cvr.key = cv.m_key;
+            cvr.value = cadValueFromDrw(cv.m_value);
+            record.childValues.push_back(std::move(cvr));
+        }
+        m_fields.push_back(std::move(record));
+    }
+
     const std::vector<RawObjectRecord>& rawObjects() const { return m_rawObjects; }
     const std::vector<ViewRecord>& views() const { return m_views; }
     const std::vector<UcsRecord>& ucsRecords() const { return m_ucsRecords; }
@@ -2872,6 +3039,13 @@ public:
     const std::vector<LayerIndexRecord>& layerIndexes() const { return m_layerIndexes; }
     const std::vector<SpatialIndexRecord>& spatialIndexes() const { return m_spatialIndexes; }
     const std::vector<DictionaryVarRecord>& dictionaryVars() const { return m_dictionaryVars; }
+    // PR 8d.2b — four larger no-storage OBJECTS families.
+    const std::vector<DictionaryWithDefaultRecord>& dictionariesWithDefault() const {
+        return m_dictionariesWithDefault;
+    }
+    const std::vector<SortEntsTableRecord>& sortEntsTables() const { return m_sortEntsTables; }
+    const std::vector<FieldListRecord>& fieldLists() const { return m_fieldLists; }
+    const std::vector<FieldRecord>& fields() const { return m_fields; }
 
     RawObjectFamilyCounts rawObjectFamilyCounts() const {
         RawObjectFamilyCounts counts;
@@ -7190,6 +7364,11 @@ private:
     std::vector<LayerIndexRecord> m_layerIndexes;
     std::vector<SpatialIndexRecord> m_spatialIndexes;
     std::vector<DictionaryVarRecord> m_dictionaryVars;
+    // PR 8d.2b — four larger no-storage OBJECTS families.
+    std::vector<DictionaryWithDefaultRecord> m_dictionariesWithDefault;
+    std::vector<SortEntsTableRecord> m_sortEntsTables;
+    std::vector<FieldListRecord> m_fieldLists;
+    std::vector<FieldRecord> m_fields;
 };
 
 #endif

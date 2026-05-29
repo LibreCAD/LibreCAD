@@ -194,6 +194,11 @@ public:
     void addLayerIndex(const DRW_LayerIndex &data) override;
     void addSpatialIndex(const DRW_SpatialIndex &data) override;
     void addDictionaryVar(const DRW_DictionaryVar &data) override;
+    // PR 8d.2b — four larger no-storage OBJECTS families.
+    void addDictionaryWithDefault(const DRW_DictionaryWithDefault &data) override;
+    void addSortEntsTable(const DRW_SortEntsTable &data) override;
+    void addFieldList(const DRW_FieldList &data) override;
+    void addField(const DRW_Field &data) override;
     void addAssociativeObject(const DRW_AssociativeObject &data) override;
     void addAcShHistoryObject(const DRW_AcShHistoryObject &data) override;
 

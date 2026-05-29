@@ -739,6 +739,76 @@ bool dwgRW::writeDictionaryVar(DRW_DictionaryVar *object) {
     return w->writeDictionaryVar(*object);
 }
 
+// PR 8d.2b — four larger no-storage OBJECTS families.  Same wrapper shape as
+// the PR 8d.2a trio.
+bool dwgRW::registerDictionaryWithDefaultObjectClass(DRW_DictionaryWithDefault *object) {
+    if (object == nullptr || writer == nullptr)
+        return false;
+    if (object->handle != 0)
+        writer->reserveHandle(object->handle);
+    return writer->registerDictionaryWithDefaultObjectClass(object->handle);
+}
+
+bool dwgRW::writeDictionaryWithDefault(DRW_DictionaryWithDefault *object) {
+    if (object == nullptr)
+        return false;
+    auto *w = asWriter15(writer);
+    if (w == nullptr)
+        return false;
+    return w->writeDictionaryWithDefault(*object);
+}
+
+bool dwgRW::registerSortEntsTableObjectClass(DRW_SortEntsTable *object) {
+    if (object == nullptr || writer == nullptr)
+        return false;
+    if (object->handle != 0)
+        writer->reserveHandle(object->handle);
+    return writer->registerSortEntsTableObjectClass(object->handle);
+}
+
+bool dwgRW::writeSortEntsTable(DRW_SortEntsTable *object) {
+    if (object == nullptr)
+        return false;
+    auto *w = asWriter15(writer);
+    if (w == nullptr)
+        return false;
+    return w->writeSortEntsTable(*object);
+}
+
+bool dwgRW::registerFieldListObjectClass(DRW_FieldList *object) {
+    if (object == nullptr || writer == nullptr)
+        return false;
+    if (object->handle != 0)
+        writer->reserveHandle(object->handle);
+    return writer->registerFieldListObjectClass(object->handle);
+}
+
+bool dwgRW::writeFieldList(DRW_FieldList *object) {
+    if (object == nullptr)
+        return false;
+    auto *w = asWriter15(writer);
+    if (w == nullptr)
+        return false;
+    return w->writeFieldList(*object);
+}
+
+bool dwgRW::registerFieldObjectClass(DRW_Field *object) {
+    if (object == nullptr || writer == nullptr)
+        return false;
+    if (object->handle != 0)
+        writer->reserveHandle(object->handle);
+    return writer->registerFieldObjectClass(object->handle);
+}
+
+bool dwgRW::writeField(DRW_Field *object) {
+    if (object == nullptr)
+        return false;
+    auto *w = asWriter15(writer);
+    if (w == nullptr)
+        return false;
+    return w->writeField(*object);
+}
+
 bool dwgRW::registerRawDwgObjectClass(const DRW_UnsupportedObject *object) {
     if (object == nullptr || writer == nullptr)
         return false;

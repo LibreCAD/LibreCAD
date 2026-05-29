@@ -104,6 +104,11 @@ public:
     bool writeLayerIndex(const DRW_LayerIndex& layerIndex);
     bool writeSpatialIndex(const DRW_SpatialIndex& spatialIndex);
     bool writeDictionaryVar(const DRW_DictionaryVar& dictionaryVar);
+    // PR 8d.2b — four larger no-storage OBJECTS families.
+    bool writeDictionaryWithDefault(const DRW_DictionaryWithDefault& dictionary);
+    bool writeSortEntsTable(const DRW_SortEntsTable& sortEntsTable);
+    bool writeFieldList(const DRW_FieldList& fieldList);
+    bool writeField(const DRW_Field& field);
 
 protected:
     /// Begin a new object in the object stream (the unsentinel'd byte
@@ -193,6 +198,13 @@ protected:
                                 const DRW_SpatialIndex& spatialIndex);
     void emitDictionaryVarObject(duint32 handle,
                                  const DRW_DictionaryVar& dictionaryVar);
+    // PR 8d.2b — four larger no-storage OBJECTS families.
+    void emitDictionaryWithDefaultObject(duint32 handle,
+                                          const DRW_DictionaryWithDefault& dictionary);
+    void emitSortEntsTableObject(duint32 handle,
+                                  const DRW_SortEntsTable& sortEntsTable);
+    void emitFieldListObject(duint32 handle, const DRW_FieldList& fieldList);
+    void emitFieldObject(duint32 handle, const DRW_Field& field);
 
 protected:
     /// Populate m_header's ctrl-handle fields with canonical reserved values

@@ -126,6 +126,15 @@ public:
     bool writeSpatialIndex(DRW_SpatialIndex *object);
     bool registerDictionaryVarObjectClass(DRW_DictionaryVar *object);
     bool writeDictionaryVar(DRW_DictionaryVar *object);
+    // PR 8d.2b — four larger no-storage OBJECTS families.
+    bool registerDictionaryWithDefaultObjectClass(DRW_DictionaryWithDefault *object);
+    bool writeDictionaryWithDefault(DRW_DictionaryWithDefault *object);
+    bool registerSortEntsTableObjectClass(DRW_SortEntsTable *object);
+    bool writeSortEntsTable(DRW_SortEntsTable *object);
+    bool registerFieldListObjectClass(DRW_FieldList *object);
+    bool writeFieldList(DRW_FieldList *object);
+    bool registerFieldObjectClass(DRW_Field *object);
+    bool writeField(DRW_Field *object);
     bool registerRawDwgObjectClass(const DRW_UnsupportedObject *object);
     bool writeRawDwgObject(DRW_UnsupportedObject *object);
 

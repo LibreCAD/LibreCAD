@@ -1575,6 +1575,162 @@ public:
     }
 };
 
+// PR 8d.2b round-trip iface fixtures — four larger no-storage OBJECTS
+// families.
+
+// DICTIONARYWDFLT round-trip — a regular dictionary plus a single fallback
+// handle returned when a lookup misses.  Exercises the encoder's delegation
+// to DRW_Dictionary::encodeDwg + the tail default-handle write.
+class DictionaryWithDefaultRoundTripIface : public EmptyIface {
+public:
+    dwgRW *m_writer {nullptr};
+    DRW_DictionaryWithDefault m_dictionary;
+    std::vector<DRW_DictionaryWithDefault> m_dictionaryObjects;
+
+    DictionaryWithDefaultRoundTripIface() {
+        m_dictionary.handle = 0x860u;
+        m_dictionary.parentHandle = 0xCu;
+        m_dictionary.cloning = 1;
+        m_dictionary.hardOwner = 0;
+        m_dictionary.name = "ACAD_DEFAULT_DICT";
+        DRW_Dictionary::Entry e1;
+        e1.m_name = "Entry1";
+        e1.m_handle = 0x1200u;
+        m_dictionary.m_entries.push_back(e1);
+        DRW_Dictionary::Entry e2;
+        e2.m_name = "Entry2";
+        e2.m_handle = 0x1201u;
+        m_dictionary.m_entries.push_back(e2);
+        m_dictionary.m_defaultEntryHandle = 0x1202u;
+    }
+
+    void writeDwgClasses() override {
+        if (m_writer != nullptr)
+            REQUIRE(m_writer->registerDictionaryWithDefaultObjectClass(&m_dictionary));
+    }
+
+    void writeObjects() override {
+        if (m_writer != nullptr)
+            REQUIRE(m_writer->writeDictionaryWithDefault(&m_dictionary));
+    }
+
+    void addDictionaryWithDefault(const DRW_DictionaryWithDefault& d) override {
+        m_dictionaryObjects.push_back(d);
+    }
+};
+
+// SORTENTSTABLE round-trip — per-block draw-order override.  Exercises the
+// inline-handle wrinkle: sort handles go in the body section BEFORE the
+// common prefix; block-owner + entity handles follow in the handle stream.
+class SortEntsTableRoundTripIface : public EmptyIface {
+public:
+    dwgRW *m_writer {nullptr};
+    DRW_SortEntsTable m_sortEntsTable;
+    std::vector<DRW_SortEntsTable> m_sortEntsTableObjects;
+
+    SortEntsTableRoundTripIface() {
+        m_sortEntsTable.handle = 0x870u;
+        m_sortEntsTable.parentHandle = 0xCu;
+        m_sortEntsTable.m_sortHandles = {0x2001u, 0x2002u, 0x2003u};
+        m_sortEntsTable.m_blockOwnerHandle = 0x2100u;
+        m_sortEntsTable.m_entityHandles = {0x2010u, 0x2011u, 0x2012u};
+    }
+
+    void writeDwgClasses() override {
+        if (m_writer != nullptr)
+            REQUIRE(m_writer->registerSortEntsTableObjectClass(&m_sortEntsTable));
+    }
+
+    void writeObjects() override {
+        if (m_writer != nullptr)
+            REQUIRE(m_writer->writeSortEntsTable(&m_sortEntsTable));
+    }
+
+    void addSortEntsTable(const DRW_SortEntsTable& s) override {
+        m_sortEntsTableObjects.push_back(s);
+    }
+};
+
+// FIELDLIST round-trip — list of FIELD handles plus the "unknown" bit
+// captured by the parser.
+class FieldListRoundTripIface : public EmptyIface {
+public:
+    dwgRW *m_writer {nullptr};
+    DRW_FieldList m_fieldList;
+    std::vector<DRW_FieldList> m_fieldListObjects;
+
+    FieldListRoundTripIface() {
+        m_fieldList.handle = 0x880u;
+        m_fieldList.parentHandle = 0xCu;
+        m_fieldList.m_unknown = 1;
+        m_fieldList.m_fieldHandles = {0x2200u, 0x2201u};
+    }
+
+    void writeDwgClasses() override {
+        if (m_writer != nullptr)
+            REQUIRE(m_writer->registerFieldListObjectClass(&m_fieldList));
+    }
+
+    void writeObjects() override {
+        if (m_writer != nullptr)
+            REQUIRE(m_writer->writeFieldList(&m_fieldList));
+    }
+
+    void addFieldList(const DRW_FieldList& f) override {
+        m_fieldListObjects.push_back(f);
+    }
+};
+
+// FIELD round-trip — populates a typed CadValue (double via dataType==2),
+// evaluator + code + format + messages, child handles, object handles.
+// Exercises the writeCadValue helper.
+class FieldRoundTripIface : public EmptyIface {
+public:
+    dwgRW *m_writer {nullptr};
+    DRW_Field m_field;
+    std::vector<DRW_Field> m_fieldObjects;
+
+    FieldRoundTripIface() {
+        m_field.handle = 0x890u;
+        m_field.parentHandle = 0xCu;
+        m_field.m_evaluatorId = "AcDbBlockEval";
+        m_field.m_fieldCode = "%<\\AcDbBlock>%";
+        m_field.m_formatString = "%lu2";
+        m_field.m_evaluationOptionFlags = 1;
+        m_field.m_filingOptionFlags = 0;
+        m_field.m_fieldStateFlags = 2;
+        m_field.m_evaluationStatusFlags = 1;
+        m_field.m_evaluationErrorCode = 0;
+        m_field.m_evaluationErrorMessage = "";
+        // formatFlags & 3 = 0 keeps the value body present at R2007+ (the
+        // parser skips the body when formatFlags & 3 != 0, treating it as
+        // an "empty" value sentinel).
+        m_field.m_value.m_formatFlags = 0;
+        m_field.m_value.m_dataType = 2;        // double
+        m_field.m_value.m_value = DRW_Variant(40, 12.5);
+        m_field.m_value.m_formatString = "%lu2";
+        m_field.m_value.m_valueString = "12.5";
+        m_field.m_valueString = "12.5";
+        m_field.m_valueStringLength = 4;
+        m_field.m_childHandles = {0x2301u};
+        m_field.m_objectHandles = {0x2401u};
+    }
+
+    void writeDwgClasses() override {
+        if (m_writer != nullptr)
+            REQUIRE(m_writer->registerFieldObjectClass(&m_field));
+    }
+
+    void writeObjects() override {
+        if (m_writer != nullptr)
+            REQUIRE(m_writer->writeField(&m_field));
+    }
+
+    void addField(const DRW_Field& f) override {
+        m_fieldObjects.push_back(f);
+    }
+};
+
 } // namespace
 
 TEST_CASE("dwgRW writes POINT/LINE/CIRCLE/ARC and reader recovers them",
@@ -2581,6 +2737,181 @@ TEST_CASE("dwgRW writes and reads DICTIONARYVAR metadata",
         REQUIRE(found != nullptr);
         CHECK(found->m_schema == 0);
         CHECK(found->m_value == "Standard");
+
+        std::remove(path.c_str());
+    }
+}
+
+// PR 8d.2b smoke tests — four larger no-storage OBJECTS families.
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("dwgRW writes and reads DICTIONARYWDFLT metadata",
+          "[dwg-write][dictionary-wdflt]") {
+    const DRW::Version versions[] = {DRW::AC1024, DRW::AC1027, DRW::AC1032};
+
+    for (DRW::Version version : versions) {
+        const std::string path = tempPath("native_dictionary_wdflt.dwg");
+        {
+            dwgRW writer(path.c_str());
+            DictionaryWithDefaultRoundTripIface iface;
+            iface.m_writer = &writer;
+            REQUIRE(writer.write(&iface, version, /*bin=*/false));
+        }
+
+        DictionaryWithDefaultRoundTripIface readIface;
+        {
+            dwgRW reader(path.c_str());
+            REQUIRE(reader.read(&readIface, /*ext=*/false));
+            REQUIRE(reader.getVersion() == version);
+            REQUIRE(reader.getError() == DRW::BAD_NONE);
+        }
+
+        const DRW_DictionaryWithDefault* found = nullptr;
+        for (const DRW_DictionaryWithDefault& d : readIface.m_dictionaryObjects) {
+            if (d.handle == 0x860u) {
+                found = &d;
+                break;
+            }
+        }
+        REQUIRE(found != nullptr);
+        CHECK(found->cloning == 1);
+        REQUIRE(found->m_entries.size() == 2);
+        CHECK(found->m_entries[0].m_name == "Entry1");
+        CHECK(found->m_entries[0].m_handle == 0x1200u);
+        CHECK(found->m_entries[1].m_name == "Entry2");
+        CHECK(found->m_entries[1].m_handle == 0x1201u);
+        CHECK(found->m_defaultEntryHandle == 0x1202u);
+
+        std::remove(path.c_str());
+    }
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("dwgRW writes and reads SORTENTSTABLE metadata",
+          "[dwg-write][sortentstable]") {
+    const DRW::Version versions[] = {DRW::AC1024, DRW::AC1027, DRW::AC1032};
+
+    for (DRW::Version version : versions) {
+        const std::string path = tempPath("native_sortentstable.dwg");
+        {
+            dwgRW writer(path.c_str());
+            SortEntsTableRoundTripIface iface;
+            iface.m_writer = &writer;
+            REQUIRE(writer.write(&iface, version, /*bin=*/false));
+        }
+
+        SortEntsTableRoundTripIface readIface;
+        {
+            dwgRW reader(path.c_str());
+            REQUIRE(reader.read(&readIface, /*ext=*/false));
+            REQUIRE(reader.getVersion() == version);
+            REQUIRE(reader.getError() == DRW::BAD_NONE);
+        }
+
+        const DRW_SortEntsTable* found = nullptr;
+        for (const DRW_SortEntsTable& s : readIface.m_sortEntsTableObjects) {
+            if (s.handle == 0x870u) {
+                found = &s;
+                break;
+            }
+        }
+        REQUIRE(found != nullptr);
+        REQUIRE(found->m_sortHandles.size() == 3);
+        CHECK(found->m_sortHandles[0] == 0x2001u);
+        CHECK(found->m_sortHandles[1] == 0x2002u);
+        CHECK(found->m_sortHandles[2] == 0x2003u);
+        CHECK(found->m_blockOwnerHandle == 0x2100u);
+        REQUIRE(found->m_entityHandles.size() == 3);
+        CHECK(found->m_entityHandles[0] == 0x2010u);
+        CHECK(found->m_entityHandles[1] == 0x2011u);
+        CHECK(found->m_entityHandles[2] == 0x2012u);
+
+        std::remove(path.c_str());
+    }
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("dwgRW writes and reads FIELDLIST metadata",
+          "[dwg-write][fieldlist]") {
+    const DRW::Version versions[] = {DRW::AC1024, DRW::AC1027, DRW::AC1032};
+
+    for (DRW::Version version : versions) {
+        const std::string path = tempPath("native_fieldlist.dwg");
+        {
+            dwgRW writer(path.c_str());
+            FieldListRoundTripIface iface;
+            iface.m_writer = &writer;
+            REQUIRE(writer.write(&iface, version, /*bin=*/false));
+        }
+
+        FieldListRoundTripIface readIface;
+        {
+            dwgRW reader(path.c_str());
+            REQUIRE(reader.read(&readIface, /*ext=*/false));
+            REQUIRE(reader.getVersion() == version);
+            REQUIRE(reader.getError() == DRW::BAD_NONE);
+        }
+
+        const DRW_FieldList* found = nullptr;
+        for (const DRW_FieldList& f : readIface.m_fieldListObjects) {
+            if (f.handle == 0x880u) {
+                found = &f;
+                break;
+            }
+        }
+        REQUIRE(found != nullptr);
+        CHECK(found->m_unknown == 1);
+        REQUIRE(found->m_fieldHandles.size() == 2);
+        CHECK(found->m_fieldHandles[0] == 0x2200u);
+        CHECK(found->m_fieldHandles[1] == 0x2201u);
+
+        std::remove(path.c_str());
+    }
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("dwgRW writes and reads FIELD metadata",
+          "[dwg-write][field]") {
+    const DRW::Version versions[] = {DRW::AC1024, DRW::AC1027, DRW::AC1032};
+
+    for (DRW::Version version : versions) {
+        const std::string path = tempPath("native_field.dwg");
+        {
+            dwgRW writer(path.c_str());
+            FieldRoundTripIface iface;
+            iface.m_writer = &writer;
+            REQUIRE(writer.write(&iface, version, /*bin=*/false));
+        }
+
+        FieldRoundTripIface readIface;
+        {
+            dwgRW reader(path.c_str());
+            REQUIRE(reader.read(&readIface, /*ext=*/false));
+            REQUIRE(reader.getVersion() == version);
+            REQUIRE(reader.getError() == DRW::BAD_NONE);
+        }
+
+        const DRW_Field* found = nullptr;
+        for (const DRW_Field& f : readIface.m_fieldObjects) {
+            if (f.handle == 0x890u) {
+                found = &f;
+                break;
+            }
+        }
+        REQUIRE(found != nullptr);
+        CHECK(found->m_evaluatorId == "AcDbBlockEval");
+        CHECK(found->m_fieldCode == "%<\\AcDbBlock>%");
+        CHECK(found->m_evaluationOptionFlags == 1);
+        CHECK(found->m_fieldStateFlags == 2);
+        CHECK(found->m_evaluationStatusFlags == 1);
+        CHECK(found->m_value.m_dataType == 2);
+        CHECK(found->m_value.m_value.d_val() == Catch::Approx(12.5));
+        CHECK(found->m_valueString == "12.5");
+        CHECK(found->m_valueStringLength == 4);
+        REQUIRE(found->m_childHandles.size() == 1);
+        CHECK(found->m_childHandles[0] == 0x2301u);
+        REQUIRE(found->m_objectHandles.size() == 1);
+        CHECK(found->m_objectHandles[0] == 0x2401u);
 
         std::remove(path.c_str());
     }

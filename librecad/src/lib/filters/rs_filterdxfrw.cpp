@@ -365,6 +365,33 @@ bool isDictionaryVarRawObject(
         || record.className == "AcDbDictionaryVar";
 }
 
+// PR 8d.2b — four larger no-storage OBJECTS families.  recordName /
+// className strings must match dwgreader.cpp dispatch (case-sensitive).
+bool isDictionaryWithDefaultRawObject(
+    const LC_DwgAdvancedMetadata::RawObjectRecord& record) {
+    return record.recordName == "ACDBDICTIONARYWDFLT"
+        || record.recordName == "DICTIONARYWDFLT"
+        || record.className == "AcDbDictionaryWithDefault";
+}
+
+bool isSortEntsTableRawObject(
+    const LC_DwgAdvancedMetadata::RawObjectRecord& record) {
+    return record.recordName == "SORTENTSTABLE"
+        || record.className == "AcDbSortentsTable";
+}
+
+bool isFieldListRawObject(
+    const LC_DwgAdvancedMetadata::RawObjectRecord& record) {
+    return record.recordName == "FIELDLIST"
+        || record.className == "AcDbFieldList";
+}
+
+bool isFieldRawObject(
+    const LC_DwgAdvancedMetadata::RawObjectRecord& record) {
+    return record.recordName == "FIELD"
+        || record.className == "AcDbField";
+}
+
 bool hasReplayableRawMLeaderStyle(const LC_DwgAdvancedMetadata& metadata,
                                   duint32 handle) {
     if (handle == 0)
@@ -626,6 +653,92 @@ DRW_DictionaryVar dictionaryVarFromMetadata(
     dv.m_schema = record.schema;
     dv.m_value = record.value;
     return dv;
+}
+
+// PR 8d.2b — four larger no-storage OBJECTS families.  Flat field-copy
+// builders matching the addX captures above.
+DRW_DictionaryWithDefault dictionaryWithDefaultFromMetadata(
+    const LC_DwgAdvancedMetadata::DictionaryWithDefaultRecord& record) {
+    DRW_DictionaryWithDefault dwd;
+    dwd.handle = record.handle;
+    dwd.parentHandle = static_cast<int>(record.parentHandle);
+    dwd.cloning = record.cloning;
+    dwd.hardOwner = record.hardOwner;
+    dwd.name = record.name;
+    dwd.m_entries.reserve(record.entries.size());
+    for (const auto& er : record.entries) {
+        DRW_Dictionary::Entry entry;
+        entry.m_name = er.name;
+        entry.m_handle = er.handle;
+        dwd.m_entries.push_back(std::move(entry));
+    }
+    dwd.m_defaultEntryHandle = record.defaultEntryHandle;
+    return dwd;
+}
+
+DRW_SortEntsTable sortEntsTableFromMetadata(
+    const LC_DwgAdvancedMetadata::SortEntsTableRecord& record) {
+    DRW_SortEntsTable se;
+    se.handle = record.handle;
+    se.parentHandle = static_cast<int>(record.parentHandle);
+    se.m_sortHandles = record.sortHandles;
+    se.m_blockOwnerHandle = record.blockOwnerHandle;
+    se.m_entityHandles = record.entityHandles;
+    return se;
+}
+
+DRW_FieldList fieldListFromMetadata(
+    const LC_DwgAdvancedMetadata::FieldListRecord& record) {
+    DRW_FieldList fl;
+    fl.handle = record.handle;
+    fl.parentHandle = static_cast<int>(record.parentHandle);
+    fl.m_unknown = record.unknown;
+    fl.m_fieldHandles = record.fieldHandles;
+    return fl;
+}
+
+DRW_CadValue cadValueFromRecord(
+    const LC_DwgAdvancedMetadata::CadValueRecord& cr) {
+    DRW_CadValue cv;
+    cv.m_formatFlags = cr.formatFlags;
+    cv.m_dataType = cr.dataType;
+    cv.m_dataSize = cr.dataSize;
+    cv.m_unitType = cr.unitType;
+    cv.m_value = cr.value;
+    cv.m_formatString = cr.formatString;
+    cv.m_valueString = cr.valueString;
+    cv.m_handle = cr.handle;
+    cv.m_rawData = cr.rawData;
+    return cv;
+}
+
+DRW_Field fieldFromMetadata(
+    const LC_DwgAdvancedMetadata::FieldRecord& record) {
+    DRW_Field f;
+    f.handle = record.handle;
+    f.parentHandle = static_cast<int>(record.parentHandle);
+    f.m_evaluatorId = record.evaluatorId;
+    f.m_fieldCode = record.fieldCode;
+    f.m_formatString = record.formatString;
+    f.m_evaluationOptionFlags = record.evaluationOptionFlags;
+    f.m_filingOptionFlags = record.filingOptionFlags;
+    f.m_fieldStateFlags = record.fieldStateFlags;
+    f.m_evaluationStatusFlags = record.evaluationStatusFlags;
+    f.m_evaluationErrorCode = record.evaluationErrorCode;
+    f.m_evaluationErrorMessage = record.evaluationErrorMessage;
+    f.m_value = cadValueFromRecord(record.value);
+    f.m_valueString = record.valueString;
+    f.m_valueStringLength = record.valueStringLength;
+    f.m_childHandles = record.childHandles;
+    f.m_objectHandles = record.objectHandles;
+    f.m_childValues.reserve(record.childValues.size());
+    for (const auto& cv : record.childValues) {
+        DRW_Field::ChildValue dcv;
+        dcv.m_key = cv.key;
+        dcv.m_value = cadValueFromRecord(cv.value);
+        f.m_childValues.push_back(std::move(dcv));
+    }
+    return f;
 }
 
 DRW_Sun sunFromMetadata(const LC_DwgAdvancedMetadata::SunRecord& record) {
@@ -4805,6 +4918,48 @@ void RS_FilterDXFRW::addDictionaryVar(const DRW_DictionaryVar &data) {
                   data.m_schema);
 }
 
+// PR 8d.2b — four larger no-storage OBJECTS families.  All custom-class
+// (513-516); filter routes each call into round-trip-grade metadata storage
+// so RS_FilterDXFRW::writeObjects can dispatch the native writer.
+void RS_FilterDXFRW::addDictionaryWithDefault(const DRW_DictionaryWithDefault &data) {
+  if (m_graphic != nullptr) {
+    m_graphic->dwgAdvancedMetadata().addDictionaryWithDefault(data);
+  }
+  RS_DEBUG->print("RS_FilterDXFRW::addDictionaryWithDefault: handle %d entries=%d default=%d",
+                  static_cast<int>(data.handle),
+                  static_cast<int>(data.m_entries.size()),
+                  static_cast<int>(data.m_defaultEntryHandle));
+}
+
+void RS_FilterDXFRW::addSortEntsTable(const DRW_SortEntsTable &data) {
+  if (m_graphic != nullptr) {
+    m_graphic->dwgAdvancedMetadata().addSortEntsTable(data);
+  }
+  RS_DEBUG->print("RS_FilterDXFRW::addSortEntsTable: handle %d entries=%d block=%d",
+                  static_cast<int>(data.handle),
+                  static_cast<int>(data.m_entityHandles.size()),
+                  static_cast<int>(data.m_blockOwnerHandle));
+}
+
+void RS_FilterDXFRW::addFieldList(const DRW_FieldList &data) {
+  if (m_graphic != nullptr) {
+    m_graphic->dwgAdvancedMetadata().addFieldList(data);
+  }
+  RS_DEBUG->print("RS_FilterDXFRW::addFieldList: handle %d fields=%d",
+                  static_cast<int>(data.handle),
+                  static_cast<int>(data.m_fieldHandles.size()));
+}
+
+void RS_FilterDXFRW::addField(const DRW_Field &data) {
+  if (m_graphic != nullptr) {
+    m_graphic->dwgAdvancedMetadata().addField(data);
+  }
+  RS_DEBUG->print("RS_FilterDXFRW::addField: handle %d evaluator=%s code=%s",
+                  static_cast<int>(data.handle),
+                  data.m_evaluatorId.c_str(),
+                  data.m_fieldCode.c_str());
+}
+
 void RS_FilterDXFRW::addAssociativeObject(const DRW_AssociativeObject &data) {
   // TODO: Reconstruct associative dimension/dynamic-block relationship graphs
   // from these shell objects after native consumers exist.
@@ -5305,6 +5460,10 @@ void RS_FilterDXFRW::writeDwgClasses() {
     std::set<duint32> nativeLayerIndexHandles;
     std::set<duint32> nativeSpatialIndexHandles;
     std::set<duint32> nativeDictionaryVarHandles;
+    std::set<duint32> nativeDictionaryWithDefaultHandles;
+    std::set<duint32> nativeSortEntsTableHandles;
+    std::set<duint32> nativeFieldListHandles;
+    std::set<duint32> nativeFieldHandles;
     if (canWriteModernObjects) {
         for (const auto& record : metadata.suns()) {
             if (record.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
@@ -5405,6 +5564,46 @@ void RS_FilterDXFRW::writeDwgClasses() {
             if (m_dwgW->registerDictionaryVarObjectClass(&dv))
                 nativeDictionaryVarHandles.insert(record.handle);
         }
+        // PR 8d.2b — four larger no-storage OBJECTS families.  Each must be
+        // registered BEFORE writeDwgClasses() emits the CLASSES section so
+        // the reader can map oType (513-516) back to its parser.
+        for (const auto& record : metadata.dictionariesWithDefault()) {
+            if (record.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                || record.handle == 0) {
+                continue;
+            }
+            DRW_DictionaryWithDefault dwd =
+                dictionaryWithDefaultFromMetadata(record);
+            if (m_dwgW->registerDictionaryWithDefaultObjectClass(&dwd))
+                nativeDictionaryWithDefaultHandles.insert(record.handle);
+        }
+        for (const auto& record : metadata.sortEntsTables()) {
+            if (record.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                || record.handle == 0) {
+                continue;
+            }
+            DRW_SortEntsTable se = sortEntsTableFromMetadata(record);
+            if (m_dwgW->registerSortEntsTableObjectClass(&se))
+                nativeSortEntsTableHandles.insert(record.handle);
+        }
+        for (const auto& record : metadata.fieldLists()) {
+            if (record.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                || record.handle == 0) {
+                continue;
+            }
+            DRW_FieldList fl = fieldListFromMetadata(record);
+            if (m_dwgW->registerFieldListObjectClass(&fl))
+                nativeFieldListHandles.insert(record.handle);
+        }
+        for (const auto& record : metadata.fields()) {
+            if (record.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                || record.handle == 0) {
+                continue;
+            }
+            DRW_Field f = fieldFromMetadata(record);
+            if (m_dwgW->registerFieldObjectClass(&f))
+                nativeFieldHandles.insert(record.handle);
+        }
     }
 
     for (const auto& record : metadata.rawObjects()) {
@@ -5441,6 +5640,19 @@ void RS_FilterDXFRW::writeDwgClasses() {
             continue;
         if (nativeDictionaryVarHandles.count(record.handle) != 0
             && isDictionaryVarRawObject(record))
+            continue;
+        // PR 8d.2b — four larger no-storage OBJECTS families.
+        if (nativeDictionaryWithDefaultHandles.count(record.handle) != 0
+            && isDictionaryWithDefaultRawObject(record))
+            continue;
+        if (nativeSortEntsTableHandles.count(record.handle) != 0
+            && isSortEntsTableRawObject(record))
+            continue;
+        if (nativeFieldListHandles.count(record.handle) != 0
+            && isFieldListRawObject(record))
+            continue;
+        if (nativeFieldHandles.count(record.handle) != 0
+            && isFieldRawObject(record))
             continue;
         DRW_UnsupportedObject object = rawObjectFromMetadata(record);
         m_dwgW->registerRawDwgObjectClass(&object);
@@ -6238,6 +6450,11 @@ void RS_FilterDXFRW::writeObjects() {
         std::set<duint32> nativeLayerIndexHandles;
         std::set<duint32> nativeSpatialIndexHandles;
         std::set<duint32> nativeDictionaryVarHandles;
+        // PR 8d.2b — four larger no-storage OBJECTS families.
+        std::set<duint32> nativeDictionaryWithDefaultHandles;
+        std::set<duint32> nativeSortEntsTableHandles;
+        std::set<duint32> nativeFieldListHandles;
+        std::set<duint32> nativeFieldHandles;
         int nativeSunObjects = 0;
         int nativePlaceholderObjects = 0;
         int nativeMLeaderStyleObjects = 0;
@@ -6253,6 +6470,11 @@ void RS_FilterDXFRW::writeObjects() {
         int nativeLayerIndexObjects = 0;
         int nativeSpatialIndexObjects = 0;
         int nativeDictionaryVarObjects = 0;
+        // PR 8d.2b — four larger no-storage OBJECTS families.
+        int nativeDictionaryWithDefaultObjects = 0;
+        int nativeSortEntsTableObjects = 0;
+        int nativeFieldListObjects = 0;
+        int nativeFieldObjects = 0;
         if (canWriteModernObjects) {
             for (const auto& record : metadata.suns()) {
                 if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
@@ -6362,6 +6584,31 @@ void RS_FilterDXFRW::writeObjects() {
                 if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
                     && record.handle != 0) {
                     nativeDictionaryVarHandles.insert(record.handle);
+                }
+            }
+            // PR 8d.2b — four larger no-storage OBJECTS families.
+            for (const auto& record : metadata.dictionariesWithDefault()) {
+                if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                    && record.handle != 0) {
+                    nativeDictionaryWithDefaultHandles.insert(record.handle);
+                }
+            }
+            for (const auto& record : metadata.sortEntsTables()) {
+                if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                    && record.handle != 0) {
+                    nativeSortEntsTableHandles.insert(record.handle);
+                }
+            }
+            for (const auto& record : metadata.fieldLists()) {
+                if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                    && record.handle != 0) {
+                    nativeFieldListHandles.insert(record.handle);
+                }
+            }
+            for (const auto& record : metadata.fields()) {
+                if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                    && record.handle != 0) {
+                    nativeFieldHandles.insert(record.handle);
                 }
             }
         }
@@ -6487,6 +6734,31 @@ void RS_FilterDXFRW::writeObjects() {
             }
             if (nativeDictionaryVarHandles.count(record.handle) != 0
                 && isDictionaryVarRawObject(record)) {
+                hasBlockedReplay = true;
+                ++blockedReplaced;
+                continue;
+            }
+            // PR 8d.2b — four larger no-storage OBJECTS families.
+            if (nativeDictionaryWithDefaultHandles.count(record.handle) != 0
+                && isDictionaryWithDefaultRawObject(record)) {
+                hasBlockedReplay = true;
+                ++blockedReplaced;
+                continue;
+            }
+            if (nativeSortEntsTableHandles.count(record.handle) != 0
+                && isSortEntsTableRawObject(record)) {
+                hasBlockedReplay = true;
+                ++blockedReplaced;
+                continue;
+            }
+            if (nativeFieldListHandles.count(record.handle) != 0
+                && isFieldListRawObject(record)) {
+                hasBlockedReplay = true;
+                ++blockedReplaced;
+                continue;
+            }
+            if (nativeFieldHandles.count(record.handle) != 0
+                && isFieldRawObject(record)) {
                 hasBlockedReplay = true;
                 ++blockedReplaced;
                 continue;
@@ -6686,6 +6958,52 @@ void RS_FilterDXFRW::writeObjects() {
                     ++blockedWriterRejected;
                 }
             }
+            // PR 8d.2b — four larger no-storage OBJECTS families.
+            for (const auto& record : metadata.dictionariesWithDefault()) {
+                if (nativeDictionaryWithDefaultHandles.count(record.handle) == 0)
+                    continue;
+                DRW_DictionaryWithDefault dwd =
+                    dictionaryWithDefaultFromMetadata(record);
+                if (m_dwgW->writeDictionaryWithDefault(&dwd)) {
+                    ++nativeDictionaryWithDefaultObjects;
+                } else {
+                    hasBlockedReplay = true;
+                    ++blockedWriterRejected;
+                }
+            }
+            for (const auto& record : metadata.sortEntsTables()) {
+                if (nativeSortEntsTableHandles.count(record.handle) == 0)
+                    continue;
+                DRW_SortEntsTable se = sortEntsTableFromMetadata(record);
+                if (m_dwgW->writeSortEntsTable(&se)) {
+                    ++nativeSortEntsTableObjects;
+                } else {
+                    hasBlockedReplay = true;
+                    ++blockedWriterRejected;
+                }
+            }
+            for (const auto& record : metadata.fieldLists()) {
+                if (nativeFieldListHandles.count(record.handle) == 0)
+                    continue;
+                DRW_FieldList fl = fieldListFromMetadata(record);
+                if (m_dwgW->writeFieldList(&fl)) {
+                    ++nativeFieldListObjects;
+                } else {
+                    hasBlockedReplay = true;
+                    ++blockedWriterRejected;
+                }
+            }
+            for (const auto& record : metadata.fields()) {
+                if (nativeFieldHandles.count(record.handle) == 0)
+                    continue;
+                DRW_Field f = fieldFromMetadata(record);
+                if (m_dwgW->writeField(&f)) {
+                    ++nativeFieldObjects;
+                } else {
+                    hasBlockedReplay = true;
+                    ++blockedWriterRejected;
+                }
+            }
         }
         if (replayedObjects > 0) {
             RS_DEBUG->print("RS_FilterDXFRW::writeObjects: replayed %d raw DWG objects",
@@ -6775,6 +7093,27 @@ void RS_FilterDXFRW::writeObjects() {
             RS_DEBUG->print(
                 "RS_FilterDXFRW::writeObjects: wrote %d native DICTIONARYVAR objects",
                 nativeDictionaryVarObjects);
+        }
+        // PR 8d.2b — four larger no-storage OBJECTS families.
+        if (nativeDictionaryWithDefaultObjects > 0) {
+            RS_DEBUG->print(
+                "RS_FilterDXFRW::writeObjects: wrote %d native DICTIONARYWDFLT objects",
+                nativeDictionaryWithDefaultObjects);
+        }
+        if (nativeSortEntsTableObjects > 0) {
+            RS_DEBUG->print(
+                "RS_FilterDXFRW::writeObjects: wrote %d native SORTENTSTABLE objects",
+                nativeSortEntsTableObjects);
+        }
+        if (nativeFieldListObjects > 0) {
+            RS_DEBUG->print(
+                "RS_FilterDXFRW::writeObjects: wrote %d native FIELDLIST objects",
+                nativeFieldListObjects);
+        }
+        if (nativeFieldObjects > 0) {
+            RS_DEBUG->print(
+                "RS_FilterDXFRW::writeObjects: wrote %d native FIELD objects",
+                nativeFieldObjects);
         }
         if (modelerPayloads.recordCount > 0) {
             const RS_Debug::RS_DebugLevel level =
@@ -9998,41 +10337,43 @@ DRW_LW_Conv::lineWidth RS_FilterDXFRW::widthToNumber(RS2::LineWidth width) {
  * - %%%p for a plus/minus sign
  */
 QString RS_FilterDXFRW::toDxfString(const QString& str) {
-    QString res = "";
-    int j=0;
-    for (int i=0; i<str.length(); ++i) {
-        int c = str.at(i).unicode();
-        if (c>175 || c<11){
-            res.append(str.mid(j,i-j));
-            j=i;
+    // 1. Reserve memory up front to eliminate reallocation overhead
+    QString res;
+    res.reserve(str.length() + 16);
 
-            switch (c) {
-                case 0x0A:
-                    res += "\\P";
-                    break;
-                // diameter:
-                case 0x2205: //RLZ: Empty_set, diameter is 0x2300 need to add in all fonts
-                case 0x2300:
-                    res += "%%C";
-                    break;
-                // degree:
-                case 0x00B0:
-                    res += "%%D";
-                    break;
-                // plus/minus
-                case 0x00B1:
-                    res += "%%P";
-                    break;
-                default:
-                    j--;
-                    break;
-            }
-            j++;
+    // 2. Iterate cleanly using modern range-based loop
+    for (const QChar& qchar : str) {
+        const ushort c = qchar.unicode();
+
+        // 3. Keep standard ASCII characters without filtering overhead
+        if (c <= 175 && c >= 11) {
+            res.append(qchar);
+            continue;
+        }
+
+        // 4. Map special DXF escape codes efficiently
+        switch (c) {
+        case 0x0A:
+            res.append(uR"(\P)");
+            break;
+        case 0x2205:
+        case 0x2300:
+            res.append(u"%%C");
+            break;
+        case 0x00B0:
+            res.append(u"%%D");
+            break;
+        case 0x00B1:
+            res.append(u"%%P");
+            break;
+        default:
+            res.append(qchar);
+            break;
         }
     }
-    res.append(str.mid(j));
     return res;
 }
+
 
 /**
  * Converts a DXF encoded string into a native Unicode string.

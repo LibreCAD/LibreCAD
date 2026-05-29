@@ -427,6 +427,73 @@ public:
         return registerDwgClass(definition);
     }
 
+    // PR 8d.2b — four larger no-storage OBJECTS families.  Same shape as
+    // PR 8d.2a; recName / className strings follow the dwgreader.cpp dispatch
+    // (case-sensitive look-up against classesmap).
+    bool registerDictionaryWithDefaultObjectClass(duint32 handle = 0) {
+        DwgClassDefinition definition;
+        definition.m_classNum = DRW_DictionaryWithDefault::kDwgClassNum;
+        definition.m_proxyFlag = 0x401;
+        definition.m_appName = "ACAD";
+        definition.m_className = "AcDbDictionaryWithDefault";
+        definition.m_recordName = "ACDBDICTIONARYWDFLT";
+        definition.m_entityFlagRaw = 0;
+        if (handle != 0
+            && m_rawClassInstanceHandles.insert({definition.m_classNum,
+                                                 handle}).second) {
+            definition.m_instanceCount = 1;
+        }
+        return registerDwgClass(definition);
+    }
+
+    bool registerSortEntsTableObjectClass(duint32 handle = 0) {
+        DwgClassDefinition definition;
+        definition.m_classNum = DRW_SortEntsTable::kDwgClassNum;
+        definition.m_proxyFlag = 0x401;
+        definition.m_appName = "ACAD";
+        definition.m_className = "AcDbSortentsTable";
+        definition.m_recordName = "SORTENTSTABLE";
+        definition.m_entityFlagRaw = 0;
+        if (handle != 0
+            && m_rawClassInstanceHandles.insert({definition.m_classNum,
+                                                 handle}).second) {
+            definition.m_instanceCount = 1;
+        }
+        return registerDwgClass(definition);
+    }
+
+    bool registerFieldListObjectClass(duint32 handle = 0) {
+        DwgClassDefinition definition;
+        definition.m_classNum = DRW_FieldList::kDwgClassNum;
+        definition.m_proxyFlag = 0x401;
+        definition.m_appName = "ACAD";
+        definition.m_className = "AcDbFieldList";
+        definition.m_recordName = "FIELDLIST";
+        definition.m_entityFlagRaw = 0;
+        if (handle != 0
+            && m_rawClassInstanceHandles.insert({definition.m_classNum,
+                                                 handle}).second) {
+            definition.m_instanceCount = 1;
+        }
+        return registerDwgClass(definition);
+    }
+
+    bool registerFieldObjectClass(duint32 handle = 0) {
+        DwgClassDefinition definition;
+        definition.m_classNum = DRW_Field::kDwgClassNum;
+        definition.m_proxyFlag = 0x401;
+        definition.m_appName = "ACAD";
+        definition.m_className = "AcDbField";
+        definition.m_recordName = "FIELD";
+        definition.m_entityFlagRaw = 0;
+        if (handle != 0
+            && m_rawClassInstanceHandles.insert({definition.m_classNum,
+                                                 handle}).second) {
+            definition.m_instanceCount = 1;
+        }
+        return registerDwgClass(definition);
+    }
+
     bool hasDwgClassDefinition(duint16 classNum) const {
         return std::any_of(m_dwgClassDefinitions.begin(), m_dwgClassDefinitions.end(),
                            [classNum](const DwgClassDefinition& definition) {

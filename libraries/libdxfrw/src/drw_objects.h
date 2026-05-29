@@ -929,6 +929,8 @@ public:
 class DRW_DictionaryWithDefault : public DRW_Dictionary {
     SETOBJFRIENDS
 public:
+    static constexpr duint16 kDwgClassNum = 513;
+
     DRW_DictionaryWithDefault() { reset(); }
     void reset(){
         DRW_Dictionary::reset();
@@ -1007,6 +1009,8 @@ struct DRW_CadValue {
 class DRW_Field : public DRW_TableEntry {
     SETOBJFRIENDS
 public:
+    static constexpr duint16 kDwgClassNum = 516;
+
     struct ChildValue {
         UTF8STRING m_key;
         DRW_CadValue m_value;
@@ -1059,6 +1063,8 @@ public:
 class DRW_FieldList : public DRW_TableEntry {
     SETOBJFRIENDS
 public:
+    static constexpr duint16 kDwgClassNum = 515;
+
     DRW_FieldList() { reset(); }
     void reset(){
         tType = DRW::FIELDLIST;
@@ -1107,6 +1113,8 @@ public:
 class DRW_SortEntsTable : public DRW_TableEntry {
     SETOBJFRIENDS
 public:
+    static constexpr duint16 kDwgClassNum = 514;
+
     DRW_SortEntsTable() { reset(); }
     void reset(){
         tType = DRW::SORTENTSTABLE;
