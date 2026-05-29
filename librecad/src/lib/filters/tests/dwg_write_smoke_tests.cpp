@@ -33,6 +33,7 @@
  *   (f) dwgRW::read() accepts the file (returns true)
  */
 
+#include <catch2/catch_approx.hpp>
 #include <catch2/catch_test_macros.hpp>
 
 #include <cstdio>
@@ -1224,6 +1225,68 @@ public:
     }
 };
 
+// GEODATA round-trip — populates a v3 geolocation object with reference/
+// design points, scale estimation, sea-level correction, observation tags,
+// and a small mesh.  Exercises PR 8d.1c's class registration + dispatch.
+class GeoDataRoundTripIface : public EmptyIface {
+public:
+    dwgRW *m_writer {nullptr};
+    DRW_GeoData m_geoData;
+    std::vector<DRW_GeoData> m_geoDataObjects;
+
+    GeoDataRoundTripIface() {
+        m_geoData.handle = 0x7F0u;
+        m_geoData.parentHandle = 0xCu;
+        m_geoData.m_hostBlockHandle = 0x1Fu;
+        m_geoData.m_version = 3;
+        m_geoData.m_coordinatesType = 2;
+        m_geoData.m_designPoint = DRW_Coord(100.0, 200.0, 0.0);
+        m_geoData.m_referencePoint = DRW_Coord(-122.5, 37.7, 10.0);
+        m_geoData.m_horizontalUnitScale = 1.0;
+        m_geoData.m_horizontalUnits = 6;     // meters
+        m_geoData.m_verticalUnitScale = 1.0;
+        m_geoData.m_verticalUnits = 6;
+        m_geoData.m_upDirection = DRW_Coord(0.0, 0.0, 1.0);
+        m_geoData.m_northDirection = DRW_Coord(0.0, 1.0, 0.0);
+        m_geoData.m_scaleEstimationMethod = 1;
+        m_geoData.m_userSpecifiedScaleFactor = 1.25;
+        m_geoData.m_enableSeaLevelCorrection = true;
+        m_geoData.m_seaLevelElevation = 12.5;
+        m_geoData.m_coordinateProjectionRadius = 6378137.0;
+        m_geoData.m_coordinateSystemDefinition = "EPSG:4326";
+        m_geoData.m_geoRssTag = "test-geo-rss";
+        m_geoData.m_observationFromTag = "from-tag";
+        m_geoData.m_observationToTag = "to-tag";
+        m_geoData.m_observationCoverageTag = "coverage-tag";
+        DRW_GeoMeshPoint mp;
+        mp.m_source = DRW_Coord(1.0, 2.0, 0.0);
+        mp.m_destination = DRW_Coord(10.0, 20.0, 0.0);
+        m_geoData.m_points.push_back(mp);
+        mp.m_source = DRW_Coord(3.0, 4.0, 0.0);
+        mp.m_destination = DRW_Coord(30.0, 40.0, 0.0);
+        m_geoData.m_points.push_back(mp);
+        DRW_GeoMeshFace mf;
+        mf.m_index1 = 0;
+        mf.m_index2 = 1;
+        mf.m_index3 = 0;
+        m_geoData.m_faces.push_back(mf);
+    }
+
+    void writeDwgClasses() override {
+        if (m_writer != nullptr)
+            REQUIRE(m_writer->registerGeoDataObjectClass(&m_geoData));
+    }
+
+    void writeObjects() override {
+        if (m_writer != nullptr)
+            REQUIRE(m_writer->writeGeoData(&m_geoData));
+    }
+
+    void addGeoData(const DRW_GeoData& gd) override {
+        m_geoDataObjects.push_back(gd);
+    }
+};
+
 // LAYOUT round-trip — populates a paper-space layout with PlotSettings
 // prefix + Layout-specific fields, asserts every field survives the
 // writeLayout / parseDwg pair.  Mirrors PR 8c.
@@ -1981,6 +2044,72 @@ TEST_CASE("dwgRW writes and reads RASTERVARIABLES metadata",
         CHECK(found->m_imageFrame == 1);
         CHECK(found->m_imageQuality == 1);
         CHECK(found->m_units == 2);
+
+        std::remove(path.c_str());
+    }
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("dwgRW writes and reads GEODATA metadata",
+          "[dwg-write][geodata]") {
+    const DRW::Version versions[] = {DRW::AC1024, DRW::AC1027, DRW::AC1032};
+
+    for (DRW::Version version : versions) {
+        const std::string path = tempPath("native_geodata.dwg");
+        {
+            dwgRW writer(path.c_str());
+            GeoDataRoundTripIface iface;
+            iface.m_writer = &writer;
+            REQUIRE(writer.write(&iface, version, /*bin=*/false));
+        }
+
+        GeoDataRoundTripIface readIface;
+        {
+            dwgRW reader(path.c_str());
+            REQUIRE(reader.read(&readIface, /*ext=*/false));
+            REQUIRE(reader.getVersion() == version);
+            REQUIRE(reader.getError() == DRW::BAD_NONE);
+        }
+
+        const DRW_GeoData* found = nullptr;
+        for (const DRW_GeoData& gd : readIface.m_geoDataObjects) {
+            if (gd.handle == 0x7F0u) {
+                found = &gd;
+                break;
+            }
+        }
+        REQUIRE(found != nullptr);
+        CHECK(found->m_version == 3);
+        CHECK(found->m_coordinatesType == 2);
+        CHECK(found->m_hostBlockHandle == 0x1Fu);
+        CHECK(found->m_designPoint.x == Catch::Approx(100.0));
+        CHECK(found->m_designPoint.y == Catch::Approx(200.0));
+        CHECK(found->m_referencePoint.x == Catch::Approx(-122.5));
+        CHECK(found->m_referencePoint.y == Catch::Approx(37.7));
+        CHECK(found->m_referencePoint.z == Catch::Approx(10.0));
+        CHECK(found->m_horizontalUnits == 6);
+        CHECK(found->m_verticalUnits == 6);
+        CHECK(found->m_horizontalUnitScale == Catch::Approx(1.0));
+        CHECK(found->m_verticalUnitScale == Catch::Approx(1.0));
+        CHECK(found->m_scaleEstimationMethod == 1);
+        CHECK(found->m_userSpecifiedScaleFactor == Catch::Approx(1.25));
+        CHECK(found->m_enableSeaLevelCorrection);
+        CHECK(found->m_seaLevelElevation == Catch::Approx(12.5));
+        CHECK(found->m_coordinateProjectionRadius == Catch::Approx(6378137.0));
+        CHECK(found->m_coordinateSystemDefinition == "EPSG:4326");
+        CHECK(found->m_geoRssTag == "test-geo-rss");
+        CHECK(found->m_observationFromTag == "from-tag");
+        CHECK(found->m_observationToTag == "to-tag");
+        CHECK(found->m_observationCoverageTag == "coverage-tag");
+        REQUIRE(found->m_points.size() == 2);
+        CHECK(found->m_points[0].m_source.x == Catch::Approx(1.0));
+        CHECK(found->m_points[0].m_destination.x == Catch::Approx(10.0));
+        CHECK(found->m_points[1].m_source.x == Catch::Approx(3.0));
+        CHECK(found->m_points[1].m_destination.x == Catch::Approx(30.0));
+        REQUIRE(found->m_faces.size() == 1);
+        CHECK(found->m_faces[0].m_index1 == 0);
+        CHECK(found->m_faces[0].m_index2 == 1);
+        CHECK(found->m_faces[0].m_index3 == 0);
 
         std::remove(path.c_str());
     }

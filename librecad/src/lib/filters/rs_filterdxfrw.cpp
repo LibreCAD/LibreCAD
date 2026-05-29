@@ -318,6 +318,13 @@ bool isRasterVariablesRawObject(
         || record.className == "AcDbRasterVariables";
 }
 
+// GEODATA raw-object predicate.  Custom-class (no fixed ODA type).
+bool isGeoDataRawObject(
+    const LC_DwgAdvancedMetadata::RawObjectRecord& record) {
+    return record.recordName == "GEODATA"
+        || record.className == "AcDbGeoData";
+}
+
 bool hasReplayableRawMLeaderStyle(const LC_DwgAdvancedMetadata& metadata,
                                   duint32 handle) {
     if (handle == 0)
@@ -454,6 +461,50 @@ DRW_RasterVariables rasterVariablesFromMetadata(
     rv.m_imageQuality = record.imageQuality;
     rv.m_units = record.units;
     return rv;
+}
+
+DRW_GeoData geoDataFromMetadata(
+    const LC_DwgAdvancedMetadata::GeoDataRecord& record) {
+    DRW_GeoData gd;
+    gd.handle = record.handle;
+    gd.parentHandle = static_cast<int>(record.parentHandle);
+    gd.m_hostBlockHandle = record.hostBlockHandle;
+    gd.m_version = record.version;
+    gd.m_coordinatesType = record.coordinatesType;
+    gd.m_horizontalUnits = record.horizontalUnits;
+    gd.m_verticalUnits = record.verticalUnits;
+    gd.m_horizontalUnitScale = record.horizontalUnitScale;
+    gd.m_verticalUnitScale = record.verticalUnitScale;
+    gd.m_coordinateSystemDefinition = record.coordinateSystemDefinition;
+    gd.m_geoRssTag = record.geoRssTag;
+    gd.m_designPoint = record.designPoint;
+    gd.m_referencePoint = record.referencePoint;
+    gd.m_upDirection = record.upDirection;
+    gd.m_northDirection = record.northDirection;
+    gd.m_scaleEstimationMethod = record.scaleEstimationMethod;
+    gd.m_userSpecifiedScaleFactor = record.userSpecifiedScaleFactor;
+    gd.m_enableSeaLevelCorrection = record.enableSeaLevelCorrection;
+    gd.m_seaLevelElevation = record.seaLevelElevation;
+    gd.m_coordinateProjectionRadius = record.coordinateProjectionRadius;
+    gd.m_observationFromTag = record.observationFromTag;
+    gd.m_observationToTag = record.observationToTag;
+    gd.m_observationCoverageTag = record.observationCoverageTag;
+    gd.m_points.reserve(record.meshPoints.size());
+    for (const auto& mp : record.meshPoints) {
+        DRW_GeoMeshPoint point;
+        point.m_source = mp.source;
+        point.m_destination = mp.destination;
+        gd.m_points.push_back(point);
+    }
+    gd.m_faces.reserve(record.meshFaces.size());
+    for (const auto& mf : record.meshFaces) {
+        DRW_GeoMeshFace face;
+        face.m_index1 = mf.index1;
+        face.m_index2 = mf.index2;
+        face.m_index3 = mf.index3;
+        gd.m_faces.push_back(face);
+    }
+    return gd;
 }
 
 DRW_Sun sunFromMetadata(const LC_DwgAdvancedMetadata::SunRecord& record) {
@@ -5076,6 +5127,7 @@ void RS_FilterDXFRW::writeDwgClasses() {
     std::set<duint32> nativeSunHandles;
     std::set<duint32> nativeMLeaderStyleHandles;
     std::set<duint32> nativeRasterVariablesHandles;
+    std::set<duint32> nativeGeoDataHandles;
     if (canWriteModernObjects) {
         for (const auto& record : metadata.suns()) {
             if (record.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
@@ -5108,6 +5160,16 @@ void RS_FilterDXFRW::writeDwgClasses() {
             if (m_dwgW->registerRasterVariablesObjectClass(&rv))
                 nativeRasterVariablesHandles.insert(record.handle);
         }
+        // GEODATA (AcDbGeoData, custom class 506) — PR 8d.1c.
+        for (const auto& record : metadata.geoData()) {
+            if (record.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                || record.handle == 0) {
+                continue;
+            }
+            DRW_GeoData gd = geoDataFromMetadata(record);
+            if (m_dwgW->registerGeoDataObjectClass(&gd))
+                nativeGeoDataHandles.insert(record.handle);
+        }
     }
 
     for (const auto& record : metadata.rawObjects()) {
@@ -5122,6 +5184,9 @@ void RS_FilterDXFRW::writeDwgClasses() {
             continue;
         if (nativeRasterVariablesHandles.count(record.handle) != 0
             && isRasterVariablesRawObject(record))
+            continue;
+        if (nativeGeoDataHandles.count(record.handle) != 0
+            && isGeoDataRawObject(record))
             continue;
         DRW_UnsupportedObject object = rawObjectFromMetadata(record);
         m_dwgW->registerRawDwgObjectClass(&object);
@@ -5911,6 +5976,7 @@ void RS_FilterDXFRW::writeObjects() {
         std::set<duint32> nativeLayoutHandles;
         std::set<duint32> nativeGroupHandles;
         std::set<duint32> nativeRasterVariablesHandles;
+        std::set<duint32> nativeGeoDataHandles;
         int nativeSunObjects = 0;
         int nativePlaceholderObjects = 0;
         int nativeMLeaderStyleObjects = 0;
@@ -5919,6 +5985,7 @@ void RS_FilterDXFRW::writeObjects() {
         int nativeLayoutObjects = 0;
         int nativeGroupObjects = 0;
         int nativeRasterVariablesObjects = 0;
+        int nativeGeoDataObjects = 0;
         if (canWriteModernObjects) {
             for (const auto& record : metadata.suns()) {
                 if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
@@ -5977,6 +6044,17 @@ void RS_FilterDXFRW::writeObjects() {
                 if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
                     && record.handle != 0) {
                     nativeRasterVariablesHandles.insert(record.handle);
+                }
+            }
+            // GEODATA (AcDbGeoData, custom class 506) — round-trip-grade
+            // GeoDataRecord extended in PR 8d.1c to capture all encoder
+            // fields (designPoint, referencePoint, up/north direction,
+            // scale estimation, sea-level correction, observation tags,
+            // mesh points + faces).
+            for (const auto& record : metadata.geoData()) {
+                if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                    && record.handle != 0) {
+                    nativeGeoDataHandles.insert(record.handle);
                 }
             }
         }
@@ -6059,6 +6137,12 @@ void RS_FilterDXFRW::writeObjects() {
             }
             if (nativeRasterVariablesHandles.count(record.handle) != 0
                 && isRasterVariablesRawObject(record)) {
+                hasBlockedReplay = true;
+                ++blockedReplaced;
+                continue;
+            }
+            if (nativeGeoDataHandles.count(record.handle) != 0
+                && isGeoDataRawObject(record)) {
                 hasBlockedReplay = true;
                 ++blockedReplaced;
                 continue;
@@ -6180,6 +6264,17 @@ void RS_FilterDXFRW::writeObjects() {
                     ++blockedWriterRejected;
                 }
             }
+            for (const auto& record : metadata.geoData()) {
+                if (nativeGeoDataHandles.count(record.handle) == 0)
+                    continue;
+                DRW_GeoData gd = geoDataFromMetadata(record);
+                if (m_dwgW->writeGeoData(&gd)) {
+                    ++nativeGeoDataObjects;
+                } else {
+                    hasBlockedReplay = true;
+                    ++blockedWriterRejected;
+                }
+            }
         }
         if (replayedObjects > 0) {
             RS_DEBUG->print("RS_FilterDXFRW::writeObjects: replayed %d raw DWG objects",
@@ -6233,6 +6328,11 @@ void RS_FilterDXFRW::writeObjects() {
             RS_DEBUG->print(
                 "RS_FilterDXFRW::writeObjects: wrote %d native RASTERVARIABLES objects",
                 nativeRasterVariablesObjects);
+        }
+        if (nativeGeoDataObjects > 0) {
+            RS_DEBUG->print(
+                "RS_FilterDXFRW::writeObjects: wrote %d native GEODATA objects",
+                nativeGeoDataObjects);
         }
         if (modelerPayloads.recordCount > 0) {
             const RS_Debug::RS_DebugLevel level =
@@ -6534,7 +6634,8 @@ void RS_FilterDXFRW::writeObjects() {
                                 + nativeXRecordObjects
                                 + nativeLayoutObjects
                                 + nativeGroupObjects
-                                + nativeRasterVariablesObjects);
+                                + nativeRasterVariablesObjects
+                                + nativeGeoDataObjects);
         const size_t semanticOnlyRecords =
             metadata.semanticOnlyRecordCount() > nativeSemanticRecords
                 ? metadata.semanticOnlyRecordCount() - nativeSemanticRecords

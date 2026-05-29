@@ -1565,6 +1565,17 @@ public:
         ReplayState replayState = ReplayState::ReplayAllowed;
     };
 
+    struct GeoMeshPointRecord {
+        DRW_Coord source;
+        DRW_Coord destination;
+    };
+
+    struct GeoMeshFaceRecord {
+        dint32 index1 = 0;
+        dint32 index2 = 0;
+        dint32 index3 = 0;
+    };
+
     struct GeoDataRecord {
         duint32 handle = 0;
         duint32 parentHandle = 0;
@@ -1579,6 +1590,21 @@ public:
         std::string geoRssTag;
         size_t meshPointCount = 0;
         size_t meshFaceCount = 0;
+        // PR 8d.1c: extended fields needed for round-trip encoding.
+        DRW_Coord designPoint;
+        DRW_Coord referencePoint;
+        DRW_Coord upDirection{0.0, 0.0, 1.0};
+        DRW_Coord northDirection{0.0, 1.0, 0.0};
+        dint32 scaleEstimationMethod = 0;
+        double userSpecifiedScaleFactor = 1.0;
+        bool enableSeaLevelCorrection = false;
+        double seaLevelElevation = 0.0;
+        double coordinateProjectionRadius = 0.0;
+        std::string observationFromTag;
+        std::string observationToTag;
+        std::string observationCoverageTag;
+        std::vector<GeoMeshPointRecord> meshPoints;
+        std::vector<GeoMeshFaceRecord> meshFaces;
         ReplayState replayState = ReplayState::ReplayAllowed;
     };
 
@@ -2506,6 +2532,34 @@ public:
         record.geoRssTag = geoData.m_geoRssTag;
         record.meshPointCount = geoData.m_points.size();
         record.meshFaceCount = geoData.m_faces.size();
+        // PR 8d.1c: extended fields for round-trip encoding.
+        record.designPoint = geoData.m_designPoint;
+        record.referencePoint = geoData.m_referencePoint;
+        record.upDirection = geoData.m_upDirection;
+        record.northDirection = geoData.m_northDirection;
+        record.scaleEstimationMethod = geoData.m_scaleEstimationMethod;
+        record.userSpecifiedScaleFactor = geoData.m_userSpecifiedScaleFactor;
+        record.enableSeaLevelCorrection = geoData.m_enableSeaLevelCorrection;
+        record.seaLevelElevation = geoData.m_seaLevelElevation;
+        record.coordinateProjectionRadius = geoData.m_coordinateProjectionRadius;
+        record.observationFromTag = geoData.m_observationFromTag;
+        record.observationToTag = geoData.m_observationToTag;
+        record.observationCoverageTag = geoData.m_observationCoverageTag;
+        record.meshPoints.reserve(geoData.m_points.size());
+        for (const DRW_GeoMeshPoint& point : geoData.m_points) {
+            GeoMeshPointRecord mp;
+            mp.source = point.m_source;
+            mp.destination = point.m_destination;
+            record.meshPoints.push_back(mp);
+        }
+        record.meshFaces.reserve(geoData.m_faces.size());
+        for (const DRW_GeoMeshFace& face : geoData.m_faces) {
+            GeoMeshFaceRecord mf;
+            mf.index1 = face.m_index1;
+            mf.index2 = face.m_index2;
+            mf.index3 = face.m_index3;
+            record.meshFaces.push_back(mf);
+        }
         m_geoData.push_back(std::move(record));
     }
 

@@ -1031,6 +1031,36 @@ bool dwgWriter15::writeRasterVariables(
     return true;
 }
 
+// GEODATA (AcDbGeoData, custom class 506) — class registration required.
+// Standard preamble + DRW_GeoData::encodeDwg sandwich.  Encoder writes its
+// own common-handle prefix into hb (the preamble does NOT) plus several
+// variable-text fields into sb.
+void dwgWriter15::emitGeoDataObject(duint32 handle, const DRW_GeoData& geoData) {
+    dwgBufferW& body = beginObject(handle);
+    dwgBufferW *sb, *hb;
+    emitRecordPreamble(body, m_version, DRW_GeoData::kDwgClassNum, handle,
+                       m_objectStrings, m_objectHandles, sb, hb);
+    geoData.encodeDwg(m_version, &body, sb, hb);
+    finishObject();
+}
+
+bool dwgWriter15::writeGeoData(const DRW_GeoData& geoData) {
+    if (m_version < DRW::AC1021)
+        return false;
+
+    DRW_GeoData object = geoData;
+    if (object.handle == 0) {
+        object.handle = m_handles.next();
+    } else {
+        m_handles.reserve(object.handle);
+    }
+    if (!registerGeoDataObjectClass(object.handle))
+        return false;
+
+    emitGeoDataObject(object.handle, object);
+    return true;
+}
+
 // --- add*() methods: register user table records for deferred emission -----
 
 void dwgWriter15::addLType(const DRW_LType& lt) {

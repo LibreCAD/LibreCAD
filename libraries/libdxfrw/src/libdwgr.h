@@ -111,6 +111,8 @@ public:
     bool writeGroup(DRW_Group *object);
     bool registerRasterVariablesObjectClass(DRW_RasterVariables *object);
     bool writeRasterVariables(DRW_RasterVariables *object);
+    bool registerGeoDataObjectClass(DRW_GeoData *object);
+    bool writeGeoData(DRW_GeoData *object);
     bool registerRawDwgObjectClass(const DRW_UnsupportedObject *object);
     bool writeRawDwgObject(DRW_UnsupportedObject *object);
 

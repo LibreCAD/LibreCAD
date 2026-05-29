@@ -251,6 +251,8 @@ struct DRW_GeoMeshFace {
 class DRW_GeoData : public DRW_TableEntry {
     SETOBJFRIENDS
 public:
+    static constexpr duint16 kDwgClassNum = 506;
+
     DRW_GeoData() { tType = DRW::GEODATA; }
 protected:
     bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;

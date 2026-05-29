@@ -96,6 +96,7 @@ public:
     bool writeLayout(const DRW_Layout& layout);
     bool writeGroup(const DRW_Group& group);
     bool writeRasterVariables(const DRW_RasterVariables& rasterVariables);
+    bool writeGeoData(const DRW_GeoData& geoData);
 
 protected:
     /// Begin a new object in the object stream (the unsentinel'd byte
@@ -173,6 +174,7 @@ protected:
     void emitGroupObject(duint32 handle, const DRW_Group& group);
     void emitRasterVariablesObject(duint32 handle,
                                    const DRW_RasterVariables& rasterVariables);
+    void emitGeoDataObject(duint32 handle, const DRW_GeoData& geoData);
 
 protected:
     /// Populate m_header's ctrl-handle fields with canonical reserved values
