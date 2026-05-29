@@ -6447,6 +6447,14 @@ void RS_FilterDXFRW::writeObjects() {
     if (m_dwgW) {
         const auto& metadata = m_graphic->dwgAdvancedMetadata();
         const bool canWriteModernObjects = m_dwgW->getVersion() >= DRW::AC1021;
+        // PR 13a — DICTIONARY (ODA fixed type 42) and XRECORD (type 79) are
+        // universally available since R2000.  Encoder smoke tests cover
+        // AC1015/AC1018/AC1024/AC1027/AC1032 round-trip (see
+        // `[dictionary]` / `[xrecord]` cases).  Broaden the dispatch gate
+        // for these two families from AC1021+ to AC1015+ ahead of the
+        // long-tail families which still need their own validation.
+        const bool canWriteFixedTypeObjects =
+            m_dwgW->getVersion() >= DRW::AC1015;
         std::set<duint32> nativeSunHandles;
         std::set<duint32> nativePlaceholderHandles;
         std::set<duint32> nativeMLeaderStyleHandles;
@@ -6508,22 +6516,10 @@ void RS_FilterDXFRW::writeObjects() {
                     nativeMLeaderStyleHandles.insert(record.handle);
                 }
             }
-            // DICTIONARY / XRECORD are universally available (≥ R13) but the
-            // current DWG export path only emits ≤ AC1018 — gating behind
-            // canWriteModernObjects keeps DWG2000/2004 output byte-identical
-            // until smoke-test coverage validates the broader gate.
-            for (const auto& record : metadata.dictionaries()) {
-                if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
-                    && record.handle != 0) {
-                    nativeDictionaryHandles.insert(record.handle);
-                }
-            }
-            for (const auto& record : metadata.xrecords()) {
-                if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
-                    && record.handle != 0) {
-                    nativeXRecordHandles.insert(record.handle);
-                }
-            }
+            // DICTIONARY / XRECORD handle-set construction moved below to
+            // its own `if (canWriteFixedTypeObjects)` block (PR 13a) so the
+            // broadened gate applies even when canWriteModernObjects is
+            // false (AC1015/AC1018 export path).
             for (const auto& record : metadata.layouts()) {
                 if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
                     && record.handle != 0) {
@@ -6622,6 +6618,23 @@ void RS_FilterDXFRW::writeObjects() {
                 if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
                     && record.handle != 0) {
                     nativeFieldHandles.insert(record.handle);
+                }
+            }
+        }
+        // PR 13a — DICTIONARY / XRECORD handle-set construction sits in its
+        // own broadened block (≥ AC1015) so the raw-replay blocker (below)
+        // skips raw bytes for these handles at AC1015/AC1018 too.
+        if (canWriteFixedTypeObjects) {
+            for (const auto& record : metadata.dictionaries()) {
+                if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                    && record.handle != 0) {
+                    nativeDictionaryHandles.insert(record.handle);
+                }
+            }
+            for (const auto& record : metadata.xrecords()) {
+                if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                    && record.handle != 0) {
+                    nativeXRecordHandles.insert(record.handle);
                 }
             }
         }
@@ -6838,28 +6851,8 @@ void RS_FilterDXFRW::writeObjects() {
                     ++blockedWriterRejected;
                 }
             }
-            for (const auto& record : metadata.dictionaries()) {
-                if (nativeDictionaryHandles.count(record.handle) == 0)
-                    continue;
-                DRW_Dictionary dictionary = dictionaryFromMetadata(record);
-                if (m_dwgW->writeDictionary(&dictionary)) {
-                    ++nativeDictionaryObjects;
-                } else {
-                    hasBlockedReplay = true;
-                    ++blockedWriterRejected;
-                }
-            }
-            for (const auto& record : metadata.xrecords()) {
-                if (nativeXRecordHandles.count(record.handle) == 0)
-                    continue;
-                DRW_XRecord xrecord = xrecordFromMetadata(record);
-                if (m_dwgW->writeXRecord(&xrecord)) {
-                    ++nativeXRecordObjects;
-                } else {
-                    hasBlockedReplay = true;
-                    ++blockedWriterRejected;
-                }
-            }
+            // DICTIONARY / XRECORD dispatch moved below to its own
+            // `if (canWriteFixedTypeObjects)` block (PR 13a).
             for (const auto& record : metadata.layouts()) {
                 if (nativeLayoutHandles.count(record.handle) == 0)
                     continue;
@@ -7012,6 +7005,36 @@ void RS_FilterDXFRW::writeObjects() {
                 DRW_Field f = fieldFromMetadata(record);
                 if (m_dwgW->writeField(&f)) {
                     ++nativeFieldObjects;
+                } else {
+                    hasBlockedReplay = true;
+                    ++blockedWriterRejected;
+                }
+            }
+        }
+        // PR 13a — DICTIONARY / XRECORD native dispatch.  Gate broadened from
+        // AC1021+ to AC1015+ now that the encoder smoke tests cover the
+        // full AC1015/AC1018/AC1024/AC1027/AC1032 range (see
+        // `[dwg-write][dictionary]` and `[dwg-write][xrecord]` cases).
+        // Sits outside the `if (canWriteModernObjects)` block so the
+        // broadened gate also applies at AC1015/AC1018.
+        if (canWriteFixedTypeObjects) {
+            for (const auto& record : metadata.dictionaries()) {
+                if (nativeDictionaryHandles.count(record.handle) == 0)
+                    continue;
+                DRW_Dictionary dictionary = dictionaryFromMetadata(record);
+                if (m_dwgW->writeDictionary(&dictionary)) {
+                    ++nativeDictionaryObjects;
+                } else {
+                    hasBlockedReplay = true;
+                    ++blockedWriterRejected;
+                }
+            }
+            for (const auto& record : metadata.xrecords()) {
+                if (nativeXRecordHandles.count(record.handle) == 0)
+                    continue;
+                DRW_XRecord xrecord = xrecordFromMetadata(record);
+                if (m_dwgW->writeXRecord(&xrecord)) {
+                    ++nativeXRecordObjects;
                 } else {
                     hasBlockedReplay = true;
                     ++blockedWriterRejected;

@@ -2184,7 +2184,12 @@ TEST_CASE("dwgRW writes and reads ACDBPLACEHOLDER metadata",
 // NOLINTNEXTLINE(readability-identifier-naming)
 TEST_CASE("dwgRW writes and reads DICTIONARY metadata",
           "[dwg-write][dictionary]") {
-    const DRW::Version versions[] = {DRW::AC1024, DRW::AC1027, DRW::AC1032};
+    // PR 13a — DICTIONARY encoder is version-clean (string-buffer routing on
+    // version > AC1018; common handle prefix unconditional per PR 2).  Pilot
+    // AC1015/AC1018 smoke coverage so the filter-side gate can later drop
+    // for the ≥ AC1015 path.
+    const DRW::Version versions[] = {DRW::AC1015, DRW::AC1018,
+                                     DRW::AC1024, DRW::AC1027, DRW::AC1032};
 
     for (DRW::Version version : versions) {
         const std::string path = tempPath("native_dictionary.dwg");
@@ -2228,7 +2233,12 @@ TEST_CASE("dwgRW writes and reads DICTIONARY metadata",
 // NOLINTNEXTLINE(readability-identifier-naming)
 TEST_CASE("dwgRW writes and reads XRECORD metadata",
           "[dwg-write][xrecord]") {
-    const DRW::Version versions[] = {DRW::AC1024, DRW::AC1027, DRW::AC1032};
+    // PR 13a — XRECORD encoder uses the byte-counted-data section pattern
+    // with the AC1015 xDictFlag-defaulting quirk codified in the encoder
+    // (see Patterns: AC1015 xDictFlag gotcha).  Pilot AC1015/AC1018 smoke
+    // coverage so the filter-side gate can later drop for the ≥ AC1015 path.
+    const DRW::Version versions[] = {DRW::AC1015, DRW::AC1018,
+                                     DRW::AC1024, DRW::AC1027, DRW::AC1032};
 
     for (DRW::Version version : versions) {
         const std::string path = tempPath("native_xrecord.dwg");
