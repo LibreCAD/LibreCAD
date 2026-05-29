@@ -2288,7 +2288,14 @@ TEST_CASE("dwgRW writes and reads XRECORD metadata",
 // NOLINTNEXTLINE(readability-identifier-naming)
 TEST_CASE("dwgRW writes and reads LAYOUT metadata",
           "[dwg-write][layout]") {
-    const DRW::Version versions[] = {DRW::AC1024, DRW::AC1027, DRW::AC1032};
+    // PR 13c — LAYOUT encoder handles AC1015 cleanly (the AC1015-only
+    // plotViewName branch, the AC1018+-only shadePlot* + viewportCount
+    // raw32 + plotViewHandle branches).  Extend smoke to AC1015/AC1018 so
+    // the filter-side gate can drop for fixed type 82 alongside
+    // DICTIONARY/XRECORD/GROUP.  The shadePlot* CHECKs are conditional
+    // because the encoder gates them on AC1018+.
+    const DRW::Version versions[] = {DRW::AC1015, DRW::AC1018,
+                                     DRW::AC1024, DRW::AC1027, DRW::AC1032};
 
     for (DRW::Version version : versions) {
         const std::string path = tempPath("native_layout.dwg");
@@ -2334,8 +2341,12 @@ TEST_CASE("dwgRW writes and reads LAYOUT metadata",
         CHECK(found->currentStyleSheet == "monochrome.ctb");
         CHECK(found->scaleType == 16);
         CHECK(found->scaleFactor == 1.0);
-        CHECK(found->shadePlotResLevel == 2);
-        CHECK(found->shadePlotCustomDPI == 300);
+        if (version >= DRW::AC1018) {
+            // shadePlot* fields are R2004+; PR 13c smoke covers AC1015 too,
+            // where the encoder skips these and the parser leaves defaults.
+            CHECK(found->shadePlotResLevel == 2);
+            CHECK(found->shadePlotCustomDPI == 300);
+        }
         // Layout-specific.
         CHECK(found->name == "Layout1");
         CHECK(found->layoutFlags == 0x01);

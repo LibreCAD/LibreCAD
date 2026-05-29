@@ -6447,14 +6447,17 @@ void RS_FilterDXFRW::writeObjects() {
     if (m_dwgW) {
         const auto& metadata = m_graphic->dwgAdvancedMetadata();
         const bool canWriteModernObjects = m_dwgW->getVersion() >= DRW::AC1021;
-        // PR 13a/b — DICTIONARY (ODA fixed type 42), XRECORD (type 79),
-        // and GROUP (type 72) are universally available since R2000.
-        // Their encoders are version-clean (no AC1018+-only fields, only
-        // string-buffer routing on version > AC1018).  Encoder smoke
-        // tests cover AC1015/AC1018/AC1024/AC1027/AC1032 round-trip (see
-        // `[dictionary]` / `[xrecord]` / `[group]` cases).  Broaden the
-        // dispatch gate for these families from AC1021+ to AC1015+ ahead
-        // of the long-tail families which still need their own validation.
+        // PR 13a/b/c — DICTIONARY (ODA fixed type 42), XRECORD (type 79),
+        // GROUP (type 72), and LAYOUT (type 82) are universally available
+        // since R2000.  Their encoders gate AC1018+-only fields (e.g.,
+        // LAYOUT shadePlot* + viewportCount RawLong32 + plotViewHandle)
+        // on `version >= DRW::AC1018`, and the AC1015-only plotViewName
+        // branch on `version < DRW::AC1018`.  Encoder smoke tests cover
+        // AC1015/AC1018/AC1024/AC1027/AC1032 round-trip (see
+        // `[dictionary]` / `[xrecord]` / `[group]` / `[layout]` cases).
+        // Broaden the dispatch gate for these families from AC1021+ to
+        // AC1015+ ahead of the long-tail families which still need their
+        // own validation.
         const bool canWriteFixedTypeObjects =
             m_dwgW->getVersion() >= DRW::AC1015;
         std::set<duint32> nativeSunHandles;
@@ -6518,18 +6521,10 @@ void RS_FilterDXFRW::writeObjects() {
                     nativeMLeaderStyleHandles.insert(record.handle);
                 }
             }
-            // DICTIONARY / XRECORD handle-set construction moved below to
-            // its own `if (canWriteFixedTypeObjects)` block (PR 13a) so the
-            // broadened gate applies even when canWriteModernObjects is
-            // false (AC1015/AC1018 export path).
-            for (const auto& record : metadata.layouts()) {
-                if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
-                    && record.handle != 0) {
-                    nativeLayoutHandles.insert(record.handle);
-                }
-            }
-            // GROUP (ODA fixed type 72) handle-set construction moved
-            // below to the broadened block (PR 13b).
+            // DICTIONARY / XRECORD / LAYOUT / GROUP handle-set construction
+            // moved below to the `canWriteFixedTypeObjects` block
+            // (PR 13a/b/c) so the broadened gate applies even when
+            // canWriteModernObjects is false (AC1015/AC1018 export path).
             // RASTERVARIABLES (AcDbRasterVariables, custom class 505) —
             // round-trip-grade RasterVariablesRecord captures every encoder
             // field (classVersion, imageFrame, imageQuality, units).  PR 8d.1.
@@ -6616,9 +6611,9 @@ void RS_FilterDXFRW::writeObjects() {
                 }
             }
         }
-        // PR 13a/b — DICTIONARY / XRECORD / GROUP handle-set construction
-        // sits in its own broadened block (≥ AC1015) so the raw-replay
-        // blocker (below) skips raw bytes for these handles at
+        // PR 13a/b/c — DICTIONARY / XRECORD / GROUP / LAYOUT handle-set
+        // construction sits in its own broadened block (≥ AC1015) so the
+        // raw-replay blocker (below) skips raw bytes for these handles at
         // AC1015/AC1018 too.
         if (canWriteFixedTypeObjects) {
             for (const auto& record : metadata.dictionaries()) {
@@ -6637,6 +6632,12 @@ void RS_FilterDXFRW::writeObjects() {
                 if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
                     && record.handle != 0) {
                     nativeGroupHandles.insert(record.handle);
+                }
+            }
+            for (const auto& record : metadata.layouts()) {
+                if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                    && record.handle != 0) {
+                    nativeLayoutHandles.insert(record.handle);
                 }
             }
         }
@@ -6853,20 +6854,8 @@ void RS_FilterDXFRW::writeObjects() {
                     ++blockedWriterRejected;
                 }
             }
-            // DICTIONARY / XRECORD dispatch moved below to its own
-            // `if (canWriteFixedTypeObjects)` block (PR 13a).
-            for (const auto& record : metadata.layouts()) {
-                if (nativeLayoutHandles.count(record.handle) == 0)
-                    continue;
-                DRW_Layout layout = layoutFromMetadata(record);
-                if (m_dwgW->writeLayout(&layout)) {
-                    ++nativeLayoutObjects;
-                } else {
-                    hasBlockedReplay = true;
-                    ++blockedWriterRejected;
-                }
-            }
-            // GROUP dispatch moved below to broadened block (PR 13b).
+            // DICTIONARY / XRECORD / LAYOUT / GROUP dispatch moved below
+            // to the `canWriteFixedTypeObjects` block (PR 13a/b/c).
             for (const auto& record : metadata.rasterVariables()) {
                 if (nativeRasterVariablesHandles.count(record.handle) == 0)
                     continue;
@@ -7003,12 +6992,12 @@ void RS_FilterDXFRW::writeObjects() {
                 }
             }
         }
-        // PR 13a/b — DICTIONARY / XRECORD / GROUP native dispatch.  Gate
-        // broadened from AC1021+ to AC1015+ now that the encoder smoke
+        // PR 13a/b/c — DICTIONARY / XRECORD / GROUP / LAYOUT native dispatch.
+        // Gate broadened from AC1021+ to AC1015+ now that the encoder smoke
         // tests cover the full AC1015/AC1018/AC1024/AC1027/AC1032 range
-        // (see `[dwg-write][dictionary]`, `[dwg-write][xrecord]`, and
-        // `[dwg-write][group]` cases).  Sits outside the
-        // `if (canWriteModernObjects)` block so the broadened gate also
+        // (see `[dwg-write][dictionary]`, `[dwg-write][xrecord]`,
+        // `[dwg-write][group]`, `[dwg-write][layout]` cases).  Sits outside
+        // the `if (canWriteModernObjects)` block so the broadened gate also
         // applies at AC1015/AC1018.
         if (canWriteFixedTypeObjects) {
             for (const auto& record : metadata.dictionaries()) {
@@ -7039,6 +7028,17 @@ void RS_FilterDXFRW::writeObjects() {
                 DRW_Group group = groupFromMetadata(record);
                 if (m_dwgW->writeGroup(&group)) {
                     ++nativeGroupObjects;
+                } else {
+                    hasBlockedReplay = true;
+                    ++blockedWriterRejected;
+                }
+            }
+            for (const auto& record : metadata.layouts()) {
+                if (nativeLayoutHandles.count(record.handle) == 0)
+                    continue;
+                DRW_Layout layout = layoutFromMetadata(record);
+                if (m_dwgW->writeLayout(&layout)) {
+                    ++nativeLayoutObjects;
                 } else {
                     hasBlockedReplay = true;
                     ++blockedWriterRejected;
