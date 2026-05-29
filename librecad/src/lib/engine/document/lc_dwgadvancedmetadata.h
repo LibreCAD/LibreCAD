@@ -3033,6 +3033,10 @@ public:
     const std::vector<DictionaryRecord>& dictionaries() const { return m_dictionaries; }
     const std::vector<XRecordRecord>& xrecords() const { return m_xrecords; }
     const std::vector<LayoutRecord>& layouts() const { return m_layouts; }
+    /** Non-const overload — UI-facing mutation hook (PR 9
+     *  RS_Graphic::setLayoutMargins).  Direct callers must bump the
+     *  modified flag themselves; prefer the RS_Graphic setters. */
+    std::vector<LayoutRecord>& layouts() { return m_layouts; }
     // PR 8d.2a — five small no-storage OBJECTS families.
     const std::vector<ScaleRecord>& scales() const { return m_scales; }
     const std::vector<IDBufferRecord>& idBuffers() const { return m_idBuffers; }

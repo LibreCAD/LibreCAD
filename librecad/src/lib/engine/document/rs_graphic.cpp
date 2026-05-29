@@ -831,6 +831,65 @@ void RS_Graphic::setPagesNum(int horiz, int vert) {
         pagesNumV = vert;
 }
 
+// ---- Paper-space layouts (PR 9) -----------------------------------------
+
+const LC_Layout* RS_Graphic::findLayout(duint32 handle) const {
+    if (handle == 0) {
+        return nullptr;
+    }
+    const auto& records = m_dwgAdvancedMetadata.layouts();
+    for (const auto& record : records) {
+        if (record.handle == handle) {
+            return &record;
+        }
+    }
+    return nullptr;
+}
+
+void RS_Graphic::setActiveLayoutHandle(duint32 handle) {
+    if (m_activeLayoutHandle == handle) {
+        return;
+    }
+    m_activeLayoutHandle = handle;
+    setModified(true);
+}
+
+bool RS_Graphic::setLayoutMargins(duint32 handle,
+                                  double left, double top,
+                                  double right, double bottom) {
+    if (handle == 0) {
+        return false;
+    }
+    auto& records = m_dwgAdvancedMetadata.layouts();
+    for (auto& record : records) {
+        if (record.handle != handle) {
+            continue;
+        }
+        bool changed = false;
+        if (left >= 0.0 && record.marginLeft != left) {
+            record.marginLeft = left;
+            changed = true;
+        }
+        if (top >= 0.0 && record.marginTop != top) {
+            record.marginTop = top;
+            changed = true;
+        }
+        if (right >= 0.0 && record.marginRight != right) {
+            record.marginRight = right;
+            changed = true;
+        }
+        if (bottom >= 0.0 && record.marginBottom != bottom) {
+            record.marginBottom = bottom;
+            changed = true;
+        }
+        if (changed) {
+            setModified(true);
+        }
+        return true;
+    }
+    return false;
+}
+
 void RS_Graphic::setPagesNum(const QString &horizXvert) {
     if (horizXvert.contains('x')) {
         bool ok1 = false;
