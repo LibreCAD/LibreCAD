@@ -1,6 +1,6 @@
 /**
- * Direct Line: draw sequential segments by typed distance and mouse aim direction.
- * Commands: dl / dline
+ * Draw Fast: draw sequential segments by typed distance and mouse aim direction.
+ * Commands: df / dfast
  *
  * Usage:
  *   1. Click to set the start point.

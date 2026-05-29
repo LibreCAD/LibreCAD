@@ -1,5 +1,5 @@
 /**
- * Direct Line: draw sequential segments by typed distance and mouse aim direction.
+ * Draw Fast: draw sequential segments by typed distance and mouse aim direction.
  *
  * Usage:
  *   1. Click to set the start point.
@@ -8,7 +8,7 @@
  *   3. Each confirmed point advances the start automatically.
  *   4. Right-click or Escape to finish.  Type "undo" to remove the last segment.
  *
- * Commands: dl, dline
+ * Commands: df, dfast
  */
 #include "lc_actiondrawlinedirect.h"
 
@@ -18,7 +18,7 @@
 #include "rs_math.h"
 
 LC_ActionDrawLineDirect::LC_ActionDrawLineDirect(LC_ActionContext *actionContext)
-    : LC_AbstractActionDrawLine("Draw Direct Line", actionContext, RS2::ActionDrawLineDirect)
+    : LC_AbstractActionDrawLine("Draw Fast", actionContext, RS2::ActionDrawLineDirect)
     , m_actionData(new ActionData{}) {
     m_primaryDirection = DIRECTION_POINT;
     m_direction = DIRECTION_POINT;
