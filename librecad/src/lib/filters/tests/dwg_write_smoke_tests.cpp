@@ -1090,6 +1090,74 @@ public:
     }
 };
 
+// DICTIONARY round-trip — populates a tiny named-object dictionary with
+// two entries, writes it via the native encoder, then reads back and
+// asserts every field survived.  Exercises PR 8b's writeDictionary path
+// plus the existing DRW_Dictionary::encodeDwg / parseDwg pair.
+class DictionaryRoundTripIface : public EmptyIface {
+public:
+    dwgRW *m_writer {nullptr};
+    DRW_Dictionary m_dictionary;
+    std::vector<DRW_Dictionary> m_dictionaries;
+
+    DictionaryRoundTripIface() {
+        m_dictionary.handle = 0x7A0u;
+        m_dictionary.parentHandle = 0xCu;
+        m_dictionary.cloning = 1;        // KeepExisting
+        m_dictionary.hardOwner = 0;
+        DRW_Dictionary::Entry e1;
+        e1.m_name = "ACAD_PLOTSETTINGS";
+        e1.m_handle = 0x7A1u;
+        m_dictionary.m_entries.push_back(e1);
+        DRW_Dictionary::Entry e2;
+        e2.m_name = "ACAD_GROUP";
+        e2.m_handle = 0x7A2u;
+        m_dictionary.m_entries.push_back(e2);
+    }
+
+    void writeObjects() override {
+        if (m_writer != nullptr)
+            REQUIRE(m_writer->writeDictionary(&m_dictionary));
+    }
+
+    void addDictionary(const DRW_Dictionary& dictionary) override {
+        m_dictionaries.push_back(dictionary);
+    }
+};
+
+// XRECORD round-trip — populates an extended-data record with a mix of
+// primitive variant types (string, int, double) plus a handle-stream
+// entry, then asserts post-round-trip equivalence.  Exercises PR 8b's
+// writeXRecord path and the existing DRW_XRecord byte-counted data
+// section encoder.
+class XRecordRoundTripIface : public EmptyIface {
+public:
+    dwgRW *m_writer {nullptr};
+    DRW_XRecord m_xrecord;
+    std::vector<DRW_XRecord> m_xrecords;
+
+    XRecordRoundTripIface() {
+        m_xrecord.handle = 0x7B0u;
+        m_xrecord.parentHandle = 0xCu;
+        m_xrecord.m_cloning = 1;
+        m_xrecord.m_values.emplace_back(1, std::string("hello-xrecord"));
+        m_xrecord.m_values.emplace_back(70, static_cast<dint32>(42));
+        m_xrecord.m_values.emplace_back(40, 3.14159);
+        // Handle-stream entry — code 0 means it lives in the handle stream
+        // (not the data block).  Parser reads via getOffsetHandle.
+        m_xrecord.m_handleValues.emplace_back(0, 0x7B1u);
+    }
+
+    void writeObjects() override {
+        if (m_writer != nullptr)
+            REQUIRE(m_writer->writeXRecord(&m_xrecord));
+    }
+
+    void addXRecord(const DRW_XRecord& xrecord) override {
+        m_xrecords.push_back(xrecord);
+    }
+};
+
 } // namespace
 
 TEST_CASE("dwgRW writes POINT/LINE/CIRCLE/ARC and reader recovers them",
@@ -1535,6 +1603,100 @@ TEST_CASE("dwgRW writes and reads ACDBPLACEHOLDER metadata",
 
         REQUIRE(readIface.m_placeholders.size() == 1);
         CHECK(readIface.m_placeholders.front().handle == 0x790u);
+
+        std::remove(path.c_str());
+    }
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("dwgRW writes and reads DICTIONARY metadata",
+          "[dwg-write][dictionary]") {
+    const DRW::Version versions[] = {DRW::AC1024, DRW::AC1027, DRW::AC1032};
+
+    for (DRW::Version version : versions) {
+        const std::string path = tempPath("native_dictionary.dwg");
+        {
+            dwgRW writer(path.c_str());
+            DictionaryRoundTripIface iface;
+            iface.m_writer = &writer;
+            REQUIRE(writer.write(&iface, version, /*bin=*/false));
+        }
+
+        DictionaryRoundTripIface readIface;
+        {
+            dwgRW reader(path.c_str());
+            REQUIRE(reader.read(&readIface, /*ext=*/false));
+            REQUIRE(reader.getVersion() == version);
+            REQUIRE(reader.getError() == DRW::BAD_NONE);
+        }
+
+        // Find the written DICTIONARY (handle 0x7A0) — the reader also
+        // surfaces the synthetic root dictionary at handle 0xC, so filter.
+        const DRW_Dictionary* found = nullptr;
+        for (const DRW_Dictionary& d : readIface.m_dictionaries) {
+            if (d.handle == 0x7A0u) {
+                found = &d;
+                break;
+            }
+        }
+        REQUIRE(found != nullptr);
+        CHECK(found->cloning == 1);
+        CHECK(found->hardOwner == 0);
+        REQUIRE(found->m_entries.size() == 2);
+        CHECK(found->m_entries[0].m_name == "ACAD_PLOTSETTINGS");
+        CHECK(found->m_entries[0].m_handle == 0x7A1u);
+        CHECK(found->m_entries[1].m_name == "ACAD_GROUP");
+        CHECK(found->m_entries[1].m_handle == 0x7A2u);
+
+        std::remove(path.c_str());
+    }
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("dwgRW writes and reads XRECORD metadata",
+          "[dwg-write][xrecord]") {
+    const DRW::Version versions[] = {DRW::AC1024, DRW::AC1027, DRW::AC1032};
+
+    for (DRW::Version version : versions) {
+        const std::string path = tempPath("native_xrecord.dwg");
+        {
+            dwgRW writer(path.c_str());
+            XRecordRoundTripIface iface;
+            iface.m_writer = &writer;
+            REQUIRE(writer.write(&iface, version, /*bin=*/false));
+        }
+
+        XRecordRoundTripIface readIface;
+        {
+            dwgRW reader(path.c_str());
+            REQUIRE(reader.read(&readIface, /*ext=*/false));
+            REQUIRE(reader.getVersion() == version);
+            REQUIRE(reader.getError() == DRW::BAD_NONE);
+        }
+
+        REQUIRE(readIface.m_xrecords.size() == 1);
+        const DRW_XRecord& xr = readIface.m_xrecords.front();
+        CHECK(xr.handle == 0x7B0u);
+        CHECK(xr.m_cloning == 1);
+        REQUIRE(xr.m_values.size() == 3);
+        REQUIRE(xr.m_values[0].type() == DRW_Variant::STRING);
+        CHECK(xr.m_values[0].code() == 1);
+        CHECK(std::string(xr.m_values[0].c_str()) == "hello-xrecord");
+        REQUIRE(xr.m_values[1].type() == DRW_Variant::INTEGER);
+        CHECK(xr.m_values[1].code() == 70);
+        CHECK(xr.m_values[1].i_val() == 42);
+        REQUIRE(xr.m_values[2].type() == DRW_Variant::DOUBLE);
+        CHECK(xr.m_values[2].code() == 40);
+        CHECK(xr.m_values[2].d_val() == 3.14159);
+        // Handle-stream entry survives — parser pushes back (0, ref).
+        bool foundHandleStreamRef = false;
+        for (const auto& hv : xr.m_handleValues) {
+            if (hv.first == 0 && hv.second == 0x7B1u) {
+                foundHandleStreamRef = true;
+                break;
+            }
+        }
+        CHECK(foundHandleStreamRef);
 
         std::remove(path.c_str());
     }

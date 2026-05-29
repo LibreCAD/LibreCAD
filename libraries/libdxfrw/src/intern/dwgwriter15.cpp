@@ -898,6 +898,57 @@ bool dwgWriter15::writeMLeaderStyle(const DRW_MLeaderStyle& style) {
     return true;
 }
 
+// DICTIONARY (ODA fixed type 42) — no class registration required.  Uses the
+// standard preamble + DRW_Dictionary::encodeDwg sandwich, mirroring the
+// SUN / PLACEHOLDER native-writer pattern.  Per-entry string handles live
+// in sb so the AC1018+ split-buffer convention applies.
+void dwgWriter15::emitDictionaryObject(duint32 handle,
+                                       const DRW_Dictionary& dictionary) {
+    dwgBufferW& body = beginObject(handle);
+    dwgBufferW *sb, *hb;
+    emitRecordPreamble(body, m_version, 42, handle,
+                       m_objectStrings, m_objectHandles, sb, hb);
+    dictionary.encodeDwg(m_version, &body, sb, hb);
+    finishObject();
+}
+
+bool dwgWriter15::writeDictionary(const DRW_Dictionary& dictionary) {
+    DRW_Dictionary object = dictionary;
+    if (object.handle == 0) {
+        object.handle = m_handles.next();
+    } else {
+        m_handles.reserve(object.handle);
+    }
+    emitDictionaryObject(object.handle, object);
+    return true;
+}
+
+// XRECORD (ODA fixed type 0x4f = 79) — no class registration required.
+// XRECORD's encoder takes (buf, /*strBuf=*/nullptr, hb): strings are emitted
+// inline as byte-counted data within the data section, so no separate
+// string buffer is needed.
+void dwgWriter15::emitXRecordObject(duint32 handle,
+                                    const DRW_XRecord& xrecord) {
+    dwgBufferW& body = beginObject(handle);
+    dwgBufferW *sb, *hb;
+    emitRecordPreamble(body, m_version, 79, handle,
+                       m_objectStrings, m_objectHandles, sb, hb);
+    DRW_UNUSED(sb);
+    xrecord.encodeDwg(m_version, &body, nullptr, hb);
+    finishObject();
+}
+
+bool dwgWriter15::writeXRecord(const DRW_XRecord& xrecord) {
+    DRW_XRecord object = xrecord;
+    if (object.handle == 0) {
+        object.handle = m_handles.next();
+    } else {
+        m_handles.reserve(object.handle);
+    }
+    emitXRecordObject(object.handle, object);
+    return true;
+}
+
 // --- add*() methods: register user table records for deferred emission -----
 
 void dwgWriter15::addLType(const DRW_LType& lt) {

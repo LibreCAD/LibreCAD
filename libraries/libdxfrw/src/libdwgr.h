@@ -105,6 +105,8 @@ public:
     bool writeSun(DRW_Sun *object);
     bool registerMLeaderStyleObjectClass(DRW_MLeaderStyle *object);
     bool writeMLeaderStyle(DRW_MLeaderStyle *object);
+    bool writeDictionary(DRW_Dictionary *object);
+    bool writeXRecord(DRW_XRecord *object);
     bool registerRawDwgObjectClass(const DRW_UnsupportedObject *object);
     bool writeRawDwgObject(DRW_UnsupportedObject *object);
 

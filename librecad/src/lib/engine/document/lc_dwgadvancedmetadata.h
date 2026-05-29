@@ -1598,6 +1598,37 @@ public:
         ReplayState replayState = ReplayState::ReplayAllowed;
     };
 
+    /// DICTIONARY (named-object container, ODA fixed type 42).  Round-trip
+    /// grade — captures every field DRW_Dictionary::encodeDwg consumes
+    /// (cloning, hardOwner, name + per-entry (name, handle) pairs).
+    struct DictionaryEntryRecord {
+        std::string name;
+        duint32 handle = 0;
+    };
+    struct DictionaryRecord {
+        duint32 handle = 0;
+        duint32 parentHandle = 0;
+        int cloning = 0;
+        int hardOwner = 0;
+        std::string name;
+        std::vector<DictionaryEntryRecord> entries;
+        ReplayState replayState = ReplayState::ReplayAllowed;
+    };
+
+    /// XRECORD (extended data record, ODA fixed type 0x4f).  Round-trip
+    /// grade — keeps the cloning flag, the DRW_Variant data list (carrying
+    /// arbitrary DXF-coded primitives), and the (code, handle) handle-stream
+    /// pairs.  Storing DRW_Variant directly mirrors existing records that
+    /// already embed DRW_* types (DRW_Coord, DRW_TableMergedRangeRecord).
+    struct XRecordRecord {
+        duint32 handle = 0;
+        duint32 parentHandle = 0;
+        int cloning = 0;
+        std::vector<DRW_Variant> values;
+        std::vector<std::pair<int, duint32>> handleValues;
+        ReplayState replayState = ReplayState::ReplayAllowed;
+    };
+
     void clear() {
         m_rawObjects.clear();
         m_views.clear();
@@ -1628,6 +1659,8 @@ public:
         m_geoData.clear();
         m_tableGeometry.clear();
         m_placeholders.clear();
+        m_dictionaries.clear();
+        m_xrecords.clear();
     }
 
     void addUnsupportedObject(const DRW_UnsupportedObject& object) {
@@ -2428,6 +2461,33 @@ public:
         m_placeholders.push_back(record);
     }
 
+    void addDictionary(const DRW_Dictionary& dictionary) {
+        DictionaryRecord record;
+        record.handle = dictionary.handle;
+        record.parentHandle = dictionary.parentHandle;
+        record.cloning = dictionary.cloning;
+        record.hardOwner = dictionary.hardOwner;
+        record.name = dictionary.name;
+        record.entries.reserve(dictionary.m_entries.size());
+        for (const DRW_Dictionary::Entry& entry : dictionary.m_entries) {
+            DictionaryEntryRecord er;
+            er.name = entry.m_name;
+            er.handle = entry.m_handle;
+            record.entries.push_back(std::move(er));
+        }
+        m_dictionaries.push_back(std::move(record));
+    }
+
+    void addXRecord(const DRW_XRecord& xrecord) {
+        XRecordRecord record;
+        record.handle = xrecord.handle;
+        record.parentHandle = xrecord.parentHandle;
+        record.cloning = xrecord.m_cloning;
+        record.values = xrecord.m_values;
+        record.handleValues = xrecord.m_handleValues;
+        m_xrecords.push_back(std::move(record));
+    }
+
     const std::vector<RawObjectRecord>& rawObjects() const { return m_rawObjects; }
     const std::vector<ViewRecord>& views() const { return m_views; }
     const std::vector<UcsRecord>& ucsRecords() const { return m_ucsRecords; }
@@ -2480,6 +2540,8 @@ public:
     const std::vector<GeoDataRecord>& geoData() const { return m_geoData; }
     const std::vector<TableGeometryRecord>& tableGeometry() const { return m_tableGeometry; }
     const std::vector<PlaceholderRecord>& placeholders() const { return m_placeholders; }
+    const std::vector<DictionaryRecord>& dictionaries() const { return m_dictionaries; }
+    const std::vector<XRecordRecord>& xrecords() const { return m_xrecords; }
 
     RawObjectFamilyCounts rawObjectFamilyCounts() const {
         RawObjectFamilyCounts counts;
@@ -6789,6 +6851,8 @@ private:
     std::vector<GeoDataRecord> m_geoData;
     std::vector<TableGeometryRecord> m_tableGeometry;
     std::vector<PlaceholderRecord> m_placeholders;
+    std::vector<DictionaryRecord> m_dictionaries;
+    std::vector<XRecordRecord> m_xrecords;
 };
 
 #endif

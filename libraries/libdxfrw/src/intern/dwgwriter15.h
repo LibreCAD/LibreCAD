@@ -91,6 +91,8 @@ public:
     bool writeAcDbPlaceholder(const DRW_AcDbPlaceholder& placeholder);
     bool writeSun(const DRW_Sun& sun);
     bool writeMLeaderStyle(const DRW_MLeaderStyle& style);
+    bool writeDictionary(const DRW_Dictionary& dictionary);
+    bool writeXRecord(const DRW_XRecord& xrecord);
 
 protected:
     /// Begin a new object in the object stream (the unsentinel'd byte
@@ -162,6 +164,8 @@ protected:
                                    const DRW_AcDbPlaceholder& placeholder);
     void emitSunObject(duint32 handle, const DRW_Sun& sun);
     void emitMLeaderStyleObject(duint32 handle, const DRW_MLeaderStyle& style);
+    void emitDictionaryObject(duint32 handle, const DRW_Dictionary& dictionary);
+    void emitXRecordObject(duint32 handle, const DRW_XRecord& xrecord);
 
 protected:
     /// Populate m_header's ctrl-handle fields with canonical reserved values

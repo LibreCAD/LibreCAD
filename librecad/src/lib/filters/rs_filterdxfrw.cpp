@@ -276,6 +276,24 @@ bool isMLeaderStyleRawObject(
         || record.className == "AcDbMLeaderStyle";
 }
 
+// DICTIONARY raw-object predicate.  Fixed type 42 is the universal ODA
+// identifier; recordName / className fallbacks cover custom-class-emitted
+// dictionaries (rare but spec-allowed).
+bool isDictionaryRawObject(
+    const LC_DwgAdvancedMetadata::RawObjectRecord& record) {
+    return record.objectType == 42 || record.recordName == "DICTIONARY"
+        || record.className == "AcDbDictionary";
+}
+
+// XRECORD raw-object predicate.  Fixed type 79 (0x4f) is the universal ODA
+// identifier; the custom-class branch in dwgreader still emits raw bytes
+// under the AcDbXrecord recName/className for non-fixed XRECORDs.
+bool isXRecordRawObject(
+    const LC_DwgAdvancedMetadata::RawObjectRecord& record) {
+    return record.objectType == 79 || record.recordName == "XRECORD"
+        || record.className == "AcDbXrecord";
+}
+
 bool hasReplayableRawMLeaderStyle(const LC_DwgAdvancedMetadata& metadata,
                                   duint32 handle) {
     if (handle == 0)
@@ -296,6 +314,35 @@ DRW_AcDbPlaceholder placeholderFromMetadata(
     placeholder.handle = record.handle;
     placeholder.parentHandle = static_cast<int>(record.parentHandle);
     return placeholder;
+}
+
+DRW_Dictionary dictionaryFromMetadata(
+    const LC_DwgAdvancedMetadata::DictionaryRecord& record) {
+    DRW_Dictionary dictionary;
+    dictionary.handle = record.handle;
+    dictionary.parentHandle = static_cast<int>(record.parentHandle);
+    dictionary.cloning = record.cloning;
+    dictionary.hardOwner = record.hardOwner;
+    dictionary.name = record.name;
+    dictionary.m_entries.reserve(record.entries.size());
+    for (const auto& er : record.entries) {
+        DRW_Dictionary::Entry entry;
+        entry.m_name = er.name;
+        entry.m_handle = er.handle;
+        dictionary.m_entries.push_back(std::move(entry));
+    }
+    return dictionary;
+}
+
+DRW_XRecord xrecordFromMetadata(
+    const LC_DwgAdvancedMetadata::XRecordRecord& record) {
+    DRW_XRecord xrecord;
+    xrecord.handle = record.handle;
+    xrecord.parentHandle = static_cast<int>(record.parentHandle);
+    xrecord.m_cloning = record.cloning;
+    xrecord.m_values = record.values;
+    xrecord.m_handleValues = record.handleValues;
+    return xrecord;
 }
 
 DRW_Sun sunFromMetadata(const LC_DwgAdvancedMetadata::SunRecord& record) {
@@ -4397,6 +4444,24 @@ void RS_FilterDXFRW::addSun(const DRW_Sun &data) {
                   data.m_isOn ? 1 : 0);
 }
 
+void RS_FilterDXFRW::addDictionary(const DRW_Dictionary &data) {
+  if (m_graphic != nullptr) {
+    m_graphic->dwgAdvancedMetadata().addDictionary(data);
+  }
+  RS_DEBUG->print("RS_FilterDXFRW::addDictionary: handle %d entries=%d",
+                  static_cast<int>(data.handle),
+                  static_cast<int>(data.m_entries.size()));
+}
+
+void RS_FilterDXFRW::addXRecord(const DRW_XRecord &data) {
+  if (m_graphic != nullptr) {
+    m_graphic->dwgAdvancedMetadata().addXRecord(data);
+  }
+  RS_DEBUG->print("RS_FilterDXFRW::addXRecord: handle %d values=%d",
+                  static_cast<int>(data.handle),
+                  static_cast<int>(data.m_values.size()));
+}
+
 void RS_FilterDXFRW::addAssociativeObject(const DRW_AssociativeObject &data) {
   // TODO: Reconstruct associative dimension/dynamic-block relationship graphs
   // from these shell objects after native consumers exist.
@@ -5704,9 +5769,13 @@ void RS_FilterDXFRW::writeObjects() {
         std::set<duint32> nativeSunHandles;
         std::set<duint32> nativePlaceholderHandles;
         std::set<duint32> nativeMLeaderStyleHandles;
+        std::set<duint32> nativeDictionaryHandles;
+        std::set<duint32> nativeXRecordHandles;
         int nativeSunObjects = 0;
         int nativePlaceholderObjects = 0;
         int nativeMLeaderStyleObjects = 0;
+        int nativeDictionaryObjects = 0;
+        int nativeXRecordObjects = 0;
         if (canWriteModernObjects) {
             for (const auto& record : metadata.suns()) {
                 if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
@@ -5725,6 +5794,22 @@ void RS_FilterDXFRW::writeObjects() {
                     && record.handle != 0
                     && !hasReplayableRawMLeaderStyle(metadata, record.handle)) {
                     nativeMLeaderStyleHandles.insert(record.handle);
+                }
+            }
+            // DICTIONARY / XRECORD are universally available (≥ R13) but the
+            // current DWG export path only emits ≤ AC1018 — gating behind
+            // canWriteModernObjects keeps DWG2000/2004 output byte-identical
+            // until smoke-test coverage validates the broader gate.
+            for (const auto& record : metadata.dictionaries()) {
+                if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                    && record.handle != 0) {
+                    nativeDictionaryHandles.insert(record.handle);
+                }
+            }
+            for (const auto& record : metadata.xrecords()) {
+                if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                    && record.handle != 0) {
+                    nativeXRecordHandles.insert(record.handle);
                 }
             }
         }
@@ -5777,6 +5862,18 @@ void RS_FilterDXFRW::writeObjects() {
             }
             if (nativeMLeaderStyleHandles.count(record.handle) != 0
                 && isMLeaderStyleRawObject(record)) {
+                hasBlockedReplay = true;
+                ++blockedReplaced;
+                continue;
+            }
+            if (nativeDictionaryHandles.count(record.handle) != 0
+                && isDictionaryRawObject(record)) {
+                hasBlockedReplay = true;
+                ++blockedReplaced;
+                continue;
+            }
+            if (nativeXRecordHandles.count(record.handle) != 0
+                && isXRecordRawObject(record)) {
                 hasBlockedReplay = true;
                 ++blockedReplaced;
                 continue;
@@ -5843,6 +5940,28 @@ void RS_FilterDXFRW::writeObjects() {
                     ++blockedWriterRejected;
                 }
             }
+            for (const auto& record : metadata.dictionaries()) {
+                if (nativeDictionaryHandles.count(record.handle) == 0)
+                    continue;
+                DRW_Dictionary dictionary = dictionaryFromMetadata(record);
+                if (m_dwgW->writeDictionary(&dictionary)) {
+                    ++nativeDictionaryObjects;
+                } else {
+                    hasBlockedReplay = true;
+                    ++blockedWriterRejected;
+                }
+            }
+            for (const auto& record : metadata.xrecords()) {
+                if (nativeXRecordHandles.count(record.handle) == 0)
+                    continue;
+                DRW_XRecord xrecord = xrecordFromMetadata(record);
+                if (m_dwgW->writeXRecord(&xrecord)) {
+                    ++nativeXRecordObjects;
+                } else {
+                    hasBlockedReplay = true;
+                    ++blockedWriterRejected;
+                }
+            }
         }
         if (replayedObjects > 0) {
             RS_DEBUG->print("RS_FilterDXFRW::writeObjects: replayed %d raw DWG objects",
@@ -5871,6 +5990,16 @@ void RS_FilterDXFRW::writeObjects() {
             RS_DEBUG->print(
                 "RS_FilterDXFRW::writeObjects: wrote %d native MLEADERSTYLE objects",
                 nativeMLeaderStyleObjects);
+        }
+        if (nativeDictionaryObjects > 0) {
+            RS_DEBUG->print(
+                "RS_FilterDXFRW::writeObjects: wrote %d native DICTIONARY objects",
+                nativeDictionaryObjects);
+        }
+        if (nativeXRecordObjects > 0) {
+            RS_DEBUG->print(
+                "RS_FilterDXFRW::writeObjects: wrote %d native XRECORD objects",
+                nativeXRecordObjects);
         }
         if (modelerPayloads.recordCount > 0) {
             const RS_Debug::RS_DebugLevel level =
@@ -6167,7 +6296,9 @@ void RS_FilterDXFRW::writeObjects() {
         }
         const size_t nativeSemanticRecords =
             static_cast<size_t>(nativeSunObjects + nativePlaceholderObjects
-                                + nativeMLeaderStyleObjects);
+                                + nativeMLeaderStyleObjects
+                                + nativeDictionaryObjects
+                                + nativeXRecordObjects);
         const size_t semanticOnlyRecords =
             metadata.semanticOnlyRecordCount() > nativeSemanticRecords
                 ? metadata.semanticOnlyRecordCount() - nativeSemanticRecords

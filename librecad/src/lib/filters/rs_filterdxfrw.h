@@ -185,6 +185,8 @@ public:
     void addUnsupportedObject(const DRW_UnsupportedObject &data) override;
     void addAcDbPlaceholder(const DRW_AcDbPlaceholder &data) override;
     void addSun(const DRW_Sun &data) override;
+    void addDictionary(const DRW_Dictionary &data) override;
+    void addXRecord(const DRW_XRecord &data) override;
     void addAssociativeObject(const DRW_AssociativeObject &data) override;
     void addAcShHistoryObject(const DRW_AcShHistoryObject &data) override;
 
