@@ -1074,6 +1074,8 @@ public:
 class DRW_RasterVariables : public DRW_TableEntry {
     SETOBJFRIENDS
 public:
+    static constexpr duint16 kDwgClassNum = 505;
+
     DRW_RasterVariables() { reset(); }
     void reset(){
         tType = DRW::RASTERVARIABLES;

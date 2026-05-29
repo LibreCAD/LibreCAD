@@ -1188,6 +1188,42 @@ public:
     }
 };
 
+// RASTERVARIABLES round-trip — populates a custom-class image-display
+// settings object (classVersion + frame + quality + units), asserts every
+// encoded field survives the writeRasterVariables / parseDwg pair.
+// Exercises PR 8d.1b's class registration + dispatch path.
+class RasterVariablesRoundTripIface : public EmptyIface {
+public:
+    dwgRW *m_writer {nullptr};
+    DRW_RasterVariables m_rasterVariables;
+    std::vector<DRW_RasterVariables> m_rasterVariablesObjects;
+
+    RasterVariablesRoundTripIface() {
+        m_rasterVariables.handle = 0x7E0u;
+        m_rasterVariables.parentHandle = 0xCu;
+        m_rasterVariables.m_classVersion = 0;
+        m_rasterVariables.m_imageFrame = 1;
+        m_rasterVariables.m_imageQuality = 1;
+        m_rasterVariables.m_units = 2;
+    }
+
+    void writeDwgClasses() override {
+        // CLASSES section is emitted before writeObjects(), so we must
+        // register the custom class here (mirrors MLeaderStyleRoundTripIface).
+        if (m_writer != nullptr)
+            REQUIRE(m_writer->registerRasterVariablesObjectClass(&m_rasterVariables));
+    }
+
+    void writeObjects() override {
+        if (m_writer != nullptr)
+            REQUIRE(m_writer->writeRasterVariables(&m_rasterVariables));
+    }
+
+    void addRasterVariables(const DRW_RasterVariables& rv) override {
+        m_rasterVariablesObjects.push_back(rv);
+    }
+};
+
 // LAYOUT round-trip — populates a paper-space layout with PlotSettings
 // prefix + Layout-specific fields, asserts every field survives the
 // writeLayout / parseDwg pair.  Mirrors PR 8c.
@@ -1906,6 +1942,45 @@ TEST_CASE("dwgRW writes and reads GROUP metadata",
         REQUIRE(found->m_entityHandles.size() == 2);
         CHECK(found->m_entityHandles[0] == 0x7D1u);
         CHECK(found->m_entityHandles[1] == 0x7D2u);
+
+        std::remove(path.c_str());
+    }
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("dwgRW writes and reads RASTERVARIABLES metadata",
+          "[dwg-write][rastervariables]") {
+    const DRW::Version versions[] = {DRW::AC1024, DRW::AC1027, DRW::AC1032};
+
+    for (DRW::Version version : versions) {
+        const std::string path = tempPath("native_rastervariables.dwg");
+        {
+            dwgRW writer(path.c_str());
+            RasterVariablesRoundTripIface iface;
+            iface.m_writer = &writer;
+            REQUIRE(writer.write(&iface, version, /*bin=*/false));
+        }
+
+        RasterVariablesRoundTripIface readIface;
+        {
+            dwgRW reader(path.c_str());
+            REQUIRE(reader.read(&readIface, /*ext=*/false));
+            REQUIRE(reader.getVersion() == version);
+            REQUIRE(reader.getError() == DRW::BAD_NONE);
+        }
+
+        const DRW_RasterVariables* found = nullptr;
+        for (const DRW_RasterVariables& rv : readIface.m_rasterVariablesObjects) {
+            if (rv.handle == 0x7E0u) {
+                found = &rv;
+                break;
+            }
+        }
+        REQUIRE(found != nullptr);
+        CHECK(found->m_classVersion == 0);
+        CHECK(found->m_imageFrame == 1);
+        CHECK(found->m_imageQuality == 1);
+        CHECK(found->m_units == 2);
 
         std::remove(path.c_str());
     }

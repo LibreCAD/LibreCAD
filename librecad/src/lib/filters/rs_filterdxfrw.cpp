@@ -310,6 +310,14 @@ bool isGroupRawObject(
         || record.className == "AcDbGroup";
 }
 
+// RASTERVARIABLES raw-object predicate.  Custom-class object (no fixed
+// ODA type) — keyed on recordName/className per dwgreader's dispatch.
+bool isRasterVariablesRawObject(
+    const LC_DwgAdvancedMetadata::RawObjectRecord& record) {
+    return record.recordName == "RASTERVARIABLES"
+        || record.className == "AcDbRasterVariables";
+}
+
 bool hasReplayableRawMLeaderStyle(const LC_DwgAdvancedMetadata& metadata,
                                   duint32 handle) {
     if (handle == 0)
@@ -434,6 +442,18 @@ DRW_Group groupFromMetadata(
     group.m_selectable = record.selectable;
     group.m_entityHandles = record.entityHandles;
     return group;
+}
+
+DRW_RasterVariables rasterVariablesFromMetadata(
+    const LC_DwgAdvancedMetadata::RasterVariablesRecord& record) {
+    DRW_RasterVariables rv;
+    rv.handle = record.handle;
+    rv.parentHandle = static_cast<int>(record.parentHandle);
+    rv.m_classVersion = record.classVersion;
+    rv.m_imageFrame = record.imageFrame;
+    rv.m_imageQuality = record.imageQuality;
+    rv.m_units = record.units;
+    return rv;
 }
 
 DRW_Sun sunFromMetadata(const LC_DwgAdvancedMetadata::SunRecord& record) {
@@ -5055,6 +5075,7 @@ void RS_FilterDXFRW::writeDwgClasses() {
     const bool canWriteModernObjects = m_dwgW->getVersion() >= DRW::AC1021;
     std::set<duint32> nativeSunHandles;
     std::set<duint32> nativeMLeaderStyleHandles;
+    std::set<duint32> nativeRasterVariablesHandles;
     if (canWriteModernObjects) {
         for (const auto& record : metadata.suns()) {
             if (record.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
@@ -5075,6 +5096,18 @@ void RS_FilterDXFRW::writeDwgClasses() {
             if (m_dwgW->registerMLeaderStyleObjectClass(&style))
                 nativeMLeaderStyleHandles.insert(record.handle);
         }
+        // RASTERVARIABLES (AcDbRasterVariables, custom class 505) — must be
+        // registered here, BEFORE writeDwgClasses() emits the CLASSES section.
+        // PR 8d.1b.
+        for (const auto& record : metadata.rasterVariables()) {
+            if (record.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                || record.handle == 0) {
+                continue;
+            }
+            DRW_RasterVariables rv = rasterVariablesFromMetadata(record);
+            if (m_dwgW->registerRasterVariablesObjectClass(&rv))
+                nativeRasterVariablesHandles.insert(record.handle);
+        }
     }
 
     for (const auto& record : metadata.rawObjects()) {
@@ -5086,6 +5119,9 @@ void RS_FilterDXFRW::writeDwgClasses() {
             continue;
         if (nativeMLeaderStyleHandles.count(record.handle) != 0
             && isMLeaderStyleRawObject(record))
+            continue;
+        if (nativeRasterVariablesHandles.count(record.handle) != 0
+            && isRasterVariablesRawObject(record))
             continue;
         DRW_UnsupportedObject object = rawObjectFromMetadata(record);
         m_dwgW->registerRawDwgObjectClass(&object);
@@ -5874,6 +5910,7 @@ void RS_FilterDXFRW::writeObjects() {
         std::set<duint32> nativeXRecordHandles;
         std::set<duint32> nativeLayoutHandles;
         std::set<duint32> nativeGroupHandles;
+        std::set<duint32> nativeRasterVariablesHandles;
         int nativeSunObjects = 0;
         int nativePlaceholderObjects = 0;
         int nativeMLeaderStyleObjects = 0;
@@ -5881,6 +5918,7 @@ void RS_FilterDXFRW::writeObjects() {
         int nativeXRecordObjects = 0;
         int nativeLayoutObjects = 0;
         int nativeGroupObjects = 0;
+        int nativeRasterVariablesObjects = 0;
         if (canWriteModernObjects) {
             for (const auto& record : metadata.suns()) {
                 if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
@@ -5930,6 +5968,15 @@ void RS_FilterDXFRW::writeObjects() {
                 if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
                     && record.handle != 0) {
                     nativeGroupHandles.insert(record.handle);
+                }
+            }
+            // RASTERVARIABLES (AcDbRasterVariables, custom class 505) —
+            // round-trip-grade RasterVariablesRecord captures every encoder
+            // field (classVersion, imageFrame, imageQuality, units).  PR 8d.1.
+            for (const auto& record : metadata.rasterVariables()) {
+                if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                    && record.handle != 0) {
+                    nativeRasterVariablesHandles.insert(record.handle);
                 }
             }
         }
@@ -6006,6 +6053,12 @@ void RS_FilterDXFRW::writeObjects() {
             }
             if (nativeGroupHandles.count(record.handle) != 0
                 && isGroupRawObject(record)) {
+                hasBlockedReplay = true;
+                ++blockedReplaced;
+                continue;
+            }
+            if (nativeRasterVariablesHandles.count(record.handle) != 0
+                && isRasterVariablesRawObject(record)) {
                 hasBlockedReplay = true;
                 ++blockedReplaced;
                 continue;
@@ -6116,6 +6169,17 @@ void RS_FilterDXFRW::writeObjects() {
                     ++blockedWriterRejected;
                 }
             }
+            for (const auto& record : metadata.rasterVariables()) {
+                if (nativeRasterVariablesHandles.count(record.handle) == 0)
+                    continue;
+                DRW_RasterVariables rv = rasterVariablesFromMetadata(record);
+                if (m_dwgW->writeRasterVariables(&rv)) {
+                    ++nativeRasterVariablesObjects;
+                } else {
+                    hasBlockedReplay = true;
+                    ++blockedWriterRejected;
+                }
+            }
         }
         if (replayedObjects > 0) {
             RS_DEBUG->print("RS_FilterDXFRW::writeObjects: replayed %d raw DWG objects",
@@ -6164,6 +6228,11 @@ void RS_FilterDXFRW::writeObjects() {
             RS_DEBUG->print(
                 "RS_FilterDXFRW::writeObjects: wrote %d native GROUP objects",
                 nativeGroupObjects);
+        }
+        if (nativeRasterVariablesObjects > 0) {
+            RS_DEBUG->print(
+                "RS_FilterDXFRW::writeObjects: wrote %d native RASTERVARIABLES objects",
+                nativeRasterVariablesObjects);
         }
         if (modelerPayloads.recordCount > 0) {
             const RS_Debug::RS_DebugLevel level =
@@ -6464,7 +6533,8 @@ void RS_FilterDXFRW::writeObjects() {
                                 + nativeDictionaryObjects
                                 + nativeXRecordObjects
                                 + nativeLayoutObjects
-                                + nativeGroupObjects);
+                                + nativeGroupObjects
+                                + nativeRasterVariablesObjects);
         const size_t semanticOnlyRecords =
             metadata.semanticOnlyRecordCount() > nativeSemanticRecords
                 ? metadata.semanticOnlyRecordCount() - nativeSemanticRecords

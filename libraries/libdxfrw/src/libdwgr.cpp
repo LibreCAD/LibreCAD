@@ -601,6 +601,23 @@ bool dwgRW::writeGroup(DRW_Group *object) {
     return w->writeGroup(*object);
 }
 
+bool dwgRW::registerRasterVariablesObjectClass(DRW_RasterVariables *object) {
+    if (object == nullptr || writer == nullptr)
+        return false;
+    if (object->handle != 0)
+        writer->reserveHandle(object->handle);
+    return writer->registerRasterVariablesObjectClass(object->handle);
+}
+
+bool dwgRW::writeRasterVariables(DRW_RasterVariables *object) {
+    if (object == nullptr)
+        return false;
+    auto *w = asWriter15(writer);
+    if (w == nullptr)
+        return false;
+    return w->writeRasterVariables(*object);
+}
+
 bool dwgRW::registerRawDwgObjectClass(const DRW_UnsupportedObject *object) {
     if (object == nullptr || writer == nullptr)
         return false;

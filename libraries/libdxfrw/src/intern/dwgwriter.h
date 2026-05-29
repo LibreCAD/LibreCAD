@@ -296,6 +296,22 @@ public:
         return registerDwgClass(definition);
     }
 
+    bool registerRasterVariablesObjectClass(duint32 handle = 0) {
+        DwgClassDefinition definition;
+        definition.m_classNum = DRW_RasterVariables::kDwgClassNum;
+        definition.m_proxyFlag = 0x401;
+        definition.m_appName = "ISM";
+        definition.m_className = "AcDbRasterVariables";
+        definition.m_recordName = "RASTERVARIABLES";
+        definition.m_entityFlagRaw = 0;
+        if (handle != 0
+            && m_rawClassInstanceHandles.insert({definition.m_classNum,
+                                                 handle}).second) {
+            definition.m_instanceCount = 1;
+        }
+        return registerDwgClass(definition);
+    }
+
     bool hasDwgClassDefinition(duint16 classNum) const {
         return std::any_of(m_dwgClassDefinitions.begin(), m_dwgClassDefinitions.end(),
                            [classNum](const DwgClassDefinition& definition) {
@@ -323,6 +339,8 @@ protected:
         if (definition.m_classNum == DRW_Sun::kDwgClassNum)
             return m_version >= DRW::AC1021;
         if (definition.m_classNum == DRW_MLeaderStyle::kDwgClassNum)
+            return m_version >= DRW::AC1021;
+        if (definition.m_classNum == DRW_RasterVariables::kDwgClassNum)
             return m_version >= DRW::AC1021;
         return true;
     }

@@ -996,6 +996,41 @@ bool dwgWriter15::writeGroup(const DRW_Group& group) {
     return true;
 }
 
+// RASTERVARIABLES (AcDbRasterVariables, custom class 505) — class
+// registration required so the reader's CLASSES section dispatch can
+// resolve the recordName back to DRW_RasterVariables::parseDwg.  Standard
+// preamble + DRW_RasterVariables::encodeDwg sandwich.  Encoder ignores
+// strBuf (no string fields) — pass nullptr to mirror parse semantics.
+void dwgWriter15::emitRasterVariablesObject(
+    duint32 handle, const DRW_RasterVariables& rasterVariables) {
+    dwgBufferW& body = beginObject(handle);
+    dwgBufferW *sb, *hb;
+    emitRecordPreamble(body, m_version,
+                       DRW_RasterVariables::kDwgClassNum, handle,
+                       m_objectStrings, m_objectHandles, sb, hb);
+    DRW_UNUSED(sb);
+    rasterVariables.encodeDwg(m_version, &body, nullptr, hb);
+    finishObject();
+}
+
+bool dwgWriter15::writeRasterVariables(
+    const DRW_RasterVariables& rasterVariables) {
+    if (m_version < DRW::AC1021)
+        return false;
+
+    DRW_RasterVariables object = rasterVariables;
+    if (object.handle == 0) {
+        object.handle = m_handles.next();
+    } else {
+        m_handles.reserve(object.handle);
+    }
+    if (!registerRasterVariablesObjectClass(object.handle))
+        return false;
+
+    emitRasterVariablesObject(object.handle, object);
+    return true;
+}
+
 // --- add*() methods: register user table records for deferred emission -----
 
 void dwgWriter15::addLType(const DRW_LType& lt) {
