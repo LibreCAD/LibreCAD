@@ -32,6 +32,7 @@
 class QG_GraphicView;
 class LC_DocumentsStorage;
 class LC_ActionContext;
+class LC_LayoutTabBar;
 class RS_EventHandler;
 /**
  * MDI document window. Contains a document and a view (window).
@@ -106,6 +107,9 @@ protected:
     unsigned id = 0;
     // Graphic view
     QG_GraphicView *m_graphicView = nullptr;
+    // Paper-space layout tab bar (PR 10a) — null when this window hosts
+    // a print-preview view (no layout switching while previewing).
+    LC_LayoutTabBar *m_layoutTabBar = nullptr;
     // Document
     RS_Document *m_document = nullptr;
     // Does the window own the document?

@@ -31,9 +31,12 @@
 #include <QPrintDialog>
 #include <QPrinter>
 #include <QMdiArea>
+#include <QVBoxLayout>
+#include <QWidget>
 
 #include "lc_documentsstorage.h"
 #include "lc_graphicviewport.h"
+#include "lc_layouttabbar.h"
 #include "lc_printpreviewview.h"
 #include "qc_applicationwindow.h"
 #include "qc_mdiwindow.h"
@@ -108,7 +111,33 @@ void QC_MDIWindow::setupGraphicView(QWidget *parent, bool printPreview, LC_Actio
         connect(m_graphicView, &RS_GraphicView::previous_zoom_state, receiver, &QC_ApplicationWindow::setPreviousZoomEnable);
     }
 
-    setWidget(m_graphicView);
+    if (printPreview) {
+        // Print-preview windows don't show the layout tab bar — the
+        // layout is fixed for the preview lifetime.  Wire the graphic
+        // view as the MDI window's sole widget, matching legacy behavior.
+        setWidget(m_graphicView);
+    } else {
+        // PR 10a — wrap the graphic view and the LC_LayoutTabBar in a
+        // vertical container.  The tab bar surfaces RS_Graphic::layouts()
+        // and tracks the active handle; no rendering swap (deferred to
+        // PR 12 follow-up).  Tab bar binds to the document's graphic
+        // when one is present.
+        auto* container = new QWidget(this);
+        container->setObjectName("mdiContentContainer");
+        auto* containerLayout = new QVBoxLayout(container);
+        containerLayout->setContentsMargins(0, 0, 0, 0);
+        containerLayout->setSpacing(0);
+        containerLayout->addWidget(m_graphicView, /*stretch=*/1);
+
+        m_layoutTabBar = new LC_LayoutTabBar(container);
+        m_layoutTabBar->setObjectName("layoutTabBarHost");
+        containerLayout->addWidget(m_layoutTabBar, /*stretch=*/0);
+
+        if (m_document != nullptr) {
+            m_layoutTabBar->setGraphic(m_document->getGraphic());
+        }
+        setWidget(container);
+    }
 }
 
 void QC_MDIWindow::addWidgetsListeners(){

@@ -1518,6 +1518,8 @@ set(SHARED_SOURCES
     librecad/src/ui/main/persistence/lc_documentsstorage.h
     librecad/src/ui/main/qc_applicationwindow.cpp
     librecad/src/ui/main/qc_applicationwindow.h
+    librecad/src/ui/main/lc_layouttabbar.cpp
+    librecad/src/ui/main/lc_layouttabbar.h
     librecad/src/ui/main/qc_mdiwindow.cpp
     librecad/src/ui/main/qc_mdiwindow.h
     librecad/src/ui/main/release_check/lc_releasechecker.cpp
