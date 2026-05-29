@@ -217,6 +217,8 @@ public:
 class DRW_SpatialFilter : public DRW_TableEntry {
     SETOBJFRIENDS
 public:
+    static constexpr duint16 kDwgClassNum = 507;
+
     DRW_SpatialFilter() { tType = DRW::SPATIALFILTER; }
 protected:
     bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;

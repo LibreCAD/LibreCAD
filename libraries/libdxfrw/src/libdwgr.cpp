@@ -635,6 +635,23 @@ bool dwgRW::writeGeoData(DRW_GeoData *object) {
     return w->writeGeoData(*object);
 }
 
+bool dwgRW::registerSpatialFilterObjectClass(DRW_SpatialFilter *object) {
+    if (object == nullptr || writer == nullptr)
+        return false;
+    if (object->handle != 0)
+        writer->reserveHandle(object->handle);
+    return writer->registerSpatialFilterObjectClass(object->handle);
+}
+
+bool dwgRW::writeSpatialFilter(DRW_SpatialFilter *object) {
+    if (object == nullptr)
+        return false;
+    auto *w = asWriter15(writer);
+    if (w == nullptr)
+        return false;
+    return w->writeSpatialFilter(*object);
+}
+
 bool dwgRW::registerRawDwgObjectClass(const DRW_UnsupportedObject *object) {
     if (object == nullptr || writer == nullptr)
         return false;

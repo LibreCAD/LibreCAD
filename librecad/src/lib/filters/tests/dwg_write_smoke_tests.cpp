@@ -1225,6 +1225,57 @@ public:
     }
 };
 
+// SPATIAL_FILTER round-trip — populates a clipped-xref filter with a
+// 4-point clip boundary, both clip planes, and identity transform
+// matrices.  Exercises PR 8d.1d's class registration + dispatch.
+class SpatialFilterRoundTripIface : public EmptyIface {
+public:
+    dwgRW *m_writer {nullptr};
+    DRW_SpatialFilter m_filter;
+    std::vector<DRW_SpatialFilter> m_filterObjects;
+
+    SpatialFilterRoundTripIface() {
+        m_filter.handle = 0x800u;
+        m_filter.parentHandle = 0xCu;
+        m_filter.m_boundaryPoints.emplace_back(0.0, 0.0, 0.0);
+        m_filter.m_boundaryPoints.emplace_back(10.0, 0.0, 0.0);
+        m_filter.m_boundaryPoints.emplace_back(10.0, 5.0, 0.0);
+        m_filter.m_boundaryPoints.emplace_back(0.0, 5.0, 0.0);
+        m_filter.m_normal = DRW_Coord(0.0, 0.0, 1.0);
+        m_filter.m_origin = DRW_Coord(0.0, 0.0, 0.0);
+        m_filter.m_displayBoundary = true;
+        m_filter.m_clipFrontPlane = true;
+        m_filter.m_frontDistance = 2.5;
+        m_filter.m_clipBackPlane = true;
+        m_filter.m_backDistance = -2.5;
+        // Identity-ish 4x3 transforms (12 doubles each).
+        m_filter.m_inverseInsertTransform = {
+            1.0, 0.0, 0.0, 0.0,
+            0.0, 1.0, 0.0, 0.0,
+            0.0, 0.0, 1.0, 0.0
+        };
+        m_filter.m_insertTransform = {
+            1.0, 0.0, 0.0, 0.0,
+            0.0, 1.0, 0.0, 0.0,
+            0.0, 0.0, 1.0, 0.0
+        };
+    }
+
+    void writeDwgClasses() override {
+        if (m_writer != nullptr)
+            REQUIRE(m_writer->registerSpatialFilterObjectClass(&m_filter));
+    }
+
+    void writeObjects() override {
+        if (m_writer != nullptr)
+            REQUIRE(m_writer->writeSpatialFilter(&m_filter));
+    }
+
+    void addSpatialFilter(const DRW_SpatialFilter& filter) override {
+        m_filterObjects.push_back(filter);
+    }
+};
+
 // GEODATA round-trip — populates a v3 geolocation object with reference/
 // design points, scale estimation, sea-level correction, observation tags,
 // and a small mesh.  Exercises PR 8d.1c's class registration + dispatch.
@@ -2044,6 +2095,61 @@ TEST_CASE("dwgRW writes and reads RASTERVARIABLES metadata",
         CHECK(found->m_imageFrame == 1);
         CHECK(found->m_imageQuality == 1);
         CHECK(found->m_units == 2);
+
+        std::remove(path.c_str());
+    }
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("dwgRW writes and reads SPATIAL_FILTER metadata",
+          "[dwg-write][spatial-filter]") {
+    const DRW::Version versions[] = {DRW::AC1024, DRW::AC1027, DRW::AC1032};
+
+    for (DRW::Version version : versions) {
+        const std::string path = tempPath("native_spatial_filter.dwg");
+        {
+            dwgRW writer(path.c_str());
+            SpatialFilterRoundTripIface iface;
+            iface.m_writer = &writer;
+            REQUIRE(writer.write(&iface, version, /*bin=*/false));
+        }
+
+        SpatialFilterRoundTripIface readIface;
+        {
+            dwgRW reader(path.c_str());
+            REQUIRE(reader.read(&readIface, /*ext=*/false));
+            REQUIRE(reader.getVersion() == version);
+            REQUIRE(reader.getError() == DRW::BAD_NONE);
+        }
+
+        const DRW_SpatialFilter* found = nullptr;
+        for (const DRW_SpatialFilter& sf : readIface.m_filterObjects) {
+            if (sf.handle == 0x800u) {
+                found = &sf;
+                break;
+            }
+        }
+        REQUIRE(found != nullptr);
+        REQUIRE(found->m_boundaryPoints.size() == 4);
+        CHECK(found->m_boundaryPoints[0].x == Catch::Approx(0.0));
+        CHECK(found->m_boundaryPoints[0].y == Catch::Approx(0.0));
+        CHECK(found->m_boundaryPoints[1].x == Catch::Approx(10.0));
+        CHECK(found->m_boundaryPoints[2].y == Catch::Approx(5.0));
+        CHECK(found->m_boundaryPoints[3].x == Catch::Approx(0.0));
+        CHECK(found->m_normal.z == Catch::Approx(1.0));
+        CHECK(found->m_displayBoundary);
+        CHECK(found->m_clipFrontPlane);
+        CHECK(found->m_frontDistance == Catch::Approx(2.5));
+        CHECK(found->m_clipBackPlane);
+        CHECK(found->m_backDistance == Catch::Approx(-2.5));
+        REQUIRE(found->m_inverseInsertTransform.size() == 12);
+        REQUIRE(found->m_insertTransform.size() == 12);
+        CHECK(found->m_inverseInsertTransform[0] == Catch::Approx(1.0));
+        CHECK(found->m_inverseInsertTransform[5] == Catch::Approx(1.0));
+        CHECK(found->m_inverseInsertTransform[10] == Catch::Approx(1.0));
+        CHECK(found->m_insertTransform[0] == Catch::Approx(1.0));
+        CHECK(found->m_insertTransform[5] == Catch::Approx(1.0));
+        CHECK(found->m_insertTransform[10] == Catch::Approx(1.0));
 
         std::remove(path.c_str());
     }

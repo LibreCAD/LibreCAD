@@ -1562,6 +1562,12 @@ public:
         bool clipBackPlane = false;
         double frontDistance = 0.0;
         double backDistance = 0.0;
+        // PR 8d.1d: extended fields needed for round-trip encoding.
+        std::vector<DRW_Coord> boundaryPoints;
+        DRW_Coord normal{0.0, 0.0, 1.0};
+        DRW_Coord origin{0.0, 0.0, 0.0};
+        std::vector<double> inverseInsertTransform;   // 12 doubles (4x3 matrix)
+        std::vector<double> insertTransform;          // 12 doubles
         ReplayState replayState = ReplayState::ReplayAllowed;
     };
 
@@ -2384,7 +2390,13 @@ public:
         record.clipBackPlane = filter.m_clipBackPlane;
         record.frontDistance = filter.m_frontDistance;
         record.backDistance = filter.m_backDistance;
-        m_spatialFilters.push_back(record);
+        // PR 8d.1d: extended fields for round-trip encoding.
+        record.boundaryPoints = filter.m_boundaryPoints;
+        record.normal = filter.m_normal;
+        record.origin = filter.m_origin;
+        record.inverseInsertTransform = filter.m_inverseInsertTransform;
+        record.insertTransform = filter.m_insertTransform;
+        m_spatialFilters.push_back(std::move(record));
     }
 
     void addRasterVariables(const DRW_RasterVariables& rasterVariables) {

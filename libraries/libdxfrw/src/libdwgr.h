@@ -113,6 +113,8 @@ public:
     bool writeRasterVariables(DRW_RasterVariables *object);
     bool registerGeoDataObjectClass(DRW_GeoData *object);
     bool writeGeoData(DRW_GeoData *object);
+    bool registerSpatialFilterObjectClass(DRW_SpatialFilter *object);
+    bool writeSpatialFilter(DRW_SpatialFilter *object);
     bool registerRawDwgObjectClass(const DRW_UnsupportedObject *object);
     bool writeRawDwgObject(DRW_UnsupportedObject *object);
 

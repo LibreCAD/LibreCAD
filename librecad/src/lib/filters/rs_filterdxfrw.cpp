@@ -325,6 +325,13 @@ bool isGeoDataRawObject(
         || record.className == "AcDbGeoData";
 }
 
+// SPATIAL_FILTER raw-object predicate.  Custom-class (no fixed ODA type).
+bool isSpatialFilterRawObject(
+    const LC_DwgAdvancedMetadata::RawObjectRecord& record) {
+    return record.recordName == "SPATIAL_FILTER"
+        || record.className == "AcDbSpatialFilter";
+}
+
 bool hasReplayableRawMLeaderStyle(const LC_DwgAdvancedMetadata& metadata,
                                   duint32 handle) {
     if (handle == 0)
@@ -505,6 +512,24 @@ DRW_GeoData geoDataFromMetadata(
         gd.m_faces.push_back(face);
     }
     return gd;
+}
+
+DRW_SpatialFilter spatialFilterFromMetadata(
+    const LC_DwgAdvancedMetadata::SpatialFilterRecord& record) {
+    DRW_SpatialFilter sf;
+    sf.handle = record.handle;
+    sf.parentHandle = static_cast<int>(record.parentHandle);
+    sf.m_boundaryPoints = record.boundaryPoints;
+    sf.m_normal = record.normal;
+    sf.m_origin = record.origin;
+    sf.m_displayBoundary = record.displayBoundary;
+    sf.m_clipFrontPlane = record.clipFrontPlane;
+    sf.m_clipBackPlane = record.clipBackPlane;
+    sf.m_frontDistance = record.frontDistance;
+    sf.m_backDistance = record.backDistance;
+    sf.m_inverseInsertTransform = record.inverseInsertTransform;
+    sf.m_insertTransform = record.insertTransform;
+    return sf;
 }
 
 DRW_Sun sunFromMetadata(const LC_DwgAdvancedMetadata::SunRecord& record) {
@@ -5128,6 +5153,7 @@ void RS_FilterDXFRW::writeDwgClasses() {
     std::set<duint32> nativeMLeaderStyleHandles;
     std::set<duint32> nativeRasterVariablesHandles;
     std::set<duint32> nativeGeoDataHandles;
+    std::set<duint32> nativeSpatialFilterHandles;
     if (canWriteModernObjects) {
         for (const auto& record : metadata.suns()) {
             if (record.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
@@ -5170,6 +5196,16 @@ void RS_FilterDXFRW::writeDwgClasses() {
             if (m_dwgW->registerGeoDataObjectClass(&gd))
                 nativeGeoDataHandles.insert(record.handle);
         }
+        // SPATIAL_FILTER (AcDbSpatialFilter, custom class 507) — PR 8d.1d.
+        for (const auto& record : metadata.spatialFilters()) {
+            if (record.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                || record.handle == 0) {
+                continue;
+            }
+            DRW_SpatialFilter sf = spatialFilterFromMetadata(record);
+            if (m_dwgW->registerSpatialFilterObjectClass(&sf))
+                nativeSpatialFilterHandles.insert(record.handle);
+        }
     }
 
     for (const auto& record : metadata.rawObjects()) {
@@ -5187,6 +5223,9 @@ void RS_FilterDXFRW::writeDwgClasses() {
             continue;
         if (nativeGeoDataHandles.count(record.handle) != 0
             && isGeoDataRawObject(record))
+            continue;
+        if (nativeSpatialFilterHandles.count(record.handle) != 0
+            && isSpatialFilterRawObject(record))
             continue;
         DRW_UnsupportedObject object = rawObjectFromMetadata(record);
         m_dwgW->registerRawDwgObjectClass(&object);
@@ -5977,6 +6016,7 @@ void RS_FilterDXFRW::writeObjects() {
         std::set<duint32> nativeGroupHandles;
         std::set<duint32> nativeRasterVariablesHandles;
         std::set<duint32> nativeGeoDataHandles;
+        std::set<duint32> nativeSpatialFilterHandles;
         int nativeSunObjects = 0;
         int nativePlaceholderObjects = 0;
         int nativeMLeaderStyleObjects = 0;
@@ -5986,6 +6026,7 @@ void RS_FilterDXFRW::writeObjects() {
         int nativeGroupObjects = 0;
         int nativeRasterVariablesObjects = 0;
         int nativeGeoDataObjects = 0;
+        int nativeSpatialFilterObjects = 0;
         if (canWriteModernObjects) {
             for (const auto& record : metadata.suns()) {
                 if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
@@ -6055,6 +6096,15 @@ void RS_FilterDXFRW::writeObjects() {
                 if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
                     && record.handle != 0) {
                     nativeGeoDataHandles.insert(record.handle);
+                }
+            }
+            // SPATIAL_FILTER (AcDbSpatialFilter, custom class 507) —
+            // round-trip-grade SpatialFilterRecord extended in PR 8d.1d to
+            // capture boundary points + 4x3 clip transform matrices.
+            for (const auto& record : metadata.spatialFilters()) {
+                if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                    && record.handle != 0) {
+                    nativeSpatialFilterHandles.insert(record.handle);
                 }
             }
         }
@@ -6143,6 +6193,12 @@ void RS_FilterDXFRW::writeObjects() {
             }
             if (nativeGeoDataHandles.count(record.handle) != 0
                 && isGeoDataRawObject(record)) {
+                hasBlockedReplay = true;
+                ++blockedReplaced;
+                continue;
+            }
+            if (nativeSpatialFilterHandles.count(record.handle) != 0
+                && isSpatialFilterRawObject(record)) {
                 hasBlockedReplay = true;
                 ++blockedReplaced;
                 continue;
@@ -6275,6 +6331,17 @@ void RS_FilterDXFRW::writeObjects() {
                     ++blockedWriterRejected;
                 }
             }
+            for (const auto& record : metadata.spatialFilters()) {
+                if (nativeSpatialFilterHandles.count(record.handle) == 0)
+                    continue;
+                DRW_SpatialFilter sf = spatialFilterFromMetadata(record);
+                if (m_dwgW->writeSpatialFilter(&sf)) {
+                    ++nativeSpatialFilterObjects;
+                } else {
+                    hasBlockedReplay = true;
+                    ++blockedWriterRejected;
+                }
+            }
         }
         if (replayedObjects > 0) {
             RS_DEBUG->print("RS_FilterDXFRW::writeObjects: replayed %d raw DWG objects",
@@ -6333,6 +6400,11 @@ void RS_FilterDXFRW::writeObjects() {
             RS_DEBUG->print(
                 "RS_FilterDXFRW::writeObjects: wrote %d native GEODATA objects",
                 nativeGeoDataObjects);
+        }
+        if (nativeSpatialFilterObjects > 0) {
+            RS_DEBUG->print(
+                "RS_FilterDXFRW::writeObjects: wrote %d native SPATIAL_FILTER objects",
+                nativeSpatialFilterObjects);
         }
         if (modelerPayloads.recordCount > 0) {
             const RS_Debug::RS_DebugLevel level =
@@ -6635,7 +6707,8 @@ void RS_FilterDXFRW::writeObjects() {
                                 + nativeLayoutObjects
                                 + nativeGroupObjects
                                 + nativeRasterVariablesObjects
-                                + nativeGeoDataObjects);
+                                + nativeGeoDataObjects
+                                + nativeSpatialFilterObjects);
         const size_t semanticOnlyRecords =
             metadata.semanticOnlyRecordCount() > nativeSemanticRecords
                 ? metadata.semanticOnlyRecordCount() - nativeSemanticRecords

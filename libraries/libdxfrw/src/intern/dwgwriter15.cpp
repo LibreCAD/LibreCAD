@@ -1061,6 +1061,39 @@ bool dwgWriter15::writeGeoData(const DRW_GeoData& geoData) {
     return true;
 }
 
+// SPATIAL_FILTER (AcDbSpatialFilter, custom class 507) — class registration
+// required.  Standard preamble + DRW_SpatialFilter::encodeDwg sandwich.
+// Encoder writes its own common-handle prefix into hb; body fields are
+// pure numeric (no strings), so strBuf is unused.
+void dwgWriter15::emitSpatialFilterObject(duint32 handle,
+                                          const DRW_SpatialFilter& filter) {
+    dwgBufferW& body = beginObject(handle);
+    dwgBufferW *sb, *hb;
+    emitRecordPreamble(body, m_version,
+                       DRW_SpatialFilter::kDwgClassNum, handle,
+                       m_objectStrings, m_objectHandles, sb, hb);
+    DRW_UNUSED(sb);
+    filter.encodeDwg(m_version, &body, nullptr, hb);
+    finishObject();
+}
+
+bool dwgWriter15::writeSpatialFilter(const DRW_SpatialFilter& filter) {
+    if (m_version < DRW::AC1021)
+        return false;
+
+    DRW_SpatialFilter object = filter;
+    if (object.handle == 0) {
+        object.handle = m_handles.next();
+    } else {
+        m_handles.reserve(object.handle);
+    }
+    if (!registerSpatialFilterObjectClass(object.handle))
+        return false;
+
+    emitSpatialFilterObject(object.handle, object);
+    return true;
+}
+
 // --- add*() methods: register user table records for deferred emission -----
 
 void dwgWriter15::addLType(const DRW_LType& lt) {

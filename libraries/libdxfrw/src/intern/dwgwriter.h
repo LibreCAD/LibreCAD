@@ -328,6 +328,22 @@ public:
         return registerDwgClass(definition);
     }
 
+    bool registerSpatialFilterObjectClass(duint32 handle = 0) {
+        DwgClassDefinition definition;
+        definition.m_classNum = DRW_SpatialFilter::kDwgClassNum;
+        definition.m_proxyFlag = 0x401;
+        definition.m_appName = "ACAD";
+        definition.m_className = "AcDbSpatialFilter";
+        definition.m_recordName = "SPATIAL_FILTER";
+        definition.m_entityFlagRaw = 0;
+        if (handle != 0
+            && m_rawClassInstanceHandles.insert({definition.m_classNum,
+                                                 handle}).second) {
+            definition.m_instanceCount = 1;
+        }
+        return registerDwgClass(definition);
+    }
+
     bool hasDwgClassDefinition(duint16 classNum) const {
         return std::any_of(m_dwgClassDefinitions.begin(), m_dwgClassDefinitions.end(),
                            [classNum](const DwgClassDefinition& definition) {
@@ -359,6 +375,8 @@ protected:
         if (definition.m_classNum == DRW_RasterVariables::kDwgClassNum)
             return m_version >= DRW::AC1021;
         if (definition.m_classNum == DRW_GeoData::kDwgClassNum)
+            return m_version >= DRW::AC1021;
+        if (definition.m_classNum == DRW_SpatialFilter::kDwgClassNum)
             return m_version >= DRW::AC1021;
         return true;
     }
