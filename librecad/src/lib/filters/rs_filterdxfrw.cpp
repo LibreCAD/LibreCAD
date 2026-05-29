@@ -302,6 +302,14 @@ bool isLayoutRawObject(
         || record.className == "AcDbLayout";
 }
 
+// GROUP raw-object predicate.  Fixed type 72 (ODA §20.4.72) + recordName/
+// className fallback for vendor extensions.
+bool isGroupRawObject(
+    const LC_DwgAdvancedMetadata::RawObjectRecord& record) {
+    return record.objectType == 72 || record.recordName == "GROUP"
+        || record.className == "AcDbGroup";
+}
+
 bool hasReplayableRawMLeaderStyle(const LC_DwgAdvancedMetadata& metadata,
                                   duint32 handle) {
     if (handle == 0)
@@ -414,6 +422,18 @@ DRW_Layout layoutFromMetadata(
     layout.namedUcsHandle.ref = record.namedUcsHandle;
     layout.viewportHandles = record.viewportHandles;
     return layout;
+}
+
+DRW_Group groupFromMetadata(
+    const LC_DwgAdvancedMetadata::GroupRecord& record) {
+    DRW_Group group;
+    group.handle = record.handle;
+    group.parentHandle = static_cast<int>(record.parentHandle);
+    group.m_description = record.description;
+    group.m_isUnnamed = record.isUnnamed;
+    group.m_selectable = record.selectable;
+    group.m_entityHandles = record.entityHandles;
+    return group;
 }
 
 DRW_Sun sunFromMetadata(const LC_DwgAdvancedMetadata::SunRecord& record) {
@@ -5853,12 +5873,14 @@ void RS_FilterDXFRW::writeObjects() {
         std::set<duint32> nativeDictionaryHandles;
         std::set<duint32> nativeXRecordHandles;
         std::set<duint32> nativeLayoutHandles;
+        std::set<duint32> nativeGroupHandles;
         int nativeSunObjects = 0;
         int nativePlaceholderObjects = 0;
         int nativeMLeaderStyleObjects = 0;
         int nativeDictionaryObjects = 0;
         int nativeXRecordObjects = 0;
         int nativeLayoutObjects = 0;
+        int nativeGroupObjects = 0;
         if (canWriteModernObjects) {
             for (const auto& record : metadata.suns()) {
                 if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
@@ -5899,6 +5921,15 @@ void RS_FilterDXFRW::writeObjects() {
                 if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
                     && record.handle != 0) {
                     nativeLayoutHandles.insert(record.handle);
+                }
+            }
+            // GROUP (ODA fixed type 72) — round-trip-grade GroupRecord
+            // already captures every encoder field (description, isUnnamed,
+            // selectable, entityHandles).  PR 8d.1.
+            for (const auto& record : metadata.groups()) {
+                if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                    && record.handle != 0) {
+                    nativeGroupHandles.insert(record.handle);
                 }
             }
         }
@@ -5969,6 +6000,12 @@ void RS_FilterDXFRW::writeObjects() {
             }
             if (nativeLayoutHandles.count(record.handle) != 0
                 && isLayoutRawObject(record)) {
+                hasBlockedReplay = true;
+                ++blockedReplaced;
+                continue;
+            }
+            if (nativeGroupHandles.count(record.handle) != 0
+                && isGroupRawObject(record)) {
                 hasBlockedReplay = true;
                 ++blockedReplaced;
                 continue;
@@ -6068,6 +6105,17 @@ void RS_FilterDXFRW::writeObjects() {
                     ++blockedWriterRejected;
                 }
             }
+            for (const auto& record : metadata.groups()) {
+                if (nativeGroupHandles.count(record.handle) == 0)
+                    continue;
+                DRW_Group group = groupFromMetadata(record);
+                if (m_dwgW->writeGroup(&group)) {
+                    ++nativeGroupObjects;
+                } else {
+                    hasBlockedReplay = true;
+                    ++blockedWriterRejected;
+                }
+            }
         }
         if (replayedObjects > 0) {
             RS_DEBUG->print("RS_FilterDXFRW::writeObjects: replayed %d raw DWG objects",
@@ -6111,6 +6159,11 @@ void RS_FilterDXFRW::writeObjects() {
             RS_DEBUG->print(
                 "RS_FilterDXFRW::writeObjects: wrote %d native LAYOUT objects",
                 nativeLayoutObjects);
+        }
+        if (nativeGroupObjects > 0) {
+            RS_DEBUG->print(
+                "RS_FilterDXFRW::writeObjects: wrote %d native GROUP objects",
+                nativeGroupObjects);
         }
         if (modelerPayloads.recordCount > 0) {
             const RS_Debug::RS_DebugLevel level =
@@ -6410,7 +6463,8 @@ void RS_FilterDXFRW::writeObjects() {
                                 + nativeMLeaderStyleObjects
                                 + nativeDictionaryObjects
                                 + nativeXRecordObjects
-                                + nativeLayoutObjects);
+                                + nativeLayoutObjects
+                                + nativeGroupObjects);
         const size_t semanticOnlyRecords =
             metadata.semanticOnlyRecordCount() > nativeSemanticRecords
                 ? metadata.semanticOnlyRecordCount() - nativeSemanticRecords

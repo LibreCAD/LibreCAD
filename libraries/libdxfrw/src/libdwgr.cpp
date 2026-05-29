@@ -592,6 +592,15 @@ bool dwgRW::writeLayout(DRW_Layout *object) {
     return w->writeLayout(*object);
 }
 
+bool dwgRW::writeGroup(DRW_Group *object) {
+    if (object == nullptr)
+        return false;
+    auto *w = asWriter15(writer);
+    if (w == nullptr)
+        return false;
+    return w->writeGroup(*object);
+}
+
 bool dwgRW::registerRawDwgObjectClass(const DRW_UnsupportedObject *object) {
     if (object == nullptr || writer == nullptr)
         return false;

@@ -108,6 +108,7 @@ public:
     bool writeDictionary(DRW_Dictionary *object);
     bool writeXRecord(DRW_XRecord *object);
     bool writeLayout(DRW_Layout *object);
+    bool writeGroup(DRW_Group *object);
     bool registerRawDwgObjectClass(const DRW_UnsupportedObject *object);
     bool writeRawDwgObject(DRW_UnsupportedObject *object);
 

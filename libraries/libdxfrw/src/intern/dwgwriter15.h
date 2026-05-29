@@ -94,6 +94,7 @@ public:
     bool writeDictionary(const DRW_Dictionary& dictionary);
     bool writeXRecord(const DRW_XRecord& xrecord);
     bool writeLayout(const DRW_Layout& layout);
+    bool writeGroup(const DRW_Group& group);
 
 protected:
     /// Begin a new object in the object stream (the unsentinel'd byte
@@ -168,6 +169,7 @@ protected:
     void emitDictionaryObject(duint32 handle, const DRW_Dictionary& dictionary);
     void emitXRecordObject(duint32 handle, const DRW_XRecord& xrecord);
     void emitLayoutObject(duint32 handle, const DRW_Layout& layout);
+    void emitGroupObject(duint32 handle, const DRW_Group& group);
 
 protected:
     /// Populate m_header's ctrl-handle fields with canonical reserved values

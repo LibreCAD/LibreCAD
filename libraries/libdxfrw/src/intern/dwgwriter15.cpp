@@ -972,6 +972,30 @@ bool dwgWriter15::writeLayout(const DRW_Layout& layout) {
     return true;
 }
 
+// GROUP (ODA fixed type 72) — no class registration required.  Standard
+// preamble + DRW_Group::encodeDwg sandwich.  description is the only
+// string field (carried in sb for AC1018+ split); entityHandles live in
+// the handle stream.  Mirrors the DICTIONARY / LAYOUT shape from PR 8b/8c.
+void dwgWriter15::emitGroupObject(duint32 handle, const DRW_Group& group) {
+    dwgBufferW& body = beginObject(handle);
+    dwgBufferW *sb, *hb;
+    emitRecordPreamble(body, m_version, 72, handle,
+                       m_objectStrings, m_objectHandles, sb, hb);
+    group.encodeDwg(m_version, &body, sb, hb);
+    finishObject();
+}
+
+bool dwgWriter15::writeGroup(const DRW_Group& group) {
+    DRW_Group object = group;
+    if (object.handle == 0) {
+        object.handle = m_handles.next();
+    } else {
+        m_handles.reserve(object.handle);
+    }
+    emitGroupObject(object.handle, object);
+    return true;
+}
+
 // --- add*() methods: register user table records for deferred emission -----
 
 void dwgWriter15::addLType(const DRW_LType& lt) {

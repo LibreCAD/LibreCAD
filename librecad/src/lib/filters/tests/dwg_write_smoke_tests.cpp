@@ -1158,6 +1158,36 @@ public:
     }
 };
 
+// GROUP round-trip — populates a named entity-group with two entity
+// handles, asserts every encoded field survives the writeGroup /
+// parseDwg pair.  Exercises PR 8d.1's writeGroup path plus the existing
+// DRW_Group::encodeDwg / parseDwg pair (ODA fixed type 72).
+class GroupRoundTripIface : public EmptyIface {
+public:
+    dwgRW *m_writer {nullptr};
+    DRW_Group m_group;
+    std::vector<DRW_Group> m_groups;
+
+    GroupRoundTripIface() {
+        m_group.handle = 0x7D0u;
+        m_group.parentHandle = 0xCu;
+        m_group.m_description = "TestGroup";
+        m_group.m_isUnnamed = false;
+        m_group.m_selectable = true;
+        m_group.m_entityHandles.push_back(0x7D1u);
+        m_group.m_entityHandles.push_back(0x7D2u);
+    }
+
+    void writeObjects() override {
+        if (m_writer != nullptr)
+            REQUIRE(m_writer->writeGroup(&m_group));
+    }
+
+    void addGroup(const DRW_Group& group) override {
+        m_groups.push_back(group);
+    }
+};
+
 // LAYOUT round-trip — populates a paper-space layout with PlotSettings
 // prefix + Layout-specific fields, asserts every field survives the
 // writeLayout / parseDwg pair.  Mirrors PR 8c.
@@ -1835,6 +1865,47 @@ TEST_CASE("dwgRW writes and reads LAYOUT metadata",
         CHECK(found->extMax.x == 100.0);
         CHECK(found->viewportCount == 0);
         CHECK(found->paperSpaceBlockRecordHandle.ref == 0x7C1u);
+
+        std::remove(path.c_str());
+    }
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("dwgRW writes and reads GROUP metadata",
+          "[dwg-write][group]") {
+    const DRW::Version versions[] = {DRW::AC1024, DRW::AC1027, DRW::AC1032};
+
+    for (DRW::Version version : versions) {
+        const std::string path = tempPath("native_group.dwg");
+        {
+            dwgRW writer(path.c_str());
+            GroupRoundTripIface iface;
+            iface.m_writer = &writer;
+            REQUIRE(writer.write(&iface, version, /*bin=*/false));
+        }
+
+        GroupRoundTripIface readIface;
+        {
+            dwgRW reader(path.c_str());
+            REQUIRE(reader.read(&readIface, /*ext=*/false));
+            REQUIRE(reader.getVersion() == version);
+            REQUIRE(reader.getError() == DRW::BAD_NONE);
+        }
+
+        const DRW_Group* found = nullptr;
+        for (const DRW_Group& g : readIface.m_groups) {
+            if (g.handle == 0x7D0u) {
+                found = &g;
+                break;
+            }
+        }
+        REQUIRE(found != nullptr);
+        CHECK(found->m_description == "TestGroup");
+        CHECK(found->m_isUnnamed == false);
+        CHECK(found->m_selectable == true);
+        REQUIRE(found->m_entityHandles.size() == 2);
+        CHECK(found->m_entityHandles[0] == 0x7D1u);
+        CHECK(found->m_entityHandles[1] == 0x7D2u);
 
         std::remove(path.c_str());
     }
