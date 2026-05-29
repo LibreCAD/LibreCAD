@@ -831,7 +831,12 @@ void dwgWriter15::emitAcDbPlaceholderObject(
 
 bool dwgWriter15::writeAcDbPlaceholder(
     const DRW_AcDbPlaceholder& placeholder) {
-    if (m_version < DRW::AC1021)
+    // ACDBPLACEHOLDER (ODA fixed type 80) is universally available since
+    // R2000.  Encoder is version-clean — only the standard string/handle
+    // split-buffer routing on `version > AC1018` (no AC1018+-only fields).
+    // PR 13d broadened the writer gate from AC1021+ to AC1015+ in step
+    // with the filter-side `canWriteFixedTypeObjects` dispatch.
+    if (m_version < DRW::AC1015)
         return false;
 
     DRW_AcDbPlaceholder object = placeholder;

@@ -2155,7 +2155,13 @@ TEST_CASE("dwgRW writes and reads SUN metadata",
 
 TEST_CASE("dwgRW writes and reads ACDBPLACEHOLDER metadata",
           "[dwg-write][placeholder]") {
-    const DRW::Version versions[] = {DRW::AC1024, DRW::AC1027, DRW::AC1032};
+    // PR 13d — ACDBPLACEHOLDER (ODA fixed type 80) is universally
+    // available since R2000 and the encoder is version-clean (no
+    // AC1018+-only fields; only the standard string/handle split-buffer
+    // routing on `version > AC1018`).  Extended the smoke array to also
+    // cover AC1015/AC1018 in step with the gate broadening.
+    const DRW::Version versions[] = {DRW::AC1015, DRW::AC1018,
+                                     DRW::AC1024, DRW::AC1027, DRW::AC1032};
 
     for (DRW::Version version : versions) {
         const std::string path = tempPath("native_placeholder.dwg");

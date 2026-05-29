@@ -6447,17 +6447,20 @@ void RS_FilterDXFRW::writeObjects() {
     if (m_dwgW) {
         const auto& metadata = m_graphic->dwgAdvancedMetadata();
         const bool canWriteModernObjects = m_dwgW->getVersion() >= DRW::AC1021;
-        // PR 13a/b/c — DICTIONARY (ODA fixed type 42), XRECORD (type 79),
-        // GROUP (type 72), and LAYOUT (type 82) are universally available
-        // since R2000.  Their encoders gate AC1018+-only fields (e.g.,
-        // LAYOUT shadePlot* + viewportCount RawLong32 + plotViewHandle)
-        // on `version >= DRW::AC1018`, and the AC1015-only plotViewName
-        // branch on `version < DRW::AC1018`.  Encoder smoke tests cover
+        // PR 13a/b/c/d — DICTIONARY (ODA fixed type 42), XRECORD (type 79),
+        // GROUP (type 72), LAYOUT (type 82), and ACDBPLACEHOLDER (type 80)
+        // are universally available since R2000.  Their encoders gate
+        // AC1018+-only fields (e.g., LAYOUT shadePlot* + viewportCount
+        // RawLong32 + plotViewHandle) on `version >= DRW::AC1018`, and
+        // the AC1015-only plotViewName branch on `version < DRW::AC1018`.
+        // ACDBPLACEHOLDER's encoder has no version-gated body fields —
+        // only the standard string/handle split-buffer routing on
+        // `version > AC1018`.  Encoder smoke tests cover
         // AC1015/AC1018/AC1024/AC1027/AC1032 round-trip (see
-        // `[dictionary]` / `[xrecord]` / `[group]` / `[layout]` cases).
-        // Broaden the dispatch gate for these families from AC1021+ to
-        // AC1015+ ahead of the long-tail families which still need their
-        // own validation.
+        // `[dictionary]` / `[xrecord]` / `[group]` / `[layout]` /
+        // `[placeholder]` cases).  Broaden the dispatch gate for these
+        // families from AC1021+ to AC1015+ ahead of the long-tail
+        // families which still need their own validation.
         const bool canWriteFixedTypeObjects =
             m_dwgW->getVersion() >= DRW::AC1015;
         std::set<duint32> nativeSunHandles;
@@ -6508,12 +6511,9 @@ void RS_FilterDXFRW::writeObjects() {
                     nativeSunHandles.insert(record.handle);
                 }
             }
-            for (const auto& record : metadata.placeholders()) {
-                if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
-                    && record.handle != 0) {
-                    nativePlaceholderHandles.insert(record.handle);
-                }
-            }
+            // ACDBPLACEHOLDER handle-set construction moved below to the
+            // `canWriteFixedTypeObjects` block (PR 13d) — fixed type 80
+            // is available since R2000 and the encoder is version-clean.
             for (const auto& record : metadata.mleaderStyles()) {
                 if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
                     && record.handle != 0
@@ -6616,6 +6616,12 @@ void RS_FilterDXFRW::writeObjects() {
         // raw-replay blocker (below) skips raw bytes for these handles at
         // AC1015/AC1018 too.
         if (canWriteFixedTypeObjects) {
+            for (const auto& record : metadata.placeholders()) {
+                if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                    && record.handle != 0) {
+                    nativePlaceholderHandles.insert(record.handle);
+                }
+            }
             for (const auto& record : metadata.dictionaries()) {
                 if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
                     && record.handle != 0) {
@@ -6817,19 +6823,13 @@ void RS_FilterDXFRW::writeObjects() {
             }
         }
         if (canWriteModernObjects) {
-            for (const auto& record : metadata.placeholders()) {
-                if (record.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
-                    || record.handle == 0) {
-                    continue;
-                }
-                DRW_AcDbPlaceholder placeholder = placeholderFromMetadata(record);
-                if (m_dwgW->writeAcDbPlaceholder(&placeholder)) {
-                    ++nativePlaceholderObjects;
-                } else {
-                    hasBlockedReplay = true;
-                    ++blockedWriterRejected;
-                }
-            }
+            // ACDBPLACEHOLDER dispatch moved below to the
+            // `canWriteFixedTypeObjects` block (PR 13d).
+            // PR 13d — SUN stays gated AC1021+ — custom class 503 was
+            // introduced in R2007 and the encoder explicitly rejects
+            // below AC1021 (see DRW_Sun::encodeDwg at drw_objects.cpp:
+            // `if (buf == nullptr || version < DRW::AC1021) return
+            // false`).  Do not move into canWriteFixedTypeObjects.
             for (const auto& record : metadata.suns()) {
                 if (record.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
                     || record.handle == 0) {
@@ -6843,6 +6843,10 @@ void RS_FilterDXFRW::writeObjects() {
                     ++blockedWriterRejected;
                 }
             }
+            // PR 13e — MLeaderStyle stays gated AC1021+ — the encoder
+            // requires R2007+ (see DRW_MLeaderStyle::encodeDwg at
+            // drw_objects.cpp:4275: `if (version < DRW::AC1021) return
+            // false`).  Do not move into canWriteFixedTypeObjects.
             for (const auto& record : metadata.mleaderStyles()) {
                 if (nativeMLeaderStyleHandles.count(record.handle) == 0)
                     continue;
@@ -6992,14 +6996,29 @@ void RS_FilterDXFRW::writeObjects() {
                 }
             }
         }
-        // PR 13a/b/c — DICTIONARY / XRECORD / GROUP / LAYOUT native dispatch.
-        // Gate broadened from AC1021+ to AC1015+ now that the encoder smoke
-        // tests cover the full AC1015/AC1018/AC1024/AC1027/AC1032 range
-        // (see `[dwg-write][dictionary]`, `[dwg-write][xrecord]`,
-        // `[dwg-write][group]`, `[dwg-write][layout]` cases).  Sits outside
-        // the `if (canWriteModernObjects)` block so the broadened gate also
+        // PR 13a/b/c/d — DICTIONARY / XRECORD / GROUP / LAYOUT /
+        // ACDBPLACEHOLDER native dispatch.  Gate broadened from AC1021+ to
+        // AC1015+ now that the encoder smoke tests cover the full
+        // AC1015/AC1018/AC1024/AC1027/AC1032 range (see
+        // `[dwg-write][dictionary]`, `[dwg-write][xrecord]`,
+        // `[dwg-write][group]`, `[dwg-write][layout]`,
+        // `[dwg-write][placeholder]` cases).  Sits outside the `if
+        // (canWriteModernObjects)` block so the broadened gate also
         // applies at AC1015/AC1018.
         if (canWriteFixedTypeObjects) {
+            for (const auto& record : metadata.placeholders()) {
+                if (record.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                    || record.handle == 0) {
+                    continue;
+                }
+                DRW_AcDbPlaceholder placeholder = placeholderFromMetadata(record);
+                if (m_dwgW->writeAcDbPlaceholder(&placeholder)) {
+                    ++nativePlaceholderObjects;
+                } else {
+                    hasBlockedReplay = true;
+                    ++blockedWriterRejected;
+                }
+            }
             for (const auto& record : metadata.dictionaries()) {
                 if (nativeDictionaryHandles.count(record.handle) == 0)
                     continue;
