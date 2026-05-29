@@ -116,6 +116,12 @@ const LC_CommandItem g_commandList[] = {
              {"sly", QObject::tr("rly", "draw snake line (Y)")}},
             RS2::ActionDrawSnakeLineY
         },
+        // draw Direct line
+        {
+            {{"dline", QObject::tr("dline", "draw direct line")}},
+            {{"dd", QObject::tr("dd", "draw direct line")}},
+            RS2::ActionDrawLineDirect
+        },
         // draw line at angle - v2.2.0r2
         {
             {{"lineang", QObject::tr("lineang", "angled line")}},

@@ -45,6 +45,7 @@
 #include "lc_actiondrawlinepoints.h"
 #include "lc_actiondrawlinepolygon3.h"
 #include "lc_actiondrawlinepolygon4.h"
+#include "lc_actiondrawlinedirect.h"
 #include "lc_actiondrawlinesnake.h"
 #include "lc_actiondrawmidline.h"
 #include "lc_actiondrawparabola4points.h"
@@ -413,6 +414,9 @@ namespace InnerFactory{
             }
             case RS2::ActionDrawBoundingBox: {
                 return new LC_ActionDrawBoundingBox(ctx);
+            }
+            case RS2::ActionDrawLineDirect: {
+                return new LC_ActionDrawLineDirect(ctx);
             }
             case RS2::ActionDrawSnakeLine: {
                 return new LC_ActionDrawLineSnake(ctx, RS2::ActionDrawSnakeLine);

@@ -455,6 +455,8 @@ set(SHARED_SOURCES
     librecad/src/actions/drawing/draw/line/lc_actiondrawlineanglerel.cpp
     librecad/src/actions/drawing/draw/line/lc_actiondrawlineanglerel.h
     librecad/src/actions/drawing/draw/line/lc_actiondrawlinefrompointtoline.cpp
+    librecad/src/actions/drawing/draw/line/lc_actiondrawlinedirect.cpp
+    librecad/src/actions/drawing/draw/line/lc_actiondrawlinedirect.h
     librecad/src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp
     librecad/src/actions/drawing/draw/line/lc_actiondrawlinesnake.h
     librecad/src/actions/drawing/draw/line/lc_actiondrawslicedivide.cpp
