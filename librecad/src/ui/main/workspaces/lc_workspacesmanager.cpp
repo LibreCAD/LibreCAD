@@ -21,10 +21,12 @@
  * ********************************************************************************
  */
 
+#include <QGuiApplication>
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QMessageBox>
+#include <QScreen>
 
 #include "lc_workspacesmanager.h"
 
@@ -34,6 +36,53 @@
 #include "rs_debug.h"
 #include "rs_settings.h"
 #include "rs_system.h"
+
+namespace {
+    // Re-place an already-positioned QWidget so its frame geometry fits
+    // within an available screen. Picks the screen that contains the
+    // saved frame's centre when one exists, falling back to the primary.
+    // If the saved size exceeds the chosen screen's available area, the
+    // window is shrunk to fit; otherwise position-only is corrected.
+    // No-op when the frame is already fully contained.
+    //
+    // Mitigates the Qt6 "re-center keeping saved size" fallback path in
+    // QWidget::restoreGeometry, which on a topology change can land the
+    // window centred on a screen narrower than itself — overflowing
+    // visibly onto a horizontally adjacent secondary.
+    void clampWidgetToScreen(QWidget& w) {
+        const auto screens = QGuiApplication::screens();
+        if (screens.isEmpty()) {
+            return; // headless / not yet realised
+        }
+        const QRect frame = w.frameGeometry();
+
+        // Already fully on some screen? Leave it alone.
+        for (const QScreen* s : screens) {
+            if (s->availableGeometry().contains(frame)) {
+                return;
+            }
+        }
+
+        const QScreen* target = QGuiApplication::screenAt(frame.center());
+        if (target == nullptr) {
+            target = QGuiApplication::primaryScreen();
+        }
+        const QRect available = target->availableGeometry();
+        const int width = qMin(frame.width(), available.width());
+        const int height = qMin(frame.height(), available.height());
+
+        // Centre the resized rect on the chosen screen.
+        QRect dst(0, 0, width, height);
+        dst.moveCenter(available.center());
+
+        // setGeometry sets the *client* rect, not the frame rect. Account
+        // for the frame inset Qt already knows about.
+        const QPoint frameInset = w.geometry().topLeft() - frame.topLeft();
+        const QSize  frameSize  = frame.size() - w.size();
+        w.setGeometry(QRect(dst.topLeft() + frameInset,
+                            QSize(width, height) - frameSize));
+    }
+}
 LC_WorkspacesManager::LC_WorkspacesManager() = default;
 
 LC_WorkspacesManager::~LC_WorkspacesManager() {
@@ -246,6 +295,13 @@ void LC_WorkspacesManager::restoreGeometryAndState(const LC_WorkspacesManager::L
         appWin.resize(windowWidth, windowHeight);
         appWin.move(windowX, windowY);
     }
+
+    // Post-restore clamp. Qt6's restoreGeometry re-centres on the chosen
+    // screen but keeps the saved width/height, so a wide saved window
+    // restored on a narrower primary overflows onto an adjacent secondary.
+    // The raw move/resize branch above doesn't validate at all. Apply a
+    // common clamp so both paths produce a window fully on some screen.
+    clampWidgetToScreen(appWin);
 
     appWin.slotViewStatusBar(workspace.showStatusBar);
     appWin.setUpdatesEnabled(true);

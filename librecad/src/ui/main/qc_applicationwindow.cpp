@@ -144,6 +144,17 @@ QC_ApplicationWindow::QC_ApplicationWindow(){
                 fireIconsRefresh();
             });
 #endif
+
+    // Re-paint toolbars when the OS-level primary screen changes (e.g. the
+    // user swaps which monitor is primary while LibreCAD is running). The
+    // canvas's own m_isHiDpi state is computed once at LC_GraphicViewRenderer
+    // construction and currently does NOT re-evaluate here — see the
+    // // fixme - sand comment at lc_graphicviewrenderer.cpp:43. Tracking that
+    // through to the per-MDI-window renderer is follow-up work documented in
+    // Task D of the plan; this connect at least refreshes icons and any
+    // listener wired to iconsRefreshed().
+    connect(qApp, &QGuiApplication::primaryScreenChanged,
+            this, [this](QScreen*) { fireIconsRefresh(); });
 }
 /**
  * Destructor.
