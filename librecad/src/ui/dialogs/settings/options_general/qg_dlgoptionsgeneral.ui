@@ -1640,6 +1640,88 @@
             </property>
            </widget>
           </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="lblPolarSnapAngle">
+            <property name="text">
+             <string>Polar snap increment:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QDoubleSpinBox" name="sbPolarSnapAngle">
+            <property name="toolTip">
+             <string>Polar snap angle increment in degrees. Must divide evenly into 360 (e.g. 1, 2.5, 5, 7.5, 10, 15, 22.5, 30, 45, 90). Used for toolbar Polar Snap and Shift angle snap.</string>
+            </property>
+            <property name="minimum">
+             <double>0.100000000000000</double>
+            </property>
+            <property name="maximum">
+             <double>90.000000000000000</double>
+            </property>
+            <property name="decimals">
+             <number>4</number>
+            </property>
+            <property name="singleStep">
+             <double>5.000000000000000</double>
+            </property>
+            <property name="value">
+             <double>15.000000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="2">
+           <widget class="QLabel" name="lblPolarSnapAngleDeg">
+            <property name="text">
+             <string>deg</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0" colspan="3">
+           <widget class="QCheckBox" name="cbSoftSnapEnabled">
+            <property name="toolTip">
+             <string>Soft Snap gently snaps to polar angles when the cursor is within the sensitivity window. Object and grid snaps still have highest priority. H/V/Ortho restrictions are softened when Soft Snap is active.</string>
+            </property>
+            <property name="text">
+             <string>Soft Snap</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QLabel" name="lblSoftSnapSensitivity">
+            <property name="text">
+             <string>Soft Snap sensitivity:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="QDoubleSpinBox" name="sbSoftSnapSensitivity">
+            <property name="toolTip">
+             <string>If the cursor angle is within this many degrees of a polar snap angle, Soft Snap will snap to that angle.</string>
+            </property>
+            <property name="minimum">
+             <double>0.100000000000000</double>
+            </property>
+            <property name="maximum">
+             <double>30.000000000000000</double>
+            </property>
+            <property name="decimals">
+             <number>1</number>
+            </property>
+            <property name="singleStep">
+             <double>0.500000000000000</double>
+            </property>
+            <property name="value">
+             <double>3.000000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="2">
+           <widget class="QLabel" name="lblSoftSnapSensitivityDeg">
+            <property name="text">
+             <string>deg</string>
+            </property>
+           </widget>
+          </item>
          </layout>
         </widget>
        </item>

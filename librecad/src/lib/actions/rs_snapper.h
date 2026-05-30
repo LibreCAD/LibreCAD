@@ -155,6 +155,7 @@ public:
 
     /**manually set snapPoint*/
     bool isSnapToGrid();
+    bool isLastSnapFree() const;
     RS_Vector snapPoint(const RS_Vector &coord, bool setSpot = false);
     RS_Vector snapPoint(QMouseEvent *e);
     RS_Vector snapFree(QMouseEvent *e);

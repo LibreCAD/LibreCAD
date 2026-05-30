@@ -27,6 +27,7 @@
 
 #include <QColorDialog>
 #include <QMessageBox>
+#include <cmath>
 
 #include "dxf_format.h"
 #include "lc_defaults.h"
@@ -553,6 +554,9 @@ void QG_DlgOptionsGeneral::init(){
         cbWheelScrollInvertV->setChecked(LC_GET_BOOL("WheelScrollInvertV"));
         cbInvertZoomDirection->setChecked(LC_GET_BOOL("InvertZoomDirection"));
         cbAngleSnapStep->setCurrentIndex(LC_GET_INT("AngleSnapStep", 3));
+        sbPolarSnapAngle->setValue(LC_GET_STR("PolarSnapAngle", "15").toDouble());
+        cbSoftSnapEnabled->setChecked(LC_GET_STR("SoftSnapEnabled", "0").toInt() != 0);
+        sbSoftSnapSensitivity->setValue(LC_GET_STR("SoftSnapSensitivityAngle", "3.0").toDouble());
 
         cbNewDrawingGridOff->setChecked(LC_GET_BOOL("GridOffForNewDrawing", false));
 
@@ -878,6 +882,16 @@ void QG_DlgOptionsGeneral::ok(){
             LC_SET("WheelScrollInvertV", cbWheelScrollInvertV->isChecked());
             LC_SET("InvertZoomDirection", cbInvertZoomDirection->isChecked());
             LC_SET("AngleSnapStep", cbAngleSnapStep->currentIndex());
+            {
+                double deg = sbPolarSnapAngle->value();
+                bool valid = (deg > 0.0 && std::fmod(360.0, deg) < 1e-4);
+                LC_SET("PolarSnapAngle", QString::number(valid ? deg : 15.0));
+            }
+            LC_SET("SoftSnapEnabled", cbSoftSnapEnabled->isChecked() ? "1" : "0");
+            {
+                double sens = sbSoftSnapSensitivity->value();
+                LC_SET("SoftSnapSensitivityAngle", QString::number(sens < 0.1 ? 3.0 : sens));
+            }
             LC_SET("GridOffForNewDrawing", cbNewDrawingGridOff->isChecked());
 
             bool defaultIsometricGrid = !rbGridOrtho->isChecked();
