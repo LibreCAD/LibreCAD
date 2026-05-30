@@ -61,8 +61,9 @@ QG_SnapToolBar::QG_SnapToolBar(QWidget* parent, QG_ActionHandler* ah, LC_ActionG
 
     // m_actionSnapMiddleManual = addOwnAction("SnapMiddleManual", actionsMap);
 
-    m_actionSnapFree = addOwnAction("SnapFree", actionsMap);
-    m_actionSnapGrid = addOwnAction("SnapGrid", actionsMap);
+    m_actionSnapFree  = addOwnAction("SnapFree",  actionsMap);
+    m_actionSnapAngle = addOwnAction("SnapAngle", actionsMap);
+    m_actionSnapGrid  = addOwnAction("SnapGrid",  actionsMap);
     m_actionSnapEnd = addOwnAction("SnapEnd", actionsMap);
     m_actionSnapOnEntity = addOwnAction("SnapEntity", actionsMap);
     m_actionSnapCenter = addOwnAction("SnapCenter", actionsMap);
@@ -113,6 +114,7 @@ void QG_SnapToolBar::saveSnapMode(){
 
 void QG_SnapToolBar::setSnaps ( RS_SnapMode const& s ){
     m_actionSnapFree->setChecked(s.snapFree);
+    m_actionSnapAngle->setChecked(s.snapAngle);
     m_actionSnapGrid->setChecked(s.snapGrid);
     m_actionSnapEnd->setChecked(s.snapEndpoint);
     m_actionSnapOnEntity->setChecked(s.snapOnEntity);
@@ -135,6 +137,7 @@ RS_SnapMode QG_SnapToolBar::getSnaps() const{
     RS_SnapMode s;
 
     s.snapFree         = m_actionSnapFree->isChecked();
+    s.snapAngle        = m_actionSnapAngle->isChecked();
     s.snapGrid         = m_actionSnapGrid->isChecked();
     s.snapEndpoint     = m_actionSnapEnd->isChecked();
     s.snapOnEntity     = m_actionSnapOnEntity->isChecked();

@@ -481,7 +481,8 @@ void LC_ActionFactory::createRelZeroActions(QMap<QString, QAction *> &map, QActi
 void LC_ActionFactory::createSnapExtraActions(QMap<QString, QAction *> &map, QActionGroup *group) const {
     createActions(map, group, {
         {"ExclusiveSnapMode", tr("Exclusive Snap Mode"), ":/icons/exclusive.lci"},
-        {"SnapFree",          tr("Free Snap"),           ":/icons/snap_free.lci"}
+        {"SnapFree",          tr("Free Snap"),           ":/icons/snap_free.lci"},
+        {"SnapAngle",         tr("Polar Snap"),          ":/icons/line_angle.lci"}
     });
 }
 

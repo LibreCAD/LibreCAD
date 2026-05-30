@@ -4924,6 +4924,9 @@
           </item>
           <item row="0" column="1">
            <widget class="QDoubleSpinBox" name="sbDrawFastOpeningDepth">
+            <property name="toolTip">
+             <string>Length of the perpendicular tick marks drawn on each side of a wall opening (Draw Fast 'o' / 'opening' command).</string>
+            </property>
             <property name="minimum">
              <double>0.010000000000000</double>
             </property>
@@ -4950,6 +4953,9 @@
           </item>
           <item row="1" column="1">
            <widget class="QDoubleSpinBox" name="sbDrawFastWindowOffsetWidth">
+            <property name="toolTip">
+             <string>Distance between the wall line and the inner window line in Draw Fast window mode ('w' / 'window' command).</string>
+            </property>
             <property name="minimum">
              <double>0.010000000000000</double>
             </property>
@@ -4976,6 +4982,9 @@
           </item>
           <item row="2" column="1">
            <widget class="QDoubleSpinBox" name="sbDrawFastDoorThickness">
+            <property name="toolTip">
+             <string>Thickness of the door slab in Draw Fast door mode. Set to 0 for a single-line door leaf.</string>
+            </property>
             <property name="minimum">
              <double>0.000000000000000</double>
             </property>
@@ -5002,6 +5011,9 @@
           </item>
           <item row="3" column="1">
            <widget class="QComboBox" name="cbDrawFastDoorSwingAngle">
+            <property name="toolTip">
+             <string>Arc sweep angle for the door swing in Draw Fast door mode. 90° draws a quarter-circle; 45° draws a shallower arc.</string>
+            </property>
             <item>
              <property name="text">
               <string>90</string>
@@ -5023,6 +5035,9 @@
           </item>
           <item row="4" column="1">
            <widget class="QComboBox" name="cbDrawFastDoorDesign">
+            <property name="toolTip">
+             <string>Door symbol style. 'Swing only' draws the leaf and arc. 'Swing with opening line' also draws a straight line across the full door opening.</string>
+            </property>
             <item>
              <property name="text">
               <string>Swing only</string>

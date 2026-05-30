@@ -9,6 +9,7 @@
 
 # Apple generated directories
 build/
+dist/
 LibreCAD.app/
 LibreCAD.pbproj/
 LibreCAD.dmg
