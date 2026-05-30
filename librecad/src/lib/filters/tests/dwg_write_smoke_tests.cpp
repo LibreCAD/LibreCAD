@@ -2806,7 +2806,10 @@ TEST_CASE("dwgRW writes and reads DICTIONARYVAR metadata",
 // NOLINTNEXTLINE(readability-identifier-naming)
 TEST_CASE("dwgRW writes and reads DICTIONARYWDFLT metadata",
           "[dwg-write][dictionary-wdflt]") {
-    const DRW::Version versions[] = {DRW::AC1024, DRW::AC1027, DRW::AC1032};
+    // PR 13h — gate broadened to AC1015+; smoke array extended to cover
+    // the new pre-AC1021 paths.
+    const DRW::Version versions[] = {DRW::AC1015, DRW::AC1018,
+                                     DRW::AC1024, DRW::AC1027, DRW::AC1032};
 
     for (DRW::Version version : versions) {
         const std::string path = tempPath("native_dictionary_wdflt.dwg");
@@ -2848,7 +2851,10 @@ TEST_CASE("dwgRW writes and reads DICTIONARYWDFLT metadata",
 // NOLINTNEXTLINE(readability-identifier-naming)
 TEST_CASE("dwgRW writes and reads SORTENTSTABLE metadata",
           "[dwg-write][sortentstable]") {
-    const DRW::Version versions[] = {DRW::AC1024, DRW::AC1027, DRW::AC1032};
+    // PR 13h — gate broadened to AC1015+; smoke array extended to cover
+    // the new pre-AC1021 paths.
+    const DRW::Version versions[] = {DRW::AC1015, DRW::AC1018,
+                                     DRW::AC1024, DRW::AC1027, DRW::AC1032};
 
     for (DRW::Version version : versions) {
         const std::string path = tempPath("native_sortentstable.dwg");
@@ -2892,7 +2898,10 @@ TEST_CASE("dwgRW writes and reads SORTENTSTABLE metadata",
 // NOLINTNEXTLINE(readability-identifier-naming)
 TEST_CASE("dwgRW writes and reads FIELDLIST metadata",
           "[dwg-write][fieldlist]") {
-    const DRW::Version versions[] = {DRW::AC1024, DRW::AC1027, DRW::AC1032};
+    // PR 13h — gate broadened to AC1015+; smoke array extended to cover
+    // the new pre-AC1021 paths.
+    const DRW::Version versions[] = {DRW::AC1015, DRW::AC1018,
+                                     DRW::AC1024, DRW::AC1027, DRW::AC1032};
 
     for (DRW::Version version : versions) {
         const std::string path = tempPath("native_fieldlist.dwg");
@@ -2931,7 +2940,11 @@ TEST_CASE("dwgRW writes and reads FIELDLIST metadata",
 // NOLINTNEXTLINE(readability-identifier-naming)
 TEST_CASE("dwgRW writes and reads FIELD metadata",
           "[dwg-write][field]") {
-    const DRW::Version versions[] = {DRW::AC1024, DRW::AC1027, DRW::AC1032};
+    // PR 13h — gate broadened to AC1015+; smoke array extended to cover
+    // the new pre-AC1021 paths.  Exercises the parser-mirrored
+    // `version < AC1021` m_formatString branch.
+    const DRW::Version versions[] = {DRW::AC1015, DRW::AC1018,
+                                     DRW::AC1024, DRW::AC1027, DRW::AC1032};
 
     for (DRW::Version version : versions) {
         const std::string path = tempPath("native_field.dwg");

@@ -5511,46 +5511,9 @@ void RS_FilterDXFRW::writeDwgClasses() {
         // below to the `canRegisterCustomClassObjects` block (PR 13f).
         // PR 13g — SCALE / IDBUFFER / LAYER_INDEX / SPATIAL_INDEX /
         // DICTIONARYVAR registration moved below to the same block.
-        // PR 8d.2b — four larger no-storage OBJECTS families.  Each must be
-        // registered BEFORE writeDwgClasses() emits the CLASSES section so
-        // the reader can map oType (513-516) back to its parser.
-        for (const auto& record : metadata.dictionariesWithDefault()) {
-            if (record.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
-                || record.handle == 0) {
-                continue;
-            }
-            DRW_DictionaryWithDefault dwd =
-                dictionaryWithDefaultFromMetadata(record);
-            if (m_dwgW->registerDictionaryWithDefaultObjectClass(&dwd))
-                nativeDictionaryWithDefaultHandles.insert(record.handle);
-        }
-        for (const auto& record : metadata.sortEntsTables()) {
-            if (record.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
-                || record.handle == 0) {
-                continue;
-            }
-            DRW_SortEntsTable se = sortEntsTableFromMetadata(record);
-            if (m_dwgW->registerSortEntsTableObjectClass(&se))
-                nativeSortEntsTableHandles.insert(record.handle);
-        }
-        for (const auto& record : metadata.fieldLists()) {
-            if (record.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
-                || record.handle == 0) {
-                continue;
-            }
-            DRW_FieldList fl = fieldListFromMetadata(record);
-            if (m_dwgW->registerFieldListObjectClass(&fl))
-                nativeFieldListHandles.insert(record.handle);
-        }
-        for (const auto& record : metadata.fields()) {
-            if (record.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
-                || record.handle == 0) {
-                continue;
-            }
-            DRW_Field f = fieldFromMetadata(record);
-            if (m_dwgW->registerFieldObjectClass(&f))
-                nativeFieldHandles.insert(record.handle);
-        }
+        // PR 13h — DICTIONARYWDFLT / SORTENTSTABLE / FIELDLIST / FIELD
+        // registration moved below to the `canRegisterCustomClassObjects`
+        // block.
     }
 
     // PR 13f — custom-class families with version-clean encoders +
@@ -5643,6 +5606,48 @@ void RS_FilterDXFRW::writeDwgClasses() {
             DRW_DictionaryVar dv = dictionaryVarFromMetadata(record);
             if (m_dwgW->registerDictionaryVarObjectClass(&dv))
                 nativeDictionaryVarHandles.insert(record.handle);
+        }
+        // PR 13h — DICTIONARYWDFLT / SORTENTSTABLE / FIELDLIST / FIELD
+        // (custom classes 513-516).  Encoders are version-clean (FIELD
+        // has a parser-mirrored `version < AC1021` branch for the
+        // legacy m_formatString TV).  All 4 default to enabled in
+        // `isDwgClassEnabled`.
+        for (const auto& record : metadata.dictionariesWithDefault()) {
+            if (record.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                || record.handle == 0) {
+                continue;
+            }
+            DRW_DictionaryWithDefault dwd =
+                dictionaryWithDefaultFromMetadata(record);
+            if (m_dwgW->registerDictionaryWithDefaultObjectClass(&dwd))
+                nativeDictionaryWithDefaultHandles.insert(record.handle);
+        }
+        for (const auto& record : metadata.sortEntsTables()) {
+            if (record.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                || record.handle == 0) {
+                continue;
+            }
+            DRW_SortEntsTable se = sortEntsTableFromMetadata(record);
+            if (m_dwgW->registerSortEntsTableObjectClass(&se))
+                nativeSortEntsTableHandles.insert(record.handle);
+        }
+        for (const auto& record : metadata.fieldLists()) {
+            if (record.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                || record.handle == 0) {
+                continue;
+            }
+            DRW_FieldList fl = fieldListFromMetadata(record);
+            if (m_dwgW->registerFieldListObjectClass(&fl))
+                nativeFieldListHandles.insert(record.handle);
+        }
+        for (const auto& record : metadata.fields()) {
+            if (record.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                || record.handle == 0) {
+                continue;
+            }
+            DRW_Field f = fieldFromMetadata(record);
+            if (m_dwgW->registerFieldObjectClass(&f))
+                nativeFieldHandles.insert(record.handle);
         }
     }
 
@@ -6568,30 +6573,8 @@ void RS_FilterDXFRW::writeObjects() {
             // Handle-set construction moved to the
             // `canRegisterCustomClassObjects` block (PR 13g).
             // PR 8d.2b — four larger no-storage OBJECTS families.
-            for (const auto& record : metadata.dictionariesWithDefault()) {
-                if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
-                    && record.handle != 0) {
-                    nativeDictionaryWithDefaultHandles.insert(record.handle);
-                }
-            }
-            for (const auto& record : metadata.sortEntsTables()) {
-                if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
-                    && record.handle != 0) {
-                    nativeSortEntsTableHandles.insert(record.handle);
-                }
-            }
-            for (const auto& record : metadata.fieldLists()) {
-                if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
-                    && record.handle != 0) {
-                    nativeFieldListHandles.insert(record.handle);
-                }
-            }
-            for (const auto& record : metadata.fields()) {
-                if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
-                    && record.handle != 0) {
-                    nativeFieldHandles.insert(record.handle);
-                }
-            }
+            // Handle-set construction moved to the
+            // `canRegisterCustomClassObjects` block (PR 13h).
         }
         // PR 13f — RASTERVARIABLES / GEODATA / SPATIAL_FILTER handle-set
         // construction sits in its own broadened block (≥AC1015) so the
@@ -6658,6 +6641,32 @@ void RS_FilterDXFRW::writeObjects() {
                 if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
                     && record.handle != 0) {
                     nativeDictionaryVarHandles.insert(record.handle);
+                }
+            }
+            // PR 13h — DICTIONARYWDFLT / SORTENTSTABLE / FIELDLIST / FIELD
+            // (custom classes 513-516) handle-set construction.
+            for (const auto& record : metadata.dictionariesWithDefault()) {
+                if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                    && record.handle != 0) {
+                    nativeDictionaryWithDefaultHandles.insert(record.handle);
+                }
+            }
+            for (const auto& record : metadata.sortEntsTables()) {
+                if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                    && record.handle != 0) {
+                    nativeSortEntsTableHandles.insert(record.handle);
+                }
+            }
+            for (const auto& record : metadata.fieldLists()) {
+                if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                    && record.handle != 0) {
+                    nativeFieldListHandles.insert(record.handle);
+                }
+            }
+            for (const auto& record : metadata.fields()) {
+                if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                    && record.handle != 0) {
+                    nativeFieldHandles.insert(record.handle);
                 }
             }
         }
@@ -6916,51 +6925,8 @@ void RS_FilterDXFRW::writeObjects() {
             // DICTIONARYVAR dispatch moved to the
             // `canRegisterCustomClassObjects` block (PR 13g).
             // PR 8d.2b — four larger no-storage OBJECTS families.
-            for (const auto& record : metadata.dictionariesWithDefault()) {
-                if (nativeDictionaryWithDefaultHandles.count(record.handle) == 0)
-                    continue;
-                DRW_DictionaryWithDefault dwd =
-                    dictionaryWithDefaultFromMetadata(record);
-                if (m_dwgW->writeDictionaryWithDefault(&dwd)) {
-                    ++nativeDictionaryWithDefaultObjects;
-                } else {
-                    hasBlockedReplay = true;
-                    ++blockedWriterRejected;
-                }
-            }
-            for (const auto& record : metadata.sortEntsTables()) {
-                if (nativeSortEntsTableHandles.count(record.handle) == 0)
-                    continue;
-                DRW_SortEntsTable se = sortEntsTableFromMetadata(record);
-                if (m_dwgW->writeSortEntsTable(&se)) {
-                    ++nativeSortEntsTableObjects;
-                } else {
-                    hasBlockedReplay = true;
-                    ++blockedWriterRejected;
-                }
-            }
-            for (const auto& record : metadata.fieldLists()) {
-                if (nativeFieldListHandles.count(record.handle) == 0)
-                    continue;
-                DRW_FieldList fl = fieldListFromMetadata(record);
-                if (m_dwgW->writeFieldList(&fl)) {
-                    ++nativeFieldListObjects;
-                } else {
-                    hasBlockedReplay = true;
-                    ++blockedWriterRejected;
-                }
-            }
-            for (const auto& record : metadata.fields()) {
-                if (nativeFieldHandles.count(record.handle) == 0)
-                    continue;
-                DRW_Field f = fieldFromMetadata(record);
-                if (m_dwgW->writeField(&f)) {
-                    ++nativeFieldObjects;
-                } else {
-                    hasBlockedReplay = true;
-                    ++blockedWriterRejected;
-                }
-            }
+            // Dispatch moved to the `canRegisterCustomClassObjects` block
+            // (PR 13h).
         }
         // PR 13a/b/c/d — DICTIONARY / XRECORD / GROUP / LAYOUT /
         // ACDBPLACEHOLDER native dispatch.  Gate broadened from AC1021+ to
@@ -7127,6 +7093,56 @@ void RS_FilterDXFRW::writeObjects() {
                 DRW_DictionaryVar dv = dictionaryVarFromMetadata(record);
                 if (m_dwgW->writeDictionaryVar(&dv)) {
                     ++nativeDictionaryVarObjects;
+                } else {
+                    hasBlockedReplay = true;
+                    ++blockedWriterRejected;
+                }
+            }
+            // PR 13h — DICTIONARYWDFLT / SORTENTSTABLE / FIELDLIST / FIELD
+            // (custom classes 513-516) dispatch.  Smoke tests at AC1015/
+            // AC1018 confirm the encoders + parsers round-trip cleanly;
+            // FIELD exercises the parser-mirrored `version < AC1021`
+            // m_formatString branch.
+            for (const auto& record : metadata.dictionariesWithDefault()) {
+                if (nativeDictionaryWithDefaultHandles.count(record.handle) == 0)
+                    continue;
+                DRW_DictionaryWithDefault dwd =
+                    dictionaryWithDefaultFromMetadata(record);
+                if (m_dwgW->writeDictionaryWithDefault(&dwd)) {
+                    ++nativeDictionaryWithDefaultObjects;
+                } else {
+                    hasBlockedReplay = true;
+                    ++blockedWriterRejected;
+                }
+            }
+            for (const auto& record : metadata.sortEntsTables()) {
+                if (nativeSortEntsTableHandles.count(record.handle) == 0)
+                    continue;
+                DRW_SortEntsTable se = sortEntsTableFromMetadata(record);
+                if (m_dwgW->writeSortEntsTable(&se)) {
+                    ++nativeSortEntsTableObjects;
+                } else {
+                    hasBlockedReplay = true;
+                    ++blockedWriterRejected;
+                }
+            }
+            for (const auto& record : metadata.fieldLists()) {
+                if (nativeFieldListHandles.count(record.handle) == 0)
+                    continue;
+                DRW_FieldList fl = fieldListFromMetadata(record);
+                if (m_dwgW->writeFieldList(&fl)) {
+                    ++nativeFieldListObjects;
+                } else {
+                    hasBlockedReplay = true;
+                    ++blockedWriterRejected;
+                }
+            }
+            for (const auto& record : metadata.fields()) {
+                if (nativeFieldHandles.count(record.handle) == 0)
+                    continue;
+                DRW_Field f = fieldFromMetadata(record);
+                if (m_dwgW->writeField(&f)) {
+                    ++nativeFieldObjects;
                 } else {
                     hasBlockedReplay = true;
                     ++blockedWriterRejected;

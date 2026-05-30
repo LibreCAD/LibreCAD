@@ -1305,7 +1305,10 @@ void dwgWriter15::emitDictionaryWithDefaultObject(duint32 handle,
 }
 
 bool dwgWriter15::writeDictionaryWithDefault(const DRW_DictionaryWithDefault& dictionary) {
-    if (m_version < DRW::AC1021)
+    // PR 13h — broaden gate from AC1021+ to AC1015+.  Encoder is
+    // version-clean (delegates to DRW_Dictionary::encodeDwg, then
+    // appends a single default-entry hard pointer at the tail).
+    if (m_version < DRW::AC1015)
         return false;
 
     DRW_DictionaryWithDefault object = dictionary;
@@ -1339,7 +1342,11 @@ void dwgWriter15::emitSortEntsTableObject(duint32 handle,
 }
 
 bool dwgWriter15::writeSortEntsTable(const DRW_SortEntsTable& sortEntsTable) {
-    if (m_version < DRW::AC1021)
+    // PR 13h — broaden gate from AC1021+ to AC1015+.  Encoder is
+    // version-clean (inline sort handles in body, then standard hb =
+    // version > AC1018 split-buffer routing for the common prefix +
+    // block-owner + entity handles).
+    if (m_version < DRW::AC1015)
         return false;
 
     DRW_SortEntsTable object = sortEntsTable;
@@ -1370,7 +1377,10 @@ void dwgWriter15::emitFieldListObject(duint32 handle, const DRW_FieldList& field
 }
 
 bool dwgWriter15::writeFieldList(const DRW_FieldList& fieldList) {
-    if (m_version < DRW::AC1021)
+    // PR 13h — broaden gate from AC1021+ to AC1015+.  Encoder is
+    // version-clean (no strings; only the standard hb = version > AC1018
+    // split-buffer routing).
+    if (m_version < DRW::AC1015)
         return false;
 
     DRW_FieldList object = fieldList;
@@ -1401,7 +1411,12 @@ void dwgWriter15::emitFieldObject(duint32 handle, const DRW_Field& field) {
 }
 
 bool dwgWriter15::writeField(const DRW_Field& field) {
-    if (m_version < DRW::AC1021)
+    // PR 13h — broaden gate from AC1021+ to AC1015+.  Encoder has a
+    // `version < AC1021` branch for m_formatString, mirrored in the
+    // parser, so the pre-R2007 path is exercised; nested CadValue /
+    // child values go through writeCadValue/readCadValue (also
+    // version-clean).
+    if (m_version < DRW::AC1015)
         return false;
 
     DRW_Field object = field;
