@@ -585,7 +585,6 @@ void LC_ActionDrawLineDirect::completeDoor() {
 
     m_pendingOpening.clear();
     m_pendingArcs.clear();
-    m_pendingOpening << RS_LineData(m_doorStart, doorEnd);
     m_pendingOpening << RS_LineData(hingePoint, leafEnd);
     m_pendingArcs    << RS_ArcData(hingePoint, m_doorWidth, leafAngle, wallEndAngle, reversed);
 
@@ -608,7 +607,6 @@ void LC_ActionDrawLineDirect::appendDoorPreview(QList<RS_Entity *> &list,
     RS_Vector leafEnd    = hingePoint + RS_Vector::polar(m_doorWidth, leafAngle);
     double wallEndAngle  = hingeAtStart ? m_doorWallAngle : m_doorWallAngle + M_PI;
     bool reversed        = (hingeAtStart == (swingSign > 0.0));
-    list << new RS_Line(m_doorStart, doorEnd);
     list << new RS_Line(hingePoint, leafEnd);
     list << new RS_Arc(RS_ArcData(hingePoint, m_doorWidth, leafAngle, wallEndAngle, reversed));
 }
