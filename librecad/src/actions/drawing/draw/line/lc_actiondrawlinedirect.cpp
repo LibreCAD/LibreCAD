@@ -14,10 +14,20 @@
 
 #include <QMouseEvent>
 
+#include "lc_archparser.h"
 #include "lc_linemath.h"
 #include "rs_arc.h"
 #include "rs_math.h"
 #include "rs_settings.h"
+
+// Try architectural fraction notation first; fall back to RS_Math::eval.
+// Architectural forms: "30-5/8", "4 7/8", "10-3", "24'7.75", etc.
+// Math expressions: "pi*10", "sqrt(2)*30", etc. pass through to eval unchanged.
+static double parseDrawFastDistance(const QString &s, bool &ok) {
+    double v = LC_ArchParser::parse(s, &ok);
+    if (!ok) v = RS_Math::eval(s, &ok);
+    return v;
+}
 
 LC_ActionDrawLineDirect::LC_ActionDrawLineDirect(LC_ActionContext *actionContext)
     : LC_AbstractActionDrawLine("Draw Fast", actionContext, RS2::ActionDrawLineDirect)
@@ -214,7 +224,7 @@ void LC_ActionDrawLineDirect::onCoordinateEvent(int status, [[maybe_unused]] boo
 
 bool LC_ActionDrawLineDirect::doProcessCommandValue(int status, const QString &c) {
     bool ok = false;
-    double distance = RS_Math::eval(c, &ok);
+    double distance = parseDrawFastDistance(c, ok);
     switch (status) {
         case SetPoint:
             if (ok && LC_LineMath::isMeaningful(distance)) {
@@ -290,7 +300,7 @@ bool LC_ActionDrawLineDirect::doProceedCommand([[maybe_unused]] int status, cons
     // Shared distance parser used by all three inline paths
     auto parseWidth = [&](const QString &s, double &out) -> bool {
         bool ok = false;
-        double v = RS_Math::eval(s, &ok);
+        double v = parseDrawFastDistance(s, ok);
         if (ok && LC_LineMath::isMeaningful(v)) { out = v; return true; }
         return false;
     };
