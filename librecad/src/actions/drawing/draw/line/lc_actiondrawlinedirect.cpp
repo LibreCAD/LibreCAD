@@ -671,43 +671,25 @@ void LC_ActionDrawLineDirect::startDoorMode() {
 }
 
 void LC_ActionDrawLineDirect::completeDoor() {
-    DoorSettings ds      = readDoorSettings();
-    double swingRad      = ds.swingAngleDeg * M_PI / 180.0;
-
-    RS_Vector doorEnd    = m_doorStart + RS_Vector::polar(m_doorWidth, m_doorWallAngle);
-    RS_Vector hingePoint = m_doorHingeAtStart ? m_doorStart : doorEnd;
-    double openingAngle  = m_doorHingeAtStart ? m_doorWallAngle : m_doorWallAngle + M_PI;
-    double leafAngle     = m_doorWallAngle + m_doorSwingSign * swingRad;
-    double wallEndAngle  = openingAngle; // direction from arcCenter toward free opening end
-    bool reversed        = (m_doorHingeAtStart == (m_doorSwingSign > 0.0));
+    DoorSettings ds = readDoorSettings();
+    DoorGeom g = computeDoorGeom(m_doorStart, m_doorWidth, m_doorWallAngle,
+                                  m_doorSwingSign, m_doorHingeAtStart, ds);
+    RS_Vector doorEnd = m_doorStart + RS_Vector::polar(m_doorWidth, m_doorWallAngle);
 
     m_pendingOpening.clear();
     m_pendingArcs.clear();
 
-    if (ds.withOpeningLine)
+    if (g.withOpeningLine)
         m_pendingOpening << RS_LineData(m_doorStart, doorEnd);
 
-    bool useRect = (ds.thickness > 0.0 && ds.thickness < m_doorWidth);
-    if (useRect) {
-        double t             = ds.thickness;
-        double radius        = m_doorWidth - t;
-        RS_Vector arcCenter  = hingePoint + RS_Vector::polar(t, openingAngle);
-        RS_Vector leafDir    = RS_Vector::polar(1.0, leafAngle);
-        RS_Vector rectA      = hingePoint;
-        RS_Vector rectB      = arcCenter;
-        RS_Vector rectC      = arcCenter + leafDir * m_doorWidth;
-        RS_Vector rectD      = hingePoint + leafDir * m_doorWidth;
-        m_pendingOpening << RS_LineData(rectA, rectB);
-        m_pendingOpening << RS_LineData(rectB, rectC);
-        m_pendingOpening << RS_LineData(rectC, rectD);
-        m_pendingOpening << RS_LineData(rectD, rectA);
-        m_pendingArcs    << RS_ArcData(arcCenter, radius, leafAngle, wallEndAngle, reversed);
+    if (g.withRect) {
+        m_pendingOpening << RS_LineData(g.hingeA, g.insideB);  // hinge-end thickness line
+        m_pendingOpening << RS_LineData(g.insideB, g.insideC); // inside edge (to arc)
+        m_pendingOpening << RS_LineData(g.hingeA, g.outsideD); // outside edge
     } else {
-        // thickness == 0 or thickness >= doorWidth: single line leaf (original behavior)
-        RS_Vector leafEnd = hingePoint + RS_Vector::polar(m_doorWidth, leafAngle);
-        m_pendingOpening << RS_LineData(hingePoint, leafEnd);
-        m_pendingArcs    << RS_ArcData(hingePoint, m_doorWidth, leafAngle, wallEndAngle, reversed);
+        m_pendingOpening << RS_LineData(g.hingeA, g.outsideD); // single leaf line
     }
+    m_pendingArcs << RS_ArcData(g.hingeA, g.arcRadius, g.leafAngle, g.arcEndAngle, g.arcReversed);
 
     m_actionData->prevPoints.push_back(m_doorStart);
     m_actionData->data.startpoint = m_doorStart;
@@ -722,39 +704,22 @@ void LC_ActionDrawLineDirect::completeDoor() {
 void LC_ActionDrawLineDirect::appendDoorPreview(QList<RS_Entity *> &list,
                                                  double swingSign,
                                                  bool hingeAtStart) const {
-    DoorSettings ds      = readDoorSettings();
-    double swingRad      = ds.swingAngleDeg * M_PI / 180.0;
+    DoorSettings ds = readDoorSettings();
+    DoorGeom g = computeDoorGeom(m_doorStart, m_doorWidth, m_doorWallAngle,
+                                  swingSign, hingeAtStart, ds);
+    RS_Vector doorEnd = m_doorStart + RS_Vector::polar(m_doorWidth, m_doorWallAngle);
 
-    RS_Vector doorEnd    = m_doorStart + RS_Vector::polar(m_doorWidth, m_doorWallAngle);
-    RS_Vector hingePoint = hingeAtStart ? m_doorStart : doorEnd;
-    double openingAngle  = hingeAtStart ? m_doorWallAngle : m_doorWallAngle + M_PI;
-    double leafAngle     = m_doorWallAngle + swingSign * swingRad;
-    double wallEndAngle  = openingAngle;
-    bool reversed        = (hingeAtStart == (swingSign > 0.0));
-
-    if (ds.withOpeningLine)
+    if (g.withOpeningLine)
         list << new RS_Line(m_doorStart, doorEnd);
 
-    bool useRect = (ds.thickness > 0.0 && ds.thickness < m_doorWidth);
-    if (useRect) {
-        double t             = ds.thickness;
-        double radius        = m_doorWidth - t;
-        RS_Vector arcCenter  = hingePoint + RS_Vector::polar(t, openingAngle);
-        RS_Vector leafDir    = RS_Vector::polar(1.0, leafAngle);
-        RS_Vector rectA      = hingePoint;
-        RS_Vector rectB      = arcCenter;
-        RS_Vector rectC      = arcCenter + leafDir * m_doorWidth;
-        RS_Vector rectD      = hingePoint + leafDir * m_doorWidth;
-        list << new RS_Line(rectA, rectB);
-        list << new RS_Line(rectB, rectC);
-        list << new RS_Line(rectC, rectD);
-        list << new RS_Line(rectD, rectA);
-        list << new RS_Arc(RS_ArcData(arcCenter, radius, leafAngle, wallEndAngle, reversed));
+    if (g.withRect) {
+        list << new RS_Line(g.hingeA, g.insideB);
+        list << new RS_Line(g.insideB, g.insideC);
+        list << new RS_Line(g.hingeA, g.outsideD);
     } else {
-        RS_Vector leafEnd = hingePoint + RS_Vector::polar(m_doorWidth, leafAngle);
-        list << new RS_Line(hingePoint, leafEnd);
-        list << new RS_Arc(RS_ArcData(hingePoint, m_doorWidth, leafAngle, wallEndAngle, reversed));
+        list << new RS_Line(g.hingeA, g.outsideD);
     }
+    list << new RS_Arc(RS_ArcData(g.hingeA, g.arcRadius, g.leafAngle, g.arcEndAngle, g.arcReversed));
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
