@@ -13,6 +13,7 @@
 #include "lc_actiondrawlinedirect.h"
 
 #include <QMouseEvent>
+#include <cmath>
 
 #include "lc_archparser.h"
 #include "lc_linemath.h"
@@ -81,9 +82,9 @@ void LC_ActionDrawLineDirect::doPreparePreviewEntities([[maybe_unused]] LC_Mouse
         case SetOpeningAim: {
             double depth = 4.0;
             {
-                LC_GROUP_GUARD("/Defaults");
+                LC_GROUP_GUARD("Defaults");
                 bool ok = false;
-                double d = RS_SETTINGS->readStr("/OpeningDepth", "4").toDouble(&ok);
+                double d = LC_GET_STR("OpeningDepth", "4").toDouble(&ok);
                 if (ok && d > 0.0) depth = d;
             }
             RS_Vector wallDir = RS_Vector::polar(1.0, m_openingWallAngle);
@@ -102,9 +103,9 @@ void LC_ActionDrawLineDirect::doPreparePreviewEntities([[maybe_unused]] LC_Mouse
             if (!LC_LineMath::isNonZeroLineLength(m_windowStart, snap)) return;
             double offset = 1.5;
             {
-                LC_GROUP_GUARD("/Defaults");
+                LC_GROUP_GUARD("Defaults");
                 bool ok = false;
-                double d = RS_SETTINGS->readStr("/WindowOffsetWidth", "1.5").toDouble(&ok);
+                double d = LC_GET_STR("WindowOffsetWidth", "1.5").toDouble(&ok);
                 if (ok && d > 0.0) offset = d;
             }
             double windowAngle = (snap - m_windowStart).angle();
@@ -476,9 +477,9 @@ void LC_ActionDrawLineDirect::startOpeningMode() {
 void LC_ActionDrawLineDirect::completeOpening(const RS_Vector &snap) {
     double depth = 4.0;
     {
-        LC_GROUP_GUARD("/Defaults");
+        LC_GROUP_GUARD("Defaults");
         bool ok = false;
-        double d = RS_SETTINGS->readStr("/OpeningDepth", "4").toDouble(&ok);
+        double d = LC_GET_STR("OpeningDepth", "4").toDouble(&ok);
         if (ok && d > 0.0) depth = d;
     }
     RS_Vector wallDir = RS_Vector::polar(1.0, m_openingWallAngle);
@@ -518,9 +519,9 @@ void LC_ActionDrawLineDirect::completeWindow(const RS_Vector &snap) {
     if (!LC_LineMath::isNonZeroLineLength(m_windowStart, snap)) return;
     double offset = 1.5;
     {
-        LC_GROUP_GUARD("/Defaults");
+        LC_GROUP_GUARD("Defaults");
         bool ok = false;
-        double d = RS_SETTINGS->readStr("/WindowOffsetWidth", "1.5").toDouble(&ok);
+        double d = LC_GET_STR("WindowOffsetWidth", "1.5").toDouble(&ok);
         if (ok && d > 0.0) offset = d;
     }
     double windowAngle = (snap - m_windowStart).angle();
@@ -548,9 +549,9 @@ void LC_ActionDrawLineDirect::completeWindowAlongWall() {
     double angle = getLastWallAngle();
     double offset = 1.5;
     {
-        LC_GROUP_GUARD("/Defaults");
+        LC_GROUP_GUARD("Defaults");
         bool ok = false;
-        double d = RS_SETTINGS->readStr("/WindowOffsetWidth", "1.5").toDouble(&ok);
+        double d = LC_GET_STR("WindowOffsetWidth", "1.5").toDouble(&ok);
         if (ok && d > 0.0) offset = d;
     }
     RS_Vector windowEnd = m_windowStart + RS_Vector::polar(m_windowWidth, angle);
@@ -573,6 +574,90 @@ void LC_ActionDrawLineDirect::completeWindowAlongWall() {
     updateMouseButtonHints();
 }
 
+// ── door settings ────────────────────────────────────────────────────────────
+
+namespace {
+    struct DoorSettings {
+        double thickness{1.5};       // 0 = single line leaf
+        double swingAngleDeg{90.0};  // 45 or 90
+        bool withOpeningLine{false}; // draw span line across opening
+    };
+
+    DoorSettings readDoorSettings() {
+        DoorSettings s;
+        LC_GROUP_GUARD("Defaults");
+        bool ok = false;
+        double t = LC_GET_STR("DrawFastDoorThickness", "1.5").toDouble(&ok);
+        if (ok && t >= 0.0) s.thickness = t;
+        int ang = LC_GET_STR("DrawFastDoorSwingAngle", "90").toInt(&ok);
+        if (ok && (ang == 45 || ang == 90)) s.swingAngleDeg = ang;
+        int design = LC_GET_STR("DrawFastDoorDesign", "0").toInt(&ok);
+        s.withOpeningLine = (design == 1);
+        return s;
+    }
+
+    // Pre-computed door geometry, shared by completeDoor() and appendDoorPreview().
+    struct DoorGeom {
+        RS_Vector hingeA;    // outside hinge corner
+        RS_Vector insideB;   // inside hinge corner (valid when withRect)
+        RS_Vector insideC;   // inside free corner — on arc (valid when withRect)
+        RS_Vector outsideD;  // outside free corner (= leaf tip for single-line)
+        double    arcRadius; // always doorWidth
+        double    leafAngle;
+        double    arcEndAngle;
+        bool      arcReversed;
+        bool      withRect;
+        bool      withOpeningLine;
+    };
+
+    // Compute door geometry.
+    //
+    // Arc is always centered at hingeA with radius = doorWidth, same as the
+    // single-line case.  For thick doors the inside edge endpoint C is found by
+    // intersecting the ray from insideB (in leafDir direction) with that arc circle:
+    //
+    //   |bOffset + t*leafDir|² = doorWidth²
+    //   t = -dot + sqrt(dot² - thickness² + doorWidth²)
+    //
+    // where bOffset = insideB - hingeA, dot = bOffset · leafDir.
+    DoorGeom computeDoorGeom(
+        RS_Vector doorStart, double doorWidth, double wallAngle,
+        double swingSign, bool hingeAtStart, const DoorSettings &ds)
+    {
+        double swingRad   = ds.swingAngleDeg * M_PI / 180.0;
+        RS_Vector doorEnd = doorStart + RS_Vector::polar(doorWidth, wallAngle);
+        RS_Vector hingePoint = hingeAtStart ? doorStart : doorEnd;
+        double openingAngle  = hingeAtStart ? wallAngle : wallAngle + M_PI;
+        double leafAngle     = wallAngle + swingSign * swingRad;
+        bool   reversed      = (hingeAtStart == (swingSign > 0.0));
+
+        DoorGeom g;
+        g.hingeA        = hingePoint;
+        g.outsideD      = hingePoint + RS_Vector::polar(doorWidth, leafAngle);
+        g.arcRadius     = doorWidth;
+        g.leafAngle     = leafAngle;
+        g.arcEndAngle   = openingAngle;
+        g.arcReversed   = reversed;
+        g.withOpeningLine = ds.withOpeningLine;
+
+        bool useRect = (ds.thickness > 0.0 && ds.thickness < doorWidth);
+        g.withRect   = useRect;
+
+        if (useRect) {
+            double thick      = ds.thickness;
+            RS_Vector bOffset = RS_Vector::polar(thick, openingAngle);
+            g.insideB         = hingePoint + bOffset;
+            RS_Vector leafDir = RS_Vector::polar(1.0, leafAngle);
+            double dot        = bOffset.x * leafDir.x + bOffset.y * leafDir.y;
+            double disc       = dot * dot - thick * thick + doorWidth * doorWidth;
+            double t          = -dot + (disc > 0.0 ? std::sqrt(disc) : 0.0);
+            g.insideC         = g.insideB + leafDir * t;
+        }
+
+        return g;
+    }
+} // namespace
+
 void LC_ActionDrawLineDirect::startDoorMode() {
     if (getStatus() != SetPoint) return;
     if (m_actionData->prevPoints.empty()) {
@@ -586,17 +671,43 @@ void LC_ActionDrawLineDirect::startDoorMode() {
 }
 
 void LC_ActionDrawLineDirect::completeDoor() {
+    DoorSettings ds      = readDoorSettings();
+    double swingRad      = ds.swingAngleDeg * M_PI / 180.0;
+
     RS_Vector doorEnd    = m_doorStart + RS_Vector::polar(m_doorWidth, m_doorWallAngle);
     RS_Vector hingePoint = m_doorHingeAtStart ? m_doorStart : doorEnd;
-    double leafAngle     = m_doorWallAngle + m_doorSwingSign * M_PI / 2.0;
-    RS_Vector leafEnd    = hingePoint + RS_Vector::polar(m_doorWidth, leafAngle);
-    double wallEndAngle  = m_doorHingeAtStart ? m_doorWallAngle : m_doorWallAngle + M_PI;
+    double openingAngle  = m_doorHingeAtStart ? m_doorWallAngle : m_doorWallAngle + M_PI;
+    double leafAngle     = m_doorWallAngle + m_doorSwingSign * swingRad;
+    double wallEndAngle  = openingAngle; // direction from arcCenter toward free opening end
     bool reversed        = (m_doorHingeAtStart == (m_doorSwingSign > 0.0));
 
     m_pendingOpening.clear();
     m_pendingArcs.clear();
-    m_pendingOpening << RS_LineData(hingePoint, leafEnd);
-    m_pendingArcs    << RS_ArcData(hingePoint, m_doorWidth, leafAngle, wallEndAngle, reversed);
+
+    if (ds.withOpeningLine)
+        m_pendingOpening << RS_LineData(m_doorStart, doorEnd);
+
+    bool useRect = (ds.thickness > 0.0 && ds.thickness < m_doorWidth);
+    if (useRect) {
+        double t             = ds.thickness;
+        double radius        = m_doorWidth - t;
+        RS_Vector arcCenter  = hingePoint + RS_Vector::polar(t, openingAngle);
+        RS_Vector leafDir    = RS_Vector::polar(1.0, leafAngle);
+        RS_Vector rectA      = hingePoint;
+        RS_Vector rectB      = arcCenter;
+        RS_Vector rectC      = arcCenter + leafDir * m_doorWidth;
+        RS_Vector rectD      = hingePoint + leafDir * m_doorWidth;
+        m_pendingOpening << RS_LineData(rectA, rectB);
+        m_pendingOpening << RS_LineData(rectB, rectC);
+        m_pendingOpening << RS_LineData(rectC, rectD);
+        m_pendingOpening << RS_LineData(rectD, rectA);
+        m_pendingArcs    << RS_ArcData(arcCenter, radius, leafAngle, wallEndAngle, reversed);
+    } else {
+        // thickness == 0 or thickness >= doorWidth: single line leaf (original behavior)
+        RS_Vector leafEnd = hingePoint + RS_Vector::polar(m_doorWidth, leafAngle);
+        m_pendingOpening << RS_LineData(hingePoint, leafEnd);
+        m_pendingArcs    << RS_ArcData(hingePoint, m_doorWidth, leafAngle, wallEndAngle, reversed);
+    }
 
     m_actionData->prevPoints.push_back(m_doorStart);
     m_actionData->data.startpoint = m_doorStart;
@@ -611,14 +722,39 @@ void LC_ActionDrawLineDirect::completeDoor() {
 void LC_ActionDrawLineDirect::appendDoorPreview(QList<RS_Entity *> &list,
                                                  double swingSign,
                                                  bool hingeAtStart) const {
+    DoorSettings ds      = readDoorSettings();
+    double swingRad      = ds.swingAngleDeg * M_PI / 180.0;
+
     RS_Vector doorEnd    = m_doorStart + RS_Vector::polar(m_doorWidth, m_doorWallAngle);
-    double leafAngle     = m_doorWallAngle + swingSign * M_PI / 2.0;
     RS_Vector hingePoint = hingeAtStart ? m_doorStart : doorEnd;
-    RS_Vector leafEnd    = hingePoint + RS_Vector::polar(m_doorWidth, leafAngle);
-    double wallEndAngle  = hingeAtStart ? m_doorWallAngle : m_doorWallAngle + M_PI;
+    double openingAngle  = hingeAtStart ? m_doorWallAngle : m_doorWallAngle + M_PI;
+    double leafAngle     = m_doorWallAngle + swingSign * swingRad;
+    double wallEndAngle  = openingAngle;
     bool reversed        = (hingeAtStart == (swingSign > 0.0));
-    list << new RS_Line(hingePoint, leafEnd);
-    list << new RS_Arc(RS_ArcData(hingePoint, m_doorWidth, leafAngle, wallEndAngle, reversed));
+
+    if (ds.withOpeningLine)
+        list << new RS_Line(m_doorStart, doorEnd);
+
+    bool useRect = (ds.thickness > 0.0 && ds.thickness < m_doorWidth);
+    if (useRect) {
+        double t             = ds.thickness;
+        double radius        = m_doorWidth - t;
+        RS_Vector arcCenter  = hingePoint + RS_Vector::polar(t, openingAngle);
+        RS_Vector leafDir    = RS_Vector::polar(1.0, leafAngle);
+        RS_Vector rectA      = hingePoint;
+        RS_Vector rectB      = arcCenter;
+        RS_Vector rectC      = arcCenter + leafDir * m_doorWidth;
+        RS_Vector rectD      = hingePoint + leafDir * m_doorWidth;
+        list << new RS_Line(rectA, rectB);
+        list << new RS_Line(rectB, rectC);
+        list << new RS_Line(rectC, rectD);
+        list << new RS_Line(rectD, rectA);
+        list << new RS_Arc(RS_ArcData(arcCenter, radius, leafAngle, wallEndAngle, reversed));
+    } else {
+        RS_Vector leafEnd = hingePoint + RS_Vector::polar(m_doorWidth, leafAngle);
+        list << new RS_Line(hingePoint, leafEnd);
+        list << new RS_Arc(RS_ArcData(hingePoint, m_doorWidth, leafAngle, wallEndAngle, reversed));
+    }
 }
 
 // ─────────────────────────────────────────────────────────────────────────────

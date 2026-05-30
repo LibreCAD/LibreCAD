@@ -589,6 +589,13 @@ void QG_DlgOptionsGeneral::init(){
         leDefAngleBaseZero->setText(defaultAnglesBase);
 
         cbInteractiveInputInActionToolbarEnabled->setChecked(LC_GET_BOOL("InteractiveInputEnabled", true));
+
+        // Draw Fast preset defaults
+        sbDrawFastOpeningDepth->setValue(LC_GET_STR("OpeningDepth", "4").toDouble());
+        sbDrawFastWindowOffsetWidth->setValue(LC_GET_STR("WindowOffsetWidth", "1.5").toDouble());
+        sbDrawFastDoorThickness->setValue(LC_GET_STR("DrawFastDoorThickness", "1.5").toDouble());
+        cbDrawFastDoorSwingAngle->setCurrentText(LC_GET_STR("DrawFastDoorSwingAngle", "90"));
+        cbDrawFastDoorDesign->setCurrentIndex(LC_GET_STR("DrawFastDoorDesign", "0").toInt());
     }
     LC_GROUP_END();
 
@@ -894,6 +901,13 @@ void QG_DlgOptionsGeneral::ok(){
             LC_SET("AnglesBaseAngle", leDefAngleBaseZero->text());
             LC_SET("AnglesCounterClockwise", rbDefAngleBasePositive->isChecked());
             LC_SET("InteractiveInputEnabled", cbInteractiveInputInActionToolbarEnabled->isChecked());
+
+            // Draw Fast preset defaults
+            LC_SET("OpeningDepth", QString::number(sbDrawFastOpeningDepth->value()));
+            LC_SET("WindowOffsetWidth", QString::number(sbDrawFastWindowOffsetWidth->value()));
+            LC_SET("DrawFastDoorThickness", QString::number(sbDrawFastDoorThickness->value()));
+            LC_SET("DrawFastDoorSwingAngle", cbDrawFastDoorSwingAngle->currentText());
+            LC_SET("DrawFastDoorDesign", QString::number(cbDrawFastDoorDesign->currentIndex()));
         }
         LC_GROUP_END();
 
