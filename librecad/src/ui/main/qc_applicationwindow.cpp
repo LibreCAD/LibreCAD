@@ -31,13 +31,17 @@
 
 
 #include <QCloseEvent>
+#include <QGuiApplication>
 #include <QMdiArea>
 #include <QMessageBox>
 #include <QMimeData>
 #include <QPushButton>
 #include <QStatusBar>
+#include <QStyleHints>
 #include <QTimer>
 #include <QDockWidget>
+
+#include "lc_iconcolorsoptions.h"
 
 #include "lc_actiongroupmanager.h"
 #include "lc_actionoptionsmanager.h"
@@ -125,6 +129,21 @@ QC_ApplicationWindow::QC_ApplicationWindow(){
 
     LC_ApplicationWindowInitializer initializer(this);
     initializer.initApplication();
+
+#if QT_VERSION >= QT_VERSION_CHECK(6, 5, 0)
+    // Re-apply icon styling defaults when the OS color scheme flips so the
+    // toolbar icons don't go invisible on a newly-dark palette. Stored user
+    // overrides are preserved because loadColor() returns the stored value
+    // when present and falls back to the (now theme-aware) default only
+    // when the key is absent.
+    connect(QGuiApplication::styleHints(), &QStyleHints::colorSchemeChanged,
+            this, [this](Qt::ColorScheme) {
+                LC_IconColorsOptions opts;
+                opts.loadSettings();
+                opts.applyOptions();
+                fireIconsRefresh();
+            });
+#endif
 }
 /**
  * Destructor.

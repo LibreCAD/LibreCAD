@@ -21,7 +21,10 @@
  ******************************************************************************/
 
 #include <QFile>
+#include <QGuiApplication>
+#include <QPalette>
 #include <QRegularExpression>
+#include <QStyleHints>
 #include <QJsonObject>
 #include <QJsonDocument>
 #include <QJsonArray>
@@ -32,6 +35,43 @@
 #include "rs_settings.h"
 #include "rs_debug.h"
 
+namespace {
+    // Light-scheme template defaults — match the SVG template colors so that
+    // the icon engine's replaceColor() short-circuits and the SVG renders
+    // exactly as authored.
+    constexpr const char* DEFAULT_MAIN_LIGHT       = "#000";
+    constexpr const char* DEFAULT_ACCENT           = "#00ff7f";
+    constexpr const char* DEFAULT_BACKGROUND_LIGHT = "#fff";
+
+    // Dark-scheme defaults — picked to avoid substring collisions in the
+    // engine's naive three-pass QString::replace() at lc_svgiconengine.cpp:368.
+    // Main must not contain "#fff" (would be clobbered by the BG pass);
+    // Background must not contain "#000" (would be clobbered by the Main pass).
+    constexpr const char* DEFAULT_MAIN_DARK       = "#e6e6e6";
+    constexpr const char* DEFAULT_BACKGROUND_DARK = "#1e1e1e";
+
+    inline const char* defaultMain() {
+        return LC_IconColorsOptions::isDarkColorScheme()
+            ? DEFAULT_MAIN_DARK : DEFAULT_MAIN_LIGHT;
+    }
+    inline const char* defaultBackground() {
+        return LC_IconColorsOptions::isDarkColorScheme()
+            ? DEFAULT_BACKGROUND_DARK : DEFAULT_BACKGROUND_LIGHT;
+    }
+}
+
+bool LC_IconColorsOptions::isDarkColorScheme() {
+#if QT_VERSION >= QT_VERSION_CHECK(6, 5, 0)
+    auto scheme = QGuiApplication::styleHints()->colorScheme();
+    if (scheme != Qt::ColorScheme::Unknown) {
+        return scheme == Qt::ColorScheme::Dark;
+    }
+    // Fall through when Qt can't tell us (some Linux platform themes,
+    // headless builds) — use palette luminance as a fallback.
+#endif
+    return QGuiApplication::palette().color(QPalette::Window).lightnessF() < 0.5;
+}
+
 LC_IconColorsOptions::LC_IconColorsOptions() {
 }
 
@@ -41,9 +81,9 @@ LC_IconColorsOptions::LC_IconColorsOptions(LC_IconColorsOptions &other){
 
 void LC_IconColorsOptions::resetToDefaults() {
     colors.clear();
-    setColor(LC_SVGIconEngineAPI::AnyMode, LC_SVGIconEngineAPI::AnyState, LC_SVGIconEngineAPI::ColorType::Main, "#000");
-    setColor(LC_SVGIconEngineAPI::AnyMode, LC_SVGIconEngineAPI::AnyState, LC_SVGIconEngineAPI::ColorType::Accent, "#00ff7f");
-    setColor(LC_SVGIconEngineAPI::AnyMode, LC_SVGIconEngineAPI::AnyState, LC_SVGIconEngineAPI::ColorType::Background, "#fff");
+    setColor(LC_SVGIconEngineAPI::AnyMode, LC_SVGIconEngineAPI::AnyState, LC_SVGIconEngineAPI::ColorType::Main, defaultMain());
+    setColor(LC_SVGIconEngineAPI::AnyMode, LC_SVGIconEngineAPI::AnyState, LC_SVGIconEngineAPI::ColorType::Accent, DEFAULT_ACCENT);
+    setColor(LC_SVGIconEngineAPI::AnyMode, LC_SVGIconEngineAPI::AnyState, LC_SVGIconEngineAPI::ColorType::Background, defaultBackground());
 }
 
 void LC_IconColorsOptions::apply(LC_IconColorsOptions &other) {
@@ -95,9 +135,9 @@ void LC_IconColorsOptions::applyColor(LC_SVGIconEngineAPI::IconMode mode, LC_SVG
 void LC_IconColorsOptions::loadSettings() {
     LC_GROUP("UiIconsStyling");
     {
-        loadColor(LC_SVGIconEngineAPI::AnyMode, LC_SVGIconEngineAPI::AnyState, LC_SVGIconEngineAPI::ColorType::Main, "#000");
-        loadColor(LC_SVGIconEngineAPI::AnyMode, LC_SVGIconEngineAPI::AnyState, LC_SVGIconEngineAPI::ColorType::Accent, "#00ff7f");
-        loadColor(LC_SVGIconEngineAPI::AnyMode, LC_SVGIconEngineAPI::AnyState, LC_SVGIconEngineAPI::ColorType::Background, "#fff");
+        loadColor(LC_SVGIconEngineAPI::AnyMode, LC_SVGIconEngineAPI::AnyState, LC_SVGIconEngineAPI::ColorType::Main, defaultMain());
+        loadColor(LC_SVGIconEngineAPI::AnyMode, LC_SVGIconEngineAPI::AnyState, LC_SVGIconEngineAPI::ColorType::Accent, DEFAULT_ACCENT);
+        loadColor(LC_SVGIconEngineAPI::AnyMode, LC_SVGIconEngineAPI::AnyState, LC_SVGIconEngineAPI::ColorType::Background, defaultBackground());
 
         loadColor(LC_SVGIconEngineAPI::Active, LC_SVGIconEngineAPI::On, LC_SVGIconEngineAPI::ColorType::Main, "");
         loadColor(LC_SVGIconEngineAPI::Active, LC_SVGIconEngineAPI::On, LC_SVGIconEngineAPI::ColorType::Accent, "");
