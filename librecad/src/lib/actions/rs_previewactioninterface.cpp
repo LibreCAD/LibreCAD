@@ -223,15 +223,24 @@ bool RS_PreviewActionInterface::trySnapToRelZeroCoordinateEvent(const LC_MouseEv
 }
 
 RS_Vector RS_PreviewActionInterface::getSnapAngleAwarePoint(const LC_MouseEvent *e, const RS_Vector& basepoint, const RS_Vector& pos, bool drawMark, bool force){
+    // No valid base point yet (e.g. first point not yet clicked): leave pos untouched.
+    if (!basepoint.valid) return pos;
     RS_Vector result = pos;
-    if (force){
-        RS_Vector freePosition  = e->graphPoint; // fixme = test, review and decide whether free snap is actually needed there. May be use snapMode instead of free?
-        // todo -  if there are restrictions or snap to grid, snap to angle will not work in snapper... yet this is double calc!
-        if(!(m_snapMode.restriction != RS2::RestrictNothing || isSnapToGrid())){
-            result = doSnapToAngle(freePosition, basepoint, m_snapToAngleStep);
-            if (drawMark){
-                previewSnapAngleMark(basepoint, result);
-            }
+    bool noRestrictionOrGrid = !(m_snapMode.restriction != RS2::RestrictNothing || isSnapToGrid());
+    if (force) {
+        // Shift: force angle snap regardless of object snaps; uses PolarSnapAngle step.
+        if (noRestrictionOrGrid) {
+            result = doSnapToAngle(e->graphPoint, basepoint, m_snapToAngleStep);
+            if (drawMark) previewSnapAngleMark(basepoint, result);
+        }
+    } else if (m_snapMode.snapAngle) {
+        // Toolbar Polar Snap: only apply when no object/grid snap pulled pos away from
+        // the free cursor.  RS_Vector::operator== uses RS_TOLERANCE (1e-10): snapPoint()
+        // returns e->graphPoint bit-identically when free snap is active, so this guard
+        // correctly protects endpoint, center, intersection, etc.
+        if (noRestrictionOrGrid && (pos == e->graphPoint)) {
+            result = doSnapToAngle(e->graphPoint, basepoint, m_snapToAngleStep);
+            if (drawMark) previewSnapAngleMark(basepoint, result);
         }
     }
     return result;
