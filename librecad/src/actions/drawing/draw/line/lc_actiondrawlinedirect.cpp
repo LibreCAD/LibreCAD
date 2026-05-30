@@ -628,8 +628,12 @@ namespace {
         RS_Vector doorEnd = doorStart + RS_Vector::polar(doorWidth, wallAngle);
         RS_Vector hingePoint = hingeAtStart ? doorStart : doorEnd;
         double openingAngle  = hingeAtStart ? wallAngle : wallAngle + M_PI;
-        double leafAngle     = wallAngle + swingSign * swingRad;
-        bool   reversed      = (hingeAtStart == (swingSign > 0.0));
+        // For hinge-at-start the leaf swings away from openingAngle by +swingSign*swingRad.
+        // For hinge-at-end the opening direction is reversed (openingAngle = wallAngle+π),
+        // so the sign must flip to keep the leaf on the same absolute wall side.
+        double hingeDir  = hingeAtStart ? 1.0 : -1.0;
+        double leafAngle = openingAngle + hingeDir * swingSign * swingRad;
+        bool   reversed  = (hingeAtStart == (swingSign > 0.0));
 
         DoorGeom g;
         g.hingeA        = hingePoint;
@@ -644,8 +648,15 @@ namespace {
         g.withRect   = useRect;
 
         if (useRect) {
-            double thick      = ds.thickness;
-            RS_Vector bOffset = RS_Vector::polar(thick, openingAngle);
+            double thick = ds.thickness;
+            // The hinge-end thickness line A→B must be perpendicular to leafDir.
+            // Which of the two perpendiculars points toward the opening interior depends
+            // on both the hinge side and the swing sign; the correct direction is
+            // leafAngle + thickSign * π/2, where thickSign is determined by:
+            //   (hingeAtStart == swingSign<0) → +1, else → -1.
+            // For 90° doors this reduces to the old openingAngle formula.
+            double thickSign  = ((hingeAtStart == (swingSign < 0.0)) ? 1.0 : -1.0);
+            RS_Vector bOffset = RS_Vector::polar(thick, leafAngle + thickSign * M_PI / 2.0);
             g.insideB         = hingePoint + bOffset;
             RS_Vector leafDir = RS_Vector::polar(1.0, leafAngle);
             double dot        = bOffset.x * leafDir.x + bOffset.y * leafDir.y;
