@@ -550,7 +550,17 @@ bool dwgReader18::readDwgClasses(){
 
 /***************/
 
-    strBuf->setPosition(strBuf->getPosition()+1);//skip remaining bits
+    // PR 13g — only advance to the next byte when the bit cursor sits
+    // mid-byte (mirrors the writer's `alignToByte`, which is a no-op if
+    // already byte-aligned).  The previous unconditional `+1` consumed
+    // an extra byte when the final class entry's bit stream landed on a
+    // byte boundary, causing reader/writer misalignment that surfaced
+    // when an 11-entry CLASSES section ended at `bitPos==0` (LAYER_INDEX
+    // at AC1018 smoke).
+    if (strBuf->getBitPos() != 0) {
+        strBuf->setPosition(strBuf->getPosition()+1);
+        strBuf->setBitPos(0);
+    }
     DRW_DBG("\nCRC: "); DRW_DBGH(strBuf->getRawShort16());
     if (version > DRW::AC1018){
         DRW_DBG("\nunknown CRC: "); DRW_DBGH(strBuf->getRawShort16());

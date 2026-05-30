@@ -1132,7 +1132,10 @@ void dwgWriter15::emitScaleObject(duint32 handle, const DRW_Scale& scale) {
 }
 
 bool dwgWriter15::writeScale(const DRW_Scale& scale) {
-    if (m_version < DRW::AC1021)
+    // PR 13g — broaden gate from AC1021+ to AC1015+.  Encoder is
+    // version-clean (body-only emit; common handle prefix written by
+    // emitScaleObject itself).
+    if (m_version < DRW::AC1015)
         return false;
 
     DRW_Scale object = scale;
@@ -1162,7 +1165,10 @@ void dwgWriter15::emitIDBufferObject(duint32 handle, const DRW_IDBuffer& idBuffe
 }
 
 bool dwgWriter15::writeIDBuffer(const DRW_IDBuffer& idBuffer) {
-    if (m_version < DRW::AC1021)
+    // PR 13g — broaden gate from AC1021+ to AC1015+.  Encoder is
+    // version-clean (only the standard hb = version > AC1018 split-buffer
+    // routing).
+    if (m_version < DRW::AC1015)
         return false;
 
     DRW_IDBuffer object = idBuffer;
@@ -1193,7 +1199,10 @@ void dwgWriter15::emitLayerIndexObject(duint32 handle,
 }
 
 bool dwgWriter15::writeLayerIndex(const DRW_LayerIndex& layerIndex) {
-    if (m_version < DRW::AC1021)
+    // PR 13g — broaden gate from AC1021+ to AC1015+.  Encoder is
+    // version-clean (only the standard sb/hb = version > AC1018 split-
+    // buffer routing).
+    if (m_version < DRW::AC1015)
         return false;
 
     DRW_LayerIndex object = layerIndex;
@@ -1225,7 +1234,11 @@ void dwgWriter15::emitSpatialIndexObject(duint32 handle,
 }
 
 bool dwgWriter15::writeSpatialIndex(const DRW_SpatialIndex& spatialIndex) {
-    if (m_version < DRW::AC1021)
+    // PR 13g — broaden gate from AC1021+ to AC1015+.  Encoder gates the
+    // common handle prefix on `version > AC1018` (parser does the same),
+    // so at AC1015/AC1018 the wrapper emits an opaque body and no handle
+    // tail — matching the parser's expectation.
+    if (m_version < DRW::AC1015)
         return false;
 
     DRW_SpatialIndex object = spatialIndex;
@@ -1256,7 +1269,10 @@ void dwgWriter15::emitDictionaryVarObject(duint32 handle,
 }
 
 bool dwgWriter15::writeDictionaryVar(const DRW_DictionaryVar& dictionaryVar) {
-    if (m_version < DRW::AC1021)
+    // PR 13g — broaden gate from AC1021+ to AC1015+.  Encoder is
+    // version-clean (only the standard sb/hb = version > AC1018 split-
+    // buffer routing).
+    if (m_version < DRW::AC1015)
         return false;
 
     DRW_DictionaryVar object = dictionaryVar;

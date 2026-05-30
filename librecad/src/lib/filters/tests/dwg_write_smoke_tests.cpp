@@ -2588,7 +2588,10 @@ TEST_CASE("dwgRW writes and reads GEODATA metadata",
 // NOLINTNEXTLINE(readability-identifier-naming)
 TEST_CASE("dwgRW writes and reads SCALE metadata",
           "[dwg-write][scale]") {
-    const DRW::Version versions[] = {DRW::AC1024, DRW::AC1027, DRW::AC1032};
+    // PR 13g — gate broadened to AC1015+; smoke array extended to cover
+    // the new pre-AC1021 paths.
+    const DRW::Version versions[] = {DRW::AC1015, DRW::AC1018,
+                                     DRW::AC1024, DRW::AC1027, DRW::AC1032};
 
     for (DRW::Version version : versions) {
         const std::string path = tempPath("native_scale.dwg");
@@ -2628,7 +2631,10 @@ TEST_CASE("dwgRW writes and reads SCALE metadata",
 // NOLINTNEXTLINE(readability-identifier-naming)
 TEST_CASE("dwgRW writes and reads IDBUFFER metadata",
           "[dwg-write][idbuffer]") {
-    const DRW::Version versions[] = {DRW::AC1024, DRW::AC1027, DRW::AC1032};
+    // PR 13g — gate broadened to AC1015+; smoke array extended to cover
+    // the new pre-AC1021 paths.
+    const DRW::Version versions[] = {DRW::AC1015, DRW::AC1018,
+                                     DRW::AC1024, DRW::AC1027, DRW::AC1032};
 
     for (DRW::Version version : versions) {
         const std::string path = tempPath("native_idbuffer.dwg");
@@ -2668,7 +2674,10 @@ TEST_CASE("dwgRW writes and reads IDBUFFER metadata",
 // NOLINTNEXTLINE(readability-identifier-naming)
 TEST_CASE("dwgRW writes and reads LAYER_INDEX metadata",
           "[dwg-write][layer-index]") {
-    const DRW::Version versions[] = {DRW::AC1024, DRW::AC1027, DRW::AC1032};
+    // PR 13g — gate broadened to AC1015+; smoke array extended to cover
+    // the new pre-AC1021 paths.
+    const DRW::Version versions[] = {DRW::AC1015, DRW::AC1018,
+                                     DRW::AC1024, DRW::AC1027, DRW::AC1032};
 
     for (DRW::Version version : versions) {
         const std::string path = tempPath("native_layer_index.dwg");
@@ -2712,7 +2721,13 @@ TEST_CASE("dwgRW writes and reads LAYER_INDEX metadata",
 // NOLINTNEXTLINE(readability-identifier-naming)
 TEST_CASE("dwgRW writes and reads SPATIAL_INDEX metadata",
           "[dwg-write][spatial-index]") {
-    const DRW::Version versions[] = {DRW::AC1024, DRW::AC1027, DRW::AC1032};
+    // PR 13g — gate broadened to AC1015+; smoke array extended to cover
+    // the new pre-AC1021 paths.  SPATIAL_INDEX's encoder gates the
+    // common-handle prefix on `version > AC1018`, so AC1015/AC1018 emit
+    // an opaque body (no handle tail) — mirrors the parser's pre-R2007
+    // behaviour.
+    const DRW::Version versions[] = {DRW::AC1015, DRW::AC1018,
+                                     DRW::AC1024, DRW::AC1027, DRW::AC1032};
 
     for (DRW::Version version : versions) {
         const std::string path = tempPath("native_spatial_index.dwg");
@@ -2749,7 +2764,10 @@ TEST_CASE("dwgRW writes and reads SPATIAL_INDEX metadata",
 // NOLINTNEXTLINE(readability-identifier-naming)
 TEST_CASE("dwgRW writes and reads DICTIONARYVAR metadata",
           "[dwg-write][dictionary-var]") {
-    const DRW::Version versions[] = {DRW::AC1024, DRW::AC1027, DRW::AC1032};
+    // PR 13g — gate broadened to AC1015+; smoke array extended to cover
+    // the new pre-AC1021 paths.
+    const DRW::Version versions[] = {DRW::AC1015, DRW::AC1018,
+                                     DRW::AC1024, DRW::AC1027, DRW::AC1032};
 
     for (DRW::Version version : versions) {
         const std::string path = tempPath("native_dictionary_var.dwg");

@@ -5509,54 +5509,8 @@ void RS_FilterDXFRW::writeDwgClasses() {
         }
         // RASTERVARIABLES / GEODATA / SPATIAL_FILTER registration moved
         // below to the `canRegisterCustomClassObjects` block (PR 13f).
-        // PR 8d.2a — five small no-storage OBJECTS families.  Each must be
-        // registered BEFORE writeDwgClasses() emits the CLASSES section so
-        // the reader can map oType (508-512) back to its parser.
-        for (const auto& record : metadata.scales()) {
-            if (record.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
-                || record.handle == 0) {
-                continue;
-            }
-            DRW_Scale s = scaleFromMetadata(record);
-            if (m_dwgW->registerScaleObjectClass(&s))
-                nativeScaleHandles.insert(record.handle);
-        }
-        for (const auto& record : metadata.idBuffers()) {
-            if (record.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
-                || record.handle == 0) {
-                continue;
-            }
-            DRW_IDBuffer b = idBufferFromMetadata(record);
-            if (m_dwgW->registerIDBufferObjectClass(&b))
-                nativeIDBufferHandles.insert(record.handle);
-        }
-        for (const auto& record : metadata.layerIndexes()) {
-            if (record.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
-                || record.handle == 0) {
-                continue;
-            }
-            DRW_LayerIndex li = layerIndexFromMetadata(record);
-            if (m_dwgW->registerLayerIndexObjectClass(&li))
-                nativeLayerIndexHandles.insert(record.handle);
-        }
-        for (const auto& record : metadata.spatialIndexes()) {
-            if (record.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
-                || record.handle == 0) {
-                continue;
-            }
-            DRW_SpatialIndex si = spatialIndexFromMetadata(record);
-            if (m_dwgW->registerSpatialIndexObjectClass(&si))
-                nativeSpatialIndexHandles.insert(record.handle);
-        }
-        for (const auto& record : metadata.dictionaryVars()) {
-            if (record.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
-                || record.handle == 0) {
-                continue;
-            }
-            DRW_DictionaryVar dv = dictionaryVarFromMetadata(record);
-            if (m_dwgW->registerDictionaryVarObjectClass(&dv))
-                nativeDictionaryVarHandles.insert(record.handle);
-        }
+        // PR 13g — SCALE / IDBUFFER / LAYER_INDEX / SPATIAL_INDEX /
+        // DICTIONARYVAR registration moved below to the same block.
         // PR 8d.2b — four larger no-storage OBJECTS families.  Each must be
         // registered BEFORE writeDwgClasses() emits the CLASSES section so
         // the reader can map oType (513-516) back to its parser.
@@ -5638,6 +5592,57 @@ void RS_FilterDXFRW::writeDwgClasses() {
             DRW_SpatialFilter sf = spatialFilterFromMetadata(record);
             if (m_dwgW->registerSpatialFilterObjectClass(&sf))
                 nativeSpatialFilterHandles.insert(record.handle);
+        }
+        // PR 13g — SCALE / IDBUFFER / LAYER_INDEX / SPATIAL_INDEX /
+        // DICTIONARYVAR (custom classes 508-512).  Encoders are version-
+        // clean; SPATIAL_INDEX additionally gates its common-handle prefix
+        // on `version > AC1018` (mirrors its parser).  All 5 default to
+        // enabled in `isDwgClassEnabled` (no per-class gate needed in
+        // dwgwriter.h).
+        for (const auto& record : metadata.scales()) {
+            if (record.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                || record.handle == 0) {
+                continue;
+            }
+            DRW_Scale s = scaleFromMetadata(record);
+            if (m_dwgW->registerScaleObjectClass(&s))
+                nativeScaleHandles.insert(record.handle);
+        }
+        for (const auto& record : metadata.idBuffers()) {
+            if (record.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                || record.handle == 0) {
+                continue;
+            }
+            DRW_IDBuffer b = idBufferFromMetadata(record);
+            if (m_dwgW->registerIDBufferObjectClass(&b))
+                nativeIDBufferHandles.insert(record.handle);
+        }
+        for (const auto& record : metadata.layerIndexes()) {
+            if (record.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                || record.handle == 0) {
+                continue;
+            }
+            DRW_LayerIndex li = layerIndexFromMetadata(record);
+            if (m_dwgW->registerLayerIndexObjectClass(&li))
+                nativeLayerIndexHandles.insert(record.handle);
+        }
+        for (const auto& record : metadata.spatialIndexes()) {
+            if (record.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                || record.handle == 0) {
+                continue;
+            }
+            DRW_SpatialIndex si = spatialIndexFromMetadata(record);
+            if (m_dwgW->registerSpatialIndexObjectClass(&si))
+                nativeSpatialIndexHandles.insert(record.handle);
+        }
+        for (const auto& record : metadata.dictionaryVars()) {
+            if (record.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                || record.handle == 0) {
+                continue;
+            }
+            DRW_DictionaryVar dv = dictionaryVarFromMetadata(record);
+            if (m_dwgW->registerDictionaryVarObjectClass(&dv))
+                nativeDictionaryVarHandles.insert(record.handle);
         }
     }
 
@@ -6560,36 +6565,8 @@ void RS_FilterDXFRW::writeObjects() {
             // construction moved to the `canRegisterCustomClassObjects`
             // block (PR 13f).
             // PR 8d.2a — five small no-storage OBJECTS families.
-            for (const auto& record : metadata.scales()) {
-                if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
-                    && record.handle != 0) {
-                    nativeScaleHandles.insert(record.handle);
-                }
-            }
-            for (const auto& record : metadata.idBuffers()) {
-                if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
-                    && record.handle != 0) {
-                    nativeIDBufferHandles.insert(record.handle);
-                }
-            }
-            for (const auto& record : metadata.layerIndexes()) {
-                if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
-                    && record.handle != 0) {
-                    nativeLayerIndexHandles.insert(record.handle);
-                }
-            }
-            for (const auto& record : metadata.spatialIndexes()) {
-                if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
-                    && record.handle != 0) {
-                    nativeSpatialIndexHandles.insert(record.handle);
-                }
-            }
-            for (const auto& record : metadata.dictionaryVars()) {
-                if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
-                    && record.handle != 0) {
-                    nativeDictionaryVarHandles.insert(record.handle);
-                }
-            }
+            // Handle-set construction moved to the
+            // `canRegisterCustomClassObjects` block (PR 13g).
             // PR 8d.2b — four larger no-storage OBJECTS families.
             for (const auto& record : metadata.dictionariesWithDefault()) {
                 if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
@@ -6648,6 +6625,39 @@ void RS_FilterDXFRW::writeObjects() {
                 if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
                     && record.handle != 0) {
                     nativeSpatialFilterHandles.insert(record.handle);
+                }
+            }
+            // PR 13g — SCALE / IDBUFFER / LAYER_INDEX / SPATIAL_INDEX /
+            // DICTIONARYVAR (custom classes 508-512) handle-set
+            // construction.
+            for (const auto& record : metadata.scales()) {
+                if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                    && record.handle != 0) {
+                    nativeScaleHandles.insert(record.handle);
+                }
+            }
+            for (const auto& record : metadata.idBuffers()) {
+                if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                    && record.handle != 0) {
+                    nativeIDBufferHandles.insert(record.handle);
+                }
+            }
+            for (const auto& record : metadata.layerIndexes()) {
+                if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                    && record.handle != 0) {
+                    nativeLayerIndexHandles.insert(record.handle);
+                }
+            }
+            for (const auto& record : metadata.spatialIndexes()) {
+                if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                    && record.handle != 0) {
+                    nativeSpatialIndexHandles.insert(record.handle);
+                }
+            }
+            for (const auto& record : metadata.dictionaryVars()) {
+                if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                    && record.handle != 0) {
+                    nativeDictionaryVarHandles.insert(record.handle);
                 }
             }
         }
@@ -6902,62 +6912,9 @@ void RS_FilterDXFRW::writeObjects() {
             // to the `canWriteFixedTypeObjects` block (PR 13a/b/c).
             // RASTERVARIABLES / GEODATA / SPATIAL_FILTER dispatch moved
             // to the `canRegisterCustomClassObjects` block (PR 13f).
-            // PR 8d.2a — five small no-storage OBJECTS families.
-            for (const auto& record : metadata.scales()) {
-                if (nativeScaleHandles.count(record.handle) == 0)
-                    continue;
-                DRW_Scale s = scaleFromMetadata(record);
-                if (m_dwgW->writeScale(&s)) {
-                    ++nativeScaleObjects;
-                } else {
-                    hasBlockedReplay = true;
-                    ++blockedWriterRejected;
-                }
-            }
-            for (const auto& record : metadata.idBuffers()) {
-                if (nativeIDBufferHandles.count(record.handle) == 0)
-                    continue;
-                DRW_IDBuffer b = idBufferFromMetadata(record);
-                if (m_dwgW->writeIDBuffer(&b)) {
-                    ++nativeIDBufferObjects;
-                } else {
-                    hasBlockedReplay = true;
-                    ++blockedWriterRejected;
-                }
-            }
-            for (const auto& record : metadata.layerIndexes()) {
-                if (nativeLayerIndexHandles.count(record.handle) == 0)
-                    continue;
-                DRW_LayerIndex li = layerIndexFromMetadata(record);
-                if (m_dwgW->writeLayerIndex(&li)) {
-                    ++nativeLayerIndexObjects;
-                } else {
-                    hasBlockedReplay = true;
-                    ++blockedWriterRejected;
-                }
-            }
-            for (const auto& record : metadata.spatialIndexes()) {
-                if (nativeSpatialIndexHandles.count(record.handle) == 0)
-                    continue;
-                DRW_SpatialIndex si = spatialIndexFromMetadata(record);
-                if (m_dwgW->writeSpatialIndex(&si)) {
-                    ++nativeSpatialIndexObjects;
-                } else {
-                    hasBlockedReplay = true;
-                    ++blockedWriterRejected;
-                }
-            }
-            for (const auto& record : metadata.dictionaryVars()) {
-                if (nativeDictionaryVarHandles.count(record.handle) == 0)
-                    continue;
-                DRW_DictionaryVar dv = dictionaryVarFromMetadata(record);
-                if (m_dwgW->writeDictionaryVar(&dv)) {
-                    ++nativeDictionaryVarObjects;
-                } else {
-                    hasBlockedReplay = true;
-                    ++blockedWriterRejected;
-                }
-            }
+            // PR 8d.2a — SCALE / IDBUFFER / LAYER_INDEX / SPATIAL_INDEX /
+            // DICTIONARYVAR dispatch moved to the
+            // `canRegisterCustomClassObjects` block (PR 13g).
             // PR 8d.2b — four larger no-storage OBJECTS families.
             for (const auto& record : metadata.dictionariesWithDefault()) {
                 if (nativeDictionaryWithDefaultHandles.count(record.handle) == 0)
@@ -7110,6 +7067,66 @@ void RS_FilterDXFRW::writeObjects() {
                 DRW_SpatialFilter sf = spatialFilterFromMetadata(record);
                 if (m_dwgW->writeSpatialFilter(&sf)) {
                     ++nativeSpatialFilterObjects;
+                } else {
+                    hasBlockedReplay = true;
+                    ++blockedWriterRejected;
+                }
+            }
+            // PR 13g — SCALE / IDBUFFER / LAYER_INDEX / SPATIAL_INDEX /
+            // DICTIONARYVAR (custom classes 508-512) dispatch.  Smoke
+            // tests at AC1015/AC1018 confirm the encoders + parsers
+            // round-trip cleanly; SPATIAL_INDEX's pre-R2007 opaque body
+            // path is exercised at AC1015/AC1018.
+            for (const auto& record : metadata.scales()) {
+                if (nativeScaleHandles.count(record.handle) == 0)
+                    continue;
+                DRW_Scale s = scaleFromMetadata(record);
+                if (m_dwgW->writeScale(&s)) {
+                    ++nativeScaleObjects;
+                } else {
+                    hasBlockedReplay = true;
+                    ++blockedWriterRejected;
+                }
+            }
+            for (const auto& record : metadata.idBuffers()) {
+                if (nativeIDBufferHandles.count(record.handle) == 0)
+                    continue;
+                DRW_IDBuffer b = idBufferFromMetadata(record);
+                if (m_dwgW->writeIDBuffer(&b)) {
+                    ++nativeIDBufferObjects;
+                } else {
+                    hasBlockedReplay = true;
+                    ++blockedWriterRejected;
+                }
+            }
+            for (const auto& record : metadata.layerIndexes()) {
+                if (nativeLayerIndexHandles.count(record.handle) == 0)
+                    continue;
+                DRW_LayerIndex li = layerIndexFromMetadata(record);
+                if (m_dwgW->writeLayerIndex(&li)) {
+                    ++nativeLayerIndexObjects;
+                } else {
+                    hasBlockedReplay = true;
+                    ++blockedWriterRejected;
+                }
+            }
+            for (const auto& record : metadata.spatialIndexes()) {
+                if (nativeSpatialIndexHandles.count(record.handle) == 0)
+                    continue;
+                DRW_SpatialIndex si = spatialIndexFromMetadata(record);
+                if (m_dwgW->writeSpatialIndex(&si)) {
+                    ++nativeSpatialIndexObjects;
+                } else {
+                    hasBlockedReplay = true;
+                    ++blockedWriterRejected;
+                }
+            }
+            for (const auto& record : metadata.dictionaryVars()) {
+                if (nativeDictionaryVarHandles.count(record.handle) == 0)
+                    continue;
+                DRW_DictionaryVar dv = dictionaryVarFromMetadata(record);
+                if (m_dwgW->writeDictionaryVar(&dv)) {
+                    ++nativeDictionaryVarObjects;
                 } else {
                     hasBlockedReplay = true;
                     ++blockedWriterRejected;
