@@ -115,3 +115,6 @@ core.*
 # pixi environments
 .pixi
 *.egg-info
+
+# Local build output
+build-master/
