@@ -10481,22 +10481,11 @@ DRW_LW_Conv::lineWidth RS_FilterDXFRW::widthToNumber(RS2::LineWidth width) {
  * - %%%p for a plus/minus sign
  */
 QString RS_FilterDXFRW::toDxfString(const QString& str) {
-    // 1. Reserve memory up front to eliminate reallocation overhead
     QString res;
     res.reserve(str.length() + 16);
 
-    // 2. Iterate cleanly using modern range-based loop
     for (const QChar& qchar : str) {
-        const ushort c = qchar.unicode();
-
-        // 3. Keep standard ASCII characters without filtering overhead
-        if (c <= 175 && c >= 11) {
-            res.append(qchar);
-            continue;
-        }
-
-        // 4. Map special DXF escape codes efficiently
-        switch (c) {
+        switch (qchar.unicode()) {
         case 0x0A:
             res.append(uR"(\P)");
             break;
@@ -10524,46 +10513,46 @@ QString RS_FilterDXFRW::toDxfString(const QString& str) {
  */
 QString RS_FilterDXFRW::toNativeString(const QString& data) {
     QString res;
+    const int n = data.length();
 
     // Ignore font tags:
     int j = 0;
-    for (int i=0; i<data.length(); ++i) {
-        if (data.at(i).unicode() == 0x7B){ //is '{' ?
-            if (data.at(i+1).unicode() == 0x5c){ //and is "{\" ?
-                //check known codes
-                if ( (data.at(i+2).unicode() == 0x66) || //is "\f" ?
-                     (data.at(i+2).unicode() == 0x48) || //is "\H" ?
-                     (data.at(i+2).unicode() == 0x43)    //is "\C" ?
-                   ) {
-                    //found tag, append parsed part
-                    res.append(data.mid(j,i-j));
-                    qsizetype pos = data.indexOf(QChar(0x7D), i+3);//find '}'
-                    if (pos <0) break; //'}' not found
-                    QString tmp = data.mid(i+1, pos-i-1);
-                    do {
-                        tmp = tmp.remove(0,tmp.indexOf(QChar{0x3B}, 0)+1 );//remove to ';'
-                    } while(tmp.startsWith("\\f") || tmp.startsWith("\\H") || tmp.startsWith("\\C"));
-                    res.append(tmp);
-                    i = j = pos;
-                    ++j;
-                }
-            }
-        }
+    for (int i=0; i<n; ++i) {
+        // Need at least "{\X" available — bounds-check before any at(i+N).
+        if (i + 2 >= n) break;
+        if (data.at(i).unicode() != 0x7B) continue; //is '{' ?
+        if (data.at(i+1).unicode() != 0x5c) continue; //and is "{\" ?
+        const ushort tagChar = data.at(i+2).unicode();
+        if (tagChar != 0x66 && tagChar != 0x48 && tagChar != 0x43) continue; // "\f" "\H" "\C"
+
+        //found tag, append parsed part
+        res.append(data.mid(j, i-j));
+        qsizetype pos = data.indexOf(QChar(0x7D), i+3); //find '}'
+        if (pos < 0) break; //'}' not found
+        QString tmp = data.mid(i+1, pos-i-1);
+        do {
+            qsizetype semi = tmp.indexOf(QChar(0x3B), 0); //find ';'
+            if (semi < 0) break; // malformed: no ';' — bail to avoid infinite loop
+            tmp.remove(0, semi + 1);
+        } while (tmp.startsWith(QLatin1StringView("\\f"))
+              || tmp.startsWith(QLatin1StringView("\\H"))
+              || tmp.startsWith(QLatin1StringView("\\C")));
+        res.append(tmp);
+        i = pos;
+        j = pos + 1;
     }
     res.append(data.mid(j));
 
-    // Line feed:
-    res = res.replace(QRegularExpression("\\\\P"), "\n");
-    // Space:
-    res = res.replace(QRegularExpression("\\\\~"), " ");
-    // Tab:
-    res = res.replace(QRegularExpression("\\^I"), "    ");//RLZ: change 4 spaces for \t when mtext have support for tab
-    // diameter:
-    res = res.replace(QRegularExpression("%%[cC]"), QChar(0x2300));//RLZ: Empty_set is 0x2205, diameter is 0x2300 need to add in all fonts
-    // degree:
-    res = res.replace(QRegularExpression("%%[dD]"), QChar(0x00B0));
-    // plus/minus
-    res = res.replace(QRegularExpression("%%[pP]"), QChar(0x00B1));
+    // Replace literal escape sequences. Each replace() mutates in place;
+    // the prior `res = res.replace(...)` was an unnecessary self-assignment.
+    res.replace(QLatin1StringView("\\P"), QLatin1StringView("\n"));   // line feed
+    res.replace(QLatin1StringView("\\~"), QLatin1StringView(" "));    // space
+    res.replace(QLatin1StringView("^I"),  QLatin1StringView("    ")); // tab → 4 spaces (RLZ)
+    // diameter / degree / plus-minus — case-insensitive match of %%c / %%C etc.
+    // (RLZ: Empty_set is 0x2205, diameter is 0x2300 — needs to be in all fonts.)
+    res.replace(QLatin1StringView("%%c"), QStringLiteral("⌀"), Qt::CaseInsensitive);
+    res.replace(QLatin1StringView("%%d"), QStringLiteral("°"), Qt::CaseInsensitive);
+    res.replace(QLatin1StringView("%%p"), QStringLiteral("±"), Qt::CaseInsensitive);
 
     return res;
 }
