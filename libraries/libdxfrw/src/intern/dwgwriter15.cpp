@@ -1020,7 +1020,12 @@ void dwgWriter15::emitRasterVariablesObject(
 
 bool dwgWriter15::writeRasterVariables(
     const DRW_RasterVariables& rasterVariables) {
-    if (m_version < DRW::AC1021)
+    // PR 13f — broaden gate from AC1021+ to AC1015+.  Encoder is
+    // version-clean (only the standard hb = version > AC1018 split-buffer
+    // routing).  Parser mirrors the same shape.  The matching class
+    // registration in writeDwgClasses now gates on
+    // canRegisterCustomClassObjects (≥AC1015).
+    if (m_version < DRW::AC1015)
         return false;
 
     DRW_RasterVariables object = rasterVariables;
@@ -1050,7 +1055,10 @@ void dwgWriter15::emitGeoDataObject(duint32 handle, const DRW_GeoData& geoData) 
 }
 
 bool dwgWriter15::writeGeoData(const DRW_GeoData& geoData) {
-    if (m_version < DRW::AC1021)
+    // PR 13f — broaden gate from AC1021+ to AC1015+.  Encoder is
+    // version-clean (only the standard sb/hb = version > AC1018 split-
+    // buffer routing).  Parser mirrors the same shape.
+    if (m_version < DRW::AC1015)
         return false;
 
     DRW_GeoData object = geoData;
@@ -1083,7 +1091,10 @@ void dwgWriter15::emitSpatialFilterObject(duint32 handle,
 }
 
 bool dwgWriter15::writeSpatialFilter(const DRW_SpatialFilter& filter) {
-    if (m_version < DRW::AC1021)
+    // PR 13f — broaden gate from AC1021+ to AC1015+.  Encoder is
+    // version-clean (only the standard hb = version > AC1018 split-buffer
+    // routing).  Parser mirrors the same shape.
+    if (m_version < DRW::AC1015)
         return false;
 
     DRW_SpatialFilter object = filter;

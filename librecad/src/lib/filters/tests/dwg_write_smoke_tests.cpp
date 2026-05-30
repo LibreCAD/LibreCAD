@@ -2417,7 +2417,10 @@ TEST_CASE("dwgRW writes and reads GROUP metadata",
 // NOLINTNEXTLINE(readability-identifier-naming)
 TEST_CASE("dwgRW writes and reads RASTERVARIABLES metadata",
           "[dwg-write][rastervariables]") {
-    const DRW::Version versions[] = {DRW::AC1024, DRW::AC1027, DRW::AC1032};
+    // PR 13f — gate broadened to AC1015+; smoke array extended to cover
+    // the new pre-AC1021 paths.
+    const DRW::Version versions[] = {DRW::AC1015, DRW::AC1018,
+                                     DRW::AC1024, DRW::AC1027, DRW::AC1032};
 
     for (DRW::Version version : versions) {
         const std::string path = tempPath("native_rastervariables.dwg");
@@ -2456,7 +2459,10 @@ TEST_CASE("dwgRW writes and reads RASTERVARIABLES metadata",
 // NOLINTNEXTLINE(readability-identifier-naming)
 TEST_CASE("dwgRW writes and reads SPATIAL_FILTER metadata",
           "[dwg-write][spatial-filter]") {
-    const DRW::Version versions[] = {DRW::AC1024, DRW::AC1027, DRW::AC1032};
+    // PR 13f — gate broadened to AC1015+; smoke array extended to cover
+    // the new pre-AC1021 paths.
+    const DRW::Version versions[] = {DRW::AC1015, DRW::AC1018,
+                                     DRW::AC1024, DRW::AC1027, DRW::AC1032};
 
     for (DRW::Version version : versions) {
         const std::string path = tempPath("native_spatial_filter.dwg");
@@ -2511,7 +2517,10 @@ TEST_CASE("dwgRW writes and reads SPATIAL_FILTER metadata",
 // NOLINTNEXTLINE(readability-identifier-naming)
 TEST_CASE("dwgRW writes and reads GEODATA metadata",
           "[dwg-write][geodata]") {
-    const DRW::Version versions[] = {DRW::AC1024, DRW::AC1027, DRW::AC1032};
+    // PR 13f — gate broadened to AC1015+; smoke array extended to cover
+    // the new pre-AC1021 paths.
+    const DRW::Version versions[] = {DRW::AC1015, DRW::AC1018,
+                                     DRW::AC1024, DRW::AC1027, DRW::AC1032};
 
     for (DRW::Version version : versions) {
         const std::string path = tempPath("native_geodata.dwg");

@@ -518,16 +518,23 @@ protected:
         // reader compatibility even when no LIGHT entity is present.
         if (definition.m_classNum == 502)
             return m_version >= DRW::AC1021;
+        // SUN + MLeaderStyle stay gated AC1021+ — their encoders explicitly
+        // reject below AC1021 (see drw_objects.cpp:4275/4803).
         if (definition.m_classNum == DRW_Sun::kDwgClassNum)
             return m_version >= DRW::AC1021;
         if (definition.m_classNum == DRW_MLeaderStyle::kDwgClassNum)
             return m_version >= DRW::AC1021;
+        // PR 13f — RasterVariables / GeoData / SpatialFilter broadened to
+        // AC1015+.  Their encoders + parsers are version-clean (only the
+        // standard `version > AC1018` split-buffer routing) and the
+        // matching filter-side gate (`canRegisterCustomClassObjects`)
+        // already issues the registration at AC1015+.
         if (definition.m_classNum == DRW_RasterVariables::kDwgClassNum)
-            return m_version >= DRW::AC1021;
+            return m_version >= DRW::AC1015;
         if (definition.m_classNum == DRW_GeoData::kDwgClassNum)
-            return m_version >= DRW::AC1021;
+            return m_version >= DRW::AC1015;
         if (definition.m_classNum == DRW_SpatialFilter::kDwgClassNum)
-            return m_version >= DRW::AC1021;
+            return m_version >= DRW::AC1015;
         return true;
     }
 

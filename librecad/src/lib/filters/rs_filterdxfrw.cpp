@@ -5463,6 +5463,16 @@ void RS_FilterDXFRW::writeDwgClasses() {
         return;
     const auto& metadata = m_graphic->dwgAdvancedMetadata();
     const bool canWriteModernObjects = m_dwgW->getVersion() >= DRW::AC1021;
+    // PR 13f — custom-class registration gate for the RasterVariables /
+    // GeoData / SpatialFilter families.  Broadened from AC1021+ to AC1015+
+    // because their encoders + parsers are version-clean (only the
+    // standard `version > AC1018` split-buffer routing).  The dispatch
+    // loop in writeObjects uses a matching `canRegisterCustomClassObjects`
+    // gate so the CLASSES section entry and the OBJECTS instance land
+    // together (otherwise the reader's class lookup fails and the object
+    // is silently dropped).
+    const bool canRegisterCustomClassObjects =
+        m_dwgW->getVersion() >= DRW::AC1015;
     std::set<duint32> nativeSunHandles;
     std::set<duint32> nativeMLeaderStyleHandles;
     std::set<duint32> nativeRasterVariablesHandles;
@@ -5497,38 +5507,8 @@ void RS_FilterDXFRW::writeDwgClasses() {
             if (m_dwgW->registerMLeaderStyleObjectClass(&style))
                 nativeMLeaderStyleHandles.insert(record.handle);
         }
-        // RASTERVARIABLES (AcDbRasterVariables, custom class 505) — must be
-        // registered here, BEFORE writeDwgClasses() emits the CLASSES section.
-        // PR 8d.1b.
-        for (const auto& record : metadata.rasterVariables()) {
-            if (record.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
-                || record.handle == 0) {
-                continue;
-            }
-            DRW_RasterVariables rv = rasterVariablesFromMetadata(record);
-            if (m_dwgW->registerRasterVariablesObjectClass(&rv))
-                nativeRasterVariablesHandles.insert(record.handle);
-        }
-        // GEODATA (AcDbGeoData, custom class 506) — PR 8d.1c.
-        for (const auto& record : metadata.geoData()) {
-            if (record.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
-                || record.handle == 0) {
-                continue;
-            }
-            DRW_GeoData gd = geoDataFromMetadata(record);
-            if (m_dwgW->registerGeoDataObjectClass(&gd))
-                nativeGeoDataHandles.insert(record.handle);
-        }
-        // SPATIAL_FILTER (AcDbSpatialFilter, custom class 507) — PR 8d.1d.
-        for (const auto& record : metadata.spatialFilters()) {
-            if (record.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
-                || record.handle == 0) {
-                continue;
-            }
-            DRW_SpatialFilter sf = spatialFilterFromMetadata(record);
-            if (m_dwgW->registerSpatialFilterObjectClass(&sf))
-                nativeSpatialFilterHandles.insert(record.handle);
-        }
+        // RASTERVARIABLES / GEODATA / SPATIAL_FILTER registration moved
+        // below to the `canRegisterCustomClassObjects` block (PR 13f).
         // PR 8d.2a — five small no-storage OBJECTS families.  Each must be
         // registered BEFORE writeDwgClasses() emits the CLASSES section so
         // the reader can map oType (508-512) back to its parser.
@@ -5616,6 +5596,48 @@ void RS_FilterDXFRW::writeDwgClasses() {
             DRW_Field f = fieldFromMetadata(record);
             if (m_dwgW->registerFieldObjectClass(&f))
                 nativeFieldHandles.insert(record.handle);
+        }
+    }
+
+    // PR 13f — custom-class families with version-clean encoders +
+    // round-trip-grade Records register here on the broadened
+    // `canRegisterCustomClassObjects` gate (≥AC1015) instead of the
+    // AC1021+ `canWriteModernObjects` gate.  The matching dispatch loop
+    // in writeObjects uses the same gate so the CLASSES section entry and
+    // the OBJECTS instance always land together.
+    if (canRegisterCustomClassObjects) {
+        // RASTERVARIABLES (AcDbRasterVariables, custom class 505) — must be
+        // registered here, BEFORE writeDwgClasses() emits the CLASSES section.
+        // PR 8d.1b + PR 13f.
+        for (const auto& record : metadata.rasterVariables()) {
+            if (record.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                || record.handle == 0) {
+                continue;
+            }
+            DRW_RasterVariables rv = rasterVariablesFromMetadata(record);
+            if (m_dwgW->registerRasterVariablesObjectClass(&rv))
+                nativeRasterVariablesHandles.insert(record.handle);
+        }
+        // GEODATA (AcDbGeoData, custom class 506) — PR 8d.1c + PR 13f.
+        for (const auto& record : metadata.geoData()) {
+            if (record.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                || record.handle == 0) {
+                continue;
+            }
+            DRW_GeoData gd = geoDataFromMetadata(record);
+            if (m_dwgW->registerGeoDataObjectClass(&gd))
+                nativeGeoDataHandles.insert(record.handle);
+        }
+        // SPATIAL_FILTER (AcDbSpatialFilter, custom class 507) — PR 8d.1d +
+        // PR 13f.
+        for (const auto& record : metadata.spatialFilters()) {
+            if (record.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                || record.handle == 0) {
+                continue;
+            }
+            DRW_SpatialFilter sf = spatialFilterFromMetadata(record);
+            if (m_dwgW->registerSpatialFilterObjectClass(&sf))
+                nativeSpatialFilterHandles.insert(record.handle);
         }
     }
 
@@ -6463,6 +6485,15 @@ void RS_FilterDXFRW::writeObjects() {
         // families which still need their own validation.
         const bool canWriteFixedTypeObjects =
             m_dwgW->getVersion() >= DRW::AC1015;
+        // PR 13f — custom-class families with version-clean encoders +
+        // round-trip-grade Records dispatch on the broadened gate
+        // (≥AC1015).  Matches the same gate used in writeDwgClasses for
+        // the CLASSES section entry registration; the entry and the
+        // OBJECTS instance must land together or the reader's class
+        // lookup fails and the object is silently dropped (see plan's
+        // "Discovered during PR 13f" notes).
+        const bool canRegisterCustomClassObjects =
+            m_dwgW->getVersion() >= DRW::AC1015;
         std::set<duint32> nativeSunHandles;
         std::set<duint32> nativePlaceholderHandles;
         std::set<duint32> nativeMLeaderStyleHandles;
@@ -6525,35 +6556,9 @@ void RS_FilterDXFRW::writeObjects() {
             // moved below to the `canWriteFixedTypeObjects` block
             // (PR 13a/b/c) so the broadened gate applies even when
             // canWriteModernObjects is false (AC1015/AC1018 export path).
-            // RASTERVARIABLES (AcDbRasterVariables, custom class 505) —
-            // round-trip-grade RasterVariablesRecord captures every encoder
-            // field (classVersion, imageFrame, imageQuality, units).  PR 8d.1.
-            for (const auto& record : metadata.rasterVariables()) {
-                if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
-                    && record.handle != 0) {
-                    nativeRasterVariablesHandles.insert(record.handle);
-                }
-            }
-            // GEODATA (AcDbGeoData, custom class 506) — round-trip-grade
-            // GeoDataRecord extended in PR 8d.1c to capture all encoder
-            // fields (designPoint, referencePoint, up/north direction,
-            // scale estimation, sea-level correction, observation tags,
-            // mesh points + faces).
-            for (const auto& record : metadata.geoData()) {
-                if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
-                    && record.handle != 0) {
-                    nativeGeoDataHandles.insert(record.handle);
-                }
-            }
-            // SPATIAL_FILTER (AcDbSpatialFilter, custom class 507) —
-            // round-trip-grade SpatialFilterRecord extended in PR 8d.1d to
-            // capture boundary points + 4x3 clip transform matrices.
-            for (const auto& record : metadata.spatialFilters()) {
-                if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
-                    && record.handle != 0) {
-                    nativeSpatialFilterHandles.insert(record.handle);
-                }
-            }
+            // RASTERVARIABLES / GEODATA / SPATIAL_FILTER handle-set
+            // construction moved to the `canRegisterCustomClassObjects`
+            // block (PR 13f).
             // PR 8d.2a — five small no-storage OBJECTS families.
             for (const auto& record : metadata.scales()) {
                 if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
@@ -6608,6 +6613,41 @@ void RS_FilterDXFRW::writeObjects() {
                 if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
                     && record.handle != 0) {
                     nativeFieldHandles.insert(record.handle);
+                }
+            }
+        }
+        // PR 13f — RASTERVARIABLES / GEODATA / SPATIAL_FILTER handle-set
+        // construction sits in its own broadened block (≥AC1015) so the
+        // raw-replay blocker (below) skips raw bytes for these handles at
+        // AC1015/AC1018 too.
+        if (canRegisterCustomClassObjects) {
+            // RASTERVARIABLES (AcDbRasterVariables, custom class 505) —
+            // round-trip-grade RasterVariablesRecord captures every encoder
+            // field (classVersion, imageFrame, imageQuality, units).  PR 8d.1.
+            for (const auto& record : metadata.rasterVariables()) {
+                if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                    && record.handle != 0) {
+                    nativeRasterVariablesHandles.insert(record.handle);
+                }
+            }
+            // GEODATA (AcDbGeoData, custom class 506) — round-trip-grade
+            // GeoDataRecord extended in PR 8d.1c to capture all encoder
+            // fields (designPoint, referencePoint, up/north direction,
+            // scale estimation, sea-level correction, observation tags,
+            // mesh points + faces).
+            for (const auto& record : metadata.geoData()) {
+                if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                    && record.handle != 0) {
+                    nativeGeoDataHandles.insert(record.handle);
+                }
+            }
+            // SPATIAL_FILTER (AcDbSpatialFilter, custom class 507) —
+            // round-trip-grade SpatialFilterRecord extended in PR 8d.1d to
+            // capture boundary points + 4x3 clip transform matrices.
+            for (const auto& record : metadata.spatialFilters()) {
+                if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                    && record.handle != 0) {
+                    nativeSpatialFilterHandles.insert(record.handle);
                 }
             }
         }
@@ -6860,39 +6900,8 @@ void RS_FilterDXFRW::writeObjects() {
             }
             // DICTIONARY / XRECORD / LAYOUT / GROUP dispatch moved below
             // to the `canWriteFixedTypeObjects` block (PR 13a/b/c).
-            for (const auto& record : metadata.rasterVariables()) {
-                if (nativeRasterVariablesHandles.count(record.handle) == 0)
-                    continue;
-                DRW_RasterVariables rv = rasterVariablesFromMetadata(record);
-                if (m_dwgW->writeRasterVariables(&rv)) {
-                    ++nativeRasterVariablesObjects;
-                } else {
-                    hasBlockedReplay = true;
-                    ++blockedWriterRejected;
-                }
-            }
-            for (const auto& record : metadata.geoData()) {
-                if (nativeGeoDataHandles.count(record.handle) == 0)
-                    continue;
-                DRW_GeoData gd = geoDataFromMetadata(record);
-                if (m_dwgW->writeGeoData(&gd)) {
-                    ++nativeGeoDataObjects;
-                } else {
-                    hasBlockedReplay = true;
-                    ++blockedWriterRejected;
-                }
-            }
-            for (const auto& record : metadata.spatialFilters()) {
-                if (nativeSpatialFilterHandles.count(record.handle) == 0)
-                    continue;
-                DRW_SpatialFilter sf = spatialFilterFromMetadata(record);
-                if (m_dwgW->writeSpatialFilter(&sf)) {
-                    ++nativeSpatialFilterObjects;
-                } else {
-                    hasBlockedReplay = true;
-                    ++blockedWriterRejected;
-                }
-            }
+            // RASTERVARIABLES / GEODATA / SPATIAL_FILTER dispatch moved
+            // to the `canRegisterCustomClassObjects` block (PR 13f).
             // PR 8d.2a — five small no-storage OBJECTS families.
             for (const auto& record : metadata.scales()) {
                 if (nativeScaleHandles.count(record.handle) == 0)
@@ -7058,6 +7067,49 @@ void RS_FilterDXFRW::writeObjects() {
                 DRW_Layout layout = layoutFromMetadata(record);
                 if (m_dwgW->writeLayout(&layout)) {
                     ++nativeLayoutObjects;
+                } else {
+                    hasBlockedReplay = true;
+                    ++blockedWriterRejected;
+                }
+            }
+        }
+        // PR 13f — RASTERVARIABLES / GEODATA / SPATIAL_FILTER native
+        // dispatch.  Gate broadened from AC1021+ to AC1015+ now that the
+        // smoke tests cover AC1015/AC1018/AC1024/AC1027/AC1032 (see
+        // `[dwg-write][rastervariables]`, `[dwg-write][geodata]`,
+        // `[dwg-write][spatial-filter]`).  Matches the
+        // `canRegisterCustomClassObjects` gate used in writeDwgClasses so
+        // the CLASSES section entry and the OBJECTS instance always land
+        // together.
+        if (canRegisterCustomClassObjects) {
+            for (const auto& record : metadata.rasterVariables()) {
+                if (nativeRasterVariablesHandles.count(record.handle) == 0)
+                    continue;
+                DRW_RasterVariables rv = rasterVariablesFromMetadata(record);
+                if (m_dwgW->writeRasterVariables(&rv)) {
+                    ++nativeRasterVariablesObjects;
+                } else {
+                    hasBlockedReplay = true;
+                    ++blockedWriterRejected;
+                }
+            }
+            for (const auto& record : metadata.geoData()) {
+                if (nativeGeoDataHandles.count(record.handle) == 0)
+                    continue;
+                DRW_GeoData gd = geoDataFromMetadata(record);
+                if (m_dwgW->writeGeoData(&gd)) {
+                    ++nativeGeoDataObjects;
+                } else {
+                    hasBlockedReplay = true;
+                    ++blockedWriterRejected;
+                }
+            }
+            for (const auto& record : metadata.spatialFilters()) {
+                if (nativeSpatialFilterHandles.count(record.handle) == 0)
+                    continue;
+                DRW_SpatialFilter sf = spatialFilterFromMetadata(record);
+                if (m_dwgW->writeSpatialFilter(&sf)) {
+                    ++nativeSpatialFilterObjects;
                 } else {
                     hasBlockedReplay = true;
                     ++blockedWriterRejected;
