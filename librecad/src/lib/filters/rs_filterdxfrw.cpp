@@ -5071,6 +5071,14 @@ void RS_FilterDXFRW::addHeader(const DRW_Header* data){
 
     for (auto it = data->vars.begin() ; it != data->vars.end(); ++it ) {
         QString key = QString::fromStdString((*it).first);
+        // DWG-read header vars arrive under bare keys (e.g. "LUPREC"), while the
+        // app (and the DXF path) query them $-prefixed ("$LUPREC"). Normalize
+        // here so DWG-stored vars are reachable. DXF keys already start with '$'
+        // (drw_header.cpp), so the guard makes this a no-op for that path and
+        // prevents double-prefixing ("$$ACADVER").
+        if (!key.startsWith('$')) {
+            key.prepend('$');
+        }
         DRW_Variant *var = (*it).second;
         switch (var->type()) {
         case DRW_Variant::COORD:

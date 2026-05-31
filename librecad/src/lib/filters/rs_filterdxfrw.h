@@ -65,6 +65,11 @@ class RS_Solid;
 class RS_Spline;
 class RS_Text;
 
+// test-only friend; defined in tests/dwg_header_app_vars_tests.cpp. Grants
+// the header-var regression suite access to the private m_graphic/
+// m_currentContainer so it can exercise addHeader against a real RS_Graphic.
+class RsFilterDxfRwHeaderTestAccess;
+
 /**
  * This format filter class can import and export DXF files.
  * It depends on the libdxfrw library.
@@ -72,6 +77,7 @@ class RS_Text;
  * @author Rallaz
  */
 class RS_FilterDXFRW : public RS_FilterInterface, DRW_Interface {
+    friend class RsFilterDxfRwHeaderTestAccess;
 public:
     RS_FilterDXFRW();
     ~RS_FilterDXFRW();
