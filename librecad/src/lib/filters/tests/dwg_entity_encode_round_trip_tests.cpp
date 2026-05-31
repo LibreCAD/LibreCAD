@@ -808,6 +808,70 @@ TEST_CASE("DRW_Attdef::encodeDwg round-trips tag + prompt",
     }
 }
 
+// 2a.2 (gap entity-reactors-xdict-dropped-roundtrip): reactor handles and the
+// xdict handle are now persisted on read and re-emitted on write (numReactors
+// BL + per-handle stream + real-or-null xdic). Empty case stays byte-stable
+// (covered by the existing [entity-encode] round-trips); this proves a
+// populated entity round-trips reactors + xdict without a handle-stream desync
+// (the layer handle still resolves, proving alignment).
+TEST_CASE("DRW entity reactors + xdict round-trip through encode (2a.2)",
+          "[dwg-write][entity-encode][phase2a]") {
+    for (DRW::Version ver : {DRW::AC1015, DRW::AC1018}) {
+        DRW_Point src;
+        src.handle = 0x71;
+        src.color = 7;
+        src.ltypeScale = 1.0;
+        src.basePoint = DRW_Coord{1.0, 2.0, 3.0};
+        src.extPoint = DRW_Coord{0.0, 0.0, 1.0};
+        src.reactorHandles = {0xA0, 0xA1};
+        src.xDictHandle = 0xB0;
+        DrwEntityEncodeTestAccess::layerH(src).ref = 0x12;
+
+        dwgBufferW w;
+        REQUIRE(DrwEntityEncodeTestAccess::encode(src, ver, &w));
+        auto bytes = snapshot(w);
+        dwgBuffer r(bytes.data(), bytes.size());
+        DRW_Point dst;
+        REQUIRE(DrwEntityEncodeTestAccess::parse(dst, ver, &r));
+
+        REQUIRE(dst.reactorHandles.size() == 2u);
+        REQUIRE(dst.reactorHandles[0] == 0xA0u);
+        REQUIRE(dst.reactorHandles[1] == 0xA1u);
+        REQUIRE(dst.xDictHandle == 0xB0u);
+        // Alignment proof: the layer handle still lands correctly after the
+        // reactor + xdic handles.
+        REQUIRE(DrwEntityEncodeTestAccess::layerH(dst).ref == 0x12u);
+        REQUIRE(dst.basePoint.x == 1.0);
+    }
+}
+
+// Mixed: reactors empty but xdict present → reader still reads the xdic handle
+// and the layer follows correctly.
+TEST_CASE("DRW entity xdict-only round-trip keeps alignment (2a.2)",
+          "[dwg-write][entity-encode][phase2a]") {
+    for (DRW::Version ver : {DRW::AC1015, DRW::AC1018}) {
+        DRW_Point src;
+        src.handle = 0x72;
+        src.color = 7;
+        src.ltypeScale = 1.0;
+        src.basePoint = DRW_Coord{4.0, 5.0, 6.0};
+        src.extPoint = DRW_Coord{0.0, 0.0, 1.0};
+        src.xDictHandle = 0xC0;   // reactors empty
+        DrwEntityEncodeTestAccess::layerH(src).ref = 0x12;
+
+        dwgBufferW w;
+        REQUIRE(DrwEntityEncodeTestAccess::encode(src, ver, &w));
+        auto bytes = snapshot(w);
+        dwgBuffer r(bytes.data(), bytes.size());
+        DRW_Point dst;
+        REQUIRE(DrwEntityEncodeTestAccess::parse(dst, ver, &r));
+
+        REQUIRE(dst.reactorHandles.empty());
+        REQUIRE(dst.xDictHandle == 0xC0u);
+        REQUIRE(DrwEntityEncodeTestAccess::layerH(dst).ref == 0x12u);
+    }
+}
+
 // 2a.1 (gap entity-visible-code60-dropped-dwg-read): the encoder now emits
 // the invisibleFlag BS (DXF 60) from `visible` instead of a hardcoded 0,
 // paired with the read assign. A real encode→parse round-trip now preserves

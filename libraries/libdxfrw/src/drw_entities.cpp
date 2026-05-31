@@ -1400,12 +1400,15 @@ bool DRW_Entity::parseDwgEntHandle(DRW::Version version, dwgBuffer *buf, bool re
         DRW_DBG("NO Block (parent) Handle\n");
 
     DRW_DBG("\n Remaining bytes: "); DRW_DBG(buf->numRemainingBytes()); DRW_DBG("\n");
+    reactorHandles.clear();
     for (int i=0; i< numReactors;++i) {
         dwgHandle reactorsH = buf->getHandle();
+        reactorHandles.push_back(reactorsH.ref);  // 2a.2: persist reactors
         DRW_DBG(" reactorsH control Handle: "); DRW_DBGHL(reactorsH.code, reactorsH.size, reactorsH.ref); DRW_DBG("\n");
     }
     if (xDictFlag !=1){//linetype in 2004 seems not have XDicObjH or NULL handle
         dwgHandle XDicObjH = buf->getHandle();
+        xDictHandle = XDicObjH.ref;  // 2a.2: persist xdict
         DRW_DBG(" XDicObj control Handle: "); DRW_DBGHL(XDicObjH.code, XDicObjH.size, XDicObjH.ref); DRW_DBG("\n");
     }
     DRW_DBG("Remaining bytes: "); DRW_DBG(buf->numRemainingBytes()); DRW_DBG("\n");
@@ -1624,19 +1627,27 @@ bool DRW_Entity::encodeDwgCommon(DRW::Version version, dwgBufferW *buf,
     // entmode: 2 = modelspace, no owner-handle in stream.
     buf->put2Bits(2);
 
-    // numReactors=0 (BL per spec §20.4.1)
+    // numReactors (BL per spec §20.4.1). 2a.2: emit the real count; empty
+    // reactorHandles → 0 → byte-identical to legacy.
+#if LIBDXFRW_FULL_COMMON_HEADER
+    buf->putBitLong(static_cast<dint32>(reactorHandles.size()));
+#else
     buf->putBitLong(0);
+#endif
 
     // R2004/R2010 (AC1018, AC1024): reader reads xDictFlag bit (version > AC1015)
-    // then forces haveNextLinks=1 (no bit in stream).  xDictFlag=0 means the
-    // reader will expect a null XDicObj handle in the handle section.
-    // R2000 (AC1015): no xDictFlag bit; reader reads haveNextLinks bit.
+    // then forces haveNextLinks=1 (no bit in stream).  We always emit
+    // xDictFlag=0 (xdic-present) so the reader reads exactly one xdic handle
+    // in the handle section — we emit the real handle when xDictHandle!=0 and
+    // a null handle otherwise. This keeps the empty case byte-identical to the
+    // legacy path (bit 0 + null handle) while round-tripping a real xdict.
+    // R2000 (AC1015): no xDictFlag bit; reader's xDictFlag stays 0 so it ALWAYS
+    // reads an xdic handle — same emit rule applies.
     // R2013+ (AC1027+): reader reads xDictFlag then reads haveNextLinks (bit restored).
-    // haveNextLinks=1 means no prev/next links — no extra handles in stream.
     if (version == DRW::AC1015) {
         buf->putBit(1);  // haveNextLinks=1 (no prev/next chain)
     } else {
-        buf->putBit(0);  // xDictFlag=0 (entity has no xdict; null handle follows)
+        buf->putBit(0);  // xDictFlag=0 (xdic present; real-or-null handle follows)
         if (version > DRW::AC1024) {
             buf->putBit(1);  // haveNextLinks=1 (AC1027+: bit is back in stream)
         }
@@ -1690,14 +1701,36 @@ bool DRW_Entity::encodeDwgEntHandle(DRW::Version version, dwgBufferW *buf,
     dwgBufferW *hb = (handleBuf != nullptr) ? handleBuf : buf;
 
     // ownerHandle skipped — entmode=2 above.
-    // No reactor handles (numReactors=0).
-    // XDic handle — for R2000/R2004/R2010, xDictFlag=0 means the reader
-    // expects a null XDicObj handle here.
-    dwgHandle xDicNull;
-    xDicNull.code = 3;
-    xDicNull.ref  = 0;
-    xDicNull.size = 0;
-    hb->putHandle(xDicNull);
+    // Reactor handles (2a.2): emitted before xdic, one per numReactors written
+    // in the DATA section, as ABSOLUTE handles (reader uses getHandle()). Empty
+    // reactorHandles → nothing emitted → byte-identical to legacy.
+#if LIBDXFRW_FULL_COMMON_HEADER
+    for (duint32 ref : reactorHandles) {
+        dwgHandle rh;
+        rh.code = 4;  // soft pointer
+        rh.ref  = ref;
+        rh.size = 0;
+        if (ref != 0) { duint32 t = ref; while (t != 0) { t >>= 8; ++rh.size; } }
+        hb->putHandle(rh);
+    }
+#endif
+
+    // XDic handle — xDictFlag=0 in the DATA section means the reader reads one
+    // XDicObj handle here: emit the real handle when xDictHandle!=0, else the
+    // null handle (matching the legacy byte-for-byte for the empty case).
+    dwgHandle xDic;
+    xDic.code = 3;
+#if LIBDXFRW_FULL_COMMON_HEADER
+    xDic.ref  = xDictHandle;
+    xDic.size = 0;
+    if (xDictHandle != 0) {
+        duint32 t = xDictHandle; while (t != 0) { t >>= 8; ++xDic.size; }
+    }
+#else
+    xDic.ref  = 0;
+    xDic.size = 0;
+#endif
+    hb->putHandle(xDic);
 
     // Layer handle (R2000+ unconditional).  Hard pointer.
     dwgHandle lH;
