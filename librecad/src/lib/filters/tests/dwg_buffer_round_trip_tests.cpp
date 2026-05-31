@@ -192,6 +192,16 @@ TEST_CASE("dwgBufferW: putBERawShort16 big-endian", "[dwg-write][primitives]") {
 
     dwgBuffer r(bytes.data(), bytes.size());
     REQUIRE(r.getBERawShort16() == 0xABCD);
+
+    // 1.6 UB fix: a high byte with the sign bit set (0xFF) must not invoke
+    // signed-char left-shift UB and must still decode big-endian.
+    dwgBufferW w2;
+    w2.putBERawShort16(0xFF80);
+    auto b2 = snapshot(w2);
+    REQUIRE(b2[0] == 0xFF);
+    REQUIRE(b2[1] == 0x80);
+    dwgBuffer r2(b2.data(), b2.size());
+    REQUIRE(r2.getBERawShort16() == 0xFF80);
 }
 
 TEST_CASE("dwgBufferW: putRawLong32 little-endian", "[dwg-write][primitives]") {

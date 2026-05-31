@@ -865,10 +865,12 @@ duint32 dwgBuffer::getEnColor(DRW::Version v) {
 
 /**Reads raw short 16 bits big-endian order, returns a unsigned short crc & size **/
 duint16 dwgBuffer::getBERawShort16(){
-    char buffer[2];
-    buffer[0] = getRawChar8();
-    buffer[1] = getRawChar8();
-    duint16 size = (buffer[0] << 8) | (buffer[1] & 0xFF);
+    // Read both bytes as unsigned: shifting a signed char with the high bit
+    // set is UB (UBSan: "left shift of negative value"). Surfaced by the 1.6
+    // fuzz harness over the DWG corpus.
+    duint8 hi = getRawChar8();
+    duint8 lo = getRawChar8();
+    duint16 size = static_cast<duint16>((static_cast<duint16>(hi) << 8) | lo);
     return size;
 }
 
