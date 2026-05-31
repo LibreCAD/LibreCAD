@@ -3295,14 +3295,46 @@ bool dxfRW::processInsert() {
     while (reader->readRec(&code)) {
         DRW_DBG(code); DRW_DBG("\n");
         if (0 == code) {
-           nextentity = reader->getString();
+            nextentity = reader->getString();
             DRW_DBG(nextentity); DRW_DBG("\n");
-            iface->addInsert(insert);
-            return true;  //found new entity or ENDSEC, terminate
+            // Attribute flag (66=1) signals trailing ATTRIB entities; mirror
+            // the POLYLINE/VERTEX/SEQEND pattern and gate on the next entity
+            // name rather than the flag (some writers omit code 66).
+            if (nextentity != "ATTRIB") {
+                iface->addInsert(insert);
+                return true;  //found new entity or ENDSEC, terminate
+            }
+            processAttrib(&insert);  //fills insert.attlist until SEQEND
         }
 
         if (!insert.parseCode(code, reader)) {
             return setError( DRW::BAD_CODE_PARSED);
+        }
+    }
+
+    return setError(DRW::BAD_READ_ENTITIES);
+}
+
+bool dxfRW::processAttrib(DRW_Insert *insert) {
+    DRW_DBG("dxfRW::processAttrib");
+    int code;
+    auto att = std::make_shared<DRW_Attrib>();
+    while (reader->readRec(&code)) {
+        DRW_DBG(code); DRW_DBG("\n");
+        if (0 == code) {
+            insert->attlist.push_back(att);
+            nextentity = reader->getString();
+            DRW_DBG(nextentity); DRW_DBG("\n");
+            if (nextentity == "SEQEND") {
+                return true;  //found SEQEND, no more attribs, terminate
+            }
+            if (nextentity == "ATTRIB") {
+                att = std::make_shared<DRW_Attrib>(); //another attrib
+            }
+        }
+
+        if (!att->parseCode(code, reader)) { //members of att are reinitialized here
+            return setError(DRW::BAD_CODE_PARSED);
         }
     }
 
