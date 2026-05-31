@@ -125,7 +125,10 @@ protected:
     /// section.  For R2000 (AC1015), `buf` and `hBbuf` may alias the
     /// same accumulator since the handle stream is inline.  Order of
     /// emission matches parseDwg byte-for-byte.
-    bool encodeDwg(DRW::Version version, dwgBufferW *buf, dwgBufferW *hBbuf);
+    /// For R2007+ (AC1021+), TV/TU header strings are written to `strBuf`
+    /// (the separate string stream); dwgWriter appends them + the footer.
+    bool encodeDwg(DRW::Version version, dwgBufferW *buf, dwgBufferW *hBbuf,
+                   dwgBufferW *strBuf = nullptr);
 private:
     bool getDouble(std::string key, double *varDouble);
     bool getInt(std::string key, int *varInt);

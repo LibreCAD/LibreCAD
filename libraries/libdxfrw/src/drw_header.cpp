@@ -2572,7 +2572,8 @@ namespace {
     }
 } // namespace
 
-bool DRW_Header::encodeDwg(DRW::Version version, dwgBufferW *buf, dwgBufferW *hBbuf) {
+bool DRW_Header::encodeDwg(DRW::Version version, dwgBufferW *buf, dwgBufferW *hBbuf,
+                           dwgBufferW *strBuf) {
     if (version != DRW::AC1015 && version != DRW::AC1018 &&
         version != DRW::AC1024 && version != DRW::AC1027 &&
         version != DRW::AC1032) return false;
@@ -3014,6 +3015,31 @@ bool DRW_Header::encodeDwg(DRW::Version version, dwgBufferW *buf, dwgBufferW *hB
     buf->putBitShort(0);
     buf->putBitShort(0);
     buf->putBitShort(0);
+
+    // -------- R2007+ string stream (inverse of parseDwg:2329-2372) ----------
+    // For R2007+ every header TV/TU string lives in a separate string stream,
+    // read consecutively in field-schema order. Collect them here in that
+    // exact order; dwgWriter assembles the [data][strings][footer] layout and
+    // back-patches bitSize so the reader's backward scan finds them. Pre-2007
+    // versions emit these inline above (gated version < AC1021).
+    if (version > DRW::AC1018 && strBuf != nullptr) {
+        strBuf->putUCSText(std::string());   // unknown text 1
+        strBuf->putUCSText(std::string());   // unknown text 2
+        strBuf->putUCSText(std::string());   // unknown text 3
+        strBuf->putUCSText(std::string());   // unknown text 4
+        strBuf->putUCSText(strVar(*this, "MENU"));
+        strBuf->putUCSText(strVar(*this, "DIMPOST"));
+        strBuf->putUCSText(strVar(*this, "DIMAPOST"));
+        if (version > DRW::AC1021) {          // 2010+
+            strBuf->putUCSText(strVar(*this, "DIMALTMZS"));
+            strBuf->putUCSText(strVar(*this, "DIMMZS"));
+        }
+        strBuf->putUCSText(strVar(*this, "HYPERLINKBASE"));
+        strBuf->putUCSText(strVar(*this, "STYLESHEET"));
+        strBuf->putUCSText(strVar(*this, "FINGERPRINTGUID"));
+        strBuf->putUCSText(strVar(*this, "VERSIONGUID"));
+        strBuf->putUCSText(strVar(*this, "PROJECTNAME"));
+    }
 
     return true;
 }

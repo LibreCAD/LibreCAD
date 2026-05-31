@@ -4414,6 +4414,8 @@ void RS_FilterDXFRW::addHatch(const DRW_Hatch *data) {
 
         RS_Entity* e = nullptr;
         if ((loop->type & 2) == 2){   //polyline, convert to lines & arcs
+            if (loop->objlist.empty())
+                continue;
             DRW_LWPolyline* pline = static_cast<DRW_LWPolyline*>(loop->objlist.at(0).get());
             RS_Polyline polyline{nullptr,
                                  RS_PolylineData(RS_Vector(false), RS_Vector(false), pline->flags)};
@@ -4539,6 +4541,9 @@ void RS_FilterDXFRW::addImage(const DRW_Image *data) {
     RS_DEBUG->print("RS_FilterDXF::addImage");
     if (m_graphic != nullptr && data != nullptr)
         m_graphic->dwgAdvancedMetadata().addRasterImage(*data, false);
+
+    if (data == nullptr)
+        return;
 
     RS_Vector ip(data->basePoint.x, data->basePoint.y);
     RS_Vector uv(data->secPoint.x, data->secPoint.y);
@@ -5004,6 +5009,9 @@ void RS_FilterDXFRW::linkImage(const DRW_ImageDef *data) {
     RS_DEBUG->print("RS_FilterDXFRW::linkImage");
     if (m_graphic != nullptr && data != nullptr)
         m_graphic->dwgAdvancedMetadata().addImageDefinition(*data);
+
+    if (data == nullptr)
+        return;
 
     int handle = data->handle;
     QString sfile(QString::fromUtf8(data->name.c_str()));
@@ -8408,6 +8416,7 @@ void RS_FilterDXFRW::writeEntity(RS_Entity* e){
     case RS2::EntityDimAngular:
     case RS2::EntityDimRadial:
     case RS2::EntityDimDiametric:
+    case RS2::EntityDimArc:
         writeDimension(static_cast<RS_Dimension*>(e));
         break;
     case RS2::EntityDimLeader:

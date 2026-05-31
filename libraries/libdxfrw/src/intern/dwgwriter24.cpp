@@ -54,9 +54,29 @@ bool dwgWriter24::writeDwgHeader() {
     if (m_header != nullptr) {
         dwgBufferW dataBuf;
         dwgBufferW handleBuf;
-        m_header->encodeDwg(m_version, &dataBuf, &handleBuf);
+        dwgBufferW strBuf;
+        m_header->encodeDwg(m_version, &dataBuf, &handleBuf, &strBuf);
         dataBuf.alignToByte();
+        strBuf.alignToByte();
         handleBuf.alignToByte();
+
+        // R2007+ string-stream footer (same convention as finishObject):
+        // append the string bytes to the data section, then 7 zero pad bits +
+        // RS(strDataSize) + present bit (24 bits = 3 bytes, byte-aligned).
+        // strDataSize = strBytes*8 + 7 so the reader's backward scan
+        // (DRW_Header::parseDwg:2329-2348) lands at the first string byte.
+        if (m_version > DRW::AC1018) {
+            duint32 strBytes = static_cast<duint32>(strBuf.data().size());
+            bool hasStrings = strBytes > 0;
+            if (hasStrings)
+                dataBuf.putBytes(strBuf.data().data(), strBytes);
+            duint16 strDataSize = hasStrings
+                ? static_cast<duint16>(strBytes * 8u + 7u) : 0u;
+            for (int i = 0; i < 7; ++i) dataBuf.putBit(0);
+            dataBuf.putRawShort16(strDataSize);
+            dataBuf.putBit(hasStrings ? 1 : 0);
+            // dataBuf is byte-aligned again (+strBytes +3 footer bytes).
+        }
 
         duint32 bitSize = 32u + static_cast<duint32>(dataBuf.size()) * 8u;
         m_buf.patchRawLong32(bitSizeOffset, bitSize);

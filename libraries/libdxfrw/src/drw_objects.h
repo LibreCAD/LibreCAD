@@ -1095,6 +1095,7 @@ public:
         tType = DRW::APPID;
         flags = 0;
         name = "";
+        DRW_TableEntry::reset();
     }
 
 protected:

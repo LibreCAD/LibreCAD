@@ -157,7 +157,8 @@ bool dxfReaderBinary::readInt16() {
     type = INT32;
     char buffer[2];
     filestr->read(buffer,2);
-    intData = (int)((buffer[1] << 8) | buffer[0]);
+    intData = static_cast<dint16>((static_cast<unsigned char>(buffer[1]) << 8)
+                                  | static_cast<unsigned char>(buffer[0]));
     DRW_DBG(intData); DRW_DBG("\n");
     return (filestr->good());
 }

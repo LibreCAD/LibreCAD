@@ -640,6 +640,11 @@ public:
     duint32 m_objectSize = 0;
     duint32 m_bodyBitSize = 0;
     std::vector<duint8> m_rawBytes;
+    std::vector<duint8> m_payloadBytes; /*!< opaque OLE payload, captured on read (Phase 6.2) */
+
+protected:
+    bool encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs=0,
+                   dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
 };
 
 //! LIGHT entity shell. LibreCAD does not render lights, but preserves metadata.

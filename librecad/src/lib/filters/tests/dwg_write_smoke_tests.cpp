@@ -338,6 +338,66 @@ TEST_CASE("dwgRW::write invokes writeHeader and the values reach the file",
 }
 
 namespace {
+/// Iface that writes string header vars (MENU/PROJECTNAME) and reads them
+/// back.  Exercises the R2007+ header string stream (F04): before the fix
+/// these strings were dropped on write for AC1021+, so they read back empty.
+class HeaderStringIface : public EmptyIface {
+public:
+    std::string m_writeMenu;
+    std::string m_writeProject;
+    bool        m_readCalled {false};
+    std::string m_readMenu;
+    std::string m_readProject;
+
+    void writeHeader(DRW_Header& data) override {
+        data.addStr("MENU", m_writeMenu, 1);
+        data.addStr("PROJECTNAME", m_writeProject, 1);
+    }
+    void addHeader(const DRW_Header* h) override {
+        if (h == nullptr) return;
+        m_readCalled = true;
+        auto readStr = [&](const char* k) -> std::string {
+            auto it = h->vars.find(k);
+            if (it != h->vars.end() && it->second
+                && it->second->type() == DRW_Variant::STRING)
+                return std::string(it->second->c_str());
+            return std::string();
+        };
+        m_readMenu    = readStr("MENU");
+        m_readProject = readStr("PROJECTNAME");
+    }
+};
+} // namespace
+
+TEST_CASE("R2010 header string vars round-trip through the string stream",
+          "[dwg-write][header-encode][string-stream]") {
+    const std::string path = tempPath("header_strings_2010.dwg");
+
+    HeaderStringIface writeIface;
+    writeIface.m_writeMenu    = "acad.mnu";
+    writeIface.m_writeProject = "MyProject";
+
+    {
+        dwgRW writer(path.c_str());
+        REQUIRE(writer.write(&writeIface, DRW::AC1024, /*bin=*/false));
+    }
+
+    HeaderStringIface readIface;
+    {
+        dwgRW reader(path.c_str());
+        bool ok = reader.read(&readIface, /*ext=*/false);
+        REQUIRE(ok);
+        REQUIRE(reader.getError() == DRW::BAD_NONE);
+        REQUIRE(reader.getVersion() == DRW::AC1024);
+    }
+    REQUIRE(readIface.m_readCalled);
+    CHECK(readIface.m_readMenu    == "acad.mnu");
+    CHECK(readIface.m_readProject == "MyProject");
+
+    std::remove(path.c_str());
+}
+
+namespace {
 
 /// Iface for the INSERT smoke test.  Defines a user block in
 /// writeBlocks(), captures the returned block_record handle, then

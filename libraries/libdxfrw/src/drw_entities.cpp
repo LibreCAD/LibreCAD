@@ -2883,10 +2883,15 @@ bool DRW_Ole2Frame::parseDwg(DRW::Version v, dwgBuffer *buf, duint32 bs){
 
     m_payloadPresent = m_declaredPayloadLength > 0;
     m_payloadByteCount = m_declaredPayloadLength;
-    if (m_declaredPayloadLength > 0
-        && !buf->moveBitPos(static_cast<dint32>(m_declaredPayloadLength * 8u))) {
-        m_payloadTruncated = true;
-        return false;
+    // Phase 6.2: capture the opaque payload bytes (was skipped via moveBitPos)
+    // so the OLE2FRAME encoder can re-emit them byte-for-byte.
+    if (m_declaredPayloadLength > 0) {
+        m_payloadBytes.resize(m_declaredPayloadLength);
+        if (!buf->getBytes(m_payloadBytes.data(), m_declaredPayloadLength)) {
+            m_payloadTruncated = true;
+            m_payloadBytes.clear();
+            return false;
+        }
     }
 
     if (v > DRW::AC1014 && buf->numRemainingBytes() > 0) {
@@ -2896,6 +2901,30 @@ bool DRW_Ole2Frame::parseDwg(DRW::Version v, dwgBuffer *buf, duint32 bs){
 
     ret = DRW_Entity::parseDwgEntHandle(v, buf);
     return ret && buf->isGood();
+}
+
+// Phase 6.2: OLE2FRAME encoder (fixed oType 74). Inverse of parseDwg, emitting
+// the captured opaque payload byte-for-byte. Without this override an OLE2FRAME
+// would encode as a LINE.
+bool DRW_Ole2Frame::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs,
+                              dwgBufferW *strBuf, dwgBufferW *handleBuf) {
+    (void)bs; (void)strBuf;
+    oType = 74;  // OLE2FRAME class id — see dwgreader.cpp case 74
+    if (!encodeDwgCommon(version, buf)) return false;
+
+    buf->putBitShort(m_flags);
+    if (version > DRW::AC1014)
+        buf->putBitShort(m_mode);
+    // Emit the actual captured length so the reader's data_size matches the
+    // bytes that follow (avoids a declared-vs-actual mismatch on re-read).
+    const duint32 payloadLen = static_cast<duint32>(m_payloadBytes.size());
+    buf->putBitLong(static_cast<dint32>(payloadLen));
+    if (payloadLen > 0)
+        buf->putBytes(m_payloadBytes.data(), m_payloadBytes.size());
+    if (version > DRW::AC1014 && m_hasR2000TrailingByte)
+        buf->putRawChar8(m_r2000TrailingByte);
+
+    return encodeDwgEntHandle(version, buf, handleBuf);
 }
 
 bool DRW_Light::parseDwg(DRW::Version v, dwgBuffer *buf, duint32 bs){
@@ -3253,7 +3282,7 @@ bool DRW_Insert::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
             DRW_DBG("second attrib Handle: "); DRW_DBGHL(attH.code, attH.size, attH.ref); DRW_DBG("\n");
             attribHandles.push_back(attH);
         } else {
-            for (duint8 i=0; i< objCount; ++i){
+            for (dint32 i=0; i < objCount && buf->isGood(); ++i){
                 dwgHandle attH = buf->getHandle(); /* H 2 BLOCK HEADER (hard pointer) */
                 DRW_DBG("attrib Handle #"); DRW_DBG(i); DRW_DBG(": "); DRW_DBGHL(attH.code, attH.size, attH.ref); DRW_DBG("\n");
                 attribHandles.push_back(attH);
@@ -6495,7 +6524,8 @@ bool DRW_Dimension::encodeDwgDimBase(DRW::Version version, dwgBufferW *buf,
     // ODA §20.4.22: version RC present for R2010+ (mirrors parseDwg read at version > AC1021)
     if (version > DRW::AC1021)
         buf->putRawChar8(0);
-    // TODO: AC1021+ strBuf routing — string fields must go through separate strBuf for R2007+
+    // R2007+: the dim text below is routed to strBuf (the separate string
+    // stream) via the (strBuf ? strBuf : buf) selector in putVariableText.
     buf->put3BitDouble(extPoint);        // 3BD per ODA §20.4.22 (NOT BE, NO padding bits)
     buf->putRawDouble(textPoint.x);
     buf->putRawDouble(textPoint.y);
@@ -7619,7 +7649,7 @@ bool DRW_Viewport::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
         DRW_DBG("ViewPort ent header: "); DRW_DBGHL(someHdl.code, someHdl.size, someHdl.ref); DRW_DBG("\n");
     }
     if (version > DRW::AC1014) {//2000+
-        for (duint8 i=0; i < frozenLyCount; ++i){
+        for (duint32 i=0; i < frozenLyCount && buf->isGood(); ++i){
             someHdl = buf->getHandle();
             DRW_DBG("Frozen layer handle "); DRW_DBG(i); DRW_DBG(": "); DRW_DBGHL(someHdl.code, someHdl.size, someHdl.ref); DRW_DBG("\n");
         }
