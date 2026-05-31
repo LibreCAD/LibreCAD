@@ -2547,7 +2547,23 @@ bool DRW_Layer::encodeDwg(DRW::Version version, dwgBufferW *buf,
             ((lwIdx & 0x1F) << 5));
         buf->putSBitShort(f);
     }
-    buf->putCmColor(version, static_cast<duint16>(color > 0 ? color : 7));
+    // P4-08: emit 24-bit truecolor + color/book name on R2004+ when present.
+    // colorName is stored joined as "BOOK$ENTRY" by parseDwg (or just "ENTRY"
+    // when no book); split it back so the CMC name/book flags round-trip. The
+    // name strings go to the string buffer (sb), matching the reader which
+    // reads them from sBuf.
+    if (version > DRW::AC1014 && color24 >= 0) {
+        UTF8STRING bookName, entryName = colorName;
+        const std::string::size_type sep = colorName.find('$');
+        if (sep != std::string::npos) {
+            bookName = colorName.substr(0, sep);
+            entryName = colorName.substr(sep + 1);
+        }
+        buf->putCmColor(version, static_cast<duint16>(color > 0 ? color : 7),
+                        color24, entryName, bookName, sb);
+    } else {
+        buf->putCmColor(version, static_cast<duint16>(color > 0 ? color : 7));
+    }
 
     // Handles
     hb->putHandle(makeSoftOwnerW(kLayerControl));

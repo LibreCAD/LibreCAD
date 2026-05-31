@@ -468,6 +468,31 @@ void dwgBufferW::putCmColor(DRW::Version v, duint16 colorIndex) {
     }
 }
 
+void dwgBufferW::putCmColor(DRW::Version v, duint16 colorIndex, dint32 rgb24,
+                            const UTF8STRING& colorName,
+                            const UTF8STRING& bookName,
+                            dwgBufferW* strBuf) {
+    // Pre-R2004 has no truecolor/name CMC encoding: index-only path.
+    if (v < DRW::AC1018 || rgb24 < 0) {
+        putCmColor(v, colorIndex);
+        return;
+    }
+    // R2004+ truecolor: BS index, BL packed (0xC2<<24 | rgb24), RC name flags,
+    // then the name strings to the string buffer (defaulting to this).
+    // Inverse of dwgBuffer::getCmColor type==0xC2 branch.
+    putBitShort(colorIndex);
+    duint32 rgb = (0xC2u << 24) | (static_cast<duint32>(rgb24) & 0xFFFFFFu);
+    putBitLong(static_cast<dint32>(rgb));
+    duint8 flags = static_cast<duint8>((colorName.empty() ? 0u : 1u)
+                                       | (bookName.empty() ? 0u : 2u));
+    putRawChar8(flags);
+    dwgBufferW* names = strBuf ? strBuf : this;
+    if (flags & 1)
+        names->putVariableText(v, colorName);
+    if (flags & 2)
+        names->putVariableText(v, bookName);
+}
+
 void dwgBufferW::putEnColor(DRW::Version v, duint16 colorIndex) {
     if (v < DRW::AC1018)
         putSBitShort(static_cast<dint16>(colorIndex));

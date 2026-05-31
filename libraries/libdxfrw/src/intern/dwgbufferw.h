@@ -160,6 +160,17 @@ public:
     /// AcDbColor references are deferred to Phase 5.
     void putCmColor(DRW::Version v, duint16 colorIndex);
 
+    /// CMC color (R2004+) with optional 24-bit truecolor + color/book name
+    /// (P4-08). For version < AC1018 this is identical to the index-only
+    /// overload. For R2004+: when rgb24 >= 0 it emits the 0xC2 truecolor
+    /// packing plus the name flags and (in strBuf, defaulting to this) the
+    /// color name / book name strings; otherwise it falls back to the
+    /// index path. Inverse of dwgBuffer::getCmColor.
+    void putCmColor(DRW::Version v, duint16 colorIndex, dint32 rgb24,
+                    const UTF8STRING& colorName,
+                    const UTF8STRING& bookName,
+                    dwgBufferW* strBuf = nullptr);
+
     /// ENC color (R2000): emits BS color index.  Matches reader's
     /// getEnColor for AC1015.
     void putEnColor(DRW::Version v, duint16 colorIndex);

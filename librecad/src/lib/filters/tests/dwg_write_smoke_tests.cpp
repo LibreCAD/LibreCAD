@@ -3869,6 +3869,63 @@ TEST_CASE("dwgRW R2004 round-trip with custom layer",
     std::remove(path.c_str());
 }
 
+// P4-08 — LAYER 24-bit truecolor + color/book name round-trip (R2004+).
+namespace {
+
+class TruecolorLayerIface : public EmptyIface {
+public:
+    dwgRW *m_writer {nullptr};
+    int m_capturedColor24 {-2};
+    std::string m_capturedColorName;
+    int m_capturedAciColor {0};
+    bool m_sawTruecolorLayer {false};
+
+    void writeLayers() override {
+        if (m_writer == nullptr) return;
+        DRW_Layer lay;
+        lay.name = "RGBLAYER";
+        lay.color = 7;
+        lay.color24 = 0x00FF8040;          // R=255 G=128 B=64
+        lay.colorName = "MyBook$Sky";      // book "MyBook", entry "Sky"
+        m_writer->addLayer(&lay);
+    }
+    void addLayer(const DRW_Layer& l) override {
+        if (l.name == "RGBLAYER") {
+            m_sawTruecolorLayer = true;
+            m_capturedColor24 = l.color24;
+            m_capturedColorName = l.colorName;
+            m_capturedAciColor = l.color;
+        }
+    }
+};
+
+} // namespace
+
+TEST_CASE("dwgRW R2004 LAYER truecolor + book name round-trips",
+          "[dwg-write][smoke][r2004][layer-truecolor]") {
+    const std::string path = tempPath("layer_truecolor_r2004.dwg");
+
+    {
+        dwgRW writer(path.c_str());
+        TruecolorLayerIface iface;
+        iface.m_writer = &writer;
+        REQUIRE(writer.write(&iface, DRW::AC1018, /*bin=*/false));
+    }
+
+    TruecolorLayerIface cap;
+    {
+        dwgRW reader(path.c_str());
+        REQUIRE(reader.read(&cap, /*ext=*/false));
+        REQUIRE(reader.getError() == DRW::BAD_NONE);
+    }
+
+    REQUIRE(cap.m_sawTruecolorLayer);
+    CHECK(cap.m_capturedColor24 == 0x00FF8040);
+    CHECK(cap.m_capturedColorName == "MyBook$Sky");
+
+    std::remove(path.c_str());
+}
+
 // ---- Phase 5 entity encoder smoke tests --------------------------------
 
 namespace {
