@@ -1262,6 +1262,58 @@ TEST_CASE("DRW_DimOrdinate::encodeDwg round-trips origin and leader endpoints",
     }
 }
 
+// 0B.1 (gap dim-ordinate-xy-flag-wrong-bit): the DWG ordinate X/Y type flag
+// is DXF group-70 bit 6 (0x40) — the bit the filter (`type & 64`) and the
+// DXF parseCode path use.  The DWG parse/encode previously used bit 7 (0x80),
+// so the byte round-tripped but the filter check never fired.  Note: a
+// DWG<->DWG byte round-trip alone is INSUFFICIENT to catch this bug (the old
+// 0x80 code round-trips its own byte fine); the load-bearing assertion is
+// that the surviving bit is 0x40 so the filter sees the X-type.
+TEST_CASE("DRW_DimOrdinate X/Y flag round-trips on bit 0x40 (filter parity)",
+          "[dwg-write][entity-encode]") {
+    for (DRW::Version ver : {DRW::AC1015, DRW::AC1018}) {
+        // X-type ordinate: group-70 bit 6 (0x40) set.
+        {
+            DRW_DimOrdinate src;
+            src.handle = 0xC7;
+            src.type   = 6 | 0x40;   // ordinate subtype bits + X-type flag
+            src.setOriginPoint({2.0, 1.0, 0.0});
+            src.setFirstLine  ({2.0, 5.0, 0.0});
+            src.setSecondLine ({4.0, 5.0, 0.0});
+            src.setTextPoint  ({3.0, 5.5, 0.0});
+            src.setHDir(0.0);
+
+            dwgBufferW w;
+            REQUIRE(DrwEntityEncodeTestAccess::encode(src, ver, &w));
+            auto bytes = snapshot(w);
+            dwgBuffer r(bytes.data(), bytes.size());
+            DRW_DimOrdinate dst;
+            REQUIRE(DrwEntityEncodeTestAccess::parse(dst, ver, &r));
+            REQUIRE((dst.type & 0x40) != 0);   // X-type survives → filter fires
+            REQUIRE((dst.type & 0x80) == 0);   // base type bit not corrupted
+        }
+        // Y-type ordinate: group-70 bit 6 (0x40) clear.
+        {
+            DRW_DimOrdinate src;
+            src.handle = 0xC8;
+            src.type   = 6;          // no 0x40 → Y-type
+            src.setOriginPoint({2.0, 1.0, 0.0});
+            src.setFirstLine  ({2.0, 5.0, 0.0});
+            src.setSecondLine ({4.0, 5.0, 0.0});
+            src.setTextPoint  ({3.0, 5.5, 0.0});
+            src.setHDir(0.0);
+
+            dwgBufferW w;
+            REQUIRE(DrwEntityEncodeTestAccess::encode(src, ver, &w));
+            auto bytes = snapshot(w);
+            dwgBuffer r(bytes.data(), bytes.size());
+            DRW_DimOrdinate dst;
+            REQUIRE(DrwEntityEncodeTestAccess::parse(dst, ver, &r));
+            REQUIRE((dst.type & 0x40) == 0);   // Y-type stays Y
+        }
+    }
+}
+
 TEST_CASE("DRW_Leader::encodeDwg round-trips vertices, arrow, leadertype, extrusion",
           "[dwg-write][entity-encode][leader]") {
     DRW_Leader src;

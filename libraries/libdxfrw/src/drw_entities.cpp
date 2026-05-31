@@ -6369,7 +6369,12 @@ bool DRW_DimOrdinate::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs)
     DRW_DBG("\ndef2: "); DRW_DBGPT(pt.x, pt.y, pt.z);
     duint8 type2 = buf->getRawChar8();//RLZ: correct this
     DRW_DBG("type2 (70) read: "); DRW_DBG(type2);
-    type =  (type2 & 1) ? type | 0x80 : type & 0xBF; //set bit 6
+    // 0B.1: x-vs-y ordinate flag is DXF group-70 bit 6 (0x40), matching the
+    // filter (rs_filterdxfrw.cpp `type & 64`) and the DWG parseCode path.
+    // (Previously set bit 7/0x80, which the filter never checks.) The clear
+    // mask 0xBF already clears 0x40. The DIMENSION base type byte (bit 7) is
+    // a separate field — see :6141/:6409/:6660, NOT touched here.
+    type =  (type2 & 1) ? type | 0x40 : type & 0xBF; //set bit 6 (0x40)
     DRW_DBG(" type (70) set: "); DRW_DBG(type);
     type |= 6;
     DRW_DBG("\n  type (70) final: "); DRW_DBG(type); DRW_DBG("\n");
@@ -6641,8 +6646,10 @@ bool DRW_DimOrdinate::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 b
     buf->put3BitDouble(getDefPoint());  // origin/definition point (code 10)
     buf->put3BitDouble(getPt3());       // feature location point (code 13)
     buf->put3BitDouble(getPt4());       // leader end point (code 14)
-    // type2 byte encodes the x-vs-y ordinate flag (bit7 of type)
-    duint8 type2byte = (type & 0x80) ? 1 : 0;
+    // type2 byte encodes the x-vs-y ordinate flag (bit 6 / 0x40 of type, per
+    // 0B.1) — keeps the DWG byte round-trip self-consistent with the parse
+    // side while making the filter's `type & 64` check fire.
+    duint8 type2byte = (type & 0x40) ? 1 : 0;
     buf->putRawChar8(type2byte);
     if (!encodeDwgEntHandle(version, buf, handleBuf)) return false;
     putDimHandles(buf, dimStyleH, blockH, handleBuf);
