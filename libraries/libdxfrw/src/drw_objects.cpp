@@ -3383,11 +3383,16 @@ bool DRW_MLineStyle::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
         UTF8STRING n2, b2;
         e.color = static_cast<int>(buf->getCmColor(version, &elRgb, sBuf, &n2, &b2));
         if (elRgb != -1) e.color24 = elRgb;
-        // Per ODA, R2018+ stores lt_index as BS here; older versions defer
-        // the linetype to a handle in the trailing handle stream. We read
-        // the handle there (parseDwgEntHandle) but skip the index field.
-        if (version >= DRW::AC1032) {  // R2018+
-            buf->getBitShort();        // lt_index, ignored — handle wins
+        // Per ODA/libreDWG (dwg.spec MLINESTYLE): PRE-R2018 stores the
+        // per-element linetype as an inline signed BS index (SUB_FIELD_BSd
+        // lt.index); R2018+ uses a linetype HANDLE in the object handle
+        // stream instead. The previous gate was INVERTED — it read the BS
+        // only for R2018+ and skipped it pre-R2018, desyncing every element
+        // by one BS for the common R2000-R2013 case. Read the signed inline
+        // index pre-R2018; getSBitShort preserves the negative BYLAYER(32767)/
+        // BYBLOCK(32766)-style sentinels. The R2018+ handle read is 0B.4b.
+        if (version < DRW::AC1032) {  // pre-R2018
+            e.linetypeIndex = buf->getSBitShort();  // BSd inline lt index
         }
         elements.push_back(std::move(e));
     }

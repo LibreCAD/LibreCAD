@@ -558,6 +558,52 @@ TEST_CASE("DRW_LayerIndex::parseDwg captures per-layer entry handles",
     REQUIRE(dst.entries[1].entryHandle == 0x201u);
 }
 
+// 0B.4a (gap object-mlinestyle-ltindex-inverted-version-gate-read):
+// PRE-R2018 MLINESTYLE stores a signed inline lt index (BSd) per element;
+// the version gate was inverted (read the BS only for R2018+), desyncing
+// every element by one BS for the common R2000-R2013 case.  This test
+// builds a 2-element AC1015 MLINESTYLE and asserts (a) both element
+// offsets/colors stay aligned (no per-element BS drift), (b) the signed
+// inline index is now CONSUMED and STORED in linetypeIndex (incl. a
+// negative sentinel proving the signed read), and (c) buff stays good.
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("DRW_MLineStyle::parseDwg captures per-element signed lt index (pre-R2018)",
+          "[dwg-read][object-encode][mlinestyle]") {
+    DRW::Version ver = DRW::AC1015;  // pre-R2018: inline BSd index present
+    dwgBufferW w;
+    emitObjectPreamble(w, ver, /*oType=*/0, /*handle=*/0x400);
+    w.putVariableText(ver, "MyStyle");    // name
+    w.putVariableText(ver, "desc");       // description
+    w.putBitShort(0);                     // flags
+    w.putCmColor(ver, 256);               // fill color (CMC)
+    w.putBitDouble(1.0471975512);         // startAngle
+    w.putBitDouble(2.0943951024);         // endAngle
+    w.putRawChar8(2);                     // numLines
+    // element 0
+    w.putBitDouble(0.5);                  // offset
+    w.putCmColor(ver, 1);                 // color
+    w.putSBitShort(0);                    // linetypeIndex (BSd) = 0
+    // element 1 — uses a negative sentinel to prove the signed read.
+    w.putBitDouble(-0.5);                 // offset
+    w.putCmColor(ver, 2);                 // color
+    w.putSBitShort(-2);                   // linetypeIndex (BSd) = -2
+
+    auto bytes = snapshot(w);
+    dwgBuffer r(bytes.data(), bytes.size());
+    DRW_MLineStyle dst;
+    REQUIRE(DrwObjectEncodeTestAccess::parse(dst, ver, &r));
+
+    REQUIRE(dst.name == "MyStyle");        // read before the element loop
+    REQUIRE(dst.elements.size() == 2u);
+    REQUIRE(dst.elements[0].offset == Approx(0.5));   // no BS drift
+    REQUIRE(dst.elements[0].color == 1);
+    REQUIRE(dst.elements[0].linetypeIndex == 0);      // inline index consumed
+    REQUIRE(dst.elements[1].offset == Approx(-0.5));  // 2nd element aligned
+    REQUIRE(dst.elements[1].color == 2);
+    REQUIRE(dst.elements[1].linetypeIndex == -2);     // signed read preserved
+    REQUIRE(r.isGood());                  // stream stayed aligned
+}
+
 // SPATIAL_INDEX parser test (ODA §20.4.95).  Body beyond timestamps is
 // opaque, so we exercise only the timestamp capture.  Handle stream is
 // gated to AC1024+ in the parser; under AC1018 the handles are not read.

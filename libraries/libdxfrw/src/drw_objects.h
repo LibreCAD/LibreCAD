@@ -1390,6 +1390,8 @@ struct DRW_MLineElement {
     double offset = 0.0;        /*!< BD — perpendicular offset from centerline */
     int    color  = 256;        /*!< CMC index — 256 = ByLayer */
     int    color24 = -1;        /*!< true-color RGB (-1 = none) */
+    int    linetypeIndex = -1;  /*!< BSd inline lt index PRE-R2018 (DXF 6); -1 = unset.
+                                 *   R2018+ uses linetypeHandle instead (0B.4b). */
     duint32 linetypeHandle = 0; /*!< H — linetype object reference */
     UTF8STRING linetype;        /*!< resolved linetype name (DXF 6) */
 };
