@@ -1549,3 +1549,97 @@ TEST_CASE("DRW_Shape::encodeDwg round-trips body and style handle",
         CHECK(dst.m_shapeFileHandle == 0x41u);
     }
 }
+
+// IMAGE encoder round-trip (Phase 6.3): DRW_Image::encodeDwg must shadow
+// DRW_Line::encodeDwg (oType 101, not 19/LINE), round-trip the body fields,
+// and preserve BOTH trailing handles (imagedef + imagedefreactor) plus the
+// display-props field that the reader previously discarded.
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("DRW_Image::encodeDwg round-trips body + both handles",
+          "[dwg-write][entity-encode][image]") {
+    DRW_Image src;
+    src.handle      = 0x70;
+    src.color       = 7;
+    src.ltypeScale  = 1.0;
+    src.basePoint   = DRW_Coord{1.0, 2.0, 3.0};
+    src.secPoint    = DRW_Coord{0.5, 0.0, 0.0};   // uvec
+    src.vVector     = DRW_Coord{0.0, 0.5, 0.0};
+    src.sizeu       = 640.0;
+    src.sizev       = 480.0;
+    src.m_displayProps = 5;
+    src.clip        = 1;
+    src.brightness  = 60;
+    src.contrast    = 40;
+    src.fade        = 10;
+    src.ref         = 0x100;                       // imagedef handle (340)
+    src.m_imageDefReactorHandle = 0x101;           // imagedefreactor (360)
+    // Non-empty polygon clip boundary (forces clip_boundary_type 2).
+    src.clipPath = {DRW_Coord{0.0, 0.0, 0.0}, DRW_Coord{10.0, 0.0, 0.0},
+                    DRW_Coord{10.0, 8.0, 0.0}, DRW_Coord{0.0, 8.0, 0.0}};
+    DrwEntityEncodeTestAccess::layerH(src).ref = 0x12;
+
+    for (DRW::Version ver : {DRW::AC1015, DRW::AC1018}) {
+        dwgBufferW w;
+        REQUIRE(DrwEntityEncodeTestAccess::encode(src, ver, &w));
+        // Proves the override shadows DRW_Line::encodeDwg (oType 19).
+        CHECK(DrwEntityEncodeTestAccess::oType(src) == 101);
+
+        auto bytes = snapshot(w);
+        dwgBuffer r(bytes.data(), bytes.size());
+        DRW_Image dst;
+        REQUIRE(DrwEntityEncodeTestAccess::parse(dst, ver, &r));
+
+        CHECK(DrwEntityEncodeTestAccess::oType(dst) == 101);
+        CHECK(dst.handle == 0x70u);
+        CHECK(dst.basePoint.x == Approx(1.0));
+        CHECK(dst.basePoint.y == Approx(2.0));
+        CHECK(dst.basePoint.z == Approx(3.0));
+        CHECK(dst.secPoint.x  == Approx(0.5));
+        CHECK(dst.vVector.y   == Approx(0.5));
+        CHECK(dst.sizeu       == Approx(640.0));
+        CHECK(dst.sizev       == Approx(480.0));
+        CHECK(dst.m_displayProps == 5);
+        CHECK(dst.clip        == 1);
+        CHECK(dst.brightness  == 60);
+        CHECK(dst.contrast    == 40);
+        CHECK(dst.fade        == 10);
+        CHECK(dst.clipPath.size() == 4u);
+        CHECK(dst.clipPath[2].x == Approx(10.0));
+        CHECK(dst.clipPath[2].y == Approx(8.0));
+        CHECK(dst.ref == 0x100u);                       // imagedef survives
+        CHECK(dst.m_imageDefReactorHandle == 0x101u);   // reactor survives
+    }
+}
+
+// IMAGE empty-clip variant: clip_boundary_type 0, both handles still emitted.
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("DRW_Image::encodeDwg round-trips empty clip boundary",
+          "[dwg-write][entity-encode][image]") {
+    DRW_Image src;
+    src.handle      = 0x71;
+    src.color       = 7;
+    src.ltypeScale  = 1.0;
+    src.basePoint   = DRW_Coord{0.0, 0.0, 0.0};
+    src.secPoint    = DRW_Coord{1.0, 0.0, 0.0};
+    src.vVector     = DRW_Coord{0.0, 1.0, 0.0};
+    src.sizeu       = 100.0;
+    src.sizev       = 100.0;
+    src.clip        = 0;
+    src.ref         = 0x200;
+    src.m_imageDefReactorHandle = 0x201;
+    DrwEntityEncodeTestAccess::layerH(src).ref = 0x12;
+
+    for (DRW::Version ver : {DRW::AC1015, DRW::AC1018}) {
+        dwgBufferW w;
+        REQUIRE(DrwEntityEncodeTestAccess::encode(src, ver, &w));
+        auto bytes = snapshot(w);
+        dwgBuffer r(bytes.data(), bytes.size());
+        DRW_Image dst;
+        REQUIRE(DrwEntityEncodeTestAccess::parse(dst, ver, &r));
+
+        CHECK(DrwEntityEncodeTestAccess::oType(dst) == 101);
+        CHECK(dst.clipPath.empty());
+        CHECK(dst.ref == 0x200u);
+        CHECK(dst.m_imageDefReactorHandle == 0x201u);
+    }
+}

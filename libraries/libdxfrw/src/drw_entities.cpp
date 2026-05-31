@@ -1054,7 +1054,9 @@ bool DRW_Entity::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer* strBu
     }
     if (version > DRW::AC1021) {//2010+
         duint32 ms = buf->size();
-        objSize = ms*8 - bs;
+        // Clamp: a corrupt bs > ms*8 would underflow objSize (unsigned) to a
+        // huge value and drive strBuf->moveBitPos(objSize-1) past the buffer.
+        objSize = (bs <= ms*8u) ? ms*8u - bs : 0u;
         DRW_DBG(" Object size: "); DRW_DBG(objSize); DRW_DBG("\n");
     }
 
@@ -1089,7 +1091,7 @@ bool DRW_Entity::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer* strBu
     // into @ref extData. Handle-typed items (type 3 layer-ref, type 5
     // entity-ref) and the per-chunk APPID handle are resolved post-hoc
     // in dwgReader::parseAttribs once the symbol tables are available.
-    dint16 extDataSize = buf->getBitShort(); //BS
+    duint16 extDataSize = buf->getBitShort(); //BS (unsigned: a >32767 chunk size must not go negative)
     DRW_DBG(" ext data size: "); DRW_DBG(extDataSize);
     while (extDataSize>0 && buf->isGood()) {
         dwgHandle ah = buf->getHandle();
@@ -6058,8 +6060,8 @@ bool DRW_Image::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     sizeu = buf->getRawDouble();
     sizev = buf->getRawDouble();
     DRW_DBG("\nsize U: "); DRW_DBG(sizeu); DRW_DBG("\nsize V: "); DRW_DBG(sizev);
-    duint16 displayProps = buf->getBitShort();
-    DRW_UNUSED(displayProps);//RLZ: temporary, complete API
+    m_displayProps = buf->getBitShort();
+    DRW_DBG("\ndisplay props: "); DRW_DBG(m_displayProps);
     clip = buf->getBit();
     brightness = buf->getRawChar8();
     contrast = buf->getRawChar8();
@@ -6102,9 +6104,66 @@ bool DRW_Image::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     ref = biH.ref;
     biH = buf->getHandle();
     DRW_DBG("ImageDefReactor Handle: "); DRW_DBGHL(biH.code, biH.size, biH.ref);
+    m_imageDefReactorHandle = biH.ref;
     DRW_DBG("Remaining bytes: "); DRW_DBG(buf->numRemainingBytes()); DRW_DBG("\n");
 //    RS crc;   //RS */
     return buf->isGood();
+}
+
+// DRW_Image::encodeDwg — inverse of DRW_Image::parseDwg above (libreDWG
+// dwg.spec:5533-5563).  Body field order: BL class_version (0), 3 x 3BD
+// (base/uvec/vvec), 2 x RD (sizeu/sizev), BS display_props, B clip,
+// 3 x RC (brightness/contrast/fade), [R2010+ B clip_mode], BS
+// clip_boundary_type + verts.  Both handles (imagedef code 5 + reactor
+// code 3) are emitted UNCONDITIONALLY at the END of the handle stream,
+// matching parseDwg's order — NOT the spec's interleaved mid-stream slots.
+bool DRW_Image::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs,
+                          dwgBufferW *strBuf, dwgBufferW *handleBuf) {
+    (void)bs; (void)strBuf;
+    oType = 101;  // IMAGE class id — see dwgreader.cpp case 101
+    if (!encodeDwgCommon(version, buf)) return false;
+
+    buf->putBitLong(0);  // class_version (reader discards; ODA emits 0)
+    buf->putBitDouble(basePoint.x); buf->putBitDouble(basePoint.y); buf->putBitDouble(basePoint.z);
+    buf->putBitDouble(secPoint.x);  buf->putBitDouble(secPoint.y);  buf->putBitDouble(secPoint.z);  // uvec
+    buf->putBitDouble(vVector.x);   buf->putBitDouble(vVector.y);   buf->putBitDouble(vVector.z);
+    buf->putRawDouble(sizeu);
+    buf->putRawDouble(sizev);
+    buf->putBitShort(static_cast<duint16>(m_displayProps));
+    buf->putBit(static_cast<duint8>(clip & 1));
+    buf->putRawChar8(static_cast<duint8>(brightness));
+    buf->putRawChar8(static_cast<duint8>(contrast));
+    buf->putRawChar8(static_cast<duint8>(fade));
+    if (version > DRW::AC1021) {  // 2010+ clip mode
+        buf->putBit(clipMode ? 1 : 0);
+    }
+    if (clipPath.empty()) {
+        buf->putBitShort(0);  // clip_boundary_type 0 = none
+    } else {
+        // Always emit polygon type 2 — reader expands a stored rect (type 1)
+        // into a 4-vertex polygon, so re-emit it as a polygon, never type 1.
+        buf->putBitShort(2);
+        buf->putBitLong(static_cast<dint32>(clipPath.size()));
+        for (const DRW_Coord& v : clipPath)
+            buf->put2RawDouble(v);
+    }
+
+    if (!encodeDwgEntHandle(version, buf, handleBuf)) return false;
+
+    // Emit both trailing handles UNCONDITIONALLY in parseDwg order:
+    // imagedef (hard pointer, code 5) then imagedefreactor (hard owner, code 3).
+    dwgBufferW *hb = handleBuf ? handleBuf : buf;
+    auto makeHandle = [](duint8 code, duint32 r) {
+        dwgHandle h;
+        h.code = (r == 0) ? 0 : code;
+        h.ref  = r;
+        h.size = 0;
+        if (r != 0) { duint32 t = r; while (t != 0) { t >>= 8; ++h.size; } }
+        return h;
+    };
+    hb->putHandle(makeHandle(5, ref));                       // imagedef (340)
+    hb->putHandle(makeHandle(3, m_imageDefReactorHandle));   // imagedefreactor (360)
+    return true;
 }
 
 bool DRW_Dimension::parseCode(int code, const std::unique_ptr<dxfReader>& reader){

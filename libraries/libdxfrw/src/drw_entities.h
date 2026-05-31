@@ -1666,7 +1666,13 @@ protected:
     virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
 
 public:
+    // SHADOWS DRW_Line::encodeDwg — without this override an IMAGE would
+    // encode as a LINE (oType 19).  Emits oType 101 + the IMAGE body.
+    virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs=0,
+                           dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
     duint32 ref = 0;           /*!< Hard reference to imagedef object, code 340 */
+    duint32 m_imageDefReactorHandle = 0; /*!< Hard owner to imagedefreactor, code 360 (DWG) */
+    int m_displayProps = 0;    /*!< Image display properties bitmask, code 70 (DWG) */
     DRW_Coord vVector;         /*!< V-vector of single pixel, x coordinate, code 12, 22 & 32 */
 //    double vx;                 /*!< V-vector of single pixel, x coordinate, code 12 */
 //    double vy;                 /*!< V-vector of single pixel, y coordinate, code 22 */
