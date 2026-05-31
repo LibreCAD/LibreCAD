@@ -3648,3 +3648,39 @@ TEST_CASE("DWG raw-replay version guard drops cross-version custom objects",
   CHECK(unknownSource.replayed == 1);
   CHECK(unknownSource.blockedVersionMismatch == 0);
 }
+
+// Phase 2b.1 — MATERIAL + VISUALSTYLE raw-replay rescue. The reader arms now
+// capture the full byte image as a custom-class raw object, eligible for
+// byte-for-byte replay (same source/target version).
+TEST_CASE("DWG MATERIAL and VISUALSTYLE raw objects are replay-eligible",
+          "[entity_metadata][dwg_metadata][replay_rescue]") {
+  LC_DwgAdvancedMetadata metadata;
+
+  DRW_UnsupportedObject material;
+  material.m_objectType = 600;  // >=500 custom class.
+  material.m_handle = 0x301u;
+  material.m_isCustomClass = true;
+  material.m_recordName = "MATERIAL";
+  material.m_className = "AcDbMaterial";
+  material.m_rawBytes = {0xAAu, 0xBBu, 0xCCu, 0xDDu};
+  metadata.addUnsupportedObject(material);
+
+  DRW_UnsupportedObject visualStyle;
+  visualStyle.m_objectType = 601;
+  visualStyle.m_handle = 0x302u;
+  visualStyle.m_isCustomClass = true;
+  visualStyle.m_recordName = "ACDB_VISUALSTYLE_CLASS";
+  visualStyle.m_className = "AcDbVisualStyle";
+  visualStyle.m_rawBytes = {0x11u, 0x22u};
+  metadata.addUnsupportedObject(visualStyle);
+
+  REQUIRE(metadata.rawObjects().size() == 2);
+  CHECK(metadata.rawObjects()[0].recordName == "MATERIAL");
+  CHECK(metadata.rawObjects()[0].rawBytes.size() == 4);
+  CHECK(metadata.rawObjects()[1].recordName == "ACDB_VISUALSTYLE_CLASS");
+  CHECK(metadata.rawObjects()[1].rawBytes.size() == 2);
+  CHECK(LC_DwgAdvancedMetadata::rawReplayBlocker(metadata.rawObjects()[0])
+        == LC_DwgAdvancedMetadata::ReplayBlocker::None);
+  CHECK(LC_DwgAdvancedMetadata::rawReplayBlocker(metadata.rawObjects()[1])
+        == LC_DwgAdvancedMetadata::ReplayBlocker::None);
+}

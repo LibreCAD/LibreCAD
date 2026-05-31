@@ -1802,7 +1802,13 @@ bool dwgReader::readDwgObject(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                         || cit->second->className == "AcDbMaterial") {
                         DRW_Material e;
                         ret = e.parseDwg(version, &buff, bs);
-                        if (ret) intfa.addMaterial(e);
+                        // MATERIAL's parser is truncated (name + description
+                        // only); raw replay captures the full byte image so
+                        // the round-trip stays faithful regardless. (Phase 2b.1)
+                        if (ret) {
+                            intfa.addMaterial(e);
+                            intfa.addUnsupportedObject(makeRawObject(oType, cit->second));
+                        }
                         break;
                     }
                     if (rn == "TABLESTYLE"
@@ -2045,7 +2051,12 @@ bool dwgReader::readDwgObject(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                         || cit->second->className == "AcDbVisualStyle") {
                         DRW_VisualStyle e;
                         ret = e.parseDwg(version, &buff, bs);
-                        if (ret) intfa.addVisualStyle(e);
+                        // Parser is a no-op stub; raw replay preserves the
+                        // full byte image for round-trip. (Phase 2b.1)
+                        if (ret) {
+                            intfa.addVisualStyle(e);
+                            intfa.addUnsupportedObject(makeRawObject(oType, cit->second));
+                        }
                         break;
                     }
                     // UNDERLAYDEFINITION — AcDb{Pdf,Dgn,Dwf}Definition.
