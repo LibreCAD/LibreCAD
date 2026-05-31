@@ -35,6 +35,8 @@
 #include <catch2/catch_approx.hpp>
 #include <catch2/catch_test_macros.hpp>
 
+#include <string>
+#include <utility>
 #include <vector>
 
 using Catch::Approx;
@@ -119,6 +121,9 @@ public:
     static dint16 oType(const DRW_TableEntry& e) { return e.oType; }
     static void setNumReactors(DRW_TableEntry& e, dint32 n) { e.numReactors = n; }
     static void setXDictFlag(DRW_TableEntry& e, duint8 f) { e.xDictFlag = f; }
+    // Phase 3A.0 — DIMSTYLE struct->vars sync (syncStructToVars is public, but
+    // the wrapper keeps the test call site uniform with the access pattern).
+    static void syncDimstyle(DRW_Dimstyle& d) { d.syncStructToVars(); }
 };
 
 namespace {
@@ -1626,4 +1631,89 @@ TEST_CASE("DRW_FieldList::encodeDwg round-trips field handles",
     REQUIRE(dst.m_fieldHandles[0] == 0x1200u);
     REQUIRE(dst.m_fieldHandles[1] == 0x1201u);
     REQUIRE(dst.m_fieldHandles[2] == 0x1202u);
+}
+
+// Phase 3A.0 — DRW_Dimstyle::syncStructToVars populates every $DIM key the
+// LibreCAD createDimStyle consumer reads, from the parsed struct fields.
+TEST_CASE("DRW_Dimstyle::syncStructToVars populates vars from struct fields",
+          "[dwg-object-encode][dimstyle][data-loss]") {
+    DRW_Dimstyle d;
+    d.dimscale = 2.0;
+    d.dimasz = 0.25;
+    d.dimclrd = 1;
+    d.dimlwd = 13;
+    d.dimtxsty = "MyText";
+    d.dimtad = 2;
+    d.dimzin = 8;
+    d.dimdec = 3;
+    d.dimlunit = 4;
+
+    DrwObjectEncodeTestAccess::syncDimstyle(d);
+
+    REQUIRE(d.get("$DIMSCALE") != nullptr);
+    CHECK(d.get("$DIMSCALE")->d_val() == Approx(2.0));
+    CHECK(d.get("$DIMASZ")->d_val() == Approx(0.25));
+    CHECK(d.get("$DIMCLRD")->i_val() == 1);
+    CHECK(d.get("$DIMLWD")->i_val() == 13);
+    REQUIRE(d.get("$DIMTXSTY") != nullptr);
+    CHECK(std::string(d.get("$DIMTXSTY")->c_str()) == "MyText");
+    CHECK(d.get("$DIMTAD")->i_val() == 2);
+    CHECK(d.get("$DIMZIN")->i_val() == 8);
+    CHECK(d.get("$DIMDEC")->i_val() == 3);
+    CHECK(d.get("$DIMLUNIT")->i_val() == 4);
+}
+
+// Phase 3A.0 — sync is idempotent: the if(!get(key)) guard never clobbers a
+// value already present in the vars map (DWG override / DXF-105 path).
+TEST_CASE("DRW_Dimstyle::syncStructToVars is idempotent and never clobbers",
+          "[dwg-object-encode][dimstyle][data-loss]") {
+    DRW_Dimstyle d;
+    d.dimscale = 2.0;
+    // Pre-populate an override value; sync must not overwrite it.
+    d.add("$DIMSCALE", 40, 9.0);
+
+    DrwObjectEncodeTestAccess::syncDimstyle(d);
+    REQUIRE(d.get("$DIMSCALE") != nullptr);
+    CHECK(d.get("$DIMSCALE")->d_val() == Approx(9.0));
+
+    // A second sync leaves the populated keys unchanged.
+    const DRW_Variant* before = d.get("$DIMASZ");
+    DrwObjectEncodeTestAccess::syncDimstyle(d);
+    CHECK(d.get("$DIMASZ") == before);
+    CHECK(d.get("$DIMSCALE")->d_val() == Approx(9.0));
+}
+
+// Phase 3A.0 — Rule-of-Five deep copy: copying a vars-populated DRW_Dimstyle
+// and destroying both copies is clean (no double-free); mutating the copy
+// does not affect the original.
+TEST_CASE("DRW_Dimstyle deep-copy is independent and leak/double-free clean",
+          "[dwg-object-encode][dimstyle][data-loss]") {
+    DRW_Dimstyle original;
+    original.dimscale = 3.5;
+    original.dimtxt = 0.25;
+    DrwObjectEncodeTestAccess::syncDimstyle(original);
+    REQUIRE(original.get("$DIMSCALE")->d_val() == Approx(3.5));
+
+    {
+        DRW_Dimstyle copy(original);  // copy ctor — deep copy vars.
+        REQUIRE(copy.get("$DIMSCALE") != nullptr);
+        CHECK(copy.get("$DIMSCALE")->d_val() == Approx(3.5));
+        // Pointers are distinct (deep copy, not shared).
+        CHECK(copy.get("$DIMSCALE") != original.get("$DIMSCALE"));
+        // Mutating the copy does not affect the original.
+        copy.add("$DIMSCALE", 40, 7.0);
+        CHECK(copy.get("$DIMSCALE")->d_val() == Approx(7.0));
+        CHECK(original.get("$DIMSCALE")->d_val() == Approx(3.5));
+
+        DRW_Dimstyle assigned;
+        assigned = original;  // copy assignment.
+        CHECK(assigned.get("$DIMSCALE")->d_val() == Approx(3.5));
+        CHECK(assigned.get("$DIMSCALE") != original.get("$DIMSCALE"));
+
+        DRW_Dimstyle moved(std::move(copy));  // move ctor steals vars.
+        CHECK(moved.get("$DIMSCALE")->d_val() == Approx(7.0));
+    }  // copy/assigned/moved destroyed here — must not double-free.
+
+    // Original still intact after the inner scope destroyed its copies.
+    CHECK(original.get("$DIMSCALE")->d_val() == Approx(3.5));
 }

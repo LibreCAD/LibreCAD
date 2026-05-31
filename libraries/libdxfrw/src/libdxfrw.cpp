@@ -2689,8 +2689,14 @@ bool dxfRW::processDimStyle() {
     while (reader->readRec(&code)) {
         DRW_DBG(code); DRW_DBG("\n");
         if (code == 0) {
-            if (reading)
+            if (reading) {
+                // Phase 3A.0: populate the vars map from the parsed struct so
+                // the LibreCAD createDimStyle consumer (reads $DIM* keys) gets
+                // the imported values, not reset() defaults. Copy-free (called
+                // on dimSty before it is reset() for the next record).
+                dimSty.syncStructToVars();
                 iface->addDimStyle(dimSty);
+            }
             sectionstr = reader->getString();
             DRW_DBG(sectionstr); DRW_DBG("\n");
             if (sectionstr == "DIMSTYLE") {

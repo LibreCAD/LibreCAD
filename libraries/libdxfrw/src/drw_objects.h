@@ -141,6 +141,35 @@ public:
         }
     }
 
+    // Deep-copy assignment so extData's owned DRW_Variant* are not double-freed
+    // (the implicit copy-assign would shallow-copy the pointers). (Phase 3A.0)
+    DRW_TableEntry& operator=(const DRW_TableEntry& e) {
+        if (this == &e)
+            return *this;
+        for (DRW_Variant* p : extData)
+            delete p;
+        extData.clear();
+        curr = nullptr;
+        tType = e.tType;
+        handle = e.handle;
+        parentHandle = e.parentHandle;
+        name = e.name;
+        flags = e.flags;
+        reactorHandles = e.reactorHandles;
+        xDictHandle = e.xDictHandle;
+        xDictFlag = e.xDictFlag;
+        numReactors = e.numReactors;
+        oType = e.oType;
+        objSize = e.objSize;
+        for (const DRW_Variant* src : e.extData) {
+            DRW_Variant* dst = new DRW_Variant(*src);
+            extData.push_back(dst);
+            if (src == e.curr)
+                curr = dst;
+        }
+        return *this;
+    }
+
 protected:
     virtual bool parseCode(int code, const std::unique_ptr<dxfReader>& reader);
     virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) = 0;
@@ -336,16 +365,54 @@ class DRW_Dimstyle : public DRW_TableEntry {
 public:
     DRW_Dimstyle() { reset();}
     ~DRW_Dimstyle() {
-        for (auto& kv : vars) delete kv.second;
+        clearVars();
     }
 
-    void add(const std::string& key, int code, int value) { vars[key] = new DRW_Variant(code, value); }
-    void add(const std::string& key, int code, double value) { vars[key] = new DRW_Variant(code, value); }
-    void add(const std::string& key, int code, std::string value) { vars[key] = new DRW_Variant(code, UTF8STRING(value)); }
+    // Rule-of-Five: vars owns raw DRW_Variant* (deleted in the dtor), so a
+    // default shallow copy would double-free. The base DRW_TableEntry copy
+    // ctor already deep-copies extData; here we additionally deep-copy vars
+    // and copy the POD fields. (Phase 3A.0)
+    DRW_Dimstyle(const DRW_Dimstyle& o) : DRW_TableEntry(o) {
+        copyPodFrom(o);
+        deepCopyVarsFrom(o);
+    }
+    DRW_Dimstyle& operator=(const DRW_Dimstyle& o) {
+        if (this != &o) {
+            clearVars();
+            DRW_TableEntry::operator=(o);
+            copyPodFrom(o);
+            deepCopyVarsFrom(o);
+        }
+        return *this;
+    }
+    DRW_Dimstyle(DRW_Dimstyle&& o) noexcept : DRW_TableEntry(o) {
+        copyPodFrom(o);
+        vars = std::move(o.vars);
+        o.vars.clear();
+    }
+    DRW_Dimstyle& operator=(DRW_Dimstyle&& o) noexcept {
+        if (this != &o) {
+            clearVars();
+            DRW_TableEntry::operator=(o);
+            copyPodFrom(o);
+            vars = std::move(o.vars);
+            o.vars.clear();
+        }
+        return *this;
+    }
+
+    void add(const std::string& key, int code, int value) { delete get(key); vars[key] = new DRW_Variant(code, value); }
+    void add(const std::string& key, int code, double value) { delete get(key); vars[key] = new DRW_Variant(code, value); }
+    void add(const std::string& key, int code, std::string value) { delete get(key); vars[key] = new DRW_Variant(code, UTF8STRING(value)); }
     DRW_Variant* get(const std::string& key) const {
         auto it = vars.find(key);
         return (it != vars.end()) ? it->second : nullptr;
     }
+
+    // Populate the vars map from the parsed/struct fields so the LibreCAD
+    // createDimStyle consumer (which reads $DIM* keys) receives imported
+    // values. Idempotent: never clobbers a key already present. (Phase 3A.0)
+    void syncStructToVars();
 
     void reset(){
         tType = DRW::DIMSTYLE;
@@ -451,6 +518,44 @@ public:
     int dimlwd;               /*!< code 371 V2000+ */
     int dimlwe;               /*!< code 372 V2000+ */
     std::map<std::string, DRW_Variant*> vars; /*!< extra/override variables written after standard fields */
+
+private:
+    void clearVars() {
+        for (auto& kv : vars) delete kv.second;
+        vars.clear();
+    }
+    void deepCopyVarsFrom(const DRW_Dimstyle& o) {
+        vars.clear();
+        for (const auto& kv : o.vars)
+            vars[kv.first] = kv.second ? new DRW_Variant(*kv.second) : nullptr;
+    }
+    // Copy every owned-by-value POD/string field (NOT the base members, NOT
+    // vars). New value-type members added in later phases ride this list.
+    void copyPodFrom(const DRW_Dimstyle& o) {
+        dimpost = o.dimpost; dimapost = o.dimapost;
+        dimblk = o.dimblk; dimblk1 = o.dimblk1; dimblk2 = o.dimblk2;
+        dimscale = o.dimscale; dimasz = o.dimasz; dimexo = o.dimexo;
+        dimdli = o.dimdli; dimexe = o.dimexe; dimrnd = o.dimrnd;
+        dimdle = o.dimdle; dimtp = o.dimtp; dimtm = o.dimtm; dimfxl = o.dimfxl;
+        dimtxt = o.dimtxt; dimcen = o.dimcen; dimtsz = o.dimtsz;
+        dimaltf = o.dimaltf; dimlfac = o.dimlfac; dimtvp = o.dimtvp;
+        dimtfac = o.dimtfac; dimgap = o.dimgap; dimaltrnd = o.dimaltrnd;
+        dimtol = o.dimtol; dimlim = o.dimlim; dimtih = o.dimtih;
+        dimtoh = o.dimtoh; dimse1 = o.dimse1; dimse2 = o.dimse2;
+        dimtad = o.dimtad; dimzin = o.dimzin; dimazin = o.dimazin;
+        dimalt = o.dimalt; dimaltd = o.dimaltd; dimtofl = o.dimtofl;
+        dimsah = o.dimsah; dimtix = o.dimtix; dimsoxd = o.dimsoxd;
+        dimclrd = o.dimclrd; dimclre = o.dimclre; dimclrt = o.dimclrt;
+        dimadec = o.dimadec; dimunit = o.dimunit; dimdec = o.dimdec;
+        dimtdec = o.dimtdec; dimaltu = o.dimaltu; dimalttd = o.dimalttd;
+        dimaunit = o.dimaunit; dimfrac = o.dimfrac; dimlunit = o.dimlunit;
+        dimdsep = o.dimdsep; dimtmove = o.dimtmove; dimjust = o.dimjust;
+        dimsd1 = o.dimsd1; dimsd2 = o.dimsd2; dimtolj = o.dimtolj;
+        dimtzin = o.dimtzin; dimaltz = o.dimaltz; dimaltttz = o.dimaltttz;
+        dimfit = o.dimfit; dimupt = o.dimupt; dimatfit = o.dimatfit;
+        dimfxlon = o.dimfxlon; dimtxsty = o.dimtxsty; dimldrblk = o.dimldrblk;
+        dimlwd = o.dimlwd; dimlwe = o.dimlwe;
+    }
 };
 
 

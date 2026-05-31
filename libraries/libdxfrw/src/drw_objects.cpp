@@ -1117,6 +1117,93 @@ bool DRW_Dimstyle::parseCode(int code, const std::unique_ptr<dxfReader>& reader)
     return true;
 }
 
+// Populate the vars map from the parsed struct fields using EXACTLY the $DIM
+// keys / DXF codes the LibreCAD createDimStyle consumer reads. Idempotent: the
+// `if (!get(key))` guard never clobbers a value already present (DWG override
+// path or DXF group-105 handles). (Phase 3A.0)
+void DRW_Dimstyle::syncStructToVars() {
+    auto addDouble = [&](const char* key, int code, double value) {
+        if (!get(key)) add(key, code, value);
+    };
+    auto addInt = [&](const char* key, int code, int value) {
+        if (!get(key)) add(key, code, value);
+    };
+    auto addStr = [&](const char* key, int code, const std::string& value) {
+        if (!get(key)) add(key, code, value);
+    };
+
+    // Doubles.
+    addDouble("$DIMSCALE", 40, dimscale);
+    addDouble("$DIMASZ", 41, dimasz);
+    addDouble("$DIMEXO", 42, dimexo);
+    addDouble("$DIMEXE", 44, dimexe);
+    addDouble("$DIMFXL", 49, dimfxl);
+    addDouble("$DIMDLE", 46, dimdle);
+    addDouble("$DIMDLI", 43, dimdli);
+    addDouble("$DIMGAP", 147, dimgap);
+    addDouble("$DIMTXT", 140, dimtxt);
+    addDouble("$DIMTVP", 145, dimtvp);
+    addDouble("$DIMRND", 45, dimrnd);
+    addDouble("$DIMALTRND", 148, dimaltrnd);
+    addDouble("$DIMCEN", 141, dimcen);
+    addDouble("$DIMTM", 48, dimtm);
+    addDouble("$DIMTP", 47, dimtp);
+    addDouble("$DIMTFAC", 146, dimtfac);
+    addDouble("$DIMTSZ", 142, dimtsz);
+    addDouble("$DIMLFAC", 144, dimlfac);
+    addDouble("$DIMALTF", 143, dimaltf);
+
+    // Ints.
+    addInt("$DIMSOXD", 175, dimsoxd);
+    addInt("$DIMSAH", 173, dimsah);
+    addInt("$DIMFXLON", 290, dimfxlon);
+    addInt("$DIMSE1", 75, dimse1);
+    addInt("$DIMSE2", 76, dimse2);
+    addInt("$DIMTOFL", 172, dimtofl);
+    addInt("$DIMTOH", 74, dimtoh);
+    addInt("$DIMTIH", 73, dimtih);
+    addInt("$DIMJUST", 280, dimjust);
+    addInt("$DIMTAD", 77, dimtad);
+    addInt("$DIMTIX", 174, dimtix);
+    addInt("$DIMUPT", 288, dimupt);
+    addInt("$DIMTMOVE", 279, dimtmove);
+    addInt("$DIMATFIT", 289, dimatfit);
+    addInt("$DIMZIN", 78, dimzin);
+    addInt("$DIMAZIN", 79, dimazin);
+    addInt("$DIMTZIN", 284, dimtzin);
+    addInt("$DIMALTZ", 285, dimaltz);
+    addInt("$DIMALTTZ", 286, dimaltttz);
+    addInt("$DIMLUNIT", 277, dimlunit);
+    addInt("$DIMDSEP", 278, dimdsep);
+    addInt("$DIMDEC", 271, dimdec);
+    addInt("$DIMALT", 170, dimalt);
+    addInt("$DIMALTU", 273, dimaltu);
+    addInt("$DIMALTD", 171, dimaltd);
+    addInt("$DIMAUNIT", 275, dimaunit);
+    addInt("$DIMADEC", 179, dimadec);
+    addInt("$DIMFRAC", 276, dimfrac);
+    addInt("$DIMTDEC", 272, dimtdec);
+    addInt("$DIMALTTD", 274, dimalttd);
+    addInt("$DIMTOL", 71, dimtol);
+    addInt("$DIMTOLJ", 283, dimtolj);
+    addInt("$DIMLIM", 72, dimlim);
+    addInt("$DIMLWD", 371, dimlwd);
+    addInt("$DIMLWE", 372, dimlwe);
+    // Color ints — createDimStyle calls numberToColor(var->i_val()).
+    addInt("$DIMCLRD", 176, dimclrd);
+    addInt("$DIMCLRE", 177, dimclre);
+    addInt("$DIMCLRT", 178, dimclrt);
+
+    // Strings.
+    addStr("$DIMPOST", 3, dimpost);
+    addStr("$DIMAPOST", 4, dimapost);
+    addStr("$DIMTXSTY", 340, dimtxsty);   // NAME; consumer runs prepareTextStyleName
+    addStr("$DIMLDRBLK", 341, dimldrblk);
+    addStr("$DIMBLK", 5, dimblk);
+    addStr("$DIMBLK1", 6, dimblk1);
+    addStr("$DIMBLK2", 7, dimblk2);
+}
+
 bool DRW_Dimstyle::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     dwgBuffer sBuff = *buf;
     dwgBuffer *sBuf = buf;
