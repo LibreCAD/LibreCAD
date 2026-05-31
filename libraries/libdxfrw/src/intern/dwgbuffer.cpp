@@ -890,6 +890,11 @@ bool dwgBuffer::getBytes(unsigned char *buf, duint64 size){
 }
 
 duint16 dwgBuffer::crc8(duint16 dx,dint32 start,dint32 end){
+    // Guard against a negative/empty byte range from a corrupt section size:
+    // `new duint8[end-start]` would compute a negative size (huge size_t).
+    // An empty fold leaves the seed unchanged, so return dx.
+    if (end <= start)
+        return dx;
     duint64 pos = filestr->getPos();
     filestr->setPos(start);
     int n = end-start;
@@ -913,6 +918,10 @@ duint16 dwgBuffer::crc8(duint16 dx,dint32 start,dint32 end){
 }
 
 duint32 dwgBuffer::crc32(duint32 seed,dint32 start,dint32 end){
+    // Guard against a negative/empty byte range (see crc8). The empty-range
+    // identity of this fold is the seed: ~(~seed) == seed.
+    if (end <= start)
+        return seed;
     duint64 pos = filestr->getPos();
     filestr->setPos(start);
     int n = end-start;

@@ -394,6 +394,33 @@ TEST_CASE("dwgBufferW: crc16 matches reader's CRC over a known buffer",
     REQUIRE(writerCrc == readerCrc);
 }
 
+// 1.1 (gap classes-crc-not-validated): crc8/crc32 computed `new[end-start]`
+// with no guard, so a corrupt section size with end<=start allocated a
+// negative (huge) size — heap overflow / bad_alloc.  Now they return the
+// seed identity on an empty/negative range without allocating.
+TEST_CASE("dwgBuffer::crc8/crc32 guard the empty/negative byte range",
+          "[dwg-write][primitives]") {
+    dwgBufferW w;
+    for (duint8 i = 0; i < 8; ++i) w.putRawChar8(i);
+    auto bytes = snapshot(w);
+    dwgBuffer r(bytes.data(), bytes.size());
+
+    // end < start (negative range): no allocation/abort; seed returned.
+    REQUIRE(r.crc8(0xC0C1, 4, 0) == 0xC0C1);
+    // end == start (empty range): seed returned.
+    REQUIRE(r.crc8(0xC0C1, 4, 4) == 0xC0C1);
+    REQUIRE(r.crc32(0xFFFFFFFFu, 8, 0) == 0xFFFFFFFFu);
+    REQUIRE(r.crc32(0x12345678u, 4, 4) == 0x12345678u);
+
+    // Valid range still produces a real CRC (happy path unaffected).
+    dwgBufferW w2;
+    for (duint8 i = 0; i < 4; ++i) w2.putRawChar8(i);
+    auto b2 = snapshot(w2);
+    dwgBuffer r2(b2.data(), b2.size());
+    REQUIRE(r2.crc8(0xC0C1, 0, 4) == w2.crc16(0xC0C1, 0, 4));
+}
+
+
 TEST_CASE("dwgBufferW: patchRawShort16 / patchRawLong32 overwrite cleanly",
           "[dwg-write][primitives]") {
     dwgBufferW w;
