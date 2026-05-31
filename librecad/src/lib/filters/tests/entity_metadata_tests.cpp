@@ -3752,3 +3752,37 @@ TEST_CASE("DWG DETAILVIEWSTYLE/SECTIONVIEWSTYLE raw objects replay-eligible",
           == LC_DwgAdvancedMetadata::ReplayBlocker::None);
   }
 }
+
+// Phase 2b.4 — IMAGEDEF_REACTOR + TABLEGEOMETRY + ACAD_EVALUATION_GRAPH rescue.
+TEST_CASE("DWG IMAGEDEF_REACTOR/TABLEGEOMETRY/EVALGRAPH raw objects eligible",
+          "[entity_metadata][dwg_metadata][replay_rescue]") {
+  LC_DwgAdvancedMetadata metadata;
+
+  const struct {
+    int objectType;
+    duint32 handle;
+    const char* recName;
+    const char* className;
+  } kCases[] = {
+      {640, 0x520u, "IMAGEDEF_REACTOR", "AcDbRasterImageDefReactor"},
+      {641, 0x521u, "TABLEGEOMETRY", "AcDbTableGeometry"},
+      {642, 0x522u, "ACAD_EVALUATION_GRAPH", "AcDbEvalGraph"},
+  };
+  for (const auto& c : kCases) {
+    DRW_UnsupportedObject raw;
+    raw.m_objectType = c.objectType;
+    raw.m_handle = c.handle;
+    raw.m_isCustomClass = true;
+    raw.m_recordName = c.recName;
+    raw.m_className = c.className;
+    raw.m_rawBytes = {0x07u, 0x08u};
+    metadata.addUnsupportedObject(raw);
+  }
+
+  REQUIRE(metadata.rawObjects().size() == 3);
+  for (const auto& record : metadata.rawObjects()) {
+    CHECK(!record.rawBytes.empty());
+    CHECK(LC_DwgAdvancedMetadata::rawReplayBlocker(record)
+          == LC_DwgAdvancedMetadata::ReplayBlocker::None);
+  }
+}

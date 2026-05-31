@@ -1855,7 +1855,11 @@ bool dwgReader::readDwgObject(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                         || cit->second->className == "AcDbEvalGraph") {
                         DRW_EvaluationGraph e;
                         ret = e.parseDwg(version, &buff, bs);
-                        if (ret) intfa.addEvaluationGraph(e);
+                        // Raw replay preserves the full byte image. (Phase 2b.4)
+                        if (ret) {
+                            intfa.addEvaluationGraph(e);
+                            intfa.addUnsupportedObject(makeRawObject(oType, cit->second));
+                        }
                         break;
                     }
                     if (rn == "SUN" || cit->second->className == "AcDbSun") {
@@ -1944,7 +1948,12 @@ bool dwgReader::readDwgObject(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                         || cit->second->className == "AcDbRasterImageDefReactor") {
                         DRW_ImageDefinitionReactor e;
                         ret = e.parseDwg(version, &buff, bs);
-                        if (ret) intfa.addImageDefinitionReactor(e);
+                        // Preserving the reactor object keeps each raster
+                        // IMAGE entity's reactor handle non-dangling. (Phase 2b.4)
+                        if (ret) {
+                            intfa.addImageDefinitionReactor(e);
+                            intfa.addUnsupportedObject(makeRawObject(oType, cit->second));
+                        }
                         break;
                     }
                     if (rn == "SPATIAL_FILTER"
@@ -1999,7 +2008,11 @@ bool dwgReader::readDwgObject(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                         || cit->second->className == "AcDbTableGeometry") {
                         DRW_TableGeometry e;
                         ret = e.parseDwg(version, &buff, bs);
-                        if (ret) intfa.addTableGeometry(e);
+                        // Raw replay preserves the full byte image. (Phase 2b.4)
+                        if (ret) {
+                            intfa.addTableGeometry(e);
+                            intfa.addUnsupportedObject(makeRawObject(oType, cit->second));
+                        }
                         break;
                     }
                     if (rn == "MLEADERSTYLE") {
