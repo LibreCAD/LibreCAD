@@ -141,6 +141,39 @@ public:
   }
 };
 
+class DictionaryVarCapture : public StubInterface {
+public:
+  int m_callCount = 0;
+  DRW_DictionaryVar m_captured;
+  void addDictionaryVar(const DRW_DictionaryVar &d) override {
+    if (m_callCount == 0)
+      m_captured = d;
+    ++m_callCount;
+  }
+};
+
+class DictionaryWithDefaultCapture : public StubInterface {
+public:
+  int m_callCount = 0;
+  DRW_DictionaryWithDefault m_captured;
+  void addDictionaryWithDefault(const DRW_DictionaryWithDefault &d) override {
+    if (m_callCount == 0)
+      m_captured = d;
+    ++m_callCount;
+  }
+};
+
+class RasterVariablesCapture : public StubInterface {
+public:
+  int m_callCount = 0;
+  DRW_RasterVariables m_captured;
+  void addRasterVariables(const DRW_RasterVariables &d) override {
+    if (m_callCount == 0)
+      m_captured = d;
+    ++m_callCount;
+  }
+};
+
 void readDxf(const std::string &dxf, DRW_Interface &cap, const char *name) {
   const auto path = std::filesystem::temp_directory_path() / name;
   std::filesystem::remove(path);
@@ -252,4 +285,49 @@ TEST_CASE("DXF MLINESTYLE object is read with elements (slice C5)", "[dxf][mline
   CHECK(cap.m_captured.elements[1].offset == -0.5);
   CHECK(cap.m_captured.elements[1].color == 2);
   CHECK(cap.m_captured.elements[1].linetype == "CONTINUOUS");
+}
+
+TEST_CASE("DXF DICTIONARYVAR object is read (schema + value)", "[dxf][dictionaryvar]") {
+  DictionaryVarCapture cap;
+  const char *dxf =
+      "0\nSECTION\n2\nOBJECTS\n"
+      "0\nDICTIONARYVAR\n5\n2A\n330\n29\n100\nDictionaryVariables\n"
+      "280\n0\n1\n2\n"
+      "0\nENDSEC\n0\nEOF\n";
+  readDxf(dxf, cap, "lc_dictvar_read.dxf");
+
+  REQUIRE(cap.m_callCount == 1);
+  CHECK(cap.m_captured.m_schema == 0);
+  CHECK(cap.m_captured.m_value == "2");
+}
+
+TEST_CASE("DXF ACDBDICTIONARYWDFLT reads entries + default handle", "[dxf][dictionary]") {
+  DictionaryWithDefaultCapture cap;
+  const char *dxf =
+      "0\nSECTION\n2\nOBJECTS\n"
+      "0\nACDBDICTIONARYWDFLT\n5\n2B\n330\n0\n100\nAcDbDictionary\n281\n1\n"
+      "3\nNormal\n350\n2C\n"
+      "100\nAcDbDictionaryWithDefault\n340\n2C\n"
+      "0\nENDSEC\n0\nEOF\n";
+  readDxf(dxf, cap, "lc_dictwdflt_read.dxf");
+
+  REQUIRE(cap.m_callCount == 1);
+  REQUIRE(cap.m_captured.m_entries.size() == 1);
+  CHECK(cap.m_captured.m_entries[0].m_name == "Normal");
+  CHECK(cap.m_captured.m_defaultEntryHandle == 0x2Cu);
+}
+
+TEST_CASE("DXF RASTERVARIABLES object is read (frame/quality/units)", "[dxf][rastervariables]") {
+  RasterVariablesCapture cap;
+  const char *dxf =
+      "0\nSECTION\n2\nOBJECTS\n"
+      "0\nRASTERVARIABLES\n5\n2D\n330\n29\n100\nAcDbRasterVariables\n"
+      "90\n0\n70\n1\n71\n1\n72\n0\n"
+      "0\nENDSEC\n0\nEOF\n";
+  readDxf(dxf, cap, "lc_rastervars_read.dxf");
+
+  REQUIRE(cap.m_callCount == 1);
+  CHECK(cap.m_captured.m_imageFrame == 1);
+  CHECK(cap.m_captured.m_imageQuality == 1);
+  CHECK(cap.m_captured.m_units == 0);
 }

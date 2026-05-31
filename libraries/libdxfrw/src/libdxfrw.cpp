@@ -3805,6 +3805,15 @@ bool dxfRW::processObjects() {
         else if ("MLINESTYLE" == nextentity) {
             processed = processMLineStyle();
         }
+        else if ("DICTIONARYVAR" == nextentity) {
+            processed = processDictionaryVar();
+        }
+        else if ("ACDBDICTIONARYWDFLT" == nextentity) {
+            processed = processDictionaryWithDefault();
+        }
+        else if ("RASTERVARIABLES" == nextentity) {
+            processed = processRasterVariables();
+        }
         else {
             if (!reader->readRec(&code)) {
                 return setError(DRW::BAD_READ_OBJECTS); //end of file without ENDSEC
@@ -4012,6 +4021,69 @@ bool dxfRW::processMLineStyle() {
         }
 
         if (!style.parseCode(code, reader)) {
+            return setError( DRW::BAD_CODE_PARSED);
+        }
+    }
+
+    return setError(DRW::BAD_READ_OBJECTS);
+}
+
+bool dxfRW::processDictionaryVar() {
+    DRW_DBG("dxfRW::processDictionaryVar");
+    int code;
+    DRW_DictionaryVar var;
+    while (reader->readRec(&code)) {
+        DRW_DBG(code); DRW_DBG("\n");
+        if (0 == code) {
+            nextentity = reader->getString();
+            DRW_DBG(nextentity); DRW_DBG("\n");
+            iface->addDictionaryVar(var);
+            return true;  //found new entity or ENDSEC, terminate
+        }
+
+        if (!var.parseCode(code, reader)) {
+            return setError( DRW::BAD_CODE_PARSED);
+        }
+    }
+
+    return setError(DRW::BAD_READ_OBJECTS);
+}
+
+bool dxfRW::processDictionaryWithDefault() {
+    DRW_DBG("dxfRW::processDictionaryWithDefault");
+    int code;
+    DRW_DictionaryWithDefault dict;
+    while (reader->readRec(&code)) {
+        DRW_DBG(code); DRW_DBG("\n");
+        if (0 == code) {
+            nextentity = reader->getString();
+            DRW_DBG(nextentity); DRW_DBG("\n");
+            iface->addDictionaryWithDefault(dict);
+            return true;  //found new entity or ENDSEC, terminate
+        }
+
+        if (!dict.parseCode(code, reader)) {
+            return setError( DRW::BAD_CODE_PARSED);
+        }
+    }
+
+    return setError(DRW::BAD_READ_OBJECTS);
+}
+
+bool dxfRW::processRasterVariables() {
+    DRW_DBG("dxfRW::processRasterVariables");
+    int code;
+    DRW_RasterVariables rv;
+    while (reader->readRec(&code)) {
+        DRW_DBG(code); DRW_DBG("\n");
+        if (0 == code) {
+            nextentity = reader->getString();
+            DRW_DBG(nextentity); DRW_DBG("\n");
+            iface->addRasterVariables(rv);
+            return true;  //found new entity or ENDSEC, terminate
+        }
+
+        if (!rv.parseCode(code, reader)) {
             return setError( DRW::BAD_CODE_PARSED);
         }
     }

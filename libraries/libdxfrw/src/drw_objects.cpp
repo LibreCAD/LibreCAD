@@ -2979,6 +2979,14 @@ bool DRW_Dictionary::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     return true;
 }
 
+bool DRW_DictionaryWithDefault::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
+    if (code == 340) {   //hard pointer to the default object
+        m_defaultEntryHandle = reader->getHandleString();
+        return true;
+    }
+    return DRW_Dictionary::parseCode(code, reader);
+}
+
 bool DRW_DictionaryWithDefault::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     bool ret = DRW_Dictionary::parseDwg(version, buf, bs);
     DRW_DBG("\n***************************** parsing DictionaryWithDefault ******************************\n");
@@ -2987,6 +2995,20 @@ bool DRW_DictionaryWithDefault::parseDwg(DRW::Version version, dwgBuffer *buf, d
     dwgHandle defaultH = buf->getOffsetHandle(handle);
     m_defaultEntryHandle = defaultH.ref;
     DRW_DBG("default entry Handle: "); DRW_DBGHL(defaultH.code, defaultH.size, defaultH.ref); DRW_DBG("\n");
+    return true;
+}
+
+bool DRW_DictionaryVar::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
+    switch (code) {
+    case 280:
+        m_schema = reader->getInt32();
+        break;
+    case 1:
+        m_value = reader->getUtf8String();
+        break;
+    default:
+        return DRW_TableEntry::parseCode(code, reader);
+    }
     return true;
 }
 
@@ -3341,6 +3363,26 @@ bool DRW_FieldList::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
             m_fieldHandles.push_back(fieldH.ref);
     }
     DRW_DBG("fieldlist fields: "); DRW_DBG(static_cast<int>(m_fieldHandles.size())); DRW_DBG("\n");
+    return true;
+}
+
+bool DRW_RasterVariables::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
+    switch (code) {
+    case 90:
+        m_classVersion = reader->getInt32();
+        break;
+    case 70:
+        m_imageFrame = reader->getInt32();
+        break;
+    case 71:
+        m_imageQuality = reader->getInt32();
+        break;
+    case 72:
+        m_units = reader->getInt32();
+        break;
+    default:
+        return DRW_TableEntry::parseCode(code, reader);
+    }
     return true;
 }
 

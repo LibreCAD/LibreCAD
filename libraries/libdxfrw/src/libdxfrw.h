@@ -179,6 +179,9 @@ private:
     bool processDictionary();
     bool processScale();
     bool processMLineStyle();
+    bool processDictionaryVar();
+    bool processDictionaryWithDefault();
+    bool processRasterVariables();
 
 //    bool writeHeader();
     bool writeEntity(DRW_Entity *ent);
