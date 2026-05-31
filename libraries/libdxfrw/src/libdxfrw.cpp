@@ -3814,6 +3814,9 @@ bool dxfRW::processObjects() {
         else if ("RASTERVARIABLES" == nextentity) {
             processed = processRasterVariables();
         }
+        else if ("SUN" == nextentity) {
+            processed = processSun();
+        }
         else {
             if (!reader->readRec(&code)) {
                 return setError(DRW::BAD_READ_OBJECTS); //end of file without ENDSEC
@@ -4084,6 +4087,27 @@ bool dxfRW::processRasterVariables() {
         }
 
         if (!rv.parseCode(code, reader)) {
+            return setError( DRW::BAD_CODE_PARSED);
+        }
+    }
+
+    return setError(DRW::BAD_READ_OBJECTS);
+}
+
+bool dxfRW::processSun() {
+    DRW_DBG("dxfRW::processSun");
+    int code;
+    DRW_Sun sun;
+    while (reader->readRec(&code)) {
+        DRW_DBG(code); DRW_DBG("\n");
+        if (0 == code) {
+            nextentity = reader->getString();
+            DRW_DBG(nextentity); DRW_DBG("\n");
+            iface->addSun(sun);
+            return true;  //found new entity or ENDSEC, terminate
+        }
+
+        if (!sun.parseCode(code, reader)) {
             return setError( DRW::BAD_CODE_PARSED);
         }
     }

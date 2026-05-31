@@ -5230,6 +5230,47 @@ bool DRW_AcDbPlaceholder::encodeDwg(DRW::Version version, dwgBufferW *buf,
     return true;
 }
 
+bool DRW_Sun::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
+    switch (code) {
+    case 90:
+        m_classVersion = reader->getInt32();
+        break;
+    case 290:
+        m_isOn = reader->getBool();
+        break;
+    case 63:
+        m_color = reader->getInt32();
+        break;
+    case 40:
+        m_intensity = reader->getDouble();
+        break;
+    case 291:
+        m_hasShadow = reader->getBool();
+        break;
+    case 91:
+        m_julianDay = reader->getInt32();
+        break;
+    case 92:
+        m_milliseconds = reader->getInt32();
+        break;
+    case 292:
+        m_isDaylightSavings = reader->getBool();
+        break;
+    case 70:
+        m_shadowType = reader->getInt32();
+        break;
+    case 71:
+        m_shadowMapSize = reader->getInt32();
+        break;
+    case 280:
+        m_shadowSoftness = reader->getInt32();
+        break;
+    default:
+        return DRW_TableEntry::parseCode(code, reader);
+    }
+    return true;
+}
+
 bool DRW_Sun::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     dwgBuffer sBuff = *buf;
     dwgBuffer *sBuf = version > DRW::AC1018 ? &sBuff : buf;

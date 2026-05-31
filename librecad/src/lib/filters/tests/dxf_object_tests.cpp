@@ -174,6 +174,17 @@ public:
   }
 };
 
+class SunCapture : public StubInterface {
+public:
+  int m_callCount = 0;
+  DRW_Sun m_captured;
+  void addSun(const DRW_Sun &d) override {
+    if (m_callCount == 0)
+      m_captured = d;
+    ++m_callCount;
+  }
+};
+
 void readDxf(const std::string &dxf, DRW_Interface &cap, const char *name) {
   const auto path = std::filesystem::temp_directory_path() / name;
   std::filesystem::remove(path);
@@ -330,4 +341,24 @@ TEST_CASE("DXF RASTERVARIABLES object is read (frame/quality/units)", "[dxf][ras
   CHECK(cap.m_captured.m_imageFrame == 1);
   CHECK(cap.m_captured.m_imageQuality == 1);
   CHECK(cap.m_captured.m_units == 0);
+}
+
+TEST_CASE("DXF SUN object is read (status/intensity/shadows/date)", "[dxf][sun]") {
+  SunCapture cap;
+  const char *dxf =
+      "0\nSECTION\n2\nOBJECTS\n"
+      "0\nSUN\n5\n2E\n330\n29\n100\nAcDbSun\n"
+      "90\n1\n290\n1\n63\n7\n40\n1.0\n291\n1\n"
+      "91\n2455563\n92\n43200000\n292\n0\n70\n1\n71\n256\n280\n2\n"
+      "0\nENDSEC\n0\nEOF\n";
+  readDxf(dxf, cap, "lc_sun_read.dxf");
+
+  REQUIRE(cap.m_callCount == 1);
+  CHECK(cap.m_captured.m_isOn == true);
+  CHECK(cap.m_captured.m_color == 7u);
+  CHECK(cap.m_captured.m_intensity == 1.0);
+  CHECK(cap.m_captured.m_hasShadow == true);
+  CHECK(cap.m_captured.m_julianDay == 2455563);
+  CHECK(cap.m_captured.m_milliseconds == 43200000);
+  CHECK(cap.m_captured.m_shadowMapSize == 256);
 }

@@ -182,6 +182,7 @@ private:
     bool processDictionaryVar();
     bool processDictionaryWithDefault();
     bool processRasterVariables();
+    bool processSun();
 
 //    bool writeHeader();
     bool writeEntity(DRW_Entity *ent);
