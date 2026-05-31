@@ -196,6 +196,17 @@ public:
   }
 };
 
+class WipeoutVariablesCapture : public StubInterface {
+public:
+  int m_callCount = 0;
+  DRW_WipeoutVariables m_captured;
+  void addWipeoutVariables(const DRW_WipeoutVariables &d) override {
+    if (m_callCount == 0)
+      m_captured = d;
+    ++m_callCount;
+  }
+};
+
 void readDxf(const std::string &dxf, DRW_Interface &cap, const char *name) {
   const auto path = std::filesystem::temp_directory_path() / name;
   std::filesystem::remove(path);
@@ -407,4 +418,16 @@ TEST_CASE("DXF LAYOUT object disambiguates plot vs layout subclasses (slice C2)"
   CHECK(cap.m_captured.orthoViewType == 0);
   CHECK(cap.m_captured.paperSpaceBlockRecordHandle.ref == 0x50u);
   CHECK(cap.m_captured.lastActiveViewportHandle.ref == 0x51u);
+}
+
+TEST_CASE("DXF WIPEOUTVARIABLES object is read (display-frame flag)", "[dxf][wipeoutvars]") {
+  WipeoutVariablesCapture cap;
+  const char *dxf =
+      "0\nSECTION\n2\nOBJECTS\n"
+      "0\nWIPEOUTVARIABLES\n5\n30\n330\n29\n100\nAcDbWipeoutVariables\n70\n1\n"
+      "0\nENDSEC\n0\nEOF\n";
+  readDxf(dxf, cap, "lc_wipeoutvars_read.dxf");
+
+  REQUIRE(cap.m_callCount == 1);
+  CHECK(cap.m_captured.m_displayFrame == 1);
 }

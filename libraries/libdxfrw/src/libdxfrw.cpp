@@ -3820,6 +3820,9 @@ bool dxfRW::processObjects() {
         else if ("LAYOUT" == nextentity) {
             processed = processLayout();
         }
+        else if ("WIPEOUTVARIABLES" == nextentity) {
+            processed = processWipeoutVariables();
+        }
         else {
             if (!reader->readRec(&code)) {
                 return setError(DRW::BAD_READ_OBJECTS); //end of file without ENDSEC
@@ -4132,6 +4135,27 @@ bool dxfRW::processLayout() {
         }
 
         if (!layout.parseCode(code, reader)) {
+            return setError( DRW::BAD_CODE_PARSED);
+        }
+    }
+
+    return setError(DRW::BAD_READ_OBJECTS);
+}
+
+bool dxfRW::processWipeoutVariables() {
+    DRW_DBG("dxfRW::processWipeoutVariables");
+    int code;
+    DRW_WipeoutVariables wv;
+    while (reader->readRec(&code)) {
+        DRW_DBG(code); DRW_DBG("\n");
+        if (0 == code) {
+            nextentity = reader->getString();
+            DRW_DBG(nextentity); DRW_DBG("\n");
+            iface->addWipeoutVariables(wv);
+            return true;  //found new entity or ENDSEC, terminate
+        }
+
+        if (!wv.parseCode(code, reader)) {
             return setError( DRW::BAD_CODE_PARSED);
         }
     }

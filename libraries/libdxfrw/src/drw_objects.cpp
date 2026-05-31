@@ -3407,6 +3407,14 @@ bool DRW_RasterVariables::parseDwg(DRW::Version version, dwgBuffer *buf, duint32
     return true;
 }
 
+bool DRW_WipeoutVariables::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
+    if (code == 70) {   //global display-frame flag
+        m_displayFrame = reader->getInt32();
+        return true;
+    }
+    return DRW_TableEntry::parseCode(code, reader);
+}
+
 bool DRW_WipeoutVariables::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     bool ret = DRW_TableEntry::parseDwg(version, buf, nullptr, bs);
     DRW_DBG("\n***************************** parsing WipeoutVariables ***********************\n");

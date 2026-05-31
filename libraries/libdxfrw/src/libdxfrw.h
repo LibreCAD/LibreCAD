@@ -184,6 +184,7 @@ private:
     bool processRasterVariables();
     bool processSun();
     bool processLayout();
+    bool processWipeoutVariables();
 
 //    bool writeHeader();
     bool writeEntity(DRW_Entity *ent);
