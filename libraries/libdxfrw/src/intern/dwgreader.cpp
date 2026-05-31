@@ -1815,21 +1815,33 @@ bool dwgReader::readDwgObject(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                         || cit->second->className == "AcDbTableStyle") {
                         DRW_TableStyle e;
                         ret = e.parseDwg(version, &buff, bs);
-                        if (ret) intfa.addTableStyle(e);
+                        // Raw replay preserves the full byte image; native
+                        // table writer (when active) claims the handle and
+                        // suppresses double-emit. (Phase 2b.2)
+                        if (ret) {
+                            intfa.addTableStyle(e);
+                            intfa.addUnsupportedObject(makeRawObject(oType, cit->second));
+                        }
                         break;
                     }
                     if (rn == "TABLECONTENT"
                         || cit->second->className == "AcDbTableContent") {
                         DRW_TableContentObject e;
                         ret = e.parseDwg(version, &buff, bs);
-                        if (ret) intfa.addTableContent(e);
+                        if (ret) {
+                            intfa.addTableContent(e);
+                            intfa.addUnsupportedObject(makeRawObject(oType, cit->second));
+                        }
                         break;
                     }
                     if (rn == "CELLSTYLEMAP"
                         || cit->second->className == "AcDbCellStyleMap") {
                         DRW_CellStyleMap e;
                         ret = e.parseDwg(version, &buff, bs);
-                        if (ret) intfa.addCellStyleMap(e);
+                        if (ret) {
+                            intfa.addCellStyleMap(e);
+                            intfa.addUnsupportedObject(makeRawObject(oType, cit->second));
+                        }
                         break;
                     }
                     if (rn == "DIMASSOC"

@@ -3684,3 +3684,38 @@ TEST_CASE("DWG MATERIAL and VISUALSTYLE raw objects are replay-eligible",
   CHECK(LC_DwgAdvancedMetadata::rawReplayBlocker(metadata.rawObjects()[1])
         == LC_DwgAdvancedMetadata::ReplayBlocker::None);
 }
+
+// Phase 2b.2 — TABLESTYLE + CELLSTYLEMAP + TABLECONTENT raw-replay rescue.
+// When not invalidated by the table graph, all three are replay-eligible.
+TEST_CASE("DWG TABLESTYLE/CELLSTYLEMAP/TABLECONTENT raw objects replay-eligible",
+          "[entity_metadata][dwg_metadata][replay_rescue][table]") {
+  LC_DwgAdvancedMetadata metadata;
+
+  const struct {
+    int objectType;
+    duint32 handle;
+    const char* recName;
+    const char* className;
+  } kCases[] = {
+      {620, 0x500u, "TABLESTYLE", "AcDbTableStyle"},
+      {621, 0x501u, "CELLSTYLEMAP", "AcDbCellStyleMap"},
+      {622, 0x502u, "TABLECONTENT", "AcDbTableContent"},
+  };
+  for (const auto& c : kCases) {
+    DRW_UnsupportedObject raw;
+    raw.m_objectType = c.objectType;
+    raw.m_handle = c.handle;
+    raw.m_isCustomClass = true;
+    raw.m_recordName = c.recName;
+    raw.m_className = c.className;
+    raw.m_rawBytes = {0x01u, 0x02u, 0x03u};
+    metadata.addUnsupportedObject(raw);
+  }
+
+  REQUIRE(metadata.rawObjects().size() == 3);
+  for (const auto& record : metadata.rawObjects()) {
+    CHECK(record.rawBytes.size() == 3);
+    CHECK(LC_DwgAdvancedMetadata::rawReplayBlocker(record)
+          == LC_DwgAdvancedMetadata::ReplayBlocker::None);
+  }
+}
