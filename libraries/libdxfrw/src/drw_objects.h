@@ -1662,6 +1662,7 @@ public:
         elements.clear();
     }
 protected:
+    bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
 public:
     int flags;                  /*!< style flags (BS) */

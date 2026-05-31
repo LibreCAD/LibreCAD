@@ -3676,6 +3676,46 @@ bool DRW_Layout::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     return buf->isGood();
 }
 
+bool DRW_MLineStyle::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
+    switch (code) {
+    case 70:
+        flags = reader->getInt32();
+        break;
+    case 3:
+        description = reader->getUtf8String();
+        break;
+    case 62:
+        //Before the first element (no 49 seen) 62 is the style fill color;
+        //after a 49 it is the current element's color.
+        if (elements.empty())
+            fillColor = reader->getInt32();
+        else
+            elements.back().color = reader->getInt32();
+        break;
+    case 51:
+        startAngle = reader->getDouble();
+        break;
+    case 52:
+        endAngle = reader->getDouble();
+        break;
+    case 71:
+        break;  //element count; elements are appended on each 49
+    case 49: {
+        DRW_MLineElement element;
+        element.offset = reader->getDouble();
+        elements.push_back(element);
+        break;
+    }
+    case 6:
+        if (!elements.empty())
+            elements.back().linetype = reader->getUtf8String();
+        break;
+    default:
+        return DRW_TableEntry::parseCode(code, reader);
+    }
+    return true;
+}
+
 bool DRW_MLineStyle::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     dwgBuffer sBuff = *buf;
     dwgBuffer *sBuf = buf;

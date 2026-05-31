@@ -3802,6 +3802,9 @@ bool dxfRW::processObjects() {
         else if ("SCALE" == nextentity) {
             processed = processScale();
         }
+        else if ("MLINESTYLE" == nextentity) {
+            processed = processMLineStyle();
+        }
         else {
             if (!reader->readRec(&code)) {
                 return setError(DRW::BAD_READ_OBJECTS); //end of file without ENDSEC
@@ -3988,6 +3991,27 @@ bool dxfRW::processScale() {
         }
 
         if (!scale.parseCode(code, reader)) {
+            return setError( DRW::BAD_CODE_PARSED);
+        }
+    }
+
+    return setError(DRW::BAD_READ_OBJECTS);
+}
+
+bool dxfRW::processMLineStyle() {
+    DRW_DBG("dxfRW::processMLineStyle");
+    int code;
+    DRW_MLineStyle style;
+    while (reader->readRec(&code)) {
+        DRW_DBG(code); DRW_DBG("\n");
+        if (0 == code) {
+            nextentity = reader->getString();
+            DRW_DBG(nextentity); DRW_DBG("\n");
+            iface->addMLineStyle(style);
+            return true;  //found new entity or ENDSEC, terminate
+        }
+
+        if (!style.parseCode(code, reader)) {
             return setError( DRW::BAD_CODE_PARSED);
         }
     }

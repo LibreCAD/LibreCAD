@@ -130,6 +130,17 @@ public:
   }
 };
 
+class MLineStyleCapture : public StubInterface {
+public:
+  int m_callCount = 0;
+  DRW_MLineStyle m_captured;
+  void addMLineStyle(const DRW_MLineStyle &d) override {
+    if (m_callCount == 0)
+      m_captured = d;
+    ++m_callCount;
+  }
+};
+
 void readDxf(const std::string &dxf, DRW_Interface &cap, const char *name) {
   const auto path = std::filesystem::temp_directory_path() / name;
   std::filesystem::remove(path);
@@ -215,4 +226,30 @@ TEST_CASE("DXF SCALE object is read (label + numerator/denominator) (slice C6)",
   CHECK(cap.m_captured.drawingUnits == 2.0);
   CHECK(cap.m_captured.isUnitScale == false);
   CHECK(cap.m_captured.scaleFactor() == 2.0);
+}
+
+TEST_CASE("DXF MLINESTYLE object is read with elements (slice C5)", "[dxf][mlinestyle]") {
+  MLineStyleCapture cap;
+  const char *dxf =
+      "0\nSECTION\n2\nOBJECTS\n"
+      "0\nMLINESTYLE\n5\n18\n330\n17\n100\nAcDbMlineStyle\n"
+      "2\nSTANDARD\n70\n0\n3\nstd desc\n62\n256\n51\n90.0\n52\n90.0\n"
+      "71\n2\n"
+      "49\n0.5\n62\n1\n6\nBYLAYER\n"
+      "49\n-0.5\n62\n2\n6\nCONTINUOUS\n"
+      "0\nENDSEC\n0\nEOF\n";
+  readDxf(dxf, cap, "lc_mlinestyle_read.dxf");
+
+  REQUIRE(cap.m_callCount == 1);
+  CHECK(cap.m_captured.name == "STANDARD");
+  CHECK(cap.m_captured.description == "std desc");
+  CHECK(cap.m_captured.fillColor == 256);  // the pre-element 62
+  CHECK(cap.m_captured.startAngle == 90.0);
+  REQUIRE(cap.m_captured.elements.size() == 2);
+  CHECK(cap.m_captured.elements[0].offset == 0.5);
+  CHECK(cap.m_captured.elements[0].color == 1);
+  CHECK(cap.m_captured.elements[0].linetype == "BYLAYER");
+  CHECK(cap.m_captured.elements[1].offset == -0.5);
+  CHECK(cap.m_captured.elements[1].color == 2);
+  CHECK(cap.m_captured.elements[1].linetype == "CONTINUOUS");
 }

@@ -178,6 +178,7 @@ private:
     bool processGroup();
     bool processDictionary();
     bool processScale();
+    bool processMLineStyle();
 
 //    bool writeHeader();
     bool writeEntity(DRW_Entity *ent);
