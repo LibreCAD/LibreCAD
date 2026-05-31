@@ -132,3 +132,37 @@ TEST_CASE("DWG header string and double vars normalize too",
     REQUIRE(graphic.getVariableString("$TEXTSTYLE", "") == QString("Standard"));
     REQUIRE(graphic.getVariableDouble("$DIMSCALE", -1.0) == 2.5);
 }
+
+// P0A-6 — consolidated end-to-end regression net for the Phase-0A header
+// vars that have LANDED.  Each assertion is tagged with the gap id it
+// guards.  Deferred (blocked) Phase-0A vars are intentionally NOT asserted
+// here so this net stays green:
+//   - P0A-2 FLAGS-derived (ENDCAPS/JOINSTYLE/LWDISPLAY/XEDIT/EXTNAMES/
+//     PSTYLEMODE/OLESTARTUP/CELWEIGHT): SKIPPED (needs-decision).
+//   - P0A-4 REALWORLDSCALE/SHADOWPLANELOCATION: SKIPPED (needs-spec-lookup).
+//   - P0A-5 UNIT1..4NAME: SKIPPED (needs-spec-lookup).
+// When those land, add their assertions here.
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("Phase 0A header vars all reach the app $-prefixed",
+          "[dwg-header][header-app-vars]") {
+    ensureQtContext();
+    RS_Graphic graphic;
+    RS_FilterDXFRW filter;
+
+    DRW_Header header;
+    // gap header-$prefix-normalization (P0A-1): bare keys → $-prefixed.
+    header.addInt("DIMASO", 1, 70);
+    header.addInt("LUPREC", 6, 70);
+    // gap header-dimadec-dimfrac-wrong-key-read (P0A-3): correct key names.
+    header.addInt("DIMADEC", 5, 70);
+    header.addInt("DIMFRAC", 2, 70);
+
+    RsFilterDxfRwHeaderTestAccess::runAddHeader(filter, graphic, header);
+
+    // P0A-1: every bare DWG var resolves under its $-prefixed app name.
+    REQUIRE(graphic.getVariableInt("$DIMASO", -1) == 1);
+    REQUIRE(graphic.getVariableInt("$LUPREC", -1) == 6);
+    // P0A-3: DIMADEC/DIMFRAC now reach the app (were lost under DIAMDEC/DIMFAC).
+    REQUIRE(graphic.getVariableInt("$DIMADEC", -1) == 5);
+    REQUIRE(graphic.getVariableInt("$DIMFRAC", -1) == 2);
+}
