@@ -1793,3 +1793,26 @@ TEST_CASE("DRW_UCS::parseDwg reads geometry, elevation, orthoType, handles",
     CHECK(dst.baseUcsHandle.ref == 0x100u);
     CHECK(dst.namedUcsHandle.ref == 0x101u);
 }
+
+// Phase 4 (P4-01) — DRW_PlotSettings now carries the full plot field set and
+// default-constructs with the documented scale defaults.
+TEST_CASE("DRW_PlotSettings default-constructs full plot field set",
+          "[dwg-object-encode][plotsettings][data-loss]") {
+    DRW_PlotSettings ps;
+    // Scale defaults are 1.0; everything else zero/empty.
+    CHECK(ps.realWorldUnits == Approx(1.0));
+    CHECK(ps.drawingUnits == Approx(1.0));
+    CHECK(ps.scaleFactor == Approx(1.0));
+    CHECK(ps.marginLeft == Approx(0.0));
+    CHECK(ps.marginTop == Approx(0.0));
+    CHECK(ps.paperWidth == Approx(0.0));
+    CHECK(ps.paperHeight == Approx(0.0));
+    CHECK(ps.plotLayoutFlags == 0);
+    CHECK(ps.paperUnits == 0);
+    CHECK(ps.plotType == 0);
+    CHECK(ps.scaleType == 0);
+    CHECK(ps.shadePlotMode == 0);
+    CHECK(ps.pageSetupName.empty());
+    CHECK(ps.paperSize.empty());
+    CHECK(ps.currentStyleSheet.empty());
+}

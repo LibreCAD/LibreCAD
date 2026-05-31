@@ -897,10 +897,29 @@ public:
 
     void reset(){
         tType = DRW::PLOTSETTINGS;
-        marginLeft = 0.0;
-        marginBottom = 0.0;
-        marginRight = 0.0;
-        marginTop = 0.0;
+        // Full plot field set (P4-01) — member names mirror DRW_Layout's plot
+        // prefix so the read/encode code can be shared verbatim.
+        pageSetupName.clear();
+        printerConfig.clear();
+        plotLayoutFlags = 0;
+        marginLeft = marginBottom = marginRight = marginTop = 0.0;
+        paperWidth = paperHeight = 0.0;
+        paperSize.clear();
+        plotOriginX = plotOriginY = 0.0;
+        paperUnits = 0;
+        plotRotation = 0;
+        plotType = 0;
+        windowMinX = windowMinY = windowMaxX = windowMaxY = 0.0;
+        plotViewName.clear();
+        realWorldUnits = 1.0;
+        drawingUnits = 1.0;
+        currentStyleSheet.clear();
+        scaleType = 0;
+        scaleFactor = 1.0;
+        paperImageOriginX = paperImageOriginY = 0.0;
+        shadePlotMode = 0;
+        shadePlotResLevel = 0;
+        shadePlotCustomDPI = 0;
         DRW_TableEntry::reset();
     }
 
@@ -909,11 +928,39 @@ protected:
     bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
 
 public:
-    UTF8STRING plotViewName;/*!< Plot view name, code 6 */
-    double marginLeft;      /*!< Size, in millimeters, of unprintable margin on left side of paper, code 40 */
-    double marginBottom;    /*!< Size, in millimeters, of unprintable margin on bottom side of paper, code 41 */
-    double marginRight;     /*!< Size, in millimeters, of unprintable margin on right side of paper, code 42 */
-    double marginTop;       /*!< Size, in millimeters, of unprintable margin on top side of paper, code 43 */
+    // Full PlotSettings field set per ODA §20.4.84 (mirrors DRW_Layout's
+    // embedded plot prefix; member names kept identical so P4-02's lifted
+    // parse/encode is a verbatim copy of the Layout path).
+    UTF8STRING pageSetupName;     /*!< code 1, TV */
+    UTF8STRING printerConfig;     /*!< code 2, TV */
+    int plotLayoutFlags;          /*!< code 70, BS */
+    double marginLeft;            /*!< code 40, BD, millimeters */
+    double marginBottom;          /*!< code 41, BD */
+    double marginRight;           /*!< code 42, BD */
+    double marginTop;             /*!< code 43, BD */
+    double paperWidth;            /*!< code 44, BD */
+    double paperHeight;           /*!< code 45, BD */
+    UTF8STRING paperSize;         /*!< code 4, TV */
+    double plotOriginX;           /*!< code 46, 2BD */
+    double plotOriginY;           /*!< code 47, 2BD */
+    int paperUnits;               /*!< code 72, BS */
+    int plotRotation;             /*!< code 73, BS */
+    int plotType;                 /*!< code 74, BS */
+    double windowMinX;            /*!< code 48, 2BD */
+    double windowMinY;            /*!< code 49, 2BD */
+    double windowMaxX;            /*!< code 140, 2BD */
+    double windowMaxY;            /*!< code 141, 2BD */
+    UTF8STRING plotViewName;      /*!< code 6, T (R13-R2000 only) */
+    double realWorldUnits;        /*!< code 142, BD — numerator of print scale */
+    double drawingUnits;          /*!< code 143, BD — denominator of print scale */
+    UTF8STRING currentStyleSheet; /*!< code 7, TV */
+    int scaleType;                /*!< code 75, BS — standard scale type */
+    double scaleFactor;           /*!< code 147, BD */
+    double paperImageOriginX;     /*!< code 148, 2BD */
+    double paperImageOriginY;     /*!< code 149, 2BD */
+    int shadePlotMode;            /*!< code 76, BS (R2004+) */
+    int shadePlotResLevel;        /*!< code 77, BS (R2004+) */
+    int shadePlotCustomDPI;       /*!< code 78, BS (R2004+) */
 };
 
 //! Class to handle UCS entries
