@@ -558,6 +558,41 @@ TEST_CASE("DRW_LayerIndex::parseDwg captures per-layer entry handles",
     REQUIRE(dst.entries[1].entryHandle == 0x201u);
 }
 
+// P4-13 (gap object-imagedef-uv-size-dropped): DRW_ImageDef::parseDwg read
+// the image pixel size (DXF 10/20) via get2RawDouble and discarded it; it now
+// assigns u/v (distinct from the up/vp pixel-scale fields).
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("DRW_ImageDef::parseDwg captures u/v pixel size",
+          "[dwg-read][object-encode][imagedef]") {
+    DRW::Version ver = DRW::AC1015;
+    dwgBufferW w;
+    emitObjectPreamble(w, ver, /*oType=*/0, /*handle=*/0x500);
+    w.putBitLong(0);                 // imgVersion (class version)
+    w.putRawDouble(1024.0);          // size.x → u
+    w.putRawDouble(768.0);           // size.y → v
+    w.putVariableText(ver, "img");   // name
+    w.putBit(1);                     // loaded
+    w.putRawChar8(2);                // resolution
+    w.putRawDouble(0.25);            // up (pixel scale U)
+    w.putRawDouble(0.5);             // vp (pixel scale V)
+
+    // Handle stream: parentH, xdic (null), then the trailing XRefH that
+    // DRW_ImageDef::parseDwg reads unconditionally.
+    emitCommonHandlePrefix(w, /*parentHandle=*/0x10, /*reactors=*/{}, /*xDictFlag=*/0);
+    w.putHandle(hardPtr(0));   // XRefH
+
+    auto bytes = snapshot(w);
+    dwgBuffer r(bytes.data(), bytes.size());
+    DRW_ImageDef dst;
+    REQUIRE(DrwObjectEncodeTestAccess::parse(dst, ver, &r));
+
+    REQUIRE(dst.u == 1024.0);        // was discarded before the fix
+    REQUIRE(dst.v == 768.0);
+    REQUIRE(dst.up == 0.25);         // pixel scale unaffected
+    REQUIRE(dst.vp == 0.5);
+    REQUIRE(dst.name == "img");
+}
+
 // 2a.0 (gap entity-reactors-xdict-dropped-roundtrip): DRW_TableEntry gained
 // reactorHandles/xDictHandle. The hand-written copy ctor must copy them (a
 // missing init-list entry would silently drop reactors on copy) and reset()

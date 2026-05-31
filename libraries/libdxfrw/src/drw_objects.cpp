@@ -1919,7 +1919,8 @@ bool DRW_ImageDef::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     dint32 imgVersion = buf->getBitLong();
     DRW_DBG("class Version: "); DRW_DBG(imgVersion);
     DRW_Coord size = buf->get2RawDouble();
-    DRW_UNUSED(size);//RLZ: temporary, complete API
+    u = size.x;  // P4-13: image size in pixels (DXF 10), was discarded
+    v = size.y;  // DXF 20
     name = sBuf->getVariableText(version, false);
     DRW_DBG("appId name: "); DRW_DBG(name.c_str()); DRW_DBG("\n");
     loaded = buf->getBit();
