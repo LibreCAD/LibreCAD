@@ -1498,3 +1498,54 @@ TEST_CASE("DRW_Leader::encodeDwg straight-leader with arrow=0 round-trips",
         REQUIRE(dst.vertexlist.size() == 2u);
     }
 }
+
+// Phase 6.1 — SHAPE encoder (fixed oType 33). Round-trips the 8 body fields +
+// the trailing SHAPEFILE style hard handle.
+TEST_CASE("DRW_Shape::encodeDwg round-trips body and style handle",
+          "[dwg-write][entity-encode][shape]") {
+    DRW_Shape src;
+    src.handle = 0x40;
+    src.color = 7;
+    src.ltypeScale = 1.0;
+    src.m_insertionPoint = DRW_Coord{3.0, 4.0, 5.0};
+    src.m_scale = 2.5;
+    src.m_rotation = 0.75;
+    src.m_widthFactor = 1.25;
+    src.m_oblique = 0.1;
+    src.m_thickness = 0.5;
+    src.m_shapeIndex = 17;
+    src.m_extrusion = DRW_Coord{0.0, 0.0, 1.0};
+    src.m_shapeFileHandle = 0x41;
+    DrwEntityEncodeTestAccess::layerH(src).ref = 0x12;
+
+    for (DRW::Version ver : {DRW::AC1015, DRW::AC1018}) {
+        dwgBufferW w;
+        REQUIRE(DrwEntityEncodeTestAccess::encode(src, ver, &w));
+
+        auto bytes = snapshot(w);
+        REQUIRE(bytes.size() > 0);
+        // Real DWG objects are followed by a 2-byte CRC; the SHAPE parser
+        // gates the trailing style handle on numRemainingBytes() > 2 (i.e.
+        // beyond that CRC). Append 2 padding bytes so the handle is read.
+        bytes.push_back(0);
+        bytes.push_back(0);
+
+        dwgBuffer r(bytes.data(), bytes.size());
+        DRW_Shape dst;
+        REQUIRE(DrwEntityEncodeTestAccess::parse(dst, ver, &r));
+
+        CHECK(DrwEntityEncodeTestAccess::oType(dst) == 33);
+        CHECK(dst.handle == 0x40u);
+        CHECK(dst.m_insertionPoint.x == Approx(3.0));
+        CHECK(dst.m_insertionPoint.y == Approx(4.0));
+        CHECK(dst.m_insertionPoint.z == Approx(5.0));
+        CHECK(dst.m_scale == Approx(2.5));
+        CHECK(dst.m_rotation == Approx(0.75));
+        CHECK(dst.m_widthFactor == Approx(1.25));
+        CHECK(dst.m_oblique == Approx(0.1));
+        CHECK(dst.m_thickness == Approx(0.5));
+        CHECK(dst.m_shapeIndex == 17);
+        CHECK(dst.m_extrusion.z == Approx(1.0));
+        CHECK(dst.m_shapeFileHandle == 0x41u);
+    }
+}

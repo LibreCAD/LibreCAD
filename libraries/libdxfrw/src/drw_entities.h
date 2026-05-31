@@ -594,6 +594,8 @@ public:
 
 protected:
     bool parseDwg(DRW::Version v, dwgBuffer *buf, duint32 bs=0) override;
+    bool encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs=0,
+                   dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
 
 public:
     DRW_Coord m_insertionPoint;

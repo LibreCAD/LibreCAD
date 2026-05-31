@@ -2816,6 +2816,40 @@ bool DRW_Shape::parseDwg(DRW::Version v, dwgBuffer *buf, duint32 bs){
     return ret && buf->isGood();
 }
 
+// Phase 6.1: SHAPE encoder (fixed oType 33). Exact inverse of parseDwg above.
+// Without this override a SHAPE would encode as a LINE (default DRW_Entity).
+bool DRW_Shape::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs,
+                          dwgBufferW *strBuf, dwgBufferW *handleBuf) {
+    (void)bs; (void)strBuf;
+    oType = 33;  // SHAPE class id — see dwgreader.cpp case 33
+    if (!encodeDwgCommon(version, buf)) return false;
+
+    buf->put3BitDouble(m_insertionPoint);
+    buf->putBitDouble(m_scale);
+    buf->putBitDouble(m_rotation);
+    buf->putBitDouble(m_widthFactor);
+    buf->putBitDouble(m_oblique);
+    buf->putBitDouble(m_thickness);
+    buf->putBitShort(m_shapeIndex);
+    buf->put3BitDouble(m_extrusion);
+
+    if (!encodeDwgEntHandle(version, buf, handleBuf)) return false;
+
+    // Trailing SHAPEFILE style hard pointer (code 5), byte-count-sized.
+    dwgHandle sH;
+    sH.code = 5;
+    sH.ref  = m_shapeFileHandle;
+    sH.size = 0;
+    if (m_shapeFileHandle != 0) {
+        duint32 t = m_shapeFileHandle;
+        while (t != 0) { t >>= 8; ++sH.size; }
+    } else {
+        sH.code = 0;  // null handle
+    }
+    (handleBuf ? handleBuf : buf)->putHandle(sH);
+    return true;
+}
+
 bool DRW_Ole2Frame::parseDwg(DRW::Version v, dwgBuffer *buf, duint32 bs){
     m_bodyBitSize = bs;
     bool ret = DRW_Entity::parseDwg(v, buf, nullptr, bs);
