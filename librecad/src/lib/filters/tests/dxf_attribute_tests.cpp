@@ -109,6 +109,14 @@ public:
   }
 };
 
+// Emits a single INSERT (with whatever attlist it carries) on write.
+class AttribEmitter : public StubInterface {
+public:
+  DRW_Insert m_insert;
+  dxfRW *m_rw = nullptr;
+  void writeEntities() override { m_rw->writeInsert(&m_insert); }
+};
+
 // Writes `dxf` to a temp file, reads it back through dxfRW into `cap`.
 void readDxf(const std::string &dxf, InsertCapture &cap, const char *name) {
   const auto path = std::filesystem::temp_directory_path() / name;
@@ -183,4 +191,61 @@ TEST_CASE("DXF INSERT without attributes yields empty attlist", "[dxf][attrib]")
   REQUIRE(cap.m_callCount == 1);
   CHECK(cap.m_captured.name == "PLAIN");
   CHECK(cap.m_captured.attlist.empty());
+}
+
+TEST_CASE("DXF INSERT attlist round-trips through write+read (slice B2)",
+          "[dxf][attrib][dxf_roundtrip]") {
+  const auto path =
+      std::filesystem::temp_directory_path() / "lc_attrib_roundtrip.dxf";
+  std::filesystem::remove(path);
+
+  AttribEmitter emitter;
+  emitter.m_insert.name = "TITLEBLK";
+  emitter.m_insert.layer = "0";
+  emitter.m_insert.basePoint = DRW_Coord(0.0, 0.0, 0.0);
+  {
+    auto a = std::make_shared<DRW_Attrib>();
+    a->layer = "0";
+    a->tag = "COMPANY";
+    a->text = "ACME Corp";
+    a->basePoint = DRW_Coord(1.0, 2.0, 0.0);
+    a->height = 0.5;
+    a->attribFlags = 0;
+    emitter.m_insert.attlist.push_back(a);
+  }
+  {
+    auto a = std::make_shared<DRW_Attrib>();
+    a->layer = "0";
+    a->tag = "REV";
+    a->text = "B";
+    a->basePoint = DRW_Coord(1.0, 3.0, 0.0);
+    a->height = 0.5;
+    a->attribFlags = 1; // invisible
+    emitter.m_insert.attlist.push_back(a);
+  }
+
+  {
+    dxfRW w(path.string().c_str());
+    emitter.m_rw = &w;
+    REQUIRE(w.write(&emitter, DRW::AC1021, false));
+  }
+
+  InsertCapture cap;
+  {
+    dxfRW r(path.string().c_str());
+    REQUIRE(r.read(&cap, /*ext=*/true));
+  }
+
+  REQUIRE(cap.m_callCount == 1);
+  REQUIRE(cap.m_captured.attlist.size() == 2);
+  CHECK(cap.m_captured.attlist[0]->tag == "COMPANY");
+  CHECK(cap.m_captured.attlist[0]->text == "ACME Corp");
+  CHECK(cap.m_captured.attlist[0]->basePoint.x == 1.0);
+  CHECK(cap.m_captured.attlist[0]->basePoint.y == 2.0);
+  CHECK((cap.m_captured.attlist[0]->attribFlags & 0x1) == 0);
+  CHECK(cap.m_captured.attlist[1]->tag == "REV");
+  CHECK(cap.m_captured.attlist[1]->text == "B");
+  CHECK((cap.m_captured.attlist[1]->attribFlags & 0x1) == 1);
+
+  std::filesystem::remove(path);
 }

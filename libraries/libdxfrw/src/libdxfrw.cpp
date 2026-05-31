@@ -1494,13 +1494,19 @@ bool dxfRW::writeDimension(DRW_Dimension *ent) {
 }
 
 bool dxfRW::writeInsert(DRW_Insert *ent){
+    const bool hasAttribs = !ent->attlist.empty();
     writer->writeString(0, "INSERT");
     writeEntity(ent);
     if (version > DRW::AC1009) {
         writer->writeString(100, "AcDbBlockReference");
+        if (hasAttribs)
+            writer->writeInt16(66, 1); //attributes-follow flag
         writer->writeUtf8String(2, ent->name);
-    } else
+    } else {
+        if (hasAttribs)
+            writer->writeInt16(66, 1);
         writer->writeUtf8Caps(2, ent->name);
+    }
     writer->writeDouble(10, ent->basePoint.x);
     writer->writeDouble(20, ent->basePoint.y);
     writer->writeDouble(30, ent->basePoint.z);
@@ -1512,6 +1518,54 @@ bool dxfRW::writeInsert(DRW_Insert *ent){
     writer->writeInt16(71, ent->rowcount);
     writer->writeDouble(44, ent->colspace);
     writer->writeDouble(45, ent->rowspace);
+    //Trailing block attributes + terminating SEQEND (mirrors writePolyline).
+    if (hasAttribs) {
+        for (const auto &att : ent->attlist) {
+            if (att)
+                writeAttrib(att.get());
+        }
+        writer->writeString(0, "SEQEND");
+        writeEntity(ent);
+    }
+    return true;
+}
+
+bool dxfRW::writeAttrib(DRW_Attrib *ent){
+    writer->writeString(0, "ATTRIB");
+    writeEntity(ent);
+    if (version > DRW::AC1009)
+        writer->writeString(100, "AcDbText");
+    writer->writeDouble(10, ent->basePoint.x);
+    writer->writeDouble(20, ent->basePoint.y);
+    writer->writeDouble(30, ent->basePoint.z);
+    writer->writeDouble(40, ent->height);
+    writer->writeUtf8String(1, ent->text);
+    writer->writeDouble(50, ent->angle);
+    writer->writeDouble(41, ent->widthscale);
+    writer->writeDouble(51, ent->oblique);
+    if (version > DRW::AC1009)
+        writer->writeUtf8String(7, ent->style);
+    else
+        writer->writeUtf8Caps(7, ent->style);
+    writer->writeInt16(71, ent->textgen);
+    if (ent->alignH != DRW_Text::HLeft)
+        writer->writeInt16(72, ent->alignH);
+    if (ent->alignH != DRW_Text::HLeft || ent->alignV != DRW_Text::VBaseLine) {
+        writer->writeDouble(11, ent->secPoint.x);
+        writer->writeDouble(21, ent->secPoint.y);
+        writer->writeDouble(31, ent->secPoint.z);
+    }
+    writer->writeDouble(210, ent->extPoint.x);
+    writer->writeDouble(220, ent->extPoint.y);
+    writer->writeDouble(230, ent->extPoint.z);
+    if (version > DRW::AC1009)
+        writer->writeString(100, "AcDbAttribute");
+    writer->writeUtf8String(2, ent->tag);
+    writer->writeInt16(70, ent->attribFlags);
+    if (ent->alignV != DRW_Text::VBaseLine)
+        writer->writeInt16(74, ent->alignV);
+    if (version > DRW::AC1014)
+        writer->writeInt16(280, ent->lockPosition ? 1 : 0);
     return true;
 }
 

@@ -96,6 +96,7 @@ public:
     bool writeBlockRecord(std::string name, int insUnits = 0);
     bool writeBlock(DRW_Block *ent);
     bool writeInsert(DRW_Insert *ent);
+    bool writeAttrib(DRW_Attrib *ent);
     bool writeMText(DRW_MText *ent);
     bool writeMLine(DRW_MLine *ent);
     bool writeUnderlay(DRW_Underlay *ent);
