@@ -1578,6 +1578,16 @@ bool DRW_Point::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
 //   - The body emit between encodeDwgCommon and encodeDwgEntHandle is
 //     per-entity (3BD basePoint for Point, etc.).
 
+// Phase-2a kill switch for the full common-entity-header write contract
+// (entity reactors/xdict/EED/visibility/entmode emission). Default ON. The
+// emission is gated by DATA PRESENCE (empty reactorHandles/extData + visible
+// == today's hardcoded zeros), so flipping this OFF restores the legacy
+// byte-identical output as an emergency escape hatch. The per-field emission
+// arms land in 2a.1..2a.5; this scaffolding commit changes no bytes.
+#ifndef LIBDXFRW_FULL_COMMON_HEADER
+#define LIBDXFRW_FULL_COMMON_HEADER 1
+#endif
+
 bool DRW_Entity::encodeDwgCommon(DRW::Version version, dwgBufferW *buf,
                                   dwgBufferW *strBuf) {
     (void)strBuf;  // common data contains no strings

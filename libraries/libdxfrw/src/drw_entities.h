@@ -186,6 +186,8 @@ public:
     duint32 fullVisualStyleHandle{0}; /*!< R2010+ full visual-style ref, ODA §19.4.2 (DWG-only) */
     duint32 faceVisualStyleHandle{0}; /*!< R2010+ face visual-style ref */
     duint32 edgeVisualStyleHandle{0}; /*!< R2010+ edge visual-style ref */
+    std::vector<duint32> reactorHandles; /*!< persisted reactor handles (ODA §19.4.2); DWG round-trip (Phase 2a) */
+    duint32 xDictHandle = 0;          /*!< extension-dictionary handle (ODA §19.4.2); DWG round-trip (Phase 2a) */
 	bool haveExtrusion = false;        /*!< set to true if the entity have extrusion*/
 	std::vector<std::shared_ptr<DRW_Variant>> extData; /*!< FIFO list of extended data, codes 1000 to 1071*/
 

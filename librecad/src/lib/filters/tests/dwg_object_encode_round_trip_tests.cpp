@@ -558,6 +558,31 @@ TEST_CASE("DRW_LayerIndex::parseDwg captures per-layer entry handles",
     REQUIRE(dst.entries[1].entryHandle == 0x201u);
 }
 
+// 2a.0 (gap entity-reactors-xdict-dropped-roundtrip): DRW_TableEntry gained
+// reactorHandles/xDictHandle. The hand-written copy ctor must copy them (a
+// missing init-list entry would silently drop reactors on copy) and reset()
+// must clear them.
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("DRW_TableEntry copy ctor + reset handle reactor/xdict members",
+          "[dwg-read][object-encode][phase2a]") {
+    DRW_Block_Record src;   // any concrete DRW_TableEntry
+    src.reactorHandles = {0xA0, 0xA1};
+    src.xDictHandle = 0xB0;
+
+    DRW_Block_Record copy(src);   // exercises the hand-written copy ctor
+    REQUIRE(copy.reactorHandles.size() == 2u);
+    REQUIRE(copy.reactorHandles[0] == 0xA0u);
+    REQUIRE(copy.reactorHandles[1] == 0xA1u);
+    REQUIRE(copy.xDictHandle == 0xB0u);
+
+    copy.reset();
+    REQUIRE(copy.reactorHandles.empty());
+    REQUIRE(copy.xDictHandle == 0u);
+    // The source must be untouched by the copy.
+    REQUIRE(src.reactorHandles.size() == 2u);
+    REQUIRE(src.xDictHandle == 0xB0u);
+}
+
 // 2a.6 (gap object-blockrecord-layout-explode-dropped): DRW_Block_Record now
 // retains description (DXF 4), canExplode (280), blockScaling (281) and the
 // owning LAYOUT handle (340), which parseDwg previously read-and-discarded.

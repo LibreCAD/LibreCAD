@@ -125,6 +125,8 @@ public:
         parentHandle {e.parentHandle},
         name {e.name},
         flags {e.flags},
+        reactorHandles {e.reactorHandles},
+        xDictHandle {e.xDictHandle},
         xDictFlag {e.xDictFlag},
         numReactors {e.numReactors},
         curr {nullptr}
@@ -149,6 +151,8 @@ protected:
             delete *it;
         }
         extData.clear();
+        reactorHandles.clear();
+        xDictHandle = 0;
         curr = nullptr;
     }
 
@@ -159,6 +163,8 @@ public:
     UTF8STRING      name;                   /*!< entry name, code 2 */
     int             flags {0};              /*!< Flags relevant to entry, code 70 */
     std::vector<DRW_Variant*> extData;      /*!< FIFO list of extended data, codes 1000 to 1071*/
+    std::vector<duint32> reactorHandles;    /*!< persisted reactor handles (ODA §19.4.2); DWG round-trip (Phase 2a) */
+    duint32         xDictHandle {0};        /*!< extension-dictionary handle (ODA §19.4.2); DWG round-trip (Phase 2a) */
 
     //***** dwg parse ********/
 protected:
