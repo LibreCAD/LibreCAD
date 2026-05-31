@@ -436,6 +436,15 @@ public:
         dimfit = dimatfit = 3;
         dimdsep = '.';
         dimlwd = dimlwe = -2;
+        // Phase 3A.1: R2007+/R2010+ members + handle refs.
+        dimjogang = 0.0;
+        dimtfill = dimtfillclr = dimarcsym = 0;
+        dimtxtdirection = 0;
+        dimaltmzf = dimmzf = 1.0;
+        dimaltmzs.clear();
+        dimmzs.clear();
+        dimtxstyH = dimldrblkH = dimblkH = dimblk1H = dimblk2H = dwgHandle{};
+        dimltypeH = dimltex1H = dimltex2H = dwgHandle{};
         DRW_TableEntry::reset();
     }
 
@@ -517,6 +526,27 @@ public:
     UTF8STRING dimldrblk;     /*!< code 341 V2000+ */
     int dimlwd;               /*!< code 371 V2000+ */
     int dimlwe;               /*!< code 372 V2000+ */
+    // Phase 3A.1: R2007+ numeric/color members (dwg.spec:4766-4790).
+    // dimfxl/dimfxlon already exist above — do not re-add.
+    double dimjogang {0.0};   /*!< code 50  BD  V2007+ */
+    int dimtfill {0};         /*!< code 69  BS  V2007+ */
+    int dimtfillclr {0};      /*!< code 70  CMC V2007+ */
+    int dimarcsym {0};        /*!< code 90  BS  V2007+ */
+    // Phase 3A.1: R2010+ members (dwg.spec:4842-4849).
+    int dimtxtdirection {0};  /*!< code 294 B   V2010+ */
+    double dimaltmzf {1.0};   /*!< BD  V2010+ */
+    UTF8STRING dimaltmzs;     /*!< T   V2010+ */
+    double dimmzf {1.0};      /*!< BD  V2010+ */
+    UTF8STRING dimmzs;        /*!< T   V2010+ */
+    // Phase 3A.1: resolved handle-stream refs (mirror DRW_Layer::lTypeH).
+    dwgHandle dimtxstyH;      /*!< code 340 */
+    dwgHandle dimldrblkH;     /*!< code 341 */
+    dwgHandle dimblkH;        /*!< code 342 */
+    dwgHandle dimblk1H;       /*!< code 343 */
+    dwgHandle dimblk2H;       /*!< code 344 */
+    dwgHandle dimltypeH;      /*!< code 345 */
+    dwgHandle dimltex1H;      /*!< code 346 */
+    dwgHandle dimltex2H;      /*!< code 347 */
     std::map<std::string, DRW_Variant*> vars; /*!< extra/override variables written after standard fields */
 
 private:
@@ -555,6 +585,15 @@ private:
         dimfit = o.dimfit; dimupt = o.dimupt; dimatfit = o.dimatfit;
         dimfxlon = o.dimfxlon; dimtxsty = o.dimtxsty; dimldrblk = o.dimldrblk;
         dimlwd = o.dimlwd; dimlwe = o.dimlwe;
+        // Phase 3A.1 members — all value types, plain member-wise copy.
+        dimjogang = o.dimjogang; dimtfill = o.dimtfill;
+        dimtfillclr = o.dimtfillclr; dimarcsym = o.dimarcsym;
+        dimtxtdirection = o.dimtxtdirection;
+        dimaltmzf = o.dimaltmzf; dimaltmzs = o.dimaltmzs;
+        dimmzf = o.dimmzf; dimmzs = o.dimmzs;
+        dimtxstyH = o.dimtxstyH; dimldrblkH = o.dimldrblkH;
+        dimblkH = o.dimblkH; dimblk1H = o.dimblk1H; dimblk2H = o.dimblk2H;
+        dimltypeH = o.dimltypeH; dimltex1H = o.dimltex1H; dimltex2H = o.dimltex2H;
     }
 };
 

@@ -1717,3 +1717,36 @@ TEST_CASE("DRW_Dimstyle deep-copy is independent and leak/double-free clean",
     // Original still intact after the inner scope destroyed its copies.
     CHECK(original.get("$DIMSCALE")->d_val() == Approx(3.5));
 }
+
+// Phase 3A.1 — new R2007/R2010 numeric/string members + handle refs
+// default-construct/reset() to their documented defaults.
+TEST_CASE("DRW_Dimstyle default-constructs R2007/R2010 members with defaults",
+          "[dwg-object-encode][dimstyle][data-loss]") {
+    DRW_Dimstyle d;
+    CHECK(d.dimjogang == Approx(0.0));
+    CHECK(d.dimtfill == 0);
+    CHECK(d.dimtfillclr == 0);
+    CHECK(d.dimarcsym == 0);
+    CHECK(d.dimtxtdirection == 0);
+    CHECK(d.dimaltmzf == Approx(1.0));
+    CHECK(d.dimmzf == Approx(1.0));
+    CHECK(d.dimaltmzs.empty());
+    CHECK(d.dimmzs.empty());
+    CHECK(d.dimtxstyH.ref == 0u);
+    CHECK(d.dimldrblkH.ref == 0u);
+    CHECK(d.dimblkH.ref == 0u);
+    CHECK(d.dimblk1H.ref == 0u);
+    CHECK(d.dimblk2H.ref == 0u);
+    CHECK(d.dimltypeH.ref == 0u);
+    CHECK(d.dimltex1H.ref == 0u);
+    CHECK(d.dimltex2H.ref == 0u);
+
+    // reset() restores the same defaults after mutation.
+    d.dimjogang = 1.25;
+    d.dimaltmzf = 5.0;
+    d.dimtxstyH.ref = 0x99u;
+    d.reset();
+    CHECK(d.dimjogang == Approx(0.0));
+    CHECK(d.dimaltmzf == Approx(1.0));
+    CHECK(d.dimtxstyH.ref == 0u);
+}
