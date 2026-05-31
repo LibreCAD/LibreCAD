@@ -4904,8 +4904,9 @@ bool DRW_Polyline::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
         DRW_DBG(" M count: "); DRW_DBG(vertexcount);
         facecount = buf->getBitShort(); //N-count
         DRW_DBG(" N count: "); DRW_DBG(facecount);
-        /*dint16 mDensity =*/ buf->getBitShort();
-        /*dint16 nDensity =*/ buf->getBitShort();
+        smoothM = buf->getBitShort(); //M smooth-surface density, DXF 73
+        smoothN = buf->getBitShort(); //N smooth-surface density, DXF 74
+        DRW_DBG(" M/N density: "); DRW_DBG(smoothM); DRW_DBG("/"); DRW_DBG(smoothN);
     }
     if (version > DRW::AC1015){ //2004+
         ooCount = buf->getBitLong();
@@ -7722,8 +7723,8 @@ bool DRW_Polyline::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs,
         buf->putBitShort(static_cast<duint16>(curvetype));
         buf->putBitShort(static_cast<duint16>(vertexcount));  // M count
         buf->putBitShort(static_cast<duint16>(facecount));    // N count
-        buf->putBitShort(0);  // mDensity
-        buf->putBitShort(0);  // nDensity
+        buf->putBitShort(static_cast<duint16>(smoothM));      // mDensity, DXF 73
+        buf->putBitShort(static_cast<duint16>(smoothN));      // nDensity, DXF 74
     }
 
     // AC2004+ (>AC1015): emit vertex count before the handle section.

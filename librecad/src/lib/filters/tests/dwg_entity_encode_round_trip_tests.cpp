@@ -890,6 +890,41 @@ TEST_CASE("DRW_Attdef lockPosition below AC1021 is not read (gate lower boundary
     }
 }
 
+// T2 (gap polyline-mesh-density-dropped-read): the POLYLINE_MESH (0x1E) DWG
+// path read the smooth-surface M/N density (DXF 73/74) into discarded locals
+// and wrote literal 0s.  Now round-tripped via smoothM/smoothN.
+TEST_CASE("DRW_Polyline POLYLINE_MESH round-trips smoothM/smoothN density",
+          "[dwg-write][entity-encode]") {
+    DRW_Polyline src;
+    src.handle     = 0xB1;
+    src.color      = 7;
+    src.ltypeScale = 1.0;
+    src.flags      = 16;          // bit 4 → POLYLINE_MESH (oType 0x1E)
+    src.curvetype  = 0;
+    src.vertexcount = 3;          // M count
+    src.facecount   = 4;          // N count
+    src.smoothM     = 4;          // DXF 73
+    src.smoothN     = 5;          // DXF 74
+    DrwEntityEncodeTestAccess::layerH(src).ref = 0x12;
+
+    for (DRW::Version ver : {DRW::AC1015, DRW::AC1018}) {
+        dwgBufferW w;
+        REQUIRE(DrwEntityEncodeTestAccess::encode(src, ver, &w));
+        auto bytes = snapshot(w);
+        dwgBuffer r(bytes.data(), bytes.size());
+        DRW_Polyline dst;
+        REQUIRE(DrwEntityEncodeTestAccess::parse(dst, ver, &r));
+
+        REQUIRE(dst.smoothM == 4);     // was 0 before the fix
+        REQUIRE(dst.smoothN == 5);     // was 0 before the fix
+        REQUIRE(dst.vertexcount == 3); // unchanged through round-trip
+        REQUIRE(dst.facecount == 4);
+        REQUIRE(dst.curvetype == 0);
+        // reader sets bit 4 (3D mesh); writer strips it, reader re-adds it.
+        REQUIRE((dst.flags & 16) == 16);
+    }
+}
+
 TEST_CASE("DRW_Attrib and DRW_Attdef block unsupported multiline DWG writes",
           "[dwg-write][entity-encode]") {
     DRW_Attrib attrib;
