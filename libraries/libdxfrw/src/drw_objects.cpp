@@ -4702,6 +4702,29 @@ bool DRW_UnderlayDefinition::parseDwg(DRW::Version version, dwgBuffer *buf, duin
 //   BD  drawingUnits   (denominator, group code 141)
 //   B   isUnitScale    (true for the 1:1 entry, group code 290)
 //   START_OBJECT_HANDLE_STREAM (parent dictionary, reactors, xdic)
+bool DRW_Scale::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
+    switch (code) {
+    case 70:
+        flag = reader->getInt32();
+        break;
+    case 140:
+        paperUnits = reader->getDouble();
+        break;
+    case 141:
+        drawingUnits = reader->getDouble();
+        break;
+    case 290:
+        isUnitScale = reader->getBool();
+        break;
+    case 300:
+        name = reader->getUtf8String();  //user-visible scale label
+        break;
+    default:
+        return DRW_TableEntry::parseCode(code, reader);
+    }
+    return true;
+}
+
 bool DRW_Scale::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     dwgBuffer sBuff = *buf;
     dwgBuffer *sBuf = buf;

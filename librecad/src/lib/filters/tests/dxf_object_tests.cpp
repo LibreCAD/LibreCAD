@@ -119,6 +119,17 @@ public:
   }
 };
 
+class ScaleCapture : public StubInterface {
+public:
+  int m_callCount = 0;
+  DRW_Scale m_captured;
+  void addScale(const DRW_Scale &d) override {
+    if (m_callCount == 0)
+      m_captured = d;
+    ++m_callCount;
+  }
+};
+
 void readDxf(const std::string &dxf, DRW_Interface &cap, const char *name) {
   const auto path = std::filesystem::temp_directory_path() / name;
   std::filesystem::remove(path);
@@ -187,4 +198,21 @@ TEST_CASE("DXF DICTIONARY entries are read (name->handle) (slice C1)", "[dxf][di
   CHECK(cap.m_captured.m_entries[1].m_handle == 0x1Au);
   CHECK(cap.m_captured.m_entries[2].m_name == "ACAD_MLINESTYLE");
   CHECK(cap.m_captured.m_entries[2].m_handle == 0x17u);
+}
+
+TEST_CASE("DXF SCALE object is read (label + numerator/denominator) (slice C6)", "[dxf][scale]") {
+  ScaleCapture cap;
+  const char *dxf =
+      "0\nSECTION\n2\nOBJECTS\n"
+      "0\nSCALE\n5\nB1\n330\nB0\n100\nAcDbScale\n"
+      "70\n0\n300\n1:2\n140\n1.0\n141\n2.0\n290\n0\n"
+      "0\nENDSEC\n0\nEOF\n";
+  readDxf(dxf, cap, "lc_scale_read.dxf");
+
+  REQUIRE(cap.m_callCount == 1);
+  CHECK(cap.m_captured.name == "1:2");
+  CHECK(cap.m_captured.paperUnits == 1.0);
+  CHECK(cap.m_captured.drawingUnits == 2.0);
+  CHECK(cap.m_captured.isUnitScale == false);
+  CHECK(cap.m_captured.scaleFactor() == 2.0);
 }

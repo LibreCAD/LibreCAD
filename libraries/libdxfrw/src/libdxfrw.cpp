@@ -3799,6 +3799,9 @@ bool dxfRW::processObjects() {
         else if ("DICTIONARY" == nextentity) {
             processed = processDictionary();
         }
+        else if ("SCALE" == nextentity) {
+            processed = processScale();
+        }
         else {
             if (!reader->readRec(&code)) {
                 return setError(DRW::BAD_READ_OBJECTS); //end of file without ENDSEC
@@ -3964,6 +3967,27 @@ bool dxfRW::processDictionary() {
         }
 
         if (!dict.parseCode(code, reader)) {
+            return setError( DRW::BAD_CODE_PARSED);
+        }
+    }
+
+    return setError(DRW::BAD_READ_OBJECTS);
+}
+
+bool dxfRW::processScale() {
+    DRW_DBG("dxfRW::processScale");
+    int code;
+    DRW_Scale scale;
+    while (reader->readRec(&code)) {
+        DRW_DBG(code); DRW_DBG("\n");
+        if (0 == code) {
+            nextentity = reader->getString();
+            DRW_DBG(nextentity); DRW_DBG("\n");
+            iface->addScale(scale);
+            return true;  //found new entity or ENDSEC, terminate
+        }
+
+        if (!scale.parseCode(code, reader)) {
             return setError( DRW::BAD_CODE_PARSED);
         }
     }
