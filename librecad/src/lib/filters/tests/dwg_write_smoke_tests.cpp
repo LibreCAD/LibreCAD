@@ -700,6 +700,20 @@ public:
         }
         return -1;
     }
+
+    // 0B.3: expose the raw item_class_id (0x1F2 entity / 0x1F3 object) so the
+    // writer-side conformance can be asserted before the reader collapses it.
+    dint32 customClassItemClassId(duint16 classNum) const {
+        for (const DwgClassDefinition& definition : m_dwgClassDefinitions) {
+            if (definition.m_classNum == classNum)
+                return definition.m_entityFlagRaw;
+        }
+        return -1;
+    }
+
+    bool registerObjectClassForTest(const DRW_UnsupportedObject& object) {
+        return registerRawObjectClass(object);
+    }
 };
 
 class MLeaderRoundTripIface : public EmptyIface {
@@ -1867,6 +1881,37 @@ TEST_CASE("dwgWriter counts unique raw custom class instances",
     REQUIRE(writer.registerRawObjectClass(first));
     REQUIRE(writer.registerRawObjectClass(second));
     CHECK(writer.customClassInstanceCount(first.m_objectType) == 2);
+}
+
+// 0B.3 (gap classes-itemclassid): object-producing CLASSES entries must
+// carry item_class_id 0x1F3; entity-producing entries 0x1F2.  Writer-only
+// change; the reader maps 0x1F2->entity and everything else->object, so the
+// self-round-trip classification is unchanged.
+TEST_CASE("dwgWriter emits 0x1F3 item_class_id for object classes, 0x1F2 for entities",
+          "[dwg-write][classes]") {
+    DRW_Header header;
+    std::ofstream stream;
+    InspectableDwgWriter15 writer(&stream, &header);
+
+    // Raw OBJECT custom class → 0x1F3 (was 0).
+    DRW_UnsupportedObject obj = makeRawReplayObject(DRW::AC1024);
+    REQUIRE(writer.registerObjectClassForTest(obj));
+    CHECK(writer.customClassItemClassId(obj.m_objectType) == 0x1F3);
+
+    // Raw ENTITY custom class → 0x1F2.
+    DRW_UnsupportedObject ent = makeRawReplayObject(DRW::AC1024);
+    ent.m_objectType = 510;
+    ent.m_isEntity = true;
+    REQUIRE(writer.registerObjectClassForTest(ent));
+    CHECK(writer.customClassItemClassId(ent.m_objectType) == 0x1F2);
+
+    // A named OBJECT helper (SUN) → 0x1F3 (was 0).
+    REQUIRE(writer.registerSunObjectClass(0x900u));
+    CHECK(writer.customClassItemClassId(DRW_Sun::kDwgClassNum) == 0x1F3);
+
+    // Reader tolerance: the built-in entity registrations (ARC_DIMENSION 500,
+    // MULTILEADER 501, LIGHT 502) keep 0x1F2.
+    CHECK(writer.customClassItemClassId(500) == 0x1F2);
 }
 
 TEST_CASE("dwgRW writes native text MLEADER entities",
