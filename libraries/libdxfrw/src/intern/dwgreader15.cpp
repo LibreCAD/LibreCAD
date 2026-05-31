@@ -160,9 +160,10 @@ bool dwgReader15::readDwgClasses(){
     }
      DRW_DBG("\nCRC: "); DRW_DBGH(fileBuf->getRawShort16());
      DRW_DBG("\nclasses section end sentinel= ");
-     checkSentinel(fileBuf.get(), secEnum::CLASSES, false);
-     bool ret = buff.isGood();
-     return ret;
+     // 1.4: honor the END sentinel (fail on mismatch). The BEGIN sentinel
+     // (:145) stays warn-only to tolerate benign begin drift.
+     bool endOk = checkSentinel(fileBuf.get(), secEnum::CLASSES, false);
+     return buff.isGood() && endOk;
 }
 
 bool dwgReader15::readDwgHandles() {

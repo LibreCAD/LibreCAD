@@ -3099,6 +3099,56 @@ TEST_CASE("dwgRW round-trip delivers the standard R2000 table records",
     std::remove(path.c_str());
 }
 
+// 1.4 (gap classes-crc-not-validated): the CLASSES end sentinel result was
+// computed and discarded.  For AC1015 (dwgReader15) it is now honored: a
+// corrupted end sentinel must fail the read with BAD_READ_CLASSES.  A valid
+// AC1015 file still reads clean (proving the happy path is unaffected).
+TEST_CASE("dwgReader15 fails on a corrupted CLASSES end sentinel",
+          "[dwg-write][smoke][classes][sentinel]") {
+    const std::string path = tempPath("classes_end_sentinel.dwg");
+    {
+        dwgRW writer(path.c_str());
+        EmptyIface iface;
+        REQUIRE(writer.write(&iface, DRW::AC1015, /*bin=*/false));
+    }
+
+    // Sanity: the pristine file reads clean.
+    {
+        dwgRW reader(path.c_str());
+        EmptyIface readIface;
+        REQUIRE(reader.read(&readIface, /*ext=*/false));
+        REQUIRE(reader.getError() == DRW::BAD_NONE);
+    }
+
+    // Locate the CLASSES section (record #1) end sentinel = last 16 bytes of
+    // the section [classesAddr + classesSize - 16].
+    auto bytes = slurp(path);
+    duint32 classesAddr = readLE32(bytes, 0x19 + 1 * 9 + 1);
+    duint32 classesSize = readLE32(bytes, 0x19 + 1 * 9 + 5);
+    size_t endSentinelOff = classesAddr + classesSize - 16;
+    REQUIRE(endSentinelOff + 16 <= bytes.size());
+    REQUIRE(std::memcmp(bytes.data() + endSentinelOff,
+                        dwgSentinels::CLASSES_END, 16) == 0);
+
+    // Corrupt one sentinel byte and write the file back.
+    bytes[endSentinelOff] ^= 0xFF;
+    {
+        std::ofstream out(path, std::ios::binary | std::ios::trunc);
+        out.write(reinterpret_cast<const char*>(bytes.data()),
+                  static_cast<std::streamsize>(bytes.size()));
+    }
+
+    // The read now fails with BAD_READ_CLASSES (end sentinel honored).
+    {
+        dwgRW reader(path.c_str());
+        EmptyIface readIface;
+        REQUIRE_FALSE(reader.read(&readIface, /*ext=*/false));
+        REQUIRE(reader.getError() == DRW::BAD_READ_CLASSES);
+    }
+
+    std::remove(path.c_str());
+}
+
 // ---- R2004 (AC1018) write smoke tests ---------------------------------------
 
 TEST_CASE("dwgRW::write produces a syntactically valid empty R2004 file",
