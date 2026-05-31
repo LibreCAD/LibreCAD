@@ -62,6 +62,10 @@ public:
                              dwgBufferW* buf) {
         return e.encodeDwg(v, buf);
     }
+    static bool encodeVport(const DRW_Vport& e, DRW::Version v,
+                             dwgBufferW* buf) {
+        return e.encodeDwg(v, buf);
+    }
     static bool encodeGroup(const DRW_Group& e, DRW::Version v,
                              dwgBufferW* buf) {
         return e.encodeDwg(v, buf);
@@ -808,6 +812,49 @@ TEST_CASE("DRW_Scale::encodeDwg round-trips paper/drawing units + unit flag",
     REQUIRE(dst.drawingUnits == Approx(50.0));
     REQUIRE(dst.isUnitScale  == false);
     REQUIRE(dst.scaleFactor() == Approx(50.0));
+}
+
+// VPORT encoder round-trip (P4-06): the per-viewport UCS block (origin / X /
+// Y axis / elevation / ortho-type / ucsPerVP) must survive encode->parse
+// instead of being written back as a hardcoded identity. AC1015 keeps the
+// name string + handle stream inline.
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("DRW_Vport::encodeDwg round-trips per-viewport UCS geometry",
+          "[dwg-write][object-encode][vport]") {
+    DRW_Vport src;
+    src.handle      = 0x500;
+    src.name        = "MYVP";
+    // Non-identity UCS values to prove they are stored, not hardcoded.
+    src.ucsOrigin   = DRW_Coord(3.0, 4.0, 5.0);
+    src.ucsXAxis    = DRW_Coord(0.0, 1.0, 0.0);
+    src.ucsYAxis    = DRW_Coord(-1.0, 0.0, 0.0);
+    src.ucsElevation = 2.0;
+    src.ucsOrthoType = 1;
+    src.ucsPerVP    = true;
+
+    DRW::Version ver = DRW::AC1015;
+    dwgBufferW w;
+    emitObjectPreamble(w, ver, /*oType=*/0x41 /* VPORT */, src.handle);
+    REQUIRE(DrwObjectEncodeTestAccess::encodeVport(src, ver, &w));
+
+    auto bytes = snapshot(w);
+    dwgBuffer r(bytes.data(), bytes.size());
+    DRW_Vport dst;
+    REQUIRE(DrwObjectEncodeTestAccess::parse(dst, ver, &r));
+
+    REQUIRE(dst.name == "MYVP");
+    REQUIRE(dst.ucsOrigin.x == Approx(3.0));
+    REQUIRE(dst.ucsOrigin.y == Approx(4.0));
+    REQUIRE(dst.ucsOrigin.z == Approx(5.0));
+    REQUIRE(dst.ucsXAxis.x  == Approx(0.0));
+    REQUIRE(dst.ucsXAxis.y  == Approx(1.0));
+    REQUIRE(dst.ucsXAxis.z  == Approx(0.0));
+    REQUIRE(dst.ucsYAxis.x  == Approx(-1.0));
+    REQUIRE(dst.ucsYAxis.y  == Approx(0.0));
+    REQUIRE(dst.ucsYAxis.z  == Approx(0.0));
+    REQUIRE(dst.ucsElevation == Approx(2.0));
+    REQUIRE(dst.ucsOrthoType == 1);
+    REQUIRE(dst.ucsPerVP     == true);
 }
 
 // GROUP encoder round-trip (ODA §20.4.72).  Description TV + unnamed flag +

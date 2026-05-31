@@ -1896,13 +1896,27 @@ bool DRW_Vport::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     snapSpacing = buf->get2RawDouble();
     DRW_DBG("\nsnap Spacing: "); DRW_DBGPT(snapSpacing.x, snapSpacing.y, snapSpacing.z);
     if (version > DRW::AC1014) { //2000+
-        DRW_DBG("\n Unknown: "); DRW_DBG(buf->getBit());
-        DRW_DBG(" UCS per Viewport: "); DRW_DBG(buf->getBit());
-        DRW_DBG("\nUCS origin: "); DRW_DBGPT(buf->getBitDouble(), buf->getBitDouble(), buf->getBitDouble());
-        DRW_DBG("\nUCS X Axis: "); DRW_DBGPT(buf->getBitDouble(), buf->getBitDouble(), buf->getBitDouble());
-        DRW_DBG("\nUCS Y Axis: "); DRW_DBGPT(buf->getBitDouble(), buf->getBitDouble(), buf->getBitDouble());
-        DRW_DBG("\nUCS elevation: "); DRW_DBG(buf->getBitDouble());
-        DRW_DBG(" UCS Orthographic type: "); DRW_DBG(buf->getBitShort());
+        // Sequenced one-statement-per-field reads (NOT inside DRW_DBGPT macro
+        // args — argument evaluation order is unspecified there).
+        buf->getBit(); // ucs_at_origin (unknown/unused)
+        ucsPerVP = buf->getBit();
+        ucsOrigin.x = buf->getBitDouble();
+        ucsOrigin.y = buf->getBitDouble();
+        ucsOrigin.z = buf->getBitDouble();
+        ucsXAxis.x = buf->getBitDouble();
+        ucsXAxis.y = buf->getBitDouble();
+        ucsXAxis.z = buf->getBitDouble();
+        ucsYAxis.x = buf->getBitDouble();
+        ucsYAxis.y = buf->getBitDouble();
+        ucsYAxis.z = buf->getBitDouble();
+        ucsElevation = buf->getBitDouble();
+        ucsOrthoType = buf->getBitShort();
+        DRW_DBG("\n UCS per Viewport: "); DRW_DBG(ucsPerVP);
+        DRW_DBG("\nUCS origin: "); DRW_DBGPT(ucsOrigin.x, ucsOrigin.y, ucsOrigin.z);
+        DRW_DBG("\nUCS X Axis: "); DRW_DBGPT(ucsXAxis.x, ucsXAxis.y, ucsXAxis.z);
+        DRW_DBG("\nUCS Y Axis: "); DRW_DBGPT(ucsYAxis.x, ucsYAxis.y, ucsYAxis.z);
+        DRW_DBG("\nUCS elevation: "); DRW_DBG(ucsElevation);
+        DRW_DBG(" UCS Orthographic type: "); DRW_DBG(ucsOrthoType);
         if (version > DRW::AC1018) { //2007+
             gridBehavior = buf->getBitShort();
             DRW_DBG(" gridBehavior (flags): "); DRW_DBG(gridBehavior);
@@ -2786,13 +2800,13 @@ bool DRW_Vport::encodeDwg(DRW::Version version, dwgBufferW *buf,
     buf->put2RawDouble(snapBase);
     buf->put2RawDouble(snapSpacing);
     if (version > DRW::AC1014) {
-        buf->putBit(0);         // unknown
-        buf->putBit(0);         // ucsPerVP
-        buf->putBitDouble(0.0); buf->putBitDouble(0.0); buf->putBitDouble(0.0); // ucsOrigin
-        buf->putBitDouble(1.0); buf->putBitDouble(0.0); buf->putBitDouble(0.0); // ucsX
-        buf->putBitDouble(0.0); buf->putBitDouble(1.0); buf->putBitDouble(0.0); // ucsY
-        buf->putBitDouble(0.0); // ucsElev
-        buf->putBitShort(0);    // ucsOrthoType
+        buf->putBit(0);                     // ucs_at_origin (unknown)
+        buf->putBit(ucsPerVP ? 1 : 0);      // ucsPerVP
+        buf->putBitDouble(ucsOrigin.x); buf->putBitDouble(ucsOrigin.y); buf->putBitDouble(ucsOrigin.z); // ucsOrigin
+        buf->putBitDouble(ucsXAxis.x);  buf->putBitDouble(ucsXAxis.y);  buf->putBitDouble(ucsXAxis.z);  // ucsX
+        buf->putBitDouble(ucsYAxis.x);  buf->putBitDouble(ucsYAxis.y);  buf->putBitDouble(ucsYAxis.z);  // ucsY
+        buf->putBitDouble(ucsElevation);    // ucsElev
+        buf->putBitShort(static_cast<duint16>(ucsOrthoType)); // ucsOrthoType
         if (version > DRW::AC1018) {
             buf->putBitShort(static_cast<duint16>(gridBehavior));
             buf->putBitShort(1); // gridMajor

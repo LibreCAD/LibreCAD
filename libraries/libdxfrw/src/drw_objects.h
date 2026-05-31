@@ -803,6 +803,12 @@ public:
             backgroundHandle = 0;
             namedUcsHandle = 0;
             baseUcsHandle = 0;
+            ucsOrigin = DRW_Coord(0.0, 0.0, 0.0);
+            ucsXAxis = DRW_Coord(1.0, 0.0, 0.0);
+            ucsYAxis = DRW_Coord(0.0, 1.0, 0.0);
+            ucsElevation = 0.0;
+            ucsOrthoType = 0;
+            ucsPerVP = false;
 	        DRW_TableEntry::reset();
 	    }
 
@@ -848,6 +854,12 @@ public:
         duint32 backgroundHandle = 0;  /*!< R2007+ background ref (DWG-only) */
         duint32 namedUcsHandle = 0;    /*!< R2000+ named UCS ref (DWG-only) */
         duint32 baseUcsHandle = 0;     /*!< R2000+ base UCS ref (DWG-only) */
+        DRW_Coord ucsOrigin;           /*!< R2000+ per-viewport UCS origin (DWG-only) */
+        DRW_Coord ucsXAxis;            /*!< R2000+ per-viewport UCS X axis (DWG-only) */
+        DRW_Coord ucsYAxis;            /*!< R2000+ per-viewport UCS Y axis (DWG-only) */
+        double ucsElevation = 0.0;     /*!< R2000+ per-viewport UCS elevation (DWG-only) */
+        int ucsOrthoType = 0;          /*!< R2000+ UCS orthographic view type (DWG-only) */
+        bool ucsPerVP = false;         /*!< R2000+ UCS-per-viewport flag (DWG-only) */
 };
 
 
