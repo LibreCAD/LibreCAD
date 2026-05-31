@@ -3149,6 +3149,55 @@ TEST_CASE("dwgReader15 fails on a corrupted CLASSES end sentinel",
     std::remove(path.c_str());
 }
 
+// 1.5a (gap classes-crc-not-validated): the R13/R15 CLASSES CRC (crc16
+// 0xC0C1) was read and discarded.  dwgReader15 now validates it over
+// [si.address+16, si.address+20+classDataSize], matching writer15's emit
+// range.  A pristine libdxfrw AC1015 file passes; a flipped class-data byte
+// is detected as BAD_READ_CLASSES.
+TEST_CASE("dwgReader15 validates the CLASSES CRC and detects a flipped byte",
+          "[dwg-write][smoke][classes][crc]") {
+    const std::string path = tempPath("classes_crc.dwg");
+    {
+        dwgRW writer(path.c_str());
+        EmptyIface iface;
+        REQUIRE(writer.write(&iface, DRW::AC1015, /*bin=*/false));
+    }
+
+    // Pristine file: CRC validates, read is clean.
+    {
+        dwgRW reader(path.c_str());
+        EmptyIface readIface;
+        REQUIRE(reader.read(&readIface, /*ext=*/false));
+        REQUIRE(reader.getError() == DRW::BAD_NONE);
+    }
+
+    auto bytes = slurp(path);
+    duint32 classesAddr = readLE32(bytes, 0x19 + 1 * 9 + 1);
+    duint32 classesSize = readLE32(bytes, 0x19 + 1 * 9 + 5);
+    // Class data lives at [classesAddr + 16(begin) + 4(sizeRL),
+    // classesAddr + classesSize - 18(CRC+end sentinel)). Flip a byte inside
+    // the CRC-covered region so the CRC no longer matches.
+    size_t dataStart = classesAddr + 20;
+    size_t dataEnd   = classesAddr + classesSize - 18;
+    REQUIRE(dataEnd > dataStart);
+    bytes[dataStart] ^= 0xFF;
+    {
+        std::ofstream out(path, std::ios::binary | std::ios::trunc);
+        out.write(reinterpret_cast<const char*>(bytes.data()),
+                  static_cast<std::streamsize>(bytes.size()));
+    }
+
+    // The CRC mismatch now fails the read.
+    {
+        dwgRW reader(path.c_str());
+        EmptyIface readIface;
+        REQUIRE_FALSE(reader.read(&readIface, /*ext=*/false));
+        REQUIRE(reader.getError() == DRW::BAD_READ_CLASSES);
+    }
+
+    std::remove(path.c_str());
+}
+
 // ---- R2004 (AC1018) write smoke tests ---------------------------------------
 
 TEST_CASE("dwgRW::write produces a syntactically valid empty R2004 file",

@@ -149,6 +149,7 @@ bool dwgReader15::readDwgClasses(){
         DRW_DBG("\nWARNING dwgReader15::readDwgClasses size are "); DRW_DBG(size);
         DRW_DBG(" and secSize - 38 are "); DRW_DBG(si.size - 38); DRW_DBG("\n");
     }
+    const duint32 classDataSize = size;  // 1.5a: preserve before the -- below
     std::vector<duint8> tmpByteStr(size);
     fileBuf->getBytes(tmpByteStr.data(), size);
     dwgBuffer buff(tmpByteStr.data(), size, &decoder);
@@ -158,12 +159,28 @@ bool dwgReader15::readDwgClasses(){
         cl->parseDwg(version, &buff, &buff);
         classesmap[cl->classNum] = cl;
     }
-     DRW_DBG("\nCRC: "); DRW_DBGH(fileBuf->getRawShort16());
+     // 1.5a: validate the R13/R15 CLASSES CRC (crc16 0xC0C1). The writer
+     // (dwgwriter15.cpp) covers [sectionStart+16, end) = the RL size field
+     // (4 bytes) + class data, matching libreDWG's [address+16, address+
+     // size-18]. Here that is [si.address+16, si.address+20+classDataSize].
+     // crc8 saves/restores fileBuf's position, so it is safe to call before
+     // reading the stored CRC. The 1.1 negative-range guard protects against
+     // a corrupt size. (crc8 returns 0 on a read failure; treat that as a
+     // mismatch only when the stored CRC is non-zero.)
+     duint16 crcCalc = fileBuf->crc8(0xc0c1,
+                                     static_cast<dint32>(si.address + 16),
+                                     static_cast<dint32>(si.address + 20 + classDataSize));
+     duint16 crcRead = fileBuf->getRawShort16();
+     bool crcOk = (crcCalc == crcRead);
+     if (!crcOk) {
+         DRW_DBG("\nWARNING dwgReader15::readDwgClasses CRC mismatch: calc=");
+         DRW_DBGH(crcCalc); DRW_DBG(" read="); DRW_DBGH(crcRead); DRW_DBG("\n");
+     }
      DRW_DBG("\nclasses section end sentinel= ");
      // 1.4: honor the END sentinel (fail on mismatch). The BEGIN sentinel
      // (:145) stays warn-only to tolerate benign begin drift.
      bool endOk = checkSentinel(fileBuf.get(), secEnum::CLASSES, false);
-     return buff.isGood() && endOk;
+     return buff.isGood() && endOk && crcOk;
 }
 
 bool dwgReader15::readDwgHandles() {
