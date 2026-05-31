@@ -558,6 +558,26 @@ TEST_CASE("DRW_LayerIndex::parseDwg captures per-layer entry handles",
     REQUIRE(dst.entries[1].entryHandle == 0x201u);
 }
 
+// 8b-1 (gap wipeoutvariables-object-not-dispatched): WIPEOUTVARIABLES carries
+// the drawing-wide display-frame flag (DXF 70). It is now parsed + dispatched
+// (addWipeoutVariables) instead of only landing in the raw-replay skip set.
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("DRW_WipeoutVariables::parseDwg captures display_frame flag",
+          "[dwg-read][object-encode][wipeout]") {
+    REQUIRE(DRW_WipeoutVariables{}.m_displayFrame == 0);  // default
+
+    DRW::Version ver = DRW::AC1018;
+    dwgBufferW w;
+    emitObjectPreamble(w, ver, /*oType=*/0, /*handle=*/0x600);
+    w.putBitShort(1);   // display_frame = 1
+
+    auto bytes = snapshot(w);
+    dwgBuffer r(bytes.data(), bytes.size());
+    DRW_WipeoutVariables dst;
+    REQUIRE(DrwObjectEncodeTestAccess::parse(dst, ver, &r));
+    REQUIRE(dst.m_displayFrame == 1);
+}
+
 // P4-13 (gap object-imagedef-uv-size-dropped): DRW_ImageDef::parseDwg read
 // the image pixel size (DXF 10/20) via get2RawDouble and discarded it; it now
 // assigns u/v (distinct from the up/vp pixel-scale fields).

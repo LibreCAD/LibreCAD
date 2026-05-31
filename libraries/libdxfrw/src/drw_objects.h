@@ -1123,6 +1123,23 @@ public:
     int m_units = 0;
 };
 
+//! Class to handle WIPEOUTVARIABLES (AcDbWipeoutVariables) — the drawing-wide
+//! wipeout/image display-frame flag. ODA / libreDWG dwg2.spec WIPEOUTVARIABLES.
+class DRW_WipeoutVariables : public DRW_TableEntry {
+    SETOBJFRIENDS
+public:
+    DRW_WipeoutVariables() { reset(); }
+    void reset(){
+        tType = DRW::UNKNOWNT;
+        m_displayFrame = 0;
+        DRW_TableEntry::reset();
+    }
+protected:
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+public:
+    duint16 m_displayFrame = 0;  /*!< global display-frame flag, DXF 70 */
+};
+
 //! Class to handle SORTENTSTABLE (AcDbSortentsTable).
 class DRW_SortEntsTable : public DRW_TableEntry {
     SETOBJFRIENDS

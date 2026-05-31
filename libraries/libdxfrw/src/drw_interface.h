@@ -68,6 +68,8 @@ public:
     virtual void addFieldList(const DRW_FieldList& data) { (void) data; }
     /** Called for every RASTERVARIABLES object. */
     virtual void addRasterVariables(const DRW_RasterVariables& data) { (void) data; }
+    /** Called for every WIPEOUTVARIABLES object (global display-frame flag). */
+    virtual void addWipeoutVariables(const DRW_WipeoutVariables& data) { (void) data; }
     /** Called for every SORTENTSTABLE object. */
     virtual void addSortEntsTable(const DRW_SortEntsTable& data) { (void) data; }
     /** Called for every MATERIAL object. */

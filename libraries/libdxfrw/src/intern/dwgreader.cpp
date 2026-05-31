@@ -1778,6 +1778,16 @@ bool dwgReader::readDwgObject(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                         }
                         break;
                     }
+                    if (rn == "WIPEOUTVARIABLES"
+                        || cit->second->className == "AcDbWipeoutVariables") {
+                        DRW_WipeoutVariables e;
+                        ret = e.parseDwg(version, &buff, bs);
+                        if (ret) {
+                            intfa.addWipeoutVariables(e);
+                            intfa.addUnsupportedObject(makeRawObject(oType, cit->second));
+                        }
+                        break;
+                    }
                     if (rn == "SORTENTSTABLE"
                         || cit->second->className == "AcDbSortentsTable") {
                         DRW_SortEntsTable e;

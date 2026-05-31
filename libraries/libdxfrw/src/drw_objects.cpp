@@ -3045,6 +3045,18 @@ bool DRW_RasterVariables::parseDwg(DRW::Version version, dwgBuffer *buf, duint32
     return true;
 }
 
+bool DRW_WipeoutVariables::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
+    bool ret = DRW_TableEntry::parseDwg(version, buf, nullptr, bs);
+    DRW_DBG("\n***************************** parsing WipeoutVariables ***********************\n");
+    if (!ret)
+        return ret;
+    // ODA / libreDWG WIPEOUTVARIABLES: a single BS display-frame flag (DXF 70)
+    // before START_OBJECT_HANDLE_STREAM. (No fields are consumed beyond it.)
+    m_displayFrame = buf->getBitShort();
+    DRW_DBG("wipeout display_frame: "); DRW_DBG(m_displayFrame); DRW_DBG("\n");
+    return true;
+}
+
 bool DRW_SortEntsTable::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     bool ret = DRW_TableEntry::parseDwg(version, buf, nullptr, bs);
     DRW_DBG("\n***************************** parsing SortEntsTable **************************\n");
