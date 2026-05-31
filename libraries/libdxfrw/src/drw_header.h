@@ -92,6 +92,7 @@ public:
     DRW_Header& operator=(const DRW_Header &h) {
        if(this != &h) {
            clearVars();
+           this->curr = nullptr;   // clearVars() freed what curr pointed at
            this->version = h.version;
            this->comments = h.comments;
            for (auto it=h.vars.begin(); it!=h.vars.end(); ++it){
@@ -141,6 +142,16 @@ private:
         for (auto it=customVars.begin(); it!=customVars.end(); ++it)
             delete it->second;
         customVars.clear();
+    }
+    /// Store v under key in vars, freeing any previously-stored variant
+    /// (avoids a leak when a header variable appears more than once).
+    /// Updates curr so subsequent parseCode value reads land in v.
+    void storeVar(const std::string& key, DRW_Variant* v) {
+        auto it = vars.find(key);
+        if (it != vars.end() && it->second != v)
+            delete it->second;
+        vars[key] = v;
+        curr = v;
     }
 
 public:

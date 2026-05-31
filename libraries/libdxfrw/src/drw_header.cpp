@@ -42,11 +42,10 @@ bool DRW_Header::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
 
     switch (code) {
     case 9:
-        curr = new DRW_Variant();
         name = reader->getString();
         if (version < DRW::AC1015 && name == "$DIMUNIT")
             name="$DIMLUNIT";
-        vars[name]=curr;
+        storeVar(name, new DRW_Variant());
         break;
     case 1:
         curr->addString(code, reader->getUtf8String());
@@ -1683,23 +1682,19 @@ void DRW_Header::write(const std::unique_ptr<dxfWriter>& writer, DRW::Version ve
 }
 
 void DRW_Header::addDouble(std::string key, double value, int code){
-    curr = new DRW_Variant(code, value);
-    vars[key] =curr;
+    storeVar(key, new DRW_Variant(code, value));
 }
 
 void DRW_Header::addInt(std::string key, int value, int code){
-    curr = new DRW_Variant(code, value);
-    vars[key] =curr;
+    storeVar(key, new DRW_Variant(code, value));
 }
 
 void DRW_Header::addStr(std::string key, std::string value, int code){
-    curr = new DRW_Variant(code, value);
-    vars[key] =curr;
+    storeVar(key, new DRW_Variant(code, value));
 }
 
 void DRW_Header::addCoord(std::string key, DRW_Coord value, int code){
-    curr = new DRW_Variant(code, value);
-    vars[key] =curr;
+    storeVar(key, new DRW_Variant(code, value));
 }
 
 bool DRW_Header::getDouble(std::string key, double *varDouble){

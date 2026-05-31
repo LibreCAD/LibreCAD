@@ -203,11 +203,11 @@ public:
     std::vector<PendingHandleRef> pendingLayerRefResolutions;
 
 protected: //only for read dwg
-    duint8 haveNextLinks; //aka nolinks //B
-    duint8 plotFlags; //presence of plot style //BB
-    duint8 ltFlags; //presence of linetype handle //BB
-    duint8 materialFlag; //presence of material handle //BB
-    duint8 shadowFlag; //R2007+ shadow mode 0..3 (cast/receive/both/ignore) //RC
+    duint8 haveNextLinks = 0; //aka nolinks //B
+    duint8 plotFlags = 0; //presence of plot style //BB
+    duint8 ltFlags = 0; //presence of linetype handle //BB
+    duint8 materialFlag = 0; //presence of material handle //BB
+    duint8 shadowFlag = 0; //R2007+ shadow mode 0..3 (cast/receive/both/ignore) //RC
     duint8 hasFullVisualStyle{0}; //R2010+ full visual-style handle present //B
     duint8 hasFaceVisualStyle{0}; //R2010+ face visual-style handle present //B
     duint8 hasEdgeVisualStyle{0}; //R2010+ edge visual-style handle present //B
@@ -331,7 +331,7 @@ protected:
     virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs=0, dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
 
 public:
-    double radious;                 /*!< radius, code 40 */
+    double radious = 0.0;           /*!< radius, code 40 */
 };
 
 //! Class to handle arc entity
@@ -370,8 +370,8 @@ protected:
     virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs=0, dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
 
 public:
-    double staangle;            /*!< start angle, code 50 in radians*/
-    double endangle;            /*!< end angle, code 51 in radians */
+    double staangle = 0.0;      /*!< start angle, code 50 in radians*/
+    double endangle = 0.0;      /*!< end angle, code 51 in radians */
     int isccw;                  /*!< is counter clockwise arc?, only used in hatch, code 73 */
 };
 
@@ -404,9 +404,9 @@ private:
     void correctAxis();
 
 public:
-    double ratio;        /*!< ratio, code 40 */
-    double staparam;     /*!< start parameter, code 41, 0.0 for full ellipse*/
-    double endparam;     /*!< end parameter, code 42, 2*PI for full ellipse */
+    double ratio = 1.0;  /*!< ratio, code 40 */
+    double staparam = 0.0;     /*!< start parameter, code 41, 0.0 for full ellipse*/
+    double endparam = 0.0;     /*!< end parameter, code 42, 2*PI for full ellipse */
     int isccw;           /*!< is counter clockwise arc?, only used in hatch, code 73 */
 };
 
@@ -953,7 +953,24 @@ public:
 					std::make_shared<DRW_Vertex2D>(*p.vertlist.at(i))
 					);
     }
-	// TODO rule of 5
+    // Deep-copy assignment to match the deep-copy constructor; the implicit
+    // operator= would shallow-copy the shared_ptr vertlist, so two assigned
+    // polylines would alias (and mutate) each other's vertices (Rule of 3).
+    DRW_LWPolyline& operator=(const DRW_LWPolyline& p) {
+        if (this != &p) {
+            DRW_Entity::operator=(p);
+            eType = DRW::LWPOLYLINE;
+            elevation = p.elevation;
+            thickness = p.thickness;
+            width = p.width;
+            flags = p.flags;
+            extPoint = p.extPoint;
+            vertlist.clear();
+            for (const auto& v : p.vertlist)
+                vertlist.push_back(std::make_shared<DRW_Vertex2D>(*v));
+        }
+        return *this;
+    }
 
     virtual void applyExtrusion() override;
     void addVertex (DRW_Vertex2D v) {
@@ -975,7 +992,7 @@ protected:
     virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs=0, dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
 
 public:
-    int vertexnum;            /*!< number of vertex, code 90 */
+    int vertexnum = 0;        /*!< number of vertex, code 90 */
     int flags;                /*!< polyline flag, code 70, default 0 */
     double width;             /*!< constant width, code 43 */
     double elevation;         /*!< elevation, code 38 */
@@ -1122,7 +1139,7 @@ protected:
     virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs=0, dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
 
 public:
-    double height;             /*!< height text, code 40 */
+    double height = 0.0;       /*!< height text, code 40 */
     UTF8STRING text;           /*!< text string, code 1 */
     double angle;              /*!< rotation angle in degrees (360), code 50 */
     double widthscale;         /*!< width factor, code 41 */
@@ -1316,7 +1333,7 @@ public:
     double bulge;             /*!< bulge, code 42 */
 
     int flags;                 /*!< vertex flag, code 70, default 0 */
-    double tgdir;           /*!< curve fit tangent direction, code 50 */
+    double tgdir = 0.0;     /*!< curve fit tangent direction, code 50 */
     int vindex1;             /*!< polyface mesh vertex index, code 71, default 0 */
     int vindex2;             /*!< polyface mesh vertex index, code 72, default 0 */
     int vindex3;             /*!< polyface mesh vertex index, code 73, default 0 */
@@ -1405,8 +1422,8 @@ public:
 
 private:
     std::list<duint32>hadlesList; //list of handles, only in 2004+
-    duint32 firstEH;      //handle of first entity, only in pre-2004
-    duint32 lastEH;       //handle of last entity, only in pre-2004
+    duint32 firstEH = 0;  //handle of first entity, only in pre-2004
+    duint32 lastEH = 0;   //handle of last entity, only in pre-2004
     dwgHandle seqEndH;    //handle of SEQEND entity
 };
 
@@ -1449,7 +1466,7 @@ public:
 //    double tgey;              /*!< end tangent y coordinate, code 23 */
 //    double tgez;              /*!< end tangent z coordinate, code 33 */
     int flags;                /*!< spline flag, code 70 */
-    int degree;               /*!< degree of the spline, code 71 */
+    int degree = 0;           /*!< degree of the spline, code 71 */
     dint32 m_scenario;         /*!< DWG spline scenario: 1=control points, 2=fit points */
     dint32 m_splineFlags1;     /*!< R2013+ method/closed/knot-parameter flags */
     dint32 m_knotParam;        /*!< R2013+ knot parameterization selector */
@@ -1649,14 +1666,14 @@ protected:
     virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
 
 public:
-    duint32 ref;               /*!< Hard reference to imagedef object, code 340 */
+    duint32 ref = 0;           /*!< Hard reference to imagedef object, code 340 */
     DRW_Coord vVector;         /*!< V-vector of single pixel, x coordinate, code 12, 22 & 32 */
 //    double vx;                 /*!< V-vector of single pixel, x coordinate, code 12 */
 //    double vy;                 /*!< V-vector of single pixel, y coordinate, code 22 */
 //    double vz;                 /*!< V-vector of single pixel, z coordinate, code 32 */
-    double sizeu;              /*!< image size in pixels, U value, code 13 */
-    double sizev;              /*!< image size in pixels, V value, code 23 */
-    double dz;                 /*!< z coordinate, code 33 */
+    double sizeu = 0.0;        /*!< image size in pixels, U value, code 13 */
+    double sizev = 0.0;        /*!< image size in pixels, V value, code 23 */
+    double dz = 0.0;           /*!< z coordinate, code 33 */
     int clip;                  /*!< Clipping state, code 280, 0=off 1=on */
     int brightness;            /*!< Brightness value, code 281, (0-100) default 50 */
     int contrast;              /*!< Brightness value, code 282, (0-100) default 50 */
@@ -1717,7 +1734,9 @@ public:
         circlePoint = d.circlePoint;
         length = d.length;
         measureValue = d.measureValue;
-        //RLZ needed a def value for this: hdir = ???
+        hdir = d.hdir;
+        flipArrow1 = d.flipArrow1;
+        flipArrow2 = d.flipArrow2;
     }
     virtual ~DRW_Dimension() = default;
 
@@ -1792,7 +1811,7 @@ private:
     double rot;                /*!< rotation angle of the dimension text, code 53 */
     DRW_Coord extPoint;        /*!<  extrusion normal vector, code 210, 220 & 230 */
 
-    double hdir;               /*!< horizontal direction for the dimension, code 51, default ? */
+    double hdir = 0.0;         /*!< horizontal direction for the dimension, code 51 */
     DRW_Coord clonePoint;      /*!< Insertion point for clones (Baseline & Continue), code 12, 22 & 32 (OCS) */
     DRW_Coord def1;            /*!< Definition point 1for linear & angular, code 13, 23 & 33 (WCS) */
     DRW_Coord def2;            /*!< Definition point 2, code 14, 24 & 34 (WCS) */
@@ -1801,7 +1820,7 @@ private:
 
     DRW_Coord circlePoint;     /*!< Definition point for diameter, radius & angular dims code 15, 25 & 35 (WCS) */
     DRW_Coord arcPoint;        /*!< Point defining dimension arc, x coordinate, code 16, 26 & 36 (OCS) */
-    double length;             /*!< Leader length, code 40 */
+    double length = 0.0;       /*!< Leader length, code 40 */
     double measureValue = 0;   /*!< Real measure value (optional; read only), code 42 */
     bool flipArrow1 {false};   /*!< force flip arrow 1, code 74 */
     bool flipArrow2 {false};   /*!< force flip arrow 2, code 75 */
@@ -2302,26 +2321,26 @@ public:
     double pswidth;           /*!< Width in paper space units, code 40 */
     double psheight;          /*!< Height in paper space units, code 41 */
     int vpstatus;             /*!< Viewport status, code 68 */
-    int vpID;                 /*!< Viewport ID, code 69 */
+    int vpID = 0;             /*!< Viewport ID, code 69 */
     double centerPX;          /*!< view center point X, code 12 */
     double centerPY;          /*!< view center point Y, code 22 */
-    double snapPX;          /*!< Snap base point X, code 13 */
-    double snapPY;          /*!< Snap base point Y, code 23 */
-    double snapSpPX;          /*!< Snap spacing X, code 14 */
-    double snapSpPY;          /*!< Snap spacing Y, code 24 */
+    double snapPX = 0.0;    /*!< Snap base point X, code 13 */
+    double snapPY = 0.0;    /*!< Snap base point Y, code 23 */
+    double snapSpPX = 0.0;    /*!< Snap spacing X, code 14 */
+    double snapSpPY = 0.0;    /*!< Snap spacing Y, code 24 */
     //TODO: complete in dxf
     DRW_Coord viewDir;        /*!< View direction vector, code 16, 26 & 36 */
     DRW_Coord viewTarget;     /*!< View target point, code 17, 27, 37 */
-    double viewLength;        /*!< Perspective lens length, code 42 */
-    double frontClip;         /*!< Front clip plane Z value, code 43 */
-    double backClip;          /*!< Back clip plane Z value, code 44 */
-    double viewHeight;        /*!< View height in model space units, code 45 */
-    double snapAngle;         /*!< Snap angle, code 50 */
-    double twistAngle;        /*!< view twist angle, code 51 */
+    double viewLength = 0.0;  /*!< Perspective lens length, code 42 */
+    double frontClip = 0.0;   /*!< Front clip plane Z value, code 43 */
+    double backClip = 0.0;    /*!< Back clip plane Z value, code 44 */
+    double viewHeight = 0.0;  /*!< View height in model space units, code 45 */
+    double snapAngle = 0.0;   /*!< Snap angle, code 50 */
+    double twistAngle = 0.0;  /*!< view twist angle, code 51 */
     duint32 m_sunHandle = 0;    /*!< R2007+ SUN hard-owner ref (DWG-only) */
 
 private:
-    duint32 frozenLyCount;
+    duint32 frozenLyCount = 0;
 };//RLZ: missing 15,25, 72, 331, 90, 340, 1, 281, 71, 74, 110, 120, 130, 111, 121,131, 112,122, 132, 345,346, and more...
 
 //used  //DRW_Coord basePoint;      /*!<  base point, code 10, 20 & 30 */

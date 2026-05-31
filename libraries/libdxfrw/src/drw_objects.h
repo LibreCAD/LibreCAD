@@ -131,6 +131,10 @@ public:
         numReactors {e.numReactors},
         curr {nullptr}
     {
+        // Match copy-assign (which copies these); set in the body to avoid
+        // a member-init-order (-Wreorder) constraint.
+        oType = e.oType;
+        objSize = e.objSize;
         for (std::vector<DRW_Variant *>::const_iterator it = e.extData.begin(); it != e.extData.end(); ++it) {
             DRW_Variant *src = *it;
             DRW_Variant *dst = new DRW_Variant( *src);

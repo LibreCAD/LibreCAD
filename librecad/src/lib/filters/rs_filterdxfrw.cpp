@@ -989,6 +989,12 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic& g, const QString& file, [[maybe_unus
     m_graphic = &g;
     m_currentContainer = m_graphic;
     m_dummyContainer = new RS_EntityContainer(nullptr, true);
+    // RAII: free the scratch container on every return path (success and the
+    // BAD_VERSION / parse-failure early returns), not just the success path.
+    struct DummyContainerGuard {
+        RS_EntityContainer** p;
+        ~DummyContainerGuard() { delete *p; *p = nullptr; }
+    } dummyGuard{&m_dummyContainer};
 
     this->m_file = file;
     // Register the file being loaded into the XREF recursion guard so
@@ -1017,6 +1023,13 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic& g, const QString& file, [[maybe_unus
     m_libDxfRwVersion = 0;
     m_unsupportedDwgObjects.clear();
     m_graphic->dwgAdvancedMetadata().clear();
+    // Clear per-import caches so a reused filter instance does not carry stale
+    // (and, for m_blockHash, potentially dangling) state across imports. XREF
+    // sub-imports use a separate child filter, so this never wipes parent state.
+    m_blockHash.clear();
+    m_mlineStyleCache.clear();
+    m_underlayDefMap.clear();
+    m_xrefBlockNames.clear();
 
 #ifdef DWGSUPPORT
     if (type == RS2::FormatDWG) {
@@ -1152,7 +1165,6 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic& g, const QString& file, [[maybe_unus
     }
 #endif
 
-    delete m_dummyContainer;
     /*set current layer */
     auto cl = m_graphic->findLayer(m_graphic->getVariableString("$CLAYER", "0"));
 	if (cl ){
