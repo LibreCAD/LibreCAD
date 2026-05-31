@@ -2915,6 +2915,31 @@ bool DRW_AppId::encodeDwg(DRW::Version version, dwgBufferW *buf,
 //enough sample-validated metadata to preserve references without promoting
 //metadata-tail uncertainty to a geometry read failure.
 
+bool DRW_Dictionary::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
+    switch (code) {
+    case 280:
+        hardOwner = reader->getInt32();
+        break;
+    case 281:
+        cloning = reader->getInt32();
+        break;
+    case 3: {
+        Entry entry;
+        entry.m_name = reader->getUtf8String();
+        m_entries.push_back(entry);   //handle (350/360) follows
+        break;
+    }
+    case 350:   //soft-owned entry handle
+    case 360:   //hard-owned entry handle
+        if (!m_entries.empty())
+            m_entries.back().m_handle = reader->getHandleString();
+        break;
+    default:
+        return DRW_TableEntry::parseCode(code, reader);
+    }
+    return true;
+}
+
 bool DRW_Dictionary::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     dwgBuffer sBuff = *buf;
     dwgBuffer *sBuf = buf;

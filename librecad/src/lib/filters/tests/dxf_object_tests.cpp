@@ -108,6 +108,17 @@ public:
   }
 };
 
+class DictionaryCapture : public StubInterface {
+public:
+  int m_callCount = 0;
+  DRW_Dictionary m_captured;
+  void addDictionary(const DRW_Dictionary &d) override {
+    if (m_callCount == 0)
+      m_captured = d;
+    ++m_callCount;
+  }
+};
+
 void readDxf(const std::string &dxf, DRW_Interface &cap, const char *name) {
   const auto path = std::filesystem::temp_directory_path() / name;
   std::filesystem::remove(path);
@@ -154,4 +165,26 @@ TEST_CASE("DXF unnamed GROUP sets the unnamed flag (slice C3)", "[dxf][group]") 
   CHECK(cap.m_captured.m_isUnnamed == true);
   CHECK(cap.m_captured.m_selectable == false);
   REQUIRE(cap.m_captured.m_entityHandles.size() == 1);
+}
+
+TEST_CASE("DXF DICTIONARY entries are read (name->handle) (slice C1)", "[dxf][dictionary]") {
+  DictionaryCapture cap;
+  const char *dxf =
+      "0\nSECTION\n2\nOBJECTS\n"
+      "0\nDICTIONARY\n5\nC\n330\n0\n100\nAcDbDictionary\n281\n1\n"
+      "3\nACAD_GROUP\n350\nD\n"
+      "3\nACAD_LAYOUT\n350\n1A\n"
+      "3\nACAD_MLINESTYLE\n350\n17\n"
+      "0\nENDSEC\n0\nEOF\n";
+  readDxf(dxf, cap, "lc_dictionary_read.dxf");
+
+  REQUIRE(cap.m_callCount == 1);
+  CHECK(cap.m_captured.cloning == 1);
+  REQUIRE(cap.m_captured.m_entries.size() == 3);
+  CHECK(cap.m_captured.m_entries[0].m_name == "ACAD_GROUP");
+  CHECK(cap.m_captured.m_entries[0].m_handle == 0xDu);
+  CHECK(cap.m_captured.m_entries[1].m_name == "ACAD_LAYOUT");
+  CHECK(cap.m_captured.m_entries[1].m_handle == 0x1Au);
+  CHECK(cap.m_captured.m_entries[2].m_name == "ACAD_MLINESTYLE");
+  CHECK(cap.m_captured.m_entries[2].m_handle == 0x17u);
 }

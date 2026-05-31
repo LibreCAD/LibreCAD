@@ -1139,6 +1139,7 @@ public:
         m_entries.clear();
     }
 protected:
+    bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
     bool encodeDwg(DRW::Version version, dwgBufferW *buf,
                    dwgBufferW *strBuf = nullptr,

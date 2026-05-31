@@ -176,6 +176,7 @@ private:
     bool processLeader();
     bool processPlotSettings();
     bool processGroup();
+    bool processDictionary();
 
 //    bool writeHeader();
     bool writeEntity(DRW_Entity *ent);
