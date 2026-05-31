@@ -420,6 +420,22 @@ TEST_CASE("dwgBuffer::crc8/crc32 guard the empty/negative byte range",
     REQUIRE(r2.crc8(0xC0C1, 0, 4) == w2.crc16(0xC0C1, 0, 4));
 }
 
+// 1.2 (gap classes-crc-not-validated): decompress18 peeked
+// compressedBuffer[compressedSize-2] before any length check, so a <2-byte
+// compressed page read out of bounds (compressedSize is duint32; 0-2
+// underflows to a huge index).  Now it fails fast.
+TEST_CASE("dwgCompressor::decompress18 rejects compressedSize<2 without OOB",
+          "[dwg-write][primitives]") {
+    duint8 cbuf[4] = {0, 0, 0, 0};
+    duint8 dbuf[16] = {0};
+    dwgCompressor comp;
+
+    // csize == 1 and 0 must fail without dereferencing cbuf[csize-2].
+    REQUIRE_FALSE(comp.decompress18(cbuf, dbuf, /*csize=*/1, /*dsize=*/16));
+    REQUIRE_FALSE(comp.decompress18(cbuf, dbuf, /*csize=*/0, /*dsize=*/16));
+    // null compressed buffer also rejected.
+    REQUIRE_FALSE(comp.decompress18(nullptr, dbuf, /*csize=*/8, /*dsize=*/16));
+}
 
 TEST_CASE("dwgBufferW: patchRawShort16 / patchRawLong32 overwrite cleanly",
           "[dwg-write][primitives]") {
