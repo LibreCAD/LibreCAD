@@ -1947,6 +1947,48 @@ TEST_CASE("dwgWriter counts unique raw custom class instances",
     CHECK(writer.customClassInstanceCount(first.m_objectType) == 2);
 }
 
+// Phase 2b.5 — sweep verification: every Phase-2b rescued custom-class raw
+// object registers a CLASSES entry (its recName) when written. This proves
+// registerRawObjectClass fires for each rescued type, so the CLASSES section
+// is never an orphan/missing entry for a replayed handle.
+TEST_CASE("dwgWriter registers a CLASSES entry for every Phase-2b rescued type",
+          "[dwg-write][raw-replay][classes][replay_rescue]") {
+    const struct {
+        duint16 classNum;
+        const char* recName;
+        const char* className;
+    } kRescued[] = {
+        {600, "MATERIAL", "AcDbMaterial"},
+        {601, "ACDB_VISUALSTYLE_CLASS", "AcDbVisualStyle"},
+        {602, "TABLESTYLE", "AcDbTableStyle"},
+        {603, "CELLSTYLEMAP", "AcDbCellStyleMap"},
+        {604, "TABLECONTENT", "AcDbTableContent"},
+        {605, "ACDBDETAILVIEWSTYLE", "AcDbDetailViewStyle"},
+        {606, "ACDBSECTIONVIEWSTYLE", "AcDbSectionViewStyle"},
+        {607, "IMAGEDEF_REACTOR", "AcDbRasterImageDefReactor"},
+        {608, "TABLEGEOMETRY", "AcDbTableGeometry"},
+        {609, "ACAD_EVALUATION_GRAPH", "AcDbEvalGraph"},
+    };
+
+    DRW_Header header;
+    std::ofstream stream;
+    InspectableDwgWriter15 writer(&stream, &header);
+
+    duint32 handle = 0x900u;
+    for (const auto& r : kRescued) {
+        DRW_UnsupportedObject obj = makeRawReplayObject(DRW::AC1024);
+        obj.m_objectType = r.classNum;
+        obj.m_handle = handle++;
+        obj.m_recordName = r.recName;
+        obj.m_className = r.className;
+        REQUIRE(writer.registerObjectClassForTest(obj));
+        // Registered with a CLASSES entry (instanceCount>=1) and tagged as an
+        // OBJECT (item_class_id 0x1F3, not the entity 0x1F2).
+        CHECK(writer.customClassInstanceCount(r.classNum) == 1);
+        CHECK(writer.customClassItemClassId(r.classNum) == 0x1F3);
+    }
+}
+
 // 0B.3 (gap classes-itemclassid): object-producing CLASSES entries must
 // carry item_class_id 0x1F3; entity-producing entries 0x1F2.  Writer-only
 // change; the reader maps 0x1F2->entity and everything else->object, so the
