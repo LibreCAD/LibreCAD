@@ -4473,3 +4473,99 @@ TEST_CASE("dwgRW R2018 writes geometry and MTEXT then reader recovers them",
 
     std::remove(path.c_str());
 }
+
+// ---------------------------------------------------------------------------
+// 1.7 — External write->reread validator fixtures.
+//
+// Hidden test [.dwg_emit_framing]: emit a trivial-but-nonempty drawing
+// (2 lines + 1 named layer) as AC1015/AC1018/AC1024/AC1027/AC1032 to a known
+// directory so scripts/dwg-validate.sh can re-read each with libreDWG's
+// external `dwgread` (the framing gate). The in-repo self-consistency
+// write->read loop runs unconditionally below to demonstrate that
+// self-consistency PASS does NOT imply external PASS for AC1027/AC1032.
+// ---------------------------------------------------------------------------
+namespace {
+
+class FramingIface : public EmptyIface {
+public:
+    dwgRW *m_writer {nullptr};
+    std::vector<DRW_Line> m_lines;
+    std::vector<std::string> m_layers;
+
+    void writeLayers() override {
+        if (m_writer == nullptr) return;
+        DRW_Layer lay;
+        lay.name = "FRAME";
+        lay.color = 2;
+        m_writer->addLayer(&lay);
+    }
+    void writeEntities() override {
+        if (m_writer == nullptr) return;
+        DRW_Line a;
+        a.basePoint = DRW_Coord{0.0, 0.0, 0.0};
+        a.secPoint  = DRW_Coord{10.0, 0.0, 0.0};
+        a.color = 1;
+        m_writer->writeLine(&a);
+        DRW_Line b;
+        b.basePoint = DRW_Coord{0.0, 0.0, 0.0};
+        b.secPoint  = DRW_Coord{0.0, 10.0, 0.0};
+        b.color = 3;
+        m_writer->writeLine(&b);
+    }
+    void addLine(const DRW_Line& l) override { m_lines.push_back(l); }
+    void addLayer(const DRW_Layer& l) override { m_layers.push_back(l.name); }
+};
+
+// Stable output dir under the repo's tmp/ so dwg-validate.sh can locate the
+// emitted fixtures without guessing the system temp path.
+std::string framingDir() {
+    std::filesystem::path d = std::filesystem::path("tmp") / "dwg-validate";
+    std::error_code ec;
+    std::filesystem::create_directories(d, ec);
+    return d.string();
+}
+
+const char* framingFileFor(DRW::Version v) {
+    switch (v) {
+        case DRW::AC1015: return "framing_AC1015.dwg";
+        case DRW::AC1018: return "framing_AC1018.dwg";
+        case DRW::AC1024: return "framing_AC1024.dwg";
+        case DRW::AC1027: return "framing_AC1027.dwg";
+        case DRW::AC1032: return "framing_AC1032.dwg";
+        default:          return "framing_unknown.dwg";
+    }
+}
+
+}  // namespace
+
+// Hidden (leading-dot tag): not run by the default suite; invoked explicitly
+// by scripts/dwg-validate.sh. Emits the 5 framing fixtures and proves the
+// in-repo self-consistency loop passes for every version (the core finding:
+// self-consistency PASS != external PASS for the thin AC1027/AC1032 writers).
+TEST_CASE("DWG framing fixtures emit + self-consistency round-trip",
+          "[.dwg_emit_framing]") {
+    const std::string dir = framingDir();
+    const DRW::Version versions[] = {
+        DRW::AC1015, DRW::AC1018, DRW::AC1024, DRW::AC1027, DRW::AC1032};
+
+    for (DRW::Version v : versions) {
+        const std::string path =
+            (std::filesystem::path(dir) / framingFileFor(v)).string();
+        {
+            dwgRW writer(path.c_str());
+            FramingIface iface;
+            iface.m_writer = &writer;
+            REQUIRE(writer.write(&iface, v, /*bin=*/false));
+        }
+        // In-repo self-consistency: libdxfrw must re-read its own output.
+        {
+            dwgRW reader(path.c_str());
+            FramingIface readIface;
+            REQUIRE(reader.read(&readIface, /*ext=*/false));
+            REQUIRE(reader.getVersion() == v);
+            REQUIRE(readIface.m_lines.size() >= 2u);
+        }
+        // NOTE: the fixtures are intentionally LEFT on disk for
+        // scripts/dwg-validate.sh to feed to the external dwgread.
+    }
+}
