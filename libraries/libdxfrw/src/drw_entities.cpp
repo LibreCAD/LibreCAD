@@ -4391,7 +4391,12 @@ bool DRW_Attrib::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     attribFlags = buf->getRawChar8();
     DRW_DBG("attrib flags: "); DRW_DBG(attribFlags); DRW_DBG("\n");
 
-    if (version >= DRW::AC1024) {
+    // lockPosition (DXF 280) appears since R2007 (AC1021) per ODA §20.4.x /
+    // ACadSharp.  Read gate lowered AC1024->AC1021 so R2007/8/9 imports keep
+    // it.  The encoder still emits it only at AC1024 (no AC1021 writer
+    // exists), so this is read-only; parseDwgEntHandle repositions to objSize
+    // for version>AC1018, absorbing the +1 bit without handle-stream drift.
+    if (version >= DRW::AC1021) {
         lockPosition = buf->getBit();
         DRW_DBG("lock position: "); DRW_DBG(lockPosition); DRW_DBG("\n");
     }
@@ -4568,7 +4573,9 @@ bool DRW_Attdef::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
 
     attribFlags = buf->getRawChar8();
 
-    if (version >= DRW::AC1024) {
+    // lockPosition (DXF 280): read gate lowered AC1024->AC1021 to match
+    // ATTRIB (R2007+). promptVersion/keep_duplicate RC below stays AC1024+.
+    if (version >= DRW::AC1021) {
         lockPosition = buf->getBit();
     }
 

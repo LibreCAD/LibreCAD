@@ -808,6 +808,88 @@ TEST_CASE("DRW_Attdef::encodeDwg round-trips tag + prompt",
     }
 }
 
+// T1 (gap attrib-attdef-lockpos-version-gate-r2007): the lockPosition (DXF
+// 280) READ gate was lowered AC1024->AC1021 so R2007/8/9 imports preserve
+// it; the ENCODE gate stays AC1024.  This test pins the LOWER boundary: at
+// AC1015/AC1018 (below AC1021) the bit is neither written nor read, so a
+// source with lockPosition=true round-trips to false with the body still
+// aligned (tag/prompt intact).  The AC1021+ POSITIVE path cannot be exercised
+// by this single-buffer harness — the encoder emits lockPosition only at
+// AC1024, and AC1024+ parse needs the separate handle/string sections + a
+// back-patched objSize the harness does not provide (existing entity tests
+// likewise cap at AC1018).  AC1021+ positive coverage is deferred to the
+// Phase-1 external write->reread validator / a real R2007 fixture.
+TEST_CASE("DRW_Attrib lockPosition below AC1021 is not read (gate lower boundary)",
+          "[dwg-write][entity-encode]") {
+    DRW_Attrib src;
+    src.handle     = 0xA1;
+    src.color      = 256;
+    src.ltypeScale = 1.0;
+    src.basePoint  = DRW_Coord{3.0, 7.5, 0.0};
+    src.secPoint   = DRW_Coord{3.0, 7.5, 0.0};
+    src.extPoint   = DRW_Coord{0.0, 0.0, 1.0};
+    src.thickness  = 0.0;
+    src.height     = 2.5;
+    src.widthscale = 1.0;
+    src.oblique    = 0.0;
+    src.angle      = 0.0;
+    src.textgen    = 0;
+    src.alignH     = DRW_Text::HLeft;
+    src.alignV     = DRW_Text::VBaseLine;
+    src.text       = "HELLO";
+    src.tag        = "TAGNAME";
+    src.attribFlags = 0;
+    src.lockPosition = true;  // set on source; must NOT survive below AC1021
+    DrwEntityEncodeTestAccess::layerH(src).ref = 0x12;
+
+    for (DRW::Version ver : {DRW::AC1015, DRW::AC1018}) {
+        dwgBufferW w;
+        REQUIRE(DrwEntityEncodeTestAccess::encode(src, ver, &w));
+        auto bytes = snapshot(w);
+        dwgBuffer r(bytes.data(), bytes.size());
+        DRW_Attrib dst;
+        REQUIRE(DrwEntityEncodeTestAccess::parse(dst, ver, &r));
+        REQUIRE(dst.lockPosition == false);   // below gate: not written/read
+        REQUIRE(dst.tag == "TAGNAME");         // body stayed aligned
+    }
+}
+
+TEST_CASE("DRW_Attdef lockPosition below AC1021 is not read (gate lower boundary)",
+          "[dwg-write][entity-encode]") {
+    DRW_Attdef src;
+    src.handle     = 0xA2;
+    src.color      = 1;
+    src.ltypeScale = 1.0;
+    src.basePoint  = DRW_Coord{0.0, 0.0, 0.0};
+    src.secPoint   = DRW_Coord{0.0, 0.0, 0.0};
+    src.extPoint   = DRW_Coord{0.0, 0.0, 1.0};
+    src.thickness  = 0.0;
+    src.height     = 1.0;
+    src.widthscale = 1.0;
+    src.oblique    = 0.0;
+    src.angle      = 0.0;
+    src.textgen    = 0;
+    src.alignH     = DRW_Text::HLeft;
+    src.alignV     = DRW_Text::VBaseLine;
+    src.text       = "DEFAULT";
+    src.tag        = "PARTNO";
+    src.prompt     = "Enter part number:";
+    src.attribFlags = 4;
+    src.lockPosition = true;
+    DrwEntityEncodeTestAccess::layerH(src).ref = 0x12;
+
+    for (DRW::Version ver : {DRW::AC1015, DRW::AC1018}) {
+        dwgBufferW w;
+        REQUIRE(DrwEntityEncodeTestAccess::encode(src, ver, &w));
+        auto bytes = snapshot(w);
+        dwgBuffer r(bytes.data(), bytes.size());
+        DRW_Attdef dst;
+        REQUIRE(DrwEntityEncodeTestAccess::parse(dst, ver, &r));
+        REQUIRE(dst.lockPosition == false);
+        REQUIRE(dst.prompt == "Enter part number:");
+    }
+}
+
 TEST_CASE("DRW_Attrib and DRW_Attdef block unsupported multiline DWG writes",
           "[dwg-write][entity-encode]") {
     DRW_Attrib attrib;
