@@ -2038,8 +2038,20 @@ bool DRW_PlotSettings::parseCode(int code, const std::unique_ptr<dxfReader>& rea
     case 5:
         handle = reader->getHandleString();
         break;
+    case 1:
+        pageSetupName = reader->getUtf8String();
+        break;
+    case 2:
+        printerConfig = reader->getUtf8String();
+        break;
+    case 4:
+        paperSize = reader->getUtf8String();
+        break;
     case 6:
         plotViewName = reader->getUtf8String();
+        break;
+    case 7:
+        currentStyleSheet = reader->getUtf8String();
         break;
     case 40:
         marginLeft = reader->getDouble();
@@ -2052,6 +2064,69 @@ bool DRW_PlotSettings::parseCode(int code, const std::unique_ptr<dxfReader>& rea
         break;
     case 43:
         marginTop = reader->getDouble();
+        break;
+    case 44:
+        paperWidth = reader->getDouble();
+        break;
+    case 45:
+        paperHeight = reader->getDouble();
+        break;
+    case 46:
+        plotOriginX = reader->getDouble();
+        break;
+    case 47:
+        plotOriginY = reader->getDouble();
+        break;
+    case 48:
+        windowMinX = reader->getDouble();
+        break;
+    case 49:
+        windowMinY = reader->getDouble();
+        break;
+    case 140:
+        windowMaxX = reader->getDouble();
+        break;
+    case 141:
+        windowMaxY = reader->getDouble();
+        break;
+    case 142:
+        realWorldUnits = reader->getDouble();
+        break;
+    case 143:
+        drawingUnits = reader->getDouble();
+        break;
+    case 147:
+        scaleFactor = reader->getDouble();
+        break;
+    case 148:
+        paperImageOriginX = reader->getDouble();
+        break;
+    case 149:
+        paperImageOriginY = reader->getDouble();
+        break;
+    case 70:
+        plotLayoutFlags = reader->getInt32();
+        break;
+    case 72:
+        paperUnits = reader->getInt32();
+        break;
+    case 73:
+        plotRotation = reader->getInt32();
+        break;
+    case 74:
+        plotType = reader->getInt32();
+        break;
+    case 75:
+        scaleType = reader->getInt32();
+        break;
+    case 76:
+        shadePlotMode = reader->getInt32();
+        break;
+    case 77:
+        shadePlotResLevel = reader->getInt32();
+        break;
+    case 78:
+        shadePlotCustomDPI = reader->getInt32();
         break;
     default:
         return DRW_TableEntry::parseCode(code, reader);
@@ -2067,10 +2142,61 @@ bool DRW_PlotSettings::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs
         sBuf = &sBuff; //separate buffer for strings
     }
     bool ret = DRW_TableEntry::parseDwg(version, buf, sBuf, bs);
-    DRW_DBG("\n********************** parsing Plot Settings (base fields only) **************************\n");
+    DRW_DBG("\n********************** parsing Plot Settings **************************\n");
     if (!ret)
         return ret;
-    //RLZ: PlotSettings-specific fields (margins, printer, plotViewName) not yet parsed
+
+    // P4-02: AcDbPlotSettings body. Same wire layout as the PLOTSETTINGS
+    // prefix embedded in DRW_Layout (libreDWG dwg.spec DWG_OBJECT(PLOTSETTINGS)
+    // == LAYOUT plot prefix). Member names here mirror DRW_Layout so the decode
+    // is a verbatim copy of the Layout path (drw_objects.cpp:3416-3452).
+    pageSetupName    = sBuf->getVariableText(version, false); // printer_cfg_file (1)
+    printerConfig    = sBuf->getVariableText(version, false); // paper_size (2)
+    plotLayoutFlags  = buf->getBitShort();
+    marginLeft       = buf->getBitDouble();
+    marginBottom     = buf->getBitDouble();
+    marginRight      = buf->getBitDouble();
+    marginTop        = buf->getBitDouble();
+    paperWidth       = buf->getBitDouble();
+    paperHeight      = buf->getBitDouble();
+    paperSize        = sBuf->getVariableText(version, false); // canonical_media_name
+    plotOriginX      = buf->getBitDouble();
+    plotOriginY      = buf->getBitDouble();
+    paperUnits       = buf->getBitShort();
+    plotRotation     = buf->getBitShort();
+    plotType         = buf->getBitShort();
+    windowMinX       = buf->getBitDouble();
+    windowMinY       = buf->getBitDouble();
+    windowMaxX       = buf->getBitDouble();
+    windowMaxY       = buf->getBitDouble();
+
+    if (version < DRW::AC1018) { // R13-R2002: plotview_name in the data section
+        plotViewName = sBuf->getVariableText(version, false);
+    }
+
+    realWorldUnits    = buf->getBitDouble(); // paper_units (142)
+    drawingUnits      = buf->getBitDouble(); // drawing_units (143)
+    currentStyleSheet = sBuf->getVariableText(version, false); // stylesheet (7)
+    scaleType         = buf->getBitShort();
+    scaleFactor       = buf->getBitDouble();
+    paperImageOriginX = buf->getBitDouble();
+    paperImageOriginY = buf->getBitDouble();
+
+    if (version >= DRW::AC1018) { // R2004+
+        shadePlotMode      = buf->getBitShort();
+        shadePlotResLevel  = buf->getBitShort();
+        shadePlotCustomDPI = buf->getBitShort();
+    }
+
+    // Common handle tail (parent/reactors/xdict). PLOTSETTINGS has no further
+    // data-consumed handles we track (R2007+ shadeplot handle is left in the
+    // stream; not needed for the margins/paper/scale data we surface).
+    dwgBuffer hBuff = *buf;
+    dwgBuffer *hBuf = (version > DRW::AC1018) ? &hBuff : buf;
+    seekObjectHandleStream(version, hBuf, objSize);
+    readCommonObjectHandles(hBuf, handle, numReactors, xDictFlag,
+                            &parentHandle);
+
     return buf->isGood();
 }
 

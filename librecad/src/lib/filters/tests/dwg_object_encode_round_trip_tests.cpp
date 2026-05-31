@@ -1816,3 +1816,69 @@ TEST_CASE("DRW_PlotSettings default-constructs full plot field set",
     CHECK(ps.paperSize.empty());
     CHECK(ps.currentStyleSheet.empty());
 }
+
+// Phase 4 (P4-02) — DRW_PlotSettings::parseDwg reads the full plot prefix
+// (margins/paper/window/scale). Synthetic AC1015 body per the LAYOUT plot
+// prefix wire layout, parsed back via the friend accessor.
+TEST_CASE("DRW_PlotSettings::parseDwg reads margins/paper/window/scale",
+          "[dwg-object-encode][plotsettings][data-loss]") {
+    const DRW::Version ver = DRW::AC1015;
+    constexpr duint16 psType = 0x1F4;  // custom-class number (>=500).
+
+    dwgBufferW body;
+    emitObjectPreamble(body, ver, psType, /*handle=*/0x40u,
+                       /*numReactors=*/0, /*xDictFlag=*/0);
+    body.putVariableText(ver, std::string("MyPrinter"));   // pageSetupName (1)
+    body.putVariableText(ver, std::string("PaperCfg"));    // printerConfig (2)
+    body.putBitShort(688);          // plotLayoutFlags (70)
+    body.putBitDouble(7.5);         // marginLeft (40)
+    body.putBitDouble(7.6);         // marginBottom (41)
+    body.putBitDouble(7.7);         // marginRight (42)
+    body.putBitDouble(7.8);         // marginTop (43)
+    body.putBitDouble(420.0);       // paperWidth (44)
+    body.putBitDouble(297.0);       // paperHeight (45)
+    body.putVariableText(ver, std::string("ISO_A3"));      // paperSize (4)
+    body.putBitDouble(1.0);         // plotOriginX (46)
+    body.putBitDouble(2.0);         // plotOriginY (47)
+    body.putBitShort(1);            // paperUnits (72)
+    body.putBitShort(2);            // plotRotation (73)
+    body.putBitShort(3);            // plotType (74)
+    body.putBitDouble(10.0);        // windowMinX (48)
+    body.putBitDouble(11.0);        // windowMinY (49)
+    body.putBitDouble(110.0);       // windowMaxX (140)
+    body.putBitDouble(111.0);       // windowMaxY (141)
+    body.putVariableText(ver, std::string("PlotView1"));   // plotViewName (<AC1018)
+    body.putBitDouble(25.4);        // realWorldUnits (142)
+    body.putBitDouble(1.0);         // drawingUnits (143)
+    body.putVariableText(ver, std::string("acad.ctb"));    // currentStyleSheet (7)
+    body.putBitShort(4);            // scaleType (75)
+    body.putBitDouble(0.5);         // scaleFactor (147)
+    body.putBitDouble(3.0);         // paperImageOriginX (148)
+    body.putBitDouble(4.0);         // paperImageOriginY (149)
+    // AC1015 < AC1018 — no shadeplot fields.
+    emitCommonHandlePrefix(body, /*parentHandle=*/0x3Du, {}, /*xDictFlag=*/0);
+
+    std::vector<duint8> bytes = snapshot(body);
+    dwgBuffer r(bytes.data(), bytes.size());
+    DRW_PlotSettings dst;
+    REQUIRE(DrwObjectEncodeTestAccess::parse(dst, ver, &r));
+
+    CHECK(dst.pageSetupName == "MyPrinter");
+    CHECK(dst.printerConfig == "PaperCfg");
+    CHECK(dst.plotLayoutFlags == 688);
+    CHECK(dst.marginLeft == Approx(7.5));
+    CHECK(dst.marginTop == Approx(7.8));
+    CHECK(dst.paperWidth == Approx(420.0));
+    CHECK(dst.paperHeight == Approx(297.0));
+    CHECK(dst.paperSize == "ISO_A3");
+    CHECK(dst.paperUnits == 1);
+    CHECK(dst.plotType == 3);
+    CHECK(dst.windowMinX == Approx(10.0));
+    CHECK(dst.windowMaxY == Approx(111.0));
+    CHECK(dst.plotViewName == "PlotView1");
+    CHECK(dst.realWorldUnits == Approx(25.4));
+    CHECK(dst.currentStyleSheet == "acad.ctb");
+    CHECK(dst.scaleType == 4);
+    CHECK(dst.scaleFactor == Approx(0.5));
+    CHECK(static_cast<duint32>(dst.parentHandle) == 0x3Du);
+}
