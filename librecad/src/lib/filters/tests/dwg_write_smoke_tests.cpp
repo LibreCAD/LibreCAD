@@ -417,6 +417,70 @@ TEST_CASE("dwgRW INSERT round-trips via defineBlock + writeInsert",
 
 namespace {
 
+/// 2b.6: writes a MINSERT (col/row grid) and captures it on read.
+class MInsertRoundTripIface : public EmptyIface {
+public:
+    dwgRW *m_writer {nullptr};
+    duint32 m_blockRecH {0};
+    std::vector<DRW_Insert> m_inserts;
+
+    void writeBlocks() override {
+        if (m_writer == nullptr) return;
+        m_blockRecH = m_writer->defineBlock("GridSym", DRW_Coord{0.0, 0.0, 0.0});
+    }
+    void writeEntities() override {
+        if (m_writer == nullptr || m_blockRecH == 0) return;
+        DRW_Insert ins;
+        ins.basePoint = DRW_Coord{10.0, 20.0, 0.0};
+        ins.xscale = 1.0; ins.yscale = 1.0; ins.zscale = 1.0;
+        ins.angle = 0.0;
+        ins.color = 4;
+        ins.colcount = 3;     // grid → MINSERT (oType 8)
+        ins.rowcount = 2;
+        ins.colspace = 10.0;
+        ins.rowspace = 5.0;
+        ins.blockRecH.ref = m_blockRecH;
+        m_writer->writeInsert(&ins);
+    }
+    void addInsert(const DRW_Insert& i) override { m_inserts.push_back(i); }
+};
+
+} // namespace
+
+// 2b.6 (gap minsert-attribs-dwg-write-drop): a MINSERT grid (col/row/spacing)
+// now encodes as oType 8 and round-trips; a one-bit grid offset would desync
+// the BLOCK_HEADER handle read, so the block reference resolving back to
+// "GridSym" is the alignment proof.
+TEST_CASE("dwgRW MINSERT round-trips col/row/spacing grid",
+          "[dwg-write][smoke][minsert]") {
+    for (DRW::Version ver : {DRW::AC1015, DRW::AC1018}) {
+        const std::string path = tempPath("minsert.dwg");
+        {
+            dwgRW writer(path.c_str());
+            MInsertRoundTripIface iface;
+            iface.m_writer = &writer;
+            REQUIRE(writer.write(&iface, ver, /*bin=*/false));
+            REQUIRE(iface.m_blockRecH != 0);
+        }
+        MInsertRoundTripIface readIface;
+        {
+            dwgRW reader(path.c_str());
+            REQUIRE(reader.read(&readIface, /*ext=*/false));
+            REQUIRE(reader.getError() == DRW::BAD_NONE);
+        }
+        REQUIRE(readIface.m_inserts.size() == 1);
+        REQUIRE(readIface.m_inserts[0].name == "GridSym");  // handle aligned
+        REQUIRE(readIface.m_inserts[0].colcount == 3);
+        REQUIRE(readIface.m_inserts[0].rowcount == 2);
+        REQUIRE(readIface.m_inserts[0].colspace == 10.0);
+        REQUIRE(readIface.m_inserts[0].rowspace == 5.0);
+        REQUIRE(readIface.m_inserts[0].basePoint.x == 10.0);
+        std::remove(path.c_str());
+    }
+}
+
+namespace {
+
 /// Iface that captures names from every table-record callback.  Used
 /// to prove the Phase 3e milestone — the standard layer "0", linetype
 /// "CONTINUOUS", textstyle "STANDARD", appid "ACAD", dimstyle

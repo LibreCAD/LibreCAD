@@ -2062,7 +2062,10 @@ bool DRW_MText::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwg
 
 bool DRW_Insert::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {
     (void)bs; (void)strBuf;
-    oType = 7;  // INSERT class id — see dwgreader.cpp:1122 (case 8 is MINSERT)
+    // 2b.6: emit MINSERT (oType 8) when a column/row grid is present;
+    // otherwise a plain INSERT (oType 7). The reader keys the grid block off
+    // oType==8 (parseDwg :3189).
+    oType = (colcount > 1 || rowcount > 1) ? 8 : 7;
     if (!encodeDwgCommon(version, buf)) return false;
 
     // INSERT body — mirror of DRW_Insert::parseDwg for R2000.
@@ -2091,8 +2094,16 @@ bool DRW_Insert::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dw
     buf->putBitDouble(angle);                // radians
     buf->putExtrusion(extPoint, /*b_R2000_style=*/false);
     buf->putBit(0);                          // hasAttrib = 0 (no ATTRIBs)
-    // (oType==8 minsert: colcount/rowcount/colspace/rowspace omitted —
-    //  we only emit oType=7 plain INSERT.)
+    // hasAttrib==0 ⇒ the SINCE-R2004 num_owned BL is absent (parse :3184), so
+    // the MINSERT grid (oType==8) follows the hasAttrib bit directly. Field
+    // order mirrors parseDwg :3190-3193 (colcount BS, rowcount BS, colspace BD,
+    // rowspace BD) and libreDWG dwg.spec num_cols/num_rows/col_spacing/row_spacing.
+    if (oType == 8) {  // MINSERT grid
+        buf->putBitShort(static_cast<duint16>(colcount));
+        buf->putBitShort(static_cast<duint16>(rowcount));
+        buf->putBitDouble(colspace);
+        buf->putBitDouble(rowspace);
+    }
 
     if (!encodeDwgEntHandle(version, buf, handleBuf)) return false;
 
