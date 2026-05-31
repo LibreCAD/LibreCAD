@@ -224,6 +224,17 @@ struct DRW_UnsupportedObject {
     std::vector<duint8> m_rawBytes;
 };
 
+//! Lossless DXF passthrough carrier (slice A1) for an OBJECTS-section object that
+//! libdxfrw does not model as a typed DXF object. Each (group code, raw text value)
+//! pair is preserved verbatim so the object can be re-emitted unchanged on DXF write
+//! (the DWG raw carrier above is binary and cannot serve the DXF text path).
+struct DRW_RawDxfObject {
+    UTF8STRING name;                  /*!< object type name (the code-0 string) */
+    duint32 handle = 0;              /*!< code 5 (for dedup vs typed writers) */
+    duint32 parentHandle = 0;       /*!< code 330 owner */
+    std::vector<DRW_Variant> groups; /*!< every (code,value) pair, value kept as text */
+};
+
 //! GROUP object (fixed type 72), carrying a named set of entity handles.
 class DRW_Group : public DRW_TableEntry {
     SETOBJFRIENDS

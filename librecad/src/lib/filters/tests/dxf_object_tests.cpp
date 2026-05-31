@@ -207,6 +207,14 @@ public:
   }
 };
 
+class RawObjectCapture : public StubInterface {
+public:
+  std::vector<DRW_RawDxfObject> m_objects;
+  void addRawDxfObject(const DRW_RawDxfObject &d) override {
+    m_objects.push_back(d);
+  }
+};
+
 void readDxf(const std::string &dxf, DRW_Interface &cap, const char *name) {
   const auto path = std::filesystem::temp_directory_path() / name;
   std::filesystem::remove(path);
@@ -430,4 +438,34 @@ TEST_CASE("DXF WIPEOUTVARIABLES object is read (display-frame flag)", "[dxf][wip
 
   REQUIRE(cap.m_callCount == 1);
   CHECK(cap.m_captured.m_displayFrame == 1);
+}
+
+TEST_CASE("DXF unmodeled OBJECT is captured verbatim, not dropped (slice A1)", "[dxf][rawobject]") {
+  RawObjectCapture cap;
+  // MATERIAL is a real object libdxfrw does not (yet) type for DXF; plus a
+  // genuinely unknown object name. Both must be preserved, none dropped.
+  const char *dxf =
+      "0\nSECTION\n2\nOBJECTS\n"
+      "0\nMATERIAL\n5\n3B\n330\n29\n100\nAcDbMaterial\n"
+      "1\nMyMaterial\n94\n63\n"
+      "0\nACDBWEIRDOBJECT\n5\n3C\n330\n29\n70\n5\n"
+      "0\nENDSEC\n0\nEOF\n";
+  readDxf(dxf, cap, "lc_rawobject.dxf");
+
+  REQUIRE(cap.m_objects.size() == 2);
+
+  const DRW_RawDxfObject &mat = cap.m_objects[0];
+  CHECK(mat.name == "MATERIAL");
+  CHECK(mat.handle == 0x3Bu);
+  CHECK(mat.parentHandle == 0x29u);
+  // groups captured verbatim: 5, 330, 100, 1, 94
+  REQUIRE(mat.groups.size() == 5);
+  CHECK(mat.groups[0].code() == 5);
+  CHECK(mat.groups[2].code() == 100);
+  CHECK(mat.groups[3].code() == 1);
+
+  const DRW_RawDxfObject &weird = cap.m_objects[1];
+  CHECK(weird.name == "ACDBWEIRDOBJECT");
+  CHECK(weird.handle == 0x3Cu);
+  REQUIRE(weird.groups.size() == 3);  // 5, 330, 70
 }

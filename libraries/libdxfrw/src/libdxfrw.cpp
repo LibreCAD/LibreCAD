@@ -3824,14 +3824,9 @@ bool dxfRW::processObjects() {
             processed = processWipeoutVariables();
         }
         else {
-            if (!reader->readRec(&code)) {
-                return setError(DRW::BAD_READ_OBJECTS); //end of file without ENDSEC
-            }
-
-            if (code == 0) {
-                nextentity = reader->getString();
-            }
-            processed = true;
+            //Slice A1: never silently drop an unmodeled object — capture its
+            //group codes verbatim for lossless re-emit instead of skipping.
+            processed = processRawObject();
         }
     }
     while (processed);
@@ -4158,6 +4153,34 @@ bool dxfRW::processWipeoutVariables() {
         if (!wv.parseCode(code, reader)) {
             return setError( DRW::BAD_CODE_PARSED);
         }
+    }
+
+    return setError(DRW::BAD_READ_OBJECTS);
+}
+
+//Slice A1: lossless passthrough for an OBJECTS-section object libdxfrw does not
+//model as a typed DXF object. Captures every (code,value) pair verbatim (value
+//kept as raw text, which round-trips exactly for ASCII DXF) so the object can be
+//re-emitted unchanged once the DXF object-write spine (A2) consumes it.
+bool dxfRW::processRawObject() {
+    DRW_DBG("dxfRW::processRawObject");
+    int code;
+    DRW_RawDxfObject obj;
+    obj.name = nextentity;
+    while (reader->readRec(&code)) {
+        DRW_DBG(code); DRW_DBG("\n");
+        if (0 == code) {
+            nextentity = reader->getString();
+            DRW_DBG(nextentity); DRW_DBG("\n");
+            iface->addRawDxfObject(obj);
+            return true;  //found new entity or ENDSEC, terminate
+        }
+        const std::string value = reader->getString();
+        if (5 == code)
+            obj.handle = reader->getHandleString();
+        else if (330 == code)
+            obj.parentHandle = reader->getHandleString();
+        obj.groups.emplace_back(code, value);
     }
 
     return setError(DRW::BAD_READ_OBJECTS);
