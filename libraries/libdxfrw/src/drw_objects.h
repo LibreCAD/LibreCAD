@@ -230,6 +230,7 @@ class DRW_Group : public DRW_TableEntry {
 public:
     DRW_Group() { tType = DRW::GROUP; }
 protected:
+    bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
     bool encodeDwg(DRW::Version version, dwgBufferW *buf,
                    dwgBufferW *strBuf = nullptr,

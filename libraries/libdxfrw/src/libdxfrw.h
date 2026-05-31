@@ -175,6 +175,7 @@ private:
     bool processArcDimension();
     bool processLeader();
     bool processPlotSettings();
+    bool processGroup();
 
 //    bool writeHeader();
     bool writeEntity(DRW_Entity *ent);

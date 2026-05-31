@@ -4705,6 +4705,26 @@ bool DRW_Scale::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     return buf->isGood();
 }
 
+bool DRW_Group::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
+    switch (code) {
+    case 300:
+        m_description = reader->getUtf8String();
+        break;
+    case 70:
+        m_isUnnamed = reader->getInt32() != 0;
+        break;
+    case 71:
+        m_selectable = reader->getInt32() != 0;
+        break;
+    case 340:
+        m_entityHandles.push_back(reader->getHandleString());
+        break;
+    default:
+        return DRW_TableEntry::parseCode(code, reader);
+    }
+    return true;
+}
+
 bool DRW_Group::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     dwgBuffer sBuff = *buf;
     dwgBuffer *sBuf = version > DRW::AC1018 ? &sBuff : buf;

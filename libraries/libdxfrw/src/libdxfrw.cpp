@@ -3793,6 +3793,9 @@ bool dxfRW::processObjects() {
         else if ("PLOTSETTINGS" == nextentity) {
             processed = processPlotSettings();
         }
+        else if ("GROUP" == nextentity) {
+            processed = processGroup();
+        }
         else {
             if (!reader->readRec(&code)) {
                 return setError(DRW::BAD_READ_OBJECTS); //end of file without ENDSEC
@@ -3916,6 +3919,27 @@ bool dxfRW::processPlotSettings() {
         }
 
         if (!ps.parseCode(code, reader)) {
+            return setError( DRW::BAD_CODE_PARSED);
+        }
+    }
+
+    return setError(DRW::BAD_READ_OBJECTS);
+}
+
+bool dxfRW::processGroup() {
+    DRW_DBG("dxfRW::processGroup");
+    int code;
+    DRW_Group group;
+    while (reader->readRec(&code)) {
+        DRW_DBG(code); DRW_DBG("\n");
+        if (0 == code) {
+            nextentity = reader->getString();
+            DRW_DBG(nextentity); DRW_DBG("\n");
+            iface->addGroup(group);
+            return true;  //found new entity or ENDSEC, terminate
+        }
+
+        if (!group.parseCode(code, reader)) {
             return setError( DRW::BAD_CODE_PARSED);
         }
     }

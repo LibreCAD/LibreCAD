@@ -1,0 +1,157 @@
+/****************************************************************************
+**
+** This file is part of the LibreCAD project, a 2D CAD program
+**
+** Copyright (C) 2026 LibreCAD (librecad.org)
+** Copyright (C) 2026 Dongxu Li (github.com/dxli)
+**
+** This program is free software; you can redistribute it and/or
+** modify it under the terms of the GNU General Public License
+** as published by the Free Software Foundation; either version 2
+** of the License, or (at your option) any later version.
+**
+** This program is distributed in the hope that it will be useful,
+** but WITHOUT ANY WARRANTY; without even the implied warranty of
+** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+** GNU General Public License for more details.
+**
+**********************************************************************/
+
+/**
+ * DXF OBJECTS-section read tests for newly-wired object types.
+ *   - slice C3: GROUP (AcDbGroup) read dispatch + DRW_Group::parseCode.
+ * The DXF parser previously dispatched only 6 OBJECTS types and silently
+ * skipped the rest (incl. GROUP); RS_FilterDXFRW::addGroup already stores
+ * the group into LC_DwgAdvancedMetadata.
+ */
+
+#include <catch2/catch_test_macros.hpp>
+
+#include <filesystem>
+#include <fstream>
+#include <string>
+
+#include "drw_objects.h"
+#include "libdxfrw.h"
+
+namespace {
+
+// Stub satisfying every DRW_Interface pure virtual.
+class StubInterface : public DRW_Interface {
+public:
+  void addHeader(const DRW_Header *) override {}
+  void addLType(const DRW_LType &) override {}
+  void addLayer(const DRW_Layer &) override {}
+  void addDimStyle(const DRW_Dimstyle &) override {}
+  void addVport(const DRW_Vport &) override {}
+  void addTextStyle(const DRW_Textstyle &) override {}
+  void addAppId(const DRW_AppId &) override {}
+  void addBlock(const DRW_Block &) override {}
+  void setBlock(const int) override {}
+  void endBlock() override {}
+  void addPoint(const DRW_Point &) override {}
+  void addLine(const DRW_Line &) override {}
+  void addRay(const DRW_Ray &) override {}
+  void addXline(const DRW_Xline &) override {}
+  void addArc(const DRW_Arc &) override {}
+  void addCircle(const DRW_Circle &) override {}
+  void addEllipse(const DRW_Ellipse &) override {}
+  void addLWPolyline(const DRW_LWPolyline &) override {}
+  void addPolyline(const DRW_Polyline &) override {}
+  void addSpline(const DRW_Spline *) override {}
+  void addKnot(const DRW_Entity &) override {}
+  void addInsert(const DRW_Insert &) override {}
+  void addTrace(const DRW_Trace &) override {}
+  void add3dFace(const DRW_3Dface &) override {}
+  void addSolid(const DRW_Solid &) override {}
+  void addMText(const DRW_MText &) override {}
+  void addText(const DRW_Text &) override {}
+  void addDimAlign(const DRW_DimAligned *) override {}
+  void addDimLinear(const DRW_DimLinear *) override {}
+  void addDimRadial(const DRW_DimRadial *) override {}
+  void addDimDiametric(const DRW_DimDiametric *) override {}
+  void addDimAngular(const DRW_DimAngular *) override {}
+  void addDimAngular3P(const DRW_DimAngular3p *) override {}
+  void addDimArc(const DRW_DimArc *) override {}
+  void addDimOrdinate(const DRW_DimOrdinate *) override {}
+  void addLeader(const DRW_Leader *) override {}
+  void addHatch(const DRW_Hatch *) override {}
+  void addViewport(const DRW_Viewport &) override {}
+  void addImage(const DRW_Image *) override {}
+  void addWipeout(const DRW_Image *) override {}
+  void addMLeader(const DRW_MLeader *) override {}
+  void addMLeaderStyle(const DRW_MLeaderStyle *) override {}
+  void linkImage(const DRW_ImageDef *) override {}
+  void addComment(const char *) override {}
+  void addPlotSettings(const DRW_PlotSettings *) override {}
+  void writeHeader(DRW_Header &) override {}
+  void writeBlocks() override {}
+  void writeBlockRecords() override {}
+  void writeEntities() override {}
+  void writeLTypes() override {}
+  void writeLayers() override {}
+  void writeTextstyles() override {}
+  void writeVports() override {}
+  void writeDimstyles() override {}
+  void writeObjects() override {}
+  void writeAppId() override {}
+};
+
+class GroupCapture : public StubInterface {
+public:
+  int m_callCount = 0;
+  DRW_Group m_captured;
+  void addGroup(const DRW_Group &d) override {
+    if (m_callCount == 0)
+      m_captured = d;
+    ++m_callCount;
+  }
+};
+
+void readDxf(const std::string &dxf, DRW_Interface &cap, const char *name) {
+  const auto path = std::filesystem::temp_directory_path() / name;
+  std::filesystem::remove(path);
+  {
+    std::ofstream out(path);
+    out << dxf;
+  }
+  dxfRW r(path.string().c_str());
+  REQUIRE(r.read(&cap, /*ext=*/true));
+  std::filesystem::remove(path);
+}
+
+} // namespace
+
+TEST_CASE("DXF GROUP object is read into a DRW_Group (slice C3)", "[dxf][group]") {
+  GroupCapture cap;
+  const char *dxf =
+      "0\nSECTION\n2\nOBJECTS\n"
+      "0\nGROUP\n5\n2F\n330\nC\n100\nAcDbGroup\n"
+      "300\nFasteners\n70\n0\n71\n1\n"
+      "340\n30\n340\n31\n340\n32\n"
+      "0\nENDSEC\n0\nEOF\n";
+  readDxf(dxf, cap, "lc_group_read.dxf");
+
+  REQUIRE(cap.m_callCount == 1);
+  CHECK(cap.m_captured.m_description == "Fasteners");
+  CHECK(cap.m_captured.m_isUnnamed == false);
+  CHECK(cap.m_captured.m_selectable == true);
+  REQUIRE(cap.m_captured.m_entityHandles.size() == 3);
+  CHECK(cap.m_captured.m_entityHandles[0] == 0x30u);
+  CHECK(cap.m_captured.m_entityHandles[2] == 0x32u);
+}
+
+TEST_CASE("DXF unnamed GROUP sets the unnamed flag (slice C3)", "[dxf][group]") {
+  GroupCapture cap;
+  const char *dxf =
+      "0\nSECTION\n2\nOBJECTS\n"
+      "0\nGROUP\n5\n3A\n330\nC\n100\nAcDbGroup\n"
+      "300\n\n70\n1\n71\n0\n340\n40\n"
+      "0\nENDSEC\n0\nEOF\n";
+  readDxf(dxf, cap, "lc_group_unnamed.dxf");
+
+  REQUIRE(cap.m_callCount == 1);
+  CHECK(cap.m_captured.m_isUnnamed == true);
+  CHECK(cap.m_captured.m_selectable == false);
+  REQUIRE(cap.m_captured.m_entityHandles.size() == 1);
+}
