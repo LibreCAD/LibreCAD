@@ -933,6 +933,8 @@ public:
         orthoOrigin.x = orthoOrigin.y = orthoOrigin.z = 0.0;
         elevation = 0.0;
         orthoType = 0;
+        baseUcsHandle = dwgHandle{};
+        namedUcsHandle = dwgHandle{};
         DRW_TableEntry::reset();
     }
 
@@ -946,7 +948,10 @@ public:
     DRW_Coord yAxisDirection;   /*!< UCS Y-axis direction, codes 12/22/32 */
     DRW_Coord orthoOrigin;      /*!< Origin for orthographic UCS, codes 13/23/33 */
     double elevation;           /*!< Elevation, code 146 */
-    int orthoType;              /*!< Orthographic type, code 71 (0 none, 1 Top, ...) */
+    int orthoType;              /*!< Orthographic type, code 71/79 (0 none, 1 Top, ...) */
+    // Phase 4 (P4-04): resolved handle-stream refs (R2000+).
+    dwgHandle baseUcsHandle;    /*!< base UCS handle (code 346) */
+    dwgHandle namedUcsHandle;   /*!< named UCS handle (code 345) */
 };
 
 //! Class to handle VIEW entries

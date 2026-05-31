@@ -2129,21 +2129,73 @@ bool DRW_UCS::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
 }
 
 bool DRW_UCS::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
-    //Minimal parseDwg: populate base table-entry fields (handle, name,
-    //parentHandle, reactors, extData) by delegating to DRW_TableEntry::parseDwg.
-    //UCS-specific fields (origin, axes, elevation, orthoType per ODA 19.4.62)
-    //stay at reset defaults until a sample-validated implementation lands.
+    // Full UCS table-record decode (P4-04). Field order = libreDWG
+    // dwg.spec:4293-4342 DWG_TABLE(UCS), binary (non-DXF) order:
+    //   COMMON_TABLE_FLAGS(name); 3BD ucsorg/ucsxdir/ucsydir;
+    //   SINCE R2000b: BD ucs_elevation FIRST, then BS UCSORTHOVIEW,
+    //   then BS num_orthopts + repeat[BS type, 3BD pt] (DATA section);
+    //   handle stream: owner, reactors, xdict, base_ucs, named_ucs.
     dwgBuffer sBuff = *buf;
     dwgBuffer *sBuf = buf;
     if (version > DRW::AC1018) {//2007+
         sBuf = &sBuff; //separate buffer for strings
     }
     bool ret = DRW_TableEntry::parseDwg(version, buf, sBuf, bs);
-    DRW_DBG("\n***************************** parsing UCS (base fields) **************************************\n");
+    DRW_DBG("\n***************************** parsing UCS **************************************\n");
     if (!ret)
         return ret;
     name = sBuf->getVariableText(version, false);
     DRW_DBG("ucs name: "); DRW_DBG(name); DRW_DBG("\n");
+
+    // COMMON_TABLE_FLAGS tail (mirror DRW_Vport: 64-flag, xrefindex, 16-flag).
+    flags |= buf->getBit() << 6; // code 70, bit 7 (64)
+    if (version < DRW::AC1021) { //2004-
+        /*dint16 xrefindex =*/ buf->getBitShort();
+    }
+    flags |= buf->getBit() << 4; // code 70, bit 5 (16), xref-dependent
+
+    origin = buf->get3BitDouble();
+    xAxisDirection = buf->get3BitDouble();
+    yAxisDirection = buf->get3BitDouble();
+
+    if (version > DRW::AC1014) { //R2000+ (SINCE R_2000b)
+        elevation = buf->getBitDouble();   // BD ucs_elevation FIRST
+        orthoType = buf->getBitShort();    // BS UCSORTHOVIEW
+        // num_orthopts array stays in the DATA section (before the handle
+        // stream). Consume it to keep alignment; retain the first point.
+        dint16 numOrthopts = buf->getBitShort();
+        for (dint16 i = 0; i < numOrthopts; ++i) {
+            dint16 oType = buf->getBitShort();
+            DRW_Coord pt = buf->get3BitDouble();
+            if (i == 0) {
+                orthoOrigin = pt;
+                if (orthoType == 0)
+                    orthoType = oType;
+            }
+        }
+    }
+
+    if (version > DRW::AC1018) {//2007+ skip string area
+        buf->setPosition(objSize >> 3);
+        buf->setBitPos(objSize & 7);
+    }
+
+    // Handle stream: owner, reactors, xdict (common prefix), then the UCS
+    // FIELD_HANDLEs base_ucs, named_ucs.
+    dwgHandle ucsControlH = buf->getHandle();
+    parentHandle = ucsControlH.ref;
+    for (dint32 i = 0; i < numReactors; ++i)
+        buf->getHandle();
+    if (xDictFlag != 1)
+        buf->getHandle();
+
+    if (version > DRW::AC1014) { //R2000+
+        baseUcsHandle = buf->getHandle();
+        namedUcsHandle = buf->getHandle();
+        DRW_DBG(" base UCS Handle: "); DRW_DBGHL(baseUcsHandle.code, baseUcsHandle.size, baseUcsHandle.ref); DRW_DBG("\n");
+        DRW_DBG(" named UCS Handle: "); DRW_DBGHL(namedUcsHandle.code, namedUcsHandle.size, namedUcsHandle.ref); DRW_DBG("\n");
+    }
+
     return buf->isGood();
 }
 

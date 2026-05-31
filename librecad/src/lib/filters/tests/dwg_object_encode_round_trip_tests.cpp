@@ -1750,3 +1750,46 @@ TEST_CASE("DRW_Dimstyle default-constructs R2007/R2010 members with defaults",
     CHECK(d.dimaltmzf == Approx(1.0));
     CHECK(d.dimtxstyH.ref == 0u);
 }
+
+// Phase 4 (P4-04) — DRW_UCS::parseDwg reads origin/axes/elevation/orthoType +
+// base/named handles. Synthetic AC1015 (R2000) UCS record per dwg.spec UCS
+// binary field order; parsed back via the friend accessor.
+TEST_CASE("DRW_UCS::parseDwg reads geometry, elevation, orthoType, handles",
+          "[dwg-object-encode][ucs][data-loss]") {
+    const DRW::Version ver = DRW::AC1015;
+    constexpr duint16 ucsType = 0x3F;  // UCS table record.
+
+    dwgBufferW body;
+    emitObjectPreamble(body, ver, ucsType, /*handle=*/0x30u,
+                       /*numReactors=*/0, /*xDictFlag=*/0);
+    body.putVariableText(ver, std::string("MyUCS"));
+    body.putBit(0);          // flags bit 7 (64)
+    body.putBitShort(0);     // xrefindex (version < AC1021)
+    body.putBit(0);          // flags bit 5 (16)
+    body.put3BitDouble(DRW_Coord(10.0, 20.0, 0.0));   // ucsorg
+    body.put3BitDouble(DRW_Coord(0.0, 1.0, 0.0));     // ucsxdir
+    body.put3BitDouble(DRW_Coord(-1.0, 0.0, 0.0));    // ucsydir
+    body.putBitDouble(5.0);  // ucs_elevation (BD, FIRST in binary order)
+    body.putBitShort(1);     // UCSORTHOVIEW (BS)
+    body.putBitShort(0);     // num_orthopts = 0
+    // Handle stream: parent, xdic, then base_ucs, named_ucs.
+    emitCommonHandlePrefix(body, /*parentHandle=*/0x3Eu, {}, /*xDictFlag=*/0);
+    body.putHandle(hardPtr(0x100u));  // base_ucs
+    body.putHandle(hardPtr(0x101u));  // named_ucs
+
+    std::vector<duint8> bytes = snapshot(body);
+    dwgBuffer r(bytes.data(), bytes.size());
+    DRW_UCS dst;
+    REQUIRE(DrwObjectEncodeTestAccess::parse(dst, ver, &r));
+
+    CHECK(dst.name == "MyUCS");
+    CHECK(dst.origin.x == Approx(10.0));
+    CHECK(dst.origin.y == Approx(20.0));
+    CHECK(dst.xAxisDirection.x == Approx(0.0));
+    CHECK(dst.xAxisDirection.y == Approx(1.0));
+    CHECK(dst.yAxisDirection.x == Approx(-1.0));
+    CHECK(dst.elevation == Approx(5.0));
+    CHECK(dst.orthoType == 1);
+    CHECK(dst.baseUcsHandle.ref == 0x100u);
+    CHECK(dst.namedUcsHandle.ref == 0x101u);
+}
