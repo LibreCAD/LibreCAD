@@ -18,10 +18,11 @@
 **********************************************************************/
 
 /**
- * DXF block-attribute tests (slice B1) — covers the DXF read path that
- * collects ATTRIB entities trailing an INSERT into DRW_Insert::attlist
- * (mirrors the POLYLINE/VERTEX/SEQEND collection pattern). Before B1 the
- * DXF parser silently dropped every ATTRIB.
+ * DXF entity read/write tests for newly-wired types.
+ *   - slices B1/B2: ATTRIB collection on INSERT (DRW_Insert::attlist) +
+ *     write-back (mirrors the POLYLINE/VERTEX/SEQEND pattern).
+ *   - slice E1: TOLERANCE (AcDbFcf) read dispatch + codec write.
+ * Before these slices the DXF parser silently dropped these entities.
  */
 
 #include <catch2/catch_test_macros.hpp>
@@ -117,8 +118,28 @@ public:
   void writeEntities() override { m_rw->writeInsert(&m_insert); }
 };
 
+// Captures the first TOLERANCE entity.
+class ToleranceCapture : public StubInterface {
+public:
+  int m_callCount = 0;
+  DRW_Tolerance m_captured;
+  void addTolerance(const DRW_Tolerance &d) override {
+    if (m_callCount == 0)
+      m_captured = d;
+    ++m_callCount;
+  }
+};
+
+// Emits a single TOLERANCE on write.
+class ToleranceEmitter : public StubInterface {
+public:
+  DRW_Tolerance m_tol;
+  dxfRW *m_rw = nullptr;
+  void writeEntities() override { m_rw->writeTolerance(&m_tol); }
+};
+
 // Writes `dxf` to a temp file, reads it back through dxfRW into `cap`.
-void readDxf(const std::string &dxf, InsertCapture &cap, const char *name) {
+void readDxf(const std::string &dxf, DRW_Interface &cap, const char *name) {
   const auto path = std::filesystem::temp_directory_path() / name;
   std::filesystem::remove(path);
   {
@@ -246,6 +267,60 @@ TEST_CASE("DXF INSERT attlist round-trips through write+read (slice B2)",
   CHECK(cap.m_captured.attlist[1]->tag == "REV");
   CHECK(cap.m_captured.attlist[1]->text == "B");
   CHECK((cap.m_captured.attlist[1]->attribFlags & 0x1) == 1);
+
+  std::filesystem::remove(path);
+}
+
+TEST_CASE("DXF TOLERANCE is read into a DRW_Tolerance (slice E1)", "[dxf][tolerance]") {
+  ToleranceCapture cap;
+  const char *dxf =
+      "0\nSECTION\n2\nENTITIES\n"
+      "0\nTOLERANCE\n8\n0\n100\nAcDbFcf\n3\nSTANDARD\n"
+      "10\n4.0\n20\n5.0\n30\n0.0\n"
+      "1\n{\\Fgdt;j}%%v\n"
+      "11\n1.0\n21\n0.0\n31\n0.0\n"
+      "0\nENDSEC\n0\nEOF\n";
+  readDxf(dxf, cap, "lc_tolerance_read.dxf");
+
+  REQUIRE(cap.m_callCount == 1);
+  CHECK(cap.m_captured.dimStyleName == "STANDARD");
+  CHECK(cap.m_captured.insertionPoint.x == 4.0);
+  CHECK(cap.m_captured.insertionPoint.y == 5.0);
+  CHECK(cap.m_captured.text == "{\\Fgdt;j}%%v");
+  CHECK(cap.m_captured.xAxisDirectionVector.x == 1.0);
+}
+
+TEST_CASE("DXF TOLERANCE round-trips through write+read (slice E1)",
+          "[dxf][tolerance][dxf_roundtrip]") {
+  const auto path =
+      std::filesystem::temp_directory_path() / "lc_tolerance_roundtrip.dxf";
+  std::filesystem::remove(path);
+
+  ToleranceEmitter emitter;
+  emitter.m_tol.layer = "0";
+  emitter.m_tol.dimStyleName = "STANDARD";
+  emitter.m_tol.text = "{\\Fgdt;n0.5}%%v";
+  emitter.m_tol.insertionPoint = DRW_Coord(2.0, 3.0, 0.0);
+  emitter.m_tol.xAxisDirectionVector = DRW_Coord(1.0, 0.0, 0.0);
+
+  {
+    dxfRW w(path.string().c_str());
+    emitter.m_rw = &w;
+    REQUIRE(w.write(&emitter, DRW::AC1021, false));
+  }
+
+  ToleranceCapture cap;
+  {
+    dxfRW r(path.string().c_str());
+    REQUIRE(r.read(&cap, /*ext=*/true));
+  }
+
+  REQUIRE(cap.m_callCount == 1);
+  CHECK(cap.m_captured.dimStyleName == "STANDARD");
+  CHECK(cap.m_captured.text == "{\\Fgdt;n0.5}%%v");
+  CHECK(cap.m_captured.insertionPoint.x == 2.0);
+  CHECK(cap.m_captured.insertionPoint.y == 3.0);
+  CHECK(cap.m_captured.xAxisDirectionVector.x == 1.0);
 
   std::filesystem::remove(path);
 }

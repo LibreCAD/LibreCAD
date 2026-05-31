@@ -1609,6 +1609,25 @@ bool dxfRW::writeText(DRW_Text *ent){
     return true;
 }
 
+bool dxfRW::writeTolerance(DRW_Tolerance *ent){
+    writer->writeString(0, "TOLERANCE");
+    writeEntity(ent);
+    if (version > DRW::AC1009)
+        writer->writeString(100, "AcDbFcf");
+    writer->writeUtf8String(3, ent->dimStyleName);
+    writer->writeDouble(10, ent->insertionPoint.x);
+    writer->writeDouble(20, ent->insertionPoint.y);
+    writer->writeDouble(30, ent->insertionPoint.z);
+    writer->writeUtf8String(1, ent->text);
+    writer->writeDouble(210, ent->extPoint.x);
+    writer->writeDouble(220, ent->extPoint.y);
+    writer->writeDouble(230, ent->extPoint.z);
+    writer->writeDouble(11, ent->xAxisDirectionVector.x);
+    writer->writeDouble(21, ent->xAxisDirectionVector.y);
+    writer->writeDouble(31, ent->xAxisDirectionVector.z);
+    return true;
+}
+
 bool dxfRW::writeMLine(DRW_MLine *ent) {
     if (version <= DRW::AC1009) return true;  // MLINE is R13+
     writer->writeString(0, "MLINE");
@@ -3046,6 +3065,8 @@ bool dxfRW::processEntities(bool isblock) {
             processed = processRay();
         } else if (nextentity == "XLINE") {
             processed = processXline();
+        } else if (nextentity == "TOLERANCE") {
+            processed = processTolerance();
         } else {
             if (!reader->readRec(&code)) {
                 return setError(DRW::BAD_READ_ENTITIES); //end of file without ENDSEC
@@ -3461,6 +3482,27 @@ bool dxfRW::processVertex(DRW_Polyline *pl) {
         }
 
         if (!v->parseCode(code, reader)) { //the members of v are reinitialized here
+            return setError(DRW::BAD_CODE_PARSED);
+        }
+    }
+
+    return setError(DRW::BAD_READ_ENTITIES);
+}
+
+bool dxfRW::processTolerance() {
+    DRW_DBG("dxfRW::processTolerance");
+    int code;
+    DRW_Tolerance tol;
+    while (reader->readRec(&code)) {
+        DRW_DBG(code); DRW_DBG("\n");
+        if (0 == code) {
+            nextentity = reader->getString();
+            DRW_DBG(nextentity); DRW_DBG("\n");
+            iface->addTolerance(tol);
+            return true;  //found new entity or ENDSEC, terminate
+        }
+
+        if (!tol.parseCode(code, reader)) {
             return setError(DRW::BAD_CODE_PARSED);
         }
     }

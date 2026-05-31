@@ -9347,6 +9347,9 @@ void RS_FilterDXFRW::writeTolerance(LC_Tolerance* t) {
         m_dwgW->writeTolerance(&tol);
         return;
     }
+    if (m_dxfW) {
+        m_dxfW->writeTolerance(&tol);
+    }
 }
 
 /**

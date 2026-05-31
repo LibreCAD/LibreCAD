@@ -101,6 +101,7 @@ public:
     bool writeMLine(DRW_MLine *ent);
     bool writeUnderlay(DRW_Underlay *ent);
     bool writeText(DRW_Text *ent);
+    bool writeTolerance(DRW_Tolerance *ent);
     bool writeHatch(DRW_Hatch *ent);
     bool writeViewport(DRW_Viewport *ent);
     DRW_ImageDef *writeImage(DRW_Image *ent, std::string name);
@@ -158,6 +159,7 @@ private:
     bool processPolyline();
     bool processVertex(DRW_Polyline* pl);
     bool processText();
+    bool processTolerance();
     bool processMText();
     bool processMLine();
     bool processUnderlay(const std::string& kind);
