@@ -31,13 +31,17 @@
 
 
 #include <QCloseEvent>
+#include <QGuiApplication>
 #include <QMdiArea>
 #include <QMessageBox>
 #include <QMimeData>
 #include <QPushButton>
 #include <QStatusBar>
+#include <QStyleHints>
 #include <QTimer>
 #include <QDockWidget>
+
+#include "lc_iconcolorsoptions.h"
 
 #include "lc_actiongroupmanager.h"
 #include "lc_actionoptionsmanager.h"
@@ -125,6 +129,32 @@ QC_ApplicationWindow::QC_ApplicationWindow(){
 
     LC_ApplicationWindowInitializer initializer(this);
     initializer.initApplication();
+
+#if QT_VERSION >= QT_VERSION_CHECK(6, 5, 0)
+    // Re-apply icon styling defaults when the OS color scheme flips so the
+    // toolbar icons don't go invisible on a newly-dark palette. Stored user
+    // overrides are preserved because loadColor() returns the stored value
+    // when present and falls back to the (now theme-aware) default only
+    // when the key is absent.
+    connect(QGuiApplication::styleHints(), &QStyleHints::colorSchemeChanged,
+            this, [this](Qt::ColorScheme) {
+                LC_IconColorsOptions opts;
+                opts.loadSettings();
+                opts.applyOptions();
+                fireIconsRefresh();
+            });
+#endif
+
+    // Re-paint toolbars when the OS-level primary screen changes (e.g. the
+    // user swaps which monitor is primary while LibreCAD is running). The
+    // canvas's own m_isHiDpi state is computed once at LC_GraphicViewRenderer
+    // construction and currently does NOT re-evaluate here — see the
+    // // fixme - sand comment at lc_graphicviewrenderer.cpp:43. Tracking that
+    // through to the per-MDI-window renderer is follow-up work documented in
+    // Task D of the plan; this connect at least refreshes icons and any
+    // listener wired to iconsRefreshed().
+    connect(qApp, &QGuiApplication::primaryScreenChanged,
+            this, [this](QScreen*) { fireIconsRefresh(); });
 }
 /**
  * Destructor.
