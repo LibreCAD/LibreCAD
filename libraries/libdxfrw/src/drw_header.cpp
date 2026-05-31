@@ -2116,13 +2116,13 @@ bool DRW_Header::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer *hBbuf
     vars["DIMCLRE"]=new DRW_Variant(70, buf->getCmColor(version));//RLZ: TODO read CMC or EMC color
     vars["DIMCLRT"]=new DRW_Variant(70, buf->getCmColor(version));//RLZ: TODO read CMC or EMC color
     if (version > DRW::AC1014) {//2000+
-        vars["DIAMDEC"]=new DRW_Variant(70, buf->getBitShort());
+        vars["DIMADEC"]=new DRW_Variant(70, buf->getBitShort());
         vars["DIMDEC"]=new DRW_Variant(70, buf->getBitShort());
         vars["DIMTDEC"]=new DRW_Variant(70, buf->getBitShort());
         vars["DIMALTU"]=new DRW_Variant(70, buf->getBitShort());
         vars["DIMALTTD"]=new DRW_Variant(70, buf->getBitShort());
         vars["DIMAUNIT"]=new DRW_Variant(70, buf->getBitShort());
-        vars["DIMFAC"]=new DRW_Variant(70, buf->getBitShort());///////////////// DIMFAC O DIMFRAC
+        vars["DIMFRAC"]=new DRW_Variant(70, buf->getBitShort());// DIMFRAC (fraction format)
         vars["DIMLUNIT"]=new DRW_Variant(70, buf->getBitShort());
         vars["DIMDSEP"]=new DRW_Variant(70, buf->getBitShort());
         vars["DIMTMOVE"]=new DRW_Variant(70, buf->getBitShort());
@@ -2849,13 +2849,13 @@ bool DRW_Header::encodeDwg(DRW::Version version, dwgBufferW *buf, dwgBufferW *hB
     buf->putCmColor(version, static_cast<duint16>(intVar(*this, "DIMCLRE")));
     buf->putCmColor(version, static_cast<duint16>(intVar(*this, "DIMCLRT")));
     // R2000+ DIM BS family
-    buf->putBitShort(static_cast<duint16>(intVar(*this, "DIAMDEC")));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "DIMADEC")));
     buf->putBitShort(static_cast<duint16>(intVar(*this, "DIMDEC", 4)));
     buf->putBitShort(static_cast<duint16>(intVar(*this, "DIMTDEC", 4)));
     buf->putBitShort(static_cast<duint16>(intVar(*this, "DIMALTU", 2)));
     buf->putBitShort(static_cast<duint16>(intVar(*this, "DIMALTTD", 2)));
     buf->putBitShort(static_cast<duint16>(intVar(*this, "DIMAUNIT")));
-    buf->putBitShort(static_cast<duint16>(intVar(*this, "DIMFAC")));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "DIMFRAC")));
     buf->putBitShort(static_cast<duint16>(intVar(*this, "DIMLUNIT", 2)));
     buf->putBitShort(static_cast<duint16>(intVar(*this, "DIMDSEP", '.')));
     buf->putBitShort(static_cast<duint16>(intVar(*this, "DIMTMOVE")));

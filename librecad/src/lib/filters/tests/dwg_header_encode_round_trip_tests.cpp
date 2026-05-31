@@ -530,3 +530,31 @@ TEST_CASE("DRW_Header::encodeDwg R2004 omits vpEntHeaderCtrl",
     // vpEntHeaderCtrl is not written or read for AC1018 — dst must stay zero.
     REQUIRE(HA::vpEntHeaderCtrl(dst) == 0u);
 }
+
+// P0A-3 (gap header-dimadec-dimfrac-wrong-key-read): the DWG header store
+// used the wrong keys DIAMDEC/DIMFAC, so $DIMADEC/$DIMFRAC never reached the
+// app/DXF path.  Renamed read store + paired writer lookup to DIMADEC/DIMFRAC.
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("DRW_Header::encodeDwg round-trips DIMADEC/DIMFRAC under correct keys",
+          "[dwg-write][header-encode]") {
+    DRW_Header src;
+    // Non-default, distinct values so a swapped or dropped field is caught.
+    src.addInt("DIMADEC", 5, 70);
+    src.addInt("DIMFRAC", 2, 70);
+
+    auto bytes = encodeWithSizePrefix(src);
+
+    dwgBuffer r(bytes.data(), bytes.size());
+    DRW_Header dst;
+    REQUIRE(DrwHeaderEncodeTestAccess::parse(dst, DRW::AC1015, &r, &r));
+
+    // Correct keys present with the set values (paired writer rename verified:
+    // the value survives encode→parse only because the writer reads DIMADEC/
+    // DIMFRAC too).
+    REQUIRE(i32(dst, "DIMADEC") == 5);
+    REQUIRE(i32(dst, "DIMFRAC") == 2);
+
+    // The old mislabeled keys must NOT be produced by the reader.
+    REQUIRE(dst.vars.find("DIAMDEC") == dst.vars.end());
+    REQUIRE(dst.vars.find("DIMFAC")  == dst.vars.end());
+}
