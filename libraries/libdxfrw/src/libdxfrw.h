@@ -186,6 +186,7 @@ private:
     bool processLayout();
     bool processWipeoutVariables();
     bool processRawObject();
+    bool processRawEntity();
 
 //    bool writeHeader();
     bool writeEntity(DRW_Entity *ent);

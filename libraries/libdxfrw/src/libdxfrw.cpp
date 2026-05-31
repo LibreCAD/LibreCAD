@@ -3068,14 +3068,9 @@ bool dxfRW::processEntities(bool isblock) {
         } else if (nextentity == "TOLERANCE") {
             processed = processTolerance();
         } else {
-            if (!reader->readRec(&code)) {
-                return setError(DRW::BAD_READ_ENTITIES); //end of file without ENDSEC
-            }
-
-            if (code == 0) {
-                nextentity = reader->getString();
-            }
-            processed = true;
+            //Slice A4: capture an unmodeled entity verbatim rather than dropping
+            //it (also preserves block ATTDEFs, which have no typed DXF dispatch).
+            processed = processRawEntity();
         }
     } while (processed);
 
@@ -4184,6 +4179,33 @@ bool dxfRW::processRawObject() {
     }
 
     return setError(DRW::BAD_READ_OBJECTS);
+}
+
+//Slice A4: lossless passthrough for an unmodeled entity in the ENTITIES section
+//or inside a BLOCK (including standalone ATTDEF). Same verbatim capture as
+//processRawObject but reports via addRawDxfEntity / the entities error code.
+bool dxfRW::processRawEntity() {
+    DRW_DBG("dxfRW::processRawEntity");
+    int code;
+    DRW_RawDxfObject ent;
+    ent.name = nextentity;
+    while (reader->readRec(&code)) {
+        DRW_DBG(code); DRW_DBG("\n");
+        if (0 == code) {
+            nextentity = reader->getString();
+            DRW_DBG(nextentity); DRW_DBG("\n");
+            iface->addRawDxfEntity(ent);
+            return true;  //found new entity, ENDSEC or ENDBLK, terminate
+        }
+        const std::string value = reader->getString();
+        if (5 == code)
+            ent.handle = reader->getHandleString();
+        else if (330 == code)
+            ent.parentHandle = reader->getHandleString();
+        ent.groups.emplace_back(code, value);
+    }
+
+    return setError(DRW::BAD_READ_ENTITIES);
 }
 
 bool dxfRW::writePlotSettings(DRW_PlotSettings *ent) {

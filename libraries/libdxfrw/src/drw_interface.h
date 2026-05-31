@@ -89,6 +89,9 @@ public:
     //! Lossless DXF passthrough (slice A1): an OBJECTS-section object libdxfrw does
     //! not model is delivered verbatim so it can be re-emitted unchanged.
     virtual void addRawDxfObject(const DRW_RawDxfObject& data) { (void) data; }
+    //! Lossless DXF passthrough (slice A4): an ENTITIES/BLOCKS entity libdxfrw does
+    //! not model (incl. standalone ATTDEF) delivered verbatim for unchanged re-emit.
+    virtual void addRawDxfEntity(const DRW_RawDxfObject& data) { (void) data; }
 
     /**
      * Called for every block. Note: all entities added after this

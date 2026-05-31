@@ -215,6 +215,14 @@ public:
   }
 };
 
+class RawEntityCapture : public StubInterface {
+public:
+  std::vector<DRW_RawDxfObject> m_entities;
+  void addRawDxfEntity(const DRW_RawDxfObject &d) override {
+    m_entities.push_back(d);
+  }
+};
+
 void readDxf(const std::string &dxf, DRW_Interface &cap, const char *name) {
   const auto path = std::filesystem::temp_directory_path() / name;
   std::filesystem::remove(path);
@@ -468,4 +476,26 @@ TEST_CASE("DXF unmodeled OBJECT is captured verbatim, not dropped (slice A1)", "
   CHECK(weird.name == "ACDBWEIRDOBJECT");
   CHECK(weird.handle == 0x3Cu);
   REQUIRE(weird.groups.size() == 3);  // 5, 330, 70
+}
+
+TEST_CASE("DXF unmodeled ENTITY is captured verbatim, not dropped (slice A4)", "[dxf][rawentity]") {
+  RawEntityCapture cap;
+  // An unknown entity and a standalone ATTDEF (no typed DXF dispatch) — both
+  // must be preserved rather than silently skipped.
+  const char *dxf =
+      "0\nSECTION\n2\nENTITIES\n"
+      "0\nWEIRDENT\n8\n0\n5\n4A\n62\n3\n10\n1.0\n20\n2.0\n"
+      "0\nATTDEF\n8\n0\n5\n4B\n10\n0.0\n20\n0.0\n40\n0.5\n1\ndef\n2\nTAG\n3\nPrompt?\n70\n0\n"
+      "0\nLINE\n8\n0\n10\n0.0\n20\n0.0\n11\n5.0\n21\n5.0\n"
+      "0\nENDSEC\n0\nEOF\n";
+  readDxf(dxf, cap, "lc_rawentity.dxf");
+
+  // WEIRDENT + ATTDEF captured; LINE is typed (not raw).
+  REQUIRE(cap.m_entities.size() == 2);
+  CHECK(cap.m_entities[0].name == "WEIRDENT");
+  CHECK(cap.m_entities[0].handle == 0x4Au);
+  CHECK(cap.m_entities[1].name == "ATTDEF");
+  CHECK(cap.m_entities[1].handle == 0x4Bu);
+  // ATTDEF groups preserved verbatim (8,5,10,20,40,1,2,3,70)
+  CHECK(cap.m_entities[1].groups.size() == 9);
 }
