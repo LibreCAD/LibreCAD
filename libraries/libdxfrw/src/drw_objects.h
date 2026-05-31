@@ -1570,12 +1570,18 @@ public:
         baseUcsHandle = dwgHandle{};
         namedUcsHandle = dwgHandle{};
         viewportHandles.clear();
+        m_dxfSubclass = 0;
     }
 protected:
+    bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
     bool encodeDwg(DRW::Version version, dwgBufferW *buf,
                    dwgBufferW *strBuf = nullptr,
                    dwgBufferW *handleBuf = nullptr) const;
+    //! Transient DXF-parse state: which 100-subclass we are in
+    //! (0 = AcDbPlotSettings prefix, 1 = AcDbLayout). Disambiguates the
+    //! codes 1/70/76/330 that appear in both subclasses.
+    int m_dxfSubclass = 0;
 public:
     // PlotSettings prefix per ODA §20.4.84 (the LAYOUT object embeds these inline)
     UTF8STRING pageSetupName;     /*!< code 1, TV */

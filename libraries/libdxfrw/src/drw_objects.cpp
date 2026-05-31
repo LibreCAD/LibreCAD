@@ -3605,6 +3605,97 @@ bool DRW_CellStyleMap::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs
     return true;
 }
 
+bool DRW_Layout::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
+    //LAYOUT embeds an AcDbPlotSettings prefix then an AcDbLayout body; codes
+    //1/70/76/330 occur in both, disambiguated by the current 100-subclass.
+    switch (code) {
+    case 100: {
+        const std::string sub = reader->getUtf8String();
+        if (sub == "AcDbLayout")
+            m_dxfSubclass = 1;
+        else if (sub == "AcDbPlotSettings")
+            m_dxfSubclass = 0;
+        return true;
+    }
+    // ---- codes shared between the two subclasses ----
+    case 1:
+        if (m_dxfSubclass == 1) name = reader->getUtf8String();
+        else pageSetupName = reader->getUtf8String();
+        break;
+    case 70:
+        if (m_dxfSubclass == 1) layoutFlags = reader->getInt32();
+        else plotLayoutFlags = reader->getInt32();
+        break;
+    case 76:
+        if (m_dxfSubclass == 1) orthoViewType = reader->getInt32();
+        else shadePlotMode = reader->getInt32();
+        break;
+    case 330:
+        if (m_dxfSubclass == 1) paperSpaceBlockRecordHandle.ref = reader->getHandleString();
+        else parentHandle = reader->getHandleString();   //structural owner
+        break;
+    // ---- AcDbPlotSettings prefix (unambiguous) ----
+    case 2:  printerConfig = reader->getUtf8String(); break;
+    case 4:  paperSize = reader->getUtf8String(); break;
+    case 6:  plotViewName = reader->getUtf8String(); break;
+    case 7:  currentStyleSheet = reader->getUtf8String(); break;
+    case 40: marginLeft = reader->getDouble(); break;
+    case 41: marginBottom = reader->getDouble(); break;
+    case 42: marginRight = reader->getDouble(); break;
+    case 43: marginTop = reader->getDouble(); break;
+    case 44: paperWidth = reader->getDouble(); break;
+    case 45: paperHeight = reader->getDouble(); break;
+    case 46: plotOriginX = reader->getDouble(); break;
+    case 47: plotOriginY = reader->getDouble(); break;
+    case 48: windowMinX = reader->getDouble(); break;
+    case 49: windowMinY = reader->getDouble(); break;
+    case 140: windowMaxX = reader->getDouble(); break;
+    case 141: windowMaxY = reader->getDouble(); break;
+    case 142: realWorldUnits = reader->getDouble(); break;
+    case 143: drawingUnits = reader->getDouble(); break;
+    case 72: paperUnits = reader->getInt32(); break;
+    case 73: plotRotation = reader->getInt32(); break;
+    case 74: plotType = reader->getInt32(); break;
+    case 75: scaleType = reader->getInt32(); break;
+    case 77: shadePlotResLevel = reader->getInt32(); break;
+    case 78: shadePlotCustomDPI = reader->getInt32(); break;
+    case 147: scaleFactor = reader->getDouble(); break;
+    case 148: paperImageOriginX = reader->getDouble(); break;
+    case 149: paperImageOriginY = reader->getDouble(); break;
+    // ---- AcDbLayout body (unambiguous) ----
+    case 71: tabOrder = reader->getInt32(); break;
+    case 10: limMinX = reader->getDouble(); break;
+    case 20: limMinY = reader->getDouble(); break;
+    case 11: limMaxX = reader->getDouble(); break;
+    case 21: limMaxY = reader->getDouble(); break;
+    case 12: insPoint.x = reader->getDouble(); break;
+    case 22: insPoint.y = reader->getDouble(); break;
+    case 32: insPoint.z = reader->getDouble(); break;
+    case 13: ucsOrigin.x = reader->getDouble(); break;
+    case 23: ucsOrigin.y = reader->getDouble(); break;
+    case 33: ucsOrigin.z = reader->getDouble(); break;
+    case 14: extMin.x = reader->getDouble(); break;
+    case 24: extMin.y = reader->getDouble(); break;
+    case 34: extMin.z = reader->getDouble(); break;
+    case 15: extMax.x = reader->getDouble(); break;
+    case 25: extMax.y = reader->getDouble(); break;
+    case 35: extMax.z = reader->getDouble(); break;
+    case 16: ucsXAxis.x = reader->getDouble(); break;
+    case 26: ucsXAxis.y = reader->getDouble(); break;
+    case 36: ucsXAxis.z = reader->getDouble(); break;
+    case 17: ucsYAxis.x = reader->getDouble(); break;
+    case 27: ucsYAxis.y = reader->getDouble(); break;
+    case 37: ucsYAxis.z = reader->getDouble(); break;
+    case 146: elevation = reader->getDouble(); break;
+    case 331: lastActiveViewportHandle.ref = reader->getHandleString(); break;
+    case 345: namedUcsHandle.ref = reader->getHandleString(); break;
+    case 346: baseUcsHandle.ref = reader->getHandleString(); break;
+    default:
+        return DRW_TableEntry::parseCode(code, reader);
+    }
+    return true;
+}
+
 bool DRW_Layout::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     dwgBuffer sBuff = *buf;
     dwgBuffer *sBuf = buf;

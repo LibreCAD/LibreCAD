@@ -3817,6 +3817,9 @@ bool dxfRW::processObjects() {
         else if ("SUN" == nextentity) {
             processed = processSun();
         }
+        else if ("LAYOUT" == nextentity) {
+            processed = processLayout();
+        }
         else {
             if (!reader->readRec(&code)) {
                 return setError(DRW::BAD_READ_OBJECTS); //end of file without ENDSEC
@@ -4108,6 +4111,27 @@ bool dxfRW::processSun() {
         }
 
         if (!sun.parseCode(code, reader)) {
+            return setError( DRW::BAD_CODE_PARSED);
+        }
+    }
+
+    return setError(DRW::BAD_READ_OBJECTS);
+}
+
+bool dxfRW::processLayout() {
+    DRW_DBG("dxfRW::processLayout");
+    int code;
+    DRW_Layout layout;
+    while (reader->readRec(&code)) {
+        DRW_DBG(code); DRW_DBG("\n");
+        if (0 == code) {
+            nextentity = reader->getString();
+            DRW_DBG(nextentity); DRW_DBG("\n");
+            iface->addLayout(layout);
+            return true;  //found new entity or ENDSEC, terminate
+        }
+
+        if (!layout.parseCode(code, reader)) {
             return setError( DRW::BAD_CODE_PARSED);
         }
     }

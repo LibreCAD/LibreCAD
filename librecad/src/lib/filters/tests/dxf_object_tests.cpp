@@ -185,6 +185,17 @@ public:
   }
 };
 
+class LayoutCapture : public StubInterface {
+public:
+  int m_callCount = 0;
+  DRW_Layout m_captured;
+  void addLayout(const DRW_Layout &d) override {
+    if (m_callCount == 0)
+      m_captured = d;
+    ++m_callCount;
+  }
+};
+
 void readDxf(const std::string &dxf, DRW_Interface &cap, const char *name) {
   const auto path = std::filesystem::temp_directory_path() / name;
   std::filesystem::remove(path);
@@ -361,4 +372,39 @@ TEST_CASE("DXF SUN object is read (status/intensity/shadows/date)", "[dxf][sun]"
   CHECK(cap.m_captured.m_julianDay == 2455563);
   CHECK(cap.m_captured.m_milliseconds == 43200000);
   CHECK(cap.m_captured.m_shadowMapSize == 256);
+}
+
+TEST_CASE("DXF LAYOUT object disambiguates plot vs layout subclasses (slice C2)", "[dxf][layout]") {
+  LayoutCapture cap;
+  const char *dxf =
+      "0\nSECTION\n2\nOBJECTS\n"
+      "0\nLAYOUT\n5\n4F\n330\n1A\n"
+      "100\nAcDbPlotSettings\n"
+      "1\nMy Page Setup\n2\nDWG To PDF\n4\nANSI_A\n"
+      "40\n5.8\n41\n5.8\n42\n5.8\n43\n5.8\n44\n215.9\n45\n279.4\n"
+      "70\n688\n72\n0\n73\n1\n74\n5\n75\n16\n"
+      "100\nAcDbLayout\n"
+      "1\nLayout1\n70\n1\n71\n2\n"
+      "10\n0.0\n20\n0.0\n11\n12.0\n21\n9.0\n"
+      "12\n0.0\n22\n0.0\n32\n0.0\n"
+      "76\n0\n146\n0.0\n330\n50\n331\n51\n"
+      "0\nENDSEC\n0\nEOF\n";
+  readDxf(dxf, cap, "lc_layout_read.dxf");
+
+  REQUIRE(cap.m_callCount == 1);
+  // AcDbPlotSettings prefix
+  CHECK(cap.m_captured.pageSetupName == "My Page Setup");
+  CHECK(cap.m_captured.printerConfig == "DWG To PDF");
+  CHECK(cap.m_captured.paperSize == "ANSI_A");
+  CHECK(cap.m_captured.paperWidth == 215.9);
+  CHECK(cap.m_captured.plotLayoutFlags == 688);
+  // AcDbLayout body — code 1/70/76/330 must NOT be confused with the prefix
+  CHECK(cap.m_captured.name == "Layout1");
+  CHECK(cap.m_captured.layoutFlags == 1);
+  CHECK(cap.m_captured.tabOrder == 2);
+  CHECK(cap.m_captured.limMaxX == 12.0);
+  CHECK(cap.m_captured.limMaxY == 9.0);
+  CHECK(cap.m_captured.orthoViewType == 0);
+  CHECK(cap.m_captured.paperSpaceBlockRecordHandle.ref == 0x50u);
+  CHECK(cap.m_captured.lastActiveViewportHandle.ref == 0x51u);
 }
