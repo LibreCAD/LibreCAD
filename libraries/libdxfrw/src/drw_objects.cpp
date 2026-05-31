@@ -1458,8 +1458,8 @@ bool DRW_Block_Record::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs
         insertCount = 0;
         while (duint8 i = buf->getRawChar8() != 0)
             insertCount +=i;
-        UTF8STRING bkdesc = sBuf->getVariableText(version, false);
-        DRW_DBG("Block description: "); DRW_DBG(bkdesc.c_str()); DRW_DBG("\n");
+        description = sBuf->getVariableText(version, false);  // 2a.6: DXF 4
+        DRW_DBG("Block description: "); DRW_DBG(description.c_str()); DRW_DBG("\n");
 
         duint32 prevData = buf->getBitLong();
         for (unsigned int j= 0; j < prevData; ++j)
@@ -1467,11 +1467,8 @@ bool DRW_Block_Record::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs
     }
     if (version > DRW::AC1018) {//2007+
         insUnits = buf->getBitShort();
-        bool canExplode = buf->getBit(); //if block can be exploded
-        duint8 bkScaling = buf->getRawChar8();
-
-        DRW_UNUSED(canExplode);
-        DRW_UNUSED(bkScaling);
+        canExplode = buf->getBit(); //if block can be exploded (DXF 280)
+        blockScaling = buf->getRawChar8(); //2a.6: DXF 281
     }
 
     if (version > DRW::AC1018) {//2007+ skip string area
@@ -1531,6 +1528,7 @@ bool DRW_Block_Record::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs
         DRW_DBG("Remaining bytes: "); DRW_DBG(buf->numRemainingBytes()); DRW_DBG("\n");
         dwgHandle layoutH = buf->getHandle();
         DRW_DBG(" layoutH Handle: "); DRW_DBGHL(layoutH.code, layoutH.size, layoutH.ref); DRW_DBG("\n");
+        layoutHandle = layoutH.ref;  // 2a.6: soft ptr to owning LAYOUT (DXF 340)
     }
     DRW_DBG("Remaining bytes: "); DRW_DBG(buf->numRemainingBytes()); DRW_DBG("\n\n");
 //    RS crc;   //RS */

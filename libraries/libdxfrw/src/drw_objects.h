@@ -550,6 +550,10 @@ public:
         tType = DRW::BLOCK_RECORD;
         flags = 0;
         insUnits = 0;
+        description.clear();
+        canExplode = true;
+        blockScaling = 0;
+        layoutHandle = 0;
         firstEH = lastEH = DRW::NoHandle;
         DRW_TableEntry::reset();
     }
@@ -562,6 +566,10 @@ public:
     int insUnits;             /*!< block insertion units, code 70 of block_record*/
     DRW_Coord basePoint;      /*!<  block insertion base point dwg only */
     UTF8STRING xrefPath;      /*!< Xref path name for XREF block_records (DWG: parsed from BLOCK_HEADER, DXF: code 1) */
+    UTF8STRING description;   /*!< block description (DXF 4); DWG read */
+    bool canExplode = true;   /*!< whether the block can be exploded (DXF 280); R2007+ DWG */
+    duint8 blockScaling = 0;  /*!< block scaling flag (DXF 281); R2007+ DWG */
+    duint32 layoutHandle = 0; /*!< soft ptr to the owning LAYOUT (DXF 340); DWG read */
 protected:
     //dwg parser
 private:

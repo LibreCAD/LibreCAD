@@ -558,6 +558,36 @@ TEST_CASE("DRW_LayerIndex::parseDwg captures per-layer entry handles",
     REQUIRE(dst.entries[1].entryHandle == 0x201u);
 }
 
+// 2a.6 (gap object-blockrecord-layout-explode-dropped): DRW_Block_Record now
+// retains description (DXF 4), canExplode (280), blockScaling (281) and the
+// owning LAYOUT handle (340), which parseDwg previously read-and-discarded.
+// The full BLOCK_HEADER body is version-dependent and handle-heavy; the
+// parse-path correctness is covered by the corpus golden check (read-only,
+// member-assignment-only change). This guards the struct defaults + reset.
+// NOTE: blockScaling/canExplode are populated only for R2007+ (>AC1018).
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("DRW_Block_Record exposes layout/explode/scaling/description members",
+          "[dwg-read][object-encode][blockrecord]") {
+    DRW_Block_Record br;
+    // Documented defaults (used by the filter when a DWG omits them).
+    REQUIRE(br.canExplode == true);
+    REQUIRE(br.blockScaling == 0);
+    REQUIRE(br.layoutHandle == 0u);
+    REQUIRE(br.description.empty());
+
+    // Mutate, then reset() must restore the documented defaults so a reused
+    // record cannot leak a prior block's layout association.
+    br.description = "stamped";
+    br.canExplode = false;
+    br.blockScaling = 3;
+    br.layoutHandle = 0xABCD;
+    br.reset();
+    REQUIRE(br.canExplode == true);
+    REQUIRE(br.blockScaling == 0);
+    REQUIRE(br.layoutHandle == 0u);
+    REQUIRE(br.description.empty());
+}
+
 // 0B.4a (gap object-mlinestyle-ltindex-inverted-version-gate-read):
 // PRE-R2018 MLINESTYLE stores a signed inline lt index (BSd) per element;
 // the version gate was inverted (read the BS only for R2018+), desyncing
