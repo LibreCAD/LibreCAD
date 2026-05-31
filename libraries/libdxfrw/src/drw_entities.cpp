@@ -1354,11 +1354,11 @@ bool DRW_Entity::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer* strBu
     }
     dint16 invisibleFlag = buf->getBitShort(); //BS
     DRW_DBG(" invisibleFlag: "); DRW_DBG(invisibleFlag);
-    // DXF group 60: 0 = visible, 1 = invisible. Previously dropped on the
-    // DWG path (the BS was read into a discarded local). The encoder still
-    // hardcodes invisibleFlag=0 (write-emit is Phase 2a, out of scope here),
-    // so a default encode→parse round-trip keeps visible==true.
-    visible = (invisibleFlag == 0);
+    // DXF group 60: bit 0 = invisible (1) / visible (0). libreDWG
+    // common_entity_data.spec masks bit 0 only (`invisible & 1`) and ignores
+    // the higher bits, so use the same mask rather than `== 0`. Paired with
+    // the encode emit below.
+    visible = ((invisibleFlag & 1) == 0);
     if (version > DRW::AC1014) {//2000+
         lWeight = DRW_LW_Conv::dwgInt2lineWidth( buf->getRawChar8() ); //RC
         DRW_DBG(" lwFlag (lWeight): "); DRW_DBG(lWeight); DRW_DBG("\n");
@@ -1665,8 +1665,13 @@ bool DRW_Entity::encodeDwgCommon(DRW::Version version, dwgBufferW *buf,
         buf->putBit(0);  // hasEdgeVisualStyle
     }
 
-    // invisibleFlag BS.
+    // invisibleFlag BS (DXF 60). 2a.1: emit from `visible` (bit 0 = invisible)
+    // instead of a hardcoded 0. visible==true → 0 → byte-identical to legacy.
+#if LIBDXFRW_FULL_COMMON_HEADER
+    buf->putBitShort(visible ? 0 : 1);
+#else
     buf->putBitShort(0);
+#endif
 
     // lWeight RC (0 = byLayer per DRW_LW_Conv).
     buf->putRawChar8(static_cast<duint8>(lWeight));

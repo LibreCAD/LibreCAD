@@ -808,6 +808,54 @@ TEST_CASE("DRW_Attdef::encodeDwg round-trips tag + prompt",
     }
 }
 
+// 2a.1 (gap entity-visible-code60-dropped-dwg-read): the encoder now emits
+// the invisibleFlag BS (DXF 60) from `visible` instead of a hardcoded 0,
+// paired with the read assign. A real encode→parse round-trip now preserves
+// visible=false; a default visible=true entity stays byte-stable.
+TEST_CASE("DRW entity visibility round-trips through encode (2a.1)",
+          "[dwg-write][entity-encode][visibility]") {
+    for (DRW::Version ver : {DRW::AC1015, DRW::AC1018}) {
+        // visible=false survives the real encoder.
+        {
+            DRW_Point src;
+            src.handle = 0x61;
+            src.color = 7;
+            src.ltypeScale = 1.0;
+            src.basePoint = DRW_Coord{1.0, 2.0, 3.0};
+            src.extPoint = DRW_Coord{0.0, 0.0, 1.0};
+            src.visible = false;
+            DrwEntityEncodeTestAccess::layerH(src).ref = 0x12;
+
+            dwgBufferW w;
+            REQUIRE(DrwEntityEncodeTestAccess::encode(src, ver, &w));
+            auto bytes = snapshot(w);
+            dwgBuffer r(bytes.data(), bytes.size());
+            DRW_Point dst;
+            REQUIRE(DrwEntityEncodeTestAccess::parse(dst, ver, &r));
+            REQUIRE(dst.visible == false);
+            REQUIRE(dst.basePoint.x == 1.0);
+        }
+        // visible=true (default) round-trips visible.
+        {
+            DRW_Point src;
+            src.handle = 0x62;
+            src.color = 7;
+            src.ltypeScale = 1.0;
+            src.basePoint = DRW_Coord{4.0, 5.0, 6.0};
+            src.extPoint = DRW_Coord{0.0, 0.0, 1.0};
+            DrwEntityEncodeTestAccess::layerH(src).ref = 0x12;
+
+            dwgBufferW w;
+            REQUIRE(DrwEntityEncodeTestAccess::encode(src, ver, &w));
+            auto bytes = snapshot(w);
+            dwgBuffer r(bytes.data(), bytes.size());
+            DRW_Point dst;
+            REQUIRE(DrwEntityEncodeTestAccess::parse(dst, ver, &r));
+            REQUIRE(dst.visible == true);
+        }
+    }
+}
+
 // T1 (gap attrib-attdef-lockpos-version-gate-r2007): the lockPosition (DXF
 // 280) READ gate was lowered AC1024->AC1021 so R2007/8/9 imports preserve
 // it; the ENCODE gate stays AC1024.  This test pins the LOWER boundary: at
