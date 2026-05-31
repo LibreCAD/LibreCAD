@@ -3719,3 +3719,36 @@ TEST_CASE("DWG TABLESTYLE/CELLSTYLEMAP/TABLECONTENT raw objects replay-eligible"
           == LC_DwgAdvancedMetadata::ReplayBlocker::None);
   }
 }
+
+// Phase 2b.3 — DETAILVIEWSTYLE + SECTIONVIEWSTYLE raw-replay rescue.
+TEST_CASE("DWG DETAILVIEWSTYLE/SECTIONVIEWSTYLE raw objects replay-eligible",
+          "[entity_metadata][dwg_metadata][replay_rescue]") {
+  LC_DwgAdvancedMetadata metadata;
+
+  DRW_UnsupportedObject detail;
+  detail.m_objectType = 630;
+  detail.m_handle = 0x510u;
+  detail.m_isCustomClass = true;
+  detail.m_recordName = "ACDBDETAILVIEWSTYLE";
+  detail.m_className = "AcDbDetailViewStyle";
+  detail.m_rawBytes = {0x01u, 0x02u, 0x03u, 0x04u};
+  metadata.addUnsupportedObject(detail);
+
+  DRW_UnsupportedObject section;
+  section.m_objectType = 631;
+  section.m_handle = 0x511u;
+  section.m_isCustomClass = true;
+  section.m_recordName = "ACDBSECTIONVIEWSTYLE";
+  section.m_className = "AcDbSectionViewStyle";
+  section.m_rawBytes = {0x05u, 0x06u};
+  metadata.addUnsupportedObject(section);
+
+  REQUIRE(metadata.rawObjects().size() == 2);
+  CHECK(metadata.rawObjects()[0].recordName == "ACDBDETAILVIEWSTYLE");
+  CHECK(metadata.rawObjects()[1].recordName == "ACDBSECTIONVIEWSTYLE");
+  for (const auto& record : metadata.rawObjects()) {
+    CHECK(!record.rawBytes.empty());
+    CHECK(LC_DwgAdvancedMetadata::rawReplayBlocker(record)
+          == LC_DwgAdvancedMetadata::ReplayBlocker::None);
+  }
+}

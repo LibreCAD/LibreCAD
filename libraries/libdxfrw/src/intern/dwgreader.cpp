@@ -1898,14 +1898,22 @@ bool dwgReader::readDwgObject(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                         || cit->second->className == "AcDbDetailViewStyle") {
                         DRW_DetailViewStyle e;
                         ret = e.parseDwg(version, &buff, bs);
-                        if (ret) intfa.addDetailViewStyle(e);
+                        // Raw replay preserves the full byte image (version
+                        // guard blocks cross-version replay). (Phase 2b.3)
+                        if (ret) {
+                            intfa.addDetailViewStyle(e);
+                            intfa.addUnsupportedObject(makeRawObject(oType, cit->second));
+                        }
                         break;
                     }
                     if (rn == "ACDBSECTIONVIEWSTYLE" || rn == "SECTIONVIEWSTYLE"
                         || cit->second->className == "AcDbSectionViewStyle") {
                         DRW_SectionViewStyle e;
                         ret = e.parseDwg(version, &buff, bs);
-                        if (ret) intfa.addSectionViewStyle(e);
+                        if (ret) {
+                            intfa.addSectionViewStyle(e);
+                            intfa.addUnsupportedObject(makeRawObject(oType, cit->second));
+                        }
                         break;
                     }
                     if (rn == "BREAKDATA"
