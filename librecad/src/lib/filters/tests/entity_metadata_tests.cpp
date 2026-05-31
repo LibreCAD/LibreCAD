@@ -3560,3 +3560,91 @@ TEST_CASE("DXF round-trip: polyface vertex flags survive write+read",
 
   std::filesystem::remove(path);
 }
+
+// Phase 2b.0 — source DWG version accessor + raw-replay version guard.
+namespace {
+// Mirrors the version guard added to RS_FilterDXFRW::writeObjects /
+// writeDwgClasses raw-replay loops: a same-version (or UNKNOWNV-source) object
+// is eligible; a cross-version object is dropped (replayed==0, blocked==1).
+struct RawReplayGuardResult {
+  int replayed = 0;
+  int blockedVersionMismatch = 0;
+};
+
+RawReplayGuardResult simulateRawReplay(const LC_DwgAdvancedMetadata& metadata,
+                                       DRW::Version targetVersion) {
+  RawReplayGuardResult result;
+  for (const auto& record : metadata.rawObjects()) {
+    if (metadata.sourceDwgVersion() != DRW::UNKNOWNV
+        && metadata.sourceDwgVersion() != targetVersion) {
+      ++result.blockedVersionMismatch;
+      continue;
+    }
+    if (LC_DwgAdvancedMetadata::rawReplayBlocker(record)
+        != LC_DwgAdvancedMetadata::ReplayBlocker::None) {
+      continue;
+    }
+    ++result.replayed;
+  }
+  return result;
+}
+}  // namespace
+
+TEST_CASE("DWG advanced metadata source version accessor round-trips",
+          "[entity_metadata][dwg_metadata][replay_version]") {
+  LC_DwgAdvancedMetadata metadata;
+  // Default is UNKNOWNV (no source recorded).
+  CHECK(metadata.sourceDwgVersion() == DRW::UNKNOWNV);
+
+  metadata.setSourceDwgVersion(DRW::AC1015);
+  CHECK(metadata.sourceDwgVersion() == DRW::AC1015);
+
+  metadata.setSourceDwgVersion(DRW::AC1032);
+  CHECK(metadata.sourceDwgVersion() == DRW::AC1032);
+
+  metadata.clear();
+  CHECK(metadata.sourceDwgVersion() == DRW::UNKNOWNV);
+
+  CHECK(std::string(LC_DwgAdvancedMetadata::replayBlockerName(
+            LC_DwgAdvancedMetadata::ReplayBlocker::VersionMismatch))
+        == "source/target version mismatch");
+}
+
+TEST_CASE("DWG raw-replay version guard drops cross-version custom objects",
+          "[entity_metadata][dwg_metadata][replay_version]") {
+  LC_DwgAdvancedMetadata metadata;
+
+  DRW_UnsupportedObject raw;
+  raw.m_objectType = 510;  // >=500 custom class.
+  raw.m_handle = 0x123u;
+  raw.m_bodyBitSize = 64u;
+  raw.m_isCustomClass = true;
+  raw.m_recordName = "ACDBMATERIAL";
+  raw.m_className = "AcDbMaterial";
+  raw.m_rawBytes = {0x10u, 0x20u, 0x30u};
+  metadata.addUnsupportedObject(raw);
+
+  // Same-version (AC1015 source -> AC1015 target): object is eligible.
+  metadata.setSourceDwgVersion(DRW::AC1015);
+  CHECK(LC_DwgAdvancedMetadata::rawReplayBlocker(metadata.rawObjects()[0])
+        == LC_DwgAdvancedMetadata::ReplayBlocker::None);
+  RawReplayGuardResult sameVersion =
+      simulateRawReplay(metadata, DRW::AC1015);
+  CHECK(sameVersion.replayed == 1);
+  CHECK(sameVersion.blockedVersionMismatch == 0);
+
+  // Cross-version (AC1032 source -> AC1015 target): object is dropped, no
+  // malformed bytes emitted, counted as a version mismatch.
+  metadata.setSourceDwgVersion(DRW::AC1032);
+  RawReplayGuardResult crossVersion =
+      simulateRawReplay(metadata, DRW::AC1015);
+  CHECK(crossVersion.replayed == 0);
+  CHECK(crossVersion.blockedVersionMismatch == 1);
+
+  // UNKNOWNV source (no version recorded): guard is a no-op, object eligible.
+  metadata.setSourceDwgVersion(DRW::UNKNOWNV);
+  RawReplayGuardResult unknownSource =
+      simulateRawReplay(metadata, DRW::AC1015);
+  CHECK(unknownSource.replayed == 1);
+  CHECK(unknownSource.blockedVersionMismatch == 0);
+}

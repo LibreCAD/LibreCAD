@@ -1030,6 +1030,9 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic& g, const QString& file, [[maybe_unus
         // name the format the user supplied. dwgR::version is set by
         // openFile() even on the BAD_VERSION fork.
         m_dwgVersion = dwgr.getVersion();
+        // Persist the source version on the document so the export filter can
+        // gate raw-replay (emit + CLASSES registration) on source==target.
+        m_graphic->dwgAdvancedMetadata().setSourceDwgVersion(m_dwgVersion);
         RS_DEBUG->print("RS_FilterDXFRW::fileImport: reading DWG file: OK");
         RS_DIALOGFACTORY->commandMessage(QObject::tr("Opened DWG file version %1.").arg(printDwgVersion(dwgr.getVersion())));
         const size_t parseFailures = dwgr.getEntityParseFailures();
@@ -5660,6 +5663,16 @@ void RS_FilterDXFRW::writeDwgClasses() {
     }
 
     for (const auto& record : metadata.rawObjects()) {
+        // Version guard: never register a CLASSES entry for a raw object whose
+        // captured bytes are from a different DWG version than the file being
+        // written. Without this, registerRawDwgObjectClass below would add an
+        // orphan CLASSES entry (numInstances=1) for an object the emit loop in
+        // writeObjects then drops on the same guard — a CLASSES/OBJECT
+        // mismatch AutoCAD rejects. Mirrors the emit-loop guard.
+        if (metadata.sourceDwgVersion() != DRW::UNKNOWNV
+            && metadata.sourceDwgVersion() != m_dwgW->getVersion()) {
+            continue;
+        }
         if (record.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
             || !record.isCustomClass) {
             continue;
@@ -6722,6 +6735,7 @@ void RS_FilterDXFRW::writeObjects() {
         int blockedMissingRawBytes = 0;
         int blockedMissingClassMetadata = 0;
         int blockedWriterRejected = 0;
+        int blockedVersionMismatch = 0;
         int replayedObjects = 0;
         const LC_DwgAdvancedMetadata::RawObjectFamilyCounts rawFamilyCounts =
             metadata.rawObjectFamilyCounts();
@@ -6863,6 +6877,17 @@ void RS_FilterDXFRW::writeObjects() {
                 && isFieldRawObject(record)) {
                 hasBlockedReplay = true;
                 ++blockedReplaced;
+                continue;
+            }
+            // Version guard: raw bytes are only byte-for-byte valid for the
+            // exact source version. If the target write version differs, drop
+            // the raw object (no malformed bytes) and count it. The matching
+            // guard in writeDwgClasses skips its CLASSES registration so no
+            // orphan CLASSES entry is left behind.
+            if (metadata.sourceDwgVersion() != DRW::UNKNOWNV
+                && metadata.sourceDwgVersion() != m_dwgW->getVersion()) {
+                hasBlockedReplay = true;
+                ++blockedVersionMismatch;
                 continue;
             }
             const LC_DwgAdvancedMetadata::ReplayBlocker blocker =
@@ -7585,10 +7610,12 @@ void RS_FilterDXFRW::writeObjects() {
                 RS_DEBUG->print(
                     RS_Debug::D_WARNING,
                     "Blocked raw DWG replay: invalidated=%d replaced=%d entity=%d "
-                    "missing-bytes=%d missing-class=%d writer-rejected=%d",
+                    "missing-bytes=%d missing-class=%d writer-rejected=%d "
+                    "version-mismatch=%d (replayed=%d)",
                     blockedInvalidated, blockedReplaced, blockedEntityReplay,
                     blockedMissingRawBytes, blockedMissingClassMetadata,
-                    blockedWriterRejected);
+                    blockedWriterRejected, blockedVersionMismatch,
+                    replayedObjects);
             }
             if (semanticOnlyRecords > 0) {
                 RS_DEBUG->print(
