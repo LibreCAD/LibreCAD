@@ -1354,6 +1354,11 @@ bool DRW_Entity::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer* strBu
     }
     dint16 invisibleFlag = buf->getBitShort(); //BS
     DRW_DBG(" invisibleFlag: "); DRW_DBG(invisibleFlag);
+    // DXF group 60: 0 = visible, 1 = invisible. Previously dropped on the
+    // DWG path (the BS was read into a discarded local). The encoder still
+    // hardcodes invisibleFlag=0 (write-emit is Phase 2a, out of scope here),
+    // so a default encode→parse round-trip keeps visible==true.
+    visible = (invisibleFlag == 0);
     if (version > DRW::AC1014) {//2000+
         lWeight = DRW_LW_Conv::dwgInt2lineWidth( buf->getRawChar8() ); //RC
         DRW_DBG(" lwFlag (lWeight): "); DRW_DBG(lWeight); DRW_DBG("\n");

@@ -96,12 +96,15 @@ namespace DRW {
 class dwgBufferW;
 class DrwEntityEncodeTestAccess;  // test-only friend; defined in
                                   // dwg_entity_encode_round_trip_tests.cpp
+class DrwVisibilityTestAccess;    // test-only friend; defined in
+                                  // dwg_visibility_read_tests.cpp
 
 #define SETENTFRIENDS  friend class dxfRW; \
                        friend class dwgReader; \
                        friend class dwgWriter15; \
                        friend class dwgWriter24; \
-                       friend class DrwEntityEncodeTestAccess;
+                       friend class DrwEntityEncodeTestAccess; \
+                       friend class DrwVisibilityTestAccess;
 
 //! Base class for entities
 /*!
