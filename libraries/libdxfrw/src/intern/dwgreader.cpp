@@ -1515,6 +1515,13 @@ bool dwgReader::readDwgEntity(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                 if (cit != classesmap.end() && cit->second) {
                     const std::string& rn = cit->second->recName;
                     const std::string& cn = cit->second->className;
+                    if (rn == "HELIX" || cn == "AcDbHelix") {
+                        DRW_Helix e;
+                        if (entryParse(e, buff, bs, ret)) {
+                            intfa.addHelix(&e);
+                        }
+                        break;
+                    }
                     if (rn == "LIGHT" || cn == "AcDbLight") {
                         DRW_Light e;
                         if (entryParse(e, buff, bs, ret)) {

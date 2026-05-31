@@ -144,6 +144,7 @@ public:
     void addText(const DRW_Text& data) override;
     void addPolyline(const DRW_Polyline& data) override;
     void addSpline(const DRW_Spline* data) override;
+    void addHelix(const DRW_Helix* data) override;
     void addKnot(const DRW_Entity&) override{}
     void addInsert(const DRW_Insert& data) override;
     void addTable(const DRW_Table& data) override;

@@ -1643,3 +1643,67 @@ TEST_CASE("DRW_Image::encodeDwg round-trips empty clip boundary",
         CHECK(dst.m_imageDefReactorHandle == 0x201u);
     }
 }
+
+// HELIX encoder round-trip (Phase 8a-1): a HELIX encodes as a SPLINE body
+// (oType 503, custom class AcDbHelix) followed by the AcDbHelix trailer. The
+// spline body must stay intact (degree/control points) and every trailer field
+// (radius/turns/turnHeight/axis vectors/handedness/constraint) must survive.
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("DRW_Helix::encodeDwg round-trips spline body + AcDbHelix trailer",
+          "[dwg-write][entity-encode][helix]") {
+    DRW_Helix src;
+    src.handle = 0xF8;
+    src.color = 5;
+    src.flags = 8;           // planar
+    src.degree = 3;
+    src.tolknot    = 1e-9;
+    src.tolcontrol = 1e-9;
+    src.knotslist  = {0, 0, 0, 0, 1, 1, 1, 1};
+    src.controllist.push_back(std::make_shared<DRW_Coord>(DRW_Coord{0.0, 0.0, 0.0}));
+    src.controllist.push_back(std::make_shared<DRW_Coord>(DRW_Coord{1.0, 1.0, 0.0}));
+    src.controllist.push_back(std::make_shared<DRW_Coord>(DRW_Coord{2.0, 1.0, 0.0}));
+    src.controllist.push_back(std::make_shared<DRW_Coord>(DRW_Coord{3.0, 0.0, 0.0}));
+    src.nknots = 8;
+    src.ncontrol = 4;
+    // AcDbHelix trailer fields.
+    src.m_majorVersion = 29;
+    src.m_maintVersion = 63;
+    src.axisBasePt = DRW_Coord{1.0, 2.0, 3.0};
+    src.startPt    = DRW_Coord{4.0, 5.0, 6.0};
+    src.axisVector = DRW_Coord{0.0, 0.0, 1.0};
+    src.radius      = 2.5;
+    src.turns       = 7.0;
+    src.turnHeight  = 1.5;
+    src.handedness  = true;
+    src.constraintType = 2;
+    DrwEntityEncodeTestAccess::layerH(src).ref = 0x12;
+
+    for (DRW::Version ver : {DRW::AC1015, DRW::AC1018}) {
+        dwgBufferW w;
+        REQUIRE(DrwEntityEncodeTestAccess::encode(src, ver, &w));
+        CHECK(DrwEntityEncodeTestAccess::oType(src) == 503);
+
+        auto bytes = snapshot(w);
+        dwgBuffer r(bytes.data(), bytes.size());
+        DRW_Helix dst;
+        REQUIRE(DrwEntityEncodeTestAccess::parse(dst, ver, &r));
+
+        // Spline body intact.
+        CHECK(dst.degree == 3);
+        CHECK(dst.controllist.size() == 2u + 2u);  // == 4
+        CHECK(dst.controllist[0]->x == Approx(0.0));
+        CHECK(dst.controllist[3]->x == Approx(3.0));
+        // Trailer round-trips.
+        CHECK(dst.m_majorVersion == 29);
+        CHECK(dst.m_maintVersion == 63);
+        CHECK(dst.axisBasePt.x == Approx(1.0));
+        CHECK(dst.axisBasePt.z == Approx(3.0));
+        CHECK(dst.startPt.y    == Approx(5.0));
+        CHECK(dst.axisVector.z == Approx(1.0));
+        CHECK(dst.radius      == Approx(2.5));
+        CHECK(dst.turns       == Approx(7.0));
+        CHECK(dst.turnHeight  == Approx(1.5));
+        CHECK(dst.handedness  == true);
+        CHECK(dst.constraintType == 2);
+    }
+}

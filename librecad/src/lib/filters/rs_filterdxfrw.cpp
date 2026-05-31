@@ -2611,6 +2611,19 @@ void RS_FilterDXFRW::addSpline(const DRW_Spline* data) {
 }
 
 /**
+ * Handles a HELIX entity. LibreCAD has no native helix; the entity is mapped
+ * to its spline approximation via addSpline. The AcDbHelix axis/turns metadata
+ * (radius, turns, turnHeight, axisVector, ...) is preserved across a DWG
+ * round-trip but is not represented in the RS entity model, so it is dropped
+ * on import.
+ */
+void RS_FilterDXFRW::addHelix(const DRW_Helix* data) {
+    RS_DEBUG->print("RS_FilterDXFRW::addHelix: mapping HELIX to spline "
+                    "approximation (axis/turns metadata dropped)");
+    addSpline(data);
+}
+
+/**
  * Implementation of the method which handles inserts.
  */
 void RS_FilterDXFRW::addInsert(const DRW_Insert& data) {

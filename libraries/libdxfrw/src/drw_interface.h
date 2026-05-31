@@ -159,7 +159,12 @@ public:
 
     /** Called for every spline */
     virtual void addSpline(const DRW_Spline* data) = 0;
-	
+
+    /** Called for every helix (AcDbHelix). Default delegates nothing; the
+     *  base no-op lets readers add HELIX without forcing every consumer to
+     *  implement it. */
+    virtual void addHelix(const DRW_Helix* data) { (void) data; }
+
 	/** Called for every spline knot value */
     virtual void addKnot(const DRW_Entity& data) = 0;
 

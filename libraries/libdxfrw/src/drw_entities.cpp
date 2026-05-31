@@ -1900,7 +1900,16 @@ bool DRW_Spline::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dw
     (void)bs; (void)strBuf;
     oType = 36;  // SPLINE class id — see dwgreader.cpp:1329
     if (!encodeDwgCommon(version, buf)) return false;
+    encodeDwgSplineBody(version, buf);
+    return encodeDwgEntHandle(version, buf, handleBuf);
+}
 
+// Spline body encode: the scenario/degree/knots/ctrl/fit section, WITHOUT the
+// leading encodeDwgCommon or the trailing encodeDwgEntHandle. Factored out so
+// DRW_Helix::encodeDwg can reuse the identical payload (Phase 8a-1).
+// Omits the DXF-only flag70/extrusion (210-230) which the DWG stream never
+// carries here.
+void DRW_Spline::encodeDwgSplineBody(DRW::Version version, dwgBufferW *buf) const {
     // Scenario:
     //   1 = control-point / rational / planar (uses knots + control + weights)
     //   2 = fit-point (uses fit points + tangents + tolerance)
@@ -1980,6 +1989,28 @@ bool DRW_Spline::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dw
     } else {
         for (const auto& fp : fitlist) buf->put3BitDouble(*fp);
     }
+}
+
+// DRW_Helix::encodeDwg — spline body (oType = HELIX class 503) + AcDbHelix
+// trailer, then the common entity handle data. Trailer field order MUST match
+// DRW_Helix::parseDwg (Phase 8a-1).
+bool DRW_Helix::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {
+    (void)bs; (void)strBuf;
+    oType = kDwgClassNum;  // HELIX custom class 503
+    if (!encodeDwgCommon(version, buf)) return false;
+    encodeDwgSplineBody(version, buf);
+
+    // AcDbHelix trailer (same order as parseDwg):
+    buf->putBitLong(m_majorVersion);
+    buf->putBitLong(m_maintVersion);
+    buf->put3BitDouble(axisBasePt);
+    buf->put3BitDouble(startPt);
+    buf->put3BitDouble(axisVector);
+    buf->putBitDouble(radius);
+    buf->putBitDouble(turns);
+    buf->putBitDouble(turnHeight);
+    buf->putBit(handedness ? 1 : 0);
+    buf->putRawChar8(static_cast<duint8>(constraintType));
 
     return encodeDwgEntHandle(version, buf, handleBuf);
 }
@@ -5856,6 +5887,21 @@ bool DRW_Spline::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     bool ret = DRW_Entity::parseDwg(version, buf, NULL, bs);
     if (!ret)
         return ret;
+    if (!parseDwgSplineBody(version, buf))
+        return false;
+    /* Common Entity Handle Data */
+    ret = DRW_Entity::parseDwgEntHandle(version, buf);
+    if (!ret)
+        return ret;
+//    RS crc;   //RS */
+    return buf->isGood();
+}
+
+// Spline body decode: the scenario/degree/knots/ctrl/fit section, WITHOUT
+// the leading DRW_Entity::parseDwg(common) or the trailing parseDwgEntHandle.
+// Factored out so DRW_Helix can reuse the identical spline payload before its
+// AcDbHelix trailer (Phase 8a-1).
+bool DRW_Spline::parseDwgSplineBody(DRW::Version version, dwgBuffer *buf){
     DRW_DBG("\n***************************** parsing spline *********************************************\n");
     duint8 weight = 0; // RLZ ??? flags, weight, code 70, bit 4 (16)
 
@@ -5969,6 +6015,34 @@ bool DRW_Spline::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
             DRW_DBG("\n"); DRW_DBGPT(v->x, v->y, v->z);
         }
     }
+
+    return buf->isGood();
+}
+
+// AcDbHelix trailer order (libreDWG dwg2.spec:2493-2503):
+//   major_version BL, maint_version BL, axis_base_pt 3BD, start_pt 3BD,
+//   axis_vector 3BD, radius BD, turns BD, turn_height BD, handedness B,
+//   constraint_type RC.
+bool DRW_Helix::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
+    bool ret = DRW_Entity::parseDwg(version, buf, NULL, bs);
+    if (!ret)
+        return ret;
+    DRW_DBG("\n***************************** parsing helix *********************************************\n");
+    if (!parseDwgSplineBody(version, buf))
+        return false;
+
+    // AcDbHelix trailer (see field order above).
+    m_majorVersion = buf->getBitLong();
+    m_maintVersion = buf->getBitLong();
+    axisBasePt  = buf->get3BitDouble();
+    startPt     = buf->get3BitDouble();
+    axisVector  = buf->get3BitDouble();
+    radius      = buf->getBitDouble();
+    turns       = buf->getBitDouble();
+    turnHeight  = buf->getBitDouble();
+    handedness  = buf->getBit() != 0;
+    constraintType = buf->getRawChar8();
+    DRW_DBG("\nhelix radius: "); DRW_DBG(radius); DRW_DBG(" turns: "); DRW_DBG(turns);
 
     /* Common Entity Handle Data */
     ret = DRW_Entity::parseDwgEntHandle(version, buf);

@@ -53,7 +53,7 @@ namespace DRW {
         DIMARC,
         ELLIPSE,
         HATCH,
-//        HELIX,
+        HELIX,
         IMAGE,
         INSERT,
         LEADER,
@@ -1451,6 +1451,11 @@ protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
     virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs=0, dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
+    // Spline payload (scenario/degree/knots/ctrl/fit) WITHOUT the leading
+    // common-entity parse or the trailing entity-handle data.  Shared with
+    // DRW_Helix, whose AcDbHelix trailer follows the spline body (Phase 8a-1).
+    bool parseDwgSplineBody(DRW::Version version, dwgBuffer *buf);
+    void encodeDwgSplineBody(DRW::Version version, dwgBufferW *buf) const;
 
 public:
 //    double ex;                /*!< normal vector x coordinate, code 210 */
@@ -1485,6 +1490,38 @@ public:
 private:
     std::shared_ptr<DRW_Coord> controlpoint;   /*!< current control point to add data */
     std::shared_ptr<DRW_Coord> fitpoint;       /*!< current fit point to add data */
+};
+
+//! Class to handle helix entity (AcDbHelix, custom class 503)
+/*!
+*  A HELIX is encoded as a SPLINE body plus an AcDbHelix trailer carrying the
+*  generating axis/turns metadata.  LibreCAD has no native helix entity, so on
+*  import it is delegated to addSpline (the spline approximation); the trailer
+*  fields are preserved on the DWG round-trip but dropped on the RS mapping.
+*/
+class DRW_Helix : public DRW_Spline {
+    SETENTFRIENDS
+public:
+    DRW_Helix() {
+        eType = DRW::HELIX;
+    }
+    static constexpr duint16 kDwgClassNum = 503; /*!< AcDbHelix DWG custom class id */
+
+protected:
+    virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs=0, dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
+
+public:
+    dint32 m_majorVersion = 0;   /*!< AcDbHelix major version, code 90 */
+    dint32 m_maintVersion = 0;   /*!< AcDbHelix maintenance version, code 91 */
+    DRW_Coord axisBasePt;        /*!< axis base point, code 10/20/30 */
+    DRW_Coord startPt;           /*!< start point, code 11/21/31 */
+    DRW_Coord axisVector;        /*!< axis vector, code 12/22/32 */
+    double radius = 0.0;         /*!< radius, code 40 */
+    double turns = 0.0;          /*!< number of turns, code 41 */
+    double turnHeight = 0.0;     /*!< turn height, code 42 */
+    bool handedness = false;     /*!< 0 = left-handed, 1 = right-handed, code 290 */
+    duint8 constraintType = 0;   /*!< constrain type, code 280 */
 };
 
 //! Class to handle hatch loop
