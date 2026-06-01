@@ -29,10 +29,6 @@ class dwgBuffer;
 */
 class DRW_Class {
 public:
-    DRW_Class() {
-    }
-    ~DRW_Class() {
-    }
 
     void write(dxfWriter *writer, DRW::Version ver);
     bool parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer *strBuf);
@@ -55,4 +51,3 @@ public: //only for read dwg
 #endif
 
 // EOF
-

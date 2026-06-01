@@ -46,7 +46,7 @@ struct  LC_InfoCursorOptions{
 class LC_InfoMessageBuilder{
 
 public:
-    LC_InfoMessageBuilder() {}
+    LC_InfoMessageBuilder() = default;
 
     explicit LC_InfoMessageBuilder(const QString& m) : msg(m) {
         msg.append("\n");
