@@ -17,6 +17,7 @@
 #include <memory>
 #include <string>
 #include <unordered_map>
+#include <utility>
 #include <vector>
 #include "drw_entities.h"
 #include "drw_objects.h"
@@ -129,6 +130,13 @@ public:
      * fixed/built-in or unknown record names. instanceCount is left 0 for the
      * caller to fill. */
     static bool dxfClassForRecordName(const std::string &recName, DRW_Class &out);
+    /*!< Register extra (name, hex-handle) entries to splice into the regenerated
+     * root NamedObjectsDictionary (handle C) so raw-net-routed named dictionaries
+     * are reachable from the root and not pruned as orphans. The filter builds
+     * this from the source root dict before write(); empty by default. */
+    void setRootDictEntries(const std::vector<std::pair<std::string, std::string>> &entries) {
+        m_rootDictEntries = entries;
+    }
 
     DRW::Version getVersion() const;
     DRW::error getError() const;
@@ -244,6 +252,7 @@ private:
     int entCount;
     int m_handleSeedFloor {0};
     std::vector<DRW_Class> m_dxfClasses;
+    std::vector<std::pair<std::string, std::string>> m_rootDictEntries;
     bool wlayer0;
     bool dimstyleStd;
     bool applyExt;

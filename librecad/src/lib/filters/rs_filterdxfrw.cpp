@@ -5318,6 +5318,58 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic& g, const QString& file, RS2::FormatT
             m_dxfW->setHandleSeedFloor(static_cast<int>(maxRawHandle));
         if (!classes.empty())
             m_dxfW->setDxfClasses(classes);
+
+        // (3) Re-attach raw-net-routed named dictionaries to the codec's
+        // regenerated root NamedObjectsDictionary (handle C). The child dict NAME
+        // is not on the child object — it lives in the SOURCE root dict's entry
+        // list (the typed DictionaryRecord with parentHandle==0). Build the
+        // (name, verbatim-handle) entries for the codec, and a suppression set so
+        // the source ACAD_GROUP dict (codec regenerates it at D) and any C/D
+        // collisions are not re-emitted. The source root dict itself is never in
+        // the raw net (processDictionary skips parentHandle==0).
+        m_dxfSuppressedObjectHandles.clear();
+        duint32 sourceRootHandle = 0;
+        duint32 acadGroupHandle = 0;
+        std::map<duint32, std::string> rootEntryName;  // child handle -> name
+        for (const auto &d : metadata.dictionaries()) {
+            if (d.parentHandle != 0)
+                continue;
+            sourceRootHandle = d.handle;
+            for (const auto &e : d.entries) {
+                if (e.name == "ACAD_GROUP")
+                    acadGroupHandle = e.handle;
+                else
+                    rootEntryName.emplace(e.handle, e.name);
+            }
+        }
+        if (acadGroupHandle != 0)
+            m_dxfSuppressedObjectHandles.insert(acadGroupHandle);
+        std::vector<std::pair<std::string, std::string>> rootEntries;
+        for (const DRW_RawDxfObject &o : metadata.rawDxfObjects()) {
+            if (o.name != "DICTIONARY" && o.name != "ACDBDICTIONARYWDFLT")
+                continue;
+            if (o.handle == 0xCu || o.handle == 0xDu) {  // collide with fixed C/D
+                m_dxfSuppressedObjectHandles.insert(o.handle);
+                continue;
+            }
+            if (o.handle == acadGroupHandle)
+                continue;  // already suppressed
+            if (o.parentHandle != sourceRootHandle)
+                continue;  // only direct root children get a root entry
+            auto it = rootEntryName.find(o.handle);
+            if (it == rootEntryName.end())
+                continue;  // name not recoverable -> cannot re-attach
+            std::string handleStr;  // verbatim code-5, matches the re-emit
+            for (const DRW_Variant &g : o.groups)
+                if (g.code() == 5) {
+                    handleStr = g.c_str();
+                    break;
+                }
+            if (!handleStr.empty())
+                rootEntries.emplace_back(it->second, handleStr);
+        }
+        if (!rootEntries.empty())
+            m_dxfW->setRootDictEntries(rootEntries);
     }
 
 //    bool success = m_dxfW->write(this, exportVersion, false); //ascii
@@ -7718,11 +7770,15 @@ void RS_FilterDXFRW::writeObjects() {
     //Slice A2: re-emit OBJECTS captured verbatim on read (A1) so a LibreCAD DXF
     //round-trip preserves unmodeled objects rather than dropping them. Records live
     //on the graphic, so this (separate) write-filter instance still sees them.
-    //(Typed objects read into dwgAdvancedMetadata still need their own DXF writers;
-    //the CLASSES section for custom-class objects is the A3 follow-up.)
+    //Skip handles the codec regenerates itself (source ACAD_GROUP dict, C/D
+    //collisions — see m_dxfSuppressedObjectHandles set up in fileExport) so routed
+    //named dictionaries don't duplicate the root/group dictionaries.
     if (m_graphic != nullptr) {
         for (const DRW_RawDxfObject &rawObject :
                  m_graphic->dwgAdvancedMetadata().rawDxfObjects()) {
+            if (rawObject.handle != 0
+                && m_dxfSuppressedObjectHandles.count(rawObject.handle) != 0)
+                continue;
             DRW_RawDxfObject object = rawObject;
             m_dxfW->writeRawDxfObject(&object);
         }

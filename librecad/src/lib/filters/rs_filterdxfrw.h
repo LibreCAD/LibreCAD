@@ -353,6 +353,12 @@ private:
      *  per-element offsets when decomposing the MLINE into N polylines. */
     std::map<QString, DRW_MLineStyle> m_mlineStyleCache;
 
+    /** DXF export: raw-net OBJECT handles to NOT re-emit because the codec
+     *  regenerates them (the source ACAD_GROUP dictionary, and any object
+     *  colliding with the fixed root/group handles C/D). Computed in fileExport
+     *  before write(), consumed by the rawDxfObjects re-emit in writeObjects. */
+    std::set<duint32> m_dxfSuppressedObjectHandles;
+
     /** UNDERLAYDEFINITION cache: handle → definition (filename, sheet, kind).
      *  Populated by linkUnderlay (OBJECTS section, after entities are
      *  parsed). Consumed at export time + by future UI surfaces that

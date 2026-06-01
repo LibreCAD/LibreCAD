@@ -2334,6 +2334,15 @@ bool dxfRW::writeObjects() {
         imgDictH = toHexStr(++entCount);
         writer->writeString(350, imgDictH);
     }
+    //Slice (spine-dicts): re-attach raw-net-routed named dictionaries to the
+    //regenerated root NamedObjectsDictionary so they are reachable (not pruned as
+    //orphans). The filter populates (name, hex-handle) from the source root dict;
+    //each handle matches the verbatim code-5 of a dictionary re-emitted later in
+    //this OBJECTS section. ACAD_GROUP / root / C-D collisions are excluded there.
+    for (const std::pair<std::string, std::string> &entry : m_rootDictEntries) {
+        writer->writeString(3, entry.first);
+        writer->writeString(350, entry.second);
+    }
     writer->writeString(0, "DICTIONARY");
     writer->writeString(5, "D");
     writer->writeString(330, "C");
@@ -3979,15 +3988,27 @@ bool dxfRW::processDictionary() {
     DRW_DBG("dxfRW::processDictionary");
     int code;
     DRW_Dictionary dict;
+    //Route NON-ROOT named dictionaries through the raw net so they round-trip
+    //DXF->DXF (re-attached to the regenerated root via setRootDictEntries). The
+    //source root dict (330==0) is NOT routed — the codec regenerates it at fixed
+    //handle C; re-emitting it would duplicate the NamedObjectsDictionary.
+    DRW_RawDxfObject raw;
+    raw.name = nextentity;
     while (reader->readRec(&code)) {
         DRW_DBG(code); DRW_DBG("\n");
         if (0 == code) {
             nextentity = reader->getString();
             DRW_DBG(nextentity); DRW_DBG("\n");
             iface->addDictionary(dict);
+            //Skip the root (330==0) and the fixed root/group handles C/D — the
+            //codec always regenerates those; routing them would duplicate the
+            //NamedObjectsDictionary / ACAD_GROUP dict.
+            if (raw.parentHandle != 0 && raw.handle != 0xCu && raw.handle != 0xDu)
+                iface->addRawDxfObject(raw);
             return true;  //found new entity or ENDSEC, terminate
         }
 
+        captureRawGroup(raw, code);
         if (!dict.parseCode(code, reader)) {
             return setError( DRW::BAD_CODE_PARSED);
         }
@@ -4075,15 +4096,22 @@ bool dxfRW::processDictionaryWithDefault() {
     DRW_DBG("dxfRW::processDictionaryWithDefault");
     int code;
     DRW_DictionaryWithDefault dict;
+    //Same as processDictionary: route non-root WDFLT dicts (e.g. ACAD_PLOTSTYLENAME)
+    //through the raw net; its 340 default points at a raw-net-preserved placeholder.
+    DRW_RawDxfObject raw;
+    raw.name = nextentity;
     while (reader->readRec(&code)) {
         DRW_DBG(code); DRW_DBG("\n");
         if (0 == code) {
             nextentity = reader->getString();
             DRW_DBG(nextentity); DRW_DBG("\n");
             iface->addDictionaryWithDefault(dict);
+            if (raw.parentHandle != 0 && raw.handle != 0xCu && raw.handle != 0xDu)
+                iface->addRawDxfObject(raw);
             return true;  //found new entity or ENDSEC, terminate
         }
 
+        captureRawGroup(raw, code);
         if (!dict.parseCode(code, reader)) {
             return setError( DRW::BAD_CODE_PARSED);
         }

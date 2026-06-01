@@ -33,6 +33,7 @@
 #include <algorithm>
 #include <filesystem>
 #include <fstream>
+#include <map>
 #include <set>
 #include <string>
 #include <vector>
@@ -113,6 +114,36 @@ std::vector<std::string> collectHandles(const std::string &path) {
       handles.push_back(trim(valueLine));
   }
   return handles;
+}
+
+// Returns the (entry-name -> handle) map of the root NamedObjectsDictionary
+// (the DICTIONARY whose code-5 handle is "C"): its 3/350 entry pairs.
+std::map<std::string, std::string> rootDictEntries(const std::string &path) {
+  std::ifstream in(path);
+  std::string codeLine, valueLine;
+  std::map<std::string, std::string> entries;
+  enum { Other, DictPendingHandle, InRoot } state = Other;
+  std::string pendingName;
+  auto trim = [](std::string s) {
+    if (!s.empty() && s.back() == '\r')
+      s.pop_back();
+    size_t a = s.find_first_not_of(" \t");
+    return a == std::string::npos ? std::string() : s.substr(a);
+  };
+  while (std::getline(in, codeLine) && std::getline(in, valueLine)) {
+    const std::string code = trim(codeLine), val = trim(valueLine);
+    if (code == "0")
+      state = (val == "DICTIONARY") ? DictPendingHandle : Other;
+    else if (code == "5" && state == DictPendingHandle)
+      state = (val == "C") ? InRoot : Other;
+    else if (state == InRoot && code == "3")
+      pendingName = val;
+    else if (state == InRoot && code == "350" && !pendingName.empty()) {
+      entries[pendingName] = val;
+      pendingName.clear();
+    }
+  }
+  return entries;
 }
 
 // Returns the set of CLASS record names (code 1) in the CLASSES section.
@@ -373,6 +404,111 @@ TEST_CASE("DXF data-only OBJECTS round-trip their body values via the raw net "
     const DRW_Variant *val = group(*dvar, 1);
     REQUIRE(val != nullptr);
     CHECK(std::string(val->c_str()) == "LWDISPLAY");
+  }
+
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+}
+
+TEST_CASE("DXF named dictionaries round-trip and stay reachable from the root "
+          "(spine-dict subset; referential integrity)",
+          "[dxf][roundtrip][filter][spinedict]") {
+  ensureSettings();
+  const std::string src = tmpFile("ksrc.dxf");
+  const std::string out = tmpFile("kout.dxf");
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+
+  // Root NamedObjectsDictionary (C) referencing ACAD_GROUP(D) + two named child
+  // dicts (ACAD_SCALELIST @ 0x50, ACAD_MATERIAL @ 0x60), each owning a data
+  // object that the raw net also preserves (SCALE @ 0x51, MATERIAL @ 0x61). On
+  // export the codec regenerates root C; the routed child dicts must be
+  // re-attached under it (3/350) and not duplicate C/D.
+  const std::string dxf =
+      "0\nSECTION\n2\nENTITIES\n"
+      "0\nLINE\n8\n0\n10\n0.0\n20\n0.0\n11\n1.0\n21\n1.0\n"
+      "0\nENDSEC\n"
+      "0\nSECTION\n2\nOBJECTS\n"
+      "0\nDICTIONARY\n5\nC\n330\n0\n100\nAcDbDictionary\n281\n1\n"
+      "3\nACAD_GROUP\n350\nD\n3\nACAD_SCALELIST\n350\n50\n3\nACAD_MATERIAL\n350\n60\n"
+      "0\nDICTIONARY\n5\nD\n330\nC\n100\nAcDbDictionary\n281\n1\n"
+      "0\nDICTIONARY\n5\n50\n330\nC\n100\nAcDbDictionary\n281\n1\n3\nMyScale\n350\n51\n"
+      "0\nSCALE\n5\n51\n330\n50\n100\nAcDbScale\n300\nMyScale\n140\n1.0\n141\n2.0\n290\n1\n"
+      "0\nDICTIONARY\n5\n60\n330\nC\n100\nAcDbDictionary\n281\n1\n3\nMyMat\n350\n61\n"
+      "0\nMATERIAL\n5\n61\n330\n60\n100\nAcDbMaterial\n1\nMyMat\n94\n7\n"
+      "0\nENDSEC\n0\nEOF\n";
+  writeText(src, dxf);
+
+  RS_Graphic graphic;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(src),
+                              RS2::FormatDXFRW));
+  }
+  // The two NON-root named dicts are routed into the raw net; the root (330=0)
+  // must NOT enter the raw net (codec regenerates it at fixed C).
+  {
+    const auto &meta = graphic.dwgAdvancedMetadata();
+    bool saw50 = false, saw60 = false, sawRootC = false;
+    for (const DRW_RawDxfObject &o : meta.rawDxfObjects()) {
+      if (o.name == "DICTIONARY" && o.handle == 0x50u) saw50 = true;
+      if (o.name == "DICTIONARY" && o.handle == 0x60u) saw60 = true;
+      if (o.name == "DICTIONARY" && o.handle == 0xCu) sawRootC = true;
+    }
+    CHECK(saw50);
+    CHECK(saw60);
+    CHECK_FALSE(sawRootC);
+  }
+
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out),
+                              RS2::FormatDXFRW));
+  }
+
+  // (a) exactly one root dict at C and one ACAD_GROUP at D; all handles unique.
+  const std::vector<std::string> handles = collectHandles(out);
+  std::set<std::string> seen;
+  for (const std::string &h : handles) {
+    INFO("duplicate handle: " << h);
+    CHECK(seen.insert(h).second);
+  }
+  CHECK(std::count(handles.begin(), handles.end(), std::string("C")) == 1);
+  CHECK(std::count(handles.begin(), handles.end(), std::string("D")) == 1);
+
+  // (b) the routed child dicts are re-attached under the regenerated root C.
+  const std::map<std::string, std::string> rootEntries = rootDictEntries(out);
+  REQUIRE(rootEntries.count("ACAD_SCALELIST") == 1);
+  REQUIRE(rootEntries.count("ACAD_MATERIAL") == 1);
+  CHECK(rootEntries.at("ACAD_SCALELIST") == "50");
+  CHECK(rootEntries.at("ACAD_MATERIAL") == "60");
+  CHECK(rootEntries.count("ACAD_GROUP") == 1);  // codec's own entry -> D
+  CHECK(rootEntries.at("ACAD_GROUP") == "D");
+
+  // (c) referential integrity: every root 350 target + child-dict entry target
+  // is actually emitted (no dangling refs an auditor would prune).
+  const std::set<std::string> handleSet(handles.begin(), handles.end());
+  CHECK(handleSet.count("50") == 1);  // ACAD_SCALELIST dict present
+  CHECK(handleSet.count("60") == 1);  // ACAD_MATERIAL dict present
+  CHECK(handleSet.count("51") == 1);  // SCALE owned by ACAD_SCALELIST
+  CHECK(handleSet.count("61") == 1);  // MATERIAL owned by ACAD_MATERIAL
+
+  // (d) the named dicts survive a full DXF->DXF re-import.
+  RS_Graphic graphic2;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic2, QString::fromStdString(out),
+                              RS2::FormatDXFRW));
+  }
+  {
+    const auto &meta = graphic2.dwgAdvancedMetadata();
+    bool saw50 = false, saw60 = false;
+    for (const DRW_RawDxfObject &o : meta.rawDxfObjects()) {
+      if (o.name == "DICTIONARY" && o.handle == 0x50u) saw50 = true;
+      if (o.name == "DICTIONARY" && o.handle == 0x60u) saw60 = true;
+    }
+    CHECK(saw50);
+    CHECK(saw60);
   }
 
   std::filesystem::remove(src);
