@@ -17,8 +17,10 @@
 #include <memory>
 #include <string>
 #include <unordered_map>
+#include <vector>
 #include "drw_entities.h"
 #include "drw_objects.h"
+#include "drw_classes.h"
 #include "drw_header.h"
 #include "drw_interface.h"
 
@@ -117,6 +119,16 @@ public:
      * filter sets this to the max code-5 handle seen in rawDxfObjects/Entities
      * before write(); 0 (default) keeps the historical FIRSTHANDLE start. */
     void setHandleSeedFloor(int floor) { m_handleSeedFloor = floor; }
+    /*!< Register the CLASS records to emit in the DXF CLASSES section (custom,
+     * non-fixed object classes actually present in the output). The filter
+     * builds this from the raw-net objects before write(); empty by default. */
+    void setDxfClasses(const std::vector<DRW_Class> &classes) { m_dxfClasses = classes; }
+    /*!< Canonical DXF CLASS metadata (recName/className/appName/proxyFlag/
+     * wasaProxyFlag/entityFlag, per ezdxf REQUIRED_CLASSES) for the known
+     * custom-class OBJECTS that the raw net round-trips. Returns false for
+     * fixed/built-in or unknown record names. instanceCount is left 0 for the
+     * caller to fill. */
+    static bool dxfClassForRecordName(const std::string &recName, DRW_Class &out);
 
     DRW::Version getVersion() const;
     DRW::error getError() const;
@@ -231,6 +243,7 @@ private:
     std::string nextentity;
     int entCount;
     int m_handleSeedFloor {0};
+    std::vector<DRW_Class> m_dxfClasses;
     bool wlayer0;
     bool dimstyleStd;
     bool applyExt;

@@ -228,6 +228,30 @@ TEST_CASE("DXF export reserves handle space so preserved raw handles do not "
 }
 
 namespace {
+// Returns the set of CLASS record names (code 1) in the CLASSES section.
+std::set<std::string> classRecordNames(const std::string &path) {
+  std::ifstream in(path);
+  std::string codeLine, valueLine;
+  std::set<std::string> names;
+  bool expectName = false;
+  auto trim = [](std::string s) {
+    if (!s.empty() && s.back() == '\r')
+      s.pop_back();
+    size_t a = s.find_first_not_of(" \t");
+    return a == std::string::npos ? std::string() : s.substr(a);
+  };
+  while (std::getline(in, codeLine) && std::getline(in, valueLine)) {
+    const std::string code = trim(codeLine), val = trim(valueLine);
+    if (expectName && code == "1") {
+      names.insert(val);
+      expectName = false;
+    } else if (code == "0") {
+      expectName = (val == "CLASS");
+    }
+  }
+  return names;
+}
+
 // Finds a raw object by record name in a graphic's metadata, or nullptr.
 const DRW_RawDxfObject *findRaw(const LC_DwgAdvancedMetadata &meta,
                                 const char *name) {
@@ -315,6 +339,16 @@ TEST_CASE("DXF data-only OBJECTS round-trip their body values via the raw net "
   for (const char *name : {"SUN", "SCALE", "DICTIONARYVAR", "RASTERVARIABLES",
                            "WIPEOUTVARIABLES", "MLINESTYLE"})
     CHECK(countRecords(out, name) >= 1);
+
+  // A3: the 5 custom-class types get a CLASS record so AutoCAD/ODA accept them;
+  // MLINESTYLE is a fixed built-in and must NOT get one.
+  const std::set<std::string> classes = classRecordNames(out);
+  for (const char *name :
+       {"SUN", "SCALE", "DICTIONARYVAR", "RASTERVARIABLES", "WIPEOUTVARIABLES"}) {
+    INFO("missing CLASS record: " << name);
+    CHECK(classes.count(name) == 1);
+  }
+  CHECK(classes.count("MLINESTYLE") == 0);
 
   RS_Graphic graphic2;
   {

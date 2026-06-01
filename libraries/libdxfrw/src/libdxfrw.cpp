@@ -163,6 +163,13 @@ bool dxfRW::write(DRW_Interface *interface_, DRW::Version ver, bool bin){
     if (ver > DRW::AC1009) {
         writer->writeString(0, "SECTION");
         writer->writeString(2, "CLASSES");
+        //Emit a CLASS record for each custom (non-fixed) object class actually
+        //present in the output. Without these, AutoCAD/ODA silently drop the
+        //corresponding OBJECTS instances (the entry and instance must co-exist).
+        //The filter registers them from the raw-net objects before write().
+        for (DRW_Class &cls : m_dxfClasses) {
+            cls.write(writer.get(), version);
+        }
         writer->writeString(0, "ENDSEC");
     }
     writer->writeString(0, "SECTION");
@@ -4328,6 +4335,35 @@ bool dxfRW::writeRawDxfObject(DRW_RawDxfObject *obj) {
         }
     }
     return true;
+}
+
+//Slice A3: canonical DXF CLASS metadata for the custom-class OBJECTS the raw net
+//round-trips. Values are the DXF-authoritative ezdxf REQUIRED_CLASSES tuple
+//{className(2), appName(3), flags(90), wasaProxy(280), isEntity(281)}. Fixed
+//built-ins (DICTIONARY/GROUP/LAYOUT/MLINESTYLE) take no CLASS record and are
+//absent here. instanceCount (91) is left 0 for the caller to fill.
+bool dxfRW::dxfClassForRecordName(const std::string &recName, DRW_Class &out) {
+    struct Entry { const char *rec; const char *cls; const char *app; int flag; };
+    static const Entry table[] = {
+        {"SUN",              "AcDbSun",              "SCENEOE",           1153},
+        {"SCALE",            "AcDbScale",            "ObjectDBX Classes", 1153},
+        {"DICTIONARYVAR",    "AcDbDictionaryVar",    "ObjectDBX Classes", 0},
+        {"RASTERVARIABLES",  "AcDbRasterVariables",  "ISM",               0},
+        {"WIPEOUTVARIABLES", "AcDbWipeoutVariables", "WipeOut",           0},
+    };
+    for (const Entry &e : table) {
+        if (recName == e.rec) {
+            out.recName = e.rec;
+            out.className = e.cls;
+            out.appName = e.app;
+            out.proxyFlag = e.flag;
+            out.wasaProxyFlag = 0;
+            out.entityFlag = 0;     //all five are object (not entity) classes
+            out.instanceCount = 0;
+            return true;
+        }
+    }
+    return false;
 }
 
 bool dxfRW::writePlotSettings(DRW_PlotSettings *ent) {
