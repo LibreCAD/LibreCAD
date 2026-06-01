@@ -388,10 +388,14 @@ void dwgBufferW::putUCSText(const std::string& utf8) {
             units.push_back(static_cast<duint16>(0xDC00 | (cp & 0x3FF)));
         }
     }
-    putBitShort(static_cast<duint16>(units.size()));
-    for (duint16 u : units) {
-        putRawChar8(static_cast<duint8>(u & 0xFF));
-        putRawChar8(static_cast<duint8>(u >> 8));
+    // The TU length is a 16-bit BS count; clamp so the emitted count always
+    // matches the emitted payload (a >0xFFFF-unit string would otherwise write
+    // a truncated count but the full payload, desyncing the stream).
+    size_t n = units.size() > 0xFFFFu ? 0xFFFFu : units.size();
+    putBitShort(static_cast<duint16>(n));
+    for (size_t i = 0; i < n; ++i) {
+        putRawChar8(static_cast<duint8>(units[i] & 0xFF));
+        putRawChar8(static_cast<duint8>(units[i] >> 8));
     }
 }
 

@@ -4845,6 +4845,18 @@ void RS_FilterDXFRW::addCellStyleMap(const DRW_CellStyleMap &data) {
                   static_cast<int>(data.m_cellStyles.size()));
 }
 
+void RS_FilterDXFRW::addRawDxfObject(const DRW_RawDxfObject &data) {
+  if (m_graphic != nullptr) {
+    m_graphic->dwgAdvancedMetadata().addRawDxfObject(data);
+  }
+}
+
+void RS_FilterDXFRW::addRawDxfEntity(const DRW_RawDxfObject &data) {
+  if (m_graphic != nullptr) {
+    m_graphic->dwgAdvancedMetadata().addRawDxfEntity(data);
+  }
+}
+
 void RS_FilterDXFRW::addUnsupportedObject(const DRW_UnsupportedObject &data) {
   if (m_graphic != nullptr) {
     m_graphic->dwgAdvancedMetadata().addUnsupportedObject(data);
@@ -7669,6 +7681,19 @@ void RS_FilterDXFRW::writeObjects() {
     ps.marginRight = m_graphic->getMarginRight();
     ps.marginBottom = m_graphic->getMarginBottom();
     m_dxfW->writePlotSettings(&ps);
+
+    //Slice A2: re-emit OBJECTS captured verbatim on read (A1) so a LibreCAD DXF
+    //round-trip preserves unmodeled objects rather than dropping them. Records live
+    //on the graphic, so this (separate) write-filter instance still sees them.
+    //(Typed objects read into dwgAdvancedMetadata still need their own DXF writers;
+    //the CLASSES section for custom-class objects is the A3 follow-up.)
+    if (m_graphic != nullptr) {
+        for (const DRW_RawDxfObject &rawObject :
+                 m_graphic->dwgAdvancedMetadata().rawDxfObjects()) {
+            DRW_RawDxfObject object = rawObject;
+            m_dxfW->writeRawDxfObject(&object);
+        }
+    }
 }
 
 void RS_FilterDXFRW::writeAppId(){

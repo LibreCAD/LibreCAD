@@ -246,6 +246,7 @@ bool dwgBuffer::getBoolBit(){
 
 /**Reads two Bits returns a char (BB) **/
 duint8 dwgBuffer::get2Bits(){
+    if (!isGood()) return 0;   // stop cascading reads once the stream is exhausted
     duint8 buffer = 0;
     duint8 ret = 0;
     if (bitPos == 0){
@@ -359,6 +360,7 @@ DRW_Coord dwgBuffer::get3BitDouble(){
 
 /**Reads raw char 8 bits returns a unsigned char (RC) **/
 duint8 dwgBuffer::getRawChar8(){
+    if (!isGood()) return 0;   // stop cascading reads once the stream is exhausted
     duint8 ret=0;
     duint8 buffer=0;
     filestr->read (&buffer,1);
@@ -374,6 +376,7 @@ duint8 dwgBuffer::getRawChar8(){
 
 /**Reads raw short 16 bits little-endian order, returns a unsigned short (RS) **/
 duint16 dwgBuffer::getRawShort16(){
+    if (!isGood()) return 0;   // stop cascading reads once the stream is exhausted
     duint8 buffer[2]={0,0};
     duint16 ret=0;
 
@@ -395,6 +398,7 @@ duint16 dwgBuffer::getRawShort16(){
 
 /**Reads raw double IEEE standard 64 bits returns a double (RD) **/
 double dwgBuffer::getRawDouble(){
+    if (!isGood()) return 0.0;   // stop cascading reads once the stream is exhausted
     duint8 buffer[8] = {0};
     if (bitPos == 0)
         filestr->read (buffer,8);

@@ -14,6 +14,7 @@
 #include <fstream>
 #include <string>
 #include <sstream>
+#include <locale>
 #include "dxfreader.h"
 #include "drw_textcodec.h"
 #include "drw_dbg.h"
@@ -273,6 +274,7 @@ bool dxfReaderAscii::readDouble() {
         }
 #else
         std::istringstream sd(text);
+        sd.imbue(std::locale::classic());  // '.' decimal regardless of global locale
         sd >> doubleData;
         DRW_DBG(doubleData); DRW_DBG('\n');
 #endif
