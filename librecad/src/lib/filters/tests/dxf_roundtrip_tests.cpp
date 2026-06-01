@@ -116,6 +116,29 @@ std::vector<std::string> collectHandles(const std::string &path) {
   return handles;
 }
 
+// True if a record named `recordName` (0/<name>) contains group `code` before
+// the next 0-record begins.
+bool recordHasCode(const std::string &path, const std::string &recordName,
+                   const std::string &code) {
+  std::ifstream in(path);
+  std::string codeLine, valueLine;
+  bool inRecord = false;
+  auto trim = [](std::string s) {
+    if (!s.empty() && s.back() == '\r')
+      s.pop_back();
+    size_t a = s.find_first_not_of(" \t");
+    return a == std::string::npos ? std::string() : s.substr(a);
+  };
+  while (std::getline(in, codeLine) && std::getline(in, valueLine)) {
+    const std::string c = trim(codeLine), v = trim(valueLine);
+    if (c == "0")
+      inRecord = (v == recordName);
+    else if (inRecord && c == code)
+      return true;
+  }
+  return false;
+}
+
 // Returns the (entry-name -> handle) map of the root NamedObjectsDictionary
 // (the DICTIONARY whose code-5 handle is "C"): its 3/350 entry pairs.
 std::map<std::string, std::string> rootDictEntries(const std::string &path) {
@@ -510,6 +533,39 @@ TEST_CASE("DXF named dictionaries round-trip and stay reachable from the root "
     CHECK(saw50);
     CHECK(saw60);
   }
+
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+}
+
+TEST_CASE("DXF export gives PLOTSETTINGS an owner handle (no ownerless prune)",
+          "[dxf][roundtrip][filter][plotsettings]") {
+  // The codec emits a synthesized PLOTSETTINGS on every DXF export; without a
+  // 330 owner, conforming readers (ezdxf/AutoCAD AUDIT) delete it as ownerless,
+  // dropping LibreCAD's page setup. Confirmed clean via ezdxf 1.4.4 audit
+  // (0 errors) after this fix; this test guards it in-repo.
+  ensureSettings();
+  const std::string src = tmpFile("psrc.dxf");
+  const std::string out = tmpFile("pout.dxf");
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+  writeText(src,
+            "0\nSECTION\n2\nENTITIES\n"
+            "0\nLINE\n8\n0\n10\n0.0\n20\n0.0\n11\n10.0\n21\n10.0\n"
+            "0\nENDSEC\n0\nEOF\n");
+  RS_Graphic graphic;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(src),
+                              RS2::FormatDXFRW));
+  }
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out),
+                              RS2::FormatDXFRW));
+  }
+  REQUIRE(countRecords(out, "PLOTSETTINGS") >= 1);
+  CHECK(recordHasCode(out, "PLOTSETTINGS", "330"));  // owner present
 
   std::filesystem::remove(src);
   std::filesystem::remove(out);

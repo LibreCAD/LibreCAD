@@ -4419,6 +4419,9 @@ bool dxfRW::dxfClassForRecordName(const std::string &recName, DRW_Class &out) {
 bool dxfRW::writePlotSettings(DRW_PlotSettings *ent) {
     writer->writeString(0, "PLOTSETTINGS");
     writer->writeString(5, toHexStr(++entCount));
+    if (version > DRW::AC1014) {
+        writer->writeString(330, "C");  //owner: root dict (avoids ownerless prune)
+    }
     writer->writeString(100, "AcDbPlotSettings");
     writer->writeUtf8String(6, ent->plotViewName);
     writer->writeDouble(40, ent->marginLeft);
