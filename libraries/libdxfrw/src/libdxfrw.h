@@ -111,6 +111,7 @@ public:
     bool writeDimension(DRW_Dimension *ent);
     void setEllipseParts(int parts){elParts = parts;} /*!< set parts number when convert ellipse to polyline */
     bool writePlotSettings(DRW_PlotSettings *ent);
+    bool writeRawDxfObject(DRW_RawDxfObject *obj);
 
     DRW::Version getVersion() const;
     DRW::error getError() const;

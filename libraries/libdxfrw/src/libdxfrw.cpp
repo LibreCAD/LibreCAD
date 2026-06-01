@@ -4208,6 +4208,32 @@ bool dxfRW::processRawEntity() {
     return setError(DRW::BAD_READ_ENTITIES);
 }
 
+//Slice A2: re-emit a raw-captured object (from processRawObject) verbatim. The
+//A1/A4 capture stores every value as STRING, so the raw text round-trips exactly
+//for ASCII DXF; the other variant arms are handled defensively.
+bool dxfRW::writeRawDxfObject(DRW_RawDxfObject *obj) {
+    writer->writeString(0, obj->name);
+    for (const DRW_Variant &v : obj->groups) {
+        switch (v.type()) {
+        case DRW_Variant::STRING:
+            writer->writeString(v.code(), std::string(v.c_str()));
+            break;
+        case DRW_Variant::INTEGER:
+            writer->writeInt32(v.code(), v.i_val());
+            break;
+        case DRW_Variant::INTEGER64:
+            writer->writeInt64(v.code(), v.i64_val());
+            break;
+        case DRW_Variant::DOUBLE:
+            writer->writeDouble(v.code(), v.d_val());
+            break;
+        default:
+            break;
+        }
+    }
+    return true;
+}
+
 bool dxfRW::writePlotSettings(DRW_PlotSettings *ent) {
     writer->writeString(0, "PLOTSETTINGS");
     writer->writeString(5, toHexStr(++entCount));

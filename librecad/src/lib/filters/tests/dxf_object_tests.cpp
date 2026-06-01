@@ -223,6 +223,13 @@ public:
   }
 };
 
+class RawObjectEmitter : public StubInterface {
+public:
+  DRW_RawDxfObject m_obj;
+  dxfRW *m_rw = nullptr;
+  void writeObjects() override { m_rw->writeRawDxfObject(&m_obj); }
+};
+
 void readDxf(const std::string &dxf, DRW_Interface &cap, const char *name) {
   const auto path = std::filesystem::temp_directory_path() / name;
   std::filesystem::remove(path);
@@ -498,4 +505,38 @@ TEST_CASE("DXF unmodeled ENTITY is captured verbatim, not dropped (slice A4)", "
   CHECK(cap.m_entities[1].handle == 0x4Bu);
   // ATTDEF groups preserved verbatim (8,5,10,20,40,1,2,3,70)
   CHECK(cap.m_entities[1].groups.size() == 9);
+}
+
+TEST_CASE("DXF raw object round-trips through write+read (slice A2)",
+          "[dxf][rawobject][dxf_roundtrip]") {
+  const auto path =
+      std::filesystem::temp_directory_path() / "lc_rawobject_rt.dxf";
+  std::filesystem::remove(path);
+
+  RawObjectEmitter em;
+  em.m_obj.name = "ACDBWEIRDOBJECT";
+  em.m_obj.groups.emplace_back(5, std::string("3C"));
+  em.m_obj.groups.emplace_back(330, std::string("29"));
+  em.m_obj.groups.emplace_back(100, std::string("AcDbWeird"));
+  em.m_obj.groups.emplace_back(1, std::string("payload text"));
+  em.m_obj.groups.emplace_back(70, std::string("5"));
+  {
+    dxfRW w(path.string().c_str());
+    em.m_rw = &w;
+    REQUIRE(w.write(&em, DRW::AC1021, false));
+  }
+
+  RawObjectCapture cap;
+  {
+    dxfRW r(path.string().c_str());
+    REQUIRE(r.read(&cap, /*ext=*/true));
+  }
+
+  REQUIRE(cap.m_objects.size() == 1);
+  CHECK(cap.m_objects[0].name == "ACDBWEIRDOBJECT");
+  REQUIRE(cap.m_objects[0].groups.size() == 5);
+  CHECK(cap.m_objects[0].groups[3].code() == 1);
+  CHECK(std::string(cap.m_objects[0].groups[3].c_str()) == "payload text");
+
+  std::filesystem::remove(path);
 }
