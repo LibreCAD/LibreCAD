@@ -246,6 +246,7 @@ bool dwgBuffer::getBoolBit(){
 
 /**Reads two Bits returns a char (BB) **/
 duint8 dwgBuffer::get2Bits(){
+    if (!isGood()) return 0;   // stop cascading reads once the stream is exhausted
     duint8 buffer = 0;
     duint8 ret = 0;
     if (bitPos == 0){
@@ -359,6 +360,7 @@ DRW_Coord dwgBuffer::get3BitDouble(){
 
 /**Reads raw char 8 bits returns a unsigned char (RC) **/
 duint8 dwgBuffer::getRawChar8(){
+    if (!isGood()) return 0;   // stop cascading reads once the stream is exhausted
     duint8 ret=0;
     duint8 buffer=0;
     filestr->read (&buffer,1);
@@ -374,6 +376,7 @@ duint8 dwgBuffer::getRawChar8(){
 
 /**Reads raw short 16 bits little-endian order, returns a unsigned short (RS) **/
 duint16 dwgBuffer::getRawShort16(){
+    if (!isGood()) return 0;   // stop cascading reads once the stream is exhausted
     duint8 buffer[2]={0,0};
     duint16 ret=0;
 
@@ -395,6 +398,7 @@ duint16 dwgBuffer::getRawShort16(){
 
 /**Reads raw double IEEE standard 64 bits returns a double (RD) **/
 double dwgBuffer::getRawDouble(){
+    if (!isGood()) return 0.0;   // stop cascading reads once the stream is exhausted
     duint8 buffer[8] = {0};
     if (bitPos == 0)
         filestr->read (buffer,8);
@@ -865,10 +869,12 @@ duint32 dwgBuffer::getEnColor(DRW::Version v) {
 
 /**Reads raw short 16 bits big-endian order, returns a unsigned short crc & size **/
 duint16 dwgBuffer::getBERawShort16(){
-    char buffer[2];
-    buffer[0] = getRawChar8();
-    buffer[1] = getRawChar8();
-    duint16 size = (buffer[0] << 8) | (buffer[1] & 0xFF);
+    // Read both bytes as unsigned: shifting a signed char with the high bit
+    // set is UB (UBSan: "left shift of negative value"). Surfaced by the 1.6
+    // fuzz harness over the DWG corpus.
+    duint8 hi = getRawChar8();
+    duint8 lo = getRawChar8();
+    duint16 size = static_cast<duint16>((static_cast<duint16>(hi) << 8) | lo);
     return size;
 }
 
@@ -890,6 +896,11 @@ bool dwgBuffer::getBytes(unsigned char *buf, duint64 size){
 }
 
 duint16 dwgBuffer::crc8(duint16 dx,dint32 start,dint32 end){
+    // Guard against a negative/empty byte range from a corrupt section size:
+    // `new duint8[end-start]` would compute a negative size (huge size_t).
+    // An empty fold leaves the seed unchanged, so return dx.
+    if (end <= start)
+        return dx;
     duint64 pos = filestr->getPos();
     filestr->setPos(start);
     int n = end-start;
@@ -913,6 +924,10 @@ duint16 dwgBuffer::crc8(duint16 dx,dint32 start,dint32 end){
 }
 
 duint32 dwgBuffer::crc32(duint32 seed,dint32 start,dint32 end){
+    // Guard against a negative/empty byte range (see crc8). The empty-range
+    // identity of this fold is the seed: ~(~seed) == seed.
+    if (end <= start)
+        return seed;
     duint64 pos = filestr->getPos();
     filestr->setPos(start);
     int n = end-start;

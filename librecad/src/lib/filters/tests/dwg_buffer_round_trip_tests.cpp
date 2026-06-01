@@ -192,6 +192,16 @@ TEST_CASE("dwgBufferW: putBERawShort16 big-endian", "[dwg-write][primitives]") {
 
     dwgBuffer r(bytes.data(), bytes.size());
     REQUIRE(r.getBERawShort16() == 0xABCD);
+
+    // 1.6 UB fix: a high byte with the sign bit set (0xFF) must not invoke
+    // signed-char left-shift UB and must still decode big-endian.
+    dwgBufferW w2;
+    w2.putBERawShort16(0xFF80);
+    auto b2 = snapshot(w2);
+    REQUIRE(b2[0] == 0xFF);
+    REQUIRE(b2[1] == 0x80);
+    dwgBuffer r2(b2.data(), b2.size());
+    REQUIRE(r2.getBERawShort16() == 0xFF80);
 }
 
 TEST_CASE("dwgBufferW: putRawLong32 little-endian", "[dwg-write][primitives]") {
@@ -392,6 +402,49 @@ TEST_CASE("dwgBufferW: crc16 matches reader's CRC over a known buffer",
     duint16 readerCrc = r.crc8(0xC0C1, 0, static_cast<dint32>(bytes.size()));
 
     REQUIRE(writerCrc == readerCrc);
+}
+
+// 1.1 (gap classes-crc-not-validated): crc8/crc32 computed `new[end-start]`
+// with no guard, so a corrupt section size with end<=start allocated a
+// negative (huge) size — heap overflow / bad_alloc.  Now they return the
+// seed identity on an empty/negative range without allocating.
+TEST_CASE("dwgBuffer::crc8/crc32 guard the empty/negative byte range",
+          "[dwg-write][primitives]") {
+    dwgBufferW w;
+    for (duint8 i = 0; i < 8; ++i) w.putRawChar8(i);
+    auto bytes = snapshot(w);
+    dwgBuffer r(bytes.data(), bytes.size());
+
+    // end < start (negative range): no allocation/abort; seed returned.
+    REQUIRE(r.crc8(0xC0C1, 4, 0) == 0xC0C1);
+    // end == start (empty range): seed returned.
+    REQUIRE(r.crc8(0xC0C1, 4, 4) == 0xC0C1);
+    REQUIRE(r.crc32(0xFFFFFFFFu, 8, 0) == 0xFFFFFFFFu);
+    REQUIRE(r.crc32(0x12345678u, 4, 4) == 0x12345678u);
+
+    // Valid range still produces a real CRC (happy path unaffected).
+    dwgBufferW w2;
+    for (duint8 i = 0; i < 4; ++i) w2.putRawChar8(i);
+    auto b2 = snapshot(w2);
+    dwgBuffer r2(b2.data(), b2.size());
+    REQUIRE(r2.crc8(0xC0C1, 0, 4) == w2.crc16(0xC0C1, 0, 4));
+}
+
+// 1.2 (gap classes-crc-not-validated): decompress18 peeked
+// compressedBuffer[compressedSize-2] before any length check, so a <2-byte
+// compressed page read out of bounds (compressedSize is duint32; 0-2
+// underflows to a huge index).  Now it fails fast.
+TEST_CASE("dwgCompressor::decompress18 rejects compressedSize<2 without OOB",
+          "[dwg-write][primitives]") {
+    duint8 cbuf[4] = {0, 0, 0, 0};
+    duint8 dbuf[16] = {0};
+    dwgCompressor comp;
+
+    // csize == 1 and 0 must fail without dereferencing cbuf[csize-2].
+    REQUIRE_FALSE(comp.decompress18(cbuf, dbuf, /*csize=*/1, /*dsize=*/16));
+    REQUIRE_FALSE(comp.decompress18(cbuf, dbuf, /*csize=*/0, /*dsize=*/16));
+    // null compressed buffer also rejected.
+    REQUIRE_FALSE(comp.decompress18(nullptr, dbuf, /*csize=*/8, /*dsize=*/16));
 }
 
 TEST_CASE("dwgBufferW: patchRawShort16 / patchRawLong32 overwrite cleanly",

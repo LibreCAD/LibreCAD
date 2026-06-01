@@ -255,7 +255,11 @@ public:
         definition.m_recordName = object.m_recordName.empty()
             ? object.m_className
             : object.m_recordName;
-        definition.m_entityFlagRaw = object.m_isEntity ? 0x1F2 : 0;
+        // item_class_id: 0x1F2 for entities, 0x1F3 for objects (ODA/libreDWG
+        // decode.c "1f2 for entities, 1f3 for objects"). The reader maps
+        // 0x1F2->entity and everything else->object, so this only improves
+        // third-party/AutoCAD conformance; self-round-trip is unaffected.
+        definition.m_entityFlagRaw = object.m_isEntity ? 0x1F2 : 0x1F3;
         if (object.m_handle != 0
             && m_rawClassInstanceHandles.insert({definition.m_classNum,
                                                  object.m_handle}).second) {
@@ -271,7 +275,7 @@ public:
         definition.m_appName = "SCENEOE";
         definition.m_className = "AcDbSun";
         definition.m_recordName = "SUN";
-        definition.m_entityFlagRaw = 0;
+        definition.m_entityFlagRaw = 0x1F3;  // object class (ODA item_class_id)
         if (handle != 0
             && m_rawClassInstanceHandles.insert({definition.m_classNum,
                                                  handle}).second) {
@@ -287,7 +291,7 @@ public:
         definition.m_appName = "ACDB_MLEADERSTYLE_CLASS";
         definition.m_className = "AcDbMLeaderStyle";
         definition.m_recordName = "MLEADERSTYLE";
-        definition.m_entityFlagRaw = 0;
+        definition.m_entityFlagRaw = 0x1F3;  // object class (ODA item_class_id)
         if (handle != 0
             && m_rawClassInstanceHandles.insert({definition.m_classNum,
                                                  handle}).second) {
@@ -303,7 +307,7 @@ public:
         definition.m_appName = "ISM";
         definition.m_className = "AcDbRasterVariables";
         definition.m_recordName = "RASTERVARIABLES";
-        definition.m_entityFlagRaw = 0;
+        definition.m_entityFlagRaw = 0x1F3;  // object class (ODA item_class_id)
         if (handle != 0
             && m_rawClassInstanceHandles.insert({definition.m_classNum,
                                                  handle}).second) {
@@ -319,7 +323,7 @@ public:
         definition.m_appName = "AcDbGeoData";
         definition.m_className = "AcDbGeoData";
         definition.m_recordName = "GEODATA";
-        definition.m_entityFlagRaw = 0;
+        definition.m_entityFlagRaw = 0x1F3;  // object class (ODA item_class_id)
         if (handle != 0
             && m_rawClassInstanceHandles.insert({definition.m_classNum,
                                                  handle}).second) {
@@ -335,7 +339,7 @@ public:
         definition.m_appName = "ACAD";
         definition.m_className = "AcDbSpatialFilter";
         definition.m_recordName = "SPATIAL_FILTER";
-        definition.m_entityFlagRaw = 0;
+        definition.m_entityFlagRaw = 0x1F3;  // object class (ODA item_class_id)
         if (handle != 0
             && m_rawClassInstanceHandles.insert({definition.m_classNum,
                                                  handle}).second) {
@@ -354,7 +358,7 @@ public:
         definition.m_appName = "ACAD";
         definition.m_className = "AcDbScale";
         definition.m_recordName = "SCALE";
-        definition.m_entityFlagRaw = 0;
+        definition.m_entityFlagRaw = 0x1F3;  // object class (ODA item_class_id)
         if (handle != 0
             && m_rawClassInstanceHandles.insert({definition.m_classNum,
                                                  handle}).second) {
@@ -370,7 +374,7 @@ public:
         definition.m_appName = "ACAD";
         definition.m_className = "AcDbIdBuffer";
         definition.m_recordName = "IDBUFFER";
-        definition.m_entityFlagRaw = 0;
+        definition.m_entityFlagRaw = 0x1F3;  // object class (ODA item_class_id)
         if (handle != 0
             && m_rawClassInstanceHandles.insert({definition.m_classNum,
                                                  handle}).second) {
@@ -386,7 +390,7 @@ public:
         definition.m_appName = "ACAD";
         definition.m_className = "AcDbLayerIndex";
         definition.m_recordName = "LAYER_INDEX";
-        definition.m_entityFlagRaw = 0;
+        definition.m_entityFlagRaw = 0x1F3;  // object class (ODA item_class_id)
         if (handle != 0
             && m_rawClassInstanceHandles.insert({definition.m_classNum,
                                                  handle}).second) {
@@ -402,7 +406,7 @@ public:
         definition.m_appName = "ACAD";
         definition.m_className = "AcDbSpatialIndex";
         definition.m_recordName = "SPATIAL_INDEX";
-        definition.m_entityFlagRaw = 0;
+        definition.m_entityFlagRaw = 0x1F3;  // object class (ODA item_class_id)
         if (handle != 0
             && m_rawClassInstanceHandles.insert({definition.m_classNum,
                                                  handle}).second) {
@@ -418,7 +422,7 @@ public:
         definition.m_appName = "ACAD";
         definition.m_className = "AcDbDictionaryVar";
         definition.m_recordName = "DICTIONARYVAR";
-        definition.m_entityFlagRaw = 0;
+        definition.m_entityFlagRaw = 0x1F3;  // object class (ODA item_class_id)
         if (handle != 0
             && m_rawClassInstanceHandles.insert({definition.m_classNum,
                                                  handle}).second) {
@@ -437,7 +441,7 @@ public:
         definition.m_appName = "ACAD";
         definition.m_className = "AcDbDictionaryWithDefault";
         definition.m_recordName = "ACDBDICTIONARYWDFLT";
-        definition.m_entityFlagRaw = 0;
+        definition.m_entityFlagRaw = 0x1F3;  // object class (ODA item_class_id)
         if (handle != 0
             && m_rawClassInstanceHandles.insert({definition.m_classNum,
                                                  handle}).second) {
@@ -453,7 +457,7 @@ public:
         definition.m_appName = "ACAD";
         definition.m_className = "AcDbSortentsTable";
         definition.m_recordName = "SORTENTSTABLE";
-        definition.m_entityFlagRaw = 0;
+        definition.m_entityFlagRaw = 0x1F3;  // object class (ODA item_class_id)
         if (handle != 0
             && m_rawClassInstanceHandles.insert({definition.m_classNum,
                                                  handle}).second) {
@@ -469,7 +473,7 @@ public:
         definition.m_appName = "ACAD";
         definition.m_className = "AcDbFieldList";
         definition.m_recordName = "FIELDLIST";
-        definition.m_entityFlagRaw = 0;
+        definition.m_entityFlagRaw = 0x1F3;  // object class (ODA item_class_id)
         if (handle != 0
             && m_rawClassInstanceHandles.insert({definition.m_classNum,
                                                  handle}).second) {
@@ -485,7 +489,7 @@ public:
         definition.m_appName = "ACAD";
         definition.m_className = "AcDbField";
         definition.m_recordName = "FIELD";
-        definition.m_entityFlagRaw = 0;
+        definition.m_entityFlagRaw = 0x1F3;  // object class (ODA item_class_id)
         if (handle != 0
             && m_rawClassInstanceHandles.insert({definition.m_classNum,
                                                  handle}).second) {
@@ -586,7 +590,7 @@ protected:
             placeholder.m_appName = "ACAD";
             placeholder.m_className = "AcDbUnusedClass";
             placeholder.m_recordName = "UNUSED_DWG_CLASS";
-            placeholder.m_entityFlagRaw = 0;
+            placeholder.m_entityFlagRaw = 0x1F3;  // unused/placeholder = object
             placeholder.m_instanceCount = 0;
             contiguous.push_back(std::move(placeholder));
         }

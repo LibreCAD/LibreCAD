@@ -14,6 +14,7 @@
 #include <fstream>
 #include <string>
 #include <sstream>
+#include <locale>
 #include "dxfreader.h"
 #include "drw_textcodec.h"
 #include "drw_dbg.h"
@@ -157,7 +158,8 @@ bool dxfReaderBinary::readInt16() {
     type = INT32;
     char buffer[2];
     filestr->read(buffer,2);
-    intData = (int)((buffer[1] << 8) | buffer[0]);
+    intData = static_cast<dint16>((static_cast<unsigned char>(buffer[1]) << 8)
+                                  | static_cast<unsigned char>(buffer[0]));
     DRW_DBG(intData); DRW_DBG("\n");
     return (filestr->good());
 }
@@ -272,6 +274,7 @@ bool dxfReaderAscii::readDouble() {
         }
 #else
         std::istringstream sd(text);
+        sd.imbue(std::locale::classic());  // '.' decimal regardless of global locale
         sd >> doubleData;
         DRW_DBG(doubleData); DRW_DBG('\n');
 #endif

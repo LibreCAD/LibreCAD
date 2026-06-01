@@ -388,10 +388,14 @@ void dwgBufferW::putUCSText(const std::string& utf8) {
             units.push_back(static_cast<duint16>(0xDC00 | (cp & 0x3FF)));
         }
     }
-    putBitShort(static_cast<duint16>(units.size()));
-    for (duint16 u : units) {
-        putRawChar8(static_cast<duint8>(u & 0xFF));
-        putRawChar8(static_cast<duint8>(u >> 8));
+    // The TU length is a 16-bit BS count; clamp so the emitted count always
+    // matches the emitted payload (a >0xFFFF-unit string would otherwise write
+    // a truncated count but the full payload, desyncing the stream).
+    size_t n = units.size() > 0xFFFFu ? 0xFFFFu : units.size();
+    putBitShort(static_cast<duint16>(n));
+    for (size_t i = 0; i < n; ++i) {
+        putRawChar8(static_cast<duint8>(units[i] & 0xFF));
+        putRawChar8(static_cast<duint8>(units[i] >> 8));
     }
 }
 
@@ -466,6 +470,31 @@ void dwgBufferW::putCmColor(DRW::Version v, duint16 colorIndex) {
         putBitLong(rgb);
         putRawChar8(0);      // flags = 0 (no color name, no book name)
     }
+}
+
+void dwgBufferW::putCmColor(DRW::Version v, duint16 colorIndex, dint32 rgb24,
+                            const UTF8STRING& colorName,
+                            const UTF8STRING& bookName,
+                            dwgBufferW* strBuf) {
+    // Pre-R2004 has no truecolor/name CMC encoding: index-only path.
+    if (v < DRW::AC1018 || rgb24 < 0) {
+        putCmColor(v, colorIndex);
+        return;
+    }
+    // R2004+ truecolor: BS index, BL packed (0xC2<<24 | rgb24), RC name flags,
+    // then the name strings to the string buffer (defaulting to this).
+    // Inverse of dwgBuffer::getCmColor type==0xC2 branch.
+    putBitShort(colorIndex);
+    duint32 rgb = (0xC2u << 24) | (static_cast<duint32>(rgb24) & 0xFFFFFFu);
+    putBitLong(static_cast<dint32>(rgb));
+    duint8 flags = static_cast<duint8>((colorName.empty() ? 0u : 1u)
+                                       | (bookName.empty() ? 0u : 2u));
+    putRawChar8(flags);
+    dwgBufferW* names = strBuf ? strBuf : this;
+    if (flags & 1)
+        names->putVariableText(v, colorName);
+    if (flags & 2)
+        names->putVariableText(v, bookName);
 }
 
 void dwgBufferW::putEnColor(DRW::Version v, duint16 colorIndex) {

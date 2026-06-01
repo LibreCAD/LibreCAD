@@ -219,6 +219,13 @@ bool dwgCompressor::decompress18(duint8 *cbuf, duint8 *dbuf, duint64 csize, duin
     compressedGood = true;
     decompGood = true;
 
+    // A <2-byte compressed page cannot hold the minimum opcode stream and the
+    // trailing-byte peek below would read out of bounds (compressedSize is a
+    // duint32, so compressedSize-2 underflows to a huge index). Fail the page;
+    // callers (parseDataPage/parseSysPage) propagate false as a read failure.
+    if (compressedBuffer == nullptr || compressedSize < 2)
+        return false;
+
     DRW_DBG("dwgCompressor::decompress, last 2 bytes: ");
     DRW_DBGH(compressedBuffer[compressedSize - 2]);DRW_DBG(" ");DRW_DBGH(compressedBuffer[compressedSize - 1]);DRW_DBG("\n");
 

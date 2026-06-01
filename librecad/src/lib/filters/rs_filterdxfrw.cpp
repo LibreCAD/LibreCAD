@@ -989,6 +989,12 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic& g, const QString& file, [[maybe_unus
     m_graphic = &g;
     m_currentContainer = m_graphic;
     m_dummyContainer = new RS_EntityContainer(nullptr, true);
+    // RAII: free the scratch container on every return path (success and the
+    // BAD_VERSION / parse-failure early returns), not just the success path.
+    struct DummyContainerGuard {
+        RS_EntityContainer** p;
+        ~DummyContainerGuard() { delete *p; *p = nullptr; }
+    } dummyGuard{&m_dummyContainer};
 
     this->m_file = file;
     // Register the file being loaded into the XREF recursion guard so
@@ -1017,6 +1023,13 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic& g, const QString& file, [[maybe_unus
     m_libDxfRwVersion = 0;
     m_unsupportedDwgObjects.clear();
     m_graphic->dwgAdvancedMetadata().clear();
+    // Clear per-import caches so a reused filter instance does not carry stale
+    // (and, for m_blockHash, potentially dangling) state across imports. XREF
+    // sub-imports use a separate child filter, so this never wipes parent state.
+    m_blockHash.clear();
+    m_mlineStyleCache.clear();
+    m_underlayDefMap.clear();
+    m_xrefBlockNames.clear();
 
 #ifdef DWGSUPPORT
     if (type == RS2::FormatDWG) {
@@ -1030,6 +1043,9 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic& g, const QString& file, [[maybe_unus
         // name the format the user supplied. dwgR::version is set by
         // openFile() even on the BAD_VERSION fork.
         m_dwgVersion = dwgr.getVersion();
+        // Persist the source version on the document so the export filter can
+        // gate raw-replay (emit + CLASSES registration) on source==target.
+        m_graphic->dwgAdvancedMetadata().setSourceDwgVersion(m_dwgVersion);
         RS_DEBUG->print("RS_FilterDXFRW::fileImport: reading DWG file: OK");
         RS_DIALOGFACTORY->commandMessage(QObject::tr("Opened DWG file version %1.").arg(printDwgVersion(dwgr.getVersion())));
         const size_t parseFailures = dwgr.getEntityParseFailures();
@@ -1149,7 +1165,6 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic& g, const QString& file, [[maybe_unus
     }
 #endif
 
-    delete m_dummyContainer;
     /*set current layer */
     auto cl = m_graphic->findLayer(m_graphic->getVariableString("$CLAYER", "0"));
 	if (cl ){
@@ -2593,6 +2608,19 @@ void RS_FilterDXFRW::addSpline(const DRW_Spline* data) {
     }
 
     spline->update();
+}
+
+/**
+ * Handles a HELIX entity. LibreCAD has no native helix; the entity is mapped
+ * to its spline approximation via addSpline. The AcDbHelix axis/turns metadata
+ * (radius, turns, turnHeight, axisVector, ...) is preserved across a DWG
+ * round-trip but is not represented in the RS entity model, so it is dropped
+ * on import.
+ */
+void RS_FilterDXFRW::addHelix(const DRW_Helix* data) {
+    RS_DEBUG->print("RS_FilterDXFRW::addHelix: mapping HELIX to spline "
+                    "approximation (axis/turns metadata dropped)");
+    addSpline(data);
 }
 
 /**
@@ -4411,6 +4439,8 @@ void RS_FilterDXFRW::addHatch(const DRW_Hatch *data) {
 
         RS_Entity* e = nullptr;
         if ((loop->type & 2) == 2){   //polyline, convert to lines & arcs
+            if (loop->objlist.empty())
+                continue;
             DRW_LWPolyline* pline = static_cast<DRW_LWPolyline*>(loop->objlist.at(0).get());
             RS_Polyline polyline{nullptr,
                                  RS_PolylineData(RS_Vector(false), RS_Vector(false), pline->flags)};
@@ -4536,6 +4566,9 @@ void RS_FilterDXFRW::addImage(const DRW_Image *data) {
     RS_DEBUG->print("RS_FilterDXF::addImage");
     if (m_graphic != nullptr && data != nullptr)
         m_graphic->dwgAdvancedMetadata().addRasterImage(*data, false);
+
+    if (data == nullptr)
+        return;
 
     RS_Vector ip(data->basePoint.x, data->basePoint.y);
     RS_Vector uv(data->secPoint.x, data->secPoint.y);
@@ -4812,6 +4845,18 @@ void RS_FilterDXFRW::addCellStyleMap(const DRW_CellStyleMap &data) {
                   static_cast<int>(data.m_cellStyles.size()));
 }
 
+void RS_FilterDXFRW::addRawDxfObject(const DRW_RawDxfObject &data) {
+  if (m_graphic != nullptr) {
+    m_graphic->dwgAdvancedMetadata().addRawDxfObject(data);
+  }
+}
+
+void RS_FilterDXFRW::addRawDxfEntity(const DRW_RawDxfObject &data) {
+  if (m_graphic != nullptr) {
+    m_graphic->dwgAdvancedMetadata().addRawDxfEntity(data);
+  }
+}
+
 void RS_FilterDXFRW::addUnsupportedObject(const DRW_UnsupportedObject &data) {
   if (m_graphic != nullptr) {
     m_graphic->dwgAdvancedMetadata().addUnsupportedObject(data);
@@ -5002,6 +5047,9 @@ void RS_FilterDXFRW::linkImage(const DRW_ImageDef *data) {
     if (m_graphic != nullptr && data != nullptr)
         m_graphic->dwgAdvancedMetadata().addImageDefinition(*data);
 
+    if (data == nullptr)
+        return;
+
     int handle = data->handle;
     QString sfile(QString::fromUtf8(data->name.c_str()));
     QFileInfo fiDxf(m_file);
@@ -5071,6 +5119,14 @@ void RS_FilterDXFRW::addHeader(const DRW_Header* data){
 
     for (auto it = data->vars.begin() ; it != data->vars.end(); ++it ) {
         QString key = QString::fromStdString((*it).first);
+        // DWG-read header vars arrive under bare keys (e.g. "LUPREC"), while the
+        // app (and the DXF path) query them $-prefixed ("$LUPREC"). Normalize
+        // here so DWG-stored vars are reachable. DXF keys already start with '$'
+        // (drw_header.cpp), so the guard makes this a no-op for that path and
+        // prevents double-prefixing ("$$ACADVER").
+        if (!key.startsWith('$')) {
+            key.prepend('$');
+        }
         DRW_Variant *var = (*it).second;
         switch (var->type()) {
         case DRW_Variant::COORD:
@@ -5652,6 +5708,16 @@ void RS_FilterDXFRW::writeDwgClasses() {
     }
 
     for (const auto& record : metadata.rawObjects()) {
+        // Version guard: never register a CLASSES entry for a raw object whose
+        // captured bytes are from a different DWG version than the file being
+        // written. Without this, registerRawDwgObjectClass below would add an
+        // orphan CLASSES entry (numInstances=1) for an object the emit loop in
+        // writeObjects then drops on the same guard — a CLASSES/OBJECT
+        // mismatch AutoCAD rejects. Mirrors the emit-loop guard.
+        if (metadata.sourceDwgVersion() != DRW::UNKNOWNV
+            && metadata.sourceDwgVersion() != m_dwgW->getVersion()) {
+            continue;
+        }
         if (record.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
             || !record.isCustomClass) {
             continue;
@@ -6714,6 +6780,7 @@ void RS_FilterDXFRW::writeObjects() {
         int blockedMissingRawBytes = 0;
         int blockedMissingClassMetadata = 0;
         int blockedWriterRejected = 0;
+        int blockedVersionMismatch = 0;
         int replayedObjects = 0;
         const LC_DwgAdvancedMetadata::RawObjectFamilyCounts rawFamilyCounts =
             metadata.rawObjectFamilyCounts();
@@ -6855,6 +6922,17 @@ void RS_FilterDXFRW::writeObjects() {
                 && isFieldRawObject(record)) {
                 hasBlockedReplay = true;
                 ++blockedReplaced;
+                continue;
+            }
+            // Version guard: raw bytes are only byte-for-byte valid for the
+            // exact source version. If the target write version differs, drop
+            // the raw object (no malformed bytes) and count it. The matching
+            // guard in writeDwgClasses skips its CLASSES registration so no
+            // orphan CLASSES entry is left behind.
+            if (metadata.sourceDwgVersion() != DRW::UNKNOWNV
+                && metadata.sourceDwgVersion() != m_dwgW->getVersion()) {
+                hasBlockedReplay = true;
+                ++blockedVersionMismatch;
                 continue;
             }
             const LC_DwgAdvancedMetadata::ReplayBlocker blocker =
@@ -7577,10 +7655,12 @@ void RS_FilterDXFRW::writeObjects() {
                 RS_DEBUG->print(
                     RS_Debug::D_WARNING,
                     "Blocked raw DWG replay: invalidated=%d replaced=%d entity=%d "
-                    "missing-bytes=%d missing-class=%d writer-rejected=%d",
+                    "missing-bytes=%d missing-class=%d writer-rejected=%d "
+                    "version-mismatch=%d (replayed=%d)",
                     blockedInvalidated, blockedReplaced, blockedEntityReplay,
                     blockedMissingRawBytes, blockedMissingClassMetadata,
-                    blockedWriterRejected);
+                    blockedWriterRejected, blockedVersionMismatch,
+                    replayedObjects);
             }
             if (semanticOnlyRecords > 0) {
                 RS_DEBUG->print(
@@ -7601,6 +7681,19 @@ void RS_FilterDXFRW::writeObjects() {
     ps.marginRight = m_graphic->getMarginRight();
     ps.marginBottom = m_graphic->getMarginBottom();
     m_dxfW->writePlotSettings(&ps);
+
+    //Slice A2: re-emit OBJECTS captured verbatim on read (A1) so a LibreCAD DXF
+    //round-trip preserves unmodeled objects rather than dropping them. Records live
+    //on the graphic, so this (separate) write-filter instance still sees them.
+    //(Typed objects read into dwgAdvancedMetadata still need their own DXF writers;
+    //the CLASSES section for custom-class objects is the A3 follow-up.)
+    if (m_graphic != nullptr) {
+        for (const DRW_RawDxfObject &rawObject :
+                 m_graphic->dwgAdvancedMetadata().rawDxfObjects()) {
+            DRW_RawDxfObject object = rawObject;
+            m_dxfW->writeRawDxfObject(&object);
+        }
+    }
 }
 
 void RS_FilterDXFRW::writeAppId(){
@@ -8373,6 +8466,7 @@ void RS_FilterDXFRW::writeEntity(RS_Entity* e){
     case RS2::EntityDimAngular:
     case RS2::EntityDimRadial:
     case RS2::EntityDimDiametric:
+    case RS2::EntityDimArc:
         writeDimension(static_cast<RS_Dimension*>(e));
         break;
     case RS2::EntityDimLeader:
@@ -9311,6 +9405,9 @@ void RS_FilterDXFRW::writeTolerance(LC_Tolerance* t) {
     if (m_dwgW) {
         m_dwgW->writeTolerance(&tol);
         return;
+    }
+    if (m_dxfW) {
+        m_dxfW->writeTolerance(&tol);
     }
 }
 

@@ -1054,7 +1054,9 @@ bool DRW_Entity::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer* strBu
     }
     if (version > DRW::AC1021) {//2010+
         duint32 ms = buf->size();
-        objSize = ms*8 - bs;
+        // Clamp: a corrupt bs > ms*8 would underflow objSize (unsigned) to a
+        // huge value and drive strBuf->moveBitPos(objSize-1) past the buffer.
+        objSize = (bs <= ms*8u) ? ms*8u - bs : 0u;
         DRW_DBG(" Object size: "); DRW_DBG(objSize); DRW_DBG("\n");
     }
 
@@ -1089,7 +1091,7 @@ bool DRW_Entity::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer* strBu
     // into @ref extData. Handle-typed items (type 3 layer-ref, type 5
     // entity-ref) and the per-chunk APPID handle are resolved post-hoc
     // in dwgReader::parseAttribs once the symbol tables are available.
-    dint16 extDataSize = buf->getBitShort(); //BS
+    duint16 extDataSize = buf->getBitShort(); //BS (unsigned: a >32767 chunk size must not go negative)
     DRW_DBG(" ext data size: "); DRW_DBG(extDataSize);
     while (extDataSize>0 && buf->isGood()) {
         dwgHandle ah = buf->getHandle();
@@ -1354,6 +1356,11 @@ bool DRW_Entity::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer* strBu
     }
     dint16 invisibleFlag = buf->getBitShort(); //BS
     DRW_DBG(" invisibleFlag: "); DRW_DBG(invisibleFlag);
+    // DXF group 60: bit 0 = invisible (1) / visible (0). libreDWG
+    // common_entity_data.spec masks bit 0 only (`invisible & 1`) and ignores
+    // the higher bits, so use the same mask rather than `== 0`. Paired with
+    // the encode emit below.
+    visible = ((invisibleFlag & 1) == 0);
     if (version > DRW::AC1014) {//2000+
         lWeight = DRW_LW_Conv::dwgInt2lineWidth( buf->getRawChar8() ); //RC
         DRW_DBG(" lwFlag (lWeight): "); DRW_DBG(lWeight); DRW_DBG("\n");
@@ -1395,12 +1402,15 @@ bool DRW_Entity::parseDwgEntHandle(DRW::Version version, dwgBuffer *buf, bool re
         DRW_DBG("NO Block (parent) Handle\n");
 
     DRW_DBG("\n Remaining bytes: "); DRW_DBG(buf->numRemainingBytes()); DRW_DBG("\n");
+    reactorHandles.clear();
     for (int i=0; i< numReactors;++i) {
         dwgHandle reactorsH = buf->getHandle();
+        reactorHandles.push_back(reactorsH.ref);  // 2a.2: persist reactors
         DRW_DBG(" reactorsH control Handle: "); DRW_DBGHL(reactorsH.code, reactorsH.size, reactorsH.ref); DRW_DBG("\n");
     }
     if (xDictFlag !=1){//linetype in 2004 seems not have XDicObjH or NULL handle
         dwgHandle XDicObjH = buf->getHandle();
+        xDictHandle = XDicObjH.ref;  // 2a.2: persist xdict
         DRW_DBG(" XDicObj control Handle: "); DRW_DBGHL(XDicObjH.code, XDicObjH.size, XDicObjH.ref); DRW_DBG("\n");
     }
     DRW_DBG("Remaining bytes: "); DRW_DBG(buf->numRemainingBytes()); DRW_DBG("\n");
@@ -1573,6 +1583,16 @@ bool DRW_Point::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
 //   - The body emit between encodeDwgCommon and encodeDwgEntHandle is
 //     per-entity (3BD basePoint for Point, etc.).
 
+// Phase-2a kill switch for the full common-entity-header write contract
+// (entity reactors/xdict/EED/visibility/entmode emission). Default ON. The
+// emission is gated by DATA PRESENCE (empty reactorHandles/extData + visible
+// == today's hardcoded zeros), so flipping this OFF restores the legacy
+// byte-identical output as an emergency escape hatch. The per-field emission
+// arms land in 2a.1..2a.5; this scaffolding commit changes no bytes.
+#ifndef LIBDXFRW_FULL_COMMON_HEADER
+#define LIBDXFRW_FULL_COMMON_HEADER 1
+#endif
+
 bool DRW_Entity::encodeDwgCommon(DRW::Version version, dwgBufferW *buf,
                                   dwgBufferW *strBuf) {
     (void)strBuf;  // common data contains no strings
@@ -1609,19 +1629,27 @@ bool DRW_Entity::encodeDwgCommon(DRW::Version version, dwgBufferW *buf,
     // entmode: 2 = modelspace, no owner-handle in stream.
     buf->put2Bits(2);
 
-    // numReactors=0 (BL per spec §20.4.1)
+    // numReactors (BL per spec §20.4.1). 2a.2: emit the real count; empty
+    // reactorHandles → 0 → byte-identical to legacy.
+#if LIBDXFRW_FULL_COMMON_HEADER
+    buf->putBitLong(static_cast<dint32>(reactorHandles.size()));
+#else
     buf->putBitLong(0);
+#endif
 
     // R2004/R2010 (AC1018, AC1024): reader reads xDictFlag bit (version > AC1015)
-    // then forces haveNextLinks=1 (no bit in stream).  xDictFlag=0 means the
-    // reader will expect a null XDicObj handle in the handle section.
-    // R2000 (AC1015): no xDictFlag bit; reader reads haveNextLinks bit.
+    // then forces haveNextLinks=1 (no bit in stream).  We always emit
+    // xDictFlag=0 (xdic-present) so the reader reads exactly one xdic handle
+    // in the handle section — we emit the real handle when xDictHandle!=0 and
+    // a null handle otherwise. This keeps the empty case byte-identical to the
+    // legacy path (bit 0 + null handle) while round-tripping a real xdict.
+    // R2000 (AC1015): no xDictFlag bit; reader's xDictFlag stays 0 so it ALWAYS
+    // reads an xdic handle — same emit rule applies.
     // R2013+ (AC1027+): reader reads xDictFlag then reads haveNextLinks (bit restored).
-    // haveNextLinks=1 means no prev/next links — no extra handles in stream.
     if (version == DRW::AC1015) {
         buf->putBit(1);  // haveNextLinks=1 (no prev/next chain)
     } else {
-        buf->putBit(0);  // xDictFlag=0 (entity has no xdict; null handle follows)
+        buf->putBit(0);  // xDictFlag=0 (xdic present; real-or-null handle follows)
         if (version > DRW::AC1024) {
             buf->putBit(1);  // haveNextLinks=1 (AC1027+: bit is back in stream)
         }
@@ -1650,8 +1678,13 @@ bool DRW_Entity::encodeDwgCommon(DRW::Version version, dwgBufferW *buf,
         buf->putBit(0);  // hasEdgeVisualStyle
     }
 
-    // invisibleFlag BS.
+    // invisibleFlag BS (DXF 60). 2a.1: emit from `visible` (bit 0 = invisible)
+    // instead of a hardcoded 0. visible==true → 0 → byte-identical to legacy.
+#if LIBDXFRW_FULL_COMMON_HEADER
+    buf->putBitShort(visible ? 0 : 1);
+#else
     buf->putBitShort(0);
+#endif
 
     // lWeight RC (0 = byLayer per DRW_LW_Conv).
     buf->putRawChar8(static_cast<duint8>(lWeight));
@@ -1670,14 +1703,36 @@ bool DRW_Entity::encodeDwgEntHandle(DRW::Version version, dwgBufferW *buf,
     dwgBufferW *hb = (handleBuf != nullptr) ? handleBuf : buf;
 
     // ownerHandle skipped — entmode=2 above.
-    // No reactor handles (numReactors=0).
-    // XDic handle — for R2000/R2004/R2010, xDictFlag=0 means the reader
-    // expects a null XDicObj handle here.
-    dwgHandle xDicNull;
-    xDicNull.code = 3;
-    xDicNull.ref  = 0;
-    xDicNull.size = 0;
-    hb->putHandle(xDicNull);
+    // Reactor handles (2a.2): emitted before xdic, one per numReactors written
+    // in the DATA section, as ABSOLUTE handles (reader uses getHandle()). Empty
+    // reactorHandles → nothing emitted → byte-identical to legacy.
+#if LIBDXFRW_FULL_COMMON_HEADER
+    for (duint32 ref : reactorHandles) {
+        dwgHandle rh;
+        rh.code = 4;  // soft pointer
+        rh.ref  = ref;
+        rh.size = 0;
+        if (ref != 0) { duint32 t = ref; while (t != 0) { t >>= 8; ++rh.size; } }
+        hb->putHandle(rh);
+    }
+#endif
+
+    // XDic handle — xDictFlag=0 in the DATA section means the reader reads one
+    // XDicObj handle here: emit the real handle when xDictHandle!=0, else the
+    // null handle (matching the legacy byte-for-byte for the empty case).
+    dwgHandle xDic;
+    xDic.code = 3;
+#if LIBDXFRW_FULL_COMMON_HEADER
+    xDic.ref  = xDictHandle;
+    xDic.size = 0;
+    if (xDictHandle != 0) {
+        duint32 t = xDictHandle; while (t != 0) { t >>= 8; ++xDic.size; }
+    }
+#else
+    xDic.ref  = 0;
+    xDic.size = 0;
+#endif
+    hb->putHandle(xDic);
 
     // Layer handle (R2000+ unconditional).  Hard pointer.
     dwgHandle lH;
@@ -1845,7 +1900,16 @@ bool DRW_Spline::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dw
     (void)bs; (void)strBuf;
     oType = 36;  // SPLINE class id — see dwgreader.cpp:1329
     if (!encodeDwgCommon(version, buf)) return false;
+    encodeDwgSplineBody(version, buf);
+    return encodeDwgEntHandle(version, buf, handleBuf);
+}
 
+// Spline body encode: the scenario/degree/knots/ctrl/fit section, WITHOUT the
+// leading encodeDwgCommon or the trailing encodeDwgEntHandle. Factored out so
+// DRW_Helix::encodeDwg can reuse the identical payload (Phase 8a-1).
+// Omits the DXF-only flag70/extrusion (210-230) which the DWG stream never
+// carries here.
+void DRW_Spline::encodeDwgSplineBody(DRW::Version version, dwgBufferW *buf) const {
     // Scenario:
     //   1 = control-point / rational / planar (uses knots + control + weights)
     //   2 = fit-point (uses fit points + tangents + tolerance)
@@ -1925,6 +1989,28 @@ bool DRW_Spline::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dw
     } else {
         for (const auto& fp : fitlist) buf->put3BitDouble(*fp);
     }
+}
+
+// DRW_Helix::encodeDwg — spline body (oType = HELIX class 503) + AcDbHelix
+// trailer, then the common entity handle data. Trailer field order MUST match
+// DRW_Helix::parseDwg (Phase 8a-1).
+bool DRW_Helix::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {
+    (void)bs; (void)strBuf;
+    oType = kDwgClassNum;  // HELIX custom class 503
+    if (!encodeDwgCommon(version, buf)) return false;
+    encodeDwgSplineBody(version, buf);
+
+    // AcDbHelix trailer (same order as parseDwg):
+    buf->putBitLong(m_majorVersion);
+    buf->putBitLong(m_maintVersion);
+    buf->put3BitDouble(axisBasePt);
+    buf->put3BitDouble(startPt);
+    buf->put3BitDouble(axisVector);
+    buf->putBitDouble(radius);
+    buf->putBitDouble(turns);
+    buf->putBitDouble(turnHeight);
+    buf->putBit(handedness ? 1 : 0);
+    buf->putRawChar8(static_cast<duint8>(constraintType));
 
     return encodeDwgEntHandle(version, buf, handleBuf);
 }
@@ -2009,7 +2095,10 @@ bool DRW_MText::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwg
 
 bool DRW_Insert::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {
     (void)bs; (void)strBuf;
-    oType = 7;  // INSERT class id — see dwgreader.cpp:1122 (case 8 is MINSERT)
+    // 2b.6: emit MINSERT (oType 8) when a column/row grid is present;
+    // otherwise a plain INSERT (oType 7). The reader keys the grid block off
+    // oType==8 (parseDwg :3189).
+    oType = (colcount > 1 || rowcount > 1) ? 8 : 7;
     if (!encodeDwgCommon(version, buf)) return false;
 
     // INSERT body — mirror of DRW_Insert::parseDwg for R2000.
@@ -2038,8 +2127,16 @@ bool DRW_Insert::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dw
     buf->putBitDouble(angle);                // radians
     buf->putExtrusion(extPoint, /*b_R2000_style=*/false);
     buf->putBit(0);                          // hasAttrib = 0 (no ATTRIBs)
-    // (oType==8 minsert: colcount/rowcount/colspace/rowspace omitted —
-    //  we only emit oType=7 plain INSERT.)
+    // hasAttrib==0 ⇒ the SINCE-R2004 num_owned BL is absent (parse :3184), so
+    // the MINSERT grid (oType==8) follows the hasAttrib bit directly. Field
+    // order mirrors parseDwg :3190-3193 (colcount BS, rowcount BS, colspace BD,
+    // rowspace BD) and libreDWG dwg.spec num_cols/num_rows/col_spacing/row_spacing.
+    if (oType == 8) {  // MINSERT grid
+        buf->putBitShort(static_cast<duint16>(colcount));
+        buf->putBitShort(static_cast<duint16>(rowcount));
+        buf->putBitDouble(colspace);
+        buf->putBitDouble(rowspace);
+    }
 
     if (!encodeDwgEntHandle(version, buf, handleBuf)) return false;
 
@@ -2752,6 +2849,40 @@ bool DRW_Shape::parseDwg(DRW::Version v, dwgBuffer *buf, duint32 bs){
     return ret && buf->isGood();
 }
 
+// Phase 6.1: SHAPE encoder (fixed oType 33). Exact inverse of parseDwg above.
+// Without this override a SHAPE would encode as a LINE (default DRW_Entity).
+bool DRW_Shape::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs,
+                          dwgBufferW *strBuf, dwgBufferW *handleBuf) {
+    (void)bs; (void)strBuf;
+    oType = 33;  // SHAPE class id — see dwgreader.cpp case 33
+    if (!encodeDwgCommon(version, buf)) return false;
+
+    buf->put3BitDouble(m_insertionPoint);
+    buf->putBitDouble(m_scale);
+    buf->putBitDouble(m_rotation);
+    buf->putBitDouble(m_widthFactor);
+    buf->putBitDouble(m_oblique);
+    buf->putBitDouble(m_thickness);
+    buf->putBitShort(m_shapeIndex);
+    buf->put3BitDouble(m_extrusion);
+
+    if (!encodeDwgEntHandle(version, buf, handleBuf)) return false;
+
+    // Trailing SHAPEFILE style hard pointer (code 5), byte-count-sized.
+    dwgHandle sH;
+    sH.code = 5;
+    sH.ref  = m_shapeFileHandle;
+    sH.size = 0;
+    if (m_shapeFileHandle != 0) {
+        duint32 t = m_shapeFileHandle;
+        while (t != 0) { t >>= 8; ++sH.size; }
+    } else {
+        sH.code = 0;  // null handle
+    }
+    (handleBuf ? handleBuf : buf)->putHandle(sH);
+    return true;
+}
+
 bool DRW_Ole2Frame::parseDwg(DRW::Version v, dwgBuffer *buf, duint32 bs){
     m_bodyBitSize = bs;
     bool ret = DRW_Entity::parseDwg(v, buf, nullptr, bs);
@@ -2785,10 +2916,15 @@ bool DRW_Ole2Frame::parseDwg(DRW::Version v, dwgBuffer *buf, duint32 bs){
 
     m_payloadPresent = m_declaredPayloadLength > 0;
     m_payloadByteCount = m_declaredPayloadLength;
-    if (m_declaredPayloadLength > 0
-        && !buf->moveBitPos(static_cast<dint32>(m_declaredPayloadLength * 8u))) {
-        m_payloadTruncated = true;
-        return false;
+    // Phase 6.2: capture the opaque payload bytes (was skipped via moveBitPos)
+    // so the OLE2FRAME encoder can re-emit them byte-for-byte.
+    if (m_declaredPayloadLength > 0) {
+        m_payloadBytes.resize(m_declaredPayloadLength);
+        if (!buf->getBytes(m_payloadBytes.data(), m_declaredPayloadLength)) {
+            m_payloadTruncated = true;
+            m_payloadBytes.clear();
+            return false;
+        }
     }
 
     if (v > DRW::AC1014 && buf->numRemainingBytes() > 0) {
@@ -2798,6 +2934,30 @@ bool DRW_Ole2Frame::parseDwg(DRW::Version v, dwgBuffer *buf, duint32 bs){
 
     ret = DRW_Entity::parseDwgEntHandle(v, buf);
     return ret && buf->isGood();
+}
+
+// Phase 6.2: OLE2FRAME encoder (fixed oType 74). Inverse of parseDwg, emitting
+// the captured opaque payload byte-for-byte. Without this override an OLE2FRAME
+// would encode as a LINE.
+bool DRW_Ole2Frame::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs,
+                              dwgBufferW *strBuf, dwgBufferW *handleBuf) {
+    (void)bs; (void)strBuf;
+    oType = 74;  // OLE2FRAME class id — see dwgreader.cpp case 74
+    if (!encodeDwgCommon(version, buf)) return false;
+
+    buf->putBitShort(m_flags);
+    if (version > DRW::AC1014)
+        buf->putBitShort(m_mode);
+    // Emit the actual captured length so the reader's data_size matches the
+    // bytes that follow (avoids a declared-vs-actual mismatch on re-read).
+    const duint32 payloadLen = static_cast<duint32>(m_payloadBytes.size());
+    buf->putBitLong(static_cast<dint32>(payloadLen));
+    if (payloadLen > 0)
+        buf->putBytes(m_payloadBytes.data(), m_payloadBytes.size());
+    if (version > DRW::AC1014 && m_hasR2000TrailingByte)
+        buf->putRawChar8(m_r2000TrailingByte);
+
+    return encodeDwgEntHandle(version, buf, handleBuf);
 }
 
 bool DRW_Light::parseDwg(DRW::Version v, dwgBuffer *buf, duint32 bs){
@@ -3155,7 +3315,7 @@ bool DRW_Insert::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
             DRW_DBG("second attrib Handle: "); DRW_DBGHL(attH.code, attH.size, attH.ref); DRW_DBG("\n");
             attribHandles.push_back(attH);
         } else {
-            for (duint8 i=0; i< objCount; ++i){
+            for (dint32 i=0; i < objCount && buf->isGood(); ++i){
                 dwgHandle attH = buf->getHandle(); /* H 2 BLOCK HEADER (hard pointer) */
                 DRW_DBG("attrib Handle #"); DRW_DBG(i); DRW_DBG(": "); DRW_DBGHL(attH.code, attH.size, attH.ref); DRW_DBG("\n");
                 attribHandles.push_back(attH);
@@ -4386,7 +4546,12 @@ bool DRW_Attrib::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     attribFlags = buf->getRawChar8();
     DRW_DBG("attrib flags: "); DRW_DBG(attribFlags); DRW_DBG("\n");
 
-    if (version >= DRW::AC1024) {
+    // lockPosition (DXF 280) appears since R2007 (AC1021) per ODA §20.4.x /
+    // ACadSharp.  Read gate lowered AC1024->AC1021 so R2007/8/9 imports keep
+    // it.  The encoder still emits it only at AC1024 (no AC1021 writer
+    // exists), so this is read-only; parseDwgEntHandle repositions to objSize
+    // for version>AC1018, absorbing the +1 bit without handle-stream drift.
+    if (version >= DRW::AC1021) {
         lockPosition = buf->getBit();
         DRW_DBG("lock position: "); DRW_DBG(lockPosition); DRW_DBG("\n");
     }
@@ -4563,7 +4728,9 @@ bool DRW_Attdef::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
 
     attribFlags = buf->getRawChar8();
 
-    if (version >= DRW::AC1024) {
+    // lockPosition (DXF 280): read gate lowered AC1024->AC1021 to match
+    // ATTRIB (R2007+). promptVersion/keep_duplicate RC below stays AC1024+.
+    if (version >= DRW::AC1021) {
         lockPosition = buf->getBit();
     }
 
@@ -4892,8 +5059,9 @@ bool DRW_Polyline::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
         DRW_DBG(" M count: "); DRW_DBG(vertexcount);
         facecount = buf->getBitShort(); //N-count
         DRW_DBG(" N count: "); DRW_DBG(facecount);
-        /*dint16 mDensity =*/ buf->getBitShort();
-        /*dint16 nDensity =*/ buf->getBitShort();
+        smoothM = buf->getBitShort(); //M smooth-surface density, DXF 73
+        smoothN = buf->getBitShort(); //N smooth-surface density, DXF 74
+        DRW_DBG(" M/N density: "); DRW_DBG(smoothM); DRW_DBG("/"); DRW_DBG(smoothN);
     }
     if (version > DRW::AC1015){ //2004+
         ooCount = buf->getBitLong();
@@ -5719,6 +5887,21 @@ bool DRW_Spline::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     bool ret = DRW_Entity::parseDwg(version, buf, NULL, bs);
     if (!ret)
         return ret;
+    if (!parseDwgSplineBody(version, buf))
+        return false;
+    /* Common Entity Handle Data */
+    ret = DRW_Entity::parseDwgEntHandle(version, buf);
+    if (!ret)
+        return ret;
+//    RS crc;   //RS */
+    return buf->isGood();
+}
+
+// Spline body decode: the scenario/degree/knots/ctrl/fit section, WITHOUT
+// the leading DRW_Entity::parseDwg(common) or the trailing parseDwgEntHandle.
+// Factored out so DRW_Helix can reuse the identical spline payload before its
+// AcDbHelix trailer (Phase 8a-1).
+bool DRW_Spline::parseDwgSplineBody(DRW::Version version, dwgBuffer *buf){
     DRW_DBG("\n***************************** parsing spline *********************************************\n");
     duint8 weight = 0; // RLZ ??? flags, weight, code 70, bit 4 (16)
 
@@ -5833,6 +6016,34 @@ bool DRW_Spline::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
         }
     }
 
+    return buf->isGood();
+}
+
+// AcDbHelix trailer order (libreDWG dwg2.spec:2493-2503):
+//   major_version BL, maint_version BL, axis_base_pt 3BD, start_pt 3BD,
+//   axis_vector 3BD, radius BD, turns BD, turn_height BD, handedness B,
+//   constraint_type RC.
+bool DRW_Helix::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
+    bool ret = DRW_Entity::parseDwg(version, buf, NULL, bs);
+    if (!ret)
+        return ret;
+    DRW_DBG("\n***************************** parsing helix *********************************************\n");
+    if (!parseDwgSplineBody(version, buf))
+        return false;
+
+    // AcDbHelix trailer (see field order above).
+    m_majorVersion = buf->getBitLong();
+    m_maintVersion = buf->getBitLong();
+    axisBasePt  = buf->get3BitDouble();
+    startPt     = buf->get3BitDouble();
+    axisVector  = buf->get3BitDouble();
+    radius      = buf->getBitDouble();
+    turns       = buf->getBitDouble();
+    turnHeight  = buf->getBitDouble();
+    handedness  = buf->getBit() != 0;
+    constraintType = buf->getRawChar8();
+    DRW_DBG("\nhelix radius: "); DRW_DBG(radius); DRW_DBG(" turns: "); DRW_DBG(turns);
+
     /* Common Entity Handle Data */
     ret = DRW_Entity::parseDwgEntHandle(version, buf);
     if (!ret)
@@ -5923,8 +6134,8 @@ bool DRW_Image::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     sizeu = buf->getRawDouble();
     sizev = buf->getRawDouble();
     DRW_DBG("\nsize U: "); DRW_DBG(sizeu); DRW_DBG("\nsize V: "); DRW_DBG(sizev);
-    duint16 displayProps = buf->getBitShort();
-    DRW_UNUSED(displayProps);//RLZ: temporary, complete API
+    m_displayProps = buf->getBitShort();
+    DRW_DBG("\ndisplay props: "); DRW_DBG(m_displayProps);
     clip = buf->getBit();
     brightness = buf->getRawChar8();
     contrast = buf->getRawChar8();
@@ -5967,9 +6178,66 @@ bool DRW_Image::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     ref = biH.ref;
     biH = buf->getHandle();
     DRW_DBG("ImageDefReactor Handle: "); DRW_DBGHL(biH.code, biH.size, biH.ref);
+    m_imageDefReactorHandle = biH.ref;
     DRW_DBG("Remaining bytes: "); DRW_DBG(buf->numRemainingBytes()); DRW_DBG("\n");
 //    RS crc;   //RS */
     return buf->isGood();
+}
+
+// DRW_Image::encodeDwg — inverse of DRW_Image::parseDwg above (libreDWG
+// dwg.spec:5533-5563).  Body field order: BL class_version (0), 3 x 3BD
+// (base/uvec/vvec), 2 x RD (sizeu/sizev), BS display_props, B clip,
+// 3 x RC (brightness/contrast/fade), [R2010+ B clip_mode], BS
+// clip_boundary_type + verts.  Both handles (imagedef code 5 + reactor
+// code 3) are emitted UNCONDITIONALLY at the END of the handle stream,
+// matching parseDwg's order — NOT the spec's interleaved mid-stream slots.
+bool DRW_Image::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs,
+                          dwgBufferW *strBuf, dwgBufferW *handleBuf) {
+    (void)bs; (void)strBuf;
+    oType = 101;  // IMAGE class id — see dwgreader.cpp case 101
+    if (!encodeDwgCommon(version, buf)) return false;
+
+    buf->putBitLong(0);  // class_version (reader discards; ODA emits 0)
+    buf->putBitDouble(basePoint.x); buf->putBitDouble(basePoint.y); buf->putBitDouble(basePoint.z);
+    buf->putBitDouble(secPoint.x);  buf->putBitDouble(secPoint.y);  buf->putBitDouble(secPoint.z);  // uvec
+    buf->putBitDouble(vVector.x);   buf->putBitDouble(vVector.y);   buf->putBitDouble(vVector.z);
+    buf->putRawDouble(sizeu);
+    buf->putRawDouble(sizev);
+    buf->putBitShort(static_cast<duint16>(m_displayProps));
+    buf->putBit(static_cast<duint8>(clip & 1));
+    buf->putRawChar8(static_cast<duint8>(brightness));
+    buf->putRawChar8(static_cast<duint8>(contrast));
+    buf->putRawChar8(static_cast<duint8>(fade));
+    if (version > DRW::AC1021) {  // 2010+ clip mode
+        buf->putBit(clipMode ? 1 : 0);
+    }
+    if (clipPath.empty()) {
+        buf->putBitShort(0);  // clip_boundary_type 0 = none
+    } else {
+        // Always emit polygon type 2 — reader expands a stored rect (type 1)
+        // into a 4-vertex polygon, so re-emit it as a polygon, never type 1.
+        buf->putBitShort(2);
+        buf->putBitLong(static_cast<dint32>(clipPath.size()));
+        for (const DRW_Coord& v : clipPath)
+            buf->put2RawDouble(v);
+    }
+
+    if (!encodeDwgEntHandle(version, buf, handleBuf)) return false;
+
+    // Emit both trailing handles UNCONDITIONALLY in parseDwg order:
+    // imagedef (hard pointer, code 5) then imagedefreactor (hard owner, code 3).
+    dwgBufferW *hb = handleBuf ? handleBuf : buf;
+    auto makeHandle = [](duint8 code, duint32 r) {
+        dwgHandle h;
+        h.code = (r == 0) ? 0 : code;
+        h.ref  = r;
+        h.size = 0;
+        if (r != 0) { duint32 t = r; while (t != 0) { t >>= 8; ++h.size; } }
+        return h;
+    };
+    hb->putHandle(makeHandle(5, ref));                       // imagedef (340)
+    hb->putHandle(makeHandle(3, m_imageDefReactorHandle));   // imagedefreactor (360)
+    return true;
 }
 
 bool DRW_Dimension::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
@@ -6356,7 +6624,12 @@ bool DRW_DimOrdinate::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs)
     DRW_DBG("\ndef2: "); DRW_DBGPT(pt.x, pt.y, pt.z);
     duint8 type2 = buf->getRawChar8();//RLZ: correct this
     DRW_DBG("type2 (70) read: "); DRW_DBG(type2);
-    type =  (type2 & 1) ? type | 0x80 : type & 0xBF; //set bit 6
+    // 0B.1: x-vs-y ordinate flag is DXF group-70 bit 6 (0x40), matching the
+    // filter (rs_filterdxfrw.cpp `type & 64`) and the DWG parseCode path.
+    // (Previously set bit 7/0x80, which the filter never checks.) The clear
+    // mask 0xBF already clears 0x40. The DIMENSION base type byte (bit 7) is
+    // a separate field — see :6141/:6409/:6660, NOT touched here.
+    type =  (type2 & 1) ? type | 0x40 : type & 0xBF; //set bit 6 (0x40)
     DRW_DBG(" type (70) set: "); DRW_DBG(type);
     type |= 6;
     DRW_DBG("\n  type (70) final: "); DRW_DBG(type); DRW_DBG("\n");
@@ -6384,7 +6657,8 @@ bool DRW_Dimension::encodeDwgDimBase(DRW::Version version, dwgBufferW *buf,
     // ODA §20.4.22: version RC present for R2010+ (mirrors parseDwg read at version > AC1021)
     if (version > DRW::AC1021)
         buf->putRawChar8(0);
-    // TODO: AC1021+ strBuf routing — string fields must go through separate strBuf for R2007+
+    // R2007+: the dim text below is routed to strBuf (the separate string
+    // stream) via the (strBuf ? strBuf : buf) selector in putVariableText.
     buf->put3BitDouble(extPoint);        // 3BD per ODA §20.4.22 (NOT BE, NO padding bits)
     buf->putRawDouble(textPoint.x);
     buf->putRawDouble(textPoint.y);
@@ -6628,8 +6902,10 @@ bool DRW_DimOrdinate::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 b
     buf->put3BitDouble(getDefPoint());  // origin/definition point (code 10)
     buf->put3BitDouble(getPt3());       // feature location point (code 13)
     buf->put3BitDouble(getPt4());       // leader end point (code 14)
-    // type2 byte encodes the x-vs-y ordinate flag (bit7 of type)
-    duint8 type2byte = (type & 0x80) ? 1 : 0;
+    // type2 byte encodes the x-vs-y ordinate flag (bit 6 / 0x40 of type, per
+    // 0B.1) — keeps the DWG byte round-trip self-consistent with the parse
+    // side while making the filter's `type & 64` check fire.
+    duint8 type2byte = (type & 0x40) ? 1 : 0;
     buf->putRawChar8(type2byte);
     if (!encodeDwgEntHandle(version, buf, handleBuf)) return false;
     putDimHandles(buf, dimStyleH, blockH, handleBuf);
@@ -7506,7 +7782,7 @@ bool DRW_Viewport::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
         DRW_DBG("ViewPort ent header: "); DRW_DBGHL(someHdl.code, someHdl.size, someHdl.ref); DRW_DBG("\n");
     }
     if (version > DRW::AC1014) {//2000+
-        for (duint8 i=0; i < frozenLyCount; ++i){
+        for (duint32 i=0; i < frozenLyCount && buf->isGood(); ++i){
             someHdl = buf->getHandle();
             DRW_DBG("Frozen layer handle "); DRW_DBG(i); DRW_DBG(": "); DRW_DBGHL(someHdl.code, someHdl.size, someHdl.ref); DRW_DBG("\n");
         }
@@ -7710,8 +7986,8 @@ bool DRW_Polyline::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs,
         buf->putBitShort(static_cast<duint16>(curvetype));
         buf->putBitShort(static_cast<duint16>(vertexcount));  // M count
         buf->putBitShort(static_cast<duint16>(facecount));    // N count
-        buf->putBitShort(0);  // mDensity
-        buf->putBitShort(0);  // nDensity
+        buf->putBitShort(static_cast<duint16>(smoothM));      // mDensity, DXF 73
+        buf->putBitShort(static_cast<duint16>(smoothN));      // nDensity, DXF 74
     }
 
     // AC2004+ (>AC1015): emit vertex count before the handle section.

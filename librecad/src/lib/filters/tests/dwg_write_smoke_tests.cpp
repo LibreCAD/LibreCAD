@@ -338,6 +338,66 @@ TEST_CASE("dwgRW::write invokes writeHeader and the values reach the file",
 }
 
 namespace {
+/// Iface that writes string header vars (MENU/PROJECTNAME) and reads them
+/// back.  Exercises the R2007+ header string stream (F04): before the fix
+/// these strings were dropped on write for AC1021+, so they read back empty.
+class HeaderStringIface : public EmptyIface {
+public:
+    std::string m_writeMenu;
+    std::string m_writeProject;
+    bool        m_readCalled {false};
+    std::string m_readMenu;
+    std::string m_readProject;
+
+    void writeHeader(DRW_Header& data) override {
+        data.addStr("MENU", m_writeMenu, 1);
+        data.addStr("PROJECTNAME", m_writeProject, 1);
+    }
+    void addHeader(const DRW_Header* h) override {
+        if (h == nullptr) return;
+        m_readCalled = true;
+        auto readStr = [&](const char* k) -> std::string {
+            auto it = h->vars.find(k);
+            if (it != h->vars.end() && it->second
+                && it->second->type() == DRW_Variant::STRING)
+                return std::string(it->second->c_str());
+            return std::string();
+        };
+        m_readMenu    = readStr("MENU");
+        m_readProject = readStr("PROJECTNAME");
+    }
+};
+} // namespace
+
+TEST_CASE("R2010 header string vars round-trip through the string stream",
+          "[dwg-write][header-encode][string-stream]") {
+    const std::string path = tempPath("header_strings_2010.dwg");
+
+    HeaderStringIface writeIface;
+    writeIface.m_writeMenu    = "acad.mnu";
+    writeIface.m_writeProject = "MyProject";
+
+    {
+        dwgRW writer(path.c_str());
+        REQUIRE(writer.write(&writeIface, DRW::AC1024, /*bin=*/false));
+    }
+
+    HeaderStringIface readIface;
+    {
+        dwgRW reader(path.c_str());
+        bool ok = reader.read(&readIface, /*ext=*/false);
+        REQUIRE(ok);
+        REQUIRE(reader.getError() == DRW::BAD_NONE);
+        REQUIRE(reader.getVersion() == DRW::AC1024);
+    }
+    REQUIRE(readIface.m_readCalled);
+    CHECK(readIface.m_readMenu    == "acad.mnu");
+    CHECK(readIface.m_readProject == "MyProject");
+
+    std::remove(path.c_str());
+}
+
+namespace {
 
 /// Iface for the INSERT smoke test.  Defines a user block in
 /// writeBlocks(), captures the returned block_record handle, then
@@ -413,6 +473,70 @@ TEST_CASE("dwgRW INSERT round-trips via defineBlock + writeInsert",
     REQUIRE(readIface.m_inserts[0].color       == 3);
 
     std::remove(path.c_str());
+}
+
+namespace {
+
+/// 2b.6: writes a MINSERT (col/row grid) and captures it on read.
+class MInsertRoundTripIface : public EmptyIface {
+public:
+    dwgRW *m_writer {nullptr};
+    duint32 m_blockRecH {0};
+    std::vector<DRW_Insert> m_inserts;
+
+    void writeBlocks() override {
+        if (m_writer == nullptr) return;
+        m_blockRecH = m_writer->defineBlock("GridSym", DRW_Coord{0.0, 0.0, 0.0});
+    }
+    void writeEntities() override {
+        if (m_writer == nullptr || m_blockRecH == 0) return;
+        DRW_Insert ins;
+        ins.basePoint = DRW_Coord{10.0, 20.0, 0.0};
+        ins.xscale = 1.0; ins.yscale = 1.0; ins.zscale = 1.0;
+        ins.angle = 0.0;
+        ins.color = 4;
+        ins.colcount = 3;     // grid → MINSERT (oType 8)
+        ins.rowcount = 2;
+        ins.colspace = 10.0;
+        ins.rowspace = 5.0;
+        ins.blockRecH.ref = m_blockRecH;
+        m_writer->writeInsert(&ins);
+    }
+    void addInsert(const DRW_Insert& i) override { m_inserts.push_back(i); }
+};
+
+} // namespace
+
+// 2b.6 (gap minsert-attribs-dwg-write-drop): a MINSERT grid (col/row/spacing)
+// now encodes as oType 8 and round-trips; a one-bit grid offset would desync
+// the BLOCK_HEADER handle read, so the block reference resolving back to
+// "GridSym" is the alignment proof.
+TEST_CASE("dwgRW MINSERT round-trips col/row/spacing grid",
+          "[dwg-write][smoke][minsert]") {
+    for (DRW::Version ver : {DRW::AC1015, DRW::AC1018}) {
+        const std::string path = tempPath("minsert.dwg");
+        {
+            dwgRW writer(path.c_str());
+            MInsertRoundTripIface iface;
+            iface.m_writer = &writer;
+            REQUIRE(writer.write(&iface, ver, /*bin=*/false));
+            REQUIRE(iface.m_blockRecH != 0);
+        }
+        MInsertRoundTripIface readIface;
+        {
+            dwgRW reader(path.c_str());
+            REQUIRE(reader.read(&readIface, /*ext=*/false));
+            REQUIRE(reader.getError() == DRW::BAD_NONE);
+        }
+        REQUIRE(readIface.m_inserts.size() == 1);
+        REQUIRE(readIface.m_inserts[0].name == "GridSym");  // handle aligned
+        REQUIRE(readIface.m_inserts[0].colcount == 3);
+        REQUIRE(readIface.m_inserts[0].rowcount == 2);
+        REQUIRE(readIface.m_inserts[0].colspace == 10.0);
+        REQUIRE(readIface.m_inserts[0].rowspace == 5.0);
+        REQUIRE(readIface.m_inserts[0].basePoint.x == 10.0);
+        std::remove(path.c_str());
+    }
 }
 
 namespace {
@@ -699,6 +823,20 @@ public:
                 return definition.m_instanceCount;
         }
         return -1;
+    }
+
+    // 0B.3: expose the raw item_class_id (0x1F2 entity / 0x1F3 object) so the
+    // writer-side conformance can be asserted before the reader collapses it.
+    dint32 customClassItemClassId(duint16 classNum) const {
+        for (const DwgClassDefinition& definition : m_dwgClassDefinitions) {
+            if (definition.m_classNum == classNum)
+                return definition.m_entityFlagRaw;
+        }
+        return -1;
+    }
+
+    bool registerObjectClassForTest(const DRW_UnsupportedObject& object) {
+        return registerRawObjectClass(object);
     }
 };
 
@@ -1867,6 +2005,79 @@ TEST_CASE("dwgWriter counts unique raw custom class instances",
     REQUIRE(writer.registerRawObjectClass(first));
     REQUIRE(writer.registerRawObjectClass(second));
     CHECK(writer.customClassInstanceCount(first.m_objectType) == 2);
+}
+
+// Phase 2b.5 — sweep verification: every Phase-2b rescued custom-class raw
+// object registers a CLASSES entry (its recName) when written. This proves
+// registerRawObjectClass fires for each rescued type, so the CLASSES section
+// is never an orphan/missing entry for a replayed handle.
+TEST_CASE("dwgWriter registers a CLASSES entry for every Phase-2b rescued type",
+          "[dwg-write][raw-replay][classes][replay_rescue]") {
+    const struct {
+        duint16 classNum;
+        const char* recName;
+        const char* className;
+    } kRescued[] = {
+        {600, "MATERIAL", "AcDbMaterial"},
+        {601, "ACDB_VISUALSTYLE_CLASS", "AcDbVisualStyle"},
+        {602, "TABLESTYLE", "AcDbTableStyle"},
+        {603, "CELLSTYLEMAP", "AcDbCellStyleMap"},
+        {604, "TABLECONTENT", "AcDbTableContent"},
+        {605, "ACDBDETAILVIEWSTYLE", "AcDbDetailViewStyle"},
+        {606, "ACDBSECTIONVIEWSTYLE", "AcDbSectionViewStyle"},
+        {607, "IMAGEDEF_REACTOR", "AcDbRasterImageDefReactor"},
+        {608, "TABLEGEOMETRY", "AcDbTableGeometry"},
+        {609, "ACAD_EVALUATION_GRAPH", "AcDbEvalGraph"},
+    };
+
+    DRW_Header header;
+    std::ofstream stream;
+    InspectableDwgWriter15 writer(&stream, &header);
+
+    duint32 handle = 0x900u;
+    for (const auto& r : kRescued) {
+        DRW_UnsupportedObject obj = makeRawReplayObject(DRW::AC1024);
+        obj.m_objectType = r.classNum;
+        obj.m_handle = handle++;
+        obj.m_recordName = r.recName;
+        obj.m_className = r.className;
+        REQUIRE(writer.registerObjectClassForTest(obj));
+        // Registered with a CLASSES entry (instanceCount>=1) and tagged as an
+        // OBJECT (item_class_id 0x1F3, not the entity 0x1F2).
+        CHECK(writer.customClassInstanceCount(r.classNum) == 1);
+        CHECK(writer.customClassItemClassId(r.classNum) == 0x1F3);
+    }
+}
+
+// 0B.3 (gap classes-itemclassid): object-producing CLASSES entries must
+// carry item_class_id 0x1F3; entity-producing entries 0x1F2.  Writer-only
+// change; the reader maps 0x1F2->entity and everything else->object, so the
+// self-round-trip classification is unchanged.
+TEST_CASE("dwgWriter emits 0x1F3 item_class_id for object classes, 0x1F2 for entities",
+          "[dwg-write][classes]") {
+    DRW_Header header;
+    std::ofstream stream;
+    InspectableDwgWriter15 writer(&stream, &header);
+
+    // Raw OBJECT custom class → 0x1F3 (was 0).
+    DRW_UnsupportedObject obj = makeRawReplayObject(DRW::AC1024);
+    REQUIRE(writer.registerObjectClassForTest(obj));
+    CHECK(writer.customClassItemClassId(obj.m_objectType) == 0x1F3);
+
+    // Raw ENTITY custom class → 0x1F2.
+    DRW_UnsupportedObject ent = makeRawReplayObject(DRW::AC1024);
+    ent.m_objectType = 510;
+    ent.m_isEntity = true;
+    REQUIRE(writer.registerObjectClassForTest(ent));
+    CHECK(writer.customClassItemClassId(ent.m_objectType) == 0x1F2);
+
+    // A named OBJECT helper (SUN) → 0x1F3 (was 0).
+    REQUIRE(writer.registerSunObjectClass(0x900u));
+    CHECK(writer.customClassItemClassId(DRW_Sun::kDwgClassNum) == 0x1F3);
+
+    // Reader tolerance: the built-in entity registrations (ARC_DIMENSION 500,
+    // MULTILEADER 501, LIGHT 502) keep 0x1F2.
+    CHECK(writer.customClassItemClassId(500) == 0x1F2);
 }
 
 TEST_CASE("dwgRW writes native text MLEADER entities",
@@ -3054,6 +3265,105 @@ TEST_CASE("dwgRW round-trip delivers the standard R2000 table records",
     std::remove(path.c_str());
 }
 
+// 1.4 (gap classes-crc-not-validated): the CLASSES end sentinel result was
+// computed and discarded.  For AC1015 (dwgReader15) it is now honored: a
+// corrupted end sentinel must fail the read with BAD_READ_CLASSES.  A valid
+// AC1015 file still reads clean (proving the happy path is unaffected).
+TEST_CASE("dwgReader15 fails on a corrupted CLASSES end sentinel",
+          "[dwg-write][smoke][classes][sentinel]") {
+    const std::string path = tempPath("classes_end_sentinel.dwg");
+    {
+        dwgRW writer(path.c_str());
+        EmptyIface iface;
+        REQUIRE(writer.write(&iface, DRW::AC1015, /*bin=*/false));
+    }
+
+    // Sanity: the pristine file reads clean.
+    {
+        dwgRW reader(path.c_str());
+        EmptyIface readIface;
+        REQUIRE(reader.read(&readIface, /*ext=*/false));
+        REQUIRE(reader.getError() == DRW::BAD_NONE);
+    }
+
+    // Locate the CLASSES section (record #1) end sentinel = last 16 bytes of
+    // the section [classesAddr + classesSize - 16].
+    auto bytes = slurp(path);
+    duint32 classesAddr = readLE32(bytes, 0x19 + 1 * 9 + 1);
+    duint32 classesSize = readLE32(bytes, 0x19 + 1 * 9 + 5);
+    size_t endSentinelOff = classesAddr + classesSize - 16;
+    REQUIRE(endSentinelOff + 16 <= bytes.size());
+    REQUIRE(std::memcmp(bytes.data() + endSentinelOff,
+                        dwgSentinels::CLASSES_END, 16) == 0);
+
+    // Corrupt one sentinel byte and write the file back.
+    bytes[endSentinelOff] ^= 0xFF;
+    {
+        std::ofstream out(path, std::ios::binary | std::ios::trunc);
+        out.write(reinterpret_cast<const char*>(bytes.data()),
+                  static_cast<std::streamsize>(bytes.size()));
+    }
+
+    // The read now fails with BAD_READ_CLASSES (end sentinel honored).
+    {
+        dwgRW reader(path.c_str());
+        EmptyIface readIface;
+        REQUIRE_FALSE(reader.read(&readIface, /*ext=*/false));
+        REQUIRE(reader.getError() == DRW::BAD_READ_CLASSES);
+    }
+
+    std::remove(path.c_str());
+}
+
+// 1.5a (gap classes-crc-not-validated): the R13/R15 CLASSES CRC (crc16
+// 0xC0C1) was read and discarded.  dwgReader15 now validates it over
+// [si.address+16, si.address+20+classDataSize], matching writer15's emit
+// range.  A pristine libdxfrw AC1015 file passes; a flipped class-data byte
+// is detected as BAD_READ_CLASSES.
+TEST_CASE("dwgReader15 validates the CLASSES CRC and detects a flipped byte",
+          "[dwg-write][smoke][classes][crc]") {
+    const std::string path = tempPath("classes_crc.dwg");
+    {
+        dwgRW writer(path.c_str());
+        EmptyIface iface;
+        REQUIRE(writer.write(&iface, DRW::AC1015, /*bin=*/false));
+    }
+
+    // Pristine file: CRC validates, read is clean.
+    {
+        dwgRW reader(path.c_str());
+        EmptyIface readIface;
+        REQUIRE(reader.read(&readIface, /*ext=*/false));
+        REQUIRE(reader.getError() == DRW::BAD_NONE);
+    }
+
+    auto bytes = slurp(path);
+    duint32 classesAddr = readLE32(bytes, 0x19 + 1 * 9 + 1);
+    duint32 classesSize = readLE32(bytes, 0x19 + 1 * 9 + 5);
+    // Class data lives at [classesAddr + 16(begin) + 4(sizeRL),
+    // classesAddr + classesSize - 18(CRC+end sentinel)). Flip a byte inside
+    // the CRC-covered region so the CRC no longer matches.
+    size_t dataStart = classesAddr + 20;
+    size_t dataEnd   = classesAddr + classesSize - 18;
+    REQUIRE(dataEnd > dataStart);
+    bytes[dataStart] ^= 0xFF;
+    {
+        std::ofstream out(path, std::ios::binary | std::ios::trunc);
+        out.write(reinterpret_cast<const char*>(bytes.data()),
+                  static_cast<std::streamsize>(bytes.size()));
+    }
+
+    // The CRC mismatch now fails the read.
+    {
+        dwgRW reader(path.c_str());
+        EmptyIface readIface;
+        REQUIRE_FALSE(reader.read(&readIface, /*ext=*/false));
+        REQUIRE(reader.getError() == DRW::BAD_READ_CLASSES);
+    }
+
+    std::remove(path.c_str());
+}
+
 // ---- R2004 (AC1018) write smoke tests ---------------------------------------
 
 TEST_CASE("dwgRW::write produces a syntactically valid empty R2004 file",
@@ -3615,6 +3925,63 @@ TEST_CASE("dwgRW R2004 round-trip with custom layer",
     REQUIRE(containsName(cap.m_layerNames, "0"));
     REQUIRE(containsName(cap.m_layerNames, "WALLS"));
     REQUIRE(cap.m_wallsColor == 1);
+
+    std::remove(path.c_str());
+}
+
+// P4-08 — LAYER 24-bit truecolor + color/book name round-trip (R2004+).
+namespace {
+
+class TruecolorLayerIface : public EmptyIface {
+public:
+    dwgRW *m_writer {nullptr};
+    int m_capturedColor24 {-2};
+    std::string m_capturedColorName;
+    int m_capturedAciColor {0};
+    bool m_sawTruecolorLayer {false};
+
+    void writeLayers() override {
+        if (m_writer == nullptr) return;
+        DRW_Layer lay;
+        lay.name = "RGBLAYER";
+        lay.color = 7;
+        lay.color24 = 0x00FF8040;          // R=255 G=128 B=64
+        lay.colorName = "MyBook$Sky";      // book "MyBook", entry "Sky"
+        m_writer->addLayer(&lay);
+    }
+    void addLayer(const DRW_Layer& l) override {
+        if (l.name == "RGBLAYER") {
+            m_sawTruecolorLayer = true;
+            m_capturedColor24 = l.color24;
+            m_capturedColorName = l.colorName;
+            m_capturedAciColor = l.color;
+        }
+    }
+};
+
+} // namespace
+
+TEST_CASE("dwgRW R2004 LAYER truecolor + book name round-trips",
+          "[dwg-write][smoke][r2004][layer-truecolor]") {
+    const std::string path = tempPath("layer_truecolor_r2004.dwg");
+
+    {
+        dwgRW writer(path.c_str());
+        TruecolorLayerIface iface;
+        iface.m_writer = &writer;
+        REQUIRE(writer.write(&iface, DRW::AC1018, /*bin=*/false));
+    }
+
+    TruecolorLayerIface cap;
+    {
+        dwgRW reader(path.c_str());
+        REQUIRE(reader.read(&cap, /*ext=*/false));
+        REQUIRE(reader.getError() == DRW::BAD_NONE);
+    }
+
+    REQUIRE(cap.m_sawTruecolorLayer);
+    CHECK(cap.m_capturedColor24 == 0x00FF8040);
+    CHECK(cap.m_capturedColorName == "MyBook$Sky");
 
     std::remove(path.c_str());
 }
@@ -4328,4 +4695,100 @@ TEST_CASE("dwgRW R2018 writes geometry and MTEXT then reader recovers them",
     REQUIRE(readIface.m_mtexts[0].m_r2018ColumnHeights[1] == 8.0);
 
     std::remove(path.c_str());
+}
+
+// ---------------------------------------------------------------------------
+// 1.7 — External write->reread validator fixtures.
+//
+// Hidden test [.dwg_emit_framing]: emit a trivial-but-nonempty drawing
+// (2 lines + 1 named layer) as AC1015/AC1018/AC1024/AC1027/AC1032 to a known
+// directory so scripts/dwg-validate.sh can re-read each with libreDWG's
+// external `dwgread` (the framing gate). The in-repo self-consistency
+// write->read loop runs unconditionally below to demonstrate that
+// self-consistency PASS does NOT imply external PASS for AC1027/AC1032.
+// ---------------------------------------------------------------------------
+namespace {
+
+class FramingIface : public EmptyIface {
+public:
+    dwgRW *m_writer {nullptr};
+    std::vector<DRW_Line> m_lines;
+    std::vector<std::string> m_layers;
+
+    void writeLayers() override {
+        if (m_writer == nullptr) return;
+        DRW_Layer lay;
+        lay.name = "FRAME";
+        lay.color = 2;
+        m_writer->addLayer(&lay);
+    }
+    void writeEntities() override {
+        if (m_writer == nullptr) return;
+        DRW_Line a;
+        a.basePoint = DRW_Coord{0.0, 0.0, 0.0};
+        a.secPoint  = DRW_Coord{10.0, 0.0, 0.0};
+        a.color = 1;
+        m_writer->writeLine(&a);
+        DRW_Line b;
+        b.basePoint = DRW_Coord{0.0, 0.0, 0.0};
+        b.secPoint  = DRW_Coord{0.0, 10.0, 0.0};
+        b.color = 3;
+        m_writer->writeLine(&b);
+    }
+    void addLine(const DRW_Line& l) override { m_lines.push_back(l); }
+    void addLayer(const DRW_Layer& l) override { m_layers.push_back(l.name); }
+};
+
+// Stable output dir under the repo's tmp/ so dwg-validate.sh can locate the
+// emitted fixtures without guessing the system temp path.
+std::string framingDir() {
+    std::filesystem::path d = std::filesystem::path("tmp") / "dwg-validate";
+    std::error_code ec;
+    std::filesystem::create_directories(d, ec);
+    return d.string();
+}
+
+const char* framingFileFor(DRW::Version v) {
+    switch (v) {
+        case DRW::AC1015: return "framing_AC1015.dwg";
+        case DRW::AC1018: return "framing_AC1018.dwg";
+        case DRW::AC1024: return "framing_AC1024.dwg";
+        case DRW::AC1027: return "framing_AC1027.dwg";
+        case DRW::AC1032: return "framing_AC1032.dwg";
+        default:          return "framing_unknown.dwg";
+    }
+}
+
+}  // namespace
+
+// Hidden (leading-dot tag): not run by the default suite; invoked explicitly
+// by scripts/dwg-validate.sh. Emits the 5 framing fixtures and proves the
+// in-repo self-consistency loop passes for every version (the core finding:
+// self-consistency PASS != external PASS for the thin AC1027/AC1032 writers).
+TEST_CASE("DWG framing fixtures emit + self-consistency round-trip",
+          "[.dwg_emit_framing]") {
+    const std::string dir = framingDir();
+    const DRW::Version versions[] = {
+        DRW::AC1015, DRW::AC1018, DRW::AC1024, DRW::AC1027, DRW::AC1032};
+
+    for (DRW::Version v : versions) {
+        const std::string path =
+            (std::filesystem::path(dir) / framingFileFor(v)).string();
+        {
+            dwgRW writer(path.c_str());
+            FramingIface iface;
+            iface.m_writer = &writer;
+            REQUIRE(writer.write(&iface, v, /*bin=*/false));
+        }
+        // In-repo self-consistency: libdxfrw must re-read its own output.
+        {
+            dwgRW reader(path.c_str());
+            FramingIface readIface;
+            REQUIRE(reader.read(&readIface, /*ext=*/false));
+            REQUIRE(reader.getVersion() == v);
+            REQUIRE(readIface.m_lines.size() >= 2u);
+        }
+        // NOTE: the fixtures are intentionally LEFT on disk for
+        // scripts/dwg-validate.sh to feed to the external dwgread.
+    }
 }

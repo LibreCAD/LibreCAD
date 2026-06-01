@@ -96,10 +96,12 @@ public:
     bool writeBlockRecord(std::string name, int insUnits = 0);
     bool writeBlock(DRW_Block *ent);
     bool writeInsert(DRW_Insert *ent);
+    bool writeAttrib(DRW_Attrib *ent);
     bool writeMText(DRW_MText *ent);
     bool writeMLine(DRW_MLine *ent);
     bool writeUnderlay(DRW_Underlay *ent);
     bool writeText(DRW_Text *ent);
+    bool writeTolerance(DRW_Tolerance *ent);
     bool writeHatch(DRW_Hatch *ent);
     bool writeViewport(DRW_Viewport *ent);
     DRW_ImageDef *writeImage(DRW_Image *ent, std::string name);
@@ -109,6 +111,7 @@ public:
     bool writeDimension(DRW_Dimension *ent);
     void setEllipseParts(int parts){elParts = parts;} /*!< set parts number when convert ellipse to polyline */
     bool writePlotSettings(DRW_PlotSettings *ent);
+    bool writeRawDxfObject(DRW_RawDxfObject *obj);
 
     DRW::Version getVersion() const;
     DRW::error getError() const;
@@ -152,10 +155,12 @@ private:
     bool processTrace();
     bool processSolid();
     bool processInsert();
+    bool processAttrib(DRW_Insert* insert);
     bool processLWPolyline();
     bool processPolyline();
     bool processVertex(DRW_Polyline* pl);
     bool processText();
+    bool processTolerance();
     bool processMText();
     bool processMLine();
     bool processUnderlay(const std::string& kind);
@@ -171,6 +176,18 @@ private:
     bool processArcDimension();
     bool processLeader();
     bool processPlotSettings();
+    bool processGroup();
+    bool processDictionary();
+    bool processScale();
+    bool processMLineStyle();
+    bool processDictionaryVar();
+    bool processDictionaryWithDefault();
+    bool processRasterVariables();
+    bool processSun();
+    bool processLayout();
+    bool processWipeoutVariables();
+    bool processRawObject();
+    bool processRawEntity();
 
 //    bool writeHeader();
     bool writeEntity(DRW_Entity *ent);

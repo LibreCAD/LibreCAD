@@ -1494,13 +1494,19 @@ bool dxfRW::writeDimension(DRW_Dimension *ent) {
 }
 
 bool dxfRW::writeInsert(DRW_Insert *ent){
+    const bool hasAttribs = !ent->attlist.empty();
     writer->writeString(0, "INSERT");
     writeEntity(ent);
     if (version > DRW::AC1009) {
         writer->writeString(100, "AcDbBlockReference");
+        if (hasAttribs)
+            writer->writeInt16(66, 1); //attributes-follow flag
         writer->writeUtf8String(2, ent->name);
-    } else
+    } else {
+        if (hasAttribs)
+            writer->writeInt16(66, 1);
         writer->writeUtf8Caps(2, ent->name);
+    }
     writer->writeDouble(10, ent->basePoint.x);
     writer->writeDouble(20, ent->basePoint.y);
     writer->writeDouble(30, ent->basePoint.z);
@@ -1512,6 +1518,54 @@ bool dxfRW::writeInsert(DRW_Insert *ent){
     writer->writeInt16(71, ent->rowcount);
     writer->writeDouble(44, ent->colspace);
     writer->writeDouble(45, ent->rowspace);
+    //Trailing block attributes + terminating SEQEND (mirrors writePolyline).
+    if (hasAttribs) {
+        for (const auto &att : ent->attlist) {
+            if (att)
+                writeAttrib(att.get());
+        }
+        writer->writeString(0, "SEQEND");
+        writeEntity(ent);
+    }
+    return true;
+}
+
+bool dxfRW::writeAttrib(DRW_Attrib *ent){
+    writer->writeString(0, "ATTRIB");
+    writeEntity(ent);
+    if (version > DRW::AC1009)
+        writer->writeString(100, "AcDbText");
+    writer->writeDouble(10, ent->basePoint.x);
+    writer->writeDouble(20, ent->basePoint.y);
+    writer->writeDouble(30, ent->basePoint.z);
+    writer->writeDouble(40, ent->height);
+    writer->writeUtf8String(1, ent->text);
+    writer->writeDouble(50, ent->angle);
+    writer->writeDouble(41, ent->widthscale);
+    writer->writeDouble(51, ent->oblique);
+    if (version > DRW::AC1009)
+        writer->writeUtf8String(7, ent->style);
+    else
+        writer->writeUtf8Caps(7, ent->style);
+    writer->writeInt16(71, ent->textgen);
+    if (ent->alignH != DRW_Text::HLeft)
+        writer->writeInt16(72, ent->alignH);
+    if (ent->alignH != DRW_Text::HLeft || ent->alignV != DRW_Text::VBaseLine) {
+        writer->writeDouble(11, ent->secPoint.x);
+        writer->writeDouble(21, ent->secPoint.y);
+        writer->writeDouble(31, ent->secPoint.z);
+    }
+    writer->writeDouble(210, ent->extPoint.x);
+    writer->writeDouble(220, ent->extPoint.y);
+    writer->writeDouble(230, ent->extPoint.z);
+    if (version > DRW::AC1009)
+        writer->writeString(100, "AcDbAttribute");
+    writer->writeUtf8String(2, ent->tag);
+    writer->writeInt16(70, ent->attribFlags);
+    if (ent->alignV != DRW_Text::VBaseLine)
+        writer->writeInt16(74, ent->alignV);
+    if (version > DRW::AC1014)
+        writer->writeInt16(280, ent->lockPosition ? 1 : 0);
     return true;
 }
 
@@ -1552,6 +1606,25 @@ bool dxfRW::writeText(DRW_Text *ent){
     if (ent->alignV != DRW_Text::VBaseLine) {
         writer->writeInt16(73, ent->alignV);
     }
+    return true;
+}
+
+bool dxfRW::writeTolerance(DRW_Tolerance *ent){
+    writer->writeString(0, "TOLERANCE");
+    writeEntity(ent);
+    if (version > DRW::AC1009)
+        writer->writeString(100, "AcDbFcf");
+    writer->writeUtf8String(3, ent->dimStyleName);
+    writer->writeDouble(10, ent->insertionPoint.x);
+    writer->writeDouble(20, ent->insertionPoint.y);
+    writer->writeDouble(30, ent->insertionPoint.z);
+    writer->writeUtf8String(1, ent->text);
+    writer->writeDouble(210, ent->extPoint.x);
+    writer->writeDouble(220, ent->extPoint.y);
+    writer->writeDouble(230, ent->extPoint.z);
+    writer->writeDouble(11, ent->xAxisDirectionVector.x);
+    writer->writeDouble(21, ent->xAxisDirectionVector.y);
+    writer->writeDouble(31, ent->xAxisDirectionVector.z);
     return true;
 }
 
@@ -2689,8 +2762,14 @@ bool dxfRW::processDimStyle() {
     while (reader->readRec(&code)) {
         DRW_DBG(code); DRW_DBG("\n");
         if (code == 0) {
-            if (reading)
+            if (reading) {
+                // Phase 3A.0: populate the vars map from the parsed struct so
+                // the LibreCAD createDimStyle consumer (reads $DIM* keys) gets
+                // the imported values, not reset() defaults. Copy-free (called
+                // on dimSty before it is reset() for the next record).
+                dimSty.syncStructToVars();
                 iface->addDimStyle(dimSty);
+            }
             sectionstr = reader->getString();
             DRW_DBG(sectionstr); DRW_DBG("\n");
             if (sectionstr == "DIMSTYLE") {
@@ -2986,15 +3065,12 @@ bool dxfRW::processEntities(bool isblock) {
             processed = processRay();
         } else if (nextentity == "XLINE") {
             processed = processXline();
+        } else if (nextentity == "TOLERANCE") {
+            processed = processTolerance();
         } else {
-            if (!reader->readRec(&code)) {
-                return setError(DRW::BAD_READ_ENTITIES); //end of file without ENDSEC
-            }
-
-            if (code == 0) {
-                nextentity = reader->getString();
-            }
-            processed = true;
+            //Slice A4: capture an unmodeled entity verbatim rather than dropping
+            //it (also preserves block ATTDEFs, which have no typed DXF dispatch).
+            processed = processRawEntity();
         }
     } while (processed);
 
@@ -3289,14 +3365,46 @@ bool dxfRW::processInsert() {
     while (reader->readRec(&code)) {
         DRW_DBG(code); DRW_DBG("\n");
         if (0 == code) {
-           nextentity = reader->getString();
+            nextentity = reader->getString();
             DRW_DBG(nextentity); DRW_DBG("\n");
-            iface->addInsert(insert);
-            return true;  //found new entity or ENDSEC, terminate
+            // Attribute flag (66=1) signals trailing ATTRIB entities; mirror
+            // the POLYLINE/VERTEX/SEQEND pattern and gate on the next entity
+            // name rather than the flag (some writers omit code 66).
+            if (nextentity != "ATTRIB") {
+                iface->addInsert(insert);
+                return true;  //found new entity or ENDSEC, terminate
+            }
+            processAttrib(&insert);  //fills insert.attlist until SEQEND
         }
 
         if (!insert.parseCode(code, reader)) {
             return setError( DRW::BAD_CODE_PARSED);
+        }
+    }
+
+    return setError(DRW::BAD_READ_ENTITIES);
+}
+
+bool dxfRW::processAttrib(DRW_Insert *insert) {
+    DRW_DBG("dxfRW::processAttrib");
+    int code;
+    auto att = std::make_shared<DRW_Attrib>();
+    while (reader->readRec(&code)) {
+        DRW_DBG(code); DRW_DBG("\n");
+        if (0 == code) {
+            insert->attlist.push_back(att);
+            nextentity = reader->getString();
+            DRW_DBG(nextentity); DRW_DBG("\n");
+            if (nextentity == "SEQEND") {
+                return true;  //found SEQEND, no more attribs, terminate
+            }
+            if (nextentity == "ATTRIB") {
+                att = std::make_shared<DRW_Attrib>(); //another attrib
+            }
+        }
+
+        if (!att->parseCode(code, reader)) { //members of att are reinitialized here
+            return setError(DRW::BAD_CODE_PARSED);
         }
     }
 
@@ -3369,6 +3477,27 @@ bool dxfRW::processVertex(DRW_Polyline *pl) {
         }
 
         if (!v->parseCode(code, reader)) { //the members of v are reinitialized here
+            return setError(DRW::BAD_CODE_PARSED);
+        }
+    }
+
+    return setError(DRW::BAD_READ_ENTITIES);
+}
+
+bool dxfRW::processTolerance() {
+    DRW_DBG("dxfRW::processTolerance");
+    int code;
+    DRW_Tolerance tol;
+    while (reader->readRec(&code)) {
+        DRW_DBG(code); DRW_DBG("\n");
+        if (0 == code) {
+            nextentity = reader->getString();
+            DRW_DBG(nextentity); DRW_DBG("\n");
+            iface->addTolerance(tol);
+            return true;  //found new entity or ENDSEC, terminate
+        }
+
+        if (!tol.parseCode(code, reader)) {
             return setError(DRW::BAD_CODE_PARSED);
         }
     }
@@ -3659,15 +3788,40 @@ bool dxfRW::processObjects() {
         else if ("PLOTSETTINGS" == nextentity) {
             processed = processPlotSettings();
         }
+        else if ("GROUP" == nextentity) {
+            processed = processGroup();
+        }
+        else if ("DICTIONARY" == nextentity) {
+            processed = processDictionary();
+        }
+        else if ("SCALE" == nextentity) {
+            processed = processScale();
+        }
+        else if ("MLINESTYLE" == nextentity) {
+            processed = processMLineStyle();
+        }
+        else if ("DICTIONARYVAR" == nextentity) {
+            processed = processDictionaryVar();
+        }
+        else if ("ACDBDICTIONARYWDFLT" == nextentity) {
+            processed = processDictionaryWithDefault();
+        }
+        else if ("RASTERVARIABLES" == nextentity) {
+            processed = processRasterVariables();
+        }
+        else if ("SUN" == nextentity) {
+            processed = processSun();
+        }
+        else if ("LAYOUT" == nextentity) {
+            processed = processLayout();
+        }
+        else if ("WIPEOUTVARIABLES" == nextentity) {
+            processed = processWipeoutVariables();
+        }
         else {
-            if (!reader->readRec(&code)) {
-                return setError(DRW::BAD_READ_OBJECTS); //end of file without ENDSEC
-            }
-
-            if (code == 0) {
-                nextentity = reader->getString();
-            }
-            processed = true;
+            //Slice A1: never silently drop an unmodeled object — capture its
+            //group codes verbatim for lossless re-emit instead of skipping.
+            processed = processRawObject();
         }
     }
     while (processed);
@@ -3787,6 +3941,297 @@ bool dxfRW::processPlotSettings() {
     }
 
     return setError(DRW::BAD_READ_OBJECTS);
+}
+
+bool dxfRW::processGroup() {
+    DRW_DBG("dxfRW::processGroup");
+    int code;
+    DRW_Group group;
+    while (reader->readRec(&code)) {
+        DRW_DBG(code); DRW_DBG("\n");
+        if (0 == code) {
+            nextentity = reader->getString();
+            DRW_DBG(nextentity); DRW_DBG("\n");
+            iface->addGroup(group);
+            return true;  //found new entity or ENDSEC, terminate
+        }
+
+        if (!group.parseCode(code, reader)) {
+            return setError( DRW::BAD_CODE_PARSED);
+        }
+    }
+
+    return setError(DRW::BAD_READ_OBJECTS);
+}
+
+bool dxfRW::processDictionary() {
+    DRW_DBG("dxfRW::processDictionary");
+    int code;
+    DRW_Dictionary dict;
+    while (reader->readRec(&code)) {
+        DRW_DBG(code); DRW_DBG("\n");
+        if (0 == code) {
+            nextentity = reader->getString();
+            DRW_DBG(nextentity); DRW_DBG("\n");
+            iface->addDictionary(dict);
+            return true;  //found new entity or ENDSEC, terminate
+        }
+
+        if (!dict.parseCode(code, reader)) {
+            return setError( DRW::BAD_CODE_PARSED);
+        }
+    }
+
+    return setError(DRW::BAD_READ_OBJECTS);
+}
+
+bool dxfRW::processScale() {
+    DRW_DBG("dxfRW::processScale");
+    int code;
+    DRW_Scale scale;
+    while (reader->readRec(&code)) {
+        DRW_DBG(code); DRW_DBG("\n");
+        if (0 == code) {
+            nextentity = reader->getString();
+            DRW_DBG(nextentity); DRW_DBG("\n");
+            iface->addScale(scale);
+            return true;  //found new entity or ENDSEC, terminate
+        }
+
+        if (!scale.parseCode(code, reader)) {
+            return setError( DRW::BAD_CODE_PARSED);
+        }
+    }
+
+    return setError(DRW::BAD_READ_OBJECTS);
+}
+
+bool dxfRW::processMLineStyle() {
+    DRW_DBG("dxfRW::processMLineStyle");
+    int code;
+    DRW_MLineStyle style;
+    while (reader->readRec(&code)) {
+        DRW_DBG(code); DRW_DBG("\n");
+        if (0 == code) {
+            nextentity = reader->getString();
+            DRW_DBG(nextentity); DRW_DBG("\n");
+            iface->addMLineStyle(style);
+            return true;  //found new entity or ENDSEC, terminate
+        }
+
+        if (!style.parseCode(code, reader)) {
+            return setError( DRW::BAD_CODE_PARSED);
+        }
+    }
+
+    return setError(DRW::BAD_READ_OBJECTS);
+}
+
+bool dxfRW::processDictionaryVar() {
+    DRW_DBG("dxfRW::processDictionaryVar");
+    int code;
+    DRW_DictionaryVar var;
+    while (reader->readRec(&code)) {
+        DRW_DBG(code); DRW_DBG("\n");
+        if (0 == code) {
+            nextentity = reader->getString();
+            DRW_DBG(nextentity); DRW_DBG("\n");
+            iface->addDictionaryVar(var);
+            return true;  //found new entity or ENDSEC, terminate
+        }
+
+        if (!var.parseCode(code, reader)) {
+            return setError( DRW::BAD_CODE_PARSED);
+        }
+    }
+
+    return setError(DRW::BAD_READ_OBJECTS);
+}
+
+bool dxfRW::processDictionaryWithDefault() {
+    DRW_DBG("dxfRW::processDictionaryWithDefault");
+    int code;
+    DRW_DictionaryWithDefault dict;
+    while (reader->readRec(&code)) {
+        DRW_DBG(code); DRW_DBG("\n");
+        if (0 == code) {
+            nextentity = reader->getString();
+            DRW_DBG(nextentity); DRW_DBG("\n");
+            iface->addDictionaryWithDefault(dict);
+            return true;  //found new entity or ENDSEC, terminate
+        }
+
+        if (!dict.parseCode(code, reader)) {
+            return setError( DRW::BAD_CODE_PARSED);
+        }
+    }
+
+    return setError(DRW::BAD_READ_OBJECTS);
+}
+
+bool dxfRW::processRasterVariables() {
+    DRW_DBG("dxfRW::processRasterVariables");
+    int code;
+    DRW_RasterVariables rv;
+    while (reader->readRec(&code)) {
+        DRW_DBG(code); DRW_DBG("\n");
+        if (0 == code) {
+            nextentity = reader->getString();
+            DRW_DBG(nextentity); DRW_DBG("\n");
+            iface->addRasterVariables(rv);
+            return true;  //found new entity or ENDSEC, terminate
+        }
+
+        if (!rv.parseCode(code, reader)) {
+            return setError( DRW::BAD_CODE_PARSED);
+        }
+    }
+
+    return setError(DRW::BAD_READ_OBJECTS);
+}
+
+bool dxfRW::processSun() {
+    DRW_DBG("dxfRW::processSun");
+    int code;
+    DRW_Sun sun;
+    while (reader->readRec(&code)) {
+        DRW_DBG(code); DRW_DBG("\n");
+        if (0 == code) {
+            nextentity = reader->getString();
+            DRW_DBG(nextentity); DRW_DBG("\n");
+            iface->addSun(sun);
+            return true;  //found new entity or ENDSEC, terminate
+        }
+
+        if (!sun.parseCode(code, reader)) {
+            return setError( DRW::BAD_CODE_PARSED);
+        }
+    }
+
+    return setError(DRW::BAD_READ_OBJECTS);
+}
+
+bool dxfRW::processLayout() {
+    DRW_DBG("dxfRW::processLayout");
+    int code;
+    DRW_Layout layout;
+    while (reader->readRec(&code)) {
+        DRW_DBG(code); DRW_DBG("\n");
+        if (0 == code) {
+            nextentity = reader->getString();
+            DRW_DBG(nextentity); DRW_DBG("\n");
+            iface->addLayout(layout);
+            return true;  //found new entity or ENDSEC, terminate
+        }
+
+        if (!layout.parseCode(code, reader)) {
+            return setError( DRW::BAD_CODE_PARSED);
+        }
+    }
+
+    return setError(DRW::BAD_READ_OBJECTS);
+}
+
+bool dxfRW::processWipeoutVariables() {
+    DRW_DBG("dxfRW::processWipeoutVariables");
+    int code;
+    DRW_WipeoutVariables wv;
+    while (reader->readRec(&code)) {
+        DRW_DBG(code); DRW_DBG("\n");
+        if (0 == code) {
+            nextentity = reader->getString();
+            DRW_DBG(nextentity); DRW_DBG("\n");
+            iface->addWipeoutVariables(wv);
+            return true;  //found new entity or ENDSEC, terminate
+        }
+
+        if (!wv.parseCode(code, reader)) {
+            return setError( DRW::BAD_CODE_PARSED);
+        }
+    }
+
+    return setError(DRW::BAD_READ_OBJECTS);
+}
+
+//Slice A1: lossless passthrough for an OBJECTS-section object libdxfrw does not
+//model as a typed DXF object. Captures every (code,value) pair verbatim (value
+//kept as raw text, which round-trips exactly for ASCII DXF) so the object can be
+//re-emitted unchanged once the DXF object-write spine (A2) consumes it.
+bool dxfRW::processRawObject() {
+    DRW_DBG("dxfRW::processRawObject");
+    int code;
+    DRW_RawDxfObject obj;
+    obj.name = nextentity;
+    while (reader->readRec(&code)) {
+        DRW_DBG(code); DRW_DBG("\n");
+        if (0 == code) {
+            nextentity = reader->getString();
+            DRW_DBG(nextentity); DRW_DBG("\n");
+            iface->addRawDxfObject(obj);
+            return true;  //found new entity or ENDSEC, terminate
+        }
+        const std::string value = reader->getString();
+        if (5 == code)
+            obj.handle = reader->getHandleString();
+        else if (330 == code)
+            obj.parentHandle = reader->getHandleString();
+        obj.groups.emplace_back(code, value);
+    }
+
+    return setError(DRW::BAD_READ_OBJECTS);
+}
+
+//Slice A4: lossless passthrough for an unmodeled entity in the ENTITIES section
+//or inside a BLOCK (including standalone ATTDEF). Same verbatim capture as
+//processRawObject but reports via addRawDxfEntity / the entities error code.
+bool dxfRW::processRawEntity() {
+    DRW_DBG("dxfRW::processRawEntity");
+    int code;
+    DRW_RawDxfObject ent;
+    ent.name = nextentity;
+    while (reader->readRec(&code)) {
+        DRW_DBG(code); DRW_DBG("\n");
+        if (0 == code) {
+            nextentity = reader->getString();
+            DRW_DBG(nextentity); DRW_DBG("\n");
+            iface->addRawDxfEntity(ent);
+            return true;  //found new entity, ENDSEC or ENDBLK, terminate
+        }
+        const std::string value = reader->getString();
+        if (5 == code)
+            ent.handle = reader->getHandleString();
+        else if (330 == code)
+            ent.parentHandle = reader->getHandleString();
+        ent.groups.emplace_back(code, value);
+    }
+
+    return setError(DRW::BAD_READ_ENTITIES);
+}
+
+//Slice A2: re-emit a raw-captured object (from processRawObject) verbatim. The
+//A1/A4 capture stores every value as STRING, so the raw text round-trips exactly
+//for ASCII DXF; the other variant arms are handled defensively.
+bool dxfRW::writeRawDxfObject(DRW_RawDxfObject *obj) {
+    writer->writeString(0, obj->name);
+    for (const DRW_Variant &v : obj->groups) {
+        switch (v.type()) {
+        case DRW_Variant::STRING:
+            writer->writeString(v.code(), std::string(v.c_str()));
+            break;
+        case DRW_Variant::INTEGER:
+            writer->writeInt32(v.code(), v.i_val());
+            break;
+        case DRW_Variant::INTEGER64:
+            writer->writeInt64(v.code(), v.i64_val());
+            break;
+        case DRW_Variant::DOUBLE:
+            writer->writeDouble(v.code(), v.d_val());
+            break;
+        default:
+            break;
+        }
+    }
+    return true;
 }
 
 bool dxfRW::writePlotSettings(DRW_PlotSettings *ent) {

@@ -1515,6 +1515,13 @@ bool dwgReader::readDwgEntity(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                 if (cit != classesmap.end() && cit->second) {
                     const std::string& rn = cit->second->recName;
                     const std::string& cn = cit->second->className;
+                    if (rn == "HELIX" || cn == "AcDbHelix") {
+                        DRW_Helix e;
+                        if (entryParse(e, buff, bs, ret)) {
+                            intfa.addHelix(&e);
+                        }
+                        break;
+                    }
                     if (rn == "LIGHT" || cn == "AcDbLight") {
                         DRW_Light e;
                         if (entryParse(e, buff, bs, ret)) {
@@ -1778,6 +1785,16 @@ bool dwgReader::readDwgObject(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                         }
                         break;
                     }
+                    if (rn == "WIPEOUTVARIABLES"
+                        || cit->second->className == "AcDbWipeoutVariables") {
+                        DRW_WipeoutVariables e;
+                        ret = e.parseDwg(version, &buff, bs);
+                        if (ret) {
+                            intfa.addWipeoutVariables(e);
+                            intfa.addUnsupportedObject(makeRawObject(oType, cit->second));
+                        }
+                        break;
+                    }
                     if (rn == "SORTENTSTABLE"
                         || cit->second->className == "AcDbSortentsTable") {
                         DRW_SortEntsTable e;
@@ -1792,28 +1809,46 @@ bool dwgReader::readDwgObject(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                         || cit->second->className == "AcDbMaterial") {
                         DRW_Material e;
                         ret = e.parseDwg(version, &buff, bs);
-                        if (ret) intfa.addMaterial(e);
+                        // MATERIAL's parser is truncated (name + description
+                        // only); raw replay captures the full byte image so
+                        // the round-trip stays faithful regardless. (Phase 2b.1)
+                        if (ret) {
+                            intfa.addMaterial(e);
+                            intfa.addUnsupportedObject(makeRawObject(oType, cit->second));
+                        }
                         break;
                     }
                     if (rn == "TABLESTYLE"
                         || cit->second->className == "AcDbTableStyle") {
                         DRW_TableStyle e;
                         ret = e.parseDwg(version, &buff, bs);
-                        if (ret) intfa.addTableStyle(e);
+                        // Raw replay preserves the full byte image; native
+                        // table writer (when active) claims the handle and
+                        // suppresses double-emit. (Phase 2b.2)
+                        if (ret) {
+                            intfa.addTableStyle(e);
+                            intfa.addUnsupportedObject(makeRawObject(oType, cit->second));
+                        }
                         break;
                     }
                     if (rn == "TABLECONTENT"
                         || cit->second->className == "AcDbTableContent") {
                         DRW_TableContentObject e;
                         ret = e.parseDwg(version, &buff, bs);
-                        if (ret) intfa.addTableContent(e);
+                        if (ret) {
+                            intfa.addTableContent(e);
+                            intfa.addUnsupportedObject(makeRawObject(oType, cit->second));
+                        }
                         break;
                     }
                     if (rn == "CELLSTYLEMAP"
                         || cit->second->className == "AcDbCellStyleMap") {
                         DRW_CellStyleMap e;
                         ret = e.parseDwg(version, &buff, bs);
-                        if (ret) intfa.addCellStyleMap(e);
+                        if (ret) {
+                            intfa.addCellStyleMap(e);
+                            intfa.addUnsupportedObject(makeRawObject(oType, cit->second));
+                        }
                         break;
                     }
                     if (rn == "DIMASSOC"
@@ -1827,7 +1862,11 @@ bool dwgReader::readDwgObject(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                         || cit->second->className == "AcDbEvalGraph") {
                         DRW_EvaluationGraph e;
                         ret = e.parseDwg(version, &buff, bs);
-                        if (ret) intfa.addEvaluationGraph(e);
+                        // Raw replay preserves the full byte image. (Phase 2b.4)
+                        if (ret) {
+                            intfa.addEvaluationGraph(e);
+                            intfa.addUnsupportedObject(makeRawObject(oType, cit->second));
+                        }
                         break;
                     }
                     if (rn == "SUN" || cit->second->className == "AcDbSun") {
@@ -1870,14 +1909,22 @@ bool dwgReader::readDwgObject(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                         || cit->second->className == "AcDbDetailViewStyle") {
                         DRW_DetailViewStyle e;
                         ret = e.parseDwg(version, &buff, bs);
-                        if (ret) intfa.addDetailViewStyle(e);
+                        // Raw replay preserves the full byte image (version
+                        // guard blocks cross-version replay). (Phase 2b.3)
+                        if (ret) {
+                            intfa.addDetailViewStyle(e);
+                            intfa.addUnsupportedObject(makeRawObject(oType, cit->second));
+                        }
                         break;
                     }
                     if (rn == "ACDBSECTIONVIEWSTYLE" || rn == "SECTIONVIEWSTYLE"
                         || cit->second->className == "AcDbSectionViewStyle") {
                         DRW_SectionViewStyle e;
                         ret = e.parseDwg(version, &buff, bs);
-                        if (ret) intfa.addSectionViewStyle(e);
+                        if (ret) {
+                            intfa.addSectionViewStyle(e);
+                            intfa.addUnsupportedObject(makeRawObject(oType, cit->second));
+                        }
                         break;
                     }
                     if (rn == "BREAKDATA"
@@ -1908,7 +1955,12 @@ bool dwgReader::readDwgObject(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                         || cit->second->className == "AcDbRasterImageDefReactor") {
                         DRW_ImageDefinitionReactor e;
                         ret = e.parseDwg(version, &buff, bs);
-                        if (ret) intfa.addImageDefinitionReactor(e);
+                        // Preserving the reactor object keeps each raster
+                        // IMAGE entity's reactor handle non-dangling. (Phase 2b.4)
+                        if (ret) {
+                            intfa.addImageDefinitionReactor(e);
+                            intfa.addUnsupportedObject(makeRawObject(oType, cit->second));
+                        }
                         break;
                     }
                     if (rn == "SPATIAL_FILTER"
@@ -1963,7 +2015,11 @@ bool dwgReader::readDwgObject(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                         || cit->second->className == "AcDbTableGeometry") {
                         DRW_TableGeometry e;
                         ret = e.parseDwg(version, &buff, bs);
-                        if (ret) intfa.addTableGeometry(e);
+                        // Raw replay preserves the full byte image. (Phase 2b.4)
+                        if (ret) {
+                            intfa.addTableGeometry(e);
+                            intfa.addUnsupportedObject(makeRawObject(oType, cit->second));
+                        }
                         break;
                     }
                     if (rn == "MLEADERSTYLE") {
@@ -2035,7 +2091,12 @@ bool dwgReader::readDwgObject(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                         || cit->second->className == "AcDbVisualStyle") {
                         DRW_VisualStyle e;
                         ret = e.parseDwg(version, &buff, bs);
-                        if (ret) intfa.addVisualStyle(e);
+                        // Parser is a no-op stub; raw replay preserves the
+                        // full byte image for round-trip. (Phase 2b.1)
+                        if (ret) {
+                            intfa.addVisualStyle(e);
+                            intfa.addUnsupportedObject(makeRawObject(oType, cit->second));
+                        }
                         break;
                     }
                     // UNDERLAYDEFINITION — AcDb{Pdf,Dgn,Dwf}Definition.

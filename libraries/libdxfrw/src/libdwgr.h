@@ -78,6 +78,8 @@ public:
     bool writeLeader(DRW_Leader *ent);
     bool writeMLeader(DRW_MLeader *ent);
     bool writeViewport(DRW_Viewport *ent);
+    bool writeShape(DRW_Shape *ent);
+    bool writeOle2Frame(DRW_Ole2Frame *ent);
 
     /// Define an empty user-block.  Allocates fresh Block_Record + Block
     /// + ENDBLK handles, emits all three into the object stream, and

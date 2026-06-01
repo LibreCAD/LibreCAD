@@ -360,7 +360,7 @@ class dwgHandle{
 public:
     dwgHandle(): code(0), size(0), ref(0){}
 
-    ~dwgHandle(){}
+    ~dwgHandle() = default;
     duint8 code;
     duint8 size;
     duint32 ref;

@@ -42,11 +42,10 @@ bool DRW_Header::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
 
     switch (code) {
     case 9:
-        curr = new DRW_Variant();
         name = reader->getString();
         if (version < DRW::AC1015 && name == "$DIMUNIT")
             name="$DIMLUNIT";
-        vars[name]=curr;
+        storeVar(name, new DRW_Variant());
         break;
     case 1:
         curr->addString(code, reader->getUtf8String());
@@ -1683,23 +1682,19 @@ void DRW_Header::write(const std::unique_ptr<dxfWriter>& writer, DRW::Version ve
 }
 
 void DRW_Header::addDouble(std::string key, double value, int code){
-    curr = new DRW_Variant(code, value);
-    vars[key] =curr;
+    storeVar(key, new DRW_Variant(code, value));
 }
 
 void DRW_Header::addInt(std::string key, int value, int code){
-    curr = new DRW_Variant(code, value);
-    vars[key] =curr;
+    storeVar(key, new DRW_Variant(code, value));
 }
 
 void DRW_Header::addStr(std::string key, std::string value, int code){
-    curr = new DRW_Variant(code, value);
-    vars[key] =curr;
+    storeVar(key, new DRW_Variant(code, value));
 }
 
 void DRW_Header::addCoord(std::string key, DRW_Coord value, int code){
-    curr = new DRW_Variant(code, value);
-    vars[key] =curr;
+    storeVar(key, new DRW_Variant(code, value));
 }
 
 bool DRW_Header::getDouble(std::string key, double *varDouble){
@@ -2116,13 +2111,13 @@ bool DRW_Header::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer *hBbuf
     vars["DIMCLRE"]=new DRW_Variant(70, buf->getCmColor(version));//RLZ: TODO read CMC or EMC color
     vars["DIMCLRT"]=new DRW_Variant(70, buf->getCmColor(version));//RLZ: TODO read CMC or EMC color
     if (version > DRW::AC1014) {//2000+
-        vars["DIAMDEC"]=new DRW_Variant(70, buf->getBitShort());
+        vars["DIMADEC"]=new DRW_Variant(70, buf->getBitShort());
         vars["DIMDEC"]=new DRW_Variant(70, buf->getBitShort());
         vars["DIMTDEC"]=new DRW_Variant(70, buf->getBitShort());
         vars["DIMALTU"]=new DRW_Variant(70, buf->getBitShort());
         vars["DIMALTTD"]=new DRW_Variant(70, buf->getBitShort());
         vars["DIMAUNIT"]=new DRW_Variant(70, buf->getBitShort());
-        vars["DIMFAC"]=new DRW_Variant(70, buf->getBitShort());///////////////// DIMFAC O DIMFRAC
+        vars["DIMFRAC"]=new DRW_Variant(70, buf->getBitShort());// DIMFRAC (fraction format)
         vars["DIMLUNIT"]=new DRW_Variant(70, buf->getBitShort());
         vars["DIMDSEP"]=new DRW_Variant(70, buf->getBitShort());
         vars["DIMTMOVE"]=new DRW_Variant(70, buf->getBitShort());
@@ -2572,7 +2567,8 @@ namespace {
     }
 } // namespace
 
-bool DRW_Header::encodeDwg(DRW::Version version, dwgBufferW *buf, dwgBufferW *hBbuf) {
+bool DRW_Header::encodeDwg(DRW::Version version, dwgBufferW *buf, dwgBufferW *hBbuf,
+                           dwgBufferW *strBuf) {
     if (version != DRW::AC1015 && version != DRW::AC1018 &&
         version != DRW::AC1024 && version != DRW::AC1027 &&
         version != DRW::AC1032) return false;
@@ -2849,13 +2845,13 @@ bool DRW_Header::encodeDwg(DRW::Version version, dwgBufferW *buf, dwgBufferW *hB
     buf->putCmColor(version, static_cast<duint16>(intVar(*this, "DIMCLRE")));
     buf->putCmColor(version, static_cast<duint16>(intVar(*this, "DIMCLRT")));
     // R2000+ DIM BS family
-    buf->putBitShort(static_cast<duint16>(intVar(*this, "DIAMDEC")));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "DIMADEC")));
     buf->putBitShort(static_cast<duint16>(intVar(*this, "DIMDEC", 4)));
     buf->putBitShort(static_cast<duint16>(intVar(*this, "DIMTDEC", 4)));
     buf->putBitShort(static_cast<duint16>(intVar(*this, "DIMALTU", 2)));
     buf->putBitShort(static_cast<duint16>(intVar(*this, "DIMALTTD", 2)));
     buf->putBitShort(static_cast<duint16>(intVar(*this, "DIMAUNIT")));
-    buf->putBitShort(static_cast<duint16>(intVar(*this, "DIMFAC")));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "DIMFRAC")));
     buf->putBitShort(static_cast<duint16>(intVar(*this, "DIMLUNIT", 2)));
     buf->putBitShort(static_cast<duint16>(intVar(*this, "DIMDSEP", '.')));
     buf->putBitShort(static_cast<duint16>(intVar(*this, "DIMTMOVE")));
@@ -3014,6 +3010,31 @@ bool DRW_Header::encodeDwg(DRW::Version version, dwgBufferW *buf, dwgBufferW *hB
     buf->putBitShort(0);
     buf->putBitShort(0);
     buf->putBitShort(0);
+
+    // -------- R2007+ string stream (inverse of parseDwg:2329-2372) ----------
+    // For R2007+ every header TV/TU string lives in a separate string stream,
+    // read consecutively in field-schema order. Collect them here in that
+    // exact order; dwgWriter assembles the [data][strings][footer] layout and
+    // back-patches bitSize so the reader's backward scan finds them. Pre-2007
+    // versions emit these inline above (gated version < AC1021).
+    if (version > DRW::AC1018 && strBuf != nullptr) {
+        strBuf->putUCSText(std::string());   // unknown text 1
+        strBuf->putUCSText(std::string());   // unknown text 2
+        strBuf->putUCSText(std::string());   // unknown text 3
+        strBuf->putUCSText(std::string());   // unknown text 4
+        strBuf->putUCSText(strVar(*this, "MENU"));
+        strBuf->putUCSText(strVar(*this, "DIMPOST"));
+        strBuf->putUCSText(strVar(*this, "DIMAPOST"));
+        if (version > DRW::AC1021) {          // 2010+
+            strBuf->putUCSText(strVar(*this, "DIMALTMZS"));
+            strBuf->putUCSText(strVar(*this, "DIMMZS"));
+        }
+        strBuf->putUCSText(strVar(*this, "HYPERLINKBASE"));
+        strBuf->putUCSText(strVar(*this, "STYLESHEET"));
+        strBuf->putUCSText(strVar(*this, "FINGERPRINTGUID"));
+        strBuf->putUCSText(strVar(*this, "VERSIONGUID"));
+        strBuf->putUCSText(strVar(*this, "PROJECTNAME"));
+    }
 
     return true;
 }

@@ -21,17 +21,15 @@
 
 /**
  * Abstract class (interface) for communicate dxfReader with the application.
- * Inherit your class which takes care of the entities in the 
- * processed DXF file from this interface. 
+ * Inherit your class which takes care of the entities in the
+ * processed DXF file from this interface.
  *
  * @author Rallaz
  */
 class DRW_Interface {
 public:
-    DRW_Interface() {
-    }
-    virtual ~DRW_Interface() {
-    }
+    DRW_Interface() = default;
+    virtual ~DRW_Interface() = default;
 
     /** Called when header is parsed.  */
     virtual void addHeader(const DRW_Header* data) = 0;
@@ -68,6 +66,8 @@ public:
     virtual void addFieldList(const DRW_FieldList& data) { (void) data; }
     /** Called for every RASTERVARIABLES object. */
     virtual void addRasterVariables(const DRW_RasterVariables& data) { (void) data; }
+    /** Called for every WIPEOUTVARIABLES object (global display-frame flag). */
+    virtual void addWipeoutVariables(const DRW_WipeoutVariables& data) { (void) data; }
     /** Called for every SORTENTSTABLE object. */
     virtual void addSortEntsTable(const DRW_SortEntsTable& data) { (void) data; }
     /** Called for every MATERIAL object. */
@@ -84,6 +84,12 @@ public:
     virtual void addMLineStyle(const DRW_MLineStyle& data) { (void) data; }
     /** Called for unsupported DWG object/entity payloads kept as raw bytes. */
     virtual void addUnsupportedObject(const DRW_UnsupportedObject& data) { (void) data; }
+    //! Lossless DXF passthrough (slice A1): an OBJECTS-section object libdxfrw does
+    //! not model is delivered verbatim so it can be re-emitted unchanged.
+    virtual void addRawDxfObject(const DRW_RawDxfObject& data) { (void) data; }
+    //! Lossless DXF passthrough (slice A4): an ENTITIES/BLOCKS entity libdxfrw does
+    //! not model (incl. standalone ATTDEF) delivered verbatim for unchanged re-emit.
+    virtual void addRawDxfEntity(const DRW_RawDxfObject& data) { (void) data; }
 
     /**
      * Called for every block. Note: all entities added after this
@@ -157,7 +163,12 @@ public:
 
     /** Called for every spline */
     virtual void addSpline(const DRW_Spline* data) = 0;
-	
+
+    /** Called for every helix (AcDbHelix). Default delegates nothing; the
+     *  base no-op lets readers add HELIX without forcing every consumer to
+     *  implement it. */
+    virtual void addHelix(const DRW_Helix* data) { (void) data; }
+
 	/** Called for every spline knot value */
     virtual void addKnot(const DRW_Entity& data) = 0;
 
@@ -165,10 +176,10 @@ public:
     virtual void addInsert(const DRW_Insert& data) = 0;
     /** Called for every ACAD_TABLE entity. Defaults to INSERT rendering. */
     virtual void addTable(const DRW_Table& data) { addInsert(data); }
-    
+
     /** Called for every trace start */
     virtual void addTrace(const DRW_Trace& data) = 0;
-    
+
     /** Called for every 3dface start */
     virtual void add3dFace(const DRW_3Dface& data) = 0;
 
@@ -189,36 +200,36 @@ public:
     virtual void addText(const DRW_Text& data) = 0;
 
     /**
-     * Called for every aligned dimension entity. 
+     * Called for every aligned dimension entity.
      */
     virtual void addDimAlign(const DRW_DimAligned *data) = 0;
     /**
-     * Called for every linear or rotated dimension entity. 
+     * Called for every linear or rotated dimension entity.
      */
     virtual void addDimLinear(const DRW_DimLinear *data) = 0;
 
 	/**
-     * Called for every radial dimension entity. 
+     * Called for every radial dimension entity.
      */
     virtual void addDimRadial(const DRW_DimRadial *data) = 0;
 
 	/**
-     * Called for every diametric dimension entity. 
+     * Called for every diametric dimension entity.
      */
     virtual void addDimDiametric(const DRW_DimDiametric *data) = 0;
 
 	/**
-     * Called for every angular dimension (2 lines version) entity. 
+     * Called for every angular dimension (2 lines version) entity.
      */
     virtual void addDimAngular(const DRW_DimAngular *data) = 0;
 
 	/**
-     * Called for every angular dimension (3 points version) entity. 
+     * Called for every angular dimension (3 points version) entity.
      */
     virtual void addDimAngular3P(const DRW_DimAngular3p *data) = 0;
-	
+
     /**
-     * Called for every ordinate dimension entity. 
+     * Called for every ordinate dimension entity.
      */
     virtual void addDimOrdinate(const DRW_DimOrdinate *data) = 0;
 
@@ -231,12 +242,12 @@ public:
 	 * Called for every leader start.
 	 */
     virtual void addLeader(const DRW_Leader *data) = 0;
-	
-	/** 
-	 * Called for every hatch entity. 
+
+	/**
+	 * Called for every hatch entity.
 	 */
     virtual void addHatch(const DRW_Hatch *data) = 0;
-	
+
     /**
      * Called for every viewport entity.
      */

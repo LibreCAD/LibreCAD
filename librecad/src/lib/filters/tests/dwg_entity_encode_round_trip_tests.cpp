@@ -808,6 +808,235 @@ TEST_CASE("DRW_Attdef::encodeDwg round-trips tag + prompt",
     }
 }
 
+// 2a.2 (gap entity-reactors-xdict-dropped-roundtrip): reactor handles and the
+// xdict handle are now persisted on read and re-emitted on write (numReactors
+// BL + per-handle stream + real-or-null xdic). Empty case stays byte-stable
+// (covered by the existing [entity-encode] round-trips); this proves a
+// populated entity round-trips reactors + xdict without a handle-stream desync
+// (the layer handle still resolves, proving alignment).
+TEST_CASE("DRW entity reactors + xdict round-trip through encode (2a.2)",
+          "[dwg-write][entity-encode][phase2a]") {
+    for (DRW::Version ver : {DRW::AC1015, DRW::AC1018}) {
+        DRW_Point src;
+        src.handle = 0x71;
+        src.color = 7;
+        src.ltypeScale = 1.0;
+        src.basePoint = DRW_Coord{1.0, 2.0, 3.0};
+        src.extPoint = DRW_Coord{0.0, 0.0, 1.0};
+        src.reactorHandles = {0xA0, 0xA1};
+        src.xDictHandle = 0xB0;
+        DrwEntityEncodeTestAccess::layerH(src).ref = 0x12;
+
+        dwgBufferW w;
+        REQUIRE(DrwEntityEncodeTestAccess::encode(src, ver, &w));
+        auto bytes = snapshot(w);
+        dwgBuffer r(bytes.data(), bytes.size());
+        DRW_Point dst;
+        REQUIRE(DrwEntityEncodeTestAccess::parse(dst, ver, &r));
+
+        REQUIRE(dst.reactorHandles.size() == 2u);
+        REQUIRE(dst.reactorHandles[0] == 0xA0u);
+        REQUIRE(dst.reactorHandles[1] == 0xA1u);
+        REQUIRE(dst.xDictHandle == 0xB0u);
+        // Alignment proof: the layer handle still lands correctly after the
+        // reactor + xdic handles.
+        REQUIRE(DrwEntityEncodeTestAccess::layerH(dst).ref == 0x12u);
+        REQUIRE(dst.basePoint.x == 1.0);
+    }
+}
+
+// Mixed: reactors empty but xdict present → reader still reads the xdic handle
+// and the layer follows correctly.
+TEST_CASE("DRW entity xdict-only round-trip keeps alignment (2a.2)",
+          "[dwg-write][entity-encode][phase2a]") {
+    for (DRW::Version ver : {DRW::AC1015, DRW::AC1018}) {
+        DRW_Point src;
+        src.handle = 0x72;
+        src.color = 7;
+        src.ltypeScale = 1.0;
+        src.basePoint = DRW_Coord{4.0, 5.0, 6.0};
+        src.extPoint = DRW_Coord{0.0, 0.0, 1.0};
+        src.xDictHandle = 0xC0;   // reactors empty
+        DrwEntityEncodeTestAccess::layerH(src).ref = 0x12;
+
+        dwgBufferW w;
+        REQUIRE(DrwEntityEncodeTestAccess::encode(src, ver, &w));
+        auto bytes = snapshot(w);
+        dwgBuffer r(bytes.data(), bytes.size());
+        DRW_Point dst;
+        REQUIRE(DrwEntityEncodeTestAccess::parse(dst, ver, &r));
+
+        REQUIRE(dst.reactorHandles.empty());
+        REQUIRE(dst.xDictHandle == 0xC0u);
+        REQUIRE(DrwEntityEncodeTestAccess::layerH(dst).ref == 0x12u);
+    }
+}
+
+// 2a.1 (gap entity-visible-code60-dropped-dwg-read): the encoder now emits
+// the invisibleFlag BS (DXF 60) from `visible` instead of a hardcoded 0,
+// paired with the read assign. A real encode→parse round-trip now preserves
+// visible=false; a default visible=true entity stays byte-stable.
+TEST_CASE("DRW entity visibility round-trips through encode (2a.1)",
+          "[dwg-write][entity-encode][visibility]") {
+    for (DRW::Version ver : {DRW::AC1015, DRW::AC1018}) {
+        // visible=false survives the real encoder.
+        {
+            DRW_Point src;
+            src.handle = 0x61;
+            src.color = 7;
+            src.ltypeScale = 1.0;
+            src.basePoint = DRW_Coord{1.0, 2.0, 3.0};
+            src.extPoint = DRW_Coord{0.0, 0.0, 1.0};
+            src.visible = false;
+            DrwEntityEncodeTestAccess::layerH(src).ref = 0x12;
+
+            dwgBufferW w;
+            REQUIRE(DrwEntityEncodeTestAccess::encode(src, ver, &w));
+            auto bytes = snapshot(w);
+            dwgBuffer r(bytes.data(), bytes.size());
+            DRW_Point dst;
+            REQUIRE(DrwEntityEncodeTestAccess::parse(dst, ver, &r));
+            REQUIRE(dst.visible == false);
+            REQUIRE(dst.basePoint.x == 1.0);
+        }
+        // visible=true (default) round-trips visible.
+        {
+            DRW_Point src;
+            src.handle = 0x62;
+            src.color = 7;
+            src.ltypeScale = 1.0;
+            src.basePoint = DRW_Coord{4.0, 5.0, 6.0};
+            src.extPoint = DRW_Coord{0.0, 0.0, 1.0};
+            DrwEntityEncodeTestAccess::layerH(src).ref = 0x12;
+
+            dwgBufferW w;
+            REQUIRE(DrwEntityEncodeTestAccess::encode(src, ver, &w));
+            auto bytes = snapshot(w);
+            dwgBuffer r(bytes.data(), bytes.size());
+            DRW_Point dst;
+            REQUIRE(DrwEntityEncodeTestAccess::parse(dst, ver, &r));
+            REQUIRE(dst.visible == true);
+        }
+    }
+}
+
+// T1 (gap attrib-attdef-lockpos-version-gate-r2007): the lockPosition (DXF
+// 280) READ gate was lowered AC1024->AC1021 so R2007/8/9 imports preserve
+// it; the ENCODE gate stays AC1024.  This test pins the LOWER boundary: at
+// AC1015/AC1018 (below AC1021) the bit is neither written nor read, so a
+// source with lockPosition=true round-trips to false with the body still
+// aligned (tag/prompt intact).  The AC1021+ POSITIVE path cannot be exercised
+// by this single-buffer harness — the encoder emits lockPosition only at
+// AC1024, and AC1024+ parse needs the separate handle/string sections + a
+// back-patched objSize the harness does not provide (existing entity tests
+// likewise cap at AC1018).  AC1021+ positive coverage is deferred to the
+// Phase-1 external write->reread validator / a real R2007 fixture.
+TEST_CASE("DRW_Attrib lockPosition below AC1021 is not read (gate lower boundary)",
+          "[dwg-write][entity-encode]") {
+    DRW_Attrib src;
+    src.handle     = 0xA1;
+    src.color      = 256;
+    src.ltypeScale = 1.0;
+    src.basePoint  = DRW_Coord{3.0, 7.5, 0.0};
+    src.secPoint   = DRW_Coord{3.0, 7.5, 0.0};
+    src.extPoint   = DRW_Coord{0.0, 0.0, 1.0};
+    src.thickness  = 0.0;
+    src.height     = 2.5;
+    src.widthscale = 1.0;
+    src.oblique    = 0.0;
+    src.angle      = 0.0;
+    src.textgen    = 0;
+    src.alignH     = DRW_Text::HLeft;
+    src.alignV     = DRW_Text::VBaseLine;
+    src.text       = "HELLO";
+    src.tag        = "TAGNAME";
+    src.attribFlags = 0;
+    src.lockPosition = true;  // set on source; must NOT survive below AC1021
+    DrwEntityEncodeTestAccess::layerH(src).ref = 0x12;
+
+    for (DRW::Version ver : {DRW::AC1015, DRW::AC1018}) {
+        dwgBufferW w;
+        REQUIRE(DrwEntityEncodeTestAccess::encode(src, ver, &w));
+        auto bytes = snapshot(w);
+        dwgBuffer r(bytes.data(), bytes.size());
+        DRW_Attrib dst;
+        REQUIRE(DrwEntityEncodeTestAccess::parse(dst, ver, &r));
+        REQUIRE(dst.lockPosition == false);   // below gate: not written/read
+        REQUIRE(dst.tag == "TAGNAME");         // body stayed aligned
+    }
+}
+
+TEST_CASE("DRW_Attdef lockPosition below AC1021 is not read (gate lower boundary)",
+          "[dwg-write][entity-encode]") {
+    DRW_Attdef src;
+    src.handle     = 0xA2;
+    src.color      = 1;
+    src.ltypeScale = 1.0;
+    src.basePoint  = DRW_Coord{0.0, 0.0, 0.0};
+    src.secPoint   = DRW_Coord{0.0, 0.0, 0.0};
+    src.extPoint   = DRW_Coord{0.0, 0.0, 1.0};
+    src.thickness  = 0.0;
+    src.height     = 1.0;
+    src.widthscale = 1.0;
+    src.oblique    = 0.0;
+    src.angle      = 0.0;
+    src.textgen    = 0;
+    src.alignH     = DRW_Text::HLeft;
+    src.alignV     = DRW_Text::VBaseLine;
+    src.text       = "DEFAULT";
+    src.tag        = "PARTNO";
+    src.prompt     = "Enter part number:";
+    src.attribFlags = 4;
+    src.lockPosition = true;
+    DrwEntityEncodeTestAccess::layerH(src).ref = 0x12;
+
+    for (DRW::Version ver : {DRW::AC1015, DRW::AC1018}) {
+        dwgBufferW w;
+        REQUIRE(DrwEntityEncodeTestAccess::encode(src, ver, &w));
+        auto bytes = snapshot(w);
+        dwgBuffer r(bytes.data(), bytes.size());
+        DRW_Attdef dst;
+        REQUIRE(DrwEntityEncodeTestAccess::parse(dst, ver, &r));
+        REQUIRE(dst.lockPosition == false);
+        REQUIRE(dst.prompt == "Enter part number:");
+    }
+}
+
+// T2 (gap polyline-mesh-density-dropped-read): the POLYLINE_MESH (0x1E) DWG
+// path read the smooth-surface M/N density (DXF 73/74) into discarded locals
+// and wrote literal 0s.  Now round-tripped via smoothM/smoothN.
+TEST_CASE("DRW_Polyline POLYLINE_MESH round-trips smoothM/smoothN density",
+          "[dwg-write][entity-encode]") {
+    DRW_Polyline src;
+    src.handle     = 0xB1;
+    src.color      = 7;
+    src.ltypeScale = 1.0;
+    src.flags      = 16;          // bit 4 → POLYLINE_MESH (oType 0x1E)
+    src.curvetype  = 0;
+    src.vertexcount = 3;          // M count
+    src.facecount   = 4;          // N count
+    src.smoothM     = 4;          // DXF 73
+    src.smoothN     = 5;          // DXF 74
+    DrwEntityEncodeTestAccess::layerH(src).ref = 0x12;
+
+    for (DRW::Version ver : {DRW::AC1015, DRW::AC1018}) {
+        dwgBufferW w;
+        REQUIRE(DrwEntityEncodeTestAccess::encode(src, ver, &w));
+        auto bytes = snapshot(w);
+        dwgBuffer r(bytes.data(), bytes.size());
+        DRW_Polyline dst;
+        REQUIRE(DrwEntityEncodeTestAccess::parse(dst, ver, &r));
+
+        REQUIRE(dst.smoothM == 4);     // was 0 before the fix
+        REQUIRE(dst.smoothN == 5);     // was 0 before the fix
+        REQUIRE(dst.vertexcount == 3); // unchanged through round-trip
+        REQUIRE(dst.facecount == 4);
+        REQUIRE(dst.curvetype == 0);
+        // reader sets bit 4 (3D mesh); writer strips it, reader re-adds it.
+        REQUIRE((dst.flags & 16) == 16);
+    }
+}
+
 TEST_CASE("DRW_Attrib and DRW_Attdef block unsupported multiline DWG writes",
           "[dwg-write][entity-encode]") {
     DRW_Attrib attrib;
@@ -1145,6 +1374,58 @@ TEST_CASE("DRW_DimOrdinate::encodeDwg round-trips origin and leader endpoints",
     }
 }
 
+// 0B.1 (gap dim-ordinate-xy-flag-wrong-bit): the DWG ordinate X/Y type flag
+// is DXF group-70 bit 6 (0x40) — the bit the filter (`type & 64`) and the
+// DXF parseCode path use.  The DWG parse/encode previously used bit 7 (0x80),
+// so the byte round-tripped but the filter check never fired.  Note: a
+// DWG<->DWG byte round-trip alone is INSUFFICIENT to catch this bug (the old
+// 0x80 code round-trips its own byte fine); the load-bearing assertion is
+// that the surviving bit is 0x40 so the filter sees the X-type.
+TEST_CASE("DRW_DimOrdinate X/Y flag round-trips on bit 0x40 (filter parity)",
+          "[dwg-write][entity-encode]") {
+    for (DRW::Version ver : {DRW::AC1015, DRW::AC1018}) {
+        // X-type ordinate: group-70 bit 6 (0x40) set.
+        {
+            DRW_DimOrdinate src;
+            src.handle = 0xC7;
+            src.type   = 6 | 0x40;   // ordinate subtype bits + X-type flag
+            src.setOriginPoint({2.0, 1.0, 0.0});
+            src.setFirstLine  ({2.0, 5.0, 0.0});
+            src.setSecondLine ({4.0, 5.0, 0.0});
+            src.setTextPoint  ({3.0, 5.5, 0.0});
+            src.setHDir(0.0);
+
+            dwgBufferW w;
+            REQUIRE(DrwEntityEncodeTestAccess::encode(src, ver, &w));
+            auto bytes = snapshot(w);
+            dwgBuffer r(bytes.data(), bytes.size());
+            DRW_DimOrdinate dst;
+            REQUIRE(DrwEntityEncodeTestAccess::parse(dst, ver, &r));
+            REQUIRE((dst.type & 0x40) != 0);   // X-type survives → filter fires
+            REQUIRE((dst.type & 0x80) == 0);   // base type bit not corrupted
+        }
+        // Y-type ordinate: group-70 bit 6 (0x40) clear.
+        {
+            DRW_DimOrdinate src;
+            src.handle = 0xC8;
+            src.type   = 6;          // no 0x40 → Y-type
+            src.setOriginPoint({2.0, 1.0, 0.0});
+            src.setFirstLine  ({2.0, 5.0, 0.0});
+            src.setSecondLine ({4.0, 5.0, 0.0});
+            src.setTextPoint  ({3.0, 5.5, 0.0});
+            src.setHDir(0.0);
+
+            dwgBufferW w;
+            REQUIRE(DrwEntityEncodeTestAccess::encode(src, ver, &w));
+            auto bytes = snapshot(w);
+            dwgBuffer r(bytes.data(), bytes.size());
+            DRW_DimOrdinate dst;
+            REQUIRE(DrwEntityEncodeTestAccess::parse(dst, ver, &r));
+            REQUIRE((dst.type & 0x40) == 0);   // Y-type stays Y
+        }
+    }
+}
+
 TEST_CASE("DRW_Leader::encodeDwg round-trips vertices, arrow, leadertype, extrusion",
           "[dwg-write][entity-encode][leader]") {
     DRW_Leader src;
@@ -1215,5 +1496,214 @@ TEST_CASE("DRW_Leader::encodeDwg straight-leader with arrow=0 round-trips",
         REQUIRE(dst.arrow      == 0);
         REQUIRE(dst.leadertype == 0);
         REQUIRE(dst.vertexlist.size() == 2u);
+    }
+}
+
+// Phase 6.1 — SHAPE encoder (fixed oType 33). Round-trips the 8 body fields +
+// the trailing SHAPEFILE style hard handle.
+TEST_CASE("DRW_Shape::encodeDwg round-trips body and style handle",
+          "[dwg-write][entity-encode][shape]") {
+    DRW_Shape src;
+    src.handle = 0x40;
+    src.color = 7;
+    src.ltypeScale = 1.0;
+    src.m_insertionPoint = DRW_Coord{3.0, 4.0, 5.0};
+    src.m_scale = 2.5;
+    src.m_rotation = 0.75;
+    src.m_widthFactor = 1.25;
+    src.m_oblique = 0.1;
+    src.m_thickness = 0.5;
+    src.m_shapeIndex = 17;
+    src.m_extrusion = DRW_Coord{0.0, 0.0, 1.0};
+    src.m_shapeFileHandle = 0x41;
+    DrwEntityEncodeTestAccess::layerH(src).ref = 0x12;
+
+    for (DRW::Version ver : {DRW::AC1015, DRW::AC1018}) {
+        dwgBufferW w;
+        REQUIRE(DrwEntityEncodeTestAccess::encode(src, ver, &w));
+
+        auto bytes = snapshot(w);
+        REQUIRE(bytes.size() > 0);
+        // Real DWG objects are followed by a 2-byte CRC; the SHAPE parser
+        // gates the trailing style handle on numRemainingBytes() > 2 (i.e.
+        // beyond that CRC). Append 2 padding bytes so the handle is read.
+        bytes.push_back(0);
+        bytes.push_back(0);
+
+        dwgBuffer r(bytes.data(), bytes.size());
+        DRW_Shape dst;
+        REQUIRE(DrwEntityEncodeTestAccess::parse(dst, ver, &r));
+
+        CHECK(DrwEntityEncodeTestAccess::oType(dst) == 33);
+        CHECK(dst.handle == 0x40u);
+        CHECK(dst.m_insertionPoint.x == Approx(3.0));
+        CHECK(dst.m_insertionPoint.y == Approx(4.0));
+        CHECK(dst.m_insertionPoint.z == Approx(5.0));
+        CHECK(dst.m_scale == Approx(2.5));
+        CHECK(dst.m_rotation == Approx(0.75));
+        CHECK(dst.m_widthFactor == Approx(1.25));
+        CHECK(dst.m_oblique == Approx(0.1));
+        CHECK(dst.m_thickness == Approx(0.5));
+        CHECK(dst.m_shapeIndex == 17);
+        CHECK(dst.m_extrusion.z == Approx(1.0));
+        CHECK(dst.m_shapeFileHandle == 0x41u);
+    }
+}
+
+// IMAGE encoder round-trip (Phase 6.3): DRW_Image::encodeDwg must shadow
+// DRW_Line::encodeDwg (oType 101, not 19/LINE), round-trip the body fields,
+// and preserve BOTH trailing handles (imagedef + imagedefreactor) plus the
+// display-props field that the reader previously discarded.
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("DRW_Image::encodeDwg round-trips body + both handles",
+          "[dwg-write][entity-encode][image]") {
+    DRW_Image src;
+    src.handle      = 0x70;
+    src.color       = 7;
+    src.ltypeScale  = 1.0;
+    src.basePoint   = DRW_Coord{1.0, 2.0, 3.0};
+    src.secPoint    = DRW_Coord{0.5, 0.0, 0.0};   // uvec
+    src.vVector     = DRW_Coord{0.0, 0.5, 0.0};
+    src.sizeu       = 640.0;
+    src.sizev       = 480.0;
+    src.m_displayProps = 5;
+    src.clip        = 1;
+    src.brightness  = 60;
+    src.contrast    = 40;
+    src.fade        = 10;
+    src.ref         = 0x100;                       // imagedef handle (340)
+    src.m_imageDefReactorHandle = 0x101;           // imagedefreactor (360)
+    // Non-empty polygon clip boundary (forces clip_boundary_type 2).
+    src.clipPath = {DRW_Coord{0.0, 0.0, 0.0}, DRW_Coord{10.0, 0.0, 0.0},
+                    DRW_Coord{10.0, 8.0, 0.0}, DRW_Coord{0.0, 8.0, 0.0}};
+    DrwEntityEncodeTestAccess::layerH(src).ref = 0x12;
+
+    for (DRW::Version ver : {DRW::AC1015, DRW::AC1018}) {
+        dwgBufferW w;
+        REQUIRE(DrwEntityEncodeTestAccess::encode(src, ver, &w));
+        // Proves the override shadows DRW_Line::encodeDwg (oType 19).
+        CHECK(DrwEntityEncodeTestAccess::oType(src) == 101);
+
+        auto bytes = snapshot(w);
+        dwgBuffer r(bytes.data(), bytes.size());
+        DRW_Image dst;
+        REQUIRE(DrwEntityEncodeTestAccess::parse(dst, ver, &r));
+
+        CHECK(DrwEntityEncodeTestAccess::oType(dst) == 101);
+        CHECK(dst.handle == 0x70u);
+        CHECK(dst.basePoint.x == Approx(1.0));
+        CHECK(dst.basePoint.y == Approx(2.0));
+        CHECK(dst.basePoint.z == Approx(3.0));
+        CHECK(dst.secPoint.x  == Approx(0.5));
+        CHECK(dst.vVector.y   == Approx(0.5));
+        CHECK(dst.sizeu       == Approx(640.0));
+        CHECK(dst.sizev       == Approx(480.0));
+        CHECK(dst.m_displayProps == 5);
+        CHECK(dst.clip        == 1);
+        CHECK(dst.brightness  == 60);
+        CHECK(dst.contrast    == 40);
+        CHECK(dst.fade        == 10);
+        CHECK(dst.clipPath.size() == 4u);
+        CHECK(dst.clipPath[2].x == Approx(10.0));
+        CHECK(dst.clipPath[2].y == Approx(8.0));
+        CHECK(dst.ref == 0x100u);                       // imagedef survives
+        CHECK(dst.m_imageDefReactorHandle == 0x101u);   // reactor survives
+    }
+}
+
+// IMAGE empty-clip variant: clip_boundary_type 0, both handles still emitted.
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("DRW_Image::encodeDwg round-trips empty clip boundary",
+          "[dwg-write][entity-encode][image]") {
+    DRW_Image src;
+    src.handle      = 0x71;
+    src.color       = 7;
+    src.ltypeScale  = 1.0;
+    src.basePoint   = DRW_Coord{0.0, 0.0, 0.0};
+    src.secPoint    = DRW_Coord{1.0, 0.0, 0.0};
+    src.vVector     = DRW_Coord{0.0, 1.0, 0.0};
+    src.sizeu       = 100.0;
+    src.sizev       = 100.0;
+    src.clip        = 0;
+    src.ref         = 0x200;
+    src.m_imageDefReactorHandle = 0x201;
+    DrwEntityEncodeTestAccess::layerH(src).ref = 0x12;
+
+    for (DRW::Version ver : {DRW::AC1015, DRW::AC1018}) {
+        dwgBufferW w;
+        REQUIRE(DrwEntityEncodeTestAccess::encode(src, ver, &w));
+        auto bytes = snapshot(w);
+        dwgBuffer r(bytes.data(), bytes.size());
+        DRW_Image dst;
+        REQUIRE(DrwEntityEncodeTestAccess::parse(dst, ver, &r));
+
+        CHECK(DrwEntityEncodeTestAccess::oType(dst) == 101);
+        CHECK(dst.clipPath.empty());
+        CHECK(dst.ref == 0x200u);
+        CHECK(dst.m_imageDefReactorHandle == 0x201u);
+    }
+}
+
+// HELIX encoder round-trip (Phase 8a-1): a HELIX encodes as a SPLINE body
+// (oType 503, custom class AcDbHelix) followed by the AcDbHelix trailer. The
+// spline body must stay intact (degree/control points) and every trailer field
+// (radius/turns/turnHeight/axis vectors/handedness/constraint) must survive.
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("DRW_Helix::encodeDwg round-trips spline body + AcDbHelix trailer",
+          "[dwg-write][entity-encode][helix]") {
+    DRW_Helix src;
+    src.handle = 0xF8;
+    src.color = 5;
+    src.flags = 8;           // planar
+    src.degree = 3;
+    src.tolknot    = 1e-9;
+    src.tolcontrol = 1e-9;
+    src.knotslist  = {0, 0, 0, 0, 1, 1, 1, 1};
+    src.controllist.push_back(std::make_shared<DRW_Coord>(DRW_Coord{0.0, 0.0, 0.0}));
+    src.controllist.push_back(std::make_shared<DRW_Coord>(DRW_Coord{1.0, 1.0, 0.0}));
+    src.controllist.push_back(std::make_shared<DRW_Coord>(DRW_Coord{2.0, 1.0, 0.0}));
+    src.controllist.push_back(std::make_shared<DRW_Coord>(DRW_Coord{3.0, 0.0, 0.0}));
+    src.nknots = 8;
+    src.ncontrol = 4;
+    // AcDbHelix trailer fields.
+    src.m_majorVersion = 29;
+    src.m_maintVersion = 63;
+    src.axisBasePt = DRW_Coord{1.0, 2.0, 3.0};
+    src.startPt    = DRW_Coord{4.0, 5.0, 6.0};
+    src.axisVector = DRW_Coord{0.0, 0.0, 1.0};
+    src.radius      = 2.5;
+    src.turns       = 7.0;
+    src.turnHeight  = 1.5;
+    src.handedness  = true;
+    src.constraintType = 2;
+    DrwEntityEncodeTestAccess::layerH(src).ref = 0x12;
+
+    for (DRW::Version ver : {DRW::AC1015, DRW::AC1018}) {
+        dwgBufferW w;
+        REQUIRE(DrwEntityEncodeTestAccess::encode(src, ver, &w));
+        CHECK(DrwEntityEncodeTestAccess::oType(src) == 503);
+
+        auto bytes = snapshot(w);
+        dwgBuffer r(bytes.data(), bytes.size());
+        DRW_Helix dst;
+        REQUIRE(DrwEntityEncodeTestAccess::parse(dst, ver, &r));
+
+        // Spline body intact.
+        CHECK(dst.degree == 3);
+        CHECK(dst.controllist.size() == 2u + 2u);  // == 4
+        CHECK(dst.controllist[0]->x == Approx(0.0));
+        CHECK(dst.controllist[3]->x == Approx(3.0));
+        // Trailer round-trips.
+        CHECK(dst.m_majorVersion == 29);
+        CHECK(dst.m_maintVersion == 63);
+        CHECK(dst.axisBasePt.x == Approx(1.0));
+        CHECK(dst.axisBasePt.z == Approx(3.0));
+        CHECK(dst.startPt.y    == Approx(5.0));
+        CHECK(dst.axisVector.z == Approx(1.0));
+        CHECK(dst.radius      == Approx(2.5));
+        CHECK(dst.turns       == Approx(7.0));
+        CHECK(dst.turnHeight  == Approx(1.5));
+        CHECK(dst.handedness  == true);
+        CHECK(dst.constraintType == 2);
     }
 }

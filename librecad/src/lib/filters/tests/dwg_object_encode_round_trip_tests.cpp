@@ -35,6 +35,8 @@
 #include <catch2/catch_approx.hpp>
 #include <catch2/catch_test_macros.hpp>
 
+#include <string>
+#include <utility>
 #include <vector>
 
 using Catch::Approx;
@@ -57,6 +59,10 @@ public:
         return e.encodeDwg(v, buf);
     }
     static bool encodeScale(const DRW_Scale& e, DRW::Version v,
+                             dwgBufferW* buf) {
+        return e.encodeDwg(v, buf);
+    }
+    static bool encodeVport(const DRW_Vport& e, DRW::Version v,
                              dwgBufferW* buf) {
         return e.encodeDwg(v, buf);
     }
@@ -119,6 +125,9 @@ public:
     static dint16 oType(const DRW_TableEntry& e) { return e.oType; }
     static void setNumReactors(DRW_TableEntry& e, dint32 n) { e.numReactors = n; }
     static void setXDictFlag(DRW_TableEntry& e, duint8 f) { e.xDictFlag = f; }
+    // Phase 3A.0 — DIMSTYLE struct->vars sync (syncStructToVars is public, but
+    // the wrapper keeps the test call site uniform with the access pattern).
+    static void syncDimstyle(DRW_Dimstyle& d) { d.syncStructToVars(); }
 };
 
 namespace {
@@ -558,6 +567,162 @@ TEST_CASE("DRW_LayerIndex::parseDwg captures per-layer entry handles",
     REQUIRE(dst.entries[1].entryHandle == 0x201u);
 }
 
+// 8b-1 (gap wipeoutvariables-object-not-dispatched): WIPEOUTVARIABLES carries
+// the drawing-wide display-frame flag (DXF 70). It is now parsed + dispatched
+// (addWipeoutVariables) instead of only landing in the raw-replay skip set.
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("DRW_WipeoutVariables::parseDwg captures display_frame flag",
+          "[dwg-read][object-encode][wipeout]") {
+    REQUIRE(DRW_WipeoutVariables{}.m_displayFrame == 0);  // default
+
+    DRW::Version ver = DRW::AC1018;
+    dwgBufferW w;
+    emitObjectPreamble(w, ver, /*oType=*/0, /*handle=*/0x600);
+    w.putBitShort(1);   // display_frame = 1
+
+    auto bytes = snapshot(w);
+    dwgBuffer r(bytes.data(), bytes.size());
+    DRW_WipeoutVariables dst;
+    REQUIRE(DrwObjectEncodeTestAccess::parse(dst, ver, &r));
+    REQUIRE(dst.m_displayFrame == 1);
+}
+
+// P4-13 (gap object-imagedef-uv-size-dropped): DRW_ImageDef::parseDwg read
+// the image pixel size (DXF 10/20) via get2RawDouble and discarded it; it now
+// assigns u/v (distinct from the up/vp pixel-scale fields).
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("DRW_ImageDef::parseDwg captures u/v pixel size",
+          "[dwg-read][object-encode][imagedef]") {
+    DRW::Version ver = DRW::AC1015;
+    dwgBufferW w;
+    emitObjectPreamble(w, ver, /*oType=*/0, /*handle=*/0x500);
+    w.putBitLong(0);                 // imgVersion (class version)
+    w.putRawDouble(1024.0);          // size.x → u
+    w.putRawDouble(768.0);           // size.y → v
+    w.putVariableText(ver, "img");   // name
+    w.putBit(1);                     // loaded
+    w.putRawChar8(2);                // resolution
+    w.putRawDouble(0.25);            // up (pixel scale U)
+    w.putRawDouble(0.5);             // vp (pixel scale V)
+
+    // Handle stream: parentH, xdic (null), then the trailing XRefH that
+    // DRW_ImageDef::parseDwg reads unconditionally.
+    emitCommonHandlePrefix(w, /*parentHandle=*/0x10, /*reactors=*/{}, /*xDictFlag=*/0);
+    w.putHandle(hardPtr(0));   // XRefH
+
+    auto bytes = snapshot(w);
+    dwgBuffer r(bytes.data(), bytes.size());
+    DRW_ImageDef dst;
+    REQUIRE(DrwObjectEncodeTestAccess::parse(dst, ver, &r));
+
+    REQUIRE(dst.u == 1024.0);        // was discarded before the fix
+    REQUIRE(dst.v == 768.0);
+    REQUIRE(dst.up == 0.25);         // pixel scale unaffected
+    REQUIRE(dst.vp == 0.5);
+    REQUIRE(dst.name == "img");
+}
+
+// 2a.0 (gap entity-reactors-xdict-dropped-roundtrip): DRW_TableEntry gained
+// reactorHandles/xDictHandle. The hand-written copy ctor must copy them (a
+// missing init-list entry would silently drop reactors on copy) and reset()
+// must clear them.
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("DRW_TableEntry copy ctor + reset handle reactor/xdict members",
+          "[dwg-read][object-encode][phase2a]") {
+    DRW_Block_Record src;   // any concrete DRW_TableEntry
+    src.reactorHandles = {0xA0, 0xA1};
+    src.xDictHandle = 0xB0;
+
+    DRW_Block_Record copy(src);   // exercises the hand-written copy ctor
+    REQUIRE(copy.reactorHandles.size() == 2u);
+    REQUIRE(copy.reactorHandles[0] == 0xA0u);
+    REQUIRE(copy.reactorHandles[1] == 0xA1u);
+    REQUIRE(copy.xDictHandle == 0xB0u);
+
+    copy.reset();
+    REQUIRE(copy.reactorHandles.empty());
+    REQUIRE(copy.xDictHandle == 0u);
+    // The source must be untouched by the copy.
+    REQUIRE(src.reactorHandles.size() == 2u);
+    REQUIRE(src.xDictHandle == 0xB0u);
+}
+
+// 2a.6 (gap object-blockrecord-layout-explode-dropped): DRW_Block_Record now
+// retains description (DXF 4), canExplode (280), blockScaling (281) and the
+// owning LAYOUT handle (340), which parseDwg previously read-and-discarded.
+// The full BLOCK_HEADER body is version-dependent and handle-heavy; the
+// parse-path correctness is covered by the corpus golden check (read-only,
+// member-assignment-only change). This guards the struct defaults + reset.
+// NOTE: blockScaling/canExplode are populated only for R2007+ (>AC1018).
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("DRW_Block_Record exposes layout/explode/scaling/description members",
+          "[dwg-read][object-encode][blockrecord]") {
+    DRW_Block_Record br;
+    // Documented defaults (used by the filter when a DWG omits them).
+    REQUIRE(br.canExplode == true);
+    REQUIRE(br.blockScaling == 0);
+    REQUIRE(br.layoutHandle == 0u);
+    REQUIRE(br.description.empty());
+
+    // Mutate, then reset() must restore the documented defaults so a reused
+    // record cannot leak a prior block's layout association.
+    br.description = "stamped";
+    br.canExplode = false;
+    br.blockScaling = 3;
+    br.layoutHandle = 0xABCD;
+    br.reset();
+    REQUIRE(br.canExplode == true);
+    REQUIRE(br.blockScaling == 0);
+    REQUIRE(br.layoutHandle == 0u);
+    REQUIRE(br.description.empty());
+}
+
+// 0B.4a (gap object-mlinestyle-ltindex-inverted-version-gate-read):
+// PRE-R2018 MLINESTYLE stores a signed inline lt index (BSd) per element;
+// the version gate was inverted (read the BS only for R2018+), desyncing
+// every element by one BS for the common R2000-R2013 case.  This test
+// builds a 2-element AC1015 MLINESTYLE and asserts (a) both element
+// offsets/colors stay aligned (no per-element BS drift), (b) the signed
+// inline index is now CONSUMED and STORED in linetypeIndex (incl. a
+// negative sentinel proving the signed read), and (c) buff stays good.
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("DRW_MLineStyle::parseDwg captures per-element signed lt index (pre-R2018)",
+          "[dwg-read][object-encode][mlinestyle]") {
+    DRW::Version ver = DRW::AC1015;  // pre-R2018: inline BSd index present
+    dwgBufferW w;
+    emitObjectPreamble(w, ver, /*oType=*/0, /*handle=*/0x400);
+    w.putVariableText(ver, "MyStyle");    // name
+    w.putVariableText(ver, "desc");       // description
+    w.putBitShort(0);                     // flags
+    w.putCmColor(ver, 256);               // fill color (CMC)
+    w.putBitDouble(1.0471975512);         // startAngle
+    w.putBitDouble(2.0943951024);         // endAngle
+    w.putRawChar8(2);                     // numLines
+    // element 0
+    w.putBitDouble(0.5);                  // offset
+    w.putCmColor(ver, 1);                 // color
+    w.putSBitShort(0);                    // linetypeIndex (BSd) = 0
+    // element 1 — uses a negative sentinel to prove the signed read.
+    w.putBitDouble(-0.5);                 // offset
+    w.putCmColor(ver, 2);                 // color
+    w.putSBitShort(-2);                   // linetypeIndex (BSd) = -2
+
+    auto bytes = snapshot(w);
+    dwgBuffer r(bytes.data(), bytes.size());
+    DRW_MLineStyle dst;
+    REQUIRE(DrwObjectEncodeTestAccess::parse(dst, ver, &r));
+
+    REQUIRE(dst.name == "MyStyle");        // read before the element loop
+    REQUIRE(dst.elements.size() == 2u);
+    REQUIRE(dst.elements[0].offset == Approx(0.5));   // no BS drift
+    REQUIRE(dst.elements[0].color == 1);
+    REQUIRE(dst.elements[0].linetypeIndex == 0);      // inline index consumed
+    REQUIRE(dst.elements[1].offset == Approx(-0.5));  // 2nd element aligned
+    REQUIRE(dst.elements[1].color == 2);
+    REQUIRE(dst.elements[1].linetypeIndex == -2);     // signed read preserved
+    REQUIRE(r.isGood());                  // stream stayed aligned
+}
+
 // SPATIAL_INDEX parser test (ODA §20.4.95).  Body beyond timestamps is
 // opaque, so we exercise only the timestamp capture.  Handle stream is
 // gated to AC1024+ in the parser; under AC1018 the handles are not read.
@@ -647,6 +812,49 @@ TEST_CASE("DRW_Scale::encodeDwg round-trips paper/drawing units + unit flag",
     REQUIRE(dst.drawingUnits == Approx(50.0));
     REQUIRE(dst.isUnitScale  == false);
     REQUIRE(dst.scaleFactor() == Approx(50.0));
+}
+
+// VPORT encoder round-trip (P4-06): the per-viewport UCS block (origin / X /
+// Y axis / elevation / ortho-type / ucsPerVP) must survive encode->parse
+// instead of being written back as a hardcoded identity. AC1015 keeps the
+// name string + handle stream inline.
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("DRW_Vport::encodeDwg round-trips per-viewport UCS geometry",
+          "[dwg-write][object-encode][vport]") {
+    DRW_Vport src;
+    src.handle      = 0x500;
+    src.name        = "MYVP";
+    // Non-identity UCS values to prove they are stored, not hardcoded.
+    src.ucsOrigin   = DRW_Coord(3.0, 4.0, 5.0);
+    src.ucsXAxis    = DRW_Coord(0.0, 1.0, 0.0);
+    src.ucsYAxis    = DRW_Coord(-1.0, 0.0, 0.0);
+    src.ucsElevation = 2.0;
+    src.ucsOrthoType = 1;
+    src.ucsPerVP    = true;
+
+    DRW::Version ver = DRW::AC1015;
+    dwgBufferW w;
+    emitObjectPreamble(w, ver, /*oType=*/0x41 /* VPORT */, src.handle);
+    REQUIRE(DrwObjectEncodeTestAccess::encodeVport(src, ver, &w));
+
+    auto bytes = snapshot(w);
+    dwgBuffer r(bytes.data(), bytes.size());
+    DRW_Vport dst;
+    REQUIRE(DrwObjectEncodeTestAccess::parse(dst, ver, &r));
+
+    REQUIRE(dst.name == "MYVP");
+    REQUIRE(dst.ucsOrigin.x == Approx(3.0));
+    REQUIRE(dst.ucsOrigin.y == Approx(4.0));
+    REQUIRE(dst.ucsOrigin.z == Approx(5.0));
+    REQUIRE(dst.ucsXAxis.x  == Approx(0.0));
+    REQUIRE(dst.ucsXAxis.y  == Approx(1.0));
+    REQUIRE(dst.ucsXAxis.z  == Approx(0.0));
+    REQUIRE(dst.ucsYAxis.x  == Approx(-1.0));
+    REQUIRE(dst.ucsYAxis.y  == Approx(0.0));
+    REQUIRE(dst.ucsYAxis.z  == Approx(0.0));
+    REQUIRE(dst.ucsElevation == Approx(2.0));
+    REQUIRE(dst.ucsOrthoType == 1);
+    REQUIRE(dst.ucsPerVP     == true);
 }
 
 // GROUP encoder round-trip (ODA §20.4.72).  Description TV + unnamed flag +
@@ -1470,4 +1678,254 @@ TEST_CASE("DRW_FieldList::encodeDwg round-trips field handles",
     REQUIRE(dst.m_fieldHandles[0] == 0x1200u);
     REQUIRE(dst.m_fieldHandles[1] == 0x1201u);
     REQUIRE(dst.m_fieldHandles[2] == 0x1202u);
+}
+
+// Phase 3A.0 — DRW_Dimstyle::syncStructToVars populates every $DIM key the
+// LibreCAD createDimStyle consumer reads, from the parsed struct fields.
+TEST_CASE("DRW_Dimstyle::syncStructToVars populates vars from struct fields",
+          "[dwg-object-encode][dimstyle][data-loss]") {
+    DRW_Dimstyle d;
+    d.dimscale = 2.0;
+    d.dimasz = 0.25;
+    d.dimclrd = 1;
+    d.dimlwd = 13;
+    d.dimtxsty = "MyText";
+    d.dimtad = 2;
+    d.dimzin = 8;
+    d.dimdec = 3;
+    d.dimlunit = 4;
+
+    DrwObjectEncodeTestAccess::syncDimstyle(d);
+
+    REQUIRE(d.get("$DIMSCALE") != nullptr);
+    CHECK(d.get("$DIMSCALE")->d_val() == Approx(2.0));
+    CHECK(d.get("$DIMASZ")->d_val() == Approx(0.25));
+    CHECK(d.get("$DIMCLRD")->i_val() == 1);
+    CHECK(d.get("$DIMLWD")->i_val() == 13);
+    REQUIRE(d.get("$DIMTXSTY") != nullptr);
+    CHECK(std::string(d.get("$DIMTXSTY")->c_str()) == "MyText");
+    CHECK(d.get("$DIMTAD")->i_val() == 2);
+    CHECK(d.get("$DIMZIN")->i_val() == 8);
+    CHECK(d.get("$DIMDEC")->i_val() == 3);
+    CHECK(d.get("$DIMLUNIT")->i_val() == 4);
+}
+
+// Phase 3A.0 — sync is idempotent: the if(!get(key)) guard never clobbers a
+// value already present in the vars map (DWG override / DXF-105 path).
+TEST_CASE("DRW_Dimstyle::syncStructToVars is idempotent and never clobbers",
+          "[dwg-object-encode][dimstyle][data-loss]") {
+    DRW_Dimstyle d;
+    d.dimscale = 2.0;
+    // Pre-populate an override value; sync must not overwrite it.
+    d.add("$DIMSCALE", 40, 9.0);
+
+    DrwObjectEncodeTestAccess::syncDimstyle(d);
+    REQUIRE(d.get("$DIMSCALE") != nullptr);
+    CHECK(d.get("$DIMSCALE")->d_val() == Approx(9.0));
+
+    // A second sync leaves the populated keys unchanged.
+    const DRW_Variant* before = d.get("$DIMASZ");
+    DrwObjectEncodeTestAccess::syncDimstyle(d);
+    CHECK(d.get("$DIMASZ") == before);
+    CHECK(d.get("$DIMSCALE")->d_val() == Approx(9.0));
+}
+
+// Phase 3A.0 — Rule-of-Five deep copy: copying a vars-populated DRW_Dimstyle
+// and destroying both copies is clean (no double-free); mutating the copy
+// does not affect the original.
+TEST_CASE("DRW_Dimstyle deep-copy is independent and leak/double-free clean",
+          "[dwg-object-encode][dimstyle][data-loss]") {
+    DRW_Dimstyle original;
+    original.dimscale = 3.5;
+    original.dimtxt = 0.25;
+    DrwObjectEncodeTestAccess::syncDimstyle(original);
+    REQUIRE(original.get("$DIMSCALE")->d_val() == Approx(3.5));
+
+    {
+        DRW_Dimstyle copy(original);  // copy ctor — deep copy vars.
+        REQUIRE(copy.get("$DIMSCALE") != nullptr);
+        CHECK(copy.get("$DIMSCALE")->d_val() == Approx(3.5));
+        // Pointers are distinct (deep copy, not shared).
+        CHECK(copy.get("$DIMSCALE") != original.get("$DIMSCALE"));
+        // Mutating the copy does not affect the original.
+        copy.add("$DIMSCALE", 40, 7.0);
+        CHECK(copy.get("$DIMSCALE")->d_val() == Approx(7.0));
+        CHECK(original.get("$DIMSCALE")->d_val() == Approx(3.5));
+
+        DRW_Dimstyle assigned;
+        assigned = original;  // copy assignment.
+        CHECK(assigned.get("$DIMSCALE")->d_val() == Approx(3.5));
+        CHECK(assigned.get("$DIMSCALE") != original.get("$DIMSCALE"));
+
+        DRW_Dimstyle moved(std::move(copy));  // move ctor steals vars.
+        CHECK(moved.get("$DIMSCALE")->d_val() == Approx(7.0));
+    }  // copy/assigned/moved destroyed here — must not double-free.
+
+    // Original still intact after the inner scope destroyed its copies.
+    CHECK(original.get("$DIMSCALE")->d_val() == Approx(3.5));
+}
+
+// Phase 3A.1 — new R2007/R2010 numeric/string members + handle refs
+// default-construct/reset() to their documented defaults.
+TEST_CASE("DRW_Dimstyle default-constructs R2007/R2010 members with defaults",
+          "[dwg-object-encode][dimstyle][data-loss]") {
+    DRW_Dimstyle d;
+    CHECK(d.dimjogang == Approx(0.0));
+    CHECK(d.dimtfill == 0);
+    CHECK(d.dimtfillclr == 0);
+    CHECK(d.dimarcsym == 0);
+    CHECK(d.dimtxtdirection == 0);
+    CHECK(d.dimaltmzf == Approx(1.0));
+    CHECK(d.dimmzf == Approx(1.0));
+    CHECK(d.dimaltmzs.empty());
+    CHECK(d.dimmzs.empty());
+    CHECK(d.dimtxstyH.ref == 0u);
+    CHECK(d.dimldrblkH.ref == 0u);
+    CHECK(d.dimblkH.ref == 0u);
+    CHECK(d.dimblk1H.ref == 0u);
+    CHECK(d.dimblk2H.ref == 0u);
+    CHECK(d.dimltypeH.ref == 0u);
+    CHECK(d.dimltex1H.ref == 0u);
+    CHECK(d.dimltex2H.ref == 0u);
+
+    // reset() restores the same defaults after mutation.
+    d.dimjogang = 1.25;
+    d.dimaltmzf = 5.0;
+    d.dimtxstyH.ref = 0x99u;
+    d.reset();
+    CHECK(d.dimjogang == Approx(0.0));
+    CHECK(d.dimaltmzf == Approx(1.0));
+    CHECK(d.dimtxstyH.ref == 0u);
+}
+
+// Phase 4 (P4-04) — DRW_UCS::parseDwg reads origin/axes/elevation/orthoType +
+// base/named handles. Synthetic AC1015 (R2000) UCS record per dwg.spec UCS
+// binary field order; parsed back via the friend accessor.
+TEST_CASE("DRW_UCS::parseDwg reads geometry, elevation, orthoType, handles",
+          "[dwg-object-encode][ucs][data-loss]") {
+    const DRW::Version ver = DRW::AC1015;
+    constexpr duint16 ucsType = 0x3F;  // UCS table record.
+
+    dwgBufferW body;
+    emitObjectPreamble(body, ver, ucsType, /*handle=*/0x30u,
+                       /*numReactors=*/0, /*xDictFlag=*/0);
+    body.putVariableText(ver, std::string("MyUCS"));
+    body.putBit(0);          // flags bit 7 (64)
+    body.putBitShort(0);     // xrefindex (version < AC1021)
+    body.putBit(0);          // flags bit 5 (16)
+    body.put3BitDouble(DRW_Coord(10.0, 20.0, 0.0));   // ucsorg
+    body.put3BitDouble(DRW_Coord(0.0, 1.0, 0.0));     // ucsxdir
+    body.put3BitDouble(DRW_Coord(-1.0, 0.0, 0.0));    // ucsydir
+    body.putBitDouble(5.0);  // ucs_elevation (BD, FIRST in binary order)
+    body.putBitShort(1);     // UCSORTHOVIEW (BS)
+    body.putBitShort(0);     // num_orthopts = 0
+    // Handle stream: parent, xdic, then base_ucs, named_ucs.
+    emitCommonHandlePrefix(body, /*parentHandle=*/0x3Eu, {}, /*xDictFlag=*/0);
+    body.putHandle(hardPtr(0x100u));  // base_ucs
+    body.putHandle(hardPtr(0x101u));  // named_ucs
+
+    std::vector<duint8> bytes = snapshot(body);
+    dwgBuffer r(bytes.data(), bytes.size());
+    DRW_UCS dst;
+    REQUIRE(DrwObjectEncodeTestAccess::parse(dst, ver, &r));
+
+    CHECK(dst.name == "MyUCS");
+    CHECK(dst.origin.x == Approx(10.0));
+    CHECK(dst.origin.y == Approx(20.0));
+    CHECK(dst.xAxisDirection.x == Approx(0.0));
+    CHECK(dst.xAxisDirection.y == Approx(1.0));
+    CHECK(dst.yAxisDirection.x == Approx(-1.0));
+    CHECK(dst.elevation == Approx(5.0));
+    CHECK(dst.orthoType == 1);
+    CHECK(dst.baseUcsHandle.ref == 0x100u);
+    CHECK(dst.namedUcsHandle.ref == 0x101u);
+}
+
+// Phase 4 (P4-01) — DRW_PlotSettings now carries the full plot field set and
+// default-constructs with the documented scale defaults.
+TEST_CASE("DRW_PlotSettings default-constructs full plot field set",
+          "[dwg-object-encode][plotsettings][data-loss]") {
+    DRW_PlotSettings ps;
+    // Scale defaults are 1.0; everything else zero/empty.
+    CHECK(ps.realWorldUnits == Approx(1.0));
+    CHECK(ps.drawingUnits == Approx(1.0));
+    CHECK(ps.scaleFactor == Approx(1.0));
+    CHECK(ps.marginLeft == Approx(0.0));
+    CHECK(ps.marginTop == Approx(0.0));
+    CHECK(ps.paperWidth == Approx(0.0));
+    CHECK(ps.paperHeight == Approx(0.0));
+    CHECK(ps.plotLayoutFlags == 0);
+    CHECK(ps.paperUnits == 0);
+    CHECK(ps.plotType == 0);
+    CHECK(ps.scaleType == 0);
+    CHECK(ps.shadePlotMode == 0);
+    CHECK(ps.pageSetupName.empty());
+    CHECK(ps.paperSize.empty());
+    CHECK(ps.currentStyleSheet.empty());
+}
+
+// Phase 4 (P4-02) — DRW_PlotSettings::parseDwg reads the full plot prefix
+// (margins/paper/window/scale). Synthetic AC1015 body per the LAYOUT plot
+// prefix wire layout, parsed back via the friend accessor.
+TEST_CASE("DRW_PlotSettings::parseDwg reads margins/paper/window/scale",
+          "[dwg-object-encode][plotsettings][data-loss]") {
+    const DRW::Version ver = DRW::AC1015;
+    constexpr duint16 psType = 0x1F4;  // custom-class number (>=500).
+
+    dwgBufferW body;
+    emitObjectPreamble(body, ver, psType, /*handle=*/0x40u,
+                       /*numReactors=*/0, /*xDictFlag=*/0);
+    body.putVariableText(ver, std::string("MyPrinter"));   // pageSetupName (1)
+    body.putVariableText(ver, std::string("PaperCfg"));    // printerConfig (2)
+    body.putBitShort(688);          // plotLayoutFlags (70)
+    body.putBitDouble(7.5);         // marginLeft (40)
+    body.putBitDouble(7.6);         // marginBottom (41)
+    body.putBitDouble(7.7);         // marginRight (42)
+    body.putBitDouble(7.8);         // marginTop (43)
+    body.putBitDouble(420.0);       // paperWidth (44)
+    body.putBitDouble(297.0);       // paperHeight (45)
+    body.putVariableText(ver, std::string("ISO_A3"));      // paperSize (4)
+    body.putBitDouble(1.0);         // plotOriginX (46)
+    body.putBitDouble(2.0);         // plotOriginY (47)
+    body.putBitShort(1);            // paperUnits (72)
+    body.putBitShort(2);            // plotRotation (73)
+    body.putBitShort(3);            // plotType (74)
+    body.putBitDouble(10.0);        // windowMinX (48)
+    body.putBitDouble(11.0);        // windowMinY (49)
+    body.putBitDouble(110.0);       // windowMaxX (140)
+    body.putBitDouble(111.0);       // windowMaxY (141)
+    body.putVariableText(ver, std::string("PlotView1"));   // plotViewName (<AC1018)
+    body.putBitDouble(25.4);        // realWorldUnits (142)
+    body.putBitDouble(1.0);         // drawingUnits (143)
+    body.putVariableText(ver, std::string("acad.ctb"));    // currentStyleSheet (7)
+    body.putBitShort(4);            // scaleType (75)
+    body.putBitDouble(0.5);         // scaleFactor (147)
+    body.putBitDouble(3.0);         // paperImageOriginX (148)
+    body.putBitDouble(4.0);         // paperImageOriginY (149)
+    // AC1015 < AC1018 — no shadeplot fields.
+    emitCommonHandlePrefix(body, /*parentHandle=*/0x3Du, {}, /*xDictFlag=*/0);
+
+    std::vector<duint8> bytes = snapshot(body);
+    dwgBuffer r(bytes.data(), bytes.size());
+    DRW_PlotSettings dst;
+    REQUIRE(DrwObjectEncodeTestAccess::parse(dst, ver, &r));
+
+    CHECK(dst.pageSetupName == "MyPrinter");
+    CHECK(dst.printerConfig == "PaperCfg");
+    CHECK(dst.plotLayoutFlags == 688);
+    CHECK(dst.marginLeft == Approx(7.5));
+    CHECK(dst.marginTop == Approx(7.8));
+    CHECK(dst.paperWidth == Approx(420.0));
+    CHECK(dst.paperHeight == Approx(297.0));
+    CHECK(dst.paperSize == "ISO_A3");
+    CHECK(dst.paperUnits == 1);
+    CHECK(dst.plotType == 3);
+    CHECK(dst.windowMinX == Approx(10.0));
+    CHECK(dst.windowMaxY == Approx(111.0));
+    CHECK(dst.plotViewName == "PlotView1");
+    CHECK(dst.realWorldUnits == Approx(25.4));
+    CHECK(dst.currentStyleSheet == "acad.ctb");
+    CHECK(dst.scaleType == 4);
+    CHECK(dst.scaleFactor == Approx(0.5));
+    CHECK(static_cast<duint32>(dst.parentHandle) == 0x3Du);
 }

@@ -465,7 +465,13 @@ bool dwgReader21::readDwgClasses(){
     buff.setPosition(size+20);//sizeVal+sn+32bSize
     DRW_DBG("\nCRC: "); DRW_DBGH(buff.getRawShort16());
     DRW_DBG("\nclasses section end sentinel= ");
-    checkSentinel(&buff, secEnum::CLASSES, true);
+    // 1.4: this is the END sentinel — it was wrongly passed start=true, so it
+    // compared the END bytes against the BEGIN sentinel (a latent bug). Fix
+    // the arg to false. Kept WARN-ONLY: AC1024 (reader24→here) valid corpus
+    // files do not carry a matching CLASSES end sentinel in libdxfrw's
+    // single-buffer model, so a hard fail regresses the corpus. The arg fix
+    // makes the diagnostic correct without changing the read outcome.
+    checkSentinel(&buff, secEnum::CLASSES, false);
     return buff.isGood();
 }
 

@@ -40,7 +40,8 @@ public:
         MissingRawBytes,
         MissingClassMetadata,
         WriterRejected,
-        SemanticOnly
+        SemanticOnly,
+        VersionMismatch
     };
 
     enum class AssociativeKind {
@@ -1876,7 +1877,10 @@ public:
     };
 
     void clear() {
+        m_sourceDwgVersion = DRW::UNKNOWNV;
         m_rawObjects.clear();
+        m_rawDxfObjects.clear();
+        m_rawDxfEntities.clear();
         m_views.clear();
         m_lights.clear();
         m_suns.clear();
@@ -1933,6 +1937,17 @@ public:
         record.family = rawObjectFamilyFromNames(record.recordName, record.className);
         record.rawBytes = object.m_rawBytes;
         m_rawObjects.push_back(std::move(record));
+    }
+
+    //Slice A2: lossless DXF passthrough store (group-text records captured by the
+    //DXF reader's processRawObject/processRawEntity). Kept on the graphic so a
+    //read filter and a later write filter share them across a DXF round-trip.
+    void addRawDxfObject(const DRW_RawDxfObject& object) {
+        m_rawDxfObjects.push_back(object);
+    }
+
+    void addRawDxfEntity(const DRW_RawDxfObject& entity) {
+        m_rawDxfEntities.push_back(entity);
     }
 
     void addView(const DRW_View& view) {
@@ -2979,6 +2994,13 @@ public:
     }
 
     const std::vector<RawObjectRecord>& rawObjects() const { return m_rawObjects; }
+    const std::vector<DRW_RawDxfObject>& rawDxfObjects() const { return m_rawDxfObjects; }
+    const std::vector<DRW_RawDxfObject>& rawDxfEntities() const { return m_rawDxfEntities; }
+
+    // Source DWG version of the document this metadata was read from. Used to
+    // gate raw-replay (both emit + CLASSES registration) on source==target.
+    void setSourceDwgVersion(DRW::Version v) { m_sourceDwgVersion = v; }
+    DRW::Version sourceDwgVersion() const { return m_sourceDwgVersion; }
     const std::vector<ViewRecord>& views() const { return m_views; }
     const std::vector<UcsRecord>& ucsRecords() const { return m_ucsRecords; }
     const std::vector<VportRecord>& vports() const { return m_vports; }
@@ -4923,6 +4945,8 @@ public:
                 return "writer rejected";
             case ReplayBlocker::SemanticOnly:
                 return "semantic-only metadata";
+            case ReplayBlocker::VersionMismatch:
+                return "source/target version mismatch";
         }
         return "unknown";
     }
@@ -7323,7 +7347,10 @@ private:
         }
     }
 
+    DRW::Version m_sourceDwgVersion = DRW::UNKNOWNV;
     std::vector<RawObjectRecord> m_rawObjects;
+    std::vector<DRW_RawDxfObject> m_rawDxfObjects;
+    std::vector<DRW_RawDxfObject> m_rawDxfEntities;
     std::vector<ViewRecord> m_views;
     std::vector<UcsRecord> m_ucsRecords;
     std::vector<VportRecord> m_vports;

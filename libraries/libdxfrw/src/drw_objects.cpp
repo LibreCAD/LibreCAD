@@ -1117,6 +1117,93 @@ bool DRW_Dimstyle::parseCode(int code, const std::unique_ptr<dxfReader>& reader)
     return true;
 }
 
+// Populate the vars map from the parsed struct fields using EXACTLY the $DIM
+// keys / DXF codes the LibreCAD createDimStyle consumer reads. Idempotent: the
+// `if (!get(key))` guard never clobbers a value already present (DWG override
+// path or DXF group-105 handles). (Phase 3A.0)
+void DRW_Dimstyle::syncStructToVars() {
+    auto addDouble = [&](const char* key, int code, double value) {
+        if (!get(key)) add(key, code, value);
+    };
+    auto addInt = [&](const char* key, int code, int value) {
+        if (!get(key)) add(key, code, value);
+    };
+    auto addStr = [&](const char* key, int code, const std::string& value) {
+        if (!get(key)) add(key, code, value);
+    };
+
+    // Doubles.
+    addDouble("$DIMSCALE", 40, dimscale);
+    addDouble("$DIMASZ", 41, dimasz);
+    addDouble("$DIMEXO", 42, dimexo);
+    addDouble("$DIMEXE", 44, dimexe);
+    addDouble("$DIMFXL", 49, dimfxl);
+    addDouble("$DIMDLE", 46, dimdle);
+    addDouble("$DIMDLI", 43, dimdli);
+    addDouble("$DIMGAP", 147, dimgap);
+    addDouble("$DIMTXT", 140, dimtxt);
+    addDouble("$DIMTVP", 145, dimtvp);
+    addDouble("$DIMRND", 45, dimrnd);
+    addDouble("$DIMALTRND", 148, dimaltrnd);
+    addDouble("$DIMCEN", 141, dimcen);
+    addDouble("$DIMTM", 48, dimtm);
+    addDouble("$DIMTP", 47, dimtp);
+    addDouble("$DIMTFAC", 146, dimtfac);
+    addDouble("$DIMTSZ", 142, dimtsz);
+    addDouble("$DIMLFAC", 144, dimlfac);
+    addDouble("$DIMALTF", 143, dimaltf);
+
+    // Ints.
+    addInt("$DIMSOXD", 175, dimsoxd);
+    addInt("$DIMSAH", 173, dimsah);
+    addInt("$DIMFXLON", 290, dimfxlon);
+    addInt("$DIMSE1", 75, dimse1);
+    addInt("$DIMSE2", 76, dimse2);
+    addInt("$DIMTOFL", 172, dimtofl);
+    addInt("$DIMTOH", 74, dimtoh);
+    addInt("$DIMTIH", 73, dimtih);
+    addInt("$DIMJUST", 280, dimjust);
+    addInt("$DIMTAD", 77, dimtad);
+    addInt("$DIMTIX", 174, dimtix);
+    addInt("$DIMUPT", 288, dimupt);
+    addInt("$DIMTMOVE", 279, dimtmove);
+    addInt("$DIMATFIT", 289, dimatfit);
+    addInt("$DIMZIN", 78, dimzin);
+    addInt("$DIMAZIN", 79, dimazin);
+    addInt("$DIMTZIN", 284, dimtzin);
+    addInt("$DIMALTZ", 285, dimaltz);
+    addInt("$DIMALTTZ", 286, dimaltttz);
+    addInt("$DIMLUNIT", 277, dimlunit);
+    addInt("$DIMDSEP", 278, dimdsep);
+    addInt("$DIMDEC", 271, dimdec);
+    addInt("$DIMALT", 170, dimalt);
+    addInt("$DIMALTU", 273, dimaltu);
+    addInt("$DIMALTD", 171, dimaltd);
+    addInt("$DIMAUNIT", 275, dimaunit);
+    addInt("$DIMADEC", 179, dimadec);
+    addInt("$DIMFRAC", 276, dimfrac);
+    addInt("$DIMTDEC", 272, dimtdec);
+    addInt("$DIMALTTD", 274, dimalttd);
+    addInt("$DIMTOL", 71, dimtol);
+    addInt("$DIMTOLJ", 283, dimtolj);
+    addInt("$DIMLIM", 72, dimlim);
+    addInt("$DIMLWD", 371, dimlwd);
+    addInt("$DIMLWE", 372, dimlwe);
+    // Color ints — createDimStyle calls numberToColor(var->i_val()).
+    addInt("$DIMCLRD", 176, dimclrd);
+    addInt("$DIMCLRE", 177, dimclre);
+    addInt("$DIMCLRT", 178, dimclrt);
+
+    // Strings.
+    addStr("$DIMPOST", 3, dimpost);
+    addStr("$DIMAPOST", 4, dimapost);
+    addStr("$DIMTXSTY", 340, dimtxsty);   // NAME; consumer runs prepareTextStyleName
+    addStr("$DIMLDRBLK", 341, dimldrblk);
+    addStr("$DIMBLK", 5, dimblk);
+    addStr("$DIMBLK1", 6, dimblk1);
+    addStr("$DIMBLK2", 7, dimblk2);
+}
+
 bool DRW_Dimstyle::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     dwgBuffer sBuff = *buf;
     dwgBuffer *sBuf = buf;
@@ -1458,8 +1545,8 @@ bool DRW_Block_Record::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs
         insertCount = 0;
         while (duint8 i = buf->getRawChar8() != 0)
             insertCount +=i;
-        UTF8STRING bkdesc = sBuf->getVariableText(version, false);
-        DRW_DBG("Block description: "); DRW_DBG(bkdesc.c_str()); DRW_DBG("\n");
+        description = sBuf->getVariableText(version, false);  // 2a.6: DXF 4
+        DRW_DBG("Block description: "); DRW_DBG(description.c_str()); DRW_DBG("\n");
 
         duint32 prevData = buf->getBitLong();
         for (unsigned int j= 0; j < prevData; ++j)
@@ -1467,11 +1554,8 @@ bool DRW_Block_Record::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs
     }
     if (version > DRW::AC1018) {//2007+
         insUnits = buf->getBitShort();
-        bool canExplode = buf->getBit(); //if block can be exploded
-        duint8 bkScaling = buf->getRawChar8();
-
-        DRW_UNUSED(canExplode);
-        DRW_UNUSED(bkScaling);
+        canExplode = buf->getBit(); //if block can be exploded (DXF 280)
+        blockScaling = buf->getRawChar8(); //2a.6: DXF 281
     }
 
     if (version > DRW::AC1018) {//2007+ skip string area
@@ -1531,6 +1615,7 @@ bool DRW_Block_Record::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs
         DRW_DBG("Remaining bytes: "); DRW_DBG(buf->numRemainingBytes()); DRW_DBG("\n");
         dwgHandle layoutH = buf->getHandle();
         DRW_DBG(" layoutH Handle: "); DRW_DBGHL(layoutH.code, layoutH.size, layoutH.ref); DRW_DBG("\n");
+        layoutHandle = layoutH.ref;  // 2a.6: soft ptr to owning LAYOUT (DXF 340)
     }
     DRW_DBG("Remaining bytes: "); DRW_DBG(buf->numRemainingBytes()); DRW_DBG("\n\n");
 //    RS crc;   //RS */
@@ -1811,13 +1896,27 @@ bool DRW_Vport::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     snapSpacing = buf->get2RawDouble();
     DRW_DBG("\nsnap Spacing: "); DRW_DBGPT(snapSpacing.x, snapSpacing.y, snapSpacing.z);
     if (version > DRW::AC1014) { //2000+
-        DRW_DBG("\n Unknown: "); DRW_DBG(buf->getBit());
-        DRW_DBG(" UCS per Viewport: "); DRW_DBG(buf->getBit());
-        DRW_DBG("\nUCS origin: "); DRW_DBGPT(buf->getBitDouble(), buf->getBitDouble(), buf->getBitDouble());
-        DRW_DBG("\nUCS X Axis: "); DRW_DBGPT(buf->getBitDouble(), buf->getBitDouble(), buf->getBitDouble());
-        DRW_DBG("\nUCS Y Axis: "); DRW_DBGPT(buf->getBitDouble(), buf->getBitDouble(), buf->getBitDouble());
-        DRW_DBG("\nUCS elevation: "); DRW_DBG(buf->getBitDouble());
-        DRW_DBG(" UCS Orthographic type: "); DRW_DBG(buf->getBitShort());
+        // Sequenced one-statement-per-field reads (NOT inside DRW_DBGPT macro
+        // args — argument evaluation order is unspecified there).
+        buf->getBit(); // ucs_at_origin (unknown/unused)
+        ucsPerVP = buf->getBit();
+        ucsOrigin.x = buf->getBitDouble();
+        ucsOrigin.y = buf->getBitDouble();
+        ucsOrigin.z = buf->getBitDouble();
+        ucsXAxis.x = buf->getBitDouble();
+        ucsXAxis.y = buf->getBitDouble();
+        ucsXAxis.z = buf->getBitDouble();
+        ucsYAxis.x = buf->getBitDouble();
+        ucsYAxis.y = buf->getBitDouble();
+        ucsYAxis.z = buf->getBitDouble();
+        ucsElevation = buf->getBitDouble();
+        ucsOrthoType = buf->getBitShort();
+        DRW_DBG("\n UCS per Viewport: "); DRW_DBG(ucsPerVP);
+        DRW_DBG("\nUCS origin: "); DRW_DBGPT(ucsOrigin.x, ucsOrigin.y, ucsOrigin.z);
+        DRW_DBG("\nUCS X Axis: "); DRW_DBGPT(ucsXAxis.x, ucsXAxis.y, ucsXAxis.z);
+        DRW_DBG("\nUCS Y Axis: "); DRW_DBGPT(ucsYAxis.x, ucsYAxis.y, ucsYAxis.z);
+        DRW_DBG("\nUCS elevation: "); DRW_DBG(ucsElevation);
+        DRW_DBG(" UCS Orthographic type: "); DRW_DBG(ucsOrthoType);
         if (version > DRW::AC1018) { //2007+
             gridBehavior = buf->getBitShort();
             DRW_DBG(" gridBehavior (flags): "); DRW_DBG(gridBehavior);
@@ -1921,7 +2020,8 @@ bool DRW_ImageDef::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     dint32 imgVersion = buf->getBitLong();
     DRW_DBG("class Version: "); DRW_DBG(imgVersion);
     DRW_Coord size = buf->get2RawDouble();
-    DRW_UNUSED(size);//RLZ: temporary, complete API
+    u = size.x;  // P4-13: image size in pixels (DXF 10), was discarded
+    v = size.y;  // DXF 20
     name = sBuf->getVariableText(version, false);
     DRW_DBG("appId name: "); DRW_DBG(name.c_str()); DRW_DBG("\n");
     loaded = buf->getBit();
@@ -1952,8 +2052,20 @@ bool DRW_PlotSettings::parseCode(int code, const std::unique_ptr<dxfReader>& rea
     case 5:
         handle = reader->getHandleString();
         break;
+    case 1:
+        pageSetupName = reader->getUtf8String();
+        break;
+    case 2:
+        printerConfig = reader->getUtf8String();
+        break;
+    case 4:
+        paperSize = reader->getUtf8String();
+        break;
     case 6:
         plotViewName = reader->getUtf8String();
+        break;
+    case 7:
+        currentStyleSheet = reader->getUtf8String();
         break;
     case 40:
         marginLeft = reader->getDouble();
@@ -1966,6 +2078,69 @@ bool DRW_PlotSettings::parseCode(int code, const std::unique_ptr<dxfReader>& rea
         break;
     case 43:
         marginTop = reader->getDouble();
+        break;
+    case 44:
+        paperWidth = reader->getDouble();
+        break;
+    case 45:
+        paperHeight = reader->getDouble();
+        break;
+    case 46:
+        plotOriginX = reader->getDouble();
+        break;
+    case 47:
+        plotOriginY = reader->getDouble();
+        break;
+    case 48:
+        windowMinX = reader->getDouble();
+        break;
+    case 49:
+        windowMinY = reader->getDouble();
+        break;
+    case 140:
+        windowMaxX = reader->getDouble();
+        break;
+    case 141:
+        windowMaxY = reader->getDouble();
+        break;
+    case 142:
+        realWorldUnits = reader->getDouble();
+        break;
+    case 143:
+        drawingUnits = reader->getDouble();
+        break;
+    case 147:
+        scaleFactor = reader->getDouble();
+        break;
+    case 148:
+        paperImageOriginX = reader->getDouble();
+        break;
+    case 149:
+        paperImageOriginY = reader->getDouble();
+        break;
+    case 70:
+        plotLayoutFlags = reader->getInt32();
+        break;
+    case 72:
+        paperUnits = reader->getInt32();
+        break;
+    case 73:
+        plotRotation = reader->getInt32();
+        break;
+    case 74:
+        plotType = reader->getInt32();
+        break;
+    case 75:
+        scaleType = reader->getInt32();
+        break;
+    case 76:
+        shadePlotMode = reader->getInt32();
+        break;
+    case 77:
+        shadePlotResLevel = reader->getInt32();
+        break;
+    case 78:
+        shadePlotCustomDPI = reader->getInt32();
         break;
     default:
         return DRW_TableEntry::parseCode(code, reader);
@@ -1981,10 +2156,61 @@ bool DRW_PlotSettings::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs
         sBuf = &sBuff; //separate buffer for strings
     }
     bool ret = DRW_TableEntry::parseDwg(version, buf, sBuf, bs);
-    DRW_DBG("\n********************** parsing Plot Settings (base fields only) **************************\n");
+    DRW_DBG("\n********************** parsing Plot Settings **************************\n");
     if (!ret)
         return ret;
-    //RLZ: PlotSettings-specific fields (margins, printer, plotViewName) not yet parsed
+
+    // P4-02: AcDbPlotSettings body. Same wire layout as the PLOTSETTINGS
+    // prefix embedded in DRW_Layout (libreDWG dwg.spec DWG_OBJECT(PLOTSETTINGS)
+    // == LAYOUT plot prefix). Member names here mirror DRW_Layout so the decode
+    // is a verbatim copy of the Layout path (drw_objects.cpp:3416-3452).
+    pageSetupName    = sBuf->getVariableText(version, false); // printer_cfg_file (1)
+    printerConfig    = sBuf->getVariableText(version, false); // paper_size (2)
+    plotLayoutFlags  = buf->getBitShort();
+    marginLeft       = buf->getBitDouble();
+    marginBottom     = buf->getBitDouble();
+    marginRight      = buf->getBitDouble();
+    marginTop        = buf->getBitDouble();
+    paperWidth       = buf->getBitDouble();
+    paperHeight      = buf->getBitDouble();
+    paperSize        = sBuf->getVariableText(version, false); // canonical_media_name
+    plotOriginX      = buf->getBitDouble();
+    plotOriginY      = buf->getBitDouble();
+    paperUnits       = buf->getBitShort();
+    plotRotation     = buf->getBitShort();
+    plotType         = buf->getBitShort();
+    windowMinX       = buf->getBitDouble();
+    windowMinY       = buf->getBitDouble();
+    windowMaxX       = buf->getBitDouble();
+    windowMaxY       = buf->getBitDouble();
+
+    if (version < DRW::AC1018) { // R13-R2002: plotview_name in the data section
+        plotViewName = sBuf->getVariableText(version, false);
+    }
+
+    realWorldUnits    = buf->getBitDouble(); // paper_units (142)
+    drawingUnits      = buf->getBitDouble(); // drawing_units (143)
+    currentStyleSheet = sBuf->getVariableText(version, false); // stylesheet (7)
+    scaleType         = buf->getBitShort();
+    scaleFactor       = buf->getBitDouble();
+    paperImageOriginX = buf->getBitDouble();
+    paperImageOriginY = buf->getBitDouble();
+
+    if (version >= DRW::AC1018) { // R2004+
+        shadePlotMode      = buf->getBitShort();
+        shadePlotResLevel  = buf->getBitShort();
+        shadePlotCustomDPI = buf->getBitShort();
+    }
+
+    // Common handle tail (parent/reactors/xdict). PLOTSETTINGS has no further
+    // data-consumed handles we track (R2007+ shadeplot handle is left in the
+    // stream; not needed for the margins/paper/scale data we surface).
+    dwgBuffer hBuff = *buf;
+    dwgBuffer *hBuf = (version > DRW::AC1018) ? &hBuff : buf;
+    seekObjectHandleStream(version, hBuf, objSize);
+    readCommonObjectHandles(hBuf, handle, numReactors, xDictFlag,
+                            &parentHandle);
+
     return buf->isGood();
 }
 
@@ -2043,21 +2269,73 @@ bool DRW_UCS::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
 }
 
 bool DRW_UCS::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
-    //Minimal parseDwg: populate base table-entry fields (handle, name,
-    //parentHandle, reactors, extData) by delegating to DRW_TableEntry::parseDwg.
-    //UCS-specific fields (origin, axes, elevation, orthoType per ODA 19.4.62)
-    //stay at reset defaults until a sample-validated implementation lands.
+    // Full UCS table-record decode (P4-04). Field order = libreDWG
+    // dwg.spec:4293-4342 DWG_TABLE(UCS), binary (non-DXF) order:
+    //   COMMON_TABLE_FLAGS(name); 3BD ucsorg/ucsxdir/ucsydir;
+    //   SINCE R2000b: BD ucs_elevation FIRST, then BS UCSORTHOVIEW,
+    //   then BS num_orthopts + repeat[BS type, 3BD pt] (DATA section);
+    //   handle stream: owner, reactors, xdict, base_ucs, named_ucs.
     dwgBuffer sBuff = *buf;
     dwgBuffer *sBuf = buf;
     if (version > DRW::AC1018) {//2007+
         sBuf = &sBuff; //separate buffer for strings
     }
     bool ret = DRW_TableEntry::parseDwg(version, buf, sBuf, bs);
-    DRW_DBG("\n***************************** parsing UCS (base fields) **************************************\n");
+    DRW_DBG("\n***************************** parsing UCS **************************************\n");
     if (!ret)
         return ret;
     name = sBuf->getVariableText(version, false);
     DRW_DBG("ucs name: "); DRW_DBG(name); DRW_DBG("\n");
+
+    // COMMON_TABLE_FLAGS tail (mirror DRW_Vport: 64-flag, xrefindex, 16-flag).
+    flags |= buf->getBit() << 6; // code 70, bit 7 (64)
+    if (version < DRW::AC1021) { //2004-
+        /*dint16 xrefindex =*/ buf->getBitShort();
+    }
+    flags |= buf->getBit() << 4; // code 70, bit 5 (16), xref-dependent
+
+    origin = buf->get3BitDouble();
+    xAxisDirection = buf->get3BitDouble();
+    yAxisDirection = buf->get3BitDouble();
+
+    if (version > DRW::AC1014) { //R2000+ (SINCE R_2000b)
+        elevation = buf->getBitDouble();   // BD ucs_elevation FIRST
+        orthoType = buf->getBitShort();    // BS UCSORTHOVIEW
+        // num_orthopts array stays in the DATA section (before the handle
+        // stream). Consume it to keep alignment; retain the first point.
+        dint16 numOrthopts = buf->getBitShort();
+        for (dint16 i = 0; i < numOrthopts; ++i) {
+            dint16 oType = buf->getBitShort();
+            DRW_Coord pt = buf->get3BitDouble();
+            if (i == 0) {
+                orthoOrigin = pt;
+                if (orthoType == 0)
+                    orthoType = oType;
+            }
+        }
+    }
+
+    if (version > DRW::AC1018) {//2007+ skip string area
+        buf->setPosition(objSize >> 3);
+        buf->setBitPos(objSize & 7);
+    }
+
+    // Handle stream: owner, reactors, xdict (common prefix), then the UCS
+    // FIELD_HANDLEs base_ucs, named_ucs.
+    dwgHandle ucsControlH = buf->getHandle();
+    parentHandle = ucsControlH.ref;
+    for (dint32 i = 0; i < numReactors; ++i)
+        buf->getHandle();
+    if (xDictFlag != 1)
+        buf->getHandle();
+
+    if (version > DRW::AC1014) { //R2000+
+        baseUcsHandle = buf->getHandle();
+        namedUcsHandle = buf->getHandle();
+        DRW_DBG(" base UCS Handle: "); DRW_DBGHL(baseUcsHandle.code, baseUcsHandle.size, baseUcsHandle.ref); DRW_DBG("\n");
+        DRW_DBG(" named UCS Handle: "); DRW_DBGHL(namedUcsHandle.code, namedUcsHandle.size, namedUcsHandle.ref); DRW_DBG("\n");
+    }
+
     return buf->isGood();
 }
 
@@ -2409,7 +2687,23 @@ bool DRW_Layer::encodeDwg(DRW::Version version, dwgBufferW *buf,
             ((lwIdx & 0x1F) << 5));
         buf->putSBitShort(f);
     }
-    buf->putCmColor(version, static_cast<duint16>(color > 0 ? color : 7));
+    // P4-08: emit 24-bit truecolor + color/book name on R2004+ when present.
+    // colorName is stored joined as "BOOK$ENTRY" by parseDwg (or just "ENTRY"
+    // when no book); split it back so the CMC name/book flags round-trip. The
+    // name strings go to the string buffer (sb), matching the reader which
+    // reads them from sBuf.
+    if (version > DRW::AC1014 && color24 >= 0) {
+        UTF8STRING bookName, entryName = colorName;
+        const std::string::size_type sep = colorName.find('$');
+        if (sep != std::string::npos) {
+            bookName = colorName.substr(0, sep);
+            entryName = colorName.substr(sep + 1);
+        }
+        buf->putCmColor(version, static_cast<duint16>(color > 0 ? color : 7),
+                        color24, entryName, bookName, sb);
+    } else {
+        buf->putCmColor(version, static_cast<duint16>(color > 0 ? color : 7));
+    }
 
     // Handles
     hb->putHandle(makeSoftOwnerW(kLayerControl));
@@ -2506,13 +2800,13 @@ bool DRW_Vport::encodeDwg(DRW::Version version, dwgBufferW *buf,
     buf->put2RawDouble(snapBase);
     buf->put2RawDouble(snapSpacing);
     if (version > DRW::AC1014) {
-        buf->putBit(0);         // unknown
-        buf->putBit(0);         // ucsPerVP
-        buf->putBitDouble(0.0); buf->putBitDouble(0.0); buf->putBitDouble(0.0); // ucsOrigin
-        buf->putBitDouble(1.0); buf->putBitDouble(0.0); buf->putBitDouble(0.0); // ucsX
-        buf->putBitDouble(0.0); buf->putBitDouble(1.0); buf->putBitDouble(0.0); // ucsY
-        buf->putBitDouble(0.0); // ucsElev
-        buf->putBitShort(0);    // ucsOrthoType
+        buf->putBit(0);                     // ucs_at_origin (unknown)
+        buf->putBit(ucsPerVP ? 1 : 0);      // ucsPerVP
+        buf->putBitDouble(ucsOrigin.x); buf->putBitDouble(ucsOrigin.y); buf->putBitDouble(ucsOrigin.z); // ucsOrigin
+        buf->putBitDouble(ucsXAxis.x);  buf->putBitDouble(ucsXAxis.y);  buf->putBitDouble(ucsXAxis.z);  // ucsX
+        buf->putBitDouble(ucsYAxis.x);  buf->putBitDouble(ucsYAxis.y);  buf->putBitDouble(ucsYAxis.z);  // ucsY
+        buf->putBitDouble(ucsElevation);    // ucsElev
+        buf->putBitShort(static_cast<duint16>(ucsOrthoType)); // ucsOrthoType
         if (version > DRW::AC1018) {
             buf->putBitShort(static_cast<duint16>(gridBehavior));
             buf->putBitShort(1); // gridMajor
@@ -2621,6 +2915,31 @@ bool DRW_AppId::encodeDwg(DRW::Version version, dwgBufferW *buf,
 //enough sample-validated metadata to preserve references without promoting
 //metadata-tail uncertainty to a geometry read failure.
 
+bool DRW_Dictionary::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
+    switch (code) {
+    case 280:
+        hardOwner = reader->getInt32();
+        break;
+    case 281:
+        cloning = reader->getInt32();
+        break;
+    case 3: {
+        Entry entry;
+        entry.m_name = reader->getUtf8String();
+        m_entries.push_back(entry);   //handle (350/360) follows
+        break;
+    }
+    case 350:   //soft-owned entry handle
+    case 360:   //hard-owned entry handle
+        if (!m_entries.empty())
+            m_entries.back().m_handle = reader->getHandleString();
+        break;
+    default:
+        return DRW_TableEntry::parseCode(code, reader);
+    }
+    return true;
+}
+
 bool DRW_Dictionary::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     dwgBuffer sBuff = *buf;
     dwgBuffer *sBuf = buf;
@@ -2660,6 +2979,14 @@ bool DRW_Dictionary::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     return true;
 }
 
+bool DRW_DictionaryWithDefault::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
+    if (code == 340) {   //hard pointer to the default object
+        m_defaultEntryHandle = reader->getHandleString();
+        return true;
+    }
+    return DRW_Dictionary::parseCode(code, reader);
+}
+
 bool DRW_DictionaryWithDefault::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     bool ret = DRW_Dictionary::parseDwg(version, buf, bs);
     DRW_DBG("\n***************************** parsing DictionaryWithDefault ******************************\n");
@@ -2668,6 +2995,20 @@ bool DRW_DictionaryWithDefault::parseDwg(DRW::Version version, dwgBuffer *buf, d
     dwgHandle defaultH = buf->getOffsetHandle(handle);
     m_defaultEntryHandle = defaultH.ref;
     DRW_DBG("default entry Handle: "); DRW_DBGHL(defaultH.code, defaultH.size, defaultH.ref); DRW_DBG("\n");
+    return true;
+}
+
+bool DRW_DictionaryVar::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
+    switch (code) {
+    case 280:
+        m_schema = reader->getInt32();
+        break;
+    case 1:
+        m_value = reader->getUtf8String();
+        break;
+    default:
+        return DRW_TableEntry::parseCode(code, reader);
+    }
     return true;
 }
 
@@ -3025,6 +3366,26 @@ bool DRW_FieldList::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     return true;
 }
 
+bool DRW_RasterVariables::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
+    switch (code) {
+    case 90:
+        m_classVersion = reader->getInt32();
+        break;
+    case 70:
+        m_imageFrame = reader->getInt32();
+        break;
+    case 71:
+        m_imageQuality = reader->getInt32();
+        break;
+    case 72:
+        m_units = reader->getInt32();
+        break;
+    default:
+        return DRW_TableEntry::parseCode(code, reader);
+    }
+    return true;
+}
+
 bool DRW_RasterVariables::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     bool ret = DRW_TableEntry::parseDwg(version, buf, nullptr, bs);
     DRW_DBG("\n***************************** parsing RasterVariables ************************\n");
@@ -3043,6 +3404,26 @@ bool DRW_RasterVariables::parseDwg(DRW::Version version, dwgBuffer *buf, duint32
     DRW_DBG(" frame: "); DRW_DBG(m_imageFrame);
     DRW_DBG(" quality: "); DRW_DBG(m_imageQuality);
     DRW_DBG(" units: "); DRW_DBG(m_units); DRW_DBG("\n");
+    return true;
+}
+
+bool DRW_WipeoutVariables::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
+    if (code == 70) {   //global display-frame flag
+        m_displayFrame = reader->getInt32();
+        return true;
+    }
+    return DRW_TableEntry::parseCode(code, reader);
+}
+
+bool DRW_WipeoutVariables::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
+    bool ret = DRW_TableEntry::parseDwg(version, buf, nullptr, bs);
+    DRW_DBG("\n***************************** parsing WipeoutVariables ***********************\n");
+    if (!ret)
+        return ret;
+    // ODA / libreDWG WIPEOUTVARIABLES: a single BS display-frame flag (DXF 70)
+    // before START_OBJECT_HANDLE_STREAM. (No fields are consumed beyond it.)
+    m_displayFrame = buf->getBitShort();
+    DRW_DBG("wipeout display_frame: "); DRW_DBG(m_displayFrame); DRW_DBG("\n");
     return true;
 }
 
@@ -3232,6 +3613,97 @@ bool DRW_CellStyleMap::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs
     return true;
 }
 
+bool DRW_Layout::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
+    //LAYOUT embeds an AcDbPlotSettings prefix then an AcDbLayout body; codes
+    //1/70/76/330 occur in both, disambiguated by the current 100-subclass.
+    switch (code) {
+    case 100: {
+        const std::string sub = reader->getUtf8String();
+        if (sub == "AcDbLayout")
+            m_dxfSubclass = 1;
+        else if (sub == "AcDbPlotSettings")
+            m_dxfSubclass = 0;
+        return true;
+    }
+    // ---- codes shared between the two subclasses ----
+    case 1:
+        if (m_dxfSubclass == 1) name = reader->getUtf8String();
+        else pageSetupName = reader->getUtf8String();
+        break;
+    case 70:
+        if (m_dxfSubclass == 1) layoutFlags = reader->getInt32();
+        else plotLayoutFlags = reader->getInt32();
+        break;
+    case 76:
+        if (m_dxfSubclass == 1) orthoViewType = reader->getInt32();
+        else shadePlotMode = reader->getInt32();
+        break;
+    case 330:
+        if (m_dxfSubclass == 1) paperSpaceBlockRecordHandle.ref = reader->getHandleString();
+        else parentHandle = reader->getHandleString();   //structural owner
+        break;
+    // ---- AcDbPlotSettings prefix (unambiguous) ----
+    case 2:  printerConfig = reader->getUtf8String(); break;
+    case 4:  paperSize = reader->getUtf8String(); break;
+    case 6:  plotViewName = reader->getUtf8String(); break;
+    case 7:  currentStyleSheet = reader->getUtf8String(); break;
+    case 40: marginLeft = reader->getDouble(); break;
+    case 41: marginBottom = reader->getDouble(); break;
+    case 42: marginRight = reader->getDouble(); break;
+    case 43: marginTop = reader->getDouble(); break;
+    case 44: paperWidth = reader->getDouble(); break;
+    case 45: paperHeight = reader->getDouble(); break;
+    case 46: plotOriginX = reader->getDouble(); break;
+    case 47: plotOriginY = reader->getDouble(); break;
+    case 48: windowMinX = reader->getDouble(); break;
+    case 49: windowMinY = reader->getDouble(); break;
+    case 140: windowMaxX = reader->getDouble(); break;
+    case 141: windowMaxY = reader->getDouble(); break;
+    case 142: realWorldUnits = reader->getDouble(); break;
+    case 143: drawingUnits = reader->getDouble(); break;
+    case 72: paperUnits = reader->getInt32(); break;
+    case 73: plotRotation = reader->getInt32(); break;
+    case 74: plotType = reader->getInt32(); break;
+    case 75: scaleType = reader->getInt32(); break;
+    case 77: shadePlotResLevel = reader->getInt32(); break;
+    case 78: shadePlotCustomDPI = reader->getInt32(); break;
+    case 147: scaleFactor = reader->getDouble(); break;
+    case 148: paperImageOriginX = reader->getDouble(); break;
+    case 149: paperImageOriginY = reader->getDouble(); break;
+    // ---- AcDbLayout body (unambiguous) ----
+    case 71: tabOrder = reader->getInt32(); break;
+    case 10: limMinX = reader->getDouble(); break;
+    case 20: limMinY = reader->getDouble(); break;
+    case 11: limMaxX = reader->getDouble(); break;
+    case 21: limMaxY = reader->getDouble(); break;
+    case 12: insPoint.x = reader->getDouble(); break;
+    case 22: insPoint.y = reader->getDouble(); break;
+    case 32: insPoint.z = reader->getDouble(); break;
+    case 13: ucsOrigin.x = reader->getDouble(); break;
+    case 23: ucsOrigin.y = reader->getDouble(); break;
+    case 33: ucsOrigin.z = reader->getDouble(); break;
+    case 14: extMin.x = reader->getDouble(); break;
+    case 24: extMin.y = reader->getDouble(); break;
+    case 34: extMin.z = reader->getDouble(); break;
+    case 15: extMax.x = reader->getDouble(); break;
+    case 25: extMax.y = reader->getDouble(); break;
+    case 35: extMax.z = reader->getDouble(); break;
+    case 16: ucsXAxis.x = reader->getDouble(); break;
+    case 26: ucsXAxis.y = reader->getDouble(); break;
+    case 36: ucsXAxis.z = reader->getDouble(); break;
+    case 17: ucsYAxis.x = reader->getDouble(); break;
+    case 27: ucsYAxis.y = reader->getDouble(); break;
+    case 37: ucsYAxis.z = reader->getDouble(); break;
+    case 146: elevation = reader->getDouble(); break;
+    case 331: lastActiveViewportHandle.ref = reader->getHandleString(); break;
+    case 345: namedUcsHandle.ref = reader->getHandleString(); break;
+    case 346: baseUcsHandle.ref = reader->getHandleString(); break;
+    default:
+        return DRW_TableEntry::parseCode(code, reader);
+    }
+    return true;
+}
+
 bool DRW_Layout::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     dwgBuffer sBuff = *buf;
     dwgBuffer *sBuf = buf;
@@ -3345,6 +3817,46 @@ bool DRW_Layout::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     return buf->isGood();
 }
 
+bool DRW_MLineStyle::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
+    switch (code) {
+    case 70:
+        flags = reader->getInt32();
+        break;
+    case 3:
+        description = reader->getUtf8String();
+        break;
+    case 62:
+        //Before the first element (no 49 seen) 62 is the style fill color;
+        //after a 49 it is the current element's color.
+        if (elements.empty())
+            fillColor = reader->getInt32();
+        else
+            elements.back().color = reader->getInt32();
+        break;
+    case 51:
+        startAngle = reader->getDouble();
+        break;
+    case 52:
+        endAngle = reader->getDouble();
+        break;
+    case 71:
+        break;  //element count; elements are appended on each 49
+    case 49: {
+        DRW_MLineElement element;
+        element.offset = reader->getDouble();
+        elements.push_back(element);
+        break;
+    }
+    case 6:
+        if (!elements.empty())
+            elements.back().linetype = reader->getUtf8String();
+        break;
+    default:
+        return DRW_TableEntry::parseCode(code, reader);
+    }
+    return true;
+}
+
 bool DRW_MLineStyle::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     dwgBuffer sBuff = *buf;
     dwgBuffer *sBuf = buf;
@@ -3383,11 +3895,16 @@ bool DRW_MLineStyle::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
         UTF8STRING n2, b2;
         e.color = static_cast<int>(buf->getCmColor(version, &elRgb, sBuf, &n2, &b2));
         if (elRgb != -1) e.color24 = elRgb;
-        // Per ODA, R2018+ stores lt_index as BS here; older versions defer
-        // the linetype to a handle in the trailing handle stream. We read
-        // the handle there (parseDwgEntHandle) but skip the index field.
-        if (version >= DRW::AC1032) {  // R2018+
-            buf->getBitShort();        // lt_index, ignored — handle wins
+        // Per ODA/libreDWG (dwg.spec MLINESTYLE): PRE-R2018 stores the
+        // per-element linetype as an inline signed BS index (SUB_FIELD_BSd
+        // lt.index); R2018+ uses a linetype HANDLE in the object handle
+        // stream instead. The previous gate was INVERTED — it read the BS
+        // only for R2018+ and skipped it pre-R2018, desyncing every element
+        // by one BS for the common R2000-R2013 case. Read the signed inline
+        // index pre-R2018; getSBitShort preserves the negative BYLAYER(32767)/
+        // BYBLOCK(32766)-style sentinels. The R2018+ handle read is 0B.4b.
+        if (version < DRW::AC1032) {  // pre-R2018
+            e.linetypeIndex = buf->getSBitShort();  // BSd inline lt index
         }
         elements.push_back(std::move(e));
     }
@@ -4366,6 +4883,29 @@ bool DRW_UnderlayDefinition::parseDwg(DRW::Version version, dwgBuffer *buf, duin
 //   BD  drawingUnits   (denominator, group code 141)
 //   B   isUnitScale    (true for the 1:1 entry, group code 290)
 //   START_OBJECT_HANDLE_STREAM (parent dictionary, reactors, xdic)
+bool DRW_Scale::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
+    switch (code) {
+    case 70:
+        flag = reader->getInt32();
+        break;
+    case 140:
+        paperUnits = reader->getDouble();
+        break;
+    case 141:
+        drawingUnits = reader->getDouble();
+        break;
+    case 290:
+        isUnitScale = reader->getBool();
+        break;
+    case 300:
+        name = reader->getUtf8String();  //user-visible scale label
+        break;
+    default:
+        return DRW_TableEntry::parseCode(code, reader);
+    }
+    return true;
+}
+
 bool DRW_Scale::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     dwgBuffer sBuff = *buf;
     dwgBuffer *sBuf = buf;
@@ -4392,6 +4932,26 @@ bool DRW_Scale::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     // Trailing handle stream (parent dictionary, reactors, xdic) — left to
     // the caller; the OBJECTS dispatch hands us a size-bounded slice.
     return buf->isGood();
+}
+
+bool DRW_Group::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
+    switch (code) {
+    case 300:
+        m_description = reader->getUtf8String();
+        break;
+    case 70:
+        m_isUnnamed = reader->getInt32() != 0;
+        break;
+    case 71:
+        m_selectable = reader->getInt32() != 0;
+        break;
+    case 340:
+        m_entityHandles.push_back(reader->getHandleString());
+        break;
+    default:
+        return DRW_TableEntry::parseCode(code, reader);
+    }
+    return true;
 }
 
 bool DRW_Group::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
@@ -4766,6 +5326,47 @@ bool DRW_AcDbPlaceholder::encodeDwg(DRW::Version version, dwgBufferW *buf,
         : buf;
     hb->putHandle(makeSoftOwnerW(static_cast<duint32>(parentHandle)));
     hb->putHandle(makeSoftOwnerW(0));  // XDic null
+    return true;
+}
+
+bool DRW_Sun::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
+    switch (code) {
+    case 90:
+        m_classVersion = reader->getInt32();
+        break;
+    case 290:
+        m_isOn = reader->getBool();
+        break;
+    case 63:
+        m_color = reader->getInt32();
+        break;
+    case 40:
+        m_intensity = reader->getDouble();
+        break;
+    case 291:
+        m_hasShadow = reader->getBool();
+        break;
+    case 91:
+        m_julianDay = reader->getInt32();
+        break;
+    case 92:
+        m_milliseconds = reader->getInt32();
+        break;
+    case 292:
+        m_isDaylightSavings = reader->getBool();
+        break;
+    case 70:
+        m_shadowType = reader->getInt32();
+        break;
+    case 71:
+        m_shadowMapSize = reader->getInt32();
+        break;
+    case 280:
+        m_shadowSoftness = reader->getInt32();
+        break;
+    default:
+        return DRW_TableEntry::parseCode(code, reader);
+    }
     return true;
 }
 

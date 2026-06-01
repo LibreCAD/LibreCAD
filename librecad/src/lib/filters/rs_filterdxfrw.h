@@ -65,6 +65,11 @@ class RS_Solid;
 class RS_Spline;
 class RS_Text;
 
+// test-only friend; defined in tests/dwg_header_app_vars_tests.cpp. Grants
+// the header-var regression suite access to the private m_graphic/
+// m_currentContainer so it can exercise addHeader against a real RS_Graphic.
+class RsFilterDxfRwHeaderTestAccess;
+
 /**
  * This format filter class can import and export DXF files.
  * It depends on the libdxfrw library.
@@ -72,6 +77,7 @@ class RS_Text;
  * @author Rallaz
  */
 class RS_FilterDXFRW : public RS_FilterInterface, DRW_Interface {
+    friend class RsFilterDxfRwHeaderTestAccess;
 public:
     RS_FilterDXFRW();
     ~RS_FilterDXFRW();
@@ -138,6 +144,7 @@ public:
     void addText(const DRW_Text& data) override;
     void addPolyline(const DRW_Polyline& data) override;
     void addSpline(const DRW_Spline* data) override;
+    void addHelix(const DRW_Helix* data) override;
     void addKnot(const DRW_Entity&) override{}
     void addInsert(const DRW_Insert& data) override;
     void addTable(const DRW_Table& data) override;
@@ -183,6 +190,8 @@ public:
     void addTableContent(const DRW_TableContentObject &data) override;
     void addCellStyleMap(const DRW_CellStyleMap &data) override;
     void addUnsupportedObject(const DRW_UnsupportedObject &data) override;
+    void addRawDxfObject(const DRW_RawDxfObject &data) override;
+    void addRawDxfEntity(const DRW_RawDxfObject &data) override;
     void addAcDbPlaceholder(const DRW_AcDbPlaceholder &data) override;
     void addSun(const DRW_Sun &data) override;
     void addDictionary(const DRW_Dictionary &data) override;

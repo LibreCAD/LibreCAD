@@ -460,6 +460,18 @@ bool dwgRW::writeViewport(DRW_Viewport *ent) {
     return writer->encodeEntity(ent);
 }
 
+// Phase 6.1 — SHAPE passthrough (no native LibreCAD entity).
+bool dwgRW::writeShape(DRW_Shape *ent) {
+    if (writer == nullptr || ent == nullptr) return false;
+    return writer->encodeEntity(ent);
+}
+
+// Phase 6.2 — OLE2FRAME passthrough (opaque payload preserved by encodeDwg).
+bool dwgRW::writeOle2Frame(DRW_Ole2Frame *ent) {
+    if (writer == nullptr || ent == nullptr) return false;
+    return writer->encodeEntity(ent);
+}
+
 duint32 dwgRW::defineBlock(const std::string& name, const DRW_Coord& basePoint,
                            int insUnits) {
     if (writer == nullptr) return 0;

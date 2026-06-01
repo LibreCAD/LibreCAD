@@ -3560,3 +3560,229 @@ TEST_CASE("DXF round-trip: polyface vertex flags survive write+read",
 
   std::filesystem::remove(path);
 }
+
+// Phase 2b.0 — source DWG version accessor + raw-replay version guard.
+namespace {
+// Mirrors the version guard added to RS_FilterDXFRW::writeObjects /
+// writeDwgClasses raw-replay loops: a same-version (or UNKNOWNV-source) object
+// is eligible; a cross-version object is dropped (replayed==0, blocked==1).
+struct RawReplayGuardResult {
+  int replayed = 0;
+  int blockedVersionMismatch = 0;
+};
+
+RawReplayGuardResult simulateRawReplay(const LC_DwgAdvancedMetadata& metadata,
+                                       DRW::Version targetVersion) {
+  RawReplayGuardResult result;
+  for (const auto& record : metadata.rawObjects()) {
+    if (metadata.sourceDwgVersion() != DRW::UNKNOWNV
+        && metadata.sourceDwgVersion() != targetVersion) {
+      ++result.blockedVersionMismatch;
+      continue;
+    }
+    if (LC_DwgAdvancedMetadata::rawReplayBlocker(record)
+        != LC_DwgAdvancedMetadata::ReplayBlocker::None) {
+      continue;
+    }
+    ++result.replayed;
+  }
+  return result;
+}
+}  // namespace
+
+TEST_CASE("DWG advanced metadata source version accessor round-trips",
+          "[entity_metadata][dwg_metadata][replay_version]") {
+  LC_DwgAdvancedMetadata metadata;
+  // Default is UNKNOWNV (no source recorded).
+  CHECK(metadata.sourceDwgVersion() == DRW::UNKNOWNV);
+
+  metadata.setSourceDwgVersion(DRW::AC1015);
+  CHECK(metadata.sourceDwgVersion() == DRW::AC1015);
+
+  metadata.setSourceDwgVersion(DRW::AC1032);
+  CHECK(metadata.sourceDwgVersion() == DRW::AC1032);
+
+  metadata.clear();
+  CHECK(metadata.sourceDwgVersion() == DRW::UNKNOWNV);
+
+  CHECK(std::string(LC_DwgAdvancedMetadata::replayBlockerName(
+            LC_DwgAdvancedMetadata::ReplayBlocker::VersionMismatch))
+        == "source/target version mismatch");
+}
+
+TEST_CASE("DWG raw-replay version guard drops cross-version custom objects",
+          "[entity_metadata][dwg_metadata][replay_version]") {
+  LC_DwgAdvancedMetadata metadata;
+
+  DRW_UnsupportedObject raw;
+  raw.m_objectType = 510;  // >=500 custom class.
+  raw.m_handle = 0x123u;
+  raw.m_bodyBitSize = 64u;
+  raw.m_isCustomClass = true;
+  raw.m_recordName = "ACDBMATERIAL";
+  raw.m_className = "AcDbMaterial";
+  raw.m_rawBytes = {0x10u, 0x20u, 0x30u};
+  metadata.addUnsupportedObject(raw);
+
+  // Same-version (AC1015 source -> AC1015 target): object is eligible.
+  metadata.setSourceDwgVersion(DRW::AC1015);
+  CHECK(LC_DwgAdvancedMetadata::rawReplayBlocker(metadata.rawObjects()[0])
+        == LC_DwgAdvancedMetadata::ReplayBlocker::None);
+  RawReplayGuardResult sameVersion =
+      simulateRawReplay(metadata, DRW::AC1015);
+  CHECK(sameVersion.replayed == 1);
+  CHECK(sameVersion.blockedVersionMismatch == 0);
+
+  // Cross-version (AC1032 source -> AC1015 target): object is dropped, no
+  // malformed bytes emitted, counted as a version mismatch.
+  metadata.setSourceDwgVersion(DRW::AC1032);
+  RawReplayGuardResult crossVersion =
+      simulateRawReplay(metadata, DRW::AC1015);
+  CHECK(crossVersion.replayed == 0);
+  CHECK(crossVersion.blockedVersionMismatch == 1);
+
+  // UNKNOWNV source (no version recorded): guard is a no-op, object eligible.
+  metadata.setSourceDwgVersion(DRW::UNKNOWNV);
+  RawReplayGuardResult unknownSource =
+      simulateRawReplay(metadata, DRW::AC1015);
+  CHECK(unknownSource.replayed == 1);
+  CHECK(unknownSource.blockedVersionMismatch == 0);
+}
+
+// Phase 2b.1 — MATERIAL + VISUALSTYLE raw-replay rescue. The reader arms now
+// capture the full byte image as a custom-class raw object, eligible for
+// byte-for-byte replay (same source/target version).
+TEST_CASE("DWG MATERIAL and VISUALSTYLE raw objects are replay-eligible",
+          "[entity_metadata][dwg_metadata][replay_rescue]") {
+  LC_DwgAdvancedMetadata metadata;
+
+  DRW_UnsupportedObject material;
+  material.m_objectType = 600;  // >=500 custom class.
+  material.m_handle = 0x301u;
+  material.m_isCustomClass = true;
+  material.m_recordName = "MATERIAL";
+  material.m_className = "AcDbMaterial";
+  material.m_rawBytes = {0xAAu, 0xBBu, 0xCCu, 0xDDu};
+  metadata.addUnsupportedObject(material);
+
+  DRW_UnsupportedObject visualStyle;
+  visualStyle.m_objectType = 601;
+  visualStyle.m_handle = 0x302u;
+  visualStyle.m_isCustomClass = true;
+  visualStyle.m_recordName = "ACDB_VISUALSTYLE_CLASS";
+  visualStyle.m_className = "AcDbVisualStyle";
+  visualStyle.m_rawBytes = {0x11u, 0x22u};
+  metadata.addUnsupportedObject(visualStyle);
+
+  REQUIRE(metadata.rawObjects().size() == 2);
+  CHECK(metadata.rawObjects()[0].recordName == "MATERIAL");
+  CHECK(metadata.rawObjects()[0].rawBytes.size() == 4);
+  CHECK(metadata.rawObjects()[1].recordName == "ACDB_VISUALSTYLE_CLASS");
+  CHECK(metadata.rawObjects()[1].rawBytes.size() == 2);
+  CHECK(LC_DwgAdvancedMetadata::rawReplayBlocker(metadata.rawObjects()[0])
+        == LC_DwgAdvancedMetadata::ReplayBlocker::None);
+  CHECK(LC_DwgAdvancedMetadata::rawReplayBlocker(metadata.rawObjects()[1])
+        == LC_DwgAdvancedMetadata::ReplayBlocker::None);
+}
+
+// Phase 2b.2 — TABLESTYLE + CELLSTYLEMAP + TABLECONTENT raw-replay rescue.
+// When not invalidated by the table graph, all three are replay-eligible.
+TEST_CASE("DWG TABLESTYLE/CELLSTYLEMAP/TABLECONTENT raw objects replay-eligible",
+          "[entity_metadata][dwg_metadata][replay_rescue][table]") {
+  LC_DwgAdvancedMetadata metadata;
+
+  const struct {
+    int objectType;
+    duint32 handle;
+    const char* recName;
+    const char* className;
+  } kCases[] = {
+      {620, 0x500u, "TABLESTYLE", "AcDbTableStyle"},
+      {621, 0x501u, "CELLSTYLEMAP", "AcDbCellStyleMap"},
+      {622, 0x502u, "TABLECONTENT", "AcDbTableContent"},
+  };
+  for (const auto& c : kCases) {
+    DRW_UnsupportedObject raw;
+    raw.m_objectType = c.objectType;
+    raw.m_handle = c.handle;
+    raw.m_isCustomClass = true;
+    raw.m_recordName = c.recName;
+    raw.m_className = c.className;
+    raw.m_rawBytes = {0x01u, 0x02u, 0x03u};
+    metadata.addUnsupportedObject(raw);
+  }
+
+  REQUIRE(metadata.rawObjects().size() == 3);
+  for (const auto& record : metadata.rawObjects()) {
+    CHECK(record.rawBytes.size() == 3);
+    CHECK(LC_DwgAdvancedMetadata::rawReplayBlocker(record)
+          == LC_DwgAdvancedMetadata::ReplayBlocker::None);
+  }
+}
+
+// Phase 2b.3 — DETAILVIEWSTYLE + SECTIONVIEWSTYLE raw-replay rescue.
+TEST_CASE("DWG DETAILVIEWSTYLE/SECTIONVIEWSTYLE raw objects replay-eligible",
+          "[entity_metadata][dwg_metadata][replay_rescue]") {
+  LC_DwgAdvancedMetadata metadata;
+
+  DRW_UnsupportedObject detail;
+  detail.m_objectType = 630;
+  detail.m_handle = 0x510u;
+  detail.m_isCustomClass = true;
+  detail.m_recordName = "ACDBDETAILVIEWSTYLE";
+  detail.m_className = "AcDbDetailViewStyle";
+  detail.m_rawBytes = {0x01u, 0x02u, 0x03u, 0x04u};
+  metadata.addUnsupportedObject(detail);
+
+  DRW_UnsupportedObject section;
+  section.m_objectType = 631;
+  section.m_handle = 0x511u;
+  section.m_isCustomClass = true;
+  section.m_recordName = "ACDBSECTIONVIEWSTYLE";
+  section.m_className = "AcDbSectionViewStyle";
+  section.m_rawBytes = {0x05u, 0x06u};
+  metadata.addUnsupportedObject(section);
+
+  REQUIRE(metadata.rawObjects().size() == 2);
+  CHECK(metadata.rawObjects()[0].recordName == "ACDBDETAILVIEWSTYLE");
+  CHECK(metadata.rawObjects()[1].recordName == "ACDBSECTIONVIEWSTYLE");
+  for (const auto& record : metadata.rawObjects()) {
+    CHECK(!record.rawBytes.empty());
+    CHECK(LC_DwgAdvancedMetadata::rawReplayBlocker(record)
+          == LC_DwgAdvancedMetadata::ReplayBlocker::None);
+  }
+}
+
+// Phase 2b.4 — IMAGEDEF_REACTOR + TABLEGEOMETRY + ACAD_EVALUATION_GRAPH rescue.
+TEST_CASE("DWG IMAGEDEF_REACTOR/TABLEGEOMETRY/EVALGRAPH raw objects eligible",
+          "[entity_metadata][dwg_metadata][replay_rescue]") {
+  LC_DwgAdvancedMetadata metadata;
+
+  const struct {
+    int objectType;
+    duint32 handle;
+    const char* recName;
+    const char* className;
+  } kCases[] = {
+      {640, 0x520u, "IMAGEDEF_REACTOR", "AcDbRasterImageDefReactor"},
+      {641, 0x521u, "TABLEGEOMETRY", "AcDbTableGeometry"},
+      {642, 0x522u, "ACAD_EVALUATION_GRAPH", "AcDbEvalGraph"},
+  };
+  for (const auto& c : kCases) {
+    DRW_UnsupportedObject raw;
+    raw.m_objectType = c.objectType;
+    raw.m_handle = c.handle;
+    raw.m_isCustomClass = true;
+    raw.m_recordName = c.recName;
+    raw.m_className = c.className;
+    raw.m_rawBytes = {0x07u, 0x08u};
+    metadata.addUnsupportedObject(raw);
+  }
+
+  REQUIRE(metadata.rawObjects().size() == 3);
+  for (const auto& record : metadata.rawObjects()) {
+    CHECK(!record.rawBytes.empty());
+    CHECK(LC_DwgAdvancedMetadata::rawReplayBlocker(record)
+          == LC_DwgAdvancedMetadata::ReplayBlocker::None);
+  }
+}
