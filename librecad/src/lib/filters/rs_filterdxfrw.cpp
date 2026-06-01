@@ -7753,6 +7753,18 @@ void RS_FilterDXFRW::writeEntities(){
       continue;
     writeEntity(e);
   }
+
+  //Slice A2 (entities): re-emit ENTITIES captured verbatim on read (A4) so a
+  //LibreCAD DXF round-trip preserves unmodeled entities (incl. standalone ATTDEF)
+  //rather than dropping them. DXF-only: the DWG writer has its own object/entity
+  //path. Records live on the graphic, shared across read/write filter instances.
+  if (!m_dwgW && m_graphic != nullptr) {
+    for (const DRW_RawDxfObject &rawEntity :
+             m_graphic->dwgAdvancedMetadata().rawDxfEntities()) {
+      DRW_RawDxfObject entity = rawEntity;
+      m_dxfW->writeRawDxfObject(&entity);
+    }
+  }
 }
 
 namespace {

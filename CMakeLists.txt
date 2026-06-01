@@ -1754,6 +1754,7 @@ if(BUILD_TESTS)
         librecad/src/lib/filters/tests/dxf_string_codec_tests.cpp
         librecad/src/lib/filters/tests/dxf_attribute_tests.cpp
         librecad/src/lib/filters/tests/dxf_object_tests.cpp
+        librecad/src/lib/filters/tests/dxf_roundtrip_tests.cpp
         librecad/src/lib/engine/settings/tests/rs_settings_migration_tests.cpp
     )
 
