@@ -115,6 +115,30 @@ std::vector<std::string> collectHandles(const std::string &path) {
   return handles;
 }
 
+// Returns the set of CLASS record names (code 1) in the CLASSES section.
+std::set<std::string> classRecordNames(const std::string &path) {
+  std::ifstream in(path);
+  std::string codeLine, valueLine;
+  std::set<std::string> names;
+  bool expectName = false;
+  auto trim = [](std::string s) {
+    if (!s.empty() && s.back() == '\r')
+      s.pop_back();
+    size_t a = s.find_first_not_of(" \t");
+    return a == std::string::npos ? std::string() : s.substr(a);
+  };
+  while (std::getline(in, codeLine) && std::getline(in, valueLine)) {
+    const std::string code = trim(codeLine), val = trim(valueLine);
+    if (expectName && code == "1") {
+      names.insert(val);
+      expectName = false;
+    } else if (code == "0") {
+      expectName = (val == "CLASS");
+    }
+  }
+  return names;
+}
+
 } // namespace
 
 TEST_CASE("DXF round-trip via RS_FilterDXFRW preserves unmodeled object + entity",
@@ -170,6 +194,11 @@ TEST_CASE("DXF round-trip via RS_FilterDXFRW preserves unmodeled object + entity
 
   CHECK(countRecords(out, "MATERIAL") >= 1);
   CHECK(countRecords(out, "WEIRDENT") >= 1);
+  // MATERIAL is a known custom OBJECT → it gets a CLASS record (AutoCAD-clean).
+  // WEIRDENT is an arbitrary/unknown entity → no CLASS (lossless LC<->LC only).
+  const std::set<std::string> classes = classRecordNames(out);
+  CHECK(classes.count("MATERIAL") == 1);
+  CHECK(classes.count("WEIRDENT") == 0);
 
   std::filesystem::remove(src);
   std::filesystem::remove(out);
@@ -228,30 +257,6 @@ TEST_CASE("DXF export reserves handle space so preserved raw handles do not "
 }
 
 namespace {
-// Returns the set of CLASS record names (code 1) in the CLASSES section.
-std::set<std::string> classRecordNames(const std::string &path) {
-  std::ifstream in(path);
-  std::string codeLine, valueLine;
-  std::set<std::string> names;
-  bool expectName = false;
-  auto trim = [](std::string s) {
-    if (!s.empty() && s.back() == '\r')
-      s.pop_back();
-    size_t a = s.find_first_not_of(" \t");
-    return a == std::string::npos ? std::string() : s.substr(a);
-  };
-  while (std::getline(in, codeLine) && std::getline(in, valueLine)) {
-    const std::string code = trim(codeLine), val = trim(valueLine);
-    if (expectName && code == "1") {
-      names.insert(val);
-      expectName = false;
-    } else if (code == "0") {
-      expectName = (val == "CLASS");
-    }
-  }
-  return names;
-}
-
 // Finds a raw object by record name in a graphic's metadata, or nullptr.
 const DRW_RawDxfObject *findRaw(const LC_DwgAdvancedMetadata &meta,
                                 const char *name) {

@@ -4338,18 +4338,40 @@ bool dxfRW::writeRawDxfObject(DRW_RawDxfObject *obj) {
 }
 
 //Slice A3: canonical DXF CLASS metadata for the custom-class OBJECTS the raw net
-//round-trips. Values are the DXF-authoritative ezdxf REQUIRED_CLASSES tuple
-//{className(2), appName(3), flags(90), wasaProxy(280), isEntity(281)}. Fixed
-//built-ins (DICTIONARY/GROUP/LAYOUT/MLINESTYLE) take no CLASS record and are
-//absent here. instanceCount (91) is left 0 for the caller to fill.
+//round-trips — both the routed data-only types (SUN/SCALE/...) and common
+//unmodeled OBJECTS captured verbatim (MATERIAL/VISUALSTYLE/...). Values are the
+//DXF-authoritative ezdxf CLASS_DEFINITIONS tuple {className(2), appName(3),
+//flags(90), wasaProxy(280), isEntity(281)}. Every entry is a NON-fixed object
+//class (ezdxf lists only classes that need a CLASS), so registering one can never
+//mislabel a fixed built-in (DICTIONARY/GROUP/LAYOUT/MLINESTYLE are absent here);
+//emission is instance-driven, so an entry that is never present never fires.
+//instanceCount (91) is left 0 for the caller to fill. entityFlag 0 = object.
+//Arbitrary/proprietary objects not in this table still round-trip losslessly
+//LibreCAD<->LibreCAD but get no CLASS (a heuristic proxy is a deliberate TODO,
+//since distinguishing a custom class from an unmodeled fixed type is unsafe).
 bool dxfRW::dxfClassForRecordName(const std::string &recName, DRW_Class &out) {
     struct Entry { const char *rec; const char *cls; const char *app; int flag; };
     static const Entry table[] = {
-        {"SUN",              "AcDbSun",              "SCENEOE",           1153},
-        {"SCALE",            "AcDbScale",            "ObjectDBX Classes", 1153},
-        {"DICTIONARYVAR",    "AcDbDictionaryVar",    "ObjectDBX Classes", 0},
-        {"RASTERVARIABLES",  "AcDbRasterVariables",  "ISM",               0},
-        {"WIPEOUTVARIABLES", "AcDbWipeoutVariables", "WipeOut",           0},
+        // Routed data-only OBJECTS (also captured into the raw net on read).
+        {"SUN",              "AcDbSun",                 "SCENEOE",           1153},
+        {"SCALE",            "AcDbScale",               "ObjectDBX Classes", 1153},
+        {"DICTIONARYVAR",    "AcDbDictionaryVar",       "ObjectDBX Classes", 0},
+        {"RASTERVARIABLES",  "AcDbRasterVariables",     "ISM",               0},
+        {"WIPEOUTVARIABLES", "AcDbWipeoutVariables",    "WipeOut",           0},
+        // Common unmodeled custom OBJECTS that reach the raw net verbatim.
+        {"MATERIAL",         "AcDbMaterial",            "ObjectDBX Classes", 1153},
+        {"VISUALSTYLE",      "AcDbVisualStyle",         "ObjectDBX Classes", 4095},
+        {"TABLESTYLE",       "AcDbTableStyle",          "ObjectDBX Classes", 4095},
+        {"MLEADERSTYLE",     "AcDbMLeaderStyle", "ACDB_MLEADERSTYLE_CLASS", 4095},
+        {"ACDBPLACEHOLDER",  "AcDbPlaceHolder",         "ObjectDBX Classes", 0},
+        {"CELLSTYLEMAP",     "AcDbCellStyleMap",        "ObjectDBX Classes", 1152},
+        {"FIELDLIST",        "AcDbFieldList",           "ObjectDBX Classes", 1152},
+        {"GEODATA",          "AcDbGeoData",             "ObjectDBX Classes", 4095},
+        {"SORTENTSTABLE",    "AcDbSortentsTable",       "ObjectDBX Classes", 0},
+        {"IDBUFFER",         "AcDbIdBuffer",            "ObjectDBX Classes", 0},
+        {"LAYER_INDEX",      "AcDbLayerIndex",          "ObjectDBX Classes", 0},
+        {"SPATIAL_INDEX",    "AcDbSpatialIndex",        "ObjectDBX Classes", 0},
+        {"DIMASSOC",         "AcDbDimAssoc",            "AcDbDimAssoc",      0},
     };
     for (const Entry &e : table) {
         if (recName == e.rec) {
@@ -4358,7 +4380,7 @@ bool dxfRW::dxfClassForRecordName(const std::string &recName, DRW_Class &out) {
             out.appName = e.app;
             out.proxyFlag = e.flag;
             out.wasaProxyFlag = 0;
-            out.entityFlag = 0;     //all five are object (not entity) classes
+            out.entityFlag = 0;     //all are object (not entity) classes
             out.instanceCount = 0;
             return true;
         }
