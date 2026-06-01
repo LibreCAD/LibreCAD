@@ -3993,15 +3993,19 @@ bool dxfRW::processScale() {
     DRW_DBG("dxfRW::processScale");
     int code;
     DRW_Scale scale;
+    DRW_RawDxfObject raw;       //data-only type: also preserved for DXF re-emit
+    raw.name = nextentity;
     while (reader->readRec(&code)) {
         DRW_DBG(code); DRW_DBG("\n");
         if (0 == code) {
             nextentity = reader->getString();
             DRW_DBG(nextentity); DRW_DBG("\n");
             iface->addScale(scale);
+            iface->addRawDxfObject(raw);
             return true;  //found new entity or ENDSEC, terminate
         }
 
+        captureRawGroup(raw, code);
         if (!scale.parseCode(code, reader)) {
             return setError( DRW::BAD_CODE_PARSED);
         }
@@ -4014,15 +4018,19 @@ bool dxfRW::processMLineStyle() {
     DRW_DBG("dxfRW::processMLineStyle");
     int code;
     DRW_MLineStyle style;
+    DRW_RawDxfObject raw;       //data-only type: also preserved for DXF re-emit
+    raw.name = nextentity;
     while (reader->readRec(&code)) {
         DRW_DBG(code); DRW_DBG("\n");
         if (0 == code) {
             nextentity = reader->getString();
             DRW_DBG(nextentity); DRW_DBG("\n");
             iface->addMLineStyle(style);
+            iface->addRawDxfObject(raw);
             return true;  //found new entity or ENDSEC, terminate
         }
 
+        captureRawGroup(raw, code);
         if (!style.parseCode(code, reader)) {
             return setError( DRW::BAD_CODE_PARSED);
         }
@@ -4035,15 +4043,19 @@ bool dxfRW::processDictionaryVar() {
     DRW_DBG("dxfRW::processDictionaryVar");
     int code;
     DRW_DictionaryVar var;
+    DRW_RawDxfObject raw;       //data-only type: also preserved for DXF re-emit
+    raw.name = nextentity;
     while (reader->readRec(&code)) {
         DRW_DBG(code); DRW_DBG("\n");
         if (0 == code) {
             nextentity = reader->getString();
             DRW_DBG(nextentity); DRW_DBG("\n");
             iface->addDictionaryVar(var);
+            iface->addRawDxfObject(raw);
             return true;  //found new entity or ENDSEC, terminate
         }
 
+        captureRawGroup(raw, code);
         if (!var.parseCode(code, reader)) {
             return setError( DRW::BAD_CODE_PARSED);
         }
@@ -4073,19 +4085,31 @@ bool dxfRW::processDictionaryWithDefault() {
     return setError(DRW::BAD_READ_OBJECTS);
 }
 
+// Data-only OBJECTS (no inter-object handle refs beyond base-class 5/330) are
+// ALSO captured into the raw-passthrough net so the DXF writer re-emits their
+// bodies verbatim on a DXF->DXF round-trip. The typed object still populates
+// LC_DwgAdvancedMetadata for the DWG write path; the raw net is DXF-write-only
+// (the DWG path ignores it), so there is no double-emit. The dictionary/handle
+// "spine" types (DICTIONARY/GROUP/LAYOUT/ACDBDICTIONARYWDFLT) are deliberately
+// NOT routed here — verbatim re-emit of their handle graph would corrupt the
+// regenerated dictionary tree; those await typed DXF writers.
 bool dxfRW::processRasterVariables() {
     DRW_DBG("dxfRW::processRasterVariables");
     int code;
     DRW_RasterVariables rv;
+    DRW_RawDxfObject raw;
+    raw.name = nextentity;
     while (reader->readRec(&code)) {
         DRW_DBG(code); DRW_DBG("\n");
         if (0 == code) {
             nextentity = reader->getString();
             DRW_DBG(nextentity); DRW_DBG("\n");
             iface->addRasterVariables(rv);
+            iface->addRawDxfObject(raw);
             return true;  //found new entity or ENDSEC, terminate
         }
 
+        captureRawGroup(raw, code);
         if (!rv.parseCode(code, reader)) {
             return setError( DRW::BAD_CODE_PARSED);
         }
@@ -4098,15 +4122,19 @@ bool dxfRW::processSun() {
     DRW_DBG("dxfRW::processSun");
     int code;
     DRW_Sun sun;
+    DRW_RawDxfObject raw;
+    raw.name = nextentity;
     while (reader->readRec(&code)) {
         DRW_DBG(code); DRW_DBG("\n");
         if (0 == code) {
             nextentity = reader->getString();
             DRW_DBG(nextentity); DRW_DBG("\n");
             iface->addSun(sun);
+            iface->addRawDxfObject(raw);
             return true;  //found new entity or ENDSEC, terminate
         }
 
+        captureRawGroup(raw, code);
         if (!sun.parseCode(code, reader)) {
             return setError( DRW::BAD_CODE_PARSED);
         }
@@ -4140,15 +4168,19 @@ bool dxfRW::processWipeoutVariables() {
     DRW_DBG("dxfRW::processWipeoutVariables");
     int code;
     DRW_WipeoutVariables wv;
+    DRW_RawDxfObject raw;
+    raw.name = nextentity;
     while (reader->readRec(&code)) {
         DRW_DBG(code); DRW_DBG("\n");
         if (0 == code) {
             nextentity = reader->getString();
             DRW_DBG(nextentity); DRW_DBG("\n");
             iface->addWipeoutVariables(wv);
+            iface->addRawDxfObject(raw);
             return true;  //found new entity or ENDSEC, terminate
         }
 
+        captureRawGroup(raw, code);
         if (!wv.parseCode(code, reader)) {
             return setError( DRW::BAD_CODE_PARSED);
         }

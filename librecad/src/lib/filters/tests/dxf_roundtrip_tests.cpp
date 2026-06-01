@@ -39,6 +39,7 @@
 
 #include <QCoreApplication>
 
+#include "lc_dwgadvancedmetadata.h"
 #include "rs_filterdxfrw.h"
 #include "rs_graphic.h"
 #include "rs_settings.h"
@@ -221,6 +222,119 @@ TEST_CASE("DXF export reserves handle space so preserved raw handles do not "
   // The preserved raw handles survive verbatim (reserve, not remap).
   CHECK(std::count(handles.begin(), handles.end(), std::string("33")) == 1);
   CHECK(std::count(handles.begin(), handles.end(), std::string("34")) == 1);
+
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+}
+
+namespace {
+// Finds a raw object by record name in a graphic's metadata, or nullptr.
+const DRW_RawDxfObject *findRaw(const LC_DwgAdvancedMetadata &meta,
+                                const char *name) {
+  for (const DRW_RawDxfObject &o : meta.rawDxfObjects())
+    if (o.name == name)
+      return &o;
+  return nullptr;
+}
+// Returns the first group with the given code in a raw object, or nullptr.
+const DRW_Variant *group(const DRW_RawDxfObject &o, int code) {
+  for (const DRW_Variant &g : o.groups)
+    if (g.code() == code)
+      return &g;
+  return nullptr;
+}
+} // namespace
+
+TEST_CASE("DXF data-only OBJECTS round-trip their body values via the raw net "
+          "(hybrid typed-export resolution)",
+          "[dxf][roundtrip][filter][dataonly]") {
+  ensureSettings();
+  const std::string src = tmpFile("dsrc.dxf");
+  const std::string out = tmpFile("dout.dxf");
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+
+  // OBJECTS section with one of each data-only type carrying distinctive numeric
+  // and string body values. These are typed-read into metadata (DWG path) AND
+  // captured into the raw net (DXF re-emit). Spine types are intentionally absent.
+  const std::string dxf =
+      "0\nSECTION\n2\nENTITIES\n"
+      "0\nLINE\n8\n0\n10\n0.0\n20\n0.0\n11\n1.0\n21\n1.0\n"
+      "0\nENDSEC\n"
+      "0\nSECTION\n2\nOBJECTS\n"
+      "0\nSUN\n5\n50\n330\nC\n100\nAcDbSun\n90\n1\n290\n1\n63\n7\n40\n0.75\n"
+      "0\nSCALE\n5\n51\n330\nC\n100\nAcDbScale\n300\nHalf\n140\n1.0\n141\n2.0\n290\n1\n"
+      "0\nDICTIONARYVAR\n5\n52\n330\nC\n100\nDictionaryVariables\n280\n0\n1\nLWDISPLAY\n"
+      "0\nRASTERVARIABLES\n5\n53\n330\nC\n100\nAcDbRasterVariables\n90\n0\n70\n1\n71\n1\n72\n3\n"
+      "0\nWIPEOUTVARIABLES\n5\n54\n330\nC\n100\nAcDbWipeoutVariables\n70\n1\n"
+      // MLINESTYLE has repeated per-element groups (49/62/6) — verbatim raw
+      // capture must preserve them in order.
+      "0\nMLINESTYLE\n5\n55\n330\nC\n100\nAcDbMlineStyle\n2\nMYSTYLE\n70\n0\n3\n\n"
+      "62\n256\n51\n90.0\n52\n90.0\n71\n2\n49\n0.5\n62\n1\n6\nBYLAYER\n"
+      "49\n-0.5\n62\n1\n6\nBYLAYER\n"
+      "0\nENDSEC\n0\nEOF\n";
+  writeText(src, dxf);
+
+  RS_Graphic graphic;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(src),
+                              RS2::FormatDXFRW));
+  }
+
+  // On read, each data-only type lands in the raw net with correctly-typed,
+  // correctly-valued body groups (validates capture fix + routing together).
+  {
+    const auto &meta = graphic.dwgAdvancedMetadata();
+    const DRW_RawDxfObject *sun = findRaw(meta, "SUN");
+    REQUIRE(sun != nullptr);
+    const DRW_Variant *intensity = group(*sun, 40);
+    REQUIRE(intensity != nullptr);
+    CHECK(intensity->type() == DRW_Variant::DOUBLE);
+    CHECK(intensity->d_val() == 0.75);
+
+    const DRW_RawDxfObject *scale = findRaw(meta, "SCALE");
+    REQUIRE(scale != nullptr);
+    const DRW_Variant *num = group(*scale, 141);
+    REQUIRE(num != nullptr);
+    CHECK(num->d_val() == 2.0);
+
+    const DRW_RawDxfObject *dvar = findRaw(meta, "DICTIONARYVAR");
+    REQUIRE(dvar != nullptr);
+    const DRW_Variant *val = group(*dvar, 1);
+    REQUIRE(val != nullptr);
+    CHECK(std::string(val->c_str()) == "LWDISPLAY");
+  }
+
+  // Export, then re-import: the body values must survive the full DXF->DXF trip.
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out),
+                              RS2::FormatDXFRW));
+  }
+  for (const char *name : {"SUN", "SCALE", "DICTIONARYVAR", "RASTERVARIABLES",
+                           "WIPEOUTVARIABLES", "MLINESTYLE"})
+    CHECK(countRecords(out, name) >= 1);
+
+  RS_Graphic graphic2;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic2, QString::fromStdString(out),
+                              RS2::FormatDXFRW));
+  }
+  {
+    const auto &meta = graphic2.dwgAdvancedMetadata();
+    const DRW_RawDxfObject *sun = findRaw(meta, "SUN");
+    REQUIRE(sun != nullptr);
+    const DRW_Variant *intensity = group(*sun, 40);
+    REQUIRE(intensity != nullptr);
+    CHECK(intensity->d_val() == 0.75);  // double value survives DXF->DXF
+    const DRW_RawDxfObject *dvar = findRaw(meta, "DICTIONARYVAR");
+    REQUIRE(dvar != nullptr);
+    const DRW_Variant *val = group(*dvar, 1);
+    REQUIRE(val != nullptr);
+    CHECK(std::string(val->c_str()) == "LWDISPLAY");
+  }
 
   std::filesystem::remove(src);
   std::filesystem::remove(out);
