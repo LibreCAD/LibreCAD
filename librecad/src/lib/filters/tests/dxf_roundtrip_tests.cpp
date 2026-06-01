@@ -30,9 +30,12 @@
 
 #include <catch2/catch_test_macros.hpp>
 
+#include <algorithm>
 #include <filesystem>
 #include <fstream>
+#include <set>
 #include <string>
+#include <vector>
 
 #include <QCoreApplication>
 
@@ -91,6 +94,26 @@ int countRecords(const std::string &path, const std::string &name) {
   return count;
 }
 
+// Collects every group-5 (handle) value in a DXF file, in order. DXF is a
+// strict (code, value) pair stream, so read two lines at a time — scanning
+// line-by-line would confuse a *value* of "5" with the group-5 code.
+std::vector<std::string> collectHandles(const std::string &path) {
+  std::ifstream in(path);
+  std::string codeLine, valueLine;
+  std::vector<std::string> handles;
+  auto trim = [](std::string s) {
+    if (!s.empty() && s.back() == '\r')
+      s.pop_back();
+    size_t a = s.find_first_not_of(" \t");
+    return a == std::string::npos ? std::string() : s.substr(a);
+  };
+  while (std::getline(in, codeLine) && std::getline(in, valueLine)) {
+    if (trim(codeLine) == "5")
+      handles.push_back(trim(valueLine));
+  }
+  return handles;
+}
+
 } // namespace
 
 TEST_CASE("DXF round-trip via RS_FilterDXFRW preserves unmodeled object + entity",
@@ -146,6 +169,58 @@ TEST_CASE("DXF round-trip via RS_FilterDXFRW preserves unmodeled object + entity
 
   CHECK(countRecords(out, "MATERIAL") >= 1);
   CHECK(countRecords(out, "WEIRDENT") >= 1);
+
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+}
+
+TEST_CASE("DXF export reserves handle space so preserved raw handles do not "
+          "collide with minted handles",
+          "[dxf][roundtrip][filter][handles]") {
+  ensureSettings();
+  const std::string src = tmpFile("hsrc.dxf");
+  const std::string out = tmpFile("hout.dxf");
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+
+  // Raw entity (0x33) and raw object (0x34) carry LOW original handles that sit
+  // squarely in the band LibreCAD mints (++entCount from 0x30) for the LINE
+  // entities + tables on export. Without the handle-floor reserve these would
+  // duplicate a freshly-minted handle; with it, minted handles start above 0x34.
+  const std::string dxf =
+      "0\nSECTION\n2\nENTITIES\n"
+      "0\nLINE\n8\n0\n10\n0.0\n20\n0.0\n11\n1.0\n21\n1.0\n"
+      "0\nLINE\n8\n0\n10\n1.0\n20\n1.0\n11\n2.0\n21\n2.0\n"
+      "0\nLINE\n8\n0\n10\n2.0\n20\n2.0\n11\n3.0\n21\n3.0\n"
+      "0\nWEIRDENT\n8\n0\n5\n33\n62\n3\n10\n1.0\n20\n2.0\n"
+      "0\nENDSEC\n"
+      "0\nSECTION\n2\nOBJECTS\n"
+      "0\nMATERIAL\n5\n34\n330\nC\n100\nAcDbMaterial\n1\nMyMaterial\n94\n7\n"
+      "0\nENDSEC\n0\nEOF\n";
+  writeText(src, dxf);
+
+  RS_Graphic graphic;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(src),
+                              RS2::FormatDXFRW));
+  }
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out),
+                              RS2::FormatDXFRW));
+  }
+
+  // Core invariant: every code-5 handle in the exported file is unique.
+  const std::vector<std::string> handles = collectHandles(out);
+  std::set<std::string> seen;
+  for (const std::string &h : handles) {
+    INFO("duplicate handle: " << h);
+    CHECK(seen.insert(h).second);
+  }
+  // The preserved raw handles survive verbatim (reserve, not remap).
+  CHECK(std::count(handles.begin(), handles.end(), std::string("33")) == 1);
+  CHECK(std::count(handles.begin(), handles.end(), std::string("34")) == 1);
 
   std::filesystem::remove(src);
   std::filesystem::remove(out);

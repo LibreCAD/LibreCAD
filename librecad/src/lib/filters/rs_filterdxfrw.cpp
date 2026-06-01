@@ -5287,6 +5287,21 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic& g, const QString& file, RS2::FormatT
     // fixme - sand - save to binary format enabling/disabling!!
     bool binary = false;
 
+    // Reserve the minted-handle space above any verbatim handle preserved in the
+    // raw-passthrough net (rawDxfObjects/rawDxfEntities are re-emitted with their
+    // original code-5 handle), so a preserved raw handle cannot collide with a
+    // handle LibreCAD assigns to its own entities/objects on this export.
+    {
+        const auto &metadata = g.dwgAdvancedMetadata();
+        duint32 maxRawHandle = 0;
+        for (const DRW_RawDxfObject &o : metadata.rawDxfObjects())
+            maxRawHandle = std::max(maxRawHandle, o.handle);
+        for (const DRW_RawDxfObject &e : metadata.rawDxfEntities())
+            maxRawHandle = std::max(maxRawHandle, e.handle);
+        if (maxRawHandle != 0)
+            m_dxfW->setHandleSeedFloor(static_cast<int>(maxRawHandle));
+    }
+
 //    bool success = m_dxfW->write(this, exportVersion, false); //ascii
     bool success = m_dxfW->write(this, exportVersion, binary); //binary
     delete m_dxfW;

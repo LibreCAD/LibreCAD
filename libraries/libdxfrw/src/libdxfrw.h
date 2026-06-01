@@ -112,6 +112,11 @@ public:
     void setEllipseParts(int parts){elParts = parts;} /*!< set parts number when convert ellipse to polyline */
     bool writePlotSettings(DRW_PlotSettings *ent);
     bool writeRawDxfObject(DRW_RawDxfObject *obj);
+    /*!< Reserve a minimum value for minted (++entCount) handles so they cannot
+     * collide with verbatim handles preserved in the raw-passthrough net. The
+     * filter sets this to the max code-5 handle seen in rawDxfObjects/Entities
+     * before write(); 0 (default) keeps the historical FIRSTHANDLE start. */
+    void setHandleSeedFloor(int floor) { m_handleSeedFloor = floor; }
 
     DRW::Version getVersion() const;
     DRW::error getError() const;
@@ -188,6 +193,13 @@ private:
     bool processWipeoutVariables();
     bool processRawObject();
     bool processRawEntity();
+    /*!< Append the current DXF record (already read by reader->readRec) to a
+     * raw-passthrough carrier as a correctly-TYPED DRW_Variant, classifying the
+     * value by DXF code range (numeric codes leave reader->strData stale AND
+     * clobber reader->type to STRING, so neither getString() nor type can be
+     * trusted for them — that was the A1/A4 capture bug). ASCII-DXF only. Also
+     * latches code 5 -> handle and code 330 -> parentHandle. */
+    void captureRawGroup(DRW_RawDxfObject &obj, int code);
 
 //    bool writeHeader();
     bool writeEntity(DRW_Entity *ent);
@@ -218,6 +230,7 @@ private:
 //    int section;
     std::string nextentity;
     int entCount;
+    int m_handleSeedFloor {0};
     bool wlayer0;
     bool dimstyleStd;
     bool applyExt;

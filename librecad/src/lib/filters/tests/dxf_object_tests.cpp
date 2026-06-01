@@ -540,3 +540,79 @@ TEST_CASE("DXF raw object round-trips through write+read (slice A2)",
 
   std::filesystem::remove(path);
 }
+
+// Regression for the A1/A4 capture bug: the reader leaves strData stale for
+// numeric codes (readInt16/32/64/Double/Bool parse into a local string), so the
+// old all-getString() capture stored the PREVIOUS string value for every
+// numeric group and mistyped it STRING. captureRawGroup must instead store a
+// correctly-typed DRW_Variant per reader->type. Asserts VALUES, not just codes.
+TEST_CASE("DXF raw-net captures numeric group VALUES, not stale strings "
+          "(capture-bug fix)",
+          "[dxf][rawobject][rawcapture]") {
+  RawObjectCapture cap;
+  // A string group (code 1) precedes every numeric group; under the old bug all
+  // numerics would re-capture "STRINGVAL". One group of each reader type:
+  // 1=string, 70=int16, 90=int32, 160=int64, 40=double, 290=bool.
+  const char *dxf =
+      "0\nSECTION\n2\nOBJECTS\n"
+      "0\nACDBWFDIAG\n5\n3B\n330\n29\n100\nAcDbWfDiag\n"
+      "1\nSTRINGVAL\n70\n7\n90\n123456\n160\n40\n40\n2.5\n290\n1\n"
+      "0\nENDSEC\n0\nEOF\n";
+  readDxf(dxf, cap, "lc_rawcapture.dxf");
+
+  REQUIRE(cap.m_objects.size() == 1);
+  const DRW_RawDxfObject &o = cap.m_objects[0];
+  CHECK(o.handle == 0x3Bu);
+  CHECK(o.parentHandle == 0x29u);
+  // Index map: 0=5(str) 1=330(str) 2=100(str) 3=1(str) 4=70 5=90 6=160 7=40 8=290
+  REQUIRE(o.groups.size() == 9);
+  CHECK(o.groups[3].type() == DRW_Variant::STRING);
+  CHECK(std::string(o.groups[3].c_str()) == "STRINGVAL");
+
+  CHECK(o.groups[4].code() == 70);
+  CHECK(o.groups[4].type() == DRW_Variant::INTEGER);
+  CHECK(o.groups[4].i_val() == 7);
+
+  CHECK(o.groups[5].code() == 90);
+  CHECK(o.groups[5].type() == DRW_Variant::INTEGER);
+  CHECK(o.groups[5].i_val() == 123456);
+
+  CHECK(o.groups[6].code() == 160);
+  CHECK(o.groups[6].type() == DRW_Variant::INTEGER64);
+  CHECK(o.groups[6].i64_val() == 40);
+
+  CHECK(o.groups[7].code() == 40);
+  CHECK(o.groups[7].type() == DRW_Variant::DOUBLE);
+  CHECK(o.groups[7].d_val() == 2.5);
+
+  CHECK(o.groups[8].code() == 290);
+  CHECK(o.groups[8].type() == DRW_Variant::INTEGER);
+  CHECK(o.groups[8].i_val() == 1);
+
+  // End-to-end: re-emit the captured object and read it back; numeric values
+  // must survive (writeRawDxfObject keys off variant type()).
+  const auto rtPath =
+      std::filesystem::temp_directory_path() / "lc_rawcapture_rt.dxf";
+  std::filesystem::remove(rtPath);
+  RawObjectEmitter em;
+  em.m_obj = o;
+  {
+    dxfRW w(rtPath.string().c_str());
+    em.m_rw = &w;
+    REQUIRE(w.write(&em, DRW::AC1021, false));
+  }
+  RawObjectCapture rt;
+  {
+    dxfRW r(rtPath.string().c_str());
+    REQUIRE(r.read(&rt, /*ext=*/true));
+  }
+  REQUIRE(rt.m_objects.size() == 1);
+  const DRW_RawDxfObject &b = rt.m_objects[0];
+  REQUIRE(b.groups.size() == 9);
+  CHECK(b.groups[4].i_val() == 7);
+  CHECK(b.groups[5].i_val() == 123456);
+  CHECK(b.groups[6].i64_val() == 40);
+  CHECK(b.groups[7].d_val() == 2.5);
+  CHECK(b.groups[8].i_val() == 1);
+  std::filesystem::remove(rtPath);
+}

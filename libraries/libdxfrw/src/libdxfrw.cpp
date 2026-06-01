@@ -153,7 +153,11 @@ bool dxfRW::write(DRW_Interface *interface_, DRW::Version ver, bool bin){
     DRW_Header header;
     iface->writeHeader(header);
     writer->writeString(0, "SECTION");
-    entCount =FIRSTHANDLE;
+    //Start minted (++entCount) handles above any verbatim handle preserved in
+    //the raw-passthrough net so a re-emitted raw OBJECT/ENTITY (code 5) cannot
+    //collide with a freshly-assigned LibreCAD handle. Defaults to FIRSTHANDLE
+    //when nothing was preserved (m_handleSeedFloor == 0), matching legacy output.
+    entCount = (m_handleSeedFloor > FIRSTHANDLE) ? m_handleSeedFloor : FIRSTHANDLE;
     header.write(writer, version);
     writer->writeString(0, "ENDSEC");
     if (ver > DRW::AC1009) {
@@ -4157,6 +4161,76 @@ bool dxfRW::processWipeoutVariables() {
 //model as a typed DXF object. Captures every (code,value) pair verbatim (value
 //kept as raw text, which round-trips exactly for ASCII DXF) so the object can be
 //re-emitted unchanged once the DXF object-write spine (A2) consumes it.
+namespace {
+enum class RawValType { Str, Int, Int64, Dbl };
+//Mirror dxfReader::readRec's code->reader dispatch (intern/dxfreader.cpp) so a
+//raw-captured group value is taken from the matching typed getter. readRec parses
+//numeric codes into the typed members (intData/int64/doubleData) and leaves
+//strData STALE, so getString() is wrong for them. The reader's public `type` is
+//ALSO unreliable here: each numeric reader sets `type` then calls readString(&t)
+//which resets it to STRING — hence we classify by code range, not reader->type.
+RawValType classifyDxfCode(int code) {
+    if (code < 10) return RawValType::Str;
+    else if (code < 60) return RawValType::Dbl;
+    else if (code < 80) return RawValType::Int;             // int16
+    else if (code > 89 && code < 100) return RawValType::Int;  // int32
+    else if (code == 100 || code == 102 || code == 105) return RawValType::Str;
+    else if (code > 109 && code < 150) return RawValType::Dbl;
+    else if (code > 159 && code < 170) return RawValType::Int64;
+    else if (code < 180) return RawValType::Int;
+    else if (code > 209 && code < 240) return RawValType::Dbl;
+    else if (code > 269 && code < 290) return RawValType::Int;
+    else if (code < 300) return RawValType::Int;            // readBool -> intData
+    else if (code < 310) return RawValType::Str;
+    else if (code < 320) return RawValType::Str;            // readBinary -> string
+    else if (code < 370) return RawValType::Str;            // incl. 330/340/350/360
+    else if (code < 390) return RawValType::Int;
+    else if (code < 400) return RawValType::Str;
+    else if (code < 410) return RawValType::Int;
+    else if (code < 420) return RawValType::Str;
+    else if (code < 430) return RawValType::Int;
+    else if (code < 440) return RawValType::Str;
+    else if (code < 450) return RawValType::Int;
+    else if (code < 460) return RawValType::Int;
+    else if (code < 470) return RawValType::Dbl;
+    else if (code < 481) return RawValType::Str;
+    else if (code == 1004) return RawValType::Str;
+    else if (code > 998 && code < 1009) return RawValType::Str;
+    else if (code < 1060) return RawValType::Dbl;
+    else if (code < 1071) return RawValType::Int;
+    else if (code == 1071) return RawValType::Int;
+    return RawValType::Str;
+}
+}  // namespace
+
+//Capture the current DXF record into a raw-passthrough carrier as a correctly
+//TYPED DRW_Variant (see classifyDxfCode above for why getString()/reader->type
+//cannot be trusted for numeric codes — that was the A1/A4 capture bug). The write
+//side (writeRawDxfObject) re-emits each variant type, so a typed capture
+//round-trips numeric values. ASCII-DXF only; the raw net contract is ASCII (see
+//processRawObject). Also latches code 5 -> handle and code 330 -> parentHandle.
+void dxfRW::captureRawGroup(DRW_RawDxfObject &obj, int code) {
+    switch (classifyDxfCode(code)) {
+    case RawValType::Int:
+        obj.groups.emplace_back(code, static_cast<dint32>(reader->getInt32()));
+        break;
+    case RawValType::Int64:
+        obj.groups.emplace_back(code, static_cast<dint64>(reader->getInt64()));
+        break;
+    case RawValType::Dbl:
+        obj.groups.emplace_back(code, reader->getDouble());
+        break;
+    case RawValType::Str:
+    default:
+        obj.groups.emplace_back(code, reader->getString());
+        break;
+    }
+    if (5 == code)
+        obj.handle = reader->getHandleString();
+    else if (330 == code)
+        obj.parentHandle = reader->getHandleString();
+}
+
 bool dxfRW::processRawObject() {
     DRW_DBG("dxfRW::processRawObject");
     int code;
@@ -4170,12 +4244,7 @@ bool dxfRW::processRawObject() {
             iface->addRawDxfObject(obj);
             return true;  //found new entity or ENDSEC, terminate
         }
-        const std::string value = reader->getString();
-        if (5 == code)
-            obj.handle = reader->getHandleString();
-        else if (330 == code)
-            obj.parentHandle = reader->getHandleString();
-        obj.groups.emplace_back(code, value);
+        captureRawGroup(obj, code);
     }
 
     return setError(DRW::BAD_READ_OBJECTS);
@@ -4197,12 +4266,7 @@ bool dxfRW::processRawEntity() {
             iface->addRawDxfEntity(ent);
             return true;  //found new entity, ENDSEC or ENDBLK, terminate
         }
-        const std::string value = reader->getString();
-        if (5 == code)
-            ent.handle = reader->getHandleString();
-        else if (330 == code)
-            ent.parentHandle = reader->getHandleString();
-        ent.groups.emplace_back(code, value);
+        captureRawGroup(ent, code);
     }
 
     return setError(DRW::BAD_READ_ENTITIES);
