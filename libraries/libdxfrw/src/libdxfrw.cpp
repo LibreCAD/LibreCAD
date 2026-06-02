@@ -16,6 +16,7 @@
 #include <fstream>
 #include <algorithm>
 #include <cmath>
+#include <cstdlib>
 #include <sstream>
 #include <cassert>
 #include "intern/drw_textcodec.h"
@@ -4401,9 +4402,37 @@ bool dxfRW::processRawEntity() {
 //Slice A2: re-emit a raw-captured object (from processRawObject) verbatim. The
 //A1/A4 capture stores every value as STRING, so the raw text round-trips exactly
 //for ASCII DXF; the other variant arms are handled defensively.
+// True for DXF group codes whose STRING value is a handle reference that the
+// codec's m_handleRemap may need to rewrite: the self handle (5/105), the
+// soft/hard pointer & owner ranges (320-369), and xdata handles (1005). Codes
+// outside these ranges (e.g. text strings, layer names) are never rewritten, so
+// a numeric-looking non-handle value can never be mistaken for a handle.
+static bool dxfIsHandleRefCode(int code) {
+    return code == 5 || code == 105 || code == 1005 ||
+           (code >= 320 && code <= 369);
+}
+
 bool dxfRW::writeRawDxfObject(DRW_RawDxfObject *obj) {
     writer->writeString(0, obj->name);
     for (const DRW_Variant &v : obj->groups) {
+        // Apply the structural-collision handle remap to handle-reference codes.
+        // The value is a hex handle string; if it names a remapped handle, emit
+        // the replacement so this object (and every reference to a remapped
+        // object) stays internally consistent.
+        if (!m_handleRemap.empty() && v.type() == DRW_Variant::STRING &&
+            dxfIsHandleRefCode(v.code())) {
+            std::string s = v.c_str();
+            char *end = nullptr;
+            unsigned long parsed = std::strtoul(s.c_str(), &end, 16);
+            if (end != s.c_str() && end != nullptr && *end == '\0') {
+                auto it = m_handleRemap.find(static_cast<std::uint32_t>(parsed));
+                if (it != m_handleRemap.end()) {
+                    writer->writeString(
+                        v.code(), toHexStr(static_cast<int>(it->second)));
+                    continue;
+                }
+            }
+        }
         switch (v.type()) {
         case DRW_Variant::STRING:
             writer->writeString(v.code(), std::string(v.c_str()));

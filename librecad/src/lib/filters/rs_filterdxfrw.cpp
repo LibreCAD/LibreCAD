@@ -5350,6 +5350,42 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic& g, const QString& file, RS2::FormatT
         }
         if (acadGroupHandle != 0)
             m_dxfSuppressedObjectHandles.insert(acadGroupHandle);
+
+        // (3a) Structural-collision remap. The codec emits its own table/block
+        // records and root dictionaries at FIXED low handles (table heads, LAYER
+        // 0x10, APPID 0x12, LTYPE 0x14-0x16, BLOCK_RECORD/BLOCK/ENDBLK 0x1C-0x21,
+        // root C / ACAD_GROUP D). Real source files reuse those very handles for
+        // unrelated OBJECTS (extension dicts, material dicts, xrecords) preserved
+        // verbatim in the raw net — an unavoidable raw-vs-fixed-structural
+        // collision the reserve-and-preserve mechanism alone cannot break (both
+        // want the same handle). The fixed structural set is non-negotiable (the
+        // codec's 330/350 cross-refs are literals), so the colliding raw objects
+        // are remapped to fresh allocator handles; writeRawDxfObject rewrites the
+        // object's own handle AND every reference to a remapped handle, keeping
+        // the raw subtree internally consistent. 0xC/0xD raw dicts are suppressed
+        // (the codec regenerates root/group) and so are NOT remapped.
+        static const std::set<std::uint32_t> kFixedStructural = {
+            0x1,  0x2,  0x3,  0x5,  0x6,  0x7,  0x8,  0x9,  0xA,
+            0x10, 0x12, 0x14, 0x15, 0x16,
+            0x1C, 0x1D, 0x1E, 0x1F, 0x20, 0x21};
+        std::map<std::uint32_t, std::uint32_t> handleRemap;
+        auto remapIfColliding = [&](std::uint32_t h) {
+            if (h == 0 || kFixedStructural.count(h) == 0)
+                return;
+            if (h == 0xCu || h == 0xDu ||
+                m_dxfSuppressedObjectHandles.count(h) != 0)
+                return;  // suppressed, not emitted -> nothing to remap
+            if (handleRemap.count(h) != 0)
+                return;
+            handleRemap.emplace(h, m_dxfW->allocHandle());
+        };
+        for (const DRW_RawDxfObject &o : metadata.rawDxfObjects())
+            remapIfColliding(o.handle);
+        for (const DRW_RawDxfObject &e : metadata.rawDxfEntities())
+            remapIfColliding(e.handle);
+        if (!handleRemap.empty())
+            m_dxfW->setHandleRemap(handleRemap);
+
         std::vector<std::pair<std::string, std::string>> rootEntries;
         for (const DRW_RawDxfObject &o : metadata.rawDxfObjects()) {
             if (o.name != "DICTIONARY" && o.name != "ACDBDICTIONARYWDFLT")
@@ -5365,12 +5401,17 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic& g, const QString& file, RS2::FormatT
             auto it = rootEntryName.find(o.handle);
             if (it == rootEntryName.end())
                 continue;  // name not recoverable -> cannot re-attach
-            std::string handleStr;  // verbatim code-5, matches the re-emit
+            std::string handleStr;  // code-5; matches the (possibly remapped) re-emit
             for (const DRW_Variant &g : o.groups)
                 if (g.code() == 5) {
                     handleStr = g.c_str();
                     break;
                 }
+            // If this child dict's handle was remapped (structural collision), the
+            // root entry must point at the NEW handle so the 350 ref resolves.
+            auto rm = handleRemap.find(o.handle);
+            if (rm != handleRemap.end())
+                handleStr = m_dxfW->toHexStrHandle(rm->second);
             if (!handleStr.empty())
                 rootEntries.emplace_back(it->second, handleStr);
         }

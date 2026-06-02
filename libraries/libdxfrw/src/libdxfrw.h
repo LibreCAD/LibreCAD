@@ -14,6 +14,7 @@
 #ifndef LIBDXFRW_H
 #define LIBDXFRW_H
 
+#include <map>
 #include <memory>
 #include <string>
 #include <unordered_map>
@@ -144,6 +145,27 @@ public:
     void setRootDictEntries(const std::vector<std::pair<std::string, std::string>> &entries) {
         m_rootDictEntries = entries;
     }
+    /*!< Allocate a fresh, collision-free code-5 handle from the codec's
+     * allocator. The filter uses this AFTER reserving every raw + fixed handle
+     * to remap the small minority of raw objects whose ORIGINAL handle coincides
+     * with one of the codec's fixed structural literals (LAYER 0x10, LTYPE
+     * 0x14-0x16, BLOCK/ENDBLK/BLOCK_RECORD 0x1C-0x21, ...). Those handles cannot
+     * be preserved verbatim because the codec emits its own table/block record at
+     * the same literal; remapping the raw object (and rewriting every reference
+     * to it via setHandleRemap) is the only collision-free resolution. */
+    std::uint32_t allocHandle() { return m_handleAllocator.next(); }
+    /*!< Format a handle as the codec's canonical code-5 hex string (uppercase,
+     * no leading zeros), so a caller can build a 350/330 reference string that
+     * byte-matches the re-emitted handle (e.g. a remapped root-dict entry). */
+    std::string toHexStrHandle(std::uint32_t h) { return toHexStr(static_cast<int>(h)); }
+    /*!< Register a handle-remap applied by writeRawDxfObject to every raw
+     * object/entity it emits: the object's own code-5/105 handle and every
+     * handle-reference group (codes 320-369, 1005, plus 102-group reactor 330s)
+     * whose value is a remapped handle is rewritten to the new handle. Empty by
+     * default (raw handles preserved verbatim). Keys/values are numeric handles. */
+    void setHandleRemap(const std::map<std::uint32_t, std::uint32_t> &remap) {
+        m_handleRemap = remap;
+    }
 
     DRW::Version getVersion() const;
     DRW::error getError() const;
@@ -271,6 +293,10 @@ private:
     HandleAllocator m_handleAllocator;
     std::vector<DRW_Class> m_dxfClasses;
     std::vector<std::pair<std::string, std::string>> m_rootDictEntries;
+    /// Numeric handle -> replacement handle, applied by writeRawDxfObject to the
+    /// few raw objects whose original handle collides with a fixed structural
+    /// literal. Empty by default (raw handles emitted verbatim).
+    std::map<std::uint32_t, std::uint32_t> m_handleRemap;
     bool wlayer0;
     bool dimstyleStd;
     bool applyExt;
