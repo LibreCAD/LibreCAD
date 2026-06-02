@@ -41,6 +41,7 @@
 
 #include <cstdlib>
 #include <filesystem>
+#include <fstream>
 #include <iostream>
 #include <string>
 #include <vector>
@@ -104,7 +105,77 @@ bool roundTrip(const std::filesystem::path &in, const std::filesystem::path &out
                            RS2::FormatDXFRW);
 }
 
+// Count "0\n<NAME>" record markers in a DXF file.
+int countDxfRecords(const std::filesystem::path &path, const std::string &name) {
+  std::ifstream in(path);
+  std::string line;
+  int count = 0;
+  bool prevZero = false;
+  while (std::getline(in, line)) {
+    if (!line.empty() && line.back() == '\r')
+      line.pop_back();
+    size_t a = line.find_first_not_of(" \t");
+    std::string trimmed = (a == std::string::npos) ? std::string() : line.substr(a);
+    if (prevZero && trimmed == name)
+      ++count;
+    prevZero = (trimmed == "0");
+  }
+  return count;
+}
+
 } // namespace
+
+// F2: RAY/XLINE/TRACE/3DFACE are typed-read but model-converted (RAY/XLINE ->
+// RS_Line, TRACE -> RS_Solid, 3DFACE -> RS_Polyline), which drops the original
+// type + Z. A type-fidelity XDATA sidecar attached on read lets a write
+// pre-pass rebuild the native DRW type with full geometry. This test drives the
+// real filter end-to-end and asserts each type survives the round-trip, and
+// that a genuine SOLID is NOT mis-rebuilt as a TRACE.
+TEST_CASE("DXF round-trip preserves RAY/XLINE/TRACE/3DFACE native types (F2)",
+          "[dxf][roundtrip][filter][f2]") {
+  ensureSettings();
+  const std::filesystem::path src =
+      std::filesystem::temp_directory_path() / "f2_typefidelity_src.dxf";
+  const std::filesystem::path out =
+      std::filesystem::temp_directory_path() / "f2_typefidelity_out.dxf";
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+
+  // RAY (base+dir w/ Z), XLINE (base+dir w/ Z), TRACE (4 corners), 3DFACE
+  // (4 corners w/ distinct Z + invisible-edge flag 5), plus a genuine SOLID
+  // (must stay SOLID). AcDb subclass markers make it a valid R2010 ENTITIES.
+  const std::string dxf =
+      "0\nSECTION\n2\nENTITIES\n"
+      "0\nRAY\n8\n0\n100\nAcDbEntity\n100\nAcDbRay\n"
+      "10\n1.0\n20\n2.0\n30\n3.0\n11\n1.0\n21\n0.0\n31\n0.0\n"
+      "0\nXLINE\n8\n0\n100\nAcDbEntity\n100\nAcDbXline\n"
+      "10\n4.0\n20\n5.0\n30\n6.0\n11\n0.0\n21\n1.0\n31\n0.0\n"
+      "0\nTRACE\n8\n0\n100\nAcDbEntity\n100\nAcDbTrace\n"
+      "10\n0.0\n20\n0.0\n30\n0.0\n11\n1.0\n21\n0.0\n31\n0.0\n"
+      "12\n1.0\n22\n1.0\n32\n0.0\n13\n0.0\n23\n1.0\n33\n0.0\n"
+      "0\n3DFACE\n8\n0\n100\nAcDbEntity\n100\nAcDbFace\n"
+      "10\n0.0\n20\n0.0\n30\n1.0\n11\n10.0\n21\n0.0\n31\n2.0\n"
+      "12\n10.0\n22\n10.0\n32\n3.0\n13\n0.0\n23\n10.0\n33\n4.0\n70\n5\n"
+      "0\nSOLID\n8\n0\n100\nAcDbEntity\n100\nAcDbTrace\n"
+      "10\n20.0\n20\n20.0\n30\n0.0\n11\n21.0\n21\n20.0\n31\n0.0\n"
+      "12\n21.0\n22\n21.0\n32\n0.0\n13\n20.0\n23\n21.0\n33\n0.0\n"
+      "0\nENDSEC\n0\nEOF\n";
+  {
+    std::ofstream o(src);
+    o << dxf;
+  }
+
+  REQUIRE(roundTrip(src, out, RS2::FormatDXFRW));
+
+  CHECK(countDxfRecords(out, "RAY") == 1);
+  CHECK(countDxfRecords(out, "XLINE") == 1);
+  CHECK(countDxfRecords(out, "TRACE") == 1);
+  CHECK(countDxfRecords(out, "3DFACE") == 1);
+  CHECK(countDxfRecords(out, "SOLID") == 1);
+
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+}
 
 TEST_CASE("DXF corpus: round-trip ~/dev/dwg_samples/*.dxf to a tmp dir",
           "[corpus]") {

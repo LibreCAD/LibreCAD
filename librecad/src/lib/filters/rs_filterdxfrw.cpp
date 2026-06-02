@@ -1754,6 +1754,31 @@ void RS_FilterDXFRW::addLine(const DRW_Line& data) {
     RS_DEBUG->print("RS_FilterDXF::addLine: OK");
 }
 
+namespace {
+// F2 type-fidelity sidecar markers. LibreCAD's RS model is 2D-lossy for these
+// types (RAY/XLINE -> RS_Line, TRACE -> RS_Solid, 3DFACE -> RS_Polyline drops
+// Z and edge flags), so the original DRW type + FULL geometry is stashed as
+// XDATA on the converted RS entity at read; a write pre-pass rebuilds the
+// native DRW type and consumes the RS entity.
+constexpr const char *kRayMarker = "LibreCAD_RAY";
+constexpr const char *kXlineMarker = "LibreCAD_XLINE";
+constexpr const char *kTraceMarker = "LibreCAD_TRACE";
+constexpr const char *k3dFaceMarker = "LibreCAD_3DFACE";
+
+// Append a type-fidelity sidecar (marker + payload variants) to whatever
+// XDATA the entity already carries from setEntityAttributes().
+void appendTypeSidecar(RS_Entity *entity, const char *marker,
+                       std::vector<std::shared_ptr<DRW_Variant>> payload) {
+  std::vector<std::shared_ptr<DRW_Variant>> ext;
+  if (entity->hasDrwExtData())
+    ext = entity->getDrwExtData();
+  ext.push_back(std::make_shared<DRW_Variant>(1001, std::string(marker)));
+  for (auto &p : payload)
+    ext.push_back(std::move(p));
+  entity->setDrwExtData(std::move(ext));
+}
+} // namespace
+
 /**
  * Implementation of the method which handles ray entities.
  */
@@ -1773,6 +1798,14 @@ void RS_FilterDXFRW::addRay(const DRW_Ray& data) {
     auto entity = new RS_Line{m_currentContainer, {v1, v2}};
     RS_DEBUG->print("RS_FilterDXF::addRay: set attributes");
     setEntityAttributes(entity, &data);
+
+    // F2 sidecar: base point + direction (preserve Z for full fidelity).
+    std::vector<std::shared_ptr<DRW_Variant>> payload;
+    payload.push_back(std::make_shared<DRW_Variant>(
+        1010, DRW_Coord(data.basePoint.x, data.basePoint.y, data.basePoint.z)));
+    payload.push_back(std::make_shared<DRW_Variant>(
+        1011, DRW_Coord(data.secPoint.x, data.secPoint.y, data.secPoint.z)));
+    appendTypeSidecar(entity, kRayMarker, std::move(payload));
 
     RS_DEBUG->print("RS_FilterDXF::addRay: add entity");
 
@@ -1801,6 +1834,14 @@ void RS_FilterDXFRW::addXline(const DRW_Xline& data) {
     auto entity = new RS_Line{m_currentContainer, {v1, v2}};
     RS_DEBUG->print("RS_FilterDXF::addXline: set attributes");
     setEntityAttributes(entity, &data);
+
+    // F2 sidecar: base point + direction (preserve Z for full fidelity).
+    std::vector<std::shared_ptr<DRW_Variant>> payload;
+    payload.push_back(std::make_shared<DRW_Variant>(
+        1010, DRW_Coord(data.basePoint.x, data.basePoint.y, data.basePoint.z)));
+    payload.push_back(std::make_shared<DRW_Variant>(
+        1011, DRW_Coord(data.secPoint.x, data.secPoint.y, data.secPoint.z)));
+    appendTypeSidecar(entity, kXlineMarker, std::move(payload));
 
     RS_DEBUG->print("RS_FilterDXF::addXline: add entity");
 
@@ -1879,6 +1920,23 @@ void RS_FilterDXFRW::addTrace(const DRW_Trace& data) {
     }
 
     setEntityAttributes(entity, &data);
+
+    // F2 sidecar: only for a genuine TRACE (addSolid() routes SOLID here too,
+    // and a SOLID must stay a SOLID). Store all 4 corners with Z (the RS_Solid
+    // is 2D-lossy) so the write pre-pass can rebuild the native TRACE.
+    if (data.eType == DRW::DXF_TRACE) {
+        std::vector<std::shared_ptr<DRW_Variant>> payload;
+        payload.push_back(std::make_shared<DRW_Variant>(
+            1010, DRW_Coord(data.basePoint.x, data.basePoint.y, data.basePoint.z)));
+        payload.push_back(std::make_shared<DRW_Variant>(
+            1011, DRW_Coord(data.secPoint.x, data.secPoint.y, data.secPoint.z)));
+        payload.push_back(std::make_shared<DRW_Variant>(
+            1012, DRW_Coord(data.thirdPoint.x, data.thirdPoint.y, data.thirdPoint.z)));
+        payload.push_back(std::make_shared<DRW_Variant>(
+            1013, DRW_Coord(data.fourPoint.x, data.fourPoint.y, data.fourPoint.z)));
+        appendTypeSidecar(entity, kTraceMarker, std::move(payload));
+    }
+
     m_currentContainer->addEntity(entity);
 }
 
@@ -7877,6 +7935,10 @@ void RS_FilterDXFRW::writeEntities(){
   std::set<RS_Entity *> consumed;
   reconstructPolylineSidecars(m_graphic, consumed);
   reconstructMLines(m_graphic, consumed);
+  // F2: rebuild RAY/XLINE/TRACE/3DFACE from their type-fidelity sidecars.
+  // Both the DXF and DWG writers expose writeRay/writeXline/writeTrace/
+  // write3dface, so this runs for either output.
+  reconstructTypedConversions(m_graphic, consumed);
   // DWG writer has no UNDERLAY encoder yet — keep that reconstruction DXF-only.
   if (!m_dwgW) {
     reconstructUnderlays(m_graphic, consumed);
@@ -8559,6 +8621,149 @@ void RS_FilterDXFRW::reconstructMLines(RS_EntityContainer *container,
       m_dxfW->writeMLine(&ml);
     for (const auto &m : entries)
       consumed.insert(m.entity);
+  }
+}
+
+namespace {
+// One parsed F2 type-fidelity sidecar (marker + payload coords/flag).
+struct TypedConversionSidecar {
+  QString marker;                 // LibreCAD_RAY / _XLINE / _TRACE / _3DFACE
+  std::vector<DRW_Coord> coords;  // 1010.. payload coordinates
+  int flag = 0;                   // 1070 invisible-edge flag (3DFACE only)
+};
+
+// Find a single F2 type-fidelity sidecar on an RS entity's XDATA, if present.
+// The marker codes match those written by appendTypeSidecar() at read time.
+std::optional<TypedConversionSidecar>
+extractTypedConversionSidecar(RS_Entity *e) {
+  if (!e || !e->hasDrwExtData())
+    return std::nullopt;
+  TypedConversionSidecar meta;
+  bool inGroup = false;
+  for (const auto &sp : e->getDrwExtData()) {
+    if (!sp)
+      continue;
+    const int code = sp->code();
+    if (code == 1001) {
+      const std::string app{sp->c_str()};
+      if (app == "LibreCAD_RAY" || app == "LibreCAD_XLINE" ||
+          app == "LibreCAD_TRACE" || app == "LibreCAD_3DFACE") {
+        meta.marker = QString::fromStdString(app);
+        inGroup = true;
+      } else {
+        inGroup = false;
+      }
+      continue;
+    }
+    if (!inGroup)
+      continue;
+    if (code >= 1010 && code <= 1013) {
+      if (const DRW_Coord *crd = sp->coord())
+        meta.coords.push_back(*crd);
+    } else if (code == 1070) {
+      meta.flag = static_cast<int>(sp->i_val());
+    }
+  }
+  if (meta.marker.isEmpty())
+    return std::nullopt;
+  return meta;
+}
+} // namespace
+
+void RS_FilterDXFRW::reconstructTypedConversions(
+    RS_EntityContainer *container, std::set<RS_Entity *> &consumed) {
+  if (!container)
+    return;
+
+  for (RS_Entity *e :
+       lc::LC_ContainerTraverser{*container, RS2::ResolveNone}.entities()) {
+    if (e->getFlag(RS2::FlagUndone))
+      continue;
+    if (consumed.find(e) != consumed.end())
+      continue;
+    auto meta = extractTypedConversionSidecar(e);
+    if (!meta)
+      continue;
+
+    // Build the native DRW entity with full geometry. Attributes (layer,
+    // color, linetype, ...) come from getEntityAttributes(); afterwards the
+    // F2 sidecar markers are stripped so the rebuilt native type does not
+    // carry them back out as XDATA.
+    auto emitNative = [&](DRW_Entity *drw) {
+      getEntityAttributes(drw, e);
+      // Drop the F2 sidecar groups from the re-emitted XDATA so the rebuilt
+      // native type does not carry the marker back out.
+      std::vector<std::shared_ptr<DRW_Variant>> filtered;
+      bool inGroup = false;
+      for (const auto &v : drw->extData) {
+        if (v && v->code() == 1001) {
+          const std::string app{v->c_str()};
+          inGroup = (app == "LibreCAD_RAY" || app == "LibreCAD_XLINE" ||
+                     app == "LibreCAD_TRACE" || app == "LibreCAD_3DFACE");
+          if (inGroup)
+            continue;
+        }
+        if (inGroup)
+          continue;
+        filtered.push_back(v);
+      }
+      drw->extData = std::move(filtered);
+    };
+
+    if (meta->marker == "LibreCAD_RAY") {
+      if (meta->coords.size() < 2)
+        continue;
+      DRW_Ray ray;
+      ray.basePoint = meta->coords[0];
+      ray.secPoint = meta->coords[1];
+      emitNative(&ray);
+      if (m_dwgW)
+        m_dwgW->writeRay(&ray);
+      else if (m_dxfW)
+        m_dxfW->writeRay(&ray);
+      consumed.insert(e);
+    } else if (meta->marker == "LibreCAD_XLINE") {
+      if (meta->coords.size() < 2)
+        continue;
+      DRW_Xline xline;
+      xline.basePoint = meta->coords[0];
+      xline.secPoint = meta->coords[1];
+      emitNative(&xline);
+      if (m_dwgW)
+        m_dwgW->writeXline(&xline);
+      else if (m_dxfW)
+        m_dxfW->writeXline(&xline);
+      consumed.insert(e);
+    } else if (meta->marker == "LibreCAD_TRACE") {
+      if (meta->coords.size() < 4)
+        continue;
+      DRW_Trace trace;
+      trace.basePoint = meta->coords[0];
+      trace.secPoint = meta->coords[1];
+      trace.thirdPoint = meta->coords[2];
+      trace.fourPoint = meta->coords[3];
+      emitNative(&trace);
+      if (m_dwgW)
+        m_dwgW->writeTrace(&trace);
+      else if (m_dxfW)
+        m_dxfW->writeTrace(&trace);
+      consumed.insert(e);
+    } else if (meta->marker == "LibreCAD_3DFACE") {
+      if (meta->coords.size() < 4)
+        continue;
+      DRW_3Dface face;
+      face.basePoint = meta->coords[0];
+      face.secPoint = meta->coords[1];
+      face.thirdPoint = meta->coords[2];
+      face.fourPoint = meta->coords[3];
+      face.invisibleflag = meta->flag;
+      emitNative(&face);
+      if (m_dwgW)
+        m_dwgW->write3dface(&face);
+      else if (m_dxfW)
+        m_dxfW->write3dface(&face);
+      consumed.insert(e);
+    }
   }
 }
 
@@ -10382,6 +10587,21 @@ void RS_FilterDXFRW::add3dFace(const DRW_3Dface& data) {
     polyline->addVertex(v2, 0.0);
     polyline->addVertex(v3, 0.0);
     polyline->addVertex(v4, 0.0);
+
+    // F2 sidecar: the RS_Polyline drops Z + the invisible-edge flags, so store
+    // all 4 corners with Z and the flag (code 70) for native 3DFACE rebuild.
+    std::vector<std::shared_ptr<DRW_Variant>> payload;
+    payload.push_back(std::make_shared<DRW_Variant>(
+        1010, DRW_Coord(data.basePoint.x, data.basePoint.y, data.basePoint.z)));
+    payload.push_back(std::make_shared<DRW_Variant>(
+        1011, DRW_Coord(data.secPoint.x, data.secPoint.y, data.secPoint.z)));
+    payload.push_back(std::make_shared<DRW_Variant>(
+        1012, DRW_Coord(data.thirdPoint.x, data.thirdPoint.y, data.thirdPoint.z)));
+    payload.push_back(std::make_shared<DRW_Variant>(
+        1013, DRW_Coord(data.fourPoint.x, data.fourPoint.y, data.fourPoint.z)));
+    payload.push_back(std::make_shared<DRW_Variant>(
+        1070, std::int32_t{data.invisibleflag}));
+    appendTypeSidecar(polyline, k3dFaceMarker, std::move(payload));
 
     m_currentContainer->addEntity(polyline);
 }

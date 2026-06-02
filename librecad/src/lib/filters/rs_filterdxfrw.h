@@ -425,6 +425,15 @@ private:
      *  through as plain LWPOLYLINEs. */
     void reconstructUnderlays(RS_EntityContainer *container,
                               std::set<RS_Entity *> &consumed);
+
+    /** Scan @p container for RS entities carrying a F2 type-fidelity
+     *  sidecar (LibreCAD_RAY / _XLINE / _TRACE / _3DFACE XDATA), rebuild the
+     *  native DRW type with full geometry (incl. Z) via the existing
+     *  writeRay/writeXline/writeTrace/write3dface, and record the consumed
+     *  RS entity so the normal entity-write loop skips it. Entities without
+     *  the marker fall through to their lossy default write. */
+    void reconstructTypedConversions(RS_EntityContainer *container,
+                                     std::set<RS_Entity *> &consumed);
     /** File m_codePage. Used to find the text coder. */
     QString m_codePage;
     /** File version. */
