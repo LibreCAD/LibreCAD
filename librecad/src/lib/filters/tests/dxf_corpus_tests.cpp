@@ -43,11 +43,14 @@
 #include <filesystem>
 #include <fstream>
 #include <iostream>
+#include <set>
 #include <string>
 #include <vector>
 
 #include <QCoreApplication>
 
+#include "lc_containertraverser.h"
+#include "rs_entity.h"
 #include "rs_filterdxfrw.h"
 #include "rs_graphic.h"
 #include "rs_settings.h"
@@ -175,6 +178,49 @@ TEST_CASE("DXF round-trip preserves RAY/XLINE/TRACE/3DFACE native types (F2)",
 
   std::filesystem::remove(src);
   std::filesystem::remove(out);
+}
+
+// F3a: RS_Entity now stores its source DXF/DWG handle (group code 5), captured
+// in setEntityAttributes during import. This is the enabler for an old->new
+// handle map (GROUP code-340 etc.). Assert a read LINE carries its handle.
+TEST_CASE("DXF import captures the source entity handle on RS_Entity (F3a)",
+          "[dxf][roundtrip][filter][handles][f3a]") {
+  ensureSettings();
+  const std::filesystem::path src =
+      std::filesystem::temp_directory_path() / "f3a_srchandle.dxf";
+  std::filesystem::remove(src);
+
+  // Two LINEs with explicit code-5 handles 1A4 and 1A5.
+  const std::string dxf =
+      "0\nSECTION\n2\nENTITIES\n"
+      "0\nLINE\n5\n1A4\n8\n0\n10\n0.0\n20\n0.0\n30\n0.0\n"
+      "11\n10.0\n21\n10.0\n31\n0.0\n"
+      "0\nLINE\n5\n1A5\n8\n0\n10\n1.0\n20\n1.0\n30\n0.0\n"
+      "11\n11.0\n21\n11.0\n31\n0.0\n"
+      "0\nENDSEC\n0\nEOF\n";
+  {
+    std::ofstream o(src);
+    o << dxf;
+  }
+
+  RS_Graphic graphic;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(src.string()),
+                              RS2::FormatDXFRW));
+  }
+
+  std::set<quint32> seen;
+  for (RS_Entity *e :
+       lc::LC_ContainerTraverser{graphic, RS2::ResolveNone}.entities()) {
+    if (e->rtti() == RS2::EntityLine && e->sourceHandle() != 0)
+      seen.insert(e->sourceHandle());
+  }
+  // 0x1A4 == 420, 0x1A5 == 421.
+  CHECK(seen.count(0x1A4) == 1);
+  CHECK(seen.count(0x1A5) == 1);
+
+  std::filesystem::remove(src);
 }
 
 TEST_CASE("DXF corpus: round-trip ~/dev/dwg_samples/*.dxf to a tmp dir",

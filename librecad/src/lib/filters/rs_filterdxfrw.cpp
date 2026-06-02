@@ -10392,6 +10392,10 @@ void RS_FilterDXFRW::setEntityAttributes(RS_Entity* entity,
     entity->setVisualStyleHandles(attrib->fullVisualStyleHandle,
                                   attrib->faceVisualStyleHandle,
                                   attrib->edgeVisualStyleHandle);
+    // Source DXF/DWG handle (code 5). Lets the writer build an old->new
+    // handle map for refs that target model entities (F3a; GROUP code-340).
+    if (attrib->handle != DRW::NoHandle)
+      entity->setSourceHandle(attrib->handle);
 
     // Preserve any XDATA / EED that came in with the entity. Stored
     // verbatim on RS_Entity so a later getEntityAttributes() can spit
