@@ -27,6 +27,7 @@
 
 #include <QDir>
 #include <QFileInfo>
+#include <QGuiApplication>
 
 #include "qc_applicationwindow.h"
 #include "rs_debug.h"
@@ -124,6 +125,16 @@ void RS_Image::updateData(RS_Vector size, RS_Vector Uv, RS_Vector Vv) {
 
 void RS_Image::update() {
     RS_DEBUG->print("RS_Image::update");
+
+    // Headless guard: constructing a QImage pulls in the GUI image plugins,
+    // which abort without a running GUI application (e.g. a QCoreApplication
+    // test harness round-tripping a drawing that contains an IMAGE/WIPEOUT).
+    // Geometry/borders are unaffected; skip only the raster load when no GUI
+    // app is present. Behaviour is unchanged once a real QApplication exists.
+    if (QGuiApplication::instance() == nullptr) {
+        RS_DEBUG->print("RS_Image::update: no GUI application, skipping raster load");
+        return;
+    }
 
     // the whole image:
     QString filePathName = imageRelativePathName(data.file);
