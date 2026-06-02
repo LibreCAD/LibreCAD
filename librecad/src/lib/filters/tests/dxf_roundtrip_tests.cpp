@@ -570,3 +570,63 @@ TEST_CASE("DXF export gives PLOTSETTINGS an owner handle (no ownerless prune)",
   std::filesystem::remove(src);
   std::filesystem::remove(out);
 }
+
+TEST_CASE("DXF unmodeled custom ENTITY round-trips with a CLASS record (HELIX)",
+          "[dxf][roundtrip][filter][entityclass]") {
+  // A custom entity LibreCAD does not model (HELIX) reaches rawDxfEntities and is
+  // re-emitted verbatim; without a CLASS, AutoCAD/ODA prune it. ezdxf 1.4.4 audit
+  // confirmed clean once the entity CLASS is emitted.
+  ensureSettings();
+  const std::string src = tmpFile("esrc.dxf");
+  const std::string out = tmpFile("eout.dxf");
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+  // A representative HELIX (subclass markers + a few body groups). Exact spline
+  // content is irrelevant here — the raw net captures and re-emits it verbatim;
+  // this fixture validates round-trip + CLASS emission, not ezdxf strict parsing
+  // (ezdxf knows HELIX natively and would require full AcDbSpline data — that
+  // needs a real-file sample, see commit notes).
+  writeText(src,
+            "0\nSECTION\n2\nENTITIES\n"
+            "0\nLINE\n8\n0\n10\n0.0\n20\n0.0\n11\n10.0\n21\n10.0\n"
+            "0\nHELIX\n5\n7A\n100\nAcDbEntity\n8\n0\n100\nAcDbSpline\n"
+            "70\n0\n71\n3\n72\n0\n73\n0\n74\n0\n"
+            "100\nAcDbHelix\n90\n29\n91\n63\n10\n0.0\n20\n0.0\n30\n0.0\n"
+            "40\n1.0\n41\n1.0\n42\n1.0\n290\n1\n280\n1\n"
+            "0\nENDSEC\n0\nEOF\n");
+  RS_Graphic graphic;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(src),
+                              RS2::FormatDXFRW));
+  }
+  {
+    bool sawHelix = false;
+    for (const DRW_RawDxfObject &e : graphic.dwgAdvancedMetadata().rawDxfEntities())
+      if (e.name == "HELIX")
+        sawHelix = true;
+    CHECK(sawHelix);
+  }
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out),
+                              RS2::FormatDXFRW));
+  }
+  CHECK(countRecords(out, "HELIX") >= 1);                  // entity re-emitted
+  CHECK(classRecordNames(out).count("HELIX") == 1);        // with a CLASS record
+
+  RS_Graphic graphic2;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic2, QString::fromStdString(out),
+                              RS2::FormatDXFRW));
+  }
+  bool sawHelix2 = false;
+  for (const DRW_RawDxfObject &e : graphic2.dwgAdvancedMetadata().rawDxfEntities())
+    if (e.name == "HELIX")
+      sawHelix2 = true;
+  CHECK(sawHelix2);
+
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+}

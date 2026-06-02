@@ -5298,22 +5298,27 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic& g, const QString& file, RS2::FormatT
         duint32 maxRawHandle = 0;
         std::vector<DRW_Class> classes;
         std::map<std::string, std::size_t> classIdx;
-        for (const DRW_RawDxfObject &o : metadata.rawDxfObjects()) {
-            maxRawHandle = std::max(maxRawHandle, o.handle);
+        auto registerClassFor = [&](const std::string &recordName) {
             DRW_Class cls;
-            if (!dxfRW::dxfClassForRecordName(o.name, cls))
-                continue;
-            auto it = classIdx.find(o.name);
+            if (!dxfRW::dxfClassForRecordName(recordName, cls))
+                return;
+            auto it = classIdx.find(recordName);
             if (it == classIdx.end()) {
                 cls.instanceCount = 1;
-                classIdx.emplace(o.name, classes.size());
+                classIdx.emplace(recordName, classes.size());
                 classes.push_back(cls);
             } else {
                 ++classes[it->second].instanceCount;
             }
+        };
+        for (const DRW_RawDxfObject &o : metadata.rawDxfObjects()) {
+            maxRawHandle = std::max(maxRawHandle, o.handle);
+            registerClassFor(o.name);
         }
-        for (const DRW_RawDxfObject &e : metadata.rawDxfEntities())
+        for (const DRW_RawDxfObject &e : metadata.rawDxfEntities()) {
             maxRawHandle = std::max(maxRawHandle, e.handle);
+            registerClassFor(e.name);  //custom ENTITIES need a CLASS too
+        }
         if (maxRawHandle != 0)
             m_dxfW->setHandleSeedFloor(static_cast<int>(maxRawHandle));
         if (!classes.empty())

@@ -4378,28 +4378,41 @@ bool dxfRW::writeRawDxfObject(DRW_RawDxfObject *obj) {
 //LibreCAD<->LibreCAD but get no CLASS (a heuristic proxy is a deliberate TODO,
 //since distinguishing a custom class from an unmodeled fixed type is unsafe).
 bool dxfRW::dxfClassForRecordName(const std::string &recName, DRW_Class &out) {
-    struct Entry { const char *rec; const char *cls; const char *app; int flag; };
+    struct Entry { const char *rec; const char *cls; const char *app; int flag; int isEntity; };
     static const Entry table[] = {
         // Routed data-only OBJECTS (also captured into the raw net on read).
-        {"SUN",              "AcDbSun",                 "SCENEOE",           1153},
-        {"SCALE",            "AcDbScale",               "ObjectDBX Classes", 1153},
-        {"DICTIONARYVAR",    "AcDbDictionaryVar",       "ObjectDBX Classes", 0},
-        {"RASTERVARIABLES",  "AcDbRasterVariables",     "ISM",               0},
-        {"WIPEOUTVARIABLES", "AcDbWipeoutVariables",    "WipeOut",           0},
+        {"SUN",              "AcDbSun",                 "SCENEOE",           1153, 0},
+        {"SCALE",            "AcDbScale",               "ObjectDBX Classes", 1153, 0},
+        {"DICTIONARYVAR",    "AcDbDictionaryVar",       "ObjectDBX Classes", 0, 0},
+        {"RASTERVARIABLES",  "AcDbRasterVariables",     "ISM",               0, 0},
+        {"WIPEOUTVARIABLES", "AcDbWipeoutVariables",    "WipeOut",           0, 0},
         // Common unmodeled custom OBJECTS that reach the raw net verbatim.
-        {"MATERIAL",         "AcDbMaterial",            "ObjectDBX Classes", 1153},
-        {"VISUALSTYLE",      "AcDbVisualStyle",         "ObjectDBX Classes", 4095},
-        {"TABLESTYLE",       "AcDbTableStyle",          "ObjectDBX Classes", 4095},
-        {"MLEADERSTYLE",     "AcDbMLeaderStyle", "ACDB_MLEADERSTYLE_CLASS", 4095},
-        {"ACDBPLACEHOLDER",  "AcDbPlaceHolder",         "ObjectDBX Classes", 0},
-        {"CELLSTYLEMAP",     "AcDbCellStyleMap",        "ObjectDBX Classes", 1152},
-        {"FIELDLIST",        "AcDbFieldList",           "ObjectDBX Classes", 1152},
-        {"GEODATA",          "AcDbGeoData",             "ObjectDBX Classes", 4095},
-        {"SORTENTSTABLE",    "AcDbSortentsTable",       "ObjectDBX Classes", 0},
-        {"IDBUFFER",         "AcDbIdBuffer",            "ObjectDBX Classes", 0},
-        {"LAYER_INDEX",      "AcDbLayerIndex",          "ObjectDBX Classes", 0},
-        {"SPATIAL_INDEX",    "AcDbSpatialIndex",        "ObjectDBX Classes", 0},
-        {"DIMASSOC",         "AcDbDimAssoc",            "AcDbDimAssoc",      0},
+        {"MATERIAL",         "AcDbMaterial",            "ObjectDBX Classes", 1153, 0},
+        {"VISUALSTYLE",      "AcDbVisualStyle",         "ObjectDBX Classes", 4095, 0},
+        {"TABLESTYLE",       "AcDbTableStyle",          "ObjectDBX Classes", 4095, 0},
+        {"MLEADERSTYLE",     "AcDbMLeaderStyle", "ACDB_MLEADERSTYLE_CLASS", 4095, 0},
+        {"ACDBPLACEHOLDER",  "AcDbPlaceHolder",         "ObjectDBX Classes", 0, 0},
+        {"CELLSTYLEMAP",     "AcDbCellStyleMap",        "ObjectDBX Classes", 1152, 0},
+        {"FIELDLIST",        "AcDbFieldList",           "ObjectDBX Classes", 1152, 0},
+        {"GEODATA",          "AcDbGeoData",             "ObjectDBX Classes", 4095, 0},
+        {"SORTENTSTABLE",    "AcDbSortentsTable",       "ObjectDBX Classes", 0, 0},
+        {"IDBUFFER",         "AcDbIdBuffer",            "ObjectDBX Classes", 0, 0},
+        {"LAYER_INDEX",      "AcDbLayerIndex",          "ObjectDBX Classes", 0, 0},
+        {"SPATIAL_INDEX",    "AcDbSpatialIndex",        "ObjectDBX Classes", 0, 0},
+        {"DIMASSOC",         "AcDbDimAssoc",            "AcDbDimAssoc",      0, 0},
+        // Custom ENTITIES (isEntity=1) that reach the raw net (rawDxfEntities)
+        // when LibreCAD does not model them; without a CLASS, AutoCAD/ODA prune
+        // them on load.
+        {"ACAD_TABLE",       "AcDbTable",               "ObjectDBX Classes", 1025, 1},
+        {"HELIX",            "AcDbHelix",               "ObjectDBX Classes", 4095, 1},
+        {"MPOLYGON",         "AcDbMPolygon",            "AcMPolygonObj15",   1025, 1},
+        {"SURFACE",          "AcDbSurface",             "ObjectDBX Classes", 4095, 1},
+        {"EXTRUDEDSURFACE",  "AcDbExtrudedSurface",     "ObjectDBX Classes", 4095, 1},
+        {"LOFTEDSURFACE",    "AcDbLoftedSurface",       "ObjectDBX Classes", 0, 1},
+        {"REVOLVEDSURFACE",  "AcDbRevolvedSurface",     "ObjectDBX Classes", 0, 1},
+        {"SWEPTSURFACE",     "AcDbSweptSurface",        "ObjectDBX Classes", 0, 1},
+        {"PLANESURFACE",     "AcDbPlaneSurface",        "ObjectDBX Classes", 4095, 1},
+        {"NURBSSURFACE",     "AcDbNurbSurface",         "ObjectDBX Classes", 4095, 1},
     };
     for (const Entry &e : table) {
         if (recName == e.rec) {
@@ -4408,7 +4421,7 @@ bool dxfRW::dxfClassForRecordName(const std::string &recName, DRW_Class &out) {
             out.appName = e.app;
             out.proxyFlag = e.flag;
             out.wasaProxyFlag = 0;
-            out.entityFlag = 0;     //all are object (not entity) classes
+            out.entityFlag = e.isEntity;
             out.instanceCount = 0;
             return true;
         }
