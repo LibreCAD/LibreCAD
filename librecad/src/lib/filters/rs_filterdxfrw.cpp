@@ -5287,15 +5287,16 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic& g, const QString& file, RS2::FormatT
     // fixme - sand - save to binary format enabling/disabling!!
     bool binary = false;
 
-    // Before write(): (1) reserve the minted-handle space above any verbatim
-    // handle preserved in the raw-passthrough net (rawDxfObjects/rawDxfEntities
-    // re-emit their original code-5 handle) so a preserved raw handle cannot
-    // collide with a handle LibreCAD assigns to its own entities/objects, and
-    // (2) register a DXF CLASS record for each custom-class object present in the
-    // raw net so AutoCAD/ODA accept those instances (entry + instance co-emit).
+    // Before write(): (1) reserve every verbatim code-5 handle preserved in the
+    // raw-passthrough net (rawDxfObjects/rawDxfEntities re-emit their original
+    // handle) in the codec's HandleAllocator so a minted handle can never
+    // collide with a preserved raw handle, AND a preserved raw handle that lands
+    // in the codec's fixed-low band (0x10-0x25) is skipped by next() too — this
+    // is the DWG-path reserve-and-preserve mechanism (dwgWriter::reserveHandle),
+    // and (2) register a DXF CLASS record for each custom-class object present in
+    // the raw net so AutoCAD/ODA accept those instances (entry + instance co-emit).
     {
         const auto &metadata = g.dwgAdvancedMetadata();
-        std::uint32_t maxRawHandle = 0;
         std::vector<DRW_Class> classes;
         std::map<std::string, std::size_t> classIdx;
         auto registerClassFor = [&](const std::string &recordName) {
@@ -5312,15 +5313,15 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic& g, const QString& file, RS2::FormatT
             }
         };
         for (const DRW_RawDxfObject &o : metadata.rawDxfObjects()) {
-            maxRawHandle = std::max(maxRawHandle, o.handle);
+            if (o.handle != 0)
+                m_dxfW->reserveHandle(o.handle);
             registerClassFor(o.name);
         }
         for (const DRW_RawDxfObject &e : metadata.rawDxfEntities()) {
-            maxRawHandle = std::max(maxRawHandle, e.handle);
+            if (e.handle != 0)
+                m_dxfW->reserveHandle(e.handle);
             registerClassFor(e.name);  //custom ENTITIES need a CLASS too
         }
-        if (maxRawHandle != 0)
-            m_dxfW->setHandleSeedFloor(static_cast<int>(maxRawHandle));
         if (!classes.empty())
             m_dxfW->setDxfClasses(classes);
 

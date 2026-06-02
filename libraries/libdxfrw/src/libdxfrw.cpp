@@ -153,11 +153,14 @@ bool dxfRW::write(DRW_Interface *interface_, DRW::Version ver, bool bin){
     DRW_Header header;
     iface->writeHeader(header);
     writer->writeString(0, "SECTION");
-    //Start minted (++entCount) handles above any verbatim handle preserved in
-    //the raw-passthrough net so a re-emitted raw OBJECT/ENTITY (code 5) cannot
-    //collide with a freshly-assigned LibreCAD handle. Defaults to FIRSTHANDLE
-    //when nothing was preserved (m_handleSeedFloor == 0), matching legacy output.
-    entCount = (m_handleSeedFloor > FIRSTHANDLE) ? m_handleSeedFloor : FIRSTHANDLE;
+    //Reserve the codec's fixed structural code-5 literals (table heads, mandatory
+    //records, BLOCK_RECORDs, *Model/*Paper BLOCK+ENDBLK, root dict C / ACAD_GROUP
+    //D) so the minted-handle stream (m_handleAllocator.next()) skips them. Any raw
+    //code-5 handle preserved by the filter was already reserve()d before write(),
+    //so a re-emitted raw OBJECT/ENTITY can collide with neither a minted handle
+    //nor a fixed-low structural handle. The first next() yields FIRSTHANDLE (0x30)
+    //exactly as the legacy ++entCount did, keeping a fresh write byte-identical.
+    seedReservedDxf();
     header.write(writer, version);
     writer->writeString(0, "ENDSEC");
     if (ver > DRW::AC1009) {
@@ -200,9 +203,43 @@ bool dxfRW::write(DRW_Interface *interface_, DRW::Version ver, bool bin){
     return isOk;
 }
 
+void dxfRW::seedReservedDxf() {
+    // Fixed structural code-5 handles the codec writes as literals (see
+    // writeTables/writeBlocks/writeBlockRecord/writeObjects). These DIFFER from
+    // the DWG seedReserved() set — they are the DXF codec's own canonical values
+    // and stay verbatim. Reserving them up front lets m_handleAllocator.next()
+    // skip them while preserving FIRSTHANDLE (0x30) as the first minted handle.
+    static const std::uint32_t fixed[] = {
+        0x1,   // BLOCK_RECORD table head
+        0x2,   // LAYER table head
+        0x3,   // STYLE table head
+        0x5,   // LTYPE table head
+        0x6,   // VIEW table head
+        0x7,   // UCS table head
+        0x8,   // VPORT table head
+        0x9,   // APPID table head
+        0xA,   // DIMSTYLE table head
+        0xC,   // NamedObjectsDictionary (root dict)
+        0xD,   // ACAD_GROUP dictionary
+        0x10,  // LAYER "0"
+        0x12,  // APPID "ACAD"
+        0x14,  // LTYPE "ByBlock"
+        0x15,  // LTYPE "ByLayer"
+        0x16,  // LTYPE "Continuous"
+        0x1C,  // ENDBLK *Paper_Space
+        0x1D,  // (legacy) ENDBLK literal / *Paper_Space block-end region
+        0x1E,  // BLOCK_RECORD "*Paper_Space"
+        0x1F,  // BLOCK_RECORD "*Model_Space"
+        0x20,  // BLOCK "*Model_Space"
+        0x21,  // ENDBLK "*Model_Space"
+    };
+    for (std::uint32_t h : fixed)
+        m_handleAllocator.reserve(h);
+}
+
 bool dxfRW::writeEntity(DRW_Entity *ent) {
-    ent->handle = ++entCount;
-    writer->writeString(5, toHexStr(ent->handle));
+    ent->handle = m_handleAllocator.next();
+    writer->writeString(5, toHexStr(static_cast<int>(ent->handle)));
     if (version > DRW::AC1009) {
         writer->writeString(100, "AcDbEntity");
     }
@@ -300,7 +337,7 @@ bool dxfRW::writeLineType(DRW_LType *ent){
     }
     writer->writeString(0, "LTYPE");
     if (version > DRW::AC1009) {
-        int handle = ++entCount;
+        int handle = static_cast<int>(m_handleAllocator.next());
         writer->writeString(5, toHexStr(handle));
         m_writingContext.lineTypesMap.emplace_back(strname, handle);
         if (version > DRW::AC1012) {
@@ -336,7 +373,7 @@ bool dxfRW::writeLayer(DRW_Layer *ent){
         }
     } else {
         if (version > DRW::AC1009) {
-            writer->writeString(5, toHexStr(++entCount));
+            writer->writeString(5, toHexStr(static_cast<int>(m_handleAllocator.next())));
         }
     }
     if (version > DRW::AC1012) {
@@ -380,8 +417,9 @@ bool dxfRW::writeTextstyle(DRW_Textstyle *ent){
         }
     }
     if (version > DRW::AC1009) {
-        writer->writeString(5, toHexStr(++entCount));
-        textStyleMap[name] = entCount;
+        int handle = static_cast<int>(m_handleAllocator.next());
+        writer->writeString(5, toHexStr(handle));
+        textStyleMap[name] = handle;
     }
 
     if (version > DRW::AC1012) {
@@ -419,7 +457,7 @@ bool dxfRW::writeVport(DRW_Vport *ent){
     }
     writer->writeString(0, "VPORT");
     if (version > DRW::AC1009) {
-        writer->writeString(5, toHexStr(++entCount));
+        writer->writeString(5, toHexStr(static_cast<int>(m_handleAllocator.next())));
         if (version > DRW::AC1012)
             writer->writeString(330, "2");
         writer->writeString(100, "AcDbSymbolTableRecord");
@@ -499,7 +537,7 @@ bool dxfRW::writeDimstyle(DRW_Dimstyle *ent){
             dimstyleStd = true;
     }
     if (version > DRW::AC1009) {
-        writer->writeString(105, toHexStr(++entCount));
+        writer->writeString(105, toHexStr(static_cast<int>(m_handleAllocator.next())));
     }
 
     if (version > DRW::AC1012) {
@@ -631,7 +669,7 @@ bool dxfRW::writeDimstyle(DRW_Dimstyle *ent){
 bool dxfRW::writeView(DRW_View *ent){
     writer->writeString(0, "VIEW");
     if (version > DRW::AC1009) {
-        writer->writeString(5, toHexStr(++entCount));
+        writer->writeString(5, toHexStr(static_cast<int>(m_handleAllocator.next())));
         if (version > DRW::AC1012)
             writer->writeString(330, "6");
         writer->writeString(100, "AcDbSymbolTableRecord");
@@ -679,7 +717,7 @@ bool dxfRW::writeView(DRW_View *ent){
 bool dxfRW::writeUCS(DRW_UCS *ent){
     writer->writeString(0, "UCS");
     if (version > DRW::AC1009) {
-        writer->writeString(5, toHexStr(++entCount));
+        writer->writeString(5, toHexStr(static_cast<int>(m_handleAllocator.next())));
         if (version > DRW::AC1012)
             writer->writeString(330, "7");
         writer->writeString(100, "AcDbSymbolTableRecord");
@@ -713,7 +751,7 @@ bool dxfRW::writeAppId(DRW_AppId *ent){
         return true;
     writer->writeString(0, "APPID");
     if (version > DRW::AC1009) {
-        writer->writeString(5, toHexStr(++entCount));
+        writer->writeString(5, toHexStr(static_cast<int>(m_handleAllocator.next())));
         if (version > DRW::AC1014) {
             writer->writeString(330, "9");
         }
@@ -1796,10 +1834,10 @@ DRW_ImageDef* dxfRW::writeImage(DRW_Image *ent, std::string name){
         if (id == NULL) {
             id = new DRW_ImageDef();
             imageDef.push_back(id);
-            id->handle = ++entCount;
+            id->handle = m_handleAllocator.next();
         }
         id->name = name;
-        std::string idReactor = toHexStr(++entCount);
+        std::string idReactor = toHexStr(static_cast<int>(m_handleAllocator.next()));
 
         writer->writeString(0, "IMAGE");
         writeEntity(ent);
@@ -1915,10 +1953,15 @@ bool dxfRW::writeWipeout(DRW_Image *ent){
 bool dxfRW::writeBlockRecord(std::string name, int insUnits){
     if (version > DRW::AC1009) {
         writer->writeString(0, "BLOCK_RECORD");
-        writer->writeString(5, toHexStr(++entCount));
+        // Mint the BLOCK_RECORD handle, then reserve the next two for the
+        // matching BLOCK (currHandle+1) and ENDBLK (currHandle+2) emitted by
+        // writeBlock/writeBlocks, mirroring the legacy "entCount = 2+entCount".
+        std::uint32_t blockRecordHandle = m_handleAllocator.next();
+        writer->writeString(5, toHexStr(static_cast<int>(blockRecordHandle)));
 
-        blockMap[name] = entCount;
-        entCount = 2+entCount;//reserve 2 for BLOCK & ENDBLOCK
+        blockMap[name] = static_cast<int>(blockRecordHandle);
+        m_handleAllocator.reserve(blockRecordHandle + 1);  // BLOCK
+        m_handleAllocator.reserve(blockRecordHandle + 2);  // ENDBLK
         if (version > DRW::AC1014) {
             writer->writeString(330, "1");
         }
@@ -2331,7 +2374,7 @@ bool dxfRW::writeObjects() {
     writer->writeString(350, "D");
     if (imageDef.size() != 0) {
         writer->writeString(3, "ACAD_IMAGE_DICT");
-        imgDictH = toHexStr(++entCount);
+        imgDictH = toHexStr(static_cast<int>(m_handleAllocator.next()));
         writer->writeString(350, imgDictH);
     }
     //Slice (spine-dicts): re-attach raw-net-routed named dictionaries to the
@@ -4431,7 +4474,7 @@ bool dxfRW::dxfClassForRecordName(const std::string &recName, DRW_Class &out) {
 
 bool dxfRW::writePlotSettings(DRW_PlotSettings *ent) {
     writer->writeString(0, "PLOTSETTINGS");
-    writer->writeString(5, toHexStr(++entCount));
+    writer->writeString(5, toHexStr(static_cast<int>(m_handleAllocator.next())));
     if (version > DRW::AC1014) {
         writer->writeString(330, "C");  //owner: root dict (avoids ownerless prune)
     }

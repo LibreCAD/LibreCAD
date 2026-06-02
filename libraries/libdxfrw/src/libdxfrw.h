@@ -24,6 +24,7 @@
 #include "drw_classes.h"
 #include "drw_header.h"
 #include "drw_interface.h"
+#include "handle_allocator.h"
 
 
 class dxfReader;
@@ -115,11 +116,17 @@ public:
     void setEllipseParts(int parts){elParts = parts;} /*!< set parts number when convert ellipse to polyline */
     bool writePlotSettings(DRW_PlotSettings *ent);
     bool writeRawDxfObject(DRW_RawDxfObject *obj);
-    /*!< Reserve a minimum value for minted (++entCount) handles so they cannot
-     * collide with verbatim handles preserved in the raw-passthrough net. The
-     * filter sets this to the max code-5 handle seen in rawDxfObjects/Entities
-     * before write(); 0 (default) keeps the historical FIRSTHANDLE start. */
-    void setHandleSeedFloor(int floor) { m_handleSeedFloor = floor; }
+    /*!< Mark a specific code-5 handle as in-use so the minted-handle stream
+     * (m_handleAllocator.next()) never re-issues it. Mirrors
+     * dwgWriter::reserveHandle. The filter calls this for every verbatim handle
+     * preserved in the raw-passthrough net (rawDxfObjects/rawDxfEntities) before
+     * write(), so a re-emitted raw OBJECT/ENTITY cannot collide with either a
+     * freshly-minted handle or a fixed-low structural handle. */
+    void reserveHandle(std::uint32_t h) { m_handleAllocator.reserve(h); }
+    /*!< High-water mark of the handle allocator (one past the largest handle
+     * reserved or minted so far). Used to populate $HANDSEED. Mirrors
+     * dwgWriter::highWaterHandle. */
+    std::uint32_t highWaterHandle() const { return m_handleAllocator.current(); }
     /*!< Register the CLASS records to emit in the DXF CLASSES section (custom,
      * non-fixed object classes actually present in the output). The filter
      * builds this from the raw-net objects before write(); empty by default. */
@@ -222,6 +229,13 @@ private:
     void captureRawGroup(DRW_RawDxfObject &obj, int code);
 
 //    bool writeHeader();
+    /// Reserve the DXF codec's fixed structural code-5 literals (table heads,
+    /// mandatory table records, BLOCK_RECORDs, the *Model/*Paper BLOCK+ENDBLK,
+    /// and the root dict "C" / ACAD_GROUP "D") in m_handleAllocator before the
+    /// body is streamed. These DIFFER from the DWG seedReserved() set. After
+    /// this, the first next() yields FIRSTHANDLE (0x30) exactly as the legacy
+    /// ++entCount did, so a fresh write (empty raw net) is byte-identical.
+    void seedReservedDxf();
     bool writeEntity(DRW_Entity *ent);
     bool writeArcDimension(DRW_DimArc *d);
     bool writeTables();
@@ -249,8 +263,12 @@ private:
     DRW_Header header;
 //    int section;
     std::string nextentity;
-    int entCount;
-    int m_handleSeedFloor {0};
+    /// Mints monotonic, collision-free code-5 handles for the DXF write path.
+    /// Seeded with the codec's fixed structural literals (seedReservedDxf) plus
+    /// every raw-net handle the filter reserves before write(); next() then
+    /// skips that whole set, so a minted handle can never duplicate a fixed-low
+    /// or preserved-raw handle. Replaces the old `int entCount` + handle floor.
+    HandleAllocator m_handleAllocator;
     std::vector<DRW_Class> m_dxfClasses;
     std::vector<std::pair<std::string, std::string>> m_rootDictEntries;
     bool wlayer0;
