@@ -27,7 +27,7 @@ namespace {
 
 /// File-header CRC seed-XOR adjustment (matches reader at
 /// dwgreader15.cpp:94-106). Indexed by `num_sections`.
-duint16 seedXorForCount(duint8 numSections) {
+std::uint16_t seedXorForCount(std::uint8_t numSections) {
     switch (numSections) {
         case 3: return 0xA598;
         case 4: return 0x8101;
@@ -46,72 +46,72 @@ duint16 seedXorForCount(duint8 numSections) {
 /// `HandleAllocator::seedReserved` and the Phase 3 sub-plan §"Reserved
 /// (fixed) handles".  0x04 is intentionally unused.
 namespace reservedHandle {
-    constexpr duint32 BLOCK_CONTROL              = 0x01;
-    constexpr duint32 LAYER_CONTROL              = 0x02;
-    constexpr duint32 STYLE_CONTROL              = 0x03;
-    constexpr duint32 LTYPE_CONTROL              = 0x05;
-    constexpr duint32 VIEW_CONTROL               = 0x06;
-    constexpr duint32 UCS_CONTROL                = 0x07;
-    constexpr duint32 VPORT_CONTROL              = 0x08;
-    constexpr duint32 APPID_CONTROL              = 0x09;
-    constexpr duint32 DIMSTYLE_CONTROL           = 0x0A;
-    constexpr duint32 VPORT_ENTITY_HEADER_CONTROL = 0x0B;
+    constexpr std::uint32_t BLOCK_CONTROL              = 0x01;
+    constexpr std::uint32_t LAYER_CONTROL              = 0x02;
+    constexpr std::uint32_t STYLE_CONTROL              = 0x03;
+    constexpr std::uint32_t LTYPE_CONTROL              = 0x05;
+    constexpr std::uint32_t VIEW_CONTROL               = 0x06;
+    constexpr std::uint32_t UCS_CONTROL                = 0x07;
+    constexpr std::uint32_t VPORT_CONTROL              = 0x08;
+    constexpr std::uint32_t APPID_CONTROL              = 0x09;
+    constexpr std::uint32_t DIMSTYLE_CONTROL           = 0x0A;
+    constexpr std::uint32_t VPORT_ENTITY_HEADER_CONTROL = 0x0B;
     // Reserved-block / linetype handles emitted in the HEADER section's
     // trailing 5-handle block (and as phantom entries in
     // BLOCK_CONTROL / LTYPE_CONTROL).  Phase 3e populates the records.
-    constexpr duint32 LTYPE_BYBLOCK    = 0x0F;
-    constexpr duint32 LTYPE_BYLAYER    = 0x10;
-    constexpr duint32 LTYPE_CONTINUOUS = 0x11;
-    constexpr duint32 BLOCK_MODEL_SPACE = 0x17;
-    constexpr duint32 BLOCK_PAPER_SPACE = 0x18;
+    constexpr std::uint32_t LTYPE_BYBLOCK    = 0x0F;
+    constexpr std::uint32_t LTYPE_BYLAYER    = 0x10;
+    constexpr std::uint32_t LTYPE_CONTINUOUS = 0x11;
+    constexpr std::uint32_t BLOCK_MODEL_SPACE = 0x17;
+    constexpr std::uint32_t BLOCK_PAPER_SPACE = 0x18;
 }
 
 /// Object-type (oType) constants for the 10 R2000 control objects.
 /// Same set as DRW_ObjControl::parseDwg's `oType` switch references.
 namespace oType {
-    constexpr duint16 BLOCK_CONTROL              = 0x30;
-    constexpr duint16 LAYER_CONTROL              = 0x32;
-    constexpr duint16 STYLE_CONTROL              = 0x34;
-    constexpr duint16 LTYPE_CONTROL              = 0x38;
-    constexpr duint16 VIEW_CONTROL               = 0x3C;
-    constexpr duint16 UCS_CONTROL                = 0x3E;
-    constexpr duint16 VPORT_CONTROL              = 0x40;
-    constexpr duint16 APPID_CONTROL              = 0x42;
-    constexpr duint16 DIMSTYLE_CONTROL           = 0x44;
-    constexpr duint16 VPORT_ENTITY_HEADER_CONTROL = 0x46;
+    constexpr std::uint16_t BLOCK_CONTROL              = 0x30;
+    constexpr std::uint16_t LAYER_CONTROL              = 0x32;
+    constexpr std::uint16_t STYLE_CONTROL              = 0x34;
+    constexpr std::uint16_t LTYPE_CONTROL              = 0x38;
+    constexpr std::uint16_t VIEW_CONTROL               = 0x3C;
+    constexpr std::uint16_t UCS_CONTROL                = 0x3E;
+    constexpr std::uint16_t VPORT_CONTROL              = 0x40;
+    constexpr std::uint16_t APPID_CONTROL              = 0x42;
+    constexpr std::uint16_t DIMSTYLE_CONTROL           = 0x44;
+    constexpr std::uint16_t VPORT_ENTITY_HEADER_CONTROL = 0x46;
     // Record oTypes are the matching control oType + 1 except
     // BLOCK_RECORD which uses 0x31.  Verified against libreDWG dwg.spec.
-    constexpr duint16 BLOCK_RECORD               = 0x31;
-    constexpr duint16 LAYER                      = 0x33;
-    constexpr duint16 STYLE                      = 0x35;
-    constexpr duint16 LTYPE                      = 0x39;
-    constexpr duint16 VIEW                       = 0x3D;
-    constexpr duint16 APPID                      = 0x43;
-    constexpr duint16 DIMSTYLE                   = 0x45;
-    constexpr duint16 VPORT                      = 0x41;
+    constexpr std::uint16_t BLOCK_RECORD               = 0x31;
+    constexpr std::uint16_t LAYER                      = 0x33;
+    constexpr std::uint16_t STYLE                      = 0x35;
+    constexpr std::uint16_t LTYPE                      = 0x39;
+    constexpr std::uint16_t VIEW                       = 0x3D;
+    constexpr std::uint16_t APPID                      = 0x43;
+    constexpr std::uint16_t DIMSTYLE                   = 0x45;
+    constexpr std::uint16_t VPORT                      = 0x41;
 }
 
 /// Build a hard-pointer (code 4) handle with the minimum-width ref.
-dwgHandle makeHardPtr(duint32 ref) {
+dwgHandle makeHardPtr(std::uint32_t ref) {
     dwgHandle h;
     h.code = (ref == 0) ? 0 : 4;
     h.ref  = ref;
     h.size = 0;
     if (ref != 0) {
-        duint32 t = ref;
+        std::uint32_t t = ref;
         while (t != 0) { t >>= 8; ++h.size; }
     }
     return h;
 }
 
 /// Build an own-handle entry (code 0) — the form used for an object's own handle.
-dwgHandle makeOwnHandle(duint32 ref) {
+dwgHandle makeOwnHandle(std::uint32_t ref) {
     dwgHandle h;
     h.code = 0;
     h.ref  = ref;
     h.size = 0;
     if (ref != 0) {
-        duint32 t = ref;
+        std::uint32_t t = ref;
         while (t != 0) { t >>= 8; ++h.size; }
     }
     return h;
@@ -126,16 +126,16 @@ dwgHandle makeNullHandle() {
     return h;
 }
 
-void putAuxRL(std::vector<duint8>& v, duint32 x) {
-    v.push_back(static_cast<duint8>(x));
-    v.push_back(static_cast<duint8>(x >> 8));
-    v.push_back(static_cast<duint8>(x >> 16));
-    v.push_back(static_cast<duint8>(x >> 24));
+void putAuxRL(std::vector<std::uint8_t>& v, std::uint32_t x) {
+    v.push_back(static_cast<std::uint8_t>(x));
+    v.push_back(static_cast<std::uint8_t>(x >> 8));
+    v.push_back(static_cast<std::uint8_t>(x >> 16));
+    v.push_back(static_cast<std::uint8_t>(x >> 24));
 }
 
-void putAuxRS(std::vector<duint8>& v, duint16 x) {
-    v.push_back(static_cast<duint8>(x));
-    v.push_back(static_cast<duint8>(x >> 8));
+void putAuxRS(std::vector<std::uint8_t>& v, std::uint16_t x) {
+    v.push_back(static_cast<std::uint8_t>(x));
+    v.push_back(static_cast<std::uint8_t>(x >> 8));
 }
 
 double headerDoubleVar(const DRW_Header *header, const std::string& key) {
@@ -149,8 +149,8 @@ double headerDoubleVar(const DRW_Header *header, const std::string& key) {
     return it->second->d_val();
 }
 
-void splitAuxDate(double stored, dint32& day, dint32& msec) {
-    day = static_cast<dint32>(stored);
+void splitAuxDate(double stored, std::int32_t& day, std::int32_t& msec) {
+    day = static_cast<std::int32_t>(stored);
     double frac = stored - static_cast<double>(day);
     if (frac == 0.0) {
         msec = 0;
@@ -160,24 +160,24 @@ void splitAuxDate(double stored, dint32& day, dint32& msec) {
         frac *= 10.0;
         const double rounded = std::round(frac);
         if (std::abs(frac - rounded) < 1e-9 && rounded != 0.0) {
-            msec = static_cast<dint32>(rounded);
+            msec = static_cast<std::int32_t>(rounded);
             return;
         }
     }
-    msec = static_cast<dint32>(std::round(frac));
+    msec = static_cast<std::int32_t>(std::round(frac));
 }
 
-void putAuxDate(std::vector<duint8>& v, double stored) {
-    dint32 day = 0;
-    dint32 msec = 0;
+void putAuxDate(std::vector<std::uint8_t>& v, double stored) {
+    std::int32_t day = 0;
+    std::int32_t msec = 0;
     splitAuxDate(stored, day, msec);
-    putAuxRL(v, static_cast<duint32>(day));
-    putAuxRL(v, static_cast<duint32>(msec));
+    putAuxRL(v, static_cast<std::uint32_t>(day));
+    putAuxRL(v, static_cast<std::uint32_t>(msec));
 }
 
-std::vector<duint8> buildR2000AuxHeaderContent(const DRW_Header *header) {
-    constexpr duint16 rawVersion = 23;  // AC1015
-    std::vector<duint8> v;
+std::vector<std::uint8_t> buildR2000AuxHeaderContent(const DRW_Header *header) {
+    constexpr std::uint16_t rawVersion = 23;  // AC1015
+    std::vector<std::uint8_t> v;
     v.reserve(111);
     v.push_back(0xff);
     v.push_back(0x77);
@@ -185,7 +185,7 @@ std::vector<duint8> buildR2000AuxHeaderContent(const DRW_Header *header) {
     putAuxRS(v, rawVersion);
     putAuxRS(v, 0);                     // maintenance version
     putAuxRL(v, 1);                     // number of saves
-    putAuxRL(v, static_cast<duint32>(-1));
+    putAuxRL(v, static_cast<std::uint32_t>(-1));
     putAuxRS(v, 1);                     // saves part 1
     putAuxRS(v, 0);                     // saves part 2
     putAuxRL(v, 0);
@@ -205,8 +205,8 @@ std::vector<duint8> buildR2000AuxHeaderContent(const DRW_Header *header) {
     putAuxDate(v, headerDoubleVar(header, "TDCREATE"));
     putAuxDate(v, headerDoubleVar(header, "TDUPDATE"));
 
-    const duint32 handSeed = header ? header->getHandSeed() : 0;
-    putAuxRL(v, handSeed <= 0x7fffffffu ? handSeed : static_cast<duint32>(-1));
+    const std::uint32_t handSeed = header ? header->getHandSeed() : 0;
+    putAuxRL(v, handSeed <= 0x7fffffffu ? handSeed : static_cast<std::uint32_t>(-1));
     putAuxRL(v, 0);                     // educational plot stamp
     putAuxRS(v, 0);
     putAuxRS(v, 1);
@@ -223,13 +223,13 @@ std::vector<duint8> buildR2000AuxHeaderContent(const DRW_Header *header) {
 
 /// Build a soft-owner (code 3) handle — the form used for the XDic
 /// slot in R2000 control objects.
-dwgHandle makeSoftOwner(duint32 ref) {
+dwgHandle makeSoftOwner(std::uint32_t ref) {
     dwgHandle h;
     h.code = 3;
     h.ref  = ref;
     h.size = 0;
     if (ref != 0) {
-        duint32 t = ref;
+        std::uint32_t t = ref;
         while (t != 0) { t >>= 8; ++h.size; }
     }
     return h;
@@ -248,7 +248,7 @@ static std::string toUpperCase(const std::string& s) {
 bool dwgWriter15::writeFileHeaderStub() {
     // Bytes 0x00-0x05: version string "AC1015".
     for (int i = 0; i < 6; ++i)
-        m_buf.putRawChar8(static_cast<duint8>(dwgVersionString::R2000[i]));
+        m_buf.putRawChar8(static_cast<std::uint8_t>(dwgVersionString::R2000[i]));
 
     // Bytes 0x06-0x0A: five zero bytes.
     for (int i = 0; i < 5; ++i)
@@ -278,11 +278,11 @@ bool dwgWriter15::writeFileHeaderStub() {
 
     // Section locator records start here. Record current offset so
     // finalize() can back-patch addresses + sizes.
-    m_recordsOffset = static_cast<duint32>(m_buf.size());
+    m_recordsOffset = static_cast<std::uint32_t>(m_buf.size());
 
     // Emit `m_numSections` stub records of (RC recno, RL address=0, RL size=0).
     // recno values are 0..(N-1) in canonical order.
-    for (duint8 recno = 0; recno < m_numSections; ++recno) {
+    for (std::uint8_t recno = 0; recno < m_numSections; ++recno) {
         m_buf.putRawChar8(recno);
         m_buf.putRawLong32(0); // address placeholder
         m_buf.putRawLong32(0); // size placeholder
@@ -299,7 +299,7 @@ bool dwgWriter15::writeFileHeaderStub() {
     return true;
 }
 
-size_t dwgWriter15::beginSentinelSection(const duint8 (&beginSentinel)[16]) {
+size_t dwgWriter15::beginSentinelSection(const std::uint8_t (&beginSentinel)[16]) {
     // Caller must ensure cursor is byte-aligned before invoking.
     m_buf.alignToByte();
     m_buf.putBytes(beginSentinel, 16);
@@ -310,27 +310,27 @@ size_t dwgWriter15::beginSentinelSection(const duint8 (&beginSentinel)[16]) {
 }
 
 void dwgWriter15::endSentinelSection(size_t sectionStart, size_t sizeOffset,
-                                     const duint8 (&endSentinel)[16]) {
+                                     const std::uint8_t (&endSentinel)[16]) {
     // Bit-packed bodies (HEADER vars, CLASSES, etc.) typically leave the
     // cursor mid-byte.  Pad to the next byte boundary so the END sentinel
     // lands aligned and the recorded payload size is in whole bytes.
     m_buf.alignToByte();
 
     // Patch the payload size: bytes between (sizeOffset + 4) and current cursor.
-    duint32 payloadSize =
-        static_cast<duint32>(m_buf.size()) - static_cast<duint32>(sizeOffset + 4);
+    std::uint32_t payloadSize =
+        static_cast<std::uint32_t>(m_buf.size()) - static_cast<std::uint32_t>(sizeOffset + 4);
     m_buf.patchRawLong32(sizeOffset, payloadSize);
 
     // CRC covers RL-size + data only — spec §9: "covers the stepper and the
     // data"; sectionStart+16 skips the 16-byte beginning sentinel.
-    duint16 crc = m_buf.crc16(0xC0C1, sectionStart + 16, m_buf.size());
+    std::uint16_t crc = m_buf.crc16(0xC0C1, sectionStart + 16, m_buf.size());
     m_buf.putRawShort16(crc);        // CRC BEFORE end sentinel
     m_buf.putBytes(endSentinel, 16); // end sentinel AFTER CRC
 }
 
 void dwgWriter15::initHeaderControlHandles() {
     if (m_header == nullptr) return;
-    auto fillIfZero = [](duint32& slot, duint32 value) {
+    auto fillIfZero = [](std::uint32_t& slot, std::uint32_t value) {
         if (slot == 0) slot = value;
     };
     fillIfZero(m_header->blockCtrl,       reservedHandle::BLOCK_CONTROL);
@@ -347,7 +347,7 @@ void dwgWriter15::initHeaderControlHandles() {
 
 bool dwgWriter15::writeDwgHeader() {
     size_t sectionStart = m_buf.size();
-    m_sectionOffsets[recno::HEADER] = static_cast<duint32>(sectionStart);
+    m_sectionOffsets[recno::HEADER] = static_cast<std::uint32_t>(sectionStart);
 
     size_t sizeOffset = beginSentinelSection(dwgSentinels::HEADER_BEGIN);
 
@@ -366,7 +366,7 @@ bool dwgWriter15::writeDwgHeader() {
     endSentinelSection(sectionStart, sizeOffset, dwgSentinels::HEADER_END);
 
     m_sectionSizes[recno::HEADER] =
-        static_cast<duint32>(m_buf.size() - sectionStart);
+        static_cast<std::uint32_t>(m_buf.size() - sectionStart);
     return true;
 }
 
@@ -375,7 +375,7 @@ bool dwgWriter15::writeDwgClasses() {
         return false;
 
     size_t sectionStart = m_buf.size();
-    m_sectionOffsets[recno::CLASSES] = static_cast<duint32>(sectionStart);
+    m_sectionOffsets[recno::CLASSES] = static_cast<std::uint32_t>(sectionStart);
 
     size_t sizeOffset = beginSentinelSection(dwgSentinels::CLASSES_BEGIN);
 
@@ -387,13 +387,13 @@ bool dwgWriter15::writeDwgClasses() {
     endSentinelSection(sectionStart, sizeOffset, dwgSentinels::CLASSES_END);
 
     m_sectionSizes[recno::CLASSES] =
-        static_cast<duint32>(m_buf.size() - sectionStart);
+        static_cast<std::uint32_t>(m_buf.size() - sectionStart);
     return true;
 }
 
 void dwgWriter15::emitControlObject(
-    duint16 typeCode, duint32 handle, duint32 numEntries,
-    std::initializer_list<duint32> childHandles)
+    std::uint16_t typeCode, std::uint32_t handle, std::uint32_t numEntries,
+    std::initializer_list<std::uint32_t> childHandles)
 {
     dwgBufferW& body = beginObject(handle);
 
@@ -425,7 +425,7 @@ void dwgWriter15::emitControlObject(
     //   H   null handle
     //   H   XDic handle  (xDictFlag=0 → reader reads one)
     //   H   child offset handles × numEntries (+2 for BLOCK/LTYPE controls)
-    body.putBitLong(static_cast<dint32>(numEntries));
+    body.putBitLong(static_cast<std::int32_t>(numEntries));
     if (typeCode == oType::DIMSTYLE_CONTROL) {
         body.putRawChar8(0);
     }
@@ -434,15 +434,15 @@ void dwgWriter15::emitControlObject(
     }
     body.putHandle(makeNullHandle());
     body.putHandle(makeSoftOwner(0));  // XDic null
-    for (duint32 child : childHandles)
+    for (std::uint32_t child : childHandles)
         body.putHandle(makeHardPtr(child));
 
     finishObject();
 }
 
 void dwgWriter15::emitControlObject(
-    duint16 typeCode, duint32 handle, duint32 numEntries,
-    const std::vector<duint32>& childHandles)
+    std::uint16_t typeCode, std::uint32_t handle, std::uint32_t numEntries,
+    const std::vector<std::uint32_t>& childHandles)
 {
     dwgBufferW& body = beginObject(handle);
     body.putObjType(m_version, typeCode);
@@ -455,25 +455,25 @@ void dwgWriter15::emitControlObject(
         body.putBit(0);    // xDictFlag
     if (m_version > DRW::AC1024)
         body.putBit(0);    // Have binary data (AC1027+)
-    body.putBitLong(static_cast<dint32>(numEntries));
+    body.putBitLong(static_cast<std::int32_t>(numEntries));
     if (typeCode == oType::DIMSTYLE_CONTROL)
         body.putRawChar8(0);
     if (m_version > DRW::AC1018)
         body.putBit(0);
     body.putHandle(makeNullHandle());
     body.putHandle(makeSoftOwner(0));
-    for (duint32 child : childHandles)
+    for (std::uint32_t child : childHandles)
         body.putHandle(makeHardPtr(child));
     finishObject();
 }
 
-duint32 dwgWriter15::defineBlock(const std::string& name,
+std::uint32_t dwgWriter15::defineBlock(const std::string& name,
                                  const DRW_Coord& basePoint,
                                  int insUnits) {
     // Allocate a fresh handle trio.
-    duint32 blockRecH  = m_handles.next();
-    duint32 blockH     = m_handles.next();
-    duint32 endBlockH  = m_handles.next();
+    std::uint32_t blockRecH  = m_handles.next();
+    std::uint32_t blockH     = m_handles.next();
+    std::uint32_t endBlockH  = m_handles.next();
 
     // Block entity for the start of the block body.
     DRW_Block bk;
@@ -534,7 +534,7 @@ duint32 dwgWriter15::defineBlock(const std::string& name,
         body.putVariableText(m_version, std::string{});  // bkdesc
         body.putBitLong(0);                    // prevData BL
         if (m_version > DRW::AC1018) {
-            body.putBitShort(static_cast<duint16>(insUnits));
+            body.putBitShort(static_cast<std::uint16_t>(insUnits));
             body.putBit(0);                    // canExplode B (R2007+)
             body.putRawChar8(0);               // bkScaling RC (R2007+)
         }
@@ -559,9 +559,9 @@ duint32 dwgWriter15::defineBlock(const std::string& name,
 bool dwgWriter15::emitDeferredBlockControl() {
     // BLOCK_CONTROL: numEntries = user blocks count; +2 phantoms for
     // MODEL_SPACE + PAPER_SPACE are appended to the child handle list.
-    std::vector<duint32> children;
+    std::vector<std::uint32_t> children;
     children.reserve(m_userBlockRecordHandles.size() + 2);
-    for (duint32 h : m_userBlockRecordHandles) children.push_back(h);
+    for (std::uint32_t h : m_userBlockRecordHandles) children.push_back(h);
     children.push_back(reservedHandle::BLOCK_MODEL_SPACE);
     children.push_back(reservedHandle::BLOCK_PAPER_SPACE);
 
@@ -579,19 +579,19 @@ bool dwgWriter15::emitDeferredBlockControl() {
     if (m_version > DRW::AC1024) {
         body.putBit(0);   // Have binary data (AC1027+)
     }
-    body.putBitLong(static_cast<dint32>(m_userBlockRecordHandles.size()));
+    body.putBitLong(static_cast<std::int32_t>(m_userBlockRecordHandles.size()));
     if (m_version > DRW::AC1018) {
         body.putBit(0);   // stringBit = 0 (R2007+)
     }
     body.putHandle(makeNullHandle());  // NullH
     body.putHandle(makeSoftOwner(0));  // XDic null
-    for (duint32 h : children)
+    for (std::uint32_t h : children)
         body.putHandle(makeHardPtr(h));
     finishObject();
     return true;
 }
 
-void dwgWriter15::emitBlockEntity(duint32 handle, const std::string& name,
+void dwgWriter15::emitBlockEntity(std::uint32_t handle, const std::string& name,
                                   bool isEnd) {
     DRW_Block bk;
     bk.handle = handle;
@@ -610,9 +610,9 @@ void dwgWriter15::emitBlockEntity(duint32 handle, const std::string& name,
     finishObject();
 }
 
-void dwgWriter15::emitBlockRecord(duint32 handle, const std::string& name,
-                                  duint32 blockHandle,
-                                  duint32 endBlockHandle,
+void dwgWriter15::emitBlockRecord(std::uint32_t handle, const std::string& name,
+                                  std::uint32_t blockHandle,
+                                  std::uint32_t endBlockHandle,
                                   int insUnits) {
     dwgBufferW& body = beginObject(handle);
 
@@ -662,7 +662,7 @@ void dwgWriter15::emitBlockRecord(duint32 handle, const std::string& name,
     strBuf->putVariableText(m_version, std::string{});  // bkdesc empty
     body.putBitLong(0);                    // prevData BL = 0
     if (m_version > DRW::AC1018) {
-        body.putBitShort(static_cast<duint16>(insUnits));
+        body.putBitShort(static_cast<std::uint16_t>(insUnits));
         body.putBit(0);                    // canExplode B (R2007+)
         body.putRawChar8(0);               // bkScaling RC (R2007+)
     }
@@ -682,7 +682,7 @@ void dwgWriter15::emitBlockRecord(duint32 handle, const std::string& name,
     finishObject();
 }
 
-void dwgWriter15::emitTableRecord(duint16 typeCode, duint32 handle,
+void dwgWriter15::emitTableRecord(std::uint16_t typeCode, std::uint32_t handle,
                                   const std::string& name) {
     dwgBufferW& body = beginObject(handle);
 
@@ -721,7 +721,7 @@ void dwgWriter15::emitTableRecord(duint16 typeCode, duint32 handle,
 // caller passes back the strBuf/hdlBuf pointers via the out-params so the
 // subsequent encodeDwg call lands its strings/handles in the right buffer.
 static void emitRecordPreamble(dwgBufferW& body, DRW::Version version,
-                                duint16 otype, duint32 handle,
+                                std::uint16_t otype, std::uint32_t handle,
                                 dwgBufferW& strBuf, dwgBufferW& hdlBuf,
                                 dwgBufferW*& sb, dwgBufferW*& hb) {
     body.putObjType(version, otype);
@@ -745,7 +745,7 @@ static void emitRecordPreamble(dwgBufferW& body, DRW::Version version,
     }
 }
 
-void dwgWriter15::emitLtypeRecord(duint32 handle, const DRW_LType& lt) {
+void dwgWriter15::emitLtypeRecord(std::uint32_t handle, const DRW_LType& lt) {
     dwgBufferW& body = beginObject(handle);
     dwgBufferW *sb, *hb;
     emitRecordPreamble(body, m_version, oType::LTYPE, handle,
@@ -754,7 +754,7 @@ void dwgWriter15::emitLtypeRecord(duint32 handle, const DRW_LType& lt) {
     finishObject();
 }
 
-void dwgWriter15::emitLayerRecord(duint32 handle, const DRW_Layer& lay) {
+void dwgWriter15::emitLayerRecord(std::uint32_t handle, const DRW_Layer& lay) {
     // Resolve linetype name to a handle before encoding.
     DRW_Layer layerCopy = lay;
     std::string ltUpper = toUpperCase(lay.lineType);
@@ -773,7 +773,7 @@ void dwgWriter15::emitLayerRecord(duint32 handle, const DRW_Layer& lay) {
     finishObject();
 }
 
-void dwgWriter15::emitStyleRecord(duint32 handle, const DRW_Textstyle& ts) {
+void dwgWriter15::emitStyleRecord(std::uint32_t handle, const DRW_Textstyle& ts) {
     dwgBufferW& body = beginObject(handle);
     dwgBufferW *sb, *hb;
     emitRecordPreamble(body, m_version, oType::STYLE, handle,
@@ -782,7 +782,7 @@ void dwgWriter15::emitStyleRecord(duint32 handle, const DRW_Textstyle& ts) {
     finishObject();
 }
 
-void dwgWriter15::emitViewRecord(duint32 handle, const DRW_View& view) {
+void dwgWriter15::emitViewRecord(std::uint32_t handle, const DRW_View& view) {
     dwgBufferW& body = beginObject(handle);
     dwgBufferW *sb, *hb;
     emitRecordPreamble(body, m_version, oType::VIEW, handle,
@@ -791,7 +791,7 @@ void dwgWriter15::emitViewRecord(duint32 handle, const DRW_View& view) {
     finishObject();
 }
 
-void dwgWriter15::emitVportRecord(duint32 handle, const DRW_Vport& vp) {
+void dwgWriter15::emitVportRecord(std::uint32_t handle, const DRW_Vport& vp) {
     dwgBufferW& body = beginObject(handle);
     dwgBufferW *sb, *hb;
     emitRecordPreamble(body, m_version, oType::VPORT, handle,
@@ -800,7 +800,7 @@ void dwgWriter15::emitVportRecord(duint32 handle, const DRW_Vport& vp) {
     finishObject();
 }
 
-void dwgWriter15::emitAppIdRecord(duint32 handle, const DRW_AppId& ai) {
+void dwgWriter15::emitAppIdRecord(std::uint32_t handle, const DRW_AppId& ai) {
     dwgBufferW& body = beginObject(handle);
     dwgBufferW *sb, *hb;
     emitRecordPreamble(body, m_version, oType::APPID, handle,
@@ -809,7 +809,7 @@ void dwgWriter15::emitAppIdRecord(duint32 handle, const DRW_AppId& ai) {
     finishObject();
 }
 
-void dwgWriter15::emitDimstyleRecord(duint32 handle, const DRW_Dimstyle& ds) {
+void dwgWriter15::emitDimstyleRecord(std::uint32_t handle, const DRW_Dimstyle& ds) {
     dwgBufferW& body = beginObject(handle);
     dwgBufferW *sb, *hb;
     emitRecordPreamble(body, m_version, oType::DIMSTYLE, handle,
@@ -819,7 +819,7 @@ void dwgWriter15::emitDimstyleRecord(duint32 handle, const DRW_Dimstyle& ds) {
 }
 
 void dwgWriter15::emitAcDbPlaceholderObject(
-    duint32 handle, const DRW_AcDbPlaceholder& placeholder) {
+    std::uint32_t handle, const DRW_AcDbPlaceholder& placeholder) {
     dwgBufferW& body = beginObject(handle);
     dwgBufferW *sb, *hb;
     emitRecordPreamble(body, m_version, 80, handle,
@@ -849,7 +849,7 @@ bool dwgWriter15::writeAcDbPlaceholder(
     return true;
 }
 
-void dwgWriter15::emitSunObject(duint32 handle, const DRW_Sun& sun) {
+void dwgWriter15::emitSunObject(std::uint32_t handle, const DRW_Sun& sun) {
     dwgBufferW& body = beginObject(handle);
     dwgBufferW *sb, *hb;
     emitRecordPreamble(body, m_version, DRW_Sun::kDwgClassNum, handle,
@@ -876,7 +876,7 @@ bool dwgWriter15::writeSun(const DRW_Sun& sun) {
     return true;
 }
 
-void dwgWriter15::emitMLeaderStyleObject(duint32 handle,
+void dwgWriter15::emitMLeaderStyleObject(std::uint32_t handle,
                                          const DRW_MLeaderStyle& style) {
     dwgBufferW& body = beginObject(handle);
     dwgBufferW *sb, *hb;
@@ -907,7 +907,7 @@ bool dwgWriter15::writeMLeaderStyle(const DRW_MLeaderStyle& style) {
 // standard preamble + DRW_Dictionary::encodeDwg sandwich, mirroring the
 // SUN / PLACEHOLDER native-writer pattern.  Per-entry string handles live
 // in sb so the AC1018+ split-buffer convention applies.
-void dwgWriter15::emitDictionaryObject(duint32 handle,
+void dwgWriter15::emitDictionaryObject(std::uint32_t handle,
                                        const DRW_Dictionary& dictionary) {
     dwgBufferW& body = beginObject(handle);
     dwgBufferW *sb, *hb;
@@ -932,7 +932,7 @@ bool dwgWriter15::writeDictionary(const DRW_Dictionary& dictionary) {
 // XRECORD's encoder takes (buf, /*strBuf=*/nullptr, hb): strings are emitted
 // inline as byte-counted data within the data section, so no separate
 // string buffer is needed.
-void dwgWriter15::emitXRecordObject(duint32 handle,
+void dwgWriter15::emitXRecordObject(std::uint32_t handle,
                                     const DRW_XRecord& xrecord) {
     dwgBufferW& body = beginObject(handle);
     dwgBufferW *sb, *hb;
@@ -957,7 +957,7 @@ bool dwgWriter15::writeXRecord(const DRW_XRecord& xrecord) {
 // LAYOUT (ODA fixed type 82, §20.4.84) — no class registration required.
 // Encoder needs both string and handle buffers (AC1018+ split, inline
 // pre-AC1018).
-void dwgWriter15::emitLayoutObject(duint32 handle, const DRW_Layout& layout) {
+void dwgWriter15::emitLayoutObject(std::uint32_t handle, const DRW_Layout& layout) {
     dwgBufferW& body = beginObject(handle);
     dwgBufferW *sb, *hb;
     emitRecordPreamble(body, m_version, 82, handle,
@@ -981,7 +981,7 @@ bool dwgWriter15::writeLayout(const DRW_Layout& layout) {
 // preamble + DRW_Group::encodeDwg sandwich.  description is the only
 // string field (carried in sb for AC1018+ split); entityHandles live in
 // the handle stream.  Mirrors the DICTIONARY / LAYOUT shape from PR 8b/8c.
-void dwgWriter15::emitGroupObject(duint32 handle, const DRW_Group& group) {
+void dwgWriter15::emitGroupObject(std::uint32_t handle, const DRW_Group& group) {
     dwgBufferW& body = beginObject(handle);
     dwgBufferW *sb, *hb;
     emitRecordPreamble(body, m_version, 72, handle,
@@ -1007,7 +1007,7 @@ bool dwgWriter15::writeGroup(const DRW_Group& group) {
 // preamble + DRW_RasterVariables::encodeDwg sandwich.  Encoder ignores
 // strBuf (no string fields) — pass nullptr to mirror parse semantics.
 void dwgWriter15::emitRasterVariablesObject(
-    duint32 handle, const DRW_RasterVariables& rasterVariables) {
+    std::uint32_t handle, const DRW_RasterVariables& rasterVariables) {
     dwgBufferW& body = beginObject(handle);
     dwgBufferW *sb, *hb;
     emitRecordPreamble(body, m_version,
@@ -1045,7 +1045,7 @@ bool dwgWriter15::writeRasterVariables(
 // Standard preamble + DRW_GeoData::encodeDwg sandwich.  Encoder writes its
 // own common-handle prefix into hb (the preamble does NOT) plus several
 // variable-text fields into sb.
-void dwgWriter15::emitGeoDataObject(duint32 handle, const DRW_GeoData& geoData) {
+void dwgWriter15::emitGeoDataObject(std::uint32_t handle, const DRW_GeoData& geoData) {
     dwgBufferW& body = beginObject(handle);
     dwgBufferW *sb, *hb;
     emitRecordPreamble(body, m_version, DRW_GeoData::kDwgClassNum, handle,
@@ -1078,7 +1078,7 @@ bool dwgWriter15::writeGeoData(const DRW_GeoData& geoData) {
 // required.  Standard preamble + DRW_SpatialFilter::encodeDwg sandwich.
 // Encoder writes its own common-handle prefix into hb; body fields are
 // pure numeric (no strings), so strBuf is unused.
-void dwgWriter15::emitSpatialFilterObject(duint32 handle,
+void dwgWriter15::emitSpatialFilterObject(std::uint32_t handle,
                                           const DRW_SpatialFilter& filter) {
     dwgBufferW& body = beginObject(handle);
     dwgBufferW *sb, *hb;
@@ -1116,15 +1116,15 @@ bool dwgWriter15::writeSpatialFilter(const DRW_SpatialFilter& filter) {
 // the trailing handle stream "to the caller").  The wrapper therefore emits
 // the common handle prefix (parentHandle + reactors + xdic) itself after
 // encodeDwg returns.  This is the inverse of the usual pattern.  PR 8d.2a.
-void dwgWriter15::emitScaleObject(duint32 handle, const DRW_Scale& scale) {
+void dwgWriter15::emitScaleObject(std::uint32_t handle, const DRW_Scale& scale) {
     dwgBufferW& body = beginObject(handle);
     dwgBufferW *sb, *hb;
     emitRecordPreamble(body, m_version, DRW_Scale::kDwgClassNum, handle,
                        m_objectStrings, m_objectHandles, sb, hb);
     scale.encodeDwg(m_version, &body, sb);
     // Emit the common handle prefix that the SCALE encoder skips.
-    hb->putHandle(makeSoftOwner(static_cast<duint32>(scale.parentHandle)));
-    for (dint32 i = 0; i < scale.numReactors; ++i)
+    hb->putHandle(makeSoftOwner(static_cast<std::uint32_t>(scale.parentHandle)));
+    for (std::int32_t i = 0; i < scale.numReactors; ++i)
         hb->putHandle(makeSoftOwner(0));
     if (scale.xDictFlag != 1)
         hb->putHandle(makeSoftOwner(0));
@@ -1154,7 +1154,7 @@ bool dwgWriter15::writeScale(const DRW_Scale& scale) {
 // IDBUFFER (AcDbIdBuffer, custom class 509) — class registration required.
 // Standard preamble + DRW_IDBuffer::encodeDwg sandwich.  Encoder owns its
 // common-handle prefix + object-id handles in hb.  PR 8d.2a.
-void dwgWriter15::emitIDBufferObject(duint32 handle, const DRW_IDBuffer& idBuffer) {
+void dwgWriter15::emitIDBufferObject(std::uint32_t handle, const DRW_IDBuffer& idBuffer) {
     dwgBufferW& body = beginObject(handle);
     dwgBufferW *sb, *hb;
     emitRecordPreamble(body, m_version, DRW_IDBuffer::kDwgClassNum, handle,
@@ -1188,7 +1188,7 @@ bool dwgWriter15::writeIDBuffer(const DRW_IDBuffer& idBuffer) {
 // required.  Standard preamble + DRW_LayerIndex::encodeDwg sandwich.  Encoder
 // writes entry names through sb (TV); per-entry handles + common prefix go
 // to hb.  PR 8d.2a.
-void dwgWriter15::emitLayerIndexObject(duint32 handle,
+void dwgWriter15::emitLayerIndexObject(std::uint32_t handle,
                                        const DRW_LayerIndex& layerIndex) {
     dwgBufferW& body = beginObject(handle);
     dwgBufferW *sb, *hb;
@@ -1222,7 +1222,7 @@ bool dwgWriter15::writeLayerIndex(const DRW_LayerIndex& layerIndex) {
 // required.  Standard preamble + DRW_SpatialIndex::encodeDwg sandwich.
 // Encoder writes timestamps to the body and the common-handle prefix to hb
 // (the latter only at R2007+; gated to AC1021+ anyway).  PR 8d.2a.
-void dwgWriter15::emitSpatialIndexObject(duint32 handle,
+void dwgWriter15::emitSpatialIndexObject(std::uint32_t handle,
                                          const DRW_SpatialIndex& spatialIndex) {
     dwgBufferW& body = beginObject(handle);
     dwgBufferW *sb, *hb;
@@ -1258,7 +1258,7 @@ bool dwgWriter15::writeSpatialIndex(const DRW_SpatialIndex& spatialIndex) {
 // required.  Standard preamble + DRW_DictionaryVar::encodeDwg sandwich.
 // Encoder owns its common-handle prefix; the m_value string goes through
 // sb at AC1018+.  PR 8d.2a.
-void dwgWriter15::emitDictionaryVarObject(duint32 handle,
+void dwgWriter15::emitDictionaryVarObject(std::uint32_t handle,
                                           const DRW_DictionaryVar& dictionaryVar) {
     dwgBufferW& body = beginObject(handle);
     dwgBufferW *sb, *hb;
@@ -1293,7 +1293,7 @@ bool dwgWriter15::writeDictionaryVar(const DRW_DictionaryVar& dictionaryVar) {
 // DRW_Dictionary::encodeDwg for the body + per-entry handle list, then
 // appends the single default-entry handle at the tail (mirroring its
 // parser).  Standard preamble + encoder sandwich.  PR 8d.2b.
-void dwgWriter15::emitDictionaryWithDefaultObject(duint32 handle,
+void dwgWriter15::emitDictionaryWithDefaultObject(std::uint32_t handle,
                                                    const DRW_DictionaryWithDefault& dictionary) {
     dwgBufferW& body = beginObject(handle);
     dwgBufferW *sb, *hb;
@@ -1330,7 +1330,7 @@ bool dwgWriter15::writeDictionaryWithDefault(const DRW_DictionaryWithDefault& di
 // entry sort handles go inline in the body section BEFORE the common
 // prefix; block-owner + entity handles follow in the handle stream.
 // PR 8d.2b.
-void dwgWriter15::emitSortEntsTableObject(duint32 handle,
+void dwgWriter15::emitSortEntsTableObject(std::uint32_t handle,
                                            const DRW_SortEntsTable& sortEntsTable) {
     dwgBufferW& body = beginObject(handle);
     dwgBufferW *sb, *hb;
@@ -1366,7 +1366,7 @@ bool dwgWriter15::writeSortEntsTable(const DRW_SortEntsTable& sortEntsTable) {
 // required.  Standard preamble + DRW_FieldList::encodeDwg sandwich.
 // Encoder owns common-handle prefix + per-field handle list in hb.  No
 // strings.  PR 8d.2b.
-void dwgWriter15::emitFieldListObject(duint32 handle, const DRW_FieldList& fieldList) {
+void dwgWriter15::emitFieldListObject(std::uint32_t handle, const DRW_FieldList& fieldList) {
     dwgBufferW& body = beginObject(handle);
     dwgBufferW *sb, *hb;
     emitRecordPreamble(body, m_version, DRW_FieldList::kDwgClassNum, handle,
@@ -1401,7 +1401,7 @@ bool dwgWriter15::writeFieldList(const DRW_FieldList& fieldList) {
 // evaluator/code/format/messages through sb (TV), CadValue + child values
 // through buf+sb, and common-prefix + child handles + object handles
 // inline through hb.  PR 8d.2b.
-void dwgWriter15::emitFieldObject(duint32 handle, const DRW_Field& field) {
+void dwgWriter15::emitFieldObject(std::uint32_t handle, const DRW_Field& field) {
     dwgBufferW& body = beginObject(handle);
     dwgBufferW *sb, *hb;
     emitRecordPreamble(body, m_version, DRW_Field::kDwgClassNum, handle,
@@ -1437,7 +1437,7 @@ bool dwgWriter15::writeField(const DRW_Field& field) {
 void dwgWriter15::addLType(const DRW_LType& lt) {
     std::string upper = toUpperCase(lt.name);
     if (upper.empty() || m_writingCtx.ltypeMap.count(upper)) return;
-    duint32 h = m_handles.next();
+    std::uint32_t h = m_handles.next();
     m_writingCtx.ltypeMap[upper] = h;
     m_pendingLTypes.emplace_back(h, lt);
 }
@@ -1445,7 +1445,7 @@ void dwgWriter15::addLType(const DRW_LType& lt) {
 void dwgWriter15::addLayer(const DRW_Layer& lay) {
     std::string upper = toUpperCase(lay.name);
     if (upper.empty() || m_writingCtx.layerMap.count(upper)) return;
-    duint32 h = m_handles.next();
+    std::uint32_t h = m_handles.next();
     m_writingCtx.layerMap[upper] = h;
     m_pendingLayers.emplace_back(h, lay);
 }
@@ -1453,7 +1453,7 @@ void dwgWriter15::addLayer(const DRW_Layer& lay) {
 void dwgWriter15::addTextstyle(const DRW_Textstyle& ts) {
     std::string upper = toUpperCase(ts.name);
     if (upper.empty() || m_writingCtx.styleMap.count(upper)) return;
-    duint32 h = m_handles.next();
+    std::uint32_t h = m_handles.next();
     m_writingCtx.styleMap[upper] = h;
     m_pendingStyles.emplace_back(h, ts);
 }
@@ -1461,7 +1461,7 @@ void dwgWriter15::addTextstyle(const DRW_Textstyle& ts) {
 void dwgWriter15::addView(const DRW_View& view) {
     std::string upper = toUpperCase(view.name);
     if (upper.empty() || m_writingCtx.viewMap.count(upper)) return;
-    duint32 h = m_handles.next();
+    std::uint32_t h = m_handles.next();
     m_writingCtx.viewMap[upper] = h;
     m_pendingViews.emplace_back(h, view);
 }
@@ -1469,7 +1469,7 @@ void dwgWriter15::addView(const DRW_View& view) {
 void dwgWriter15::addVport(const DRW_Vport& vp) {
     std::string upper = toUpperCase(vp.name);
     if (upper.empty() || m_writingCtx.vportMap.count(upper)) return;
-    duint32 h = m_handles.next();
+    std::uint32_t h = m_handles.next();
     m_writingCtx.vportMap[upper] = h;
     m_pendingVports.emplace_back(h, vp);
 }
@@ -1477,7 +1477,7 @@ void dwgWriter15::addVport(const DRW_Vport& vp) {
 void dwgWriter15::addDimstyle(const DRW_Dimstyle& ds) {
     std::string upper = toUpperCase(ds.name);
     if (upper.empty() || m_writingCtx.dimstyleMap.count(upper)) return;
-    duint32 h = m_handles.next();
+    std::uint32_t h = m_handles.next();
     m_writingCtx.dimstyleMap[upper] = h;
     m_pendingDimstyles.emplace_back(h, ds);
 }
@@ -1485,7 +1485,7 @@ void dwgWriter15::addDimstyle(const DRW_Dimstyle& ds) {
 void dwgWriter15::addAppId(const DRW_AppId& ai) {
     std::string upper = toUpperCase(ai.name);
     if (upper.empty() || m_writingCtx.appidMap.count(upper)) return;
-    duint32 h = m_handles.next();
+    std::uint32_t h = m_handles.next();
     m_writingCtx.appidMap[upper] = h;
     m_pendingAppIds.emplace_back(h, ai);
 }
@@ -1496,7 +1496,7 @@ bool dwgWriter15::encodeEntity(DRW_Entity *ent) {
     // fresh one only when ent->handle is zero.  Either way, reserve
     // the handle in the allocator so a later next() can't return it
     // for a different entity.
-    duint32 handle = ent->handle;
+    std::uint32_t handle = ent->handle;
     if (handle == 0) {
         handle = m_handles.next();
         ent->handle = handle;
@@ -1510,7 +1510,7 @@ bool dwgWriter15::encodeEntity(DRW_Entity *ent) {
         auto it = m_writingCtx.layerMap.find(layerUp);
         ent->layerH.ref = (it != m_writingCtx.layerMap.end())
             ? it->second
-            : static_cast<duint32>(0x12);  // fallback: layer "0"
+            : static_cast<std::uint32_t>(0x12);  // fallback: layer "0"
     }
     // Resolve linetype name → handle when caller specified a non-empty name.
     if (ent->lTypeH.ref == 0 && !ent->lineType.empty()) {
@@ -1533,17 +1533,17 @@ bool dwgWriter15::writeDwgObjects() {
     m_writingCtx.ltypeMap.insert({"CONTINUOUS", reservedHandle::LTYPE_CONTINUOUS});
     m_writingCtx.ltypeMap.insert({"BYLAYER",    reservedHandle::LTYPE_BYLAYER});
     m_writingCtx.ltypeMap.insert({"BYBLOCK",    reservedHandle::LTYPE_BYBLOCK});
-    m_writingCtx.layerMap.insert({"0",        static_cast<duint32>(0x12)});
-    m_writingCtx.styleMap.insert({"STANDARD", static_cast<duint32>(0x13)});
+    m_writingCtx.layerMap.insert({"0",        static_cast<std::uint32_t>(0x12)});
+    m_writingCtx.styleMap.insert({"STANDARD", static_cast<std::uint32_t>(0x13)});
     // Named VIEW has no required standard record.
-    m_writingCtx.appidMap.insert({"ACAD",     static_cast<duint32>(0x14)});
-    m_writingCtx.dimstyleMap.insert({"STANDARD", static_cast<duint32>(0x15)});
-    m_writingCtx.vportMap.insert({"*ACTIVE",  static_cast<duint32>(0x16)});
+    m_writingCtx.appidMap.insert({"ACAD",     static_cast<std::uint32_t>(0x14)});
+    m_writingCtx.dimstyleMap.insert({"STANDARD", static_cast<std::uint32_t>(0x15)});
+    m_writingCtx.vportMap.insert({"*ACTIVE",  static_cast<std::uint32_t>(0x16)});
 
     // --- LTYPE section --- (emitted before LAYER so ltypeMap is populated
     // when emitLayerRecord resolves lineType→handle)
     {
-        std::vector<duint32> ltypeChildren = {
+        std::vector<std::uint32_t> ltypeChildren = {
             reservedHandle::LTYPE_BYBLOCK,
             reservedHandle::LTYPE_BYLAYER,
             reservedHandle::LTYPE_CONTINUOUS
@@ -1551,7 +1551,7 @@ bool dwgWriter15::writeDwgObjects() {
         for (auto& p : m_pendingLTypes) ltypeChildren.push_back(p.first);
         // numEntries excludes BYBLOCK/BYLAYER phantoms (reader adds +2)
         emitControlObject(oType::LTYPE_CONTROL, reservedHandle::LTYPE_CONTROL,
-                          1 + static_cast<duint32>(m_pendingLTypes.size()),
+                          1 + static_cast<std::uint32_t>(m_pendingLTypes.size()),
                           ltypeChildren);
         emitTableRecord(oType::LTYPE, reservedHandle::LTYPE_BYBLOCK,    "BYBLOCK");
         emitTableRecord(oType::LTYPE, reservedHandle::LTYPE_BYLAYER,    "BYLAYER");
@@ -1562,10 +1562,10 @@ bool dwgWriter15::writeDwgObjects() {
 
     // --- LAYER section ---
     {
-        std::vector<duint32> layerChildren = {0x12};
+        std::vector<std::uint32_t> layerChildren = {0x12};
         for (auto& p : m_pendingLayers) layerChildren.push_back(p.first);
         emitControlObject(oType::LAYER_CONTROL, reservedHandle::LAYER_CONTROL,
-                          1 + static_cast<duint32>(m_pendingLayers.size()),
+                          1 + static_cast<std::uint32_t>(m_pendingLayers.size()),
                           layerChildren);
         emitTableRecord(oType::LAYER, 0x12, "0");
         for (auto& p : m_pendingLayers)
@@ -1574,10 +1574,10 @@ bool dwgWriter15::writeDwgObjects() {
 
     // --- STYLE section ---
     {
-        std::vector<duint32> styleChildren = {0x13};
+        std::vector<std::uint32_t> styleChildren = {0x13};
         for (auto& p : m_pendingStyles) styleChildren.push_back(p.first);
         emitControlObject(oType::STYLE_CONTROL, reservedHandle::STYLE_CONTROL,
-                          1 + static_cast<duint32>(m_pendingStyles.size()),
+                          1 + static_cast<std::uint32_t>(m_pendingStyles.size()),
                           styleChildren);
         emitTableRecord(oType::STYLE, 0x13, "STANDARD");
         for (auto& p : m_pendingStyles)
@@ -1586,10 +1586,10 @@ bool dwgWriter15::writeDwgObjects() {
 
     // --- VIEW section --- (named views; no required standard record)
     {
-        std::vector<duint32> viewChildren;
+        std::vector<std::uint32_t> viewChildren;
         for (auto& p : m_pendingViews) viewChildren.push_back(p.first);
         emitControlObject(oType::VIEW_CONTROL, reservedHandle::VIEW_CONTROL,
-                          static_cast<duint32>(m_pendingViews.size()),
+                          static_cast<std::uint32_t>(m_pendingViews.size()),
                           viewChildren);
         for (auto& p : m_pendingViews)
             emitViewRecord(p.first, p.second);
@@ -1600,10 +1600,10 @@ bool dwgWriter15::writeDwgObjects() {
 
     // --- VPORT section ---
     {
-        std::vector<duint32> vportChildren = {0x16};
+        std::vector<std::uint32_t> vportChildren = {0x16};
         for (auto& p : m_pendingVports) vportChildren.push_back(p.first);
         emitControlObject(oType::VPORT_CONTROL, reservedHandle::VPORT_CONTROL,
-                          1 + static_cast<duint32>(m_pendingVports.size()),
+                          1 + static_cast<std::uint32_t>(m_pendingVports.size()),
                           vportChildren);
         emitTableRecord(oType::VPORT, 0x16, "*ACTIVE");
         for (auto& p : m_pendingVports)
@@ -1612,10 +1612,10 @@ bool dwgWriter15::writeDwgObjects() {
 
     // --- APPID section ---
     {
-        std::vector<duint32> appidChildren = {0x14};
+        std::vector<std::uint32_t> appidChildren = {0x14};
         for (auto& p : m_pendingAppIds) appidChildren.push_back(p.first);
         emitControlObject(oType::APPID_CONTROL, reservedHandle::APPID_CONTROL,
-                          1 + static_cast<duint32>(m_pendingAppIds.size()),
+                          1 + static_cast<std::uint32_t>(m_pendingAppIds.size()),
                           appidChildren);
         emitTableRecord(oType::APPID, 0x14, "ACAD");
         for (auto& p : m_pendingAppIds)
@@ -1624,10 +1624,10 @@ bool dwgWriter15::writeDwgObjects() {
 
     // --- DIMSTYLE section ---
     {
-        std::vector<duint32> dimChildren = {0x15};
+        std::vector<std::uint32_t> dimChildren = {0x15};
         for (auto& p : m_pendingDimstyles) dimChildren.push_back(p.first);
         emitControlObject(oType::DIMSTYLE_CONTROL, reservedHandle::DIMSTYLE_CONTROL,
-                          1 + static_cast<duint32>(m_pendingDimstyles.size()),
+                          1 + static_cast<std::uint32_t>(m_pendingDimstyles.size()),
                           dimChildren);
         emitTableRecord(oType::DIMSTYLE, 0x15, "STANDARD");
         for (auto& p : m_pendingDimstyles)
@@ -1639,10 +1639,10 @@ bool dwgWriter15::writeDwgObjects() {
                       reservedHandle::VPORT_ENTITY_HEADER_CONTROL, 0, {});
 
     // Block entities + Block_Records for *Model_Space and *Paper_Space.
-    constexpr duint32 blkModelStart = 0x1B;
-    constexpr duint32 blkModelEnd   = 0x1C;
-    constexpr duint32 blkPaperStart = 0x1D;
-    constexpr duint32 blkPaperEnd   = 0x1E;
+    constexpr std::uint32_t blkModelStart = 0x1B;
+    constexpr std::uint32_t blkModelEnd   = 0x1C;
+    constexpr std::uint32_t blkPaperStart = 0x1D;
+    constexpr std::uint32_t blkPaperEnd   = 0x1E;
 
     emitBlockEntity(blkModelStart, "*Model_Space", /*isEnd=*/false);
     emitBlockEntity(blkModelEnd,   std::string{},   /*isEnd=*/true);
@@ -1665,21 +1665,21 @@ bool dwgWriter15::replayRawObject(const DRW_UnsupportedObject& object) {
     if (!registerRawObjectClass(object))
         return false;
 
-    const duint32 frameStart = static_cast<duint32>(m_buf.size());
-    m_buf.putModularShort(static_cast<dint32>(object.m_rawBytes.size()));
+    const std::uint32_t frameStart = static_cast<std::uint32_t>(m_buf.size());
+    m_buf.putModularShort(static_cast<std::int32_t>(object.m_rawBytes.size()));
     if (m_version > DRW::AC1021)
         m_buf.putUModularChar(object.m_bodyBitSize);
     const size_t bodyStart = m_buf.size();
     m_buf.putBytes(object.m_rawBytes.data(), object.m_rawBytes.size());
 
-    const duint16 crc = m_buf.crc16(0xC0C1, static_cast<size_t>(frameStart),
+    const std::uint16_t crc = m_buf.crc16(0xC0C1, static_cast<size_t>(frameStart),
                                     bodyStart + object.m_rawBytes.size());
     m_buf.putRawShort16(crc);
     m_objectMap.emplace_back(object.m_handle, frameStart);
     return true;
 }
 
-dwgBufferW& dwgWriter15::beginObject(duint32 handle) {
+dwgBufferW& dwgWriter15::beginObject(std::uint32_t handle) {
     m_currentHandle = handle;
     m_objectBody.data().clear();
     return m_objectBody;
@@ -1692,11 +1692,11 @@ void dwgWriter15::finishObject() {
     //   code "01" → RC payload → 10-bit BS → RL at bit 10
     //   code "00" → RS payload → 18-bit BS → RL at bit 18
     //   code "10" or "11" → no payload → 2-bit BS → RL at bit 2
-    duint32 bitCount = static_cast<duint32>(m_objectBody.size()) * 8;
+    std::uint32_t bitCount = static_cast<std::uint32_t>(m_objectBody.size()) * 8;
     if (m_objectBody.bitPos() != 0)
-        bitCount -= static_cast<duint32>(8 - m_objectBody.bitPos());
+        bitCount -= static_cast<std::uint32_t>(8 - m_objectBody.bitPos());
     if (!m_objectBody.data().empty()) {
-        duint8 bsCode = (m_objectBody.data()[0] >> 6) & 0x03;
+        std::uint8_t bsCode = (m_objectBody.data()[0] >> 6) & 0x03;
         size_t rlBitOffset = (bsCode == 0x01) ? 10 : (bsCode == 0x00) ? 18 : 2;
         m_objectBody.patchRawLong32AtBit(rlBitOffset, bitCount);
     }
@@ -1704,20 +1704,20 @@ void dwgWriter15::finishObject() {
     // Byte-align the body — the trailing CRC must start aligned and
     // the per-object frame size must be in whole bytes.
     m_objectBody.alignToByte();
-    duint32 bodyBytes = static_cast<duint32>(m_objectBody.size());
+    std::uint32_t bodyBytes = static_cast<std::uint32_t>(m_objectBody.size());
 
-    duint32 frameStart = static_cast<duint32>(m_buf.size());
+    std::uint32_t frameStart = static_cast<std::uint32_t>(m_buf.size());
 
     // MS objectSize = byte count of body (no CRC).  Per the master plan
     // interpretation (b): CRC follows immediately after the slurped body
     // and is not included in `size`.
-    m_buf.putModularShort(static_cast<dint32>(bodyBytes));
+    m_buf.putModularShort(static_cast<std::int32_t>(bodyBytes));
     size_t bodyStartOffset = m_buf.size();
     m_buf.putBytes(m_objectBody.data().data(), bodyBytes);
 
     // CRC covers MS prefix + body — spec §20.2: "The CRC includes the size
     // bytes."  frameStart was recorded before putModularShort.
-    duint16 crc = m_buf.crc16(0xC0C1, static_cast<size_t>(frameStart),
+    std::uint16_t crc = m_buf.crc16(0xC0C1, static_cast<size_t>(frameStart),
                               bodyStartOffset + bodyBytes);
     m_buf.putRawShort16(crc);
 
@@ -1727,18 +1727,18 @@ void dwgWriter15::finishObject() {
 
 bool dwgWriter15::writeDwgHandles() {
     size_t sectionStart = m_buf.size();
-    m_sectionOffsets[recno::HANDLES] = static_cast<duint32>(sectionStart);
+    m_sectionOffsets[recno::HANDLES] = static_cast<std::uint32_t>(sectionStart);
 
     if (m_objectMap.empty()) {
         // Empty object map: single terminator page of `RS_BE(2) + CRC16_BE`.
         // size_BE = 2 means "this page contains 2 bytes including the size word".
-        duint16 pageSize = 2;
+        std::uint16_t pageSize = 2;
         m_buf.putBERawShort16(pageSize);
-        duint16 crc = m_buf.crc16(0xC0C1, sectionStart, m_buf.size());
+        std::uint16_t crc = m_buf.crc16(0xC0C1, sectionStart, m_buf.size());
         m_buf.putBERawShort16(crc);
 
         m_sectionSizes[recno::HANDLES] =
-            static_cast<duint32>(m_buf.size() - sectionStart);
+            static_cast<std::uint32_t>(m_buf.size() - sectionStart);
         return true;
     }
 
@@ -1760,13 +1760,13 @@ bool dwgWriter15::writeDwgHandles() {
         // so we know the payload budget is kMaxPagePayloadBytes - 2.
         m_buf.putBERawShort16(0);  // patched after entries
 
-        duint32 prevHandle = 0;
-        duint32 prevOffset = 0;
-        duint32 base = objectBaseOffset();
+        std::uint32_t prevHandle = 0;
+        std::uint32_t prevOffset = 0;
+        std::uint32_t base = objectBaseOffset();
         size_t entryEnd = entryStart;
         while (entryEnd < m_objectMap.size()) {
-            duint32 h = m_objectMap[entryEnd].first;
-            duint32 off = m_objectMap[entryEnd].second - base;
+            std::uint32_t h = m_objectMap[entryEnd].first;
+            std::uint32_t off = m_objectMap[entryEnd].second - base;
 
             // Cheap upper-bound check: UMC + MC are each ≤5 bytes; if
             // adding 10 bytes would overflow the page, close it now.
@@ -1776,7 +1776,7 @@ bool dwgWriter15::writeDwgHandles() {
                 break;
 
             m_buf.putUModularChar(h - prevHandle);
-            m_buf.putModularChar(static_cast<dint32>(off - prevOffset));
+            m_buf.putModularChar(static_cast<std::int32_t>(off - prevOffset));
             prevHandle = h;
             prevOffset = off;
             ++entryEnd;
@@ -1785,12 +1785,12 @@ bool dwgWriter15::writeDwgHandles() {
         // Patch the page size (BE) — overwrite the placeholder we wrote
         // at pageStart at the top of the loop.  Note: patchRawShort16
         // emits LE, so we write the BE bytes directly here.
-        duint16 pageSize = static_cast<duint16>(m_buf.size() - pageStart);
-        m_buf.data()[pageStart]     = static_cast<duint8>((pageSize >> 8) & 0xFF);
-        m_buf.data()[pageStart + 1] = static_cast<duint8>(pageSize & 0xFF);
+        std::uint16_t pageSize = static_cast<std::uint16_t>(m_buf.size() - pageStart);
+        m_buf.data()[pageStart]     = static_cast<std::uint8_t>((pageSize >> 8) & 0xFF);
+        m_buf.data()[pageStart + 1] = static_cast<std::uint8_t>(pageSize & 0xFF);
 
         // CRC16 BE over (size + entries).
-        duint16 crc = m_buf.crc16(0xC0C1, pageStart, m_buf.size());
+        std::uint16_t crc = m_buf.crc16(0xC0C1, pageStart, m_buf.size());
         m_buf.putBERawShort16(crc);
 
         entryStart = entryEnd;
@@ -1798,33 +1798,33 @@ bool dwgWriter15::writeDwgHandles() {
 
     // Terminator page (2-byte size word + CRC of just the size).
     size_t termStart = m_buf.size();
-    duint16 termSize = 2;
+    std::uint16_t termSize = 2;
     m_buf.putBERawShort16(termSize);
-    duint16 termCrc = m_buf.crc16(0xC0C1, termStart, m_buf.size());
+    std::uint16_t termCrc = m_buf.crc16(0xC0C1, termStart, m_buf.size());
     m_buf.putBERawShort16(termCrc);
 
     m_sectionSizes[recno::HANDLES] =
-        static_cast<duint32>(m_buf.size() - sectionStart);
+        static_cast<std::uint32_t>(m_buf.size() - sectionStart);
     return true;
 }
 
 bool dwgWriter15::writeSecondHeader() {
-    const std::vector<duint8> auxHeader = buildR2000AuxHeaderContent(m_header);
-    m_sectionOffsets[recno::AUXHEADER] = static_cast<duint32>(m_buf.size());
+    const std::vector<std::uint8_t> auxHeader = buildR2000AuxHeaderContent(m_header);
+    m_sectionOffsets[recno::AUXHEADER] = static_cast<std::uint32_t>(m_buf.size());
     if (!auxHeader.empty())
         m_buf.putBytes(auxHeader.data(), auxHeader.size());
-    m_sectionSizes[recno::AUXHEADER] = static_cast<duint32>(auxHeader.size());
+    m_sectionSizes[recno::AUXHEADER] = static_cast<std::uint32_t>(auxHeader.size());
     return true;
 }
 
 bool dwgWriter15::finalize() {
     // Patch each section record in the file-header locator table.
     // Each record is 9 bytes: RC recno @ +0, RL address @ +1, RL size @ +5.
-    for (duint8 recno = 0; recno < m_numSections; ++recno) {
+    for (std::uint8_t recno = 0; recno < m_numSections; ++recno) {
         auto offIt  = m_sectionOffsets.find(recno);
         auto sizeIt = m_sectionSizes.find(recno);
-        duint32 address = (offIt  != m_sectionOffsets.end()) ? offIt->second  : 0;
-        duint32 size    = (sizeIt != m_sectionSizes.end())   ? sizeIt->second : 0;
+        std::uint32_t address = (offIt  != m_sectionOffsets.end()) ? offIt->second  : 0;
+        std::uint32_t size    = (sizeIt != m_sectionSizes.end())   ? sizeIt->second : 0;
         size_t base = m_recordsOffset + static_cast<size_t>(recno) * 9;
         m_buf.patchRawLong32(base + 1, address);
         m_buf.patchRawLong32(base + 5, size);
@@ -1834,13 +1834,13 @@ bool dwgWriter15::finalize() {
     // with seed=0, then XOR'd by the per-count constant, then stored at
     // (m_recordsOffset + 9N).
     size_t crcOffset = m_recordsOffset + static_cast<size_t>(m_numSections) * 9;
-    duint16 crc = m_buf.crc16(0, 0, crcOffset);
-    crc = static_cast<duint16>(crc ^ seedXorForCount(m_numSections));
+    std::uint16_t crc = m_buf.crc16(0, 0, crcOffset);
+    crc = static_cast<std::uint16_t>(crc ^ seedXorForCount(m_numSections));
     m_buf.patchRawShort16(crcOffset, crc);
 
     // Flush the accumulator to disk in one write().
     if (m_stream == nullptr || !m_stream->good()) return false;
-    const std::vector<duint8>& bytes = m_buf.data();
+    const std::vector<std::uint8_t>& bytes = m_buf.data();
     m_stream->write(reinterpret_cast<const char*>(bytes.data()),
                     static_cast<std::streamsize>(bytes.size()));
     return m_stream->good();

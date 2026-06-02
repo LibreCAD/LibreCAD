@@ -87,10 +87,10 @@ namespace DRW {
 
 struct DRW_DwgSubrecordRange {
     UTF8STRING m_name;
-    duint64 m_startBit = 0;
-    duint64 m_bitSize = 0;
+    std::uint64_t m_startBit = 0;
+    std::uint64_t m_bitSize = 0;
     DRW::Version m_version = DRW::UNKNOWNV;
-    duint32 m_count = 0;
+    std::uint32_t m_count = 0;
     bool m_parseComplete = true;
 };
 
@@ -176,8 +176,8 @@ public:
 
 protected:
     virtual bool parseCode(int code, const std::unique_ptr<dxfReader>& reader);
-    virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) = 0;
-    bool parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer* strBuf, duint32 bs=0);
+    virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) = 0;
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer* strBuf, std::uint32_t bs=0);
     void reset() {
         flags = 0;
         for (std::vector<DRW_Variant*>::iterator it = extData.begin(); it != extData.end(); ++it) {
@@ -191,20 +191,20 @@ protected:
 
 public:
     enum DRW::TTYPE tType {DRW::UNKNOWNT};  /*!< enum: entity type, code 0 */
-    duint32         handle {0};             /*!< entity identifier, code 5 */
+    std::uint32_t         handle {0};             /*!< entity identifier, code 5 */
     int             parentHandle {0};       /*!< Soft-pointer ID/handle to owner object, code 330 */
     UTF8STRING      name;                   /*!< entry name, code 2 */
     int             flags {0};              /*!< Flags relevant to entry, code 70 */
     std::vector<DRW_Variant*> extData;      /*!< FIFO list of extended data, codes 1000 to 1071*/
-    std::vector<duint32> reactorHandles;    /*!< persisted reactor handles (ODA §19.4.2); DWG round-trip (Phase 2a) */
-    duint32         xDictHandle {0};        /*!< extension-dictionary handle (ODA §19.4.2); DWG round-trip (Phase 2a) */
+    std::vector<std::uint32_t> reactorHandles;    /*!< persisted reactor handles (ODA §19.4.2); DWG round-trip (Phase 2a) */
+    std::uint32_t         xDictHandle {0};        /*!< extension-dictionary handle (ODA §19.4.2); DWG round-trip (Phase 2a) */
 
     //***** dwg parse ********/
 protected:
-    dint16  oType {0};
-    duint8  xDictFlag {0};
-    dint32  numReactors {0};
-    duint32 objSize {0};    //RL 32bits object data size in bits
+    std::int16_t  oType {0};
+    std::uint8_t  xDictFlag {0};
+    std::int32_t  numReactors {0};
+    std::uint32_t objSize {0};    //RL 32bits object data size in bits
 
 private:
     DRW_Variant* curr {nullptr};
@@ -213,15 +213,15 @@ private:
 //! Raw carrier for a DWG object/entity class that libdxfrw does not model yet.
 struct DRW_UnsupportedObject {
     int m_objectType = 0;
-    duint32 m_handle = 0;
-    duint32 m_bodyBitSize = 0;
-    duint64 m_objectOffset = 0;
-    duint32 m_objectSize = 0;
+    std::uint32_t m_handle = 0;
+    std::uint32_t m_bodyBitSize = 0;
+    std::uint64_t m_objectOffset = 0;
+    std::uint32_t m_objectSize = 0;
     bool m_isEntity = false;
     bool m_isCustomClass = false;
     UTF8STRING m_recordName;
     UTF8STRING m_className;
-    std::vector<duint8> m_rawBytes;
+    std::vector<std::uint8_t> m_rawBytes;
 };
 
 //! Lossless DXF passthrough carrier (slice A1) for an OBJECTS-section object that
@@ -230,8 +230,8 @@ struct DRW_UnsupportedObject {
 //! (the DWG raw carrier above is binary and cannot serve the DXF text path).
 struct DRW_RawDxfObject {
     UTF8STRING name;                  /*!< object type name (the code-0 string) */
-    duint32 handle = 0;              /*!< code 5 (for dedup vs typed writers) */
-    duint32 parentHandle = 0;       /*!< code 330 owner */
+    std::uint32_t handle = 0;              /*!< code 5 (for dedup vs typed writers) */
+    std::uint32_t parentHandle = 0;       /*!< code 330 owner */
     std::vector<DRW_Variant> groups; /*!< every (code,value) pair, value kept as text */
 };
 
@@ -242,7 +242,7 @@ public:
     DRW_Group() { tType = DRW::GROUP; }
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
-    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
     bool encodeDwg(DRW::Version version, dwgBufferW *buf,
                    dwgBufferW *strBuf = nullptr,
                    dwgBufferW *handleBuf = nullptr) const;
@@ -250,7 +250,7 @@ public:
     UTF8STRING m_description;
     bool m_isUnnamed = false;
     bool m_selectable = true;
-    std::vector<duint32> m_entityHandles;
+    std::vector<std::uint32_t> m_entityHandles;
 };
 
 //! IMAGEDEF_REACTOR object.  The image relationship is carried by object ownership.
@@ -259,20 +259,20 @@ class DRW_ImageDefinitionReactor : public DRW_TableEntry {
 public:
     DRW_ImageDefinitionReactor() { tType = DRW::IMAGEDEFREACTOR; }
 protected:
-    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
 public:
-    dint32 m_classVersion = 0;
+    std::int32_t m_classVersion = 0;
 };
 
 //! SPATIAL_FILTER object used for clipped external references.
 class DRW_SpatialFilter : public DRW_TableEntry {
     SETOBJFRIENDS
 public:
-    static constexpr duint16 kDwgClassNum = 507;
+    static constexpr std::uint16_t kDwgClassNum = 507;
 
     DRW_SpatialFilter() { tType = DRW::SPATIALFILTER; }
 protected:
-    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
     bool encodeDwg(DRW::Version version, dwgBufferW *buf,
                    dwgBufferW *strBuf = nullptr,
                    dwgBufferW *handleBuf = nullptr) const;
@@ -295,36 +295,36 @@ struct DRW_GeoMeshPoint {
 };
 
 struct DRW_GeoMeshFace {
-    dint32 m_index1 = 0;
-    dint32 m_index2 = 0;
-    dint32 m_index3 = 0;
+    std::int32_t m_index1 = 0;
+    std::int32_t m_index2 = 0;
+    std::int32_t m_index3 = 0;
 };
 
 //! GEODATA object carrying drawing geolocation metadata.
 class DRW_GeoData : public DRW_TableEntry {
     SETOBJFRIENDS
 public:
-    static constexpr duint16 kDwgClassNum = 506;
+    static constexpr std::uint16_t kDwgClassNum = 506;
 
     DRW_GeoData() { tType = DRW::GEODATA; }
 protected:
-    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
     bool encodeDwg(DRW::Version version, dwgBufferW *buf,
                    dwgBufferW *strBuf = nullptr,
                    dwgBufferW *handleBuf = nullptr) const;
 public:
-    dint32 m_version = 0;
-    duint32 m_hostBlockHandle = 0;
-    dint16 m_coordinatesType = 0;
+    std::int32_t m_version = 0;
+    std::uint32_t m_hostBlockHandle = 0;
+    std::int16_t m_coordinatesType = 0;
     DRW_Coord m_designPoint;
     DRW_Coord m_referencePoint;
     DRW_Coord m_upDirection{0.0, 0.0, 1.0};
     DRW_Coord m_northDirection{0.0, 1.0, 0.0};
     double m_horizontalUnitScale = 1.0;
     double m_verticalUnitScale = 1.0;
-    dint32 m_horizontalUnits = 0;
-    dint32 m_verticalUnits = 0;
-    dint32 m_scaleEstimationMethod = 0;
+    std::int32_t m_horizontalUnits = 0;
+    std::int32_t m_verticalUnits = 0;
+    std::int32_t m_scaleEstimationMethod = 0;
     double m_userSpecifiedScaleFactor = 1.0;
     bool m_enableSeaLevelCorrection = false;
     double m_seaLevelElevation = 0.0;
@@ -345,14 +345,14 @@ struct DRW_TableGeometryContent {
     double m_contentHeight = 0.0;
     double m_width = 0.0;
     double m_height = 0.0;
-    dint32 m_unknown = 0;
+    std::int32_t m_unknown = 0;
 };
 
 struct DRW_TableGeometryCell {
-    dint32 m_flags = 0;
+    std::int32_t m_flags = 0;
     double m_widthWithGap = 0.0;
     double m_heightWithGap = 0.0;
-    duint32 m_unknownHandle = 0;
+    std::uint32_t m_unknownHandle = 0;
     std::vector<DRW_TableGeometryContent> m_contents;
 };
 
@@ -362,11 +362,11 @@ class DRW_TableGeometry : public DRW_TableEntry {
 public:
     DRW_TableGeometry() { tType = DRW::TABLEGEOMETRY; }
 protected:
-    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
 public:
-    dint32 m_rowCount = 0;
-    dint32 m_columnCount = 0;
-    dint32 m_cellCount = 0;
+    std::int32_t m_rowCount = 0;
+    std::int32_t m_columnCount = 0;
+    std::int32_t m_cellCount = 0;
     std::vector<DRW_TableGeometryCell> m_cells;
 };
 
@@ -466,7 +466,7 @@ public:
 
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
-    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
 
 public:
     bool encodeDwg(DRW::Version version, dwgBufferW *buf,
@@ -647,7 +647,7 @@ public:
 
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
-    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
     void update();
 
 public:
@@ -686,7 +686,7 @@ public:
 
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
-    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
 
 public:
     bool encodeDwg(DRW::Version version, dwgBufferW *buf,
@@ -725,7 +725,7 @@ public:
     }
 
 protected:
-    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
 
 public:
 //Note:    int DRW_TableEntry::flags; contains code 70 of block
@@ -734,16 +734,16 @@ public:
     UTF8STRING xrefPath;      /*!< Xref path name for XREF block_records (DWG: parsed from BLOCK_HEADER, DXF: code 1) */
     UTF8STRING description;   /*!< block description (DXF 4); DWG read */
     bool canExplode = true;   /*!< whether the block can be exploded (DXF 280); R2007+ DWG */
-    duint8 blockScaling = 0;  /*!< block scaling flag (DXF 281); R2007+ DWG */
-    duint32 layoutHandle = 0; /*!< soft ptr to the owning LAYOUT (DXF 340); DWG read */
+    std::uint8_t blockScaling = 0;  /*!< block scaling flag (DXF 281); R2007+ DWG */
+    std::uint32_t layoutHandle = 0; /*!< soft ptr to the owning LAYOUT (DXF 340); DWG read */
 protected:
     //dwg parser
 private:
-    duint32 block;   //handle for block entity
-    duint32 endBlock;//handle for end block entity
-    duint32 firstEH; //handle of first entity, only in pre-2004
-    duint32 lastEH;  //handle of last entity, only in pre-2004
-    std::vector<duint32>entMap;
+    std::uint32_t block;   //handle for block entity
+    std::uint32_t endBlock;//handle for end block entity
+    std::uint32_t firstEH; //handle of first entity, only in pre-2004
+    std::uint32_t lastEH;  //handle of last entity, only in pre-2004
+    std::vector<std::uint32_t>entMap;
 };
 
 //! Class to handle text style entries
@@ -768,7 +768,7 @@ public:
 
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
-    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
 
 public:
     bool encodeDwg(DRW::Version version, dwgBufferW *buf,
@@ -826,7 +826,7 @@ public:
 
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
-    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
 
 public:
     bool encodeDwg(DRW::Version version, dwgBufferW *buf,
@@ -861,11 +861,11 @@ public:
     * bit 3 (4) allow subdivision
     * bit 4 (8) follow dynamic SCP
     **/
-	    duint32 visualStyleHandle = 0; /*!< R2007+ visual-style ref (DWG-only) */
-	    duint32 m_sunHandle = 0;         /*!< R2007+ SUN hard-owner ref (DWG-only) */
-        duint32 backgroundHandle = 0;  /*!< R2007+ background ref (DWG-only) */
-        duint32 namedUcsHandle = 0;    /*!< R2000+ named UCS ref (DWG-only) */
-        duint32 baseUcsHandle = 0;     /*!< R2000+ base UCS ref (DWG-only) */
+	    std::uint32_t visualStyleHandle = 0; /*!< R2007+ visual-style ref (DWG-only) */
+	    std::uint32_t m_sunHandle = 0;         /*!< R2007+ SUN hard-owner ref (DWG-only) */
+        std::uint32_t backgroundHandle = 0;  /*!< R2007+ background ref (DWG-only) */
+        std::uint32_t namedUcsHandle = 0;    /*!< R2000+ named UCS ref (DWG-only) */
+        std::uint32_t baseUcsHandle = 0;     /*!< R2000+ base UCS ref (DWG-only) */
         DRW_Coord ucsOrigin;           /*!< R2000+ per-viewport UCS origin (DWG-only) */
         DRW_Coord ucsXAxis;            /*!< R2000+ per-viewport UCS X axis (DWG-only) */
         DRW_Coord ucsYAxis;            /*!< R2000+ per-viewport UCS Y axis (DWG-only) */
@@ -895,7 +895,7 @@ public:
 
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
-    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
 
 public:
 //    std::string handle;       /*!< entity identifier, code 5 */
@@ -953,7 +953,7 @@ public:
 
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
-    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
 
 public:
     // Full PlotSettings field set per ODA §20.4.84 (mirrors DRW_Layout's
@@ -1015,7 +1015,7 @@ public:
 
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
-    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
 
 public:
     DRW_Coord origin;           /*!< UCS origin, codes 10/20/30 */
@@ -1073,7 +1073,7 @@ public:
 
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
-    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
     bool encodeDwg(DRW::Version version, dwgBufferW *buf,
                    dwgBufferW *strBuf = nullptr,
                    dwgBufferW *hdlBuf = nullptr) const;
@@ -1096,17 +1096,17 @@ public:
     DRW_Coord ucsYAxis;                 /*!< UCS Y axis, codes 112/122/132 */
     int ucsOrthoType;                   /*!< Orthographic type, code 79 */
     double ucsElevation;                /*!< UCS elevation, code 146 */
-    duint32 namedUCS_ID;                /*!< Handle of named UCS table record, code 345 */
-    duint32 baseUCS_ID;                 /*!< Handle of base UCS table record, code 346 */
+    std::uint32_t namedUCS_ID;                /*!< Handle of named UCS table record, code 345 */
+    std::uint32_t baseUCS_ID;                 /*!< Handle of base UCS table record, code 346 */
     bool m_useDefaultLights = true;     /*!< R2007+ default-lighting flag (DWG-only) */
-    duint8 m_defaultLightingType = 1;   /*!< R2007+ default-lighting type (DWG-only) */
+    std::uint8_t m_defaultLightingType = 1;   /*!< R2007+ default-lighting type (DWG-only) */
     double m_brightness = 0.0;          /*!< R2007+ view brightness (DWG-only) */
     double m_contrast = 0.0;            /*!< R2007+ view contrast (DWG-only) */
-    duint32 m_ambientColor = 250;       /*!< R2007+ ambient CMC indexed color (DWG-only) */
-    duint32 m_backgroundHandle = 0;     /*!< R2007+ background soft-pointer ref (DWG-only) */
-    duint32 m_visualStyleHandle = 0;    /*!< R2007+ visual-style hard-pointer ref (DWG-only) */
-    duint32 m_sunHandle = 0;            /*!< R2007+ SUN hard-owner ref (DWG-only) */
-    duint32 m_liveSectionHandle = 0;    /*!< R2007+ live-section soft-pointer ref (DWG-only) */
+    std::uint32_t m_ambientColor = 250;       /*!< R2007+ ambient CMC indexed color (DWG-only) */
+    std::uint32_t m_backgroundHandle = 0;     /*!< R2007+ background soft-pointer ref (DWG-only) */
+    std::uint32_t m_visualStyleHandle = 0;    /*!< R2007+ visual-style hard-pointer ref (DWG-only) */
+    std::uint32_t m_sunHandle = 0;            /*!< R2007+ SUN hard-owner ref (DWG-only) */
+    std::uint32_t m_liveSectionHandle = 0;    /*!< R2007+ live-section soft-pointer ref (DWG-only) */
 };
 
 //! Class to handle AppId entries
@@ -1127,7 +1127,7 @@ public:
     }
 
 protected:
-    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
 
 public:
     bool encodeDwg(DRW::Version version, dwgBufferW *buf,
@@ -1151,14 +1151,14 @@ public:
     }
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
-    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
     bool encodeDwg(DRW::Version version, dwgBufferW *buf,
                    dwgBufferW *strBuf = nullptr,
                    dwgBufferW *handleBuf = nullptr) const;
 public:
     struct Entry {
         UTF8STRING m_name;
-        duint32 m_handle = 0;
+        std::uint32_t m_handle = 0;
     };
     int cloning;     /*!< duplicate-record handling (BS) */
     int hardOwner;   /*!< hard-owner flag (RC, R2007+) */
@@ -1169,7 +1169,7 @@ public:
 class DRW_DictionaryWithDefault : public DRW_Dictionary {
     SETOBJFRIENDS
 public:
-    static constexpr duint16 kDwgClassNum = 513;
+    static constexpr std::uint16_t kDwgClassNum = 513;
 
     DRW_DictionaryWithDefault() { reset(); }
     void reset(){
@@ -1179,19 +1179,19 @@ public:
     }
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
-    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
     bool encodeDwg(DRW::Version version, dwgBufferW *buf,
                    dwgBufferW *strBuf = nullptr,
                    dwgBufferW *handleBuf = nullptr) const;
 public:
-    duint32 m_defaultEntryHandle = 0;
+    std::uint32_t m_defaultEntryHandle = 0;
 };
 
 //! Class to handle DICTIONARYVAR (AcDbDictionaryVar).
 class DRW_DictionaryVar : public DRW_TableEntry {
     SETOBJFRIENDS
 public:
-    static constexpr duint16 kDwgClassNum = 512;
+    static constexpr std::uint16_t kDwgClassNum = 512;
 
     DRW_DictionaryVar() { reset(); }
     void reset(){
@@ -1202,7 +1202,7 @@ public:
     }
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
-    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
     bool encodeDwg(DRW::Version version, dwgBufferW *buf,
                    dwgBufferW *strBuf = nullptr,
                    dwgBufferW *handleBuf = nullptr) const;
@@ -1224,34 +1224,34 @@ public:
         DRW_TableEntry::reset();
     }
 protected:
-    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
     bool encodeDwg(DRW::Version version, dwgBufferW *buf,
                    dwgBufferW *strBuf = nullptr,
                    dwgBufferW *handleBuf = nullptr) const;
 public:
     int m_cloning = 0; /*!< duplicate-record handling, code 280 */
     std::vector<DRW_Variant> m_values;
-    std::vector<std::pair<int, duint32>> m_handleValues; /*!< DXF code + object id */
+    std::vector<std::pair<int, std::uint32_t>> m_handleValues; /*!< DXF code + object id */
 };
 
 //! Value payload used by FIELD and TABLE/TABLECONTENT objects.
 struct DRW_CadValue {
     int m_formatFlags = 0;
     int m_dataType = 0;
-    duint32 m_dataSize = 0;
+    std::uint32_t m_dataSize = 0;
     int m_unitType = 0;
     DRW_Variant m_value;
     UTF8STRING m_formatString;
     UTF8STRING m_valueString;
-    duint32 m_handle = 0;
-    std::vector<duint8> m_rawData;
+    std::uint32_t m_handle = 0;
+    std::vector<std::uint8_t> m_rawData;
 };
 
 //! Class to handle FIELD (AcDbField).
 class DRW_Field : public DRW_TableEntry {
     SETOBJFRIENDS
 public:
-    static constexpr duint16 kDwgClassNum = 516;
+    static constexpr std::uint16_t kDwgClassNum = 516;
 
     struct ChildValue {
         UTF8STRING m_key;
@@ -1279,7 +1279,7 @@ public:
         DRW_TableEntry::reset();
     }
 protected:
-    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
     bool encodeDwg(DRW::Version version, dwgBufferW *buf,
                    dwgBufferW *strBuf = nullptr,
                    dwgBufferW *handleBuf = nullptr) const;
@@ -1296,8 +1296,8 @@ public:
     DRW_CadValue m_value;
     UTF8STRING m_valueString;
     int m_valueStringLength = 0;
-    std::vector<duint32> m_childHandles;
-    std::vector<duint32> m_objectHandles;
+    std::vector<std::uint32_t> m_childHandles;
+    std::vector<std::uint32_t> m_objectHandles;
     std::vector<ChildValue> m_childValues;
 };
 
@@ -1305,7 +1305,7 @@ public:
 class DRW_FieldList : public DRW_TableEntry {
     SETOBJFRIENDS
 public:
-    static constexpr duint16 kDwgClassNum = 515;
+    static constexpr std::uint16_t kDwgClassNum = 515;
 
     DRW_FieldList() { reset(); }
     void reset(){
@@ -1315,20 +1315,20 @@ public:
         DRW_TableEntry::reset();
     }
 protected:
-    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
     bool encodeDwg(DRW::Version version, dwgBufferW *buf,
                    dwgBufferW *strBuf = nullptr,
                    dwgBufferW *handleBuf = nullptr) const;
 public:
     int m_unknown = 0;
-    std::vector<duint32> m_fieldHandles;
+    std::vector<std::uint32_t> m_fieldHandles;
 };
 
 //! Class to handle RASTERVARIABLES (AcDbRasterVariables).
 class DRW_RasterVariables : public DRW_TableEntry {
     SETOBJFRIENDS
 public:
-    static constexpr duint16 kDwgClassNum = 505;
+    static constexpr std::uint16_t kDwgClassNum = 505;
 
     DRW_RasterVariables() { reset(); }
     void reset(){
@@ -1341,7 +1341,7 @@ public:
     }
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
-    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
     bool encodeDwg(DRW::Version version, dwgBufferW *buf,
                    dwgBufferW *strBuf = nullptr,
                    dwgBufferW *handleBuf = nullptr) const;
@@ -1365,16 +1365,16 @@ public:
     }
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
-    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
 public:
-    duint16 m_displayFrame = 0;  /*!< global display-frame flag, DXF 70 */
+    std::uint16_t m_displayFrame = 0;  /*!< global display-frame flag, DXF 70 */
 };
 
 //! Class to handle SORTENTSTABLE (AcDbSortentsTable).
 class DRW_SortEntsTable : public DRW_TableEntry {
     SETOBJFRIENDS
 public:
-    static constexpr duint16 kDwgClassNum = 514;
+    static constexpr std::uint16_t kDwgClassNum = 514;
 
     DRW_SortEntsTable() { reset(); }
     void reset(){
@@ -1385,14 +1385,14 @@ public:
         DRW_TableEntry::reset();
     }
 protected:
-    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
     bool encodeDwg(DRW::Version version, dwgBufferW *buf,
                    dwgBufferW *strBuf = nullptr,
                    dwgBufferW *handleBuf = nullptr) const;
 public:
-    std::vector<duint32> m_sortHandles;
-    duint32 m_blockOwnerHandle = 0;
-    std::vector<duint32> m_entityHandles;
+    std::vector<std::uint32_t> m_sortHandles;
+    std::uint32_t m_blockOwnerHandle = 0;
+    std::vector<std::uint32_t> m_entityHandles;
 };
 
 //! Class to handle MATERIAL (AcDbMaterial) identity fields.
@@ -1407,7 +1407,7 @@ public:
         DRW_TableEntry::reset();
     }
 protected:
-    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
 public:
     UTF8STRING m_name;
     UTF8STRING m_description;
@@ -1419,14 +1419,14 @@ struct DRW_TableStyleBorder {
     int m_borderType = 0;
     int m_color = 0;
     int m_lineWeight = 0;
-    duint32 m_lineTypeHandle = 0;
+    std::uint32_t m_lineTypeHandle = 0;
     int m_visible = 0;
     double m_doubleLineSpacing = 0.0;
 };
 
 struct DRW_TableStyleContentFormat {
-    duint32 m_propertyOverrideFlags = 0;
-    duint32 m_propertyFlags = 0;
+    std::uint32_t m_propertyOverrideFlags = 0;
+    std::uint32_t m_propertyFlags = 0;
     int m_valueDataType = 0;
     int m_valueUnitType = 0;
     UTF8STRING m_valueFormatString;
@@ -1434,17 +1434,17 @@ struct DRW_TableStyleContentFormat {
     double m_blockScale = 1.0;
     int m_cellAlignment = 0;
     int m_contentColor = 0;
-    duint32 m_textStyleHandle = 0;
+    std::uint32_t m_textStyleHandle = 0;
     double m_textHeight = 0.0;
 };
 
 struct DRW_TableStyleCellStyle {
     int m_type = 0;
     bool m_hasData = false;
-    duint32 m_propertyOverrideFlags = 0;
-    duint32 m_mergeFlags = 0;
+    std::uint32_t m_propertyOverrideFlags = 0;
+    std::uint32_t m_mergeFlags = 0;
     int m_backgroundColor = 0;
-    duint32 m_contentLayout = 0;
+    std::uint32_t m_contentLayout = 0;
     DRW_TableStyleContentFormat m_contentFormat;
     int m_marginOverrideFlags = 0;
     double m_verticalMargin = 0.0;
@@ -1460,7 +1460,7 @@ struct DRW_TableStyleCellStyle {
 };
 
 struct DRW_TableStyleRowStyle {
-    duint32 m_textStyleHandle = 0;
+    std::uint32_t m_textStyleHandle = 0;
     double m_textHeight = 0.0;
     int m_textAlignment = 0;
     int m_textColor = 0;
@@ -1494,7 +1494,7 @@ public:
         DRW_TableEntry::reset();
     }
 protected:
-    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
 public:
     UTF8STRING m_name;
     int m_flowDirection = 0;
@@ -1503,7 +1503,7 @@ public:
     double m_verticalCellMargin = 0.0;
     bool m_titleSuppressed = false;
     bool m_headerSuppressed = false;
-    duint32 m_unknownHandle = 0;
+    std::uint32_t m_unknownHandle = 0;
     DRW_TableStyleCellStyle m_tableCellStyle;
     std::vector<DRW_TableStyleRowStyle> m_rowStyles;
     std::vector<DRW_TableStyleCellStyle> m_cellStyles;
@@ -1522,7 +1522,7 @@ public:
         DRW_TableEntry::reset();
     }
 protected:
-    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
 public:
     std::vector<DRW_TableStyleCellStyle> m_cellStyles;
     std::vector<DRW_DwgSubrecordRange> m_subrecordRanges;
@@ -1586,7 +1586,7 @@ public:
     }
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
-    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
     bool encodeDwg(DRW::Version version, dwgBufferW *buf,
                    dwgBufferW *strBuf = nullptr,
                    dwgBufferW *handleBuf = nullptr) const;
@@ -1641,7 +1641,7 @@ public:
     int orthoViewType;            /*!< code 76, BS — orthographic view type of UCS */
     DRW_Coord extMin;             /*!< code 14, 3BD — layout extent min */
     DRW_Coord extMax;             /*!< code 15, 3BD — layout extent max */
-    dint32 viewportCount;         /*!< RL — viewport count (R2004+) */
+    std::int32_t viewportCount;         /*!< RL — viewport count (R2004+) */
     // Handle refs (the common parentHandle is on DRW_TableEntry)
     dwgHandle plotViewHandle;                 /*!< code 6 (R2004+) */
     dwgHandle visualStyleHandle;              /*!< (R2007+) */
@@ -1649,7 +1649,7 @@ public:
     dwgHandle lastActiveViewportHandle;       /*!< code 331 */
     dwgHandle baseUcsHandle;                  /*!< code 346 */
     dwgHandle namedUcsHandle;                 /*!< code 345 */
-    std::vector<duint32> viewportHandles;     /*!< viewport handles (R2004+) */
+    std::vector<std::uint32_t> viewportHandles;     /*!< viewport handles (R2004+) */
 };
 
 //! One parallel line element within a MLineStyle (ODA §19.4.73).
@@ -1659,7 +1659,7 @@ struct DRW_MLineElement {
     int    color24 = -1;        /*!< true-color RGB (-1 = none) */
     int    linetypeIndex = -1;  /*!< BSd inline lt index PRE-R2018 (DXF 6); -1 = unset.
                                  *   R2018+ uses linetypeHandle instead (0B.4b). */
-    duint32 linetypeHandle = 0; /*!< H — linetype object reference */
+    std::uint32_t linetypeHandle = 0; /*!< H — linetype object reference */
     UTF8STRING linetype;        /*!< resolved linetype name (DXF 6) */
 };
 
@@ -1684,7 +1684,7 @@ public:
     }
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
-    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
 public:
     int flags;                  /*!< style flags (BS) */
     double startAngle;          /*!< start angle (BD) */
@@ -1704,30 +1704,30 @@ public:
 class DRW_MLeaderStyle : public DRW_TableEntry {
     SETOBJFRIENDS
 public:
-    static constexpr duint16 kDwgClassNum = 504;
+    static constexpr std::uint16_t kDwgClassNum = 504;
 
     DRW_MLeaderStyle() {
         tType = DRW::MLEADERSTYLE;
     }
 protected:
-    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
 public:
     bool encodeDwg(DRW::Version version, dwgBufferW *buf,
                    dwgBufferW *strBuf = nullptr,
                    dwgBufferW *handleBuf = nullptr) const;
 
     /* Per §20.4.87.  Names follow the spec column for traceability. */
-    duint16 styleVersion = 2;          /*!< code 179, R2010+ */
-    duint16 contentType = 2;           /*!< code 170: 0=None,1=Block,2=MText,3=Tolerance */
-    duint16 drawMLeaderOrder = 0;      /*!< code 171: 0=content first,1=leader head first */
-    duint16 drawLeaderOrder = 0;       /*!< code 172 */
-    dint32 maxLeaderPoints = 0;        /*!< code 90 */
+    std::uint16_t styleVersion = 2;          /*!< code 179, R2010+ */
+    std::uint16_t contentType = 2;           /*!< code 170: 0=None,1=Block,2=MText,3=Tolerance */
+    std::uint16_t drawMLeaderOrder = 0;      /*!< code 171: 0=content first,1=leader head first */
+    std::uint16_t drawLeaderOrder = 0;       /*!< code 172 */
+    std::int32_t maxLeaderPoints = 0;        /*!< code 90 */
     double firstSegmentAngle = 0.0;    /*!< code 40 (radians) */
     double secondSegmentAngle = 0.0;   /*!< code 41 (radians) */
-    duint16 leaderType = 1;            /*!< code 173 */
+    std::uint16_t leaderType = 1;            /*!< code 173 */
     int leaderColor = 0;               /*!< code 91 (CMC) */
     dwgHandle leaderLineTypeHandle{};  /*!< code 340 (handle stream) */
-    dint32 leaderLineWeight = 0;       /*!< code 92 */
+    std::int32_t leaderLineWeight = 0;       /*!< code 92 */
     bool landingEnabled = true;        /*!< code 290 */
     double landingGap = 0.0;           /*!< code 42 */
     bool autoIncludeLanding = true;    /*!< code 291 */
@@ -1737,10 +1737,10 @@ public:
     double arrowHeadSize = 0.0;        /*!< code 44 */
     UTF8STRING textDefault;            /*!< code 300 */
     dwgHandle textStyleHandle{};       /*!< code 342 */
-    duint16 leftAttachment = 0;        /*!< code 174 */
-    duint16 rightAttachment = 0;       /*!< code 178 */
-    duint16 textAngleType = 0;         /*!< code 175 (R2010+) */
-    duint16 textAlignmentType = 0;     /*!< code 176 */
+    std::uint16_t leftAttachment = 0;        /*!< code 174 */
+    std::uint16_t rightAttachment = 0;       /*!< code 178 */
+    std::uint16_t textAngleType = 0;         /*!< code 175 (R2010+) */
+    std::uint16_t textAlignmentType = 0;     /*!< code 176 */
     int textColor = 0;                 /*!< code 93 */
     double textHeight = 0.0;           /*!< code 45 */
     bool textFrameEnabled = false;     /*!< code 292 */
@@ -1752,15 +1752,15 @@ public:
     bool blockScaleEnabled = false;    /*!< code 293 */
     double blockRotation = 0.0;        /*!< code 141 (radians) */
     bool blockRotationEnabled = false; /*!< code 294 */
-    duint16 blockConnectionType = 0;   /*!< code 177 */
+    std::uint16_t blockConnectionType = 0;   /*!< code 177 */
     double scaleFactor = 1.0;          /*!< code 142 */
     bool propertyChanged = false;      /*!< code 295 */
     bool isAnnotative = false;         /*!< code 296 */
     double breakSize = 0.0;            /*!< code 143 */
     /* R2010+ */
-    duint16 attachmentDirection = 0;   /*!< code 271 */
-    duint16 topAttachment = 0;         /*!< code 273 */
-    duint16 bottomAttachment = 0;      /*!< code 272 */
+    std::uint16_t attachmentDirection = 0;   /*!< code 271 */
+    std::uint16_t topAttachment = 0;         /*!< code 273 */
+    std::uint16_t bottomAttachment = 0;      /*!< code 272 */
     bool textExtended = false;         /*!< code 298, R2013+ */
 };
 
@@ -1790,11 +1790,11 @@ public:
         bookName.clear();
     }
 protected:
-    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
 public:
     int rgb = -1;            /*!< 24-bit RGB value, code 420 (or -1 if not RGB type) */
-    duint16 colorIndex = 0;  /*!< ACI fallback when method=0xC3, code 62 */
-    duint8 colorMethod = 0;  /*!< 0xC0 ByLayer / 0xC1 ByBlock / 0xC2 RGB / 0xC3 ACI */
+    std::uint16_t colorIndex = 0;  /*!< ACI fallback when method=0xC3, code 62 */
+    std::uint8_t colorMethod = 0;  /*!< 0xC0 ByLayer / 0xC1 ByBlock / 0xC2 RGB / 0xC3 ACI */
     UTF8STRING bookName;     /*!< color book name, code 430 prefix */
     // name (inherited from DRW_TableEntry) is the entry name within the book
 };
@@ -1821,7 +1821,7 @@ public:
 class DRW_Scale : public DRW_TableEntry {
     SETOBJFRIENDS
 public:
-    static constexpr duint16 kDwgClassNum = 508;
+    static constexpr std::uint16_t kDwgClassNum = 508;
 
     DRW_Scale() {
         tType = DRW::SCALE;
@@ -1833,11 +1833,11 @@ public:
 
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
-    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
     bool encodeDwg(DRW::Version version, dwgBufferW *buf,
                    dwgBufferW *strBuf = nullptr) const;
 public:
-    duint16 flag = 0;            /*!< always 0, code 70 */
+    std::uint16_t flag = 0;            /*!< always 0, code 70 */
     double  paperUnits = 1.0;    /*!< numerator,  code 140 */
     double  drawingUnits = 1.0;  /*!< denominator, code 141 */
     bool    isUnitScale = false; /*!< true for the 1:1 entry, code 290 */
@@ -1846,8 +1846,8 @@ public:
 
 struct DRW_DimensionAssociationOsnapRef {
     UTF8STRING m_className;
-    duint8 m_objectOsnapType = 0;
-    duint32 m_objectHandle = 0;
+    std::uint8_t m_objectOsnapType = 0;
+    std::uint32_t m_objectHandle = 0;
 };
 
 //! Shell parser for DIMASSOC (AcDbDimAssoc) associative dimension metadata.
@@ -1859,38 +1859,38 @@ public:
     }
 
 protected:
-    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
 
 public:
-    duint32 m_dimensionHandle = 0;
-    duint32 m_associativityFlags = 0;
+    std::uint32_t m_dimensionHandle = 0;
+    std::uint32_t m_associativityFlags = 0;
     bool m_isTransSpace = false;
-    duint8 m_rotatedDimensionType = 0;
+    std::uint8_t m_rotatedDimensionType = 0;
     std::vector<DRW_DimensionAssociationOsnapRef> m_osnapRefs;
 };
 
 struct DRW_EvaluationGraphNode {
-    dint32 m_index = 0;
-    dint32 m_flags = 0;
-    dint32 m_nextNodeIndex = 0;
-    duint32 m_expressionHandle = 0;
-    dint32 m_data1 = 0;
-    dint32 m_data2 = 0;
-    dint32 m_data3 = 0;
-    dint32 m_data4 = 0;
+    std::int32_t m_index = 0;
+    std::int32_t m_flags = 0;
+    std::int32_t m_nextNodeIndex = 0;
+    std::uint32_t m_expressionHandle = 0;
+    std::int32_t m_data1 = 0;
+    std::int32_t m_data2 = 0;
+    std::int32_t m_data3 = 0;
+    std::int32_t m_data4 = 0;
 };
 
 struct DRW_EvaluationGraphEdge {
-    dint32 m_value92 = 0;
-    dint32 m_value93 = 0;
-    dint32 m_value94 = 0;
-    dint32 m_value91a = 0;
-    dint32 m_value91b = 0;
-    dint32 m_value92a = 0;
-    dint32 m_value92b = 0;
-    dint32 m_value92c = 0;
-    dint32 m_value92d = 0;
-    dint32 m_value92e = 0;
+    std::int32_t m_value92 = 0;
+    std::int32_t m_value93 = 0;
+    std::int32_t m_value94 = 0;
+    std::int32_t m_value91a = 0;
+    std::int32_t m_value91b = 0;
+    std::int32_t m_value92a = 0;
+    std::int32_t m_value92b = 0;
+    std::int32_t m_value92c = 0;
+    std::int32_t m_value92d = 0;
+    std::int32_t m_value92e = 0;
 };
 
 //! Shell parser for ACAD_EVALUATION_GRAPH dynamic/associative metadata.
@@ -1902,11 +1902,11 @@ public:
     }
 
 protected:
-    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
 
 public:
-    dint32 m_value96 = 0;
-    dint32 m_value97 = 0;
+    std::int32_t m_value96 = 0;
+    std::int32_t m_value97 = 0;
     std::vector<DRW_EvaluationGraphNode> m_nodes;
     std::vector<DRW_EvaluationGraphEdge> m_edges;
 };
@@ -1918,7 +1918,7 @@ public:
     DRW_AcDbPlaceholder() { tType = DRW::ACDBPLACEHOLDER; }
 
 protected:
-    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
 
 public:
     bool encodeDwg(DRW::Version version, dwgBufferW *buf,
@@ -1929,34 +1929,34 @@ public:
 class DRW_Sun : public DRW_TableEntry {
     SETOBJFRIENDS
 public:
-    static constexpr duint16 kDwgClassNum = 503;
+    static constexpr std::uint16_t kDwgClassNum = 503;
 
     DRW_Sun() { tType = DRW::SUN; }
 
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
-    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
 
 public:
     bool encodeDwg(DRW::Version version, dwgBufferW *buf,
                    dwgBufferW *handleBuf = nullptr) const;
 
-    duint32 m_classVersion = 0;
+    std::uint32_t m_classVersion = 0;
     bool m_isOn = false;
-    duint32 m_color = 0;
+    std::uint32_t m_color = 0;
     double m_intensity = 0.0;
     bool m_hasShadow = false;
-    dint32 m_julianDay = 0;
-    dint32 m_milliseconds = 0;
+    std::int32_t m_julianDay = 0;
+    std::int32_t m_milliseconds = 0;
     bool m_isDaylightSavings = false;
-    duint32 m_shadowType = 0;
-    duint16 m_shadowMapSize = 0;
-    duint8 m_shadowSoftness = 0;
+    std::uint32_t m_shadowType = 0;
+    std::uint16_t m_shadowMapSize = 0;
+    std::uint8_t m_shadowSoftness = 0;
 };
 
 struct DRW_AssociativeHandleRef {
     bool m_isOwned = false;
-    duint32 m_handle = 0;
+    std::uint32_t m_handle = 0;
 };
 
 struct DRW_AssociativePrefixStatus {
@@ -1981,13 +1981,13 @@ struct DRW_AssociativePrefixStatus {
     };
 
     Kind m_kind = Kind::AcDbAssocAction;
-    duint64 m_startBit = 0;
-    duint64 m_bitSize = 0;
-    duint16 m_classVersion = 0;
+    std::uint64_t m_startBit = 0;
+    std::uint64_t m_bitSize = 0;
+    std::uint16_t m_classVersion = 0;
     ParseStatus m_status = ParseStatus::Missing;
     size_t m_decodedHandleCount = 0;
     size_t m_decodedValueCount = 0;
-    dint32 m_decodedCountValue = 0;
+    std::int32_t m_decodedCountValue = 0;
     UTF8STRING m_sourceAssumption;
 };
 
@@ -2001,33 +2001,33 @@ public:
     }
 
 protected:
-    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
 
 public:
     UTF8STRING m_recordName;
-    duint16 m_classVersion = 0;
-    dint32 m_geometryStatus = 0;
-    duint32 m_owningNetworkHandle = 0;
-    duint32 m_actionBodyHandle = 0;
-    dint32 m_actionIndex = 0;
-    dint32 m_maxDependencyIndex = 0;
+    std::uint16_t m_classVersion = 0;
+    std::int32_t m_geometryStatus = 0;
+    std::uint32_t m_owningNetworkHandle = 0;
+    std::uint32_t m_actionBodyHandle = 0;
+    std::int32_t m_actionIndex = 0;
+    std::int32_t m_maxDependencyIndex = 0;
     std::vector<DRW_AssociativeHandleRef> m_dependencies;
     std::vector<DRW_AssociativeHandleRef> m_actions;
-    std::vector<duint32> m_ownedParams;
-    std::vector<duint32> m_ownedActions;
+    std::vector<std::uint32_t> m_ownedParams;
+    std::vector<std::uint32_t> m_ownedActions;
     size_t m_valueParamCount = 0;
     size_t m_ownedParamPrefixCount = 0;
     bool m_valueParamsParsed = false;
     bool m_actionParamPrefixParsed = false;
     bool m_singleDependencyActionParamParsed = false;
     bool m_compoundActionParamParsed = false;
-    duint32 m_dependencyHandle = 0;
-    duint32 m_readDependencyHandle = 0;
-    duint32 m_writeDependencyHandle = 0;
-    duint32 m_rNodeHandle = 0;
-    duint32 m_dNodeHandle = 0;
-    dint32 m_status = 0;
-    duint8 m_osnapMode = 0;
+    std::uint32_t m_dependencyHandle = 0;
+    std::uint32_t m_readDependencyHandle = 0;
+    std::uint32_t m_writeDependencyHandle = 0;
+    std::uint32_t m_rNodeHandle = 0;
+    std::uint32_t m_dNodeHandle = 0;
+    std::int32_t m_status = 0;
+    std::uint8_t m_osnapMode = 0;
     double m_parameter = 0.0;
     DRW_Coord m_point;
     std::vector<DRW_AssociativePrefixStatus> m_prefixStatuses;
@@ -2043,14 +2043,14 @@ public:
     }
 
 protected:
-    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
 
 public:
     UTF8STRING m_recordName;
-    duint32 m_major = 0;
-    duint32 m_minor = 0;
-    duint32 m_ownerHandle = 0;
-    duint32 m_historyNodeId = 0;
+    std::uint32_t m_major = 0;
+    std::uint32_t m_minor = 0;
+    std::uint32_t m_ownerHandle = 0;
+    std::uint32_t m_historyNodeId = 0;
     bool m_showHistory = false;
     bool m_recordHistory = false;
     DRW_Coord m_direction;
@@ -2060,18 +2060,18 @@ public:
     double m_scaleFactor = 1.0;
     double m_twistAngle = 0.0;
     double m_alignAngle = 0.0;
-    std::vector<duint8> m_binaryBlob1;
-    std::vector<duint8> m_binaryBlob2;
+    std::vector<std::uint8_t> m_binaryBlob1;
+    std::vector<std::uint8_t> m_binaryBlob2;
     std::vector<DRW_AssociativePrefixStatus> m_prefixStatuses;
 };
 
 //! Common AcDbModelDocViewStyle header shared by detail/section view styles.
 struct DRW_ModelDocViewStyle {
-    duint16 m_modelDocClassVersion = 0;   /*!< DXF 70, AcDbModelDocViewStyle */
+    std::uint16_t m_modelDocClassVersion = 0;   /*!< DXF 70, AcDbModelDocViewStyle */
     UTF8STRING m_description;             /*!< DXF 3 */
     bool m_modifiedForRecompute = false;  /*!< DXF 290 */
     UTF8STRING m_displayName;             /*!< DXF 300, R2018+ */
-    duint32 m_viewStyleFlags = 0;         /*!< DXF 90, R2018+ */
+    std::uint32_t m_viewStyleFlags = 0;         /*!< DXF 90, R2018+ */
 };
 
 //! Class to handle DETAILVIEWSTYLE / AcDbDetailViewStyle objects.
@@ -2082,37 +2082,37 @@ public:
     void reset();
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
-    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
 public:
     DRW_ModelDocViewStyle m_modelDoc;
-    duint16 m_classVersion = 0;
-    duint32 m_flags = 0;
-    duint32 m_identifierStyleHandle = 0;
+    std::uint16_t m_classVersion = 0;
+    std::uint32_t m_flags = 0;
+    std::uint32_t m_identifierStyleHandle = 0;
     int m_identifierColor = 256;
     double m_identifierHeight = 0.0;
     UTF8STRING m_identifierExcludeCharacters;
     double m_identifierOffset = 0.0;
-    duint8 m_identifierPlacement = 0;
-    duint32 m_arrowSymbolHandle = 0;
+    std::uint8_t m_identifierPlacement = 0;
+    std::uint32_t m_arrowSymbolHandle = 0;
     int m_arrowSymbolColor = 256;
     double m_arrowSymbolSize = 0.0;
-    duint32 m_boundaryLineTypeHandle = 0;
-    dint32 m_boundaryLineWeight = 0;
+    std::uint32_t m_boundaryLineTypeHandle = 0;
+    std::int32_t m_boundaryLineWeight = 0;
     int m_boundaryLineColor = 256;
-    duint32 m_viewLabelTextStyleHandle = 0;
+    std::uint32_t m_viewLabelTextStyleHandle = 0;
     int m_viewLabelTextColor = 256;
     double m_viewLabelTextHeight = 0.0;
-    duint32 m_viewLabelAttachment = 0;
+    std::uint32_t m_viewLabelAttachment = 0;
     double m_viewLabelOffset = 0.0;
-    duint32 m_viewLabelAlignment = 0;
+    std::uint32_t m_viewLabelAlignment = 0;
     UTF8STRING m_viewLabelPattern;
-    duint32 m_connectionLineTypeHandle = 0;
-    dint32 m_connectionLineWeight = 0;
+    std::uint32_t m_connectionLineTypeHandle = 0;
+    std::int32_t m_connectionLineWeight = 0;
     int m_connectionLineColor = 256;
-    duint32 m_borderLineTypeHandle = 0;
-    dint32 m_borderLineWeight = 0;
+    std::uint32_t m_borderLineTypeHandle = 0;
+    std::int32_t m_borderLineWeight = 0;
     int m_borderLineColor = 256;
-    duint8 m_modelEdge = 0;
+    std::uint8_t m_modelEdge = 0;
 private:
     UTF8STRING m_dxfSubclass;
     int m_dxfGroup = -1;
@@ -2130,44 +2130,44 @@ public:
     void reset();
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
-    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
 public:
     DRW_ModelDocViewStyle m_modelDoc;
-    duint16 m_classVersion = 0;
-    duint32 m_flags = 0;
-    duint32 m_identifierStyleHandle = 0;
+    std::uint16_t m_classVersion = 0;
+    std::uint32_t m_flags = 0;
+    std::uint32_t m_identifierStyleHandle = 0;
     int m_identifierColor = 256;
     double m_identifierHeight = 0.0;
-    duint32 m_arrowStartSymbolHandle = 0;
-    duint32 m_arrowEndSymbolHandle = 0;
+    std::uint32_t m_arrowStartSymbolHandle = 0;
+    std::uint32_t m_arrowEndSymbolHandle = 0;
     int m_arrowSymbolColor = 256;
     double m_arrowSymbolSize = 0.0;
     UTF8STRING m_identifierExcludeCharacters;
-    dint32 m_identifierPosition = 0;
+    std::int32_t m_identifierPosition = 0;
     double m_identifierOffset = 0.0;
-    dint32 m_arrowPosition = 0;
+    std::int32_t m_arrowPosition = 0;
     double m_arrowSymbolExtensionLength = 0.0;
-    duint32 m_planeLineTypeHandle = 0;
-    dint32 m_planeLineWeight = 0;
+    std::uint32_t m_planeLineTypeHandle = 0;
+    std::int32_t m_planeLineWeight = 0;
     int m_planeLineColor = 256;
-    duint32 m_bendLineTypeHandle = 0;
-    dint32 m_bendLineWeight = 0;
+    std::uint32_t m_bendLineTypeHandle = 0;
+    std::int32_t m_bendLineWeight = 0;
     int m_bendLineColor = 256;
     double m_bendLineLength = 0.0;
     double m_endLineOvershoot = 0.0;
     double m_endLineLength = 0.0;
-    duint32 m_viewLabelTextStyleHandle = 0;
+    std::uint32_t m_viewLabelTextStyleHandle = 0;
     int m_viewLabelTextColor = 256;
     double m_viewLabelTextHeight = 0.0;
-    duint32 m_viewLabelAttachment = 0;
+    std::uint32_t m_viewLabelAttachment = 0;
     double m_viewLabelOffset = 0.0;
-    duint32 m_viewLabelAlignment = 0;
+    std::uint32_t m_viewLabelAlignment = 0;
     UTF8STRING m_viewLabelPattern;
     int m_hatchColor = 256;
     int m_hatchBackgroundColor = 257;
     UTF8STRING m_hatchPattern;
     double m_hatchScale = 1.0;
-    dint32 m_hatchTransparency = 0;
+    std::int32_t m_hatchTransparency = 0;
     bool m_unknownB1 = false;
     bool m_unknownB2 = false;
     std::vector<double> m_hatchAngles;
@@ -2179,7 +2179,7 @@ private:
     int m_dxfDoubleCount = 0;
     int m_dxfLongCount = 0;
     int m_dxfBoolCount = 0;
-    duint32 m_dxfExpectedHatchAngles = 0;
+    std::uint32_t m_dxfExpectedHatchAngles = 0;
 };
 
 //! Class to handle BREAKDATA / AcDbBreakData objects.
@@ -2190,10 +2190,10 @@ public:
     void reset();
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
-    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
 public:
-    std::vector<duint32> m_pointRefHandles;
-    duint32 m_dimensionHandle = 0;
+    std::vector<std::uint32_t> m_pointRefHandles;
+    std::uint32_t m_dimensionHandle = 0;
 private:
     bool m_dxfInBreakData = false;
 };
@@ -2205,7 +2205,7 @@ public:
     DRW_BreakPointRef() { reset(); }
     void reset() { tType = DRW::BREAKPOINTREF; DRW_TableEntry::reset(); }
 protected:
-    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
 };
 
 //! Class to handle VISUALSTYLE (AcDbVisualStyle) — custom-class object §20.4.95.
@@ -2222,10 +2222,10 @@ public:
     DRW_VisualStyle() { reset(); }
     void reset() { tType = DRW::VISUALSTYLE; desc.clear(); type = 0; }
 protected:
-    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
 public:
     UTF8STRING desc;       /*!< description (TV in DWG) */
-    duint16 type = 0;      /*!< visual-style type code (BS in DWG) */
+    std::uint16_t type = 0;      /*!< visual-style type code (BS in DWG) */
 };
 
 //! Class to handle UNDERLAYDEFINITION (AcDb*Definition) — custom-class object.
@@ -2246,7 +2246,7 @@ public:
         sheetName.clear();
     }
 protected:
-    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
 public:
     Kind kind = PDF;
     UTF8STRING filename;
@@ -2261,7 +2261,7 @@ public:
 class DRW_IDBuffer : public DRW_TableEntry {
     SETOBJFRIENDS
 public:
-    static constexpr duint16 kDwgClassNum = 509;
+    static constexpr std::uint16_t kDwgClassNum = 509;
 
     DRW_IDBuffer() { reset(); }
     void reset() {
@@ -2271,13 +2271,13 @@ public:
         DRW_TableEntry::reset();
     }
 protected:
-    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
     bool encodeDwg(DRW::Version version, dwgBufferW *buf,
                    dwgBufferW *strBuf = nullptr,
                    dwgBufferW *handleBuf = nullptr) const;
 public:
     int classVersion = 0;                /*!< class_version RC, always 0 */
-    std::vector<duint32> objIds;         /*!< object handles (soft pointer) */
+    std::vector<std::uint32_t> objIds;         /*!< object handles (soft pointer) */
 };
 
 //! LAYER_INDEX (AcDbLayerIndex) — ODA §20.4.83.
@@ -2288,13 +2288,13 @@ public:
 struct DRW_LayerIndexEntry {
     int indexLong = 0;
     UTF8STRING name;
-    duint32 entryHandle = 0;       /*!< populated from the post-body handle stream */
+    std::uint32_t entryHandle = 0;       /*!< populated from the post-body handle stream */
 };
 
 class DRW_LayerIndex : public DRW_TableEntry {
     SETOBJFRIENDS
 public:
-    static constexpr duint16 kDwgClassNum = 510;
+    static constexpr std::uint16_t kDwgClassNum = 510;
 
     DRW_LayerIndex() { reset(); }
     void reset() {
@@ -2305,13 +2305,13 @@ public:
         DRW_TableEntry::reset();
     }
 protected:
-    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
     bool encodeDwg(DRW::Version version, dwgBufferW *buf,
                    dwgBufferW *strBuf = nullptr,
                    dwgBufferW *handleBuf = nullptr) const;
 public:
-    duint32 timestamp1 = 0;          /*!< Julian day BL */
-    duint32 timestamp2 = 0;          /*!< milliseconds BL */
+    std::uint32_t timestamp1 = 0;          /*!< Julian day BL */
+    std::uint32_t timestamp2 = 0;          /*!< milliseconds BL */
     std::vector<DRW_LayerIndexEntry> entries;
 };
 
@@ -2325,7 +2325,7 @@ public:
 class DRW_SpatialIndex : public DRW_TableEntry {
     SETOBJFRIENDS
 public:
-    static constexpr duint16 kDwgClassNum = 511;
+    static constexpr std::uint16_t kDwgClassNum = 511;
 
     DRW_SpatialIndex() { reset(); }
     void reset() {
@@ -2335,13 +2335,13 @@ public:
         DRW_TableEntry::reset();
     }
 protected:
-    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
     bool encodeDwg(DRW::Version version, dwgBufferW *buf,
                    dwgBufferW *strBuf = nullptr,
                    dwgBufferW *handleBuf = nullptr) const;
 public:
-    duint32 timestamp1 = 0;          /*!< Julian day BL */
-    duint32 timestamp2 = 0;          /*!< milliseconds BL */
+    std::uint32_t timestamp1 = 0;          /*!< Julian day BL */
+    std::uint32_t timestamp2 = 0;          /*!< milliseconds BL */
 };
 
 /** Holds per-write-session maps populated during DXF/DWG writing. */
@@ -2349,13 +2349,13 @@ class DRW_WritingContext {
 public:
     DRW_WritingContext() = default;
     std::vector<std::pair<std::string, int>> lineTypesMap; /*!< DXF: uppercase name -> handle */
-    std::map<std::string, duint32> ltypeMap;    /*!< DWG: uppercase ltype name -> handle */
-    std::map<std::string, duint32> layerMap;    /*!< DWG: uppercase layer name -> handle */
-    std::map<std::string, duint32> styleMap;    /*!< DWG: uppercase style name -> handle */
-    std::map<std::string, duint32> viewMap;     /*!< DWG: uppercase view name -> handle */
-    std::map<std::string, duint32> vportMap;    /*!< DWG: uppercase vport name -> handle */
-    std::map<std::string, duint32> appidMap;    /*!< DWG: uppercase appid name -> handle */
-    std::map<std::string, duint32> dimstyleMap; /*!< DWG: uppercase dimstyle name -> handle */
+    std::map<std::string, std::uint32_t> ltypeMap;    /*!< DWG: uppercase ltype name -> handle */
+    std::map<std::string, std::uint32_t> layerMap;    /*!< DWG: uppercase layer name -> handle */
+    std::map<std::string, std::uint32_t> styleMap;    /*!< DWG: uppercase style name -> handle */
+    std::map<std::string, std::uint32_t> viewMap;     /*!< DWG: uppercase view name -> handle */
+    std::map<std::string, std::uint32_t> vportMap;    /*!< DWG: uppercase vport name -> handle */
+    std::map<std::string, std::uint32_t> appidMap;    /*!< DWG: uppercase appid name -> handle */
+    std::map<std::string, std::uint32_t> dimstyleMap; /*!< DWG: uppercase dimstyle name -> handle */
 };
 
 namespace DRW {

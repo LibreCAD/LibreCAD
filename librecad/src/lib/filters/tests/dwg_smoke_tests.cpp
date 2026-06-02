@@ -1235,8 +1235,8 @@ TEST_CASE("DWG Pool_Detail.dwg: dump every circle", "[.dwg_pool_circles]") {
     struct CInfo {
       double cx, cy, cz, r;
       std::string layer;
-      duint32 handle;
-      duint32 parentHandle;
+      std::uint32_t handle;
+      std::uint32_t parentHandle;
       int space; // 0=Model, 1=Paper
       bool visible;
       double ex, ey, ez;
@@ -4169,10 +4169,10 @@ TEST_CASE("DWG arch_multileaders: MLEADER body parser fidelity") {
     int contentType;
     double scale;
     bool hasText;
-    duint32 styleHandleRef;
-    duint32 textStyleHandleRef; // ctx.textStyleHandle
-    duint32 leaderLineTypeHandleRef;
-    duint32 styleTextStyleHandleRef;
+    std::uint32_t styleHandleRef;
+    std::uint32_t textStyleHandleRef; // ctx.textStyleHandle
+    std::uint32_t leaderLineTypeHandleRef;
+    std::uint32_t styleTextStyleHandleRef;
   };
 
   class Iface : public TypeTrackingIface {
@@ -4280,7 +4280,7 @@ TEST_CASE("DWG arch_multileaders: MLEADER body parser fidelity") {
   int populatedStyleHandles = 0;
   int populatedTextStyleHandles = 0;
   int populatedLineLTypeHandles = 0;
-  std::set<duint32> distinctStyles;
+  std::set<std::uint32_t> distinctStyles;
   for (const auto &s : iface.snaps) {
     if (s.styleHandleRef != 0) {
       ++populatedStyleHandles;

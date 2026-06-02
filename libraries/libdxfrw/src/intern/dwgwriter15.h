@@ -25,12 +25,12 @@ class DRW_Entity;
 
 /// Section record indices used in m_sectionOffsets / m_sectionSizes.
 namespace recno {
-    constexpr duint8 HEADER    = 0;
-    constexpr duint8 CLASSES   = 1;
-    constexpr duint8 HANDLES   = 2;
-    constexpr duint8 UNKNOWN   = 3;
-    constexpr duint8 TEMPLATE  = 4;
-    constexpr duint8 AUXHEADER = 5;
+    constexpr std::uint8_t HEADER    = 0;
+    constexpr std::uint8_t CLASSES   = 1;
+    constexpr std::uint8_t HANDLES   = 2;
+    constexpr std::uint8_t UNKNOWN   = 3;
+    constexpr std::uint8_t TEMPLATE  = 4;
+    constexpr std::uint8_t AUXHEADER = 5;
 }
 
 /// R2000 (AC1015) concrete DWG writer.  Structural mirror of
@@ -72,7 +72,7 @@ public:
     /// dwgWriter::encodeEntity for the contract.
     bool encodeEntity(DRW_Entity *ent) override;
 
-    duint32 defineBlock(const std::string& name,
+    std::uint32_t defineBlock(const std::string& name,
                         const DRW_Coord& basePoint,
                         int insUnits = 0) override;
     bool emitDeferredBlockControl() override;
@@ -117,7 +117,7 @@ protected:
     /// `m_objectMap` entry, and returns a reference to the scratch
     /// body buffer the caller writes into.  `m_objectBody` is cleared
     /// at every call so callers can use it directly without prep.
-    dwgBufferW& beginObject(duint32 handle);
+    dwgBufferW& beginObject(std::uint32_t handle);
 
     /// Finish the current object: byte-align the body, emit the
     /// per-object frame (MS objectSize + body bytes + RS CRC16 LE) to
@@ -137,10 +137,10 @@ protected:
     /// sequence on the wire).  Handles are emitted as absolute hard
     /// pointers (code 4) so the reader's `getOffsetHandle` returns
     /// them as-is.
-    void emitControlObject(duint16 oType, duint32 handle, duint32 numEntries,
-                           std::initializer_list<duint32> childHandles);
-    void emitControlObject(duint16 oType, duint32 handle, duint32 numEntries,
-                           const std::vector<duint32>& childHandles);
+    void emitControlObject(std::uint16_t oType, std::uint32_t handle, std::uint32_t numEntries,
+                           std::initializer_list<std::uint32_t> childHandles);
+    void emitControlObject(std::uint16_t oType, std::uint32_t handle, std::uint32_t numEntries,
+                           const std::vector<std::uint32_t>& childHandles);
 
     /// Phase 3e helper: emit a minimum-stub table record at `handle`.
     /// Body is preamble + name only.  The reader parses the name
@@ -149,7 +149,7 @@ protected:
     /// per-record warning, not a section failure).  Sufficient to
     /// flip `ltypemap.count("CONTINUOUS") == 1` etc., to make Phase 3's
     /// "the reader reports the standard tables" milestone hold.
-    void emitTableRecord(duint16 oType, duint32 handle,
+    void emitTableRecord(std::uint16_t oType, std::uint32_t handle,
                          const std::string& name);
 
     /// Phase 4d helper: emit a full Block_Record at `handle` with the
@@ -158,53 +158,53 @@ protected:
     /// no inserts, no layout.  Needed so `readDwgBlocks` can resolve
     /// the BLOCK_CONTROL `+2` phantom handles (0x17, 0x18) without
     /// failing the block walk.
-    void emitBlockRecord(duint32 handle, const std::string& name,
-                         duint32 blockHandle, duint32 endBlockHandle,
+    void emitBlockRecord(std::uint32_t handle, const std::string& name,
+                         std::uint32_t blockHandle, std::uint32_t endBlockHandle,
                          int insUnits = 0);
 
     /// Phase 4d helper: emit a Block entity at `handle`.  `isEnd=true`
     /// suppresses the name field and emits an ENDBLK (oType=5) rather
     /// than a BLOCK (oType=4).
-    void emitBlockEntity(duint32 handle, const std::string& name,
+    void emitBlockEntity(std::uint32_t handle, const std::string& name,
                          bool isEnd);
 
     /// Full table-record emitters — preamble + encodeDwg + finishObject.
-    void emitLtypeRecord(duint32 handle, const DRW_LType& lt);
-    void emitLayerRecord(duint32 handle, const DRW_Layer& lay);
-    void emitStyleRecord(duint32 handle, const DRW_Textstyle& ts);
-    void emitViewRecord(duint32 handle, const DRW_View& view);
-    void emitVportRecord(duint32 handle, const DRW_Vport& vp);
-    void emitAppIdRecord(duint32 handle, const DRW_AppId& ai);
-    void emitDimstyleRecord(duint32 handle, const DRW_Dimstyle& ds);
-    void emitAcDbPlaceholderObject(duint32 handle,
+    void emitLtypeRecord(std::uint32_t handle, const DRW_LType& lt);
+    void emitLayerRecord(std::uint32_t handle, const DRW_Layer& lay);
+    void emitStyleRecord(std::uint32_t handle, const DRW_Textstyle& ts);
+    void emitViewRecord(std::uint32_t handle, const DRW_View& view);
+    void emitVportRecord(std::uint32_t handle, const DRW_Vport& vp);
+    void emitAppIdRecord(std::uint32_t handle, const DRW_AppId& ai);
+    void emitDimstyleRecord(std::uint32_t handle, const DRW_Dimstyle& ds);
+    void emitAcDbPlaceholderObject(std::uint32_t handle,
                                    const DRW_AcDbPlaceholder& placeholder);
-    void emitSunObject(duint32 handle, const DRW_Sun& sun);
-    void emitMLeaderStyleObject(duint32 handle, const DRW_MLeaderStyle& style);
-    void emitDictionaryObject(duint32 handle, const DRW_Dictionary& dictionary);
-    void emitXRecordObject(duint32 handle, const DRW_XRecord& xrecord);
-    void emitLayoutObject(duint32 handle, const DRW_Layout& layout);
-    void emitGroupObject(duint32 handle, const DRW_Group& group);
-    void emitRasterVariablesObject(duint32 handle,
+    void emitSunObject(std::uint32_t handle, const DRW_Sun& sun);
+    void emitMLeaderStyleObject(std::uint32_t handle, const DRW_MLeaderStyle& style);
+    void emitDictionaryObject(std::uint32_t handle, const DRW_Dictionary& dictionary);
+    void emitXRecordObject(std::uint32_t handle, const DRW_XRecord& xrecord);
+    void emitLayoutObject(std::uint32_t handle, const DRW_Layout& layout);
+    void emitGroupObject(std::uint32_t handle, const DRW_Group& group);
+    void emitRasterVariablesObject(std::uint32_t handle,
                                    const DRW_RasterVariables& rasterVariables);
-    void emitGeoDataObject(duint32 handle, const DRW_GeoData& geoData);
-    void emitSpatialFilterObject(duint32 handle,
+    void emitGeoDataObject(std::uint32_t handle, const DRW_GeoData& geoData);
+    void emitSpatialFilterObject(std::uint32_t handle,
                                  const DRW_SpatialFilter& filter);
     // PR 8d.2a — five small no-storage OBJECTS families.
-    void emitScaleObject(duint32 handle, const DRW_Scale& scale);
-    void emitIDBufferObject(duint32 handle, const DRW_IDBuffer& idBuffer);
-    void emitLayerIndexObject(duint32 handle,
+    void emitScaleObject(std::uint32_t handle, const DRW_Scale& scale);
+    void emitIDBufferObject(std::uint32_t handle, const DRW_IDBuffer& idBuffer);
+    void emitLayerIndexObject(std::uint32_t handle,
                               const DRW_LayerIndex& layerIndex);
-    void emitSpatialIndexObject(duint32 handle,
+    void emitSpatialIndexObject(std::uint32_t handle,
                                 const DRW_SpatialIndex& spatialIndex);
-    void emitDictionaryVarObject(duint32 handle,
+    void emitDictionaryVarObject(std::uint32_t handle,
                                  const DRW_DictionaryVar& dictionaryVar);
     // PR 8d.2b — four larger no-storage OBJECTS families.
-    void emitDictionaryWithDefaultObject(duint32 handle,
+    void emitDictionaryWithDefaultObject(std::uint32_t handle,
                                           const DRW_DictionaryWithDefault& dictionary);
-    void emitSortEntsTableObject(duint32 handle,
+    void emitSortEntsTableObject(std::uint32_t handle,
                                   const DRW_SortEntsTable& sortEntsTable);
-    void emitFieldListObject(duint32 handle, const DRW_FieldList& fieldList);
-    void emitFieldObject(duint32 handle, const DRW_Field& field);
+    void emitFieldListObject(std::uint32_t handle, const DRW_FieldList& fieldList);
+    void emitFieldObject(std::uint32_t handle, const DRW_Field& field);
 
 protected:
     /// Populate m_header's ctrl-handle fields with canonical reserved values
@@ -216,13 +216,13 @@ protected:
     /// Per-section-frame helper: emit BEGIN sentinel + 4-byte RL size
     /// placeholder, mark the start offset.  Returns the byte offset of
     /// the placeholder RL so `endSentinelSection` can patch it.
-    size_t beginSentinelSection(const duint8 (&beginSentinel)[16]);
+    size_t beginSentinelSection(const std::uint8_t (&beginSentinel)[16]);
 
     /// Per-section-frame helper: emit END sentinel + CRC16 LE over the
     /// section bytes between begin sentinel and end sentinel.  Patches
     /// the RL size at `sizeOffset` with the actual payload size.
     void endSentinelSection(size_t sectionStart, size_t sizeOffset,
-                            const duint8 (&endSentinel)[16]);
+                            const std::uint8_t (&endSentinel)[16]);
 
 protected:
     /// Scratch buffer for the in-flight object body (DATA section).
@@ -241,12 +241,12 @@ protected:
 
     /// Handle of the in-flight object (set by `beginObject`, cleared
     /// at `finishObject`).  Used to record the (handle, offset) pair.
-    duint32 m_currentHandle {0};
+    std::uint32_t m_currentHandle {0};
 
     /// Object-map collector.  Each entry is `(handle, byte-offset of
     /// the object's MS prefix in m_buf)`.  Sorted by handle in
     /// `writeDwgHandles` before page emission for monotonic deltas.
-    std::vector<std::pair<duint32, duint32>> m_objectMap;
+    std::vector<std::pair<std::uint32_t, std::uint32_t>> m_objectMap;
 
     /// Writing context: maps normalised (upper-case) table record names
     /// to their allocated DWG handles.  Pre-seeded with standard entries;
@@ -256,30 +256,30 @@ protected:
 
     /// Pending user-defined table records.  Populated by add*() during
     /// the table-callback phase; consumed by writeDwgObjects().
-    std::vector<std::pair<duint32, DRW_LType>>     m_pendingLTypes;
-    std::vector<std::pair<duint32, DRW_Layer>>     m_pendingLayers;
-    std::vector<std::pair<duint32, DRW_Textstyle>> m_pendingStyles;
-    std::vector<std::pair<duint32, DRW_View>>      m_pendingViews;
-    std::vector<std::pair<duint32, DRW_Vport>>     m_pendingVports;
-    std::vector<std::pair<duint32, DRW_Dimstyle>>  m_pendingDimstyles;
-    std::vector<std::pair<duint32, DRW_AppId>>     m_pendingAppIds;
+    std::vector<std::pair<std::uint32_t, DRW_LType>>     m_pendingLTypes;
+    std::vector<std::pair<std::uint32_t, DRW_Layer>>     m_pendingLayers;
+    std::vector<std::pair<std::uint32_t, DRW_Textstyle>> m_pendingStyles;
+    std::vector<std::pair<std::uint32_t, DRW_View>>      m_pendingViews;
+    std::vector<std::pair<std::uint32_t, DRW_Vport>>     m_pendingVports;
+    std::vector<std::pair<std::uint32_t, DRW_Dimstyle>>  m_pendingDimstyles;
+    std::vector<std::pair<std::uint32_t, DRW_AppId>>     m_pendingAppIds;
 
 private:
     /// File offset of the first section-locator record byte.  Used by
     /// `finalize()` to back-patch addresses + sizes.  Set during
     /// `writeFileHeaderStub`.
-    duint32 m_recordsOffset {0};
+    std::uint32_t m_recordsOffset {0};
 
     /// Number of section-locator records emitted.  R2000 writes the
     /// canonical HEADER, CLASSES, HANDLES, ObjFreeSpace, Template, and
     /// AuxHeader records.
-    duint8 m_numSections {6};
+    std::uint8_t m_numSections {6};
 
     /// Block_Record handles for user-defined blocks (from defineBlock).
     /// Consumed by emitDeferredBlockControl to populate BLOCK_CONTROL's
     /// numEntries + child handle list.  +2 phantom handles for
     /// MODEL_SPACE and PAPER_SPACE are added on top.
-    std::vector<duint32> m_userBlockRecordHandles;
+    std::vector<std::uint32_t> m_userBlockRecordHandles;
 };
 
 #endif // DWGWRITER15_H

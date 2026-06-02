@@ -28,31 +28,31 @@
 
 namespace {
 
-constexpr duint32 kMaxTableRows = 10000;
-constexpr duint32 kMaxTableColumns = 1000;
-constexpr duint32 kMaxTableCells = 200000;
-constexpr duint32 kMaxTableItems = 100000;
-constexpr duint32 kMaxTableStringBytes = 16 * 1024 * 1024;
-constexpr dint32 kMaxLWPolylineVertices = 1000000;
-constexpr dint32 kMaxSplineItems = 1000000;
-constexpr dint32 kMaxSplineDegree = 1024;
+constexpr std::uint32_t kMaxTableRows = 10000;
+constexpr std::uint32_t kMaxTableColumns = 1000;
+constexpr std::uint32_t kMaxTableCells = 200000;
+constexpr std::uint32_t kMaxTableItems = 100000;
+constexpr std::uint32_t kMaxTableStringBytes = 16 * 1024 * 1024;
+constexpr std::int32_t kMaxLWPolylineVertices = 1000000;
+constexpr std::int32_t kMaxSplineItems = 1000000;
+constexpr std::int32_t kMaxSplineDegree = 1024;
 
-constexpr dint32 kSplineFlagMethodFitPoints = 1;
-constexpr dint32 kSplineFlagClosed = 4;
-constexpr dint32 kSplineFlagUseKnotParameter = 8;
-constexpr dint32 kSplineKnotParamCustom = 15;
+constexpr std::int32_t kSplineFlagMethodFitPoints = 1;
+constexpr std::int32_t kSplineFlagClosed = 4;
+constexpr std::int32_t kSplineFlagUseKnotParameter = 8;
+constexpr std::int32_t kSplineKnotParamCustom = 15;
 
-bool isValidCount(dint32 count, dint32 maxCount) {
+bool isValidCount(std::int32_t count, std::int32_t maxCount) {
     return count >= 0 && count <= maxCount;
 }
 
-duint64 currentDwgBit(const dwgBuffer *buf) {
+std::uint64_t currentDwgBit(const dwgBuffer *buf) {
     return buf->getPosition() * 8 + buf->getBitPos();
 }
 
-DRW_DwgSubrecordRange makeDwgSubrecordRange(const char *name, duint64 startBit,
-                                            duint64 endBit, DRW::Version version,
-                                            duint32 count, bool parseComplete) {
+DRW_DwgSubrecordRange makeDwgSubrecordRange(const char *name, std::uint64_t startBit,
+                                            std::uint64_t endBit, DRW::Version version,
+                                            std::uint32_t count, bool parseComplete) {
     DRW_DwgSubrecordRange range;
     range.m_name = name;
     range.m_startBit = startBit;
@@ -67,7 +67,7 @@ bool isValidSplineDegree(int degree) {
     return degree >= 1 && degree <= kMaxSplineDegree;
 }
 
-bool isValidControlSplineLayout(int degree, dint32 knotCount, dint32 controlCount) {
+bool isValidControlSplineLayout(int degree, std::int32_t knotCount, std::int32_t controlCount) {
     if (!isValidSplineDegree(degree) || !isValidCount(knotCount, kMaxSplineItems) ||
         !isValidCount(controlCount, kMaxSplineItems)) {
         return false;
@@ -77,11 +77,11 @@ bool isValidControlSplineLayout(int degree, dint32 knotCount, dint32 controlCoun
         return false;
     }
 
-    const dint64 expectedKnots = static_cast<dint64>(controlCount) + degree + 1;
+    const std::int64_t expectedKnots = static_cast<std::int64_t>(controlCount) + degree + 1;
     return expectedKnots <= kMaxSplineItems && knotCount == expectedKnots;
 }
 
-bool isValidFitSplineLayout(int degree, dint32 fitCount) {
+bool isValidFitSplineLayout(int degree, std::int32_t fitCount) {
     return isValidSplineDegree(degree) && isValidCount(fitCount, kMaxSplineItems) &&
            fitCount >= 2;
 }
@@ -90,13 +90,13 @@ bool differsFromUnitWeight(double weight) {
     return std::fabs(weight - 1.0) > 1e-12;
 }
 
-void putHardPointerHandle(dwgBufferW *buf, duint32 ref) {
+void putHardPointerHandle(dwgBufferW *buf, std::uint32_t ref) {
     dwgHandle h;
     h.code = 5;
     h.ref = ref;
     h.size = 0;
     if (ref != 0) {
-        duint32 t = ref;
+        std::uint32_t t = ref;
         while (t != 0) {
             t >>= 8;
             ++h.size;
@@ -105,22 +105,22 @@ void putHardPointerHandle(dwgBufferW *buf, duint32 ref) {
     buf->putHandle(h);
 }
 
-duint32 readTableHandle(dwgBuffer *hdlBuf) {
+std::uint32_t readTableHandle(dwgBuffer *hdlBuf) {
     if (hdlBuf == nullptr || !hdlBuf->isGood())
         return 0;
     dwgHandle h = hdlBuf->getHandle();
     return h.ref;
 }
 
-void seekTableObjectHandleStream(DRW::Version version, dwgBuffer *buf, duint32 objSize) {
+void seekTableObjectHandleStream(DRW::Version version, dwgBuffer *buf, std::uint32_t objSize) {
     if (version > DRW::AC1018) {
         buf->setPosition(objSize >> 3);
         buf->setBitPos(objSize & 7);
     }
 }
 
-void readTableObjectCommonHandles(dwgBuffer *buf, duint32 baseHandle,
-                                  dint32 numReactors, duint8 xDictFlag,
+void readTableObjectCommonHandles(dwgBuffer *buf, std::uint32_t baseHandle,
+                                  std::int32_t numReactors, std::uint8_t xDictFlag,
                                   int *parentHandle) {
     dwgHandle parentH = buf->getOffsetHandle(baseHandle);
     if (parentHandle)
@@ -131,8 +131,8 @@ void readTableObjectCommonHandles(dwgBuffer *buf, duint32 baseHandle,
         buf->getOffsetHandle(baseHandle);
 }
 
-bool readTableValueBytes(dwgBuffer *buf, std::vector<duint8>& raw, const char *label) {
-    const duint32 byteCount = buf->getBitLong();
+bool readTableValueBytes(dwgBuffer *buf, std::vector<std::uint8_t>& raw, const char *label) {
+    const std::uint32_t byteCount = buf->getBitLong();
     if (byteCount > kMaxTableStringBytes) {
         DRW_DBG(label); DRW_DBG(" too large: "); DRW_DBG(byteCount); DRW_DBG("\n");
         return false;
@@ -146,7 +146,7 @@ bool readTableValueBytes(dwgBuffer *buf, std::vector<duint8>& raw, const char *l
     return good;
 }
 
-UTF8STRING decodeTableValueText(DRW::Version version, dwgBuffer *buf, const std::vector<duint8>& raw) {
+UTF8STRING decodeTableValueText(DRW::Version version, dwgBuffer *buf, const std::vector<std::uint8_t>& raw) {
     if (raw.empty())
         return UTF8STRING();
     std::string s(reinterpret_cast<const char*>(raw.data()), raw.size());
@@ -168,7 +168,7 @@ UTF8STRING readTableText(DRW::Version version, dwgBuffer *buf) {
     if (version <= DRW::AC1018)
         return buf->getVariableText(version, false);
 
-    const duint32 byteLen = buf->getBitShort();
+    const std::uint32_t byteLen = buf->getBitShort();
     if (byteLen == 0)
         return UTF8STRING();
     if (byteLen > kMaxTableStringBytes) {
@@ -176,7 +176,7 @@ UTF8STRING readTableText(DRW::Version version, dwgBuffer *buf) {
         return UTF8STRING();
     }
 
-    std::vector<duint8> raw(static_cast<size_t>(byteLen) + 2, 0);
+    std::vector<std::uint8_t> raw(static_cast<size_t>(byteLen) + 2, 0);
     if (!buf->getBytes(raw.data(), byteLen))
         return UTF8STRING();
 
@@ -187,8 +187,8 @@ UTF8STRING readTableText(DRW::Version version, dwgBuffer *buf) {
 }
 
 bool readTableValuePoint(dwgBuffer *buf, DRW_CadValue& value, int dimensions) {
-    value.m_dataSize = static_cast<duint32>(buf->getBitLong());
-    const duint32 expectedSize = static_cast<duint32>(dimensions) * 8;
+    value.m_dataSize = static_cast<std::uint32_t>(buf->getBitLong());
+    const std::uint32_t expectedSize = static_cast<std::uint32_t>(dimensions) * 8;
     if (value.m_dataSize > kMaxTableStringBytes)
         return false;
     if (value.m_dataSize < expectedSize) {
@@ -205,7 +205,7 @@ bool readTableValuePoint(dwgBuffer *buf, DRW_CadValue& value, int dimensions) {
     c.z = dimensions == 3 ? buf->getRawDouble() : 0.0;
     value.m_value.addCoord(11, c);
 
-    const duint32 extraBytes = value.m_dataSize - expectedSize;
+    const std::uint32_t extraBytes = value.m_dataSize - expectedSize;
     value.m_rawData.resize(extraBytes);
     return extraBytes == 0 || buf->getBytes(value.m_rawData.data(), value.m_rawData.size());
 }
@@ -230,13 +230,13 @@ bool readTableCadValue(DRW::Version version, dwgBuffer *buf, dwgBuffer *strBuf,
         case 512:
             if (!readTableValueBytes(buf, value.m_rawData, "TABLE value byte payload"))
                 return false;
-            value.m_dataSize = static_cast<duint32>(value.m_rawData.size());
+            value.m_dataSize = static_cast<std::uint32_t>(value.m_rawData.size());
             value.m_value.addString(1, decodeTableValueText(version, buf, value.m_rawData));
             break;
         case 8: {
             if (!readTableValueBytes(buf, value.m_rawData, "TABLE value date payload"))
                 return false;
-            value.m_dataSize = static_cast<duint32>(value.m_rawData.size());
+            value.m_dataSize = static_cast<std::uint32_t>(value.m_rawData.size());
             value.m_value.addBinary(310, value.m_rawData);
             break;
         }
@@ -250,7 +250,7 @@ bool readTableCadValue(DRW::Version version, dwgBuffer *buf, dwgBuffer *strBuf,
             break;
         case 64:
             value.m_handle = readTableHandle(hdlBuf);
-            value.m_value.addInt(330, static_cast<duint32>(value.m_handle));
+            value.m_value.addInt(330, static_cast<std::uint32_t>(value.m_handle));
             break;
         case 128:
         case 256:
@@ -309,8 +309,8 @@ void readTableCmColor(DRW::Version version, dwgBuffer *buf, dwgBuffer *strBuf) {
     }
 
     buf->getBitShort();
-    const duint32 rgb = buf->getBitLong();
-    const duint8 colorFlags = buf->getRawChar8();
+    const std::uint32_t rgb = buf->getBitLong();
+    const std::uint8_t colorFlags = buf->getRawChar8();
     DRW_DBG("\ntype COLOR: "); DRW_DBGH(rgb >> 24);
     DRW_DBG("\nRGB COLOR: "); DRW_DBGH(rgb);
     DRW_DBG("\nbyte COLOR: "); DRW_DBGH(colorFlags);
@@ -324,8 +324,8 @@ bool skipR2007TableCellOverrides(DRW::Version version, dwgBuffer *buf,
                                  dwgBuffer *strBuf, dwgBuffer *hdlBuf,
                                  DRW_TableCell& cell,
                                  std::vector<DRW_DwgSubrecordRange> *ranges) {
-    const duint64 startBit = currentDwgBit(buf);
-    cell.m_overrideFlags = static_cast<duint32>(buf->getBitLong());
+    const std::uint64_t startBit = currentDwgBit(buf);
+    cell.m_overrideFlags = static_cast<std::uint32_t>(buf->getBitLong());
     cell.m_virtualEdgeFlags = buf->getRawChar8();
 
     if (cell.m_overrideFlags & 0x00001)
@@ -401,9 +401,9 @@ bool parseR2007TableCell(DRW::Version version, dwgBuffer *buf, dwgBuffer *strBuf
         cell.m_blockHandle = cell.m_valueHandle;
         cell.m_blockScale = buf->getBitDouble();
         if (buf->getBit() != 0) {
-            const duint16 numAttributes = buf->getBitShort();
+            const std::uint16_t numAttributes = buf->getBitShort();
             cell.m_attributes.reserve(numAttributes);
-            for (duint16 i = 0; i < numAttributes; ++i) {
+            for (std::uint16_t i = 0; i < numAttributes; ++i) {
                 DRW_TableCellAttribute attribute;
                 attribute.m_attdefHandle = readTableHandle(hdlBuf);
                 attribute.m_index = buf->getBitShort();
@@ -441,10 +441,10 @@ bool parseR2007TableCell(DRW::Version version, dwgBuffer *buf, dwgBuffer *strBuf
 bool skipR2007TableOverrides(DRW::Version version, dwgBuffer *buf,
                              dwgBuffer *strBuf, dwgBuffer *hdlBuf,
                              std::vector<DRW_DwgSubrecordRange> *ranges = nullptr) {
-    const duint64 startBit = currentDwgBit(buf);
-    duint32 maskCount = 0;
+    const std::uint64_t startBit = currentDwgBit(buf);
+    std::uint32_t maskCount = 0;
     if (buf->getBit() != 0) {
-        const duint32 flags = static_cast<duint32>(buf->getBitLong());
+        const std::uint32_t flags = static_cast<std::uint32_t>(buf->getBitLong());
         ++maskCount;
         if (flags & 0x000001)
             buf->getBit();
@@ -493,7 +493,7 @@ bool skipR2007TableOverrides(DRW::Version version, dwgBuffer *buf,
     }
 
     if (buf->getBit() != 0) {
-        const duint32 flags = static_cast<duint32>(buf->getBitLong());
+        const std::uint32_t flags = static_cast<std::uint32_t>(buf->getBitLong());
         ++maskCount;
         for (int i = 0; i < 18; ++i) {
             if (flags & (1u << i))
@@ -502,7 +502,7 @@ bool skipR2007TableOverrides(DRW::Version version, dwgBuffer *buf,
     }
 
     if (buf->getBit() != 0) {
-        const duint32 flags = static_cast<duint32>(buf->getBitLong());
+        const std::uint32_t flags = static_cast<std::uint32_t>(buf->getBitLong());
         ++maskCount;
         for (int i = 0; i < 18; ++i) {
             if (flags & (1u << i))
@@ -511,7 +511,7 @@ bool skipR2007TableOverrides(DRW::Version version, dwgBuffer *buf,
     }
 
     if (buf->getBit() != 0) {
-        const duint32 flags = static_cast<duint32>(buf->getBitLong());
+        const std::uint32_t flags = static_cast<std::uint32_t>(buf->getBitLong());
         ++maskCount;
         for (int i = 0; i < 18; ++i) {
             if (flags & (1u << i))
@@ -531,7 +531,7 @@ bool skipR2007TableOverrides(DRW::Version version, dwgBuffer *buf,
 bool skipTableContentFormat(DRW::Version version, dwgBuffer *buf,
                             dwgBuffer *strBuf, dwgBuffer *hdlBuf,
                             std::vector<DRW_DwgSubrecordRange> *ranges = nullptr) {
-    const duint64 startBit = currentDwgBit(buf);
+    const std::uint64_t startBit = currentDwgBit(buf);
     dwgBuffer *textBuf = strBuf ? strBuf : buf;
     buf->getBitLong();  // property override flags
     buf->getBitLong();  // property flags
@@ -541,7 +541,7 @@ bool skipTableContentFormat(DRW::Version version, dwgBuffer *buf,
     buf->getBitDouble(); // rotation
     buf->getBitDouble(); // block scale
     buf->getBitLong();   // alignment
-    dint32 rgb = -1;
+    std::int32_t rgb = -1;
     UTF8STRING name;
     UTF8STRING book;
     buf->getCmColor(version, &rgb, textBuf, &name, &book);
@@ -559,7 +559,7 @@ bool skipTableContentFormat(DRW::Version version, dwgBuffer *buf,
 bool skipTableCellStyle(DRW::Version version, dwgBuffer *buf,
                         dwgBuffer *strBuf, dwgBuffer *hdlBuf,
                         std::vector<DRW_DwgSubrecordRange> *ranges = nullptr) {
-    const duint64 startBit = currentDwgBit(buf);
+    const std::uint64_t startBit = currentDwgBit(buf);
     buf->getBitLong(); // style type
     const bool hasData = buf->getBitShort() != 0;
     if (!hasData) {
@@ -573,7 +573,7 @@ bool skipTableCellStyle(DRW::Version version, dwgBuffer *buf,
 
     buf->getBitLong(); // property override flags
     buf->getBitLong(); // merge flags
-    dint32 rgb = -1;
+    std::int32_t rgb = -1;
     UTF8STRING name;
     UTF8STRING book;
     dwgBuffer *textBuf = strBuf ? strBuf : buf;
@@ -582,19 +582,19 @@ bool skipTableCellStyle(DRW::Version version, dwgBuffer *buf,
     if (!skipTableContentFormat(version, buf, strBuf, hdlBuf, ranges))
         return false;
 
-    const duint16 marginFlags = buf->getBitShort();
+    const std::uint16_t marginFlags = buf->getBitShort();
     if (marginFlags != 0) {
         for (int i = 0; i < 6; ++i)
             buf->getBitDouble();
     }
 
-    const duint32 borders = buf->getBitLong();
+    const std::uint32_t borders = buf->getBitLong();
     if (borders > 6) {
         DRW_DBG("TABLE cell style border count out of range: "); DRW_DBG(borders); DRW_DBG("\n");
         return false;
     }
-    for (duint32 i = 0; i < borders; ++i) {
-        const duint32 edgeFlags = buf->getBitLong();
+    for (std::uint32_t i = 0; i < borders; ++i) {
+        const std::uint32_t edgeFlags = buf->getBitLong();
         if (edgeFlags == 0)
             continue;
         buf->getBitLong(); // border overrides
@@ -627,12 +627,12 @@ bool parseTableCell(DRW::Version version, dwgBuffer *buf, dwgBuffer *strBuf,
     }
     buf->getBitLong(); // custom data
 
-    const duint32 customItems = buf->getBitLong();
+    const std::uint32_t customItems = buf->getBitLong();
     if (customItems > kMaxTableItems) {
         DRW_DBG("TABLE cell custom item count out of range: "); DRW_DBG(customItems); DRW_DBG("\n");
         return false;
     }
-    for (duint32 i = 0; i < customItems; ++i) {
+    for (std::uint32_t i = 0; i < customItems; ++i) {
         if (!skipTableCustomData(version, buf, strBuf, hdlBuf)) {
             DRW_DBG("TABLE cell custom data parse incomplete\n");
             return false;
@@ -646,13 +646,13 @@ bool parseTableCell(DRW::Version version, dwgBuffer *buf, dwgBuffer *strBuf,
         buf->getBitLong();
     }
 
-    const duint32 contentCount = buf->getBitLong();
+    const std::uint32_t contentCount = buf->getBitLong();
     if (contentCount > kMaxTableItems) {
         DRW_DBG("TABLE cell content count out of range: "); DRW_DBG(contentCount); DRW_DBG("\n");
         return false;
     }
     cell.m_contents.reserve(contentCount);
-    for (duint32 i = 0; i < contentCount; ++i) {
+    for (std::uint32_t i = 0; i < contentCount; ++i) {
         DRW_TableCellContent content;
         content.m_type = buf->getBitLong();
         if (content.m_type == 1) {
@@ -668,12 +668,12 @@ bool parseTableCell(DRW::Version version, dwgBuffer *buf, dwgBuffer *strBuf,
             content.m_handle = readTableHandle(hdlBuf);
         }
 
-        const duint32 numAttrs = buf->getBitLong();
+        const std::uint32_t numAttrs = buf->getBitLong();
         if (numAttrs > kMaxTableItems) {
             DRW_DBG("TABLE cell attribute count out of range: "); DRW_DBG(numAttrs); DRW_DBG("\n");
             return false;
         }
-        for (duint32 attr = 0; attr < numAttrs; ++attr) {
+        for (std::uint32_t attr = 0; attr < numAttrs; ++attr) {
             readTableHandle(hdlBuf);
             readTableText(version, textBuf);
             buf->getBitLong();
@@ -694,8 +694,8 @@ bool parseTableCell(DRW::Version version, dwgBuffer *buf, dwgBuffer *strBuf,
     }
 
     cell.m_styleId = buf->getBitLong();
-    const duint64 geometryStartBit = currentDwgBit(buf);
-    const duint32 hasGeometry = buf->getBitLong();
+    const std::uint64_t geometryStartBit = currentDwgBit(buf);
+    const std::uint32_t hasGeometry = buf->getBitLong();
     if (hasGeometry != 0) {
         buf->getBitLong(); // unknown AC1027+ geometry marker
         cell.m_width = buf->getBitDouble();
@@ -731,23 +731,23 @@ bool parseTableContent(DRW::Version version, dwgBuffer *buf, dwgBuffer *strBuf,
     content.m_name = readTableText(version, textBuf);
     content.m_description = readTableText(version, textBuf);
 
-    const duint32 columns = buf->getBitLong();
+    const std::uint32_t columns = buf->getBitLong();
     if (columns > kMaxTableColumns) {
         DRW_DBG("TABLECONTENT column count out of range: "); DRW_DBG(columns); DRW_DBG("\n");
         return false;
     }
     content.m_columns.clear();
     content.m_columns.reserve(columns);
-    for (duint32 col = 0; col < columns; ++col) {
+    for (std::uint32_t col = 0; col < columns; ++col) {
         DRW_TableColumn column;
         column.m_name = readTableText(version, textBuf);
         buf->getBitLong(); // custom data
-        const duint32 customItems = buf->getBitLong();
+        const std::uint32_t customItems = buf->getBitLong();
         if (customItems > kMaxTableItems) {
             DRW_DBG("TABLECONTENT column custom item count out of range: "); DRW_DBG(customItems); DRW_DBG("\n");
             return false;
         }
-        for (duint32 i = 0; i < customItems; ++i) {
+        for (std::uint32_t i = 0; i < customItems; ++i) {
             if (!skipTableCustomData(version, buf, strBuf, hdlBuf)) {
                 DRW_DBG("TABLECONTENT column custom data parse incomplete\n");
                 return false;
@@ -763,22 +763,22 @@ bool parseTableContent(DRW::Version version, dwgBuffer *buf, dwgBuffer *strBuf,
         content.m_columns.push_back(column);
     }
 
-    const duint32 rows = buf->getBitLong();
+    const std::uint32_t rows = buf->getBitLong();
     if (rows > kMaxTableRows || (columns != 0 && rows > kMaxTableCells / columns)) {
         DRW_DBG("TABLECONTENT row count out of range: "); DRW_DBG(rows); DRW_DBG("\n");
         return false;
     }
     content.m_rows.clear();
     content.m_rows.reserve(rows);
-    for (duint32 rowIndex = 0; rowIndex < rows; ++rowIndex) {
+    for (std::uint32_t rowIndex = 0; rowIndex < rows; ++rowIndex) {
         DRW_TableRow row;
-        const duint32 cells = buf->getBitLong();
+        const std::uint32_t cells = buf->getBitLong();
         if (cells > kMaxTableColumns || cells > kMaxTableItems) {
             DRW_DBG("TABLECONTENT row cell count out of range: "); DRW_DBG(cells); DRW_DBG("\n");
             return false;
         }
         row.m_cells.reserve(cells);
-        for (duint32 cellIndex = 0; cellIndex < cells; ++cellIndex) {
+        for (std::uint32_t cellIndex = 0; cellIndex < cells; ++cellIndex) {
             DRW_TableCell cell;
             if (!parseTableCell(version, buf, strBuf, hdlBuf, cell,
                                 &content.m_subrecordRanges)) {
@@ -790,12 +790,12 @@ bool parseTableContent(DRW::Version version, dwgBuffer *buf, dwgBuffer *strBuf,
         }
 
         buf->getBitLong(); // custom data
-        const duint32 customItems = buf->getBitLong();
+        const std::uint32_t customItems = buf->getBitLong();
         if (customItems > kMaxTableItems) {
             DRW_DBG("TABLECONTENT row custom item count out of range: "); DRW_DBG(customItems); DRW_DBG("\n");
             return false;
         }
-        for (duint32 i = 0; i < customItems; ++i) {
+        for (std::uint32_t i = 0; i < customItems; ++i) {
             if (!skipTableCustomData(version, buf, strBuf, hdlBuf)) {
                 DRW_DBG("TABLECONTENT row custom data parse incomplete\n");
                 return false;
@@ -811,15 +811,15 @@ bool parseTableContent(DRW::Version version, dwgBuffer *buf, dwgBuffer *strBuf,
         content.m_rows.push_back(row);
     }
 
-    const duint32 fieldRefs = buf->getBitLong();
+    const std::uint32_t fieldRefs = buf->getBitLong();
     if (fieldRefs > kMaxTableItems) {
         DRW_DBG("TABLECONTENT field reference count out of range: "); DRW_DBG(fieldRefs); DRW_DBG("\n");
         return false;
     }
     content.m_fieldHandles.clear();
     content.m_fieldHandles.reserve(fieldRefs);
-    for (duint32 i = 0; i < fieldRefs; ++i) {
-        const duint32 ref = readTableHandle(hdlBuf);
+    for (std::uint32_t i = 0; i < fieldRefs; ++i) {
+        const std::uint32_t ref = readTableHandle(hdlBuf);
         if (ref != 0)
             content.m_fieldHandles.push_back(ref);
     }
@@ -830,14 +830,14 @@ bool parseTableContent(DRW::Version version, dwgBuffer *buf, dwgBuffer *strBuf,
         return false;
     }
 
-    const duint32 mergedRanges = buf->getBitLong();
+    const std::uint32_t mergedRanges = buf->getBitLong();
     if (mergedRanges > kMaxTableItems) {
         DRW_DBG("TABLECONTENT merged range count out of range: "); DRW_DBG(mergedRanges); DRW_DBG("\n");
         return false;
     }
     content.m_mergedRanges.clear();
     content.m_mergedRanges.reserve(mergedRanges);
-    for (duint32 i = 0; i < mergedRanges; ++i) {
+    for (std::uint32_t i = 0; i < mergedRanges; ++i) {
         DRW_TableMergedRange range;
         range.m_topRow = buf->getBitLong();
         range.m_leftColumn = buf->getBitLong();
@@ -946,7 +946,7 @@ bool DRW_Entity::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
         shadow = static_cast<DRW::ShadowMode>(reader->getInt32() & 0x3);
         break;
     case 347:
-        material = static_cast<duint32>(reader->getHandleString());
+        material = static_cast<std::uint32_t>(reader->getHandleString());
         break;
     case 390:
         plotStyle = reader->getHandleString();
@@ -1042,7 +1042,7 @@ bool DRW_Entity::parseDxfGroups(int code, const std::unique_ptr<dxfReader>& read
     return true;
 }
 
-bool DRW_Entity::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer* strBuf, duint32 bs){
+bool DRW_Entity::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer* strBuf, std::uint32_t bs){
     objSize=0;
     DRW_DBG("\n***************************** parsing entity *********************************************\n");
     oType = buf->getObjType(version);
@@ -1053,7 +1053,7 @@ bool DRW_Entity::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer* strBu
         DRW_DBG(" Object size: "); DRW_DBG(objSize); DRW_DBG("\n");
     }
     if (version > DRW::AC1021) {//2010+
-        duint32 ms = buf->size();
+        std::uint32_t ms = buf->size();
         // Clamp: a corrupt bs > ms*8 would underflow objSize (unsigned) to a
         // huge value and drive strBuf->moveBitPos(objSize-1) past the buffer.
         objSize = (bs <= ms*8u) ? ms*8u - bs : 0u;
@@ -1066,12 +1066,12 @@ bool DRW_Entity::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer* strBu
         if (strBuf->getBit() == 1){
             DRW_DBG("DRW_TableEntry::parseDwg string bit is 1\n");
             strBuf->moveBitPos(-17);
-            duint16 strDataSize = strBuf->getRawShort16();
+            std::uint16_t strDataSize = strBuf->getRawShort16();
             DRW_DBG("\nDRW_TableEntry::parseDwg string strDataSize: "); DRW_DBGH(strDataSize); DRW_DBG("\n");
             if ( (strDataSize& 0x8000) == 0x8000){
                 DRW_DBG("\nDRW_TableEntry::parseDwg string 0x8000 bit is set");
                 strBuf->moveBitPos(-32);
-                duint16 hiSize = strBuf->getRawShort16();
+                std::uint16_t hiSize = strBuf->getRawShort16();
                 strDataSize = ((strDataSize&0x7fff) | (hiSize<<15));
             }
             strBuf->moveBitPos( -strDataSize -16); //-14
@@ -1091,12 +1091,12 @@ bool DRW_Entity::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer* strBu
     // into @ref extData. Handle-typed items (type 3 layer-ref, type 5
     // entity-ref) and the per-chunk APPID handle are resolved post-hoc
     // in dwgReader::parseAttribs once the symbol tables are available.
-    duint16 extDataSize = buf->getBitShort(); //BS (unsigned: a >32767 chunk size must not go negative)
+    std::uint16_t extDataSize = buf->getBitShort(); //BS (unsigned: a >32767 chunk size must not go negative)
     DRW_DBG(" ext data size: "); DRW_DBG(extDataSize);
     while (extDataSize>0 && buf->isGood()) {
         dwgHandle ah = buf->getHandle();
         DRW_DBG("App Handle: "); DRW_DBGHL(ah.code, ah.size, ah.ref);
-        duint8 *tmpExtData = new duint8[extDataSize];
+        std::uint8_t *tmpExtData = new std::uint8_t[extDataSize];
         buf->getBytes(tmpExtData, extDataSize);
         dwgBuffer tmpExtDataBuf(tmpExtData, extDataSize, buf->decoder);
 
@@ -1106,23 +1106,23 @@ bool DRW_Entity::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer* strBu
         pendingAppIdResolutions.push_back({extData.size() - 1, ah.ref});
 
         while (tmpExtDataBuf.numRemainingBytes() > 0 && tmpExtDataBuf.isGood()) {
-            duint8 dxfCode = tmpExtDataBuf.getRawChar8();
+            std::uint8_t dxfCode = tmpExtDataBuf.getRawChar8();
             DRW_DBG(" eed type: "); DRW_DBG(dxfCode);
             switch (dxfCode){
             case 0: { //string
                 std::string s;
                 if (version > DRW::AC1018) { //R2007+: 2-byte char count + UTF-16LE
                     if (tmpExtDataBuf.numRemainingBytes() < 2) break;
-                    duint16 nChars = tmpExtDataBuf.getRawShort16();
+                    std::uint16_t nChars = tmpExtDataBuf.getRawShort16();
                     if (nChars > 0) {
-                        duint64 byteLen = static_cast<duint64>(nChars) * 2;
-                        if ((duint64)tmpExtDataBuf.numRemainingBytes() < byteLen) break;
-                        std::vector<duint8> bytes(byteLen);
+                        std::uint64_t byteLen = static_cast<std::uint64_t>(nChars) * 2;
+                        if ((std::uint64_t)tmpExtDataBuf.numRemainingBytes() < byteLen) break;
+                        std::vector<std::uint8_t> bytes(byteLen);
                         tmpExtDataBuf.getBytes(bytes.data(), byteLen);
                         // Inline UTF-16LE → UTF-8 conversion.
-                        for (duint16 i = 0; i < nChars; ++i) {
-                            duint16 c = static_cast<duint16>(bytes[2*i]) |
-                                       (static_cast<duint16>(bytes[2*i+1]) << 8);
+                        for (std::uint16_t i = 0; i < nChars; ++i) {
+                            std::uint16_t c = static_cast<std::uint16_t>(bytes[2*i]) |
+                                       (static_cast<std::uint16_t>(bytes[2*i+1]) << 8);
                             if (c < 0x80) {
                                 s.push_back(static_cast<char>(c));
                             } else if (c < 0x800) {
@@ -1137,12 +1137,12 @@ bool DRW_Entity::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer* strBu
                     }
                 } else { //R13–R2004: 1-byte len + 2-byte BE codepage hint + bytes (+NUL)
                     if (tmpExtDataBuf.numRemainingBytes() < 3) break;
-                    duint8 strLength = tmpExtDataBuf.getRawChar8();
-                    duint16 cp = tmpExtDataBuf.getBERawShort16();
+                    std::uint8_t strLength = tmpExtDataBuf.getRawChar8();
+                    std::uint16_t cp = tmpExtDataBuf.getBERawShort16();
                     (void)cp; //per-string codepage hint dropped; file-level codec used
                     if (strLength > 0 && tmpExtDataBuf.numRemainingBytes() >= strLength) {
                         std::string raw(strLength, '\0');
-                        tmpExtDataBuf.getBytes(reinterpret_cast<duint8*>(&raw[0]), strLength);
+                        tmpExtDataBuf.getBytes(reinterpret_cast<std::uint8_t*>(&raw[0]), strLength);
                         s = tmpExtDataBuf.decoder ? tmpExtDataBuf.decoder->toUtf8(raw) : raw;
                     }
                     //consume the optional trailing NUL terminator if present
@@ -1155,16 +1155,16 @@ bool DRW_Entity::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer* strBu
             }
             case 2: { //control character: 0 = '{', 1 = '}'
                 if (tmpExtDataBuf.numRemainingBytes() < 1) break;
-                duint8 ctrl = tmpExtDataBuf.getRawChar8();
+                std::uint8_t ctrl = tmpExtDataBuf.getRawChar8();
                 extData.push_back(std::make_shared<DRW_Variant>(
                     1002, std::string(ctrl == 0 ? "{" : "}")));
                 break;
             }
             case 3: { //layer-table reference (8 raw BE bytes -> handle)
                 if (tmpExtDataBuf.numRemainingBytes() < 8) break;
-                duint8 hb[8];
+                std::uint8_t hb[8];
                 tmpExtDataBuf.getBytes(hb, 8);
-                duint64 ref = 0;
+                std::uint64_t ref = 0;
                 for (int i = 0; i < 8; ++i) {
                     ref = (ref << 8) | hb[i];
                 }
@@ -1172,13 +1172,13 @@ bool DRW_Entity::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer* strBu
                 extData.push_back(std::make_shared<DRW_Variant>(
                     1003, std::string{}, /*isLayerRef=*/true));
                 pendingLayerRefResolutions.push_back(
-                    {extData.size() - 1, static_cast<duint32>(ref)});
+                    {extData.size() - 1, static_cast<std::uint32_t>(ref)});
                 break;
             }
             case 4: { //binary chunk: 1-byte length + bytes
                 if (tmpExtDataBuf.numRemainingBytes() < 1) break;
-                duint8 binLen = tmpExtDataBuf.getRawChar8();
-                std::vector<duint8> bytes(binLen);
+                std::uint8_t binLen = tmpExtDataBuf.getRawChar8();
+                std::vector<std::uint8_t> bytes(binLen);
                 if (binLen > 0 && tmpExtDataBuf.numRemainingBytes() >= binLen) {
                     tmpExtDataBuf.getBytes(bytes.data(), binLen);
                 }
@@ -1187,9 +1187,9 @@ bool DRW_Entity::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer* strBu
             }
             case 5: { //entity-handle reference (8 raw BE bytes -> hex string)
                 if (tmpExtDataBuf.numRemainingBytes() < 8) break;
-                duint8 hb[8];
+                std::uint8_t hb[8];
                 tmpExtDataBuf.getBytes(hb, 8);
-                duint64 ref = 0;
+                std::uint64_t ref = 0;
                 for (int i = 0; i < 8; ++i) {
                     ref = (ref << 8) | hb[i];
                 }
@@ -1216,13 +1216,13 @@ bool DRW_Entity::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer* strBu
             }
             case 70: { //int16
                 if (tmpExtDataBuf.numRemainingBytes() < 2) break;
-                dint16 i = static_cast<dint16>(tmpExtDataBuf.getRawShort16());
-                extData.push_back(std::make_shared<DRW_Variant>(1070, static_cast<dint32>(i)));
+                std::int16_t i = static_cast<std::int16_t>(tmpExtDataBuf.getRawShort16());
+                extData.push_back(std::make_shared<DRW_Variant>(1070, static_cast<std::int32_t>(i)));
                 break;
             }
             case 71: { //int32
                 if (tmpExtDataBuf.numRemainingBytes() < 4) break;
-                dint32 i = static_cast<dint32>(tmpExtDataBuf.getRawLong32());
+                std::int32_t i = static_cast<std::int32_t>(tmpExtDataBuf.getRawLong32());
                 extData.push_back(std::make_shared<DRW_Variant>(1071, i));
                 break;
             }
@@ -1239,21 +1239,21 @@ bool DRW_Entity::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer* strBu
         DRW_DBG(" ext data size: "); DRW_DBG(extDataSize);
     } //end parsing extData (EED)
     DRW_DBG(" [bidi-debug pre-graphFlag bufpos="); DRW_DBG(buf->getPosition()); DRW_DBG(" bitpos="); DRW_DBG(buf->getBitPos()); DRW_DBG("]\n");
-    duint8 graphFlag = buf->getBit(); //B
+    std::uint8_t graphFlag = buf->getBit(); //B
     DRW_DBG(" graphFlag: "); DRW_DBG(graphFlag); DRW_DBG("\n");
     if (graphFlag) {
         DRW_DBG(" [bidi-debug pre-graphSize bufpos="); DRW_DBG(buf->getPosition()); DRW_DBG(" bitpos="); DRW_DBG(buf->getBitPos()); DRW_DBG("]\n");
-        const duint64 graphDataSize = (version >= DRW::AC1024)
+        const std::uint64_t graphDataSize = (version >= DRW::AC1024)
             ? buf->getBitLongLong()
             : buf->getRawLong32();
-        DRW_DBG("graphData in bytes: "); DRW_DBG(static_cast<duint32>(graphDataSize)); DRW_DBG("\n");
-        const duint64 maxMoveBytes = static_cast<duint64>(std::numeric_limits<dint32>::max() / 8);
-        if (graphDataSize > static_cast<duint64>(buf->numRemainingBytes())
+        DRW_DBG("graphData in bytes: "); DRW_DBG(static_cast<std::uint32_t>(graphDataSize)); DRW_DBG("\n");
+        const std::uint64_t maxMoveBytes = static_cast<std::uint64_t>(std::numeric_limits<std::int32_t>::max() / 8);
+        if (graphDataSize > static_cast<std::uint64_t>(buf->numRemainingBytes())
             || graphDataSize > maxMoveBytes) {
             DRW_DBG("graphData size outside object body\n");
             return false;
         }
-        if (!buf->moveBitPos(static_cast<dint32>(graphDataSize * 8)))
+        if (!buf->moveBitPos(static_cast<std::int32_t>(graphDataSize * 8)))
             return false;
     }
     if (version < DRW::AC1015) {//14-
@@ -1261,7 +1261,7 @@ bool DRW_Entity::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer* strBu
         DRW_DBG(" Object size in bits: "); DRW_DBG(objSize); DRW_DBG("\n");
     }
 
-    duint8 entmode = buf->get2Bits(); //BB
+    std::uint8_t entmode = buf->get2Bits(); //BB
     if (entmode == 0)
         ownerHandle= true;
 //        entmode = 2;
@@ -1354,7 +1354,7 @@ bool DRW_Entity::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer* strBu
         DRW_DBG(hasFaceVisualStyle); DRW_DBG(" ");
         DRW_DBG(hasEdgeVisualStyle); DRW_DBG("\n");
     }
-    dint16 invisibleFlag = buf->getBitShort(); //BS
+    std::int16_t invisibleFlag = buf->getBitShort(); //BS
     DRW_DBG(" invisibleFlag: "); DRW_DBG(invisibleFlag);
     // DXF group 60: bit 0 = invisible (1) / visible (0). libreDWG
     // common_entity_data.spec masks bit 0 only (`invisible & 1`) and ignores
@@ -1367,7 +1367,7 @@ bool DRW_Entity::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer* strBu
     }
     //Only in blocks ????????
 //    if (version > DRW::AC1018) {//2007+
-//        duint8 unk = buf->getBit();
+//        std::uint8_t unk = buf->getBit();
 //        DRW_DBG("unknown bit: "); DRW_DBG(unk); DRW_DBG("\n");
 //    }
     return buf->isGood();
@@ -1601,7 +1601,7 @@ bool DRW_Entity::encodeDwgCommon(DRW::Version version, dwgBufferW *buf,
         version != DRW::AC1032) return false;
 
     // Object type: BS for AC1015/AC1018, OT for AC1024+.
-    buf->putObjType(version, static_cast<duint16>(oType));
+    buf->putObjType(version, static_cast<std::uint16_t>(oType));
 
     // objSize stub — back-patched for AC1015/AC1018 only.  AC1024 derives
     // objSize from the body buffer size, so no RL is emitted.
@@ -1615,7 +1615,7 @@ bool DRW_Entity::encodeDwgCommon(DRW::Version version, dwgBufferW *buf,
     ownH.ref  = handle;
     ownH.size = 0;
     if (handle != 0) {
-        duint32 t = handle;
+        std::uint32_t t = handle;
         while (t != 0) { t >>= 8; ++ownH.size; }
     }
     buf->putHandle(ownH);
@@ -1632,7 +1632,7 @@ bool DRW_Entity::encodeDwgCommon(DRW::Version version, dwgBufferW *buf,
     // numReactors (BL per spec §20.4.1). 2a.2: emit the real count; empty
     // reactorHandles → 0 → byte-identical to legacy.
 #if LIBDXFRW_FULL_COMMON_HEADER
-    buf->putBitLong(static_cast<dint32>(reactorHandles.size()));
+    buf->putBitLong(static_cast<std::int32_t>(reactorHandles.size()));
 #else
     buf->putBitLong(0);
 #endif
@@ -1656,7 +1656,7 @@ bool DRW_Entity::encodeDwgCommon(DRW::Version version, dwgBufferW *buf,
     }
 
     // ENC color (BS for R2000/R2004/R2010).
-    buf->putEnColor(version, static_cast<duint16>(color));
+    buf->putEnColor(version, static_cast<std::uint16_t>(color));
 
     // ltypeScale BD.
     buf->putBitDouble(ltypeScale);
@@ -1687,7 +1687,7 @@ bool DRW_Entity::encodeDwgCommon(DRW::Version version, dwgBufferW *buf,
 #endif
 
     // lWeight RC (0 = byLayer per DRW_LW_Conv).
-    buf->putRawChar8(static_cast<duint8>(lWeight));
+    buf->putRawChar8(static_cast<std::uint8_t>(lWeight));
 
     return true;
 }
@@ -1707,12 +1707,12 @@ bool DRW_Entity::encodeDwgEntHandle(DRW::Version version, dwgBufferW *buf,
     // in the DATA section, as ABSOLUTE handles (reader uses getHandle()). Empty
     // reactorHandles → nothing emitted → byte-identical to legacy.
 #if LIBDXFRW_FULL_COMMON_HEADER
-    for (duint32 ref : reactorHandles) {
+    for (std::uint32_t ref : reactorHandles) {
         dwgHandle rh;
         rh.code = 4;  // soft pointer
         rh.ref  = ref;
         rh.size = 0;
-        if (ref != 0) { duint32 t = ref; while (t != 0) { t >>= 8; ++rh.size; } }
+        if (ref != 0) { std::uint32_t t = ref; while (t != 0) { t >>= 8; ++rh.size; } }
         hb->putHandle(rh);
     }
 #endif
@@ -1726,7 +1726,7 @@ bool DRW_Entity::encodeDwgEntHandle(DRW::Version version, dwgBufferW *buf,
     xDic.ref  = xDictHandle;
     xDic.size = 0;
     if (xDictHandle != 0) {
-        duint32 t = xDictHandle; while (t != 0) { t >>= 8; ++xDic.size; }
+        std::uint32_t t = xDictHandle; while (t != 0) { t >>= 8; ++xDic.size; }
     }
 #else
     xDic.ref  = 0;
@@ -1740,7 +1740,7 @@ bool DRW_Entity::encodeDwgEntHandle(DRW::Version version, dwgBufferW *buf,
     lH.ref  = layerH.ref;
     lH.size = 0;
     if (lH.ref != 0) {
-        duint32 t = lH.ref;
+        std::uint32_t t = lH.ref;
         while (t != 0) { t >>= 8; ++lH.size; }
     }
     hb->putHandle(lH);
@@ -1753,7 +1753,7 @@ bool DRW_Entity::encodeDwgEntHandle(DRW::Version version, dwgBufferW *buf,
     return true;
 }
 
-bool DRW_Point::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {
+bool DRW_Point::encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {
     (void)bs; (void)strBuf;
     oType = 27;  // POINT class id — see dwgreader.cpp:1111 dispatch
     if (!encodeDwgCommon(version, buf)) return false;
@@ -1769,7 +1769,7 @@ bool DRW_Point::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwg
     return encodeDwgEntHandle(version, buf, handleBuf);
 }
 
-bool DRW_Point::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
+bool DRW_Point::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs){
     bool ret = DRW_Entity::parseDwg(version, buf, NULL, bs);
     if (!ret)
         return ret;
@@ -1812,7 +1812,7 @@ bool DRW_Line::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
     return true;
 }
 
-bool DRW_Line::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {
+bool DRW_Line::encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {
     (void)bs; (void)strBuf;
     oType = 19;  // LINE class id — see dwgreader.cpp:1105
     if (!encodeDwgCommon(version, buf)) return false;
@@ -1839,7 +1839,7 @@ bool DRW_Line::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwgB
     return encodeDwgEntHandle(version, buf, handleBuf);
 }
 
-bool DRW_Circle::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {
+bool DRW_Circle::encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {
     (void)bs; (void)strBuf;
     oType = 18;  // CIRCLE class id — see dwgreader.cpp:1099
     if (!encodeDwgCommon(version, buf)) return false;
@@ -1855,7 +1855,7 @@ bool DRW_Circle::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dw
     return encodeDwgEntHandle(version, buf, handleBuf);
 }
 
-bool DRW_Ray::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {
+bool DRW_Ray::encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {
     (void)bs; (void)strBuf;
     // Ray = 40, Xline = 41 — derive from runtime type so DRW_Xline can
     // share this encoder (it inherits from DRW_Ray).
@@ -1873,7 +1873,7 @@ bool DRW_Ray::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwgBu
     return encodeDwgEntHandle(version, buf, handleBuf);
 }
 
-bool DRW_Trace::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {
+bool DRW_Trace::encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {
     (void)bs; (void)strBuf;
     oType = 32;  // TRACE = 32 — see dwgreader.cpp:1317
     if (!encodeDwgCommon(version, buf)) return false;
@@ -1896,7 +1896,7 @@ bool DRW_Trace::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwg
     return encodeDwgEntHandle(version, buf, handleBuf);
 }
 
-bool DRW_Spline::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {
+bool DRW_Spline::encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {
     (void)bs; (void)strBuf;
     oType = 36;  // SPLINE class id — see dwgreader.cpp:1329
     if (!encodeDwgCommon(version, buf)) return false;
@@ -1918,7 +1918,7 @@ void DRW_Spline::encodeDwgSplineBody(DRW::Version version, dwgBufferW *buf) cons
     // fit-point section, so writing both would corrupt all subsequent entities.
     const bool hasFit  = !fitlist.empty();
     const bool hasCtrl = !controllist.empty();
-    dint32 scenario = (hasFit && !hasCtrl) ? 2 : 1;
+    std::int32_t scenario = (hasFit && !hasCtrl) ? 2 : 1;
     if (m_scenario == 1 && hasCtrl) {
         scenario = 1;
     } else if (m_scenario == 2 && hasFit) {
@@ -1928,7 +1928,7 @@ void DRW_Spline::encodeDwgSplineBody(DRW::Version version, dwgBufferW *buf) cons
     if (version > DRW::AC1024) {
         // splFlag1 bit 0: method = fit points; bit 2: closed;
         // bit 3: knotParam participates in R2013+ scenario selection.
-        dint32 splFlag1 = m_splineFlags1;
+        std::int32_t splFlag1 = m_splineFlags1;
         splFlag1 &= ~(kSplineFlagMethodFitPoints | kSplineFlagUseKnotParameter | kSplineFlagClosed);
         if (scenario == 2) {
             splFlag1 |= kSplineFlagMethodFitPoints | kSplineFlagUseKnotParameter;
@@ -1937,7 +1937,7 @@ void DRW_Spline::encodeDwgSplineBody(DRW::Version version, dwgBufferW *buf) cons
             if (flags & 0x01) splFlag1 |= kSplineFlagClosed;
         }
         buf->putBitLong(splFlag1);
-        dint32 knotParam = m_knotParam;
+        std::int32_t knotParam = m_knotParam;
         if (scenario == 1) {
             knotParam = kSplineKnotParamCustom;
         } else if (knotParam == kSplineKnotParamCustom) {
@@ -1945,13 +1945,13 @@ void DRW_Spline::encodeDwgSplineBody(DRW::Version version, dwgBufferW *buf) cons
         }
         buf->putBitLong(knotParam);
     }
-    buf->putBitLong(static_cast<dint32>(degree));
+    buf->putBitLong(static_cast<std::int32_t>(degree));
 
     if (scenario == 2) {
         buf->putBitDouble(tolfit);
         buf->put3BitDouble(tgStart);
         buf->put3BitDouble(tgEnd);
-        const dint32 nFit = static_cast<dint32>(fitlist.size());
+        const std::int32_t nFit = static_cast<std::int32_t>(fitlist.size());
         buf->putBitLong(nFit);
     } else {
         // scenario == 1
@@ -1965,8 +1965,8 @@ void DRW_Spline::encodeDwgSplineBody(DRW::Version version, dwgBufferW *buf) cons
         buf->putBit((flags & 0x2) ? 1 : 0);  // periodic
         buf->putBitDouble(tolknot);
         buf->putBitDouble(tolcontrol);
-        const dint32 nKnots = static_cast<dint32>(knotslist.size());
-        const dint32 nCtrl  = static_cast<dint32>(controllist.size());
+        const std::int32_t nKnots = static_cast<std::int32_t>(knotslist.size());
+        const std::int32_t nCtrl  = static_cast<std::int32_t>(controllist.size());
         buf->putBitLong(nKnots);
         buf->putBitLong(nCtrl);
         // weight bit: caller populates weightlist when each control point
@@ -1994,7 +1994,7 @@ void DRW_Spline::encodeDwgSplineBody(DRW::Version version, dwgBufferW *buf) cons
 // DRW_Helix::encodeDwg — spline body (oType = HELIX class 503) + AcDbHelix
 // trailer, then the common entity handle data. Trailer field order MUST match
 // DRW_Helix::parseDwg (Phase 8a-1).
-bool DRW_Helix::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {
+bool DRW_Helix::encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {
     (void)bs; (void)strBuf;
     oType = kDwgClassNum;  // HELIX custom class 503
     if (!encodeDwgCommon(version, buf)) return false;
@@ -2010,12 +2010,12 @@ bool DRW_Helix::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwg
     buf->putBitDouble(turns);
     buf->putBitDouble(turnHeight);
     buf->putBit(handedness ? 1 : 0);
-    buf->putRawChar8(static_cast<duint8>(constraintType));
+    buf->putRawChar8(static_cast<std::uint8_t>(constraintType));
 
     return encodeDwgEntHandle(version, buf, handleBuf);
 }
 
-bool DRW_MText::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {
+bool DRW_MText::encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {
     (void)bs;
     oType = 44;  // MTEXT class id — see dwgreader.cpp:1215
     if (!encodeDwgCommon(version, buf)) return false;
@@ -2029,8 +2029,8 @@ bool DRW_MText::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwg
         buf->putBitDouble(0.0);             // rect height, R2007+
     }
     buf->putBitDouble(height);              // text height
-    buf->putBitShort(static_cast<duint16>(textgen));  // attachment
-    buf->putBitShort(static_cast<duint16>(alignH));   // drawing dir
+    buf->putBitShort(static_cast<std::uint16_t>(textgen));  // attachment
+    buf->putBitShort(static_cast<std::uint16_t>(alignH));   // drawing dir
     buf->putBitDouble(0.0);                 // ext_ht (extents height; undocumented)
     buf->putBitDouble(0.0);                 // ext_wid (extents width; undocumented)
     // For AC1024: text goes to string buffer; for AC1015/AC1018: inline.
@@ -2043,7 +2043,7 @@ bool DRW_MText::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwg
         buf->putBitLong(m_backgroundFlags);
         if ((m_backgroundFlags & 0x01) || (version >= DRW::AC1032 && (m_backgroundFlags & 0x10))) {
             buf->putBitLong(m_backgroundScale);
-            buf->putCmColor(version, static_cast<duint16>(m_backgroundColor));
+            buf->putCmColor(version, static_cast<std::uint16_t>(m_backgroundColor));
             buf->putBitLong(m_backgroundTransparency);
         }
     }
@@ -2061,10 +2061,10 @@ bool DRW_MText::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwg
             buf->putBitDouble(m_r2018ExtentsWidth);
             buf->putBitShort(m_r2018ColumnType);
             if (m_r2018ColumnType != 0) {
-                dint32 columnCount = m_r2018ColumnCount;
+                std::int32_t columnCount = m_r2018ColumnCount;
                 if (!m_r2018ColumnAutoHeight && m_r2018ColumnType == 2
                     && !m_r2018ColumnHeights.empty()) {
-                    columnCount = static_cast<dint32>(m_r2018ColumnHeights.size());
+                    columnCount = static_cast<std::int32_t>(m_r2018ColumnHeights.size());
                 }
                 buf->putBitLong(columnCount);
                 buf->putBitDouble(m_r2018ColumnWidth);
@@ -2072,7 +2072,7 @@ bool DRW_MText::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwg
                 buf->putBit(m_r2018ColumnAutoHeight ? 1 : 0);
                 buf->putBit(m_r2018ColumnFlowReversed ? 1 : 0);
                 if (!m_r2018ColumnAutoHeight && m_r2018ColumnType == 2) {
-                    for (dint32 i = 0; i < columnCount; ++i) {
+                    for (std::int32_t i = 0; i < columnCount; ++i) {
                         const double columnHeight = static_cast<size_t>(i) < m_r2018ColumnHeights.size()
                             ? m_r2018ColumnHeights[static_cast<size_t>(i)]
                             : 0.0;
@@ -2093,7 +2093,7 @@ bool DRW_MText::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwg
     return true;
 }
 
-bool DRW_Insert::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {
+bool DRW_Insert::encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {
     (void)bs; (void)strBuf;
     // 2b.6: emit MINSERT (oType 8) when a column/row grid is present;
     // otherwise a plain INSERT (oType 7). The reader keys the grid block off
@@ -2132,8 +2132,8 @@ bool DRW_Insert::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dw
     // order mirrors parseDwg :3190-3193 (colcount BS, rowcount BS, colspace BD,
     // rowspace BD) and libreDWG dwg.spec num_cols/num_rows/col_spacing/row_spacing.
     if (oType == 8) {  // MINSERT grid
-        buf->putBitShort(static_cast<duint16>(colcount));
-        buf->putBitShort(static_cast<duint16>(rowcount));
+        buf->putBitShort(static_cast<std::uint16_t>(colcount));
+        buf->putBitShort(static_cast<std::uint16_t>(rowcount));
         buf->putBitDouble(colspace);
         buf->putBitDouble(rowspace);
     }
@@ -2146,14 +2146,14 @@ bool DRW_Insert::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dw
     bhH.ref  = blockRecH.ref;
     bhH.size = 0;
     if (bhH.ref != 0) {
-        duint32 t = bhH.ref;
+        std::uint32_t t = bhH.ref;
         while (t != 0) { t >>= 8; ++bhH.size; }
     }
     (handleBuf ? handleBuf : buf)->putHandle(bhH);
     return true;
 }
 
-bool DRW_3Dface::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {
+bool DRW_3Dface::encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {
     (void)bs; (void)strBuf;
     oType = 28;  // 3DFACE class id — see dwgreader.cpp:1237
     if (!encodeDwgCommon(version, buf)) return false;
@@ -2177,12 +2177,12 @@ bool DRW_3Dface::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dw
     buf->putDefaultDouble(thirdPoint.x, fourPoint.x);
     buf->putDefaultDouble(thirdPoint.y, fourPoint.y);
     buf->putDefaultDouble(thirdPoint.z, fourPoint.z);
-    if (!hasNoFlag) buf->putBitShort(static_cast<duint16>(invisibleflag));
+    if (!hasNoFlag) buf->putBitShort(static_cast<std::uint16_t>(invisibleflag));
 
     return encodeDwgEntHandle(version, buf, handleBuf);
 }
 
-bool DRW_Solid::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {
+bool DRW_Solid::encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {
     (void)bs; (void)strBuf;
     oType = 31;  // SOLID class id — see dwgreader.cpp:1305
     if (!encodeDwgCommon(version, buf)) return false;
@@ -2205,7 +2205,7 @@ bool DRW_Solid::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwg
     return encodeDwgEntHandle(version, buf, handleBuf);
 }
 
-bool DRW_LWPolyline::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {
+bool DRW_LWPolyline::encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {
     (void)bs; (void)strBuf;
     oType = 77;  // LWPOLYLINE class id — see dwgreader.cpp:1202
     if (!encodeDwgCommon(version, buf)) return false;
@@ -2214,7 +2214,7 @@ bool DRW_LWPolyline::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs
     // DWG-side flags are different: they signal which optional fields are
     // present.  Per parseDwg, bit 9 (0x200) = closed, bit 8 (0x100) =
     // plinegen.  Build the DWG flags from the DXF flags plus the data.
-    duint16 dwgFlags = 0;
+    std::uint16_t dwgFlags = 0;
     if (flags & 1)   dwgFlags |= 0x200;   // closed
     if (flags & 128) dwgFlags |= 0x100;   // plinegen
     if (thickness != 0.0) dwgFlags |= 0x2;
@@ -2241,7 +2241,7 @@ bool DRW_LWPolyline::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs
     if (dwgFlags & 0x2)  buf->putBitDouble(thickness);
     if (dwgFlags & 0x1)  buf->putExtrusion(extPoint, /*b_R2000_style=*/false);
 
-    const dint32 numVerts = static_cast<dint32>(vertlist.size());
+    const std::int32_t numVerts = static_cast<std::int32_t>(vertlist.size());
     buf->putBitLong(numVerts);
     if (dwgFlags & 0x10) buf->putBitLong(numVerts);  // bulgesnum
     if (version > DRW::AC1021 && (dwgFlags & 0x400)) {
@@ -2265,7 +2265,7 @@ bool DRW_LWPolyline::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs
         }
         if (version > DRW::AC1021 && (dwgFlags & 0x400)) {
             for (const auto& v : vertlist)
-                buf->putBitLong(static_cast<dint32>(v->identifier));
+                buf->putBitLong(static_cast<std::int32_t>(v->identifier));
         }
         if (dwgFlags & 0x20) {
             for (const auto& v : vertlist) {
@@ -2278,7 +2278,7 @@ bool DRW_LWPolyline::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs
     return encodeDwgEntHandle(version, buf, handleBuf);
 }
 
-bool DRW_Block::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {
+bool DRW_Block::encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {
     (void)bs;
     // BLOCK = 4, ENDBLK = 5 per DWG spec.  isEnd controls which.
     oType = isEnd ? 5 : 4;
@@ -2292,7 +2292,7 @@ bool DRW_Block::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwg
     return encodeDwgEntHandle(version, buf, handleBuf);
 }
 
-bool DRW_Text::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {
+bool DRW_Text::encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {
     (void)bs;
     oType = 1;  // TEXT class id — see dwgreader.cpp:1208
     if (!encodeDwgCommon(version, buf)) return false;
@@ -2316,28 +2316,28 @@ bool DRW_Text::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwgB
     buf->putRawDouble(height);                        // text height
     buf->putRawDouble(widthscale);                    // width factor
     (strBuf ? strBuf : buf)->putVariableText(version, text);  // text string
-    buf->putBitShort(static_cast<duint16>(textgen));
-    buf->putBitShort(static_cast<duint16>(alignH));
-    buf->putBitShort(static_cast<duint16>(alignV));
+    buf->putBitShort(static_cast<std::uint16_t>(textgen));
+    buf->putBitShort(static_cast<std::uint16_t>(alignH));
+    buf->putBitShort(static_cast<std::uint16_t>(alignV));
 
     if (!encodeDwgEntHandle(version, buf, handleBuf)) return false;
 
     // styleH — hard pointer to STYLE table record.  Default points at
     // the STANDARD textstyle (handle 0x13) if caller hasn't set one.
     dwgHandle sH;
-    duint32 sref = (styleH.ref == 0) ? 0x13 : styleH.ref;
+    std::uint32_t sref = (styleH.ref == 0) ? 0x13 : styleH.ref;
     sH.code = 5;  // hard pointer
     sH.ref  = sref;
     sH.size = 0;
     if (sref != 0) {
-        duint32 t = sref;
+        std::uint32_t t = sref;
         while (t != 0) { t >>= 8; ++sH.size; }
     }
     (handleBuf ? handleBuf : buf)->putHandle(sH);
     return true;
 }
 
-bool DRW_Ellipse::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {
+bool DRW_Ellipse::encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {
     (void)bs; (void)strBuf;
     oType = 35;  // ELLIPSE class id — see dwgreader.cpp:1117
     if (!encodeDwgCommon(version, buf)) return false;
@@ -2353,7 +2353,7 @@ bool DRW_Ellipse::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, d
     return encodeDwgEntHandle(version, buf, handleBuf);
 }
 
-bool DRW_Arc::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {
+bool DRW_Arc::encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {
     (void)bs; (void)strBuf;
     oType = 17;  // ARC class id — see dwgreader.cpp:1093
     if (!encodeDwgCommon(version, buf)) return false;
@@ -2371,7 +2371,7 @@ bool DRW_Arc::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwgBu
     return encodeDwgEntHandle(version, buf, handleBuf);
 }
 
-bool DRW_Line::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
+bool DRW_Line::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs){
     bool ret = DRW_Entity::parseDwg(version, buf, NULL, bs);
     if (!ret)
         return ret;
@@ -2409,7 +2409,7 @@ bool DRW_Line::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     return buf->isGood();
 }
 
-bool DRW_Ray::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
+bool DRW_Ray::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs){
     bool ret = DRW_Entity::parseDwg(version, buf, NULL, bs);
     if (!ret)
         return ret;
@@ -2450,7 +2450,7 @@ bool DRW_Circle::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
     return true;
 }
 
-bool DRW_Circle::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
+bool DRW_Circle::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs){
     bool ret = DRW_Entity::parseDwg(version, buf, nullptr, bs);
     if (!ret)
         return ret;
@@ -2510,7 +2510,7 @@ bool DRW_Arc::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
     return true;
 }
 
-bool DRW_Arc::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
+bool DRW_Arc::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs){
     bool ret = DRW_Entity::parseDwg(version, buf, NULL, bs);
     if (!ret)
         return ret;
@@ -2593,7 +2593,7 @@ void DRW_Ellipse::correctAxis(){
     }
 }
 
-bool DRW_Ellipse::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
+bool DRW_Ellipse::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs){
     bool ret = DRW_Entity::parseDwg(version, buf, NULL, bs);
     if (!ret)
         return ret;
@@ -2691,7 +2691,7 @@ bool DRW_Trace::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
     return true;
 }
 
-bool DRW_Trace::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
+bool DRW_Trace::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs){
     bool ret = DRW_Entity::parseDwg(version, buf, NULL, bs);
     if (!ret)
         return ret;
@@ -2728,7 +2728,7 @@ bool DRW_Trace::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     return buf->isGood();
 }
 
-bool DRW_Solid::parseDwg(DRW::Version v, dwgBuffer *buf, duint32 bs){
+bool DRW_Solid::parseDwg(DRW::Version v, dwgBuffer *buf, std::uint32_t bs){
     DRW_DBG("\n***************************** parsing Solid *********************************************\n");
     return DRW_Trace::parseDwg(v, buf, bs);
 }
@@ -2745,7 +2745,7 @@ bool DRW_3Dface::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
     return true;
 }
 
-bool DRW_3Dface::parseDwg(DRW::Version v, dwgBuffer *buf, duint32 bs){
+bool DRW_3Dface::parseDwg(DRW::Version v, dwgBuffer *buf, std::uint32_t bs){
     bool ret = DRW_Entity::parseDwg(v, buf, NULL, bs);
     if (!ret)
         return ret;
@@ -2798,7 +2798,7 @@ bool DRW_3Dface::parseDwg(DRW::Version v, dwgBuffer *buf, duint32 bs){
     return buf->isGood();
 }
 
-bool DRW_ModelerGeometry::parseDwg(DRW::Version v, dwgBuffer *buf, duint32 bs){
+bool DRW_ModelerGeometry::parseDwg(DRW::Version v, dwgBuffer *buf, std::uint32_t bs){
     m_bodyBitSize = bs;
     bool ret = DRW_Entity::parseDwg(v, buf, nullptr, bs);
     if (!ret)
@@ -2822,7 +2822,7 @@ bool DRW_ModelerGeometry::parseDwg(DRW::Version v, dwgBuffer *buf, duint32 bs){
     return ret;
 }
 
-bool DRW_Shape::parseDwg(DRW::Version v, dwgBuffer *buf, duint32 bs){
+bool DRW_Shape::parseDwg(DRW::Version v, dwgBuffer *buf, std::uint32_t bs){
     m_bodyBitSize = bs;
     bool ret = DRW_Entity::parseDwg(v, buf, nullptr, bs);
     if (!ret)
@@ -2851,7 +2851,7 @@ bool DRW_Shape::parseDwg(DRW::Version v, dwgBuffer *buf, duint32 bs){
 
 // Phase 6.1: SHAPE encoder (fixed oType 33). Exact inverse of parseDwg above.
 // Without this override a SHAPE would encode as a LINE (default DRW_Entity).
-bool DRW_Shape::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs,
+bool DRW_Shape::encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs,
                           dwgBufferW *strBuf, dwgBufferW *handleBuf) {
     (void)bs; (void)strBuf;
     oType = 33;  // SHAPE class id — see dwgreader.cpp case 33
@@ -2874,7 +2874,7 @@ bool DRW_Shape::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs,
     sH.ref  = m_shapeFileHandle;
     sH.size = 0;
     if (m_shapeFileHandle != 0) {
-        duint32 t = m_shapeFileHandle;
+        std::uint32_t t = m_shapeFileHandle;
         while (t != 0) { t >>= 8; ++sH.size; }
     } else {
         sH.code = 0;  // null handle
@@ -2883,7 +2883,7 @@ bool DRW_Shape::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs,
     return true;
 }
 
-bool DRW_Ole2Frame::parseDwg(DRW::Version v, dwgBuffer *buf, duint32 bs){
+bool DRW_Ole2Frame::parseDwg(DRW::Version v, dwgBuffer *buf, std::uint32_t bs){
     m_bodyBitSize = bs;
     bool ret = DRW_Entity::parseDwg(v, buf, nullptr, bs);
     if (!ret)
@@ -2895,20 +2895,20 @@ bool DRW_Ole2Frame::parseDwg(DRW::Version v, dwgBuffer *buf, duint32 bs){
         m_mode = buf->getBitShort();
     m_declaredPayloadLength = buf->getBitLong();
     m_payloadStartBit = currentDwgBit(buf);
-    const duint64 currentBit = currentDwgBit(buf);
-    const duint64 bodyRemainingBits =
+    const std::uint64_t currentBit = currentDwgBit(buf);
+    const std::uint64_t bodyRemainingBits =
         (v > DRW::AC1018 && objSize > currentBit)
             ? objSize - currentBit
-            : static_cast<duint64>(buf->numRemainingBytes()) * 8u;
-    const duint32 remainingBytes =
-        static_cast<duint32>(std::min<duint64>(
+            : static_cast<std::uint64_t>(buf->numRemainingBytes()) * 8u;
+    const std::uint32_t remainingBytes =
+        static_cast<std::uint32_t>(std::min<std::uint64_t>(
             bodyRemainingBits / 8u,
-            static_cast<duint64>(std::numeric_limits<duint32>::max())));
+            static_cast<std::uint64_t>(std::numeric_limits<std::uint32_t>::max())));
     if (m_declaredPayloadLength > kMaxOlePayloadBytes) {
         m_payloadTooLarge = true;
         return false;
     }
-    if (m_declaredPayloadLength > static_cast<duint32>(remainingBytes)) {
+    if (m_declaredPayloadLength > static_cast<std::uint32_t>(remainingBytes)) {
         m_payloadTruncated = true;
         m_payloadByteCount = remainingBytes;
         return false;
@@ -2939,7 +2939,7 @@ bool DRW_Ole2Frame::parseDwg(DRW::Version v, dwgBuffer *buf, duint32 bs){
 // Phase 6.2: OLE2FRAME encoder (fixed oType 74). Inverse of parseDwg, emitting
 // the captured opaque payload byte-for-byte. Without this override an OLE2FRAME
 // would encode as a LINE.
-bool DRW_Ole2Frame::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs,
+bool DRW_Ole2Frame::encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs,
                               dwgBufferW *strBuf, dwgBufferW *handleBuf) {
     (void)bs; (void)strBuf;
     oType = 74;  // OLE2FRAME class id — see dwgreader.cpp case 74
@@ -2950,8 +2950,8 @@ bool DRW_Ole2Frame::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs,
         buf->putBitShort(m_mode);
     // Emit the actual captured length so the reader's data_size matches the
     // bytes that follow (avoids a declared-vs-actual mismatch on re-read).
-    const duint32 payloadLen = static_cast<duint32>(m_payloadBytes.size());
-    buf->putBitLong(static_cast<dint32>(payloadLen));
+    const std::uint32_t payloadLen = static_cast<std::uint32_t>(m_payloadBytes.size());
+    buf->putBitLong(static_cast<std::int32_t>(payloadLen));
     if (payloadLen > 0)
         buf->putBytes(m_payloadBytes.data(), m_payloadBytes.size());
     if (version > DRW::AC1014 && m_hasR2000TrailingByte)
@@ -2960,7 +2960,7 @@ bool DRW_Ole2Frame::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs,
     return encodeDwgEntHandle(version, buf, handleBuf);
 }
 
-bool DRW_Light::parseDwg(DRW::Version v, dwgBuffer *buf, duint32 bs){
+bool DRW_Light::parseDwg(DRW::Version v, dwgBuffer *buf, std::uint32_t bs){
     dwgBuffer sBuff = *buf;
     dwgBuffer *sBuf = v > DRW::AC1018 ? &sBuff : buf;
     bool ret = DRW_Entity::parseDwg(v, buf, sBuf, bs);
@@ -2968,24 +2968,24 @@ bool DRW_Light::parseDwg(DRW::Version v, dwgBuffer *buf, duint32 bs){
         return ret;
     DRW_DBG("\n***************************** parsing LIGHT *****************************\n");
 
-    const duint64 bodyDataEndBit = v > DRW::AC1018 ? currentDwgBit(sBuf) : 0;
-    m_classVersion = static_cast<duint32>(buf->getBitLong());
+    const std::uint64_t bodyDataEndBit = v > DRW::AC1018 ? currentDwgBit(sBuf) : 0;
+    m_classVersion = static_cast<std::uint32_t>(buf->getBitLong());
     m_name = sBuf->getVariableText(v, false);
-    m_type = static_cast<duint32>(buf->getBitLong());
+    m_type = static_cast<std::uint32_t>(buf->getBitLong());
     m_status = buf->getBit() != 0;
     m_color = buf->getCmColor(v);
     m_plotGlyph = buf->getBit() != 0;
     m_intensity = buf->getBitDouble();
     m_position = buf->get3BitDouble();
     m_target = buf->get3BitDouble();
-    m_attenuationType = static_cast<duint32>(buf->getBitLong());
+    m_attenuationType = static_cast<std::uint32_t>(buf->getBitLong());
     m_useAttenuationLimits = buf->getBit() != 0;
     m_attenuationStartLimit = buf->getBitDouble();
     m_attenuationEndLimit = buf->getBitDouble();
     m_hotspotAngle = buf->getBitDouble();
     m_falloffAngle = buf->getBitDouble();
     m_castShadows = buf->getBit() != 0;
-    m_shadowType = static_cast<duint32>(buf->getBitLong());
+    m_shadowType = static_cast<std::uint32_t>(buf->getBitLong());
     m_shadowMapSize = buf->getBitShort();
     m_shadowMapSoftness = buf->getRawChar8();
 
@@ -3013,7 +3013,7 @@ bool DRW_Light::parseDwg(DRW::Version v, dwgBuffer *buf, duint32 bs){
     return ret;
 }
 
-bool DRW_Light::encodeDwg(DRW::Version v, dwgBufferW *buf, duint32 bs,
+bool DRW_Light::encodeDwg(DRW::Version v, dwgBufferW *buf, std::uint32_t bs,
                           dwgBufferW *strBuf, dwgBufferW *handleBuf) {
     (void)bs;
     if (v < DRW::AC1021)
@@ -3028,7 +3028,7 @@ bool DRW_Light::encodeDwg(DRW::Version v, dwgBufferW *buf, duint32 bs,
     sb->putVariableText(v, m_name);
     buf->putBitLong(m_type);
     buf->putBit(m_status ? 1 : 0);
-    buf->putCmColor(v, static_cast<duint16>(m_color));
+    buf->putCmColor(v, static_cast<std::uint16_t>(m_color));
     buf->putBit(m_plotGlyph ? 1 : 0);
     buf->putBitDouble(m_intensity);
     buf->put3BitDouble(m_position);
@@ -3105,7 +3105,7 @@ bool DRW_Tolerance::parseCode(int code, const std::unique_ptr<dxfReader>& reader
     return true;
 }
 
-bool DRW_Tolerance::parseDwg(DRW::Version v, dwgBuffer *buf, duint32 bs){
+bool DRW_Tolerance::parseDwg(DRW::Version v, dwgBuffer *buf, std::uint32_t bs){
     dwgBuffer sBuff = *buf;
     dwgBuffer *sBuf = buf;
     if (v > DRW::AC1018)
@@ -3141,7 +3141,7 @@ bool DRW_Tolerance::parseDwg(DRW::Version v, dwgBuffer *buf, duint32 bs){
     return buf->isGood();
 }
 
-bool DRW_Tolerance::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs,
+bool DRW_Tolerance::encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs,
                               dwgBufferW *strBuf, dwgBufferW *handleBuf) {
     (void)bs;
     oType = 46;
@@ -3185,7 +3185,7 @@ bool DRW_Block::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
     return true;
 }
 
-bool DRW_Block::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
+bool DRW_Block::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs){
     dwgBuffer sBuff = *buf;
     dwgBuffer *sBuf = buf;
     if (version > DRW::AC1018) {//2007+
@@ -3202,7 +3202,7 @@ bool DRW_Block::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
         DRW_DBG("\n***************************** parsing end block *********************************************\n");
     }
     if (version > DRW::AC1018) {//2007+
-        duint8 unk = buf->getBit();
+        std::uint8_t unk = buf->getBit();
         DRW_DBG("unknown bit: "); DRW_DBG(unk); DRW_DBG("\n");
     }
 //    X handleAssoc;   //X
@@ -3250,8 +3250,8 @@ bool DRW_Insert::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
     return true;
 }
 
-bool DRW_Insert::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
-    dint32 objCount = 0;
+bool DRW_Insert::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs){
+    std::int32_t objCount = 0;
     bool ret = DRW_Entity::parseDwg(version, buf, NULL, bs);
     if (!ret)
         return ret;
@@ -3265,7 +3265,7 @@ bool DRW_Insert::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
         yscale = buf->getBitDouble();
         zscale = buf->getBitDouble();
     } else {
-        duint8 dataFlags = buf->get2Bits();
+        std::uint8_t dataFlags = buf->get2Bits();
         if (dataFlags == 3){
             //none default value 1,1,1
         } else if (dataFlags == 1){ //x default value 1, y & z can be x value
@@ -3315,7 +3315,7 @@ bool DRW_Insert::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
             DRW_DBG("second attrib Handle: "); DRW_DBGHL(attH.code, attH.size, attH.ref); DRW_DBG("\n");
             attribHandles.push_back(attH);
         } else {
-            for (dint32 i=0; i < objCount && buf->isGood(); ++i){
+            for (std::int32_t i=0; i < objCount && buf->isGood(); ++i){
                 dwgHandle attH = buf->getHandle(); /* H 2 BLOCK HEADER (hard pointer) */
                 DRW_DBG("attrib Handle #"); DRW_DBG(i); DRW_DBG(": "); DRW_DBGHL(attH.code, attH.size, attH.ref); DRW_DBG("\n");
                 attribHandles.push_back(attH);
@@ -3332,7 +3332,7 @@ bool DRW_Insert::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     return buf->isGood();
 }
 
-bool DRW_Table::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
+bool DRW_Table::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs){
     if (version <= DRW::AC1018)
         return false;
 
@@ -3348,7 +3348,7 @@ bool DRW_Table::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     basePoint.y = buf->getBitDouble();
     basePoint.z = buf->getBitDouble();
 
-    duint8 dataFlags = buf->get2Bits();
+    std::uint8_t dataFlags = buf->get2Bits();
     if (dataFlags == 3) {
         // default scale 1,1,1
     } else if (dataFlags == 1) {
@@ -3366,7 +3366,7 @@ bool DRW_Table::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     angle = buf->getBitDouble();
     extPoint = buf->getExtrusion(false);
 
-    dint32 objCount = 0;
+    std::int32_t objCount = 0;
     bool hasAttrib = buf->getBit();
     if (hasAttrib && version > DRW::AC1015)
         objCount = buf->getBitLong();
@@ -3376,7 +3376,7 @@ bool DRW_Table::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     blockRecH = hBuff.getHandle();
 
     if (hasAttrib) {
-        for (dint32 i = 0; i < objCount && hBuff.isGood(); ++i)
+        for (std::int32_t i = 0; i < objCount && hBuff.isGood(); ++i)
             attribHandles.push_back(hBuff.getHandle());
         seqendH = hBuff.getHandle();
     }
@@ -3406,7 +3406,7 @@ bool DRW_Table::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
         buf->getBitShort();
         m_horizontalDirection = buf->get3BitDouble();
 
-        const duint64 breakStartBit = currentDwgBit(buf);
+        const std::uint64_t breakStartBit = currentDwgBit(buf);
         const bool hasBreakData = buf->getBitLong() != 0;
         if (hasBreakData) {
             buf->getBitLong();
@@ -3414,14 +3414,14 @@ bool DRW_Table::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
             buf->getBitDouble();
             buf->getBitLong();
             buf->getBitLong();
-            const duint32 manualPositions = buf->getBitLong();
+            const std::uint32_t manualPositions = buf->getBitLong();
             if (manualPositions > kMaxTableItems) {
                 m_content.m_subrecordRanges.push_back(makeDwgSubrecordRange(
                     "table-break-data", breakStartBit, currentDwgBit(buf),
                     version, manualPositions, false));
                 return true;
             }
-            for (duint32 i = 0; i < manualPositions; ++i) {
+            for (std::uint32_t i = 0; i < manualPositions; ++i) {
                 buf->get3BitDouble();
                 buf->getBitDouble();
                 buf->getBitLong();
@@ -3431,10 +3431,10 @@ bool DRW_Table::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
                 version, manualPositions, buf->isGood()));
         }
 
-        const duint64 rowRangeStartBit = currentDwgBit(buf);
-        const duint32 rowRanges = buf->getBitLong();
+        const std::uint64_t rowRangeStartBit = currentDwgBit(buf);
+        const std::uint32_t rowRanges = buf->getBitLong();
         if (rowRanges <= kMaxTableItems) {
-            for (duint32 i = 0; i < rowRanges; ++i) {
+            for (std::uint32_t i = 0; i < rowRanges; ++i) {
                 buf->get3BitDouble();
                 buf->getBitLong();
                 buf->getBitLong();
@@ -3455,8 +3455,8 @@ bool DRW_Table::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
 
     m_valueFlag = buf->getBitShort();
     m_horizontalDirection = buf->get3BitDouble();
-    const duint32 columns = buf->getBitLong();
-    const duint32 rows = buf->getBitLong();
+    const std::uint32_t columns = buf->getBitLong();
+    const std::uint32_t rows = buf->getBitLong();
     if (columns > kMaxTableColumns || rows > kMaxTableRows
         || (columns != 0 && rows > kMaxTableCells / columns)) {
         return true;
@@ -3468,12 +3468,12 @@ bool DRW_Table::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     m_content.m_rows.clear();
     m_content.m_columns.reserve(columns);
     m_content.m_rows.reserve(rows);
-    for (duint32 i = 0; i < columns; ++i) {
+    for (std::uint32_t i = 0; i < columns; ++i) {
         DRW_TableColumn column;
         column.m_width = buf->getBitDouble();
         m_content.m_columns.push_back(column);
     }
-    for (duint32 i = 0; i < rows; ++i) {
+    for (std::uint32_t i = 0; i < rows; ++i) {
         DRW_TableRow row;
         row.m_height = buf->getBitDouble();
         row.m_cells.resize(columns);
@@ -3482,8 +3482,8 @@ bool DRW_Table::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     m_tableStyleHandle = readTableHandle(&hBuff);
     m_content.m_tableStyleHandle = m_tableStyleHandle;
     m_semanticContentComplete = true;
-    for (duint32 row = 0; row < rows && m_semanticContentComplete; ++row) {
-        for (duint32 column = 0; column < columns; ++column) {
+    for (std::uint32_t row = 0; row < rows && m_semanticContentComplete; ++row) {
+        for (std::uint32_t column = 0; column < columns; ++column) {
             if (!parseR2007TableCell(version, buf, sBuf, &hBuff,
                                      m_content.m_rows[row].m_cells[column],
                                      &m_content.m_subrecordRanges)) {
@@ -3502,7 +3502,7 @@ bool DRW_Table::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     return true;
 }
 
-bool DRW_TableContentObject::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
+bool DRW_TableContentObject::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs){
     if (version <= DRW::AC1018)
         return false;
 
@@ -3596,7 +3596,7 @@ bool DRW_LWPolyline::parseCode(int code, const std::unique_ptr<dxfReader>& reade
     return true;
 }
 
-bool DRW_LWPolyline::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
+bool DRW_LWPolyline::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs){
     bool ret = DRW_Entity::parseDwg(version, buf, NULL, bs);
     if (!ret)
         return ret;
@@ -3681,7 +3681,7 @@ bool DRW_LWPolyline::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
         //add vertexId
         if (version > DRW::AC1021) {//2010+
             for (int i = 0; i < vertexIdCount; i++){
-                dint32 vertexId = buf->getBitLong();
+                std::int32_t vertexId = buf->getBitLong();
                 if (static_cast<size_t>(i) < vertlist.size())
                     vertlist.at(i)->identifier = vertexId;
             }
@@ -3725,22 +3725,22 @@ bool DRW_MLine::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
         styleName = reader->getString();
         break;
     case 340:
-        styleHandle = static_cast<duint32>(reader->getHandleString());
+        styleHandle = static_cast<std::uint32_t>(reader->getHandleString());
         break;
     case 40:
         scale = reader->getDouble();
         break;
     case 70:
-        justification = static_cast<duint8>(reader->getInt32() & 0x3);
+        justification = static_cast<std::uint8_t>(reader->getInt32() & 0x3);
         break;
     case 71:
         openClosed = reader->getInt32();
         break;
     case 72:
-        numVerts = static_cast<duint16>(reader->getInt32());
+        numVerts = static_cast<std::uint16_t>(reader->getInt32());
         break;
     case 73:
-        numLines = static_cast<duint8>(reader->getInt32());
+        numLines = static_cast<std::uint8_t>(reader->getInt32());
         break;
     case 10:
         basePoint.x = reader->getDouble();
@@ -3852,7 +3852,7 @@ bool DRW_MLine::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
     return true;
 }
 
-bool DRW_MLine::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
+bool DRW_MLine::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs){
     if (!DRW_Entity::parseDwg(version, buf, nullptr, bs)) return false;
     DRW_DBG("\n***************************** parsing MLINE *********************\n");
     // Per ODA §19.4.78 / libreDWG dwg_decode_MLINE:
@@ -3884,12 +3884,12 @@ bool DRW_MLine::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
         vtx.segParms.resize(numLines);
         vtx.areaFillParms.resize(numLines);
         for (int li = 0; li < numLines; ++li) {
-            duint16 nSeg = buf->getBitShort();
+            std::uint16_t nSeg = buf->getBitShort();
             vtx.segParms[li].reserve(nSeg);
             for (int s = 0; s < nSeg; ++s) {
                 vtx.segParms[li].push_back(buf->getBitDouble());
             }
-            duint16 nFill = buf->getBitShort();
+            std::uint16_t nFill = buf->getBitShort();
             vtx.areaFillParms[li].reserve(nFill);
             for (int f = 0; f < nFill; ++f) {
                 vtx.areaFillParms[li].push_back(buf->getBitDouble());
@@ -3923,7 +3923,7 @@ bool DRW_MLine::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
 bool DRW_Underlay::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
     switch (code) {
     case 340:
-        definitionHandle = static_cast<duint32>(reader->getHandleString());
+        definitionHandle = static_cast<std::uint32_t>(reader->getHandleString());
         break;
     case 10: position.x = reader->getDouble(); break;
     case 20: position.y = reader->getDouble(); break;
@@ -3935,9 +3935,9 @@ bool DRW_Underlay::parseCode(int code, const std::unique_ptr<dxfReader>& reader)
     case 210: extPoint.x = reader->getDouble(); break;
     case 220: extPoint.y = reader->getDouble(); break;
     case 230: extPoint.z = reader->getDouble(); break;
-    case 280: flags    = static_cast<duint8>(reader->getInt32() & 0xFF); break;
-    case 281: contrast = static_cast<duint8>(reader->getInt32() & 0xFF); break;
-    case 282: fade     = static_cast<duint8>(reader->getInt32() & 0xFF); break;
+    case 280: flags    = static_cast<std::uint8_t>(reader->getInt32() & 0xFF); break;
+    case 281: contrast = static_cast<std::uint8_t>(reader->getInt32() & 0xFF); break;
+    case 282: fade     = static_cast<std::uint8_t>(reader->getInt32() & 0xFF); break;
     case 11: {
         ++m_currentClipVertexIdx;
         if (m_currentClipVertexIdx >= static_cast<int>(clipBoundary.size())) {
@@ -3958,7 +3958,7 @@ bool DRW_Underlay::parseCode(int code, const std::unique_ptr<dxfReader>& reader)
     return true;
 }
 
-bool DRW_Underlay::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
+bool DRW_Underlay::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs){
     if (!DRW_Entity::parseDwg(version, buf, nullptr, bs)) return false;
     DRW_DBG("\n***************************** parsing UNDERLAY ***************\n");
     extPoint = buf->getExtrusion(false);
@@ -3968,14 +3968,14 @@ bool DRW_Underlay::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     flags    = buf->getRawChar8();
     contrast = buf->getRawChar8();
     fade     = buf->getRawChar8();
-    duint32 nClip = buf->getBitLong();
+    std::uint32_t nClip = buf->getBitLong();
     DRW_DBG(" UNDERLAY pos: "); DRW_DBG(position.x); DRW_DBG(",");
     DRW_DBG(position.y); DRW_DBG(" rot: "); DRW_DBG(rotation);
     DRW_DBG(" flags: "); DRW_DBGH(flags);
     DRW_DBG(" nClip: "); DRW_DBG(nClip); DRW_DBG("\n");
     if (nClip > 100000) return true;  // sanity
     clipBoundary.reserve(nClip);
-    for (duint32 i = 0; i < nClip; ++i) {
+    for (std::uint32_t i = 0; i < nClip; ++i) {
         DRW_Coord p;
         p.x = buf->getRawDouble();
         p.y = buf->getRawDouble();
@@ -4029,7 +4029,7 @@ bool DRW_Text::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
     return true;
 }
 
-bool DRW_Text::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
+bool DRW_Text::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs){
     dwgBuffer sBuff = *buf;
     dwgBuffer *sBuf = buf;
     if (version > DRW::AC1018) {//2007+
@@ -4041,7 +4041,7 @@ bool DRW_Text::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     DRW_DBG("\n***************************** parsing text *********************************************\n");
 
  // DataFlags RC Used to determine presence of subsequent data, set to 0xFF for R14-
-    duint8 data_flags = 0x00;
+    std::uint8_t data_flags = 0x00;
     if (version > DRW::AC1014) {//2000+
         data_flags = buf->getRawChar8(); /* DataFlags RC Used to determine presence of subsequent data */
         DRW_DBG("data_flags: "); DRW_DBG(data_flags); DRW_DBG("\n");
@@ -4147,7 +4147,7 @@ namespace {
 struct EmbeddedMTextHandleInfo {
     bool m_ownerHandle = false;
     int m_numReactors = 0;
-    duint8 m_xDictFlag = 1;
+    std::uint8_t m_xDictFlag = 1;
     bool m_hasAcDbColorHandle = false;
     int m_ltFlags = 0;
     int m_plotFlags = 0;
@@ -4163,7 +4163,7 @@ struct EmbeddedMTextHandleInfo {
 
 static bool parseEmbeddedMTextEntityMode(DRW::Version version, dwgBuffer *buf,
                                          EmbeddedMTextHandleInfo& info) {
-    duint8 entmode = buf->get2Bits();
+    std::uint8_t entmode = buf->get2Bits();
     info.m_ownerHandle = entmode == 0;
     info.m_numReactors = buf->getBitLong();
     if (version > DRW::AC1015) {
@@ -4255,7 +4255,7 @@ static bool parseEmbeddedMTextDwg(DRW::Version version, dwgBuffer *buf,
                 if (!mtext.m_r2018ColumnAutoHeight && mtext.m_r2018ColumnType == 2
                     && mtext.m_r2018ColumnCount > 0 && mtext.m_r2018ColumnCount < 10000) {
                     mtext.m_r2018ColumnHeights.reserve(static_cast<size_t>(mtext.m_r2018ColumnCount));
-                    for (dint32 i = 0; i < mtext.m_r2018ColumnCount; ++i) {
+                    for (std::int32_t i = 0; i < mtext.m_r2018ColumnCount; ++i) {
                         mtext.m_r2018ColumnHeights.push_back(buf->getBitDouble());
                     }
                 }
@@ -4263,12 +4263,12 @@ static bool parseEmbeddedMTextDwg(DRW::Version version, dwgBuffer *buf,
         }
     }
 
-    const duint16 annotativeSize = buf->getBitShort();
+    const std::uint16_t annotativeSize = buf->getBitShort();
     if (annotativeSize > 0) {
         const int remaining = buf->numRemainingBytes();
-        if (remaining < 0 || static_cast<duint64>(annotativeSize) > static_cast<duint64>(remaining))
+        if (remaining < 0 || static_cast<std::uint64_t>(annotativeSize) > static_cast<std::uint64_t>(remaining))
             return false;
-        std::vector<duint8> annotativeData(annotativeSize);
+        std::vector<std::uint8_t> annotativeData(annotativeSize);
         buf->getBytes(annotativeData.data(), annotativeData.size());
         info.m_hasAnnotativeAppHandle = true;
         buf->getBitShort(); // unknown short, normally 0
@@ -4277,7 +4277,7 @@ static bool parseEmbeddedMTextDwg(DRW::Version version, dwgBuffer *buf,
 }
 
 static bool consumeEmbeddedMTextHandles(DRW::Version version, dwgBuffer *buf,
-                                        duint32 objSize,
+                                        std::uint32_t objSize,
                                         const EmbeddedMTextHandleInfo& info,
                                         DRW_MText *mtext) {
     if (version > DRW::AC1018) {
@@ -4325,7 +4325,7 @@ static bool encodeEmbeddedMTextEntityMode(DRW::Version version, dwgBufferW *buf,
     buf->putBitLong(0);                     // no reactors
     buf->putBit(1);                         // xDictFlag=1, no xdict handle
     buf->putBit(1);                         // no prev/next links
-    buf->putEnColor(version, static_cast<duint16>(mtext.color));
+    buf->putEnColor(version, static_cast<std::uint16_t>(mtext.color));
     buf->putBitDouble(mtext.ltypeScale);
     buf->put2Bits(0);                       // linetype by layer
     buf->put2Bits(0);                       // plotstyle by layer
@@ -4335,7 +4335,7 @@ static bool encodeEmbeddedMTextEntityMode(DRW::Version version, dwgBufferW *buf,
     buf->putBit(0);                         // no face visual style
     buf->putBit(0);                         // no edge visual style
     buf->putBitShort(0);                    // visible
-    buf->putRawChar8(static_cast<duint8>(mtext.lWeight));
+    buf->putRawChar8(static_cast<std::uint8_t>(mtext.lWeight));
     return true;
 }
 
@@ -4351,8 +4351,8 @@ static bool encodeEmbeddedMTextDwg(DRW::Version version, dwgBufferW *buf,
     buf->putBitDouble(mtext.widthscale);
     buf->putBitDouble(mtext.m_r2018RectHeight);
     buf->putBitDouble(mtext.height);
-    buf->putBitShort(static_cast<duint16>(mtext.textgen));
-    buf->putBitShort(static_cast<duint16>(mtext.alignH));
+    buf->putBitShort(static_cast<std::uint16_t>(mtext.textgen));
+    buf->putBitShort(static_cast<std::uint16_t>(mtext.alignH));
     buf->putBitDouble(mtext.m_r2018ExtentsHeight);
     buf->putBitDouble(mtext.m_r2018ExtentsWidth);
     (strBuf ? strBuf : buf)->putVariableText(version, mtext.text);
@@ -4364,7 +4364,7 @@ static bool encodeEmbeddedMTextDwg(DRW::Version version, dwgBufferW *buf,
     if ((mtext.m_backgroundFlags & 0x01)
         || (mtext.m_backgroundFlags & 0x10)) {
         buf->putBitLong(mtext.m_backgroundScale);
-        buf->putCmColor(version, static_cast<duint16>(mtext.m_backgroundColor));
+        buf->putCmColor(version, static_cast<std::uint16_t>(mtext.m_backgroundColor));
         buf->putBitLong(mtext.m_backgroundTransparency);
     }
 
@@ -4381,10 +4381,10 @@ static bool encodeEmbeddedMTextDwg(DRW::Version version, dwgBufferW *buf,
         buf->putBitDouble(mtext.m_r2018ExtentsWidth);
         buf->putBitShort(mtext.m_r2018ColumnType);
         if (mtext.m_r2018ColumnType != 0) {
-            dint32 columnCount = mtext.m_r2018ColumnCount;
+            std::int32_t columnCount = mtext.m_r2018ColumnCount;
             if (!mtext.m_r2018ColumnAutoHeight && mtext.m_r2018ColumnType == 2
                 && !mtext.m_r2018ColumnHeights.empty()) {
-                columnCount = static_cast<dint32>(mtext.m_r2018ColumnHeights.size());
+                columnCount = static_cast<std::int32_t>(mtext.m_r2018ColumnHeights.size());
             }
             buf->putBitLong(columnCount);
             buf->putBitDouble(mtext.m_r2018ColumnWidth);
@@ -4392,7 +4392,7 @@ static bool encodeEmbeddedMTextDwg(DRW::Version version, dwgBufferW *buf,
             buf->putBit(mtext.m_r2018ColumnAutoHeight ? 1 : 0);
             buf->putBit(mtext.m_r2018ColumnFlowReversed ? 1 : 0);
             if (!mtext.m_r2018ColumnAutoHeight && mtext.m_r2018ColumnType == 2) {
-                for (dint32 i = 0; i < columnCount; ++i) {
+                for (std::int32_t i = 0; i < columnCount; ++i) {
                     const double columnHeight = static_cast<size_t>(i) < mtext.m_r2018ColumnHeights.size()
                         ? mtext.m_r2018ColumnHeights[static_cast<size_t>(i)]
                         : 0.0;
@@ -4458,7 +4458,7 @@ bool DRW_Attrib::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
     return true;
 }
 
-bool DRW_Attrib::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
+bool DRW_Attrib::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs){
     dwgBuffer sBuff = *buf;
     dwgBuffer *sBuf = buf;
     if (version > DRW::AC1018) {//2007+
@@ -4470,7 +4470,7 @@ bool DRW_Attrib::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     DRW_DBG("\n***************************** parsing attrib *********************************************\n");
 
     // Inline TEXT subtype data (mirrors DRW_Text::parseDwg layout, sans handles)
-    duint8 data_flags = 0x00;
+    std::uint8_t data_flags = 0x00;
     if (version > DRW::AC1014) {
         data_flags = buf->getRawChar8();
         if (!(data_flags & 0x01)) {
@@ -4540,7 +4540,7 @@ bool DRW_Attrib::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     tag = sBuf->getVariableText(version, false);
     DRW_DBG("attrib tag: "); DRW_DBG(tag.c_str()); DRW_DBG("\n");
 
-    duint16 fieldLen = buf->getBitShort(); /* Field length BS (always 0) */
+    std::uint16_t fieldLen = buf->getBitShort(); /* Field length BS (always 0) */
     DRW_UNUSED(fieldLen);
 
     attribFlags = buf->getRawChar8();
@@ -4571,11 +4571,11 @@ bool DRW_Attrib::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     return buf->isGood();
 }
 
-bool DRW_Attrib::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {
+bool DRW_Attrib::encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {
     (void)bs;
     if (version >= DRW::AC1024 && version < DRW::AC1032 && (attVersion != 0 || mtext))
         return false;
-    const duint8 attributeType = (m_attributeType == 0) ? 1 : m_attributeType;
+    const std::uint8_t attributeType = (m_attributeType == 0) ? 1 : m_attributeType;
     const bool hasEmbeddedMText = version >= DRW::AC1032 && attributeType != 1;
     if (hasEmbeddedMText && !mtext)
         return false;
@@ -4600,9 +4600,9 @@ bool DRW_Attrib::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dw
     buf->putRawDouble(widthscale);                    // width factor RD
     dwgBufferW *sb = strBuf ? strBuf : buf;
     sb->putVariableText(version, text);               // text string TV
-    buf->putBitShort(static_cast<duint16>(textgen));  // generation flags BS
-    buf->putBitShort(static_cast<duint16>(alignH));   // horiz align BS
-    buf->putBitShort(static_cast<duint16>(alignV));   // vert align BS
+    buf->putBitShort(static_cast<std::uint16_t>(textgen));  // generation flags BS
+    buf->putBitShort(static_cast<std::uint16_t>(alignH));   // horiz align BS
+    buf->putBitShort(static_cast<std::uint16_t>(alignV));   // vert align BS
 
     if (version >= DRW::AC1024) {
         buf->putRawChar8(hasEmbeddedMText && attVersion == 0 ? 1 : attVersion);
@@ -4627,11 +4627,11 @@ bool DRW_Attrib::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dw
     if (!encodeDwgEntHandle(version, buf, handleBuf)) return false;
 
     dwgHandle sH;
-    duint32 sref = (styleH.ref == 0) ? 0x13 : styleH.ref;
+    std::uint32_t sref = (styleH.ref == 0) ? 0x13 : styleH.ref;
     sH.code = 5;
     sH.ref  = sref;
     sH.size = 0;
-    if (sref != 0) { duint32 t = sref; while (t != 0) { t >>= 8; ++sH.size; } }
+    if (sref != 0) { std::uint32_t t = sref; while (t != 0) { t >>= 8; ++sH.size; } }
     (handleBuf ? handleBuf : buf)->putHandle(sH);
     return true;
 }
@@ -4647,7 +4647,7 @@ bool DRW_Attdef::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
     return true;
 }
 
-bool DRW_Attdef::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
+bool DRW_Attdef::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs){
     // ATTDEF mirrors ATTRIB layout but adds a prompt string after the tag.
     // Implementation duplicates ATTRIB::parseDwg in order to inject the
     // prompt read at the correct offset; refactor opportunity if a third
@@ -4662,7 +4662,7 @@ bool DRW_Attdef::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
         return ret;
     DRW_DBG("\n***************************** parsing attdef *********************************************\n");
 
-    duint8 data_flags = 0x00;
+    std::uint8_t data_flags = 0x00;
     if (version > DRW::AC1014) {
         data_flags = buf->getRawChar8();
         if (!(data_flags & 0x01)) basePoint.z = buf->getRawDouble();
@@ -4723,7 +4723,7 @@ bool DRW_Attdef::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     tag = sBuf->getVariableText(version, false);
     DRW_DBG("attdef tag: "); DRW_DBG(tag.c_str()); DRW_DBG("\n");
 
-    duint16 fieldLen = buf->getBitShort();
+    std::uint16_t fieldLen = buf->getBitShort();
     DRW_UNUSED(fieldLen);
 
     attribFlags = buf->getRawChar8();
@@ -4735,7 +4735,7 @@ bool DRW_Attdef::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     }
 
     if (version >= DRW::AC1024) {
-        const duint8 promptVersion = buf->getRawChar8();
+        const std::uint8_t promptVersion = buf->getRawChar8();
         DRW_UNUSED(promptVersion);
     }
 
@@ -4756,11 +4756,11 @@ bool DRW_Attdef::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     return buf->isGood();
 }
 
-bool DRW_Attdef::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {
+bool DRW_Attdef::encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {
     (void)bs;
     if (version >= DRW::AC1024 && version < DRW::AC1032 && (attVersion != 0 || mtext))
         return false;
-    const duint8 attributeType = (m_attributeType == 0) ? 1 : m_attributeType;
+    const std::uint8_t attributeType = (m_attributeType == 0) ? 1 : m_attributeType;
     const bool hasEmbeddedMText = version >= DRW::AC1032 && attributeType != 1;
     if (hasEmbeddedMText && !mtext)
         return false;
@@ -4783,9 +4783,9 @@ bool DRW_Attdef::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dw
     buf->putRawDouble(widthscale);
     dwgBufferW *sb = strBuf ? strBuf : buf;
     sb->putVariableText(version, text);
-    buf->putBitShort(static_cast<duint16>(textgen));
-    buf->putBitShort(static_cast<duint16>(alignH));
-    buf->putBitShort(static_cast<duint16>(alignV));
+    buf->putBitShort(static_cast<std::uint16_t>(textgen));
+    buf->putBitShort(static_cast<std::uint16_t>(alignH));
+    buf->putBitShort(static_cast<std::uint16_t>(alignV));
 
     if (version >= DRW::AC1024) {
         buf->putRawChar8(hasEmbeddedMText && attVersion == 0 ? 1 : attVersion);
@@ -4816,11 +4816,11 @@ bool DRW_Attdef::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dw
     if (!encodeDwgEntHandle(version, buf, handleBuf)) return false;
 
     dwgHandle sH;
-    duint32 sref = (styleH.ref == 0) ? 0x13 : styleH.ref;
+    std::uint32_t sref = (styleH.ref == 0) ? 0x13 : styleH.ref;
     sH.code = 5;
     sH.ref  = sref;
     sH.size = 0;
-    if (sref != 0) { duint32 t = sref; while (t != 0) { t >>= 8; ++sH.size; } }
+    if (sref != 0) { std::uint32_t t = sref; while (t != 0) { t >>= 8; ++sH.size; } }
     (handleBuf ? handleBuf : buf)->putHandle(sH);
     return true;
 }
@@ -4845,7 +4845,7 @@ bool DRW_MText::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
         angle = reader->getDouble();
         break;
     case 73:
-        linespacingStyle = static_cast<duint16>(reader->getInt32());
+        linespacingStyle = static_cast<std::uint16_t>(reader->getInt32());
         break;
     default:
         return DRW_Text::parseCode(code, reader);
@@ -4854,7 +4854,7 @@ bool DRW_MText::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
     return true;
 }
 
-bool DRW_MText::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
+bool DRW_MText::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs){
     dwgBuffer sBuff = *buf;
     dwgBuffer *sBuf = buf;
     if (version > DRW::AC1018) {//2007+
@@ -4945,7 +4945,7 @@ bool DRW_MText::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
                 if (!m_r2018ColumnAutoHeight && m_r2018ColumnType == 2 && m_r2018ColumnCount > 0
                     && m_r2018ColumnCount < 10000) {
                     m_r2018ColumnHeights.reserve(static_cast<size_t>(m_r2018ColumnCount));
-                    for (dint32 i = 0; i < m_r2018ColumnCount; ++i) {
+                    for (std::int32_t i = 0; i < m_r2018ColumnCount; ++i) {
                         m_r2018ColumnHeights.push_back(buf->getBitDouble());
                     }
                 }
@@ -5013,13 +5013,13 @@ bool DRW_Polyline::parseCode(int code, const std::unique_ptr<dxfReader>& reader)
 //0x0F polyline 2D bit 4(8) & 5(16) NOT set
 //0x10 polyline 3D bit 4(8) set
 //0x1D PFACE bit 5(16) set
-bool DRW_Polyline::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
+bool DRW_Polyline::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs){
     bool ret = DRW_Entity::parseDwg(version, buf, NULL, bs);
     if (!ret)
         return ret;
     DRW_DBG("\n***************************** parsing polyline *********************************************\n");
 
-    dint32 ooCount = 0;
+    std::int32_t ooCount = 0;
     if (oType == 0x0F) { //pline 2D
         flags = buf->getBitShort();
         DRW_DBG("flags value: "); DRW_DBG(flags);
@@ -5030,7 +5030,7 @@ bool DRW_Polyline::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
         basePoint = DRW_Coord(0,0,buf->getBitDouble());
         extPoint = buf->getExtrusion(version > DRW::AC1014);
     } else if (oType == 0x10) { //pline 3D
-        duint8 tmpFlag = buf->getRawChar8();
+        std::uint8_t tmpFlag = buf->getRawChar8();
         DRW_DBG("flags 1 value: "); DRW_DBG(tmpFlag);
         if (tmpFlag & 1)
             curvetype = 5;       // quadratic B-spline
@@ -5080,7 +5080,7 @@ bool DRW_Polyline::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
         DRW_DBG(" last Vertex Handle: "); DRW_DBGHL(objectH.code, objectH.size, objectH.ref); DRW_DBG("\n");
         DRW_DBG("Remaining bytes: "); DRW_DBG(buf->numRemainingBytes()); DRW_DBG("\n");
     } else {
-        for (dint32 i = 0; i < ooCount; ++i){
+        for (std::int32_t i = 0; i < ooCount; ++i){
                 dwgHandle objectH = buf->getOffsetHandle(handle);
                 hadlesList.push_back (objectH.ref);
                 DRW_DBG(" Vertex Handle: "); DRW_DBGHL(objectH.code, objectH.size, objectH.ref); DRW_DBG("\n");
@@ -5139,7 +5139,7 @@ bool DRW_Vertex::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
 //0x0C MESH
 //0x0D PFACE
 //0x0E PFACE FACE
-bool DRW_Vertex::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs, double el){
+bool DRW_Vertex::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs, double el){
     bool ret = DRW_Entity::parseDwg(version, buf, NULL, bs);
     if (!ret)
         return ret;
@@ -5447,10 +5447,10 @@ bool DRW_Hatch::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
     return true;
 }
 
-bool DRW_Hatch::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
+bool DRW_Hatch::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs){
     dwgBuffer sBuff = *buf;
     dwgBuffer *sBuf = buf;
-    duint32 totalBoundItems = 0;
+    std::uint32_t totalBoundItems = 0;
     bool havePixelSize = false;
 
     if (version > DRW::AC1018) {//2007+
@@ -5475,21 +5475,21 @@ bool DRW_Hatch::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
         DRW_DBG("\nsingle color Grad: "); DRW_DBG(singleColor);
         gradTint = buf->getBitDouble();
         DRW_DBG(" Gradient tint: "); DRW_DBG(gradTint);
-        dint32 numCol = buf->getBitLong();
+        std::int32_t numCol = buf->getBitLong();
         DRW_DBG(" num colors: "); DRW_DBG(numCol);
         if (numCol > 0)
             DRW::reserve(gradColors, numCol);
-        for (dint32 i = 0 ; i < numCol; ++i){
+        for (std::int32_t i = 0 ; i < numCol; ++i){
             GradientStop stop;
             // First field is the stop position (per libreDWG: BD/unkDouble holds
             // the stop value in [0,1]); falls back to even spacing if missing.
             stop.value = buf->getBitDouble();
             DRW_DBG("\nstop value: "); DRW_DBG(stop.value);
-            duint16 unkShort = buf->getBitShort();
+            std::uint16_t unkShort = buf->getBitShort();
             DRW_DBG(" unkShort: "); DRW_DBG(unkShort);
             stop.rgb = buf->getBitLong();
             DRW_DBG(" rgb color: "); DRW_DBG(stop.rgb);
-            duint8 ignCol = buf->getRawChar8();
+            std::uint8_t ignCol = buf->getRawChar8();
             DRW_DBG(" ignored color: "); DRW_DBG(ignCol);
             gradColors.push_back(stop);
         }
@@ -5509,15 +5509,15 @@ bool DRW_Hatch::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     DRW_DBG(" loopsnum: "); DRW_DBG(loopsnum); DRW_DBG("\n");
 
     //read loops
-    for (dint32 i = 0 ; i < loopsnum; ++i){
+    for (std::int32_t i = 0 ; i < loopsnum; ++i){
         loop = std::make_shared<DRW_HatchLoop>(buf->getBitLong());
         havePixelSize |= loop->type & 4;
         DRW_DBG(" loop["); DRW_DBG(i); DRW_DBG("] type: "); DRW_DBG(loop->type);
         if (!(loop->type & 2)){ //Not polyline
-            dint32 numPathSeg = buf->getBitLong();
+            std::int32_t numPathSeg = buf->getBitLong();
             DRW_DBG(" numPathSeg: "); DRW_DBG(numPathSeg); DRW_DBG("\n");
-            for (dint32 j = 0; j<numPathSeg;++j){
-                duint8 typePath = buf->getRawChar8();
+            for (std::int32_t j = 0; j<numPathSeg;++j){
+                std::uint8_t typePath = buf->getRawChar8();
                 DRW_DBG("  seg["); DRW_DBG(j); DRW_DBG("] typePath: "); DRW_DBG(typePath); DRW_DBG("\n");
                 if (typePath == 1){ //line
                     addLine();
@@ -5552,10 +5552,10 @@ bool DRW_Hatch::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
                     if (!DRW::reserve( spline->controllist, spline->ncontrol)) {
                         return false;
                     }
-                    for (dint32 j = 0; j < spline->nknots;++j){
+                    for (std::int32_t j = 0; j < spline->nknots;++j){
                         spline->knotslist.push_back (buf->getBitDouble());
                     }
-                    for (dint32 j = 0; j < spline->ncontrol;++j){
+                    for (std::int32_t j = 0; j < spline->ncontrol;++j){
                         std::shared_ptr<DRW_Coord> crd = std::make_shared<DRW_Coord>(buf->get2RawDouble());
                         if(isRational)
                             crd->z =  buf->getBitDouble(); //RLZ: investigate how store weight
@@ -5566,7 +5566,7 @@ bool DRW_Hatch::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
                         if (!DRW::reserve( spline->fitlist, spline->nfit)) {
                             return false;
                         }
-                        for (dint32 j = 0; j < spline->nfit;++j){
+                        for (std::int32_t j = 0; j < spline->nfit;++j){
                             std::shared_ptr<DRW_Coord> crd = std::make_shared<DRW_Coord>(buf->get2RawDouble());
                             spline->fitlist.push_back(crd);
                         }
@@ -5579,10 +5579,10 @@ bool DRW_Hatch::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
             pline = std::make_shared<DRW_LWPolyline>();
             bool asBulge = buf->getBit();
             pline->flags = buf->getBit();//closed bit
-            dint32 numVert = buf->getBitLong();
+            std::int32_t numVert = buf->getBitLong();
             DRW_DBG(" asBulge: "); DRW_DBG(asBulge); DRW_DBG(" closed: "); DRW_DBG(pline->flags);
             DRW_DBG(" numVert: "); DRW_DBG(numVert); DRW_DBG("\n");
-            for (dint32 j = 0; j<numVert;++j){
+            for (std::int32_t j = 0; j<numVert;++j){
                 DRW_Vertex2D v;
                 v.x = buf->getRawDouble();
                 v.y = buf->getRawDouble();
@@ -5606,17 +5606,17 @@ bool DRW_Hatch::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
         scale = buf->getBitDouble();
         doubleflag = buf->getBit();
         deflines = buf->getBitShort();
-        for (dint32 i = 0 ; i < deflines; ++i){
+        for (std::int32_t i = 0 ; i < deflines; ++i){
             DRW_Coord ptL, offL;
             double angleL = buf->getBitDouble();
             ptL.x = buf->getBitDouble();
             ptL.y = buf->getBitDouble();
             offL.x = buf->getBitDouble();
             offL.y = buf->getBitDouble();
-            duint16 numDashL = buf->getBitShort();
+            std::uint16_t numDashL = buf->getBitShort();
             DRW_DBG("\ndef line: "); DRW_DBG(angleL); DRW_DBG(","); DRW_DBG(ptL.x); DRW_DBG(","); DRW_DBG(ptL.y);
             DRW_DBG(","); DRW_DBG(offL.x); DRW_DBG(","); DRW_DBG(offL.y); DRW_DBG(","); DRW_DBG(angleL);
-            for (duint16 i = 0 ; i < numDashL; ++i){
+            for (std::uint16_t i = 0 ; i < numDashL; ++i){
                 double lengthL = buf->getBitDouble();
                 DRW_DBG(","); DRW_DBG(lengthL);
             }
@@ -5624,14 +5624,14 @@ bool DRW_Hatch::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     } //end not solid
 
     if (havePixelSize){
-        ddouble64 pixsize = buf->getBitDouble();
+        double pixsize = buf->getBitDouble();
         DRW_DBG("\npixel size: "); DRW_DBG(pixsize);
     }
-    dint32 numSeedPoints = buf->getBitLong();
+    std::int32_t numSeedPoints = buf->getBitLong();
     DRW_DBG("\nnum Seed Points  "); DRW_DBG(numSeedPoints);
     if (numSeedPoints > 0)
         DRW::reserve(seedPoints, numSeedPoints);
-    for (dint32 i = 0 ; i < numSeedPoints; ++i){
+    for (std::int32_t i = 0 ; i < numSeedPoints; ++i){
         DRW_Coord seedPt;
         seedPt.x = buf->getRawDouble();
         seedPt.y = buf->getRawDouble();
@@ -5645,7 +5645,7 @@ bool DRW_Hatch::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
         return ret;
     DRW_DBG("Remaining bytes: "); DRW_DBG(buf->numRemainingBytes()); DRW_DBG("\n");
 
-    for (duint32 i = 0 ; i < totalBoundItems; ++i){
+    for (std::uint32_t i = 0 ; i < totalBoundItems; ++i){
         dwgHandle biH = buf->getHandle();
         DRW_DBG("Boundary Items Handle: "); DRW_DBGHL(biH.code, biH.size, biH.ref);
     }
@@ -5654,7 +5654,7 @@ bool DRW_Hatch::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     return buf->isGood();
 }
 
-bool DRW_Hatch::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {
+bool DRW_Hatch::encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {
     (void)bs;
     oType = 78;  // HATCH class id — see dwgreader.cpp:1380
     if (!encodeDwgCommon(version, buf)) return false;
@@ -5667,11 +5667,11 @@ bool DRW_Hatch::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwg
         buf->putBitDouble(gradShift);
         buf->putBitLong(singleColor);
         buf->putBitDouble(gradTint);
-        buf->putBitLong(static_cast<dint32>(gradColors.size()));
+        buf->putBitLong(static_cast<std::int32_t>(gradColors.size()));
         for (const GradientStop& stop : gradColors) {
             buf->putBitDouble(stop.value);
-            buf->putBitShort(static_cast<duint16>(stop.aciColor));
-            buf->putBitLong(static_cast<duint32>(stop.rgb));
+            buf->putBitShort(static_cast<std::uint16_t>(stop.aciColor));
+            buf->putBitLong(static_cast<std::uint32_t>(stop.rgb));
             buf->putRawChar8(0);
         }
         sb->putVariableText(version, gradName);
@@ -5680,13 +5680,13 @@ bool DRW_Hatch::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwg
     buf->putBitDouble(basePoint.z);            // BD: elevation
     buf->put3BitDouble(extPoint);              // 3BD: extrusion (NOT BE-style for HATCH)
     sb->putVariableText(version, name);        // TV: hatch pattern name
-    buf->putBit(static_cast<duint8>(solid));
-    buf->putBit(static_cast<duint8>(associative));
+    buf->putBit(static_cast<std::uint8_t>(solid));
+    buf->putBit(static_cast<std::uint8_t>(associative));
     // Write the actual count we iterate — not loopsnum, which may be stale.
-    buf->putBitLong(static_cast<dint32>(looplist.size()));
+    buf->putBitLong(static_cast<std::int32_t>(looplist.size()));
 
     // Encode each boundary loop.
-    duint32 totalBoundItems = 0;
+    std::uint32_t totalBoundItems = 0;
     for (const auto& lp : looplist) {
         // Strip bit 4 (pixel-size flag): DRW_Hatch has no storage for the
         // associated pixelSize BD, so a reader would desync if the flag were
@@ -5695,7 +5695,7 @@ bool DRW_Hatch::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwg
 
         if (!(lp->type & 2)) {
             // Non-polyline path: edges
-            buf->putBitLong(static_cast<dint32>(lp->objlist.size()));
+            buf->putBitLong(static_cast<std::int32_t>(lp->objlist.size()));
             for (const auto& seg : lp->objlist) {
                 if (const auto* ln = dynamic_cast<const DRW_Line*>(seg.get())) {
                     buf->putRawChar8(1);  // line
@@ -5707,7 +5707,7 @@ bool DRW_Hatch::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwg
                     buf->putBitDouble(arc->radious);
                     buf->putBitDouble(arc->staangle);   // radians
                     buf->putBitDouble(arc->endangle);
-                    buf->putBit(static_cast<duint8>(arc->isccw));
+                    buf->putBit(static_cast<std::uint8_t>(arc->isccw));
                 } else if (const auto* el = dynamic_cast<const DRW_Ellipse*>(seg.get())) {
                     buf->putRawChar8(3);  // ellipse arc
                     buf->put2RawDouble(el->basePoint);
@@ -5715,16 +5715,16 @@ bool DRW_Hatch::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwg
                     buf->putBitDouble(el->ratio);
                     buf->putBitDouble(el->staparam);
                     buf->putBitDouble(el->endparam);
-                    buf->putBit(static_cast<duint8>(el->isccw));
+                    buf->putBit(static_cast<std::uint8_t>(el->isccw));
                 } else if (const auto* sp = dynamic_cast<const DRW_Spline*>(seg.get())) {
                     buf->putRawChar8(4);  // spline
                     buf->putBitLong(sp->degree);
                     bool isRational = (sp->flags & 4) != 0;
                     bool isPeriodic = (sp->flags & 2) != 0;
-                    buf->putBit(static_cast<duint8>(isRational));
-                    buf->putBit(static_cast<duint8>(isPeriodic));
-                    buf->putBitLong(static_cast<dint32>(sp->knotslist.size()));
-                    buf->putBitLong(static_cast<dint32>(sp->controllist.size()));
+                    buf->putBit(static_cast<std::uint8_t>(isRational));
+                    buf->putBit(static_cast<std::uint8_t>(isPeriodic));
+                    buf->putBitLong(static_cast<std::int32_t>(sp->knotslist.size()));
+                    buf->putBitLong(static_cast<std::int32_t>(sp->controllist.size()));
                     for (double k : sp->knotslist)
                         buf->putBitDouble(k);
                     for (const auto& cp : sp->controllist) {
@@ -5749,9 +5749,9 @@ bool DRW_Hatch::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwg
             for (const auto& v : pl->vertlist)
                 if (v->bulge != 0.0) { asBulge = true; break; }
 
-            buf->putBit(static_cast<duint8>(asBulge));
-            buf->putBit(static_cast<duint8>(pl->flags & 1));  // closed bit
-            buf->putBitLong(static_cast<dint32>(pl->vertlist.size()));
+            buf->putBit(static_cast<std::uint8_t>(asBulge));
+            buf->putBit(static_cast<std::uint8_t>(pl->flags & 1));  // closed bit
+            buf->putBitLong(static_cast<std::int32_t>(pl->vertlist.size()));
             for (const auto& v : pl->vertlist) {
                 buf->putRawDouble(v->x);
                 buf->putRawDouble(v->y);
@@ -5763,13 +5763,13 @@ bool DRW_Hatch::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwg
         buf->putBitLong(0);  // numBoundHandles for this loop (0 = non-associative)
     }
 
-    buf->putBitShort(static_cast<duint16>(hstyle));
-    buf->putBitShort(static_cast<duint16>(hpattern));
+    buf->putBitShort(static_cast<std::uint16_t>(hstyle));
+    buf->putBitShort(static_cast<std::uint16_t>(hpattern));
 
     if (!solid) {
         buf->putBitDouble(angle);
         buf->putBitDouble(scale);
-        buf->putBit(static_cast<duint8>(doubleflag));
+        buf->putBit(static_cast<std::uint8_t>(doubleflag));
         // Pattern definition lines: the parseDwg reads them but DRW_Hatch
         // has no storage for per-line data, so emit 0 here.
         buf->putBitShort(0);  // deflines = 0
@@ -5779,7 +5779,7 @@ bool DRW_Hatch::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwg
     // above (DRW_Hatch has no pixelSize storage), so havePixelSize is always
     // false on the read side and parseDwg never expects this field.
 
-    buf->putBitLong(static_cast<dint32>(seedPoints.size()));
+    buf->putBitLong(static_cast<std::int32_t>(seedPoints.size()));
     for (const auto& sp : seedPoints) {
         buf->putRawDouble(sp.x);
         buf->putRawDouble(sp.y);
@@ -5883,7 +5883,7 @@ bool DRW_Spline::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
     return true;
 }
 
-bool DRW_Spline::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
+bool DRW_Spline::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs){
     bool ret = DRW_Entity::parseDwg(version, buf, NULL, bs);
     if (!ret)
         return ret;
@@ -5903,15 +5903,15 @@ bool DRW_Spline::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
 // AcDbHelix trailer (Phase 8a-1).
 bool DRW_Spline::parseDwgSplineBody(DRW::Version version, dwgBuffer *buf){
     DRW_DBG("\n***************************** parsing spline *********************************************\n");
-    duint8 weight = 0; // RLZ ??? flags, weight, code 70, bit 4 (16)
+    std::uint8_t weight = 0; // RLZ ??? flags, weight, code 70, bit 4 (16)
 
-    dint32 scenario = buf->getBitLong();
+    std::int32_t scenario = buf->getBitLong();
     m_scenario = scenario;
     DRW_DBG("scenario: "); DRW_DBG(scenario);
     if (version > DRW::AC1024) {
-        dint32 splFlag1 = buf->getBitLong();
+        std::int32_t splFlag1 = buf->getBitLong();
         m_splineFlags1 = splFlag1;
-        dint32 knotParam = buf->getBitLong();
+        std::int32_t knotParam = buf->getBitLong();
         m_knotParam = knotParam;
         if (knotParam == kSplineKnotParamCustom || !(splFlag1 & kSplineFlagUseKnotParameter)) {
             scenario = 1;
@@ -5976,7 +5976,7 @@ bool DRW_Spline::parseDwgSplineBody(DRW::Version version, dwgBuffer *buf){
     if (!DRW::reserve( knotslist, nknots)) {
         return false;
     }
-    for (dint32 i= 0; i<nknots; ++i){
+    for (std::int32_t i= 0; i<nknots; ++i){
         knotslist.push_back (buf->getBitDouble());
     }
     if (!DRW::reserve( controllist, ncontrol)) {
@@ -5985,7 +5985,7 @@ bool DRW_Spline::parseDwgSplineBody(DRW::Version version, dwgBuffer *buf){
     if (weight && !DRW::reserve(weightlist, ncontrol)) {
         return false;
     }
-    for (dint32 i= 0; i<ncontrol; ++i){
+    for (std::int32_t i= 0; i<ncontrol; ++i){
         controllist.push_back(std::make_shared<DRW_Coord>(buf->get3BitDouble()));
         if (weight) {
             //per-control-point weight; required for hyperbola/parabola
@@ -5998,7 +5998,7 @@ bool DRW_Spline::parseDwgSplineBody(DRW::Version version, dwgBuffer *buf){
     if (!DRW::reserve( fitlist, nfit)) {
         return false;
     }
-    for (dint32 i= 0; i<nfit; ++i)
+    for (std::int32_t i= 0; i<nfit; ++i)
         fitlist.push_back(std::make_shared<DRW_Coord>(buf->get3BitDouble()));
 
     if (DRW_DBGGL == DRW_dbg::Level::Debug) {
@@ -6023,7 +6023,7 @@ bool DRW_Spline::parseDwgSplineBody(DRW::Version version, dwgBuffer *buf){
 //   major_version BL, maint_version BL, axis_base_pt 3BD, start_pt 3BD,
 //   axis_vector 3BD, radius BD, turns BD, turn_height BD, handedness B,
 //   constraint_type RC.
-bool DRW_Helix::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
+bool DRW_Helix::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs){
     bool ret = DRW_Entity::parseDwg(version, buf, NULL, bs);
     if (!ret)
         return ret;
@@ -6112,7 +6112,7 @@ bool DRW_Image::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
     return true;
 }
 
-bool DRW_Image::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
+bool DRW_Image::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs){
     dwgBuffer sBuff = *buf;
     dwgBuffer *sBuf = buf;
     if (version > DRW::AC1018) {//2007+
@@ -6123,7 +6123,7 @@ bool DRW_Image::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
         return ret;
     DRW_DBG("\n***************************** parsing image *********************************************\n");
 
-    dint32 classVersion = buf->getBitLong();
+    std::int32_t classVersion = buf->getBitLong();
     DRW_DBG("class Version: "); DRW_DBG(classVersion);
     basePoint = buf->get3BitDouble();
     DRW_DBG("\nbase point: "); DRW_DBGPT(basePoint.x, basePoint.y, basePoint.z);
@@ -6143,7 +6143,7 @@ bool DRW_Image::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     if (version > DRW::AC1021){ //2010+
         clipMode = buf->getBit() != 0;  // ODA §20.4.80: Clip mode B (R2010+)
     }
-    duint16 clipType = buf->getBitShort();
+    std::uint16_t clipType = buf->getBitShort();
     clipPath.clear();
     if (clipType == 0) {
         // No clip boundary payload.
@@ -6157,7 +6157,7 @@ bool DRW_Image::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
         clipPath.push_back(ur);
         clipPath.push_back(DRW_Coord(ll.x, ur.y, 0.0));
     } else if (clipType == 2) {
-        dint32 numVerts = buf->getBitLong();
+        std::int32_t numVerts = buf->getBitLong();
         if (numVerts < 0 || numVerts > 100000)
             return false;
         clipPath.reserve(numVerts);
@@ -6191,7 +6191,7 @@ bool DRW_Image::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
 // clip_boundary_type + verts.  Both handles (imagedef code 5 + reactor
 // code 3) are emitted UNCONDITIONALLY at the END of the handle stream,
 // matching parseDwg's order — NOT the spec's interleaved mid-stream slots.
-bool DRW_Image::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs,
+bool DRW_Image::encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs,
                           dwgBufferW *strBuf, dwgBufferW *handleBuf) {
     (void)bs; (void)strBuf;
     oType = 101;  // IMAGE class id — see dwgreader.cpp case 101
@@ -6203,11 +6203,11 @@ bool DRW_Image::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs,
     buf->putBitDouble(vVector.x);   buf->putBitDouble(vVector.y);   buf->putBitDouble(vVector.z);
     buf->putRawDouble(sizeu);
     buf->putRawDouble(sizev);
-    buf->putBitShort(static_cast<duint16>(m_displayProps));
-    buf->putBit(static_cast<duint8>(clip & 1));
-    buf->putRawChar8(static_cast<duint8>(brightness));
-    buf->putRawChar8(static_cast<duint8>(contrast));
-    buf->putRawChar8(static_cast<duint8>(fade));
+    buf->putBitShort(static_cast<std::uint16_t>(m_displayProps));
+    buf->putBit(static_cast<std::uint8_t>(clip & 1));
+    buf->putRawChar8(static_cast<std::uint8_t>(brightness));
+    buf->putRawChar8(static_cast<std::uint8_t>(contrast));
+    buf->putRawChar8(static_cast<std::uint8_t>(fade));
     if (version > DRW::AC1021) {  // 2010+ clip mode
         buf->putBit(clipMode ? 1 : 0);
     }
@@ -6217,7 +6217,7 @@ bool DRW_Image::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs,
         // Always emit polygon type 2 — reader expands a stored rect (type 1)
         // into a 4-vertex polygon, so re-emit it as a polygon, never type 1.
         buf->putBitShort(2);
-        buf->putBitLong(static_cast<dint32>(clipPath.size()));
+        buf->putBitLong(static_cast<std::int32_t>(clipPath.size()));
         for (const DRW_Coord& v : clipPath)
             buf->put2RawDouble(v);
     }
@@ -6227,12 +6227,12 @@ bool DRW_Image::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs,
     // Emit both trailing handles UNCONDITIONALLY in parseDwg order:
     // imagedef (hard pointer, code 5) then imagedefreactor (hard owner, code 3).
     dwgBufferW *hb = handleBuf ? handleBuf : buf;
-    auto makeHandle = [](duint8 code, duint32 r) {
+    auto makeHandle = [](std::uint8_t code, std::uint32_t r) {
         dwgHandle h;
         h.code = (r == 0) ? 0 : code;
         h.ref  = r;
         h.size = 0;
-        if (r != 0) { duint32 t = r; while (t != 0) { t >>= 8; ++h.size; } }
+        if (r != 0) { std::uint32_t t = r; while (t != 0) { t >>= 8; ++h.size; } }
         return h;
     };
     hb->putHandle(makeHandle(5, ref));                       // imagedef (340)
@@ -6357,7 +6357,7 @@ bool DRW_Dimension::parseCode(int code, const std::unique_ptr<dxfReader>& reader
     return true;
 }
 
-bool DRW_Dimension::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs)
+bool DRW_Dimension::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs)
 {
     DRW_UNUSED( version);
     DRW_UNUSED( buf);
@@ -6368,7 +6368,7 @@ bool DRW_Dimension::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs)
     return false;
 }
 
-bool DRW_Dimension::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer *sBuf, duint32 bs /*= 0*/) {
+bool DRW_Dimension::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer *sBuf, std::uint32_t bs /*= 0*/) {
     dwgBuffer sBuff = *buf;
     sBuf = buf;
     if (version > DRW::AC1018) {//2007+
@@ -6381,7 +6381,7 @@ bool DRW_Dimension::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer *sB
 
     DRW_DBG("\n***************************** parsing dimension *********************************************");
     if (version > DRW::AC1021) { //2010+
-        duint8 dimVersion = buf->getRawChar8();
+        std::uint8_t dimVersion = buf->getRawChar8();
         DRW_DBG("\ndimVersion: "); DRW_DBG(dimVersion);
     }
     // ODA §20.4.22: Extrusion is plain 3BD (NOT BE) — confirmed by libreDWG dwg_spec_shared.h
@@ -6426,7 +6426,7 @@ bool DRW_Dimension::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer *sB
     return buf->isGood();
 }
 
-bool DRW_DimAligned::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
+bool DRW_DimAligned::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs){
     if (!DRW_Dimension::parseDwg(version, buf, nullptr, bs)) {
         return false;
     }
@@ -6466,7 +6466,7 @@ bool DRW_DimAligned::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     return buf->isGood();
  }
 
-bool DRW_DimRadial::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
+bool DRW_DimRadial::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs){
     if (!DRW_Dimension::parseDwg(version, buf, nullptr, bs)) {
         return false;
     }
@@ -6498,7 +6498,7 @@ bool DRW_DimRadial::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     return buf->isGood();
 }
 
-bool DRW_DimDiametric::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
+bool DRW_DimDiametric::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs){
     if (!DRW_Dimension::parseDwg(version, buf, nullptr, bs)) {
         return false;
     }
@@ -6530,7 +6530,7 @@ bool DRW_DimDiametric::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs
     return buf->isGood();
 }
 
-bool DRW_DimAngular::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
+bool DRW_DimAngular::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs){
     if (!DRW_Dimension::parseDwg(version, buf, nullptr, bs)) {
         return false;
     }
@@ -6571,7 +6571,7 @@ bool DRW_DimAngular::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     return buf->isGood();
 }
 
-bool DRW_DimAngular3p::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
+bool DRW_DimAngular3p::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs){
     if (!DRW_Dimension::parseDwg(version, buf, nullptr, bs)) {
         return false;
     }
@@ -6607,7 +6607,7 @@ bool DRW_DimAngular3p::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs
     return buf->isGood();
 }
 
-bool DRW_DimOrdinate::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
+bool DRW_DimOrdinate::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs){
     if (!DRW_Dimension::parseDwg(version, buf, nullptr, bs)) {
         return false;
     }
@@ -6622,7 +6622,7 @@ bool DRW_DimOrdinate::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs)
     pt = buf->get3BitDouble();
     setPt4(pt);
     DRW_DBG("\ndef2: "); DRW_DBGPT(pt.x, pt.y, pt.z);
-    duint8 type2 = buf->getRawChar8();//RLZ: correct this
+    std::uint8_t type2 = buf->getRawChar8();//RLZ: correct this
     DRW_DBG("type2 (70) read: "); DRW_DBG(type2);
     // 0B.1: x-vs-y ordinate flag is DXF group-70 bit 6 (0x40), matching the
     // filter (rs_filterdxfrw.cpp `type & 64`) and the DWG parseCode path.
@@ -6666,7 +6666,7 @@ bool DRW_Dimension::encodeDwgDimBase(DRW::Version version, dwgBufferW *buf,
     // Reverse the parseDwg type-byte transformation:
     //   parseDwg bit0=0 → type bit7 set;  bit0=1 → type bit7 clear
     //   parseDwg bit1=1 → type bit5 set;  bit1=0 → type bit5 clear
-    duint8 rawByte = static_cast<duint8>(
+    std::uint8_t rawByte = static_cast<std::uint8_t>(
         ((type & 0x80) ? 0 : 1) | ((type & 0x20) ? 2 : 0));
     buf->putRawChar8(rawByte);
     (strBuf ? strBuf : buf)->putVariableText(version, text);
@@ -6676,8 +6676,8 @@ bool DRW_Dimension::encodeDwgDimBase(DRW::Version version, dwgBufferW *buf,
     buf->put3BitDouble(zeroCoord);  // inspoint — not stored, emit zero
     buf->putBitDouble(0.0);         // insRot_code54 — not stored
     // R2000 (version > AC1014): alignment, spacing, line factor, measure
-    buf->putBitShort(static_cast<duint16>(align));
-    buf->putBitShort(static_cast<duint16>(linesty));
+    buf->putBitShort(static_cast<std::uint16_t>(align));
+    buf->putBitShort(static_cast<std::uint16_t>(linesty));
     buf->putBitDouble(linefactor);
     buf->putBitDouble(measureValue);
     if (version > DRW::AC1018) {
@@ -6698,21 +6698,21 @@ static void putDimHandles(dwgBufferW *buf, const dwgHandle& dimStyleH, const dwg
     dsH.code = 5;
     dsH.ref  = (dimStyleH.ref == 0) ? 0x15 : dimStyleH.ref;
     dsH.size = 0;
-    if (dsH.ref != 0) { duint32 t = dsH.ref; while (t != 0) { t >>= 8; ++dsH.size; } }
+    if (dsH.ref != 0) { std::uint32_t t = dsH.ref; while (t != 0) { t >>= 8; ++dsH.size; } }
     hb->putHandle(dsH);
 
     dwgHandle bhH;
     bhH.code = (blockH.ref == 0) ? 0 : 5;
     bhH.ref  = blockH.ref;
     bhH.size = 0;
-    if (bhH.ref != 0) { duint32 t = bhH.ref; while (t != 0) { t >>= 8; ++bhH.size; } }
+    if (bhH.ref != 0) { std::uint32_t t = bhH.ref; while (t != 0) { t >>= 8; ++bhH.size; } }
     hb->putHandle(bhH);
 }
 
 // ----------------------------------------------------------------------------
 // DRW_DimAligned::encodeDwg  (oType=22)
 // ----------------------------------------------------------------------------
-bool DRW_DimAligned::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {
+bool DRW_DimAligned::encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {
     (void)bs;
     oType = 22;
     if (!encodeDwgCommon(version, buf)) return false;
@@ -6729,7 +6729,7 @@ bool DRW_DimAligned::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs
 // ----------------------------------------------------------------------------
 // DRW_DimLinear::encodeDwg  (oType=21)
 // ----------------------------------------------------------------------------
-bool DRW_DimLinear::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {
+bool DRW_DimLinear::encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {
     (void)bs;
     oType = 21;
     if (!encodeDwgCommon(version, buf)) return false;
@@ -6747,7 +6747,7 @@ bool DRW_DimLinear::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs,
 // ----------------------------------------------------------------------------
 // DRW_DimRadial::encodeDwg  (oType=25)
 // ----------------------------------------------------------------------------
-bool DRW_DimRadial::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {
+bool DRW_DimRadial::encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {
     (void)bs;
     oType = 25;
     if (!encodeDwgCommon(version, buf)) return false;
@@ -6763,7 +6763,7 @@ bool DRW_DimRadial::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs,
 // ----------------------------------------------------------------------------
 // DRW_DimDiametric::encodeDwg  (oType=26)
 // ----------------------------------------------------------------------------
-bool DRW_DimDiametric::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {
+bool DRW_DimDiametric::encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {
     (void)bs;
     oType = 26;
     if (!encodeDwgCommon(version, buf)) return false;
@@ -6779,7 +6779,7 @@ bool DRW_DimDiametric::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 
 // ----------------------------------------------------------------------------
 // DRW_DimAngular::encodeDwg  (oType=24, 2-line angular)
 // ----------------------------------------------------------------------------
-bool DRW_DimAngular::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {
+bool DRW_DimAngular::encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {
     (void)bs;
     oType = 24;
     if (!encodeDwgCommon(version, buf)) return false;
@@ -6799,7 +6799,7 @@ bool DRW_DimAngular::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs
 // ----------------------------------------------------------------------------
 // DRW_DimAngular3p::encodeDwg  (oType=23, 3-point angular)
 // ----------------------------------------------------------------------------
-bool DRW_DimAngular3p::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {
+bool DRW_DimAngular3p::encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {
     (void)bs;
     oType = 23;
     if (!encodeDwgCommon(version, buf)) return false;
@@ -6845,7 +6845,7 @@ bool DRW_DimArc::parseCode(int code, const std::unique_ptr<dxfReader>& reader) {
 // ----------------------------------------------------------------------------
 // DRW_DimArc::parseDwg  (ODA DWG spec §20.4.19)
 // ----------------------------------------------------------------------------
-bool DRW_DimArc::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs) {
+bool DRW_DimArc::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs) {
     if (!DRW_Dimension::parseDwg(version, buf, nullptr, bs)) return false;
     setDefPoint(buf->get3BitDouble());   // arc dim-line arc point (code 10)
     setPt3(buf->get3BitDouble());        // extension line 1 (code 13)
@@ -6867,7 +6867,7 @@ bool DRW_DimArc::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs) {
 // ----------------------------------------------------------------------------
 // DRW_DimArc::encodeDwg  (oType=500 — dynamic class, classNum from writeDwgClasses)
 // ----------------------------------------------------------------------------
-bool DRW_DimArc::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs,
+bool DRW_DimArc::encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs,
                              dwgBufferW *strBuf, dwgBufferW *handleBuf) {
     (void)bs;
     oType = DRW_DimArc::kDwgClassNum;  // assigned in writeDwgClasses; reader resolves via classesmap
@@ -6894,7 +6894,7 @@ bool DRW_DimArc::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs,
 // ----------------------------------------------------------------------------
 // DRW_DimOrdinate::encodeDwg  (oType=20)
 // ----------------------------------------------------------------------------
-bool DRW_DimOrdinate::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {
+bool DRW_DimOrdinate::encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {
     (void)bs;
     oType = 20;
     if (!encodeDwgCommon(version, buf)) return false;
@@ -6905,7 +6905,7 @@ bool DRW_DimOrdinate::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 b
     // type2 byte encodes the x-vs-y ordinate flag (bit 6 / 0x40 of type, per
     // 0B.1) — keeps the DWG byte round-trip self-consistent with the parse
     // side while making the filter's `type & 64` check fire.
-    duint8 type2byte = (type & 0x40) ? 1 : 0;
+    std::uint8_t type2byte = (type & 0x40) ? 1 : 0;
     buf->putRawChar8(type2byte);
     if (!encodeDwgEntHandle(version, buf, handleBuf)) return false;
     putDimHandles(buf, dimStyleH, blockH, handleBuf);
@@ -7003,7 +7003,7 @@ bool DRW_Leader::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
     return true;
 }
 
-bool DRW_Leader::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
+bool DRW_Leader::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs){
     dwgBuffer sBuff = *buf;
     dwgBuffer *sBuf = buf;
     if (version > DRW::AC1018) {//2007+
@@ -7017,7 +7017,7 @@ bool DRW_Leader::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     DRW_DBG(" annot type "); DRW_DBG(buf->getBitShort());
     leadertype = buf->getBitShort();
     DRW_DBG(" Path type "); DRW_DBG(leadertype);
-    dint32 nPt = buf->getBitLong();
+    std::int32_t nPt = buf->getBitLong();
     DRW_DBG(" Num pts "); DRW_DBG(nPt);
 
     // add vertexes
@@ -7143,10 +7143,10 @@ static bool parseMLeaderRoot(DRW::Version version, dwgBuffer *buf,
     if (hasLastPt) root.connectionPoint = buf->get3BitDouble();
     if (hasDogleg) root.direction       = buf->get3BitDouble();
 
-    dint32 nBreaks = buf->getBitLong();
+    std::int32_t nBreaks = buf->getBitLong();
     if (nBreaks < 0 || nBreaks > 5000) return false; // libreDWG MAX_LEADER_NUMBER
     root.breaks.reserve(static_cast<size_t>(nBreaks));
-    for (dint32 i = 0; i < nBreaks; ++i) {
+    for (std::int32_t i = 0; i < nBreaks; ++i) {
         DRW_Coord a = buf->get3BitDouble();
         DRW_Coord b = buf->get3BitDouble();
         root.breaks.emplace_back(a, b);
@@ -7155,24 +7155,24 @@ static bool parseMLeaderRoot(DRW::Version version, dwgBuffer *buf,
     root.leaderIndex     = buf->getBitLong();   // 90 branch_index
     root.landingDistance = buf->getBitDouble(); // 40 dogleg_length
 
-    dint32 nLines = buf->getBitLong();
+    std::int32_t nLines = buf->getBitLong();
     if (nLines < 0 || nLines > 5000) return false;
     root.leaderLines.reserve(static_cast<size_t>(nLines));
-    for (dint32 i = 0; i < nLines; ++i) {
+    for (std::int32_t i = 0; i < nLines; ++i) {
         DRW_MLeaderLeaderLine line;
         // Per libreDWG: BL num_points, points, BL num_breaks, breaks, BL line_index.
         // The previous 5-BL layout (brkInfoCount + segmentIndex + nPairs +
         // pairs + leaderLineIndex) inserted two spurious BL reads, drifting
         // every subsequent entity-level field (overallScale, contentType, …).
-        dint32 nPts = buf->getBitLong();
+        std::int32_t nPts = buf->getBitLong();
         if (nPts < 0 || nPts > 5000) return false;
         line.points.reserve(static_cast<size_t>(nPts));
-        for (dint32 j = 0; j < nPts; ++j) {
+        for (std::int32_t j = 0; j < nPts; ++j) {
             line.points.push_back(buf->get3BitDouble());
         }
-        dint32 nLineBreaks = buf->getBitLong();
+        std::int32_t nLineBreaks = buf->getBitLong();
         if (nLineBreaks < 0 || nLineBreaks > 5000) return false;
-        for (dint32 j = 0; j < nLineBreaks; ++j) {
+        for (std::int32_t j = 0; j < nLineBreaks; ++j) {
             DRW_Coord a = buf->get3BitDouble();
             DRW_Coord b = buf->get3BitDouble();
             line.breaks.emplace_back(a, b);
@@ -7217,7 +7217,7 @@ static bool parseMLeaderAnnotContext(DRW::Version version, dwgBuffer *buf,
     // handle is deferred to the trailing handle stream.
 
     // Number of leader roots.
-    dint32 nRoots = buf->getBitLong();
+    std::int32_t nRoots = buf->getBitLong();
     if (nRoots == 0) {
         bool rootCountBits[7] = {};
         for (bool& rootCountBit : rootCountBits)
@@ -7227,7 +7227,7 @@ static bool parseMLeaderAnnotContext(DRW::Version version, dwgBuffer *buf,
     if (nRoots < 0 || nRoots > 1000000) return false;
     ctx.roots.clear();
     ctx.roots.reserve(static_cast<size_t>(nRoots));
-    for (dint32 i = 0; i < nRoots; ++i) {
+    for (std::int32_t i = 0; i < nRoots; ++i) {
         DRW_MLeaderRoot root;
         if (!parseMLeaderRoot(version, buf, root)) return false;
         ctx.roots.push_back(std::move(root));
@@ -7269,10 +7269,10 @@ static bool parseMLeaderAnnotContext(DRW::Version version, dwgBuffer *buf,
         ctx.columnWidth       = buf->getBitDouble();
         ctx.columnGutter      = buf->getBitDouble();
         ctx.columnFlowReversed = buf->getBit();
-        dint32 nColSizes = buf->getBitLong();
+        std::int32_t nColSizes = buf->getBitLong();
         if (nColSizes < 0 || nColSizes > 1000000) return false;
         ctx.columnSizes.reserve(static_cast<size_t>(nColSizes));
-        for (dint32 i = 0; i < nColSizes; ++i) {
+        for (std::int32_t i = 0; i < nColSizes; ++i) {
             ctx.columnSizes.push_back(buf->getBitDouble());
         }
         ctx.wordBreak = buf->getBit();
@@ -7318,7 +7318,7 @@ static bool encodeMLeaderRoot(DRW::Version version, dwgBufferW *buf,
     if (root.unknown291)
         buf->put3BitDouble(root.direction);
 
-    buf->putBitLong(static_cast<dint32>(root.breaks.size()));
+    buf->putBitLong(static_cast<std::int32_t>(root.breaks.size()));
     for (const auto& brk : root.breaks) {
         buf->put3BitDouble(brk.first);
         buf->put3BitDouble(brk.second);
@@ -7327,15 +7327,15 @@ static bool encodeMLeaderRoot(DRW::Version version, dwgBufferW *buf,
     buf->putBitLong(root.leaderIndex);
     buf->putBitDouble(root.landingDistance);
 
-    buf->putBitLong(static_cast<dint32>(root.leaderLines.size()));
+    buf->putBitLong(static_cast<std::int32_t>(root.leaderLines.size()));
     for (const DRW_MLeaderLeaderLine& line : root.leaderLines) {
         if (line.points.size() > 5000 || line.breaks.size() > 5000)
             return false;
-        buf->putBitLong(static_cast<dint32>(line.points.size()));
+        buf->putBitLong(static_cast<std::int32_t>(line.points.size()));
         for (const DRW_Coord& point : line.points)
             buf->put3BitDouble(point);
 
-        buf->putBitLong(static_cast<dint32>(line.breaks.size()));
+        buf->putBitLong(static_cast<std::int32_t>(line.breaks.size()));
         for (const auto& brk : line.breaks) {
             buf->put3BitDouble(brk.first);
             buf->put3BitDouble(brk.second);
@@ -7344,7 +7344,7 @@ static bool encodeMLeaderRoot(DRW::Version version, dwgBufferW *buf,
 
         if (version >= DRW::AC1024) {
             buf->putBitShort(line.leaderType);
-            buf->putCmColor(version, static_cast<duint16>(line.color));
+            buf->putCmColor(version, static_cast<std::uint16_t>(line.color));
             buf->putBitLong(line.lineWeight);
             buf->putBitDouble(line.arrowSize);
             buf->putBitLong(line.overrideFlags);
@@ -7365,7 +7365,7 @@ static bool encodeMLeaderAnnotContext(DRW::Version version, dwgBufferW *buf,
     if (ctx.hasContentsBlock)
         return false;
 
-    buf->putBitLong(static_cast<dint32>(ctx.roots.size()));
+    buf->putBitLong(static_cast<std::int32_t>(ctx.roots.size()));
     for (const DRW_MLeaderRoot& root : ctx.roots) {
         if (!encodeMLeaderRoot(version, buf, root))
             return false;
@@ -7392,10 +7392,10 @@ static bool encodeMLeaderAnnotContext(DRW::Version version, dwgBufferW *buf,
         buf->putBitDouble(ctx.boundaryHeight);
         buf->putBitDouble(ctx.lineSpacingFactor);
         buf->putBitShort(ctx.lineSpacingStyle);
-        buf->putCmColor(version, static_cast<duint16>(ctx.textColor));
+        buf->putCmColor(version, static_cast<std::uint16_t>(ctx.textColor));
         buf->putBitShort(ctx.alignment);
         buf->putBitShort(ctx.flowDirection);
-        buf->putCmColor(version, static_cast<duint16>(ctx.bgFillColor));
+        buf->putCmColor(version, static_cast<std::uint16_t>(ctx.bgFillColor));
         buf->putBitDouble(ctx.bgScaleFactor);
         buf->putBitLong(ctx.bgTransparency);
         buf->putBit(ctx.bgFillEnabled ? 1 : 0);
@@ -7405,7 +7405,7 @@ static bool encodeMLeaderAnnotContext(DRW::Version version, dwgBufferW *buf,
         buf->putBitDouble(ctx.columnWidth);
         buf->putBitDouble(ctx.columnGutter);
         buf->putBit(ctx.columnFlowReversed ? 1 : 0);
-        buf->putBitLong(static_cast<dint32>(ctx.columnSizes.size()));
+        buf->putBitLong(static_cast<std::int32_t>(ctx.columnSizes.size()));
         for (double columnSize : ctx.columnSizes)
             buf->putBitDouble(columnSize);
         buf->putBit(ctx.wordBreak ? 1 : 0);
@@ -7427,7 +7427,7 @@ static bool encodeMLeaderAnnotContext(DRW::Version version, dwgBufferW *buf,
     return true;
 }
 
-bool DRW_MLeader::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
+bool DRW_MLeader::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs){
     dwgBuffer sBuff = *buf;
     dwgBuffer *sBuf = buf;
     if (version > DRW::AC1018) {  // 2007+
@@ -7492,18 +7492,18 @@ bool DRW_MLeader::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     // On a sanity-check trip, abort the rest of the body parse but keep
     // the entity (per Phase 4 contract above).
     if (version < DRW::AC1024) {
-        dint32 nArrows = buf->getBitLong();
+        std::int32_t nArrows = buf->getBitLong();
         if (nArrows < 0 || nArrows > 1000000) return true;
         arrowHeads.reserve(static_cast<size_t>(nArrows));
-        for (dint32 i = 0; i < nArrows; ++i) {
+        for (std::int32_t i = 0; i < nArrows; ++i) {
             ArrowHeadEntry e;
             e.isDefault = buf->getBit();
             arrowHeads.push_back(e);
         }
-        dint32 nLabels = buf->getBitLong();
+        std::int32_t nLabels = buf->getBitLong();
         if (nLabels < 0 || nLabels > 1000000) return true;
         blockLabels.reserve(static_cast<size_t>(nLabels));
-        for (dint32 i = 0; i < nLabels; ++i) {
+        for (std::int32_t i = 0; i < nLabels; ++i) {
             BlockLabelEntry e;
             e.labelText = sBuf->getVariableText(version, false);
             e.uiIndex   = buf->getBitShort();
@@ -7594,7 +7594,7 @@ bool DRW_MLeader::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     return true;
 }
 
-bool DRW_MLeader::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs,
+bool DRW_MLeader::encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs,
                             dwgBufferW *strBuf, dwgBufferW *handleBuf) {
     (void)bs;
     if (version < DRW::AC1024)
@@ -7610,7 +7610,7 @@ bool DRW_MLeader::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs,
 
     buf->putBitLong(overrideFlags);
     buf->putBitShort(leaderType);
-    buf->putCmColor(version, static_cast<duint16>(leaderColor));
+    buf->putCmColor(version, static_cast<std::uint16_t>(leaderColor));
     buf->putBitLong(leaderLineWeight);
     buf->putBit(landingEnabled ? 1 : 0);
     buf->putBit(doglegEnabled ? 1 : 0);
@@ -7621,9 +7621,9 @@ bool DRW_MLeader::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs,
     buf->putBitShort(styleRightAttach);
     buf->putBitShort(styleTextAngleType);
     buf->putBitShort(unknown175);
-    buf->putCmColor(version, static_cast<duint16>(styleTextColor));
+    buf->putCmColor(version, static_cast<std::uint16_t>(styleTextColor));
     buf->putBit(styleTextFrameEnabled ? 1 : 0);
-    buf->putCmColor(version, static_cast<duint16>(styleBlockColor));
+    buf->putCmColor(version, static_cast<std::uint16_t>(styleBlockColor));
     buf->put3BitDouble(styleBlockScale);
     buf->putBitDouble(styleBlockRotation);
     buf->putBitShort(styleAttachmentType);
@@ -7692,7 +7692,7 @@ bool DRW_Viewport::parseCode(int code, const std::unique_ptr<dxfReader>& reader)
     return true;
 }
 //ex 22 dec 34
-bool DRW_Viewport::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
+bool DRW_Viewport::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs){
     dwgBuffer sBuff = *buf;
     dwgBuffer *sBuf = buf;
     if (version > DRW::AC1018) {//2007+
@@ -7782,7 +7782,7 @@ bool DRW_Viewport::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
         DRW_DBG("ViewPort ent header: "); DRW_DBGHL(someHdl.code, someHdl.size, someHdl.ref); DRW_DBG("\n");
     }
     if (version > DRW::AC1014) {//2000+
-        for (duint32 i=0; i < frozenLyCount && buf->isGood(); ++i){
+        for (std::uint32_t i=0; i < frozenLyCount && buf->isGood(); ++i){
             someHdl = buf->getHandle();
             DRW_DBG("Frozen layer handle "); DRW_DBG(i); DRW_DBG(": "); DRW_DBGHL(someHdl.code, someHdl.size, someHdl.ref); DRW_DBG("\n");
         }
@@ -7824,13 +7824,13 @@ bool DRW_Viewport::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
 namespace {
 // Write an absolute hard-pointer handle (code=5, ref=ref) or null handle
 // (code=3, ref=0) depending on whether ref is non-zero.
-static void putAbsHandle(dwgBufferW *hb, duint32 ref) {
+static void putAbsHandle(dwgBufferW *hb, std::uint32_t ref) {
     dwgHandle h;
     h.code = (ref != 0) ? 5 : 3;
     h.ref  = ref;
     h.size = 0;
     if (h.ref != 0) {
-        duint32 t = h.ref;
+        std::uint32_t t = h.ref;
         while (t != 0) { t >>= 8; ++h.size; }
     }
     hb->putHandle(h);
@@ -7841,7 +7841,7 @@ static void putAbsHandle(dwgBufferW *hb, duint32 ref) {
 // DRW_MLine::encodeDwg — OT=47 (AC1015/AC1018/AC1024)
 // ---------------------------------------------------------------------------
 
-bool DRW_MLine::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs,
+bool DRW_MLine::encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs,
                            dwgBufferW *strBuf, dwgBufferW *handleBuf) {
     (void)bs; (void)strBuf;
     oType = 47;
@@ -7851,7 +7851,7 @@ bool DRW_MLine::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs,
     buf->putRawChar8(justification);
     buf->put3BitDouble(basePoint);
     buf->putExtrusion(extPoint, false);  // false = pre-2000 style (getExtrusion(false) in parser)
-    buf->putBitShort(static_cast<duint16>(openClosed));
+    buf->putBitShort(static_cast<std::uint16_t>(openClosed));
     buf->putRawChar8(numLines);
     buf->putBitShort(numVerts);
 
@@ -7864,9 +7864,9 @@ bool DRW_MLine::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs,
                                     ? vtx.segParms[li]      : std::vector<double>{};
             const auto& fills = (li < static_cast<int>(vtx.areaFillParms.size()))
                                     ? vtx.areaFillParms[li] : std::vector<double>{};
-            buf->putBitShort(static_cast<duint16>(segs.size()));
+            buf->putBitShort(static_cast<std::uint16_t>(segs.size()));
             for (double s : segs)  buf->putBitDouble(s);
-            buf->putBitShort(static_cast<duint16>(fills.size()));
+            buf->putBitShort(static_cast<std::uint16_t>(fills.size()));
             for (double f : fills) buf->putBitDouble(f);
         }
     }
@@ -7885,7 +7885,7 @@ bool DRW_MLine::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs,
 // DRW_Vertex::encodeDwg — OT varies by flags
 // ---------------------------------------------------------------------------
 
-bool DRW_Vertex::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs,
+bool DRW_Vertex::encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs,
                              dwgBufferW *strBuf, dwgBufferW *handleBuf) {
     (void)bs; (void)strBuf;
     switch (m_dwgSubtype) {
@@ -7911,34 +7911,34 @@ bool DRW_Vertex::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs,
     if (!encodeDwgCommon(version, buf)) return false;
 
     if (oType == 0x0A) {
-        buf->putRawChar8(static_cast<duint8>(flags));
+        buf->putRawChar8(static_cast<std::uint8_t>(flags));
         buf->put3BitDouble(basePoint);
         buf->putBitDouble(stawidth);
         buf->putBitDouble(endwidth);
         buf->putBitDouble(bulge);
         if (version > DRW::AC1021)
-            buf->putBitLong(static_cast<dint32>(identifier));
+            buf->putBitLong(static_cast<std::int32_t>(identifier));
         buf->putBitDouble(tgdir);
     } else if (oType == 0x0B || oType == 0x0C || oType == 0x0D) {
-        buf->putRawChar8(static_cast<duint8>(flags));
+        buf->putRawChar8(static_cast<std::uint8_t>(flags));
         buf->put3BitDouble(basePoint);
     } else {  // 0x0E pface face
-        buf->putBitShort(static_cast<duint16>(vindex1));
-        buf->putBitShort(static_cast<duint16>(vindex2));
-        buf->putBitShort(static_cast<duint16>(vindex3));
-        buf->putBitShort(static_cast<duint16>(vindex4));
+        buf->putBitShort(static_cast<std::uint16_t>(vindex1));
+        buf->putBitShort(static_cast<std::uint16_t>(vindex2));
+        buf->putBitShort(static_cast<std::uint16_t>(vindex3));
+        buf->putBitShort(static_cast<std::uint16_t>(vindex4));
     }
 
     return encodeDwgEntHandle(version, buf, handleBuf);
 }
 
-bool DRW_SeqEnd::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs) {
+bool DRW_SeqEnd::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs) {
     if (!DRW_Entity::parseDwg(version, buf, nullptr, bs))
         return false;
     return DRW_Entity::parseDwgEntHandle(version, buf);
 }
 
-bool DRW_SeqEnd::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs,
+bool DRW_SeqEnd::encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs,
                            dwgBufferW *strBuf, dwgBufferW *handleBuf) {
     (void)bs; (void)strBuf;
     oType = 0x06;
@@ -7951,7 +7951,7 @@ bool DRW_SeqEnd::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs,
 // DRW_Polyline::encodeDwg — OT varies by flags; vertex handles emitted here.
 // ---------------------------------------------------------------------------
 
-bool DRW_Polyline::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs,
+bool DRW_Polyline::encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs,
                                dwgBufferW *strBuf, dwgBufferW *handleBuf) {
     (void)bs; (void)strBuf;
     // Determine object type from stored flags (mirror of parseDwg dispatch).
@@ -7963,8 +7963,8 @@ bool DRW_Polyline::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs,
     if (!encodeDwgCommon(version, buf)) return false;
 
     if (oType == 0x0F) {
-        buf->putBitShort(static_cast<duint16>(flags));
-        buf->putBitShort(static_cast<duint16>(curvetype));
+        buf->putBitShort(static_cast<std::uint16_t>(flags));
+        buf->putBitShort(static_cast<std::uint16_t>(curvetype));
         buf->putBitDouble(defstawidth);
         buf->putBitDouble(defendwidth);
         buf->putThickness(thickness, version > DRW::AC1014);
@@ -7972,26 +7972,26 @@ bool DRW_Polyline::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs,
         buf->putExtrusion(extPoint, version > DRW::AC1014);
     } else if (oType == 0x10) {
         // curvetype → 2 RC flag bytes (mirror of parser decode)
-        duint8 rc1 = 0;
+        std::uint8_t rc1 = 0;
         if      (curvetype == 5) rc1 = 1;
         else if (curvetype == 6) rc1 = 2;
         else if (curvetype == 8) rc1 = 3;
         buf->putRawChar8(rc1);
-        buf->putRawChar8(static_cast<duint8>(flags & 1));  // bit 0 = closed
+        buf->putRawChar8(static_cast<std::uint8_t>(flags & 1));  // bit 0 = closed
     } else if (oType == 0x1D) {
-        buf->putBitShort(static_cast<duint16>(vertexcount));
-        buf->putBitShort(static_cast<duint16>(facecount));
+        buf->putBitShort(static_cast<std::uint16_t>(vertexcount));
+        buf->putBitShort(static_cast<std::uint16_t>(facecount));
     } else {  // 0x1E MESH
-        buf->putBitShort(static_cast<duint16>(flags & ~16));  // strip reader-added bit 4
-        buf->putBitShort(static_cast<duint16>(curvetype));
-        buf->putBitShort(static_cast<duint16>(vertexcount));  // M count
-        buf->putBitShort(static_cast<duint16>(facecount));    // N count
-        buf->putBitShort(static_cast<duint16>(smoothM));      // mDensity, DXF 73
-        buf->putBitShort(static_cast<duint16>(smoothN));      // nDensity, DXF 74
+        buf->putBitShort(static_cast<std::uint16_t>(flags & ~16));  // strip reader-added bit 4
+        buf->putBitShort(static_cast<std::uint16_t>(curvetype));
+        buf->putBitShort(static_cast<std::uint16_t>(vertexcount));  // M count
+        buf->putBitShort(static_cast<std::uint16_t>(facecount));    // N count
+        buf->putBitShort(static_cast<std::uint16_t>(smoothM));      // mDensity, DXF 73
+        buf->putBitShort(static_cast<std::uint16_t>(smoothN));      // nDensity, DXF 74
     }
 
     // AC2004+ (>AC1015): emit vertex count before the handle section.
-    dint32 ooCount = static_cast<dint32>(vertlist.size());
+    std::int32_t ooCount = static_cast<std::int32_t>(vertlist.size());
     if (version > DRW::AC1015)
         buf->putBitLong(ooCount);
 
@@ -8017,7 +8017,7 @@ bool DRW_Polyline::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs,
 // DRW_Leader::encodeDwg — OT=45 (AC1015/AC1018/AC1024)
 // ---------------------------------------------------------------------------
 
-bool DRW_Leader::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs,
+bool DRW_Leader::encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs,
                              dwgBufferW *strBuf, dwgBufferW *handleBuf) {
     (void)bs; (void)strBuf;
     oType = 45;
@@ -8025,8 +8025,8 @@ bool DRW_Leader::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs,
 
     buf->putBit(0);                                              // unknown bit
     buf->putBitShort(0);                                         // annotType (ignored on read)
-    buf->putBitShort(static_cast<dint16>(leadertype));           // pathType (DXF code 72)
-    buf->putBitLong(static_cast<dint32>(vertexlist.size()));
+    buf->putBitShort(static_cast<std::int16_t>(leadertype));           // pathType (DXF code 72)
+    buf->putBitLong(static_cast<std::int32_t>(vertexlist.size()));
     for (const auto& vp : vertexlist)
         buf->put3BitDouble(*vp);
     buf->put3BitDouble(DRW_Coord(0, 0, 0));                     // Endptproj (ignored on read)
@@ -8047,8 +8047,8 @@ bool DRW_Leader::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs,
         buf->putBitDouble(textwidth);
     }
 
-    buf->putBit(static_cast<duint8>(hookline));
-    buf->putBit(static_cast<duint8>(arrow));
+    buf->putBit(static_cast<std::uint8_t>(hookline));
+    buf->putBit(static_cast<std::uint8_t>(arrow));
 
     if (version < DRW::AC1015) {
         buf->putBitShort(0);    // arrowHeadType
@@ -8078,7 +8078,7 @@ bool DRW_Leader::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs,
 // DRW_Viewport::encodeDwg — OT=34 (AC1015/AC1018/AC1024)
 // ---------------------------------------------------------------------------
 
-bool DRW_Viewport::encodeDwg(DRW::Version version, dwgBufferW *buf, duint32 bs,
+bool DRW_Viewport::encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs,
                                dwgBufferW *strBuf, dwgBufferW *handleBuf) {
     (void)bs;
     oType = 34;

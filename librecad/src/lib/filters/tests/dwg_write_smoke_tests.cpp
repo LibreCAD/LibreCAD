@@ -120,29 +120,29 @@ public:
 };
 
 /// Read a file fully into memory for byte-compare checks.
-std::vector<duint8> slurp(const std::string& path) {
+std::vector<std::uint8_t> slurp(const std::string& path) {
     std::ifstream in(path, std::ios::binary);
     if (!in) return {};
     in.seekg(0, std::ios::end);
     auto sz = in.tellg();
     in.seekg(0, std::ios::beg);
-    std::vector<duint8> buf(static_cast<size_t>(sz));
+    std::vector<std::uint8_t> buf(static_cast<size_t>(sz));
     if (sz > 0)
         in.read(reinterpret_cast<char*>(buf.data()), sz);
     return buf;
 }
 
 /// Decode little-endian u32 at an offset.
-duint16 readLE16(const std::vector<duint8>& buf, size_t off) {
-    return static_cast<duint16>(buf[off]) |
-           (static_cast<duint16>(buf[off + 1]) << 8);
+std::uint16_t readLE16(const std::vector<std::uint8_t>& buf, size_t off) {
+    return static_cast<std::uint16_t>(buf[off]) |
+           (static_cast<std::uint16_t>(buf[off + 1]) << 8);
 }
 
-duint32 readLE32(const std::vector<duint8>& buf, size_t off) {
-    return static_cast<duint32>(buf[off]) |
-           (static_cast<duint32>(buf[off + 1]) << 8) |
-           (static_cast<duint32>(buf[off + 2]) << 16) |
-           (static_cast<duint32>(buf[off + 3]) << 24);
+std::uint32_t readLE32(const std::vector<std::uint8_t>& buf, size_t off) {
+    return static_cast<std::uint32_t>(buf[off]) |
+           (static_cast<std::uint32_t>(buf[off + 1]) << 8) |
+           (static_cast<std::uint32_t>(buf[off + 2]) << 16) |
+           (static_cast<std::uint32_t>(buf[off + 3]) << 24);
 }
 
 std::string tempPath(const char* suffix) {
@@ -199,7 +199,7 @@ TEST_CASE("dwgRW::write produces a syntactically valid empty R2000 file",
     REQUIRE(bytes[0x14] == 0);
 
     // Bytes 0x15-0x18: RL num_sections LE.
-    duint32 numSections = readLE32(bytes, 0x15);
+    std::uint32_t numSections = readLE32(bytes, 0x15);
     REQUIRE(numSections == 6);
 
     // (d) FILE_HEADER_END sentinel at offset (0x19 + 9N + 2).
@@ -210,8 +210,8 @@ TEST_CASE("dwgRW::write produces a syntactically valid empty R2000 file",
 
     // (e) HEADER section record (recno=0) — back-patched address must point
     // at the HEADER_BEGIN sentinel.
-    duint32 headerAddr = readLE32(bytes, 0x19 + 0 * 9 + 1);
-    duint32 headerSize = readLE32(bytes, 0x19 + 0 * 9 + 5);
+    std::uint32_t headerAddr = readLE32(bytes, 0x19 + 0 * 9 + 1);
+    std::uint32_t headerSize = readLE32(bytes, 0x19 + 0 * 9 + 5);
     REQUIRE(headerAddr > 0);
     REQUIRE(headerSize >= 38);  // 16 + 4 + 0 + 16 + 2 = 38 minimum
     REQUIRE(headerAddr + 16 <= bytes.size());
@@ -219,8 +219,8 @@ TEST_CASE("dwgRW::write produces a syntactically valid empty R2000 file",
                         dwgSentinels::HEADER_BEGIN, 16) == 0);
 
     // CLASSES section record (recno=1) — sentinel must match.
-    duint32 classesAddr = readLE32(bytes, 0x19 + 1 * 9 + 1);
-    duint32 classesSize = readLE32(bytes, 0x19 + 1 * 9 + 5);
+    std::uint32_t classesAddr = readLE32(bytes, 0x19 + 1 * 9 + 1);
+    std::uint32_t classesSize = readLE32(bytes, 0x19 + 1 * 9 + 5);
     REQUIRE(classesAddr > headerAddr);
     REQUIRE(classesSize >= 38);
     REQUIRE(std::memcmp(bytes.data() + classesAddr,
@@ -228,13 +228,13 @@ TEST_CASE("dwgRW::write produces a syntactically valid empty R2000 file",
 
     // HANDLES section record (recno=2) — has real entries after Phase 3d
     // (10 control objects + terminator page).  Floor of 4 = empty terminator.
-    duint32 handlesSize = readLE32(bytes, 0x19 + 2 * 9 + 5);
+    std::uint32_t handlesSize = readLE32(bytes, 0x19 + 2 * 9 + 5);
     REQUIRE(handlesSize >= 4);
 
     // AuxHeader section record (recno=5) — native R2000 writes now include
     // AcDb:AuxHeader instead of advertising only the first five locators.
-    duint32 auxAddr = readLE32(bytes, 0x19 + 5 * 9 + 1);
-    duint32 auxSize = readLE32(bytes, 0x19 + 5 * 9 + 5);
+    std::uint32_t auxAddr = readLE32(bytes, 0x19 + 5 * 9 + 1);
+    std::uint32_t auxSize = readLE32(bytes, 0x19 + 5 * 9 + 5);
     REQUIRE(auxAddr > 0);
     REQUIRE(auxSize >= 111);
     REQUIRE(auxAddr + auxSize <= bytes.size());
@@ -407,7 +407,7 @@ namespace {
 class InsertRoundTripIface : public EmptyIface {
 public:
     dwgRW *m_writer {nullptr};
-    duint32 m_blockRecH {0};
+    std::uint32_t m_blockRecH {0};
     std::vector<std::string> m_blocks;
     std::vector<DRW_Insert>  m_inserts;
 
@@ -481,7 +481,7 @@ namespace {
 class MInsertRoundTripIface : public EmptyIface {
 public:
     dwgRW *m_writer {nullptr};
-    duint32 m_blockRecH {0};
+    std::uint32_t m_blockRecH {0};
     std::vector<DRW_Insert> m_inserts;
 
     void writeBlocks() override {
@@ -740,7 +740,7 @@ public:
 };
 
 DRW_UnsupportedObject makeRawReplayObject(DRW::Version version) {
-    constexpr duint16 rawClassNumber = 509;
+    constexpr std::uint16_t rawClassNumber = 509;
     dwgBufferW body;
     body.putObjType(version, rawClassNumber);
 
@@ -748,7 +748,7 @@ DRW_UnsupportedObject makeRawReplayObject(DRW::Version version) {
     object.m_objectType = rawClassNumber;
     object.m_handle = 0x700;
     object.m_bodyBitSize = version > DRW::AC1021 ? body.bitCount() : 0;
-    object.m_objectSize = static_cast<duint32>(body.data().size());
+    object.m_objectSize = static_cast<std::uint32_t>(body.data().size());
     object.m_isEntity = false;
     object.m_isCustomClass = true;
     object.m_recordName = "RAW_REPLAY_TEST";
@@ -766,7 +766,7 @@ public:
     dwgRW *m_writer {nullptr};
     DRW_UnsupportedObject m_rawObject;
     std::vector<DRW_UnsupportedObject> m_unsupportedObjects;
-    duint32 m_readHandseed {0};
+    std::uint32_t m_readHandseed {0};
 
     void writeDwgClasses() override {
         if (m_writer != nullptr)
@@ -817,7 +817,7 @@ public:
         : dwgWriter15(stream, header)
     {}
 
-    dint32 customClassInstanceCount(duint16 classNum) const {
+    std::int32_t customClassInstanceCount(std::uint16_t classNum) const {
         for (const DwgClassDefinition& definition : m_dwgClassDefinitions) {
             if (definition.m_classNum == classNum)
                 return definition.m_instanceCount;
@@ -827,7 +827,7 @@ public:
 
     // 0B.3: expose the raw item_class_id (0x1F2 entity / 0x1F3 object) so the
     // writer-side conformance can be asserted before the reader collapses it.
-    dint32 customClassItemClassId(duint16 classNum) const {
+    std::int32_t customClassItemClassId(std::uint16_t classNum) const {
         for (const DwgClassDefinition& definition : m_dwgClassDefinitions) {
             if (definition.m_classNum == classNum)
                 return definition.m_entityFlagRaw;
@@ -1280,7 +1280,7 @@ public:
         m_xrecord.parentHandle = 0xCu;
         m_xrecord.m_cloning = 1;
         m_xrecord.m_values.emplace_back(1, std::string("hello-xrecord"));
-        m_xrecord.m_values.emplace_back(70, static_cast<dint32>(42));
+        m_xrecord.m_values.emplace_back(70, static_cast<std::int32_t>(42));
         m_xrecord.m_values.emplace_back(40, 3.14159);
         // Handle-stream entry — code 0 means it lives in the handle stream
         // (not the data block).  Parser reads via getOffsetHandle.
@@ -2014,7 +2014,7 @@ TEST_CASE("dwgWriter counts unique raw custom class instances",
 TEST_CASE("dwgWriter registers a CLASSES entry for every Phase-2b rescued type",
           "[dwg-write][raw-replay][classes][replay_rescue]") {
     const struct {
-        duint16 classNum;
+        std::uint16_t classNum;
         const char* recName;
         const char* className;
     } kRescued[] = {
@@ -2034,7 +2034,7 @@ TEST_CASE("dwgWriter registers a CLASSES entry for every Phase-2b rescued type",
     std::ofstream stream;
     InspectableDwgWriter15 writer(&stream, &header);
 
-    duint32 handle = 0x900u;
+    std::uint32_t handle = 0x900u;
     for (const auto& r : kRescued) {
         DRW_UnsupportedObject obj = makeRawReplayObject(DRW::AC1024);
         obj.m_objectType = r.classNum;
@@ -3289,8 +3289,8 @@ TEST_CASE("dwgReader15 fails on a corrupted CLASSES end sentinel",
     // Locate the CLASSES section (record #1) end sentinel = last 16 bytes of
     // the section [classesAddr + classesSize - 16].
     auto bytes = slurp(path);
-    duint32 classesAddr = readLE32(bytes, 0x19 + 1 * 9 + 1);
-    duint32 classesSize = readLE32(bytes, 0x19 + 1 * 9 + 5);
+    std::uint32_t classesAddr = readLE32(bytes, 0x19 + 1 * 9 + 1);
+    std::uint32_t classesSize = readLE32(bytes, 0x19 + 1 * 9 + 5);
     size_t endSentinelOff = classesAddr + classesSize - 16;
     REQUIRE(endSentinelOff + 16 <= bytes.size());
     REQUIRE(std::memcmp(bytes.data() + endSentinelOff,
@@ -3338,8 +3338,8 @@ TEST_CASE("dwgReader15 validates the CLASSES CRC and detects a flipped byte",
     }
 
     auto bytes = slurp(path);
-    duint32 classesAddr = readLE32(bytes, 0x19 + 1 * 9 + 1);
-    duint32 classesSize = readLE32(bytes, 0x19 + 1 * 9 + 5);
+    std::uint32_t classesAddr = readLE32(bytes, 0x19 + 1 * 9 + 1);
+    std::uint32_t classesSize = readLE32(bytes, 0x19 + 1 * 9 + 5);
     // Class data lives at [classesAddr + 16(begin) + 4(sizeRL),
     // classesAddr + classesSize - 18(CRC+end sentinel)). Flip a byte inside
     // the CRC-covered region so the CRC no longer matches.

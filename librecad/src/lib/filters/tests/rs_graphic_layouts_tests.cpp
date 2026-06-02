@@ -43,7 +43,7 @@
 
 namespace {
 
-DRW_Layout makeLayout(duint32 handle, const std::string& name,
+DRW_Layout makeLayout(std::uint32_t handle, const std::string& name,
                       double left = 0.0, double top = 0.0,
                       double right = 0.0, double bottom = 0.0) {
     DRW_Layout layout;

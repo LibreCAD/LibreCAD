@@ -16,6 +16,7 @@
 
 #include <algorithm>
 #include <cstddef>
+#include <cstdint>
 #include <fstream>
 #include <string>
 #include <utility>
@@ -257,17 +258,17 @@ public:
 
     struct RawObjectRecord {
         int objectType = 0;
-        duint32 handle = 0;
-        duint32 parentHandle = 0;
-        duint32 bodyBitSize = 0;
-        duint64 objectOffset = 0;
-        duint32 objectSize = 0;
+        std::uint32_t handle = 0;
+        std::uint32_t parentHandle = 0;
+        std::uint32_t bodyBitSize = 0;
+        std::uint64_t objectOffset = 0;
+        std::uint32_t objectSize = 0;
         bool isEntity = false;
         bool isCustomClass = false;
         RawObjectFamily family = RawObjectFamily::Unknown;
         std::string recordName;
         std::string className;
-        std::vector<duint8> rawBytes;
+        std::vector<std::uint8_t> rawBytes;
         ReplayState replayState = ReplayState::ReplayAllowed;
     };
 
@@ -332,7 +333,7 @@ public:
         AdvancedEntityWriterFamily family = AdvancedEntityWriterFamily::Unknown;
         AdvancedEntityWriterOdaCoverage odaCoverage =
             AdvancedEntityWriterOdaCoverage::Absent;
-        duint32 handle = 0;
+        std::uint32_t handle = 0;
         std::string recordName;
         std::string className;
         bool nativeWriterAvailable = false;
@@ -373,8 +374,8 @@ public:
     };
 
     struct MeshRecord {
-        duint32 handle = 0;
-        duint32 parentHandle = 0;
+        std::uint32_t handle = 0;
+        std::uint32_t parentHandle = 0;
         std::string recordName;
         bool isSubDMesh = false;
         int schemaVersion = 0;
@@ -397,7 +398,7 @@ public:
     };
 
     struct MeshSidecarRecord {
-        duint32 sourceHandle = 0;
+        std::uint32_t sourceHandle = 0;
         unsigned long long fallbackEntityId = 0;
         std::string meshId;
         std::string role;
@@ -447,10 +448,10 @@ public:
     };
 
     struct RasterImageRecord {
-        duint32 handle = 0;
-        duint32 parentHandle = 0;
+        std::uint32_t handle = 0;
+        std::uint32_t parentHandle = 0;
         bool isWipeout = false;
-        duint32 definitionHandle = 0;
+        std::uint32_t definitionHandle = 0;
         DRW_Coord basePoint;
         DRW_Coord uVector;
         DRW_Coord vVector;
@@ -471,8 +472,8 @@ public:
     };
 
     struct ImageDefinitionRecord {
-        duint32 handle = 0;
-        duint32 parentHandle = 0;
+        std::uint32_t handle = 0;
+        std::uint32_t parentHandle = 0;
         std::string path;
         int classVersion = 0;
         double imageSizeU = 0.0;
@@ -481,23 +482,23 @@ public:
         double pixelSizeV = 0.0;
         int loaded = 0;
         int resolution = 0;
-        std::vector<duint32> reactorHandles;
+        std::vector<std::uint32_t> reactorHandles;
         ExternalReferencePathDiagnostic pathDiagnostic;
         bool hasReactorHandle = false;
         ReplayState replayState = ReplayState::ReplayAllowed;
     };
 
     struct UnderlayRecord {
-        duint32 handle = 0;
-        duint32 parentHandle = 0;
-        duint32 definitionHandle = 0;
+        std::uint32_t handle = 0;
+        std::uint32_t parentHandle = 0;
+        std::uint32_t definitionHandle = 0;
         int kind = 0;
         DRW_Coord position;
         DRW_Coord scale;
         double rotation = 0.0;
-        duint8 flags = 0;
-        duint8 contrast = 0;
-        duint8 fade = 0;
+        std::uint8_t flags = 0;
+        std::uint8_t contrast = 0;
+        std::uint8_t fade = 0;
         size_t clipVertexCount = 0;
         ClipBoundaryStatus clipStatus = ClipBoundaryStatus::Unknown;
         bool frameVisible = true;
@@ -507,8 +508,8 @@ public:
     };
 
     struct UnderlayDefinitionRecord {
-        duint32 handle = 0;
-        duint32 parentHandle = 0;
+        std::uint32_t handle = 0;
+        std::uint32_t parentHandle = 0;
         int kind = 0;
         std::string path;
         std::string sheetName;
@@ -517,8 +518,8 @@ public:
     };
 
     struct RasterVariablesRecord {
-        duint32 handle = 0;
-        duint32 parentHandle = 0;
+        std::uint32_t handle = 0;
+        std::uint32_t parentHandle = 0;
         int classVersion = 0;
         int imageFrame = 0;
         int imageQuality = 0;
@@ -555,10 +556,10 @@ public:
     };
 
     struct ShapeRecord {
-        duint32 handle = 0;
-        duint32 parentHandle = 0;
-        duint32 shapeFileHandle = 0;
-        duint16 shapeIndex = 0;
+        std::uint32_t handle = 0;
+        std::uint32_t parentHandle = 0;
+        std::uint32_t shapeFileHandle = 0;
+        std::uint16_t shapeIndex = 0;
         DRW_Coord insertionPoint;
         DRW_Coord extrusion;
         double scale = 1.0;
@@ -572,18 +573,18 @@ public:
     };
 
     struct Ole2FrameRecord {
-        duint32 handle = 0;
-        duint32 parentHandle = 0;
-        duint16 flags = 0;
-        duint16 mode = 0;
-        duint32 declaredPayloadLength = 0;
-        duint32 payloadByteCount = 0;
-        duint64 payloadStartBit = 0;
+        std::uint32_t handle = 0;
+        std::uint32_t parentHandle = 0;
+        std::uint16_t flags = 0;
+        std::uint16_t mode = 0;
+        std::uint32_t declaredPayloadLength = 0;
+        std::uint32_t payloadByteCount = 0;
+        std::uint64_t payloadStartBit = 0;
         bool payloadPresent = false;
         bool payloadTruncated = false;
         bool payloadTooLarge = false;
         bool hasR2000TrailingByte = false;
-        duint8 r2000TrailingByte = 0;
+        std::uint8_t r2000TrailingByte = 0;
         size_t rawByteCount = 0;
         bool previewFrameAvailable = false;
         bool previewFrameInvalidated = false;
@@ -615,8 +616,8 @@ public:
     };
 
     struct ViewRecord {
-        duint32 handle = 0;
-        duint32 parentHandle = 0;
+        std::uint32_t handle = 0;
+        std::uint32_t parentHandle = 0;
         std::string name;
         DRW_Coord size;
         DRW_Coord center;
@@ -635,26 +636,26 @@ public:
         DRW_Coord ucsYAxis;
         int ucsOrthoType = 0;
         double ucsElevation = 0.0;
-        duint32 namedUcsHandle = 0;
-        duint32 baseUcsHandle = 0;
-        duint32 backgroundHandle = 0;
-        duint32 visualStyleHandle = 0;
-        duint32 sunHandle = 0;
-        duint32 liveSectionHandle = 0;
+        std::uint32_t namedUcsHandle = 0;
+        std::uint32_t baseUcsHandle = 0;
+        std::uint32_t backgroundHandle = 0;
+        std::uint32_t visualStyleHandle = 0;
+        std::uint32_t sunHandle = 0;
+        std::uint32_t liveSectionHandle = 0;
         bool hasUcsHandleRefs = false;
         bool hasVisualHandleRefs = false;
         bool sunResolved = false;
         bool useDefaultLights = true;
-        duint8 defaultLightingType = 1;
+        std::uint8_t defaultLightingType = 1;
         double brightness = 0.0;
         double contrast = 0.0;
-        duint32 ambientColor = 0;
+        std::uint32_t ambientColor = 0;
         ReplayState replayState = ReplayState::ReplayAllowed;
     };
 
     struct UcsRecord {
-        duint32 handle = 0;
-        duint32 parentHandle = 0;
+        std::uint32_t handle = 0;
+        std::uint32_t parentHandle = 0;
         std::string name;
         DRW_Coord origin;
         DRW_Coord xAxisDirection;
@@ -666,8 +667,8 @@ public:
     };
 
     struct VportRecord {
-        duint32 handle = 0;
-        duint32 parentHandle = 0;
+        std::uint32_t handle = 0;
+        std::uint32_t parentHandle = 0;
         std::string name;
         DRW_Coord center;
         DRW_Coord viewTarget;
@@ -678,34 +679,34 @@ public:
         int grid = 0;
         int snap = 0;
         int gridBehavior = 0;
-        duint32 backgroundHandle = 0;
-        duint32 visualStyleHandle = 0;
-        duint32 sunHandle = 0;
-        duint32 namedUcsHandle = 0;
-        duint32 baseUcsHandle = 0;
+        std::uint32_t backgroundHandle = 0;
+        std::uint32_t visualStyleHandle = 0;
+        std::uint32_t sunHandle = 0;
+        std::uint32_t namedUcsHandle = 0;
+        std::uint32_t baseUcsHandle = 0;
         ReplayState replayState = ReplayState::ReplayAllowed;
     };
 
     struct DocumentMappingRecord {
-        duint32 handle = 0;
-        duint32 parentHandle = 0;
-        duint32 sourceHandle = 0;
+        std::uint32_t handle = 0;
+        std::uint32_t parentHandle = 0;
+        std::uint32_t sourceHandle = 0;
         DocumentMappingSource sourceType = DocumentMappingSource::View;
         std::string sourceName;
         std::string documentItemName;
         int documentItemIndex = -1;
-        duint32 ownerHandle = 0;
-        duint32 layoutHandle = 0;
-        duint32 associatedUcsHandle = 0;
-        duint32 baseUcsHandle = 0;
-        duint32 namedUcsHandle = 0;
-        duint32 plotViewHandle = 0;
-        duint32 backgroundHandle = 0;
-        duint32 visualStyleHandle = 0;
-        duint32 sunHandle = 0;
-        duint32 liveSectionHandle = 0;
-        duint32 viewportHeaderHandle = 0;
-        duint32 layoutBlockRecordHandle = 0;
+        std::uint32_t ownerHandle = 0;
+        std::uint32_t layoutHandle = 0;
+        std::uint32_t associatedUcsHandle = 0;
+        std::uint32_t baseUcsHandle = 0;
+        std::uint32_t namedUcsHandle = 0;
+        std::uint32_t plotViewHandle = 0;
+        std::uint32_t backgroundHandle = 0;
+        std::uint32_t visualStyleHandle = 0;
+        std::uint32_t sunHandle = 0;
+        std::uint32_t liveSectionHandle = 0;
+        std::uint32_t viewportHeaderHandle = 0;
+        std::uint32_t layoutBlockRecordHandle = 0;
         size_t unresolvedReferenceCount = 0;
         ReplayState replayState = ReplayState::ReplayAllowed;
 
@@ -725,11 +726,11 @@ public:
     };
 
     struct VisualStyleRecord {
-        duint32 handle = 0;
-        duint32 parentHandle = 0;
+        std::uint32_t handle = 0;
+        std::uint32_t parentHandle = 0;
         std::string name;
         std::string description;
-        duint16 type = 0;
+        std::uint16_t type = 0;
         ReplayState replayState = ReplayState::ReplayAllowed;
     };
 
@@ -738,20 +739,20 @@ public:
         VisualMetadataSpecCoverage specCoverage =
             VisualMetadataSpecCoverage::OdaCovered;
         std::string displayName;
-        duint32 handle = 0;
-        duint32 ownerHandle = 0;
-        duint32 layoutHandle = 0;
-        duint32 lightOrSunType = 0;
+        std::uint32_t handle = 0;
+        std::uint32_t ownerHandle = 0;
+        std::uint32_t layoutHandle = 0;
+        std::uint32_t lightOrSunType = 0;
         bool lightOrSunEnabled = false;
         double intensity = 0.0;
-        duint32 color = 0;
-        dint32 julianDay = 0;
-        dint32 milliseconds = 0;
+        std::uint32_t color = 0;
+        std::int32_t julianDay = 0;
+        std::int32_t milliseconds = 0;
         bool daylightSavings = false;
-        duint32 referencedSunHandle = 0;
-        duint32 referencedVisualStyleHandle = 0;
-        duint32 referencedBackgroundHandle = 0;
-        duint32 referencedLiveSectionHandle = 0;
+        std::uint32_t referencedSunHandle = 0;
+        std::uint32_t referencedVisualStyleHandle = 0;
+        std::uint32_t referencedBackgroundHandle = 0;
+        std::uint32_t referencedLiveSectionHandle = 0;
         size_t unresolvedReferenceCount = 0;
         ReplayState replayState = ReplayState::ReplayAllowed;
     };
@@ -774,7 +775,7 @@ public:
 
     struct VisualMetadataReplayEligibility {
         VisualMetadataSource sourceType = VisualMetadataSource::View;
-        duint32 handle = 0;
+        std::uint32_t handle = 0;
         bool hasSemanticRecord = false;
         bool hasRawPayload = false;
         bool rawReplayable = false;
@@ -811,38 +812,38 @@ public:
     };
 
     struct LightRecord {
-        duint32 handle = 0;
-        duint32 parentHandle = 0;
-        duint32 classVersion = 0;
+        std::uint32_t handle = 0;
+        std::uint32_t parentHandle = 0;
+        std::uint32_t classVersion = 0;
         std::string name;
-        duint32 type = 0;
+        std::uint32_t type = 0;
         bool status = false;
-        duint32 color = 0;
+        std::uint32_t color = 0;
         bool plotGlyph = false;
         double intensity = 0.0;
         DRW_Coord position;
         DRW_Coord target;
-        duint32 attenuationType = 0;
+        std::uint32_t attenuationType = 0;
         bool useAttenuationLimits = false;
         double attenuationStartLimit = 0.0;
         double attenuationEndLimit = 0.0;
         double hotspotAngle = 0.0;
         double falloffAngle = 0.0;
         bool castShadows = false;
-        duint32 shadowType = 0;
-        duint16 shadowMapSize = 0;
-        duint8 shadowMapSoftness = 0;
+        std::uint32_t shadowType = 0;
+        std::uint16_t shadowMapSize = 0;
+        std::uint8_t shadowMapSoftness = 0;
         bool hasPhotometricData = false;
         bool hasWebFile = false;
         std::string webFile;
-        duint16 physicalIntensityMethod = 0;
+        std::uint16_t physicalIntensityMethod = 0;
         double physicalIntensity = 0.0;
         double illuminanceDistance = 0.0;
-        duint16 lampColorType = 0;
+        std::uint16_t lampColorType = 0;
         double lampColorTemperature = 0.0;
-        duint16 lampColorPreset = 0;
+        std::uint16_t lampColorPreset = 0;
         DRW_Coord webRotation{1.0, 0.0, 0.0};
-        duint16 extendedLightShape = 0;
+        std::uint16_t extendedLightShape = 0;
         double extendedLightLength = 0.0;
         double extendedLightWidth = 0.0;
         double extendedLightRadius = 0.0;
@@ -850,19 +851,19 @@ public:
     };
 
     struct SunRecord {
-        duint32 handle = 0;
-        duint32 parentHandle = 0;
-        duint32 classVersion = 0;
+        std::uint32_t handle = 0;
+        std::uint32_t parentHandle = 0;
+        std::uint32_t classVersion = 0;
         bool isOn = false;
-        duint32 color = 0;
+        std::uint32_t color = 0;
         double intensity = 0.0;
         bool hasShadow = false;
-        dint32 julianDay = 0;
-        dint32 milliseconds = 0;
+        std::int32_t julianDay = 0;
+        std::int32_t milliseconds = 0;
         bool isDaylightSavings = false;
-        duint32 shadowType = 0;
-        duint16 shadowMapSize = 0;
-        duint8 shadowSoftness = 0;
+        std::uint32_t shadowType = 0;
+        std::uint16_t shadowMapSize = 0;
+        std::uint8_t shadowSoftness = 0;
         ReplayState replayState = ReplayState::ReplayAllowed;
     };
 
@@ -880,12 +881,12 @@ public:
     };
 
     struct ModelerGeometryRecord {
-        duint32 handle = 0;
-        duint32 parentHandle = 0;
+        std::uint32_t handle = 0;
+        std::uint32_t parentHandle = 0;
         DRW::ETYPE type = DRW::UNKNOWN;
-        duint16 modelerVersion = 0;
-        duint32 bodyBitSize = 0;
-        duint32 objectSize = 0;
+        std::uint16_t modelerVersion = 0;
+        std::uint32_t bodyBitSize = 0;
+        std::uint32_t objectSize = 0;
         bool isEmpty = false;
         bool hasModelerData = false;
         bool modelerDataUnknownBit = false;
@@ -900,9 +901,9 @@ public:
         size_t rawBodyByteCount = 0;
         size_t rawHandleByteCount = 0;
         ModelerPayloadSection markerSection = ModelerPayloadSection::Unknown;
-        duint32 historyHandle = 0;
+        std::uint32_t historyHandle = 0;
         size_t rawByteCount = 0;
-        std::vector<duint8> rawBytes;
+        std::vector<std::uint8_t> rawBytes;
         std::vector<ModelerPayloadRangeRecord> payloadRanges;
         ReplayState replayState = ReplayState::ReplayAllowed;
     };
@@ -920,12 +921,12 @@ public:
         int flags = 0;
         int type = 0;
         int styleId = 0;
-        duint32 overrideFlags = 0;
-        duint32 valueHandle = 0;
-        duint32 textStyleHandle = 0;
-        duint32 textStyleOverrideHandle = 0;
-        duint32 blockHandle = 0;
-        duint32 geometryHandle = 0;
+        std::uint32_t overrideFlags = 0;
+        std::uint32_t valueHandle = 0;
+        std::uint32_t textStyleHandle = 0;
+        std::uint32_t textStyleOverrideHandle = 0;
+        std::uint32_t blockHandle = 0;
+        std::uint32_t geometryHandle = 0;
         bool isMerged = false;
         bool autoFit = false;
         size_t contentCount = 0;
@@ -937,8 +938,8 @@ public:
         size_t unknownContentCount = 0;
         std::vector<std::string> texts;
         std::vector<std::string> attributeTexts;
-        std::vector<duint32> contentHandles;
-        std::vector<duint32> attributeHandles;
+        std::vector<std::uint32_t> contentHandles;
+        std::vector<std::uint32_t> attributeHandles;
     };
 
     struct TableWriterBlockerCounts {
@@ -970,7 +971,7 @@ public:
     };
 
     struct TableNativeWriterEligibility {
-        duint32 tableHandle = 0;
+        std::uint32_t tableHandle = 0;
         std::string recordName;
         DRW::Version writerVersion = DRW::UNKNOWNV;
         TableContentStorageMode storageMode =
@@ -1184,10 +1185,10 @@ public:
     };
 
     struct TableRecord {
-        duint32 handle = 0;
-        duint32 parentHandle = 0;
+        std::uint32_t handle = 0;
+        std::uint32_t parentHandle = 0;
         std::string recordName;
-        duint32 tableStyleHandle = 0;
+        std::uint32_t tableStyleHandle = 0;
         int rowCount = 0;
         int columnCount = 0;
         size_t cellCount = 0;
@@ -1241,13 +1242,13 @@ public:
         std::vector<int> cellStyleIds;
         std::vector<std::string> cellTexts;
         std::vector<std::string> attributeTexts;
-        std::vector<duint32> valueHandles;
-        std::vector<duint32> blockHandles;
-        std::vector<duint32> fieldHandles;
-        std::vector<duint32> attributeHandles;
-        std::vector<duint32> textStyleHandles;
-        std::vector<duint32> lineTypeHandles;
-        std::vector<duint32> geometryHandles;
+        std::vector<std::uint32_t> valueHandles;
+        std::vector<std::uint32_t> blockHandles;
+        std::vector<std::uint32_t> fieldHandles;
+        std::vector<std::uint32_t> attributeHandles;
+        std::vector<std::uint32_t> textStyleHandles;
+        std::vector<std::uint32_t> lineTypeHandles;
+        std::vector<std::uint32_t> geometryHandles;
         std::vector<int> m_tableStyleIds;
         std::vector<std::string> m_tableStyleNames;
         std::vector<double> m_tableTextHeights;
@@ -1259,7 +1260,7 @@ public:
     };
 
     struct TableFallbackRenderSummary {
-        duint32 tableHandle = 0;
+        std::uint32_t tableHandle = 0;
         size_t gridEntityCount = 0;
         size_t textEntityCount = 0;
         size_t placeholderEntityCount = 0;
@@ -1268,8 +1269,8 @@ public:
     };
 
     struct TableFallbackEntityRecord {
-        duint32 tableHandle = 0;
-        duint32 sourceHandle = 0;
+        std::uint32_t tableHandle = 0;
+        std::uint32_t sourceHandle = 0;
         int row = -1;
         int column = -1;
         TableFallbackRole role = TableFallbackRole::Placeholder;
@@ -1278,8 +1279,8 @@ public:
     };
 
     struct CellStyleMapRecord {
-        duint32 handle = 0;
-        duint32 parentHandle = 0;
+        std::uint32_t handle = 0;
+        std::uint32_t parentHandle = 0;
         size_t m_cellStyleCount = 0;
         size_t m_borderCount = 0;
         size_t m_contentFormatCount = 0;
@@ -1291,8 +1292,8 @@ public:
         std::vector<int> m_styleIds;
         std::vector<int> m_styleClasses;
         std::vector<std::string> m_styleNames;
-        std::vector<duint32> m_textStyleHandles;
-        std::vector<duint32> m_lineTypeHandles;
+        std::vector<std::uint32_t> m_textStyleHandles;
+        std::vector<std::uint32_t> m_lineTypeHandles;
         std::vector<double> m_textHeights;
         std::vector<int> m_alignments;
         std::vector<int> m_colors;
@@ -1303,26 +1304,26 @@ public:
         AssociativePrefixKind kind = AssociativePrefixKind::AcDbAssocAction;
         AssociativePrefixParseStatus status =
             AssociativePrefixParseStatus::Missing;
-        duint64 startBit = 0;
-        duint64 bitSize = 0;
-        duint16 classVersion = 0;
+        std::uint64_t startBit = 0;
+        std::uint64_t bitSize = 0;
+        std::uint16_t classVersion = 0;
         size_t decodedHandleCount = 0;
         size_t decodedValueCount = 0;
-        dint32 decodedCountValue = 0;
+        std::int32_t decodedCountValue = 0;
         std::string sourceAssumption;
     };
 
     struct AssociativeRecord {
-        duint32 handle = 0;
-        duint32 parentHandle = 0;
+        std::uint32_t handle = 0;
+        std::uint32_t parentHandle = 0;
         std::string recordName;
         AssociativeKind kind = AssociativeKind::Unknown;
-        duint16 classVersion = 0;
-        dint32 geometryStatus = 0;
-        duint32 owningNetworkHandle = 0;
-        duint32 actionBodyHandle = 0;
-        dint32 actionIndex = 0;
-        dint32 maxDependencyIndex = 0;
+        std::uint16_t classVersion = 0;
+        std::int32_t geometryStatus = 0;
+        std::uint32_t owningNetworkHandle = 0;
+        std::uint32_t actionBodyHandle = 0;
+        std::int32_t actionIndex = 0;
+        std::int32_t maxDependencyIndex = 0;
         size_t dependencyCount = 0;
         size_t actionCount = 0;
         size_t valueParamCount = 0;
@@ -1333,15 +1334,15 @@ public:
         bool compoundActionParamParsed = false;
         std::vector<DRW_AssociativeHandleRef> dependencyRefs;
         std::vector<DRW_AssociativeHandleRef> actionRefs;
-        std::vector<duint32> ownedParamHandles;
-        std::vector<duint32> ownedActionHandles;
-        duint32 dependencyHandle = 0;
-        duint32 readDependencyHandle = 0;
-        duint32 writeDependencyHandle = 0;
-        duint32 rNodeHandle = 0;
-        duint32 dNodeHandle = 0;
-        dint32 status = 0;
-        duint8 osnapMode = 0;
+        std::vector<std::uint32_t> ownedParamHandles;
+        std::vector<std::uint32_t> ownedActionHandles;
+        std::uint32_t dependencyHandle = 0;
+        std::uint32_t readDependencyHandle = 0;
+        std::uint32_t writeDependencyHandle = 0;
+        std::uint32_t rNodeHandle = 0;
+        std::uint32_t dNodeHandle = 0;
+        std::int32_t status = 0;
+        std::uint8_t osnapMode = 0;
         double parameter = 0.0;
         DRW_Coord point;
         std::vector<AssociativePrefixStatusRecord> prefixStatuses;
@@ -1349,8 +1350,8 @@ public:
     };
 
     struct AssociativeEdgeRecord {
-        duint32 sourceHandle = 0;
-        duint32 targetHandle = 0;
+        std::uint32_t sourceHandle = 0;
+        std::uint32_t targetHandle = 0;
         std::string sourceRecordName;
         AssociativeKind sourceKind = AssociativeKind::Unknown;
         AssociativeEdgeKind edgeKind =
@@ -1362,13 +1363,13 @@ public:
     };
 
     struct AcShRecord {
-        duint32 handle = 0;
-        duint32 parentHandle = 0;
+        std::uint32_t handle = 0;
+        std::uint32_t parentHandle = 0;
         std::string recordName;
-        duint32 major = 0;
-        duint32 minor = 0;
-        duint32 ownerHandle = 0;
-        duint32 historyNodeId = 0;
+        std::uint32_t major = 0;
+        std::uint32_t minor = 0;
+        std::uint32_t ownerHandle = 0;
+        std::uint32_t historyNodeId = 0;
         bool showHistory = false;
         bool recordHistory = false;
         DRW_Coord direction;
@@ -1386,23 +1387,23 @@ public:
     };
 
     struct MLeaderRecord {
-        duint32 handle = 0;
-        duint32 parentHandle = 0;
-        duint16 classVersion = 0;
-        duint32 styleHandle = 0;
-        dint32 overrideFlags = 0;
-        duint16 leaderType = 0;
-        duint16 styleContentType = 0;
-        duint32 leaderLineTypeHandle = 0;
-        duint32 arrowHeadHandle = 0;
-        duint32 textStyleHandle = 0;
-        duint32 blockHandle = 0;
-        duint16 effectiveContentType = 0;
-        duint16 effectiveLeaderType = 0;
-        duint32 effectiveLeaderLineTypeHandle = 0;
-        duint32 effectiveArrowHeadHandle = 0;
-        duint32 effectiveTextStyleHandle = 0;
-        duint32 effectiveBlockHandle = 0;
+        std::uint32_t handle = 0;
+        std::uint32_t parentHandle = 0;
+        std::uint16_t classVersion = 0;
+        std::uint32_t styleHandle = 0;
+        std::int32_t overrideFlags = 0;
+        std::uint16_t leaderType = 0;
+        std::uint16_t styleContentType = 0;
+        std::uint32_t leaderLineTypeHandle = 0;
+        std::uint32_t arrowHeadHandle = 0;
+        std::uint32_t textStyleHandle = 0;
+        std::uint32_t blockHandle = 0;
+        std::uint16_t effectiveContentType = 0;
+        std::uint16_t effectiveLeaderType = 0;
+        std::uint32_t effectiveLeaderLineTypeHandle = 0;
+        std::uint32_t effectiveArrowHeadHandle = 0;
+        std::uint32_t effectiveTextStyleHandle = 0;
+        std::uint32_t effectiveBlockHandle = 0;
         size_t rootCount = 0;
         size_t leaderLineCount = 0;
         size_t pointCount = 0;
@@ -1410,8 +1411,8 @@ public:
         size_t columnCount = 0;
         size_t arrowHeadOverrideCount = 0;
         size_t blockLabelCount = 0;
-        std::vector<duint32> arrowHeadOverrideHandles;
-        std::vector<duint32> blockAttributeDefinitionHandles;
+        std::vector<std::uint32_t> arrowHeadOverrideHandles;
+        std::vector<std::uint32_t> blockAttributeDefinitionHandles;
         std::vector<std::string> blockLabelTexts;
         double overallScale = 1.0;
         double landingDistance = 0.0;
@@ -1428,34 +1429,34 @@ public:
     };
 
     struct MLeaderStyleRecord {
-        duint32 handle = 0;
-        duint32 parentHandle = 0;
+        std::uint32_t handle = 0;
+        std::uint32_t parentHandle = 0;
         std::string name;
-        duint16 styleVersion = 0;
-        duint16 contentType = 0;
-        duint16 drawMLeaderOrder = 0;
-        duint16 drawLeaderOrder = 0;
-        dint32 maxLeaderPoints = 0;
+        std::uint16_t styleVersion = 0;
+        std::uint16_t contentType = 0;
+        std::uint16_t drawMLeaderOrder = 0;
+        std::uint16_t drawLeaderOrder = 0;
+        std::int32_t maxLeaderPoints = 0;
         double firstSegmentAngle = 0.0;
         double secondSegmentAngle = 0.0;
-        duint16 leaderType = 0;
+        std::uint16_t leaderType = 0;
         int leaderColor = 0;
-        duint32 leaderLineTypeHandle = 0;
-        dint32 leaderLineWeight = 0;
+        std::uint32_t leaderLineTypeHandle = 0;
+        std::int32_t leaderLineWeight = 0;
         bool landingEnabled = false;
         double landingGap = 0.0;
         bool autoIncludeLanding = false;
         double landingDistance = 0.0;
         std::string description;
-        duint32 arrowHeadBlockHandle = 0;
-        duint32 textStyleHandle = 0;
-        duint32 blockHandle = 0;
+        std::uint32_t arrowHeadBlockHandle = 0;
+        std::uint32_t textStyleHandle = 0;
+        std::uint32_t blockHandle = 0;
         double arrowHeadSize = 0.0;
         std::string textDefault;
-        duint16 leftAttachment = 0;
-        duint16 rightAttachment = 0;
-        duint16 textAngleType = 0;
-        duint16 textAlignmentType = 0;
+        std::uint16_t leftAttachment = 0;
+        std::uint16_t rightAttachment = 0;
+        std::uint16_t textAngleType = 0;
+        std::uint16_t textAlignmentType = 0;
         int textColor = 0;
         double textHeight = 0.0;
         bool textFrameEnabled = false;
@@ -1466,32 +1467,32 @@ public:
         bool blockScaleEnabled = false;
         double blockRotation = 0.0;
         bool blockRotationEnabled = false;
-        duint16 blockConnectionType = 0;
+        std::uint16_t blockConnectionType = 0;
         double scaleFactor = 1.0;
         bool propertyChanged = false;
         bool isAnnotative = false;
         double breakSize = 0.0;
-        duint16 attachmentDirection = 0;
-        duint16 topAttachment = 0;
-        duint16 bottomAttachment = 0;
+        std::uint16_t attachmentDirection = 0;
+        std::uint16_t topAttachment = 0;
+        std::uint16_t bottomAttachment = 0;
         bool textExtended = false;
         ReplayState replayState = ReplayState::ReplayAllowed;
     };
 
     struct DetailViewStyleRecord {
-        duint32 handle = 0;
-        duint32 parentHandle = 0;
+        std::uint32_t handle = 0;
+        std::uint32_t parentHandle = 0;
         std::string name;
         std::string description;
         std::string displayName;
-        duint16 classVersion = 0;
-        duint32 flags = 0;
-        duint32 identifierStyleHandle = 0;
-        duint32 arrowSymbolHandle = 0;
-        duint32 viewLabelTextStyleHandle = 0;
-        duint32 boundaryLineTypeHandle = 0;
-        duint32 connectionLineTypeHandle = 0;
-        duint32 borderLineTypeHandle = 0;
+        std::uint16_t classVersion = 0;
+        std::uint32_t flags = 0;
+        std::uint32_t identifierStyleHandle = 0;
+        std::uint32_t arrowSymbolHandle = 0;
+        std::uint32_t viewLabelTextStyleHandle = 0;
+        std::uint32_t boundaryLineTypeHandle = 0;
+        std::uint32_t connectionLineTypeHandle = 0;
+        std::uint32_t borderLineTypeHandle = 0;
         std::string viewLabelPattern;
         double identifierHeight = 0.0;
         double arrowSymbolSize = 0.0;
@@ -1500,19 +1501,19 @@ public:
     };
 
     struct SectionViewStyleRecord {
-        duint32 handle = 0;
-        duint32 parentHandle = 0;
+        std::uint32_t handle = 0;
+        std::uint32_t parentHandle = 0;
         std::string name;
         std::string description;
         std::string displayName;
-        duint16 classVersion = 0;
-        duint32 flags = 0;
-        duint32 identifierStyleHandle = 0;
-        duint32 arrowStartSymbolHandle = 0;
-        duint32 arrowEndSymbolHandle = 0;
-        duint32 planeLineTypeHandle = 0;
-        duint32 bendLineTypeHandle = 0;
-        duint32 viewLabelTextStyleHandle = 0;
+        std::uint16_t classVersion = 0;
+        std::uint32_t flags = 0;
+        std::uint32_t identifierStyleHandle = 0;
+        std::uint32_t arrowStartSymbolHandle = 0;
+        std::uint32_t arrowEndSymbolHandle = 0;
+        std::uint32_t planeLineTypeHandle = 0;
+        std::uint32_t bendLineTypeHandle = 0;
+        std::uint32_t viewLabelTextStyleHandle = 0;
         std::string viewLabelPattern;
         std::string hatchPattern;
         double identifierHeight = 0.0;
@@ -1524,39 +1525,39 @@ public:
     };
 
     struct BreakDataRecord {
-        duint32 handle = 0;
-        duint32 parentHandle = 0;
-        duint32 dimensionHandle = 0;
-        std::vector<duint32> pointRefHandles;
+        std::uint32_t handle = 0;
+        std::uint32_t parentHandle = 0;
+        std::uint32_t dimensionHandle = 0;
+        std::vector<std::uint32_t> pointRefHandles;
         ReplayState replayState = ReplayState::ReplayAllowed;
     };
 
     struct BreakPointRefRecord {
-        duint32 handle = 0;
-        duint32 parentHandle = 0;
+        std::uint32_t handle = 0;
+        std::uint32_t parentHandle = 0;
         ReplayState replayState = ReplayState::ReplayAllowed;
     };
 
     struct GroupRecord {
-        duint32 handle = 0;
-        duint32 parentHandle = 0;
+        std::uint32_t handle = 0;
+        std::uint32_t parentHandle = 0;
         std::string description;
         bool isUnnamed = false;
         bool selectable = true;
-        std::vector<duint32> entityHandles;
+        std::vector<std::uint32_t> entityHandles;
         ReplayState replayState = ReplayState::ReplayAllowed;
     };
 
     struct ImageDefinitionReactorRecord {
-        duint32 handle = 0;
-        duint32 parentHandle = 0;
-        dint32 classVersion = 0;
+        std::uint32_t handle = 0;
+        std::uint32_t parentHandle = 0;
+        std::int32_t classVersion = 0;
         ReplayState replayState = ReplayState::ReplayAllowed;
     };
 
     struct SpatialFilterRecord {
-        duint32 handle = 0;
-        duint32 parentHandle = 0;
+        std::uint32_t handle = 0;
+        std::uint32_t parentHandle = 0;
         size_t boundaryPointCount = 0;
         bool displayBoundary = false;
         bool clipFrontPlane = false;
@@ -1578,19 +1579,19 @@ public:
     };
 
     struct GeoMeshFaceRecord {
-        dint32 index1 = 0;
-        dint32 index2 = 0;
-        dint32 index3 = 0;
+        std::int32_t index1 = 0;
+        std::int32_t index2 = 0;
+        std::int32_t index3 = 0;
     };
 
     struct GeoDataRecord {
-        duint32 handle = 0;
-        duint32 parentHandle = 0;
-        duint32 hostBlockHandle = 0;
-        dint32 version = 0;
-        dint16 coordinatesType = 0;
-        dint32 horizontalUnits = 0;
-        dint32 verticalUnits = 0;
+        std::uint32_t handle = 0;
+        std::uint32_t parentHandle = 0;
+        std::uint32_t hostBlockHandle = 0;
+        std::int32_t version = 0;
+        std::int16_t coordinatesType = 0;
+        std::int32_t horizontalUnits = 0;
+        std::int32_t verticalUnits = 0;
         double horizontalUnitScale = 1.0;
         double verticalUnitScale = 1.0;
         std::string coordinateSystemDefinition;
@@ -1602,7 +1603,7 @@ public:
         DRW_Coord referencePoint;
         DRW_Coord upDirection{0.0, 0.0, 1.0};
         DRW_Coord northDirection{0.0, 1.0, 0.0};
-        dint32 scaleEstimationMethod = 0;
+        std::int32_t scaleEstimationMethod = 0;
         double userSpecifiedScaleFactor = 1.0;
         bool enableSeaLevelCorrection = false;
         double seaLevelElevation = 0.0;
@@ -1616,18 +1617,18 @@ public:
     };
 
     struct TableGeometryRecord {
-        duint32 handle = 0;
-        duint32 parentHandle = 0;
-        dint32 rowCount = 0;
-        dint32 columnCount = 0;
-        dint32 cellCount = 0;
+        std::uint32_t handle = 0;
+        std::uint32_t parentHandle = 0;
+        std::int32_t rowCount = 0;
+        std::int32_t columnCount = 0;
+        std::int32_t cellCount = 0;
         size_t contentCount = 0;
         ReplayState replayState = ReplayState::ReplayAllowed;
     };
 
     struct PlaceholderRecord {
-        duint32 handle = 0;
-        duint32 parentHandle = 0;
+        std::uint32_t handle = 0;
+        std::uint32_t parentHandle = 0;
         ReplayState replayState = ReplayState::ReplayAllowed;
     };
 
@@ -1636,11 +1637,11 @@ public:
     /// (cloning, hardOwner, name + per-entry (name, handle) pairs).
     struct DictionaryEntryRecord {
         std::string name;
-        duint32 handle = 0;
+        std::uint32_t handle = 0;
     };
     struct DictionaryRecord {
-        duint32 handle = 0;
-        duint32 parentHandle = 0;
+        std::uint32_t handle = 0;
+        std::uint32_t parentHandle = 0;
         int cloning = 0;
         int hardOwner = 0;
         std::string name;
@@ -1654,11 +1655,11 @@ public:
     /// pairs.  Storing DRW_Variant directly mirrors existing records that
     /// already embed DRW_* types (DRW_Coord, DRW_TableMergedRangeRecord).
     struct XRecordRecord {
-        duint32 handle = 0;
-        duint32 parentHandle = 0;
+        std::uint32_t handle = 0;
+        std::uint32_t parentHandle = 0;
         int cloning = 0;
         std::vector<DRW_Variant> values;
-        std::vector<std::pair<int, duint32>> handleValues;
+        std::vector<std::pair<int, std::uint32_t>> handleValues;
         ReplayState replayState = ReplayState::ReplayAllowed;
     };
 
@@ -1668,8 +1669,8 @@ public:
     /// LibreCAD's UI via PR 9-11 (RS_Graphic::layouts() — thin view over
     /// this record).
     struct LayoutRecord {
-        duint32 handle = 0;
-        duint32 parentHandle = 0;
+        std::uint32_t handle = 0;
+        std::uint32_t parentHandle = 0;
         // PlotSettings prefix (ODA §20.4.84 embeds these inline in LAYOUT).
         std::string pageSetupName;
         std::string printerConfig;
@@ -1717,15 +1718,15 @@ public:
         int orthoViewType = 0;
         DRW_Coord extMin;
         DRW_Coord extMax;
-        dint32 viewportCount = 0;
+        std::int32_t viewportCount = 0;
         // Handle refs.
-        duint32 plotViewHandle = 0;
-        duint32 visualStyleHandle = 0;
-        duint32 paperSpaceBlockRecordHandle = 0;
-        duint32 lastActiveViewportHandle = 0;
-        duint32 baseUcsHandle = 0;
-        duint32 namedUcsHandle = 0;
-        std::vector<duint32> viewportHandles;
+        std::uint32_t plotViewHandle = 0;
+        std::uint32_t visualStyleHandle = 0;
+        std::uint32_t paperSpaceBlockRecordHandle = 0;
+        std::uint32_t lastActiveViewportHandle = 0;
+        std::uint32_t baseUcsHandle = 0;
+        std::uint32_t namedUcsHandle = 0;
+        std::vector<std::uint32_t> viewportHandles;
         ReplayState replayState = ReplayState::ReplayAllowed;
     };
 
@@ -1737,10 +1738,10 @@ public:
     /// + isUnitScale.  The SCALE encoder leaves the common-handle prefix to
     /// the wrapper (see dwgWriter15::emitScaleObject).
     struct ScaleRecord {
-        duint32 handle = 0;
-        duint32 parentHandle = 0;
+        std::uint32_t handle = 0;
+        std::uint32_t parentHandle = 0;
         std::string name;
-        duint16 flag = 0;
+        std::uint16_t flag = 0;
         double paperUnits = 1.0;
         double drawingUnits = 1.0;
         bool isUnitScale = false;
@@ -1750,10 +1751,10 @@ public:
     /// IDBUFFER (AcDbIdBuffer, custom class 509) — list of object handles
     /// (used by selection filters and LAYER_INDEX entries).
     struct IDBufferRecord {
-        duint32 handle = 0;
-        duint32 parentHandle = 0;
+        std::uint32_t handle = 0;
+        std::uint32_t parentHandle = 0;
         int classVersion = 0;
-        std::vector<duint32> objIds;
+        std::vector<std::uint32_t> objIds;
         ReplayState replayState = ReplayState::ReplayAllowed;
     };
 
@@ -1762,13 +1763,13 @@ public:
     struct LayerIndexEntryRecord {
         int indexLong = 0;
         std::string name;
-        duint32 entryHandle = 0;
+        std::uint32_t entryHandle = 0;
     };
     struct LayerIndexRecord {
-        duint32 handle = 0;
-        duint32 parentHandle = 0;
-        duint32 timestamp1 = 0;
-        duint32 timestamp2 = 0;
+        std::uint32_t handle = 0;
+        std::uint32_t parentHandle = 0;
+        std::uint32_t timestamp1 = 0;
+        std::uint32_t timestamp2 = 0;
         std::vector<LayerIndexEntryRecord> entries;
         ReplayState replayState = ReplayState::ReplayAllowed;
     };
@@ -1776,18 +1777,18 @@ public:
     /// SPATIAL_INDEX (AcDbSpatialIndex, custom class 511) — spatial entity
     /// index.  Only timestamps are parsed (body beyond is opaque per ODA spec).
     struct SpatialIndexRecord {
-        duint32 handle = 0;
-        duint32 parentHandle = 0;
-        duint32 timestamp1 = 0;
-        duint32 timestamp2 = 0;
+        std::uint32_t handle = 0;
+        std::uint32_t parentHandle = 0;
+        std::uint32_t timestamp1 = 0;
+        std::uint32_t timestamp2 = 0;
         ReplayState replayState = ReplayState::ReplayAllowed;
     };
 
     /// DICTIONARYVAR (AcDbDictionaryVar, custom class 512) — schema + value
     /// pair stored under a named-object dictionary entry.
     struct DictionaryVarRecord {
-        duint32 handle = 0;
-        duint32 parentHandle = 0;
+        std::uint32_t handle = 0;
+        std::uint32_t parentHandle = 0;
         int schema = 0;
         std::string value;
         ReplayState replayState = ReplayState::ReplayAllowed;
@@ -1801,16 +1802,16 @@ public:
     /// lookup misses.  Stores the full dictionary state plus the default.
     struct DictionaryWithDefaultEntryRecord {
         std::string name;
-        duint32 handle = 0;
+        std::uint32_t handle = 0;
     };
     struct DictionaryWithDefaultRecord {
-        duint32 handle = 0;
-        duint32 parentHandle = 0;
+        std::uint32_t handle = 0;
+        std::uint32_t parentHandle = 0;
         int cloning = 0;
         int hardOwner = 0;
         std::string name;
         std::vector<DictionaryWithDefaultEntryRecord> entries;
-        duint32 defaultEntryHandle = 0;
+        std::uint32_t defaultEntryHandle = 0;
         ReplayState replayState = ReplayState::ReplayAllowed;
     };
 
@@ -1818,21 +1819,21 @@ public:
     /// order override.  Stores parallel sort + entity handle lists plus the
     /// block-owner handle.
     struct SortEntsTableRecord {
-        duint32 handle = 0;
-        duint32 parentHandle = 0;
-        std::vector<duint32> sortHandles;
-        duint32 blockOwnerHandle = 0;
-        std::vector<duint32> entityHandles;
+        std::uint32_t handle = 0;
+        std::uint32_t parentHandle = 0;
+        std::vector<std::uint32_t> sortHandles;
+        std::uint32_t blockOwnerHandle = 0;
+        std::vector<std::uint32_t> entityHandles;
         ReplayState replayState = ReplayState::ReplayAllowed;
     };
 
     /// FIELDLIST (AcDbFieldList, custom class 515) — handle list of FIELD
     /// children plus the "unknown" bit captured by the parser.
     struct FieldListRecord {
-        duint32 handle = 0;
-        duint32 parentHandle = 0;
+        std::uint32_t handle = 0;
+        std::uint32_t parentHandle = 0;
         int unknown = 0;
-        std::vector<duint32> fieldHandles;
+        std::vector<std::uint32_t> fieldHandles;
         ReplayState replayState = ReplayState::ReplayAllowed;
     };
 
@@ -1843,21 +1844,21 @@ public:
     struct CadValueRecord {
         int formatFlags = 0;
         int dataType = 0;
-        duint32 dataSize = 0;
+        std::uint32_t dataSize = 0;
         int unitType = 0;
         DRW_Variant value;
         std::string formatString;
         std::string valueString;
-        duint32 handle = 0;
-        std::vector<duint8> rawData;
+        std::uint32_t handle = 0;
+        std::vector<std::uint8_t> rawData;
     };
     struct FieldChildValueRecord {
         std::string key;
         CadValueRecord value;
     };
     struct FieldRecord {
-        duint32 handle = 0;
-        duint32 parentHandle = 0;
+        std::uint32_t handle = 0;
+        std::uint32_t parentHandle = 0;
         std::string evaluatorId;
         std::string fieldCode;
         std::string formatString;
@@ -1870,8 +1871,8 @@ public:
         CadValueRecord value;
         std::string valueString;
         int valueStringLength = 0;
-        std::vector<duint32> childHandles;
-        std::vector<duint32> objectHandles;
+        std::vector<std::uint32_t> childHandles;
+        std::vector<std::uint32_t> objectHandles;
         std::vector<FieldChildValueRecord> childValues;
         ReplayState replayState = ReplayState::ReplayAllowed;
     };
@@ -2594,7 +2595,7 @@ public:
         record.loaded = imageDefinition.loaded;
         record.resolution = imageDefinition.resolution;
         for (const auto& reactor : imageDefinition.reactors) {
-            const duint32 handle = parseHexHandle(reactor.first);
+            const std::uint32_t handle = parseHexHandle(reactor.first);
             if (handle != 0)
                 record.reactorHandles.push_back(handle);
         }
@@ -3089,7 +3090,7 @@ public:
         return result;
     }
 
-    const TableRecord* findTableByHandle(duint32 handle) const {
+    const TableRecord* findTableByHandle(std::uint32_t handle) const {
         if (handle == 0)
             return nullptr;
         for (const TableRecord& record : m_tables) {
@@ -3098,7 +3099,7 @@ public:
         }
         return nullptr;
     }
-    const TableRecord* findTableStyleByHandle(duint32 handle) const {
+    const TableRecord* findTableStyleByHandle(std::uint32_t handle) const {
         if (handle == 0)
             return nullptr;
         for (const TableRecord& record : m_tables) {
@@ -3108,7 +3109,7 @@ public:
         return nullptr;
     }
     std::vector<const TableRecord*> findTableStylesReferencingHandle(
-        duint32 handle) const {
+        std::uint32_t handle) const {
         std::vector<const TableRecord*> result;
         if (handle == 0)
             return result;
@@ -3118,7 +3119,7 @@ public:
         }
         return result;
     }
-    std::vector<const TableRecord*> findTablesUsingStyle(duint32 styleHandle) const {
+    std::vector<const TableRecord*> findTablesUsingStyle(std::uint32_t styleHandle) const {
         std::vector<const TableRecord*> result;
         if (styleHandle == 0)
             return result;
@@ -3128,7 +3129,7 @@ public:
         }
         return result;
     }
-    std::vector<const TableRecord*> findTablesReferencingHandle(duint32 handle) const {
+    std::vector<const TableRecord*> findTablesReferencingHandle(std::uint32_t handle) const {
         std::vector<const TableRecord*> result;
         if (handle == 0)
             return result;
@@ -3139,7 +3140,7 @@ public:
         return result;
     }
     std::vector<const TableFallbackEntityRecord*> findTableFallbackEntities(
-        duint32 tableHandle) const {
+        std::uint32_t tableHandle) const {
         std::vector<const TableFallbackEntityRecord*> result;
         if (tableHandle == 0)
             return result;
@@ -3159,7 +3160,7 @@ public:
         }
         return nullptr;
     }
-    const CellStyleMapRecord* findCellStyleMapByHandle(duint32 handle) const {
+    const CellStyleMapRecord* findCellStyleMapByHandle(std::uint32_t handle) const {
         if (handle == 0)
             return nullptr;
         for (const CellStyleMapRecord& record : m_cellStyleMaps) {
@@ -3179,7 +3180,7 @@ public:
         return result;
     }
     std::vector<const CellStyleMapRecord*> findCellStyleMapsReferencingHandle(
-        duint32 handle) const {
+        std::uint32_t handle) const {
         std::vector<const CellStyleMapRecord*> result;
         if (handle == 0)
             return result;
@@ -3203,7 +3204,7 @@ public:
         return result;
     }
     TableNativeWriterEligibility tableNativeWriterEligibility(
-        duint32 handle, DRW::Version version) const {
+        std::uint32_t handle, DRW::Version version) const {
         TableNativeWriterEligibility eligibility;
         eligibility.tableHandle = handle;
         eligibility.writerVersion = version;
@@ -3579,7 +3580,7 @@ public:
         }
         return counts;
     }
-    const TableCellRecord* findTableCell(duint32 tableHandle, int row, int column) const {
+    const TableCellRecord* findTableCell(std::uint32_t tableHandle, int row, int column) const {
         const TableRecord* table = findTableByHandle(tableHandle);
         if (table == nullptr || row < 0 || column < 0)
             return nullptr;
@@ -3589,7 +3590,7 @@ public:
         }
         return nullptr;
     }
-    std::vector<const TableCellRecord*> findTableCellsReferencingHandle(duint32 handle) const {
+    std::vector<const TableCellRecord*> findTableCellsReferencingHandle(std::uint32_t handle) const {
         std::vector<const TableCellRecord*> result;
         if (handle == 0)
             return result;
@@ -3604,7 +3605,7 @@ public:
         return result;
     }
 
-    const MLeaderRecord* findMLeaderByHandle(duint32 handle) const {
+    const MLeaderRecord* findMLeaderByHandle(std::uint32_t handle) const {
         if (handle == 0)
             return nullptr;
         for (const MLeaderRecord& record : m_mleaders) {
@@ -3613,7 +3614,7 @@ public:
         }
         return nullptr;
     }
-    const MLeaderStyleRecord* findMLeaderStyleByHandle(duint32 handle) const {
+    const MLeaderStyleRecord* findMLeaderStyleByHandle(std::uint32_t handle) const {
         if (handle == 0)
             return nullptr;
         for (const MLeaderStyleRecord& record : m_mleaderStyles) {
@@ -3622,7 +3623,7 @@ public:
         }
         return nullptr;
     }
-    std::vector<const MLeaderRecord*> findMLeadersUsingStyle(duint32 styleHandle) const {
+    std::vector<const MLeaderRecord*> findMLeadersUsingStyle(std::uint32_t styleHandle) const {
         std::vector<const MLeaderRecord*> result;
         if (styleHandle == 0)
             return result;
@@ -3632,7 +3633,7 @@ public:
         }
         return result;
     }
-    std::vector<const MLeaderRecord*> findMLeadersReferencingHandle(duint32 handle) const {
+    std::vector<const MLeaderRecord*> findMLeadersReferencingHandle(std::uint32_t handle) const {
         std::vector<const MLeaderRecord*> result;
         if (handle == 0)
             return result;
@@ -3643,7 +3644,7 @@ public:
         return result;
     }
     std::vector<const MLeaderStyleRecord*> findMLeaderStylesReferencingHandle(
-        duint32 handle) const {
+        std::uint32_t handle) const {
         std::vector<const MLeaderStyleRecord*> result;
         if (handle == 0)
             return result;
@@ -3654,7 +3655,7 @@ public:
         return result;
     }
 
-    const ModelerGeometryRecord* findModelerGeometryByHandle(duint32 handle) const {
+    const ModelerGeometryRecord* findModelerGeometryByHandle(std::uint32_t handle) const {
         if (handle == 0)
             return nullptr;
         for (const ModelerGeometryRecord& record : m_modelerGeometry) {
@@ -3664,7 +3665,7 @@ public:
         return nullptr;
     }
     std::vector<const ModelerGeometryRecord*> findModelerGeometryByHistoryHandle(
-        duint32 historyHandle) const {
+        std::uint32_t historyHandle) const {
         std::vector<const ModelerGeometryRecord*> result;
         if (historyHandle == 0)
             return result;
@@ -3675,7 +3676,7 @@ public:
         return result;
     }
 
-    const MeshRecord* findMeshByHandle(duint32 handle) const {
+    const MeshRecord* findMeshByHandle(std::uint32_t handle) const {
         if (handle == 0)
             return nullptr;
         for (const MeshRecord& record : m_meshes) {
@@ -3686,7 +3687,7 @@ public:
     }
 
     std::vector<const MeshSidecarRecord*> findMeshSidecarsBySourceHandle(
-        duint32 sourceHandle) const {
+        std::uint32_t sourceHandle) const {
         std::vector<const MeshSidecarRecord*> result;
         if (sourceHandle == 0)
             return result;
@@ -3708,7 +3709,7 @@ public:
         return nullptr;
     }
 
-    const RasterImageRecord* findRasterImageByHandle(duint32 handle) const {
+    const RasterImageRecord* findRasterImageByHandle(std::uint32_t handle) const {
         if (handle == 0)
             return nullptr;
         for (const RasterImageRecord& record : m_rasterImages) {
@@ -3719,7 +3720,7 @@ public:
     }
 
     const ImageDefinitionRecord* findImageDefinitionByHandle(
-        duint32 handle) const {
+        std::uint32_t handle) const {
         if (handle == 0)
             return nullptr;
         for (const ImageDefinitionRecord& record : m_imageDefinitions) {
@@ -3730,7 +3731,7 @@ public:
     }
 
     std::vector<const RasterImageRecord*> findRasterImagesByDefinitionHandle(
-        duint32 definitionHandle) const {
+        std::uint32_t definitionHandle) const {
         std::vector<const RasterImageRecord*> result;
         if (definitionHandle == 0)
             return result;
@@ -3742,7 +3743,7 @@ public:
     }
 
     std::vector<const ImageDefinitionReactorRecord*>
-    findImageDefinitionReactorsByDefinitionHandle(duint32 definitionHandle) const {
+    findImageDefinitionReactorsByDefinitionHandle(std::uint32_t definitionHandle) const {
         std::vector<const ImageDefinitionReactorRecord*> result;
         if (definitionHandle == 0)
             return result;
@@ -3755,7 +3756,7 @@ public:
     }
 
     const UnderlayDefinitionRecord* findUnderlayDefinitionByHandle(
-        duint32 handle) const {
+        std::uint32_t handle) const {
         if (handle == 0)
             return nullptr;
         for (const UnderlayDefinitionRecord& record : m_underlayDefinitions) {
@@ -3766,7 +3767,7 @@ public:
     }
 
     std::vector<const UnderlayRecord*> findUnderlaysByDefinitionHandle(
-        duint32 definitionHandle) const {
+        std::uint32_t definitionHandle) const {
         std::vector<const UnderlayRecord*> result;
         if (definitionHandle == 0)
             return result;
@@ -3801,7 +3802,7 @@ public:
         return result;
     }
 
-    const ShapeRecord* findShapeByHandle(duint32 handle) const {
+    const ShapeRecord* findShapeByHandle(std::uint32_t handle) const {
         if (handle == 0)
             return nullptr;
         for (const ShapeRecord& record : m_shapes) {
@@ -3812,7 +3813,7 @@ public:
     }
 
     std::vector<const ShapeRecord*> findShapesByShapeFileHandle(
-        duint32 shapeFileHandle) const {
+        std::uint32_t shapeFileHandle) const {
         std::vector<const ShapeRecord*> result;
         if (shapeFileHandle == 0)
             return result;
@@ -3823,7 +3824,7 @@ public:
         return result;
     }
 
-    const Ole2FrameRecord* findOle2FrameByHandle(duint32 handle) const {
+    const Ole2FrameRecord* findOle2FrameByHandle(std::uint32_t handle) const {
         if (handle == 0)
             return nullptr;
         for (const Ole2FrameRecord& record : m_ole2Frames) {
@@ -3833,7 +3834,7 @@ public:
         return nullptr;
     }
 
-    const AssociativeRecord* findAssociativeObjectByHandle(duint32 handle) const {
+    const AssociativeRecord* findAssociativeObjectByHandle(std::uint32_t handle) const {
         if (handle == 0)
             return nullptr;
         for (const AssociativeRecord& record : m_associativeObjects) {
@@ -3852,7 +3853,7 @@ public:
         return result;
     }
     std::vector<const AssociativeRecord*> findAssociativeObjectsReferencingHandle(
-        duint32 handle) const {
+        std::uint32_t handle) const {
         std::vector<const AssociativeRecord*> result;
         if (handle == 0)
             return result;
@@ -3863,7 +3864,7 @@ public:
         return result;
     }
     std::vector<const AssociativeEdgeRecord*> findAssociativeEdgesFrom(
-        duint32 handle) const {
+        std::uint32_t handle) const {
         std::vector<const AssociativeEdgeRecord*> result;
         if (handle == 0)
             return result;
@@ -3874,7 +3875,7 @@ public:
         return result;
     }
     std::vector<const AssociativeEdgeRecord*> findAssociativeEdgesTo(
-        duint32 handle) const {
+        std::uint32_t handle) const {
         std::vector<const AssociativeEdgeRecord*> result;
         if (handle == 0)
             return result;
@@ -3885,9 +3886,9 @@ public:
         return result;
     }
     std::vector<const AssociativeRecord*> findAssociativeRecordsAffectedBy(
-        duint32 handle) const {
+        std::uint32_t handle) const {
         std::vector<const AssociativeRecord*> result;
-        for (duint32 sourceHandle : findAssociativeClosureFrom(handle, 32u)) {
+        for (std::uint32_t sourceHandle : findAssociativeClosureFrom(handle, 32u)) {
             if (const AssociativeRecord* record =
                     findAssociativeObjectByHandle(sourceHandle)) {
                 result.push_back(record);
@@ -3895,17 +3896,17 @@ public:
         }
         return result;
     }
-    std::vector<duint32> findAssociativeClosureFrom(
-        duint32 handle, size_t maxDepth) const {
-        std::vector<duint32> result;
+    std::vector<std::uint32_t> findAssociativeClosureFrom(
+        std::uint32_t handle, size_t maxDepth) const {
+        std::vector<std::uint32_t> result;
         if (handle == 0)
             return result;
-        std::vector<duint32> visited;
-        std::vector<std::pair<duint32, size_t>> queue;
+        std::vector<std::uint32_t> visited;
+        std::vector<std::pair<std::uint32_t, size_t>> queue;
         visited.push_back(handle);
         queue.push_back({handle, 0u});
         for (size_t index = 0; index < queue.size(); ++index) {
-            const duint32 targetHandle = queue[index].first;
+            const std::uint32_t targetHandle = queue[index].first;
             const size_t depth = queue[index].second;
             for (const AssociativeEdgeRecord& edge : m_associativeEdges) {
                 if (edge.targetHandle != targetHandle
@@ -3921,7 +3922,7 @@ public:
         return result;
     }
 
-    const AcShRecord* findAcShObjectByHandle(duint32 handle) const {
+    const AcShRecord* findAcShObjectByHandle(std::uint32_t handle) const {
         if (handle == 0)
             return nullptr;
         for (const AcShRecord& record : m_acshObjects) {
@@ -3930,7 +3931,7 @@ public:
         }
         return nullptr;
     }
-    std::vector<const AcShRecord*> findAcShObjectsByOwnerHandle(duint32 ownerHandle) const {
+    std::vector<const AcShRecord*> findAcShObjectsByOwnerHandle(std::uint32_t ownerHandle) const {
         std::vector<const AcShRecord*> result;
         if (ownerHandle == 0)
             return result;
@@ -4030,7 +4031,7 @@ public:
     };
 
     static ModelerRawByteSplit splitModelerRawBytes(
-        duint32 bodyBitSize, size_t rawByteCount) {
+        std::uint32_t bodyBitSize, size_t rawByteCount) {
         ModelerRawByteSplit split;
         if (bodyBitSize == 0) {
             split.bodyByteCount = rawByteCount;
@@ -4050,7 +4051,7 @@ public:
     }
 
     static ModelerPayloadMarker scanModelerPayloadMarker(
-        const std::vector<duint8>& bytes) {
+        const std::vector<std::uint8_t>& bytes) {
         const ModelerPayloadMarker sab = findModelerPayloadMarker(
             bytes, "ACIS BinaryFile", ModelerPayloadKind::Sab);
         if (sab.kind != ModelerPayloadKind::Unknown)
@@ -4062,12 +4063,12 @@ public:
         return findModelerPayloadMarker(bytes, "ACIS", ModelerPayloadKind::Sat);
     }
 
-    static ModelerPayloadKind classifyModelerPayload(const std::vector<duint8>& bytes) {
+    static ModelerPayloadKind classifyModelerPayload(const std::vector<std::uint8_t>& bytes) {
         return scanModelerPayloadMarker(bytes).kind;
     }
 
     static std::vector<ModelerPayloadRangeRecord> scanModelerPayloadRanges(
-        const std::vector<duint8>& bytes, duint32 bodyBitSize,
+        const std::vector<std::uint8_t>& bytes, std::uint32_t bodyBitSize,
         bool hasWireframe = false) {
         std::vector<ModelerPayloadRangeRecord> ranges;
         if (bytes.empty())
@@ -4090,7 +4091,7 @@ public:
         if (marker.kind == ModelerPayloadKind::Sab) {
             appendUnknownModelerRange(ranges, 0u, marker.offset,
                                       declaredBodyByteCount, bodyConsistency);
-            const std::vector<duint8> terminator =
+            const std::vector<std::uint8_t> terminator =
                 sabTerminatorBytes();
             const size_t terminatorOffset = findByteSequence(
                 bytes, terminator, marker.offset + marker.length,
@@ -4174,7 +4175,7 @@ private:
     }
 
     static ModelerPayloadMarker findModelerPayloadMarker(
-        const std::vector<duint8>& bytes, const char* marker,
+        const std::vector<std::uint8_t>& bytes, const char* marker,
         ModelerPayloadKind kind) {
         ModelerPayloadMarker result;
         if (marker == nullptr || marker[0] == '\0')
@@ -4187,7 +4188,7 @@ private:
         for (size_t offset = 0; offset + markerSize <= bytes.size(); ++offset) {
             bool matched = true;
             for (size_t index = 0; index < markerSize; ++index) {
-                if (bytes[offset + index] != static_cast<duint8>(marker[index])) {
+                if (bytes[offset + index] != static_cast<std::uint8_t>(marker[index])) {
                     matched = false;
                     break;
                 }
@@ -4208,7 +4209,7 @@ private:
     }
 
     static ModelerPayloadMarker scanModelerPayloadMarkerInRange(
-        const std::vector<duint8>& bytes, size_t start, size_t end) {
+        const std::vector<std::uint8_t>& bytes, size_t start, size_t end) {
         const ModelerPayloadMarker sab = findModelerPayloadMarkerInRange(
             bytes, "ACIS BinaryFile", ModelerPayloadKind::Sab, start, end);
         if (sab.kind != ModelerPayloadKind::Unknown)
@@ -4224,7 +4225,7 @@ private:
     }
 
     static ModelerPayloadMarker findModelerPayloadMarkerInRange(
-        const std::vector<duint8>& bytes, const char* marker,
+        const std::vector<std::uint8_t>& bytes, const char* marker,
         ModelerPayloadKind kind, size_t start, size_t end) {
         ModelerPayloadMarker result;
         if (marker == nullptr || marker[0] == '\0' || start >= bytes.size())
@@ -4241,7 +4242,7 @@ private:
             bool matched = true;
             for (size_t index = 0; index < markerSize; ++index) {
                 if (bytes[offset + index] !=
-                    static_cast<duint8>(marker[index])) {
+                    static_cast<std::uint8_t>(marker[index])) {
                     matched = false;
                     break;
                 }
@@ -4257,13 +4258,13 @@ private:
         return result;
     }
 
-    static std::vector<duint8> sabTerminatorBytes() {
+    static std::vector<std::uint8_t> sabTerminatorBytes() {
         return {'E', 'n', 'd', 0x0Eu, 0x02u, 'o', 'f', 0x0Eu, 0x04u,
                 'A', 'C', 'I', 'S', 0x0Du, 0x04u, 'd', 'a', 't', 'a'};
     }
 
-    static size_t findByteSequence(const std::vector<duint8>& bytes,
-                                   const std::vector<duint8>& marker,
+    static size_t findByteSequence(const std::vector<std::uint8_t>& bytes,
+                                   const std::vector<std::uint8_t>& marker,
                                    size_t start, size_t end) {
         if (marker.empty() || start >= bytes.size())
             return npos();
@@ -4324,7 +4325,7 @@ public:
         }
         return nullptr;
     }
-    const ViewRecord* findViewByHandle(duint32 handle) const {
+    const ViewRecord* findViewByHandle(std::uint32_t handle) const {
         if (handle == 0)
             return nullptr;
         for (const ViewRecord& record : m_views) {
@@ -4340,7 +4341,7 @@ public:
         }
         return nullptr;
     }
-    const UcsRecord* findUcsByHandle(duint32 handle) const {
+    const UcsRecord* findUcsByHandle(std::uint32_t handle) const {
         if (handle == 0)
             return nullptr;
         for (const UcsRecord& record : m_ucsRecords) {
@@ -4349,7 +4350,7 @@ public:
         }
         return nullptr;
     }
-    const VportRecord* findVportByHandle(duint32 handle) const {
+    const VportRecord* findVportByHandle(std::uint32_t handle) const {
         if (handle == 0)
             return nullptr;
         for (const VportRecord& record : m_vports) {
@@ -4358,7 +4359,7 @@ public:
         }
         return nullptr;
     }
-    const VisualStyleRecord* findVisualStyleByHandle(duint32 handle) const {
+    const VisualStyleRecord* findVisualStyleByHandle(std::uint32_t handle) const {
         if (handle == 0)
             return nullptr;
         for (const VisualStyleRecord& record : m_visualStyles) {
@@ -4367,7 +4368,7 @@ public:
         }
         return nullptr;
     }
-    std::vector<const ViewRecord*> findViewsReferencingHandle(duint32 handle) const {
+    std::vector<const ViewRecord*> findViewsReferencingHandle(std::uint32_t handle) const {
         std::vector<const ViewRecord*> result;
         if (handle == 0)
             return result;
@@ -4378,7 +4379,7 @@ public:
         return result;
     }
     const DocumentMappingRecord* findDocumentMappingBySourceHandle(
-        duint32 handle) const {
+        std::uint32_t handle) const {
         if (handle == 0)
             return nullptr;
         for (const DocumentMappingRecord& record : m_documentMappings) {
@@ -4399,7 +4400,7 @@ public:
         return result;
     }
     std::vector<const DocumentMappingRecord*> findDocumentMappingsByOwner(
-        duint32 ownerHandle) const {
+        std::uint32_t ownerHandle) const {
         std::vector<const DocumentMappingRecord*> result;
         if (ownerHandle == 0)
             return result;
@@ -4410,7 +4411,7 @@ public:
         return result;
     }
     std::vector<const DocumentMappingRecord*> findDocumentMappingsByLayout(
-        duint32 layoutHandle) const {
+        std::uint32_t layoutHandle) const {
         std::vector<const DocumentMappingRecord*> result;
         if (layoutHandle == 0)
             return result;
@@ -4421,12 +4422,12 @@ public:
         return result;
     }
     void mapViewToDocumentItem(
-        duint32 handle, const std::string& name, int documentItemIndex) {
+        std::uint32_t handle, const std::string& name, int documentItemIndex) {
         mapDocumentItem(
             DocumentMappingSource::View, handle, name, documentItemIndex);
     }
     void mapUcsToDocumentItem(
-        duint32 handle, const std::string& name, int documentItemIndex) {
+        std::uint32_t handle, const std::string& name, int documentItemIndex) {
         mapDocumentItem(
             DocumentMappingSource::Ucs, handle, name, documentItemIndex);
     }
@@ -4507,7 +4508,7 @@ public:
     }
     std::vector<const VisualMetadataSummaryRecord*> findVisualSummariesByOwner(
         const std::vector<VisualMetadataSummaryRecord>& summaries,
-        duint32 ownerHandle) const {
+        std::uint32_t ownerHandle) const {
         std::vector<const VisualMetadataSummaryRecord*> result;
         if (ownerHandle == 0)
             return result;
@@ -4519,7 +4520,7 @@ public:
     }
     std::vector<const VisualMetadataSummaryRecord*> findVisualSummariesByLayout(
         const std::vector<VisualMetadataSummaryRecord>& summaries,
-        duint32 layoutHandle) const {
+        std::uint32_t layoutHandle) const {
         std::vector<const VisualMetadataSummaryRecord*> result;
         if (layoutHandle == 0)
             return result;
@@ -4567,7 +4568,7 @@ public:
         return counts;
     }
     VisualMetadataReplayEligibility visualMetadataReplayEligibility(
-        duint32 handle, DRW::Version version) const {
+        std::uint32_t handle, DRW::Version version) const {
         VisualMetadataReplayEligibility eligibility;
         eligibility.handle = handle;
         for (const VisualMetadataSummaryRecord& summary :
@@ -4597,7 +4598,7 @@ public:
         }
         return eligibility;
     }
-    const LightRecord* findLightByHandle(duint32 handle) const {
+    const LightRecord* findLightByHandle(std::uint32_t handle) const {
         if (handle == 0)
             return nullptr;
         for (const LightRecord& record : m_lights) {
@@ -4606,7 +4607,7 @@ public:
         }
         return nullptr;
     }
-    std::vector<const LightRecord*> findLightsByParentHandle(duint32 parentHandle) const {
+    std::vector<const LightRecord*> findLightsByParentHandle(std::uint32_t parentHandle) const {
         std::vector<const LightRecord*> result;
         if (parentHandle == 0)
             return result;
@@ -4616,7 +4617,7 @@ public:
         }
         return result;
     }
-    const SunRecord* findSunByHandle(duint32 handle) const {
+    const SunRecord* findSunByHandle(std::uint32_t handle) const {
         for (const SunRecord& record : m_suns) {
             if (record.handle == handle)
                 return &record;
@@ -4627,7 +4628,7 @@ public:
         const ViewRecord* view = findViewByName(name);
         return view == nullptr ? nullptr : findSunByHandle(view->sunHandle);
     }
-    const SunRecord* findSunForViewHandle(duint32 handle) const {
+    const SunRecord* findSunForViewHandle(std::uint32_t handle) const {
         const ViewRecord* view = findViewByHandle(handle);
         return view == nullptr ? nullptr : findSunByHandle(view->sunHandle);
     }
@@ -5093,24 +5094,24 @@ public:
             || hasReplayable(m_placeholders);
     }
 
-    void invalidateByHandle(duint32 handle) {
-        invalidateMatching([handle](duint32 recordHandle, duint32) {
+    void invalidateByHandle(std::uint32_t handle) {
+        invalidateMatching([handle](std::uint32_t recordHandle, std::uint32_t) {
             return recordHandle == handle;
         });
     }
 
-    void invalidateByOwner(duint32 ownerHandle) {
-        invalidateMatching([ownerHandle](duint32, duint32 parentHandle) {
+    void invalidateByOwner(std::uint32_t ownerHandle) {
+        invalidateMatching([ownerHandle](std::uint32_t, std::uint32_t parentHandle) {
             return parentHandle == ownerHandle;
         });
     }
 
-    void invalidateAssociativeGraphForHandle(duint32 dependentHandle) {
+    void invalidateAssociativeGraphForHandle(std::uint32_t dependentHandle) {
         if (dependentHandle == 0)
             return;
-        const std::vector<duint32> affectedHandles =
+        const std::vector<std::uint32_t> affectedHandles =
             findAssociativeClosureFrom(dependentHandle, 32u);
-        for (duint32 affectedHandle : affectedHandles) {
+        for (std::uint32_t affectedHandle : affectedHandles) {
             invalidateAssociativeSemanticRecord(affectedHandle);
             invalidateRawAssociativeObject(affectedHandle);
             for (AssociativeEdgeRecord& edge : m_associativeEdges) {
@@ -5122,7 +5123,7 @@ public:
         }
     }
 
-    void invalidateTableGraphForHandle(duint32 dependentHandle) {
+    void invalidateTableGraphForHandle(std::uint32_t dependentHandle) {
         if (dependentHandle == 0)
             return;
         for (TableRecord& record : m_tables) {
@@ -5163,7 +5164,7 @@ public:
         return invalidated;
     }
 
-    void invalidateMLeaderGraphForHandle(duint32 dependentHandle) {
+    void invalidateMLeaderGraphForHandle(std::uint32_t dependentHandle) {
         if (dependentHandle == 0)
             return;
         for (MLeaderRecord& record : m_mleaders) {
@@ -5182,7 +5183,7 @@ public:
         }
     }
 
-    void invalidateViewGraphForHandle(duint32 dependentHandle) {
+    void invalidateViewGraphForHandle(std::uint32_t dependentHandle) {
         if (dependentHandle == 0)
             return;
         for (ViewRecord& record : m_views) {
@@ -5207,7 +5208,7 @@ public:
         }
     }
 
-    void markMLeaderReplayReplacedForHandle(duint32 handle) {
+    void markMLeaderReplayReplacedForHandle(std::uint32_t handle) {
         if (handle == 0)
             return;
         for (MLeaderRecord& record : m_mleaders) {
@@ -5216,7 +5217,7 @@ public:
         }
     }
 
-    void markRawReplayReplacedForHandle(duint32 handle) {
+    void markRawReplayReplacedForHandle(std::uint32_t handle) {
         if (handle == 0)
             return;
         for (RawObjectRecord& record : m_rawObjects) {
@@ -5821,7 +5822,7 @@ private:
         return true;
     }
 
-    static bool tableCellReferences(const TableCellRecord& cell, duint32 handle) {
+    static bool tableCellReferences(const TableCellRecord& cell, std::uint32_t handle) {
         if (handle == 0)
             return false;
         if (cell.valueHandle == handle
@@ -5831,47 +5832,47 @@ private:
             || cell.geometryHandle == handle) {
             return true;
         }
-        for (duint32 contentHandle : cell.contentHandles) {
+        for (std::uint32_t contentHandle : cell.contentHandles) {
             if (contentHandle == handle)
                 return true;
         }
-        for (duint32 attributeHandle : cell.attributeHandles) {
+        for (std::uint32_t attributeHandle : cell.attributeHandles) {
             if (attributeHandle == handle)
                 return true;
         }
         return false;
     }
 
-    static bool tableRecordReferences(const TableRecord& record, duint32 handle) {
+    static bool tableRecordReferences(const TableRecord& record, std::uint32_t handle) {
         if (handle == 0)
             return false;
         if (record.tableStyleHandle == handle)
             return true;
-        for (duint32 valueHandle : record.valueHandles) {
+        for (std::uint32_t valueHandle : record.valueHandles) {
             if (valueHandle == handle)
                 return true;
         }
-        for (duint32 blockHandle : record.blockHandles) {
+        for (std::uint32_t blockHandle : record.blockHandles) {
             if (blockHandle == handle)
                 return true;
         }
-        for (duint32 fieldHandle : record.fieldHandles) {
+        for (std::uint32_t fieldHandle : record.fieldHandles) {
             if (fieldHandle == handle)
                 return true;
         }
-        for (duint32 attributeHandle : record.attributeHandles) {
+        for (std::uint32_t attributeHandle : record.attributeHandles) {
             if (attributeHandle == handle)
                 return true;
         }
-        for (duint32 textStyleHandle : record.textStyleHandles) {
+        for (std::uint32_t textStyleHandle : record.textStyleHandles) {
             if (textStyleHandle == handle)
                 return true;
         }
-        for (duint32 lineTypeHandle : record.lineTypeHandles) {
+        for (std::uint32_t lineTypeHandle : record.lineTypeHandles) {
             if (lineTypeHandle == handle)
                 return true;
         }
-        for (duint32 geometryHandle : record.geometryHandles) {
+        for (std::uint32_t geometryHandle : record.geometryHandles) {
             if (geometryHandle == handle)
                 return true;
         }
@@ -5883,7 +5884,7 @@ private:
     }
 
     static bool cellStyleMapReferences(const CellStyleMapRecord& record,
-                                       duint32 handle) {
+                                       std::uint32_t handle) {
         if (handle == 0)
             return false;
         return containsValue(record.m_textStyleHandles, handle)
@@ -5895,7 +5896,7 @@ private:
         return std::find(values.begin(), values.end(), value) != values.end();
     }
 
-    static bool mleaderRecordReferences(const MLeaderRecord& record, duint32 handle) {
+    static bool mleaderRecordReferences(const MLeaderRecord& record, std::uint32_t handle) {
         if (handle == 0)
             return false;
         if (record.styleHandle == handle
@@ -5909,11 +5910,11 @@ private:
             || record.effectiveBlockHandle == handle) {
             return true;
         }
-        for (duint32 arrowHandle : record.arrowHeadOverrideHandles) {
+        for (std::uint32_t arrowHandle : record.arrowHeadOverrideHandles) {
             if (arrowHandle == handle)
                 return true;
         }
-        for (duint32 attributeHandle : record.blockAttributeDefinitionHandles) {
+        for (std::uint32_t attributeHandle : record.blockAttributeDefinitionHandles) {
             if (attributeHandle == handle)
                 return true;
         }
@@ -6198,7 +6199,7 @@ private:
         m_documentMappings.push_back(std::move(mapping));
     }
 
-    void mapDocumentItem(DocumentMappingSource sourceType, duint32 handle,
+    void mapDocumentItem(DocumentMappingSource sourceType, std::uint32_t handle,
                          const std::string& name, int documentItemIndex) {
         for (DocumentMappingRecord& record : m_documentMappings) {
             if (record.sourceType != sourceType)
@@ -6232,7 +6233,7 @@ private:
     }
 
     void invalidateDocumentMappingForSource(
-        DocumentMappingSource sourceType, duint32 handle) {
+        DocumentMappingSource sourceType, std::uint32_t handle) {
         if (handle == 0)
             return;
         for (DocumentMappingRecord& record : m_documentMappings) {
@@ -6246,7 +6247,7 @@ private:
     size_t documentMappingUnresolvedReferenceCount(
         const DocumentMappingRecord& record) const {
         size_t count = 0;
-        std::vector<duint32> unresolvedHandles;
+        std::vector<std::uint32_t> unresolvedHandles;
         appendUnresolvedUcsReference(
             unresolvedHandles, record.associatedUcsHandle);
         appendUnresolvedUcsReference(unresolvedHandles, record.baseUcsHandle);
@@ -6260,7 +6261,7 @@ private:
             unresolvedHandles, record.viewportHeaderHandle);
         appendUnresolvedOpaqueReference(
             unresolvedHandles, record.layoutBlockRecordHandle);
-        for (duint32 handle : unresolvedHandles) {
+        for (std::uint32_t handle : unresolvedHandles) {
             if (handle != 0 && !containsValue(unresolvedHandles, handle, count))
                 ++count;
         }
@@ -6268,25 +6269,25 @@ private:
     }
 
     void appendUnresolvedUcsReference(
-        std::vector<duint32>& unresolvedHandles, duint32 handle) const {
+        std::vector<std::uint32_t>& unresolvedHandles, std::uint32_t handle) const {
         if (handle != 0 && findUcsByHandle(handle) == nullptr)
             unresolvedHandles.push_back(handle);
     }
 
     void appendUnresolvedSunReference(
-        std::vector<duint32>& unresolvedHandles, duint32 handle) const {
+        std::vector<std::uint32_t>& unresolvedHandles, std::uint32_t handle) const {
         if (handle != 0 && findSunByHandle(handle) == nullptr)
             unresolvedHandles.push_back(handle);
     }
 
     static void appendUnresolvedOpaqueReference(
-        std::vector<duint32>& unresolvedHandles, duint32 handle) {
+        std::vector<std::uint32_t>& unresolvedHandles, std::uint32_t handle) {
         if (handle != 0)
             unresolvedHandles.push_back(handle);
     }
 
     static bool containsValue(
-        const std::vector<duint32>& values, duint32 value, size_t limit) {
+        const std::vector<std::uint32_t>& values, std::uint32_t value, size_t limit) {
         for (size_t i = 0; i < limit && i < values.size(); ++i) {
             if (values[i] == value)
                 return true;
@@ -6294,7 +6295,7 @@ private:
         return false;
     }
 
-    static bool viewRecordReferences(const ViewRecord& record, duint32 handle) {
+    static bool viewRecordReferences(const ViewRecord& record, std::uint32_t handle) {
         if (handle == 0)
             return false;
         return record.namedUcsHandle == handle
@@ -6305,7 +6306,7 @@ private:
                || record.liveSectionHandle == handle;
     }
 
-    static bool vportRecordReferences(const VportRecord& record, duint32 handle) {
+    static bool vportRecordReferences(const VportRecord& record, std::uint32_t handle) {
         if (handle == 0)
             return false;
         return record.namedUcsHandle == handle
@@ -6316,7 +6317,7 @@ private:
     }
 
     static bool mleaderStyleRecordReferences(const MLeaderStyleRecord& record,
-                                             duint32 handle) {
+                                             std::uint32_t handle) {
         if (handle == 0)
             return false;
         return record.leaderLineTypeHandle == handle
@@ -6343,7 +6344,7 @@ private:
     }
 
     static bool associativeRecordReferences(const AssociativeRecord& record,
-                                            duint32 handle) {
+                                            std::uint32_t handle) {
         if (handle == 0)
             return false;
         if (record.owningNetworkHandle == handle
@@ -6363,11 +6364,11 @@ private:
             if (ref.m_handle == handle)
                 return true;
         }
-        for (duint32 refHandle : record.ownedParamHandles) {
+        for (std::uint32_t refHandle : record.ownedParamHandles) {
             if (refHandle == handle)
                 return true;
         }
-        for (duint32 refHandle : record.ownedActionHandles) {
+        for (std::uint32_t refHandle : record.ownedActionHandles) {
             if (refHandle == handle)
                 return true;
         }
@@ -6383,7 +6384,7 @@ private:
                || containsSubstring(record.className, "AcSh");
     }
 
-    void invalidateRawAssociativeObject(duint32 handle) {
+    void invalidateRawAssociativeObject(std::uint32_t handle) {
         if (handle == 0)
             return;
         for (RawObjectRecord& record : m_rawObjects) {
@@ -6426,7 +6427,7 @@ private:
                || record.className == "AcDbCellStyleMap";
     }
 
-    void invalidateRawTableObject(duint32 handle) {
+    void invalidateRawTableObject(std::uint32_t handle) {
         if (handle == 0)
             return;
         for (RawObjectRecord& record : m_rawObjects) {
@@ -6437,7 +6438,7 @@ private:
         }
     }
 
-    void invalidateRawVisualMetadataObject(duint32 handle) {
+    void invalidateRawVisualMetadataObject(std::uint32_t handle) {
         if (handle == 0)
             return;
         for (RawObjectRecord& record : m_rawObjects) {
@@ -6448,7 +6449,7 @@ private:
         }
     }
 
-    void invalidateRawMLeaderStyle(duint32 handle) {
+    void invalidateRawMLeaderStyle(std::uint32_t handle) {
         if (handle == 0)
             return;
         for (RawObjectRecord& record : m_rawObjects) {
@@ -6548,8 +6549,8 @@ private:
         return record;
     }
 
-    static bool containsHandle(const std::vector<duint32>& handles,
-                               duint32 handle) {
+    static bool containsHandle(const std::vector<std::uint32_t>& handles,
+                               std::uint32_t handle) {
         return std::find(handles.begin(), handles.end(), handle) != handles.end();
     }
 
@@ -6572,12 +6573,12 @@ private:
                                AssociativeEdgeKind::OwnsAction, ref.m_handle,
                                AssociativeEdgeConfidence::ExplicitHandle);
         }
-        for (duint32 handle : record.ownedParamHandles) {
+        for (std::uint32_t handle : record.ownedParamHandles) {
             addAssociativeEdge(record.handle, record.recordName, record.kind,
                                AssociativeEdgeKind::OwnsParameter, handle,
                                AssociativeEdgeConfidence::ExplicitHandle);
         }
-        for (duint32 handle : record.ownedActionHandles) {
+        for (std::uint32_t handle : record.ownedActionHandles) {
             addAssociativeEdge(record.handle, record.recordName, record.kind,
                                AssociativeEdgeKind::OwnsAction, handle,
                                AssociativeEdgeConfidence::ExplicitHandle);
@@ -6613,9 +6614,9 @@ private:
     }
 
     void addAssociativeEdge(
-        duint32 sourceHandle, const std::string& sourceRecordName,
+        std::uint32_t sourceHandle, const std::string& sourceRecordName,
         AssociativeKind sourceKind, AssociativeEdgeKind edgeKind,
-        duint32 targetHandle, AssociativeEdgeConfidence confidence) {
+        std::uint32_t targetHandle, AssociativeEdgeConfidence confidence) {
         if (sourceHandle == 0 || targetHandle == 0)
             return;
         for (const AssociativeEdgeRecord& edge : m_associativeEdges) {
@@ -6635,7 +6636,7 @@ private:
         m_associativeEdges.push_back(std::move(edge));
     }
 
-    void invalidateAssociativeSemanticRecord(duint32 handle) {
+    void invalidateAssociativeSemanticRecord(std::uint32_t handle) {
         if (handle == 0)
             return;
         for (AssociativeRecord& record : m_associativeObjects) {
@@ -7107,7 +7108,7 @@ private:
     }
 
     bool hasRawGraphObjectForHandle(
-        duint32 handle, GraphReplayFamily family) const {
+        std::uint32_t handle, GraphReplayFamily family) const {
         if (handle == 0)
             return false;
         for (const RawObjectRecord& record : m_rawObjects) {
@@ -7142,11 +7143,11 @@ private:
             && record.preservedVertexCount != expectedVertexCount;
     }
 
-    static duint32 parseHexHandle(const std::string& text) {
+    static std::uint32_t parseHexHandle(const std::string& text) {
         if (text.empty())
             return 0;
         try {
-            return static_cast<duint32>(std::stoul(text, nullptr, 16));
+            return static_cast<std::uint32_t>(std::stoul(text, nullptr, 16));
         } catch (...) {
             return 0;
         }

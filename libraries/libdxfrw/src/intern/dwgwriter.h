@@ -35,18 +35,18 @@ class DRW_Entity;
 /// DWG custom class numbers start at 500; fixed built-in object types are not
 /// represented here.
 struct DwgClassDefinition {
-    duint16 m_classNum {0};
-    duint16 m_proxyFlag {0};
+    std::uint16_t m_classNum {0};
+    std::uint16_t m_proxyFlag {0};
     std::string m_appName;
     std::string m_className;
     std::string m_recordName;
     bool m_wasProxy {false};
-    duint16 m_entityFlagRaw {0};
-    dint32 m_instanceCount {0};
-    dint32 m_dwgVersion {0};
-    dint32 m_maintenanceVersion {0};
-    dint32 m_unknown1 {0};
-    dint32 m_unknown2 {0};
+    std::uint16_t m_entityFlagRaw {0};
+    std::int32_t m_instanceCount {0};
+    std::int32_t m_dwgVersion {0};
+    std::int32_t m_maintenanceVersion {0};
+    std::int32_t m_unknown1 {0};
+    std::int32_t m_unknown2 {0};
 };
 
 /// Allocates object handles for a fresh DWG write.  Reserves the
@@ -105,7 +105,7 @@ public:
 
     /// Mark a specific handle as in-use.  Used during read-then-write
     /// to preserve source handles; idempotent.
-    void reserve(duint32 h) {
+    void reserve(std::uint32_t h) {
         m_reserved.insert(h);
         if (h >= m_next)
             m_next = h + 1;
@@ -114,22 +114,22 @@ public:
     /// Allocate the next unused handle ≥ `m_next`, skipping reserved.
     /// Marks the returned handle as reserved so subsequent calls don't
     /// return the same value.
-    duint32 next() {
+    std::uint32_t next() {
         while (m_reserved.count(m_next))
             ++m_next;
-        duint32 h = m_next++;
+        std::uint32_t h = m_next++;
         m_reserved.insert(h);
         return h;
     }
 
     /// High-water mark.  Used to populate the HANDSEED header variable.
-    duint32 current() const { return m_next; }
+    std::uint32_t current() const { return m_next; }
 
 private:
     /// First candidate for user-allocated handles.  All canonical
     /// reserved handles are below 0x30, so seeding starts here.
-    duint32 m_next {0x30};
-    std::set<duint32> m_reserved;
+    std::uint32_t m_next {0x30};
+    std::set<std::uint32_t> m_reserved;
 };
 
 /// Abstract base for per-version DWG writers.  Concrete subclasses
@@ -204,7 +204,7 @@ public:
     /// BLOCK_CONTROL list so a later `emitDeferredBlockControl` call
     /// includes it.  Returns the Block_Record handle (suitable for
     /// `DRW_Insert::blockRecH.ref`).  Returns 0 on failure.
-    virtual duint32 defineBlock(const std::string& name,
+    virtual std::uint32_t defineBlock(const std::string& name,
                                 const DRW_Coord& basePoint,
                                 int insUnits = 0) = 0;
 
@@ -216,37 +216,37 @@ public:
 
     /// Accumulator (exposed for tests + for sibling classes that
     /// need byte-level inspection).  Reserved unless a test asks.
-    const std::vector<duint8>& buffer() const { return m_buf.data(); }
+    const std::vector<std::uint8_t>& buffer() const { return m_buf.data(); }
 
     /// Byte offset of the start of the OBJECTS data region within m_buf.
     /// writeDwgHandles subtracts this from each object's m_buf offset so
     /// the HANDLES section stores section-relative positions.  For R2000
     /// (whole-file buffer) the base is 0; R2004 overrides to point past
     /// the HEADER + CLASSES sections that precede the object stream.
-    virtual duint32 objectBaseOffset() const { return 0; }
+    virtual std::uint32_t objectBaseOffset() const { return 0; }
 
     /// First-available user handle from the allocator.  `dwgRW::write`
     /// uses this to auto-populate `DRW_Header::handSeed` for fresh
     /// documents where the caller did not set one explicitly — without
     /// it, the encoder emits null HANDSEED and AutoCAD refreshes on
     /// first open, marking the file modified.  See [Risk 4j].
-    duint32 highWaterHandle() const { return m_handles.current(); }
+    std::uint32_t highWaterHandle() const { return m_handles.current(); }
 
     /// Allocate a fresh user handle and return it without encoding any
     /// object.  Used by writePolyline to reserve the polyline handle
     /// before vertex handles, so that readDwgEntities (which iterates
     /// ObjectMap in ascending-handle order) encounters the polyline
     /// before its vertices and can consume them via readPlineVertex.
-    duint32 allocNextHandle() { return m_handles.next(); }
+    std::uint32_t allocNextHandle() { return m_handles.next(); }
 
     /// Reserve a specific handle so `next()` never returns it again.
-    void reserveHandle(duint32 h) { m_handles.reserve(h); }
+    void reserveHandle(std::uint32_t h) { m_handles.reserve(h); }
 
     bool registerRawObjectClass(const DRW_UnsupportedObject& object) {
         if (!object.m_isCustomClass || object.m_objectType < 500)
             return true;
         DwgClassDefinition definition;
-        definition.m_classNum = static_cast<duint16>(object.m_objectType);
+        definition.m_classNum = static_cast<std::uint16_t>(object.m_objectType);
         definition.m_proxyFlag = 0x401;
         definition.m_appName = "ACAD";
         definition.m_className = object.m_className.empty()
@@ -268,7 +268,7 @@ public:
         return registerDwgClass(definition);
     }
 
-    bool registerSunObjectClass(duint32 handle = 0) {
+    bool registerSunObjectClass(std::uint32_t handle = 0) {
         DwgClassDefinition definition;
         definition.m_classNum = DRW_Sun::kDwgClassNum;
         definition.m_proxyFlag = 0x401;
@@ -284,7 +284,7 @@ public:
         return registerDwgClass(definition);
     }
 
-    bool registerMLeaderStyleObjectClass(duint32 handle = 0) {
+    bool registerMLeaderStyleObjectClass(std::uint32_t handle = 0) {
         DwgClassDefinition definition;
         definition.m_classNum = DRW_MLeaderStyle::kDwgClassNum;
         definition.m_proxyFlag = 0x401;
@@ -300,7 +300,7 @@ public:
         return registerDwgClass(definition);
     }
 
-    bool registerRasterVariablesObjectClass(duint32 handle = 0) {
+    bool registerRasterVariablesObjectClass(std::uint32_t handle = 0) {
         DwgClassDefinition definition;
         definition.m_classNum = DRW_RasterVariables::kDwgClassNum;
         definition.m_proxyFlag = 0x401;
@@ -316,7 +316,7 @@ public:
         return registerDwgClass(definition);
     }
 
-    bool registerGeoDataObjectClass(duint32 handle = 0) {
+    bool registerGeoDataObjectClass(std::uint32_t handle = 0) {
         DwgClassDefinition definition;
         definition.m_classNum = DRW_GeoData::kDwgClassNum;
         definition.m_proxyFlag = 0x401;
@@ -332,7 +332,7 @@ public:
         return registerDwgClass(definition);
     }
 
-    bool registerSpatialFilterObjectClass(duint32 handle = 0) {
+    bool registerSpatialFilterObjectClass(std::uint32_t handle = 0) {
         DwgClassDefinition definition;
         definition.m_classNum = DRW_SpatialFilter::kDwgClassNum;
         definition.m_proxyFlag = 0x401;
@@ -351,7 +351,7 @@ public:
     // PR 8d.2a — five small no-storage OBJECTS families.  All are custom-class
     // (≥ 500); recName / className strings follow the dwgreader.cpp dispatch
     // (case-sensitive look-up against classesmap).
-    bool registerScaleObjectClass(duint32 handle = 0) {
+    bool registerScaleObjectClass(std::uint32_t handle = 0) {
         DwgClassDefinition definition;
         definition.m_classNum = DRW_Scale::kDwgClassNum;
         definition.m_proxyFlag = 0x401;
@@ -367,7 +367,7 @@ public:
         return registerDwgClass(definition);
     }
 
-    bool registerIDBufferObjectClass(duint32 handle = 0) {
+    bool registerIDBufferObjectClass(std::uint32_t handle = 0) {
         DwgClassDefinition definition;
         definition.m_classNum = DRW_IDBuffer::kDwgClassNum;
         definition.m_proxyFlag = 0x401;
@@ -383,7 +383,7 @@ public:
         return registerDwgClass(definition);
     }
 
-    bool registerLayerIndexObjectClass(duint32 handle = 0) {
+    bool registerLayerIndexObjectClass(std::uint32_t handle = 0) {
         DwgClassDefinition definition;
         definition.m_classNum = DRW_LayerIndex::kDwgClassNum;
         definition.m_proxyFlag = 0x401;
@@ -399,7 +399,7 @@ public:
         return registerDwgClass(definition);
     }
 
-    bool registerSpatialIndexObjectClass(duint32 handle = 0) {
+    bool registerSpatialIndexObjectClass(std::uint32_t handle = 0) {
         DwgClassDefinition definition;
         definition.m_classNum = DRW_SpatialIndex::kDwgClassNum;
         definition.m_proxyFlag = 0x401;
@@ -415,7 +415,7 @@ public:
         return registerDwgClass(definition);
     }
 
-    bool registerDictionaryVarObjectClass(duint32 handle = 0) {
+    bool registerDictionaryVarObjectClass(std::uint32_t handle = 0) {
         DwgClassDefinition definition;
         definition.m_classNum = DRW_DictionaryVar::kDwgClassNum;
         definition.m_proxyFlag = 0x401;
@@ -434,7 +434,7 @@ public:
     // PR 8d.2b — four larger no-storage OBJECTS families.  Same shape as
     // PR 8d.2a; recName / className strings follow the dwgreader.cpp dispatch
     // (case-sensitive look-up against classesmap).
-    bool registerDictionaryWithDefaultObjectClass(duint32 handle = 0) {
+    bool registerDictionaryWithDefaultObjectClass(std::uint32_t handle = 0) {
         DwgClassDefinition definition;
         definition.m_classNum = DRW_DictionaryWithDefault::kDwgClassNum;
         definition.m_proxyFlag = 0x401;
@@ -450,7 +450,7 @@ public:
         return registerDwgClass(definition);
     }
 
-    bool registerSortEntsTableObjectClass(duint32 handle = 0) {
+    bool registerSortEntsTableObjectClass(std::uint32_t handle = 0) {
         DwgClassDefinition definition;
         definition.m_classNum = DRW_SortEntsTable::kDwgClassNum;
         definition.m_proxyFlag = 0x401;
@@ -466,7 +466,7 @@ public:
         return registerDwgClass(definition);
     }
 
-    bool registerFieldListObjectClass(duint32 handle = 0) {
+    bool registerFieldListObjectClass(std::uint32_t handle = 0) {
         DwgClassDefinition definition;
         definition.m_classNum = DRW_FieldList::kDwgClassNum;
         definition.m_proxyFlag = 0x401;
@@ -482,7 +482,7 @@ public:
         return registerDwgClass(definition);
     }
 
-    bool registerFieldObjectClass(duint32 handle = 0) {
+    bool registerFieldObjectClass(std::uint32_t handle = 0) {
         DwgClassDefinition definition;
         definition.m_classNum = DRW_Field::kDwgClassNum;
         definition.m_proxyFlag = 0x401;
@@ -498,7 +498,7 @@ public:
         return registerDwgClass(definition);
     }
 
-    bool hasDwgClassDefinition(duint16 classNum) const {
+    bool hasDwgClassDefinition(std::uint16_t classNum) const {
         return std::any_of(m_dwgClassDefinitions.begin(), m_dwgClassDefinitions.end(),
                            [classNum](const DwgClassDefinition& definition) {
                                return definition.m_classNum == classNum;
@@ -577,7 +577,7 @@ protected:
         std::vector<DwgClassDefinition> contiguous;
         contiguous.reserve(static_cast<size_t>(definitions.back().m_classNum - 499));
         auto it = definitions.begin();
-        for (duint32 classNum = 500; classNum <= definitions.back().m_classNum; ++classNum) {
+        for (std::uint32_t classNum = 500; classNum <= definitions.back().m_classNum; ++classNum) {
             if (it != definitions.end() && it->m_classNum == classNum) {
                 contiguous.push_back(*it);
                 ++it;
@@ -585,7 +585,7 @@ protected:
             }
 
             DwgClassDefinition placeholder;
-            placeholder.m_classNum = static_cast<duint16>(classNum);
+            placeholder.m_classNum = static_cast<std::uint16_t>(classNum);
             placeholder.m_proxyFlag = 0x401;
             placeholder.m_appName = "ACAD";
             placeholder.m_className = "AcDbUnusedClass";
@@ -597,8 +597,8 @@ protected:
         return contiguous;
     }
 
-    duint16 maxDwgClassNumber() const {
-        duint16 maxClass = 499;
+    std::uint16_t maxDwgClassNumber() const {
+        std::uint16_t maxClass = 499;
         for (const auto& definition : m_dwgClassDefinitions) {
             if (!isDwgClassEnabled(definition))
                 continue;
@@ -637,10 +637,10 @@ protected:
     /// Per-section start byte offsets, indexed by `secEnum::DWGSection`.
     /// Populated as each section begins emitting; consumed by `finalize()`
     /// to back-patch the file-header section locator records.
-    std::map<int, duint32> m_sectionOffsets;
+    std::map<int, std::uint32_t> m_sectionOffsets;
 
     /// Per-section byte sizes, same indexing as `m_sectionOffsets`.
-    std::map<int, duint32> m_sectionSizes;
+    std::map<int, std::uint32_t> m_sectionSizes;
 
     std::ofstream *m_stream {nullptr};
     DRW_Header *m_header {nullptr};
@@ -658,7 +658,7 @@ protected:
     HandleAllocator m_handles;
 
     std::vector<DwgClassDefinition> m_dwgClassDefinitions;
-    std::set<std::pair<duint16, duint32>> m_rawClassInstanceHandles;
+    std::set<std::pair<std::uint16_t, std::uint32_t>> m_rawClassInstanceHandles;
     bool m_hasDwgClassConflict {false};
 };
 

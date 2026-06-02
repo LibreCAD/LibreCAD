@@ -16,6 +16,7 @@
 
 #define DRW_VERSION "0.6.3"
 
+#include <cstdint>
 #include <string>
 #include <cmath>
 #include <unordered_map>
@@ -48,21 +49,6 @@
 #endif
 #define M_PIx2      6.283185307179586 // 2*PI
 #define ARAD 57.29577951308232
-
-typedef signed char dint8;              /* 8 bit signed */
-typedef signed short dint16;            /* 16 bit signed */
-typedef signed int dint32;              /* 32 bit signed */
-typedef long long int dint64;           /* 64 bit signed */
-
-typedef unsigned char duint8;           /* 8 bit unsigned */
-typedef unsigned short duint16;         /* 16 bit unsigned */
-typedef unsigned int duint32;           /* 32 bit unsigned */
-typedef unsigned long long int duint64; /* 64 bit unsigned */
-
-typedef float dfloat32;                 /* 32 bit floating point */
-typedef double ddouble64;               /* 64 bit floating point */
-typedef long double ddouble80;          /* 80 bit floating point */
-
 
 namespace DRW {
 
@@ -268,15 +254,15 @@ public:
         BINARY,
         INVALID
     };
-    DRW_Variant(): sdata(std::string()), vdata(), bdata(), content(static_cast<dint32>(0)), vType(INVALID), vCode(0) {}
+    DRW_Variant(): sdata(std::string()), vdata(), bdata(), content(static_cast<std::int32_t>(0)), vType(INVALID), vCode(0) {}
 
-    DRW_Variant(int c, dint32 i): sdata(std::string()), vdata(), bdata(), content(i), vType(INTEGER), vCode(c){}
+    DRW_Variant(int c, std::int32_t i): sdata(std::string()), vdata(), bdata(), content(i), vType(INTEGER), vCode(c){}
 
-    DRW_Variant(int c, duint32 i): sdata(std::string()), vdata(), bdata(), content(static_cast<dint32>(i)), vType(INTEGER), vCode(c) {}
+    DRW_Variant(int c, std::uint32_t i): sdata(std::string()), vdata(), bdata(), content(static_cast<std::int32_t>(i)), vType(INTEGER), vCode(c) {}
 
-    DRW_Variant(int c, dint64 i): sdata(std::string()), vdata(), bdata(), content(i), vType(INTEGER64), vCode(c) {}
+    DRW_Variant(int c, std::int64_t i): sdata(std::string()), vdata(), bdata(), content(i), vType(INTEGER64), vCode(c) {}
 
-    DRW_Variant(int c, duint64 i): sdata(std::string()), vdata(), bdata(), content(static_cast<dint64>(i)), vType(INTEGER64), vCode(c) {}
+    DRW_Variant(int c, std::uint64_t i): sdata(std::string()), vdata(), bdata(), content(static_cast<std::int64_t>(i)), vType(INTEGER64), vCode(c) {}
 
     DRW_Variant(int c, double d): sdata(std::string()), vdata(), bdata(), content(d), vType(DOUBLE), vCode(c) {}
 
@@ -286,7 +272,7 @@ public:
 
     DRW_Variant(int c, DRW_Coord crd): sdata(std::string()), vdata(crd), bdata(), content(&vdata), vType(COORD), vCode(c) {}
 
-    DRW_Variant(int c, std::vector<duint8> b): sdata(std::string()), vdata(), bdata(std::move(b)), content(&bdata), vType(BINARY), vCode(c) {}
+    DRW_Variant(int c, std::vector<std::uint8_t> b): sdata(std::string()), vdata(), bdata(std::move(b)), content(&bdata), vType(BINARY), vCode(c) {}
 
     DRW_Variant(const DRW_Variant& d): sdata(d.sdata), vdata(d.vdata), bdata(d.bdata), content(d.content), vType(d.vType), vCode(d.vCode), sIsLayerRef(d.sIsLayerRef) {
         if (d.vType == COORD)
@@ -302,10 +288,10 @@ public:
 
     void addString(int c, UTF8STRING s) {vType = STRING; sdata = s; content.s = &sdata; vCode=c; sIsLayerRef=false;}
     void addInt(int c, int i) {vType = INTEGER; content.i = i; vCode=c;}
-    void addInt64(int c, dint64 i) {vType = INTEGER64; content.i64 = i; vCode=c;}
+    void addInt64(int c, std::int64_t i) {vType = INTEGER64; content.i64 = i; vCode=c;}
     void addDouble(int c, double d) {vType = DOUBLE; content.d = d; vCode=c;}
     void addCoord(int c, DRW_Coord v) {vType = COORD; vdata = v; content.v = &vdata; vCode=c;}
-    void addBinary(int c, std::vector<duint8> b) {vType = BINARY; bdata = std::move(b); content.b = &bdata; vCode=c;}
+    void addBinary(int c, std::vector<std::uint8_t> b) {vType = BINARY; bdata = std::move(b); content.b = &bdata; vCode=c;}
     void setCoordX(double d) { if (vType == COORD) vdata.x = d;}
     void setCoordY(double d) { if (vType == COORD) vdata.y = d;}
     void setCoordZ(double d) { if (vType == COORD) vdata.z = d;}
@@ -315,31 +301,31 @@ public:
     bool isLayerRef() const { return sIsLayerRef && vType == STRING; }
     const char* c_str() const { return content.s->c_str(); }
     double d_val() const { return content.d; }
-    dint32 i_val() const { return content.i; }
-    dint64 i64_val() const { return content.i64; }
+    std::int32_t i_val() const { return content.i; }
+    std::int64_t i64_val() const { return content.i64; }
     DRW_Coord* coord() const { return content.v; }
-    const std::vector<duint8>* binary() const { return &bdata; }
+    const std::vector<std::uint8_t>* binary() const { return &bdata; }
 
 private:
     std::string sdata;
     DRW_Coord vdata;
-    std::vector<duint8> bdata;
+    std::vector<std::uint8_t> bdata;
 
 private:
     union DRW_VarContent{
         UTF8STRING *s;
-        dint32 i;
-        dint64 i64;
+        std::int32_t i;
+        std::int64_t i64;
         double d;
         DRW_Coord *v;
-        std::vector<duint8> *b;
+        std::vector<std::uint8_t> *b;
 
         DRW_VarContent(UTF8STRING *sd):s(sd){}
-        DRW_VarContent(dint32 id):i(id){}
-        DRW_VarContent(dint64 id):i64(id){}
+        DRW_VarContent(std::int32_t id):i(id){}
+        DRW_VarContent(std::int64_t id):i64(id){}
         DRW_VarContent(double dd):d(dd){}
         DRW_VarContent(DRW_Coord *vd):v(vd){}
-        DRW_VarContent(std::vector<duint8> *bd):b(bd){}
+        DRW_VarContent(std::vector<std::uint8_t> *bd):b(bd){}
     };
 
 public:
@@ -361,9 +347,9 @@ public:
     dwgHandle(): code(0), size(0), ref(0){}
 
     ~dwgHandle() = default;
-    duint8 code;
-    duint8 size;
-    duint32 ref;
+    std::uint8_t code;
+    std::uint8_t size;
+    std::uint32_t ref;
 };
 
 //! Class to convert between line width and integer

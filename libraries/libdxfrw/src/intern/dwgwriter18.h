@@ -49,7 +49,7 @@ public:
     /// For R2004, HANDLES offsets are section-relative (into the OBJECTS
     /// data page).  Return the byte offset where OBJECTS content starts in
     /// m_buf so writeDwgHandles can subtract it before encoding deltas.
-    duint32 objectBaseOffset() const override;
+    std::uint32_t objectBaseOffset() const override;
 
 
     /// Re-packages m_buf sections into R2004 container pages,

@@ -44,7 +44,7 @@ public:
     int wasaProxyFlag = 0;   /*!< proxy flag (app loaded on save), code 280 */
     int entityFlag = 0;      /*!< entity flag, code 281 (0 object, 1 entity)*/
 public: //only for read dwg
-    duint16 classNum = 0;
+    std::uint16_t classNum = 0;
     int dwgType = 0;
 };
 

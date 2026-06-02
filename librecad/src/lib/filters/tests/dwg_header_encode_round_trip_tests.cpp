@@ -63,17 +63,17 @@ public:
                       dwgBuffer* buf, dwgBuffer* hBuf) {
         return h.parseDwg(v, buf, hBuf, /*mv=*/0);
     }
-    static duint32& linetypeCtrl(DRW_Header& h)    { return h.linetypeCtrl; }
-    static duint32& layerCtrl(DRW_Header& h)       { return h.layerCtrl; }
-    static duint32& styleCtrl(DRW_Header& h)       { return h.styleCtrl; }
-    static duint32& dimstyleCtrl(DRW_Header& h)    { return h.dimstyleCtrl; }
-    static duint32& appidCtrl(DRW_Header& h)       { return h.appidCtrl; }
-    static duint32& blockCtrl(DRW_Header& h)       { return h.blockCtrl; }
-    static duint32& viewCtrl(DRW_Header& h)        { return h.viewCtrl; }
-    static duint32& ucsCtrl(DRW_Header& h)         { return h.ucsCtrl; }
-    static duint32& vportCtrl(DRW_Header& h)       { return h.vportCtrl; }
-    static duint32& vpEntHeaderCtrl(DRW_Header& h) { return h.vpEntHeaderCtrl; }
-    static duint32& handSeed(DRW_Header& h)        { return h.handSeed; }
+    static std::uint32_t& linetypeCtrl(DRW_Header& h)    { return h.linetypeCtrl; }
+    static std::uint32_t& layerCtrl(DRW_Header& h)       { return h.layerCtrl; }
+    static std::uint32_t& styleCtrl(DRW_Header& h)       { return h.styleCtrl; }
+    static std::uint32_t& dimstyleCtrl(DRW_Header& h)    { return h.dimstyleCtrl; }
+    static std::uint32_t& appidCtrl(DRW_Header& h)       { return h.appidCtrl; }
+    static std::uint32_t& blockCtrl(DRW_Header& h)       { return h.blockCtrl; }
+    static std::uint32_t& viewCtrl(DRW_Header& h)        { return h.viewCtrl; }
+    static std::uint32_t& ucsCtrl(DRW_Header& h)         { return h.ucsCtrl; }
+    static std::uint32_t& vportCtrl(DRW_Header& h)       { return h.vportCtrl; }
+    static std::uint32_t& vpEntHeaderCtrl(DRW_Header& h) { return h.vpEntHeaderCtrl; }
+    static std::uint32_t& handSeed(DRW_Header& h)        { return h.handSeed; }
 };
 using HA = DrwHeaderEncodeTestAccess;
 
@@ -82,7 +82,7 @@ namespace {
 /// Encode `h` into a stream that begins with the 4-byte RL section-size
 /// (matching what parseDwg expects to consume first), with the size
 /// back-patched once the body is known.  Returns the accumulated bytes.
-std::vector<duint8> encodeWithSizePrefix(DRW_Header& h,
+std::vector<std::uint8_t> encodeWithSizePrefix(DRW_Header& h,
                                          DRW::Version v = DRW::AC1015) {
     dwgBufferW w;
     // Reserve 4 bytes for the size_RL placeholder that parseDwg reads first.
@@ -90,7 +90,7 @@ std::vector<duint8> encodeWithSizePrefix(DRW_Header& h,
     REQUIRE(DrwHeaderEncodeTestAccess::encode(h, v, &w, &w));
     w.alignToByte();
     // Patch the size field: body bytes after the 4-byte size prefix.
-    duint32 bodySize = static_cast<duint32>(w.size()) - 4;
+    std::uint32_t bodySize = static_cast<std::uint32_t>(w.size()) - 4;
     w.patchRawLong32(0, bodySize);
     return w.data();
 }
@@ -104,7 +104,7 @@ double dbl(const DRW_Header& h, const char* name) {
 }
 
 /// Helper: extract an int var.
-dint32 i32(const DRW_Header& h, const char* name) {
+std::int32_t i32(const DRW_Header& h, const char* name) {
     auto it = h.vars.find(name);
     REQUIRE(it != h.vars.end());
     REQUIRE(it->second != nullptr);
@@ -145,14 +145,14 @@ TEST_CASE("DRW_Header::encodeDwg round-trips defaults",
     REQUIRE(i32(dst, "ISOLINES")   == 4);
     REQUIRE(i32(dst, "DIMLUNIT")   == 2);
     REQUIRE(i32(dst, "DIMATFIT")   == 3);
-    REQUIRE(i32(dst, "DIMDSEP")    == static_cast<dint32>('.'));
+    REQUIRE(i32(dst, "DIMDSEP")    == static_cast<std::int32_t>('.'));
     REQUIRE(i32(dst, "DIMTOLJ")    == 1);
     REQUIRE(i32(dst, "DIMALTD")    == 2);
     REQUIRE(i32(dst, "TSTACKALIGN") == 1);
     REQUIRE(i32(dst, "TSTACKSIZE") == 70);
 
-    // DIMLWD/DIMLWE default to -2 (signed).  parseDwg reads BS as duint16
-    // and stores it as dint32 without sign extension, so -2 round-trips as
+    // DIMLWD/DIMLWE default to -2 (signed).  parseDwg reads BS as std::uint16_t
+    // and stores it as std::int32_t without sign extension, so -2 round-trips as
     // the 16-bit bit pattern 0xFFFE == 65534.
     REQUIRE(i32(dst, "DIMLWD") == 0xFFFE);
     REQUIRE(i32(dst, "DIMLWE") == 0xFFFE);
@@ -216,7 +216,7 @@ TEST_CASE("DRW_Header::encodeDwg round-trips populated vars and control handles"
     REQUIRE(i32(dst, "LUPREC")     == 6);
     REQUIRE(i32(dst, "SPLINESEGS") == 16);
     REQUIRE(i32(dst, "MAXACTVP")   == 32);
-    REQUIRE(i32(dst, "DIMDSEP")    == static_cast<dint32>(','));
+    REQUIRE(i32(dst, "DIMDSEP")    == static_cast<std::int32_t>(','));
     REQUIRE(i32(dst, "DIMLWD") == 30);
     REQUIRE(i32(dst, "DIMLWE") == 50);
 
@@ -352,23 +352,23 @@ public:
     void writeAppId() override {}
 };
 
-std::vector<duint8> slurpFile(const std::string& path) {
+std::vector<std::uint8_t> slurpFile(const std::string& path) {
     std::ifstream in(path, std::ios::binary);
     if (!in) return {};
     in.seekg(0, std::ios::end);
     auto sz = in.tellg();
     in.seekg(0, std::ios::beg);
-    std::vector<duint8> buf(static_cast<size_t>(sz));
+    std::vector<std::uint8_t> buf(static_cast<size_t>(sz));
     if (sz > 0)
         in.read(reinterpret_cast<char*>(buf.data()), sz);
     return buf;
 }
 
-duint32 leU32(const std::vector<duint8>& b, size_t off) {
-    return static_cast<duint32>(b[off])
-         | (static_cast<duint32>(b[off + 1]) << 8)
-         | (static_cast<duint32>(b[off + 2]) << 16)
-         | (static_cast<duint32>(b[off + 3]) << 24);
+std::uint32_t leU32(const std::vector<std::uint8_t>& b, size_t off) {
+    return static_cast<std::uint32_t>(b[off])
+         | (static_cast<std::uint32_t>(b[off + 1]) << 8)
+         | (static_cast<std::uint32_t>(b[off + 2]) << 16)
+         | (static_cast<std::uint32_t>(b[off + 3]) << 24);
 }
 
 } // namespace
@@ -403,17 +403,17 @@ TEST_CASE("DRW_Header::encodeDwg replays a real fixture header round-trip",
     REQUIRE(fileBytes.size() > 100);
     REQUIRE(std::memcmp(fileBytes.data(), "AC1015", 6) == 0);
 
-    duint32 numSections = leU32(fileBytes, 0x15);
+    std::uint32_t numSections = leU32(fileBytes, 0x15);
     REQUIRE(numSections >= 3);
 
-    duint32 headerAddr = leU32(fileBytes, 0x19 + 0 * 9 + 1);
-    duint32 headerSecSize = leU32(fileBytes, 0x19 + 0 * 9 + 5);
+    std::uint32_t headerAddr = leU32(fileBytes, 0x19 + 0 * 9 + 1);
+    std::uint32_t headerSecSize = leU32(fileBytes, 0x19 + 0 * 9 + 5);
     REQUIRE(headerAddr > 0);
     REQUIRE(headerSecSize >= 38);
 
-    duint32 bodySizeOnDisk = leU32(fileBytes, headerAddr + 16);
+    std::uint32_t bodySizeOnDisk = leU32(fileBytes, headerAddr + 16);
     REQUIRE(bodySizeOnDisk + 16 + 4 + 16 + 2 == headerSecSize);
-    const duint8* originalBody = fileBytes.data() + headerAddr + 16 + 4;
+    const std::uint8_t* originalBody = fileBytes.data() + headerAddr + 16 + 4;
 
     // Read the fixture and capture the parsed header.
     HeaderCaptureIface cap;
@@ -426,34 +426,34 @@ TEST_CASE("DRW_Header::encodeDwg replays a real fixture header round-trip",
     // doesn't mutate `cap.m_captured`, but reading via the friend
     // accessor against the same instance keeps the test code explicit.
     auto snapshotDouble = [&](const char* k) -> double { return dbl(cap.m_captured, k); };
-    auto snapshotInt    = [&](const char* k) -> dint32 { return i32(cap.m_captured, k); };
+    auto snapshotInt    = [&](const char* k) -> std::int32_t { return i32(cap.m_captured, k); };
 
     const double origLTSCALE  = snapshotDouble("LTSCALE");
     const double origTEXTSIZE = snapshotDouble("TEXTSIZE");
     const double origDIMSCALE = snapshotDouble("DIMSCALE");
     const double origDIMASZ   = snapshotDouble("DIMASZ");
-    const dint32 origLUNITS   = snapshotInt("LUNITS");
-    const dint32 origLUPREC   = snapshotInt("LUPREC");
-    const dint32 origMAXACTVP = snapshotInt("MAXACTVP");
-    const dint32 origDIMDSEP  = snapshotInt("DIMDSEP");
-    const duint32 origBlockCtrl    = HA::blockCtrl(cap.m_captured);
-    const duint32 origLayerCtrl    = HA::layerCtrl(cap.m_captured);
-    const duint32 origLinetypeCtrl = HA::linetypeCtrl(cap.m_captured);
+    const std::int32_t origLUNITS   = snapshotInt("LUNITS");
+    const std::int32_t origLUPREC   = snapshotInt("LUPREC");
+    const std::int32_t origMAXACTVP = snapshotInt("MAXACTVP");
+    const std::int32_t origDIMDSEP  = snapshotInt("DIMDSEP");
+    const std::uint32_t origBlockCtrl    = HA::blockCtrl(cap.m_captured);
+    const std::uint32_t origLayerCtrl    = HA::layerCtrl(cap.m_captured);
+    const std::uint32_t origLinetypeCtrl = HA::linetypeCtrl(cap.m_captured);
 
     // Re-encode the captured header.
     dwgBufferW w;
     w.putRawLong32(0);
     REQUIRE(DrwHeaderEncodeTestAccess::encode(cap.m_captured, DRW::AC1015, &w, &w));
     w.alignToByte();
-    duint32 reBodySize = static_cast<duint32>(w.size()) - 4;
+    std::uint32_t reBodySize = static_cast<std::uint32_t>(w.size()) - 4;
     w.patchRawLong32(0, reBodySize);
 
     // Informational: how close are we to the on-disk body?
-    duint32 commonPrefix = 0;
+    std::uint32_t commonPrefix = 0;
     {
-        const duint8* reBody = w.data().data() + 4;
-        duint32 minSize = std::min(bodySizeOnDisk, reBodySize);
-        for (duint32 i = 0; i < minSize; ++i) {
+        const std::uint8_t* reBody = w.data().data() + 4;
+        std::uint32_t minSize = std::min(bodySizeOnDisk, reBodySize);
+        for (std::uint32_t i = 0; i < minSize; ++i) {
             if (originalBody[i] != reBody[i]) break;
             ++commonPrefix;
         }

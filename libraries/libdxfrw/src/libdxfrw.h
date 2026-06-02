@@ -40,21 +40,21 @@ public:
     DRW_ParsingContext() = default;
     /** Returns line-type name for a given DXF handle, or empty string if not found. */
     std::string resolveLineTypeName(int handle) const {
-        auto it = lineTypeNameMap.find(static_cast<duint32>(handle));
+        auto it = lineTypeNameMap.find(static_cast<std::uint32_t>(handle));
         return (it != lineTypeNameMap.end()) ? it->second : std::string();
     }
     /** Returns block-record name for a given DXF handle, or empty string if not found. */
-    std::string resolveBlockRecordName(duint32 handle) const {
+    std::string resolveBlockRecordName(std::uint32_t handle) const {
         auto it = blockRecordMap.find(handle);
         return (it != blockRecordMap.end()) ? it->second.name : std::string();
     }
     /** Returns block-record insertion units for a given DXF handle, or 0 if unknown. */
-    int resolveBlockRecordInsUnits(duint32 handle) const {
+    int resolveBlockRecordInsUnits(std::uint32_t handle) const {
         auto it = blockRecordMap.find(handle);
         return (it != blockRecordMap.end()) ? it->second.insUnits : 0;
     }
-    std::unordered_map<duint32, std::string> lineTypeNameMap;
-    std::unordered_map<duint32, BlockRecordInfo> blockRecordMap;
+    std::unordered_map<std::uint32_t, std::string> lineTypeNameMap;
+    std::unordered_map<std::uint32_t, BlockRecordInfo> blockRecordMap;
 };
 
 class dxfRW {

@@ -116,12 +116,12 @@ public:
     /// HANDSEED accessors.  The DWG writer uses these to propagate the
     /// document's high-water-mark handle so AutoCAD does not refresh
     /// HANDSEED on first save.  See [Risk 4j] in the writer plan.
-    duint32 getHandSeed() const { return handSeed; }
-    void    setHandSeed(duint32 h) { handSeed = h; }
+    std::uint32_t getHandSeed() const { return handSeed; }
+    void    setHandSeed(std::uint32_t h) { handSeed = h; }
 
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader);
-    bool parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer *hBbuf, duint8 mv=0);
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer *hBbuf, std::uint8_t mv=0);
     /// Inverse of parseDwg: emits the bit-packed body of the HEADER
     /// section.  For R2000 (AC1015), `buf` and `hBbuf` may alias the
     /// same accumulator since the handle stream is inline.  Order of
@@ -163,23 +163,23 @@ private:
     DRW_Variant* curr {nullptr};
     int version; //to use on read
 
-    duint32 linetypeCtrl;
-    duint32 layerCtrl;
-    duint32 styleCtrl;
-    duint32 dimstyleCtrl;
-    duint32 appidCtrl;
-    duint32 blockCtrl;
-    duint32 viewCtrl;
-    duint32 ucsCtrl;
-    duint32 vportCtrl;
-    duint32 vpEntHeaderCtrl;
+    std::uint32_t linetypeCtrl;
+    std::uint32_t layerCtrl;
+    std::uint32_t styleCtrl;
+    std::uint32_t dimstyleCtrl;
+    std::uint32_t appidCtrl;
+    std::uint32_t blockCtrl;
+    std::uint32_t viewCtrl;
+    std::uint32_t ucsCtrl;
+    std::uint32_t vportCtrl;
+    std::uint32_t vpEntHeaderCtrl;
     /// HANDSEED: the document's high-water-mark allocated handle.
     /// parseDwg captures it from the data stream; encodeDwg writes it
     /// back.  Default 0 means "fresh document — encoder emits null and
     /// AutoCAD will refresh it on first save".  For round-trip
     /// preservation, populate via the captured value from the source
     /// file.
-    duint32 handSeed {0};
+    std::uint32_t handSeed {0};
 
     int measurement(const int unit);
 };

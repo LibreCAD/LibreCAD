@@ -33,7 +33,7 @@ class DRW_TextCodec;
 /// Lifecycle: instantiate, call put* to append, then read out the
 /// accumulated bytes via data().  No seek-back; sections that need
 /// post-hoc patching (e.g. file-header section-locator addresses)
-/// must be patched in the final std::vector<duint8> by the caller.
+/// must be patched in the final std::vector<std::uint8_t> by the caller.
 class dwgBufferW {
 public:
     /// @param decoder Codec used to convert UTF-8 input strings down
@@ -47,8 +47,8 @@ public:
     /// Accumulated bytes. After a partial byte (bitPos != 0) the trailing
     /// byte's unused low bits are zero — they will be overwritten by the
     /// next put* if more bits are appended.
-    const std::vector<duint8>& data() const { return m_buf; }
-    std::vector<duint8>& data() { return m_buf; }
+    const std::vector<std::uint8_t>& data() const { return m_buf; }
+    std::vector<std::uint8_t>& data() { return m_buf; }
 
     /// Current write position in bytes (size of accumulator).  When
     /// bitPos() != 0 the last byte is partially filled.
@@ -56,7 +56,7 @@ public:
 
     /// Bit position within the trailing byte, 0..7.  0 means the next
     /// put will start a fresh byte.
-    duint8 bitPos() const { return m_bitPos; }
+    std::uint8_t bitPos() const { return m_bitPos; }
 
     /// Reserve capacity in the underlying vector to avoid repeated
     /// reallocations during large emits.
@@ -72,25 +72,25 @@ public:
 
     // ---- bit-level primitives (inverse of dwgBuffer get*) ---------------
 
-    void putBit(duint8 b);                  //B
+    void putBit(std::uint8_t b);                  //B
     void putBoolBit(bool b);                //B as bool
-    void put2Bits(duint8 b);                //BB
-    void put3Bits(duint8 b);                //3B
-    void putBitShort(duint16 v);            //BS
-    void putSBitShort(dint16 v);            //BS
-    void putBitLong(dint32 v);              //BL
-    void putBitLongLong(duint64 v);         //BLL (R24)
+    void put2Bits(std::uint8_t b);                //BB
+    void put3Bits(std::uint8_t b);                //3B
+    void putBitShort(std::uint16_t v);            //BS
+    void putSBitShort(std::int16_t v);            //BS
+    void putBitLong(std::int32_t v);              //BL
+    void putBitLongLong(std::uint64_t v);         //BLL (R24)
     void putBitDouble(double d);            //BD
     void put3BitDouble(const DRW_Coord& c); //3BD
 
     // ---- raw fixed-width primitives -------------------------------------
 
-    void putRawChar8(duint8 v);             //RC
-    void putRawShort16(duint16 v);          //RS (little-endian)
-    void putBERawShort16(duint16 v);        //RS_BE (big-endian; HANDLES CRC)
+    void putRawChar8(std::uint8_t v);             //RC
+    void putRawShort16(std::uint16_t v);          //RS (little-endian)
+    void putBERawShort16(std::uint16_t v);        //RS_BE (big-endian; HANDLES CRC)
     void putRawDouble(double d);            //RD
-    void putRawLong32(duint32 v);           //RL (little-endian)
-    void putRawLong64(duint64 v);           //RLL (little-endian)
+    void putRawLong32(std::uint32_t v);           //RL (little-endian)
+    void putRawLong64(std::uint64_t v);           //RLL (little-endian)
     void put2RawDouble(const DRW_Coord& c); //2RD
 
     // ---- modular/variable-length encodings ------------------------------
@@ -98,14 +98,14 @@ public:
     /// Unsigned modular char (UMC) — used for handle/offset deltas
     /// in the object map.  Emits 7-bit chunks LSB-first, top bit set
     /// on all chunks except the last (terminator).
-    void putUModularChar(duint32 v);
+    void putUModularChar(std::uint32_t v);
 
     /// Signed modular char (MC) — last chunk uses 6 bits + sign bit.
-    void putModularChar(dint32 v);
+    void putModularChar(std::int32_t v);
 
     /// Modular short (MS) — 15-bit chunks; up to 2 chunks (reader
     /// only consumes 2). Unsigned only (matches reader behavior).
-    void putModularShort(dint32 v);
+    void putModularShort(std::int32_t v);
 
     // ---- handles --------------------------------------------------------
 
@@ -116,7 +116,7 @@ public:
 
     /// Object type (OT).  R2010+ uses a 2-bit code + variable-width
     /// value; earlier versions use a plain BS.
-    void putObjType(DRW::Version v, duint16 oType);
+    void putObjType(DRW::Version v, std::uint16_t oType);
 
     // ---- strings --------------------------------------------------------
 
@@ -135,11 +135,11 @@ public:
 
     /// Bit count of data written so far (total bits, accounting for a
     /// partial trailing byte when bitPos() != 0).
-    duint32 bitCount() const;
+    std::uint32_t bitCount() const;
 
     /// Append raw bytes at the current bit position.  Handles
     /// non-byte-aligned writes via per-byte bit shifting.
-    void putBytes(const duint8* buf, size_t n);
+    void putBytes(const std::uint8_t* buf, size_t n);
 
     // ---- specialty primitives -------------------------------------------
 
@@ -158,7 +158,7 @@ public:
 
     /// CMC color (R2000): emits BS color index.  Higher-version
     /// AcDbColor references are deferred to Phase 5.
-    void putCmColor(DRW::Version v, duint16 colorIndex);
+    void putCmColor(DRW::Version v, std::uint16_t colorIndex);
 
     /// CMC color (R2004+) with optional 24-bit truecolor + color/book name
     /// (P4-08). For version < AC1018 this is identical to the index-only
@@ -166,14 +166,14 @@ public:
     /// packing plus the name flags and (in strBuf, defaulting to this) the
     /// color name / book name strings; otherwise it falls back to the
     /// index path. Inverse of dwgBuffer::getCmColor.
-    void putCmColor(DRW::Version v, duint16 colorIndex, dint32 rgb24,
+    void putCmColor(DRW::Version v, std::uint16_t colorIndex, std::int32_t rgb24,
                     const UTF8STRING& colorName,
                     const UTF8STRING& bookName,
                     dwgBufferW* strBuf = nullptr);
 
     /// ENC color (R2000): emits BS color index.  Matches reader's
     /// getEnColor for AC1015.
-    void putEnColor(DRW::Version v, duint16 colorIndex);
+    void putEnColor(DRW::Version v, std::uint16_t colorIndex);
 
     // ---- CRC ------------------------------------------------------------
 
@@ -181,17 +181,17 @@ public:
     /// the accumulator.  Caller is responsible for byte-aligning the
     /// range and for emitting the result via putRawShort16 (LE) for
     /// most sections, or putBERawShort16 (BE) for HANDLES page CRCs.
-    duint16 crc16(duint16 seed, size_t start, size_t end) const;
+    std::uint16_t crc16(std::uint16_t seed, size_t start, size_t end) const;
 
     // ---- in-place patching ---------------------------------------------
 
     /// Overwrite 16-bit little-endian at byte offset (no bit shift).
     /// Used to back-patch the file-header section-locator records once
     /// final section addresses are known.
-    void patchRawShort16(size_t byteOffset, duint16 v);
+    void patchRawShort16(size_t byteOffset, std::uint16_t v);
 
     /// Overwrite 32-bit little-endian at byte offset (no bit shift).
-    void patchRawLong32(size_t byteOffset, duint32 v);
+    void patchRawLong32(size_t byteOffset, std::uint32_t v);
 
     /// Back-patch the RL objSize field at the given stream-bit offset.
     /// The RL straddles bytes [bitOffset/8 .. bitOffset/8+4], each shifted
@@ -200,14 +200,14 @@ public:
     /// writer leave a remainder of 2: "01"+RC = 10 bits, "00"+RS = 18 bits,
     /// "10"/"11" = 2 bits — the byte+2-bit shift is always 2).
     /// Call this BEFORE alignToByte().
-    void patchRawLong32AtBit(size_t bitOffset, duint32 val);
+    void patchRawLong32AtBit(size_t bitOffset, std::uint32_t val);
 
 private:
     /// Append a single byte assuming the cursor is byte-aligned.
-    void appendAlignedByte(duint8 b);
+    void appendAlignedByte(std::uint8_t b);
 
-    std::vector<duint8> m_buf;
-    duint8 m_bitPos {0};
+    std::vector<std::uint8_t> m_buf;
+    std::uint8_t m_bitPos {0};
     DRW_TextCodec *m_decoder {nullptr};
 };
 

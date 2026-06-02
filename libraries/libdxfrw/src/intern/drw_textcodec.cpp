@@ -484,7 +484,7 @@ std::string DRW_ConvUTF16::toUtf8(const std::string &s){//RLZ: pending to write
     for ( auto it=s.begin() ; it < s.end(); ++it ) {
         unsigned char c1 = *it;
         unsigned char c2 = *(++it);
-        duint16 ch = (c2 <<8) | c1;
+        std::uint16_t ch = (c2 <<8) | c1;
         res +=encodeNum(ch);
     } //end for
 

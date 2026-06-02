@@ -51,7 +51,7 @@ using Catch::Approx;
 class DrwObjectEncodeTestAccess {
 public:
     static bool parse(DRW_TableEntry& e, DRW::Version v, dwgBuffer* buf) {
-        duint32 bs = 0;
+        std::uint32_t bs = 0;
         return e.parseDwg(v, buf, bs);
     }
     static bool encodeDictionary(const DRW_Dictionary& e, DRW::Version v,
@@ -122,9 +122,9 @@ public:
                                  dwgBufferW* buf) {
         return e.encodeDwg(v, buf);
     }
-    static dint16 oType(const DRW_TableEntry& e) { return e.oType; }
-    static void setNumReactors(DRW_TableEntry& e, dint32 n) { e.numReactors = n; }
-    static void setXDictFlag(DRW_TableEntry& e, duint8 f) { e.xDictFlag = f; }
+    static std::int16_t oType(const DRW_TableEntry& e) { return e.oType; }
+    static void setNumReactors(DRW_TableEntry& e, std::int32_t n) { e.numReactors = n; }
+    static void setXDictFlag(DRW_TableEntry& e, std::uint8_t f) { e.xDictFlag = f; }
     // Phase 3A.0 — DIMSTYLE struct->vars sync (syncStructToVars is public, but
     // the wrapper keeps the test call site uniform with the access pattern).
     static void syncDimstyle(DRW_Dimstyle& d) { d.syncStructToVars(); }
@@ -132,7 +132,7 @@ public:
 
 namespace {
 
-std::vector<duint8> snapshot(const dwgBufferW& w) { return w.data(); }
+std::vector<std::uint8_t> snapshot(const dwgBufferW& w) { return w.data(); }
 
 // Build a null handle (code 0, size 0).  Parser will read ref=0 back.
 dwgHandle nullHandle() {
@@ -145,13 +145,13 @@ dwgHandle nullHandle() {
 
 // Build a hard-pointer (code 4) handle.  Mirrors makeHardPtr in
 // dwgwriter15.cpp (file-local there; inlined here).
-dwgHandle hardPtr(duint32 ref) {
+dwgHandle hardPtr(std::uint32_t ref) {
     dwgHandle h;
     h.code = (ref == 0) ? 0 : 4;
     h.ref  = ref;
     h.size = 0;
     if (ref != 0) {
-        duint32 t = ref;
+        std::uint32_t t = ref;
         while (t != 0) { t >>= 8; ++h.size; }
     }
     return h;
@@ -166,8 +166,8 @@ dwgHandle hardPtr(duint32 ref) {
 // the caller is responsible for emitting matching parent/reactor/xdic
 // handles at the head of the post-body handle stream.
 void emitObjectPreamble(dwgBufferW& body, DRW::Version version,
-                        duint16 oType, duint32 handle,
-                        dint32 numReactors = 0, duint8 xDictFlag = 0) {
+                        std::uint16_t oType, std::uint32_t handle,
+                        std::int32_t numReactors = 0, std::uint8_t xDictFlag = 0) {
     body.putObjType(version, oType);
     if (version > DRW::AC1014 && version < DRW::AC1024) {
         // RL 32-bit obj-size-in-bits placeholder; parser reads but does not
@@ -187,11 +187,11 @@ void emitObjectPreamble(dwgBufferW& body, DRW::Version version,
 // handles + xdic (when xDictFlag != 1).  Must precede any type-specific
 // handles in the post-body handle stream so the parser's
 // readCommonObjectHandles call lands its consumption in the right slot.
-void emitCommonHandlePrefix(dwgBufferW& body, duint32 parentHandle,
-                            const std::vector<duint32>& reactorHandles,
-                            duint8 xDictFlag) {
+void emitCommonHandlePrefix(dwgBufferW& body, std::uint32_t parentHandle,
+                            const std::vector<std::uint32_t>& reactorHandles,
+                            std::uint8_t xDictFlag) {
     body.putHandle(hardPtr(parentHandle));
-    for (duint32 ref : reactorHandles) {
+    for (std::uint32_t ref : reactorHandles) {
         body.putHandle(hardPtr(ref));
     }
     if (xDictFlag != 1) {
@@ -211,13 +211,13 @@ void emitCommonHandlePrefix(dwgBufferW& body, duint32 parentHandle,
 // to consume them correctly.
 void emitLayoutBody(dwgBufferW& body, DRW::Version version,
                     const DRW_Layout& src,
-                    duint32 parentHandle = 0,
-                    const std::vector<duint32>& reactorHandles = {},
-                    duint8 xDictFlag = 0,
-                    duint32 paperSpaceBlockRecordRef = 0,
-                    duint32 lastActiveViewportRef = 0,
-                    duint32 baseUcsRef = 0,
-                    duint32 namedUcsRef = 0) {
+                    std::uint32_t parentHandle = 0,
+                    const std::vector<std::uint32_t>& reactorHandles = {},
+                    std::uint8_t xDictFlag = 0,
+                    std::uint32_t paperSpaceBlockRecordRef = 0,
+                    std::uint32_t lastActiveViewportRef = 0,
+                    std::uint32_t baseUcsRef = 0,
+                    std::uint32_t namedUcsRef = 0) {
     body.putVariableText(version, src.pageSetupName);
     body.putVariableText(version, src.printerConfig);
     body.putBitShort(src.plotLayoutFlags);
@@ -284,7 +284,7 @@ void emitLayoutBody(dwgBufferW& body, DRW::Version version,
     body.putHandle(hardPtr(baseUcsRef));
     body.putHandle(hardPtr(namedUcsRef));
     if (version >= DRW::AC1018) {
-        for (dint32 i = 0; i < src.viewportCount; ++i) {
+        for (std::int32_t i = 0; i < src.viewportCount; ++i) {
             body.putHandle(nullHandle());
         }
     }
@@ -470,17 +470,17 @@ TEST_CASE("DRW_Layout::parseDwg consumes parentHandle + reactors before type-spe
     src.layoutFlags = 0;
     src.viewportCount = 0;
 
-    const duint32 kParent = 0x42;
-    const std::vector<duint32> kReactors = {0x50, 0x51};
-    const duint32 kPaperSpaceRef = 0x70;
-    const duint32 kLastActiveRef = 0x71;
-    const duint32 kBaseUcsRef    = 0x72;
-    const duint32 kNamedUcsRef   = 0x73;
+    const std::uint32_t kParent = 0x42;
+    const std::vector<std::uint32_t> kReactors = {0x50, 0x51};
+    const std::uint32_t kPaperSpaceRef = 0x70;
+    const std::uint32_t kLastActiveRef = 0x71;
+    const std::uint32_t kBaseUcsRef    = 0x72;
+    const std::uint32_t kNamedUcsRef   = 0x73;
 
     DRW::Version ver = DRW::AC1018;
     dwgBufferW w;
     emitObjectPreamble(w, ver, 82, 0x110,
-                       static_cast<dint32>(kReactors.size()),
+                       static_cast<std::int32_t>(kReactors.size()),
                        /*xDictFlag=*/0);
     emitLayoutBody(w, ver, src, kParent, kReactors, /*xDictFlag=*/0,
                    kPaperSpaceRef, kLastActiveRef, kBaseUcsRef, kNamedUcsRef);
@@ -492,7 +492,7 @@ TEST_CASE("DRW_Layout::parseDwg consumes parentHandle + reactors before type-spe
 
     // The fix guarantees parent is read into parentHandle, and type-specific
     // handles land in the correct slots.
-    REQUIRE(static_cast<duint32>(dst.parentHandle)        == kParent);
+    REQUIRE(static_cast<std::uint32_t>(dst.parentHandle)        == kParent);
     REQUIRE(dst.paperSpaceBlockRecordHandle.ref           == kPaperSpaceRef);
     REQUIRE(dst.lastActiveViewportHandle.ref              == kLastActiveRef);
     REQUIRE(dst.baseUcsHandle.ref                         == kBaseUcsRef);
@@ -520,7 +520,7 @@ TEST_CASE("DRW_IDBuffer::parseDwg captures object-id handle list",
     DRW_IDBuffer dst;
     REQUIRE(DrwObjectEncodeTestAccess::parse(dst, ver, &r));
 
-    REQUIRE(static_cast<duint32>(dst.parentHandle) == 0x10u);
+    REQUIRE(static_cast<std::uint32_t>(dst.parentHandle) == 0x10u);
     REQUIRE(dst.classVersion == 0);
     REQUIRE(dst.objIds.size() == 3u);
     REQUIRE(dst.objIds[0] == 0x100u);
@@ -555,7 +555,7 @@ TEST_CASE("DRW_LayerIndex::parseDwg captures per-layer entry handles",
     DRW_LayerIndex dst;
     REQUIRE(DrwObjectEncodeTestAccess::parse(dst, ver, &r));
 
-    REQUIRE(static_cast<duint32>(dst.parentHandle) == 0x20u);
+    REQUIRE(static_cast<std::uint32_t>(dst.parentHandle) == 0x20u);
     REQUIRE(dst.timestamp1 == 0x12345u);
     REQUIRE(dst.timestamp2 == 0x6789au);
     REQUIRE(dst.entries.size() == 2u);
@@ -773,7 +773,7 @@ TEST_CASE("DRW_Dictionary::encodeDwg round-trips entries + cloning",
 
     REQUIRE(dst.cloning    == 1);
     REQUIRE(dst.hardOwner  == 1);
-    REQUIRE(static_cast<duint32>(dst.parentHandle) == 0xCu);
+    REQUIRE(static_cast<std::uint32_t>(dst.parentHandle) == 0xCu);
     REQUIRE(dst.m_entries.size() == 3u);
     REQUIRE(dst.m_entries[0].m_name   == "ACAD_LAYOUT");
     REQUIRE(dst.m_entries[0].m_handle == 0x1Au);
@@ -890,7 +890,7 @@ TEST_CASE("DRW_Group::encodeDwg round-trips description + entity handles",
     REQUIRE(dst.m_entityHandles[0] == 0x800u);
     REQUIRE(dst.m_entityHandles[1] == 0x801u);
     REQUIRE(dst.m_entityHandles[2] == 0x802u);
-    REQUIRE(static_cast<duint32>(dst.parentHandle) == 0xCu);
+    REQUIRE(static_cast<std::uint32_t>(dst.parentHandle) == 0xCu);
 }
 
 // XRECORD encoder round-trip (ODA §20.4.105 — typed-pair payload).  Covers
@@ -914,12 +914,12 @@ TEST_CASE("DRW_XRecord::encodeDwg round-trips every value type bucket",
     src.m_values.emplace_back(1,   UTF8STRING("hello"));               // string
     src.m_values.emplace_back(10,  DRW_Coord{1.0, 2.0, 3.0});           // 3D point
     src.m_values.emplace_back(40,  3.14159);                            // double
-    src.m_values.emplace_back(70,  static_cast<dint32>(-5));            // int16
-    src.m_values.emplace_back(90,  static_cast<dint32>(0x12345678));    // int32
-    src.m_values.emplace_back(160, static_cast<dint64>(0x1122334455667788LL)); // int64
-    src.m_values.emplace_back(290, static_cast<dint32>(1));             // bool
-    src.m_values.emplace_back(280, static_cast<dint32>(7));             // byte
-    src.m_values.emplace_back(310, std::vector<duint8>{0xDE, 0xAD, 0xBE, 0xEF}); // binary
+    src.m_values.emplace_back(70,  static_cast<std::int32_t>(-5));            // int16
+    src.m_values.emplace_back(90,  static_cast<std::int32_t>(0x12345678));    // int32
+    src.m_values.emplace_back(160, static_cast<std::int64_t>(0x1122334455667788LL)); // int64
+    src.m_values.emplace_back(290, static_cast<std::int32_t>(1));             // bool
+    src.m_values.emplace_back(280, static_cast<std::int32_t>(7));             // byte
+    src.m_values.emplace_back(310, std::vector<std::uint8_t>{0xDE, 0xAD, 0xBE, 0xEF}); // binary
 
     // Data-block handle — code 330 is in xRecordCodeIsHandle range; parser
     // stores the low 32 bits.
@@ -944,7 +944,7 @@ TEST_CASE("DRW_XRecord::encodeDwg round-trips every value type bucket",
     REQUIRE(DrwObjectEncodeTestAccess::parse(dst, ver, &r));
 
     REQUIRE(dst.m_cloning == 1);
-    REQUIRE(static_cast<duint32>(dst.parentHandle) == 0xCu);
+    REQUIRE(static_cast<std::uint32_t>(dst.parentHandle) == 0xCu);
     REQUIRE(dst.m_values.size() == 9u);
 
     // String
@@ -971,12 +971,12 @@ TEST_CASE("DRW_XRecord::encodeDwg round-trips every value type bucket",
     REQUIRE(dst.m_values[3].type() == DRW_Variant::INTEGER);
     // Parser reads RS as unsigned then casts via static_cast<int>; -5 (0xFFFB)
     // round-trips back as 0xFFFB / 65531 in unsigned representation.
-    REQUIRE(static_cast<duint16>(dst.m_values[3].i_val() & 0xFFFF) == 0xFFFBu);
+    REQUIRE(static_cast<std::uint16_t>(dst.m_values[3].i_val() & 0xFFFF) == 0xFFFBu);
 
     // Int32
     REQUIRE(dst.m_values[4].code() == 90);
     REQUIRE(dst.m_values[4].type() == DRW_Variant::INTEGER);
-    REQUIRE(static_cast<duint32>(dst.m_values[4].i_val()) == 0x12345678u);
+    REQUIRE(static_cast<std::uint32_t>(dst.m_values[4].i_val()) == 0x12345678u);
 
     // Int64 (160-169)
     REQUIRE(dst.m_values[5].code() == 160);
@@ -996,7 +996,7 @@ TEST_CASE("DRW_XRecord::encodeDwg round-trips every value type bucket",
     // Binary
     REQUIRE(dst.m_values[8].code() == 310);
     REQUIRE(dst.m_values[8].type() == DRW_Variant::BINARY);
-    const std::vector<duint8>* raw = dst.m_values[8].binary();
+    const std::vector<std::uint8_t>* raw = dst.m_values[8].binary();
     REQUIRE(raw != nullptr);
     REQUIRE(raw->size() == 4u);
     REQUIRE((*raw)[0] == 0xDE);
@@ -1139,7 +1139,7 @@ TEST_CASE("DRW_Layout::encodeDwg round-trips PlotSettings + layout body + handle
     REQUIRE(dst.viewportCount == 2);
 
     // Handle prefix + type-specific tail.
-    REQUIRE(static_cast<duint32>(dst.parentHandle)        == 0x1A2u);
+    REQUIRE(static_cast<std::uint32_t>(dst.parentHandle)        == 0x1A2u);
     REQUIRE(dst.paperSpaceBlockRecordHandle.ref           == 0x70u);
     REQUIRE(dst.lastActiveViewportHandle.ref              == 0x71u);
     REQUIRE(dst.baseUcsHandle.ref                         == 0x72u);
@@ -1196,7 +1196,7 @@ TEST_CASE("DRW_Layout::encodeDwg emits common handle prefix before type-specific
     REQUIRE(DrwObjectEncodeTestAccess::parse(dst, ver, &r));
 
     // parentHandle must be 0x55, not 0 (and not consumed by paperSpaceBlockRecord).
-    REQUIRE(static_cast<duint32>(dst.parentHandle) == 0x55u);
+    REQUIRE(static_cast<std::uint32_t>(dst.parentHandle) == 0x55u);
     // Type-specific handles land in the expected slots — proves the encoder
     // emitted (parent + 2 reactors + xdic) BEFORE the type-specific block.
     REQUIRE(dst.paperSpaceBlockRecordHandle.ref == 0x90u);
@@ -1235,7 +1235,7 @@ TEST_CASE("DRW_RasterVariables::encodeDwg round-trips classVersion + frame + qua
     REQUIRE(dst.m_imageFrame   == 1);
     REQUIRE(dst.m_imageQuality == 1);
     REQUIRE(dst.m_units        == 2);
-    REQUIRE(static_cast<duint32>(dst.parentHandle) == 0xCu);
+    REQUIRE(static_cast<std::uint32_t>(dst.parentHandle) == 0xCu);
 }
 
 // SORTENTSTABLE encoder round-trip (ODA §20.4.93).  Body: numEntries +
@@ -1265,7 +1265,7 @@ TEST_CASE("DRW_SortEntsTable::encodeDwg round-trips sort + entity handles + bloc
     DRW_SortEntsTable dst;
     REQUIRE(DrwObjectEncodeTestAccess::parse(dst, ver, &r));
 
-    REQUIRE(static_cast<duint32>(dst.parentHandle) == 0x1Fu);
+    REQUIRE(static_cast<std::uint32_t>(dst.parentHandle) == 0x1Fu);
     REQUIRE(dst.m_blockOwnerHandle == 0x1Fu);
     REQUIRE(dst.m_sortHandles.size() == 3u);
     REQUIRE(dst.m_sortHandles[0] == 0x101u);
@@ -1323,7 +1323,7 @@ TEST_CASE("DRW_SpatialFilter::encodeDwg round-trips clip boundary + transforms",
     DRW_SpatialFilter dst;
     REQUIRE(DrwObjectEncodeTestAccess::parse(dst, ver, &r));
 
-    REQUIRE(static_cast<duint32>(dst.parentHandle) == 0x44u);
+    REQUIRE(static_cast<std::uint32_t>(dst.parentHandle) == 0x44u);
     REQUIRE(dst.m_boundaryPoints.size() == 4u);
     REQUIRE(dst.m_boundaryPoints[0].x == Approx(0.0));
     REQUIRE(dst.m_boundaryPoints[1].x == Approx(10.0));
@@ -1391,7 +1391,7 @@ TEST_CASE("DRW_GeoData::encodeDwg round-trips version=2 metadata + mesh",
     DRW_GeoData dst;
     REQUIRE(DrwObjectEncodeTestAccess::parse(dst, ver, &r));
 
-    REQUIRE(static_cast<duint32>(dst.parentHandle) == 0x1Au);
+    REQUIRE(static_cast<std::uint32_t>(dst.parentHandle) == 0x1Au);
     REQUIRE(dst.m_version == 2);
     REQUIRE(dst.m_hostBlockHandle == 0x1Fu);
     REQUIRE(dst.m_coordinatesType == 1);
@@ -1449,7 +1449,7 @@ TEST_CASE("DRW_DictionaryVar::encodeDwg round-trips schema + value",
 
     REQUIRE(dst.m_schema == 0);
     REQUIRE(dst.m_value  == "Standard");
-    REQUIRE(static_cast<duint32>(dst.parentHandle) == 0x40u);
+    REQUIRE(static_cast<std::uint32_t>(dst.parentHandle) == 0x40u);
 }
 
 // DICTIONARYWDFLT encoder round-trip (ODA §20.4.45).  Inherits DICTIONARY's
@@ -1481,7 +1481,7 @@ TEST_CASE("DRW_DictionaryWithDefault::encodeDwg round-trips dictionary + default
 
     REQUIRE(dst.cloning      == 1);
     REQUIRE(dst.hardOwner    == 1);
-    REQUIRE(static_cast<duint32>(dst.parentHandle) == 0xCu);
+    REQUIRE(static_cast<std::uint32_t>(dst.parentHandle) == 0xCu);
     REQUIRE(dst.m_entries.size() == 2u);
     REQUIRE(dst.m_entries[0].m_name == "ENTRY_A");
     REQUIRE(dst.m_entries[0].m_handle == 0x71u);
@@ -1514,7 +1514,7 @@ TEST_CASE("DRW_IDBuffer::encodeDwg round-trips object id list",
     DRW_IDBuffer dst;
     REQUIRE(DrwObjectEncodeTestAccess::parse(dst, ver, &r));
 
-    REQUIRE(static_cast<duint32>(dst.parentHandle) == 0x10u);
+    REQUIRE(static_cast<std::uint32_t>(dst.parentHandle) == 0x10u);
     REQUIRE(dst.classVersion == 0);
     REQUIRE(dst.objIds.size() == 4u);
     REQUIRE(dst.objIds[0] == 0x101u);
@@ -1550,7 +1550,7 @@ TEST_CASE("DRW_LayerIndex::encodeDwg round-trips timestamps + per-layer entries"
     DRW_LayerIndex dst;
     REQUIRE(DrwObjectEncodeTestAccess::parse(dst, ver, &r));
 
-    REQUIRE(static_cast<duint32>(dst.parentHandle) == 0x10u);
+    REQUIRE(static_cast<std::uint32_t>(dst.parentHandle) == 0x10u);
     REQUIRE(dst.timestamp1 == 0x99887766u);
     REQUIRE(dst.timestamp2 == 0x11223344u);
     REQUIRE(dst.entries.size() == 3u);
@@ -1630,7 +1630,7 @@ TEST_CASE("DRW_Field::encodeDwg round-trips evaluator + double value + child han
     DRW_Field dst;
     REQUIRE(DrwObjectEncodeTestAccess::parse(dst, ver, &r));
 
-    REQUIRE(static_cast<duint32>(dst.parentHandle) == 0x44u);
+    REQUIRE(static_cast<std::uint32_t>(dst.parentHandle) == 0x44u);
     REQUIRE(dst.m_evaluatorId == "AcVariable");
     REQUIRE(dst.m_fieldCode   == "%<\\AcVar Area>%");
     REQUIRE(dst.m_formatString == "%lf");
@@ -1672,7 +1672,7 @@ TEST_CASE("DRW_FieldList::encodeDwg round-trips field handles",
     DRW_FieldList dst;
     REQUIRE(DrwObjectEncodeTestAccess::parse(dst, ver, &r));
 
-    REQUIRE(static_cast<duint32>(dst.parentHandle) == 0x44u);
+    REQUIRE(static_cast<std::uint32_t>(dst.parentHandle) == 0x44u);
     REQUIRE(dst.m_unknown == 0);
     REQUIRE(dst.m_fieldHandles.size() == 3u);
     REQUIRE(dst.m_fieldHandles[0] == 0x1200u);
@@ -1804,7 +1804,7 @@ TEST_CASE("DRW_Dimstyle default-constructs R2007/R2010 members with defaults",
 TEST_CASE("DRW_UCS::parseDwg reads geometry, elevation, orthoType, handles",
           "[dwg-object-encode][ucs][data-loss]") {
     const DRW::Version ver = DRW::AC1015;
-    constexpr duint16 ucsType = 0x3F;  // UCS table record.
+    constexpr std::uint16_t ucsType = 0x3F;  // UCS table record.
 
     dwgBufferW body;
     emitObjectPreamble(body, ver, ucsType, /*handle=*/0x30u,
@@ -1824,7 +1824,7 @@ TEST_CASE("DRW_UCS::parseDwg reads geometry, elevation, orthoType, handles",
     body.putHandle(hardPtr(0x100u));  // base_ucs
     body.putHandle(hardPtr(0x101u));  // named_ucs
 
-    std::vector<duint8> bytes = snapshot(body);
+    std::vector<std::uint8_t> bytes = snapshot(body);
     dwgBuffer r(bytes.data(), bytes.size());
     DRW_UCS dst;
     REQUIRE(DrwObjectEncodeTestAccess::parse(dst, ver, &r));
@@ -1870,7 +1870,7 @@ TEST_CASE("DRW_PlotSettings default-constructs full plot field set",
 TEST_CASE("DRW_PlotSettings::parseDwg reads margins/paper/window/scale",
           "[dwg-object-encode][plotsettings][data-loss]") {
     const DRW::Version ver = DRW::AC1015;
-    constexpr duint16 psType = 0x1F4;  // custom-class number (>=500).
+    constexpr std::uint16_t psType = 0x1F4;  // custom-class number (>=500).
 
     dwgBufferW body;
     emitObjectPreamble(body, ver, psType, /*handle=*/0x40u,
@@ -1905,7 +1905,7 @@ TEST_CASE("DRW_PlotSettings::parseDwg reads margins/paper/window/scale",
     // AC1015 < AC1018 — no shadeplot fields.
     emitCommonHandlePrefix(body, /*parentHandle=*/0x3Du, {}, /*xDictFlag=*/0);
 
-    std::vector<duint8> bytes = snapshot(body);
+    std::vector<std::uint8_t> bytes = snapshot(body);
     dwgBuffer r(bytes.data(), bytes.size());
     DRW_PlotSettings dst;
     REQUIRE(DrwObjectEncodeTestAccess::parse(dst, ver, &r));
@@ -1927,5 +1927,5 @@ TEST_CASE("DRW_PlotSettings::parseDwg reads margins/paper/window/scale",
     CHECK(dst.currentStyleSheet == "acad.ctb");
     CHECK(dst.scaleType == 4);
     CHECK(dst.scaleFactor == Approx(0.5));
-    CHECK(static_cast<duint32>(dst.parentHandle) == 0x3Du);
+    CHECK(static_cast<std::uint32_t>(dst.parentHandle) == 0x3Du);
 }

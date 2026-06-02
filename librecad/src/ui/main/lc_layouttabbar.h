@@ -24,6 +24,8 @@
 #ifndef LC_LAYOUTTABBAR_H
 #define LC_LAYOUTTABBAR_H
 
+#include <cstdint>
+
 #include <QWidget>
 
 #include "drw_base.h"
@@ -66,7 +68,7 @@ public:
 signals:
     /** Emitted when the user clicks a tab.  Provided for QC_MDIWindow
      *  to hook custom behavior alongside the handle setter. */
-    void tabClicked(duint32 handle);
+    void tabClicked(std::uint32_t handle);
 
 private slots:
     void onTabBarClicked(int index);
@@ -84,11 +86,11 @@ private:
     QTimer* m_pollTimer = nullptr;
 
     /** Tab-index → layout handle.  Empty for the modelspace tab (handle 0). */
-    std::vector<duint32> m_handlesByIndex;
+    std::vector<std::uint32_t> m_handlesByIndex;
 
     /** Cached state used to suppress redundant rebuilds. */
     std::size_t m_lastLayoutCount = 0;
-    duint32 m_lastActiveHandle = 0;
+    std::uint32_t m_lastActiveHandle = 0;
 };
 
 #endif  // LC_LAYOUTTABBAR_H

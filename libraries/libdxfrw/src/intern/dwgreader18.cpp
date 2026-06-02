@@ -24,13 +24,13 @@
 
 void dwgReader18::genMagicNumber(){
     int size =0x114;
-    std::vector<duint8> tmpMagicStr(size);
-    duint8 *p = tmpMagicStr.data();
+    std::vector<std::uint8_t> tmpMagicStr(size);
+    std::uint8_t *p = tmpMagicStr.data();
     int rSeed =1;
     while (size--) {
         rSeed *= 0x343fd;
         rSeed += 0x269ec3;
-        *p++ = static_cast<duint8>(rSeed >> 0x10);
+        *p++ = static_cast<std::uint8_t>(rSeed >> 0x10);
     }
     int j = 0;
     size =0x114;
@@ -46,33 +46,33 @@ void dwgReader18::genMagicNumber(){
     }
 }
 
-duint32 dwgReader18::checksum(duint32 seed, duint8* data, duint64 sz){
+std::uint32_t dwgReader18::checksum(std::uint32_t seed, std::uint8_t* data, std::uint64_t sz){
     return dwgUtil::checksum18(seed, data, sz);
 }
 
 //called: Section page map: 0x41630e3b
-bool dwgReader18::parseSysPage(duint8 *decompSec, duint32 decompSize){
+bool dwgReader18::parseSysPage(std::uint8_t *decompSec, std::uint32_t decompSize){
     DRW_DBG("\nparseSysPage:\n ");
-    duint32 compSize = fileBuf->getRawLong32();
+    std::uint32_t compSize = fileBuf->getRawLong32();
     DRW_DBG("Compressed size= "); DRW_DBG(compSize); DRW_DBG(", "); DRW_DBGH(compSize);
-    duint32 compType = fileBuf->getRawLong32();
+    std::uint32_t compType = fileBuf->getRawLong32();
     DRW_DBG("\nCompression type= "); DRW_DBGH(compType);
     DRW_DBG("\nSection page checksum= "); DRW_DBGH(fileBuf->getRawLong32()); DRW_DBG("\n");
 
-    duint8 hdrData[20];
+    std::uint8_t hdrData[20];
     fileBuf->moveBitPos(-160);
     fileBuf->getBytes(hdrData, 20);
-    duint32 storedChecksum = static_cast<duint32>(hdrData[16])
-                           | (static_cast<duint32>(hdrData[17]) << 8)
-                           | (static_cast<duint32>(hdrData[18]) << 16)
-                           | (static_cast<duint32>(hdrData[19]) << 24);
-    for (duint8 i= 16; i<20; ++i)
+    std::uint32_t storedChecksum = static_cast<std::uint32_t>(hdrData[16])
+                           | (static_cast<std::uint32_t>(hdrData[17]) << 8)
+                           | (static_cast<std::uint32_t>(hdrData[18]) << 16)
+                           | (static_cast<std::uint32_t>(hdrData[19]) << 24);
+    for (std::uint8_t i= 16; i<20; ++i)
         hdrData[i]=0;
-    duint32 calcsH = checksum(0, hdrData, 20);
+    std::uint32_t calcsH = checksum(0, hdrData, 20);
     DRW_DBG("Calc hdr checksum= "); DRW_DBGH(calcsH);
-    std::vector<duint8> tmpCompSec(compSize);
+    std::vector<std::uint8_t> tmpCompSec(compSize);
     fileBuf->getBytes(tmpCompSec.data(), compSize);
-    duint32 calcsD = checksum(calcsH, tmpCompSec.data(), compSize);
+    std::uint32_t calcsD = checksum(calcsH, tmpCompSec.data(), compSize);
     DRW_DBG("\nCalc data checksum= "); DRW_DBGH(calcsD); DRW_DBG("\n");
     if (calcsD != storedChecksum) {
         DRW_DBG("parseSysPage: checksum mismatch: stored="); DRW_DBGH(storedChecksum);
@@ -98,16 +98,16 @@ bool dwgReader18::parseSysPage(duint8 *decompSec, duint32 decompSize){
 }
 
  //called ???: Section map: 0x4163003b
-bool dwgReader18::parseDataPage(const dwgSectionInfo &si/*, duint8 *dData*/){
+bool dwgReader18::parseDataPage(const dwgSectionInfo &si/*, std::uint8_t *dData*/){
     DRW_DBG("\nparseDataPage\n ");
-    objData.reset( new duint8 [si.pageCount * si.maxSize] );
+    objData.reset( new std::uint8_t [si.pageCount * si.maxSize] );
 
     for (auto it=si.pages.begin(); it!=si.pages.end(); ++it){
         dwgPageInfo pi = it->second;
         if (!fileBuf->setPosition(pi.address))
             return false;
         //decript section header
-        duint8 hdrData[32];
+        std::uint8_t hdrData[32];
         fileBuf->getBytes(hdrData, 32);
         dwgCompressor::decrypt18Hdr(hdrData, 32, pi.address);
         DRW_DBG("Section  "); DRW_DBG(si.name); DRW_DBG(" page header=\n");
@@ -140,25 +140,25 @@ bool dwgReader18::parseDataPage(const dwgSectionInfo &si/*, duint8 *dData*/){
         DRW_DBG("\n      data checksum= "); DRW_DBGH(bufHdr.getRawLong32()); DRW_DBG("\n");
 
         //get compressed data
-        std::vector<duint8> cData(pi.cSize);
+        std::vector<std::uint8_t> cData(pi.cSize);
         if (!fileBuf->setPosition(pi.address + 32)) {
             return false;
         }
         fileBuf->getBytes(cData.data(), pi.cSize);
 
         //calculate checksum
-        duint32 storedHdrCk = static_cast<duint32>(hdrData[24])
-                            | (static_cast<duint32>(hdrData[25]) << 8)
-                            | (static_cast<duint32>(hdrData[26]) << 16)
-                            | (static_cast<duint32>(hdrData[27]) << 24);
-        duint32 storedDataCk = static_cast<duint32>(hdrData[28])
-                             | (static_cast<duint32>(hdrData[29]) << 8)
-                             | (static_cast<duint32>(hdrData[30]) << 16)
-                             | (static_cast<duint32>(hdrData[31]) << 24);
-        duint32 calcsD = checksum(0, cData.data(), pi.cSize);
-        for (duint8 i= 24; i<28; ++i)
+        std::uint32_t storedHdrCk = static_cast<std::uint32_t>(hdrData[24])
+                            | (static_cast<std::uint32_t>(hdrData[25]) << 8)
+                            | (static_cast<std::uint32_t>(hdrData[26]) << 16)
+                            | (static_cast<std::uint32_t>(hdrData[27]) << 24);
+        std::uint32_t storedDataCk = static_cast<std::uint32_t>(hdrData[28])
+                             | (static_cast<std::uint32_t>(hdrData[29]) << 8)
+                             | (static_cast<std::uint32_t>(hdrData[30]) << 16)
+                             | (static_cast<std::uint32_t>(hdrData[31]) << 24);
+        std::uint32_t calcsD = checksum(0, cData.data(), pi.cSize);
+        for (std::uint8_t i= 24; i<28; ++i)
             hdrData[i]=0;
-        duint32 calcsH = checksum(calcsD, hdrData, 32);
+        std::uint32_t calcsH = checksum(calcsD, hdrData, 32);
         DRW_DBG("Calc header checksum= "); DRW_DBGH(calcsH);
         DRW_DBG("\nCalc data checksum= "); DRW_DBGH(calcsD); DRW_DBG("\n");
         if (calcsD != storedDataCk || calcsH != storedHdrCk) {
@@ -169,7 +169,7 @@ bool dwgReader18::parseDataPage(const dwgSectionInfo &si/*, duint8 *dData*/){
             return false;
         }
 
-        duint8* oData = objData.get() + pi.startOffset;
+        std::uint8_t* oData = objData.get() + pi.startOffset;
         pi.uSize = si.maxSize;
         if (si.compressed == 1) {
             // type 1 = store (no compression)
@@ -198,7 +198,7 @@ bool dwgReader18::readMetaData() {
     DRW_DBG("\npreviewImagePos (seekerImageData) = "); DRW_DBG(previewImagePos);
     DRW_DBG("\napp Dwg version= "); DRW_DBGH(fileBuf->getRawChar8()); DRW_DBG(", ");
     DRW_DBG("\napp maintenance version= "); DRW_DBGH(fileBuf->getRawChar8());
-    duint16 cp = fileBuf->getRawShort16();
+    std::uint16_t cp = fileBuf->getRawShort16();
     DRW_DBG("\ncodepage= "); DRW_DBG(cp);
     if (cp == 30)
         decoder.setCodePage("ANSI_1252", false);
@@ -207,11 +207,11 @@ bool dwgReader18::readMetaData() {
     securityFlags = fileBuf->getRawLong32();
     DRW_DBG("\nsecurity flags= "); DRW_DBG(securityFlags);
     // UNKNOWN SECTION 4 bytes
-    duint32 uk =    fileBuf->getRawLong32();
+    std::uint32_t uk =    fileBuf->getRawLong32();
     DRW_DBG("\nUNKNOWN SECTION ( 4 bytes) = "); DRW_DBG(uk);
-    duint32 sumInfoAddr =    fileBuf->getRawLong32();
+    std::uint32_t sumInfoAddr =    fileBuf->getRawLong32();
     DRW_DBG("\nsummary Info Address= "); DRW_DBG(sumInfoAddr);
-    duint32 vbaAdd =    fileBuf->getRawLong32();
+    std::uint32_t vbaAdd =    fileBuf->getRawLong32();
     DRW_DBG("\nVBA address= "); DRW_DBGH(vbaAdd);
     DRW_DBG("\npos 0x28 are 0x00000080= "); DRW_DBGH(fileBuf->getRawLong32());
      DRW_DBG("\n");
@@ -225,10 +225,10 @@ bool dwgReader18::readFileHeader() {
 
 //    genMagicNumber(); DBG("\n"); DBG("\n");
     DRW_DBG("Encrypted Header Data=\n");
-    duint8 byteStr[0x6C];
+    std::uint8_t byteStr[0x6C];
     int size =0x6C;
     for (int i=0, j=0; i< 0x6C;i++) {
-        duint8 ch = fileBuf->getRawChar8();
+        std::uint8_t ch = fileBuf->getRawChar8();
         DRW_DBGH(ch);
         if (j == 15) {
             DRW_DBG("\n");
@@ -273,21 +273,21 @@ bool dwgReader18::readFileHeader() {
     DRW_DBG("\n0x20 long= "); DRW_DBGH(buff.getRawLong32());
     DRW_DBG("\n0x80 long= "); DRW_DBGH(buff.getRawLong32());
     DRW_DBG("\n0x40 long= "); DRW_DBGH(buff.getRawLong32());
-    dint32 secPageMapId = buff.getRawLong32();
+    std::int32_t secPageMapId = buff.getRawLong32();
     DRW_DBG("\nSection Page Map Id= "); DRW_DBGH(secPageMapId);
-    duint64 secPageMapAddr = buff.getRawLong64()+0x100;
+    std::uint64_t secPageMapAddr = buff.getRawLong64()+0x100;
     DRW_DBG("\nSection Page Map address 64b= "); DRW_DBGH(secPageMapAddr);
     DRW_DBG("\nSection Page Map address 64b dec= "); DRW_DBG(secPageMapAddr);
-    duint32 secMapId = buff.getRawLong32();
+    std::uint32_t secMapId = buff.getRawLong32();
     DRW_DBG("\nSection Map Id= "); DRW_DBGH(secMapId);
     DRW_DBG("\nSection page array size= "); DRW_DBGH(buff.getRawLong32());
     DRW_DBG("\nGap array size= "); DRW_DBGH(buff.getRawLong32());
     //TODO: verify CRC
     DRW_DBG("\nCRC32= "); DRW_DBGH(buff.getRawLong32());
-    for (duint8 i = 0x68; i < 0x6c; ++i)
+    for (std::uint8_t i = 0x68; i < 0x6c; ++i)
         byteStr[i] = '\0';
 //    byteStr[i] = '\0';
-    duint32 crcCalc = buff.crc32(0x00,0,0x6C);
+    std::uint32_t crcCalc = buff.crc32(0x00,0,0x6C);
     DRW_DBG("\nCRC32 calculated= "); DRW_DBGH(crcCalc);
 
     DRW_DBG("\nEnd Encrypted Data. Reads 0x14 bytes, equal to magic number:\n");
@@ -307,34 +307,34 @@ bool dwgReader18::readFileHeader() {
 
     if (! fileBuf->setPosition(secPageMapAddr))
         return false;
-    duint32 pageType = fileBuf->getRawLong32();
+    std::uint32_t pageType = fileBuf->getRawLong32();
     DRW_DBG("\nSection page type= "); DRW_DBGH(pageType);
-    duint32 decompSize = fileBuf->getRawLong32();
+    std::uint32_t decompSize = fileBuf->getRawLong32();
     DRW_DBG("\nDecompressed size= "); DRW_DBG(decompSize); DRW_DBG(", "); DRW_DBGH(decompSize);
     if (pageType != 0x41630e3b){
         //bad page type, ends
         DRW_DBG("Warning, bad page type, was expected 0x41630e3b instead of");  DRW_DBGH(pageType); DRW_DBG("\n");
         return false;
     }
-    std::vector<duint8> tmpDecompSec(decompSize);
+    std::vector<std::uint8_t> tmpDecompSec(decompSize);
     if (!parseSysPage(tmpDecompSec.data(), decompSize)) {
         return false;
     }
 
 //parses "Section page map" decompressed data
     dwgBuffer buff2(tmpDecompSec.data(), decompSize, &decoder);
-    duint32 address = 0x100;
+    std::uint32_t address = 0x100;
     //stores temporarily info of all pages:
-    std::unordered_map<duint64, dwgPageInfo >sectionPageMapTmp;
+    std::unordered_map<std::uint64_t, dwgPageInfo >sectionPageMapTmp;
 
     for (unsigned int i = 0; i < decompSize;) {
-        dint32 id = buff2.getRawLong32();//RLZ bad can be +/-
-        duint32 size = buff2.getRawLong32();
+        std::int32_t id = buff2.getRawLong32();//RLZ bad can be +/-
+        std::uint32_t size = buff2.getRawLong32();
         i += 8;
         DRW_DBG("Page num= "); DRW_DBG(id); DRW_DBG(" size= "); DRW_DBGH(size);
         DRW_DBG(" address= "); DRW_DBGH(address);  DRW_DBG("\n");
         //TODO num can be negative indicating gap
-//        duint64 ind = id > 0 ? id : -id;
+//        std::uint64_t ind = id > 0 ? id : -id;
         if (id < 0){
             DRW_DBG("Parent= "); DRW_DBG(buff2.getRawLong32());
             DRW_DBG("\nLeft= "); DRW_DBG(buff2.getRawLong32());
@@ -368,7 +368,7 @@ bool dwgReader18::readFileHeader() {
 //reads sections:
     DRW_DBG("\n*** dwgReader18: reads sections:");
     dwgBuffer buff3(tmpDecompSec.data(), decompSize, &decoder);
-    duint32 numDescriptions = buff3.getRawLong32();
+    std::uint32_t numDescriptions = buff3.getRawLong32();
     DRW_DBG("\nnumDescriptions (sections)= "); DRW_DBG(numDescriptions);
     DRW_DBG("\n0x02 long= "); DRW_DBGH(buff3.getRawLong32());
     DRW_DBG("\n0x00007400 long= "); DRW_DBGH(buff3.getRawLong32());
@@ -391,12 +391,12 @@ bool dwgReader18::readFileHeader() {
         secInfo.encrypted = buff3.getRawLong32();
         //encrypted (doc: 0 no, 1 yes, 2 unkn) on read: objects 0 and encrypted yes
         DRW_DBG("\nEncrypted= "); DRW_DBGH(secInfo.encrypted);
-        duint8 nameCStr[64];
+        std::uint8_t nameCStr[64];
         buff3.getBytes(nameCStr, 64);
         secInfo.name = reinterpret_cast<char*>(nameCStr);
         DRW_DBG("\nSection std::Name= "); DRW_DBG( secInfo.name.c_str() ); DRW_DBG("\n");
         for (unsigned int i = 0; i < secInfo.pageCount; i++){
-            duint32 pn = buff3.getRawLong32();
+            std::uint32_t pn = buff3.getRawLong32();
             dwgPageInfo pi = sectionPageMapTmp[pn]; //get a copy
             DRW_DBG(" reading pag num = "); DRW_DBGH(pn);
             pi.dataSize = buff3.getRawLong32();
@@ -462,26 +462,26 @@ bool dwgReader18::readDwgClasses(){
     DRW_DBG("classes section sentinel= ");
     checkSentinel(&dataBuf, secEnum::CLASSES, true);
 
-    duint32 size = dataBuf.getRawLong32();
+    std::uint32_t size = dataBuf.getRawLong32();
     DRW_DBG("\ndata size in bytes "); DRW_DBG(size);
     if ((DRW::AC1024 <= version && 3 < maintenanceVersion)
         || DRW::AC1032 <= version) { //2010+ MV>3
-        duint32 hSize = dataBuf.getRawLong32();
+        std::uint32_t hSize = dataBuf.getRawLong32();
         DRW_DBG("\n2010+ & MV> 3, height 32b: "); DRW_DBG(hSize);
     }
-    duint32 bitSize = 0;
+    std::uint32_t bitSize = 0;
     if (version > DRW::AC1021) {//2007+
         bitSize = dataBuf.getRawLong32();
         DRW_DBG("\ntotal size in bits "); DRW_DBG(bitSize);
     }
-    duint32 maxClassNum = dataBuf.getBitShort();
+    std::uint32_t maxClassNum = dataBuf.getBitShort();
     DRW_DBG("\nMaximum class number "); DRW_DBG(maxClassNum);
     DRW_DBG("\nRc 1 "); DRW_DBG(dataBuf.getRawChar8());
     DRW_DBG("\nRc 2 "); DRW_DBG(dataBuf.getRawChar8());
     DRW_DBG("\nBit "); DRW_DBG(dataBuf.getBit());
     // DWG custom-class numbers start at 500. maxClassNum is the highest class
     // number used; the loop below iterates (maxClassNum - 499) times. Any
-    // value < 499 produces a duint32 underflow (huge loop), so reject it as
+    // value < 499 produces a std::uint32_t underflow (huge loop), so reject it as
     // structural corruption. maxClassNum == 499 (zero custom classes) is
     // legitimate — empty drawings saved by AutoCAD 2010 RTM (maintenanceVersion=2)
     // were previously rejected outright.
@@ -502,7 +502,7 @@ bool dwgReader18::readDwgClasses(){
         //32 bits and fail BAD_READ_CLASSES.
         bool hasHSize = ((DRW::AC1024 <= version && 3 < maintenanceVersion)
                          || DRW::AC1032 <= version);
-        duint32 strStartPos = bitSize + (hasHSize ? 191 : 159);
+        std::uint32_t strStartPos = bitSize + (hasHSize ? 191 : 159);
         DRW_DBG("\nstrStartPos: "); DRW_DBG(strStartPos);
         strBuff.setPosition(strStartPos >> 3);
         strBuff.setBitPos(strStartPos & 7);
@@ -515,14 +515,14 @@ bool dwgReader18::readDwgClasses(){
         strBuff.setBitPos(strStartPos & 7);
         DRW_DBG("\nclasses strings buff.getPosition: "); DRW_DBG(strBuff.getPosition());
         DRW_DBG("\nclasses strings buff.getBitPos: "); DRW_DBG(strBuff.getBitPos());
-        duint32 strDataSize = strBuff.getRawShort16();
+        std::uint32_t strDataSize = strBuff.getRawShort16();
         DRW_DBG("\nstrDataSize: "); DRW_DBG(strDataSize);
         if (strDataSize & 0x8000) {
             strStartPos -= 16;//decrement 16 bits
             strDataSize &= 0x7FFF; //strip 0x8000;
             strBuff.setPosition(strStartPos >> 3);
             strBuff.setBitPos(strStartPos & 7);
-            duint32 hiSize = strBuff.getRawShort16();
+            std::uint32_t hiSize = strBuff.getRawShort16();
             strDataSize |= (hiSize << 15);
         }
         strStartPos -= strDataSize;
@@ -535,9 +535,9 @@ bool dwgReader18::readDwgClasses(){
 
     /*******************************/
 
-    duint32 endDataPos = maxClassNum-499;
+    std::uint32_t endDataPos = maxClassNum-499;
     DRW_DBG("\nbuff.getPosition: "); DRW_DBG(dataBuf.getPosition());
-    for (duint32 i= 0; i<endDataPos;i++) {
+    for (std::uint32_t i= 0; i<endDataPos;i++) {
         DRW_Class *cl = new DRW_Class();
         cl->parseDwg(version, &dataBuf, strBuf);
         classesmap[cl->classNum] = cl;

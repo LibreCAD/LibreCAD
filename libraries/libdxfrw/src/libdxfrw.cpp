@@ -272,7 +272,7 @@ bool dxfRW::writeAppData(const std::list<std::list<DRW_Variant>>& appData) {
                         break;
 
                     case DRW_Variant::INTEGER64:
-                        writer->writeInt64(data.code(), static_cast<duint64>(data.content.i64));
+                        writer->writeInt64(data.code(), static_cast<std::uint64_t>(data.content.i64));
                         break;
 
                     case DRW_Variant::DOUBLE:
@@ -620,7 +620,7 @@ bool dxfRW::writeDimstyle(DRW_Dimstyle *ent){
         switch (v->type()) {
             case DRW_Variant::STRING:  writer->writeUtf8String(v->code(), v->c_str()); break;
             case DRW_Variant::INTEGER: writer->writeInt16(v->code(), v->i_val()); break;
-            case DRW_Variant::INTEGER64: writer->writeInt64(v->code(), static_cast<duint64>(v->i64_val())); break;
+            case DRW_Variant::INTEGER64: writer->writeInt64(v->code(), static_cast<std::uint64_t>(v->i64_val())); break;
             case DRW_Variant::DOUBLE:  writer->writeDouble(v->code(), v->d_val()); break;
             default: break;
         }
@@ -1900,7 +1900,7 @@ bool dxfRW::writeWipeout(DRW_Image *ent){
     writer->writeInt16(283, ent->fade);
     writer->writeString(100, "AcDbWipeout");
     writer->writeInt32(90, 0);             // class version
-    writer->writeInt32(91, static_cast<dint32>(ent->clipPath.size()));
+    writer->writeInt32(91, static_cast<std::int32_t>(ent->clipPath.size()));
     for (const DRW_Coord& v : ent->clipPath) {
         writer->writeDouble(14, v.x);
         writer->writeDouble(24, v.y);
@@ -2438,12 +2438,12 @@ bool dxfRW::writeExtData(const std::vector<DRW_Variant*> &ed){
             // round-trip that already hex-encoded the bytes) variants are
             // accepted.
             if ((*it)->type() == DRW_Variant::BINARY) {
-                const std::vector<duint8>* bytes = (*it)->binary();
+                const std::vector<std::uint8_t>* bytes = (*it)->binary();
                 std::string hex;
                 if (bytes != nullptr) {
                     static const char hexDigits[] = "0123456789ABCDEF";
                     hex.reserve(bytes->size() * 2);
-                    for (duint8 b : *bytes) {
+                    for (std::uint8_t b : *bytes) {
                         hex.push_back(hexDigits[(b >> 4) & 0xF]);
                         hex.push_back(hexDigits[b & 0xF]);
                     }
@@ -2477,7 +2477,7 @@ bool dxfRW::writeExtData(const std::vector<DRW_Variant*> &ed){
             if ((*it)->type() == DRW_Variant::INTEGER)
                 writer->writeInt32((*it)->code(), (*it)->content.i);
             else if ((*it)->type() == DRW_Variant::INTEGER64)
-                writer->writeInt32((*it)->code(), static_cast<dint32>((*it)->content.i64));
+                writer->writeInt32((*it)->code(), static_cast<std::int32_t>((*it)->content.i64));
             break;
         default:
             break;
@@ -2666,7 +2666,7 @@ bool dxfRW::processBlockRecord() {
     DRW_DBG("dxfRW::processBlockRecord\n");
     int code = 0;
     bool reading = false;
-    duint32 handle = DRW::NoHandle;
+    std::uint32_t handle = DRW::NoHandle;
     DRW_ParsingContext::BlockRecordInfo record;
 
     auto finishRecord = [&]() {
@@ -4279,10 +4279,10 @@ RawValType classifyDxfCode(int code) {
 void dxfRW::captureRawGroup(DRW_RawDxfObject &obj, int code) {
     switch (classifyDxfCode(code)) {
     case RawValType::Int:
-        obj.groups.emplace_back(code, static_cast<dint32>(reader->getInt32()));
+        obj.groups.emplace_back(code, static_cast<std::int32_t>(reader->getInt32()));
         break;
     case RawValType::Int64:
-        obj.groups.emplace_back(code, static_cast<dint64>(reader->getInt64()));
+        obj.groups.emplace_back(code, static_cast<std::int64_t>(reader->getInt64()));
         break;
     case RawValType::Dbl:
         obj.groups.emplace_back(code, reader->getDouble());

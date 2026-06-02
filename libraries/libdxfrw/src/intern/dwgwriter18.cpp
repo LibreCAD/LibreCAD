@@ -19,7 +19,7 @@
 // XOR key for the 0x6C-byte encrypted variable header (file offset 0x80).
 // Matches DRW_magicNum18 in dwgreader18.h — kept local to avoid including
 // the reader header from writer code.
-static const duint8 kMagicNum18[0x6C] = {
+static const std::uint8_t kMagicNum18[0x6C] = {
     0x29, 0x23, 0xbe, 0x84, 0xe1, 0x6c, 0xd6, 0xae,
     0x52, 0x90, 0x49, 0xf1, 0xf1, 0xbb, 0xe9, 0xeb,
     0xb3, 0xa6, 0xdb, 0x3c, 0x87, 0x0c, 0x3e, 0x99,
@@ -37,7 +37,7 @@ static const duint8 kMagicNum18[0x6C] = {
 };
 
 // Tail magic emitted at file offsets 0xEC-0xFF.  Matches DRW_magicNumEnd18.
-static const duint8 kMagicNumEnd18[0x14] = {
+static const std::uint8_t kMagicNumEnd18[0x14] = {
     0xf8, 0x46, 0x6a, 0x04, 0x96, 0x73, 0x0e, 0xd9,
     0x16, 0x2f, 0x67, 0x68, 0xd4, 0xf7, 0x4a, 0x4a,
     0xd0, 0x57, 0x68, 0x76
@@ -45,33 +45,33 @@ static const duint8 kMagicNumEnd18[0x14] = {
 
 // --- little-endian helpers ---------------------------------------------------
 
-static void putRL(std::vector<duint8>& v, duint32 x) {
-    v.push_back(static_cast<duint8>(x));
-    v.push_back(static_cast<duint8>(x >> 8));
-    v.push_back(static_cast<duint8>(x >> 16));
-    v.push_back(static_cast<duint8>(x >> 24));
+static void putRL(std::vector<std::uint8_t>& v, std::uint32_t x) {
+    v.push_back(static_cast<std::uint8_t>(x));
+    v.push_back(static_cast<std::uint8_t>(x >> 8));
+    v.push_back(static_cast<std::uint8_t>(x >> 16));
+    v.push_back(static_cast<std::uint8_t>(x >> 24));
 }
 
-static void putRS(std::vector<duint8>& v, duint16 x) {
-    v.push_back(static_cast<duint8>(x));
-    v.push_back(static_cast<duint8>(x >> 8));
+static void putRS(std::vector<std::uint8_t>& v, std::uint16_t x) {
+    v.push_back(static_cast<std::uint8_t>(x));
+    v.push_back(static_cast<std::uint8_t>(x >> 8));
 }
 
-static void putRLL(std::vector<duint8>& v, duint64 x) {
-    putRL(v, static_cast<duint32>(x));
-    putRL(v, static_cast<duint32>(x >> 32));
+static void putRLL(std::vector<std::uint8_t>& v, std::uint64_t x) {
+    putRL(v, static_cast<std::uint32_t>(x));
+    putRL(v, static_cast<std::uint32_t>(x >> 32));
 }
 
-static void patchRL(std::vector<duint8>& v, size_t offset, duint32 x) {
-    v[offset+0] = static_cast<duint8>(x);
-    v[offset+1] = static_cast<duint8>(x >> 8);
-    v[offset+2] = static_cast<duint8>(x >> 16);
-    v[offset+3] = static_cast<duint8>(x >> 24);
+static void patchRL(std::vector<std::uint8_t>& v, size_t offset, std::uint32_t x) {
+    v[offset+0] = static_cast<std::uint8_t>(x);
+    v[offset+1] = static_cast<std::uint8_t>(x >> 8);
+    v[offset+2] = static_cast<std::uint8_t>(x >> 16);
+    v[offset+3] = static_cast<std::uint8_t>(x >> 24);
 }
 
-static void patchRLL(std::vector<duint8>& v, size_t offset, duint64 x) {
-    patchRL(v, offset,     static_cast<duint32>(x));
-    patchRL(v, offset + 4, static_cast<duint32>(x >> 32));
+static void patchRLL(std::vector<std::uint8_t>& v, size_t offset, std::uint64_t x) {
+    patchRL(v, offset,     static_cast<std::uint32_t>(x));
+    patchRL(v, offset + 4, static_cast<std::uint32_t>(x >> 32));
 }
 
 // --- R2004 page builders -----------------------------------------------------
@@ -79,9 +79,9 @@ static void patchRLL(std::vector<duint8>& v, size_t offset, duint64 x) {
 // Build a sys page (Section Page Map or Data Section Map).
 // Layout: +0 pageType  +4 decompSize  +8 compSize  +12 compType  +16 checksum
 //         +20 data
-static std::vector<duint8> buildSysPage(duint32 pageType,
-                                        const duint8* data, duint32 dataSz) {
-    std::vector<duint8> pg;
+static std::vector<std::uint8_t> buildSysPage(std::uint32_t pageType,
+                                        const std::uint8_t* data, std::uint32_t dataSz) {
+    std::vector<std::uint8_t> pg;
     pg.reserve(20 + dataSz);
     putRL(pg, pageType);    // +0
     putRL(pg, dataSz);      // +4 decompressed size (= data size, store mode)
@@ -90,8 +90,8 @@ static std::vector<duint8> buildSysPage(duint32 pageType,
     putRL(pg, 0);           // +16 checksum placeholder
 
     // Compute checksum: seed over header[0..15] with [16..19]=0, then over data.
-    duint32 ckH = dwgUtil::checksum18(0, pg.data(), 20);
-    duint32 ckD = dwgUtil::checksum18(ckH, data, dataSz);
+    std::uint32_t ckH = dwgUtil::checksum18(0, pg.data(), 20);
+    std::uint32_t ckD = dwgUtil::checksum18(ckH, data, dataSz);
     patchRL(pg, 16, ckD);
 
     pg.insert(pg.end(), data, data + dataSz);
@@ -101,17 +101,17 @@ static std::vector<duint8> buildSysPage(duint32 pageType,
 // Build a data page.  The 32-byte page header is XOR-encrypted with
 // decrypt18Hdr using pageAddr as the key offset.
 // Layout: 32-byte encrypted header + data bytes (uncompressed).
-static std::vector<duint8> buildDataPage(duint64 pageAddr,
-                                         duint32 sectionNum,
-                                         const duint8* data,
-                                         duint32 dataSz) {
+static std::vector<std::uint8_t> buildDataPage(std::uint64_t pageAddr,
+                                         std::uint32_t sectionNum,
+                                         const std::uint8_t* data,
+                                         std::uint32_t dataSz) {
     // Build decrypted 32-byte header.
-    duint8 hdr[32] = {};
-    auto rl = [&](int off, duint32 x) {
-        hdr[off+0] = static_cast<duint8>(x);
-        hdr[off+1] = static_cast<duint8>(x >> 8);
-        hdr[off+2] = static_cast<duint8>(x >> 16);
-        hdr[off+3] = static_cast<duint8>(x >> 24);
+    std::uint8_t hdr[32] = {};
+    auto rl = [&](int off, std::uint32_t x) {
+        hdr[off+0] = static_cast<std::uint8_t>(x);
+        hdr[off+1] = static_cast<std::uint8_t>(x >> 8);
+        hdr[off+2] = static_cast<std::uint8_t>(x >> 16);
+        hdr[off+3] = static_cast<std::uint8_t>(x >> 24);
     };
     rl( 0, 0x4163043b);  // data page type
     rl( 4, sectionNum);  // section number
@@ -123,17 +123,17 @@ static std::vector<duint8> buildDataPage(duint64 pageAddr,
     rl(28, 0);           // data checksum placeholder
 
     // Data checksum (seed=0 over the page data).
-    duint32 ckData = dwgUtil::checksum18(0, data, dataSz);
+    std::uint32_t ckData = dwgUtil::checksum18(0, data, dataSz);
     rl(28, ckData);
     // Header checksum: bytes 24-27 zeroed (they hold the field being computed).
     rl(24, 0);
-    duint32 ckHdr = dwgUtil::checksum18(ckData, hdr, 32);
+    std::uint32_t ckHdr = dwgUtil::checksum18(ckData, hdr, 32);
     rl(24, ckHdr);
 
     // Encrypt the header using the page's file address.
     dwgCompressor::decrypt18Hdr(hdr, 32, pageAddr);  // symmetric XOR
 
-    std::vector<duint8> pg;
+    std::vector<std::uint8_t> pg;
     pg.reserve(32 + dataSz);
     pg.insert(pg.end(), hdr, hdr + 32);
     pg.insert(pg.end(), data, data + dataSz);
@@ -141,14 +141,14 @@ static std::vector<duint8> buildDataPage(duint64 pageAddr,
 }
 
 // Build the decompressed content of the Section Page Map.
-// Each entry: dint32 id (RL) + duint32 size (RL).  All IDs are positive
+// Each entry: std::int32_t id (RL) + std::uint32_t size (RL).  All IDs are positive
 // (no gap pages needed for a fresh write).
-static std::vector<duint8> buildSectionPageMapContent(
-        const std::vector<duint32>& pageSizes) {
-    std::vector<duint8> v;
+static std::vector<std::uint8_t> buildSectionPageMapContent(
+        const std::vector<std::uint32_t>& pageSizes) {
+    std::vector<std::uint8_t> v;
     v.reserve(pageSizes.size() * 8);
     for (size_t i = 0; i < pageSizes.size(); ++i) {
-        putRL(v, static_cast<duint32>(i + 1));
+        putRL(v, static_cast<std::uint32_t>(i + 1));
         putRL(v, pageSizes[i]);
     }
     return v;
@@ -157,34 +157,34 @@ static std::vector<duint8> buildSectionPageMapContent(
 // Append one section description to the Data Section Map buffer.
 // secId: 0-based section index.  pageNum: page ID in the Section Page Map.
 // dataSize: size of decompressed section content.
-static void appendSectionDesc(std::vector<duint8>& v,
-                               duint32 secId, duint32 pageNum,
-                               duint64 dataSize, const char* name) {
+static void appendSectionDesc(std::vector<std::uint8_t>& v,
+                               std::uint32_t secId, std::uint32_t pageNum,
+                               std::uint64_t dataSize, const char* name) {
     putRLL(v, dataSize);         // size of section (uint64)
     putRL (v, 1);                // pageCount = 1
-    putRL (v, static_cast<duint32>(dataSize));  // maxSize
+    putRL (v, static_cast<std::uint32_t>(dataSize));  // maxSize
     putRL (v, 0);                // unknown
     putRL (v, 1);                // compressed = 1 (store)
     putRL (v, secId);            // section Id
     putRL (v, 0);                // encrypted = 0
 
     // 64-byte null-padded name.
-    duint8 nameBuf[64] = {};
+    std::uint8_t nameBuf[64] = {};
     std::strncpy(reinterpret_cast<char*>(nameBuf), name, 63);
     v.insert(v.end(), nameBuf, nameBuf + 64);
 
     // 1 page entry: page number (RL) + dataSize (RL) + startOffset (RLL=0).
     putRL (v, pageNum);
-    putRL (v, static_cast<duint32>(dataSize));  // page dataSize
+    putRL (v, static_cast<std::uint32_t>(dataSize));  // page dataSize
     putRLL(v, 0);                               // startOffset = 0
 }
 
 // Build the decompressed content of the Data Section Map.
-static std::vector<duint8> buildDataSectionMapContent(
-        duint32 hdrSz, duint32 clsSz, duint32 objSz, duint32 hdlSz,
-        bool hasAuxHeader, duint32 auxHeaderSz) {
-    std::vector<duint8> v;
-    const duint32 numDescriptions = hasAuxHeader ? 5 : 4;
+static std::vector<std::uint8_t> buildDataSectionMapContent(
+        std::uint32_t hdrSz, std::uint32_t clsSz, std::uint32_t objSz, std::uint32_t hdlSz,
+        bool hasAuxHeader, std::uint32_t auxHeaderSz) {
+    std::vector<std::uint8_t> v;
+    const std::uint32_t numDescriptions = hasAuxHeader ? 5 : 4;
     // 20-byte header.
     putRL(v, numDescriptions);
     putRL(v, 0x02);
@@ -201,7 +201,7 @@ static std::vector<duint8> buildDataSectionMapContent(
     return v;
 }
 
-static duint16 auxHeaderRawVersion(DRW::Version version) {
+static std::uint16_t auxHeaderRawVersion(DRW::Version version) {
     switch (version) {
     case DRW::AC1018: return 25;
     case DRW::AC1021: return 27;
@@ -223,8 +223,8 @@ static double headerDoubleVar(const DRW_Header *header, const std::string& key) 
     return it->second->d_val();
 }
 
-static void splitAuxDate(double stored, dint32& day, dint32& msec) {
-    day = static_cast<dint32>(stored);
+static void splitAuxDate(double stored, std::int32_t& day, std::int32_t& msec) {
+    day = static_cast<std::int32_t>(stored);
     double frac = stored - static_cast<double>(day);
     if (frac == 0.0) {
         msec = 0;
@@ -234,25 +234,25 @@ static void splitAuxDate(double stored, dint32& day, dint32& msec) {
         frac *= 10.0;
         const double rounded = std::round(frac);
         if (std::abs(frac - rounded) < 1e-9 && rounded != 0.0) {
-            msec = static_cast<dint32>(rounded);
+            msec = static_cast<std::int32_t>(rounded);
             return;
         }
     }
-    msec = static_cast<dint32>(std::round(frac));
+    msec = static_cast<std::int32_t>(std::round(frac));
 }
 
-static void putAuxDate(std::vector<duint8>& v, double stored) {
-    dint32 day = 0;
-    dint32 msec = 0;
+static void putAuxDate(std::vector<std::uint8_t>& v, double stored) {
+    std::int32_t day = 0;
+    std::int32_t msec = 0;
     splitAuxDate(stored, day, msec);
-    putRL(v, static_cast<duint32>(day));
-    putRL(v, static_cast<duint32>(msec));
+    putRL(v, static_cast<std::uint32_t>(day));
+    putRL(v, static_cast<std::uint32_t>(msec));
 }
 
-static std::vector<duint8> buildAuxHeaderContent(DRW::Version version,
+static std::vector<std::uint8_t> buildAuxHeaderContent(DRW::Version version,
                                                  const DRW_Header *header) {
-    std::vector<duint8> v;
-    const duint16 rawVersion = auxHeaderRawVersion(version);
+    std::vector<std::uint8_t> v;
+    const std::uint16_t rawVersion = auxHeaderRawVersion(version);
     if (rawVersion == 0)
         return v;
 
@@ -262,7 +262,7 @@ static std::vector<duint8> buildAuxHeaderContent(DRW::Version version,
     putRS(v, rawVersion);
     putRS(v, 0);                       // maintenance version
     putRL(v, 1);                       // number of saves
-    putRL(v, static_cast<duint32>(-1));
+    putRL(v, static_cast<std::uint32_t>(-1));
     putRS(v, 1);                       // saves part 1
     putRS(v, 0);                       // saves part 2
     putRL(v, 0);
@@ -282,8 +282,8 @@ static std::vector<duint8> buildAuxHeaderContent(DRW::Version version,
     putAuxDate(v, headerDoubleVar(header, "TDCREATE"));
     putAuxDate(v, headerDoubleVar(header, "TDUPDATE"));
 
-    const duint32 handSeed = header ? header->getHandSeed() : 0;
-    putRL(v, handSeed <= 0x7fffffffu ? handSeed : static_cast<duint32>(-1));
+    const std::uint32_t handSeed = header ? header->getHandSeed() : 0;
+    putRL(v, handSeed <= 0x7fffffffu ? handSeed : static_cast<std::uint32_t>(-1));
     putRL(v, 0);                       // educational plot stamp
     putRS(v, 0);
     putRS(v, 1);
@@ -310,12 +310,12 @@ static std::vector<duint8> buildAuxHeaderContent(DRW::Version version,
 // lastPageEndAddr: absolute file address after the last page listed in the
 //                  Section Page Map (= start of Section Page Map page).
 // numPages: total pages listed in the Section Page Map (= 5).
-static std::vector<duint8> buildFileHeader(duint64 secPageMapAddr,
-                                           duint32 secMapId,
-                                           duint64 lastPageEndAddr,
-                                           duint32 numPages,
+static std::vector<std::uint8_t> buildFileHeader(std::uint64_t secPageMapAddr,
+                                           std::uint32_t secMapId,
+                                           std::uint64_t lastPageEndAddr,
+                                           std::uint32_t numPages,
                                            const char* verStr = "AC1018") {
-    std::vector<duint8> hdr(0x100, 0);
+    std::vector<std::uint8_t> hdr(0x100, 0);
 
     std::memcpy(hdr.data(), verStr, 6);
     // Byte 11: maintenance version = 0 (already 0).
@@ -333,20 +333,20 @@ static std::vector<duint8> buildFileHeader(duint64 secPageMapAddr,
     // Bytes 44-127: zeros (padding to 0x80).
 
     // ---- Encrypted variable header at offset 0x80 (0x6C bytes) -----
-    duint8 varHdr[0x6C] = {};
+    std::uint8_t varHdr[0x6C] = {};
     // Bytes 0-11: ID string "AcFssFcAJMB\0".
     std::memcpy(varHdr, "AcFssFcAJMB", 11);
     varHdr[11] = 0;
 
-    auto vrl = [&](int off, duint32 x) {
-        varHdr[off+0] = static_cast<duint8>(x);
-        varHdr[off+1] = static_cast<duint8>(x >> 8);
-        varHdr[off+2] = static_cast<duint8>(x >> 16);
-        varHdr[off+3] = static_cast<duint8>(x >> 24);
+    auto vrl = [&](int off, std::uint32_t x) {
+        varHdr[off+0] = static_cast<std::uint8_t>(x);
+        varHdr[off+1] = static_cast<std::uint8_t>(x >> 8);
+        varHdr[off+2] = static_cast<std::uint8_t>(x >> 16);
+        varHdr[off+3] = static_cast<std::uint8_t>(x >> 24);
     };
-    auto vrll = [&](int off, duint64 x) {
-        vrl(off,   static_cast<duint32>(x));
-        vrl(off+4, static_cast<duint32>(x >> 32));
+    auto vrll = [&](int off, std::uint64_t x) {
+        vrl(off,   static_cast<std::uint32_t>(x));
+        vrl(off+4, static_cast<std::uint32_t>(x >> 32));
     };
 
     vrl(12, 0x00000000);
@@ -364,7 +364,7 @@ static std::vector<duint8> buildFileHeader(duint64 secPageMapAddr,
     vrl(68, 0x20);
     vrl(72, 0x80);
     vrl(76, 0x40);
-    vrl(80, static_cast<duint32>(-1));  // Section Page Map Id (informational)
+    vrl(80, static_cast<std::uint32_t>(-1));  // Section Page Map Id (informational)
     vrll(84, secPageMapAddr - 0x100);   // Section Page Map address (relative)
     vrl(92, secMapId);           // Section Map Id
     vrl(96, numPages);           // Section page array size
@@ -372,12 +372,12 @@ static std::vector<duint8> buildFileHeader(duint64 secPageMapAddr,
     vrl(104, 0);                 // CRC32 placeholder (zeroed for computation)
 
     // Compute CRC32 over the 0x6C bytes with last 4 zeroed.
-    duint32 crc = dwgUtil::crc32(0, varHdr, 0x6C);
+    std::uint32_t crc = dwgUtil::crc32(0, varHdr, 0x6C);
     vrl(104, crc);
 
     // XOR-encrypt with kMagicNum18 and store at file offset 0x80.
     for (int i = 0; i < 0x6C; ++i)
-        hdr[0x80 + i] = static_cast<duint8>(kMagicNum18[i] ^ varHdr[i]);
+        hdr[0x80 + i] = static_cast<std::uint8_t>(kMagicNum18[i] ^ varHdr[i]);
 
     // Tail magic at 0xEC.
     std::memcpy(hdr.data() + 0xEC, kMagicNumEnd18, 0x14);
@@ -387,7 +387,7 @@ static std::vector<duint8> buildFileHeader(duint64 secPageMapAddr,
 
 // --- dwgWriter18::objectBaseOffset -------------------------------------------
 
-duint32 dwgWriter18::objectBaseOffset() const {
+std::uint32_t dwgWriter18::objectBaseOffset() const {
     auto it1 = m_sectionOffsets.find(recno::CLASSES);
     auto it2 = m_sectionSizes.find(recno::CLASSES);
     if (it1 == m_sectionOffsets.end() || it2 == m_sectionSizes.end()) return 0;
@@ -404,7 +404,7 @@ bool dwgWriter18::writeDwgClasses() {
         return false;
 
     size_t sectionStart = m_buf.size();
-    m_sectionOffsets[recno::CLASSES] = static_cast<duint32>(sectionStart);
+    m_sectionOffsets[recno::CLASSES] = static_cast<std::uint32_t>(sectionStart);
 
     size_t sizeOffset = beginSentinelSection(dwgSentinels::CLASSES_BEGIN);
 
@@ -419,7 +419,7 @@ bool dwgWriter18::writeDwgClasses() {
     endSentinelSection(sectionStart, sizeOffset, dwgSentinels::CLASSES_END);
 
     m_sectionSizes[recno::CLASSES] =
-        static_cast<duint32>(m_buf.size() - sectionStart);
+        static_cast<std::uint32_t>(m_buf.size() - sectionStart);
     return true;
 }
 
@@ -429,96 +429,96 @@ bool dwgWriter18::finalize() {
     if (m_stream == nullptr || !m_stream->good()) return false;
 
     // Extract section ranges from the inherited m_buf accumulator.
-    const std::vector<duint8>& raw = m_buf.data();
-    const duint8* rawPtr = raw.data();
+    const std::vector<std::uint8_t>& raw = m_buf.data();
+    const std::uint8_t* rawPtr = raw.data();
 
     auto offIt = m_sectionOffsets.find(0);  // recno::HEADER
     auto szIt  = m_sectionSizes  .find(0);
     if (offIt == m_sectionOffsets.end() || szIt == m_sectionSizes.end())
         return false;
-    duint32 hdrOff = offIt->second;
-    duint32 hdrSz  = szIt->second;
+    std::uint32_t hdrOff = offIt->second;
+    std::uint32_t hdrSz  = szIt->second;
 
     offIt = m_sectionOffsets.find(1);  // recno::CLASSES
     szIt  = m_sectionSizes  .find(1);
     if (offIt == m_sectionOffsets.end() || szIt == m_sectionSizes.end())
         return false;
-    duint32 clsOff = offIt->second;
-    duint32 clsSz  = szIt->second;
+    std::uint32_t clsOff = offIt->second;
+    std::uint32_t clsSz  = szIt->second;
 
     offIt = m_sectionOffsets.find(2);  // recno::HANDLES
     szIt  = m_sectionSizes  .find(2);
     if (offIt == m_sectionOffsets.end() || szIt == m_sectionSizes.end())
         return false;
-    duint32 hdlOff = offIt->second;
-    duint32 hdlSz  = szIt->second;
+    std::uint32_t hdlOff = offIt->second;
+    std::uint32_t hdlSz  = szIt->second;
 
-    duint32 objOff = clsOff + clsSz;
-    duint32 objSz  = hdlOff - objOff;
+    std::uint32_t objOff = clsOff + clsSz;
+    std::uint32_t objSz  = hdlOff - objOff;
 
     // Build the four data pages (with correct file addresses).
     // Addresses accumulate from 0x100; data page size = 32 + dataSize.
-    constexpr duint64 kBase = 0x100;
-    duint64 addr1 = kBase;
-    duint64 addr2 = addr1 + 32 + hdrSz;
-    duint64 addr3 = addr2 + 32 + clsSz;
-    duint64 addr4 = addr3 + 32 + objSz;
+    constexpr std::uint64_t kBase = 0x100;
+    std::uint64_t addr1 = kBase;
+    std::uint64_t addr2 = addr1 + 32 + hdrSz;
+    std::uint64_t addr3 = addr2 + 32 + clsSz;
+    std::uint64_t addr4 = addr3 + 32 + objSz;
 
     auto hdrPage = buildDataPage(addr1, 0, rawPtr + hdrOff, hdrSz);
     auto clsPage = buildDataPage(addr2, 1, rawPtr + clsOff, clsSz);
     auto objPage = buildDataPage(addr3, 2, rawPtr + objOff, objSz);
     auto hdlPage = buildDataPage(addr4, 3, rawPtr + hdlOff, hdlSz);
 
-    const std::vector<duint8> auxHeaderData =
+    const std::vector<std::uint8_t> auxHeaderData =
         (m_version >= DRW::AC1027) ? buildAuxHeaderContent(m_version, m_header)
-                                   : std::vector<duint8>();
+                                   : std::vector<std::uint8_t>();
     const bool hasAuxHeader = !auxHeaderData.empty();
 
-    duint64 addr5 = addr4 + 32 + hdlSz;
-    std::vector<duint8> auxHeaderPage;
+    std::uint64_t addr5 = addr4 + 32 + hdlSz;
+    std::vector<std::uint8_t> auxHeaderPage;
     if (hasAuxHeader)
         auxHeaderPage = buildDataPage(addr5, 4, auxHeaderData.data(),
-                                      static_cast<duint32>(auxHeaderData.size()));
+                                      static_cast<std::uint32_t>(auxHeaderData.size()));
 
     // Build the Data Section Map sys page.
     auto dsmData = buildDataSectionMapContent(
         hdrSz, clsSz, objSz, hdlSz, hasAuxHeader,
-        static_cast<duint32>(auxHeaderData.size()));
+        static_cast<std::uint32_t>(auxHeaderData.size()));
     auto dsmPage = buildSysPage(0x4163003b, dsmData.data(),
-                                static_cast<duint32>(dsmData.size()));
+                                static_cast<std::uint32_t>(dsmData.size()));
 
     // Data Section Map sys page follows the optional AuxHeader data page.
-    const duint64 addrDsm = hasAuxHeader
-        ? addr5 + static_cast<duint64>(auxHeaderPage.size())
+    const std::uint64_t addrDsm = hasAuxHeader
+        ? addr5 + static_cast<std::uint64_t>(auxHeaderPage.size())
         : addr5;
-    duint64 addrSPM = addrDsm + static_cast<duint64>(dsmPage.size());
+    std::uint64_t addrSPM = addrDsm + static_cast<std::uint64_t>(dsmPage.size());
 
     // Build Section Page Map sys page.
-    std::vector<duint32> pageSizes = {
-        static_cast<duint32>(hdrPage.size()),
-        static_cast<duint32>(clsPage.size()),
-        static_cast<duint32>(objPage.size()),
-        static_cast<duint32>(hdlPage.size())
+    std::vector<std::uint32_t> pageSizes = {
+        static_cast<std::uint32_t>(hdrPage.size()),
+        static_cast<std::uint32_t>(clsPage.size()),
+        static_cast<std::uint32_t>(objPage.size()),
+        static_cast<std::uint32_t>(hdlPage.size())
     };
     if (hasAuxHeader)
-        pageSizes.push_back(static_cast<duint32>(auxHeaderPage.size()));
-    pageSizes.push_back(static_cast<duint32>(dsmPage.size()));
+        pageSizes.push_back(static_cast<std::uint32_t>(auxHeaderPage.size()));
+    pageSizes.push_back(static_cast<std::uint32_t>(dsmPage.size()));
     auto spmData = buildSectionPageMapContent(pageSizes);
     auto spmPage = buildSysPage(0x41630e3b, spmData.data(),
-                                static_cast<duint32>(spmData.size()));
+                                static_cast<std::uint32_t>(spmData.size()));
 
     // Build the 0x100-byte file header.
     // lastPageEndAddr = byte address just past the end of the last page listed
     // in the Section Page Map.  The SPM page is the last entry, so its end is
     // addrSPM + spmPage.size().
-    const duint32 dataSectionMapPageId = hasAuxHeader ? 6 : 5;
+    const std::uint32_t dataSectionMapPageId = hasAuxHeader ? 6 : 5;
     auto fileHdr = buildFileHeader(addrSPM, dataSectionMapPageId,
-                                   addrSPM + static_cast<duint64>(spmPage.size()),
-                                   static_cast<duint32>(pageSizes.size()),
+                                   addrSPM + static_cast<std::uint64_t>(spmPage.size()),
+                                   static_cast<std::uint32_t>(pageSizes.size()),
                                    fileHeaderVersion());
 
     // Write everything.
-    auto writeVec = [&](const std::vector<duint8>& v) {
+    auto writeVec = [&](const std::vector<std::uint8_t>& v) {
         m_stream->write(reinterpret_cast<const char*>(v.data()),
                         static_cast<std::streamsize>(v.size()));
     };

@@ -88,7 +88,7 @@ public:
     /// `blockRecH.ref` on subsequent `DRW_Insert` entities.  Must be
     /// invoked from the iface's `writeBlocks()` callback (before
     /// `writeEntities`); returns 0 if invoked outside that window.
-    duint32 defineBlock(const std::string& name, const DRW_Coord& basePoint,
+    std::uint32_t defineBlock(const std::string& name, const DRW_Coord& basePoint,
                         int insUnits = 0);
 
     /// Table-record registration API — invoked from the iface's writeLTypes/

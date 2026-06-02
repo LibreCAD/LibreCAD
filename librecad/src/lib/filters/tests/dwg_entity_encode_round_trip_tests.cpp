@@ -56,18 +56,18 @@ public:
     static bool parse(DRW_Entity& e, DRW::Version v, dwgBuffer* buf) {
         // Per-entity parseDwg overrides the abstract; both Point/Line/etc.
         // call DRW_Entity::parseDwg(buf, NULL, bs) themselves.  Use a
-        // named duint32 to disambiguate from the 4-arg parseDwg overload
+        // named std::uint32_t to disambiguate from the 4-arg parseDwg overload
         // (which has dwgBuffer* as its 3rd parameter).
-        duint32 bs = 0;
+        std::uint32_t bs = 0;
         return e.parseDwg(v, buf, bs);
     }
     static dwgHandle& layerH(DRW_Entity& e) { return e.layerH; }
-    static duint16 oType(const DRW_Entity& e) { return e.oType; }
+    static std::uint16_t oType(const DRW_Entity& e) { return e.oType; }
 };
 
 namespace {
 
-std::vector<duint8> snapshot(const dwgBufferW& w) { return w.data(); }
+std::vector<std::uint8_t> snapshot(const dwgBufferW& w) { return w.data(); }
 
 } // namespace
 

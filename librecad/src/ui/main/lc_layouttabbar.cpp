@@ -87,7 +87,7 @@ void LC_LayoutTabBar::refreshFromGraphic() {
         return;
     }
     const std::size_t count = m_graphic->layouts().size();
-    const duint32 active = m_graphic->activeLayoutHandle();
+    const std::uint32_t active = m_graphic->activeLayoutHandle();
     if (count == m_lastLayoutCount && active == m_lastActiveHandle) {
         return;
     }
@@ -151,7 +151,7 @@ void LC_LayoutTabBar::rebuildTabs() {
     }
 
     // Highlight the active layout — find its position in the rebuilt list.
-    const duint32 active = m_graphic->activeLayoutHandle();
+    const std::uint32_t active = m_graphic->activeLayoutHandle();
     int activeIndex = 0;
     for (std::size_t i = 0; i < m_handlesByIndex.size(); ++i) {
         if (m_handlesByIndex[i] == active) {
@@ -169,7 +169,7 @@ void LC_LayoutTabBar::onTabBarClicked(int index) {
     if (index < 0 || static_cast<std::size_t>(index) >= m_handlesByIndex.size()) {
         return;
     }
-    const duint32 handle = m_handlesByIndex[static_cast<std::size_t>(index)];
+    const std::uint32_t handle = m_handlesByIndex[static_cast<std::size_t>(index)];
     m_graphic->setActiveLayoutHandle(handle);
     m_lastActiveHandle = handle;
     emit tabClicked(handle);

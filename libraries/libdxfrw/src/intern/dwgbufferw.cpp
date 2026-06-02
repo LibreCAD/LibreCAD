@@ -65,36 +65,36 @@ void dwgBufferW::alignToByte() {
         m_bitPos = 0;
 }
 
-void dwgBufferW::appendAlignedByte(duint8 b) {
+void dwgBufferW::appendAlignedByte(std::uint8_t b) {
     m_buf.push_back(b);
 }
 
 // ---- bit-level primitives -------------------------------------------------
 
-void dwgBufferW::putBit(duint8 b) {
+void dwgBufferW::putBit(std::uint8_t b) {
     if (m_bitPos == 0)
         m_buf.push_back(0);
-    m_buf.back() = static_cast<duint8>(m_buf.back() | ((b & 1) << (7 - m_bitPos)));
-    m_bitPos = static_cast<duint8>((m_bitPos + 1) & 7);
+    m_buf.back() = static_cast<std::uint8_t>(m_buf.back() | ((b & 1) << (7 - m_bitPos)));
+    m_bitPos = static_cast<std::uint8_t>((m_bitPos + 1) & 7);
 }
 
 void dwgBufferW::putBoolBit(bool b) {
     putBit(b ? 1 : 0);
 }
 
-void dwgBufferW::put2Bits(duint8 b) {
+void dwgBufferW::put2Bits(std::uint8_t b) {
     // MSB first: bit-1 of the 2-bit field comes out first.
     putBit((b >> 1) & 1);
     putBit(b & 1);
 }
 
-void dwgBufferW::put3Bits(duint8 b) {
+void dwgBufferW::put3Bits(std::uint8_t b) {
     putBit((b >> 2) & 1);
     putBit((b >> 1) & 1);
     putBit(b & 1);
 }
 
-void dwgBufferW::putBitShort(duint16 v) {
+void dwgBufferW::putBitShort(std::uint16_t v) {
     // Inverse of getBitShort: 2-bit code selects width.
     //   code 0b00 → followed by RS (16 bits LE)
     //   code 0b01 → followed by RC (8 bits)
@@ -106,14 +106,14 @@ void dwgBufferW::putBitShort(duint16 v) {
         put2Bits(0b11);
     } else if (v < 256) {
         put2Bits(0b01);
-        putRawChar8(static_cast<duint8>(v));
+        putRawChar8(static_cast<std::uint8_t>(v));
     } else {
         put2Bits(0b00);
         putRawShort16(v);
     }
 }
 
-void dwgBufferW::putSBitShort(dint16 v) {
+void dwgBufferW::putSBitShort(std::int16_t v) {
     // Reader's getSBitShort returns signed; same compression rules but
     // the 8-bit shortcut sign-extends.  For round-trip safety only use
     // the shortcut when the value fits an unsigned byte (0..255).
@@ -123,14 +123,14 @@ void dwgBufferW::putSBitShort(dint16 v) {
         put2Bits(0b11);
     } else if (v >= 0 && v < 256) {
         put2Bits(0b01);
-        putRawChar8(static_cast<duint8>(v));
+        putRawChar8(static_cast<std::uint8_t>(v));
     } else {
         put2Bits(0b00);
-        putRawShort16(static_cast<duint16>(v));
+        putRawShort16(static_cast<std::uint16_t>(v));
     }
 }
 
-void dwgBufferW::putBitLong(dint32 v) {
+void dwgBufferW::putBitLong(std::int32_t v) {
     // Inverse of getBitLong:
     //   code 0b00 → RL (32 bits LE)
     //   code 0b01 → RC (8 bits)
@@ -139,25 +139,25 @@ void dwgBufferW::putBitLong(dint32 v) {
         put2Bits(0b10);
     } else if (v > 0 && v < 256) {
         put2Bits(0b01);
-        putRawChar8(static_cast<duint8>(v));
+        putRawChar8(static_cast<std::uint8_t>(v));
     } else {
         put2Bits(0b00);
-        putRawLong32(static_cast<duint32>(v));
+        putRawLong32(static_cast<std::uint32_t>(v));
     }
 }
 
-void dwgBufferW::putBitLongLong(duint64 v) {
+void dwgBufferW::putBitLongLong(std::uint64_t v) {
     // Inverse of getBitLongLong: 3 bits = byte count, then that many
     // bytes least-significant first.
-    duint8 n = 0;
-    duint64 t = v;
+    std::uint8_t n = 0;
+    std::uint64_t t = v;
     while (t != 0 && n < 7) {
         t >>= 8;
         ++n;
     }
     put3Bits(n);
-    for (duint8 i = 0; i < n; ++i)
-        putRawChar8(static_cast<duint8>((v >> (i * 8)) & 0xFF));
+    for (std::uint8_t i = 0; i < n; ++i)
+        putRawChar8(static_cast<std::uint8_t>((v >> (i * 8)) & 0xFF));
 }
 
 void dwgBufferW::putBitDouble(double d) {
@@ -166,7 +166,7 @@ void dwgBufferW::putBitDouble(double d) {
     //   code 0b01 → value is 1.0
     //   code 0b10 → value is 0.0
     // Bit-exact compare on 0.0 / 1.0 (their IEEE patterns are unique).
-    duint64 bits;
+    std::uint64_t bits;
     std::memcpy(&bits, &d, 8);
     if (bits == 0x3FF0000000000000ULL) { // 1.0
         put2Bits(0b01);
@@ -175,7 +175,7 @@ void dwgBufferW::putBitDouble(double d) {
     } else {
         put2Bits(0b00);
         // Emit the 8 bytes via putRawChar8 to respect current bit cursor.
-        duint8 buf[8];
+        std::uint8_t buf[8];
         std::memcpy(buf, &d, 8);
         for (int i = 0; i < 8; ++i)
             putRawChar8(buf[i]);
@@ -190,42 +190,42 @@ void dwgBufferW::put3BitDouble(const DRW_Coord& c) {
 
 // ---- raw fixed-width primitives ------------------------------------------
 
-void dwgBufferW::putRawChar8(duint8 v) {
+void dwgBufferW::putRawChar8(std::uint8_t v) {
     if (m_bitPos == 0) {
         m_buf.push_back(v);
         return;
     }
     // Top (8 - bitPos) bits of v fill the remaining low bits of the
     // current byte; bottom bitPos bits become the high bits of a new byte.
-    m_buf.back() = static_cast<duint8>(m_buf.back() | (v >> m_bitPos));
-    m_buf.push_back(static_cast<duint8>((v << (8 - m_bitPos)) & 0xFF));
+    m_buf.back() = static_cast<std::uint8_t>(m_buf.back() | (v >> m_bitPos));
+    m_buf.push_back(static_cast<std::uint8_t>((v << (8 - m_bitPos)) & 0xFF));
 }
 
-void dwgBufferW::putRawShort16(duint16 v) {
-    putRawChar8(static_cast<duint8>(v & 0xFF));
-    putRawChar8(static_cast<duint8>((v >> 8) & 0xFF));
+void dwgBufferW::putRawShort16(std::uint16_t v) {
+    putRawChar8(static_cast<std::uint8_t>(v & 0xFF));
+    putRawChar8(static_cast<std::uint8_t>((v >> 8) & 0xFF));
 }
 
-void dwgBufferW::putBERawShort16(duint16 v) {
-    putRawChar8(static_cast<duint8>((v >> 8) & 0xFF));
-    putRawChar8(static_cast<duint8>(v & 0xFF));
+void dwgBufferW::putBERawShort16(std::uint16_t v) {
+    putRawChar8(static_cast<std::uint8_t>((v >> 8) & 0xFF));
+    putRawChar8(static_cast<std::uint8_t>(v & 0xFF));
 }
 
 void dwgBufferW::putRawDouble(double d) {
-    duint8 buf[8];
+    std::uint8_t buf[8];
     std::memcpy(buf, &d, 8);
     for (int i = 0; i < 8; ++i)
         putRawChar8(buf[i]);
 }
 
-void dwgBufferW::putRawLong32(duint32 v) {
-    putRawShort16(static_cast<duint16>(v & 0xFFFF));
-    putRawShort16(static_cast<duint16>((v >> 16) & 0xFFFF));
+void dwgBufferW::putRawLong32(std::uint32_t v) {
+    putRawShort16(static_cast<std::uint16_t>(v & 0xFFFF));
+    putRawShort16(static_cast<std::uint16_t>((v >> 16) & 0xFFFF));
 }
 
-void dwgBufferW::putRawLong64(duint64 v) {
-    putRawLong32(static_cast<duint32>(v & 0xFFFFFFFFu));
-    putRawLong32(static_cast<duint32>((v >> 32) & 0xFFFFFFFFu));
+void dwgBufferW::putRawLong64(std::uint64_t v) {
+    putRawLong32(static_cast<std::uint32_t>(v & 0xFFFFFFFFu));
+    putRawLong32(static_cast<std::uint32_t>((v >> 32) & 0xFFFFFFFFu));
 }
 
 void dwgBufferW::put2RawDouble(const DRW_Coord& c) {
@@ -235,38 +235,38 @@ void dwgBufferW::put2RawDouble(const DRW_Coord& c) {
 
 // ---- modular / variable-length encodings ---------------------------------
 
-void dwgBufferW::putUModularChar(duint32 v) {
+void dwgBufferW::putUModularChar(std::uint32_t v) {
     // Emit 7-bit chunks LSB-first; all but the last have 0x80 set.
     // Reader caps at 4 chunks (the `for (int i=0; i<4; i++)` in
     // dwgBuffer::getUModularChar), so the writer caps at 4 too — a
     // 5-chunk emit would leave one stale byte the reader never reads.
     // Max representable: 2^28 - 1.  Values >= 2^28 silently truncate
     // to 28 bits, matching what the reader could represent anyway.
-    duint8 chunks[4];
+    std::uint8_t chunks[4];
     int n = 0;
     do {
-        chunks[n++] = static_cast<duint8>(v & 0x7F);
+        chunks[n++] = static_cast<std::uint8_t>(v & 0x7F);
         v >>= 7;
     } while (v != 0 && n < 4);
     // Set continuation bit on all but the last chunk.
     for (int i = 0; i < n - 1; ++i)
-        chunks[i] = static_cast<duint8>(chunks[i] | 0x80);
+        chunks[i] = static_cast<std::uint8_t>(chunks[i] | 0x80);
     for (int i = 0; i < n; ++i)
         putRawChar8(chunks[i]);
 }
 
-void dwgBufferW::putModularChar(dint32 v) {
+void dwgBufferW::putModularChar(std::int32_t v) {
     // Reader caps at 4 chunks (dwgBuffer::getModularChar `for (int i=0;
     // i<4; i++)`).  Writer matches the cap so a stale 5th chunk never
     // gets emitted.  Max representable magnitude with 1 sign bit:
     // 3 × 7-bit chunks + 1 × 6-bit chunk = 2^27 - 1.
     bool negative = v < 0;
-    duint32 absv = negative ? static_cast<duint32>(-static_cast<dint64>(v))
-                            : static_cast<duint32>(v);
-    duint8 chunks[4];
+    std::uint32_t absv = negative ? static_cast<std::uint32_t>(-static_cast<std::int64_t>(v))
+                            : static_cast<std::uint32_t>(v);
+    std::uint8_t chunks[4];
     int n = 0;
     do {
-        chunks[n++] = static_cast<duint8>(absv & 0x7F);
+        chunks[n++] = static_cast<std::uint8_t>(absv & 0x7F);
         absv >>= 7;
     } while (absv != 0 && n < 4);
     // The last chunk reserves 0x40 for the sign bit.  If magnitude
@@ -276,28 +276,28 @@ void dwgBufferW::putModularChar(dint32 v) {
     // reader side anyway, so we just drop the sign bit silently.
     if (chunks[n - 1] & 0x40) {
         if (n < 4) {
-            chunks[n - 1] = static_cast<duint8>(chunks[n - 1] | 0x80);
+            chunks[n - 1] = static_cast<std::uint8_t>(chunks[n - 1] | 0x80);
             chunks[n++] = 0;
         }
     }
     if (negative && !(chunks[n - 1] & 0x40))
-        chunks[n - 1] = static_cast<duint8>(chunks[n - 1] | 0x40);
+        chunks[n - 1] = static_cast<std::uint8_t>(chunks[n - 1] | 0x40);
     for (int i = 0; i < n - 1; ++i)
-        chunks[i] = static_cast<duint8>(chunks[i] | 0x80);
+        chunks[i] = static_cast<std::uint8_t>(chunks[i] | 0x80);
     for (int i = 0; i < n; ++i)
         putRawChar8(chunks[i]);
 }
 
-void dwgBufferW::putModularShort(dint32 v) {
+void dwgBufferW::putModularShort(std::int32_t v) {
     // Reader handles at most 2 RS chunks; positive only.
-    duint32 absv = static_cast<duint32>(v);
-    duint16 lo = static_cast<duint16>(absv & 0x7FFF);
-    duint16 hi = static_cast<duint16>((absv >> 15) & 0x7FFF);
+    std::uint32_t absv = static_cast<std::uint32_t>(v);
+    std::uint16_t lo = static_cast<std::uint16_t>(absv & 0x7FFF);
+    std::uint16_t hi = static_cast<std::uint16_t>((absv >> 15) & 0x7FFF);
     if (hi == 0) {
         // Single chunk (no continuation bit).
         putRawShort16(lo);
     } else {
-        putRawShort16(static_cast<duint16>(lo | 0x8000));
+        putRawShort16(static_cast<std::uint16_t>(lo | 0x8000));
         putRawShort16(hi);
     }
 }
@@ -305,33 +305,33 @@ void dwgBufferW::putModularShort(dint32 v) {
 // ---- handles --------------------------------------------------------------
 
 void dwgBufferW::putHandle(const dwgHandle& h) {
-    duint8 size = 0;
-    duint32 ref = h.ref;
+    std::uint8_t size = 0;
+    std::uint32_t ref = h.ref;
     if (ref != 0) {
-        duint32 t = ref;
+        std::uint32_t t = ref;
         while (t != 0) {
             t >>= 8;
             ++size;
         }
     }
-    duint8 header = static_cast<duint8>(((h.code & 0x0F) << 4) | (size & 0x0F));
+    std::uint8_t header = static_cast<std::uint8_t>(((h.code & 0x0F) << 4) | (size & 0x0F));
     putRawChar8(header);
     // Emit MSB byte first.
     for (int i = size - 1; i >= 0; --i)
-        putRawChar8(static_cast<duint8>((ref >> (i * 8)) & 0xFF));
+        putRawChar8(static_cast<std::uint8_t>((ref >> (i * 8)) & 0xFF));
 }
 
 // ---- object type (OT) ----------------------------------------------------
 
-void dwgBufferW::putObjType(DRW::Version v, duint16 oType) {
+void dwgBufferW::putObjType(DRW::Version v, std::uint16_t oType) {
     if (v > DRW::AC1021) {
         // R2010+ OT: 2-bit code + variable payload
         if (oType < 256) {
             put2Bits(0);
-            putRawChar8(static_cast<duint8>(oType));
+            putRawChar8(static_cast<std::uint8_t>(oType));
         } else if (oType >= 0x01F0 && oType < 0x02F0) {
             put2Bits(1);
-            putRawChar8(static_cast<duint8>(oType - 0x01F0));
+            putRawChar8(static_cast<std::uint8_t>(oType - 0x01F0));
         } else {
             put2Bits(2);
             putRawShort16(oType);
@@ -352,19 +352,19 @@ void dwgBufferW::putVariableText(DRW::Version v, const std::string& utf8) {
 
 void dwgBufferW::putCP8Text(const std::string& utf8) {
     std::string encoded = m_decoder ? m_decoder->fromUtf8(utf8) : utf8;
-    duint16 byteLen = static_cast<duint16>(encoded.size());
+    std::uint16_t byteLen = static_cast<std::uint16_t>(encoded.size());
     putBitShort(byteLen);
     if (byteLen != 0)
-        putBytes(reinterpret_cast<const duint8*>(encoded.data()), byteLen);
+        putBytes(reinterpret_cast<const std::uint8_t*>(encoded.data()), byteLen);
 }
 
 void dwgBufferW::putUCSText(const std::string& utf8) {
     // Convert UTF-8 to UTF-16LE code units (BMP only — sufficient for
     // printable ASCII + Latin-1 content found in typical DWG files).
-    std::vector<duint16> units;
+    std::vector<std::uint16_t> units;
     for (size_t i = 0; i < utf8.size(); ) {
         unsigned char c = static_cast<unsigned char>(utf8[i]);
-        duint32 cp = 0;
+        std::uint32_t cp = 0;
         if (c < 0x80) {
             cp = c; ++i;
         } else if ((c & 0xE0) == 0xC0 && i + 1 < utf8.size()) {
@@ -381,31 +381,31 @@ void dwgBufferW::putUCSText(const std::string& utf8) {
         }
         // Encode as UTF-16 (surrogates for > 0xFFFF)
         if (cp < 0x10000) {
-            units.push_back(static_cast<duint16>(cp));
+            units.push_back(static_cast<std::uint16_t>(cp));
         } else {
             cp -= 0x10000;
-            units.push_back(static_cast<duint16>(0xD800 | (cp >> 10)));
-            units.push_back(static_cast<duint16>(0xDC00 | (cp & 0x3FF)));
+            units.push_back(static_cast<std::uint16_t>(0xD800 | (cp >> 10)));
+            units.push_back(static_cast<std::uint16_t>(0xDC00 | (cp & 0x3FF)));
         }
     }
     // The TU length is a 16-bit BS count; clamp so the emitted count always
     // matches the emitted payload (a >0xFFFF-unit string would otherwise write
     // a truncated count but the full payload, desyncing the stream).
     size_t n = units.size() > 0xFFFFu ? 0xFFFFu : units.size();
-    putBitShort(static_cast<duint16>(n));
+    putBitShort(static_cast<std::uint16_t>(n));
     for (size_t i = 0; i < n; ++i) {
-        putRawChar8(static_cast<duint8>(units[i] & 0xFF));
-        putRawChar8(static_cast<duint8>(units[i] >> 8));
+        putRawChar8(static_cast<std::uint8_t>(units[i] & 0xFF));
+        putRawChar8(static_cast<std::uint8_t>(units[i] >> 8));
     }
 }
 
-duint32 dwgBufferW::bitCount() const {
+std::uint32_t dwgBufferW::bitCount() const {
     if (m_bitPos == 0)
-        return static_cast<duint32>(m_buf.size()) * 8;
-    return static_cast<duint32>(m_buf.size() - 1) * 8 + m_bitPos;
+        return static_cast<std::uint32_t>(m_buf.size()) * 8;
+    return static_cast<std::uint32_t>(m_buf.size() - 1) * 8 + m_bitPos;
 }
 
-void dwgBufferW::putBytes(const duint8* buf, size_t n) {
+void dwgBufferW::putBytes(const std::uint8_t* buf, size_t n) {
     if (buf == nullptr || n == 0) return;
     if (m_bitPos == 0) {
         m_buf.insert(m_buf.end(), buf, buf + n);
@@ -451,7 +451,7 @@ void dwgBufferW::putThickness(double t, bool b_R2000_style) {
     putBitDouble(t);
 }
 
-void dwgBufferW::putCmColor(DRW::Version v, duint16 colorIndex) {
+void dwgBufferW::putCmColor(DRW::Version v, std::uint16_t colorIndex) {
     putBitShort(colorIndex);
     if (v >= DRW::AC1018) {  // R2004+: getCmColor reads BS + BL(rgb) + rawchar8(flags)
         // getCmColor dispatches on rgb>>24 (type byte):
@@ -459,20 +459,20 @@ void dwgBufferW::putCmColor(DRW::Version v, duint16 colorIndex) {
         //   0xC1 → return 0   (ByBlock)
         //   0xC3 → return rgb&0xFF  (ACI palette index 1..255)
         // Type 0x00 falls to the default "return 256" branch, discarding idx.
-        duint32 typeNibble;
+        std::uint32_t typeNibble;
         if (colorIndex == 0)
             typeNibble = 0xC1u;         // ByBlock
         else if (colorIndex >= 256)
             typeNibble = 0xC0u;         // ByLayer (256)
         else
             typeNibble = 0xC3u;         // ACI 1..255
-        duint32 rgb = (typeNibble << 24) | (colorIndex & 0xFFu);
+        std::uint32_t rgb = (typeNibble << 24) | (colorIndex & 0xFFu);
         putBitLong(rgb);
         putRawChar8(0);      // flags = 0 (no color name, no book name)
     }
 }
 
-void dwgBufferW::putCmColor(DRW::Version v, duint16 colorIndex, dint32 rgb24,
+void dwgBufferW::putCmColor(DRW::Version v, std::uint16_t colorIndex, std::int32_t rgb24,
                             const UTF8STRING& colorName,
                             const UTF8STRING& bookName,
                             dwgBufferW* strBuf) {
@@ -485,9 +485,9 @@ void dwgBufferW::putCmColor(DRW::Version v, duint16 colorIndex, dint32 rgb24,
     // then the name strings to the string buffer (defaulting to this).
     // Inverse of dwgBuffer::getCmColor type==0xC2 branch.
     putBitShort(colorIndex);
-    duint32 rgb = (0xC2u << 24) | (static_cast<duint32>(rgb24) & 0xFFFFFFu);
-    putBitLong(static_cast<dint32>(rgb));
-    duint8 flags = static_cast<duint8>((colorName.empty() ? 0u : 1u)
+    std::uint32_t rgb = (0xC2u << 24) | (static_cast<std::uint32_t>(rgb24) & 0xFFFFFFu);
+    putBitLong(static_cast<std::int32_t>(rgb));
+    std::uint8_t flags = static_cast<std::uint8_t>((colorName.empty() ? 0u : 1u)
                                        | (bookName.empty() ? 0u : 2u));
     putRawChar8(flags);
     dwgBufferW* names = strBuf ? strBuf : this;
@@ -497,43 +497,43 @@ void dwgBufferW::putCmColor(DRW::Version v, duint16 colorIndex, dint32 rgb24,
         names->putVariableText(v, bookName);
 }
 
-void dwgBufferW::putEnColor(DRW::Version v, duint16 colorIndex) {
+void dwgBufferW::putEnColor(DRW::Version v, std::uint16_t colorIndex) {
     if (v < DRW::AC1018)
-        putSBitShort(static_cast<dint16>(colorIndex));
+        putSBitShort(static_cast<std::int16_t>(colorIndex));
     else
         putBitShort(colorIndex);  // R2004+: unsigned BS; reader uses getBitShort()
 }
 
 // ---- CRC ------------------------------------------------------------------
 
-duint16 dwgBufferW::crc16(duint16 seed, size_t start, size_t end) const {
+std::uint16_t dwgBufferW::crc16(std::uint16_t seed, size_t start, size_t end) const {
     if (end > m_buf.size()) end = m_buf.size();
-    duint16 dx = seed;
+    std::uint16_t dx = seed;
     for (size_t i = start; i < end; ++i) {
-        duint8 al = static_cast<duint8>(m_buf[i] ^ static_cast<duint8>(dx & 0xFF));
-        dx = static_cast<duint16>((dx >> 8) & 0xFF);
-        dx = static_cast<duint16>(dx ^ crcTable[al]);
+        std::uint8_t al = static_cast<std::uint8_t>(m_buf[i] ^ static_cast<std::uint8_t>(dx & 0xFF));
+        dx = static_cast<std::uint16_t>((dx >> 8) & 0xFF);
+        dx = static_cast<std::uint16_t>(dx ^ crcTable[al]);
     }
     return dx;
 }
 
 // ---- in-place patching ---------------------------------------------------
 
-void dwgBufferW::patchRawShort16(size_t byteOffset, duint16 v) {
+void dwgBufferW::patchRawShort16(size_t byteOffset, std::uint16_t v) {
     if (byteOffset + 2 > m_buf.size()) return;
-    m_buf[byteOffset]     = static_cast<duint8>(v & 0xFF);
-    m_buf[byteOffset + 1] = static_cast<duint8>((v >> 8) & 0xFF);
+    m_buf[byteOffset]     = static_cast<std::uint8_t>(v & 0xFF);
+    m_buf[byteOffset + 1] = static_cast<std::uint8_t>((v >> 8) & 0xFF);
 }
 
-void dwgBufferW::patchRawLong32(size_t byteOffset, duint32 v) {
+void dwgBufferW::patchRawLong32(size_t byteOffset, std::uint32_t v) {
     if (byteOffset + 4 > m_buf.size()) return;
-    m_buf[byteOffset]     = static_cast<duint8>(v & 0xFF);
-    m_buf[byteOffset + 1] = static_cast<duint8>((v >> 8) & 0xFF);
-    m_buf[byteOffset + 2] = static_cast<duint8>((v >> 16) & 0xFF);
-    m_buf[byteOffset + 3] = static_cast<duint8>((v >> 24) & 0xFF);
+    m_buf[byteOffset]     = static_cast<std::uint8_t>(v & 0xFF);
+    m_buf[byteOffset + 1] = static_cast<std::uint8_t>((v >> 8) & 0xFF);
+    m_buf[byteOffset + 2] = static_cast<std::uint8_t>((v >> 16) & 0xFF);
+    m_buf[byteOffset + 3] = static_cast<std::uint8_t>((v >> 24) & 0xFF);
 }
 
-void dwgBufferW::patchRawLong32AtBit(size_t bitOffset, duint32 val) {
+void dwgBufferW::patchRawLong32AtBit(size_t bitOffset, std::uint32_t val) {
     // Write 32 bits of val into the stream starting at stream-bit bitOffset.
     // Precondition: bitOffset % 8 == 2 (all BS widths in our writer leave a
     // 2-bit sub-byte remainder: "01"+RC = 10 bits, "00"+RS = 18 bits,
@@ -545,13 +545,13 @@ void dwgBufferW::patchRawLong32AtBit(size_t bitOffset, duint32 val) {
     //   buf[byteIdx+4]: high 2 = remaining 2 bits, low 6 bits preserved
     size_t byteIdx = bitOffset / 8;
     if (byteIdx + 4 >= m_buf.size()) return;
-    duint8 b0 = static_cast<duint8>(val & 0xFF);
-    duint8 b1 = static_cast<duint8>((val >> 8) & 0xFF);
-    duint8 b2 = static_cast<duint8>((val >> 16) & 0xFF);
-    duint8 b3 = static_cast<duint8>((val >> 24) & 0xFF);
-    m_buf[byteIdx]     = (m_buf[byteIdx] & 0xC0) | static_cast<duint8>(b0 >> 2);
-    m_buf[byteIdx + 1] = static_cast<duint8>(b0 << 6) | static_cast<duint8>(b1 >> 2);
-    m_buf[byteIdx + 2] = static_cast<duint8>(b1 << 6) | static_cast<duint8>(b2 >> 2);
-    m_buf[byteIdx + 3] = static_cast<duint8>(b2 << 6) | static_cast<duint8>(b3 >> 2);
-    m_buf[byteIdx + 4] = (m_buf[byteIdx + 4] & 0x3F) | static_cast<duint8>(b3 << 6);
+    std::uint8_t b0 = static_cast<std::uint8_t>(val & 0xFF);
+    std::uint8_t b1 = static_cast<std::uint8_t>((val >> 8) & 0xFF);
+    std::uint8_t b2 = static_cast<std::uint8_t>((val >> 16) & 0xFF);
+    std::uint8_t b3 = static_cast<std::uint8_t>((val >> 24) & 0xFF);
+    m_buf[byteIdx]     = (m_buf[byteIdx] & 0xC0) | static_cast<std::uint8_t>(b0 >> 2);
+    m_buf[byteIdx + 1] = static_cast<std::uint8_t>(b0 << 6) | static_cast<std::uint8_t>(b1 >> 2);
+    m_buf[byteIdx + 2] = static_cast<std::uint8_t>(b1 << 6) | static_cast<std::uint8_t>(b2 >> 2);
+    m_buf[byteIdx + 3] = static_cast<std::uint8_t>(b2 << 6) | static_cast<std::uint8_t>(b3 >> 2);
+    m_buf[byteIdx + 4] = (m_buf[byteIdx + 4] & 0x3F) | static_cast<std::uint8_t>(b3 << 6);
 }

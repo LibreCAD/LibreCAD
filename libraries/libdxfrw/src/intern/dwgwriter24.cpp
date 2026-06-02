@@ -36,7 +36,7 @@ static std::string toUpperCase(const std::string& s) {
 
 bool dwgWriter24::writeDwgHeader() {
     size_t sectionStart = m_buf.size();
-    m_sectionOffsets[recno::HEADER] = static_cast<duint32>(sectionStart);
+    m_sectionOffsets[recno::HEADER] = static_cast<std::uint32_t>(sectionStart);
 
     size_t sizeOffset = beginSentinelSection(dwgSentinels::HEADER_BEGIN);
 
@@ -66,19 +66,19 @@ bool dwgWriter24::writeDwgHeader() {
         // strDataSize = strBytes*8 + 7 so the reader's backward scan
         // (DRW_Header::parseDwg:2329-2348) lands at the first string byte.
         if (m_version > DRW::AC1018) {
-            duint32 strBytes = static_cast<duint32>(strBuf.data().size());
+            std::uint32_t strBytes = static_cast<std::uint32_t>(strBuf.data().size());
             bool hasStrings = strBytes > 0;
             if (hasStrings)
                 dataBuf.putBytes(strBuf.data().data(), strBytes);
-            duint16 strDataSize = hasStrings
-                ? static_cast<duint16>(strBytes * 8u + 7u) : 0u;
+            std::uint16_t strDataSize = hasStrings
+                ? static_cast<std::uint16_t>(strBytes * 8u + 7u) : 0u;
             for (int i = 0; i < 7; ++i) dataBuf.putBit(0);
             dataBuf.putRawShort16(strDataSize);
             dataBuf.putBit(hasStrings ? 1 : 0);
             // dataBuf is byte-aligned again (+strBytes +3 footer bytes).
         }
 
-        duint32 bitSize = 32u + static_cast<duint32>(dataBuf.size()) * 8u;
+        std::uint32_t bitSize = 32u + static_cast<std::uint32_t>(dataBuf.size()) * 8u;
         m_buf.patchRawLong32(bitSizeOffset, bitSize);
 
         m_buf.putBytes(dataBuf.data().data(), dataBuf.size());
@@ -89,7 +89,7 @@ bool dwgWriter24::writeDwgHeader() {
     endSentinelSection(sectionStart, sizeOffset, dwgSentinels::HEADER_END);
 
     m_sectionSizes[recno::HEADER] =
-        static_cast<duint32>(m_buf.size() - sectionStart);
+        static_cast<std::uint32_t>(m_buf.size() - sectionStart);
     return true;
 }
 
@@ -103,7 +103,7 @@ bool dwgWriter24::writeDwgClasses() {
         return false;
 
     size_t sectionStart = m_buf.size();
-    m_sectionOffsets[recno::CLASSES] = static_cast<duint32>(sectionStart);
+    m_sectionOffsets[recno::CLASSES] = static_cast<std::uint32_t>(sectionStart);
 
     size_t sizeOffset = beginSentinelSection(dwgSentinels::CLASSES_BEGIN);
 
@@ -133,28 +133,28 @@ bool dwgWriter24::writeDwgClasses() {
 
     if (classStrings.size() > 0)
         m_buf.putBytes(classStrings.data().data(), classStrings.size());
-    const duint16 strDataSize =
-        static_cast<duint16>(classStrings.size() * 8u);
+    const std::uint16_t strDataSize =
+        static_cast<std::uint16_t>(classStrings.size() * 8u);
     m_buf.putRawShort16(strDataSize);
-    const duint32 crcStartBit =
-        m_buf.bitCount() - static_cast<duint32>(sectionStart) * 8u;
+    const std::uint32_t crcStartBit =
+        m_buf.bitCount() - static_cast<std::uint32_t>(sectionStart) * 8u;
     m_buf.putRawShort16(0);   // classes CRC placeholder (reader does not validate)
     m_buf.putRawChar8(0);     // unknown CRC tail byte for R2007+
 
     // Back-patch RL bitSize. The reader adds 159 bits without hSize, or
     // 191 bits with hSize, and then backs up 16 bits to read strDataSize.
-    duint32 bitSize = crcStartBit - (hasHSize ? 191u : 159u);
+    std::uint32_t bitSize = crcStartBit - (hasHSize ? 191u : 159u);
     m_buf.patchRawLong32(bitSizeOffset, bitSize);
 
     // Patch RL size and write end sentinel.
-    duint32 payloadSize =
-        static_cast<duint32>(m_buf.size()) - static_cast<duint32>(sizeOffset + 4);
+    std::uint32_t payloadSize =
+        static_cast<std::uint32_t>(m_buf.size()) - static_cast<std::uint32_t>(sizeOffset + 4);
     m_buf.patchRawLong32(sizeOffset, payloadSize);
 
     m_buf.putBytes(dwgSentinels::CLASSES_END, 16);
 
     m_sectionSizes[recno::CLASSES] =
-        static_cast<duint32>(m_buf.size() - sectionStart);
+        static_cast<std::uint32_t>(m_buf.size() - sectionStart);
     return true;
 }
 
@@ -178,7 +178,7 @@ bool dwgWriter24::encodeEntity(DRW_Entity *ent) {
         auto it = m_writingCtx.layerMap.find(layerUp);
         ent->layerH.ref = (it != m_writingCtx.layerMap.end())
             ? it->second
-            : static_cast<duint32>(0x12);
+            : static_cast<std::uint32_t>(0x12);
     }
     if (ent->lTypeH.ref == 0 && !ent->lineType.empty()) {
         auto ltUp = toUpperCase(ent->lineType);
@@ -221,12 +221,12 @@ void dwgWriter24::finishObject() {
     // start: (dataBytes-1)+(b>>3)=dataBytesBeforeStrings=(dataBytes-strBytes-3)
     // → b=-((strBytes+2)*8) → strDataSize=strBytes*8+7.
     m_objectBody.alignToByte();
-    duint32 strBytes = static_cast<duint32>(m_objectStrings.data().size());
+    std::uint32_t strBytes = static_cast<std::uint32_t>(m_objectStrings.data().size());
     bool hasStrings = (strBytes > 0);
     if (hasStrings)
         m_objectBody.putBytes(m_objectStrings.data().data(), strBytes);
-    duint16 strDataSize = hasStrings
-        ? static_cast<duint16>(strBytes * 8u + 7u)
+    std::uint16_t strDataSize = hasStrings
+        ? static_cast<std::uint16_t>(strBytes * 8u + 7u)
         : 0u;
     for (int i = 0; i < 7; ++i) m_objectBody.putBit(0);
     m_objectBody.putRawShort16(strDataSize);
@@ -236,15 +236,15 @@ void dwgWriter24::finishObject() {
     // --- Byte-align the handle section -------------------------------------
     m_objectHandles.alignToByte();
 
-    duint32 dataBytes   = static_cast<duint32>(m_objectBody.size());
-    duint32 handleBytes = static_cast<duint32>(m_objectHandles.size());
-    duint32 totalBytes  = dataBytes + handleBytes;
-    duint32 bs          = handleBytes * 8;  // bit count of handle section
+    std::uint32_t dataBytes   = static_cast<std::uint32_t>(m_objectBody.size());
+    std::uint32_t handleBytes = static_cast<std::uint32_t>(m_objectHandles.size());
+    std::uint32_t totalBytes  = dataBytes + handleBytes;
+    std::uint32_t bs          = handleBytes * 8;  // bit count of handle section
 
-    duint32 frameStart = static_cast<duint32>(m_buf.size());
+    std::uint32_t frameStart = static_cast<std::uint32_t>(m_buf.size());
 
     // MS totalBodyBytes + UMC bs + body bytes.
-    m_buf.putModularShort(static_cast<dint32>(totalBytes));
+    m_buf.putModularShort(static_cast<std::int32_t>(totalBytes));
     m_buf.putUModularChar(bs);
     size_t bodyStart = m_buf.size();
     m_buf.putBytes(m_objectBody.data().data(), dataBytes);
@@ -252,7 +252,7 @@ void dwgWriter24::finishObject() {
         m_buf.putBytes(m_objectHandles.data().data(), handleBytes);
 
     // CRC covers MS prefix + UMC bs + body bytes.
-    duint16 crc = m_buf.crc16(0xC0C1, frameStart, bodyStart + totalBytes);
+    std::uint16_t crc = m_buf.crc16(0xC0C1, frameStart, bodyStart + totalBytes);
     m_buf.putRawShort16(crc);
 
     m_objectMap.emplace_back(m_currentHandle, frameStart);

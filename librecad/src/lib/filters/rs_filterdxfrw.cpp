@@ -393,7 +393,7 @@ bool isFieldRawObject(
 }
 
 bool hasReplayableRawMLeaderStyle(const LC_DwgAdvancedMetadata& metadata,
-                                  duint32 handle) {
+                                  std::uint32_t handle) {
     if (handle == 0)
         return false;
     for (const auto& record : metadata.rawObjects()) {
@@ -1971,14 +1971,14 @@ void RS_FilterDXFRW::addLWPolyline(const DRW_LWPolyline& data) {
         ext.push_back(std::make_shared<DRW_Variant>(1040, data.thickness));
         ext.push_back(std::make_shared<DRW_Variant>(1010, data.extPoint));
         ext.push_back(std::make_shared<DRW_Variant>(
-            1070, dint32{static_cast<int>(data.vertlist.size())}));
+            1070, std::int32_t{static_cast<int>(data.vertlist.size())}));
         for (const auto& v : data.vertlist) {
             ext.push_back(std::make_shared<DRW_Variant>(
                 1040, v ? v->stawidth : 0.0));
             ext.push_back(std::make_shared<DRW_Variant>(
                 1040, v ? v->endwidth : 0.0));
             ext.push_back(std::make_shared<DRW_Variant>(
-                1071, dint32{v ? v->identifier : 0}));
+                1071, std::int32_t{v ? v->identifier : 0}));
         }
         polyline->setDrwExtData(std::move(ext));
     }
@@ -2076,12 +2076,12 @@ void RS_FilterDXFRW::addMLine(const DRW_MLine *data) {
     ext.push_back(std::make_shared<DRW_Variant>(1000, data->styleName));
     ext.push_back(std::make_shared<DRW_Variant>(1040, data->scale));
     ext.push_back(
-        std::make_shared<DRW_Variant>(1070, dint32{data->justification}));
-    ext.push_back(std::make_shared<DRW_Variant>(1070, dint32{N}));
-    ext.push_back(std::make_shared<DRW_Variant>(1070, dint32{i}));
+        std::make_shared<DRW_Variant>(1070, std::int32_t{data->justification}));
+    ext.push_back(std::make_shared<DRW_Variant>(1070, std::int32_t{N}));
+    ext.push_back(std::make_shared<DRW_Variant>(1070, std::int32_t{i}));
     ext.push_back(std::make_shared<DRW_Variant>(1040, effOffsets[i]));
     ext.push_back(
-        std::make_shared<DRW_Variant>(1070, dint32{data->openClosed}));
+        std::make_shared<DRW_Variant>(1070, std::int32_t{data->openClosed}));
     if (i == 0) {
       // Anchor carries baseline + miter for each vertex.
       for (const auto &v : data->vertlist) {
@@ -2198,15 +2198,15 @@ void RS_FilterDXFRW::addUnderlay(const DRW_Underlay *data) {
   ext.push_back(std::make_shared<DRW_Variant>(1000, underlayId.toStdString()));
   ext.push_back(std::make_shared<DRW_Variant>(1000, std::string(kindStr)));
   ext.push_back(std::make_shared<DRW_Variant>(
-      1071, dint32{static_cast<int>(data->definitionHandle)}));
+      1071, std::int32_t{static_cast<int>(data->definitionHandle)}));
   ext.push_back(std::make_shared<DRW_Variant>(
       1010, DRW_Coord(data->position.x, data->position.y, data->position.z)));
   ext.push_back(std::make_shared<DRW_Variant>(1040, data->scale.x));
   ext.push_back(std::make_shared<DRW_Variant>(1040, data->scale.y));
   ext.push_back(std::make_shared<DRW_Variant>(1040, data->rotation));
-  ext.push_back(std::make_shared<DRW_Variant>(1070, dint32{data->flags}));
-  ext.push_back(std::make_shared<DRW_Variant>(1070, dint32{data->contrast}));
-  ext.push_back(std::make_shared<DRW_Variant>(1070, dint32{data->fade}));
+  ext.push_back(std::make_shared<DRW_Variant>(1070, std::int32_t{data->flags}));
+  ext.push_back(std::make_shared<DRW_Variant>(1070, std::int32_t{data->contrast}));
+  ext.push_back(std::make_shared<DRW_Variant>(1070, std::int32_t{data->fade}));
   polyline->setDrwExtData(std::move(ext));
 
   if (m_graphic != nullptr)
@@ -2250,23 +2250,23 @@ void RS_FilterDXFRW::addPolyline(const DRW_Polyline& data) {
             ext.push_back(std::make_shared<DRW_Variant>(1000, meshId));
             ext.push_back(std::make_shared<DRW_Variant>(1000, role));
             ext.push_back(std::make_shared<DRW_Variant>(
-                1070, dint32{elementIndex}));
+                1070, std::int32_t{elementIndex}));
             ext.push_back(std::make_shared<DRW_Variant>(
-                1070, dint32{meshElementCount}));
+                1070, std::int32_t{meshElementCount}));
             ext.push_back(std::make_shared<DRW_Variant>(
-                1070, dint32{roleIndex}));
+                1070, std::int32_t{roleIndex}));
             ext.push_back(std::make_shared<DRW_Variant>(
-                1070, dint32{data.flags}));
+                1070, std::int32_t{data.flags}));
             ext.push_back(std::make_shared<DRW_Variant>(
-                1070, dint32{M}));
+                1070, std::int32_t{M}));
             ext.push_back(std::make_shared<DRW_Variant>(
-                1070, dint32{N}));
+                1070, std::int32_t{N}));
             ext.push_back(std::make_shared<DRW_Variant>(
-                1070, dint32{data.smoothM}));
+                1070, std::int32_t{data.smoothM}));
             ext.push_back(std::make_shared<DRW_Variant>(
-                1070, dint32{data.smoothN}));
+                1070, std::int32_t{data.smoothN}));
             ext.push_back(std::make_shared<DRW_Variant>(
-                1070, dint32{data.curvetype}));
+                1070, std::int32_t{data.curvetype}));
             if (anchor) {
                 for (const auto& vertex : data.vertlist) {
                     if (!vertex) {
@@ -2372,23 +2372,23 @@ void RS_FilterDXFRW::addPolyline(const DRW_Polyline& data) {
                 ext.push_back(std::make_shared<DRW_Variant>(
                     1000, polyfaceId));
                 ext.push_back(std::make_shared<DRW_Variant>(
-                    1070, dint32{faceIndex}));
+                    1070, std::int32_t{faceIndex}));
                 ext.push_back(std::make_shared<DRW_Variant>(
-                    1070, dint32{static_cast<int>(faceRecords.size())}));
+                    1070, std::int32_t{static_cast<int>(faceRecords.size())}));
                 ext.push_back(std::make_shared<DRW_Variant>(
-                    1070, dint32{data.flags}));
+                    1070, std::int32_t{data.flags}));
                 ext.push_back(std::make_shared<DRW_Variant>(
-                    1070, dint32{data.vertexcount}));
+                    1070, std::int32_t{data.vertexcount}));
                 ext.push_back(std::make_shared<DRW_Variant>(
-                    1070, dint32{data.facecount}));
+                    1070, std::int32_t{data.facecount}));
                 ext.push_back(std::make_shared<DRW_Variant>(
-                    1070, dint32{face.vindex1}));
+                    1070, std::int32_t{face.vindex1}));
                 ext.push_back(std::make_shared<DRW_Variant>(
-                    1070, dint32{face.vindex2}));
+                    1070, std::int32_t{face.vindex2}));
                 ext.push_back(std::make_shared<DRW_Variant>(
-                    1070, dint32{face.vindex3}));
+                    1070, std::int32_t{face.vindex3}));
                 ext.push_back(std::make_shared<DRW_Variant>(
-                    1070, dint32{face.vindex4}));
+                    1070, std::int32_t{face.vindex4}));
                 if (anchor) {
                     for (const auto& coord : sourceVertices) {
                         ext.push_back(std::make_shared<DRW_Variant>(
@@ -3139,9 +3139,9 @@ void RS_FilterDXFRW::fillEntityExtData(std::vector<std::shared_ptr<DRW_Variant>>
                       // (DXF group 1004). The DXF writer hex-encodes them
                       // on emit; the DWG path will use the raw bytes.
                       const QByteArray &bytes = tag->bytes();
-                      std::vector<duint8> raw(bytes.size());
+                      std::vector<std::uint8_t> raw(bytes.size());
                       for (int i = 0; i < bytes.size(); ++i) {
-                        raw[i] = static_cast<duint8>(bytes[i]);
+                        raw[i] = static_cast<std::uint8_t>(bytes[i]);
                       }
                       extData.push_back(
                           std::make_shared<DRW_Variant>(1004, std::move(raw)));
@@ -5295,7 +5295,7 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic& g, const QString& file, RS2::FormatT
     // raw net so AutoCAD/ODA accept those instances (entry + instance co-emit).
     {
         const auto &metadata = g.dwgAdvancedMetadata();
-        duint32 maxRawHandle = 0;
+        std::uint32_t maxRawHandle = 0;
         std::vector<DRW_Class> classes;
         std::map<std::string, std::size_t> classIdx;
         auto registerClassFor = [&](const std::string &recordName) {
@@ -5333,9 +5333,9 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic& g, const QString& file, RS2::FormatT
         // collisions are not re-emitted. The source root dict itself is never in
         // the raw net (processDictionary skips parentHandle==0).
         m_dxfSuppressedObjectHandles.clear();
-        duint32 sourceRootHandle = 0;
-        duint32 acadGroupHandle = 0;
-        std::map<duint32, std::string> rootEntryName;  // child handle -> name
+        std::uint32_t sourceRootHandle = 0;
+        std::uint32_t acadGroupHandle = 0;
+        std::map<std::uint32_t, std::string> rootEntryName;  // child handle -> name
         for (const auto &d : metadata.dictionaries()) {
             if (d.parentHandle != 0)
                 continue;
@@ -5619,20 +5619,20 @@ void RS_FilterDXFRW::writeDwgClasses() {
     // is silently dropped).
     const bool canRegisterCustomClassObjects =
         m_dwgW->getVersion() >= DRW::AC1015;
-    std::set<duint32> nativeSunHandles;
-    std::set<duint32> nativeMLeaderStyleHandles;
-    std::set<duint32> nativeRasterVariablesHandles;
-    std::set<duint32> nativeGeoDataHandles;
-    std::set<duint32> nativeSpatialFilterHandles;
-    std::set<duint32> nativeScaleHandles;
-    std::set<duint32> nativeIDBufferHandles;
-    std::set<duint32> nativeLayerIndexHandles;
-    std::set<duint32> nativeSpatialIndexHandles;
-    std::set<duint32> nativeDictionaryVarHandles;
-    std::set<duint32> nativeDictionaryWithDefaultHandles;
-    std::set<duint32> nativeSortEntsTableHandles;
-    std::set<duint32> nativeFieldListHandles;
-    std::set<duint32> nativeFieldHandles;
+    std::set<std::uint32_t> nativeSunHandles;
+    std::set<std::uint32_t> nativeMLeaderStyleHandles;
+    std::set<std::uint32_t> nativeRasterVariablesHandles;
+    std::set<std::uint32_t> nativeGeoDataHandles;
+    std::set<std::uint32_t> nativeSpatialFilterHandles;
+    std::set<std::uint32_t> nativeScaleHandles;
+    std::set<std::uint32_t> nativeIDBufferHandles;
+    std::set<std::uint32_t> nativeLayerIndexHandles;
+    std::set<std::uint32_t> nativeSpatialIndexHandles;
+    std::set<std::uint32_t> nativeDictionaryVarHandles;
+    std::set<std::uint32_t> nativeDictionaryWithDefaultHandles;
+    std::set<std::uint32_t> nativeSortEntsTableHandles;
+    std::set<std::uint32_t> nativeFieldListHandles;
+    std::set<std::uint32_t> nativeFieldHandles;
     if (canWriteModernObjects) {
         for (const auto& record : metadata.suns()) {
             if (record.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
@@ -6660,27 +6660,27 @@ void RS_FilterDXFRW::writeObjects() {
         // "Discovered during PR 13f" notes).
         const bool canRegisterCustomClassObjects =
             m_dwgW->getVersion() >= DRW::AC1015;
-        std::set<duint32> nativeSunHandles;
-        std::set<duint32> nativePlaceholderHandles;
-        std::set<duint32> nativeMLeaderStyleHandles;
-        std::set<duint32> nativeDictionaryHandles;
-        std::set<duint32> nativeXRecordHandles;
-        std::set<duint32> nativeLayoutHandles;
-        std::set<duint32> nativeGroupHandles;
-        std::set<duint32> nativeRasterVariablesHandles;
-        std::set<duint32> nativeGeoDataHandles;
-        std::set<duint32> nativeSpatialFilterHandles;
+        std::set<std::uint32_t> nativeSunHandles;
+        std::set<std::uint32_t> nativePlaceholderHandles;
+        std::set<std::uint32_t> nativeMLeaderStyleHandles;
+        std::set<std::uint32_t> nativeDictionaryHandles;
+        std::set<std::uint32_t> nativeXRecordHandles;
+        std::set<std::uint32_t> nativeLayoutHandles;
+        std::set<std::uint32_t> nativeGroupHandles;
+        std::set<std::uint32_t> nativeRasterVariablesHandles;
+        std::set<std::uint32_t> nativeGeoDataHandles;
+        std::set<std::uint32_t> nativeSpatialFilterHandles;
         // PR 8d.2a — five small no-storage OBJECTS families.
-        std::set<duint32> nativeScaleHandles;
-        std::set<duint32> nativeIDBufferHandles;
-        std::set<duint32> nativeLayerIndexHandles;
-        std::set<duint32> nativeSpatialIndexHandles;
-        std::set<duint32> nativeDictionaryVarHandles;
+        std::set<std::uint32_t> nativeScaleHandles;
+        std::set<std::uint32_t> nativeIDBufferHandles;
+        std::set<std::uint32_t> nativeLayerIndexHandles;
+        std::set<std::uint32_t> nativeSpatialIndexHandles;
+        std::set<std::uint32_t> nativeDictionaryVarHandles;
         // PR 8d.2b — four larger no-storage OBJECTS families.
-        std::set<duint32> nativeDictionaryWithDefaultHandles;
-        std::set<duint32> nativeSortEntsTableHandles;
-        std::set<duint32> nativeFieldListHandles;
-        std::set<duint32> nativeFieldHandles;
+        std::set<std::uint32_t> nativeDictionaryWithDefaultHandles;
+        std::set<std::uint32_t> nativeSortEntsTableHandles;
+        std::set<std::uint32_t> nativeFieldListHandles;
+        std::set<std::uint32_t> nativeFieldHandles;
         int nativeSunObjects = 0;
         int nativePlaceholderObjects = 0;
         int nativeMLeaderStyleObjects = 0;
@@ -8486,10 +8486,10 @@ void RS_FilterDXFRW::reconstructMLines(RS_EntityContainer *container,
     DRW_MLine ml;
     ml.styleName = anchor->styleName.toStdString();
     ml.scale = anchor->scale;
-    ml.justification = static_cast<duint8>(anchor->justification);
+    ml.justification = static_cast<std::uint8_t>(anchor->justification);
     ml.openClosed = anchor->openClosed;
-    ml.numLines = static_cast<duint8>(N);
-    ml.numVerts = static_cast<duint16>(anchor->baselineVerts.size());
+    ml.numLines = static_cast<std::uint8_t>(N);
+    ml.numVerts = static_cast<std::uint16_t>(anchor->baselineVerts.size());
     if (!anchor->baselineVerts.empty()) {
       ml.basePoint = anchor->baselineVerts.front();
     }
@@ -8646,7 +8646,7 @@ void RS_FilterDXFRW::reconstructUnderlays(RS_EntityContainer *container,
         break;
       }
       case 1071:
-        u.definitionHandle = static_cast<duint32>(sp->i_val());
+        u.definitionHandle = static_cast<std::uint32_t>(sp->i_val());
         break;
       case 1010: {
         const auto *c = sp->coord();
@@ -8670,11 +8670,11 @@ void RS_FilterDXFRW::reconstructUnderlays(RS_EntityContainer *container,
       case 1070: {
         const int v = static_cast<int>(sp->i_val());
         if (seen1070 == 0)
-          u.flags = static_cast<duint8>(v);
+          u.flags = static_cast<std::uint8_t>(v);
         else if (seen1070 == 1)
-          u.contrast = static_cast<duint8>(v);
+          u.contrast = static_cast<std::uint8_t>(v);
         else if (seen1070 == 2)
-          u.fade = static_cast<duint8>(v);
+          u.fade = static_cast<std::uint8_t>(v);
         ++seen1070;
         break;
       }
@@ -9021,7 +9021,7 @@ void RS_FilterDXFRW::writeSplinePoints(LC_SplinePoints *s){
 	auto const& fitPoints = data.splinePoints;
 	const bool writeFitScenario = !data.useControlPoints && fitPoints.size() >= 2;
 	sp.degree = 2;
-	sp.nfit = static_cast<dint32>(fitPoints.size());
+	sp.nfit = static_cast<std::int32_t>(fitPoints.size());
 
 	if (writeFitScenario) {
 		sp.m_scenario = 2;
@@ -9255,7 +9255,7 @@ void RS_FilterDXFRW::writeMText(RS_MText* t) {
           text->extData.push_back(
               std::make_shared<DRW_Variant>(1001, std::string("LibreCad")));
           text->extData.push_back(
-              std::make_shared<DRW_Variant>(1071, dint32{1}));
+              std::make_shared<DRW_Variant>(1071, std::int32_t{1}));
         }
                 if (t->getLineSpacingStyle() == RS_MTextData::AtLeast) {
 		    text->alignV = static_cast<DRW_Text::VAlign>(1);
@@ -9584,11 +9584,11 @@ makeDrwSplineFromSplinePoints(const LC_SplinePoints *sp) {
   if (d.useControlPoints && !d.controlPoints.empty()) {
     for (const auto &v : d.controlPoints)
       drw->controllist.push_back(std::make_shared<DRW_Coord>(v.x, v.y, 0.0));
-    drw->ncontrol = static_cast<dint32>(d.controlPoints.size());
+    drw->ncontrol = static_cast<std::int32_t>(d.controlPoints.size());
   } else {
     for (const auto &v : d.splinePoints)
       drw->fitlist.push_back(std::make_shared<DRW_Coord>(v.x, v.y, 0.0));
-    drw->nfit = static_cast<dint32>(d.splinePoints.size());
+    drw->nfit = static_cast<std::int32_t>(d.splinePoints.size());
   }
   return drw;
 }
@@ -9600,7 +9600,7 @@ makeDrwSplineFromSplinePoints(const LC_SplinePoints *sp) {
 std::shared_ptr<DRW_Spline> makeDrwSplineFromRSSpline(const RS_Spline *sp) {
   auto drw = std::make_shared<DRW_Spline>();
   const auto &sd = sp->getData();
-  drw->degree = static_cast<dint32>(sd.degree);
+  drw->degree = static_cast<std::int32_t>(sd.degree);
 
   const auto cps = sp->getControlPoints();
   const auto ws = sp->getWeights();
@@ -9618,12 +9618,12 @@ std::shared_ptr<DRW_Spline> makeDrwSplineFromRSSpline(const RS_Spline *sp) {
     drw->controllist.push_back(
         std::make_shared<DRW_Coord>(cps[i].x, cps[i].y, w));
   }
-  drw->ncontrol = static_cast<dint32>(cps.size());
+  drw->ncontrol = static_cast<std::int32_t>(cps.size());
   if (isRational) {
     drw->weightlist = ws;
   }
   drw->knotslist = sd.knotslist;
-  drw->nknots = static_cast<dint32>(sd.knotslist.size());
+  drw->nknots = static_cast<std::int32_t>(sd.knotslist.size());
   return drw;
 }
 
@@ -9890,14 +9890,14 @@ void RS_FilterDXFRW::writeMLeader(LC_MLeader *m) {
                                      sourceRoot.connectionPoint.z);
     root.direction = DRW_Coord(sourceRoot.direction.x, sourceRoot.direction.y,
                                sourceRoot.direction.z);
-    root.leaderIndex = static_cast<dint32>(e.context.roots.size());
+    root.leaderIndex = static_cast<std::int32_t>(e.context.roots.size());
     root.landingDistance = sourceRoot.landingDistance;
-    root.attachmentDirection = static_cast<duint16>(sourceRoot.attachmentDirection);
+    root.attachmentDirection = static_cast<std::uint16_t>(sourceRoot.attachmentDirection);
     root.leaderLines.reserve(sourceRoot.leaderLines.size());
     for (const auto &sourceLine : sourceRoot.leaderLines) {
       DRW_MLeaderLeaderLine line;
       line.leaderLineIndex = sourceLine.leaderLineIndex;
-      line.leaderType = static_cast<duint16>(d.leaderType);
+      line.leaderType = static_cast<std::uint16_t>(d.leaderType);
       line.color = d.leaderColor;
       line.lineWeight = e.lWeight;
       line.arrowSize = d.arrowSize;
@@ -11428,7 +11428,7 @@ LC_DimStyle *RS_FilterDXFRW::createDimStyle(const DRW_Dimstyle &s) {
     return result;
 }
 
-bool RS_FilterDXFRW::resolveBlockNameByHandle(duint32 blockHandle, QString& blockName) const {
+bool RS_FilterDXFRW::resolveBlockNameByHandle(std::uint32_t blockHandle, QString& blockName) const {
     std::string name = m_dxfR->getReadingContext()->resolveBlockRecordName(blockHandle);
     if (name.empty()) {
         return false;

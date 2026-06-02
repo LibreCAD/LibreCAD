@@ -94,7 +94,7 @@ bool dwgRW::testReader(){
     }
 
     dwgBuffer fileBuf(&filestr);
-    duint8 *tmpStrData = new duint8[fileBuf.size()];
+    std::uint8_t *tmpStrData = new std::uint8_t[fileBuf.size()];
     fileBuf.getBytes(tmpStrData, fileBuf.size());
     dwgBuffer dataBuf(tmpStrData, fileBuf.size());
     fileBuf.setPosition(0);
@@ -472,7 +472,7 @@ bool dwgRW::writeOle2Frame(DRW_Ole2Frame *ent) {
     return writer->encodeEntity(ent);
 }
 
-duint32 dwgRW::defineBlock(const std::string& name, const DRW_Coord& basePoint,
+std::uint32_t dwgRW::defineBlock(const std::string& name, const DRW_Coord& basePoint,
                            int insUnits) {
     if (writer == nullptr) return 0;
     return writer->defineBlock(name, basePoint, insUnits);

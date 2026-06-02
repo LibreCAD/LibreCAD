@@ -2030,7 +2030,7 @@ TEST_CASE("DWG advanced metadata indexes modeler raw byte splits",
 
 TEST_CASE("DWG advanced metadata indexes modeler payload ranges",
           "[entity_metadata][dwg_metadata][modeler]") {
-  const std::vector<duint8> sabTerminated = {
+  const std::vector<std::uint8_t> sabTerminated = {
       'x', 'x', 'A', 'C', 'I', 'S', ' ', 'B', 'i', 'n', 'a', 'r', 'y',
       'F', 'i', 'l', 'e', 0x01u, 'E', 'n', 'd', 0x0Eu, 0x02u, 'o',
       'f', 0x0Eu, 0x04u, 'A', 'C', 'I', 'S', 0x0Du, 0x04u, 'd',
@@ -2297,7 +2297,7 @@ TEST_CASE("DWG advanced metadata indexes associative graph edges",
   REQUIRE(actionEdges.size() == 3u);
   CHECK(actionEdges.front()->sourceRecordName == "ACDBASSOCACTION");
 
-  const std::vector<duint32> closure =
+  const std::vector<std::uint32_t> closure =
       metadata.findAssociativeClosureFrom(0x610u, 8u);
   REQUIRE(closure.size() == 4u);
   CHECK(closure[0] == 0x600u);
@@ -3693,7 +3693,7 @@ TEST_CASE("DWG TABLESTYLE/CELLSTYLEMAP/TABLECONTENT raw objects replay-eligible"
 
   const struct {
     int objectType;
-    duint32 handle;
+    std::uint32_t handle;
     const char* recName;
     const char* className;
   } kCases[] = {
@@ -3760,7 +3760,7 @@ TEST_CASE("DWG IMAGEDEF_REACTOR/TABLEGEOMETRY/EVALGRAPH raw objects eligible",
 
   const struct {
     int objectType;
-    duint32 handle;
+    std::uint32_t handle;
     const char* recName;
     const char* className;
   } kCases[] = {

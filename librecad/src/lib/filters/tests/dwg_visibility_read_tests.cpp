@@ -51,7 +51,7 @@ public:
         return e.encodeDwg(v, buf, /*bs=*/0);
     }
     static bool parse(DRW_Entity& e, DRW::Version v, dwgBuffer* buf) {
-        duint32 bs = 0;
+        std::uint32_t bs = 0;
         return e.parseDwg(v, buf, bs);
     }
     static dwgHandle& layerH(DRW_Entity& e) { return e.layerH; }
@@ -60,12 +60,12 @@ public:
 namespace {
 
 /// Build a handle with the minimal byte size for `ref`.
-dwgHandle makeHandle(duint8 code, duint32 ref) {
+dwgHandle makeHandle(std::uint8_t code, std::uint32_t ref) {
     dwgHandle h;
     h.code = code;
     h.ref = ref;
     h.size = 0;
-    duint32 t = ref;
+    std::uint32_t t = ref;
     while (t != 0) { t >>= 8; ++h.size; }
     return h;
 }
@@ -73,10 +73,10 @@ dwgHandle makeHandle(duint8 code, duint32 ref) {
 /// Hand-built AC1015 POINT record mirroring DRW_Entity::encodeDwgCommon +
 /// DRW_Point body + DRW_Entity::encodeDwgEntHandle, with the invisibleFlag
 /// BS field parameterized.  Layout cites drw_entities.cpp:1604-1719.
-std::vector<duint8> buildAc1015Point(duint32 handle, duint32 layerRef,
-                                     duint16 color, double ltypeScale,
+std::vector<std::uint8_t> buildAc1015Point(std::uint32_t handle, std::uint32_t layerRef,
+                                     std::uint16_t color, double ltypeScale,
                                      const DRW_Coord& basePoint,
-                                     duint16 invisibleFlag) {
+                                     std::uint16_t invisibleFlag) {
     dwgBufferW w;
 
     // --- encodeDwgCommon (AC1015) ---

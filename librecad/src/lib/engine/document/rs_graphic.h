@@ -25,6 +25,7 @@
 #define RS_GRAPHIC_H
 
 #include <array>
+#include <cstdint>
 #include <memory>
 #include <QDateTime>
 
@@ -109,7 +110,7 @@ public:
         return m_dwgAdvancedMetadata.layouts();
     }
     /** @return pointer to the layout record matching @p handle, or nullptr. */
-    const LC_Layout* findLayout(duint32 handle) const;
+    const LC_Layout* findLayout(std::uint32_t handle) const;
 
     /**
      * Active layout handle (paper-space tab the UI currently shows).
@@ -117,13 +118,13 @@ public:
      * is implicitly active, matching legacy behavior.  PR 10 wires this
      * into the new tab bar; PR 11 wires it into the plot dialog.
      */
-    duint32 activeLayoutHandle() const { return m_activeLayoutHandle; }
-    void setActiveLayoutHandle(duint32 handle);
+    std::uint32_t activeLayoutHandle() const { return m_activeLayoutHandle; }
+    void setActiveLayoutHandle(std::uint32_t handle);
 
     /** Per-layout paper margin setter — mutates the matching LayoutRecord
      *  in dwgAdvancedMetadata() and bumps the modified flag.  Returns
      *  false if @p handle has no matching layout. */
-    bool setLayoutMargins(duint32 handle,
+    bool setLayoutMargins(std::uint32_t handle,
                           double left, double top,
                           double right, double bottom);
 
@@ -373,7 +374,7 @@ private:
 
     /** Active paper-space layout handle.  0 == "no explicit selection"
      *  (legacy behavior — UI defaults to modelspace / first layout). */
-    duint32 m_activeLayoutHandle = 0;
+    std::uint32_t m_activeLayoutHandle = 0;
 
     //if set to true, will refuse to modify paper scale
     bool paperScaleFixed = false;

@@ -39,7 +39,7 @@
 
 TEST_CASE("DRW_Variant: BINARY round-trip preserves bytes",
           "[eed][drw_variant]") {
-  std::vector<duint8> bytes{0x00, 0x01, 0x7F, 0x80, 0xFF, 0xDE, 0xAD};
+  std::vector<std::uint8_t> bytes{0x00, 0x01, 0x7F, 0x80, 0xFF, 0xDE, 0xAD};
   DRW_Variant v(1004, bytes);
 
   REQUIRE(v.code() == 1004);
@@ -53,7 +53,7 @@ TEST_CASE("DRW_Variant: BINARY round-trip preserves bytes",
 
 TEST_CASE("DRW_Variant: copy ctor preserves BINARY data",
           "[eed][drw_variant]") {
-  std::vector<duint8> bytes{0xAA, 0xBB, 0xCC};
+  std::vector<std::uint8_t> bytes{0xAA, 0xBB, 0xCC};
   DRW_Variant src(1004, bytes);
   DRW_Variant dst(src);
 
@@ -68,7 +68,7 @@ TEST_CASE("DRW_Variant: copy ctor preserves BINARY data",
 
 TEST_CASE("DRW_Variant: INTEGER64 preserves high bits",
           "[eed][drw_variant]") {
-  constexpr dint64 value = 0x123456789ABCDELL;
+  constexpr std::int64_t value = 0x123456789ABCDELL;
   DRW_Variant src(160, value);
   DRW_Variant dst(src);
 
@@ -127,7 +127,7 @@ TEST_CASE("RS_Entity: drwExtData storage round-trips", "[eed][rs_entity]") {
   std::vector<std::shared_ptr<DRW_Variant>> ext;
   ext.push_back(std::make_shared<DRW_Variant>(1001, std::string{"ACAD"}));
   ext.push_back(std::make_shared<DRW_Variant>(1000, std::string{"hello"}));
-  ext.push_back(std::make_shared<DRW_Variant>(1070, dint32{42}));
+  ext.push_back(std::make_shared<DRW_Variant>(1070, std::int32_t{42}));
   ext.push_back(std::make_shared<DRW_Variant>(1040, 3.14));
 
   line.setDrwExtData(ext);
@@ -149,7 +149,7 @@ TEST_CASE("RS_Entity: copy ctor deep-copies drwExtData", "[eed][rs_entity]") {
   RS_Line src(RS_Vector{0., 0., 0.}, RS_Vector{1., 1., 0.});
   std::vector<std::shared_ptr<DRW_Variant>> ext;
   ext.push_back(std::make_shared<DRW_Variant>(1001, std::string{"APP"}));
-  ext.push_back(std::make_shared<DRW_Variant>(1070, dint32{7}));
+  ext.push_back(std::make_shared<DRW_Variant>(1070, std::int32_t{7}));
   src.setDrwExtData(ext);
 
   RS_Line copy(src);

@@ -21,39 +21,39 @@
 // common.c:100-177 and the ODA Open Design Specification v5.4.1.
 // Each pair of BEGIN/END is the byte-wise XOR-0xFF of the other.
 namespace dwgSentinels {
-    const duint8 FILE_HEADER_END[16] = {
+    const std::uint8_t FILE_HEADER_END[16] = {
         0x95, 0xA0, 0x4E, 0x28, 0x99, 0x82, 0x1A, 0xE5,
         0x5E, 0x41, 0xE0, 0x5F, 0x9D, 0x3A, 0x4D, 0x00
     };
-    const duint8 HEADER_BEGIN[16] = {
+    const std::uint8_t HEADER_BEGIN[16] = {
         0xCF, 0x7B, 0x1F, 0x23, 0xFD, 0xDE, 0x38, 0xA9,
         0x5F, 0x7C, 0x68, 0xB8, 0x4E, 0x6D, 0x33, 0x5F
     };
-    const duint8 HEADER_END[16] = {
+    const std::uint8_t HEADER_END[16] = {
         0x30, 0x84, 0xE0, 0xDC, 0x02, 0x21, 0xC7, 0x56,
         0xA0, 0x83, 0x97, 0x47, 0xB1, 0x92, 0xCC, 0xA0
     };
-    const duint8 CLASSES_BEGIN[16] = {
+    const std::uint8_t CLASSES_BEGIN[16] = {
         0x8D, 0xA1, 0xC4, 0xB8, 0xC4, 0xA9, 0xF8, 0xC5,
         0xC0, 0xDC, 0xF4, 0x5F, 0xE7, 0xCF, 0xB6, 0x8A
     };
-    const duint8 CLASSES_END[16] = {
+    const std::uint8_t CLASSES_END[16] = {
         0x72, 0x5E, 0x3B, 0x47, 0x3B, 0x56, 0x07, 0x3A,
         0x3F, 0x23, 0x0B, 0xA0, 0x18, 0x30, 0x49, 0x75
     };
-    const duint8 PREVIEW_BEGIN[16] = {
+    const std::uint8_t PREVIEW_BEGIN[16] = {
         0x1F, 0x25, 0x6D, 0x07, 0xD4, 0x36, 0x28, 0x28,
         0x9D, 0x57, 0xCA, 0x3F, 0x9D, 0x44, 0x10, 0x2B
     };
-    const duint8 PREVIEW_END[16] = {
+    const std::uint8_t PREVIEW_END[16] = {
         0xE0, 0xDA, 0x92, 0xF8, 0x2B, 0xC9, 0xD7, 0xD7,
         0x62, 0xA8, 0x35, 0xC0, 0x62, 0xBB, 0xEF, 0xD4
     };
-    const duint8 SECOND_HEADER_BEGIN[16] = {
+    const std::uint8_t SECOND_HEADER_BEGIN[16] = {
         0xD4, 0x7B, 0x21, 0xCE, 0x28, 0x93, 0x9F, 0xBF,
         0x53, 0x24, 0x40, 0x09, 0x12, 0x3C, 0xAA, 0x01
     };
-    const duint8 SECOND_HEADER_END[16] = {
+    const std::uint8_t SECOND_HEADER_END[16] = {
         0x2B, 0x84, 0xDE, 0x31, 0xD7, 0x6C, 0x60, 0x40,
         0xAC, 0xDB, 0xBF, 0xF6, 0xED, 0xC3, 0x55, 0xFE
     };
@@ -94,12 +94,12 @@ std::string toHexStr(int n){
  * @param out : output data (at least 239*blk bytes)
  * @param blk number of codewords ( 1 cw == 255 bytes)
  */
-bool dwgRSCodec::decode239I(unsigned char *in, unsigned char *out, duint32 blk){
+bool dwgRSCodec::decode239I(unsigned char *in, unsigned char *out, std::uint32_t blk){
     int k=0;
     bool allOk = true;
     unsigned char data[255];
     RScodec rsc(0x96, 8, 8); //(255, 239)
-    for (duint32 i=0; i<blk; i++){
+    for (std::uint32_t i=0; i<blk; i++){
         k = i;
         for (int j=0; j<255; j++) {
             data[j] = in[k];
@@ -124,12 +124,12 @@ bool dwgRSCodec::decode239I(unsigned char *in, unsigned char *out, duint32 blk){
  * @param out : output data (at least 251*blk bytes)
  * @param blk number of codewords ( 1 cw == 255 bytes)
  */
-bool dwgRSCodec::decode251I(unsigned char *in, unsigned char *out, duint32 blk){
+bool dwgRSCodec::decode251I(unsigned char *in, unsigned char *out, std::uint32_t blk){
     int k=0;
     bool allOk = true;
     unsigned char data[255];
     RScodec rsc(0xB8, 8, 2); //(255, 251)
-    for (duint32 i=0; i<blk; i++){
+    for (std::uint32_t i=0; i<blk; i++){
         k = i;
         for (int j=0; j<255; j++) {
             data[j] = in[k];
@@ -148,26 +148,26 @@ bool dwgRSCodec::decode251I(unsigned char *in, unsigned char *out, duint32 blk){
     return allOk;
 }
 
-duint8 *dwgCompressor::compressedBuffer {nullptr};
-duint32 dwgCompressor::compressedSize {0};
-duint32 dwgCompressor::compressedPos {0};
+std::uint8_t *dwgCompressor::compressedBuffer {nullptr};
+std::uint32_t dwgCompressor::compressedSize {0};
+std::uint32_t dwgCompressor::compressedPos {0};
 bool    dwgCompressor::compressedGood {true};
-duint8 *dwgCompressor::decompBuffer {nullptr};
-duint32 dwgCompressor::decompSize {0};
-duint32 dwgCompressor::decompPos {0};
+std::uint8_t *dwgCompressor::decompBuffer {nullptr};
+std::uint32_t dwgCompressor::decompSize {0};
+std::uint32_t dwgCompressor::decompPos {0};
 bool    dwgCompressor::decompGood {true};
 
-duint32 dwgCompressor::twoByteOffset(duint32 *ll){
-    duint32 cont = 0;
-    duint8 fb = compressedByte();
+std::uint32_t dwgCompressor::twoByteOffset(std::uint32_t *ll){
+    std::uint32_t cont = 0;
+    std::uint8_t fb = compressedByte();
     cont = (fb >> 2) | (compressedByte() << 6);
     *ll = (fb & 0x03);
     return cont;
 }
 
-duint32 dwgCompressor::longCompressionOffset(){
-    duint32 cont = 0;
-    duint8 ll = compressedByte();
+std::uint32_t dwgCompressor::longCompressionOffset(){
+    std::uint32_t cont = 0;
+    std::uint8_t ll = compressedByte();
     while (ll == 0x00 && compressedGood) {
         cont += 0xFF;
         ll = compressedByte();
@@ -176,10 +176,10 @@ duint32 dwgCompressor::longCompressionOffset(){
     return cont;
 }
 
-duint32 dwgCompressor::long20CompressionOffset(){
-//    duint32 cont = 0;
-    duint32 cont = 0x0F;
-    duint8 ll = compressedByte();
+std::uint32_t dwgCompressor::long20CompressionOffset(){
+//    std::uint32_t cont = 0;
+    std::uint32_t cont = 0x0F;
+    std::uint8_t ll = compressedByte();
     while (ll == 0x00 && compressedGood){
 //        cont += 0xFF;
         ll = compressedByte();
@@ -188,9 +188,9 @@ duint32 dwgCompressor::long20CompressionOffset(){
     return cont;
 }
 
-duint32 dwgCompressor::litLength18(){
-    duint32 cont = 0;
-    duint8 ll = compressedByte();
+std::uint32_t dwgCompressor::litLength18(){
+    std::uint32_t cont = 0;
+    std::uint8_t ll = compressedByte();
     //no literal length, this byte is next opCode
     if (ll > 0x0F) {
         --compressedPos;
@@ -209,7 +209,7 @@ duint32 dwgCompressor::litLength18(){
     return cont + ll + 3;
 }
 
-bool dwgCompressor::decompress18(duint8 *cbuf, duint8 *dbuf, duint64 csize, duint64 dsize){
+bool dwgCompressor::decompress18(std::uint8_t *cbuf, std::uint8_t *dbuf, std::uint64_t csize, std::uint64_t dsize){
     compressedBuffer = cbuf;
     decompBuffer = dbuf;
     compressedSize = csize;
@@ -221,7 +221,7 @@ bool dwgCompressor::decompress18(duint8 *cbuf, duint8 *dbuf, duint64 csize, duin
 
     // A <2-byte compressed page cannot hold the minimum opcode stream and the
     // trailing-byte peek below would read out of bounds (compressedSize is a
-    // duint32, so compressedSize-2 underflows to a huge index). Fail the page;
+    // std::uint32_t, so compressedSize-2 underflows to a huge index). Fail the page;
     // callers (parseDataPage/parseSysPage) propagate false as a read failure.
     if (compressedBuffer == nullptr || compressedSize < 2)
         return false;
@@ -229,17 +229,17 @@ bool dwgCompressor::decompress18(duint8 *cbuf, duint8 *dbuf, duint64 csize, duin
     DRW_DBG("dwgCompressor::decompress, last 2 bytes: ");
     DRW_DBGH(compressedBuffer[compressedSize - 2]);DRW_DBG(" ");DRW_DBGH(compressedBuffer[compressedSize - 1]);DRW_DBG("\n");
 
-    duint32 compBytes {0};
-    duint32 compOffset {0};
-    duint32 litCount {litLength18()};
+    std::uint32_t compBytes {0};
+    std::uint32_t compOffset {0};
+    std::uint32_t litCount {litLength18()};
 
     //copy first literal length
-    for (duint32 i = 0; i < litCount && buffersGood(); ++i) {
+    for (std::uint32_t i = 0; i < litCount && buffersGood(); ++i) {
         decompSet( compressedByte());
     }
 
     while (buffersGood()) {
-        duint8 oc = compressedByte(); //next opcode
+        std::uint8_t oc = compressedByte(); //next opcode
         if (oc == 0x10){
             compBytes = longCompressionOffset()+ 9;
             compOffset = twoByteOffset(&litCount) + 0x3FFF;
@@ -262,7 +262,7 @@ bool dwgCompressor::decompress18(duint8 *cbuf, duint8 *dbuf, duint64 csize, duin
                 litCount= litLength18();
         } else if ( oc > 0x3F){
             compBytes = ((oc & 0xF0) >> 4) - 1;
-            duint8 ll2 = compressedByte();
+            std::uint8_t ll2 = compressedByte();
             compOffset =  (ll2 << 2) | ((oc & 0x0C) >> 2);
             litCount = oc & 0x03;
             if (litCount < 1){
@@ -285,8 +285,8 @@ bool dwgCompressor::decompress18(duint8 *cbuf, duint8 *dbuf, duint64 csize, duin
             // only copy what we can fit
             compBytes = decompSize - decompPos;
         }
-        duint32 j {decompPos - compOffset - 1};
-        for (duint32 i = 0; i < compBytes && buffersGood(); i++) {
+        std::uint32_t j {decompPos - compOffset - 1};
+        for (std::uint32_t i = 0; i < compBytes && buffersGood(); i++) {
             decompSet( decompByte( j++));
         }
 
@@ -297,7 +297,7 @@ bool dwgCompressor::decompress18(duint8 *cbuf, duint8 *dbuf, duint64 csize, duin
             // only copy what we can fit
             litCount = decompSize - decompPos;
         }
-        for (duint32 i=0; i < litCount && buffersGood(); i++) {
+        for (std::uint32_t i=0; i < litCount && buffersGood(); i++) {
             decompSet( compressedByte());
         }
     }
@@ -306,9 +306,9 @@ bool dwgCompressor::decompress18(duint8 *cbuf, duint8 *dbuf, duint64 csize, duin
     return false;
 }
 
-duint8 dwgCompressor::compressedByte(void)
+std::uint8_t dwgCompressor::compressedByte(void)
 {
-    duint8 result {0};
+    std::uint8_t result {0};
 
     compressedGood = (compressedPos < compressedSize);
     if (compressedGood) {
@@ -319,7 +319,7 @@ duint8 dwgCompressor::compressedByte(void)
     return result;
 }
 
-duint8 dwgCompressor::compressedByte(const duint32 index)
+std::uint8_t dwgCompressor::compressedByte(const std::uint32_t index)
 {
     if (index < compressedSize) {
         return compressedBuffer[index];
@@ -328,12 +328,12 @@ duint8 dwgCompressor::compressedByte(const duint32 index)
     return 0;
 }
 
-duint32 dwgCompressor::compressedHiByte(void)
+std::uint32_t dwgCompressor::compressedHiByte(void)
 {
-    return static_cast<duint32>(compressedByte()) << 8;
+    return static_cast<std::uint32_t>(compressedByte()) << 8;
 }
 
-bool dwgCompressor::compressedInc(const dint32 inc /*= 1*/)
+bool dwgCompressor::compressedInc(const std::int32_t inc /*= 1*/)
 {
     compressedPos += inc;
     compressedGood = (compressedPos <= compressedSize);
@@ -341,7 +341,7 @@ bool dwgCompressor::compressedInc(const dint32 inc /*= 1*/)
     return compressedGood;
 }
 
-duint8 dwgCompressor::decompByte(const duint32 index)
+std::uint8_t dwgCompressor::decompByte(const std::uint32_t index)
 {
     if (index < decompSize) {
         return decompBuffer[index];
@@ -350,7 +350,7 @@ duint8 dwgCompressor::decompByte(const duint32 index)
     return 0;
 }
 
-void dwgCompressor::decompSet(const duint8 value)
+void dwgCompressor::decompSet(const std::uint8_t value)
 {
     decompGood = (decompPos < decompSize);
     if (decompGood) {
@@ -364,13 +364,13 @@ bool dwgCompressor::buffersGood(void)
     return compressedGood && decompGood;
 }
 
-duint32 dwgUtil::checksum18(duint32 seed, const duint8* data, duint64 sz) {
-    duint32 sum1 = seed & 0xffff;
-    duint32 sum2 = seed >> 0x10;
+std::uint32_t dwgUtil::checksum18(std::uint32_t seed, const std::uint8_t* data, std::uint64_t sz) {
+    std::uint32_t sum1 = seed & 0xffff;
+    std::uint32_t sum2 = seed >> 0x10;
     while (sz != 0) {
-        duint64 chunk = sz < 0x15b0 ? sz : 0x15b0;
+        std::uint64_t chunk = sz < 0x15b0 ? sz : 0x15b0;
         sz -= chunk;
-        for (duint64 i = 0; i < chunk; ++i) {
+        for (std::uint64_t i = 0; i < chunk; ++i) {
             sum1 += *data++;
             sum2 += sum1;
         }
@@ -380,46 +380,46 @@ duint32 dwgUtil::checksum18(duint32 seed, const duint8* data, duint64 sz) {
     return (sum2 << 0x10) | (sum1 & 0xffff);
 }
 
-duint32 dwgUtil::crc32(duint32 seed, const duint8* data, duint32 sz) {
+std::uint32_t dwgUtil::crc32(std::uint32_t seed, const std::uint8_t* data, std::uint32_t sz) {
     // Standard CRC-32/ISO-HDLC, polynomial 0xEDB88320 (matches dwgBuffer::crc32).
-    static duint32 kTable[256];
+    static std::uint32_t kTable[256];
     static bool kInit = false;
     if (!kInit) {
         for (int i = 0; i < 256; ++i) {
-            duint32 c = static_cast<duint32>(i);
+            std::uint32_t c = static_cast<std::uint32_t>(i);
             for (int j = 0; j < 8; ++j)
                 c = (c & 1u) ? (0xEDB88320u ^ (c >> 1)) : (c >> 1);
             kTable[i] = c;
         }
         kInit = true;
     }
-    duint32 crc = ~seed;
+    std::uint32_t crc = ~seed;
     while (sz-- > 0)
         crc = (crc >> 8) ^ kTable[(crc ^ *data++) & 0xFF];
     return ~crc;
 }
 
-void dwgCompressor::decrypt18Hdr(duint8 *buf, duint64 size, duint64 offset){
-    duint8 max = size / 4;
-    duint32 secMask = 0x4164536b ^ offset;
-    duint32* pHdr = reinterpret_cast<duint32*>(buf);
-    for (duint8 j = 0; j < max; j++)
+void dwgCompressor::decrypt18Hdr(std::uint8_t *buf, std::uint64_t size, std::uint64_t offset){
+    std::uint8_t max = size / 4;
+    std::uint32_t secMask = 0x4164536b ^ offset;
+    std::uint32_t* pHdr = reinterpret_cast<std::uint32_t*>(buf);
+    for (std::uint8_t j = 0; j < max; j++)
         *pHdr++ ^= secMask;
 }
 
-/*void dwgCompressor::decrypt18Data(duint8 *buf, duint32 size, duint32 offset){
-    duint8 max = size / 4;
-    duint32 secMask = 0x4164536b ^ offset;
-    duint32* pHdr = (duint32*)buf;
-    for (duint8 j = 0; j < max; j++)
+/*void dwgCompressor::decrypt18Data(std::uint8_t *buf, std::uint32_t size, std::uint32_t offset){
+    std::uint8_t max = size / 4;
+    std::uint32_t secMask = 0x4164536b ^ offset;
+    std::uint32_t* pHdr = (std::uint32_t*)buf;
+    for (std::uint8_t j = 0; j < max; j++)
         *pHdr++ ^= secMask;
 }*/
 
-duint32 dwgCompressor::litLength21(duint8 opCode)
+std::uint32_t dwgCompressor::litLength21(std::uint8_t opCode)
 {
-    duint32 length = 8u + opCode;
+    std::uint32_t length = 8u + opCode;
     if (0x17 == length) {
-        duint32 n = compressedByte();
+        std::uint32_t n = compressedByte();
         length += n;
         if (0xffu == n) {
             do {
@@ -434,7 +434,7 @@ duint32 dwgCompressor::litLength21(duint8 opCode)
     return length;
 }
 
-bool dwgCompressor::decompress21(duint8 *cbuf, duint8 *dbuf, duint64 csize, duint64 dsize){
+bool dwgCompressor::decompress21(std::uint8_t *cbuf, std::uint8_t *dbuf, std::uint64_t csize, std::uint64_t dsize){
     compressedBuffer = cbuf;
     decompBuffer = dbuf;
     compressedSize = csize;
@@ -444,9 +444,9 @@ bool dwgCompressor::decompress21(duint8 *cbuf, duint8 *dbuf, duint64 csize, duin
     compressedGood = true;
     decompGood = true;
 
-    duint32 length {0};
-    duint32 sourceOffset {0};
-    duint8 opCode {compressedByte()};
+    std::uint32_t length {0};
+    std::uint32_t sourceOffset {0};
+    std::uint8_t opCode {compressedByte()};
     if ((opCode >> 4) == 2){
         compressedInc( 2);
         length = compressedByte() & 0x07;
@@ -483,7 +483,7 @@ bool dwgCompressor::decompress21(duint8 *cbuf, duint8 *dbuf, duint64 csize, duin
                 compressedGood = false;
             }
             sourceOffset = decompPos - sourceOffset;
-            for (duint32 i=0; i< length; i++)
+            for (std::uint32_t i=0; i< length; i++)
                 decompSet( decompByte( sourceOffset + i));
 
             length = opCode & 7;
@@ -510,7 +510,7 @@ bool dwgCompressor::decompress21(duint8 *cbuf, duint8 *dbuf, duint64 csize, duin
     return buffersGood();
 }
 
-void dwgCompressor::readInstructions21(duint8 &opCode, duint32 &sourceOffset, duint32 &length){
+void dwgCompressor::readInstructions21(std::uint8_t &opCode, std::uint32_t &sourceOffset, std::uint32_t &length){
 
     switch (opCode >> 4) {
     case 0:
@@ -535,7 +535,7 @@ void dwgCompressor::readInstructions21(duint8 &opCode, duint32 &sourceOffset, du
             length = (opCode & 0xf8) + length;
         } else {
             ++sourceOffset;
-            length = (static_cast<duint32>(compressedByte()) << 3) + length;
+            length = (static_cast<std::uint32_t>(compressedByte()) << 3) + length;
             opCode = compressedByte();
             length = (((opCode & 0xf8) << 8) + length) + 0x100;
         }
@@ -549,39 +549,39 @@ void dwgCompressor::readInstructions21(duint8 &opCode, duint32 &sourceOffset, du
     }
 }
 
-const duint8 dwgCompressor::CopyOrder21_01[] = {0};
-const duint8 dwgCompressor::CopyOrder21_02[] = {1,0};
-const duint8 dwgCompressor::CopyOrder21_03[] = {2,1,0};
-const duint8 dwgCompressor::CopyOrder21_04[] = {0,1,2,3};
-const duint8 dwgCompressor::CopyOrder21_05[] = {4,0,1,2,3};
-const duint8 dwgCompressor::CopyOrder21_06[] = {5,1,2,3,4,0};
-const duint8 dwgCompressor::CopyOrder21_07[] = {6,5,1,2,3,4,0};
-const duint8 dwgCompressor::CopyOrder21_08[] = {0,1,2,3,4,5,6,7};
-const duint8 dwgCompressor::CopyOrder21_09[] = {8,0,1,2,3,4,5,6,7};
-const duint8 dwgCompressor::CopyOrder21_10[] = {9,1,2,3,4,5,6,7,8,0};
-const duint8 dwgCompressor::CopyOrder21_11[] = {10,9,1,2,3,4,5,6,7,8,0};
-const duint8 dwgCompressor::CopyOrder21_12[] = {8,9,10,11,0,1,2,3,4,5,6,7};
-const duint8 dwgCompressor::CopyOrder21_13[] = {12,8,9,10,11,0,1,2,3,4,5,6,7};
-const duint8 dwgCompressor::CopyOrder21_14[] = {13,9,10,11,12,1,2,3,4,5,6,7,8,0};
-const duint8 dwgCompressor::CopyOrder21_15[] = {14,13,9,10,11,12,1,2,3,4,5,6,7,8,0};
-const duint8 dwgCompressor::CopyOrder21_16[] = {8,9,10,11,12,13,14,15,0,1,2,3,4,5,6,7};
-const duint8 dwgCompressor::CopyOrder21_17[] = {9,10,11,12,13,14,15,16,8,0,1,2,3,4,5,6,7};
-const duint8 dwgCompressor::CopyOrder21_18[] = {17,9,10,11,12,13,14,15,16,1,2,3,4,5,6,7,8,0};
-const duint8 dwgCompressor::CopyOrder21_19[] = {18,17,16,8,9,10,11,12,13,14,15,0,1,2,3,4,5,6,7};
-const duint8 dwgCompressor::CopyOrder21_20[] = {16,17,18,19,8,9,10,11,12,13,14,15,0,1,2,3,4,5,6,7};
-const duint8 dwgCompressor::CopyOrder21_21[] = {20,16,17,18,19,8,9,10,11,12,13,14,15,0,1,2,3,4,5,6,7};
-const duint8 dwgCompressor::CopyOrder21_22[] = {21,20,16,17,18,19,8,9,10,11,12,13,14,15,0,1,2,3,4,5,6,7};
-const duint8 dwgCompressor::CopyOrder21_23[] = {22,21,20,16,17,18,19,8,9,10,11,12,13,14,15,0,1,2,3,4,5,6,7};
-const duint8 dwgCompressor::CopyOrder21_24[] = {16,17,18,19,20,21,22,23,8,9,10,11,12,13,14,15,0,1,2,3,4,5,6,7};
-const duint8 dwgCompressor::CopyOrder21_25[] = {17,18,19,20,21,22,23,24,16,8,9,10,11,12,13,14,15,0,1,2,3,4,5,6,7};
-const duint8 dwgCompressor::CopyOrder21_26[] = {25,17,18,19,20,21,22,23,24,16,8,9,10,11,12,13,14,15,0,1,2,3,4,5,6,7};
-const duint8 dwgCompressor::CopyOrder21_27[] = {26,25,17,18,19,20,21,22,23,24,16,8,9,10,11,12,13,14,15,0,1,2,3,4,5,6,7};
-const duint8 dwgCompressor::CopyOrder21_28[] = {24,25,26,27,16,17,18,19,20,21,22,23,8,9,10,11,12,13,14,15,0,1,2,3,4,5,6,7};
-const duint8 dwgCompressor::CopyOrder21_29[] = {28,24,25,26,27,16,17,18,19,20,21,22,23,8,9,10,11,12,13,14,15,0,1,2,3,4,5,6,7};
-const duint8 dwgCompressor::CopyOrder21_30[] = {29,28,24,25,26,27,16,17,18,19,20,21,22,23,8,9,10,11,12,13,14,15,0,1,2,3,4,5,6,7};
-const duint8 dwgCompressor::CopyOrder21_31[] = {30,26,27,28,29,18,19,20,21,22,23,24,25,10,11,12,13,14,15,16,17,2,3,4,5,6,7,8,9,1,0};
-const duint8 dwgCompressor::CopyOrder21_32[] = {24,25,26,27,28,29,30,31,16,17,18,19,20,21,22,23,8,9,10,11,12,13,14,15,0,1,2,3,4,5,6,7};
-const duint8 *dwgCompressor::CopyOrder21[dwgCompressor::Block21OrderArray] = {
+const std::uint8_t dwgCompressor::CopyOrder21_01[] = {0};
+const std::uint8_t dwgCompressor::CopyOrder21_02[] = {1,0};
+const std::uint8_t dwgCompressor::CopyOrder21_03[] = {2,1,0};
+const std::uint8_t dwgCompressor::CopyOrder21_04[] = {0,1,2,3};
+const std::uint8_t dwgCompressor::CopyOrder21_05[] = {4,0,1,2,3};
+const std::uint8_t dwgCompressor::CopyOrder21_06[] = {5,1,2,3,4,0};
+const std::uint8_t dwgCompressor::CopyOrder21_07[] = {6,5,1,2,3,4,0};
+const std::uint8_t dwgCompressor::CopyOrder21_08[] = {0,1,2,3,4,5,6,7};
+const std::uint8_t dwgCompressor::CopyOrder21_09[] = {8,0,1,2,3,4,5,6,7};
+const std::uint8_t dwgCompressor::CopyOrder21_10[] = {9,1,2,3,4,5,6,7,8,0};
+const std::uint8_t dwgCompressor::CopyOrder21_11[] = {10,9,1,2,3,4,5,6,7,8,0};
+const std::uint8_t dwgCompressor::CopyOrder21_12[] = {8,9,10,11,0,1,2,3,4,5,6,7};
+const std::uint8_t dwgCompressor::CopyOrder21_13[] = {12,8,9,10,11,0,1,2,3,4,5,6,7};
+const std::uint8_t dwgCompressor::CopyOrder21_14[] = {13,9,10,11,12,1,2,3,4,5,6,7,8,0};
+const std::uint8_t dwgCompressor::CopyOrder21_15[] = {14,13,9,10,11,12,1,2,3,4,5,6,7,8,0};
+const std::uint8_t dwgCompressor::CopyOrder21_16[] = {8,9,10,11,12,13,14,15,0,1,2,3,4,5,6,7};
+const std::uint8_t dwgCompressor::CopyOrder21_17[] = {9,10,11,12,13,14,15,16,8,0,1,2,3,4,5,6,7};
+const std::uint8_t dwgCompressor::CopyOrder21_18[] = {17,9,10,11,12,13,14,15,16,1,2,3,4,5,6,7,8,0};
+const std::uint8_t dwgCompressor::CopyOrder21_19[] = {18,17,16,8,9,10,11,12,13,14,15,0,1,2,3,4,5,6,7};
+const std::uint8_t dwgCompressor::CopyOrder21_20[] = {16,17,18,19,8,9,10,11,12,13,14,15,0,1,2,3,4,5,6,7};
+const std::uint8_t dwgCompressor::CopyOrder21_21[] = {20,16,17,18,19,8,9,10,11,12,13,14,15,0,1,2,3,4,5,6,7};
+const std::uint8_t dwgCompressor::CopyOrder21_22[] = {21,20,16,17,18,19,8,9,10,11,12,13,14,15,0,1,2,3,4,5,6,7};
+const std::uint8_t dwgCompressor::CopyOrder21_23[] = {22,21,20,16,17,18,19,8,9,10,11,12,13,14,15,0,1,2,3,4,5,6,7};
+const std::uint8_t dwgCompressor::CopyOrder21_24[] = {16,17,18,19,20,21,22,23,8,9,10,11,12,13,14,15,0,1,2,3,4,5,6,7};
+const std::uint8_t dwgCompressor::CopyOrder21_25[] = {17,18,19,20,21,22,23,24,16,8,9,10,11,12,13,14,15,0,1,2,3,4,5,6,7};
+const std::uint8_t dwgCompressor::CopyOrder21_26[] = {25,17,18,19,20,21,22,23,24,16,8,9,10,11,12,13,14,15,0,1,2,3,4,5,6,7};
+const std::uint8_t dwgCompressor::CopyOrder21_27[] = {26,25,17,18,19,20,21,22,23,24,16,8,9,10,11,12,13,14,15,0,1,2,3,4,5,6,7};
+const std::uint8_t dwgCompressor::CopyOrder21_28[] = {24,25,26,27,16,17,18,19,20,21,22,23,8,9,10,11,12,13,14,15,0,1,2,3,4,5,6,7};
+const std::uint8_t dwgCompressor::CopyOrder21_29[] = {28,24,25,26,27,16,17,18,19,20,21,22,23,8,9,10,11,12,13,14,15,0,1,2,3,4,5,6,7};
+const std::uint8_t dwgCompressor::CopyOrder21_30[] = {29,28,24,25,26,27,16,17,18,19,20,21,22,23,8,9,10,11,12,13,14,15,0,1,2,3,4,5,6,7};
+const std::uint8_t dwgCompressor::CopyOrder21_31[] = {30,26,27,28,29,18,19,20,21,22,23,24,25,10,11,12,13,14,15,16,17,2,3,4,5,6,7,8,9,1,0};
+const std::uint8_t dwgCompressor::CopyOrder21_32[] = {24,25,26,27,28,29,30,31,16,17,18,19,20,21,22,23,8,9,10,11,12,13,14,15,0,1,2,3,4,5,6,7};
+const std::uint8_t *dwgCompressor::CopyOrder21[dwgCompressor::Block21OrderArray] = {
         nullptr,
         CopyOrder21_01, CopyOrder21_02, CopyOrder21_03, CopyOrder21_04,
         CopyOrder21_05, CopyOrder21_06, CopyOrder21_07, CopyOrder21_08,
@@ -593,24 +593,24 @@ const duint8 *dwgCompressor::CopyOrder21[dwgCompressor::Block21OrderArray] = {
         CopyOrder21_29, CopyOrder21_30, CopyOrder21_31, CopyOrder21_32
 };
 
-void dwgCompressor::copyBlock21(const duint32 length)
+void dwgCompressor::copyBlock21(const std::uint32_t length)
 {
     if (MaxBlock21Length < length) {
         return;
     }
 
-    const duint8 *order {CopyOrder21[length]};
+    const std::uint8_t *order {CopyOrder21[length]};
     if (nullptr == order) {
         return;
     }
 
-    for (duint32 index = 0; (length > index) && buffersGood(); ++index) {
+    for (std::uint32_t index = 0; (length > index) && buffersGood(); ++index) {
         decompSet( compressedByte( compressedPos + order[index]));
     }
     compressedInc( length);
 }
 
-bool dwgCompressor::copyCompBytes21(duint32 length)
+bool dwgCompressor::copyCompBytes21(std::uint32_t length)
 {
     DRW_DBG("\ncopyCompBytes21() "); DRW_DBG(length); DRW_DBG("\n");
 

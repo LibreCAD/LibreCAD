@@ -833,7 +833,7 @@ void RS_Graphic::setPagesNum(int horiz, int vert) {
 
 // ---- Paper-space layouts (PR 9) -----------------------------------------
 
-const LC_Layout* RS_Graphic::findLayout(duint32 handle) const {
+const LC_Layout* RS_Graphic::findLayout(std::uint32_t handle) const {
     if (handle == 0) {
         return nullptr;
     }
@@ -846,7 +846,7 @@ const LC_Layout* RS_Graphic::findLayout(duint32 handle) const {
     return nullptr;
 }
 
-void RS_Graphic::setActiveLayoutHandle(duint32 handle) {
+void RS_Graphic::setActiveLayoutHandle(std::uint32_t handle) {
     if (m_activeLayoutHandle == handle) {
         return;
     }
@@ -854,7 +854,7 @@ void RS_Graphic::setActiveLayoutHandle(duint32 handle) {
     setModified(true);
 }
 
-bool RS_Graphic::setLayoutMargins(duint32 handle,
+bool RS_Graphic::setLayoutMargins(std::uint32_t handle,
                                   double left, double top,
                                   double right, double bottom) {
     if (handle == 0) {

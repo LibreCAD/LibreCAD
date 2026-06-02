@@ -324,7 +324,7 @@ public:
     static RS_FilterInterface* createFilter(){return new RS_FilterDXFRW();}
 protected:
     void parseDimStyleExtData(const DRW_Dimstyle& s, LC_DimStyle* result);
-    bool resolveBlockNameByHandle(duint32 handle, QString& block_name) const;
+    bool resolveBlockNameByHandle(std::uint32_t handle, QString& block_name) const;
     LC_DimStyle* parseDimStyleOverride(LC_ExtEntityData* data) const;
     RS_DimensionData convDimensionData(const DRW_Dimension* data);
     void fillEntityExtData(std::vector<std::shared_ptr<DRW_Variant>>& extData, LC_ExtEntityData* entityData);
@@ -357,13 +357,13 @@ private:
      *  regenerates them (the source ACAD_GROUP dictionary, and any object
      *  colliding with the fixed root/group handles C/D). Computed in fileExport
      *  before write(), consumed by the rawDxfObjects re-emit in writeObjects. */
-    std::set<duint32> m_dxfSuppressedObjectHandles;
+    std::set<std::uint32_t> m_dxfSuppressedObjectHandles;
 
     /** UNDERLAYDEFINITION cache: handle → definition (filename, sheet, kind).
      *  Populated by linkUnderlay (OBJECTS section, after entities are
      *  parsed). Consumed at export time + by future UI surfaces that
      *  want the filename for a given underlay. Cleared per import. */
-    std::map<duint32, DRW_UnderlayDefinition> m_underlayDefMap;
+    std::map<std::uint32_t, DRW_UnderlayDefinition> m_underlayDefMap;
 
     /** Raw unsupported DWG payloads kept during import for diagnostics and
      *  future round-trip/semantic decoders. */

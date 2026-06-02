@@ -27,14 +27,14 @@
 class objHandle{
 public:
     objHandle()=default;
-    objHandle(duint32 t, duint32 h, duint32 l)
+    objHandle(std::uint32_t t, std::uint32_t h, std::uint32_t l)
         :type{t}
         ,handle{h}
         ,loc{l}
     {}
-    duint32 type{0};
-    duint32 handle{0};
-    duint32 loc{0};
+    std::uint32_t type{0};
+    std::uint32_t handle{0};
+    std::uint32_t loc{0};
 };
 
 //until 2000 = 2000-
@@ -60,16 +60,16 @@ public:
 class dwgPageInfo {
 public:
     dwgPageInfo()=default;
-    dwgPageInfo(duint64 i, duint64 ad, duint64 sz){
+    dwgPageInfo(std::uint64_t i, std::uint64_t ad, std::uint64_t sz){
         Id=i; address=ad; size=sz;
     }
-    duint64 Id;
-    duint64 address; //in file stream, for rd18, rd21
-    duint64 size; //in file stream, for rd18, rd21
-    duint64 dataSize; //for rd18, rd21
-    duint64 startOffset; //for rd18, rd21
-    duint64 cSize; //compressed page size, for rd21
-    duint64 uSize; //uncompressed page size, for rd21
+    std::uint64_t Id;
+    std::uint64_t address; //in file stream, for rd18, rd21
+    std::uint64_t size; //in file stream, for rd18, rd21
+    std::uint64_t dataSize; //for rd18, rd21
+    std::uint64_t startOffset; //for rd18, rd21
+    std::uint64_t cSize; //compressed page size, for rd21
+    std::uint64_t uSize; //uncompressed page size, for rd21
 };
 
 // sections of file
@@ -86,15 +86,15 @@ public:
 class dwgSectionInfo {
 public:
     dwgSectionInfo()=default;
-    dint32 Id{-1}; //section Id, 2000-   rd15 rd18
+    std::int32_t Id{-1}; //section Id, 2000-   rd15 rd18
     std::string name; //section name rd18
-    duint32 compressed{1};//is compressed? 1=no, 2=yes rd18, rd21(encoding)
-    duint32 encrypted{0};//encrypted (doc: 0=no, 1=yes, 2=unkn) on read: objects 0 and encrypted yes rd18
-    std::unordered_map<duint32, dwgPageInfo >pages;//index, size, offset
-    duint64 size;//size of section,  2000- rd15, rd18, rd21 (data size)
-    duint64 pageCount{0}; //number of pages (dwgPageInfo) in section rd18, rd21
-    duint64 maxSize; //max decompressed size (needed??) rd18 rd21
-    duint64 address; //address (seek) , 2000-
+    std::uint32_t compressed{1};//is compressed? 1=no, 2=yes rd18, rd21(encoding)
+    std::uint32_t encrypted{0};//encrypted (doc: 0=no, 1=yes, 2=unkn) on read: objects 0 and encrypted yes rd18
+    std::unordered_map<std::uint32_t, dwgPageInfo >pages;//index, size, offset
+    std::uint64_t size;//size of section,  2000- rd15, rd18, rd21 (data size)
+    std::uint64_t pageCount{0}; //number of pages (dwgPageInfo) in section rd18, rd21
+    std::uint64_t maxSize; //max decompressed size (needed??) rd18 rd21
+    std::uint64_t address; //address (seek) , 2000-
 };
 
 
@@ -110,8 +110,8 @@ public:
     // hmm-- is DRW_TableEntry::reset() intended to be virtual??
     void reset(){
     }
-    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
-    std::list<duint32>handlesList;
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
+    std::list<std::uint32_t>handlesList;
 };
 
 
@@ -147,12 +147,12 @@ protected:
     virtual bool readDwgEntity(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& intfa);
     bool readDwgObject(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& intfa);
     void parseAttribs(DRW_Entity* e);
-    std::string findTableName(DRW::TTYPE table, dint32 handle);
+    std::string findTableName(DRW::TTYPE table, std::int32_t handle);
 
     void setCodePage(const std::string &c){decoder.setCodePage(c, false);}
     std::string getCodePage(){ return decoder.getCodePage();}
     bool readDwgHeader(DRW_Header& hdr, dwgBuffer *buf, dwgBuffer *hBuf);
-    bool readDwgHandles(dwgBuffer *dbuf, duint64 offset, duint64 size);
+    bool readDwgHandles(dwgBuffer *dbuf, std::uint64_t offset, std::uint64_t size);
     bool readDwgTables(DRW_Header& hdr, dwgBuffer *dbuf);
     bool checkSentinel(dwgBuffer *buf, enum secEnum::DWGSection, bool start);
 
@@ -168,16 +168,16 @@ protected:
     bool walkBlockRecordEntities(DRW_Block_Record* bkr, dwgBuffer *dbuf, DRW_Interface& intfa);
 
 public:
-    std::unordered_map<duint32, objHandle>ObjectMap;
-    std::unordered_map<duint32, objHandle>objObjectMap; //stores the objects & entities not read in readDwgEntities
-    std::unordered_map<duint32, objHandle>remainingMap; //stores the objects & entities not read in all processes, for debug only
-    std::unordered_map<duint32, DRW_LType*> ltypemap;
-    std::unordered_map<duint32, DRW_Layer*> layermap;
-    std::unordered_map<duint32, DRW_Block*> blockmap;
-    std::unordered_map<duint32, DRW_Textstyle*> stylemap;
-    std::unordered_map<duint32, DRW_Dimstyle*> dimstylemap;
-    std::unordered_map<duint32, DRW_Vport*> vportmap;
-    std::unordered_map<duint32, DRW_Block_Record*> blockRecordmap;
+    std::unordered_map<std::uint32_t, objHandle>ObjectMap;
+    std::unordered_map<std::uint32_t, objHandle>objObjectMap; //stores the objects & entities not read in readDwgEntities
+    std::unordered_map<std::uint32_t, objHandle>remainingMap; //stores the objects & entities not read in all processes, for debug only
+    std::unordered_map<std::uint32_t, DRW_LType*> ltypemap;
+    std::unordered_map<std::uint32_t, DRW_Layer*> layermap;
+    std::unordered_map<std::uint32_t, DRW_Block*> blockmap;
+    std::unordered_map<std::uint32_t, DRW_Textstyle*> stylemap;
+    std::unordered_map<std::uint32_t, DRW_Dimstyle*> dimstylemap;
+    std::unordered_map<std::uint32_t, DRW_Vport*> vportmap;
+    std::unordered_map<std::uint32_t, DRW_Block_Record*> blockRecordmap;
 
     /// Resolved DBCOLOR (AcDbColor) lookup, populated as the OBJECTS section
     /// is decoded.  Key: handle of the AcDbColor object.  Value: pair of
@@ -185,19 +185,19 @@ public:
     /// ENC flag 0x40) get color24 + colorName patched from this map after
     /// their parseDwg returns.  Names are formatted as "BOOK$ENTRY" when a
     /// book name is present, otherwise just the entry name.
-    std::unordered_map<duint32, std::pair<dint32, std::string>> dbColorMap;
+    std::unordered_map<std::uint32_t, std::pair<std::int32_t, std::string>> dbColorMap;
     /// MLINESTYLE handle → style name. Populated as MLINESTYLE objects are
     /// parsed; consumed by the entryParse template hook to stamp
     /// styleName onto each MLINE entity post-parse (DXF code 2 / DWG 340
     /// resolves to a name only after the OBJECTS section is read).
-    std::unordered_map<duint32, std::string> mlineStyleNameMap;
+    std::unordered_map<std::uint32_t, std::string> mlineStyleNameMap;
 
     /// SCALE (AcDbScale) handle → entry. Populated as SCALE objects are
     /// parsed in the OBJECTS section. Foundation for per-viewport-scale
     /// resolution: annotation-scaled MLEADER/MTEXT/DIMENSION entities
     /// reference these handles via their AcDbAnnotScaleObjectContextData
     /// chain.  scaleFactor() == drawingUnits / paperUnits.
-    std::unordered_map<duint32, DRW_Scale> scaleMap;
+    std::unordered_map<std::uint32_t, DRW_Scale> scaleMap;
 
     /// Per-entity parseDwg failures accumulated across readDwgBlocks /
     /// readDwgEntities / walkBlockRecordEntities / readPlineVertex.
@@ -220,19 +220,19 @@ public:
     /// m_skippedCustomClasses, this also includes non-graphical metadata such
     /// as reactors, filters, TABLECONTENT, dynamic-block graphs, etc.
     std::unordered_map<std::string, size_t> m_skippedUnsupportedObjects;
-    std::unordered_map<duint32, DRW_AppId*> appIdmap;
-    std::unordered_map<duint32, DRW_View*> viewmap;
-    std::unordered_map<duint32, DRW_UCS*> ucsmap;
+    std::unordered_map<std::uint32_t, DRW_AppId*> appIdmap;
+    std::unordered_map<std::uint32_t, DRW_View*> viewmap;
+    std::unordered_map<std::uint32_t, DRW_UCS*> ucsmap;
 
     // Buffers for ATTRIB attached-attlist routing in processDwgEntity.
     // m_pendingInserts: INSERT entities awaiting their ATTRIB children + SEQEND
     //                   before being dispatched to addInsert.  Keyed by INSERT handle.
     // m_orphanAttribs:  ATTRIB entities seen before their owning INSERT.
     //                   Keyed by parent (INSERT) handle.
-    std::unordered_map<duint32, DRW_Insert> m_pendingInserts;
-    std::unordered_map<duint32, std::vector<std::shared_ptr<DRW_Attrib>>> m_orphanAttribs;
-//    duint32 currBlock;
-    duint8 maintenanceVersion{0};
+    std::unordered_map<std::uint32_t, DRW_Insert> m_pendingInserts;
+    std::unordered_map<std::uint32_t, std::vector<std::shared_ptr<DRW_Attrib>>> m_orphanAttribs;
+//    std::uint32_t currBlock;
+    std::uint8_t maintenanceVersion{0};
 
 protected:
     std::unique_ptr<dwgBuffer> fileBuf;
@@ -240,23 +240,23 @@ protected:
     DRW::Version version{DRW::UNKNOWNV};
 
 //seeker (position) for the beginning sentinel of the image data (R13 to R15)
-    duint32 previewImagePos;
+    std::uint32_t previewImagePos;
 
 //sections map
     std::unordered_map<int, dwgSectionInfo >sections;
-    std::unordered_map<duint32, DRW_Class*> classesmap;
+    std::unordered_map<std::uint32_t, DRW_Class*> classesmap;
 
 protected:
     DRW_TextCodec decoder;
 
 protected:
-//    duint32 blockCtrl;
-    duint32 nextEntLink{0};
-    duint32 prevEntLink{0};
+//    std::uint32_t blockCtrl;
+    std::uint32_t nextEntLink{0};
+    std::uint32_t prevEntLink{0};
 
 private:
     template <class T>
-    bool entryParse(T &e, dwgBuffer &buff, duint32 bs, bool &ret) {
+    bool entryParse(T &e, dwgBuffer &buff, std::uint32_t bs, bool &ret) {
         ret = e.parseDwg( version, &buff, bs);
         if (ret) {
             parseAttribs(&e);
