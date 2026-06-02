@@ -119,6 +119,15 @@ public:
     std::uint32_t getHandSeed() const { return handSeed; }
     void    setHandSeed(std::uint32_t h) { handSeed = h; }
 
+    /// Stream offset of the $HANDSEED value field written by the ASCII DXF
+    /// header writer (DRW_Header::write).  The value is emitted as a fixed
+    /// 8-hex-digit placeholder so dxfRW can seek back here after the OBJECTS
+    /// section and overwrite it with the final handle high-water mark
+    /// (highWaterHandle).  -1 means "not recorded" (binary DXF / pre-2000).
+    std::streampos m_handseedValueOffset {std::streampos(-1)};
+    /// Fixed character width of the back-patchable $HANDSEED value field.
+    static constexpr int kHandseedFieldWidth = 8;
+
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader);
     bool parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer *hBbuf, std::uint8_t mv=0);

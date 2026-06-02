@@ -31,6 +31,9 @@ public:
     void setVersion(const std::string &v, bool dxfFormat){encoder.setVersion(v, dxfFormat);}
     void setCodePage(const std::string &c){encoder.setCodePage(c, true);}
     std::string getCodePage(){return encoder.getCodePage();}
+    /// Underlying output stream, used by dxfRW to record the $HANDSEED value
+    /// offset and back-patch it with the final handle high-water mark.
+    std::ofstream *stream() { return filestr; }
 protected:
     std::ofstream *filestr;
 private:

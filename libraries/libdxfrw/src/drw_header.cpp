@@ -14,6 +14,7 @@
 
 #include "drw_header.h"
 #include <cmath>
+#include <cstdio>
 #include "intern/dxfreader.h"
 #include "intern/dxfwriter.h"
 #include "intern/drw_dbg.h"
@@ -915,7 +916,29 @@ void DRW_Header::write(const std::unique_ptr<dxfWriter>& writer, DRW::Version ve
     }
     writer->writeString(9, "$HANDSEED");
     //RLZ        dxfHex(5, 0xFFFF);
-    writer->writeString(5, "20000");
+    // Emit $HANDSEED as a fixed-width zero-padded hex placeholder and record the
+    // value-field offset so dxfRW can back-patch it with the final handle
+    // high-water mark after the OBJECTS section (the header streams first, so the
+    // true high-water is not yet known here). handSeed (if pre-set by a DWG-side
+    // round-trip) seeds the placeholder; otherwise the legacy 0x20000 ceiling is
+    // used and back-patched up if minted/raw handles exceed it.
+    {
+        std::uint32_t seed = (handSeed != 0) ? handSeed : 0x20000u;
+        char buf[kHandseedFieldWidth + 1];
+        snprintf(buf, sizeof(buf), "%0*X", kHandseedFieldWidth, seed);
+        std::ofstream *os = writer->stream();
+        std::streampos before = os ? os->tellp() : std::streampos(-1);
+        writer->writeString(5, std::string(buf));
+        if (os && before != std::streampos(-1)) {
+            std::streampos after = os->tellp();
+            // ASCII: "  5\n"+value+"\n"; binary: code(2)+value+'\0'. In both the
+            // value field is the kHandseedFieldWidth bytes ending one byte before
+            // `after`, so the field starts at after-(width+1).
+            m_handseedValueOffset =
+                after - static_cast<std::streamoff>(kHandseedFieldWidth + 1);
+            (void)before;
+        }
+    }
     writer->writeString(9, "$SURFTAB1");
     if (getInt("$SURFTAB1", &varInt)) {
         writer->writeInt16(70, varInt);

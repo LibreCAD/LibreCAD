@@ -196,6 +196,22 @@ bool dxfRW::write(DRW_Interface *interface_, DRW::Version ver, bool bin){
         writer->writeString(0, "ENDSEC");
     }
     writer->writeString(0, "EOF");
+    // Back-patch $HANDSEED with the final handle high-water mark. The header was
+    // streamed first (before any table/block/entity/object handle was minted),
+    // so it wrote a fixed-width placeholder and recorded the value-field offset.
+    // Now that the whole body is written, m_handleAllocator.current() is one past
+    // the largest handle reserved or minted, i.e. strictly above every emitted
+    // code-5 handle — exactly what a $HANDSEED needs to be.
+    if (header.m_handseedValueOffset != std::streampos(-1)) {
+        std::uint32_t seed = highWaterHandle();
+        char buf[DRW_Header::kHandseedFieldWidth + 1];
+        snprintf(buf, sizeof(buf), "%0*X",
+                 DRW_Header::kHandseedFieldWidth, seed);
+        std::streampos resume = filestr.tellp();
+        filestr.seekp(header.m_handseedValueOffset);
+        filestr.write(buf, DRW_Header::kHandseedFieldWidth);
+        filestr.seekp(resume);
+    }
     filestr.flush();
     filestr.close();
     isOk = true;
