@@ -4532,6 +4532,86 @@ bool dxfRW::writePlotSettings(DRW_PlotSettings *ent) {
     return true;
 }
 
+//F4: typed DXF emitters for the routed data-only OBJECTS that the DWG reader
+//populates only into typed metadata (NOT the DXF raw net). On DWG->DXF the filter
+//pulls each from dwgAdvancedMetadata().suns()/scales()/dictionaryVars()/
+//rasterVariables() and calls these so the object is present in the output (DXF->DXF
+//already preserves them via the raw net; the filter dedups by handle to avoid a
+//double-emit). The group-code shape is the inverse of each type's parseCode
+//(DRW_Sun/Scale/DictionaryVar/RasterVariables::parseCode in drw_objects.cpp),
+//cross-checked field-for-field against ezdxf 1.4.4. Each emits the verbatim
+//code-5 handle (reserved by the filter's pre-write pass) and a 330 owner (the
+//record's parentHandle when known, else root dict "C" to avoid an ownerless
+//prune). The matching CLASS record is registered by the filter via
+//dxfClassForRecordName.
+
+//helper: emit 330 owner as a hex handle (record parentHandle when nonzero, else
+//root dict "C" so the object is reachable and not pruned as an orphan).
+void dxfRW::writeObjectOwner(std::uint32_t parentHandle) {
+    if (version <= DRW::AC1014)
+        return;  //pre-R2000 DXF has no 330 owner handles in OBJECTS
+    if (parentHandle != 0)
+        writer->writeString(330, toHexStr(static_cast<int>(parentHandle)));
+    else
+        writer->writeString(330, "C");
+}
+
+bool dxfRW::writeSun(DRW_Sun *ent) {
+    writer->writeString(0, "SUN");
+    writer->writeString(5, toHexStr(static_cast<int>(ent->handle)));
+    writeObjectOwner(static_cast<std::uint32_t>(ent->parentHandle));
+    writer->writeString(100, "AcDbSun");
+    writer->writeInt32(90, static_cast<int>(ent->m_classVersion));
+    writer->writeBool(290, ent->m_isOn);
+    writer->writeInt32(63, static_cast<int>(ent->m_color));
+    writer->writeDouble(40, ent->m_intensity);
+    writer->writeBool(291, ent->m_hasShadow);
+    writer->writeInt32(91, ent->m_julianDay);
+    writer->writeInt32(92, ent->m_milliseconds);
+    writer->writeBool(292, ent->m_isDaylightSavings);
+    writer->writeInt32(70, static_cast<int>(ent->m_shadowType));
+    writer->writeInt16(71, static_cast<int>(ent->m_shadowMapSize));
+    writer->writeInt16(280, static_cast<int>(ent->m_shadowSoftness));
+    return true;
+}
+
+bool dxfRW::writeScale(DRW_Scale *ent) {
+    writer->writeString(0, "SCALE");
+    writer->writeString(5, toHexStr(static_cast<int>(ent->handle)));
+    writeObjectOwner(static_cast<std::uint32_t>(ent->parentHandle));
+    writer->writeString(100, "AcDbScale");
+    writer->writeInt16(70, static_cast<int>(ent->flag));
+    writer->writeUtf8String(300, ent->name);
+    writer->writeDouble(140, ent->paperUnits);
+    writer->writeDouble(141, ent->drawingUnits);
+    writer->writeBool(290, ent->isUnitScale);
+    return true;
+}
+
+bool dxfRW::writeDictionaryVar(DRW_DictionaryVar *ent) {
+    writer->writeString(0, "DICTIONARYVAR");
+    writer->writeString(5, toHexStr(static_cast<int>(ent->handle)));
+    writeObjectOwner(static_cast<std::uint32_t>(ent->parentHandle));
+    //DICTIONARYVAR uses the literal subclass marker "DictionaryVariables"
+    //(NOT "AcDbDictionaryVar"); confirmed against ezdxf 1.4.4.
+    writer->writeString(100, "DictionaryVariables");
+    writer->writeInt16(280, static_cast<int>(ent->m_schema));
+    writer->writeUtf8String(1, ent->m_value);
+    return true;
+}
+
+bool dxfRW::writeRasterVariables(DRW_RasterVariables *ent) {
+    writer->writeString(0, "RASTERVARIABLES");
+    writer->writeString(5, toHexStr(static_cast<int>(ent->handle)));
+    writeObjectOwner(static_cast<std::uint32_t>(ent->parentHandle));
+    writer->writeString(100, "AcDbRasterVariables");
+    writer->writeInt32(90, ent->m_classVersion);
+    writer->writeInt16(70, ent->m_imageFrame);
+    writer->writeInt16(71, ent->m_imageQuality);
+    writer->writeInt16(72, ent->m_units);
+    return true;
+}
+
 /** utility function
  * convert a int to string in hex
  **/

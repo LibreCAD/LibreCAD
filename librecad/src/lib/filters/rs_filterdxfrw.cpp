@@ -5370,9 +5370,12 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic& g, const QString& file, RS2::FormatT
                 ++classes[it->second].instanceCount;
             }
         };
+        std::set<std::uint32_t> rawObjectHandles;
         for (const DRW_RawDxfObject &o : metadata.rawDxfObjects()) {
-            if (o.handle != 0)
+            if (o.handle != 0) {
                 m_dxfW->reserveHandle(o.handle);
+                rawObjectHandles.insert(o.handle);
+            }
             registerClassFor(o.name);
         }
         for (const DRW_RawDxfObject &e : metadata.rawDxfEntities()) {
@@ -5380,6 +5383,34 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic& g, const QString& file, RS2::FormatT
                 m_dxfW->reserveHandle(e.handle);
             registerClassFor(e.name);  //custom ENTITIES need a CLASS too
         }
+
+        //F4: the routed data-only OBJECTS (SUN/SCALE/DICTIONARYVAR/
+        //RASTERVARIABLES) are typed-emitted on DWG->DXF (the DWG reader does NOT
+        //put them in the raw net — see writeObjects). For each such record that
+        //will be typed-emitted (ReplayAllowed, nonzero handle, NOT already in the
+        //raw net → not double-counted), reserve its verbatim code-5 handle so a
+        //minted handle can't collide, and register the same CLASS the raw-net
+        //objects use (else AutoCAD/ezdxf drop the instance). The dedup predicate
+        //here MUST match writeObjects' emitTyped.
+        auto reserveTyped = [&](std::uint32_t handle,
+                                LC_DwgAdvancedMetadata::ReplayState state,
+                                const char *recordName) {
+            if (handle == 0
+                || state != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                || rawObjectHandles.count(handle) != 0)
+                return;
+            m_dxfW->reserveHandle(handle);
+            registerClassFor(recordName);
+        };
+        for (const auto &record : metadata.suns())
+            reserveTyped(record.handle, record.replayState, "SUN");
+        for (const auto &record : metadata.scales())
+            reserveTyped(record.handle, record.replayState, "SCALE");
+        for (const auto &record : metadata.dictionaryVars())
+            reserveTyped(record.handle, record.replayState, "DICTIONARYVAR");
+        for (const auto &record : metadata.rasterVariables())
+            reserveTyped(record.handle, record.replayState, "RASTERVARIABLES");
+
         if (!classes.empty())
             m_dxfW->setDxfClasses(classes);
 
@@ -7886,6 +7917,53 @@ void RS_FilterDXFRW::writeObjects() {
                 continue;
             DRW_RawDxfObject object = rawObject;
             m_dxfW->writeRawDxfObject(&object);
+        }
+
+        //F4: typed DXF emit for the routed data-only OBJECTS the DWG reader stores
+        //ONLY in typed metadata (NOT the raw net) — SUN/SCALE/DICTIONARYVAR/
+        //RASTERVARIABLES. On DWG->DXF these are absent from the raw net, so the
+        //loop above never emits them; emit them natively here so the type is
+        //preserved. DEDUP vs the raw net: a DXF-READ object lives in BOTH the
+        //typed metadata AND the raw net (processSun calls addSun AND
+        //addRawDxfObject), so it was already re-emitted above — skip the typed
+        //emit when its code-5 handle is already in the raw net to avoid a
+        //double-emit. (Build the raw-handle set once.) Only ReplayAllowed,
+        //nonzero-handle records are emitted; handles are reserved and a CLASS
+        //record is registered in fileExport's pre-write pass.
+        const auto &metadata = m_graphic->dwgAdvancedMetadata();
+        std::set<std::uint32_t> rawHandles;
+        for (const DRW_RawDxfObject &o : metadata.rawDxfObjects())
+            if (o.handle != 0)
+                rawHandles.insert(o.handle);
+        auto emitTyped = [&](std::uint32_t handle,
+                             LC_DwgAdvancedMetadata::ReplayState state) {
+            return handle != 0
+                && state == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                && rawHandles.count(handle) == 0;
+        };
+        for (const auto &record : metadata.suns()) {
+            if (!emitTyped(record.handle, record.replayState))
+                continue;
+            DRW_Sun sun = sunFromMetadata(record);
+            m_dxfW->writeSun(&sun);
+        }
+        for (const auto &record : metadata.scales()) {
+            if (!emitTyped(record.handle, record.replayState))
+                continue;
+            DRW_Scale scale = scaleFromMetadata(record);
+            m_dxfW->writeScale(&scale);
+        }
+        for (const auto &record : metadata.dictionaryVars()) {
+            if (!emitTyped(record.handle, record.replayState))
+                continue;
+            DRW_DictionaryVar dv = dictionaryVarFromMetadata(record);
+            m_dxfW->writeDictionaryVar(&dv);
+        }
+        for (const auto &record : metadata.rasterVariables()) {
+            if (!emitTyped(record.handle, record.replayState))
+                continue;
+            DRW_RasterVariables rv = rasterVariablesFromMetadata(record);
+            m_dxfW->writeRasterVariables(&rv);
         }
     }
 }

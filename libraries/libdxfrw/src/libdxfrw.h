@@ -116,6 +116,19 @@ public:
     bool writeDimension(DRW_Dimension *ent);
     void setEllipseParts(int parts){elParts = parts;} /*!< set parts number when convert ellipse to polyline */
     bool writePlotSettings(DRW_PlotSettings *ent);
+    /*!< F4 — typed DXF emitters for the routed data-only OBJECTS the DWG reader
+     * populates only into typed metadata (SUN/SCALE/DICTIONARYVAR/
+     * RASTERVARIABLES). The DXF group-code shape is the inverse of each type's
+     * parseCode, cross-checked against ezdxf 1.4.4. The filter pulls these from
+     * dwgAdvancedMetadata() on the DWG->DXF path (DXF->DXF preserves them via the
+     * raw net; the filter dedups by handle to avoid a double-emit). Each emits the
+     * verbatim code-5 handle and a 330 owner; a matching CLASS record must be
+     * registered (dxfClassForRecordName has SUN/SCALE/DICTIONARYVAR/
+     * RASTERVARIABLES). */
+    bool writeSun(DRW_Sun *ent);
+    bool writeScale(DRW_Scale *ent);
+    bool writeDictionaryVar(DRW_DictionaryVar *ent);
+    bool writeRasterVariables(DRW_RasterVariables *ent);
     bool writeRawDxfObject(DRW_RawDxfObject *obj);
     /*!< Mark a specific code-5 handle as in-use so the minted-handle stream
      * (m_handleAllocator.next()) never re-issues it. Mirrors
@@ -267,6 +280,10 @@ private:
     /* Entity-flavoured overload: entities own extData via shared_ptr, table
      * records own raw pointers. Same DXF codes, different storage. */
     bool writeExtData(const std::vector<std::shared_ptr<DRW_Variant>> &ed);
+    /*!< F4 — emit a 330 owner handle for a typed data-only OBJECT (the record's
+     * parentHandle when nonzero, else root dict "C" so it is reachable and not
+     * pruned as an orphan); no-op pre-R2000 (DXF has no OBJECTS 330 then). */
+    void writeObjectOwner(std::uint32_t parentHandle);
     /*use version from dwgutil.h*/
     std::string toHexStr(int n);//RLZ removeme
     bool writeAppData(const std::list<std::list<DRW_Variant>> &appData);

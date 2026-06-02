@@ -481,6 +481,54 @@ TEST_CASE("DXF data-only OBJECTS round-trip their body values via the raw net "
   std::filesystem::remove(out);
 }
 
+// F4 dedup regression: a DXF-READ data-only OBJECT lands in BOTH the raw net AND
+// the typed metadata (processSun calls addSun AND addRawDxfObject). The raw net
+// re-emits it, and the F4 typed writers ALSO emit from metadata — so on DXF->DXF
+// the same object could be written TWICE. The filter must skip the typed emit
+// when the record's code-5 handle is already present in the raw net. Assert each
+// of the 4 F4 types appears EXACTLY ONCE (count == 1) after a DXF->DXF export.
+TEST_CASE("DXF F4 typed writers do not double-emit raw-net data-only OBJECTS "
+          "(DXF->DXF dedup; SUN/SCALE/DICTIONARYVAR/RASTERVARIABLES count==1)",
+          "[dxf][roundtrip][filter][dataonly]") {
+  ensureSettings();
+  const std::string src = tmpFile("f4src.dxf");
+  const std::string out = tmpFile("f4out.dxf");
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+
+  const std::string dxf =
+      "0\nSECTION\n2\nENTITIES\n"
+      "0\nLINE\n8\n0\n10\n0.0\n20\n0.0\n11\n1.0\n21\n1.0\n"
+      "0\nENDSEC\n"
+      "0\nSECTION\n2\nOBJECTS\n"
+      "0\nSUN\n5\n50\n330\nC\n100\nAcDbSun\n90\n1\n290\n1\n63\n7\n40\n0.75\n"
+      "0\nSCALE\n5\n51\n330\nC\n100\nAcDbScale\n300\nHalf\n140\n1.0\n141\n2.0\n290\n1\n"
+      "0\nDICTIONARYVAR\n5\n52\n330\nC\n100\nDictionaryVariables\n280\n0\n1\nLWDISPLAY\n"
+      "0\nRASTERVARIABLES\n5\n53\n330\nC\n100\nAcDbRasterVariables\n90\n0\n70\n1\n71\n1\n72\n3\n"
+      "0\nENDSEC\n0\nEOF\n";
+  writeText(src, dxf);
+
+  RS_Graphic graphic;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(src),
+                              RS2::FormatDXFRW));
+  }
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out),
+                              RS2::FormatDXFRW));
+  }
+  for (const char *name :
+       {"SUN", "SCALE", "DICTIONARYVAR", "RASTERVARIABLES"}) {
+    INFO("expected exactly one " << name);
+    CHECK(countRecords(out, name) == 1);
+  }
+
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+}
+
 TEST_CASE("DXF named dictionaries round-trip and stay reachable from the root "
           "(spine-dict subset; referential integrity)",
           "[dxf][roundtrip][filter][spinedict]") {
