@@ -31,6 +31,7 @@
 #include <catch2/catch_test_macros.hpp>
 
 #include <algorithm>
+#include <cstdlib>
 #include <filesystem>
 #include <fstream>
 #include <map>
@@ -169,6 +170,50 @@ std::map<std::string, std::string> rootDictEntries(const std::string &path) {
   return entries;
 }
 
+// Returns the $HANDSEED header value parsed as an integer (hex), or 0 if absent.
+unsigned long handseedValue(const std::string &path) {
+  std::ifstream in(path);
+  std::string codeLine, valueLine;
+  bool pending = false;
+  auto trim = [](std::string s) {
+    if (!s.empty() && s.back() == '\r')
+      s.pop_back();
+    size_t a = s.find_first_not_of(" \t");
+    return a == std::string::npos ? std::string() : s.substr(a);
+  };
+  while (std::getline(in, codeLine) && std::getline(in, valueLine)) {
+    const std::string c = trim(codeLine), v = trim(valueLine);
+    if (pending && c == "5")
+      return std::strtoul(v.c_str(), nullptr, 16);
+    pending = (c == "9" && v == "$HANDSEED");
+  }
+  return 0;
+}
+
+// Returns the largest code-5/105 handle (hex) emitted in the body sections
+// (TABLES/BLOCKS/ENTITIES/OBJECTS), excluding the HEADER's $HANDSEED code-5.
+unsigned long maxHandle(const std::string &path) {
+  std::ifstream in(path);
+  std::string codeLine, valueLine;
+  unsigned long m = 0;
+  std::string section;
+  auto trim = [](std::string s) {
+    if (!s.empty() && s.back() == '\r')
+      s.pop_back();
+    size_t a = s.find_first_not_of(" \t");
+    return a == std::string::npos ? std::string() : s.substr(a);
+  };
+  while (std::getline(in, codeLine) && std::getline(in, valueLine)) {
+    const std::string c = trim(codeLine), v = trim(valueLine);
+    if (c == "2" && (v == "HEADER" || v == "CLASSES" || v == "TABLES" ||
+                     v == "BLOCKS" || v == "ENTITIES" || v == "OBJECTS"))
+      section = v;
+    else if (section != "HEADER" && (c == "5" || c == "105"))
+      m = std::max(m, std::strtoul(v.c_str(), nullptr, 16));
+  }
+  return m;
+}
+
 // Returns the set of CLASS record names (code 1) in the CLASSES section.
 std::set<std::string> classRecordNames(const std::string &path) {
   std::ifstream in(path);
@@ -302,9 +347,12 @@ TEST_CASE("DXF export reserves handle space so preserved raw handles do not "
     INFO("duplicate handle: " << h);
     CHECK(seen.insert(h).second);
   }
-  // The preserved raw handles survive verbatim (reserve, not remap).
+  // The preserved raw handles survive verbatim (reserve, not remap) — they sit
+  // above the codec's fixed structural band, so there is no collision to remap.
   CHECK(std::count(handles.begin(), handles.end(), std::string("33")) == 1);
   CHECK(std::count(handles.begin(), handles.end(), std::string("34")) == 1);
+  // $HANDSEED is strictly above every emitted body handle.
+  CHECK(handseedValue(out) > maxHandle(out));
 
   std::filesystem::remove(src);
   std::filesystem::remove(out);
@@ -500,17 +548,24 @@ TEST_CASE("DXF named dictionaries round-trip and stay reachable from the root "
   CHECK(std::count(handles.begin(), handles.end(), std::string("D")) == 1);
 
   // (b) the routed child dicts are re-attached under the regenerated root C.
+  // Referential integrity (not literal handle values): each root 350 target must
+  // resolve to an actually-emitted code-5 handle. These source handles do not
+  // collide with the codec's fixed structural set, so they are preserved
+  // verbatim; the test asserts the entry RESOLVES rather than hardcoding "50".
   const std::map<std::string, std::string> rootEntries = rootDictEntries(out);
+  const std::set<std::string> handleSet(handles.begin(), handles.end());
   REQUIRE(rootEntries.count("ACAD_SCALELIST") == 1);
   REQUIRE(rootEntries.count("ACAD_MATERIAL") == 1);
+  CHECK(handleSet.count(rootEntries.at("ACAD_SCALELIST")) == 1);
+  CHECK(handleSet.count(rootEntries.at("ACAD_MATERIAL")) == 1);
+  CHECK(rootEntries.count("ACAD_GROUP") == 1);  // codec's own entry -> D
+  CHECK(rootEntries.at("ACAD_GROUP") == "D");   // fixed structural literal
+  // The preserved (non-colliding) child-dict handles survive verbatim.
   CHECK(rootEntries.at("ACAD_SCALELIST") == "50");
   CHECK(rootEntries.at("ACAD_MATERIAL") == "60");
-  CHECK(rootEntries.count("ACAD_GROUP") == 1);  // codec's own entry -> D
-  CHECK(rootEntries.at("ACAD_GROUP") == "D");
 
   // (c) referential integrity: every root 350 target + child-dict entry target
   // is actually emitted (no dangling refs an auditor would prune).
-  const std::set<std::string> handleSet(handles.begin(), handles.end());
   CHECK(handleSet.count("50") == 1);  // ACAD_SCALELIST dict present
   CHECK(handleSet.count("60") == 1);  // ACAD_MATERIAL dict present
   CHECK(handleSet.count("51") == 1);  // SCALE owned by ACAD_SCALELIST
@@ -626,6 +681,92 @@ TEST_CASE("DXF unmodeled custom ENTITY round-trips with a CLASS record (HELIX)",
     if (e.name == "HELIX")
       sawHelix2 = true;
   CHECK(sawHelix2);
+
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+}
+
+// Regression for the raw-vs-fixed-structural handle collision (the bug that made
+// 35/42 real AC1015+ exports unreadable by ezdxf). The source reuses the codec's
+// OWN fixed structural handles for unrelated OBJECTS: a DICTIONARY at 0x10 (==
+// codec LAYER "0"), an XRECORD at 0x14 (== codec LTYPE), an XRECORD at 0x1F (==
+// codec *Model_Space BLOCK_RECORD), and a MATERIAL at 0x21 (== codec ENDBLK).
+// These cannot be preserved verbatim, so the codec remaps them to fresh handles
+// and rewrites every reference. Invariants: all code-5 unique; every 330/350
+// reference resolves to an emitted handle; the fixed structural handles still
+// equal their canonical literals; $HANDSEED is strictly above every body handle.
+TEST_CASE("DXF export remaps raw objects colliding with fixed structural handles "
+          "(referential integrity + unique handles + HANDSEED)",
+          "[dxf][roundtrip][filter][handles]") {
+  ensureSettings();
+  const std::string src = tmpFile("colsrc.dxf");
+  const std::string out = tmpFile("colout.dxf");
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+
+  // Root dict C points at a material dict (0x10) and a group dict (0x12); the
+  // material dict owns a MATERIAL (0x21), the group dict owns XRECORDs (0x14,
+  // 0x1F). Every one of 0x10/0x12/0x14/0x1F/0x21 is a codec-fixed structural
+  // handle, so all must be remapped (and the C entries + 330 owners rewritten).
+  const std::string dxf =
+      "0\nSECTION\n2\nENTITIES\n"
+      "0\nLINE\n8\n0\n10\n0.0\n20\n0.0\n11\n1.0\n21\n1.0\n"
+      "0\nENDSEC\n"
+      "0\nSECTION\n2\nOBJECTS\n"
+      "0\nDICTIONARY\n5\nC\n330\n0\n100\nAcDbDictionary\n281\n1\n"
+      "3\nACAD_GROUP\n350\nD\n3\nACAD_MATERIAL\n350\n10\n3\nMYGROUPS\n350\n12\n"
+      "0\nDICTIONARY\n5\nD\n330\nC\n100\nAcDbDictionary\n281\n1\n"
+      "0\nDICTIONARY\n5\n10\n330\nC\n100\nAcDbDictionary\n281\n1\n3\nMyMat\n350\n21\n"
+      "0\nMATERIAL\n5\n21\n330\n10\n100\nAcDbMaterial\n1\nMyMat\n94\n7\n"
+      "0\nDICTIONARY\n5\n12\n330\nC\n100\nAcDbDictionary\n281\n1\n"
+      "3\nREC_A\n350\n14\n3\nREC_B\n350\n1F\n"
+      "0\nXRECORD\n5\n14\n330\n12\n100\nAcDbXrecord\n280\n1\n1\nhello\n"
+      "0\nXRECORD\n5\n1F\n330\n12\n100\nAcDbXrecord\n280\n1\n1\nworld\n"
+      "0\nENDSEC\n0\nEOF\n";
+  writeText(src, dxf);
+
+  RS_Graphic graphic;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(src),
+                              RS2::FormatDXFRW));
+  }
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out),
+                              RS2::FormatDXFRW));
+  }
+
+  // (a) every code-5 handle in the file is unique.
+  const std::vector<std::string> handles = collectHandles(out);
+  std::set<std::string> seen;
+  for (const std::string &h : handles) {
+    INFO("duplicate handle: " << h);
+    CHECK(seen.insert(h).second);
+  }
+
+  // (b) fixed structural handles still equal their canonical literals (the codec
+  // owns them; the colliding raw objects were moved off them).
+  const std::set<std::string> handleSet(handles.begin(), handles.end());
+  for (const char *fixed : {"C", "D", "10", "12", "14", "1F", "21"})
+    CHECK(handleSet.count(fixed) == 1);  // emitted exactly once, by the codec
+
+  // (c) referential integrity: the root dict's ACAD_MATERIAL / MYGROUPS targets
+  // were remapped to fresh handles that ARE emitted (not the old 0x10/0x12).
+  const std::map<std::string, std::string> rootEntries = rootDictEntries(out);
+  REQUIRE(rootEntries.count("ACAD_MATERIAL") == 1);
+  REQUIRE(rootEntries.count("MYGROUPS") == 1);
+  CHECK(rootEntries.at("ACAD_MATERIAL") != "10");  // remapped off the collision
+  CHECK(rootEntries.at("MYGROUPS") != "12");
+  CHECK(handleSet.count(rootEntries.at("ACAD_MATERIAL")) == 1);  // resolves
+  CHECK(handleSet.count(rootEntries.at("MYGROUPS")) == 1);
+
+  // (d) $HANDSEED is strictly above every body handle.
+  CHECK(handseedValue(out) > maxHandle(out));
+
+  // (e) the data survives a full DXF->DXF re-import (MATERIAL + both XRECORDs).
+  CHECK(countRecords(out, "MATERIAL") >= 1);
+  CHECK(countRecords(out, "XRECORD") >= 2);
 
   std::filesystem::remove(src);
   std::filesystem::remove(out);
