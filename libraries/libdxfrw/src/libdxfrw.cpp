@@ -2416,11 +2416,27 @@ bool dxfRW::writeObjects() {
         writer->writeString(3, entry.first);
         writer->writeString(350, entry.second);
     }
+    //F3: mint a fresh code-5 handle for each GROUP BEFORE the ACAD_GROUP D dict
+    //so the D dict body can list each group as a (name, handle) entry (the GROUP
+    //objects themselves are emitted after the named-dict block below, owned by
+    //D). Allocator-minted handles skip the reserved/fixed set, so they cannot
+    //collide. A group with no resolvable members is still listed/emitted (a valid
+    //empty group is harmless); members are filtered at emit time.
+    std::vector<std::uint32_t> groupHandles;
+    groupHandles.reserve(m_groups.size());
+    for (std::size_t i = 0; i < m_groups.size(); ++i)
+        groupHandles.push_back(m_handleAllocator.next());
     writer->writeString(0, "DICTIONARY");
     writer->writeString(5, "D");
     writer->writeString(330, "C");
     writer->writeString(100, "AcDbDictionary");
     writer->writeInt16(281, 1);
+    for (std::size_t i = 0; i < m_groups.size(); ++i) {
+        //Unnamed groups carry a generated "*An" name; named groups carry their
+        //real name. The D-dict entry name mirrors the GROUP's name field.
+        writer->writeUtf8String(3, m_groups[i].name);
+        writer->writeString(350, toHexStr(static_cast<int>(groupHandles[i])));
+    }
 //write IMAGEDEF_REACTOR
     for (unsigned int i=0; i<imageDef.size(); i++) {
         DRW_ImageDef *id = imageDef.at(i);
@@ -2491,6 +2507,29 @@ bool dxfRW::writeObjects() {
         for (const DRW_Dictionary::Entry &entry : dict.m_entries) {
             writer->writeUtf8String(3, entry.m_name);
             writer->writeString(350, toHexStr(static_cast<int>(entry.m_handle)));
+        }
+    }
+
+    //F3: emit each GROUP object, owned by the ACAD_GROUP D dict (which already
+    //lists it as a (name, minted-handle) entry above). Member 340 references are
+    //resolved through the writeEntity source->minted map; a member whose SOURCE
+    //handle was not written (consumed / filtered entity) is SKIPPED — never an
+    //emitted dangling 340.
+    const auto &srcToMinted = m_writingContext.sourceHandleToMintedMap;
+    for (std::size_t i = 0; i < m_groups.size(); ++i) {
+        const DRW_Group &grp = m_groups[i];
+        writer->writeString(0, "GROUP");
+        writer->writeString(5, toHexStr(static_cast<int>(groupHandles[i])));
+        writer->writeString(330, "D");
+        writer->writeString(100, "AcDbGroup");
+        writer->writeUtf8String(300, grp.m_description);
+        writer->writeInt16(70, grp.m_isUnnamed ? 1 : 0);
+        writer->writeInt16(71, grp.m_selectable ? 1 : 0);
+        for (std::uint32_t memberSrc : grp.m_entityHandles) {
+            auto it = srcToMinted.find(memberSrc);
+            if (it == srcToMinted.end())
+                continue;  // member not written -> skip (no dangling 340)
+            writer->writeString(340, toHexStr(static_cast<int>(it->second)));
         }
     }
 

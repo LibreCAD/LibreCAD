@@ -27,6 +27,8 @@
 
 #include <catch2/catch_test_macros.hpp>
 
+#include <cstdint>
+#include <cstdio>
 #include <filesystem>
 #include <fstream>
 #include <iterator>
@@ -261,6 +263,14 @@ std::string slurp(const std::filesystem::path &path) {
   std::ifstream in(path);
   return std::string((std::istreambuf_iterator<char>(in)),
                      std::istreambuf_iterator<char>());
+}
+
+// Format a handle the way the codec emits code-5/340/350: uppercase hex, no
+// leading zeros (matches dxfRW::toHexStr's "%X").
+std::string toHexUpper(std::uint32_t h) {
+  char buf[9] = {'\0'};
+  std::snprintf(buf, sizeof(buf), "%X", h);
+  return std::string(buf);
 }
 
 void readDxf(const std::string &dxf, DRW_Interface &cap, const char *name) {
@@ -756,4 +766,69 @@ TEST_CASE("DXF writeEntity captures source->minted handles (F3-1)",
   CHECK(mintedA >= 0x30u);
   CHECK(mintedB >= 0x30u);
   CHECK(mintedA != mintedB);
+}
+
+// F3-2: setGroups injects each group into the ACAD_GROUP D dict (name -> minted
+// group handle) and emits a GROUP object owned by D. Members are resolved
+// through the source->minted map captured by writeEntity; a member whose source
+// handle was never written (0xDEAD) is dropped, never emitted as a dangling 340.
+TEST_CASE("DXF setGroups emits a D-owned GROUP with resolved members (F3-2)",
+          "[dxf][objects][group]") {
+  const auto path =
+      std::filesystem::temp_directory_path() / "lc_group_emit.dxf";
+  std::filesystem::remove(path);
+
+  SeededPointEmitter em;
+  em.m_sourceHandles = {0xAAu, 0xBBu};
+  std::map<std::uint32_t, std::uint32_t> captured;
+  {
+    dxfRW w(path.string().c_str());
+    em.m_rw = &w;
+    DRW_Group g;
+    g.name = "*A1";
+    g.m_description = "test group";
+    g.m_isUnnamed = true;
+    g.m_selectable = true;
+    g.m_entityHandles = {0xAAu, 0xBBu, 0xDEADu};  // 0xDEAD never written
+    w.setGroups({g});
+    REQUIRE(w.write(&em, DRW::AC1021, false));
+    captured = w.getWritingContext()->sourceHandleToMintedMap;
+  }
+
+  const auto groups = readGroups(path);
+  std::filesystem::remove(path);
+
+  const std::string mintedA = toHexUpper(captured[0xAAu]);
+  const std::string mintedB = toHexUpper(captured[0xBBu]);
+
+  // The GROUP object: owned by D, the unnamed/selectable flags, then exactly the
+  // two resolvable members as 340 (0xDEAD dropped).
+  CHECK(hasConsecutive(groups,
+                       {{"0", "GROUP"}}));
+  CHECK(hasConsecutive(
+      groups, {{"100", "AcDbGroup"}, {"300", "test group"}, {"70", "1"},
+               {"71", "1"}, {"340", mintedA}, {"340", mintedB}}));
+  // The GROUP is owned by D and has exactly two 340 members (0xDEAD skipped).
+  // Count 340s ONLY inside the GROUP record (from its 0/GROUP marker to the next
+  // 0/...), so unrelated table 340s (e.g. STYLE font handle) are not counted.
+  int groupCount = 0;
+  int memberCount = 0;
+  std::string groupHandle;
+  for (std::size_t i = 0; i < groups.size(); ++i) {
+    if (groups[i].first == "0" && groups[i].second == "GROUP") {
+      ++groupCount;
+      if (i + 1 < groups.size())
+        groupHandle = groups[i + 1].second;  // the code-5 line
+      for (std::size_t j = i + 1; j < groups.size(); ++j) {
+        if (groups[j].first == "0")
+          break;  // end of GROUP record
+        if (groups[j].first == "340")
+          ++memberCount;
+      }
+    }
+  }
+  CHECK(groupCount == 1);
+  CHECK(memberCount == 2);
+  // The ACAD_GROUP D dict lists the group: 3 *A1 / 350 <minted group handle>.
+  CHECK(hasConsecutive(groups, {{"3", "*A1"}, {"350", groupHandle}}));
 }

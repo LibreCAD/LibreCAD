@@ -169,6 +169,17 @@ public:
     void setNamedDictObjects(const std::vector<DRW_Dictionary> &dicts) {
         m_namedDictObjects = dicts;
     }
+    /*!< Register GROUP objects to typed-emit in the regenerated OBJECTS section
+     * (DXF write path only). Each carries its name/description/flags and the
+     * member entity SOURCE handles (DRW_Group::m_entityHandles). The codec mints
+     * a fresh group handle, injects the (name, minted-handle) entry into the
+     * ACAD_GROUP D dict, and emits the GROUP with 340 references resolved through
+     * the writeEntity source->minted map (members absent from the map — consumed
+     * or filtered entities — are skipped, never emitted as a dangling 340).
+     * Empty by default. */
+    void setGroups(const std::vector<DRW_Group> &groups) {
+        m_groups = groups;
+    }
     /*!< Allocate a fresh, collision-free code-5 handle from the codec's
      * allocator. The filter uses this AFTER reserving every raw + fixed handle
      * to remap the small minority of raw objects whose ORIGINAL handle coincides
@@ -325,6 +336,9 @@ private:
     /// Populated via setNamedDictObjects; empty by default so a fresh write is
     /// byte-identical.
     std::vector<DRW_Dictionary> m_namedDictObjects;
+    /// GROUP objects to typed-emit in writeObjects (DXF path). Populated via
+    /// setGroups; empty by default so a fresh write is byte-identical.
+    std::vector<DRW_Group> m_groups;
     /// Numeric handle -> replacement handle, applied by writeRawDxfObject to the
     /// few raw objects whose original handle collides with a fixed structural
     /// literal. Empty by default (raw handles emitted verbatim).
