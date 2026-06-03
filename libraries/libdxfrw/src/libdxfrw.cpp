@@ -4708,6 +4708,17 @@ bool dxfRW::writeMLineStyle(DRW_MLineStyle *ent) {
     return true;
 }
 
+//WIPEOUTVARIABLES (AcDbWipeoutVariables, custom class). Inverse of
+//DRW_WipeoutVariables::parseCode: only the global display-frame flag (DXF 70).
+bool dxfRW::writeWipeoutVariables(DRW_WipeoutVariables *ent) {
+    writer->writeString(0, "WIPEOUTVARIABLES");
+    writer->writeString(5, toHexStr(static_cast<int>(ent->handle)));
+    writeObjectOwner(static_cast<std::uint32_t>(ent->parentHandle));
+    writer->writeString(100, "AcDbWipeoutVariables");
+    writer->writeInt16(70, ent->m_displayFrame);
+    return true;
+}
+
 /** utility function
  * convert a int to string in hex
  **/

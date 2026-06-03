@@ -183,6 +183,7 @@ public:
     void addGroup(const DRW_Group &data) override;
     void addImageDefinitionReactor(const DRW_ImageDefinitionReactor &data) override;
     void addRasterVariables(const DRW_RasterVariables &data) override;
+    void addWipeoutVariables(const DRW_WipeoutVariables &data) override;
     void addSpatialFilter(const DRW_SpatialFilter &data) override;
     void addGeoData(const DRW_GeoData &data) override;
     void addTableGeometry(const DRW_TableGeometry &data) override;

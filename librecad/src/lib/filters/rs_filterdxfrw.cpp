@@ -629,6 +629,15 @@ DRW_MLineStyle mlineStyleFromMetadata(
     return s;
 }
 
+DRW_WipeoutVariables wipeoutVariablesFromMetadata(
+    const LC_DwgAdvancedMetadata::WipeoutVariablesRecord& record) {
+    DRW_WipeoutVariables w;
+    w.handle = record.handle;
+    w.parentHandle = static_cast<int>(record.parentHandle);
+    w.m_displayFrame = static_cast<std::uint16_t>(record.displayFrame);
+    return w;
+}
+
 DRW_IDBuffer idBufferFromMetadata(
     const LC_DwgAdvancedMetadata::IDBufferRecord& record) {
     DRW_IDBuffer b;
@@ -2082,6 +2091,14 @@ void RS_FilterDXFRW::addMLineStyle(const DRW_MLineStyle &data) {
   //double-emit.
   if (m_graphic != nullptr) {
     m_graphic->dwgAdvancedMetadata().addMLineStyle(data);
+  }
+}
+
+void RS_FilterDXFRW::addWipeoutVariables(const DRW_WipeoutVariables &data) {
+  //DWG read populates only this typed metadata; DXF read also keeps it in the
+  //raw net (writeObjects dedups by handle). Enables DWG->DXF typed re-emit.
+  if (m_graphic != nullptr) {
+    m_graphic->dwgAdvancedMetadata().addWipeoutVariables(data);
   }
 }
 
@@ -5439,6 +5456,9 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic& g, const QString& file, RS2::FormatT
             reserveTyped(record.handle, record.replayState, "DICTIONARYVAR");
         for (const auto &record : metadata.rasterVariables())
             reserveTyped(record.handle, record.replayState, "RASTERVARIABLES");
+        //SLICE 2: WIPEOUTVARIABLES is a CUSTOM class -> reserve + register CLASS.
+        for (const auto &record : metadata.wipeoutVariables())
+            reserveTyped(record.handle, record.replayState, "WIPEOUTVARIABLES");
         //SLICE 1: MLINESTYLE is a FIXED built-in -> reserve its handle but
         //register NO CLASS (it is intentionally absent from dxfClassForRecordName).
         for (const auto &record : metadata.mlineStyles()) {
@@ -5583,6 +5603,8 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic& g, const QString& file, RS2::FormatT
         for (const auto &r : metadata.rasterVariables())
             noteDataOnly(r.handle, r.parentHandle, r.replayState);
         for (const auto &r : metadata.mlineStyles())
+            noteDataOnly(r.handle, r.parentHandle, r.replayState);
+        for (const auto &r : metadata.wipeoutVariables())
             noteDataOnly(r.handle, r.parentHandle, r.replayState);
 
         std::vector<DRW_Dictionary> namedDicts;
@@ -8179,6 +8201,15 @@ void RS_FilterDXFRW::writeObjects() {
             DRW_MLineStyle style = mlineStyleFromMetadata(record);
             style.parentHandle = resolveOwner(record.parentHandle);
             m_dxfW->writeMLineStyle(&style);
+        }
+        //SLICE 2: WIPEOUTVARIABLES (custom, CLASS registered). Same dedup-vs-raw
+        //-net + owner re-attach as the other data-only OBJECTS.
+        for (const auto &record : metadata.wipeoutVariables()) {
+            if (!emitTyped(record.handle, record.replayState))
+                continue;
+            DRW_WipeoutVariables wv = wipeoutVariablesFromMetadata(record);
+            wv.parentHandle = resolveOwner(record.parentHandle);
+            m_dxfW->writeWipeoutVariables(&wv);
         }
     }
 }

@@ -1770,6 +1770,16 @@ public:
         ReplayState replayState = ReplayState::ReplayAllowed;
     };
 
+    /// WIPEOUTVARIABLES (AcDbWipeoutVariables, custom class). Durable metadata so
+    /// the DWG->DXF path can re-emit it typed (DXF read keeps it in the raw net;
+    /// writeObjects dedups by handle). Only body field is the display-frame flag.
+    struct WipeoutVariablesRecord {
+        std::uint32_t handle = 0;
+        std::uint32_t parentHandle = 0;
+        int displayFrame = 0;        // DXF 70
+        ReplayState replayState = ReplayState::ReplayAllowed;
+    };
+
     /// IDBUFFER (AcDbIdBuffer, custom class 509) — list of object handles
     /// (used by selection filters and LAYER_INDEX entries).
     struct IDBufferRecord {
@@ -1937,6 +1947,7 @@ public:
         m_layouts.clear();
         m_scales.clear();
         m_mlineStyles.clear();
+        m_wipeoutVariables.clear();
         m_idBuffers.clear();
         m_layerIndexes.clear();
         m_spatialIndexes.clear();
@@ -2914,6 +2925,14 @@ public:
         m_mlineStyles.push_back(std::move(record));
     }
 
+    void addWipeoutVariables(const DRW_WipeoutVariables& wv) {
+        WipeoutVariablesRecord record;
+        record.handle = wv.handle;
+        record.parentHandle = wv.parentHandle;
+        record.displayFrame = wv.m_displayFrame;
+        m_wipeoutVariables.push_back(std::move(record));
+    }
+
     void addIDBuffer(const DRW_IDBuffer& idBuffer) {
         IDBufferRecord record;
         record.handle = idBuffer.handle;
@@ -3107,6 +3126,7 @@ public:
     // PR 8d.2a — five small no-storage OBJECTS families.
     const std::vector<ScaleRecord>& scales() const { return m_scales; }
     const std::vector<MLineStyleRecord>& mlineStyles() const { return m_mlineStyles; }
+    const std::vector<WipeoutVariablesRecord>& wipeoutVariables() const { return m_wipeoutVariables; }
     const std::vector<IDBufferRecord>& idBuffers() const { return m_idBuffers; }
     const std::vector<LayerIndexRecord>& layerIndexes() const { return m_layerIndexes; }
     const std::vector<SpatialIndexRecord>& spatialIndexes() const { return m_spatialIndexes; }
@@ -7438,6 +7458,7 @@ private:
     // PR 8d.2a — five small no-storage OBJECTS families.
     std::vector<ScaleRecord> m_scales;
     std::vector<MLineStyleRecord> m_mlineStyles;
+    std::vector<WipeoutVariablesRecord> m_wipeoutVariables;
     std::vector<IDBufferRecord> m_idBuffers;
     std::vector<LayerIndexRecord> m_layerIndexes;
     std::vector<SpatialIndexRecord> m_spatialIndexes;

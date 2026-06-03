@@ -133,6 +133,9 @@ public:
      * only typed metadata, so the filter emits it typed on DWG->DXF, deduped vs
      * the raw net by handle. */
     bool writeMLineStyle(DRW_MLineStyle *ent);
+    /*!< WIPEOUTVARIABLES (custom class — CLASS registered) DWG->DXF typed emit;
+     * deduped vs the raw net by handle like the other data-only OBJECTS. */
+    bool writeWipeoutVariables(DRW_WipeoutVariables *ent);
     bool writeRawDxfObject(DRW_RawDxfObject *obj);
     /*!< Mark a specific code-5 handle as in-use so the minted-handle stream
      * (m_handleAllocator.next()) never re-issues it. Mirrors
