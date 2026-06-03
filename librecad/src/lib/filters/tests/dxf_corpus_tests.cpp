@@ -223,6 +223,82 @@ TEST_CASE("DXF import captures the source entity handle on RS_Entity (F3a)",
   std::filesystem::remove(src);
 }
 
+// F3-3: a GROUP read from DXF must survive a DXF->DXF round-trip via the real
+// filter: the codec mints the group handle, augments the ACAD_GROUP D dict, and
+// resolves each member's SOURCE handle (the LINE code-5) through the
+// source->minted map. This is end-to-end coverage the *.dxf corpus lacks (no
+// sample carries a GROUP). Asserts the GROUP record reappears with two resolved
+// 340 members and that no member 340 dangles.
+TEST_CASE("DXF round-trip preserves a GROUP with resolved members (F3-3)",
+          "[dxf][roundtrip][filter][group]") {
+  ensureSettings();
+  const std::filesystem::path src =
+      std::filesystem::temp_directory_path() / "f33_group_src.dxf";
+  const std::filesystem::path out =
+      std::filesystem::temp_directory_path() / "f33_group_out.dxf";
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+
+  // Two LINEs (handles 1A4/1A5) and a named GROUP "MyGroup" referencing both.
+  const std::string dxf =
+      "0\nSECTION\n2\nENTITIES\n"
+      "0\nLINE\n5\n1A4\n8\n0\n10\n0.0\n20\n0.0\n30\n0.0\n"
+      "11\n10.0\n21\n10.0\n31\n0.0\n"
+      "0\nLINE\n5\n1A5\n8\n0\n10\n1.0\n20\n1.0\n30\n0.0\n"
+      "11\n11.0\n21\n11.0\n31\n0.0\n"
+      "0\nENDSEC\n"
+      "0\nSECTION\n2\nOBJECTS\n"
+      "0\nDICTIONARY\n5\nC\n330\n0\n100\nAcDbDictionary\n281\n1\n"
+      "3\nACAD_GROUP\n350\nD\n"
+      "0\nDICTIONARY\n5\nD\n330\nC\n100\nAcDbDictionary\n281\n1\n"
+      "3\nMyGroup\n350\n2F\n"
+      "0\nGROUP\n5\n2F\n330\nD\n100\nAcDbGroup\n"
+      "300\nmy desc\n70\n0\n71\n1\n"
+      "340\n1A4\n340\n1A5\n"
+      "0\nENDSEC\n0\nEOF\n";
+  {
+    std::ofstream o(src);
+    o << dxf;
+  }
+
+  REQUIRE(roundTrip(src, out, RS2::FormatDXFRW));
+
+  // Exactly one GROUP reappears.
+  CHECK(countDxfRecords(out, "GROUP") == 1);
+
+  // The GROUP carries exactly two 340 members (both LINEs resolved, none
+  // dangling). Parse the file into (code, value) pairs and count 340s only
+  // inside the GROUP record (a value may itself be "0", so a line-based record
+  // split is unsafe — split on the (code,value) "0"/<TYPE> marker pair).
+  std::ifstream in(out);
+  std::string codeLine;
+  std::string valLine;
+  auto trim = [](std::string s) {
+    while (!s.empty() && (s.back() == '\r' || s.back() == ' '))
+      s.pop_back();
+    size_t a = s.find_first_not_of(" \t");
+    return a == std::string::npos ? std::string() : s.substr(a);
+  };
+  bool inGroup = false;
+  int memberCount = 0;
+  bool sawDesc = false;
+  while (std::getline(in, codeLine) && std::getline(in, valLine)) {
+    const std::string code = trim(codeLine);
+    const std::string val = trim(valLine);
+    if (code == "0")
+      inGroup = (val == "GROUP");
+    else if (inGroup && code == "340")
+      ++memberCount;
+    else if (inGroup && code == "300" && val == "my desc")
+      sawDesc = true;
+  }
+  CHECK(memberCount == 2);
+  CHECK(sawDesc);
+
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+}
+
 TEST_CASE("DXF corpus: round-trip ~/dev/dwg_samples/*.dxf to a tmp dir",
           "[corpus]") {
   ensureSettings();

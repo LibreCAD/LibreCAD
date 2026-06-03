@@ -5609,6 +5609,45 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic& g, const QString& file, RS2::FormatT
         if (!namedDicts.empty())
             m_dxfW->setNamedDictObjects(namedDicts);
 
+        // (4) F3: typed GROUP emit (both directions). GROUP is read into typed
+        // metadata only (processGroup -> addGroup; never routed to the DXF raw
+        // net — confirmed against the DXF reader's processGroup which makes no
+        // addRawDxfObject call), so there is no raw-net dedup to do here. The
+        // codec mints each group's handle, augments the ACAD_GROUP D dict, and
+        // resolves member entityHandles (SOURCE handles) through the source->minted
+        // map captured during writeEntity. The source ACAD_GROUP dict is already
+        // suppressed above (acadGroupHandle); the codec regenerates D.
+        //
+        // Group NAMES live in the ACAD_GROUP dict's entries (groupName ->
+        // groupHandle), not on the GROUP record; harvest them. Unnamed groups
+        // (isUnnamed) carry a generated "*An" name AutoCAD assigns; synthesize a
+        // stable "*A<n>" when no name is recoverable so the D-dict entry + GROUP
+        // are still well-formed.
+        std::map<std::uint32_t, std::string> groupHandleToName;
+        for (const auto &d : metadata.dictionaries()) {
+            if (d.handle != acadGroupHandle || acadGroupHandle == 0)
+                continue;
+            for (const auto &e : d.entries)
+                groupHandleToName.emplace(e.handle, e.name);
+        }
+        std::vector<DRW_Group> groupsToWrite;
+        groupsToWrite.reserve(metadata.groups().size());
+        int unnamedSeq = 0;
+        for (const auto &record : metadata.groups()) {
+            if (record.replayState
+                != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed)
+                continue;
+            DRW_Group group = groupFromMetadata(record);
+            auto nameIt = groupHandleToName.find(record.handle);
+            if (nameIt != groupHandleToName.end() && !nameIt->second.empty())
+                group.name = nameIt->second;
+            else
+                group.name = "*A" + std::to_string(++unnamedSeq);
+            groupsToWrite.push_back(std::move(group));
+        }
+        if (!groupsToWrite.empty())
+            m_dxfW->setGroups(groupsToWrite);
+
         if (!handleRemap.empty())
             m_dxfW->setHandleRemap(handleRemap);
 
