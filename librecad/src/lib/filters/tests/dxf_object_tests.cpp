@@ -239,6 +239,23 @@ public:
   void writeObjects() override {}
 };
 
+// Emits a set of points whose handle field is pre-seeded with a SOURCE handle
+// (as RS_FilterDXFRW::getEntityAttributes does). Drives dxfRW::writePoint ->
+// writeEntity so the codec's source->minted capture (F3) can be inspected.
+class SeededPointEmitter : public StubInterface {
+public:
+  std::vector<std::uint32_t> m_sourceHandles;
+  dxfRW *m_rw = nullptr;
+  void writeEntities() override {
+    for (std::uint32_t src : m_sourceHandles) {
+      DRW_Point pt;
+      pt.basePoint = DRW_Coord(1.0, 2.0, 0.0);
+      pt.handle = src;  // seed: source-handle key consumed by writeEntity
+      m_rw->writePoint(&pt);
+    }
+  }
+};
+
 // Read a written DXF file back into a string for structural assertions.
 std::string slurp(const std::filesystem::path &path) {
   std::ifstream in(path);
@@ -709,4 +726,34 @@ TEST_CASE("DXF setNamedDictObjects emits an owned named dictionary (F4f-1)",
                        {{"0", "DICTIONARY"}, {"5", "50"}, {"330", "C"},
                         {"100", "AcDbDictionary"}, {"281", "1"},
                         {"3", "SCALE"}, {"350", "51"}}));
+}
+
+// F3-1: dxfRW::writeEntity captures source-handle -> minted-handle in the
+// writing context. Two entities seeded with distinct source handles map to two
+// distinct minted handles (>= the first minted handle FIRSTHANDLE 0x30). The map
+// is written here but consumed only by GROUP-emit (F3-2/F3-3).
+TEST_CASE("DXF writeEntity captures source->minted handles (F3-1)",
+          "[dxf][objects][handles]") {
+  const auto path =
+      std::filesystem::temp_directory_path() / "lc_srcminted_capture.dxf";
+  std::filesystem::remove(path);
+
+  SeededPointEmitter em;
+  em.m_sourceHandles = {0xAAu, 0xBBu};
+  std::map<std::uint32_t, std::uint32_t> captured;
+  {
+    dxfRW w(path.string().c_str());
+    em.m_rw = &w;
+    REQUIRE(w.write(&em, DRW::AC1021, false));
+    captured = w.getWritingContext()->sourceHandleToMintedMap;
+  }
+  std::filesystem::remove(path);
+
+  REQUIRE(captured.count(0xAAu) == 1);
+  REQUIRE(captured.count(0xBBu) == 1);
+  const std::uint32_t mintedA = captured[0xAAu];
+  const std::uint32_t mintedB = captured[0xBBu];
+  CHECK(mintedA >= 0x30u);
+  CHECK(mintedB >= 0x30u);
+  CHECK(mintedA != mintedB);
 }

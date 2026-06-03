@@ -10617,6 +10617,14 @@ void RS_FilterDXFRW::setEntityAttributes(RS_Entity* entity,
 void RS_FilterDXFRW::getEntityAttributes(DRW_Entity* ent, const RS_Entity* entity) {
 //DRW_Entity RS_FilterDXFRW::getEntityAttributes(RS_Entity* /*entity*/) {
 
+    // F3: seed ent->handle with the entity's SOURCE handle (stored on RS_Entity
+    // from the import) as a key input for the codec's source->minted capture in
+    // dxfRW::writeEntity (used to resolve GROUP 340 members). This is a write-only
+    // key here: getEntityAttributes reads no ent->handle, and writeEntity
+    // unconditionally overwrites it with a freshly-minted handle before any
+    // reader sees it. Any future pre-mint read of ent->handle is a latent bug.
+    ent->handle = entity->sourceHandle();
+
     // Layer:
     RS_Layer* layer = entity->getLayer();
     QString layerName;

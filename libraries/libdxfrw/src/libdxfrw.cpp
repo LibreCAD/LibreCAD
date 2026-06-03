@@ -255,7 +255,20 @@ void dxfRW::seedReservedDxf() {
 }
 
 bool dxfRW::writeEntity(DRW_Entity *ent) {
-    ent->handle = m_handleAllocator.next();
+    // On entry, ent->handle is a SOURCE-handle key seeded by the filter from
+    // RS_Entity::sourceHandle() (getEntityAttributes); it is read by NOTHING
+    // before this unconditional mint and is captured here for GROUP 340
+    // resolution (F3). Any future pre-mint read of ent->handle is a latent bug.
+    const std::uint32_t sourceHandle = ent->handle;
+    ent->handle = m_handleAllocator.next();  // unconditional mint (unchanged)
+    if (sourceHandle != 0) {
+        // emplace (NOT operator[]): writePolyline/writeInsert call
+        // writeEntity(ent) for the PARENT, re-entering with a now-minted
+        // (nonzero, minted-range) key. emplace keeps the first-seen real source
+        // and makes those stale minted-range keys inert (never queried — GROUP
+        // 340 lookups use real source handles only).
+        m_writingContext.sourceHandleToMintedMap.emplace(sourceHandle, ent->handle);
+    }
     writer->writeString(5, toHexStr(static_cast<int>(ent->handle)));
     if (version > DRW::AC1009) {
         writer->writeString(100, "AcDbEntity");

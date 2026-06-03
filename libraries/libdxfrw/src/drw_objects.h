@@ -2356,6 +2356,12 @@ public:
     std::map<std::string, std::uint32_t> vportMap;    /*!< DWG: uppercase vport name -> handle */
     std::map<std::string, std::uint32_t> appidMap;    /*!< DWG: uppercase appid name -> handle */
     std::map<std::string, std::uint32_t> dimstyleMap; /*!< DWG: uppercase dimstyle name -> handle */
+    /*!< DXF write: source entity handle -> minted code-5 handle, captured in
+     * dxfRW::writeEntity. Lets GROUP-emit (F3) resolve a member's SOURCE handle
+     * to the handle actually written. emplace-only: a parent re-entering
+     * writeEntity (writePolyline/writeInsert reuse ent->handle) keeps the
+     * first-seen real source; stale minted-range keys are never queried. */
+    std::map<std::uint32_t, std::uint32_t> sourceHandleToMintedMap;
 };
 
 namespace DRW {
