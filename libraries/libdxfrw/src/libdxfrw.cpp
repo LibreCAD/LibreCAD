@@ -2462,6 +2462,25 @@ bool dxfRW::writeObjects() {
        imageDef.pop_back();
     }
 
+    //F4-followup: emit the named-dictionary OBJECTS the filter routed via
+    //setNamedDictObjects (DWG->DXF). The root C dict already references these by
+    //handle (setRootDictEntries spliced their (name, handle) into C above); this
+    //makes them exist as reachable objects with a valid owner, clearing the
+    //INVALID_OWNER_HANDLE fixes ezdxf otherwise applies to the dangling 350s.
+    for (const DRW_Dictionary &dict : m_namedDictObjects) {
+        writer->writeString(0, "DICTIONARY");
+        writer->writeString(5, toHexStr(static_cast<int>(dict.handle)));
+        writeObjectOwner(dict.parentHandle != 0
+                             ? static_cast<std::uint32_t>(dict.parentHandle)
+                             : 0);
+        writer->writeString(100, "AcDbDictionary");
+        writer->writeInt16(281, dict.cloning != 0 ? 1 : 0);
+        for (const DRW_Dictionary::Entry &entry : dict.m_entries) {
+            writer->writeUtf8String(3, entry.m_name);
+            writer->writeString(350, toHexStr(static_cast<int>(entry.m_handle)));
+        }
+    }
+
     iface->writeObjects();
 
     return true;

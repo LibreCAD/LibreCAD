@@ -158,6 +158,17 @@ public:
     void setRootDictEntries(const std::vector<std::pair<std::string, std::string>> &entries) {
         m_rootDictEntries = entries;
     }
+    /*!< Register named-dictionary OBJECTS to emit verbatim in the regenerated
+     * OBJECTS section (DXF write path only). Each carries its source code-5
+     * handle, parent (330) owner, and entry (name -> child handle) list. The
+     * filter builds these from dwgAdvancedMetadata().dictionaries() on the
+     * DWG->DXF path so the named dictionaries that were previously only
+     * referenced from the root C dict (via setRootDictEntries) actually exist
+     * as reachable objects with a valid owner — clearing the INVALID_OWNER_HANDLE
+     * fixes ezdxf applies for the dangling 350 references. Empty by default. */
+    void setNamedDictObjects(const std::vector<DRW_Dictionary> &dicts) {
+        m_namedDictObjects = dicts;
+    }
     /*!< Allocate a fresh, collision-free code-5 handle from the codec's
      * allocator. The filter uses this AFTER reserving every raw + fixed handle
      * to remap the small minority of raw objects whose ORIGINAL handle coincides
@@ -310,6 +321,10 @@ private:
     HandleAllocator m_handleAllocator;
     std::vector<DRW_Class> m_dxfClasses;
     std::vector<std::pair<std::string, std::string>> m_rootDictEntries;
+    /// Named-dictionary OBJECTS to emit verbatim in writeObjects (DXF path).
+    /// Populated via setNamedDictObjects; empty by default so a fresh write is
+    /// byte-identical.
+    std::vector<DRW_Dictionary> m_namedDictObjects;
     /// Numeric handle -> replacement handle, applied by writeRawDxfObject to the
     /// few raw objects whose original handle collides with a fixed structural
     /// literal. Empty by default (raw handles emitted verbatim).

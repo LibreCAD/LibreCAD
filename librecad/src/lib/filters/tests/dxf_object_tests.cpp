@@ -29,6 +29,7 @@
 
 #include <filesystem>
 #include <fstream>
+#include <iterator>
 #include <string>
 
 #include "drw_objects.h"
@@ -229,6 +230,21 @@ public:
   dxfRW *m_rw = nullptr;
   void writeObjects() override { m_rw->writeRawDxfObject(&m_obj); }
 };
+
+// Emits nothing of its own; the codec emits the named-dict / group objects it
+// was handed via setNamedDictObjects / setGroups. Used by the [objects] codec
+// write units.
+class NullObjectEmitter : public StubInterface {
+public:
+  void writeObjects() override {}
+};
+
+// Read a written DXF file back into a string for structural assertions.
+std::string slurp(const std::filesystem::path &path) {
+  std::ifstream in(path);
+  return std::string((std::istreambuf_iterator<char>(in)),
+                     std::istreambuf_iterator<char>());
+}
 
 void readDxf(const std::string &dxf, DRW_Interface &cap, const char *name) {
   const auto path = std::filesystem::temp_directory_path() / name;
@@ -615,4 +631,82 @@ TEST_CASE("DXF raw-net captures numeric group VALUES, not stale strings "
   CHECK(b.groups[7].d_val() == 2.5);
   CHECK(b.groups[8].i_val() == 1);
   std::filesystem::remove(rtPath);
+}
+
+namespace {
+// Parse a DXF file's lines into trimmed (code-line, value-line) text rows so a
+// codec-write test can assert ordered group sequences without a full reader.
+std::vector<std::pair<std::string, std::string>> readGroups(
+    const std::filesystem::path &path) {
+  std::vector<std::pair<std::string, std::string>> out;
+  std::ifstream in(path);
+  std::string codeLine;
+  std::string valLine;
+  auto trim = [](std::string s) {
+    while (!s.empty() && (s.back() == '\r' || s.back() == '\n' || s.back() == ' '))
+      s.pop_back();
+    std::size_t b = s.find_first_not_of(" \t");
+    return b == std::string::npos ? std::string() : s.substr(b);
+  };
+  while (std::getline(in, codeLine) && std::getline(in, valLine))
+    out.emplace_back(trim(codeLine), trim(valLine));
+  return out;
+}
+
+// True if the group sequence `groups` contains, starting at any position, the
+// ordered subsequence `seq` (each element a (code,value) pair), allowing other
+// groups in between is NOT permitted — strictly consecutive.
+bool hasConsecutive(
+    const std::vector<std::pair<std::string, std::string>> &groups,
+    const std::vector<std::pair<std::string, std::string>> &seq) {
+  if (seq.empty() || groups.size() < seq.size())
+    return false;
+  for (std::size_t i = 0; i + seq.size() <= groups.size(); ++i) {
+    bool ok = true;
+    for (std::size_t j = 0; j < seq.size(); ++j)
+      if (groups[i + j] != seq[j]) { ok = false; break; }
+    if (ok)
+      return true;
+  }
+  return false;
+}
+} // namespace
+
+// F4f-1: dxfRW::setNamedDictObjects emits a named DICTIONARY object in the
+// OBJECTS section, owned by C (parentHandle 0 -> 330 "C"), with its entry list,
+// while setRootDictEntries re-attaches it under the root C dict. This is the
+// emit that gives the previously-dangling 350 references a real, valid-owner
+// target (clearing ezdxf INVALID_OWNER_HANDLE on the DWG->DXF path).
+TEST_CASE("DXF setNamedDictObjects emits an owned named dictionary (F4f-1)",
+          "[dxf][objects][dictionary]") {
+  const auto path =
+      std::filesystem::temp_directory_path() / "lc_nameddict_emit.dxf";
+  std::filesystem::remove(path);
+
+  NullObjectEmitter em;
+  {
+    dxfRW w(path.string().c_str());
+    DRW_Dictionary dict;
+    dict.handle = 0x50u;
+    dict.parentHandle = 0;  // -> owner "C"
+    dict.cloning = 1;
+    DRW_Dictionary::Entry e;
+    e.m_name = "SCALE";
+    e.m_handle = 0x51u;
+    dict.m_entries.push_back(e);
+    w.setNamedDictObjects({dict});
+    w.setRootDictEntries({{"ACAD_SCALELIST", "50"}});
+    REQUIRE(w.write(&em, DRW::AC1021, false));
+  }
+
+  const auto groups = readGroups(path);
+  std::filesystem::remove(path);
+
+  // Root C dict carries the ACAD_SCALELIST -> 50 entry.
+  CHECK(hasConsecutive(groups, {{"3", "ACAD_SCALELIST"}, {"350", "50"}}));
+  // A DICTIONARY object at handle 50, owned by C, with the SCALE -> 51 entry.
+  CHECK(hasConsecutive(groups,
+                       {{"0", "DICTIONARY"}, {"5", "50"}, {"330", "C"},
+                        {"100", "AcDbDictionary"}, {"281", "1"},
+                        {"3", "SCALE"}, {"350", "51"}}));
 }
