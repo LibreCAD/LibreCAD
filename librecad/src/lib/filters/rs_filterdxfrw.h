@@ -359,6 +359,14 @@ private:
      *  before write(), consumed by the rawDxfObjects re-emit in writeObjects. */
     std::set<std::uint32_t> m_dxfSuppressedObjectHandles;
 
+    /** DXF export (DWG->DXF): SOURCE handles of the named parent dictionaries
+     *  emitted via setNamedDictObjects (F4-followup). Computed in fileExport,
+     *  consumed by the data-only OBJECT emitters in writeObjects: a data-only
+     *  record whose 330 parent is in this set (or 0, or a raw-net handle) keeps
+     *  it; otherwise the parent is zeroed so writeObjectOwner emits C and the
+     *  object is never a dangling-owner reference. */
+    std::set<std::uint32_t> m_dxfEmittedNamedDictHandles;
+
     /** UNDERLAYDEFINITION cache: handle → definition (filename, sheet, kind).
      *  Populated by linkUnderlay (OBJECTS section, after entities are
      *  parsed). Consumed at export time + by future UI surfaces that

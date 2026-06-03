@@ -5423,6 +5423,7 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic& g, const QString& file, RS2::FormatT
         // collisions are not re-emitted. The source root dict itself is never in
         // the raw net (processDictionary skips parentHandle==0).
         m_dxfSuppressedObjectHandles.clear();
+        m_dxfEmittedNamedDictHandles.clear();
         std::uint32_t sourceRootHandle = 0;
         std::uint32_t acadGroupHandle = 0;
         std::map<std::uint32_t, std::string> rootEntryName;  // child handle -> name
@@ -5593,6 +5594,7 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic& g, const QString& file, RS2::FormatT
             dict.m_entries = std::move(keptEntries);
             namedDicts.push_back(std::move(dict));
             emittedDictHandles.insert(d.handle);
+            m_dxfEmittedNamedDictHandles.insert(d.handle);
 
             // Re-attach under root C so the dict object is reachable. Use the
             // harvested name if known, else the source dict name, else a synthetic.
@@ -8047,28 +8049,45 @@ void RS_FilterDXFRW::writeObjects() {
                 && state == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
                 && rawHandles.count(handle) == 0;
         };
+        //F4f-3: owner fallback. A data-only OBJECT's 330 parent must resolve to
+        //an object that actually exists in the output, else ezdxf deletes the
+        //object (INVALID_OWNER_HANDLE). A parent is reachable iff it is 0 (->
+        //root C), a named parent dict we emit (F4f-2), or a raw-net object
+        //re-emitted verbatim. Otherwise (e.g. a SUN owned by a per-viewport ACAD
+        //dict LibreCAD never materializes) zero it so writeObjectOwner emits C.
+        auto resolveOwner = [&](std::uint32_t parent) -> int {
+            if (parent == 0
+                || m_dxfEmittedNamedDictHandles.count(parent) != 0
+                || rawHandles.count(parent) != 0)
+                return static_cast<int>(parent);
+            return 0;  // dangling -> owner C
+        };
         for (const auto &record : metadata.suns()) {
             if (!emitTyped(record.handle, record.replayState))
                 continue;
             DRW_Sun sun = sunFromMetadata(record);
+            sun.parentHandle = resolveOwner(record.parentHandle);
             m_dxfW->writeSun(&sun);
         }
         for (const auto &record : metadata.scales()) {
             if (!emitTyped(record.handle, record.replayState))
                 continue;
             DRW_Scale scale = scaleFromMetadata(record);
+            scale.parentHandle = resolveOwner(record.parentHandle);
             m_dxfW->writeScale(&scale);
         }
         for (const auto &record : metadata.dictionaryVars()) {
             if (!emitTyped(record.handle, record.replayState))
                 continue;
             DRW_DictionaryVar dv = dictionaryVarFromMetadata(record);
+            dv.parentHandle = resolveOwner(record.parentHandle);
             m_dxfW->writeDictionaryVar(&dv);
         }
         for (const auto &record : metadata.rasterVariables()) {
             if (!emitTyped(record.handle, record.replayState))
                 continue;
             DRW_RasterVariables rv = rasterVariablesFromMetadata(record);
+            rv.parentHandle = resolveOwner(record.parentHandle);
             m_dxfW->writeRasterVariables(&rv);
         }
     }
