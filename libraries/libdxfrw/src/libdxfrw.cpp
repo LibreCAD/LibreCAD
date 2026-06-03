@@ -4683,6 +4683,31 @@ bool dxfRW::writeRasterVariables(DRW_RasterVariables *ent) {
     return true;
 }
 
+//MLINESTYLE is a FIXED built-in (no CLASS record). The group-code shape is the
+//inverse of DRW_MLineStyle::parseCode (drw_objects.cpp): name 2, flags 70,
+//description 3, fill color 62 (before any element), start/end angle 51/52,
+//element count 71, then per element offset 49 / color 62 / linetype 6.
+//Cross-checked field-for-field against ezdxf 1.4.4 (AcDbMlineStyle).
+bool dxfRW::writeMLineStyle(DRW_MLineStyle *ent) {
+    writer->writeString(0, "MLINESTYLE");
+    writer->writeString(5, toHexStr(static_cast<int>(ent->handle)));
+    writeObjectOwner(static_cast<std::uint32_t>(ent->parentHandle));
+    writer->writeString(100, "AcDbMlineStyle");
+    writer->writeUtf8String(2, ent->name);
+    writer->writeInt16(70, ent->flags);
+    writer->writeUtf8String(3, ent->description);
+    writer->writeInt16(62, ent->fillColor);
+    writer->writeDouble(51, ent->startAngle);
+    writer->writeDouble(52, ent->endAngle);
+    writer->writeInt16(71, static_cast<int>(ent->elements.size()));
+    for (const DRW_MLineElement &el : ent->elements) {
+        writer->writeDouble(49, el.offset);
+        writer->writeInt16(62, el.color);
+        writer->writeUtf8String(6, el.linetype.empty() ? "BYLAYER" : el.linetype);
+    }
+    return true;
+}
+
 /** utility function
  * convert a int to string in hex
  **/

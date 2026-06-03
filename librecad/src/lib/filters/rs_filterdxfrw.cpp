@@ -607,6 +607,28 @@ DRW_Scale scaleFromMetadata(
     return s;
 }
 
+DRW_MLineStyle mlineStyleFromMetadata(
+    const LC_DwgAdvancedMetadata::MLineStyleRecord& record) {
+    DRW_MLineStyle s;
+    s.handle = record.handle;
+    s.parentHandle = static_cast<int>(record.parentHandle);
+    s.name = record.name;
+    s.flags = record.flags;
+    s.description = record.description;
+    s.fillColor = record.fillColor;
+    s.startAngle = record.startAngle;
+    s.endAngle = record.endAngle;
+    s.elements.reserve(record.elements.size());
+    for (const auto& er : record.elements) {
+        DRW_MLineElement e;
+        e.offset = er.offset;
+        e.color = er.color;
+        e.linetype = er.linetype;
+        s.elements.push_back(std::move(e));
+    }
+    return s;
+}
+
 DRW_IDBuffer idBufferFromMetadata(
     const LC_DwgAdvancedMetadata::IDBufferRecord& record) {
     DRW_IDBuffer b;
@@ -2053,6 +2075,13 @@ void RS_FilterDXFRW::addMLineStyle(const DRW_MLineStyle &data) {
   QString key = QString::fromUtf8(data.name.c_str());
   if (!key.isEmpty()) {
     m_mlineStyleCache[key] = data;
+  }
+  //Durable metadata (in ADDITION to the transient cache addMLine uses to
+  //decompose). The DWG reader populates ONLY this; the DXF->DXF path keeps
+  //MLINESTYLE in the raw net, so writeObjects dedups by handle to avoid a
+  //double-emit.
+  if (m_graphic != nullptr) {
+    m_graphic->dwgAdvancedMetadata().addMLineStyle(data);
   }
 }
 
@@ -5410,6 +5439,16 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic& g, const QString& file, RS2::FormatT
             reserveTyped(record.handle, record.replayState, "DICTIONARYVAR");
         for (const auto &record : metadata.rasterVariables())
             reserveTyped(record.handle, record.replayState, "RASTERVARIABLES");
+        //SLICE 1: MLINESTYLE is a FIXED built-in -> reserve its handle but
+        //register NO CLASS (it is intentionally absent from dxfClassForRecordName).
+        for (const auto &record : metadata.mlineStyles()) {
+            if (record.handle == 0
+                || record.replayState
+                       != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                || rawObjectHandles.count(record.handle) != 0)
+                continue;
+            m_dxfW->reserveHandle(record.handle);
+        }
 
         if (!classes.empty())
             m_dxfW->setDxfClasses(classes);
@@ -5542,6 +5581,8 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic& g, const QString& file, RS2::FormatT
         for (const auto &r : metadata.dictionaryVars())
             noteDataOnly(r.handle, r.parentHandle, r.replayState);
         for (const auto &r : metadata.rasterVariables())
+            noteDataOnly(r.handle, r.parentHandle, r.replayState);
+        for (const auto &r : metadata.mlineStyles())
             noteDataOnly(r.handle, r.parentHandle, r.replayState);
 
         std::vector<DRW_Dictionary> namedDicts;
@@ -8128,6 +8169,16 @@ void RS_FilterDXFRW::writeObjects() {
             DRW_RasterVariables rv = rasterVariablesFromMetadata(record);
             rv.parentHandle = resolveOwner(record.parentHandle);
             m_dxfW->writeRasterVariables(&rv);
+        }
+        //SLICE 1: MLINESTYLE (FIXED built-in, no CLASS). DWG read populates only
+        //typed metadata; DXF read keeps it in the raw net (so emitTyped dedups by
+        //handle). The STANDARD mline style is present in most drawings.
+        for (const auto &record : metadata.mlineStyles()) {
+            if (!emitTyped(record.handle, record.replayState))
+                continue;
+            DRW_MLineStyle style = mlineStyleFromMetadata(record);
+            style.parentHandle = resolveOwner(record.parentHandle);
+            m_dxfW->writeMLineStyle(&style);
         }
     }
 }

@@ -1748,6 +1748,28 @@ public:
         ReplayState replayState = ReplayState::ReplayAllowed;
     };
 
+    /// MLINESTYLE (AcDbMlineStyle, FIXED built-in type 73 — no CLASS record).
+    /// Durable metadata so the DWG->DXF path can re-emit the style typed (the
+    /// transient read cache in RS_FilterDXFRW is DXF-read-only).  Per-element
+    /// lists mirror DRW_MLineStyle::elements (offset 49 / color 62 / linetype 6).
+    struct MLineStyleElementRecord {
+        double offset = 0.0;
+        int color = 256;
+        std::string linetype;
+    };
+    struct MLineStyleRecord {
+        std::uint32_t handle = 0;
+        std::uint32_t parentHandle = 0;
+        std::string name;            // DXF 2 (DRW_TableEntry::name)
+        int flags = 0;               // DXF 70
+        std::string description;     // DXF 3
+        int fillColor = 256;         // DXF 62 (before any element)
+        double startAngle = 0.0;     // DXF 51
+        double endAngle = 0.0;       // DXF 52
+        std::vector<MLineStyleElementRecord> elements;
+        ReplayState replayState = ReplayState::ReplayAllowed;
+    };
+
     /// IDBUFFER (AcDbIdBuffer, custom class 509) — list of object handles
     /// (used by selection filters and LAYER_INDEX entries).
     struct IDBufferRecord {
@@ -1914,6 +1936,7 @@ public:
         m_xrecords.clear();
         m_layouts.clear();
         m_scales.clear();
+        m_mlineStyles.clear();
         m_idBuffers.clear();
         m_layerIndexes.clear();
         m_spatialIndexes.clear();
@@ -2870,6 +2893,27 @@ public:
         m_scales.push_back(std::move(record));
     }
 
+    void addMLineStyle(const DRW_MLineStyle& style) {
+        MLineStyleRecord record;
+        record.handle = style.handle;
+        record.parentHandle = style.parentHandle;
+        record.name = style.name;
+        record.flags = style.flags;
+        record.description = style.description;
+        record.fillColor = style.fillColor;
+        record.startAngle = style.startAngle;
+        record.endAngle = style.endAngle;
+        record.elements.reserve(style.elements.size());
+        for (const DRW_MLineElement& e : style.elements) {
+            MLineStyleElementRecord er;
+            er.offset = e.offset;
+            er.color = e.color;
+            er.linetype = e.linetype;
+            record.elements.push_back(std::move(er));
+        }
+        m_mlineStyles.push_back(std::move(record));
+    }
+
     void addIDBuffer(const DRW_IDBuffer& idBuffer) {
         IDBufferRecord record;
         record.handle = idBuffer.handle;
@@ -3062,6 +3106,7 @@ public:
     std::vector<LayoutRecord>& layouts() { return m_layouts; }
     // PR 8d.2a — five small no-storage OBJECTS families.
     const std::vector<ScaleRecord>& scales() const { return m_scales; }
+    const std::vector<MLineStyleRecord>& mlineStyles() const { return m_mlineStyles; }
     const std::vector<IDBufferRecord>& idBuffers() const { return m_idBuffers; }
     const std::vector<LayerIndexRecord>& layerIndexes() const { return m_layerIndexes; }
     const std::vector<SpatialIndexRecord>& spatialIndexes() const { return m_spatialIndexes; }
@@ -7392,6 +7437,7 @@ private:
     std::vector<LayoutRecord> m_layouts;
     // PR 8d.2a — five small no-storage OBJECTS families.
     std::vector<ScaleRecord> m_scales;
+    std::vector<MLineStyleRecord> m_mlineStyles;
     std::vector<IDBufferRecord> m_idBuffers;
     std::vector<LayerIndexRecord> m_layerIndexes;
     std::vector<SpatialIndexRecord> m_spatialIndexes;

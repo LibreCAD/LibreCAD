@@ -129,6 +129,10 @@ public:
     bool writeScale(DRW_Scale *ent);
     bool writeDictionaryVar(DRW_DictionaryVar *ent);
     bool writeRasterVariables(DRW_RasterVariables *ent);
+    /*!< MLINESTYLE is a FIXED built-in (no CLASS record); DWG read populates
+     * only typed metadata, so the filter emits it typed on DWG->DXF, deduped vs
+     * the raw net by handle. */
+    bool writeMLineStyle(DRW_MLineStyle *ent);
     bool writeRawDxfObject(DRW_RawDxfObject *obj);
     /*!< Mark a specific code-5 handle as in-use so the minted-handle stream
      * (m_handleAllocator.next()) never re-issues it. Mirrors
