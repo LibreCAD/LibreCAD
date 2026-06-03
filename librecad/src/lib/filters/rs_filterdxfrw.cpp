@@ -5472,8 +5472,8 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic& g, const QString& file, RS2::FormatT
             remapIfColliding(o.handle);
         for (const DRW_RawDxfObject &e : metadata.rawDxfEntities())
             remapIfColliding(e.handle);
-        if (!handleRemap.empty())
-            m_dxfW->setHandleRemap(handleRemap);
+        // setHandleRemap is pushed AFTER the named-dict block below so any remap
+        // a colliding named-dict handle adds is included in the codec's table.
 
         std::vector<std::pair<std::string, std::string>> rootEntries;
         for (const DRW_RawDxfObject &o : metadata.rawDxfObjects()) {
@@ -5504,6 +5504,112 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic& g, const QString& file, RS2::FormatT
             if (!handleStr.empty())
                 rootEntries.emplace_back(it->second, handleStr);
         }
+
+        // (3b) F4-followup: DWG->DXF parent dictionaries for the data-only
+        // OBJECTS. On the DWG path the only INVALID_OWNER_HANDLE fixes ezdxf
+        // applies are data-only OBJECTS (SUN / SCALE / DICTIONARYVAR /
+        // RASTERVARIABLES) whose 330 owner is a named dictionary that LibreCAD
+        // does not regenerate (e.g. ACAD_DICTIONARYVAR @0x70 owning the
+        // DICTIONARYVARs). Emit EXACTLY those parent dictionaries as real,
+        // C-owned OBJECTS so the children resolve to a valid owner; keep ONLY the
+        // entries that target an object we actually emit (the data-only children)
+        // so the dict introduces no new dangling 350. We deliberately do NOT emit
+        // the dictionaries whose children are unmodeled objects LibreCAD drops
+        // (ACAD_VISUALSTYLE / ACAD_MATERIAL / ACAD_MLINESTYLE / ACAD_LAYOUT ...):
+        // emitting those would replace one missing-owner fix with many
+        // dangling-entry fixes and corrupt cross-refs.
+        //
+        // The set of objects we emit on this path (their code-5 handles):
+        // the ReplayAllowed, non-raw-net data-only records (matches writeObjects'
+        // emitTyped), plus the raw-net objects (re-emitted verbatim above).
+        std::set<std::uint32_t> emittedObjectHandles = rawObjectHandles;
+        std::set<std::uint32_t> neededParents;  // 330 owners we must materialize
+        auto noteDataOnly = [&](std::uint32_t handle, std::uint32_t parent,
+                                LC_DwgAdvancedMetadata::ReplayState state) {
+            if (handle == 0
+                || state != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                || rawObjectHandles.count(handle) != 0)
+                return;  // not emitted on this path
+            emittedObjectHandles.insert(handle);
+            if (parent != 0)
+                neededParents.insert(parent);
+        };
+        for (const auto &r : metadata.suns())
+            noteDataOnly(r.handle, r.parentHandle, r.replayState);
+        for (const auto &r : metadata.scales())
+            noteDataOnly(r.handle, r.parentHandle, r.replayState);
+        for (const auto &r : metadata.dictionaryVars())
+            noteDataOnly(r.handle, r.parentHandle, r.replayState);
+        for (const auto &r : metadata.rasterVariables())
+            noteDataOnly(r.handle, r.parentHandle, r.replayState);
+
+        std::vector<DRW_Dictionary> namedDicts;
+        std::set<std::uint32_t> emittedDictHandles;
+        for (const auto &d : metadata.dictionaries()) {
+            if (d.parentHandle == 0)
+                continue;  // source root: harvested for names only
+            if (d.handle == 0 || d.handle == 0xCu || d.handle == 0xDu)
+                continue;
+            if (d.handle == acadGroupHandle)
+                continue;
+            if (m_dxfSuppressedObjectHandles.count(d.handle) != 0)
+                continue;
+            if (rawObjectHandles.count(d.handle) != 0)
+                continue;  // DXF-read dict already round-tripped via the raw net
+            if (neededParents.count(d.handle) == 0)
+                continue;  // not a parent of any object we emit -> skip
+            if (emittedDictHandles.count(d.handle) != 0)
+                continue;  // de-dup (dictionaries() may list a handle once, guard anyway)
+
+            // Reserve + structural-collision remap, mirroring the raw path so a
+            // dict handle landing on a fixed literal is moved.
+            m_dxfW->reserveHandle(d.handle);
+            remapIfColliding(d.handle);
+            auto remapOf = [&](std::uint32_t h) {
+                auto rm = handleRemap.find(h);
+                return rm != handleRemap.end() ? rm->second : h;
+            };
+            DRW_Dictionary dict = dictionaryFromMetadata(d);
+            dict.handle = remapOf(d.handle);
+            // Owner: re-point a child of the source root at C (handle 0 ->
+            // writeObjectOwner emits "C"). If the explicit parent is itself an
+            // emitted dict, keep it (remapped); otherwise fall back to C so the
+            // dict is never itself a dangling-owner object.
+            std::uint32_t parent = static_cast<std::uint32_t>(d.parentHandle);
+            if (parent == sourceRootHandle || neededParents.count(parent) == 0)
+                dict.parentHandle = 0;
+            else
+                dict.parentHandle = static_cast<int>(remapOf(parent));
+            // Keep ONLY entries whose target is an object we actually emit, so the
+            // dict adds no dangling 350.
+            std::vector<DRW_Dictionary::Entry> keptEntries;
+            keptEntries.reserve(dict.m_entries.size());
+            for (auto &entry : dict.m_entries) {
+                if (emittedObjectHandles.count(entry.m_handle) == 0)
+                    continue;
+                entry.m_handle = remapOf(entry.m_handle);
+                keptEntries.push_back(entry);
+            }
+            dict.m_entries = std::move(keptEntries);
+            namedDicts.push_back(std::move(dict));
+            emittedDictHandles.insert(d.handle);
+
+            // Re-attach under root C so the dict object is reachable. Use the
+            // harvested name if known, else the source dict name, else a synthetic.
+            auto nameIt = rootEntryName.find(d.handle);
+            std::string entryName = nameIt != rootEntryName.end()
+                                        ? nameIt->second
+                                        : (!d.name.empty() ? d.name : std::string());
+            if (!entryName.empty())
+                rootEntries.emplace_back(
+                    entryName, m_dxfW->toHexStrHandle(remapOf(d.handle)));
+        }
+        if (!namedDicts.empty())
+            m_dxfW->setNamedDictObjects(namedDicts);
+
+        if (!handleRemap.empty())
+            m_dxfW->setHandleRemap(handleRemap);
+
         if (!rootEntries.empty())
             m_dxfW->setRootDictEntries(rootEntries);
     }
