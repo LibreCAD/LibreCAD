@@ -3126,10 +3126,30 @@ static void writeXRecordText(DRW::Version version, dwgBufferW *buf,
                 cp = (cp << 6) | (static_cast<unsigned char>(s[i+1]) & 0x3F);
                 cp = (cp << 6) | (static_cast<unsigned char>(s[i+2]) & 0x3F);
                 i += 3;
+            } else if ((c & 0xF8) == 0xF0 && i + 3 < s.size()) {
+                cp = (c & 0x07);
+                cp = (cp << 6) | (static_cast<unsigned char>(s[i+1]) & 0x3F);
+                cp = (cp << 6) | (static_cast<unsigned char>(s[i+2]) & 0x3F);
+                cp = (cp << 6) | (static_cast<unsigned char>(s[i+3]) & 0x3F);
+                i += 4;
             } else {
-                cp = c; ++i;
+                cp = '?'; ++i;  // malformed UTF-8 -> replacement char
             }
-            units.push_back(static_cast<std::uint16_t>(cp & 0xFFFF));
+            // Emit UTF-16LE: a surrogate pair for astral code points (> 0xFFFF),
+            // matching dwgBufferW::putUCSText and AutoCAD/ODA. (Previously a
+            // 4-byte UTF-8 sequence fell into the else and emitted one bogus unit
+            // per byte -> mojibake.) NOTE: readXRecordText decodes via
+            // DRW_ConvUTF16::toUtf8, which does NOT recombine surrogate pairs, so
+            // an astral char is lossy on a libdxfrw->libdxfrw round-trip (re-read
+            // as two WTF-8 surrogates); the emitted count/payload stay consistent
+            // and match what conforming writers produce.
+            if (cp > 0xFFFF) {
+                cp -= 0x10000;
+                units.push_back(static_cast<std::uint16_t>(0xD800 + ((cp >> 10) & 0x3FF)));
+                units.push_back(static_cast<std::uint16_t>(0xDC00 + (cp & 0x3FF)));
+            } else {
+                units.push_back(static_cast<std::uint16_t>(cp & 0xFFFF));
+            }
         }
         buf->putRawShort16(static_cast<std::uint16_t>(units.size()));
         for (std::uint16_t u : units) {
