@@ -4494,17 +4494,18 @@ bool dxfRW::processRawEntity() {
 // True for DXF group codes whose STRING value is a handle reference that the
 // codec's m_handleRemap may need to rewrite: the self handle (5/105), the
 // soft/hard pointer & owner ranges (320-369), the hard-pointer ranges
-// (390-399 and 480-481), and xdata handles (1005). Codes outside these ranges
+// (390-399 and 480), and xdata handles (1005). Codes outside these ranges
 // (e.g. text strings, layer names) are never rewritten, so a numeric-looking
-// non-handle value can never be mistaken for a handle. NOTE: 380-389 are NOT
-// handles (classifyDxfCode maps them to Int) and are intentionally excluded;
-// 390-399/480-481 are captured as STRING by classifyDxfCode, so the existing
-// STRING re-emit path already carries them.
+// non-handle value can never be mistaken for a handle. Only codes captured as
+// STRING by classifyDxfCode are rewritable: 380-389 are Int (excluded), and
+// note 481 is classified as a DOUBLE by classifyDxfCode AND the reader/writer
+// (the 470-480 STRING arm is exclusive of 481), so a 481 group is never a raw
+// STRING and is intentionally NOT listed here — including it would be dead code.
 static bool dxfIsHandleRefCode(int code) {
     return code == 5 || code == 105 || code == 1005 ||
            (code >= 320 && code <= 369) ||
            (code >= 390 && code <= 399) ||
-           (code >= 480 && code <= 481);
+           code == 480;
 }
 
 bool dxfRW::writeRawDxfObject(DRW_RawDxfObject *obj) {
