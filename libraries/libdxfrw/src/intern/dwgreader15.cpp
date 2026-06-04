@@ -173,14 +173,22 @@ bool dwgReader15::readDwgClasses(){
      std::uint16_t crcRead = fileBuf->getRawShort16();
      bool crcOk = (crcCalc == crcRead);
      if (!crcOk) {
+         // WARN-ONLY: a CLASSES CRC mismatch is non-fatal — failing it discarded
+         // the WHOLE drawing (processDwg short-circuits all later sections) for a
+         // single drifted byte from a deviating third-party writer, inconsistent
+         // with the warn-only BEGIN sentinel (:145). The class-number map still
+         // parsed; track the mismatch as a diagnostic instead. (crc8 returns 0 on
+         // a stream read failure; a spurious 0==0 match there is acceptable for a
+         // diagnostic-only counter.)
+         ++m_classesCrcMismatch;
          DRW_DBG("\nWARNING dwgReader15::readDwgClasses CRC mismatch: calc=");
          DRW_DBGH(crcCalc); DRW_DBG(" read="); DRW_DBGH(crcRead); DRW_DBG("\n");
      }
      DRW_DBG("\nclasses section end sentinel= ");
      // 1.4: honor the END sentinel (fail on mismatch). The BEGIN sentinel
-     // (:145) stays warn-only to tolerate benign begin drift.
+     // (:145) and the CRC above stay warn-only to tolerate benign drift.
      bool endOk = checkSentinel(fileBuf.get(), secEnum::CLASSES, false);
-     return buff.isGood() && endOk && crcOk;
+     return buff.isGood() && endOk;
 }
 
 bool dwgReader15::readDwgHandles() {

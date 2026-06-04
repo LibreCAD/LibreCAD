@@ -208,6 +208,10 @@ public:
     /// Per-object parseDwg failures accumulated in readDwgObjects. Mirrors
     /// m_entityParseFailures — non-fatal warnings tracked for caller reporting.
     size_t m_objectParseFailures = 0;
+    /// R13/R15 CLASSES-section CRC mismatches (warn-only — a mismatch no longer
+    /// fails the import, which previously discarded the whole drawing). Non-fatal
+    /// diagnostic, surfaced via dwgRW::getClassesCrcMismatch().
+    size_t m_classesCrcMismatch = 0;
     /// Custom-class entities (oType >= 500, recName not in our hardcoded
     /// dwgType map) that fell through readDwgEntity's default branch and
     /// got stuffed into objObjectMap.  Keyed by the DXF recName (eg

@@ -171,6 +171,7 @@ bool dwgRW::read(DRW_Interface *interface_, bool ext){
         // still surface them.
         m_entityParseFailures = reader->m_entityParseFailures;
         m_objectParseFailures = reader->m_objectParseFailures;
+        m_classesCrcMismatch = reader->m_classesCrcMismatch;
         m_skippedCustomClasses = reader->m_skippedCustomClasses;
         m_skippedUnsupportedObjects = reader->m_skippedUnsupportedObjects;
         reader.reset();
@@ -195,6 +196,12 @@ size_t dwgRW::getObjectParseFailures() const {
     // Mirrors getEntityParseFailures: prefer the dwgRW-side cache (survives
     // reader.reset()), fall back to the live reader for a mid-read query.
     return reader ? reader->m_objectParseFailures : m_objectParseFailures;
+}
+
+size_t dwgRW::getClassesCrcMismatch() const {
+    // Non-fatal R13/R15 CLASSES CRC mismatch count (warn-only). Same
+    // cache-then-live pattern as the parse-failure getters.
+    return reader ? reader->m_classesCrcMismatch : m_classesCrcMismatch;
 }
 
 std::unordered_map<std::string, size_t> dwgRW::getSkippedCustomClasses() const {

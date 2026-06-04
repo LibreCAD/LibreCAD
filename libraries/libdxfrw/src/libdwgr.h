@@ -152,6 +152,9 @@ public:
     /// load. Like getEntityParseFailures, these are non-fatal warnings — the
     /// file still loads with the surviving objects. Zero on a clean load.
     size_t getObjectParseFailures() const;
+    /// R13/R15 CLASSES-section CRC mismatches (warn-only — a mismatch no longer
+    /// fails the import). Non-fatal diagnostic; zero on a clean load.
+    size_t getClassesCrcMismatch() const;
     /// Vendor-extension custom-class entities (oType >= 500) silently
     /// dropped because libdxfrw has no parser for their proprietary
     /// binary layout — typically AutoCAD Mechanical (AmgStdPart aka
@@ -190,6 +193,9 @@ private:
     /// Captured from reader->m_objectParseFailures before reader.reset()
     /// so getObjectParseFailures() works post-read.
     size_t m_objectParseFailures { 0 };
+    /// Captured from reader->m_classesCrcMismatch before reader.reset()
+    /// so getClassesCrcMismatch() works post-read.
+    size_t m_classesCrcMismatch { 0 };
     /// Captured from reader->m_skippedCustomClasses before reader.reset()
     /// so getSkippedCustomClasses() works post-read.
     std::unordered_map<std::string, size_t> m_skippedCustomClasses;
