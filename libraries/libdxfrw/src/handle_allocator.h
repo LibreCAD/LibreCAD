@@ -14,6 +14,7 @@
 #ifndef HANDLE_ALLOCATOR_H
 #define HANDLE_ALLOCATOR_H
 
+#include <cassert>
 #include <cstdint>
 #include <set>
 
@@ -75,16 +76,20 @@ public:
     /// to preserve source handles; idempotent.
     void reserve(std::uint32_t h) {
         m_reserved.insert(h);
-        if (h >= m_next)
+        if (h >= m_next) {
+            assert(h < UINT32_MAX);  // guard against m_next wrapping to 0
             m_next = h + 1;
+        }
     }
 
     /// Allocate the next unused handle ≥ `m_next`, skipping reserved.
     /// Marks the returned handle as reserved so subsequent calls don't
     /// return the same value.
     std::uint32_t next() {
-        while (m_reserved.count(m_next))
+        while (m_reserved.count(m_next)) {
+            assert(m_next < UINT32_MAX);  // guard against wrap in the skip loop
             ++m_next;
+        }
         std::uint32_t h = m_next++;
         m_reserved.insert(h);
         return h;
