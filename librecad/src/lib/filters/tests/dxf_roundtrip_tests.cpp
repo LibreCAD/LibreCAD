@@ -819,3 +819,52 @@ TEST_CASE("DXF export remaps raw objects colliding with fixed structural handles
   std::filesystem::remove(src);
   std::filesystem::remove(out);
 }
+
+TEST_CASE("DXF DETAILVIEWSTYLE/SECTIONVIEWSTYLE round-trip (typed-read OBJECT "
+          "preserved via raw net + CLASS, owned xdict resolves)",
+          "[dxf][roundtrip][filter][viewstyle]") {
+  ensureSettings();
+  const std::string src = tmpFile("vsrc.dxf");
+  const std::string out = tmpFile("vout.dxf");
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+  // Root dict + ACAD_DETAILVIEWSTYLE dict -> a DETAILVIEWSTYLE object that owns
+  // an extension DICTIONARY (the dangling-owner case this fix closes). Before the
+  // fix the view style was dropped on DXF write and the xdict's 330 dangled.
+  writeText(src,
+            "0\nSECTION\n2\nENTITIES\n"
+            "0\nLINE\n8\n0\n10\n0\n20\n0\n11\n1\n21\n1\n0\nENDSEC\n"
+            "0\nSECTION\n2\nOBJECTS\n"
+            "0\nDICTIONARY\n5\nC\n330\n0\n100\nAcDbDictionary\n281\n1\n"
+            "3\nACAD_DETAILVIEWSTYLE\n350\n50\n"
+            "0\nDICTIONARY\n5\n50\n330\nC\n100\nAcDbDictionary\n281\n1\n3\nMyDVS\n350\n51\n"
+            "0\nACDBDETAILVIEWSTYLE\n5\n51\n102\n{ACAD_XDICTIONARY\n360\n52\n102\n}\n"
+            "330\n50\n100\nAcDbModelDocViewStyle\n70\n0\n100\nAcDbDetailViewStyle\n"
+            "70\n1\n300\nDetail\n"
+            "0\nDICTIONARY\n5\n52\n330\n51\n100\nAcDbDictionary\n281\n1\n"
+            "0\nENDSEC\n0\nEOF\n");
+  RS_Graphic graphic;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(src),
+                              RS2::FormatDXFRW));
+  }
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out),
+                              RS2::FormatDXFRW));
+  }
+  // The view style survives DXF->DXF (was dropped) ...
+  CHECK(countRecords(out, "ACDBDETAILVIEWSTYLE") >= 1);
+  // ... carries a CLASS record (custom class) ...
+  CHECK(classRecordNames(out).count("ACDBDETAILVIEWSTYLE") == 1);
+  // ... and its extension dictionary's 330 owner (the view-style handle) is now
+  // emitted, so the owner resolves (no dangling INVALID_OWNER_HANDLE).
+  const std::set<std::string> handles(collectHandles(out).begin(),
+                                      collectHandles(out).end());
+  CHECK(handles.count("51") == 1);  // the view style
+  CHECK(handles.count("52") == 1);  // its owned xdict
+
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+}

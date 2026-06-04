@@ -3984,14 +3984,22 @@ bool dxfRW::processDetailViewStyle() {
     DRW_DBG("dxfRW::processDetailViewStyle");
     int code;
     DRW_DetailViewStyle style;
+    //Also route to the raw net so this typed-read OBJECT survives DXF->DXF (it
+    //has no typed DXF writer). Without it the object is dropped and any extension
+    //dictionary it owns is orphaned (dangling 330). CLASS is registered via
+    //dxfClassForRecordName(ACDB(DETAIL|SECTION)VIEWSTYLE).
+    DRW_RawDxfObject raw;
+    raw.name = nextentity;
     while (reader->readRec(&code)) {
         DRW_DBG(code); DRW_DBG("\n");
         if (code == 0) {
             nextentity = reader->getString();
             DRW_DBG(nextentity); DRW_DBG("\n");
             iface->addDetailViewStyle(style);
+            iface->addRawDxfObject(raw);
             return true;
         }
+        captureRawGroup(raw, code);
         if (!style.parseCode(code, reader))
             return setError(DRW::BAD_CODE_PARSED);
     }
@@ -4002,14 +4010,18 @@ bool dxfRW::processSectionViewStyle() {
     DRW_DBG("dxfRW::processSectionViewStyle");
     int code;
     DRW_SectionViewStyle style;
+    DRW_RawDxfObject raw;
+    raw.name = nextentity;
     while (reader->readRec(&code)) {
         DRW_DBG(code); DRW_DBG("\n");
         if (code == 0) {
             nextentity = reader->getString();
             DRW_DBG(nextentity); DRW_DBG("\n");
             iface->addSectionViewStyle(style);
+            iface->addRawDxfObject(raw);
             return true;
         }
+        captureRawGroup(raw, code);
         if (!style.parseCode(code, reader))
             return setError(DRW::BAD_CODE_PARSED);
     }
@@ -4550,6 +4562,10 @@ bool dxfRW::dxfClassForRecordName(const std::string &recName, DRW_Class &out) {
         {"VISUALSTYLE",      "AcDbVisualStyle",         "ObjectDBX Classes", 4095, 0},
         {"TABLESTYLE",       "AcDbTableStyle",          "ObjectDBX Classes", 4095, 0},
         {"MLEADERSTYLE",     "AcDbMLeaderStyle", "ACDB_MLEADERSTYLE_CLASS", 4095, 0},
+        {"ACDBDETAILVIEWSTYLE",  "AcDbDetailViewStyle",  "ObjectDBX Classes", 1025, 0},
+        {"DETAILVIEWSTYLE",      "AcDbDetailViewStyle",  "ObjectDBX Classes", 1025, 0},
+        {"ACDBSECTIONVIEWSTYLE", "AcDbSectionViewStyle", "ObjectDBX Classes", 1025, 0},
+        {"SECTIONVIEWSTYLE",     "AcDbSectionViewStyle", "ObjectDBX Classes", 1025, 0},
         {"ACDBPLACEHOLDER",  "AcDbPlaceHolder",         "ObjectDBX Classes", 0, 0},
         {"CELLSTYLEMAP",     "AcDbCellStyleMap",        "ObjectDBX Classes", 1152, 0},
         {"FIELDLIST",        "AcDbFieldList",           "ObjectDBX Classes", 1152, 0},
