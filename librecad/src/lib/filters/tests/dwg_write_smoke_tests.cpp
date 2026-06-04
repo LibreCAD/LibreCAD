@@ -3320,8 +3320,8 @@ TEST_CASE("dwgReader15 fails on a corrupted CLASSES end sentinel",
 // [si.address+16, si.address+20+classDataSize], matching writer15's emit
 // range.  A pristine libdxfrw AC1015 file passes; a flipped class-data byte
 // is detected as BAD_READ_CLASSES.
-TEST_CASE("dwgReader15 validates the CLASSES CRC and detects a flipped byte",
-          "[dwg-write][smoke][classes][crc]") {
+TEST_CASE("dwgReader15 treats a CLASSES CRC mismatch as a non-fatal warning",
+          "[dwg-write][smoke][classes]") {
     const std::string path = tempPath("classes_crc.dwg");
     {
         dwgRW writer(path.c_str());
@@ -3329,36 +3329,40 @@ TEST_CASE("dwgReader15 validates the CLASSES CRC and detects a flipped byte",
         REQUIRE(writer.write(&iface, DRW::AC1015, /*bin=*/false));
     }
 
-    // Pristine file: CRC validates, read is clean.
+    // Pristine file: CRC validates, read is clean, no mismatch recorded.
     {
         dwgRW reader(path.c_str());
         EmptyIface readIface;
         REQUIRE(reader.read(&readIface, /*ext=*/false));
         REQUIRE(reader.getError() == DRW::BAD_NONE);
+        REQUIRE(reader.getClassesCrcMismatch() == 0u);
     }
 
     auto bytes = slurp(path);
     std::uint32_t classesAddr = readLE32(bytes, 0x19 + 1 * 9 + 1);
     std::uint32_t classesSize = readLE32(bytes, 0x19 + 1 * 9 + 5);
-    // Class data lives at [classesAddr + 16(begin) + 4(sizeRL),
-    // classesAddr + classesSize - 18(CRC+end sentinel)). Flip a byte inside
-    // the CRC-covered region so the CRC no longer matches.
-    size_t dataStart = classesAddr + 20;
-    size_t dataEnd   = classesAddr + classesSize - 18;
-    REQUIRE(dataEnd > dataStart);
-    bytes[dataStart] ^= 0xFF;
+    // Section layout: [16 begin sentinel][4 size RL][class data][2 CRC]
+    // [16 end sentinel] = classesSize. Flip a byte of the STORED CRC (at
+    // classesAddr + classesSize - 18) so the CRC no longer matches WITHOUT
+    // corrupting the class data — corrupting the data would trip an unrelated
+    // parse-loop hang, and the point here is the CRC path specifically.
+    size_t crcPos = classesAddr + classesSize - 18;
+    REQUIRE(crcPos + 2 <= bytes.size());
+    bytes[crcPos] ^= 0xFF;
     {
         std::ofstream out(path, std::ios::binary | std::ios::trunc);
         out.write(reinterpret_cast<const char*>(bytes.data()),
                   static_cast<std::streamsize>(bytes.size()));
     }
 
-    // The CRC mismatch now fails the read.
+    // The CRC mismatch is WARN-ONLY: the drawing still loads (it previously
+    // failed the whole import) and the mismatch is surfaced as a diagnostic.
     {
         dwgRW reader(path.c_str());
         EmptyIface readIface;
-        REQUIRE_FALSE(reader.read(&readIface, /*ext=*/false));
-        REQUIRE(reader.getError() == DRW::BAD_READ_CLASSES);
+        REQUIRE(reader.read(&readIface, /*ext=*/false));
+        CHECK(reader.getError() == DRW::BAD_NONE);
+        CHECK(reader.getClassesCrcMismatch() == 1u);
     }
 
     std::remove(path.c_str());
