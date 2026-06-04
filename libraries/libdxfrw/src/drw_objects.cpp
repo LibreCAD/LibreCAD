@@ -3776,6 +3776,13 @@ bool DRW_Layout::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs
 
     if (version >= DRW::AC1018) {
         viewportCount = buf->getRawLong32();
+        // Bound a corrupt/hostile count before the reserve() below — mirrors the
+        // file-wide guard convention (SortEntsTable numEntries, IDBUFFER numIds).
+        // An unbounded viewportCount (e.g. 0x7FFFFFFF) would reserve() ~8.5 GB.
+        if (viewportCount < 0 || viewportCount > 100000) {
+            DRW_DBG("LAYOUT viewportCount out of range: "); DRW_DBG(viewportCount); DRW_DBG("\n");
+            viewportCount = 0;
+        }
     }
 
     // --- Handle stream ---
