@@ -1122,10 +1122,13 @@ void dwgWriter15::emitScaleObject(std::uint32_t handle, const DRW_Scale& scale) 
     emitRecordPreamble(body, m_version, DRW_Scale::kDwgClassNum, handle,
                        m_objectStrings, m_objectHandles, sb, hb);
     scale.encodeDwg(m_version, &body, sb);
-    // Emit the common handle prefix that the SCALE encoder skips.
+    // Emit the common handle prefix that the SCALE encoder skips.  emitRecordPreamble
+    // wrote the data-stream numReactors as a hardcoded 0 (like every object on this
+    // write path — LibreCAD does not preserve reactor lists), so the handle stream
+    // must emit ZERO reactor handles to match.  Emitting scale.numReactors here
+    // desynced the stream: the reader parses numReactors=0 and never consumes them,
+    // shifting the xdic / following handle on a round-tripped SCALE with reactors.
     hb->putHandle(makeSoftOwner(static_cast<std::uint32_t>(scale.parentHandle)));
-    for (std::int32_t i = 0; i < scale.numReactors; ++i)
-        hb->putHandle(makeSoftOwner(0));
     if (scale.xDictFlag != 1)
         hb->putHandle(makeSoftOwner(0));
     finishObject();
