@@ -948,10 +948,12 @@ public:
         this->width = p.width;
         this->flags = p.flags;
 		this->extPoint = p.extPoint;
+        this->vertexnum = p.vertexnum;
         for (unsigned i=0; i<p.vertlist.size(); i++)// RLZ ok or new
 		  this->vertlist.push_back(
 					std::make_shared<DRW_Vertex2D>(*p.vertlist.at(i))
 					);
+        // `vertex` (transient build pointer) stays null in a fresh copy.
     }
     // Deep-copy assignment to match the deep-copy constructor; the implicit
     // operator= would shallow-copy the shared_ptr vertlist, so two assigned
@@ -965,9 +967,11 @@ public:
             width = p.width;
             flags = p.flags;
             extPoint = p.extPoint;
+            vertexnum = p.vertexnum;
             vertlist.clear();
             for (const auto& v : p.vertlist)
                 vertlist.push_back(std::make_shared<DRW_Vertex2D>(*v));
+            vertex.reset();  // transient build pointer — do not alias p's vertlist
         }
         return *this;
     }

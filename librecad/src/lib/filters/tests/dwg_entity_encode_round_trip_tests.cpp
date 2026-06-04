@@ -695,6 +695,36 @@ TEST_CASE("DRW_LWPolyline::encodeDwg round-trips bulges + widths",
     }
 }
 
+// D-5: DRW_LWPolyline copy + assignment must carry vertexnum and must NOT leave
+// the transient `vertex` build pointer aliasing the source's vertlist (Rule of 3).
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("DRW_LWPolyline copy and assignment carry vertexnum + reset the build pointer",
+          "[dwg-write][entity-encode]") {
+    DRW_LWPolyline a;
+    a.flags = 1;
+    a.vertexnum = 2;
+    auto v0 = a.addVertex();
+    a.addVertex();
+    a.vertex = v0;  // simulate a transient build pointer into a's vertlist
+
+    // copy-construct
+    DRW_LWPolyline b(a);
+    CHECK(b.vertexnum == 2);
+    REQUIRE(b.vertlist.size() == 2u);
+    CHECK(b.vertex == nullptr);                              // not aliased
+    CHECK(b.vertlist[0].get() != a.vertlist[0].get());       // deep copy
+
+    // copy-assign
+    DRW_LWPolyline c;
+    c = a;
+    CHECK(c.vertexnum == 2);
+    REQUIRE(c.vertlist.size() == 2u);
+    CHECK(c.vertex == nullptr);
+    CHECK(c.vertlist[0].get() != a.vertlist[0].get());       // deep copy
+    c.vertlist[0]->bulge = 99.0;
+    CHECK(a.vertlist[0]->bulge != 99.0);                     // mutating c leaves a intact
+}
+
 TEST_CASE("DRW_Ellipse::encodeDwg round-trips center + axis + ratio + params",
           "[dwg-write][entity-encode]") {
     DRW_Ellipse src;
