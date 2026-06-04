@@ -762,6 +762,39 @@ TEST_CASE("DXF setNamedDictObjects emits an owned named dictionary (F4f-1)",
                         {"3", "SCALE"}, {"350", "51"}}));
 }
 
+// C-1: the named-dictionary emit preserves the FULL duplicate-record cloning
+// policy (code 281), not a 0/1 collapse. A dict with cloning=12 (keep + sort)
+// must round-trip as 281=12, since parseCode reads the full int.
+TEST_CASE("DXF setNamedDictObjects preserves the cloning policy (code 281)",
+          "[dxf][objects][dictionary]") {
+  const auto path =
+      std::filesystem::temp_directory_path() / "lc_nameddict_cloning.dxf";
+  std::filesystem::remove(path);
+
+  NullObjectEmitter em;
+  {
+    dxfRW w(path.string().c_str());
+    DRW_Dictionary dict;
+    dict.handle = 0x50u;
+    dict.parentHandle = 0;
+    dict.cloning = 12;  // keep + sort — must NOT collapse to 1
+    DRW_Dictionary::Entry e;
+    e.m_name = "SCALE";
+    e.m_handle = 0x51u;
+    dict.m_entries.push_back(e);
+    w.setNamedDictObjects({dict});
+    w.setRootDictEntries({{"ACAD_SCALELIST", "50"}});
+    REQUIRE(w.write(&em, DRW::AC1021, false));
+  }
+
+  const auto groups = readGroups(path);
+  std::filesystem::remove(path);
+
+  CHECK(hasConsecutive(groups,
+                       {{"0", "DICTIONARY"}, {"5", "50"}, {"330", "C"},
+                        {"100", "AcDbDictionary"}, {"281", "12"}}));
+}
+
 // F3-1: dxfRW::writeEntity captures source-handle -> minted-handle in the
 // writing context. Two entities seeded with distinct source handles map to two
 // distinct minted handles (>= the first minted handle FIRSTHANDLE 0x30). The map

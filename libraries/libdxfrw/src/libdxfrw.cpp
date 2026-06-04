@@ -2509,7 +2509,10 @@ bool dxfRW::writeObjects() {
                              ? static_cast<std::uint32_t>(dict.parentHandle)
                              : 0);
         writer->writeString(100, "AcDbDictionary");
-        writer->writeInt16(281, dict.cloning != 0 ? 1 : 0);
+        // Preserve the full duplicate-record cloning policy (valid values include
+        // 0,1,2,3,4,5,11,12,13 — e.g. 12 = keep, sort). parseCode reads the full
+        // int (code 281); collapsing nonzero->1 silently rewrote the policy.
+        writer->writeInt16(281, dict.cloning);
         for (const DRW_Dictionary::Entry &entry : dict.m_entries) {
             writer->writeUtf8String(3, entry.m_name);
             writer->writeString(350, toHexStr(static_cast<int>(entry.m_handle)));
