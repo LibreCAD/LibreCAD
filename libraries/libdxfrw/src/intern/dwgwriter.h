@@ -441,7 +441,7 @@ protected:
         // AcDbLight is a modern visualisation entity.  Advertising its custom
         // class in AC1015/AC1018 files makes older writer smoke files fail
         // reader compatibility even when no LIGHT entity is present.
-        if (definition.m_classNum == 502)
+        if (definition.m_classNum == 502)  // DRW_Light::kDwgClassNum (drw_entities.h, not included here)
             return m_version >= DRW::AC1021;
         // SUN + MLeaderStyle stay gated AC1021+ — their encoders explicitly
         // reject below AC1021 (see drw_objects.cpp:4275/4803).

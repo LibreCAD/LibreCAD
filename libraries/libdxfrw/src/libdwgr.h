@@ -148,6 +148,10 @@ public:
     /// Zero on a clean load. Surface alongside the entity count so users
     /// know how many entities were skipped.
     size_t getEntityParseFailures() const;
+    /// Per-object parseDwg failures accumulated during the OBJECTS-section
+    /// load. Like getEntityParseFailures, these are non-fatal warnings — the
+    /// file still loads with the surviving objects. Zero on a clean load.
+    size_t getObjectParseFailures() const;
     /// Vendor-extension custom-class entities (oType >= 500) silently
     /// dropped because libdxfrw has no parser for their proprietary
     /// binary layout — typically AutoCAD Mechanical (AmgStdPart aka
@@ -183,6 +187,9 @@ private:
     /// Captured from reader->m_entityParseFailures before reader.reset()
     /// so getEntityParseFailures() works post-read.
     size_t m_entityParseFailures { 0 };
+    /// Captured from reader->m_objectParseFailures before reader.reset()
+    /// so getObjectParseFailures() works post-read.
+    size_t m_objectParseFailures { 0 };
     /// Captured from reader->m_skippedCustomClasses before reader.reset()
     /// so getSkippedCustomClasses() works post-read.
     std::unordered_map<std::string, size_t> m_skippedCustomClasses;
