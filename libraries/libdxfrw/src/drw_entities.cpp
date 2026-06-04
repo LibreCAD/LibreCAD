@@ -4405,6 +4405,16 @@ static bool encodeEmbeddedMTextDwg(DRW::Version version, dwgBufferW *buf,
     buf->putBitShort(0);                    // no annotative payload
 
     dwgBufferW *hb = handleBuf ? handleBuf : buf;
+    // Layer hard-pointer: consumeEmbeddedMTextHandles reads this UNCONDITIONALLY
+    // for version > AC1014 (the entity-mode flags this encoder writes make every
+    // other conditional embedded handle absent: no color/owner/reactor/xdict,
+    // linetype/plotstyle/material/shadow all "by layer"). Omitting it made the
+    // parser consume the style handle as the layer and the appId as the style,
+    // then run into the PARENT ATTRIB/ATTDEF handle stream, shifting it. The
+    // parser discards this value, so emit LAYER "0" (0x12) as the placeholder
+    // (layerH is a protected DRW_Entity member, not reachable from this free
+    // function; only the slot matters for handle-count alignment).
+    putHardPointerHandle(hb, 0x12);
     putHardPointerHandle(hb, (mtext.styleH.ref == 0) ? 0x13 : mtext.styleH.ref);
     if (mtext.m_r2018IsNotAnnotative)
         putHardPointerHandle(hb, (mtext.m_r2018AppIdHandle == 0) ? 0x14 : mtext.m_r2018AppIdHandle);
