@@ -145,11 +145,26 @@ bool dxfReaderBinary::readString(std::string *text) {
 }
 
 bool dxfReaderBinary::readBinary() {
+    type = STRING;
     unsigned char chunklen {0};
 
     filestr->read( reinterpret_cast<char *>(&chunklen), 1);
-    filestr->seekg( chunklen, std::ios_base::cur);
-    DRW_DBG( chunklen); DRW_DBG( " byte(s) binary data bypassed\n");
+    // Capture the chunk bytes as an upper-hex string — the canonical ASCII form
+    // of binary codes (310-319/1004) — so getString() returns the real data.
+    // Previously this seeked past the chunk and never wrote strData, so any
+    // binary group on a binary read (typed entity OR raw-net object) re-emitted
+    // a STALE strData (the previous record's value). Same net stream advance.
+    strData.clear();
+    strData.reserve(static_cast<std::size_t>(chunklen) * 2);
+    static const char hex[] = "0123456789ABCDEF";
+    for (unsigned i = 0; i < chunklen; ++i) {
+        char b = 0;
+        filestr->read(&b, 1);
+        const unsigned char u = static_cast<unsigned char>(b);
+        strData.push_back(hex[(u >> 4) & 0xF]);
+        strData.push_back(hex[u & 0xF]);
+    }
+    DRW_DBG( chunklen); DRW_DBG( " byte(s) binary data read\n");
 
     return (filestr->good());
 }

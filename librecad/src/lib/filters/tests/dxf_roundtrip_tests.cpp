@@ -912,6 +912,46 @@ TEST_CASE("DXF export rewrites 390/480 hard-pointer refs to remapped raw objects
   std::filesystem::remove(out);
 }
 
+// D-2(c): a raw object's captured owner (330) must be the handle OUTSIDE any
+// 102 {ACAD_REACTORS} control group, not the last 330 seen. Here the owner 330=C
+// is at depth 0 (first) and a reactor 330=D is at depth 1 (last); the prior
+// last-wins latch took D (the reactor) as the owner.
+TEST_CASE("DXF raw object owner 330 ignores reactor-group handles",
+          "[dxf][roundtrip][filter][handles]") {
+  ensureSettings();
+  const std::string src = tmpFile("reactor330.dxf");
+  std::filesystem::remove(src);
+
+  // MATERIAL routes to the raw net; owner C precedes a reactor group whose 330
+  // (D) is the LAST 330 in the record.
+  const std::string dxf =
+      "0\nSECTION\n2\nENTITIES\n"
+      "0\nLINE\n8\n0\n10\n0.0\n20\n0.0\n11\n1.0\n21\n1.0\n"
+      "0\nENDSEC\n"
+      "0\nSECTION\n2\nOBJECTS\n"
+      "0\nDICTIONARY\n5\nC\n330\n0\n100\nAcDbDictionary\n281\n1\n3\nMYMAT\n350\n90\n"
+      "0\nMATERIAL\n5\n90\n330\nC\n102\n{ACAD_REACTORS\n330\nD\n102\n}\n"
+      "100\nAcDbMaterial\n1\nRM\n94\n7\n"
+      "0\nENDSEC\n0\nEOF\n";
+  writeText(src, dxf);
+
+  RS_Graphic graphic;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(src), RS2::FormatDXFRW));
+  }
+  std::filesystem::remove(src);
+
+  const LC_DwgAdvancedMetadata &meta = graphic.dwgAdvancedMetadata();
+  const DRW_RawDxfObject *mat = nullptr;
+  for (const DRW_RawDxfObject &o : meta.rawDxfObjects())
+    if (o.name == "MATERIAL" && o.handle == 0x90u)
+      mat = &o;
+  REQUIRE(mat != nullptr);
+  // Owner is C (0xC), NOT the reactor D (0xD).
+  CHECK(mat->parentHandle == 0xCu);
+}
+
 TEST_CASE("DXF DETAILVIEWSTYLE/SECTIONVIEWSTYLE round-trip (typed-read OBJECT "
           "preserved via raw net + CLASS, owned xdict resolves)",
           "[dxf][roundtrip][filter][viewstyle]") {

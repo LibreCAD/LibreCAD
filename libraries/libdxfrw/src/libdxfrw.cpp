@@ -4444,10 +4444,27 @@ void dxfRW::captureRawGroup(DRW_RawDxfObject &obj, int code) {
         obj.groups.emplace_back(code, reader->getString());
         break;
     }
-    if (5 == code)
+    if (5 == code) {
         obj.handle = reader->getHandleString();
-    else if (330 == code)
-        obj.parentHandle = reader->getHandleString();
+    } else if (330 == code) {
+        // Latch the OWNER 330 only — the one OUTSIDE any 102 {ACAD_REACTORS/
+        // ACAD_XDICTIONARY} control group. Reactor 330s live at 102-group depth
+        // >= 1; the prior code latched the LAST 330 unconditionally, so an object
+        // whose only 330s are reactors (no owner 330) took a reactor handle as
+        // its owner. Compute the depth from the groups captured so far (the
+        // current 330 is the last element) and latch only at depth 0.
+        int depth = 0;
+        for (std::size_t i = 0; i + 1 < obj.groups.size(); ++i) {
+            if (obj.groups[i].code() == 102
+                && obj.groups[i].type() == DRW_Variant::STRING) {
+                const char *v = obj.groups[i].c_str();
+                if (v && v[0] == '{') ++depth;
+                else if (v && v[0] == '}') --depth;
+            }
+        }
+        if (depth == 0)
+            obj.parentHandle = reader->getHandleString();
+    }
 }
 
 bool dxfRW::processRawObject() {
