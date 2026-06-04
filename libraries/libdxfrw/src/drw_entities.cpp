@@ -2954,7 +2954,14 @@ bool DRW_Ole2Frame::encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32
     buf->putBitLong(static_cast<std::int32_t>(payloadLen));
     if (payloadLen > 0)
         buf->putBytes(m_payloadBytes.data(), m_payloadBytes.size());
-    if (version > DRW::AC1014 && m_hasR2000TrailingByte)
+    // R2000+ Unknown RC (ODA §20.4.88): emitted UNCONDITIONALLY for version >
+    // AC1014. parseDwg reads it whenever bytes remain before the handle stream
+    // (which is always — handle data always follows), so gating the write on
+    // m_hasR2000TrailingByte desynced a directly-constructed OLE2FRAME (the
+    // default false): the parser consumed the first handle byte as this RC and
+    // shifted the entity handle stream. Default m_r2000TrailingByte is 0, so
+    // constructed entities align and round-tripped ones keep the captured byte.
+    if (version > DRW::AC1014)
         buf->putRawChar8(m_r2000TrailingByte);
 
     return encodeDwgEntHandle(version, buf, handleBuf);

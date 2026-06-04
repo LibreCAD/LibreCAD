@@ -1550,6 +1550,41 @@ TEST_CASE("DRW_Shape::encodeDwg round-trips body and style handle",
     }
 }
 
+// B-6 (item 3): a directly-CONSTRUCTED OLE2FRAME (m_hasR2000TrailingByte stays
+// false) must still emit the R2000+ Unknown RC byte the parser reads
+// unconditionally before the handle stream. Omitting it made the parser consume
+// the first handle byte as the RC and shift the entity handle stream, corrupting
+// the layer handle. The distinctive layer must survive the round-trip.
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("DRW_Ole2Frame::encodeDwg round-trips a constructed entity without handle desync",
+          "[dwg-write][entity-encode]") {
+    DRW_Ole2Frame src;
+    src.handle      = 0x90;
+    src.color       = 7;
+    src.ltypeScale  = 1.0;
+    src.m_flags     = 2;
+    src.m_mode      = 1;
+    src.m_payloadBytes = {0x01, 0x02, 0x03, 0x04};
+    // m_hasR2000TrailingByte deliberately left false (constructed, not parsed).
+    DrwEntityEncodeTestAccess::layerH(src).ref = 0x2A;   // distinctive layer
+
+    for (DRW::Version ver : {DRW::AC1015, DRW::AC1018}) {
+        dwgBufferW w;
+        REQUIRE(DrwEntityEncodeTestAccess::encode(src, ver, &w));
+        auto bytes = snapshot(w);
+        dwgBuffer r(bytes.data(), bytes.size());
+        DRW_Ole2Frame dst;
+        REQUIRE(DrwEntityEncodeTestAccess::parse(dst, ver, &r));
+        // Layer handle survives only if the handle stream is aligned — a missing
+        // trailing RC shifts it by one byte (the discriminating check).
+        CHECK(DrwEntityEncodeTestAccess::layerH(dst).ref == 0x2Au);
+        REQUIRE(dst.m_payloadBytes.size() == 4u);
+        CHECK(dst.m_payloadBytes[0] == 0x01);
+        CHECK(dst.m_payloadBytes[3] == 0x04);
+        CHECK(dst.m_flags == 2);
+    }
+}
+
 // IMAGE encoder round-trip (Phase 6.3): DRW_Image::encodeDwg must shadow
 // DRW_Line::encodeDwg (oType 101, not 19/LINE), round-trip the body fields,
 // and preserve BOTH trailing handles (imagedef + imagedefreactor) plus the
