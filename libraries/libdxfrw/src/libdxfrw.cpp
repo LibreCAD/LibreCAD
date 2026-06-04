@@ -813,7 +813,7 @@ bool dxfRW::writePoint(DRW_Point *ent) {
         writer->writeDouble(30, ent->basePoint.z);
     }
     if (ent->xAxisAngle != 0.0)
-        writer->writeDouble(50, ent->xAxisAngle / ARAD);  // radians → DXF degrees
+        writer->writeDouble(50, ent->xAxisAngle * ARAD);  // radians -> DXF degrees (rad * 180/pi)
     return true;
 }
 

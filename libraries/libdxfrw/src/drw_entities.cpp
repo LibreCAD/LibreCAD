@@ -1536,7 +1536,11 @@ bool DRW_Point::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
         thickness = reader->getDouble();
         break;
     case 50:
-        xAxisAngle = reader->getDouble() * ARAD;  // DXF degrees → radians
+        // DXF code 50 is in degrees; the field is radians (matching the DWG
+        // path, drw_entities.cpp:1787). degrees -> radians is /ARAD (x pi/180);
+        // the prior *ARAD only canceled with the writer's /ARAD on DXF->DXF and
+        // corrupted the value for DXF->DWG. ARAD = 180/pi.
+        xAxisAngle = reader->getDouble() / ARAD;  // DXF degrees -> radians
         break;
     case 210:
         haveExtrusion = true;

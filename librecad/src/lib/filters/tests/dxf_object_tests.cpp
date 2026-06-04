@@ -282,6 +282,19 @@ public:
   }
 };
 
+// Emits a POINT whose xAxisAngle is set in TRUE RADIANS (the DWG-path / field
+// convention). The DXF writer must convert it to DEGREES for code 50 (C-2).
+class XAxisPointEmitter : public StubInterface {
+public:
+  dxfRW *m_rw = nullptr;
+  void writeEntities() override {
+    DRW_Point pt;
+    pt.basePoint = DRW_Coord(1.0, 2.0, 0.0);
+    pt.xAxisAngle = 1.5707963267948966;  // pi/2 radians == 90 degrees
+    m_rw->writePoint(&pt);
+  }
+};
+
 // Read a written DXF file back into a string for structural assertions.
 std::string slurp(const std::filesystem::path &path) {
   std::ifstream in(path);
@@ -793,6 +806,41 @@ TEST_CASE("DXF setNamedDictObjects preserves the cloning policy (code 281)",
   CHECK(hasConsecutive(groups,
                        {{"0", "DICTIONARY"}, {"5", "50"}, {"330", "C"},
                         {"100", "AcDbDictionary"}, {"281", "12"}}));
+}
+
+// C-2: DRW_Point::xAxisAngle is true radians (matching the DWG path); the DXF
+// writer must emit code 50 in DEGREES (radians * ARAD). A point with pi/2 rad
+// must write 90, not pi/2 / ARAD (~0.0274, the pre-fix bug).
+TEST_CASE("DXF writePoint emits xAxisAngle (code 50) in degrees from radians (C-2)",
+          "[dxf][objects]") {
+  const auto path =
+      std::filesystem::temp_directory_path() / "lc_point_xaxis.dxf";
+  std::filesystem::remove(path);
+
+  {
+    dxfRW w(path.string().c_str());
+    XAxisPointEmitter em;
+    em.m_rw = &w;
+    REQUIRE(w.write(&em, DRW::AC1021, false));
+  }
+
+  const auto groups = readGroups(path);
+  std::filesystem::remove(path);
+
+  // Find the POINT record's code-50 value and assert ~90 degrees.
+  bool inPoint = false;
+  bool found = false;
+  double angle = -1.0;
+  for (const auto &kv : groups) {
+    if (kv.first == "0")
+      inPoint = (kv.second == "POINT");
+    else if (inPoint && kv.first == "50") {
+      angle = std::stod(kv.second);
+      found = true;
+    }
+  }
+  REQUIRE(found);
+  CHECK(std::fabs(angle - 90.0) < 1e-6);  // 90 deg, not ~0.0274 (the /ARAD bug)
 }
 
 // F3-1: dxfRW::writeEntity captures source-handle -> minted-handle in the
