@@ -6227,9 +6227,15 @@ bool DRW_Image::encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t b
         // Always emit polygon type 2 — reader expands a stored rect (type 1)
         // into a 4-vertex polygon, so re-emit it as a polygon, never type 1.
         buf->putBitShort(2);
-        buf->putBitLong(static_cast<std::int32_t>(clipPath.size()));
-        for (const DRW_Coord& v : clipPath)
-            buf->put2RawDouble(v);
+        // Clamp to the count parseDwg accepts (it rejects clipType==2 with
+        // numVerts > 100000, dropping the entity on re-read). The DXF parseCode
+        // path (code 91) has no such bound, so a DXF-sourced clip can exceed it;
+        // cap on encode and emit exactly that many vertices.
+        const std::int32_t vertexCount =
+            std::min<std::int32_t>(static_cast<std::int32_t>(clipPath.size()), 100000);
+        buf->putBitLong(vertexCount);
+        for (std::int32_t i = 0; i < vertexCount; ++i)
+            buf->put2RawDouble(clipPath[static_cast<std::size_t>(i)]);
     }
 
     if (!encodeDwgEntHandle(version, buf, handleBuf)) return false;

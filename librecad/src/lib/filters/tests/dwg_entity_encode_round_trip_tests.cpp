@@ -1611,6 +1611,44 @@ TEST_CASE("DRW_Image::encodeDwg round-trips body + both handles",
     }
 }
 
+// B-4: a DXF-sourced clip path can exceed the 100000-vertex cap that
+// DRW_Image::parseDwg enforces on clipType==2 (the DXF parseCode path has no
+// such bound). The encoder must clamp to 100000 so the IMAGE survives a DWG
+// re-read rather than being rejected/dropped.
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("DRW_Image::encodeDwg clamps an oversized clip path to 100000",
+          "[dwg-write][entity-encode][image]") {
+    DRW_Image src;
+    src.handle      = 0x71;
+    src.color       = 7;
+    src.ltypeScale  = 1.0;
+    src.basePoint   = DRW_Coord{0.0, 0.0, 0.0};
+    src.secPoint    = DRW_Coord{1.0, 0.0, 0.0};
+    src.vVector     = DRW_Coord{0.0, 1.0, 0.0};
+    src.sizeu       = 1.0;
+    src.sizev       = 1.0;
+    src.m_displayProps = 1;
+    src.clip        = 1;
+    src.ref         = 0x100;
+    src.m_imageDefReactorHandle = 0x101;
+    DrwEntityEncodeTestAccess::layerH(src).ref = 0x12;
+    // 100001 vertices — one over the parser's cap.
+    src.clipPath.reserve(100001);
+    for (int i = 0; i < 100001; ++i)
+        src.clipPath.emplace_back(static_cast<double>(i), 0.0, 0.0);
+
+    dwgBufferW w;
+    REQUIRE(DrwEntityEncodeTestAccess::encode(src, DRW::AC1018, &w));
+    auto bytes = snapshot(w);
+    dwgBuffer r(bytes.data(), bytes.size());
+    DRW_Image dst;
+    // Without the clamp the emitted count (100001) makes parseDwg reject the
+    // clipType==2 boundary and return false (entity dropped); the clamp keeps it.
+    REQUIRE(DrwEntityEncodeTestAccess::parse(dst, DRW::AC1018, &r));
+    CHECK(dst.clipPath.size() == 100000u);
+    CHECK(dst.ref == 0x100u);
+}
+
 // IMAGE empty-clip variant: clip_boundary_type 0, both handles still emitted.
 // NOLINTNEXTLINE(readability-identifier-naming)
 TEST_CASE("DRW_Image::encodeDwg round-trips empty clip boundary",
