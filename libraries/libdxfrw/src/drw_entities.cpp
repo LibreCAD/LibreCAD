@@ -2908,7 +2908,7 @@ bool DRW_Ole2Frame::parseDwg(DRW::Version v, dwgBuffer *buf, std::uint32_t bs){
         m_payloadTooLarge = true;
         return false;
     }
-    if (m_declaredPayloadLength > static_cast<std::uint32_t>(remainingBytes)) {
+    if (m_declaredPayloadLength > remainingBytes) {  // remainingBytes is already uint32
         m_payloadTruncated = true;
         m_payloadByteCount = remainingBytes;
         return false;

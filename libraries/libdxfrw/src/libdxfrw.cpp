@@ -243,8 +243,8 @@ void dxfRW::seedReservedDxf() {
         0x14,  // LTYPE "ByBlock"
         0x15,  // LTYPE "ByLayer"
         0x16,  // LTYPE "Continuous"
-        0x1C,  // ENDBLK *Paper_Space
-        0x1D,  // (legacy) ENDBLK literal / *Paper_Space block-end region
+        0x1C,  // BLOCK "*Paper_Space"
+        0x1D,  // ENDBLK "*Paper_Space"
         0x1E,  // BLOCK_RECORD "*Paper_Space"
         0x1F,  // BLOCK_RECORD "*Model_Space"
         0x20,  // BLOCK "*Model_Space"

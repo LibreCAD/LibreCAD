@@ -936,7 +936,6 @@ void DRW_Header::write(const std::unique_ptr<dxfWriter>& writer, DRW::Version ve
             // `after`, so the field starts at after-(width+1).
             m_handseedValueOffset =
                 after - static_cast<std::streamoff>(kHandseedFieldWidth + 1);
-            (void)before;
         }
     }
     writer->writeString(9, "$SURFTAB1");
