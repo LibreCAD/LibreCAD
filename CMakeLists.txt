@@ -455,6 +455,8 @@ set(SHARED_SOURCES
     librecad/src/actions/drawing/draw/line/lc_actiondrawlineanglerel.cpp
     librecad/src/actions/drawing/draw/line/lc_actiondrawlineanglerel.h
     librecad/src/actions/drawing/draw/line/lc_actiondrawlinefrompointtoline.cpp
+    librecad/src/actions/drawing/draw/line/lc_actiondrawlinedirect.cpp
+    librecad/src/actions/drawing/draw/line/lc_actiondrawlinedirect.h
     librecad/src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp
     librecad/src/actions/drawing/draw/line/lc_actiondrawlinesnake.h
     librecad/src/actions/drawing/draw/line/lc_actiondrawslicedivide.cpp
@@ -1028,6 +1030,8 @@ set(SHARED_SOURCES
     librecad/src/lib/information/rs_information.h
     librecad/src/lib/information/rs_locale.cpp
     librecad/src/lib/information/rs_locale.h
+    librecad/src/lib/math/lc_archparser.cpp
+    librecad/src/lib/math/lc_archparser.h
     librecad/src/lib/math/lc_convert.cpp
     librecad/src/lib/math/lc_convert.h
     librecad/src/lib/math/lc_linemath.cpp

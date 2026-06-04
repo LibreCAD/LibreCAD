@@ -27,6 +27,7 @@
 #include "rs_previewactioninterface.h"
 
 #include <QMouseEvent>
+#include <cmath>
 
 #include "lc_actioncontext.h"
 #include "lc_actioninfomessagebuilder.h"
@@ -223,15 +224,47 @@ bool RS_PreviewActionInterface::trySnapToRelZeroCoordinateEvent(const LC_MouseEv
 }
 
 RS_Vector RS_PreviewActionInterface::getSnapAngleAwarePoint(const LC_MouseEvent *e, const RS_Vector& basepoint, const RS_Vector& pos, bool drawMark, bool force){
+    // Guard 1: no valid basepoint yet (e.g. first point not clicked) — leave pos untouched.
+    if (!basepoint.valid) return pos;
+
+    // Guard 2: a real object or grid snap fired — preserve that result unconditionally.
+    // isLastSnapFree() returns true when snapType==FREE, meaning the cursor was free of
+    // entity/grid snaps.  H/V/Ortho restrictions project the coord but leave snapType==FREE,
+    // so restriction-only results correctly pass through this guard.
+    if (!isLastSnapFree()) return pos;
+
     RS_Vector result = pos;
-    if (force){
-        RS_Vector freePosition  = e->graphPoint; // fixme = test, review and decide whether free snap is actually needed there. May be use snapMode instead of free?
-        // todo -  if there are restrictions or snap to grid, snap to angle will not work in snapper... yet this is double calc!
-        if(!(m_snapMode.restriction != RS2::RestrictNothing || isSnapToGrid())){
-            result = doSnapToAngle(freePosition, basepoint, m_snapToAngleStep);
-            if (drawMark){
-                previewSnapAngleMark(basepoint, result);
+
+    if (m_softSnapEnabled) {
+        // ---- Soft Snap mode ----
+        // Shift still forces a hard angle snap (override sensitivity).
+        if (force) {
+            result = doSnapToAngle(e->graphPoint, basepoint, m_snapToAngleStep);
+            if (drawMark) previewSnapAngleMark(basepoint, result);
+        } else {
+            // Gentle: snap only if the raw cursor angle is within sensitivity of the
+            // nearest configured polar angle.  When outside the window, return the raw
+            // cursor (e->graphPoint) so any H/V/Ortho restriction projection is discarded.
+            RS_Vector candidate = doSnapToAngle(e->graphPoint, basepoint, m_snapToAngleStep);
+            double rawAngle  = basepoint.angleTo(e->graphPoint);
+            double snapAngle = basepoint.angleTo(candidate);
+            double diff = std::abs(std::remainder(rawAngle - snapAngle, 2.0 * M_PI));
+            if (diff <= m_softSnapSensitivityRad) {
+                result = candidate;
+                if (drawMark) previewSnapAngleMark(basepoint, result);
+            } else {
+                result = e->graphPoint;
             }
+        }
+    } else {
+        // ---- Hard mode (Soft Snap OFF): original behavior preserved exactly ----
+        bool noRG = !(m_snapMode.restriction != RS2::RestrictNothing || isSnapToGrid());
+        if (force && noRG) {
+            result = doSnapToAngle(e->graphPoint, basepoint, m_snapToAngleStep);
+            if (drawMark) previewSnapAngleMark(basepoint, result);
+        } else if (m_snapMode.snapAngle && noRG) {
+            result = doSnapToAngle(e->graphPoint, basepoint, m_snapToAngleStep);
+            if (drawMark) previewSnapAngleMark(basepoint, result);
         }
     }
     return result;

@@ -1025,6 +1025,13 @@ bool RS_Snapper::isSnapToGrid(){
     return result;
 }
 
+bool RS_Snapper::isLastSnapFree() const {
+    // Returns true when the last snapPoint() call found no object or grid snap,
+    // meaning the cursor was free (possibly with H/V/Ortho restriction applied on top).
+    // FREE == -1 in the file-local SnapType enum.
+    return pImpData->snapType == FREE;
+}
+
 RS_Vector RS_Snapper::snapToRelativeAngle(double baseAngle, const RS_Vector &currentCoord, const RS_Vector &referenceCoord, const double angularResolution){
 
     if(m_snapMode.restriction != RS2::RestrictNothing || isSnapToGrid()){

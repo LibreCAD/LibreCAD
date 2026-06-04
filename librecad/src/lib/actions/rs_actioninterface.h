@@ -141,6 +141,8 @@ protected:
     RS2::ActionType m_actionType = RS2::ActionNone;
     std::unique_ptr<LC_ActionOptionsWidget> m_optionWidget;
     double m_snapToAngleStep = DEFAULT_SNAP_ANGLE_STEP;
+    bool   m_softSnapEnabled = false;
+    double m_softSnapSensitivityRad = RS_Math::deg2rad(3.0);
 
     virtual bool mayInitWithContextEntity(int status);
     virtual void doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos);

@@ -27,6 +27,7 @@
 #include "rs_actioninterface.h"
 
 #include <QMouseEvent>
+#include <cmath>
 
 #include "lc_actioncontext.h"
 #include "lc_actionoptionswidget.h"
@@ -649,43 +650,20 @@ void RS_ActionInterface::commandPrompt(const QString &msg) const{
 }
 
 void RS_ActionInterface::updateSnapAngleStep() {
-    int stepType = LC_GET_ONE_INT("Defaults", "AngleSnapStep", 3);
-    double snapStepDegrees;
-    switch (stepType){
-        case 0:
-            snapStepDegrees = 1.0;
-            break;
-        case 1:
-            snapStepDegrees = 3.0;
-            break;
-        case 2:
-            snapStepDegrees = 5.0;
-            break;
-        case 3:
-            snapStepDegrees = 10.0;
-            break;
-        case 4:
-            snapStepDegrees = 15.0;
-            break;
-        case 5:
-            snapStepDegrees = 18.0;
-            break;
-        case 6:
-            snapStepDegrees = 22.5;
-            break;
-        case 7:
-            snapStepDegrees = 30.0;
-            break;
-        case 8:
-            snapStepDegrees = 45.0;
-            break;
-        case 9:
-            snapStepDegrees = 90.0;
-            break;
-        default:
-            snapStepDegrees = 15.0;
+    // Read the polar snap increment (degrees).  Must divide evenly into 360;
+    // fall back to 15° if the stored value is missing or invalid.
+    bool ok = false;
+    double deg = LC_GET_ONE_STR("Defaults", "PolarSnapAngle", "15").toDouble(&ok);
+    if (!ok || deg <= 0.0 || std::fmod(360.0, deg) > 1e-4) {
+        deg = 15.0;
     }
-    m_snapToAngleStep = RS_Math::deg2rad(snapStepDegrees);
+    m_snapToAngleStep = RS_Math::deg2rad(deg);
+
+    // Soft Snap settings.
+    m_softSnapEnabled = LC_GET_ONE_STR("Defaults", "SoftSnapEnabled", "0").toInt() != 0;
+    double sensDeg = LC_GET_ONE_STR("Defaults", "SoftSnapSensitivityAngle", "3.0").toDouble(&ok);
+    if (!ok || sensDeg < 0.1) sensDeg = 3.0;
+    m_softSnapSensitivityRad = RS_Math::deg2rad(sensDeg);
 }
 
 bool RS_ActionInterface::isControl(const QInputEvent *e){

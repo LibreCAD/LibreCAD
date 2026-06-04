@@ -213,6 +213,7 @@ void LC_ActionFactory::createDrawLineActions(QMap<QString, QAction*>& map, QActi
         {"DrawLineRel",              RS2::ActionDrawSnakeLine,           tr("Snake"),                  ":/icons/line_rel.lci"},
         {"DrawLineRelX",             RS2::ActionDrawSnakeLineX,          tr("Snake (X)"),              ":/icons/line_rel_x.lci"},
         {"DrawLineRelY",             RS2::ActionDrawSnakeLineY,          tr("Snake (Y)"),              ":/icons/line_rel_y.lci"},
+        {"DrawLineDirect",           RS2::ActionDrawLineDirect,          tr("Draw Fast"),              ":/icons/line_rel.lci"},
         {"DrawLineAngleRel",         RS2::ActionDrawLineAngleRel,        tr("Angle From Line"),        ":/icons/line_angle_rel.lci"},
         {"DrawLineOrthogonalRel",    RS2::ActionDrawLineOrthogonalRel,   tr("Orthogonal From Line"),   ":/icons/line_ortho_rel.lci"},
         {"DrawLineFromPointToLine",  RS2::ActionDrawLineFromPointToLine, tr("From Point To Line"),     ":/icons/line_to_ortho.lci"},
@@ -480,7 +481,8 @@ void LC_ActionFactory::createRelZeroActions(QMap<QString, QAction *> &map, QActi
 void LC_ActionFactory::createSnapExtraActions(QMap<QString, QAction *> &map, QActionGroup *group) const {
     createActions(map, group, {
         {"ExclusiveSnapMode", tr("Exclusive Snap Mode"), ":/icons/exclusive.lci"},
-        {"SnapFree",          tr("Free Snap"),           ":/icons/snap_free.lci"}
+        {"SnapFree",          tr("Free Snap"),           ":/icons/snap_free.lci"},
+        {"SnapAngle",         tr("Polar Snap"),          ":/icons/line_angle.lci"}
     });
 }
 
@@ -852,6 +854,7 @@ void LC_ActionFactory::fillActionLists(QMap<QString, QAction *> &map){
                         "DrawLineRel",
                         "DrawLineRelX",
                         "DrawLineRelY",
+                        "DrawLineDirect",
                         "DrawLineAngleRel",
                         "DrawLineOrthogonalRel",
                         "DrawLineFromPointToLine",

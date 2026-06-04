@@ -1640,6 +1640,88 @@
             </property>
            </widget>
           </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="lblPolarSnapAngle">
+            <property name="text">
+             <string>Polar snap increment:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QDoubleSpinBox" name="sbPolarSnapAngle">
+            <property name="toolTip">
+             <string>Polar snap angle increment in degrees. Must divide evenly into 360 (e.g. 1, 2.5, 5, 7.5, 10, 15, 22.5, 30, 45, 90). Used for toolbar Polar Snap and Shift angle snap.</string>
+            </property>
+            <property name="minimum">
+             <double>0.100000000000000</double>
+            </property>
+            <property name="maximum">
+             <double>90.000000000000000</double>
+            </property>
+            <property name="decimals">
+             <number>4</number>
+            </property>
+            <property name="singleStep">
+             <double>5.000000000000000</double>
+            </property>
+            <property name="value">
+             <double>15.000000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="2">
+           <widget class="QLabel" name="lblPolarSnapAngleDeg">
+            <property name="text">
+             <string>deg</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0" colspan="3">
+           <widget class="QCheckBox" name="cbSoftSnapEnabled">
+            <property name="toolTip">
+             <string>Soft Snap gently snaps to polar angles when the cursor is within the sensitivity window. Object and grid snaps still have highest priority. H/V/Ortho restrictions are softened when Soft Snap is active.</string>
+            </property>
+            <property name="text">
+             <string>Soft Snap</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QLabel" name="lblSoftSnapSensitivity">
+            <property name="text">
+             <string>Soft Snap sensitivity:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="QDoubleSpinBox" name="sbSoftSnapSensitivity">
+            <property name="toolTip">
+             <string>If the cursor angle is within this many degrees of a polar snap angle, Soft Snap will snap to that angle.</string>
+            </property>
+            <property name="minimum">
+             <double>0.100000000000000</double>
+            </property>
+            <property name="maximum">
+             <double>30.000000000000000</double>
+            </property>
+            <property name="decimals">
+             <number>1</number>
+            </property>
+            <property name="singleStep">
+             <double>0.500000000000000</double>
+            </property>
+            <property name="value">
+             <double>3.000000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="2">
+           <widget class="QLabel" name="lblSoftSnapSensitivityDeg">
+            <property name="text">
+             <string>deg</string>
+            </property>
+           </widget>
+          </item>
          </layout>
         </widget>
        </item>
@@ -4823,6 +4905,163 @@
              </property>
             </item>
            </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="3" column="0" colspan="2">
+        <widget class="QGroupBox" name="groupBoxDrawFast">
+         <property name="title">
+          <string>Draw Fast Defaults</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayoutDrawFast">
+          <item row="0" column="0">
+           <widget class="QLabel" name="labelDrawFastOpeningDepth">
+            <property name="text">
+             <string>Opening marker depth:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QDoubleSpinBox" name="sbDrawFastOpeningDepth">
+            <property name="toolTip">
+             <string>Length of the perpendicular tick marks drawn on each side of a wall opening (Draw Fast 'o' / 'opening' command).</string>
+            </property>
+            <property name="minimum">
+             <double>0.010000000000000</double>
+            </property>
+            <property name="maximum">
+             <double>99999.000000000000000</double>
+            </property>
+            <property name="decimals">
+             <number>2</number>
+            </property>
+            <property name="singleStep">
+             <double>1.000000000000000</double>
+            </property>
+            <property name="value">
+             <double>4.000000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="labelDrawFastWindowOffsetWidth">
+            <property name="text">
+             <string>Window offset width:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QDoubleSpinBox" name="sbDrawFastWindowOffsetWidth">
+            <property name="toolTip">
+             <string>Distance between the wall line and the inner window line in Draw Fast window mode ('w' / 'window' command).</string>
+            </property>
+            <property name="minimum">
+             <double>0.010000000000000</double>
+            </property>
+            <property name="maximum">
+             <double>99999.000000000000000</double>
+            </property>
+            <property name="decimals">
+             <number>2</number>
+            </property>
+            <property name="singleStep">
+             <double>0.250000000000000</double>
+            </property>
+            <property name="value">
+             <double>1.500000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="labelDrawFastDoorThickness">
+            <property name="text">
+             <string>Door thickness:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QDoubleSpinBox" name="sbDrawFastDoorThickness">
+            <property name="toolTip">
+             <string>Thickness of the door slab in Draw Fast door mode. Set to 0 for a single-line door leaf.</string>
+            </property>
+            <property name="minimum">
+             <double>0.000000000000000</double>
+            </property>
+            <property name="maximum">
+             <double>9999.000000000000000</double>
+            </property>
+            <property name="decimals">
+             <number>2</number>
+            </property>
+            <property name="singleStep">
+             <double>0.250000000000000</double>
+            </property>
+            <property name="value">
+             <double>1.500000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="labelDrawFastDoorSwingAngle">
+            <property name="text">
+             <string>Door swing angle:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QComboBox" name="cbDrawFastDoorSwingAngle">
+            <property name="toolTip">
+             <string>Arc sweep angle for the door swing in Draw Fast door mode. 90° draws a quarter-circle; 45° draws a shallower arc.</string>
+            </property>
+            <item>
+             <property name="text">
+              <string>90</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>45</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QLabel" name="labelDrawFastDoorDesign">
+            <property name="text">
+             <string>Door design:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="QComboBox" name="cbDrawFastDoorDesign">
+            <property name="toolTip">
+             <string>Door symbol style. 'Swing only' draws the leaf and arc. 'Swing with opening line' also draws a straight line across the full door opening.</string>
+            </property>
+            <item>
+             <property name="text">
+              <string>Swing only</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Swing with opening line</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="5" column="0" colspan="2">
+           <spacer name="spacerDrawFastH">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
           </item>
          </layout>
         </widget>

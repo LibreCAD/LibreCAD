@@ -67,6 +67,7 @@ private:
     QG_ActionHandler* m_actionHandler;
 
     QAction *m_actionSnapFree;
+    QAction *m_actionSnapAngle;
     QAction *m_actionSnapGrid;
     QAction *m_actionSnapEnd;
     QAction *m_actionSnapOnEntity;

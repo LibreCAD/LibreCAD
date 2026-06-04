@@ -9,6 +9,7 @@
 
 # Apple generated directories
 build/
+dist/
 LibreCAD.app/
 LibreCAD.pbproj/
 LibreCAD.dmg
@@ -115,3 +116,6 @@ core.*
 # pixi environments
 .pixi
 *.egg-info
+
+# Local build output
+build-master/
