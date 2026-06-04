@@ -6237,12 +6237,17 @@ bool DRW_Image::encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t b
         // Clamp to the count parseDwg accepts (it rejects clipType==2 with
         // numVerts > 100000, dropping the entity on re-read). The DXF parseCode
         // path (code 91) has no such bound, so a DXF-sourced clip can exceed it;
-        // cap on encode and emit exactly that many vertices.
-        const std::int32_t vertexCount =
-            std::min<std::int32_t>(static_cast<std::int32_t>(clipPath.size()), 100000);
-        buf->putBitLong(vertexCount);
-        for (std::int32_t i = 0; i < vertexCount; ++i)
-            buf->put2RawDouble(clipPath[static_cast<std::size_t>(i)]);
+        // cap on encode and emit exactly that many vertices. Compute the min on
+        // size_t (NOT a pre-cast int32) so an enormous size cannot wrap negative.
+        constexpr std::size_t kMaxClipVerts = 100000u;
+        const std::size_t emitVerts = std::min(clipPath.size(), kMaxClipVerts);
+        if (clipPath.size() > kMaxClipVerts) {
+            DRW_DBG("IMAGE clip vertices truncated to 100000 (was ");
+            DRW_DBG(static_cast<int>(clipPath.size())); DRW_DBG(")\n");
+        }
+        buf->putBitLong(static_cast<std::int32_t>(emitVerts));
+        for (std::size_t i = 0; i < emitVerts; ++i)
+            buf->put2RawDouble(clipPath[i]);
     }
 
     if (!encodeDwgEntHandle(version, buf, handleBuf)) return false;

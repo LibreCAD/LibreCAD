@@ -3207,6 +3207,10 @@ bool DRW_XRecord::encodeDwg(DRW::Version version, dwgBufferW *buf,
             // desynced the stream when size > 255 (the reader consumed only
             // `len` bytes, then mis-read the remainder as the next group). Cap
             // the chunk to 255 and write exactly `len` bytes to match.
+            if (raw && raw->size() > 255u) {
+                DRW_DBG("XRECORD binary chunk truncated to 255 bytes (was ");
+                DRW_DBG(static_cast<int>(raw->size())); DRW_DBG(")\n");
+            }
             std::uint8_t len = raw
                 ? static_cast<std::uint8_t>(std::min(raw->size(), static_cast<std::size_t>(255u)))
                 : 0;
