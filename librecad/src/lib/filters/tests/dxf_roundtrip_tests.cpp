@@ -868,3 +868,53 @@ TEST_CASE("DXF DETAILVIEWSTYLE/SECTIONVIEWSTYLE round-trip (typed-read OBJECT "
   std::filesystem::remove(src);
   std::filesystem::remove(out);
 }
+
+TEST_CASE("DXF MESH round-trips losslessly via the raw net (real geometry)",
+          "[dxf][roundtrip][filter][mesh]") {
+  // MESH (AcDbSubDMesh) is a fixed DXF entity LibreCAD does not model; it must
+  // survive DXF->DXF verbatim through the raw-passthrough net (not just the
+  // synthetic WEIRDENT case). Fixture = an 8-vertex / 6-face cube mesh.
+  ensureSettings();
+  const std::string src = tmpFile("msrc.dxf");
+  const std::string out = tmpFile("mout.dxf");
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+  const std::string mesh =
+      "0\nMESH\n5\n2F\n330\nC\n100\nAcDbEntity\n8\n0\n100\nAcDbSubDMesh\n71\n2\n72\n0\n91\n0\n"
+      "92\n8\n10\n0.0\n20\n0.0\n30\n0.0\n10\n1.0\n20\n0.0\n30\n0.0\n10\n1.0\n20\n1.0\n30\n0.0\n"
+      "10\n0.0\n20\n1.0\n30\n0.0\n10\n0.0\n20\n0.0\n30\n1.0\n10\n1.0\n20\n0.0\n30\n1.0\n"
+      "10\n1.0\n20\n1.0\n30\n1.0\n10\n0.0\n20\n1.0\n30\n1.0\n"
+      "93\n30\n90\n4\n90\n0\n90\n1\n90\n2\n90\n3\n90\n4\n90\n4\n90\n5\n90\n6\n90\n7\n"
+      "90\n4\n90\n0\n90\n1\n90\n5\n90\n4\n90\n4\n90\n1\n90\n2\n90\n6\n90\n5\n"
+      "90\n4\n90\n2\n90\n3\n90\n7\n90\n6\n90\n4\n90\n3\n90\n0\n90\n4\n90\n7\n"
+      "94\n0\n95\n0\n90\n0\n";
+  writeText(src, "0\nSECTION\n2\nENTITIES\n0\nLINE\n8\n0\n10\n0\n20\n0\n11\n1\n21\n1\n" +
+                     mesh + "0\nENDSEC\n0\nEOF\n");
+  RS_Graphic graphic;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(src), RS2::FormatDXFRW));
+  }
+  auto meshVertexCount = [](const LC_DwgAdvancedMetadata &meta) -> int {
+    for (const DRW_RawDxfObject &e : meta.rawDxfEntities())
+      if (e.name == "MESH")
+        for (const DRW_Variant &g : e.groups)
+          if (g.code() == 92)
+            return g.i_val();  // captured typed (the numeric-capture fix)
+    return -1;
+  };
+  CHECK(meshVertexCount(graphic.dwgAdvancedMetadata()) == 8);  // preserved on read
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out), RS2::FormatDXFRW));
+  }
+  CHECK(countRecords(out, "MESH") == 1);  // emitted once (no drop, no double)
+  RS_Graphic graphic2;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic2, QString::fromStdString(out), RS2::FormatDXFRW));
+  }
+  CHECK(meshVertexCount(graphic2.dwgAdvancedMetadata()) == 8);  // survives DXF->DXF
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+}
