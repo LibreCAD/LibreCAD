@@ -820,6 +820,98 @@ TEST_CASE("DXF export remaps raw objects colliding with fixed structural handles
   std::filesystem::remove(out);
 }
 
+// A-4: the structural-collision handle remap must rewrite hard-pointer references
+// carried in codes 390-399 and 480-481, not only 5/105/320-369/1005. A target raw
+// object placed on a codec-fixed structural handle (0x14 == codec LTYPE
+// CONTINUOUS) is remapped to a fresh handle; a second raw object referencing it
+// via code 390 AND 480 must have those refs rewritten to the new handle, not left
+// dangling at the reused literal.
+TEST_CASE("DXF export rewrites 390/480 hard-pointer refs to remapped raw objects",
+          "[dxf][roundtrip][filter][handles]") {
+  ensureSettings();
+  const std::string src = tmpFile("ref390src.dxf");
+  const std::string out = tmpFile("ref390out.dxf");
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+
+  const std::string dxf =
+      "0\nSECTION\n2\nENTITIES\n"
+      "0\nLINE\n8\n0\n10\n0.0\n20\n0.0\n11\n1.0\n21\n1.0\n"
+      "0\nENDSEC\n"
+      "0\nSECTION\n2\nOBJECTS\n"
+      "0\nDICTIONARY\n5\nC\n330\n0\n100\nAcDbDictionary\n281\n1\n"
+      "3\nACAD_GROUP\n350\nD\n3\nMYDICT\n350\n12\n"
+      "0\nDICTIONARY\n5\nD\n330\nC\n100\nAcDbDictionary\n281\n1\n"
+      "0\nDICTIONARY\n5\n12\n330\nC\n100\nAcDbDictionary\n281\n1\n"
+      "3\nTGT\n350\n14\n3\nREF\n350\n40\n"
+      // target raw object collides with codec LTYPE 0x14 -> remapped to fresh handle
+      "0\nMATERIAL\n5\n14\n330\n12\n100\nAcDbMaterial\n1\nTgtMat\n94\n7\n"
+      // referencing raw object (no collision) points at 0x14 via 390 AND 480
+      "0\nMATERIAL\n5\n40\n330\n12\n100\nAcDbMaterial\n1\nRefMat\n390\n14\n480\n14\n"
+      "0\nENDSEC\n0\nEOF\n";
+  writeText(src, dxf);
+
+  RS_Graphic graphic;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(src),
+                              RS2::FormatDXFRW));
+  }
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out),
+                              RS2::FormatDXFRW));
+  }
+
+  // Parse the output into ordered (code,value) pairs and pull out the two
+  // MATERIAL records' fields (handle 5, name 1, refs 390/480).
+  std::ifstream in(out);
+  std::string codeLine, valueLine;
+  auto trim = [](std::string s) {
+    if (!s.empty() && s.back() == '\r')
+      s.pop_back();
+    size_t a = s.find_first_not_of(" \t");
+    return a == std::string::npos ? std::string() : s.substr(a);
+  };
+  std::string targetHandle, ref390, ref480;
+  std::string curType, curHandle, curName, cur390, cur480;
+  auto flush = [&]() {
+    if (curType == "MATERIAL") {
+      if (curName == "TgtMat")
+        targetHandle = curHandle;
+      if (curName == "RefMat") {
+        ref390 = cur390;
+        ref480 = cur480;
+      }
+    }
+    curType = curHandle = curName = cur390 = cur480 = "";
+  };
+  while (std::getline(in, codeLine) && std::getline(in, valueLine)) {
+    const std::string c = trim(codeLine), v = trim(valueLine);
+    if (c == "0") { flush(); curType = v; }
+    else if (c == "5") curHandle = v;
+    else if (c == "1") curName = v;
+    else if (c == "390") cur390 = v;
+    else if (c == "480") cur480 = v;
+  }
+  flush();
+
+  // The target was remapped off the colliding literal 0x14...
+  REQUIRE_FALSE(targetHandle.empty());
+  CHECK(targetHandle != "14");
+  // ...and the referencing object's 390 + 480 were rewritten to the new handle
+  // (LOAD-BEARING: both are "14" before the fix -> dangling).
+  REQUIRE_FALSE(ref390.empty());
+  REQUIRE_FALSE(ref480.empty());
+  CHECK(ref390 == targetHandle);
+  CHECK(ref480 == targetHandle);
+  CHECK(ref390 != "14");
+  CHECK(ref480 != "14");
+
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+}
+
 TEST_CASE("DXF DETAILVIEWSTYLE/SECTIONVIEWSTYLE round-trip (typed-read OBJECT "
           "preserved via raw net + CLASS, owned xdict resolves)",
           "[dxf][roundtrip][filter][viewstyle]") {
