@@ -3202,10 +3202,17 @@ bool DRW_XRecord::encodeDwg(DRW::Version version, dwgBufferW *buf,
             data.putRawLong64(static_cast<std::uint64_t>(v.i64_val()));
         } else if (xRecordCodeIsBinary(code)) {
             const std::vector<std::uint8_t>* raw = v.binary();
-            std::uint8_t len = raw ? static_cast<std::uint8_t>(raw->size() & 0xFF) : 0;
+            // A DWG binary chunk is a single RC length (max 255) + that many
+            // bytes.  Writing (size & 0xFF) as the length but raw->size() bytes
+            // desynced the stream when size > 255 (the reader consumed only
+            // `len` bytes, then mis-read the remainder as the next group). Cap
+            // the chunk to 255 and write exactly `len` bytes to match.
+            std::uint8_t len = raw
+                ? static_cast<std::uint8_t>(std::min(raw->size(), static_cast<std::size_t>(255u)))
+                : 0;
             data.putRawChar8(len);
-            if (raw && !raw->empty())
-                data.putBytes(raw->data(), raw->size());
+            if (raw && len != 0)
+                data.putBytes(raw->data(), len);
         } else {
             // Unhandled — emit zero bytes so the size still matches.  The
             // parser logs the same case and bails out.

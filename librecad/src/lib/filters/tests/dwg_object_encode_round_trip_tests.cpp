@@ -1019,6 +1019,54 @@ TEST_CASE("DRW_XRecord::encodeDwg round-trips every value type bucket",
     REQUIRE(dst.m_handleValues[2].second == 0xA2u);
 }
 
+// B-5: a binary XRECORD value larger than 255 bytes. A DWG binary chunk is a
+// single RC length (max 255) + that many bytes; writing (size & 0xFF) as the
+// length but the FULL payload desynced the stream so a following value was
+// mis-read. The chunk must be capped to 255 and exactly that many bytes emitted.
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("DRW_XRecord::encodeDwg caps an oversized binary chunk at 255 bytes",
+          "[dwg-write][object-encode][xrecord]") {
+    DRW_XRecord src;
+    src.handle       = 0x801;
+    src.parentHandle = 0xC;
+    src.m_cloning    = 1;
+    DrwObjectEncodeTestAccess::setNumReactors(src, 0);
+    DrwObjectEncodeTestAccess::setXDictFlag(src, 1);
+
+    std::vector<std::uint8_t> big(300);
+    for (std::size_t i = 0; i < big.size(); ++i)
+        big[i] = static_cast<std::uint8_t>(i & 0xFF);
+    src.m_values.emplace_back(310, big);                                  // >255-byte binary
+    src.m_values.emplace_back(90, static_cast<std::int32_t>(0x0BADF00D)); // FOLLOWING value
+
+    DRW::Version ver = DRW::AC1018;
+    dwgBufferW w;
+    emitObjectPreamble(w, ver, /*oType=*/79, src.handle,
+                       /*numReactors=*/0, /*xDictFlag=*/1);
+    REQUIRE(DrwObjectEncodeTestAccess::encodeXRecord(src, ver, &w));
+
+    auto bytes = snapshot(w);
+    dwgBuffer r(bytes.data(), bytes.size());
+    DRW_XRecord dst;
+    REQUIRE(DrwObjectEncodeTestAccess::parse(dst, ver, &r));
+
+    REQUIRE(dst.m_values.size() == 2u);
+    // Binary clamped to 255 bytes.
+    REQUIRE(dst.m_values[0].code() == 310);
+    REQUIRE(dst.m_values[0].type() == DRW_Variant::BINARY);
+    const std::vector<std::uint8_t>* raw = dst.m_values[0].binary();
+    REQUIRE(raw != nullptr);
+    REQUIRE(raw->size() == 255u);
+    REQUIRE((*raw)[0] == 0x00);
+    REQUIRE((*raw)[254] == static_cast<std::uint8_t>(254));
+    // The FOLLOWING value survives intact — proves the stream did not desync
+    // (before the fix the truncated length byte left 256 stray payload bytes
+    // that the parser mis-read as subsequent groups).
+    REQUIRE(dst.m_values[1].code() == 90);
+    REQUIRE(dst.m_values[1].type() == DRW_Variant::INTEGER);
+    REQUIRE(dst.m_values[1].i_val() == 0x0BADF00D);
+}
+
 // LAYOUT encoder round-trip (ODA §20.4.84).  Exercises the PlotSettings prefix +
 // layout-specific body + common handle prefix + type-specific handle tail at
 // AC1018 (R2004), where the shade-plot block + viewport-count branch is active
