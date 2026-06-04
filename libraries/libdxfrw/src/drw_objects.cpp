@@ -4353,13 +4353,19 @@ bool DRW_SortEntsTable::encodeDwg(DRW::Version version, dwgBufferW *buf,
     DRW_UNUSED(strBuf);
     dwgBufferW *hb = (handleBuf != nullptr && version > DRW::AC1018) ? handleBuf : buf;
 
-    const std::int32_t numEntries = static_cast<std::int32_t>(m_entityHandles.size());
-    buf->putBitLong(numEntries);
+    // The parser reads numEntries handles in BOTH the sort loop and the entity
+    // loop (one shared count), storing only the non-zero refs — so m_sortHandles
+    // and m_entityHandles each hold <= numEntries and can differ in size. Emit a
+    // single count and EXACTLY that many handles in each loop, padding the shorter
+    // with null handles (ref 0, which the parser reads-but-skips). A count that
+    // matched only one loop would desync the block-owner + following handles.
+    const std::size_t entryCount = std::max(m_sortHandles.size(), m_entityHandles.size());
+    buf->putBitLong(static_cast<std::int32_t>(entryCount));
 
     // Sort handles — emitted inline in body to match parser's
     // `buf->getOffsetHandle(handle)` reads (pre-common-prefix).
-    for (std::uint32_t h : m_sortHandles) {
-        buf->putHandle(makeSoftOwnerW(h));
+    for (std::size_t i = 0; i < entryCount; ++i) {
+        buf->putHandle(makeSoftOwnerW(i < m_sortHandles.size() ? m_sortHandles[i] : 0));
     }
 
     // Common handle prefix.
@@ -4374,9 +4380,9 @@ bool DRW_SortEntsTable::encodeDwg(DRW::Version version, dwgBufferW *buf,
     // Block-owner handle (soft pointer to the parent BlockRecord).
     hb->putHandle(makeSoftOwnerW(m_blockOwnerHandle));
 
-    // Entity handles (one per entry, soft pointers).
-    for (std::uint32_t h : m_entityHandles) {
-        hb->putHandle(makeSoftOwnerW(h));
+    // Entity handles — same count as the sort loop (pad the shorter with null).
+    for (std::size_t i = 0; i < entryCount; ++i) {
+        hb->putHandle(makeSoftOwnerW(i < m_entityHandles.size() ? m_entityHandles[i] : 0));
     }
     return true;
 }

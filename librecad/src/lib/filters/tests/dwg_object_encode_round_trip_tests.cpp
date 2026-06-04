@@ -1284,6 +1284,50 @@ TEST_CASE("DRW_SortEntsTable::encodeDwg round-trips sort + entity handles + bloc
     REQUIRE(dst.m_entityHandles[2] == 0x203u);
 }
 
+// B-1: SORTENTSTABLE with UNEQUAL sort/entity vector sizes. The parser reads one
+// shared numEntries for both loops; the encoder must emit that many handles in
+// each (padding the shorter with null) or the re-parse consumes the wrong number
+// of sort-handle slots and desyncs the block-owner + entity handles. Before the
+// fix the count was m_entityHandles.size() while the sort loop emitted only
+// m_sortHandles.size() handles.
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("DRW_SortEntsTable::encodeDwg round-trips unequal sort/entity handle counts",
+          "[dwg-write][object-encode][sortentstable]") {
+    DRW_SortEntsTable src;
+    src.handle             = 0xA10;
+    src.parentHandle       = 0x1F;
+    src.m_blockOwnerHandle = 0x1F;
+    src.m_sortHandles      = {0x101, 0x102};                 // 2 sort handles
+    src.m_entityHandles    = {0x201, 0x202, 0x203, 0x204};   // 4 entity handles
+    DrwObjectEncodeTestAccess::setNumReactors(src, 0);
+    DrwObjectEncodeTestAccess::setXDictFlag(src, 1);
+
+    DRW::Version ver = DRW::AC1018;
+    dwgBufferW w;
+    emitObjectPreamble(w, ver, /*oType=*/0, src.handle,
+                       /*numReactors=*/0, /*xDictFlag=*/1);
+    REQUIRE(DrwObjectEncodeTestAccess::encodeSortEntsTable(src, ver, &w));
+
+    auto bytes = snapshot(w);
+    dwgBuffer r(bytes.data(), bytes.size());
+    DRW_SortEntsTable dst;
+    REQUIRE(DrwObjectEncodeTestAccess::parse(dst, ver, &r));
+
+    // Block owner must survive intact (it is the first handle AFTER the sort loop;
+    // a count/loop mismatch shifts it).
+    REQUIRE(dst.m_blockOwnerHandle == 0x1Fu);
+    REQUIRE(static_cast<std::uint32_t>(dst.parentHandle) == 0x1Fu);
+    // Both vectors recover exactly (null padding is read-and-skipped).
+    REQUIRE(dst.m_sortHandles.size() == 2u);
+    REQUIRE(dst.m_sortHandles[0] == 0x101u);
+    REQUIRE(dst.m_sortHandles[1] == 0x102u);
+    REQUIRE(dst.m_entityHandles.size() == 4u);
+    REQUIRE(dst.m_entityHandles[0] == 0x201u);
+    REQUIRE(dst.m_entityHandles[1] == 0x202u);
+    REQUIRE(dst.m_entityHandles[2] == 0x203u);
+    REQUIRE(dst.m_entityHandles[3] == 0x204u);
+}
+
 // SPATIAL_FILTER encoder round-trip (ODA §20.4.94).  Boundary points + normal
 // + origin + clip flags + optional clip distances + 4x3 transform matrices.
 // Handle stream is just the common prefix (no type-specific handles).
