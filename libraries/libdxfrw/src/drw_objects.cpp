@@ -4153,7 +4153,7 @@ bool DRW_Group::encodeDwg(DRW::Version version, dwgBufferW *buf,
         hb->putHandle(makeSoftOwnerW(0));
     }
     for (std::uint32_t h : m_entityHandles) {
-        hb->putHandle(makeSoftOwnerW(h));    // entity handles are soft pointers
+        hb->putHandle(makeHardPtrW(h));    // entity members are hard pointers per ODA §20.4.72
     }
     return true;
 }

@@ -891,6 +891,13 @@ TEST_CASE("DRW_Group::encodeDwg round-trips description + entity handles",
     REQUIRE(dst.m_entityHandles[1] == 0x801u);
     REQUIRE(dst.m_entityHandles[2] == 0x802u);
     REQUIRE(static_cast<std::uint32_t>(dst.parentHandle) == 0xCu);
+    // NOTE: members are now emitted as HARD pointers (code 4, makeHardPtrW) per
+    // ODA §20.4.72 rather than soft owners (code 3).  getOffsetHandle ignores
+    // the reference code for codes <= 5, so this round-trip recovers identical
+    // refs either way — it is the regression net proving the code-4 change did
+    // not disturb the handle-stream structure.  The on-wire code value itself is
+    // not asserted here: the handle stream is bit-packed (not byte-aligned), so a
+    // raw byte-scan is unreliable, and only external consumers (AutoCAD) read it.
 }
 
 // XRECORD encoder round-trip (ODA §20.4.105 — typed-pair payload).  Covers
