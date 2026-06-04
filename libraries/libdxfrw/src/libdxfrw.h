@@ -300,7 +300,9 @@ private:
     /// this, the first next() yields FIRSTHANDLE (0x30) exactly as the legacy
     /// ++entCount did, so a fresh write (empty raw net) is byte-identical.
     void seedReservedDxf();
-    bool writeEntity(DRW_Entity *ent);
+    // captureSourceHandle=false on the VERTEX/SEQEND parent re-entries
+    // (writePolyline/writeInsert) so they do not pollute the source->minted map.
+    bool writeEntity(DRW_Entity *ent, bool captureSourceHandle = true);
     bool writeArcDimension(DRW_DimArc *d);
     bool writeTables();
     bool writeBlocks();

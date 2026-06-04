@@ -254,19 +254,25 @@ void dxfRW::seedReservedDxf() {
         m_handleAllocator.reserve(h);
 }
 
-bool dxfRW::writeEntity(DRW_Entity *ent) {
+bool dxfRW::writeEntity(DRW_Entity *ent, bool captureSourceHandle) {
     // On entry, ent->handle is a SOURCE-handle key seeded by the filter from
     // RS_Entity::sourceHandle() (getEntityAttributes); it is read by NOTHING
     // before this unconditional mint and is captured here for GROUP 340
     // resolution (F3). Any future pre-mint read of ent->handle is a latent bug.
     const std::uint32_t sourceHandle = ent->handle;
     ent->handle = m_handleAllocator.next();  // unconditional mint (unchanged)
-    if (sourceHandle != 0) {
-        // emplace (NOT operator[]): writePolyline/writeInsert call
-        // writeEntity(ent) for the PARENT, re-entering with a now-minted
-        // (nonzero, minted-range) key. emplace keeps the first-seen real source
-        // and makes those stale minted-range keys inert (never queried — GROUP
-        // 340 lookups use real source handles only).
+    if (captureSourceHandle && sourceHandle != 0) {
+        // emplace (NOT operator[]): keeps the FIRST-seen source->minted mapping.
+        // captureSourceHandle is false on the VERTEX/SEQEND parent re-entries from
+        // writePolyline/writeInsert, which call writeEntity(ent) AGAIN on the SAME
+        // parent whose handle was already minted -- so sourceHandle there is a
+        // stale MINTED handle (>= FIRSTHANDLE), not a real source. Recording those
+        // would POLLUTE the map: a real source handle (also commonly >= FIRSTHANDLE)
+        // can numerically equal a stale minted key, and emplace keeping the
+        // first-seen would then SHADOW the genuine mapping -> GROUP 340 (resolved
+        // via sourceHandleToMintedMap) would mis-point or drop a member. Gating on
+        // the call SITE (not the handle value) is correct because a real source
+        // handle is indistinguishable from a minted one by value alone.
         m_writingContext.sourceHandleToMintedMap.emplace(sourceHandle, ent->handle);
     }
     writer->writeString(5, toHexStr(static_cast<int>(ent->handle)));
@@ -1082,7 +1088,7 @@ bool dxfRW::writePolyline(DRW_Polyline *ent) {
     for (int i = 0;  i< vertexnum; i++){
         DRW_Vertex *v = ent->vertlist.at(i).get();
         writer->writeString(0, "VERTEX");
-        writeEntity(ent);
+        writeEntity(ent, /*captureSourceHandle=*/false);  // parent re-entry: do not pollute the map
         if (version > DRW::AC1009)
             writer->writeString(100, "AcDbVertex");
         if ( (v->flags & 128) && !(v->flags & 64) ) {
@@ -1125,7 +1131,7 @@ bool dxfRW::writePolyline(DRW_Polyline *ent) {
         }
     }
     writer->writeString(0, "SEQEND");
-    writeEntity(ent);
+    writeEntity(ent, /*captureSourceHandle=*/false);  // parent re-entry: do not pollute the map
     return true;
 }
 
@@ -1604,7 +1610,7 @@ bool dxfRW::writeInsert(DRW_Insert *ent){
                 writeAttrib(att.get());
         }
         writer->writeString(0, "SEQEND");
-        writeEntity(ent);
+        writeEntity(ent, /*captureSourceHandle=*/false);  // parent re-entry: do not pollute the map
     }
     return true;
 }

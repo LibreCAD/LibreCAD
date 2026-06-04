@@ -258,6 +258,30 @@ public:
   }
 };
 
+// Emits a POLYLINE (two vertices, seeded source 0xAA) followed by a POINT (seeded
+// source 0xBB). The POLYLINE drives the VERTEX/SEQEND parent re-entries into
+// dxfRW::writeEntity that must NOT pollute the source->minted map (A-3).
+class SeededPolylineEmitter : public StubInterface {
+public:
+  dxfRW *m_rw = nullptr;
+  void writeEntities() override {
+    DRW_Polyline pl;
+    pl.handle = 0xAAu;  // seeded source-handle key
+    auto v1 = std::make_shared<DRW_Vertex>();
+    v1->basePoint = DRW_Coord(0.0, 0.0, 0.0);
+    auto v2 = std::make_shared<DRW_Vertex>();
+    v2->basePoint = DRW_Coord(1.0, 1.0, 0.0);
+    pl.vertlist.push_back(v1);
+    pl.vertlist.push_back(v2);
+    m_rw->writePolyline(&pl);
+
+    DRW_Point pt;
+    pt.basePoint = DRW_Coord(2.0, 2.0, 0.0);
+    pt.handle = 0xBBu;  // seeded source-handle key
+    m_rw->writePoint(&pt);
+  }
+};
+
 // Read a written DXF file back into a string for structural assertions.
 std::string slurp(const std::filesystem::path &path) {
   std::ifstream in(path);
@@ -766,6 +790,38 @@ TEST_CASE("DXF writeEntity captures source->minted handles (F3-1)",
   CHECK(mintedA >= 0x30u);
   CHECK(mintedB >= 0x30u);
   CHECK(mintedA != mintedB);
+}
+
+// A-3: the VERTEX/SEQEND parent re-entries from writePolyline call
+// writeEntity(ent) again on the already-minted parent. Those re-entries must NOT
+// emplace into sourceHandleToMintedMap. After writing a POLYLINE (2 vertices,
+// source 0xAA) and a POINT (source 0xBB), the map's keys must be EXACTLY the two
+// genuine seeded source handles -- no extra minted-range keys. A polluting key
+// (a stale minted handle) can numerically equal a real source handle and, via
+// emplace's keep-first-seen, SHADOW the genuine mapping, mis-resolving GROUP 340.
+TEST_CASE("DXF writeEntity does not pollute source->minted map on VERTEX/SEQEND re-entry (A-3)",
+          "[dxf][objects][handles]") {
+  const auto path =
+      std::filesystem::temp_directory_path() / "lc_srcminted_poly.dxf";
+  std::filesystem::remove(path);
+
+  std::map<std::uint32_t, std::uint32_t> captured;
+  {
+    dxfRW w(path.string().c_str());
+    SeededPolylineEmitter em;
+    em.m_rw = &w;
+    REQUIRE(w.write(&em, DRW::AC1021, false));
+    captured = w.getWritingContext()->sourceHandleToMintedMap;
+  }
+  std::filesystem::remove(path);
+
+  // Exactly the two genuine source handles, nothing else (no re-entry pollution).
+  REQUIRE(captured.size() == 2u);
+  CHECK(captured.count(0xAAu) == 1);
+  CHECK(captured.count(0xBBu) == 1);
+  CHECK(captured[0xAAu] >= 0x30u);
+  CHECK(captured[0xBBu] >= 0x30u);
+  CHECK(captured[0xAAu] != captured[0xBBu]);
 }
 
 // F3-2: setGroups injects each group into the ACAD_GROUP D dict (name -> minted
