@@ -725,6 +725,28 @@ TEST_CASE("DRW_LWPolyline copy and assignment carry vertexnum + reset the build 
     CHECK(a.vertlist[0]->bulge != 99.0);                     // mutating c leaves a intact
 }
 
+// G-2: copy/assign must also deep-copy the base extData (XDATA), not just
+// vertlist — the implicit DRW_Entity base copy aliases the shared_ptr variants,
+// which parseAttribs mutates (addString/setLayerRefName).
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("DRW_LWPolyline copy/assign deep-copy base extData (no XDATA aliasing)",
+          "[dwg-write][entity-encode]") {
+    DRW_LWPolyline a;
+    a.extData.push_back(std::make_shared<DRW_Variant>(1000, UTF8STRING("orig")));
+
+    DRW_LWPolyline b(a);
+    REQUIRE(b.extData.size() == 1u);
+    CHECK(b.extData[0].get() != a.extData[0].get());  // distinct shared_ptr (deep copy)
+
+    DRW_LWPolyline c;
+    c = a;
+    REQUIRE(c.extData.size() == 1u);
+    CHECK(c.extData[0].get() != a.extData[0].get());
+    // Mutating the copy's XDATA variant must not touch the source's.
+    c.extData[0]->addString(1000, UTF8STRING("changed"));
+    CHECK(std::string(a.extData[0]->c_str()) == "orig");
+}
+
 TEST_CASE("DRW_Ellipse::encodeDwg round-trips center + axis + ratio + params",
           "[dwg-write][entity-encode]") {
     DRW_Ellipse src;

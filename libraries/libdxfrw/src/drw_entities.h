@@ -953,7 +953,14 @@ public:
 		  this->vertlist.push_back(
 					std::make_shared<DRW_Vertex2D>(*p.vertlist.at(i))
 					);
-        // `vertex` (transient build pointer) stays null in a fresh copy.
+        // Deep-copy the base extData too: the implicit DRW_Entity(p) base copy
+        // shallow-copies the shared_ptr XDATA variants, but parseAttribs mutates
+        // them, so two copies must not share. (`vertex` stays null in a fresh
+        // copy; `curr` is a private parse-transient cursor — its shallow copy is
+        // benign since reset() clears it before reuse.)
+        extData.clear();
+        for (const auto& v : p.extData)
+            extData.push_back(v ? std::make_shared<DRW_Variant>(*v) : nullptr);
     }
     // Deep-copy assignment to match the deep-copy constructor; the implicit
     // operator= would shallow-copy the shared_ptr vertlist, so two assigned
@@ -972,6 +979,11 @@ public:
             for (const auto& v : p.vertlist)
                 vertlist.push_back(std::make_shared<DRW_Vertex2D>(*v));
             vertex.reset();  // transient build pointer — do not alias p's vertlist
+            // Deep-copy base extData (DRW_Entity::operator= aliased the shared
+            // XDATA variants, which parseAttribs mutates).
+            extData.clear();
+            for (const auto& v : p.extData)
+                extData.push_back(v ? std::make_shared<DRW_Variant>(*v) : nullptr);
         }
         return *this;
     }
