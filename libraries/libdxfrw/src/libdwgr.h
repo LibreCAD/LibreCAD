@@ -139,6 +139,7 @@ public:
     bool writeField(DRW_Field *object);
     bool registerRawDwgObjectClass(const DRW_UnsupportedObject *object);
     bool writeRawDwgObject(DRW_UnsupportedObject *object);
+    bool writeRawDwgSection(const DRW_RawDwgSection *section);
 
     bool getPreview();
     DRW::Version getVersion(){return version;}

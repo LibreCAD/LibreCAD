@@ -54,6 +54,7 @@ public:
     /// m_buf so writeDwgHandles can subtract it before encoding deltas.
     std::uint32_t objectBaseOffset() const override;
 
+    bool addRawDwgSection(const DRW_RawDwgSection& section) override;
 
     /// Re-packages m_buf sections into R2004 container pages,
     /// builds the encrypted variable header, and flushes to disk.
@@ -63,6 +64,8 @@ protected:
     /// Version string embedded in the 0x100-byte file header (bytes 0-5).
     /// Override in subclasses to produce a different version (e.g. "AC1024").
     virtual const char* fileHeaderVersion() const { return "AC1018"; }
+
+    std::vector<DRW_RawDwgSection> m_rawDwgSections;
 };
 
 #endif // DWGWRITER18_H

@@ -224,6 +224,13 @@ struct DRW_UnsupportedObject {
     std::vector<std::uint8_t> m_rawBytes;
 };
 
+//! Lossless carrier for non-object DWG data sections preserved byte-for-byte.
+struct DRW_RawDwgSection {
+    UTF8STRING m_name;
+    DRW::Version m_version = DRW::UNKNOWNV;
+    std::vector<std::uint8_t> m_data;
+};
+
 //! Lossless DXF passthrough carrier (slice A1) for an OBJECTS-section object that
 //! libdxfrw does not model as a typed DXF object. Each (group code, raw text value)
 //! pair is preserved verbatim so the object can be re-emitted unchanged on DXF write

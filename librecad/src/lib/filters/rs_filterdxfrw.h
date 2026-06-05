@@ -191,6 +191,7 @@ public:
     void addTableContent(const DRW_TableContentObject &data) override;
     void addCellStyleMap(const DRW_CellStyleMap &data) override;
     void addUnsupportedObject(const DRW_UnsupportedObject &data) override;
+    void addRawDwgSection(const DRW_RawDwgSection &data) override;
     void addRawDxfObject(const DRW_RawDxfObject &data) override;
     void addRawDxfEntity(const DRW_RawDxfObject &data) override;
     void addAcDbPlaceholder(const DRW_AcDbPlaceholder &data) override;

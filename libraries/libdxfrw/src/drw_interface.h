@@ -84,6 +84,8 @@ public:
     virtual void addMLineStyle(const DRW_MLineStyle& data) { (void) data; }
     /** Called for unsupported DWG object/entity payloads kept as raw bytes. */
     virtual void addUnsupportedObject(const DRW_UnsupportedObject& data) { (void) data; }
+    /** Called for unsupported DWG data sections kept as raw bytes. */
+    virtual void addRawDwgSection(const DRW_RawDwgSection& data) { (void) data; }
     //! Lossless DXF passthrough (slice A1): an OBJECTS-section object libdxfrw does
     //! not model is delivered verbatim so it can be re-emitted unchanged.
     virtual void addRawDxfObject(const DRW_RawDxfObject& data) { (void) data; }

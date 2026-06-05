@@ -788,6 +788,28 @@ public:
     }
 };
 
+class RawDwgSectionReplayIface : public EmptyIface {
+public:
+    RawDwgSectionReplayIface() {
+        m_section.m_name = "AcDb:AcDsPrototype_1b";
+        m_section.m_version = DRW::AC1027;
+        m_section.m_data = {0x41u, 0x63u, 0x44u, 0x73u, 0x01u, 0x00u, 0x7fu};
+    }
+
+    dwgRW *m_writer {nullptr};
+    DRW_RawDwgSection m_section;
+    std::vector<DRW_RawDwgSection> m_sections;
+
+    void writeObjects() override {
+        if (m_writer != nullptr)
+            REQUIRE(m_writer->writeRawDwgSection(&m_section));
+    }
+
+    void addRawDwgSection(const DRW_RawDwgSection &section) override {
+        m_sections.push_back(section);
+    }
+};
+
 class ConflictingRawClassIface : public EmptyIface {
 public:
     explicit ConflictingRawClassIface(DRW::Version version)
@@ -4500,6 +4522,33 @@ TEST_CASE("dwgRW R2013 round-trip: write empty, reader returns true",
         REQUIRE(reader.getError() == DRW::BAD_NONE);
         REQUIRE(ok);
     }
+
+    std::remove(path.c_str());
+}
+
+TEST_CASE("dwgRW R2013 preserves AcDsPrototype raw data section",
+          "[dwg-write][smoke][r2013][raw-section]") {
+    const std::string path = tempPath("raw_prototype_r2013.dwg");
+
+    RawDwgSectionReplayIface writeIface;
+    {
+        dwgRW writer(path.c_str());
+        writeIface.m_writer = &writer;
+        REQUIRE(writer.write(&writeIface, DRW::AC1027, /*bin=*/false));
+    }
+
+    RawDwgSectionReplayIface readIface;
+    {
+        dwgRW reader(path.c_str());
+        REQUIRE(reader.read(&readIface, /*ext=*/false));
+        REQUIRE(reader.getVersion() == DRW::AC1027);
+        REQUIRE(reader.getError() == DRW::BAD_NONE);
+    }
+
+    REQUIRE(readIface.m_sections.size() == 1u);
+    CHECK(readIface.m_sections.front().m_name == "AcDb:AcDsPrototype_1b");
+    CHECK(readIface.m_sections.front().m_version == DRW::AC1027);
+    CHECK(readIface.m_sections.front().m_data == writeIface.m_section.m_data);
 
     std::remove(path.c_str());
 }

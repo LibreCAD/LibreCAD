@@ -4972,6 +4972,14 @@ void RS_FilterDXFRW::addUnsupportedObject(const DRW_UnsupportedObject &data) {
                   static_cast<int>(data.m_rawBytes.size()));
 }
 
+void RS_FilterDXFRW::addRawDwgSection(const DRW_RawDwgSection &data) {
+  if (m_graphic != nullptr) {
+    m_graphic->dwgAdvancedMetadata().addRawDwgSection(data);
+  }
+  RS_DEBUG->print("RS_FilterDXFRW::addRawDwgSection: %s (%d bytes)",
+                  data.m_name.c_str(), static_cast<int>(data.m_data.size()));
+}
+
 void RS_FilterDXFRW::addAcDbPlaceholder(const DRW_AcDbPlaceholder &data) {
   if (m_graphic != nullptr) {
     m_graphic->dwgAdvancedMetadata().addAcDbPlaceholder(data);
@@ -7213,6 +7221,7 @@ void RS_FilterDXFRW::writeObjects() {
         int blockedWriterRejected = 0;
         int blockedVersionMismatch = 0;
         int replayedObjects = 0;
+        int replayedSections = 0;
         const LC_DwgAdvancedMetadata::RawObjectFamilyCounts rawFamilyCounts =
             metadata.rawObjectFamilyCounts();
         const LC_DwgAdvancedMetadata::TableNativeWriterBlockerCounts tableBlockers =
@@ -7239,6 +7248,29 @@ void RS_FilterDXFRW::writeObjects() {
             metadata.associativePrefixCounts();
         LC_DwgAdvancedMetadata::GraphReplayPolicyCounts graphReplayPolicy =
             metadata.graphReplayPolicyCounts();
+        for (const auto& record : metadata.rawDwgSections()) {
+            if (record.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed) {
+                hasBlockedReplay = true;
+                ++blockedInvalidated;
+                continue;
+            }
+            if (metadata.sourceDwgVersion() != DRW::UNKNOWNV
+                && metadata.sourceDwgVersion() != m_dwgW->getVersion()) {
+                hasBlockedReplay = true;
+                ++blockedVersionMismatch;
+                continue;
+            }
+            DRW_RawDwgSection section;
+            section.m_name = record.name;
+            section.m_version = record.version;
+            section.m_data = record.data;
+            if (m_dwgW->writeRawDwgSection(&section)) {
+                ++replayedSections;
+            } else {
+                hasBlockedReplay = true;
+                ++blockedWriterRejected;
+            }
+        }
         for (const auto& record : metadata.rawObjects()) {
             if (nativeSunHandles.count(record.handle) != 0 && isSunRawObject(record)) {
                 hasBlockedReplay = true;
@@ -7662,6 +7694,10 @@ void RS_FilterDXFRW::writeObjects() {
             RS_DEBUG->print("RS_FilterDXFRW::writeObjects: replayed %d raw DWG objects",
                             replayedObjects);
         }
+        if (replayedSections > 0) {
+            RS_DEBUG->print("RS_FilterDXFRW::writeObjects: replayed %d raw DWG data sections",
+                            replayedSections);
+        }
         if (rawFamilyCounts.total() > 0) {
             RS_DEBUG->print(
                 "RS_FilterDXFRW::writeObjects: raw DWG object families "
@@ -8080,18 +8116,18 @@ void RS_FilterDXFRW::writeObjects() {
             RS_DEBUG->print(
                 RS_Debug::D_WARNING,
                 "Some DWG advanced metadata still cannot be emitted natively; "
-                "unchanged raw OBJECTS are replayed where safe, while entities "
-                "and semantic-only records remain diagnostic-only");
+                "unchanged raw OBJECTS/data sections are replayed where safe, "
+                "while entities and semantic-only records remain diagnostic-only");
             if (hasBlockedReplay) {
                 RS_DEBUG->print(
                     RS_Debug::D_WARNING,
                     "Blocked raw DWG replay: invalidated=%d replaced=%d entity=%d "
                     "missing-bytes=%d missing-class=%d writer-rejected=%d "
-                    "version-mismatch=%d (replayed=%d)",
+                    "version-mismatch=%d (objects=%d sections=%d)",
                     blockedInvalidated, blockedReplaced, blockedEntityReplay,
                     blockedMissingRawBytes, blockedMissingClassMetadata,
                     blockedWriterRejected, blockedVersionMismatch,
-                    replayedObjects);
+                    replayedObjects, replayedSections);
             }
             if (semanticOnlyRecords > 0) {
                 RS_DEBUG->print(
@@ -10738,13 +10774,12 @@ void RS_FilterDXFRW::setEntityAttributes(RS_Entity* entity,
 void RS_FilterDXFRW::getEntityAttributes(DRW_Entity* ent, const RS_Entity* entity) {
 //DRW_Entity RS_FilterDXFRW::getEntityAttributes(RS_Entity* /*entity*/) {
 
-    // F3: seed ent->handle with the entity's SOURCE handle (stored on RS_Entity
-    // from the import) as a key input for the codec's source->minted capture in
-    // dxfRW::writeEntity (used to resolve GROUP 340 members). This is a write-only
-    // key here: getEntityAttributes reads no ent->handle, and writeEntity
-    // unconditionally overwrites it with a freshly-minted handle before any
-    // reader sees it. Any future pre-mint read of ent->handle is a latent bug.
-    ent->handle = entity->sourceHandle();
+    // F3: DXF export seeds ent->handle with the entity's SOURCE handle as a
+    // source->minted remap key (used to resolve GROUP 340 members). DWG export
+    // must leave the handle unset so the DWG writer can allocate from its single
+    // table/entity/object namespace; otherwise imported source handles can
+    // collide with deferred table records already reserved by this writer.
+    ent->handle = m_dwgW ? 0 : entity->sourceHandle();
 
     // Layer:
     RS_Layer* layer = entity->getLayer();

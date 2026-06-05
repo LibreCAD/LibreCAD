@@ -854,6 +854,12 @@ bool dwgRW::writeRawDwgObject(DRW_UnsupportedObject *object) {
     return w->replayRawObject(*object);
 }
 
+bool dwgRW::writeRawDwgSection(const DRW_RawDwgSection *section) {
+    if (section == nullptr || writer == nullptr)
+        return false;
+    return writer->addRawDwgSection(*section);
+}
+
 std::unique_ptr<dwgReader> dwgRW::createReaderForVersion(DRW::Version version, std::ifstream *stream, dwgRW *p )
 {
     switch ( version ) {
@@ -1026,6 +1032,11 @@ bool dwgRW::processDwg() {
     if (ret && !ret2) {
         error = DRW::BAD_READ_OBJECTS;
         ret = ret2;
+    }
+
+    if (ret) {
+        for (const DRW_RawDwgSection& section : reader->m_rawDwgSections)
+            iface->addRawDwgSection(section);
     }
 
     return ret;

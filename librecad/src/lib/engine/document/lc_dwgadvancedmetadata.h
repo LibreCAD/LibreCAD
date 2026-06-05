@@ -272,6 +272,13 @@ public:
         ReplayState replayState = ReplayState::ReplayAllowed;
     };
 
+    struct RawDwgSectionRecord {
+        std::string name;
+        DRW::Version version = DRW::UNKNOWNV;
+        std::vector<std::uint8_t> data;
+        ReplayState replayState = ReplayState::ReplayAllowed;
+    };
+
     struct RawObjectFamilyCounts {
         size_t unknown = 0;
         size_t associative = 0;
@@ -1912,6 +1919,7 @@ public:
     void clear() {
         m_sourceDwgVersion = DRW::UNKNOWNV;
         m_rawObjects.clear();
+        m_rawDwgSections.clear();
         m_rawDxfObjects.clear();
         m_rawDxfEntities.clear();
         m_views.clear();
@@ -1972,6 +1980,14 @@ public:
         record.family = rawObjectFamilyFromNames(record.recordName, record.className);
         record.rawBytes = object.m_rawBytes;
         m_rawObjects.push_back(std::move(record));
+    }
+
+    void addRawDwgSection(const DRW_RawDwgSection& section) {
+        RawDwgSectionRecord record;
+        record.name = section.m_name;
+        record.version = section.m_version;
+        record.data = section.m_data;
+        m_rawDwgSections.push_back(std::move(record));
     }
 
     //Slice A2: lossless DXF passthrough store (group-text records captured by the
@@ -3058,6 +3074,9 @@ public:
     }
 
     const std::vector<RawObjectRecord>& rawObjects() const { return m_rawObjects; }
+    const std::vector<RawDwgSectionRecord>& rawDwgSections() const {
+        return m_rawDwgSections;
+    }
     const std::vector<DRW_RawDxfObject>& rawDxfObjects() const { return m_rawDxfObjects; }
     const std::vector<DRW_RawDxfObject>& rawDxfEntities() const { return m_rawDxfEntities; }
 
@@ -7415,6 +7434,7 @@ private:
 
     DRW::Version m_sourceDwgVersion = DRW::UNKNOWNV;
     std::vector<RawObjectRecord> m_rawObjects;
+    std::vector<RawDwgSectionRecord> m_rawDwgSections;
     std::vector<DRW_RawDxfObject> m_rawDxfObjects;
     std::vector<DRW_RawDxfObject> m_rawDxfEntities;
     std::vector<ViewRecord> m_views;

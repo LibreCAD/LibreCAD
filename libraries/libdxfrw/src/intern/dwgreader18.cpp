@@ -668,5 +668,35 @@ bool dwgReader18::readDwgTables(DRW_Header& hdr) {
 
     //Do not delete objData in this point, needed in the remaining code
 
-    return dwgReader::readDwgTables(hdr, &dataBuf);
+    if (!dwgReader::readDwgTables(hdr, &dataBuf))
+        return false;
+
+    if (!captureRawDwgDataSections())
+        return false;
+
+    // Restore OBJECTS data after raw-section capture, which reuses objData.
+    if (!parseDataPage(si))
+        return false;
+    uncompSize = si.size;
+    return true;
+}
+
+bool dwgReader18::captureRawDwgDataSections() {
+    auto it = sections.find(secEnum::PROTOTYPE);
+    if (it == sections.end() || it->second.Id < 0)
+        return true;
+
+    const dwgSectionInfo& si = it->second;
+    DRW_RawDwgSection section;
+    section.m_name = si.name.empty() ? "AcDb:AcDsPrototype_1b" : si.name;
+    section.m_version = version;
+
+    if (si.size != 0) {
+        if (!parseDataPage(si))
+            return false;
+        section.m_data.assign(objData.get(), objData.get() + si.size);
+    }
+
+    m_rawDwgSections.push_back(std::move(section));
+    return true;
 }

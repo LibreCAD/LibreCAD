@@ -225,7 +225,14 @@ bool dwgReader::readDwgHandles(dwgBuffer *dbuf, std::uint64_t offset, std::uint6
                 DRW_DBG(" lastLoc= "); DRW_DBG(lastLoc); DRW_DBG("\n");
                 if (!buff.isGood() || buff.getPosition() <= prevPos)
                     return false;
-                ObjectMap[lastHandle]= objHandle(0, lastHandle, lastLoc);
+                if (lastHandle <= 0)
+                    return false;
+                const auto handleKey = static_cast<std::uint32_t>(lastHandle);
+                if (ObjectMap.find(handleKey) != ObjectMap.end()) {
+                    DRW_DBG("duplicate object-map handle\n");
+                    return false;
+                }
+                ObjectMap[handleKey] = objHandle(0, handleKey, lastLoc);
             }
         } else {
 	    end = true;

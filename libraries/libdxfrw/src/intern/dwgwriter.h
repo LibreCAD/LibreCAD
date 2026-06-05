@@ -163,6 +163,11 @@ public:
     /// Reserve a specific handle so `next()` never returns it again.
     void reserveHandle(std::uint32_t h) { m_handles.reserve(h); }
 
+    virtual bool addRawDwgSection(const DRW_RawDwgSection& section) {
+        (void)section;
+        return false;
+    }
+
     bool registerRawObjectClass(const DRW_UnsupportedObject& object) {
         if (!object.m_isCustomClass || object.m_objectType < 500)
             return true;

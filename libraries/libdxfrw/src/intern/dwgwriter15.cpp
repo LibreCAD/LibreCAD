@@ -1750,6 +1750,10 @@ bool dwgWriter15::writeDwgHandles() {
     // map is already monotonic because objects are emitted in handle
     // order, but the sort defends against future out-of-order emit.
     std::sort(m_objectMap.begin(), m_objectMap.end());
+    for (size_t i = 1; i < m_objectMap.size(); ++i) {
+        if (m_objectMap[i - 1].first == m_objectMap[i].first)
+            return false;
+    }
 
     // Page-emit walk.  Each page is bounded at ≤2030 bytes of (size
     // field + entries) to leave 2 bytes for the trailing CRC under the

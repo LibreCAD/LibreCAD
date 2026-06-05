@@ -69,6 +69,13 @@ static void patchRL(std::vector<std::uint8_t>& v, size_t offset, std::uint32_t x
     v[offset+3] = static_cast<std::uint8_t>(x >> 24);
 }
 
+struct DataSectionDesc {
+    std::uint32_t sectionId = 0;
+    std::uint32_t pageNum = 0;
+    std::uint32_t dataSize = 0;
+    std::string name;
+};
+
 // --- R2004 page builders -----------------------------------------------------
 
 // Build a sys page (Section Page Map or Data Section Map).
@@ -89,7 +96,8 @@ static std::vector<std::uint8_t> buildSysPage(std::uint32_t pageType,
     std::uint32_t ckD = dwgUtil::checksum18(ckH, data, dataSz);
     patchRL(pg, 16, ckD);
 
-    pg.insert(pg.end(), data, data + dataSz);
+    if (dataSz != 0)
+        pg.insert(pg.end(), data, data + dataSz);
     return pg;
 }
 
@@ -131,7 +139,8 @@ static std::vector<std::uint8_t> buildDataPage(std::uint64_t pageAddr,
     std::vector<std::uint8_t> pg;
     pg.reserve(32 + dataSz);
     pg.insert(pg.end(), hdr, hdr + 32);
-    pg.insert(pg.end(), data, data + dataSz);
+    if (dataSz != 0)
+        pg.insert(pg.end(), data, data + dataSz);
     return pg;
 }
 
@@ -154,7 +163,7 @@ static std::vector<std::uint8_t> buildSectionPageMapContent(
 // dataSize: size of decompressed section content.
 static void appendSectionDesc(std::vector<std::uint8_t>& v,
                                std::uint32_t secId, std::uint32_t pageNum,
-                               std::uint64_t dataSize, const char* name) {
+                               std::uint64_t dataSize, const std::string& name) {
     putRLL(v, dataSize);         // size of section (uint64)
     putRL (v, 1);                // pageCount = 1
     putRL (v, static_cast<std::uint32_t>(dataSize));  // maxSize
@@ -165,7 +174,7 @@ static void appendSectionDesc(std::vector<std::uint8_t>& v,
 
     // 64-byte null-padded name.
     std::uint8_t nameBuf[64] = {};
-    std::strncpy(reinterpret_cast<char*>(nameBuf), name, 63);
+    std::strncpy(reinterpret_cast<char*>(nameBuf), name.c_str(), 63);
     v.insert(v.end(), nameBuf, nameBuf + 64);
 
     // 1 page entry: page number (RL) + dataSize (RL) + startOffset (RLL=0).
@@ -176,10 +185,9 @@ static void appendSectionDesc(std::vector<std::uint8_t>& v,
 
 // Build the decompressed content of the Data Section Map.
 static std::vector<std::uint8_t> buildDataSectionMapContent(
-        std::uint32_t hdrSz, std::uint32_t clsSz, std::uint32_t objSz, std::uint32_t hdlSz,
-        bool hasAuxHeader, std::uint32_t auxHeaderSz) {
+        const std::vector<DataSectionDesc>& sections) {
     std::vector<std::uint8_t> v;
-    const std::uint32_t numDescriptions = hasAuxHeader ? 5 : 4;
+    const std::uint32_t numDescriptions = static_cast<std::uint32_t>(sections.size());
     // 20-byte header.
     putRL(v, numDescriptions);
     putRL(v, 0x02);
@@ -187,12 +195,10 @@ static std::vector<std::uint8_t> buildDataSectionMapContent(
     putRL(v, 0x00);
     putRL(v, numDescriptions);
 
-    appendSectionDesc(v, 0, 1, hdrSz, "AcDb:Header");
-    appendSectionDesc(v, 1, 2, clsSz, "AcDb:Classes");
-    appendSectionDesc(v, 2, 3, objSz, "AcDb:AcDbObjects");
-    appendSectionDesc(v, 3, 4, hdlSz, "AcDb:Handles");
-    if (hasAuxHeader)
-        appendSectionDesc(v, 4, 5, auxHeaderSz, "AcDb:AuxHeader");
+    for (const DataSectionDesc& section : sections) {
+        appendSectionDesc(v, section.sectionId, section.pageNum,
+                          section.dataSize, section.name);
+    }
     return v;
 }
 
@@ -394,6 +400,19 @@ std::uint32_t dwgWriter18::objectBaseOffset() const {
     return it1->second + it2->second;
 }
 
+bool dwgWriter18::addRawDwgSection(const DRW_RawDwgSection& section) {
+    if (m_version < DRW::AC1027 || section.m_name != "AcDb:AcDsPrototype_1b")
+        return false;
+    if (section.m_data.size() > UINT32_MAX)
+        return false;
+    for (const DRW_RawDwgSection& existing : m_rawDwgSections) {
+        if (existing.m_name == section.m_name)
+            return false;
+    }
+    m_rawDwgSections.push_back(section);
+    return true;
+}
+
 // --- dwgWriter18::writeDwgClasses --------------------------------------------
 // R2004 CLASSES format differs from R2000.  R2000 stores raw class-entry bytes;
 // R2004 adds BS maxClassNum + RC + RC + Bit before the class entries.  The
@@ -456,52 +475,59 @@ bool dwgWriter18::finalize() {
     std::uint32_t objOff = clsOff + clsSz;
     std::uint32_t objSz  = hdlOff - objOff;
 
-    // Build the four data pages (with correct file addresses).
+    // Build the data pages (with correct file addresses).
     // Addresses accumulate from 0x100; data page size = 32 + dataSize.
     constexpr std::uint64_t kBase = 0x100;
-    std::uint64_t addr1 = kBase;
-    std::uint64_t addr2 = addr1 + 32 + hdrSz;
-    std::uint64_t addr3 = addr2 + 32 + clsSz;
-    std::uint64_t addr4 = addr3 + 32 + objSz;
+    std::uint64_t nextAddr = kBase;
+    std::uint32_t nextSectionId = 0;
+    std::uint32_t nextPageId = 1;
+    std::vector<DataSectionDesc> sectionDescs;
+    std::vector<std::vector<std::uint8_t>> dataPages;
 
-    auto hdrPage = buildDataPage(addr1, 0, rawPtr + hdrOff, hdrSz);
-    auto clsPage = buildDataPage(addr2, 1, rawPtr + clsOff, clsSz);
-    auto objPage = buildDataPage(addr3, 2, rawPtr + objOff, objSz);
-    auto hdlPage = buildDataPage(addr4, 3, rawPtr + hdlOff, hdlSz);
+    auto appendDataPage = [&](const std::string& name, const std::uint8_t* data,
+                              std::uint32_t dataSize) {
+        const std::uint32_t sectionId = nextSectionId++;
+        const std::uint32_t pageId = nextPageId++;
+        dataPages.push_back(buildDataPage(nextAddr, sectionId, data, dataSize));
+        sectionDescs.push_back({sectionId, pageId, dataSize, name});
+        nextAddr += static_cast<std::uint64_t>(dataPages.back().size());
+    };
+
+    appendDataPage("AcDb:Header", rawPtr + hdrOff, hdrSz);
+    appendDataPage("AcDb:Classes", rawPtr + clsOff, clsSz);
+    appendDataPage("AcDb:AcDbObjects", rawPtr + objOff, objSz);
+    appendDataPage("AcDb:Handles", rawPtr + hdlOff, hdlSz);
+
+    for (const DRW_RawDwgSection& section : m_rawDwgSections) {
+        appendDataPage(section.m_name,
+                       section.m_data.empty() ? nullptr : section.m_data.data(),
+                       static_cast<std::uint32_t>(section.m_data.size()));
+    }
 
     const std::vector<std::uint8_t> auxHeaderData =
         (m_version >= DRW::AC1027) ? buildAuxHeaderContent(m_version, m_header)
                                    : std::vector<std::uint8_t>();
     const bool hasAuxHeader = !auxHeaderData.empty();
 
-    std::uint64_t addr5 = addr4 + 32 + hdlSz;
-    std::vector<std::uint8_t> auxHeaderPage;
-    if (hasAuxHeader)
-        auxHeaderPage = buildDataPage(addr5, 4, auxHeaderData.data(),
-                                      static_cast<std::uint32_t>(auxHeaderData.size()));
+    if (hasAuxHeader) {
+        appendDataPage("AcDb:AuxHeader", auxHeaderData.data(),
+                       static_cast<std::uint32_t>(auxHeaderData.size()));
+    }
 
     // Build the Data Section Map sys page.
-    auto dsmData = buildDataSectionMapContent(
-        hdrSz, clsSz, objSz, hdlSz, hasAuxHeader,
-        static_cast<std::uint32_t>(auxHeaderData.size()));
+    auto dsmData = buildDataSectionMapContent(sectionDescs);
     auto dsmPage = buildSysPage(0x4163003b, dsmData.data(),
                                 static_cast<std::uint32_t>(dsmData.size()));
 
-    // Data Section Map sys page follows the optional AuxHeader data page.
-    const std::uint64_t addrDsm = hasAuxHeader
-        ? addr5 + static_cast<std::uint64_t>(auxHeaderPage.size())
-        : addr5;
+    // Data Section Map sys page follows the last data page.
+    const std::uint64_t addrDsm = nextAddr;
     std::uint64_t addrSPM = addrDsm + static_cast<std::uint64_t>(dsmPage.size());
 
     // Build Section Page Map sys page.
-    std::vector<std::uint32_t> pageSizes = {
-        static_cast<std::uint32_t>(hdrPage.size()),
-        static_cast<std::uint32_t>(clsPage.size()),
-        static_cast<std::uint32_t>(objPage.size()),
-        static_cast<std::uint32_t>(hdlPage.size())
-    };
-    if (hasAuxHeader)
-        pageSizes.push_back(static_cast<std::uint32_t>(auxHeaderPage.size()));
+    std::vector<std::uint32_t> pageSizes;
+    pageSizes.reserve(dataPages.size() + 2);
+    for (const std::vector<std::uint8_t>& page : dataPages)
+        pageSizes.push_back(static_cast<std::uint32_t>(page.size()));
     pageSizes.push_back(static_cast<std::uint32_t>(dsmPage.size()));
     auto spmData = buildSectionPageMapContent(pageSizes);
     auto spmPage = buildSysPage(0x41630e3b, spmData.data(),
@@ -511,7 +537,7 @@ bool dwgWriter18::finalize() {
     // lastPageEndAddr = byte address just past the end of the last page listed
     // in the Section Page Map.  The SPM page is the last entry, so its end is
     // addrSPM + spmPage.size().
-    const std::uint32_t dataSectionMapPageId = hasAuxHeader ? 6 : 5;
+    const std::uint32_t dataSectionMapPageId = nextPageId;
     auto fileHdr = buildFileHeader(addrSPM, dataSectionMapPageId,
                                    addrSPM + static_cast<std::uint64_t>(spmPage.size()),
                                    static_cast<std::uint32_t>(pageSizes.size()),
@@ -523,12 +549,8 @@ bool dwgWriter18::finalize() {
                         static_cast<std::streamsize>(v.size()));
     };
     writeVec(fileHdr);
-    writeVec(hdrPage);
-    writeVec(clsPage);
-    writeVec(objPage);
-    writeVec(hdlPage);
-    if (hasAuxHeader)
-        writeVec(auxHeaderPage);
+    for (const std::vector<std::uint8_t>& page : dataPages)
+        writeVec(page);
     writeVec(dsmPage);
     writeVec(spmPage);
 
