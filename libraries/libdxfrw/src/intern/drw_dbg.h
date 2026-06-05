@@ -46,6 +46,7 @@ public:
     void print(unsigned char i);
     void print(int i);
     void print(unsigned int i);
+    void print(long int i);
     void print(long long int i);
     void print(long unsigned int i);
     void print(long long unsigned int i);

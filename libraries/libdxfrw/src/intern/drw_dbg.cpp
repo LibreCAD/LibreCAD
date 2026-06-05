@@ -89,6 +89,10 @@ void DRW_dbg::print(unsigned int i){
     currentPrinter->printUI(i);
 }
 
+void DRW_dbg::print(long int i){
+    currentPrinter->printI(i);
+}
+
 void DRW_dbg::print(long long int i){
     currentPrinter->printI(i);
 }
