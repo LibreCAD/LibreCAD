@@ -63,13 +63,13 @@ public:
     dwgPageInfo(std::uint64_t i, std::uint64_t ad, std::uint64_t sz){
         Id=i; address=ad; size=sz;
     }
-    std::uint64_t Id;
-    std::uint64_t address; //in file stream, for rd18, rd21
-    std::uint64_t size; //in file stream, for rd18, rd21
-    std::uint64_t dataSize; //for rd18, rd21
-    std::uint64_t startOffset; //for rd18, rd21
-    std::uint64_t cSize; //compressed page size, for rd21
-    std::uint64_t uSize; //uncompressed page size, for rd21
+    std::uint64_t Id{0};
+    std::uint64_t address{0}; //in file stream, for rd18, rd21
+    std::uint64_t size{0}; //in file stream, for rd18, rd21
+    std::uint64_t dataSize{0}; //for rd18, rd21
+    std::uint64_t startOffset{0}; //for rd18, rd21
+    std::uint64_t cSize{0}; //compressed page size, for rd21
+    std::uint64_t uSize{0}; //uncompressed page size, for rd21
 };
 
 // sections of file
@@ -91,10 +91,10 @@ public:
     std::uint32_t compressed{1};//is compressed? 1=no, 2=yes rd18, rd21(encoding)
     std::uint32_t encrypted{0};//encrypted (doc: 0=no, 1=yes, 2=unkn) on read: objects 0 and encrypted yes rd18
     std::unordered_map<std::uint32_t, dwgPageInfo >pages;//index, size, offset
-    std::uint64_t size;//size of section,  2000- rd15, rd18, rd21 (data size)
+    std::uint64_t size{0};//size of section,  2000- rd15, rd18, rd21 (data size)
     std::uint64_t pageCount{0}; //number of pages (dwgPageInfo) in section rd18, rd21
-    std::uint64_t maxSize; //max decompressed size (needed??) rd18 rd21
-    std::uint64_t address; //address (seek) , 2000-
+    std::uint64_t maxSize{0}; //max decompressed size (needed??) rd18 rd21
+    std::uint64_t address{0}; //address (seek) , 2000-
 };
 
 

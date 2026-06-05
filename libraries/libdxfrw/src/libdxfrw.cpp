@@ -136,20 +136,27 @@ int dxfRW::getTextStyleHandle(const std::string& styleName) const {
 bool dxfRW::write(DRW_Interface *interface_, DRW::Version ver, bool bin){
     bool isOk = false;
     std::ofstream filestr;
+    if (interface_ == nullptr)
+        return false;
     version = ver;
     binFile = bin;
     iface = interface_;
     if (binFile) {
         filestr.open (fileName.c_str(), std::ios_base::out | std::ios::binary | std::ios::trunc);
+        if (!filestr.is_open() || !filestr.good())
+            return false;
         //write sentinel
         filestr << "AutoCAD Binary DXF\r\n" << (char)26 << '\0';
         writer = std::make_unique<dxfWriterBinary>(&filestr);
         DRW_DBG("dxfRW::read binary file\n");
     } else {
         filestr.open (fileName.c_str(), std::ios_base::out | std::ios::trunc);
+        if (!filestr.is_open() || !filestr.good())
+            return false;
         writer = std::make_unique<dxfWriterAscii>(&filestr);
         std::string comm = std::string("dxfrw ") + std::string(DRW_VERSION);
-        writer->writeString(999, comm);
+        if (!writer->writeString(999, comm))
+            return false;
     }
     DRW_Header header;
     iface->writeHeader(header);
@@ -196,7 +203,10 @@ bool dxfRW::write(DRW_Interface *interface_, DRW::Version ver, bool bin){
         writeObjects();
         writer->writeString(0, "ENDSEC");
     }
-    writer->writeString(0, "EOF");
+    if (!writer->writeString(0, "EOF")) {
+        writer.reset();
+        return false;
+    }
     // Back-patch $HANDSEED with the final handle high-water mark. The header was
     // streamed first (before any table/block/entity/object handle was minted),
     // so it wrote a fixed-width placeholder and recorded the value-field offset.
@@ -214,8 +224,8 @@ bool dxfRW::write(DRW_Interface *interface_, DRW::Version ver, bool bin){
         filestr.seekp(resume);
     }
     filestr.flush();
+    isOk = filestr.good();
     filestr.close();
-    isOk = true;
     writer.reset();
     return isOk;
 }
@@ -3103,7 +3113,8 @@ bool dxfRW::processBlocks() {
             sectionstr = reader->getString();
             DRW_DBG(sectionstr); DRW_DBG("\n");
             if (sectionstr == "BLOCK") {
-                processBlock();
+                if (!processBlock())
+                    return false;
             } else if (sectionstr == "ENDSEC") {
                 return true;  //found ENDSEC terminate
             }
@@ -3136,7 +3147,8 @@ bool dxfRW::processBlock() {
                 iface->endBlock();
                 return true;  //found ENDBLK, terminate
             } else {
-                processEntities(true);
+                if (!processEntities(true))
+                    return false;
                 iface->endBlock();
                 return true;  //found ENDBLK, terminate
             }
@@ -3156,14 +3168,16 @@ bool dxfRW::processBlock() {
 bool dxfRW::processEntities(bool isblock) {
     DRW_DBG("dxfRW::processEntities\n");
     int code;
-    if (!reader->readRec(&code)){
-        return setError(DRW::BAD_READ_ENTITIES);
-    }
+    if (!isblock || nextentity.empty()) {
+        if (!reader->readRec(&code)){
+            return setError(DRW::BAD_READ_ENTITIES);
+        }
 
-    if (code == 0) {
-        nextentity = reader->getString();
-    } else if (!isblock) {
-        return setError(DRW::BAD_READ_ENTITIES);  //first record in entities is 0
+        if (code == 0) {
+            nextentity = reader->getString();
+        } else if (!isblock) {
+            return setError(DRW::BAD_READ_ENTITIES);  //first record in entities is 0
+        }
     }
 
     bool processed {false};
@@ -3534,7 +3548,9 @@ bool dxfRW::processInsert() {
                 iface->addInsert(insert);
                 return true;  //found new entity or ENDSEC, terminate
             }
-            processAttrib(&insert);  //fills insert.attlist until SEQEND
+            if (!processAttrib(&insert))  //fills insert.attlist until SEQEND
+                return false;
+            continue;
         }
 
         if (!insert.parseCode(code, reader)) {
@@ -3552,15 +3568,19 @@ bool dxfRW::processAttrib(DRW_Insert *insert) {
     while (reader->readRec(&code)) {
         DRW_DBG(code); DRW_DBG("\n");
         if (0 == code) {
-            insert->attlist.push_back(att);
             nextentity = reader->getString();
             DRW_DBG(nextentity); DRW_DBG("\n");
             if (nextentity == "SEQEND") {
+                insert->attlist.push_back(att);
                 return true;  //found SEQEND, no more attribs, terminate
             }
             if (nextentity == "ATTRIB") {
+                insert->attlist.push_back(att);
                 att = std::make_shared<DRW_Attrib>(); //another attrib
+                continue;
             }
+            insert->attlist.push_back(att);
+            return true;
         }
 
         if (!att->parseCode(code, reader)) { //members of att are reinitialized here
@@ -3607,7 +3627,9 @@ bool dxfRW::processPolyline() {
                 iface->addPolyline(pl);
                 return true;  //found new entity or ENDSEC, terminate
             }
-            processVertex(&pl);
+            if (!processVertex(&pl))
+                return false;
+            continue;
         }
 
         if (!pl.parseCode(code, reader)) { //parseCode just initialize the members of pl
@@ -3625,15 +3647,19 @@ bool dxfRW::processVertex(DRW_Polyline *pl) {
     while (reader->readRec(&code)) {
         DRW_DBG(code); DRW_DBG("\n");
         if(0 == code)  {
-            pl->appendVertex(v);
             nextentity = reader->getString();
             DRW_DBG(nextentity); DRW_DBG("\n");
             if (nextentity == "SEQEND") {
+                pl->appendVertex(v);
                 return true;  //found SEQEND no more vertex, terminate
             }
             if (nextentity == "VERTEX"){
+                pl->appendVertex(v);
                 v = std::make_shared<DRW_Vertex>(); //another vertex
+                continue;
             }
+            pl->appendVertex(v);
+            return true;
         }
 
         if (!v->parseCode(code, reader)) { //the members of v are reinitialized here
@@ -4412,7 +4438,7 @@ RawValType classifyDxfCode(int code) {
     else if (code < 450) return RawValType::Int;
     else if (code < 460) return RawValType::Int;
     else if (code < 470) return RawValType::Dbl;
-    else if (code < 481) return RawValType::Str;
+    else if (code <= 481) return RawValType::Str;
     else if (code == 1004) return RawValType::Str;
     else if (code > 998 && code < 1009) return RawValType::Str;
     else if (code < 1060) return RawValType::Dbl;
@@ -4514,18 +4540,14 @@ bool dxfRW::processRawEntity() {
 // True for DXF group codes whose STRING value is a handle reference that the
 // codec's m_handleRemap may need to rewrite: the self handle (5/105), the
 // soft/hard pointer & owner ranges (320-369), the hard-pointer ranges
-// (390-399 and 480), and xdata handles (1005). Codes outside these ranges
+// (390-399 and 480-481), and xdata handles (1005). Codes outside these ranges
 // (e.g. text strings, layer names) are never rewritten, so a numeric-looking
-// non-handle value can never be mistaken for a handle. Only codes captured as
-// STRING by classifyDxfCode are rewritable: 380-389 are Int (excluded), and
-// note 481 is classified as a DOUBLE by classifyDxfCode AND the reader/writer
-// (the 470-480 STRING arm is exclusive of 481), so a 481 group is never a raw
-// STRING and is intentionally NOT listed here — including it would be dead code.
+// non-handle value can never be mistaken for a handle.
 static bool dxfIsHandleRefCode(int code) {
     return code == 5 || code == 105 || code == 1005 ||
            (code >= 320 && code <= 369) ||
            (code >= 390 && code <= 399) ||
-           code == 480;
+           (code >= 480 && code <= 481);
 }
 
 bool dxfRW::writeRawDxfObject(DRW_RawDxfObject *obj) {
@@ -4684,6 +4706,8 @@ bool dxfRW::writeSun(DRW_Sun *ent) {
     writer->writeInt32(90, static_cast<int>(ent->m_classVersion));
     writer->writeBool(290, ent->m_isOn);
     writer->writeInt32(63, static_cast<int>(ent->m_color));
+    if (version > DRW::AC1015 && ent->m_color24 >= 0)
+        writer->writeInt32(421, ent->m_color24);  // 24-bit true color (R2004+)
     writer->writeDouble(40, ent->m_intensity);
     writer->writeBool(291, ent->m_hasShadow);
     writer->writeInt32(91, ent->m_julianDay);

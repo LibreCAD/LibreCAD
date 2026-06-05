@@ -295,7 +295,9 @@ bool dwgRW::write(DRW_Interface *interface_, DRW::Version ver, bool bin) {
         // names.  writeEntities is where modelspace geometry flows;
         // writeObjects is reserved for NOD-dictionary objects (Phase 5).
         iface->writeBlocks();
-        writer->emitDeferredBlockControl();
+        ok = writer->emitDeferredBlockControl();
+    }
+    if (ok) {
         iface->writeEntities();
         iface->writeObjects();
     }

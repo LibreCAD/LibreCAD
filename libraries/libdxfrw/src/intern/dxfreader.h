@@ -23,6 +23,7 @@ public:
         INT64,
         DOUBLE,
         BOOL,
+        BINARY,
         INVALID
     };
     enum TYPE type;

@@ -69,11 +69,6 @@ static void patchRL(std::vector<std::uint8_t>& v, size_t offset, std::uint32_t x
     v[offset+3] = static_cast<std::uint8_t>(x >> 24);
 }
 
-static void patchRLL(std::vector<std::uint8_t>& v, size_t offset, std::uint64_t x) {
-    patchRL(v, offset,     static_cast<std::uint32_t>(x));
-    patchRL(v, offset + 4, static_cast<std::uint32_t>(x >> 32));
-}
-
 // --- R2004 page builders -----------------------------------------------------
 
 // Build a sys page (Section Page Map or Data Section Map).
@@ -386,6 +381,11 @@ static std::vector<std::uint8_t> buildFileHeader(std::uint64_t secPageMapAddr,
 }
 
 // --- dwgWriter18::objectBaseOffset -------------------------------------------
+
+bool dwgWriter18::writeDwgObjects() {
+    m_buf.putRawLong32(0x0dca);
+    return dwgWriter15::writeDwgObjects();
+}
 
 std::uint32_t dwgWriter18::objectBaseOffset() const {
     auto it1 = m_sectionOffsets.find(recno::CLASSES);

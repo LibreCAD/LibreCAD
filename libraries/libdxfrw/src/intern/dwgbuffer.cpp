@@ -211,14 +211,30 @@ void dwgBuffer::setBitPos(std::uint8_t pos){
 bool dwgBuffer::moveBitPos(std::int32_t size){
     if (size == 0) return true;
 
-    std::int32_t b= size + bitPos;
-    filestr->setPos(getPosition() + (b >> 3) );
-    bitPos = b & 7;
+    const std::uint64_t oldStreamPos = filestr->getPos();
+    const std::uint8_t oldBitPos = bitPos;
+    const std::uint8_t oldCurrByte = currByte;
+    const std::int64_t currentBit =
+        static_cast<std::int64_t>(getPosition()) * 8 + static_cast<std::int64_t>(bitPos);
+    const std::int64_t newBit = currentBit + static_cast<std::int64_t>(size);
+    if (newBit < 0 || static_cast<std::uint64_t>(newBit) > maxSize * 8)
+        return false;
 
-    if (bitPos != 0){
-        filestr->read (&currByte,1);
+    const std::uint64_t newBytePos = static_cast<std::uint64_t>(newBit / 8);
+    const std::uint8_t newBitPos = static_cast<std::uint8_t>(newBit % 8);
+    if (!filestr->setPos(newBytePos))
+        return false;
+
+    if (newBitPos != 0){
+        if (!filestr->read(&currByte, 1)) {
+            filestr->setPos(oldStreamPos);
+            bitPos = oldBitPos;
+            currByte = oldCurrByte;
+            return false;
+        }
     }
-    return filestr->good();
+    bitPos = newBitPos;
+    return true;
 }
 
 /**Reads one Bit returns a char with value 0/1 (B) **/
@@ -550,8 +566,8 @@ std::string dwgBuffer::get8bitStr(){
     std::uint16_t textSize = getBitShort();
     if (textSize == 0)
         return std::string();
-    std::uint8_t *tmpBuffer = new std::uint8_t[textSize];
-    bool good = getBytes(tmpBuffer, textSize);
+    std::vector<std::uint8_t> tmpBuffer(textSize);
+    bool good = getBytes(tmpBuffer.data(), textSize);
     if (!good)
         return std::string();
 
@@ -567,8 +583,7 @@ std::string dwgBuffer::get8bitStr(){
             currByte = tmp;
         }
     }*/
-    std::string str(reinterpret_cast<char*>(tmpBuffer), textSize);
-    delete[]tmpBuffer;
+    std::string str(reinterpret_cast<char*>(tmpBuffer.data()), textSize);
     // R13/R14 TV strings include the null terminator in the length field;
     // strip it so comparisons like recName == "LWPOLYLINE" work correctly.
     while (!str.empty() && str.back() == '\0')
@@ -585,16 +600,15 @@ std::string dwgBuffer::get16bitStr(std::uint16_t textSize, bool nullTerm){
     std::uint16_t ts = textSize;
     if (nullTerm)
         ts += 2;
-    std::uint8_t *tmpBuffer = new std::uint8_t[textSize + 2];
-    bool good = getBytes(tmpBuffer, ts);
+    std::vector<std::uint8_t> tmpBuffer(static_cast<std::size_t>(textSize) + 2);
+    bool good = getBytes(tmpBuffer.data(), ts);
     if (!good)
         return std::string();
     if (!nullTerm) {
         tmpBuffer[textSize] = '\0';
         tmpBuffer[textSize + 1] = '\0';
     }
-    std::string str(reinterpret_cast<char*>(tmpBuffer), ts);
-    delete[]tmpBuffer;
+    std::string str(reinterpret_cast<char*>(tmpBuffer.data()), ts);
 
     return str;
 }
@@ -808,7 +822,6 @@ std::uint32_t dwgBuffer::getEnColor(DRW::Version v) {
     if (v < DRW::AC1018) //2000-
         return getSBitShort();
     std::uint32_t rgb = 0;
-    std::uint32_t cb = 0;
     std::uint16_t idx = getBitShort();
     DRW_DBG("idx reads COLOR: "); DRW_DBGH(idx);
     std::uint16_t flags = idx>>8;
@@ -828,7 +841,6 @@ std::uint32_t dwgBuffer::getEnColor(DRW::Version v) {
     lastEnColorAlphaRaw = 0;
     if (flags & 0x20) {
         lastEnColorAlphaRaw = static_cast<std::uint32_t>(getBitLong());
-        cb = lastEnColorAlphaRaw; // keep cb for legacy DRW_DBG below
         DRW_DBG("\nTransparency COLOR (alpha_raw): "); DRW_DBGH(lastEnColorAlphaRaw);
     }
     // libreDWG common_entity_data.spec:454-466: when 0x40 set, an AcDbColor
@@ -904,9 +916,9 @@ std::uint16_t dwgBuffer::crc8(std::uint16_t dx,std::int32_t start,std::int32_t e
     std::uint64_t pos = filestr->getPos();
     filestr->setPos(start);
     int n = end-start;
-    std::uint8_t *tmpBuf = new std::uint8_t[n];
-    std::uint8_t *p = tmpBuf;
-    filestr->read (tmpBuf,n);
+    std::vector<std::uint8_t> tmpBuf(n);
+    std::uint8_t *p = tmpBuf.data();
+    filestr->read (tmpBuf.data(),n);
     filestr->setPos(pos);
     if (!filestr->good())
         return 0;
@@ -919,7 +931,6 @@ std::uint16_t dwgBuffer::crc8(std::uint16_t dx,std::int32_t start,std::int32_t e
     dx = dx ^ crctable[al & 0xFF];
     p++;
   }
-  delete[]tmpBuf;
   return(dx);
 }
 
@@ -931,9 +942,9 @@ std::uint32_t dwgBuffer::crc32(std::uint32_t seed,std::int32_t start,std::int32_
     std::uint64_t pos = filestr->getPos();
     filestr->setPos(start);
     int n = end-start;
-    std::uint8_t *tmpBuf = new std::uint8_t[n];
-    std::uint8_t *p = tmpBuf;
-    filestr->read (tmpBuf,n);
+    std::vector<std::uint8_t> tmpBuf(n);
+    std::uint8_t *p = tmpBuf.data();
+    filestr->read (tmpBuf.data(),n);
     filestr->setPos(pos);
     if (!filestr->good())
         return 0;
@@ -943,7 +954,6 @@ std::uint32_t dwgBuffer::crc32(std::uint32_t seed,std::int32_t start,std::int32_
     std::uint8_t data = *p++;
     invertedCrc = (invertedCrc >> 8) ^ crc32Table[(invertedCrc ^ data) & 0xff];
     }
-    delete[]tmpBuf;
     return ~invertedCrc;
 }
 

@@ -11,6 +11,7 @@
 ******************************************************************************/
 
 #include <cstdlib>
+#include <cctype>
 #include <fstream>
 #include <string>
 #include <algorithm>
@@ -108,6 +109,30 @@ bool dxfWriterBinary::writeString(int code, std::string text) {
     bufcode[0] =code & 0xFF;
     bufcode[1] =code  >> 8;
     filestr->write(bufcode, 2);
+    if ((code >= 310 && code <= 319) || code == 1004) {
+        if ((text.size() % 2) != 0 || text.size() / 2 > 255)
+            return false;
+        unsigned char chunkLen = static_cast<unsigned char>(text.size() / 2);
+        filestr->write(reinterpret_cast<const char*>(&chunkLen), 1);
+        auto hexValue = [](char ch) -> int {
+            unsigned char c = static_cast<unsigned char>(ch);
+            if (c >= '0' && c <= '9')
+                return c - '0';
+            c = static_cast<unsigned char>(std::toupper(c));
+            if (c >= 'A' && c <= 'F')
+                return c - 'A' + 10;
+            return -1;
+        };
+        for (std::size_t i = 0; i < text.size(); i += 2) {
+            int hi = hexValue(text[i]);
+            int lo = hexValue(text[i + 1]);
+            if (hi < 0 || lo < 0)
+                return false;
+            unsigned char value = static_cast<unsigned char>((hi << 4) | lo);
+            filestr->write(reinterpret_cast<const char*>(&value), 1);
+        }
+        return filestr->good();
+    }
     *filestr << text << '\0';
     return (filestr->good());
 }
@@ -267,4 +292,3 @@ bool dxfWriterAscii::writeBool(int code, bool data) {
     *filestr << code << '\n' << data << '\n';
     return (filestr->good());
 }
-

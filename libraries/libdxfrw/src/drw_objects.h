@@ -401,12 +401,12 @@ public:
         }
         return *this;
     }
-    DRW_Dimstyle(DRW_Dimstyle&& o) noexcept : DRW_TableEntry(o) {
+    DRW_Dimstyle(DRW_Dimstyle&& o) : DRW_TableEntry(o) {
         copyPodFrom(o);
         vars = std::move(o.vars);
         o.vars.clear();
     }
-    DRW_Dimstyle& operator=(DRW_Dimstyle&& o) noexcept {
+    DRW_Dimstyle& operator=(DRW_Dimstyle&& o) {
         if (this != &o) {
             clearVars();
             DRW_TableEntry::operator=(o);
@@ -1929,7 +1929,7 @@ public:
 class DRW_Sun : public DRW_TableEntry {
     SETOBJFRIENDS
 public:
-    static constexpr std::uint16_t kDwgClassNum = 503;
+    static constexpr std::uint16_t kDwgClassNum = 517;
 
     DRW_Sun() { tType = DRW::SUN; }
 
@@ -1943,7 +1943,8 @@ public:
 
     std::uint32_t m_classVersion = 0;
     bool m_isOn = false;
-    std::uint32_t m_color = 0;
+    std::uint32_t m_color = 0;          /*!< ACI index, DXF code 63 */
+    std::int32_t m_color24 = -1;        /*!< 24-bit true color, DXF code 421; -1 = unset */
     double m_intensity = 0.0;
     bool m_hasShadow = false;
     std::int32_t m_julianDay = 0;

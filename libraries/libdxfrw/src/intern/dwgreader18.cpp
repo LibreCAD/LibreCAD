@@ -10,6 +10,7 @@
 **  along with this program.  If not, see <http://www.gnu.org/licenses/>.    **
 ******************************************************************************/
 
+#include <algorithm>
 #include <cstdlib>
 #include <iostream>
 #include <fstream>
@@ -100,10 +101,17 @@ bool dwgReader18::parseSysPage(std::uint8_t *decompSec, std::uint32_t decompSize
  //called ???: Section map: 0x4163003b
 bool dwgReader18::parseDataPage(const dwgSectionInfo &si/*, std::uint8_t *dData*/){
     DRW_DBG("\nparseDataPage\n ");
-    objData.reset( new std::uint8_t [si.pageCount * si.maxSize] );
+    if (si.size == 0)
+        return false;
+    objData.reset(new std::uint8_t[si.size]);
+    std::fill(objData.get(), objData.get() + si.size, 0);
 
     for (auto it=si.pages.begin(); it!=si.pages.end(); ++it){
         dwgPageInfo pi = it->second;
+        if (pi.startOffset > si.size || pi.dataSize > si.size - pi.startOffset) {
+            DRW_DBG("parseDataPage: page range exceeds section size\n");
+            return false;
+        }
         if (!fileBuf->setPosition(pi.address))
             return false;
         //decript section header
@@ -134,17 +142,23 @@ bool dwgReader18::parseDataPage(const dwgSectionInfo &si/*, std::uint8_t *dData*
         DRW_DBG("\n      data size (compressed)= "); DRW_DBGH(pi.cSize); DRW_DBG(" dec "); DRW_DBG(pi.cSize);
         pi.uSize = bufHdr.getRawLong32();
         DRW_DBG("\n      page size (decompressed)= "); DRW_DBGH(pi.uSize); DRW_DBG(" dec "); DRW_DBG(pi.uSize);
-        DRW_DBG("\n      start offset (in decompressed buffer)= "); DRW_DBGH(bufHdr.getRawLong32());
+        std::uint32_t headerStartOffset = bufHdr.getRawLong32();
+        DRW_DBG("\n      start offset (in decompressed buffer)= "); DRW_DBGH(headerStartOffset);
         DRW_DBG("\n      unknown= "); DRW_DBGH(bufHdr.getRawLong32());
         DRW_DBG("\n      header checksum= "); DRW_DBGH(bufHdr.getRawLong32());
         DRW_DBG("\n      data checksum= "); DRW_DBGH(bufHdr.getRawLong32()); DRW_DBG("\n");
 
         //get compressed data
+        if (pi.address > UINT64_MAX - 32 || pi.cSize > pi.size) {
+            return false;
+        }
         std::vector<std::uint8_t> cData(pi.cSize);
         if (!fileBuf->setPosition(pi.address + 32)) {
             return false;
         }
-        fileBuf->getBytes(cData.data(), pi.cSize);
+        if (!fileBuf->getBytes(cData.data(), pi.cSize)) {
+            return false;
+        }
 
         //calculate checksum
         std::uint32_t storedHdrCk = static_cast<std::uint32_t>(hdrData[24])
@@ -169,10 +183,20 @@ bool dwgReader18::parseDataPage(const dwgSectionInfo &si/*, std::uint8_t *dData*
             return false;
         }
 
+        if (headerStartOffset != pi.startOffset || pi.uSize > si.size - pi.startOffset) {
+            DRW_DBG("parseDataPage: decompressed page range exceeds section size\n");
+            return false;
+        }
+        if (pi.dataSize != 0 && pi.uSize > pi.dataSize) {
+            DRW_DBG("parseDataPage: decompressed page size exceeds declared page data size\n");
+            return false;
+        }
         std::uint8_t* oData = objData.get() + pi.startOffset;
-        pi.uSize = si.maxSize;
         if (si.compressed == 1) {
             // type 1 = store (no compression)
+            if (cData.size() != pi.uSize) {
+                return false;
+            }
             std::copy(cData.begin(), cData.end(), oData);
         } else {
             DRW_DBG("decompressing "); DRW_DBG(pi.cSize); DRW_DBG(" bytes in "); DRW_DBG(pi.uSize); DRW_DBG(" bytes\n");
@@ -348,7 +372,10 @@ bool dwgReader18::readFileHeader() {
     }
 
     DRW_DBG("\n*** dwgReader18: Processing Data Section Map ***\n");
-    dwgPageInfo sectionMap = sectionPageMapTmp[secMapId];
+    auto sectionMapIt = sectionPageMapTmp.find(secMapId);
+    if (sectionMapIt == sectionPageMapTmp.end())
+        return false;
+    dwgPageInfo sectionMap = sectionMapIt->second;
     if (!fileBuf->setPosition(sectionMap.address))
         return false;
     pageType = fileBuf->getRawLong32();
@@ -397,7 +424,10 @@ bool dwgReader18::readFileHeader() {
         DRW_DBG("\nSection std::Name= "); DRW_DBG( secInfo.name.c_str() ); DRW_DBG("\n");
         for (unsigned int i = 0; i < secInfo.pageCount; i++){
             std::uint32_t pn = buff3.getRawLong32();
-            dwgPageInfo pi = sectionPageMapTmp[pn]; //get a copy
+            auto pageIt = sectionPageMapTmp.find(pn);
+            if (pageIt == sectionPageMapTmp.end())
+                return false;
+            dwgPageInfo pi = pageIt->second; //get a copy
             DRW_DBG(" reading pag num = "); DRW_DBGH(pn);
             pi.dataSize = buff3.getRawLong32();
             pi.startOffset = buff3.getRawLong64();
@@ -539,7 +569,12 @@ bool dwgReader18::readDwgClasses(){
     DRW_DBG("\nbuff.getPosition: "); DRW_DBG(dataBuf.getPosition());
     for (std::uint32_t i= 0; i<endDataPos;i++) {
         DRW_Class *cl = new DRW_Class();
-        cl->parseDwg(version, &dataBuf, strBuf);
+        if (!cl->parseDwg(version, &dataBuf, strBuf)
+            || cl->classNum < 500
+            || classesmap.find(cl->classNum) != classesmap.end()) {
+            delete cl;
+            return false;
+        }
         classesmap[cl->classNum] = cl;
         DRW_DBG("\nbuff.getPosition: "); DRW_DBG(dataBuf.getPosition());
     }

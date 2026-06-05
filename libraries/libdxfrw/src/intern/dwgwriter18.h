@@ -46,6 +46,9 @@ public:
     ///   RL size, BS maxClassNum(499), RC, RC, Bit, padding, CRC, END sentinel.
     bool writeDwgClasses() override;
 
+    /// R2004+ AcDbObjects starts with RL 0x0dca before the first object frame.
+    bool writeDwgObjects() override;
+
     /// For R2004, HANDLES offsets are section-relative (into the OBJECTS
     /// data page).  Return the byte offset where OBJECTS content starts in
     /// m_buf so writeDwgHandles can subtract it before encoding deltas.

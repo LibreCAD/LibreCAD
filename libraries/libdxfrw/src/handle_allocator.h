@@ -16,6 +16,7 @@
 
 #include <cassert>
 #include <cstdint>
+#include <stdexcept>
 #include <set>
 
 /// Allocates object handles for a fresh DWG or DXF write.  Both write paths
@@ -77,7 +78,8 @@ public:
     void reserve(std::uint32_t h) {
         m_reserved.insert(h);
         if (h >= m_next) {
-            assert(h < UINT32_MAX);  // guard against m_next wrapping to 0
+            if (h == UINT32_MAX)
+                throw std::overflow_error("DWG/DXF handle allocator exhausted");
             m_next = h + 1;
         }
     }
@@ -87,9 +89,12 @@ public:
     /// return the same value.
     std::uint32_t next() {
         while (m_reserved.count(m_next)) {
-            assert(m_next < UINT32_MAX);  // guard against wrap in the skip loop
+            if (m_next == UINT32_MAX)
+                throw std::overflow_error("DWG/DXF handle allocator exhausted");
             ++m_next;
         }
+        if (m_next == UINT32_MAX)
+            throw std::overflow_error("DWG/DXF handle allocator exhausted");
         std::uint32_t h = m_next++;
         m_reserved.insert(h);
         return h;

@@ -813,6 +813,8 @@ DRW_DBG("\n***************************** parsing table entry *******************
     }
     if (version > DRW::AC1021) {//2010+
         std::uint32_t ms = buf->size();
+        if (bs > ms*8u)
+            return false;
         objSize = ms*8 - bs;
         DRW_DBG(" Object size: "); DRW_DBG(objSize); DRW_DBG("\n");
     }
@@ -846,9 +848,10 @@ DRW_DBG("\n***************************** parsing table entry *******************
         /* RLZ: TODO */
         dwgHandle ah = buf->getHandle();
         DRW_DBG("App Handle: "); DRW_DBGHL(ah.code, ah.size, ah.ref);
-        std::uint8_t *tmpExtData = new std::uint8_t[extDataSize];
-        buf->getBytes(tmpExtData, extDataSize);
-        dwgBuffer tmpExtDataBuf(tmpExtData, extDataSize, buf->decoder);
+        std::vector<std::uint8_t> tmpExtData(static_cast<std::size_t>(extDataSize));
+        if (!buf->getBytes(tmpExtData.data(), extDataSize))
+            return false;
+        dwgBuffer tmpExtDataBuf(tmpExtData.data(), extDataSize, buf->decoder);
         int pos = tmpExtDataBuf.getPosition();
         int bpos = tmpExtDataBuf.getBitPos();
         DRW_DBG("ext data pos: "); DRW_DBG(pos); DRW_DBG("."); DRW_DBG(bpos); DRW_DBG("\n");
@@ -871,7 +874,6 @@ DRW_DBG("\n***************************** parsing table entry *******************
             break;
         }
         DRW_DBG("ext data pos: "); DRW_DBG(tmpExtDataBuf.getPosition()); DRW_DBG("."); DRW_DBG(tmpExtDataBuf.getBitPos()); DRW_DBG("\n");
-        delete[]tmpExtData;
         extDataSize = buf->getBitShort(); //BS
         DRW_DBG(" ext data size: "); DRW_DBG(extDataSize);
     } //end parsing extData (EED)
@@ -5384,6 +5386,9 @@ bool DRW_Sun::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
     case 63:
         m_color = reader->getInt32();
         break;
+    case 421:
+        m_color24 = reader->getInt32();  // 24-bit true color (optional)
+        break;
     case 40:
         m_intensity = reader->getDouble();
         break;
@@ -5428,7 +5433,11 @@ bool DRW_Sun::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs){
 
     m_classVersion = static_cast<std::uint32_t>(buf->getBitLong());
     m_isOn = buf->getBit() != 0;
-    m_color = buf->getCmColor(version);
+    {
+        std::int32_t rgb24 = -1;
+        m_color = buf->getCmColor(version, &rgb24);  // capture optional 24-bit true color
+        m_color24 = rgb24;
+    }
     m_intensity = buf->getBitDouble();
     m_hasShadow = buf->getBit() != 0;
     m_julianDay = buf->getBitLong();
@@ -5454,7 +5463,9 @@ bool DRW_Sun::encodeDwg(DRW::Version version, dwgBufferW *buf,
 
     buf->putBitLong(static_cast<std::int32_t>(m_classVersion));
     buf->putBit(m_isOn ? 1 : 0);
-    buf->putCmColor(version, static_cast<std::uint16_t>(m_color));
+    // Carry the 24-bit true color (m_color24); putCmColor falls back to the
+    // index-only encoding (byte-identical) when m_color24 < 0 (unset).
+    buf->putCmColor(version, static_cast<std::uint16_t>(m_color), m_color24, {}, {});
     buf->putBitDouble(m_intensity);
     buf->putBit(m_hasShadow ? 1 : 0);
     buf->putBitLong(m_julianDay);

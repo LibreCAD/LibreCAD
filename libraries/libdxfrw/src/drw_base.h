@@ -20,6 +20,7 @@
 #include <string>
 #include <cmath>
 #include <unordered_map>
+#include <utility>
 #include <vector>
 
 #ifdef DRW_ASSERTS
@@ -281,6 +282,60 @@ public:
             content.s = &sdata;
         if (d.vType == BINARY)
             content.b = &bdata;
+    }
+
+    DRW_Variant& operator=(const DRW_Variant& d) {
+        if (this == &d)
+            return *this;
+        sdata = d.sdata;
+        vdata = d.vdata;
+        bdata = d.bdata;
+        content = d.content;
+        vType = d.vType;
+        vCode = d.vCode;
+        sIsLayerRef = d.sIsLayerRef;
+        if (d.vType == COORD)
+            content.v = &vdata;
+        if (d.vType == STRING)
+            content.s = &sdata;
+        if (d.vType == BINARY)
+            content.b = &bdata;
+        return *this;
+    }
+
+    DRW_Variant(DRW_Variant&& d) noexcept
+        : sdata(std::move(d.sdata))
+        , vdata(d.vdata)
+        , bdata(std::move(d.bdata))
+        , content(d.content)
+        , vType(d.vType)
+        , vCode(d.vCode)
+        , sIsLayerRef(d.sIsLayerRef) {
+        if (d.vType == COORD)
+            content.v = &vdata;
+        if (d.vType == STRING)
+            content.s = &sdata;
+        if (d.vType == BINARY)
+            content.b = &bdata;
+    }
+
+    DRW_Variant& operator=(DRW_Variant&& d) noexcept {
+        if (this == &d)
+            return *this;
+        sdata = std::move(d.sdata);
+        vdata = d.vdata;
+        bdata = std::move(d.bdata);
+        content = d.content;
+        vType = d.vType;
+        vCode = d.vCode;
+        sIsLayerRef = d.sIsLayerRef;
+        if (d.vType == COORD)
+            content.v = &vdata;
+        if (d.vType == STRING)
+            content.s = &sdata;
+        if (d.vType == BINARY)
+            content.b = &bdata;
+        return *this;
     }
 
     ~DRW_Variant() {

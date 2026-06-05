@@ -473,7 +473,7 @@ TEST_CASE("DXF SUN object is read (status/intensity/shadows/date)", "[dxf][sun]"
   const char *dxf =
       "0\nSECTION\n2\nOBJECTS\n"
       "0\nSUN\n5\n2E\n330\n29\n100\nAcDbSun\n"
-      "90\n1\n290\n1\n63\n7\n40\n1.0\n291\n1\n"
+      "90\n1\n290\n1\n63\n7\n421\n16711680\n40\n1.0\n291\n1\n"
       "91\n2455563\n92\n43200000\n292\n0\n70\n1\n71\n256\n280\n2\n"
       "0\nENDSEC\n0\nEOF\n";
   readDxf(dxf, cap, "lc_sun_read.dxf");
@@ -481,6 +481,7 @@ TEST_CASE("DXF SUN object is read (status/intensity/shadows/date)", "[dxf][sun]"
   REQUIRE(cap.m_callCount == 1);
   CHECK(cap.m_captured.m_isOn == true);
   CHECK(cap.m_captured.m_color == 7u);
+  CHECK(cap.m_captured.m_color24 == 16711680);  // code 421 true-color preserved (G-1)
   CHECK(cap.m_captured.m_intensity == 1.0);
   CHECK(cap.m_captured.m_hasShadow == true);
   CHECK(cap.m_captured.m_julianDay == 2455563);

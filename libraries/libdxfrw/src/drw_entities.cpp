@@ -940,8 +940,7 @@ bool DRW_Entity::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
         space = static_cast<DRW::Space>(reader->getInt32());
         break;
     case 102:
-        parseDxfGroups(code, reader);
-        break;
+        return parseDxfGroups(code, reader);
     case 284:
         shadow = static_cast<DRW::ShadowMode>(reader->getInt32() & 0x3);
         break;
@@ -1004,42 +1003,54 @@ bool DRW_Entity::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
 bool DRW_Entity::parseDxfGroups(int code, const std::unique_ptr<dxfReader>& reader){
     std::list<DRW_Variant> ls;
     DRW_Variant curr;
-    int nc;
     std::string appName= reader->getString();
-    if (!appName.empty() && appName.at(0)== '{'){
-        curr.addString(code, appName.substr(1, (int) appName.size()-1));
+    bool complete = true;
+    if (!appName.empty() && appName.at(0)== '{') {
+        curr.addString(code, appName.substr(1));
         ls.push_back(curr);
-        while (code !=102 && appName.at(0)== '}'){
-            reader->readRec(&nc);//RLZ curr.code = code or nc?
-//            curr.code = code;
-            //RLZ code == 330 || code == 360 OR nc == 330 || nc == 360 ?
-            if (code == 330 || code == 360)
-                curr.addInt(code, reader->getHandleString());//RLZ code or nc
-            else {
+        int depth = 1;
+        int nextCode = 0;
+        while (depth > 0 && reader->readRec(&nextCode)) {
+            DRW_Variant value;
+            if (nextCode == 102) {
+                std::string marker = reader->getString();
+                value.addString(nextCode, marker);
+                if (!marker.empty() && marker.at(0) == '{')
+                    ++depth;
+                else if (!marker.empty() && marker.at(0) == '}')
+                    --depth;
+            } else if ((nextCode >= 320 && nextCode <= 369)
+                       || (nextCode >= 390 && nextCode <= 399)
+                       || nextCode == 480 || nextCode == 481
+                       || nextCode == 1005) {
+                value.addString(nextCode, reader->getString());
+            } else {
                 switch (reader->type) {
                 case dxfReader::STRING:
-                    curr.addString(code, reader->getString());//RLZ code or nc
+                case dxfReader::BINARY:
+                    value.addString(nextCode, reader->getString());
                     break;
                 case dxfReader::INT32:
+                case dxfReader::BOOL:
+                    value.addInt(nextCode, reader->getInt32());
+                    break;
                 case dxfReader::INT64:
-                    curr.addInt(code, reader->getInt32());//RLZ code or nc
+                    value.addInt64(nextCode, static_cast<std::int64_t>(reader->getInt64()));
                     break;
                 case dxfReader::DOUBLE:
-                    curr.addDouble(code, reader->getDouble());//RLZ code or nc
-                    break;
-                case dxfReader::BOOL:
-                    curr.addInt(code, reader->getInt32());//RLZ code or nc
+                    value.addDouble(nextCode, reader->getDouble());
                     break;
                 default:
                     break;
                 }
             }
-            ls.push_back(curr);
+            ls.push_back(value);
         }
+        complete = depth == 0;
     }
 
     appData.push_back(ls);
-    return true;
+    return complete;
 }
 
 bool DRW_Entity::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer* strBuf, std::uint32_t bs){
@@ -1096,9 +1107,10 @@ bool DRW_Entity::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer* strBu
     while (extDataSize>0 && buf->isGood()) {
         dwgHandle ah = buf->getHandle();
         DRW_DBG("App Handle: "); DRW_DBGHL(ah.code, ah.size, ah.ref);
-        std::uint8_t *tmpExtData = new std::uint8_t[extDataSize];
-        buf->getBytes(tmpExtData, extDataSize);
-        dwgBuffer tmpExtDataBuf(tmpExtData, extDataSize, buf->decoder);
+        std::vector<std::uint8_t> tmpExtData(static_cast<std::size_t>(extDataSize));
+        if (!buf->getBytes(tmpExtData.data(), extDataSize))
+            return false;
+        dwgBuffer tmpExtDataBuf(tmpExtData.data(), extDataSize, buf->decoder);
 
         // Placeholder for the APPID name (DXF group 1001). Filled in by
         // parseAttribs from appIdmap; falls back to ACAD_<hex> if unknown.
@@ -1234,7 +1246,6 @@ bool DRW_Entity::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer* strBu
                 break;
             }
         }
-        delete[]tmpExtData;
         extDataSize = buf->getBitShort(); //BS
         DRW_DBG(" ext data size: "); DRW_DBG(extDataSize);
     } //end parsing extData (EED)

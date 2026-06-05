@@ -62,6 +62,10 @@ public:
 class dxfRW {
 public:
     dxfRW(const char* name);
+    dxfRW(const dxfRW&) = delete;
+    dxfRW& operator=(const dxfRW&) = delete;
+    dxfRW(dxfRW&&) = delete;
+    dxfRW& operator=(dxfRW&&) = delete;
     ~dxfRW();
     void setDebug(DRW::DebugLevel lvl);
     /// reads the file specified in constructor

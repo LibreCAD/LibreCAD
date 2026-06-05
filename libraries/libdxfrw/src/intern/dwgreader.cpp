@@ -14,6 +14,7 @@
 #include <cstdio>
 #include <cstdlib>
 #include <fstream>
+#include <limits>
 #include <string>
 #include <sstream>
 #include "dwgreader.h"
@@ -178,15 +179,17 @@ bool dwgReader::checkSentinel(dwgBuffer *buf, enum secEnum::DWGSection sec, bool
 **/
 bool dwgReader::readDwgHandles(dwgBuffer *dbuf, std::uint64_t offset, std::uint64_t size) {
     DRW_DBG("\ndwgReader::readDwgHandles\n");
+    if (size > dbuf->size() || offset > dbuf->size() - size)
+        return false;
     if (!dbuf->setPosition(offset))
         return false;
 
-    std::uint32_t maxPos = offset + size;
+    std::uint64_t maxPos = offset + size;
     DRW_DBG("\nSection HANDLES offset= "); DRW_DBG(offset);
     DRW_DBG("\nSection HANDLES size= "); DRW_DBG(size);
     DRW_DBG("\nSection HANDLES maxPos= "); DRW_DBG(maxPos);
 
-    int startPos = offset;
+    std::uint64_t startPos = offset;
     bool end = false;
 
     std::vector<std::uint8_t> tmpByteStr;
@@ -197,29 +200,38 @@ bool dwgReader::readDwgHandles(dwgBuffer *dbuf, std::uint64_t offset, std::uint6
      */
     while (!end && (maxPos > dbuf->getPosition())) {
         DRW_DBG("\nstart handles section buf->curPosition()= "); DRW_DBG(dbuf->getPosition()); DRW_DBG("\n");
-        std::uint16_t size = dbuf->getBERawShort16();
-        DRW_DBG("object map section size= "); DRW_DBG(size); DRW_DBG("\n");
+        std::uint16_t pageSize = dbuf->getBERawShort16();
+        DRW_DBG("object map section size= "); DRW_DBG(pageSize); DRW_DBG("\n");
+        if (pageSize < 2 || startPos > maxPos || pageSize > maxPos - startPos) {
+            DRW_DBG("object map section size out of range\n");
+            return false;
+        }
         dbuf->setPosition(startPos);
-        tmpByteStr.resize(size);
-        dbuf->getBytes(tmpByteStr.data(), size);
-        dwgBuffer buff(tmpByteStr.data(), size, &decoder);
-        if (size != 2){
-            buff.setPosition(2);
+        tmpByteStr.resize(pageSize);
+        if (!dbuf->getBytes(tmpByteStr.data(), pageSize))
+            return false;
+        dwgBuffer buff(tmpByteStr.data(), pageSize, &decoder);
+        if (pageSize != 2){
+            if (!buff.setPosition(2))
+                return false;
             int lastHandle = 0;
             int lastLoc = 0;
             //read data
-            while(buff.getPosition()< size){
+            while(buff.getPosition()< pageSize){
+                std::uint64_t prevPos = buff.getPosition();
                 lastHandle += buff.getUModularChar();
                 DRW_DBG("object map lastHandle= "); DRW_DBGH(lastHandle);
                 lastLoc += buff.getModularChar();
                 DRW_DBG(" lastLoc= "); DRW_DBG(lastLoc); DRW_DBG("\n");
+                if (!buff.isGood() || buff.getPosition() <= prevPos)
+                    return false;
                 ObjectMap[lastHandle]= objHandle(0, lastHandle, lastLoc);
             }
         } else {
 	    end = true;
 	}
         //verify crc
-        std::uint16_t crcCalc = buff.crc8(0xc0c1,0,size);
+        std::uint16_t crcCalc = buff.crc8(0xc0c1,0,pageSize);
         std::uint16_t crcRead = dbuf->getBERawShort16();
         DRW_DBG("object map section crc8 read= "); DRW_DBG(crcRead);
         DRW_DBG("\nobject map section crc8 calculated= "); DRW_DBG(crcCalc);
@@ -1090,18 +1102,43 @@ bool dwgReader::readDwgEntity(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
     std::uint32_t bs = 0;
 
     nextEntLink = prevEntLink = 0;// set to 0 to skip unimplemented entities
-    dbuf->setPosition(obj.loc);
+    const std::uint64_t frameStart = obj.loc;
+    dbuf->setPosition(frameStart);
     //verify if position is ok:
     if (!dbuf->isGood()){
         DRW_DBG(" Warning: readDwgEntity, bad location\n");
         return false;
     }
     int size = dbuf->getModularShort();
+    if (size < 0) {
+        DRW_DBG(" Warning: readDwgEntity, negative size\n");
+        return false;
+    }
     if (version > DRW::AC1021) {//2010+
         bs = dbuf->getUModularChar();
     }
+    const std::uint64_t bodyStart = dbuf->getPosition();
+    const auto bodySize = static_cast<std::uint64_t>(size);
+    if (bodyStart > dbuf->size() || bodySize > dbuf->size() - bodyStart
+        || dbuf->size() - bodyStart - bodySize < 2) {
+        DRW_DBG(" Warning: readDwgEntity, frame size out of range\n");
+        return false;
+    }
+    if (frameStart > static_cast<std::uint64_t>(std::numeric_limits<std::int32_t>::max())
+        || bodyStart + bodySize > static_cast<std::uint64_t>(std::numeric_limits<std::int32_t>::max())) {
+        DRW_DBG(" Warning: readDwgEntity, frame CRC range out of range\n");
+        return false;
+    }
     std::vector<std::uint8_t> tmpByteStr(size);
     dbuf->getBytes(tmpByteStr.data(), size);
+    std::uint16_t crcRead = dbuf->getRawShort16();
+    std::uint16_t crcCalc = dbuf->crc8(0xC0C1,
+                                       static_cast<std::int32_t>(frameStart),
+                                       static_cast<std::int32_t>(bodyStart + bodySize));
+    if (crcRead != crcCalc) {
+        DRW_DBG(" Warning: readDwgEntity, CRC mismatch\n");
+        return false;
+    }
     //verify if getBytes is ok:
     if (!dbuf->isGood()) {
         DRW_DBG(" Warning: readDwgEntity, bad size\n");
@@ -1622,25 +1659,49 @@ bool dwgReader::readDwgObject(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
     bool ret = true;
     std::uint32_t bs = 0;
 
-        dbuf->setPosition(obj.loc);
+        const std::uint64_t frameStart = obj.loc;
+        dbuf->setPosition(frameStart);
         //verify if position is ok:
         if (!dbuf->isGood()){
             DRW_DBG(" Warning: readDwgObject, bad location\n");
             return false;
         }
         int size = dbuf->getModularShort();
+        if (size < 0) {
+            DRW_DBG(" Warning: readDwgObject, negative size\n");
+            return false;
+        }
         if (version > DRW::AC1021) {//2010+
             bs = dbuf->getUModularChar();
         }
-        std::uint8_t *tmpByteStr = new std::uint8_t[size];
-        dbuf->getBytes(tmpByteStr, size);
+        const std::uint64_t bodyStart = dbuf->getPosition();
+        const auto bodySize = static_cast<std::uint64_t>(size);
+        if (bodyStart > dbuf->size() || bodySize > dbuf->size() - bodyStart
+            || dbuf->size() - bodyStart - bodySize < 2) {
+            DRW_DBG(" Warning: readDwgObject, frame size out of range\n");
+            return false;
+        }
+        if (frameStart > static_cast<std::uint64_t>(std::numeric_limits<std::int32_t>::max())
+            || bodyStart + bodySize > static_cast<std::uint64_t>(std::numeric_limits<std::int32_t>::max())) {
+            DRW_DBG(" Warning: readDwgObject, frame CRC range out of range\n");
+            return false;
+        }
+        std::vector<std::uint8_t> tmpByteStr(size);
+        dbuf->getBytes(tmpByteStr.data(), size);
+        std::uint16_t crcRead = dbuf->getRawShort16();
+        std::uint16_t crcCalc = dbuf->crc8(0xC0C1,
+                                           static_cast<std::int32_t>(frameStart),
+                                           static_cast<std::int32_t>(bodyStart + bodySize));
+        if (crcRead != crcCalc) {
+            DRW_DBG(" Warning: readDwgObject, CRC mismatch\n");
+            return false;
+        }
         //verify if getBytes is ok:
         if (!dbuf->isGood()){
             DRW_DBG(" Warning: readDwgObject, bad size\n");
-            delete[]tmpByteStr;
             return false;
         }
-        dwgBuffer buff(tmpByteStr, size, &decoder);
+        dwgBuffer buff(tmpByteStr.data(), size, &decoder);
         //oType are set parsing entities
         std::int16_t oType = obj.type;
         auto makeRawObject = [&](int rawType, const DRW_Class *cls = nullptr) {
@@ -1656,7 +1717,7 @@ bool dwgReader::readDwgObject(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                 raw.m_recordName = cls->recName;
                 raw.m_className = cls->className;
             }
-            raw.m_rawBytes.assign(tmpByteStr, tmpByteStr + size);
+            raw.m_rawBytes = tmpByteStr;
             return raw;
         };
 
@@ -1664,8 +1725,10 @@ bool dwgReader::readDwgObject(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
         case 42: { //DICTIONARY (ODA fixed type 42)
             DRW_Dictionary e;
             ret = e.parseDwg(version, &buff, bs);
-            intfa.addDictionary(e);
-            if (ret) intfa.addUnsupportedObject(makeRawObject(oType));
+            if (ret) {
+                intfa.addDictionary(e);
+                intfa.addUnsupportedObject(makeRawObject(oType));
+            }
             break; }
         case 79: { //XRECORD (ODA fixed type 0x4f)
             DRW_XRecord e;
@@ -1684,9 +1747,9 @@ bool dwgReader::readDwgObject(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                 // is fully parsed (entries usually appear before OBJECTS,
                 // so this map is consulted in case 47 dispatch).
                 mlineStyleNameMap[obj.handle] = e.name;
+                intfa.addMLineStyle(e);
+                intfa.addUnsupportedObject(makeRawObject(oType));
             }
-            intfa.addMLineStyle(e);
-            if (ret) intfa.addUnsupportedObject(makeRawObject(oType));
             break; }
         case 72: { //GROUP (ODA fixed type 72)
             DRW_Group e;
@@ -1699,8 +1762,10 @@ bool dwgReader::readDwgObject(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
         case 82: { //LAYOUT (ODA fixed type 82)
             DRW_Layout e;
             ret = e.parseDwg(version, &buff, bs);
-            intfa.addLayout(e);
-            if (ret) intfa.addUnsupportedObject(makeRawObject(oType));
+            if (ret) {
+                intfa.addLayout(e);
+                intfa.addUnsupportedObject(makeRawObject(oType));
+            }
             break; }
         case 80: { //ACDBPLACEHOLDER (ODA fixed type 0x50)
             DRW_AcDbPlaceholder e;
@@ -1713,7 +1778,8 @@ bool dwgReader::readDwgObject(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
         case 102: {
             DRW_ImageDef e;
             ret = e.parseDwg(version, &buff, bs);
-            intfa.linkImage(&e);
+            if (ret)
+                intfa.linkImage(&e);
             break; }
         default:
             // Custom-class objects (oType >= 500) — look up by classesmap
@@ -2154,7 +2220,6 @@ bool dwgReader::readDwgObject(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
         if (!ret){
             DRW_DBG("Warning: Object type "); DRW_DBG(oType);DRW_DBG("has failed, handle: "); DRW_DBG(obj.handle); DRW_DBG("\n");
         }
-        delete[]tmpByteStr;
     return ret;
 }
 

@@ -110,6 +110,17 @@ public:
   }
 };
 
+class LineCapture : public StubInterface {
+public:
+  int m_callCount = 0;
+  DRW_Line m_captured;
+  void addLine(const DRW_Line &d) override {
+    if (m_callCount == 0)
+      m_captured = d;
+    ++m_callCount;
+  }
+};
+
 // Emits a single INSERT (with whatever attlist it carries) on write.
 class AttribEmitter : public StubInterface {
 public:
@@ -170,6 +181,48 @@ const char *kInsertTwoAttribs =
     "0\nENDSEC\n0\nEOF\n";
 
 } // namespace
+
+TEST_CASE("DXF BLOCK first entity keeps first data group", "[dxf][block]") {
+  LineCapture cap;
+  const char *dxf =
+      "0\nSECTION\n2\nBLOCKS\n"
+      "0\nBLOCK\n5\n20\n8\nBlockLayer\n2\nB1\n70\n0\n10\n0\n20\n0\n30\n0\n"
+      "0\nLINE\n5\n21\n8\nInnerLayer\n10\n0\n20\n0\n11\n1\n21\n1\n"
+      "0\nENDBLK\n5\n22\n8\nBlockLayer\n"
+      "0\nENDSEC\n0\nEOF\n";
+  readDxf(dxf, cap, "lc_block_first_entity.dxf");
+
+  REQUIRE(cap.m_callCount == 1);
+  CHECK(cap.m_captured.handle == 0x21u);
+  CHECK(cap.m_captured.layer == "InnerLayer");
+}
+
+TEST_CASE("DXF entity 102 reactor handles do not overwrite owner", "[dxf][reactor]") {
+  LineCapture cap;
+  const char *dxf =
+      "0\nSECTION\n2\nENTITIES\n"
+      "0\nLINE\n5\n21\n330\nC\n102\n{ACAD_REACTORS\n330\nD\n102\n}\n"
+      "8\n0\n10\n0\n20\n0\n11\n1\n21\n1\n"
+      "0\nENDSEC\n0\nEOF\n";
+  readDxf(dxf, cap, "lc_entity_102_owner.dxf");
+
+  REQUIRE(cap.m_callCount == 1);
+  CHECK(cap.m_captured.parentHandle == 0xCu);
+}
+
+TEST_CASE("DXF malformed ASCII group code is rejected", "[dxf][malformed]") {
+  const auto path = std::filesystem::temp_directory_path() / "lc_bad_group_code.dxf";
+  std::filesystem::remove(path);
+  {
+    std::ofstream out(path);
+    out << "0\nSECTION\n2\nENTITIES\nBAD\nLINE\n0\nENDSEC\n0\nEOF\n";
+  }
+
+  StubInterface cap;
+  dxfRW r(path.string().c_str());
+  CHECK_FALSE(r.read(&cap, /*ext=*/true));
+  std::filesystem::remove(path);
+}
 
 TEST_CASE("DXF INSERT collects one trailing ATTRIB into attlist", "[dxf][attrib]") {
   InsertCapture cap;
