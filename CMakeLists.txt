@@ -4,6 +4,11 @@ project(LibreCAD VERSION 2.2.2)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+# Set policies
+if(POLICY CMP0167)
+    cmake_policy(SET CMP0167 NEW)
+endif()
+
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOUIC_OPTIONS --connections string)
 
@@ -11,6 +16,12 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
 add_compile_definitions(QC_APPDIR=librecad)
+# Suppress WrapVulkanHeaders warning
+set(WrapVulkanHeaders_FIND_QUIETLY ON)
+find_package(WrapVulkanHeaders QUIET)
+
+# Explicitly disable Vulkan to avoid warnings
+set(QT_NO_VULKAN 1)
 find_package(Qt6 COMPONENTS Gui Core Widgets PrintSupport Svg Network REQUIRED)
 find_package(Qt6 REQUIRED COMPONENTS LinguistTools)
 find_package(Boost REQUIRED)
@@ -1614,8 +1625,17 @@ set(MAIN_SOURCES
 
 # Main executable
 qt_add_executable(librecad
-	${MAIN_SOURCES}
+    ${MAIN_SOURCES}
 )
+
+# On macOS, make it a bundle and set info.plist
+if(APPLE)
+    set_target_properties(librecad PROPERTIES
+        MACOSX_BUNDLE TRUE
+        MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/librecad/src/macos/Info.plist"
+    )
+endif()
+
 target_include_directories(librecad PRIVATE
         ${SHARED_INCLUDES}
 )
@@ -1626,7 +1646,15 @@ target_link_libraries(librecad PRIVATE
    librecad_lib
    Qt6::Core Qt6::Widgets Qt6::Gui Qt6::PrintSupport Qt6::Svg Qt6::Network
 )
-install(TARGETS librecad RUNTIME DESTINATION bin)
+
+if(APPLE)
+    install(TARGETS librecad
+        RUNTIME DESTINATION bin
+        BUNDLE DESTINATION bin
+    )
+else()
+    install(TARGETS librecad RUNTIME DESTINATION bin)
+endif()
 
 # Translations
 set(TS_DIR librecad/ts)
@@ -1697,6 +1725,8 @@ set(TS_FILES
     librecad/ts/librecad_zh_cn.ts
     librecad/ts/librecad_zh_tw.ts
 )
+
+# Use qt_add_translations normally, the language warnings are harmless
 qt_add_translations(librecad TS_FILE_DIR ${TS_DIR} TS_FILES ${TS_FILES})
 
 # Optional ttf2lff
