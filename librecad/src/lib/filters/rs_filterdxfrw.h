@@ -194,6 +194,7 @@ public:
     void addRawDwgSection(const DRW_RawDwgSection &data) override;
     void addRawDxfObject(const DRW_RawDxfObject &data) override;
     void addRawDxfEntity(const DRW_RawDxfObject &data) override;
+    void addDxfClass(const DRW_Class &data) override;
     void addAcDbPlaceholder(const DRW_AcDbPlaceholder &data) override;
     void addSun(const DRW_Sun &data) override;
     void addDictionary(const DRW_Dictionary &data) override;

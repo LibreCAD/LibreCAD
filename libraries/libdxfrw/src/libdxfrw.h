@@ -225,6 +225,7 @@ private:
     /// used by read() to parse the content of the file
     bool processDxf();
     bool processHeader();
+    bool processClasses();
     bool processTables();
     bool processBlocks();
     bool processBlock();

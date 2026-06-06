@@ -19,6 +19,8 @@
 #include "drw_objects.h"
 #include "drw_header.h"
 
+class DRW_Class;
+
 /**
  * Abstract class (interface) for communicate dxfReader with the application.
  * Inherit your class which takes care of the entities in the
@@ -92,6 +94,10 @@ public:
     //! Lossless DXF passthrough (slice A4): an ENTITIES/BLOCKS entity libdxfrw does
     //! not model (incl. standalone ATTDEF) delivered verbatim for unchanged re-emit.
     virtual void addRawDxfEntity(const DRW_RawDxfObject& data) { (void) data; }
+    //! Parsed DXF CLASSES-section entry. Default no-op keeps older consumers
+    //! source-compatible while filters that preserve raw custom data can retain
+    //! exact class metadata for re-emission.
+    virtual void addDxfClass(const DRW_Class& data) { (void) data; }
 
     /**
      * Called for every block. Note: all entities added after this

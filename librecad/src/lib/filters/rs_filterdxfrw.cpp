@@ -4961,6 +4961,12 @@ void RS_FilterDXFRW::addRawDxfEntity(const DRW_RawDxfObject &data) {
   }
 }
 
+void RS_FilterDXFRW::addDxfClass(const DRW_Class &data) {
+  if (m_graphic != nullptr) {
+    m_graphic->dwgAdvancedMetadata().addDxfClass(data);
+  }
+}
+
 void RS_FilterDXFRW::addUnsupportedObject(const DRW_UnsupportedObject &data) {
   if (m_graphic != nullptr) {
     m_graphic->dwgAdvancedMetadata().addUnsupportedObject(data);
@@ -5411,10 +5417,19 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic& g, const QString& file, RS2::FormatT
         const auto &metadata = g.dwgAdvancedMetadata();
         std::vector<DRW_Class> classes;
         std::map<std::string, std::size_t> classIdx;
+        std::map<std::string, DRW_Class> sourceClasses;
+        for (const DRW_Class &cls : metadata.dxfClasses()) {
+            if (!cls.recName.empty())
+                sourceClasses.emplace(cls.recName, cls);
+        }
         auto registerClassFor = [&](const std::string &recordName) {
             DRW_Class cls;
-            if (!dxfRW::dxfClassForRecordName(recordName, cls))
+            auto sourceIt = sourceClasses.find(recordName);
+            if (sourceIt != sourceClasses.end()) {
+                cls = sourceIt->second;
+            } else if (!dxfRW::dxfClassForRecordName(recordName, cls)) {
                 return;
+            }
             auto it = classIdx.find(recordName);
             if (it == classIdx.end()) {
                 cls.instanceCount = 1;

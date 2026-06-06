@@ -303,6 +303,55 @@ TEST_CASE("DXF round-trip via RS_FilterDXFRW preserves unmodeled object + entity
   std::filesystem::remove(out);
 }
 
+TEST_CASE("DXF CLASSES section round-trips source custom entity metadata",
+          "[dxf][roundtrip][filter][classes]") {
+  ensureSettings();
+  const std::string src = tmpFile("classsrc.dxf");
+  const std::string out = tmpFile("classout.dxf");
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+
+  const std::string dxf =
+      "0\nSECTION\n2\nCLASSES\n"
+      "0\nCLASS\n1\nWEIRDENT\n2\nAcDbWeirdEntity\n3\nCUSTOM_APP\n"
+      "90\n4095\n91\n1\n280\n0\n281\n1\n"
+      "0\nENDSEC\n"
+      "0\nSECTION\n2\nENTITIES\n"
+      "0\nWEIRDENT\n5\n7B\n100\nAcDbEntity\n8\n0\n"
+      "100\nAcDbWeirdEntity\n10\n1.0\n20\n2.0\n30\n0.0\n"
+      "0\nENDSEC\n0\nEOF\n";
+  writeText(src, dxf);
+
+  RS_Graphic graphic;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(src),
+                              RS2::FormatDXFRW));
+  }
+
+  const auto &metadata = graphic.dwgAdvancedMetadata();
+  bool sawClass = false;
+  for (const DRW_Class &cls : metadata.dxfClasses()) {
+    if (cls.recName == "WEIRDENT" && cls.className == "AcDbWeirdEntity"
+        && cls.appName == "CUSTOM_APP") {
+      sawClass = true;
+    }
+  }
+  CHECK(sawClass);
+
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out),
+                              RS2::FormatDXFRW));
+  }
+
+  CHECK(countRecords(out, "WEIRDENT") == 1);
+  CHECK(classRecordNames(out).count("WEIRDENT") == 1);
+
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+}
+
 TEST_CASE("DXF export reserves handle space so preserved raw handles do not "
           "collide with minted handles",
           "[dxf][roundtrip][filter][handles]") {

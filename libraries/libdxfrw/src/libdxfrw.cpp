@@ -2689,6 +2689,9 @@ bool dxfRW::processDxf() {
                 if ("HEADER" == sectionname) {
                     processed = processHeader();
                 }
+                else if ("CLASSES" == sectionname) {
+                    processed = processClasses();
+                }
                 else if ("TABLES" == sectionname) {
                     processed = processTables();
                 }
@@ -2702,8 +2705,6 @@ bool dxfRW::processDxf() {
                     processed = processObjects();
                 }
                 else {
-                    //TODO handle CLASSES
-
                     DRW_DBG("section unknown or not supported\n");
                     continue;
                 }
@@ -2755,6 +2756,78 @@ bool dxfRW::processHeader() {
 
         if (!header.parseCode(code, reader)) {
             return setError( DRW::BAD_CODE_PARSED);
+        }
+    }
+
+    return setError(DRW::BAD_READ_HEADER);
+}
+
+/********* Classes Section *********/
+
+bool dxfRW::processClasses() {
+    DRW_DBG("dxfRW::processClasses\n");
+    int code = 0;
+    bool reading = false;
+    DRW_Class cls;
+
+    auto finishClass = [&]() -> bool {
+        if (!reading)
+            return true;
+        if (cls.recName.empty() || cls.className.empty()) {
+            DRW_DBG("malformed CLASS record: missing record/class name\n");
+            return false;
+        }
+        iface->addDxfClass(cls);
+        return true;
+    };
+
+    while (reader->readRec(&code)) {
+        DRW_DBG(code); DRW_DBG(" processClasses\n");
+        if (code == 0) {
+            if (!finishClass())
+                return setError(DRW::BAD_CODE_PARSED);
+            const std::string sectionstr = reader->getString();
+            DRW_DBG(sectionstr); DRW_DBG(" processClasses\n\n");
+            if (sectionstr == "CLASS") {
+                reading = true;
+                cls = DRW_Class{};
+                continue;
+            }
+            if (sectionstr == "ENDSEC") {
+                return true;
+            }
+
+            DRW_DBG("unexpected 0 code in classes section!\n");
+            return setError(DRW::BAD_READ_HEADER);
+        }
+
+        if (!reading)
+            continue;
+
+        switch (code) {
+        case 1:
+            cls.recName = reader->getUtf8String();
+            break;
+        case 2:
+            cls.className = reader->getUtf8String();
+            break;
+        case 3:
+            cls.appName = reader->getUtf8String();
+            break;
+        case 90:
+            cls.proxyFlag = reader->getInt32();
+            break;
+        case 91:
+            cls.instanceCount = reader->getInt32();
+            break;
+        case 280:
+            cls.wasaProxyFlag = reader->getInt32();
+            break;
+        case 281:
+            cls.entityFlag = reader->getInt32();
+            break;
+        default:
+            break;
         }
     }
 

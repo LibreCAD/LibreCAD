@@ -22,6 +22,7 @@
 #include <utility>
 #include <vector>
 
+#include "drw_classes.h"
 #include "drw_entities.h"
 #include "drw_objects.h"
 
@@ -1920,6 +1921,7 @@ public:
         m_sourceDwgVersion = DRW::UNKNOWNV;
         m_rawObjects.clear();
         m_rawDwgSections.clear();
+        m_dxfClasses.clear();
         m_rawDxfObjects.clear();
         m_rawDxfEntities.clear();
         m_views.clear();
@@ -1999,6 +2001,10 @@ public:
 
     void addRawDxfEntity(const DRW_RawDxfObject& entity) {
         m_rawDxfEntities.push_back(entity);
+    }
+
+    void addDxfClass(const DRW_Class& cls) {
+        m_dxfClasses.push_back(cls);
     }
 
     void addView(const DRW_View& view) {
@@ -3079,6 +3085,7 @@ public:
     }
     const std::vector<DRW_RawDxfObject>& rawDxfObjects() const { return m_rawDxfObjects; }
     const std::vector<DRW_RawDxfObject>& rawDxfEntities() const { return m_rawDxfEntities; }
+    const std::vector<DRW_Class>& dxfClasses() const { return m_dxfClasses; }
 
     // Source DWG version of the document this metadata was read from. Used to
     // gate raw-replay (both emit + CLASSES registration) on source==target.
@@ -7435,6 +7442,7 @@ private:
     DRW::Version m_sourceDwgVersion = DRW::UNKNOWNV;
     std::vector<RawObjectRecord> m_rawObjects;
     std::vector<RawDwgSectionRecord> m_rawDwgSections;
+    std::vector<DRW_Class> m_dxfClasses;
     std::vector<DRW_RawDxfObject> m_rawDxfObjects;
     std::vector<DRW_RawDxfObject> m_rawDxfEntities;
     std::vector<ViewRecord> m_views;
