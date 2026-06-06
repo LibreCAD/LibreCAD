@@ -247,7 +247,13 @@ bool dwgCompressor::decompress18(std::uint8_t *cbuf, std::uint8_t *dbuf, std::ui
                 litCount= litLength18();
         } else if (oc > 0x11 && oc< 0x20){
             compBytes = (oc & 0x0F) + 2;
-            compOffset = twoByteOffset(&litCount) + 0x3FFF;
+            // ODA 4.7 / libreDWG decode.c:1245-1246: for opcodes 0x12-0x1F, bit
+            // 3 of the opcode extends the back-reference offset by 0x4000 (base
+            // is 0x4000 when bit3=0, 0x8000 when bit3=1). Pre-add the extension
+            // so back-references >= 0x4000 bytes decode correctly. The +0x3FFF
+            // (vs libreDWG's 0x4000) is balanced by the -1 in the copy index
+            // below, matching libreDWG's two_byte_offset(..., 0x4000, ...).
+            compOffset = twoByteOffset(&litCount) + 0x3FFF + ((oc & 0x08) << 11);
             if (litCount == 0)
                 litCount= litLength18();
         } else if (oc == 0x20){
