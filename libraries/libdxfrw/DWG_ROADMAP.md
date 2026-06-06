@@ -1,6 +1,6 @@
-# DWG ACadSharp Gap-Closure Roadmap
+# DWG/DXF Feature-Completeness Roadmap
 
-Last reviewed: 2026-05-28.
+Last reviewed: 2026-06-06.
 
 This is the single current DWG/DXF implementation plan for LibreCAD/libdxfrw.
 It replaces the earlier split roadmap and support-plan files. The cleanup scan
@@ -9,7 +9,15 @@ this file to avoid plan drift.
 
 ## Review Scope
 
-Primary comparison target:
+Current comparison targets:
+
+- `../dwgTs/`
+  - `README.md`
+  - `FEATURE_COVERAGE.md`
+  - `src/dwg/sections/DwgObjectsReader.ts`
+  - `src/dwg/sections/DwgDataStorageReader.ts`
+  - `src/dxf/entities/dispatch.ts`
+  - `src/dxf/objects/dispatch.ts`
 
 - `../ACadSharp/src/ACadSharp/IO/DWG/`
 - `../ACadSharp/src/ACadSharp/Entities/`
@@ -87,6 +95,1557 @@ ACadSharp is broader in these areas:
 - DWG file-structure details such as AuxHeader/second-header writing.
 - Proxy/unknown entity/object preservation paths.
 
+dwgTs is broader in these areas:
+
+- Typed DWG parser coverage for AC1012 through AC1032, with approximately
+  240 parser entries reported in `../dwgTs/FEATURE_COVERAGE.md`.
+- Typed DXF parser coverage for 64 entity names and 259 OBJECTS-section object
+  names.
+- Full DataStorage discovery and AC1027+ `AcDb:AcDsPrototype_1b` section
+  modeling, including payload ranges that can be linked to modeler entities.
+- Typed or shell parser coverage for modern entities that libdxfrw currently
+  raw-preserves or skips semantically: MESH, MPOLYGON, POINTCLOUD,
+  POINTCLOUDEX, NAVISWORKSMODEL, RTEXT, CAMERA, SECTIONOBJECT, 3DLINE,
+  ARCALIGNEDTEXT, GEOPOSITIONMARKER, and surface families.
+- Typed or shell parser coverage for modern object families that libdxfrw only
+  partially models: point cloud definitions/reactors/color maps, render and
+  background objects, sun study, section manager/settings, object context data,
+  dynamic block records, VX records, persistent subentity managers, and larger
+  ACDBASSOC/ACSH families.
+- Table-family coverage is more complete at the semantic database level:
+  TABLECONTENT, TABLEGEOMETRY, TABLESTYLE, CELLSTYLEMAP, merged ranges, cell
+  contents, FIELD references, and geometry summaries.
+- OLEFRAME/proxy records are at least inventoried and raw-shell routed in the
+  coverage reports, even where typed payload decoding remains intentionally
+  deferred.
+
+## dwgTs Feature-Completeness Baseline
+
+Reviewed against `../dwgTs/` on 2026-06-05.
+
+The parity target is not "LibreCAD must render everything dwgTs parses."
+Instead, the target is a layered support model:
+
+1. The file structure is read safely.
+2. Known records are classified by stable type and version.
+3. Unmodeled payload bytes remain same-version replayable.
+4. Typed metadata is exposed to LibreCAD when the layout is understood.
+5. Native writers are enabled only for records whose owner graph, class
+   registration, version gates, and downgrade behavior are known.
+
+Current local status:
+
+- Core 2D DWG/DXF entities are supported.
+- DWG raw unsupported object preservation is strong for same-version object
+  replay.
+- DXF raw entity/object capture preserves many unknown records for DXF to DXF
+  round trip.
+- LibreCAD metadata stores many modern DWG records without rendering them.
+- Modern typed coverage remains materially below dwgTs for semantic database
+  inspection, AC1027 DataStorage linkage, 3D/modeler payload indexing, point
+  clouds, dynamic blocks, object context data, render/background metadata, and
+  specialty entities.
+
+High-priority feature gaps against dwgTs:
+
+| Family | dwgTs state | libdxfrw state | Implementation priority |
+| --- | --- | --- | --- |
+| Coverage inventory | Generated feature reports and parser maps | No generated parity report | P0 |
+| MESH/SubDMesh | Typed DWG/DXF parser | DXF raw fallback and metadata sidecars; no native SubDMesh parser | P1 |
+| MPOLYGON | Typed hatch-family parser | No explicit parser | P1 |
+| Point cloud | Entity plus definitions/reactors/color map | Mostly unsupported/raw | P1 |
+| Navisworks | Entity plus definition object | Unsupported/raw | P1 |
+| Camera/section/special annotations | Typed lightweight parsers | Unsupported/raw or missing callbacks | P2 |
+| Surface families | Shell parsers with ACIS/SAB awareness | Modeler-like raw preservation only | P2 |
+| DataStorage | Section reader and payload ranges | Raw AC1027 section replay only | P1 |
+| Object context data | Typed object parsers | Mostly unsupported/raw | P2 |
+| Dynamic blocks | Many shell parsers | Mostly unsupported/raw | P2 |
+| Render/background/sun study | Typed object parsers | Partial visual/light/sun metadata only | P3 |
+| DXF OBJECTS coverage | 259 object parsers | Small explicit object dispatch plus raw fallback | P1/P2 |
+| OLE/proxy | Inventoried raw-shell plus planned metadata | OLE2FRAME partial; OLEFRAME/proxy mostly raw | P2 |
+
+## dwgTs Parity Implementation Plan
+
+This plan refines the broad roadmap into implementation-ready sub-plans. Keep
+each phase independently buildable and testable. Do not merge native writer
+support in the same patch that first introduces a risky parser.
+
+### Phase 0: Coverage Harness
+
+Goal: turn the dwgTs comparison into a measurable backlog.
+
+Implemented baseline:
+
+- `scripts/dwgts_coverage_inventory.py` inventories static DWG/DXF dispatch
+  parity against `../dwgTs` source registrations.
+- `libraries/libdxfrw/DWGTS_COVERAGE_STATUS.md` is the generated baseline
+  report.
+- Regenerate and verify with:
+  `python3 scripts/dwgts_coverage_inventory.py --check`.
+
+Implementation steps:
+
+1. Add a local script or test helper that inventories libdxfrw support from:
+   - `libraries/libdxfrw/src/intern/dwgreader.cpp`
+   - `libraries/libdxfrw/src/libdxfrw.cpp`
+   - `libraries/libdxfrw/src/drw_interface.h`
+   - `libraries/libdxfrw/src/drw_entities.h`
+   - `libraries/libdxfrw/src/drw_objects.h`
+2. Import or manually encode the relevant dwgTs coverage lists from:
+   - `../dwgTs/FEATURE_COVERAGE.md`
+   - `../dwgTs/src/dwg/sections/DwgObjectsReader.ts`
+   - `../dwgTs/src/dxf/entities/dispatch.ts`
+   - `../dwgTs/src/dxf/objects/dispatch.ts`
+3. Emit a stable report with columns:
+   - `format`: DWG fixed, DWG custom, DXF entity, DXF object, data section.
+   - `name`: canonical record name.
+   - `fixedType`: numeric DWG type when known.
+   - `className`: AutoCAD class name when known.
+   - `dwgTsStatus`: typed, shell, raw, deferred, missing.
+   - `libdxfrwStatus`: typed, typed-metadata-only, raw-preserved,
+     callback-missing, writer-only, reader-only, missing.
+   - `priority`: P0 through P3.
+4. Add the report as non-failing CI output first. Later, fail only on
+   regressions from `typed` to `raw` or `raw` to `missing`.
+5. Add a small manually-reviewed allowlist for intentionally out-of-scope
+   features such as full ACIS kernel interpretation and photometric rendering.
+
+Acceptance:
+
+- Running the coverage helper produces deterministic output.
+- The report lists at least all dwgTs DWG entity parser keys, DWG object
+  parser keys, DXF entity names, and DXF object names.
+- No existing import/export tests are required to pass through external
+  `dwgTs` code at runtime.
+
+### Phase 1: Model and Callback Foundation
+
+Goal: add stable libdxfrw/LibreCAD surfaces before implementing byte parsers.
+
+Implementation steps:
+
+1. Add metadata-first entity shells:
+   - `DRW_Mesh`
+   - `DRW_MPolygon`
+   - `DRW_PointCloud`
+   - `DRW_PointCloudEx`
+   - `DRW_NavisworksModel`
+   - `DRW_Camera`
+   - `DRW_SectionObject`
+   - `DRW_GeoPositionMarker`
+   - `DRW_ArcAlignedText`
+   - `DRW_RText`
+   - `DRW_Surface`
+2. Add metadata-first object shells:
+   - `DRW_PointCloudDefinition`
+   - `DRW_PointCloudDefinitionReactor`
+   - `DRW_PointCloudColorMap`
+   - `DRW_NavisworksModelDefinition`
+   - `DRW_SectionManager`
+   - `DRW_SectionSettings`
+   - `DRW_ObjectContextData`
+   - `DRW_BackgroundObject`
+   - `DRW_RenderSettingsObject`
+   - `DRW_DynamicBlockObject`
+3. Add callbacks to `DRW_Interface`. The default implementation must be a
+   no-op to preserve existing consumers.
+4. Add storage records to `LC_DwgAdvancedMetadata` and lookup helpers by
+   handle, owner handle, referenced handle, and record name.
+5. Keep rendering out of this phase except for optional summary metadata.
+6. Add synthetic `[entity_metadata]` tests for add/find/count/invalidate
+   behavior before any DWG/DXF parser uses the new models.
+
+Acceptance:
+
+- qmake6 and CMake builds compile with the expanded public interface.
+- Existing interface implementers remain source-compatible because callbacks
+  have default no-op definitions.
+- Metadata records can be invalidated and excluded from native writer
+  eligibility.
+
+### Phase 2: DWG Entity Parsers, Batch 1
+
+Goal: promote high-value modern DWG entities from raw preservation to typed
+metadata.
+
+Implementation order:
+
+1. `MESH` / `AcDbSubDMesh`
+   - Source comparison: `../dwgTs/src/dwg/entities/parseEntityMesh.ts`.
+   - Fields: subdivision level, vertex count, face count, edge count, crease
+     count, vertices, face indices, edge data, crease data, raw range status.
+   - Writer mode after parser: blocked with diagnostics only.
+2. `MPOLYGON`
+   - Source comparison: `../dwgTs/src/dwg/entities/parseEntityHatch.ts`.
+   - Reuse hatch boundary loops where compatible.
+   - Fields: hatch-like loops, fill data, gradient/pattern flags, island
+     style, boundary references.
+   - Writer mode after parser: blocked unless it can degrade to supported
+     HATCH with explicit user-visible diagnostics.
+3. Lightweight specialty entities:
+   - `CAMERA`
+   - `SECTIONOBJECT`
+   - `3DLINE`
+   - `ARCALIGNEDTEXT`
+   - `GEOPOSITIONMARKER`
+   - `RTEXT`
+   - These should parse stable scalar fields and handles first, then retain
+     raw ranges for unknown tails.
+4. External reference entities:
+   - `POINTCLOUD`
+   - `POINTCLOUDEX`
+   - `NAVISWORKSMODEL`
+   - Fields: insertion/transform, clipping, display flags, definition handle,
+     file reference link, owner/reactor handles.
+5. Surface shells:
+   - `EXTRUDEDSURFACE`
+   - `LOFTEDSURFACE`
+   - `REVOLVEDSURFACE`
+   - `SWEPTSURFACE`
+   - `PLANESURFACE`
+   - `NURBSURFACE`
+   - Treat these as ACIS/SAB linked modeler shells. Do not implement surface
+     topology editing.
+
+Parser rules:
+
+- Dispatch by resolved custom class name in `dwgreader.cpp`.
+- On parse failure, emit no typed callback and fall back to raw unsupported
+  object only if the original frame bytes are intact.
+- Every variable count must have a maximum derived from remaining bits/bytes.
+- Store raw byte ranges for fields that are skipped or shell-parsed.
+
+Acceptance:
+
+- One synthetic or fixture-backed read test per entity family.
+- Malformed count/size tests for MESH, MPOLYGON, point cloud, and surface
+  payloads.
+- Coverage report moves each implemented type from `missing/raw-preserved` to
+  `typed-metadata-only` or `typed`.
+
+### Phase 3: DWG Object Parsers, Batch 1
+
+Goal: parse objects required by Phase 2 entities and common modern metadata.
+
+Implementation order:
+
+1. Point cloud family:
+   - `POINTCLOUDDEF`
+   - `POINTCLOUDDEFEX`
+   - `POINTCLOUDDEF_REACTOR`
+   - `POINTCLOUDDEF_REACTOR_EX`
+   - `POINTCLOUDCOLORMAP`
+2. Navisworks family:
+   - `NAVISWORKSMODELDEF`
+3. Section family:
+   - `SECTIONMANAGER`
+   - `SECTIONSETTINGS`
+4. Render/background family:
+   - `SKYLIGHT_BACKGROUND`
+   - solid, gradient, ground, IBL, and image background classes where present
+   - render entry/environment/global/settings objects
+   - `SUNSTUDY`
+5. Object context data:
+   - MTEXT, MTEXTATTRIBUTE, TEXT, LEADER, FCF, MLEADER, block reference, and
+     dimension object-context records.
+6. Dynamic block shells:
+   - Parameter, grip, action, lookup, property table, purge preventer, and
+     proxy node objects.
+
+Parser rules:
+
+- Start with metadata shells plus raw range preservation.
+- Do not evaluate dynamic block actions or object-context scale behavior.
+- Store all referenced handles in a common reference vector for lookup and
+  invalidation.
+- Classify the object family in `LC_DwgAdvancedMetadata` so export
+  diagnostics can report family counts.
+
+Acceptance:
+
+- Metadata lookup tests by object handle, family, owner, and referenced handle.
+- Raw replay invalidation tests when a referenced handle is edited.
+- Coverage report shows each family as `typed-metadata-only` or `shell`
+  instead of anonymous raw.
+
+### Phase 4: DXF Parser Parity
+
+Goal: keep DXF and DWG semantics aligned for the same feature families.
+
+Implementation steps:
+
+1. Add explicit DXF entity parsers for:
+   - `MESH`
+   - `MPOLYGON`
+   - `HELIX`
+   - `LIGHT`
+   - `CAMERA`
+   - `POINTCLOUD`
+   - `POINTCLOUDEX`
+   - `NAVISWORKSMODEL`
+   - `SECTIONOBJECT`
+   - `RTEXT`
+   - `OLEFRAME`
+   - `OLE2FRAME`
+   - modeler geometry entities: `REGION`, `3DSOLID`, `BODY`
+2. Add explicit DXF object parsers for:
+   - point cloud definitions/reactors/color map
+   - Navisworks definition
+   - section manager/settings
+   - render/background objects
+   - object-context data
+   - dynamic block objects
+   - visual/VX records
+3. Keep `processRawEntity()` and `processRawObject()` as fallback paths.
+4. Use shared handle classification for group codes, including group `481`.
+5. Preserve binary chunks `310-319` and `1004` exactly.
+6. Preserve comments according to the existing raw passthrough policy.
+
+Acceptance:
+
+- DXF round-trip tests prove known-but-unmodeled records no longer lose
+  handle references or binary chunks.
+- New typed parsers still preserve unknown group codes in raw sidecar data
+  when exact re-emission is required.
+- Coverage report distinguishes `DXF typed` from `DXF raw-preserved`.
+
+### Phase 5: DataStorage and ACIS/SAB Linkage
+
+Goal: move AC1027 DataStorage support from raw replay only to inspectable
+payload indexing.
+
+Implementation steps:
+
+1. Generalize the current `AcDb:AcDsPrototype_1b` raw section model into
+   `DRW_DataStorageSection`.
+2. Parse section metadata:
+   - section name
+   - version
+   - record count
+   - payload offsets and lengths
+   - referenced object handles where encoded
+   - unknown tail ranges
+3. Link DataStorage records to:
+   - `REGION`
+   - `3DSOLID`
+   - `BODY`
+   - surface entities
+   - other objects that set "has data-store binary" bits.
+4. Keep same-version raw replay as the first acceptance target.
+5. Add typed SAT/SAB payload category and byte range diagnostics, but do not
+   convert SAT to SAB or SAB to SAT.
+
+Acceptance:
+
+- A same-version AC1027 fixture preserves `AcDb:AcDsPrototype_1b`.
+- Metadata can answer "which modeler/surface handle uses this payload range?"
+- Cross-version writing is blocked unless a typed converter exists.
+
+### Phase 6: Writer Readiness and Native Writer Gates
+
+Goal: prevent typed parser work from causing silent export loss.
+
+Implementation steps:
+
+1. For each new feature, assign writer mode:
+   - `none`: read-only metadata.
+   - `raw-replay-only`: unchanged same-version replay.
+   - `typed-dxf`: DXF writer can emit a safe subset.
+   - `typed-dwg`: DWG writer can emit a safe subset.
+2. Add writer blocker counters per family:
+   - missing owner
+   - missing class registration
+   - unresolved referenced handle
+   - incomplete parser
+   - edited raw payload
+   - unsupported target version
+   - unsupported binary payload
+   - unsupported downgrade
+3. Add object-class reservation before HEADER/CLASSES emission for any feature
+   that can write typed DWG custom classes.
+4. Suppress stale raw replay when a typed metadata record has been edited or
+   invalidated.
+5. Prefer DXF typed writers before DWG typed writers when the DXF group model
+   is simpler and fixture coverage is available.
+
+Acceptance:
+
+- Export logs report blocked modern families by count and reason.
+- No feature emits both a typed replacement and the stale raw original.
+- Native DWG writer work is not enabled until class IDs, handles, ownership,
+  and version gates have tests.
+
+### Phase 7: Test and Fixture Strategy
+
+Goal: make each new parser safe against malformed files and measurable against
+feature coverage.
+
+Required tests:
+
+- Parser success fixture or synthetic record for every new entity/object.
+- Malformed short read for every new variable-length payload.
+- Count overflow test for every count-controlled loop.
+- Unknown-tail preservation test for every shell parser.
+- Raw replay eligibility test for same-version unchanged records.
+- Raw replay suppression test after metadata invalidation.
+- Writer blocker test for every blocked native writer family.
+- Coverage inventory test proving the support status changed intentionally.
+
+Preferred test locations:
+
+- `librecad/src/lib/filters/tests/dwg_smoke_tests.cpp`
+- `librecad/src/lib/filters/tests/dwg_write_smoke_tests.cpp`
+- `librecad/src/lib/filters/tests/dxf_roundtrip_tests.cpp`
+- `librecad/src/lib/filters/tests/entity_metadata_tests.cpp`
+
+External comparison:
+
+- Use `../dwgTs` fixtures and JSON/model dumps when available.
+- Use `../ACadSharp` and `../libreDWG` as layout cross-checks when dwgTs has a
+  shell parser rather than a fully typed parser.
+- Keep external tool execution optional in default CI.
+
+### Implementation Order
+
+Use this order for reviewable implementation slices:
+
+1. Coverage inventory and support status report.
+2. Metadata/callback shells for the P1 families.
+3. DWG `MESH` parser and metadata tests.
+4. DXF `MESH` parser and round-trip tests.
+5. DWG/DXF `MPOLYGON`.
+6. Point cloud entity/object family.
+7. Navisworks entity/definition family.
+8. Camera, section object, RTEXT, 3DLINE, ARCALIGNEDTEXT, and
+   GEOPOSITIONMARKER.
+9. Surface shells and ACIS/SAB linkage metadata.
+10. AC1027 DataStorage indexing.
+11. Object-context data shells.
+12. Dynamic block shells.
+13. Render/background/sun study metadata.
+14. Writer blocker diagnostics for all new families.
+15. DXF typed writer subsets where safe.
+16. DWG typed writer subsets only after ownership/class/version tests pass.
+
+### Deeper Review Addendum
+
+Use this addendum before starting each implementation slice. The purpose is to
+avoid "parser added, model still ambiguous" work. Every slice should leave a
+short evidence trail in either tests, comments, or the coverage report.
+
+#### Review Workstreams
+
+1. Type identity review
+   - Confirm DWG fixed type, custom class record name, C++ class name, DXF
+     entity/object name, and version gates.
+   - Cross-check dwgTs `DwgObjectsReader.ts` type maps against ODA, ACadSharp,
+     and libreDWG before adding local dispatch.
+   - Record whether the local type is fixed, custom-class, DXF-only, or
+     section-only.
+2. Frame and byte-range review
+   - Identify all count-controlled loops, byte-size fields, bit-size fields,
+     handle streams, string sections, and raw tails.
+   - Decide whether malformed input should fail the whole object, degrade to
+     raw shell, or skip only an optional sub-record.
+   - Add byte-range metadata for skipped sub-records before attempting deeper
+     semantic decoding.
+3. Handle and ownership review
+   - List owner, hard pointer, soft pointer, reactor, extension dictionary,
+     class, style, definition, and payload handles.
+   - Add referenced-handle lookup and invalidation before enabling writers.
+   - Confirm whether the entity lives under a BLOCK_RECORD, OBJECTS
+     dictionary, extension dictionary, DataStorage section, or side table.
+4. Raw replay review
+   - Decide same-version replay eligibility.
+   - Decide what edits suppress replay.
+   - Decide whether typed metadata can replace raw bytes. Default answer is
+     no until a writer contract exists.
+5. DXF parity review
+   - For every DWG parser added, decide whether DXF should be typed in the
+     same slice, a follow-up slice, or intentionally raw-only.
+   - Preserve unknown DXF groups and binary chunks when a typed parser is not
+     yet a full writer.
+6. Writer readiness review
+   - Assign writer mode: `none`, `raw-replay-only`, `typed-dxf`, or
+     `typed-dwg`.
+   - Add blocker counters before native writer code.
+   - Require class registration, handle reservation, owner resolution, and
+     version matrix tests before DWG writer enablement.
+
+#### Feature Readiness Matrix
+
+| Feature | dwgTs anchor | Local starting point | First implementation result | Deeper-review blocker |
+| --- | --- | --- | --- | --- |
+| Coverage harness | `FEATURE_COVERAGE.md`, `DwgObjectsReader.ts` | No generated parity report | Stable local report with support status | Need canonical local status taxonomy |
+| MESH/SubDMesh | DWG type 1104, `parseEntityMesh.ts`; DXF `MESH` parser | Mesh sidecar metadata exists; DXF raw MESH round-trip exists | DWG/DXF typed metadata parser with raw fallback | Need count/size limits and face/edge/crease range rules |
+| MPOLYGON | DWG type 1168, `parseMPolygon`; DXF `MPOLYGON` parser | DXF class defaults exist; no explicit parser | Hatch-family metadata parser | Need loop compatibility and HATCH downgrade policy |
+| Point cloud | DWG types 1152-1158; DXF point cloud object/entity parsers | Mostly raw/unsupported | Entity/definition/reactor/color map metadata graph | Need external file path policy and definition ownership |
+| Navisworks | DWG types 1150-1151; DXF definition parser | Unsupported/raw | Entity plus definition metadata | Need file reference, transform, and clipping field audit |
+| Camera/section/special annotations | DWG types 1159-1164 | Header camera vars only; entities unsupported | Lightweight metadata callbacks | Need view/UCS/reference mapping rules |
+| Surface families | DWG types 1170-1175; `parseSurfaceShell` | Modeler raw preservation only | Surface shell with ACIS/SAB linkage | Need DataStorage and ACIS payload range linkage |
+| DataStorage | `DwgDataStorageReader.ts` | Raw `AcDb:AcDsPrototype_1b` replay only | Indexed AC1027 payload metadata | Need record format and object binary-data bit audit |
+| Object context data | DWG types 1011, 1012, 1102, 1132-1145 | Family classification only | Metadata shells with referenced handles | Need scale/context ownership and no-evaluation policy |
+| Dynamic blocks | DWG types 1117-1125, 1176-1194, 1261+ | Raw family classification | Shell records and dependency edges | Need action/parameter/grip taxonomy and stale replay policy |
+| Render/background/sun study | DWG types 1165-1167 and related object parsers | Partial VIEW/VISUALSTYLE/LIGHT/SUN metadata | Read-only metadata summaries | Need UI/rendering non-goals and writer blocker counts |
+| OLE/proxy | Raw entity/object sets in dwgTs coverage | OLE2FRAME partial; proxy raw | Payload diagnostics and metadata shell | Need no-regeneration rule and binary chunk preservation |
+
+#### Parser Contract Template
+
+Every new parser should define this contract before code review:
+
+- Supported versions and source references.
+- Record identity: fixed type, record name, class name, DXF name.
+- Required common entity/object fields.
+- Required handle fields and their ownership semantics.
+- Count and byte-size fields with maximum bounds.
+- Optional sub-records and raw-tail preservation behavior.
+- Error policy for truncated body, impossible count, bad handle, and unknown
+  version branch.
+- Callback behavior on success, partial decode, and failure.
+- Raw replay behavior when unchanged, edited, or cross-version exported.
+- Test fixtures or synthetic buffers that prove success and failure paths.
+
+#### First Ready Slices
+
+Ready dwgTs-0: coverage inventory.
+
+1. Create a support-status inventory from local dispatch code and public
+   callbacks.
+2. Seed expected dwgTs rows from the reviewed feature maps.
+3. Commit the generated baseline report or a checked-in compact CSV/Markdown
+   table.
+4. Add a non-failing test that checks the inventory generator still recognizes
+   the major P1 families.
+5. Mark coverage changes in follow-up parser patches.
+
+Ready dwgTs-1: MESH/SubDMesh metadata.
+
+1. Audit dwgTs `parseEntityMesh.ts` against ODA/libreDWG for vertex, face,
+   edge, crease, and subdivision fields.
+2. Add `DRW_Mesh` only after deciding whether it shares any fields with
+   existing polyline-mesh metadata. Do not conflate legacy POLYLINE_MESH
+   type 30 with modern SubDMesh type 1104.
+3. Add `DRW_Interface::addMesh` and metadata storage.
+4. Implement DWG dispatch for custom class `MESH` / `AcDbSubDMesh`.
+5. Promote DXF `MESH` from raw-only to typed metadata while preserving unknown
+   groups and raw round-trip behavior.
+6. Add malformed tests for vertex count, face index count, edge count, crease
+   count, and truncated coordinate data.
+7. Keep writer mode blocked and add blocker diagnostics.
+
+Ready dwgTs-2: MPOLYGON metadata.
+
+1. Compare MPOLYGON with existing HATCH parsing and dwgTs `parseMPolygon`.
+2. Add `DRW_MPolygon` as a hatch-family entity, not as a plain raw entity.
+3. Preserve all loops, fill flags, pattern/gradient data, island style, and
+   boundary handles that are already understood by HATCH.
+4. Store MPOLYGON-only fields as metadata and raw ranges.
+5. Add DXF `MPOLYGON` typed import with raw unknown-group preservation.
+6. Block DWG/DXF native writing unless an explicit HATCH downgrade or native
+   MPOLYGON writer contract is approved.
+
+Ready dwgTs-3: point cloud graph.
+
+1. Implement object definitions before entity writer work:
+   `POINTCLOUDDEF`, `POINTCLOUDDEFEX`, reactors, and color map.
+2. Implement entity metadata for `POINTCLOUD` and `POINTCLOUDEX`.
+3. Link entity handles to definition/reactor/color-map handles.
+4. Preserve file paths as strings only; do not copy or validate external
+   point cloud assets during import.
+5. Add lookup and invalidation tests for entity-to-definition relationships.
+6. Keep all writing blocked until definition ownership and file path policy
+   are fixture-backed.
+
+Ready dwgTs-4: AC1027 DataStorage indexing.
+
+1. Preserve current raw section replay behavior.
+2. Add an indexed metadata view over `AcDb:AcDsPrototype_1b`.
+3. Record payload ranges, referenced handles, and unknown tails.
+4. Link payload ranges to modeler/surface handles where the object bit says
+   binary data exists.
+5. Block cross-version replay unless a typed converter exists.
+
+#### Done Criteria for a Feature Slice
+
+- Coverage report status changed intentionally.
+- Parser is bounds-checked and fuzz-friendly.
+- Metadata can be looked up by handle and invalidated by referenced handle.
+- Raw replay behavior is tested for unchanged and stale states.
+- Writer blocker diagnostics exist before any native writer.
+- DXF parity decision is documented.
+- New tests pass under the normal LibreCAD filter test target.
+
+### Second-Pass Deeper Review: Implementation Dossiers
+
+Before coding any P1/P2 feature, create a small implementation dossier in the
+PR description or test comments. The dossier is not a new permanent document;
+it is the evidence packet reviewers need to verify that the implementation is
+layout-backed, version-aware, and safe to extend.
+
+#### Required Dossier Fields
+
+- Feature family and local owner.
+- dwgTs anchor files and parser names.
+- ODA/libreDWG/ACadSharp anchors used for byte layout confirmation.
+- DWG fixed type or custom class names, including class-number range.
+- DXF entity/object names and group-code coverage.
+- Local files touched.
+- New public callbacks or metadata records.
+- All count, size, and byte-range fields.
+- All handle fields, grouped by owner, reactor, hard pointer, soft pointer,
+  style/reference, and extension dictionary.
+- Failure behavior for malformed body, malformed handle stream, unknown
+  version branch, and unsupported optional payload.
+- Raw replay behavior for unchanged, edited, stale, and cross-version output.
+- Writer mode and blocker counters.
+- Test files and exact cases added.
+
+#### File Touchpoint Map
+
+Use this map to keep changes localized and reviewable:
+
+| Layer | Primary files | Expected changes |
+| --- | --- | --- |
+| Public entity model | `libraries/libdxfrw/src/drw_entities.h`, `libraries/libdxfrw/src/drw_entities.cpp` | Add typed metadata fields, `parseDwg`, `parseCode`, safe reset/copy behavior, raw range fields |
+| Public object model | `libraries/libdxfrw/src/drw_objects.h`, `libraries/libdxfrw/src/drw_objects.cpp` | Add object shells, referenced-handle storage, parse status flags |
+| Callback surface | `libraries/libdxfrw/src/drw_interface.h` | Add default no-op callbacks only; avoid forcing all consumers to change |
+| DWG read dispatch | `libraries/libdxfrw/src/intern/dwgreader.cpp` | Route fixed/custom types, emit callbacks only after complete parse |
+| R2004+ data sections | `libraries/libdxfrw/src/libdwgr.cpp`, `libraries/libdxfrw/src/intern/dwgreader*.cpp`, `libraries/libdxfrw/src/intern/dwgwriter18.cpp` | Preserve/index raw sections, keep AC1027 replay behavior |
+| DXF read/write dispatch | `libraries/libdxfrw/src/libdxfrw.cpp` | Add explicit parser routes while retaining raw fallback |
+| LibreCAD metadata | `librecad/src/lib/engine/document/lc_dwgadvancedmetadata.h` | Store records, lookup by handle/reference/family, invalidate stale raw |
+| LibreCAD import/export glue | `librecad/src/lib/filters/rs_filterdxfrw.h`, `librecad/src/lib/filters/rs_filterdxfrw.cpp` | Store callbacks, report export blockers, avoid double emission |
+| Tests | `librecad/src/lib/filters/tests/*.cpp` | Add metadata, read, round-trip, malformed, and writer-blocker tests |
+
+#### Deeper Slice Review Checklist
+
+For each slice, reviewers should be able to answer these questions from the
+patch without re-reading the whole roadmap:
+
+1. Is this feature being promoted from missing to raw, raw to shell, or shell
+   to typed metadata?
+2. Does the parser know the exact object body end before reading optional
+   fields?
+3. Are all arrays bounded by remaining bytes or remaining bits?
+4. Are malformed child records prevented from emitting public callbacks?
+5. Does every referenced handle have a lookup or invalidation path?
+6. Does stale typed metadata suppress stale raw replay?
+7. Does unchanged raw replay remain available for same-version output?
+8. Is cross-version output blocked unless typed conversion exists?
+9. Does DXF either gain matching typed support or explicitly stay raw-only?
+10. Does the coverage report make the status change visible?
+
+#### Negative Test Inventory
+
+Every new binary parser should add at least one negative test from the
+following list. High-risk parsers should add several:
+
+- truncated object body before common entity fields finish;
+- truncated handle stream after body fields parse successfully;
+- count value that exceeds remaining bytes;
+- count value that would overflow `size_t` or `uint32_t` multiplication;
+- byte-size field larger than object frame;
+- zero-length optional payload where the spec requires at least one byte;
+- unknown version branch with otherwise valid common fields;
+- malformed string footer or string-section offset;
+- duplicated class record name with conflicting class metadata;
+- raw replay requested for a different target DWG version;
+- typed metadata edited while preserved raw payload is still queued;
+- DXF binary chunk split across multiple `310` records;
+- DXF handle group present inside nested `102` control groups.
+
+#### Slice Dossier: Coverage Inventory
+
+Implementation-ready detail:
+
+1. Generate support rows from local code without executing LibreCAD import:
+   - DWG entity fixed cases and custom class name checks from
+     `dwgreader.cpp`.
+   - DWG object fixed cases and custom class name checks from
+     `dwgreader.cpp`.
+   - DXF entity/object string dispatch from `libdxfrw.cpp`.
+   - Public callbacks from `drw_interface.h`.
+   - Metadata storage families from `lc_dwgadvancedmetadata.h`.
+2. Seed dwgTs rows from reviewed static files, not by importing TypeScript at
+   runtime in CI.
+3. Normalize names:
+   - `AcDbSubDMesh` -> `MESH`.
+   - `POINTCLOUDDEFEX` and `POINTCLOUDDEFINITIONEX` -> one canonical family
+     plus aliases.
+   - `NURBSSURFACE` and `NURBSURFACE` -> one canonical family plus aliases.
+   - `SECTION_MANAGER` and `SECTIONMANAGER` -> one canonical family plus
+     aliases.
+4. Keep status values small and stable: `missing`, `raw-preserved`, `shell`,
+   `typed-metadata`, `typed-rendered`, `typed-writable`, `blocked-writer`.
+5. First report may be checked in as Markdown. A later slice can make it
+   generated in CI.
+
+Review gates:
+
+- The report must distinguish legacy `POLYLINE_MESH` type 30 from modern
+  `MESH` / `AcDbSubDMesh` type 1104.
+- The report must distinguish DXF raw round-trip support from typed parsing.
+- The report must not mark a feature writable just because raw replay exists.
+
+#### Slice Dossier: MESH/SubDMesh
+
+Implementation-ready detail:
+
+1. Model fields:
+   - handle, owner, layer/style/common entity data;
+   - subdivision level and display flags;
+   - vertex count and 3D vertex list;
+   - face count and face index runs;
+   - edge count and edge pairs;
+   - crease count, crease edge ids, and crease weights;
+   - raw body ranges for any skipped or version-specific data;
+   - parse-complete flags for vertices, faces, edges, and creases.
+2. Parser placement:
+   - add `DRW_Mesh` to `drw_entities.*`;
+   - add `DRW_Interface::addMesh`;
+   - route DWG custom class `MESH` / `AcDbSubDMesh` from `dwgreader.cpp`;
+   - route DXF `MESH` in `libdxfrw.cpp`.
+3. Metadata placement:
+   - reuse existing mesh-sidecar concepts only for fallback previews;
+   - add a distinct modern SubDMesh metadata record so legacy
+     `POLYLINE_MESH` remains separate.
+4. Tests:
+   - parse minimal empty mesh;
+   - parse mesh with vertices and faces;
+   - parse mesh with edge and crease data;
+   - malformed vertex count;
+   - malformed face index run;
+   - DXF raw unknown groups preserved after typed import;
+   - writer blocker reports modern mesh as blocked.
+
+Review gates:
+
+- No native DWG writer in the first MESH slice.
+- No conversion from SubDMesh to legacy polyline mesh without an explicit
+  fallback policy.
+- Existing DXF raw MESH round-trip behavior must not regress or double-emit.
+
+#### Slice Dossier: MPOLYGON
+
+Implementation-ready detail:
+
+1. Model MPOLYGON as a hatch-family entity with explicit MPOLYGON identity.
+2. Reuse only the HATCH fields whose DXF/DWG semantics match exactly.
+3. Store MPOLYGON-only fields as raw ranges until their semantics are proven.
+4. Preserve boundary references and loop classifications.
+5. Add import metadata for "can be displayed as hatch preview" separately
+   from "can be written as native MPOLYGON".
+
+Tests:
+
+- one simple closed-loop MPOLYGON;
+- one island-loop MPOLYGON;
+- one malformed loop count;
+- one pattern/gradient branch;
+- DXF typed import with unknown groups preserved;
+- writer blocker for native MPOLYGON.
+
+Review gates:
+
+- Do not silently downgrade MPOLYGON to HATCH during export.
+- Any fallback HATCH preview must invalidate native raw replay if edited.
+
+#### Slice Dossier: Point Cloud and Navisworks
+
+Implementation-ready detail:
+
+1. Implement definitions before native writer work:
+   - `POINTCLOUDDEF`;
+   - `POINTCLOUDDEFEX`;
+   - `POINTCLOUDDEF_REACTOR`;
+   - `POINTCLOUDDEF_REACTOR_EX`;
+   - `POINTCLOUDCOLORMAP`;
+   - `NAVISWORKSMODELDEF`.
+2. Implement entity records:
+   - `POINTCLOUD`;
+   - `POINTCLOUDEX`;
+   - `NAVISWORKSMODEL`.
+3. Store file path/reference strings exactly. Do not normalize, copy, probe,
+   or require external files.
+4. Store transforms, clipping state, display flags, definition handles,
+   reactor handles, and owner handles.
+5. Add lookup helpers:
+   - entity by definition handle;
+   - definition by filepath;
+   - reactors by definition handle;
+   - stale records by edited referenced handle.
+
+Tests:
+
+- entity links to definition by handle;
+- missing definition produces unresolved-reference diagnostic;
+- filepath survives DXF and DWG metadata import;
+- clipping flags and transform values survive metadata round trip;
+- edited definition suppresses same-version raw replay;
+- writer blocker reports missing external-reference writer contract.
+
+Review gates:
+
+- No external asset loading in parser tests.
+- No writer enablement until definition, reactor, owner, and file path policy
+  are fixture-backed.
+
+#### Slice Dossier: AC1027 DataStorage
+
+Implementation-ready detail:
+
+1. Preserve current `DRW_RawDwgSection` replay behavior unchanged.
+2. Add a metadata-only indexed view over AC1027 DataStorage sections.
+3. Record section name, version, record count, payload offsets, payload
+   lengths, referenced handles, and unknown tails.
+4. Link object-level "has binary data" state to DataStorage payload ranges.
+5. Expose query helpers:
+   - payloads by object handle;
+   - payloads by section name;
+   - modeler/surface records with missing payloads;
+   - payload ranges not referenced by any object.
+
+Tests:
+
+- same-version raw section replay remains byte-preserving;
+- indexed payload count matches fixture metadata;
+- missing payload reference is diagnostic-only;
+- cross-version write is blocked;
+- malformed payload length cannot overrun section bytes.
+
+Review gates:
+
+- No typed SAT/SAB conversion in this slice.
+- No cross-version replay of raw DataStorage.
+- The section index must be optional; files without DataStorage keep loading.
+
+#### Slice Dossier: Object Context and Dynamic Blocks
+
+Implementation-ready detail:
+
+1. Start with shell records and referenced-handle edges only.
+2. Keep annotation-scale, context-data, and dynamic-block evaluation
+   non-executing.
+3. Store record name, class name, owner, scale/context handles, target
+   entity handles, action/parameter/grip family, and raw byte ranges.
+4. Invalidate shells when referenced entities, blocks, styles, or parameters
+   are edited.
+5. Report family counts during export.
+
+Tests:
+
+- object context shell linked to target entity;
+- dynamic block parameter/action/grip shell classified by family;
+- edited target handle suppresses raw replay;
+- missing target handle produces unresolved diagnostic;
+- no evaluator or geometry mutation runs during import.
+
+Review gates:
+
+- Do not implement dynamic block evaluation in these slices.
+- Do not regenerate object-context records after edits.
+- Do not assume class names imply identical layouts across versions.
+
+#### Review Sequence for Each PR
+
+1. Read the dwgTs parser and local existing parser side by side.
+2. Confirm byte layout against ODA, libreDWG, or ACadSharp.
+3. Write the parser contract before adding dispatch.
+4. Add metadata storage and tests.
+5. Add parser without writer enablement.
+6. Add malformed tests.
+7. Add raw replay and stale replay tests.
+8. Update coverage inventory.
+9. Add writer blocker diagnostics.
+10. Only then consider typed writer work in a separate PR.
+
+### Third-Pass Deeper Review: Source-Audit Packs
+
+This pass turns each first implementation slice into a source-audit pack. The
+pack is a short, reviewable artifact produced before code changes. Its job is
+to prove that the local implementation plan is based on concrete source
+comparisons rather than parser-name matching.
+
+#### Audit Pack Output
+
+Each audit pack should produce:
+
+- one support-status row update;
+- one parser-contract draft;
+- one handle/reference map;
+- one raw-replay decision table;
+- one negative-test list;
+- one explicit writer-mode decision;
+- one list of local files to touch;
+- one list of layout questions that remain blocked by fixtures or spec gaps.
+
+If an audit pack cannot answer one of these, the implementation slice remains
+blocked. It can still add raw classification or diagnostics, but not a typed
+parser.
+
+#### Source Comparison Method
+
+Use the same comparison method for every family:
+
+1. Read the dwgTs TypeScript parser and model type.
+2. Read the corresponding libdxfrw parser, raw fallback, or missing dispatch
+   location.
+3. Read ODA `~/doc/dwg/dwg.pdf` for the official version branch where it is
+   documented.
+4. Read libreDWG specs for field order and class/type aliases.
+5. Read ACadSharp for writer/read-model behavior when ODA or libreDWG is
+   incomplete.
+6. Record any disagreement explicitly. Do not resolve disagreements by picking
+   the parser that looks simpler.
+
+Disagreement categories:
+
+- `naming-alias`: same layout, different record/class/DXF spelling.
+- `version-branch`: same record, different layout by DWG version.
+- `layout-gap`: one source has fields the others do not document.
+- `semantic-gap`: bytes can be preserved, but meaning is not proven.
+- `writer-gap`: read layout is understood, but output ownership/class rules
+  are not.
+- `fixture-gap`: source agreement looks plausible, but no local fixture proves
+  it.
+
+#### Cross-Source Evidence Matrix
+
+| Evidence | Required before shell parser | Required before typed metadata | Required before writer |
+| --- | --- | --- | --- |
+| Type/class identity | yes | yes | yes |
+| Common entity/object fields | yes | yes | yes |
+| Count and byte bounds | yes | yes | yes |
+| Handle/reference map | partial | complete | complete |
+| Version branch map | partial | complete for parsed fields | complete for emitted fields |
+| Raw byte preservation | yes | yes | yes |
+| Local metadata storage | no | yes | yes |
+| Invalidation behavior | no | yes | yes |
+| Writer class registration | no | no | yes |
+| Owner graph and reactors | no | partial | complete |
+| Round-trip fixture | preferred | yes | yes |
+| Malformed fixture/synthetic test | yes | yes | yes |
+
+#### Audit Pack: Coverage Inventory
+
+Source reads:
+
+- local `dwgreader.cpp` fixed-type switch and custom-class dispatch;
+- local `libdxfrw.cpp` DXF entity/object dispatch and raw fallback;
+- local `drw_interface.h` callback surface;
+- local `lc_dwgadvancedmetadata.h` stored metadata families;
+- dwgTs `FEATURE_COVERAGE.md`;
+- dwgTs `DwgObjectsReader.ts`;
+- dwgTs DXF entity/object registration files.
+
+Questions to answer:
+
+1. Which dwgTs types are already typed in libdxfrw?
+2. Which are typed only as LibreCAD metadata sidecars?
+3. Which are raw-preserved but not semantically parsed?
+4. Which are neither parsed nor raw-preserved?
+5. Which have a writer API but incomplete reader semantics?
+6. Which local entries are legacy features with similar names but different
+   layouts, such as `POLYLINE_MESH` versus `MESH`?
+
+Implementation readiness output:
+
+- `coverage-status.md` or equivalent generated table.
+- Alias table for canonical names.
+- First failing-regression rule proposal, but no CI failure yet.
+
+Blocked until:
+
+- The report can distinguish typed rendering, typed metadata, raw
+  preservation, and native writing.
+
+#### Audit Pack: DWG Object Frame Safety
+
+Why this precedes new binary parsers: typed modern records tend to contain
+large variable arrays. Frame handling must remain the common safety boundary.
+
+Source reads:
+
+- local object/entity frame readers in `dwgreader.cpp`;
+- local R2004+ reader classes;
+- ODA object CRC/body/string/handle layout;
+- dwgTs object reader frame splitting.
+
+Questions to answer:
+
+1. Does each parser receive the correct body bit size and object byte range?
+2. Can a parser seek past the body into the handle stream?
+3. Can optional strings or raw tails be bounded without trusting a parsed
+   count?
+4. Can a failed parser safely return to raw replay using the original bytes?
+5. Are class IDs resolved before dispatch and preserved for unsupported
+   objects?
+
+Implementation readiness output:
+
+- A short shared "parser input contract" note.
+- A decision on whether to add helper accessors for remaining body bits,
+  remaining body bytes, and raw sub-ranges before implementing MESH.
+
+Blocked until:
+
+- New parsers have a way to reject out-of-body reads without desynchronizing
+  later objects.
+
+#### Audit Pack: MESH/SubDMesh
+
+Additional source reads:
+
+- dwgTs `parseEntityMesh.ts`;
+- dwgTs model type for mesh;
+- libreDWG mesh/subdmesh layout if present;
+- ODA mesh/subdivision sections if available;
+- existing local polyline mesh encode/read tests;
+- local DXF raw MESH round-trip test.
+
+Questions to answer:
+
+1. Which fields are shared with legacy polyline mesh, and which are modern
+   SubDMesh-only?
+2. Which counts nest inside other counts: faces, face indices, edges, crease
+   ids, crease weights?
+3. Are face indices signed, unsigned, zero-based, or sentinel-terminated?
+4. Which fields are version-gated?
+5. Which fields are display-only versus geometry-defining?
+6. What is the maximum safe allocation strategy for large meshes?
+7. Can DXF MESH typed import preserve unknown groups without breaking the
+   existing raw-net round-trip test?
+
+Implementation readiness output:
+
+- Mesh field table.
+- Mesh malformed-test table.
+- Decision on metadata storage: modern mesh record separate from legacy
+  `POLYLINE_MESH` sidecars.
+- Writer mode: `blocked-writer`.
+
+Blocked until:
+
+- Count nesting and allocation bounds are documented.
+
+#### Audit Pack: MPOLYGON
+
+Additional source reads:
+
+- dwgTs `parseMPolygon`;
+- local HATCH parser and writer;
+- ODA HATCH/MPOLYGON sections;
+- DXF `MPOLYGON` group-code parser in dwgTs.
+
+Questions to answer:
+
+1. Which MPOLYGON loops are byte-compatible with HATCH loops?
+2. Which fields are MPOLYGON-only and must stay raw-ranged?
+3. Can MPOLYGON be preview-rendered as HATCH without changing export
+   semantics?
+4. Which boundary handles must participate in invalidation?
+5. What does editing fallback geometry mean for raw replay?
+
+Implementation readiness output:
+
+- HATCH-compatible field list.
+- MPOLYGON-only raw-range list.
+- Explicit "no silent HATCH downgrade" export rule.
+
+Blocked until:
+
+- MPOLYGON fallback preview invalidation is defined.
+
+#### Audit Pack: Point Cloud and Navisworks
+
+Additional source reads:
+
+- dwgTs point cloud entity/object parsers;
+- dwgTs Navisworks entity/object parsers;
+- ODA sections for external reference objects if available;
+- ACadSharp external reference/image/underlay patterns;
+- local IMAGE/UNDERLAY metadata and invalidation behavior.
+
+Questions to answer:
+
+1. Which objects are definitions and which are reactors?
+2. Which handles connect entity to definition, reactor, dictionary, and owner?
+3. Which path strings must be preserved exactly?
+4. Which fields are transform, clipping, display, and loading metadata?
+5. Can LibreCAD metadata expose unresolved references without trying to load
+   external assets?
+6. What invalidates raw replay: editing the entity, editing the definition,
+   or changing the referenced path?
+
+Implementation readiness output:
+
+- External reference graph diagram in text form.
+- File-path preservation policy.
+- Unresolved-reference diagnostic list.
+- Writer mode: `blocked-writer`.
+
+Blocked until:
+
+- Definition/reactor ownership and stale replay suppression are specified.
+
+#### Audit Pack: AC1027 DataStorage
+
+Additional source reads:
+
+- dwgTs `DwgDataStorageReader.ts`;
+- local raw DWG section capture/replay;
+- ODA AC1027 data-section descriptions;
+- libreDWG `acds.spec` where relevant;
+- current modeler geometry payload range metadata.
+
+Questions to answer:
+
+1. What is the exact section-level record framing?
+2. Which fields identify object handles or object indexes?
+3. How is the per-object "has binary data" bit represented locally?
+4. Can payload ranges be indexed without parsing SAT/SAB?
+5. What happens when a referenced object is missing?
+6. Which target versions can replay the section unchanged?
+
+Implementation readiness output:
+
+- DataStorage record framing table.
+- Payload range query contract.
+- Same-version replay and cross-version block policy.
+
+Blocked until:
+
+- Section byte bounds and referenced-handle extraction are proven.
+
+#### Audit Pack: Object Context, Dynamic Blocks, and Associative Shells
+
+Additional source reads:
+
+- dwgTs object parsers for context data and dynamic block families;
+- local raw family classification in metadata;
+- local associative graph metadata;
+- ACadSharp dynamic block/evaluation models;
+- libreDWG dynamic block specs where present.
+
+Questions to answer:
+
+1. Which classes are pure context data and which are evaluators?
+2. Which records can be represented as handle-edge shells only?
+3. Which records have scalar values that are useful without evaluation?
+4. Which edits should mark the shell stale?
+5. Which families must never be regenerated until a dynamic-block evaluator
+   exists?
+
+Implementation readiness output:
+
+- Family taxonomy table.
+- Edge-kind list.
+- No-evaluation policy.
+- Export diagnostic buckets.
+
+Blocked until:
+
+- Class aliases and version-specific layouts are separated from semantic
+  family names.
+
+#### Audit Pack: DXF Parity Layer
+
+Source reads:
+
+- local `processEntities`, `processObjects`, raw entity/object paths, and
+  writer paths in `libdxfrw.cpp`;
+- dwgTs DXF registration files;
+- existing DXF raw round-trip tests.
+
+Questions to answer:
+
+1. Does typed DXF import need a typed writer in the same slice?
+2. Which unknown groups must be preserved for exact re-emission?
+3. Which group codes carry handles, including nested `102` groups?
+4. Which binary chunk groups need exact byte preservation?
+5. Does adding a typed parser change existing raw-net deduplication?
+
+Implementation readiness output:
+
+- DXF parser/writer mode table per feature.
+- Unknown-group preservation policy.
+- Raw-net deduplication test list.
+
+Blocked until:
+
+- Existing raw round-trip cases for that entity/object have a typed-parser
+  replacement test or are intentionally left raw-only.
+
+#### Audit Pack: Writer Gates
+
+Source reads:
+
+- local `dwgRW` public writer APIs;
+- `dwgwriter15.cpp` and `dwgwriter18.cpp` object queues;
+- class registration and raw replay invalidation logic;
+- LibreCAD export logging in `RS_FilterDXFRW`.
+
+Questions to answer:
+
+1. Can all class records be reserved before HEADER/CLASSES emission?
+2. Can all entity/object handles be known before object-map writing?
+3. Does the feature require extension dictionary or reactor ownership?
+4. Can unchanged raw replay coexist with typed replacements without
+   double-emission?
+5. What is the downgrade behavior for AC1015, AC1018, AC1024, AC1027, and
+   AC1032?
+
+Implementation readiness output:
+
+- Writer blocker counts.
+- Version matrix.
+- Class/handle reservation plan.
+- Raw suppression plan.
+
+Blocked until:
+
+- The feature can pass a same-version round-trip and a stale-raw suppression
+  test.
+
+#### Prioritized Review Queue
+
+Do these audits in order:
+
+1. Coverage inventory.
+2. DWG object frame safety.
+3. MESH/SubDMesh.
+4. DXF parity for MESH.
+5. MPOLYGON.
+6. Point cloud definitions/reactors/entities.
+7. Navisworks definition/entity.
+8. AC1027 DataStorage.
+9. Surface shell linkage to modeler/DataStorage payloads.
+10. Object context and dynamic block shells.
+11. DXF parity for object-context and dynamic-block shells.
+12. Writer gates for any feature whose parser has landed.
+
+### Fourth-Pass Deeper Review: Execution Readiness Scorecards
+
+This pass defines how to decide whether a reviewed slice is ready to
+implement. It should be used after the source-audit pack and before any code
+patch that adds public callbacks, typed parsing, or writer behavior.
+
+#### Readiness Levels
+
+Use the lowest applicable level. A feature cannot move to a higher level until
+all lower-level requirements are satisfied.
+
+| Level | Name | Meaning | Allowed implementation |
+| --- | --- | --- | --- |
+| L0 | Inventoried | Type/class names are known, but layout is not proven | Coverage row, raw classification, diagnostics only |
+| L1 | Frame-safe shell | Frame, object bounds, and raw replay behavior are proven | Shell parser with raw ranges and no semantic promises |
+| L2 | Typed metadata | Parsed fields, handles, version branches, and invalidation are proven | Public callback plus metadata storage and read tests |
+| L3 | Editable/renderable | LibreCAD has a clear user-facing interpretation and invalidation policy | Optional fallback geometry or UI summaries |
+| L4 | Writable | Class registration, ownership, handles, version gates, and downgrade rules are proven | Native DXF/DWG writer subset |
+
+Default target for new dwgTs parity work is L2. L3 and L4 require separate
+review because they can change user-visible behavior or export behavior.
+
+#### Gate A: Structural Safety
+
+Required before L1:
+
+- Object frame size, body bit size, string section, and handle stream limits
+  are known or safely discoverable.
+- Parser can report remaining body bits/bytes before every variable-length
+  read.
+- Count-controlled allocations are capped by remaining bytes and a reasonable
+  implementation maximum.
+- CRC/frame validation remains outside the feature parser and is not weakened.
+- A failed parse cannot advance the parent object stream in a way that hides
+  the next object.
+- Raw bytes remain available after failure if the enclosing frame was valid.
+
+Evidence:
+
+- one parser contract section titled "Bounds";
+- at least one malformed-body negative test;
+- at least one oversized-count negative test for variable-length records.
+
+Stop conditions:
+
+- body end cannot be identified;
+- parser must guess where the handle stream begins;
+- a dwgTs parser relies on JavaScript array growth without a clear byte cap and
+  no independent spec/source confirms the limit.
+
+#### Gate B: Semantic Model
+
+Required before L2:
+
+- Local `DRW_*` model has stable ownership, copy/move, reset, and parse-status
+  behavior.
+- Common entity/object fields are not duplicated or reinterpreted in feature
+  structs.
+- Every field is classified as geometry, display, handle reference, external
+  reference, opaque payload, diagnostic, or unknown raw range.
+- Unknown fields have raw byte/bit ranges or explicit unsupported diagnostics.
+- Metadata storage can answer lookup by handle and family.
+
+Evidence:
+
+- model-field table in the audit pack;
+- metadata tests for add/find/count;
+- parser success test that proves fields reach the callback or metadata store.
+
+Stop conditions:
+
+- the same handle is stored under two incompatible meanings;
+- a field is required for writer eligibility but not parsed or preserved;
+- metadata cannot distinguish "not present" from "parse failed."
+
+#### Gate C: Reference Graph and Invalidation
+
+Required before L2 for any record with handles:
+
+- Owner handles are separated from referenced object handles.
+- Hard/soft pointer semantics are recorded when known.
+- Reactors and extension dictionaries are recorded separately from normal
+  references.
+- Referenced-handle lookup exists or the record explicitly has no references.
+- Editing a referenced handle has a defined stale/invalidation behavior.
+- Stale metadata suppresses stale raw replay.
+
+Evidence:
+
+- handle/reference map;
+- lookup test by referenced handle;
+- invalidation test that marks the record stale;
+- raw replay suppression test after invalidation.
+
+Stop conditions:
+
+- imported record can reference a definition/style/block but the definition
+  cannot be found or diagnosed;
+- invalidation would silently leave an old raw payload queued for export;
+- owner graph for writer output is unknown.
+
+#### Gate D: DXF Parity
+
+Required before marking a DWG parser complete:
+
+- DXF state is explicitly recorded as typed, raw-preserved, not applicable, or
+  deferred.
+- If typed DXF import is added, unknown groups and binary chunks have a
+  preservation policy.
+- Raw-net deduplication still prevents double emission when a typed parser and
+  raw sidecar both see the same entity/object.
+- Handle group classification is reviewed, including nested `102` groups and
+  group `481`.
+
+Evidence:
+
+- DXF mode row in coverage report;
+- round-trip test for raw-only or typed-preserving behavior;
+- explicit test for unknown group or binary chunk preservation when relevant.
+
+Stop conditions:
+
+- adding typed DXF import would drop unknown groups previously preserved;
+- writer path would emit both typed entity and raw entity;
+- handle remapping rules are unknown for new handle-bearing groups.
+
+#### Gate E: Writer Readiness
+
+Required before L4:
+
+- Feature class registration happens before HEADER/CLASSES emission.
+- Class instance counts are final before object writing.
+- All handles are reserved before object-map writing.
+- Owner, reactor, extension dictionary, and block record relationships are
+  reproducible.
+- Version matrix is explicit for AC1015, AC1018, AC1024, AC1027, and AC1032.
+- Same-version raw replay and typed replacement cannot both emit.
+- Downgrade behavior is diagnostic, not silent flattening.
+
+Evidence:
+
+- writer blocker counters;
+- same-version write/read test;
+- stale raw suppression test;
+- version matrix test or explicit blocked-version test.
+
+Stop conditions:
+
+- class registration can occur after HEADER/CLASSES emission;
+- writer needs handles that are only discovered during object emission;
+- target version cannot represent a required field and no diagnostic exists.
+
+#### Gate F: Test Depth
+
+Required before merging an L2 parser:
+
+- success parse test;
+- malformed short-body test;
+- malformed count/size test;
+- unknown tail or skipped sub-record preservation test;
+- metadata lookup test;
+- invalidation test when handles exist;
+- coverage status update;
+- DXF parity decision test or explicit no-DXF note.
+
+Required before merging an L4 writer:
+
+- same-version round-trip test;
+- blocked-version test;
+- stale raw suppression test;
+- class/handle ownership test;
+- no-double-emission test.
+
+#### Traceability Matrix
+
+Each implementation PR should leave this traceable path:
+
+| Source evidence | Local artifact | Test evidence |
+| --- | --- | --- |
+| dwgTs parser and model | parser contract field table | success parse fixture/synthetic record |
+| ODA/libreDWG/ACadSharp layout | bounds and version table | malformed count/size tests |
+| local raw fallback | raw replay decision table | unchanged and stale raw replay tests |
+| local metadata model | `LC_DwgAdvancedMetadata` record and lookup | add/find/invalidate tests |
+| DXF dispatch state | DXF mode row | DXF round-trip or deferred note |
+| writer policy | blocker counters and version matrix | writer blocker or round-trip tests |
+
+#### Feature-Specific Readiness Targets
+
+| Feature | Initial target | Must not do in first implementation |
+| --- | --- | --- |
+| Coverage inventory | L0 | Fail CI on coverage gaps before baseline stabilizes |
+| DWG object frame safety | L1 infrastructure | Add feature semantics while frame contract is unstable |
+| MESH/SubDMesh | L2 typed metadata | Convert to POLYLINE_MESH or enable native writer |
+| MPOLYGON | L2 typed metadata | Silently export as HATCH |
+| Point cloud | L2 typed metadata graph | Load/copy external point cloud assets |
+| Navisworks | L2 typed metadata graph | Load/copy external model assets |
+| AC1027 DataStorage | L1/L2 indexed payload metadata | Convert SAT/SAB or cross-version replay raw data |
+| Surface shells | L1 shell linked to modeler payload | Interpret surface topology |
+| Object context data | L1/L2 shell plus references | Apply annotation/context scaling |
+| Dynamic blocks | L1 shell plus dependency edges | Evaluate actions or regenerate block graphs |
+| Render/background/sun study | L2 read-only metadata | Implement photometric rendering |
+| OLE/proxy | L1/L2 payload diagnostics | Regenerate OLE/proxy binary payloads |
+
+#### Review Stop Conditions
+
+Stop the implementation slice and keep the feature at its current readiness
+level when any of these is true:
+
+- source references disagree on field order and no fixture resolves it;
+- a variable-length payload cannot be bounded from the object frame;
+- handles cannot be classified enough to avoid corrupting ownership;
+- typed import would lose raw data that was previously preserved;
+- DXF typed import would break raw round-trip behavior;
+- writer support requires late class registration;
+- downgrade behavior would silently drop user data;
+- tests would need external assets or network access to prove basic parsing.
+
+#### Next Review Artifacts To Produce
+
+1. `dwgTs` coverage inventory baseline.
+2. DWG object-frame parser input contract.
+3. MESH/SubDMesh field and bounds table.
+4. MESH DXF raw-net replacement test plan.
+5. MPOLYGON HATCH-compatibility table.
+6. Point cloud/Navisworks external-reference graph.
+7. AC1027 DataStorage record framing table.
+8. Dynamic-block/object-context family taxonomy.
+9. Writer-gate version matrix template.
+
+### Fifth-Pass Deeper Review: Multi-Agent Review Protocol
+
+Use this protocol before implementing any P1/P2 dwgTs parity slice. The goal
+is to split review into independent evidence tracks, then merge only the
+artifacts that agree. Agents are evidence-only reviewers unless a later slice
+explicitly assigns disjoint implementation ownership.
+
+#### Multi-Agent Operating Rules
+
+- Run agents in parallel only for distinct questions: DWG layout, DXF/raw
+  preservation, metadata graph, writer readiness, and tests.
+- Agents do not edit code during review passes.
+- Each agent returns a bounded artifact, not an open-ended essay.
+- The coordination lead merges artifacts into one slice readiness summary.
+- If two agents disagree, the slice remains blocked until a source or fixture
+  resolves the disagreement.
+- Default CI must not depend on external tools, network access, or external
+  assets. External comparisons may enrich the artifact but cannot be the only
+  proof.
+- Treat `../dwgTs/src/**` parser registrations as stronger evidence than
+  generated coverage summaries when they disagree; record the disagreement in
+  the coverage artifact.
+
+#### Agent Roles and Artifacts
+
+| Agent role | Files to inspect | Questions to answer | Artifact |
+| --- | --- | --- | --- |
+| Coverage reconciler | `DWG_ROADMAP.md`, `../dwgTs/FEATURE_COVERAGE.md`, `../dwgTs/src/dwg/sections/DwgObjectsReader.ts`, `../dwgTs/src/dxf/entities/dispatch.ts`, `../dwgTs/src/dxf/objects/dispatch.ts`, `dwgreader.cpp`, `libdxfrw.cpp`, `drw_interface.h` | Which dwgTs source parsers are missing or stale in coverage docs? Which libdxfrw records are typed, metadata-only, raw-preserved, or missing? Which names are aliases versus distinct layouts, especially `POLYLINE_MESH` versus `MESH`? | Canonical parity table with `type`, `recordName`, `className`, `dwgTsStatus`, `libdxfrwStatus`, `priority`, and `evidence` |
+| DWG layout auditor | `~/doc/dwg/dwg.pdf`, `../dwgTs/src/dwg/**`, `../libreDWG/src/*.spec`, `../ACadSharp/src/ACadSharp/IO/DWG/**`, local `drw_entities.*`, `drw_objects.*`, `dwgreader.cpp` | What are the exact type/class identity, version branch, frame boundary, count/size rules, and unresolved source disagreements? | Parser contract, field/bounds table, unresolved-layout list |
+| MESH/MPOLYGON auditor | dwgTs mesh/hatch DXF and DWG parsers, local mesh/HATCH metadata and tests | What are the bounded counts for vertices, face-index vectors, edges, creases, hatch loops, boundary handles, and MPOLYGON-only trailers? Can MPOLYGON preview reuse HATCH loops without changing export semantics? | MESH field/bounds table, MPOLYGON-versus-HATCH compatibility table, malformed-input matrix |
+| Point cloud/Navisworks auditor | dwgTs point-cloud/Navisworks parsers, local IMAGE/UNDERLAY metadata, raw replay paths, `lc_dwgadvancedmetadata.h` | Which records are entities, definitions, reactors, color maps, or file references? Which handles define owner, definition, reactor, clipping, dictionary, and external file relationships? | External-reference graph, handle-role table, unresolved-reference diagnostics, raw-replay invalidation policy |
+| DataStorage/surface auditor | `../dwgTs/src/dwg/sections/DwgDataStorageReader.ts`, `../dwgTs/src/helpers/linkAcisDataStorage.ts`, `../dwgTs/src/dwg/entities/parseEntitySurface.ts`, local raw section replay, modeler metadata, R2004+ writer handling | How is `AcDb:AcDsPrototype_1b` framed? Which records link to BODY/REGION/3DSOLID/surface handles? Which surface fields are safe metadata versus opaque ACIS/SAB payload? | DataStorage framing table, payload-range query contract, surface-shell linkage map |
+| Object-context/dynamic-block auditor | dwgTs object-context and dynamic-block parsers, shell range registration, local associative and ACSH shells, raw family classifiers, `entity_metadata_tests.cpp` | Which classes are object-context data, dynamic-block params/actions/grips, associative shells, or ACSH shells? Which scalar fields are useful without evaluation? Which handle edges are needed for invalidation? | Family taxonomy table, class-alias table, edge-kind list, no-evaluation/no-regeneration policy |
+| DXF dispatch parity auditor | `libdxfrw.cpp`, dwgTs DXF dispatch files, local DXF tests | Which dwgTs DXF names are typed, shell-only, raw-only, or aliases locally? Which libdxfrw typed routes currently lose unknown groups? Which aliases need explicit rows? | `dxf-parser-parity-matrix.md` with name, section, dwgTs status, libdxfrw status, fallback path, priority, and alias notes |
+| DXF raw preservation auditor | `libdxfrw.cpp`, `drw_objects.h`, `rs_filterdxfrw.cpp`, dwgTs DXF shell fallback code | Does raw capture preserve group order, numeric types, nested `102` control groups, comments policy, and unknown groups after typed promotion? Which typed OBJECTS also need raw-net dedup? | Raw preservation contract with examples for unknown entity, unknown object, typed plus raw object, and typed parser with unknown tail |
+| DXF handle/binary auditor | `libdxfrw.h`, `handle_allocator.h`, DXF reader/writer internals, local DXF round-trip tests, dwgTs DXF handle and binary reader helpers | Are handle groups `5`, `105`, `320-369`, `390-399`, `480-481`, and `1005` handled consistently? Are `310-319` and `1004` chunks preserved across ASCII and binary DXF? | Handle-code/remap matrix, fixed structural handle list, binary chunk preservation matrix, minimal fixture list |
+| Metadata graph integrator | `drw_entities.*`, `drw_objects.*`, `drw_interface.h`, `lc_dwgadvancedmetadata.h`, `rs_filterdxfrw.*` | Which callback/storage family owns the record? Which handles are owners, references, reactors, or extension dictionaries? What invalidates replay? | Handle/reference map, metadata lookup plan, invalidation table |
+| Writer readiness gatekeeper | `libdwgr.cpp`, `dwgwriter*.{h,cpp}`, class registration paths, raw replay invalidation, export diagnostics | Can classes be registered before `CLASSES` emission? Are handles reserved before the object map? Can typed output and raw replay double-emit? What is the AC1015/AC1018/AC1024/AC1027/AC1032 matrix? | Writer-mode decision, blocker counters, class/handle reservation plan, version matrix |
+| Test/fixture auditor | `dwg_*_tests.cpp`, `entity_metadata_tests.cpp`, `dxf_roundtrip_tests.cpp`, `dxf_object_tests.cpp`, optional fixture manifest and fuzz targets | What proves success, malformed bounds, raw preservation, stale suppression, DXF parity, binary chunk preservation, and writer blocking? Can default CI run without external tools/assets? | Test matrix with exact cases, fixture needs, coverage-row expectation, command list |
+| Coordination lead | All artifacts plus readiness gates in this roadmap | Are dependencies ordered? Is this PR parser-only, metadata-only, blocker-only, or writer-only? Are stop conditions resolved or explicitly deferred? | Slice readiness summary and merge checklist |
+
+#### Multi-Agent Merge Gates
+
+- Do not merge native DWG writer support in the same slice that first adds
+  risky binary parsing.
+- Add metadata callbacks/storage and lookup/invalidation tests before parser
+  dispatch emits public callbacks.
+- Add writer blocker diagnostics before any `typed-dwg` writer path.
+- Require class registration, instance counts, handle reservation, ownership,
+  raw suppression, and version-matrix evidence before L4 writer readiness.
+- Coverage status must change intentionally and distinguish `raw-preserved`,
+  `shell`, `typed-metadata`, `blocked-writer`, and `typed-writable`.
+- DXF typed promotion must preserve unknown groups, handle groups, binary
+  chunks, raw-net deduplication, and existing raw round-trip behavior.
+- Same-version raw replay must stay available unless a typed replacement is
+  proven and stale raw suppression is tested.
+
+#### Multi-Agent Stop Conditions
+
+Stop the slice, keep the feature at its current readiness level, and record
+the blocker when any agent reports one of these unresolved issues:
+
+- object body, string section, handle stream, or raw tail bounds cannot be
+  proven;
+- source references disagree on field order or version behavior and no fixture
+  resolves it;
+- handles cannot be classified enough to avoid corrupting ownership or replay
+  invalidation;
+- typed import would lose bytes, unknown DXF groups, binary chunks, comments,
+  or same-version raw replay;
+- stale typed metadata could leave stale raw bytes queued for export;
+- writer support needs class registration or handles discovered too late;
+- downgrade behavior would silently drop user data;
+- parser or writer confidence requires network access or non-optional external
+  assets.
+
+#### Multi-Agent Review Order
+
+1. Coverage reconciler produces canonical DWG/DXF parity rows.
+2. DWG layout auditor and DXF dispatch/raw auditors run in parallel.
+3. Feature specialists run for MESH/MPOLYGON, point cloud/Navisworks,
+   DataStorage/surfaces, and object-context/dynamic-block families.
+4. Metadata graph integrator checks ownership, lookup, and invalidation.
+5. Writer gatekeeper assigns writer mode and blocker counters.
+6. Test/fixture auditor maps success, malformed, raw-preservation, stale
+   replay, binary chunk, and no-double-emission tests.
+7. Coordination lead emits one readiness summary:
+   - target readiness level;
+   - files to touch;
+   - artifacts produced;
+   - unresolved blockers;
+   - allowed implementation type;
+   - explicit stop line for the PR.
+
 ## Non-Negotiable Implementation Rules
 
 1. Preserve bytes before decoding semantics.
@@ -120,6 +1679,13 @@ ACadSharp is broader in these areas:
 | Fixtures/interoperability | Broad fixture-driven regression potential | External fixture manifest is optional; no ACadSharp/libreDWG diff harness yet | P2 |
 
 ## Implementation Progress
+
+Completed in the 2026-06-06 implementation pass:
+
+- Phase 0 `dwgTs` coverage inventory baseline was implemented:
+  `scripts/dwgts_coverage_inventory.py` now generates
+  `libraries/libdxfrw/DWGTS_COVERAGE_STATUS.md` and supports `--check` for
+  deterministic report validation.
 
 Completed in the 2026-05-27 implementation pass:
 

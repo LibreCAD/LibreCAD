@@ -992,8 +992,12 @@ TEST_CASE("DXF DETAILVIEWSTYLE/SECTIONVIEWSTYLE round-trip (typed-read OBJECT "
   CHECK(classRecordNames(out).count("ACDBDETAILVIEWSTYLE") == 1);
   // ... and its extension dictionary's 330 owner (the view-style handle) is now
   // emitted, so the owner resolves (no dangling INVALID_OWNER_HANDLE).
-  const std::set<std::string> handles(collectHandles(out).begin(),
-                                      collectHandles(out).end());
+  // collectHandles() must be called once into a named vector: building the set
+  // straight from collectHandles(out).begin()/collectHandles(out).end() takes
+  // begin()/end() from two *different* temporaries, an invalid iterator range
+  // (UB) that crashes on some platforms.
+  const std::vector<std::string> handleList = collectHandles(out);
+  const std::set<std::string> handles(handleList.begin(), handleList.end());
   CHECK(handles.count("51") == 1);  // the view style
   CHECK(handles.count("52") == 1);  // its owned xdict
 

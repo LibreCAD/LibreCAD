@@ -22,6 +22,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include "lc_quickinfoentitydata.h"
 
+#include <QCoreApplication>
+
 #include "lc_containertraverser.h"
 #include "lc_dimarc.h"
 #include "lc_dimordinate.h"
@@ -49,6 +51,18 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_spline.h"
 #include "rs_text.h"
 #include "rs_units.h"
+
+namespace {
+QString formatDimensionLabelForInfo(const QString& label) {
+    if (label.isEmpty()) {
+        return QCoreApplication::translate("LC_QuickInfoEntityData", "[Automatic]");
+    }
+    if (label == " ") {
+        return QCoreApplication::translate("LC_QuickInfoEntityData", "[Suppressed]");
+    }
+    return label;
+}
+}
 
 LC_QuickInfoEntityData::LC_QuickInfoEntityData(): LC_QuickInfoBaseData(),
                                                   m_penRegistry{LC_PenInfoRegistry::instance()} {
@@ -423,7 +437,7 @@ QString LC_QuickInfoEntityData::generateView(){
             createLink(data, "val", i, tr("To Cmd"), property->value);
         } else {
             data.append("<b>");
-            data.append(property->value);
+            data.append(property->value.toHtmlEscaped());
             data.append("</b>");
         }
         data.append("</td>");
@@ -1417,21 +1431,11 @@ QString LC_QuickInfoEntityData::getDimensionStyleString(RS_Dimension* dim) {
 }
 
 void LC_QuickInfoEntityData::appendDimensionLabelInfo(QString& result, RS_Dimension* dim) {
-    QString label = dim->getLabel(true);
-    QString rawLabel = dim->getLabel(false);
-    appendValue(result, tr("Label"), label.isEmpty() ? tr("[None]") : label);
-    if (!rawLabel.isEmpty() && rawLabel != label) {
-        appendValue(result, tr("Text Override"), rawLabel == " " ? tr("[Suppressed]") : rawLabel);
-    }
+    appendValue(result, tr("Label"), formatDimensionLabelForInfo(dim->getLabel(false)));
 }
 
 void LC_QuickInfoEntityData::collectDimensionLabelProperties(RS_Dimension* dim) {
-    QString label = dim->getLabel(true);
-    QString rawLabel = dim->getLabel(false);
-    addProperty(tr("Label"), label.isEmpty() ? tr("[None]") : label, PropertyType::OTHER);
-    if (!rawLabel.isEmpty() && rawLabel != label) {
-        addProperty(tr("Text Override"), rawLabel == " " ? tr("[Suppressed]") : rawLabel, PropertyType::OTHER);
-    }
+    addProperty(tr("Label"), formatDimensionLabelForInfo(dim->getLabel(false)), PropertyType::OTHER);
 }
 
 QString LC_QuickInfoEntityData::prepareDimLinearDescription(RS_DimLinear *dim, RS2::EntityDescriptionLevel level) {

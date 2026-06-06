@@ -139,9 +139,15 @@ bool dwgReader18::parseDataPage(const dwgSectionInfo &si/*, std::uint8_t *dData*
         DRW_DBG("      section page type= "); DRW_DBGH(bufHdr.getRawLong32());
         DRW_DBG("\n      section number= "); DRW_DBGH(bufHdr.getRawLong32());
         pi.cSize = bufHdr.getRawLong32();
-        DRW_DBG("\n      data size (compressed)= "); DRW_DBGH(pi.cSize); DRW_DBG(" dec "); DRW_DBG(pi.cSize);
+        DRW_DBG("\n      data size (compressed)= ");
+        DRW_DBGH(pi.cSize);
+        DRW_DBG(" dec ");
+        DRW_DBG(static_cast<unsigned long long>(pi.cSize));
         pi.uSize = bufHdr.getRawLong32();
-        DRW_DBG("\n      page size (decompressed)= "); DRW_DBGH(pi.uSize); DRW_DBG(" dec "); DRW_DBG(pi.uSize);
+        DRW_DBG("\n      page size (decompressed)= ");
+        DRW_DBGH(pi.uSize);
+        DRW_DBG(" dec ");
+        DRW_DBG(static_cast<unsigned long long>(pi.uSize));
         std::uint32_t headerStartOffset = bufHdr.getRawLong32();
         DRW_DBG("\n      start offset (in decompressed buffer)= "); DRW_DBGH(headerStartOffset);
         DRW_DBG("\n      unknown= "); DRW_DBGH(bufHdr.getRawLong32());
@@ -199,7 +205,11 @@ bool dwgReader18::parseDataPage(const dwgSectionInfo &si/*, std::uint8_t *dData*
             }
             std::copy(cData.begin(), cData.end(), oData);
         } else {
-            DRW_DBG("decompressing "); DRW_DBG(pi.cSize); DRW_DBG(" bytes in "); DRW_DBG(pi.uSize); DRW_DBG(" bytes\n");
+            DRW_DBG("decompressing ");
+            DRW_DBG(static_cast<unsigned long long>(pi.cSize));
+            DRW_DBG(" bytes in ");
+            DRW_DBG(static_cast<unsigned long long>(pi.uSize));
+            DRW_DBG(" bytes\n");
             dwgCompressor comp;
             if (!comp.decompress18(cData.data(), oData, pi.cSize, pi.uSize)) {
                 return false;

@@ -10075,7 +10075,7 @@ void RS_FilterDXFRW::writeDimension(RS_Dimension* d) {
     dim->setStyle (d->getStyle().toUtf8().data());
     dim->setAlign (attachmentPoint);
     dim->setTextLineStyle(d->getLineSpacingStyle());
-    dim->setText (toDxfString(d->getText()).toUtf8().data());
+    dim->setText (toDxfString(d->getLabel(false)).toUtf8().data());
     dim->setTextLineFactor(d->getLineSpacingFactor());
     dim->setHDir(d->getHDir());
     dim->setFlipArrow1(d->isFlipArrow1());
