@@ -558,3 +558,29 @@ TEST_CASE("DRW_Header::encodeDwg round-trips DIMADEC/DIMFRAC under correct keys"
     REQUIRE(dst.vars.find("DIAMDEC") == dst.vars.end());
     REQUIRE(dst.vars.find("DIMFAC")  == dst.vars.end());
 }
+
+// B3 (header-var prefix): the DWG encoder looks up vars by BARE name
+// ("LTSCALE"), but the DXF reader and the app's writeHeader populate vars with
+// $-prefixed keys ("$LTSCALE").  Before the findVar() fallback the DWG encoder
+// silently emitted defaults for every $-prefixed var, dropping ~150 header
+// variables on every DXF->DWG export.  This pins the cross-convention lookup:
+// $-prefixed source vars must survive encode->parse (parser stores bare names).
+TEST_CASE("DRW_Header::encodeDwg resolves $-prefixed (DXF-style) header keys",
+          "[dwg-write][header-encode][header-prefix]") {
+    DRW_Header src;
+    // Populate with DXF-style $NAME keys, as RS_FilterDXFRW::writeHeader does.
+    src.addDouble("$LTSCALE", 4.25, 40);
+    src.addInt("$LUNITS", 4, 70);
+    src.addInt("$LUPREC", 6, 70);
+
+    auto bytes = encodeWithSizePrefix(src);
+    dwgBuffer r(bytes.data(), bytes.size());
+    DRW_Header dst;
+    REQUIRE(DrwHeaderEncodeTestAccess::parse(dst, DRW::AC1015, &r, &r));
+
+    // Parser stores BARE keys; the values must match the $-prefixed source.
+    // Without findVar() these would be the encoder defaults (1.0, 2, 4).
+    REQUIRE(dbl(dst, "LTSCALE") == 4.25);
+    REQUIRE(i32(dst, "LUNITS")  == 4);
+    REQUIRE(i32(dst, "LUPREC")  == 6);
+}

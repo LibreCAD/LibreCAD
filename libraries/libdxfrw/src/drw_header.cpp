@@ -2498,27 +2498,43 @@ bool DRW_Header::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer *hBbuf
 // 13-handle control-handle block and the conditional layout.
 
 namespace {
+    /// Look up a header var tolerant of either naming convention.
+    /// DWG-side parseDwg stores bare keys ("LUPREC"); DXF-side parseCode and
+    /// the app's writeHeader push $-prefixed keys ("$LUPREC").  This helper
+    /// tries the caller-supplied key first (preserving bare-on-both DWG
+    /// round-trip semantics), then falls back to the alternate form so the
+    /// DXF -> DWG export path (where vars were filled with $NAME keys) finds
+    /// the values instead of emitting encoder defaults.  Centralizing the
+    /// fallback here keeps the DXF reader/writer surfaces untouched.
+    auto findVar(const DRW_Header& hdr, const std::string& name) {
+        auto it = hdr.vars.find(name);
+        if (it != hdr.vars.end()) return it;
+        if (!name.empty() && name.front() == '$') {
+            return hdr.vars.find(name.substr(1));
+        }
+        return hdr.vars.find(std::string{"$"} + name);
+    }
     /// Look up a 1-bit boolean var in DRW_Header::vars; default 0.
     std::uint8_t boolVar(const DRW_Header& hdr, const std::string& name) {
-        auto it = hdr.vars.find(name);
+        auto it = findVar(hdr, name);
         if (it == hdr.vars.end() || !it->second) return 0;
         return static_cast<std::uint8_t>(it->second->i_val() & 1);
     }
     /// Look up a BS/BL int var; default 0 (or caller-supplied default).
     std::int32_t intVar(const DRW_Header& hdr, const std::string& name, std::int32_t def = 0) {
-        auto it = hdr.vars.find(name);
+        auto it = findVar(hdr, name);
         if (it == hdr.vars.end() || !it->second) return def;
         return it->second->i_val();
     }
     /// Look up a BD float var; default 0.0 (or caller-supplied).
     double dblVar(const DRW_Header& hdr, const std::string& name, double def = 0.0) {
-        auto it = hdr.vars.find(name);
+        auto it = findVar(hdr, name);
         if (it == hdr.vars.end() || !it->second) return def;
         return it->second->d_val();
     }
     /// Look up a 3BD coord var; default {0,0,0}.
     DRW_Coord coordVar(const DRW_Header& hdr, const std::string& name) {
-        auto it = hdr.vars.find(name);
+        auto it = findVar(hdr, name);
         if (it == hdr.vars.end() || !it->second
             || it->second->type() != DRW_Variant::COORD
             || it->second->coord() == nullptr) {
@@ -2528,7 +2544,7 @@ namespace {
     }
     /// Look up a TV string var; default empty.
     UTF8STRING strVar(const DRW_Header& hdr, const std::string& name) {
-        auto it = hdr.vars.find(name);
+        auto it = findVar(hdr, name);
         if (it == hdr.vars.end() || !it->second
             || it->second->type() != DRW_Variant::STRING) {
             return {};
