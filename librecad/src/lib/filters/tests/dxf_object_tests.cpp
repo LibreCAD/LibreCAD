@@ -874,6 +874,39 @@ TEST_CASE("DXF writeEntity captures source->minted handles (F3-1)",
   CHECK(mintedA != mintedB);
 }
 
+// B3: writeEntity must emit a code-330 owner (soft-pointer to the owning
+// BLOCK_RECORD) on every R2000+ entity. Pre-fix the entity carried no 330 at
+// all, so ezdxf/AutoCAD treated it as an orphan. A model-space POINT must own
+// to the Model_Space BLOCK_RECORD (handle 1F), emitted right after its (5)
+// handle.
+TEST_CASE("DXF writeEntity emits a 330 owner handle on every entity (B3)",
+          "[dxf][objects][owner]") {
+  const auto path =
+      std::filesystem::temp_directory_path() / "lc_entity_owner.dxf";
+  std::filesystem::remove(path);
+
+  SeededPointEmitter em;
+  em.m_sourceHandles = {0xAAu};
+  {
+    dxfRW w(path.string().c_str());
+    em.m_rw = &w;
+    REQUIRE(w.write(&em, DRW::AC1021, false));
+  }
+  const auto groups = readGroups(path);
+  std::filesystem::remove(path);
+
+  bool foundPoint = false;
+  for (std::size_t i = 0; i + 2 < groups.size(); ++i) {
+    if (groups[i].first == "0" && groups[i].second == "POINT") {
+      REQUIRE(groups[i + 1].first == "5");          // minted entity handle
+      REQUIRE(groups[i + 2].first == "330");         // owner handle follows
+      REQUIRE(groups[i + 2].second == "1F");         // Model_Space BLOCK_RECORD
+      foundPoint = true;
+    }
+  }
+  REQUIRE(foundPoint);
+}
+
 // A-3: the VERTEX/SEQEND parent re-entries from writePolyline call
 // writeEntity(ent) again on the already-minted parent. Those re-entries must NOT
 // emplace into sourceHandleToMintedMap. After writing a POLYLINE (2 vertices,

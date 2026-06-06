@@ -286,6 +286,24 @@ bool dxfRW::writeEntity(DRW_Entity *ent, bool captureSourceHandle) {
         m_writingContext.sourceHandleToMintedMap.emplace(sourceHandle, ent->handle);
     }
     writer->writeString(5, toHexStr(static_cast<int>(ent->handle)));
+    // R2000+ DXF requires a code-330 owner handle (soft-pointer to the owning
+    // BLOCK_RECORD) on every entity. Without it ezdxf/AutoCAD treat the entity
+    // as an orphan and emit a recover/audit warning. Resolution priority:
+    //   1) ent->parentHandle when explicitly seeded (e.g. raw-replay paths);
+    //   2) the active BLOCK_RECORD (currHandle) while writingBlock is true --
+    //      writeBlock() latches it for every user block in the BLOCKS section;
+    //   3) the fixed Model_Space (0x1F) / Paper_Space (0x1E) BLOCK_RECORD
+    //      handles by ent->space, for entities in the ENTITIES section.
+    if (version > DRW::AC1014) {
+        std::uint32_t ownerHandle = ent->parentHandle;
+        if (ownerHandle == 0) {
+            if (writingBlock)
+                ownerHandle = static_cast<std::uint32_t>(currHandle);
+            else
+                ownerHandle = (ent->space == DRW::PaperSpace) ? 0x1Eu : 0x1Fu;
+        }
+        writer->writeString(330, toHexStr(static_cast<int>(ownerHandle)));
+    }
     if (version > DRW::AC1009) {
         writer->writeString(100, "AcDbEntity");
     }
@@ -2357,7 +2375,9 @@ bool dxfRW::writeBlocks() {
     if (version > DRW::AC1009) {
         writer->writeString(5, "1C");
         if (version > DRW::AC1014) {
-            writer->writeString(330, "1B");
+            // Paper_Space BLOCK (handle 1C) is owned by the Paper_Space
+            // BLOCK_RECORD (1E, reserved above), not the nonexistent handle 1B.
+            writer->writeString(330, "1E");
         }
         writer->writeString(100, "AcDbEntity");
     }
@@ -2380,7 +2400,9 @@ bool dxfRW::writeBlocks() {
     if (version > DRW::AC1009) {
         writer->writeString(5, "1D");
         if (version > DRW::AC1014) {
-            writer->writeString(330, "1F");
+            // Paper_Space ENDBLK (handle 1D) is owned by the Paper_Space
+            // BLOCK_RECORD (1E), not the Model_Space BLOCK_RECORD (1F).
+            writer->writeString(330, "1E");
         }
         writer->writeString(100, "AcDbEntity");
     }
