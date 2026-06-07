@@ -182,6 +182,7 @@ const char *kInsertTwoAttribs =
 
 } // namespace
 
+// NOLINTNEXTLINE(readability-identifier-naming)
 TEST_CASE("DXF BLOCK first entity keeps first data group", "[dxf][block]") {
   LineCapture cap;
   const char *dxf =
@@ -197,6 +198,7 @@ TEST_CASE("DXF BLOCK first entity keeps first data group", "[dxf][block]") {
   CHECK(cap.m_captured.layer == "InnerLayer");
 }
 
+// NOLINTNEXTLINE(readability-identifier-naming)
 TEST_CASE("DXF entity 102 reactor handles do not overwrite owner", "[dxf][reactor]") {
   LineCapture cap;
   const char *dxf =
@@ -210,6 +212,7 @@ TEST_CASE("DXF entity 102 reactor handles do not overwrite owner", "[dxf][reacto
   CHECK(cap.m_captured.parentHandle == 0xCu);
 }
 
+// NOLINTNEXTLINE(readability-identifier-naming)
 TEST_CASE("DXF malformed ASCII group code is rejected", "[dxf][malformed]") {
   const auto path = std::filesystem::temp_directory_path() / "lc_bad_group_code.dxf";
   std::filesystem::remove(path);
@@ -224,6 +227,7 @@ TEST_CASE("DXF malformed ASCII group code is rejected", "[dxf][malformed]") {
   std::filesystem::remove(path);
 }
 
+// NOLINTNEXTLINE(readability-identifier-naming)
 TEST_CASE("DXF INSERT collects one trailing ATTRIB into attlist", "[dxf][attrib]") {
   InsertCapture cap;
   readDxf(kInsertOneAttrib, cap, "lc_attrib_one.dxf");
@@ -240,6 +244,7 @@ TEST_CASE("DXF INSERT collects one trailing ATTRIB into attlist", "[dxf][attrib]
   CHECK(att->height == 0.5);
 }
 
+// NOLINTNEXTLINE(readability-identifier-naming)
 TEST_CASE("DXF INSERT collects multiple ATTRIBs incl. invisible flag", "[dxf][attrib]") {
   InsertCapture cap;
   readDxf(kInsertTwoAttribs, cap, "lc_attrib_two.dxf");
@@ -254,6 +259,7 @@ TEST_CASE("DXF INSERT collects multiple ATTRIBs incl. invisible flag", "[dxf][at
   CHECK((cap.m_captured.attlist[1]->attribFlags & 0x1) == 1);
 }
 
+// NOLINTNEXTLINE(readability-identifier-naming)
 TEST_CASE("DXF INSERT without attributes yields empty attlist", "[dxf][attrib]") {
   InsertCapture cap;
   const char *noAttr =
@@ -267,6 +273,7 @@ TEST_CASE("DXF INSERT without attributes yields empty attlist", "[dxf][attrib]")
   CHECK(cap.m_captured.attlist.empty());
 }
 
+// NOLINTNEXTLINE(readability-identifier-naming)
 TEST_CASE("DXF INSERT attlist round-trips through write+read (slice B2)",
           "[dxf][attrib][dxf_roundtrip]") {
   const auto path =
@@ -324,6 +331,7 @@ TEST_CASE("DXF INSERT attlist round-trips through write+read (slice B2)",
   std::filesystem::remove(path);
 }
 
+// NOLINTNEXTLINE(readability-identifier-naming)
 TEST_CASE("DXF TOLERANCE is read into a DRW_Tolerance (slice E1)", "[dxf][tolerance]") {
   ToleranceCapture cap;
   const char *dxf =
@@ -343,6 +351,7 @@ TEST_CASE("DXF TOLERANCE is read into a DRW_Tolerance (slice E1)", "[dxf][tolera
   CHECK(cap.m_captured.xAxisDirectionVector.x == 1.0);
 }
 
+// NOLINTNEXTLINE(readability-identifier-naming)
 TEST_CASE("DXF TOLERANCE round-trips through write+read (slice E1)",
           "[dxf][tolerance][dxf_roundtrip]") {
   const auto path =
@@ -376,4 +385,66 @@ TEST_CASE("DXF TOLERANCE round-trips through write+read (slice E1)",
   CHECK(cap.m_captured.xAxisDirectionVector.x == 1.0);
 
   std::filesystem::remove(path);
+}
+
+// attrib-73: DXF AcDbAttribute subclass uses code 73 for field length (not
+// the vertical alignment from AcDbText), and code 74 for vertical alignment.
+// Before this fix, code 73 in AcDbAttribute wrongly set DRW_Text::alignV (via
+// the default DRW_Text::parseCode fallback) and code 74 was silently dropped.
+// Also verifies that writeAttrib emits both 73 (fieldLength) and 74 (alignV).
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("DXF ATTRIB AcDbAttribute codes 73/74 round-trip (attrib-73)",
+          "[dxf][attrib][attrib-73]") {
+  // R2000+ DXF with explicit AcDbAttribute subclass, 73=fieldLength, 74=valign.
+  // alignV=VTop (3) — the default is VBaseLine (0) so any difference is visible.
+  const char *kAttrib73 =
+      "0\nSECTION\n2\nENTITIES\n"
+      "0\nINSERT\n8\n0\n2\nTBLK\n10\n0\n20\n0\n30\n0\n66\n1\n"
+      "0\nATTRIB\n5\n30\n330\n1F\n"
+      "100\nAcDbEntity\n8\n0\n"
+      "100\nAcDbText\n10\n1\n20\n2\n30\n0\n40\n0.5\n1\nVALUE\n"
+      "100\nAcDbAttribute\n2\nTAG\n70\n0\n73\n5\n74\n3\n"
+      "0\nSEQEND\n"
+      "0\nENDSEC\n0\nEOF\n";
+  InsertCapture cap;
+  readDxf(kAttrib73, cap, "lc_attrib_73_read.dxf");
+  REQUIRE(cap.m_callCount == 1);
+  REQUIRE(cap.m_captured.attlist.size() == 1);
+  const DRW_Attrib &att = *cap.m_captured.attlist[0];
+  CHECK(att.m_fieldLength == 5);
+  CHECK(att.alignV == DRW_Text::VTop);    // code 74 must set alignV, not be dropped
+
+  // Round-trip via write+read: fieldLength and alignV must survive.
+  const auto path =
+      std::filesystem::temp_directory_path() / "lc_attrib_73_rt.dxf";
+  std::filesystem::remove(path);
+
+  AttribEmitter em;
+  em.m_insert.name = "TBLK";
+  auto a = std::make_shared<DRW_Attrib>();
+  a->basePoint = DRW_Coord(1.0, 2.0, 0.0);
+  a->height = 0.5;
+  a->text = "VALUE";
+  a->tag = "TAG";
+  a->attribFlags = 0;
+  a->m_fieldLength = 7;
+  a->alignV = DRW_Text::VMiddle;
+  em.m_insert.attlist.push_back(a);
+  {
+    dxfRW w(path.string().c_str());
+    em.m_rw = &w;
+    REQUIRE(w.write(&em, DRW::AC1021, false));
+  }
+
+  InsertCapture cap2;
+  {
+    dxfRW r(path.string().c_str());
+    REQUIRE(r.read(&cap2, /*ext=*/true));
+  }
+  std::filesystem::remove(path);
+
+  REQUIRE(cap2.m_captured.attlist.size() == 1);
+  const DRW_Attrib &att2 = *cap2.m_captured.attlist[0];
+  CHECK(att2.m_fieldLength == 7);
+  CHECK(att2.alignV == DRW_Text::VMiddle);
 }

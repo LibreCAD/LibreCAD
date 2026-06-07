@@ -4498,6 +4498,16 @@ bool DRW_Attrib::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
     case 70:
         attribFlags = reader->getInt32();
         break;
+    case 73:
+        // AcDbAttribute code 73 = field length (obsolete); NOT the vertical
+        // alignment from AcDbText (which is code 73 in TEXT but 74 in ATTRIB).
+        m_fieldLength = reader->getInt32();
+        break;
+    case 74:
+        // AcDbAttribute vertical alignment (code 74); TEXT uses code 73 for
+        // this but ATTRIB moves it here to free code 73 for field length.
+        alignV = (VAlign)reader->getInt32();
+        break;
     case 280:
         // Lock position flag (R2010+ DXF group code)
         lockPosition = reader->getInt32() != 0;
@@ -4590,8 +4600,7 @@ bool DRW_Attrib::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs
     tag = sBuf->getVariableText(version, false);
     DRW_DBG("attrib tag: "); DRW_DBG(tag.c_str()); DRW_DBG("\n");
 
-    std::uint16_t fieldLen = buf->getBitShort(); /* Field length BS (always 0) */
-    DRW_UNUSED(fieldLen);
+    m_fieldLength = buf->getBitShort(); /* Field length BS (obsolete, usually 0) */
 
     attribFlags = buf->getRawChar8();
     DRW_DBG("attrib flags: "); DRW_DBG(attribFlags); DRW_DBG("\n");
@@ -4668,7 +4677,7 @@ bool DRW_Attrib::encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t 
 
     // ATTRIB-specific tail
     sb->putVariableText(version, tag);                // tag TV
-    buf->putBitShort(0);                              // fieldLen BS (always 0)
+    buf->putBitShort(static_cast<std::uint16_t>(m_fieldLength)); // fieldLen BS
     buf->putRawChar8(attribFlags);                    // flags RC
     if (version >= DRW::AC1024) {
         buf->putBit(lockPosition ? 1 : 0);             // lock position B
@@ -4773,8 +4782,7 @@ bool DRW_Attdef::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs
     tag = sBuf->getVariableText(version, false);
     DRW_DBG("attdef tag: "); DRW_DBG(tag.c_str()); DRW_DBG("\n");
 
-    std::uint16_t fieldLen = buf->getBitShort();
-    DRW_UNUSED(fieldLen);
+    m_fieldLength = buf->getBitShort(); /* field length BS (obsolete, usually 0) */
 
     attribFlags = buf->getRawChar8();
 
@@ -4850,7 +4858,7 @@ bool DRW_Attdef::encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t 
     }
 
     sb->putVariableText(version, tag);
-    buf->putBitShort(0);                              // fieldLen BS (always 0)
+    buf->putBitShort(static_cast<std::uint16_t>(m_fieldLength)); // fieldLen BS
     buf->putRawChar8(attribFlags);
     if (version >= DRW::AC1024) {
         buf->putBit(lockPosition ? 1 : 0);

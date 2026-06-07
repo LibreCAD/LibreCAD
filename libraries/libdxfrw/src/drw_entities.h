@@ -1201,6 +1201,7 @@ protected:
 public:
     UTF8STRING tag;            /*!< attribute tag, code 2 */
     std::uint8_t attribFlags;        /*!< attribute flags, code 70 (1=invisible, 2=constant, 4=verify, 8=preset) */
+    int m_fieldLength = 0;   /*!< field length (obsolete), DXF code 73 in AcDbAttribute; DWG fieldLen BS */
     bool lockPosition;         /*!< lock position flag (R2010+) */
     std::uint8_t attVersion;         /*!< version byte (R2010+); 0=plain TEXT-style, >0=MText-style */
     std::uint8_t m_attributeType;    /*!< R2018+ attribute type: 1=single-line, 2=multi-line ATTRIB, 4=multi-line ATTDEF */

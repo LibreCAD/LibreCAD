@@ -1768,6 +1768,7 @@ bool dxfRW::writeAttrib(DRW_Attrib *ent){
         writer->writeString(100, "AcDbAttribute");
     writer->writeUtf8String(2, ent->tag);
     writer->writeInt16(70, ent->attribFlags);
+    writer->writeInt16(73, ent->m_fieldLength);
     if (ent->alignV != DRW_Text::VBaseLine)
         writer->writeInt16(74, ent->alignV);
     if (version > DRW::AC1014)
