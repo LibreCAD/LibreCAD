@@ -4846,11 +4846,41 @@ bool dxfRW::writePlotSettings(DRW_PlotSettings *ent) {
         writer->writeString(330, "C");  //owner: root dict (avoids ownerless prune)
     }
     writer->writeString(100, "AcDbPlotSettings");
+    // Full AcDbPlotSettings field set in ezdxf layout.py order. Previously only
+    // 6/40/41/42/43 were emitted, so page size, margins, plot window, scale,
+    // rotation, units and shade-plot settings were all lost on export.
+    writer->writeUtf8String(1, ent->pageSetupName);
+    writer->writeUtf8String(2, ent->printerConfig);
+    writer->writeUtf8String(4, ent->paperSize);
     writer->writeUtf8String(6, ent->plotViewName);
     writer->writeDouble(40, ent->marginLeft);
     writer->writeDouble(41, ent->marginBottom);
     writer->writeDouble(42, ent->marginRight);
     writer->writeDouble(43, ent->marginTop);
+    writer->writeDouble(44, ent->paperWidth);
+    writer->writeDouble(45, ent->paperHeight);
+    writer->writeDouble(46, ent->plotOriginX);
+    writer->writeDouble(47, ent->plotOriginY);
+    writer->writeDouble(48, ent->windowMinX);
+    writer->writeDouble(49, ent->windowMinY);
+    writer->writeDouble(140, ent->windowMaxX);
+    writer->writeDouble(141, ent->windowMaxY);
+    writer->writeDouble(142, ent->realWorldUnits);
+    writer->writeDouble(143, ent->drawingUnits);
+    writer->writeInt16(70, ent->plotLayoutFlags);
+    writer->writeInt16(72, ent->paperUnits);
+    writer->writeInt16(73, ent->plotRotation);
+    writer->writeInt16(74, ent->plotType);
+    writer->writeUtf8String(7, ent->currentStyleSheet);
+    writer->writeInt16(75, ent->scaleType);
+    if (version > DRW::AC1015) {   // shade-plot settings are R2004+
+        writer->writeInt16(76, ent->shadePlotMode);
+        writer->writeInt16(77, ent->shadePlotResLevel);
+        writer->writeInt16(78, ent->shadePlotCustomDPI);
+    }
+    writer->writeDouble(147, ent->scaleFactor);
+    writer->writeDouble(148, ent->paperImageOriginX);
+    writer->writeDouble(149, ent->paperImageOriginY);
     return true;
 }
 
