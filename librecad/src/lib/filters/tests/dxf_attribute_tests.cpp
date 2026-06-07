@@ -98,6 +98,26 @@ public:
   void writeAppId() override {}
 };
 
+// Captures the first HATCH entity.
+class HatchCapture : public StubInterface {
+public:
+  int m_callCount = 0;
+  DRW_Hatch m_captured;
+  void addHatch(const DRW_Hatch *d) override {
+    if (m_callCount == 0)
+      m_captured = *d;
+    ++m_callCount;
+  }
+};
+
+// Emits a single HATCH on write.
+class HatchEmitter : public StubInterface {
+public:
+  DRW_Hatch m_hatch;
+  dxfRW *m_rw = nullptr;
+  void writeEntities() override { m_rw->writeHatch(&m_hatch); }
+};
+
 // Captures addImage / addWipeout (both call through DRW_Image*).
 class ImageCapture : public StubInterface {
 public:
@@ -558,4 +578,91 @@ TEST_CASE("DXF IMAGE/WIPEOUT code 71 stored in m_clipBoundaryType (image-wipeout
   REQUIRE(cap3.m_wipeoutCount == 1);
   CHECK(cap3.m_lastWipeout.m_clipBoundaryType == 2);
   CHECK(cap3.m_lastWipeout.clipPath.size() == 3);
+}
+
+// hatch-97: DXF code 97 appears in two distinct contexts inside a HATCH
+// entity:
+//   1. As a spline-edge fit-point count (nfit), preceding code-11/21 pairs.
+//   2. As a per-loop source boundary object count (associative hatch),
+//      preceding code-330 handle pairs.
+// Before this fix, a spline edge with nfit=0 left the 'spline' pointer
+// active, so the *next* code-97 (the boundary count) was wrongly consumed
+// as a second nfit rather than stored as the boundary handle count.
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("DXF HATCH code 97/330 boundary handles stored per-loop (hatch-97)",
+          "[dxf][hatch][hatch-97]") {
+  // Minimal associative-hatch DXF: one spline edge with nfit=0,
+  // followed by one boundary source handle (0xBEEF).
+  const char *kHatch97 =
+      "0\nSECTION\n2\nENTITIES\n"
+      "0\nHATCH\n5\nA0\n330\n0\n"
+      "100\nAcDbEntity\n8\n0\n"
+      "100\nAcDbHatch\n"
+      "10\n0.0\n20\n0.0\n30\n0.0\n"
+      "210\n0.0\n220\n0.0\n230\n1.0\n"
+      "2\nSOLID\n70\n1\n71\n1\n"   // solid, associative
+      "91\n1\n"                     // 1 loop
+      "92\n0\n"                     // edge path
+      "93\n1\n"                     // 1 edge
+      "72\n4\n"                     // spline edge
+      "94\n2\n"                     // degree
+      "73\n0\n74\n0\n"              // not rational, not periodic
+      "95\n4\n"                     // 4 knots
+      "96\n2\n"                     // 2 control points
+      "40\n0.0\n40\n0.0\n40\n1.0\n40\n1.0\n"  // knots
+      "10\n0.0\n20\n0.0\n"         // cp1
+      "10\n4.0\n20\n0.0\n"         // cp2
+      "97\n0\n"                     // nfit = 0
+      "97\n1\n"                     // boundary handle count = 1
+      "330\nBEEF\n"                 // handle 0xBEEF = 48879
+      "75\n0\n76\n1\n77\n0\n78\n0\n47\n1.0\n"
+      "98\n0\n"
+      "0\nENDSEC\n0\nEOF\n";
+
+  HatchCapture cap1;
+  readDxf(kHatch97, cap1, "lc_hatch97_read.dxf");
+  REQUIRE(cap1.m_callCount == 1);
+  REQUIRE(cap1.m_captured.looplist.size() == 1);
+  const DRW_HatchLoop &loop = *cap1.m_captured.looplist[0];
+  REQUIRE(loop.m_boundaryHandles.size() == 1);
+  CHECK(loop.m_boundaryHandles[0] == 0xBEEFu);
+
+  // --- write+read round-trip: boundary handles must survive ---
+  // Build a HATCH with a single LINE boundary loop carrying one handle.
+  const auto path =
+      std::filesystem::temp_directory_path() / "lc_hatch97_rt.dxf";
+  std::filesystem::remove(path);
+
+  HatchEmitter em;
+  em.m_hatch.name = "SOLID";
+  em.m_hatch.solid = 1;
+  em.m_hatch.associative = 1;
+  em.m_hatch.hstyle = 0;
+  em.m_hatch.hpattern = 1;
+  em.m_hatch.basePoint = DRW_Coord(0.0, 0.0, 0.0);
+  auto loopPtr = std::make_shared<DRW_HatchLoop>(0);
+  auto lineEnt = std::make_shared<DRW_Line>();
+  lineEnt->basePoint = DRW_Coord(0.0, 0.0, 0.0);
+  lineEnt->secPoint  = DRW_Coord(1.0, 0.0, 0.0);
+  loopPtr->objlist.push_back(lineEnt);
+  loopPtr->m_boundaryHandles.push_back(0xCAFEu);
+  em.m_hatch.appendLoop(loopPtr);
+  {
+    dxfRW w(path.string().c_str());
+    em.m_rw = &w;
+    REQUIRE(w.write(&em, DRW::AC1021, false));
+  }
+
+  HatchCapture cap2;
+  {
+    dxfRW r(path.string().c_str());
+    REQUIRE(r.read(&cap2, /*ext=*/true));
+  }
+  std::filesystem::remove(path);
+
+  REQUIRE(cap2.m_callCount == 1);
+  REQUIRE(cap2.m_captured.looplist.size() == 1);
+  const DRW_HatchLoop &rtLoop = *cap2.m_captured.looplist[0];
+  REQUIRE(rtLoop.m_boundaryHandles.size() == 1);
+  CHECK(rtLoop.m_boundaryHandles[0] == 0xCAFEu);
 }

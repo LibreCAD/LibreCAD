@@ -5415,10 +5415,43 @@ bool DRW_Hatch::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
         if (spline) spline->ncontrol = reader->getInt32();
         break;
     case 97:
-        // Spline edge number of fit points (also used as terminator for
-        // non-spline edges — only consume when spline is current).
-        if (spline) spline->nfit = reader->getInt32();
+        if (spline) {
+            if (!m_splineNfitSet) {
+                // First 97 in this spline edge = fit-point count (nfit).
+                spline->nfit = reader->getInt32();
+                if (spline->nfit == 0) {
+                    // No fit points or tangents follow; safe to clear spline
+                    // so the next code-97 (loop boundary count) is not
+                    // misinterpreted as another nfit.
+                    spline.reset();
+                } else {
+                    m_splineNfitSet = true;
+                }
+            } else {
+                // Second 97 while spline is active = loop boundary handle count.
+                spline.reset();
+                m_splineNfitSet = false;
+                m_boundaryHandleCount = reader->getInt32();
+                if (m_boundaryHandleCount > 0 && loop)
+                    DRW::reserve(loop->m_boundaryHandles, m_boundaryHandleCount);
+            }
+            break;
+        }
+        // No active spline: this is the loop boundary handle count.
+        m_splineNfitSet = false;
+        m_boundaryHandleCount = reader->getInt32();
+        if (m_boundaryHandleCount > 0 && loop)
+            DRW::reserve(loop->m_boundaryHandles, m_boundaryHandleCount);
         break;
+    case 330:
+        if (m_boundaryHandleCount > 0 && loop) {
+            // getHandleString() converts the hex string to int for us.
+            loop->m_boundaryHandles.push_back(
+                static_cast<std::uint32_t>(reader->getHandleString()));
+            --m_boundaryHandleCount;
+            break;
+        }
+        return DRW_Point::parseCode(code, reader);
     case 75:
         hstyle = reader->getInt32();
         break;

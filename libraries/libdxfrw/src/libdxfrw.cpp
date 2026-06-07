@@ -1324,7 +1324,14 @@ bool dxfRW::writeHatch(DRW_Hatch *ent){
                     if (hasBulge)
                         writer->writeDouble(42, vtx->bulge);
                 }
-                writer->writeInt16(97, 0); // source boundary object count
+                // Emit source boundary handles (associative hatch) or 0.
+                if (!loop->m_boundaryHandles.empty()) {
+                    writer->writeInt16(97, static_cast<int>(loop->m_boundaryHandles.size()));
+                    for (std::uint32_t h : loop->m_boundaryHandles)
+                        writer->writeString(330, toHexStr(static_cast<int>(h)));
+                } else {
+                    writer->writeInt16(97, 0);
+                }
             } else {
                 //boundary path
                 loop->update();
@@ -1406,7 +1413,14 @@ bool dxfRW::writeHatch(DRW_Hatch *ent){
                         break;
                     }
                 }
-                writer->writeInt16(97, 0);
+                // Emit source boundary handles (associative hatch) or 0.
+                if (!loop->m_boundaryHandles.empty()) {
+                    writer->writeInt16(97, static_cast<int>(loop->m_boundaryHandles.size()));
+                    for (std::uint32_t h : loop->m_boundaryHandles)
+                        writer->writeString(330, toHexStr(static_cast<int>(h)));
+                } else {
+                    writer->writeInt16(97, 0);
+                }
             }
         }
         writer->writeInt16(75, ent->hstyle);

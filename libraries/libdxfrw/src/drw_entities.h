@@ -1564,6 +1564,9 @@ public:
 //TODO: store lwpolylines as entities
 //    std::vector<DRW_LWPolyline *> pollist;  /*!< polyline list */
     std::vector<std::shared_ptr<DRW_Entity>> objlist;      /*!< entities list */
+    /* Source boundary object handles: count in DXF code 97 (per-loop),
+       then one code-330 handle per entry.  Empty when not associative. */
+    std::vector<std::uint32_t> m_boundaryHandles;
 };
 
 //! Class to handle hatch entity
@@ -1656,6 +1659,7 @@ private:
         ellipse.reset();
         spline.reset();
         plvert.reset();
+        m_splineNfitSet = false;
     }
 
     void addLine() {
@@ -1700,6 +1704,13 @@ private:
     std::shared_ptr<DRW_Point> pt;
     std::shared_ptr<DRW_Vertex2D> plvert;
     bool ispol;
+    /* True after the first code-97 in the current spline edge (= nfit set);
+       the second code-97 while spline is active is the per-loop boundary
+       handle count, not another nfit.  Reset by clearEntities(). */
+    bool m_splineNfitSet = false;
+    /* Remaining code-330 values to consume as boundary source handles.
+       Set when code-97 is interpreted as the per-loop boundary count. */
+    int m_boundaryHandleCount = 0;
 };
 
 //! Class to handle image entity
