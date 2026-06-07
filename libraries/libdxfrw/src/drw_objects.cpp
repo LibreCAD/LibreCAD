@@ -24,16 +24,30 @@
 
 namespace {
 
-dwgHandle makeSoftOwnerW(std::uint32_t ref) {
-    dwgHandle h; h.code = ref ? 3 : 0; h.ref = ref; h.size = 0;
+// ODA handle reference codes (dwg_spec.txt §2.13): 2=soft ownership,
+// 3=hard ownership, 4=soft pointer, 5=hard pointer.  Emits a null handle
+// (code 0) when ref==0, which is the canonical NULL encoding.
+dwgHandle makeRefW(std::uint32_t ref, std::uint8_t code) {
+    dwgHandle h; h.code = ref ? code : 0; h.ref = ref; h.size = 0;
     for (std::uint32_t t = ref; t; t >>= 8) ++h.size;
     return h;
 }
-dwgHandle makeHardPtrW(std::uint32_t ref) {
-    dwgHandle h; h.code = ref ? 4 : 0; h.ref = ref; h.size = 0;
-    for (std::uint32_t t = ref; t; t >>= 8) ++h.size;
-    return h;
+// Common object handle prefix per libreDWG common_object_handle_data.spec:
+// ownerhandle = soft pointer (4), each reactor = soft pointer (4),
+// xdictionary = hard owner (3).
+void putCommonObjectHandlePrefix(dwgBufferW* hb, std::uint32_t ownerRef,
+                                 std::int32_t numReactors, std::uint8_t xDictFlag) {
+    hb->putHandle(makeRefW(ownerRef, 4));            // ownerhandle (330)
+    for (std::int32_t i = 0; i < numReactors; ++i)
+        hb->putHandle(makeRefW(0, 4));               // reactors
+    if (xDictFlag != 1)
+        hb->putHandle(makeRefW(0, 3));               // xdictionary
 }
+// DEPRECATED names (wrong codes per ODA) — retained only for not-yet-migrated
+// call sites; emit the historical (pre-B2) codes so un-migrated sites are
+// unchanged.  New code should use makeRefW(ref, code) with an explicit ODA code.
+dwgHandle makeSoftOwnerW(std::uint32_t ref) { return makeRefW(ref, 3); }
+dwgHandle makeHardPtrW(std::uint32_t ref) { return makeRefW(ref, 4); }
 dwgHandle writeHandleOrHardPtr(const dwgHandle& handle) {
     if (handle.ref != 0 && handle.code == 0)
         return makeHardPtrW(handle.ref);
@@ -2657,7 +2671,7 @@ bool DRW_LType::encodeDwg(DRW::Version version, dwgBufferW *buf,
     }
 
     // Handles
-    hb->putHandle(makeSoftOwnerW(kLtypeControl));
+    hb->putHandle(makeRefW(kLtypeControl, 4));  // owner = soft pointer (4)
     // xDictFlag == 0 → write XDic null
     hb->putHandle(makeSoftOwnerW(0));
     // ODA 20.4.58: XRefH is always present (COMMON_TABLE_FLAGS), then one style
@@ -2719,7 +2733,7 @@ bool DRW_Layer::encodeDwg(DRW::Version version, dwgBufferW *buf,
     }
 
     // Handles
-    hb->putHandle(makeSoftOwnerW(kLayerControl));
+    hb->putHandle(makeRefW(kLayerControl, 4));  // owner = soft pointer (4)
     hb->putHandle(makeSoftOwnerW(0));   // XDic null
     hb->putHandle(makeNullHandleW());   // XRef null
     if (version > DRW::AC1014)
@@ -2749,7 +2763,7 @@ bool DRW_Textstyle::encodeDwg(DRW::Version version, dwgBufferW *buf,
     sb->putVariableText(version, font);
     sb->putVariableText(version, bigFont);
 
-    hb->putHandle(makeSoftOwnerW(kStyleControl));
+    hb->putHandle(makeRefW(kStyleControl, 4));  // owner = soft pointer (4)
     hb->putHandle(makeSoftOwnerW(0));  // XDic null
     hb->putHandle(makeNullHandleW());  // XRef null
     return true;
@@ -2826,7 +2840,7 @@ bool DRW_Vport::encodeDwg(DRW::Version version, dwgBufferW *buf,
         }
     }
 
-    hb->putHandle(makeSoftOwnerW(kVportControl));
+    hb->putHandle(makeRefW(kVportControl, 4));  // owner = soft pointer (4)
     hb->putHandle(makeSoftOwnerW(0));  // XDic null
     hb->putHandle(makeNullHandleW());  // XRef null
     if (version > DRW::AC1018) {
@@ -2889,7 +2903,7 @@ bool DRW_View::encodeDwg(DRW::Version version, dwgBufferW *buf,
     if (version > DRW::AC1018)
         buf->putBit(static_cast<std::uint8_t>(cameraPlottable ? 1 : 0));
 
-    hb->putHandle(makeSoftOwnerW(kViewControl));
+    hb->putHandle(makeRefW(kViewControl, 4));  // owner = soft pointer (4)
     hb->putHandle(makeSoftOwnerW(0));  // XDic null
     hb->putHandle(makeNullHandleW());  // XRef null
     if (version > DRW::AC1018) {
@@ -2917,7 +2931,7 @@ bool DRW_AppId::encodeDwg(DRW::Version version, dwgBufferW *buf,
     buf->putBit(static_cast<std::uint8_t>((flags >> 4) & 1));
     buf->putRawChar8(0);  // unknown code 71
 
-    hb->putHandle(makeSoftOwnerW(kAppIdControl));
+    hb->putHandle(makeRefW(kAppIdControl, 4));  // owner = soft pointer (4)
     hb->putHandle(makeSoftOwnerW(0));  // XDic null
     hb->putHandle(makeNullHandleW());  // XRef null
     return true;
@@ -3278,7 +3292,7 @@ bool DRW_XRecord::encodeDwg(DRW::Version version, dwgBufferW *buf,
         buf->putBitShort(static_cast<std::int16_t>(m_cloning));
 
     // Common handle prefix per object base spec.
-    hb->putHandle(makeSoftOwnerW(static_cast<std::uint32_t>(parentHandle)));
+    hb->putHandle(makeRefW(static_cast<std::uint32_t>(parentHandle), 4));  // ownerhandle = soft pointer (4)
     for (std::int32_t i = 0; i < numReactors; ++i)
         hb->putHandle(makeSoftOwnerW(0));
     if (xDictFlag != 1)
@@ -4199,7 +4213,7 @@ bool DRW_Group::encodeDwg(DRW::Version version, dwgBufferW *buf,
     buf->putBitShort(m_selectable ? 1 : 0);
     buf->putBitLong(static_cast<std::int32_t>(m_entityHandles.size()));
 
-    hb->putHandle(makeSoftOwnerW(static_cast<std::uint32_t>(parentHandle)));
+    hb->putHandle(makeRefW(static_cast<std::uint32_t>(parentHandle), 4));  // ownerhandle = soft pointer (4)
     for (std::int32_t i = 0; i < numReactors; ++i) {
         hb->putHandle(makeSoftOwnerW(0));
     }
@@ -4207,7 +4221,7 @@ bool DRW_Group::encodeDwg(DRW::Version version, dwgBufferW *buf,
         hb->putHandle(makeSoftOwnerW(0));
     }
     for (std::uint32_t h : m_entityHandles) {
-        hb->putHandle(makeHardPtrW(h));    // entity members are hard pointers per ODA §20.4.72
+        hb->putHandle(makeRefW(h, 5));     // GROUP members = hard pointer (5) per libreDWG dwg.spec:4936
     }
     return true;
 }
@@ -4291,7 +4305,7 @@ bool DRW_Layout::encodeDwg(DRW::Version version, dwgBufferW *buf,
     // --- Handle stream ---
     // Common prefix (parentHandle + reactors + xdic) FIRST, matching the
     // post-PR-2 parser's readCommonObjectHandles call ordering.
-    hb->putHandle(makeSoftOwnerW(static_cast<std::uint32_t>(parentHandle)));
+    hb->putHandle(makeRefW(static_cast<std::uint32_t>(parentHandle), 4));  // ownerhandle = soft pointer (4)
     for (std::int32_t i = 0; i < numReactors; ++i) {
         hb->putHandle(makeSoftOwnerW(0));    // reactor refs — null
     }
@@ -4348,7 +4362,7 @@ bool DRW_Dictionary::encodeDwg(DRW::Version version, dwgBufferW *buf,
 
     // Common handle prefix (parentHandle + reactors + xdic) — must precede
     // per-entry handles per ODA §20.4.44.
-    hb->putHandle(makeSoftOwnerW(static_cast<std::uint32_t>(parentHandle)));
+    hb->putHandle(makeRefW(static_cast<std::uint32_t>(parentHandle), 4));  // ownerhandle = soft pointer (4)
     for (std::int32_t i = 0; i < numReactors; ++i) {
         hb->putHandle(makeSoftOwnerW(0));    // reactor refs — null
     }
@@ -4356,7 +4370,7 @@ bool DRW_Dictionary::encodeDwg(DRW::Version version, dwgBufferW *buf,
         hb->putHandle(makeSoftOwnerW(0));    // xdic
     }
     for (const auto& e : m_entries) {
-        hb->putHandle(makeHardPtrW(e.m_handle));
+        hb->putHandle(makeRefW(e.m_handle, 2));  // DICTIONARY itemhandle = soft owner (2) per libreDWG dwg.spec:3232
     }
     return true;
 }
@@ -4377,7 +4391,7 @@ bool DRW_RasterVariables::encodeDwg(DRW::Version version, dwgBufferW *buf,
     buf->putBitShort(static_cast<std::int16_t>(m_units));
 
     // Common handle prefix (parentHandle + reactors + xdic).
-    hb->putHandle(makeSoftOwnerW(static_cast<std::uint32_t>(parentHandle)));
+    hb->putHandle(makeRefW(static_cast<std::uint32_t>(parentHandle), 4));  // ownerhandle = soft pointer (4)
     for (std::int32_t i = 0; i < numReactors; ++i) {
         hb->putHandle(makeSoftOwnerW(0));
     }
@@ -4418,7 +4432,7 @@ bool DRW_SortEntsTable::encodeDwg(DRW::Version version, dwgBufferW *buf,
     }
 
     // Common handle prefix.
-    hb->putHandle(makeSoftOwnerW(static_cast<std::uint32_t>(parentHandle)));
+    hb->putHandle(makeRefW(static_cast<std::uint32_t>(parentHandle), 4));  // ownerhandle = soft pointer (4)
     for (std::int32_t i = 0; i < numReactors; ++i) {
         hb->putHandle(makeSoftOwnerW(0));
     }
@@ -4427,7 +4441,7 @@ bool DRW_SortEntsTable::encodeDwg(DRW::Version version, dwgBufferW *buf,
     }
 
     // Block-owner handle (soft pointer to the parent BlockRecord).
-    hb->putHandle(makeSoftOwnerW(m_blockOwnerHandle));
+    hb->putHandle(makeRefW(m_blockOwnerHandle, 4));  // SORTENTSTABLE block_owner = soft pointer (4) per libreDWG dwg2.spec:160
 
     // Entity handles — same count as the sort loop (pad the shorter with null).
     for (std::size_t i = 0; i < entryCount; ++i) {
@@ -4480,7 +4494,7 @@ bool DRW_SpatialFilter::encodeDwg(DRW::Version version, dwgBufferW *buf,
     writeMatrix12(m_insertTransform);
 
     // Common handle prefix LAST (matches parser's post-body readCommonObjectHandles).
-    hb->putHandle(makeSoftOwnerW(static_cast<std::uint32_t>(parentHandle)));
+    hb->putHandle(makeRefW(static_cast<std::uint32_t>(parentHandle), 4));  // ownerhandle = soft pointer (4)
     for (std::int32_t i = 0; i < numReactors; ++i) {
         hb->putHandle(makeSoftOwnerW(0));
     }
@@ -4506,7 +4520,7 @@ bool DRW_GeoData::encodeDwg(DRW::Version version, dwgBufferW *buf,
     dwgBufferW *hb = (handleBuf != nullptr && version > DRW::AC1018) ? handleBuf : buf;
 
     // Common handle prefix FIRST.
-    hb->putHandle(makeSoftOwnerW(static_cast<std::uint32_t>(parentHandle)));
+    hb->putHandle(makeRefW(static_cast<std::uint32_t>(parentHandle), 4));  // ownerhandle = soft pointer (4)
     for (std::int32_t i = 0; i < numReactors; ++i) {
         hb->putHandle(makeSoftOwnerW(0));
     }
@@ -4590,7 +4604,7 @@ bool DRW_DictionaryVar::encodeDwg(DRW::Version version, dwgBufferW *buf,
     buf->putRawChar8(static_cast<std::uint8_t>(m_schema));
     sb->putVariableText(version, m_value);
 
-    hb->putHandle(makeSoftOwnerW(static_cast<std::uint32_t>(parentHandle)));
+    hb->putHandle(makeRefW(static_cast<std::uint32_t>(parentHandle), 4));  // ownerhandle = soft pointer (4)
     for (std::int32_t i = 0; i < numReactors; ++i) {
         hb->putHandle(makeSoftOwnerW(0));
     }
@@ -4610,7 +4624,7 @@ bool DRW_DictionaryWithDefault::encodeDwg(DRW::Version version, dwgBufferW *buf,
     if (!DRW_Dictionary::encodeDwg(version, buf, strBuf, handleBuf))
         return false;
     dwgBufferW *hb = (handleBuf != nullptr && version > DRW::AC1018) ? handleBuf : buf;
-    hb->putHandle(makeHardPtrW(m_defaultEntryHandle));
+    hb->putHandle(makeRefW(m_defaultEntryHandle, 5));  // WDFLT defaultid = hard pointer (5) per libreDWG dwg.spec:3284
     return true;
 }
 
@@ -4626,7 +4640,7 @@ bool DRW_IDBuffer::encodeDwg(DRW::Version version, dwgBufferW *buf,
     buf->putRawChar8(static_cast<std::uint8_t>(classVersion));
     buf->putBitLong(static_cast<std::int32_t>(objIds.size()));
 
-    hb->putHandle(makeSoftOwnerW(static_cast<std::uint32_t>(parentHandle)));
+    hb->putHandle(makeRefW(static_cast<std::uint32_t>(parentHandle), 4));  // ownerhandle = soft pointer (4)
     for (std::int32_t i = 0; i < numReactors; ++i) {
         hb->putHandle(makeSoftOwnerW(0));
     }
@@ -4658,7 +4672,7 @@ bool DRW_LayerIndex::encodeDwg(DRW::Version version, dwgBufferW *buf,
         sb->putVariableText(version, e.name);
     }
 
-    hb->putHandle(makeSoftOwnerW(static_cast<std::uint32_t>(parentHandle)));
+    hb->putHandle(makeRefW(static_cast<std::uint32_t>(parentHandle), 4));  // ownerhandle = soft pointer (4)
     for (std::int32_t i = 0; i < numReactors; ++i) {
         hb->putHandle(makeSoftOwnerW(0));
     }
@@ -4689,7 +4703,7 @@ bool DRW_SpatialIndex::encodeDwg(DRW::Version version, dwgBufferW *buf,
     // leaves the handles unset, so we don't write them either (the opaque
     // tail makes any inline write unsafe to round-trip).
     if (version > DRW::AC1018) {
-        hb->putHandle(makeSoftOwnerW(static_cast<std::uint32_t>(parentHandle)));
+        hb->putHandle(makeRefW(static_cast<std::uint32_t>(parentHandle), 4));  // ownerhandle = soft pointer (4)
         for (std::int32_t i = 0; i < numReactors; ++i) {
             hb->putHandle(makeSoftOwnerW(0));
         }
@@ -4809,7 +4823,7 @@ bool DRW_Field::encodeDwg(DRW::Version version, dwgBufferW *buf,
     // Common handle prefix + child handles + object handles.  Note: parser
     // reads child + object handles via `buf->getOffsetHandle(handle)` after
     // `readCommonObjectHandles(buf, ...)`, i.e. all inline at AC1018.
-    hb->putHandle(makeSoftOwnerW(static_cast<std::uint32_t>(parentHandle)));
+    hb->putHandle(makeRefW(static_cast<std::uint32_t>(parentHandle), 4));  // ownerhandle = soft pointer (4)
     for (std::int32_t i = 0; i < numReactors; ++i) {
         hb->putHandle(makeSoftOwnerW(0));
     }
@@ -4837,7 +4851,7 @@ bool DRW_FieldList::encodeDwg(DRW::Version version, dwgBufferW *buf,
     buf->putBitLong(static_cast<std::int32_t>(m_fieldHandles.size()));
     buf->putBit(m_unknown ? 1 : 0);
 
-    hb->putHandle(makeSoftOwnerW(static_cast<std::uint32_t>(parentHandle)));
+    hb->putHandle(makeRefW(static_cast<std::uint32_t>(parentHandle), 4));  // ownerhandle = soft pointer (4)
     for (std::int32_t i = 0; i < numReactors; ++i) {
         hb->putHandle(makeSoftOwnerW(0));
     }
@@ -4912,7 +4926,7 @@ bool DRW_MLeaderStyle::encodeDwg(DRW::Version version, dwgBufferW *buf,
     if (version >= DRW::AC1027)
         buf->putBit(textExtended ? 1 : 0);
 
-    hb->putHandle(makeSoftOwnerW(static_cast<std::uint32_t>(parentHandle)));
+    hb->putHandle(makeRefW(static_cast<std::uint32_t>(parentHandle), 4));  // ownerhandle = soft pointer (4)
     hb->putHandle(makeSoftOwnerW(0));  // XDic null
     hb->putHandle(writeHandleOrHardPtr(leaderLineTypeHandle));
     hb->putHandle(writeHandleOrHardPtr(arrowHeadBlockHandle));
@@ -5391,7 +5405,7 @@ bool DRW_AcDbPlaceholder::encodeDwg(DRW::Version version, dwgBufferW *buf,
     dwgBufferW *hb = (handleBuf != nullptr && version > DRW::AC1018)
         ? handleBuf
         : buf;
-    hb->putHandle(makeSoftOwnerW(static_cast<std::uint32_t>(parentHandle)));
+    hb->putHandle(makeRefW(static_cast<std::uint32_t>(parentHandle), 4));  // ownerhandle = soft pointer (4)
     hb->putHandle(makeSoftOwnerW(0));  // XDic null
     return true;
 }
@@ -5496,7 +5510,7 @@ bool DRW_Sun::encodeDwg(DRW::Version version, dwgBufferW *buf,
     buf->putBitShort(static_cast<std::int16_t>(m_shadowMapSize));
     buf->putRawChar8(m_shadowSoftness);
 
-    hb->putHandle(makeSoftOwnerW(static_cast<std::uint32_t>(parentHandle)));
+    hb->putHandle(makeRefW(static_cast<std::uint32_t>(parentHandle), 4));  // ownerhandle = soft pointer (4)
     hb->putHandle(makeSoftOwnerW(0));  // XDic null
     return true;
 }
