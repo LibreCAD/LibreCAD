@@ -719,12 +719,15 @@ bool dxfRW::writeDimstyle(DRW_Dimstyle *ent){
         }
     }
     if (version > DRW::AC1014) {
+        // 341 (DIMLDRBLK handle) is only emitted when the leader block exists,
+        // but DIMLWD (371) / DIMLWE (372) are unconditional R2000+ dimstyle
+        // fields — they were wrongly dropped when dimldrblk was empty/absent.
         if(blockMap.count(ent->dimldrblk) > 0) {
             int blkHandle = (*(blockMap.find(ent->dimldrblk))).second;
             writer->writeUtf8String(341, toHexStr(blkHandle));
-            writer->writeInt16(371, ent->dimlwd);
-            writer->writeInt16(372, ent->dimlwe);
         }
+        writer->writeInt16(371, ent->dimlwd);
+        writer->writeInt16(372, ent->dimlwe);
     }
     for (auto& kv : ent->vars) {
         DRW_Variant* v = kv.second;
