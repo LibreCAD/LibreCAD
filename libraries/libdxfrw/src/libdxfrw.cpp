@@ -1481,11 +1481,39 @@ bool dxfRW::writeLeader(DRW_Leader *ent){
             writer->writeDouble(20, vert->y);
             writer->writeDouble(30, vert->z);
         }
+        // block_color (77): color used when the leader annotation color is
+        // BYBLOCK; ezdxf acdb_leader emits it unconditionally (default 7).
+        writer->writeInt16(77, ent->coloruse);
+        // annotation_handle (340): hard ref to the associated annotation,
+        // resolved through the source->minted map; skip when unresolved so we
+        // never emit a dangling handle (mirrors the GROUP-340 policy).
+        if (ent->annotHandle != 0) {
+            auto it = m_writingContext.sourceHandleToMintedMap.find(ent->annotHandle);
+            if (it != m_writingContext.sourceHandleToMintedMap.end())
+                writer->writeString(340, toHexStr(static_cast<int>(it->second)));
+        }
         if (ent->extrusionPoint.x != 0.0 || ent->extrusionPoint.y != 0.0 ||
             ent->extrusionPoint.z != 1.0) {
             writer->writeDouble(210, ent->extrusionPoint.x);
             writer->writeDouble(220, ent->extrusionPoint.y);
             writer->writeDouble(230, ent->extrusionPoint.z);
+        }
+        // horizontal_direction (211), offset-from-block (212), offset-from-
+        // annotation (213) — emitted after 210 per ezdxf order, when non-default.
+        if (ent->horizdir.x != 1.0 || ent->horizdir.y != 0.0 || ent->horizdir.z != 0.0) {
+            writer->writeDouble(211, ent->horizdir.x);
+            writer->writeDouble(221, ent->horizdir.y);
+            writer->writeDouble(231, ent->horizdir.z);
+        }
+        if (ent->offsetblock.x != 0.0 || ent->offsetblock.y != 0.0 || ent->offsetblock.z != 0.0) {
+            writer->writeDouble(212, ent->offsetblock.x);
+            writer->writeDouble(222, ent->offsetblock.y);
+            writer->writeDouble(232, ent->offsetblock.z);
+        }
+        if (ent->offsettext.x != 0.0 || ent->offsettext.y != 0.0 || ent->offsettext.z != 0.0) {
+            writer->writeDouble(213, ent->offsettext.x);
+            writer->writeDouble(223, ent->offsettext.y);
+            writer->writeDouble(233, ent->offsettext.z);
         }
     } else  {
         //RLZ: todo not supported by acad 12 saved as unnamed block
