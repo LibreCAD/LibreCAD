@@ -4845,3 +4845,51 @@ TEST_CASE("DWG framing fixtures emit + self-consistency round-trip",
         // scripts/dwg-validate.sh to feed to the external dwgread.
     }
 }
+
+// B1-ltype-dash-handles: the LTYPE handle stream carries one style handle per
+// dash (plus the always-present XRefH), not a fixed 2-or-1.  The legacy code
+// emitted/read a fixed count, mismatching the per-dash layout for any dash
+// count != 0 and != 2.  This exercises the paired per-dash loop with 4 dashes:
+// if the encoder/parser handle loops disagreed the object framing would break
+// and the read would error.  (The per-dash style handles are null/discarded in
+// libdxfrw; exact external-reader parity needs a real AutoCAD/ODA fixture.)
+TEST_CASE("dwgRW round-trip preserves a 4-dash linetype",
+          "[dwg-write][smoke][ltype]") {
+    class FourDashIface : public EmptyIface {
+    public:
+        dwgRW *m_writer {nullptr};
+        int m_dash4Path {-1};
+        void writeLTypes() override {
+            if (m_writer == nullptr) return;
+            DRW_LType lt;
+            lt.name = "DASH4";
+            lt.desc = "4 dashes";
+            lt.path = {0.5, -0.1, 0.25, -0.15};
+            lt.size = static_cast<int>(lt.path.size());
+            m_writer->addLType(&lt);
+        }
+        void addLType(const DRW_LType& l) override {
+            if (l.name == "DASH4")
+                m_dash4Path = static_cast<int>(l.path.size());
+        }
+    };
+
+    for (DRW::Version ver : {DRW::AC1015, DRW::AC1024}) {
+        const std::string path = tempPath("dash4_ltype.dwg");
+        {
+            dwgRW writer(path.c_str());
+            FourDashIface iface;
+            iface.m_writer = &writer;
+            REQUIRE(writer.write(&iface, ver, /*bin=*/false));
+        }
+
+        FourDashIface cap;
+        {
+            dwgRW reader(path.c_str());
+            REQUIRE(reader.read(&cap, /*ext=*/false));
+            REQUIRE(reader.getError() == DRW::BAD_NONE);
+        }
+        REQUIRE(cap.m_dash4Path == 4);  // body dashes survive; object parse stays in sync
+        std::remove(path.c_str());
+    }
+}

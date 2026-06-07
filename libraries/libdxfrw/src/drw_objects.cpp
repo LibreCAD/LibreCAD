@@ -1362,15 +1362,21 @@ bool DRW_LType::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs)
         DRW_DBG(" XDicObj control Handle: "); DRW_DBGHL(XDicObjH.code, XDicObjH.size, XDicObjH.ref); DRW_DBG("\n");
         DRW_DBG("\n Remaining bytes: "); DRW_DBG(buf->numRemainingBytes()); DRW_DBG("\n");
     }
-    if(size>0){
-        dwgHandle XRefH = buf->getHandle();
-        DRW_DBG(" XRefH control Handle: "); DRW_DBGHL(XRefH.code, XRefH.size, XRefH.ref); DRW_DBG("\n");
-        dwgHandle shpHandle = buf->getHandle();
-        DRW_DBG(" shapeFile Handle: "); DRW_DBGHL(shpHandle.code, shpHandle.size, shpHandle.ref);
-        DRW_DBG("\n Remaining bytes: "); DRW_DBG(buf->numRemainingBytes()); DRW_DBG("\n");
+    // ODA 20.4.58 LTYPE handle stream: external-reference block handle (always
+    // present per COMMON_TABLE_FLAGS) followed by one shapefile/style handle
+    // (DXF 340) PER DASH.  The per-dash handle is emitted unconditionally in the
+    // DWG binary stream (NULL when the dash has no shape); only the DXF 340
+    // group is gated by the dash shapeflag.  The legacy code read a fixed 2-or-1
+    // trailing handles, which over-read for 1 dash and under-read for >=3 dashes,
+    // desyncing the next object.  Cross-checked: libreDWG dwg.spec LTYPE REPEAT
+    // block (per-dash SUB_FIELD_HANDLE style, code 340).
+    dwgHandle xRefH = buf->getHandle();
+    DRW_DBG(" XRefH control Handle: "); DRW_DBGHL(xRefH.code, xRefH.size, xRefH.ref); DRW_DBG("\n");
+    for (int i = 0; i < size; ++i) {
+        dwgHandle dashStyleH = buf->getHandle();
+        DRW_DBG(" dash["); DRW_DBG(i); DRW_DBG("] style Handle: ");
+        DRW_DBGHL(dashStyleH.code, dashStyleH.size, dashStyleH.ref); DRW_DBG("\n");
     }
-    dwgHandle shpHandle = buf->getHandle();
-    DRW_DBG(" shapeFile +1 Handle ??: "); DRW_DBGHL(shpHandle.code, shpHandle.size, shpHandle.ref); DRW_DBG("\n");
 
     DRW_DBG("\n Remaining bytes: "); DRW_DBG(buf->numRemainingBytes()); DRW_DBG("\n");
 //    RS crc;   //RS */
@@ -2654,11 +2660,16 @@ bool DRW_LType::encodeDwg(DRW::Version version, dwgBufferW *buf,
     hb->putHandle(makeSoftOwnerW(kLtypeControl));
     // xDictFlag == 0 → write XDic null
     hb->putHandle(makeSoftOwnerW(0));
-    if (size > 0) {
-        hb->putHandle(makeNullHandleW());  // XRefH
-        hb->putHandle(makeNullHandleW());  // shpH
+    // ODA 20.4.58: XRefH is always present (COMMON_TABLE_FLAGS), then one style
+    // handle per dash.  The DWG binary stream emits the per-dash handle
+    // unconditionally (NULL here -- libdxfrw does not yet model complex dashes);
+    // the shape-flag gating only applies to the DXF 340 group.  Mirrors the
+    // per-dash reader loop above.  (Byte-identical to the legacy encoder for
+    // size==0 and size==2; correct for all other dash counts.)
+    hb->putHandle(makeNullHandleW());      // XRefH (always)
+    for (int i = 0; i < size; ++i) {
+        hb->putHandle(makeNullHandleW());  // dash[i] style (340)
     }
-    hb->putHandle(makeNullHandleW());  // trailing null
     return true;
 }
 
