@@ -34,6 +34,7 @@
 #include <iterator>
 #include <string>
 
+#include "drw_header.h"
 #include "drw_objects.h"
 #include "libdxfrw.h"
 
@@ -1151,4 +1152,53 @@ TEST_CASE("DXF setGroups emits a D-owned GROUP with resolved members (F3-2)",
   CHECK(memberCount == 2);
   // The ACAD_GROUP D dict lists the group: 3 *A1 / 350 <minted group handle>.
   CHECK(hasConsecutive(groups, {{"3", "*A1"}, {"350", groupHandle}}));
+}
+
+// dxf-struct-003 (getstr-prefix): DRW_Header::getStr/getInt/getDouble/getCoord
+// now try the alternate $-convention when the exact key is not found.  This
+// bridges the DWG->DXF path where DWG parseDwg stores bare keys ("LTSCALE")
+// but encodeDxf (DRW_Header::write) queries with "$" prefix ("$LTSCALE").
+// Without the fix, every header var would fall through to the codec-internal
+// default, silently discarding what was read from the DWG file.
+//
+// Also verifies that $FINGERPRINTGUID/$VERSIONGUID are now emitted (R2000+)
+// when stored under their DWG bare-key names.
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("DXF header write tolerates bare vs $-prefixed key convention (dxf-struct-003)",
+          "[dxf][header][getstr-prefix]") {
+  const auto path =
+      std::filesystem::temp_directory_path() / "lc_header_getstr.dxf";
+  std::filesystem::remove(path);
+
+  class BareKeyHeaderEmitter : public StubInterface {
+  public:
+    void writeHeader(DRW_Header &h) override {
+      // DWG-parse convention: bare keys, no '$'.
+      h.addDouble("LTSCALE", 4.25, 40);  // default would be 1.0 -> emits "1"
+      h.addInt("LUNITS", 3, 70);          // default would be 2
+      h.addStr("FINGERPRINTGUID",
+               "{AABBCCDD-0000-0000-0000-001122334455}", 2);
+      h.addStr("VERSIONGUID",
+               "{FFEEDDCC-0000-0000-0000-AABBCCDDEEFF}", 2);
+    }
+  } em;
+
+  {
+    dxfRW w(path.string().c_str());
+    REQUIRE(w.write(&em, DRW::AC1021, false));
+  }
+  const auto groups = readGroups(path);
+  std::filesystem::remove(path);
+
+  // LTSCALE: bare key must propagate 4.25, not the default 1.
+  CHECK(hasConsecutive(groups, {{"9", "$LTSCALE"}, {"40", "4.25"}}));
+  // LUNITS: bare key must propagate 3, not the default 2.
+  CHECK(hasConsecutive(groups, {{"9", "$LUNITS"}, {"70", "3"}}));
+  // GUIDs must appear (not silently skipped) when stored as bare keys.
+  CHECK(hasConsecutive(groups,
+      {{"9", "$FINGERPRINTGUID"},
+       {"2", "{AABBCCDD-0000-0000-0000-001122334455}"}}));
+  CHECK(hasConsecutive(groups,
+      {{"9", "$VERSIONGUID"},
+       {"2", "{FFEEDDCC-0000-0000-0000-AABBCCDDEEFF}"}}));
 }

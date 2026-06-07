@@ -1479,7 +1479,19 @@ void DRW_Header::write(const std::unique_ptr<dxfWriter>& writer, DRW::Version ve
             writer->writeInt16(290, varInt);
         else
             writer->writeInt16(290, 1);
-//RLZ: here $FINGERPRINTGUID and $VERSIONGUID, do not add?
+        if (ver > DRW::AC1014) {
+            static const std::string nullGuid = "{00000000-0000-0000-0000-000000000000}";
+            writer->writeString(9, "$FINGERPRINTGUID");
+            if (getStr("$FINGERPRINTGUID", &varStr))
+                writer->writeUtf8String(2, varStr);
+            else
+                writer->writeString(2, nullGuid);
+            writer->writeString(9, "$VERSIONGUID");
+            if (getStr("$VERSIONGUID", &varStr))
+                writer->writeUtf8String(2, varStr);
+            else
+                writer->writeString(2, nullGuid);
+        }
         writer->writeString(9, "$EXTNAMES"); //RLZ bool flag, verify in bin version
         if (getInt("$EXTNAMES", &varInt))
             writer->writeInt16(290, varInt);
@@ -1729,9 +1741,24 @@ void DRW_Header::addCoord(std::string key, DRW_Coord value, int code){
     storeVar(key, new DRW_Variant(code, value));
 }
 
+// Mirror the DWG-encoder findVar() convention: DXF reader stores "$NAME" keys,
+// DWG parser stores bare "NAME" keys.  Try the queried form first; if not
+// found, try the alternate ($-stripped or $-added) form so both read paths
+// can feed the DXF writer without key-convention mismatches.
+static auto varFindAlternate(std::unordered_map<std::string, DRW_Variant*>& vars,
+                             const std::string& key)
+    -> std::unordered_map<std::string, DRW_Variant*>::iterator
+{
+    auto it = vars.find(key);
+    if (it != vars.end())
+        return it;
+    std::string alt = (!key.empty() && key[0] == '$') ? key.substr(1) : ("$" + key);
+    return vars.find(alt);
+}
+
 bool DRW_Header::getDouble(std::string key, double *varDouble){
     bool result = false;
-    auto it=vars.find( key);
+    auto it = varFindAlternate(vars, key);
     if (it != vars.end()) {
         DRW_Variant *var = (*it).second;
         if (var->type() == DRW_Variant::DOUBLE) {
@@ -1739,14 +1766,14 @@ bool DRW_Header::getDouble(std::string key, double *varDouble){
             result = true;
         }
         delete var;
-        vars.erase (it);
+        vars.erase(it);
     }
     return result;
 }
 
 bool DRW_Header::getInt(std::string key, int *varInt){
     bool result = false;
-    auto it=vars.find( key);
+    auto it = varFindAlternate(vars, key);
     if (it != vars.end()) {
         DRW_Variant *var = (*it).second;
         if (var->type() == DRW_Variant::INTEGER) {
@@ -1754,14 +1781,14 @@ bool DRW_Header::getInt(std::string key, int *varInt){
             result = true;
         }
         delete var;
-        vars.erase (it);
+        vars.erase(it);
     }
     return result;
 }
 
 bool DRW_Header::getStr(std::string key, std::string *varStr){
     bool result = false;
-    auto it=vars.find( key);
+    auto it = varFindAlternate(vars, key);
     if (it != vars.end()) {
         DRW_Variant *var = (*it).second;
         if (var->type() == DRW_Variant::STRING) {
@@ -1769,14 +1796,14 @@ bool DRW_Header::getStr(std::string key, std::string *varStr){
             result = true;
         }
         delete var;
-        vars.erase (it);
+        vars.erase(it);
     }
     return result;
 }
 
 bool DRW_Header::getCoord(std::string key, DRW_Coord *varCoord){
     bool result = false;
-    auto it=vars.find( key);
+    auto it = varFindAlternate(vars, key);
     if (it != vars.end()) {
         DRW_Variant *var = (*it).second;
         if (var->type() == DRW_Variant::COORD) {
@@ -1784,7 +1811,7 @@ bool DRW_Header::getCoord(std::string key, DRW_Coord *varCoord){
             result = true;
         }
         delete var;
-        vars.erase (it);
+        vars.erase(it);
     }
     return result;
 }
