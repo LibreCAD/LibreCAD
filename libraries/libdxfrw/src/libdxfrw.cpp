@@ -1146,8 +1146,27 @@ bool dxfRW::writePolyline(DRW_Polyline *ent) {
         DRW_Vertex *v = ent->vertlist.at(i).get();
         writer->writeString(0, "VERTEX");
         writeEntity(ent, /*captureSourceHandle=*/false);  // parent re-entry: do not pollute the map
-        if (version > DRW::AC1009)
-            writer->writeString(100, "AcDbVertex");
+        if (version > DRW::AC1009) {
+            // R2000+ requires a type-specific second subclass marker after
+            // AcDbVertex (a face record uses ONLY AcDbFaceRecord). Mirrors
+            // ezdxf polyline.py vertex classification; without it AutoCAD/ezdxf
+            // mis-type 3D/mesh/polyface vertices.
+            if ((v->flags & 128) && (v->flags & 64)) {
+                writer->writeString(100, "AcDbFaceRecord");
+            } else {
+                writer->writeString(100, "AcDbVertex");
+                if (v->flags & 128)
+                    writer->writeString(100, "AcDbPolyFaceMeshVertex");
+                else if (ent->flags & 16)
+                    writer->writeString(100, "AcDbPolyFaceMeshVertex");
+                else if (ent->flags & 32)
+                    writer->writeString(100, "AcDbPolygonMeshVertex");
+                else if (ent->flags & 8)
+                    writer->writeString(100, "AcDb3dPolylineVertex");
+                else
+                    writer->writeString(100, "AcDb2dVertex");
+            }
+        }
         if ( (v->flags & 128) && !(v->flags & 64) ) {
             writer->writeDouble(10, 0);
             writer->writeDouble(20, 0);
@@ -1414,7 +1433,7 @@ bool dxfRW::writeHatch(DRW_Hatch *ent){
             for (const DRW_Hatch::GradientStop &stop : ent->gradColors) {
                 writer->writeDouble(463, stop.value);
                 if (stop.aciColor != 0)
-                    writer->writeInt32(63, stop.aciColor);
+                    writer->writeInt16(63, stop.aciColor);
                 writer->writeInt32(421, stop.rgb);
             }
             writer->writeUtf8String(470, ent->gradName);
@@ -1976,7 +1995,7 @@ bool dxfRW::writeMultiLeader(DRW_MLeader *ent){
     writer->writeInt32(90, ent->overrideFlags);
     writer->writeInt16(170, ent->leaderType);
     writer->writeInt32(91, ent->leaderColor);
-    writer->writeInt32(171, ent->leaderLineWeight);
+    writer->writeInt16(171, ent->leaderLineWeight);
     writer->writeBool(290, ent->landingEnabled);
     writer->writeBool(291, ent->doglegEnabled);
     writer->writeDouble(41, ent->landingDistance);
@@ -4829,7 +4848,7 @@ bool dxfRW::writeSun(DRW_Sun *ent) {
     writer->writeString(100, "AcDbSun");
     writer->writeInt32(90, static_cast<int>(ent->m_classVersion));
     writer->writeBool(290, ent->m_isOn);
-    writer->writeInt32(63, static_cast<int>(ent->m_color));
+    writer->writeInt16(63, static_cast<int>(ent->m_color));
     if (version > DRW::AC1015 && ent->m_color24 >= 0)
         writer->writeInt32(421, ent->m_color24);  // 24-bit true color (R2004+)
     writer->writeDouble(40, ent->m_intensity);
@@ -4837,7 +4856,7 @@ bool dxfRW::writeSun(DRW_Sun *ent) {
     writer->writeInt32(91, ent->m_julianDay);
     writer->writeInt32(92, ent->m_milliseconds);
     writer->writeBool(292, ent->m_isDaylightSavings);
-    writer->writeInt32(70, static_cast<int>(ent->m_shadowType));
+    writer->writeInt16(70, static_cast<int>(ent->m_shadowType));
     writer->writeInt16(71, static_cast<int>(ent->m_shadowMapSize));
     writer->writeInt16(280, static_cast<int>(ent->m_shadowSoftness));
     return true;

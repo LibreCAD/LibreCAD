@@ -971,6 +971,43 @@ TEST_CASE("DXF writeCircle/writeArc emit thickness + extrusion (P1)",
   CHECK(close(v, 1.0));
 }
 
+// Batch A (vertex subclass): a 3D POLYLINE's VERTEX must carry the type-specific
+// second subclass marker (AcDb3dPolylineVertex) after AcDbVertex. Pre-fix only
+// AcDbVertex was emitted, so ezdxf/AutoCAD mis-typed 3D/mesh vertices.
+TEST_CASE("DXF writePolyline emits VERTEX type subclass marker (Batch A)",
+          "[dxf][objects][vertex]") {
+  class Poly3dEmitter : public StubInterface {
+  public:
+    dxfRW *m_rw = nullptr;
+    void writeEntities() override {
+      DRW_Polyline pl;
+      pl.flags = 8;  // 3D polyline
+      auto v1 = std::make_shared<DRW_Vertex>();
+      v1->basePoint = DRW_Coord(0.0, 0.0, 0.0);
+      auto v2 = std::make_shared<DRW_Vertex>();
+      v2->basePoint = DRW_Coord(1.0, 1.0, 2.0);
+      pl.vertlist.push_back(v1);
+      pl.vertlist.push_back(v2);
+      m_rw->writePolyline(&pl);
+    }
+  };
+
+  const auto path =
+      std::filesystem::temp_directory_path() / "lc_vertex_subclass.dxf";
+  std::filesystem::remove(path);
+  Poly3dEmitter em;
+  {
+    dxfRW w(path.string().c_str());
+    em.m_rw = &w;
+    REQUIRE(w.write(&em, DRW::AC1021, false));
+  }
+  const auto groups = readGroups(path);
+  std::filesystem::remove(path);
+
+  CHECK(hasConsecutive(groups,
+        {{"100", "AcDbVertex"}, {"100", "AcDb3dPolylineVertex"}}));
+}
+
 // A-3: the VERTEX/SEQEND parent re-entries from writePolyline call
 // writeEntity(ent) again on the already-minted parent. Those re-entries must NOT
 // emplace into sourceHandleToMintedMap. After writing a POLYLINE (2 vertices,
