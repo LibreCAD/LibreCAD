@@ -234,8 +234,8 @@ bool dwgReader18::readMetaData() {
     DRW_DBG("\napp maintenance version= "); DRW_DBGH(fileBuf->getRawChar8());
     std::uint16_t cp = fileBuf->getRawShort16();
     DRW_DBG("\ncodepage= "); DRW_DBG(cp);
-    if (cp == 30)
-        decoder.setCodePage("ANSI_1252", false);
+    if (const char* cpName = dwgCodePageName(cp))
+        decoder.setCodePage(cpName, false);
     DRW_DBG("\n3 0x00 bytes(seems 0x00, appDwgV & appMaintV) = "); DRW_DBGH(fileBuf->getRawChar8()); DRW_DBG(", ");
     DRW_DBGH(fileBuf->getRawChar8()); DRW_DBG(", "); DRW_DBGH(fileBuf->getRawChar8());
     securityFlags = fileBuf->getRawLong32();

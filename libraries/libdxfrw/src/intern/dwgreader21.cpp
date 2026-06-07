@@ -39,8 +39,8 @@ bool dwgReader21::readMetaData() {
     DRW_DBG("\napp writer maintenance version= "); DRW_DBGH(fileBuf->getRawChar8());
     std::uint16_t cp = fileBuf->getRawShort16();
     DRW_DBG("\ncodepage= "); DRW_DBG(cp);
-    if (cp == 30)
-        decoder.setCodePage("ANSI_1252", false);
+    if (const char* cpName = dwgCodePageName(cp))
+        decoder.setCodePage(cpName, false);
     /* UNKNOUWN SECTION 2 bytes*/
     DRW_DBG("\nUNKNOWN SECTION= "); DRW_DBG(fileBuf->getRawShort16());
     DRW_DBG("\nUNKNOUWN SECTION 3b= "); DRW_DBG(fileBuf->getRawChar8());

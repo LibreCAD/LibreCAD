@@ -37,6 +37,11 @@ public:
     std::uint32_t loc{0};
 };
 
+/// Map a DWG file-header codepage id (libreDWG codepages.h) to a
+/// DRW_TextCodec ANSI codepage name.  Returns nullptr for unknown/unsupported
+/// ids so the caller keeps the ANSI_1252 default (no worse than before).
+const char* dwgCodePageName(std::uint16_t cp);
+
 //until 2000 = 2000-
 //since 2004 except 2007 = 2004+
 // 2007 = 2007

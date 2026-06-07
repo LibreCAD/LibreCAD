@@ -31,6 +31,31 @@ namespace {
     }
 }
 
+// DWG file-header codepage id -> DRW_TextCodec ANSI name (libreDWG
+// codepages.h:35-82). Only codec-recognized names are mapped; unknown/rare ids
+// (UTF-16, Johab, CP866, US-ASCII, ...) return nullptr so the caller keeps the
+// ANSI_1252 default. 31 (GB2312) maps to its CP936 superset.
+const char* dwgCodePageName(std::uint16_t cp) {
+    switch (cp) {
+        case 28: return "ANSI_1250";  // Central/East European
+        case 29: return "ANSI_1251";  // Cyrillic
+        case 30: return "ANSI_1252";  // Western European
+        case 31: return "ANSI_936";   // GB2312 (Simplified Chinese, CP936 superset)
+        case 32: return "ANSI_1253";  // Greek
+        case 33: return "ANSI_1254";  // Turkish
+        case 34: return "ANSI_1255";  // Hebrew
+        case 35: return "ANSI_1256";  // Arabic
+        case 36: return "ANSI_1257";  // Baltic
+        case 37: return "ANSI_874";   // Thai
+        case 38: return "ANSI_932";   // Japanese (Shift-JIS)
+        case 39: return "ANSI_936";   // Simplified Chinese
+        case 40: return "ANSI_949";   // Korean (Wansung)
+        case 41: return "ANSI_950";   // Traditional Chinese (Big5)
+        case 44: return "ANSI_1258";  // Vietnamese
+        default: return nullptr;      // unknown id: keep ANSI_1252 default
+    }
+}
+
 dwgReader::~dwgReader() {
     mapCleanUp(ltypemap);
     mapCleanUp(layermap);
