@@ -326,13 +326,17 @@ bool dxfRW::writeEntity(DRW_Entity *ent, bool captureSourceHandle) {
     if (version > DRW::AC1018 && ent->shadow != DRW::CastAndReceieveShadows) {
         writer->writeInt16(284, static_cast<int>(ent->shadow));
     }
-    if (version > DRW::AC1015 && ent->material != DRW::MaterialByLayer) {
+    // Material (347) is an R2007+ AcDbEntity field (ezdxf acdb_entity:347 ->
+    // DXF2007); emitting it at R2004 is non-conformant.
+    if (version > DRW::AC1018 && ent->material != DRW::MaterialByLayer) {
         writer->writeUtf8String(347, toHexStr(static_cast<int>(ent->material)));
     }
     if (version > DRW::AC1014) {
         writer->writeInt16(370, DRW_LW_Conv::lineWidth2dxfInt(ent->lWeight));
     }
-    if (version > DRW::AC1015 && ent->plotStyle != DRW::DefaultPlotStyle) {
+    // Plot-style handle (390) is likewise R2007+ (ezdxf acdb_entity:390 ->
+    // DXF2007).
+    if (version > DRW::AC1018 && ent->plotStyle != DRW::DefaultPlotStyle) {
         writer->writeUtf8String(390, toHexStr(ent->plotStyle));
     }
     if (version > DRW::AC1015 && ent->transparency != DRW::Opaque) {
