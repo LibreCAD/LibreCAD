@@ -907,6 +907,70 @@ TEST_CASE("DXF writeEntity emits a 330 owner handle on every entity (B3)",
   REQUIRE(foundPoint);
 }
 
+// P1 (circle/arc extrusion+thickness): writeCircle/writeArc previously dropped
+// the AcDbCircle thickness (39) and extrusion (210/220/230), so non-Z-up or
+// thick circles/arcs flattened on DXF export. The reader (DRW_Point::parseCode)
+// already consumed them; this confirms the writer now emits them.
+TEST_CASE("DXF writeCircle/writeArc emit thickness + extrusion (P1)",
+          "[dxf][objects][circle]") {
+  class CurveEmitter : public StubInterface {
+  public:
+    dxfRW *m_rw = nullptr;
+    void writeEntities() override {
+      DRW_Circle c;
+      c.basePoint = DRW_Coord(1.0, 2.0, 0.0);
+      c.radious = 5.0;
+      c.thickness = 2.5;
+      c.extPoint = DRW_Coord(0.0, 0.0, -1.0);  // flipped normal
+      m_rw->writeCircle(&c);
+      DRW_Arc a;
+      a.basePoint = DRW_Coord(3.0, 4.0, 0.0);
+      a.radious = 1.5;
+      a.thickness = 0.0;
+      a.extPoint = DRW_Coord(0.0, 1.0, 0.0);  // sideways extrusion
+      a.staangle = 0.0;
+      a.endangle = 1.0;
+      m_rw->writeArc(&a);
+    }
+  };
+
+  const auto path =
+      std::filesystem::temp_directory_path() / "lc_curve_extrusion.dxf";
+  std::filesystem::remove(path);
+  CurveEmitter em;
+  {
+    dxfRW w(path.string().c_str());
+    em.m_rw = &w;
+    REQUIRE(w.write(&em, DRW::AC1021, false));
+  }
+  const auto groups = readGroups(path);
+  std::filesystem::remove(path);
+
+  // Find the first (code) value within a given entity's group block (from its
+  // (0,name) marker up to the next (0,*)); returns true and sets out if found.
+  auto entityVal = [&](const std::string &name, const std::string &code,
+                       double &out) -> bool {
+    bool in = false;
+    for (const auto &g : groups) {
+      if (g.first == "0") { in = (g.second == name); continue; }
+      if (in && g.first == code) { out = std::stod(g.second); return true; }
+    }
+    return false;
+  };
+  auto close = [](double a, double b) { double d = a - b; return (d < 0 ? -d : d) < 1e-9; };
+
+  double v = 0.0;
+  // CIRCLE: thickness 2.5, extrusion z = -1.0 (flipped).
+  REQUIRE(entityVal("CIRCLE", "39", v));
+  CHECK(close(v, 2.5));
+  REQUIRE(entityVal("CIRCLE", "230", v));
+  CHECK(close(v, -1.0));
+  // ARC: no thickness (0 -> omitted), extrusion y = 1.0.
+  CHECK_FALSE(entityVal("ARC", "39", v));
+  REQUIRE(entityVal("ARC", "220", v));
+  CHECK(close(v, 1.0));
+}
+
 // A-3: the VERTEX/SEQEND parent re-entries from writePolyline call
 // writeEntity(ent) again on the already-minted parent. Those re-entries must NOT
 // emplace into sourceHandleToMintedMap. After writing a POLYLINE (2 vertices,

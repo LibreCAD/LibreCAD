@@ -915,12 +915,24 @@ bool dxfRW::writeCircle(DRW_Circle *ent) {
     if (version > DRW::AC1009) {
         writer->writeString(100, "AcDbCircle");
     }
+    if (ent->thickness != 0) {
+        writer->writeDouble(39, ent->thickness);
+    }
     writer->writeDouble(10, ent->basePoint.x);
     writer->writeDouble(20, ent->basePoint.y);
     if (ent->basePoint.z != 0.0) {
         writer->writeDouble(30, ent->basePoint.z);
     }
     writer->writeDouble(40, ent->radious);
+    // Extrusion (AcDbCircle subclass) — default 0,0,1. Omitting it flattened
+    // non-Z-up circles on DXF export; the reader (DRW_Point::parseCode) already
+    // consumes 210/220/230, so this completes the round trip.
+    DRW_Coord crd = ent->extPoint;
+    if (crd.x != 0 || crd.y != 0 || crd.z != 1) {
+        writer->writeDouble(210, crd.x);
+        writer->writeDouble(220, crd.y);
+        writer->writeDouble(230, crd.z);
+    }
     return true;
 }
 
@@ -936,6 +948,14 @@ bool dxfRW::writeArc(DRW_Arc *ent) {
         writer->writeDouble(30, ent->basePoint.z);
     }
     writer->writeDouble(40, ent->radious);
+    // Extrusion belongs to the AcDbCircle subclass, so it must precede the
+    // AcDbArc marker. Default 0,0,1; reader consumes 210/220/230.
+    DRW_Coord crd = ent->extPoint;
+    if (crd.x != 0 || crd.y != 0 || crd.z != 1) {
+        writer->writeDouble(210, crd.x);
+        writer->writeDouble(220, crd.y);
+        writer->writeDouble(230, crd.z);
+    }
     if (version > DRW::AC1009) {
         writer->writeString(100, "AcDbArc");
     }
