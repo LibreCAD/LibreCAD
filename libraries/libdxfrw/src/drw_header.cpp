@@ -160,7 +160,17 @@ void DRW_Header::write(const std::unique_ptr<dxfWriter>& writer, DRW::Version ve
     writer->setVersion(varStr, true);
 
     getStr("$ACADVER", &varStr);
-    getStr("$ACADMAINTVER", &varStr);
+    // $ACADMAINTVER (R2000+) was read then discarded. Emit it; the group code
+    // changed from 70 (Int16) to 90 (Int32) in R2018+ (ezdxf headervars.py).
+    if (ver > DRW::AC1014) {
+        writer->writeString(9, "$ACADMAINTVER");
+        int maintVer = 0;
+        getInt("$ACADMAINTVER", &maintVer);
+        if (ver >= DRW::AC1032)
+            writer->writeInt32(90, maintVer);
+        else
+            writer->writeInt16(70, maintVer);
+    }
 
     if (!getStr("$DWGCODEPAGE", &varStr)) {
         varStr = "ANSI_1252";
