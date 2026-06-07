@@ -1018,6 +1018,13 @@ bool dxfRW::writeTrace(DRW_Trace *ent){
     writer->writeDouble(13, ent->fourPoint.x);
     writer->writeDouble(23, ent->fourPoint.y);
     writer->writeDouble(33, ent->fourPoint.z);
+    if (ent->thickness != 0.0)
+        writer->writeDouble(39, ent->thickness);
+    if (ent->extPoint.x != 0.0 || ent->extPoint.y != 0.0 || ent->extPoint.z != 1.0) {
+        writer->writeDouble(210, ent->extPoint.x);
+        writer->writeDouble(220, ent->extPoint.y);
+        writer->writeDouble(230, ent->extPoint.z);
+    }
     return true;
 }
 
@@ -1039,6 +1046,13 @@ bool dxfRW::writeSolid(DRW_Solid *ent){
     writer->writeDouble(13, ent->fourPoint.x);
     writer->writeDouble(23, ent->fourPoint.y);
     writer->writeDouble(33, ent->fourPoint.z);
+    if (ent->thickness != 0.0)
+        writer->writeDouble(39, ent->thickness);
+    if (ent->extPoint.x != 0.0 || ent->extPoint.y != 0.0 || ent->extPoint.z != 1.0) {
+        writer->writeDouble(210, ent->extPoint.x);
+        writer->writeDouble(220, ent->extPoint.y);
+        writer->writeDouble(230, ent->extPoint.z);
+    }
     return true;
 }
 
