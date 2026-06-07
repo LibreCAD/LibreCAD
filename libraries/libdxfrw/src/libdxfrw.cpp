@@ -1954,6 +1954,7 @@ DRW_ImageDef* dxfRW::writeImage(DRW_Image *ent, std::string name){
         writer->writeString(0, "IMAGE");
         writeEntity(ent);
         writer->writeString(100, "AcDbRasterImage");
+        writer->writeInt32(90, 0);   // class_version (mandatory; always 0)
         writer->writeDouble(10, ent->basePoint.x);
         writer->writeDouble(20, ent->basePoint.y);
         writer->writeDouble(30, ent->basePoint.z);
@@ -1972,6 +1973,28 @@ DRW_ImageDef* dxfRW::writeImage(DRW_Image *ent, std::string name){
         writer->writeInt16(282, ent->contrast);
         writer->writeInt16(283, ent->fade);
         writer->writeString(360, idReactor);
+        // Clip boundary (ezdxf acdb_raster_image order): type 71, count 91,
+        // then 14/24 vertices. A polygonal path (>=3 pts) is type 2; otherwise
+        // emit the rectangular default (type 1, two opposite corners in
+        // image-pixel coords) so consumers never see count=0.
+        if (ent->clipPath.size() >= 3) {
+            writer->writeInt16(71, 2);
+            writer->writeInt32(91, static_cast<std::int32_t>(ent->clipPath.size()));
+            for (const DRW_Coord& v : ent->clipPath) {
+                writer->writeDouble(14, v.x);
+                writer->writeDouble(24, v.y);
+            }
+        } else {
+            writer->writeInt16(71, 1);
+            writer->writeInt32(91, 2);
+            writer->writeDouble(14, -0.5);
+            writer->writeDouble(24, -0.5);
+            writer->writeDouble(14, ent->sizeu - 0.5);
+            writer->writeDouble(24, ent->sizev - 0.5);
+        }
+        if (version >= DRW::AC1024) {
+            writer->writeBool(290, ent->clipMode);  // R2010+ clip mode
+        }
         id->reactors[idReactor] = toHexStr(ent->handle);
         return id;
     }

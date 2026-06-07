@@ -1008,6 +1008,54 @@ TEST_CASE("DXF writePolyline emits VERTEX type subclass marker (Batch A)",
         {{"100", "AcDbVertex"}, {"100", "AcDb3dPolylineVertex"}}));
 }
 
+// Batch A (image mandatory fields): writeImage must emit class_version (90)
+// and the clip boundary (71 type, 91 count, 14/24 vertices). Pre-fix these
+// were absent and ezdxf flagged the IMAGE as malformed.
+TEST_CASE("DXF writeImage emits class_version + clip boundary (Batch A)",
+          "[dxf][objects][image]") {
+  class ImgEmitter : public StubInterface {
+  public:
+    dxfRW *m_rw = nullptr;
+    void writeEntities() override {
+      DRW_Image img;
+      img.basePoint = DRW_Coord(0.0, 0.0, 0.0);
+      img.secPoint = DRW_Coord(1.0, 0.0, 0.0);
+      img.vVector = DRW_Coord(0.0, 1.0, 0.0);
+      img.sizeu = 640.0;
+      img.sizev = 480.0;
+      img.clipPath.push_back(DRW_Coord(0.0, 0.0, 0.0));
+      img.clipPath.push_back(DRW_Coord(100.0, 0.0, 0.0));
+      img.clipPath.push_back(DRW_Coord(100.0, 80.0, 0.0));
+      img.clipPath.push_back(DRW_Coord(0.0, 80.0, 0.0));
+      m_rw->writeImage(&img, "ref.png");
+    }
+  };
+
+  const auto path =
+      std::filesystem::temp_directory_path() / "lc_image_fields.dxf";
+  std::filesystem::remove(path);
+  ImgEmitter em;
+  {
+    dxfRW w(path.string().c_str());
+    em.m_rw = &w;
+    REQUIRE(w.write(&em, DRW::AC1021, false));
+  }
+  const auto groups = readGroups(path);
+  std::filesystem::remove(path);
+
+  auto inImage = [&](const std::string &code, const std::string &val) {
+    bool in = false;
+    for (const auto &g : groups) {
+      if (g.first == "0") { in = (g.second == "IMAGE"); continue; }
+      if (in && g.first == code && g.second == val) return true;
+    }
+    return false;
+  };
+  CHECK(inImage("90", "0"));    // class_version
+  CHECK(inImage("71", "2"));    // polygonal clip boundary type
+  CHECK(inImage("91", "4"));    // 4 boundary vertices
+}
+
 // A-3: the VERTEX/SEQEND parent re-entries from writePolyline call
 // writeEntity(ent) again on the already-minted parent. Those re-entries must NOT
 // emplace into sourceHandleToMintedMap. After writing a POLYLINE (2 vertices,
