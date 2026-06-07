@@ -4420,27 +4420,20 @@ bool DRW_SortEntsTable::encodeDwg(DRW::Version version, dwgBufferW *buf,
     return true;
 }
 
-// SPATIAL_FILTER (AcDbSpatialFilter) encoder — ODA §20.4.94.  Inverts
-// parseDwg above.  Body order (per the post-fix parser): common handle
-// prefix FIRST, then point-count BS + N 2RD points + 3BD normal + 3BD origin
-// + display-boundary BS + (front/back) clip flags BS + optional clip
-// distances BD + two 4x3 BD transform matrices (24 bit-doubles).
+// SPATIAL_FILTER (AcDbSpatialFilter) encoder — ODA §20.4.94 / libreDWG
+// dwg2.spec DWG_OBJECT(SPATIAL_FILTER).  Inverts parseDwg above.  Body order:
+// point-count BS + N 2RD points + 3BD normal + 3BD origin + display-boundary BS
+// + (front/back) clip flags BS + optional clip distances BD + two 4x3 BD
+// transform matrices, THEN the common handle prefix (START_OBJECT_HANDLE_STREAM)
+// LAST.  For AC1015/AC1018 the handle stream is inline (hb == buf), so writing
+// the common prefix first would interleave its bits into the body BitShort the
+// parser expects.
 bool DRW_SpatialFilter::encodeDwg(DRW::Version version, dwgBufferW *buf,
                                    dwgBufferW *strBuf,
                                    dwgBufferW *handleBuf) const {
     if (buf == nullptr) return false;
     DRW_UNUSED(strBuf);
     dwgBufferW *hb = (handleBuf != nullptr && version > DRW::AC1018) ? handleBuf : buf;
-
-    // Common handle prefix FIRST (matches parser's hBuf consumption before
-    // any body BitShort).
-    hb->putHandle(makeSoftOwnerW(static_cast<std::uint32_t>(parentHandle)));
-    for (std::int32_t i = 0; i < numReactors; ++i) {
-        hb->putHandle(makeSoftOwnerW(0));
-    }
-    if (xDictFlag != 1) {
-        hb->putHandle(makeSoftOwnerW(0));
-    }
 
     const std::int16_t pointCount = static_cast<std::int16_t>(m_boundaryPoints.size());
     buf->putBitShort(pointCount);
@@ -4469,6 +4462,15 @@ bool DRW_SpatialFilter::encodeDwg(DRW::Version version, dwgBufferW *buf,
     };
     writeMatrix12(m_inverseInsertTransform);
     writeMatrix12(m_insertTransform);
+
+    // Common handle prefix LAST (matches parser's post-body readCommonObjectHandles).
+    hb->putHandle(makeSoftOwnerW(static_cast<std::uint32_t>(parentHandle)));
+    for (std::int32_t i = 0; i < numReactors; ++i) {
+        hb->putHandle(makeSoftOwnerW(0));
+    }
+    if (xDictFlag != 1) {
+        hb->putHandle(makeSoftOwnerW(0));
+    }
     return true;
 }
 
@@ -5059,16 +5061,12 @@ bool DRW_SpatialFilter::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint
     if (!ret)
         return ret;
 
-    // For AC1015/AC1018 the handle stream is inline (hBuf == buf); for
-    // AC1024+ it lives in a separate offset reached via
-    // seekObjectHandleStream(objSize).  Per the PR-2 convention, the common
-    // handle prefix must be read unconditionally so that AC1015/AC1018 also
-    // consumes parent + reactors + xdic before any subsequent body reads.
-    dwgBuffer hBuff = *buf;
-    dwgBuffer *hBuf = (version > DRW::AC1018) ? &hBuff : buf;
-    seekObjectHandleStream(version, hBuf, objSize);
-    readCommonObjectHandles(hBuf, handle, numReactors, xDictFlag, &parentHandle);
-
+    // Body fields FIRST (per libreDWG dwg2.spec DWG_OBJECT(SPATIAL_FILTER) and
+    // ODA 20.4.94), then the common handle prefix via START_OBJECT_HANDLE_STREAM
+    // -- matching the in-tree convention in DRW_DictionaryVar/DRW_PlotSettings.
+    // For AC1015/AC1018 the handle stream is inline (hBuf == buf), so reading
+    // the common handle prefix before the body would desync the bit position
+    // and corrupt every subsequent body BitShort.
     const std::int32_t pointCount = buf->getBitShort();
     if (pointCount < 0 || pointCount > 100000)
         return false;
@@ -5088,6 +5086,13 @@ bool DRW_SpatialFilter::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint
         m_backDistance = buf->getBitDouble();
     m_inverseInsertTransform = readObject4x3Matrix(buf);
     m_insertTransform = readObject4x3Matrix(buf);
+
+    // Common handle prefix LAST.  For AC1015/AC1018 hBuf == buf (inline); for
+    // AC1024+ hBuf is a separate cursor seeked to objSize.
+    dwgBuffer hBuff = *buf;
+    dwgBuffer *hBuf = (version > DRW::AC1018) ? &hBuff : buf;
+    seekObjectHandleStream(version, hBuf, objSize);
+    readCommonObjectHandles(hBuf, handle, numReactors, xDictFlag, &parentHandle);
 
     DRW_UNUSED(sBuf);
     DRW_DBG("SPATIAL_FILTER boundary points: ");
