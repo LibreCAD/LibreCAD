@@ -6142,6 +6142,9 @@ bool DRW_Image::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
     case 283:
         fade = reader->getInt32();
         break;
+    case 71:
+        m_clipBoundaryType = reader->getInt32();
+        break;
     case 91:
         // WIPEOUT: number of polygon vertices.  We don't pre-size — the count
         // is informational and the 14/24 pairs follow in order.
@@ -6201,11 +6204,11 @@ bool DRW_Image::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs)
     if (version > DRW::AC1021){ //2010+
         clipMode = buf->getBit() != 0;  // ODA §20.4.80: Clip mode B (R2010+)
     }
-    std::uint16_t clipType = buf->getBitShort();
+    m_clipBoundaryType = buf->getBitShort();
     clipPath.clear();
-    if (clipType == 0) {
+    if (m_clipBoundaryType == 0) {
         // No clip boundary payload.
-    } else if (clipType == 1){
+    } else if (m_clipBoundaryType == 1){
         // rectangular clip: lower-left and upper-right corners; expand to a
         // 4-vertex polygon so downstream consumers can treat both kinds uniformly.
         DRW_Coord ll = buf->get2RawDouble();
@@ -6214,7 +6217,7 @@ bool DRW_Image::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs)
         clipPath.push_back(DRW_Coord(ur.x, ll.y, 0.0));
         clipPath.push_back(ur);
         clipPath.push_back(DRW_Coord(ll.x, ur.y, 0.0));
-    } else if (clipType == 2) {
+    } else if (m_clipBoundaryType == 2) {
         std::int32_t numVerts = buf->getBitLong();
         if (numVerts < 0 || numVerts > 100000)
             return false;
@@ -6222,7 +6225,7 @@ bool DRW_Image::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs)
         for (int i= 0; i< numVerts;++i)
             clipPath.push_back(buf->get2RawDouble());
     } else {
-        DRW_DBG("unsupported image clip type: "); DRW_DBG(clipType); DRW_DBG("\n");
+        DRW_DBG("unsupported image clip type: "); DRW_DBG(m_clipBoundaryType); DRW_DBG("\n");
         return false;
     }
 

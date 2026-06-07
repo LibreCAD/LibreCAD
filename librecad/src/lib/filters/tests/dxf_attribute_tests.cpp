@@ -98,6 +98,31 @@ public:
   void writeAppId() override {}
 };
 
+// Captures addImage / addWipeout (both call through DRW_Image*).
+class ImageCapture : public StubInterface {
+public:
+  int m_imageCount = 0;
+  int m_wipeoutCount = 0;
+  DRW_Image m_lastImage;
+  DRW_Image m_lastWipeout;
+  void addImage(const DRW_Image *d) override {
+    m_lastImage = *d;
+    ++m_imageCount;
+  }
+  void addWipeout(const DRW_Image *d) override {
+    m_lastWipeout = *d;
+    ++m_wipeoutCount;
+  }
+};
+
+// Emits a single WIPEOUT with a triangular clip path.
+class WipeoutEmitter : public StubInterface {
+public:
+  DRW_Image m_wipeout;
+  dxfRW *m_rw = nullptr;
+  void writeEntities() override { m_rw->writeWipeout(&m_wipeout); }
+};
+
 // Captures the first INSERT (deep-enough: attlist shared_ptrs are copied).
 class InsertCapture : public StubInterface {
 public:
@@ -447,4 +472,90 @@ TEST_CASE("DXF ATTRIB AcDbAttribute codes 73/74 round-trip (attrib-73)",
   const DRW_Attrib &att2 = *cap2.m_captured.attlist[0];
   CHECK(att2.m_fieldLength == 7);
   CHECK(att2.alignV == DRW_Text::VMiddle);
+}
+
+// image-wipeout-71: DXF code 71 (clip boundary type) was not stored by
+// DRW_Image::parseCode.  After the fix, code 71 in IMAGE and WIPEOUT entities
+// is captured in DRW_Image::m_clipBoundaryType.  Also verifies that
+// writeWipeout now emits code 71 (it was previously omitted).
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("DXF IMAGE/WIPEOUT code 71 stored in m_clipBoundaryType (image-wipeout-71)",
+          "[dxf][image][wipeout][image-wipeout-71]") {
+  // --- read side: IMAGE with explicit 71=1 (rectangular) ---
+  const char *kImage71 =
+      "0\nSECTION\n2\nENTITIES\n"
+      "0\nIMAGE\n5\nA1\n330\n0\n"
+      "100\nAcDbEntity\n8\n0\n"
+      "100\nAcDbRasterImage\n"
+      "10\n0\n20\n0\n30\n0\n"
+      "11\n1\n21\n0\n31\n0\n"
+      "12\n0\n22\n1\n32\n0\n"
+      "13\n100\n23\n100\n"
+      "340\n0\n"
+      "70\n1\n280\n1\n281\n50\n282\n50\n283\n0\n"
+      "360\n0\n"
+      "71\n1\n"
+      "91\n2\n14\n-0.5\n24\n-0.5\n14\n99.5\n24\n99.5\n"
+      "0\nENDSEC\n0\nEOF\n";
+  ImageCapture cap1;
+  readDxf(kImage71, cap1, "lc_image_71_read.dxf");
+  REQUIRE(cap1.m_imageCount == 1);
+  CHECK(cap1.m_lastImage.m_clipBoundaryType == 1);
+  CHECK(cap1.m_lastImage.clipPath.size() == 2);
+
+  // --- read side: WIPEOUT with explicit 71=2 (polygonal) ---
+  const char *kWipeout71 =
+      "0\nSECTION\n2\nENTITIES\n"
+      "0\nWIPEOUT\n5\nB1\n330\n0\n"
+      "100\nAcDbEntity\n8\n0\n"
+      "100\nAcDbRasterImage\n"
+      "10\n1\n20\n2\n30\n0\n"
+      "11\n0.01\n21\n0\n31\n0\n"
+      "12\n0\n22\n0.01\n32\n0\n"
+      "13\n100\n23\n100\n"
+      "70\n1\n280\n1\n281\n50\n282\n50\n283\n0\n"
+      "100\nAcDbWipeout\n"
+      "90\n0\n"
+      "71\n2\n"
+      "91\n3\n14\n10\n24\n0\n14\n20\n24\n10\n14\n10\n24\n20\n"
+      "290\n0\n"
+      "0\nENDSEC\n0\nEOF\n";
+  ImageCapture cap2;
+  readDxf(kWipeout71, cap2, "lc_wipeout_71_read.dxf");
+  REQUIRE(cap2.m_wipeoutCount == 1);
+  CHECK(cap2.m_lastWipeout.m_clipBoundaryType == 2);
+  CHECK(cap2.m_lastWipeout.clipPath.size() == 3);
+
+  // --- write+read: writeWipeout must emit code 71 ---
+  // Write a WIPEOUT with a 3-vertex clip path; default m_clipBoundaryType=0
+  // triggers the wipeout-default of type 2.  Reading back should store type 2.
+  const auto path =
+      std::filesystem::temp_directory_path() / "lc_wipeout_71_rt.dxf";
+  std::filesystem::remove(path);
+
+  WipeoutEmitter em;
+  em.m_wipeout.basePoint = DRW_Coord(5.0, 5.0, 0.0);
+  em.m_wipeout.secPoint  = DRW_Coord(0.01, 0.0, 0.0);
+  em.m_wipeout.vVector   = DRW_Coord(0.0, 0.01, 0.0);
+  em.m_wipeout.sizeu = 100;
+  em.m_wipeout.sizev = 100;
+  em.m_wipeout.clipPath.push_back({0.0, 0.0, 0.0});
+  em.m_wipeout.clipPath.push_back({50.0, 0.0, 0.0});
+  em.m_wipeout.clipPath.push_back({25.0, 50.0, 0.0});
+  {
+    dxfRW w(path.string().c_str());
+    em.m_rw = &w;
+    REQUIRE(w.write(&em, DRW::AC1021, false));
+  }
+
+  ImageCapture cap3;
+  {
+    dxfRW r(path.string().c_str());
+    REQUIRE(r.read(&cap3, /*ext=*/true));
+  }
+  std::filesystem::remove(path);
+
+  REQUIRE(cap3.m_wipeoutCount == 1);
+  CHECK(cap3.m_lastWipeout.m_clipBoundaryType == 2);
+  CHECK(cap3.m_lastWipeout.clipPath.size() == 3);
 }

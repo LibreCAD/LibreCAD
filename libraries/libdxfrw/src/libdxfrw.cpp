@@ -2137,6 +2137,8 @@ bool dxfRW::writeWipeout(DRW_Image *ent){
     writer->writeInt16(283, ent->fade);
     writer->writeString(100, "AcDbWipeout");
     writer->writeInt32(90, 0);             // class version
+    // Clip boundary type: honour stored value; WIPEOUT defaults to 2 (polygon).
+    writer->writeInt16(71, ent->m_clipBoundaryType != 0 ? ent->m_clipBoundaryType : 2);
     writer->writeInt32(91, static_cast<std::int32_t>(ent->clipPath.size()));
     for (const DRW_Coord& v : ent->clipPath) {
         writer->writeDouble(14, v.x);

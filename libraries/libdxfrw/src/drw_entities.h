@@ -1739,6 +1739,9 @@ public:
     int brightness;            /*!< Brightness value, code 281, (0-100) default 50 */
     int contrast;              /*!< Brightness value, code 282, (0-100) default 50 */
     int fade;                  /*!< Brightness value, code 283, (0-100) default 0 */
+    /* Clip boundary type: 0=unset/auto, 1=rectangular (2 corner pts), 2=polygon.
+       DXF group code 71 in AcDbRasterImage / AcDbWipeout; DWG clipType BS. */
+    int m_clipBoundaryType = 0;
     /* Polygonal clip boundary in image-pixel coordinates (DXF codes 91 + 14/24,
        or DWG image-clip block).  Populated for both raster IMAGEs (when a clip
        is set) and WIPEOUTs (where this is the only meaningful payload). */
