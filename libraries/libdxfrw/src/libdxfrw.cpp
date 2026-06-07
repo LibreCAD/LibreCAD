@@ -1495,7 +1495,7 @@ bool dxfRW::writeArcDimension(DRW_DimArc *d) {
     writer->writeString(0, "ARC_DIMENSION");
     writeEntity(d);
     writer->writeString(100, "AcDbDimension");
-    if (version >= DRW::AC1021)
+    if (version >= DRW::AC1024)
         writer->writeInt16(280, 0);   // AcDbDimension version, 0 = R2010+
     if (!d->getName().empty())
         writer->writeString(2, d->getName());
@@ -1550,7 +1550,7 @@ bool dxfRW::writeDimension(DRW_Dimension *ent) {
         writer->writeString(0, "DIMENSION");
         writeEntity(ent);
         writer->writeString(100, "AcDbDimension");
-        if (version >= DRW::AC1021)
+        if (version >= DRW::AC1024)
             writer->writeInt16(280, 0);   // AcDbDimension version, 0 = R2010+
         if (!ent->getName().empty()){
             writer->writeString(2, ent->getName());
@@ -1572,7 +1572,7 @@ bool dxfRW::writeDimension(DRW_Dimension *ent) {
         if ( ent->getTextLineFactor() != 1)
             writer->writeDouble(41, ent->getTextLineFactor());
         writer->writeUtf8String(3, ent->getStyle());
-        if ( ent->getTextLineFactor() != 0)
+        if ( ent->getDir() != 0)
             writer->writeDouble(53, ent->getDir());
         writer->writeDouble(210, ent->getExtrusion().x);
         writer->writeDouble(220, ent->getExtrusion().y);
