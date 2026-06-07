@@ -461,10 +461,15 @@ bool dxfRW::writeLayer(DRW_Layer *ent){
     }
     if (version > DRW::AC1009) {
         writer->writeUtf8String(6, ent->lineType);
-        if (! ent->plotF)
-            writer->writeBool(290, ent->plotF);
-        writer->writeInt16(370, DRW_LW_Conv::lineWidth2dxfInt(ent->lWeight));
-        writer->writeString(390, "F");
+        // plot (290), lineweight (370) and plotstyle handle (390) are R2000+
+        // LAYER fields (ezdxf acdb_symbol_table_record: all DXF2000); they did
+        // not exist in R13/R14, so emitting them there is non-conformant.
+        if (version > DRW::AC1014) {
+            if (! ent->plotF)
+                writer->writeBool(290, ent->plotF);
+            writer->writeInt16(370, DRW_LW_Conv::lineWidth2dxfInt(ent->lWeight));
+            writer->writeString(390, "F");
+        }
     } else
         writer->writeUtf8Caps(6, ent->lineType);
     if (!ent->extData.empty()){
