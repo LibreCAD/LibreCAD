@@ -268,7 +268,9 @@ void emitLayoutBody(dwgBufferW& body, DRW::Version version,
     body.put3BitDouble(src.extMin);
     body.put3BitDouble(src.extMax);
     if (version >= DRW::AC1018) {
-        body.putRawLong32(src.viewportCount);
+        // BitLong per ODA §20.4.84 / libreDWG FIELD_BL (num_viewports) -- must
+        // match DRW_Layout::parseDwg's getBitLong() or the round-trip desyncs.
+        body.putBitLong(src.viewportCount);
     }
     // Common handle prefix (parentHandle + reactors + xdic) per ODA
     // §20.4.84 + base-object spec.  Must precede the type-specific

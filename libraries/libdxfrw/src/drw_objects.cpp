@@ -3819,7 +3819,10 @@ bool DRW_Layout::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs
     extMax        = buf->get3BitDouble();
 
     if (version >= DRW::AC1018) {
-        viewportCount = buf->getRawLong32();
+        // ODA §20.4.84 / libreDWG dwg.spec FIELD_BL (num_viewports) is a BitLong,
+        // not a RawLong32.  Reading it as RL desynced the rest of the body stream
+        // for any AC1018+ LAYOUT with viewport handles.
+        viewportCount = buf->getBitLong();
         // Bound a corrupt/hostile count before the reserve() below — mirrors the
         // file-wide guard convention (SortEntsTable numEntries, IDBUFFER numIds).
         // An unbounded viewportCount (e.g. 0x7FFFFFFF) would reserve() ~8.5 GB.
@@ -4280,7 +4283,9 @@ bool DRW_Layout::encodeDwg(DRW::Version version, dwgBufferW *buf,
     buf->put3BitDouble(extMax);
 
     if (version >= DRW::AC1018) {
-        buf->putRawLong32(static_cast<std::uint32_t>(viewportCount));
+        // BitLong per ODA §20.4.84 / libreDWG FIELD_BL (num_viewports); see the
+        // matching getBitLong() in parseDwg.
+        buf->putBitLong(viewportCount);
     }
 
     // --- Handle stream ---

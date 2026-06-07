@@ -1648,7 +1648,7 @@ public:
     int orthoViewType;            /*!< code 76, BS — orthographic view type of UCS */
     DRW_Coord extMin;             /*!< code 14, 3BD — layout extent min */
     DRW_Coord extMax;             /*!< code 15, 3BD — layout extent max */
-    std::int32_t viewportCount;         /*!< RL — viewport count (R2004+) */
+    std::int32_t viewportCount;         /*!< BL — viewport count (R2004+) */
     // Handle refs (the common parentHandle is on DRW_TableEntry)
     dwgHandle plotViewHandle;                 /*!< code 6 (R2004+) */
     dwgHandle visualStyleHandle;              /*!< (R2007+) */
