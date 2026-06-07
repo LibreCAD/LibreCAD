@@ -63,6 +63,7 @@ public:
     }
     static dwgHandle& layerH(DRW_Entity& e) { return e.layerH; }
     static std::uint16_t oType(const DRW_Entity& e) { return e.oType; }
+    static std::uint8_t& hasDsData(DRW_Entity& e) { return e.hasDsData; }
 };
 
 namespace {
@@ -1830,5 +1831,40 @@ TEST_CASE("DRW_Helix::encodeDwg round-trips spline body + AcDbHelix trailer",
         CHECK(dst.turnHeight  == Approx(1.5));
         CHECK(dst.handedness  == true);
         CHECK(dst.constraintType == 2);
+    }
+}
+
+// B1 (has_ds_data): for R2013+ (version > AC1024) the entity common preamble
+// carries a `has_ds_data` bit after xDictFlag (libreDWG common_entity_data.spec).
+// The encoder used to emit a literal 1 (mislabeled "haveNextLinks"), falsely
+// advertising an inline ACIS SAB datastore. It now emits the hasDsData member
+// (default 0). Differential check: flipping the member must change the encoded
+// stream -- pre-fix both encodings were byte-identical because the bit was a
+// literal. (Robust to the exact bit position; a full R2013+ parse harness is
+// not available at this layer, but the file-level smoke tests round-trip
+// AC1027/AC1032.)
+TEST_CASE("DRW_Entity sources has_ds_data from the member at AC1027/AC1032",
+          "[dwg-write][entity-encode][r2013][b1-has-ds-data]") {
+    auto encodePoint = [](DRW::Version ver, std::uint8_t ds) {
+        DRW_Point src;
+        src.handle = 0x33;
+        src.color  = 7;
+        src.ltypeScale = 1.0;
+        src.basePoint = DRW_Coord{1.0, 2.0, 3.0};
+        src.thickness = 0.0;
+        src.extPoint  = DRW_Coord{0.0, 0.0, 1.0};
+        DrwEntityEncodeTestAccess::layerH(src).ref = 0x12;
+        DrwEntityEncodeTestAccess::hasDsData(src) = ds;
+        dwgBufferW w;
+        REQUIRE(DrwEntityEncodeTestAccess::encode(src, ver, &w));
+        return snapshot(w);
+    };
+
+    for (DRW::Version ver : {DRW::AC1027, DRW::AC1032}) {
+        const auto withZero = encodePoint(ver, 0);
+        const auto withOne  = encodePoint(ver, 1);
+        REQUIRE(withZero.size() > 0);
+        // Flipping has_ds_data must alter the stream (bit is member-sourced now).
+        REQUIRE(withZero != withOne);
     }
 }

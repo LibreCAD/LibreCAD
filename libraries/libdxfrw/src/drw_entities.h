@@ -203,7 +203,8 @@ public:
     std::vector<PendingHandleRef> pendingLayerRefResolutions;
 
 protected: //only for read dwg
-    std::uint8_t haveNextLinks = 0; //aka nolinks //B
+    std::uint8_t haveNextLinks = 0; //R13..R2002 nolinks (no prev/next chain when 1) //B
+    std::uint8_t hasDsData = 0; //R2013+ has_ds_data: 1 advertises inline ACIS SAB datastore //B
     std::uint8_t plotFlags = 0; //presence of plot style //BB
     std::uint8_t ltFlags = 0; //presence of linetype handle //BB
     std::uint8_t materialFlag = 0; //presence of material handle //BB

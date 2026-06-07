@@ -1299,12 +1299,26 @@ bool DRW_Entity::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer* strBu
         DRW_DBG(" xDictFlag: "); DRW_DBG(xDictFlag); DRW_DBG("\n");
     }
 
-    if (version > DRW::AC1024 || version < DRW::AC1018) {
-        haveNextLinks = buf->getBit(); //aka nolinks //B
+    // libreDWG common_entity_data.spec — the bit at this stream position has two
+    // disjoint meanings by version:
+    //   * R13..R2002 (version < AC1018): `nolinks` (B). 1 = no prev/next handles
+    //     in the handle section; 0 = read prev+next at parseDwgEntHandle.
+    //   * R2004..R2010 (AC1018..AC1024): NO bit in the stream — reader forces
+    //     haveNextLinks=1 to skip the prev/next handle reads.
+    //   * R2013+ (version > AC1024): `has_ds_data` (B). 1 = inline ACIS SAB
+    //     datastore present. Stored separately because it gates SAB handling,
+    //     not prev/next links (which are already version<AC1018 gated).
+    // Total bit consumption is unchanged for every version.
+    if (version < DRW::AC1018) {
+        haveNextLinks = buf->getBit(); //nolinks //B
         DRW_DBG(", haveNextLinks (0 yes, 1 prev next): "); DRW_DBG(haveNextLinks); DRW_DBG("\n");
     } else {
-        haveNextLinks = 1; //aka nolinks //B
+        haveNextLinks = 1; //AC1018+: not in stream, force 1 (no prev/next)
         DRW_DBG(", haveNextLinks (forced): "); DRW_DBG(haveNextLinks); DRW_DBG("\n");
+    }
+    if (version > DRW::AC1024) {
+        hasDsData = buf->getBit(); //has_ds_data //B (R2013+)
+        DRW_DBG(", hasDsData (R2013+): "); DRW_DBG(hasDsData); DRW_DBG("\n");
     }
 //ENC color
     color = buf->getEnColor(version); //BS or CMC //ok for R14 or negate
@@ -1662,11 +1676,15 @@ bool DRW_Entity::encodeDwgCommon(DRW::Version version, dwgBufferW *buf,
     // reads an xdic handle — same emit rule applies.
     // R2013+ (AC1027+): reader reads xDictFlag then reads haveNextLinks (bit restored).
     if (version == DRW::AC1015) {
-        buf->putBit(1);  // haveNextLinks=1 (no prev/next chain)
+        buf->putBit(1);  // nolinks=1 (R2000: no prev/next chain)
     } else {
         buf->putBit(0);  // xDictFlag=0 (xdic present; real-or-null handle follows)
         if (version > DRW::AC1024) {
-            buf->putBit(1);  // haveNextLinks=1 (AC1027+: bit is back in stream)
+            // libreDWG common_entity_data.spec — R2013+ has_ds_data (B). libdxfrw
+            // never inlines an ACIS SAB datastore, so emit hasDsData (default 0).
+            // The old code emitted literal 1 (mislabeled haveNextLinks), falsely
+            // advertising an SAB blob and risking misparse in strict readers.
+            buf->putBit(hasDsData);
         }
     }
 

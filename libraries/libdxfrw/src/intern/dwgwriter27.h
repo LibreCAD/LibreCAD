@@ -23,8 +23,9 @@
 ///   - File header version string "AC1027" instead of "AC1024"
 ///   - Header data section adds REQUIREDVERSIONS (BLL) before the 4 unknown BDs
 ///   - Header handle section adds one extra soft-owner handle after DICT VISUALSTYLE
-///   - Entity common preamble adds haveNextLinks (B) after xDictFlag (restored
-///     from forced=1 in AC1018-AC1024 back to an explicit bit in AC1027+)
+///   - Entity common preamble adds has_ds_data (B) after xDictFlag -- NOT a
+///     restored haveNextLinks; per libreDWG common_entity_data.spec the bit
+///     gates an inline ACIS SAB datastore (always 0 in libdxfrw)
 ///   - Table record preamble adds "Have binary data" (B) after xDictFlag
 ///   - SPLINE entity adds splFlag1 (BL) + knotParam (BL) after scenario
 ///
