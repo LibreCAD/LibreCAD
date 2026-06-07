@@ -1905,14 +1905,32 @@ bool dxfRW::writeMText(DRW_MText *ent){
         writer->writeDouble(41, ent->widthscale);
         writer->writeInt16(71, ent->textgen);
         writer->writeInt16(72, ent->alignH);
-        std::string text = writer->fromUtf8String(ent->text);
-
-        int i;
-        for(i =0; (text.size()-i) > 250; ) {
-            writer->writeString(3, text.substr(i, 250));
-            i +=250;
+        // Chunk on UTF-8 codepoint boundaries so a multi-byte character (or
+        // its codepage/DBCS encoding, or a \U+/\M+ escape) is never split
+        // across the group-3/group-1 records. The previous code split the
+        // post-codec byte string at a fixed 250 bytes, corrupting DBCS pairs
+        // and escape sequences. Encoded per-codepoint chunks stay <=250 bytes;
+        // for pure-ASCII text the output is byte-identical to the old 250-split.
+        const std::string& utf8 = ent->text;
+        std::vector<std::string> chunks;
+        std::string cur;
+        for (std::size_t p = 0; p < utf8.size(); ) {
+            unsigned char c = static_cast<unsigned char>(utf8[p]);
+            std::size_t cl = (c < 0x80) ? 1 : ((c >> 5) == 0x6) ? 2
+                           : ((c >> 4) == 0xE) ? 3 : ((c >> 3) == 0x1E) ? 4 : 1;
+            if (p + cl > utf8.size()) cl = utf8.size() - p;
+            std::string enc = writer->fromUtf8String(utf8.substr(p, cl));
+            if (!cur.empty() && cur.size() + enc.size() > 250) {
+                chunks.push_back(cur);
+                cur.clear();
+            }
+            cur += enc;
+            p += cl;
         }
-        writer->writeString(1, text.substr(i));
+        chunks.push_back(cur);  // final (group 1); empty when text is empty
+        for (std::size_t k = 0; k + 1 < chunks.size(); ++k)
+            writer->writeString(3, chunks[k]);
+        writer->writeString(1, chunks.back());
         writer->writeString(7, ent->style);
         writer->writeDouble(210, ent->extPoint.x);
         writer->writeDouble(220, ent->extPoint.y);
