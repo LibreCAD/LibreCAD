@@ -929,29 +929,49 @@ RS_Insert* RS_Creation::createLibraryInsert(RS_LibraryInsertData& data) {
     RS_Graphic g;
     if (!g.open(data.file, RS2::FormatUnknown)) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
-                        "RS_Creation::createLibraryInsert: Cannot open file: %s", data.file.toStdString().c_str());
+                        "RS_Creation::createLibraryInsert: Cannot open file: %s",
+                        data.file.toStdString().c_str());
         return nullptr;
     }
 
-    // unit conversion:
-    if (graphic) {
-        double uf = RS_Units::convert(1.0, g.getUnit(),
-                                      graphic->getUnit());
-        g.scale(RS_Vector(0.0, 0.0), RS_Vector(uf, uf));
+    QString blockName = QFileInfo(data.file).completeBaseName();
+    RS_BlockData blockData = RS_BlockData(blockName, RS_Vector(0.0, 0.0), false);
+
+    // Add all entities to a block, except insert entities
+    RS_Block* block = new RS_Block(container, blockData);
+    int numberOfEntities = 0;
+    for(auto e: g.getEntityList()) {
+        if (e) {
+            RS_Entity* c = e->clone();
+            if (c->rtti() != RS2::EntityInsert) {
+                block->addEntity(c);
+                numberOfEntities++;
+            }
+        }
+    }
+    // The block is not added nor inserted if empty
+    // (e.g. library file was empty or only made of inserts)
+    if (numberOfEntities == 0) {
+        delete block;
+        return nullptr;
     }
 
-    //g.scale(RS_Vector(data.factor, data.factor));
-    //g.rotate(data.angle);
+    // Add the block if it does not already exist
+    if (graphic) {
+        graphic->addBlock(block);
+    }
 
-    QString s = QFileInfo(data.file).completeBaseName();
-
-    RS_Modification m(*container, graphicView);
-    m.paste(
-                RS_PasteData(
-                    data.insertionPoint,
-                    data.factor, data.angle, true,
-                    s),
-                &g);
+    // Insert the block with provided data
+    RS_InsertData id(
+        blockName,
+        data.insertionPoint,
+        RS_Vector(data.factor, data.factor),
+        data.angle,
+        1,
+        1,
+        RS_Vector(0.0, 0.0)
+    );
+    createInsert(&id);
 
     RS_DEBUG->print("RS_Creation::createLibraryInsert: OK");
 
