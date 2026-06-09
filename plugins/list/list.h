@@ -42,7 +42,6 @@ private:
 class lc_Listdlg : public QDialog
 {
     Q_OBJECT
-
 public:
     explicit lc_Listdlg(QWidget *parent = nullptr);
     ~lc_Listdlg() override;
@@ -69,4 +68,4 @@ private:
     QTextEdit edit;
 };
 
-#endif // LIST_H
+#endif

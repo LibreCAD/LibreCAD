@@ -30,6 +30,7 @@
 
 #define STR(x)   #x
 #define XSTR(x)  STR(x)
+#include <QStringList>
 
 class QMainWindow;
 /**

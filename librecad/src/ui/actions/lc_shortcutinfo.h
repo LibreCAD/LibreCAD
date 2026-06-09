@@ -28,29 +28,29 @@
 class LC_ShortcutInfo{
 public:
     LC_ShortcutInfo(const QString& actionName,
-                    const QKeySequence& default_key)
+                    const QKeySequence& defaultKey)
         : m_name(actionName),
-          m_defaultKey(default_key),
-          m_key(default_key) {
+          m_defaultKey(defaultKey),
+          m_key(defaultKey) {
     }
 
-    static const char* PROPERTY_ACTION_SHORTCUT_CONFIGURABLE;
+    static constexpr auto PROPERTY_ACTION_SHORTCUT_CONFIGURABLE = "actionShortcut.configurable";
 
-    QString getName() const {return m_name;};
-    bool hasNoKey() const {return m_key.isEmpty();};
-    bool hasKey() const {return !m_key.isEmpty();};
+    QString getName() const {return m_name;}
+    bool hasNoKey() const {return m_key.isEmpty();}
+    bool hasKey() const {return !m_key.isEmpty();}
     QString retrieveKey(bool useDefault)const;
-    QString getKeyAsString();
-    QKeySequence getKey() const {return m_key;};
+    QString getKeyAsString() const;
+    QKeySequence getKey() const {return m_key;}
     QList<QKeySequence> getKeysList() const;
     void resetToDefault();
-    void setKey(QKeySequence newKey);
-    bool isModified(){return m_modified;}
+    void setKey(const QKeySequence& newKey);
+    bool isModified() const {return m_modified;}
     void clear();
-    bool hasCollision(){return m_collision;};
-    void setCollision(bool val){m_collision = val;};
+    bool hasCollision() const {return m_collision;}
+    void setCollision(const bool val){m_collision = val;}
     static int translateModifiers(Qt::KeyboardModifiers state,const QString &text);
-    bool hasTheSameKey(QKeySequence sequenceToTest);
+    bool hasTheSameKey(const QKeySequence& sequenceToTest) const;
 protected:
     QString m_name;
     QKeySequence m_defaultKey;
@@ -59,4 +59,4 @@ protected:
     bool m_collision = false;
 };
 
-#endif // SHORTCUT_H
+#endif

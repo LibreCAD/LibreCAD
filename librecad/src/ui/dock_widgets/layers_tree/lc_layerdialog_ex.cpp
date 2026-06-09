@@ -22,24 +22,24 @@
 **
 **********************************************************************/
 
+#include "lc_layerdialog_ex.h"
+
 #include <QMessageBox>
 
-#include "lc_layerdialog_ex.h"
 #include "lc_layertreeitem.h"
 #include "lc_layertreemodel.h"
 #include "lc_layertreemodel_options.h"
 #include "rs_layer.h"
 #include "rs_layerlist.h"
 
-LC_LayerDialogEx::LC_LayerDialogEx(QWidget* parent, const QString& name, LC_LayerTreeModel* model, LC_LayerTreeItem *treeItem, RS_LayerList* ll)
-      : QDialog(parent/*, f*l*/)
-{
+LC_LayerDialogEx::LC_LayerDialogEx(QWidget* parent, const QString& name, LC_LayerTreeModel* model, LC_LayerTreeItem *treeItem, RS_LayerList* layerList)
+      : LC_Dialog(parent, "LayersTreeLayerDialog"), m_mode{-1}{
     setupUi(this);
     setModal(true);
     setObjectName(name);
 
     m_layerTreeModel = model;
-    m_layerList = ll;
+    m_layerList = layerList;
     m_editedTreeItem = treeItem;
 }
 
@@ -47,12 +47,12 @@ void LC_LayerDialogEx::languageChange(){
     retranslateUi(this);
 }
 
-void LC_LayerDialogEx::setMode(int viewMode){
-    int mode = viewMode;
+void LC_LayerDialogEx::setMode(const int viewMode){
+    const int mode = viewMode;
     this->setProperty("mode", mode);
     leParentPath->setEnabled(false);
     switch (mode){
-        case LC_LayerDialogEx::MODE_RENAME_VIRTUAL:{
+        case MODE_RENAME_VIRTUAL:{
             leName->setFocus();
             wPen->setVisible(false);
             cbConstructionLayer ->setVisible(false);
@@ -61,26 +61,26 @@ void LC_LayerDialogEx::setMode(int viewMode){
             setWindowTitle(tr("Rename Virtual Layer"));
             break;
         }
-        case LC_LayerDialogEx::MODE_ADD_SECONDARY_LAYER:{
+        case MODE_ADD_SECONDARY_LAYER:{
             setWindowTitle(tr("Add Secondary Layer"));
             leName->setFocus();
             allowChangingLayerType(false);
           break;
         }
-        case LC_LayerDialogEx::MODE_ADD_CHILD_LAYER:{
+        case MODE_ADD_CHILD_LAYER:{
             setWindowTitle(tr("Add Layer"));
             leParentPath->setEnabled(false);
             leName->setFocus();
             allowChangingLayerType(true);
             break;
         }
-        case LC_LayerDialogEx::MODE_ADD_LAYER:{
+        case MODE_ADD_LAYER:{
             setWindowTitle(tr("Add Layer"));
             leName->setFocus();
             allowChangingLayerType(true);
             break;
         }
-        case LC_LayerDialogEx::MODE_EDIT_LAYER:{
+        case MODE_EDIT_LAYER:{
             setWindowTitle(tr("Edit Layer"));
             if (m_editedTreeItem->isZero()){
                 allowChangingLayerType(false);
@@ -97,7 +97,7 @@ void LC_LayerDialogEx::setMode(int viewMode){
     }
 }
 
-void LC_LayerDialogEx::allowChangingLayerType(bool value){
+void LC_LayerDialogEx::allowChangingLayerType(const bool value){
     gbLayerType->setEnabled(value);
     if (value){
         connect(rbNormal, &QRadioButton::clicked, this, &LC_LayerDialogEx::layerTypeChanged);
@@ -107,29 +107,29 @@ void LC_LayerDialogEx::allowChangingLayerType(bool value){
     }
 }
 
-void LC_LayerDialogEx::setLayerType(int type) const {
+void LC_LayerDialogEx::setLayerType(const int type) const {
     switch (type){
-        case LC_LayerTreeItem::VIRTUAL: {
+        case RS_Layer::LayerType::VIRTUAL: {
             gbLayerType->setVisible(false);
             break;
         }
-        case LC_LayerTreeItem::NOT_DEFINED_LAYER_TYPE:
-        case LC_LayerTreeItem::NORMAL: {
+        case RS_Layer::NOT_DEFINED_LAYER_TYPE:
+        case RS_Layer::LayerType::NORMAL: {
             gbLayerType->setVisible(true);
             rbNormal->setChecked(true);
             break;
         }
-        case LC_LayerTreeItem::DIMENSIONAL: {
+        case RS_Layer::LayerType::DIMENSIONAL: {
             gbLayerType->setVisible(true);
             rbDimensions->setChecked(true);
             break;
         }
-        case LC_LayerTreeItem::ALTERNATE_POSITION: {
+        case RS_Layer::LayerType::ALTERNATE_POSITION: {
             gbLayerType->setVisible(true);
             rbAlternativePosition->setChecked(true);
             break;
         }
-        case LC_LayerTreeItem::INFORMATIONAL: {
+        case RS_Layer::LayerType::INFORMATIONAL: {
             gbLayerType->setVisible(true);
             rbInformational->setChecked(true);
             break;
@@ -140,18 +140,18 @@ void LC_LayerDialogEx::setLayerType(int type) const {
 }
 
 int LC_LayerDialogEx::getEditedLayerType() const {
-    int result = LC_LayerTreeItem::NOT_DEFINED_LAYER_TYPE;
+    int result = RS_Layer::NOT_DEFINED_LAYER_TYPE;
     if (rbNormal->isChecked()){
-        result = LC_LayerTreeItem::NORMAL;
+        result = RS_Layer::LayerType::NORMAL;
     }
     else if (rbDimensions->isChecked()){
-        result = LC_LayerTreeItem::DIMENSIONAL;
+        result = RS_Layer::LayerType::DIMENSIONAL;
     }
     else if (rbAlternativePosition->isChecked()){
-        result = LC_LayerTreeItem::ALTERNATE_POSITION;
+        result = RS_Layer::LayerType::ALTERNATE_POSITION;
     }
     else if (rbInformational->isChecked()){
-        result = LC_LayerTreeItem::INFORMATIONAL;
+        result = RS_Layer::LayerType::INFORMATIONAL;
     }
     return result;
 }
@@ -196,21 +196,21 @@ void LC_LayerDialogEx::init(){
 void LC_LayerDialogEx::layerTypeChanged() const {
     int layerType = -1;
     if (rbNormal->isChecked()){
-        layerType = LC_LayerTreeItem::NORMAL;
+        layerType = RS_Layer::LayerType::NORMAL;
     }
     else if (rbDimensions ->isChecked()){
-        layerType = LC_LayerTreeItem::DIMENSIONAL;
+        layerType = RS_Layer::LayerType::DIMENSIONAL;
     }
     else if (rbAlternativePosition -> isChecked()){
-        layerType = LC_LayerTreeItem::ALTERNATE_POSITION;
+        layerType = RS_Layer::LayerType::ALTERNATE_POSITION;
     }
     else if (rbInformational->isChecked()){
-        layerType = LC_LayerTreeItem::INFORMATIONAL;
+        layerType = RS_Layer::LayerType::INFORMATIONAL;
     }
 
     if (layerType > 0){
         RS_Pen defaultPen = m_layerTreeModel ->getOptions()->getDefaultPen(layerType);
-        RS_Pen penCopy  = RS_Pen(defaultPen);
+        const auto penCopy  = RS_Pen(defaultPen);
         wPen->setPen(penCopy, false, false, tr("Default Pen"));
     }
 }
@@ -224,36 +224,36 @@ void LC_LayerDialogEx::validate() {
                                  QMessageBox::Ok);
     }
     else{
-        int newLayerType = getEditedLayerType();
+        const int newLayerType = getEditedLayerType();
         QStringList newLayerNamesList;
 
-        int dialogMode = property("mode").toInt();
+        const int dialogMode = property("mode").toInt();
         switch (dialogMode) {
             case MODE_ADD_LAYER: {
-                QString newLayerName = m_layerTreeModel->createFullLayerName(
+                const QString newLayerName = m_layerTreeModel->createFullLayerName(
                     m_editedTreeItem, layerName, newLayerType, true);
                 newLayerNamesList << newLayerName;
                 break;
             }
             case MODE_ADD_CHILD_LAYER:
             case MODE_ADD_SECONDARY_LAYER: {
-                QString newLayerName = m_layerTreeModel->createFullLayerName(
+                const QString newLayerName = m_layerTreeModel->createFullLayerName(
                     m_editedTreeItem, layerName, newLayerType, true);
                 newLayerNamesList << newLayerName;
                 break;
             }
             case MODE_RENAME_VIRTUAL: {
-                QString oldLayerName = m_editedTreeItem->getName();
+                const QString oldLayerName = m_editedTreeItem->getName();
                 if (layerName != oldLayerName) {
                     newLayerNamesList = m_layerTreeModel->getLayersListForRenamedVirtualLayer(m_editedTreeItem, layerName);
                 }
                 break;
             }
             case MODE_EDIT_LAYER: {
-                QString originalName = m_editedTreeItem->getName();
-                int originalLayerType = m_editedTreeItem->getLayerType();
-                bool typeChanged = newLayerType != originalLayerType;
-                bool nameChanged = originalName != layerName;
+                const QString originalName = m_editedTreeItem->getName();
+                const int originalLayerType = m_editedTreeItem->getLayerType();
+                const bool typeChanged = newLayerType != originalLayerType;
+                const bool nameChanged = originalName != layerName;
                 if (nameChanged || typeChanged) {
                     // inner name should be changed - so we have to check for possible duplicates.
                     newLayerNamesList = m_layerTreeModel->getLayersListForRenamedPrimary(
@@ -269,8 +269,8 @@ void LC_LayerDialogEx::validate() {
           accept();
         }
         else{
-            bool duplicateNameFound = checkForDuplicatedNames(newLayerNamesList);
-            if (!duplicateNameFound){                
+            const bool duplicateNameFound = checkForDuplicatedNames(newLayerNamesList);
+            if (!duplicateNameFound){
                 accept();
             }
         }
@@ -278,12 +278,12 @@ void LC_LayerDialogEx::validate() {
 }
 
 bool LC_LayerDialogEx::checkForDuplicatedNames(const QStringList &newLayerNamesList) const {
-    int count = newLayerNamesList.size();
+    const int count = newLayerNamesList.size();
     bool duplicateNameFound = false;
     for (int i = 0; i < count; i++) {
-        QString candidateLayerName = newLayerNamesList.at(i);
+        const QString& candidateLayerName = newLayerNamesList.at(i);
         // here we check against layer list and not against model, since some filtering may be applied
-        RS_Layer* existingLayer = m_layerList->find(candidateLayerName);
+        const RS_Layer* existingLayer = m_layerList->find(candidateLayerName);
         if (existingLayer != nullptr){
             QMessageBox::information(parentWidget(),
                                      QMessageBox::tr("Layer Properties"),

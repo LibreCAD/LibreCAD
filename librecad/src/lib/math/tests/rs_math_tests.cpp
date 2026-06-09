@@ -24,12 +24,13 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
+#include <QString>
 #include <catch2/catch_test_macros.hpp>
 #include <catch2/matchers/catch_matchers_floating_point.hpp>
-#include <QString>
 
 #include "rs_debug.h"
 #include "rs_math.h"
+
 namespace {
 constexpr double EPS = 1e-6;
 }

@@ -31,7 +31,7 @@ class LC_SVGIconEngine:public QIconEngine{
 public:
     LC_SVGIconEngine();
     LC_SVGIconEngine(const LC_SVGIconEngine &other);
-    ~LC_SVGIconEngine();
+    ~LC_SVGIconEngine() override;
     void paint(QPainter *painter, const QRect &rect,
                QIcon::Mode mode, QIcon::State state) override;
     QSize actualSize(const QSize &size, QIcon::Mode mode,
@@ -52,4 +52,4 @@ private:
     QSharedDataPointer<LC_SvgIconEnginePrivate> d;
 };
 
-#endif // LC_SVGICONENGINE_H
+#endif

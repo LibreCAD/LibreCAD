@@ -20,8 +20,8 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
 
-#ifndef LIBRECAD_LC_COORDINATES_MAPPER_H
-#define LIBRECAD_LC_COORDINATES_MAPPER_H
+#ifndef LC_COORDINATES_MAPPER_H
+#define LC_COORDINATES_MAPPER_H
 
 #include "rs_vector.h"
 
@@ -32,7 +32,7 @@ public:
     LC_CoordinatesMapper();
     void toUCSDelta(const RS_Vector& worldDelta, double& ucsDX, double &ucsDY) const;
     RS_Vector toUCSDelta(const RS_Vector& worldDelta) const;
-    RS_Vector toWorldDelta(const RS_Vector& worldDelta) const;
+    RS_Vector toWorldDelta(const RS_Vector& ucsDelta) const;
     double toWorldAngle(double ucsAngle) const;
     double toWorldAngleDegrees(double ucsAngle) const;
     double toUCSAngle(double wcsAngle) const;
@@ -43,18 +43,18 @@ public:
     RS_Vector toWorld(const RS_Vector& ucsPos) const;
     bool hasUCS() const {return m_hasUcs;}
     void ucsBoundingBox(const RS_Vector& wcsMin, const RS_Vector&wcsMax, RS_Vector& ucsMin, RS_Vector& ucsMax) const;
-    void worldBoundingBox(const RS_Vector& ucsMin, const RS_Vector &ucsMax, RS_Vector& worlMin, RS_Vector& worldMax) const;
+    void worldBoundingBox(const RS_Vector& ucsMin, const RS_Vector &ucsMax, RS_Vector& worldMin, RS_Vector& worldMax) const;
     RS_Vector restrictHorizontal(const RS_Vector &baseWCSPoint, const RS_Vector& wcsCoord) const;
     RS_Vector restrictVertical(const RS_Vector &baseWCSPoint, const RS_Vector& wcsCoord) const;
 
     double toUCSBasisAngle(double ucsAbsAngle, double baseAngle, bool counterclockwise);
-    double toUCSAbsAngle(double ucsBasisAngle, double baseAngle, bool conterclockwise);
+    double toUCSAbsAngle(double ucsBasisAngle, double baseAngle, bool counterclockwise);
 
-    void apply(LC_CoordinatesMapper* other);
+    void apply(const LC_CoordinatesMapper* other);
 
     const RS_Vector &getUcsOrigin() const;
     void setUcsOrigin(const RS_Vector& origin);
-    double getXAxisAngle() const{return xAxisAngle;}
+    double getXAxisAngle() const{return m_xAxisAngle;}
     const RS_Vector& getUcsRotation() const
     {
         return m_ucsRotation;
@@ -62,7 +62,6 @@ public:
 
 protected:
     void setXAxisAngle(double angle);
-    double toUCSAngleDegree(double angle) const;
     void doWCS2UCS(double worldX, double worldY, double &ucsX, double &ucsY) const;
     RS_Vector doWCS2UCS(const RS_Vector &worldCoordinate) const;
     RS_Vector doWCSDelta2UCSDelta(const RS_Vector &worldDelta) const;
@@ -72,11 +71,9 @@ protected:
     RS_Vector doUCS2WCS(const RS_Vector &ucsCoordinate) const;
     void doUCS2WCS(double ucsX, double ucsY, double &worldX, double &worldY) const;
     void update(const RS_Vector& origin, double angle);
-    void useUCS(bool isUcs)
-    {
+    void useUCS(const bool isUcs) {
         m_hasUcs = isUcs;
     }
-
 private:
     /**
      * Flag that defines whether ucs should be applied.
@@ -88,15 +85,15 @@ private:
      */
     bool m_hasUcs = false;
     RS_Vector m_ucsOrigin{0., 0., 0.};
-    double xAxisAngle = 0.0;
-    double xAxisAngleDegrees = 0.0;
+    double m_xAxisAngle = 0.0;
+    double m_xAxisAngleDegrees = 0.0;
     RS_Vector m_ucsRotation;
-    double& sinXAngle = m_ucsRotation.y;
-    double& cosXAngle = m_ucsRotation.x;
-    RS_Vector m_AxisNegRotation;
-    double& sinNegativeXAngle = m_AxisNegRotation.y;
-    double& cosNegativeXAngle = m_AxisNegRotation.x;
+    double& m_sinXAngle = m_ucsRotation.y;
+    double& m_cosXAngle = m_ucsRotation.x;
+    RS_Vector m_axisNegRotation;
+    double& m_sinNegativeXAngle = m_axisNegRotation.y;
+    double& m_cosNegativeXAngle = m_axisNegRotation.x;
 };
 
 
-#endif //LIBRECAD_LC_COORDINATES_MAPPER_H
+#endif

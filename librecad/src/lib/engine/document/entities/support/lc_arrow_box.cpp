@@ -25,9 +25,9 @@
 
 #include "rs_painter.h"
 
-LC_ArrowBox::LC_ArrowBox(RS_EntityContainer* container, const RS_Vector& pos, double dirAngle, double size, bool filled)
+LC_ArrowBox::LC_ArrowBox(RS_EntityContainer* container, const RS_Vector& pos, const double dirAngle, const double size, const bool filled)
    :LC_DimArrowPoly(container, pos, dirAngle, size), m_filled{filled} {
-    createVertexes(size);
+   createVertexes(size);
 }
 
 RS_Entity* LC_ArrowBox::clone() const {
@@ -45,7 +45,7 @@ void LC_ArrowBox::draw(RS_Painter* painter) {
     painter->drawLineWCS(getDimLinePoint(), getPosition());
 }
 
-void LC_ArrowBox::createVertexes(double size) {
+void LC_ArrowBox::createVertexes(const double size) {
     initVertexes(5);
     double halfSize = size * 0.5;
 

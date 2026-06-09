@@ -1,5 +1,5 @@
 /*******************************************************************************
-*
+ *
  This file is part of the LibreCAD project, a 2D CAD program
 
  Copyright (C) 2025 LibreCAD.org
@@ -25,10 +25,10 @@
 class QC_ApplicationWindow;
 
 class LC_AppWindowAware {
-    public:
-        LC_AppWindowAware(QC_ApplicationWindow* mainWin);
-    protected:
-        QC_ApplicationWindow* m_appWin{nullptr};
+public:
+    explicit LC_AppWindowAware(QC_ApplicationWindow* mainWin);
+protected:
+    QC_ApplicationWindow* m_appWin{nullptr};
 };
 
-#endif // LC_APPWINDOWAWARE_H
+#endif

@@ -1,5 +1,5 @@
 /****************************************************************************
-*
+ *
 * Options Dialog for QuickInfo widget related functions
 
 Copyright (C) 2024 LibreCAD.org
@@ -20,15 +20,16 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 #include "lc_quickinfowidgetoptionsdialog.h"
+
 #include "lc_quickinfowidgetoptions.h"
 #include "ui_lc_quickinfowidgetoptionsdialog.h"
 
-LC_QuickInfoWidgetOptionsDialog::LC_QuickInfoWidgetOptionsDialog(QWidget *parent, LC_QuickInfoOptions *opts):
+LC_QuickInfoWidgetOptionsDialog::LC_QuickInfoWidgetOptionsDialog(QWidget *parent, LC_QuickInfoOptions *options):
     LC_Dialog(parent, "QuickInfoOptions"),
     ui(new Ui::LC_QuickInfoWidgetOptionsDialog){
     ui->setupUi(this);
 
-    m_options = opts;
+    m_options = options;
 
     connect(ui->buttonBox, &QDialogButtonBox::accepted, this, &LC_QuickInfoWidgetOptionsDialog::validate);
     connect(ui->cbDefaultActionAuto, &QCheckBox::clicked, this, &LC_QuickInfoWidgetOptionsDialog::onDefaultActionAutoClicked);
@@ -39,7 +40,7 @@ LC_QuickInfoWidgetOptionsDialog::LC_QuickInfoWidgetOptionsDialog(QWidget *parent
     ui->cbInDefaultAction->setChecked(m_options->selectEntitiesInDefaultActionByCTRL);
     ui->cbDefaultActionAuto->setChecked(m_options->autoSelectEntitiesInDefaultAction);
     ui->cbDetailedPolyline->setChecked(m_options->displayPolylineDetailed);
-    RS_Pen highlightPen = m_options->pen;
+    const RS_Pen highlightPen = m_options->pen;
     ui->wHighlightPen->setPen(highlightPen, false, false, tr("Points highlight pen"));
     ui->cbInDefaultAction->setEnabled(!m_options->autoSelectEntitiesInDefaultAction);
 }
@@ -49,7 +50,7 @@ LC_QuickInfoWidgetOptionsDialog::~LC_QuickInfoWidgetOptionsDialog(){
 }
 
 void LC_QuickInfoWidgetOptionsDialog::validate(){
-    RS_Pen pen = ui->wHighlightPen->getPen();
+    const RS_Pen pen = ui->wHighlightPen->getPen();
     m_options->pen = pen;
     m_options->displayDistanceAndAngle = ui->cbDisplayDistance->isChecked();
     m_options->displayPointsPath = ui->cbDrawPointsPath->isChecked();
@@ -60,7 +61,7 @@ void LC_QuickInfoWidgetOptionsDialog::validate(){
     accept();
 }
 
-void LC_QuickInfoWidgetOptionsDialog::onDefaultActionAutoClicked(){
+void LC_QuickInfoWidgetOptionsDialog::onDefaultActionAutoClicked() const {
     ui->cbInDefaultAction->setEnabled(!ui->cbDefaultActionAuto->isChecked());
 }
 

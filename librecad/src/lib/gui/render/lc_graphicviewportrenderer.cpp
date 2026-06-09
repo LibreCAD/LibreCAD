@@ -31,14 +31,14 @@
 #include "rs_units.h"
 
 LC_GraphicViewportRenderer::LC_GraphicViewportRenderer(LC_GraphicViewport* v, QPaintDevice* painterDevice):
-    pd{painterDevice}
-    , viewport{v}
-    , graphic {viewport->getGraphic()}
+    m_paintDevice{painterDevice}
+    , m_viewport{v}
+    , m_graphic {m_viewport->getGraphic()}
 {
 }
 
 void LC_GraphicViewportRenderer::render() {
-    renderBoundingClipRect = prepareBoundingClipRect();
+    m_renderBoundingClipRect = prepareBoundingClipRect();
     doRender();
 }
 
@@ -55,57 +55,55 @@ void LC_GraphicViewportRenderer::renderEntityAsChild(RS_Painter *painter, RS_Ent
 }
 
 void LC_GraphicViewportRenderer::loadSettings() {
-    auto g = getGraphic();
+    const auto g = getGraphic();
     if (g != nullptr){
         updateGraphicRelatedSettings(g);
    }
 }
 
-LC_Rect LC_GraphicViewportRenderer::prepareBoundingClipRect(){
-    int width = viewport->getWidth();
-    int height = viewport->getHeight();
-    const RS_Vector ucsViewportLeftBottom = viewport->toUCSFromGui(0, 0);
-    const RS_Vector ucsViewportRightTop = viewport->toUCSFromGui(width, height);
+LC_Rect LC_GraphicViewportRenderer::prepareBoundingClipRect() const {
+    const int width = m_viewport->getWidth();
+    const int height = m_viewport->getHeight();
+    const RS_Vector ucsViewportLeftBottom = m_viewport->toUCSFromGui(0, 0);
+    const RS_Vector ucsViewportRightTop = m_viewport->toUCSFromGui(width, height);
 
-    if (viewport->hasUCS()){
+    if (m_viewport->hasUCS()){
         // here were extend (enlarge) clipping rect to ensure that if there is shift/rotation in ucs, resulting bounding box cover the entire screen
         // thus we'll paint a bit more entities that is necessary (and more comparing to non-ucs world mode), yet ensure that they are not clipped
 
         RS_Vector wcsViewportMin;
         RS_Vector wcsViewportMax;
 
-        viewport->worldBoundingBox(ucsViewportLeftBottom, ucsViewportRightTop, wcsViewportMin, wcsViewportMax);
+        m_viewport->worldBoundingBox(ucsViewportLeftBottom, ucsViewportRightTop, wcsViewportMin, wcsViewportMax);
 
         return LC_Rect(wcsViewportMin, wcsViewportMax);
     }
-    else{
-        // clipping rect is defined by the screen (0,0 and width/height)
-        return LC_Rect(ucsViewportLeftBottom, ucsViewportRightTop);
-    }
+    // clipping rect is defined by the screen (0,0 and width/height)
+    return LC_Rect(ucsViewportLeftBottom, ucsViewportRightTop);
 }
 
-bool LC_GraphicViewportRenderer::isOutsideOfBoundingClipRect(RS_Entity* e, bool constructionEntity){
+bool LC_GraphicViewportRenderer::isOutsideOfBoundingClipRect(const RS_Entity* e, const bool constructionEntity) const {
     // test if the entity is in the viewport
     switch (e->rtti()){
         /* case RS2::EntityGraphic:
              break;*/
         case RS2::EntityLine:{
             if (constructionEntity){
-                if (!LC_LineMath::hasIntersectionLineRect(e->getMin(), e->getMax(), renderBoundingClipRect.minP(), renderBoundingClipRect.maxP())){
+                if (!LC_LineMath::hasIntersectionLineRect(e->getMin(), e->getMax(), m_renderBoundingClipRect.minP(), m_renderBoundingClipRect.maxP())){
                     return true;
                 }
             }
             else{ // normal line
-                if (e->getMax().x < renderBoundingClipRect.minP().x || e->getMin().x > renderBoundingClipRect.maxP().x ||
-                    e->getMin().y > renderBoundingClipRect.maxP().y || e->getMax().y < renderBoundingClipRect.minP().y){
+                if (e->getMax().x < m_renderBoundingClipRect.minP().x || e->getMin().x > m_renderBoundingClipRect.maxP().x ||
+                    e->getMin().y > m_renderBoundingClipRect.maxP().y || e->getMax().y < m_renderBoundingClipRect.minP().y){
                     return true;
                 }
             }
             break;
         }
         default:
-            if (e->getMax().x < renderBoundingClipRect.minP().x || e->getMin().x > renderBoundingClipRect.maxP().x ||
-                e->getMin().y > renderBoundingClipRect.maxP().y || e->getMax().y < renderBoundingClipRect.minP().y){
+            if (e->getMax().x < m_renderBoundingClipRect.minP().x || e->getMin().x > m_renderBoundingClipRect.maxP().x ||
+                e->getMin().y > m_renderBoundingClipRect.maxP().y || e->getMax().y < m_renderBoundingClipRect.minP().y){
                 return true;
             }
     }
@@ -130,55 +128,55 @@ void LC_GraphicViewportRenderer::justDrawEntity(RS_Painter *painter, RS_Entity *
 
 void LC_GraphicViewportRenderer::updateEndCapsStyle(const RS_Graphic *graphic) {//        Lineweight endcaps setting for new objects:
 //        0 = none; 1 = round; 2 = angle; 3 = square
-    int endCaps = graphic->getGraphicVariableInt("$ENDCAPS", 1);
+    const int endCaps = graphic->getGraphicVariableInt("$ENDCAPS", 1);
     switch (endCaps){
         case 0:
-            penCapStyle = Qt::FlatCap;
+            m_penCapStyle = Qt::FlatCap;
             break;
         case 1:
-            penCapStyle = Qt::RoundCap;
+            m_penCapStyle = Qt::RoundCap;
             break;
         case 2:
-            penCapStyle = Qt::MPenCapStyle;
+            m_penCapStyle = Qt::MPenCapStyle;
             break;
         case 3:
-            penCapStyle = Qt::SquareCap;
+            m_penCapStyle = Qt::SquareCap;
             break;
         default:
-            penCapStyle = Qt::FlatCap; // fixme - or round?
+            m_penCapStyle = Qt::FlatCap; // fixme - or round?
     }
 }
 
-void LC_GraphicViewportRenderer::updatePointEntitiesStyle(RS_Graphic *graphic) {
-    pdmode = graphic->getGraphicVariableInt("$PDMODE", LC_DEFAULTS_PDMode);
-    pdsize = graphic->getGraphicVariableDouble("$PDSIZE", LC_DEFAULTS_PDSize);
+void LC_GraphicViewportRenderer::updatePointEntitiesStyle(const RS_Graphic *graphic) {
+    m_pdmode = graphic->getGraphicVariableInt("$PDMODE", LC_DEFAULTS_PDMode);
+    m_pdsize = graphic->getGraphicVariableDouble("$PDSIZE", LC_DEFAULTS_PDSize);
 }
 
 void LC_GraphicViewportRenderer::updateJoinStyle(const RS_Graphic *graphic) {//0=none; 1= round; 2 = angle; 3 = flat
-    int joinStyle = graphic->getGraphicVariableInt("$JOINSTYLE", 1);
+    const int joinStyle = graphic->getGraphicVariableInt("$JOINSTYLE", 1);
 
     switch (joinStyle){
         case 0:
-            penJoinStyle = Qt::BevelJoin;
+            m_penJoinStyle = Qt::BevelJoin;
             break;
         case 1:
-            penJoinStyle = Qt::RoundJoin;
+            m_penJoinStyle = Qt::RoundJoin;
             break;
         case 2:
-            penJoinStyle = Qt::MiterJoin;
+            m_penJoinStyle = Qt::MiterJoin;
             break;
         case 3:
-            penJoinStyle = Qt::BevelJoin;
+            m_penJoinStyle = Qt::BevelJoin;
             break;
         default:
-            penJoinStyle = Qt::RoundJoin;
+            m_penJoinStyle = Qt::RoundJoin;
     }
 }
 
 void LC_GraphicViewportRenderer::setBackground(const RS_Color &bg) {
     m_colorBackground = bg;
 
-    RS_Color black(0, 0, 0);
+    const RS_Color black(0, 0, 0);
     if (black.colorDistance(bg) >= RS_Color::MinColorDistance) {
         m_colorForeground = black;
     } else {
@@ -195,25 +193,25 @@ void LC_GraphicViewportRenderer::updateGraphicRelatedSettings(RS_Graphic *g) {
 }
 
 void LC_GraphicViewportRenderer::updateUnitAndDefaultWidthFactors(const RS_Graphic *g) {
-    unitFactor = RS_Units::convert(1.0, RS2::Millimeter, g->getUnit());
-    unitFactor100 =  unitFactor / 100.0;
-    defaultWidthFactor = g->getVariableDouble("$DIMSCALE", 1.0);
+    m_unitFactor = RS_Units::convert(1.0, RS2::Millimeter, g->getUnit());
+    m_unitFactor100 =  m_unitFactor / 100.0;
+    m_defaultWidthFactor = g->getVariableDouble("$DIMSCALE", 1.0);
 }
 
 void LC_GraphicViewportRenderer::setupPainter(RS_Painter *painter) {
     painter->setRenderer(this);
-    painter->setViewPort(viewport);
-    painter->updatePointsScreenSize(pdsize);
-    painter->setPointsMode(pdmode);
-    painter->setDefaultWidthFactor(defaultWidthFactor);
-    painter->setWorldBoundingRect(renderBoundingClipRect);
+    painter->setViewPort(m_viewport);
+    painter->updatePointsScreenSize(m_pdsize);
+    painter->setPointsMode(m_pdmode);
+    painter->setDefaultWidthFactor(m_defaultWidthFactor);
+    painter->setWorldBoundingRect(m_renderBoundingClipRect);
 }
 
-bool LC_GraphicViewportRenderer::isTextLineNotRenderable([[maybe_unused]]double d) const {
+bool LC_GraphicViewportRenderer::isTextLineNotRenderable([[maybe_unused]]double uiLineHeight) const {
     return false;
 }
 
-void LC_GraphicViewportRenderer::updateAnglesBasis(RS_Graphic *g) {
+void LC_GraphicViewportRenderer::updateAnglesBasis(const RS_Graphic *g) {
     m_angleBasisBaseAngle = g->getAnglesBase();
     m_angleBasisCounterClockwise = g->areAnglesCounterClockWise();
 }

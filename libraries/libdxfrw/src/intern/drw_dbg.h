@@ -39,21 +39,21 @@ public:
      * is required.
      */
     void setCustomDebugPrinter(std::unique_ptr<DRW::DebugPrinter> printer);
-    Level getLevel();
+    Level getLevel() const;
     static DRW_dbg *getInstance();
-    void print(const std::string &s);
-    void print(signed char i);
-    void print(unsigned char i);
-    void print(int i);
-    void print(unsigned int i);
-    void print(long long int i);
-    void print(long unsigned int i);
-    void print(long long unsigned int i);
-    void print(double d);
-    void printH(long long int i);
-    void printB(int i);
-    void printHL(int c, int s, int h);
-    void printPT(double x, double y, double z);
+    void print(const std::string &s) const;
+    void print(signed char i) const;
+    void print(unsigned char i) const;
+    void print(int i) const;
+    void print(unsigned int i) const;
+    void print(long long int i) const;
+    void print(long unsigned int i) const;
+    void print(long long unsigned int i) const;
+    void print(double d) const;
+    void printH(long long int i) const;
+    void printB(int i) const;
+    void printHL(int c, int s, int h) const;
+    void printPT(double x, double y, double z) const;
 
 private:
     DRW_dbg();
@@ -65,4 +65,4 @@ private:
 };
 
 
-#endif // DRW_DBG_H
+#endif

@@ -31,7 +31,7 @@
 class LC_ActionInteractivePickPosition :public LC_ActionInteractivePickBase {
     Q_OBJECT
 public:
-    explicit  LC_ActionInteractivePickPosition(LC_ActionContext *actionContext);
+    explicit  LC_ActionInteractivePickPosition(LC_ActionContext *actionContext, RS2::ActionType actionType);
     ~LC_ActionInteractivePickPosition() override;
     void init(int status) override;
 protected:
@@ -53,12 +53,13 @@ protected:
     bool isInteractiveDataValid() override;
     void doSetInteractiveInputValue(LC_ActionContext::InteractiveInputInfo* interactiveInputInfo) override;
     RS2::CursorType doGetMouseCursor(int status) override;
-    void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
-    void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
-    void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
+    void onMouseLeftButtonRelease(int status, const LC_MouseEvent* e) override;
+    void onMouseRightButtonRelease(int status, const LC_MouseEvent* e) override;
+    void onMouseMoveEvent(int status, const LC_MouseEvent* e) override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
-    void updateMouseButtonHints() override;
-    void updateInfoCursor(const RS_Vector &mouse, const RS_Vector &relZero);
+    void updateActionPrompt() override;
+    void updateInfoCursor(const RS_Vector &mouse, const RS_Vector &relZero) const;
+    bool isInVisualSnapStatus(int status) override;
 };
 
-#endif // LC_ACTIONINTERACTIVEPICKPOSITION_H
+#endif

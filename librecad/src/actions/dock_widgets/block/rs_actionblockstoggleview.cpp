@@ -42,22 +42,22 @@ void RS_ActionBlocksToggleView::trigger() {
         RS_BlockList* blockList = m_graphic->getBlockList();
         unsigned toggledBlocksCount = 0;
         // toggle selected blocks
-        for (auto block: *blockList) {
+        for (const auto block: *blockList) {
             if (block != nullptr && block->isVisibleInBlockList() && block->isSelectedInBlockList()) {
                 m_graphic->toggleBlock(block);
                 toggledBlocksCount++;
             }
         }
         // if there wasn't selected blocks, toggle active block
-        if (!toggledBlocksCount) {
+        if (toggledBlocksCount == 0) {
             m_graphic->toggleBlock(m_graphic->getActiveBlock());
         }
     }
     redrawDrawing();
-    finish(false);
+    finish();
 }
 
-void RS_ActionBlocksToggleView::init(int status) {
+void RS_ActionBlocksToggleView::init(const int status) {
     RS_ActionInterface::init(status);
     trigger();
 }

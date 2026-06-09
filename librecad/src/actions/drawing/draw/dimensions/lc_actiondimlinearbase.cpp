@@ -23,7 +23,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "lc_actiondimlinearbase.h"
 
 #include "rs_constructionline.h"
-#include "rs_debug.h"
 #include "rs_dimaligned.h"
 #include "rs_dimension.h"
 #include "rs_dimlinear.h"
@@ -31,7 +30,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_polyline.h"
 #include "rs_preview.h"
 
-LC_ActionDimLinearBase::LC_ActionDimLinearBase(const char *name, LC_ActionContext *actionContext,  RS2::EntityType dimType, RS2::ActionType actionType):
+LC_ActionDimLinearBase::LC_ActionDimLinearBase(const char *name, LC_ActionContext *actionContext, const RS2::EntityType dimType, const RS2::ActionType actionType):
    RS_ActionDimension(name, actionContext, dimType, actionType){
 }
 
@@ -41,22 +40,20 @@ LC_ActionDimLinearBase::~LC_ActionDimLinearBase() = default;
 
 namespace {
     //list of entity types supported by current action - line, arc, circle
-    const auto dimEntityTypes = EntityTypeList{RS2::EntityDimLinear, RS2::EntityDimAligned};
+    const auto DIM_ENTITY_TYPES = EntityTypeList{RS2::EntityDimLinear, RS2::EntityDimAligned};
 }
 
-void LC_ActionDimLinearBase::doTrigger() {
+RS_Entity* LC_ActionDimLinearBase::doTriggerCreateEntity() {
     preparePreview(m_alternateDimDirection);
-    auto *dim = createDim(m_container);
-    setPenAndLayerToActive(dim);
+    auto *dim = createDim(m_document);
     dim->update();
-    undoCycleAdd(dim);
-    RS_DEBUG->print("LC_ActionDimLinearBase::trigger(): dim added: %lu", dim->getId());
+    return dim;
 }
 
 void LC_ActionDimLinearBase::doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) {
     auto entity = contextEntity;
     if (isPolyline(contextEntity)) {
-        auto polyline = static_cast<RS_Polyline*>(contextEntity);
+        const auto polyline = static_cast<RS_Polyline*>(contextEntity);
         entity = polyline->getNearestEntity(clickPos);
     }
     if (isLine(entity)) {
@@ -66,14 +63,14 @@ void LC_ActionDimLinearBase::doInitWithContextEntity(RS_Entity* contextEntity, c
     }
 }
 
-void LC_ActionDimLinearBase::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+void LC_ActionDimLinearBase::onMouseMoveEvent(const int status, const LC_MouseEvent* e) {
     RS_Vector mouse = e->snapPoint;
 
-    bool ctrlPressed = e->isControl;
+    const bool ctrlPressed = e->isControl;
     switch (status) {
         case SetExtPoint1: {
             if (ctrlPressed) {
-                auto entity = catchAndDescribe(e, RS2::EntityLine, RS2::ResolveAll);
+                const auto entity = catchAndDescribe(e, RS2::EntityLine, RS2::ResolveAll);
                 if (isLine(entity)) {
                     highlightHover(entity);
                 }
@@ -132,20 +129,20 @@ void LC_ActionDimLinearBase::onMouseMoveEvent(int status, LC_MouseEvent *e) {
                 addReferencePointToPreview(p1);
                 addReferencePointToPreview(p2);
 #endif
-                break;
             }
+            break;
         }
         default:
             break;
     }
 }
 
-void LC_ActionDimLinearBase::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
+void LC_ActionDimLinearBase::onMouseLeftButtonRelease(const int status, const LC_MouseEvent* e) {
     RS_Vector snap = e->snapPoint;
     switch (status) {
         case SetExtPoint1: {
             if (e->isControl) {
-                auto entity = catchAndDescribe(e, RS2::EntityLine, RS2::ResolveAll);
+                const auto entity = catchAndDescribe(e, RS2::EntityLine, RS2::ResolveAll);
                 if (isLine(entity)) {
                     setExtensionPoint1(entity->getStartpoint());
                     setExtensionPoint2(entity->getEndpoint());
@@ -180,12 +177,12 @@ void LC_ActionDimLinearBase::onMouseLeftButtonRelease(int status, LC_MouseEvent 
     }
 }
 
-void LC_ActionDimLinearBase::onMouseRightButtonRelease(int status, [[maybe_unused]] LC_MouseEvent *e) {
+void LC_ActionDimLinearBase::onMouseRightButtonRelease(const int status, [[maybe_unused]] const LC_MouseEvent* e) {
     deletePreview();
     initPrevious(status);
 }
 
-void LC_ActionDimLinearBase::onCoordinateEvent(int status, [[maybe_unused]] bool isZero, const RS_Vector &pos) {
+void LC_ActionDimLinearBase::onCoordinateEvent(const int status, [[maybe_unused]] bool isZero, const RS_Vector &pos) {
     switch (status) {
         case SetExtPoint1: {
             setExtensionPoint1(pos);
@@ -211,27 +208,28 @@ void LC_ActionDimLinearBase::onCoordinateEvent(int status, [[maybe_unused]] bool
     }
 }
 
-RS_Vector LC_ActionDimLinearBase::getAdjacentDimDimSnapPoint(const RS_Vector &ownDimPointToCheck, double snapRange){
+RS_Vector LC_ActionDimLinearBase::getAdjacentDimDimSnapPoint(const RS_Vector &ownDimPointToCheck, const double snapRange) const {
     auto result = RS_Vector(false);
-    auto dimCandidate = RS_Snapper::catchEntity(ownDimPointToCheck, dimEntityTypes, RS2::ResolveNone);
+    const auto dimCandidate = catchEntity(ownDimPointToCheck, DIM_ENTITY_TYPES, RS2::ResolveNone);
     if (dimCandidate != nullptr){
-        int rtti = dimCandidate->rtti();
+        const int rtti = dimCandidate->rtti();
         bool dimFound = true;
         RS_Vector candidateDim1;
         RS_Vector candidateDim2;
         switch (rtti){
             case RS2::EntityDimAligned:{
-                auto* startAligned = dynamic_cast<RS_DimAligned *>(dimCandidate);
+                const auto* startAligned = static_cast<RS_DimAligned *>(dimCandidate);
                 startAligned->getDimPoints(candidateDim1, candidateDim2);
                 break;
             }
             case RS2::EntityDimLinear: {
-                auto *startLin = dynamic_cast<RS_DimLinear *>(dimCandidate);
+                const auto *startLin = static_cast<RS_DimLinear *>(dimCandidate);
                 startLin->getDimPoints(candidateDim1, candidateDim2);
                 break;
             }
             default: {
                 dimFound = false;
+                break;
             }
         }
         if (dimFound){
@@ -294,22 +292,22 @@ RS_Vector LC_ActionDimLinearBase::adjustDefPointByAdjacentDims(const RS_Vector &
     return result;
 }
 
-RS_Vector LC_ActionDimLinearBase::adjustByAdjacentDim(RS_Vector mouse, bool forPreview, bool altDirection){
+RS_Vector LC_ActionDimLinearBase::adjustByAdjacentDim(const RS_Vector& mouse, const bool forPreview, const bool altDirection){
     return adjustDefPointByAdjacentDims(mouse, getExtensionPoint1(), getExtensionPoint2(), getDimAngle(altDirection), forPreview);
 }
 
 void LC_ActionDimLinearBase::updateMouseButtonHintForExtPoint2() {
-    updateMouseWidgetTRBack(tr("Specify second extension line origin"), MOD_SHIFT_ANGLE_SNAP);
+    updatePromptTRBack(tr("Specify second extension line origin"), MOD_SHIFT_ANGLE_SNAP);
 }
 
 void LC_ActionDimLinearBase::updateMouseButtonHintForDefPoint() {
-    updateMouseWidgetTRBack(tr("Specify dimension line location"), MOD_SHIFT_LC(tr("Snap to Adjacent Dim")));
+    updatePromptTRBack(tr("Specify dimension line location"), MOD_SHIFT_LC(tr("Snap to Adjacent Dim")));
 }
 
-void LC_ActionDimLinearBase::updateMouseButtonHints(){
+void LC_ActionDimLinearBase::updateActionPrompt(){
     switch (getStatus()) {
         case SetExtPoint1:
-            updateMouseWidgetTRCancel(tr("Specify first extension line origin"),MOD_SHIFT_AND_CTRL( MSG_REL_ZERO, "Select Line for origin points"));
+            updatePromptTRCancel(tr("Specify first extension line origin"),MOD_SHIFT_AND_CTRL( MSG_REL_ZERO, "Select Line for origin points"));
             break;
         case SetExtPoint2:
             updateMouseButtonHintForExtPoint2();
@@ -318,13 +316,13 @@ void LC_ActionDimLinearBase::updateMouseButtonHints(){
             updateMouseButtonHintForDefPoint();
             break;
         case SetText:
-            updateMouseWidget(tr("Enter dimension text:"));
+            updatePrompt(tr("Enter dimension text:"));
             break;
         case SetAngle:
-            updateMouseWidget(tr("Enter dimension line angle:"));
+            updatePrompt(tr("Enter dimension line angle:"));
             break;
         default:
-            updateMouseWidget();
+            updatePrompt();
             break;
     }
 }

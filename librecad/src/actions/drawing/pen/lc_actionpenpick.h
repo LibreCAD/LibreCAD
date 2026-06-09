@@ -29,28 +29,30 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * Action that picks the pen (resolved or not) from entity selected by the user
  * and applies it to pen toolbar
  */
-class LC_ActionPenPick:public RS_PreviewActionInterface {
-       Q_OBJECT
-public:
+class LC_ActionPenPick : public RS_PreviewActionInterface {
+    Q_OBJECT public:
     enum {
-          SelectEntity = InitialActionStatus
-     };
-    LC_ActionPenPick(LC_ActionContext *actionContext,bool resolve);
+        SelectEntity = InitialActionStatus
+    };
+
+    LC_ActionPenPick(LC_ActionContext* actionContext, bool resolve);
     void init(int status) override;
-    void finish(bool updateTB) override;
+    void finish() override;
+
 private:
     /**
      * flag that indicates whether pen from entity should be resolved
      */
     bool m_resolveMode;
-    void applyPenToPenToolBar(RS_Entity* entity);
+    void applyPenToPenToolBar(const RS_Entity* entity) const;
+
 protected:
     void doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) override;
     RS2::CursorType doGetMouseCursor(int status) override;
-    void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
-    void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
-    void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
-       void pickPen(RS_Entity* en);
-       void updateMouseButtonHints() override;
+    void onMouseLeftButtonRelease(int status, const LC_MouseEvent* e) override;
+    void onMouseRightButtonRelease(int status, const LC_MouseEvent* e) override;
+    void onMouseMoveEvent(int status, const LC_MouseEvent* e) override;
+    void pickPen(const RS_Entity* en);
+    void updateActionPrompt() override;
 };
-#endif // LC_ACTIONPENPICK_H
+#endif

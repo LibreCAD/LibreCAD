@@ -60,4 +60,4 @@ private:
     
 };
 
-#endif // PLOTDIALOG_H
+#endif

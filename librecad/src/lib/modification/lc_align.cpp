@@ -21,27 +21,29 @@
  ******************************************************************************/
 
 #include "lc_align.h"
+
 #include "rs_entity.h"
 #include "rs_pen.h"
 
-RS_Entity* LC_Align::createCloneMovedToOffset(const RS_Entity *e, const RS_Vector &offset, bool updateAttributes) {
-    RS_Entity *clone = e->clone();
+RS_Entity* LC_Align::createCloneMovedToOffset(const RS_Entity* e, const RS_Vector& offset, const bool updateAttributes) {
+    RS_Entity* clone = e->clone();
     clone->move(offset);
-    if (updateAttributes){
-        clone->setLayer(e->getLayer());
+    if (updateAttributes) {
+        clone->setLayer(e->getLayer(false));
         clone->setPen(e->getPen(false));
     }
     return clone;
 }
 
-RS_Entity *LC_Align::createCloneMovedToTarget(const RS_Entity *e, const RS_Vector &targetPoint, bool updateAttributes, int horizontalAlign, int verticalAlign) {
-    RS_Vector entityRefPoint = getReferencePoint(e->getMin(), e->getMax(), horizontalAlign, verticalAlign);
-    RS_Vector offset = targetPoint - entityRefPoint;
+RS_Entity* LC_Align::createCloneMovedToTarget(const RS_Entity* e, const RS_Vector& targetPoint, const bool updateAttributes,
+                                              const int horizontalAlign, const int verticalAlign) {
+    const RS_Vector entityRefPoint = getReferencePoint(e->getMin(), e->getMax(), horizontalAlign, verticalAlign);
+    const RS_Vector offset = targetPoint - entityRefPoint;
     RS_Entity* clone = createCloneMovedToOffset(e, offset, updateAttributes);
     return clone;
 }
 
-RS_Vector LC_Align::getReferencePoint(const RS_Vector &min, const RS_Vector &max, int horizontalAlign, int verticalAlign) {
+RS_Vector LC_Align::getReferencePoint(const RS_Vector& min, const RS_Vector& max, const int horizontalAlign, const int verticalAlign) {
     double x = 0;
     double y = 0;
 
@@ -76,10 +78,10 @@ RS_Vector LC_Align::getReferencePoint(const RS_Vector &min, const RS_Vector &max
     return RS_Vector(x, y);
 }
 
-void LC_Align::collectSelectionBounds( std::vector<RS_Entity*> selectedEntities, RS_Vector &boxMin, RS_Vector &boxMax) {
+void LC_Align::collectSelectionBounds(QList<RS_Entity*> selectedEntities, RS_Vector& boxMin, RS_Vector& boxMax) {
     RS_Vector minV;
     RS_Vector maxV;
-    for (auto e: selectedEntities) {
+    for (const auto e : selectedEntities) {
         minV = RS_Vector::minimum(e->getMin(), minV);
         maxV = RS_Vector::maximum(e->getMax(), maxV);
     }
@@ -87,18 +89,18 @@ void LC_Align::collectSelectionBounds( std::vector<RS_Entity*> selectedEntities,
     boxMax = maxV;
 }
 
-bool LC_Align::getVerticalRefCoordinate(const RS_Vector &min, const RS_Vector &max, int verticalAlign, double &refCoordinate) {
+bool LC_Align::getVerticalRefCoordinate(const RS_Vector& min, const RS_Vector& max, const int verticalAlign, double& refCoordinate) {
     bool hasRefPoint = true;
     switch (verticalAlign) {
-        case LC_Align::LEFT_TOP: {
+        case LEFT_TOP: {
             refCoordinate = min.x;
             break;
         }
-        case LC_Align::MIDDLE: {
+        case MIDDLE: {
             refCoordinate = (min.x + max.x) / 2.0;
             break;
         }
-        case LC_Align::RIGHT_BOTTOM: {
+        case RIGHT_BOTTOM: {
             refCoordinate = max.x;
             break;
         }
@@ -109,18 +111,18 @@ bool LC_Align::getVerticalRefCoordinate(const RS_Vector &min, const RS_Vector &m
     return hasRefPoint;
 }
 
-bool LC_Align::getHorizontalRefCoordinate(const RS_Vector &min, const RS_Vector &max, int verticalAlign, double &refCoordinate) {
+bool LC_Align::getHorizontalRefCoordinate(const RS_Vector& min, const RS_Vector& max, const int horizontalAlign, double& refCoordinate) {
     bool hasRefPoint = true;
-    switch (verticalAlign) {
-        case LC_Align::LEFT_TOP: {
+    switch (horizontalAlign) {
+        case LEFT_TOP: {
             refCoordinate = max.y;
             break;
         }
-        case LC_Align::MIDDLE: {
+        case MIDDLE: {
             refCoordinate = (min.y + max.y) / 2.0;
             break;
         }
-        case LC_Align::RIGHT_BOTTOM: {
+        case RIGHT_BOTTOM: {
             refCoordinate = min.y;
             break;
         }

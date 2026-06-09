@@ -33,44 +33,40 @@
 #include "rs_preview.h"
 
 // fixme - sand - action type is not set!!
-RS_ActionSnapIntersectionManual::RS_ActionSnapIntersectionManual(LC_ActionContext *actionContext)
-	:RS_PreviewActionInterface("Trim Entity", actionContext)
-	,m_entity1(nullptr)
-    ,m_entity2(nullptr)
-    ,m_coord(std::make_unique<RS_Vector>()){
+RS_ActionSnapIntersectionManual::RS_ActionSnapIntersectionManual(LC_ActionContext* actionContext)
+    : RS_PreviewActionInterface("Trim Entity", actionContext), m_coord(std::make_unique<RS_Vector>()) {
 }
 
-RS_ActionSnapIntersectionManual::~RS_ActionSnapIntersectionManual()=default;
+RS_ActionSnapIntersectionManual::~RS_ActionSnapIntersectionManual() = default;
 
-void RS_ActionSnapIntersectionManual::init(int status){
+void RS_ActionSnapIntersectionManual::init(const int status) {
     RS_ActionInterface::init(status);
     m_snapMode.clear();
 }
 
-void RS_ActionSnapIntersectionManual::trigger(){
+void RS_ActionSnapIntersectionManual::trigger() {
     RS_DEBUG->print("RS_ActionSnapIntersectionManual::trigger()");
 
-    if (isAtomic(m_entity2) && isAtomic(m_entity1)){
-        RS_VectorSolutions sol =
-            RS_Information::getIntersection(m_entity1, m_entity2, false);
+    if (isAtomic(m_entity2) && isAtomic(m_entity1)) {
+        const RS_VectorSolutions sol = RS_Information::getIntersection(m_entity1, m_entity2, false);
 
         m_entity2 = nullptr;
         m_entity1 = nullptr;
-        if (m_predecessor){
-            RS_Vector ip = sol.getClosest(*m_coord);
+        if (m_predecessor) {
+            const RS_Vector ip = sol.getClosest(*m_coord);
 
-            if (ip.valid){
+            if (ip.valid) {
                 RS_CoordinateEvent e(ip);
                 m_predecessor->coordinateEvent(&e);
             }
         }
-        finish(false);
+        finish();
     }
 }
 
-void RS_ActionSnapIntersectionManual::onMouseMoveEvent(int status, LC_MouseEvent *e) {
-    RS_Entity *se = catchEntityByEvent(e);
-    RS_Vector mouse = e->graphPoint;
+void RS_ActionSnapIntersectionManual::onMouseMoveEvent(const int status, const LC_MouseEvent* e) {
+    RS_Entity* se = catchEntityByEvent(e);
+    const RS_Vector mouse = e->graphPoint;
 
     switch (status) {
         case ChooseEntity1: {
@@ -81,23 +77,16 @@ void RS_ActionSnapIntersectionManual::onMouseMoveEvent(int status, LC_MouseEvent
             m_entity2 = se;
             *m_coord = mouse;
 
-            RS_VectorSolutions sol =
-                RS_Information::getIntersection(m_entity1, m_entity2, false);
-
-            //for (int i=0; i<sol.getNumber(); i++) {
-            //    ip = sol.get(i);
-            //    break;
-            //}
+            const RS_VectorSolutions sol = RS_Information::getIntersection(m_entity1, m_entity2, false);
 
             RS_Vector ip = sol.getClosest(*m_coord);
 
-            if (ip.valid){
+            if (ip.valid) {
                 deletePreview();
-                m_preview->addEntity(new RS_Circle(m_preview.get(),{ip, toGraphDX(4)}));
+                m_preview->addEntity(new RS_Circle(m_preview.get(), {ip, toGraphDX(4)}));
                 drawPreview();
 
                 updateCoordinateWidgetByRelZero(ip);
-
             }
             break;
         }
@@ -106,14 +95,14 @@ void RS_ActionSnapIntersectionManual::onMouseMoveEvent(int status, LC_MouseEvent
     }
 }
 
-void RS_ActionSnapIntersectionManual::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
-    RS_Vector mouse = e->graphPoint;
-    RS_Entity *se = catchEntityByEvent(e);
+void RS_ActionSnapIntersectionManual::onMouseLeftButtonRelease(const int status, const LC_MouseEvent* e) {
+    const RS_Vector mouse = e->graphPoint;
+    RS_Entity* se = catchEntityByEvent(e);
 
     switch (status) {
         case ChooseEntity1:
             m_entity1 = se;
-            if (isAtomic(m_entity1)){
+            if (isAtomic(m_entity1)) {
                 setStatus(ChooseEntity2);
             }
             break;
@@ -121,7 +110,7 @@ void RS_ActionSnapIntersectionManual::onMouseLeftButtonRelease(int status, LC_Mo
         case ChooseEntity2:
             m_entity2 = se;
             *m_coord = mouse;
-            if (isAtomic(m_entity2) && m_coord->valid){
+            if (isAtomic(m_entity2) && m_coord->valid) {
                 trigger();
             }
             break;
@@ -131,24 +120,25 @@ void RS_ActionSnapIntersectionManual::onMouseLeftButtonRelease(int status, LC_Mo
     }
 }
 
-void RS_ActionSnapIntersectionManual::onMouseRightButtonRelease(int status, [[maybe_unused]] LC_MouseEvent *e) {
+void RS_ActionSnapIntersectionManual::onMouseRightButtonRelease(const int status, [[maybe_unused]] const LC_MouseEvent* e) {
     deletePreview();
     initPrevious(status);
 }
 
-void RS_ActionSnapIntersectionManual::updateMouseButtonHints() {
+void RS_ActionSnapIntersectionManual::updateActionPrompt() {
     switch (getStatus()) {
         case ChooseEntity1:
-            updateMouseWidgetTRCancel(tr("Select first entity"));
+            updatePromptTRCancel(tr("Select first entity"));
             break;
         case ChooseEntity2:
-            updateMouseWidgetTRBack(tr("Select second entity"));
+            updatePromptTRBack(tr("Select second entity"));
             break;
         default:
-            updateMouseWidget();
+            updatePrompt();
             break;
     }
 }
-RS2::CursorType RS_ActionSnapIntersectionManual::doGetMouseCursor([[maybe_unused]] int status){
+
+RS2::CursorType RS_ActionSnapIntersectionManual::doGetMouseCursor([[maybe_unused]] int status) {
     return RS2::CadCursor;
 }

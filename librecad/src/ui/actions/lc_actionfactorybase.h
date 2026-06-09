@@ -36,7 +36,7 @@ class QG_ActionHandler;
 class LC_ActionFactoryBase : public QObject, public LC_AppWindowAware{
     Q_OBJECT
 public:
-    LC_ActionFactoryBase(QC_ApplicationWindow* parent, QG_ActionHandler* a_handler);
+    LC_ActionFactoryBase(QC_ApplicationWindow* parent, QG_ActionHandler* actionHandler);
 protected:
     struct ActionInfo{
         const char* key;
@@ -47,9 +47,9 @@ protected:
         void (QC_ApplicationWindow::*slotPtr)() = nullptr;
         void (QC_ApplicationWindow::*slotPtrBool)(bool) = nullptr;
 
-        ActionInfo(const char *key, const QString &text, const char *iconName):key(key), text(text), iconName(iconName) {}
+        ActionInfo(const char *key, const QString &text, const char *iconName):key(key), actionType{RS2::ActionNone}, text(text), iconName(iconName) {}
 
-        ActionInfo(const char *actionKey, RS2::ActionType actionType,const QString& text, const char *iconName = nullptr,
+        ActionInfo(const char *actionKey, const RS2::ActionType actionType,const QString& text, const char *iconName = nullptr,
              const char *themeIcon = nullptr)
             :key(actionKey),actionType(actionType),text(text),iconName(iconName), themeIconName(themeIcon){}
 
@@ -64,7 +64,7 @@ protected:
 
     struct ActionGroupInfo {
         ActionGroupInfo(const QString& name,  const QString& title, const QString& description,
-            const char* iconName, bool toolGroup = true)
+            const char* iconName, const bool toolGroup = true)
             : name{name},
               isToolGroup{toolGroup},
               title{title},
@@ -85,17 +85,17 @@ protected:
     QAction *createAction_AH(const char* name, RS2::ActionType actionType, const QString& text,
                              const char *iconName, const char *themeIconName,
                              QActionGroup *parent,
-                             QMap<QString, QAction *> &a_map) const;
+                             QMap<QString, QAction *> &actionsMap) const;
 
     void createActionHandlerActions(QMap<QString, QAction *> &map, QActionGroup *group, const std::vector<ActionInfo> &actionList) const;
     void createMainWindowActions( QMap<QString, QAction *> &map, QActionGroup *group, const std::vector<ActionInfo> &actionList, bool useToggled = false) const;
 
     QAction *createAction_MW(const char *name, void (QC_ApplicationWindow::*slotPtr)(), void (QC_ApplicationWindow::*slotBoolPtr)(bool),
         const QString& text, const char *iconName,  const char *themeIconName,  QActionGroup *parent,
-        QMap<QString, QAction *> &a_map, bool toggled = false) const;
+        QMap<QString, QAction *> &actionsMap, bool useToggled = false) const;
 
     void makeActionsShortcutsNonEditable(const QMap<QString, QAction *> &map, const std::vector<const char *> &actionNames);
-    QAction *justCreateAction(QMap<QString, QAction *> &a_map, const char *name, const QString& text, const char *iconName,
+    QAction *justCreateAction(QMap<QString, QAction *> &actionsMap, const char *name, const QString& text, const char *iconName,
                                  const char *themeIconName,QActionGroup *parent) const;
     void createActions(QMap<QString, QAction *> &map, QActionGroup *group, const std::vector<ActionInfo> &actionList) const;
     void addActionsToMainWindow(const QMap<QString, QAction *> &map) const;
@@ -103,4 +103,4 @@ protected:
     void fillActionsList(QList<QAction*>& list, const std::vector<const char*>& actionNames, const QMap<QString, QAction*>& map) const;
 };
 
-#endif // LC_ACTIONFACTORYBASE_H
+#endif

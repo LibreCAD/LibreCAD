@@ -35,13 +35,11 @@
  * @author Andrew Mustun
  */
 class RS_ActionBlocksEdit : public RS_ActionInterface {
-	Q_OBJECT
-public:
-    RS_ActionBlocksEdit(LC_ActionContext *actionContext);
+    Q_OBJECT public:
+    explicit RS_ActionBlocksEdit(LC_ActionContext* actionContext);
 
-	void init(int status) override;
-	void trigger() override;
-
+    void init(int status) override;
+    void trigger() override;
 };
 
 #endif

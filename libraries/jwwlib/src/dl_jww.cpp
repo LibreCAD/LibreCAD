@@ -670,7 +670,7 @@ void DL_Jww::CreateBlock(DL_CreationInterface* /*creationInterface*/, CDataBlock
 bool DL_Jww::in(const string& file, DL_CreationInterface* creationInterface) {
 	//JWWファイル読み取り
 	string ofile("");
-	JWWDocument* jwdoc = new JWWDocument((std::string&)file, ofile);
+	auto jwdoc = new JWWDocument((std::string&)file, ofile);
 	if(!jwdoc->Read())
 		return false;
 	//DXF変数設定
@@ -937,7 +937,7 @@ void DL_Jww::addAttrib(DL_CreationInterface* /*creationInterface*/) {
 /**
  * @return dimension data from current values.
  */
-DL_DimensionData DL_Jww::getDimData() {
+DL_DimensionData DL_Jww::getDimData() const {
     // tin-pot@gmx.net 2011-12-29: make compiler happy.
     DL_DimensionData dummy(0.,0.,0.,0.,0.,0.,0,0,0,0.,"DUMMY","",0.);
     return dummy;
@@ -995,7 +995,7 @@ void DL_Jww::addDimAngular3P(DL_CreationInterface* /*creationInterface*/) {
 /**
  * Adds a leader entity that was read from the file via the creation interface.
  */
-void DL_Jww::addLeader(DL_CreationInterface* /*creationInterface*/) {
+void DL_Jww::addLeader(DL_CreationInterface* /*creationInterface*/) const {
 }
 
 
@@ -1037,6 +1037,9 @@ void DL_Jww::endEntity(DL_CreationInterface* /*creationInterface*/) {
 void DL_Jww::endSequence(DL_CreationInterface* /*creationInterface*/) {
 }
 
+int DL_Jww::stringToInt(const char* s, bool* ok) {
+    return 0;
+}
 
 /**
  * @brief Opens the given file for writing and returns a pointer

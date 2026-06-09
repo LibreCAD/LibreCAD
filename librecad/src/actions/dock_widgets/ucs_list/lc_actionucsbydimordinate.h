@@ -1,6 +1,7 @@
 #ifndef LC_ACTIONUCSBYDIMORDINATE_H
 #define LC_ACTIONUCSBYDIMORDINATE_H
-#include "lc_actionsingleentityselectbase.h"
+
+#include "lc_action_select_single_entity_base.h"
 
 class LC_DimOrdinate;
 
@@ -15,4 +16,4 @@ protected:
     QString doGetMouseButtonHint() override;
 };
 
-#endif // LC_ACTIONUCSBYDIMORDINATE_H
+#endif

@@ -32,50 +32,50 @@ class LC_GraphicViewport;
 void LC_OverlayUCSZeroOptions::loadSettings(){
     LC_GROUP("Appearance");
     {
-        m_extendAxisLines = LC_GET_BOOL("ExtendAxisLines", false);
-        m_extendAxisModeX = LC_GET_INT("ExtendModeXAxis", 0);
-        m_extendAxisModeY = LC_GET_INT("ExtendModeYAxis", 0);
-        m_zeroShortAxisMarkSize = LC_GET_INT("ZeroShortAxisMarkSize", 20);
+        extendAxisLines = LC_GET_BOOL("ExtendAxisLines", false);
+        extendAxisModeX = LC_GET_INT("ExtendModeXAxis", 0);
+        extendAxisModeY = LC_GET_INT("ExtendModeYAxis", 0);
+        zeroShortAxisMarkSize = LC_GET_INT("ZeroShortAxisMarkSize", 20);
     }
     LC_GROUP_GUARD("Colors");
     {
-        m_colorXAxisExtension = QColor(LC_GET_STR("grid_x_axisColor", "red"));
-        m_colorYAxisExtension = QColor(LC_GET_STR("grid_y_axisColor", "green"));
+        colorXAxisExtension = RS_Color(LC_GET_STR("grid_x_axisColor", "red"));
+        colorYAxisExtension = RS_Color(LC_GET_STR("grid_y_axisColor", "green"));
     }
 }
 
-LC_OverlayUCSZero::LC_OverlayUCSZero(double uiOriginPointX, double uiOriginPointY, LC_OverlayUCSZeroOptions *options):uiOriginPointX(
-    uiOriginPointX), uiOriginPointY(uiOriginPointY), options{options} {}
+LC_OverlayUCSZero::LC_OverlayUCSZero(const double uiOriginPointX, const double uiOriginPointY, LC_OverlayUCSZeroOptions *options):m_uiOriginPointX(
+    uiOriginPointX), m_uiOriginPointY(uiOriginPointY), m_options{options} {}
 
-LC_OverlayUCSZero::LC_OverlayUCSZero(LC_OverlayUCSZeroOptions *options):uiOriginPointX(0), uiOriginPointY(0), options{options} {}
+LC_OverlayUCSZero::LC_OverlayUCSZero(LC_OverlayUCSZeroOptions *options): m_options{options} {}
 
 void LC_OverlayUCSZero::draw(RS_Painter *painter) {
     // draw absolute zero point and axies
-    int const zr = options->m_zeroShortAxisMarkSize;
+    const int zr = m_options->zeroShortAxisMarkSize;
 
-    RS_Pen pen_xAxis (options->m_colorXAxisExtension, RS2::Width00, RS2::SolidLine);
-    pen_xAxis.setScreenWidth(0);
+    RS_Pen penXAxis (m_options->colorXAxisExtension, RS2::Width00, RS2::SolidLine);
+    penXAxis.setScreenWidth(0);
 
-    RS_Pen pen_yAxis (options->m_colorYAxisExtension, RS2::Width00, RS2::SolidLine);
-    pen_yAxis.setScreenWidth(0);
+    RS_Pen penYAxis (m_options->colorYAxisExtension, RS2::Width00, RS2::SolidLine);
+    penYAxis.setScreenWidth(0);
 
-    auto viewport = painter->getViewPort();
+    auto* viewport = painter->getViewPort();
 
     int width = viewport->getWidth();
     int height = viewport->getHeight();
 
-    if (options->m_extendAxisLines){ // axises are extended
-        int xAxisStartPoint;
-        int xAxisEndPoint;
+    if (m_options->extendAxisLines){ // axises are extended
+        double xAxisStartPoint = 0.0;
+        double xAxisEndPoint = 0.0;
 
-        switch (options->m_extendAxisModeX){
+        switch (m_options->extendAxisModeX){
             case LC_OverlayUCSZeroOptions::Both:
                 xAxisStartPoint = 0;
                 xAxisEndPoint = width;
                 break;
             case LC_OverlayUCSZeroOptions::Positive:
-                xAxisStartPoint = uiOriginPointX;
-                if (uiOriginPointX < width){
+                xAxisStartPoint = m_uiOriginPointX;
+                if (m_uiOriginPointX < width){
                     xAxisEndPoint = width;
                 }
                 else{
@@ -83,8 +83,8 @@ void LC_OverlayUCSZero::draw(RS_Painter *painter) {
                 }
                 break;
             case LC_OverlayUCSZeroOptions::Negative:
-                xAxisStartPoint  = uiOriginPointX;
-                if (uiOriginPointX < width){
+                xAxisStartPoint  = m_uiOriginPointX;
+                if (m_uiOriginPointX < width){
                     xAxisEndPoint = 0;
                 }
                 else{
@@ -92,8 +92,8 @@ void LC_OverlayUCSZero::draw(RS_Painter *painter) {
                 }
                 break;
             case LC_OverlayUCSZeroOptions::None:{ // draw short
-                xAxisStartPoint  = uiOriginPointX - zr;
-                xAxisEndPoint = uiOriginPointX + zr;
+                xAxisStartPoint  = m_uiOriginPointX - zr;
+                xAxisEndPoint = m_uiOriginPointX + zr;
                 break;
             }
             default:
@@ -102,29 +102,28 @@ void LC_OverlayUCSZero::draw(RS_Painter *painter) {
                 break;
         }
 
-        painter->setPen(pen_xAxis);
-        painter->drawLineUISimple(xAxisStartPoint, uiOriginPointY, xAxisEndPoint, uiOriginPointY);
+        painter->setPen(penXAxis);
+        painter->drawLineUISimple(xAxisStartPoint, m_uiOriginPointY, xAxisEndPoint, m_uiOriginPointY);
 
         int yAxisStartPoint;
         int yAxisEndPoint;
-        switch (options->m_extendAxisModeY){
+        switch (m_options->extendAxisModeY){
             case LC_OverlayUCSZeroOptions::Both:
                 yAxisStartPoint  = 0;
                 yAxisEndPoint  = height;
                 break;
             case LC_OverlayUCSZeroOptions::Positive:
-                yAxisStartPoint = uiOriginPointY;
-                if (uiOriginPointY < height){
+                yAxisStartPoint = m_uiOriginPointY;
+                if (m_uiOriginPointY < height){
                     yAxisEndPoint = 0;
                 }
                 else{
-
                     yAxisEndPoint = height;
                 }
                 break;
             case LC_OverlayUCSZeroOptions::Negative:
-                yAxisStartPoint  = uiOriginPointY;
-                if (uiOriginPointY < height){
+                yAxisStartPoint  = m_uiOriginPointY;
+                if (m_uiOriginPointY < height){
                     yAxisEndPoint = height;
                 }
                 else{
@@ -132,8 +131,8 @@ void LC_OverlayUCSZero::draw(RS_Painter *painter) {
                 }
                 break;
             case LC_OverlayUCSZeroOptions::None:
-                yAxisStartPoint  = uiOriginPointY - zr;
-                yAxisEndPoint = uiOriginPointY + zr;
+                yAxisStartPoint  = m_uiOriginPointY - zr;
+                yAxisEndPoint = m_uiOriginPointY + zr;
                 break;
             default:
                 yAxisStartPoint = 0;
@@ -141,26 +140,29 @@ void LC_OverlayUCSZero::draw(RS_Painter *painter) {
                 break;
         }
 
-        painter->setPen(pen_yAxis);
-        painter->drawLineUISimple(uiOriginPointX, yAxisStartPoint, uiOriginPointX, yAxisEndPoint);
+        painter->setPen(penYAxis);
+        painter->drawLineUISimple(m_uiOriginPointX, yAxisStartPoint, m_uiOriginPointX, yAxisEndPoint);
     }
     else { // axises are short
         double xAxisPoints [2];
         double yAxisPoints [2];
 
-        if (((uiOriginPointX + zr) < 0) || ((uiOriginPointX - zr) > width)) return;
-        if (((uiOriginPointY + zr) < 0) || ((uiOriginPointY - zr) > height)) return;
-        xAxisPoints [0] = uiOriginPointX - zr;
-        xAxisPoints [1] = uiOriginPointX + zr;
+        if (((m_uiOriginPointX + zr) < 0) || ((m_uiOriginPointX - zr) > width)) {
+            return;
+        }
+        if (((m_uiOriginPointY + zr) < 0) || ((m_uiOriginPointY - zr) > height)) {
+            return;
+        }
+        xAxisPoints [0] = m_uiOriginPointX - zr;
+        xAxisPoints [1] = m_uiOriginPointX + zr;
 
-        yAxisPoints [0] = uiOriginPointY - zr;
-        yAxisPoints [1] = uiOriginPointY + zr;
+        yAxisPoints [0] = m_uiOriginPointY - zr;
+        yAxisPoints [1] = m_uiOriginPointY + zr;
 
-        painter->setPen(pen_xAxis);
-        painter->drawLineUISimple(xAxisPoints[0], uiOriginPointY,xAxisPoints[1], uiOriginPointY);
+        painter->setPen(penXAxis);
+        painter->drawLineUISimple(xAxisPoints[0], m_uiOriginPointY,xAxisPoints[1], m_uiOriginPointY);
 
-        painter->setPen(pen_yAxis);
-        painter->drawLine(uiOriginPointX, yAxisPoints[0], uiOriginPointX, yAxisPoints[1]);
+        painter->setPen(penYAxis);
+        painter->drawLine(m_uiOriginPointX, yAxisPoints[0], m_uiOriginPointX, yAxisPoints[1]);
     }
-
 }

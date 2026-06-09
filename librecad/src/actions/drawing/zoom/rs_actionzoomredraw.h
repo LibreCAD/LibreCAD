@@ -35,12 +35,15 @@
  * @author Andrew Mustun
  */
 class RS_ActionZoomRedraw : public RS_ActionInterface {
-	Q_OBJECT
+    Q_OBJECT
 public:
-    RS_ActionZoomRedraw(LC_ActionContext *actionContext);
-	void init(int status) override;
-	void trigger() override;
-    bool isSupportsPredecessorAction() override {return true;}
+    explicit RS_ActionZoomRedraw(LC_ActionContext* actionContext);
+    void init(int status) override;
+    void trigger() override;
+
+    bool isSupportsPredecessorAction() const override {
+        return true;
+    }
 };
 
 #endif

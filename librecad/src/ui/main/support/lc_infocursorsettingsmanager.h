@@ -1,5 +1,5 @@
 /*******************************************************************************
-*
+ *
  This file is part of the LibreCAD project, a 2D CAD program
 
  Copyright (C) 2025 LibreCAD.org
@@ -23,6 +23,7 @@
 #define LC_INFOCURSORSETTINGSMANAGER_H
 
 #include <QObject>
+
 #include "lc_appwindowaware.h"
 
 class LC_InfoCursorSettingsManager: public QObject, public LC_AppWindowAware{
@@ -38,4 +39,4 @@ signals:
      void showInfoCursorSettingChanged(bool enabled);
 };
 
-#endif // LC_INFOCURSORSETTINGSMANAGER_H
+#endif

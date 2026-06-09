@@ -41,7 +41,7 @@ void RS_ActionBlocksEdit::trigger() {
         RS_DEBUG->print(RS_Debug::D_ERROR, "RS_ActionBlocksEdit::trigger(): nullptr graphic");
         return;
     }
-    RS_BlockList *blockList = m_graphic->getBlockList();
+    const RS_BlockList *blockList = m_graphic->getBlockList();
     if (blockList == nullptr) {
         RS_DEBUG->print(RS_Debug::D_ERROR, "RS_ActionBlocksEdit::trigger(): nullptr block list in graphic");
         return;
@@ -49,14 +49,14 @@ void RS_ActionBlocksEdit::trigger() {
 
 //  std::cout<<__func__<<" : "<<__LINE__<<" : graphic->getBlockList()->count()="<<graphic->getBlockList()->count()<<std::endl;
 
-    auto& appWindow = QC_ApplicationWindow::getAppWindow();
+    const auto& appWindow = QC_ApplicationWindow::getAppWindow();
     appWindow->slotEditActiveBlock();
 
-    finish(false);
+    finish();
     RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_ActionBlocksEdit::trigger(): OK");
 }
 
-void RS_ActionBlocksEdit::init(int status) {
+void RS_ActionBlocksEdit::init(const int status) {
     RS_ActionInterface::init(status);
     trigger();
 }

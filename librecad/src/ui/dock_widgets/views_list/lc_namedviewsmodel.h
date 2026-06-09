@@ -25,7 +25,8 @@
 
 #include <QAbstractTableModel>
 #include <QIcon>
-#include "rs.h"
+
+#include "lc_formatter.h"
 
 class LC_View;
 class LC_ViewList;
@@ -38,7 +39,7 @@ class LC_NamedViewsModel:public QAbstractTableModel {
 public:
     explicit LC_NamedViewsModel(LC_NamedViewsListOptions *modelOptions, QObject * parent = nullptr);
     ~LC_NamedViewsModel() override;
-    void setViewsList(LC_ViewList *viewsList,RS2::LinearFormat format, RS2::AngleFormat angleFormat,int precision, int anglePrec, RS2::Unit drawingUnit);
+    void setViewsList(LC_ViewList *viewsList,LC_Formatter* formatter);
     QModelIndex parent(const QModelIndex &child) const override;
     int rowCount(const QModelIndex &parent) const override;
     int columnCount(const QModelIndex &parent) const override;
@@ -47,14 +48,14 @@ public:
     LC_View *getItemForIndex(const QModelIndex &index) const;
     int translateColumn(int column) const;
     void fillViewsList(QList<LC_View *> &list) const;
-    QIcon getTypeIcon(LC_View *view) const;
+    QIcon getTypeIcon(const LC_View *view) const;
     QIcon getUCSTypeIcon(const LC_View *view) const;
     QIcon getGridTypeIcon(const LC_View *view) const;
     QModelIndex getIndexForView(const LC_View* view) const;
     void updateViewsUCSNames(LC_UCSList *ucsList);
 
     void clear();
-    int count(){
+    int count() const {
         return m_views.count();
     }
     /**
@@ -83,11 +84,7 @@ protected:
         QString displayName;
     };
 
-    RS2::AngleFormat m_angleFormat;
-    RS2::LinearFormat m_linearFormat;
-    int m_prec;
-    int m_anglePrec;
-    RS2::Unit m_unit;
+    LC_Formatter* m_formatter {nullptr};
     LC_ViewList* m_viewsList {nullptr};
     QList<ViewItem*> m_views;
     QIcon m_iconViewPaperSpace;
@@ -99,10 +96,10 @@ protected:
     QIcon m_iconGridISOLeft;
     QIcon m_iconGridISORight;
     LC_NamedViewsListOptions* m_options {nullptr};
-    QString getUCSInfo(LC_UCS *ucs) const;
+    QString getUCSInfo(const LC_UCS *ucs) const;
     QString getGridViewType(int orthoType);
     ViewItem* createViewItem(LC_View *view);
-    void setupViewItem(LC_View *view, LC_NamedViewsModel::ViewItem *result);
+    void setupViewItem(LC_View *view, ViewItem *result);
 };
 
-#endif // LC_NAMEDVIEWSMODEL_H
+#endif

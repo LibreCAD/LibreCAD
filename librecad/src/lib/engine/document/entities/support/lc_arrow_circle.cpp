@@ -25,10 +25,9 @@
 
 #include "rs_painter.h"
 
-LC_ArrowCircle::LC_ArrowCircle(RS_EntityContainer* container, const RS_Vector& point, double dirAngle, double size, CircleArrowSubtype subType):
-   LC_DimArrowPoly(container, point, dirAngle, size),
-   m_subType{subType}{
-   createVertexes(size);
+LC_ArrowCircle::LC_ArrowCircle(RS_EntityContainer* container, const RS_Vector& point, const double dirAngle, const double size,
+                               const CircleArrowSubtype subType) : LC_DimArrowPoly(container, point, dirAngle, size), m_subType{subType} {
+    createVertexes(size);
 }
 
 RS_Entity* LC_ArrowCircle::clone() const {
@@ -36,45 +35,45 @@ RS_Entity* LC_ArrowCircle::clone() const {
 }
 
 void LC_ArrowCircle::draw(RS_Painter* painter) {
-    double arrowSize = getArrowSize();
+    const double arrowSize = getArrowSize();
 
-    painter->drawCircleWCS(vertexAt(2), arrowSize*0.5);
+    painter->drawCircleWCS(vertexAt(2), arrowSize * 0.5);
 
     switch (m_subType) {
-        case (dot): {
-            painter->drawFilledCircleWCS(vertexAt(2), arrowSize*0.5);
+        case DOT: {
+            painter->drawFilledCircleWCS(vertexAt(2), arrowSize * 0.5);
             painter->drawLineWCS(vertexAt(0), vertexAt(1));
             break;
         }
-        case dot_blank: {
+        case DOT_BLANK: {
             painter->drawLineWCS(vertexAt(0), vertexAt(1));
             break;
         }
-        case origin_indicator: {
+        case ORIGIN_INDICATOR: {
             // do nothing
             painter->drawLineWCS(vertexAt(0), vertexAt(2));
             break;
         }
-        case origin_indicator2:{
+        case ORIGIN_INDICATOR2: {
             painter->drawLineWCS(vertexAt(0), vertexAt(1));
-            painter->drawCircleWCS(vertexAt(2), arrowSize*0.25);
+            painter->drawCircleWCS(vertexAt(2), arrowSize * 0.25);
             break;
         }
     }
 }
 
-void LC_ArrowCircle::createVertexes(double size) {
+void LC_ArrowCircle::createVertexes(const double size) {
     initVertexes(6);
 
     double halfSize = size / 2.0;
 
-    setVertex(0, {-size,0}); // dimline end
-    setVertex(1, {-halfSize,0}); // connection line
-    setVertex(2, {0,0}); // center
+    setVertex(0, {-size, 0}); // dimline end
+    setVertex(1, {-halfSize, 0}); // connection line
+    setVertex(2, {0, 0}); // center
     // just boundary points used for nearest point only
-    setVertex(3, {0,halfSize});
-    setVertex(4, {0,-halfSize});
-    setVertex(5, {halfSize,0});
+    setVertex(3, {0, halfSize});
+    setVertex(4, {0, -halfSize});
+    setVertex(5, {halfSize, 0});
 
     positionFromZero();
     calculateBorders();

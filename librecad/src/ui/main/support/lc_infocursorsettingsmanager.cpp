@@ -1,5 +1,5 @@
 /*******************************************************************************
-*
+ *
  This file is part of the LibreCAD project, a 2D CAD program
 
  Copyright (C) 2025 LibreCAD.org
@@ -22,20 +22,18 @@
 
 #include "lc_infocursorsettingsmanager.h"
 
-#include <QAction>
-
 #include "qc_applicationwindow.h"
 #include "qc_mdiwindow.h"
 #include "qg_graphicview.h"
 #include "rs_settings.h"
 
-void LC_InfoCursorSettingsManager::slotInfoCursorSetting(bool toggle) {
+void LC_InfoCursorSettingsManager::slotInfoCursorSetting(const bool toggle) {
     auto* action = qobject_cast<QAction*>(sender());
     if (action != nullptr) {
-        QVariant tag = action->property("InfoCursorActionTag");
+        const QVariant tag = action->property("InfoCursorActionTag");
         if (tag.isValid()) {
-            bool ok;
-            int tagValue = tag.toInt(&ok);
+            bool ok = false;
+            const int tagValue = tag.toInt(&ok);
             if (ok) {
                 bool doUpdate = true;
                 switch (tagValue) {
@@ -64,6 +62,10 @@ void LC_InfoCursorSettingsManager::slotInfoCursorSetting(bool toggle) {
                         LC_SET_ONE("InfoOverlayCursor", "ShowPropertiesCatched", toggle);
                         break;
                     }
+                    case 6: {
+                        action->trigger();
+                        break;
+                    }
                     default:
                         doUpdate = false;
                         break;
@@ -85,7 +87,7 @@ void LC_InfoCursorSettingsManager::slotInfoCursorSetting(bool toggle) {
 void LC_InfoCursorSettingsManager::loadFromSettings() const {
     LC_GROUP("InfoOverlayCursor");
     {
-        bool infoCursorEnabled = LC_GET_BOOL("Enabled", true);
+        const bool infoCursorEnabled = LC_GET_BOOL("Enabled", true);
         QAction *action = m_appWin->getAction("EntityDescriptionInfo");
         if (action != nullptr) {
             action->setVisible(infoCursorEnabled);

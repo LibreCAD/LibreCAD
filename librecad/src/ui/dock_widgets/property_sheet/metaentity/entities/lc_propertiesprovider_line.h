@@ -1,0 +1,44 @@
+/*
+ * ********************************************************************************
+ * This file is part of the LibreCAD project, a 2D CAD program
+ *
+ * Copyright (C) 2025 LibreCAD.org
+ * Copyright (C) 2025 sand1024
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ * ********************************************************************************
+ */
+
+#ifndef LC_PROPERTIESPROVIDERLINE_H
+#define LC_PROPERTIESPROVIDERLINE_H
+
+#include "lc_entity_type_propertiesprovider.h"
+
+class LC_PropertiesProviderLine : public LC_EntityTypePropertiesProvider {
+    Q_OBJECT
+
+public:
+    LC_PropertiesProviderLine(LC_ActionContext* actionContext, LC_PropertySheetWidget* widget)
+        : LC_EntityTypePropertiesProvider(RS2::EntityLine, actionContext, widget) {
+    }
+
+protected:
+    void doCreateEntitySpecificProperties(LC_PropertyContainer* cont, const QList<RS_Entity*>& list) override;
+    void doCreateCalculatedProperties(LC_PropertyContainer* cont, const QList<RS_Entity*>& list) override;
+    void doCreateSingleEntityCommands(LC_PropertyContainer* container, RS_Entity* entity) override;
+    void doCreateSelectedSetCommands(LC_PropertyContainer* propertyContainer, const QList<RS_Entity*>& list) override;
+};
+
+#endif

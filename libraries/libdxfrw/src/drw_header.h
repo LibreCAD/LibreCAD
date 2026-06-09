@@ -116,6 +116,8 @@ public:
     duint32 getHandSeed() const { return handSeed; }
     void    setHandSeed(duint32 h) { handSeed = h; }
 
+    static int measurement(const int unit);
+
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader);
     bool parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer *hBbuf, duint8 mv=0);
@@ -165,10 +167,7 @@ private:
     /// file.
     duint32 handSeed {0};
 
-    int measurement(const int unit);
+
 };
 
 #endif
-
-// EOF
-

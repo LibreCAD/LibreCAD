@@ -29,7 +29,7 @@
 class RS_Ellipse;
 
 #include "ui_qg_dlgellipse.h"
-#include "../dialogs/entity/lc_entitypropertiesdlg.h"
+#include "lc_entitypropertiesdlg.h"
 
 class QG_DlgEllipse : public LC_EntityPropertiesDlg, public Ui::QG_DlgEllipse{
     Q_OBJECT
@@ -44,4 +44,4 @@ protected:
     void setEntity(RS_Ellipse *e);
 };
 
-#endif // QG_DLGELLIPSE_H
+#endif

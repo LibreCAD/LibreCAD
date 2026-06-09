@@ -21,6 +21,7 @@
  * *********************************************************************
  */
 #include "qg_dlgimageoptions.h"
+
 #include "rs_math.h"
 #include "rs_settings.h"
 
@@ -110,7 +111,7 @@ void QG_ImageOptionsDialog::ok() {
     accept();
 }
 
-void QG_ImageOptionsDialog::sameBordersChanged() {
+void QG_ImageOptionsDialog::sameBordersChanged() const {
     if(cbSameBorders->isChecked()) {
         leTopBottom->setText(leLeftRight->text());
         leTopBottom->setDisabled(true);
@@ -120,7 +121,7 @@ void QG_ImageOptionsDialog::sameBordersChanged() {
     }
 }
 
-void QG_ImageOptionsDialog::borderChanged() {
+void QG_ImageOptionsDialog::borderChanged() const {
     if(cbSameBorders->isChecked()) {
         leTopBottom->setText(leLeftRight->text());
     }
@@ -143,8 +144,8 @@ void  QG_ImageOptionsDialog::resolutionChanged() {
         if (!ok) {
             res = 1.0;
         }
-        int w = RS_Math::round(res * m_graphicSize.x);
-        int h = RS_Math::round(res * m_graphicSize.y);
+        const int w = RS_Math::round(res * m_graphicSize.x);
+        const int h = RS_Math::round(res * m_graphicSize.y);
         m_useResolution = true;
         leWidth->setText(QString("%1").arg(w));
         leHeight->setText(QString("%1").arg(h));
@@ -152,20 +153,20 @@ void  QG_ImageOptionsDialog::resolutionChanged() {
     }
 }
 
-QSize QG_ImageOptionsDialog::getSize() {
+QSize QG_ImageOptionsDialog::getSize() const {
     return QSize(RS_Math::round(RS_Math::eval(leWidth->text())),
                     RS_Math::round(RS_Math::eval(leHeight->text())));
 }
 
-QSize QG_ImageOptionsDialog::getBorders() {
+QSize QG_ImageOptionsDialog::getBorders() const {
     return QSize(RS_Math::round(RS_Math::eval(leLeftRight->text())),
                    RS_Math::round(RS_Math::eval(leTopBottom->text())));
 }
 
-bool QG_ImageOptionsDialog::isBackgroundBlack() {
+bool QG_ImageOptionsDialog::isBackgroundBlack() const {
     return rbBlack->isChecked();
 }
 
-bool QG_ImageOptionsDialog::isBlackWhite() {
+bool QG_ImageOptionsDialog::isBlackWhite() const {
     return rbBlackWhite->isChecked();
 }

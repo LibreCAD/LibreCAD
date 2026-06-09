@@ -33,20 +33,20 @@ class LC_ModifiersInfo;
 class QG_MouseWidget : public QWidget, public Ui::QG_MouseWidget{
     Q_OBJECT
 public:
-    QG_MouseWidget(QWidget* parent = nullptr, const char* name = nullptr, Qt::WindowFlags fl = {});
+    explicit QG_MouseWidget(QWidget* parent = nullptr, const char* name = nullptr, Qt::WindowFlags fl = {});
     ~QG_MouseWidget() override;
 
-    void updatePixmap(QString iconName, QLabel *label);
+    void updatePixmap(const QString& iconName, QLabel *label);
     void setHelp( const QString & left, const QString & right, const LC_ModifiersInfo& modifiersInfo) const;
-    void setActionIcon(QIcon icon);
-    void clearActionIcon();
+    void setActionIcon(const QIcon& icon) const;
+    void clearActionIcon() const;
 public slots:
     void languageChange();
     void setupModifier(QLabel *btn, const QString& helpMsg) const;
     void onIconsRefreshed();
-    void setCurrentQAction(QAction *a);
+    void setCurrentQAction(const QAction *a);
 protected:
-    int iconSize = 24;
+    int m_iconSize = 24; // fixme - sand - optional?
 };
 
-#endif // QG_MOUSEWIDGET_H
+#endif

@@ -24,20 +24,43 @@
 
 #include "lc_linemath.h"
 
-LC_AbstractActionDrawLine::LC_AbstractActionDrawLine(const char* name, LC_ActionContext *actionContext, RS2::ActionType actionType)
-     :LC_AbstractActionWithPreview(name, actionContext, actionType){
+LC_AbstractActionDrawLine::LC_AbstractActionDrawLine(const char* name, LC_ActionContext* actionContext, const RS2::ActionType actionType)
+    : LC_AbstractActionWithPreview(name, actionContext, actionType) {
 }
 
-LC_AbstractActionDrawLine::~LC_AbstractActionDrawLine()= default;
+LC_AbstractActionDrawLine::~LC_AbstractActionDrawLine() = default;
+
+void LC_AbstractActionDrawLine::setDirection(int dir) {
+    switch (dir) {
+        case DIRECTION_X: {
+            setSetXDirectionState();
+            break;
+        }
+        case DIRECTION_Y: {
+            setSetYDirectionState();
+            break;
+        }
+        case DIRECTION_POINT: {
+            setSetPointDirectionState();
+            break;
+        }
+        case DIRECTION_ANGLE: {
+            setSetAngleDirectionState();
+            break;
+        }
+        default:
+            break;
+    }
+}
 
 /**
  * Setting new line start point. Checks whether we're in state that allows to set new start point and changes the action state.
  */
-void LC_AbstractActionDrawLine::setNewStartPointState(){
-    if (mayStart()){
+void LC_AbstractActionDrawLine::setNewStartPointState() {
+    if (mayStart()) {
         setStatus(SetStartPoint);
     }
-    else{
+    else {
         commandMessage(tr("Start point may set in distance or point state only"));
     }
 }
@@ -46,14 +69,15 @@ void LC_AbstractActionDrawLine::setNewStartPointState(){
  * Extension point that controls whether we may start new line with new start point
  * @return true if setting new start point is allowed
  */
-bool LC_AbstractActionDrawLine::mayStart(){
+bool LC_AbstractActionDrawLine::mayStart() {
     return true;
 }
+
 /**
  * We may pre-snap to relative zero if we're in SetStartPoint state
  * @return
  */
-int LC_AbstractActionDrawLine::doGetStatusForInitialSnapToRelativeZero(){
+int LC_AbstractActionDrawLine::doGetStatusForInitialSnapToRelativeZero() {
     return SetStartPoint;
 }
 
@@ -61,7 +85,7 @@ int LC_AbstractActionDrawLine::doGetStatusForInitialSnapToRelativeZero(){
  * Do pre-snap to relative zero
  * @param relZero
  */
-void LC_AbstractActionDrawLine::doInitialSnapToRelativeZero(RS_Vector relZero){
+void LC_AbstractActionDrawLine::doInitialSnapToRelativeZero(const RS_Vector& relZero) {
     doSetStartPoint(relZero);
 }
 
@@ -70,9 +94,9 @@ void LC_AbstractActionDrawLine::doInitialSnapToRelativeZero(RS_Vector relZero){
  * @param e event
  * @return point for snap
  */
-RS_Vector LC_AbstractActionDrawLine::doGetMouseSnapPoint(LC_MouseEvent *e){
+RS_Vector LC_AbstractActionDrawLine::doGetMouseSnapPoint(const LC_MouseEvent* e) {
     RS_Vector snapped = e->snapPoint;
-    if (m_direction == DIRECTION_POINT || m_direction == DIRECTION_NONE){
+    if (m_direction == DIRECTION_POINT || m_direction == DIRECTION_NONE) {
         // Snapping to angle(15*) if shift key is pressed
         snapped = getSnapAngleAwarePoint(e, getStartPointForAngleSnap(), snapped, isMouseMove(e));
     }
@@ -85,42 +109,45 @@ RS_Vector LC_AbstractActionDrawLine::doGetMouseSnapPoint(LC_MouseEvent *e){
  * @param status
  * @return
  */
-bool LC_AbstractActionDrawLine::doCheckMayDrawPreview([[maybe_unused]]LC_MouseEvent *pEvent, [[maybe_unused]]int status){
+bool LC_AbstractActionDrawLine::doCheckMayDrawPreview([[maybe_unused]] const LC_MouseEvent* pEvent, [[maybe_unused]] int status) {
     return isStartPointValid();
 }
 
 /**
  * Common line-related commands processing
- * @param e
+ * @param status
  * @param c
  * @return
  */
-bool LC_AbstractActionDrawLine::doProcessCommand(int status, const QString &c){
+bool LC_AbstractActionDrawLine::doProcessCommand(const int status, const QString& c) {
     bool accept = true;
-    bool allowDirectionCommands = isAllowDirectionCommands();
+    const bool allowDirectionCommands = isAllowDirectionCommands();
     // line by X coordinate
-    if (checkCommand("x", c) && allowDirectionCommands){
-       setSetXDirectionState();
+    if (checkCommand("x", c) && allowDirectionCommands) {
+        setSetXDirectionState();
     }
     // line by Y coordinate
-    else if (checkCommand("y", c) && allowDirectionCommands){
-       setSetYDirectionState();
+    else if (checkCommand("y", c) && allowDirectionCommands) {
+        setSetYDirectionState();
     }
     // line to arbitrary point
-    else if (checkCommand("p", c) && allowDirectionCommands){
-       setSetPointDirectionState();
+    else if (checkCommand("p", c) && allowDirectionCommands) {
+        setSetPointDirectionState();
     }
     // line to angle
-    else if (checkCommand("angle", c) && allowDirectionCommands){
+    else if (checkCommand("angle", c) && allowDirectionCommands) {
         setSetAngleState(false);
+        updateOptions();
     }
-    else if (doProceedCommand(status, c)){ // delegate other commands to inherited actions
-       // intentionally does nothing, processing is withing method call
+    else if (doProceedCommand(status, c)) {
+        // delegate other commands to inherited actions
+        // intentionally does nothing, processing is withing method call
     }
-    else if (doProcessCommandValue(status, c)){ // if we're here, it means that this is some input value - delegate it to inherited action
+    else if (doProcessCommandValue(status, c)) {
+        // if we're here, it means that this is some input value - delegate it to inherited action
         // intentionally does nothing
     }
-    else{
+    else {
         accept = false;
     }
     return accept;
@@ -128,21 +155,21 @@ bool LC_AbstractActionDrawLine::doProcessCommand(int status, const QString &c){
 
 /**
  * Extension points for inherited actions for processing specific commands
- * @param e event
+ * @param status
  * @param c command string
  * @return true if command is processed, false if not and further processing is needed (or command invalid)
  */
-bool LC_AbstractActionDrawLine::doProceedCommand([[maybe_unused]]int status, [[maybe_unused]]const QString &c){
+bool LC_AbstractActionDrawLine::doProceedCommand([[maybe_unused]] int status, [[maybe_unused]] const QString& c) {
     return false;
 }
 
 /**
  * Extension point for inherited actions for processing of some values (like length or so).
- * @param e event
+ * @param status
  * @param c command input
  * @return true if value is processed, false if value in not processed (invalid input or so)
  */
-bool LC_AbstractActionDrawLine::doProcessCommandValue([[maybe_unused]]int status, [[maybe_unused]]const QString &c){
+bool LC_AbstractActionDrawLine::doProcessCommandValue([[maybe_unused]] int status, [[maybe_unused]] const QString& c) {
     return false;
 }
 
@@ -150,98 +177,91 @@ bool LC_AbstractActionDrawLine::doProcessCommandValue([[maybe_unused]]int status
  * Utility method for setting mode that angle is invalid
  * @param value
  */
-void LC_AbstractActionDrawLine::setAngleIsRelative(bool value){
+void LC_AbstractActionDrawLine::setAngleIsRelative(const bool value) {
     m_angleIsRelative = value;
-    updateOptions();
 }
 
 /**
  * Return whether specified angle is relative
  * @return
  */
-bool LC_AbstractActionDrawLine::isAngleRelative() const{
+bool LC_AbstractActionDrawLine::isAngleRelative() const {
     return m_angleIsRelative;
 }
 
 /**
  * Sets action drawing state to drawing with angle mode
  */
-void LC_AbstractActionDrawLine::setSetAngleDirectionState(){
+void LC_AbstractActionDrawLine::setSetAngleDirectionState() {
     m_direction = DIRECTION_ANGLE;
     setStatusForValidStartPoint(SetAngle);
-    updateOptions();
 }
 
 /**
 * Sets action drawing state to drawing to point mode
 */
-void LC_AbstractActionDrawLine::setSetPointDirectionState(){
+void LC_AbstractActionDrawLine::setSetPointDirectionState() {
     m_direction = DIRECTION_POINT;
     setStatusForValidStartPoint(SetPoint);
-    updateOptions();
 }
 
 /**
  * Set relative angle drawing mode
  * @param relative
  */
-void LC_AbstractActionDrawLine::setSetAngleState(bool relative){
+void LC_AbstractActionDrawLine::setSetAngleState(const bool relative) {
     m_direction = DIRECTION_ANGLE;
     m_angleIsRelative = relative;
     setStatusForValidStartPoint(SetAngle);
-    updateOptions();
 }
 
 /**
  * Sets drawing mode to X state
  */
-void LC_AbstractActionDrawLine::setSetXDirectionState(){
+void LC_AbstractActionDrawLine::setSetXDirectionState() {
     m_direction = DIRECTION_X;
     setStatusForValidStartPoint(SetDistance);
-    updateOptions();
 }
 
 /**
  * Sets drawing mode to Y state
  */
-void LC_AbstractActionDrawLine::setSetYDirectionState(){
+void LC_AbstractActionDrawLine::setSetYDirectionState() {
     m_direction = DIRECTION_Y;
     setStatusForValidStartPoint(SetDistance);
-    updateOptions();
 }
 
 /**
  * Sets angle value and switch to SetDistance state
  */
-void LC_AbstractActionDrawLine::setAngleValueDegrees(double value){
+void LC_AbstractActionDrawLine::setAngleValueDegrees(const double value) {
     doSetAngleDegrees(value);
-    if (getStatus() == SetAngle){
+    if (getStatus() == SetAngle) {
         setStatusForValidStartPoint(SetDistance);
     }
-    updateOptions();
 }
 
-void LC_AbstractActionDrawLine::doSetAngleDegrees(double value) {
+void LC_AbstractActionDrawLine::doSetAngleDegrees(const double value) {
     m_angleDegrees = value;
 }
 
-void LC_AbstractActionDrawLine::setStatusForValidStartPoint(int newStatus){
-    if (isStartPointValid()){
+void LC_AbstractActionDrawLine::setStatusForValidStartPoint(const int newStatus) {
+    if (isStartPointValid()) {
         setStatus(newStatus);
     }
-    else{
+    else {
         setStatus(SetStartPoint);
     }
 }
 
-double LC_AbstractActionDrawLine::getAngleDegrees() const{
+double LC_AbstractActionDrawLine::getAngleDegrees() const {
     return m_angleDegrees;
 }
 
-bool LC_AbstractActionDrawLine::processAngleValueInput(const QString &c){
+bool LC_AbstractActionDrawLine::processAngleValueInput(const QString& c) {
     bool ok = false;
     double value = RS_Math::eval(c, &ok);
-    if (ok){
+    if (ok) {
         value = LC_LineMath::getMeaningfulAngle(value);
         setAngleValueDegrees(value);
         // ask for distance after angle entering
@@ -250,11 +270,12 @@ bool LC_AbstractActionDrawLine::processAngleValueInput(const QString &c){
     return ok;
 }
 
-void LC_AbstractActionDrawLine::doOnLeftMouseButtonRelease([[maybe_unused]]LC_MouseEvent *e, int status, const RS_Vector &snapped){
-    onCoordinateEvent(status,  false, snapped);
+void LC_AbstractActionDrawLine::doOnLeftMouseButtonRelease([[maybe_unused]] const LC_MouseEvent* e, const int status,
+                                                           const RS_Vector& snapped) {
+    onCoordinateEvent(status, false, snapped);
 }
 
-bool LC_AbstractActionDrawLine::isStartPointValid() const{
+bool LC_AbstractActionDrawLine::isStartPointValid() const {
     return false;
 }
 

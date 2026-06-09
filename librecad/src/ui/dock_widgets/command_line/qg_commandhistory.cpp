@@ -20,7 +20,7 @@
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **
 **********************************************************************************
-*/
+ */
 #include "qg_commandhistory.h"
 
 #include <QMouseEvent>
@@ -29,19 +29,19 @@ QG_CommandHistory::QG_CommandHistory(QWidget* parent) :
     QTextEdit(parent){
     setContextMenuPolicy(Qt::ActionsContextMenu);
 
-    m_pCopy = new QAction(tr("&Copy"), this);
-    connect(m_pCopy, &QAction::triggered, this, &QG_CommandHistory::copy);
-    addAction(m_pCopy);
-    m_pCopy->setVisible(false);
+    m_actionCopy = new QAction(tr("&Copy"), this);
+    connect(m_actionCopy, &QAction::triggered, this, &QG_CommandHistory::copy);
+    addAction(m_actionCopy);
+    m_actionCopy->setVisible(false);
     //only show "copy" menu item when there's available selection to copy
-    connect(this, &QG_CommandHistory::copyAvailable, m_pCopy, &QAction::setVisible);
+    connect(this, &QG_CommandHistory::copyAvailable, m_actionCopy, &QAction::setVisible);
 
-    m_pSelectAll = new QAction(tr("Select &All"), this);
-    connect(m_pSelectAll, &QAction::triggered, this, &QG_CommandHistory::selectAll);
-    addAction(m_pSelectAll);
+    m_actionSelectAll = new QAction(tr("Select &All"), this);
+    connect(m_actionSelectAll, &QAction::triggered, this, &QG_CommandHistory::selectAll);
+    addAction(m_actionSelectAll);
     connect(this, &QG_CommandHistory::textChanged, this, &QG_CommandHistory::slotTextChanged);
 
-    QAction* clear = new QAction(tr("Clear"), this);
+    const auto clear = new QAction(tr("Clear"), this);
     connect(clear, &QAction::triggered, this, &QG_CommandHistory::clear);
     addAction(clear);
 
@@ -52,12 +52,12 @@ QG_CommandHistory::QG_CommandHistory(QWidget* parent) :
 
 void QG_CommandHistory::mouseReleaseEvent(QMouseEvent* event){
     QTextEdit::mouseReleaseEvent(event);
-    if (event->button() == Qt::LeftButton && m_pCopy->isVisible())    {
+    if (event->button() == Qt::LeftButton && m_actionCopy->isVisible())    {
         copy();
     }
 }
 
-void QG_CommandHistory::slotTextChanged(){
+void QG_CommandHistory::slotTextChanged() const {
 //only show the selectAll item when there is text
-    m_pSelectAll->setVisible(! toPlainText().isEmpty());
+    m_actionSelectAll->setVisible(! toPlainText().isEmpty());
 }

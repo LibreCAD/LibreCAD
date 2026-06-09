@@ -27,6 +27,7 @@
 #ifndef RS_ACTIONBLOCKSREMOVE_H
 #define RS_ACTIONBLOCKSREMOVE_H
 
+#include "lc_undoabledocumentmodificationaction.h"
 #include "rs_actioninterface.h"
 
 /**
@@ -34,12 +35,13 @@
  *
  * @author Andrew Mustun
  */
-class RS_ActionBlocksRemove : public RS_ActionInterface {
-	Q_OBJECT
-public:
-    RS_ActionBlocksRemove(LC_ActionContext *actionContext);
-	void init(int status) override;
-	void trigger() override;
+class RS_ActionBlocksRemove : public LC_UndoableDocumentModificationAction {
+    Q_OBJECT public:
+    explicit RS_ActionBlocksRemove(LC_ActionContext* actionContext);
+    void init(int status) override;
+
+protected:
+    bool doTriggerModifications(LC_DocumentModificationBatch& ctx) override;
 };
 
 #endif

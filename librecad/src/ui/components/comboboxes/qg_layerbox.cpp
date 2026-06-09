@@ -37,7 +37,6 @@
  */
 QG_LayerBox::QG_LayerBox(QWidget* parent)
     : QComboBox(parent) {
-
     m_showByBlock = false;
     m_showUnchanged = false;
     m_unchanged = false;
@@ -48,7 +47,8 @@ QG_LayerBox::QG_LayerBox(QWidget* parent)
 /**
  * Destructor
  */
-QG_LayerBox::~QG_LayerBox() {}
+QG_LayerBox::~QG_LayerBox() {
+}
 
 /**
  * Initialisation (called manually only once).
@@ -56,9 +56,9 @@ QG_LayerBox::~QG_LayerBox() {}
  * @param ll Layer list which provides the layer names that are
  *                  available.
  * @param doShowByBlock true: Show attribute ByBlock.
+ * @param doShowUnchanged
  */
-void QG_LayerBox::init(RS_LayerList& ll,
-                       bool doShowByBlock, bool doShowUnchanged) {
+void QG_LayerBox::init(RS_LayerList& ll, const bool doShowByBlock, const bool doShowUnchanged) {
     m_showByBlock = doShowByBlock;
     m_showUnchanged = doShowUnchanged;
     ll.sort(); // fixme !!!!!!
@@ -68,14 +68,14 @@ void QG_LayerBox::init(RS_LayerList& ll,
         addItem(tr("- Unchanged -"));
     }
 
-    for (unsigned i=0; i < ll.count(); ++i) {
-        RS_Layer* lay = ll.at(i);
-        if (lay && (lay->getName()!="ByBlock" || doShowByBlock)) {
+    for (unsigned i = 0; i < ll.count(); ++i) {
+        const RS_Layer* lay = ll.at(i);
+        if ((lay != nullptr) && (lay->getName() != "ByBlock" || doShowByBlock)) {
             addItem(lay->getName());
         }
     }
 
-    connect(this, &QG_LayerBox::activated ,this, &QG_LayerBox::slotLayerChanged);
+    connect(this, &QG_LayerBox::activated, this, &QG_LayerBox::slotLayerChanged);
     setCurrentIndex(0);
     slotLayerChanged(currentIndex());
 }
@@ -85,7 +85,7 @@ void QG_LayerBox::init(RS_LayerList& ll,
  */
 void QG_LayerBox::setLayer(RS_Layer& layer) {
     m_currentLayer = &layer;
-    int i = findText(layer.getName());
+    const int i = findText(layer.getName());
     setCurrentIndex(i);
     slotLayerChanged(currentIndex());
 }
@@ -93,8 +93,8 @@ void QG_LayerBox::setLayer(RS_Layer& layer) {
 /**
  * Sets the layer shown in the combobox to the given layer.
  */
-void QG_LayerBox::setLayer(QString& layer) {
-    int i = findText(layer);
+void QG_LayerBox::setLayer(const QString& layer) {
+    const int i = findText(layer);
     setCurrentIndex(i);
     slotLayerChanged(currentIndex());
 }
@@ -105,9 +105,10 @@ void QG_LayerBox::setLayer(QString& layer) {
  * offers a dialog to the user that allows him/ her to
  * choose an individual color.
  */
-void QG_LayerBox::slotLayerChanged(int index) {
-    if (m_layerList == nullptr)
+void QG_LayerBox::slotLayerChanged(const int index) {
+    if (m_layerList == nullptr) {
         return;
+    }
     m_unchanged = m_showUnchanged && index == 0;
     m_currentLayer = m_layerList->find(itemText(index));
     emit layerChanged(m_currentLayer);

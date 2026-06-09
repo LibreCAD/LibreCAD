@@ -39,11 +39,13 @@ QC_ActionGetEnt::QC_ActionGetEnt(LC_ActionContext* actionContext)
     m_entity = nullptr;
 }
 
-void QC_ActionGetEnt::updateMouseButtonHints() {
-    if (!m_completed)
-        updateMouseWidget(m_message, tr("Cancel"));
-    else
-        updateMouseWidget();
+void QC_ActionGetEnt::updateActionPrompt() {
+    if (!m_completed) {
+        updatePrompt(m_message, tr("Cancel"));
+    }
+    else {
+        updatePrompt();
+    }
 }
 
 
@@ -51,16 +53,16 @@ RS2::CursorType QC_ActionGetEnt::doGetMouseCursor([[maybe_unused]] int status){
     return RS2::SelectCursor;
 }
 
-void QC_ActionGetEnt::setMessage(QString msg){
+void QC_ActionGetEnt::setMessage(const QString& msg){
     m_message = msg;
 }
 
 void QC_ActionGetEnt::trigger() {
     if (m_entity) {
-        RS_Selection s(*m_container, m_viewport);
+        const RS_Selection s(m_document, m_viewport);
         s.selectSingle(m_entity);
         m_completed = true;
-        updateMouseButtonHints();
+        updateActionPrompt();
     } else {
         RS_DEBUG->print("QC_ActionGetEnt::trigger: Entity is NULL\n");
     }
@@ -72,14 +74,14 @@ void QC_ActionGetEnt::onMouseLeftButtonRelease([[maybe_unused]]int status, [[may
 }
 void QC_ActionGetEnt::onMouseRightButtonRelease([[maybe_unused]]int status, [[maybe_unused]]QMouseEvent * e){
     m_completed = true;
-    updateMouseButtonHints();
+    updateActionPrompt();
     finish();
 }
 
 void QC_ActionGetEnt::keyPressEvent(QKeyEvent *e){
     // qDebug() << "QC_ActionGetEnt::keyPressEvent";
     if (e->key() == Qt::Key_Escape) {
-        updateMouseWidget();
+        updatePrompt();
         m_completed = true;
         // qDebug() << "escape QC_ActionGetEnt";
     }
@@ -88,7 +90,7 @@ void QC_ActionGetEnt::keyPressEvent(QKeyEvent *e){
 /**
  * Add selected entity from 'container' to the selection.
  */
-Plugin_Entity *QC_ActionGetEnt::getSelected(Doc_plugin_interface* d) {
+Plugin_Entity *QC_ActionGetEnt::getSelected(Doc_plugin_interface* d) const {
     Plugin_Entity *pe = m_entity ? new Plugin_Entity(m_entity, d) : nullptr;
     return pe;
 }

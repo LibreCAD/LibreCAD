@@ -34,7 +34,7 @@
 RS_ActionToolRegenerateDimensions::RS_ActionToolRegenerateDimensions(LC_ActionContext *actionContext)
         :RS_ActionInterface("Regen Dims", actionContext, RS2::ActionDimRegenerate) {}
 
-void RS_ActionToolRegenerateDimensions::init(int status) {
+void RS_ActionToolRegenerateDimensions::init(const int status) {
     RS_ActionInterface::init(status);
     trigger();
 }
@@ -44,7 +44,7 @@ void RS_ActionToolRegenerateDimensions::trigger() {
 
     QApplication::setOverrideCursor(Qt::WaitCursor);
     // fixme - sand - should we use autoText there? Is options needed for autotext? review this later on dims
-    int updatedDimensionsCount = m_container->updateDimensions(false);
+    const int updatedDimensionsCount = m_document->updateDimensions(false);
     QApplication::restoreOverrideCursor();
     /*for(auto e: *m_container){ // fixme - iteration over all entities in container
 
@@ -65,5 +65,5 @@ void RS_ActionToolRegenerateDimensions::trigger() {
     else {
         commandMessage(tr("No dimension entities found"));
     }
-    finish(false);
+    finish();
 }

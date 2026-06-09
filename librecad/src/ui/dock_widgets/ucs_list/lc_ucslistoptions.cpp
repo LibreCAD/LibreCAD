@@ -21,9 +21,10 @@
  ******************************************************************************/
 
 #include "lc_ucslistoptions.h"
+
 #include "rs_settings.h"
 
-LC_UCSListOptions::LC_UCSListOptions() {}
+LC_UCSListOptions::LC_UCSListOptions() = default;
 
 void LC_UCSListOptions::load() {
     LC_GROUP("Appearance");
@@ -43,6 +44,7 @@ void LC_UCSListOptions::load() {
         askForDeletionConfirmation = LC_GET_BOOL("ConfirmDelete", false);
         restoreViewBySingleClick = LC_GET_BOOL("SingleClickRestore", false);
         doubleClickPolicy = LC_GET_INT("DoubleClickPolicy",APPLY_UCS);
+        showGrid = LC_GET_BOOL("ShowGrid", true);
     }
 }
 
@@ -62,6 +64,7 @@ void LC_UCSListOptions::save() const{
         LC_SET("ShowColumnPositionAndAngle", showColumnPositionAndAngle);
         LC_SET("ConfirmDelete", askForDeletionConfirmation);
         LC_SET("DoubleClickPolicy", doubleClickPolicy);
-        LC_GET_BOOL("SingleClickRestore", restoreViewBySingleClick);
+        LC_SET("SingleClickRestore", restoreViewBySingleClick);
+        LC_SET("ShowGrid", showGrid);
     }
 }

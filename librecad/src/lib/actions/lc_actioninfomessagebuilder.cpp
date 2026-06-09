@@ -59,24 +59,23 @@ LC_ActionInfoMessageBuilder& LC_ActionInfoMessageBuilder::relativePolar(const RS
     return *this;
 }
 
-LC_ActionInfoMessageBuilder& LC_ActionInfoMessageBuilder::wcsAngle(const QString& name, double value) {
+LC_ActionInfoMessageBuilder& LC_ActionInfoMessageBuilder::wcsAngle(const QString& name, const double value) {
     add(name, m_action->formatWCSAngle(value));
     return *this;
 }
 
-LC_ActionInfoMessageBuilder& LC_ActionInfoMessageBuilder::rawAngle(const QString& name, double value) {
+LC_ActionInfoMessageBuilder& LC_ActionInfoMessageBuilder::rawAngle(const QString& name, const double value) {
     add(name, m_action->formatAngleRaw(value));
     return *this;
 }
 
-LC_ActionInfoMessageBuilder& LC_ActionInfoMessageBuilder::linear(const QString& name, double value) {
+LC_ActionInfoMessageBuilder& LC_ActionInfoMessageBuilder::linear(const QString& name, const double value) {
     add(name, m_action->formatLinear(value));
     return *this;
 }
 
-void LC_ActionInfoMessageBuilder::toInfoCursorZone2(bool replace) {
-    QString message = toString();
+void LC_ActionInfoMessageBuilder::toInfoCursorZone2(const bool replace) {
+    const QString message = toString();
     m_action->appendInfoCursorZoneMessage(message, 2, replace);
     cleanup();
-    message = toString();
 }

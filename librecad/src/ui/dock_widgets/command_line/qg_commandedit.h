@@ -35,17 +35,17 @@
 class QG_CommandEdit: public QLineEdit {
     Q_OBJECT
 public:
-    QG_CommandEdit(QWidget* parent=nullptr);
+    explicit QG_CommandEdit(QWidget* parent=nullptr);
     ~QG_CommandEdit() override = default;
     void readCommandFile(const QString& path);
-    bool m_keycode_mode = false;
+    void setKeyCodeMode(const bool val) {m_keycodeMode = val;}
 protected:
     bool event(QEvent* e) override;
     void keyPressEvent(QKeyEvent* e) override;
     void focusInEvent(QFocusEvent *e) override;
     void focusOutEvent(QFocusEvent *e) override;
     void evaluateExpression(QString input);
-    QString m_relative_ray;
+    QString m_relativeRay;
     QMap<QString, QString> m_variables;
     void processInput(QString input);
     bool isForeignCommand(QString input);
@@ -64,14 +64,15 @@ signals:
 private:
     /**
       * @brief extractCliCal, filter cli calculator math expression
-      * @param cmd, cli string
+      * @param cmd cli string
       * @return an empty string, if calculation is performed; the input string, otherwise
       */
     QString filterCliCal(const QString& cmd);
     QStringList m_historyList;
-    QStringList::const_iterator it = m_historyList.cbegin();
+    QStringList::const_iterator it = m_historyList.cbegin(); // fixme - sand - REVIEW THIS!!!
     bool m_acceptCoordinates = false;
-    bool m_calculator_mode = false;
+    bool m_calculatorMode = false;
+    bool m_keycodeMode = false;
 public slots:
     void modifiedPaste();
 };

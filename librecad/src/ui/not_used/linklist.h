@@ -6,7 +6,6 @@
 class LinkList : public QListWidget
 {
     Q_OBJECT
-
 public:
     LinkList(QWidget* parent);
 
@@ -16,4 +15,4 @@ protected slots:
     void showWebPage(QListWidgetItem*);
 };
 
-#endif // LINKLIST_H
+#endif

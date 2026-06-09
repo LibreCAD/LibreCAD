@@ -1,41 +1,38 @@
-/****************************************************************************
-**
-** This file is part of the LibreCAD project, a 2D CAD program
-**
-** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
-** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
-**
-**
-** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software
-** Foundation and appearing in the file gpl-2.0.txt included in the
-** packaging of this file.
-**
-** This program is distributed in the hope that it will be useful,
-** but WITHOUT ANY WARRANTY; without even the implied warranty of
-** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-** GNU General Public License for more details.
-**
-** You should have received a copy of the GNU General Public License
-** along with this program; if not, write to the Free Software
-** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
-**
-** This copyright notice MUST APPEAR in all copies of the script!
-**
-**********************************************************************/
+/*
+ * ********************************************************************************
+ * This file is part of the LibreCAD project, a 2D CAD program
+ *
+ * Copyright (C) 2026 LibreCAD.org
+ * Copyright (C) 2026 sand1024
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ * ********************************************************************************
+ */
 #include "qg_selectionwidget.h"
 
 #include <QSettings>
 #include <QTimer>
 
-#include "rs_entitycontainer.h"
+#include "rs_document.h"
 #include "rs_graphicview.h"
 
 /*
  *  Constructs a QG_SelectionWidget as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
  */
-QG_SelectionWidget::QG_SelectionWidget(QWidget* parent, const char* name, Qt::WindowFlags fl)
+QG_SelectionWidget::QG_SelectionWidget(QWidget* parent, const char* name, const Qt::WindowFlags fl)
     : QWidget(parent, fl){
     setObjectName(name);
     setupUi(this);
@@ -57,10 +54,6 @@ QG_SelectionWidget::~QG_SelectionWidget(){
     delete m_timer;
 }
 
-QToolButton* QG_SelectionWidget::getActionsButton() {
-    return tbSelectionActions;
-}
-
 /*
  *  Sets the strings of the subwidgets using the current
  *  language.
@@ -69,7 +62,7 @@ void QG_SelectionWidget::languageChange(){
     retranslateUi(this);
 }
 
-void QG_SelectionWidget::setNumber(int n){
+void QG_SelectionWidget::setNumber(const int n) const {
     if (m_auxDataMode)    {
         QSettings settings("QGDialogFactory", "QGSelectionWidget");
         settings.setValue("lEntities_text", n);
@@ -81,23 +74,18 @@ void QG_SelectionWidget::setNumber(int n){
     }
 }
 
-void QG_SelectionWidget::setTotalLength(double l) {
+void QG_SelectionWidget::setTotalLength(const double l) const {
     QString str;
     str.setNum(l, 'g', 6);
     lTotalLength->setText(str);
 }
 
 
-void QG_SelectionWidget::flashAuxData( const QString& header, 
-                                       const QString& data, 
-                                       const unsigned int& timeout, 
-                                       const bool& flash){
+void QG_SelectionWidget::flashAuxData(const QString& header, const QString& data, const unsigned int timeout, const bool flash){
     if (flash){
-        QSettings settings("QGDialogFactory", "QGSelectionWidget");
-
-        if (!m_auxDataMode)
-        {
+        if (!m_auxDataMode){
             m_auxDataMode = true;
+            QSettings settings("QGDialogFactory", "QGSelectionWidget");
 
             settings.setValue("lLabelLength_minWidth",  lLabelLength->minimumWidth());
             settings.setValue("lLabelLength_minHeight", lLabelLength->minimumHeight());
@@ -140,18 +128,18 @@ void QG_SelectionWidget::flashAuxData( const QString& header,
 void QG_SelectionWidget::removeAuxData(){
     m_auxDataMode = false;
 
-    QSettings settings("QGDialogFactory", "QGSelectionWidget");
+    const QSettings settings("QGDialogFactory", "QGSelectionWidget");
 
-    lLabelLength->setMinimumSize( settings.value("lLabelLength_minWidth").toInt(), 
+    lLabelLength->setMinimumSize( settings.value("lLabelLength_minWidth").toInt(),
                                   settings.value("lLabelLength_minHeight").toInt());
 
-    lLabelLength->setMaximumSize( settings.value("lLabelLength_maxWidth").toInt(), 
+    lLabelLength->setMaximumSize( settings.value("lLabelLength_maxWidth").toInt(),
                                   settings.value("lLabelLength_maxHeight").toInt());
 
-    lTotalLength->setMinimumSize( settings.value("lTotalLength_minWidth").toInt(), 
+    lTotalLength->setMinimumSize( settings.value("lTotalLength_minWidth").toInt(),
                                   settings.value("lTotalLength_minHeight").toInt());
 
-    lTotalLength->setMaximumSize( settings.value("lTotalLength_maxWidth").toInt(), 
+    lTotalLength->setMaximumSize( settings.value("lTotalLength_maxWidth").toInt(),
                                   settings.value("lTotalLength_maxHeight").toInt());
 
     lLabel->setMinimumWidth(settings.value("lLabel_w").toInt());
@@ -162,15 +150,32 @@ void QG_SelectionWidget::removeAuxData(){
 }
 
 void QG_SelectionWidget::setGraphicView(RS_GraphicView* gview) {
+    if (m_document != nullptr) {
+        m_document->getSelection()->removeListener(this);
+    }
     if (gview == nullptr) {
         removeAuxData();
         setNumber(0);
         setTotalLength(0);
+        m_document = nullptr;
     }
     else {
-        RS_EntityContainer* container = gview->getContainer();
-        const RS_EntityContainer::LC_SelectionInfo &info = container->getSelectionInfo();
-        setNumber(info.count);
-        setTotalLength(info.length);
+        m_document = gview->getDocument();
+        if (m_document != nullptr) {
+           m_document->getSelection()->addListener(this);
+        }
+        selectionChanged();
     }
+}
+
+void QG_SelectionWidget::selectionChanged() {
+    int number = 0;
+    double length = 0.0;
+    if (m_document != nullptr) {
+        const RS_Document::LC_SelectionInfo &info = m_document->getSelectionInfo();
+        number = info.entitiesCount;
+        length = info.totalLength;
+    }
+    setNumber(number);
+    setTotalLength(length);
 }

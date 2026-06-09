@@ -24,15 +24,15 @@
 **
 **********************************************************************/
 
-#include <QString>
 #include "rs_utility.h"
 
+#include <QString>
 
 /**
  * Converts a double to a string cutting away unnecessary 0's.
  * e.g. 2.70000  -> 2.7
  */
-QString RS_Utility::doubleToString(double value, int precision) {
+QString RS_Utility::doubleToString(const double value, const int precision) {
     QString ret;
 
     ret.setNum(value, 'f', precision);

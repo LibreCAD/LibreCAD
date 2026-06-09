@@ -20,9 +20,10 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 #include "lc_modifiersinfo.h"
+
 #include <QObject>
 
-LC_ModifiersInfo::LC_ModifiersInfo() {}
+LC_ModifiersInfo::LC_ModifiersInfo() = default;
 
 const QString LC_ModifiersInfo::MSG_EMPTY = "";
 
@@ -43,42 +44,38 @@ LC_ModifiersInfo LC_ModifiersInfo::SHIFT_RELATIVE_ZERO(){
 }
 
 LC_ModifiersInfo LC_ModifiersInfo::SHIFT(const QString &msg){
-    LC_ModifiersInfo result = LC_ModifiersInfo();
+    auto result = LC_ModifiersInfo();
     result.setFlag(Qt::ShiftModifier);
-    result.shiftMsg = msg;
+    result.m_shiftMsg = msg;
     return result;
 }
 
 LC_ModifiersInfo LC_ModifiersInfo::CTRL(const QString &msg){
-    LC_ModifiersInfo result = LC_ModifiersInfo();
+    auto result = LC_ModifiersInfo();
     result.setFlag(Qt::ControlModifier);
-    result.ctrlMsg = msg;
+    result.m_ctrlMsg = msg;
     return result;
 }
 
 LC_ModifiersInfo LC_ModifiersInfo::SHIFT_AND_CTRL(const QString &shiftMsg, const QString &ctrlMsg){
-    LC_ModifiersInfo result = LC_ModifiersInfo();
+    auto result = LC_ModifiersInfo();
     result.setFlag(Qt::ControlModifier);
     result.setFlag(Qt::ShiftModifier);
-    result.ctrlMsg = ctrlMsg;
-    result.shiftMsg = shiftMsg;
+    result.m_ctrlMsg = ctrlMsg;
+    result.m_shiftMsg = shiftMsg;
     return result;
 }
 
-const QString& LC_ModifiersInfo::getShiftMessage() const{
-    if (modifiers & Qt::ShiftModifier){
-        return shiftMsg;
+const QString& LC_ModifiersInfo::getShiftMessage() const {
+    if ((m_modifiers & Qt::ShiftModifier) != 0u) {
+        return m_shiftMsg;
     }
-    else {
-        return MSG_EMPTY;
-    }
+    return MSG_EMPTY;
 }
 
 const QString& LC_ModifiersInfo::getCtrlMessage() const{
-    if (modifiers & Qt::ControlModifier){
-        return ctrlMsg;
+    if ((m_modifiers & Qt::ControlModifier) != 0u) {
+        return m_ctrlMsg;
     }
-    else {
-        return MSG_EMPTY;
-    }
+    return MSG_EMPTY;
 }

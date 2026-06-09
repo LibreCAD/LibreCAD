@@ -25,10 +25,8 @@
 **
 **********************************************************************/
 
-
 #ifndef RS_SYSTEM_H
 #define RS_SYSTEM_H
-
 
 #define RS_SYSTEM RS_System::instance()
 #include <QList>
@@ -43,27 +41,20 @@ class RS_Locale;
  * @author Andrew Mustun
  */
 class RS_System {
-
 public:
     /**
      * @return Instance to the unique system object.
      */
-    static RS_System *instance();
+    static RS_System* instance();
 
-    void init(const QString& appName,
-              const QString& appVersion,
-              const QString& appDirName,
-              const char *arg0);
+    void init(const QString& appName, const QString& appVersion, const QString& appDirName, const char* arg0);
 
-    void init(const QString& appName,
-              const QString& appVersion,
-              const QString& appDirName,
-              const QString& arg0);
+    void init(const QString& appName, const QString& appVersion, const QString& appDirName, const QString& arg0);
     void initLanguageList();
     void initAllLanguagesList();
 
     bool checkInit() const;
-    bool createPaths(const QString& p);
+    bool createPaths(const QString& directory);
 
     /**
      * @return Users home directory.
@@ -86,8 +77,7 @@ public:
     /**
      * @return A list of absolute paths to all font files found.
      */
-    QStringList getFontList() const
-    {
+    QStringList getFontList() const {
         QStringList ret = getFileList("fonts", "cxf");
         return ret;
     }
@@ -95,7 +85,7 @@ public:
     /**
      * @return A list of absolute paths to all NEW font files found.
      */
-    QStringList getNewFontList() {
+    QStringList getNewFontList() const {
         QStringList ret = getFileList("fonts", "lff");
         return ret;
     }
@@ -103,7 +93,7 @@ public:
     /**
      * @return A list of absolute paths to all hatch pattern files found.
      */
-    QStringList getPatternList() {
+    QStringList getPatternList() const {
         QStringList ret = getFileList("patterns", "dxf");
         return ret;
     }
@@ -111,7 +101,7 @@ public:
     /**
      * @return A list of absolute paths to all script files found.
      */
-    QStringList getScriptList() {
+    QStringList getScriptList() const {
         QStringList ret = getFileList("scripts/qsa", "qs");
         return ret;
     }
@@ -119,7 +109,7 @@ public:
     /**
      * @return A list of absolute paths to all machine configuration files found.
      */
-    QStringList getMachineList() {
+    QStringList getMachineList() const {
         QStringList ret = getFileList("machines", "cxm");
         return ret;
     }
@@ -127,39 +117,35 @@ public:
     /**
      * @return Absolute path to the documentation.
      */
-    QString getDocPath() {
+    QString getDocPath() const {
         QStringList lst = getDirectoryList("doc");
 
-        if( !lst.isEmpty()) {
+        if (!lst.isEmpty()) {
             return lst.first();
         }
-        else {
-            return QString();
-        }
+        return QString();
     }
 
     /**
      * @return The application name.
      */
     QString getAppName() const {
-        return appName;
+        return m_appName;
     }
 
     /**
      * @return The application version.
      */
     QString getAppVersion() const {
-        return appVersion;
+        return m_appVersion;
     }
 
-    QStringList getFileList (const QString& subDirectory,
-                            const QString& fileExtension) const;
+    QStringList getFileList(const QString& subDirectory, const QString& fileExtension) const;
 
-    QStringList getDirectoryList(const QString&
-		   subDirectory) const;
+    QStringList getDirectoryList(const QString& subDir) const;
 
     QStringList getLanguageList() const {
-        return languageList;
+        return m_languageList;
     }
 
     static QString languageToSymbol(const QString& lang);
@@ -169,8 +155,6 @@ public:
 
     void loadTranslation(const QString& lang, const QString& langCmd);
 
-    static bool test();
-
     /** Returns ISO code for given locale. Needed for win32 to convert
      *  from system encodings.
      */
@@ -178,17 +162,18 @@ public:
 
 private:
     RS_System() = default;
-    void addLocale(RS_Locale *locale);
-protected:
-    QString appName;
-    QString appVersion;
-    QString appDirName;
-    QString appDir;
+    void addLocale(RS_Locale* locale);
 
-    QStringList languageList;   //< List of available translations
-    bool initialized {false};
-    bool externalAppDir {false};
-    QList<QSharedPointer<RS_Locale>> allKnownLocales;
+protected:
+    QString m_appName;
+    QString m_appVersion;
+    QString m_appDirName;
+    QString m_appDir;
+
+    QStringList m_languageList; //< List of available translations
+    bool m_initialized{false};
+    bool m_externalAppDir{false};
+    QList<QSharedPointer<RS_Locale>> m_allKnownLocales;
 };
 
 #endif

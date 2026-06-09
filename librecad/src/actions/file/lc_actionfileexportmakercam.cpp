@@ -37,53 +37,47 @@
 class LC_MakerCamSVG;
 
 namespace {
-
-    bool getSetting(const QString &entry) {
+    bool getSetting(const QString& entry) {
         return LC_GET_INT("" + entry, 0);
     }
 
-// create an SVG generator
-    std::unique_ptr<LC_MakerCamSVG> getGenerator()
-    {
+    // create an SVG generator
+    std::unique_ptr<LC_MakerCamSVG> getGenerator() {
         LC_GROUP_GUARD("ExportMakerCam");
         {
             auto generator = std::make_unique<LC_MakerCamSVG>(std::make_unique<LC_XMLWriterQXmlStreamWriter>(),
-                                                              LC_GET_BOOL("ExportInvisibleLayers"),
-                                                              LC_GET_BOOL("ExportConstructionLayers"),
-                                                              LC_GET_BOOL("WriteBlocksInline"),
-                                                              LC_GET_BOOL("ConvertEllipsesToBeziers"),
-                                                              LC_GET_BOOL("ExportImages"),
-                                                              LC_GET_BOOL("BakeDashDotLines"),
+                                                              LC_GET_BOOL("ExportInvisibleLayers"), LC_GET_BOOL("ExportConstructionLayers"),
+                                                              LC_GET_BOOL("WriteBlocksInline"), LC_GET_BOOL("ConvertEllipsesToBeziers"),
+                                                              LC_GET_BOOL("ExportImages"), LC_GET_BOOL("BakeDashDotLines"),
                                                               LC_GET_STR("DefaultElementWidth", "1.0").toDouble(),
                                                               LC_GET_STR("DefaultDashLinePatternLength").toDouble());
-            bool exportPoints = getSetting("ExportPoints");
+            const bool exportPoints = getSetting("ExportPoints");
             generator->setExportPoints(exportPoints);
             return generator;
         }
     }
 }
 
-LC_ActionFileExportMakerCam::LC_ActionFileExportMakerCam(LC_ActionContext *actionContext)
-    : RS_ActionInterface("Export as CAM/plain SVG...", actionContext, RS2::ActionFileExportMakerCam){
+LC_ActionFileExportMakerCam::LC_ActionFileExportMakerCam(LC_ActionContext* actionContext)
+    : RS_ActionInterface("Export as CAM/plain SVG...", actionContext, RS2::ActionFileExportMakerCam) {
 }
 
-
-void LC_ActionFileExportMakerCam::init(int status) {
+void LC_ActionFileExportMakerCam::init(const int status) {
     RS_ActionInterface::init(status);
     trigger();
 }
 
-bool LC_ActionFileExportMakerCam::writeSvg(const QString& fileName, RS_Graphic& graphic){
+bool LC_ActionFileExportMakerCam::writeSvg(const QString& fileName, RS_Graphic& graphic) {
     if (fileName.isEmpty()) {
-        LC_ERR<<__func__<<"(): empty file name, no SVG is generated";
+        LC_ERR << __func__ << "(): empty file name, no SVG is generated";
         return false;
     }
 
-    auto generator = getGenerator();
+    const auto generator = getGenerator();
     if (generator->generate(&graphic)) {
         QFile file{fileName};
         if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
-            LC_ERR<<__func__<<"(): failed in creating file "<<fileName<<", no SVG is generated";
+            LC_ERR << __func__ << "(): failed in creating file " << fileName << ", no SVG is generated";
             return false;
         }
 
@@ -93,22 +87,17 @@ bool LC_ActionFileExportMakerCam::writeSvg(const QString& fileName, RS_Graphic& 
     return true;
 }
 
-
 void LC_ActionFileExportMakerCam::trigger() {
-
-	RS_DEBUG->print("LC_ActionFileExportMakerCam::trigger()");
+    RS_DEBUG->print("LC_ActionFileExportMakerCam::trigger()");
 
     if (m_graphic != nullptr) {
-
-        bool accepted = RS_DIALOGFACTORY->requestOptionsMakerCamDialog();
+        const bool accepted = RS_DIALOGFACTORY->requestOptionsMakerCamDialog();
 
         if (accepted) {
-            QString filename = RS_DIALOGFACTORY->requestFileSaveAsDialog(tr("Export as"),
-                                                                         "",
-                                                                         "Scalable Vector Graphics (*.svg)");
+            const QString filename = RS_DIALOGFACTORY->requestFileSaveAsDialog(tr("Export as"), "", "Scalable Vector Graphics (*.svg)");
             writeSvg(filename, *m_graphic);
         }
     }
 
-    finish(false);
+    finish();
 }

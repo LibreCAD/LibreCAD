@@ -28,20 +28,17 @@
 
 class LC_XMLWriterInterface {
 public:
-    virtual void createRootElement(const std::string &name, const std::string &default_namespace_uri = "") = 0;
-
-    virtual void addElement(const std::string &name, const std::string &namespace_uri = "") = 0;
-
-    virtual void addAttribute(const std::string &name, const std::string &value, const std::string &namespace_uri = "") = 0;
-
-    virtual void addNamespaceDeclaration(const std::string &prefix, const std::string &namespace_uri) = 0;
-
+    virtual void createRootElement(const std::string& name, const std::string& defaultNamespaceUri = "") = 0;
+    virtual void addElement(const std::string& name, const std::string& namespaceUri = "");
+    virtual void addAttribute(const std::string& name, const std::string& value, const std::string& namespaceUri = "") = 0;
+    virtual void addNamespaceDeclaration(const std::string& prefix, const std::string& namespaceUri) = 0;
     virtual void closeElement() = 0;
-
     virtual std::string documentAsString() = 0;
-
-	LC_XMLWriterInterface() = default;
-	virtual ~LC_XMLWriterInterface() = default;
+    LC_XMLWriterInterface() = default;
+    virtual ~LC_XMLWriterInterface() = default;
 };
+
+inline void LC_XMLWriterInterface::addElement([[maybe_unused]]const std::string& name, [[maybe_unused]]const std::string& namespaceUri) {
+}
 
 #endif

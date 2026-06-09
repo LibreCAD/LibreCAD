@@ -38,6 +38,8 @@ namespace LC_LineMath {
     double getMeaningfulPositive(double candidate, double replacementValue = 0.0);
     bool isMeaningfulAngle(double value);
     bool isSameAngle(double angle1, double angle2);
+    bool isSameLength(double angle1, double angle2);
+    bool isSameValue(double angle1, double angle2);
     double getMeaningfulAngle(double candidate, double replacementValue = 0.0);
     bool isNonZeroLineLength(const RS_Vector &startPoint, const RS_Vector &endPoint);
     RS_Vector getEndOfLineSegment(const RS_Vector &startPoint, double angleValueDegree, double distance);
@@ -54,14 +56,14 @@ namespace LC_LineMath {
     int getPointPosition(const RS_Vector &startPos, const RS_Vector &endPos, const RS_Vector &point);
     RS_Vector findPointOnCircle(double radius, double arcAngle, const RS_Vector& centerCircle);
     bool areLinesOnSameRay(const RS_Vector &line1Start, const RS_Vector &line1End, const RS_Vector &line2Start, const RS_Vector &line2End);
-    RS_Vector getIntersectionLineLine(const RS_Vector& s1, const RS_Vector& e1, const RS_Vector& s2, const RS_Vector& e2);
-    RS_Vector getIntersectionLineLineFast(const RS_Vector& s1, const RS_Vector& e1, const RS_Vector& s2, const RS_Vector& e2);
-    RS_Vector getIntersectionInfiniteLineLineFast(const RS_Vector& infs1, const RS_Vector& infe1, const RS_Vector& s2, const RS_Vector& e2, double offsetX, double offsetY);
-    bool hasIntersectionLineRect(const RS_Vector& s1, const RS_Vector& e1, const RS_Vector& s2, const RS_Vector& e2);
+    RS_Vector getIntersectionLineLine(const RS_Vector& start1, const RS_Vector& end1, const RS_Vector& start2, const RS_Vector& end2);
+    RS_Vector getIntersectionLineLineFast(const RS_Vector& start1, const RS_Vector& end1, const RS_Vector& start2, const RS_Vector& end2);
+    RS_Vector getIntersectionInfiniteLineLineFast(const RS_Vector& infiniteStart, const RS_Vector& infiniteEnd, const RS_Vector& lineStart, const RS_Vector& lineEnd, double offsetX, double offsetY);
+    bool hasIntersectionLineRect(const RS_Vector& lineStart, const RS_Vector& lineEnd, const RS_Vector& rectMinCorner, const RS_Vector& rectMaxCorner);
     RS_LineData createParallel(const RS_Vector& start, const RS_Vector& end, double distance);
     bool isMeaningfulDistance(const RS_Vector &v1, const RS_Vector &v2);
     bool isNotMeaningfulDistance(const RS_Vector &v1, const RS_Vector &v2);
-    bool hasLineIntersection(RS_Vector p0, RS_Vector direction, RS_Vector p2, RS_Vector p3);
+    bool hasLineIntersection(const RS_Vector& p0, const RS_Vector& direction, const RS_Vector& p2, const RS_Vector& p3);
     /**
      * @brief convexHull - find the convex hull of a point cloud
      * @param points - input points
@@ -70,4 +72,4 @@ namespace LC_LineMath {
     RS_VectorSolutions convexHull(const RS_VectorSolutions& points);
     double angleFor3Points(const RS_Vector& edgePoint1, const RS_Vector& intersection, const RS_Vector& edgePoint2);
 }
-#endif // LC_LINEMATH_H
+#endif

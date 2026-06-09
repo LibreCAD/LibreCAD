@@ -23,8 +23,8 @@
 #ifndef LC_OVERLAYANGLESBASEMARK_H
 #define LC_OVERLAYANGLESBASEMARK_H
 
-#include "rs_color.h"
 #include "lc_overlayentity.h"
+#include "rs_color.h"
 #include "rs_vector.h"
 
 struct LC_AnglesBaseMarkOptions{
@@ -33,27 +33,27 @@ struct LC_AnglesBaseMarkOptions{
         SHOW_IF_NON_DEFAULTS
     };
     /** coordinate origin marker */
-    bool m_showAnglesBaseMark = true;
-    int m_displayPolicy = SHOW_ALWAYS;
-    RS_Color m_colorDirectionType = Qt::blue;
-    int m_markerRadius = 30;
-    RS_Color m_colorAnglePointer = Qt::blue;
-    RS_Color m_colorRadius = Qt::blue;
+    bool showAnglesBaseMark = true;
+    int displayPolicy = SHOW_ALWAYS;
+    RS_Color colorDirectionType = Qt::blue;
+    int markerRadius = 30;
+    RS_Color colorAnglePointer = Qt::blue;
+    RS_Color colorRadius = Qt::blue;
     void loadSettings();
 };
 
 class LC_OverlayAnglesBaseMark:public LC_OverlayDrawable{
 public:
-    LC_OverlayAnglesBaseMark(RS_Vector uiOrigin, double baseAngle, bool counterclockwize, LC_AnglesBaseMarkOptions *options);
+    LC_OverlayAnglesBaseMark(const RS_Vector& uiOrigin, double baseAngle, bool counterClockWise, LC_AnglesBaseMarkOptions *options);
     explicit LC_OverlayAnglesBaseMark(LC_AnglesBaseMarkOptions *options);
     void draw(RS_Painter *painter) override;
     void update(const RS_Vector &uiOrigin, double angle, bool counterclockwise);
 protected:
-    RS_Vector origin = RS_Vector(false);
-    double baseAngle = 0.0;
-    bool dirCounterClockWise = true;
-    LC_AnglesBaseMarkOptions* options = nullptr;
+    RS_Vector m_origin = RS_Vector(false);
+    double m_baseAngle = 0.0;
+    bool m_dirCounterClockWise = true;
+    LC_AnglesBaseMarkOptions* m_options = nullptr;
     void createArrowShape(const RS_Vector &point, double angle, double arrowSize, RS_Vector &p1, RS_Vector &p2, RS_Vector &p3);
 };
 
-#endif // LC_OVERLAYANGLESBASEMARK_H
+#endif

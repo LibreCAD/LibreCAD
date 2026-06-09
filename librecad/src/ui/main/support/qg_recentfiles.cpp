@@ -1,25 +1,25 @@
-// /****************************************************************************
-//
-// Utility base class for widgets that represents options for actions
-//
-// Copyright (C) 2025 LibreCAD.org
-// Copyright (C) 2025 sand1024
-//
-// This program is free software; you can redistribute it and/or
-// modify it under the terms of the GNU General Public License
-// as published by the Free Software Foundation; either version 2
-// of the License, or (at your option) any later version.
-//
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with this program; if not, write to the Free Software
-// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-// **********************************************************************
-//
+/*
+ * ********************************************************************************
+ * This file is part of the LibreCAD project, a 2D CAD program
+ *
+ * Copyright (C) 2025 LibreCAD.org
+ * Copyright (C) 2025 sand1024
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ * ********************************************************************************
+ */
 
 #include "qg_recentfiles.h"
 
@@ -33,13 +33,15 @@
 
 /**
 * Constructor
+* @param parent
 * @param number Number of files that can be stored in the list at maximum
 */
-QG_RecentFiles::QG_RecentFiles(QObject* parent, int number)
+QG_RecentFiles::QG_RecentFiles(QObject* parent, const int number)
     : QObject(parent)
       , m_maxEntries(number) {
-    if (number <= 0)
+    if (number <= 0) {
         assert(!"maximum number of RecentFiles must be larger than zero");
+    }
 }
 
 QG_RecentFiles::~QG_RecentFiles() {
@@ -74,18 +76,21 @@ void QG_RecentFiles::add(const QString& filename) {
     }
 
     // Already on top
-    if (!m_files.empty() && filename == m_files.back())
+    if (!m_files.empty() && filename == m_files.back()) {
         return;
+    }
 
     // is the file already in the list? remove it, as it will be added to the top
     m_files.removeAll(filename);
 
     // prepend
     m_files.append(filename);
-    while (m_files.size() > m_maxEntries)
+    while (m_files.size() > m_maxEntries) {
         m_files.pop_front();
-    if (hasMenuEntries())
+    }
+    if (hasMenuEntries()) {
         updateRecentFilesMenu();
+    }
     RS_DEBUG->print("QG_RecentFiles::add: OK");
 }
 
@@ -95,13 +100,11 @@ void QG_RecentFiles::addIfAbsent(const QString& filename) {
     }
 }
 
-QString QG_RecentFiles::get(int i) const {
+QString QG_RecentFiles::get(const int i) const {
     if (i >= 0 && i < m_files.size()) {
         return m_files[i];
     }
-    else {
-        return QString("");
-    }
+    return QString();
 }
 
 int QG_RecentFiles::count() const {
@@ -117,26 +120,27 @@ int QG_RecentFiles::indexOf(const QString &filename) const{
     return m_files.indexOf(filename);
 }
 
-void QG_RecentFiles::addFiles(QMenu *file_menu){
+void QG_RecentFiles::addFiles(QMenu *fileMenu){
     RS_DEBUG->print("QG_RecentFiles::addFiles()");
 
     LC_GROUP("RecentFiles");
     for (int i = 0; i < m_maxEntries; ++i) {
         QString filename = LC_GET_STR(QString("File") + QString::number(i + 1));
-        if (QFileInfo::exists(filename))
+        if (QFileInfo::exists(filename)) {
             add(filename);
+        }
     }
     LC_GROUP_END();
 
     auto *a_group = new QActionGroup(this);
-    QC_ApplicationWindow *context = static_cast<QC_ApplicationWindow *>(parent());
+    const QC_ApplicationWindow *context = static_cast<QC_ApplicationWindow *>(parent());
     connect(a_group, &QActionGroup::triggered, context, &QC_ApplicationWindow::slotFileOpenRecent);
 
     for (int i = 0; i < m_maxEntries; ++i) {
         m_recentFilesActions.push_back(new QAction(a_group));
         QAction *a = m_recentFilesActions.back();
         a->setVisible(false);
-        file_menu->addAction(a);
+        fileMenu->addAction(a);
     }
     if (count() > 0) {
         updateRecentFilesMenu();
@@ -154,8 +158,9 @@ void QG_RecentFiles::updateRecentFilesMenu(){
                  m_files.cend(),
                  std::back_inserter(validateFiles),
                  [](const QString &file) { return QFileInfo::exists(file); });
-    if (validateFiles.size() < m_files.size())
+    if (validateFiles.size() < m_files.size()) {
         m_files = validateFiles;
+    }
 
     while (m_files.size() > m_recentFilesActions.size()){
         m_files.pop_front();
@@ -172,8 +177,9 @@ void QG_RecentFiles::updateRecentFilesMenu(){
         //newest on top
 
         auto file_path = *itFile;
-        if (file_path.length() > 128)
+        if (file_path.length() > 128) {
             file_path = "..." + file_path.right(128);
+        }
         const QString text = tr("&%1 %2").arg(itFile - m_files.rbegin() + 1).arg(file_path);
 
         auto *action = *itAction++;

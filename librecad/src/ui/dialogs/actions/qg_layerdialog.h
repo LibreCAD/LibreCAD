@@ -26,24 +26,24 @@
 #ifndef QG_LAYERDIALOG_H
 #define QG_LAYERDIALOG_H
 
-#include "ui_qg_layerdialog.h"
 #include "lc_dialog.h"
+#include "ui_qg_layerdialog.h"
 
 class RS_Layer;
 class RS_LayerList;
-class QG_LayerDialog : public LC_Dialog, public Ui::QG_LayerDialog{
-    Q_OBJECT
-public:
-    QG_LayerDialog(QWidget* parent = nullptr, QString name = 0);
-	~QG_LayerDialog() override;
+
+class QG_LayerDialog : public LC_Dialog, public Ui::QG_LayerDialog {
+    Q_OBJECT public:
+    explicit QG_LayerDialog(QWidget* parent = nullptr, const QString& name = nullptr);
+    ~QG_LayerDialog() override;
 public slots:
-    void setLayer( RS_Layer * l );
-    void updateLayer();
+    void setLayer(RS_Layer* l);
+    void updateLayer() const;
     void validate();
-    void setLayerList( RS_LayerList * ll );
-    void setEditLayer( bool el );
+    void setLayerList(RS_LayerList* ll);
+    void setEditLayer(bool el);
     //! @return a reference to the QLineEdit object.
-    QLineEdit* getQLineEdit ();
+    QLineEdit* getQLineEdit() const;
 protected:
     RS_Layer* m_layer;
     RS_LayerList* m_layerList;
@@ -55,4 +55,4 @@ private:
     void init();
 };
 
-#endif // QG_LAYERDIALOG_H
+#endif

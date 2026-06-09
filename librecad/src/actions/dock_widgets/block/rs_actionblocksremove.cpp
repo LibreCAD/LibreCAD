@@ -26,7 +26,6 @@
 
 #include "rs_actionblocksremove.h"
 
-#include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_dialogfactoryinterface.h"
 #include "rs_graphic.h"
@@ -35,22 +34,20 @@
 class RS_BlockList;
 
 RS_ActionBlocksRemove::RS_ActionBlocksRemove(LC_ActionContext *actionContext)
-    :RS_ActionInterface("Remove Block", actionContext, RS2::ActionBlocksRemove) {}
+    :LC_UndoableDocumentModificationAction("Remove Block", actionContext, RS2::ActionBlocksRemove) {}
 
-void RS_ActionBlocksRemove::trigger() {
-    RS_DEBUG->print("RS_ActionBlocksRemove::trigger");
-
-    if (!(m_graphic && m_document)) {
-        finish(false);
-        return;
+bool RS_ActionBlocksRemove::doTriggerModifications(LC_DocumentModificationBatch& ctx) {
+    if (!((m_graphic != nullptr) && (m_document != nullptr))) { /// fixme - remove, should be checked on init
+        finish();
+        return false;
     }
 
     RS_BlockList *blockList = m_graphic->getBlockList();
     QList<RS_Block *> blocks = RS_DIALOGFACTORY->requestSelectedBlocksRemovalDialog(blockList);
 
     if (blocks.isEmpty()) {
-        finish(false);
-        return;
+        finish();
+        return false;
     }
 
     // list of containers that might refer to the block via inserts:
@@ -60,28 +57,25 @@ void RS_ActionBlocksRemove::trigger() {
         containerList.push_back(blockList->at(bi));
     }
 
-    undoCycleStart();
-
-    for (auto block: blocks) {
+    for (const auto block: std::as_const(blocks)) {
         if (nullptr == block) {
             continue;
         }
-        for (auto cont: containerList) {
+        for (const auto cont: containerList) {
         // remove all inserts from the graphic:
-            bool done;
-            do {
-                done = true;
-                for (auto e: *cont) {
-                    if (e->is(RS2::EntityInsert)) {
-                        auto *ins = static_cast<RS_Insert *>(e);
-                        if (ins->getName() == block->getName() && !ins->isUndone()) {
-                            m_document->addUndoable(ins);
-                            ins->setUndoState(true);
-                            done = false;
-                            break;
-                        }
+        bool done = false;
+        do {
+            done = true;
+            for (const auto e : *cont) {
+                if (e->is(RS2::EntityInsert)) {
+                    auto* insert = static_cast<RS_Insert*>(e);
+                    if (insert->getName() == block->getName() && !insert->isDeleted()) {
+                        ctx -= insert;
+                        done = false;
+                        break;
                     }
                 }
+            }
             } while (!done);
         }
 
@@ -95,21 +89,19 @@ void RS_ActionBlocksRemove::trigger() {
         RS_DIALOGFACTORY->closeEditBlockWindow(block);
 
         // Now remove block from the block list, but do not delete:
-        block->setUndoState(true);
-        m_document->addUndoable(block);
+        ctx -= block;
     }
-    undoCycleEnd();
 
     m_graphic->addBlockNotification();
     m_graphic->updateInserts();
-    redrawDrawing();
     blockList->activate(nullptr);
 
-    finish(false);
-    updateSelectionWidget();
+    finish(); // fixme - is it needed there?
+
+    return true;
 }
 
-void RS_ActionBlocksRemove::init(int status) {
+void RS_ActionBlocksRemove::init(const int status) {
     RS_ActionInterface::init(status);
     trigger();
 }

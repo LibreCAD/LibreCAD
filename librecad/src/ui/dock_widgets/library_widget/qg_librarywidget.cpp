@@ -25,6 +25,7 @@
 **
 **********************************************************************/
 
+#include "qg_librarywidget.h"
 
 #include <QApplication>
 #include <QDir>
@@ -35,19 +36,16 @@
 #include <QPushButton>
 #include <QStandardItemModel>
 #include <QStandardPaths>
-#include <QToolButton>
 #include <QTreeView>
 #include <QVBoxLayout>
-#include <QAbstractItemView>
 
-#include "qg_librarywidget.h"
+#include "lc_action_block_library_insert.h"
 #include "lc_containertraverser.h"
 #include "lc_documentsstorage.h"
 #include "lc_graphicviewport.h"
 #include "lc_printviewportrenderer.h"
 #include "qg_actionhandler.h"
 #include "rs_actioninterface.h"
-#include "rs_actionlibraryinsert.h"
 #include "rs_debug.h"
 #include "rs_graphic.h"
 #include "rs_painter.h"
@@ -56,17 +54,15 @@
 
 namespace {
     // fixme - sand - rework, use reusable class
-    void writePng(const QString& pngPath, QPixmap pixmap)
-    {
+    void writePng(const QString& pngPath, const QPixmap& pixmap) {
         QImageWriter iio;
         QImage img = pixmap.toImage();
-        img = img.scaled(64,64, Qt::IgnoreAspectRatio, Qt::SmoothTransformation );
+        img = img.scaled(64, 64, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
         // iio.setImage(img);
         iio.setFileName(pngPath);
         iio.setFormat("PNG");
         if (!iio.write(img)) {
-            RS_DEBUG->print(RS_Debug::D_ERROR,
-                            "QG_LibraryWidget::getPathToPixmap: Cannot write thumbnail: '%s'",
+            RS_DEBUG->print(RS_Debug::D_ERROR, "QG_LibraryWidget::getPathToPixmap: Cannot write thumbnail: '%s'",
                             pngPath.toLatin1().data());
         }
     }
@@ -78,48 +74,48 @@ namespace {
  *
  * @author Rallaz
  */
-QG_LibraryWidget::QG_LibraryWidget(QG_ActionHandler *action_handler, QWidget* parent, const char* name, Qt::WindowFlags fl)
-    : LC_GraphicViewAwareWidget(parent, name, fl), actionHandler{action_handler}{
-    auto vboxLayout = new QVBoxLayout(this);
+QG_LibraryWidget::QG_LibraryWidget(const QG_ActionHandler* actionHandler, QWidget* parent, const char* name, const Qt::WindowFlags fl)
+    : LC_GraphicViewAwareWidget(parent, name, fl), m_actionHandler{actionHandler} {
+    const auto vboxLayout = new QVBoxLayout(this);
     vboxLayout->setSpacing(2);
     vboxLayout->setContentsMargins(2, 2, 2, 2);
-    dirView = new QTreeView(this);
-    dirView->setRootIsDecorated(true);
-    dirView->setEditTriggers(QAbstractItemView::NoEditTriggers);
-    vboxLayout->addWidget(dirView);
-    ivPreview = new QListView(this);
-    ivPreview->setViewMode(QListView::IconMode);
-    vboxLayout->addWidget(ivPreview);
-    bInsert = new QPushButton(tr("Insert"), this);
-    vboxLayout->addWidget(bInsert);
+    m_dirView = new QTreeView(this);
+    m_dirView->setRootIsDecorated(true);
+    m_dirView->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    vboxLayout->addWidget(m_dirView);
+    m_ivPreview = new QListView(this);
+    m_ivPreview->setViewMode(QListView::IconMode);
+    vboxLayout->addWidget(m_ivPreview);
+    m_bInsert = new QPushButton(tr("Insert"), this);
+    vboxLayout->addWidget(m_bInsert);
 
-    QHBoxLayout *refreshButtonsLayout = new QHBoxLayout();
-    bRefresh = new QPushButton(tr("Refresh"), this);
-    refreshButtonsLayout->addWidget(bRefresh);
-    bRebuild = new QPushButton(tr("Rebuild"), this);
-    refreshButtonsLayout->addWidget(bRebuild);
+    const auto refreshButtonsLayout = new QHBoxLayout();
+    m_bRefresh = new QPushButton(tr("Refresh"), this);
+    refreshButtonsLayout->addWidget(m_bRefresh);
+    m_bRebuild = new QPushButton(tr("Rebuild"), this);
+    refreshButtonsLayout->addWidget(m_bRebuild);
     vboxLayout->addLayout(refreshButtonsLayout);
 
     buildTree();
 
-    connect(dirView, &QTreeView::expanded, this, &QG_LibraryWidget::expandView);
-    connect(dirView, &QTreeView::collapsed, this, &QG_LibraryWidget::collapseView);
-    connect(dirView, &QTreeView::clicked, this, &QG_LibraryWidget::updatePreview);
-    connect(bInsert, &QPushButton::clicked, this, &QG_LibraryWidget::insert);
-    connect(bRefresh, &QPushButton::clicked, this, &QG_LibraryWidget::refresh);
-    connect(bRebuild, &QPushButton::clicked, this, &QG_LibraryWidget::buildTree);
+    connect(m_dirView, &QTreeView::expanded, this, &QG_LibraryWidget::expandView);
+    connect(m_dirView, &QTreeView::collapsed, this, &QG_LibraryWidget::collapseView);
+    connect(m_dirView, &QTreeView::clicked, this, &QG_LibraryWidget::updatePreview);
+    connect(m_bInsert, &QPushButton::clicked, this, &QG_LibraryWidget::insert);
+    connect(m_bRefresh, &QPushButton::clicked, this, &QG_LibraryWidget::refresh);
+    connect(m_bRebuild, &QPushButton::clicked, this, &QG_LibraryWidget::buildTree);
 
     updateWidgetSettings();
 }
 
 QG_LibraryWidget::~QG_LibraryWidget() = default;
 
-void QG_LibraryWidget::setGraphicView([[maybe_unused]]RS_GraphicView* gview) {
+void QG_LibraryWidget::setGraphicView([[maybe_unused]] RS_GraphicView* gview) {
     // todo - add further processing later
 }
 
-void QG_LibraryWidget::setActionHandler(QG_ActionHandler* ah) {
-    actionHandler = ah;
+void QG_LibraryWidget::setActionHandler(const QG_ActionHandler* ah) {
+    m_actionHandler = ah;
 }
 
 /**
@@ -127,8 +123,7 @@ void QG_LibraryWidget::setActionHandler(QG_ActionHandler* ah) {
  */
 void QG_LibraryWidget::keyPressEvent(QKeyEvent* e) {
     switch (e->key()) {
-        case Qt::Key_Escape:
-            emit escape();
+        case Qt::Key_Escape: emit escape();
             break;
         default:
             QWidget::keyPressEvent(e);
@@ -136,14 +131,13 @@ void QG_LibraryWidget::keyPressEvent(QKeyEvent* e) {
     }
 }
 
-
 /**
  * Insert.
  */
 void QG_LibraryWidget::insert() {
-    QItemSelectionModel* selIconView = ivPreview->selectionModel();
-    QModelIndex idx = selIconView->currentIndex();
-    QStandardItem * item = iconModel->itemFromIndex ( idx );
+    const QItemSelectionModel* selIconView = m_ivPreview->selectionModel();
+    const QModelIndex idx = selIconView->currentIndex();
+    const QStandardItem* item = m_iconModel->itemFromIndex(idx);
     if (item == nullptr) {
         return;
     }
@@ -151,33 +145,29 @@ void QG_LibraryWidget::insert() {
     QString dxfPath = getItemPath(item);
 
     if (QFileInfo(dxfPath).isReadable()) {
-        if (actionHandler) {
-		std::shared_ptr<RS_ActionInterface> a =
-                actionHandler->setCurrentAction(RS2::ActionLibraryInsert);
+        if (m_actionHandler != nullptr) {
+            const std::shared_ptr<RS_ActionInterface> a = m_actionHandler->setCurrentAction(RS2::ActionLibraryInsert);
             if (a) {
-                auto* action = static_cast<RS_ActionLibraryInsert*>(a.get());
+                const auto* action = static_cast<LC_ActionBlockLibraryInsert*>(a.get());
                 action->setFile(std::move(dxfPath));
-            } else {
-                RS_DEBUG->print(RS_Debug::D_ERROR,
-                                "QG_LibraryWidget::insert:"
-                                "Cannot create action RS_ActionLibraryInsert");
+            }
+            else {
+                RS_DEBUG->print(RS_Debug::D_ERROR, "QG_LibraryWidget::insert:" "Cannot create action RS_ActionLibraryInsert");
             }
         }
-    } else {
-        RS_DEBUG->print(RS_Debug::D_ERROR,
-                        "QG_LibraryWidget::insert: Can't read file: '%s'", dxfPath.toLatin1().data());
+    }
+    else {
+        RS_DEBUG->print(RS_Debug::D_ERROR, "QG_LibraryWidget::insert: Can't read file: '%s'", dxfPath.toLatin1().data());
     }
 }
-
 
 /**
  * Refresh
  */
 void QG_LibraryWidget::refresh() {
     scanTree();
-    updatePreview(dirView->selectionModel()->currentIndex());
+    updatePreview(m_dirView->selectionModel()->currentIndex());
 }
-
 
 /**
  * Scan library tree for new items
@@ -188,27 +178,25 @@ void QG_LibraryWidget::scanTree() {
         appendTree(nullptr, directory);
     }
 
-    QString customPath= LC_GET_ONE_STR("Paths", "Library", "");
+    const QString customPath = LC_GET_ONE_STR("Paths", "Library", "");
 
-    if(customPath.size()>0){
+    if (customPath.size() > 0) {
         //todo: make the custom path more flexible
-        appendTree(nullptr,customPath);
+        appendTree(nullptr, customPath);
     }
 }
-
 
 /**
  * (Re)build dirModel and iconModel from scratch
  */
 void QG_LibraryWidget::buildTree() {
-    dirModel = std::make_unique<QStandardItemModel>();
-    iconModel = std::make_unique<QStandardItemModel>();
+    m_dirModel = std::make_unique<QStandardItemModel>();
+    m_iconModel = std::make_unique<QStandardItemModel>();
     scanTree();
-    dirView->setModel(dirModel.get());
-    ivPreview->setModel(iconModel.get());
-    dirModel->setHorizontalHeaderLabels ( QStringList(tr("Directories")));
+    m_dirView->setModel(m_dirModel.get());
+    m_ivPreview->setModel(m_iconModel.get());
+    m_dirModel->setHorizontalHeaderLabels(QStringList(tr("Directories")));
 }
-
 
 /**
  * Appends the given directory to the given list view item. Called recursively until all
@@ -216,40 +204,42 @@ void QG_LibraryWidget::buildTree() {
  *
  * @author Rallaz
  */
-void QG_LibraryWidget::appendTree(QStandardItem* item, QString directory) {
-//    QStringList::Iterator it;
-    QDir dir(directory);
+void QG_LibraryWidget::appendTree(QStandardItem* item, const QString& directory) {
+    //    QStringList::Iterator it;
+    const QDir dir(directory);
 
-	if (!dir.exists()) {
-	    return;
-	}
+    if (!dir.exists()) {
+        return;
+    }
 
     // read subdirectories of this directory:
-    QStringList lDirectoryList = dir.entryList(QDir::Dirs|QDir::NoDotAndDotDot, QDir::Name);
+    QStringList lDirectoryList = dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name);
 
-	if (!item) item = dirModel->invisibleRootItem();
+    if (item == nullptr) {
+        item = m_dirModel->invisibleRootItem();
+    }
 
-    foreach (const auto& lDirectory, lDirectoryList) {
-		QStandardItem* newItem=nullptr;
+    foreach(const auto& lDirectory, lDirectoryList) {
+        QStandardItem* newItem = nullptr;
 
         // Look for an item already existing and take this
         //   instead of making a new one:
         for (int j = 0; j < item->rowCount(); ++j) {
-			QStandardItem* const searchItem = item->child (j);
+            QStandardItem* const searchItem = item->child(j);
             if (searchItem->text() == lDirectory) {
-                newItem=searchItem;
+                newItem = searchItem;
                 break;
             }
         }
 
         // Create new item if no existing was found:
-        if (!newItem) {
+        if (newItem == nullptr) {
             newItem = new QStandardItem(QIcon(":/icons/folderclosed.lci"), lDirectory);
             item->setChild(item->rowCount(), newItem);
         }
-        appendTree(newItem, directory+QDir::separator()+lDirectory);
+        appendTree(newItem, directory + QDir::separator() + lDirectory);
     }
-    item->sortChildren ( 0, Qt::AscendingOrder );
+    item->sortChildren(0, Qt::AscendingOrder);
 }
 
 /**
@@ -257,8 +247,8 @@ void QG_LibraryWidget::appendTree(QStandardItem* item, QString directory) {
  *
  * @author Rallaz
  */
-void QG_LibraryWidget::expandView( QModelIndex idx ){
-    QStandardItem * item = dirModel->itemFromIndex ( idx );
+void QG_LibraryWidget::expandView(const QModelIndex& idx) const {
+    QStandardItem* item = m_dirModel->itemFromIndex(idx);
     if (item != nullptr) {
         item->setIcon(QIcon(":/icons/fileopen.lci"));
     }
@@ -269,11 +259,15 @@ void QG_LibraryWidget::expandView( QModelIndex idx ){
  *
  * @author Rallaz
  */
-void QG_LibraryWidget::collapseView( QModelIndex idx ){
-    QStandardItem * item = dirModel->itemFromIndex ( idx );
+void QG_LibraryWidget::collapseView(const QModelIndex& idx) const {
+    QStandardItem* item = m_dirModel->itemFromIndex(idx);
     if (item != nullptr) {
         item->setIcon(QIcon(":/icons/folderclosed.lci"));
     }
+}
+
+QLayout* QG_LibraryWidget::getTopLevelLayout() const {
+    return layout();
 }
 
 /**
@@ -281,32 +275,31 @@ void QG_LibraryWidget::collapseView( QModelIndex idx ){
  *
  * @author Rallaz
  */
-void QG_LibraryWidget::updatePreview(QModelIndex idx) {
-    QStandardItem * item = dirModel->itemFromIndex ( idx );
+void QG_LibraryWidget::updatePreview(const QModelIndex& idx) {
+    const QStandardItem* item = m_dirModel->itemFromIndex(idx);
     if (item == nullptr) {
         return;
     }
 
-    QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
+    QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
 
     // dir from the point of view of the library browser (e.g. /mechanical/screws)
-    QString directory = getItemDir(item); //RLZ change to do-while
-    iconModel->clear();
+    const QString directory = getItemDir(item); //RLZ change to do-while
+    m_iconModel->clear();
 
     // List of all directories that contain part libraries:
-    QStringList directoryList = RS_SYSTEM->getDirectoryList("library");
+    const QStringList directoryList = RS_SYSTEM->getDirectoryList("library");
     QDir itemDir;
     QStringList itemPathList;
 
     // look in all possible system directories for DXF files in the current library path:
-    for (int i = 0; i < directoryList.size(); ++i) {
-        itemDir.setPath(directoryList.at(i)+directory);
+    for (const auto & i : directoryList) {
+        itemDir.setPath(i + directory);
 
         if (itemDir.exists()) {
-            QStringList itemNameList =
-                itemDir.entryList(QStringList("*.dxf"), QDir::Files, QDir::Name);
-            for (int j = 0; j < itemNameList.size(); ++j) {
-                itemPathList += itemDir.path()+QDir::separator()+itemNameList.at(j);
+            QStringList itemNameList = itemDir.entryList(QStringList("*.dxf"), QDir::Files, QDir::Name);
+            for (const auto & j : itemNameList) {
+                itemPathList += itemDir.path() + QDir::separator() + j;
             }
         }
     }
@@ -318,44 +311,45 @@ void QG_LibraryWidget::updatePreview(QModelIndex idx) {
     for (int i = 0; i < itemPathList.size(); ++i) {
         QString label = QFileInfo(itemPathList.at(i)).completeBaseName();
         QIcon icon = getIcon(directory, QFileInfo(itemPathList.at(i)).fileName(), itemPathList.at(i));
-        auto newItem = new QStandardItem(icon, label);
-        iconModel->setItem(i, newItem);
+        const auto newItem = new QStandardItem(icon, label);
+        m_iconModel->setItem(i, newItem);
     }
     QApplication::restoreOverrideCursor();
 }
 
- //RLZ change to do-while
+//RLZ change to do-while
 /**
  * @return Directory (in terms of the List view) to the given item (e.g. /mechanical/screws)
  */
-QString QG_LibraryWidget::getItemDir(QStandardItem* item) {
-    if (item == nullptr)
+QString QG_LibraryWidget::getItemDir(const QStandardItem* item) {
+    if (item == nullptr) {
         return {};
+    }
 
-    QStandardItem* parent = item->parent();
+    const QStandardItem* parent = item->parent();
     return getItemDir(parent) + QDir::separator() + QString("%1").arg(item->text());
 }
-
 
 /**
  * @return Path of the DXF file that is represented by the given item.
  */
-QString QG_LibraryWidget::getItemPath(QStandardItem* item) {
-    if (item == nullptr)
+QString QG_LibraryWidget::getItemPath(const QStandardItem* item) {
+    if (item == nullptr) {
         return {};
-    QItemSelectionModel* selDirView = dirView->selectionModel();
-    QModelIndex idx = selDirView->currentIndex();
-    QStandardItem * dirItem = dirModel->itemFromIndex ( idx );
-    QString dir = getItemDir(dirItem);
+    }
+    const QItemSelectionModel* selDirView = m_dirView->selectionModel();
+    const QModelIndex idx = selDirView->currentIndex();
+    const QStandardItem* dirItem = m_dirModel->itemFromIndex(idx);
+    const QString dir = getItemDir(dirItem);
 
     // List of all directories that contain part libraries:
     QStringList directoryList = RS_SYSTEM->getDirectoryList("library");
 
     // look in all possible system directories for DXF files in the current library path:
-    for (auto it=directoryList.begin(); it!=directoryList.end(); ++it) {
-        QDir itemDir((*it)+dir);
+    for (auto & it : directoryList) {
+        QDir itemDir(it + dir);
         if (itemDir.exists()) {
-            QString dxfFile = (*it) + dir + QDir::separator() + item->text() + ".dxf";
+            QString dxfFile = it + dir + QDir::separator() + item->text() + ".dxf";
             if (QFileInfo(dxfFile).isReadable()) {
                 return dxfFile;
             }
@@ -371,22 +365,19 @@ QString QG_LibraryWidget::getItemPath(QStandardItem* item) {
  *
  * @param dir Library directory (e.g. "/mechanical/screws")
  * @param dxfFile File name (e.g. "screw1.dxf")
- * @param dxfPath Full path to the existing DXF file on disk 
+ * @param dxfPath Full path to the existing DXF file on disk
  *                          (e.g. /home/tux/.qcad/library/mechanical/screws/screw1.dxf)
  */
-QIcon QG_LibraryWidget::getIcon(const QString& dir, const QString& dxfFile,
-                                    const QString& dxfPath) {
-    QString pngFile = getPathToPixmap(dir, dxfFile, dxfPath);
-    QFileInfo fiPng(pngFile);
+QIcon QG_LibraryWidget::getIcon(const QString& dir, const QString& dxfFile, const QString& dxfPath) {
+    const QString pngFile = getPathToPixmap(dir, dxfFile, dxfPath);
+    const QFileInfo fiPng(pngFile);
 
     // found existing thumbnail:
     if (fiPng.isFile()) {
         return QIcon(pngFile);
     }
     // default thumbnail:
-    else {
-        return QIcon(QPixmap(64,64));
-    }
+    return QIcon(QPixmap(64, 64));
 }
 
 // fixme - sand - files - generation of thumbnails should be extracted!!! Do this on general rework of the library
@@ -395,16 +386,13 @@ QIcon QG_LibraryWidget::getIcon(const QString& dir, const QString& dxfFile,
  * @return Path to the thumbnail of the given DXF file. If no thumbnail exists, one is
  * created in the user's home. If no thumbnail can be created, an empty string is returned.
  */
-QString QG_LibraryWidget::getPathToPixmap(const QString& dir,
-        const QString& dxfFile,
-        const QString& dxfPath) {
-
+QString QG_LibraryWidget::getPathToPixmap(const QString& dir, const QString& dxfFile, const QString& dxfPath) {
     // the thumbnail must be created in the user's home.
-    QString iconCacheLocation=QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + QDir::separator() + "iconCache" + QDir::separator();
+    QString iconCacheLocation = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + QDir::separator() + "iconCache" +
+        QDir::separator();
 
-    RS_DEBUG->print("QG_LibraryWidget::getPathToPixmap: "
-                    "dir: '%s' dxfFile: '%s' dxfPath: '%s'",
-                    dir.toLatin1().data(), dxfFile.toLatin1().data(), dxfPath.toLatin1().data());
+    RS_DEBUG->print("QG_LibraryWidget::getPathToPixmap: " "dir: '%s' dxfFile: '%s' dxfPath: '%s'", dir.toLatin1().data(),
+                    dxfFile.toLatin1().data(), dxfPath.toLatin1().data());
 
     // List of all directories that contain part libraries:
     QStringList directoryList = RS_SYSTEM->getDirectoryList("library");
@@ -414,11 +402,10 @@ QString QG_LibraryWidget::getPathToPixmap(const QString& dir,
 
     // look in all possible system directories for PNG files
     //  in the current library path:
-    foreach (QString path, directoryList) {
+    foreach(QString path, directoryList) {
         QString itemDir = path + dir;
         QString pngPath = itemDir + QDir::separator() + fiDxf.baseName() + ".png";
-        RS_DEBUG->print("QG_LibraryWidget::getPathToPixmap: checking: '%s'",
-                        pngPath.toLatin1().data());
+        RS_DEBUG->print("QG_LibraryWidget::getPathToPixmap: checking: '%s'", pngPath.toLatin1().data());
         QFileInfo fiPng(pngPath);
 
         // the thumbnail exists:
@@ -426,13 +413,10 @@ QString QG_LibraryWidget::getPathToPixmap(const QString& dir,
             RS_DEBUG->print("QG_LibraryWidget::getPathToPixmap: dxf date: %s, png date: %s",
                             fiDxf.lastModified().toString().toLatin1().data(), fiPng.lastModified().toString().toLatin1().data());
             if (fiPng.lastModified() > fiDxf.lastModified()) {
-                RS_DEBUG->print("QG_LibraryWidget::getPathToPixmap: thumbnail found: '%s'",
-                                pngPath.toLatin1().data());
+                RS_DEBUG->print("QG_LibraryWidget::getPathToPixmap: thumbnail found: '%s'", pngPath.toLatin1().data());
                 return pngPath;
-            } else {
-                RS_DEBUG->print("QG_LibraryWidget::getPathToPixmap: thumbnail needs to be updated: '%s'",
-                                pngPath.toLatin1().data());
             }
+            RS_DEBUG->print("QG_LibraryWidget::getPathToPixmap: thumbnail needs to be updated: '%s'", pngPath.toLatin1().data());
         }
     }
 
@@ -441,26 +425,24 @@ QString QG_LibraryWidget::getPathToPixmap(const QString& dir,
 
     QString pngPath = iconCacheLocation + dir + QDir::separator() + fiDxf.baseName() + ".png";
 
-    QPixmap buffer(128,128); // fixme - sand - add settings for thumbnail size, generate per setting!
+    QPixmap buffer(128, 128); // fixme - sand - add settings for thumbnail size, generate per setting!
     RS_Painter painter(&buffer);
-    painter.setBackground(RS_Color(255,255,255));
-    painter.eraseRect(0,0, 128,128);
+    painter.setBackground(RS_Color(255, 255, 255));
+    painter.eraseRect(0, 0, 128, 128);
 
     LC_GraphicViewport viewport;
-    viewport.setSize(128,128);
+    viewport.setSize(128, 128);
 
     RS_Graphic graphic;
 
     LC_DocumentsStorage storage;
 
     if (!storage.loadDocument(&graphic, dxfPath, RS2::FormatUnknown)) {
-        RS_DEBUG->print(RS_Debug::D_ERROR,
-                        "QG_LibraryWidget::getPathToPixmap: Cannot open file: '%s'",
-                        dxfPath.toLatin1().data());
+        RS_DEBUG->print(RS_Debug::D_ERROR, "QG_LibraryWidget::getPathToPixmap: Cannot open file: '%s'", dxfPath.toLatin1().data());
         return {};
     }
 
-    viewport.setContainer(&graphic);
+    viewport.setDocument(&graphic);
     viewport.initAfterDocumentOpen();
     viewport.zoomAuto(false);
 
@@ -468,7 +450,7 @@ QString QG_LibraryWidget::getPathToPixmap(const QString& dir,
     renderer.loadSettings();
     renderer.setupPainter(&painter);
 
-    for(RS_Entity* e: lc::LC_ContainerTraverser{graphic, RS2::ResolveAll}.entities()) {
+    for (RS_Entity* e : lc::LC_ContainerTraverser{graphic, RS2::ResolveAll}.entities()) {
         if (e != nullptr && e->rtti() != RS2::EntityHatch) {
             RS_Pen pen = e->getPen();
             pen.setColor(Qt::black);
@@ -484,20 +466,4 @@ QString QG_LibraryWidget::getPathToPixmap(const QString& dir,
     writePng(pngPath, std::move(buffer));
     LC_LOG << "Writing to " << pngPath << " OK";
     return pngPath;
-}
-
-void QG_LibraryWidget::updateWidgetSettings(){
-    LC_GROUP("Widgets"); {
-        bool flatIcons = LC_GET_BOOL("DockWidgetsFlatIcons", true);
-        int iconSize = LC_GET_INT("DockWidgetsIconSize", 16);
-
-        QSize size(iconSize, iconSize);
-
-        QList<QToolButton *> widgets = this->findChildren<QToolButton *>();
-        foreach(QToolButton *w, widgets) {
-            w->setAutoRaise(flatIcons);
-            w->setIconSize(size);
-        }
-    }
-    LC_GROUP_END();
 }

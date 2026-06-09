@@ -30,7 +30,7 @@
 class LC_ActionInteractivePickAngle:public LC_ActionInteractivePickBase {
     Q_OBJECT
 public:
-    LC_ActionInteractivePickAngle(LC_ActionContext *actionContext);
+    explicit LC_ActionInteractivePickAngle(LC_ActionContext *actionContext);
     ~LC_ActionInteractivePickAngle() override;
     void init(int status) override;
 protected:
@@ -55,15 +55,16 @@ protected:
     bool isInteractiveDataValid() override;
     void doSetInteractiveInputValue(LC_ActionContext::InteractiveInputInfo* interactiveInputInfo) override;
     RS2::CursorType doGetMouseCursor(int status) override;
-    void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
-    void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
-    void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
-    void updateInfoCursor2(const RS_Vector& point2, const RS_Vector& intersection);
+    void onMouseLeftButtonRelease(int status, const LC_MouseEvent* e) override;
+    void onMouseRightButtonRelease(int status, const LC_MouseEvent* e) override;
+    void onMouseMoveEvent(int status, const LC_MouseEvent* e) override;
+    void updateInfoCursor2(const RS_Vector& point2, const RS_Vector& intersection) const;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
-    void updateMouseButtonHints() override;
-    void updateInfoCursor(const RS_Vector& mouse, const RS_Vector& point2, const RS_Vector& startPoint);
-    void updateInfoCursor(const RS_Vector &mouse, const RS_Vector &startPoint);
+    void updateActionPrompt() override;
+    void updateInfoCursor(const RS_Vector& mouse, const RS_Vector& point2, const RS_Vector& startPoint) const;
+    void updateInfoCursor(const RS_Vector &mouse, const RS_Vector &startPoint) const;
     void doTrigger() override;
+    bool isInVisualSnapStatus(int status) override;
 };
 
-#endif // LC_ACTIONINTERACTIVEPICKANGLE_H
+#endif

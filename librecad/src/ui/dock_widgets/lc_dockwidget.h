@@ -28,11 +28,11 @@
 
 class LC_DockWidget : public QDockWidget {
     public:
-        LC_DockWidget(QWidget* parent, const QString& title, const QString& m_vertical_title, const Qt::WindowFlags& flags = Qt::WindowFlags());
+        LC_DockWidget(QWidget* parent, const QString& title, const QString& verticalTitle, const Qt::WindowFlags& flags = Qt::WindowFlags());
         void updateTitle();
     private:
         QString m_verticalTitle;
         QString m_horizontalTitle;
 };
 
-#endif // LC_DOCKWIDGET_H
+#endif

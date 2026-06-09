@@ -22,14 +22,14 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
 
-#include <boost/numeric/ublas/matrix.hpp>
-#include <boost/numeric/ublas/io.hpp>
+#include "lc_rtree.h"
+
 #include <boost/geometry.hpp>
 #include <boost/geometry/geometries/register/point.hpp>
 #include <boost/geometry/index/rtree.hpp>
+#include <boost/numeric/ublas/matrix.hpp>
 
 #include "lc_rect.h"
-#include "lc_rtree.h"
 #include "rs.h"
 #include "rs_vector.h"
 
@@ -43,34 +43,34 @@ namespace lc {
 
 namespace geo {
 
-struct RTree::RTreeImpl: public bgi::rtree< TreeValue, bgi::quadratic<16> >
+struct RTree::RTreeImpl: bgi::rtree< TreeValue, bgi::quadratic<16> >
 {
-    RTreeImpl(double tolerance):
+    RTreeImpl(const double tolerance):
         m_tolerance{tolerance},
         m_halfBox{0.5 * m_tolerance, 0.5 * m_tolerance}
     {}
 
-    BPoint ToPoint(const RS_Vector& point) const
+    BPoint toPoint(const RS_Vector& point) const
     {
         return {point.x, point.y};
     }
 
-    static RS_Vector ToPoint(const BBox& box)
+    static RS_Vector toPoint(const BBox& box)
     {
-        auto min = box.min_corner();
-        auto max = box.max_corner();
-        auto center = RS_Vector{min.get<0>()+max.get<0>(), min.get<1>()+max.get<1>() } * 0.5;
+        const auto min = box.min_corner();
+        const auto max = box.max_corner();
+        const auto center = RS_Vector{min.get<0>()+max.get<0>(), min.get<1>()+max.get<1>() } * 0.5;
         return center;
     }
 
-    BBox ToBox(const RS_Vector& point) const
+    BBox toBox(const RS_Vector& point) const
     {
-        return {ToPoint(point - m_halfBox), ToPoint(point + m_halfBox)};
+        return {toPoint(point - m_halfBox), toPoint(point + m_halfBox)};
     }
 
-    BBox ToBox(const LC_Rect& rect) const
+    BBox toBox(const LC_Rect& rect) const
     {
-        return {ToPoint(rect.lowerLeftCorner()), ToPoint(rect.upperRightCorner())};
+        return {toPoint(rect.lowerLeftCorner()), toPoint(rect.upperRightCorner())};
     }
 
     RS_VectorSolutions Intersects(const BBox& box) const
@@ -78,8 +78,9 @@ struct RTree::RTreeImpl: public bgi::rtree< TreeValue, bgi::quadratic<16> >
         std::vector<TreeValue> result_s;
         query(bgi::intersects(box), std::back_inserter(result_s));
         RS_VectorSolutions ret;
-        for(const auto& [box, index]: result_s)
-            ret.push_back(ToPoint(box));
+        for(const auto& [bbox, index]: result_s) {
+            ret.push_back(toPoint(bbox));
+        }
         return ret;
     }
 
@@ -114,10 +115,10 @@ RTree::RTree(double toleranceSize):
      *                        i.e. the node box centers
      */
 RTree::RTree(const RS_VectorSolutions& points, double toleranceSize):
-    m_pRTree{std::make_unique<RTreeImpl>(toleranceSize)}
-{
-    for(const RS_Vector& point: points)
+    m_pRTree{std::make_unique<RTreeImpl>(toleranceSize)}{
+    for(const RS_Vector& point: points) {
         Insert(point);
+    }
 }
 
 
@@ -127,11 +128,9 @@ RTree::RTree(const RS_VectorSolutions& points, double toleranceSize):
  * @return bool - true, if successful; false, if a coincident point is already in the the container
  * @author Dongxu Li
  */
-bool RTree::Insert(const RS_Vector& point)
-{
-
+bool RTree::Insert(const RS_Vector& point) const {
     // create a box
-    BBox b = m_pRTree->ToBox(point);
+    BBox b = m_pRTree->toBox(point);
     // insert new value
     m_pRTree->insert({b, m_pRTree->size()});
     return true;
@@ -141,27 +140,26 @@ bool RTree::Insert(const RS_Vector& point)
      * @param area box
      * @return
      */
-bool RTree::Insert(const Area& area)
-{
+bool RTree::Insert(const Area& area) const {
     // create a box
-    BBox b = m_pRTree->ToBox(area);
+    BBox b = m_pRTree->toBox(area);
     // insert new value
     m_pRTree->insert(std::make_pair(b, m_pRTree->size()));
     return true;
 }
 
-RS_VectorSolutions RTree::NearestNeighbors(const RS_Vector& point) const
+RS_VectorSolutions RTree::nearestNeighbors(const RS_Vector& point) const
 {
     // convert the point to a box with side length by the default tolerance
-    BBox box = m_pRTree->ToBox(point);
+    const BBox box = m_pRTree->toBox(point);
     // find values intersecting some area defined by a box
     return m_pRTree->Intersects(box);
 }
 
-RS_VectorSolutions RTree::PointsInBox(const Area& area) const
+RS_VectorSolutions RTree::pointsInBox(const Area& area) const
 {
     // find values intersecting some area defined by a box
-    BBox box = m_pRTree->ToBox(area);
+    const BBox box = m_pRTree->toBox(area);
     return m_pRTree->Intersects(box);
 }
 

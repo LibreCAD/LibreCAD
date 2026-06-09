@@ -25,6 +25,7 @@
 **********************************************************************/
 
 #include "rs_actionzoomprevious.h"
+
 #include "lc_graphicviewport.h"
 
 /**
@@ -34,12 +35,12 @@ RS_ActionZoomPrevious::RS_ActionZoomPrevious(LC_ActionContext *actionContext)
         :RS_ActionInterface("Previous zoom", actionContext, RS2::ActionZoomPrevious) {
 }
 
-void RS_ActionZoomPrevious::init(int status) {
+void RS_ActionZoomPrevious::init(const int status) {
     RS_ActionInterface::init(status);
     trigger();
 }
 
 void RS_ActionZoomPrevious::trigger() {
     m_viewport->zoomPrevious();
-    finish(false);
+    finish();
 }

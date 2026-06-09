@@ -34,9 +34,9 @@ namespace {
     const QString g_radialPrefix=QObject::tr("R", "Radial dimension prefix");
 }
 
-RS_ActionDimension::RS_ActionDimension(const char *name,LC_ActionContext *actionContext, RS2::EntityType dimType,  RS2::ActionType actionType)
-    :RS_PreviewActionInterface(name,actionContext, actionType),  m_dimTypeToCreate {dimType}{
-    reset();
+RS_ActionDimension::RS_ActionDimension(const char *name,LC_ActionContext *actionContext, const RS2::EntityType dimType, const RS2::ActionType actionType)
+    :LC_SingleEntityCreationAction(name,actionContext, actionType),  m_dimTypeToCreate {dimType}{
+    RS_ActionDimension::reset();
     readSettings();
 }
 
@@ -57,7 +57,7 @@ void RS_ActionDimension::reset(){
     m_diameter = false;
 }
 
-void RS_ActionDimension::init(int status){
+void RS_ActionDimension::init(const int status){
     RS_PreviewActionInterface::init(status);
 //reset();
 }
@@ -65,7 +65,7 @@ RS2::CursorType RS_ActionDimension::doGetMouseCursor([[maybe_unused]] int status
     return RS2::SelectCursor;
 }
 
-bool RS_ActionDimension::isDimensionAction(RS2::ActionType type){
+bool RS_ActionDimension::isDimensionAction(const RS2::ActionType type){
     switch (type) {
         case RS2::ActionDimAligned:
         case RS2::ActionDimLinear:
@@ -91,7 +91,7 @@ QString RS_ActionDimension::getText() const{
 
     QString l = m_label;
 
-    if (l.isEmpty() && (m_diameter == true || !m_tol1.isEmpty() || !m_tol2.isEmpty())) {
+    if (l.isEmpty() && (m_diameter || !m_tol1.isEmpty() || !m_tol2.isEmpty())) {
         l = "<>";
     }
 
@@ -117,7 +117,7 @@ QString RS_ActionDimension::getText() const{
     return l;
 }
 
-void RS_ActionDimension::setText(const QString &t){
+void RS_ActionDimension::setText(const QString &t) const {
     m_dimensionData->text = t;
 }
 
@@ -150,7 +150,7 @@ bool RS_ActionDimension::getDiameter() const{
     return m_diameter;
 }
 
-void RS_ActionDimension::setDiameter(bool d){
+void RS_ActionDimension::setDiameter(const bool d){
     m_diameter = d;
 }
 
@@ -168,9 +168,9 @@ void RS_ActionDimension::resume() {
     readSettings();
 }
 
-void RS_ActionDimension::setDimStyleName(const QString& styleName) {
-    LC_DimStylesList* stylesList = m_graphic->getDimStyleList();
-    auto typeSpecificDimStyle = stylesList->findByBaseNameAndType(styleName, m_dimTypeToCreate);
+void RS_ActionDimension::setDimStyleName(const QString& styleName) const {
+    const LC_DimStylesList* stylesList = m_graphic->getDimStyleList();
+    const auto typeSpecificDimStyle = stylesList->findByBaseNameAndType(styleName, m_dimTypeToCreate);
     if (typeSpecificDimStyle != nullptr) {
         m_dimensionData->style = typeSpecificDimStyle->getName();
     }
@@ -179,6 +179,6 @@ void RS_ActionDimension::setDimStyleName(const QString& styleName) {
     }
 }
 
-QString RS_ActionDimension::getDimStyleName() {
+QString RS_ActionDimension::getDimStyleName() const {
     return m_dimensionData->style;
 }

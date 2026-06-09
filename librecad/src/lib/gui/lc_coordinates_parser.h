@@ -32,14 +32,14 @@ class RS_GraphicView;
 
 class LC_CoordinatesParser{
 public:
-    LC_CoordinatesParser(RS_GraphicView* gview);
-    RS_CoordinateEvent parseCoordinate(const QString& inputStr, bool &stringContainsCoordinate);
+    explicit LC_CoordinatesParser(RS_GraphicView* gview);
+    RS_CoordinateEvent parseCoordinate(const QString& inputStr, bool &stringContainsCoordinate) const;
 private:
     RS_GraphicView* m_graphicView;
-    RS_Vector toWCS(const RS_Vector& ucs);
-    RS_Vector toUCS(const RS_Vector& wcs);
-    double toAbsUCSAngle(double ucsBasisAngle);
-    double toWCSAngle(double ucsAngle);
+    RS_Vector toWCS(const RS_Vector& ucs) const;
+    RS_Vector toUCS(const RS_Vector& wcs) const;
+    double toAbsUCSAngle(double ucsBasisAngle) const;
+    double toWCSAngle(double ucsAngle) const;
 };
 
-#endif // LC_COORDINATESPARSER_H
+#endif

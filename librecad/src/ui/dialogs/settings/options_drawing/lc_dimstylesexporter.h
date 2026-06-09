@@ -34,9 +34,9 @@ class LC_DimStylesExporter : public QObject{
 public:
     LC_DimStylesExporter();
     bool exportStyles(QWidget* parent, const QList<LC_DimStyleItem*> &styles, const QString& baseFileName);
-    bool importStyles(QWidget* parent, QList<LC_DimStyle*> &styles);
+    bool importStyles(QWidget* parent, QList<LC_DimStyle*> &styleItems);
 protected:
     bool obtainFileName(QWidget *parent, QString &fileName, bool forRead, const QString& baseFileName);
 };
 
-#endif // LC_DIMSTYLESEXPORTER_H
+#endif

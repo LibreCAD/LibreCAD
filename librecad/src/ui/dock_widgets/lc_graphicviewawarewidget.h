@@ -31,8 +31,14 @@
 
 class LC_GraphicViewAwareWidget: public QWidget, public LC_GraphicViewAware {
 public:
-    LC_GraphicViewAwareWidget(QWidget* parent,const char* name=nullptr, Qt::WindowFlags f = {});
+    explicit LC_GraphicViewAwareWidget(QWidget* parent,const char* name=nullptr, Qt::WindowFlags f = {});
     ~LC_GraphicViewAwareWidget() override;
+public slots:
+    void updateWidgetSettings() const;
+    void onDockLocationChanged(Qt::DockWidgetArea area);
+protected:
+    virtual void doAdjustForDockLocation(Qt::DockWidgetArea area);
+    virtual QLayout* getTopLevelLayout() const = 0;
 };
 
-#endif // LC_GRAPHICAWAREWIDGET_H
+#endif

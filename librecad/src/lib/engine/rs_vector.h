@@ -91,7 +91,7 @@ public:
     RS_Vector& rotate(const RS_Vector& center, const RS_Vector& angleVector);
     RS_Vector& scale(double factor);
     RS_Vector& scale(const RS_Vector& factor);
-    RS_Vector scale(const RS_Vector& factor) const;
+    RS_Vector scaled(const RS_Vector& factor) const;
     RS_Vector& scale(const RS_Vector& center, const RS_Vector& factor);
     RS_Vector& mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2);
     /**
@@ -137,11 +137,11 @@ public:
     }
 //!
 //! \brief operator == comparison of validity with bool
-//! \param valid boolean parameter
+//! \param val boolean parameter
 //! \return true is the parameter valid is the same as validity
 //!
-    bool operator == (bool valid) const;
-    bool operator != (bool valid) const;
+    bool operator == (bool val) const;
+    bool operator != (bool val) const;
 
     static bool isValid(const RS_Vector& v) {
         return v.valid;
@@ -157,17 +157,21 @@ public:
                             const RS_Vector& pos);
 
     /** switch x,y for all vectors */
-    RS_Vector flipXY(void) const;
+    RS_Vector flipXY() const;
 
     friend RS_Vector operator * (double scale, const RS_Vector& vp);
     friend std::ostream& operator << (std::ostream&, const RS_Vector& v);
+
+    double getX() const {return x;}
+    double getY() const {return y;}
+    void setX(const double val){ x = val;}
+    void setY(const double val){ y = val;}
 
 #ifdef RS_TEST
 
     static bool test();
 #endif
 
-public:
     double x=0.;
     double y=0.;
     double z=0.;
@@ -185,7 +189,7 @@ public:
     RS_VectorSolutions() = default;
     RS_VectorSolutions(std::vector<RS_Vector> vectors);
     RS_VectorSolutions(std::initializer_list<RS_Vector> list);
-    RS_VectorSolutions(int num);
+    explicit RS_VectorSolutions(int num);
 
     void alloc(size_t num);
     void clear();
@@ -201,17 +205,18 @@ public:
     RS_Vector& front();
     RS_Vector& at(size_t i);
     const RS_Vector& at(size_t i) const;
-    const RS_Vector&  operator [] (const size_t i) const;
-    RS_Vector&  operator [] (const size_t i);
+    const RS_Vector&  operator [] (size_t i) const;
+    RS_Vector&  operator [] (size_t i);
     size_t getNumber() const;
-    bool isEmpty();
+    bool isEmpty() const;
+    bool isNotEmpty() const;
     size_t size() const;
     bool empty() const;
     void resize(size_t n);
     bool hasValid() const;
     void set(size_t i, const RS_Vector& v);
     void push_back(const RS_Vector& v);
-    void removeAt(const size_t i);
+    void removeAt(size_t i);
     RS_VectorSolutions& push_back(const RS_VectorSolutions& v);
     void setTangent(bool t);
     bool isTangent() const;
@@ -235,14 +240,14 @@ public:
     void scale(const RS_Vector& factor);
 
     /** switch x,y for all vectors */
-    RS_VectorSolutions flipXY(void) const;
+    RS_VectorSolutions flipXY() const;
 
     friend std::ostream& operator << (std::ostream& os,
                                       const RS_VectorSolutions& s);
 
 private:
-    std::vector<RS_Vector> vector;
-    bool tangent = false;
+    std::vector<RS_Vector> m_vector;
+    bool m_tangent = false;
 };
 
 #endif

@@ -42,7 +42,7 @@ void LC_DimStyleItem::appendChild(LC_DimStyleItem *item){
     item->setParentItem(this);
 }
 
-LC_DimStyleItem *LC_DimStyleItem::child(int row) const {
+LC_DimStyleItem *LC_DimStyleItem::child(const int row) const {
     return m_childItems.value(row);
 }
 
@@ -55,23 +55,23 @@ LC_DimStyleItem *LC_DimStyleItem::parentItem() const {
 }
 
 void LC_DimStyleItem::updateNameAndType() {
-    QString name = m_dimStyle->getName();
+    const QString name = m_dimStyle->getName();
     LC_DimStyle::parseStyleName(name, m_baseName, m_dimType);
     m_displayName = composeDisplayName(m_baseName, m_dimType);
 }
 
-QString LC_DimStyleItem::getDisplayDimStyleName(LC_DimStyle* style) {
-    QString name = style->getName();
+QString LC_DimStyleItem::getDisplayDimStyleName(const LC_DimStyle* style) {
+    const QString& name = style->getName();
     QString baseName;
     RS2::EntityType entityType;
     LC_DimStyle::parseStyleName(name, baseName, entityType);
     return composeDisplayName(baseName, entityType);
 }
 
-bool LC_DimStyleItem::hasUsedChildren() {
-    int childCount = m_childItems.count();
+bool LC_DimStyleItem::hasUsedChildren() const {
+    const int childCount = m_childItems.count();
     for (int i = 0; i < childCount; ++i) {
-        LC_DimStyleItem* child = m_childItems.at(i);
+        const LC_DimStyleItem* child = m_childItems.at(i);
         if (child->usageCount() > 0) {
             return true;
         }
@@ -79,11 +79,11 @@ bool LC_DimStyleItem::hasUsedChildren() {
     return false;
 }
 
-bool LC_DimStyleItem::isNotUsedInDrawing() {
+bool LC_DimStyleItem::isNotUsedInDrawing() const {
     return m_usageCount == 0 && !hasUsedChildren();
 }
 
-QString LC_DimStyleItem::composeDisplayName(QString baseName, RS2::EntityType entityType) {
+QString LC_DimStyleItem::composeDisplayName(const QString& baseName, const RS2::EntityType entityType) {
     QString result = baseName;
     QString suffix = "";
     switch (entityType) {
@@ -125,7 +125,7 @@ int LC_DimStyleItem::row() const {
 }
 
 LC_DimStyleItem* LC_DimStyleItem::findByName(const QString& name) const {
-    int childCount = m_childItems.count();
+    const int childCount = m_childItems.count();
     for (int i = 0; i < childCount; ++i) {
         LC_DimStyleItem* child = m_childItems.at(i);
         if (child->dimStyle()->getName().compare(name, Qt::CaseInsensitive) == 0) {
@@ -140,7 +140,7 @@ LC_DimStyleItem* LC_DimStyleItem::findByName(const QString& name) const {
 }
 
 LC_DimStyleItem* LC_DimStyleItem::findBaseStyleItem(const QString& baseStyleName) const {
-    int childCount = m_childItems.count();
+    const int childCount = m_childItems.count();
     for (int i = 0; i < childCount; ++i) {
         LC_DimStyleItem* child = m_childItems.at(i);
         if (child->baseName().compare(baseStyleName, Qt::CaseInsensitive) == 0) {
@@ -153,7 +153,7 @@ LC_DimStyleItem* LC_DimStyleItem::findBaseStyleItem(const QString& baseStyleName
 // fixme - sand - rework later, create more uniform generic
 // tree model, with search based on acceptors etc..
 LC_DimStyleItem* LC_DimStyleItem::findActive() const {
-    int childCount = m_childItems.count();
+    const int childCount = m_childItems.count();
     for (int i = 0; i < childCount; ++i) {
         LC_DimStyleItem* child = m_childItems.at(i);
         if (child->isActive()) {
@@ -168,7 +168,7 @@ LC_DimStyleItem* LC_DimStyleItem::findActive() const {
 }
 
 LC_DimStyleItem* LC_DimStyleItem::findEntityStyleItem() const {
-    int childCount = m_childItems.count();
+    const int childCount = m_childItems.count();
     for (int i = 0; i < childCount; ++i) {
         LC_DimStyleItem* child = m_childItems.at(i);
         if (child->isEntityStyleItem()) {
@@ -182,12 +182,12 @@ LC_DimStyleItem* LC_DimStyleItem::findEntityStyleItem() const {
     return nullptr;
 }
 
-void LC_DimStyleItem::cleanup(bool deleteDimStyles) {
-    int childCount = m_childItems.count();
+void LC_DimStyleItem::cleanup(const bool deleteDimStyles) {
+    const int childCount = m_childItems.count();
     for (int i = 0; i < childCount; ++i) {
         LC_DimStyleItem* child = m_childItems.at(i);
         child->cleanup(deleteDimStyles);
-        auto dimStyle = child->dimStyle();
+        const auto dimStyle = child->dimStyle();
         if (deleteDimStyles) {
             delete dimStyle;
         }
@@ -201,8 +201,8 @@ void LC_DimStyleItem::removeChild(LC_DimStyleItem* item) {
     item->setParentItem(nullptr);
 }
 
-void LC_DimStyleItem::collectChildren(QList<LC_DimStyleItem*>& items) {
-    int childCount = m_childItems.count();
+void LC_DimStyleItem::collectChildren(QList<LC_DimStyleItem*>& items) const {
+    const int childCount = m_childItems.count();
     for (int i = 0; i < childCount; ++i) {
         LC_DimStyleItem* child = m_childItems.at(i);
         items.push_back(child);
@@ -215,12 +215,12 @@ void LC_DimStyleItem::setNewBaseName(const QString& newBaseName) {
         m_dimStyle->setName(newBaseName);
     }
     else {
-        QString newName = LC_DimStyle::getStyleNameForBaseAndType(newBaseName, m_dimType);
+        const QString newName = LC_DimStyle::getStyleNameForBaseAndType(newBaseName, m_dimType);
         m_dimStyle->setName(newName);
     }
     m_baseName = newBaseName;
     m_displayName = composeDisplayName(m_baseName, m_dimType);
-    int childCount = m_childItems.count();
+    const int childCount = m_childItems.count();
     for (int i = 0; i < childCount; ++i) {
         LC_DimStyleItem* child = m_childItems.at(i);
         child->setNewBaseName(newBaseName);

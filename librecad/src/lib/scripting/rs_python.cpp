@@ -42,8 +42,7 @@ RS_Python* RS_Python::uniqueInstance = NULL;
 /**
  * Constructor
  */
-RS_Python::RS_Python()
-{
+RS_Python::RS_Python() {
     graphic = NULL;
     Py_Initialize();
     initlibrecad();
@@ -57,12 +56,11 @@ RS_Python::RS_Python()
  * singleton class
  */
 RS_Python* RS_Python::instance() {
-    if(uniqueInstance==NULL) {
+    if (uniqueInstance == NULL) {
         uniqueInstance = new RS_Python;
     }
     return uniqueInstance;
 }
-
 
 /**
  * Launches the given script.
@@ -86,22 +84,24 @@ int RS_Python::launch(const QString& script) {
                 rslt = PyObject_CallFunction(func, "(s)", "noparam");
                 //printf("calling ok\n");
                 if (rslt) {
-		    // The result value is currently not used
+                    // The result value is currently not used
                     Py_XDECREF(rslt);
-                } else
-		{
-		    // Give user some feed back what went wrong
-	            printf("*** PYTHON RUNTIME ERROR ***\n");
-		    PyErr_Print();
-		}
+                }
+                else {
+                    // Give user some feed back what went wrong
+                    printf("*** PYTHON RUNTIME ERROR ***\n");
+                    PyErr_Print();
+                }
             }
-        } else {
+        }
+        else {
             printf("no such function: start\n");
         }
         Py_XDECREF(mod);
-    } else {
+    }
+    else {
         printf("*** ERROR LOADING SCRIPT '%s' ***\n", script.latin1());
-	PyErr_Print();	
+        PyErr_Print();
     }
     Py_XDECREF(modname);
     //Py_Finalize();

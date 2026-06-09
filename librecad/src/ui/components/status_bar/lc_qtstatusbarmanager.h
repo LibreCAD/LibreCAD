@@ -31,17 +31,17 @@ class QStatusBar;
 class LC_QTStatusbarManager: public QObject{
     Q_OBJECT
 public:
-    LC_QTStatusbarManager(QStatusBar* statusBar);
+    explicit LC_QTStatusbarManager(QStatusBar* statusBar);
     void setActionHelp( const QString & left, const QString & right, const LC_ModifiersInfo& modifiersInfo) const;
-    void clearAction(){m_actionToolTip = "";};
+    void clearAction(){m_actionToolTip.clear();}
     void loadSettings();
     void setup();
 public slots:
-    void setCurrentQAction(QAction *a);
+    void setCurrentQAction(const QAction *a);
 protected:
     QString  m_actionToolTip;
     QStatusBar* m_statusBar {nullptr};
     bool m_actionPromptEnabled = true;
 };
 
-#endif // LC_QTSTATUSBARMANAGER_H
+#endif

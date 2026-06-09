@@ -35,7 +35,7 @@
 
 RS_ActionDimAngular::RS_ActionDimAngular(LC_ActionContext *actionContext) :
     RS_ActionDimension( "Draw Angular Dimensions", actionContext,  RS2::EntityDimAngular, RS2::ActionDimAngular){
-    reset();
+    RS_ActionDimAngular::reset();
 }
 
 RS_ActionDimAngular::~RS_ActionDimAngular() = default;
@@ -55,33 +55,33 @@ void RS_ActionDimAngular::doInitWithContextEntity(RS_Entity* contextEntity, cons
     }
 }
 
-void RS_ActionDimAngular::doTrigger() {
+RS_Entity* RS_ActionDimAngular::doTriggerCreateEntity() {
     if (m_line1->getStartpoint().valid && m_line2->getStartpoint().valid) {
-        auto* newEntity = new RS_DimAngular( m_container,*m_dimensionData,*m_edata);
-
-        setPenAndLayerToActive(newEntity);
+        auto* newEntity = new RS_DimAngular( m_document,*m_dimensionData,*m_edata);
         newEntity->update();
-        undoCycleAdd(newEntity);
-        setStatus( SetLine1);
-        RS_Snapper::finish();
+        return newEntity;
     }
-    else {
-        RS_DEBUG->print( "RS_ActionDimAngular::trigger: Entity is nullptr\n");
-    }
+    RS_DEBUG->print( "RS_ActionDimAngular::trigger: One of endpoints invalid\n");
+    return nullptr;
 }
 
-void RS_ActionDimAngular::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+void RS_ActionDimAngular::doTriggerCompletion([[maybe_unused]]bool success) {
+    setStatus( SetLine1);
+    RS_Snapper::finish();
+}
+
+void RS_ActionDimAngular::onMouseMoveEvent(const int status, const LC_MouseEvent* e) {
     RS_Vector snap = e->snapPoint;
     switch (status) {
         case SetLine1: {
-            RS_Entity *en = catchEntityByEvent(e, RS2::EntityLine, RS2::ResolveAll);
+            const RS_Entity *en = catchEntityByEvent(e, RS2::EntityLine, RS2::ResolveAll);
             if (en != nullptr){
                 highlightHover(en);
             }
             break;
         }
         case SetLine2: {
-            RS_Entity *en = catchEntityByEvent(e, RS2::EntityLine, RS2::ResolveAll);
+            const RS_Entity *en = catchEntityByEvent(e, RS2::EntityLine, RS2::ResolveAll);
             if (en != nullptr && en != m_line1){
                 highlightHover(en);
             }
@@ -96,10 +96,10 @@ void RS_ActionDimAngular::onMouseMoveEvent(int status, LC_MouseEvent *e) {
                 highlightSelected(m_line2);
 
                 if (m_showRefEntitiesOnPreview) {
-                    double radius = snap.distanceTo(m_center);
+                    const double radius = snap.distanceTo(m_center);
 
                     // draw reference points for all quadrants
-                    for (double angle: m_angles) {
+                    for (const double angle: m_angles) {
                         RS_Vector vec = RS_Vector::polar(radius, angle);
                         RS_Vector refPoint = m_center + vec;
                         previewRefPoint(refPoint);
@@ -116,12 +116,12 @@ void RS_ActionDimAngular::onMouseMoveEvent(int status, LC_MouseEvent *e) {
 }
 
 void RS_ActionDimAngular::setFirstLine(RS_Entity* en, const RS_Vector& pos) {
-    m_line1 = dynamic_cast<RS_Line *>(en);
+    m_line1 = static_cast<RS_Line *>(en);
     m_click1 = m_line1->getNearestPointOnEntity(pos);
     setStatus(SetLine2);
 }
 
-void RS_ActionDimAngular::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
+void RS_ActionDimAngular::onMouseLeftButtonRelease(const int status, const LC_MouseEvent* e) {
     const RS_Vector &pos = e->graphPoint;
     switch (status) {
         case SetLine1: {
@@ -135,7 +135,7 @@ void RS_ActionDimAngular::onMouseLeftButtonRelease(int status, LC_MouseEvent *e)
             RS_Entity *en = catchEntityByEvent(e, RS2::EntityLine,RS2::ResolveAll);
             if (en != nullptr){
                 if (en != m_line1){
-                    m_line2 = dynamic_cast<RS_Line *>(en);
+                    m_line2 = static_cast<RS_Line *>(en);
                     m_click2 = m_line2->getNearestPointOnEntity(pos);
                     if (setData(m_click2, true)){
                         moveRelativeZero(m_center);
@@ -156,12 +156,12 @@ void RS_ActionDimAngular::onMouseLeftButtonRelease(int status, LC_MouseEvent *e)
     }
 }
 
-void RS_ActionDimAngular::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {
+void RS_ActionDimAngular::onMouseRightButtonRelease(const int status, [[maybe_unused]] const LC_MouseEvent* e) {
     deletePreview();
     initPrevious(status);
 }
 
-void RS_ActionDimAngular::onCoordinateEvent(int status, [[maybe_unused]] bool isZero, const RS_Vector &pos) {
+void RS_ActionDimAngular::onCoordinateEvent(const int status, [[maybe_unused]] bool isZero, const RS_Vector &pos) {
     switch (status) {
         case SetPos: {
             if (setData(pos)) {
@@ -176,17 +176,17 @@ void RS_ActionDimAngular::onCoordinateEvent(int status, [[maybe_unused]] bool is
     }
 }
 
-bool RS_ActionDimAngular::doProcessCommand(int status, const QString &c) {
+bool RS_ActionDimAngular::doProcessCommand(int status, const QString &command) {
     bool accept = false;
     // setting new text label:
     if (SetText == status) {
-        setText( c);
+        setText( command);
         updateOptions();
         enableCoordinateInput();
         setStatus( m_lastStatus);
         accept = true;
     }
-    else if (checkCommand( "text", c)) { // command: text
+    else if (checkCommand( "text", command)) { // command: text
         m_lastStatus = static_cast<Status>(status);
         disableCoordinateInput();
         setStatus( SetText);
@@ -210,22 +210,22 @@ QStringList RS_ActionDimAngular::getAvailableCommands(){
 }
 
 // REVIEW - PROBABLY THERE SHOULD BE BACK INSTEAD OF CANCEL
-void RS_ActionDimAngular::updateMouseButtonHints(){
+void RS_ActionDimAngular::updateActionPrompt(){
     switch (getStatus()) {
         case SetLine1:
-            updateMouseWidgetTRCancel(tr("Select first line"));
+            updatePromptTRCancel(tr("Select first line"));
             break;
         case SetLine2:
-            updateMouseWidgetTRCancel(tr("Select second line"));
+            updatePromptTRCancel(tr("Select second line"));
             break;
         case SetPos:
-            updateMouseWidgetTRCancel(tr("Specify dimension arc line location"), MOD_SHIFT_FREE_SNAP);
+            updatePromptTRCancel(tr("Specify dimension arc line location"), MOD_SHIFT_FREE_SNAP);
             break;
         case SetText:
-            updateMouseWidget(tr("Enter dimension text:"));
+            updatePrompt(tr("Enter dimension text:"));
             break;
         default:
-            updateMouseWidget();
+            updatePrompt();
             break;
     }
 }
@@ -237,10 +237,9 @@ void RS_ActionDimAngular::updateMouseButtonHints(){
  *
  * @param line A selected line for the dimension
  * @param click The click pos which selected the line
- * @param center The intersection of the 2 lines to dimension
  */
-RS_LineData RS_ActionDimAngular::justify(RS_Line* line, const RS_Vector &click){
-    RS_Vector vStartPoint( line->getStartpoint());
+RS_LineData RS_ActionDimAngular::justify(const RS_Line* line, const RS_Vector &click) const {
+    const RS_Vector vStartPoint( line->getStartpoint());
     RS_LineData lineData = line->getData();
     if( RS_Math::notEqual( vStartPoint.angleTo(m_center), click.angleTo( m_center), RS_TOLERANCE_ANGLE)
         || vStartPoint.distanceTo( m_center) < click.distanceTo( m_center)) {
@@ -255,16 +254,16 @@ RS_LineData RS_ActionDimAngular::justify(RS_Line* line, const RS_Vector &click){
  * Ensure, that line1 and line2 are in CCW order.
  * Compute an offset for quadrant() method.
  *
- * @param line A selected line for the dimension
- * @param click The click pos which selected the line
- * @param center The intersection of the 2 lines to dimension
+ * @param dimPos
+ * @param ld1
+ * @param ld2
  */
 void RS_ActionDimAngular::lineOrder(const RS_Vector &dimPos, RS_LineData& ld1, RS_LineData& ld2){
     if( ! m_center.valid) {
         return;
     }
     // starting point angles and selection point angle from intersection point
-    double  a0  =  (dimPos - m_center).angle();
+    const double  a0  =  (dimPos - m_center).angle();
     double  a1  = (ld1.startpoint - m_center).angle();
     double  a2  = (ld2.startpoint - m_center).angle();
 
@@ -284,7 +283,7 @@ void RS_ActionDimAngular::lineOrder(const RS_Vector &dimPos, RS_LineData& ld1, R
 
     // find starting quadrant and compute the offset for quadrant() method
     int startQuadrant = 0;
-    for( auto angle : m_angles) {
+    for(const auto angle : m_angles) {
         if( RS_Math::equal( a1, angle, RS_TOLERANCE_ANGLE)) {
             break;
         }
@@ -302,13 +301,13 @@ void RS_ActionDimAngular::lineOrder(const RS_Vector &dimPos, RS_LineData& ld1, R
  * @param angle The angle, e.g. mouse or coordinate position
  * @return The quadrant of \p angle, relative to the 1st selection quadrant
  */
-int RS_ActionDimAngular::determineQuadrant(const double angle){
+int RS_ActionDimAngular::determineQuadrant(const double angle) const {
     if(m_angles.empty()) {
         return 0;
     }
 
-    double a1 {RS_Math::correctAnglePlusMinusPi( m_angles.at(0) - angle)};
-    double a2 {RS_Math::correctAnglePlusMinusPi( m_angles.at(1) - angle)};
+    const double a1 {RS_Math::correctAnglePlusMinusPi( m_angles.at(0) - angle)};
+    const double a2 {RS_Math::correctAnglePlusMinusPi( m_angles.at(1) - angle)};
 
     int angleQuadrant {0};
     if( 0.0 < a1 && 0.0 < a2) {
@@ -321,7 +320,7 @@ int RS_ActionDimAngular::determineQuadrant(const double angle){
         angleQuadrant = 2;
     }
 
-    return (0x03 & (angleQuadrant + m_quadrantOffset));
+    return 0x03 & (angleQuadrant + m_quadrantOffset);
 }
 
 /**
@@ -341,21 +340,21 @@ bool RS_ActionDimAngular::setData(const RS_Vector &dimPos, const bool calcCenter
     if (m_line1->getStartpoint().valid && m_line2->getStartpoint().valid){
 
         if (!m_center.valid || calcCenter){
-            RS_VectorSolutions sol = RS_Information::getIntersectionLineLine(m_line1, m_line2);
+            const RS_VectorSolutions sol = RS_Information::getIntersectionLineLine(m_line1, m_line2);
             m_center = sol.get(0);
         }
 
-        RS_LineData ld1 = justify(m_line1, m_click1);
-        RS_LineData ld2 = justify(m_line2, m_click2);
-
         if (m_center.valid){
+            RS_LineData ld1 = justify(m_line1, m_click1);
+            RS_LineData ld2 = justify(m_line2, m_click2);
+
             if (calcCenter){
                 lineOrder(dimPos, ld1, ld2);
             }
 
             m_edata->definitionPoint4 = dimPos;
-            double angleFromCenter = (dimPos - m_center).angle();
-            int quad = determineQuadrant(angleFromCenter);
+            const double angleFromCenter = (dimPos - m_center).angle();
+            const int quad = determineQuadrant(angleFromCenter);
             switch (quad) {
                 default:
                 case 0:

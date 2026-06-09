@@ -38,23 +38,24 @@
  * @author Andrew Mustun
  */
 class RS_ActionZoomIn : public RS_ActionInterface {
-	Q_OBJECT
+    Q_OBJECT
 public:
-    RS_ActionZoomIn(LC_ActionContext *actionContext,
-                    RS2::ZoomDirection direction = RS2::In,
-					RS2::Axis axis = RS2::Both,
-					RS_Vector const* pCenter = nullptr,
-                    double factor = 1.137);
-	~RS_ActionZoomIn() override;
+    explicit RS_ActionZoomIn(LC_ActionContext* actionContext, RS2::ZoomDirection direction = RS2::In, RS2::Axis axis = RS2::Both,
+                             const RS_Vector* pCenter = nullptr, double factor = 1.137);
+    ~RS_ActionZoomIn() override;
 
-	void init(int status) override;
-	void trigger() override;
-    bool isSupportsPredecessorAction() override {return true;}
+    void init(int status) override;
+    void trigger() override;
+
+    bool isSupportsPredecessorAction() const override {
+        return true;
+    }
+
 protected:
     double m_zoomFactor = 1.;
     RS2::ZoomDirection m_direction = RS2::In;
     RS2::Axis m_axis = RS2::Both;
-	std::unique_ptr<RS_Vector> m_centerPoint;
+    RS_Vector m_centerPoint;
 };
 
 #endif

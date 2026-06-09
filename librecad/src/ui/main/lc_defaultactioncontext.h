@@ -1,5 +1,5 @@
 /*******************************************************************************
-*
+ *
  This file is part of the LibreCAD project, a 2D CAD program
 
  Copyright (C) 2025 LibreCAD.org
@@ -23,6 +23,7 @@
 #ifndef LC_DEFAULTACTIONCONTEXT_H
 #define LC_DEFAULTACTIONCONTEXT_H
 #include "lc_actioncontext.h"
+#include "lc_propertysheetwidget.h"
 
 class QG_ActionHandler;
 class LC_QTStatusbarManager;
@@ -34,57 +35,52 @@ class LC_ActionOptionsManager;
 
 class LC_DefaultActionContext: public LC_ActionContext{
 public:
-    LC_DefaultActionContext(QG_ActionHandler* actionHandler);
-    virtual ~LC_DefaultActionContext() = default;
+    explicit LC_DefaultActionContext(QG_ActionHandler* actionHandler);
+    ~LC_DefaultActionContext() override = default;
     void addOptionsWidget(LC_ActionOptionsWidget *widget) override;
     void removeOptionsWidget(LC_ActionOptionsWidget *widget) override;
     void requestSnapDistOptions(double *dist, bool on) override;
     void requestSnapMiddleOptions(int *middlePoints, bool on) override;
     void hideSnapOptions() override;
-    void updateSelectionWidget(int countSelected, double selectedLength) override;
-
-    void updateMouseWidget(const QString &, const QString &, const LC_ModifiersInfo &modifiers) override;
+    void updateActionPrompt(const QString &, const QString &, const LC_ModifiersInfo &modifiers) override;
     void commandMessage(const QString &message) override;
     void commandPrompt(const QString &message) override;
     void updateCoordinateWidget(const RS_Vector &abs, const RS_Vector &rel, bool updateFormat) override;
+    void setPropertySheetWidget(LC_PropertySheetWidget* widget);
 
-    void setActionOptionsManager(LC_ActionOptionsManager *m_action_options_manager){
-        m_actionOptionsManager = m_action_options_manager;
+    void setActionOptionsManager(LC_ActionOptionsManager *actionOptionsManager){
+        m_actionOptionsManager = actionOptionsManager;
     }
 
-    void setCoordinateWidget(QG_CoordinateWidget *coordinate_widget){
-        m_coordinateWidget = coordinate_widget;
+    void setCoordinateWidget(QG_CoordinateWidget *coordinateWidget){
+        m_coordinateWidget = coordinateWidget;
     }
 
-    void setCommandWidget(QG_CommandWidget *command_widget){
-        m_commandWidget = command_widget;
+    void setCommandWidget(QG_CommandWidget *commandWidget){
+        m_commandWidget = commandWidget;
     }
 
-    void setSelectionWidget(QG_SelectionWidget *selection_widget){
-        m_selectionWidget = selection_widget;
+    void setMouseWidget(QG_MouseWidget *mouseWidget){
+        m_mouseWidget = mouseWidget;
     }
 
-    void setMouseWidget(QG_MouseWidget *mouse_widget){
-        m_mouseWidget = mouse_widget;
-    }
-
-    void setStatusBarManager(LC_QTStatusbarManager *status_bar_manager){
-        m_statusBarManager = status_bar_manager;
+    void setStatusBarManager(LC_QTStatusbarManager *statusBarManager){
+        m_statusBarManager = statusBarManager;
     }
     void setDocumentAndView(RS_Document *document, RS_GraphicView *view) override;
     void setSnapMode(const RS_SnapMode& mode) override;
     void setCurrentAction(RS2::ActionType, void* data) override;
     RS_ActionInterface* getCurrentAction() override;
 protected:
-    void deleteActionHandler();
+    void deleteActionHandler() const;
 private:
     LC_ActionOptionsManager* m_actionOptionsManager {nullptr};
     QG_CoordinateWidget* m_coordinateWidget{nullptr};
     QG_CommandWidget* m_commandWidget{nullptr};
-    QG_SelectionWidget* m_selectionWidget{nullptr};
     QG_MouseWidget* m_mouseWidget{nullptr};
     LC_QTStatusbarManager* m_statusBarManager{nullptr};
     QG_ActionHandler* m_actionHandler{nullptr};
+    LC_PropertySheetWidget* m_propertySheetWidget{nullptr};
 };
 
-#endif // LC_DEFAULTACTIONCONTEXT_H
+#endif

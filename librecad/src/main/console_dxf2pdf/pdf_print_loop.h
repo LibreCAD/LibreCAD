@@ -25,56 +25,40 @@
 #define PDF_PRINT_LOOP_H
 
 #include <QtCore>
-#include <QPrinter>
 
 #include "rs_vector.h"
 
-
 struct PdfPrintParams {
-        QStringList dxfFiles;
-        QString outDir;
-        QString outFile;
-        int resolution = 1200;
-        bool centerOnPage=false;
-        bool fitToPage=false;
-        bool monochrome=false;
-        bool grayscale=false;
-        double scale = 0.0;  // If scale <= 0.0, use value from dxf file.
-        RS_Vector pageSize;  // If zeros, use value from dxf file.
-        struct {
-            double left = -1.0;
-            double top = -1.0;
-            double right = -1.0;
-            double bottom = -1.0;
-        } margins;           // If margin < 0.0, use value from dxf file.
-        int pagesH = 0;      // If number of pages < 1,
-        int pagesV = 0;      // use value from dxf file.
+    QStringList dxfFiles;
+    QString outDir;
+    QString outFile;
+    int resolution = 1200;
+    bool centerOnPage = false;
+    bool fitToPage = false;
+    bool monochrome = false;
+    bool grayscale = false;
+    double scale = 0.0; // If scale <= 0.0, use value from dxf file.
+    RS_Vector pageSize; // If zeros, use value from dxf file.
+    struct {
+        double left = -1.0;
+        double top = -1.0;
+        double right = -1.0;
+        double bottom = -1.0;
+    } margins; // If margin < 0.0, use value from dxf file.
+    int pagesH = 0; // If number of pages < 1,
+    int pagesV = 0; // use value from dxf file.
 };
 
-
 class PdfPrintLoop : public QObject {
-
-    Q_OBJECT
-
-public:
-
-    PdfPrintLoop(PdfPrintParams& params, QObject* parent=0) :
-        QObject(parent)
-        , params{params}
-    {
+    Q_OBJECT public:
+    PdfPrintLoop(const PdfPrintParams& params, QObject* parent = nullptr) : QObject(parent), m_params{params} {
     }
-
 public slots:
-
     void run();
-
 signals:
-
     void finished();
-
 private:
-    PdfPrintParams params{};
-
+    PdfPrintParams m_params{};
     void printOneDxfToOnePdf(const QString&);
     void printManyDxfToOnePdf();
 };

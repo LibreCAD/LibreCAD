@@ -38,7 +38,6 @@
  */
 class RS_ActionSelect:public RS_ActionInterface {
 Q_OBJECT
-
 public:
     RS_ActionSelect(LC_ActionContext *actionContext,
         RS2::ActionType nextAction,

@@ -29,15 +29,15 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 class LC_ActionInfoPickCoordinates:public LC_AbstractActionWithPreview{
     Q_OBJECT
 public:
-    LC_ActionInfoPickCoordinates(LC_ActionContext *actionContext);
+    explicit LC_ActionInfoPickCoordinates(LC_ActionContext *actionContext);
     void init(int status) override;
     void resume() override;
 protected:
-    void doPreparePreviewEntities(LC_MouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;
-    void doOnLeftMouseButtonRelease(LC_MouseEvent *e, int status, const RS_Vector &snapPoint) override;
-    RS_Vector doGetMouseSnapPoint(LC_MouseEvent *e) override;
-    void doFinish(bool updateTB) override;
-    void updateMouseButtonHints() override;
+    void doPreparePreviewEntities(const LC_MouseEvent* e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;
+    void doOnLeftMouseButtonRelease(const LC_MouseEvent* e, int status, const RS_Vector &snapPoint) override;
+    RS_Vector doGetMouseSnapPoint(const LC_MouseEvent* e) override;
+    void doFinish() override;
+    void updateActionPrompt() override;
 private:
     /**
      * collected points
@@ -52,4 +52,4 @@ private:
     void updateCollectedPointsByWidget();
 };
 
-#endif // LC_ACTIONINFOPICKCOORDINATES_H
+#endif

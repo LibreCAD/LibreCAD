@@ -23,18 +23,20 @@
 #ifndef LC_OVERLAYBOXACTION_H
 #define LC_OVERLAYBOXACTION_H
 
+#include "lc_undoabledocumentmodificationaction.h"
 #include "rs_previewactioninterface.h"
 
 struct LC_OverlayBoxOptions;
 
-class LC_OverlayBoxAction:public RS_PreviewActionInterface{
-public:
-    LC_OverlayBoxAction(const char *name,LC_ActionContext *actionContext,RS2::ActionType actionType = RS2::ActionNone);
-    ~LC_OverlayBoxAction() override;
+class LC_OverlayBoxAction:public LC_UndoableDocumentModificationAction{
 protected:
+    explicit LC_OverlayBoxAction(const QString &name,LC_ActionContext *actionContext,RS2::ActionType actionType = RS2::ActionNone);
+    ~LC_OverlayBoxAction() override;
     std::unique_ptr<LC_OverlayBoxOptions> m_overlayBoxOptions;
-    void drawOverlayBox(const RS_Vector &corner1, const RS_Vector &corner2);
+    void drawOverlayBox(const RS_Vector &corner1, const RS_Vector &corner2) const;
     void initFromSettings() override;
+
+    bool m_selectWithPressedMouseOnly = true;
 };
 
-#endif // LC_OVERLAYBOXACTION_H
+#endif

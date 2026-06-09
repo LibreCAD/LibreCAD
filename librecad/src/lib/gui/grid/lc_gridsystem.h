@@ -1,32 +1,33 @@
-/*******************************************************************************
+/*
+ * ********************************************************************************
+ * This file is part of the LibreCAD project, a 2D CAD program
  *
- This file is part of the LibreCAD project, a 2D CAD program
-
- Copyright (C) 2024 LibreCAD.org
- Copyright (C) 2024 sand1024
-
- This program is free software; you can redistribute it and/or
- modify it under the terms of the GNU General Public License
- as published by the Free Software Foundation; either version 2
- of the License, or (at your option) any later version.
-
- This program is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
-
- You should have received a copy of the GNU General Public License
- along with this program; if not, write to the Free Software
- Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- ******************************************************************************/
+ * Copyright (C) 2026 LibreCAD.org
+ * Copyright (C) 2026 sand1024
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ * ********************************************************************************
+ */
 
 #ifndef LC_GRIDSYSTEM_H
 #define LC_GRIDSYSTEM_H
 
 #include <memory>
 
-#include "rs_vector.h"
 #include "rs_color.h"
+#include "rs_vector.h"
 
 class RS_Painter;
 class LC_Lattice;
@@ -35,39 +36,40 @@ class LC_GraphicViewport;
 class LC_GridSystem {
 public:
     struct LC_GridOptions{
-        bool simpleGridRendering = false;
-        bool drawLines = false;
-
-        bool drawGrid = true;
-        RS2::LineType gridLineType{};
-        int gridWidthPx = 1;
-
         RS_Color gridColorLine;
         RS_Color gridColorPoint;
-        bool drawMetaGrid = true;
         RS_Color metaGridColor;
-        int metaGridLineWidthPx = 1;
+        RS2::LineType gridLineType{};
         RS2::LineType metaGridLineType{};
+        int gridWidthPx = 1;
+        int metaGridLineWidthPx = 1;
+        bool drawMetaGrid = true;
         bool disableGridOnPanning = false;
         bool drawIsometricVerticalsAlways = true; // fixme - complete initialization
+        bool simpleGridRendering = false;
+        bool drawLines = false;
+        bool drawGrid = true;
     };
 
-    LC_GridSystem(LC_GridOptions* options);
+    explicit LC_GridSystem(LC_GridOptions* options);
     virtual ~LC_GridSystem() ;
 
     void setOptions(std::unique_ptr<LC_GridOptions> options);
     void invalidate();
-    RS_Vector const &getCellVector() const {
+
+    const RS_Vector&getCellVector() const {
         return m_cellVector;
     }
     virtual RS_Vector snapGrid(const RS_Vector &coord) const = 0;
-    void createGrid(LC_GraphicViewport* view, const RS_Vector &viewZero, const RS_Vector &viewSize, const RS_Vector &metaGridWidth, const RS_Vector &gridWidth);
+    virtual RS_Vector snapGrid(const RS_Vector& coord, const RS_Vector& rayStart, const RS_Vector& rayEnd) = 0;
+    void createGrid(const LC_GraphicViewport* view, const RS_Vector &viewZero, const RS_Vector &viewSize, const RS_Vector &metaGridWidth, const RS_Vector &gridWidth);
     void draw(RS_Painter *painter, LC_GraphicViewport* view);
-    void clearGrid();
+    void clearGrid() const;
     void setGridInfiniteState(bool hasIndefiniteAxis, bool undefinedX);
-    bool isGridDisabledByPanning(LC_GraphicViewport *view);
+    bool isGridDisabledByPanning(const LC_GraphicViewport *view) const;
     bool isValid() const;
-    void calculateSnapInfo(RS_Vector& viewZero,RS_Vector& viewSize,RS_Vector& metaGridWidthToUse,RS_Vector& gridWidthToUse);
+    void calculateSnapInfo(const RS_Vector& viewZero, const RS_Vector& viewSize, const RS_Vector& metaGridWidthToUse, const RS_Vector& gridWidthToUse);
+    bool isDrawMetaGrid() const {return m_gridOptions->drawMetaGrid;}
 
 protected:
     bool m_valid = false;
@@ -119,13 +121,13 @@ protected:
     bool m_hasAxisIndefinite = false;
     bool m_indefiniteX  = false;
 
-    void doCreateGrid(LC_GraphicViewport* view, const RS_Vector &viewZero, const RS_Vector &viewSize, const RS_Vector &metaGridWidth, const RS_Vector &gridWidth);
+    void doCreateGrid(const LC_GraphicViewport* view, const RS_Vector &viewZero, const RS_Vector &viewSize, const RS_Vector &metaGridWidth, const RS_Vector &gridWidth);
     virtual void createMetaGridLines(const RS_Vector& min, const RS_Vector &max)  = 0;
     void drawMetaGrid(RS_Painter *painter, LC_GraphicViewport *view);
     void drawGrid(RS_Painter *painter, LC_GraphicViewport *view);
-    void drawGridPoints(RS_Painter *painter, LC_GraphicViewport *view);
+    void drawGridPoints(RS_Painter *painter, LC_GraphicViewport *view) const;
     void drawGridLines(RS_Painter *painter, LC_GraphicViewport *view);
-    int getGridPointsCount();
+    int getGridPointsCount() const;
     virtual void drawMetaGridLines(RS_Painter *painter, LC_GraphicViewport *view) = 0;
     virtual void createGridPoints(const RS_Vector &min, const RS_Vector &max,const RS_Vector &gridWidth, bool drawGridWithoutGaps, int numPointsTotal) = 0;
     virtual void createGridLines(const RS_Vector& min, const RS_Vector &max, const RS_Vector & gridWidth, bool gaps, const RS_Vector& lineOffset) = 0;
@@ -135,10 +137,10 @@ protected:
     virtual void determineMetaGridBoundaries(const RS_Vector &viewZero, const RS_Vector &viewSize) = 0;
     virtual void prepareGridOther(const RS_Vector &viewZero, const RS_Vector &viewSize) = 0;
     double truncToStep(double value, double step);
-    void doDrawLines(RS_Painter *painter, LC_GraphicViewport *view, LC_Lattice *lattice);
+    void doDrawLines(RS_Painter *painter, LC_GraphicViewport *view, const LC_Lattice *linesLattice);
     bool isNumberOfPointsValid(int numberOfPoints);
     virtual void setCellSize(const RS_Vector &gridWidth, const RS_Vector &metaGridWidth);
-    void doCalculateSnapInfo(RS_Vector& viewZero,RS_Vector& viewSize,RS_Vector& metaGridWidthToUse,RS_Vector& gridWidthToUse);
+    void doCalculateSnapInfo(const RS_Vector& viewZero, const RS_Vector& viewSize, const RS_Vector& metaGridWidth, const RS_Vector& gridWidth);
 };
 
-#endif // LC_GRIDSYSTEM_H
+#endif

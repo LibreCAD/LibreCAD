@@ -27,8 +27,9 @@
 #ifndef RS_ACTIONDIMENSION_H
 #define RS_ACTIONDIMENSION_H
 
+
+#include "lc_undoabledocumentmodificationaction.h"
 #include "rs.h"
-#include "rs_previewactioninterface.h"
 
 struct RS_DimensionData;
 
@@ -37,15 +38,12 @@ struct RS_DimensionData;
  *
  * @author Andrew Mustun
  */
-class RS_ActionDimension:public RS_PreviewActionInterface {
+class RS_ActionDimension:public LC_SingleEntityCreationAction {
     Q_OBJECT
 public:
-    RS_ActionDimension(const char *name, LC_ActionContext *actionContext, RS2::EntityType dimType, RS2::ActionType actionType = RS2::ActionNone);
-    ~RS_ActionDimension() override;
     void init(int status) override;
-
     QString getText() const;
-    void setText(const QString &t);
+    void setText(const QString &t) const;
     const QString &getLabel() const;
     void setLabel(const QString &t);
     const QString &getTol1() const;
@@ -56,8 +54,8 @@ public:
     void setDiameter(bool d);
     static bool isDimensionAction(RS2::ActionType type);
     void resume() override; // fixme - sand - check?
-    void setDimStyleName(const QString& styleName);
-    QString getDimStyleName();
+    void setDimStyleName(const QString& styleName) const;
+    QString getDimStyleName() const;
 protected:
     /**
      * Generic dimension data.
@@ -68,6 +66,8 @@ protected:
     QString m_tol1;
     QString m_tol2;
     bool m_diameter = false;
+    RS_ActionDimension(const char *name, LC_ActionContext *actionContext, RS2::EntityType dimType, RS2::ActionType actionType = RS2::ActionNone);
+    ~RS_ActionDimension() override;
     LC_ActionOptionsWidget* createOptionsWidget() override;
     RS2::CursorType doGetMouseCursor(int status) override;
     bool m_previewShowsFullDimension = false;

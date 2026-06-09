@@ -27,7 +27,7 @@
 
 #if defined(_MSC_VER) && _MSC_VER > 1000
 #pragma once
-#endif // _MSC_VER > 1000
+#endif
 
 #include "lc_dimarc.h"
 #include "rs_actiondimension.h"
@@ -35,7 +35,7 @@
 class LC_ActionDimArc : public RS_ActionDimension{
    Q_OBJECT
 public:
-    LC_ActionDimArc(LC_ActionContext *actionContext);
+   explicit LC_ActionDimArc(LC_ActionContext *actionContext);
     ~LC_ActionDimArc() override;
     QStringList getAvailableCommands() override;
 protected:
@@ -48,13 +48,14 @@ protected:
    void doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) override;
    void reset()   override;
     void setRadius(const RS_Vector& selectedPosition);
-    void updateMouseButtonHints() override;
+    void updateActionPrompt() override;
     bool doProcessCommand(int status, const QString &command)  override;
-    void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
-    void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
-    void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
+    void onMouseLeftButtonRelease(int status, const LC_MouseEvent* e) override;
+    void onMouseRightButtonRelease(int status, const LC_MouseEvent* e) override;
+    void onMouseMoveEvent(int status, const LC_MouseEvent* e) override;
    void setArcEntity(RS_Entity* entity);
    void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
-    void doTrigger() override;
+   RS_Entity* doTriggerCreateEntity() override;
+   void doTriggerCompletion(bool success) override;
 };
-#endif //LC_ACTIONDIMARC_H
+#endif

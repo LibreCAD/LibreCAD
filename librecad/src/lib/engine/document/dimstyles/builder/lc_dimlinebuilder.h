@@ -28,12 +28,11 @@
 
 class LC_DimLineBuilder{
 public:
-    LC_DimLineBuilder(RS_Graphic* graphic);
-
+    explicit LC_DimLineBuilder(RS_Graphic* graphic);
 protected:
     void buildDimensionLine(RS_EntityContainer* container, LC_DimStyle* style, const RS_Vector& dimLineStart, const RS_Vector& dimLineEnd, bool forceAutoText);
     LC_DimArrowRegistry m_arrowsRegistry;
     RS_Graphic* m_graphic;
 };
 
-#endif // LC_DIMLINEBUILDER_H
+#endif

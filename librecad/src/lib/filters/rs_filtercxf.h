@@ -24,7 +24,6 @@
 **
 **********************************************************************/
 
-
 #ifndef RS_FILTERCXF_H
 #define RS_FILTERCXF_H
 
@@ -40,17 +39,19 @@
 class RS_FilterCXF : public RS_FilterInterface {
 public:
     RS_FilterCXF();
-    ~RS_FilterCXF() {}
-	
-	/**
-	 * @return RS2::FormatCXF.
-	 */
-    bool canImport(const QString& /*fileName*/, RS2::FormatType t) const override {
-		return (t==RS2::FormatCXF);
-	}
-	
-    bool canExport(const QString& /*fileName*/, RS2::FormatType t) const override {
-		return (t==RS2::FormatCXF);
+
+    ~RS_FilterCXF() override {
+    }
+
+    /**
+     * @return RS2::FormatCXF.
+     */
+    bool canImport(const QString& /*fileName*/, const RS2::FormatType t) const override {
+        return t == RS2::FormatCXF;
+    }
+
+    bool canExport(const QString& /*fileName*/, const RS2::FormatType t) const override {
+        return t == RS2::FormatCXF;
     }
 
     bool fileImport(RS_Graphic& g, const QString& file, RS2::FormatType /*type*/) override;
@@ -59,7 +60,9 @@ public:
 
     void stream(std::ofstream& fs, double value);
 
-    static RS_FilterInterface* createFilter(){return new RS_FilterCXF();}
+    static RS_FilterInterface* createFilter() {
+        return new RS_FilterCXF();
+    }
 };
 
 #endif

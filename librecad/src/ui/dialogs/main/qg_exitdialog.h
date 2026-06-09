@@ -33,26 +33,26 @@ namespace Ui {
     class QG_ExitDialog;
 }
 
-class QG_ExitDialog : public LC_Dialog{
+class QG_ExitDialog : public LC_Dialog {
     Q_OBJECT
 public:
-    QG_ExitDialog(QWidget* parent = nullptr);
-	~QG_ExitDialog() override;
-	enum ExitDialogResult {
-        Cancel, DontSave, DontSaveAll, Save, SaveAll
-	};
+    explicit QG_ExitDialog(QWidget* parent = nullptr);
+    ~QG_ExitDialog() override;
 
-public slots:
-    void setText( const QString & text );
-    void setTitle( const QString & text );
-    void setForce( bool force );
-	void setShowOptionsForAll(bool show);
-    void clicked(QAbstractButton * button);
-protected slots:
+    enum ExitDialogResult {
+        Cancel, DontSave, DontSaveAll, Save, SaveAll
+    };
+public slots :
+    void setText(const QString& text) const;
+    void setTitle(const QString& text);
+    void setForce(bool force) const;
+    void setShowOptionsForAll(bool show) const;
+    void clicked(QAbstractButton* button);
+protected slots :
     void languageChange();
 private:
-    void init();
-	std::unique_ptr<Ui::QG_ExitDialog> ui;
+    void init() const;
+    std::unique_ptr<Ui::QG_ExitDialog> ui;
 };
 
-#endif // QG_EXITDIALOG_H
+#endif

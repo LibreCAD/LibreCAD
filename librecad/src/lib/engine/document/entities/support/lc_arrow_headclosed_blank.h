@@ -32,4 +32,4 @@ public:
     void draw(RS_Painter* painter) override;
 };
 
-#endif // LC_ARROW_HEADCLOSED_BLANK_H
+#endif

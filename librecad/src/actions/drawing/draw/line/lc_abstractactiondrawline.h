@@ -20,8 +20,8 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
-#ifndef LIBRECAD_LC_ABSTRACTACTIONDRAWLINE_H
-#define LIBRECAD_LC_ABSTRACTACTIONDRAWLINE_H
+#ifndef LC_ABSTRACTACTIONDRAWLINE_H
+#define LC_ABSTRACTACTIONDRAWLINE_H
 
 #include "lc_abstractactionwithpreview.h"
 
@@ -39,13 +39,14 @@ public:
     LC_AbstractActionDrawLine(const char* name, LC_ActionContext *actionContext, RS2::ActionType actionType = RS2::ActionNone);
     ~LC_AbstractActionDrawLine() override;
     int getDirection() const{return m_direction;}
+    void setDirection(int dir);
     void setNewStartPointState();
     void setSetAngleDirectionState();
     void setSetPointDirectionState();
     void setSetXDirectionState();
     void setSetYDirectionState();
     void setAngleValueDegrees(double value);
-    void setAngleDegrees(double value){doSetAngleDegrees(value);}
+    void setAngleDegrees(const double value){doSetAngleDegrees(value);}
     double getAngleDegrees() const;
     bool isAngleRelative() const;
     void setAngleIsRelative(bool value);
@@ -70,18 +71,18 @@ protected:
 
     void setSetAngleState(bool relative);
     virtual bool processAngleValueInput(const QString &c);
-    virtual bool doProceedCommand(int status, const QString &qString);
+    virtual bool doProceedCommand(int status, const QString &c);
     virtual bool doProcessCommandValue(int status, const QString &c);
     virtual const RS_Vector& getStartPointForAngleSnap() const = 0;
     virtual bool isStartPointValid() const;
-    void doOnLeftMouseButtonRelease(LC_MouseEvent *e, int status, const RS_Vector &snapped) override;
-    bool doCheckMayDrawPreview(LC_MouseEvent *pEvent, int status) override;
-    RS_Vector doGetMouseSnapPoint(LC_MouseEvent *e) override;
-    virtual void doSetStartPoint(RS_Vector vector) = 0;
+    void doOnLeftMouseButtonRelease(const LC_MouseEvent* e, int status, const RS_Vector &snapped) override;
+    bool doCheckMayDrawPreview(const LC_MouseEvent* pEvent, int status) override;
+    RS_Vector doGetMouseSnapPoint(const LC_MouseEvent* e) override;
+    virtual void doSetStartPoint(const RS_Vector& vector) = 0;
     int doGetStatusForInitialSnapToRelativeZero() override;
-    void doInitialSnapToRelativeZero(RS_Vector vector) override;
+    void doInitialSnapToRelativeZero(const RS_Vector& relZero) override;
     void setStatusForValidStartPoint(int newStatus);
     virtual bool isAllowDirectionCommands();
     void doSetAngleDegrees(double value);
 };
-#endif //LIBRECAD_LC_ABSTRACTACTIONDRAWLINE_H
+#endif

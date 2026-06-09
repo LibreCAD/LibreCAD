@@ -26,8 +26,8 @@
 #ifndef QG_COORDINATEWIDGET_H
 #define QG_COORDINATEWIDGET_H
 
+#include "lc_formatter.h"
 #include "lc_graphicviewaware.h"
-#include "rs.h"
 #include "rs_vector.h"
 #include "ui_qg_coordinatewidget.h"
 
@@ -37,9 +37,9 @@ class RS_Graphic;
 class QG_CoordinateWidget : public QWidget, public LC_GraphicViewAware,  public Ui::QG_CoordinateWidget{
     Q_OBJECT
 public:
-    QG_CoordinateWidget(QWidget *parent = nullptr, const char *name = nullptr, Qt::WindowFlags fl = {});
+    explicit QG_CoordinateWidget(QWidget *parent = nullptr, const char *name = nullptr, Qt::WindowFlags fl = {});
     ~QG_CoordinateWidget() override;
-    void clearContent();
+    void clearContent() const;
     void setGraphicView(RS_GraphicView* gv) override;
 public slots:
     void setCoordinates(const RS_Vector & wcsAbs, const RS_Vector & wcsDelta, bool updateFormat ); // fixme - check why updateFormat is always true
@@ -50,12 +50,9 @@ private:
     RS_Graphic* m_graphic = nullptr;
     RS_GraphicView *m_graphicView = nullptr;
     LC_GraphicViewport* m_viewport = nullptr;
-    int m_linearPrecision = 0;
-    RS2::LinearFormat m_linearFormat = RS2::Decimal;
-    int m_anglePrecision = 0;
-    RS2::AngleFormat m_angleFormat = RS2::DegreesDecimal;
+    LC_Formatter* m_formatter = nullptr;
     RS_Vector m_absoluteCoordinates;
     RS_Vector m_relativeCoordinates;
 };
 
-#endif // QG_COORDINATEWIDGET_H
+#endif

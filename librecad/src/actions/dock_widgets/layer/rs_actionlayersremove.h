@@ -35,12 +35,12 @@
  * @author Andrew Mustun
  */
 class RS_ActionLayersRemove : public RS_ActionInterface {
-	Q_OBJECT
+    Q_OBJECT
 public:
-    RS_ActionLayersRemove(LC_ActionContext *actionContext);
+    explicit RS_ActionLayersRemove(LC_ActionContext* actionContext);
 
-	void init(int status) override;
-	void trigger() override;
+    void init(int status) override;
+    void trigger() override;
 };
 
 #endif

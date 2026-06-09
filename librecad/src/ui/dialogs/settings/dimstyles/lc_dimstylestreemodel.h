@@ -23,7 +23,6 @@
 
 #ifndef LC_DIMSTYLETREEMODEL_H
 #define LC_DIMSTYLETREEMODEL_H
-#include <QAbstractItemModel>
 
 #include "lc_dimstyle.h"
 
@@ -34,30 +33,30 @@ public:
     LC_DimStyleTreeModel(QObject* parent, const QList<LC_DimStyleItem*>& items, bool highlightCurrentItem);
     QVariant data(const QModelIndex& index, int role) const override;
     QModelIndex index(int row, int column, const QModelIndex& parent) const override;
-    QModelIndex parent(const QModelIndex& child) const override;
+    QModelIndex parent(const QModelIndex& childIndex) const override;
     int rowCount(const QModelIndex& parent) const override;
     int columnCount(const QModelIndex& parent) const override;
     LC_DimStyleItem* getItemForIndex(const QModelIndex& index) const;
     void collectUnsavedItems(QList<LC_DimStyleItem*>& items) const;
-    void setUsageCount(bool val) {m_showUsageCount = val;}
-    LC_DimStyleItem* getActiveStyleItem();
-    LC_DimStyleItem* getEntityStyleItem();
-    LC_DimStyleItem* getStandardItem();
-    LC_DimStyleItem* findByName(const QString& chars);
+    void setUsageCount(const bool val) {m_showUsageCount = val;}
+    LC_DimStyleItem* getActiveStyleItem() const;
+    LC_DimStyleItem* getEntityStyleItem() const;
+    LC_DimStyleItem* getStandardItem() const;
+    LC_DimStyleItem* findByName(const QString& name) const;
     void addItem(LC_DimStyleItem* item);
     void collectItemsForBaseStyleItem(QList<LC_DimStyleItem*>* list, LC_DimStyleItem* baseItem);
-    void collectAllItemsForStyle(LC_DimStyle* lc_dim_style, QList<LC_DimStyleItem*>* list);
-    void collectItemsForBaseStyleName(const QString& chars, QList<LC_DimStyleItem*>* list);
+    void collectAllItemsForStyle(const LC_DimStyle* dimStyle, QList<LC_DimStyleItem*>* list);
+    void collectItemsForBaseStyleName(const QString& baseStyleName, QList<LC_DimStyleItem*>* list);
     void emitDataChanged();
     void removeItem(LC_DimStyleItem* item);
-    void setActiveStyleItem(const QModelIndex& model_index);
+    void setActiveStyleItem(const QModelIndex& index);
     void setEntityItem(LC_DimStyleItem* item);
-    void setEntityItem(const QModelIndex& model_index);
+    void setEntityItem(const QModelIndex& index);
     void cleanup(bool deleteDimStyles);
-    void collectAllStyleItems(QList<LC_DimStyleItem*>& items);
+    void collectAllStyleItems(QList<LC_DimStyleItem*>& items) const;
     void mergeWith(const QList<LC_DimStyle*>& list);
-    int itemsCount();
-    LC_DimStyleItem*  rootItem() {return m_rootItem.get();}
+    int itemsCount() const;
+    LC_DimStyleItem*  rootItem() const {return m_rootItem.get();}
 private:
     void addToParent(LC_DimStyleItem* item);
     void buildTree(const QList<LC_DimStyleItem*>& list);
@@ -67,4 +66,4 @@ private:
     bool m_highlightCurrentItem {false};
 };
 
-#endif // LC_DIMSTYLETREEMODEL_H
+#endif

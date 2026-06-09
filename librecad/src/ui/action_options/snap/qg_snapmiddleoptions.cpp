@@ -21,6 +21,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
 #include "qg_snapmiddleoptions.h"
+
 #include "ui_qg_snapmiddleoptions.h"
 
 /*
@@ -32,9 +33,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
 QG_SnapMiddleOptions::QG_SnapMiddleOptions(QWidget* parent)
-    : QWidget(parent)
-    , m_middlePoints(nullptr)
-    , ui(new Ui::Ui_SnapMiddleOptions{}){
+    : QWidget(parent), ui(new Ui::Ui_SnapMiddleOptions{}){
     ui->setupUi(this);
 }
 
@@ -53,6 +52,7 @@ void QG_SnapMiddleOptions::languageChange(){
 
 void QG_SnapMiddleOptions::saveSettings() {
     LC_SET_ONE("Snap", "MiddlePoints", *m_middlePoints);
+    emit middlePointsChanged();
 }
 
 void QG_SnapMiddleOptions::useMiddlePointsValue(int* i) {
@@ -70,21 +70,21 @@ void QG_SnapMiddleOptions::useMiddlePointsValue(int* i) {
     }
 }
 
-void QG_SnapMiddleOptions::on_sbMiddlePoints_valueChanged(int i) {
-    if (m_middlePoints) {
+void QG_SnapMiddleOptions::on_sbMiddlePoints_valueChanged(const int i) {
+    if (m_middlePoints != nullptr) {
         *m_middlePoints = i;
         saveSettings();
     }
 }
 
 void QG_SnapMiddleOptions::doShow() {
-    bool requestFocus = !isVisible();
+    const bool requestFocus = !isVisible();
     show();
     if (requestFocus){
         ui->sbMiddlePoints->setFocus();
     }
 }
 
-int *QG_SnapMiddleOptions::getMiddlePointsValue() {
+int *QG_SnapMiddleOptions::getMiddlePointsValue() const {
     return m_middlePoints;
 }

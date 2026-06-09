@@ -27,7 +27,7 @@
 #define QG_DLGSPLINE_H
 
 #include "ui_qg_dlgspline.h"
-#include "../dialogs/entity/lc_entitypropertiesdlg.h"
+#include "lc_entitypropertiesdlg.h"
 
 class RS_Spline;
 
@@ -44,4 +44,4 @@ protected:
     void setEntity(RS_Spline *e);
 };
 
-#endif // QG_DLGSPLINE_H
+#endif

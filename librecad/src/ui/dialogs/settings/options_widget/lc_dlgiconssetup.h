@@ -36,7 +36,7 @@ class LC_DlgIconsSetup:public LC_Dialog {
 public:
     explicit LC_DlgIconsSetup(QWidget *parent = nullptr);
     ~LC_DlgIconsSetup() override;
-    void setIconsOptions(LC_IconColorsOptions *iconColorsOptions);
+    void setIconsOptions(LC_IconColorsOptions *options);
     void initComboBox(QComboBox *cb, const QString &text);
     void accept() override;
 public slots:
@@ -67,42 +67,42 @@ public slots:
     void onPbDisabledOffMainClicked();
     void onPbDisabledOffAccentClicked();
     void onPbDisabledOffBackClicked();
-    void onGenericMainColorChanged(const QString &value);
-    void onGenericAccentColorChanged(const QString &value);
-    void onGenericBackColorChanged(const QString &value);
-    void onActiveOnMainColorChanged(const QString &value);
-    void onActiveOnAccentColorChanged(const QString &value);
-    void onActiveOnBackColorChanged(const QString &value);
-    void onActiveOffMainColorChanged(const QString &value);
-    void onActiveOffAccentColorChanged(const QString &value);
-    void onActiveOffBackColorChanged(const QString &value);
-    void onNormalOnMainColorChanged(const QString &value);
+    void onGenericMainColorChanged(const QString &value) const;
+    void onGenericAccentColorChanged(const QString &value) const;
+    void onGenericBackColorChanged(const QString &value) const;
+    void onActiveOnMainColorChanged(const QString &value) const;
+    void onActiveOnAccentColorChanged(const QString &value) const;
+    void onActiveOnBackColorChanged(const QString &value) const;
+    void onActiveOffMainColorChanged(const QString &value) const;
+    void onActiveOffAccentColorChanged(const QString &value) const;
+    void onActiveOffBackColorChanged(const QString &value) const;
+    void onNormalOnMainColorChanged(const QString &value) const;
     void resetToDefaults();
-    void applyIconColors();
+    void applyIconColors() const;
 protected:
     Ui::LC_DlgIconsSetup *ui;
     LC_IconColorsOptions *m_iconColorsOptions;
-    void onNormalOnAccentColorChanged(const QString &value);
-    void onNormalOnBackColorChanged(const QString &value);
-    void onNormalOffMainColorChanged(const QString &value);
-    void onNormalOffAccentColorChanged(const QString &value);
-    void onNormalOffBackColorChanged(const QString &value);
-    void onSelectedOnMainColorChanged(const QString &value);
-    void onSelectedOnAccentColorChanged(const QString &value);
-    void onSelectedOnBackColorChanged(const QString &value);
-    void onSelectedOffMainColorChanged(const QString &value);
-    void onSelectedOffAccentColorChanged(const QString &value);
-    void onSelectedOffBackColorChanged(const QString &value);
-    void onDisabledOnMainColorChanged(const QString &value);
-    void onDisabledOnAccentColorChanged(const QString &value);
-    void onDisabledOnBackColorChanged(const QString &value);
-    void onDisabledOffMainColorChanged(const QString &value);
-    void onDisabledOffAccentColorChanged(const QString &value);
-    void onDisabledOffBackColorChanged(const QString &value);
-    QString set_color(QComboBox *combo);
-    void initCombobox(LC_IconColorsOptions *options, LC_SVGIconEngineAPI::IconMode mode, LC_SVGIconEngineAPI::IconState state,
+    void onNormalOnAccentColorChanged(const QString &value) const;
+    void onNormalOnBackColorChanged(const QString &value) const;
+    void onNormalOffMainColorChanged(const QString &value) const;
+    void onNormalOffAccentColorChanged(const QString &value) const;
+    void onNormalOffBackColorChanged(const QString &value) const;
+    void onSelectedOnMainColorChanged(const QString &value) const;
+    void onSelectedOnAccentColorChanged(const QString &value) const;
+    void onSelectedOnBackColorChanged(const QString &value) const;
+    void onSelectedOffMainColorChanged(const QString &value) const;
+    void onSelectedOffAccentColorChanged(const QString &value) const;
+    void onSelectedOffBackColorChanged(const QString &value) const;
+    void onDisabledOnMainColorChanged(const QString &value) const;
+    void onDisabledOnAccentColorChanged(const QString &value) const;
+    void onDisabledOnBackColorChanged(const QString &value) const;
+    void onDisabledOffMainColorChanged(const QString &value) const;
+    void onDisabledOffAccentColorChanged(const QString &value) const;
+    void onDisabledOffBackColorChanged(const QString &value) const;
+    QString setComboBoxColor(const QComboBox *combo);
+    void initCombobox(const LC_IconColorsOptions *options, LC_SVGIconEngineAPI::IconMode mode, LC_SVGIconEngineAPI::IconState state,
         LC_SVGIconEngineAPI::ColorType type, QComboBox *ctrl);
     void saveColor(LC_IconColorsOptions *options, LC_SVGIconEngineAPI::IconMode mode, LC_SVGIconEngineAPI::IconState state,
-        LC_SVGIconEngineAPI::ColorType type, QComboBox *ctrl);
+        LC_SVGIconEngineAPI::ColorType type, const QComboBox *ctrl);
 };
-#endif // LC_DLGICONSSETUP_H
+#endif

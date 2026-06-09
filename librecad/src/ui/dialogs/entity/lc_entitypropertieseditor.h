@@ -35,7 +35,7 @@ class LC_GraphicViewport;
 class LC_EntityPropertiesEditor: public QObject, public LC_LateCompletionRequestor{
     Q_OBJECT
 public:
-    LC_EntityPropertiesEditor(LC_ActionContext* actionContext, LC_LateCompletionRequestor* lateCompletionRequestor);
+    LC_EntityPropertiesEditor(LC_ActionContext* actionContext, LC_LateCompletionRequestor* requestor);
     void editEntity(QWidget* parent, RS_Entity* entity, LC_GraphicViewport* viewport);
     void onLateRequestCompleted(bool shouldBeSkipped) override;
 public slots:
@@ -48,4 +48,4 @@ protected:
     QWidget* m_parent {nullptr};
 };
 
-#endif // LC_ENTITYPROPERTIESEDITOR_H
+#endif

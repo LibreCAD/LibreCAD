@@ -25,6 +25,7 @@
 #define LC_EVENTHANDLER_H
 
 #include <QObject>
+
 #include "rs.h"
 
 class LC_CoordinatesParser;
@@ -39,21 +40,20 @@ class RS_GraphicView;
 class LC_EventHandler : public QObject {
     Q_OBJECT
 public:
-    LC_EventHandler();
-    explicit LC_EventHandler(RS_GraphicView* parent = 0);
+    explicit LC_EventHandler(RS_GraphicView* parent = nullptr);
     ~LC_EventHandler() override;
     void uncheckQAction();
     void setQAction(QAction* action);
-    QAction* getQAction();
+    QAction* getQAction() const;
 
-    void back();
+    void back(Qt::KeyboardModifiers modifiers);
     void enter();
 
-    void mousePressEvent(QMouseEvent *e);
+    void mousePressEvent(QMouseEvent *e) const;
     void mouseReleaseEvent(QMouseEvent *e);
     void mouseMoveEvent(QMouseEvent *e);
-    void mouseLeaveEvent();
-    void mouseEnterEvent();
+    void mouseLeaveEvent() const;
+    void mouseEnterEvent() const;
 
     void keyPressEvent(QKeyEvent* e);
     void keyReleaseEvent(QKeyEvent* e);
@@ -67,12 +67,12 @@ public:
 
     bool setCurrentAction(std::shared_ptr<RS_ActionInterface> action);
     void resumeAction(const std::shared_ptr<RS_ActionInterface>& action);
-    RS_ActionInterface* getCurrentAction();
-    bool isValid(RS_ActionInterface* action) const;
-    void killAllActions();
-    bool hasAction();
-    void setSnapMode(RS_SnapMode sm);
-    void setSnapRestriction(RS2::SnapRestriction sr);
+    RS_ActionInterface* getCurrentAction() const;
+    bool isValid(const RS_ActionInterface* action) const;
+    bool killAllActions();
+    bool hasAction() const;
+    void setSnapMode(RS_SnapMode sm) const;
+    void setSnapRestriction(RS2::SnapRestriction sr) const;
     void notifyLastActionFinished();
 private:
     std::unique_ptr<LC_CoordinatesParser> m_coordinatesParser;
@@ -86,4 +86,4 @@ private:
     void switchToDefaultAction();
 };
 
-#endif // LC_EVENTHANDLER_H
+#endif

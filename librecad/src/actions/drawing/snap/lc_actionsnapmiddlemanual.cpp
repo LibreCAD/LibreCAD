@@ -66,13 +66,13 @@ LC_ActionSnapMiddleManual::LC_ActionSnapMiddleManual(LC_ActionContext *actionCon
     RS_DEBUG->print("LC_ActionSnapMiddleManual::LC_ActionSnapMiddleManual");
 
     m_actionData->currentAppPen = m_document->getActivePen();
-    const RS_Pen snapMiddleManual_pen { RS_Pen(RS_Color(255,0,0), RS2::Width01, RS2::DashDotLineTiny) };
-    m_document->setActivePen(snapMiddleManual_pen);
+    const auto snapMiddleManualPen { RS_Pen(RS_Color(255,0,0), RS2::Width01, RS2::DashDotLineTiny) };
+    m_document->setActivePen(snapMiddleManualPen);
 }
 
 LC_ActionSnapMiddleManual::~LC_ActionSnapMiddleManual() = default;
 
-void LC_ActionSnapMiddleManual::init(int status){
+void LC_ActionSnapMiddleManual::init(const int status){
     RS_DEBUG->print("LC_ActionSnapMiddleManual::init");
     m_document->setActivePen(m_actionData->currentAppPen); // fixme - sand - check this, it looks like invalid pen is set
     RS_PreviewActionInterface::init(status);
@@ -80,13 +80,13 @@ void LC_ActionSnapMiddleManual::init(int status){
     drawSnapper();
 }
 
-void LC_ActionSnapMiddleManual::onMouseMoveEvent(int status, LC_MouseEvent *e) {
-    RS_Vector mouse = e->snapPoint;
+void LC_ActionSnapMiddleManual::onMouseMoveEvent(const int status, const LC_MouseEvent* e) {
     if (status == SetEndPoint){
+        RS_Vector mouse = e->snapPoint;
         /* Snapping to an angle defined by settings, if the shift key is pressed. */
         mouse = getSnapAngleAwarePoint(e, m_actionData->startPoint, mouse,true);
 
-        auto *line = previewLine(m_actionData->startPoint, mouse);
+        const auto *line = obtainPreviewLine(m_actionData->startPoint, mouse);
         previewRefSelectablePoint(line->getMiddlePoint());
         if (m_showRefEntitiesOnPreview){
             previewRefLine(m_actionData->startPoint, mouse);
@@ -103,18 +103,18 @@ void LC_ActionSnapMiddleManual::onMouseMoveEvent(int status, LC_MouseEvent *e) {
     }
 }
 
-void LC_ActionSnapMiddleManual::onMouseLeftButtonRelease([[maybe_unused]] int status, LC_MouseEvent *e) {
+void LC_ActionSnapMiddleManual::onMouseLeftButtonRelease([[maybe_unused]] int status, const LC_MouseEvent* e) {
     RS_Vector snapped = e->snapPoint;
     snapped = getSnapAngleAwarePoint(e, m_actionData->startPoint, snapped);
     fireCoordinateEvent(snapped);
 }
 
 void LC_ActionSnapMiddleManual::fireUnsetMiddleManual() {
-    auto snapToolbar = QC_ApplicationWindow::getAppWindow()->getSnapToolBar();
+    const auto snapToolbar = QC_ApplicationWindow::getAppWindow()->getSnapToolBar();
     snapToolbar->slotUnsetSnapMiddleManual();
 }
 
-void LC_ActionSnapMiddleManual::onMouseRightButtonRelease(int status, [[maybe_unused]] LC_MouseEvent *e) {
+void LC_ActionSnapMiddleManual::onMouseRightButtonRelease(const int status, [[maybe_unused]] const LC_MouseEvent* e) {
     deletePreview();
 
     switch (status) {
@@ -127,27 +127,30 @@ void LC_ActionSnapMiddleManual::onMouseRightButtonRelease(int status, [[maybe_un
         default:
             setStatus(SetPercentage);
             init(getStatus());
+            break;
     }
 }
 
-void LC_ActionSnapMiddleManual::onCoordinateEvent(int status, [[maybe_unused]]bool isZero, const RS_Vector &mouse) {
+void LC_ActionSnapMiddleManual::onCoordinateEvent(const int status, [[maybe_unused]]bool isZero, const RS_Vector &pos) {
     switch (status) {
         case SetPercentage:
         case SetStartPoint: {
-            m_actionData->startPoint = mouse;
+            m_actionData->startPoint = pos;
             setStatus(SetEndPoint);
-            moveRelativeZero(mouse);
-            updateMouseButtonHints();
+            addSnappedPointToVisualSnap(pos);
+            moveRelativeZero(pos);
+            updateActionPrompt();
             break;
         }
         case SetEndPoint: {
             /* Refuse zero length lines. */
-            if ((mouse - m_actionData->startPoint).squared() > RS_TOLERANCE2) {
-                m_actionData->endPoint = mouse;
+            if ((pos - m_actionData->startPoint).squared() > RS_TOLERANCE2) {
+                m_actionData->endPoint = pos;
 
                 const RS_Vector middleManualPoint =
                     m_actionData->startPoint + (m_actionData->endPoint - m_actionData->startPoint) * m_actionData->percentage;
 
+                addSnappedPointToVisualSnap(pos);
                 moveRelativeZero(middleManualPoint);
 
                 if (m_predecessor != nullptr) {
@@ -161,7 +164,7 @@ void LC_ActionSnapMiddleManual::onCoordinateEvent(int status, [[maybe_unused]]bo
                 }
 
                 setStatus(SetPercentage);
-                updateMouseButtonHints();
+                updateActionPrompt();
                 init(getStatus());
             }
             break;
@@ -171,9 +174,9 @@ void LC_ActionSnapMiddleManual::onCoordinateEvent(int status, [[maybe_unused]]bo
     }
 }
 
-bool LC_ActionSnapMiddleManual::doProcessCommand(int status, const QString& command) {
+bool LC_ActionSnapMiddleManual::doProcessCommand(const int status, const QString& command) {
     bool accepted = false;
-    QString inputCommand = command.toLower();
+    const QString inputCommand = command.toLower();
 
     switch (status) {
         case SetPercentage: {
@@ -182,7 +185,7 @@ bool LC_ActionSnapMiddleManual::doProcessCommand(int status, const QString& comm
             if (ok){
                 setStatus(SetStartPoint);
                 accepted = true;
-                updateMouseButtonHints();
+                updateActionPrompt();
             } else {
                 m_actionData->percentage = g_defaultRatio;
             }
@@ -190,7 +193,7 @@ bool LC_ActionSnapMiddleManual::doProcessCommand(int status, const QString& comm
         }
         case SetStartPoint: {
             if (checkCommand("help", inputCommand)){
-                commandMessage(msgAvailableCommands() + getAvailableCommands().join(", "));
+                commandMessage(msgAvailableCommands() + " " + getAvailableCommands().join(", "));
                 accepted = true;
             }
             break;
@@ -199,7 +202,7 @@ bool LC_ActionSnapMiddleManual::doProcessCommand(int status, const QString& comm
             if (checkCommand("close", inputCommand)){
                 setStatus(-1);
                 accepted = true;
-                updateMouseButtonHints();
+                updateActionPrompt();
             }
             break;
         }
@@ -209,7 +212,7 @@ bool LC_ActionSnapMiddleManual::doProcessCommand(int status, const QString& comm
     return accepted;
 }
 
-QStringList LC_ActionSnapMiddleManual::doGetAvailableCommands(int status){
+QStringList LC_ActionSnapMiddleManual::doGetAvailableCommands(const int status){
     QStringList actionCommandsList;
     switch (status) {
         case SetEndPoint:
@@ -221,19 +224,23 @@ QStringList LC_ActionSnapMiddleManual::doGetAvailableCommands(int status){
     return actionCommandsList;
 }
 
-void LC_ActionSnapMiddleManual::updateMouseButtonHints(){
+bool LC_ActionSnapMiddleManual::isInVisualSnapStatus(int status) {
+    return (status == SetStartPoint) || (status == SetEndPoint);
+}
+
+void LC_ActionSnapMiddleManual::updateActionPrompt(){
     switch (getStatus()) {
         case SetPercentage:
-            updateMouseWidgetTRCancel(tr("Specify percentage / start-point"));
+            updatePromptTRCancel(tr("Specify percentage / start-point"));
             break;
         case SetStartPoint:
-            updateMouseWidgetTRCancel(tr("Specify start point"));
+            updatePromptTRCancel(tr("Specify start point"));
             break;
         case SetEndPoint:
-            updateMouseWidgetTRBack(tr("Specify end point"), MOD_SHIFT_ANGLE_SNAP);
+            updatePromptTRBack(tr("Specify end point"), MOD_SHIFT_ANGLE_SNAP);
             break;
         default:
-            updateMouseWidget();
+            updatePrompt();
             break;
     }
 }

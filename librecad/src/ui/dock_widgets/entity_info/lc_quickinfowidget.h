@@ -33,15 +33,12 @@ class LC_QuickInfoOptions;
 class RS_Vector;
 class RS_Entity;
 
-namespace Ui
-{
+namespace Ui{
     class LC_QuickInfoWidget;
 }
 
-class LC_QuickInfoWidget : public LC_GraphicViewAwareWidget
-{
+class LC_QuickInfoWidget : public LC_GraphicViewAwareWidget{
     Q_OBJECT
-
 public:
     /**
      * current mode of widget
@@ -54,8 +51,8 @@ public:
     LC_QuickInfoWidget(QWidget *parent, QMap<QString, QAction *> map);
     ~LC_QuickInfoWidget() override;
     void setGraphicView(RS_GraphicView* view) override;
-    void processEntity(RS_Entity *en);
-    QString getEntityDescription(RS_Entity* en, RS2::EntityDescriptionLevel shortDescription) const ;
+    void processEntity(const RS_Entity* en);
+    QString getEntityDescription(const RS_Entity* en, RS2::EntityDescriptionLevel shortDescription) const ;
     void processCoordinate(const RS_Vector& point);
     void endAddingCoordinates() const;
     void updateCollectedPointsView(bool forceUpdate = false) const;
@@ -69,8 +66,6 @@ public:
     bool isAutoSelectEntitiesInDefaultAction() const;
     void onEntityPropertiesEdited(unsigned long originalId, unsigned long editedCloneId);
     void updateFormats() const;
-public slots:
-    void updateWidgetSettings() const;
 protected slots:
     void onSettings();
     void onClearAll() const;
@@ -90,6 +85,8 @@ protected slots:
     void onRemoveCoordinate(int index) const;
     void onInsertCoordinates(int index) const;
     void onRelativeZeroChanged(const RS_Vector& relZero) const;
+protected:
+    QLayout* getTopLevelLayout() const override;
 private:
     Ui::LC_QuickInfoWidget *ui = nullptr;
     RS_GraphicView* m_graphicView = nullptr; // fixme - sand - review dependency
@@ -132,4 +129,4 @@ private:
     void invokeOptionsDialog();
 };
 
-#endif // LC_QUICKINFOWIDGET_H
+#endif

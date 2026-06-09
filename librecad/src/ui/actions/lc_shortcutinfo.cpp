@@ -22,25 +22,23 @@
 
 #include "lc_shortcutinfo.h"
 
-const char* LC_ShortcutInfo::PROPERTY_ACTION_SHORTCUT_CONFIGURABLE = "actionShortcut.configurable";
-
-QString LC_ShortcutInfo::retrieveKey(bool useDefault) const {
+QString LC_ShortcutInfo::retrieveKey(const bool useDefault) const {
     return useDefault ? m_defaultKey.toString() : m_key.toString();
-};
+}
 
-QString LC_ShortcutInfo::getKeyAsString() {
+QString LC_ShortcutInfo::getKeyAsString() const {
     QString text = m_key.toString(QKeySequence::PortableText);
     return text;
 }
 
-QList<QKeySequence> LC_ShortcutInfo::getKeysList() const { return QList<QKeySequence>(); };
+QList<QKeySequence> LC_ShortcutInfo::getKeysList() const { return QList<QKeySequence>(); }
 
 void LC_ShortcutInfo::resetToDefault() {
     m_key = m_defaultKey;
     m_modified = false;
 }
 
-void LC_ShortcutInfo::setKey(QKeySequence newKey) {
+void LC_ShortcutInfo::setKey(const QKeySequence& newKey) {
     m_key = newKey;
     m_modified = m_key != m_defaultKey;
 }
@@ -49,7 +47,7 @@ void LC_ShortcutInfo::clear() {
     setKey(QKeySequence());
 }
 
-int LC_ShortcutInfo::translateModifiers(Qt::KeyboardModifiers state,
+int LC_ShortcutInfo::translateModifiers(const Qt::KeyboardModifiers state,
                                         const QString& text) {
     int result = 0;
     // The shift modifier only counts when it is not used to type a symbol
@@ -57,18 +55,22 @@ int LC_ShortcutInfo::translateModifiers(Qt::KeyboardModifiers state,
     if ((state & Qt::ShiftModifier) && (text.size() == 0
         || !text.at(0).isPrint()
         || text.at(0).isLetterOrNumber()
-        || text.at(0).isSpace()))
+        || text.at(0).isSpace())) {
         result |= Qt::SHIFT;
-    if (state & Qt::ControlModifier)
+    }
+    if (state & Qt::ControlModifier) {
         result |= Qt::CTRL;
-    if (state & Qt::MetaModifier)
+    }
+    if (state & Qt::MetaModifier) {
         result |= Qt::META;
-    if (state & Qt::AltModifier)
+    }
+    if (state & Qt::AltModifier) {
         result |= Qt::ALT;
+    }
     return result;
 }
 
-bool LC_ShortcutInfo::hasTheSameKey(QKeySequence sequenceToTest) {
+bool LC_ShortcutInfo::hasTheSameKey(const QKeySequence& sequenceToTest) const {
     bool result = false;
     if (m_key.isEmpty()) {
         if (!m_defaultKey.isEmpty()) {

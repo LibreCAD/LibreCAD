@@ -28,4 +28,4 @@ class LC_SameProp : public QObject, QC_PluginInterface
                           QWidget *parent, QString cmd) Q_DECL_OVERRIDE;
 };
 
-#endif // SAMPLE_H
+#endif

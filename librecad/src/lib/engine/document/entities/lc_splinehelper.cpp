@@ -21,12 +21,13 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 // File: lc_splinehelper.cpp
 
+#include "lc_splinehelper.h"
+
 #include <algorithm>
 #include <cassert>
 #include <cmath>
 #include <numeric>
 
-#include "lc_splinehelper.h"
 #include "rs_debug.h"
 #include "rs_math.h"
 #include "rs_vector.h"
@@ -36,8 +37,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * Extracts internal knots and adds clamping multiplicities.
  */
 std::vector<double> LC_SplineHelper::convertClosedToOpenKnotVector(
-    const std::vector<double> &closedKnotVector, size_t unwrappedControlCount,
-    size_t splineDegree) {
+    const std::vector<double> &closedKnotVector, const size_t unwrappedControlCount, const size_t splineDegree) {
   const size_t n = unwrappedControlCount;
   const size_t m = splineDegree;
   if (closedKnotVector.size() < n + m + 1 || n < m + 1) {
@@ -69,24 +69,25 @@ std::vector<double> LC_SplineHelper::convertClosedToOpenKnotVector(
  * Convert open knot vector to closed (periodic) form.
  */
 std::vector<double> LC_SplineHelper::convertOpenToClosedKnotVector(
-    const std::vector<double> &openKnots, size_t n, size_t m) {
-  if (openKnots.size() <= n)
-    return {};
+    const std::vector<double> &openKnots, const size_t n, const size_t splineDegree) {
+  if (openKnots.size() <= n) {
+      return {};
+  }
 
   bool isClamped = false;
-  if (openKnots.size() >= 2 * (m + 1)) {
-    double startValue = openKnots[0];
+  if (openKnots.size() >= 2 * (splineDegree + 1)) {
+    const double startValue = openKnots[0];
     bool isStartClamped = true;
-    for (size_t i = 1; i <= m; ++i) {
+    for (size_t i = 1; i <= splineDegree; ++i) {
       if (std::abs(openKnots[i] - startValue) > RS_TOLERANCE) {
         isStartClamped = false;
         break;
       }
     }
 
-    double endValue = openKnots.back();
+    const double endValue = openKnots.back();
     bool isEndClamped = true;
-    for (size_t i = 1; i <= m; ++i) {
+    for (size_t i = 1; i <= splineDegree; ++i) {
       if (std::abs(openKnots[openKnots.size() - i - 1] - endValue) >
           RS_TOLERANCE) {
         isEndClamped = false;
@@ -97,23 +98,24 @@ std::vector<double> LC_SplineHelper::convertOpenToClosedKnotVector(
     isClamped = isStartClamped && isEndClamped;
   }
 
-  double period = openKnots.back() - openKnots.front();
+  const double period = openKnots.back() - openKnots.front();
   if (period <= 0.0) {
     return {};
   }
 
-  size_t startIdx = isClamped ? m + 1 : 0;
-  size_t lastIdx = n;
+  const size_t startIdx = isClamped ? splineDegree + 1 : 0;
+  const size_t lastIdx = n;
   if (startIdx > lastIdx) {
     return {};
   }
   std::vector<double> closedKnots(openKnots.begin() + startIdx,
                                   openKnots.begin() + lastIdx + 1);
-  if (closedKnots.empty())
-    return {};
+  if (closedKnots.empty()) {
+      return {};
+  }
 
-  size_t initial_size = closedKnots.size();
-  const size_t newSize = n + 2 * m + 1;
+  const size_t initial_size = closedKnots.size();
+  const size_t newSize = n + 2 * splineDegree + 1;
   double current = closedKnots.back();
   size_t j = 1;
   while (closedKnots.size() < newSize) {
@@ -121,7 +123,7 @@ std::vector<double> LC_SplineHelper::convertOpenToClosedKnotVector(
     if (initial_size <= 1) {
       delta = 0.0;
     } else {
-      size_t jj = (j - 1) % (initial_size - 1) + 1;
+      const size_t jj = (j - 1) % (initial_size - 1) + 1;
       delta = closedKnots[jj] - closedKnots[jj - 1];
     }
     current += delta;
@@ -138,14 +140,15 @@ std::vector<double> LC_SplineHelper::convertOpenToClosedKnotVector(
 std::vector<double> LC_SplineHelper::getNormalizedKnotVector(
     const std::vector<double> &inputKnotVector, double newMinimum,
     const std::vector<double> &fallbackKnotVector) {
-  if (inputKnotVector.size() < 2)
-    return fallbackKnotVector;
+  if (inputKnotVector.size() < 2) {
+      return fallbackKnotVector;
+  }
   double minKnot =
       *std::min_element(inputKnotVector.begin(), inputKnotVector.end());
   std::vector<double> shiftedKnotVector(inputKnotVector.size());
   std::transform(inputKnotVector.begin(), inputKnotVector.end(),
                  shiftedKnotVector.begin(),
-                 [minKnot, newMinimum](double knotValue) {
+                 [minKnot, newMinimum](const double knotValue) {
                    return newMinimum + (knotValue - minKnot);
                  });
   return shiftedKnotVector;
@@ -155,16 +158,16 @@ std::vector<double> LC_SplineHelper::getNormalizedKnotVector(
  * Clamp a knot vector by adding endpoint multiplicity using internal values.
  */
 std::vector<double>
-LC_SplineHelper::clampKnotVector(const std::vector<double> &inputKnotVector,
-                                 size_t controlPointCount, size_t splineOrder) {
-  if (inputKnotVector.size() != controlPointCount + splineOrder)
-    return inputKnotVector;
+LC_SplineHelper::clampKnotVector(const std::vector<double> &inputKnotVector, const size_t controlPointCount, const size_t splineOrder) {
+  if (inputKnotVector.size() != controlPointCount + splineOrder) {
+      return inputKnotVector;
+  }
   std::vector<double> clampedKnotVector = inputKnotVector;
-  size_t splineDegree = splineOrder - 1;
-  double leftClampValue = inputKnotVector[splineDegree];
+  const size_t splineDegree = splineOrder - 1;
+  const double leftClampValue = inputKnotVector[splineDegree];
   std::fill(clampedKnotVector.begin(),
             clampedKnotVector.begin() + splineDegree + 1, leftClampValue);
-  double rightClampValue = inputKnotVector[controlPointCount];
+  const double rightClampValue = inputKnotVector[controlPointCount];
   std::fill(clampedKnotVector.end() - (splineDegree + 1),
             clampedKnotVector.end(), rightClampValue);
   return clampedKnotVector;
@@ -175,26 +178,27 @@ LC_SplineHelper::clampKnotVector(const std::vector<double> &inputKnotVector,
  * deltas.
  */
 std::vector<double>
-LC_SplineHelper::unclampKnotVector(const std::vector<double> &inputKnotVector,
-                                   size_t controlPointCount,
-                                   size_t splineOrder) {
-  if (inputKnotVector.size() != controlPointCount + splineOrder)
-    return inputKnotVector;
+LC_SplineHelper::unclampKnotVector(const std::vector<double> &inputKnotVector, const size_t controlPointCount, const size_t splineOrder) {
+  if (inputKnotVector.size() != controlPointCount + splineOrder) {
+      return inputKnotVector;
+  }
   std::vector<double> unclampedKnotVector = inputKnotVector;
-  size_t splineDegree = splineOrder - 1;
+  const size_t splineDegree = splineOrder - 1;
   double leftDelta =
-      (inputKnotVector[splineDegree + 1] - inputKnotVector[splineDegree]);
-  if (std::abs(leftDelta) < RS_TOLERANCE)
-    leftDelta = 1.0;
+      inputKnotVector[splineDegree + 1] - inputKnotVector[splineDegree];
+  if (std::abs(leftDelta) < RS_TOLERANCE) {
+      leftDelta = 1.0;
+  }
   double current = inputKnotVector[splineDegree];
   for (size_t i = 1; i <= splineDegree; ++i) {
     current -= leftDelta;
     unclampedKnotVector[splineDegree - i] = current;
   }
-  double rightDelta = (inputKnotVector[controlPointCount] -
-                       inputKnotVector[controlPointCount - 1]);
-  if (std::abs(rightDelta) < RS_TOLERANCE)
-    rightDelta = 1.0;
+  double rightDelta = inputKnotVector[controlPointCount] -
+      inputKnotVector[controlPointCount - 1];
+  if (std::abs(rightDelta) < RS_TOLERANCE) {
+      rightDelta = 1.0;
+  }
   current = inputKnotVector[controlPointCount];
   for (size_t i = 1; i <= splineDegree; ++i) {
     current += rightDelta;
@@ -215,8 +219,8 @@ void LC_SplineHelper::toClampedOpenFromStandard(RS_SplineData &splineData) {
     return; // Skip conversion to preserve original state
   }
 
-  auto originalKnots = splineData.knotslist;
-  auto originalType = splineData.type;
+  const auto originalKnots = splineData.knotslist;
+  const auto originalType = splineData.type;
 
   splineData.knotslist =
       clampKnotVector(splineData.knotslist, splineData.controlPoints.size(),
@@ -246,8 +250,8 @@ void LC_SplineHelper::toStandardFromClampedOpen(RS_SplineData &splineData) {
     return; // Skip conversion to preserve original state
   }
 
-  auto originalKnots = splineData.knotslist;
-  auto originalType = splineData.type;
+  const auto originalKnots = splineData.knotslist;
+  const auto originalType = splineData.type;
 
   splineData.knotslist =
       unclampKnotVector(splineData.knotslist, splineData.controlPoints.size(),
@@ -277,10 +281,10 @@ void LC_SplineHelper::toWrappedClosedFromStandard(RS_SplineData &splineData) {
     return; // Skip conversion to preserve original state
   }
 
-  auto savedKnots = splineData.knotslist;
-  auto savedType = splineData.type;
-  auto savedControls = splineData.controlPoints;
-  auto savedWeights = splineData.weights;
+  const auto savedKnots = splineData.knotslist;
+  const auto savedType = splineData.type;
+  const auto savedControls = splineData.controlPoints;
+  const auto savedWeights = splineData.weights;
 
   addWrapping(splineData);
   splineData.type = RS_SplineData::SplineType::WrappedClosed;
@@ -310,10 +314,10 @@ void LC_SplineHelper::toStandardFromWrappedClosed(RS_SplineData &splineData) {
     return; // Skip conversion to preserve original state
   }
 
-  auto savedKnots = splineData.knotslist;
-  auto savedType = splineData.type;
-  auto savedControls = splineData.controlPoints;
-  auto savedWeights = splineData.weights;
+  const auto savedKnots = splineData.knotslist;
+  const auto savedType = splineData.type;
+  const auto savedControls = splineData.controlPoints;
+  const auto savedWeights = splineData.weights;
 
   removeWrapping(splineData);
   splineData.type = RS_SplineData::SplineType::Standard;
@@ -344,10 +348,10 @@ void LC_SplineHelper::toClampedOpenFromWrappedClosed(
     return; // Skip conversion to preserve original state
   }
 
-  auto savedKnots = splineData.knotslist;
-  auto savedType = splineData.type;
-  auto savedControls = splineData.controlPoints;
-  auto savedWeights = splineData.weights;
+  const auto savedKnots = splineData.knotslist;
+  const auto savedType = splineData.type;
+  const auto savedControls = splineData.controlPoints;
+  const auto savedWeights = splineData.weights;
 
   toStandardFromWrappedClosed(splineData);
   toClampedOpenFromStandard(splineData);
@@ -378,10 +382,10 @@ void LC_SplineHelper::toWrappedClosedFromClampedOpen(
     return; // Skip conversion to preserve original state
   }
 
-  auto savedKnots = splineData.knotslist;
-  auto savedType = splineData.type;
-  auto savedControls = splineData.controlPoints;
-  auto savedWeights = splineData.weights;
+  const auto savedKnots = splineData.knotslist;
+  const auto savedType = splineData.type;
+  const auto savedControls = splineData.controlPoints;
+  const auto savedWeights = splineData.weights;
 
   toStandardFromClampedOpen(splineData);
   toWrappedClosedFromStandard(splineData);
@@ -403,10 +407,11 @@ void LC_SplineHelper::toWrappedClosedFromClampedOpen(
  * Add wrapping to control points and weights for closed splines.
  */
 void LC_SplineHelper::addWrapping(RS_SplineData &splineData) {
-  size_t n = splineData.controlPoints.size();
-  size_t m = splineData.degree;
-  if (n < m + 1)
-    return;
+  const size_t n = splineData.controlPoints.size();
+  const size_t m = splineData.degree;
+  if (n < m + 1) {
+      return;
+  }
   for (size_t i = 0; i < m; ++i) {
     splineData.controlPoints.push_back(splineData.controlPoints[i]);
     splineData.weights.push_back(splineData.weights[i]);
@@ -424,9 +429,10 @@ void LC_SplineHelper::addWrapping(RS_SplineData &splineData) {
 void LC_SplineHelper::removeWrapping(RS_SplineData &splineData) {
   const size_t n = splineData.controlPoints.size();
   const size_t m = splineData.degree;
-  if (n <= m + 1)
-    return;
-  size_t unwrappedControlCount = n - m;
+  if (n <= m + 1) {
+      return;
+  }
+  const size_t unwrappedControlCount = n - m;
   splineData.controlPoints.resize(unwrappedControlCount);
   splineData.weights.resize(unwrappedControlCount);
   splineData.knotslist = convertClosedToOpenKnotVector(
@@ -437,10 +443,11 @@ void LC_SplineHelper::removeWrapping(RS_SplineData &splineData) {
  * Update wrapping for control points and weights.
  */
 void LC_SplineHelper::updateControlAndWeightWrapping(
-    RS_SplineData &splineData, bool isClosed, size_t unwrappedControlCount) {
-  if (!isClosed)
-    return;
-  size_t degree = splineData.degree;
+    RS_SplineData &splineData, const bool isClosed, const size_t unwrappedControlCount) {
+  if (!isClosed) {
+      return;
+  }
+  const size_t degree = splineData.degree;
   for (size_t i = 0; i < degree; ++i) {
     splineData.controlPoints[unwrappedControlCount + i] =
         splineData.controlPoints[i];
@@ -451,11 +458,10 @@ void LC_SplineHelper::updateControlAndWeightWrapping(
 /**
  * Update knot vector wrapping for closed splines.
  */
-void LC_SplineHelper::updateKnotWrapping(RS_SplineData &splineData,
-                                         bool isClosed,
-                                         size_t unwrappedControlCount) {
-  if (!isClosed)
-    return;
+void LC_SplineHelper::updateKnotWrapping(RS_SplineData &splineData, const bool isClosed, const size_t unwrappedControlCount) {
+  if (!isClosed) {
+      return;
+  }
   splineData.knotslist = convertOpenToClosedKnotVector(
       splineData.knotslist, unwrappedControlCount, splineData.degree);
 }
@@ -463,14 +469,14 @@ void LC_SplineHelper::updateKnotWrapping(RS_SplineData &splineData,
 /**
  * Generate clamped uniform knot vector.
  */
-std::vector<double> LC_SplineHelper::knot(size_t controlPointCount,
-                                          size_t splineOrder) {
+std::vector<double> LC_SplineHelper::knot(const size_t controlPointCount, const size_t splineOrder) {
   std::vector<double> clampedKnotVector(controlPointCount + splineOrder, 0.0);
-  size_t splineDegree = splineOrder - 1;
+  const size_t splineDegree = splineOrder - 1;
   for (size_t internalIndex = 0;
-       internalIndex < controlPointCount - splineDegree; ++internalIndex)
-    clampedKnotVector[splineOrder + internalIndex] =
-        static_cast<double>(internalIndex + 1);
+       internalIndex < controlPointCount - splineDegree; ++internalIndex) {
+      clampedKnotVector[splineOrder + internalIndex] =
+          static_cast<double>(internalIndex + 1);
+  }
   std::fill(clampedKnotVector.begin() + controlPointCount + 1,
             clampedKnotVector.end(),
             static_cast<double>(controlPointCount - splineDegree));
@@ -481,8 +487,7 @@ std::vector<double> LC_SplineHelper::knot(size_t controlPointCount,
  * Generate open uniform knot vector.
  */
 std::vector<double>
-LC_SplineHelper::generateOpenUniformKnotVector(size_t controlPointCount,
-                                               size_t splineOrder) {
+LC_SplineHelper::generateOpenUniformKnotVector(const size_t controlPointCount, const size_t splineOrder) {
   std::vector<double> openKnotVector(controlPointCount + splineOrder);
   std::iota(openKnotVector.begin(), openKnotVector.end(), 0.0);
   return openKnotVector;
@@ -497,13 +502,13 @@ void LC_SplineHelper::extendKnotVector(std::vector<double> &knots) {
   if (!knots.empty()) {
     last = knots.back();
     if (knots.size() >= 2) {
-      double prev_delta = last - knots[knots.size() - 2];
+      const double prev_delta = last - knots[knots.size() - 2];
       if (prev_delta > 0.0) {
         delta = prev_delta;
       }
     }
   }
-  double new_knot = last + delta;
+  const double new_knot = last + delta;
   knots.push_back(new_knot);
 }
 /**
@@ -519,17 +524,17 @@ void LC_SplineHelper::insertKnot(std::vector<double> &knots,
     new_knot = 0.0;
   } else if (knot_index == 0) {
     // Edge case: insert at start
-    double delta = knots.size() >= 2 ? knots[1] - knots[0] : 1.0;
+    const double delta = knots.size() >= 2 ? knots[1] - knots[0] : 1.0;
     new_knot = knots[0] - std::max(delta, RS_TOLERANCE);
   } else if (knot_index >= knots.size()) {
     // Edge case: insert at end (like add)
-    double delta =
+    const double delta =
         knots.size() >= 2 ? knots.back() - knots[knots.size() - 2] : 1.0;
     new_knot = knots.back() + std::max(delta, RS_TOLERANCE);
   } else {
     // Mid: average of surrounding
-    double left = knots[knot_index - 1];
-    double right = knots[knot_index];
+    const double left = knots[knot_index - 1];
+    const double right = knots[knot_index];
     new_knot = (left + right) / 2.0;
     if (right - left < 2 * RS_TOLERANCE) {
       new_knot = right + RS_TOLERANCE;
@@ -541,8 +546,7 @@ void LC_SplineHelper::insertKnot(std::vector<double> &knots,
 /**
  * Remove a knot at the specified index.
  */
-void LC_SplineHelper::removeKnot(std::vector<double> &knots,
-                                 size_t knot_index) {
+void LC_SplineHelper::removeKnot(std::vector<double> &knots, const size_t knot_index) {
   if (knot_index >= knots.size()) {
     return;
   }
@@ -564,42 +568,49 @@ void LC_SplineHelper::ensureMonotonic(std::vector<double> &knots) {
  * Validate the spline data integrity.
  */
 bool LC_SplineHelper::validate(const RS_SplineData &data) {
-  size_t deg = data.degree;
-  if (deg < 1 || deg > 3)
-    return false;
-
-  size_t ctrlSz = data.controlPoints.size();
-  if (data.weights.size() != ctrlSz)
-    return false;
-
-  bool closed = (data.type == RS_SplineData::SplineType::WrappedClosed);
-  size_t uwSz = closed ? (ctrlSz > deg ? ctrlSz - deg : 0) : ctrlSz;
-  if (uwSz < deg + 1)
-    return false;
-
-  if (ctrlSz != (closed ? uwSz + deg : uwSz) ||
-      data.knotslist.size() != (closed ? uwSz + 2 * deg + 1 : uwSz + deg + 1))
-    return false;
-
-  for (size_t i = 1; i < data.knotslist.size(); ++i) {
-    if (data.knotslist[i] < data.knotslist[i - 1] - RS_TOLERANCE)
+  const size_t deg = data.degree;
+  if (deg < 1 || deg > 3) {
       return false;
   }
 
-  if (data.type == RS_SplineData::SplineType::ClampedOpen) {
-    double start = data.knotslist[0], end = data.knotslist.back();
-    for (size_t i = 1; i <= deg; ++i) {
-      if (fabs(data.knotslist[i] - start) > RS_TOLERANCE ||
-          fabs(data.knotslist[data.knotslist.size() - i - 1] - end) >
-              RS_TOLERANCE)
+  const size_t ctrlSz = data.controlPoints.size();
+  if (data.weights.size() != ctrlSz) {
+      return false;
+  }
+
+  const bool closed = data.type == RS_SplineData::SplineType::WrappedClosed;
+  const size_t uwSz = closed ? (ctrlSz > deg ? ctrlSz - deg : 0) : ctrlSz;
+  if (uwSz < deg + 1) {
+      return false;
+  }
+
+  if (ctrlSz != (closed ? uwSz + deg : uwSz) ||
+      data.knotslist.size() != (closed ? uwSz + 2 * deg + 1 : uwSz + deg + 1)) {
+      return false;
+  }
+
+  for (size_t i = 1; i < data.knotslist.size(); ++i) {
+    if (data.knotslist[i] < data.knotslist[i - 1] - RS_TOLERANCE) {
         return false;
     }
-  } else if (closed) {
+  }
+
+  if (data.type == RS_SplineData::SplineType::ClampedOpen) {
+      const double start = data.knotslist[0];
+      const double end = data.knotslist.back();
+      for (size_t i = 1; i <= deg; ++i) {
+          if (fabs(data.knotslist[i] - start) > RS_TOLERANCE || fabs(data.knotslist[data.knotslist.size() - i - 1] - end) > RS_TOLERANCE) {
+              return false;
+          }
+      }
+  }
+  else if (closed) {
     for (size_t i = 0; i < deg; ++i) {
       if ((data.controlPoints[uwSz + i] - data.controlPoints[i]).magnitude() >
               RS_TOLERANCE ||
-          fabs(data.weights[uwSz + i] - data.weights[i]) > RS_TOLERANCE)
-        return false;
+          fabs(data.weights[uwSz + i] - data.weights[i]) > RS_TOLERANCE) {
+          return false;
+      }
     }
   }
   return true;

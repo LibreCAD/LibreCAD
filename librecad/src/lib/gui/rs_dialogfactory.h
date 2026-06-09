@@ -37,17 +37,16 @@ class RS_DialogFactoryInterface;
  * Interface for objects that can create and show dialogs.
  */
 class RS_DialogFactory {
-private:
-    RS_DialogFactory();
-    virtual ~RS_DialogFactory();
 public:
     static RS_DialogFactory* instance();
     void setFactoryObject(RS_DialogFactoryInterface* fo);
-    RS_DialogFactoryInterface* getFactoryObject();
-    void commandMessage(const QString& m);
+    RS_DialogFactoryInterface* getFactoryObject() const;
+    void commandMessage(const QString& m) const;
 private:
-    RS_DialogFactoryInterface* factoryObject;
-    RS_DialogFactoryInterface*  factoryAdapter;
+    RS_DialogFactory();
+    virtual ~RS_DialogFactory();
+    RS_DialogFactoryInterface* m_factoryObject;
+    RS_DialogFactoryInterface*  m_factoryAdapter;
 };
 
 

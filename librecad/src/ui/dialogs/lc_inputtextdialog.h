@@ -44,4 +44,4 @@ private:
     Ui::LC_InputTextDialog *ui;
 };
 
-#endif // LC_INPUTTEXTDIALOG_H
+#endif

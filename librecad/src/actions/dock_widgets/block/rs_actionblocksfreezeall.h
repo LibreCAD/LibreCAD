@@ -35,11 +35,11 @@
  * @author Andrew Mustun
  */
 class RS_ActionBlocksFreezeAll : public RS_ActionInterface {
-	Q_OBJECT
-public:
-    RS_ActionBlocksFreezeAll(bool freeze, LC_ActionContext *actionContext);
-	void init(int status) override;
-	void trigger() override;
+    Q_OBJECT public:
+    RS_ActionBlocksFreezeAll(bool freeze, LC_ActionContext* actionContext);
+    void init(int status) override;
+    void trigger() override;
+
 private:
     bool m_freeze = false;
 };

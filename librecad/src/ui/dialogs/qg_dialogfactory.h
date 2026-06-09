@@ -48,11 +48,9 @@ class RS_Vector;
  */
 class QG_DialogFactory: public RS_DialogFactoryInterface {
 public:
-    QG_DialogFactory(QWidget* parent, QToolBar* ow, LC_SnapOptionsWidgetsHolder *);
+    QG_DialogFactory(QWidget* parent, QToolBar* optionsToolbar, LC_SnapOptionsWidgetsHolder *);
     ~QG_DialogFactory() override;
 
-
-public:
 
 /**
  * @return command widget or nullptr.
@@ -89,17 +87,8 @@ public:
 
     QString requestImageOpenDialog() override;
 
-protected:
-
-public:
     bool requestAttributesDialog(RS_AttributesData& data,
                                  RS_LayerList& layerList) override;
-    bool requestMoveDialog(RS_MoveData& data) override;
-    bool requestRotateDialog(RS_RotateData& data) override;
-    bool requestScaleDialog(RS_ScaleData& data) override;
-    bool requestMirrorDialog(RS_MirrorData& data) override;
-    bool requestMoveRotateDialog(RS_MoveRotateData& data) override;
-    bool requestRotate2Dialog(RS_Rotate2Data& data) override;
 
     bool requestModifyEntityDialog(RS_Entity *entity, LC_GraphicViewport *viewport) override;
     bool requestMTextDialog(RS_MText *text, LC_GraphicViewport *viewport) override;
@@ -109,30 +98,26 @@ public:
     int requestOptionsDrawingDialog(RS_Graphic& graphic, int tabIndex) override;
     bool requestOptionsMakerCamDialog() override;
 
-    QString requestFileSaveAsDialog(const QString& caption = QString(),
-                                    const QString& dir = QString(),
-                                    const QString& filter = QString(),
-                                    QString* selectedFilter = 0) override;
+    QString requestFileSaveAsDialog(const QString& caption, const QString& dir, const QString& filter, QString* selectedFilter) override;
 
     void commandMessage(const QString& message) override;
     void command(const QString& message) override;
     void commandPrompt(const QString& message) override;
 
     static QString extToFormat(const QString& ext);
-    void displayBlockName(const QString& blockName, const bool& display) override;
-    // void setCurrentQAction(QAction *action) override;
+    void displayBlockName(const QString& blockName, bool display) override;
 
     /// fixme - sand - temporary, remove accessort later with further refactorings
-    void set_selection_widget(QG_SelectionWidget* selection_widget) {
-        m_selectionWidget = selection_widget;
+    void set_selection_widget(QG_SelectionWidget* selectionWidget) {
+        m_selectionWidget = selectionWidget;
     }
 
-    void set_command_widget(QG_CommandWidget* command_widget) {
-        m_commandWidget = command_widget;
+    void set_command_widget(QG_CommandWidget* commandWidget) {
+        m_commandWidget = commandWidget;
     }
 
-    void set_rel_zero_coordinates_widget(LC_RelZeroCoordinatesWidget* rel_zero_coordinates_widget) {
-        m_relZeroCoordinatesWidget = rel_zero_coordinates_widget;
+    void set_rel_zero_coordinates_widget(LC_RelZeroCoordinatesWidget* relZeroCoordinatesWidget) {
+        m_relZeroCoordinatesWidget = relZeroCoordinatesWidget;
     }
 
 
@@ -145,7 +130,7 @@ protected:
 //! Pointer to the command line widget
     QG_CommandWidget* m_commandWidget = nullptr;
 
-    LC_RelZeroCoordinatesWidget *m_relZeroCoordinatesWidget;
+    LC_RelZeroCoordinatesWidget *m_relZeroCoordinatesWidget {nullptr};
 
 };
 

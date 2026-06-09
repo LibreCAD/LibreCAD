@@ -29,7 +29,7 @@
 RS_ActionDimDiametric::RS_ActionDimDiametric(LC_ActionContext *actionContext)
         :LC_ActionCircleDimBase("Draw Diametric Dimensions", actionContext, RS2::EntityDimDiametric, RS2::ActionDimDiametric)
         , m_edata{std::make_unique<RS_DimDiametricData>()}{
-    reset();
+    RS_ActionDimDiametric::reset();
 }
 
 RS_ActionDimDiametric::~RS_ActionDimDiametric() = default;
@@ -47,10 +47,10 @@ RS_Dimension *RS_ActionDimDiametric::createDim(RS_EntityContainer *parent) const
     return newEntity;
 }
 
-RS_Vector RS_ActionDimDiametric::preparePreview(RS_Entity *en, RS_Vector &position, bool forcePosition) {
+RS_Vector RS_ActionDimDiametric::preparePreview(RS_Entity *en, RS_Vector &position, const bool forcePosition) {
     if (en != nullptr){
-        double radius = en->getRadius();
-        RS_Vector center = en->getCenter();
+        const double radius = en->getRadius();
+        const RS_Vector center = en->getCenter();
         double angleToUse = m_currentAngle;
         if (m_angleIsFree || forcePosition){
             angleToUse = center.angleTo(position);
@@ -60,10 +60,8 @@ RS_Vector RS_ActionDimDiametric::preparePreview(RS_Entity *en, RS_Vector &positi
         m_edata->definitionPoint.setPolar(radius, angleToUse);
         m_edata->definitionPoint += center;
 
-        RS_Vector result = center + RS_Vector::polar(radius, angleToUse);
+        const RS_Vector result = center + RS_Vector::polar(radius, angleToUse);
         return result;
     }
-    else{
-        return RS_Vector(false);
-    }
+    return RS_Vector(false);
 }

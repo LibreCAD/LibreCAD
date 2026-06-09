@@ -530,9 +530,11 @@ cout << "MojiData1:" << m_strFontName << endl;
 
 				ifstr.read(buf,wd);
 
-				if (skip != 0) ifstr.ignore(skip);
+				if (skip != 0) {
+                    ifstr.ignore(skip);
+                }
 
-				buf[wd] = '\0';
+                buf[wd] = '\0';
 				m_strFontName = buf;
 #ifdef	DATA_DUMP
 cout << "MojiData2:" << m_strFontName << endl;
@@ -558,9 +560,11 @@ cout << "MojiData3:"  << m_string << endl;
 
 				ifstr.read(buf,wd);
 
-				if (skip != 0) ifstr.ignore(skip);
+				if (skip != 0) {
+                    ifstr.ignore(skip);
+                }
 
-				buf[wd] = '\0';
+                buf[wd] = '\0';
 				m_string = buf;
 #ifdef	DATA_DUMP
 cout << "MojiData4:"  << m_string << endl;
@@ -822,9 +826,11 @@ cout << "MojiData1:"  << m_strName << endl;
 
 			ifstr.read(buf,wd);
 
-			if (skip != 0) ifstr.ignore(skip);
+			if (skip != 0) {
+                ifstr.ignore(skip);
+            }
 
-			buf[wd] = '\0';
+            buf[wd] = '\0';
 			m_strName = buf;
 #ifdef	DATA_DUMP
 cout << "MojiData1:"  << m_strName << endl;
@@ -862,19 +868,17 @@ typedef	CDataType* PCDataType;
 //
 class	JWWBlockList
 {
-private:
 	vector<PCDataBlock> FBlockList;
 	vector<PCDataList> FDataList;
 	vector<CDataType> FDataType;
-protected:
 public:
 	JWWBlockList();
 	~JWWBlockList();
-	CDataList GetBlockList(unsigned int i);
-	int getBlockListCount();
-    int GetDataListCount(unsigned int i);
-    void* GetData(unsigned int i, int j );
-    CDataType GetDataType(unsigned int i, int j );
+	CDataList GetBlockList(unsigned int i) const;
+	int getBlockListCount() const;
+    int GetDataListCount(unsigned int i) const;
+    void* GetData(unsigned int i, int j ) const;
+    CDataType GetDataType(unsigned int i, int j ) const;
 
 	CDataEnko GetCDataEnko(int i, int j );
 	CDataMoji GetCDataMoji(int i, int j );
@@ -906,37 +910,39 @@ typedef	NoList*	PNoList;
 //データ格納リスト
 class	JWWList
 {
-private:
 	vector<PNoList> FList;
 
 public:
 	JWWList();
 	~JWWList();
-	int GetCount();
-	NoList& GetItem(int i);
-	NoList& GetNoByItem(int i);
+	int GetCount() const;
+	NoList& GetItem(int i) const;
+	NoList& GetNoByItem(int i) const;
 	void AddItem(int No,string& str);
 };
 
 //JWWファイル入出力クラス
 class	JWWDocument
 {
-private:
 	string	InputFName,
 			OutputFName;
 public:
 	JWWDocument(string& iFName, string& oFName){
 		InputFName = iFName;
-		if(iFName.length()>0)
-			ifs = new ifstream(iFName.c_str(),ios::binary);
-		else
-			ifs = NULL;
-		OutputFName = oFName;
-		if(oFName.length()>0)
-			ofs = new ofstream(oFName.c_str(),ios::binary|ios::trunc);
-		else
-			ofs = NULL;
-		pList = new JWWList();
+		if(iFName.length()>0) {
+            ifs = new ifstream(iFName.c_str(),ios::binary);
+        }
+        else {
+            ifs = nullptr;
+        }
+        OutputFName = oFName;
+		if(oFName.length()>0) {
+            ofs = new ofstream(oFName.c_str(),ios::binary|ios::trunc);
+        }
+        else {
+            ofs = nullptr;
+        }
+        pList = new JWWList();
 		pBlockList = new JWWBlockList();
 	}
 	~JWWDocument(){
@@ -992,8 +998,8 @@ public:
 	JWWBlockList*	pBlockList;//ブロックデータ定義部のリスト
 	vector<CData*>   m_DataList;    //図形データのリスト
 	vector<CDataList*>	m_DataListList;  //ブロックデータ定義部のリスト
-	void WriteString(string s);
-	string ReadData(int n);
+	void WriteString(string s) const;
+	string ReadData(int n) const;
 	string ReadString();
 	jwBOOL ReadHeader();
 	jwBOOL WriteHeader();
@@ -1010,4 +1016,4 @@ public:
 	jwBOOL SaveDataList(CDataList const& DList);
 };
 
-#endif //JWWDOC_H
+#endif

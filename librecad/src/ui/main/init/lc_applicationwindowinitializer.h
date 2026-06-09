@@ -1,5 +1,5 @@
 /*******************************************************************************
-*
+ *
  This file is part of the LibreCAD project, a 2D CAD program
 
  Copyright (C) 2025 LibreCAD.org
@@ -34,16 +34,17 @@ public:
     ~LC_ApplicationWindowInitializer() override = default;
     void initApplication();
 private:
-    void initSnapManager();
+    void initSnapManager() const;
     void initReleaseChecker();
     void initActionGroupManager();
     void initActionOptionsManager();
+    void initPropertySheetWidget();
     void initActionFactory() const;
     void initDockCorners() const;
     void initCentralWidget();
     void initIconSize() const;
     void loadCmdWidgetVariablesFile() const;
-    void initDockAreasActions() const;
+    void initDockAndToolbarAreasActions() const;
     void initMainMenu() const;
     static void updateCommandsAlias();
     void initRecentFilesList() const;
@@ -53,6 +54,7 @@ private:
     void initPlugins();
     void initAutoSaveTimer() const;
     void initActionContext() const;
+    void setupActionContextWidgets() const;
 };
 
-#endif // LC_APPLICATIONWINDOWINITIALIZER_H
+#endif

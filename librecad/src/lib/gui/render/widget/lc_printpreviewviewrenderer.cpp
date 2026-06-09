@@ -31,10 +31,10 @@
 
 namespace{
     // fixme - move to nicer settings
-    static const RS_Color printPreviewBorderAndShadowColor = RS_Color(64, 64, 64);
-    static const RS_Color printPreviewBackgroundColor = RS_Color(200, 200, 200);
-    static const RS_Color printPreviewPaperColor = RS_Color(180, 180, 180);
-    static const RS_Color printPreviewPrintAreaColor = RS_Color(255, 255, 255);
+    const auto PRINT_PREVIEW_BORDER_AND_SHADOW_COLOR = RS_Color(64, 64, 64);
+    const auto PRINT_PREVIEW_BACKGROUND_COLOR = RS_Color(200, 200, 200);
+    const auto PRINT_PREVIEW_PAPER_COLOR = RS_Color(180, 180, 180);
+    const auto PRINT_PREVIEW_PRINT_AREA_COLOR = RS_Color(255, 255, 255);
 }
 
 LC_PrintPreviewViewRenderer::LC_PrintPreviewViewRenderer(LC_GraphicViewport *viewport, QPaintDevice* paintDevice)
@@ -42,8 +42,8 @@ LC_PrintPreviewViewRenderer::LC_PrintPreviewViewRenderer(LC_GraphicViewport *vie
 }
 
 void LC_PrintPreviewViewRenderer::doRender() {
-    if (graphic != nullptr){
-        m_paperScale = graphic->getPaperScale();
+    if (m_graphic != nullptr){
+        m_paperScale = m_graphic->getPlotSettings()->getPaperScale();
     }
     else{
         m_paperScale = 1.0;
@@ -67,16 +67,17 @@ void LC_PrintPreviewViewRenderer::drawPaper(RS_Painter *painter) {
         return;
     }
 // draw paper:
-    RS_Vector pinsbase = graphic->getPaperInsertionBase();
-    RS_Vector printAreaSize = graphic->getPrintAreaSize();
+    RS_Vector pinsbase = m_graphic->getPaperInsertionBase();
+    const LC_PlotSettings* ps = m_graphic->getPlotSettings();
+    const RS_Vector printAreaSize = ps->getPrintAreaSize();
 
-    double paperFactorX = painter->toGuiDX(1.0) / m_paperScale;
-    double paperFactorY = painter->toGuiDX(1.0) / m_paperScale;
+    const double paperFactorX = painter->toGuiDX(1.0) / m_paperScale;
+    const double paperFactorY = painter->toGuiDY(1.0) / m_paperScale;
 
-    int marginLeft = (int) (graphic->getMarginLeftInUnits() * paperFactorX);
-    int marginTop = (int) (graphic->getMarginTopInUnits() * paperFactorY);
-    int marginRight = (int) (graphic->getMarginRightInUnits() * paperFactorX);
-    int marginBottom = (int) (graphic->getMarginBottomInUnits() * paperFactorY);
+    const int marginLeft = static_cast<int>(ps->getMarginLeftInUnits() * paperFactorX);
+    const int marginTop = static_cast<int>(ps->getMarginTopInUnits() * paperFactorY);
+    const int marginRight = static_cast<int>(ps->getMarginRightInUnits() * paperFactorX);
+    const int marginBottom = static_cast<int>(ps->getMarginBottomInUnits() * paperFactorY);
 
     const RS_Vector &wcsLeftBottomCorner = (RS_Vector(0, 0) - pinsbase) / m_paperScale;
     const RS_Vector &wcsTopBottomCorner = (printAreaSize - pinsbase) / m_paperScale;
@@ -85,55 +86,55 @@ void LC_PrintPreviewViewRenderer::drawPaper(RS_Painter *painter) {
     painter->toGui(wcsLeftBottomCorner, v1x, v1y);
     painter->toGui(wcsTopBottomCorner, v2x, v2y);
 
-    int numX = graphic->getPagesNumHoriz();
-    int numY = graphic->getPagesNumVert();
+    const int numX = ps->getPagesNumHoriz();
+    const int numY = ps->getPagesNumVert();
 
-    int viewWidth = viewport->getWidth();
-    int viewHeight = viewport->getHeight();
+    const int viewWidth = m_viewport->getWidth();
+    const int viewHeight = m_viewport->getHeight();
 
 // --- below we're graphic-agnostic
-    int printAreaW = (int) (v2x - v1x);
-    int printAreaH = (int) (v2y - v1y);
+    const int printAreaW = static_cast<int>(v2x - v1x);
+    const int printAreaH = static_cast<int>(v2y - v1y);
 
-    int paperX1 = (int) v1x;
-    int paperY1 = (int) v1y;
+    const int paperX1 = static_cast<int>(v1x);
+    const int paperY1 = static_cast<int>(v1y);
 // Don't show margins between neighbor pages.
-    int paperW = printAreaW + marginLeft + marginRight;
-    int paperH = printAreaH - marginTop - marginBottom;
+    const int paperW = printAreaW + marginLeft + marginRight;
+    const int paperH = printAreaH - marginTop - marginBottom;
 
-    painter->setPen(QColor(Qt::gray));
+    painter->setPen(RS_Color(Qt::gray));
 
 // gray background:
-    painter->fillRect(0, 0, viewWidth, viewHeight,printPreviewBackgroundColor);
+    painter->fillRect(0, 0, viewWidth, viewHeight,PRINT_PREVIEW_BACKGROUND_COLOR);
 
 // shadow:
-    painter->fillRect(paperX1 + 6, paperY1 + 6, paperW, paperH,printPreviewBorderAndShadowColor);
+    painter->fillRect(paperX1 + 6, paperY1 + 6, paperW, paperH,PRINT_PREVIEW_BORDER_AND_SHADOW_COLOR);
 
 // border:
-    painter->fillRect(paperX1, paperY1, paperW, paperH,printPreviewBorderAndShadowColor);
+    painter->fillRect(paperX1, paperY1, paperW, paperH,PRINT_PREVIEW_BORDER_AND_SHADOW_COLOR);
 
 // paper:
-    painter->fillRect(paperX1 + 1, paperY1 - 1, paperW - 2, paperH + 2,printPreviewPaperColor);
+    painter->fillRect(paperX1 + 1, paperY1 - 1, paperW - 2, paperH + 2,PRINT_PREVIEW_PAPER_COLOR);
 
 // print area:
     painter->fillRect(paperX1 + 1 + marginLeft, paperY1 - 1 - marginBottom,
                       printAreaW - 2, printAreaH + 2,
-                      printPreviewPrintAreaColor);
+                      PRINT_PREVIEW_PRINT_AREA_COLOR);
 
 // don't paint boundaries if zoom is to small
     if (qMin(std::abs(printAreaW / numX), std::abs(printAreaH / numY)) > 2) {
 // boundaries between pages:
         for (int pX = 1; pX < numX; pX++) {
-            double offset = ((double) printAreaW * pX) / numX;
+            const double offset = static_cast<double>(printAreaW) * pX / numX;
             painter->fillRect(paperX1 + marginLeft + offset, paperY1,
                               1, paperH,
-                              printPreviewBorderAndShadowColor);
+                              PRINT_PREVIEW_BORDER_AND_SHADOW_COLOR);
         }
         for (int pY = 1; pY < numY; pY++) {
-            double offset = ((double) printAreaH * pY) / numY;
+            const double offset = static_cast<double>(printAreaH) * pY / numY;
             painter->fillRect(paperX1, paperY1 - marginBottom + offset,
                               paperW, 1,
-                              printPreviewBorderAndShadowColor);
+                              PRINT_PREVIEW_BORDER_AND_SHADOW_COLOR);
         }
     }
 
@@ -160,14 +161,14 @@ void LC_PrintPreviewViewRenderer::drawPaper(RS_Painter *painter) {
 void LC_PrintPreviewViewRenderer::renderEntity(RS_Painter *painter, RS_Entity *e) {
     // fixme - sand - ucs - is it really necessary for print preview??????
     // check for selected entity drawing
-    if (/*!e->isContainer() && */(e->getFlag(RS2::FlagSelected) != painter->shouldDrawSelected())) {
+    if (/*!e->isContainer() && */e->getFlag(RS2::FlagSelected) != painter->shouldDrawSelected()) {
         return;
     }
 #ifdef DEBUG_RENDERING
     isVisibleTimer.start();
 #endif
     // entity is not visible:
-    bool visible = e->isVisible();
+    const bool visible = e->isVisible();
 #ifdef DEBUG_RENDERING
     isVisibleTime += isVisibleTimer.nsecsElapsed();
 #endif
@@ -178,13 +179,14 @@ void LC_PrintPreviewViewRenderer::renderEntity(RS_Painter *painter, RS_Entity *e
 #ifdef DEBUG_RENDERING
     isConstructionTimer.start();
 #endif
-    bool constructionEntity = e->isConstruction();
+    const bool constructionEntity = e->isConstruction();
 #ifdef DEBUG_RENDERING
     isConstructionTime += isConstructionTimer.nsecsElapsed();
 #endif
 
-    if (!e->isPrint() || constructionEntity)
+    if (!e->isPrint() || constructionEntity) {
         return;
+    }
 
     if (isOutsideOfBoundingClipRect(e, constructionEntity)) {
         return;
@@ -204,7 +206,7 @@ void LC_PrintPreviewViewRenderer::setPenForPrintingEntity(RS_Painter *painter, R
     RS_Pen originalPen = pen;
 
     double patternOffset = painter->currentDashOffset();
-    if (lastPaintEntityPen.isSameAs(pen, patternOffset)) {
+    if (m_lastPaintEntityPen.isSameAs(pen, patternOffset)) {
         return;
     }
     // Avoid negative widths
@@ -217,18 +219,18 @@ void LC_PrintPreviewViewRenderer::setPenForPrintingEntity(RS_Painter *painter, R
 // bug# 3437941
 // ------------------------------------------------------------
 
-    if (pen.getAlpha() == 1.0) {
+    if (pen.isFullyOpaque()) {
         if (width >0) {
             double wf = 1.0; // Width factor.
 
             if (m_paperScale > RS_TOLERANCE) {
                 if (m_scaleLineWidth) {
-                    wf = defaultWidthFactor;
+                    wf = m_defaultWidthFactor;
                 } else {
                     wf = 1.0 / m_paperScale;
                 }
             }
-            double screenWidth = painter->toGuiDX(width * unitFactor100 * wf);
+            double screenWidth = painter->toGuiDX(width * m_unitFactor100 * wf);
 
             /*// prevent drawing with 1-width which is slow:
             if (RS_Math::round(pen.getScreenWidth()) == 1) {
@@ -253,13 +255,13 @@ void LC_PrintPreviewViewRenderer::setPenForPrintingEntity(RS_Painter *painter, R
     }
 
     RS_Color penColor = pen.getColor();
-    if (penColor.isEqualIgnoringFlags(printPreviewPrintAreaColor) ||
-        (penColor.toIntColor() == RS_Color::Black && penColor.colorDistance(printPreviewPrintAreaColor) < RS_Color::MinColorDistance)) {
+    if (penColor.isEqualIgnoringFlags(PRINT_PREVIEW_PRINT_AREA_COLOR) ||
+        (penColor.toIntColor() == RS_Color::Black && penColor.colorDistance(PRINT_PREVIEW_PRINT_AREA_COLOR) < RS_Color::MinColorDistance)) {
         pen.setColor(m_colorForeground);
     }
 
     if (pen.getLineType() != RS2::SolidLine){
-        pen.setDashOffset(patternOffset * defaultWidthFactor);
+        pen.setDashOffset(patternOffset * m_defaultWidthFactor);
     }
 
     if (e->getFlag(RS2::FlagTransparent) ) {
@@ -267,7 +269,7 @@ void LC_PrintPreviewViewRenderer::setPenForPrintingEntity(RS_Painter *painter, R
     }
 
     // we store original pen as last painted, not resolved one - since original pen lead to resulting resolved and may be used by the next entity
-    lastPaintEntityPen.updateBy(originalPen);
+    m_lastPaintEntityPen.updateBy(originalPen);
     painter->setPen(pen);
 #ifdef DEBUG_RENDERING
     setPenTime += setPenTimer.nsecsElapsed();
@@ -295,7 +297,7 @@ void LC_PrintPreviewViewRenderer::setupPainter(RS_Painter *painter)  {
     painter->disableUCS();
 }
 
-void LC_PrintPreviewViewRenderer::setDrawingMode(RS2::DrawingMode mode){
+void LC_PrintPreviewViewRenderer::setDrawingMode(const RS2::DrawingMode mode){
     m_drawingMode = mode;
-    viewport->notifyChanged();
+    m_viewport->notifyChanged();
 }

@@ -31,7 +31,7 @@
 class LC_SnapManager: public LC_GraphicViewAware{
 public:
     explicit LC_SnapManager(QG_SnapToolBar* snapToolbar);
-    void setSnaps(RS_SnapMode const& s);
+    void setSnaps(const RS_SnapMode& s);
     bool tryToProcessSnapActions(RS2::ActionType type);
     void toggleSnapFree();
     bool toggleTemporarySnapFree();
@@ -59,4 +59,4 @@ private:
     bool m_inTempSnapFreeMode{false};
 };
 
-#endif // LC_SNAPMANAGER_H
+#endif

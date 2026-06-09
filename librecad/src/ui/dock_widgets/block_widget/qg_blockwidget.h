@@ -27,8 +27,6 @@
 #ifndef QG_BLOCKWIDGET_H
 #define QG_BLOCKWIDGET_H
 
-#include <QAbstractTableModel>
-#include <QIcon>
 #include <QSortFilterProxyModel>
 
 #include "lc_graphicviewawarewidget.h"
@@ -44,6 +42,7 @@ class RS_Block;
 class RS_BlockList;
 class QG_BlockModel;
 class LC_FlexLayout;
+class LC_MouseTrackingTableView;
 
 /**
  * Implementation of a model to use in QG_BlockWidget
@@ -51,20 +50,20 @@ class LC_FlexLayout;
 class QG_BlockModel: public QAbstractTableModel {
 public:
     enum {
-        VISIBLE,
-        NAME,
-        LAST = 2
+        VISIBLE = 0,
+        NAME    = 1,
+        LAST    = 2
     };
     QG_BlockModel(QObject * parent = nullptr);
     Qt::ItemFlags flags ( const QModelIndex & /*index*/ ) const override {
         return Qt::ItemIsSelectable|Qt::ItemIsEnabled;}
     int columnCount(const QModelIndex &/*parent*/) const  override {
-        return static_cast<int>(LAST);
+        return LAST;
     }
-    int rowCount ( const QModelIndex & parent = {} ) const override;
+    int rowCount ( const QModelIndex & parent) const override;
     QVariant data ( const QModelIndex & index, int role = Qt::DisplayRole ) const override;
     QModelIndex parent ( const QModelIndex & index ) const override;
-    QModelIndex index ( int row, int column, const QModelIndex & parent = {} ) const override;
+    QModelIndex index ( int row, int column, const QModelIndex & parent) const override;
     void setBlockList(RS_BlockList* bl);
     RS_Block *getBlock( int row) const;
     QModelIndex getIndex (RS_Block * blk) const;
@@ -86,23 +85,23 @@ private:
 class QG_BlockWidget: public LC_GraphicViewAwareWidget, public RS_BlockListListener {
     Q_OBJECT
 public:
-    QG_BlockWidget(LC_ActionGroupManager* m_actionGroupManager, QG_ActionHandler* ah, QWidget* parent,
+    QG_BlockWidget(LC_ActionGroupManager* agm, const QG_ActionHandler* ah, QWidget* parent,
                    const char* name=nullptr, Qt::WindowFlags f = {});
-    void setGraphicView(RS_GraphicView* doc) override;
-    RS_BlockList* getBlockList() {
+    void setGraphicView(RS_GraphicView* gv) override;
+    RS_BlockList* getBlockList() const {
         return m_blockList;
     }
-    void update();
+    void updateWidget();
     void activateBlock(RS_Block* block);
     void blockAdded(RS_Block*) override;
     void blockEdited(RS_Block*) override{
-        update();
+        updateWidget();
     }
     void blockRemoved(RS_Block*) override{
-        update();
+        updateWidget();
     }
     void blockToggled(RS_Block*) override{
-        update();
+        updateWidget();
     }
 signals:
     void escape();
@@ -110,22 +109,22 @@ public slots:
     void slotActivated(const QModelIndex &blockIdx);
     void slotSelectionChanged(const QItemSelection &selected,const QItemSelection &deselected) const;
     void slotUpdateBlockList() const;
-    void updateWidgetSettings() const;
 protected:
     void contextMenuEvent(QContextMenuEvent *e) override;
-    void addMenuItem(QMenu* contextMenu, RS2::ActionType actionType);
+    void addMenuItem(QMenu* contextMenu, RS2::ActionType actionType) const;
     void keyPressEvent(QKeyEvent* e) override;
     void setBlockList(RS_BlockList* blockList);
     void addToolbarButton(LC_FlexLayout* layButtons, RS2::ActionType actionType);
+    QLayout* getTopLevelLayout() const override;
 private:
     void restoreSelections() const;
     RS_BlockList* m_blockList = nullptr;
     QLineEdit* m_matchBlockName = nullptr;
-    QTableView* m_blockView = nullptr;
+    LC_MouseTrackingTableView* m_blockView = nullptr;
     QG_BlockModel *m_blockModel = nullptr;
     QSortFilterProxyModel* m_proxyModel = nullptr;
     RS_Block* m_lastBlock = nullptr;
-    QG_ActionHandler* m_actionHandler = nullptr;
+    const QG_ActionHandler* m_actionHandler = nullptr;
     LC_ActionGroupManager* m_actionGroupManager{nullptr};
 };
 

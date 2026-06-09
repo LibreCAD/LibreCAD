@@ -1,0 +1,55 @@
+/*
+ * ********************************************************************************
+ * This file is part of the LibreCAD project, a 2D CAD program
+ *
+ * Copyright (C) 2025 LibreCAD.org
+ * Copyright (C) 2025 sand1024
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ * ********************************************************************************
+ */
+
+#include "lc_matchdescriptor_dimarc.h"
+
+#include "lc_dimarc.h"
+
+void LC_MatchDescriptorDimArc::init(QMap<RS2::EntityType, LC_EntityMatchDescriptor*>& map, LC_ActionContext *actionContext) {
+    const auto entity = new LC_DimensionEntityMatchDescriptor<LC_DimArc>(tr("Dimension Arc"), RS2::EntityDimArc);
+    initCommonEntityAttributesProperties<LC_DimArc>(entity);
+    initCommonDimensionAttributes(entity, actionContext);
+    entity->addLength("raidus", [](const LC_DimArc* e) {
+        return e->getRadius();
+    }, tr("Radius"), tr("Dimension radius"));
+
+    entity->addVectorX("centerX", [](const LC_DimArc* e) {
+       return e->getCenter();
+   }, tr("Center Point X"), tr("X coordinate for dimension center"));
+
+    entity->addVectorY("centerY", [](const LC_DimArc* e) {
+      return e->getCenter();
+  }, tr("Center Point Y"), tr("Y coordinate for dimension center"));
+
+    // addLinearProperty(tr("Arc Length"), data.arcLength);
+
+    entity->addAngle("angleStart", [](const LC_DimArc* e) {
+          return e->getStartAngle();
+    }, tr("Start Angle"), tr("Dimension start angle"));
+
+    entity->addAngle("angleEnd", [](const LC_DimArc* e) {
+          return e->getEndAngle();
+    }, tr("End Angle"), tr("Dimension end angle"));
+
+    map.insert(RS2::EntityDimArc, entity);
+}

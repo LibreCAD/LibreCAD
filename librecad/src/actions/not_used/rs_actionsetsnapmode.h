@@ -35,11 +35,12 @@
  * @author Andrew Mustun
  */
 class RS_ActionSetSnapMode : public RS_ActionInterface {
-	Q_OBJECT
+    Q_OBJECT
 public:
-    RS_ActionSetSnapMode(LC_ActionContext *actionContext,RS2::SnapMode snapMode);
-	void init(int status) override;
-	void trigger() override;
+    RS_ActionSetSnapMode(LC_ActionContext* actionContext, RS2::SnapMode snapMode);
+    void init(int status) override;
+    void trigger() override;
+
 protected:
     RS2::SnapMode snapMode = RS2::SnapFree;
 };

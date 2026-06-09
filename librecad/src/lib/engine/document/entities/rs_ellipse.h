@@ -34,11 +34,10 @@
 class LC_Quadratic;
 class QPainterPath;
 
-namespace lc {
-    namespace geo {
+namespace lc::geo {
     class Area;
-    }
 }
+
 using LC_Rect = lc::geo::Area;
 
 /**
@@ -66,6 +65,36 @@ struct RS_EllipseData {
     double startAngleDegrees = 0.;
     double otherAngleDegrees = 0.;
     double angularLength = 0.;
+
+    void setAngle1(double a1) {
+        angle1 = a1;
+        isArc = std::isnormal(angle1) || std::isnormal(angle2);
+    }
+
+    void setAngle2(double a2) {
+        angle2 = a2;
+        isArc = std::isnormal(angle1) || std::isnormal(angle2);
+    }
+
+    void rotate(const RS_Vector& centr, double angle) {
+        const RS_Vector angleVector(angle);
+        rotate(centr, angleVector);
+    }
+
+    void rotate(double angle) {
+        const RS_Vector aV(angle);
+        center.rotate(aV);
+        majorP.rotate(aV);
+    }
+
+    void rotate(const RS_Vector& centr, const RS_Vector& angleVector) {
+        center.rotate(centr, angleVector);
+        majorP.rotate(angleVector);
+    }
+
+    void move(const RS_Vector& offset) {
+        center.move(offset);
+    }
 };
 
 std::ostream& operator << (std::ostream& os, const RS_EllipseData& ed);
@@ -110,8 +139,8 @@ public:
     *@ x2, ellipse angle
     //@return the arc length between ellipse angle x1, x2
     **/
-    double getEllipseLength(double a1, double a2) const;
-    double getEllipseLength(double a2) const;
+    double getEllipseLength(double angle1, double angle2) const;
+    double getEllipseLength(double angleLength) const;
     RS_VectorSolutions getTangentPoint(const RS_Vector& point) const override;//find the tangential points seeing from given point
     RS_Vector getTangentDirection(const RS_Vector& point)const override;
     RS2::Ending getTrimPoint(const RS_Vector& trimCoord,
@@ -182,29 +211,8 @@ public:
     bool isEdge() const override{
         return true;
     }
-    bool createFrom4P(const RS_VectorSolutions& sol);
-    bool createFromCenter3Points(const RS_VectorSolutions& sol);
-//! \{ \brief from quadratic form
-/** : dn[0] x^2 + dn[1] xy + dn[2] y^2 =1 */
-    bool createFromQuadratic(const std::vector<double>& dn);
-/** : generic quadratic: A x^2 + C xy + B y^2 + D x + E y + F =0 */
-    bool createFromQuadratic(const LC_Quadratic& q);
-//! \}
-    bool createInscribeQuadrilateral(const std::vector<RS_Line*>& lines,std::vector<RS_Vector> &tangent);
-    RS_Vector getMiddlePoint(void)const override;
-    RS_Vector getNearestEndpoint(const RS_Vector& coord,
-                                 double* dist = nullptr) const override;
-    RS_Vector getNearestPointOnEntity(const RS_Vector& coord,
-                                      bool onEntity = true, double* dist = nullptr, RS_Entity** entity=nullptr) const override;
-    RS_Vector getNearestCenter(const RS_Vector& coord,
-                               double* dist = nullptr)const override;
-    RS_Vector getNearestMiddle(const RS_Vector& coord,
-                               double* dist = nullptr,
-                               int middlePoints = 1
-    )const override;
-    RS_Vector getNearestDist(double distance,
-                             const RS_Vector& coord,
-                             double* dist = nullptr)const override;
+
+    RS_Vector getMiddlePoint()const override;
     RS_Vector getNearestOrthTan(const RS_Vector& coord,
                                 const RS_Line& normal,
                                 bool onEntity = false) const override;
@@ -213,16 +221,14 @@ public:
 
     RS_Vector dualLineTangentPoint(const RS_Vector& line) const override;
 
-    bool switchMajorMinor(void); //switch major minor axes to keep major the longer ellipse radius
+    bool switchMajorMinor(); //switch major minor axes to keep major the longer ellipse radius
     void correctAngles();//make sure angleLength() is not more than 2*M_PI
-    bool isPointOnEntity(const RS_Vector& coord,
-                         double tolerance=RS_TOLERANCE) const override;
 
     void move(const RS_Vector& offset) override;
     void rotate(double angle);
     void rotate(const RS_Vector& angleVector);
     void rotate(const RS_Vector& center, double angle) override;
-    void rotate(const RS_Vector& center, const RS_Vector& angle) override;
+    void rotate(const RS_Vector& center, const RS_Vector& angleVector) override;
     void scale(const RS_Vector& center, const RS_Vector& factor) override;
     RS_Entity& shear(double k) override;
     void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) override;
@@ -279,8 +285,14 @@ a quadratic contains coefficients for quadratic:
     LC_SecondMoment secondMomentLineIntegral() const override;
 
 protected:
-    RS_EllipseData data; // fixme - renderperf - cache major and minor radiuses!
+    RS_EllipseData m_data; // fixme - renderperf - cache major and minor radiuses!
     void updateLength() override;
+    RS_Vector doGetNearestPointOnEntity(const RS_Vector& coord,
+                                      bool onEntity, double* dist, RS_Entity** entity) const override;
+    bool doIsPointOnEntity(const RS_Vector& coord, double tolerance/*=RS_TOLERANCE*/) const override;
+    RS_Vector doGetNearestEndpoint(const RS_Vector& coord, double* dist, RS_Entity** entity) const override;
+    RS_Vector doGetNearestMiddle(const RS_Vector& coord, double* dist, int middlePoints) const override;
+    RS_Vector doGetNearestDist(double distance, const RS_Vector& coord, double* dist) const override;
 private:
     /**
      * @brief mergeBoundingBox, given a line passing the ellipse center, if the line intersects with
@@ -290,7 +302,8 @@ private:
      *        direction
      * @author Dongxu Li
      */
-    void mergeBoundingBox(LC_Rect& boundingBox, const RS_Vector& direction);
+    void mergeBoundingBox(LC_Rect& boundingBox, const RS_Vector& direction) const;
+    RS_Vector doGetNearestCenter(const RS_Vector& coord, double* dist, RS_Entity** centerEntity) const override;
     double computeLocalArea(double t1, double t2) const;
     LC_FirstMoment computeLocalFirstMoment(double t1, double t2) const;
     LC_SecondMoment computeLocalSecondMoment(double t1, double t2) const;

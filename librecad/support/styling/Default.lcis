@@ -1,0 +1,24 @@
+{
+    "name": "Default",
+    "settings": [
+        {
+            "colorSvgString": "#000",
+            "colorType": "main",
+            "iconMode": "any",
+            "iconState": "any"
+        },
+        {
+            "colorSvgString": "#00ff7f",
+            "colorType": "accent",
+            "iconMode": "any",
+            "iconState": "any"
+        },
+        {
+            "colorSvgString": "#fff",
+            "colorType": "background",
+            "iconMode": "any",
+            "iconState": "any"
+        }
+    ],
+    "type": "LibreCAD Icons Style"
+}

@@ -32,12 +32,12 @@ class LC_OverlayDrawablesContainer{
 public:
     LC_OverlayDrawablesContainer();
     virtual ~LC_OverlayDrawablesContainer();
-    void add(LC_OverlayDrawable* e) {drawables << e;};
+    void add(LC_OverlayDrawable* e) {m_drawables << e;}
     void clear();
     LC_OverlayDrawable* first();
     void draw(RS_Painter* painter);
 protected:
-    QList<LC_OverlayDrawable *> drawables;
+    QList<LC_OverlayDrawable *> m_drawables;
 };
 
-#endif // LC_OVERLAYENTITIESCONTAINER_H
+#endif

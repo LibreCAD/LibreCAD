@@ -26,36 +26,41 @@
 #ifndef QG_COMMANDWIDGET_H
 #define QG_COMMANDWIDGET_H
 
+
+#include "lc_graphicviewawarewidget.h"
 #include "ui_qg_commandwidget.h"
 
 class QG_ActionHandler;
 class QAction;
 
-class QG_CommandWidget : public QWidget, public Ui::QG_CommandWidget{
+class QG_CommandWidget : public LC_GraphicViewAwareWidget, public Ui::QG_CommandWidget{
     Q_OBJECT
 public:
-    QG_CommandWidget(QG_ActionHandler *action_handler, QWidget *parent = nullptr, const char *name = nullptr, Qt::WindowFlags fl = {});
-    ~QG_CommandWidget();
+    explicit QG_CommandWidget(QG_ActionHandler *actionHandler, QWidget *parent, const char *name, Qt::WindowFlags fl = {});
+    ~QG_CommandWidget() override;
 
     bool eventFilter(QObject *obj, QEvent *event) override;
     QAction* getDockingAction() const {
         return m_docking;
     }
-    void setInput(const QString &cmd);
+    void setInput(const QString &cmd) const;
+    void setGraphicView([[maybe_unused]]RS_GraphicView* gview) override {}
+protected:
+    QLayout* getTopLevelLayout() const override {return layout();}
 public slots:
-    virtual void setFocus();
-    void setCommand( const QString & cmd );
-    void appendHistory( const QString & msg );
-    void handleCommand(QString cmd);
-    void handleKeycode(QString code);
-    void spacePressed();
-    void tabPressed();
-    void escape();
+    virtual void focusWidget();
+    void setCommand( const QString & cmd ) const;
+    void appendHistory( const QString & msg ) const;
+    void handleCommand(QString cmd) const;
+    void handleKeycode(const QString& code) const;
+    void spacePressed() const;
+    void tabPressed() const;
+    void escape() const;
     void setActionHandler( QG_ActionHandler * ah );
-    void setCommandMode();
-    void setNormalMode();
+    void setCommandMode() const;
+    void setNormalMode() const;
     static QString getRootCommand( const QStringList & cmdList, const QString & typed );
-    void setKeycodeMode(bool state);
+    void setKeycodeMode(bool state) const;
 protected slots:
     void languageChange();
     void chooseCommandFile();
@@ -66,4 +71,4 @@ private:
     QAction* m_docking = nullptr;
 };
 
-#endif // QG_COMMANDWIDGET_H
+#endif

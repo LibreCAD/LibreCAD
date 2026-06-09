@@ -20,19 +20,21 @@
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **
 **********************************************************************************
-*/
+ */
+
+#include "colorcombobox.h"
 
 #include <QColor>
 #include <QPixmap>
-#include "colorcombobox.h"
 
 ColorComboBox::ColorComboBox(QWidget* parent)
     : QComboBox(parent){
     setEditable(true);
 
-    foreach (auto color, QColor::colorNames())
-    {
-        QPixmap pixmap(32, 32);
+    static constexpr int PIXMAP_SIZE = 32;
+
+    foreach(auto color, QColor::colorNames()) {
+        QPixmap pixmap(PIXMAP_SIZE, PIXMAP_SIZE);
         pixmap.fill(color);
         addItem(QIcon(pixmap), color);
     }

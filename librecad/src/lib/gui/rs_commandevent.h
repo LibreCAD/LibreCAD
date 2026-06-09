@@ -24,7 +24,6 @@
 **
 **********************************************************************/
 
-
 #ifndef RS_COMMANDEVENT_H
 #define RS_COMMANDEVENT_H
 
@@ -34,40 +33,40 @@
 class RS_CommandEvent {
 public:
     /**
-	 * Creates a new command event that is not yet accepted.
-	 *
-	 * @param cmd the command that was triggered.
-	 */
-    RS_CommandEvent(const QString& cmd) {
-        this->cmd = cmd;
-		accepted = false;
+  * Creates a new command event that is not yet accepted.
+  *
+  * @param cmd the command that was triggered.
+  */
+    explicit RS_CommandEvent(const QString& cmd) {
+        this->m_cmd = cmd;
+        m_accepted = false;
     }
- 
+
     /**
-	 * @return the command that was triggered, usually by
-	 * the user.
-	 */
+  * @return the command that was triggered, usually by
+  * the user.
+  */
     QString getCommand() {
-        return cmd;
+        return m_cmd;
     }
 
     /**
-	 * Sets the event state to accepted.
-	 */
-	void accept() {
-		accepted = true;
-	}
+  * Sets the event state to accepted.
+  */
+    void accept() {
+        m_accepted = true;
+    }
 
     /**
-	 * @return Whether the event was already accepted or not.
-	 */
-	bool isAccepted() {
-		return accepted;
-	}
- 
+  * @return Whether the event was already accepted or not.
+  */
+    bool isAccepted() const {
+        return m_accepted;
+    }
+
 protected:
-    QString cmd;
-	bool accepted;
+    QString m_cmd;
+    bool m_accepted;
 };
 
 #endif

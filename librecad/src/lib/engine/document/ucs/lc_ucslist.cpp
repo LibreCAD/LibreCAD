@@ -39,7 +39,7 @@ void LC_UCSList::add(LC_UCS *ucs) {
     }
 
     // check if layer already exists:
-    LC_UCS *v = find(ucs->getName());
+    const LC_UCS *v = find(ucs->getName());
     if (v == nullptr) {
         m_ucsList.append(ucs);
     }
@@ -51,17 +51,18 @@ void LC_UCSList::addNew(LC_UCS *ucs) {
     }
 
     // check if layer already exists:
-    LC_UCS *v = find(ucs->getName());
+    const LC_UCS *v = find(ucs->getName());
     if (v == nullptr) {
         m_ucsList.append(ucs);
         setModified(true);
     }
 }
 
+// note - if this method is called, list should be marked as modified externally!
 void LC_UCSList::remove(LC_UCS *ucs) {
     if (ucs->isUCS()) {
         m_ucsList.removeOne(ucs);
-        setModified(true);
+        // setModified(true);
         delete ucs;
     }
 }
@@ -86,7 +87,7 @@ void LC_UCSList::edited([[maybe_unused]]LC_UCS *ucs) {
 }
 
 LC_UCS *LC_UCSList::find(const QString &name) const {
-    for (auto v: m_ucsList){
+    for (const auto v: m_ucsList){
         if (v->getName() == name){
             return v;
         }
@@ -99,7 +100,7 @@ int LC_UCSList::getIndex(const QString &name) const
     int result = -1;
 
     for (int i = 0; i < m_ucsList.size(); i++) {
-        LC_UCS *v = m_ucsList.at(i);
+        const LC_UCS *v = m_ucsList.at(i);
         if (v->getName() == name) {
             result = i;
             break;
@@ -112,7 +113,7 @@ int LC_UCSList::getIndex(LC_UCS *ucs) const {
     return m_ucsList.indexOf(ucs);
 }
 
-void LC_UCSList::setModified(bool m) {
+void LC_UCSList::setModified(const bool m) {
     m_modified = m;
     fireModified(m);
 }
@@ -123,7 +124,7 @@ LC_UCS *LC_UCSList::tryAddUCS(LC_UCS *candidate) {
     }
     LC_UCS *existingUCS = findExisting(candidate);
 
-    LC_UCS* result;
+    LC_UCS* result = nullptr;
     if (existingUCS == nullptr){
         m_ucsList.append(candidate);
         setModified(true);
@@ -135,16 +136,16 @@ LC_UCS *LC_UCSList::tryAddUCS(LC_UCS *candidate) {
     return result;
 }
 
-LC_UCS *LC_UCSList::findExisting(LC_UCS *candidate) {// check if layer already exists:
+LC_UCS *LC_UCSList::findExisting(const LC_UCS *candidate) {// check if layer already exists:
     LC_UCS *existingUCS = nullptr;
-    for (auto v: m_ucsList){
+    for (const auto v : std::as_const(m_ucsList)) {
         if (v == candidate){
             existingUCS = v;
             break;
         }
     }
     if (existingUCS == nullptr){
-        for (auto v: m_ucsList) {
+        for (const auto v : std::as_const(m_ucsList)) {
             if (v->isSameTo(candidate)) {
                 existingUCS = v;
                 break;
@@ -158,8 +159,8 @@ LC_UCS *LC_UCSList::getWCS() const{
     return m_wcs.get();
 }
 
-void LC_UCSList::tryToSetActive(LC_UCS *ucs) {
-    LC_UCS* oldActive = m_activeUCS;
+void LC_UCSList::tryToSetActive(const LC_UCS *ucs) {
+    const LC_UCS* oldActive = m_activeUCS;
     m_activeUCS = findExisting(ucs);
     if (oldActive != m_activeUCS) {
         if (oldActive == nullptr) {

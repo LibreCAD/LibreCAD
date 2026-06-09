@@ -26,33 +26,24 @@
 
 #include <QString>
 #include <memory>
+
 #include "lc_xmlwriterinterface.h"
 
 class QXmlStreamWriter;
 
 class LC_XMLWriterQXmlStreamWriter : public LC_XMLWriterInterface {
 public:
-	LC_XMLWriterQXmlStreamWriter();
-
+    LC_XMLWriterQXmlStreamWriter();
     ~LC_XMLWriterQXmlStreamWriter() override;
-
-    void createRootElement(const std::string &name, const std::string &namespace_uri = "") override;
-
-    void addElement(const std::string &name, const std::string &namespace_uri = "") override;
-
-    void addAttribute(const std::string &name, const std::string &value, const std::string &namespace_uri = "") override;
-
-    void addNamespaceDeclaration(const std::string &prefix, const std::string &namespace_uri) override;
-
+    void createRootElement(const std::string& name, const std::string& namespace_uri = "") override;
+    void addElement(const std::string& name, const std::string& namespace_uri = "") override;
+    void addAttribute(const std::string& name, const std::string& value, const std::string& namespace_uri = "") override;
+    void addNamespaceDeclaration(const std::string& prefix, const std::string& namespace_uri) override;
     void closeElement() override;
-
     std::string documentAsString() override;
-
 private:
-
-	std::unique_ptr<QXmlStreamWriter> xmlWriter;
-
-    QString xml;
+    QString m_xml;
+    std::unique_ptr<QXmlStreamWriter> m_xmlWriter;
 };
 
 #endif

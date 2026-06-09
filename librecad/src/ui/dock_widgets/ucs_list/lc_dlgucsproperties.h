@@ -37,8 +37,9 @@ class LC_DlgUCSProperties : public LC_Dialog{
     Q_OBJECT
 public:
     explicit LC_DlgUCSProperties(QWidget *parent = nullptr);
-    ~LC_DlgUCSProperties();
-    void setUCS(LC_UCSList *ucsList, bool applyDuplicateSilently, LC_UCS* u, RS2::Unit unit,  RS2::LinearFormat linearFormat, int linearPrec, RS2::AngleFormat angleFormat, int anglePrec);
+    ~LC_DlgUCSProperties() override;
+    void setUCS1(LC_UCSList* ucsList, bool applyDuplicatesSilently, LC_UCS* u, RS2::Unit unit, RS2::LinearFormat linearFormat,
+                 int linearPrecision, RS2::AngleFormat angleFormat, int anglePrec);
     void updateUCS();
 public slots:
     void languageChange();
@@ -49,4 +50,4 @@ private:
     bool m_applyDuplicateSilently = true;
 };
 
-#endif // LC_DLGUCSPROPERTIES_H
+#endif

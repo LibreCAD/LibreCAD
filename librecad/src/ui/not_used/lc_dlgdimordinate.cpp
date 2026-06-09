@@ -21,7 +21,7 @@
  * ********************************************************************************
  */
 
-#include "../dialogs/entity/lc_dlgdimordinate.h"
+#include "lc_dlgdimordinate.h"
 
 #include "lc_dimordinate.h"
 #include "rs_graphic.h"

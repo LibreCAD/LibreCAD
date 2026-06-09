@@ -25,9 +25,9 @@
 
 #include "rs_painter.h"
 
-LC_ArrowHeadClosed::LC_ArrowHeadClosed(RS_EntityContainer* container, const RS_Vector& point, double dirAngle,
-                                       double size, double ownAngle, bool filled):
-    LC_DimArrowPoly{container, point, dirAngle, size}, m_filled(filled), m_ownAngle(ownAngle) {
+LC_ArrowHeadClosed::LC_ArrowHeadClosed(RS_EntityContainer* container, const RS_Vector& point, const double dirAngle, const double size,
+                                       const double ownAngle, const bool filled) : LC_DimArrowPoly{container, point, dirAngle, size},
+                                                                                   m_filled(filled), m_ownAngle(ownAngle) {
     createVertexes();
 }
 
@@ -48,16 +48,16 @@ void LC_ArrowHeadClosed::draw(RS_Painter* painter) {
 void LC_ArrowHeadClosed::createVertexes() {
     initVertexes(3);
 
-    double cos1 = cos(m_ownAngle);
-    double sin1 = sin(m_ownAngle);
+    const double cos1 = cos(m_ownAngle);
+    const double sin1 = sin(m_ownAngle);
 
-    double arrowSize = getArrowSize();
+    const double arrowSize = getArrowSize();
 
-    double arrowSide{arrowSize / cos1};
-    double halfArrowHeight = sin1 * arrowSide;
+    const double arrowSide{arrowSize / cos1};
+    const double halfArrowHeight = sin1 * arrowSide;
 
-    setVertex(0, -arrowSize, - halfArrowHeight);
-    setVertex(1,0, 0);
+    setVertex(0, -arrowSize, -halfArrowHeight);
+    setVertex(1, 0, 0);
     setVertex(2, -arrowSize, halfArrowHeight);
 
     positionFromZero();

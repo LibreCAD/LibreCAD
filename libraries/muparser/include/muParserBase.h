@@ -116,18 +116,18 @@ namespace mu
 
 		int GetNumResults() const;
 
-		void SetExpr(const string_type& a_sExpr);
-		void SetVarFactory(facfun_type a_pFactory, void* pUserData = nullptr);
+		void SetExpr(const string_type& a_sExpr) const;
+		void SetVarFactory(facfun_type a_pFactory, void* pUserData = nullptr) const;
 
 		void SetDecSep(char_type cDecSep);
 		void SetThousandsSep(char_type cThousandsSep = 0);
 		void ResetLocale();
 
-		void EnableOptimizer(bool a_bIsOn = true);
+		void EnableOptimizer(bool a_bIsOn = true) const;
 		void EnableBuiltInOprt(bool a_bIsOn = true);
 
 		bool HasBuiltInOprt() const;
-		void AddValIdent(identfun_type a_pCallback);
+		void AddValIdent(identfun_type a_pCallback) const;
 
 		/** \fn void mu::ParserBase::DefineFun(const string_type &a_strName, fun_type0 a_pFun, bool a_bAllowOpt = true)
 			\brief Define a parser function without arguments.
@@ -187,7 +187,7 @@ namespace mu
 		const char_type* ValidOprtChars() const;
 		const char_type* ValidInfixOprtChars() const;
 
-		void SetArgSep(char_type cArgSep);
+		void SetArgSep(char_type cArgSep) const;
 		void SetByteCode(const ParserByteCode& a_ByteCode);
 
 		char_type GetArgSep() const;

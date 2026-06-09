@@ -37,4 +37,4 @@ private:
     bool m_architectural;
 };
 
-#endif // LC_ARROWTICK_H
+#endif

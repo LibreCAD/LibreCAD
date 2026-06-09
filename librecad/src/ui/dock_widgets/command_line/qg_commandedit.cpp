@@ -25,13 +25,14 @@
 **********************************************************************/
 
 
+#include "qg_commandedit.h"
+
 #include <QApplication>
 #include <QClipboard>
 #include <QFile>
 #include <QKeyEvent>
 #include <QRegularExpression>
 
-#include "qg_commandedit.h"
 #include "rs_dialogfactory.h"
 #include "rs_dialogfactoryinterface.h"
 #include "rs_math.h"
@@ -47,16 +48,19 @@ constexpr unsigned g_maxLineLength = 4096;
 // returns true, if value exists, evaluated and printed to output
 bool calculatorEvaluation(const QString& input){
     int pos = input.indexOf(' ');
-    if (pos == -1)
+    if (pos == -1) {
         pos = input.indexOf(':');
-    if (pos == -1)
+    }
+    if (pos == -1) {
         return false;
+    }
 
-    QString expression = input.mid(pos);
-    if (expression.isEmpty())
+    const QString expression = input.mid(pos);
+    if (expression.isEmpty()) {
         return false;
+    }
     bool okay=false;
-    double value = RS_Math::eval(expression, &okay);
+    const double value = RS_Math::eval(expression, &okay);
     if (okay) {
         RS_DIALOGFACTORY->commandMessage(QObject::tr("Calculator: ") + expression
                                          + QString{" = %1"}.arg(value, 0, 'g', 10));
@@ -70,12 +74,7 @@ bool calculatorEvaluation(const QString& input){
  * to use this constructor.
  */
 QG_CommandEdit::QG_CommandEdit(QWidget* parent)
-    : QLineEdit(parent)
-    , m_keycode_mode(false)
-    , m_relative_ray("none")
-    , m_calculator_mode(false)
-
-{
+    : QLineEdit(parent), m_relativeRay("none") {
 #ifndef DONT_FORCE_WIDGETS_CSS
     setStyleSheet("selection-color: white; selection-background-color: green;");
 #endif
@@ -88,7 +87,7 @@ QG_CommandEdit::QG_CommandEdit(QWidget* parent)
  */
 bool QG_CommandEdit::event(QEvent* e) {
     if (e != nullptr && e->type()==QEvent::KeyPress) {
-        QKeyEvent* k = static_cast<QKeyEvent*>(e);
+        const QKeyEvent* k = static_cast<QKeyEvent*>(e);
         switch(k->key()) {
         case Qt::Key_Tab:
             emit tabPressed();
@@ -113,23 +112,24 @@ void QG_CommandEdit::keyPressEvent(QKeyEvent* e) {
     if (e->modifiers() & Qt::ControlModifier) {
         auto value = text();
 
-        if (value.isEmpty())
-            value = m_relative_ray;
+        if (value.isEmpty()) {
+            value = m_relativeRay;
+        }
 
-        QString r_string;
+        QString relativeCommandString;
 
         switch (e->key()) {
             case Qt::Key_Up:
-                r_string = "0," + value;
+                relativeCommandString = "0," + value;
                 break;
             case Qt::Key_Down:
-                r_string = "0,-" + value;
+                relativeCommandString = "0,-" + value;
                 break;
             case Qt::Key_Right:
-                r_string = value + ",0";
+                relativeCommandString = value + ",0";
                 break;
             case Qt::Key_Left:
-                r_string = "-" + value + ",0";
+                relativeCommandString = "-" + value + ",0";
                 break;
             default:
                 QLineEdit::keyPressEvent(e);
@@ -137,15 +137,13 @@ void QG_CommandEdit::keyPressEvent(QKeyEvent* e) {
         }
 
         // r_string is empty when Ctrl is pressed
-        if (!r_string.isEmpty()) {
+        if (!relativeCommandString.isEmpty()) {
             if (value == "none") {
-                emit message(
-                    QObject::tr("You must input a distance first.")
-                    );
+                emit message(QObject::tr("You must input a distance first."));
             }
             else {
-                m_relative_ray = value;
-                emit command("@" + r_string);
+                m_relativeRay = value;
+                emit command("@" + relativeCommandString);
             }
         }
         return;
@@ -197,8 +195,8 @@ void QG_CommandEdit::keyPressEvent(QKeyEvent* e) {
             break;
     }
 
-    if (m_keycode_mode) {
-        auto input = text();
+    if (m_keycodeMode) {
+        const auto input = text();
         if (input.size() == 2) {
             emit keycode(input);
         }
@@ -209,11 +207,13 @@ void QG_CommandEdit::evaluateExpression(QString input) {
     static QRegularExpression regex(R"~(([\d\.]+)deg|d)~");
     input.replace(regex, R"~(\1*pi/180)~");
     bool ok = true;
-    double result = RS_Math::eval(input, &ok);
-    if (ok)
+    const double result = RS_Math::eval(input, &ok);
+    if (ok) {
         emit message(input + " = " + QString::number(result, 'g', 12));
-    else
+    }
+    else {
         emit message(QObject::tr("Calculator error for input: ") + input);
+    }
 }
 
 void QG_CommandEdit::focusInEvent(QFocusEvent *e) {
@@ -230,29 +230,33 @@ void QG_CommandEdit::processInput(QString input) {
     // author: ravas
 
     // convert 10..0 to @10,0
-    QRegularExpression regex(R"~(([-\w\.\\]+)\.\.)~");
+    const QRegularExpression regex(R"~(([-\w\.\\]+)\.\.)~");
     input.replace(regex, "@\\1,");
 
     if (isForeignCommand(input)) {
         if (input.contains(";")) {
             foreach(auto str, input.split(";")) {
-                if (str.contains("\\"))
+                if (str.contains("\\")) {
                     processVariable(str);
-                else
+                }
+                else {
                     emit command(str);
+                }
             }
         }
         else {
-            if (input.contains("\\"))
+            if (input.contains("\\")) {
                 processVariable(input);
-            else
+            }
+            else {
                 emit command(input);
+            }
         }
 
         m_historyList.append(input);
         it = m_historyList.end();
     }
-    else if (input == "") {
+    else if (input.isEmpty()) {
         emit command("");
     }
     clear();
@@ -260,13 +264,13 @@ void QG_CommandEdit::processInput(QString input) {
 
 /**
  * @brief extractCliCal, filter cli calculator math expression
- * @param cmd, cli string
+ * @param cmd string
  * @return empty string, if calculation is performed; the input string, otherwise
  */
 QString QG_CommandEdit::filterCliCal(const QString& cmd) {
     QString str = cmd.trimmed();
-    static const QRegularExpression calCmd(R"(^\s*(cal|calculate)\s?)", QRegularExpression::CaseInsensitiveOption);
-    QRegularExpressionMatch match = calCmd.match(str);
+    static const QRegularExpression CAL_CMD(R"(^\s*(cal|calculate)\s?)", QRegularExpression::CaseInsensitiveOption);
+    const QRegularExpressionMatch match = CAL_CMD.match(str);
     if (!(match.hasMatch()
         || str.startsWith(QObject::tr("cal ", "command to trigger cli calculator"), Qt::CaseInsensitive)
         || str.startsWith(QObject::tr("calculate ", "command to trigger cli calculator"), Qt::CaseInsensitive)
@@ -274,17 +278,18 @@ QString QG_CommandEdit::filterCliCal(const QString& cmd) {
         return cmd;
     }
     int index = match.capturedEnd(0);
-    bool spaceFound = (index >= 0);
+    const bool spaceFound = (index >= 0);
     str = str.mid(index);
     static QRegularExpression reSpace(R"(\S)");
     index = str.indexOf(reSpace);
-    if (!(spaceFound && index >= 0))
+    if (!(spaceFound && index >= 0)) {
         return cmd;
+    }
     str = str.mid(index);
     if (!str.isEmpty()) {
         // Do calculation
         bool okay = false;
-        double result = RS_Math::eval(str, &okay);
+        const double result = RS_Math::eval(str, &okay);
         if (okay) {
             emit message(QString("%1 =%2").arg(str).arg(result, 12, 'g'));
             return {};
@@ -294,30 +299,30 @@ QString QG_CommandEdit::filterCliCal(const QString& cmd) {
 }
 
 bool QG_CommandEdit::isForeignCommand(QString input) {
-    // author: ravas
-
     bool r_value = true;
 
     if (input == tr("clear")) {
         emit clearCommandsHistory();
         r_value = false;
     }
-    else if ((input = filterCliCal(input)).isEmpty()) {
+    else if ((input = filterCliCal(input)).isEmpty()) {  // fixme - sand - rework this!!!
         r_value = false;
     }
     else if (input.startsWith(QObject::tr("cal"))) {
         // Allow inline calculation. Tweak the calculator mode only if there's
         // no expression after "cal " or "cal:"
         if (!calculatorEvaluation(input)) {
-            m_calculator_mode = !m_calculator_mode;
-            if (m_calculator_mode)
+            m_calculatorMode = !m_calculatorMode;
+            if (m_calculatorMode) {
                 emit message(QObject::tr("Calculator mode: On"));
-            else
+            }
+            else {
                 emit message(QObject::tr("Calculator mode: Off"));
+            }
         }
         r_value = false;
     }
-    else if (m_calculator_mode) {
+    else if (m_calculatorMode) {
         evaluateExpression(input);
         r_value = false;
     }
@@ -330,8 +335,6 @@ bool QG_CommandEdit::isForeignCommand(QString input) {
 }
 
 void QG_CommandEdit::processVariable(QString input) {
-    // author: ravas
-
     if (input.contains(",")) {
         QString rel = "";
 
@@ -343,13 +346,15 @@ void QG_CommandEdit::processVariable(QString input) {
         auto x_y = input.split(",");
         if (x_y[0].contains("\\")) {
             x_y[0].remove("\\");
-            if (m_variables.contains(x_y[0]))
+            if (m_variables.contains(x_y[0])) {
                 x_y[0] = m_variables[x_y[0]];
+            }
         }
         if (x_y[1].contains("\\")) {
             x_y[1].remove("\\");
-            if (m_variables.contains(x_y[1]))
+            if (m_variables.contains(x_y[1])) {
                 x_y[1] = m_variables[x_y[1]];
+            }
         }
         emit command(rel + x_y[0] + "," + x_y[1]);
         return;
@@ -360,29 +365,34 @@ void QG_CommandEdit::processVariable(QString input) {
         input = m_variables[input];
         if (input.contains(";")) {
             foreach(auto str, input.split(";")) {
-                if (str.contains("\\"))
+                if (str.contains("\\")) {
                     processVariable(str);
-                else
+                }
+                else {
                     emit command(str);
+                }
             }
         }
-        else emit command(input);
+        else {
+            emit command(input);
+        }
     }
 }
 
 void QG_CommandEdit::readCommandFile(const QString& path) {
-    // author: ravas
     QFile file(path);
-    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         return;
+    }
 
     // keep the pos of the read part
     size_t pos = 0;
     bool ended = false;
     while (!ended) {
         if (!file.isOpen()) {
-            if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+            if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
                 break;
+            }
             file.skip(pos);
         }
 
@@ -390,8 +400,9 @@ void QG_CommandEdit::readCommandFile(const QString& path) {
         QTextStream txt_stream(&file);
         QStringList lines;
         for (unsigned i = 0; i < g_maxLinesToRead; ++i) {
-            if (txt_stream.atEnd())
+            if (txt_stream.atEnd()) {
                 break;
+            }
             lines << txt_stream.readLine(g_maxLineLength);
         }
         ended = txt_stream.atEnd();
@@ -401,10 +412,11 @@ void QG_CommandEdit::readCommandFile(const QString& path) {
         file.close();
 
         // Process the commands while the file is closed
-        for (QString line : lines) {
+        for (QString line : std::as_const(lines)) {
             line.remove(" ");
-            if (!line.startsWith("#"))
+            if (!line.startsWith("#")) {
                 processInput(line);
+            }
         }
     }
 }

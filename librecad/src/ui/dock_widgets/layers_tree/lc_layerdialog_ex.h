@@ -25,8 +25,7 @@
 #ifndef LC_LAYERDIALOG_EX_H
 #define LC_LAYERDIALOG_EX_H
 
-#include <QString>
-
+#include "lc_dialog.h"
 #include "rs_pen.h"
 #include "ui_lc_layerdialog_ex.h"
 
@@ -35,10 +34,8 @@ class RS_Layer;
 class LC_LayerTreeItem;
 class LC_LayerTreeModel;
 
-class LC_LayerDialogEx :public QDialog, public Ui::LC_LayerDialogEx
-{
+class LC_LayerDialogEx :public LC_Dialog, public Ui::LC_LayerDialogEx{
     Q_OBJECT
-
 public:
     enum{
         MODE_RENAME_VIRTUAL,
@@ -47,10 +44,10 @@ public:
         MODE_ADD_CHILD_LAYER,
         MODE_ADD_SECONDARY_LAYER
     };
-    LC_LayerDialogEx(QWidget* parent, const QString& name, LC_LayerTreeModel* model, LC_LayerTreeItem *editedTreeItem, RS_LayerList* layerList);
-    ~LC_LayerDialogEx() = default;
+    LC_LayerDialogEx(QWidget* parent, const QString& name, LC_LayerTreeModel* model, LC_LayerTreeItem *treeItem, RS_LayerList* layerList);
+    ~LC_LayerDialogEx() override = default;
 
-    void setMode(int mode);
+    void setMode(int viewMode);
     void setLayerName(const QString& name) const;
     void setParentPath(const QString& name) const;
     void setLayerType(int type) const;
@@ -59,8 +56,8 @@ public:
     void setLayer(const RS_Layer *layer) const;
     void allowChangingLayerType(bool value);
     RS_Pen getPen() const;
-    bool isConstruction() {return cbConstructionLayer->isChecked();};
-    void setConstruction(bool enable) {cbConstructionLayer->setChecked(enable);};
+    bool isConstruction() const {return cbConstructionLayer->isChecked();}
+    void setConstruction(const bool enable) const {cbConstructionLayer->setChecked(enable);}
     QString getLayerName() const;
 public slots:
     void validate();
@@ -78,4 +75,4 @@ private:
     bool checkForDuplicatedNames(const QStringList &newLayerNamesList) const;
 };
 
-#endif // LC_LAYERDIALOG_EX_H
+#endif

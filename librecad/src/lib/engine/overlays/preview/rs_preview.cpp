@@ -36,12 +36,12 @@
  * Constructor.
  */
 RS_Preview::RS_Preview(RS_EntityContainer* parent, LC_GraphicViewport* viewport)
-        : RS_EntityContainer(parent, true), m_viewport{viewport}{
+        : LC_PreviewDocument(parent), m_viewport{viewport}{
 
 // fixme - sand - ucs - check when preview is created and whether this may be delegated to actio init?
 
     m_maxEntities = LC_GET_ONE_INT("Appearance", "MaxPreview", 100);
-    RS_Color highLight = QColor(LC_GET_ONE_STR("Colors", "highlight", RS_Settings::highlight));
+    const auto highLight = RS_Color(LC_GET_ONE_STR("Colors", "highlight", RS_Settings::HIGHLIGHT));
     setPen(RS_Pen(highLight, RS2::Width00, RS2::SolidLine));
 }
 
@@ -49,14 +49,14 @@ RS_Preview::RS_Preview(RS_EntityContainer* parent, LC_GraphicViewport* viewport)
  * Adds an entity to this preview and removes any attributes / layer
  * connections before that.
  */
-void RS_Preview::addEntity(RS_Entity* entity) {
-    if (!entity || entity->isUndone()) {
+void RS_Preview::addEntity(const RS_Entity* entity) {
+    if (entity == nullptr || entity->isDeleted()) {
         return;
     }
 
     // only border preview for complex entities:
 
-    int rtti = entity->rtti();
+    const int rtti = entity->rtti();
 
     bool addBorder = false;
     bool refEntity = false;
@@ -71,8 +71,13 @@ void RS_Preview::addEntity(RS_Entity* entity) {
             break;
         }*/
         case RS2::EntityRefPoint:
+        case RS2::EntitySnapMark:
         case RS2::EntityRefLine:
+        case RS2::EntitySnapLine:
+        case RS2::EntitySnapCircle:
+        case RS2::EntitySnapArc:
         case RS2::EntityRefConstructionLine:
+        case RS2::EntitySnapConstructionLine:
         case RS2::EntityRefCircle:
         case RS2::EntityRefEllipse:
         case RS2::EntityRefArc: {
@@ -80,6 +85,8 @@ void RS_Preview::addEntity(RS_Entity* entity) {
             break;
         }
         // todo - sand - hm... spline and texts are not included into limit of preview entities?
+        case RS2::EntityPolyline:
+            break;
         case RS2::EntitySpline:
             break;
         case RS2::EntityMText:
@@ -98,7 +105,6 @@ void RS_Preview::addEntity(RS_Entity* entity) {
     }
 
     if (addBorder) {
-
         RS_Line *l1, *l2, *l3, *l4;
 
         RS_Vector min = entity->getMin();
@@ -127,12 +133,13 @@ void RS_Preview::addEntity(RS_Entity* entity) {
         delete entity;
     }
     else {
-        entity->setLayer(nullptr);
-        entity->setSelected(false);
-        entity->reparent(this);
+        const auto ent = const_cast<RS_Entity*>(entity);
+        ent->setLayer(nullptr);
+        ent->clearSelectionFlag();
+        ent->reparent(this);
         // Don't set this pen, let drawing routines decide entity->setPenToActive();
         if (refEntity) {
-            m_referenceEntities.append(entity);
+            m_referenceEntities.append(ent);
             if (getAutoUpdateBorders()) {
                 adjustBorders(entity);
             }
@@ -144,10 +151,10 @@ void RS_Preview::addEntity(RS_Entity* entity) {
 }
 
 void RS_Preview::calcRectCorners(const RS_Vector &worldCorner1, const RS_Vector &worldCorner3, RS_Vector &worldCorner2, RS_Vector &worldCorner4) const {
-    RS_Vector ucsCorner1 = m_viewport->toUCS(worldCorner1);
-    RS_Vector ucsCorner3 = m_viewport->toUCS(worldCorner3);
-    RS_Vector ucsCorner2 = RS_Vector(ucsCorner1.x, ucsCorner3.y);
-    RS_Vector ucsCorner4 = RS_Vector(ucsCorner3.x, ucsCorner1.y);
+    const RS_Vector ucsCorner1 = m_viewport->toUCS(worldCorner1);
+    const RS_Vector ucsCorner3 = m_viewport->toUCS(worldCorner3);
+    const auto ucsCorner2 = RS_Vector(ucsCorner1.x, ucsCorner3.y);
+    const auto ucsCorner4 = RS_Vector(ucsCorner3.x, ucsCorner1.y);
     worldCorner2 =  m_viewport->toWorld(ucsCorner2);
     worldCorner4 =  m_viewport->toWorld(ucsCorner4);
 }
@@ -163,49 +170,62 @@ void RS_Preview::clear() {
     RS_EntityContainer::clear();
 }
 
-/**
- * Clones the given entity and adds the clone to the preview.
- */
-void RS_Preview::addCloneOf(RS_Entity* entity, [[maybe_unused]]LC_GraphicViewport* view) {
-    if (!entity) {
-        return;
-    }
-
-    RS_Entity* clone = entity->cloneProxy();
-    clone->reparent(this);
-    addEntity(clone);
-}
 
 /**
  * Adds all entities from 'container' to the preview (unselected).
  */
 void RS_Preview::addAllFrom(RS_EntityContainer& container, [[maybe_unused]]LC_GraphicViewport* view) {
     unsigned int c=0;
-    for(auto e: container){
-        if (c < m_maxEntities) {
-            RS_Entity* clone = e->cloneProxy();
-            clone->setSelected(false);
-            clone->reparent(this);
+    for(const auto e: container){
+        if (c > m_maxEntities) {
+            break;
+        }
+        RS_Entity* clone = e->cloneProxy();
+        clone->clearSelectionFlag();
+        clone->reparent(this);
 
-            c+=clone->countDeep();
+        c += clone->countDeep();
+        addEntity(clone);
+        // clone might be nullptr after this point
+    }
+}
+
+void RS_Preview::addClonesFromList(const QList<RS_Entity*>& list) {
+    unsigned int c = 0;
+    for (const auto e: list) {
+        if (c > m_maxEntities) {
+            break;
+        }
+        if (e != nullptr) {
+            const RS_Entity* clone = e->cloneProxy();
+            c += clone->countDeep();
             addEntity(clone);
-            // clone might be nullptr after this point
         }
     }
 }
 
-/**
- * Adds all selected entities from 'container' to the preview (unselected).
- */
-void RS_Preview::addSelectionFrom(RS_EntityContainer& container, [[maybe_unused]]LC_GraphicViewport* view) {
-    unsigned int c=0;
-    for(auto e: container){ // fixme - sand - wow - iterating over all entities!!! Rework selection
-        if (e->isSelected() && c<m_maxEntities) {
-            RS_Entity* clone = e->cloneProxy();
+void RS_Preview::addAllFromList(const QList<RS_Entity*>& list) {
+    unsigned int c = 0;
+    for (const auto e: list) {
+        if (c > m_maxEntities) {
+            break;
+        }
+        if (e != nullptr) {
+            c += e->countDeep();
+            addEntity(e);
+        }
+    }
+}
 
-            c+=clone->countDeep();
-            addEntity(clone);
-            // clone might be nullptr after this point
+void RS_Preview::addAllFromList(const std::list<RS_Entity*>& list) {
+    unsigned int c = 0;
+    for (const auto e: list) {
+        if (c > m_maxEntities) {
+            break;
+        }
+        if (e != nullptr) {
+            c += e->countDeep();
+            addEntity(e);
         }
     }
 }
@@ -218,9 +238,9 @@ void RS_Preview::addStretchablesFrom(RS_EntityContainer& container, [[maybe_unus
                                      const RS_Vector& v1, const RS_Vector& v2) {
     unsigned int c=0;
 
-    for (auto e: container) {
+    for (const auto e: container) {
         if (e->isVisible() && e->rtti() != RS2::EntityHatch &&
-            ((e->isInWindow(v1, v2)) || e->hasEndpointsWithinWindow(v1, v2)) &&
+            (e->isInWindow(v1, v2) || e->hasEndpointsWithinWindow(v1, v2)) &&
             c < m_maxEntities) {
 
             RS_Entity *clone = e->cloneProxy();
@@ -237,19 +257,17 @@ void RS_Preview::addStretchablesFrom(RS_EntityContainer& container, [[maybe_unus
 void RS_Preview::draw(RS_Painter* painter) {
 //    bool drawTextsAsDraftsForPreview = view->isDrawTextsAsDraftForPreview();
 // fixme - ucs - achieve view - store as field? This temporary for compilation...
-    bool drawTextsAsDraftsForPreview = false;
+    const bool drawTextsAsDraftsForPreview = false;
 
-    for (auto e: std::as_const(*this)) {
-        int type = e->rtti();
+    for (const auto e: std::as_const(*this)) {
+        const int type = e->rtti();
         switch (type) {
             case RS2::EntityMText:
             case RS2::EntityText: {
                 if (drawTextsAsDraftsForPreview){
                     e->drawDraft(painter);
                 }
-                else {
-                    e->draw(painter);
-                }
+                e->draw(painter);
                 break;
             }
             case RS2::EntityImage: {
@@ -263,11 +281,11 @@ void RS_Preview::draw(RS_Painter* painter) {
 }
 
 void RS_Preview::addReferenceEntitiesToContainer(RS_EntityContainer *container){
-    for (auto en: std::as_const(m_referenceEntities)){
+    for (const auto en: std::as_const(m_referenceEntities)){
         container->addEntity(en);
     }
 }
 
-int RS_Preview::getMaxAllowedEntities() {
+int RS_Preview::getMaxAllowedEntities() const {
     return m_maxEntities;
 }

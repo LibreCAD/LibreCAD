@@ -29,21 +29,21 @@
 
 struct LC_OverlayRelZeroOptions{
     bool hideRelativeZero = false;
-    int m_relativeZeroRadius  = 2;
-    RS_Color m_colorRelativeZero = Qt::red;
+    int relativeZeroRadius  = 2;
+    RS_Color colorRelativeZero = Qt::red;
 
     void loadSettings();
 };
 
 class LC_OverlayRelativeZero:public LC_OverlayDrawable{
   public:
-    LC_OverlayRelativeZero(const RS_Vector &wcsPosition, LC_OverlayRelZeroOptions *options);
-    LC_OverlayRelativeZero(LC_OverlayRelZeroOptions *options);
+    LC_OverlayRelativeZero(const RS_Vector &wcsPos, LC_OverlayRelZeroOptions *options);
+    explicit LC_OverlayRelativeZero(LC_OverlayRelZeroOptions *options);
     void draw(RS_Painter *painter) override;
-    void setPos(const RS_Vector &pos);
+    void setPos(const RS_Vector &wcsPos);
 protected:
-    RS_Vector wcsPosition;
-    LC_OverlayRelZeroOptions* options;
+    RS_Vector m_wcsPosition;
+    LC_OverlayRelZeroOptions* m_options;
 };
 
-#endif // LC_OVERLAYRELATIVEZERO_H
+#endif

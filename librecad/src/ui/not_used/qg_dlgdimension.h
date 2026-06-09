@@ -27,7 +27,7 @@
 #define QG_DLGDIMENSION_H
 
 #include "ui_qg_dlgdimension.h"
-#include "../dialogs/entity/lc_entitypropertiesdlg.h"
+#include "lc_entitypropertiesdlg.h"
 
 class RS_Dimension;
 
@@ -45,4 +45,4 @@ protected:
     void setEntity(RS_Dimension *d);
 };
 
-#endif // QG_DLGDIMENSION_H
+#endif

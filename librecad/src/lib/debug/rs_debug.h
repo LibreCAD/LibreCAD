@@ -40,7 +40,7 @@ class QStringView;
 
 /** print out a debug header*/
 #define DEBUG_HEADER debugHeader(__FILE__, __func__, __LINE__);
-void debugHeader(char const* file, char const* func, int line);
+void debugHeader(const char* file, const char* func, int line);
 #define RS_DEBUG RS_Debug::instance()
 #define RS_DEBUG_VERBOSE \
     DEBUG_HEADER\
@@ -136,8 +136,8 @@ public:
     static LogStream Log(RS_DebugLevel level = D_DEBUGGING);
 
     void setLevel(RS_DebugLevel level);
-    RS_DebugLevel getLevel();
-    void print(RS_DebugLevel level, const char* format ...);
+    RS_DebugLevel getLevel() const;
+    void print(RS_DebugLevel level, const char* format ...) const;
     void print(const char* format ...);
     void print(const QString& text);
     void printUnicode(const QString& text);

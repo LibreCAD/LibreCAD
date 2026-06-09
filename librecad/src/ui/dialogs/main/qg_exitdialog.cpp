@@ -38,9 +38,8 @@
  *  true to construct a modal dialog.
  */
 QG_ExitDialog::QG_ExitDialog(QWidget* parent)
-	: LC_Dialog(parent, "DlgExit")
-    , ui(std::make_unique<Ui::QG_ExitDialog>()){
-	ui->setupUi(this);
+    : LC_Dialog(parent, "DlgExit"), ui(std::make_unique<Ui::QG_ExitDialog>()) {
+    ui->setupUi(this);
     init();
 }
 
@@ -50,57 +49,56 @@ QG_ExitDialog::~QG_ExitDialog() = default;
  *  Sets the strings of the subwidgets using the current
  *  language.
  */
-void QG_ExitDialog::languageChange(){
-	ui->retranslateUi(this);
+void QG_ExitDialog::languageChange() {
+    ui->retranslateUi(this);
 }
 
-void QG_ExitDialog::init(){
-    QG_ExitDialog::setShowOptionsForAll(false);
-	//set dlg icon
-    QMessageBox mb({}, "", "");
-	ui->l_icon->setPixmap( mb.iconPixmap());
+void QG_ExitDialog::init() const {
+    setShowOptionsForAll(false);
+    //set dlg icon
+    const QMessageBox mb({}, "", "");
+    ui->l_icon->setPixmap(mb.iconPixmap());
 }
 
-void QG_ExitDialog::clicked(QAbstractButton * button){
-	QDialogButtonBox::StandardButton bt = ui->buttonBox->standardButton ( button );
-    switch (bt){
-    case QDialogButtonBox::No:
-        done(DontSave);
-        break;
-    case QDialogButtonBox::NoToAll:
-        done(DontSaveAll);
-        break;
-    case QDialogButtonBox::Yes:
-        done(Save);
-        break;
-    case QDialogButtonBox::YesToAll:
-        done(SaveAll);
-        break;
-    default:
-        done(Cancel);
-    };
+void QG_ExitDialog::clicked(QAbstractButton* button) {
+    const QDialogButtonBox::StandardButton bt = ui->buttonBox->standardButton(button);
+    switch (bt) {
+        case QDialogButtonBox::No:
+            done(DontSave);
+            break;
+        case QDialogButtonBox::NoToAll:
+            done(DontSaveAll);
+            break;
+        case QDialogButtonBox::Yes:
+            done(Save);
+            break;
+        case QDialogButtonBox::YesToAll:
+            done(SaveAll);
+            break;
+        default:
+            done(Cancel);
+    }
 }
 
-void QG_ExitDialog::setText(const QString& text) {
-	ui->lQuestion->setText(text);
+void QG_ExitDialog::setText(const QString& text) const {
+    ui->lQuestion->setText(text);
 }
 
 void QG_ExitDialog::setTitle(const QString& text) {
     setWindowTitle(text);
 }
 
-void QG_ExitDialog::setForce(bool force) {
-	 QPushButton * bCancel = ui->buttonBox->button ( QDialogButtonBox::Cancel );
-     bCancel->setDisabled(force);
+void QG_ExitDialog::setForce(const bool force) const {
+    QPushButton* bCancel = ui->buttonBox->button(QDialogButtonBox::Cancel);
+    bCancel->setDisabled(force);
 }
 
-void QG_ExitDialog::setShowOptionsForAll(bool show){
-
-    auto yesToAll = ui->buttonBox->button(QDialogButtonBox::YesToAll);
+void QG_ExitDialog::setShowOptionsForAll(const bool show) const {
+    const auto yesToAll = ui->buttonBox->button(QDialogButtonBox::YesToAll);
     yesToAll->setVisible(show);
     ui->buttonBox->button(QDialogButtonBox::NoToAll)->setVisible(show);
 
-    QPushButton* defaultButton;
+    QPushButton* defaultButton = nullptr;
     if (show) {
         defaultButton = yesToAll;
     }

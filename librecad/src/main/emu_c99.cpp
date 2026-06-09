@@ -1,11 +1,11 @@
 #include "emu_c99.h"
 
-#include <cmath>
 #include <cfloat>
+#include <cmath>
 
 #ifdef EMU_C99
 
-#if !defined(_MSC_VER) && !defined(_M_IX86) 
+#if !defined(_MSC_VER) && !defined(_M_IX86)
 #error Don't know how to implement C99 math functions here ...
 #else
 #if defined(_WIN64)

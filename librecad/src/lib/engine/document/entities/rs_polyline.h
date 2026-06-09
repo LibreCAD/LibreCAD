@@ -24,7 +24,6 @@
 **
 **********************************************************************/
 
-
 #pragma once
 #ifndef RS_Polyline_INCLUDE_H
 
@@ -38,52 +37,47 @@ class RS_Ellipse;
 /**
  * Holds the data that defines a polyline.
  */
-struct RS_PolylineData : public RS_Flags {
+struct RS_PolylineData : RS_Flags {
     RS_PolylineData() = default;
-	RS_PolylineData(const RS_Vector& startpoint,
-                    const RS_Vector& endpoint,
-					bool closed);
+    RS_PolylineData(const RS_Vector& startpoint, const RS_Vector& endpoint, bool closed);
 
     RS_Vector startpoint;
     RS_Vector endpoint;
 };
 
-std::ostream& operator << (std::ostream& os, const RS_PolylineData& pd);
+std::ostream& operator <<(std::ostream& os, const RS_PolylineData& pd);
 
 /**
  * Class for a poly line entity (lots of connected lines and arcs).
  *
  * @author Andrew Mustun
  */
-class RS_Polyline:public RS_EntityContainer {
+class RS_Polyline : public RS_EntityContainer {
 public:
-    RS_Polyline(RS_EntityContainer *parent = nullptr);
-    RS_Polyline(RS_EntityContainer *parent, const RS_PolylineData &d);
-    RS_Entity *clone() const override;
+    explicit RS_Polyline(RS_EntityContainer* parent = nullptr);
+    RS_Polyline(RS_EntityContainer* parent, const RS_PolylineData& d);
+    RS_Entity* clone() const override;
 
     /**	@return RS2::EntityPolyline */
-    RS2::EntityType rtti() const override{
+    RS2::EntityType rtti() const override {
         return RS2::EntityPolyline;
     }
 
     /** @return Copy of data that defines the polyline. */
-    RS_PolylineData getData() const{
-        return data;
+    RS_PolylineData getData() const {
+        return m_data;
     }
 
     RS_PolylineData& getData() {
-        return data;
+        return m_data;
     }
 
     /** sets a new start point of the polyline */
-    void setStartpoint(RS_Vector const &v);
+    void setStartpoint(const RS_Vector& v);
     /** @return Start point of the entity */
     RS_Vector getStartpoint() const override;
     /** sets a new end point of the polyline */
-    void setEndpoint(RS_Vector const &v);
-    // set layer for polyline and sub-entities
-    void setLayer(const QString &name);
-    void setLayer(RS_Layer *l);
+    void setEndpoint(const RS_Vector& v);
     /** @return End point of the entity */
     RS_Vector getEndpoint() const override;
     double getClosingBulge() const;
@@ -91,47 +85,35 @@ public:
     /** @return true if the polyline is closed. false otherwise */
     bool isClosed() const;
     void setClosed(bool cl);
-    void setClosed(bool cl, double bulge);//RLZ: rewrite this:
+    void setClosed(bool cl, double bulge); //RLZ: rewrite this:
 
     RS_VectorSolutions getRefPoints() const override;
 
-    RS_Vector getMiddlePoint(void) const override{
+    RS_Vector getMiddlePoint() const override {
         return RS_Vector(false);
     }
+    RS_Entity* addVertex(const RS_Vector& v, double bulge = 0.0, bool prepend = false);
+    void appendVertexs(const std::vector<std::pair<RS_Vector, double>>& vl);
 
-    RS_Vector getNearestRef(
-        const RS_Vector &coord,
-        double *dist = nullptr) const override;
-    RS_Vector getNearestSelectedRef(
-        const RS_Vector &coord,
-        double *dist = nullptr) const override;
-    RS_Entity *addVertex(
-        const RS_Vector &v,
-        double bulge = 0.0, bool prepend = false);
-    void appendVertexs(const std::vector<std::pair<RS_Vector, double> > &vl);
-
-    void setNextBulge(double bulge){
+    void setNextBulge(const double bulge) {
         m_nextBulge = bulge;
     }
 
-    void addEntity(RS_Entity *entity) override;
-//void addSegment(RS_Entity* entity) override;
+    void addEntity(const RS_Entity* entity) override;
+    //void addSegment(RS_Entity* entity) override;
     void removeLastVertex();
     void endPolyline();
 
-//void reorder() override;
+    //void reorder() override;
 
-    bool offset(const RS_Vector &coord, const double &distance) override;
-    void move(const RS_Vector &offset) override;
-    void rotate(const RS_Vector &center, double angle) override;
-    void rotate(const RS_Vector &center, const RS_Vector &angleVector) override;
-    void scale(const RS_Vector &center, const RS_Vector &factor) override;
-    void mirror(const RS_Vector &axisPoint1, const RS_Vector &axisPoint2) override;
-    void stretch(
-        const RS_Vector &firstCorner,
-        const RS_Vector &secondCorner,
-        const RS_Vector &offset) override;
-    void moveRef(const RS_Vector &ref, const RS_Vector &offset) override;
+    bool offset(const RS_Vector& coord, double distance) override;
+    void move(const RS_Vector& offset) override;
+    void rotate(const RS_Vector& center, double angle) override;
+    void rotate(const RS_Vector& center, const RS_Vector& angleVector) override;
+    void scale(const RS_Vector& center, const RS_Vector& factor) override;
+    void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) override;
+    void stretch(const RS_Vector& firstCorner, const RS_Vector& secondCorner, const RS_Vector& offset) override;
+    void moveRef(const RS_Vector& ref, const RS_Vector& offset) override;
     void revertDirection() override;
 
     /**
@@ -139,19 +121,20 @@ public:
  * @return true - if the polyline contains any circular arc
  */
     bool containsArc() const;
-    void draw(RS_Painter *painter) override;
-    void drawAsChild(RS_Painter *painter) override;
-    friend std::ostream &operator<<(std::ostream &os, const RS_Polyline &l);
-    RS_Vector getRefPointAdjacentDirection(bool previousSegment, RS_Vector& refPoint);
+    void draw(RS_Painter* painter) override;
+    void drawAsChild(RS_Painter* painter) override;
+    friend std::ostream& operator<<(std::ostream& os, const RS_Polyline& l);
+    RS_Vector getRefPointAdjacentDirection(bool previousSegment, const RS_Vector& refPoint) const;
+    QList<RS_Vector> getVertexes() const;
+    RS_Vector getVertex(int index) const;
     static RS_Ellipse* convertToEllipse(const std::pair<RS_Arc*, double>& arcPair);
     static std::pair<RS_Arc*, double> convertToArcPair(const RS_Ellipse* ellipse);
     static RS_Arc* arcFromBulge(const RS_Vector& start, const RS_Vector& end, double bulge);
 
 protected:
-    std::unique_ptr<RS_Entity> createVertex(
-        const RS_Vector &v,
-        double bulge = 0.0, bool prepend = false);
-
+    std::unique_ptr<RS_Entity> createVertex(const RS_Vector& v, double bulge = 0.0, bool prepend = false);
+    RS_Vector doGetNearestRef(const RS_Vector& coord, double* dist = nullptr) const override;
+    RS_Vector doGetNearestSelectedRef(const RS_Vector& coord, double* dist) const override;
 private:
     /**
      * @brief Converts all circular arc (RS_Arc) segments to equivalent elliptic arcs (RS_Ellipse)
@@ -163,11 +146,11 @@ private:
      * @note Called from scale() before applying the transformation.
      * @note Relies on static convertToEllipse() for per-arc conversion.
      */
-    void convertArcsToElliptic(const RS_Vector &factor);
+    // void convertArcsToElliptic(const RS_Vector& factor);
 
-    RS_PolylineData data;
-    RS_Entity *m_closingEntity = nullptr;
+    RS_PolylineData m_data;
+    RS_Entity* m_closingEntity = nullptr;
     double m_nextBulge = 0.;
 };
 
-#endif // RS_Polyline_INCLUDE_H
+#endif

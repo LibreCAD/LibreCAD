@@ -30,9 +30,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 class LC_ActionPenSyncActiveByLayer:public RS_ActionInterface {
     Q_OBJECT
 public:
-    LC_ActionPenSyncActiveByLayer(LC_ActionContext *actionContext);
+    explicit LC_ActionPenSyncActiveByLayer(LC_ActionContext *actionContext);
     void init(int status) override;
-    bool isSupportsPredecessorAction() override {return true;}
+    bool isSupportsPredecessorAction() const override {return true;}
 };
 
-#endif // LC_ACTIONPENSYNCACTIVEBYLAYER_H
+#endif

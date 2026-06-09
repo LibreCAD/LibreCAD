@@ -27,7 +27,6 @@
 #include "rs_color.h"
 
 struct LC_OverlayUCSZeroOptions{
-
     enum ExtendAxisArea{
         Both,
         Positive,
@@ -35,12 +34,12 @@ struct LC_OverlayUCSZeroOptions{
         None
     };
 
-    bool m_extendAxisLines = false;
-    int m_extendAxisModeX = 0;
-    int m_extendAxisModeY = 0;
-    int m_zeroShortAxisMarkSize = 20;
-    RS_Color m_colorXAxisExtension = Qt::red;
-    RS_Color m_colorYAxisExtension = Qt::green;
+    bool extendAxisLines = false;
+    int extendAxisModeX = 0;
+    int extendAxisModeY = 0;
+    int zeroShortAxisMarkSize = 20;
+    RS_Color colorXAxisExtension = Qt::red;
+    RS_Color colorYAxisExtension = Qt::green;
 
     void loadSettings();
 };
@@ -52,11 +51,11 @@ public:
     explicit LC_OverlayUCSZero(LC_OverlayUCSZeroOptions *options);
     LC_OverlayUCSZero(double uiOriginPointX, double uiOriginPointY, LC_OverlayUCSZeroOptions *options);
     void draw(RS_Painter *painter) override;
-    void updateOrigin(double uiOriginX, double uiOriginY) {uiOriginPointX = uiOriginX; uiOriginPointY = uiOriginY;}
+    void updateOrigin(const double uiOriginX, const double uiOriginY) {m_uiOriginPointX = uiOriginX; m_uiOriginPointY = uiOriginY;}
 protected:
-    double uiOriginPointX = 0.0;
-    double uiOriginPointY = 0.0;
-    LC_OverlayUCSZeroOptions *options = nullptr;
+    double m_uiOriginPointX = 0.0;
+    double m_uiOriginPointY = 0.0;
+    LC_OverlayUCSZeroOptions *m_options = nullptr;
 };
 
-#endif // LC_OVERLAYUCSZERO_H
+#endif

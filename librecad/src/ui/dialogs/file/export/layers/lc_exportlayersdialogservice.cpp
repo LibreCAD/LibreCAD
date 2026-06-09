@@ -39,7 +39,6 @@ struct LC_FileDialogResult {
     QString fileName;
     QString fileExtension;
     RS2::FormatType fileType = RS2::FormatUnknown;
-    int checkState = 0;
 };
 
 void LC_ExportLayersService::exportLayers(LC_LayersExportOptions& exportOptions, RS_Graphic* sourceGraphic) {
@@ -47,9 +46,8 @@ void LC_ExportLayersService::exportLayers(LC_LayersExportOptions& exportOptions,
     service.doExportLayers(exportOptions, sourceGraphic);
 }
 
-QString LC_ExportLayersService::createExportDocumentFileName(bool separateFileForLayer, LC_FileDialogResult& fileInfo,
-                                                             size_t exportFilesCount, size_t currentExportLayerIndex,
-                                                             [[maybe_unused]]const QString& dataName) {
+QString LC_ExportLayersService::createExportDocumentFileName(const bool separateFileForLayer, const LC_FileDialogResult& fileInfo, const size_t exportFilesCount, const size_t currentExportLayerIndex,
+                                                             [[maybe_unused]]const QString& exportData) {
     QString actualFileName = QDir::toNativeSeparators(
         fileInfo.dirPath + "/"
         + fileInfo.fileName + (separateFileForLayer ? paddedIndex(currentExportLayerIndex + 1, exportFilesCount) : "")
@@ -59,26 +57,26 @@ QString LC_ExportLayersService::createExportDocumentFileName(bool separateFileFo
 
 void LC_ExportLayersService::doExportLayers(LC_LayersExportOptions& exportOptions, RS_Graphic* sourceGraphic) {
     LC_FileDialogResult fileInfo;
-    exportOptions.m_sourceDrawingFileName = sourceGraphic->getFilename();
+    exportOptions.sourceDrawingFileName = sourceGraphic->getFilename();
     if (selectLayersExportFile(exportOptions, fileInfo)) {
         QApplication::setOverrideCursor(Qt::WaitCursor);
         LC_LayersExporter layersExporter;
-        std::vector<LC_LayerExportData*> exportResultList;
+        std::vector<LC_LayerExportData> exportResultList;
         layersExporter.exportLayers(&exportOptions, sourceGraphic, exportResultList);
         LC_DocumentsStorage storage;
 
-        size_t exportFilesCount = exportResultList.size();
+        const size_t exportFilesCount = exportResultList.size();
 
         for (size_t currentExportLayerIndex = 0; currentExportLayerIndex < exportFilesCount; currentExportLayerIndex++){
-            auto exportData = exportResultList[currentExportLayerIndex];
-            auto graphicToSave = exportData->m_graphic;
-            QString actualFileName = createExportDocumentFileName(exportOptions.m_createSeparateDocumentPerLayer,
-                                          fileInfo, exportFilesCount, currentExportLayerIndex, exportData->m_name);
+            const auto exportData = exportResultList[currentExportLayerIndex];
+            const auto graphicToSave = exportData.graphic;
+            QString actualFileName = createExportDocumentFileName(exportOptions.createSeparateDocumentPerLayer,
+                                          fileInfo, exportFilesCount, currentExportLayerIndex, exportData.name);
             [[maybe_unused]]bool saveWasSuccessful = storage.exportGraphics(graphicToSave, actualFileName, fileInfo.fileType);
 
             graphicToSave->setGraphicView(nullptr);
             graphicToSave->setParent(nullptr);
-            graphicToSave->newDoc();
+            graphicToSave->initForNewDocument();
 
             /*                if (saveWasSuccessful){
                     RS_DIALOGFACTORY->commandMessage(
@@ -89,15 +87,14 @@ void LC_ExportLayersService::doExportLayers(LC_LayersExportOptions& exportOption
                 }
 */
         }
-        exportResultList.clear();
         QApplication::restoreOverrideCursor();
     }
-    exportOptions.m_layers.clear();
+    exportOptions.layers.clear();
 }
 
-QString LC_ExportLayersService::paddedIndex(int index, int totalNumber){
+QString LC_ExportLayersService::paddedIndex(const int index, const int totalNumber){
     // the maximum string size needed
-    int fieldWidth=QString::number(totalNumber).size();
+    const int fieldWidth=QString::number(totalNumber).size();
     auto str = QString("%1").arg(index, fieldWidth, 10, QChar{'0'});
     return str;
 }
@@ -111,7 +108,7 @@ LC_ExportLayersService::LC_ExportLayersService() {}
 
 namespace
 {
-    QStringList filtersStringList = {
+    const QStringList FILTERS_STRING_LIST = {
         /* Drawing filters */
         "Drawing Exchange DXF 2007 (*.dxf)",
         "Drawing Exchange DXF 2004 (*.dxf)",
@@ -120,7 +117,7 @@ namespace
         "Drawing Exchange DXF R12 (*.dxf)",
     };
 
-    QList<RS2::FormatType> filtersTypeList =
+    const QList<RS2::FormatType> FILTERS_TYPE_LIST =
     {
         /* Drawing filters */
         RS2::FormatDXFRW,
@@ -133,19 +130,19 @@ namespace
 }
 
 bool LC_ExportLayersService::selectExportFile(LC_LayersExportOptions& options, LC_FileDialogResult& fileInfo) {
-    std::pair<QString, QString> defaultDirFilter = readDefaultDirAndFilter();
+    const std::pair<QString, QString> defaultDirFilter = readDefaultDirAndFilter();
 
     auto saveFileDialog = QFileDialog(nullptr, tr("Export Layers"), defaultDirFilter.first,
-                                      filtersStringList.join(";;"));
+                                      FILTERS_STRING_LIST.join(";;"));
     saveFileDialog.selectNameFilter(defaultDirFilter.second);
     saveFileDialog.setAcceptMode (QFileDialog::AcceptSave);
     saveFileDialog.setOption (QFileDialog::HideNameFilterDetails, false);
     saveFileDialog.setOption (QFileDialog::DontUseNativeDialog, true);
 
-    QString sourceFileName  = options.m_sourceDrawingFileName;
+    const QString sourceFileName  = options.sourceDrawingFileName;
     QString preselectionFileName;
     if (!sourceFileName.isEmpty()) {
-        QFileInfo sourceFileInfo(sourceFileName);
+        const QFileInfo sourceFileInfo(sourceFileName);
         preselectionFileName = sourceFileInfo.baseName()  + " - Export "; // fixme - sand - use options?
     }
     else {
@@ -174,24 +171,24 @@ bool LC_ExportLayersService::selectExportFile(LC_LayersExportOptions& options, L
 
             /* Confirm if the user wants to overwrite an existing file. */
             if (QFileInfo::exists(fileInfo.filePath)) {
-                int replaceFileResponse = QMessageBox::warning(
+                const int replaceFileResponse = QMessageBox::warning(
                     QApplication::activeWindow(),
                     tr("Export Layers"),
                     QObject::tr(R"(File "%1" already exists. Do you want to replace it?)").arg(fileInfo.fileName),
                     QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel, QMessageBox::Cancel
                     );
 
-                if (replaceFileResponse != QMessageBox::Yes)
+                if (replaceFileResponse != QMessageBox::Yes) {
                     continue;
+                }
             }
 
             exportOptionsWidget->fillLayerExportOptions(&options);
 
             saveDefaultDirAndFilter(fileInfo, selectedFilter);
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 }
 
@@ -199,12 +196,12 @@ std::pair<QString, QString> LC_ExportLayersService::readDefaultDirAndFilter() {
     LC_GROUP_GUARD("Export.Layers");
     {
         QString defaultDir = LC_GET_STR("DirPath", QDir::toNativeSeparators(QDir::homePath()));
-        QString defaultFilter = LC_GET_STR("FileFilter", filtersStringList.at(0));
+        QString defaultFilter = LC_GET_STR("FileFilter", FILTERS_STRING_LIST.at(0));
         return {defaultDir, defaultFilter};
     }
 }
 
-void LC_ExportLayersService::saveDefaultDirAndFilter(LC_FileDialogResult& fileInfo, const QString selectedFilter) {
+void LC_ExportLayersService::saveDefaultDirAndFilter(const LC_FileDialogResult& fileInfo, const QString& selectedFilter) {
     LC_GROUP_GUARD("Export.Layers");
     {
         LC_SET("DirPath", fileInfo.dirPath);
@@ -213,8 +210,8 @@ void LC_ExportLayersService::saveDefaultDirAndFilter(LC_FileDialogResult& fileIn
 }
 
 RS2::FormatType LC_ExportLayersService::getFormatType(const QString& formatString){
-    int index = filtersStringList.indexOf(formatString);
-    return (index >= 0 && index < filtersTypeList.count()) ? filtersTypeList.at(index) : RS2::FormatDXFRW;
+    const int index = FILTERS_STRING_LIST.indexOf(formatString);
+    return (index >= 0 && index < FILTERS_TYPE_LIST.count()) ? FILTERS_TYPE_LIST.at(index) : RS2::FormatDXFRW;
 }
 
 void LC_ExportLayersService::updateFileExtension(LC_FileDialogResult& result, const QString& selectedFilter) {

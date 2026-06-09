@@ -26,94 +26,99 @@
 #include "rs_math.h"
 
 // fixme - potentially, distortion for axis x and y should be added, as so far distortion factor is 1 (which is fine for cartesian and isometric)
-LC_Lattice::LC_Lattice(double angleX, double angleY, const RS_Vector& gridWidth) {
+LC_Lattice::LC_Lattice(const double angleX, const double angleY, const RS_Vector& gridWidth) {
     calcDeltas(angleX, angleY, gridWidth);
 }
 
-LC_Lattice::LC_Lattice(double angleX, double angleY, const RS_Vector& gridWidth, int numPointsTotal) {
+LC_Lattice::LC_Lattice(const double angleX, const double angleY, const RS_Vector& gridWidth, const int numPointsTotal) {
     calcDeltas(angleX, angleY, gridWidth);
     init(numPointsTotal);
 }
-
 
 LC_Lattice::~LC_Lattice() {
-    pointsX.clear();
-    pointsY.clear();
-    pointsX.resize(0);
-    pointsY.resize(0);
+    m_pointsX.clear();
+    m_pointsY.clear();
+    m_pointsX.resize(0);
+    m_pointsY.resize(0);
 }
 
-void LC_Lattice::update(double angleX, double angleY, const RS_Vector &gridWidth, int numPointsTotal) {
+void LC_Lattice::update(const double angleX, const double angleY, const RS_Vector& gridWidth, const int numPointsTotal) {
     calcDeltas(angleX, angleY, gridWidth);
     init(numPointsTotal);
 }
 
-void LC_Lattice::updateForLines(double angleX, double angleY, const RS_Vector& gridWidth, const RS_Vector& offsetForLine, int numPointsTotal){
+void LC_Lattice::updateForLines(const double angleX, const double angleY, const RS_Vector& gridWidth, const RS_Vector& offsetForLine,
+                                const int numPointsTotal) {
     calcDeltas(angleX, angleY, gridWidth);
     calcLineOffsetDeltas(angleX, angleY, offsetForLine);
     init(numPointsTotal);
 }
 
-void LC_Lattice::calcLineOffsetDeltas(double angleX, double angleY, const RS_Vector &offset) {
+void LC_Lattice::calcLineOffsetDeltas(const double angleX, const double angleY, const RS_Vector& offset) {
     RS_Vector rowDelta{0, offset.y};
     rowDelta.rotate(RS_Math::deg2rad(angleY));
-    lineOffsetY = rowDelta;
+    m_lineOffsetY = rowDelta;
 
     RS_Vector columnDelta{offset.x, 0};
     columnDelta.rotate(RS_Math::deg2rad(angleX));
-    lineOffsetX = columnDelta;
+    m_lineOffsetX = columnDelta;
 }
 
-void LC_Lattice::calcDeltas(double angleX, double angleY, const RS_Vector &gridWidth) {
+void LC_Lattice::calcDeltas(const double angleX, const double angleY, const RS_Vector& gridWidth) {
     RS_Vector rowDelta{0, gridWidth.y};
     rowDelta.rotate(RS_Math::deg2rad(angleY));
-    deltaY = rowDelta;
+    m_deltaY = rowDelta;
 
     RS_Vector columnDelta{gridWidth.x, 0};
     columnDelta.rotate(RS_Math::deg2rad(angleX));
-    deltaX = columnDelta;
+    m_deltaX = columnDelta;
 
-    majorVector = deltaX + deltaY;
+    m_majorVector = m_deltaX + m_deltaY;
 }
 
-void LC_Lattice::init([[maybe_unused]]int projectedPointsCount) {
-    pointsX.clear();
-    pointsY.clear();
+void LC_Lattice::init([[maybe_unused]] int projectedPointsCount) {
+    m_pointsX.clear();
+    m_pointsX.resize(0);
+    m_pointsY.clear();
+    m_pointsY.resize(0);
 }
 
-void LC_Lattice::fillVerticalEdge(int numPointsByX, const RS_Vector &baseGridPoint, bool reverseX, bool reverseY, bool skipFirstPoint) {
+void LC_Lattice::fillVerticalEdge(const int numPointsByX, const RS_Vector& baseGridPoint, const bool reverseX, const bool reverseY,
+                                  const bool skipFirstPoint) {
     RS_Vector xDeltaToUse;
     RS_Vector yDeltaToUse;
     prepareDeltas(reverseX, reverseY, xDeltaToUse, yDeltaToUse);
     fillVerticalEdge(numPointsByX, baseGridPoint, xDeltaToUse, yDeltaToUse, skipFirstPoint);
 }
 
-void LC_Lattice::fillHorizontalEdge(int numPointsByX, const RS_Vector &baseGridPoint, bool reverseX, bool reverseY,  bool skipFirstPoint) {
+void LC_Lattice::fillHorizontalEdge(const int numPointsByX, const RS_Vector& baseGridPoint, const bool reverseX, const bool reverseY,
+                                    const bool skipFirstPoint) {
     RS_Vector xDeltaToUse;
     RS_Vector yDeltaToUse;
     prepareDeltas(reverseX, reverseY, xDeltaToUse, yDeltaToUse);
     fillHorizontalEdge(numPointsByX, baseGridPoint, xDeltaToUse, yDeltaToUse, skipFirstPoint);
 }
 
-void LC_Lattice::fillHorizontalEdge(int numPointsByX, const RS_Vector &baseGridPoint,
-                                    const RS_Vector& xDelta, const RS_Vector& yDelta, bool skipFirstPoint) {
-    RS_Vector base = baseGridPoint - majorVector;
-    if (skipFirstPoint){
-       base += xDelta;
+void LC_Lattice::fillHorizontalEdge(const int numPointsByX, const RS_Vector& baseGridPoint, const RS_Vector& xDelta,
+                                    const RS_Vector& yDelta, const bool skipFirstPoint) {
+    RS_Vector base = baseGridPoint - m_majorVector;
+    if (skipFirstPoint) {
+        base += xDelta;
     }
     fillAll(numPointsByX, 1, base, xDelta, yDelta);
 }
 
-void LC_Lattice::fillVerticalEdge(int numPointsByY, const RS_Vector &baseGridPoint,
-                                  const RS_Vector& xDelta, const RS_Vector& yDelta, bool skipFirstPoint) {
-    RS_Vector base = baseGridPoint - majorVector;
+void LC_Lattice::fillVerticalEdge(const int numPointsByY, const RS_Vector& baseGridPoint, const RS_Vector& xDelta, const RS_Vector& yDelta,
+                                  const bool skipFirstPoint) {
+    RS_Vector base = baseGridPoint - m_majorVector;
     if (skipFirstPoint) {
         base = base - yDelta;
     }
     fillAll(1, numPointsByY, base, xDelta, yDelta);
 }
 
-void LC_Lattice::fill(int numPointsByX, int numPointsByY, const RS_Vector &baseGridPoint, bool reverseX, bool reverseY) {
+void LC_Lattice::fill(const int numPointsByX, const int numPointsByY, const RS_Vector& baseGridPoint, const bool reverseX,
+                      const bool reverseY) {
     RS_Vector xDeltaToUse;
     RS_Vector yDeltaToUse;
     prepareDeltas(reverseX, reverseY, xDeltaToUse, yDeltaToUse);
@@ -121,35 +126,33 @@ void LC_Lattice::fill(int numPointsByX, int numPointsByY, const RS_Vector &baseG
     fillAll(numPointsByX, numPointsByY, baseGridPoint, xDeltaToUse, yDeltaToUse);
 }
 
-void LC_Lattice::prepareDeltas(bool reverseX, bool reverseY, RS_Vector &xDeltaToUse, RS_Vector &yDeltaToUse) const {
-    if (reverseX){
-        xDeltaToUse = -deltaX;
+void LC_Lattice::prepareDeltas(const bool reverseX, const bool reverseY, RS_Vector& xDeltaToUse, RS_Vector& yDeltaToUse) const {
+    if (reverseX) {
+        xDeltaToUse = -m_deltaX;
     }
-    else{
-        xDeltaToUse = deltaX;
+    else {
+        xDeltaToUse = m_deltaX;
     }
 
-    if (reverseY){
-        yDeltaToUse = -deltaY;
+    if (reverseY) {
+        yDeltaToUse = -m_deltaY;
     }
-    else{
-        yDeltaToUse = deltaY;
+    else {
+        yDeltaToUse = m_deltaY;
     }
 }
 
-void LC_Lattice::fillWithoutDiagonal(int numPointsByX, int numPointsByY,
-                                     const RS_Vector &baseGridPoint,
-                                     bool reverseX, bool reverseY, bool bottomLeftToTopRightDiagonal, int totalSize){
+void LC_Lattice::fillWithoutDiagonal(const int numPointsByX, const int numPointsByY, const RS_Vector& baseGridPoint, const bool reverseX,
+                                     const bool reverseY, const bool bottomLeftToTopRightDiagonal, const int totalSize) {
     RS_Vector xDeltaToUse;
     RS_Vector yDeltaToUse;
 
     prepareDeltas(reverseX, reverseY, xDeltaToUse, yDeltaToUse);
 
-    if (bottomLeftToTopRightDiagonal)
-    {
+    if (bottomLeftToTopRightDiagonal) {
         fillExceptBLTRDiagonal(numPointsByX, numPointsByY, baseGridPoint, xDeltaToUse, yDeltaToUse);
     }
-    else{
+    else {
         fillExceptTLBRDiagonal(numPointsByX, numPointsByY, baseGridPoint, xDeltaToUse, yDeltaToUse, totalSize);
     }
 }
@@ -168,21 +171,22 @@ void LC_Lattice::fillWithoutDiagonal(int numPointsByX, int numPointsByY,
  * @param yDelta
  * @param xDelta
  */
-void LC_Lattice::fillAll(int numPointsByX, int numPointsByY, const RS_Vector &baseGridPoint,
-                        const RS_Vector& xDelta, const RS_Vector& yDelta) {
+void LC_Lattice::fillAll(const int numPointsByX, const int numPointsByY, const RS_Vector& baseGridPoint, const RS_Vector& xDelta,
+                         const RS_Vector& yDelta) {
     RS_Vector rowStartPoint = baseGridPoint + xDelta + yDelta;
     for (int y = 0; y < numPointsByY; ++y) {
         RS_Vector currentPoint(rowStartPoint);
         for (int x = 0; x < numPointsByX; ++x) {
-            pointsX.push_back(currentPoint.x);
-            pointsY.push_back(currentPoint.y);
+            m_pointsX.push_back(currentPoint.x);
+            m_pointsY.push_back(currentPoint.y);
             currentPoint += xDelta;
         }
-        rowStartPoint+=yDelta;
+        rowStartPoint += yDelta;
     }
 }
 
-void LC_Lattice::fillByLines(int numPointsByX, int numPointsByY, const RS_Vector &baseGridPoint, bool reverseX, bool reverseY, bool fillLeftEdge, bool fillRightEdge) {
+void LC_Lattice::fillByLines(const int numPointsByX, const int numPointsByY, const RS_Vector& baseGridPoint, const bool reverseX,
+                             const bool reverseY, const bool fillLeftEdge, const bool fillRightEdge) {
     RS_Vector xDeltaToUse;
     RS_Vector yDeltaToUse;
     prepareDeltas(reverseX, reverseY, xDeltaToUse, yDeltaToUse);
@@ -190,190 +194,189 @@ void LC_Lattice::fillByLines(int numPointsByX, int numPointsByY, const RS_Vector
     fillAllByLine(numPointsByX, numPointsByY, baseGridPoint, xDeltaToUse, yDeltaToUse, fillLeftEdge, fillRightEdge);
 }
 
-void LC_Lattice::fillAllByLinesExceptDiagonal(int numPointsByX, int numPointsByY, const RS_Vector &baseGridPoint, bool reverseX, bool reverseY, bool fillLeftEdge, bool fillRightEdge) {
+void LC_Lattice::fillAllByLinesExceptDiagonal(const int numPointsByX, const int numPointsByY, const RS_Vector& baseGridPoint,
+                                              const bool reverseX, const bool reverseY, const bool fillLeftEdge, const bool fillRightEdge) {
     RS_Vector xDeltaToUse;
     RS_Vector yDeltaToUse;
     prepareDeltas(reverseX, reverseY, xDeltaToUse, yDeltaToUse);
 
     fillAllByLineExceptDiagonal(numPointsByX, numPointsByY, baseGridPoint, xDeltaToUse, yDeltaToUse, fillLeftEdge, fillRightEdge);
     fillByLinesParallelDiagonal(numPointsByX, numPointsByY, baseGridPoint, xDeltaToUse, yDeltaToUse);
-
 }
 
-void LC_Lattice::fillByLinesParallelDiagonal(int numPointsByX, int numPointsByY, const RS_Vector &baseGridPoint, const RS_Vector& xDelta, const RS_Vector& yDelta){
-    RS_Vector majorDiagonalStartPoint = baseGridPoint;
-    RS_Vector majorDiagonalEndPoint = baseGridPoint + xDelta * (numPointsByX + 1) + yDelta * (numPointsByY + 1);
+void LC_Lattice::fillByLinesParallelDiagonal(const int numPointsByX, const int numPointsByY, const RS_Vector& baseGridPoint,
+                                             const RS_Vector& xDelta, const RS_Vector& yDelta) {
+    const RS_Vector majorDiagonalStartPoint = baseGridPoint;
+    const RS_Vector majorDiagonalEndPoint = baseGridPoint + xDelta * (numPointsByX + 1) + yDelta * (numPointsByY + 1);
 
-    RS_Vector lineOffset = lineOffsetX + lineOffsetY;
+    const RS_Vector lineOffset = m_lineOffsetX + m_lineOffsetY;
 
     RS_Vector startPoint = majorDiagonalStartPoint + lineOffset;
-    RS_Vector endPoint = majorDiagonalEndPoint -  lineOffset;
+    RS_Vector endPoint = majorDiagonalEndPoint - lineOffset;
 
-    for (int i = 0; i < numPointsByX; i++){
+    for (int i = 0; i < numPointsByX; i++) {
         startPoint = startPoint + xDelta;
         endPoint = endPoint - yDelta;
 
-        pointsX.push_back(startPoint.x);
-        pointsY.push_back(startPoint.y);
+        m_pointsX.push_back(startPoint.x);
+        m_pointsY.push_back(startPoint.y);
 
-        pointsX.push_back(endPoint.x);
-        pointsY.push_back(endPoint.y);
+        m_pointsX.push_back(endPoint.x);
+        m_pointsY.push_back(endPoint.y);
     }
 
     startPoint = majorDiagonalStartPoint + lineOffset;
     endPoint = majorDiagonalEndPoint - lineOffset;
-    for (int i = 0; i < numPointsByX; i++){
+    for (int i = 0; i < numPointsByX; i++) {
         startPoint = startPoint + yDelta;
         endPoint = endPoint - xDelta;
 
-        pointsX.push_back(startPoint.x);
-        pointsY.push_back(startPoint.y);
+        m_pointsX.push_back(startPoint.x);
+        m_pointsY.push_back(startPoint.y);
 
-        pointsX.push_back(endPoint.x);
-        pointsY.push_back(endPoint.y);
+        m_pointsX.push_back(endPoint.x);
+        m_pointsY.push_back(endPoint.y);
     }
-
-
 }
 
-void LC_Lattice::fillAllByLine(int numPointsByX, int numPointsByY, const RS_Vector &baseGridPoint,
-                         const RS_Vector& xDelta, const RS_Vector& yDelta, bool fillLeftEdge, bool fillRightEdge) {
+void LC_Lattice::fillAllByLine(const int numPointsByX, const int numPointsByY, const RS_Vector& baseGridPoint, const RS_Vector& xDelta,
+                               const RS_Vector& yDelta, const bool fillLeftEdge, const bool fillRightEdge) {
     RS_Vector rowStartPoint = baseGridPoint + yDelta;
-    const RS_Vector &xLength = xDelta * (numPointsByX + 1);
-    RS_Vector rowEndPoint = rowStartPoint + xLength - lineOffsetX;
+    const RS_Vector& xLength = xDelta * (numPointsByX + 1);
+    RS_Vector rowEndPoint = rowStartPoint + xLength - m_lineOffsetX;
 
-    rowStartPoint.plus(lineOffsetX);
-    
-    if (fillRightEdge){
-        RS_Vector start = baseGridPoint + lineOffsetX;
-        RS_Vector end = baseGridPoint + xLength - lineOffsetX;
+    rowStartPoint.plus(m_lineOffsetX);
 
-        pointsX.push_back(start.x);
-        pointsY.push_back(start.y);
+    if (fillRightEdge) {
+        const RS_Vector start = baseGridPoint + m_lineOffsetX;
+        const RS_Vector end = baseGridPoint + xLength - m_lineOffsetX;
 
-        pointsX.push_back(end.x);
-        pointsY.push_back(end.y);
+        m_pointsX.push_back(start.x);
+        m_pointsY.push_back(start.y);
+
+        m_pointsX.push_back(end.x);
+        m_pointsY.push_back(end.y);
     }
-    
-    for (int y = 0; y < numPointsByY; ++y) {
-        pointsX.push_back(rowStartPoint.x);
-        pointsY.push_back(rowStartPoint.y);
 
-        pointsX.push_back(rowEndPoint.x);
-        pointsY.push_back(rowEndPoint.y);
+    for (int y = 0; y < numPointsByY; ++y) {
+        m_pointsX.push_back(rowStartPoint.x);
+        m_pointsY.push_back(rowStartPoint.y);
+
+        m_pointsX.push_back(rowEndPoint.x);
+        m_pointsY.push_back(rowEndPoint.y);
 
         rowStartPoint += yDelta;
         rowEndPoint += yDelta;
     }
 
-    const RS_Vector &yLength = yDelta * (numPointsByY + 1);
-    if (fillLeftEdge){
-        RS_Vector start = baseGridPoint + lineOffsetY;
-        RS_Vector end = baseGridPoint + yLength - lineOffsetY;
-        pointsX.push_back(start.x);
-        pointsY.push_back(start.y);
+    const RS_Vector& yLength = yDelta * (numPointsByY + 1);
+    if (fillLeftEdge) {
+        const RS_Vector start = baseGridPoint + m_lineOffsetY;
+        const RS_Vector end = baseGridPoint + yLength - m_lineOffsetY;
+        m_pointsX.push_back(start.x);
+        m_pointsY.push_back(start.y);
 
-        pointsX.push_back(end.x);
-        pointsY.push_back(end.y);
+        m_pointsX.push_back(end.x);
+        m_pointsY.push_back(end.y);
     }
-    
+
     RS_Vector colStartPoint = baseGridPoint + xDelta;
 
-    RS_Vector colEndPoint = colStartPoint + yLength - lineOffsetY;
-    colStartPoint.plus( lineOffsetY);
+    RS_Vector colEndPoint = colStartPoint + yLength - m_lineOffsetY;
+    colStartPoint.plus(m_lineOffsetY);
     for (int x = 0; x < numPointsByX; ++x) {
-        pointsX.push_back(colStartPoint.x);
-        pointsY.push_back(colStartPoint.y);
+        m_pointsX.push_back(colStartPoint.x);
+        m_pointsY.push_back(colStartPoint.y);
 
-        pointsX.push_back(colEndPoint.x);
-        pointsY.push_back(colEndPoint.y);
+        m_pointsX.push_back(colEndPoint.x);
+        m_pointsY.push_back(colEndPoint.y);
 
         colEndPoint += xDelta;
         colStartPoint += xDelta;
     }
 }
 
-void LC_Lattice::fillAllByLineExceptDiagonal(int numPointsByX, int numPointsByY, const RS_Vector &baseGridPoint,
-                               const RS_Vector& xDelta, const RS_Vector& yDelta, bool fillLeftEdge, bool fillRightEdge) {
+void LC_Lattice::fillAllByLineExceptDiagonal(int numPointsByX, int numPointsByY, const RS_Vector& baseGridPoint, const RS_Vector& xDelta,
+                                             const RS_Vector& yDelta, bool fillLeftEdge, bool fillRightEdge) {
     RS_Vector rowStartPoint = baseGridPoint + yDelta;
-    const RS_Vector &xLength = xDelta * (numPointsByX + 1);
-    RS_Vector rowEndPoint = rowStartPoint + xLength - lineOffsetX;
+    const RS_Vector& xLength = xDelta * (numPointsByX + 1);
+    RS_Vector rowEndPoint = rowStartPoint + xLength - m_lineOffsetX;
 
     RS_Vector diagonalDelta = yDelta + xDelta;
-    rowStartPoint.plus(lineOffsetX);
+    rowStartPoint.plus(m_lineOffsetX);
 
     RS_Vector diagonalPoint = baseGridPoint + diagonalDelta;
-    RS_Vector diagonalPointLeft = diagonalPoint - lineOffsetX;
-    RS_Vector diagonalPointRight = diagonalPoint + lineOffsetX;
+    RS_Vector diagonalPointLeft = diagonalPoint - m_lineOffsetX;
+    RS_Vector diagonalPointRight = diagonalPoint + m_lineOffsetX;
 
-    if (fillRightEdge){
-        RS_Vector start = baseGridPoint + lineOffsetX;
-        RS_Vector end = baseGridPoint + xLength - lineOffsetX;
+    if (fillRightEdge) {
+        RS_Vector start = baseGridPoint + m_lineOffsetX;
+        RS_Vector end = baseGridPoint + xLength - m_lineOffsetX;
 
-        pointsX.push_back(start.x);
-        pointsY.push_back(start.y);
+        m_pointsX.push_back(start.x);
+        m_pointsY.push_back(start.y);
 
-        pointsX.push_back(end.x);
-        pointsY.push_back(end.y);
+        m_pointsX.push_back(end.x);
+        m_pointsY.push_back(end.y);
     }
 
     for (int y = 0; y < numPointsByY; ++y) {
-        pointsX.push_back(rowStartPoint.x);
-        pointsY.push_back(rowStartPoint.y);
+        m_pointsX.push_back(rowStartPoint.x);
+        m_pointsY.push_back(rowStartPoint.y);
 
-        pointsX.push_back(diagonalPointLeft.x);
-        pointsY.push_back(diagonalPointLeft.y);
+        m_pointsX.push_back(diagonalPointLeft.x);
+        m_pointsY.push_back(diagonalPointLeft.y);
 
-        pointsX.push_back(diagonalPointRight.x);
-        pointsY.push_back(diagonalPointRight.y);
+        m_pointsX.push_back(diagonalPointRight.x);
+        m_pointsY.push_back(diagonalPointRight.y);
 
-        pointsX.push_back(rowEndPoint.x);
-        pointsY.push_back(rowEndPoint.y);
+        m_pointsX.push_back(rowEndPoint.x);
+        m_pointsY.push_back(rowEndPoint.y);
 
         rowStartPoint += yDelta;
         rowEndPoint += yDelta;
-        diagonalPointLeft +=diagonalDelta;
-        diagonalPointRight+=diagonalDelta;
+        diagonalPointLeft += diagonalDelta;
+        diagonalPointRight += diagonalDelta;
     }
 
-    const RS_Vector &yLength = yDelta * (numPointsByY + 1);
+    const RS_Vector& yLength = yDelta * (numPointsByY + 1);
 
-    if (fillLeftEdge){
-        RS_Vector start = baseGridPoint + lineOffsetY;
-        RS_Vector end = baseGridPoint + yLength - lineOffsetY;
-        pointsX.push_back(start.x);
-        pointsY.push_back(start.y);
+    if (fillLeftEdge) {
+        RS_Vector start = baseGridPoint + m_lineOffsetY;
+        RS_Vector end = baseGridPoint + yLength - m_lineOffsetY;
+        m_pointsX.push_back(start.x);
+        m_pointsY.push_back(start.y);
 
-        pointsX.push_back(end.x);
-        pointsY.push_back(end.y);
+        m_pointsX.push_back(end.x);
+        m_pointsY.push_back(end.y);
     }
 
-    diagonalPointLeft = diagonalPoint - lineOffsetY;
-    diagonalPointRight = diagonalPoint + lineOffsetY;
+    diagonalPointLeft = diagonalPoint - m_lineOffsetY;
+    diagonalPointRight = diagonalPoint + m_lineOffsetY;
     RS_Vector colStartPoint = baseGridPoint + xDelta;
 
-    RS_Vector colEndPoint = colStartPoint + yLength - lineOffsetY;
-    colStartPoint.plus( lineOffsetY);
+    RS_Vector colEndPoint = colStartPoint + yLength - m_lineOffsetY;
+    colStartPoint.plus(m_lineOffsetY);
     for (int x = 0; x < numPointsByX; ++x) {
-        pointsX.push_back(colStartPoint.x);
-        pointsY.push_back(colStartPoint.y);
+        m_pointsX.push_back(colStartPoint.x);
+        m_pointsY.push_back(colStartPoint.y);
 
-        pointsX.push_back(diagonalPointLeft.x);
-        pointsY.push_back(diagonalPointLeft.y);
+        m_pointsX.push_back(diagonalPointLeft.x);
+        m_pointsY.push_back(diagonalPointLeft.y);
 
-        pointsX.push_back(diagonalPointRight.x);
-        pointsY.push_back(diagonalPointRight.y);
+        m_pointsX.push_back(diagonalPointRight.x);
+        m_pointsY.push_back(diagonalPointRight.y);
 
-
-        pointsX.push_back(colEndPoint.x);
-        pointsY.push_back(colEndPoint.y);
+        m_pointsX.push_back(colEndPoint.x);
+        m_pointsY.push_back(colEndPoint.y);
 
         colEndPoint += xDelta;
         colStartPoint += xDelta;
-        diagonalPointLeft +=diagonalDelta;
-        diagonalPointRight+=diagonalDelta;
+        diagonalPointLeft += diagonalDelta;
+        diagonalPointRight += diagonalDelta;
     }
 }
+
 /**
  * Fills lattice leaving bottom-left/top-right corner diagonal empty
  * @param numPointsByX
@@ -382,99 +385,95 @@ void LC_Lattice::fillAllByLineExceptDiagonal(int numPointsByX, int numPointsByY,
  * @param yDelta
  * @param xDelta
  */
-void LC_Lattice::fillExceptBLTRDiagonal(int numPointsByX, int numPointsByY, const RS_Vector &baseGridPoint,
+void LC_Lattice::fillExceptBLTRDiagonal(const int numPointsByX, const int numPointsByY, const RS_Vector& baseGridPoint,
                                         const RS_Vector& xDelta, const RS_Vector& yDelta) {
     RS_Vector rowStartPoint = baseGridPoint + xDelta + yDelta;
     for (int y = 0; y < numPointsByY; ++y) {
         RS_Vector currentPoint(rowStartPoint);
         for (int x = 0; x < numPointsByX; ++x) {
             if (x != y) {
-                pointsX.push_back(currentPoint.x);
-                pointsY.push_back(currentPoint.y);
-             }
+                m_pointsX.push_back(currentPoint.x);
+                m_pointsY.push_back(currentPoint.y);
+            }
             currentPoint += xDelta;
         }
-        rowStartPoint+=yDelta;
+        rowStartPoint += yDelta;
     }
 }
+
 /**
  * * Fills lattice leaving top-left/bottom-right corner diagonal empty
  * @param numPointsByX
  * @param numPointsByY
  * @param baseGridPoint
  * @param yDelta
+ * @param totalSize
  * @param xDelta
  */
-void LC_Lattice::fillExceptTLBRDiagonal(int numPointsByX, int numPointsByY, const RS_Vector &baseGridPoint,
-                                        const RS_Vector& xDelta, const RS_Vector& yDelta, int totalSize) {
+void LC_Lattice::fillExceptTLBRDiagonal(const int numPointsByX, const int numPointsByY, const RS_Vector& baseGridPoint,
+                                        const RS_Vector& xDelta, const RS_Vector& yDelta, const int totalSize) {
     RS_Vector rowStartPoint = baseGridPoint + xDelta + yDelta;
     for (int y = 0; y < numPointsByY; ++y) {
         RS_Vector currentPoint(rowStartPoint);
-        int columnToExclude = totalSize - y;
+        const int columnToExclude = totalSize - y;
         for (int x = 0; x < numPointsByX; ++x) {
             if (x != columnToExclude) {
-                pointsX.push_back(currentPoint.x);
-                pointsY.push_back(currentPoint.y);
+                m_pointsX.push_back(currentPoint.x);
+                m_pointsY.push_back(currentPoint.y);
             }
             currentPoint += xDelta;
         }
-        rowStartPoint+=yDelta;
+        rowStartPoint += yDelta;
     }
 }
 
-void LC_Lattice::toGui(LC_GraphicViewport* viewport){
-    int numPoints = pointsX.size();
-    for (int i = 0; i< numPoints; i++){
-        double x = pointsX[i];
-        double uiX = viewport->toGuiX(x);
-        pointsX[i] = uiX;
+void LC_Lattice::toGui(const LC_GraphicViewport* viewport) {
+    const size_t numPoints = m_pointsX.size();
+    for (size_t i = 0; i < numPoints; i++) {
+        const double x = m_pointsX[i];
+        const double uiX = viewport->toGuiX(x);
+        m_pointsX[i] = uiX;
 
-        double y = pointsY[i];
-        double uiY = viewport->toGuiY(y);
-        pointsY[i] = uiY;
+        const double y = m_pointsY[i];
+        const double uiY = viewport->toGuiY(y);
+        m_pointsY[i] = uiY;
     }
 }
 
-const std::vector<RS_Vector> LC_Lattice::getPoints() {
-    return {};// points;
-}
-
-RS_Vector LC_Lattice::getOffset(int xPointsDelta, int yPointsDelta) {
-    RS_Vector result = deltaX*xPointsDelta + deltaY*yPointsDelta;
+RS_Vector LC_Lattice::getOffset(const int xPointsDelta, const int yPointsDelta) const {
+    const RS_Vector result = m_deltaX * xPointsDelta + m_deltaY * yPointsDelta;
     return result;
 }
 
-const  RS_Vector &LC_Lattice::getMajorVector() {
-    return majorVector;
+const RS_Vector& LC_Lattice::getMajorVector() const {
+    return m_majorVector;
 }
 
-const RS_Vector &LC_Lattice::getDeltaX() {
-    return deltaX;
+const RS_Vector& LC_Lattice::getDeltaX() const {
+    return m_deltaX;
 }
 
-const  RS_Vector &LC_Lattice::getDeltaY() {
-    return deltaY;
+const RS_Vector& LC_Lattice::getDeltaY() const {
+    return m_deltaY;
 }
 
-
-const std::vector<double> &LC_Lattice::getPointsX() const {
-    return pointsX;
+const std::vector<double>& LC_Lattice::getPointsX() const {
+    return m_pointsX;
 }
 
-const std::vector<double> &LC_Lattice::getPointsY() const {
-    return pointsY;
+const std::vector<double>& LC_Lattice::getPointsY() const {
+    return m_pointsY;
 }
 
-void LC_Lattice::addLine(const double x1, const double y1, const double x2, const double y2) {
-    pointsX.push_back(x1);
-    pointsX.push_back(x2);
+void LC_Lattice::addLine(const double startX, const double startY, const double endX, const double endY) {
+    m_pointsX.push_back(startX);
+    m_pointsX.push_back(endX);
 
-    pointsY.push_back(y1);
-    pointsY.push_back(y2);
+    m_pointsY.push_back(startY);
+    m_pointsY.push_back(endY);
 }
 
-void LC_Lattice::addPoint(double x, double y) {
-    pointsX.push_back(x);
-    pointsY.push_back(y);
-
+void LC_Lattice::addPoint(const double x, const double y) {
+    m_pointsX.push_back(x);
+    m_pointsY.push_back(y);
 }

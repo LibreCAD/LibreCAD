@@ -25,46 +25,48 @@
 
 #include "rs_locale.h"
 
-RS_Locale::RS_Locale(const QString &canonical)
-    : QLocale(toCanonical(canonical))
-{}
-
-void RS_Locale::setCanonical(const QString &_canonical) {
-    canonical=_canonical;
+RS_Locale::RS_Locale(const QString& canonical)
+    : QLocale(toCanonical(canonical)) {
 }
 
-QString RS_Locale::toCanonical(const QString &canonical){
+void RS_Locale::setCanonical(const QString& canonical) {
+    m_canonical = canonical;
+}
+
+QString RS_Locale::toCanonical(const QString& canonical) {
     QString languageCode("C");
-    int i1=canonical.indexOf('_');
-    if(i1 >= 2 ) {
-        languageCode= canonical.mid(0,i1).toLower();
+    int i1 = canonical.indexOf('_');
+    if (i1 >= 2) {
+        languageCode = canonical.mid(0, i1).toLower();
         i1++;
-        if(canonical.size() == i1+2 ){
-            languageCode += QString('_')+canonical.mid(i1,canonical.size()-i1).toUpper();
+        if (canonical.size() == i1 + 2) {
+            languageCode += QString('_') + canonical.mid(i1, canonical.size() - i1).toUpper();
         }
-    }else{
-        languageCode=canonical.toLower();
+    }
+    else {
+        languageCode = canonical.toLower();
     }
     return languageCode;
 }
 
-void RS_Locale::setDirection(RS2::TextLocaleDirection _direction) {
-    direction=_direction;
+void RS_Locale::setDirection(const RS2::TextLocaleDirection direction) {
+    m_direction = direction;
 }
-void RS_Locale::setName(const QString &_name) {
-    localeName=_name;
+
+void RS_Locale::setName(const QString& name) {
+    m_localeName = name;
 }
 
 QString RS_Locale::getCanonical() const {
-    return canonical;
+    return m_canonical;
 }
 
 QString RS_Locale::getName() const {
-    return localeName;
+    return m_localeName;
 }
 
-QString RS_Locale::name() const{
-        return 	languageToString(language())+QString(" (")+territoryToString(territory())+QString(")");
+QString RS_Locale::name() const {
+    return languageToString(language()) + QString(" (") + territoryToString(territory()) + QString(")");
 }
 
 //EOF

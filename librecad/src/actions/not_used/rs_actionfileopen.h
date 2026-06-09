@@ -29,19 +29,18 @@
 
 #include "rs_actioninterface.h"
 
-
 /**
  * This action class can handle user events to open files.
  *
  * @author Andrew Mustun
  */
 class RS_ActionFileOpen : public RS_ActionInterface {
-	Q_OBJECT
+    Q_OBJECT
 public:
-    RS_ActionFileOpen(LC_ActionContext *actionContext);
+    RS_ActionFileOpen(LC_ActionContext* actionContext);
 
-	void init(int status) override;
-	void trigger() override;
+    void init(int status) override;
+    void trigger() override;
 };
 
 #endif

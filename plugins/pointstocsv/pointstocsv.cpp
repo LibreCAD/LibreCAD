@@ -160,14 +160,14 @@ QString lc_Exptocsvdlg::getFormatedText(Plug_Entity* entity){
     return response;
 }
 
-QString lc_Exptocsvdlg::getPointFormatedText(QHash<int, QVariant> data){
+QString lc_Exptocsvdlg::getPointFormatedText(QHash<int, QVariant> data) const {
     QString response = "";
     response.append(d->realToStr(data.value(DPI::STARTX).toDouble())).
             append(";").append(d->realToStr(data.value(DPI::STARTY).toDouble())).append("\n");
     return response;
 }
 
-QString lc_Exptocsvdlg::getLineFormatedText(QHash<int, QVariant> data){
+QString lc_Exptocsvdlg::getLineFormatedText(QHash<int, QVariant> data) const {
     QString response = "";
     QPointF ptA, ptB;
     ptA.setX( data.value(DPI::STARTX).toDouble());
@@ -182,7 +182,7 @@ QString lc_Exptocsvdlg::getLineFormatedText(QHash<int, QVariant> data){
     return response;
 }
 
-QString lc_Exptocsvdlg::getPolylineFormatedText(Plug_Entity* entity){
+QString lc_Exptocsvdlg::getPolylineFormatedText(Plug_Entity* entity) const {
     QString response = "";
     QList<Plug_VertexData> vl;
     entity->getPolylineData(&vl);
@@ -258,7 +258,7 @@ void lc_Exptocsvdlg::setSelectedObj(QList<Plug_Entity *> *obj){
     setSelectedLabelCounterText(selectedObj.size());
     
 }
-void lc_Exptocsvdlg::setSelectedLabelCounterText(int count){
+void lc_Exptocsvdlg::setSelectedLabelCounterText(int count) const {
     if(count==1){
         selectedEntitiesLabel->setText(" 1 element selected ");
     } else if( count==0 || count >1 ){

@@ -24,7 +24,6 @@
 **
 **********************************************************************/
 
-
 #ifndef RS_DIMALIGNED_H
 #define RS_DIMALIGNED_H
 
@@ -32,48 +31,45 @@
 
 /**
  * Holds the data that defines an aligned dimension entity.
- */
+ */ // fixme - sand - no assignment operator!
 struct RS_DimAlignedData {
-	/**
-	 * Default constructor
-	 */
+    /**
+     * Default constructor
+     */
     RS_DimAlignedData() = default;
     RS_DimAlignedData(const RS_DimAlignedData& other);
-	/**
-	 * Constructor with initialisation.
-	 *
-		* @para extensionPoint1 Definition point. Startpoint of the
-	 *         first extension line.
-		* @para extensionPoint2 Definition point. Startpoint of the
-	 *         second extension line.
-	 */
-	RS_DimAlignedData(const RS_Vector& extensionPoint1,
-					  const RS_Vector& extensionPoint2);
+    /**
+     * Constructor with initialisation.
+     *
+        * @para extensionPoint1 Definition point. Startpoint of the
+     *         first extension line.
+        * @para extensionPoint2 Definition point. Startpoint of the
+     *         second extension line.
+     */
+    RS_DimAlignedData(const RS_Vector& extensionPoint1, const RS_Vector& extensionPoint2);
 
-	/** Definition point. Startpoint of the first extension line. */
-	RS_Vector extensionPoint1;
-	/** Definition point. Startpoint of the second extension line. */
-	RS_Vector extensionPoint2;
+    /** Definition point. Startpoint of the first extension line. */
+    RS_Vector extensionPoint1;
+    /** Definition point. Startpoint of the second extension line. */
+    RS_Vector extensionPoint2;
 };
 
-std::ostream& operator << (std::ostream& os, const RS_DimAlignedData& dd);
+std::ostream& operator <<(std::ostream& os, const RS_DimAlignedData& dd);
 
 /**
  * Class for aligned dimension entities.
  *
  * @author Andrew Mustun
  */
-class RS_DimAligned:public RS_Dimension {
+// fixme - sand - no assignment operator!
+class RS_DimAligned : public RS_Dimension {
 public:
-    RS_DimAligned(
-        RS_EntityContainer *parent,
-        const RS_DimensionData &d,
-        const RS_DimAlignedData &ed);
-        RS_DimAligned(const RS_DimAligned& parent);
-    RS_Entity *clone() const override;
+    RS_DimAligned(RS_EntityContainer* parent, const RS_DimensionData& d, const RS_DimAlignedData& ed);
+    RS_DimAligned(const RS_DimAligned& other);
+    RS_Entity* clone() const override;
 
     /**	@return RS2::EntityDimAligned */
-    RS2::EntityType rtti() const override{
+    RS2::EntityType rtti() const override {
         return RS2::EntityDimAligned;
     }
 
@@ -81,36 +77,31 @@ public:
      * @return Copy of data that defines the aligned dimension.
      * @see getData()
      */
-    RS_DimAlignedData const &getEData() const;
+    const RS_DimAlignedData& getEData() const;
     RS_VectorSolutions getRefPoints() const override;
     QString getMeasuredLabel() override;
-    RS_Vector const &getExtensionPoint1() const;
-    RS_Vector const &getExtensionPoint2() const;
+    const RS_Vector& getExtensionPoint1() const;
+    const RS_Vector& getExtensionPoint2() const;
+    void setExtensionPoint1(const RS_Vector& extensionPoint1);
+    void setExtensionPoint2(const RS_Vector& extensionPoint2);
     /**
      * Recalculate the original Dimension Point to remove Dim oblique angle.
      * @author Rallaz
      */
     void updateDimPoint();
-    void move(const RS_Vector &offset) override;
-    void rotate(const RS_Vector &center, double angle) override;
-    void rotate(const RS_Vector &center, const RS_Vector &angleVector) override;
-    void scale(const RS_Vector &center, const RS_Vector &factor) override;
-    void mirror(const RS_Vector &axisPoint1, const RS_Vector &axisPoint2) override;
-    bool hasEndpointsWithinWindow(const RS_Vector &v1, const RS_Vector &v2) const override;
-    void stretch(
-        const RS_Vector &firstCorner,
-        const RS_Vector &secondCorner,
-        const RS_Vector &offset) override;
-    void moveRef(const RS_Vector &ref, const RS_Vector &offset) override;
-    friend std::ostream &operator<<(
-        std::ostream &os,
-        const RS_DimAligned &d);
-    void getDimPoints(RS_Vector &dimP1, RS_Vector &dimP2);
+    void move(const RS_Vector& offset) override;
+    void rotate(const RS_Vector& center, double angle) override;
+    void rotate(const RS_Vector& center, const RS_Vector& angleVector) override;
+    void scale(const RS_Vector& center, const RS_Vector& factor) override;
+    void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) override;
+    bool hasEndpointsWithinWindow(const RS_Vector& v1, const RS_Vector& v2) const override;
+    void stretch(const RS_Vector& firstCorner, const RS_Vector& secondCorner, const RS_Vector& offset) override;
+    void moveRef(const RS_Vector& ref, const RS_Vector& offset) override;
+    friend std::ostream& operator<<(std::ostream& os, const RS_DimAligned& d);
+    void getDimPoints(RS_Vector& dimP1, RS_Vector& dimP2) const;
 
-    double getDistanceToPoint(const RS_Vector& coord,
-                              RS_Entity** entity,
-                              RS2::ResolveLevel level=RS2::ResolveNone,
-                              double solidDist = RS_MAXDOUBLE) const override;
+protected:
+    double doGetDistanceToPoint(const RS_Vector& coord, RS_Entity** entity, RS2::ResolveLevel level, double solidDist) const override;
 private:
     /** Extended data. */
     RS_DimAlignedData m_dimAlignedData;

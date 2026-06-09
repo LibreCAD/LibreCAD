@@ -23,6 +23,8 @@
 #ifndef LC_ALIGN_H
 #define LC_ALIGN_H
 
+#include <QList>
+
 #include "rs_vector.h"
 
 class RS_Entity;
@@ -40,9 +42,9 @@ namespace LC_Align
     RS_Vector getReferencePoint(const RS_Vector &min, const RS_Vector &max, int horizontalAlign, int verticalAlign);
     RS_Entity* createCloneMovedToOffset(const RS_Entity *e, const RS_Vector &offset, bool updateAttributes);
     RS_Entity* createCloneMovedToTarget(const RS_Entity *e, const RS_Vector &targetPoint, bool updateAttributes, int horizontalAlign, int verticalAlign);
-    void collectSelectionBounds( std::vector<RS_Entity*> selectedEntities, RS_Vector &boxMin, RS_Vector &boxMax);
+    void collectSelectionBounds(QList<RS_Entity*> selectedEntities, RS_Vector &boxMin, RS_Vector &boxMax);
     bool getVerticalRefCoordinate(const RS_Vector &min, const RS_Vector &max, int verticalAlign, double &refCoordinate);
     bool getHorizontalRefCoordinate(const RS_Vector &min, const RS_Vector &max, int horizontalAlign, double &refCoordinate);
-};
+}
 
-#endif // LC_ALIGN_H
+#endif

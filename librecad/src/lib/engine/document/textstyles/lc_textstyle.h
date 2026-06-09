@@ -2,8 +2,8 @@
  * ********************************************************************************
  * This file is part of the LibreCAD project, a 2D CAD program
  *
- * Copyright (C) 2025 LibreCAD.org
- * Copyright (C) 2025 sand1024
+ * Copyright (C) 2026 LibreCAD.org
+ * Copyright (C) 2026 sand1024
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -48,7 +48,7 @@ public:
     void setFontFamilyItalicBold(int fontFamilyItalicBold);
     void setName(const QString& name);
     QString getName() const {return m_name;}
-    void setFlags(unsigned flags) {m_flags.setFlags(flags);};
+    void setFlags(const unsigned flags) {m_flags.setFlags(flags);}
     unsigned getFlags() const {return m_flags.getFlags();}
 private:
     QString m_name;
@@ -63,4 +63,4 @@ private:
     int m_fontFamilyItalicBold {0};         /*!< ttf font family, italic and bold flags, code 1071 */
 };
 
-#endif // LC_TEXTSTYLE_H
+#endif

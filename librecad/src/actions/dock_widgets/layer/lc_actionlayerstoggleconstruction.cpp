@@ -25,6 +25,7 @@
 #include "rs_debug.h"
 #include "rs_graphic.h"
 #include "rs_layer.h"
+#include "rs_selection.h"
 
 /**
  * whether a layer is a construction layer or not
@@ -33,48 +34,42 @@
  *
  * @author Armin Stebich
  */
-LC_ActionLayersToggleConstruction::LC_ActionLayersToggleConstruction(
-    LC_ActionContext *actionContext,
-    RS_Layer* layer)
-        : RS_ActionInterface("Toggle Construction Layer", actionContext, RS2::ActionType::ActionLayersToggleConstruction)
-        , m_layer(layer){
+LC_ActionLayersToggleConstruction::LC_ActionLayersToggleConstruction(LC_ActionContext* actionContext, RS_Layer* layer)
+    : RS_ActionInterface("Toggle Construction Layer", actionContext, RS2::ActionType::ActionLayersToggleConstruction), m_layer(layer) {
 }
-
 
 void LC_ActionLayersToggleConstruction::trigger() {
     RS_DEBUG->print("toggle layer construction");
-    if (m_graphic) {
-        RS_LayerList* ll = m_graphic->getLayerList();
-        unsigned cnt = 0;
+    if (m_graphic != nullptr) {
+        RS_LayerList* ll     = m_graphic->getLayerList();
+        bool noLayersToggled = true;
         // toggle selected layers
-        for (auto layer: *ll) {
-            if (!layer) continue;
-            if (!layer->isVisibleInLayerList()) continue;
-            if (!layer->isSelectedInLayerList()) continue;
+        for (const auto layer : *ll) {
+            if (layer == nullptr || !layer->isVisibleInLayerList() || !layer->isSelectedInLayerList()) {
+                continue;
+            }
             m_graphic->toggleLayerConstruction(layer);
             deselectEntities(layer);
-            cnt++;
+            noLayersToggled = false;
         }
         // if there wasn't selected layers, toggle active layer
-        if (!cnt) {
+        if (noLayersToggled) {
             m_graphic->toggleLayerConstruction(m_layer);
             deselectEntities(m_layer);
         }
         redrawDrawing();
     }
-    finish(false);
+    finish();
 }
 
-void LC_ActionLayersToggleConstruction::init(int status) {
+void LC_ActionLayersToggleConstruction::init(const int status) {
     RS_ActionInterface::init(status);
     trigger();
 }
 
-void LC_ActionLayersToggleConstruction::deselectEntities(RS_Layer* layer){
-    if (!layer) return;
-    for(auto e: *m_container){ // fixme - sand -  iteration over all entities in container
-        if (e && e->isVisible() && e->getLayer() == layer) {
-            e->setSelected(false);
-        }
+void LC_ActionLayersToggleConstruction::deselectEntities(RS_Layer* layer) const {
+    if (layer == nullptr) {
+        return;
     }
+    RS_Selection::unselectLayer(m_document, m_viewport, layer);
 }

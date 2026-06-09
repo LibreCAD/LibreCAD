@@ -32,20 +32,21 @@
 /**
  * Constructor.
  *
+ * @param actionContext
  * @param keepAspectRatio true: keep same zoom value for x/y.
  *                        false: adjust both x and y individually
  */
-RS_ActionZoomAuto::RS_ActionZoomAuto(LC_ActionContext *actionContext, bool keepAspectRatio)
+RS_ActionZoomAuto::RS_ActionZoomAuto(LC_ActionContext *actionContext, const bool keepAspectRatio)
         :RS_ActionInterface("Auto zoom", actionContext, RS2::ActionZoomAuto) {
     this->m_keepAspectRatio = keepAspectRatio;
 }
 
-void RS_ActionZoomAuto::init(int status) {
+void RS_ActionZoomAuto::init(const int status) {
     RS_ActionInterface::init(status);
     trigger();
 }
 
 void RS_ActionZoomAuto::trigger() {
     m_viewport->zoomAuto(false, m_keepAspectRatio);
-    finish(false);
+    finish();
 }

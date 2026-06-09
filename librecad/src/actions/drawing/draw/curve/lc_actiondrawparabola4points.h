@@ -23,7 +23,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef LC_ActionDrawParabola4Points_H
 #define LC_ActionDrawParabola4Points_H
 
-#include "rs_previewactioninterface.h"
+#include "lc_undoabledocumentmodificationaction.h"
 
 class RS_Vector;
 
@@ -32,10 +32,10 @@ class RS_Vector;
  *
  * @author Dongxu Li
  */
-class LC_ActionDrawParabola4Points : public RS_PreviewActionInterface {
+class LC_ActionDrawParabola4Points : public LC_SingleEntityCreationAction {
     Q_OBJECT
 public:
-    LC_ActionDrawParabola4Points(LC_ActionContext *actionContext);
+    explicit LC_ActionDrawParabola4Points(LC_ActionContext *actionContext);
     ~LC_ActionDrawParabola4Points() override;
     void init(int status) override;
     QStringList getAvailableCommands() override;
@@ -54,12 +54,14 @@ protected:
     struct ActionData;
     std::unique_ptr<ActionData> m_actionData;
     RS2::CursorType doGetMouseCursor(int status) override;
-    void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
-    void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
-    void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
-    void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
-    void updateMouseButtonHints() override;
-    bool preparePreview(const RS_Vector& mouse, bool rebuild);
-    void doTrigger() override;
+    void onMouseLeftButtonRelease(int status, const LC_MouseEvent* e) override;
+    void onMouseRightButtonRelease(int status, const LC_MouseEvent* e) override;
+    void onMouseMoveEvent(int status, const LC_MouseEvent* e) override;
+    void onCoordinateEvent(int status, bool isZero, const RS_Vector &coord) override;
+    void updateActionPrompt() override;
+    void preparePreview(const RS_Vector& mouse, bool rebuild) const;
+    RS_Entity* doTriggerCreateEntity() override;
+    void doTriggerCompletion(bool success) override;
+    bool isInVisualSnapStatus(int status) override;
 };
 #endif

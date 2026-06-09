@@ -29,7 +29,7 @@
 
 LC_DlgNewCustomVariable::LC_DlgNewCustomVariable(QWidget *parent)
     : LC_Dialog(parent, "NewCustomVarDlg")
-    , ui(new Ui::LC_DlgNewCustomVariable){
+    , ui(new Ui::LC_DlgNewCustomVariable), m_existingPropertyNames{nullptr}{
     ui->setupUi(this);
     ui->leVarName->setFocus();
 }
@@ -41,7 +41,7 @@ LC_DlgNewCustomVariable::~LC_DlgNewCustomVariable(){
 void LC_DlgNewCustomVariable::accept() {
     m_varName = ui->leVarName->text();
     m_varValue = ui->leVarValue->text();
-    bool uniquePropertyName = !m_existingPropertyNames->contains(m_varName, Qt::CaseInsensitive);
+    const bool uniquePropertyName = !m_existingPropertyNames->contains(m_varName, Qt::CaseInsensitive);
 
     if (uniquePropertyName) {
         LC_Dialog::accept();

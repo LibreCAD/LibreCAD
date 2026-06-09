@@ -29,8 +29,8 @@
 
 #include "rs_actioninterface.h"
 
- class Plugin_Entity;
- class Doc_plugin_interface;
+class Plugin_Entity;
+class Doc_plugin_interface;
 
 /**
  * This action class can handle user events to select entities from plugin.
@@ -39,21 +39,26 @@
  */
 
 class QC_ActionGetEnt : public RS_ActionInterface {
-	Q_OBJECT
+    Q_OBJECT
 public:
     QC_ActionGetEnt(LC_ActionContext* actionContext);
     void trigger() override;
     void keyPressEvent(QKeyEvent* e) override;
 
-    void setMessage(QString msg);
-    bool isCompleted() const {return m_completed;}
-    Plugin_Entity *getSelected(Doc_plugin_interface* d);
+    void setMessage(const QString& msg);
+
+    bool isCompleted() const {
+        return m_completed;
+    }
+
+    Plugin_Entity* getSelected(Doc_plugin_interface* d) const;
 
 protected:
     RS2::CursorType doGetMouseCursor(int status) override;
-    void onMouseLeftButtonRelease(int status, QMouseEvent * e) override;
-    void onMouseRightButtonRelease(int status, QMouseEvent * e) override;
-    void updateMouseButtonHints() override;
+    void onMouseLeftButtonRelease(int status, QMouseEvent* e) override;
+    void onMouseRightButtonRelease(int status, QMouseEvent* e) override;
+    void updateActionPrompt() override;
+
 private:
     bool m_completed = false;
     QString m_message;

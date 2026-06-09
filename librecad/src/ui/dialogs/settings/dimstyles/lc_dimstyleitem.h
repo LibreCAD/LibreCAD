@@ -24,9 +24,6 @@
 #ifndef LC_DIMSTYLEITEM_H
 #define LC_DIMSTYLEITEM_H
 
-
-#include <QString>
-
 #include "lc_dimstyle.h"
 #include "rs.h"
 
@@ -37,8 +34,7 @@ class LC_DimStyleItem : public QObject {
 public:
     LC_DimStyleItem();
 
-    LC_DimStyleItem(LC_DimStyle* dimStyle, int usageCount,
-                    bool current):
+    LC_DimStyleItem(LC_DimStyle* dimStyle, const int usageCount, const bool current):
           m_dimStyle{dimStyle},
           m_usageCount{usageCount},
           m_active{current} {
@@ -55,7 +51,7 @@ public:
     int usageCount() const { return m_usageCount; }
     LC_DimStyleItem* parentItem() const;
     void setParentItem(LC_DimStyleItem* root) {m_parentItem = root;}
-    void setActive(bool value) {
+    void setActive(const bool value) {
         m_active = value;
     }
     LC_DimStyle* dimStyle() const { return m_dimStyle; }
@@ -72,18 +68,18 @@ public:
     LC_DimStyleItem* findEntityStyleItem() const;
     void cleanup(bool deleteDimStyles);
     void removeChild(LC_DimStyleItem* item);
-    void collectChildren(QList<LC_DimStyleItem*>& items);
+    void collectChildren(QList<LC_DimStyleItem*>& items) const;
     void setNewBaseName(const QString& newBaseName);
-    static QString composeDisplayName(QString baseName, RS2::EntityType entityType);
-    static QString getDisplayDimStyleName(LC_DimStyle* style);
-    bool hasUsedChildren();
-    bool isNotUsedInDrawing();
+    static QString composeDisplayName(const QString& baseName, RS2::EntityType entityType);
+    static QString getDisplayDimStyleName(const LC_DimStyle* style);
+    bool hasUsedChildren() const;
+    bool isNotUsedInDrawing() const;
     bool isOverrideItem() const {return m_overrideItem;}
-    void setOverrideItem(bool val) {m_overrideItem = val;}
+    void setOverrideItem(const bool val) {m_overrideItem = val;}
     bool isEntityStyleItem() const {return m_entityStyle;}
-    void setEntityStyleItem(bool val) {m_entityStyle = val;}
-    bool isUnsaved(){return m_unsavedItem;}
-    void setUnsaved(bool value){m_unsavedItem = value;}
+    void setEntityStyleItem(const bool val) {m_entityStyle = val;}
+    bool isUnsaved() const {return m_unsavedItem;}
+    void setUnsaved(const bool value){m_unsavedItem = value;}
 private:
     LC_DimStyle* m_dimStyle{nullptr};
     int m_usageCount{0};
@@ -98,4 +94,4 @@ private:
     QList<LC_DimStyleItem*> m_childItems;
     LC_DimStyleItem* m_parentItem{nullptr};
 };
-#endif // LC_DIMSTYLEITEM_H
+#endif

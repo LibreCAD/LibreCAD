@@ -27,7 +27,7 @@
 
 class LC_ArrowDatum: public LC_DimArrowPoly{
 public:
-    LC_ArrowDatum(RS_EntityContainer* container, const RS_Vector& point, double dirAngle, double size, bool filled);
+    LC_ArrowDatum(RS_EntityContainer* container, const RS_Vector& pos, double dirAngle, double size, bool filled);
     RS_Entity* clone() const override;
     void draw(RS_Painter* painter) override;
 protected:
@@ -36,4 +36,4 @@ private:
     bool m_filled;
 };
 
-#endif // LC_DATUMARROW_H
+#endif

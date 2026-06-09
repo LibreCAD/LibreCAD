@@ -1,5 +1,5 @@
 /*******************************************************************************
-*
+ *
  This file is part of the LibreCAD project, a 2D CAD program
 
  Copyright (C) 2025 LibreCAD.org
@@ -21,13 +21,12 @@
  ******************************************************************************/
 #include "lc_applicationwindowinitializer.h"
 
-#include <QCoreApplication>
 #include <QMdiArea>
 #include <QMdiSubWindow>
 
+#include "lc_action_options_manager.h"
 #include "lc_actionfactory.h"
 #include "lc_actiongroupmanager.h"
-#include "lc_actionoptionsmanager.h"
 #include "lc_appwindowdialogsinvoker.h"
 #include "lc_centralwidget.h"
 #include "lc_customstylehelper.h"
@@ -38,6 +37,7 @@
 #include "lc_menufactory.h"
 #include "lc_optionswidgetsholder.h"
 #include "lc_plugininvoker.h"
+#include "lc_propertysheetwidget.h"
 #include "lc_releasechecker.h"
 #include "lc_snapmanager.h"
 #include "lc_toolbarfactory.h"
@@ -56,8 +56,8 @@
 #include "rs_settings.h"
 
 LC_ApplicationWindowInitializer::LC_ApplicationWindowInitializer(QC_ApplicationWindow *appWindow)
-    : LC_AppWindowAware{appWindow}
-{}
+    : LC_AppWindowAware{appWindow} {
+}
 
 void LC_ApplicationWindowInitializer::initApplication(){
     m_appWin->m_actionHandler = std::make_unique<QG_ActionHandler>(m_appWin);
@@ -73,7 +73,7 @@ void LC_ApplicationWindowInitializer::initApplication(){
     m_appWin->setAcceptDrops(true);
     initDockCorners();
     initIconSize();
-
+    initActionContext();
     initActionFactory();
     initWidgets();
     initToolbars();
@@ -81,9 +81,10 @@ void LC_ApplicationWindowInitializer::initApplication(){
 
     initCentralWidget();
     initMainMenu();
-    initDockAreasActions();
+    initDockAndToolbarAreasActions();
     initActionOptionsManager();
-    initActionContext();
+    setupActionContextWidgets();
+    initPropertySheetWidget();
     initDialogFactory();
     initRecentFilesList();
     m_appWin->initSettings();
@@ -95,13 +96,13 @@ void LC_ApplicationWindowInitializer::initApplication(){
     initReleaseChecker();
 }
 
-void LC_ApplicationWindowInitializer::initSnapManager() {
+void LC_ApplicationWindowInitializer::initSnapManager() const {
     m_appWin->m_snapManager = std::make_unique<LC_SnapManager>(m_appWin->m_snapToolBar);
     m_appWin->m_actionHandler->setSnapManager(m_appWin->m_snapManager.get());
 }
 
 void LC_ApplicationWindowInitializer::initReleaseChecker(){
-    const char *ownBuildVersion = XSTR(LC_VERSION);
+    auto ownBuildVersion = XSTR(LC_VERSION);
     m_appWin->m_releaseChecker = std::make_unique<LC_ReleaseChecker>( ownBuildVersion,XSTR(LC_PRERELEASE));
     connect(m_appWin->m_releaseChecker.get(), &LC_ReleaseChecker::updatesAvailable, m_appWin, &QC_ApplicationWindow::onNewVersionAvailable);
 }
@@ -114,21 +115,26 @@ void LC_ApplicationWindowInitializer::initActionGroupManager(){
 void LC_ApplicationWindowInitializer::initActionOptionsManager(){
     LC_SnapOptionsWidgetsHolder *snapOptionsHolder = m_appWin->m_snapToolBar->getSnapOptionsHolder();
     m_appWin->m_actionOptionsManager = new LC_ActionOptionsManager(m_appWin, m_appWin->m_toolOptionsToolbar, snapOptionsHolder);
-    LC_OptionsWidgetsHolder* optionsWidgetsHolder = m_appWin->m_actionOptionsManager->getActionOptionWidgetHolder();
+    const LC_OptionsWidgetsHolder* optionsWidgetsHolder = m_appWin->m_actionOptionsManager->getActionOptionWidgetHolder();
     connect(m_appWin, &QC_ApplicationWindow::currentActionIconChanged, optionsWidgetsHolder, &LC_OptionsWidgetsHolder::setCurrentQAction);
+}
+
+void LC_ApplicationWindowInitializer::initPropertySheetWidget() {
+    const LC_PropertySheetWidget* propertySheetWidget = m_appWin->getPropertySheetWidget();
+    connect(m_appWin, &QC_ApplicationWindow::currentActionIconChanged, propertySheetWidget, &LC_PropertySheetWidget::setCurrentQAction);
 }
 
 void LC_ApplicationWindowInitializer::initActionFactory() const {
     m_appWin->m_actionFactory = std::make_unique<LC_ActionFactory>(m_appWin, m_appWin->m_actionHandler.get());
-    bool using_theme = LC_GET_ONE_BOOL("Widgets","AllowTheme", false);
+    const bool using_theme = LC_GET_ONE_BOOL("Widgets","AllowTheme", false);
     m_appWin->m_actionFactory->initActions(m_appWin->m_actionGroupManager.get(), using_theme);
 }
 
 void LC_ApplicationWindowInitializer::initDockCorners() const {
     LC_GROUP("Widgets");
     {
-        bool allowDockNesting = LC_GET_BOOL("DockAllowNested", true);
-        bool verticalTabs = LC_GET_BOOL("DockVerticalTabs", false);
+        const bool allowDockNesting = LC_GET_BOOL("DockAllowNested", true);
+        const bool verticalTabs = LC_GET_BOOL("DockVerticalTabs", true);
         LC_WidgetFactory::updateDockOptions(m_appWin, allowDockNesting, verticalTabs);
     }
     LC_GROUP_END();
@@ -144,7 +150,7 @@ void LC_ApplicationWindowInitializer::initDockCorners() const {
 void LC_ApplicationWindowInitializer::initCentralWidget(){
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: creating LC_CentralWidget");
 
-    auto central = new LC_CentralWidget(m_appWin);
+    const auto central = new LC_CentralWidget(m_appWin);
     m_appWin->setCentralWidget(central);
     m_appWin->m_mdiAreaCAD = central->getMdiArea();
     m_appWin->m_mdiAreaCAD->setDocumentMode(true);
@@ -154,7 +160,7 @@ void LC_ApplicationWindowInitializer::initCentralWidget(){
                  static_cast<RS2::TabPosition>(LC_GET_INT("TabPosition", RS2::West)));
     LC_GROUP_END();
 
-    bool tabMode = LC_GET_ONE_BOOL("Startup", "TabMode", false);
+    const bool tabMode = LC_GET_ONE_BOOL("Startup", "TabMode", false);
     if (tabMode) {
         m_appWin->setupCADAreaTabbar();
     }
@@ -174,29 +180,34 @@ void LC_ApplicationWindowInitializer::initCentralWidget(){
 void LC_ApplicationWindowInitializer::initIconSize() const {
     LC_GROUP("Widgets");
     {
-        bool custom_size = LC_GET_BOOL("AllowToolbarIconSize", false);
-        int icon_size = custom_size ? LC_GET_INT("ToolbarIconSize", 24) : 24;
-
-        if (custom_size) {
-            m_appWin->setIconSize(QSize(icon_size, icon_size));
+        const bool hasCustomIconSize = LC_GET_BOOL("AllowToolbarIconSize", false);
+        if (hasCustomIconSize) {
+            const int iconSize = LC_GET_INT("ToolbarIconSize", 24);
+            m_appWin->setIconSize(QSize(iconSize, iconSize));
         }
     }
     LC_GROUP_END();
 }
 
 void LC_ApplicationWindowInitializer::loadCmdWidgetVariablesFile() const {
-    auto command_file = LC_GET_ONE_STR("Paths","VariableFile", "");
-    if (!command_file.isEmpty()) {
-        m_appWin->m_commandWidget->leCommand->readCommandFile(command_file);
+    const auto commandFile = LC_GET_ONE_STR("Paths","VariableFile", "");
+    if (!commandFile.isEmpty()) {
+        m_appWin->m_commandWidget->leCommand->readCommandFile(commandFile);
     }
 }
 
-void LC_ApplicationWindowInitializer::initDockAreasActions() const {
-    m_appWin->m_dockAreas.left = m_appWin->getAction("LeftDockAreaToggle");
-    m_appWin->m_dockAreas.right = m_appWin->getAction("RightDockAreaToggle");
-    m_appWin->m_dockAreas.top = m_appWin->getAction("TopDockAreaToggle");
-    m_appWin->m_dockAreas.bottom = m_appWin->getAction("BottomDockAreaToggle");
-    m_appWin->m_dockAreas.floating = m_appWin->getAction("FloatingDockwidgetsToggle");
+void LC_ApplicationWindowInitializer::initDockAndToolbarAreasActions() const {
+    m_appWin->m_dockAreasToggleActions.left = m_appWin->getAction("LeftDockAreaToggle");
+    m_appWin->m_dockAreasToggleActions.right = m_appWin->getAction("RightDockAreaToggle");
+    m_appWin->m_dockAreasToggleActions.top = m_appWin->getAction("TopDockAreaToggle");
+    m_appWin->m_dockAreasToggleActions.bottom = m_appWin->getAction("BottomDockAreaToggle");
+    m_appWin->m_dockAreasToggleActions.floating = m_appWin->getAction("FloatingDockwidgetsToggle");
+
+    m_appWin->m_toolbarAreasToggleActions.left = m_appWin->getAction("LeftTBAreaToggle");
+    m_appWin->m_toolbarAreasToggleActions.right = m_appWin->getAction("RightTBAreaToggle");
+    m_appWin->m_toolbarAreasToggleActions.top = m_appWin->getAction("TopTBAreaToggle");
+    m_appWin->m_toolbarAreasToggleActions.bottom = m_appWin->getAction("BottomTBAreaToggle");
+    // m_appWin->m_toolbarAreasToggleActions.floating = m_appWin->getAction("FloatingDockwidgetsToggle");
 }
 
 void LC_ApplicationWindowInitializer::initMainMenu() const {
@@ -215,7 +226,7 @@ void LC_ApplicationWindowInitializer::initRecentFilesList() const {
 
 void LC_ApplicationWindowInitializer::initDialogFactory() const {
     LC_SnapOptionsWidgetsHolder *snapOptionsHolder = m_appWin->m_snapToolBar->getSnapOptionsHolder();
-    auto factory = new QC_DialogFactory(m_appWin, m_appWin->m_toolOptionsToolbar, snapOptionsHolder);
+    const auto factory = new QC_DialogFactory(m_appWin, m_appWin->m_toolOptionsToolbar, snapOptionsHolder);
     RS_DialogFactory::instance()->setFactoryObject(factory);
     m_appWin->m_dialogFactory = factory;
 
@@ -241,7 +252,7 @@ void LC_ApplicationWindowInitializer::initPlugins(){
 }
 
 void LC_ApplicationWindowInitializer::initAutoSaveTimer() const {
-    bool allowAutoSave = LC_GET_ONE_BOOL("Defaults", "AutoBackupDocument", true);
+    const bool allowAutoSave = LC_GET_ONE_BOOL("Defaults", "AutoBackupDocument", true);
     m_appWin->startAutoSaveTimer(allowAutoSave);
 }
 
@@ -250,17 +261,17 @@ void LC_ApplicationWindowInitializer::initAutoSaveTimer() const {
  * LC_DefaultActionContext. Thinks whether this is practical..
  */
 void LC_ApplicationWindowInitializer::initActionContext() const {
-    auto actionHandler = m_appWin->m_actionHandler.get();
-    auto action_context = new LC_DefaultActionContext(actionHandler);
-
-    action_context->setActionOptionsManager(m_appWin->m_actionOptionsManager);
-    action_context->setCommandWidget(m_appWin->m_commandWidget);
-    action_context->setCoordinateWidget(m_appWin->m_coordinateWidget);
-    action_context->setMouseWidget(m_appWin->m_mouseWidget);
-    action_context->setSelectionWidget(m_appWin->m_selectionWidget);
-    action_context->setStatusBarManager(m_appWin->m_statusbarManager);
-
+    const auto actionHandler = m_appWin->m_actionHandler.get();
+    const auto action_context = new LC_DefaultActionContext(actionHandler);
     m_appWin->m_actionContext = action_context;
-
     actionHandler->setActionContext(action_context);
+}
+
+void LC_ApplicationWindowInitializer::setupActionContextWidgets() const {
+    m_appWin->m_actionContext->setActionOptionsManager(m_appWin->m_actionOptionsManager);
+    m_appWin->m_actionContext->setCommandWidget(m_appWin->m_commandWidget);
+    m_appWin->m_actionContext->setCoordinateWidget(m_appWin->m_coordinateWidget);
+    m_appWin->m_actionContext->setMouseWidget(m_appWin->m_mouseWidget);
+    m_appWin->m_actionContext->setStatusBarManager(m_appWin->m_statusbarManager);
+    m_appWin->m_actionContext->setPropertySheetWidget(m_appWin->m_propertySheetWidget);
 }

@@ -22,7 +22,6 @@
 **
 **********************************************************************************
 */
-// File: lc_looputils.h
 #ifndef LC_LOOPUTILS_H
 #define LC_LOOPUTILS_H
 
@@ -30,22 +29,22 @@
 #include <memory>
 #include <vector>
 
+#include "rs_entitycontainer.h"
 #include "lc_secondmoment.h"
 
 class QPainterPath;
 class RS_AtomicEntity;
 class RS_Entity;
-class RS_EntityContainer;
+
 class RS_Painter;
 class RS_Pattern;
 class RS_Vector;
 class RS_VectorSolutions;
 
-namespace lc {
-namespace geo {
-class Area;
+namespace lc::geo {
+    class Area;
 }
-}
+
 using LC_Rect = lc::geo::Area;
 
 /**
@@ -80,7 +79,7 @@ public:
    * @brief Adds an entity to the outer loop.
    * @param entity Pointer to the entity to add.
    */
-  void addEntity(RS_Entity* entity);
+  void addEntity(const RS_Entity* entity) const;
   /**
    * @brief Checks if a point is inside this loop (considering odd-even rule for hierarchy).
    * @param point The point to test.
@@ -162,6 +161,7 @@ private:
   bool isInsideOuter(const RS_Vector& point) const;
   /**
    * @brief Builds a QPainterPath from the entities in a container.
+   * @param painter
    * @param cont The entity container.
    * @return The resulting path.
    */
@@ -289,7 +289,7 @@ public:
    * @brief Extracts all closed loops from the edges.
    * @return Vector of unique_ptr to loop containers.
    */
-  std::vector<std::unique_ptr<RS_EntityContainer>> extract();
+  std::vector<std::unique_ptr<RS_EntityContainer>> extract() const;
 
 private:
   // validate the loop m_loop
@@ -392,14 +392,14 @@ public:
    * @brief Gets the optimized hierarchical results.
    * @return Shared pointer to vector of LC_Loops.
    */
-  std::shared_ptr<std::vector<LC_Loops>> GetResults() const;
+  std::shared_ptr<std::vector<LC_Loops>> getResults() const;
 
 private:
   /**
    * @brief Adds and processes a contour container.
    * @param contour The input contour.
    */
-  void AddContainer(const RS_EntityContainer& contour);
+  void addContainer(const RS_EntityContainer& contour) const;
 
   struct Data;
   std::shared_ptr<Data> m_data;  ///< Private data for optimization results

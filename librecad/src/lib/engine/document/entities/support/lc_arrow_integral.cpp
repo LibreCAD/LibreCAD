@@ -25,8 +25,8 @@
 
 #include "rs_painter.h"
 
-LC_ArrowIntegral::LC_ArrowIntegral(RS_EntityContainer* container, const RS_Vector& point, double dirAngle, double size)
-    :LC_DimArrowPoly(container, point, dirAngle, size){
+LC_ArrowIntegral::LC_ArrowIntegral(RS_EntityContainer* container, const RS_Vector& point, const double dirAngle, const double size)
+    : LC_DimArrowPoly(container, point, dirAngle, size) {
     createVertexes(size);
 }
 
@@ -39,25 +39,25 @@ void LC_ArrowIntegral::draw(RS_Painter* painter) {
     painter->drawPolygonWCS(getVertexes());
 }
 
-void LC_ArrowIntegral::createVertexes(double size) {
+void LC_ArrowIntegral::createVertexes(const double size) {
     initVertexes(7);
 
-    double halfSize = size*0.5;
+    double halfSize = size * 0.5;
 
     // right leg
-    setVertex(0,{halfSize,halfSize}); // rightmost topmost
-    setVertex(1,{halfSize*0.5,halfSize*0.8659});
-    setVertex(2,{halfSize*0.134 ,halfSize*0.4992});
+    setVertex(0, {halfSize, halfSize}); // rightmost topmost
+    setVertex(1, {halfSize * 0.5, halfSize * 0.8659});
+    setVertex(2, {halfSize * 0.134, halfSize * 0.4992});
 
     // center point
-    setVertex(3,{0,0});
+    setVertex(3, {0, 0});
 
     // left Leg
-    setVertex(4,{-halfSize*0.134 ,-halfSize*0.4992});
-    setVertex(5,{-halfSize*0.5,-halfSize*0.8659});
-    setVertex(6,{-halfSize,-halfSize});
+    setVertex(4, {-halfSize * 0.134, -halfSize * 0.4992});
+    setVertex(5, {-halfSize * 0.5, -halfSize * 0.8659});
+    setVertex(6, {-halfSize, -halfSize});
 
-    setDimLinePoint({-size,0});
+    setDimLinePoint({-size, 0});
 
     positionFromZero();
     calculateBorders();

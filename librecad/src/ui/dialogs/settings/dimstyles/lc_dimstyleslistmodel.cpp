@@ -21,38 +21,38 @@
  * ********************************************************************************
  */
 
-#include <QFont>
 #include "lc_dimstyleslistmodel.h"
+
+#include <QFont>
+
 #include "lc_dimstyle.h"
 #include "lc_dimstyleitem.h"
 
-LC_StylesListModel::LC_StylesListModel(QObject* parent, const QList<LC_DimStyleItem*>& items, bool showUsageCount)
+LC_StylesListModel::LC_StylesListModel(QObject* parent, const QList<LC_DimStyleItem*>& items, const bool showUsageCount)
     : QAbstractListModel{parent},
       m_items{items} {
     m_showUsagesCount = showUsageCount;
 }
 
-LC_StylesListModel::LC_StylesListModel(QObject* parent, RS_Graphic* g, RS2::EntityType dimensionType):QAbstractListModel{parent},
+LC_StylesListModel::LC_StylesListModel(QObject* parent, RS_Graphic* g, const RS2::EntityType dimensionType):QAbstractListModel{parent},
     m_showUsagesCount{false}{
     createModel(g, dimensionType);
 }
 
 int LC_StylesListModel::rowCount([[maybe_unused]]const QModelIndex& parent) const { return m_items.size(); }
 
-QVariant LC_StylesListModel::data(const QModelIndex& index, int role) const {
+QVariant LC_StylesListModel::data(const QModelIndex& index, const int role) const {
     if (!index.isValid()) {
         return QVariant();
     }
-    int row = index.row();
-    LC_DimStyleItem* item = m_items[row];
+    const int row = index.row();
+    const LC_DimStyleItem* item = m_items[row];
     switch (role) {
         case Qt::DisplayRole: {
             if (m_showUsagesCount) {
-                return item->displayName() + " (" + QString::number(item->usageCount()) + ")";
+                return QVariant(item->displayName() + " (" + QString::number(item->usageCount()) + ")");
             }
-            else {
-                return item->displayName();
-            }
+            return item->displayName();
         }
         case Qt::FontRole: {
             if (item->isActive()) {
@@ -74,12 +74,12 @@ void LC_StylesListModel::addItem(LC_DimStyleItem* item) {
 }
 
 LC_DimStyleItem* LC_StylesListModel::getActiveStyleItem() {
-    size_t size = m_items.size();
+    const size_t size = m_items.size();
     for (size_t i = 0; i < size; ++i) {
-        LC_DimStyleItem *item = m_items[i];
+        const auto item = m_items[i];
         if (item->isActive()) {
             return item;
-        };
+        }
     }
     return nullptr;
 }
@@ -91,7 +91,7 @@ LC_DimStyleItem* LC_StylesListModel::getItemForIndex(const QModelIndex& index) c
     return m_items[index.row()];
 }
 
-LC_DimStyleItem* LC_StylesListModel::getItemAtRow(int row) const {
+LC_DimStyleItem* LC_StylesListModel::getItemAtRow(const int row) const {
     return m_items[row];
 }
 
@@ -100,8 +100,8 @@ LC_DimStyleItem* LC_StylesListModel::getStandardItem() const {
 }
 
 void LC_StylesListModel::setActiveStyleItem(const QModelIndex& index) {
-   int row = index.row();
-   int size = m_items.size();
+   const int row = index.row();
+   const int size = m_items.size();
     for (int i = 0; i < size; ++i) {
         LC_DimStyleItem *item = m_items[i];
         item->setActive(i == row);
@@ -110,12 +110,12 @@ void LC_StylesListModel::setActiveStyleItem(const QModelIndex& index) {
 }
 
 int LC_StylesListModel::getActiveStyleItemIndex() {
-    size_t size = m_items.size();
+    const size_t size = m_items.size();
     for (size_t i = 0; i < size; ++i) {
-        LC_DimStyleItem *item = m_items[i];
+        const LC_DimStyleItem *item = m_items[i];
         if (item->isActive()) {
             return i;
-        };
+        }
     }
     return 0;
 }
@@ -125,13 +125,13 @@ void LC_StylesListModel::emitDataChanged() {
 }
 
 LC_DimStyleItem* LC_StylesListModel::findByName(const QString& name) {
-    size_t size = m_items.size();
+    const size_t size = m_items.size();
     for (size_t i = 0; i < size; ++i) {
         LC_DimStyleItem *item = m_items[i];
         auto itemName = item->dimStyle()->getName();
         if (itemName == name) {
             return item;
-        };
+        }
     }
     return nullptr;
 }
@@ -150,11 +150,11 @@ void LC_StylesListModel::removeItem(LC_DimStyleItem* item) {
 
 void LC_StylesListModel::mergeWith(QList<LC_DimStyle*>& list) {
     for (const auto i: list) {
-        auto incomingDimStyle = i;
+        const auto incomingDimStyle = i;
         QString itemName = incomingDimStyle->getName();
-        auto existingItem = findByName(itemName);
+        const auto existingItem = findByName(itemName);
         if (existingItem != nullptr) { // style with such name already exists...
-            auto existingDimStyle = existingItem->dimStyle();
+            const auto existingDimStyle = existingItem->dimStyle();
             // todo - sand - potentially, some policy may be used there and that policy will define how to
             // handle duplicates of styles. For example, it's possible to make a copy.
             // However, for now we'll simply update existing style be values from incoming style.
@@ -163,7 +163,7 @@ void LC_StylesListModel::mergeWith(QList<LC_DimStyle*>& list) {
             delete incomingDimStyle;
         }
         else {
-            auto varsItem = new LC_DimStyleItem(incomingDimStyle, 0, false);
+            const auto varsItem = new LC_DimStyleItem(incomingDimStyle, 0, false);
             m_items << varsItem;
         }
     }
@@ -176,26 +176,26 @@ LC_StylesListModel* LC_StylesListModel::getFlatItemsListModel() {
     return this; // fixme - quick tmp test approach
 }
 
-int LC_StylesListModel::getItemIndex(LC_DimStyleItem* itemToFind) {
-    size_t size = m_items.size();
+int LC_StylesListModel::getItemIndex(const LC_DimStyleItem* itemToFind) {
+    const size_t size = m_items.size();
     for (size_t i = 0; i < size; ++i) {
-        LC_DimStyleItem *item = m_items[i];
+        const auto item = m_items[i];
         if (item == itemToFind) {
             return i;
-        };
+        }
     }
     return 0;
 }
 
 void LC_StylesListModel::collectItemsForBaseStyleName(const QString &baseName, QList<LC_DimStyleItem*>* list) {
-    for (const auto dsi: m_items) {
+    for (const auto dsi: std::as_const(m_items)) {
         if (baseName == dsi->baseName()) {
             list->push_back(dsi);
         }
     }
 }
 
-void LC_StylesListModel::collectItemsForStyle(LC_DimStyle* dimStyle, QList<LC_DimStyleItem*>* list) {
+void LC_StylesListModel::collectItemsForStyle(const LC_DimStyle* dimStyle, QList<LC_DimStyleItem*>* list) {
     QString baseName;
     RS2::EntityType styleFor;
     LC_DimStyle::parseStyleName(dimStyle->getName(), baseName, styleFor);
@@ -219,16 +219,16 @@ void LC_StylesListModel::sort([[maybe_unused]]int column,[[maybe_unused]] Qt::So
     emit layoutChanged({QModelIndex()}, QAbstractItemModel::VerticalSortHint);*/
 }
 
-void LC_StylesListModel::cleanup() {
+void LC_StylesListModel::cleanup() const {
     qDeleteAll(m_items);
 }
 
 void LC_StylesListModel::createModel(RS_Graphic* g, [[maybe_unused]]RS2::EntityType dimensionType) {
-    QString defaultDimStyleName = g->getDefaultDimStyleName();
-    LC_DimStyle* styleThatIsDefault = g->getDimStyleByName(defaultDimStyleName);
+    const QString defaultDimStyleName = g->getDefaultDimStyleName();
+    const LC_DimStyle* styleThatIsDefault = g->getDimStyleByName(defaultDimStyleName);
 
-    auto dimStylesList = g->getDimStyleList();
-    auto dimStyles = dimStylesList->getStylesList();
+    const auto dimStylesList = g->getDimStyleList();
+    const auto dimStyles = dimStylesList->getStylesList();
 
     for (const auto dimStyle : *dimStyles) {
         QString styleName = dimStyle->getName();
@@ -239,8 +239,8 @@ void LC_StylesListModel::createModel(RS_Graphic* g, [[maybe_unused]]RS2::EntityT
         // skip artificial style from vars and skip type-specific styles
         if (!dimStyle->isFromVars() && entityType == RS2::EntityUnknown) {
             LC_DimStyle* ds = dimStyle->getCopy();
-            bool defaultStyle = styleThatIsDefault == dimStyle;
-            auto item = new LC_DimStyleItem(ds, 0, defaultStyle);
+            const bool defaultStyle = styleThatIsDefault == dimStyle;
+            const auto item = new LC_DimStyleItem(ds, 0, defaultStyle);
             m_items << item;
         }
     }

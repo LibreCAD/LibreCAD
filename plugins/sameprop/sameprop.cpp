@@ -38,7 +38,7 @@ void LC_SameProp::execComm(Document_Interface *doc,
     QVariant lay, col, ltype, lwidth;
     Plug_Entity *ent, *modent;
     ent =  doc->getEnt(tr("select original entity:"));
-    if (!ent) return;
+    if (ent == nullptr) return;
     bool yes  = doc->getSelect(&obj, tr("select entities to change"));
     if (!yes || obj.isEmpty()) {
         delete ent;

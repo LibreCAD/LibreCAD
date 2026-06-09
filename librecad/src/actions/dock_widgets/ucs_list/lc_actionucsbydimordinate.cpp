@@ -27,7 +27,6 @@
 #include "lc_graphicviewport.h"
 #include "lc_linemath.h"
 #include "lc_ucs.h"
-#include "rs_document.h"
 
 LC_ActionUCSByDimOrdinate::LC_ActionUCSByDimOrdinate(LC_ActionContext* actionContext)
     : LC_ActionSingleEntitySelectBase("UCSFromDimOrdinateAction", actionContext, RS2::ActionUCSSetByDimOrdinate){
@@ -38,11 +37,12 @@ LC_ActionUCSByDimOrdinate::~LC_ActionUCSByDimOrdinate() = default;
 
 void LC_ActionUCSByDimOrdinate::doTrigger() {
     if (m_entity != nullptr) {
-        auto dimOrdinate = dynamic_cast<LC_DimOrdinate*>(m_entity);
+        const auto dimOrdinate = dynamic_cast<LC_DimOrdinate*>(m_entity);
         if (dimOrdinate != nullptr) {
-            double horizontalDirection = dimOrdinate->getHDir();
-            auto definitionPoint = dimOrdinate->getDefinitionPoint();
-            bool nonWCS = LC_LineMath::isMeaningfulAngle(horizontalDirection) || LC_LineMath::isMeaningfulDistance(definitionPoint, RS_Vector(0, 0, 0));
+            const double horizontalDirection = dimOrdinate->getHDir();
+            const auto definitionPoint = dimOrdinate->getDefinitionPoint();
+            const bool nonWCS = LC_LineMath::isMeaningfulAngle(horizontalDirection) ||
+                  LC_LineMath::isMeaningfulDistance(definitionPoint, RS_Vector(0, 0, 0));
             if (nonWCS) {
                 m_viewport->createUCS(definitionPoint, horizontalDirection);
             }

@@ -42,7 +42,7 @@ class RS_Graphic;
 
 class LC_DimensionsBuilder{
 public:
-    explicit LC_DimensionsBuilder(RS_Graphic* graphic, RS_Dimension* dimension);
+    explicit LC_DimensionsBuilder(RS_Graphic* graphic, RS_Dimension* dim);
     ~LC_DimensionsBuilder() = default;
     void build();
 private:
@@ -51,10 +51,10 @@ private:
     void buildDiametric(RS_DimDiametric* dimLinear);
     void buildRadial(RS_DimRadial* dimLinear);
     void buildOrdinate(LC_DimOrdinate* dimLinear);
-    RS_Line* addDimComponentLine(RS_Vector start, RS_Vector end, const RS_Pen& pen);
-    RS_Pen getPenForText();
-    RS_Pen getPenExtensionLine();
-    RS_Pen getPenDimensionLine();
+    RS_Line* addDimComponentLine(RS_Vector start, RS_Vector end, const RS_Pen& pen) const;
+    RS_Pen getPenForText() const;
+    RS_Pen getPenExtensionLine() const;
+    RS_Pen getPenDimensionLine() const;
     void buildAngular(RS_DimAngular* dimLinear);
     void buildArc(LC_DimArc* dimLinear);
     void buildLeader(RS_Leader* dimLinear);
@@ -64,4 +64,4 @@ private:
     LC_DimStyle *m_dimStyle;
 };
 
-#endif // LC_DIMENSIONSBUILDER_H
+#endif

@@ -1,5 +1,5 @@
 /*******************************************************************************
-*
+ *
  This file is part of the LibreCAD project, a 2D CAD program
 
  Copyright (C) 2025 LibreCAD.org
@@ -23,9 +23,11 @@
 
 #include <QDateTime>
 
+#include "lc_defaults.h"
 #include "lc_graphicviewportlistener.h"
 #include "lc_linemath.h"
 #include "lc_overlayentitiescontainer.h"
+#include "lc_refpoint.h"
 #include "lc_undoablerelzero.h"
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
@@ -37,17 +39,18 @@
 #include "rs_units.h"
 
 LC_GraphicViewport::LC_GraphicViewport():
-    grid{std::make_unique<RS_Grid>(this)},
-    savedViews(16),
-    previousViewTime{std::make_unique<QDateTime>(QDateTime::currentDateTime())} {
+    m_grid{std::make_unique<RS_Grid>(this)},
+    m_savedViews(16),
+    m_previousViewTime{std::make_unique<QDateTime>(QDateTime::currentDateTime())},
+    m_formatter{std::make_unique<LC_Formatter>(this)} {
 }
 
 LC_GraphicViewport::~LC_GraphicViewport() = default;
 
-void LC_GraphicViewport::setContainer(RS_EntityContainer *c) {
-    container = c;
+void LC_GraphicViewport::setDocument(RS_Document *c) {
+    m_document = c;
     RS_Graphic* g = nullptr;
-    if (container->rtti() == RS2::EntityGraphic){
+    if (m_document->rtti() == RS2::EntityGraphic){
         g = static_cast<RS_Graphic*>(c);
     }
     else{
@@ -61,41 +64,62 @@ void LC_GraphicViewport::loadSettings() {
     {
         m_ucsApplyingPolicy = LC_GET_INT("UCSApplyPolicy",0);
         m_modifyOnZoom = LC_GET_BOOL("ModifyOnViewChange", true);
+        m_refPointMode = LC_GET_INT("RefPointType", DXF_FORMAT_PDMode_EncloseSquare(DXF_FORMAT_PDMode_CentreDot));
+        const QString pdsizeStr = LC_GET_STR("RefPointSize", "2.0");
+
+        bool ok = false;
+        m_refPointSize = RS_Math::eval(pdsizeStr, &ok);
+        if (!ok) {
+            m_refPointSize = LC_DEFAULTS_PDSize;
+        }
     }
     LC_GROUP_END();
 
-    if (grid != nullptr){
-        grid->loadSettings();
+    if (m_grid != nullptr){
+        m_grid->loadSettings();
     }
+
+    m_formatter->updateByGraphic(m_graphic);
 }
 
-void LC_GraphicViewport::setBorders(int left, int top, int right, int bottom) {
-    borderLeft = left;
-    borderTop = top;
-    borderRight = right;
-    borderBottom = bottom;
+void LC_GraphicViewport::setBorders(const int left, const int top, const int right, const int bottom) {
+    m_borderLeft = left;
+    m_borderTop = top;
+    m_borderRight = right;
+    m_borderBottom = bottom;
 }
 
-bool LC_GraphicViewport::areAnglesCounterClockwise(){
-    if (graphic != nullptr){
-        return graphic->areAnglesCounterClockWise();
+bool LC_GraphicViewport::areAnglesCounterClockwise() const {
+    if (m_graphic != nullptr){
+        return m_graphic->areAnglesCounterClockWise();
     }
     return true;
 }
 
-double LC_GraphicViewport::getAnglesBaseAngle(){
-    if (graphic != nullptr){
-        return graphic->getAnglesBase();
+double LC_GraphicViewport::getAnglesBaseAngle() const {
+    if (m_graphic != nullptr){
+        return m_graphic->getAnglesBase();
     }
     return 0.0;
+}
+
+void LC_GraphicViewport::highlightLocation(const RS_Vector &vector) {
+    const auto container = m_overlaysManager.getEntitiesContainer(RS2::OverlayGraphics::PermanentHighlights);
+    container->addEntity(new LC_RefPoint(container, vector,m_refPointSize, m_refPointMode));
+    notifyChanged(RS2::RedrawOverlay, true);
+}
+
+void LC_GraphicViewport::clearLocationsHighlight()  {
+    const auto container = m_overlaysManager.getEntitiesContainer(RS2::OverlayGraphics::PermanentHighlights);
+    container->clear();
 }
 
 /**
  * @return true if the grid is switched on.
  */
 bool LC_GraphicViewport::isGridOn() const {
-    if (container != nullptr) {
-        RS_Graphic *graphic = container->getGraphic();
+    if (m_document != nullptr) {
+        const RS_Graphic *graphic = m_document->getGraphic();
         if (graphic != nullptr) {
             return graphic->isGridOn();
         }
@@ -109,25 +133,25 @@ bool LC_GraphicViewport::isGridOn() const {
  *@Author: Dongxu Li
  */
 bool LC_GraphicViewport::isGridIsometric() const {
-    return grid->isIsometric();
+    return m_grid->isIsometric();
 }
 
 
-void LC_GraphicViewport::setIsoViewType(RS2::IsoGridViewType chType) {
-    grid->setIsoViewType(chType);
+void LC_GraphicViewport::setIsoViewType(const RS2::IsoGridViewType chType) const {
+    m_grid->setIsoViewType(chType);
 }
 
 RS2::IsoGridViewType LC_GraphicViewport::getIsoViewType() const {
-    return grid->getIsoViewType();
+    return m_grid->getIsoViewType();
 }
 
 
 /**
  * Sets the zoom factor in X for this visualization of the graphic.
  */
-void LC_GraphicViewport::setFactorX(double f) {
-    if (!zoomFrozen) {
-        factor.x = std::abs(f);
+void LC_GraphicViewport::setFactorX(const double f) {
+    if (!m_zoomFrozen) {
+        m_factor.x = std::abs(f);
         fireViewportChanged();
     }
 }
@@ -135,27 +159,27 @@ void LC_GraphicViewport::setFactorX(double f) {
 /**
  * Sets the zoom factor in Y for this visualization of the graphic.
  */
-void LC_GraphicViewport::setFactorY(double f) {
-    if (!zoomFrozen) {
-        factor.y = std::abs(f);
+void LC_GraphicViewport::setFactorY(const double f) {
+    if (!m_zoomFrozen) {
+        m_factor.y = std::abs(f);
         fireViewportChanged();
     }
 }
 
-void LC_GraphicViewport::setOffset(int ox, int oy) {
-    offsetX = ox;
-    offsetY = oy;
+void LC_GraphicViewport::setOffset(const int ox, const int oy) {
+    m_offsetX = ox;
+    m_offsetY = oy;
     fireViewportChanged();
 }
 
 
-void LC_GraphicViewport::setOffsetX(int ox) {
-    offsetX = ox;
+void LC_GraphicViewport::setOffsetX(const int ox) {
+    m_offsetX = ox;
     fireViewportChanged();
 }
 
-void LC_GraphicViewport::setOffsetY(int oy) {
-    offsetY = oy;
+void LC_GraphicViewport::setOffsetY(const int oy) {
+    m_offsetY = oy;
     fireViewportChanged();
 }
 
@@ -163,16 +187,16 @@ void LC_GraphicViewport::setOffsetY(int oy) {
 /**
  * zooms in by factor f in y
  */
-void LC_GraphicViewport::zoomInY(double f) {
-    factor.y *= f;
-    offsetY = (int) ((offsetY - getHeight() / 2) * f) + getHeight() / 2;
+void LC_GraphicViewport::zoomInY(const double f) {
+    m_factor.y *= f;
+    m_offsetY = static_cast<int>((m_offsetY - getHeight() / 2) * f) + getHeight() / 2;
     fireViewportChanged();
 }
 
 /**
  * zooms out by factor f
  */
-void LC_GraphicViewport::zoomOut(double f, const RS_Vector &center) {
+void LC_GraphicViewport::zoomOut(const double f, const RS_Vector &center) {
     if (f < 1.0e-6) {
         RS_DEBUG->print(RS_Debug::D_WARNING, "RS_GraphicView::zoomOut: invalid factor");
         return;
@@ -183,20 +207,20 @@ void LC_GraphicViewport::zoomOut(double f, const RS_Vector &center) {
 /**
  * zooms out by factor f in x
  */
-void LC_GraphicViewport::zoomOutX(double f) {
+void LC_GraphicViewport::zoomOutX(const double f) {
     if (f < 1.0e-6) {
         RS_DEBUG->print(RS_Debug::D_WARNING,"RS_GraphicView::zoomOutX: invalid factor");
         return;
     }
-    factor.x /= f;
-    offsetX = (int) (offsetX / f);
+    m_factor.x /= f;
+    m_offsetX = static_cast<int>(m_offsetX / f);
     fireViewportChanged();
 }
 
 void LC_GraphicViewport::centerOffsetXandY(const RS_Vector& containerMin, const RS_Vector& containerSize) {
-    if (container && !zoomFrozen) {
-        offsetX = (int) (((getWidth() - borderLeft - borderRight) - (containerSize.x * factor.x)) / 2.0 - (containerMin.x * factor.x)) + borderLeft;
-        offsetY = (int) ((getHeight() - borderTop - borderBottom - (containerSize.y * factor.y)) / 2.0  - (containerMin.y * factor.y)) + borderBottom;
+    if ((m_document != nullptr) && !m_zoomFrozen) {
+        m_offsetX = static_cast<int>((getWidth() - m_borderLeft - m_borderRight - containerSize.x * m_factor.x) / 2.0 - containerMin.x * m_factor.x) + m_borderLeft;
+        m_offsetY = static_cast<int>((getHeight() - m_borderTop - m_borderBottom - containerSize.y * m_factor.y) / 2.0 - containerMin.y * m_factor.y) + m_borderBottom;
         fireViewportChanged();
     }
 }
@@ -205,8 +229,8 @@ void LC_GraphicViewport::centerOffsetXandY(const RS_Vector& containerMin, const 
  * Centers the drawing in x-direction.
  */
 void LC_GraphicViewport::centerOffsetX(const RS_Vector& containerMin, const RS_Vector& containerSize) {
-    if (container && !zoomFrozen) {
-        offsetX = (int) (((getWidth() - borderLeft - borderRight) - (containerSize.x * factor.x)) / 2.0 - (containerMin.x * factor.x)) + borderLeft;
+    if ((m_document != nullptr) && !m_zoomFrozen) {
+        m_offsetX = static_cast<int>((getWidth() - m_borderLeft - m_borderRight - containerSize.x * m_factor.x) / 2.0 - containerMin.x * m_factor.x) + m_borderLeft;
        fireViewportChanged();
     }
 }
@@ -215,8 +239,8 @@ void LC_GraphicViewport::centerOffsetX(const RS_Vector& containerMin, const RS_V
  * Centers the drawing in y-direction.
  */
 void LC_GraphicViewport::centerOffsetY(const RS_Vector& containerMin, const RS_Vector& containerSize) {
-    if (container && !zoomFrozen) {
-        offsetY = (int) ((getHeight() - borderTop - borderBottom - (containerSize.y * factor.y)) / 2.0  - (containerMin.y * factor.y)) + borderBottom;
+    if ((m_document != nullptr) && !m_zoomFrozen) {
+        m_offsetY = static_cast<int>((getHeight() - m_borderTop - m_borderBottom - containerSize.y * m_factor.y) / 2.0 - containerMin.y * m_factor.y) + m_borderBottom;
         fireViewportChanged();
     }
 }
@@ -224,9 +248,9 @@ void LC_GraphicViewport::centerOffsetY(const RS_Vector& containerMin, const RS_V
 /**
  * Centers the given coordinate in the view in x-direction.
  */
-void LC_GraphicViewport::centerX(double v) {
-    if (!zoomFrozen) {
-        offsetX = (int) ((v * factor.x) - (double) (getWidth() - borderLeft - borderRight) / 2.0);
+void LC_GraphicViewport::centerX(const double x) {
+    if (!m_zoomFrozen) {
+        m_offsetX = static_cast<int>(m_factor.x * x - static_cast<double>(getWidth() - m_borderLeft - m_borderRight) / 2.0);
         fireViewportChanged();
     }
 }
@@ -234,9 +258,9 @@ void LC_GraphicViewport::centerX(double v) {
 /**
  * Centers the given coordinate in the view in y-direction.
  */
-void LC_GraphicViewport::centerY(double v) {
-    if (!zoomFrozen) {
-        offsetY = (int) ((v * factor.y) - (double) (getHeight() - borderTop - borderBottom) / 2.0);
+void LC_GraphicViewport::centerY(const double y) {
+    if (!m_zoomFrozen) {
+        m_offsetY = static_cast<int>(y * m_factor.y - static_cast<double>(getHeight() - m_borderTop - m_borderBottom) / 2.0);
         fireViewportChanged();
     }
 }
@@ -244,20 +268,22 @@ void LC_GraphicViewport::centerY(double v) {
 /**
  * Centers the point v1.
  */
-void LC_GraphicViewport::zoomPan(int dx, int dy) {
-    offsetX += dx;
-    offsetY -= dy;
+void LC_GraphicViewport::zoomPan(const int dx, const int dy) {
+    m_offsetX += dx;
+    m_offsetY -= dy;
     fireViewportChanged();
 }
 
 /**
  * Zooms the area given by v1 and v2.
  *
+ * @param v1
+ * @param v2
  * @param keepAspectRatio true: keeps the aspect ratio 1:1
  *                        false: zooms exactly the selected range to the
  *                               current graphic view
  */
-void LC_GraphicViewport::zoomWindow(RS_Vector v1, RS_Vector v2,bool keepAspectRatio) {
+void LC_GraphicViewport::zoomWindow(RS_Vector v1, RS_Vector v2, const bool keepAspectRatio) {
 
     // Switch left/right and top/bottom is necessary:
     /*  if (v1.x > v2.x) {
@@ -283,7 +309,7 @@ void LC_GraphicViewport::zoomWindow(RS_Vector v1, RS_Vector v2,bool keepAspectRa
 
     double zoomX = 480.0;    // Zoom for X-Axis
     double zoomY = 640.0;    // Zoom for Y-Axis   (Set smaller one)
-    int zoomBorder = 0; // fixme - what for this variable?
+    const int zoomBorder = 0; // fixme - what for this variable?
 
 // Switch left/right and top/bottom is necessary:
     if (v1.x > v2.x) {
@@ -305,13 +331,15 @@ void LC_GraphicViewport::zoomWindow(RS_Vector v1, RS_Vector v2,bool keepAspectRa
     if (keepAspectRatio) {
         if (zoomX < zoomY) {
             if (getWidth() != 0) {
-                zoomX = zoomY = double(getWidth() - 2 * zoomBorder) /
-                                getWidth() * zoomX;
+                const double zoom = static_cast<double>(getWidth() - 2 * zoomBorder) / getWidth() * zoomX;
+                zoomX = zoom;
+                zoomY = zoom;
             }
         } else {
             if (getHeight() != 0) {
-                zoomX = zoomY = double(getHeight() - 2 * zoomBorder) /
-                                getHeight() * zoomY;
+                const double zoom = static_cast<double>(getHeight() - 2 * zoomBorder) / getHeight() * zoomY;
+                zoomX = zoom;
+                zoomY = zoom;
             }
         }
     }
@@ -320,10 +348,10 @@ void LC_GraphicViewport::zoomWindow(RS_Vector v1, RS_Vector v2,bool keepAspectRa
     zoomY = std::abs(zoomY);
 
 // Borders in pixel after zoom
-    int pixLeft = int(v1.x * zoomX);
-    int pixTop = int(v2.y * zoomY);
-    int pixRight = int(v2.x * zoomX);
-    int pixBottom = int(v1.y * zoomY);
+    const int pixLeft = static_cast<int>(v1.x * zoomX);
+    const int pixTop = static_cast<int>(v2.y * zoomY);
+    const int pixRight = static_cast<int>(v2.x * zoomX);
+    const int pixBottom = static_cast<int>(v1.y * zoomY);
     if (pixLeft == INT_MIN || pixLeft == INT_MAX ||
         pixRight == INT_MIN || pixRight == INT_MAX ||
         pixTop == INT_MIN || pixTop == INT_MAX ||
@@ -334,10 +362,10 @@ void LC_GraphicViewport::zoomWindow(RS_Vector v1, RS_Vector v2,bool keepAspectRa
     saveView();
 
 // Set new offset for zero point:
-    offsetX = (getWidth() - (v1.x + v2.x) * zoomX) / 2;
-    offsetY = (getHeight() - (v1.y + v2.y) * zoomY) / 2;
-    factor.x = zoomX;
-    factor.y = zoomY;
+    m_offsetX = (getWidth() - (v1.x + v2.x) * zoomX) / 2;
+    m_offsetY = (getHeight() - (v1.y + v2.y) * zoomY) / 2;
+    m_factor.x = zoomX;
+    m_factor.y = zoomY;
 
     fireViewportChanged();
 }
@@ -346,7 +374,7 @@ void LC_GraphicViewport::zoomWindow(RS_Vector v1, RS_Vector v2,bool keepAspectRa
 /**
  * zooms in by factor f
  */
-void LC_GraphicViewport::zoomIn(double f, const RS_Vector &center) {
+void LC_GraphicViewport::zoomIn(const double f, const RS_Vector &center) {
     if (f < 1.0e-6) {
         RS_DEBUG->print(RS_Debug::D_WARNING, "RS_GraphicView::zoomIn: invalid factor");
         return;
@@ -360,63 +388,59 @@ void LC_GraphicViewport::zoomIn(double f, const RS_Vector &center) {
         c = (zeroCorner + rightTopCorner) * 0.5;
     }
 
-    const RS_Vector scaleVector = RS_Vector(1.0 / f, 1.0 / f);
+    const auto scaleVector = RS_Vector(1.0 / f, 1.0 / f);
     zoomWindow(zeroCorner.scale(c, scaleVector), rightTopCorner.scale(c, scaleVector));
 }
 
 /**
  * zooms in by factor f in x
  */
-void LC_GraphicViewport::zoomInX(double f) {
-    factor.x *= f;
-    offsetX = (int) ((offsetX - getWidth() / 2) * f) + getWidth() / 2;
+void LC_GraphicViewport::zoomInX(const double f) {
+    m_factor.x *= f;
+    m_offsetX = static_cast<int>((m_offsetX - getWidth() / 2) * f) + getWidth() / 2;
     fireViewportChanged();
 }
 
 void LC_GraphicViewport::addViewportListener(LC_GraphicViewPortListener *listener) {
-    viewportListeners.append(listener);
+    m_viewportListeners.append(listener);
 }
 
 void LC_GraphicViewport::removeViewportListener(LC_GraphicViewPortListener *listener) {
-    viewportListeners.removeOne(listener);
+    m_viewportListeners.removeOne(listener);
 }
 
 
-void LC_GraphicViewport::fireViewportChanged(){
+void LC_GraphicViewport::fireViewportChanged() const {
     invalidateGrid();
-    for (int i=0; i<viewportListeners.size(); ++i) {
-        LC_GraphicViewPortListener* l = viewportListeners.at(i);
+    for (const auto l : m_viewportListeners) {
         l->onViewportChanged();
     }
 }
 
-void LC_GraphicViewport::invalidateGrid() {
-    grid->invalidate(isGridOn());
+void LC_GraphicViewport::invalidateGrid() const {
+    m_grid->invalidate(isGridOn());
 }
 
-void LC_GraphicViewport::fireRedrawNeeded(){
-    for (int i=0; i<viewportListeners.size(); ++i) {
-        LC_GraphicViewPortListener* l = viewportListeners.at(i);
-        l->onViewportRedrawNeeded();
+void LC_GraphicViewport::fireRedrawNeeded(const RS2::RedrawMethod method, bool immediately) const {
+    for (const auto l : m_viewportListeners) {
+        l->onViewportRedrawNeeded(method, immediately);
     }
 }
 
-void LC_GraphicViewport::fireUcsChanged(LC_UCS *ucs) {
+void LC_GraphicViewport::fireUcsChanged(LC_UCS *ucs) const {
     invalidateGrid();
-    for (int i=0; i<viewportListeners.size(); ++i) {
-        LC_GraphicViewPortListener* l = viewportListeners.at(i);
+    for (const auto l : m_viewportListeners) {
         l->onUCSChanged(ucs);
     }
 }
 
 void LC_GraphicViewport::firePreviousZoomChanged([[maybe_unused]]bool value) {
 // fixme - ucs - complete - restore!!!
-//     emit previous_zoom_state(true);
+//     emit previousZoomAvailable(true);
 }
 
-void LC_GraphicViewport::fireRelativeZeroChanged(const RS_Vector &pos){
-    for (int i=0; i<viewportListeners.size(); ++i) {
-        LC_GraphicViewPortListener* l = viewportListeners.at(i);
+void LC_GraphicViewport::fireRelativeZeroChanged(const RS_Vector &pos) const {
+    for (const auto l : m_viewportListeners) {
         l->onRelativeZeroChanged(pos);
     }
 }
@@ -424,32 +448,32 @@ void LC_GraphicViewport::fireRelativeZeroChanged(const RS_Vector &pos){
 /**
  * zooms out by factor f y
  */
-void LC_GraphicViewport::zoomOutY(double f) {
+void LC_GraphicViewport::zoomOutY(const double f) {
     if (f < 1.0e-6) {
         RS_DEBUG->print(RS_Debug::D_WARNING, "RS_GraphicView::zoomOutY: invalid factor");
         return;
     }
-    factor.y /= f;
-    offsetY = (int) (offsetY / f);
+    m_factor.y /= f;
+    m_offsetY = static_cast<int>(m_offsetY / f);
     fireViewportChanged();
 }
 
 /**
  * Scrolls in the given direction.
  */
-void LC_GraphicViewport::zoomScroll(RS2::Direction direction) {
+void LC_GraphicViewport::zoomScroll(const RS2::Direction direction) {
     switch (direction) {
         case RS2::Up:
-            offsetY -= 50;
+            m_offsetY -= 50;
             break;
         case RS2::Down:
-            offsetY += 50;
+            m_offsetY += 50;
             break;
         case RS2::Right:
-            offsetX += 50;
+            m_offsetX += 50;
             break;
         case RS2::Left:
-            offsetX -= 50;
+            m_offsetX -= 50;
             break;
     }
     fireViewportChanged();
@@ -467,27 +491,28 @@ void LC_GraphicViewport::zoomScroll(RS2::Direction direction) {
  *	Returns:				void
  *	*/
 
-void LC_GraphicViewport::zoomAutoY(bool axis) {
-    if (container) {
+void LC_GraphicViewport::zoomAutoY(const bool axis) {
+    if (m_document != nullptr) {
         double visibleHeight = 0.0;
         double minY = RS_MAXDOUBLE;
         double maxY = RS_MINDOUBLE;
         bool noChange = false;
 
         // fixme - sand -- ?? WHY ?? What if there are entities outside lines? This is not reliable at all
-        for (auto e: *container) {
+        for (const auto e: *m_document) {
             if (e->rtti() == RS2::EntityLine) {
-                auto *l = (RS_Line *) e;
-                double x1, x2;
-                x1 = toGuiX(l->getStartpoint().x);
-                x2 = toGuiX(l->getEndpoint().x);
+                const auto *l = static_cast<RS_Line*>(e);
+                const auto& startpoint = l->getStartpoint();
+                const double x1 = toGuiX(startpoint.x);
+                const auto& endpoint = l->getEndpoint();
+                const double x2 = toGuiX(endpoint.x);
 
-                if (((x1 > 0.0) && (x1 < (double) getWidth())) ||
-                    ((x2 > 0.0) && (x2 < (double) getWidth()))) {
-                    minY = std::min(minY, l->getStartpoint().y);
-                    minY = std::min(minY, l->getEndpoint().y);
-                    maxY = std::max(maxY, l->getStartpoint().y);
-                    maxY = std::max(maxY, l->getEndpoint().y);
+                if (((x1 > 0.0) && (x1 < static_cast<double>(getWidth()))) ||
+                    ((x2 > 0.0) && (x2 < static_cast<double>(getWidth())))) {
+                    minY = std::min(minY, startpoint.y);
+                    minY = std::min(minY, endpoint.y);
+                    maxY = std::max(maxY, startpoint.y);
+                    maxY = std::max(maxY, endpoint.y);
                 }
             }
         }
@@ -504,20 +529,18 @@ void LC_GraphicViewport::zoomAutoY(bool axis) {
 
         double fy = 1.0;
         if (visibleHeight > 1.0e-6) {
-            fy = (getHeight() - borderTop - borderBottom)
+            fy = (getHeight() - m_borderTop - m_borderBottom)
                  / visibleHeight;
-            if (factor.y < 0.000001) {
+            if (m_factor.y < 0.000001) {
                 noChange = true;
             }
         }
 
         if (noChange == false) {
-            if (!zoomFrozen) {
-                factor.y = std::abs(fy);
+            if (!m_zoomFrozen) {
+                m_factor.y = std::abs(fy);
             }
-            offsetY = (int) ((getHeight() - borderTop - borderBottom
-                              - (visibleHeight * factor.y)) / 2.0
-                             - (minY * factor.y)) + borderBottom;
+            m_offsetY = static_cast<int>((getHeight() - m_borderTop - m_borderBottom - visibleHeight * m_factor.y) / 2.0 - (minY * m_factor.y)) + m_borderBottom;
             fireViewportChanged();
 
         }
@@ -526,10 +549,10 @@ void LC_GraphicViewport::zoomAutoY(bool axis) {
 }
 
 void LC_GraphicViewport::zoomAutoEnsurePointsIncluded(const RS_Vector &wcsP1, const RS_Vector &wcsP2, const RS_Vector &wcsP3) {
-    if (container) {
-        container->calculateBorders();
-        RS_Vector min = container->getMin();
-        RS_Vector max = container->getMax();
+    if (m_document != nullptr) {
+        m_document->calculateBorders();
+        RS_Vector min = m_document->getMin();
+        RS_Vector max = m_document->getMax();
 
         min = RS_Vector::minimum(min, wcsP1);
         min = RS_Vector::minimum(min, wcsP2);
@@ -549,18 +572,18 @@ void LC_GraphicViewport::zoomAutoEnsurePointsIncluded(const RS_Vector &wcsP1, co
  * @param keepAspectRatio true: keep aspect ratio 1:1
  *                        false: factors in x and y are stretched to the max
  */
-void LC_GraphicViewport::zoomAuto(bool axis, bool keepAspectRatio) {
+void LC_GraphicViewport::zoomAuto(const bool axis, const bool keepAspectRatio) {
     RS_DEBUG->print("RS_GraphicView::zoomAuto");
-    if (container) {
-        container->calculateBorders();
-        RS_Vector min = container->getMin();
-        RS_Vector max = container->getMax();
+    if (m_document != nullptr) {
+        m_document->calculateBorders();
+        const RS_Vector min = m_document->getMin();
+        const RS_Vector max = m_document->getMax();
         doZoomAuto(min,max, axis, keepAspectRatio);
     }
     RS_DEBUG->print("RS_GraphicView::zoomAuto OK");
 }
 
-void LC_GraphicViewport::doZoomAuto(const RS_Vector& min, const RS_Vector& max, bool axis, bool keepAspectRatio) {
+void LC_GraphicViewport::doZoomAuto(const RS_Vector& min, const RS_Vector& max, const bool axis, const bool keepAspectRatio) {
     double sx = 0., sy = 0.;
     RS_Vector containerSize;
     RS_Vector containerMin;
@@ -571,7 +594,7 @@ void LC_GraphicViewport::doZoomAuto(const RS_Vector& min, const RS_Vector& max, 
 
         ucsBoundingBox(min, max, ucsMin, ucsMax);
 
-        RS_Vector ucsSize = ucsMax - ucsMin;
+        const RS_Vector ucsSize = ucsMax - ucsMin;
 
         sx = ucsSize.x;
         sy = ucsSize.y;
@@ -580,7 +603,7 @@ void LC_GraphicViewport::doZoomAuto(const RS_Vector& min, const RS_Vector& max, 
         containerMin = ucsMin;
     }
     else {
-        auto const dV = max - min;
+        const auto dV = max - min;
         if (axis) {
             sx = std::max(dV.x, 0.);
             sy = std::max(dV.y, 0.);
@@ -596,13 +619,13 @@ void LC_GraphicViewport::doZoomAuto(const RS_Vector& min, const RS_Vector& max, 
     unsigned short fFlags = 0;
 
     if (sx > RS_TOLERANCE) {
-        fx = (getWidth() - borderLeft - borderRight) / sx;
+        fx = (getWidth() - m_borderLeft - m_borderRight) / sx;
     } else {
         fFlags += 1; //invalid x factor
     }
 
     if (sy > RS_TOLERANCE) {
-        fy = (getHeight() - borderTop - borderBottom) / sy;
+        fy = (getHeight() - m_borderTop - m_borderBottom) / sy;
     } else {
         fFlags += 2; //invalid y factor
     }
@@ -617,7 +640,9 @@ void LC_GraphicViewport::doZoomAuto(const RS_Vector& min, const RS_Vector& max, 
             return; //do not do anything, invalid factors
         default:
             if (keepAspectRatio) {
-                fx = fy = std::min(fx, fy);
+                const double minValue = std::min(fx, fy);
+                fx = minValue;
+                fy = minValue;
             }
     }
     //exclude invalid factors
@@ -630,20 +655,21 @@ void LC_GraphicViewport::doZoomAuto(const RS_Vector& min, const RS_Vector& max, 
         fy = 1.0;
         fFlags += 2;
     }
-    if (fFlags == 3) return;
+    if (fFlags == 3) {
+        return;
+    }
     saveView();
 
-    if (!zoomFrozen) {
-        factor.x = std::abs(fx);
-        factor.y = std::abs(fy);
+    if (!m_zoomFrozen) {
+        m_factor.x = std::abs(fx);
+        m_factor.y = std::abs(fy);
     }
     centerOffsetXandY(containerMin, containerSize);
 }
 
 RS_Grid *LC_GraphicViewport::getGrid() const {
-    return grid.get();
+    return m_grid.get();
 }
-
 
 /**
  * Shows previous view.
@@ -652,7 +678,7 @@ void LC_GraphicViewport::zoomPrevious() {
 
     RS_DEBUG->print("RS_GraphicView::zoomPrevious");
 
-    if (container) {
+    if (m_document != nullptr) {
         restoreView();
     }
 }
@@ -662,67 +688,68 @@ void LC_GraphicViewport::zoomPrevious() {
  * switch back later with @see restoreView().
  */
 void LC_GraphicViewport::saveView() {
-    if (graphic != nullptr) {
+    if (m_graphic != nullptr) {
         if (m_modifyOnZoom) {
             getGraphic()->setModified(true);
         }
     }
-    QDateTime noUpdateWindow = QDateTime::currentDateTime().addMSecs(-500);
+    const QDateTime noUpdateWindow = QDateTime::currentDateTime().addMSecs(-500);
 //do not update view within 500 milliseconds
-    if (*previousViewTime > noUpdateWindow) {
+    if (*m_previousViewTime > noUpdateWindow) {
         return;
     }
-    *previousViewTime = QDateTime::currentDateTime();
-    savedViews[savedViewIndex] = std::make_tuple(offsetX, offsetY, factor);
-    savedViewIndex = (savedViewIndex + 1) % savedViews.size();
-    if (savedViewCount < savedViews.size()) savedViewCount++;
+    *m_previousViewTime = QDateTime::currentDateTime();
+    m_savedViews[m_savedViewIndex] = std::make_tuple(m_offsetX, m_offsetY, m_factor);
+    m_savedViewIndex = (m_savedViewIndex + 1) % m_savedViews.size();
+    if (m_savedViewCount < m_savedViews.size()) {
+        m_savedViewCount++;
+    }
 
-    if (savedViewCount == 1) {
+    if (m_savedViewCount == 1) {
         firePreviousZoomChanged(true);
     }
 }
-
 
 /**
  * Restores the view previously saved with
  * @see saveView().
  */
 void LC_GraphicViewport::restoreView() {
-    if (savedViewCount == 0) return;
-    savedViewCount--;
-    if (savedViewCount == 0) {
-//        emit previous_zoom_state(false);
+    if (m_savedViewCount == 0) {
+        return;
+    }
+    m_savedViewCount--;
+    if (m_savedViewCount == 0) {
         firePreviousZoomChanged(false);
     }
-    savedViewIndex = (savedViewIndex + savedViews.size() - 1) % savedViews.size();
+    m_savedViewIndex = (m_savedViewIndex + m_savedViews.size() - 1) % m_savedViews.size();
 
-    offsetX = std::get<0>(savedViews[savedViewIndex]);
-    offsetY = std::get<1>(savedViews[savedViewIndex]);
-    factor = std::get<2>(savedViews[savedViewIndex]);
+    m_offsetX = std::get<0>(m_savedViews[m_savedViewIndex]);
+    m_offsetY = std::get<1>(m_savedViews[m_savedViewIndex]);
+    m_factor = std::get<2>(m_savedViews[m_savedViewIndex]);
 
     fireViewportChanged();
 }
 
-
-void LC_GraphicViewport::setFactor(double f) {
-    if (!zoomFrozen) {
-        double absF = std::abs(f);
-        factor.x = absF;
-        factor.y = absF;
+void LC_GraphicViewport::setFactor(const double f) {
+    if (!m_zoomFrozen) {
+        const double absF = std::abs(f);
+        m_factor.x = absF;
+        m_factor.y = absF;
         fireViewportChanged();
     }
 }
 
-void LC_GraphicViewport::setOffsetAndFactor(int ox, int oy, double f){
+void LC_GraphicViewport::setOffsetAndFactor(const int ox, const int oy, const double f){
     justSetOffsetAndFactor(ox, oy, f);
     fireViewportChanged();
 }
 
-void LC_GraphicViewport::justSetOffsetAndFactor(int ox, int oy, double f){
-    offsetX = ox;
-    offsetY = oy;
-    factor.x = std::abs(f);
-    factor.y = std::abs(f);
+void LC_GraphicViewport::justSetOffsetAndFactor(const int ox, const int oy, const double f){
+    m_offsetX = ox;
+    m_offsetY = oy;
+    m_factor.x = std::abs(f);
+    m_factor.y = std::abs(f);
     // fixme - ucs - this method is called on initial reading, is it necessary to update listeners there (as force redraw may be invoked later???)
     //  fireViewportChanged();
 }
@@ -739,15 +766,15 @@ RS_Vector LC_GraphicViewport::getUCSViewRightTop() const{
     return toUCSFromGui(getWidth(),getHeight());
 }
 
-double LC_GraphicViewport::toAbsUCSAngle(double ucsRelAngle) {
-    return toUCSAbsAngle(ucsRelAngle, getAnglesBaseAngle(), areAnglesCounterClockwise());
+double LC_GraphicViewport::toAbsUCSAngle(const double ucsBasisAngle) {
+    return toUCSAbsAngle(ucsBasisAngle, getAnglesBaseAngle(), areAnglesCounterClockwise());
 }
 
-double LC_GraphicViewport::toBasisUCSAngle(double ucsAbsAngle) {
+double LC_GraphicViewport::toBasisUCSAngle(const double ucsAbsAngle) {
     return toUCSBasisAngle(ucsAbsAngle, getAnglesBaseAngle(), areAnglesCounterClockwise());
 }
 
-void LC_GraphicViewport::toUI(RS_Vector wcsCoordinate, double &uiX, double &uiY) const{
+void LC_GraphicViewport::toUI(const RS_Vector& wcsCoordinate, double &uiX, double &uiY) const{
     if (hasUCS()){
         doWCS2UCS(wcsCoordinate.x, wcsCoordinate.y, uiX, uiY);
         uiX = toGuiX(uiX);
@@ -757,30 +784,31 @@ void LC_GraphicViewport::toUI(RS_Vector wcsCoordinate, double &uiX, double &uiY)
         uiX = toGuiX(wcsCoordinate.x);
         uiY = toGuiY(wcsCoordinate.y);
     }
-};
-
-void LC_GraphicViewport::loadGridSettings() {
-    if (grid != nullptr){
-        grid->loadSettings();
-    }
-    fireRedrawNeeded();
 }
 
-void LC_GraphicViewport::setUCS(const RS_Vector &origin, double angle, bool isometric, RS2::IsoGridViewType isoType) {
-    RS_Vector ucsOrigin = doSetUCS(origin, angle, isometric, isoType);
+void LC_GraphicViewport::loadGridSettings() const {
+    if (m_grid != nullptr){
+        m_grid->loadSettings();
+    }
+    fireRedrawNeeded(RS2::RedrawGrid, false);
+}
+
+void LC_GraphicViewport::setUCS(const RS_Vector &origin, const double angle, const bool isometric, const RS2::IsoGridViewType isoType) {
+    const RS_Vector ucsOrigin = doSetUCS(origin, angle, isometric, isoType);
     switch (m_ucsApplyingPolicy){
         case UCSApplyingPolicy::ZoomAuto: {
             zoomAuto();
             break;
         }
         case UCSApplyingPolicy::PanOriginCenter: {
-            int offX = (int) ((ucsOrigin.x * factor.x) + (double) (getWidth() - borderLeft - borderRight) / 2.0);
-            int offY = (int) ((ucsOrigin.y * factor.y) + (double) (getHeight() - borderTop - borderBottom) / 2.0);
+            const int offX = static_cast<int>(ucsOrigin.x * m_factor.x + (getWidth() - m_borderLeft - m_borderRight) * 0.5);
+            const int offY = static_cast<int>(ucsOrigin.y * m_factor.y + (getHeight() - m_borderTop - m_borderBottom) * 0.5);
             setOffset(offX, offY);
             break;
         }
-        case UCSApplyingPolicy::PanOriginLowerLeft:{
-            setOffset(ucsOrigin.x* factor.x+(borderLeft + borderRight)/2, ucsOrigin.y* factor.y + (borderBottom + borderRight)/2);
+        case UCSApplyingPolicy::PanOriginLowerLeft: {
+            setOffset(ucsOrigin.x * m_factor.x + (m_borderLeft + m_borderRight) / 2,
+                      ucsOrigin.y * m_factor.y + (m_borderBottom + m_borderRight) / 2);
             break;
         }
         default:{
@@ -793,21 +821,21 @@ void LC_GraphicViewport::applyUCS(LC_UCS *ucsToSet) {
     if (ucsToSet == nullptr){
         return;
     }
-    RS_Vector originToSet = ucsToSet->getOrigin();
-    double angleToSet = ucsToSet->getXAxisDirection();
-    bool hasIso = ucsToSet->isIsometric();
-    RS2::IsoGridViewType isoType = ucsToSet->getIsoGridViewType();
+    const RS_Vector originToSet = ucsToSet->getOrigin();
+    const double angleToSet = ucsToSet->getXAxisDirection();
+    const bool hasIso = ucsToSet->isIsometric();
+    const RS2::IsoGridViewType isoType = ucsToSet->getIsoGridViewType();
     setUCS(originToSet, angleToSet, hasIso, isoType);
-    if (graphic != nullptr){
-        graphic->setCurrentUCS(ucsToSet);
+    if (m_graphic != nullptr){
+        m_graphic->setCurrentUCS(ucsToSet);
     }
     fireUcsChanged(ucsToSet);
 }
 
 void LC_GraphicViewport::extractUCS(){
     if (hasUCS()){
-        if (graphic != nullptr) {
-            LC_UCSList *ucsList = graphic->getUCSList();
+        if (m_graphic != nullptr) {
+            LC_UCSList *ucsList = m_graphic->getUCSList();
             LC_UCS *candidate = createUCSEntity(getUcsOrigin(), -getXAxisAngle(), isGridIsometric(), getIsoViewType());
             LC_UCS *createdUCS = ucsList->tryAddUCS(candidate);
             if (createdUCS != nullptr) {
@@ -817,17 +845,17 @@ void LC_GraphicViewport::extractUCS(){
     }
 }
 
-
-RS_Vector LC_GraphicViewport::doSetUCS(const RS_Vector &origin, double angle, bool isometric, RS2::IsoGridViewType &isoType) {
-    bool customUCS = LC_LineMath::isMeaningfulAngle(angle) || LC_LineMath::isMeaningfulDistance(origin, RS_Vector(0, 0, 0));
-    RS_Vector ucsOrigin = customUCS ? toUCS(origin) : RS_Vector{0., 0.};
-    if (customUCS)
+RS_Vector LC_GraphicViewport::doSetUCS(const RS_Vector &origin, const double angle, const bool isometric, const RS2::IsoGridViewType isoType) {
+    const bool customUCS = LC_LineMath::isMeaningfulAngle(angle) || LC_LineMath::isMeaningfulDistance(origin, RS_Vector(0, 0, 0));
+    const RS_Vector ucsOrigin = customUCS ? toUCS(origin) : RS_Vector{0., 0.};
+    if (customUCS) {
         update(origin, -angle);
+    }
     useUCS(customUCS);
-    auto g = getGraphic();
+    const auto g = getGraphic();
     if (g != nullptr){
-        bool oldIsometricGrid = g->isIsometricGrid();
-        RS2::IsoGridViewType oldIsoViewType = g->getIsoView();
+        const bool oldIsometricGrid = g->isIsometricGrid();
+        const RS2::IsoGridViewType oldIsoViewType = g->getIsoView();
         if (oldIsometricGrid != isometric || oldIsoViewType != isoType) {
             g->setIsometricGrid(isometric);
             if (isometric) {
@@ -839,15 +867,14 @@ RS_Vector LC_GraphicViewport::doSetUCS(const RS_Vector &origin, double angle, bo
     return ucsOrigin;
 }
 
-
-void LC_GraphicViewport::createUCS(const RS_Vector &origin, double angle) {
-    bool customUCS = LC_LineMath::isMeaningfulAngle(angle) || LC_LineMath::isMeaningfulDistance(origin, RS_Vector(0, 0, 0));
+void LC_GraphicViewport::createUCS(const RS_Vector &origin, const double angle) {
+    const bool customUCS = LC_LineMath::isMeaningfulAngle(angle) || LC_LineMath::isMeaningfulDistance(origin, RS_Vector(0, 0, 0));
     if (customUCS){
-        auto g = getGraphic();
+        const auto g = getGraphic();
         if (g != nullptr) {
-            auto ucsList = g->getUCSList();
-            auto candidate = createUCSEntity(origin, angle, isGridIsometric(), getIsoViewType());
-            auto createdUCS = ucsList->tryAddUCS(candidate);
+            const auto ucsList = g->getUCSList();
+            const auto candidate = createUCSEntity(origin, angle, isGridIsometric(), getIsoViewType());
+            const auto createdUCS = ucsList->tryAddUCS(candidate);
             if (createdUCS != nullptr){
                 setUCS(origin, angle, isGridIsometric(), getIsoViewType());
                 g->setCurrentUCS(createdUCS);
@@ -857,12 +884,12 @@ void LC_GraphicViewport::createUCS(const RS_Vector &origin, double angle) {
     }
 }
 
-LC_UCS *LC_GraphicViewport::createUCSEntity(const RS_Vector &origin, double angle, bool isometric, RS2::IsoGridViewType isoType) const{
+LC_UCS *LC_GraphicViewport::createUCSEntity(const RS_Vector &origin, const double angle, const bool isometric, const RS2::IsoGridViewType isoType) const{
     auto* result = new LC_UCS("");
     result->setOrigin(origin);
 
-    RS_Vector xAxis = RS_Vector(1.0, 0, 0);
-    RS_Vector yAxis = RS_Vector(0,1.0, 0);
+    auto xAxis = RS_Vector(1.0, 0, 0);
+    auto yAxis = RS_Vector(0,1.0, 0);
 
     xAxis.rotate(angle);
     yAxis.rotate(angle);
@@ -878,15 +905,15 @@ LC_UCS *LC_GraphicViewport::createUCSEntity(const RS_Vector &origin, double angl
     int orthoType = LC_UCS::NON_ORTHO;
     if (isometric){
         switch (isoType){
-            case (RS2::IsoRight):{
+            case RS2::IsoRight:{
                 orthoType = LC_UCS::RIGHT;
                 break;
             }
-            case (RS2::IsoLeft):{
+            case RS2::IsoLeft:{
                 orthoType = LC_UCS::LEFT;
                 break;
             }
-            case (RS2::IsoTop):{
+            case RS2::IsoTop:{
                 orthoType = LC_UCS::TOP;
                 break;
             }
@@ -901,24 +928,24 @@ LC_UCS *LC_GraphicViewport::createUCSEntity(const RS_Vector &origin, double angl
 void LC_GraphicViewport::applyUCSAfterLoad(){
     LC_UCS* ucsCurrent = getGraphic()->getCurrentUCS();
     if (ucsCurrent != nullptr) {
-        RS_Vector originToSet = ucsCurrent->getOrigin();
-        double angleToSet = ucsCurrent->getXAxisDirection();
-        bool isometric = ucsCurrent->isIsometric();
-        RS2::IsoGridViewType isoType = ucsCurrent->getIsoGridViewType();
+        const RS_Vector originToSet = ucsCurrent->getOrigin();
+        const double angleToSet = ucsCurrent->getXAxisDirection();
+        const bool isometric = ucsCurrent->isIsometric();
+        const RS2::IsoGridViewType isoType = ucsCurrent->getIsoGridViewType();
         doSetUCS(originToSet, angleToSet, isometric, isoType);
         fireUcsChanged(ucsCurrent);
         delete ucsCurrent;
     }
 }
 
-void LC_GraphicViewport::fillCurrentUCSInfo(RS_Vector& origin, double& xAsixDirection) const {
+void LC_GraphicViewport::fillCurrentUCSInfo(RS_Vector& origin, double& xAxisDirection) const {
     if (hasUCS()) {
         origin = getUcsOrigin();
-        xAsixDirection = -getXAxisAngle();
+        xAxisDirection = -getXAxisAngle();
     }
     else {
         origin = RS_Vector(0, 0, 0);
-        xAsixDirection = 0;
+        xAxisDirection = 0;
     }
 }
 
@@ -930,6 +957,24 @@ LC_UCS* LC_GraphicViewport::getCurrentUCS() const{
     return result;
 }
 
+RS_Vector LC_GraphicViewport::snapGrid([[maybe_unused]] const RS_Vector& coord, [[maybe_unused]] RS_Entity* entity) const {
+    // fixme - reserved for the future
+    Q_ASSERT_X(false, "snapGrid", "Not implemented");
+    return RS_Vector(false);
+}
+
+RS_Vector LC_GraphicViewport::snapGrid(const RS_Vector& coord, const RS_Vector& rayStart, const RS_Vector& rayEnd) const {
+    if (hasUCS()) {
+        // basically, wcs coordinate still should be returned there.
+        // however, it will be rotated according to the grid (which is not rotated in ucs).
+        RS_Vector snap = getGrid()->snapGrid(toUCS(coord), toUCS(rayStart), toUCS(rayEnd));
+        snap = toWorld(snap);
+        return snap;
+    }
+    const RS_Vector snap = getGrid()->snapGrid(coord, rayStart, rayEnd);
+    return snap;
+}
+
 RS_Vector LC_GraphicViewport::snapGrid(const RS_Vector &coord) const {
     if (hasUCS()) {
         // basically, wcs coordinate still should be returned there.
@@ -938,25 +983,23 @@ RS_Vector LC_GraphicViewport::snapGrid(const RS_Vector &coord) const {
         snap = toWorld(snap);
         return snap;
     }
-    else{
-        RS_Vector snap = getGrid()->snapGrid(coord);
-        return snap;
-    }
+    const RS_Vector snap = getGrid()->snapGrid(coord);
+    return snap;
 }
 
-void LC_GraphicViewport::restoreView(LC_View *view) {
+void LC_GraphicViewport::restoreView(const LC_View *view) {
     if (view == nullptr){
         return;
     }
 
-    RS_Vector center = view->getCenter();
-    RS_Vector size = view->getSize();
+    const RS_Vector center = view->getCenter();
+    const RS_Vector size = view->getSize();
 
     const RS_Vector halfSize = size / 2;
-    RS_Vector v1 = center - halfSize;
-    RS_Vector v2 = center + halfSize;
+    const RS_Vector v1 = center - halfSize;
+    const RS_Vector v2 = center + halfSize;
 
-    RS_Vector origin = RS_Vector(0,0,0);
+    auto origin = RS_Vector(0,0,0);
     double angle = 0;
     bool isometric = false;
     RS2::IsoGridViewType isoType = RS2::IsoTop;
@@ -970,9 +1013,9 @@ void LC_GraphicViewport::restoreView(LC_View *view) {
     }
     else{
         ucs = &LC_WCS::instance;
-    };
+    }
 
-    auto g = getGraphic();
+    const auto g = getGraphic();
     if (g != nullptr){
         g->setCurrentUCS(ucs);
     }
@@ -985,7 +1028,7 @@ void LC_GraphicViewport::initAfterDocumentOpen() {
     applyUCSAfterLoad();
 }
 
-LC_View* LC_GraphicViewport::createNamedView(QString name) const{
+LC_View* LC_GraphicViewport::createNamedView(const QString& name) const{
     auto* viewToCreate = new LC_View(name);
     doUpdateViewByGraphicView(viewToCreate);
     return viewToCreate;
@@ -998,14 +1041,14 @@ void LC_GraphicViewport::updateNamedView(LC_View* view) const{
 void LC_GraphicViewport::doUpdateViewByGraphicView(LC_View *view) const {
     view->setForPaperView(isPrintPreview());
 
-    int width = getWidth();
-    int height = getHeight();
+    const int width = getWidth();
+    const int height = getHeight();
 
-    double x = toUcsX(width);
-    double y = toUcsY(height);
+    const double x = toUcsX(width);
+    const double y = toUcsY(height);
 
-    double x0 = toUcsX(0);
-    double y0 = toUcsY(0);
+    const double x0 = toUcsX(0);
+    const double y0 = toUcsY(0);
 
     view->setCenter({(x + x0) / 2.0, (y + y0) / 2.0, 0});
     view->setSize({(x - x0), (y - y0), 0});
@@ -1015,12 +1058,12 @@ void LC_GraphicViewport::doUpdateViewByGraphicView(LC_View *view) const {
     LC_UCS* viewUCS = getCurrentUCS();
     if (viewUCS != nullptr) {
         view->setUCS(viewUCS);
-        if (graphic != nullptr) {
-            LC_UCSList *ucsList = graphic->getUCSList();
+        if (m_graphic != nullptr) {
+            LC_UCSList *ucsList = m_graphic->getUCSList();
 
-            LC_UCS *existingListUCS = ucsList->findExisting(viewUCS);
+            const LC_UCS *existingListUCS = ucsList->findExisting(viewUCS);
             if (existingListUCS != nullptr) {
-                QString ucsName = existingListUCS->getName();
+                const QString ucsName = existingListUCS->getName();
                 viewUCS->setName(ucsName);
             }
         }
@@ -1036,9 +1079,8 @@ void LC_GraphicViewport::doUpdateViewByGraphicView(LC_View *view) const {
  * without deleting / drawing the point.
  */
 void LC_GraphicViewport::setRelativeZero(const RS_Vector &pos) {
-    if (!relativeZeroLocked) {
-        markedRelativeZero = relativeZero;
-        relativeZero = pos;
+    if (!m_relativeZeroLocked) {
+        m_relativeZero = pos;
         fireRelativeZeroChanged(pos);
     }
 }
@@ -1053,16 +1095,17 @@ void LC_GraphicViewport::moveRelativeZero(const RS_Vector &pos) {
 
 RS_Undoable *LC_GraphicViewport::getRelativeZeroUndoable() {
     RS_Undoable* result = nullptr;
-    if (LC_LineMath::isMeaningfulDistance(markedRelativeZero, relativeZero)){
-        result = new LC_UndoableRelZero(this, markedRelativeZero, relativeZero);
+    if (LC_LineMath::isMeaningfulDistance(m_markedRelativeZero, m_relativeZero)){
+        result = new LC_UndoableRelZero(this, m_markedRelativeZero, m_relativeZero);
         markRelativeZero();
     }
     return result;
 }
 
 void LC_GraphicViewport::setGraphic(RS_Graphic *g) {
-     graphic = g;
-     overlaysManager.setGraphic(g);
+    m_graphic = g;
+    m_overlaysManager.setGraphic(g);
+    m_formatter->updateByGraphic(g);
 }
 
 /**
@@ -1071,51 +1114,56 @@ void LC_GraphicViewport::setGraphic(RS_Graphic *g) {
  // fixme - ucs, potentially, these methods should live in some other place...
 void LC_GraphicViewport::zoomPage() {
     RS_DEBUG->print("RS_GraphicView::zoomPage");
-    if (!container) {
+    if (m_document == nullptr) {
         return;
     }
 
-    RS_Graphic *graphic = container->getGraphic();
-    if (!graphic) {
+    const RS_Graphic *graphic = m_document->getGraphic();
+    if (graphic == nullptr) {
         return;
     }
 
-    RS_Vector s = graphic->getPrintAreaSize() / graphic->getPaperScale();
+    const LC_PlotSettings* ps = graphic->getPlotSettings();
+
+    const RS_Vector s = ps->getPrintAreaSize() / ps->getPaperScale();
 
     double fx = 0., fy = 0.;
 
     if (s.x > RS_TOLERANCE) {
-        fx = (getWidth() - borderLeft - borderRight) / s.x;
+        fx = (getWidth() - m_borderLeft - m_borderRight) / s.x;
     } else {
         fx = 1.0;
     }
 
     if (s.y > RS_TOLERANCE) {
-        fy = (getHeight() - borderTop - borderBottom) / s.y;
+        fy = (getHeight() - m_borderTop - m_borderBottom) / s.y;
     } else {
         fy = 1.0;
     }
 
     RS_DEBUG->print("f: %f/%f", fx, fy);
 
-    fx = fy = std::min(fx, fy);
+    const double minValue = std::min(fx, fy);
+    fx = minValue;
+    fy = minValue;
 
     RS_DEBUG->print("f: %f/%f", fx, fy);
 
     if (fx < RS_TOLERANCE) {
-        fx = fy = 1.0;
+        fx = 1.0;
+        fy = 1.0;
     }
 
-     if (!zoomFrozen) {
-         factor.x = std::abs(fx);
-         factor.y = std::abs(fy);
+     if (!m_zoomFrozen) {
+         m_factor.x = std::abs(fx);
+         m_factor.y = std::abs(fy);
      }
 
 
     RS_DEBUG->print("f: %f/%f", fx, fy);
 
-    RS_Vector containerMin = container->getMin();
-    RS_Vector containerSize = container->getSize();
+    const RS_Vector containerMin = m_document->getMin();
+    const RS_Vector containerSize = m_document->getSize();
 
      centerOffsetXandY(containerMin, containerSize);
     // fixme - remove debug code
@@ -1130,37 +1178,38 @@ void LC_GraphicViewport::zoomPage() {
 
 void LC_GraphicViewport::zoomPageEx() {
     RS_DEBUG->print("RS_GraphicView::zoomPage");
-    if (!container) {
+    if (m_document == nullptr) {
         return;
     }
 
-    RS_Graphic *graphic = container->getGraphic();
-    if (!graphic) {
+    const RS_Graphic *graphic = m_document->getGraphic();
+    if (graphic == nullptr) {
         return;
     }
 
-    RS2::Unit dest = graphic->getUnit();
-    double marginsWidth = RS_Units::convert(graphic->getMarginLeft() + graphic->getMarginRight(), RS2::Millimeter, dest);
-    double marginsHeight = RS_Units::convert(graphic->getMarginTop() +graphic->getMarginBottom(), RS2::Millimeter, dest);
+    const RS2::Unit dest = graphic->getUnit();
+    const LC_PlotSettings* ps = m_graphic->getPlotSettings();
+    const double marginsWidth = RS_Units::convert(ps->getMarginLeftMm() + ps->getMarginRightMm(), RS2::Millimeter, dest);
+    const double marginsHeight = RS_Units::convert(ps->getMarginTopMm() + ps->getMarginBottomMm(), RS2::Millimeter, dest);
 
-    const RS_Vector &printAreaSize = graphic->getPrintAreaSize(true);
-    double paperScale = graphic->getPaperScale();
-    RS_Vector printAreaSizeInViewCoordinates = (printAreaSize + RS_Vector(marginsWidth, marginsHeight)) / paperScale;
+    const RS_Vector &printAreaSize = ps->getPrintAreaSize(true);
+    const double paperScale = ps->getPaperScale();
+    const RS_Vector printAreaSizeInViewCoordinates = (printAreaSize + RS_Vector(marginsWidth, marginsHeight)) / paperScale;
 
     LC_ERR<<"margin: "<<marginsWidth<<", "<<marginsHeight;
     LC_ERR<<__LINE__<<" printAreaSizeInViewCoordinates "<< printAreaSizeInViewCoordinates.x<<", "<<printAreaSizeInViewCoordinates.y;
-    double fx=1., fy=1.;
-
-    int widthToFit = getWidth() - borderLeft - borderRight;
+    double fx;
+    double fy;
 
     if (printAreaSizeInViewCoordinates.x > RS_TOLERANCE) {
+        const int widthToFit = getWidth() - m_borderLeft - m_borderRight;
         fx = widthToFit / printAreaSizeInViewCoordinates.x;
     } else {
         fx = 1.0;
     }
 
-    int heightToFit = getHeight() - borderTop - borderBottom;
     if (printAreaSizeInViewCoordinates.y > RS_TOLERANCE) {
+        const int heightToFit = getHeight() - m_borderTop - m_borderBottom;
         fy = heightToFit / printAreaSizeInViewCoordinates.y;
     } else {
         fy = 1.0;
@@ -1168,44 +1217,47 @@ void LC_GraphicViewport::zoomPageEx() {
 
     RS_DEBUG->print("f: %f/%f", fx, fy);
 
-    fx = fy = std::min(fx, fy);
+    const double minValue = std::min(fx, fy);
+    fx = minValue;
+    fy = minValue;
 
     RS_DEBUG->print("f: %f/%f", fx, fy);
 
     if (fx < RS_TOLERANCE) {
-        fx = fy = 1.0;
+        fx = 1.0;
+        fy = 1.0;
     }
 
-    if (!zoomFrozen) {
-        factor.x = std::abs(fx);
-        factor.y = std::abs(fy);
+    if (!m_zoomFrozen) {
+        m_factor.x = std::abs(fx);
+        m_factor.y = std::abs(fy);
     }
 
     RS_DEBUG->print("f: %f/%f", fx, fy);
 
     const RS_Vector &paperInsertionBase = graphic->getPaperInsertionBase();
 
-    offsetX = (int) ((getWidth() - borderLeft - borderRight - (printAreaSizeInViewCoordinates.x) * factor.x) / 2.0 +
-                     (paperInsertionBase.x * factor.x / paperScale)) + borderLeft;
+    m_offsetX = static_cast<int>((getWidth() - m_borderLeft - m_borderRight - printAreaSizeInViewCoordinates.x * m_factor.x) / 2.0 + (
+        paperInsertionBase.x * m_factor.x / paperScale)) + m_borderLeft;
 
-    fy = factor.y;
+    fy = m_factor.y;
 
-    offsetY = (int) ((getHeight() - borderTop - borderBottom - (printAreaSizeInViewCoordinates.y) * fy) / 2.0 +
-                     paperInsertionBase.y * fy / paperScale) + borderBottom;
+    m_offsetY = static_cast<int>((getHeight() - m_borderTop - m_borderBottom - printAreaSizeInViewCoordinates.y * fy) / 2.0 +
+        paperInsertionBase.y * fy / paperScale) + m_borderBottom;
 
     LC_LOG<<"LC_GraphicViewport::"<<__func__<<"(): end normally";
     fireViewportChanged();
 }
 
-void LC_GraphicViewport::clearOverlayEntitiesContainer(RS2::OverlayGraphics overlayType) {
-    auto overlayEntities = overlaysManager.entitiesAt(overlayType);
+void LC_GraphicViewport::clearOverlayEntitiesContainer(const RS2::OverlayGraphics overlayType) const {
+    const auto overlayEntities = m_overlaysManager.entitiesAt(overlayType);
     if (overlayEntities != nullptr) {
         overlayEntities->clear();
     }
 }
 
-void LC_GraphicViewport::clearOverlayDrawablesContainer(RS2::OverlayGraphics overlayType) {
-    auto overlayDrawables = overlaysManager.drawablesAt(overlayType);
+void LC_GraphicViewport::clearOverlayDrawablesContainer(const RS2::OverlayGraphics overlayType) const {
+    const auto overlayDrawables = m_overlaysManager.drawablesAt(overlayType);
     if (overlayDrawables != nullptr) {
         overlayDrawables->clear();
     }

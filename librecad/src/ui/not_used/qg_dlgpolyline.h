@@ -28,7 +28,7 @@
 class RS_Polyline;
 
 #include "ui_qg_dlgpolyline.h"
-#include "../dialogs/entity/lc_entitypropertiesdlg.h"
+#include "lc_entitypropertiesdlg.h"
 
 class QG_DlgPolyline : public LC_EntityPropertiesDlg, public Ui::QG_DlgPolyline{
     Q_OBJECT
@@ -44,4 +44,4 @@ protected:
     void setEntity(RS_Polyline *e);
 };
 
-#endif // QG_DLGPOLYLINE_H
+#endif

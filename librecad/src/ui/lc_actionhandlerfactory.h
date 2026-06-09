@@ -35,4 +35,4 @@ namespace LC_ActionsHandlerFactory{
     std::shared_ptr<RS_ActionInterface> createActionInstance(RS2::ActionType actionType, LC_ActionContext* ctx, void* data = nullptr);
 }
 
-#endif // LC_ACTIONHANDLERFACTORY_H
+#endif

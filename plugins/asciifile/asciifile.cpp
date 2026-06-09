@@ -181,8 +181,7 @@ pointBox::pointBox(const QString & title, const QString & label, QWidget * paren
     vbox->addLayout(lolayer);
     setLayout(vbox);
 }
-void pointBox::setInLayout(QLayout *lo)
-{
+void pointBox::setInLayout(QLayout *lo) const {
     vbox->addLayout(lo);
 }
 
@@ -300,8 +299,7 @@ void dibPunto::dptFile()
     fileedit->setText(fileName);
 }
 
-bool dibPunto::failGUI(QString *msg)
-{
+bool dibPunto::failGUI(QString *msg) const {
     if (pt2d->checkOn() == true) {
         if (pt2d->getLayer().isEmpty()) {msg->insert(0, tr("Point 2D layer is empty")); return true;}
     }
@@ -394,8 +392,7 @@ void dibPunto::procesFile(Document_Interface *doc)
 
 }
 
-void dibPunto::drawLine()
-{
+void dibPunto::drawLine() const {
     QPointF prevP, nextP;
     int i;
 
@@ -418,8 +415,7 @@ void dibPunto::drawLine()
     }
 }
 
-void dibPunto::draw2D()
-{
+void dibPunto::draw2D() const {
     QPointF pt;
     currDoc->setLayer(pt2d->getLayer());
     for (int i = 0; i < dataList.size(); ++i) {
@@ -431,8 +427,7 @@ void dibPunto::draw2D()
         }
     }
 }
-void dibPunto::draw3D()
-{
+void dibPunto::draw3D() const {
     QPointF pt;
     currDoc->setLayer(pt3d->getLayer());
     for (int i = 0; i < dataList.size(); ++i) {
@@ -686,8 +681,7 @@ void dibPunto::readSettings()
     move(pos);
  }
 
-void dibPunto::writeSettings()
- {
+void dibPunto::writeSettings() const {
     QSettings settings(QSettings::IniFormat, QSettings::UserScope, "LibreCAD", "asciifile");
     settings.setValue("pos", pos());
     settings.setValue("size", size());

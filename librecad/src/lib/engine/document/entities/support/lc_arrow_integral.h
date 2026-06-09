@@ -34,4 +34,4 @@ protected:
     void createVertexes(double size);
 };
 
-#endif // LC_INTEGRALARROWHEAD_H
+#endif

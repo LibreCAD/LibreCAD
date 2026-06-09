@@ -1,0 +1,74 @@
+/*******************************************************************************
+ *
+ This file is part of the LibreCAD project, a 2D CAD program
+
+ Copyright (C) 2024 LibreCAD.org
+ Copyright (C) 2024 sand1024
+
+ This program is free software; you can redistribute it and/or
+ modify it under the terms of the GNU General Public License
+ as published by the Free Software Foundation; either version 2
+ of the License, or (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ ******************************************************************************/
+
+#ifndef LC_ACTIONSPLINEEXPLODE_H
+#define LC_ACTIONSPLINEEXPLODE_H
+
+#include "lc_action_spline_modify_base.h"
+
+class RS_Pen;
+class RS_Layer;
+
+class LC_ActionSplineExplode:public LC_ActionSplineModifyBase{
+Q_OBJECT
+public:
+    explicit LC_ActionSplineExplode(LC_ActionContext *actionContext);
+    ~LC_ActionSplineExplode() override = default;
+    int getSegmentsCountFromDrawing() const;
+    bool isUseCurrentAttributes() const {return m_useCurrentAttributes;}
+    void setUseCurrentAttributes(const bool b) {m_useCurrentAttributes  = b;}
+    bool isUseCurrentLayer() const {return m_useCurrentLayer;}
+    void setUseCurrentLayer(const bool b) {m_useCurrentLayer = b;}
+    bool isKeepOriginals() const {return m_keepOriginals;}
+    void setKeepOriginals(const bool b) {m_keepOriginals = b;}
+    bool isToPolyline() const {return m_createPolyline;}
+    void setUsePolyline(const bool b) {m_createPolyline = b;}
+    int getCustomSegmentsCount() const {return m_customSegmentsCount;}
+    void setSegmentsCountValue(const int i) {m_customSegmentsCount = i;}
+    bool isUseCustomSegmentsCount() const {return m_useCustomSegmentsCount;}
+    void setUseCustomSegmentsCount(const bool b) {m_useCustomSegmentsCount = b;}
+protected:
+    bool m_createPolyline {false};
+    bool m_keepOriginals {false};
+    bool m_useCurrentLayer {false};
+    bool m_useCurrentAttributes {false};
+    bool m_useCustomSegmentsCount {false};
+    int m_customSegmentsCount = 8;
+    bool mayModifySplineEntity(RS_Entity* entity) override;
+    RS_Entity *createPolylineByVertexes(const std::vector<RS_Vector> &strokePoints, bool closed) const;
+    int obtainSegmentsCount() const;
+    void onMouseLeftButtonRelease(int status, const LC_MouseEvent* e) override;
+    void onMouseMove(RS_Vector mouse, int status, const LC_MouseEvent* e) override;
+    void setEntityToModify(RS_Entity* entity) override;
+    void fillStrokePoints(RS_Entity *e, int segmentsCount, std::vector<RS_Vector> &strokePoints, bool &closed) const;
+    void updateActionPrompt() override;
+    RS_Entity *createModifiedSplineEntity(RS_Entity *e, RS_Vector controlPoint, bool startDirection) override;
+    LC_ActionOptionsWidget *createOptionsWidget() override;
+    LC_ActionOptionsPropertiesFiller* createOptionsFiller() override;
+    void doTriggerSelections(const LC_DocumentModificationBatch& ctx) override;
+    bool doTriggerModifications(LC_DocumentModificationBatch& ctx) override;
+    void doTriggerCompletion(bool success) override;
+    void doSaveOptions() override;
+    void doLoadOptions() override;
+};
+
+#endif

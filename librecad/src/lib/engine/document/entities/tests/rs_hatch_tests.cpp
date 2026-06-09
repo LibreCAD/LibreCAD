@@ -380,7 +380,9 @@ struct TestPainter {
     bool filledAt(double wcsX, double wcsY) const {
         const int px = static_cast<int>(std::round(wcsX));
         const int py = static_cast<int>(std::round(H - wcsY));
-        if (px < 0 || px >= W || py < 0 || py >= H) return false;
+        if (px < 0 || px >= W || py < 0 || py >= H) {
+            return false;
+        }
         return image.pixel(px, py) != qRgb(255, 255, 255);
     }
 };

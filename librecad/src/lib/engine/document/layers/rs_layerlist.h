@@ -25,7 +25,6 @@
 **
 **********************************************************************/
 
-
 #ifndef RS_LAYERLIST_H
 #define RS_LAYERLIST_H
 
@@ -41,11 +40,8 @@ class RS_LayerListListener;
  */
 class RS_LayerList {
 public:
-    RS_LayerList();
-    virtual ~RS_LayerList() = default;
-
-    void clear();
-
+    explicit RS_LayerList();
+    virtual ~RS_LayerList();
     /**
      * @return Number of layers in the list.
      */
@@ -56,46 +52,25 @@ public:
     /**
      * @return Layer at given position or NULL if i is out of range.
      */
-    RS_Layer* at(unsigned int i) {
+    RS_Layer* at(const unsigned int i) const {
         return m_layers.at(i);
     }
+
     QList<RS_Layer*>::iterator begin();
     QList<RS_Layer*>::iterator end();
-    QList<RS_Layer*>::const_iterator begin()const;
-    QList<RS_Layer*>::const_iterator end()const;
+    QList<RS_Layer*>::const_iterator begin() const;
+    QList<RS_Layer*>::const_iterator end() const;
 
-    void activate(const QString& name, bool notify = false);
-    void fireLayerActivated();
-    void activate(RS_Layer* layer, bool notify = false);
     //! @return The active layer of NULL if no layer is activated.
     RS_Layer* getActive() const {
         return m_activeLayer;
     }
-    virtual void add(RS_Layer* layerToAdd);
-    void fireLayerRemoved(RS_Layer* layer);
-    virtual void remove(RS_Layer* layerToRemove);
-    virtual void edit(RS_Layer* layer, const RS_Layer& source);
+
+    void add(RS_Layer* layerToAdd);
+    void edit(RS_Layer* layer, const RS_Layer& source);
     RS_Layer* find(const QString& name);
     int getIndex(const QString& name);
-    int getIndex(RS_Layer* layer);
-    void toggle(const QString& name);
-    void toggle(RS_Layer* layer);
-    void toggleLock(RS_Layer* layer);
-    void togglePrint(RS_Layer* layer);
-    void toggleConstruction(RS_Layer* layer);
-    void freezeAll(bool freeze);
-    void lockAll(bool lock);
-
-    void toggleLockMulti(QList<RS_Layer*> layers);
-    void togglePrintMulti(QList<RS_Layer*> layers);
-    void toggleConstructionMulti(QList<RS_Layer*> layers);
-    void toggleFreezeMulti(QList<RS_Layer*> layers);
-
-    void setFreezeMulti(QList<RS_Layer*> layersEnable, QList<RS_Layer*> layersDisable);
-				void setLockMulti(QList<RS_Layer*> layersToUnlock, QList<RS_Layer*> layersToLock);
-    void setPrintMulti(QList<RS_Layer*> layersNoPrint, QList<RS_Layer*> layersPrint);
-    void setConstructionMulti(QList<RS_Layer*> layersNoConstruction, QList<RS_Layer*> layersConstruction);
-    void fireEdit(RS_Layer* layer);
+    int getIndex(RS_Layer* layer) const;
 
     void addListener(RS_LayerListListener* listener);
     void removeListener(RS_LayerListListener* listener);
@@ -110,21 +85,50 @@ public:
     virtual bool isModified() const {
         return m_modified;
     }
+
     /**
      * @brief sort by layer names
      */
     void sort();
-    void fireLayerAdded(RS_Layer* layer);
-    void fireLayerToggled();
     void slotUpdateLayerList();
-    friend std::ostream& operator << (std::ostream& os, RS_LayerList& l);
+    friend std::ostream& operator <<(std::ostream& os, const RS_LayerList& l);
+    void fireLayerToggled();
+    void fireLayerEdited(RS_Layer* layer);
+
+protected:
+    void fireLayerAdded(RS_Layer* layer) const;
+    void fireLayerActivated();
+    void fireLayerRemoved(RS_Layer* layer) const;
+    virtual void remove(RS_Layer* layerToRemove);
+
+    void clear();
+
+    void activate(const QString& name, bool notify = false);
+    void activate(RS_Layer* layer, bool notify = false);
+    void toggle(const QString& name);
+    void toggle(RS_Layer* layer);
+    void toggleLock(RS_Layer* layer);
+    void togglePrint(RS_Layer* layer);
+    void toggleConstruction(RS_Layer* layer);
+    void freezeAll(bool freeze);
+    void lockAll(bool lock);
+    void toggleLockMulti(const QList<RS_Layer*>& layers);
+    void togglePrintMulti(const QList<RS_Layer*>& layers);
+    void toggleConstructionMulti(const QList<RS_Layer*>& layers);
+    void toggleFreezeMulti(const QList<RS_Layer*>& layers);
+    void setFreezeMulti(const QList<RS_Layer*>& layersEnable, const QList<RS_Layer*>& layersDisable);
+    void setLockMulti(const QList<RS_Layer*>& layersToUnlock, const QList<RS_Layer*>& layersToLock);
+    void setPrintMulti(const QList<RS_Layer*>& layersNoPrint, const QList<RS_Layer*>& layersPrint);
+    void setConstructionMulti(const QList<RS_Layer*>& layersNoConstruction, const QList<RS_Layer*>& layersConstruction);
+
+    friend class RS_Graphic;
 
 private:
-	//! layers in the graphic
+    //! layers in the graphic
     QList<RS_Layer*> m_layers;
     //! List of registered LayerListListeners
     QList<RS_LayerListListener*> m_layerListListeners;
-    RS_Layer *m_activeLayer = nullptr;
+    RS_Layer* m_activeLayer = nullptr;
     /** Flag set if the layer list was modified and not yet saved. */
     bool m_modified = false;
 };

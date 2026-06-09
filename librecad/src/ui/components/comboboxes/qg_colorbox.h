@@ -27,9 +27,8 @@
 #ifndef QG_COLORBOX_H
 #define QG_COLORBOX_H
 
-#include <memory>
-
 #include <QComboBox>
+#include <memory>
 
 class QColor;
 class RS_Color;
@@ -37,18 +36,16 @@ class RS_Color;
 /**
  * A combobox for choosing a color.
  */
-class QG_ColorBox: public QComboBox {
+class QG_ColorBox : public QComboBox {
     Q_OBJECT
-
 public:
-    QG_ColorBox(QWidget* parent=nullptr, const char* name=nullptr);
-    QG_ColorBox(bool showByLayer, bool showUnchanged,
-                QWidget* parent=nullptr, const char* name=nullptr);
+    explicit QG_ColorBox(QWidget* parent = nullptr, const char* name = nullptr);
+    QG_ColorBox(bool showByLayer, bool showUnchanged, QWidget* parent = nullptr, const char* name = nullptr);
     ~QG_ColorBox() override;
 
     RS_Color getColor() const;
 
-    void addColor(QColor color, QString text);
+    void addColor(QColor color, const QString& text);
     void setColor(const RS_Color& color);
     void setLayerColor(const RS_Color& color);
 
@@ -56,24 +53,27 @@ public:
 
     bool isUnchanged() const;
 
-private slots:
+private
+    slots :
     void slotColorChanged(int index);
-signals:
+    signals :
     void colorChanged(const RS_Color& color);
+
 protected:
     std::unique_ptr<RS_Color> m_currentColor;
-    int findColor(const RS_Color& color);
+    int findColor(const RS_Color& color) const;
+
 private:
     int addCustomColor(const RS_Color& color);
     // add custom color items from rs_settings
     void readCustomColorSettings();
-    void writeCustomColorSettings();
+    void writeCustomColorSettings() const;
 
     int m_colorIndexStart = 0;
     bool m_showByLayer = true;
     bool m_showUnchanged = true;
     bool m_unchanged = true;
-    int addTemporaryCustomColor(const RS_Color &color);
+    int addTemporaryCustomColor(const RS_Color& color);
 };
 
 #endif

@@ -24,11 +24,10 @@
 **
 **********************************************************************/
 
-#include<iostream>
 #include "rs_patternlist.h"
 
 #include <QFileInfo>
-#include <QStringList>
+#include<iostream>
 
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
@@ -37,8 +36,8 @@
 #include "rs_system.h"
 
 RS_PatternList* RS_PatternList::instance() {
-	static RS_PatternList instance;
-	return &instance;
+    static RS_PatternList instance;
+    return &instance;
 }
 
 RS_PatternList::~RS_PatternList() = default;
@@ -50,22 +49,23 @@ RS_PatternList::~RS_PatternList() = default;
 void RS_PatternList::init() {
     RS_DEBUG->print("RS_PatternList::initPatterns");
 
-	QStringList list = RS_SYSTEM->getPatternList();
+    QStringList list = RS_SYSTEM->getPatternList();
 
-	patterns.clear();
+    m_patterns.clear();
 
-    foreach(auto const& s, list) {
+    foreach(auto const&s, list)
+    {
         RS_DEBUG->print("pattern: %s:", s.toLatin1().data());
 
-        QString const name = QFileInfo(s).baseName().toLower();
-        patterns.emplace(name, std::unique_ptr<RS_Pattern>{});
+        const QString name = QFileInfo(s).baseName().toLower();
+        m_patterns.emplace(name, std::unique_ptr<RS_Pattern>{});
 
         RS_DEBUG->print("base: %s", name.toLatin1().data());
     }
-    if (patterns.empty())
+    if (m_patterns.empty()) {
         RS_DIALOGFACTORY->commandMessage(QObject::tr("Hatch:: no pattern found. Please set pattern path in application preferences"));
+    }
 }
-
 
 /**
  * @return Pointer to the pattern with the given name or
@@ -77,51 +77,45 @@ std::unique_ptr<RS_Pattern> RS_PatternList::requestPattern(const QString& name) 
 
     QString name2 = name.toLower();
     RS_DEBUG->print("Pattern: name2: %s", name2.toLatin1().data());
-    if (patterns.count(name2) == 0 || patterns.at(name2) == nullptr) {
+    if (m_patterns.count(name2) == 0 || m_patterns.at(name2) == nullptr) {
         auto p = std::make_unique<RS_Pattern>(name2);
-        if (p!=nullptr) {
+        if (p != nullptr) {
             if (p->loadPattern()) {
-                patterns.emplace(name2,  std::unique_ptr<RS_Pattern>{});
-                patterns[name2].swap(p);
+                m_patterns.emplace(name2, std::unique_ptr<RS_Pattern>{});
+                m_patterns[name2].swap(p);
             }
             else {
-                patterns.erase(name2);
+                m_patterns.erase(name2);
             }
         }
         else {
-            LC_ERR<<"RS_PatternList::"<<__func__<<"(): loading pattern failed: "<<name2;
+            LC_ERR << "RS_PatternList::" << __func__ << "(): loading pattern failed: " << name2;
             RS_DIALOGFACTORY->commandMessage(QObject::tr("Hatch:: loading pattern failed: %1").arg(name2));
             return {};
         }
     }
 
-    if (patterns.count(name2) == 1) {
-        RS_DEBUG->print("name2: %s, size= %d", name2.toLatin1().data(),
-                        patterns[name2]->countDeep());
-        return std::unique_ptr<RS_Pattern>{static_cast<RS_Pattern*>(patterns[name2]->clone())};
-	}
+    if (m_patterns.count(name2) == 1) {
+        RS_DEBUG->print("name2: %s, size= %d", name2.toLatin1().data(), m_patterns[name2]->countDeep());
+        return std::unique_ptr<RS_Pattern>{static_cast<RS_Pattern*>(m_patterns[name2]->clone())};
+    }
 
     return {};
-
 }
 
-	
 bool RS_PatternList::contains(const QString& name) const {
-
-	return patterns.count(name.toLower());
-
+    return m_patterns.count(name.toLower()) != 0u;
 }
-
 
 /**
  * Dumps the patterns to stdout.
  */
-std::ostream& operator << (std::ostream& os, RS_PatternList& l) {
-
+std::ostream& operator <<(std::ostream& os, const RS_PatternList& l) {
     os << "Patternlist: \n";
-	for (auto const& pa: l.patterns)
-		if (pa.second)
-			os<< *pa.second << '\n';
-
+    for (const auto& [fst, snd] : l.m_patterns) {
+        if (snd) {
+            os << *snd << '\n';
+        }
+    }
     return os;
 }

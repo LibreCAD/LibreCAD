@@ -29,7 +29,7 @@
 
 #if _MSC_VER > 1000
 #pragma once
-#endif // _MSC_VER > 1000
+#endif
 
 /**
  * Used for exception handling.
@@ -53,4 +53,3 @@ class DL_GroupCodeExc : public DL_Exception {
 //    int groupCode;
 };
 #endif
-

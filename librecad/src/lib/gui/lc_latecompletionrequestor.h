@@ -31,4 +31,4 @@ public:
     virtual void onLateRequestCompleted(bool shouldBeSkipped) = 0;
 };
 
-#endif // LC_LATECOMPLETIONREQUESTOR_H
+#endif

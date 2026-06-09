@@ -37,4 +37,4 @@ private:
 };
 
 
-#endif // LC_ARROWHEADOPENARROW_H
+#endif

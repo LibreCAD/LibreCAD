@@ -33,14 +33,14 @@ class QC_MDIWindow;
 namespace LC_Printing
 {
     enum class PrinterType { Printer, PDF };
-    QPageSize::PageSizeId rsToQtPaperFormat(RS2::PaperFormat f);
+    QPageSize::PageSizeId rsToQtPaperFormat(RS2::PaperFormat paperFormat);
 
     /**
      * @brief Print - the implementation of drawing printing
      * @param mdiWindow - the mdiWindow to print
      * @param printerType - whether printing to a printer or a PDF file
      */
-    void Print(QC_MDIWindow &mdiWindow, PrinterType printerType);
+    void print(QC_MDIWindow &mdiWindow, PrinterType printerType);
 }
 
-#endif // LC_PRINTING_H
+#endif

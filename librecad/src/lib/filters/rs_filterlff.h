@@ -24,7 +24,6 @@
 **
 **********************************************************************/
 
-
 #ifndef RS_FILTERLFF_H
 #define RS_FILTERLFF_H
 
@@ -41,19 +40,19 @@ class RS_FilterLFF : public RS_FilterInterface {
 public:
     RS_FilterLFF();
 
-/**
+    /**
 * @return RS2::FormatLFF.
 */
-RS2::FormatType rtti() const{
+    RS2::FormatType rtti() const {
         return RS2::FormatLFF;
-}
-	
-    bool canImport(const QString& /*fileName*/, RS2::FormatType t) const  override{
-        return (t==RS2::FormatLFF);
     }
-	
-    bool canExport(const QString& /*fileName*/, RS2::FormatType t) const override {
-        return (t==RS2::FormatLFF);
+
+    bool canImport(const QString& /*fileName*/, const RS2::FormatType t) const override {
+        return t == RS2::FormatLFF;
+    }
+
+    bool canExport(const QString& /*fileName*/, const RS2::FormatType t) const override {
+        return t == RS2::FormatLFF;
     }
 
     bool fileImport(RS_Graphic& g, const QString& file, RS2::FormatType /*type*/) override;
@@ -62,9 +61,9 @@ RS2::FormatType rtti() const{
 
     void stream(std::ofstream& fs, double value);
 
-    static RS_FilterInterface *createFilter() {return new RS_FilterLFF();}
+    static RS_FilterInterface* createFilter() {
+        return new RS_FilterLFF();
+    }
 };
-
-
 
 #endif

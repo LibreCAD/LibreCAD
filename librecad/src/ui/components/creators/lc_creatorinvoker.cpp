@@ -1,5 +1,5 @@
 /*******************************************************************************
-*
+ *
  This file is part of the LibreCAD project, a 2D CAD program
 
  Copyright (C) 2025 LibreCAD.org
@@ -26,15 +26,15 @@
 #include <QMenu>
 #include <QMouseEvent>
 #include <QSettings>
+#include <QTimer>
 #include <QToolBar>
 #include <QVBoxLayout>
 
 #include "lc_actiongroupmanager.h"
 #include "lc_dialog.h"
-#include "lc_dlgmenuassigner.h"
-#include "lc_dlgwidgetcreator.h"
+#include "lc_dlg_menu_assigner.h"
+#include "lc_dlg_widget_creator.h"
 #include "qc_applicationwindow.h"
-#include "qc_mdiwindow.h"
 #include "qg_graphicview.h"
 #include "rs_settings.h"
 
@@ -44,46 +44,74 @@ LC_CreatorInvoker::LC_CreatorInvoker(QC_ApplicationWindow *appWin, LC_ActionGrou
 }
 
 void createCustomMenuForFirstRunIfNeeded() {
-    bool firstLoad = LC_GET_BOOL("FirstLoad", true);
+    const bool firstLoad = LC_GET_BOOL("FirstLoad", true);
     if (firstLoad) {
         QStringList list;
         list << "ZoomAuto";
         QSettings settings;
-        auto menuName = "AutoZoom";
-        auto key = QString("CustomMenus/%1").arg(menuName);
+        const auto menuName = "AutoZoom";
+        const auto key = QString("CustomMenus/%1").arg(menuName);
         settings.setValue(key, list);
 
-        LC_MenuActivator zoomActivator("",false, false, false, LC_MenuActivator::MIDDLE, LC_MenuActivator::DOUBLE_CLICK, false, RS2::EntityUnknown);
+        LC_MenuActivator zoomActivator("", false, false, false, LC_MenuActivator::MIDDLE, LC_MenuActivator::DBL_CLICK, false,
+                                       RS2::EntityUnknown);
         zoomActivator.update();
-        auto shortcut = zoomActivator.getShortcut();
-        auto activatorKey = QString("Activators/%1").arg(shortcut);
+        const auto shortcut = zoomActivator.getShortcut();
+        const auto activatorKey = QString("Activators/%1").arg(shortcut);
 
         settings.setValue(activatorKey, menuName);
     }
 }
 
-void LC_CreatorInvoker::createCustomToolbars(bool showToolTips) {
+void LC_CreatorInvoker::createCustomToolbars(const bool showToolTips) {
     m_showToolbarTooltips = showToolTips;
     QSettings settings;
+    settings.beginGroup("CustomToolbarsVisibility");
+    const QStringList visibleToolbars = settings.value("VisibleList").toStringList();
+    settings.endGroup();
+
     settings.beginGroup("CustomToolbars");
     const QStringList &customToolbars = settings.childKeys();
-
     for (const QString& key : customToolbars) {
         QList<QAction*> actionsList;
         auto actionNames = settings.value(key).toStringList();
-        for (const QString& actionName : actionNames) {
-            QAction* action = getAction(actionName);
-            if (action != nullptr)
-                actionsList.push_back(getAction(actionName));
+        bool hasActions = false;
+        for (const QString& actionName : std::as_const(actionNames)) {
+            if ("" == actionName){
+                actionsList.push_back(nullptr);
+            }
+            else{
+                const QAction* action = getAction(actionName);
+                if (action != nullptr){
+                    actionsList.push_back(getAction(actionName));
+                    hasActions = true;
+                }
+            }
         }
-        if (!actionsList.empty()) {
+        if (hasActions) {
             auto* toolbar = new QToolBar(key, m_appWindow);
             toolbar->setObjectName(key);
             if (m_showToolbarTooltips) {
                 toolbar->setToolTip(tr("Toolbar: %1 (Custom)").arg(key));
             }
-            toolbar->addActions(actionsList);
+            for (const auto action: actionsList){
+                if (action == nullptr){
+                    toolbar->addSeparator();
+                }
+                else{
+                    toolbar->addAction(action);
+                }
+            }
+            connect(toolbar, &QToolBar::visibilityChanged, this, &LC_CreatorInvoker::onCustomToolbarVisibilityChanged);
+            bool visible = visibleToolbars.contains(key);
+            // LC_ERR << "Custom TB creation " << key << (visible ? " VISIBLE" : " NOT_VISIBLE");
+            toolbar->setVisible(visible);
             m_appWindow->addToolBar(toolbar);
+            // due to some reasons, visibilty TRUE event comes even if toolbar is set as invisible (probably as part of add toolbar).
+            // therefore, we forcefully disable toolbar, if necessary, after some delay.
+            QTimer::singleShot(5, [toolbar, visible] {
+                toolbar->setVisible(visible);
+            });
         }
     }
 
@@ -100,19 +128,20 @@ void LC_CreatorInvoker::invokeToolbarCreator() {
 
     dlg.exec();
     dlg.deleteLater();
+    m_appWindow->recreateToolbarsMenu();
 }
 
-void LC_CreatorInvoker::createToolbar(const QString &toolbar_name, const QStringList& actionNames, int areaIndex) {
-    auto toolbar = m_appWindow->findChild<QToolBar *>(toolbar_name);
+void LC_CreatorInvoker::createToolbar(const QString &toolbarName, const QStringList& actionNames, const int areaIndex) const {
+    auto toolbar = m_appWindow->findChild<QToolBar *>(toolbarName);
 
-    if (toolbar) {
+    if (toolbar != nullptr) {
         toolbar->clear();
     }
     else {
-        toolbar = new QToolBar(toolbar_name, m_appWindow);
-        toolbar->setObjectName(toolbar_name);
+        toolbar = new QToolBar(toolbarName, m_appWindow);
+        toolbar->setObjectName(toolbarName);
         if (m_showToolbarTooltips) {
-            toolbar->setToolTip(tr("Toolbar: %1 (Custom)").arg(toolbar_name));
+            toolbar->setToolTip(tr("Toolbar: %1 (Custom)").arg(toolbarName));
         }
         Qt::ToolBarArea area;
         switch (areaIndex) {
@@ -136,13 +165,56 @@ void LC_CreatorInvoker::createToolbar(const QString &toolbar_name, const QString
     }
 
     for(const auto &key: actionNames) {
-        toolbar->addAction(getAction(key));
+        if ("" == key){
+            toolbar->addSeparator();
+        }
+        else{
+            toolbar->addAction(getAction(key));
+        }
     }
+
+    connect(toolbar, &QToolBar::visibilityChanged, this, &LC_CreatorInvoker::onCustomToolbarVisibilityChanged);
 }
 
-void LC_CreatorInvoker::destroyToolbar(const QString &toolbar_name) {
-    auto toolbar = m_appWindow->findChild<QToolBar *>(toolbar_name);
+void LC_CreatorInvoker::destroyToolbar(const QString &toolbarName) const {
+    const auto toolbar = m_appWindow->findChild<QToolBar *>(toolbarName);
+    toolbar->setVisible(false);
+    disconnect(toolbar, &QToolBar::visibilityChanged, this, &LC_CreatorInvoker::onCustomToolbarVisibilityChanged);
     delete toolbar;
+}
+
+void LC_CreatorInvoker::onCustomToolbarVisibilityChanged(const bool visible) {
+    const auto toolbar = dynamic_cast<QToolBar*>(sender());
+    if (toolbar != nullptr) {
+        const QString toolbarName = toolbar->objectName();
+        QSettings settings;
+        settings.beginGroup("CustomToolbarsVisibility");
+        QStringList visibleToolbars = settings.value("VisibleList").toStringList();
+
+        const qsizetype size = visibleToolbars.count();
+        int idx = -1;
+        for (qsizetype i = 0; i < size; i++) {
+            const QString& s = visibleToolbars.at(i);
+            if (s == toolbarName) {
+                idx = i;
+                break;
+            }
+        }
+        if (visible) {
+            if (idx == -1) {
+                visibleToolbars << toolbarName;
+            }
+        }
+        else {
+            if (idx != -1) {
+                visibleToolbars.remove(idx);
+            }
+        }
+        settings.setValue("VisibleList", visibleToolbars);
+        settings.endGroup();
+
+        // LC_ERR << "TB_Visible " << toolbarName << (visible ? " Yes" : " no");
+    }
 }
 
 void LC_CreatorInvoker::invokeMenuCreator() {
@@ -151,21 +223,21 @@ void LC_CreatorInvoker::invokeMenuCreator() {
     loadMenuActivators();
 }
 
-bool LC_CreatorInvoker::getMenuActionsForMouseEvent(QMouseEvent* event, RS_Entity* entity, QStringList& actions) {
-    LC_MenuActivator* activatorForEntityType {nullptr};
-    LC_MenuActivator* activatorForAnyEntity{nullptr};
-    LC_MenuActivator* activatorForEitherEntity{nullptr};
-    LC_MenuActivator* activatorForNoEntity{nullptr};
-    bool hasEntity = entity != nullptr;
+bool LC_CreatorInvoker::getMenuActionsForMouseEvent(const QMouseEvent* event, const RS_Entity* entity, QStringList& actions) {
+    const LC_MenuActivator* activatorForEntityType {nullptr};
+    const LC_MenuActivator* activatorForAnyEntity{nullptr};
+    const LC_MenuActivator* activatorForEitherEntity{nullptr};
+    const LC_MenuActivator* activatorForNoEntity{nullptr};
+    const bool hasEntity = entity != nullptr;
 
     RS2::EntityType entityType = RS2::EntityUnknown;
     if (hasEntity) {
         entityType = entity->rtti();
     }
 
-    for (auto a: m_menuActivators) {
+    for (const auto a: std::as_const(m_menuActivators)) {
         if (a->isEventApplicable(event)) {
-            RS2::EntityType activatorEntityType = a->getEntityType();
+            const RS2::EntityType activatorEntityType = a->getEntityType();
             if (a->isEntityRequired()) {
                 if (hasEntity) {
                     if (activatorEntityType == RS2::EntityUnknown) {
@@ -188,14 +260,12 @@ bool LC_CreatorInvoker::getMenuActionsForMouseEvent(QMouseEvent* event, RS_Entit
                 if (hasEntity) {
                     continue;
                 }
-                else {
-                    activatorForNoEntity = a;
-                }
+                activatorForNoEntity = a;
             }
         }
     }
 
-    LC_MenuActivator*  activatorToUse {nullptr};
+    const LC_MenuActivator*  activatorToUse {nullptr};
 
     if (hasEntity) {
         if (activatorForEntityType != nullptr) {
@@ -225,21 +295,21 @@ bool LC_CreatorInvoker::getMenuActionsForMouseEvent(QMouseEvent* event, RS_Entit
         }
     }
     else {
-        QString menuName = activatorToUse->getMenuName();
+        const QString menuName = activatorToUse->getMenuName();
 
-        QSettings settings;
-        auto widget = QString("CustomMenus/%1").arg(menuName);
-        auto value = settings.value(widget);
+        const QSettings settings;
+        const auto widget = QString("CustomMenus/%1").arg(menuName);
+        const auto value = settings.value(widget);
         if (value.isValid()) {
-            QStringList s_list = value.toStringList();
+            const QStringList sList = value.toStringList();
             actions.clear();
-            actions.append(s_list);
+            actions.append(sList);
         }
     }
     return mayInvokeDefaultMenu;
 }
 
-bool LC_CreatorInvoker::isDefaultMenuInvokerEvent(QMouseEvent* event) {
+bool LC_CreatorInvoker::isDefaultMenuInvokerEvent(const QMouseEvent* event) {
     return event->modifiers() == Qt::NoModifier && event->button() == Qt::RightButton && event->type() == QEvent::MouseButtonRelease;
 }
 
@@ -252,7 +322,7 @@ void LC_CreatorInvoker::loadMenuActivators() {
     LC_GROUP("Activators");
     auto activators = LC_CHILD_KEYS();
 
-    for (auto key : activators) {
+    for (const auto &key : std::as_const(activators)) {
         LC_MenuActivator* activator = LC_MenuActivator::fromShortcut(key);
         if (activator != nullptr) {
             QString menuName = LC_GET_STR(key);
@@ -263,6 +333,6 @@ void LC_CreatorInvoker::loadMenuActivators() {
     LC_GROUP_END();
 }
 
-QAction *LC_CreatorInvoker::getAction(const QString &key) {
+QAction *LC_CreatorInvoker::getAction(const QString &key) const {
     return m_actionGroupManager->getActionByName(key);
 }

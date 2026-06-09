@@ -15,7 +15,7 @@
   </property>
   <layout class="QGridLayout" name="gridLayout" rowstretch="10,0,0">
    <property name="leftMargin">
-    <number>2</number>
+    <number>0</number>
    </property>
    <property name="topMargin">
     <number>1</number>
@@ -150,7 +150,6 @@ li.checked::marker { content: &quot;\2612&quot;; }
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../../../../res/icons/icons.qrc"/>
   <include location="../../../../res/icons/icons.qrc"/>
  </resources>
  <connections/>

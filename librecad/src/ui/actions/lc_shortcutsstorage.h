@@ -40,4 +40,4 @@ public:
     static int saveShortcuts(const QString &filename, const QList<LC_ShortcutInfo *> &items, bool resetToDefault = false);
 };
 
-#endif // COMMANDFILE_H
+#endif

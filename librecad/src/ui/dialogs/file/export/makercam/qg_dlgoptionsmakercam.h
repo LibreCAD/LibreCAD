@@ -24,27 +24,28 @@
 #define QG_DLGOPTIONSMAKERCAM_H
 
 #include "ui_qg_dlgoptionsmakercam.h"
-// fixme - sand - MakerCam is dead now - is it still relevant?
-class QG_DlgOptionsMakerCam : public QDialog, public Ui::QG_DlgOptionsMakerCam{
-    Q_OBJECT
 
-public:
-    QG_DlgOptionsMakerCam(QWidget* parent = nullptr, bool modal = false, Qt::WindowFlags fl = {});
-	~QG_DlgOptionsMakerCam() = default;
+// fixme - sand - MakerCam is dead now - is it still relevant?
+class QG_DlgOptionsMakerCam : public QDialog, public Ui::QG_DlgOptionsMakerCam {
+    Q_OBJECT public:
+    explicit QG_DlgOptionsMakerCam(QWidget* parent = nullptr, bool modal = false, Qt::WindowFlags fl = {});
+    ~QG_DlgOptionsMakerCam() override = default;
 
 public slots:
     void validate();
     void cancel();
+
 protected slots:
     void languageChange();
+
 private:
     void loadSettings();
-    void updateCheckbox(QCheckBox* checkbox, QString name, int defaultValue);
-    void updateDoubleSpinBox(QDoubleSpinBox* dSpinBox, QString name, double defaultValue);
+    void updateCheckbox(QCheckBox* checkbox, const QString& name, int defaultValue);
+    void updateDoubleSpinBox(QDoubleSpinBox* dSpinBox, const QString& name, double defaultValue);
 
     void saveSettings();
-    void saveBoolean(QString name, QCheckBox* checkbox);
-    void saveDouble(QString name, QDoubleSpinBox* dSpinBox);
+    void saveBoolean(const QString& name, const QCheckBox* checkbox);
+    void saveDouble(const QString& name, const QDoubleSpinBox* dSpinBox);
 };
 
 #endif

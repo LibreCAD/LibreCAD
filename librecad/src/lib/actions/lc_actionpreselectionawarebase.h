@@ -28,47 +28,50 @@
 class LC_ActionPreSelectionAwareBase:public RS_ActionSelectBase{
     Q_OBJECT
 public:
-    LC_ActionPreSelectionAwareBase(const char *name, LC_ActionContext *actionContext, RS2::ActionType actionType = RS2::ActionNone,
-        const QList<RS2::EntityType> &entityTypeList = {}, bool countSelectionDeep = false);
-    ~LC_ActionPreSelectionAwareBase() override;
-    void mousePressEvent(QMouseEvent*) override;
     void init(int status) override;
     void drawSnapper() override;
-
 protected:
+    LC_ActionPreSelectionAwareBase(const QString &name, LC_ActionContext *actionContext, RS2::ActionType actionType = RS2::ActionNone,
+        const QList<RS2::EntityType> &entityTypeList = {});
+    ~LC_ActionPreSelectionAwareBase() override;
+
+    bool isKeepModifiedEntitiesSelected() const;
+
     bool m_selectionComplete = false;
-    bool m_countDeep = false;
-    std::vector<RS_Entity*> m_selectedEntities;
+    QList<RS_Entity*> m_selectedEntities;
 
     RS_Vector m_selectionCorner1 = RS_Vector(false);
     bool m_inBoxSelectionMode = false;
+    bool m_lmbPressed = false;
     bool m_forceSelectContextEntity = false;
+    bool m_secondMousePressWhileInSelectionMode = false;
 
     virtual bool isForceSelectContextEntity() {return true;}
     void doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) override;
     void selectionFinishedByKey(QKeyEvent *e, bool escape) override;
-    void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
-    void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
+    void onMouseRightButtonRelease(int status, const LC_MouseEvent* e) override;
+    void onMouseLeftButtonRelease(int status, const LC_MouseEvent* e) override;
+    void onMouseLeftButtonPress(int status, const LC_MouseEvent* e) override;
     virtual void applyBoxSelectionModeIfNeeded(RS_Vector mouse);
     virtual void onSelectionCompleted(bool singleEntity, bool fromInit);
-    virtual void onMouseLeftButtonReleaseSelected(int status, LC_MouseEvent *pEvent);
-    virtual void onMouseRightButtonReleaseSelected(int status, LC_MouseEvent *pEvent);
-    virtual void onMouseMoveEventSelected(int status, LC_MouseEvent *e);
-    virtual void updateMouseButtonHintsForSelection() = 0;
-    virtual void updateMouseButtonHintsForSelected(int status);
-    virtual bool isAllowTriggerOnEmptySelection(){return true;};
-    virtual void doTrigger(bool keepSelected) = 0;
-    virtual void finishMouseMoveOnSelection(LC_MouseEvent *event);
-    virtual void proceedSelectedEntity(LC_MouseEvent* e);
+    virtual void proceedSelectionComplete(bool allowEmptySelection, bool fromInit, unsigned int selectedCount);
+    virtual void onMouseLeftButtonReleaseSelected(int status, const LC_MouseEvent* event);
+    virtual void onMouseRightButtonReleaseSelected(int status, const LC_MouseEvent* event);
+    virtual void onMouseMoveEventSelected(int status, const LC_MouseEvent* event);
+    virtual void updateActionPromptForSelection() = 0;
+    virtual void updateActionPromptForSelected(int status);
+    virtual bool isAllowTriggerOnEmptySelection(){return true;}
+    virtual void doTriggerSelectionUpdate([[maybe_unused]]bool keepSelected, [[maybe_unused]]const LC_DocumentModificationBatch& ctx) {}
+    void doTriggerSelections(const LC_DocumentModificationBatch& ctx) override;
+    virtual void finishMouseMoveOnSelection(const LC_MouseEvent* event);
+    virtual void proceedSelectedEntity(const LC_MouseEvent* e);
+    void endBoxSelectionMode(const LC_MouseEvent* e);
     RS2::CursorType doGetMouseCursor(int status) override;
     virtual RS2::CursorType doGetMouseCursorSelected(int status);
-    unsigned int countSelectedEntities();
+    unsigned int collectSelectedEntities();
     void setSelectionComplete(bool allowEmptySelection, bool fromInit);
-    void updateMouseButtonHints() override;
+    void updateActionPrompt() override;
     void doSelectEntity(RS_Entity *entityToSelect, bool selectContour) const override;
-    void doTrigger() override;
-    void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
-
+    void onMouseMoveEvent(int status, const LC_MouseEvent* e) override;
 };
-
-#endif // LC_ACTIONPRESELECTIONAWAREBASE_H
+#endif

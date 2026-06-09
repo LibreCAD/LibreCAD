@@ -25,7 +25,6 @@
 
 #include <QItemSelection>
 
-#include "rs.h"
 #include "lc_graphicviewaware.h"
 #include "lc_graphicviewawarewidget.h"
 
@@ -53,14 +52,13 @@ public:
     void restoreView(const QString &name);
     void restoreSelectedView();
     void fillViewsList(QList<LC_View *> &list) const;
-    QIcon getViewTypeIcon(LC_View *view) const;
+    QIcon getViewTypeIcon(const LC_View *view) const;
     QWidget* createSelectionWidget(QAction* saveViewAction, QAction* defaultAction);
 signals:
     void viewListChanged(int itemsCount);
 public slots:
     void addNewView();
     void onUcsListChanged() const;
-    void updateWidgetSettings() const;
 protected slots:
     void invokeOptionsDialog();
     void updateView();
@@ -68,14 +66,15 @@ protected slots:
     void removeView();
     void removeAllViews();
     void renameView();
-    void onCustomContextMenu(const QPoint &point);
-    void slotTableClicked(const QModelIndex& layerIdx);
+    void onCustomContextMenu(const QPoint &pos);
+    void slotTableClicked(const QModelIndex& modelIndex);
     void onTableSelectionChanged(const QItemSelection &selected, const QItemSelection &deselected) const;
     void onTableDoubleClicked();
 protected:
     void doCreateNewView(const QString& name);
     void updateViewsUCSNames() const;
     void refresh();
+    QLayout* getTopLevelLayout() const override;
 private:
     Ui::LC_NamedViewsListWidget *ui;
     LC_ViewList* m_currentViewList{nullptr};
@@ -83,20 +82,16 @@ private:
     LC_NamedViewsListOptions *m_options {nullptr};
     LC_NamedViewsButton *m_namedViewsButton {nullptr};
     QAction* m_saveViewAction {nullptr};
-    RS2::LinearFormat m_linearFormat;
-    RS2::AngleFormat m_angleFormat;
-    int m_precision;
-    int m_anglePrecision;
-    RS2::Unit drawingUnit;
     RS_GraphicView *m_graphicView {nullptr};
     LC_GraphicViewport *m_viewport {nullptr};
+    int m_itemHeight = 21;
 
     void initToolbar() const;
     void updateData(bool restoreSelectionIfPossible);
     void loadOptions();
     void createModel();
-    void restoreView(LC_View* view);
-    void updateExistingView(LC_View *pView);
+    void restoreView(const LC_View* view);
+    void updateExistingView(LC_View *view);
     LC_View *getSelectedView() const;
     void removeExistingView(LC_View *view) const;
     QModelIndex getSelectedItemIndex() const;
@@ -108,7 +103,6 @@ private:
     void selectView(const LC_View *view) const;
     int getSingleSelectedRow() const;
     void restoreSingleSelectedRow(bool restoreSelectionIfPossible, int selectedRow) const;
-    void loadFormats(const RS_Graphic *graphic);
 };
 
-#endif // LC_NAMEDVIEWSLISTWIDGET_H
+#endif

@@ -29,6 +29,7 @@
 #define RS_ACTIONINFODIST_H
 
 #include <memory>
+
 #include "rs_previewactioninterface.h"
 
 /**
@@ -40,7 +41,7 @@
 class RS_ActionInfoDist:public RS_PreviewActionInterface {
     Q_OBJECT
 public:
-    RS_ActionInfoDist(LC_ActionContext *actionContext);
+    explicit RS_ActionInfoDist(LC_ActionContext *actionContext);
     ~RS_ActionInfoDist() override;
     void init(int status) override;
 protected:
@@ -55,12 +56,13 @@ protected:
     std::unique_ptr<ActionData> m_actionData;
 
     RS2::CursorType doGetMouseCursor(int status) override;
-    void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
-    void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
-    void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
-    void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
-    void updateMouseButtonHints() override;
-    void updateInfoCursor(const RS_Vector &mouse, const RS_Vector &startPoint);
+    void onMouseLeftButtonRelease(int status, const LC_MouseEvent* e) override;
+    void onMouseRightButtonRelease(int status, const LC_MouseEvent* e) override;
+    void onMouseMoveEvent(int status, const LC_MouseEvent* e) override;
+    void onCoordinateEvent(int status, bool isZero, const RS_Vector &coord) override;
+    void updateActionPrompt() override;
+    void updateInfoCursor(const RS_Vector &mouse, const RS_Vector &startPoint) const;
     void doTrigger() override;
+    bool isInVisualSnapStatus(int status) override;
 };
 #endif

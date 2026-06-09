@@ -24,7 +24,7 @@
 #ifndef LC_DLDDIMORDINATE_H
 #define LC_DLDDIMORDINATE_H
 
-#include "../dialogs/entity/lc_entitypropertiesdlg.h"
+#include "lc_entitypropertiesdlg.h"
 
 class LC_DimOrdinate;
 
@@ -48,4 +48,4 @@ private:
     Ui::LC_DlgDimOrdinate *ui;
 };
 
-#endif // LC_DLDDIMORDINATE_H
+#endif

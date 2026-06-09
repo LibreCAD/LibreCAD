@@ -24,7 +24,8 @@
 **
 **********************************************************************/
 
-#include <cmath>
+#include "rs_painterqtold.h"
+
 #include <iostream>
 #include <memory>
 
@@ -36,14 +37,13 @@
 #include "rs_line.h"
 #include "rs_linetypepattern.h"
 #include "rs_math.h"
-#include "rs_painterqtold.h"
 #include "rs_polyline.h"
 #include "rs_spline.h"
 
 namespace {
 // Convert fro LibreCAD line style pattern to QPen Dash Pattern.
 // QPen dash pattern by default is in the unit of pixel
-QVector<qreal> rsToQDashPattern(RS2::LineType t, double screenWidth, double dpmm)
+QVector<qreal> rsToQDashPattern(const RS2::LineType t, const double screenWidth, double dpmm)
 {
     // dash pattern is in mm
     // d*dpmm/screenWidth, so, the scaling factor k = dpmm/screenWidth
@@ -52,7 +52,7 @@ QVector<qreal> rsToQDashPattern(RS2::LineType t, double screenWidth, double dpmm
 
     const std::vector<double>& pattern = RS_LineTypePattern::getPattern(t)->pattern;
     QVector<qreal> dashPattern;
-    std::transform(pattern.cbegin(), pattern.cend(), std::back_inserter(dashPattern), [k](double d) {
+    std::transform(pattern.cbegin(), pattern.cend(), std::back_inserter(dashPattern), [k](const double d) {
         return std::max(k * std::abs(d), 1.);
     });
     dashPattern.resize(dashPattern.size() - dashPattern.size() % 2);
@@ -63,7 +63,7 @@ QVector<qreal> rsToQDashPattern(RS2::LineType t, double screenWidth, double dpmm
  * Wrapper for Qt
  * convert RS2::LineType to Qt::PenStyle
  */
-Qt::PenStyle rsToQtLineType(RS2::LineType t) {
+Qt::PenStyle rsToQtLineType(const RS2::LineType t) {
     switch (t) {
     case RS2::NoPen:
         return Qt::NoPen;
@@ -106,9 +106,7 @@ Qt::PenStyle rsToQtLineType(RS2::LineType t) {
  */
 class EllipseHelper {
 public:
-    EllipseHelper(const RS_Vector& origin,
-                  double radius1, double radius2,
-                  double angle):
+    EllipseHelper(const RS_Vector& origin, const double radius1, const double radius2, const double angle):
         m_origin{origin}
         , m_radius1{radius1}
         , m_radius2{radius2}
@@ -120,7 +118,7 @@ public:
      * @param a - double, an elliptic angle
      * @return RS_Vector - the elliptic point for the given angle
      */
-    RS_Vector getEllipsePoint(double a) const  {
+    RS_Vector getEllipsePoint(const double a) const  {
         auto point = m_origin + RS_Vector{a}.scale({m_radius1, - m_radius2});
         point.rotate(m_origin, -m_angle);
         return point;
@@ -131,7 +129,7 @@ public:
      * @param a - double, an elliptic angle
      * @return QPointF - the elliptic point for the given angle
      */
-    QPointF getPointF(double a) const
+    QPointF getPointF(const double a) const
     {
         auto p = getEllipsePoint(a);
         return {p.x, p.y};
@@ -139,14 +137,14 @@ public:
 
     // Arc clipping will generate an arc without cap/connecting style
     // Draw short line segment at each end;
-    std::vector<QPainterPath> getEndSegments(double angle1, double angle2) const
+    std::vector<QPainterPath> getEndSegments(const double angle1, const double angle2) const
     {
         const double r = std::min(m_radius1, m_radius2);
         if (r <= 1.)
             return {};
         // draw line segments of 0.01 degree or 1 device independent coordinate
         const double da = std::min(0.01, 1./r);
-        QPointF points[] = { getPointF(angle1), getPointF(angle1 + da),
+        const QPointF points[] = { getPointF(angle1), getPointF(angle1 + da),
                             getPointF(angle2 - da), getPointF(angle2)};
         QPainterPath path1{points[0]};
         path1.lineTo(points[1]);
@@ -157,14 +155,14 @@ public:
 
     // For a given elliptic arc, create a QPainterPath to allow clipping the complete QR
     // to the desirable
-    QPainterPath getArcClipping(double angle1, double angle2, double width) const
+    QPainterPath getArcClipping(const double angle1, const double angle2, const double width) const
     {
         // Elliptic arc: QPainter doesn't support drawing an elliptic arc natively.
         // Create a QPainterPath to clip the complete ellipse to draw an arc.
         // Get a point on ellipse by the elliptic angle
 
-        RS_Vector p1 = getEllipsePoint(angle1);
-        RS_Vector p2 = getEllipsePoint(angle2);
+        const RS_Vector p1 = getEllipsePoint(angle1);
+        const RS_Vector p2 = getEllipsePoint(angle2);
         // Find a direction vector along the two end points of the arc
         auto dp = (p2 - p1).normalized();
         // Find a point on the arc
@@ -172,15 +170,15 @@ public:
         // Find a direction normal to the line p1-p2
         p3 -= dp * p3.dotP(dp);
         // the QPainterPath should be larger
-        double ellipseSize = 2.0 * std::max(m_radius1, m_radius2);
+        const double ellipseSize = 2.0 * std::max(m_radius1, m_radius2);
         // make the vector larger than the ellipse size in any direction
         p3 *= ellipseSize/p3.magnitude();
 
         // the inner points
         const double thickness = width/2. + 1.;
         // normal directions
-        RS_Vector n1 = getN(angle1) * thickness;
-        RS_Vector n2 = getN(angle2) * thickness;
+        const RS_Vector n1 = getN(angle1) * thickness;
+        const RS_Vector n2 = getN(angle2) * thickness;
         RS_Vector p1inner = p1 - n1;
         RS_Vector p2inner = p2 - n2;
         // the outer points
@@ -191,7 +189,7 @@ public:
         // The path goes to inner points, and cut the arc along normal directions
         // from outer points, the path extends to cover the whole ellipse size
         // The outer points will include the ellipse middle point.
-        std::vector<RS_Vector> vertices = {{
+        const std::vector<RS_Vector> vertices = {{
             p1inner, p1outer, p1outer - dp, p1outer - dp + p3,
             p2outer + dp + p3, p2outer + dp, p2outer, p2inner
         }};
@@ -203,7 +201,7 @@ public:
         return path;
     }
 
-    RS_Vector getN(double a) const
+    RS_Vector getN(const double a) const
     {
         RS_Vector normal = RS_Vector{a}.scale({m_radius2, -m_radius1});
         normal.rotate(-m_angle).normalize();
@@ -226,8 +224,8 @@ public:
     {
         painter.save();
         // set pen
-        RS_Pen& rsPen = painter.getRsPen();
-        Qt::PenStyle styleToUse = rsPen.getLineType() == RS2::SolidLine ? Qt::SolidLine : Qt::CustomDashLine;
+        const RS_Pen& rsPen = painter.getRsPen();
+        const Qt::PenStyle styleToUse = rsPen.getLineType() == RS2::SolidLine ? Qt::SolidLine : Qt::CustomDashLine;
         QPen qPen = painter.pen();
         qPen.setStyle(styleToUse);
         qPen.setColor(rsPen.getColor());
@@ -242,8 +240,8 @@ public:
             if (!dashPattern.isEmpty()) {
                 qPen.setDashPattern(std::move(dashPattern));
 
-                double dpmm = std::max(painter.getDpmm(), 1e-6);
-                double k = dpmm / std::max(rsPen.getScreenWidth(), 1.);
+                const double dpmm = std::max(painter.getDpmm(), 1e-6);
+                const double k = dpmm / std::max(rsPen.getScreenWidth(), 1.);
                 qPen.setDashOffset(rsPen.dashOffset() * k);
                 // Cap style at line end points
                 // Join style
@@ -273,26 +271,26 @@ private:
 void drawArc(QPainterPath& path, const RS_Arc& arc, const LC_Rect& viewRect, const std::function<QPointF(const RS_Vector&)>& mapping)
 {
     auto mapingRs=[&mapping](const RS_Vector& vp) -> RS_Vector {
-        QPointF point = mapping(vp);
+        const QPointF point = mapping(vp);
         return {point.x(), point.y()};
     };
-    LC_Rect arcRect{mapingRs(arc.getMin()), mapingRs(arc.getMax())};
+    const LC_Rect arcRect{mapingRs(arc.getMin()), mapingRs(arc.getMax())};
     if (arcRect.inArea(viewRect) && arc.isReversed()) {
         // QPainterPath::arcTo() can only draw along the increasing angle direction.
         // Approximate a reversed arc by line segments. Maximum step about 5 degrees
-        double a0 = arc.getAngle1();
-        double a1 = arc.isReversed() ? a0 - arc.getAngleLength() : a0 + arc.getAngleLength();
-        int steps = int(arc.getAngleLength()/(M_PI/36.)) + 2;
-        double dA = (a1-a0)/steps;
+        const double a0 = arc.getAngle1();
+        const double a1 = arc.isReversed() ? a0 - arc.getAngleLength() : a0 + arc.getAngleLength();
+        const int steps = int(arc.getAngleLength()/(M_PI/36.)) + 2;
+        const double dA = (a1-a0)/steps;
         for (int i=0; i<= steps; ++i) {
-            double a = a0 + dA * i;
+            const double a = a0 + dA * i;
             path.lineTo(mapping(arc.getCenter() + RS_Vector{a} * arc.getRadius()));
         }
     } else {
         double a0 = arc.getAngle1();
-        QPointF center = mapping(arc.getCenter());
-        QPointF rightMost = mapping(arc.getCenter() + RS_Vector{arc.getRadius(), 0.});
-        double r = std::hypot(center.x() - rightMost.x(), center.y() - rightMost.y());
+        const QPointF center = mapping(arc.getCenter());
+        const QPointF rightMost = mapping(arc.getCenter() + RS_Vector{arc.getRadius(), 0.});
+        const double r = std::hypot(center.x() - rightMost.x(), center.y() - rightMost.y());
         if (arc.isReversed()) {
             // if the arc is not enclosed in the viewport, we don't care about DashPattern offsets
             // draw the arc along the positive angular direction; ignore reversed drawing
@@ -333,10 +331,10 @@ QPainterPath createPolyline(const RS_Polyline& polyline, const RS_GraphicView& v
         return {vGui.x, vGui.y};
     };
     auto mapingRs=[&toGui](const RS_Vector& vp) -> RS_Vector {
-        QPointF point = toGui(vp);
+        const QPointF point = toGui(vp);
         return {point.x(), point.y()};
     };
-    LC_Rect viewRect{mapingRs(view.getViewRect().minP()), mapingRs(view.getViewRect().maxP())};
+    const LC_Rect viewRect{mapingRs(view.getViewRect().minP()), mapingRs(view.getViewRect().maxP())};
     path.moveTo(toGui(static_cast<RS_AtomicEntity*>(*polyline.begin())->getStartpoint()));
 
     for(RS_Entity* entity: polyline)
@@ -353,14 +351,14 @@ QPainterPath createPolyline(const RS_Polyline& polyline, const RS_GraphicView& v
 RS_PainterQtOld::RS_PainterQtOld( QPaintDevice* pd)
     : QPainter{pd} {}
 
-void RS_PainterQtOld::moveTo(int x, int y) {
+void RS_PainterQtOld::moveTo(const int x, const int y) {
     //RVT_PORT changed from QPainter::moveTo(x,y);
     rememberX=x;
     rememberY=y;
 }
 
 
-void RS_PainterQtOld::lineTo(int x, int y) {
+void RS_PainterQtOld::lineTo(const int x, const int y) {
     // RVT_PORT changed from QPainter::lineTo(x, y);
     QPainterPath path;
     path.moveTo(rememberX,rememberY);
@@ -384,10 +382,10 @@ void RS_PainterQtOld::drawGridPoint(const double &x, const double &y) {
 /**
  * Draws a point at (x1, y1).
  */
-void RS_PainterQtOld::drawPoint(const RS_Vector& p, int pdmode, int pdsize) {
-    int screenX = toScreenX(p.x);
-    int screenY = toScreenY(p.y);
-    int halfPDSize = pdsize/2;
+void RS_PainterQtOld::drawPoint(const RS_Vector& p, const int pdmode, const int pdsize) {
+    const int screenX = toScreenX(p.x);
+    const int screenY = toScreenY(p.y);
+    const int halfPDSize = pdsize/2;
 
     /*	PDMODE values =>
         bits 0-3 = 0, centre dot
@@ -431,15 +429,15 @@ void RS_PainterQtOld::drawPoint(const RS_Vector& p, int pdmode, int pdsize) {
     /*	Surrounding circle if required  */
     if (DXF_FORMAT_PDMode_hasEncloseCircle(pdmode)) {
         /*	Approximate circle by an octagon  */
-        int xMin = screenX-halfPDSize;
-        int xMax = screenX+halfPDSize;
-        int yMin = screenY-halfPDSize;
-        int yMax = screenY+halfPDSize;
-        int octOffset = halfPDSize * 0.71;
-        int xOctMin = screenX - octOffset;
-        int xOctMax = screenX + octOffset;
-        int yOctMin = screenY - octOffset;
-        int yOctMax = screenY + octOffset;
+        const int xMin = screenX-halfPDSize;
+        const int xMax = screenX+halfPDSize;
+        const int yMin = screenY-halfPDSize;
+        const int yMax = screenY+halfPDSize;
+        const int octOffset = halfPDSize * 0.71;
+        const int xOctMin = screenX - octOffset;
+        const int xOctMax = screenX + octOffset;
+        const int yOctMin = screenY - octOffset;
+        const int yOctMax = screenY + octOffset;
 
         QPainter::drawLine(screenX, yMin, xOctMax, yOctMin);
         QPainter::drawLine(screenX, yMin, xOctMin, yOctMin);
@@ -454,10 +452,10 @@ void RS_PainterQtOld::drawPoint(const RS_Vector& p, int pdmode, int pdsize) {
 
     /*	Surrounding square if required  */
     if (DXF_FORMAT_PDMode_hasEncloseSquare(pdmode)) {
-        int xMin = screenX-halfPDSize;
-        int xMax = screenX+halfPDSize;
-        int yMin = screenY-halfPDSize;
-        int yMax = screenY+halfPDSize;
+        const int xMin = screenX-halfPDSize;
+        const int xMax = screenX+halfPDSize;
+        const int yMin = screenY-halfPDSize;
+        const int yMax = screenY+halfPDSize;
 
         QPainter::drawLine(xMin, yMin, xMax, yMin);
         QPainter::drawLine(xMin, yMax, xMax, yMax);
@@ -510,11 +508,7 @@ void RS_PainterQtOld::drawLine(const double &x1, const double &y1, const double 
  * @param a2 Angle 2 in rad
  * @param reversed true: clockwise, false: counterclockwise
  */
-void RS_PainterQtOld::drawArc( const RS_Vector& cp,
-                           double radius,
-                           double a1,
-                           double a2,
-                           bool reversed)
+void RS_PainterQtOld::drawArc( const RS_Vector& cp, const double radius, const double a1, const double a2, const bool reversed)
 {
 
     PainterGuard painterGuard{*this};
@@ -524,14 +518,14 @@ void RS_PainterQtOld::drawArc( const RS_Vector& cp,
         return;
     }
 
-    QPointF qCenter{cp.x, cp.y};
-    QPointF qSize{radius, radius};
+    const QPointF qCenter{cp.x, cp.y};
+    const QPointF qSize{radius, radius};
 
     // The rect for the circle
-    QRectF circleRect{qCenter - qSize, qCenter + qSize};
+    const QRectF circleRect{qCenter - qSize, qCenter + qSize};
 
     // angles in degrees
-    double startAngle = RS_Math::rad2deg(reversed ? a2 : a1);
+    const double startAngle = RS_Math::rad2deg(reversed ? a2 : a1);
     //    double endAngle = RS_Math::rad2deg(reversed ? a1 : a2);
     double angularLength = RS_Math::rad2deg(RS_Math::getAngleDifference(a1, a2, reversed));
     // Issue #1896: zero angular length arc is not supported, assuming 360 degree arcs
@@ -563,9 +557,7 @@ void RS_PainterQtOld::drawArc( const RS_Vector& cp,
  * @param a2 Angle 2 in rad
  * @param reversed true: clockwise, false: counterclockwise
  */
-void RS_PainterQtOld::drawArcMac(const RS_Vector& cp, double radius,
-                              double a1, double a2,
-                              bool reversed) {
+void RS_PainterQtOld::drawArcMac(const RS_Vector& cp, const double radius, const double a1, double a2, const bool reversed) {
     RS_DEBUG->print("RS_PainterQt::drawArcMac");
     if(radius<=0.5) {
         drawGridPoint(cp);
@@ -650,7 +642,7 @@ void RS_PainterQtOld::drawArcMac(const RS_Vector& cp, double radius,
  * @param cp Center point
  * @param radius Radius
  */
-void RS_PainterQtOld::drawCircle(const RS_Vector& cp, double radius)
+void RS_PainterQtOld::drawCircle(const RS_Vector& cp, const double radius)
 {
     // RAII style: setting and restoring QPen dashPattern
     PainterGuard painterGuard{*this};
@@ -662,11 +654,8 @@ void RS_PainterQtOld::drawCircle(const RS_Vector& cp, double radius)
 /**
  * Draws a rotated ellipse arc.
  */
-void RS_PainterQtOld::drawEllipse(const RS_Vector& cp,
-                               double radius1, double radius2,
-                               double angle,
-                               double a1, double a2,
-                               bool reversed) {
+void RS_PainterQtOld::drawEllipse(const RS_Vector& cp, const double radius1, const double radius2, const double angle,
+                               double a1, double a2, const bool reversed) {
 
     if (reversed)
         std::swap(a1, a2);
@@ -675,15 +664,15 @@ void RS_PainterQtOld::drawEllipse(const RS_Vector& cp,
     // shift a2 - a1 to the range of 0 to 2 pi
     a2 = a1+ M_PI + std::remainder(a2 - a1 - M_PI, 2. * M_PI);
 
-    QPointF center = {double(toScreenX(cp.x)), double(toScreenY(cp.y))};
-    RS_Vector origin{center.x(), center.y()};
+    const QPointF center = {double(toScreenX(cp.x)), double(toScreenY(cp.y))};
+    const RS_Vector origin{center.x(), center.y()};
 
     // RAII style QPainter state saving/restoring
     PainterGuard painterGuard{*this};
 
     const bool isArc = std::abs(std::remainder(a2 - a1, 2. * M_PI)) > RS_TOLERANCE_ANGLE;
-    EllipseHelper helper{origin, radius1, radius2, angle};
-    std::vector<QPainterPath> endSegments = helper.getEndSegments(a1, a2);
+    const EllipseHelper helper{origin, radius1, radius2, angle};
+    const std::vector<QPainterPath> endSegments = helper.getEndSegments(a1, a2);
     // For arcs, draw line segments at arc start/end to support QPen Cap Style
     if (isArc && !endSegments.empty()) {
         drawPath(endSegments.front());
@@ -693,7 +682,7 @@ void RS_PainterQtOld::drawEllipse(const RS_Vector& cp,
     {
         // Elliptic arc: QPainter doesn't support drawing an elliptic arc natively.
         // Create a QPainterPath to clip the complete ellipse to draw an arc.
-        QPainterPath path = helper.getArcClipping(a1, a2, QPainter::pen().widthF());
+        const QPainterPath path = helper.getArcClipping(a1, a2, QPainter::pen().widthF());
         setClipping(true);
         setClipPath(path);
     }
@@ -745,8 +734,8 @@ void RS_PainterQtOld::drawImg(QImage& img, const RS_Vector& pos,
         RS_PainterQtOld ::setRenderHint(SmoothPixmapTransform);
     }
 
-    RS_Vector un = uVector/uVector.magnitude();
-    RS_Vector vn = vVector/vVector.magnitude();
+    const RS_Vector un = uVector/uVector.magnitude();
+    const RS_Vector vn = vVector/vVector.magnitude();
 
     // Image mirroring is switching the handedness of u-v vectors pair which can be detected by
     // looking at the sign of the z component of their cross product. If z is negative image is mirrored.
@@ -766,8 +755,7 @@ void RS_PainterQtOld::drawImg(QImage& img, const RS_Vector& pos,
 }
 
 
-void RS_PainterQtOld::drawTextH(int x1, int y1,
-                             int x2, int y2,
+void RS_PainterQtOld::drawTextH(const int x1, const int y1, const int x2, const int y2,
                              const QString& text) {
     QPainter::drawText(x1, y1, x2, y2,
                        Qt::AlignRight|Qt::AlignVCenter,
@@ -776,8 +764,7 @@ void RS_PainterQtOld::drawTextH(int x1, int y1,
 
 
 
-void RS_PainterQtOld::drawTextV(int x1, int y1,
-                             int x2, int y2,
+void RS_PainterQtOld::drawTextV(const int x1, const int y1, const int x2, const int y2,
                              const QString& text) {
     save();
     QTransform wm = worldTransform();
@@ -791,7 +778,7 @@ void RS_PainterQtOld::drawTextV(int x1, int y1,
     restore();
 }
 
-void RS_PainterQtOld::fillRect(int x1, int y1, int w, int h,
+void RS_PainterQtOld::fillRect(const int x1, const int y1, const int w, const int h,
                             const RS_Color& col) {
     QPainter::fillRect(x1, y1, w, h, col);
 }
@@ -802,7 +789,7 @@ void RS_PainterQtOld::fillTriangle(const RS_Vector& p1,
                                 const RS_Vector& p3) {
 
     QPolygon arr(3);
-    QBrush brushSaved=brush();
+    const QBrush brushSaved=brush();
     arr.putPoints(0, 3,
                   toScreenX(p1.x),toScreenY(p1.y),
                   toScreenX(p2.x),toScreenY(p2.y),
@@ -850,7 +837,7 @@ RS_Pen RS_PainterQtOld::getPen() const{
     //return p;
 }
 
-void RS_PainterQtOld::setPen(const RS_Pen &pen, int penWidth) {
+void RS_PainterQtOld::setPen(const RS_Pen &pen, const int penWidth) {
     lpen = pen;
     switch (drawingMode) {
         case RS2::ModeBW:
@@ -872,7 +859,7 @@ void RS_PainterQtOld::setPen(const RS_Pen &pen, int penWidth) {
     QPen p(pColor, penWidth, rsToQtLineType(lpen.getLineType()));
     if (p.style() == Qt::CustomDashLine)
     {
-        auto dashPattern = rsToQDashPattern(lpen.getLineType(),
+        const auto dashPattern = rsToQDashPattern(lpen.getLineType(),
                                             p.widthF(),
                                             getDpmm());
         if (!dashPattern.isEmpty())
@@ -886,7 +873,7 @@ void RS_PainterQtOld::setPen(const RS_Pen &pen, int penWidth) {
 }
 
 void RS_PainterQtOld::setPen(const RS_Pen& pen) {
-    int penWidth = RS_Math::round(pen.getScreenWidth());
+    const int penWidth = RS_Math::round(pen.getScreenWidth());
     setPen(pen, penWidth);
 }
 
@@ -909,7 +896,7 @@ void RS_PainterQtOld::setPen(const RS_Color& color) {
     }
 }
 
-void RS_PainterQtOld::setPen(int r, int g, int b) {
+void RS_PainterQtOld::setPen(const int r, const int g, const int b) {
     switch (drawingMode) {
     case RS2::ModeBW:
         setPen( QColor( Qt::black));
@@ -950,7 +937,7 @@ void RS_PainterQtOld::setBrush(const QBrush& color) {
     QPainter::setBrush(color);
 }
 
-void RS_PainterQtOld::drawPolygon(const QPolygon& a, Qt::FillRule rule) {
+void RS_PainterQtOld::drawPolygon(const QPolygon& a, const Qt::FillRule rule) {
     QPainter::drawPolygon(a,rule);
 }
 
@@ -959,7 +946,7 @@ void RS_PainterQtOld::drawPath ( const QPainterPath & path ) {
 }
 
 
-void RS_PainterQtOld::setClipRect(int x, int y, int w, int h) {
+void RS_PainterQtOld::setClipRect(const int x, const int y, const int w, const int h) {
     QPainter::setClipRect(x, y, w, h);
     setClipping(true);
 }
@@ -970,18 +957,18 @@ void RS_PainterQtOld::resetClipping() {
 
 void RS_PainterQtOld::fillRect ( const QRectF & rectangle, const RS_Color & color ) {
 
-    double x1=rectangle.left();
-    double x2=rectangle.right();
-    double y1=rectangle.top();
-    double y2=rectangle.bottom();
+    const double x1=rectangle.left();
+    const double x2=rectangle.right();
+    const double y1=rectangle.top();
+    const double y2=rectangle.bottom();
 
     QPainter::fillRect(toScreenX(x1),toScreenY(y1),toScreenX(x2)-toScreenX(x1),toScreenY(y2)-toScreenX(y1), color);
 }
 void RS_PainterQtOld::fillRect ( const QRectF & rectangle, const QBrush & brush ) {
-    double x1=rectangle.left();
-    double x2=rectangle.right();
-    double y1=rectangle.top();
-    double y2=rectangle.bottom();
+    const double x1=rectangle.left();
+    const double x2=rectangle.right();
+    const double y1=rectangle.top();
+    const double y2=rectangle.bottom();
     QPainter::fillRect(toScreenX(x1),toScreenY(y1),toScreenX(x2),toScreenY(y2), brush);
 }
 
@@ -1091,7 +1078,7 @@ QPainterPath RS_PainterQtOld::createSpline(const RS_Spline& spline, const RS_Gra
 
     RS_Entity* e=spline.firstEntity(RS2::ResolveNone);
     do {
-        auto line = dynamic_cast<RS_Line*>(e);
+        const auto line = dynamic_cast<RS_Line*>(e);
         if (line == nullptr)
             break;
         if (path.isEmpty())

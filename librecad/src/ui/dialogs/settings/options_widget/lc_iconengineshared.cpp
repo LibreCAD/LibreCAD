@@ -21,9 +21,10 @@
  ******************************************************************************/
 
 #include "lc_iconengineshared.h"
+
 #include <QIcon>
 
-QString LC_SVGIconEngineAPI::getColorAppKeyName(QString baseName, int mode, int state){
+QString LC_SVGIconEngineAPI::getColorAppKeyName(const QString& baseName, const int mode, const int state){
     QString result = baseName;
     switch (mode) {
         case QIcon::Mode::Normal: {

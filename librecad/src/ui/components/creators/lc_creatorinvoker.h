@@ -1,5 +1,5 @@
 /*******************************************************************************
-*
+ *
  This file is part of the LibreCAD project, a 2D CAD program
 
  Copyright (C) 2025 LibreCAD.org
@@ -22,8 +22,6 @@
  ******************************************************************************/
 #ifndef LC_CREATORINVOKER_H
 #define LC_CREATORINVOKER_H
-#include <QMap>
-#include <QObject>
 
 #include "lc_menuactivator.h"
 
@@ -37,21 +35,22 @@ class QC_ApplicationWindow;
 class LC_CreatorInvoker : public QObject{
     Q_OBJECT
 public:
-    LC_CreatorInvoker(QC_ApplicationWindow * appWindows, LC_ActionGroupManager * actionGrupManager);
-    void createCustomToolbars(bool showTooltips);
+    LC_CreatorInvoker(QC_ApplicationWindow * appWin, LC_ActionGroupManager * actionGroupManager);
+    void createCustomToolbars(bool showToolTips);
     void invokeToolbarCreator();
     void invokeMenuCreator();
-    bool getMenuActionsForMouseEvent(QMouseEvent* event, RS_Entity* entity, QStringList& actions);
+    bool getMenuActionsForMouseEvent(const QMouseEvent* event, const RS_Entity* entity, QStringList& actions);
 protected slots:
-    void createToolbar(const QString& toolbar_name, const QStringList& actionNames, int areaIndex);
-    void destroyToolbar(const QString& toolbar_name);
+    void createToolbar(const QString& toolbarName, const QStringList& actionNames, int areaIndex) const;
+    void destroyToolbar(const QString& toolbarName) const;
+    void onCustomToolbarVisibilityChanged(bool visible);
 private:
     QC_ApplicationWindow *m_appWindow;
     LC_ActionGroupManager* m_actionGroupManager {nullptr};
     QList<LC_MenuActivator*> m_menuActivators;
     bool m_showToolbarTooltips {false};
     void loadMenuActivators();
-    QAction*  getAction(const QString & key);
-    bool isDefaultMenuInvokerEvent(QMouseEvent* event);
+    QAction*  getAction(const QString & key) const;
+    bool isDefaultMenuInvokerEvent(const QMouseEvent* event);
 };
-#endif // LC_CREATORINVOKER_H
+#endif

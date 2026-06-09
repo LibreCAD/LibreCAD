@@ -24,15 +24,13 @@
 #define LC_NAMEDVIEWSBUTTON_H
 
 #include <QToolButton>
-#include <QList>
 
 class QMenu;
 class LC_NamedViewsListWidget;
 
-class LC_NamedViewsButton : public QToolButton{
-Q_OBJECT
-public:
-    LC_NamedViewsButton(LC_NamedViewsListWidget* widget);
+class LC_NamedViewsButton : public QToolButton {
+    Q_OBJECT public:
+    explicit LC_NamedViewsButton(LC_NamedViewsListWidget* widget);
 protected:
     LC_NamedViewsListWidget* m_widget{nullptr};
     QMenu* m_menu;
@@ -42,4 +40,4 @@ protected slots:
     void menuTriggered(bool checked = false) const;
 };
 
-#endif // LC_NAMEDVIEWSBUTTON_H
+#endif

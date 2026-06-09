@@ -32,30 +32,31 @@
  * @author Andrew Mustun
  */
 struct RS_Flags {
-	//! \{Constructor with initialisation to the given flags.
-	//! Default sets all flags to 0
-	RS_Flags(unsigned f = 0);
-	//! \}
+    //! \{Constructor with initialisation to the given flags.
+    //! Default sets all flags to 0
+    explicit RS_Flags(unsigned f = 0);
+    //! \}
 
-	virtual ~RS_Flags() = default;
+    virtual ~RS_Flags() = default;
 
-	unsigned getFlags() const;
+    unsigned getFlags() const;
 
-	void resetFlags();
+    void resetFlags();
 
-	void setFlags(unsigned f);
+    void setFlags(unsigned f);
 
-	void setFlag(unsigned f);
+    void setFlag(unsigned f);
 
-	void delFlag(unsigned f);
+    void delFlag(unsigned f);
 
-	void toggleFlag(unsigned f);
+    void toggleFlag(unsigned f);
 
-	bool getFlag(unsigned f) const;
+    bool getFlag(unsigned f) const;
     bool isSet(unsigned f) const;
     bool isNotSet(unsigned f) const;
+
 private:
-	unsigned flags = 0;
+    unsigned m_flags = 0;
 };
 
 #endif

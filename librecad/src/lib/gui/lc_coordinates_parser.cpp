@@ -23,8 +23,6 @@
 
 #include "lc_coordinates_parser.h"
 
-#include <QString>
-
 #include "lc_convert.h"
 #include "lc_graphicviewport.h"
 #include "rs_graphicview.h"
@@ -32,7 +30,7 @@
 
 LC_CoordinatesParser::LC_CoordinatesParser(RS_GraphicView* gview):m_graphicView{gview} {}
 
-RS_CoordinateEvent LC_CoordinatesParser::parseCoordinate(const QString& inputStr, bool &stringContainsCoordinate) {
+RS_CoordinateEvent LC_CoordinatesParser::parseCoordinate(const QString& inputStr, bool &stringContainsCoordinate) const {
     RS_CoordinateEvent invalid(RS_Vector(false));
 
     stringContainsCoordinate = true;
@@ -41,7 +39,7 @@ RS_CoordinateEvent LC_CoordinatesParser::parseCoordinate(const QString& inputStr
     if (inputStr.length() == 1) {
         switch (inputStr[0].toLatin1()) {
             case '0': {
-                RS_Vector ucs0 = RS_Vector(0, 0, 0);
+                auto ucs0 = RS_Vector(0, 0, 0);
                 RS_Vector wcs0 = toWCS(ucs0);
                 return RS_CoordinateEvent(wcs0, true, false);
             }
@@ -67,7 +65,7 @@ RS_CoordinateEvent LC_CoordinatesParser::parseCoordinate(const QString& inputStr
             double x = RS_Math::eval(LC_Convert::updateForFraction(candidate.left(separatorPos)), &ok1);
             double y = RS_Math::eval(LC_Convert::updateForFraction(candidate.mid(separatorPos + 1)), &ok2);
             if (ok1 && ok2) {
-                const RS_Vector& wcsCoordinate = RS_Vector(x, y);
+                const auto& wcsCoordinate = RS_Vector(x, y);
                 return RS_CoordinateEvent(wcsCoordinate);
             }
             return invalid;
@@ -76,14 +74,18 @@ RS_CoordinateEvent LC_CoordinatesParser::parseCoordinate(const QString& inputStr
         if (isPolar) {
             // proceed absolute polar coordinates
             qsizetype separatorPos = candidate.indexOf('<');
-            bool ok1{false}, ok2{false};
+            bool ok1{false};
             double distance = RS_Math::eval(LC_Convert::updateForFraction(candidate.left(separatorPos)), &ok1);
             const QString& angleStr = candidate.mid(separatorPos + 1);
-            double angleDegrees = LC_Convert::evalAngleValue(angleStr, ok2);
-            if (ok1 && ok2) {
-                double wcsAngle = RS_Math::deg2rad(angleDegrees); // fixme - sand - check whether angle base should be considered!!
-                RS_Vector wcsCoordinate = RS_Vector(distance, wcsAngle);
-                return RS_CoordinateEvent(wcsCoordinate);
+
+            if (ok1) {
+                bool ok2{false};
+                double angleDegrees = LC_Convert::evalAngleValue(angleStr, ok2);
+                if (ok2) {
+                    double wcsAngle = RS_Math::deg2rad(angleDegrees); // fixme - sand - check whether angle base should be considered!!
+                    auto wcsCoordinate = RS_Vector(distance, wcsAngle);
+                    return RS_CoordinateEvent(wcsCoordinate);
+                }
             }
             return invalid;
         }
@@ -99,7 +101,7 @@ RS_CoordinateEvent LC_CoordinatesParser::parseCoordinate(const QString& inputStr
             double x = RS_Math::eval(LC_Convert::updateForFraction(inputStr.left(separatorPos)), &ok1);
             double y = RS_Math::eval(LC_Convert::updateForFraction(inputStr.mid(separatorPos + 1)), &ok2);
             if (ok1 && ok2) {
-                const RS_Vector& ucsCoordinate = RS_Vector(x, y);
+                const auto& ucsCoordinate = RS_Vector(x, y);
                 RS_Vector wcsCoordinate = toWCS(ucsCoordinate);
                 return RS_CoordinateEvent(wcsCoordinate);
             }
@@ -111,7 +113,7 @@ RS_CoordinateEvent LC_CoordinatesParser::parseCoordinate(const QString& inputStr
         double y = RS_Math::eval(LC_Convert::updateForFraction(inputStr.mid(separatorPos + 1)), &ok2);
 
         if (ok1 && ok2) {
-            const RS_Vector& ucsOffset = RS_Vector(x, y);
+            const auto& ucsOffset = RS_Vector(x, y);
             const RS_Vector ucsRelZero = toUCS(m_graphicView->getViewPort()->getRelativeZero());
             const RS_Vector ucsCoordinate = ucsOffset + ucsRelZero;
             const RS_Vector& wcsCoordinate = toWCS(ucsCoordinate);
@@ -129,7 +131,6 @@ RS_CoordinateEvent LC_CoordinatesParser::parseCoordinate(const QString& inputStr
             double ucsDistance = RS_Math::eval(LC_Convert::updateForFraction(inputStr.left(separatorPos)), &ok1);
             const QString& angleStr = inputStr.mid(separatorPos + 1);
             double ucsBasisAngleDegrees = LC_Convert::evalAngleValue(angleStr, ok2);
-
             if (ok1 && ok2) {
                 double ucsBasisAngleRad = RS_Math::deg2rad(ucsBasisAngleDegrees);
                 double ucsAngle = toAbsUCSAngle(ucsBasisAngleRad);
@@ -161,18 +162,18 @@ RS_CoordinateEvent LC_CoordinatesParser::parseCoordinate(const QString& inputStr
     return invalid;
 }
 
-RS_Vector LC_CoordinatesParser::toWCS(const RS_Vector &ucs) {
+RS_Vector LC_CoordinatesParser::toWCS(const RS_Vector &ucs) const {
     return m_graphicView->getViewPort()->toWorld(ucs);
 }
 
-RS_Vector LC_CoordinatesParser::toUCS(const RS_Vector &wcs) {
+RS_Vector LC_CoordinatesParser::toUCS(const RS_Vector &wcs) const {
     return m_graphicView->getViewPort()->toUCS(wcs);
 }
 
-double LC_CoordinatesParser::toAbsUCSAngle(double ucsBasisAngle) {
+double LC_CoordinatesParser::toAbsUCSAngle(const double ucsBasisAngle) const {
     return m_graphicView->getViewPort()->toAbsUCSAngle(ucsBasisAngle);
 }
 
-double LC_CoordinatesParser::toWCSAngle(double ucsAngle) {
+double LC_CoordinatesParser::toWCSAngle(const double ucsAngle) const {
     return m_graphicView->getViewPort()->toWorldAngle(ucsAngle);
 }

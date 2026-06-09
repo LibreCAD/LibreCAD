@@ -28,6 +28,7 @@
 #define RS_ACTIONINFOINSIDE_H
 
 #include<memory>
+
 #include "rs_actioninterface.h"
 
 class RS_EntityContainer;
@@ -42,7 +43,7 @@ class RS_Vector;
 class RS_ActionInfoInside : public RS_ActionInterface {
 Q_OBJECT
 public:
-    RS_ActionInfoInside(LC_ActionContext *actionContext);
+    explicit RS_ActionInfoInside(LC_ActionContext *actionContext);
     ~RS_ActionInfoInside() override;
 
     void trigger() override;
@@ -51,7 +52,7 @@ protected:
     RS2::CursorType doGetMouseCursor(int status) override;
     void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
     void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
-    void updateMouseButtonHints() override;
+    void updateActionPrompt() override;
 private:
     std::unique_ptr<RS_Vector> m_point;
     std::unique_ptr<RS_EntityContainer> m_contour;

@@ -32,31 +32,32 @@
 #include "rs_dialogfactoryinterface.h"
 #include "rs_graphic.h"
 
-RS_ActionBlocksAdd::RS_ActionBlocksAdd(LC_ActionContext *actionContext)
-		:RS_ActionInterface("Add Block", actionContext, RS2::ActionBlocksAdd) {
-	m_actionType = RS2::ActionBlocksAdd;
+RS_ActionBlocksAdd::RS_ActionBlocksAdd(LC_ActionContext* actionContext)
+    : RS_ActionInterface("Add Block", actionContext, RS2::ActionBlocksAdd) {
+    m_actionType = RS2::ActionBlocksAdd;
 }
 
-void RS_ActionBlocksAdd::trigger(){
+void RS_ActionBlocksAdd::trigger() {
     RS_DEBUG->print("adding block");
-    if (m_graphic != nullptr){
-        RS_BlockList *blockList = m_graphic->getBlockList();
-        if (blockList){
-            RS_BlockData d = RS_DIALOGFACTORY->requestNewBlockDialog(blockList);
-            if (d.isValid()){
+    if (m_graphic != nullptr) {
+        RS_BlockList* blockList = m_graphic->getBlockList();
+        if (blockList != nullptr) {
+            const RS_BlockData d = RS_DIALOGFACTORY->requestNewBlockDialog(blockList);
+            if (d.isValid()) {
                 // Block cannot contain blocks.
-                if (m_container->is(RS2::EntityBlock)){
-                    m_graphic->addBlock(new RS_Block(m_container->getParent(), d));
-                } else {
-                    m_graphic->addBlock(new RS_Block(m_container, d));
+                if (m_document->is(RS2::EntityBlock)) {
+                    m_graphic->addBlock(new RS_Block(m_document->getParent(), d));
+                }
+                else {
+                    m_graphic->addBlock(new RS_Block(m_document, d));
                 }
             }
         }
     }
-    finish(false);
+    finish();
 }
 
-void RS_ActionBlocksAdd::init(int status) {
+void RS_ActionBlocksAdd::init(const int status) {
     RS_ActionInterface::init(status);
     trigger();
 }

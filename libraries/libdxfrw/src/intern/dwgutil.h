@@ -53,14 +53,14 @@ private:
     duint32 long20CompressionOffset();
     duint32 twoByteOffset(duint32 *ll);
 
-    static duint8 compressedByte(void);
-    static duint8 compressedByte(const duint32 index);
-    static duint32 compressedHiByte(void);
-    static bool compressedInc(const dint32 inc = 1);
-    static duint8 decompByte(const duint32 index);
-    static void decompSet(const duint8 value);
-    static bool buffersGood(void);
-    static void copyBlock21(const duint32 length);
+    static duint8 compressedByte();
+    static duint8 compressedByte(duint32 index);
+    static duint32 compressedHiByte();
+    static bool compressedInc(dint32 inc = 1);
+    static duint8 decompByte(duint32 index);
+    static void decompSet(duint8 value);
+    static bool buffersGood();
+    static void copyBlock21(duint32 length);
 
     static duint8 *compressedBuffer;
     static duint32 compressedSize;
@@ -195,4 +195,4 @@ namespace secEnum {
     DWGSection getEnum(const std::string &nameSec);
 }
 
-#endif // DWGUTIL_H
+#endif

@@ -22,9 +22,9 @@
 **
 **********************************************************************/
 
-#include <iostream>
-
 #include "lc_actiondimarc.h"
+
+#include <iostream>
 
 #include "rs_arc.h"
 #include "rs_debug.h"
@@ -32,7 +32,7 @@
 
 LC_ActionDimArc::LC_ActionDimArc(LC_ActionContext *actionContext):
     RS_ActionDimension("Draw Arc Dimensions", actionContext,RS2::EntityDimArc, RS2::ActionDimArc){
-    reset();
+    LC_ActionDimArc::reset();
 }
 
 LC_ActionDimArc::~LC_ActionDimArc() = default;
@@ -55,31 +55,30 @@ void LC_ActionDimArc::doInitWithContextEntity(RS_Entity* contextEntity, [[maybe_
    setArcEntity(contextEntity);
 }
 
-void LC_ActionDimArc::doTrigger() {
+RS_Entity* LC_ActionDimArc::doTriggerCreateEntity() {
     if (m_selectedArcEntity == nullptr){
         RS_DEBUG->print(RS_Debug::D_ERROR, "LC_ActionDimArc::trigger: selectedArcEntity is nullptr.\n");
-        return;
+        return nullptr;
     }
-
     if (!m_dimArcData.centre.valid){
         RS_DEBUG->print(RS_Debug::D_ERROR, "LC_ActionDimArc::trigger: dimArcData.centre is not valid.\n");
-        return;
+        return nullptr;
     }
-
-    auto newEntity= new LC_DimArc(m_container, *m_dimensionData, m_dimArcData);
-    setPenAndLayerToActive(newEntity);
+    const auto newEntity = new LC_DimArc(m_document, *m_dimensionData, m_dimArcData);
     newEntity->update();
-    undoCycleAdd(newEntity);
-    setStatus(SetEntity);
+    return newEntity;
+}
 
+void LC_ActionDimArc::doTriggerCompletion([[maybe_unused]]bool success) {
+    setStatus(SetEntity);
     RS_Snapper::finish();
 }
 
-void LC_ActionDimArc::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+void LC_ActionDimArc::onMouseMoveEvent(const int status, const LC_MouseEvent* e) {
     RS_Vector snap = e->snapPoint;
     switch (status) {
         case SetEntity:{
-            auto en = catchEntityByEvent(e,RS2::EntityArc, RS2::ResolveAll);
+            const auto en = catchEntityByEvent(e,RS2::EntityArc, RS2::ResolveAll);
             if (en != nullptr){
                 highlightHover(en);
             }
@@ -92,8 +91,8 @@ void LC_ActionDimArc::onMouseMoveEvent(int status, LC_MouseEvent *e) {
 
             // fixme - determine why DimArc is drawn on preview by preview pen, while other dimension entities - using normal pen...
 
-            LC_DimArc *temp_dimArc_entity{new LC_DimArc(m_preview.get(), *m_dimensionData, m_dimArcData)};
-            previewEntity(temp_dimArc_entity);
+            const LC_DimArc *tempDimArcEntity{new LC_DimArc(m_preview.get(), *m_dimensionData, m_dimArcData)};
+            previewEntity(tempDimArcEntity);
             break;
         }
         default:
@@ -107,14 +106,14 @@ void LC_ActionDimArc::setArcEntity(RS_Entity* entity) {
         m_dimArcData.centre = m_selectedArcEntity->getCenter();
         m_dimArcData.arcLength = m_selectedArcEntity->getLength();
 
-        auto selectedEntity = static_cast<RS_Arc*>(m_selectedArcEntity);
+        const auto selectedEntity = m_selectedArcEntity;
         m_dimArcData.startAngle = RS_Vector(selectedEntity->getAngle1());
         m_dimArcData.endAngle = RS_Vector(selectedEntity->getAngle2());
 
         m_dimensionData->definitionPoint = m_selectedArcEntity->getStartpoint();
 
         if (m_selectedArcEntity->isReversed()){
-            const RS_Vector tempAngle = RS_Vector(m_dimArcData.startAngle);
+            const auto tempAngle = RS_Vector(m_dimArcData.startAngle);
             m_dimArcData.startAngle = m_dimArcData.endAngle;
             m_dimArcData.endAngle = tempAngle;
             m_dimensionData->definitionPoint = m_selectedArcEntity->getEndpoint();
@@ -129,10 +128,10 @@ void LC_ActionDimArc::setArcEntity(RS_Entity* entity) {
     }
 }
 
-void LC_ActionDimArc::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
+void LC_ActionDimArc::onMouseLeftButtonRelease(const int status, const LC_MouseEvent* e) {
     switch (status) {
         case SetEntity: {
-            auto entity = catchEntityByEvent(e, RS2::ResolveAll);
+            const auto entity = catchEntityByEvent(e, RS2::ResolveAll);
             if (entity != nullptr){
                 setArcEntity(entity);
             }
@@ -149,12 +148,12 @@ void LC_ActionDimArc::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     }
 }
 
-void LC_ActionDimArc::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {
+void LC_ActionDimArc::onMouseRightButtonRelease(const int status, [[maybe_unused]] const LC_MouseEvent* e) {
     deletePreview();
     initPrevious(status);
 }
 
-void LC_ActionDimArc::onCoordinateEvent(int status, [[maybe_unused]] bool isZero, const RS_Vector &pos) {
+void LC_ActionDimArc::onCoordinateEvent(const int status, [[maybe_unused]] bool isZero, const RS_Vector &pos) {
     switch (status) {
         case SetPos: {
             setRadius(pos);
@@ -168,10 +167,10 @@ void LC_ActionDimArc::onCoordinateEvent(int status, [[maybe_unused]] bool isZero
     }
 }
 
-bool LC_ActionDimArc::doProcessCommand([[maybe_unused]]int status, const QString& c){
+bool LC_ActionDimArc::doProcessCommand([[maybe_unused]]int status, const QString& command){
     // fixme - support other commands
     bool accept = false;
-    if (checkCommand("exit", c)){
+    if (checkCommand("exit", command)){
         init(-1);
         accept = true;
     }
@@ -183,24 +182,24 @@ QStringList LC_ActionDimArc::getAvailableCommands(){
     return availableCommandsList;
 }
 
-void LC_ActionDimArc::updateMouseButtonHints(){
+void LC_ActionDimArc::updateActionPrompt(){
     switch (getStatus()) {
         case SetEntity:
-            updateMouseWidgetTRCancel(tr("Select arc entity"));
+            updatePromptTRCancel(tr("Select arc entity"));
             break;
         case SetPos:
-            updateMouseWidgetTRBack(tr("Specify dimension arc location"),MOD_SHIFT_FREE_SNAP);
+            updatePromptTRBack(tr("Specify dimension arc location"),MOD_SHIFT_FREE_SNAP);
             break;
         default:
-            updateMouseWidget();
+            updatePrompt();
             break;
     }
 }
 
 void LC_ActionDimArc::setRadius(const RS_Vector &selectedPosition){
-    const double minimum_dimArc_gap = 0.0;
+    constexpr double minimumDimArcGap = 0.0;
     m_dimArcData.radius = selectedPosition.distanceTo(m_dimArcData.centre);
-    const double minimumRadius = m_selectedArcEntity->getRadius() + minimum_dimArc_gap;
+    const double minimumRadius = m_selectedArcEntity->getRadius() + minimumDimArcGap;
     if (m_dimArcData.radius < minimumRadius) {
         m_dimArcData.radius = minimumRadius;
     }

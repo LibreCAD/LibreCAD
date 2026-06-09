@@ -65,58 +65,58 @@ void DRW_dbg::setLevel(Level lvl){
     }
 }
 
-DRW_dbg::Level DRW_dbg::getLevel(){
+DRW_dbg::Level DRW_dbg::getLevel() const {
     return level;
 }
 
-void DRW_dbg::print(const std::string &s){
+void DRW_dbg::print(const std::string &s) const {
     currentPrinter->printS(s);
 }
 
-void DRW_dbg::print(signed char i){
+void DRW_dbg::print(signed char i) const {
     currentPrinter->printI(i);
 }
 
-void DRW_dbg::print(unsigned char i){
+void DRW_dbg::print(unsigned char i) const {
     currentPrinter->printUI(i);
 }
 
-void DRW_dbg::print(int i){
+void DRW_dbg::print(int i) const {
     currentPrinter->printI(i);
 }
 
-void DRW_dbg::print(unsigned int i){
+void DRW_dbg::print(unsigned int i) const {
     currentPrinter->printUI(i);
 }
 
-void DRW_dbg::print(long long int i){
+void DRW_dbg::print(long long int i) const {
     currentPrinter->printI(i);
 }
 
-void DRW_dbg::print(long unsigned int i){
+void DRW_dbg::print(long unsigned int i) const {
     currentPrinter->printUI(i);
 }
 
-void DRW_dbg::print(long long unsigned int i){
+void DRW_dbg::print(long long unsigned int i) const {
     currentPrinter->printUI(i);
 }
 
-void DRW_dbg::print(double d){
+void DRW_dbg::print(double d) const {
     currentPrinter->printD(d);
 }
 
-void DRW_dbg::printH(long long int i){
+void DRW_dbg::printH(long long int i) const {
     currentPrinter->printH(i);
 }
 
-void DRW_dbg::printB(int i){
+void DRW_dbg::printB(int i) const {
     currentPrinter->printB(i);
 }
-void DRW_dbg::printHL(int c, int s, int h){
+void DRW_dbg::printHL(int c, int s, int h) const {
     currentPrinter->printHL(c, s, h);
 }
 
-void DRW_dbg::printPT(double x, double y, double z){
+void DRW_dbg::printPT(double x, double y, double z) const {
     currentPrinter->printPT(x, y, z);
 }
 

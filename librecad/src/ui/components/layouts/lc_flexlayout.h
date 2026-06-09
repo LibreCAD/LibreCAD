@@ -25,7 +25,6 @@
 #define LC_FLEXLAYOUT_H
 
 #include <QLayout>
-#include <QRect>
 #include <QStyle>
 #include <set>
 
@@ -38,7 +37,7 @@ class LC_FlexLayout :public QLayout
 public:
     explicit LC_FlexLayout(QWidget *parent, int margin = -1, int hSpacing = -1, int vSpacing = -1);
     explicit LC_FlexLayout(int margin = -1, int hSpacing = -1, int vSpacing = -1, int widthOfFirstColumn = -1);
-    ~LC_FlexLayout();
+    ~LC_FlexLayout() override;
 
     void addItem(QLayoutItem *item) override;
     int horizontalSpacing() const;
@@ -53,8 +52,8 @@ public:
     QSize sizeHint() const override;
     QLayoutItem *takeAt(int index) override;
     void fillFromLayout(QLayout *source);
-    void setSoftBreakItems(const std::set<int> &itemPositions){m_softBreakItems = itemPositions;};
-    void setFullWidthItems(const std::set<int> &itemPositions){m_fullWidthItems = itemPositions;};
+    void setSoftBreakItems(const std::set<int> &itemPositions){m_softBreakItems = itemPositions;}
+    void setFullWidthItems(const std::set<int> &itemPositions){m_fullWidthItems = itemPositions;}
 private:
     int performLayout(const QRect &rect, bool geometryCheck) const;
     int defaultSpacing(QStyle::PixelMetric pm) const;
@@ -90,4 +89,4 @@ private:
     int getSpaceY(const QWidget *wid) const;
 };
 
-#endif // LC_FLEXLAYOUT_H
+#endif

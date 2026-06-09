@@ -22,11 +22,11 @@
  */
 
 #include "lc_arrow_headopen.h"
+
 #include "rs_painter.h"
 
-LC_ArrowHeadOpen::LC_ArrowHeadOpen(RS_EntityContainer* container, const RS_Vector& point, double dirAngle,
-                                   double size, double ownAngle):
-    LC_DimArrowPoly{container, point, dirAngle, size}, m_ownAngle(ownAngle) {
+LC_ArrowHeadOpen::LC_ArrowHeadOpen(RS_EntityContainer* container, const RS_Vector& point, const double dirAngle, const double size,
+                                   const double ownAngle) : LC_DimArrowPoly{container, point, dirAngle, size}, m_ownAngle(ownAngle) {
     createVertexes(size);
 }
 
@@ -39,20 +39,20 @@ void LC_ArrowHeadOpen::draw(RS_Painter* painter) {
     painter->drawLineWCS(getDimLinePoint(), getPosition());
 }
 
-void LC_ArrowHeadOpen::createVertexes(double size) {
+void LC_ArrowHeadOpen::createVertexes(const double size) {
     initVertexes(3);
 
-    double cos1 = cos(m_ownAngle);
-    double sin1 = sin(m_ownAngle);
+    const double cos1 = cos(m_ownAngle);
+    const double sin1 = sin(m_ownAngle);
 
-    double arrowSide{size / cos1};
-    double halfArrowHeight = sin1 * arrowSide;
+    const double arrowSide{size / cos1};
+    const double halfArrowHeight = sin1 * arrowSide;
 
-    setVertex(0, -size, - halfArrowHeight); // bottom leg end
-    setVertex(1,0, 0);  // corner
+    setVertex(0, -size, -halfArrowHeight); // bottom leg end
+    setVertex(1, 0, 0); // corner
     setVertex(2, -size, halfArrowHeight); // upper leg end
 
-    setDimLinePoint({-size,0});
+    setDimLinePoint({-size, 0});
 
     positionFromZero();
     calculateBorders();

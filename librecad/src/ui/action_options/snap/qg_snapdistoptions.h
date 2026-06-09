@@ -37,11 +37,11 @@ namespace Ui {
 class QG_SnapDistOptions : public QWidget, public LC_LateCompletionRequestor{
     Q_OBJECT
 public:
-    QG_SnapDistOptions(QWidget* parent = nullptr);
-    ~QG_SnapDistOptions();
+    explicit QG_SnapDistOptions(QWidget* parent = nullptr);
+    ~QG_SnapDistOptions() override;
     void useSnapDistanceValue( double* d);
     void doShow();
-    double *getDistanceValue();
+    double *getDistanceValue() const;
     void onLateRequestCompleted(bool shouldBeSkipped) override;
 protected:
     double* m_dist;
@@ -49,8 +49,10 @@ protected slots:
     void languageChange();
     void onDistEditingFinished();
     void onPickDistanceClicked(bool clicked);
+signals:
+    void distanceChanged();
 private:
     void saveSettings();
     std::unique_ptr<Ui::Ui_SnapDistOptions> ui;
 };
-#endif // QG_SNAPDISTOPTIONS_H
+#endif

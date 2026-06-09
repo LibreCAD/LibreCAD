@@ -27,12 +27,12 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_graphicview.h"
 #include "rs_layer.h"
 
-LC_ActionPenPick::LC_ActionPenPick(LC_ActionContext *actionContext, bool resolve)
+LC_ActionPenPick::LC_ActionPenPick(LC_ActionContext *actionContext, const bool resolve)
     :RS_PreviewActionInterface(resolve? "PenPick" : "PenPickApply", actionContext,
         resolve?  RS2::ActionPenPickResolved : RS2::ActionPenPick), m_resolveMode{resolve}{
 }
 
-void LC_ActionPenPick::init(int status){
+void LC_ActionPenPick::init(const int status){
     RS_PreviewActionInterface::init(status);
 }
 
@@ -42,15 +42,14 @@ void LC_ActionPenPick::doInitWithContextEntity(RS_Entity* contextEntity, [[maybe
 
 /**
  * Cleanup that is needed if action was finished by escape
- * @param updateTB
  */
-void LC_ActionPenPick::finish(bool updateTB){
-    RS_PreviewActionInterface::finish(updateTB);
+void LC_ActionPenPick::finish(){
+    RS_PreviewActionInterface::finish();
 }
 
-void LC_ActionPenPick::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+void LC_ActionPenPick::onMouseMoveEvent(const int status, const LC_MouseEvent* e) {
     if (status == SelectEntity){
-        RS_Entity *en = catchAndDescribe(e, RS2::ResolveNone);
+        const RS_Entity *en = catchAndDescribe(e, RS2::ResolveNone);
         deleteHighlights();
         if (en != nullptr){
             highlightHover(en);
@@ -58,34 +57,34 @@ void LC_ActionPenPick::onMouseMoveEvent(int status, LC_MouseEvent *e) {
     }
 }
 
-void LC_ActionPenPick::pickPen(RS_Entity* en) {
+void LC_ActionPenPick::pickPen(const RS_Entity* en) {
     applyPenToPenToolBar(en);
-    init( getStatus() - 1);
-    finish(true);
+    init(getStatus() - 1);
+    finish();
     redraw();
-    m_graphicView->back();
+    m_graphicView->back(Qt::KeyboardModifier::NoModifier);
 }
 
-void LC_ActionPenPick::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
+void LC_ActionPenPick::onMouseLeftButtonRelease(const int status, const LC_MouseEvent* e) {
     if (status == SelectEntity){
         // Well, actually, it's possible to use Shift modifier for determining whether pen should be
         // resolved or not.  However, in UI there are two separate actions for consistency of
         // UIX with Pen Palette Widget
-        RS_Entity *en = catchEntityByEvent(e, RS2::ResolveNone);
+        const RS_Entity *en = catchEntityByEvent(e, RS2::ResolveNone);
         if (en != nullptr){
             pickPen(en);
         }
     }
 }
 
-void LC_ActionPenPick::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {
-    finish(true);
+void LC_ActionPenPick::onMouseRightButtonRelease(const int status, [[maybe_unused]] const LC_MouseEvent* e) {
+    finish();
     initPrevious(status);
     redraw();
 }
 
-void LC_ActionPenPick::updateMouseButtonHints(){
-    updateMouseWidgetTRCancel(tr("Specify entity to pick the pen"));
+void LC_ActionPenPick::updateActionPrompt(){
+    updatePromptTRCancel(tr("Specify entity to pick the pen"));
 }
 RS2::CursorType LC_ActionPenPick::doGetMouseCursor([[maybe_unused]] int status){
     return RS2::SelectCursor;
@@ -95,15 +94,15 @@ RS2::CursorType LC_ActionPenPick::doGetMouseCursor([[maybe_unused]] int status){
  * Set pen picked from entity as active in pen toolbar
  * @param entity entity from which pen will be picked
  */
-void LC_ActionPenPick::applyPenToPenToolBar(RS_Entity* entity){
+void LC_ActionPenPick::applyPenToPenToolBar(const RS_Entity* entity) const {
     QG_PenToolBar* penToolBar  = QC_ApplicationWindow::getAppWindow()->getPenToolBar();
     if (penToolBar != nullptr){
-            RS_Layer *layer = entity->getLayer(true);
+            const RS_Layer *layer = entity->getLayer(true);
             if (layer != nullptr){
-                RS_Pen pen = entity->getPen(m_resolveMode);
-                RS_Pen layerPen = layer->getPen();
-                RS2::LineType lineType = pen.getLineType();
-                RS2::LineWidth width = pen.getWidth();
+                const RS_Pen pen = entity->getPen(m_resolveMode);
+                const RS_Pen layerPen = layer->getPen();
+                const RS2::LineType lineType = pen.getLineType();
+                const RS2::LineWidth width = pen.getWidth();
                 const RS_Color &color = pen.getColor();
                 // todo - processing of "By Block" - is it needed there?
                 if (lineType == RS2::LineType::LineByLayer){

@@ -24,26 +24,22 @@
 **
 **********************************************************************/
 
-#include <fstream>
-
-#include <QTextStream>
-#include <QStringList>
-#include <QDate>
-
+#include "rs_filterlff.h"
 
 #include <QFile>
+#include <QStringList>
+#include <fstream>
 
 #include "lc_containertraverser.h"
 #include "rs_arc.h"
-#include "rs_line.h"
-#include "rs_filterlff.h"
-#include "rs_font.h"
-#include "rs_utility.h"
-#include "rs_system.h"
 #include "rs_block.h"
-#include "rs_polyline.h"
 #include "rs_debug.h"
-
+#include "rs_font.h"
+#include "rs_graphic.h"
+#include "rs_line.h"
+#include "rs_polyline.h"
+#include "rs_system.h"
+#include "rs_utility.h"
 
 /**
  * Default constructor.
@@ -59,6 +55,7 @@ RS_FilterLFF::RS_FilterLFF() : RS_FilterInterface() {
  * @param g The graphic in which the entities from the file
  * will be created or the graphics from which the entities are
  * taken to be stored in a file.
+ * @param file
  */
 bool RS_FilterLFF::fileImport(RS_Graphic& g, const QString& file, RS2::FormatType /*type*/) {
     RS_DEBUG->print("LFF Filter: importing file '%s'...", file.toLatin1().data());
@@ -71,14 +68,12 @@ bool RS_FilterLFF::fileImport(RS_Graphic& g, const QString& file, RS2::FormatTyp
     RS_Font font(file, false);
     success = font.loadFont();
 
-    if (success==false) {
-        RS_DEBUG->print(RS_Debug::D_WARNING,
-                        "Cannot open LFF file '%s'.", file.toLatin1().data());
-		return false;
+    if (success == false) {
+        RS_DEBUG->print(RS_Debug::D_WARNING, "Cannot open LFF file '%s'.", file.toLatin1().data());
+        return false;
     }
 
-    g.addVariable("Names",
-                         font.getNames().join(","), 0);
+    g.addVariable("Names", font.getNames().join(","), 0);
     g.addVariable("LetterSpacing", font.getLetterSpacing(), 0);
     g.addVariable("WordSpacing", font.getWordSpacing(), 0);
     g.addVariable("LineSpacingFactor", font.getLineSpacingFactor(), 0);
@@ -91,38 +86,38 @@ bool RS_FilterLFF::fileImport(RS_Graphic& g, const QString& file, RS2::FormatTyp
 
     font.generateAllFonts();
     RS_BlockList* letterList = font.getLetterList();
-    auto lettersCount = font.countLetters();
-    for (unsigned i=0; i<lettersCount; ++i) { // fixme - sand - this cycle takes too long for large fonts (azomix), refactor reading and avoid  letterList->rename
+    const auto lettersCount = font.countLetters();
+    for (unsigned i = 0; i < lettersCount; ++i) {
+        // fixme - sand - this cycle takes too long for large fonts (azomix), refactor reading and avoid  letterList->rename
         RS_Block* ch = font.letterAt(i);
 
         QString uCode;
         uCode.setNum(ch->getName().at(0).unicode(), 16);
-        while (uCode.length()<4) {
-//            uCode.rightJustified(4, '0');
-            uCode="0"+uCode;
+        while (uCode.length() < 4) {
+            //            uCode.rightJustified(4, '0');
+            uCode = "0" + uCode;
         }
         //ch->setName("[" + uCode + "] " + ch->getName());
         //letterList->rename(ch, QString("[%1]").arg(ch->getName()));
-        letterList->rename(ch,
-                           QString("[%1] %2").arg(uCode).arg(ch->getName().at(0)));
+        letterList->rename(ch, QString("[%1] %2").arg(uCode).arg(ch->getName().at(0)));
 
         g.addBlock(ch, false);
         ch->reparent(&g);
     }
 
     g.addBlockNotification();
-	return true;
+    return true;
 }
 
-
-QString clearZeros(double num, int prec){
-    QString str = QString::number(num, 'f', prec);
-    int i = str.length()- 1;
-    while (str.at(i) == '0' && i>1) {
+QString clearZeros(const double num, const int prec) {
+    const QString str = QString::number(num, 'f', prec);
+    int i = str.length() - 1;
+    while (str.at(i) == '0' && i > 1) {
         --i;
     }
-    if (str.at(i) != '.')
-            i++;
+    if (str.at(i) != '.') {
+        i++;
+    }
     return str.left(i);
 }
 
@@ -130,10 +125,10 @@ QString clearZeros(double num, int prec){
  * Implementation of the method used for RS_Export to communicate
  * with this filter.
  *
+ * @param g
  * @param file Full path to the LFF file that will be written.
  */
 bool RS_FilterLFF::fileExport(RS_Graphic& g, const QString& file, RS2::FormatType /*type*/) {
-
     RS_DEBUG->print("LFF Filter: exporting file '%s'...", file.toLatin1().data());
     RS_DEBUG->print("RS_FilterLFF::fileExport: open");
 
@@ -141,8 +136,6 @@ bool RS_FilterLFF::fileExport(RS_Graphic& g, const QString& file, RS2::FormatTyp
     QTextStream ts(&f);
     ts.setEncoding(QStringConverter::Utf8);
     if (f.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
-
-
         RS_DEBUG->print("RS_FilterLFF::fileExport: open: OK");
 
         RS_DEBUG->print("RS_FilterLFF::fileExport: header");
@@ -152,9 +145,9 @@ bool RS_FilterLFF::fileExport(RS_Graphic& g, const QString& file, RS2::FormatTyp
         ts << QString("# Creator:           %1\n").arg(RS_SYSTEM->getAppName());
         ts << QString("# Version:           %1\n").arg(RS_SYSTEM->getAppVersion());
 
-        QString ns = g.getVariableString("Names", "");
+        const QString ns = g.getVariableString("Names", "");
         if (!ns.isEmpty()) {
-            QStringList names = ns.split(',');
+            const QStringList names = ns.split(',');
             RS_DEBUG->print("002");
             for (int i = 0; i < names.size(); ++i) {
                 ts << QString("# Name:              %1\n").arg(names.at(i));
@@ -163,24 +156,20 @@ bool RS_FilterLFF::fileExport(RS_Graphic& g, const QString& file, RS2::FormatTyp
 
         QString es = g.getVariableString("Encoding", "");
         ts << QString("# Encoding:          UTF-8\n");
-        ts << QString("# LetterSpacing:     %1\n").arg(
-                  g.getVariableDouble("LetterSpacing", 3.0));
-        ts << QString("# WordSpacing:       %1\n").arg(
-                  g.getVariableDouble("WordSpacing", 6.75));
-        ts << QString("# LineSpacingFactor: %1\n").arg(
-                  g.getVariableDouble("LineSpacingFactor", 1.0));
-        QString dateline = QDate::currentDate().toString ("yyyy-MM-dd");
-        ts << QString("# Created:           %1\n").arg(
-                  g.getVariableString("Created", dateline));
+        ts << QString("# LetterSpacing:     %1\n").arg(g.getVariableDouble("LetterSpacing", 3.0));
+        ts << QString("# WordSpacing:       %1\n").arg(g.getVariableDouble("WordSpacing", 6.75));
+        ts << QString("# LineSpacingFactor: %1\n").arg(g.getVariableDouble("LineSpacingFactor", 1.0));
+        const QString dateline = QDate::currentDate().toString("yyyy-MM-dd");
+        ts << QString("# Created:           %1\n").arg(g.getVariableString("Created", dateline));
         ts << QString("# Last modified:     %1\n").arg(dateline);
 
-        QString sa = g.getVariableString("Authors", "");
+        const QString sa = g.getVariableString("Authors", "");
         RS_DEBUG->print("authors: %s", sa.toLocal8Bit().data());
         if (!sa.isEmpty()) {
-            QStringList authors = sa.split(',');
-            LC_LOG<<"count: " << authors.count();
+            const QStringList authors = sa.split(',');
+            LC_LOG << "count: " << authors.count();
 
-            QString a;
+            // QString a;
             for (int i = 0; i < authors.size(); ++i) {
                 ts << QString("# Author:            %1\n").arg(authors.at(i));
             }
@@ -188,75 +177,76 @@ bool RS_FilterLFF::fileExport(RS_Graphic& g, const QString& file, RS2::FormatTyp
         es = g.getVariableString("License", "");
         if (!es.isEmpty()) {
             ts << QString("# License:           %1\n").arg(es);
-        } else
+        }
+        else {
             ts << "# License:           unknown\n";
+        }
 
         RS_DEBUG->print("RS_FilterLFF::fileExport: header: OK");
 
         // iterate through blocks (=letters of font)
-        for (unsigned i=0; i<g.countBlocks(); ++i) {
-            RS_Block* blk = g.blockAt(i);
+        for (unsigned i = 0; i < g.countBlocks(); ++i) {
+            const RS_Block* blk = g.blockAt(i);
 
             RS_DEBUG->print("block: %d", i);
 
-            if (blk && !blk->isUndone()) {
-                RS_DEBUG->print("002a: %s",
-                                (blk->getName().toLocal8Bit().data()));
+            if (blk && !blk->isDeleted()) {
+                RS_DEBUG->print("002a: %s", blk->getName().toLocal8Bit().data());
 
                 ts << QString("\n%1\n").arg(blk->getName());
 
                 // iterate through entities of this letter:
-                for(RS_Entity* e: lc::LC_ContainerTraverser{*blk, RS2::ResolveNone}.entities()) {
-                    if (!e->isUndone()) {
-
+                for (RS_Entity* e : lc::LC_ContainerTraverser{*blk, RS2::ResolveNone}.entities()) {
+                    if (!e->isDeleted()) {
                         // lines:
-                        if (e->rtti()==RS2::EntityLine) {
-                            RS_Line* l = (RS_Line*)e;
+                        if (e->rtti() == RS2::EntityLine) {
+                            const auto l = static_cast<RS_Line*>(e);
                             ts << clearZeros(l->getStartpoint().x, 5) << ',';
                             ts << clearZeros(l->getStartpoint().y, 5) << ';';
                             ts << clearZeros(l->getEndpoint().x, 5) << ',';
                             ts << clearZeros(l->getEndpoint().y, 5) << '\n';
                         }
                         // arcs:
-                        else if (e->rtti()==RS2::EntityArc) {
-                            RS_Arc* a = (RS_Arc*)e;
+                        else if (e->rtti() == RS2::EntityArc) {
+                            const auto a = static_cast<RS_Arc*>(e);
                             ts << clearZeros(a->getStartpoint().x, 5) << ',';
                             ts << clearZeros(a->getStartpoint().y, 5) << ';';
                             ts << clearZeros(a->getEndpoint().x, 5) << ',';
                             ts << clearZeros(a->getEndpoint().y, 5) << ",A";
                             ts << clearZeros(a->getBulge(), 5) << '\n';
                         }
-                        else if (e->rtti()==RS2::EntityBlock) {
-                            RS_Block* b = (RS_Block*)e;
+                        else if (e->rtti() == RS2::EntityBlock) {
+                            const auto b = static_cast<RS_Block*>(e);
                             QString uCode;
                             uCode.setNum(b->getName().at(0).unicode(), 16);
-                            if (uCode.length()<4) {
+                            if (uCode.length() < 4) {
                                 uCode = uCode.rightJustified(4, '0');
                             }
                             ts << QString("C%1\n").arg(uCode);
                         }
-                        else if (e->rtti()==RS2::EntityPolyline) {
-                            RS_Polyline* p = (RS_Polyline*)e;
+                        else if (e->rtti() == RS2::EntityPolyline) {
+                            const auto p = static_cast<RS_Polyline*>(e);
                             ts << clearZeros(p->getStartpoint().x, 5) << ',';
                             ts << clearZeros(p->getStartpoint().y, 5);
-                            for(RS_Entity* e2: lc::LC_ContainerTraverser{*p, RS2::ResolveNone}.entities()) {
-                                if (e2->rtti()==RS2::EntityLine){
-                                    RS_Line* l = (RS_Line*)e2;
+                            for (RS_Entity* e2 : lc::LC_ContainerTraverser{*p, RS2::ResolveNone}.entities()) {
+                                if (e2->rtti() == RS2::EntityLine) {
+                                    const auto l = static_cast<RS_Line*>(e2);
                                     ts << ';' << clearZeros(l->getEndpoint().x, 5) << ',';
                                     ts << clearZeros(l->getEndpoint().y, 5);
-                                } else if (e2->rtti()==RS2::EntityArc){
-                                    RS_Arc* a = (RS_Arc*)e2;
+                                }
+                                else if (e2->rtti() == RS2::EntityArc) {
+                                    const auto a = static_cast<RS_Arc*>(e2);
                                     ts << ';' << clearZeros(a->getEndpoint().x, 5) << ',';
-                                    ts << clearZeros(a->getEndpoint().y, 5) <<",A";
+                                    ts << clearZeros(a->getEndpoint().y, 5) << ",A";
                                     ts << clearZeros(a->getBulge(), 5);
                                 }
                             }
-                            ts<<'\n';
+                            ts << '\n';
                         }
                         // Ignore entities other than arcs / lines
-                        else {}
+                        else {
+                        }
                     }
-
                 }
             }
         }
@@ -264,20 +254,17 @@ bool RS_FilterLFF::fileExport(RS_Graphic& g, const QString& file, RS2::FormatTyp
         RS_DEBUG->print("LFF Filter: exporting file: OK");
         return true;
     }
-    else {
-        RS_DEBUG->print("LFF Filter: exporting file failed");
-    }
+    RS_DEBUG->print("LFF Filter: exporting file failed");
 
     return false;
 }
 
-
-
 /**
  * Streams a double value to the given stream cutting away trailing 0's.
  *
+ * @param fs
  * @param value A double value. e.g. 2.700000
  */
-void RS_FilterLFF::stream(std::ofstream& fs, double value) {
+void RS_FilterLFF::stream(std::ofstream& fs, const double value) {
     fs << RS_Utility::doubleToString(value).toLatin1().data();
 }

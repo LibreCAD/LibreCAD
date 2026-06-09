@@ -8,8 +8,8 @@ class QG_ActiveLayerName : public QWidget, public LC_GraphicViewAware, public Ui
     Q_OBJECT
 public:
     explicit QG_ActiveLayerName(QWidget *parent = nullptr);
-    void activeLayerChanged(const QString& name);
+    void activeLayerChanged(const QString& name) const;
     void setGraphicView(RS_GraphicView* gview) override;
 };
 
-#endif // QG_ACTIVELAYERNAME_H
+#endif

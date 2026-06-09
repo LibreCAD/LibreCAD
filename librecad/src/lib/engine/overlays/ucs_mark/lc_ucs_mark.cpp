@@ -31,45 +31,45 @@
 void LC_UCSMarkOptions::loadSettings() {
     LC_GROUP("Appearance");
     {
-        m_showUCSZeroMarker = LC_GET_BOOL("ShowUCSZeroMarker", false);
-        m_showWCSZeroMarker = LC_GET_BOOL("ShowWCSZeroMarker", true);
-        m_csZeroMarkerSize = LC_GET_INT("ZeroMarkerSize", 30);
-        m_csZeroMarkerFontSize = LC_GET_INT("ZeroMarkerFontSize", 10);
-        m_csZeroMarkerfontName = LC_GET_STR("ZeroMarkerFontName", "Verdana");
-        m_csZeroMarkerFont = QFont(m_csZeroMarkerfontName, m_csZeroMarkerFontSize);
+        showUcsZeroMarker = LC_GET_BOOL("ShowUCSZeroMarker", false);
+        showWcsZeroMarker = LC_GET_BOOL("ShowWCSZeroMarker", true);
+        csZeroMarkerSize = LC_GET_INT("ZeroMarkerSize", 30);
+        csZeroMarkerFontSize = LC_GET_INT("ZeroMarkerFontSize", 10);
+        csZeroMarkerfontName = LC_GET_STR("ZeroMarkerFontName", "Verdana");
+        csZeroMarkerFont = QFont(csZeroMarkerfontName, csZeroMarkerFontSize);
     }
     LC_GROUP_GUARD("Colors");
     {
-        m_colorXAxisExtension = QColor(LC_GET_STR("grid_x_axisColor", "red"));
-        m_colorYAxisExtension = QColor(LC_GET_STR("grid_y_axisColor", "green"));
-        m_colorAngleMark = QColor(LC_GET_STR("previewReferencesColor", RS_Settings::previewRefColor));
+        colorXAxisExtension = RS_Color(LC_GET_STR("grid_x_axisColor", "red"));
+        colorYAxisExtension = RS_Color(LC_GET_STR("grid_y_axisColor", "green"));
+        colorAngleMark = RS_Color(LC_GET_STR("previewReferencesColor", RS_Settings::PREVIEW_REF_COLOR));
     }
 }
 
-LC_OverlayUCSMark::LC_OverlayUCSMark(RS_Vector uiOrigin, double xAxisAngle, bool forWcs, LC_UCSMarkOptions *options):uiOrigin(uiOrigin), xAxisAngle(xAxisAngle), forWCS(
-    forWcs), options(options) {}
+LC_OverlayUCSMark::LC_OverlayUCSMark(const RS_Vector& uiOrigin, const double xAxisAngle, const bool forWcs, LC_UCSMarkOptions* options) :
+    m_uiOrigin{uiOrigin}, m_xAxisAngle{xAxisAngle}, m_forWcs{forWcs}, m_options{options} {
+}
 
-LC_OverlayUCSMark::LC_OverlayUCSMark(LC_UCSMarkOptions *options):uiOrigin({0,0,0}), xAxisAngle(0), forWCS(false), options(options) {}
+LC_OverlayUCSMark::LC_OverlayUCSMark(LC_UCSMarkOptions *options):m_uiOrigin({0,0,0}), m_xAxisAngle(0), m_options(options) {}
 
-void LC_OverlayUCSMark::update(RS_Vector uiPos, double xAngle, bool wcs){
-    uiOrigin = uiPos;
-    xAxisAngle = xAngle;
-    forWCS = wcs;
+void LC_OverlayUCSMark::update(const RS_Vector& uiPos, const double xAngle, const bool wcs){
+    m_uiOrigin = uiPos;
+    m_xAxisAngle = xAngle;
+    m_forWcs = wcs;
 }
 
 void LC_OverlayUCSMark::draw(RS_Painter *painter) {
+    const int zr = m_options->csZeroMarkerSize;
+    RS_Vector uiXAxisEnd = m_uiOrigin.relative(zr, m_xAxisAngle);
 
-    int const zr = options->m_csZeroMarkerSize;
-    RS_Vector uiXAxisEnd = uiOrigin.relative(zr, xAxisAngle);
+    double yAxisAngle = m_xAxisAngle-M_PI_2; // as we're in UI coordinate space
+    RS_Vector uiYAxisEnd = m_uiOrigin.relative(zr,yAxisAngle);
 
-    double yAxisAngle = xAxisAngle-M_PI_2; // as we're in UI coordinate space
-    RS_Vector uiYAxisEnd = uiOrigin.relative(zr,yAxisAngle);
+    RS_Pen penXAxis (m_options->colorXAxisExtension, RS2::Width00, RS2::SolidLine);
+    penXAxis.setScreenWidth(2);
 
-    RS_Pen pen_xAxis (options->m_colorXAxisExtension, RS2::Width00, RS2::SolidLine);
-    pen_xAxis.setScreenWidth(2);
-
-    RS_Pen pen_yAxis (options->m_colorYAxisExtension, RS2::Width00, RS2::SolidLine);
-    pen_yAxis.setScreenWidth(2);
+    RS_Pen penYAxis (m_options->colorYAxisExtension, RS2::Width00, RS2::SolidLine);
+    penYAxis.setScreenWidth(2);
 
     double anchorFactor = 0.2;
     double anchorAngle = RS_Math::deg2rad(70);
@@ -77,40 +77,40 @@ void LC_OverlayUCSMark::draw(RS_Painter *painter) {
 
     double resultingAchorAngle = M_PI_2 + anchorAngle;
 
-    painter->setFont(options->m_csZeroMarkerFont);
+    painter->setFont(m_options->csZeroMarkerFont);
 
-    painter->setPen(pen_xAxis);
+    painter->setPen(penXAxis);
     // axis
-    painter->drawLineUISimple(uiOrigin, uiXAxisEnd);
+    painter->drawLineUISimple(m_uiOrigin, uiXAxisEnd);
     // anchor
-    painter->drawLineUISimple(uiXAxisEnd, uiXAxisEnd.relative(anchorSize, xAxisAngle+resultingAchorAngle));
-    painter->drawLineUISimple(uiXAxisEnd, uiXAxisEnd.relative(anchorSize, xAxisAngle-resultingAchorAngle));
+    painter->drawLineUISimple(uiXAxisEnd, uiXAxisEnd.relative(anchorSize, m_xAxisAngle+resultingAchorAngle));
+    painter->drawLineUISimple(uiXAxisEnd, uiXAxisEnd.relative(anchorSize, m_xAxisAngle-resultingAchorAngle));
 
-    const char* xString = forWCS ? "wX" : "X";
+    const char* xString = m_forWcs ? "wX" : "X";
 
-    const QSize &xSize = QFontMetrics(options->m_csZeroMarkerFont).size(Qt::TextSingleLine, xString);
+    const QSize &xSize = QFontMetrics(m_options->csZeroMarkerFont).size(Qt::TextSingleLine, xString);
 
-    RS_Vector offset = RS_Vector(20,10);
+    auto offset = RS_Vector(20,10);
 
     RS_Vector xTextPosition = uiXAxisEnd.relative(offset.x, yAxisAngle);
 
-    QRect xRect = QRect(QPoint(xTextPosition.x, xTextPosition.y), xSize);
+    auto xRect = QRect(QPoint(xTextPosition.x, xTextPosition.y), xSize);
     QRect xBoundingRect;
     painter->drawText(xRect,  Qt::AlignTop | Qt::AlignRight | Qt::TextDontClip, xString, &xBoundingRect);
 
-    painter->setPen(pen_yAxis);
+    painter->setPen(penYAxis);
     // axis
-    painter->drawLineUISimple(uiOrigin, uiYAxisEnd);
+    painter->drawLineUISimple(m_uiOrigin, uiYAxisEnd);
     // anchor
     painter->drawLineUISimple(uiYAxisEnd, uiYAxisEnd.relative(anchorSize, yAxisAngle+resultingAchorAngle));
     painter->drawLineUISimple(uiYAxisEnd, uiYAxisEnd.relative(anchorSize, yAxisAngle-resultingAchorAngle));
 
-    const char* yString = forWCS ? "wY" : "Y";
-    const QSize &ySize = QFontMetrics(options->m_csZeroMarkerFont).size(Qt::TextSingleLine, yString);
+    const char* yString = m_forWcs ? "wY" : "Y";
+    const QSize &ySize = QFontMetrics(m_options->csZeroMarkerFont).size(Qt::TextSingleLine, yString);
 
-    RS_Vector yTextPosition = uiYAxisEnd.relative(offset.x, xAxisAngle);
+    RS_Vector yTextPosition = uiYAxisEnd.relative(offset.x, m_xAxisAngle);
 
-    QRect yRect = QRect(QPoint(yTextPosition.x, yTextPosition.y), ySize);
+    auto yRect = QRect(QPoint(yTextPosition.x, yTextPosition.y), ySize);
     QRect yBoundingRect;
     painter->drawText(yRect, Qt::AlignTop | Qt::AlignRight | Qt::TextDontClip, yString, &yBoundingRect);
 
@@ -118,11 +118,11 @@ void LC_OverlayUCSMark::draw(RS_Painter *painter) {
     double angleFactor = 0.05;
     double angleLen = zr*angleFactor;
 
-    RS_Vector angleX0 = uiOrigin.relative(angleLen, xAxisAngle);
+    RS_Vector angleX0 = m_uiOrigin.relative(angleLen, m_xAxisAngle);
     RS_Vector angleX1 = angleX0.relative(angleLen, yAxisAngle);
-    RS_Vector anchorY0 = uiOrigin.relative(angleLen, yAxisAngle);
+    RS_Vector anchorY0 = m_uiOrigin.relative(angleLen, yAxisAngle);
 
-    RS_Pen anglePen (options->m_colorAngleMark, RS2::Width00, RS2::SolidLine);
+    RS_Pen anglePen (m_options->colorAngleMark, RS2::Width00, RS2::SolidLine);
     anglePen.setScreenWidth(0);
 
     painter->setPen(anglePen);
@@ -130,5 +130,5 @@ void LC_OverlayUCSMark::draw(RS_Painter *painter) {
     painter->drawLineUISimple(anchorY0, angleX1);
     painter->drawLineUISimple(angleX0, angleX1);
 
-    painter->drawGridPoint(uiOrigin);
+    painter->drawGridPoint(m_uiOrigin);
 }

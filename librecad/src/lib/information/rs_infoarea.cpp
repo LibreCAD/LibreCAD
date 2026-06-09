@@ -24,15 +24,17 @@
 **
 **********************************************************************/
 
-#include <QPolygon>
-#include "rs.h"
 #include "rs_infoarea.h"
+
+#include <QPolygon>
+
+#include "rs.h"
 
 /**
  * Constructor.
  */
 RS_InfoArea::RS_InfoArea():
-    calculationNeeded(true){
+    m_calculationNeeded(true){
 }
 
 /**
@@ -42,17 +44,17 @@ RS_InfoArea::RS_InfoArea():
  */
 void RS_InfoArea::push_back(const RS_Vector &p){
     if (m_points.empty()){
-        baseY = p.y;
+        m_baseY = p.y;
     }
 
     m_points.push_back(p);
-    calculationNeeded = true;
+    m_calculationNeeded = true;
 }
 
 //remove the last point
 void RS_InfoArea::pop_back(){
     m_points.pop_back();
-    calculationNeeded = true;
+    m_calculationNeeded = true;
 }
 
 /**
@@ -60,8 +62,8 @@ void RS_InfoArea::pop_back(){
  */
 void RS_InfoArea::reset(){
     m_points.clear();
-    area = 0.0;
-    circumference = 0.0;
+    m_area = 0.0;
+    m_circumference = 0.0;
 }
 
 /**
@@ -69,12 +71,15 @@ void RS_InfoArea::reset(){
   *@return true if the point is a duplicate
   *@return false if the point is not in contour
   **/
-bool RS_InfoArea::duplicated(const RS_Vector &p){
-    if (m_points.size() < 1) return false;
-    for (const RS_Vector &v: m_points) {
-        if ((v - p).squared() < RS_TOLERANCE2) return true;
+bool RS_InfoArea::duplicated(const RS_Vector &p) const {
+    if (m_points.empty()) {
+        return false;
     }
-
+    for (const RS_Vector &v: m_points) {
+        if ((v - p).squared() < RS_TOLERANCE2) {
+            return true;
+        }
+    }
     return false;
 }
 
@@ -82,26 +87,30 @@ bool RS_InfoArea::duplicated(const RS_Vector &p){
  * Calculates the area and the circumference of the area.
  */
 void RS_InfoArea::calculate(){
-    area = 0.0;
-    circumference = 0.0;
-    if (m_points.size() < 3) return;
+    m_area = 0.0;
+    m_circumference = 0.0;
+    if (m_points.size() < 3) {
+        return;
+    }
 
     RS_Vector p1 = m_points.front();
     for (size_t i = 0; i < m_points.size(); ++i) {
 //        std::cout<<"RS_InfoArea::calculate(): "<<i<<" , "<<p1<<std::endl;
         RS_Vector p2 = m_points.at((i + 1) % m_points.size());
-        area += calcSubArea(p1, p2);
-        circumference += p1.distanceTo(p2);
+        m_area += calcSubArea(p1, p2);
+        m_circumference += p1.distanceTo(p2);
         p1 = p2;
     }
 
-    area = 0.5 * std::abs(area);
-    calculationNeeded = false;
+    m_area = 0.5 * std::abs(m_area);
+    m_calculationNeeded = false;
 }
 
 double RS_InfoArea::getArea(const QPolygon &polygon){
     double ret = 0.0;
-    if (polygon.size() < 3) return ret;
+    if (polygon.size() < 3) {
+        return ret;
+    }
 
     for (int i = 0; i < polygon.size(); ++i) {
         const QPoint &p0 = polygon.at(i);
@@ -117,48 +126,43 @@ double RS_InfoArea::getArea(const QPolygon &polygon){
  * @param p1 first point
  * @param p2 second point
  */
-double RS_InfoArea::calcSubArea(const RS_Vector &p1, const RS_Vector &p2){
-    double width = p2.x - p1.x;
-    double height = (p1.y - baseY) + (p2.y - baseY);
+double RS_InfoArea::calcSubArea(const RS_Vector &p1, const RS_Vector &p2) const {
+    const double width = p2.x - p1.x;
+    const double height = (p1.y - m_baseY) + (p2.y - m_baseY);
 
     return width * height; //moved a factor of 0.5 to calculate()
 }
 
-// ---------------------------------//
 double RS_InfoArea::getArea() const{
-    return area;
+    return m_area;
 }
 
-// ---------------------------------//
 double RS_InfoArea::getCircumference(){
-    if (calculationNeeded)
+    if (m_calculationNeeded) {
         calculate();
-    return circumference;
+    }
+    return m_circumference;
 }
 
-// ---------------------------------//
 int RS_InfoArea::size(){
-    if (calculationNeeded)
+    if (m_calculationNeeded) {
         calculate();
+    }
     return m_points.size();
 }
 
-// ---------------------------------//
-const RS_Vector &RS_InfoArea::at(int i) const{
+const RS_Vector &RS_InfoArea::at(const int i) const{
     return m_points.at(i);
 }
 
-// ---------------------------------//
-RS_Vector &RS_InfoArea::at(int i) {
+RS_Vector &RS_InfoArea::at(const int i) {
     return m_points.at(i);
 }
 
-// ---------------------------------//
 const RS_Vector &RS_InfoArea::back() const{
     return m_points.back();
 }
 
-// ---------------------------------//
 RS_Vector &RS_InfoArea::back() {
     return m_points.back();
 }

@@ -22,7 +22,7 @@ public:
     virtual bool writeString(int code, std::string text) = 0;
     bool writeUtf8String(int code, std::string text);
     bool writeUtf8Caps(int code, std::string text);
-    std::string fromUtf8String(std::string t) {return encoder.fromUtf8(t);}
+    std::string fromUtf8String(std::string t) const {return encoder.fromUtf8(t);}
     virtual bool writeInt16(int code, int data) = 0;
     virtual bool writeInt32(int code, int data) = 0;
     virtual bool writeInt64(int code, unsigned long long int data) = 0;
@@ -61,4 +61,4 @@ public:
     virtual bool writeBool(int code, bool data);
 };
 
-#endif // DXFWRITER_H
+#endif

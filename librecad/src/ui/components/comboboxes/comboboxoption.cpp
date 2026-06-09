@@ -20,21 +20,20 @@
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **
 **********************************************************************************
-*/
+ */
 
 #include "comboboxoption.h"
+
 #include "ui_comboboxoption.h"
 
-ComboBoxOption::ComboBoxOption(QWidget* parent) :
-    QFrame(parent),
-    ui(new Ui::ComboBoxOption){
+ComboBoxOption::ComboBoxOption(QWidget* parent) : QFrame(parent), m_lastSavedIndex{-1}, ui(new Ui::ComboBoxOption) {
     ui->setupUi(this);
     ui->pushButton->setDisabled(true);
     connect(ui->pushButton, &QPushButton::released, this, &ComboBoxOption::saveIndexAndEmitOption);
     connect(ui->comboBox, &QComboBox::activated, this, &ComboBoxOption::setButtonState);
 }
 
-ComboBoxOption::~ComboBoxOption(){
+ComboBoxOption::~ComboBoxOption() {
     delete ui;
 }
 
@@ -46,20 +45,20 @@ void ComboBoxOption::setOptionsList(const QStringList& options) const {
     ui->comboBox->addItems(options);
 }
 
-void ComboBoxOption::setCurrentOption(const QString& option){
-    int index = ui->comboBox->findText(option);
+void ComboBoxOption::setCurrentOption(const QString& option) {
+    const int index = ui->comboBox->findText(option);
     ui->comboBox->setCurrentIndex(index);
     m_lastSavedIndex = index;
 }
 
-void ComboBoxOption::saveIndexAndEmitOption(){
+void ComboBoxOption::saveIndexAndEmitOption() {
     ui->pushButton->setDisabled(true);
-    int index = ui->comboBox->currentIndex();
-    QString option = ui->comboBox->itemText(index);
+    const int index = ui->comboBox->currentIndex();
+    const QString option = ui->comboBox->itemText(index);
     m_lastSavedIndex = index;
     emit optionToSave(option);
 }
 
-void ComboBoxOption::setButtonState(int index){
-    ui->pushButton->setDisabled((m_lastSavedIndex == index) ? true : false);
+void ComboBoxOption::setButtonState(const int index) const {
+    ui->pushButton->setDisabled(m_lastSavedIndex == index);
 }

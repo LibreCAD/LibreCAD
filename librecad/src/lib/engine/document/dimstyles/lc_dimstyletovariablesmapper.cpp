@@ -23,10 +23,10 @@
 
 #include "lc_dimstyletovariablesmapper.h"
 
+#include "lc_dimstyle.h"
 #include "rs_filterdxfrw.h"
 #include "rs_graphic.h"
 #include "rs_units.h"
-#include "lc_dimstyle.h"
 
 LC_DimStyleToVariablesMapper::LC_DimStyleToVariablesMapper() {}
 
@@ -36,7 +36,7 @@ LC_DimStyleToVariablesMapper::LC_DimStyleToVariablesMapper() {}
 //     toDictionary(style, variableDict);
 // }
 
-void LC_DimStyleToVariablesMapper::fromDictionary(LC_DimStyle* style, RS_VariableDict* vd, RS2::Unit unit) {
+void LC_DimStyleToVariablesMapper::fromDictionary(const LC_DimStyle* style, RS_VariableDict* vd, const RS2::Unit unit) {
     arrowFromVars(style->arrowhead(),vd, unit);
     arcFromVars(style->arc(),vd);
     dimLineFromVars(style->dimensionLine(),vd, unit);
@@ -72,13 +72,13 @@ void LC_DimStyleToVariablesMapper::toDictionary(const LC_DimStyle* style, RS_Var
     zerosSuppression2Vars(style->zerosSuppression(), vd);
 }
 
-void LC_DimStyleToVariablesMapper::arc2Vars(LC_DimStyle::Arc* s,RS_VariableDict* vd) {
+void LC_DimStyleToVariablesMapper::arc2Vars(const LC_DimStyle::Arc* s,RS_VariableDict* vd) {
     if (s->checkModifyState(LC_DimStyle::Arc::$DIMARCSYM)) {
         vd->add(QStringLiteral( "$DIMARCSYM"), s->arcSymbolPosition(), 90);
     }
 }
 
-void LC_DimStyleToVariablesMapper::arcFromVars(LC_DimStyle::Arc* s,RS_VariableDict* vd) {
+void LC_DimStyleToVariablesMapper::arcFromVars(LC_DimStyle::Arc* s, const RS_VariableDict* vd) {
     // not present in header, may be in dxf
     if (vd->has("$DIMARCSYM")) {
         s->setArcSymbolPositionRaw(vd->getInt("$DIMARCSYM", 0));
@@ -86,7 +86,7 @@ void LC_DimStyleToVariablesMapper::arcFromVars(LC_DimStyle::Arc* s,RS_VariableDi
 }
 
 
-void LC_DimStyleToVariablesMapper::angularUnitFromVars(LC_DimStyle::AngularFormat* s,RS_VariableDict* vd) {
+void LC_DimStyleToVariablesMapper::angularUnitFromVars(LC_DimStyle::AngularFormat* s, const RS_VariableDict* vd) {
     if (vd->has("$DIMAUNIT")) {
         s->setFormatRaw( vd->getInt("$DIMAUNIT", RS2::AngleFormat::DegreesDecimal));
     }
@@ -95,7 +95,7 @@ void LC_DimStyleToVariablesMapper::angularUnitFromVars(LC_DimStyle::AngularForma
     }
 }
 
-void LC_DimStyleToVariablesMapper::angularUnit2Vars(LC_DimStyle::AngularFormat* s,RS_VariableDict* vd) {
+void LC_DimStyleToVariablesMapper::angularUnit2Vars(const LC_DimStyle::AngularFormat* s,RS_VariableDict* vd) {
     if (s->checkModifyState(LC_DimStyle::AngularFormat::$DIMAUNIT)) {
         vd->add(QStringLiteral( "$DIMAUNIT"), s->format(), 70);
     }
@@ -104,7 +104,7 @@ void LC_DimStyleToVariablesMapper::angularUnit2Vars(LC_DimStyle::AngularFormat* 
     }
 }
 
-void LC_DimStyleToVariablesMapper::arrowFromVars(LC_DimStyle::Arrowhead* s, RS_VariableDict* vd, RS2::Unit unit) {
+void LC_DimStyleToVariablesMapper::arrowFromVars(LC_DimStyle::Arrowhead* s, const RS_VariableDict* vd, const RS2::Unit unit) {
     // Arrow Style
     if (vd->has("$DIMTSZ")) {
         s->setTickSize(varDouble(vd, unit, "$DIMTSZ", 0.));
@@ -123,14 +123,14 @@ void LC_DimStyleToVariablesMapper::arrowFromVars(LC_DimStyle::Arrowhead* s, RS_V
         s->setUseSeparateArrowHeads(vd->getBool("$DIMSAH", false));
     }
     if (vd->has("$DIMSOXD")) {
-        s->setSuppressionsRaw(vd->getInt("$DIMSOXD", false));
+        s->setSuppressionsRaw(vd->getInt("$DIMSOXD", 0));
     }
     if (vd->has("$DIMASZ")) {
         s->setSize(varDouble(vd, unit, "$DIMASZ", 2.5));
     }
 }
 
-void LC_DimStyleToVariablesMapper::arrow2Vars(LC_DimStyle::Arrowhead* s, RS_VariableDict* vd) {
+void LC_DimStyleToVariablesMapper::arrow2Vars(const LC_DimStyle::Arrowhead* s, RS_VariableDict* vd) {
     if (s->checkModifyState(LC_DimStyle::Arrowhead::$DIMTSZ)) {
         vd->add("$DIMTSZ", s->tickSize(), 40);
     }
@@ -154,21 +154,21 @@ void LC_DimStyleToVariablesMapper::arrow2Vars(LC_DimStyle::Arrowhead* s, RS_Vari
     }
 }
 
-void LC_DimStyleToVariablesMapper::fractionsFromVars(LC_DimStyle::Fractions* s,RS_VariableDict* vd) {
+void LC_DimStyleToVariablesMapper::fractionsFromVars(LC_DimStyle::Fractions* s, const RS_VariableDict* vd) {
     // not present in header, may be in dxf
     if (vd->has("$DIMFRAC")) {
         s->setStyleRaw(vd->getInt("$DIMFRAC", LC_DimStyle::Fractions::HORIZONTAL));
     }
 }
 
-void LC_DimStyleToVariablesMapper::fractions2Vars(LC_DimStyle::Fractions* s,RS_VariableDict* vd) {
+void LC_DimStyleToVariablesMapper::fractions2Vars(const LC_DimStyle::Fractions* s,RS_VariableDict* vd) {
     // not present in header, may be in dxf
     if (s->checkModifyState(LC_DimStyle::Fractions::$DIMFRAC)) {
         vd->add("$DIMFRAC", s->style(), 70);
     }
 }
 
-void LC_DimStyleToVariablesMapper::leaderFromVars(LC_DimStyle::Leader* s,RS_VariableDict* vd) {
+void LC_DimStyleToVariablesMapper::leaderFromVars(LC_DimStyle::Leader* s, const RS_VariableDict* vd) {
     if (vd->has("$DIMLDRBLK")) {
         auto dimldrblk = vd->getString("$DIMLDRBLK", "");
         // fixme - sand - this is workaround for default logic in  DRW_Header::writeDimVars where no value for block is set to STANDARD
@@ -180,13 +180,13 @@ void LC_DimStyleToVariablesMapper::leaderFromVars(LC_DimStyle::Leader* s,RS_Vari
     }
 }
 
-void LC_DimStyleToVariablesMapper::leaderStyle2Vars(LC_DimStyle::Leader* s,RS_VariableDict* vd) {
+void LC_DimStyleToVariablesMapper::leaderStyle2Vars(const LC_DimStyle::Leader* s,RS_VariableDict* vd) {
     if (s->checkModifyState(LC_DimStyle::Leader::$DIMLDRBLK)) {
         vd->add("$DIMLDRBLK", s->arrowBlockName(), 1);
     }
 }
 
-void LC_DimStyleToVariablesMapper::toleranceFromVars(LC_DimStyle::LatteralTolerance* s,RS_VariableDict* vd,RS2::Unit unit) {
+void LC_DimStyleToVariablesMapper::toleranceFromVars(LC_DimStyle::LatteralTolerance* s, const RS_VariableDict* vd, const RS2::Unit unit) {
     if (vd->has("$DIMALTTD")) {
         s->setDecimalPlacesAltDim(vd->getInt("$DIMALTTD", 3));
     }
@@ -216,7 +216,7 @@ void LC_DimStyleToVariablesMapper::toleranceFromVars(LC_DimStyle::LatteralTolera
     }
 }
 
-void LC_DimStyleToVariablesMapper::toleranceStyle2Vars(LC_DimStyle::LatteralTolerance* s,RS_VariableDict* vd) {
+void LC_DimStyleToVariablesMapper::toleranceStyle2Vars(const LC_DimStyle::LatteralTolerance* s,RS_VariableDict* vd) {
     if (s->checkModifyState(LC_DimStyle::LatteralTolerance::$DIMALTTD)) {
         vd->add("$DIMALTTD", s->decimalPlacesAltDim(), 70);
     }
@@ -254,7 +254,7 @@ void LC_DimStyleToVariablesMapper::mleaderFromVars([[maybe_unused]]LC_DimStyle::
   // nothing is in header
 }
 
-void LC_DimStyleToVariablesMapper::radialFromVars(LC_DimStyle::Radial* s,RS_VariableDict* vd,  RS2::Unit unit) {
+void LC_DimStyleToVariablesMapper::radialFromVars(LC_DimStyle::Radial* s, const RS_VariableDict* vd, const RS2::Unit unit) {
     if (vd->has("$DIMCEN")) {
         s->setCenterMarkOrLineSize(varDouble(vd, unit, "$DIMCEN", 2.5));
     }
@@ -263,7 +263,7 @@ void LC_DimStyleToVariablesMapper::radialFromVars(LC_DimStyle::Radial* s,RS_Vari
     }
 }
 
-void LC_DimStyleToVariablesMapper::radial2Vars(LC_DimStyle::Radial* s, RS_VariableDict* vd) {
+void LC_DimStyleToVariablesMapper::radial2Vars(const LC_DimStyle::Radial* s, RS_VariableDict* vd) {
     if (s->checkModifyState(LC_DimStyle::Radial::$DIMCEN)) {
         vd->add("$DIMCEN", s->centerCenterMarkOrLineSize(), 40);
     }
@@ -272,8 +272,7 @@ void LC_DimStyleToVariablesMapper::radial2Vars(LC_DimStyle::Radial* s, RS_Variab
     }
 }
 
-void LC_DimStyleToVariablesMapper::roundOffFromVars(LC_DimStyle::LinearRoundOff* s, RS_VariableDict* vd,
-                                                    RS2::Unit unit) {
+void LC_DimStyleToVariablesMapper::roundOffFromVars(LC_DimStyle::LinearRoundOff* s, const RS_VariableDict* vd, const RS2::Unit unit) {
     if (vd->has("$DIMALTRND")) {
         s->setAltRoundToValue(varDouble(vd, unit, "$DIMALTRND", 0));
     }
@@ -282,7 +281,7 @@ void LC_DimStyleToVariablesMapper::roundOffFromVars(LC_DimStyle::LinearRoundOff*
     }
 }
 
-void LC_DimStyleToVariablesMapper::roundOff2Vars(LC_DimStyle::LinearRoundOff* s, RS_VariableDict* vd) {
+void LC_DimStyleToVariablesMapper::roundOff2Vars(const LC_DimStyle::LinearRoundOff* s, RS_VariableDict* vd) {
     if (s->checkModifyState(LC_DimStyle::LinearRoundOff::$DIMALTRND)) {
         vd->add("$DIMALTRND", s->altRoundTo(), 40);
     }
@@ -291,7 +290,7 @@ void LC_DimStyleToVariablesMapper::roundOff2Vars(LC_DimStyle::LinearRoundOff* s,
     }
 }
 
-void LC_DimStyleToVariablesMapper::scalingFromVars(LC_DimStyle::Scaling* s, RS_VariableDict* vd, RS2::Unit unit) {
+void LC_DimStyleToVariablesMapper::scalingFromVars(LC_DimStyle::Scaling* s, const RS_VariableDict* vd, const RS2::Unit unit) {
     if (vd->has("$DIMLFAC")) {
         s->setLinearFactor(varDouble(vd, unit, "$DIMLFAC", 1.0));
     }
@@ -300,7 +299,7 @@ void LC_DimStyleToVariablesMapper::scalingFromVars(LC_DimStyle::Scaling* s, RS_V
     }
 }
 
-void LC_DimStyleToVariablesMapper::scaling2Vars(LC_DimStyle::Scaling* s, RS_VariableDict* vd) {
+void LC_DimStyleToVariablesMapper::scaling2Vars(const LC_DimStyle::Scaling* s, RS_VariableDict* vd) {
     if (s->checkModifyState(LC_DimStyle::Scaling::$DIMLFAC)) {
         vd->add("$DIMLFAC", s->linearFactor(), 40);
     }
@@ -309,7 +308,7 @@ void LC_DimStyleToVariablesMapper::scaling2Vars(LC_DimStyle::Scaling* s, RS_Vari
     }
 }
 
-void LC_DimStyleToVariablesMapper::unitFormatFromVars(LC_DimStyle::LinearFormat* s,RS_VariableDict* vd) {
+void LC_DimStyleToVariablesMapper::unitFormatFromVars(LC_DimStyle::LinearFormat* s, const RS_VariableDict* vd) {
     if (vd->has("$DIMALT")) {
         s->setAlternateUnitsRaw(vd->getInt("$DIMALT", 0));
     }
@@ -339,7 +338,7 @@ void LC_DimStyleToVariablesMapper::unitFormatFromVars(LC_DimStyle::LinearFormat*
     }
 }
 
-void LC_DimStyleToVariablesMapper::unitFormat2Vars(LC_DimStyle::LinearFormat* s, RS_VariableDict* vd) {
+void LC_DimStyleToVariablesMapper::unitFormat2Vars(const LC_DimStyle::LinearFormat* s, RS_VariableDict* vd) {
     if (s->checkModifyState(LC_DimStyle::LinearFormat::$DIMALT)) {
         vd->add("$DIMALT", s->alternateUnits(), 70);
     }
@@ -369,7 +368,7 @@ void LC_DimStyleToVariablesMapper::unitFormat2Vars(LC_DimStyle::LinearFormat* s,
     }
 }
 
-void LC_DimStyleToVariablesMapper::textFromVars(LC_DimStyle::Text* s, RS_VariableDict* vd, RS2::Unit unit) {
+void LC_DimStyleToVariablesMapper::textFromVars(LC_DimStyle::Text* s, const RS_VariableDict* vd, const RS2::Unit unit) {
     if (vd->has("$DIMATFIT")) {
         s->setUnsufficientSpacePolicyRaw(vd->getInt(
             QStringLiteral("$DIMATFIT"),
@@ -382,11 +381,8 @@ void LC_DimStyleToVariablesMapper::textFromVars(LC_DimStyle::Text* s, RS_Variabl
     if (vd->has("$DIMJUST")) {
         s->setHorizontalPositioningRaw(vd->getInt(QStringLiteral("$DIMJUST"), LC_DimStyle::Text::ABOVE_AND_CENTERED));
     }
-    if (vd->has("$DIMJUST")) {
-        s->setHorizontalPositioningRaw(vd->getInt(QStringLiteral("$DIMJUST"), LC_DimStyle::Text::ABOVE_AND_CENTERED));
-    }
     if (vd->has("$DIMCLRT")) {
-        RS_Color dimclrt = RS_FilterDXFRW::numberToColor(vd->getInt("$DIMCLRT", 0));
+        const RS_Color dimclrt = RS_FilterDXFRW::numberToColor(vd->getInt("$DIMCLRT", 0));
 
         s->setColor(dimclrt);
     }
@@ -420,7 +416,7 @@ void LC_DimStyleToVariablesMapper::textFromVars(LC_DimStyle::Text* s, RS_Variabl
         s->setBackgroundFillModeRaw(vd->getInt("$DIMTFILL", LC_DimStyle::Text::NONE));
     }
     if (vd->has("$DIMTFILLCLR")) {
-        RS_Color fillClr = RS_FilterDXFRW::numberToColor(vd->getInt("$DIMTFILLCLR", 0));
+        const RS_Color fillClr = RS_FilterDXFRW::numberToColor(vd->getInt("$DIMTFILLCLR", 0));
         s->setExplicitBackgroundFillColor(fillClr);
     }
     if (vd->has("$DIMTFILL")) {
@@ -431,7 +427,7 @@ void LC_DimStyleToVariablesMapper::textFromVars(LC_DimStyle::Text* s, RS_Variabl
     }
 }
 
-void LC_DimStyleToVariablesMapper::text2Vars(LC_DimStyle::Text* s, RS_VariableDict* vd) {
+void LC_DimStyleToVariablesMapper::text2Vars(const LC_DimStyle::Text* s, RS_VariableDict* vd) {
     if (s->checkModifyState(LC_DimStyle::Text::$DIMATFIT)) {
         vd->add("$DIMATFIT", s->unsufficientSpacePolicy(), 70);
     }
@@ -487,9 +483,9 @@ void LC_DimStyleToVariablesMapper::text2Vars(LC_DimStyle::Text* s, RS_VariableDi
     }
 }
 
-void LC_DimStyleToVariablesMapper::extensionLineFromVars(LC_DimStyle::ExtensionLine* s,RS_VariableDict* vd,  RS2::Unit unit) {
+void LC_DimStyleToVariablesMapper::extensionLineFromVars(LC_DimStyle::ExtensionLine* s, const RS_VariableDict* vd, const RS2::Unit unit) {
     if (vd->has("$DIMCLRE")) {
-        RS_Color color = RS_FilterDXFRW::numberToColor(vd->getInt("$DIMCLRE", 0));
+        const RS_Color color = RS_FilterDXFRW::numberToColor(vd->getInt("$DIMCLRE", 0));
         s->setColor(color);
     }
     if (vd->has("$DIMEXE")) {
@@ -515,23 +511,23 @@ void LC_DimStyleToVariablesMapper::extensionLineFromVars(LC_DimStyle::ExtensionL
         s->setHasFixedLength(vd->getBool("$DIMFXLON", false));
     }
     if (vd->has("$DIMLTEX1")) {
-        auto dimltex1 = vd->getString("$DIMLTEX1", "");
+        const auto dimltex1 = vd->getString("$DIMLTEX1", "");
         if (!dimltex1.isEmpty()) {
             s->setLineTypeFirst(dimltex1);
         }
     }
     if (vd->has("$DIMLTEX2")) {
-        auto dimltex2 = vd->getString("$DIMLTEX2", "");
+        const auto dimltex2 = vd->getString("$DIMLTEX2", "");
         if (!dimltex2.isEmpty()) {
             s->setLineTypeSecond(dimltex2);
         }
     }
 }
 
-void LC_DimStyleToVariablesMapper::extensionLine2Vars(LC_DimStyle::ExtensionLine* s, RS_VariableDict* vd) {
+void LC_DimStyleToVariablesMapper::extensionLine2Vars(const LC_DimStyle::ExtensionLine* s, RS_VariableDict* vd) {
     int colRGB;
-    int colNum = RS_FilterDXFRW::colorToNumber(s->color(), &colRGB);
     if (s->checkModifyState(LC_DimStyle::ExtensionLine::$DIMCLRE)) {
+        const int colNum = RS_FilterDXFRW::colorToNumber(s->color(), &colRGB);
         vd->add("$DIMCLRE", colNum, 70);
     }
     if (s->checkModifyState(LC_DimStyle::ExtensionLine::$DIMEXE)) {
@@ -566,9 +562,9 @@ void LC_DimStyleToVariablesMapper::extensionLine2Vars(LC_DimStyle::ExtensionLine
     }
 }
 
-void LC_DimStyleToVariablesMapper::dimLineFromVars(LC_DimStyle::DimensionLine* s,RS_VariableDict* vd,  RS2::Unit unit) {
+void LC_DimStyleToVariablesMapper::dimLineFromVars(LC_DimStyle::DimensionLine* s, const RS_VariableDict* vd, const RS2::Unit unit) {
     if (vd->has("$DIMCLRD")) {
-        RS_Color dimclrd = RS_FilterDXFRW::numberToColor(vd->getInt("$DIMCLRD", 0));
+        const RS_Color dimclrd = RS_FilterDXFRW::numberToColor(vd->getInt("$DIMCLRD", 0));
         s->setColor(dimclrd);
     }
     if (vd->has("$DIMDLE")) {
@@ -589,15 +585,15 @@ void LC_DimStyleToVariablesMapper::dimLineFromVars(LC_DimStyle::DimensionLine* s
     if (vd->has("$DIMSD1")) {
         s->setSuppressFirstLineRaw(vd->getInt("$DIMSD1", LC_DimStyle::DimensionLine::DONT_SUPPRESS));
     }
-    if (vd->has("$DIMSD1")) {
-        s->setSuppressSecondLineRaw(vd->getInt("$DIMSD1", LC_DimStyle::DimensionLine::DONT_SUPPRESS));
+    if (vd->has("$DIMSD2")) {
+        s->setSuppressSecondLineRaw(vd->getInt("$DIMSD2", LC_DimStyle::DimensionLine::DONT_SUPPRESS));
     }
 }
 
-void LC_DimStyleToVariablesMapper::dimLine2Vars(LC_DimStyle::DimensionLine* s, RS_VariableDict* vd) {
+void LC_DimStyleToVariablesMapper::dimLine2Vars(const LC_DimStyle::DimensionLine* s, RS_VariableDict* vd) {
     if (s->checkModifyState(LC_DimStyle::DimensionLine::$DIMCLRD)) {
         int colRGB;
-        int colNum = RS_FilterDXFRW::colorToNumber(s->color(), &colRGB);
+        const int colNum = RS_FilterDXFRW::colorToNumber(s->color(), &colRGB);
         vd->add("$DIMCLRD", colNum, 70);
     }
     if (s->checkModifyState(LC_DimStyle::DimensionLine::$DIMDLE)) {
@@ -623,7 +619,7 @@ void LC_DimStyleToVariablesMapper::dimLine2Vars(LC_DimStyle::DimensionLine* s, R
     }
 }
 
-void LC_DimStyleToVariablesMapper::zerosSuppressionFromVars(LC_DimStyle::ZerosSuppression* s, RS_VariableDict* vd) {
+void LC_DimStyleToVariablesMapper::zerosSuppressionFromVars(LC_DimStyle::ZerosSuppression* s, const RS_VariableDict* vd) {
     if (vd->has("$DIMZIN")) {
         s->setLinearRaw(vd->getInt("$DIMZIN", LC_DimStyle::ZerosSuppression::TRAILING_IN_DECIMAL));
     }
@@ -643,7 +639,7 @@ void LC_DimStyleToVariablesMapper::zerosSuppressionFromVars(LC_DimStyle::ZerosSu
     }
 }
 
-void LC_DimStyleToVariablesMapper::zerosSuppression2Vars(LC_DimStyle::ZerosSuppression* s, RS_VariableDict* vd) {
+void LC_DimStyleToVariablesMapper::zerosSuppression2Vars(const LC_DimStyle::ZerosSuppression* s, RS_VariableDict* vd) {
     if (s->checkModifyState(LC_DimStyle::ZerosSuppression::$DIMZIN)) {
         vd->add("$DIMZIN", s->linearRaw(), 70);
     }
@@ -667,10 +663,10 @@ void LC_DimStyleToVariablesMapper::zerosSuppression2Vars(LC_DimStyle::ZerosSuppr
  * If the variable is not found it is added with the given default
  * value converted to the local unit.
  */
-double LC_DimStyleToVariablesMapper::varDouble(RS_VariableDict* vd, RS2::Unit graphicUnit, const QString& key, double defMM) {
+double LC_DimStyleToVariablesMapper::varDouble(const RS_VariableDict* vd, const RS2::Unit unit, const QString& key, const double defMM) {
     double v = vd->getDouble(key, RS_MINDOUBLE);
     if (v <= RS_MINDOUBLE) {
-        double defaultValue  =  RS_Units::convert(defMM, RS2::Millimeter, graphicUnit);
+        const double defaultValue  =  RS_Units::convert(defMM, RS2::Millimeter, unit);
         v = defaultValue;
     }
     return v;

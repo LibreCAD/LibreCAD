@@ -28,4 +28,4 @@ class LC_Align : public QObject, QC_PluginInterface
                           QWidget *parent, QString cmd) Q_DECL_OVERRIDE;
 };
 
-#endif // ALIGN_H
+#endif

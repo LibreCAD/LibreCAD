@@ -13,7 +13,7 @@ LinkList::LinkList(QWidget* parent)
 
 void LinkList::addLink(const QString& text, const QString& url)
 {
-    auto item = new QListWidgetItem;
+    const auto item = new QListWidgetItem;
     item->setText(text);
     item->setToolTip(url);
     addItem(item);

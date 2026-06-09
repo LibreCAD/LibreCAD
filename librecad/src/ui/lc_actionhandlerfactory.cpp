@@ -23,41 +23,131 @@
 
 #include "lc_actionhandlerfactory.h"
 
+#include "lc_action_block_explode.h"
+#include "lc_action_block_insert.h"
+#include "lc_action_block_library_insert.h"
+#include "lc_action_draw_arc_2points_angle.h"
+#include "lc_action_draw_arc_2points_height.h"
+#include "lc_action_draw_arc_2points_length.h"
+#include "lc_action_draw_arc_2points_radius.h"
+#include "lc_action_draw_arc_3points.h"
+#include "lc_action_draw_arc_center_point_param.h"
+#include "lc_action_draw_arc_tangential.h"
+#include "lc_action_draw_bounding_box.h"
+#include "lc_action_draw_center_line.h"
+#include "lc_action_draw_center_mark.h"
+#include "lc_action_draw_circle_2points.h"
+#include "lc_action_draw_circle_2points_radius.h"
+#include "lc_action_draw_circle_3points.h"
+#include "lc_action_draw_circle_by_arc.h"
+#include "lc_action_draw_circle_center_point.h"
+#include "lc_action_draw_circle_center_radius.h"
+#include "lc_action_draw_circle_inscribe.h"
+#include "lc_action_draw_circle_tangental_1entity_2points.h"
+#include "lc_action_draw_circle_tangental_2entities_1point.h"
+#include "lc_action_draw_circle_tangental_2entities_radius.h"
+#include "lc_action_draw_circle_tangental_3entities.h"
+#include "lc_action_draw_ellipse_1point.h"
+#include "lc_action_draw_ellipse_axis.h"
+#include "lc_action_draw_image.h"
+#include "lc_action_draw_line.h"
+#include "lc_action_draw_line_angle.h"
+#include "lc_action_draw_line_angle_rel.h"
+#include "lc_action_draw_line_bisector.h"
+#include "lc_action_draw_line_freehand.h"
+#include "lc_action_draw_line_from_point_to_line.h"
+#include "lc_action_draw_line_parallel.h"
+#include "lc_action_draw_line_parallel_through.h"
+#include "lc_action_draw_line_radiant.h"
+#include "lc_action_draw_line_rel_angle.h"
+#include "lc_action_draw_line_snake.h"
+#include "lc_action_draw_mtext.h"
+#include "lc_action_draw_point.h"
+#include "lc_action_draw_points_lattice.h"
+#include "lc_action_draw_points_line.h"
+#include "lc_action_draw_polygon_center_corner.h"
+#include "lc_action_draw_polygon_center_tan.h"
+#include "lc_action_draw_polygon_corner_corner.h"
+#include "lc_action_draw_polygon_side_side.h"
+#include "lc_action_draw_polyline.h"
+#include "lc_action_draw_rectangle_1point.h"
+#include "lc_action_draw_rectangle_2points.h"
+#include "lc_action_draw_rectangle_3points.h"
+#include "lc_action_draw_rectangle_simple.h"
+#include "lc_action_draw_slice_divide.h"
+#include "lc_action_draw_spline.h"
+#include "lc_action_draw_spline_points.h"
+#include "lc_action_draw_star.h"
+#include "lc_action_draw_text.h"
+#include "lc_action_edit_copy_cut.h"
+#include "lc_action_edit_paste_to_points.h"
+#include "lc_action_edit_paste_transform.h"
+#include "lc_action_edit_undo_redo.h"
+#include "lc_action_info_dist_point_to_entity.h"
+#include "lc_action_modify_align.h"
+#include "lc_action_modify_align_ref.h"
+#include "lc_action_modify_align_single.h"
+#include "lc_action_modify_attributes.h"
+#include "lc_action_modify_bevel.h"
+#include "lc_action_modify_break_divide.h"
+#include "lc_action_modify_cut.h"
+#include "lc_action_modify_delete.h"
+#include "lc_action_modify_delete_free.h"
+#include "lc_action_modify_duplicate.h"
+#include "lc_action_modify_entity.h"
+#include "lc_action_modify_explode_text.h"
+#include "lc_action_modify_line_gap.h"
+#include "lc_action_modify_line_join.h"
+#include "lc_action_modify_mirror.h"
+#include "lc_action_modify_move.h"
+#include "lc_action_modify_move_adjust.h"
+#include "lc_action_modify_move_rotate.h"
+#include "lc_action_modify_offset.h"
+#include "lc_action_modify_order.h"
+#include "lc_action_modify_revert_direction.h"
+#include "lc_action_modify_rotate.h"
+#include "lc_action_modify_rotate_twice.h"
+#include "lc_action_modify_round.h"
+#include "lc_action_modify_scale.h"
+#include "lc_action_modify_stretch.h"
+#include "lc_action_modify_trim.h"
+#include "lc_action_modify_trim_amount.h"
+#include "lc_action_polyline_add.h"
+#include "lc_action_polyline_append.h"
+#include "lc_action_polyline_arcs_to_lines.h"
+#include "lc_action_polyline_change_segment_type.h"
+#include "lc_action_polyline_delete_node.h"
+#include "lc_action_polyline_delete_node_between.h"
+#include "lc_action_polyline_equidistant.h"
+#include "lc_action_polyline_from_segment.h"
+#include "lc_action_polyline_trim.h"
+#include "lc_action_select_all.h"
+#include "lc_action_select_contour.h"
+#include "lc_action_select_generic.h"
+#include "lc_action_select_intersected.h"
+#include "lc_action_select_invert.h"
+#include "lc_action_select_layer.h"
+#include "lc_action_select_mode_toggle.h"
+#include "lc_action_select_points.h"
+#include "lc_action_select_quick.h"
+#include "lc_action_select_single.h"
+#include "lc_action_spline_add_point.h"
+#include "lc_action_spline_append_point.h"
+#include "lc_action_spline_from_polyline.h"
+#include "lc_action_spline_modify_explode.h"
+#include "lc_action_spline_remove_between.h"
+#include "lc_action_spline_remove_points.h"
 #include "lc_actioncontext.h"
 #include "lc_actiondimarc.h"
 #include "lc_actiondimordinate.h"
 #include "lc_actiondimordinaterebase.h"
 #include "lc_actiondimstyleapply.h"
-#include "lc_actiondrawarc2pointsangle.h"
-#include "lc_actiondrawarc2pointsheight.h"
-#include "lc_actiondrawarc2pointslength.h"
-#include "lc_actiondrawarc2pointsradius.h"
-#include "lc_actiondrawboundingbox.h"
-#include "lc_actiondrawcircle2pr.h"
-#include "lc_actiondrawcirclebyarc.h"
-#include "lc_actiondrawcross.h"
 #include "lc_actiondrawdimbaseline.h"
 #include "lc_actiondrawdual.h"
-#include "lc_actiondrawellipse1point.h"
 #include "lc_actiondrawgdtfeaturecontrolframe.h"
-#include "lc_actiondrawlineanglerel.h"
-#include "lc_actiondrawlinefrompointtoline.h"
-#include "lc_actiondrawlinepoints.h"
-#include "lc_actiondrawlinepolygon3.h"
-#include "lc_actiondrawlinepolygon4.h"
-#include "lc_actiondrawlinesnake.h"
-#include "lc_actiondrawmidline.h"
+#include "lc_actiondrawhyperbolafp.h"
 #include "lc_actiondrawparabola4points.h"
 #include "lc_actiondrawparabolaFD.h"
-#include "lc_actiondrawhyperbolafp.h"
-#include "lc_actiondrawpointslattice.h"
-#include "lc_actiondrawrectangle1point.h"
-#include "lc_actiondrawrectangle2points.h"
-#include "lc_actiondrawrectangle3points.h"
-#include "lc_actiondrawslicedivide.h"
-#include "lc_actiondrawsplinepoints.h"
-#include "lc_actiondrawstar.h"
-#include "lc_actioneditpastetransform.h"
 #include "lc_actionentitylayertoggle.h"
 #include "lc_actionfileexportmakercam.h"
 #include "lc_actioninfo3pointsangle.h"
@@ -70,39 +160,18 @@
 #include "lc_actionlayerscmd.h"
 #include "lc_actionlayersexport.h"
 #include "lc_actionlayerstoggleconstruction.h"
-#include "lc_actionmodifyalign.h"
-#include "lc_actionmodifyalignref.h"
-#include "lc_actionmodifyalignsingle.h"
-#include "lc_actionmodifybreakdivide.h"
-#include "lc_actionmodifyduplicate.h"
-#include "lc_actionmodifylinegap.h"
-#include "lc_actionmodifylinejoin.h"
-#include "lc_actionmodifymoveadjust.h"
-#include "lc_actionpastetopoints.h"
 #include "lc_actionpenapply.h"
 #include "lc_actionpenpick.h"
 #include "lc_actionpensyncactivebylayer.h"
-#include "lc_actionpolylinearcstolines.h"
-#include "lc_actionpolylinechangesegmenttype.h"
-#include "lc_actionremovesplinepoints.h"
 #include "lc_actionselectdimordinatesameorigin.h"
-#include "lc_actionselectpoints.h"
 #include "lc_actionsnapmiddlemanual.h"
-#include "lc_actionsplineaddpoint.h"
-#include "lc_actionsplineappendpoint.h"
-#include "lc_actionsplineexplode.h"
-#include "lc_actionsplinefrompolyline.h"
-#include "lc_actionsplineremovebetween.h"
 #include "lc_actionucsbydimordinate.h"
 #include "lc_actionucscreate.h"
-#include "pick/lc_actioninteractivepickposition.h"
 #include "rs_actionblocksadd.h"
 #include "rs_actionblocksattributes.h"
 #include "rs_actionblockscreate.h"
 #include "rs_actionblocksedit.h"
-#include "rs_actionblocksexplode.h"
 #include "rs_actionblocksfreezeall.h"
-#include "rs_actionblocksinsert.h"
 #include "rs_actionblocksremove.h"
 #include "rs_actionblockssave.h"
 #include "rs_actionblockstoggleview.h"
@@ -112,50 +181,18 @@
 #include "rs_actiondimleader.h"
 #include "rs_actiondimlinear.h"
 #include "rs_actiondimradial.h"
-#include "rs_actiondrawarc.h"
-#include "rs_actiondrawarc3p.h"
-#include "rs_actiondrawarctangential.h"
-#include "rs_actiondrawcircle.h"
-#include "rs_actiondrawcircle2p.h"
-#include "rs_actiondrawcircle3p.h"
-#include "rs_actiondrawcirclecr.h"
-#include "rs_actiondrawcircleinscribe.h"
-#include "rs_actiondrawcircletan1_2p.h"
-#include "rs_actiondrawcircletan2.h"
-#include "rs_actiondrawcircletan2_1p.h"
-#include "rs_actiondrawcircletan3.h"
 #include "rs_actiondrawellipse4points.h"
-#include "rs_actiondrawellipseaxis.h"
 #include "rs_actiondrawellipsecenter3points.h"
 #include "rs_actiondrawellipsefocipoint.h"
 #include "rs_actiondrawellipseinscribe.h"
 #include "rs_actiondrawhatch.h"
-#include "rs_actiondrawimage.h"
-#include "rs_actiondrawline.h"
-#include "rs_actiondrawlineangle.h"
-#include "rs_actiondrawlinebisector.h"
-#include "rs_actiondrawlinefree.h"
 #include "rs_actiondrawlinehorvert.h"
 #include "rs_actiondrawlineorthtan.h"
-#include "rs_actiondrawlineparallel.h"
-#include "rs_actiondrawlineparallelthrough.h"
-#include "rs_actiondrawlinepolygon.h"
-#include "rs_actiondrawlinepolygon2.h"
-#include "rs_actiondrawlinerectangle.h"
-#include "rs_actiondrawlinerelangle.h"
 #include "rs_actiondrawlinetangent1.h"
 #include "rs_actiondrawlinetangent2.h"
-#include "rs_actiondrawmtext.h"
-#include "rs_actiondrawpoint.h"
-#include "rs_actiondrawpolyline.h"
-#include "rs_actiondrawspline.h"
-#include "rs_actiondrawtext.h"
-#include "rs_actioneditcopy.h"
-#include "rs_actioneditundo.h"
 #include "rs_actioninfoangle.h"
 #include "rs_actioninfoarea.h"
 #include "rs_actioninfodist.h"
-#include "rs_actioninfodist2.h"
 #include "rs_actioninfoinside.h"
 #include "rs_actioninfototallength.h"
 #include "rs_actioninterface.h"
@@ -167,43 +204,8 @@
 #include "rs_actionlayerstogglelock.h"
 #include "rs_actionlayerstoggleprint.h"
 #include "rs_actionlayerstoggleview.h"
-#include "rs_actionlibraryinsert.h"
 #include "rs_actionlockrelativezero.h"
-#include "rs_actionmodifyattributes.h"
-#include "rs_actionmodifybevel.h"
-#include "rs_actionmodifycut.h"
-#include "rs_actionmodifydelete.h"
-#include "rs_actionmodifydeletefree.h"
-#include "rs_actionmodifyentity.h"
-#include "rs_actionmodifyexplodetext.h"
-#include "rs_actionmodifymirror.h"
-#include "rs_actionmodifymove.h"
-#include "rs_actionmodifymoverotate.h"
-#include "rs_actionmodifyoffset.h"
-#include "rs_actionmodifyrevertdirection.h"
-#include "rs_actionmodifyrotate.h"
-#include "rs_actionmodifyrotate2.h"
-#include "rs_actionmodifyround.h"
-#include "rs_actionmodifyscale.h"
-#include "rs_actionmodifystretch.h"
-#include "rs_actionmodifytrim.h"
-#include "rs_actionmodifytrimamount.h"
 #include "rs_actionoptionsdrawing.h"
-#include "rs_actionorder.h"
-#include "rs_actionpolylineadd.h"
-#include "rs_actionpolylineappend.h"
-#include "rs_actionpolylinedel.h"
-#include "rs_actionpolylinedelbetween.h"
-#include "rs_actionpolylineequidistant.h"
-#include "rs_actionpolylinesegment.h"
-#include "rs_actionpolylinetrim.h"
-#include "rs_actionselectall.h"
-#include "rs_actionselectcontour.h"
-#include "rs_actionselectintersected.h"
-#include "rs_actionselectinvert.h"
-#include "rs_actionselectlayer.h"
-#include "rs_actionselectsingle.h"
-#include "rs_actionselectwindow.h"
 #include "rs_actionsetrelativezero.h"
 #include "rs_actiontoolregeneratedimensions.h"
 #include "rs_actionzoomauto.h"
@@ -213,49 +215,34 @@
 #include "rs_actionzoomredraw.h"
 #include "rs_actionzoomwindow.h"
 #include "rs_debug.h"
-#include "rs_dialogfactory.h"
 #include "rs_dialogfactoryinterface.h"
 #include "rs_graphicview.h"
 #include "rs_layerlist.h"
 #include "rs_selection.h"
 
-RS_Layer* obtainLayer(LC_ActionContext* m_actionContext, void* data) {
+RS_Layer* obtainLayer(LC_ActionContext* actionContext, void* data) {
     RS_Layer* layer{nullptr};
     if (data != nullptr) {
         layer = static_cast<RS_Layer*>(data);
     }
     else {
-        RS_Document* document = m_actionContext->getEntityContainer()->getDocument();
+        RS_Document* document = actionContext->getDocument()->getDocument();
         layer = (document->getLayerList() != nullptr) ? document->getLayerList()->getActive() : nullptr;
     }
     return layer;
 }
 
-bool hasSelection(LC_ActionContext* m_actionContext) {
-    return m_actionContext->getEntityContainer()->countSelected() > 0;
-    // fixme - sand - think about moving to the action context
-}
-
-bool hasNoSelection(LC_ActionContext* m_actionContext) {
-    return m_actionContext->getEntityContainer()->countSelected() == 0;
-    // fixme - sand - think about moving to the action context
-}
-
 namespace InnerFactory{
-    RS_ActionInterface* doCreateActionInstance(RS2::ActionType actionType, LC_ActionContext* ctx, void* data) {
-        auto view = ctx->getGraphicView();
+    RS_ActionInterface* doCreateActionInstance(const RS2::ActionType actionType, LC_ActionContext* ctx, void* data) {
+        const auto view = ctx->getGraphicView();
         switch (actionType) {
             case RS2::ActionEditKillAllActions: {
                 if (view != nullptr) {
                     // DO we need to call some form of a 'clean' function?
-                    view->killAllActions();
-                    auto document = ctx->getEntityContainer();
-                    RS_Selection s(static_cast<RS_EntityContainer&>(*document), view->getViewPort());
-                    s.selectAll(false);
-
-                    auto selectionInfo = document->getSelectionInfo();
-                    ctx->updateSelectionWidget(selectionInfo.count, selectionInfo.length);
-                    // RS_DIALOGFACTORY->updateSelectionWidget(document->countSelected(), document->totalSelectedLength());
+                    if (view->killAllActionsWithResult()) {
+                        const auto document = ctx->getDocument();
+                        RS_Selection::unselectAllInDocument(document, view->getViewPort());
+                    }
                 }
                 return nullptr;
             }
@@ -263,10 +250,10 @@ namespace InnerFactory{
                 //to avoid operation on deleted entities, Undo action invalid all suspended
                 //actions
                 view->killAllActions();
-                return new RS_ActionEditUndo(true, ctx);
+                return new LC_ActionEditUndoRedo(true, ctx);
             }
             case RS2::ActionEditRedo: {
-                return new RS_ActionEditUndo(false, ctx);
+                return new LC_ActionEditUndoRedo(false, ctx);
             }
             case RS2::ActionEditCut: {
                 return new RS_ActionEditCopyPaste(ctx, RS2::ActionEditCut);
@@ -290,54 +277,63 @@ namespace InnerFactory{
                 return new LC_ActionPasteToPoints(ctx);
             }
             case RS2::ActionOrderBottom: {
-                return new RS_ActionOrder(ctx, RS2::ActionOrderBottom);
+                return new LC_ActionOrder(ctx, RS2::ActionOrderBottom);
             }
             case RS2::ActionOrderLower: {
-                return new RS_ActionOrder(ctx, RS2::ActionOrderLower);
+                return new LC_ActionOrder(ctx, RS2::ActionOrderLower);
             }
             case RS2::ActionOrderRaise: {
-                return new RS_ActionOrder(ctx, RS2::ActionOrderRaise);
+                return new LC_ActionOrder(ctx, RS2::ActionOrderRaise);
             }
             case RS2::ActionOrderTop: {
-                return new RS_ActionOrder(ctx, RS2::ActionOrderTop);
+                return new LC_ActionOrder(ctx, RS2::ActionOrderTop);
             }
             case RS2::ActionSelectSingle: {
                 // fixme - sand - files - that's suspicious implementation, check it again for plugins
                 RS_ActionInterface* currentAction = ctx->getCurrentAction();
                 if (currentAction->rtti() != RS2::ActionSelectSingle) {
-                    return new RS_ActionSelectSingle(ctx, currentAction);
+                    return new LC_ActionSelectSingle(ctx, currentAction);
                 }
                 break;
             }
             case RS2::ActionSelectContour: {
-                return new RS_ActionSelectContour(ctx);
+                return new LC_ActionSelectContour(ctx);
             }
             case RS2::ActionSelectAll: {
-                return new RS_ActionSelectAll(ctx, true);
+                return new LC_ActionSelectAll(ctx, true);
             }
             case RS2::ActionDeselectAll: {
-                return new RS_ActionSelectAll(ctx, false);
+                return new LC_ActionSelectAll(ctx, false);
             }
             case RS2::ActionSelectWindow: {
-                return new RS_ActionSelectWindow(view->getTypeToSelect(), ctx, true);
+                return new LC_ActionSelectWindow(view->getTypeToSelect(), ctx);
             }
             case RS2::ActionSelectPoints: {
                 return new LC_ActionSelectPoints(ctx);
             }
             case RS2::ActionDeselectWindow: {
-                return new RS_ActionSelectWindow(ctx, false);
+                return new LC_ActionSelectWindow(ctx, false);
             }
             case RS2::ActionSelectInvert: {
-                return new RS_ActionSelectInvert(ctx);
+                return new LC_ActionSelectInvert(ctx);
             }
             case RS2::ActionSelectIntersected: {
-                return new RS_ActionSelectIntersected(ctx, true);
+                return new LC_ActionSelectIntersected(ctx, true);
             }
             case RS2::ActionDeselectIntersected: {
-                return new RS_ActionSelectIntersected(ctx, false);
+                return new LC_ActionSelectIntersected(ctx, false);
             }
             case RS2::ActionSelectLayer: {
-                return new RS_ActionSelectLayer(ctx);
+                return new LC_ActionSelectLayer(ctx);
+            }
+            case RS2::ActionSelectQuick: {
+                return new LC_ActionSelectQuick(ctx);
+            }
+            case RS2::ActionSelectGeneric: {
+                return new LC_ActionSelectGeneric(ctx);
+            }
+            case RS2::ActionSelectModeToggle: {
+                return new LC_ActionSelectModeToggle(ctx);
             }
             case RS2::ActionDimRegenerate: {
                 return new RS_ActionToolRegenerateDimensions(ctx);
@@ -367,34 +363,34 @@ namespace InnerFactory{
                 return new RS_ActionDrawPoint(ctx);
             }
             case RS2::ActionDrawLine: {
-                return new RS_ActionDrawLine(ctx);
+                return new LC_ActionDrawLine(ctx);
             }
             case RS2::ActionDrawLineAngle: {
-                return new RS_ActionDrawLineAngle(ctx, false);
+                return new LC_ActionDrawLineAngle(ctx, false);
             }
             case RS2::ActionDrawLineHorizontal: {
-                return new RS_ActionDrawLineAngle(ctx, true,RS2::ActionDrawLineHorizontal);
+                return new LC_ActionDrawLineAngle(ctx, true,RS2::ActionDrawLineHorizontal);
             }
             case RS2::ActionDrawLineHorVert: {
                 return new RS_ActionDrawLineHorVert(ctx);
             }
             case RS2::ActionDrawLineVertical: {
-                return new RS_ActionDrawLineAngle(ctx, true,RS2::ActionDrawLineVertical);
+                return new LC_ActionDrawLineAngle(ctx, true,RS2::ActionDrawLineVertical);
             }
-            case RS2::ActionDrawLineFree: {
-                return new RS_ActionDrawLineFree(ctx);
+            case RS2::ActionDrawLineFreehand: {
+                return new LC_ActionDrawLineFreehand(ctx);
             }
             case RS2::ActionDrawLineParallel: {
-                return new RS_ActionDrawLineParallel(ctx, RS2::ActionDrawLineParallel);
+                return new LC_ActionDrawLineParallel(ctx, RS2::ActionDrawLineParallel);
             }
             case RS2::ActionDrawCircleParallel: {
-                return new RS_ActionDrawLineParallel(ctx, RS2::ActionDrawCircleParallel);
+                return new LC_ActionDrawLineParallel(ctx, RS2::ActionDrawCircleParallel);
             }
             case RS2::ActionDrawArcParallel: {
-                return new RS_ActionDrawLineParallel(ctx, RS2::ActionDrawArcParallel);
+                return new LC_ActionDrawLineParallel(ctx, RS2::ActionDrawArcParallel);
             }
             case RS2::ActionDrawLineParallelThrough: {
-                return new RS_ActionDrawLineParallelThrough(ctx);
+                return new LC_ActionDrawLineParallelThrough(ctx);
             }
             case RS2::ActionDrawLineRectangle: {
                 return new RS_ActionDrawLineRectangle(ctx);
@@ -408,8 +404,8 @@ namespace InnerFactory{
             case RS2::ActionDrawRectangle1Point: {
                 return new LC_ActionDrawRectangle1Point(ctx);
             }
-            case RS2::ActionDrawCross: {
-                return new LC_ActionDrawCross(ctx);
+            case RS2::ActionDrawCenterMark: {
+                return new LC_ActionDrawCenterMark(ctx);
             }
             case RS2::ActionDrawBoundingBox: {
                 return new LC_ActionDrawBoundingBox(ctx);
@@ -429,17 +425,17 @@ namespace InnerFactory{
             case RS2::ActionDrawSliceDivideCircle: {
                 return new LC_ActionDrawSliceDivide(ctx, true);
             }
-            case RS2::ActionDrawLinePoints: {
-                return new LC_ActionDrawLinePoints(ctx, false);
+            case RS2::ActionDrawPointsLine: {
+                return new LC_ActionDrawPointsLine(ctx, false);
             }
             case RS2::ActionDrawPointsMiddle: {
-                return new LC_ActionDrawLinePoints(ctx, true);
+                return new LC_ActionDrawPointsLine(ctx, true);
             }
             case RS2::ActionDrawPointsLattice: {
                 return new LC_ActionDrawPointsLattice(ctx);
             }
             case RS2::ActionDrawLineBisector: {
-                return new RS_ActionDrawLineBisector(ctx);
+                return new LC_ActionDrawLineBisector(ctx);
             }
             case RS2::ActionDrawLineOrthTan: {
                 return new RS_ActionDrawLineOrthTan(ctx);
@@ -451,13 +447,13 @@ namespace InnerFactory{
                 return new RS_ActionDrawLineTangent2(ctx);
             }
             case RS2::ActionDrawLineOrthogonal: {
-                return new RS_ActionDrawLineRelAngle(ctx, M_PI_2, true);
+                return new LC_ActionDrawLineRelAngle(ctx, M_PI_2, true);
             }
             case RS2::ActionDrawLineRelAngle: {
-                return new RS_ActionDrawLineRelAngle(ctx, M_PI_2, false);
+                return new LC_ActionDrawLineRelAngle(ctx, M_PI_2, false);
             }
             case RS2::ActionDrawPolyline: {
-                return new RS_ActionDrawPolyline(ctx);
+                return new LC_ActionDrawPolyline(ctx);
             }
             case RS2::ActionDrawLineOrthogonalRel: {
                 return new LC_ActionDrawLineAngleRel(ctx, 90.0, true);
@@ -468,37 +464,38 @@ namespace InnerFactory{
             case RS2::ActionDrawLineFromPointToLine: {
                 return new LC_ActionDrawLineFromPointToLine(ctx);
             }
-            case RS2::ActionDrawLineMiddle: {
-                return new LC_ActionDrawMidLine(ctx);
+            case RS2::ActionDrawCenterLine: {
+                return new LC_ActionDrawCenterLine(ctx);
+            }
+            case RS2::ActionDrawLineRadiant: {
+                return new LC_ActionDrawLineRadiant(ctx);
             }
             case RS2::ActionDrawStar: {
                 return new LC_ActionDrawStar(ctx);
             }
             case RS2::ActionPolylineAdd: {
-                return new RS_ActionPolylineAdd(ctx);
+                return new LC_ActionPolylineAdd(ctx);
             }
             case RS2::ActionPolylineAppend: {
-                return new RS_ActionPolylineAppend(ctx);
+                return new LC_ActionPolylineAppend(ctx);
             }
             case RS2::ActionPolylineDel: {
-                return new RS_ActionPolylineDel(ctx);
+                return new LC_ActionPolylineDeleteNode(ctx);
             }
             case RS2::ActionPolylineDelBetween: {
-                return new RS_ActionPolylineDelBetween(ctx);
+                return new LC_ActionPolylineDeleteNodeBetween(ctx);
             }
             case RS2::ActionPolylineTrim: {
-                return new RS_ActionPolylineTrim(ctx);
+                return new LC_ActionPolylineTrim(ctx);
             }
             case RS2::ActionPolylineEquidistant: {
-                return new RS_ActionPolylineEquidistant(ctx);
+                return new LC_ActionPolylineEquidistant(ctx);
             }
             case RS2::ActionPolylineSegment: {
                 if (data == nullptr) {
-                    return new RS_ActionPolylineSegment(ctx);
+                    return new LC_ActionPolylineFromSegment(ctx);
                 }
-                else {
-                    return new RS_ActionPolylineSegment(ctx, static_cast<RS_Entity*>(data));
-                }
+                return new LC_ActionPolylineFromSegment(ctx, static_cast<RS_Entity*>(data));
             }
             case RS2::ActionPolylineArcsToLines: {
                 return new LC_ActionPolylineArcsToLines(ctx);
@@ -507,65 +504,64 @@ namespace InnerFactory{
                 return new LC_ActionPolylineChangeSegmentType(ctx);
             }
             case RS2::ActionDrawLinePolygonCenCor: {
-                return new RS_ActionDrawLinePolygonCenCor(ctx);
+                return new LC_ActionDrawLinePolygonCenterCorner(ctx);
             }
             case RS2::ActionDrawLinePolygonCenTan: {
-                //20161223 added by txmy
-                return new LC_ActionDrawLinePolygonCenTan(ctx);
+                return new LC_ActionDrawLinePolygonCenterTangent(ctx);
             }
             case RS2::ActionDrawLinePolygonSideSide: {
-                return new LC_ActionDrawLinePolygon4(ctx);
+                return new LC_ActionDrawLinePolygonSideSide(ctx);
             }
             case RS2::ActionDrawLinePolygonCorCor: {
-                return new RS_ActionDrawLinePolygonCorCor(ctx);
+                return new LC_ActionDrawLinePolygonCornerCorner(ctx);
             }
-            case RS2::ActionDrawCircle: {
-                return new RS_ActionDrawCircle(ctx);
+            case RS2::ActionDrawCircleCenterPoint: {
+                return new LC_ActionDrawCircleCenterPoint(ctx);
             }
-            case RS2::ActionDrawCircleCR: {
-                return new RS_ActionDrawCircleCR(ctx);
+            case RS2::ActionDrawCircleCenterRadius: {
+                return new LC_ActionDrawCircleCenterRadius(ctx);
             }
             case RS2::ActionDrawCircleByArc: {
                 return new LC_ActionDrawCircleByArc(ctx);
             }
-            case RS2::ActionDrawCircle2P: {
-                return new RS_ActionDrawCircle2P(ctx);
+            case RS2::ActionDrawCircle2Points: {
+                return new LC_ActionDrawCircle2Points(ctx);
             }
-            case RS2::ActionDrawCircle2PR: {
-                return new LC_ActionDrawCircle2PR(ctx);
+            case RS2::ActionDrawCircle2PointsRadius: {
+                return new LC_ActionDrawCircle2PointsRadius(ctx);
             }
-            case RS2::ActionDrawCircle3P: {
-                return new RS_ActionDrawCircle3P(ctx);
+            case RS2::ActionDrawCircle3Points: {
+                return new LC_ActionDrawCircle3Points(ctx);
             }
-            case RS2::ActionDrawCircleTan1_2P: {
-                return new RS_ActionDrawCircleTan1_2P(ctx);
+            case RS2::ActionDrawCircleTangental1Entity2Points: {
+                return new LC_ActionDrawCircleTangental1Entity2Points(ctx);
             }
-            case RS2::ActionDrawCircleTan2_1P: {
-                return new RS_ActionDrawCircleTan2_1P(ctx);
+            case RS2::ActionDrawCircleTangental2Entities1Point: {
+                return new LC_ActionDrawCircleTangental2Entities1Point(ctx);
             }
             case RS2::ActionDrawCircleInscribe: {
-                return new RS_ActionDrawCircleInscribe(ctx);
+                return new LC_ActionDrawCircleInscribe(ctx);
             }
-            case RS2::ActionDrawCircleTan2: {
-                return new RS_ActionDrawCircleTan2(ctx);
+            case RS2::ActionDrawCircleTan2EntitiesRadius: {
+                return new LC_ActionDrawCircleTangental2EntitiesRadius(ctx);
             }
-            case RS2::ActionDrawCircleTan3: {
-                return new RS_ActionDrawCircleTan3(ctx);
+            case RS2::ActionDrawCircleTan3Entities: {
+                return new LC_ActionDrawCircleTangental3Entities(ctx);
             }
             case RS2::ActionDrawArc: {
-                return new RS_ActionDrawArc(ctx, RS2::ActionDrawArc);
+                return new LC_ActionDrawArcCenterPointParam(ctx, RS2::ActionDrawArc);
             }
             case RS2::ActionDrawArcChord: {
-                return new RS_ActionDrawArc(ctx, RS2::ActionDrawArcChord);
+                return new LC_ActionDrawArcCenterPointParam(ctx, RS2::ActionDrawArcChord);
             }
             case RS2::ActionDrawArcAngleLen: {
-                return new RS_ActionDrawArc(ctx, RS2::ActionDrawArcAngleLen);
+                return new LC_ActionDrawArcCenterPointParam(ctx, RS2::ActionDrawArcAngleLen);
             }
             case RS2::ActionDrawArc3P: {
-                return new RS_ActionDrawArc3P(ctx);
+                return new LC_ActionDrawArc3Points(ctx);
             }
             case RS2::ActionDrawArcTangential: {
-                return new RS_ActionDrawArcTangential(ctx);
+                return new LC_ActionDrawArcTangential(ctx);
             }
             case RS2::ActionDrawArc2PRadius: {
                 return new LC_ActionDrawArc2PointsRadius(ctx);
@@ -594,10 +590,10 @@ namespace InnerFactory{
             case RS2::ActionDrawParabola4Points: {
                 return new LC_ActionDrawParabola4Points(ctx);
             }
-            case RS2::ActionDrawParabolaFD: {
+            case RS2::ActionDrawParabolaFocusDiretrix: {
                 return new LC_ActionDrawParabolaFD(ctx);
             }
-            case RS2::ActionDrawHyperbolaFP: {
+            case RS2::ActionDrawHyperbolaFoci2Points: {
               return new LC_ActionDrawHyperbolaFP(ctx);
             }
             case RS2::ActionDrawEllipseFociPoint: {
@@ -613,7 +609,7 @@ namespace InnerFactory{
                 return new RS_ActionDrawEllipseInscribe(ctx);
             }
             case RS2::ActionDrawSpline: {
-                return new RS_ActionDrawSpline(ctx);
+                return new LC_ActionDrawSpline(ctx);
             }
             case RS2::ActionDrawSplinePoints: {
                 return new LC_ActionDrawSplinePoints(ctx);
@@ -637,16 +633,16 @@ namespace InnerFactory{
                 return new LC_ActionSplineFromPolyline(ctx);
             }
             case RS2::ActionDrawMText: {
-                return new RS_ActionDrawMText(ctx);
+                return new LC_ActionDrawMText(ctx);
             }
             case RS2::ActionDrawText: {
-                return new RS_ActionDrawText(ctx);
+                return new LC_ActionDrawText(ctx);
             }
             case RS2::ActionDrawHatch: {
                 return new RS_ActionDrawHatch(ctx);
             }
             case RS2::ActionDrawImage: {
-                return new RS_ActionDrawImage(ctx);
+                return new LC_ActionDrawImage(ctx);
             }
             case RS2::ActionDrawDual: {
                 return new LC_ActionDrawDual(ctx);
@@ -706,66 +702,66 @@ namespace InnerFactory{
                 return new LC_ActionModifyLineGap(ctx);
             }
             case RS2::ActionModifyAttributes: {
-                return new RS_ActionModifyAttributes(ctx);
+                return new LC_ActionModifyAttributes(ctx);
             }
             case RS2::ActionModifyDelete:
                 [[fallthrough]];
             case RS2::ActionModifyDeleteQuick: {
-                return new RS_ActionModifyDelete(ctx);
+                return new LC_ActionModifyDelete(ctx);
             }
             case RS2::ActionModifyDeleteFree: {
-                return new RS_ActionModifyDeleteFree(ctx);
+                return new LC_ActionModifyDeleteFree(ctx);
             }
             case RS2::ActionModifyMove: {
-                return new RS_ActionModifyMove(ctx);
+                return new LC_ActionModifyMove(ctx);
             }
             case RS2::ActionModifyRevertDirection: {
-                return new RS_ActionModifyRevertDirection(ctx);
+                return new LC_ActionModifyRevertDirection(ctx);
             }
             case RS2::ActionModifyRotate: {
-                return new RS_ActionModifyRotate(ctx);
+                return new LC_ActionModifyRotate(ctx);
             }
             case RS2::ActionModifyScale: {
-                return new RS_ActionModifyScale(ctx);
+                return new LC_ActionModifyScale(ctx);
             }
             case RS2::ActionModifyMirror: {
-                return new RS_ActionModifyMirror(ctx);
+                return new LC_ActionModifyMirror(ctx);
             }
             case RS2::ActionModifyMoveRotate: {
-                return new RS_ActionModifyMoveRotate(ctx);
+                return new LC_ActionModifyMoveRotate(ctx);
             }
-            case RS2::ActionModifyRotate2: {
-                return new RS_ActionModifyRotate2(ctx);
+            case RS2::ActionModifyRotateTwice: {
+                return new LC_ActionModifyRotateTwice(ctx);
             }
             case RS2::ActionModifyEntity: {
-                return new RS_ActionModifyEntity(ctx);
+                return new LC_ActionModifyEntity(ctx);
             }
             case RS2::ActionModifyTrim: {
-                return new RS_ActionModifyTrim(ctx, false);
+                return new LC_ActionModifyTrim(ctx, false);
             }
             case RS2::ActionModifyTrim2: {
-                return new RS_ActionModifyTrim(ctx, true);
+                return new LC_ActionModifyTrim(ctx, true);
             }
             case RS2::ActionModifyTrimAmount: {
-                return new RS_ActionModifyTrimAmount(ctx);
+                return new LC_ActionModifyTrimAmount(ctx);
             }
             case RS2::ActionModifyCut: {
-                return new RS_ActionModifyCut(ctx);
+                return new LC_ActionModifyCut(ctx);
             }
             case RS2::ActionModifyStretch: {
-                return new RS_ActionModifyStretch(ctx);
+                return new LC_ActionModifyStretch(ctx);
             }
             case RS2::ActionModifyBevel: {
-                return new RS_ActionModifyBevel(ctx);
+                return new LC_ActionModifyBevel(ctx);
             }
             case RS2::ActionModifyRound: {
-                return new RS_ActionModifyRound(ctx);
+                return new LC_ActionModifyRound(ctx);
             }
             case RS2::ActionModifyOffset: {
-                return new RS_ActionModifyOffset(ctx);
+                return new LC_ActionModifyOffset(ctx);
             }
             case RS2::ActionModifyExplodeText: {
-                return new RS_ActionModifyExplodeText(ctx);
+                return new LC_ActionModifyExplodeText(ctx);
             }
             case RS2::ActionModifyAlign: {
                 return new LC_ActionModifyAlign(ctx);
@@ -807,10 +803,10 @@ namespace InnerFactory{
                 return new RS_ActionInfoDist(ctx);
             }
             case RS2::ActionInfoDistEntity2Point: {
-                return new RS_ActionInfoDist2(ctx);
+                return new LC_ActionInfoDistPointToEntity(ctx);
             }
             case RS2::ActionInfoDistPoint2Entity: {
-                return new RS_ActionInfoDist2(ctx, true);
+                return new LC_ActionInfoDistPointToEntity(ctx, true);
             }
             case RS2::ActionInfoPoint: {
                 return new LC_ActionInfoPoint(ctx);
@@ -861,28 +857,28 @@ namespace InnerFactory{
                 return new RS_ActionLayersEdit(ctx);
             }
             case RS2::ActionLayersToggleView: {
-                auto a_layer = obtainLayer(ctx, data);
+                const auto a_layer = obtainLayer(ctx, data);
                 if (a_layer != nullptr) {
                     return new RS_ActionLayersToggleView(ctx, a_layer);
                 }
                 break;
             }
             case RS2::ActionLayersToggleLock: {
-                auto a_layer = obtainLayer(ctx, data);
+                const auto a_layer = obtainLayer(ctx, data);
                 if (a_layer != nullptr) {
                     return new RS_ActionLayersToggleLock(ctx, a_layer);
                 }
                 break;
             }
             case RS2::ActionLayersTogglePrint: {
-                auto a_layer = obtainLayer(ctx, data);
+                const auto a_layer = obtainLayer(ctx, data);
                 if (a_layer != nullptr) {
                     return new RS_ActionLayersTogglePrint(ctx, a_layer);
                 }
                 break;
             }
             case RS2::ActionLayersToggleConstruction: {
-                auto a_layer = obtainLayer(ctx, data);
+                const auto a_layer = obtainLayer(ctx, data);
                 if (a_layer != nullptr) {
                     return new LC_ActionLayersToggleConstruction(ctx, a_layer);
                 }
@@ -916,7 +912,7 @@ namespace InnerFactory{
                 return new RS_ActionBlocksSave(ctx);
             }
             case RS2::ActionBlocksInsert: {
-                return new RS_ActionBlocksInsert(ctx);
+                return new LC_ActionBlockInsert(ctx);
             }
             case RS2::ActionBlocksToggleView: {
                 return new RS_ActionBlocksToggleView(ctx);
@@ -925,10 +921,10 @@ namespace InnerFactory{
                 return new RS_ActionBlocksCreate(ctx);
             }
             case RS2::ActionBlocksExplode: {
-                return new RS_ActionBlocksExplode(ctx);
+                return new LC_ActionBlocksExplode(ctx);
             }
             case RS2::ActionLibraryInsert: {
-                return new RS_ActionLibraryInsert(ctx);
+                return new LC_ActionBlockLibraryInsert(ctx);
             }
             case RS2::ActionOptionsDrawing: {
                 return new RS_ActionOptionsDrawing(ctx);
@@ -949,7 +945,7 @@ namespace InnerFactory{
                 return new LC_ActionFileExportMakerCam(ctx);
             }
             case RS2::ActionSnapMiddleManual: {
-                auto currentAction = ctx->getCurrentAction();
+                const auto currentAction = ctx->getCurrentAction();
                 if (currentAction != nullptr) {
                     if (currentAction->rtti() == RS2::ActionSnapMiddleManual) {
                         currentAction->init(-1);
@@ -979,7 +975,13 @@ namespace InnerFactory{
                 return new LC_ActionDimOrdinateRebase(ctx);
             }
             case RS2::ActionInteractivePickPoint: {
-                return new LC_ActionInteractivePickPosition(ctx);
+                return new LC_ActionInteractivePickPosition(ctx, RS2::ActionInteractivePickPoint);
+            }
+            case RS2::ActionInteractivePickPoint_X: {
+                return new LC_ActionInteractivePickPosition(ctx,RS2::ActionInteractivePickPoint_X);
+            }
+            case RS2::ActionInteractivePickPoint_Y: {
+                return new LC_ActionInteractivePickPosition(ctx,RS2::ActionInteractivePickPoint_Y);
             }
             case RS2::ActionInteractivePickLength: {
                 return new LC_ActionInteractivePickDistance(ctx);
@@ -989,7 +991,7 @@ namespace InnerFactory{
             }
             case RS2::ActionModifyMoveAdjust: {
                 if (data != nullptr) {
-                    LC_ActionModifyMoveAdjust::MovementInfo* movementInfo = static_cast<LC_ActionModifyMoveAdjust::MovementInfo*>(data);
+                    const auto* movementInfo = static_cast<LC_ActionModifyMoveAdjust::MovementInfo*>(data);
                     return new LC_ActionModifyMoveAdjust(ctx, *movementInfo);
                 }
                 break;
@@ -1025,9 +1027,11 @@ mingw32-make[3]: *** [Makefile.Debug:88797: ../../generated/librecad/obj/lc_acti
 *  The later case is also fine, and shared_ptr to base type is returned and all actions has virtual destructors
 *
 */
-std::shared_ptr<RS_ActionInterface> LC_ActionsHandlerFactory::createActionInstance(
-    RS2::ActionType actionType, LC_ActionContext* ctx, void* data) {
+std::shared_ptr<RS_ActionInterface> LC_ActionsHandlerFactory::createActionInstance(const RS2::ActionType actionType, LC_ActionContext* ctx, void* data) {
     RS_ActionInterface* actionInstance = InnerFactory::doCreateActionInstance(actionType, ctx, data);
+    if (actionInstance != nullptr) {
+        actionInstance->postCreateInit();
+    }
     std::shared_ptr<RS_ActionInterface> result{actionInstance};
     return result;
 }

@@ -32,7 +32,7 @@ LC_ActionInfoPickCoordinates::LC_ActionInfoPickCoordinates(LC_ActionContext *act
     :LC_AbstractActionWithPreview("Pick Coordinates", actionContext,RS2::ActionInfoPickCoordinates){
 }
 
-void LC_ActionInfoPickCoordinates::init(int status){
+void LC_ActionInfoPickCoordinates::init(const int status){
     LC_AbstractActionWithPreview::init(status);
     if (status == 0){
         // init points and settings
@@ -51,7 +51,7 @@ void LC_ActionInfoPickCoordinates::resume(){
 void LC_ActionInfoPickCoordinates::updateCollectedPointsByWidget(){
     LC_QuickInfoWidget *entityInfoWidget = QC_ApplicationWindow::getAppWindow()->getEntityInfoWidget();
     if (entityInfoWidget != nullptr){
-        int size = entityInfoWidget->getCollectedCoordinatesCount();
+        const int size = entityInfoWidget->getCollectedCoordinatesCount();
         m_points.clear();
         for (int i = 0; i < size; i++) {
             RS_Vector p = entityInfoWidget->getCollectedCoordinate(i);
@@ -64,40 +64,38 @@ void LC_ActionInfoPickCoordinates::updateCollectedPointsByWidget(){
     }
 }
 
-void LC_ActionInfoPickCoordinates::doFinish(bool updateTB){
-    LC_AbstractActionWithPreview::doFinish(updateTB);
+void LC_ActionInfoPickCoordinates::doFinish(){
+    LC_AbstractActionWithPreview::doFinish();
     m_points.clear();
 
     // notify widget that collection points is completed
-    LC_QuickInfoWidget *entityInfoWidget = QC_ApplicationWindow::getAppWindow()->getEntityInfoWidget();
+    const LC_QuickInfoWidget *entityInfoWidget = QC_ApplicationWindow::getAppWindow()->getEntityInfoWidget();
     if (entityInfoWidget != nullptr){
         entityInfoWidget->endAddingCoordinates();
     }
 }
 
-void LC_ActionInfoPickCoordinates::doOnLeftMouseButtonRelease([[maybe_unused]]LC_MouseEvent *e, [[maybe_unused]]int status, const RS_Vector &snapPoint){
+void LC_ActionInfoPickCoordinates::doOnLeftMouseButtonRelease([[maybe_unused]] const LC_MouseEvent* e, [[maybe_unused]]int status, const RS_Vector &snapPoint){
     // add point
     m_points << snapPoint;
     updateQuickInfoWidget(snapPoint);
     drawPreviewForLastPoint();
 }
 
-RS_Vector LC_ActionInfoPickCoordinates::doGetMouseSnapPoint(LC_MouseEvent *e){
-    bool freeSnap = e->isShift;
+RS_Vector LC_ActionInfoPickCoordinates::doGetMouseSnapPoint(const LC_MouseEvent* e){
+    const bool freeSnap = e->isShift;
     if (freeSnap){ // let free point snap if shift pressed
         return e->graphPoint;
     }
-    else{
-        return e->snapPoint;
-    }
+    return e->snapPoint;
 }
 
-void LC_ActionInfoPickCoordinates::doPreparePreviewEntities([[maybe_unused]]LC_MouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, [[maybe_unused]]int status){
+void LC_ActionInfoPickCoordinates::doPreparePreviewEntities([[maybe_unused]] const LC_MouseEvent* e, RS_Vector &snap, QList<RS_Entity *> &list, [[maybe_unused]]int status){
     // preview for this point
     // todo - review - should we display normal or reference point?
     createPoint(snap, list);
     // preview for previously collected points
-    int size = m_points.size();
+    const int size = m_points.size();
     for (int i = 0; i < size ;i++){
         RS_Vector point = m_points.at(i);
         createPoint(point, list);
@@ -117,6 +115,6 @@ void LC_ActionInfoPickCoordinates::updateQuickInfoWidget(const RS_Vector& coord)
     }
 }
 
-void LC_ActionInfoPickCoordinates::updateMouseButtonHints(){
-    updateMouseWidgetTRCancel(tr("Select point"), MOD_SHIFT_FREE_SNAP);
+void LC_ActionInfoPickCoordinates::updateActionPrompt(){
+    updatePromptTRCancel(tr("Select point"), MOD_SHIFT_FREE_SNAP);
 }

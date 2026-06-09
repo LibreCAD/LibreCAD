@@ -22,56 +22,60 @@
 
 #include "lc_overlayrelativezero.h"
 
-#include "rs_painter.h"
 #include "lc_graphicviewport.h"
+#include "rs_painter.h"
 #include "rs_settings.h"
 
 void LC_OverlayRelZeroOptions::loadSettings() {
     LC_GROUP("Appearance");
     {
         hideRelativeZero = LC_GET_BOOL("hideRelativeZero");
-        m_relativeZeroRadius = LC_GET_INT("RelZeroMarkerRadius", 5);
+        relativeZeroRadius = LC_GET_INT("RelZeroMarkerRadius", 5);
     }
     LC_GROUP_GUARD("Colors");
     {
-        m_colorRelativeZero = QColor(LC_GET_STR("relativeZeroColor", RS_Settings::relativeZeroColor));
+        colorRelativeZero = RS_Color(LC_GET_STR("relativeZeroColor", RS_Settings::RELATIVE_ZERO_COLOR));
     }
 }
 
 LC_OverlayRelativeZero::LC_OverlayRelativeZero(const RS_Vector &wcsPos, LC_OverlayRelZeroOptions *options)
-    :wcsPosition(wcsPos)
-    , options(options)
+    :m_wcsPosition(wcsPos)
+    , m_options(options)
 {}
 
   LC_OverlayRelativeZero::LC_OverlayRelativeZero(LC_OverlayRelZeroOptions *options)
-    :wcsPosition(RS_Vector(false))
-    , options(options)
+    :m_wcsPosition(RS_Vector(false))
+    , m_options(options)
 {}
 
 void LC_OverlayRelativeZero::draw(RS_Painter *painter) {
-    RS_Vector uiPos = painter->toGui(wcsPosition);
+    const RS_Vector uiPos = painter->toGui(m_wcsPosition);
 
-    RS2::LineType relativeZeroPenType = RS2::SolidLine;
+    constexpr RS2::LineType relativeZeroPenType = RS2::SolidLine;
 
-    RS_Pen p(options->m_colorRelativeZero, RS2::Width00, relativeZeroPenType);
+    RS_Pen p(m_options->colorRelativeZero, RS2::Width00, relativeZeroPenType);
     p.setScreenWidth(0);
     painter->setPen(p);
 
-    double const zr = options->m_relativeZeroRadius;
+    const double zr = m_options->relativeZeroRadius;
 
-    RS_Vector vpMin = uiPos - RS_Vector{zr, zr};
-    RS_Vector vpMax = uiPos + RS_Vector{zr, zr};
+    const RS_Vector vpMin = uiPos - RS_Vector{zr, zr};
+    const RS_Vector vpMax = uiPos + RS_Vector{zr, zr};
 
-    LC_GraphicViewport *viewport = painter->getViewPort();
+    const LC_GraphicViewport *viewport = painter->getViewPort();
 
-    if (vpMax.x < 0 || vpMin.x > viewport->getWidth()) return;
-    if (vpMax.y < 0 || vpMin.y > viewport->getHeight()) return;
+    if (vpMax.x < 0 || vpMin.x > viewport->getWidth()) {
+        return;
+    }
+    if (vpMax.y < 0 || vpMin.y > viewport->getHeight()) {
+        return;
+    }
 
     painter->drawLineUISimple(vpMin, vpMax);
 
-    painter->drawCircleUIDirect(uiPos, options->m_relativeZeroRadius);
+    painter->drawCircleUIDirect(uiPos, m_options->relativeZeroRadius);
 }
 
 void LC_OverlayRelativeZero::setPos(const RS_Vector &wcsPos) {
-    wcsPosition = wcsPos;
+    m_wcsPosition = wcsPos;
 }

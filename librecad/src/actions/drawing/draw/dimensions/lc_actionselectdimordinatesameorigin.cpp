@@ -26,7 +26,7 @@
 #include "lc_dimordinate.h"
 #include "lc_graphicviewport.h"
 #include "lc_linemath.h"
-
+#include "rs_selection.h"
 
 LC_ActionSelectDimOrdinateSameOrigin::LC_ActionSelectDimOrdinateSameOrigin(LC_ActionContext* actionContext)
     : LC_ActionSingleEntitySelectBase("SelectDimOrdinateSameOriginAction", actionContext, RS2::ActionDimOrdByOriginSelect){
@@ -34,30 +34,33 @@ LC_ActionSelectDimOrdinateSameOrigin::LC_ActionSelectDimOrdinateSameOrigin(LC_Ac
 
 LC_ActionSelectDimOrdinateSameOrigin::~LC_ActionSelectDimOrdinateSameOrigin() = default;
 
-
-
-void LC_ActionSelectDimOrdinateSameOrigin::selectOrdinatesWithTheSameBase() {
-    auto dimOrdinate = dynamic_cast<LC_DimOrdinate*>(m_entity);
-    if (dimOrdinate != nullptr) {
-        double horizontalDirection = dimOrdinate->getHDir();
-        auto definitionPoint = dimOrdinate->getDefinitionPoint();
-        for (auto en: *m_document) {
-            if (en->isUndone()) {
-                continue;
-            }
-            if (en->rtti() == RS2::EntityDimOrdinate) {
-                if (en->isVisible()){
-                    auto otherDimOrdinate = dynamic_cast<LC_DimOrdinate*>(en);
-                    bool sameBasePoint = LC_LineMath::isSameAngle(otherDimOrdinate->getHDir(), horizontalDirection)
-                        &&
-                        LC_LineMath::isNotMeaningfulDistance(otherDimOrdinate->getDefinitionPoint(),
-                                                             definitionPoint);
-                    if (sameBasePoint) {
-                        en->setSelected(true);
-                    }
+QList<RS_Entity*> LC_ActionSelectDimOrdinateSameOrigin::collectOrdinateDimensionsWithSameBase(const LC_DimOrdinate* const dimOrdinate, const RS_Document* document) {
+    const double horizontalDirection = dimOrdinate->getHDir();
+    const auto definitionPoint= dimOrdinate->getDefinitionPoint();
+    QList<RS_Entity*> sameBaseDimensionsList;
+    for (const auto en : *document) {
+        if (en->isDeleted()) {
+            continue;
+        }
+        if (en->rtti() == RS2::EntityDimOrdinate) {
+            if (en->isVisible()) {
+                const auto otherDimOrdinate = static_cast<LC_DimOrdinate*>(en);
+                const bool sameBasePoint    = LC_LineMath::isSameAngle(otherDimOrdinate->getHDir(), horizontalDirection) &&
+                    LC_LineMath::isNotMeaningfulDistance(otherDimOrdinate->getDefinitionPoint(), definitionPoint);
+                if (sameBasePoint) {
+                    sameBaseDimensionsList.push_back(en);
                 }
             }
         }
+    }
+    return sameBaseDimensionsList;
+}
+
+void LC_ActionSelectDimOrdinateSameOrigin::selectOrdinatesWithTheSameBase() const {
+    const auto dimOrdinate = static_cast<LC_DimOrdinate*>(m_entity);
+    if (dimOrdinate != nullptr) {
+        const QList<RS_Entity*> sameBaseDimensionsList = collectOrdinateDimensionsWithSameBase(dimOrdinate, m_document);
+        RS_Selection::selectEntitiesList(m_document, m_viewport, sameBaseDimensionsList, true);
     }
 }
 

@@ -2,8 +2,8 @@
  * ********************************************************************************
  * This file is part of the LibreCAD project, a 2D CAD program
  *
- * Copyright (C) 2025 LibreCAD.org
- * Copyright (C) 2025 sand1024
+ * Copyright (C) 2026 LibreCAD.org
+ * Copyright (C) 2026 sand1024
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -28,13 +28,13 @@
 LC_GraphicVariables::LC_GraphicVariables() = default;
 
 
-void LC_GraphicVariables::loadFromVars(RS_Graphic* g) {
+void LC_GraphicVariables::loadFromVars(const RS_Graphic* g) {
     m_gridOn = g->getVariableBool("$GRIDMODE", true);
     m_isometricGrid = g->getVariableBool("$SNAPSTYLE", false);
     m_anglesBase = g->getVariableDouble("$ANGBASE",0.0);
     m_anglesCounterClockWise = !g->getVariableBool("$ANGDIR", false);
     m_dimStyle = g->getVariableString("$DIMSTYLE", "Standard");
-    m_gridViewType= (RS2::IsoGridViewType) g->getVariableInt("$SNAPISOPAIR", RS2::IsoGridViewType::IsoTop);
+    m_gridViewType= static_cast<RS2::IsoGridViewType>(g->getVariableInt("$SNAPISOPAIR", RS2::IsoGridViewType::IsoTop));
     m_paperInsertionBase = g->getVariableVector("$PINSBASE", RS_Vector(0.0,0.0));
     m_angleFormat = angleUnitsDXF2LC(g->getVariableInt("$AUNITS", 0));
     m_anglePrecision = g->getVariableInt("$AUPREC", 4);
@@ -43,7 +43,7 @@ void LC_GraphicVariables::loadFromVars(RS_Graphic* g) {
     m_unit = static_cast<RS2::Unit>(g->getVariableInt("$INSUNITS", 0));
 }
 
-void LC_GraphicVariables::saveToVars(RS_Graphic* g) {
+void LC_GraphicVariables::saveToVars(RS_Graphic* g) const {
     g->addVariable("$GRIDMODE", m_gridOn, 70);
     g->addVariable("$SNAPSTYLE", m_isometricGrid, 70);
     g->addVariable("$ANGBASE", m_isometricGrid, 50);
@@ -63,7 +63,7 @@ bool LC_GraphicVariables::isGridOn() const {
 /**
  * Enables / disables the grid.
  */
-void LC_GraphicVariables::setGridOn(bool on) {
+void LC_GraphicVariables::setGridOn(const bool on) {
     m_gridOn = on;
 }
 
@@ -77,7 +77,7 @@ bool LC_GraphicVariables::isIsometricGrid() const{
 /**
  * Enables / disables isometric grid.
  */
-void LC_GraphicVariables::setIsometricGrid(bool on) {
+void LC_GraphicVariables::setIsometricGrid(const bool on) {
     m_isometricGrid = on;
 }
 
@@ -85,7 +85,7 @@ double LC_GraphicVariables::getAnglesBase() const{
    return m_anglesBase;
 }
 
-void LC_GraphicVariables::setAnglesBase(double baseAngle){
+void LC_GraphicVariables::setAnglesBase(const double baseAngle){
     m_anglesBase = baseAngle;
 }
 
@@ -93,7 +93,7 @@ bool LC_GraphicVariables::areAnglesCounterClockWise() const{
     return m_anglesCounterClockWise;
 }
 
-void LC_GraphicVariables::setAnglesCounterClockwise(bool on){
+void LC_GraphicVariables::setAnglesCounterClockwise(const bool on){
     m_anglesCounterClockWise = on;
 }
 
@@ -101,7 +101,7 @@ QString LC_GraphicVariables::getDefaultDimStyleName() {
     return m_dimStyle;
 }
 
-void LC_GraphicVariables::setDefaultDimStyleName(QString name) {
+void LC_GraphicVariables::setDefaultDimStyleName(const QString& name) {
     m_dimStyle = name;
 }
 
@@ -110,7 +110,7 @@ RS2::IsoGridViewType LC_GraphicVariables::getIsoView() const{
    return m_gridViewType;
 }
 
-void LC_GraphicVariables::setIsoView(RS2::IsoGridViewType viewType){
+void LC_GraphicVariables::setIsoView(const RS2::IsoGridViewType viewType){
     m_gridViewType = viewType;
 }
 
@@ -119,7 +119,7 @@ void LC_GraphicVariables::setIsoView(RS2::IsoGridViewType viewType){
  * This is the distance from the lower left paper edge to the zero
  * point of the drawing. DXF: $PINSBASE.
  */
-RS_Vector LC_GraphicVariables::getPaperInsertionBase() {
+RS_Vector LC_GraphicVariables::getPaperInsertionBase() const {
     return m_paperInsertionBase;
 }
 
@@ -163,7 +163,7 @@ RS2::Unit LC_GraphicVariables::getUnit() const {
 /**
  * @return The linear format type used by the variable "$LUNITS" & "$DIMLUNIT".
  */
-RS2::LinearFormat LC_GraphicVariables::convertLinearFormatDXF2LC(int f){
+RS2::LinearFormat LC_GraphicVariables::convertLinearFormatDXF2LC(const int f){
     switch (f) {
         case 1:
             return RS2::Scientific;
@@ -182,7 +182,7 @@ RS2::LinearFormat LC_GraphicVariables::convertLinearFormatDXF2LC(int f){
     }
 }
 
-RS2::AngleFormat LC_GraphicVariables::angleUnitsDXF2LC(int aunits) {
+RS2::AngleFormat LC_GraphicVariables::angleUnitsDXF2LC(const int aunits) {
     switch (aunits) {
         case 0:
             return RS2::DegreesDecimal;

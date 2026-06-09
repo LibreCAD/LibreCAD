@@ -12,9 +12,9 @@ class DRW_TextCodec
 public:
     DRW_TextCodec();
     ~DRW_TextCodec();
-    std::string fromUtf8(const std::string& s);
-    std::string toUtf8(const std::string &s);
-    int getVersion(){return version;}
+    std::string fromUtf8(const std::string& s) const;
+    std::string toUtf8(const std::string &s) const;
+    int getVersion() const {return version;}
     void setVersion(const std::string &v, bool dxfFormat);
     void setVersion(DRW::Version v, bool dxfFormat);
     void setCodePage(const std::string &c, bool dxfFormat);
@@ -23,8 +23,7 @@ public:
 private:
     std::string correctCodePage(const std::string& s);
 
-private:
-    DRW::Version version{DRW::UNKNOWNV};
+DRW::Version version{DRW::UNKNOWNV};
     std::string cp;
     std::unique_ptr< DRW_Converter> conv;
 };
@@ -85,4 +84,4 @@ public:
 
 };
 
-#endif // DRW_TEXTCODEC_H
+#endif

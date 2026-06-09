@@ -190,9 +190,9 @@ struct evolute {
 
     evolute(int n_t, double add, double ded, double p_ang);
 
-    QPointF evo0(const double phi); /* evolute for tooth face */
-    QPointF evo1(const double phi); /* evolute for tooth carving (interference) */
-    double aux(const double phi); /* auxiliary function */
+    QPointF evo0(const double phi) const; /* evolute for tooth face */
+    QPointF evo1(const double phi) const; /* evolute for tooth carving (interference) */
+    double aux(const double phi) const; /* auxiliary function */
     double find_common_phi_evo1(const double eps = default_eps); 
 
     const int n_teeth;
@@ -235,8 +235,7 @@ evolute::evolute(int n_t, double add, double ded, double p_ang):
 
 /* this evolute calculates points for an argument phi for the
  * curve that defines de active face of the tooth.  */
-QPointF evolute::evo0(const double phi)
-{
+QPointF evolute::evo0(const double phi) const {
     double x = cos_p_angle * re_evolute(phi),
            y = cos_p_angle * im_evolute(phi);
     return QPointF(cos_angle_0 * x - sin_angle_0 * y,
@@ -246,8 +245,7 @@ QPointF evolute::evo0(const double phi)
 /* this evolute calculates points for an argument phi for the
  * curve that defines the carved neck of the tooth in case of
  * interference. */
-QPointF evolute::evo1(const double phi)
-{
+QPointF evolute::evo1(const double phi) const {
     double x = re_evolute(phi, alpha);
     double y = im_evolute(phi, alpha);
     return QPointF(cos_angle_1 * x - sin_angle_1 * y,
@@ -259,8 +257,7 @@ QPointF evolute::evo1(const double phi)
  * function to derive the phi angle of the secondary evolute at which
  * it crosses the primary.   This is the common point for both evolutes
  */
-double evolute::aux(const double phi)
-{
+double evolute::aux(const double phi) const {
     const double mod = mod_evolute(phi, alpha);
     const double arg = arg_evolute(phi, alpha);
 

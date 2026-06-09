@@ -74,7 +74,7 @@ void QG_DlgImage::setEntity(RS_Image* e) {
     m_scale = m_entity->getUVector().magnitude();
     toUIValue(m_scale, leScale);
 
-    double uAngle = m_entity->getUVector().angle();
+    const double uAngle = m_entity->getUVector().angle();
     toUIAngleDeg(uAngle, leAngle);
 
     lePath->setText(m_entity->getFile());
@@ -108,7 +108,7 @@ void QG_DlgImage::changeScale() {
 
 void QG_DlgImage::changeDPI(){
     double oldDpi = RS_Units::scaleToDpi(m_scale, m_entity->getGraphicUnit()); // todo - what if scale was changed? Save dpi in dlg?
-    double dpi = toWCSValue(leDPI, oldDpi);
+    const double dpi = toWCSValue(leDPI, oldDpi);
     m_scale = RS_Units::dpiToScale(dpi, m_entity->getGraphicUnit());
     toUIValue(m_scale, leScale);
     toUIValue(m_entity->getWidth()*m_scale, leWidth);
@@ -118,7 +118,7 @@ void QG_DlgImage::changeDPI(){
 void QG_DlgImage::updateEntity() {
     m_entity->setInsertionPoint(toWCS(leInsertX, leInsertY, m_entity->getInsertionPoint()));
 
-    double orgScale = m_entity->getUVector().magnitude();
+    const double orgScale = m_entity->getUVector().magnitude();
     m_scale /= orgScale;
     double orgAngle = m_entity->getUVector().angle();
 

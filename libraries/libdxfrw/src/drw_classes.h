@@ -34,7 +34,7 @@ public:
     ~DRW_Class() {
     }
 
-    void write(dxfWriter *writer, DRW::Version ver);
+    void write(dxfWriter *writer, DRW::Version ver) const;
     bool parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer *strBuf);
 
 private:
@@ -47,12 +47,9 @@ public:
     int instanceCount;       /*!< number of instances for a custom class, code 91*/
     int wasaProxyFlag;       /*!< proxy flag (app loaded on save), code 280 */
     int entityFlag;          /*!< entity flag, code 281 (0 object, 1 entity)*/
-public: //only for read dwg
+     //only for read dwg
     duint16 classNum;
     int dwgType;
 };
 
 #endif
-
-// EOF
-

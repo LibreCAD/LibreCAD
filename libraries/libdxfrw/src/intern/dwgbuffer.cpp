@@ -299,24 +299,22 @@ duint16 dwgBuffer::getBitShort(){
     duint8 b = get2Bits();
     if (b == 0)
         return getRawShort16();
-    else if (b== 1)
+    if (b== 1)
         return getRawChar8();
-    else if (b == 2)
+    if (b == 2)
         return 0;
-    else
-        return 256;
+    return 256;
 }
 /**Reads compressed Short (max. 16 + 2 bits) little-endian order, returns a signed 16 bits (BS) **/
 dint16 dwgBuffer::getSBitShort(){
     duint8 b = get2Bits();
     if (b == 0)
         return static_cast<dint16>(getRawShort16());
-    else if (b== 1)
+    if (b== 1)
         return static_cast<dint16>(getRawChar8());
-    else if (b == 2)
+    if (b == 2)
         return 0;
-    else
-        return 256;
+    return 256;
 }
 
 /**Reads compressed 32 bits Int (max. 32 + 2 bits) little-endian order, returns a signed 32 bits (BL) **/
@@ -325,10 +323,10 @@ dint32 dwgBuffer::getBitLong(){
     dint8 b = get2Bits();
     if (b == 0)
         return getRawLong32();
-    else if (b== 1)
+    if (b== 1)
         return getRawChar8();
-    else //if (b == 2)
-        return 0;
+        //if (b == 2)
+    return 0;
 }
 
 /**Reads compressed 64 bits Int (max. 56 + 3 bits) little-endian order, returns a unsigned 64 bits (BLL) **/
@@ -347,7 +345,7 @@ double dwgBuffer::getBitDouble(){
     dint8 b = get2Bits();
     if (b == 1)
         return 1.0;
-    else if (b == 0){
+    if (b == 0){
         duint8 buffer[8] = {0};
         if (bitPos != 0) {
             for (int i = 0; i < 8; i++)
@@ -377,13 +375,12 @@ duint8 dwgBuffer::getRawChar8(){
     duint8 ret=0;
     duint8 buffer=0;
     filestr->read (&buffer,1);
-    if (bitPos == 0)
+    if (bitPos == 0) {
         return buffer;
-    else {
-        ret = currByte << bitPos;
-        currByte = buffer;
-        ret = ret | (currByte >>(8 - bitPos));
     }
+    ret = currByte << bitPos;
+    currByte = buffer;
+    ret = ret | (currByte >>(8 - bitPos));
     return ret;
 }
 
@@ -662,10 +659,10 @@ duint16 dwgBuffer::getObjType(DRW::Version v){//OT
         duint8 b = get2Bits();
         if (b == 0)
             return getRawChar8();
-        else if (b== 1){
+        if (b== 1){
             return (getRawChar8() + 0x01F0);
-        } else //b == 2
-            return getRawShort16();
+        } //b == 2
+        return getRawShort16();
     }
     return getBitShort();
 }
@@ -695,28 +692,29 @@ double dwgBuffer::getDefaultDouble(double d){
     dint8 b = get2Bits();
     if (b == 0)
         return d;
-    else if (b == 1){
+    if (b == 1){
         duint8 buffer[4];
         char *tmp=nullptr;
         if (bitPos != 0) {
             for (int i = 0; i < 4; i++)
                 buffer[i] = getRawChar8();
         } else {
-        filestr->read (buffer,4);
+            filestr->read (buffer,4);
         }
         tmp = reinterpret_cast<char*>(&d);
         for (int i = 0; i < 4; i++)
             tmp[i] = buffer[i];
         double ret = *reinterpret_cast<double*>( tmp );
         return ret;
-    } else if (b == 2){
+    }
+    if (b == 2){
         duint8 buffer[6];
         char *tmp=nullptr;
         if (bitPos != 0) {
             for (int i = 0; i < 6; i++)
                 buffer[i] = getRawChar8();
         } else {
-        filestr->read (buffer,6);
+            filestr->read (buffer,6);
         }
         tmp = reinterpret_cast<char*>(&d);
         for (int i = 2; i < 6; i++)
@@ -894,7 +892,7 @@ bool dwgBuffer::getBytes(unsigned char *buf, duint64 size){
     return true;
 }
 
-duint16 dwgBuffer::crc8(duint16 dx,dint32 start,dint32 end){
+duint16 dwgBuffer::crc8(duint16 dx,dint32 start,dint32 end) const {
     duint64 pos = filestr->getPos();
     filestr->setPos(start);
     int n = end-start;
@@ -917,7 +915,7 @@ duint16 dwgBuffer::crc8(duint16 dx,dint32 start,dint32 end){
   return(dx);
 }
 
-duint32 dwgBuffer::crc32(duint32 seed,dint32 start,dint32 end){
+duint32 dwgBuffer::crc32(duint32 seed,dint32 start,dint32 end) const {
     duint64 pos = filestr->getPos();
     filestr->setPos(start);
     int n = end-start;
@@ -959,4 +957,3 @@ duint32 dwgBuffer::crc32(duint32 seed,dint32 start,dint32 end){
     return st;
 //    return std::string(buffer);
 }*/
-

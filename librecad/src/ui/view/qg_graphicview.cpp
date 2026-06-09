@@ -24,37 +24,35 @@
 **
 **********************************************************************/
 
-#include <cmath>
-#include <cstdlib>
-#include <iostream>
+#include "qg_graphicview.h"
 
-#include <QDebug>
 #include <QGridLayout>
-#include <QLabel>
 #include <QMenu>
 #include <QNativeGestureEvent>
 #include <QPoint>
 #include <QPointingDevice>
 #include <QTimer>
+#include <cstdlib>
+#include <iostream>
 
-#include "qg_graphicview.h"
-
+#include "lc_action_modify_move_adjust.h"
+#include "lc_action_select_single.h"
 #include "lc_actioncontext.h"
-#include "lc_actionmodifymoveadjust.h"
 #include "lc_eventhandler.h"
 #include "lc_graphicviewport.h"
 #include "lc_graphicviewrenderer.h"
 #include "lc_overlayentitiescontainer.h"
 #include "lc_quickinfowidget.h"
 #include "lc_rect.h"
+#include "lc_relative_point_input_widget.h"
+#include "lc_relative_position_editing_widget.h"
 #include "lc_ucs_mark.h"
+#include "lc_undosection.h"
 #include "qc_applicationwindow.h"
 #include "qg_blockwidget.h"
 #include "qg_scrollbar.h"
 #include "rs.h"
 #include "rs_actiondefault.h"
-#include "rs_actionmodifyentity.h"
-#include "rs_actionselectsingle.h"
 #include "rs_blocklist.h"
 #include "rs_debug.h"
 #include "rs_dialogfactoryinterface.h"
@@ -62,6 +60,7 @@
 #include "rs_entitycontainer.h"
 #include "rs_graphic.h"
 #include "rs_insert.h"
+#include "rs_selection.h"
 #include "rs_settings.h"
 
 #ifdef EMU_C99
@@ -69,55 +68,51 @@
 #endif
 
 namespace {
-// Issue #1765: set default cursor size: 32x32
-constexpr int g_cursorSize=32; // fixme - sand - move to common public place
-// Issue #1787: cursor hot spot at center by using hotX=hotY=-1
-constexpr int g_hotspotXY=-1;
+    // Issue #1765: set default cursor size: 32x32
+    constexpr int g_cursorSize = 32; // fixme - sand - move to common public place
+    // Issue #1787: cursor hot spot at center by using hotX=hotY=-1
+    constexpr int HOTSPOT_XY = -1;
 
-// maximum length for displayed block name in context menu
+    // maximum length for displayed block name in context menu
     constexpr int g_MaxBlockNameLength = 40; // fixme - sand - move to common public place
 
-/*
-         * The zoomFactor effects how quickly the scroll wheel will zoom in & out.
-         *
-         * Benchmarks:
-         * 1.250 - the original; fast & usable, but seems a choppy & a bit 'jarring'
-         * 1.175 - still a bit choppy
-         * 1.150 - smoother than the original, but still 'quick' enough for good navigation.
-         * 1.137 - seems to work well for me
-         * 1.125 - about the lowest that would be acceptable and useful, a tad on the slow side for me
-         * 1.100 - a very slow & deliberate zooming, but feels very "cautious", "controlled", "safe", and "precise".
-         * 1.000 - goes nowhere. :)
-         */
-    constexpr double zoomFactor = 1.137;// fixme - to settings
-// zooming factor is wheel angle delta divided by this factor
-    constexpr double zoomWheelDivisor = 200.; // fixme - to settings
-
+    /*
+             * The zoomFactor effects how quickly the scroll wheel will zoom in & out.
+             *
+             * Benchmarks:
+             * 1.250 - the original; fast & usable, but seems a choppy & a bit 'jarring'
+             * 1.175 - still a bit choppy
+             * 1.150 - smoother than the original, but still 'quick' enough for good navigation.
+             * 1.137 - seems to work well for me
+             * 1.125 - about the lowest that would be acceptable and useful, a tad on the slow side for me
+             * 1.100 - a very slow & deliberate zooming, but feels very "cautious", "controlled", "safe", and "precise".
+             * 1.000 - goes nowhere. :)
+             */
+    constexpr double zoomFactor = 1.137; // fixme - to settings
+    // zooming factor is wheel angle delta divided by this factor
+    constexpr double ZOOM_WHEEL_DIVISOR = 200.; // fixme - to settings
 
     // Helper function to test validity of a rect
-    bool withinValidRange(double x) {
+    bool withinValidRange(const double x) {
         return x >= RS_MINDOUBLE && x <= RS_MAXDOUBLE;
     }
 
-    bool withinValidRange(const RS_Vector& vp){
+    bool withinValidRange(const RS_Vector& vp) {
         return vp.valid && withinValidRange(vp.x) && withinValidRange(vp.y);
     }
 
     bool isRectValid(const RS_Vector& vpMin, const RS_Vector& vpMax) {
-        return
-            withinValidRange(vpMin)
-            && withinValidRange(vpMax)
-            && vpMin.x < vpMax.x
-            && vpMin.y < vpMax.y
-            && vpMin.x + 1e6 >= vpMax.x
-            && vpMin.y + 1e6 >= vpMax.y;
+        return withinValidRange(vpMin) && withinValidRange(vpMax) && vpMin.x < vpMax.x && vpMin.y < vpMax.y && vpMin.x + 1e6 >= vpMax.x &&
+            vpMin.y + 1e6 >= vpMax.y;
     }
 }
 
 /**
  * @brief snapEntity find the closest entity
- * @param QG_GraphicView& view - the graphic view
- * @param const QMouseEvent* event - the mouse event
+ * @param view
+ * @param event
+ * @param view - the graphic view
+ * @param event - the mouse event
  * @return RS_Entity* - the closest entity within the range of g_cursorSize
  *                      returns nullptr, if no entity is found in range
  */
@@ -125,16 +120,17 @@ RS_Entity* snapEntity(const QG_GraphicView& view, const QMouseEvent* event) {
     if (event == nullptr) {
         return nullptr;
     }
-    RS_EntityContainer* container = view.getContainer();
-    if (container == nullptr) {
+    const auto doc = view.getDocument();
+    if (doc == nullptr) {
+        // how it might be???
         return nullptr;
     }
     const QPointF mapped = event->pos();
     double distance = RS_MAXDOUBLE;
-    const LC_GraphicViewport* viewPort = view.getViewPort();
+    const auto viewPort = view.getViewPort();
 
-    auto pos = viewPort->toWorldFromUi(mapped.x(), mapped.y());
-    RS_Entity* entity = container->getNearestEntity(pos, &distance, RS2::ResolveNone);
+    const auto pos = viewPort->toWorldFromUi(mapped.x(), mapped.y());
+    const auto entity = doc->getNearestEntity(pos, &distance, RS2::ResolveNone);
 
     return (viewPort->toGuiDX(distance) <= g_cursorSize) ? entity : nullptr;
 }
@@ -152,9 +148,10 @@ RS_Insert* getAncestorInsert(RS_Entity* entity) {
     }
     return nullptr;
 }
+
 // fixme - sand - remove, not needed?
 // whether the current insert is part of Text
-RS_Entity* getParentText(RS_Insert* insert) {
+RS_Entity* getParentText(const RS_Insert* insert) {
     if (insert == nullptr || insert->getBlock() != nullptr || insert->getParent() == nullptr) {
         return nullptr;
     }
@@ -168,7 +165,7 @@ RS_Entity* getParentText(RS_Insert* insert) {
 }
 
 // Show the entity property dialog on the closest entity in range
-void QG_GraphicView::showEntityPropertiesDialog(RS_Entity* entity){
+void QG_GraphicView::showEntityPropertiesDialog(RS_Entity* entity) const {
     if (entity == nullptr) {
         return;
     }
@@ -181,65 +178,70 @@ void QG_GraphicView::showEntityPropertiesDialog(RS_Entity* entity){
     launchEditProperty(entity);
 }
 
-void QG_GraphicView::launchEditProperty(RS_Entity* entity){
-    RS_EntityContainer* container = getContainer();
-    if (entity == nullptr || container == nullptr) {
+void QG_GraphicView::launchEditProperty(RS_Entity* entity) const {
+    const auto* doc = getDocument();
+    if (entity == nullptr || doc == nullptr) {
         return;
     }
-    editAction( *entity);
+    editAction(*entity);
 
-    //container->removeEntity(entity);
-    auto* doc = dynamic_cast<RS_Document*>(container);
-    if (doc != nullptr) {
-        doc->startUndoCycle();
-    }
     // delete any temporary highlighting duplicates of the original
     auto* defaultAction = dynamic_cast<RS_ActionDefault*>(getEventHandler()->getDefaultAction());
-    if (defaultAction != nullptr){
+    if (defaultAction != nullptr) {
         defaultAction->clearHighLighting();
     }
-    doc->endUndoCycle();
 }
 
 // Start the edit action:
 // Edit Block for an insert
 // Edit entity, otherwise
-void QG_GraphicView::editAction( RS_Entity& entity){
-    RS_EntityContainer* container = getContainer();
-    if (container==nullptr) {
+void QG_GraphicView::editAction(RS_Entity& entity) const {
+    const auto doc = getDocument();
+    if (doc == nullptr) {
+        // fixme - DOC - review what for this check is used
         return;
     }
-    switch(entity.rtti()) {
+    switch (entity.rtti()) {
         case RS2::EntityInsert: {
-            auto& appWindow = QC_ApplicationWindow::getAppWindow(); // fixme - sand - remove static, it just one of parents?
+            // fixme - sand - rework block editing. Currently insert may not be changed after insertion! Window is needed!!
+            const auto& appWindow = QC_ApplicationWindow::getAppWindow(); // fixme - sand - remove static, it just one of parents?
             RS_BlockList* blockList = appWindow->getBlockWidget()->getBlockList();
             RS_Block* active = (blockList != nullptr) ? blockList->getActive() : nullptr;
-            auto* insert = static_cast<RS_Insert*>(&entity);
+            const auto* insert = static_cast<RS_Insert*>(&entity);
             RS_Block* current = insert->getBlockForInsert();
             if (current == active) {
-                active=nullptr;
+                active = nullptr;
             }
             else if (blockList != nullptr) {
                 blockList->activate(current);
             }
-            std::shared_ptr<RS_Block*> scoped{&active, [blockList](RS_Block** pointer) {
-                if (pointer != nullptr && *pointer != nullptr && blockList != nullptr)
-                    blockList->activate(*pointer);
-            }};
+            /*// fixme - sand - simplify
+            std::shared_ptr<RS_Block*> scoped{
+                &active,
+                [blockList](RS_Block** pointer) {
+                    if (pointer != nullptr && *pointer != nullptr && blockList != nullptr) {
+                        blockList->activate(*pointer);
+                    }
+                }
+            };*/
             switchToAction(RS2::ActionBlocksEdit);
+            if (active != nullptr && blockList != nullptr) {
+                blockList->activate(active);
+            }
             break;
         }
-        default:{
-            m_actionContext->saveContextMenuActionContext(&entity,RS_Vector(false), entity.isSelected());
+        default: {
+            m_actionContext->saveContextMenuActionContext(&entity, RS_Vector(false), entity.isSelected());
             switchToAction(RS2::ActionModifyEntity);
+            break;
         }
     }
 }
 
 // Support auto-panning when the cursor is close to the view border
-struct QG_GraphicView::AutoPanData{
-    void start(double interval, QG_GraphicView &view){
-        m_delayCounter = 0;
+struct QG_GraphicView::AutoPanData {
+    void start(const double interval, QG_GraphicView& view) {
+        delayCounter = 0;
         panTimer = std::make_unique<QTimer>(&view);
         panTimer->start(interval);
         connect(panTimer.get(), &QTimer::timeout, &view, &QG_GraphicView::autoPanStep);
@@ -249,77 +251,77 @@ struct QG_GraphicView::AutoPanData{
 
     QPoint panOffset;
 
-    unsigned m_delayCounter = 0u;
+    unsigned delayCounter = 0U;
     // skip the first events, to avoid unintensional panning
-    const unsigned delayCounterMax = 10u;
+    const unsigned delayCounterMax = 10U;
     const double panOffsetMagnitude = 20.0;
 
-    const double panTimerInterval_minimum = 20.0;
-    const double panTimerInterval_maximum = 100.0;
+    const double panTimerIntervalMinimum = 20.0;
+    const double panTimerIntervalMaximum = 100.0;
 
     // the sensitive border of the view
     const RS_Vector probedAreaOffset = {50 /* pixels */, 50 /* pixels */};
 };
 
 struct QG_GraphicView::UCSHighlightData {
-    std::unique_ptr<QTimer> m_timer;
+    std::unique_ptr<QTimer> timer;
 
-    double m_timerInterval = 200.0;
-    int m_blinkNumber = 0;
-    int m_maxBlinkNumber = 15;
-    bool m_inVisiblePhase = false;
+    double timerInterval = 200.0;
+    int blinkNumber = 0;
+    int maxBlinkNumber = 15;
+    bool inVisiblePhase = false;
     RS_Vector origin;
     double angle = 0.0;
     bool forWCS = false;
 
+    RS_Vector savedViewOffset = RS_Vector(0, 0, 0);
+    double savedViewFactor = 0.0;
 
-    RS_Vector m_savedViewOffset = RS_Vector(0, 0, 0);
-    double m_savedViewFactor = 0.0;
-
-    void start(double interval, QG_GraphicView &view) {
-        if (m_timer == nullptr) {
-            m_timer = std::make_unique<QTimer>(&view);
-            connect(m_timer.get(), &QTimer::timeout, &view, &QG_GraphicView::ucsHighlightStep);
+    void start(const double interval, QG_GraphicView& view) {
+        if (timer == nullptr) {
+            timer = std::make_unique<QTimer>(&view);
+            connect(timer.get(), &QTimer::timeout, &view, &QG_GraphicView::ucsHighlightStep);
         }
-        m_timer->start(interval);
+        timer->start(interval);
     }
 
-    bool mayTick(){
-        m_blinkNumber++;
-        m_inVisiblePhase = !m_inVisiblePhase;
-        return m_blinkNumber <= m_maxBlinkNumber;
+    bool mayTick() {
+        blinkNumber++;
+        inVisiblePhase = !inVisiblePhase;
+        return blinkNumber <= maxBlinkNumber;
     }
 
-    void stop(){
-        m_blinkNumber = 0;
-        m_inVisiblePhase = false;
-        m_timer->stop();
+    void stop() {
+        blinkNumber = 0;
+        inVisiblePhase = false;
+        timer->stop();
     }
 };
 
 void createViewRenderer();
+
+void QG_GraphicView::initRelativePointInputWidget() {
+    m_relativePointWidgetHolder = new LC_RelativePointInputWidget(this, m_actionContext);
+    m_relativePointWidgetHolder->setVisible(false);
+}
 
 /**
  * Constructor.
  */
 // fixme - sand - files - init by action context???
 QG_GraphicView::QG_GraphicView(QWidget* parent, RS_Document* doc, LC_ActionContext* actionContext)
-    :RS_GraphicView(parent, {})
-    ,m_device("Mouse")
-    ,m_cursorCad(new QCursor(QPixmap(":cursors/cur_cad_bmp.png"), g_hotspotXY, g_hotspotXY))
-    ,m_cursorDel(new QCursor(QPixmap(":cursors/cur_del_bmp.png"), g_hotspotXY, g_hotspotXY))
-    ,m_cursorSelect(new QCursor(QPixmap(":cursors/cur_select_bmp.png"), g_hotspotXY, g_hotspotXY))
-    ,m_cursorMagnifier(new QCursor(QPixmap(":cursors/cur_glass_bmp.png"), g_hotspotXY, g_hotspotXY))
-    ,m_cursorHand(new QCursor(QPixmap(":cursors/cur_hand_bmp.png"), g_hotspotXY, g_hotspotXY))
-    ,m_isSmoothScrolling(false)
-    , m_ucsMarkOptions{std::make_unique<LC_UCSMarkOptions>()}
-    , m_panData{std::make_unique<AutoPanData>()}
-    , m_ucsHighlightData{std::make_unique<UCSHighlightData>()}
-{
+    : RS_GraphicView(parent, {}), m_device("Mouse"),
+      m_cursorCad(new QCursor(QPixmap(":cursors/cur_cad_bmp.png"), HOTSPOT_XY, HOTSPOT_XY)),
+      m_cursorDel(new QCursor(QPixmap(":cursors/cur_del_bmp.png"), HOTSPOT_XY, HOTSPOT_XY)),
+      m_cursorSelect(new QCursor(QPixmap(":cursors/cur_select_bmp.png"), HOTSPOT_XY, HOTSPOT_XY)),
+      m_cursorMagnifier(new QCursor(QPixmap(":cursors/cur_glass_bmp.png"), HOTSPOT_XY, HOTSPOT_XY)),
+      m_cursorHand(new QCursor(QPixmap(":cursors/cur_hand_bmp.png"), HOTSPOT_XY, HOTSPOT_XY)), m_isSmoothScrolling(false),
+      m_ucsMarkOptions{std::make_unique<LC_UCSMarkOptions>()}, m_panData{std::make_unique<AutoPanData>()},
+      m_ucsHighlightData{std::make_unique<UCSHighlightData>()} {
     RS_DEBUG->print("QG_GraphicView::QG_GraphicView()..");
 
-    if (doc != nullptr){
-        setContainer(doc);
+    if (doc != nullptr) {
+        setDocument(doc);
         doc->setGraphicView(this);
         actionContext->setDocumentAndView(doc, this);
         setDefaultAction(new RS_ActionDefault(actionContext));
@@ -327,7 +329,7 @@ QG_GraphicView::QG_GraphicView(QWidget* parent, RS_Document* doc, LC_ActionConte
 
     m_actionContext = actionContext;
 
-    getViewPort()->justSetOffsetAndFactor(0,0,4.0);
+    getViewPort()->justSetOffsetAndFactor(0, 0, 4.0);
     getViewPort()->setBorders(10, 10, 10, 10);
 
     setMouseTracking(true);
@@ -338,26 +340,23 @@ QG_GraphicView::QG_GraphicView(QWidget* parent, RS_Document* doc, LC_ActionConte
 
     // Issue #2264: prevents macOS from applying text-related features like the Caps Lock indicator to the non-text canvas
 #ifdef Q_OS_MAC
-    setAttribute(Qt::WA_InputMethodEnabled, false);
-    setInputMethodHints(Qt::ImhNone);
+    setAttribute(Qt::WA_InputMethodEnabled, false); setInputMethodHints(Qt::ImhNone);
 #endif
 }
 
 void QG_GraphicView::initView() {
     createViewRenderer();
+    initRelativePointInputWidget();
 }
 
 void QG_GraphicView::createViewRenderer() {
-    if (getViewPort()) {
+    if (getViewPort() != nullptr) {
         getViewPort()->setSize(width(), height()); // fixme - sand - merge - CHECK THIS
         setRenderer(std::make_unique<LC_GraphicViewRenderer>(getViewPort(), this));
     }
 }
 
-void QG_GraphicView::layerToggled(RS_Layer *) {
-    const RS_EntityContainer::LC_SelectionInfo &info = getContainer()->getSelectionInfo();
-    m_actionContext->updateSelectionWidget(info.count, info.length);
-    // RS_DIALOGFACTORY->updateSelectionWidget(info.count, info.length);
+void QG_GraphicView::layerToggled(RS_Layer*) {
     redraw(RS2::RedrawDrawing);
 }
 
@@ -365,40 +364,42 @@ void QG_GraphicView::layerToggled(RS_Layer *) {
  * Destructor
  */
 QG_GraphicView::~QG_GraphicView() {
-	cleanUp();
+    try {
+        // LC_ERR << "QG_GraphicView destructor";
+        cleanUp();
+        // LC_ERR << "QG_GraphicView destructor 1";
+    }
+    catch (...) {
+        LC_ERR << __func__ << "(): received exception";
+    }
 }
 
 /**
  * @return width of widget.
  */
-int QG_GraphicView::getWidth() const{
+int QG_GraphicView::getWidth() const {
     if (m_scrollbars) {
         return width() - m_vScrollBar->sizeHint().width();
     }
-    else {
-        return width();
-    }
+    return width();
 }
 
 /**
  * @return height of widget.
  */
-int QG_GraphicView::getHeight() const{
+int QG_GraphicView::getHeight() const {
     if (m_scrollbars) {
         return height() - m_hScrollBar->sizeHint().height();
     }
-    else {
-        return height();
-    }
+    return height();
 }
 
 /**
  * Sets the mouse cursor to the given type.
  */
-void QG_GraphicView::setMouseCursor(RS2::CursorType cursorType) {
+void QG_GraphicView::setMouseCursor(const RS2::CursorType cursorType) {
     switch (cursorType) {
-        default:
-        case RS2::ArrowCursor:
+        default: case RS2::ArrowCursor:
             setCursor(Qt::ArrowCursor);
             break;
         case RS2::UpArrowCursor:
@@ -453,13 +454,13 @@ void QG_GraphicView::setMouseCursor(RS2::CursorType cursorType) {
             setCursor(Qt::ClosedHandCursor);
             break;
         case RS2::CadCursor:
-            m_cursor_hiding ? setCursor(Qt::BlankCursor) : setCursor(*m_cursorCad);
+            m_cursorHiding ? setCursor(Qt::BlankCursor) : setCursor(*m_cursorCad);
             break;
         case RS2::DelCursor:
             setCursor(*m_cursorDel);
             break;
         case RS2::SelectCursor:
-            m_selectCursor_hiding ? setCursor(Qt::BlankCursor) : setCursor(*m_cursorSelect);
+            m_selectCursorHiding ? setCursor(Qt::BlankCursor) : setCursor(*m_cursorSelect);
             break;
         case RS2::MagnifierCursor:
             setCursor(*m_cursorMagnifier);
@@ -473,34 +474,37 @@ void QG_GraphicView::setMouseCursor(RS2::CursorType cursorType) {
 /**
  * Sets the text for the grid status widget in the left bottom corner.
  */
-void QG_GraphicView::updateGridStatusWidget(QString text){
+void QG_GraphicView::updateGridStatusWidget(QString text) {
     emit gridStatusChanged(std::move(text));
 }
 
 void QG_GraphicView::dragEnterEvent(QDragEnterEvent* event) {
-     RS_GraphicView::dragEnterEvent(event);
+    RS_GraphicView::dragEnterEvent(event);
 
     /*
      *   fixme - sand - remove later, experiments with d&d
      */
-  /*  if (event->mimeData()->formats().contains("application/x-qabstractitemmodeldatalist")) {
-        // QStandardItemModel model;
-        // model.dropMimeData(event->mimeData(), Qt::CopyAction, 0,0, QModelIndex());
-        // auto item = model.item(0.0);
-        // LC_ERR <<  item->text();
+    /*  if (event->mimeData()->formats().contains("application/x-qabstractitemmodeldatalist")) {
+          // QStandardItemModel model;
+          // model.dropMimeData(event->mimeData(), Qt::CopyAction, 0,0, QModelIndex());
+          // auto item = model.item(0.0);
+          // LC_ERR <<  item->text();
 
-         QDrag::cancel();
-         QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
-         QC_ApplicationWindow::getAppWindow()->getLibraryWidget()->insert();
-    }*/
+           QDrag::cancel();
+           QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
+           QC_ApplicationWindow::getAppWindow()->getLibraryWidget()->insert();
+      }*/
 }
 
 /**
  * Redraws the widget.
  */
-void QG_GraphicView::redraw(RS2::RedrawMethod method) {
+void QG_GraphicView::redraw(const RS2::RedrawMethod method, bool immediately) {
     getRenderer()->invalidate(method);
-    update(); // Paint when reeady to pain
+    update(); // Paint when ready to paint
+    if (immediately) {
+        repaint();
+    }
 }
 
 void QG_GraphicView::resizeEvent(QResizeEvent* e) {
@@ -508,21 +512,20 @@ void QG_GraphicView::resizeEvent(QResizeEvent* e) {
     RS_DEBUG->print("QG_GraphicView::resizeEvent begin");
     adjustOffsetControls();
     adjustZoomControls();
-//     updateGrid();
+    //     updateGrid();
     // Small hack, delete the snapper during resizes
     getViewPort()->clearOverlayDrawablesContainer(RS2::Snapper);
     redraw();
     RS_DEBUG->print("QG_GraphicView::resizeEvent end");
 }
 
-
-void QG_GraphicView::switchToAction(RS2::ActionType actionType, void* data) const {
+void QG_GraphicView::switchToAction(const RS2::ActionType actionType, void* data) const {
     m_actionContext->setCurrentAction(actionType, data);
 }
 
-RS_Entity* QG_GraphicView::catchContextEntity(QMouseEvent* event, RS_Vector& clickPos) {
-    auto container = getContainer();
-    if (container == nullptr || event == nullptr) {
+RS_Entity* QG_GraphicView::catchContextEntity(const QMouseEvent* event, RS_Vector& clickPos) const {
+    const auto doc = getDocument();
+    if (doc == nullptr || event == nullptr) {
         return nullptr;
     }
 
@@ -531,26 +534,24 @@ RS_Entity* QG_GraphicView::catchContextEntity(QMouseEvent* event, RS_Vector& cli
     const LC_GraphicViewport* viewPort = getViewPort();
 
     clickPos = viewPort->toWorldFromUi(mapped.x(), mapped.y());
-    RS_Entity* entity = container->getNearestEntity(clickPos, &distance, RS2::ResolveNone);
+    RS_Entity* entity = doc->getNearestEntity(clickPos, &distance, RS2::ResolveNone);
 
     if (viewPort->toGuiDX(distance) <= g_cursorSize) {
         return entity;
     }
-    else {
-        return nullptr;
-    }
+    return nullptr;
 }
 
 bool QG_GraphicView::invokeContextMenuForMouseEvent(QMouseEvent* e) {
     bool result = false;
     RS_Vector clickPos;
     RS_Entity* entity = catchContextEntity(e, clickPos);
-    auto contextMenu = QC_ApplicationWindow::getAppWindow()->createGraphicViewContentMenu(e, this, entity, clickPos);
+    const auto contextMenu = QC_ApplicationWindow::getAppWindow()->createGraphicViewContentMenu(e, this, entity, clickPos);
     if (contextMenu != nullptr) {
         if (!contextMenu->isEmpty()) {
             auto actions = contextMenu->actions();
             if (actions.size() == 1) {
-                auto action = actions.front();
+                const auto action = actions.front();
                 action->trigger();
                 result = true;
             }
@@ -564,10 +565,10 @@ bool QG_GraphicView::invokeContextMenuForMouseEvent(QMouseEvent* e) {
     return result;
 }
 
-void QG_GraphicView::mousePressEvent(QMouseEvent* event){
+void QG_GraphicView::mousePressEvent(QMouseEvent* event) {
     // LC_ERR << "MOUSE PRESS";
     // pan zoom with middle mouse button
-    if (event->button()==Qt::MiddleButton && event->modifiers() == Qt::NoModifier){
+    if (event->button() == Qt::MiddleButton && event->modifiers() == Qt::NoModifier) {
         switchToAction(RS2::ActionZoomPan);
         getCurrentAction()->mousePressEvent(event);
     }
@@ -576,13 +577,12 @@ void QG_GraphicView::mousePressEvent(QMouseEvent* event){
     }
 }
 
-void QG_GraphicView::mouseDoubleClickEvent(QMouseEvent* e){
+void QG_GraphicView::mouseDoubleClickEvent(QMouseEvent* e) {
     // LC_ERR << "MOUSE DOUBLE CLICK";
     if (getEventHandler()->hasAction()) {
-
     }
     else {
-        auto defaultAction = getEventHandler()->getDefaultAction();
+        const auto defaultAction = getEventHandler()->getDefaultAction();
         RS_Vector clickPos;
         RS_Entity* entity = catchContextEntity(e, clickPos);
         if (entity == nullptr) {
@@ -624,7 +624,7 @@ void QG_GraphicView::mouseDoubleClickEvent(QMouseEvent* e){
     e->accept();
 }
 
-void QG_GraphicView::mouseReleaseEvent(QMouseEvent* event){
+void QG_GraphicView::mouseReleaseEvent(QMouseEvent* event) {
     RS_DEBUG->print("QG_GraphicView::mouseReleaseEvent");
 
     event->accept();
@@ -632,7 +632,7 @@ void QG_GraphicView::mouseReleaseEvent(QMouseEvent* event){
         switch (event->button()) {
             case Qt::RightButton: {
                 if (getEventHandler()->hasAction()) {
-                    back();
+                    back(event->modifiers());
                 }
                 break;
             }
@@ -646,9 +646,9 @@ void QG_GraphicView::mouseReleaseEvent(QMouseEvent* event){
         }
     }
     else {
-        auto defaultAction = getEventHandler()->getDefaultAction();
+        const auto defaultAction = getEventHandler()->getDefaultAction();
         if (defaultAction != nullptr) {
-            int defaultActionStatus = defaultAction->getStatus();
+            const int defaultActionStatus = defaultAction->getStatus();
             if (defaultActionStatus == RS_ActionInterface::InitialActionStatus) {
                 if (isMouseReleaseEventForDefaultAction(event)) {
                     defaultAction->mouseReleaseEvent(event);
@@ -668,16 +668,17 @@ void QG_GraphicView::mouseReleaseEvent(QMouseEvent* event){
     RS_DEBUG->print("QG_GraphicView::mouseReleaseEvent: OK");
 }
 
-bool QG_GraphicView::isMouseReleaseEventForDefaultAction(QMouseEvent* event) {
+bool QG_GraphicView::isMouseReleaseEventForDefaultAction(const QMouseEvent* event) {
     // should correspond to LC_DlgMenuAssigner::validateShortcut()
     if (event->button() == Qt::LeftButton) {
-        auto modifiers = event->modifiers();
-        if (modifiers == Qt::NoModifier) { // select
+        const auto modifiers = event->modifiers();
+        if (modifiers == Qt::NoModifier) {
+            // select
             return true;
         }
-        bool control = modifiers & Qt::ControlModifier;
-        bool alt = modifiers & Qt::AltModifier;
-        bool shift = modifiers & Qt::ShiftModifier;
+        const bool control = modifiers & Qt::ControlModifier;
+        const bool alt = modifiers & Qt::AltModifier;
+        const bool shift = modifiers & Qt::ShiftModifier;
         if (control && !alt && !shift) {
             // pan
             return true;
@@ -690,7 +691,7 @@ bool QG_GraphicView::isMouseReleaseEventForDefaultAction(QMouseEvent* event) {
     return false;
 }
 
-void QG_GraphicView::mouseMoveEvent(QMouseEvent* event){
+void QG_GraphicView::mouseMoveEvent(QMouseEvent* event) {
     // LC_ERR << "OWN MOUSE MOVE";
     if (isAutoPan(event)) {
         startAutoPanTimer(event);
@@ -706,28 +707,24 @@ void QG_GraphicView::mouseMoveEvent(QMouseEvent* event){
 bool QG_GraphicView::proceedEvent(QEvent* event) {
     // skip events without a default action
     // Hatch preview in qg_dlghatch doesn't have its default action
-    if (dynamic_cast<QInputEvent*>(event) == nullptr || getDefaultAction() != nullptr){
+    if (dynamic_cast<QInputEvent*>(event) == nullptr || getDefaultAction() != nullptr) {
         return QWidget::event(event);
-    }
-    else {
-        // LC_ERR<< "Event Skipped";
-    }
+    } // LC_ERR<< "Event Skipped";
     return true;
 }
 
-    bool QG_GraphicView::event(QEvent *event){
-
+bool QG_GraphicView::event(QEvent* event) {
     if (event->type() == QEvent::NativeGesture) {
-        auto *nge = static_cast<QNativeGestureEvent *>(event);
+        const auto* nge = static_cast<QNativeGestureEvent*>(event);
 
         if (nge->gestureType() == Qt::ZoomNativeGesture) {
-            double v = nge->value();
-            RS2::ZoomDirection direction = std::signbit(v) ? RS2::Out : RS2::In;
-            double factor = 1. + std::abs(v);
+            const double v = nge->value();
+            const RS2::ZoomDirection direction = std::signbit(v) ? RS2::Out : RS2::In;
+            const double factor = 1. + std::abs(v);
 
             // It seems the NativeGestureEvent::pos() incorrectly reports global coordinates
-            QPointF g = mapFromGlobal(nge->globalPosition().toPoint());
-            RS_Vector mouse = getViewPort()->toWorldFromUi(g.x(), g.y());
+            const QPointF g = mapFromGlobal(nge->globalPosition().toPoint());
+            const RS_Vector mouse = getViewPort()->toWorldFromUi(g.x(), g.y());
             doZoom(direction, mouse, factor);
         }
         return true;
@@ -735,11 +732,12 @@ bool QG_GraphicView::proceedEvent(QEvent* event) {
     return proceedEvent(event);
 }
 
-void QG_GraphicView::doZoom(RS2::ZoomDirection direction, RS_Vector& center, double zoom_factor) {
-    if (direction==RS2::In) {
-        getViewPort()->zoomIn(zoom_factor, center);
-    } else {
-        getViewPort()->zoomOut(zoom_factor, center);
+void QG_GraphicView::doZoom(const RS2::ZoomDirection direction, const RS_Vector& center, const double zoomFactor) const {
+    if (direction == RS2::In) {
+        getViewPort()->zoomIn(zoomFactor, center);
+    }
+    else {
+        getViewPort()->zoomOut(zoomFactor, center);
     }
 }
 
@@ -749,89 +747,80 @@ void QG_GraphicView::doZoom(RS2::ZoomDirection direction, RS_Vector& center, dou
 void QG_GraphicView::tabletEvent(QTabletEvent* e) {
     if (testAttribute(Qt::WA_UnderMouse)) {
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
-        switch(e->pointerType()) {
-        case QPointingDevice::PointerType::Eraser:
-            if (e->type()==QEvent::TabletRelease) {
-                if (getContainer() != nullptr) {
-			        auto a = std::make_shared<RS_ActionSelectSingle>(m_actionContext);
-                    setCurrentAction(a);
-                    QMouseEvent ev(QEvent::MouseButtonRelease, e->position(), e->globalPosition(),
-                                   Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);//RLZ
-                    mouseReleaseEvent(&ev);
-                    a->finish();
+        switch (e->pointerType()) {
+            case QPointingDevice::PointerType::Eraser:
+                if (e->type() == QEvent::TabletRelease) {
+                    if (getDocument() != nullptr) {
+                        auto a = std::make_shared<LC_ActionSelectSingle>(m_actionContext);
+                        setCurrentAction(a);
+                        QMouseEvent ev(QEvent::MouseButtonRelease, e->position(), e->globalPosition(), Qt::LeftButton, Qt::LeftButton,
+                                       Qt::NoModifier); //RLZ
+                        mouseReleaseEvent(&ev);
+                        a->finish();
 
-                    if (getContainer()->countSelected()>0) {
-                        switchToAction(RS2::ActionModifyDelete);
+                        if (getDocument()->hasSelection()) {
+                            switchToAction(RS2::ActionModifyDelete);
+                        }
                     }
                 }
-            }
-            break;
+                break;
 
-        case QPointingDevice::PointerType::Generic:
-        case QPointingDevice::PointerType::Pen:
-        case QPointingDevice::PointerType::Cursor:
-            if (e->type()==QEvent::TabletPress) {
-                QMouseEvent ev(QEvent::MouseButtonPress, e->position(), e->globalPosition(),
-                               Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);//RLZ
-                mousePressEvent(&ev);
-            } else if (e->type()==QEvent::TabletRelease) {
-                QMouseEvent ev(QEvent::MouseButtonRelease, e->position(), e->globalPosition(),
-                               Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);//RLZ
-                mouseReleaseEvent(&ev);
-            } else if (e->type()==QEvent::TabletMove) {
-                QMouseEvent ev(QEvent::MouseMove, e->position(), e->globalPosition(),
-                               Qt::NoButton, {}, Qt::NoModifier);//RLZ
-                mouseMoveEvent(&ev);
-            }
-            break;
-        default:
-            break;
+            case QPointingDevice::PointerType::Generic:
+            case QPointingDevice::PointerType::Pen:
+            case QPointingDevice::PointerType::Cursor:
+                if (e->type() == QEvent::TabletPress) {
+                    QMouseEvent ev(QEvent::MouseButtonPress, e->position(), e->globalPosition(), Qt::LeftButton, Qt::LeftButton,
+                                   Qt::NoModifier); //RLZ
+                    mousePressEvent(&ev);
+                }
+                else if (e->type() == QEvent::TabletRelease) {
+                    QMouseEvent ev(QEvent::MouseButtonRelease, e->position(), e->globalPosition(), Qt::LeftButton, Qt::LeftButton,
+                                   Qt::NoModifier); //RLZ
+                    mouseReleaseEvent(&ev);
+                }
+                else if (e->type() == QEvent::TabletMove) {
+                    QMouseEvent ev(QEvent::MouseMove, e->position(), e->globalPosition(), Qt::NoButton, {}, Qt::NoModifier); //RLZ
+                    mouseMoveEvent(&ev);
+                }
+                break;
+            default:
+                break;
         }
 #else
 #if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
         switch (e->deviceType()) {
+
 #else
         switch (e->device()) {
+
 #endif
-        case QTabletEvent::Eraser:
-            if (e->type()==QEvent::TabletRelease) {
-                if (getContainer() != nullptr) {
+    case QTabletEvent::Eraser:
+        if (e->type() == QEvent::TabletRelease) {
+            if (getDocument() != nullptr) {
+                RS_ActionSelectSingle* a = new RS_ActionSelectSingle(*getDocument(), *this);
+                setCurrentAction(a);
+                QMouseEvent ev(QEvent::MouseButtonRelease, e->position(), Qt::LeftButton, Qt::LeftButton, Qt::NoModifier); //RLZ
+                mouseReleaseEvent(&ev);
+                a->finish();
 
-                    RS_ActionSelectSingle* a =
-                        new RS_ActionSelectSingle(*getContainer(), *this);
-                    setCurrentAction(a);
-                    QMouseEvent ev(QEvent::MouseButtonRelease, e->position(),
-                                   Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);//RLZ
-                    mouseReleaseEvent(&ev);
-                    a->finish();
-
-                    if (getContainer()->countSelected()>0) {
-                        setCurrentAction(
-                            new RS_ActionModifyDelete(*getContainer(), *this));
-                    }
+                if (getDocument()->hasSelection()) {
+                    setCurrentAction(new RS_ActionModifyDelete(*getDocument(), *this));
                 }
             }
-            break;
-
-        case QTabletEvent::Stylus:
-        case QTabletEvent::Puck:
-            if (e->type()==QEvent::TabletPress) {
-                QMouseEvent ev(QEvent::MouseButtonPress, e->position(),
-                               Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);//RLZ
-                mousePressEvent(&ev);
-            } else if (e->type()==QEvent::TabletRelease) {
-                QMouseEvent ev(QEvent::MouseButtonRelease, e->position(),
-                               Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);//RLZ
-                mouseReleaseEvent(&ev);
-            } else if (e->type()==QEvent::TabletMove) {
-                QMouseEvent ev(QEvent::MouseMove, e->position(),
-                               Qt::NoButton, {}, Qt::NoModifier);//RLZ
-                mouseMoveEvent(&ev);
-            }
-            break;
-
-        default:
-            break;
+        } break; case QTabletEvent::Stylus: case QTabletEvent::Puck:
+        if (e->type() == QEvent::TabletPress) {
+            QMouseEvent ev(QEvent::MouseButtonPress, e->position(), Qt::LeftButton, Qt::LeftButton, Qt::NoModifier); //RLZ
+            mousePressEvent(&ev);
+        }
+        else if (e->type() == QEvent::TabletRelease) {
+            QMouseEvent ev(QEvent::MouseButtonRelease, e->position(), Qt::LeftButton, Qt::LeftButton, Qt::NoModifier); //RLZ
+            mouseReleaseEvent(&ev);
+        }
+        else if (e->type() == QEvent::TabletMove) {
+            QMouseEvent ev(QEvent::MouseMove, e->position(), Qt::NoButton, {}, Qt::NoModifier); //RLZ
+            mouseMoveEvent(&ev);
+        } break; default:
+        break;
         }
 #endif
     }
@@ -882,21 +871,21 @@ void QG_GraphicView::focusInEvent(QFocusEvent* e) {
  * mouse wheel event. zooms in/out or scrolls when
  * shift or ctrl is pressed.
  */
-void QG_GraphicView::wheelEvent(QWheelEvent *e) {
+void QG_GraphicView::wheelEvent(QWheelEvent* e) {
     // LC_ERR << "OWN WHEEL";
     //RS_DEBUG->print("wheel: %d", e->delta());
 
     //printf("state: %d\n", e->state());
     //printf("ctrl: %d\n", Qt::ControlButton);
 
-    if (getContainer() == nullptr) {
+    if (getDocument() == nullptr) {
         return;
     }
 
 #if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
-//    RS_Vector mouse = toGraph(e->position());
-    const QPointF &uiEventPosition = e->position();
-    RS_Vector mouse = getViewPort()->toUCSFromGui(uiEventPosition.x(), uiEventPosition.y());
+    //    RS_Vector mouse = toGraph(e->position());
+    const QPointF& uiEventPosition = e->position();
+    const RS_Vector mouse = getViewPort()->toUCSFromGui(uiEventPosition.x(), uiEventPosition.y());
 #else
     RS_Vector mouse = toGraph(e->position());
 #endif
@@ -907,35 +896,38 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
         // high-resolution scrolling triggers Pan instead of Zoom logic
         m_isSmoothScrolling |= !numPixels.isNull();
 
-        if (m_isSmoothScrolling){
-            if (e->phase() == Qt::ScrollEnd) m_isSmoothScrolling = false;
+        if (m_isSmoothScrolling) {
+            if (e->phase() == Qt::ScrollEnd) {
+                m_isSmoothScrolling = false;
+            }
         }
         else // Trackpads that without high-resolution scrolling
-             // e.g. libinput-XWayland trackpads
+        // e.g. libinput-XWayland trackpads
         {
             numPixels = e->angleDelta() / 4;
         }
 
-        if (!numPixels.isNull()){
-            if (e->modifiers()==Qt::ControlModifier){
+        if (!numPixels.isNull()) {
+            if (e->modifiers() == Qt::ControlModifier) {
                 // Hold ctrl to zoom. 1 % per pixel
-                double v = (m_invertZoomDirection) ? (numPixels.y() / zoomWheelDivisor) : (-numPixels.y() / zoomWheelDivisor);
+                const double v = (m_invertZoomDirection) ? (numPixels.y() / ZOOM_WHEEL_DIVISOR) : (-numPixels.y() / ZOOM_WHEEL_DIVISOR);
                 RS2::ZoomDirection direction;
                 if (v < 0) {
                     direction = RS2::Out;
-                } else {
+                }
+                else {
                     direction = RS2::In;
                 }
 
-                double zoomFactor = 1. + std::abs(v);
-                doZoom(direction, mouse, zoomFactor);
+                const double zoomFact = 1. + std::abs(v);
+                doZoom(direction, mouse, zoomFact);
             }
-            else{
-                int hDelta = (m_invertHorizontalScroll) ? -numPixels.x() : numPixels.x();
-                int vDelta = (m_invertVerticalScroll) ? -numPixels.y() : numPixels.y();
+            else {
+                const int hDelta = (m_invertHorizontalScroll) ? -numPixels.x() : numPixels.x();
+                const int vDelta = (m_invertVerticalScroll) ? -numPixels.y() : numPixels.y();
 
                 // scroll by scrollbars: issue #479 (it has its own issues)
-                if (m_scrollbars){
+                if (m_scrollbars) {
                     m_hScrollBar->setValue(m_hScrollBar->value() - hDelta);
                     m_vScrollBar->setValue(m_vScrollBar->value() - vDelta);
                 }
@@ -959,7 +951,7 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
     RS2::Direction direction = RS2::Up;
 
     // scroll up / down:
-    int angleDeltaY = e->angleDelta().y(); // delta for VERTICAL mouse wheel
+    const int angleDeltaY = e->angleDelta().y(); // delta for VERTICAL mouse wheel
     int angleDeltaX = e->angleDelta().x(); // delta for HORIZONTAL mouse wheel
 
     // for zoom, let's use just vertical scrolling, so below we'll rely on AngleDeltaY only.
@@ -968,71 +960,71 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
     angleDeltaX = angleDeltaY;
     if (e->modifiers() == Qt::ControlModifier) {
         scroll = true;
-        direction= (angleDeltaY > 0) ? RS2::Up : RS2::Down;
+        direction = (angleDeltaY > 0) ? RS2::Up : RS2::Down;
     }
-    else if(e->modifiers() == Qt::ShiftModifier){
+    else if (e->modifiers() == Qt::ShiftModifier) {
         scroll = true;
-        direction= (angleDeltaX > 0) ? RS2::Left : RS2::Right;
+        direction = (angleDeltaX > 0) ? RS2::Left : RS2::Right;
     }
 
     // fixme - potentially, we can support mouses with two mouse wheels later if this will be reasonable.
     // fixme - however, it looks as a kind of overkill - using on single vertical mouse wheel for scroll seems to be fine//
-/*
-    if (e->modifiers() == Qt::ControlModifier) {
-        scroll = true;
-        if (angleDeltaY == 0){
-        //case Qt::Horizontal:
-            direction= (angleDeltaX > 0) ? RS2::Left : RS2::Right;
-        } else {
-        //case Qt::Vertical:
-            direction= (angleDeltaY > 0) ? RS2::Up : RS2::Down;
+    /*
+        if (e->modifiers() == Qt::ControlModifier) {
+            scroll = true;
+            if (angleDeltaY == 0){
+            //case Qt::Horizontal:
+                direction= (angleDeltaX > 0) ? RS2::Left : RS2::Right;
+            } else {
+            //case Qt::Vertical:
+                direction= (angleDeltaY > 0) ? RS2::Up : RS2::Down;
+            }
         }
-    }
-    // scroll left / right:
-    else if	(e->modifiers()==Qt::ShiftModifier) {
-        scroll = true;
-        if (angleDeltaY == 0){
-        //case Qt::Horizontal:
-            direction= (angleDeltaX > 0) ? RS2::Up : RS2::Down;
-        } else {
-        //case Qt::Vertical:
-            direction= (angleDeltaX > 0) ? RS2::Left : RS2::Right;
-        }
-    }*/
+        // scroll left / right:
+        else if	(e->modifiers()==Qt::ShiftModifier) {
+            scroll = true;
+            if (angleDeltaY == 0){
+            //case Qt::Horizontal:
+                direction= (angleDeltaX > 0) ? RS2::Up : RS2::Down;
+            } else {
+            //case Qt::Vertical:
+                direction= (angleDeltaX > 0) ? RS2::Left : RS2::Right;
+            }
+        }*/
 
     if (scroll && m_scrollbars) {
-		//scroll by scrollbars: issue #479
+        //scroll by scrollbars: issue #479
 
         int delta = 0;
 
-        switch(direction){
+        switch (direction) {
             case RS2::Left:
             case RS2::Right:
                 delta = (m_invertHorizontalScroll) ? -angleDeltaX : angleDeltaX;
-                m_hScrollBar->setValue(m_hScrollBar->value()+delta);
+                m_hScrollBar->setValue(m_hScrollBar->value() + delta);
                 break;
             default:
                 delta = (m_invertVerticalScroll) ? -angleDeltaY : angleDeltaY;
-                m_vScrollBar->setValue(m_vScrollBar->value()+delta);
+                m_vScrollBar->setValue(m_vScrollBar->value() + delta);
+                break;
         }
     }
     // zoom in / out:
-    else if (e->modifiers()==0) {
+    else if (e->modifiers() == 0) {
+        //        LC_ERR << " AngleDelta Y "  << angleDeltaY;
 
-//        LC_ERR << " AngleDelta Y "  << angleDeltaY;
+        const RS2::ZoomDirection zoomDirection = ((angleDeltaY > 0) != m_invertZoomDirection) ? RS2::In : RS2::Out;
 
-        RS2::ZoomDirection zoomDirection = ((angleDeltaY > 0) != m_invertZoomDirection) ? RS2::In : RS2::Out;
-
-        const QPoint viewCenter{getWidth()/2, getHeight()/2};
+        const QPoint viewCenter{getWidth() / 2, getHeight() / 2};
         const QPoint delta = viewCenter - uiEventPosition.toPoint();
 
         if (getPanOnZoom()) {
             QCursor::setPos(mapToGlobal(viewCenter));
             getViewPort()->zoomPan(delta.x(), delta.y());
         }
-        if (!getPanOnZoom() || !getSkipFirstZoom() || (abs(delta.x())<32 && abs(delta.y())<32)) {
-            RS_Vector& zoomCenter = mouse;
-//            LC_ERR << " Mouse "  << mouse << " Direction: " << (zoomDirection == RS2::In ? "In" : "Out");
+        if (!getPanOnZoom() || !getSkipFirstZoom() || (abs(delta.x()) < 32 && abs(delta.y()) < 32)) {
+            const RS_Vector& zoomCenter = mouse;
+            //            LC_ERR << " Mouse "  << mouse << " Direction: " << (zoomDirection == RS2::In ? "In" : "Out");
 
             /*// todo - well, actually this is one-shot action... and it will lead to full action processing chain in action handler
             // todo - are we REALLY need it there? alternatively, zoom may be part of this class)
@@ -1043,34 +1035,38 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
     }
     redraw();
 
-/*    QMouseEvent event
-    {
-        QEvent::MouseMove,
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 15, 0))
-            e->position(),
-#if (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
-            e->globalPosition(),
-#endif
-#else
-            QPointF{static_cast<qreal>(e->x()), static_cast<qreal>(e->y())},
-#endif
-            Qt::NoButton, Qt::NoButton, Qt::NoModifier
-    };
-    eventHandler->mouseMoveEvent(&event);
+    /*    QMouseEvent event
+        {
+            QEvent::MouseMove,
+    #if (QT_VERSION >= QT_VERSION_CHECK(5, 15, 0))
+                e->position(),
+    #if (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
+                e->globalPosition(),
+    #endif
+    #else
+                QPointF{static_cast<qreal>(e->x()), static_cast<qreal>(e->y())},
+    #endif
+                Qt::NoButton, Qt::NoButton, Qt::NoModifier
+        };
+        eventHandler->mouseMoveEvent(&event);
 
-    e->accept();*/
+        e->accept();*/
 }
 
 // fixme - sand -  move by keyboard support!!!
-void QG_GraphicView::keyPressEvent(QKeyEvent * e) {
-    if (getContainer() == nullptr) {
+void QG_GraphicView::keyPressEvent(QKeyEvent* e) {
+    if (getDocument() == nullptr) {
         return;
     }
+    if (m_relativePointWidgetHolder->isVisible()) {
+        return;
+    }
+    bool eventProcessed = false; // due to some weird reasons, even incoming event is already accepted (Win10)... so using own flag
     if (m_allowScrollAndMoveAdjustByKeys) {
         RS2::Direction direction = RS2::Up;
         bool scroll = e->modifiers() == Qt::NoModifier;
-        bool shift = e->modifiers() & Qt::ShiftModifier;
-        bool control = e->modifiers() & Qt::ControlModifier;
+        const bool shift = e->modifiers() & Qt::ShiftModifier;
+        const bool control = e->modifiers() & Qt::ControlModifier;
 
         bool move = shift || control;
 
@@ -1095,6 +1091,7 @@ void QG_GraphicView::keyPressEvent(QKeyEvent * e) {
 
         if (scroll) {
             getViewPort()->zoomScroll(direction);
+            eventProcessed = true;
             e->accept();
         }
         else if (move) {
@@ -1113,15 +1110,16 @@ void QG_GraphicView::keyPressEvent(QKeyEvent * e) {
 
             LC_ActionModifyMoveAdjust::MovementInfo info(direction, step);
             switchToAction(RS2::ActionModifyMoveAdjust, &info);
+            eventProcessed = true;
             e->accept();
         }
     }
-    if (!e->isAccepted()){
+    if (!eventProcessed) {
         getEventHandler()->keyPressEvent(e);
     }
 }
 
-void QG_GraphicView::keyReleaseEvent(QKeyEvent * e){
+void QG_GraphicView::keyReleaseEvent(QKeyEvent* e) {
     getEventHandler()->keyReleaseEvent(e);
 }
 
@@ -1129,45 +1127,46 @@ void QG_GraphicView::keyReleaseEvent(QKeyEvent * e){
 * Called whenever the graphic view has changed.
 * Adjusts the scrollbar ranges / steps.
 */
-void QG_GraphicView::adjustOffsetControls(){
-    if (!m_scrollbars)
+void QG_GraphicView::adjustOffsetControls() {
+    if (!m_scrollbars) {
         return;
+    }
 
     std::unique_lock<std::mutex> lock(m_scrollbarMutex, std::defer_lock);
     if (!lock.try_lock()) {
         return;
     }
 
-    if (getContainer()==nullptr || m_hScrollBar==nullptr || m_vScrollBar==nullptr) {
+    if (getDocument() == nullptr || m_hScrollBar == nullptr || m_vScrollBar == nullptr) {
         return;
     }
-    LC_LOG<<__func__<<"(): begin";
+    LC_LOG << __func__ << "(): begin";
 
-    getContainer()->forcedCalculateBorders();
-    RS_Vector vpMin = getContainer()->getMin();
-    RS_Vector vpMax = getContainer()->getMax();
+    getDocument()->forcedCalculateBorders();
+    RS_Vector vpMin = getDocument()->getMin();
+    RS_Vector vpMax = getDocument()->getMax();
 
     // no drawing yet - still allow to scroll
     if (!isRectValid(vpMin, vpMax)) {
-        vpMin = RS_Vector(-10,-10);
-        vpMax = RS_Vector(100,100);
+        vpMin = RS_Vector(-10, -10);
+        vpMax = RS_Vector(100, 100);
     }
 
-    int ox = getViewPort()->getOffsetX();
-    int oy = getViewPort()->getOffsetY();
+    const int ox = getViewPort()->getOffsetX();
+    const int oy = getViewPort()->getOffsetY();
 
-    int minVal = int(-1.25 * getWidth() - ox);
-    int maxVal = int( 0.25 * getWidth() - ox);
+    int minVal = static_cast<int>(-1.25 * getWidth() - ox);
+    int maxVal = static_cast<int>(0.25 * getWidth() - ox);
 
-    LC_LOG<<__func__<<"(): x scrollbar range["<<minVal<<", "<<maxVal<<"]: "<<getViewPort()->getOffsetX();
-    if (minVal<=maxVal) {
+    LC_LOG << __func__ << "(): x scrollbar range[" << minVal << ", " << maxVal << "]: " << getViewPort()->getOffsetX();
+    if (minVal <= maxVal) {
         m_hScrollBar->setRange(minVal, maxVal);
     }
 
-    minVal = int(0.75 * getHeight() - oy);
-    maxVal = int(0.25 * getHeight() - oy);
+    minVal = static_cast<int>(0.75 * getHeight() - oy);
+    maxVal = static_cast<int>(0.25 * getHeight() - oy);
 
-    if (minVal<=maxVal) {
+    if (minVal <= maxVal) {
         m_vScrollBar->setRange(minVal, maxVal);
     }
 
@@ -1176,11 +1175,10 @@ void QG_GraphicView::adjustOffsetControls(){
 
     m_hScrollBar->setValue(-ox);
     m_vScrollBar->setValue(oy);
-    LC_LOG<<__func__<<"(): y scrollbar range["<<minVal<<", "<<maxVal<<"]: "<<oy;
+    LC_LOG << __func__ << "(): y scrollbar range[" << minVal << ", " << maxVal << "]: " << oy;
 
     slotHScrolled(-ox);
     slotVScrolled(oy);
-
 
     //        RS_DEBUG->print("H min: %d / max: %d / step: %d / value: %d\n",
     //                        hScrollBar->minimum(), hScrollBar->maximum(),
@@ -1189,120 +1187,108 @@ void QG_GraphicView::adjustOffsetControls(){
     //        RS_DEBUG->print(/*RS_Debug::D_WARNING, */"V min: %d / max: %d / step: %d / value: %d\n",
     //                        vScrollBar->minimum(), vScrollBar->maximum(),
     //                        vScrollBar->pageStep(), oy);
-    LC_LOG<<__func__<<"(): end";
-
+    LC_LOG << __func__ << "(): end";
 }
-
 
 /**
  * override this to adjust controls and widgets that
  * control the zoom factor of the graphic.
  */
-void QG_GraphicView::adjustZoomControls()
-{
+void QG_GraphicView::adjustZoomControls() {
 }
+
 
 /**
  * Slot for horizontal scroll events.
  */
-void QG_GraphicView::slotHScrolled(int value) {
-    // Scrollbar behaviour tends to change with every Qt version..
-    // so let's keep old code in here for now
-
-    auto viewport = getViewPort();
-    //static int running = false;
-    //if (!running) {
-    //running = true;
-    ////RS_DEBUG->print("value x: %d\n", value);
-    if (m_hScrollBar->maximum()==m_hScrollBar->minimum()) {
-        getContainer()->calculateBorders();
-        RS_Vector min = getContainer()->getMin();
-        RS_Vector max = getContainer()->getMax();
+void QG_GraphicView::slotHScrolled(const int value) {
+    const auto viewport = getViewPort();
+    if (m_hScrollBar->maximum() == m_hScrollBar->minimum()) {
+        getDocument()->calculateBorders();
+        const RS_Vector min = getDocument()->getMin();
+        const RS_Vector max = getDocument()->getMax();
         RS_Vector ucsMin;
         RS_Vector ucsMax;
         viewport->ucsBoundingBox(min, max, ucsMin, ucsMax);
-        RS_Vector containerSize = ucsMax - ucsMin;
+        const RS_Vector containerSize = ucsMax - ucsMin;
         viewport->centerOffsetX(ucsMin, containerSize);
-    } else {
+    }
+    else {
         viewport->setOffsetX(-value);
     }
-    //if (isUpdateEnabled()) {
-//         updateGrid();
     redraw();
 }
 
 /**
  * Slot for vertical scroll events.
  */
-void QG_GraphicView::slotVScrolled(int value) {
+void QG_GraphicView::slotVScrolled(const int value) {
     // Scrollbar behaviour tends to change with every Qt version..
     // so let's keep old code in here for now
 
-    if (m_vScrollBar->maximum()==m_vScrollBar->minimum()) {
-        getContainer()->calculateBorders();
-        RS_Vector min = getContainer()->getMin();
-        RS_Vector max = getContainer()->getMax();
+    if (m_vScrollBar->maximum() == m_vScrollBar->minimum()) {
+        getDocument()->calculateBorders();
+        const RS_Vector min = getDocument()->getMin();
+        const RS_Vector max = getDocument()->getMax();
         RS_Vector ucsMin;
         RS_Vector ucsMax;
         getViewPort()->ucsBoundingBox(min, max, ucsMin, ucsMax);
-        RS_Vector containerSize = ucsMax - ucsMin;
+        const RS_Vector containerSize = ucsMax - ucsMin;
         getViewPort()->centerOffsetY(ucsMin, containerSize);
-    } else {
+    }
+    else {
         getViewPort()->setOffsetY(value);
     }
-    //if (isUpdateEnabled()) {
-  //  updateGrid();
     redraw();
 }
 
 /**
  * @brief setOffset
- * @param ox, offset X
- * @param oy, offset Y
+ * @param ox offset X
+ * @param oy offset Y
  */
-void QG_GraphicView::setOffset([[maybe_unused]]int ox, [[maybe_unused]]int oy) {
+void QG_GraphicView::setOffset([[maybe_unused]] const int ox, [[maybe_unused]] const int oy) {
     getViewPort()->setOffsetX(ox);
     getViewPort()->setOffsetY(oy);
     // need to adjust offset control for scrollbars when setting graphicview offset
     adjustOffsetControls();
 }
 
-void QG_GraphicView::layerActivated(RS_Layer *layer) {
-    bool toActivated = LC_GET_ONE_BOOL("Modify", "ModifyEntitiesToActiveLayer");
+void QG_GraphicView::layerActivated(RS_Layer* layer) {
+    const bool applyLayerToSelectedEntities = LC_GET_ONE_BOOL("Modify", "ModifyEntitiesToActiveLayer");
 
-    if (toActivated) {
-        RS_EntityContainer *container = getContainer();
-        RS_Graphic *graphic = getGraphic();
+    if (applyLayerToSelectedEntities) {
+        RS_Graphic* graphic = getGraphic();
         if (graphic != nullptr) {
-            QList<RS_Entity *> clones;
-
-            graphic->startUndoCycle();
-
-            for (auto en: std::as_const(*container)) { // fixme - sand - iterating all elements in container
-                if (en != nullptr) {
-                    if (en->isSelected()) {
-                        RS_Entity *cl = en->clone();
-                        cl->setLayer(layer);
-                        en->setSelected(false);
-                        cl->setSelected(false);
-                        clones << cl;
-
-                        en->setUndoState(true);
-                        graphic->addUndoable(en);
-                    }
+            const auto doc = getDocument();
+            const auto selection = doc->getSelection();
+            if (!selection->isEmpty()) {
+                QList<RS_Entity*> selected;
+                selection->collectSelectedEntities(selected);
+                if (!selected.isEmpty()) {
+                    doc->undoableModify(getViewPort(), [selected, layer](LC_DocumentModificationBatch& ctx)-> bool {
+                                            for (const auto en : std::as_const(selected)) {
+                                                if (en != nullptr && en->isAlive()) {
+                                                    RS_Entity* clone = en->clone();
+                                                    clone->setLayer(layer);
+                                                    clone->setPen(en->getPen(false));
+                                                    clone->clearSelectionFlag();
+                                                    clone->update();
+                                                    ctx += clone;
+                                                    ctx -= en;
+                                                }
+                                            }
+                                            ctx.dontSetActiveLayerAndPen();
+                                            return true;
+                                        }, [this]([[maybe_unused]] LC_DocumentModificationBatch& ctx, RS_Document* d)-> void {
+                                            RS_Selection::unselectAllInDocument(d, getViewPort());
+                                        });
                 }
             }
 
-            for (auto cl: std::as_const(clones)) {
-                container->addEntity(cl);
-                graphic->addUndoable(cl);
-            }
-
-            graphic->endUndoCycle();
             graphic->updateInserts();
-
-            container->calculateBorders();
-            container->setSelected(false);
+            doc->calculateBorders();
+            doc->clearSelectionFlag();
             redraw(RS2::RedrawDrawing);
         }
     }
@@ -1313,10 +1299,9 @@ void QG_GraphicView::layerActivated(RS_Layer *layer) {
  * usually that's very fast since we only paint the buffer we
  * have from the last call..
  */
-void QG_GraphicView::paintEvent(QPaintEvent *){
+void QG_GraphicView::paintEvent(QPaintEvent*) {
     getRenderer()->render();
 }
-
 
 #define HIDE_SELECT_CURSOR false
 
@@ -1325,11 +1310,12 @@ void QG_GraphicView::loadSettings() {
 
     {
         LC_GROUP_GUARD("Appearance");
-        int zoomFactor1000 = LC_GET_INT("ScrollZoomFactor", 1137);
+        const int zoomFactor1000 = LC_GET_INT("ScrollZoomFactor", 1137);
         m_scrollZoomFactor = zoomFactor1000 / 1000.0;
 
-        m_ucsHighlightData->m_maxBlinkNumber = LC_GET_INT("UCSHighlightBlinkCount",10)*2; // one blink includes both for visible and invisible phase
-        m_ucsHighlightData->m_timerInterval =  LC_GET_INT("UCSHighlightBlinkDelay",250);
+        m_ucsHighlightData->maxBlinkNumber = LC_GET_INT("UCSHighlightBlinkCount", 10) * 2;
+        // one blink includes both for visible and invisible phase
+        m_ucsHighlightData->timerInterval = LC_GET_INT("UCSHighlightBlinkDelay", 250);
     }
 
     {
@@ -1343,33 +1329,51 @@ void QG_GraphicView::loadSettings() {
 
     LC_GROUP("Appearance");
     {
-        m_cursor_hiding = LC_GET_BOOL("cursor_hiding", false);
+        m_cursorHiding = LC_GET_BOOL("cursor_hiding", false);
         bool showSnapIndicatorLines = LC_GET_BOOL("indicator_lines_state", true);
         bool showSnapIndicatorShape = LC_GET_BOOL("indicator_shape_state", true);
         if (HIDE_SELECT_CURSOR) {
             // potentially, select cursor may be also hidden and so snapper will be used instead of cursor.
             // however, this will require review and modifications of significant amount of actions, so
             // probably I'll return to this later. In such case, the code within this "if" will be handy for such support
-            m_selectCursor_hiding = m_cursor_hiding && (showSnapIndicatorLines || showSnapIndicatorShape);
+            m_selectCursorHiding = m_cursorHiding && (showSnapIndicatorLines || showSnapIndicatorShape);
         }
-        else {
-            m_selectCursor_hiding = false;
-        }
+        m_selectCursorHiding = false;
     }
     LC_GROUP_END();
     m_ucsMarkOptions->loadSettings();
+
+    LC_GROUP("Colors");
+    {
+        const RS_Color bgColor(LC_GET_STR("RelativePositionAssistantBackground", RS_Settings::RELATIVE_POSITION_BACKGROUND));
+        const RS_Color txtColor(LC_GET_STR("RelativePositionAssistantText", RS_Settings::RELATIVE_POSITION_BACKGROUND));
+        m_relativePointWidgetHolder->setWidgetColors(bgColor, txtColor);
+    }
+    LC_GROUP_END();
+
+    LC_GROUP("RelativePositionAssistant");
+    {
+        const int fontSize = LC_GET_INT("FontSize", 10);
+        const QString fontName = LC_GET_STR("FontName", "Helvetica");
+        m_relativePointWidgetHolder->setFont(fontName, fontSize);
+    }
+    LC_GROUP_END();
 }
 
-void QG_GraphicView::setAntialiasing(bool state){
+void QG_GraphicView::setAntialiasing(const bool state) const {
     getRenderer()->setAntialiasing(state);
 }
 
-bool QG_GraphicView::isDraftMode() const {
-    auto* viewRenderer = dynamic_cast<LC_GraphicViewRenderer*>(getRenderer());
-    return (viewRenderer != nullptr) ?  viewRenderer->isDraftMode() : false;
+bool QG_GraphicView::isAntialiasing() const {
+    return getRenderer()->isAntialiasing();
 }
 
-void QG_GraphicView::setDraftMode(bool dm) {
+bool QG_GraphicView::isDraftMode() const {
+    const auto* viewRenderer = dynamic_cast<LC_GraphicViewRenderer*>(getRenderer());
+    return (viewRenderer != nullptr) ? viewRenderer->isDraftMode() : false;
+}
+
+void QG_GraphicView::setDraftMode(const bool dm) {
     auto* viewRenderer = dynamic_cast<LC_GraphicViewRenderer*>(getRenderer());
     if (viewRenderer != nullptr) {
         viewRenderer->setDraftMode(dm);
@@ -1377,14 +1381,22 @@ void QG_GraphicView::setDraftMode(bool dm) {
     }
 }
 
-void QG_GraphicView::setDraftLinesMode(bool mode) {
+void QG_GraphicView::setDraftLinesMode(const bool mode) const {
     auto* viewRenderer = dynamic_cast<LC_GraphicViewRenderer*>(getRenderer());
     if (viewRenderer != nullptr) {
-        viewRenderer->setLineWidthScaling(!mode);
+        viewRenderer->setLineWidthScaling(mode);
     }
 }
 
-void QG_GraphicView::addScrollbars(){
+bool QG_GraphicView::isDraftLinesMode() const {
+    const auto* viewRenderer = dynamic_cast<LC_GraphicViewRenderer*>(getRenderer());
+    if (viewRenderer != nullptr) {
+        return !viewRenderer->getLineWidthScaling();
+    }
+    return false;
+}
+
+void QG_GraphicView::addScrollbars() {
     m_scrollbars = true;
 
     m_hScrollBar = new QG_ScrollBar(Qt::Horizontal, this);
@@ -1416,98 +1428,85 @@ void QG_GraphicView::addScrollbars(){
     connect(m_vScrollBar, &QG_ScrollBar::valueChanged, this, &QG_GraphicView::slotVScrolled);
 }
 
-bool QG_GraphicView::hasScrollbars(){
+bool QG_GraphicView::hasScrollbars() const {
     return m_scrollbars;
 }
 
-void QG_GraphicView::setCursorHiding(bool state){
-    m_cursor_hiding = state;
+void QG_GraphicView::setCursorHiding(const bool state) {
+    m_cursorHiding = state;
 }
 
-void QG_GraphicView::setCurrentQAction(QAction* q_action){
+void QG_GraphicView::setCurrentQAction(QAction* q_action) {
     getEventHandler()->setQAction(q_action);
 
-    if (m_recent_actions.contains(q_action)){
-        m_recent_actions.removeOne(q_action);
+    if (m_recentActions.contains(q_action)) {
+        m_recentActions.removeOne(q_action);
     }
-    m_recent_actions.prepend(q_action);
+    m_recentActions.prepend(q_action);
 }
 
-
-void QG_GraphicView::startAutoPanTimer(QMouseEvent *event){
+void QG_GraphicView::startAutoPanTimer(const QMouseEvent* event) {
     if (event == nullptr) {
         return;
     }
     const RS_Vector cadArea_minCoord(0., 0.);
     const RS_Vector cadArea_maxCoord(getWidth(), getHeight());
     const LC_Rect cadArea_actual(cadArea_minCoord, cadArea_maxCoord);
-    const LC_Rect cadArea_unprobed(cadArea_minCoord + m_panData->probedAreaOffset,
-                                   cadArea_maxCoord - m_panData->probedAreaOffset);
+    const LC_Rect cadArea_unprobed(cadArea_minCoord + m_panData->probedAreaOffset, cadArea_maxCoord - m_panData->probedAreaOffset);
 
     RS_Vector mouseCoord{event->position()};
     mouseCoord.y = cadArea_actual.height() - mouseCoord.y;
 
     const RS_Vector cadArea_centerPoint((cadArea_minCoord + cadArea_maxCoord) / 2.0);
     RS_Vector offset = mouseCoord - cadArea_centerPoint;
-    offset = {std::abs(offset.x) - cadArea_unprobed.width() / 2.,
-              std::abs(offset.y) - cadArea_unprobed.height() / 2.};
+    offset = {std::abs(offset.x) - cadArea_unprobed.width() / 2., std::abs(offset.y) - cadArea_unprobed.height() / 2.};
     offset = {std::max(offset.x, 1.), std::max(offset.y, 1.)};
 
-    double panOffset_angle{cadArea_centerPoint.angleTo(mouseCoord)};
+    const double panOffset_angle{cadArea_centerPoint.angleTo(mouseCoord)};
 
     /* It would be better if the below value was calculated in the code that deals with resizing the CAD area. */
     const double quarterAngle = cadArea_centerPoint.angleTo(cadArea_actual.upperRightCorner());
 
-    double percentageFactor = 1.;
+    double percentageFactor;
 
-    if (((panOffset_angle > quarterAngle) && (panOffset_angle <= (M_PI - quarterAngle)))
-        || ((panOffset_angle > (quarterAngle + M_PI))
-            && (panOffset_angle <= (M_PI + M_PI - quarterAngle)))) {
-        percentageFactor = (std::abs((mouseCoord - cadArea_centerPoint).y)
-                            - (cadArea_unprobed.height() / 2.0))
-                           / ((cadArea_actual.height() / 2.0) - (cadArea_unprobed.height() / 2.0));
-    } else {
-        percentageFactor = (std::abs((mouseCoord - cadArea_centerPoint).x)
-                            - (cadArea_unprobed.width() / 2.0))
-                           / ((cadArea_actual.width() / 2.0) - (cadArea_unprobed.width() / 2.0));
+    if (((panOffset_angle > quarterAngle) && (panOffset_angle <= (M_PI - quarterAngle))) || ((panOffset_angle > (quarterAngle + M_PI)) && (
+        panOffset_angle <= (M_PI + M_PI - quarterAngle)))) {
+        percentageFactor = (std::abs((mouseCoord - cadArea_centerPoint).y) - cadArea_unprobed.height() / 2.0) / (cadArea_actual.height() /
+            2.0 - cadArea_unprobed.height() / 2.0);
+    }
+    else {
+        percentageFactor = (std::abs((mouseCoord - cadArea_centerPoint).x) - cadArea_unprobed.width() / 2.0) / (cadArea_actual.width() / 2.0
+            - cadArea_unprobed.width() / 2.0);
     }
 
     const double panTimerInterval{
-        m_panData->panTimerInterval_minimum
-        + ((m_panData->panTimerInterval_maximum - m_panData->panTimerInterval_minimum)
-           * (1.0 - percentageFactor))};
+        m_panData->panTimerIntervalMinimum + ((m_panData->panTimerIntervalMaximum - m_panData->panTimerIntervalMinimum) * (1.0 -
+            percentageFactor))
+    };
 
     offset = RS_Vector::polar(offset.magnitude(), M_PI - panOffset_angle);
     m_panData->panOffset = {static_cast<int>(offset.x), static_cast<int>(offset.y)};
 
     if (m_panData->panTimer != nullptr) {
         m_panData->panTimer->setInterval(panTimerInterval);
-    } else {
+    }
+    else {
         m_panData->start(panTimerInterval, *this);
     }
 
     if (RS_DEBUG->getLevel() >= RS_Debug::D_INFORMATIONAL) {
-        std::cout << " CAD area centre point                = " << cadArea_centerPoint << std::endl
-                  << " Actual CAD area quarter angle (deg)  = " << quarterAngle * 180.0 / M_PI
-                  << std::endl
-                  << " Percentage factor                    = " << percentageFactor << std::endl
-                  << " Pan offset angle (radians)           = " << panOffset_angle << std::endl
-                  << " Pan offset angle (degrees)           = " << panOffset_angle * 180.0 / M_PI
-                  << std::endl
-                  << " Pan offset vector                    = " << m_panData->panOffset.x() << ", "
-                  << m_panData->panOffset.y()
-                  << std::endl
-                  //<< " Pan timer interval (ms)              = " << m_panData->panTimer->interfac
-                  << std::endl
-                  << " Mouse (cursor) position (adjusted)   = " << mouseCoord << std::endl
-                  << " Mouse position w.r.t. centre point   = " << mouseCoord - cadArea_centerPoint
-                  << std::endl
-                  << std::endl
-                  << std::endl;
+        std::cout << " CAD area centre point                = " << cadArea_centerPoint << std::endl <<
+            " Actual CAD area quarter angle (deg)  = " << quarterAngle * 180.0 / M_PI << std::endl <<
+            " Percentage factor                    = " << percentageFactor << std::endl << " Pan offset angle (radians)           = " <<
+            panOffset_angle << std::endl << " Pan offset angle (degrees)           = " << panOffset_angle * 180.0 / M_PI << std::endl <<
+            " Pan offset vector                    = " << m_panData->panOffset.x() << ", " << m_panData->panOffset.y() << std::endl
+            //<< " Pan timer interval (ms)              = " << m_panData->panTimer->interfac
+            << std::endl << " Mouse (cursor) position (adjusted)   = " << mouseCoord << std::endl <<
+            " Mouse position w.r.t. centre point   = " << mouseCoord - cadArea_centerPoint << std::endl << std::endl << std::endl;
     }
 }
 
-bool QG_GraphicView::isAutoPan(QMouseEvent *event) const{
+bool QG_GraphicView::isAutoPan(const QMouseEvent* event) const {
     if (event == nullptr) {
         return false;
     }
@@ -1521,38 +1520,34 @@ bool QG_GraphicView::isAutoPan(QMouseEvent *event) const{
     const RS_Vector cadArea_minCoord(0., 0.);
     const RS_Vector cadArea_maxCoord(getWidth(), getHeight());
     const LC_Rect cadArea_actual(cadArea_minCoord, cadArea_maxCoord);
-    const LC_Rect cadArea_unprobed(cadArea_minCoord + m_panData->probedAreaOffset,
-                                   cadArea_maxCoord - m_panData->probedAreaOffset);
+    const LC_Rect cadArea_unprobed(cadArea_minCoord + m_panData->probedAreaOffset, cadArea_maxCoord - m_panData->probedAreaOffset);
     if (cadArea_unprobed.width() < 0. || cadArea_unprobed.height() < 0.) {
         return false;
     }
 
-    RS_Vector mouseCoord{event->position()};
+    const RS_Vector mouseCoord{event->position()};
 
     if (RS_DEBUG->getLevel() >= RS_Debug::D_INFORMATIONAL) {
-        std::cout << " Unprobed CAD area width and height = " << cadArea_unprobed.width() << "/"
-                  << cadArea_unprobed.height() << std::endl
-                  << " Actual   CAD area width and height = " << cadArea_actual.width() << "/"
-                  << cadArea_actual.height() << std::endl
-                  << " Mouse (cursor) position            = " << mouseCoord << std::endl
-                  << std::endl;
+        std::cout << " Unprobed CAD area width and height = " << cadArea_unprobed.width() << "/" << cadArea_unprobed.height() << std::endl
+            << " Actual   CAD area width and height = " << cadArea_actual.width() << "/" << cadArea_actual.height() << std::endl <<
+            " Mouse (cursor) position            = " << mouseCoord << std::endl << std::endl;
     }
 
     return cadArea_actual.inArea(mouseCoord) && !cadArea_unprobed.inArea(mouseCoord);
 }
 
-void QG_GraphicView::deleteActionContext() {
-    delete m_actionContext;
+void QG_GraphicView::deleteActionContext() const {
+     delete m_actionContext;
 }
 
 /*
     Auto-pans the CAD area.
     - by Melwyn Francis Carlo <carlo.melwyn@outlook.com>
 */
-void QG_GraphicView::autoPanStep(){
+void QG_GraphicView::autoPanStep() const {
     // skip first steps to avoid unintensional panning
-    m_panData->m_delayCounter = std::min(++ m_panData->m_delayCounter, m_panData->delayCounterMax);
-    if (m_panData->m_delayCounter < m_panData->delayCounterMax) {
+    m_panData->delayCounter = std::min(++m_panData->delayCounter, m_panData->delayCounterMax);
+    if (m_panData->delayCounter < m_panData->delayCounterMax) {
         return;
     }
 
@@ -1560,67 +1555,65 @@ void QG_GraphicView::autoPanStep(){
     getViewPort()->zoomPan(m_panData->panOffset.x(), m_panData->panOffset.y());
 }
 
-
-QString QG_GraphicView::obtainEntityDescription(RS_Entity *entity, RS2::EntityDescriptionLevel shortDescription) {
-    LC_QuickInfoWidget *entityInfoWidget = QC_ApplicationWindow::getAppWindow()->getEntityInfoWidget();
-    if (entityInfoWidget != nullptr){
+QString QG_GraphicView::obtainEntityDescription(const RS_Entity* entity, const RS2::EntityDescriptionLevel shortDescription) {
+    const LC_QuickInfoWidget* entityInfoWidget = QC_ApplicationWindow::getAppWindow()->getEntityInfoWidget();
+    if (entityInfoWidget != nullptr) {
         QString result = entityInfoWidget->getEntityDescription(entity, shortDescription);
         return result;
     }
     return "";
 }
 
-void QG_GraphicView::ucsHighlightStep(){
-    auto overlayContainer = getViewPort()->getOverlaysDrawablesContainer(RS2::OverlayGraphics::ActionPreviewEntity);
+void QG_GraphicView::ucsHighlightStep() {
+    const auto overlayContainer = getViewPort()->getOverlaysDrawablesContainer(RS2::OverlayGraphics::ActionPreviewEntity);
     overlayContainer->clear();
-    if (m_ucsHighlightData->mayTick()){
-        if (m_ucsHighlightData->m_inVisiblePhase) {
+    if (m_ucsHighlightData->mayTick()) {
+        if (m_ucsHighlightData->inVisiblePhase) {
             // note - potentially, here we may simply store data for custom ucs mark and create object in renderer....
             // that will eliminate storing ucs mark settings in this class
-            auto m_ucsMark = new LC_OverlayUCSMark(m_ucsHighlightData->origin, m_ucsHighlightData->angle,
-                                                   m_ucsHighlightData->forWCS, m_ucsMarkOptions.get());
-            overlayContainer->add(m_ucsMark);
+            const auto ucsMark = new LC_OverlayUCSMark(m_ucsHighlightData->origin, m_ucsHighlightData->angle, m_ucsHighlightData->forWCS,
+                                                         m_ucsMarkOptions.get());
+            overlayContainer->add(ucsMark);
         }
-        else{
+        else {
         }
     }
-    else{
+    else {
         m_ucsHighlightData->stop();
         // restore current view position
-        getViewPort()->justSetOffsetAndFactor(m_ucsHighlightData->m_savedViewOffset.x,
-                                         m_ucsHighlightData->m_savedViewOffset.y,
-                                         m_ucsHighlightData->m_savedViewFactor);
+        getViewPort()->justSetOffsetAndFactor(m_ucsHighlightData->savedViewOffset.x, m_ucsHighlightData->savedViewOffset.y,
+                                              m_ucsHighlightData->savedViewFactor);
     }
     redraw(RS2::RedrawOverlay);
     update();
 }
 
-void QG_GraphicView::highlightUCSLocation(LC_UCS *ucs){
-    if (ucs == nullptr){
+void QG_GraphicView::highlightUCSLocation(LC_UCS* ucs) {
+    if (ucs == nullptr) {
         return;
     }
 
-    auto viewport = getViewPort();
+    const auto viewport = getViewPort();
     // save current view position
-    m_ucsHighlightData->m_savedViewOffset.x = viewport->getOffsetX();
-    m_ucsHighlightData->m_savedViewOffset.y = viewport->getOffsetY();
-    m_ucsHighlightData->m_savedViewFactor = viewport->getFactor().x;
+    m_ucsHighlightData->savedViewOffset.x = viewport->getOffsetX();
+    m_ucsHighlightData->savedViewOffset.y = viewport->getOffsetY();
+    m_ucsHighlightData->savedViewFactor = viewport->getFactor().x;
 
-    RS_Vector origin = ucs->getOrigin();
-    double angle = ucs->getXAxisDirection();
+    const RS_Vector origin = ucs->getOrigin();
+    const double angle = ucs->getXAxisDirection();
 
     // try to ensure that origin of UCS is visible if it's outside of visible part of drawing
-    double AXIS_SIZE = viewport->toUcsDX(20); // fixme - ucs - or toUcsX?
-    viewport->zoomAutoEnsurePointsIncluded(origin, origin.relative(AXIS_SIZE, angle),  origin.relative(AXIS_SIZE, angle+M_PI_2));
+    const double AXIS_SIZE = viewport->toUcsDX(20); // fixme - ucs - or toUcsX?
+    viewport->zoomAutoEnsurePointsIncluded(origin, origin.relative(AXIS_SIZE, angle), origin.relative(AXIS_SIZE, angle + M_PI_2));
 
-    double uiOriginPointX=0., uiOriginPointY=0.;
+    double uiOriginPointX = 0., uiOriginPointY = 0.;
     viewport->toUI(origin, uiOriginPointX, uiOriginPointY);
 
-    double ucsXAxisAngleInUCS = viewport->toUCSAngle(angle);
+    const double ucsXAxisAngleInUCS = viewport->toUCSAngle(angle);
 
     m_ucsHighlightData->origin = RS_Vector(uiOriginPointX, uiOriginPointY);
     m_ucsHighlightData->angle = -ucsXAxisAngleInUCS;
-    m_ucsHighlightData->forWCS = ! ucs->isUCS();
-    double timerInterval = m_ucsHighlightData->m_timerInterval;
+    m_ucsHighlightData->forWCS = !ucs->isUCS();
+    const double timerInterval = m_ucsHighlightData->timerInterval;
     m_ucsHighlightData->start(timerInterval, *this);
 }

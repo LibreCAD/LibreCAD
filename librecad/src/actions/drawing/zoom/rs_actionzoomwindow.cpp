@@ -24,7 +24,6 @@
 **
 **********************************************************************/
 
-
 #include "rs_actionzoomwindow.h"
 
 #include <QMouseEvent>
@@ -34,58 +33,59 @@
 #include "rs_preview.h"
 
 struct RS_ActionZoomWindow::ActionData {
- RS_Vector ucsV1;
-	RS_Vector v1;
-	RS_Vector v2;
+    RS_Vector ucsV1;
+    RS_Vector v1;
+    RS_Vector v2;
 };
 
 /**
  * Default constructor.
  *
+ * @param actionContext
  * @param keepAspectRatio Keep the aspect ratio. true: the factors
  *          in x and y will stay the same. false Exactly the chosen
  *          area will be fit to the viewport.
  */
-RS_ActionZoomWindow::RS_ActionZoomWindow(LC_ActionContext *actionContext, bool keepAspectRatio)
-    :RS_PreviewActionInterface("Zoom Window",actionContext, RS2::ActionZoomWindow)
-    , m_actionData(std::make_unique<ActionData>()), m_keepAspectRatio(keepAspectRatio){
+RS_ActionZoomWindow::RS_ActionZoomWindow(LC_ActionContext* actionContext, const bool keepAspectRatio)
+    : RS_PreviewActionInterface("Zoom Window", actionContext, RS2::ActionZoomWindow), m_actionData(std::make_unique<ActionData>()),
+      m_keepAspectRatio(keepAspectRatio) {
 }
 
 RS_ActionZoomWindow::~RS_ActionZoomWindow() = default;
 
-void RS_ActionZoomWindow::init(int status){
+void RS_ActionZoomWindow::init(const int status) {
     RS_DEBUG->print("RS_ActionZoomWindow::init()");
 
     RS_PreviewActionInterface::init(status);
     m_actionData.reset(new ActionData{});
-//deleteSnapper();
+    //deleteSnapper();
     // snapMode.clear();
     // snapMode.restriction = RS2::RestrictNothing;
 }
 
 void RS_ActionZoomWindow::doTrigger() {
     RS_DEBUG->print("RS_ActionZoomWindow::trigger()");
-    if (m_actionData->v1.valid && m_actionData->v2.valid){
-        if (m_viewport->toGuiDX(m_actionData->v1.distanceTo(m_actionData->v2)) > 5){
-            RS_Vector point1 = toUCS(m_actionData->v1);
-            RS_Vector point2 = toUCS(m_actionData->v2);
+    if (m_actionData->v1.valid && m_actionData->v2.valid) {
+        if (m_viewport->toGuiDX(m_actionData->v1.distanceTo(m_actionData->v2)) > 5) {
+            const RS_Vector point1 = toUCS(m_actionData->v1);
+            const RS_Vector point2 = toUCS(m_actionData->v2);
             m_viewport->zoomWindow(point1, point2, m_keepAspectRatio);
             init(SetFirstCorner);
         }
     }
 }
 
-void RS_ActionZoomWindow::mouseMoveEvent(QMouseEvent *e){
+void RS_ActionZoomWindow::mouseMoveEvent(QMouseEvent* e) {
     deletePreview();
-    snapFree(e);
+    const auto snap = snapFree(e);
     drawSnapper();
-    if (getStatus() == SetSecondCorner && m_actionData->v1.valid){
-        m_actionData->v2 = snapFree(e);
+    if (getStatus() == SetSecondCorner && m_actionData->v1.valid) {
+        m_actionData->v2 = snap;
 
-        RS_Vector worldCorner1 = m_actionData->v1;
-        RS_Vector worldCorner3 = m_actionData->v2;
+        const RS_Vector worldCorner1 = m_actionData->v1;
+        const RS_Vector worldCorner3 = m_actionData->v2;
 
-        RS_Vector worldCorner2,worldCorner4;
+        RS_Vector worldCorner2, worldCorner4;
         calcRectCorners(worldCorner1, worldCorner3, worldCorner2, worldCorner4);
 
         m_preview->addRectangle(worldCorner1, worldCorner2, worldCorner3, worldCorner4);
@@ -93,8 +93,8 @@ void RS_ActionZoomWindow::mouseMoveEvent(QMouseEvent *e){
     drawPreview();
 }
 
-void RS_ActionZoomWindow::mousePressEvent(QMouseEvent *e){
-    if (e->button() == Qt::LeftButton){
+void RS_ActionZoomWindow::mousePressEvent(QMouseEvent* e) {
+    if (e->button() == Qt::LeftButton) {
         switch (getStatus()) {
             case SetFirstCorner:
                 m_actionData->v1 = snapFree(e);
@@ -107,16 +107,15 @@ void RS_ActionZoomWindow::mousePressEvent(QMouseEvent *e){
         }
     }
 
-    RS_DEBUG->print("RS_ActionZoomWindow::mousePressEvent(): %f %f",
-                    m_actionData->v1.x, m_actionData->v1.y);
+    RS_DEBUG->print("RS_ActionZoomWindow::mousePressEvent(): %f %f", m_actionData->v1.x, m_actionData->v1.y);
 }
 
-void RS_ActionZoomWindow::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
+void RS_ActionZoomWindow::onMouseLeftButtonRelease(const int status, const LC_MouseEvent* e) {
     RS_DEBUG->print("RS_ActionZoomWindow::mouseReleaseEvent()");
-    if (status == SetSecondCorner){
+    if (status == SetSecondCorner) {
         m_actionData->v2 = e->graphPoint;
-        if (fabs(m_actionData->v1.x - m_actionData->v2.x) < RS_TOLERANCE
-            || fabs(m_actionData->v1.y - m_actionData->v2.y) < RS_TOLERANCE){//invalid zoom window
+        if (fabs(m_actionData->v1.x - m_actionData->v2.x) < RS_TOLERANCE || fabs(m_actionData->v1.y - m_actionData->v2.y) < RS_TOLERANCE) {
+            //invalid zoom window
             deletePreview();
             initPrevious(status);
         }
@@ -124,29 +123,30 @@ void RS_ActionZoomWindow::onMouseLeftButtonRelease(int status, LC_MouseEvent *e)
     }
 }
 
-void RS_ActionZoomWindow::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {
+void RS_ActionZoomWindow::onMouseRightButtonRelease(const int status, [[maybe_unused]] const LC_MouseEvent* e) {
     RS_DEBUG->print("RS_ActionZoomWindow::mouseReleaseEvent()");
-    if (status == SetSecondCorner){
+    if (status == SetSecondCorner) {
         deletePreview();
     }
     initPrevious(status);
 }
 
-void RS_ActionZoomWindow::updateMouseButtonHints(){
+void RS_ActionZoomWindow::updateActionPrompt() {
     RS_DEBUG->print("RS_ActionZoomWindow::updateMouseButtonHints()");
 
     switch (getStatus()) {
         case SetFirstCorner:
-            updateMouseWidgetTRCancel(tr("Specify first edge"));
+            updatePromptTRCancel(tr("Specify first edge"));
             break;
         case SetSecondCorner:
-            updateMouseWidgetTRBack(tr("Specify second edge"));
+            updatePromptTRBack(tr("Specify second edge"));
             break;
         default:
-            updateMouseWidget();
+            updatePrompt();
             break;
     }
 }
-RS2::CursorType RS_ActionZoomWindow::doGetMouseCursor([[maybe_unused]] int status){
+
+RS2::CursorType RS_ActionZoomWindow::doGetMouseCursor([[maybe_unused]] int status) {
     return RS2::MagnifierCursor;
 }

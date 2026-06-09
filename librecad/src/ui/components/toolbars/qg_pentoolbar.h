@@ -40,12 +40,12 @@ class QG_LineTypeBox;
 /**
  * A toolbar that offers all widgets for choosing a pen.
  */
-class QG_PenToolBar: public QToolBar, public LC_GraphicViewAware, public RS_LayerListListener {
+class QG_PenToolBar : public QToolBar, public LC_GraphicViewAware, public RS_LayerListListener {
     Q_OBJECT
 public:
-	QG_PenToolBar( const QString & title, QWidget * parent = 0 );
+    explicit QG_PenToolBar(const QString& title, QWidget* parent = nullptr);
     ~QG_PenToolBar() override;
-    void updateByLayer(RS_Layer* l);
+    void updateByLayer(const RS_Layer* l) const;
 
     RS_Pen getPen() const;
 
@@ -53,29 +53,32 @@ public:
     void layerActivated(RS_Layer*) override;
     void layerEdited(RS_Layer*) override;
 
-    void setLayerColor(RS_Color color, bool b);
-    void setLayerWidth(RS2::LineWidth width, bool b);
-    void setLayerLineType(RS2::LineType lineType, bool b);
+    void setLayerColor(const RS_Color& color, bool updateSelection);
+    void setLayerWidth(RS2::LineWidth width, bool updateSelection);
+    void setLayerLineType(RS2::LineType lineType, bool updateSelection);
 
-    void setColor(RS_Color color);
-    void setWidth(RS2::LineWidth width);
-    void setLineType(RS2::LineType lineType);
+    void setColor(const RS_Color& color) const;
+    void setWidth(RS2::LineWidth width) const;
+    void setLineType(RS2::LineType lineType) const;
     void emitPenChanged();
 
     void setGraphicView(RS_GraphicView* gview) override;
-public slots:
+
+public
+    slots :
     void slotColorChanged(const RS_Color& color);
     void slotWidthChanged(RS2::LineWidth w);
     void slotLineTypeChanged(RS2::LineType w);
-signals:
+    signals :
     void penChanged(RS_Pen);
+
 private:
     void setLayerList(RS_LayerList* ll);
     RS_LayerList* m_layerList{nullptr};
-	std::unique_ptr<RS_Pen> m_currentPen;
-	std::unique_ptr<QG_ColorBox> m_colorBox;
-	std::unique_ptr<QG_WidthBox> m_widthBox;
-	std::unique_ptr<QG_LineTypeBox> m_lineTypeBox;
+    std::unique_ptr<RS_Pen> m_currentPen;
+    std::unique_ptr<QG_ColorBox> m_colorBox;
+    std::unique_ptr<QG_WidthBox> m_widthBox;
+    std::unique_ptr<QG_LineTypeBox> m_lineTypeBox;
 };
 
 #endif

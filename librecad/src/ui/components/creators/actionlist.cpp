@@ -22,10 +22,11 @@
 ** http://www.gnu.org/licenses/gpl-2.0.html
 **
 **********************************************************************************
-*/
+ */
+
+#include "actionlist.h"
 
 #include <QAction>
-#include "actionlist.h"
 
 #include "lc_actiongroup.h"
 
@@ -33,41 +34,42 @@ ActionList::ActionList(QWidget* parent)
     : QListWidget(parent)
 {}
 
-void ActionList::addActionItem(QAction *action) {
-    auto item = new QListWidgetItem;
+void ActionList::addActionItem(const QAction *action) {
+    const auto item = new QListWidgetItem;
     item->setText(action->text().remove("&"));
     item->setIcon(action->icon());
     item->setWhatsThis(action->objectName());
-    auto actionGroup = action->actionGroup();
+    const auto actionGroup = action->actionGroup();
     if (actionGroup != nullptr) {
-        LC_ActionGroup* lc_actiongroup = dynamic_cast<LC_ActionGroup*>(actionGroup);
-        if (lc_actiongroup != nullptr) {
-            item->setData(Qt::UserRole, lc_actiongroup->getName());
+        const auto lcActionGroup = dynamic_cast<LC_ActionGroup*>(actionGroup);
+        if (lcActionGroup != nullptr) {
+            item->setData(Qt::UserRole, lcActionGroup->getName());
         }
     }
     addItem(item);
 }
 
-void ActionList::fromActionList(const QList<QAction *> &a_list) {
-    m_actionList = a_list;
-    foreach(QAction *a, a_list) {
+void ActionList::fromActionList(const QList<QAction *> &actionList) {
+    m_actionList = actionList;
+    foreach(QAction *a, actionList) {
         if (a != nullptr) {
             addActionItem(a);
         }
     }
 }
 
-void ActionList::fromActionMap(QMap<QString, QAction *> &a_map) {
-    foreach(QAction *a, a_map) {
+void ActionList::fromActionMap(QMap<QString, QAction *> &actionMap) {
+    foreach(QAction *a, actionMap) {
         if (a != nullptr) {
             addActionItem(a);
         }
     }
 }
 
-void ActionList::activateAction(QListWidgetItem *item) {
+void ActionList::activateAction(const QListWidgetItem *item) {
     foreach(QAction *a, m_actionList) {
-        if (a->text() == item->text())
+        if (a->text() == item->text()) {
             a->activate(QAction::Trigger);
+        }
     }
 }

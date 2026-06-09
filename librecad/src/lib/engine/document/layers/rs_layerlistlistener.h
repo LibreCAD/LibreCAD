@@ -42,48 +42,47 @@ public:
     /**
      * Called when the active layer changes.
      */
-    virtual void layerActivated(RS_Layer*) {}
+    virtual void layerActivated(RS_Layer*) {layerListModified(true);}
 
     /**
      * Called when a new layer is added to the list.
      */
-    virtual void layerAdded(RS_Layer*) {}
+    virtual void layerAdded(RS_Layer*) {layerListModified(true);}
 
     /**
      * Called when a layer is removed from the list.
      */
-    virtual void layerRemoved(RS_Layer*) {}
+    virtual void layerRemoved(RS_Layer*) {layerListModified(true);}
 
     /**
      * Called when a layer's attributes are modified.
      */
-    virtual void layerEdited(RS_Layer*) {}
+    virtual void layerEdited(RS_Layer*) {layerListModified(true);}
 
     /**
      * Called when a layer's visibility is toggled.
      */
-    virtual void layerToggled(RS_Layer*) {}
+    virtual void layerToggled(RS_Layer*) {layerListModified(true);}
 
     /**
      * Called when a layer's lock attribute is toggled.
      */
-    virtual void layerToggledLock(RS_Layer*) {}
+    virtual void layerToggledLock(RS_Layer*) {layerListModified(true);}
 
     /**
      * Called when a layer's printing attribute is toggled.
      */
-    virtual void layerToggledPrint(RS_Layer*) {}
+    virtual void layerToggledPrint(RS_Layer*) {layerListModified(true);}
 
     /**
      * Called when a layer's construction attribute is toggled.
      */
-    virtual void layerToggledConstruction(RS_Layer*) {}
+    virtual void layerToggledConstruction(RS_Layer*) {layerListModified(true);}
 
     /**
      * Called when layer list is modified.
      */
     virtual void layerListModified(bool) {}
-}
-;
+};
 
 #endif

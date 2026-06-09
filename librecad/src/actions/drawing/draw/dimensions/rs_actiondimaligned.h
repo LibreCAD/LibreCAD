@@ -40,7 +40,7 @@ struct RS_DimAlignedData;
 class RS_ActionDimAligned:public LC_ActionDimLinearBase {
     Q_OBJECT
 public:
-    RS_ActionDimAligned(LC_ActionContext *actionContext);
+    explicit RS_ActionDimAligned(LC_ActionContext *actionContext);
     ~RS_ActionDimAligned() override;
     void preparePreview(bool alternativeMode) override;
     QStringList getAvailableCommands() override;
@@ -52,8 +52,8 @@ protected:
 /** Last status before entering text. */
     Status m_lastStatus = SetExtPoint1;
     void reset() override;
-    void setExtensionPoint1(RS_Vector p) override;
-    void setExtensionPoint2(RS_Vector p) override;
+    void setExtensionPoint1(const RS_Vector& p) override;
+    void setExtensionPoint2(const RS_Vector& p) override;
     RS_Entity *createDim(RS_EntityContainer* parent) override;
     RS_Vector getExtensionPoint1() override;
     RS_Vector getExtensionPoint2() override;

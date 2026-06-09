@@ -29,13 +29,12 @@
 #include "rs_units.h"
 #include "ui_lc_dlgucsproperties.h"
 
-LC_DlgUCSProperties::LC_DlgUCSProperties(QWidget *parent)
-    : LC_Dialog(parent, "UCSEdit")
-    , ui(new Ui::LC_DlgUCSProperties){
+LC_DlgUCSProperties::LC_DlgUCSProperties(QWidget* parent)
+    : LC_Dialog(parent, "UCSEdit"), ui(new Ui::LC_DlgUCSProperties), m_ucs{nullptr}, m_ucsList{nullptr} {
     ui->setupUi(this);
 }
 
-LC_DlgUCSProperties::~LC_DlgUCSProperties(){
+LC_DlgUCSProperties::~LC_DlgUCSProperties() {
     delete ui;
 }
 
@@ -44,55 +43,50 @@ void LC_DlgUCSProperties::languageChange() {
 }
 
 void LC_DlgUCSProperties::updateUCS() {
-    QString name = ui->leName->text().trimmed();
-    if (name.isEmpty()){
-        QMessageBox::warning(this, tr("UCS Edit"),
-                             tr("Please specify name of UCS"),
-                             QMessageBox::Close,
-                             QMessageBox::Close);
+    const QString name = ui->leName->text().trimmed();
+    if (name.isEmpty()) {
+        QMessageBox::warning(this, tr("UCS Edit"), tr("Please specify name of UCS"), QMessageBox::Close, QMessageBox::Close);
     }
-    else if (!LC_UCS::isValidName(name)){
-        QMessageBox::warning(this, tr("UCS Edit"),
-                             tr("Name contains not allowed characters"),
-                             QMessageBox::Close,
-                             QMessageBox::Close);
+    else if (!LC_UCS::isValidName(name)) {
+        QMessageBox::warning(this, tr("UCS Edit"), tr("Name contains not allowed characters"), QMessageBox::Close, QMessageBox::Close);
     }
-    else{
-        LC_UCS* existingUCS = m_ucsList->find(name);
-        if (existingUCS == nullptr){
+    else {
+        const LC_UCS* existingUCS = m_ucsList->find(name);
+        if (existingUCS == nullptr) {
             m_ucs->setName(name);
             m_ucsList->setModified(true);
         }
-        else{
-            if (existingUCS == m_ucs){
+        else {
+            if (existingUCS == m_ucs) {
                 // actually, do nothing... no name change
             }
-            else{
-                if (m_applyDuplicateSilently){
-
+            else {
+                if (m_applyDuplicateSilently) {
                 }
             }
         }
     }
 }
 
-void LC_DlgUCSProperties::setUCS(LC_UCSList *ulist, bool applyDuplicates, [[maybe_unused]]LC_UCS* u, RS2::Unit unit, RS2::LinearFormat linearFormat, int linearPrec, RS2::AngleFormat angleFormat, int anglePrec) {
-
-    double angleValue = RS_Math::correctAnglePlusMinusPi(m_ucs->getXAxis().angle());
-    QString originX = RS_Units::formatLinear(m_ucs->getOrigin().x, unit, linearFormat, linearPrec);
-    QString originY = RS_Units::formatLinear(m_ucs->getOrigin().y, unit, linearFormat, linearPrec);
-    QString angle = RS_Units::formatAngle(angleValue, angleFormat, anglePrec);
+void LC_DlgUCSProperties::setUCS1(LC_UCSList* ucsList, const bool applyDuplicatesSilently, [[maybe_unused]] LC_UCS* u, const RS2::Unit unit,
+                                  const RS2::LinearFormat linearFormat, const int linearPrecision, const RS2::AngleFormat angleFormat,
+                                  const int anglePrec) {
+    const double angleValue = RS_Math::correctAnglePlusMinusPi(m_ucs->getXAxis().angle());
+    const QString originX = RS_Units::formatLinear(m_ucs->getOrigin().x, unit, linearFormat, linearPrecision);
+    const QString originY = RS_Units::formatLinear(m_ucs->getOrigin().y, unit, linearFormat, linearPrecision);
+    const QString angle = RS_Units::formatAngle(angleValue, angleFormat, anglePrec);
 
     QString origin;
-    origin.append(originX).append(" , "). append(originY);
+    origin.append(originX).append(" , ").append(originY);
 
     ui->lblOrigin->setText(origin);
     ui->lblAxis->setText(angle);
 
-    QString xEnd = RS_Units::formatLinear(m_ucs->getXAxis().x, unit, linearFormat, linearPrec);
-    QString yxEnd = RS_Units::formatLinear(m_ucs->getXAxis().y, unit, linearFormat, linearPrec);
+    // todo - future suppport?
+    // QString xEnd = RS_Units::formatLinear(m_ucs->getXAxis().x, unit, linearFormat, linearPrec);
+    // QString yxEnd = RS_Units::formatLinear(m_ucs->getXAxis().y, unit, linearFormat, linearPrec);
     QString xAxis;
-    xAxis.append(originX).append(" , "). append(originY);
+    xAxis.append(originX).append(" , ").append(originY);
 
     ui->lblAxisEndtpoint->setText(xAxis);
 
@@ -121,7 +115,6 @@ void LC_DlgUCSProperties::setUCS(LC_UCSList *ulist, bool applyDuplicates, [[mayb
 
     ui->lblGridType->setText(gridType);
 
-    m_ucsList = ulist;
-    m_applyDuplicateSilently = applyDuplicates;
-
+    m_ucsList = ucsList;
+    m_applyDuplicateSilently = applyDuplicatesSilently;
 }

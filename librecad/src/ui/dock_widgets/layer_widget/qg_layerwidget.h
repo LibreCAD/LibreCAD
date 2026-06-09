@@ -36,11 +36,14 @@
 #include "rs.h"
 #include "rs_layerlistlistener.h"
 
+class QListView;
+class QTreeView;
+class LC_MouseTrackingTableView;
+class RS_Graphic;
 class QItemSelection;
 class RS_LayerList;
 class RS_Layer;
 class QG_ActionHandler;
-class QTableView;
 class QLineEdit;
 class RS_Document;
 class RS_GraphicView;
@@ -49,46 +52,51 @@ class LC_ActionGroupManager;
 /**
  * Implementation of a model to use in QG_LayerWidget
  */
-class QG_LayerModel: public QAbstractTableModel {
+class QG_LayerModel : public QAbstractItemModel {
 public:
-    enum {
-        VISIBLE,
-        LOCKED,
-        PRINT,
-        CONSTRUCTION,
-        COLOR_SAMPLE,
-        NAME,
-        LAST
+    enum Columns {
+        COLUMN_VISIBLE,
+        COLUMN_LOCKED,
+        COLUMN_PRINT,
+        COLUMN_CONSTRUCTION,
+        COLUMN_COLOR_SAMPLE,
+        COLUMN_NAME,
+        COLUMN_LAST
     };
 
     // the default icon size
-    constexpr static int ICONWIDTH = 24;
+    constexpr static int ICONWIDTH = 21;
 
-	QG_LayerModel(QObject * parent = nullptr);
-	~QG_LayerModel() = default;
-    Qt::ItemFlags flags (const QModelIndex & index) const override{
-        if (index.column() == 5)
-            return Qt::ItemIsSelectable|Qt::ItemIsEnabled;
-        else
-            return Qt::ItemIsEnabled;
+    explicit QG_LayerModel(QObject* parent = nullptr);
+    ~QG_LayerModel() override = default;
+
+    Qt::ItemFlags flags(const QModelIndex& index) const override {
+        if (index.column() == 5) {
+            return Qt::ItemIsSelectable | Qt::ItemIsEnabled;
+        }
+        return Qt::ItemIsEnabled;
     }
-    int columnCount(const QModelIndex &/*parent*/) const  override {return LAST;}
-    int rowCount ( const QModelIndex & parent = {} ) const override;
-    QVariant data ( const QModelIndex & index, int role = Qt::DisplayRole ) const override;
-    QModelIndex parent ( const QModelIndex & index ) const override;
-    QModelIndex index ( int row, int column, const QModelIndex & parent = QModelIndex() ) const override;
-    void setLayerList(RS_LayerList* ll);
-    RS_Layer *getLayer( int row ) const;
-    QModelIndex getIndex (RS_Layer * lay) const;
 
-    RS_Layer* getActiveLayer() const
-    {
+    int columnCount(const QModelIndex&/*parent*/) const override {
+        return COLUMN_LAST;
+    }
+
+    int rowCount(const QModelIndex& parent) const override;
+    QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
+    QModelIndex parent(const QModelIndex& index) const override;
+    QModelIndex index(int row, int column, const QModelIndex& parent = QModelIndex()) const override;
+    void setLayerList(const RS_LayerList* ll);
+    RS_Layer* getLayer(int row) const;
+    QModelIndex getIndex(RS_Layer* lay) const;
+
+    RS_Layer* getActiveLayer() const {
         return m_activeLayer;
     }
-    void setActiveLayer(RS_Layer* l)
-    {
+
+    void setActiveLayer(RS_Layer* l) {
         m_activeLayer = l;
     }
+
 
 private:
     QList<RS_Layer*> m_listLayer;
@@ -100,7 +108,7 @@ private:
     QIcon m_iconLayerNoPrint;
     QIcon m_iconLayerConstruction;
     QIcon m_iconLayerNoConstruction;
-    RS_Layer* m_activeLayer {nullptr};
+    RS_Layer* m_activeLayer{nullptr};
 };
 
 /**
@@ -110,34 +118,38 @@ private:
 class QG_LayerWidget : public LC_GraphicViewAwareWidget, public RS_LayerListListener {
     Q_OBJECT
 public:
-    QG_LayerWidget(LC_ActionGroupManager* m_actionGroupManager, QG_ActionHandler *ah, QWidget* parent, const char* name = nullptr,
+    QG_LayerWidget(LC_ActionGroupManager* actionGroupManager, const QG_ActionHandler* ah, QWidget* parent, const char* name = nullptr,
                    Qt::WindowFlags f = {});
     ~QG_LayerWidget() override = default;
 
-    void update();
-    void activateLayer(RS_Layer* layer, bool updateScroll = true);
-    void layerActivated(RS_Layer* layer) override { activateLayer(layer); }
+    void updateWidget();
+    void activateLayer(RS_Layer* layer, bool updateScroll = true) const;
+
+    void layerActivated(RS_Layer* layer) override {
+        activateLayer(layer);
+    }
+
     void layerAdded(RS_Layer* layer) override;
     void layerEdited(RS_Layer*) override;
     void layerRemoved(RS_Layer*) override;
 
     void layerToggled(RS_Layer*) override {
-        update();
+        updateWidget();
     }
 
     void layerToggledLock(RS_Layer*) override {
-        update();
+        updateWidget();
     }
 
     void layerToggledPrint(RS_Layer*) override {
-        update();
+        updateWidget();
     }
 
     void layerToggledConstruction(RS_Layer*) override {
-        update();
+        updateWidget();
     }
 
-    QLineEdit* getMatchLayerName() {
+    QLineEdit* getMatchLayerName() const {
         return m_matchLayerName;
     }
 
@@ -147,33 +159,35 @@ public:
      */
     QString getActiveName() const;
     void setGraphicView(RS_GraphicView* gview) override;
-signals:
+    signals :
     void escape();
-public slots:
-    void slotActivated(QModelIndex layerIdx);
-    void slotSelectionChanged(
-        const QItemSelection& selected,
-        const QItemSelection& deselected);
+
+public
+    slots :
+    void slotActivated(const QModelIndex& layerIdx) const;
+    void slotSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected) const;
     void slotUpdateLayerList();
-    void activateLayer(int row);
-    void updateWidgetSettings();
+    void activateLayer(int row) const;
+
 protected:
     void contextMenuEvent(QContextMenuEvent* e) override;
     void keyPressEvent(QKeyEvent* e) override;
     void setLayerList(RS_LayerList* layerList, bool showByBlock);
     void updateFiltering();
     void addToolbarButton(LC_FlexLayout* layButtons, RS2::ActionType actionType);
-    void addMenuItem(QMenu* contextMenu, RS2::ActionType actionType);
+    void addMenuItem(QMenu* contextMenu, RS2::ActionType actionType) const;
+    QLayout* getTopLevelLayout() const override;
 private:
+    RS_Graphic* m_graphic{nullptr};
     RS_LayerList* m_layerList = nullptr;
     bool m_showByBlock = false;
     QLineEdit* m_matchLayerName = nullptr;
-    QTableView* m_layerView = nullptr;
+    LC_MouseTrackingTableView* m_layerView = nullptr;
     QG_LayerModel* m_layerModel = nullptr;
     RS_Layer* m_lastLayer = nullptr;
-    QG_ActionHandler* m_actionHandler = nullptr;
+    const QG_ActionHandler* m_actionHandler = nullptr;
     LC_ActionGroupManager* m_actionGroupManager{nullptr};
-    void restoreSelections();
+    void restoreSelections() const;
 };
 
 #endif

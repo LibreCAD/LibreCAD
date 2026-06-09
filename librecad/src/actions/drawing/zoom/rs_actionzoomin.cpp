@@ -25,29 +25,27 @@
 **********************************************************************/
 
 #include "rs_actionzoomin.h"
+
 #include "lc_graphicviewport.h"
 
 /**
  * Default constructor.
  *
+ * @param actionContext
  * @param direction In for zooming in, Out for zooming out.
  * @param axis Axis that are affected by the zoom (OnlyX, OnlyY or Both)
+ * @param pCenter
+ * @param factor
  */
-RS_ActionZoomIn::RS_ActionZoomIn(LC_ActionContext *actionContext,
-                                 RS2::ZoomDirection direction,
-                                 RS2::Axis axis,
-								 RS_Vector const* pCenter,
-                                 double factor)
-            :RS_ActionInterface("Zoom in", actionContext, RS2::ActionZoomIn)
-        ,m_zoomFactor(factor)
-        ,m_direction(direction)
-        ,m_axis(axis)
-		,m_centerPoint(pCenter?new RS_Vector{*pCenter}:new RS_Vector{}){;
+RS_ActionZoomIn::RS_ActionZoomIn(LC_ActionContext* actionContext, const RS2::ZoomDirection direction, const RS2::Axis axis,
+                                 const RS_Vector* pCenter, const double factor) :
+    RS_ActionInterface("Zoom in", actionContext, RS2::ActionZoomIn), m_zoomFactor(factor), m_direction(direction), m_axis(axis),
+    m_centerPoint{(pCenter != nullptr) ? RS_Vector{*pCenter} : RS_Vector()} {
 }
 
 RS_ActionZoomIn::~RS_ActionZoomIn() = default;
 
-void RS_ActionZoomIn::init(int status) {
+void RS_ActionZoomIn::init(const int status) {
     RS_ActionInterface::init(status);
     trigger();
 }
@@ -73,11 +71,11 @@ void RS_ActionZoomIn::trigger() {
 
         case RS2::Both:
             if (m_direction==RS2::In) {
-                m_viewport->zoomIn(m_zoomFactor, *m_centerPoint);
+                m_viewport->zoomIn(m_zoomFactor, m_centerPoint);
             } else {
-                m_viewport->zoomOut(m_zoomFactor, *m_centerPoint);
+                m_viewport->zoomOut(m_zoomFactor, m_centerPoint);
             }
             break;
     }
-    finish(false);
+    finish();
 }

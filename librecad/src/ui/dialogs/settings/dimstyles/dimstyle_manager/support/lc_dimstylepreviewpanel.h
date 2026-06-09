@@ -41,14 +41,14 @@ public:
     ~LC_DimStylePreviewPanel() override;
     void setGraphicView(LC_DimStylePreviewGraphicView *gv);
 protected slots:
-    void zoomOut();
-    void zoomIn();
-    void zoomAuto();
-    void zoomPan();
+    void zoomOut() const;
+    void zoomIn() const;
+    void zoomAuto() const;
+    void zoomPan() const;
 private:
     void setupButton(bool dockWidgetsFlatIcons, int docWidgetsIconSize, QToolButton* btn);
     Ui::LC_DimStylePreviewPanel* ui;
     LC_DimStylePreviewGraphicView* m_graphicView{nullptr};
 };
 
-#endif // LC_DIMSTYLEPREVIEWPANEL_H
+#endif

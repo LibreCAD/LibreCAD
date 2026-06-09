@@ -349,8 +349,7 @@ namespace mu
 		string using different valident callbacks. Thus it's possible to parse
 		for hex values, binary values and floating point values.
 	*/
-	void ParserBase::AddValIdent(identfun_type a_pCallback)
-	{
+	void ParserBase::AddValIdent(identfun_type a_pCallback) const {
 		m_pTokenReader->AddValIdent(a_pCallback);
 	}
 
@@ -359,8 +358,7 @@ namespace mu
 		\param a_pFactory A pointer to the variable factory.
 		\param pUserData A user defined context pointer.
 	*/
-	void ParserBase::SetVarFactory(facfun_type a_pFactory, void* pUserData)
-	{
+	void ParserBase::SetVarFactory(facfun_type a_pFactory, void* pUserData) const {
 		m_pTokenReader->SetVarCreator(a_pFactory, pUserData);
 	}
 
@@ -438,8 +436,7 @@ namespace mu
 		Triggers first time calculation thus the creation of the bytecode and
 		scanning of used variables.
 	*/
-	void ParserBase::SetExpr(const string_type& a_sExpr)
-	{
+	void ParserBase::SetExpr(const string_type& a_sExpr) const {
 		// Check locale compatibility
 		if (m_pTokenReader->GetArgSep() == std::use_facet<numpunct<char_type> >(s_locale).decimal_point())
 			Error(ecLOCALE);
@@ -1682,8 +1679,7 @@ namespace mu
 		\post Resets the parser to string parser mode.
 		\throw nothrow
 	*/
-	void ParserBase::EnableOptimizer(bool a_bIsOn)
-	{
+	void ParserBase::EnableOptimizer(bool a_bIsOn) const {
 		m_vRPN.EnableOptimizer(a_bIsOn);
 		ReInit();
 	}
@@ -1739,8 +1735,7 @@ namespace mu
 	/** \brief Set argument separator.
 		\param cArgSep the argument separator character.
 	*/
-	void ParserBase::SetArgSep(char_type cArgSep)
-	{
+	void ParserBase::SetArgSep(char_type cArgSep) const {
 		m_pTokenReader->SetArgSep(cArgSep);
 	}
 
@@ -1946,4 +1941,3 @@ namespace mu
 #if defined(_MSC_VER)
 	#pragma warning(pop)
 #endif
-

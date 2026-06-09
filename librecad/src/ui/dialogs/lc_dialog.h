@@ -28,17 +28,17 @@
 class LC_Dialog : public QDialog{
 public:
     LC_Dialog(QWidget *parent, const QString &dlgName);
-    virtual ~LC_Dialog() = default;
+    ~LC_Dialog() override = default;
     void accept() override;
     void reject() override;
 protected:
     QString m_dialogName;
     bool m_positionLoaded = false;
-    void setDialogName(const QString& dialogName) {m_dialogName = dialogName;};
+    void setDialogName(const QString& dialogName) {m_dialogName = dialogName;}
     void saveDialogPosition() const;
     void loadDialogPosition();
     QString getPositionSettingsGroupName() const;
     void showEvent(QShowEvent *event) override;
 };
 
-#endif // LC_DIALOG_H
+#endif

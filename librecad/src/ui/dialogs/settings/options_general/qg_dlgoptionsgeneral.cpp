@@ -63,9 +63,15 @@ QG_DlgOptionsGeneral::QG_DlgOptionsGeneral(QWidget *parent)
     connect(hatchpatterns_button, &QToolButton::clicked,
             this, &QG_DlgOptionsGeneral::setHatchPatternsFolder);
 
+    connect(btTemplate, &QToolButton::clicked,
+            this, &QG_DlgOptionsGeneral::setTemplateFile);
+
+    connect(btPathLibrary, &QToolButton::clicked,
+            this, &QG_DlgOptionsGeneral::setLibraryPath);
+
     // starting Qt-6.7.0, use QCheckBox::checkStateChanged
 #if QT_VERSION >= QT_VERSION_CHECK(6, 7, 0)
-    auto stateChangedSignal = &QCheckBox::checkStateChanged;
+    const auto stateChangedSignal = &QCheckBox::checkStateChanged;
 #else
     auto stateChangedSignal = &QCheckBox::stateChanged;
 #endif
@@ -75,10 +81,8 @@ QG_DlgOptionsGeneral::QG_DlgOptionsGeneral(QWidget *parent)
             this, &QG_DlgOptionsGeneral::on_cbVisualizeHoveringClicked);
     connect(cbPersistentDialogs, stateChangedSignal,
             this, &QG_DlgOptionsGeneral::on_cbPersistentDialogsClicked);
-    connect(translation_button, &QToolButton::clicked,
-            this, &QG_DlgOptionsGeneral::setTranslationsFolder);
-    connect(hatchpatterns_button, &QToolButton::clicked,
-            this, &QG_DlgOptionsGeneral::setHatchPatternsFolder);
+
+
     connect(cbAutoBackup, stateChangedSignal,
             this, &QG_DlgOptionsGeneral::onAutoBackupChanged);
     connect(cbVisualizeHovering, stateChangedSignal,
@@ -100,9 +104,23 @@ QG_DlgOptionsGeneral::QG_DlgOptionsGeneral(QWidget *parent)
     connect(pbImportSettings, &QPushButton::clicked, this, &QG_DlgOptionsGeneral::importSettings);
 
     connect(cbExpandToolsMenu, &QCheckBox::toggled, this, &QG_DlgOptionsGeneral::onExpandToolsMenuToggled);
+
+    connect(cbEnableCADDockWidgets, stateChangedSignal,
+            this, &QG_DlgOptionsGeneral::onEnableCADDocWidgetsChanged);
+
+    connect(cbRelativePositionAssistantRememberMode, &QCheckBox::toggled, [this](bool checked) {
+       cbRelativePositionAssistantStartInOffsetMode->setEnabled(!checked);
+    });
+
+    connect(cbVisualSnapAutoAddSnapPoint, &QCheckBox::toggled, [this](bool checked) {
+       cbVSAutoAddLastSnapOnly->setEnabled(checked);
+    });
+
+    // hide temporary until support will be added
+    cbShowCommandInMenu->setVisible(false);
 }
 
-void QG_DlgOptionsGeneral::onExpandToolsMenuToggled([[maybe_unused]]bool checked){
+void QG_DlgOptionsGeneral::onExpandToolsMenuToggled([[maybe_unused]]bool checked) const {
     cbExpandToolsMenuTillEntity->setEnabled(cbExpandToolsMenu->isChecked());
 }
 
@@ -119,7 +137,7 @@ void QG_DlgOptionsGeneral::init(){
     QStringList languageList = RS_SYSTEM->getLanguageList();
     languageList.sort();
     languageList.prepend("en");
-    for (auto const &lang: languageList) {
+    for (const auto&lang: std::as_const(languageList)) {
         RS_DEBUG->print("QG_DlgOptionsGeneral::init: adding %s to combobox",
                         lang.toLatin1().data());
 
@@ -158,8 +176,16 @@ void QG_DlgOptionsGeneral::init(){
         indicator_shape_combobox->setCurrentIndex(indicator_shape_type);
 
         wSnapLinesLineType->init(false, false, false);
-        RS2::LineType snapIndicatorLineType = static_cast<RS2::LineType>(LC_GET_INT("indicator_lines_line_type", RS2::DashLine2));
+        auto snapIndicatorLineType = static_cast<RS2::LineType>(LC_GET_INT("indicator_lines_line_type", RS2::DashLine2));
         wSnapLinesLineType->setLineType(snapIndicatorLineType);
+
+        wOverlaySelectionLineType->init(false, false, false);
+        auto selectionOverlayLineType = static_cast<RS2::LineType>(LC_GET_INT("selection_overlay_line_type", RS2::SolidLine));
+        wOverlaySelectionLineType->setLineType(selectionOverlayLineType);
+
+        wOverlaySelectionInvertedLineType->init(false, false, false);
+        auto selectionOverlayInvertedLineType = static_cast<RS2::LineType>(LC_GET_INT("selection_overlay_inverted_line_type", RS2::SolidLine));
+        wOverlaySelectionInvertedLineType->setLineType(selectionOverlayInvertedLineType);
 
         int snapIndicatorLineWidth = static_cast<RS2::LineType>(LC_GET_INT("indicator_lines_line_width", 1));
         sbSnapLinesLineWidth->setValue(snapIndicatorLineWidth);
@@ -184,7 +210,7 @@ void QG_DlgOptionsGeneral::init(){
         cbDisplayRefPoints->setChecked(visualizePreviewRefPoints);
 
         bool persistDialogs = LC_GET_BOOL("PersistDialogPositions", false);
-        cbPersistentDialogs->setChecked((persistDialogs));
+        cbPersistentDialogs->setChecked(persistDialogs);
         cbPersistentDialogSizeOnly->setEnabled(persistDialogs);
 
         bool persistSizeOnly = LC_GET_BOOL("PersistDialogRestoreSizeOnly", false);
@@ -241,8 +267,7 @@ void QG_DlgOptionsGeneral::init(){
         int axisSize = LC_GET_INT("ZeroShortAxisMarkSize", 20);
         sbAxisSize->setValue(axisSize);
 
-        m_originalAllowsMenusTearOff = LC_GET_BOOL("AllowMenusTearOff", true);
-        cbAllowMenusDetaching->setChecked(m_originalAllowsMenusTearOff);
+        cbAllowMenusDetaching->setChecked(LC_GET_BOOL("AllowMenusTearOff", true));
 
         checked = LC_GET_BOOL("GridDraw", true);
         cbDrawGrid->setChecked(checked);
@@ -255,13 +280,13 @@ void QG_DlgOptionsGeneral::init(){
 
         wGridLinesLineType->init(false, false, false);
 
-        RS2::LineType metaGridPointsLineType = static_cast<RS2::LineType>(LC_GET_INT("metaGridPointsLineType", RS2::DotLineTiny));
+        auto metaGridPointsLineType = static_cast<RS2::LineType>(LC_GET_INT("metaGridPointsLineType", RS2::DotLineTiny));
         wMetaGridPointsLineType->setLineType(metaGridPointsLineType);
 
-        RS2::LineType metaGridLinesLineType = static_cast<RS2::LineType>(LC_GET_INT("metaGridLinesLineType", RS2::SolidLine));
+        auto metaGridLinesLineType = static_cast<RS2::LineType>(LC_GET_INT("metaGridLinesLineType", RS2::SolidLine));
         wMetaGridLinesLineType->setLineType(metaGridLinesLineType);
 
-        RS2::LineType gridLinesLineType = static_cast<RS2::LineType>(LC_GET_INT("GridLinesLineType", RS2::DotLine));
+        auto gridLinesLineType = static_cast<RS2::LineType>(LC_GET_INT("GridLinesLineType", RS2::DotLine));
         wGridLinesLineType->setLineType(gridLinesLineType);
 
         int metagridPointsWidthPx = LC_GET_INT("metaGridPointsLineWidth", 1);
@@ -364,6 +389,43 @@ void QG_DlgOptionsGeneral::init(){
 
         double gridCellFactor = LC_GET_INT("AdvSnapGridCellSnapFactor", 25) / 100.0;
         sbMinGridCellSnapFactor->setValue(gridCellFactor);
+
+        int visualSnapVertexSize = LC_GET_INT("VSVertexSize", 6);
+        sbVisualSnapVertexSize->setValue(visualSnapVertexSize);
+
+        int visualSnapProjectedSnapSize = LC_GET_INT("VSProjectedSnapSize", 8);
+        sbVisualSnapProjectedSnapSize->setValue(visualSnapProjectedSnapSize);
+
+        int visualSnapHighlightedVertexSize = LC_GET_INT("VSHighlightedVertexSize", 10);
+        sbVisualSnapHighlightedVertexSize->setValue(visualSnapHighlightedVertexSize);
+
+        cbAngleSnapToLinesIfGrid->setChecked(LC_GET_BOOL("AngleSnapToLinesIfGrid", true));
+
+        sbVisualSnapPointAddingDelay->setValue((LC_GET_INT("VSSnapPointAddingDelay", 300)));
+        sbVisualSnapVertexAddingDelay->setValue((LC_GET_INT("VSVertexAddingDelay", 1200)));
+        sbVisualSnapSnapDocEntityAddingDelay->setValue((LC_GET_INT("VSDocEntityAddingDelay", 1500)));
+
+        sbVSCatchDistance->setValue(LC_GET_INT("VSGuidingEntitiesCatchDistance", 24));
+
+        cbVisualSnapRaysAngleSnapVertexes->setChecked(LC_GET_BOOL("VSAngleSnapStepRaysVertexes", true));
+        cbVisualSnapRaysAngleSnapRelative->setChecked(LC_GET_BOOL("VSAngleSnapStepRaysRelative", true));
+        cbVisualSnapVertexVertexDistanceCircles->setChecked(LC_GET_BOOL("VSVertexVertexDistanceCircles", true));
+        cbVisualSnapVertexVertexDistancesTangential->setChecked(LC_GET_BOOL("VSVertexVertexDistanceTangents", true));
+
+        bool autoAddSnapPoints = LC_GET_BOOL("VSSnapAutoAddSnapPoint", true);
+        cbVisualSnapAutoAddSnapPoint->setChecked(autoAddSnapPoints);
+        cbVSAutoAddLastSnapOnly->setEnabled(autoAddSnapPoints);
+        cbVSAutoAddLastSnapOnly->setChecked(LC_GET_BOOL("VSSnapAutoAddLastSnapPointOnly", true));
+        cbVisualSnapManualAddingWithCTRL->setChecked(LC_GET_BOOL("VSSnapManualAddingWithCTRL", false));
+
+        cbVSShowLabelsOnGuides->setChecked(LC_GET_BOOL("VSGuidingEntitiesShowLabels", true));
+        sbVisualSnapGuidingLabelsFontSize->setValue(LC_GET_INT("VSGuidingEntityLabelFontSize", 10));
+
+        cbVisualSnapClearSolutionByRMB->setChecked(LC_GET_BOOL("VSClearSolutionByRMB", false));
+
+        sbVSGuidingEntityLabelOffset->setValue( LC_GET_INT("VSGuidingLabelOffsetPx", 50));
+
+        cbVisualSnapShowNotSnappableGuides->setChecked(LC_GET_BOOL("VSShowNotSnappableGuides", false));
     }
     LC_GROUP_END();
 
@@ -417,6 +479,23 @@ void QG_DlgOptionsGeneral::init(){
         checked = LC_GET_BOOL("ShowPropertiesCreating", true);
         cbInfoOverlayPreviewCreatingEntity->setChecked(checked);
     }
+    LC_GROUP_END();
+
+    LC_GROUP("RelativePositionAssistant");
+    {
+        int fontSize = LC_GET_INT("FontSize", 10);
+        sbRelativePositionAssistantFontSize->setValue(fontSize);
+
+        QString fontName = LC_GET_STR("FontName", "Verdana");
+        QFont font(fontName);
+        fcbRelativePositionAssistant->setCurrentFont(font);
+
+        bool rememberMode = LC_GET_BOOL("RememberCoordinatesMode", false);
+        cbRelativePositionAssistantRememberMode->setChecked(rememberMode);
+        cbRelativePositionAssistantStartInOffsetMode->setEnabled(!rememberMode);
+        cbRelativePositionAssistantStartInOffsetMode->setChecked(LC_GET_BOOL("StartInOffsetMode", true));
+    }
+    LC_GROUP_END();
 
     LC_GROUP("Render"); {
         int minTextHeight = LC_GET_INT("MinRenderableTextHeightPx", 4);
@@ -473,38 +552,44 @@ void QG_DlgOptionsGeneral::init(){
     LC_GROUP_END();
 
     LC_GROUP("Colors"); {
-        initComboBox(cbBackgroundColor, LC_GET_STR("background", RS_Settings::background));
-        initComboBox(cbGridPointsColor, LC_GET_STR("grid", RS_Settings::color_meta_grid_points));
-        initComboBox(cbGridLinesColor, LC_GET_STR("gridLines", RS_Settings::color_meta_grid_lines));
-        initComboBox(cbMetaGridPointsColor, LC_GET_STR("meta_grid", RS_Settings::color_meta_grid_points));
-        initComboBox(cbMetaGridLinesColor, LC_GET_STR("meta_grid_lines", RS_Settings::color_meta_grid_lines));
-        initComboBox(cbSelectedColor, LC_GET_STR("select", RS_Settings::select));
-        initComboBox(cbHighlightedColor, LC_GET_STR("highlight", RS_Settings::select));
-        initComboBox(cbStartHandleColor, LC_GET_STR("start_handle", RS_Settings::start_handle));
-        initComboBox(cbHandleColor, LC_GET_STR("handle", RS_Settings::handle));
-        initComboBox(cbEndHandleColor, LC_GET_STR("end_handle", RS_Settings::end_handle));
-        initComboBox(cbRelativeZeroColor, LC_GET_STR("relativeZeroColor", RS_Settings::relativeZeroColor));
-        initComboBox(cbPreviewRefColor, LC_GET_STR("previewReferencesColor", RS_Settings::previewRefColor));
-        initComboBox(cbPreviewRefHighlightColor,LC_GET_STR("previewReferencesHighlightColor", RS_Settings::previewRefHighlightColor));
-        initComboBox(cb_snap_color, LC_GET_STR("snap_indicator", RS_Settings::snap_indicator));
-        initComboBox(cb_snap_lines_color, LC_GET_STR("snap_indicator_lines", RS_Settings::snap_indicator_lines));
-        initComboBox(cbAxisXColor, LC_GET_STR("grid_x_axisColor", RS_Settings::xAxisColor));
-        initComboBox(cbAxisYColor, LC_GET_STR("grid_y_axisColor", RS_Settings::yAxisColor));
+        initComboBox(cbBackgroundColor, LC_GET_STR("background", RS_Settings::BACKGROUND));
+        initComboBox(cbGridPointsColor, LC_GET_STR("grid", RS_Settings::COLOR_META_GRID_POINTS));
+        initComboBox(cbGridLinesColor, LC_GET_STR("gridLines", RS_Settings::COLOR_META_GRID_LINES));
+        initComboBox(cbMetaGridPointsColor, LC_GET_STR("meta_grid", RS_Settings::COLOR_META_GRID_POINTS));
+        initComboBox(cbMetaGridLinesColor, LC_GET_STR("meta_grid_lines", RS_Settings::COLOR_META_GRID_LINES));
+        initComboBox(cbSelectedColor, LC_GET_STR("select", RS_Settings::SELECT));
+        initComboBox(cbHighlightedColor, LC_GET_STR("highlight", RS_Settings::SELECT));
+        initComboBox(cbStartHandleColor, LC_GET_STR("start_handle", RS_Settings::START_HANDLE));
+        initComboBox(cbHandleColor, LC_GET_STR("handle", RS_Settings::HANDLE));
+        initComboBox(cbEndHandleColor, LC_GET_STR("end_handle", RS_Settings::END_HANDLE));
+        initComboBox(cbRelativeZeroColor, LC_GET_STR("relativeZeroColor", RS_Settings::RELATIVE_ZERO_COLOR));
+        initComboBox(cbPreviewRefColor, LC_GET_STR("previewReferencesColor", RS_Settings::PREVIEW_REF_COLOR));
+        initComboBox(cbPreviewRefHighlightColor,LC_GET_STR("previewReferencesHighlightColor", RS_Settings::PREVIEW_REF_HIGHLIGHT_COLOR));
+        initComboBox(cb_snap_color, LC_GET_STR("snap_indicator", RS_Settings::SNAP_INDICATOR));
+        initComboBox(cb_snap_lines_color, LC_GET_STR("snap_indicator_lines", RS_Settings::SNAP_INDICATOR_LINES));
+        initComboBox(cbAxisXColor, LC_GET_STR("grid_x_axisColor", RS_Settings::X_AXIS_COLOR));
+        initComboBox(cbAxisYColor, LC_GET_STR("grid_y_axisColor", RS_Settings::Y_AXIS_COLOR));
 
-        initComboBox(cbOverlayBoxLine, LC_GET_STR("overlay_box_line", RS_Settings::overlayBoxLine));
-        initComboBox(cbOverlayBoxFill, LC_GET_STR("overlay_box_fill", RS_Settings::overlayBoxFill));
-        initComboBox(cbOverlayBoxLineInverted, LC_GET_STR("overlay_box_line_inv", RS_Settings::overlayBoxLineInverted));
-        initComboBox(cbOverlayBoxFillInverted, LC_GET_STR("overlay_box_fill_inv", RS_Settings::overlayBoxFillInverted));
+        initComboBox(cbOverlayBoxLine, LC_GET_STR("overlay_box_line", RS_Settings::OVERLAY_BOX_LINE));
+        initComboBox(cbOverlayBoxFill, LC_GET_STR("overlay_box_fill", RS_Settings::OVERLAY_BOX_FILL));
+        initComboBox(cbOverlayBoxLineInverted, LC_GET_STR("overlay_box_line_inv", RS_Settings::OVERLAY_BOX_LINE_INVERTED));
+        initComboBox(cbOverlayBoxFillInverted, LC_GET_STR("overlay_box_fill_inv", RS_Settings::OVERLAY_BOX_FILL_INVERTED));
 
-        initComboBox(cbInfoOverlayAbsolutePositionColor, LC_GET_STR("info_overlay_absolute", RS_Settings::overlayInfoCursorAbsolutePos));
-        initComboBox(cbInfoOverlaySnapColor, LC_GET_STR("info_overlay_snap", RS_Settings::overlayInfoCursorSnap));
-        initComboBox(cbInfoOverlayCommandPromptColor, LC_GET_STR("info_overlay_prompt", RS_Settings::overlayInfoCursorCommandPrompt));
-        initComboBox(cbInfoOverlayRelativeColor, LC_GET_STR("info_overlay_relative", RS_Settings::overlayInfoCursorRelativePos));
+        initComboBox(cbInfoOverlayAbsolutePositionColor, LC_GET_STR("info_overlay_absolute", RS_Settings::OVERLAY_INFO_CURSOR_ABSOLUTE_POS));
+        initComboBox(cbInfoOverlaySnapColor, LC_GET_STR("info_overlay_snap", RS_Settings::OVERLAY_INFO_CURSOR_SNAP));
+        initComboBox(cbInfoOverlayCommandPromptColor, LC_GET_STR("info_overlay_prompt", RS_Settings::OVERLAY_INFO_CURSOR_COMMAND_PROMPT));
+        initComboBox(cbInfoOverlayRelativeColor, LC_GET_STR("info_overlay_relative", RS_Settings::OVERLAY_INFO_CURSOR_RELATIVE_POS));
+        initComboBox(cbDraftModeMarkerColor, LC_GET_STR("draft_mode_marker", RS_Settings::SELECT));
+        initComboBox(cbAnglesMarkColorDirection, LC_GET_STR("angles_basis_direction", RS_Settings::ANGLES_BASIS_DIRECTION));
+        initComboBox(cbAnglesMarkColorAngleRay, LC_GET_STR("angles_basis_angleray", RS_Settings::ANGLES_BASIS_ANGLE_RAY));
 
-        initComboBox(cbDraftModeMarkerColor, LC_GET_STR("draft_mode_marker", RS_Settings::select));
+        initComboBox(cbColorVisualSnapGuideEntities, LC_GET_STR("VisualSnapGuideEntitiesColor", RS_Settings::VISUAL_SNAP_ENTITIES));
+        initComboBox(cbColorVisualSnapVertexes, LC_GET_STR("VisualSnapVertexesColor", RS_Settings::VISUAL_SNAP_VERTEXES));
+        initComboBox(cbColorVisualSnapProjectedSnap, LC_GET_STR("VisualSnapProjectedSnapColor", RS_Settings::VISUAL_SNAP_PROJECTED_SNAP));
+        initComboBox(cbColorVisualSnapDocumentEntity, LC_GET_STR("VisualSnapDocumentEntitiesColor", RS_Settings::VISUAL_SNAP_PROJECTED_SNAP));
 
-        initComboBox(cbAnglesMarkColorDirection, LC_GET_STR("angles_basis_direction", RS_Settings::anglesBasisDirection));
-        initComboBox(cbAnglesMarkColorAngleRay, LC_GET_STR("angles_basis_angleray", RS_Settings::anglesBasisAngleRay));
+        initComboBox(cbColorRelativePositionAssistantBackground, LC_GET_STR("RelativePositionAssistantBackground", RS_Settings::RELATIVE_POSITION_BACKGROUND));
+        initComboBox(cbColorRelativePositionAssistantText, LC_GET_STR("RelativePositionAssistantText", RS_Settings::RELATIVE_POSITION_BACKGROUND));
 
         int overlayTransparency = LC_GET_INT("overlay_box_transparency", 90);
         sbOverlayBoxTransparency->setValue(overlayTransparency);
@@ -525,8 +610,9 @@ void QG_DlgOptionsGeneral::init(){
 
     // units:
     for (int i = RS2::None; i < RS2::LastUnit; i++) {
-        if (i != (int) RS2::None)
-            cbUnit->addItem(RS_Units::unitToString((RS2::Unit) i));
+        if (i != static_cast<int>(RS2::None)) {
+            cbUnit->addItem(RS_Units::unitToString(static_cast<RS2::Unit>(i)));
+        }
     }
     // RVT_PORT cbUnit->listBox()->sort();
     cbUnit->insertItem(0, RS_Units::unitToString(RS2::None));
@@ -606,6 +692,8 @@ void QG_DlgOptionsGeneral::init(){
     LC_GROUP("CADPreferences"); {
         cbAutoZoomDrawing->setChecked(LC_GET_BOOL("AutoZoomDrawing"));
         cbAnglesInputInDecimalDegreesOnly->setChecked(LC_GET_BOOL("InputAnglesAsDecimalsOnly", false));
+        cbSelectionWindowByMBClickAndUp->setChecked(LC_GET_BOOL("SelectionWindowBy2Clicks", false));
+        cbFinishMovingByMouseUp->setChecked(LC_GET_BOOL("AdHockMovingEndsByMouseClick", true));
     }
     LC_GROUP_END();
 
@@ -613,34 +701,43 @@ void QG_DlgOptionsGeneral::init(){
         cbSplash->setChecked(LC_GET_BOOL("ShowSplash", true));
         tab_mode_check_box->setChecked(LC_GET_BOOL("TabMode"));
         maximize_checkbox->setChecked(LC_GET_BOOL("Maximize"));
-        left_sidebar_checkbox->setChecked(LC_GET_BOOL("EnableLeftSidebar", true));
+
+        bool enableCADDockWidgets = LC_GET_BOOL("EnableLeftSidebar", true);
+        cbEnableCADDockWidgets->setChecked(enableCADDockWidgets);
+        cbCADWidgetsUngroupped->setChecked(LC_GET_BOOL("CADSideBarUngrouped",false));
+        cbCADWidgetsUngroupped->setEnabled(enableCADDockWidgets);
+
         cad_toolbars_checkbox->setChecked(LC_GET_BOOL("EnableCADToolbars", true));
         cbOpenLastFiles->setChecked(LC_GET_BOOL("OpenLastOpenedFiles", true));
-        m_originalUseClassicToolbar = LC_GET_BOOL("UseClassicStatusBar", false);
-        cbClassicStatusBar->setChecked(m_originalUseClassicToolbar);
+        bool useClassicStatusBar = LC_GET_BOOL("UseClassicStatusBar", false);
+        cbClassicStatusBar->setChecked(useClassicStatusBar);
 
         cbCheckNewVersion->setChecked(LC_GET_BOOL("CheckForNewVersions", true));
         cbCheckNewVersionIgnorePreRelease->setChecked(LC_GET_BOOL("IgnorePreReleaseVersions", true));
 
         bool checked = LC_GET_BOOL("ShowCommandPromptInStatusBar", true);
         cbDuplicateActionsPromptsInStatusBar->setChecked(checked);
-        cbDuplicateActionsPromptsInStatusBar->setEnabled(!m_originalUseClassicToolbar);
+        cbDuplicateActionsPromptsInStatusBar->setEnabled(!useClassicStatusBar);
 
         bool useExpandedToolsMenu = LC_GET_BOOL("ExpandedToolsMenu", false);
-        m_originalExpandedToolsMenu = useExpandedToolsMenu;
         cbExpandToolsMenu->setChecked(useExpandedToolsMenu);
 
         bool expandToolsMenuTillEntity = LC_GET_BOOL("ExpandedToolsMenuTillEntity", false);
-        m_originalExpandedToolsMenuTillEntity = expandToolsMenuTillEntity;
         cbExpandToolsMenuTillEntity->setChecked(expandToolsMenuTillEntity);
 
         cbExpandToolsMenuTillEntity->setEnabled(useExpandedToolsMenu);
+        cbStartupTBTooltips->setChecked( LC_GET_BOOL("ShowToolbarsTooltip", true));
 
-        m_originalShowToolbarTooltips = LC_GET_BOOL("ShowToolbarsTooltip", true);
-        cbStartupTBTooltips->setChecked(m_originalShowToolbarTooltips);
+        cbShowVersionInWinTitle->setChecked(LC_GET_BOOL("ShowVersionInTitle", true));
     }
     LC_GROUP_END();
 
+    LC_GROUP("CommandsPromotion");
+    {
+        cbShowCommandInMenu->setChecked(LC_GET_BOOL("ShowCommandInMenu", true));
+        cbPromoteCommandInCmd->setChecked(LC_GET_BOOL("PromoteCommands", true));
+    }
+    LC_GROUP_END();
     LC_GROUP("Keyboard"); {
         cbEvaluateOnSpace->setChecked(LC_GET_BOOL("EvaluateCommandOnSpace"));
         cbToggleFreeSnapOnSpace->setChecked(LC_GET_BOOL("ToggleFreeSnapOnSpace"));
@@ -670,12 +767,23 @@ void QG_DlgOptionsGeneral::setRestartNeeded(){
 void QG_DlgOptionsGeneral::setTemplateFile(){
     RS2::FormatType type = RS2::FormatDXFRW;
     QG_FileDialog dlg(this);
-    QString fileName = dlg.getOpenFile(&type);
+    const QString fileName = dlg.getOpenFile(&type);
     leTemplate->setText(fileName);
 }
 
+void QG_DlgOptionsGeneral::updateMainWindowTitle(bool showVersionInTitle) {
+    QString mainWinTitle;
+    if (showVersionInTitle) {
+        mainWinTitle = QApplication::applicationName() + " [" + QApplication::applicationVersion() + "]";
+    }
+    else {
+        mainWinTitle = QApplication::applicationName();
+    }
+    QC_ApplicationWindow::getAppWindow()->setWindowTitle(mainWinTitle);
+}
+
 void QG_DlgOptionsGeneral::ok(){
-    if (RS_Settings::save_is_allowed) {
+    if (RS_Settings::saveIsAllowed) {
         //RS_SYSTEM->loadTranslation(cbLanguage->currentText());
         LC_GROUP("Appearance"); {
             LC_SET("ScaleGrid", cbScaleGrid->isChecked());
@@ -685,7 +793,7 @@ void QG_DlgOptionsGeneral::ok(){
             LC_SET("VisualizePreviewRefPoints", cbDisplayRefPoints->isChecked());
             LC_SET("MinGridSpacing", cbMinGridSpacing->currentText());
             LC_SET("MaxPreview", cbMaxPreview->currentText());
-            int langGuiIdx = cbLanguage->currentIndex();
+            const int langGuiIdx = cbLanguage->currentIndex();
             if (langGuiIdx != m_initialLanguageGUIIdx) {
                 setRestartNeeded();
             }
@@ -696,6 +804,8 @@ void QG_DlgOptionsGeneral::ok(){
             LC_SET("indicator_shape_state", indicator_shape_checkbox->isChecked());
             LC_SET("indicator_shape_type", indicator_shape_combobox->currentIndex());
             LC_SET("indicator_lines_line_type", wSnapLinesLineType->getLineType());
+            LC_SET("selection_overlay_line_type", wOverlaySelectionLineType->getLineType());
+            LC_SET("selection_overlay_inverted_line_type", wOverlaySelectionInvertedLineType->getLineType());
             LC_SET("indicator_lines_line_width", sbSnapLinesLineWidth->value());
             LC_SET("cursor_hiding", cursor_hiding_checkbox->isChecked());
             LC_SET("showSnapOptionsInSnapToolbar", cbShowSnapOptionsInSnapBar->isChecked());
@@ -714,7 +824,9 @@ void QG_DlgOptionsGeneral::ok(){
             LC_SET("EntityHandleSize", sbHandleSize->value());
             LC_SET("RelZeroMarkerRadius", sbRelZeroRadius->value());
             LC_SET("ZeroShortAxisMarkSize", sbAxisSize->value());
-            LC_SET("AllowMenusTearOff", cbAllowMenusDetaching->isChecked());
+            if (LC_SET("AllowMenusTearOff", cbAllowMenusDetaching->isChecked())){
+                setRestartNeeded();
+            }
 
             LC_SET("metaGridDraw", cbDrawMetaGrid->isChecked());
             LC_SET("GridDraw", cbDrawGrid->isChecked());
@@ -729,8 +841,8 @@ void QG_DlgOptionsGeneral::ok(){
             LC_SET("GridDisableWithinPan", cbDisableGridOnPanning->isChecked());
             LC_SET("GridDrawIsoVerticalForTop", cbDrawVerticalForIsoTop->isChecked());
 
-            double zoomFactor = sbDefaultZoomFactor->value();
-            int zoomFactor1000 = (int) (zoomFactor * 1000.0);
+            const double zoomFactor = sbDefaultZoomFactor->value();
+            const int zoomFactor1000 = static_cast<int>(zoomFactor * 1000.0);
             LC_SET("ScrollZoomFactor", zoomFactor1000);
             LC_SET("IgnoreDraftForHighlight", cbHighlightWIthLinewidthInDraft->isChecked());
 
@@ -762,9 +874,35 @@ void QG_DlgOptionsGeneral::ok(){
         LC_GROUP_END();
 
         LC_GROUP("Snap"); {
-            LC_SET("AdvSnapOnEntitySwitchToFreeDistance", (int) (sbFreeSnapSwitchDistance->value() * 100));
+            LC_SET("AdvSnapOnEntitySwitchToFreeDistance", static_cast<int>(sbFreeSnapSwitchDistance->value() * 100));
             LC_SET("AdvSnapEntityCatchRange", sbCatchEntitySnapDistance->value());
-            LC_SET("AdvSnapGridCellSnapFactor", (int) (sbMinGridCellSnapFactor->value() * 100));
+            LC_SET("AdvSnapGridCellSnapFactor", static_cast<int>(sbMinGridCellSnapFactor->value() * 100));
+            LC_SET("AngleSnapToLinesIfGrid", cbAngleSnapToLinesIfGrid->isChecked());
+
+            LC_SET("VSVertexSize", sbVisualSnapVertexSize->value());
+            LC_SET("VSProjectedSnapSize", sbVisualSnapProjectedSnapSize->value());
+            LC_SET("VSHighlightedVertexSize", sbVisualSnapHighlightedVertexSize->value());
+
+            LC_SET("VSSnapPointAddingDelay", sbVisualSnapPointAddingDelay->value());
+            LC_SET("VSVertexAddingDelay", sbVisualSnapVertexAddingDelay->value());
+            LC_SET("VSDocEntityAddingDelay", sbVisualSnapSnapDocEntityAddingDelay->value());
+
+            LC_SET("VSGuidingEntitiesCatchDistance", sbVSCatchDistance->value());
+
+            LC_SET("VSAngleSnapStepRaysVertexes", cbVisualSnapRaysAngleSnapVertexes->isChecked());
+            LC_SET("VSAngleSnapStepRaysRelative", cbVisualSnapRaysAngleSnapRelative->isChecked());
+
+            LC_SET("VSSnapAutoAddSnapPoint", cbVisualSnapAutoAddSnapPoint->isChecked());
+            LC_SET("VSSnapAutoAddLastSnapPointOnly", cbVSAutoAddLastSnapOnly->isChecked());
+            LC_SET("VSSnapManualAddingWithCTRL", cbVisualSnapManualAddingWithCTRL->isChecked());
+            LC_SET("VSVertexVertexDistanceCircles", cbVisualSnapVertexVertexDistanceCircles->isChecked());
+            LC_SET("VSVertexVertexDistanceTangents", cbVisualSnapVertexVertexDistancesTangential->isChecked());
+
+            LC_SET("VSGuidingEntitiesShowLabels", cbVSShowLabelsOnGuides->isChecked());
+            LC_SET("VSGuidingEntityLabelFontSize", sbVisualSnapGuidingLabelsFontSize->value());
+            LC_SET("VSClearSolutionByRMB", cbVisualSnapClearSolutionByRMB->isChecked());
+            LC_SET("VSGuidingLabelOffsetPx", sbVSGuidingEntityLabelOffset->value());
+            LC_SET("VSShowNotSnappableGuides", cbVisualSnapShowNotSnappableGuides->isChecked());
         }
         LC_GROUP_END();
 
@@ -786,14 +924,25 @@ void QG_DlgOptionsGeneral::ok(){
             LC_SET("ShowPropertiesEdit", cbInfoOverlayPreviewEditingEntity->isChecked());
             LC_SET("ShowPropertiesCreating", cbInfoOverlayPreviewCreatingEntity->isChecked());
         }
+        LC_GROUP_END();
+
+        LC_GROUP("RelativePositionAssistant");
+        {
+            LC_SET("FontSize", sbRelativePositionAssistantFontSize->value());
+            LC_SET("FontName", fcbRelativePositionAssistant->currentText());
+
+            LC_SET("RememberCoordinatesMode", cbRelativePositionAssistantRememberMode->isChecked());
+            LC_SET("StartInOffsetMode",cbRelativePositionAssistantStartInOffsetMode->isChecked());
+        }
+        LC_GROUP_END();
 
         LC_GROUP("Render"); {
             LC_SET("MinRenderableTextHeightPx", sbTextMinHeight->value());
-            LC_SET("MinArcRadius", (int) (sbRenderMinArcRadius->value() * 100));
-            LC_SET("MinCircleRadius", (int) (sbRenderMinCircleRadius->value() * 100));
-            LC_SET("MinLineLen", (int) (sbRenderMinLineLen->value() * 100));
-            LC_SET("MinEllipseMajor", (int) (sbRenderMinEllipseMajor->value() * 100));
-            LC_SET("MinEllipseMinor", (int) (sbRenderMinEllipseMinor->value() * 100));
+            LC_SET("MinArcRadius", static_cast<int>(sbRenderMinArcRadius->value() * 100));
+            LC_SET("MinCircleRadius", static_cast<int>(sbRenderMinCircleRadius->value() * 100));
+            LC_SET("MinLineLen", static_cast<int>(sbRenderMinLineLen->value() * 100));
+            LC_SET("MinEllipseMajor", static_cast<int>(sbRenderMinEllipseMajor->value() * 100));
+            LC_SET("MinEllipseMinor", static_cast<int>(sbRenderMinEllipseMinor->value() * 100));
             LC_SET("DrawTextsAsDraftInPanning", cbTextDraftOnPanning->isChecked());
             LC_SET("DrawTextsAsDraftInPreview", cbTextDraftInPreview->isChecked());
 
@@ -840,6 +989,14 @@ void QG_DlgOptionsGeneral::ok(){
             LC_SET("angles_basis_angleray", cbAnglesMarkColorAngleRay->currentText());
 
             LC_SET("draft_mode_marker", cbDraftModeMarkerColor->currentText());
+
+            LC_SET("VisualSnapGuideEntitiesColor", cbColorVisualSnapGuideEntities->currentText());
+            LC_SET("VisualSnapVertexesColor", cbColorVisualSnapVertexes->currentText());
+            LC_SET("VisualSnapProjectedSnapColor", cbColorVisualSnapProjectedSnap->currentText());
+            LC_SET("VisualSnapDocumentEntitiesColor", cbColorVisualSnapDocumentEntity->currentText());
+
+            LC_SET("RelativePositionAssistantBackground", cbColorRelativePositionAssistantBackground->currentText());
+            LC_SET("RelativePositionAssistantText", cbColorRelativePositionAssistantText->currentText());
         }
         LC_GROUP_END();
 
@@ -860,10 +1017,10 @@ void QG_DlgOptionsGeneral::ok(){
             LC_SET("AutoSaveTime", cbAutoSaveTime->value());
             LC_SET("AutoBackupDocument", cbAutoBackup->isChecked());
 
-            QString autosaveFileNamePrefix = cbAutoSaveFileNamePrefix->currentText();
+            const QString autosaveFileNamePrefix = cbAutoSaveFileNamePrefix->currentText();
             LC_SET("AutosaveFilePrefix", autosaveFileNamePrefix);
 
-            QString backupFileNameSuffix = cbBackupFileSuffix->currentText();
+            const QString backupFileNameSuffix = cbBackupFileSuffix->currentText();
             LC_SET("BackupFileSuffix", backupFileNameSuffix);
 
             LC_SET("UseQtFileOpenDialog", cbUseQtFileOpenDialog->isChecked());
@@ -873,10 +1030,10 @@ void QG_DlgOptionsGeneral::ok(){
             LC_SET("AngleSnapStep", cbAngleSnapStep->currentIndex());
             LC_SET("GridOffForNewDrawing", cbNewDrawingGridOff->isChecked());
 
-            bool defaultIsometricGrid = !rbGridOrtho->isChecked();
+            const bool defaultIsometricGrid = !rbGridOrtho->isChecked();
             LC_SET("IsometricGrid", defaultIsometricGrid);
             if (defaultIsometricGrid) {
-                int defaultIsoView;
+                int defaultIsoView = 0;
 
                 if (rbGridIsoLeft->isChecked()) {
                     defaultIsoView = RS2::IsoGridViewType::IsoLeft;
@@ -907,23 +1064,47 @@ void QG_DlgOptionsGeneral::ok(){
         LC_GROUP("CADPreferences"); {
             LC_SET("AutoZoomDrawing", cbAutoZoomDrawing->isChecked());
             LC_SET("InputAnglesAsDecimalsOnly", cbAnglesInputInDecimalDegreesOnly->isChecked());
+            LC_SET("SelectionWindowBy2Clicks", cbSelectionWindowByMBClickAndUp->isChecked());
+            LC_SET("AdHockMovingEndsByMouseClick", cbFinishMovingByMouseUp->isChecked());
         }
         LC_GROUP_END();
 
-        LC_GROUP("Startup"); {
+        LC_GROUP("CommandsPromotion");
+        {
+            LC_SET("ShowCommandInMenu", cbShowCommandInMenu->isChecked());
+            LC_SET("PromoteCommands", cbPromoteCommandInCmd->isChecked());
+        }
+        LC_GROUP_END();
+        LC_GROUP("Startup");
+        {
             LC_SET("ShowSplash", cbSplash->isChecked());
             LC_SET("TabMode", tab_mode_check_box->isChecked());
             LC_SET("Maximize", maximize_checkbox->isChecked());
-            LC_SET("EnableLeftSidebar", left_sidebar_checkbox->isChecked());
-            LC_SET("EnableCADToolbars", cad_toolbars_checkbox->isChecked());
+
+            if (LC_SET("EnableLeftSidebar", cbEnableCADDockWidgets->isChecked())){
+                setRestartNeeded();
+            }
+            if (LC_SET("CADSideBarUngrouped", cbCADWidgetsUngroupped->isChecked())){
+                setRestartNeeded();
+            }
+            if (LC_SET("EnableCADToolbars", cad_toolbars_checkbox->isChecked())){
+                setRestartNeeded();
+            }
             LC_SET("OpenLastOpenedFiles", cbOpenLastFiles->isChecked());
-            LC_SET("UseClassicStatusBar", cbClassicStatusBar->isChecked());
+            if (LC_SET("UseClassicStatusBar", cbClassicStatusBar->isChecked())){
+                setRestartNeeded();
+            }
             LC_SET("ShowCommandPromptInStatusBar", cbDuplicateActionsPromptsInStatusBar->isChecked());
             LC_SET("CheckForNewVersions", cbCheckNewVersion->isChecked());
             LC_SET("IgnorePreReleaseVersions", cbCheckNewVersionIgnorePreRelease->isChecked());
             LC_SET("ExpandedToolsMenu", cbExpandToolsMenu->isChecked());
             LC_SET("ExpandedToolsMenuTillEntity", cbExpandToolsMenuTillEntity->isChecked());
-            LC_SET("ShowToolbarsTooltip", cbStartupTBTooltips->isChecked());
+            if (LC_SET("ShowToolbarsTooltip", cbStartupTBTooltips->isChecked())){
+                setRestartNeeded();
+            }
+            bool showVersionInTitle = cbShowVersionInWinTitle->isChecked();
+            LC_SET("ShowVersionInTitle", showVersionInTitle);
+            updateMainWindowTitle(showVersionInTitle);
         }
         LC_GROUP_END();
 
@@ -944,15 +1125,13 @@ void QG_DlgOptionsGeneral::ok(){
     accept();
 }
 
-bool QG_DlgOptionsGeneral::checkRestartNeeded() {
-    bool result = m_originalUseClassicToolbar != cbClassicStatusBar->isChecked() ||
-                  m_originalLibraryPath != lePathLibrary->text().trimmed() ||
-                  m_originalAllowsMenusTearOff != cbAllowMenusDetaching->isChecked() ||
-                  m_originalShowToolbarTooltips != cbStartupTBTooltips->isChecked();
+bool QG_DlgOptionsGeneral::checkRestartNeeded() const {
+    const bool result = m_originalLibraryPath != lePathLibrary->text().trimmed() ||
+                  m_restartNeeded;
     return result;
 }
 
-void QG_DlgOptionsGeneral::on_tabWidget_currentChanged(int index){
+void QG_DlgOptionsGeneral::on_tabWidget_currentChanged(const int index){
     m_currentTab = index;
 }
 
@@ -969,135 +1148,159 @@ void QG_DlgOptionsGeneral::set_color(QComboBox *combo, QColor custom){
 }
 
 void QG_DlgOptionsGeneral::on_pb_background_clicked(){
-    set_color(cbBackgroundColor, QColor(RS_Settings::background));
+    set_color(cbBackgroundColor, QColor(RS_Settings::BACKGROUND));
 }
 
 void QG_DlgOptionsGeneral::on_pb_gridPoints_clicked(){
-    set_color(cbGridPointsColor, QColor(RS_Settings::color_meta_grid_points));
+    set_color(cbGridPointsColor, QColor(RS_Settings::COLOR_META_GRID_POINTS));
 }
 
 void QG_DlgOptionsGeneral::on_pb_gridLines_clicked(){
-    set_color(cbGridLinesColor, QColor(RS_Settings::color_meta_grid_lines));
+    set_color(cbGridLinesColor, QColor(RS_Settings::COLOR_META_GRID_LINES));
 }
 
 void QG_DlgOptionsGeneral::on_pb_metaPoints_clicked(){
-    set_color(cbMetaGridPointsColor, QColor(RS_Settings::color_meta_grid_points));
+    set_color(cbMetaGridPointsColor, QColor(RS_Settings::COLOR_META_GRID_POINTS));
 }
 
 void QG_DlgOptionsGeneral::on_pb_metaLines_clicked(){
-    set_color(cbMetaGridLinesColor, QColor(RS_Settings::color_meta_grid_lines));
+    set_color(cbMetaGridLinesColor, QColor(RS_Settings::COLOR_META_GRID_LINES));
 }
 
 void QG_DlgOptionsGeneral::on_pb_selected_clicked(){
-    set_color(cbSelectedColor, QColor(RS_Settings::select));
+    set_color(cbSelectedColor, QColor(RS_Settings::SELECT));
 }
 
 void QG_DlgOptionsGeneral::on_pb_highlighted_clicked(){
-    set_color(cbHighlightedColor, QColor(RS_Settings::highlight));
+    set_color(cbHighlightedColor, QColor(RS_Settings::HIGHLIGHT));
 }
 
 void QG_DlgOptionsGeneral::on_pb_start_clicked(){
-    set_color(cbStartHandleColor, QColor(RS_Settings::start_handle));
+    set_color(cbStartHandleColor, QColor(RS_Settings::START_HANDLE));
 }
 
 void QG_DlgOptionsGeneral::on_pb_handle_clicked(){
-    set_color(cbHandleColor, QColor(RS_Settings::handle));
+    set_color(cbHandleColor, QColor(RS_Settings::HANDLE));
 }
 
 void QG_DlgOptionsGeneral::on_pb_end_clicked(){
-    set_color(cbEndHandleColor, QColor(RS_Settings::end_handle));
+    set_color(cbEndHandleColor, QColor(RS_Settings::END_HANDLE));
 }
 
 void QG_DlgOptionsGeneral::on_pb_snap_color_clicked(){
-    set_color(cb_snap_color, QColor(RS_Settings::snap_indicator));
+    set_color(cb_snap_color, QColor(RS_Settings::SNAP_INDICATOR));
 }
 
 void QG_DlgOptionsGeneral::on_pb_snap_lines_color_clicked(){
-    set_color(cb_snap_lines_color, QColor(RS_Settings::snap_indicator_lines));
+    set_color(cb_snap_lines_color, QColor(RS_Settings::SNAP_INDICATOR_LINES));
 }
 
 void QG_DlgOptionsGeneral::on_pb_relativeZeroColor_clicked(){
-    set_color(cbRelativeZeroColor, QColor(RS_Settings::relativeZeroColor));
+    set_color(cbRelativeZeroColor, QColor(RS_Settings::RELATIVE_ZERO_COLOR));
 }
 
 void QG_DlgOptionsGeneral::on_pb_previewRefColor_clicked(){
-    set_color(cbPreviewRefColor, QColor(RS_Settings::previewRefColor));
+    set_color(cbPreviewRefColor, QColor(RS_Settings::PREVIEW_REF_COLOR));
 }
 
 void QG_DlgOptionsGeneral::on_pb_previewRefHighlightColor_clicked(){
-    set_color(cbPreviewRefHighlightColor, QColor(RS_Settings::previewRefHighlightColor));
+    set_color(cbPreviewRefHighlightColor, QColor(RS_Settings::PREVIEW_REF_HIGHLIGHT_COLOR));
 }
 
 void QG_DlgOptionsGeneral::on_pb_axis_X_clicked(){
-    set_color(cbAxisXColor, QColor(RS_Settings::xAxisColor));
+    set_color(cbAxisXColor, QColor(RS_Settings::X_AXIS_COLOR));
 }
 
 void QG_DlgOptionsGeneral::on_pb_axis_Y_clicked(){
-    set_color(cbAxisYColor, QColor(RS_Settings::yAxisColor));
+    set_color(cbAxisYColor, QColor(RS_Settings::Y_AXIS_COLOR));
 }
 
 void QG_DlgOptionsGeneral::on_pbOverlayBoxLine_clicked(){
-    set_color(cbOverlayBoxLine, QColor(RS_Settings::overlayBoxLine));
+    set_color(cbOverlayBoxLine, QColor(RS_Settings::OVERLAY_BOX_LINE));
 }
 
 void QG_DlgOptionsGeneral::on_pbOverlayBoxFill_clicked(){
-    set_color(cbOverlayBoxFill, QColor(RS_Settings::overlayBoxFill));
+    set_color(cbOverlayBoxFill, QColor(RS_Settings::OVERLAY_BOX_FILL));
 }
 
 void QG_DlgOptionsGeneral::on_pbOverlayBoxLineInverted_clicked(){
-    set_color(cbOverlayBoxLineInverted, QColor(RS_Settings::overlayBoxLineInverted));
+    set_color(cbOverlayBoxLineInverted, QColor(RS_Settings::OVERLAY_BOX_LINE_INVERTED));
 }
 
 void QG_DlgOptionsGeneral::on_pbOverlayBoxFillInverted_clicked(){
-    set_color(cbOverlayBoxFillInverted, QColor(RS_Settings::overlayBoxFillInverted));
+    set_color(cbOverlayBoxFillInverted, QColor(RS_Settings::OVERLAY_BOX_FILL_INVERTED));
 }
 
 void QG_DlgOptionsGeneral::on_pbDraftModeColor_clicked(){
-    set_color(cbDraftModeMarkerColor, QColor(RS_Settings::select));
+    set_color(cbDraftModeMarkerColor, QColor(RS_Settings::SELECT));
 }
 
 void QG_DlgOptionsGeneral::on_pbcbInfoOverlayAbsolutePositionColor_clicked(){
-    set_color(cbInfoOverlayAbsolutePositionColor, QColor(RS_Settings::overlayInfoCursorAbsolutePos));
+    set_color(cbInfoOverlayAbsolutePositionColor, QColor(RS_Settings::OVERLAY_INFO_CURSOR_ABSOLUTE_POS));
 }
 
 void QG_DlgOptionsGeneral::on_pbInfoOverlaySnapColor_clicked(){
-    set_color(cbInfoOverlayAbsolutePositionColor, QColor(RS_Settings::overlayInfoCursorSnap));
+    set_color(cbInfoOverlayAbsolutePositionColor, QColor(RS_Settings::OVERLAY_INFO_CURSOR_SNAP));
 }
 
 void QG_DlgOptionsGeneral::on_pbInfoOverlayRelativeColor_clicked(){
-    set_color(cbInfoOverlayAbsolutePositionColor, QColor(RS_Settings::overlayInfoCursorRelativePos));
+    set_color(cbInfoOverlayAbsolutePositionColor, QColor(RS_Settings::OVERLAY_INFO_CURSOR_RELATIVE_POS));
 }
 
 void QG_DlgOptionsGeneral::on_pbInfoOverlayCommandPromptColor_clicked(){
-    set_color(cbInfoOverlayAbsolutePositionColor, QColor(RS_Settings::overlayInfoCursorCommandPrompt));
+    set_color(cbInfoOverlayAbsolutePositionColor, QColor(RS_Settings::OVERLAY_INFO_CURSOR_COMMAND_PROMPT));
 }
 
 void QG_DlgOptionsGeneral::on_pbAnglesMarkDirection_clicked(){
-    set_color(cbAnglesMarkColorDirection, QColor(RS_Settings::anglesBasisDirection));
+    set_color(cbAnglesMarkColorDirection, QColor(RS_Settings::ANGLES_BASIS_DIRECTION));
 }
 
 void QG_DlgOptionsGeneral::on_pbAnglesMarkAngleRay_clicked(){
-    set_color(cbAnglesMarkColorAngleRay, QColor(RS_Settings::anglesBasisAngleRay));
+    set_color(cbAnglesMarkColorAngleRay, QColor(RS_Settings::ANGLES_BASIS_ANGLE_RAY));
+}
+
+
+void QG_DlgOptionsGeneral::on_pbVisualSnapGuideEntitiesColor_clicked() {
+    set_color(cbColorVisualSnapGuideEntities, QColor(RS_Settings::VISUAL_SNAP_ENTITIES));
+}
+
+void QG_DlgOptionsGeneral::on_pbVisualSnapVertexesColor_clicked() {
+    set_color(cbColorVisualSnapVertexes, QColor(RS_Settings::VISUAL_SNAP_VERTEXES));
+}
+
+void QG_DlgOptionsGeneral::on_pbVisualSnapProjectedSnapColor_clicked() {
+    set_color(cbColorVisualSnapProjectedSnap, QColor(RS_Settings::VISUAL_SNAP_PROJECTED_SNAP));
+}
+
+void QG_DlgOptionsGeneral::on_pbVisualSnapDocEntitiesColor_clicked() {
+    set_color(cbColorVisualSnapDocumentEntity, QColor(RS_Settings::VISUAL_SNAP_DOCUMENT_ENTITIES));
+}
+
+void QG_DlgOptionsGeneral::on_pbRelativePositionAssistantBackgroundColor_clicked() {
+    set_color(cbColorRelativePositionAssistantBackground, QColor(RS_Settings::RELATIVE_POSITION_BACKGROUND));
+}
+
+void QG_DlgOptionsGeneral::on_pbRelativePositionAssistantFontColor_clicked() {
+    set_color(cbColorRelativePositionAssistantText, QColor(RS_Settings::RELATIVE_POSITION_FONT));
 }
 
 void QG_DlgOptionsGeneral::on_pb_clear_all_clicked(){
-    QMessageBox::StandardButton reply;
-    reply = QMessageBox::question(this, tr("Clear settings"),
-                                  tr("This will also include custom menus and toolbars. Continue?"),
-                                  QMessageBox::Yes | QMessageBox::No);
+    const QMessageBox::StandardButton reply = QMessageBox::question(this, tr("Clear settings"),
+                                                              tr("This will also include custom menus and toolbars. Continue?"),
+                                                              QMessageBox::Yes | QMessageBox::No);
     if (reply == QMessageBox::Yes) {
-        RS_SETTINGS->clear_all();
+        RS_SETTINGS->clearAll();
         QMessageBox::information(this, "info", tr("You must restart LibreCAD to see the changes."));
     }
 }
 
 void QG_DlgOptionsGeneral::on_pb_clear_geometry_clicked(){
-    RS_SETTINGS->clear_geometry();
+    RS_SETTINGS->clearGeometry();
     QMessageBox::information(this, "info", tr("You must restart LibreCAD to see the changes."));
 }
 
 void QG_DlgOptionsGeneral::setVariableFile(){
-    QString path = QFileDialog::getOpenFileName(this);
+    const QString path = QFileDialog::getOpenFileName(this);
     if (!path.isEmpty()) {
         variablefile_field->setText(QDir::toNativeSeparators(path));
     }
@@ -1109,28 +1312,28 @@ void QG_DlgOptionsGeneral::setVariableFile(){
  * \date 2016-286
  */
 void QG_DlgOptionsGeneral::setFontsFolder(){
-    QString folder = selectFolder(tr("Select Fonts Folder"));
+    const QString folder = selectFolder(tr("Select Fonts Folder"));
     if (folder != nullptr) {
         lePathFonts->setText(QDir::toNativeSeparators(folder));
     }
 }
 
 void QG_DlgOptionsGeneral::setTranslationsFolder(){
-    QString folder = selectFolder(tr("Select Translations Folder"));
+    const QString folder = selectFolder(tr("Select Translations Folder"));
     if (folder != nullptr) {
         lePathTranslations->setText(QDir::toNativeSeparators(folder));
     }
 }
 
 void QG_DlgOptionsGeneral::setHatchPatternsFolder(){
-    QString folder = selectFolder(tr("Select Hatch Patterns Folder"));
+    const QString folder = selectFolder(tr("Select Hatch Patterns Folder"));
     if (folder != nullptr) {
         lePathHatch->setText(QDir::toNativeSeparators(folder));
     }
 }
 
 void QG_DlgOptionsGeneral::setOtherSettingsFolder(){
-    QString folder = selectFolder(tr("Select Other Settings Folder"));
+    const QString folder = selectFolder(tr("Select Other Settings Folder"));
     if (folder != nullptr) {
         leOtherSettingsDirectory->setText(QDir::toNativeSeparators(folder));
     }
@@ -1140,14 +1343,14 @@ QString QG_DlgOptionsGeneral::selectFolder(const QString &title){
     QString folder = nullptr;
     QFileDialog dlg(this);
     if (title != nullptr) {
-        QString dlgTitle = title;
+        const QString dlgTitle = title;
         dlg.setWindowTitle(dlgTitle);
     }
     dlg.setFileMode(QFileDialog::Directory);
     dlg.setOption(QFileDialog::ShowDirsOnly);
 
-    if (dlg.exec()) {
-        folder = dlg.selectedFiles()[0];
+    if (dlg.exec() != 0) {
+        folder = dlg.selectedFiles().at(0);
     }
     return folder;
 }
@@ -1157,27 +1360,31 @@ void QG_DlgOptionsGeneral::setLibraryPath(){
     QG_FileDialog dlg(this);
     dlg.setFileMode(QFileDialog::Directory);
 
-    if (dlg.exec()) {
-        auto dir = dlg.selectedFiles()[0];
+    if (dlg.exec() != 0) {
+        const auto dir = dlg.selectedFiles().at(0);
         lePathLibrary->setText(QDir::toNativeSeparators(dir));
         setRestartNeeded();
     }
 }
 
-void QG_DlgOptionsGeneral::on_cbVisualizeHoveringClicked(){
+void QG_DlgOptionsGeneral::on_cbVisualizeHoveringClicked() const {
     cbShowRefPointsOnHovering->setEnabled(cbVisualizeHovering->isChecked());
 }
 
-void QG_DlgOptionsGeneral::on_cbPersistentDialogsClicked(){
+void QG_DlgOptionsGeneral::on_cbPersistentDialogsClicked() const {
     cbPersistentDialogSizeOnly->setEnabled(cbPersistentDialogs->isChecked());
 }
 
-void QG_DlgOptionsGeneral::on_cbClassicStatusBarToggled(){
+void QG_DlgOptionsGeneral::on_cbClassicStatusBarToggled() const {
     cbDuplicateActionsPromptsInStatusBar->setEnabled(!cbClassicStatusBar->isChecked());
 }
 
-void QG_DlgOptionsGeneral::onTabCloseButtonChanged(){
+void QG_DlgOptionsGeneral::onTabCloseButtonChanged() const {
     cbTabCloseButtonMode->setEnabled(cbTabCloseButton->isChecked());
+}
+
+void QG_DlgOptionsGeneral::onEnableCADDocWidgetsChanged() const {
+    cbCADWidgetsUngroupped->setEnabled(cbEnableCADDockWidgets->isChecked());
 }
 
 void QG_DlgOptionsGeneral::onInfoCursorPromptChanged(){
@@ -1192,14 +1399,14 @@ void QG_DlgOptionsGeneral::onInfoCursorRelativeChanged(){
 void QG_DlgOptionsGeneral::onInfoCursorSnapChanged(){
 }
 
-void QG_DlgOptionsGeneral::on_cbGridExtendAxisLinesToggled(){
-    bool extend = cbGridExtendAxisLines->isChecked();
+void QG_DlgOptionsGeneral::on_cbGridExtendAxisLinesToggled() const {
+    const bool extend = cbGridExtendAxisLines->isChecked();
     sbAxisSize->setEnabled(!extend);
     cbXAxisAreas->setEnabled(extend);
     cbYAxisAreas->setEnabled(extend);
 }
 
-void QG_DlgOptionsGeneral::onCheckNewVersionChanged(){
+void QG_DlgOptionsGeneral::onCheckNewVersionChanged() const {
     if (cbCheckNewVersion->isChecked()) {
         cbCheckNewVersionIgnorePreRelease->setEnabled(!XSTR(LC_PRERELEASE));
     } else {
@@ -1207,15 +1414,15 @@ void QG_DlgOptionsGeneral::onCheckNewVersionChanged(){
     }
 }
 
-void QG_DlgOptionsGeneral::onAutoBackupChanged([[maybe_unused]] int state){
-    bool allowBackup = cbAutoBackup->isChecked();
+void QG_DlgOptionsGeneral::onAutoBackupChanged([[maybe_unused]] int state) const {
+    const bool allowBackup = cbAutoBackup->isChecked();
     cbAutoSaveTime->setEnabled(allowBackup);
-    auto &appWindow = QC_ApplicationWindow::getAppWindow(); // fixme - sand - files - remove static
+    const auto &appWindow = QC_ApplicationWindow::getAppWindow(); // fixme - sand - files - remove static
     appWindow->startAutoSaveTimer(allowBackup);
 }
 
-void QG_DlgOptionsGeneral::initReferencePoints(){
-    int pdmode;
+void QG_DlgOptionsGeneral::initReferencePoints() const {
+    int pdmode = 0;
     QString pdsizeStr;
     LC_GROUP_GUARD("Appearance"); {
         // Points drawing style:
@@ -1296,7 +1503,7 @@ void QG_DlgOptionsGeneral::initReferencePoints(){
     // points size in absolute drawing units; pdsize == 0 implies points size to be
     // 5% relative to screen size.
 
-    bool ok;
+    bool ok = false;
     double pdsize = RS_Math::eval(pdsizeStr, &ok);
     if (!ok) {
         pdsize = LC_DEFAULTS_PDSize;
@@ -1314,74 +1521,95 @@ void QG_DlgOptionsGeneral::initReferencePoints(){
     updateLPtSzUnits();
 }
 
-void QG_DlgOptionsGeneral::updateLPtSzUnits(){
+void QG_DlgOptionsGeneral::updateLPtSzUnits() const {
     //	RS_DEBUG->print(RS_Debug::D_ERROR,"QG_DlgOptionsDrawing::updateLPtSzUnits, rbRelSize->isChecked() = %d",rbRelSize->isChecked());
-    if (rbRelSize->isChecked())
+    if (rbRelSize->isChecked()) {
         lPtSzUnits->setText(QApplication::translate("QG_DlgOptionsDrawing", "Screen %", nullptr));
-    else
+    }
+    else {
         lPtSzUnits->setText(QApplication::translate("QG_DlgOptionsDrawing", "Dwg Units", nullptr));
+    }
 }
 
-void QG_DlgOptionsGeneral::saveReferencePoints(){
+void QG_DlgOptionsGeneral::saveReferencePoints() const {
     // Points drawing style:
     // Get currently selected point style from which button is checked
     int pdmode = LC_DEFAULTS_PDMode;
 
-    if (bDot->isChecked())
+    if (bDot->isChecked()) {
         pdmode = DXF_FORMAT_PDMode_CentreDot;
-    else if (bBlank->isChecked())
+    }
+    else if (bBlank->isChecked()) {
         pdmode = DXF_FORMAT_PDMode_CentreBlank;
-    else if (bPlus->isChecked())
+    }
+    else if (bPlus->isChecked()) {
         pdmode = DXF_FORMAT_PDMode_CentrePlus;
-    else if (bCross->isChecked())
+    }
+    else if (bCross->isChecked()) {
         pdmode = DXF_FORMAT_PDMode_CentreCross;
-    else if (bTick->isChecked())
+    }
+    else if (bTick->isChecked()) {
         pdmode = DXF_FORMAT_PDMode_CentreTick;
-
-    else if (bDotCircle->isChecked())
+    }
+    else if (bDotCircle->isChecked()) {
         pdmode = DXF_FORMAT_PDMode_EncloseCircle(DXF_FORMAT_PDMode_CentreDot);
-    else if (bBlankCircle->isChecked())
+    }
+    else if (bBlankCircle->isChecked()) {
         pdmode = DXF_FORMAT_PDMode_EncloseCircle(DXF_FORMAT_PDMode_CentreBlank);
-    else if (bPlusCircle->isChecked())
+    }
+    else if (bPlusCircle->isChecked()) {
         pdmode = DXF_FORMAT_PDMode_EncloseCircle(DXF_FORMAT_PDMode_CentrePlus);
-    else if (bCrossCircle->isChecked())
+    }
+    else if (bCrossCircle->isChecked()) {
         pdmode = DXF_FORMAT_PDMode_EncloseCircle(DXF_FORMAT_PDMode_CentreCross);
-    else if (bTickCircle->isChecked())
+    }
+    else if (bTickCircle->isChecked()) {
         pdmode = DXF_FORMAT_PDMode_EncloseCircle(DXF_FORMAT_PDMode_CentreTick);
-
-    else if (bDotSquare->isChecked())
+    }
+    else if (bDotSquare->isChecked()) {
         pdmode = DXF_FORMAT_PDMode_EncloseSquare(DXF_FORMAT_PDMode_CentreDot);
-    else if (bBlankSquare->isChecked())
+    }
+    else if (bBlankSquare->isChecked()) {
         pdmode = DXF_FORMAT_PDMode_EncloseSquare(DXF_FORMAT_PDMode_CentreBlank);
-    else if (bPlusSquare->isChecked())
+    }
+    else if (bPlusSquare->isChecked()) {
         pdmode = DXF_FORMAT_PDMode_EncloseSquare(DXF_FORMAT_PDMode_CentrePlus);
-    else if (bCrossSquare->isChecked())
+    }
+    else if (bCrossSquare->isChecked()) {
         pdmode = DXF_FORMAT_PDMode_EncloseSquare(DXF_FORMAT_PDMode_CentreCross);
-    else if (bTickSquare->isChecked())
+    }
+    else if (bTickSquare->isChecked()) {
         pdmode = DXF_FORMAT_PDMode_EncloseSquare(DXF_FORMAT_PDMode_CentreTick);
-
-    else if (bDotCircleSquare->isChecked())
+    }
+    else if (bDotCircleSquare->isChecked()) {
         pdmode = DXF_FORMAT_PDMode_EncloseCircleSquare(DXF_FORMAT_PDMode_CentreDot);
-    else if (bBlankCircleSquare->isChecked())
+    }
+    else if (bBlankCircleSquare->isChecked()) {
         pdmode = DXF_FORMAT_PDMode_EncloseCircleSquare(DXF_FORMAT_PDMode_CentreBlank);
-    else if (bPlusCircleSquare->isChecked())
+    }
+    else if (bPlusCircleSquare->isChecked()) {
         pdmode = DXF_FORMAT_PDMode_EncloseCircleSquare(DXF_FORMAT_PDMode_CentrePlus);
-    else if (bCrossCircleSquare->isChecked())
+    }
+    else if (bCrossCircleSquare->isChecked()) {
         pdmode = DXF_FORMAT_PDMode_EncloseCircleSquare(DXF_FORMAT_PDMode_CentreCross);
-    else if (bTickCircleSquare->isChecked())
+    }
+    else if (bTickCircleSquare->isChecked()) {
         pdmode = DXF_FORMAT_PDMode_EncloseCircleSquare(DXF_FORMAT_PDMode_CentreTick);
+    }
 
     // Get points display size from the value string and the relative vs. absolute
     // size radio buttons state
-    bool ok;
+    bool ok = false;
     double pdsize = RS_Math::eval(lePointSize->text(), &ok);
-    if (!ok)
+    if (!ok) {
         pdsize = LC_DEFAULTS_PDSize;
+    }
 
-    if (pdsize > 0.0 && rbRelSize->isChecked())
+    if (pdsize > 0.0 && rbRelSize->isChecked()) {
         pdsize = -pdsize;
+    }
 
-    QString pdsizeStr = QString::number(pdsize);
+    const QString pdsizeStr = QString::number(pdsize);
 
     LC_GROUP_GUARD("Appearance"); {
         // Points drawing style:

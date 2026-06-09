@@ -53,7 +53,7 @@ bool DRW_Class::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer *strBuf
     return buf->isGood();
 }
 
-void DRW_Class::write(dxfWriter *writer, DRW::Version ver){
+void DRW_Class::write(dxfWriter *writer, DRW::Version ver) const {
     if (ver > DRW::AC1009) {
         writer->writeString(0, "CLASS");
         writer->writeString(1, recName);

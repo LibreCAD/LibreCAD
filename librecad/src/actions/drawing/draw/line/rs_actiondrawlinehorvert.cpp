@@ -27,52 +27,54 @@
 #include "rs_actiondrawlinehorvert.h"
 
 #include "rs_debug.h"
+#include "rs_document.h"
 #include "rs_line.h"
 
 struct RS_ActionDrawLineHorVert::ActionData {
-	/**
-	 * Line data.
-	 */
-	RS_LineData data;
-	/**
-	 * 2 points
-	 */
-	RS_Vector p1;
-	RS_Vector p2;
+    /**
+  * Line data.
+  */
+    RS_LineData data;
+    /**
+  * 2 points
+  */
+    RS_Vector p1;
+    RS_Vector p2;
 };
 
-RS_ActionDrawLineHorVert::RS_ActionDrawLineHorVert(LC_ActionContext *actionContext)
-    :RS_PreviewActionInterface("Draw horizontal/vertical lines",actionContext,RS2::ActionDrawLineHorVert),
-    m_actionData(std::make_unique<ActionData>()){
+RS_ActionDrawLineHorVert::RS_ActionDrawLineHorVert(LC_ActionContext* actionContext)
+    : LC_SingleEntityCreationAction("Draw horizontal/vertical lines", actionContext, RS2::ActionDrawLineHorVert),
+      m_actionData(std::make_unique<ActionData>()) {
     reset();
     RS_DEBUG->print("RS_ActionDrawLineHorVert::constructor");
 }
 
 RS_ActionDrawLineHorVert::~RS_ActionDrawLineHorVert() = default;
 
-void RS_ActionDrawLineHorVert::reset(){
+void RS_ActionDrawLineHorVert::reset() const {
     m_actionData->data = {};
 }
 
-void RS_ActionDrawLineHorVert::init(int status){
+void RS_ActionDrawLineHorVert::init(const int status) {
     RS_PreviewActionInterface::init(status);
     reset();
     RS_DEBUG->print("RS_ActionDrawLineHorVert::init");
 }
 
-void RS_ActionDrawLineHorVert::doTrigger() {
-    auto *line = new RS_Line(m_container, m_actionData->data);
-    setPenAndLayerToActive(line);
+RS_Entity* RS_ActionDrawLineHorVert::doTriggerCreateEntity() {
+    auto* line = new RS_Line(m_document, m_actionData->data);
     moveRelativeZero(line->getMiddlePoint());
-    undoCycleAdd(line);
-    RS_DEBUG->print("RS_ActionDrawLineHorVert::trigger(): line added: %lu", line->getId());
+    return line;
 }
 
-void RS_ActionDrawLineHorVert::onMouseMoveEvent([[maybe_unused]]int status, LC_MouseEvent *e) {
-    RS_Vector mouse = e->snapPoint;
-    if (getStatus() == SetEndpoint && m_actionData->p1.valid){
-        RS_Vector p2x = RS_Vector(mouse.x, m_actionData->p1.y);
-        RS_Vector p2y = RS_Vector(m_actionData->p1.x, mouse.y);
+void RS_ActionDrawLineHorVert::doTriggerCompletion([[maybe_unused]] bool success) {
+}
+
+void RS_ActionDrawLineHorVert::onMouseMoveEvent([[maybe_unused]] const int status, const LC_MouseEvent* e) {
+    if (getStatus() == SetEndpoint && m_actionData->p1.valid) {
+        const RS_Vector mouse = e->snapPoint;
+        const auto p2x = RS_Vector(mouse.x, m_actionData->p1.y);
+        const auto p2y = RS_Vector(m_actionData->p1.x, mouse.y);
         if (mouse.distanceTo(p2y) > mouse.distanceTo(p2x)) {
             m_actionData->p2 = p2x;
         }
@@ -84,8 +86,8 @@ void RS_ActionDrawLineHorVert::onMouseMoveEvent([[maybe_unused]]int status, LC_M
     }
 }
 
-void RS_ActionDrawLineHorVert::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
-    RS_Vector mouse = e->snapPoint;
+void RS_ActionDrawLineHorVert::onMouseLeftButtonRelease(const int status, const LC_MouseEvent* e) {
+    const RS_Vector mouse = e->snapPoint;
     switch (status) {
         case SetStartpoint: {
             m_actionData->p1 = mouse;
@@ -103,24 +105,25 @@ void RS_ActionDrawLineHorVert::onMouseLeftButtonRelease(int status, LC_MouseEven
     }
 }
 
-void RS_ActionDrawLineHorVert::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {
+void RS_ActionDrawLineHorVert::onMouseRightButtonRelease(const int status, [[maybe_unused]] const LC_MouseEvent* e) {
     deletePreview();
     initPrevious(status);
 }
 
-void RS_ActionDrawLineHorVert::updateMouseButtonHints(){
+void RS_ActionDrawLineHorVert::updateActionPrompt() {
     switch (getStatus()) {
         case SetStartpoint:
-            updateMouseWidgetTRCancel(tr("Specify first point"));
+            updatePromptTRCancel(tr("Specify first point"));
             break;
         case SetEndpoint:
-            updateMouseWidgetTRBack(tr("Specify second point"));
+            updatePromptTRBack(tr("Specify second point"));
             break;
         default:
-            updateMouseWidget();
+            updatePrompt();
             break;
     }
 }
-RS2::CursorType RS_ActionDrawLineHorVert::doGetMouseCursor([[maybe_unused]] int status){
+
+RS2::CursorType RS_ActionDrawLineHorVert::doGetMouseCursor([[maybe_unused]] int status) {
     return RS2::CadCursor;
 }

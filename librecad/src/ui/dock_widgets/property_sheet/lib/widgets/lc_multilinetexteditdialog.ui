@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  - *********************************************************************************
+  - This file is part of the LibreCAD project, a 2D CAD program
+  -
+  - Copyright (C) 2025 LibreCAD.org
+  - Copyright (C) 2025 sand1024
+  -
+  - This program is free software; you can redistribute it and/or
+  - modify it under the terms of the GNU General Public License
+  - as published by the Free Software Foundation; either version 2
+  - of the License, or (at your option) any later version.
+  -
+  - This program is distributed in the hope that it will be useful,
+  - but WITHOUT ANY WARRANTY; without even the implied warranty of
+  - MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  - GNU General Public License for more details.
+  -
+  - You should have received a copy of the GNU General Public License
+  - along with this program; if not, write to the Free Software
+  - Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+  - *********************************************************************************
+  -->
+
+<ui version="4.0">
+    <class>LC_MultilineTextEditDialog</class>
+    <widget class="QDialog" name="LC_MultilineTextEditDialog">
+        <property name="geometry">
+            <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>400</width>
+                <height>300</height>
+            </rect>
+        </property>
+        <property name="windowTitle">
+            <string/>
+        </property>
+        <property name="sizeGripEnabled">
+            <bool>true</bool>
+        </property>
+        <property name="modal">
+            <bool>true</bool>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout">
+            <property name="leftMargin">
+                <number>6</number>
+            </property>
+            <property name="topMargin">
+                <number>6</number>
+            </property>
+            <property name="rightMargin">
+                <number>6</number>
+            </property>
+            <property name="bottomMargin">
+                <number>6</number>
+            </property>
+            <item>
+                <widget class="QPlainTextEdit" name="plainTextEdit">
+                    <property name="tabChangesFocus">
+                        <bool>true</bool>
+                    </property>
+                    <property name="lineWrapMode">
+                        <enum>QPlainTextEdit::WidgetWidth</enum>
+                    </property>
+                </widget>
+            </item>
+            <item>
+                <widget class="QDialogButtonBox" name="buttonBox">
+                    <property name="standardButtons">
+                        <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+                    </property>
+                    <property name="centerButtons">
+                        <bool>false</bool>
+                    </property>
+                </widget>
+            </item>
+        </layout>
+    </widget>
+    <resources/>
+    <connections/>
+</ui>

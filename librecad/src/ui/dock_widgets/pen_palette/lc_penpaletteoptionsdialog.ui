@@ -23,44 +23,11 @@
    <item row="7" column="0">
     <widget class="QGroupBox" name="groupBox_2">
      <property name="title">
-      <string>Colors</string>
+      <string>Appearance</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_5">
-      <item row="0" column="1">
-       <widget class="QComboBox" name="cbColorActiveBg">
-        <property name="toolTip">
-         <string>Background color for pen element currently edited in pen's table</string>
-        </property>
-        <property name="editable">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="3">
-       <spacer name="horizontalSpacer">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item row="1" column="1">
-       <widget class="QComboBox" name="cbColorGrid">
-        <property name="toolTip">
-         <string>Color of grid for pens list</string>
-        </property>
-        <property name="editable">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="2">
-       <widget class="QToolButton" name="tbGridColorSelect">
+      <item row="0" column="2">
+       <widget class="QToolButton" name="tbActiveColorSelect">
         <property name="toolTip">
          <string>Click to select color</string>
         </property>
@@ -80,21 +47,30 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="2">
-       <widget class="QToolButton" name="tbActiveColorSelect">
+      <item row="0" column="3">
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="0" column="1">
+       <widget class="QComboBox" name="cbColorActiveBg">
         <property name="toolTip">
-         <string>Click to select color</string>
+         <string>Background color for pen element currently edited in pen's table</string>
         </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset resource="../../../../res/controls/controls.qrc">
-          <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
+        <property name="editable">
+         <bool>true</bool>
         </property>
        </widget>
       </item>
-      <item row="3" column="0" colspan="2">
+      <item row="2" column="0" colspan="2">
        <widget class="QCheckBox" name="cbAllRowBold">
         <property name="toolTip">
          <string>If set, bold font is used for all elements of active pen item (otherwise, only for name)</string>
@@ -104,21 +80,7 @@
         </property>
        </widget>
       </item>
-      <item row="1" column="0">
-       <widget class="QLabel" name="label_3">
-        <property name="text">
-         <string>Grid Color:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="0">
-       <widget class="QLabel" name="label_4">
-        <property name="text">
-         <string>Matched Item Color:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="1">
+      <item row="1" column="1">
        <widget class="QComboBox" name="cbColorMatchedItem">
         <property name="toolTip">
          <string>Color of pen item that is matched by filter</string>
@@ -128,7 +90,14 @@
         </property>
        </widget>
       </item>
-      <item row="2" column="2">
+      <item row="1" column="0">
+       <widget class="QLabel" name="label_4">
+        <property name="text">
+         <string>Matched Item Color:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="2">
        <widget class="QToolButton" name="tbMatchedItemColorSelect">
         <property name="toolTip">
          <string>Click to select color</string>
@@ -139,6 +108,16 @@
         <property name="icon">
          <iconset resource="../../../../res/controls/controls.qrc">
           <normaloff>:/controls/colorxx.png</normaloff>:/controls/colorxx.png</iconset>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QCheckBox" name="cbShowGrid">
+        <property name="toolTip">
+         <string>If selected, grid lines will be drawn</string>
+        </property>
+        <property name="text">
+         <string>Show grid</string>
         </property>
        </widget>
       </item>

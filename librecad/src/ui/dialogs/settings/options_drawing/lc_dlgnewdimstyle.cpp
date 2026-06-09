@@ -46,19 +46,19 @@ LC_DlgNewDimStyle::~LC_DlgNewDimStyle(){
     delete ui;
 }
 
-void LC_DlgNewDimStyle::onUsedForChanged(int index) {
-    bool forAllDimensions = index == 0;
+void LC_DlgNewDimStyle::onUsedForChanged(const int index) {
+    const bool forAllDimensions = index == 0;
     ui->leStyleName->setEnabled(forAllDimensions);
     if (forAllDimensions) {
         ui->leStyleName->selectAll();
     }
     if (!forAllDimensions) {
-        int currentBasedOnIdx = ui->cbBasedOnStyle->currentIndex();
-        auto dimStyleItem = m_dimItemsListModel->getItemAtRow(currentBasedOnIdx);
+        const int currentBasedOnIdx = ui->cbBasedOnStyle->currentIndex();
+        const auto dimStyleItem = m_dimItemsListModel->getItemAtRow(currentBasedOnIdx);
         if (!dimStyleItem->isBaseStyle()) {
-            auto majorDimStyleItem = dimStyleItem->parentItem();
+            const auto majorDimStyleItem = dimStyleItem->parentItem();
             if (majorDimStyleItem != nullptr) { // this is style for specific dim type
-                int newIndex = m_dimItemsListModel->getItemIndex(majorDimStyleItem);
+                const int newIndex = m_dimItemsListModel->getItemIndex(majorDimStyleItem);
                 ui->cbBasedOnStyle->blockSignals(true);
                 ui->cbBasedOnStyle->setCurrentIndex(newIndex);
                 ui->cbBasedOnStyle->blockSignals(false);
@@ -67,76 +67,76 @@ void LC_DlgNewDimStyle::onUsedForChanged(int index) {
     }
     switch (index) {
         case 0:
-            dimType = RS2::EntityUnknown;
+            m_dimType = RS2::EntityUnknown;
             break;
         case 1:
-            dimType = RS2::EntityDimLinear;
+            m_dimType = RS2::EntityDimLinear;
             break;
         case 2:
-            dimType = RS2::EntityDimAngular;
+            m_dimType = RS2::EntityDimAngular;
             break;
         case 3:
-            dimType = RS2::EntityDimRadial;
+            m_dimType = RS2::EntityDimRadial;
             break;
         case 4:
-            dimType = RS2::EntityDimDiametric;
+            m_dimType = RS2::EntityDimDiametric;
             break;
         case 5:
-            dimType = RS2::EntityDimOrdinate;
+            m_dimType = RS2::EntityDimOrdinate;
             break;
         case 6:
-            dimType = RS2::EntityDimLeader;
+            m_dimType = RS2::EntityDimLeader;
             break;
         default:
-            dimType = RS2::EntityUnknown;
+            m_dimType = RS2::EntityUnknown;
     }
 }
 
-void LC_DlgNewDimStyle::onBasedOnChanged(int index) {
-    int currentUsedForMode = ui->cbUseFor->currentIndex();
+void LC_DlgNewDimStyle::onBasedOnChanged(const int index) {
+    const int currentUsedForMode = ui->cbUseFor->currentIndex();
     if (currentUsedForMode != 0) {
         ui->cbUseFor->setCurrentIndex(0);
-        nameWasEntered = false;
+        m_nameWasEntered = false;
     }
-    baseDimStyle = m_dimItemsListModel->getItemAtRow(index);
-    if (!nameWasEntered) {
-        QString newStyleName = "Copy of " + baseDimStyle->displayName();
+    m_baseDimStyle = m_dimItemsListModel->getItemAtRow(index);
+    if (!m_nameWasEntered) {
+        const QString newStyleName = "Copy of " + m_baseDimStyle->displayName();
         ui->leStyleName->setText(newStyleName);
         ui->leStyleName->selectAll();
     }
 }
 
 void LC_DlgNewDimStyle::onStyleNameTextChanged(const QString&) {
-    nameWasEntered = true;
+    m_nameWasEntered = true;
 }
 
-void LC_DlgNewDimStyle::setup(LC_DimStyleItem* initialStyle, QList<LC_DimStyleItem*>& items) {
+void LC_DlgNewDimStyle::setup(const LC_DimStyleItem* initialStyle, const QList<LC_DimStyleItem*>& items) {
     QList<LC_DimStyleItem*> sortedItems;
     sortedItems.append(items);
     // fixme - sand - sort items by base name!
     m_dimItemsListModel = new LC_StylesListModel(this, sortedItems, false);
     m_dimItemsListModel->sort(0, Qt::SortOrder::AscendingOrder);
     ui->cbBasedOnStyle->setModel(m_dimItemsListModel);
-    int initialIndex = m_dimItemsListModel->getItemIndex(initialStyle);
+    const int initialIndex = m_dimItemsListModel->getItemIndex(initialStyle);
     ui->cbBasedOnStyle->setCurrentIndex(initialIndex);
     ui->leStyleName->selectAll();
     ui->leStyleName->setFocus();
 }
 
 QString LC_DlgNewDimStyle::getStyleName() const {
-    switch (dimType) {
+    switch (m_dimType) {
         case RS2::EntityUnknown:
             return ui->leStyleName->text();
         default: {
-            QString baseStyleName = baseDimStyle->dimStyle()->getName();
-            QString resultingName = LC_DimStyle::getStyleNameForBaseAndType(baseStyleName, dimType);
+            const QString baseStyleName = m_baseDimStyle->dimStyle()->getName();
+            QString resultingName = LC_DimStyle::getStyleNameForBaseAndType(baseStyleName, m_dimType);
             return resultingName;
         }
     }
 }
 
 void LC_DlgNewDimStyle::onAccept() {
-    QString newName = getStyleName();
+    const QString newName = getStyleName();
     if (newName.isEmpty()) {
         QMessageBox::warning(this, tr("New Dimension Style"), tr("Empty name of style is not allowed."));
         return;

@@ -35,7 +35,7 @@ LC_DimStylesList::~LC_DimStylesList() {
 
 LC_DimStyle *LC_DimStylesList::findByName(const QString &name) const {
     //
-    for (auto v: m_stylesList){
+    for (const auto v: m_stylesList){
         if (v->getName().compare(name, Qt::CaseInsensitive) == 0){
             return v;
         }
@@ -43,13 +43,13 @@ LC_DimStyle *LC_DimStylesList::findByName(const QString &name) const {
     return nullptr;
 }
 
-LC_DimStyle *LC_DimStylesList::findByBaseNameAndType(const QString &name, RS2::EntityType dimType) const {
+LC_DimStyle *LC_DimStylesList::findByBaseNameAndType(const QString &name, const RS2::EntityType dimType) const {
     if (dimType == RS2::EntityUnknown) {
         return findByName(name);
     }
-    QString nameSuffix = LC_DimStyle::getDimStyleNameSuffixForType(dimType);
+    const QString nameSuffix = LC_DimStyle::getDimStyleNameSuffixForType(dimType);
     QString nameToFind = name + nameSuffix;
-    auto result = findByName(nameToFind);
+    const auto result = findByName(nameToFind);
     if (result == nullptr) {
         if (dimType == RS2::EntityDimAligned) {
             // fall back to style for linear
@@ -66,8 +66,8 @@ LC_DimStyle *LC_DimStylesList::findByBaseNameAndType(const QString &name, RS2::E
 }
 
 
-LC_DimStyle* LC_DimStylesList::resolveByBaseName(const QString& name, RS2::EntityType dimType) const {
-    QString nameSuffix = LC_DimStyle::getDimStyleNameSuffixForType(dimType);
+LC_DimStyle* LC_DimStylesList::resolveByBaseName(const QString& name, const RS2::EntityType dimType) const {
+    const QString nameSuffix = LC_DimStyle::getDimStyleNameSuffixForType(dimType);
     if (nameSuffix.isEmpty()) {
         return findByName(name);
     }
@@ -96,11 +96,10 @@ LC_DimStyle* LC_DimStylesList::resolveByBaseName(const QString& name, RS2::Entit
     return res;
 }
 
-LC_DimStyle* LC_DimStylesList::resolveByName(const QString& name, RS2::EntityType dimType) const {
-    LC_DimStyle* res = nullptr;
-
+LC_DimStyle* LC_DimStylesList::resolveByName(const QString& name, const RS2::EntityType dimType) const {
     // first, try to resolve style by its exact name. AutoCAD stores complete style name for type in DIMENSION
     if (name.contains(LC_DimStyle::NAME_SEPARATOR)) {
+        LC_DimStyle* res = nullptr;
         res = findByName(name);
         if (res != nullptr) {
             return res;
@@ -135,7 +134,7 @@ void LC_DimStylesList::mergeStyles() {
 
     QMap<QString, LC_DimStyle*> baseStyles;
     QList<LC_DimStyle*> entityTypeStyles;
-    for (auto ds: m_stylesList) {
+    for (const auto ds : std::as_const(m_stylesList)) {
         QString baseName;
         RS2::EntityType entityType;
         LC_DimStyle::parseStyleName(ds->getName(), baseName, entityType);
@@ -147,14 +146,14 @@ void LC_DimStylesList::mergeStyles() {
         }
     }
 
-    for (auto typeSpecificStyle: entityTypeStyles) {
+    for (const auto typeSpecificStyle: entityTypeStyles) {
         QString baseName;
         RS2::EntityType entityType;
         LC_DimStyle::parseStyleName(typeSpecificStyle->getName(), baseName, entityType);
 
         if (baseStyles.contains(baseName)) {
-            auto baseStyle = baseStyles[baseName];
-            auto savedCheckMode = typeSpecificStyle->getModifyCheckMode();
+            const auto baseStyle = baseStyles[baseName];
+            const auto savedCheckMode = typeSpecificStyle->getModifyCheckMode();
 
             // merge type-specific and basic style, so the type-specific style for all explicitly modified properties
             // will store own explicit values, and for properties that are not changed - their values will be set from the base style.

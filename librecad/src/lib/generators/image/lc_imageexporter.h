@@ -51,4 +51,4 @@ protected:
     bool exportGraphicToImage(RS_Graphic* graphic, const ExportOptions& options);
     void renderGraphic(RS_Graphic* graphic, const ExportOptions& options, QPaintDevice* buffer);
 };
-#endif // LC_IMAGEEXPORTER_H
+#endif

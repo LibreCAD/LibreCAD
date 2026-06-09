@@ -44,8 +44,8 @@ private:
     QPoint findWindowCentre();
     QPointF findStartX( double, double, QPointF );
     void drawTick( QPointF, double, double );
-    void segmentLine( QPointF, QPointF, QPointF, QString, int, int );
-    void segment( QPointF *, double, double, double, QString);
+    void segmentLine( QPointF, QPointF, QPointF, QString, int, int ) const;
+    void segment( QPointF *, double, double, double, QString) const;
 };
 
-#endif //end DIVIDE_H
+#endif

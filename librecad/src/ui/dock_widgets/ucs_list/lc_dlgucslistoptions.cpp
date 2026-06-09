@@ -25,9 +25,9 @@
 #include "lc_ucslistoptions.h"
 #include "ui_lc_dlgucslistoptions.h"
 
-LC_DlgUCSListOptions::LC_DlgUCSListOptions(LC_UCSListOptions* opts, QWidget *parent)
+LC_DlgUCSListOptions::LC_DlgUCSListOptions(LC_UCSListOptions* options, QWidget *parent)
     : LC_Dialog(parent, "UCSListOptions")
-    , ui(new Ui::LC_DlgUCSListOptions), m_options{opts}{
+    , ui(new Ui::LC_DlgUCSListOptions), m_options{options}{
     ui->setupUi(this);
 
 
@@ -35,6 +35,7 @@ LC_DlgUCSListOptions::LC_DlgUCSListOptions(LC_UCSListOptions* opts, QWidget *par
     ui->cbShowPositionAndAngle->setChecked(m_options->showColumnPositionAndAngle);
     ui->cbShowGridType->setChecked(m_options->showColumnGridType);
     ui->cbShowTooltip->setChecked(m_options->showViewInfoToolTip);
+    ui->cbShowGrid->setChecked(m_options->showGrid);
 
     ui->cbSilentUpdate->setChecked(m_options->duplicatedNameReplacesSilently);
     ui->cbShowPositionAndAngle->setChecked(m_options->showColumnPositionAndAngle);
@@ -48,7 +49,7 @@ LC_DlgUCSListOptions::LC_DlgUCSListOptions(LC_UCSListOptions* opts, QWidget *par
 
     ui->cbSilentUpdate->setVisible(false); // hide for now, reserve for future extension
 
-    QObject::connect(ui->buttonBox, &QDialogButtonBox::accepted, this, &LC_DlgUCSListOptions::validate);
+    connect(ui->buttonBox, &QDialogButtonBox::accepted, this, &LC_DlgUCSListOptions::validate);
 }
 
 LC_DlgUCSListOptions::~LC_DlgUCSListOptions(){
@@ -59,11 +60,12 @@ void LC_DlgUCSListOptions::languageChange() {
     ui->retranslateUi(this);
 }
 
-void LC_DlgUCSListOptions::validate() {
+void LC_DlgUCSListOptions::validate() const {
     m_options->showColumnTypeIcon = ui->cbShowTypeIcon->isChecked();
     m_options->showColumnPositionAndAngle = ui->cbShowPositionAndAngle->isChecked();
     m_options->showColumnGridType= ui->cbShowGridType->isChecked();
     m_options->showViewInfoToolTip = ui->cbShowTooltip->isChecked();
+    m_options->showGrid = ui->cbShowGrid->isChecked();
     m_options->restoreViewBySingleClick = ui->cbSingleClickRestore->isChecked();
     m_options->duplicatedNameReplacesSilently = ui->cbSilentUpdate->isChecked();
     m_options->askForDeletionConfirmation = ui->cbRemovalConfirmation->isChecked();

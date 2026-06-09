@@ -27,7 +27,6 @@ class QComboBox;
 class lc_Geardlg : public QDialog
 {
     Q_OBJECT
-
 public:
     explicit lc_Geardlg(QWidget *parent);
     virtual ~lc_Geardlg();

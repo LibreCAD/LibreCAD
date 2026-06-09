@@ -1,3 +1,26 @@
+/*
+ * ********************************************************************************
+ * This file is part of the LibreCAD project, a 2D CAD program
+ *
+ * Copyright (C) 2026 LibreCAD.org
+ * Copyright (C) 2026 sand1024
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ * ********************************************************************************
+ */
+
 #include "lc_lastopenfilesopener.h"
 
 #include <QDir>
@@ -15,12 +38,12 @@ LC_LastOpenFilesOpener::LC_LastOpenFilesOpener(QC_ApplicationWindow* appWin):m_a
 
 LC_LastOpenFilesOpener::~LC_LastOpenFilesOpener() = default;
 
-void LC_LastOpenFilesOpener::collectFilesList(const QList<QC_MDIWindow*>& m_windowList, const QMdiSubWindow* activWindow) {
-    bool rememberOpenedFiles = LC_GET_ONE_BOOL("Startup", "OpenLastOpenedFiles", false);
-    m_activeFile = "";
-    m_openedFiles = "";
+void LC_LastOpenFilesOpener::collectFilesList(const QList<QC_MDIWindow*>& windowList, const QMdiSubWindow* activWindow) {
+    const bool rememberOpenedFiles = LC_GET_ONE_BOOL("Startup", "OpenLastOpenedFiles", false);
+    m_activeFile.clear();
+    m_openedFiles.clear();
     if (rememberOpenedFiles) {
-        for (auto w: m_windowList) {
+        for (const auto w: windowList) {
             QString fileName = w->getFileName();
             if (!fileName.isEmpty()) {
                 if (activWindow != nullptr && activWindow == w) {
@@ -33,9 +56,9 @@ void LC_LastOpenFilesOpener::collectFilesList(const QList<QC_MDIWindow*>& m_wind
     }
 }
 
-void LC_LastOpenFilesOpener::saveSettings() {
+void LC_LastOpenFilesOpener::saveSettings() const {
     LC_GROUP_GUARD("Startup"); {
-        bool rememberOpenedFiles = LC_GET_BOOL("OpenLastOpenedFiles", false);
+        const bool rememberOpenedFiles = LC_GET_BOOL("OpenLastOpenedFiles", false);
         if (rememberOpenedFiles) {
             LC_SET("LastOpenFilesList", m_openedFiles);
             LC_SET("LastOpenFilesActive", m_activeFile);
@@ -44,16 +67,17 @@ void LC_LastOpenFilesOpener::saveSettings() {
 }
 
 
-void LC_LastOpenFilesOpener::openLastOpenFiles(QStringList &fileList,  QSplashScreen* splash) {
-    bool files_loaded = false;
+void LC_LastOpenFilesOpener::openLastOpenFiles(QStringList &fileList,  QSplashScreen* splash) const {
     LC_GROUP("Startup"); // fixme - sand - files - move saved files opening to the appwindow or util class out of there
     {
-        QString lastFiles = LC_GET_STR("LastOpenFilesList", "");
-        bool reopenLastFiles = LC_GET_BOOL("OpenLastOpenedFiles");
+        bool files_loaded = false;
+        const QString lastFiles = LC_GET_STR("LastOpenFilesList", "");
+        const bool reopenLastFiles = LC_GET_BOOL("OpenLastOpenedFiles");
         if (reopenLastFiles) {
             foreach(const QString &filename, lastFiles.split(";")) {
-                if (!filename.isEmpty() && QFileInfo::exists(filename))
+                if (!filename.isEmpty() && QFileInfo::exists(filename)) {
                     fileList << filename;
+                }
             }
         }
         if (!fileList.isEmpty()) {
@@ -67,7 +91,7 @@ void LC_LastOpenFilesOpener::openLastOpenFiles(QStringList &fileList,  QSplashSc
                 files_loaded = true;
             }
             if (reopenLastFiles) {
-                QString activeFile = LC_GET_STR("LastOpenFilesActive", "");
+                const QString activeFile = LC_GET_STR("LastOpenFilesActive", "");
                 m_appWindow->activateWindowWithFile(activeFile);
             }
         }

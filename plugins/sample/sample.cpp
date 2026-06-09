@@ -101,8 +101,7 @@ lc_Sampledlg::lc_Sampledlg(QWidget *parent) :  QDialog(parent)
 }
 
 
-bool lc_Sampledlg::failGUI(QString *msg)
-{
+bool lc_Sampledlg::failGUI(QString *msg) const {
     if (startxedit->text().isEmpty()) {msg->insert(0, tr("Start X is empty")); return true;}
     if (startyedit->text().isEmpty()) {msg->insert(0, tr("Start Y is empty")); return true;}
     if (endxedit->text().isEmpty()) {msg->insert(0, tr("End X is empty")); return true;}
@@ -111,8 +110,7 @@ bool lc_Sampledlg::failGUI(QString *msg)
 }
 
 
-void lc_Sampledlg::processAction([[maybe_unused]] Document_Interface *doc)
-{
+void lc_Sampledlg::processAction([[maybe_unused]] Document_Interface *doc) const {
     QPointF start, end;
     start.setX(startxedit->text().toDouble());
     start.setY(startyedit->text().toDouble());
@@ -147,7 +145,6 @@ void lc_Sampledlg::closeEvent(QCloseEvent *event)
 
 void lc_Sampledlg::readSettings()
  {
-    QString str;
     QSettings settings(QSettings::IniFormat, QSettings::UserScope, "LibreCAD", "sample_plugin");
     QPoint pos = settings.value("pos", QPoint(200, 200)).toPoint();
     QSize size = settings.value("size", QSize(430,140)).toSize();
@@ -161,8 +158,7 @@ void lc_Sampledlg::readSettings()
     move(pos);
  }
 
-void lc_Sampledlg::writeSettings()
- {
+void lc_Sampledlg::writeSettings() const {
     QSettings settings(QSettings::IniFormat, QSettings::UserScope, "LibreCAD", "sample_plugin");
     settings.setValue("pos", pos());
     settings.setValue("size", size());

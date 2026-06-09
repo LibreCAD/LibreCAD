@@ -46,6 +46,7 @@ public:
     bool showColumnViewDetails{true};
     bool showViewInfoToolTip{true};
     bool restoreViewBySingleClick{true};
+    bool showGrid {false};
 };
 
-#endif // LC_NAMEDVIEWSLISTOPTIONS_H
+#endif

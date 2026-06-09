@@ -55,4 +55,4 @@ protected:
 	void initToolBars();
 };
 
-#endif // LC_CADTOOLBARINTERFACE_H
+#endif

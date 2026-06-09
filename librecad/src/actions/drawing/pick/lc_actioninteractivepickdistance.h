@@ -23,13 +23,14 @@
 
 #ifndef LC_ACTIONINTERACTIVEPICKDISTANCE_H
 #define LC_ACTIONINTERACTIVEPICKDISTANCE_H
+
 #include "lc_actioninteractivepickbase.h"
 #include "rs_previewactioninterface.h"
 
 class LC_ActionInteractivePickDistance:public LC_ActionInteractivePickBase {
     Q_OBJECT
 public:
-    LC_ActionInteractivePickDistance(LC_ActionContext *actionContext);
+    explicit LC_ActionInteractivePickDistance(LC_ActionContext *actionContext);
     ~LC_ActionInteractivePickDistance() override;
 protected:
 
@@ -49,13 +50,14 @@ protected:
     bool isInteractiveDataValid() override;
     void doSetInteractiveInputValue(LC_ActionContext::InteractiveInputInfo* interactiveInputInfo) override;
     RS2::CursorType doGetMouseCursor(int status) override;
-    void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
-    void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
-    void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
-    void updateInfoCursorForPoint1(const RS_Vector& mouse);
+    void onMouseLeftButtonRelease(int status, const LC_MouseEvent* e) override;
+    void onMouseRightButtonRelease(int status, const LC_MouseEvent* e) override;
+    void onMouseMoveEvent(int status, const LC_MouseEvent* e) override;
+    void updateInfoCursorForPoint1(const RS_Vector& mouse) const;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
-    void updateMouseButtonHints() override;
-    void updateInfoCursorForPoint2(const RS_Vector &mouse, const RS_Vector &startPoint);
+    void updateActionPrompt() override;
+    void updateInfoCursorForPoint2(const RS_Vector &mouse, const RS_Vector &startPoint) const;
+    bool isInVisualSnapStatus(int status) override;
 };
 
-#endif // LC_ACTIONINTERACTIVEPICKDISTANCE_H
+#endif

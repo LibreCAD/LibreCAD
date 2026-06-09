@@ -23,33 +23,33 @@
 #include "lc_printviewportrenderer.h"
 
 #include "lc_graphicviewport.h"
+#include "rs_document.h"
 #include "rs_entitycontainer.h"
 #include "rs_math.h"
 #include "rs_painter.h"
 
 class RS_EntityContainer;
 
-LC_PrintViewportRenderer::LC_PrintViewportRenderer(LC_GraphicViewport *viewport, RS_Painter* p)
+LC_PrintViewportRenderer::LC_PrintViewportRenderer(LC_GraphicViewport *viewport, RS_Painter* painter)
    :LC_GraphicViewportRenderer(viewport, nullptr)
-    ,painter{p}
-{
+    ,m_painter{painter}{
    setBackground({255,255,255});
 }
 
 
 void LC_PrintViewportRenderer::doRender() {
-    setupPainter(painter);
-    RS_EntityContainer *container = viewport->getContainer();
-    container->draw(painter);
+    setupPainter(m_painter);
+    RS_EntityContainer *container = m_viewport->getDocument();
+    container->draw(m_painter);
 }
 
 
-void LC_PrintViewportRenderer::renderEntity(RS_Painter *painter, RS_Entity *e) {
+void LC_PrintViewportRenderer::renderEntity(RS_Painter *painter, RS_Entity *entity) {
 #ifdef DEBUG_RENDERING
     isVisibleTimer.start();
 #endif
     // entity is not visible:
-    bool visible = e->isVisible();
+    const bool visible = entity->isVisible();
 #ifdef DEBUG_RENDERING
     isVisibleTime += isVisibleTimer.nsecsElapsed();
 #endif
@@ -60,19 +60,20 @@ void LC_PrintViewportRenderer::renderEntity(RS_Painter *painter, RS_Entity *e) {
 #ifdef DEBUG_RENDERING
     isConstructionTimer.start();
 #endif
-    bool constructionEntity = e->isConstruction();
+    const bool constructionEntity = entity->isConstruction();
 #ifdef DEBUG_RENDERING
     isConstructionTime += isConstructionTimer.nsecsElapsed();
 #endif
     // do not draw construction layer on print preview or print
-    if (!e->isPrint() || constructionEntity)
-        return;
-
-    if (isOutsideOfBoundingClipRect(e, constructionEntity)) {
+    if (!entity->isPrint() || constructionEntity) {
         return;
     }
-    setPenForPrintingEntity(painter, e);
-    justDrawEntity(painter, e);
+
+    if (isOutsideOfBoundingClipRect(entity, constructionEntity)) {
+        return;
+    }
+    setPenForPrintingEntity(painter, entity);
+    justDrawEntity(painter, entity);
 }
 
 void LC_PrintViewportRenderer::setPenForPrintingEntity(RS_Painter *painter, RS_Entity *e) {
@@ -84,7 +85,7 @@ void LC_PrintViewportRenderer::setPenForPrintingEntity(RS_Painter *painter, RS_E
     RS_Pen originalPen = pen;
 
     double patternOffset = painter->currentDashOffset();
-    if (lastPaintEntityPen.isSameAs(pen, patternOffset)) {
+    if (m_lastPaintEntityPen.isSameAs(pen, patternOffset)) {
         return;
     }
     // Avoid negative widths
@@ -97,18 +98,18 @@ void LC_PrintViewportRenderer::setPenForPrintingEntity(RS_Painter *painter, RS_E
 // bug# 3437941
 // ------------------------------------------------------------
 
-    if (pen.getAlpha() == 1.0) {
+    if (pen.isFullyOpaque()) {
         if (width >0) {
             double wf = 1.0; // Width factor.
 
-            if (paperScale > RS_TOLERANCE) {
+            if (m_paperScale > RS_TOLERANCE) {
                 if (m_scaleLineWidth) {
-                    wf = defaultWidthFactor;
+                    wf = m_defaultWidthFactor;
                 } else {
-                    wf = 1.0 / paperScale;
+                    wf = 1.0 / m_paperScale;
                 }
             }
-            double screenWidth = painter->toGuiDX(width * unitFactor100 * wf);
+            double screenWidth = painter->toGuiDX(width * m_unitFactor100 * wf);
 
             /*// prevent drawing with 1-width which is slow:
             if (RS_Math::round(pen.getScreenWidth()) == 1) {
@@ -139,15 +140,15 @@ void LC_PrintViewportRenderer::setPenForPrintingEntity(RS_Painter *painter, RS_E
     }
 
     if (pen.getLineType() != RS2::SolidLine){
-        pen.setDashOffset(patternOffset * defaultWidthFactor);
+        pen.setDashOffset(patternOffset * m_defaultWidthFactor);
     }
-    
-    if (e->getFlag(RS2::FlagTransparent) ) {
+
+    if (e->getFlag(RS2::FlagTransparent)) {
         pen.setColor(m_colorBackground);
     }
 
     // we store original pen as last painted, not resolved one - since original pen lead to resulting resolved and may be used by the next entity
-    lastPaintEntityPen.updateBy(originalPen);
+    m_lastPaintEntityPen.updateBy(originalPen);
     painter->setPen(pen);
 #ifdef DEBUG_RENDERING
     setPenTime += setPenTimer.nsecsElapsed();
@@ -163,7 +164,7 @@ void LC_PrintViewportRenderer::loadSettings() {
 
 void LC_PrintViewportRenderer::setupPainter(RS_Painter* painter) {
     LC_GraphicViewportRenderer::setupPainter(painter);
-    painter->setDrawingMode(drawingMode);
+    painter->setDrawingMode(m_drawingMode);
     // fixme - sand - paperspace - disabling UCS for print - for now, restore later
     painter->disableUCS();
 }

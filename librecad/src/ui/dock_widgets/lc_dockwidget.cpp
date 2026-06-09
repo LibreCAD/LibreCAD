@@ -23,15 +23,13 @@
  */
 #include "lc_dockwidget.h"
 
-LC_DockWidget::LC_DockWidget(QWidget* parent, const QString& title, const QString& m_vertical_title, const Qt::WindowFlags& flags)
-    : QDockWidget{title, parent, flags},
-              m_verticalTitle{m_vertical_title},
-              m_horizontalTitle{title} {
-        }
+LC_DockWidget::LC_DockWidget(QWidget* parent, const QString& title, const QString& verticalTitle, const Qt::WindowFlags& flags)
+    : QDockWidget{title, parent, flags}, m_verticalTitle{verticalTitle}, m_horizontalTitle{title} {
+}
 
 void LC_DockWidget::updateTitle() {
-    DockWidgetFeatures currentFeatures = features();
-    auto verticalTitleBar = currentFeatures & QDockWidget::DockWidgetVerticalTitleBar;
+    const DockWidgetFeatures currentFeatures = features();
+    const auto verticalTitleBar = currentFeatures & QDockWidget::DockWidgetVerticalTitleBar;
     if (verticalTitleBar) {
         setWindowTitle(m_verticalTitle);
     }

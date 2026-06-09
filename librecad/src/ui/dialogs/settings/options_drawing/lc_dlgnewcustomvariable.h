@@ -54,4 +54,4 @@ private:
     QStringList *m_existingPropertyNames;
 };
 
-#endif // LC_DLGNEWCUSTOMVARIABLE_H
+#endif

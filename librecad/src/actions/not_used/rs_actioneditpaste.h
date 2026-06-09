@@ -58,7 +58,7 @@ protected:
     bool finishOnTrigger = true;
     std::unique_ptr<RS_Vector> targetPoint;
     RS2::CursorType doGetMouseCursor(int status) override;
-    void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
+    void onMouseLeftButtonRelease(int status, const LC_MouseEvent *e) override;
     void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     void updateMouseButtonHints() override;

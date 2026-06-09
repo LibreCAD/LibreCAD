@@ -23,9 +23,10 @@
 
 #include "lc_actiondimordinaterebase.h"
 
+#include "lc_dimordinate.h"
 #include "lc_graphicviewport.h"
 #include "rs_entity.h"
-#include "lc_dimordinate.h"
+#include "rs_selection.h"
 
 class LC_DimOrdinate;
 
@@ -37,36 +38,39 @@ void LC_ActionDimOrdinateRebase::doInitWithContextEntity(RS_Entity* contextEntit
     LC_ActionPreSelectionAwareBase::doInitWithContextEntity(contextEntity, clickPos);
 }
 
-void LC_ActionDimOrdinateRebase::updateMouseButtonHintsForSelection() {
-    updateMouseWidgetTRCancel("Select Ordinate dimension to rebase (Enter - to complete)", MOD_CTRL(tr("Select and rebase")));
+void LC_ActionDimOrdinateRebase::updateActionPromptForSelection() {
+    updatePromptTRCancel("Select Ordinate dimension to rebase (Enter - to complete)", MOD_CTRL(tr("Select and rebase")));
 }
 
 bool LC_ActionDimOrdinateRebase::isAllowTriggerOnEmptySelection() {
     return false;
 }
 
-void LC_ActionDimOrdinateRebase::doTrigger([[maybe_unused]]bool keepSelected) {
-    if (m_document != nullptr) {
-        undoCycleStart();
-        double horizontalDirection = 0;
-        RS_Vector origin {false};
+bool LC_ActionDimOrdinateRebase::doTriggerModifications(LC_DocumentModificationBatch& modificationData) {
+    double horizontalDirection = 0;
+    RS_Vector origin{false};
+    m_viewport->fillCurrentUCSInfo(origin, horizontalDirection);
 
-        m_viewport->fillCurrentUCSInfo(origin, horizontalDirection);
+    for (const auto e : std::as_const(m_selectedEntities)) {
+        const auto* dimOrdinate = dynamic_cast<LC_DimOrdinate*>(e);
+        if (dimOrdinate != nullptr) {
+            const auto clone = static_cast<LC_DimOrdinate*>(dimOrdinate->clone());
+            clone->setHDir(horizontalDirection);
+            clone->setDefinitionPoint(origin);
+            clone->clearSelectionFlag();
+            clone->update();
 
-        for (auto e: m_selectedEntities) {
-            auto* dimOrdinate = dynamic_cast<LC_DimOrdinate*>(e);
-            if (dimOrdinate != nullptr) {
-                auto clone = dynamic_cast<LC_DimOrdinate*>(dimOrdinate->clone());
-                clone->setHDir(horizontalDirection);
-                clone->setDefinitionPoint(origin);
-                m_container->addEntity(clone); // fixme - sand - dims - probably it's better to merge adding to container with undo?
-                undoCycleReplace(e, clone);
-                clone->update();
-            }
+            modificationData.replace(e, clone);
         }
-
-        undoCycleEnd();
-
-        m_viewport->notifyChanged();
     }
+    return true;
+}
+
+void LC_ActionDimOrdinateRebase::doTriggerSelectionUpdate(const bool keepSelected, const LC_DocumentModificationBatch& ctx) {
+    if (keepSelected) {
+        RS_Selection::selectEntitiesList(m_document, m_viewport, ctx.entitiesToAdd, true);
+    }
+}
+
+void LC_ActionDimOrdinateRebase::doTriggerCompletion([[maybe_unused]]bool success) {
 }

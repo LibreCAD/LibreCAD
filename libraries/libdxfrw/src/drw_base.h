@@ -18,6 +18,7 @@
 
 #include <string>
 #include <cmath>
+#include <memory>
 #include <unordered_map>
 #include <vector>
 
@@ -224,12 +225,18 @@ public:
         }
     }
 
-public:
-    double x{0};
+double x{0};
     double y{0};
     double z{0};
 };
 
+class dxfReader;
+
+class DRW_ParseableEntity {
+public:
+    virtual ~DRW_ParseableEntity() = default;
+    virtual bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) = 0;
+};
 
 //! Class to handle vertex
 /*!
@@ -242,8 +249,7 @@ public:
 
     DRW_Vertex2D(double sx, double sy, double b): x(sx), y(sy), stawidth(0), endwidth(0), bulge(b) {}
 
-public:
-    double x;                 /*!< x coordinate, code 10 */
+double x;                 /*!< x coordinate, code 10 */
     double y;                 /*!< y coordinate, code 20 */
     double stawidth;          /*!< Start width, code 40 */
     double endwidth;          /*!< End width, code 41 */
@@ -318,8 +324,7 @@ private:
     DRW_Coord vdata;
     std::vector<duint8> bdata;
 
-private:
-    union DRW_VarContent{
+union DRW_VarContent{
         UTF8STRING *s;
         dint32 i;
         double d;
@@ -336,7 +341,7 @@ private:
 public:
     DRW_VarContent content;
 private:
-    enum TYPE vType;
+    TYPE vType = INVALID;
     int vCode;            /*!< dxf code of this value*/
     bool sIsLayerRef{false}; /*!< when type==STRING, marks code 1003 layer-name references */
 
@@ -396,7 +401,7 @@ public:
         widthDefault = 31  /*!< by default (dxf -3) */
     };
 
-    static int lineWidth2dxfInt(enum lineWidth lw){
+    static int lineWidth2dxfInt(lineWidth lw){
         switch (lw){
         case widthByLayer:
             return -1;
@@ -458,11 +463,11 @@ public:
         return -3;
     }
 
-    static int lineWidth2dwgInt(enum lineWidth lw){
+    static int lineWidth2dwgInt(lineWidth lw){
         return static_cast<int> (lw);
     }
 
-    static enum lineWidth dxfInt2lineWidth(int i){
+    static lineWidth dxfInt2lineWidth(int i){
         if (i<0) {
             if (i==-1)
                 return widthByLayer;
@@ -523,7 +528,7 @@ public:
         return widthDefault;
     }
 
-    static enum lineWidth dwgInt2lineWidth(int i){
+    static lineWidth dwgInt2lineWidth(int i){
         if ( (i>-1 && i<24) || (i>28 && i<32) ) {
             return static_cast<lineWidth> (i);
         }
@@ -533,6 +538,3 @@ public:
 };
 
 #endif
-
-// EOF
-

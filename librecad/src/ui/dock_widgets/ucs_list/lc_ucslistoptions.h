@@ -40,6 +40,7 @@ public:
     int ucsApplyingPolicy = 0;
     int highlightBlinksCount = 10;
     int highlightBlinksDelay = 250;
+    bool showGrid = false;
 
     enum DoubleClickPolicy{
         DO_NOTHING,
@@ -49,4 +50,4 @@ public:
     };
 };
 
-#endif // LC_UCSLISTOPTIONS_H
+#endif

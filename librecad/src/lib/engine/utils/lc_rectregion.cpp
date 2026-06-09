@@ -22,79 +22,79 @@
 
 #include "lc_rectregion.h"
 
-LC_RectRegion::LC_RectRegion() {}
+LC_RectRegion::LC_RectRegion() = default;
 
-void LC_RectRegion::setCorners(RS_Vector lBottom, RS_Vector lTop, RS_Vector rTop, RS_Vector rBottom){
-    leftBottom = lBottom;
-    leftTop = lTop;
-    rightBottom = rBottom;
-    rightTop = rTop;
+void LC_RectRegion::setCorners(const RS_Vector& lBottom, const RS_Vector& lTop, const RS_Vector& rTop, const RS_Vector& rBottom){
+    m_leftBottom = lBottom;
+    m_leftTop = lTop;
+    m_rightBottom = rBottom;
+    m_rightTop = rTop;
     updateOther();
 }
 
-RS_Vector LC_RectRegion::getRotatedPoint(RS_Vector vect, double angle) {
+RS_Vector LC_RectRegion::getRotatedPoint(const RS_Vector& vect, const double angle) const {
     RS_Vector result = vect;
-    result.rotate(leftBottom, angle);
+    result.rotate(m_leftBottom, angle);
     return result;
 }
 
-LC_RectRegion* LC_RectRegion::getRotated(double angle) {
-    LC_RectRegion* result = new LC_RectRegion();
-    RS_Vector ltop = leftTop;
-    ltop.rotate(leftBottom, angle);
-    RS_Vector rtop = rightTop;
-    rtop.rotate(leftBottom, angle);
-    RS_Vector rbottom = rightBottom;
-    rbottom.rotate(leftBottom, angle);
+LC_RectRegion* LC_RectRegion::getRotated(const double angle) const {
+    const auto result = new LC_RectRegion();
+    RS_Vector ltop = m_leftTop;
+    ltop.rotate(m_leftBottom, angle);
+    RS_Vector rtop = m_rightTop;
+    rtop.rotate(m_leftBottom, angle);
+    RS_Vector rbottom = m_rightBottom;
+    rbottom.rotate(m_leftBottom, angle);
 
-    result->setCorners(leftBottom, ltop, rtop, rbottom);
+    result->setCorners(m_leftBottom, ltop, rtop, rbottom);
     return result;
 }
 
 void LC_RectRegion::updateOther(){
-    midLeft  = (leftBottom + leftTop) * 0.5;
-    midRight = (rightBottom + rightTop) * 0.5;
-    midBottom = (rightBottom + leftBottom) * 0.5;
-    midTop = (rightTop + leftTop) * 0.5;
-    center = (rightBottom + leftTop) * 0.5;
+    m_midLeft  = (m_leftBottom + m_leftTop) * 0.5;
+    m_midRight = (m_rightBottom + m_rightTop) * 0.5;
+    m_midBottom = (m_rightBottom + m_leftBottom) * 0.5;
+    m_midTop = (m_rightTop + m_leftTop) * 0.5;
+    m_center = (m_rightBottom + m_leftTop) * 0.5;
 
-    allPoints[0] = leftBottom;
-    allPoints[1] = midLeft;
-    allPoints[2] = leftTop;
-    allPoints[3] = midTop;
-    allPoints[4] = rightTop;
-    allPoints[5] = midRight;
-    allPoints[6] = rightBottom;
-    allPoints[7] = midBottom;
+    m_allPoints[0] = m_leftBottom;
+    m_allPoints[1] = m_midLeft;
+    m_allPoints[2] = m_leftTop;
+    m_allPoints[3] = m_midTop;
+    m_allPoints[4] = m_rightTop;
+    m_allPoints[5] = m_midRight;
+    m_allPoints[6] = m_rightBottom;
+    m_allPoints[7] = m_midBottom;
 
-    corners[0] = leftBottom;
-    corners[1] = leftTop;
-    corners[2] = rightTop;
-    corners[3] = rightBottom;
+    m_corners[0] = m_leftBottom;
+    m_corners[1] = m_leftTop;
+    m_corners[2] = m_rightTop;
+    m_corners[3] = m_rightBottom;
 }
 
-void LC_RectRegion::rotate(double angle){
-    RS_Vector center = leftBottom;
-    RS_Vector angleVector{angle};
-    leftTop.rotate(center, angleVector);
-    rightBottom.rotate(center, angleVector);
-    rightTop.rotate(center, angleVector);
+void LC_RectRegion::rotate(const double angle){
+    const RS_Vector center = m_leftBottom;
+    const RS_Vector angleVector{angle};
+    m_leftTop.rotate(center, angleVector);
+    m_rightBottom.rotate(center, angleVector);
+    m_rightTop.rotate(center, angleVector);
     updateOther();
 }
 
-void LC_RectRegion::move(RS_Vector offset){
-    leftBottom.move(offset);
-    leftTop.move(offset);
-    rightBottom.move(offset);
-    rightTop.move(offset);
+void LC_RectRegion::move(const RS_Vector& offset){
+    m_leftBottom.move(offset);
+    m_leftTop.move(offset);
+    m_rightBottom.move(offset);
+    m_rightTop.move(offset);
     updateOther();
 }
 
-void LC_RectRegion::scale(RS_Vector factor){
-    RS_Vector center = leftBottom;
-    leftTop.scale(center, factor);
-    rightBottom.scale(center, factor);
-    rightTop.scale(center, factor);
+void LC_RectRegion::scale(const RS_Vector& factor){
+    const RS_Vector center = m_leftBottom;
+    m_leftTop.scale(center, factor);
+    m_rightBottom.scale(center, factor);
+    m_rightTop.scale(center, factor);
     updateOther();
 }
 

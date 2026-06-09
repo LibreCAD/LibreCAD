@@ -37,36 +37,36 @@ class LC_RectRegion{
 public:
     LC_RectRegion();
     void rotate(double angle);
-    void move(RS_Vector offset);
-    void scale(RS_Vector offset);
-    void setCorners(RS_Vector lBottom, RS_Vector lTop, RS_Vector rTop, RS_Vector rBottom);
+    void move(const RS_Vector& offset);
+    void scale(const RS_Vector& factor);
+    void setCorners(const RS_Vector& lBottom, const RS_Vector& lTop, const RS_Vector& rTop, const RS_Vector& rBottom);
 
-    RS_VectorSolutions getAllPoints() const {return allPoints;};
-    RS_VectorSolutions getCorners() const {return corners;}
+    RS_VectorSolutions getAllPoints() const {return m_allPoints;}
+    RS_VectorSolutions getCorners() const {return m_corners;}
 
-    RS_Vector getRotatedPoint(RS_Vector vect, double angle);
-    LC_RectRegion* getRotated(double angle);
+    RS_Vector getRotatedPoint(const RS_Vector& vect, double angle) const;
+    LC_RectRegion* getRotated(double angle) const;
 
-    RS_Vector getLeftBottomCorner(){return leftBottom;};
+    RS_Vector getLeftBottomCorner() const {return m_leftBottom;}
 
     LC_TransformData determineTransformData(RS_Vector ref, RS_Vector newRef);
 
 protected:
-    RS_Vector leftBottom;
-    RS_Vector leftTop;
-    RS_Vector rightBottom;
-    RS_Vector rightTop;
+    RS_Vector m_leftBottom;
+    RS_Vector m_leftTop;
+    RS_Vector m_rightBottom;
+    RS_Vector m_rightTop;
 
-    RS_Vector midLeft;
-    RS_Vector midRight;
-    RS_Vector midBottom;
-    RS_Vector midTop;
-    RS_Vector center;
+    RS_Vector m_midLeft;
+    RS_Vector m_midRight;
+    RS_Vector m_midBottom;
+    RS_Vector m_midTop;
+    RS_Vector m_center;
 
-    RS_VectorSolutions allPoints{8};
-    RS_VectorSolutions corners{4};
+    RS_VectorSolutions m_allPoints{8};
+    RS_VectorSolutions m_corners{4};
 
     void updateOther();
 };
 
-#endif // LC_RECTREGION_H
+#endif

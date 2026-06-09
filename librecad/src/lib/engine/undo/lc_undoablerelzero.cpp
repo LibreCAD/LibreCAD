@@ -20,13 +20,14 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
 
-#include "lc_graphicviewport.h"
 #include "lc_undoablerelzero.h"
 
-LC_UndoableRelZero::LC_UndoableRelZero(LC_GraphicViewport *view, const RS_Vector &mFrom, const RS_Vector &mTo):viewport(view), m_From(mFrom), m_To(mTo) {}
+#include "lc_graphicviewport.h"
 
-void LC_UndoableRelZero::undoStateChanged(bool undone) {
-    if (viewport != nullptr) {
-        viewport->moveRelativeZero(undone ? m_From : m_To);
+LC_UndoableRelZero::LC_UndoableRelZero(LC_GraphicViewport *view, const RS_Vector &mFrom, const RS_Vector &mTo):m_viewport(view), m_from(mFrom), m_to(mTo) {}
+
+void LC_UndoableRelZero::deletedStateChanged(const bool undone) {
+    if (m_viewport != nullptr) {
+        m_viewport->moveRelativeZero(undone ? m_from : m_to);
     }
 }

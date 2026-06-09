@@ -38,14 +38,14 @@
 class RS_ActionZoomPan : public RS_ActionInterface {
     Q_OBJECT
 public:
-    RS_ActionZoomPan(LC_ActionContext *actionContext);
+    explicit RS_ActionZoomPan(LC_ActionContext *actionContext);
     void init(int status) override;
-    void finish(bool updateTB) override;
+    void finish() override;
     void trigger() override;
     void mouseMoveEvent(QMouseEvent* e) override;
     void mousePressEvent(QMouseEvent* e) override;
     void mouseReleaseEvent(QMouseEvent* e) override;
-    bool isSupportsPredecessorAction() override {return true;}
+    bool isSupportsPredecessorAction() const override {return true;}
 protected:
     /*
        ** Action States.
@@ -63,6 +63,6 @@ protected:
     int m_x2 = 0;
     int m_y2 = 0;
     RS2::CursorType doGetMouseCursor(int status) override;
-    void updateMouseButtonHints() override;
+    void updateActionPrompt() override;
 };
 #endif

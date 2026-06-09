@@ -239,8 +239,8 @@ bool dxfReaderAscii::readInt16() {
         intData = atoi(text.c_str());
         DRW_DBG(intData); DRW_DBG("\n");
         return true;
-    } else
-        return false;
+    }
+    return false;
 }
 
 bool dxfReaderAscii::readInt32() {
@@ -270,8 +270,8 @@ bool dxfReaderAscii::readDouble() {
         DRW_DBG(doubleData); DRW_DBG('\n');
 #endif
         return true;
-    } else
-        return false;
+    }
+    return false;
 }
 
 //saved as int or add a bool member??
@@ -282,7 +282,7 @@ bool dxfReaderAscii::readBool() {
         intData = atoi(text.c_str());
         DRW_DBG(intData); DRW_DBG("\n");
         return true;
-    } else
-        return false;
+    }
+    return false;
 }
 

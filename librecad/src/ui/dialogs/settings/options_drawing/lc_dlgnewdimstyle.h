@@ -37,7 +37,6 @@ namespace Ui{
 
 class LC_DlgNewDimStyle : public LC_Dialog{
     Q_OBJECT
-
 public:
     explicit LC_DlgNewDimStyle(QWidget *parent = nullptr);
     ~LC_DlgNewDimStyle() override;
@@ -45,17 +44,17 @@ public slots:
     void onUsedForChanged(int index);
     void onBasedOnChanged(int index);
     void onStyleNameTextChanged(const QString &);
-    void setup(LC_DimStyleItem* initialStyle, QList<LC_DimStyleItem*>& items);
+    void setup(const LC_DimStyleItem* initialStyle, const QList<LC_DimStyleItem*>& items);
     QString getStyleName() const;
     void onAccept();
-    RS2::EntityType getDimensionType(){return dimType;}
-    LC_DimStyleItem* getBaseDimStyle(){return baseDimStyle;}
+    RS2::EntityType getDimensionType() const {return m_dimType;}
+    LC_DimStyleItem* getBaseDimStyle() const {return m_baseDimStyle;}
 private:
     Ui::LC_DlgNewDimStyle *ui;
-    bool nameWasEntered = false;
+    bool m_nameWasEntered = false;
     LC_StylesListModel* m_dimItemsListModel{nullptr};
-    RS2::EntityType dimType = RS2::EntityUnknown;
-    LC_DimStyleItem* baseDimStyle{nullptr};
+    RS2::EntityType m_dimType = RS2::EntityUnknown;
+    LC_DimStyleItem* m_baseDimStyle{nullptr};
 };
 
-#endif // LC_DLGNEWDIMSTYLE_H
+#endif

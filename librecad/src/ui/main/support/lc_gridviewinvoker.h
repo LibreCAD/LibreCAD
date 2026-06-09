@@ -1,5 +1,5 @@
 /*******************************************************************************
-*
+ *
  This file is part of the LibreCAD project, a 2D CAD program
 
  Copyright (C) 2025 LibreCAD.org
@@ -27,11 +27,11 @@
 
 class QC_ApplicationWindow;
 
-class LC_GridViewInvoker: public LC_AppWindowAware {
-    public:
-        LC_GridViewInvoker(QC_ApplicationWindow* mainWin);
-        void setGridView(bool toggle, bool isometric, RS2::IsoGridViewType isoGridType) const;
-        void updateGridViewActions(bool isometric, RS2::IsoGridViewType type) const;
+class LC_GridViewInvoker : public LC_AppWindowAware {
+public:
+    explicit LC_GridViewInvoker(QC_ApplicationWindow* mainWin);
+    void setGridView(bool toggle, bool isometric, RS2::IsoGridViewType isoGridType) const;
+    void updateGridViewActions(bool isometric, RS2::IsoGridViewType type) const;
 };
 
-#endif // LC_GRIDVIEWINVOKER_H
+#endif

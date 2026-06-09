@@ -20,29 +20,30 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
 
-#include <QStyledItemDelegate>
-#include <QPainter>
-
 #include "lc_shortcutstreeview.h"
+
+#include <QPainter>
+#include <QStyledItemDelegate>
+
 #include "lc_shortcutstreemodel.h"
 #include "lc_shortcuttreeitem.h"
 
 class LC_ShortcutsTreeGridDelegate:public QStyledItemDelegate {
 public:
     explicit LC_ShortcutsTreeGridDelegate(LC_ShortcutsTreeView *parent = nullptr, LC_ShortcutsTreeModel* treeModel = nullptr):QStyledItemDelegate(parent){
-        if (parent){
-            this->treeModel = treeModel;
+        if (parent != nullptr){
+            this->m_treeModel = treeModel;
         }
     }
 
     void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const override{
         QStyledItemDelegate::paint(painter, option, index);
-        int col = index.column();
+        const int col = index.column();
 
         if (col > 0){
             bool draw = true;
 
-            LC_ShortcutTreeItem *shortcutItem = treeModel->getItemForIndex(index);
+            const LC_ShortcutTreeItem *shortcutItem = m_treeModel->getItemForIndex(index);
             if (shortcutItem != nullptr){
                 if (shortcutItem->isGroup()){
                     draw = false;
@@ -54,7 +55,7 @@ public:
             if (draw){
                 /*LC_LayerTreeModelOptions* options = treeModel->getOptions();
                 QColor color = options->itemsGridColor;*/
-                auto color = QColor(0xd3d3d3);
+                const auto color = QColor(0xd3d3d3);
                 painter->save();
                 painter->setPen(color);
                 painter->drawRect(option.rect);
@@ -64,7 +65,7 @@ public:
     }
 
 private:
-    LC_ShortcutsTreeModel* treeModel{nullptr};
+    LC_ShortcutsTreeModel* m_treeModel{nullptr};
 };
 
 LC_ShortcutsTreeView::LC_ShortcutsTreeView(QWidget *parent):QTreeView(parent) {}
@@ -77,9 +78,9 @@ void LC_ShortcutsTreeView::setup(LC_ShortcutsTreeModel *treeModel) {
 
 // todo - duplicated code from LayerTreeView. Most probably, need separate tree widget that supports expanded state
 
-QStringList LC_ShortcutsTreeView::saveTreeExpansionState(){
+QStringList LC_ShortcutsTreeView::saveTreeExpansionState() const {
     QStringList treeExpansionState;
-    LC_ShortcutsTreeModel *treeModel = getTreeModel();
+    const LC_ShortcutsTreeModel *treeModel = getTreeModel();
         for (QModelIndex index : treeModel->getPersistentIndexList()) {
             if (this->isExpanded(index)){
                 treeExpansionState << index.data(Qt::UserRole).toString();
@@ -95,7 +96,7 @@ QStringList LC_ShortcutsTreeView::saveTreeExpansionState(){
  * @param treeExpansionState
  */
 void LC_ShortcutsTreeView::restoreTreeExpansionState(QStringList treeExpansionState){
-    LC_ShortcutsTreeModel *layerTreeModel = getTreeModel();
+    const LC_ShortcutsTreeModel *layerTreeModel = getTreeModel();
     this->setUpdatesEnabled(false);
     applyExpandState(treeExpansionState, layerTreeModel->index(0, 0, QModelIndex()));
     this->setUpdatesEnabled(true);
@@ -103,7 +104,7 @@ void LC_ShortcutsTreeView::restoreTreeExpansionState(QStringList treeExpansionSt
 }
 
 LC_ShortcutsTreeModel *LC_ShortcutsTreeView::getTreeModel() const{
-    auto* result = dynamic_cast<LC_ShortcutsTreeModel *>(model());
+    auto* result = static_cast<LC_ShortcutsTreeModel *>(model());
     return result;
 }
 
@@ -117,7 +118,7 @@ void LC_ShortcutsTreeView::expandChildren(const QModelIndex &index){
     }
     expand(index);
 
-    int childCount = index.model()->rowCount(index);
+    const int childCount = index.model()->rowCount(index);
     for (int i = 0; i < childCount; i++) {
         const QModelIndex &child = model()->index(i, 0, index);
         // Recursively call the function for each child node.
@@ -133,11 +134,11 @@ void LC_ShortcutsTreeView::expandChildren(const QModelIndex &index){
  * @param startIndex
  */
 void LC_ShortcutsTreeView::applyExpandState(
-    QStringList &expandedItems, QModelIndex startIndex){
-    LC_ShortcutsTreeModel* treeModel = getTreeModel();
-        for (QString item: expandedItems) {
+    QStringList &expandedItems, const QModelIndex& startIndex){
+    const LC_ShortcutsTreeModel* treeModel = getTreeModel();
+        for (const QString &item: expandedItems) {
             QModelIndexList matches = treeModel->match(startIndex, Qt::UserRole, item);
-                for (QModelIndex index: matches) {
+                for (QModelIndex index: std::as_const(matches)) {
                     this->setExpanded(index, true);
                     applyExpandState(expandedItems, treeModel->index(0, 0, index));
                 }

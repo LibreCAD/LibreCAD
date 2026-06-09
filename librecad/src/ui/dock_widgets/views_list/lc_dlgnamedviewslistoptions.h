@@ -35,7 +35,7 @@ class LC_DlgNamedViewsListOptions : public LC_Dialog{
     Q_OBJECT
 public:
     explicit LC_DlgNamedViewsListOptions(LC_NamedViewsListOptions* options, QWidget *parent = nullptr);
-    ~LC_DlgNamedViewsListOptions();
+    ~LC_DlgNamedViewsListOptions() override;
 public slots:
     void validate() const;
 protected slots:
@@ -45,4 +45,4 @@ private:
     LC_NamedViewsListOptions* m_options;
 };
 
-#endif // LC_DLGNAMEDVIEWSLISTOPTIONS_H
+#endif

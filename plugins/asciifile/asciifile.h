@@ -49,7 +49,6 @@ namespace DPT {
 class dibPunto : public QDialog
 {
     Q_OBJECT
-
 public:
     explicit dibPunto(QWidget *parent = nullptr);
     ~dibPunto();
@@ -62,20 +61,20 @@ public slots:
 
 private:
     void readSettings();
-    void writeSettings();
+    void writeSettings() const;
     void procesfileODB(QFile* file, QString sep);
 #if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
     void procesfileNormal(QFile* file, QString sep, Qt::SplitBehaviorFlags skip = Qt::KeepEmptyParts);
 #else
     void procesfileNormal(QFile* file, QString sep, QString::SplitBehavior skip = QString::KeepEmptyParts);
 #endif
-    void drawLine();
-    void draw2D();
-    void draw3D();
+    void drawLine() const;
+    void draw2D() const;
+    void draw3D() const;
     void drawNumber();
     void drawElev();
     void drawCode();
-    bool failGUI(QString *msg);
+    bool failGUI(QString *msg) const;
     void calcPos(DPI::VAlign *v, DPI::HAlign *h, double sep,
                  double *x, double *y, DPT::txtposition sit);
 
@@ -99,12 +98,11 @@ private:
 class imgLabel : public QLabel
 {
     Q_OBJECT
-
 public:
     imgLabel(QWidget * parent = nullptr, Qt::WindowFlags f = {} );
 
     void setPos(DPT::txtposition pos = DPT::N);
-    DPT::txtposition getPos() { return currPos;}
+    DPT::txtposition getPos() const { return currPos;}
 
 protected:
     void mouseReleaseEvent(QMouseEvent *event) override;
@@ -122,14 +120,13 @@ private:
 class pointBox : public QGroupBox
 {
     Q_OBJECT
-
 public:
     pointBox(const QString & title, const QString & label, QWidget * parent = nullptr );
-    void setInLayout(QLayout *lo);
-    bool checkOn() { return rb->isChecked();}
-    void setCheck(bool val) { rb->setChecked(val);}
-    QString getLayer() { return layedit->text();}
-    void setLayer(QString l) { layedit->setText(l);}
+    void setInLayout(QLayout *lo) const;
+    bool checkOn() const { return rb->isChecked();}
+    void setCheck(bool val) const { rb->setChecked(val);}
+    QString getLayer() const { return layedit->text();}
+    void setLayer(QString l) const { layedit->setText(l);}
 private:
     QCheckBox *rb;
     QLineEdit *layedit;
@@ -140,22 +137,21 @@ private:
 class textBox : public pointBox
 {
     Q_OBJECT
-
 public:
     textBox(const QString & title, const QString & label, QWidget * parent = nullptr );
-    void setPos(DPT::txtposition p) { img->setPos(p); }
-    QString getStyleStr() { return combostyle->currentText();}
-    void setStyleIdx(int idx) { combostyle->setCurrentIndex(idx);}
-    int getStyleIdx() { return combostyle->currentIndex();}
-    void setHeight(double data) { heightedit->setText( QString::number(data,'f'));}
+    void setPos(DPT::txtposition p) const { img->setPos(p); }
+    QString getStyleStr() const { return combostyle->currentText();}
+    void setStyleIdx(int idx) const { combostyle->setCurrentIndex(idx);}
+    int getStyleIdx() const { return combostyle->currentIndex();}
+    void setHeight(double data) const { heightedit->setText( QString::number(data,'f'));}
 //    double getHeight();
-    QString getHeightStr() { return heightedit->text();}
-    double getHeight() { return heightedit->text().toDouble();}
-    void setSeparation(double data) { sepedit->setText( QString::number(data,'f'));}
-    QString getSeparationStr() { return sepedit->text();}
-    double getSeparation() { return sepedit->text().toDouble();}
-    void setPosition(DPT::txtposition p) { img->setPos(p);}
-    DPT::txtposition getPosition() { return img->getPos();}
+    QString getHeightStr() const { return heightedit->text();}
+    double getHeight() const { return heightedit->text().toDouble();}
+    void setSeparation(double data) const { sepedit->setText( QString::number(data,'f'));}
+    QString getSeparationStr() const { return sepedit->text();}
+    double getSeparation() const { return sepedit->text().toDouble();}
+    void setPosition(DPT::txtposition p) const { img->setPos(p);}
+    DPT::txtposition getPosition() const { return img->getPos();}
 
 private:
     QComboBox *combostyle;
@@ -173,4 +169,4 @@ struct PointData
     QString code;
 };
 /***********/
-#endif // ECHOPLUG_H
+#endif

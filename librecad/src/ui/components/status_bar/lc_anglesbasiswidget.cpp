@@ -20,13 +20,13 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
 
-#include <QMouseEvent>
 #include "lc_anglesbasiswidget.h"
+
+#include <QMouseEvent>
 
 #include "rs_graphic.h"
 #include "rs_graphicview.h"
 #include "ui_lc_anglesbasiswidget.h"
-
 
 LC_AnglesBasisWidget::LC_AnglesBasisWidget(QWidget *parent,const char* name)
     : QWidget(parent)
@@ -48,10 +48,10 @@ void LC_AnglesBasisWidget::mouseReleaseEvent(QMouseEvent *e) {
     QWidget::mouseReleaseEvent(e);
 }
 
-void LC_AnglesBasisWidget::update(RS_Graphic *graphic) {
+void LC_AnglesBasisWidget::update(const RS_Graphic *graphic) {
     if (graphic != nullptr) {
-        double baseAngle = graphic->getAnglesBase();
-        QString angleStr = graphic->formatAngle(baseAngle);
+        const double baseAngle = graphic->getAnglesBase();
+        const QString angleStr = graphic->formatAngle(baseAngle);
         update(angleStr, graphic->areAnglesCounterClockWise());
     }
     else{
@@ -61,14 +61,14 @@ void LC_AnglesBasisWidget::update(RS_Graphic *graphic) {
 
 void LC_AnglesBasisWidget::setGraphicView(RS_GraphicView* gv) {
     if (gv != nullptr) {
-        RS_Graphic *graphic = gv->getGraphic();
+        const RS_Graphic *graphic = gv->getGraphic();
         if (graphic != nullptr) {
             update(graphic);
         }
     }
 }
 
-void LC_AnglesBasisWidget::update(QString angle, bool counterclockwise) {
+void LC_AnglesBasisWidget::update(const QString& angle, const bool counterclockwise) {
     QIcon icon;
     QString tooltip;
     if (counterclockwise){
@@ -85,6 +85,6 @@ void LC_AnglesBasisWidget::update(QString angle, bool counterclockwise) {
     ui->lblPositiveDirection->setToolTip(tooltip);
 }
 
-void LC_AnglesBasisWidget::onIconsRefreshed(){
+void LC_AnglesBasisWidget::onIconsRefreshed() const {
     ui->lblPositiveDirection->setPixmap(m_counterclockwise ? m_iconCounterClockwise.pixmap(m_iconSize) : m_iconClockwise.pixmap(m_iconSize));
 }

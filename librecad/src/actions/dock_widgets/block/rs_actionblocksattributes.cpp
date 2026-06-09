@@ -37,29 +37,28 @@
 class RS_BlockList;
 class RS_Block;
 
-RS_ActionBlocksAttributes::RS_ActionBlocksAttributes(LC_ActionContext *actionContext)
-        :RS_ActionInterface("Edit Block Attributes",actionContext, RS2::ActionBlocksAttributes) {}
+RS_ActionBlocksAttributes::RS_ActionBlocksAttributes(LC_ActionContext* actionContext)
+    : RS_ActionInterface("Edit Block Attributes", actionContext, RS2::ActionBlocksAttributes) {
+}
 
 void RS_ActionBlocksAttributes::trigger() {
     RS_DEBUG->print("editing block attributes");
 
-	if (m_graphic != nullptr) {
+    if (m_graphic != nullptr) {
         RS_Block* block = m_graphic->getActiveBlock();
         RS_BlockList* blockList = m_graphic->getBlockList();
         if (blockList != nullptr && block != nullptr) {
-            QString oldName = block->getName();
+            const QString oldName = block->getName();
 
-            RS_BlockData d = RS_DIALOGFACTORY->requestBlockAttributesDialog(blockList);
+            const RS_BlockData d = RS_DIALOGFACTORY->requestBlockAttributesDialog(blockList);
 
             if (d.isValid()) {
-                QString newName = d.name;
+                const QString newName = d.name;
                 // update window title of opened block
-                auto& appWindow = QC_ApplicationWindow::getAppWindow();
+                const auto& appWindow = QC_ApplicationWindow::getAppWindow();
                 if (QC_MDIWindow* blockWindow = appWindow->getWindowWithDoc(block)) {
                     QString title = blockWindow->windowTitle();
-                    title = title.replace(
-                            "'" + oldName + "'",
-                            "'" + newName + "'");
+                    title = title.replace("'" + oldName + "'", "'" + newName + "'");
                     blockWindow->setWindowTitle(title);
                 }
                 blockList->rename(block, newName);
@@ -69,10 +68,10 @@ void RS_ActionBlocksAttributes::trigger() {
             }
         }
     }
-    finish(false);
+    finish();
 }
 
-void RS_ActionBlocksAttributes::init(int status) {
+void RS_ActionBlocksAttributes::init(const int status) {
     RS_ActionInterface::init(status);
     trigger();
 }

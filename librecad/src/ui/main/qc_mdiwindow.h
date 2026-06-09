@@ -39,19 +39,18 @@ class RS_EventHandler;
  * @author Andrew Mustun
  */
 class QC_MDIWindow:public QMdiSubWindow,
-                   public LC_GraphicModificationListener {
+                   public LC_DocumentModificationListener {
     Q_OBJECT
 public:
     QC_MDIWindow(RS_Document *doc,QWidget *parent,bool printPreview, LC_ActionContext* actionContext);
-    void removeWidgetsListeners() const;
     ~QC_MDIWindow() override;
 public slots:
-    void slotPenChanged(const RS_Pen &p);
-    void slotFileNew();
-    bool loadDocumentFromTemplate(const QString &fileName, RS2::FormatType type);
+    void slotPenChanged(const RS_Pen &pen) const;
+    void slotFileNew() const;
+    bool loadDocumentFromTemplate(const QString &fileName, RS2::FormatType type) const;
     bool loadDocument(const QString &fileName, RS2::FormatType type);
     bool saveDocument(bool &cancelled, bool isAutoSave = false);
-    bool autoSaveDocument(QString &autosaveFileName);
+    bool autoSaveDocument(QString &autosaveFileName) const;
     bool saveDocumentAs(bool &cancelled);
     void slotFilePrint();
 public:
@@ -84,26 +83,26 @@ public:
      * @return The MDI window id.
      */
     unsigned getId() const;
-    friend std::ostream &operator <<(std::ostream &os, QC_MDIWindow &w);
-    bool has_children() const;
+    friend std::ostream &operator <<(std::ostream &os, const QC_MDIWindow &w);
+    bool hasChildren() const;
 
     void graphicModified(const RS_Graphic *g, bool modified) override;
-    void undoStateChanged(const RS_Graphic* g, bool undoAvailable, bool redoAvailable) override;
-    void zoomAuto();
-    bool isModified();
+    void undoStateChanged(const RS_Document* g, bool undoAvailable, bool redoAvailable) override;
+    void zoomAuto() const;
+    bool isModified() const;
 
     SaveOnClosePolicy getSaveOnClosePolicy() const{
         return m_saveOnClosePolicy;
     }
 
-    void setSaveOnClosePolicy(SaveOnClosePolicy val){
+    void setSaveOnClosePolicy(const SaveOnClosePolicy val){
         m_saveOnClosePolicy = val;
     }
 
 protected:
     LC_DocumentsStorage *m_documentsStorage;
     // window ID
-    unsigned id = 0;
+    unsigned m_id = 0;
     // Graphic view
     QG_GraphicView *m_graphicView = nullptr;
     // Document
@@ -117,9 +116,10 @@ protected:
     QMdiArea *m_cadMdiArea = nullptr;
 
     SaveOnClosePolicy m_saveOnClosePolicy = ASK;
-    void drawChars(); // fime - sand - files - refactor and remove from there!
+    void drawChars() const; // fime - sand - files - refactor and remove from there!
     void closeEvent(QCloseEvent *) override;
     void addWidgetsListeners();
-    void setupGraphicView(QWidget *parent, bool printPreview, LC_ActionContext* actionContext);
+    void removeWidgetsListeners();
+    void setupGraphicView(const QWidget *parent, bool printPreview, LC_ActionContext* actionContext);
 };
 #endif

@@ -43,13 +43,13 @@ public:
      */
     QColor matchedItemColor = QColor("blue");
     /**
-     * color for table's grid drawing
+     * defines whether grid is shown
      */
-    QColor itemsGridColor = QColor(216, 216, 216);
+    bool showGrid{true};
     /**
      * mode for displaying color name
      */
-    int colorNameDisplayMode {LC_PenInfoRegistry::RGB};
+    LC_PenInfoRegistry::ColorNameDisplayMode colorNameDisplayMode {LC_PenInfoRegistry::RGB};
     /**
      * should we show all fields for active pen in the table or only for name
      */
@@ -101,4 +101,4 @@ public:
 
 };
 
-#endif // LC_PENPALETTEOPTIONS_H
+#endif

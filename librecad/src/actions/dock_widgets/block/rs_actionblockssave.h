@@ -32,14 +32,14 @@ class RS_Insert;
  * @author Dongxu Li
  */
 class RS_ActionBlocksSave : public RS_ActionInterface {
-	Q_OBJECT
-public:
-    RS_ActionBlocksSave(LC_ActionContext *actionContext);
-	void init(int status) override;
-	void trigger() override;
+    Q_OBJECT public:
+    explicit RS_ActionBlocksSave(LC_ActionContext* actionContext);
+    void init(int status) override;
+    void trigger() override;
+
 private:
-    void addBlock(RS_Insert* in, RS_Graphic* g);
-	RS_Graphic *createGraphicForBlock(RS_Block *activeBlock);
+    void addBlock(const RS_Insert* in, RS_Graphic* g);
+    RS_Graphic* createGraphicForBlock(const RS_Block* activeBlock);
 };
 
 #endif

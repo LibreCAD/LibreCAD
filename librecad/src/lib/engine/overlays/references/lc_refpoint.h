@@ -32,8 +32,8 @@ public:
     RS_Entity *clone()  const override;
     void draw(RS_Painter *painter) override;
 private:
-    int pdmode;
-    double pdsize;
+    int m_pdmode;
+    double m_pdsize;
 };
 
-#endif // LC_REFPOINT_H
+#endif

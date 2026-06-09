@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>LC_DlgPropertySheetWidgetOptions</class>
+ <widget class="QDialog" name="LC_DlgPropertySheetWidgetOptions">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>768</width>
+    <height>418</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Property Sheet Properties</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout_2">
+   <item row="1" column="0">
+    <widget class="QGroupBox" name="groupBox_3">
+     <property name="title">
+      <string>Entities View</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_4">
+      <item row="0" column="0">
+       <widget class="QCheckBox" name="cbShowComputed">
+        <property name="toolTip">
+         <string>If enabled, calculated properties for entities will be also shown (if any exists)</string>
+        </property>
+        <property name="text">
+         <string>Show calculated properties</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QCheckBox" name="cbShowMultipleEntitiesCommands">
+        <property name="toolTip">
+         <string>If selected, if there is one or more entities selected, the list of entity set modification commands will be shown (if any applicable).</string>
+        </property>
+        <property name="text">
+         <string>Show multiple entities modification commands</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QCheckBox" name="cbShowSingelEntityCommands">
+        <property name="toolTip">
+         <string>If selected, in case there is only on entity in sheet, the list for commands that are relevant for entity will be shown (if any applicable).</string>
+        </property>
+        <property name="text">
+         <string>Show single entity commands</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="0" column="1" rowspan="2">
+    <widget class="QGroupBox" name="groupBox">
+     <property name="title">
+      <string>No Selection View</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="8" column="0">
+       <widget class="QCheckBox" name="cbGraphicView">
+        <property name="toolTip">
+         <string>Settings for generic rendering of drawing</string>
+        </property>
+        <property name="text">
+         <string>Graphic View</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QCheckBox" name="cbNamedViews">
+        <property name="toolTip">
+         <string>Named view selection and operations</string>
+        </property>
+        <property name="text">
+         <string>Named Views</string>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="0">
+       <widget class="QCheckBox" name="cbDrawingUnits">
+        <property name="toolTip">
+         <string>Linear and angular units settings for the drawing</string>
+        </property>
+        <property name="text">
+         <string>Drawing Units</string>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="0">
+       <widget class="QCheckBox" name="cbWorkspace">
+        <property name="toolTip">
+         <string>Workspace selection and saving section</string>
+        </property>
+        <property name="text">
+         <string>Workspace</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0">
+       <widget class="QCheckBox" name="cbUCS">
+        <property name="toolTip">
+         <string>User coordinates system sleection and related operations</string>
+        </property>
+        <property name="text">
+         <string>User Coordinate system (UCS)</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QCheckBox" name="cbActiveLayer">
+        <property name="toolTip">
+         <string>Active layer selection, properties and commands</string>
+        </property>
+        <property name="text">
+         <string>Active Layer</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="0">
+       <widget class="QCheckBox" name="cbGrid">
+        <property name="toolTip">
+         <string>Grid settings for drawing view</string>
+        </property>
+        <property name="text">
+         <string>Grid</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QCheckBox" name="cbActivePen">
+        <property name="toolTip">
+         <string>Active pen settings section</string>
+        </property>
+        <property name="text">
+         <string>Active Pen</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="label">
+        <property name="toolTip">
+         <string>Sections that should be visible if there are no selected entities</string>
+        </property>
+        <property name="text">
+         <string>Visible sections:</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="3" column="0">
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="orientation">
+      <enum>Qt::Orientation::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::StandardButton::Cancel|QDialogButtonBox::StandardButton::Ok</set>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <widget class="QGroupBox" name="groupBox_2">
+     <property name="title">
+      <string>General</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_3">
+      <item row="5" column="2">
+       <widget class="QLabel" name="label_3">
+        <property name="text">
+         <string>points</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="3">
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Orientation::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>0</width>
+          <height>0</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="5" column="0">
+       <widget class="QLabel" name="label_2">
+        <property name="text">
+         <string>Font size:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="1">
+       <widget class="QSpinBox" name="sbFontSize">
+        <property name="toolTip">
+         <string>Size of the font, in points, that is used by properties sheet</string>
+        </property>
+        <property name="minimum">
+         <number>5</number>
+        </property>
+        <property name="maximum">
+         <number>20</number>
+        </property>
+        <property name="value">
+         <number>9</number>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="0">
+       <widget class="QCheckBox" name="cbShowLinks">
+        <property name="toolTip">
+         <string>If enabled, property sheet will include links to command actions, that are relevant to specific properties or sections</string>
+        </property>
+        <property name="text">
+         <string>Include command links</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0" colspan="4">
+       <widget class="QCheckBox" name="cbDuplicateSelectionAction">
+        <property name="toolTip">
+         <string>If enabled, generic selection-related actions will be included into the widget toolbar</string>
+        </property>
+        <property name="text">
+         <string>Show generic selection actions button in toolbar</string>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="0" colspan="4">
+       <widget class="QCheckBox" name="cbShowToolOptions">
+        <property name="toolTip">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If selected, fields for current tool options (usually shown in &lt;span style=&quot; font-style:italic;&quot;&gt;Tool Options&lt;/span&gt; toolbar) will also be shown in property sheet.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+        <property name="text">
+         <string>Show tool options</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Orientation::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>0</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>LC_DlgPropertySheetWidgetOptions</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>248</x>
+     <y>254</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>157</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>LC_DlgPropertySheetWidgetOptions</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>316</x>
+     <y>260</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>286</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

@@ -30,18 +30,18 @@ class LC_GraphicViewport;
 class LC_Lattice{
 public:
     LC_Lattice(double angleX, double angleY, const RS_Vector& gridWidth);
-    LC_Lattice(double angleX, double angleY, const RS_Vector& gridWidth, int numPoints);
+    LC_Lattice(double angleX, double angleY, const RS_Vector& gridWidth, int numPointsTotal);
 
     LC_Lattice() = default;
 
     virtual ~LC_Lattice();
-    const RS_Vector& getMajorVector();
-    const RS_Vector& getDeltaX();
-    const RS_Vector& getDeltaY();
+    const RS_Vector& getMajorVector() const;
+    const RS_Vector& getDeltaX() const;
+    const RS_Vector& getDeltaY() const;
     void init(int projectedPointsCount);
 
     void update(double angleX, double angleY, const RS_Vector& gridWidth, int numPointsTotal);
-    void updateForLines(double angleX, double angleY, const RS_Vector& gridWidth, const RS_Vector& lineOffset, int numPointsTotal);
+    void updateForLines(double angleX, double angleY, const RS_Vector& gridWidth, const RS_Vector& offsetForLine, int numPointsTotal);
 
     void fill(int numPointsByX, int numPointsByY,
               const RS_Vector &baseGridPoint,
@@ -54,32 +54,30 @@ public:
     void fillVerticalEdge(int numPointsByX, const RS_Vector& baseGridPoint, bool reverseX, bool reverseY, bool skipFirstPoint = false);
     void fillHorizontalEdge(int numPointsByX, const RS_Vector& baseGridPoint, bool reverseX, bool reverseY, bool skipFirstPoint = false);
 
-    int getPointsSize(){return pointsX.size();}
-    const std::vector<RS_Vector>getPoints();
+    int getPointsSize() const {return m_pointsX.size();}
+    RS_Vector getPoint(const int index) const {return RS_Vector(m_pointsX[index], m_pointsY[index]);}
 
-    inline RS_Vector getPoint(int index) {return RS_Vector(pointsX[index], pointsY[index]);};
-
-    RS_Vector getOffset(int xPoints, int yPoints);
+    RS_Vector getOffset(int xPointsDelta, int yPointsDelta) const;
 
     void fillByLines(int numPointsByX, int numPointsByY, const RS_Vector &baseGridPoint, bool reverseX, bool reverseY, bool fillLeftEdge, bool fillRightEdge);
     void fillAllByLinesExceptDiagonal(int numPointsByX, int numPointsByY, const RS_Vector &baseGridPoint, bool reverseX, bool reverseY, bool fillLeftEdge, bool fillRightEdge);
 
-    double getPointX(int i){return pointsX[i];};
-    double getPointY(int i){return pointsY[i];};
+    double getPointX(const int i) const {return m_pointsX[i];}
+    double getPointY(const int i) const {return m_pointsY[i];}
 
     const std::vector<double> &getPointsX() const;
     const std::vector<double> &getPointsY() const;
-    void toGui(LC_GraphicViewport *viewport);
-    void addLine(double d, double d1, double d2, double d3);
+    void toGui(const LC_GraphicViewport *viewport);
+    void addLine(double startX, double startY, double endX, double endY);
     void addPoint(double x, double y);
 protected:
-    RS_Vector deltaX;
-    RS_Vector deltaY;
-    RS_Vector majorVector;
-    std::vector<double> pointsX;
-    std::vector<double> pointsY;
-    RS_Vector lineOffsetX;
-    RS_Vector lineOffsetY;
+    RS_Vector m_deltaX;
+    RS_Vector m_deltaY;
+    RS_Vector m_majorVector;
+    std::vector<double> m_pointsX;
+    std::vector<double> m_pointsY;
+    RS_Vector m_lineOffsetX;
+    RS_Vector m_lineOffsetY;
 
     void fillAll(int numPointsByX, int numPointsByY,
                  const RS_Vector &baseGridPoint,
@@ -103,4 +101,4 @@ protected:
     void fillByLinesParallelDiagonal(int numPointsByX, int numPointsByY, const RS_Vector &baseGridPoint, const RS_Vector &xDelta, const RS_Vector &yDelta);
 };
 
-#endif // LC_LATTICE_H
+#endif

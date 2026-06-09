@@ -35,7 +35,7 @@
 class RS_ActionBlocksAdd:public RS_ActionInterface {
     Q_OBJECT
 public:
-    RS_ActionBlocksAdd(LC_ActionContext *actionContext);
+    explicit RS_ActionBlocksAdd(LC_ActionContext *actionContext);
     void init(int status) override;
     void trigger() override;
 };

@@ -23,16 +23,14 @@
 
 #include "lc_exporttoimageservice.h"
 
-#include <QApplication>
-
 #include "lc_appwindowdialogsinvoker.h"
 #include "lc_imageexporter.h"
 #include "qc_applicationwindow.h"
 #include "qg_dlgimageoptions.h"
 #include "rs_graphic.h"
 
-bool LC_ExportToImageService::exportGraphicsToImage(RS_Graphic* graphic, const QString& documentFileName) {
-    QG_ImageOptionsDialog imageOptionsDialog = new QG_ImageOptionsDialog(m_appWin);
+bool LC_ExportToImageService::exportGraphicsToImage(RS_Graphic* graphic, const QString& documentFileName) const {
+    auto imageOptionsDialog = QG_ImageOptionsDialog(m_appWin);
     graphic->calculateBorders();
     imageOptionsDialog.setGraphicSize(graphic->getSize() * 2.);
 
@@ -43,23 +41,22 @@ bool LC_ExportToImageService::exportGraphicsToImage(RS_Graphic* graphic, const Q
         options.blackAndWhite = imageOptionsDialog.isBlackWhite();
         options.backgroundBlack = imageOptionsDialog.isBackgroundBlack();
 
-        QPair<QString, QString> fileFormat = m_dlgHelpr->showExportFileSelectionDialog(documentFileName);
-        QString fileName = fileFormat.first;
+        auto [fileName, format] = m_dlgHelpr->showExportFileSelectionDialog(documentFileName);
         if (fileName.isEmpty()) {
             return true;
         }
 
         options.fileName = fileName;
-        options.format = fileFormat.second;
+        options.format = format;
 
         m_appWin->showStatusMessage(tr("Exporting drawing..."), 2000);
         QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
 
         LC_ImageExporter exporter;
 
-        bool ret = exporter.exportToImage(graphic, options);
+        const bool ret = exporter.exportToImage(graphic, options);
         if (ret) {
-            QString message = tr("Exported: %1").arg(fileName);
+            const QString message = tr("Exported: %1").arg(fileName);
             m_appWin->notificationMessage(message, 20000);
         } else {
             m_appWin->showStatusMessage(tr("Export failed!"), 2000);

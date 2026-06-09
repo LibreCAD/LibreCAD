@@ -25,8 +25,7 @@
 #define LC_TOLERANCEUTILS_H
 #include <QString>
 
-namespace LC_ToleranceUtils
-{
+namespace LC_ToleranceUtils {
     struct DatumInfo {
         QString value;
         QString code;
@@ -44,9 +43,9 @@ namespace LC_ToleranceUtils
         DatumInfo datumThree_2;
     };
 
-   FeatureControlFrameInfo stringToControlInfo();
+    FeatureControlFrameInfo stringToControlInfo();
 
-       enum BoundaryModifierMode {
+    enum BoundaryModifierMode {
         NONE,
         DIAMETER,
         SF_DIAMETER,
@@ -71,19 +70,11 @@ namespace LC_ToleranceUtils
     };
 
     struct CharacteristicDefinition {
-        CharacteristicDefinition(Characteristic t, const QString& icon,
-                                 int minDatum,
-                                 int maxDatum,
-                                 bool tolModifiableToMaterial,
-                                 bool materialModifiersForDatumRefs,
-                                 BoundaryModifierMode boundaryModifier)
-            : type{t},
-              icon{icon},
-              minDatumAllowed{minDatum},
-              maxDatumAllowed{maxDatum},
-              toleranceModifiersAllowed{tolModifiableToMaterial},
-              materialModifiersAllowedForDatumRefs{materialModifiersForDatumRefs},
-              boundaryModifierMode{boundaryModifier} {
+        CharacteristicDefinition(const Characteristic t, const QString& icon, const int minDatum, const int maxDatum,
+                                 const bool tolModifiableToMaterial, const bool materialModifiersForDatumRefs,
+                                 const BoundaryModifierMode boundaryModifier)
+            : type{t}, icon{icon}, minDatumAllowed{minDatum}, maxDatumAllowed{maxDatum}, toleranceModifiersAllowed{tolModifiableToMaterial},
+              materialModifiersAllowedForDatumRefs{materialModifiersForDatumRefs}, boundaryModifierMode{boundaryModifier} {
         }
 
         Characteristic type;
@@ -95,7 +86,7 @@ namespace LC_ToleranceUtils
         BoundaryModifierMode boundaryModifierMode = NONE;
     };
 
-    std::vector<CharacteristicDefinition> g_characteristics = {
+    inline std::vector<CharacteristicDefinition> g_characteristics = {
         {POSITION, ":/gdt/chars/position.lci", 1, 3, true, true, BoundaryModifierMode::BOTH},
         {CONCENTRICITY, ":/gdt/chars/concentricity.lci", 1, 3, false, false, BoundaryModifierMode::BOTH},
         {SYMMETRRY, ":/gdt/chars/symmetry.lci", 1, 3, false, false, BoundaryModifierMode::NONE},
@@ -112,8 +103,7 @@ namespace LC_ToleranceUtils
         {TOTAL_RUNOUT, ":/gdt/chars/totalrunout.lci", 1, 2, false, false, BoundaryModifierMode::NONE}
     };
 
-    bool LC_ToleranceUtils::isAllowedDatumName(const QString& datumName);
+    bool isAllowedDatumName(const QString& datumName);
+}
 
-};
-
-#endif // LC_TOLERANCEUTILS_H
+#endif

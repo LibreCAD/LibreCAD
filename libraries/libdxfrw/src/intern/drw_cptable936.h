@@ -21940,4 +21940,4 @@ static const int DRW_DoubleTable936[][2] = {
     {0xFE4F, 0xFA29} //21791 #CJK COMPATIBILITY IDEOGRAPH
 };
 
-#endif // DRW_CPTABLE936_H
+#endif

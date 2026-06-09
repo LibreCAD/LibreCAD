@@ -23,20 +23,19 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-#include<cmath>
+#include "rs_painterold.h"
 
 #include<QPainterPath>
 #include<QPolygon>
+#include<cmath>
 
 #include "rs_color.h"
 #include "rs_debug.h"
 #include "rs_math.h"
-#include "rs_painterold.h"
 
 void RS_PainterOld::createArc(QPolygon& pa,
-                           const RS_Vector& cp, double radius,
-                           double a1, double a2,
-                           bool reversed) {
+                              const RS_Vector& cp, const double radius,
+                              double a1, double a2, const bool reversed) const {
 
     if (radius<1.0e-6) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
@@ -67,23 +66,18 @@ void RS_PainterOld::createArc(QPolygon& pa,
     //QPointArray pa;
     pa.clear();
     //    pa<<QPoint(toScreenX(cp.x+cos(aStart)*radius), toScreenY(cp.y-sin(aStart)*radius));
-    double da=std::abs(a2-a1);
+    const double da=std::abs(a2-a1);
     for(a=a1; std::abs(a-a1)<da; a+=aStep) {
         pa<<QPoint(toScreenX(cp.x+std::cos(a)*radius), toScreenY(cp.y-std::sin(a)*radius));
     }
 
-    QPoint pt2(toScreenX(cp.x+std::cos(a2)*radius), toScreenY(cp.y-std::sin(a2)*radius));
+    const QPoint pt2(toScreenX(cp.x+std::cos(a2)*radius), toScreenY(cp.y-std::sin(a2)*radius));
     if(pa.size()>0 && pa.last() != pt2) pa<<pt2;
 }
 
 
 void RS_PainterOld::createEllipse(QPolygon& pa,
-                               const RS_Vector& cp,
-                               double radius1, double radius2,
-                               double angle,
-                               double angle1, double angle2,
-                               bool reversed)
-{
+                               const RS_Vector& cp, const double radius1, const double radius2, const double angle, const double angle1, const double angle2, const bool reversed) const {
 
     const RS_Vector vr(radius1,radius2);
     const RS_Vector rvp(radius2,radius1);
@@ -152,14 +146,14 @@ void RS_PainterOld::drawHandle(const RS_Vector& p, const RS_Color& c, int size) 
     if (size<0) { // fixme - remove redundant check in painting
         size = 2;
     }
-    int doubleSize = 2 * size;
+    const int doubleSize = 2 * size;
     fillRect((int)(p.x - size), (int)(p.y - size), doubleSize, doubleSize, c);
 }
 
-int RS_PainterOld::toScreenX(double x) const {
+int RS_PainterOld::toScreenX(const double x) const {
     return RS_Math::round(offset.x + x);
 }
 
-int RS_PainterOld::toScreenY(double y) const{
+int RS_PainterOld::toScreenY(const double y) const{
     return RS_Math::round(offset.y + y);
 }

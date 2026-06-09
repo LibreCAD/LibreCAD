@@ -24,17 +24,19 @@
 **
 **********************************************************************/
 #include "qg_dimensionlabeleditor.h"
+
 #include "rs_dimension.h"
 
 namespace {
-    const QChar g_diametericPrefix{0x2205};
+    constexpr QChar g_diametericPrefix{0x2205};
 }
+
 /*
  *  Constructs a QG_DimensionLabelEditor as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
  */
-QG_DimensionLabelEditor::QG_DimensionLabelEditor(QWidget* parent, Qt::WindowFlags fl)
-    : QWidget(parent, fl){
+QG_DimensionLabelEditor::QG_DimensionLabelEditor(QWidget* parent, const Qt::WindowFlags fl)
+    : QWidget(parent, fl) {
     setupUi(this);
     connect(bDiameter, &QAbstractButton::toggled, this, &QG_DimensionLabelEditor::updatePrefix);
     // Initialize the symbol selection
@@ -57,28 +59,28 @@ QG_DimensionLabelEditor::~QG_DimensionLabelEditor() = default;
  *  Sets the strings of the subwidgets using the current
  *  language.
  */
-void QG_DimensionLabelEditor::languageChange(){
+void QG_DimensionLabelEditor::languageChange() {
     retranslateUi(this);
 }
 
-void QG_DimensionLabelEditor::updateRawLabelText() {
-     QString label = getLabel();
-     leRawText->setText(label);
+void QG_DimensionLabelEditor::updateRawLabelText() const {
+    const QString label = getLabel();
+    leRawText->setText(label);
 }
 
-void QG_DimensionLabelEditor::setLabel(const QString& l) {
-    int i0, i1a, i1b, i2;
-    QString label, tol1, tol2;
+void QG_DimensionLabelEditor::setLabel(const QString& l) const {
+    QString tol1, tol2;
     bool hasDiameter = false;
 
-    label = l;
+    QString label = l;
 
-    if ( !label.isEmpty()) {
-        if (label.at(0)==QChar(g_diametericPrefix) || label.at(0)==QChar(0xF8)) {
+    if (!label.isEmpty()) {
+        if (label.at(0) == QChar(g_diametericPrefix) || label.at(0) == QChar(0xF8)) {
             hasDiameter = true;
             bDiameter->setChecked(true);
             bDiameter->setText({{QChar(g_diametericPrefix)}});
-        } else if (label.startsWith(tr("R", "Radial dimension prefix"))) {
+        }
+        else if (label.startsWith(tr("R", "Radial dimension prefix"))) {
             bDiameter->setIcon({});
             bDiameter->setText(tr("R", "Radial dimesnion prefix"));
             bDiameter->setCheckable(true);
@@ -86,18 +88,20 @@ void QG_DimensionLabelEditor::setLabel(const QString& l) {
         }
     }
 
-    i0 = l.indexOf("\\S");
-    if (i0>=0) {
-        i1a = l.indexOf("^ ", i0);
-        i1b = i1a+1;
-        if (i1a<0) {
-            i1a = i1b = l.indexOf('^', i0);
+    const int i0 = l.indexOf("\\S");
+    if (i0 >= 0) {
+        int i1a = l.indexOf("^ ", i0);
+        int i1b = i1a + 1;
+        if (i1a < 0) {
+            const qint64 idx = l.indexOf('^', i0);
+            i1a = idx;
+            i1b = idx;
         }
-        if (i1a>=0) {
-            i2 = l.indexOf(';', i1b);
+        if (i1a >= 0) {
+            const int i2 = l.indexOf(';', i1b);
             label = l.mid(0, i0);
-            tol1 = l.mid(i0+2, i1a-i0-2);
-            tol2 = l.mid(i1b+1, i2-i1b-1);
+            tol1 = l.mid(i0 + 2, i1a - i0 - 2);
+            tol2 = l.mid(i1b + 1, i2 - i1b - 1);
         }
     }
 
@@ -106,32 +110,37 @@ void QG_DimensionLabelEditor::setLabel(const QString& l) {
     leTol2->setText(tol2);
 }
 
-QString QG_DimensionLabelEditor::getLabel() {
+QString QG_DimensionLabelEditor::getLabel() const {
     // TODO: an extra '&' shouldn't be added
     // TODO: fix the the root cause
     QString l = leLabel->text();
-    if (l.startsWith('&'))
+    if (l.startsWith('&')) {
         l = l.mid(1);
+    }
     QString prefix = m_hasDiameter ? bDiameter->text() : QString{};
-    if (prefix.startsWith('&'))
+    if (prefix.startsWith('&')) {
         prefix = prefix.mid(1);
+    }
 
-    QRegularExpression re{QString{R"(^\s*%1)"}.arg(prefix)};
     // diameter:
     if (!bDiameter->text().isEmpty()) {
-        auto match = re.match(l);
+        const QRegularExpression re{QString{R"(^\s*%1)"}.arg(prefix)};
+        const auto match = re.match(l);
         if (bDiameter->isChecked()) {
             if (l.isEmpty()) {
                 l = QString("%1<>").arg(prefix);
             }
             else {
-                if (!match.hasMatch())
+                if (!match.hasMatch()) {
                     l = prefix + l;
+                }
             }
-        } else {
+        }
+        else {
             if (match.hasMatch()) {
                 l = l.mid(match.capturedEnd(0));
-            } else if (!l.isEmpty() && l.at(0) == g_diametericPrefix) {
+            }
+            else if (!l.isEmpty() && l.at(0) == g_diametericPrefix) {
                 l = l.mid(1);
             }
         }
@@ -143,9 +152,9 @@ QString QG_DimensionLabelEditor::getLabel() {
     return l;
 }
 
-void QG_DimensionLabelEditor::insertSign(const QString& s) {
+void QG_DimensionLabelEditor::insertSign(const QString& s) const {
     const QString prefix = s.left(1);
-    const QString &current = leLabel->text();
+    const QString& current = leLabel->text();
     if (current.isEmpty()) {
         leLabel->setText(prefix + R"(<>)");
     }
@@ -155,22 +164,21 @@ void QG_DimensionLabelEditor::insertSign(const QString& s) {
     updateRawLabelText();
 }
 
-void QG_DimensionLabelEditor::updatePrefix(bool isChecked)
-{
+void QG_DimensionLabelEditor::updatePrefix(const bool isChecked) const {
     QString prefix = bDiameter->text();
     if (prefix.startsWith('&')) {
         prefix = prefix.mid(1);
     }
-    QRegularExpression re{QString{R"(^\s*%1)"}.arg(prefix)};
-    QString label = leLabel->text();
-    auto match = re.match(label);
+    const QRegularExpression re{QString{R"(^\s*%1)"}.arg(prefix)};
+    const QString label = leLabel->text();
+    const auto match = re.match(label);
     if (!isChecked && match.hasMatch()) {
         leLabel->setText(label.mid(match.capturedEnd(0)));
         updateRawLabelText();
     }
 }
 
-void QG_DimensionLabelEditor::setRadialType(const RS_Dimension& dim){
+void QG_DimensionLabelEditor::setRadialType(const RS_Dimension& dim) {
     switch (dim.rtti()) {
         case RS2::EntityDimRadial: {
             bDiameter->setIcon({});

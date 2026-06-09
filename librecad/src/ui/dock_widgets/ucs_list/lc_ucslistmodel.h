@@ -25,7 +25,8 @@
 
 #include <QAbstractTableModel>
 #include <QIcon>
-#include "rs.h"
+
+#include "lc_formatter.h"
 
 class LC_UCS;
 class LC_UCSList;
@@ -37,7 +38,7 @@ public:
     explicit LC_UCSListModel(LC_UCSListOptions *modelOptions, QObject * parent = nullptr);
 
     ~LC_UCSListModel() override;
-    void setUCSList(LC_UCSList *ucsList, RS2::LinearFormat format, RS2::AngleFormat angleFormat, int precision, int anglePrecision, RS2::Unit drawingUnit);
+    void setUCSList(LC_UCSList *ucsList, LC_Formatter* formatter);
 
     QModelIndex parent(const QModelIndex &child) const override;
     int rowCount(const QModelIndex &parent) const override;
@@ -47,13 +48,13 @@ public:
     LC_UCS *getItemForIndex(const QModelIndex &index) const;
     int translateColumn(int column) const;
     void fillUCSsList(QList<LC_UCS *> &list) const;
-    QIcon getTypeIcon(LC_UCS *ucs) const;
-    QIcon getOrthoTypeIcon(LC_UCS *ucs) const;
-    QModelIndex getIndexForUCS(LC_UCS* ucs) const;
-    void markActive(LC_UCS *ucs);
-    LC_UCS* getActiveUCS();
-    int count();
-    LC_UCS *getWCS();
+    QIcon getTypeIcon(const LC_UCS *ucs) const;
+    QIcon getOrthoTypeIcon(const LC_UCS *ucs) const;
+    QModelIndex getIndexForUCS(const LC_UCS* ucs) const;
+    void markActive(const LC_UCS *ucs);
+    LC_UCS* getActiveUCS() const;
+    int count() const;
+    LC_UCS *getWCS() const;
 
     /**
    * Columns that are shown in the table
@@ -66,7 +67,7 @@ public:
         LAST
     };
 
-    QString getUCSInfo(LC_UCS *ucs);
+    QString getUCSInfo(const LC_UCS *ucs) const;
 
     struct UCSItem{
         LC_UCS* ucs;
@@ -78,11 +79,6 @@ public:
     };
 
 protected:
-    RS2::LinearFormat m_linearFormat;
-    RS2::AngleFormat m_angleFormat;
-    int m_anglePrec;
-    int m_prec;
-    RS2::Unit m_unit;
     LC_UCSList* m_ucsList {nullptr};
     QList<UCSItem*> m_ucss;
     QIcon m_iconWCS;
@@ -92,8 +88,9 @@ protected:
     QIcon m_iconGridISOLeft;
     QIcon m_iconGridISORight;
     LC_UCSListOptions* m_options {nullptr};
+    LC_Formatter* m_formatter {nullptr};
     QString getGridViewType(int orthoType);
-    UCSItem* createUCSItem(LC_UCS *view);
+    UCSItem* createUCSItem(LC_UCS *ucs);
 };
 
-#endif // LC_UCSLISTMODEL_H
+#endif

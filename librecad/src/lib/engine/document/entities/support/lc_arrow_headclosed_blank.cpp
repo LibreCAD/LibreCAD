@@ -25,8 +25,8 @@
 
 #include "rs_painter.h"
 
-LC_ArrowHeadClosedBlank::LC_ArrowHeadClosedBlank(RS_EntityContainer* container,
-                                                 const RS_Vector& point, double dirAngle, double size, double ownAngle)
+LC_ArrowHeadClosedBlank::LC_ArrowHeadClosedBlank(RS_EntityContainer* container, const RS_Vector& point, const double dirAngle,
+                                                 const double size, const double ownAngle)
     : LC_ArrowHeadClosed(container, point, dirAngle, size, ownAngle, false) {
 }
 
@@ -35,5 +35,5 @@ RS_Entity* LC_ArrowHeadClosedBlank::clone() const {
 }
 
 void LC_ArrowHeadClosedBlank::draw(RS_Painter* painter) {
-  painter->drawPolygonWCS(vertexAt(0), vertexAt(1), vertexAt(2), vertexAt(0), RS_Vector(false));
+    painter->drawPolygonWCS(vertexAt(0), vertexAt(1), vertexAt(2), vertexAt(0), RS_Vector(false));
 }

@@ -151,9 +151,8 @@ public:
     string getLineType() const {
         if (lineType.length()==0) {
             return "BYLAYER";
-        } else {
-            return lineType;
         }
+        return lineType;
     }
 
 private:

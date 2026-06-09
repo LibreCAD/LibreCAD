@@ -23,91 +23,94 @@
 ** This copyright notice MUST APPEAR in all copies of the script!  
 **
 **********************************************************************/
-#include <cstddef>
+#include "rs_linetypepattern.h"
+
 #include <cstdlib>
 #include <map>
-#include "rs_linetypepattern.h"
+
 #include "rs.h"
 
 namespace {
 //define all line patterns in pixels
-const RS_LineTypePattern patternSolidLine={10.0};
+const RS_LineTypePattern PATTERN_SOLID_LINE={10.0};
 
-const RS_LineTypePattern patternDotLineTiny{{0.15, -1.}};
-const RS_LineTypePattern patternDotLine{{0.2, -6.2}};
-const RS_LineTypePattern patternDotLine2{{0.2, -3.1}};
-const RS_LineTypePattern patternDotLineX2{{0.2, -12.4}};
+const RS_LineTypePattern PATTERN_DOT_LINE_TINY{{0.15, -1.}};
+const RS_LineTypePattern PATTERN_DOT_LINE{{0.2, -6.2}};
+const RS_LineTypePattern PATTERN_DOT_LINE2{{0.2, -3.1}};
+const RS_LineTypePattern PATTERN_DOT_LINE_X2{{0.2, -12.4}};
 
-const RS_LineTypePattern patternDashLineTiny{{2., -1.}};
-const RS_LineTypePattern patternDashLine{{12.0, -6.0}};
-const RS_LineTypePattern patternDashLine2{{6.0, -3.0}};
-const RS_LineTypePattern patternDashLineX2{{24.0, -12.0}};
+const RS_LineTypePattern PATTERN_DASH_LINE_TINY{{2., -1.}};
+const RS_LineTypePattern PATTERN_DASH_LINE{{12.0, -6.0}};
+const RS_LineTypePattern PATTERN_DASH_LINE2{{6.0, -3.0}};
+const RS_LineTypePattern PATTERN_DASH_LINE_X2{{24.0, -12.0}};
 
-const RS_LineTypePattern patternDashDotLineTiny{{2., -2., 0.15, -2.}};
-const RS_LineTypePattern patternDashDotLine{{12.0, -5., 0.2, -5.}};
-const RS_LineTypePattern patternDashDotLine2{{6.0, -2.5, 0.2, -2.5}};
-const RS_LineTypePattern patternDashDotLineX2{{24.0, -8., 0.2, -8.}};
+const RS_LineTypePattern PATTERN_DASH_DOT_LINE_TINY{{2., -2., 0.15, -2.}};
+const RS_LineTypePattern PATTERN_DASH_DOT_LINE{{12.0, -5., 0.2, -5.}};
+const RS_LineTypePattern PATTERN_DASH_DOT_LINE2{{6.0, -2.5, 0.2, -2.5}};
+const RS_LineTypePattern PATTERN_DASH_DOT_LINE_X2{{24.0, -8., 0.2, -8.}};
 
-const RS_LineTypePattern patternDivideLineTiny{{2., -0.7, 0.15, -0.7, 0.15, -0.7}};
-const RS_LineTypePattern patternDivideLine{{12.0, -4.9, 0.2, -4.9, 0.2, -4.9}};
-const RS_LineTypePattern patternDivideLine2{{6.0, -1.9, 0.2, -1.9, 0.2, -1.9}};
-const RS_LineTypePattern patternDivideLineX2{{24.0, -8., 0.2, -8., 0.2, -8.}};
+const RS_LineTypePattern PATTERN_DIVIDE_LINE_TINY{{2., -0.7, 0.15, -0.7, 0.15, -0.7}};
+const RS_LineTypePattern PATTERN_DIVIDE_LINE{{12.0, -4.9, 0.2, -4.9, 0.2, -4.9}};
+const RS_LineTypePattern PATTERN_DIVIDE_LINE2{{6.0, -1.9, 0.2, -1.9, 0.2, -1.9}};
+const RS_LineTypePattern PATTERN_DIVIDE_LINE_X2{{24.0, -8., 0.2, -8., 0.2, -8.}};
 
-const RS_LineTypePattern patternCenterLineTiny{{5., -1., 1., -1.}};
-const RS_LineTypePattern patternCenterLine{{32.0, -6.0, 6.0, -6.0}};
-const RS_LineTypePattern patternCenterLine2{{16.0, -3.0, 3.0, -3.0}};
-const RS_LineTypePattern patternCenterLineX2{{64.0, -12.0, 12.0, -12.0}};
+const RS_LineTypePattern PATTERN_CENTER_LINE_TINY{{5., -1., 1., -1.}};
+const RS_LineTypePattern PATTERN_CENTER_LINE{{32.0, -6.0, 6.0, -6.0}};
+const RS_LineTypePattern PATTERN_CENTER_LINE2{{16.0, -3.0, 3.0, -3.0}};
+const RS_LineTypePattern PATTERN_CENTER_LINE_X2{{64.0, -12.0, 12.0, -12.0}};
 
-const RS_LineTypePattern patternBorderLineTiny{{2., -1., 2., -1., 0.15, -1.}};
-const RS_LineTypePattern patternBorderLine{{12.0, -4.0, 12.0, -4., 0.2, -4.}};
-const RS_LineTypePattern patternBorderLine2{{6.0, -3.0, 6.0, -3., 0.2, -3.}};
-const RS_LineTypePattern patternBorderLineX2{{24.0, -8.0, 24.0, -8., 0.2, -8.}};
+const RS_LineTypePattern PATTERN_BORDER_LINE_TINY{{2., -1., 2., -1., 0.15, -1.}};
+const RS_LineTypePattern PATTERN_BORDER_LINE{{12.0, -4.0, 12.0, -4., 0.2, -4.}};
+const RS_LineTypePattern PATTERN_BORDER_LINE2{{6.0, -3.0, 6.0, -3., 0.2, -3.}};
+const RS_LineTypePattern PATTERN_BORDER_LINE_X2{{24.0, -8.0, 24.0, -8., 0.2, -8.}};
 
-const RS_LineTypePattern patternBlockLine{{0.5, -0.5}};
-const RS_LineTypePattern patternSelected{{1.0, -3.0}};
+const RS_LineTypePattern PATTERN_BLOCK_LINE{{0.5, -0.5}};
+const RS_LineTypePattern PATTERN_SELECTED{{1.0, -3.0}};
 }
 
-RS_LineTypePattern::RS_LineTypePattern(std::initializer_list<double> const& pattern):
+RS_LineTypePattern::RS_LineTypePattern(const std::initializer_list<double>& pattern):
     pattern(pattern), num { pattern.size()}{
-    for(double l: pattern){
+    for(const double l: pattern){
         totalLength += std::abs(l);
     }
 }
 
 
-const RS_LineTypePattern* RS_LineTypePattern::getPattern(RS2::LineType lineType){
+const RS_LineTypePattern* RS_LineTypePattern::getPattern(const RS2::LineType lineType){
     static std::map<RS2::LineType, const RS_LineTypePattern*> lineTypeToPattern = {
-            {RS2::NoPen, &patternSolidLine},
-            {RS2::SolidLine, &patternSolidLine},
-            {RS2::DotLine, &patternDotLine},
-            {RS2::DotLineTiny, &patternDotLineTiny},
-            {RS2::DotLine2, &patternDotLine2},
-            {RS2::DotLineX2, &patternDotLineX2},
-            {RS2::DashLine, &patternDashLine},
-            {RS2::DashLineTiny, &patternDashLineTiny},
-            {RS2::DashLine2, &patternDashLine2},
-            {RS2::DashLineX2, &patternDashLineX2},
-            {RS2::DashDotLine, &patternDashDotLine},
-            {RS2::DashDotLineTiny, &patternDashDotLineTiny},
-            {RS2::DashDotLine2, &patternDashDotLine2},
-            {RS2::DashDotLineX2, &patternDashDotLineX2},
-            {RS2::DivideLine, &patternDivideLine},
-            {RS2::DivideLineTiny, &patternDivideLineTiny},
-            {RS2::DivideLine2, &patternDivideLine2},
-            {RS2::DivideLineX2, &patternDivideLineX2},
-            {RS2::CenterLine, &patternCenterLine},
-            {RS2::CenterLineTiny, &patternCenterLineTiny},
-            {RS2::CenterLine2, &patternCenterLine2},
-            {RS2::CenterLineX2, &patternCenterLineX2},
-            {RS2::BorderLine, &patternBorderLine},
-            {RS2::BorderLineTiny, &patternBorderLineTiny},
-            {RS2::BorderLine2, &patternBorderLine2},
-            {RS2::BorderLineX2, &patternBorderLineX2},
-            {RS2::LineByLayer, &patternBlockLine},
-            {RS2::LineByBlock, &patternBlockLine},
-            {RS2::LineSelected, &patternSelected}
+            {RS2::NoPen, &PATTERN_SOLID_LINE},
+            {RS2::SolidLine, &PATTERN_SOLID_LINE},
+            {RS2::DotLine, &PATTERN_DOT_LINE},
+            {RS2::DotLineTiny, &PATTERN_DOT_LINE_TINY},
+            {RS2::DotLine2, &PATTERN_DOT_LINE2},
+            {RS2::DotLineX2, &PATTERN_DOT_LINE_X2},
+            {RS2::DashLine, &PATTERN_DASH_LINE},
+            {RS2::DashLineTiny, &PATTERN_DASH_LINE_TINY},
+            {RS2::DashLine2, &PATTERN_DASH_LINE2},
+            {RS2::DashLineX2, &PATTERN_DASH_LINE_X2},
+            {RS2::DashDotLine, &PATTERN_DASH_DOT_LINE},
+            {RS2::DashDotLineTiny, &PATTERN_DASH_DOT_LINE_TINY},
+            {RS2::DashDotLine2, &PATTERN_DASH_DOT_LINE2},
+            {RS2::DashDotLineX2, &PATTERN_DASH_DOT_LINE_X2},
+            {RS2::DivideLine, &PATTERN_DIVIDE_LINE},
+            {RS2::DivideLineTiny, &PATTERN_DIVIDE_LINE_TINY},
+            {RS2::DivideLine2, &PATTERN_DIVIDE_LINE2},
+            {RS2::DivideLineX2, &PATTERN_DIVIDE_LINE_X2},
+            {RS2::CenterLine, &PATTERN_CENTER_LINE},
+            {RS2::CenterLineTiny, &PATTERN_CENTER_LINE_TINY},
+            {RS2::CenterLine2, &PATTERN_CENTER_LINE2},
+            {RS2::CenterLineX2, &PATTERN_CENTER_LINE_X2},
+            {RS2::BorderLine, &PATTERN_BORDER_LINE},
+            {RS2::BorderLineTiny, &PATTERN_BORDER_LINE_TINY},
+            {RS2::BorderLine2, &PATTERN_BORDER_LINE2},
+            {RS2::BorderLineX2, &PATTERN_BORDER_LINE_X2},
+            {RS2::LineByLayer, &PATTERN_BLOCK_LINE},
+            {RS2::LineByBlock, &PATTERN_BLOCK_LINE},
+            {RS2::LineSelected, &PATTERN_SELECTED}
             };
-    if (lineTypeToPattern.count(lineType) == 0) // fixme - redundant check since its developer bug?
+    if (lineTypeToPattern.count(lineType) == 0) {
+        // fixme - redundant check since its developer bug?
         return nullptr;
+    }
     return lineTypeToPattern[lineType];
 }

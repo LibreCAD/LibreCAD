@@ -21,13 +21,13 @@
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <property name="sizeConstraint">
-    <enum>QLayout::SetDefaultConstraint</enum>
+    <enum>QLayout::SizeConstraint::SetDefaultConstraint</enum>
    </property>
    <property name="leftMargin">
     <number>2</number>
    </property>
    <property name="topMargin">
-    <number>2</number>
+    <number>0</number>
    </property>
    <property name="rightMargin">
     <number>2</number>
@@ -37,6 +37,9 @@
    </property>
    <property name="horizontalSpacing">
     <number>0</number>
+   </property>
+   <property name="verticalSpacing">
+    <number>4</number>
    </property>
    <item row="1" column="0">
     <layout class="QHBoxLayout" name="layButtons">
@@ -250,7 +253,7 @@
     </layout>
    </item>
    <item row="12" column="0" colspan="2">
-    <widget class="QTableView" name="tableView">
+    <widget class="LC_MouseTrackingTableView" name="tableView">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
        <horstretch>1</horstretch>
@@ -264,13 +267,13 @@
       </size>
      </property>
      <property name="sizeAdjustPolicy">
-      <enum>QAbstractScrollArea::AdjustToContents</enum>
+      <enum>QAbstractScrollArea::SizeAdjustPolicy::AdjustToContents</enum>
      </property>
      <property name="autoScrollMargin">
       <number>6</number>
      </property>
      <property name="editTriggers">
-      <set>QAbstractItemView::NoEditTriggers</set>
+      <set>QAbstractItemView::EditTrigger::NoEditTriggers</set>
      </property>
      <property name="showDropIndicator" stdset="0">
       <bool>false</bool>
@@ -279,10 +282,10 @@
       <bool>false</bool>
      </property>
      <property name="selectionMode">
-      <enum>QAbstractItemView::SingleSelection</enum>
+      <enum>QAbstractItemView::SelectionMode::SingleSelection</enum>
      </property>
      <property name="selectionBehavior">
-      <enum>QAbstractItemView::SelectRows</enum>
+      <enum>QAbstractItemView::SelectionBehavior::SelectRows</enum>
      </property>
      <property name="iconSize">
       <size>
@@ -294,7 +297,7 @@
       <bool>false</bool>
      </property>
      <property name="gridStyle">
-      <enum>Qt::DashLine</enum>
+      <enum>Qt::PenStyle::DashLine</enum>
      </property>
      <property name="cornerButtonEnabled">
       <bool>false</bool>
@@ -373,7 +376,7 @@
      <item>
       <spacer name="horizontalSpacer_2">
        <property name="orientation">
-        <enum>Qt::Horizontal</enum>
+        <enum>Qt::Orientation::Horizontal</enum>
        </property>
        <property name="sizeHint" stdset="0">
         <size>
@@ -459,7 +462,7 @@
      <item>
       <spacer name="horizontalSpacer">
        <property name="orientation">
-        <enum>Qt::Horizontal</enum>
+        <enum>Qt::Orientation::Horizontal</enum>
        </property>
        <property name="sizeHint" stdset="0">
         <size>
@@ -474,7 +477,7 @@
    <item row="8" column="0" colspan="2">
     <widget class="Line" name="line">
      <property name="orientation">
-      <enum>Qt::Horizontal</enum>
+      <enum>Qt::Orientation::Horizontal</enum>
      </property>
     </widget>
    </item>
@@ -525,7 +528,7 @@
      <item>
       <spacer name="horizontalSpacer_3">
        <property name="orientation">
-        <enum>Qt::Horizontal</enum>
+        <enum>Qt::Orientation::Horizontal</enum>
        </property>
        <property name="sizeHint" stdset="0">
         <size>
@@ -557,11 +560,6 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>QG_LineTypeBox</class>
-   <extends>QWidget</extends>
-   <header>qg_linetypebox.h</header>
-  </customwidget>
-  <customwidget>
    <class>QG_ColorBox</class>
    <extends>QComboBox</extends>
    <header>../ui/components/comboboxes/qg_colorbox.h</header>
@@ -570,6 +568,16 @@
    <class>QG_WidthBox</class>
    <extends>QComboBox</extends>
    <header>../ui/components/comboboxes/qg_widthbox.h</header>
+  </customwidget>
+  <customwidget>
+   <class>QG_LineTypeBox</class>
+   <extends>QWidget</extends>
+   <header>qg_linetypebox.h</header>
+  </customwidget>
+  <customwidget>
+   <class>LC_MouseTrackingTableView</class>
+   <extends>QTableView</extends>
+   <header location="global">lc_mouse_tracking_table_view.h</header>
   </customwidget>
  </customwidgets>
  <resources>

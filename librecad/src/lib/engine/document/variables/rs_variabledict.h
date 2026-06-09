@@ -25,11 +25,11 @@
 **
 **********************************************************************/
 
-
 #ifndef RS_VARIABLEDICT_H
 #define RS_VARIABLEDICT_H
 
 #include <QHash>
+
 #include "rs_variable.h"
 
 class RS_Vector;
@@ -43,47 +43,75 @@ class QString;
  */
 class RS_VariableDict {
 public:
-	RS_VariableDict() = default;
+    RS_VariableDict() = default;
 
     void clear();
     /**
      * @return Number of variables available.
      */
-	int count() const {
-        return variables.count();
+    int count() const {
+        return m_variables.count();
     }
-    void add(const QString& key, const QString& value, int code, int type);
-    void add(const QString& key, const RS_Vector& value, int code);
-    void add(const QString& key, const QString& value, int code);
-    void add(const QString& key, int value, int code);
-    void add(const QString& key, double value, int code);
-    void add(const QString& key, bool value, int code);
 
-	RS_Vector getVector(const QString& key, const RS_Vector& def) const;
-	QString getString(const QString& key, const QString& def) const;
-	int getInt(const QString& key, int def) const;
+    bool add(const QString& key, const QString& value, int code, int type);
+    bool add(const QString& key, const RS_Vector& value, int code);
+    bool add(const QString& key, const QString& value, int code);
+    bool add(const QString& key, int value, int code);
+    bool add(const QString& key, double value, int code);
+    bool add(const QString& key, bool value, int code);
+
+    RS_Vector getVector(const QString& key, const RS_Vector& def) const;
+    QString getString(const QString& key, const QString& def) const;
+    int getInt(const QString& key, int def) const;
     bool getBool(const QString& key, bool def) const;
-	double getDouble(const QString& key, double def) const;
+    double getDouble(const QString& key, double def) const;
 
-	void remove(const QString& key);
+    void remove(const QString& key);
 
-    bool has(const QString& key) {return variables.contains(key);};
-
-	QHash<QString, RS_Variable> const& getVariableDict() const {
-        return variables;
+    bool has(const QString& key) const {
+        return m_variables.contains(key);
     }
-	QHash<QString, RS_Variable>& getVariableDict() {
-		return variables;
-	}
 
+    const QHash<QString, RS_Variable>& getVariableDict() const {
+        return m_variables;
+    }
+
+    QHash<QString, RS_Variable>& getVariableDict() {
+        return m_variables;
+    }
+
+    bool isModified() const {return m_modified;}
+
+    void setModified(const bool val) {m_modified = val;}
 
     //void addVariableDictListener(RS_VariableDictListener* listener);
 
-    friend std::ostream& operator << (std::ostream& os, RS_VariableDict& v);
+    friend std::ostream& operator <<(std::ostream& os, RS_VariableDict& v);
 
 private:
     //! Variables for the graphic
-    QHash<QString, RS_Variable> variables;
+    bool insert(const QString& key, const RS_Variable& value) {
+        const QString& actualKey = key;
+        const auto it = m_variables.find(actualKey);
+        bool modified = false;
+        if (it != m_variables.end()) {
+            const RS_Variable& oldVar = it.value();
+            if (oldVar != value) {
+                modified = true;
+                m_variables.insert(actualKey, value);
+            }
+        }
+        else {
+            m_variables.insert(actualKey, value);
+            modified = true;
+        }
+        if (modified) {
+            m_modified = true;
+        }
+        return modified;
+    }
+    QHash<QString, RS_Variable> m_variables;
+    bool m_modified = false;
 };
 
 #endif

@@ -21,50 +21,45 @@
 ** http://www.gnu.org/licenses/gpl-2.0.html
 **
 **********************************************************************************
-*/
+ */
+
+#include "textfileviewer.h"
 
 #include <QFile>
 
-#include "textfileviewer.h"
 #include "ui_textfileviewer.h"
 
-TextFileViewer::TextFileViewer(QWidget* parent) :
-    QFrame(parent),
-    ui(new Ui::TextFileViewer)
-{
+TextFileViewer::TextFileViewer(QWidget* parent) : QFrame(parent), ui(new Ui::TextFileViewer) {
     ui->setupUi(this);
     ui->text_edit->setReadOnly(true);
 
     connect(ui->list, &QListWidget::itemClicked, this, &TextFileViewer::loadFile);
 }
 
-TextFileViewer::~TextFileViewer()
-{
+TextFileViewer::~TextFileViewer() {
     delete ui;
 }
 
-bool TextFileViewer::addFile(QString name, QString path)
-{
+bool TextFileViewer::addFile(const QString& name, const QString& path) const {
     QFile file(path);
-    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         return false;
+    }
 
-    QTextStream txt_stream(&file);
-    auto txt = txt_stream.readAll();
+    QTextStream txtStream(&file);
+    const auto txt = txtStream.readAll();
 
-    auto item = new QListWidgetItem(name, ui->list);
+    const auto item = new QListWidgetItem(name, ui->list);
     item->setWhatsThis(txt);
     return true;
 }
 
-void TextFileViewer::loadFile(QListWidgetItem* item)
-{
+void TextFileViewer::loadFile(const QListWidgetItem* item) const {
     ui->text_edit->setPlainText(item->whatsThis());
 }
 
-void TextFileViewer::setFile(QString name)
-{
-    auto item = ui->list->findItems(name, Qt::MatchExactly)[0];
+void TextFileViewer::setFile(const QString& name) const {
+    const auto item = ui->list->findItems(name, Qt::MatchExactly)[0];
     ui->list->setCurrentItem(item);
     loadFile(item);
 }

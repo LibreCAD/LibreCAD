@@ -22,7 +22,7 @@
 ** http://www.gnu.org/licenses/gpl-2.0.html
 **
 **********************************************************************************
-*/
+ */
 
 #include "colorwizard.h"
 
@@ -31,71 +31,69 @@
 
 #include "ui_colorwizard.h"
 
-ColorWizard::ColorWizard(QWidget *parent) :
-    QFrame(parent),
-    ui(std::make_unique<Ui::ColorWizard>())
-{
+namespace {
+    constexpr int PIXMAP_SIZE = 32;
+}
+
+ColorWizard::ColorWizard(QWidget* parent) : QFrame(parent), ui(std::make_unique<Ui::ColorWizard>()) {
     ui->setupUi(this);
 
-    connect(ui->colorwin_button, &QToolButton::clicked,
-            this, &ColorWizard::invokeColorDialog);
+    connect(ui->colorwin_button, &QToolButton::clicked, this, &ColorWizard::invokeColorDialog);
 
-    connect(ui->add_button, &QToolButton::clicked,
-            this, &ColorWizard::addOrRemove);
+    connect(ui->add_button, &QToolButton::clicked, this, &ColorWizard::addOrRemove);
 
-    connect(ui->fav_list, &QListWidget::itemDoubleClicked,
-            this, &ColorWizard::handleDoubleClick);
+    const auto favList = ui->fav_list;
+    connect(favList, &QListWidget::itemDoubleClicked, this, &ColorWizard::handleDoubleClick);
 
-    ui->fav_list->setContextMenuPolicy(Qt::ActionsContextMenu);
-    ui->fav_list->setDragDropMode(QAbstractItemView::InternalMove);
+    favList->setContextMenuPolicy(Qt::ActionsContextMenu);
+    favList->setDragDropMode(QAbstractItemView::InternalMove);
 
-    auto select = new QAction(QObject::tr("Select objects"), ui->fav_list);
+    const auto select = new QAction(QObject::tr("Select objects"), favList);
     connect(select, &QAction::triggered, this, &ColorWizard::requestSelection);
-    ui->fav_list->addAction(select);
+    favList->addAction(select);
 
-    auto apply = new QAction(QObject::tr("Apply to selected"), ui->fav_list);
+    const auto apply = new QAction(QObject::tr("Apply to selected"), favList);
     connect(apply, &QAction::triggered, this, &ColorWizard::requestColorChange);
-    ui->fav_list->addAction(apply);
+    favList->addAction(apply);
 
-    auto remove = new QAction(QObject::tr("Remove"), ui->fav_list);
+    const auto remove = new QAction(QObject::tr("Remove"), favList);
     connect(remove, &QAction::triggered, this, &ColorWizard::removeFavorite);
-    ui->fav_list->addAction(remove);
+    favList->addAction(remove);
 
-    QSettings settings;
+    const QSettings settings;
     auto favs = settings.value("Widgets/FavoriteColors").toStringList();
-    foreach (auto fav, favs)
-    {
+    foreach(auto fav, favs) {
         addFavorite(fav);
     }
     ui->combo->setCurrentIndex(-1);
 }
 
-ColorWizard::~ColorWizard()
-{
-    auto favs = getFavList();
+ColorWizard::~ColorWizard() {
+    const auto favs = getFavList();
     QSettings settings;
-    if (favs.size() > 0)
-        settings.setValue("Widgets/FavoriteColors", favs);
-    else
+    if (favs.empty()) {
         settings.remove("Widgets/FavoriteColors");
+    }
+    else {
+        settings.setValue("Widgets/FavoriteColors", favs);
+    }
 }
 
-void ColorWizard::requestColorChange()
-{
-    auto i = ui->fav_list->currentItem();
-    if (i)
+void ColorWizard::requestColorChange() {
+    const auto i = ui->fav_list->currentItem();
+    if (i != nullptr) {
         emit requestingColorChange(QColor(i->text()));
+    }
 }
 
-void ColorWizard::requestSelection()
-{
-    auto i = ui->fav_list->currentItem();
-    if (i)
+void ColorWizard::requestSelection() {
+    const auto i = ui->fav_list->currentItem();
+    if (i != nullptr) {
         emit requestingSelection(QColor(i->text()));
+    }
 }
 
-void ColorWizard::invokeColorDialog()
-{
+void ColorWizard::invokeColorDialog() {
     QColor current;
 #if QT_VERSION >= QT_VERSION_CHECK(6, 2, 0)
     current = QColor::fromString(ui->combo->currentText());
@@ -106,9 +104,8 @@ void ColorWizard::invokeColorDialog()
     QColorDialog dlg;
     dlg.setCustomColor(0, current);
 
-    QColor color = dlg.getColor(current, this, "Select Color", QColorDialog::DontUseNativeDialog);
-    if (color.isValid())
-    {
+    const QColor color = dlg.getColor(current, this, "Select Color", QColorDialog::DontUseNativeDialog);
+    if (color.isValid()) {
         QPixmap pixmap(32, 32);
         pixmap.fill(color);
         ui->combo->insertItem(0, QIcon(pixmap), color.name());
@@ -116,57 +113,52 @@ void ColorWizard::invokeColorDialog()
     }
 }
 
-void ColorWizard::addOrRemove()
-{
-    auto color = ui->combo->currentText();
-    if (color.isEmpty()) return;
+void ColorWizard::addOrRemove() const {
+    const auto color = ui->combo->currentText();
+    if (color.isEmpty()) {
+        return;
+    }
 
-    auto list = ui->fav_list->findItems(color, Qt::MatchExactly);
-    if (list.size() > 0)
+    const auto list = ui->fav_list->findItems(color, Qt::MatchExactly);
+    if (list.size() > 0) {
         qDeleteAll(list);
-    else
+    }
+    else {
         addFavorite(color);
-
+    }
 }
 
-QStringList ColorWizard::getFavList()
-{
+QStringList ColorWizard::getFavList() const {
     QStringList s_list;
 
-    for (int i = 0; i < ui->fav_list->count(); ++i)
-    {
+    for (int i = 0; i < ui->fav_list->count(); ++i) {
         s_list << ui->fav_list->item(i)->text();
     }
     return s_list;
 }
 
-void ColorWizard::addFavorite(QString color)
-{
-    auto item = new QListWidgetItem;
+void ColorWizard::addFavorite(const QString& color) const {
+    const auto item = new QListWidgetItem;
     item->setText(color);
-    QPixmap pixmap(32, 32);
+    QPixmap pixmap(PIXMAP_SIZE, PIXMAP_SIZE);
     pixmap.fill(color);
     item->setIcon(QIcon(pixmap));
     ui->fav_list->addItem(item);
 }
 
-void ColorWizard::removeFavorite()
-{
+void ColorWizard::removeFavorite() const {
     delete ui->fav_list->currentItem();
 }
 
-void ColorWizard::handleDoubleClick(QListWidgetItem* item)
-{
-    auto name = item->text();
-    auto color = QColor(name);
-    auto i = ui->combo->findText(name);
-    if (i != -1)
-    {
+void ColorWizard::handleDoubleClick(const QListWidgetItem* item) {
+    const auto name = item->text();
+    const auto color = QColor(name);
+    const auto i = ui->combo->findText(name);
+    if (i != -1) {
         ui->combo->setCurrentIndex(i);
     }
-    else
-    {
-        QPixmap pixmap(32, 32);
+    else {
+        QPixmap pixmap(PIXMAP_SIZE, PIXMAP_SIZE);
         pixmap.fill(color);
         ui->combo->insertItem(0, QIcon(pixmap), name);
         ui->combo->setCurrentIndex(0);

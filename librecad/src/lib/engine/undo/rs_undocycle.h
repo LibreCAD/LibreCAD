@@ -25,7 +25,6 @@
 **
 **********************************************************************/
 
-
 #ifndef RS_UNDOLISTITEM_H
 #define RS_UNDOLISTITEM_H
 
@@ -49,10 +48,7 @@
  */
 class RS_UndoCycle {
 public:
-    /**
-     * @param type Type of undo item.
-     */
-	RS_UndoCycle(/*RS2::UndoType type*/)=default;
+    RS_UndoCycle() = default;
 
     /**
      * Adds an Undoable to this Undo Cycle. Every Cycle can contain one or
@@ -71,21 +67,18 @@ public:
     size_t size() const;
     bool empty() const;
 
-
     //! change undo state of all undoable in the current cycle
-    void changeUndoState();
+    void changeUndoState() const;
 
-    friend std::ostream& operator << (std::ostream& os, RS_UndoCycle& uc);
+    friend std::ostream& operator <<(std::ostream& os, const RS_UndoCycle& uc);
 
     friend class RS_Undo;
 
-    std::set<RS_Undoable*> const& getUndoables() const;
+    const std::set<RS_Undoable*>& getUndoables() const;
 
 private:
-    //! Undo type:
-    //RS2::UndoType type;
     //! List of entity id's that were affected by this action
-    std::set<RS_Undoable*> undoables;
+    std::set<RS_Undoable*> m_undoables;
 };
 
 #endif

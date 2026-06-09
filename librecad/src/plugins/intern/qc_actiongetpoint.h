@@ -37,19 +37,26 @@ class QPointF;
  * @author  Rallaz
  */
 class QC_ActionGetPoint : public RS_PreviewActionInterface {
-	Q_OBJECT
+    Q_OBJECT
 public:
-    QC_ActionGetPoint(LC_ActionContext *actionContext);
-    ~QC_ActionGetPoint();
+    explicit QC_ActionGetPoint(LC_ActionContext* actionContext);
+    ~QC_ActionGetPoint() override;
 
     void trigger() override;
     void mouseMoveEvent(QMouseEvent* e) override;
     void mouseReleaseEvent(QMouseEvent* e) override;
-    void getPoint(QPointF *point);
-    void setBasepoint(QPointF* basepoint);
-    void setMessage(QString msg);
-    bool isCompleted(){return m_completed;}
-    bool wasCanceled(){return m_canceled;}
+    void getPoint(QPointF* point) const;
+    void setBasepoint(const QPointF* basepoint);
+    void setMessage(const QString& msg) const;
+
+    bool isCompleted() const {
+        return m_completed;
+    }
+
+    bool wasCanceled() const {
+        return m_canceled;
+    }
+
 protected:
     bool m_canceled;
     bool m_completed;
@@ -57,7 +64,7 @@ protected:
     struct ActionData;
     std::unique_ptr<ActionData> m_actionData;
     RS2::CursorType doGetMouseCursor(int status) override;
-    void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
-    void updateMouseButtonHints() override;
+    void onCoordinateEvent(int status, bool isZero, const RS_Vector& pos) override;
+    void updateActionPrompt() override;
 };
 #endif

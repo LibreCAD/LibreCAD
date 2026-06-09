@@ -25,12 +25,11 @@
 **
 **********************************************************************/
 
-
 #ifndef RS_CIRCLE_H
 #define RS_CIRCLE_H
 
-#include "rs_vector.h"
 #include "lc_cachedlengthentity.h"
+#include "rs_vector.h"
 
 class LC_Quadratic;
 class QPainterPath;
@@ -42,15 +41,15 @@ struct LC_SecondMoment;
  * Holds the data that defines a circle.
  */
 struct RS_CircleData {
-	RS_CircleData() = default;
-	RS_CircleData(RS_Vector const& center, double radius);
-	bool isValid() const;
-	bool operator == (RS_CircleData const&) const;
-	RS_Vector center;
+    RS_CircleData() = default;
+    RS_CircleData(const RS_Vector& center, double radius);
+    bool isValid() const;
+    bool operator ==(const RS_CircleData&) const;
+    RS_Vector center;
     double radius = 0.;
 };
 
-std::ostream& operator << (std::ostream& os, const RS_CircleData& ad);
+std::ostream& operator <<(std::ostream& os, const RS_CircleData& ad);
 
 /**
  * Class for a circle entity.
@@ -59,35 +58,35 @@ std::ostream& operator << (std::ostream& os, const RS_CircleData& ad);
  */
 class RS_Circle : public LC_CachedLengthEntity {
 public:
-	RS_Circle()=default;
-    RS_Circle (RS_EntityContainer* parent,
-               const RS_CircleData& d);
-    RS_Circle (const RS_CircleData& d);
-	~RS_Circle() = default;
+    RS_Circle() = default;
+    RS_Circle(RS_EntityContainer* parent, const RS_CircleData& d);
+    explicit RS_Circle(const RS_CircleData& d);
+    ~RS_Circle() override = default;
 
-	RS_Entity* clone() const override;
+    RS_Entity* clone() const override;
 
     /**	@return RS2::EntityCircle */
-    RS2::EntityType rtti() const override{
+    RS2::EntityType rtti() const override {
         return RS2::EntityCircle;
     }
+
     /** @return true */
-    bool isEdge() const  override{
+    bool isEdge() const override {
         return true;
     }
 
     /** @return Copy of data that defines the circle. **/
     const RS_CircleData& getData() const {
-        return data;
+        return m_data;
     }
 
-	RS_VectorSolutions getRefPoints() const override;
+    RS_VectorSolutions getRefPoints() const override;
 
     //no start/end point for whole circle
-	//        RS_Vector getStartpoint() const {
+    //        RS_Vector getStartpoint() const {
     //                return data.center + RS_Vector(data.radius, 0.0);
     //        }
-	//        RS_Vector getEndpoint() const {
+    //        RS_Vector getEndpoint() const {
     //                return data.center + RS_Vector(data.radius, 0.0);
     //        }
     /**
@@ -110,57 +109,19 @@ public:
     /** Sets new radius. */
     void setRadius(double r) override;
     double getAngleLength() const;
-    bool isTangent(const RS_CircleData&  circleData) const override;
+    bool isTangent(const RS_CircleData& circleData) const override;
 
-    bool createFromCR(const RS_Vector& c, double r);
-    bool createFrom2P(const RS_Vector& p1, const RS_Vector& p2);
-    bool createFrom3P(const RS_Vector& p1, const RS_Vector& p2,
-                      const RS_Vector& p3);
-    bool createFrom3P(const RS_VectorSolutions& sol);
-    bool createInscribe(const RS_Vector& coord, const std::vector<RS_Line*>& lines);
-    std::vector<RS_Entity* > offsetTwoSides(const double& distance) const override;
-    RS_VectorSolutions createTan1_2P(const RS_AtomicEntity* circle, const std::vector<RS_Vector>& points);
-    static RS_VectorSolutions createTan2(const std::vector<RS_AtomicEntity*>& circles, const double& r);
-    /** solve one of the eight Appollonius Equations
-| Cx - Ci|^2=(Rx+Ri)^2
-with Cx the center of the common tangent circle, Rx the radius. Ci and Ri are the Center and radius of the i-th existing circle
-**/
-    static std::vector<RS_Circle> solveAolloniusSingle(const std::vector<RS_Circle>& circles);
-    /**
-     * @brief solveApolloniusHyperbola a more generic solution based on hyperbola intersections.
-     *        this algorithm is likely worse in precision compared with solveAolloniusSingle().
-     *        Provided as a backup when solveAolloniusSingle() fails.
-     * @param circles - the three input circles
-     * @return candidates circles
-     */
-    static std::vector<RS_Circle> solveApolloniusHyperbola(const std::vector<RS_Circle>& circles);
+    std::vector<RS_Entity*> offsetTwoSides(double distance) const override;
 
-    std::vector<RS_Circle> createTan3(const std::vector<RS_AtomicEntity*>& circles);
-    bool testTan3(const std::vector<RS_AtomicEntity*>& circles) const;
-    RS_Vector getMiddlePoint(void)const override;
-    RS_Vector getNearestEndpoint(const RS_Vector& coord,
-                                 double* dist = nullptr) const override;
-    RS_Vector getNearestPointOnEntity(const RS_Vector& coord,
-                                      bool onEntity = true, double* dist = nullptr, RS_Entity** entity=nullptr)const override;
-    RS_Vector getNearestCenter(const RS_Vector& coord,
-                               double* dist = nullptr)const override;
-    RS_Vector getNearestMiddle(const RS_Vector& coord,
-                               double* dist = nullptr,
-                               int middlePoints = 1 ) const override;
-    RS_Vector getNearestDist(double distance,
-                             const RS_Vector& coord,
-                             double* dist = nullptr)const override;
-    RS_Vector getNearestDist(double distance,
-                             bool startp)const override;
-    RS_Vector getNearestOrthTan(const RS_Vector& coord,
-                                const RS_Line& normal,
-                                bool onEntity = false) const override;
+    RS_Vector getMiddlePoint() const override;
+    RS_Vector getNearestDistToEndpoint(double distance, bool startp) const override;
+    RS_Vector getNearestOrthTan(const RS_Vector& coord, const RS_Line& normal, bool onEntity = false) const override;
 
     RS_Vector dualLineTangentPoint(const RS_Vector& line) const override;
 
-    bool offset(const RS_Vector& coord, const double& distance) override;
-    RS_VectorSolutions getTangentPoint(const RS_Vector& point) const override;//find the tangential points seeing from given point
-    RS_Vector getTangentDirection(const RS_Vector& point)const override;
+    bool offset(const RS_Vector& coord, double distance) override;
+    RS_VectorSolutions getTangentPoint(const RS_Vector& point) const override; //find the tangential points seeing from given point
+    RS_Vector getTangentDirection(const RS_Vector& point) const override;
     void move(const RS_Vector& offset) override;
     void rotate(const RS_Vector& center, double angle) override;
     void rotate(const RS_Vector& center, const RS_Vector& angleVector) override;
@@ -174,7 +135,7 @@ with Cx the center of the common tangent circle, Rx the radius. Ci and Ri are th
      *                  0  1  0
      *                        1
      * @author          Dongxu Li
-     * @param[in] double - k the skew/shear parameter
+     * @param k the skew/shear parameter
      */
     RS_Entity& shear(double k) override;
     void moveRef(const RS_Vector& ref, const RS_Vector& offset) override;
@@ -193,12 +154,12 @@ m0 x + m1 y + m2 =0
 **/
     LC_Quadratic getQuadratic() const override;
 
-/**
-* @brief Returns area of full circle
-* Note: Circular arcs are handled separately by RS_Arc (areaLIneIntegral) 
-* However, full ellipses and ellipse arcs are handled by RS_Ellipse
-* @return \pi r^2
-*/
+    /**
+    * @brief Returns area of full circle
+    * Note: Circular arcs are handled separately by RS_Arc (areaLIneIntegral)
+    * However, full ellipses and ellipse arcs are handled by RS_Ellipse
+    * @return \pi r^2
+    */
     double areaLineIntegral() const override;
 
     LC_FirstMoment firstMomentLineIntegral() const override;
@@ -213,13 +174,18 @@ m0 x + m1 y + m2 =0
      */
     LC_SecondMoment secondMomentLineIntegral() const override;
 
-    friend std::ostream& operator << (std::ostream& os, const RS_Circle& a);
+    friend std::ostream& operator <<(std::ostream& os, const RS_Circle& a);
 
     void calculateBorders() override;
 
 protected:
-    RS_CircleData data;
+    RS_CircleData m_data;
     void updateLength() override;
+    RS_Vector doGetNearestPointOnEntity(const RS_Vector& coord, bool onEntity, double* dist, RS_Entity** entity) const override;
+    RS_Vector doGetNearestEndpoint(const RS_Vector& coord, double* dist, RS_Entity** entity) const override;
+    RS_Vector doGetNearestCenter(const RS_Vector& coord, double* dist, RS_Entity** centerEntity) const override;
+    RS_Vector doGetNearestMiddle(const RS_Vector& coord, double* dist, int middlePoints) const override;
+    RS_Vector doGetNearestDist(double distance, const RS_Vector& coord, double* dist) const override;
 };
 
 #endif

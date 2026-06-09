@@ -28,6 +28,7 @@
 #define RS_ACTIONINFOANGLE_H
 
 #include <memory>
+
 #include "rs_previewactioninterface.h"
 
 /**
@@ -38,7 +39,7 @@
 class RS_ActionInfoAngle:public RS_PreviewActionInterface {
     Q_OBJECT
 public:
-    RS_ActionInfoAngle(LC_ActionContext *actionContext);
+    explicit RS_ActionInfoAngle(LC_ActionContext *actionContext);
     ~RS_ActionInfoAngle() override;
     void init(int status) override;
     void drawSnapper() override;
@@ -56,12 +57,12 @@ protected:
 
     void doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) override;
     RS2::CursorType doGetMouseCursor(int status) override;
-    void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
-    void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
-    void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
-    void updateMouseButtonHints() override;
-    void updateInfoCursor1(RS_Line* line);
-    void updateInfoCursor2(const RS_Vector &mouse, const RS_Vector &intersection);
+    void onMouseLeftButtonRelease(int status, const LC_MouseEvent* e) override;
+    void onMouseRightButtonRelease(int status, const LC_MouseEvent* e) override;
+    void onMouseMoveEvent(int status, const LC_MouseEvent* event) override;
+    void updateActionPrompt() override;
+    void updateInfoCursor1(const RS_Line* line) const;
+    void updateInfoCursor2(const RS_Vector &mouse, const RS_Vector &intersection) const;
     void doTrigger() override;
 };
 #endif

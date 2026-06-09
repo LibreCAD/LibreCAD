@@ -37,26 +37,24 @@ RS_ActionLayersRemove::RS_ActionLayersRemove(LC_ActionContext *actionContext)
 
 void RS_ActionLayersRemove::trigger() {
     RS_DEBUG->print("RS_ActionLayersRemove::trigger");
-
-    if (m_graphic) {
+    if (m_graphic != nullptr) {
         RS_LayerList *ll = m_graphic->getLayerList();
         QStringList names =
             RS_DIALOGFACTORY->requestSelectedLayersRemovalDialog(ll);
 
         if (!names.isEmpty()) {
-            for (auto name: names) {
+            for (const auto& name : std::as_const(names)) {
                 m_graphic->removeLayer(ll->find(name));
             }
             m_graphic->updateInserts();
-            m_container->calculateBorders();
+            m_document->calculateBorders();
             // m_graphic->getLayerList()->getLayerWitget()->slotUpdateLayerList();
         }
     }
-    finish(false);
-    updateSelectionWidget();
+    finish();
 }
 
-void RS_ActionLayersRemove::init(int status) {
+void RS_ActionLayersRemove::init(const int status) {
     RS_ActionInterface::init(status);
     trigger();
 }

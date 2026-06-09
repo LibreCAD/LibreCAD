@@ -23,11 +23,11 @@
 
 #include "lc_dimlinebuilder.h"
 
-LC_DimLineBuilder::LC_DimLineBuilder(RS_Graphic* graphic) {
+LC_DimLineBuilder::LC_DimLineBuilder([[maybe_unused]]RS_Graphic* graphic) : m_graphic(graphic) {
 }
 
-void LC_DimLineBuilder::buildDimensionLine(RS_EntityContainer* container, LC_DimStyle* style,
-    const RS_Vector& dimLineStart, const RS_Vector& dimLineEnd, bool forceAutoText) {
+void LC_DimLineBuilder::buildDimensionLine([[maybe_unused]]RS_EntityContainer* container, [[maybe_unused]]LC_DimStyle* style,
+                                           [[maybe_unused]]const RS_Vector& dimLineStart,[[maybe_unused]] const RS_Vector& dimLineEnd, [[maybe_unused]]bool forceAutoText) {
 }
 
 /*

@@ -58,20 +58,18 @@ public:
     static LC_ModifiersInfo SHIFT_RELATIVE_ZERO();
     static LC_ModifiersInfo CTRL(const QString &msg);
 
-
     static LC_ModifiersInfo SHIFT(const QString &msg);
     static LC_ModifiersInfo SHIFT_AND_CTRL(const QString &shiftMsg, const QString &ctrlMsg);
     const QString&  getShiftMessage() const;
     const QString&  getCtrlMessage() const;
 protected:
-    Qt::KeyboardModifiers modifiers = Qt::NoModifier;
-    QString shiftMsg;
-    QString ctrlMsg;
+    Qt::KeyboardModifiers m_modifiers = Qt::NoModifier;
+    QString m_shiftMsg;
+    QString m_ctrlMsg;
 
-
-    void setFlag(Qt::KeyboardModifier flag){
-        modifiers = modifiers | flag;
+    void setFlag(const Qt::KeyboardModifier flag){
+        m_modifiers = m_modifiers | flag;
     }
 };
 
-#endif // LC_MODIFIERSINFO_H
+#endif

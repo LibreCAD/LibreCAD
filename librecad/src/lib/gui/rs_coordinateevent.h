@@ -24,7 +24,6 @@
 **
 **********************************************************************/
 
-
 #ifndef RS_COORDINATEEVENT_H
 #define RS_COORDINATEEVENT_H
 
@@ -35,23 +34,34 @@
  */
 class RS_CoordinateEvent {
 public:
-	/**
-	 * @param pos coordinate
-	 * @param abs true: absolute coordinate, false: relative coordinate
-	 */
-    RS_CoordinateEvent(const RS_Vector& pos, bool zero = false, bool relzero = false)
-    :m_wcsPos(pos), m_forZero{zero}, m_forRelZero{relzero}{}
- 
     /**
-	 * @return the position of the event in real graphic measures.
-	 */
+     * @param pos coordinate
+     * @param zero
+     * @param relzero
+     */
+    explicit RS_CoordinateEvent(const RS_Vector& pos, const bool zero = false, const bool relzero = false)
+        : m_wcsPos(pos), m_forZero{zero}, m_forRelZero{relzero} {
+    }
+
+    /**
+  * @return the position of the event in real graphic measures.
+  */
     RS_Vector getCoordinate() const {
         return m_wcsPos;
     }
 
-    bool isZero() const {return m_forZero;}
-    bool isRelZero() const {return m_forRelZero;}
-    bool isValid() {return m_wcsPos.valid;}
+    bool isZero() const {
+        return m_forZero;
+    }
+
+    bool isRelZero() const {
+        return m_forRelZero;
+    }
+
+    bool isValid() const {
+        return m_wcsPos.valid;
+    }
+
 protected:
     RS_Vector m_wcsPos;
     bool m_forZero = false;

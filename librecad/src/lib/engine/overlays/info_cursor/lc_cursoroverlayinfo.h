@@ -25,8 +25,8 @@
 
 #include <QString>
 
-#include "rs_vector.h"
 #include "lc_overlayentity.h"
+#include "rs_vector.h"
 
 struct  LC_InfoCursorOptions{
     struct ZoneSetup;
@@ -40,92 +40,91 @@ struct  LC_InfoCursorOptions{
     QString fontName = "Verdana";
 
     struct Impl;
-    const std::unique_ptr<Impl> m_pImpl;
+    const std::unique_ptr<Impl> pImpl;
 };
 
 class LC_InfoMessageBuilder{
 
 public:
-    LC_InfoMessageBuilder() {}
+    LC_InfoMessageBuilder() = default;
 
-    explicit LC_InfoMessageBuilder(const QString& m) : msg(m) {
-        msg.append("\n");
+    explicit LC_InfoMessageBuilder(const QString& m) : m_msg(m) {
+        m_msg.append("\n");
     }
 
     QString toString() {
-        return msg;
+        return m_msg;
     }
 
-    void add(QString label, QString value = "") {
-        if (msg.contains(label)) {
+    void add(const QString& label, QString value = "") {
+        if (m_msg.contains(label)) {
             value = "0";
         }
-        msg.append(label);
+        m_msg.append(label);
         if (!value.isEmpty()) {
-            msg.append(" ");
-            msg.append(value);
+            m_msg.append(" ");
+            m_msg.append(value);
         }
-        msg.append("\n");
+        m_msg.append("\n");
     }
 
     void cleanup() {
-        msg = "";
+        m_msg.clear();
     }
   protected:
-    QString msg;
+    QString m_msg;
 };
 
 
 struct LC_InfoCursorData{
-public:
     void clear(){
-        zone1.clear();
-        zone2.clear();
-        zone3.clear();
-        zone4.clear();
+        m_zone1.clear();
+        m_zone2.clear();
+        m_zone3.clear();
+        m_zone4.clear();
     }
 
     void setZone1(const QString &zone1) {
-        LC_InfoCursorData::zone1 = zone1;
+        m_zone1 = zone1;
     }
 
     void setZone2(const QString &zone2) {
-        LC_InfoCursorData::zone2 = zone2;
+        m_zone2 = zone2;
     }
 
     void setZone3(const QString &zone3) {
-        LC_InfoCursorData::zone3 = zone3;
+        m_zone3 = zone3;
     }
 
     void setZone4(const QString &zone4) {
-        LC_InfoCursorData::zone4 = zone4;
+        m_zone4 = zone4;
     }
 
     const QString &getZone1() const {
-        return zone1;
+        return m_zone1;
     }
 
     const QString &getZone2() const {
-        return zone2;
+        return m_zone2;
     }
 
     const QString &getZone3() const {
-        return zone3;
+        return m_zone3;
     }
 
     const QString &getZone4() const {
-        return zone4;
+        return m_zone4;
     }
 
 protected:
     // bottom left
-    QString zone1;
+    QString m_zone1;
     // bottom right
-    QString zone2;
+    QString m_zone2;
     // top left
-    QString zone3;
+    QString m_zone3;
     // top right
-    QString zone4;
+    QString m_zone4;
 
 };
 
@@ -143,7 +142,7 @@ struct LC_InfoCursorOverlayPrefs{
     bool showLabels = false;
     bool multiLine = false;
     bool showCurrentActionName = true;
-    LC_InfoCursorOptions options = LC_InfoCursorOptions();
+    LC_InfoCursorOptions options;
 
     void loadSettings();
 };
@@ -153,16 +152,16 @@ public:
     LC_OverlayInfoCursor(const RS_Vector &coord, LC_InfoCursorOptions* cursorOverlaySettings);
     void setZonesData(LC_InfoCursorData *data);
     void draw(RS_Painter *painter) override;
-    void clear();
-    LC_InfoCursorData* getData(){return zonesData;}
+    void clear() const;
+    LC_InfoCursorData* getData() const {return m_zonesData;}
     LC_InfoCursorData *getZonesData() const;
     LC_InfoCursorOptions *getOptions() const;
     void setOptions(LC_InfoCursorOptions *options);
-    void setPos(const RS_Vector wPos){wcsPos = wPos;};
+    void setPos(const RS_Vector& wPos){m_wcsPos = wPos;}
 protected:
-    LC_InfoCursorData* zonesData = nullptr;
-    LC_InfoCursorOptions* options = nullptr;
-    RS_Vector wcsPos;
+    LC_InfoCursorData* m_zonesData = nullptr;
+    LC_InfoCursorOptions* m_options = nullptr;
+    RS_Vector m_wcsPos;
 };
 
-#endif // LC_CURSOROVERLAYINFO_H
+#endif

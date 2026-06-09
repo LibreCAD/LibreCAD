@@ -38,7 +38,6 @@ class Ui_LinePolygon2Options;
 class QG_LinePolygon2Options : public QWidget
 {
     Q_OBJECT
-
 public:
     QG_LinePolygon2Options(QWidget* parent = 0, Qt::WindowFlags fl = {});
     ~QG_LinePolygon2Options();
@@ -58,4 +57,4 @@ private:
 	std::unique_ptr<Ui::Ui_LinePolygon2Options> ui;
 };
 
-#endif // QG_LINEPOLYGON2OPTIONS_H
+#endif

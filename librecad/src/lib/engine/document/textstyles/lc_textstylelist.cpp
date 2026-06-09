@@ -34,7 +34,7 @@ void LC_TextStyleList::clear() {
     m_styles.clear(); // fixme - sand - check whether items should be deleted!
 }
 
-LC_TextStyle* LC_TextStyleList::at(unsigned int i) {
+LC_TextStyle* LC_TextStyleList::at(const unsigned int i) const {
     return m_styles.at(i);
 }
 
@@ -42,7 +42,7 @@ void LC_TextStyleList::addStyle(LC_TextStyle* style) {
     if (style == nullptr) {
         return;
     }
-    auto* s = find(style->getName());
+    const auto* s = find(style->getName());
     if (s == nullptr) {
         m_styles.append(style);
         setModified(true);
@@ -66,7 +66,7 @@ void LC_TextStyleList::remove(const QString& name) {
 
 LC_TextStyle* LC_TextStyleList::find(const QString& name) {
     // amount of styles should be small, so linear search should be fine
-    for (auto v : m_styles) {
+    for (const auto v : std::as_const(m_styles)) {
         if (v->getName() == name) {
             // fixme - case sensitivity?
             return v;
@@ -75,7 +75,7 @@ LC_TextStyle* LC_TextStyleList::find(const QString& name) {
     return nullptr;
 }
 
-void LC_TextStyleList::replace(QList<LC_TextStyle*> newStylesList) {
+void LC_TextStyleList::replace(const QList<LC_TextStyle*>& newStylesList) {
     qDeleteAll(m_styles);
     m_styles.clear();
     m_styles.append(newStylesList);

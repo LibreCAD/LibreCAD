@@ -21,7 +21,7 @@
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **
 **********************************************************************************
-*/
+ */
 // File: lc_pathbuilder.cpp
 
 #include "lc_pathbuilder.h"
@@ -46,7 +46,9 @@ PathBuilder::PathBuilder(RS_Painter* painter)
 }
 
 void PathBuilder::append(RS_Entity* entity) {
-  if (!entity || entity->isUndone()) return;
+  if (!entity || entity->isDeleted()) {
+      return;
+  }
 
   RS_Vector startp = entity->getStartpoint();
   if (startp.valid) {
@@ -93,14 +95,14 @@ void PathBuilder::append(RS_Entity* entity) {
 }
 
 void PathBuilder::moveTo(const RS_Vector& pos) {
-  QPointF uiPos = toGuiPoint(pos);
+  const QPointF uiPos = toGuiPoint(pos);
   m_path.moveTo(uiPos);
   m_lastPoint = pos;
   m_hasLastPoint = true;
 }
 
 void PathBuilder::lineTo(const RS_Vector& pos) {
-  QPointF uiPos = toGuiPoint(pos);
+  const QPointF uiPos = toGuiPoint(pos);
   m_path.lineTo(uiPos);
   m_lastPoint = pos;
   m_hasLastPoint = true;
@@ -125,12 +127,16 @@ QPointF PathBuilder::toGuiPoint(const RS_Vector& vp) const {
 }
 
 void PathBuilder::appendLine(RS_Line* line) {
-  if (!line) return;
+  if (!line) {
+      return;
+  }
   m_path.lineTo(toGuiPoint(line->getEndpoint()));
 }
 
 void PathBuilder::appendArc(RS_Arc* arc) {
-  if (!arc || !m_painter) return;
+  if (!arc || !m_painter) {
+      return;
+  }
   const double radius = arc->getRadius();
   RS_Vector uiCenter = m_painter->toGui(arc->getCenter());
   RS_Vector uiRadii{m_painter->toGuiDX(radius), m_painter->toGuiDY(radius)};
@@ -143,18 +149,24 @@ void PathBuilder::appendArc(RS_Arc* arc) {
 }
 
 void PathBuilder::appendCircle(RS_Circle* circle) {
-  if (!circle || !m_painter) return;
+  if (!circle || !m_painter) {
+      return;
+  }
   circle->createPainterPath(m_painter, m_path);
 }
 
 void PathBuilder::appendEllipse(RS_Ellipse* ellipse) {
-  if (!ellipse || !m_painter) return;
+  if (!ellipse || !m_painter) {
+      return;
+  }
 
   ellipse->createPainterPath(m_painter, m_path);
 }
 
 void PathBuilder::appendSplinePoints(LC_SplinePoints* spline) {
-  if (!spline || !m_painter) return;
+  if (!spline || !m_painter) {
+      return;
+  }
 
   // Iterate quadratic segments using the same indexing as
   // LC_SplinePoints::fillStrokePoints: i = 1..iSplines, where
@@ -181,7 +193,7 @@ void PathBuilder::appendSplinePoints(LC_SplinePoints* spline) {
   bool emittedMoveTo = false;
   for (size_t i = 1; i <= iSplines; ++i) {
     RS_Vector start, ctrl, end;
-    int npts = spline->GetQuadPoints(int(i), &start, &ctrl, &end);
+    int npts = spline->getQuadPoints(int(i), &start, &ctrl, &end);
     if (npts < 3) {
       if (npts >= 2 && start.valid && end.valid) {
         if (!emittedMoveTo) {
@@ -201,7 +213,9 @@ void PathBuilder::appendSplinePoints(LC_SplinePoints* spline) {
 }
 
 void PathBuilder::appendParabola(LC_Parabola* parabola) {
-  if (!parabola) return;
+  if (!parabola) {
+      return;
+  }
   // Parabolas delegate to spline logic (quadratic Beziers)
   appendSplinePoints(parabola);
 }

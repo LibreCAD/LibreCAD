@@ -63,16 +63,16 @@ void LC_DlgParabola::setEntity(LC_Parabola* b){
 }
 
 void LC_DlgParabola::updatePoints(){
-    auto const& bData = m_entity->getData();
-    auto const& pts = bData.controlPoints;
-    auto model = new QStandardItemModel(pts.size(), 2, this);
+    const auto& bData = m_entity->getParabolaData();
+    const auto& pts = bData.controlPoints;
+    const auto model = new QStandardItemModel(pts.size(), 2, this);
     model->setHorizontalHeaderLabels({"x", "y"});
 
     //set control data
     for (size_t row = 0; row < pts.size(); ++row) {
-        auto const& vp = pts.at(row);
+        const auto& vp = pts.at(row);
 
-        QString uiX, uiY;
+        // QString uiX, uiY;
         QPair<QString, QString> uiPoint = toUIStr(vp);
 
         auto* x = new QStandardItem(uiPoint.first);
@@ -85,15 +85,16 @@ void LC_DlgParabola::updatePoints(){
 }
 
 void LC_DlgParabola::updateEntity(){
-    if (m_entity == nullptr)
+    if (m_entity == nullptr) {
         return;
+    }
 
     //update pen
     m_entity->setPen(ui->wPen->getPen());
     //update layer
     m_entity->setLayer(ui->cbLayer->getLayer());
     //update Spline Points
-    auto model = static_cast<QStandardItemModel*>(ui->tvPoints->model());
+    const auto model = static_cast<QStandardItemModel*>(ui->tvPoints->model());
     model->setRowCount(3);
 
     //update points
@@ -101,10 +102,10 @@ void LC_DlgParabola::updateEntity(){
     //update points
     for (size_t i = 0; i < 3; ++i) {
         auto& vp = vps.at(i);
-        auto const& vpx = model->item(i, 0)->text();
-        auto const& vpy = model->item(i, 1)->text();
+        const auto& vpx = model->item(i, 0)->text();
+        const auto& vpy = model->item(i, 1)->text();
 
-        RS_Vector wcsPoint = toWCSVector(vpx, vpy, vp);
+        const RS_Vector wcsPoint = toWCSVector(vpx, vpy, vp);
 
         vp.x = wcsPoint.x;
         vp.y = wcsPoint.y;
@@ -113,7 +114,7 @@ void LC_DlgParabola::updateEntity(){
         RS_DIALOGFACTORY->commandMessage(tr("Parabola control points cannot be collinear"));
         return;
     }
-    auto& d = m_entity->getData();
+    auto& d = m_entity->getParabolaData();
     d.controlPoints = vps;
     m_entity->update();
 }

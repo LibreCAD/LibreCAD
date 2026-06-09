@@ -1,5 +1,5 @@
 /*******************************************************************************
-*
+ *
  This file is part of the LibreCAD project, a 2D CAD program
 
  Copyright (C) 2025 LibreCAD.org
@@ -23,6 +23,7 @@
 #define LC_CUSTOMSTYLEHELPER_H
 
 #include <QString>
+
 #include "lc_appwindowaware.h"
 
 class LC_CustomStyleHelper : public LC_AppWindowAware {
@@ -38,4 +39,4 @@ private:
     QString m_styleSheetPath;
 };
 
-#endif // LC_CUSTOMSTYLEHELPER_H
+#endif

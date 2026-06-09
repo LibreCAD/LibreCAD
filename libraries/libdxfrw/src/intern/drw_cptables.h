@@ -1327,4 +1327,4 @@ static const int DRW_Table1258[] = {
     0x00FF  //128 #LATIN SMALL LETTER Y WITH DIAERESIS
 };
 
-#endif // DRW_CPTABLES_H
+#endif

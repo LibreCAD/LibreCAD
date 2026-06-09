@@ -29,19 +29,16 @@
 #include "rs_settings.h"
 #include "rs_system.h"
 
-bool LC_FileNameSelectionService::doObtainFileName(QWidget* parent, QString& fileName,
-                                                   bool forRead,
-                                                   const QString& extensionStr,
-                                                   const QString& defaultFileName,
-                                                   const QString& captionForImport, const QString& captionForExport,
-                                                   QString fileNameFilter) {
+bool LC_FileNameSelectionService::doObtainFileName(QWidget* parent, QString& fileName, const bool forRead, const QString& extensionStr,
+                                                   const QString& defaultFileName, const QString& captionForImport,
+                                                   const QString& captionForExport, const QString& fileNameFilter) {
     LC_GROUP("Export");
-    QString defDir = LC_GET_STR("ExportSettingsDir", RS_SYSTEM->getHomeDir());
+    const QString defDir = LC_GET_STR("ExportSettingsDir", RS_SYSTEM->getHomeDir());
     LC_GROUP_END();
 
-    bool useQtFileDialog = LC_GET_ONE_BOOL("Defaults","UseQtFileOpenDialog");
+    const bool useQtFileDialog = LC_GET_ONE_BOOL("Defaults","UseQtFileOpenDialog");
 
-    const QString defaultExtension{extensionStr};
+    const QString& defaultExtension{extensionStr};
 
     const auto defaultFilter = fileNameFilter.arg(defaultExtension);
     QFileDialog fileDlg(parent, forRead ? captionForImport  : captionForExport);
@@ -55,7 +52,7 @@ bool LC_FileNameSelectionService::doObtainFileName(QWidget* parent, QString& fil
 
     QString fileNameForSelection = defaultFileName;
     if (!defaultFileName.endsWith(extensionStr)) {
-        int dotIndex = defaultFileName.indexOf('.');
+        const int dotIndex = defaultFileName.indexOf('.');
         fileNameForSelection = defaultFileName.left(dotIndex);
         fileNameForSelection.append(".").append(extensionStr);
 
@@ -67,7 +64,7 @@ bool LC_FileNameSelectionService::doObtainFileName(QWidget* parent, QString& fil
         QStringList files = fileDlg.selectedFiles();
         if (!files.isEmpty()) {
             fileName = files.front();
-            QString extension = QString(".").append(extensionStr);
+            const QString extension = QString(".").append(extensionStr);
             if (!fileName.endsWith(extension)) {
                 fileName = fileName +extension;
             }

@@ -21,7 +21,6 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
-
 #ifndef RS_ACTIONLAYERSTOGGLEPRINT_H
 #define RS_ACTIONLAYERSTOGGLEPRINT_H
 
@@ -38,13 +37,15 @@ class RS_Layer;
 class RS_ActionLayersTogglePrint : public RS_ActionInterface {
     Q_OBJECT
 public:
-    RS_ActionLayersTogglePrint(LC_ActionContext *actionContext,RS_Layer* layer);
-	void init(int status) override;
-	void trigger() override;
+    RS_ActionLayersTogglePrint(LC_ActionContext* actionContext, RS_Layer* layer);
+    void init(int status) override;
+    void trigger() override;
+
 protected:
     RS_Layer* m_layer = nullptr;
+
 private:
-    void deselectEntities(RS_Layer* layer);
+    void deselectEntities(RS_Layer* layer) const;
 };
 
 #endif

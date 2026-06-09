@@ -60,10 +60,9 @@ public:
     {
         return indexOf(filename) >= 0;
     }
-    void addFiles(QMenu* file_menu);
+    void addFiles(QMenu* fileMenu);
     void updateRecentFilesMenu();
-    bool hasMenuEntries() const
-    {
+    bool hasMenuEntries() const {
         return !m_recentFilesActions.empty();
     }
 private:
@@ -73,7 +72,7 @@ private:
      */
     void saveToSettings() const;
 
-    int const m_maxEntries;
+    const int m_maxEntries;
     QStringList m_files{};
     QList<QAction*> m_recentFilesActions{};
 };

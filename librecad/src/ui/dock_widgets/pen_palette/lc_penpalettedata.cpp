@@ -22,10 +22,9 @@
 **
 **********************************************************************/
 
-#include <QFile>
-
 #include "lc_penpalettedata.h"
 
+#include <QFile>
 #include <QTextStream>
 
 #include "lc_peninforegistry.h"
@@ -34,7 +33,7 @@
 /**
  * Separator for fields of pen in persistent string
  */
-static const char *const PEN_DATA_FIELDS_SEPARATOR = ",";
+static const auto PEN_DATA_FIELDS_SEPARATOR = ",";
 
 LC_PenPaletteData::LC_PenPaletteData(LC_PenPaletteOptions* opts):
     m_registry{LC_PenInfoRegistry::instance()}, m_options{opts} {
@@ -49,7 +48,7 @@ LC_PenPaletteData::~LC_PenPaletteData(){
  * The file format is CSV, each line represents one pen
  */
 bool LC_PenPaletteData::saveItems(){
-    QString fileName = m_options->pensFileName;
+    const QString fileName = m_options->pensFileName;
     QFile file(fileName);
     bool result = false;
     if (file.open(QIODevice::WriteOnly | QIODevice::Text)){
@@ -61,7 +60,7 @@ bool LC_PenPaletteData::saveItems(){
 #endif
 
         // just convert each pen to string and store in file
-        int count = m_persistentItems.count();
+        const int count = m_persistentItems.count();
         for (int i= 0; i < count; i++){
             LC_PenItem* item = m_persistentItems.at(i);
             out << toStringRepresentation(item);
@@ -76,9 +75,9 @@ bool LC_PenPaletteData::saveItems(){
 }
 
 bool LC_PenPaletteData::loadItems(){
-    QString fileName = m_options->pensFileName;
+    const QString fileName = m_options->pensFileName;
     QFile file(fileName);
-    bool result = file.open(QIODevice::ReadOnly | QIODevice::Text);
+    const bool result = file.open(QIODevice::ReadOnly | QIODevice::Text);
     if (result && file.isOpen()){
         QTextStream in(&file);
 #if QT_VERSION >= QT_VERSION_CHECK(6, 2, 0)
@@ -97,10 +96,8 @@ bool LC_PenPaletteData::loadItems(){
         file.close();
         return true;
     }
-    else {
-        createDefaultPens();
-    }
-    return result;
+    createDefaultPens();
+    return false;
 }
 
 /**
@@ -108,16 +105,16 @@ bool LC_PenPaletteData::loadItems(){
  * @param item
  * @return
  */
-QString LC_PenPaletteData::toStringRepresentation(LC_PenItem *item){
+QString LC_PenPaletteData::toStringRepresentation(LC_PenItem *item) const {
 
-    RS2::LineType lineType = item->getLineType();
-    RS2::LineWidth lineWidth = item->getLineWidth();
-    RS_Color color = item->getColor();
-    QString name = item->getName();
+    const RS2::LineType lineType = item->getLineType();
+    const RS2::LineWidth lineWidth = item->getLineWidth();
+    const RS_Color color = item->getColor();
+    const QString name = item->getName();
 
-    QString lineTypeName = QString().setNum((short)lineType);
-    QString lineWidthName =  QString().setNum(lineWidth);
-    QString colorName = m_registry->getInternalColorString(color);
+    QString lineTypeName = QString().setNum(static_cast<short>(lineType));
+    const QString lineWidthName =  QString().setNum(lineWidth);
+    const QString colorName = m_registry->getInternalColorString(color);
 
     QString result = lineTypeName.append(PEN_DATA_FIELDS_SEPARATOR).append(lineWidthName).append(PEN_DATA_FIELDS_SEPARATOR).append(colorName).append(
         PEN_DATA_FIELDS_SEPARATOR).append(name).append("\n");
@@ -132,35 +129,33 @@ QString LC_PenPaletteData::toStringRepresentation(LC_PenItem *item){
  * @param str string to parse
  * @return created item or nullptr if parsing error occurred
  */
-LC_PenItem* LC_PenPaletteData::fromStringRepresentation(QString &str){
+LC_PenItem* LC_PenPaletteData::fromStringRepresentation(const QString &str) const {
     LC_PenItem* result = nullptr;
     const QStringList stringParts = str.split(PEN_DATA_FIELDS_SEPARATOR);
 
     // it is expected that only 4 fields should be in the string
     if (stringParts.size() == 4){
-
         // first proceed with linetype
-        RS2::LineType lineType;
-        QString lineTypeStr = stringParts.at(0).trimmed();
+        const QString lineTypeStr = stringParts.at(0).trimmed();
         bool conversionOk = false;
         int type = lineTypeStr.toInt(&conversionOk, 10);
         if (conversionOk){
             // we've converted to int, now we'll check that int value is one of valid line types
             if (m_registry->hasLineType(type)){
-                lineType = static_cast<RS2::LineType>(type);
+                const auto lineType = static_cast<RS2::LineType>(type);
 
                 // now we'll parse lien width
-                QString widthStr = stringParts.at(1).trimmed();
+                const QString widthStr = stringParts.at(1).trimmed();
                 conversionOk = false;
                 int width = widthStr.toInt(&conversionOk, 10);
                 if (conversionOk){
                     // if converted to it fine, check whether int is valid width
                     if (m_registry->hasLineWidth(width)){ // allow valid line width only
-                        RS2::LineWidth lineWidth = static_cast<RS2::LineWidth>(width);
+                        const auto lineWidth = static_cast<RS2::LineWidth>(width);
 
                         // here we'll parse color
-                        QString colorStr = stringParts.at(2), trimmed;
-                        RS_Color color = m_registry->getColorFromInternalString(colorStr);
+                        const QString colorStr = stringParts.at(2).trimmed();
+                        const RS_Color color = m_registry->getColorFromInternalString(colorStr);
                         bool colorValid = color.isValid();
                         if (!colorValid){
                             // the color itself may be invalid, yet it might include important flags, so check for them
@@ -171,7 +166,7 @@ LC_PenItem* LC_PenPaletteData::fromStringRepresentation(QString &str){
                         if (colorValid){
 
                             // ok, we'll proceed with name
-                            QString name = stringParts.at(3);
+                            const QString name = stringParts.at(3);
                             if (!name.isEmpty()){ // skip empty pens without names
                                 // check that name of pen is not duplicated
                                 if (findItemWithName(name) == nullptr){
@@ -226,11 +221,11 @@ void LC_PenPaletteData::itemEdited([[maybe_unused]] LC_PenItem *item){
     emitDataChange();
 }
 
-int LC_PenPaletteData::getItemsCount(){
+int LC_PenPaletteData::getItemsCount() const {
     return m_persistentItems.count();
 }
 
-LC_PenItem *LC_PenPaletteData::getItemAt(int index){
+LC_PenItem *LC_PenPaletteData::getItemAt(const int index) const {
     return m_persistentItems.at(index);
 }
 
@@ -239,9 +234,9 @@ LC_PenItem *LC_PenPaletteData::getItemAt(int index){
  * @param name name to search for
  * @return item with given name, or nullptr if nothing is found
  */
-LC_PenItem *LC_PenPaletteData::findItemWithName(QString &name){
+LC_PenItem *LC_PenPaletteData::findItemWithName(const QString &name) const {
 
-    int count = m_persistentItems.count();
+    const int count = m_persistentItems.count();
     for (int i = 0; i < count; i++){
         LC_PenItem* item = m_persistentItems.at(i);
         QString itemName = item->getName();
@@ -253,11 +248,11 @@ LC_PenItem *LC_PenPaletteData::findItemWithName(QString &name){
 }
 /**
  * Simply creates new pen with given name
- * @param name name of pen
+ * @param penName name of pen
  * @return created item
  */
-LC_PenItem *LC_PenPaletteData::createNewPenItem(QString penName){
-    LC_PenItem* penItem = new LC_PenItem(penName);
+LC_PenItem *LC_PenPaletteData::createNewPenItem(const QString& penName){
+    const auto penItem = new LC_PenItem(penName);
     return penItem;
 }
 
@@ -269,8 +264,8 @@ LC_PenItem *LC_PenPaletteData::createNewPenItem(QString penName){
  * @param color color
  * @return created pen item
  */
-LC_PenItem *LC_PenPaletteData::doCreateNewDefaultPenItem(QString penName, RS2::LineType lineType, RS2::LineWidth lineWidth, RS_Color color){
-    LC_PenItem* penItem = new LC_PenItem(QObject::tr(penName.toStdString().c_str()));
+LC_PenItem *LC_PenPaletteData::doCreateNewDefaultPenItem(const QString& penName, const RS2::LineType lineType, const RS2::LineWidth lineWidth, const RS_Color& color){
+    const auto penItem = new LC_PenItem(QObject::tr(penName.toStdString().c_str()));
     penItem->setLineWidth(lineWidth);
     penItem->setLineType(lineType);
     penItem->setColor(color);

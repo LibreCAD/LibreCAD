@@ -32,7 +32,6 @@
 #include "rs_dialogfactory.h"
 #include "rs_dialogfactoryinterface.h"
 #include "rs_graphic.h"
-#include "rs_graphicview.h"
 #include "rs_insert.h"
 
 class RS_BlockList;
@@ -46,46 +45,51 @@ RS_ActionBlocksCreate::RS_ActionBlocksCreate(LC_ActionContext *actionContext)
 
 RS_ActionBlocksCreate::~RS_ActionBlocksCreate() = default;
 
-void RS_ActionBlocksCreate::onSelectionCompleted([[maybe_unused]]bool singleEntity, bool fromInit) {
+void RS_ActionBlocksCreate::onSelectionCompleted([[maybe_unused]]bool singleEntity, const bool fromInit) {
     setSelectionComplete(isAllowTriggerOnEmptySelection(), fromInit);
     if (m_selectionComplete) {
-        updateMouseButtonHints();
-        updateSelectionWidget();
+        updateActionPrompt();
     }
 }
 
-void RS_ActionBlocksCreate::doTrigger([[maybe_unused]]bool keepSelected) {
-    if (m_graphic != nullptr) {
-        RS_BlockList* blockList = m_graphic->getBlockList();
-        if (blockList != nullptr) {
-            RS_BlockData d =
-                RS_DIALOGFACTORY->requestNewBlockDialog(blockList);
+bool RS_ActionBlocksCreate::doTriggerModifications(LC_DocumentModificationBatch& ctx) {
+    if (m_graphic == nullptr) {
+        return false;
+    }
+    RS_BlockList* blockList = m_graphic->getBlockList();
+    if (blockList != nullptr) {
+        const RS_BlockData d = RS_DIALOGFACTORY->requestNewBlockDialog(blockList);
 
-            if (!d.name.isEmpty()) {
-                RS_Creation creation(m_container, getViewPort());
-                creation.createBlock(&d, *m_referencePoint, true);
-                RS_InsertData id(d.name, *m_referencePoint, RS_Vector(1.0, 1.0), 0.0,
-                                 1, 1, RS_Vector(0.0, 0.0));
-                creation.createInsert(&id);
-            }
+        if (!d.name.isEmpty()) {
+            RS_Block* block = RS_Creation::createBlock(&d, *m_referencePoint, m_selectedEntities);
+            const RS_InsertData insertData(d.name, *m_referencePoint, RS_Vector(1.0, 1.0), 0.0, 1, 1, RS_Vector(0.0, 0.0));
+            const auto insert = new RS_Insert(m_document, insertData);
+            m_graphic->addBlock(block);
+
+            ctx += insert;
+            ctx -= m_selectedEntities;
+
+            insert->update();
         }
     }
+    return true;
+}
 
-    redrawDrawing();
+void RS_ActionBlocksCreate::doTriggerCompletion([[maybe_unused]]bool success) {
     setStatus(getStatus()+1); // clear mouse button hints
-    updateMouseButtonHints();
-    finish(false);
+    updateActionPrompt();
+    finish();
 }
 
-void RS_ActionBlocksCreate::onMouseLeftButtonReleaseSelected([[maybe_unused]]int status, LC_MouseEvent* pEvent) {
-    fireCoordinateEventForSnap(pEvent);
+void RS_ActionBlocksCreate::onMouseLeftButtonReleaseSelected([[maybe_unused]]int status, const LC_MouseEvent* e) {
+    fireCoordinateEventForSnap(e);
 }
 
-void RS_ActionBlocksCreate::onMouseRightButtonReleaseSelected([[maybe_unused]]int status,[[maybe_unused]] LC_MouseEvent* pEvent) {
+void RS_ActionBlocksCreate::onMouseRightButtonReleaseSelected([[maybe_unused]]int status, [[maybe_unused]] const LC_MouseEvent* event) {
     init(getStatus()-1);
 }
 
-void RS_ActionBlocksCreate::onCoordinateEvent(int status, [[maybe_unused]] bool isZero, const RS_Vector &pos) {
+void RS_ActionBlocksCreate::onCoordinateEvent(const int status, [[maybe_unused]] bool isZero, const RS_Vector &pos) {
     switch (status) {
         case SetReferencePoint: {
             *m_referencePoint = pos;
@@ -97,17 +101,17 @@ void RS_ActionBlocksCreate::onCoordinateEvent(int status, [[maybe_unused]] bool 
     }
 }
 
-void RS_ActionBlocksCreate::updateMouseButtonHintsForSelection() {
-    updateMouseWidgetTRCancel(tr("Select to create block (Enter to complete)"), MOD_SHIFT_LC(tr("Select contour")));
+void RS_ActionBlocksCreate::updateActionPromptForSelection() {
+    updatePromptTRCancel(tr("Select to create block") + getSelectionCompletionHintMsg(), MOD_SHIFT_LC(tr("Select contour")));
 }
 
-void RS_ActionBlocksCreate::updateMouseButtonHintsForSelected(int status) {
+void RS_ActionBlocksCreate::updateActionPromptForSelected(const int status) {
     switch (status) {
         case SetReferencePoint:
-            updateMouseWidgetTRCancel(tr("Specify reference point"));
+            updatePromptTRCancel(tr("Specify reference point"));
             break;
         default:
-            updateMouseWidget();
+            updatePrompt();
             break;
     }
 }

@@ -248,13 +248,13 @@ public:
     }
 
     /** Sets the current attributes for entities. */
-    void setExtrusion(double dx, double dy, double dz, double elevation) {
+    void setExtrusion(double dx, double dy, double dz, double elevation) const {
         extrusion->setDirection(dx, dy, dz);
 		extrusion->setElevation(elevation);
     }
 
     /** @return the current attributes used for new entities. */
-    DL_Extrusion* getExtrusion() {
+    DL_Extrusion* getExtrusion() const {
         return extrusion;
     }
 

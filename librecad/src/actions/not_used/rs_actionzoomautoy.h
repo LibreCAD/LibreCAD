@@ -34,11 +34,11 @@
  * @author Andrew Mustun
  */
 class RS_ActionZoomAutoY : public RS_ActionInterface {
-	Q_OBJECT
+    Q_OBJECT
 public:
-    RS_ActionZoomAutoY(LC_ActionContext *actionContext);
-	void init(int status) override;
-	void trigger() override;
+    RS_ActionZoomAutoY(LC_ActionContext* actionContext);
+    void init(int status) override;
+    void trigger() override;
 };
 
 #endif

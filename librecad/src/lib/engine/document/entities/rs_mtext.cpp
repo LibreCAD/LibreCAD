@@ -24,12 +24,10 @@
 **
 **********************************************************************/
 
-
- #include <iostream>
-
-#include <QChar>
-
 #include "rs_mtext.h"
+
+#include <iostream>
+
 #include "rs_debug.h"
 #include "rs_font.h"
 #include "rs_fontlist.h"
@@ -289,94 +287,91 @@ RS_MText::computeBidiVisualOrder(const QString &text,
   return result;
 }
 
-RS_MText::LC_TextLine *RS_MText::LC_TextLine::clone() const {
-    auto *ec = new LC_TextLine(getParent(), isOwner());
+RS_MText::LC_TextLine* RS_MText::LC_TextLine::clone() const {
+    auto* ec = new LC_TextLine(getParent(), isOwner());
     if (isOwner()) {
-        for (const RS_Entity *entity: *this)
-            if (entity != nullptr)
+        for (const RS_Entity* entity : *this) {
+            if (entity != nullptr) {
                 ec->push_back(entity->clone());
-    } else {
+            }
+        }
+    }
+    else {
         ec->clear();
         std::copy(cbegin(), cend(), std::back_inserter(*ec));
     }
     ec->detach();
-    ec->setTextSize(textSize);
-    ec->setLeftBottomCorner(leftBottomCorner);
-    ec->setBaselineStart(baselineStart);
-    ec->setBaselineEnd(baselineEnd);
+    ec->setTextSize(m_textSize);
+    ec->setLeftBottomCorner(m_leftBottomCorner);
+    ec->setBaselineStart(m_baselineStart);
+    ec->setBaselineEnd(m_baselineEnd);
     return ec;
 }
 
-const RS_Vector &RS_MText::LC_TextLine::getTextSize() {
-    return textSize;
+const RS_Vector& RS_MText::LC_TextLine::getTextSize() const {
+    return m_textSize;
 }
 
-void RS_MText::LC_TextLine::setTextSize(const RS_Vector &textSize) {
-    this->textSize = textSize;
+void RS_MText::LC_TextLine::setTextSize(const RS_Vector& v) {
+    m_textSize = v;
 }
 
-const RS_Vector &RS_MText::LC_TextLine::getLeftBottomCorner() const {
-    return leftBottomCorner;
+const RS_Vector& RS_MText::LC_TextLine::getLeftBottomCorner() const {
+    return m_leftBottomCorner;
 }
 
-void RS_MText::LC_TextLine::setLeftBottomCorner(const RS_Vector leftBottomCorner) {
-    this->leftBottomCorner = leftBottomCorner;
+void RS_MText::LC_TextLine::setLeftBottomCorner(const RS_Vector& v) {
+    m_leftBottomCorner = v;
 }
 
-const RS_Vector &RS_MText::LC_TextLine::getBaselineStart() const {
-    return baselineStart;
+const RS_Vector& RS_MText::LC_TextLine::getBaselineStart() const {
+    return m_baselineStart;
 }
 
-void RS_MText::LC_TextLine::setBaselineStart(const RS_Vector &baselineStart) {
-    this->baselineStart = baselineStart;
+void RS_MText::LC_TextLine::setBaselineStart(const RS_Vector& v) {
+    m_baselineStart = v;
 }
 
-const RS_Vector &RS_MText::LC_TextLine::getBaselineEnd() const {
-    return baselineEnd;
+const RS_Vector& RS_MText::LC_TextLine::getBaselineEnd() const {
+    return m_baselineEnd;
 }
 
-void RS_MText::LC_TextLine::setBaselineEnd(const RS_Vector &baselineEnd) {
-    this->baselineEnd = baselineEnd;
+void RS_MText::LC_TextLine::setBaselineEnd(const RS_Vector& v) {
+    m_baselineEnd = v;
 }
 
-void RS_MText::LC_TextLine::moveBaseline(const RS_Vector &offset) {
-    baselineStart.move(offset);
-    baselineEnd.move(offset);
-    leftBottomCorner.move(offset);
+void RS_MText::LC_TextLine::moveBaseline(const RS_Vector& offset) {
+    m_baselineStart.move(offset);
+    m_baselineEnd.move(offset);
+    m_leftBottomCorner.move(offset);
 }
 
-RS_MTextData::RS_MTextData(const RS_Vector &_insertionPoint, double _height,
-                           double _width, VAlign _valign, HAlign _halign,
-                           MTextDrawingDirection _drawingDirection,
-                           MTextLineSpacingStyle _lineSpacingStyle,
-                           double _lineSpacingFactor, const QString &_text,
-                           const QString &_style, double _angle,
-                           RS2::UpdateMode _updateMode)
-    : insertionPoint(_insertionPoint), height(_height), width(_width),
-      valign(_valign), halign(_halign), drawingDirection(_drawingDirection),
-      lineSpacingStyle(_lineSpacingStyle),
-      lineSpacingFactor(_lineSpacingFactor), text(_text), style(_style),
-      angle(_angle), updateMode(_updateMode) {}
+RS_MTextData::RS_MTextData(const RS_Vector& insertionPoint, const double height, const double width, const VAlign valign,
+                           const HAlign halign, const MTextDrawingDirection drawingDirection,
+                           const MTextLineSpacingStyle lineSpacingStyle, const double lineSpacingFactor, const QString& text,
+                           const QString& style, const double angle, const RS2::UpdateMode updateMode)
+    : insertionPoint(insertionPoint), height(height), width(width), valign(valign), halign(halign),
+      drawingDirection(drawingDirection), lineSpacingStyle(lineSpacingStyle), lineSpacingFactor(lineSpacingFactor), text(text),
+      style(style), angle(angle), updateMode(updateMode) {
+}
 
-std::ostream &operator<<(std::ostream &os, const RS_MTextData &td) {
-    os << "(" << td.insertionPoint << ',' << td.height << ',' << td.width << ','
-       << td.valign << ',' << td.halign << ',' << td.drawingDirection << ','
-       << td.lineSpacingStyle << ',' << td.lineSpacingFactor << ','
-       << td.text.toLatin1().data() << ',' << td.style.toLatin1().data() << ','
-       << td.angle << ',' << td.updateMode << ',' << ")";
+std::ostream& operator<<(std::ostream& os, const RS_MTextData& td) {
+    os << "(" << td.insertionPoint << ',' << td.height << ',' << td.width << ',' << td.valign << ',' << td.halign << ',' << td.
+        drawingDirection << ',' << td.lineSpacingStyle << ',' << td.lineSpacingFactor << ',' << td.text.toLatin1().data() << ',' << td.style
+       .toLatin1().data() << ',' << td.angle << ',' << td.updateMode << ',' << ")";
     return os;
 }
 
 /**
  * Constructor.
  */
-RS_MText::RS_MText(RS_EntityContainer *parent, const RS_MTextData &d)
-    : RS_EntityContainer(parent), data(d) {
-    setText(data.text);
+RS_MText::RS_MText(RS_EntityContainer* parent, const RS_MTextData& d)
+    : RS_EntityContainer(parent), m_data(d) {
+    RS_MText::setText(m_data.text);
 }
 
-RS_Entity *RS_MText::clone() const {
-    auto *t = new RS_MText(*this);
+RS_Entity* RS_MText::clone() const {
+    auto* t = new RS_MText(*this);
     t->setOwner(isOwner());
     t->detach();
     return t;
@@ -384,22 +379,22 @@ RS_Entity *RS_MText::clone() const {
 
 // fixme - test concept for using UI proxies for heavy entities on modification operation (rotate, scale etc).
 // potentially, it might be either expanded further or removed.
-class RS_MTextProxy:public RS_EntityContainer{
+class RS_MTextProxy : public RS_EntityContainer {
 public:
-    RS_MTextProxy(const RS_MText &parent):RS_EntityContainer(parent) {
+    explicit RS_MTextProxy(const RS_MText& parent) : RS_EntityContainer(parent) {
     }
 };
 
-RS_Entity *RS_MText::cloneProxy() const {
+RS_Entity* RS_MText::cloneProxy() const {
     auto* proxy = new RS_EntityContainer();
     proxy->setOwner(true);
-    for (RS_Entity *entity: std::as_const(*this)) {
-        auto line = dynamic_cast<LC_TextLine*>(entity);
+    for (RS_Entity* entity : std::as_const(*this)) {
+        const auto line = dynamic_cast<LC_TextLine*>(entity);
         if (line != nullptr && line->count() > 0) {
-            const RS_Vector &start = line->getBaselineStart();
-            const RS_Vector &end = line->getBaselineEnd();
-            auto line = new RS_Line(proxy, start, end);
-            proxy->addEntity(line);
+            const RS_Vector& start = line->getBaselineStart();
+            const RS_Vector& end = line->getBaselineEnd();
+            const auto l = new RS_Line(proxy, start, end);
+            proxy->addEntity(l);
         }
     }
     return proxy;
@@ -410,33 +405,35 @@ RS_Entity *RS_MText::cloneProxy() const {
  * text are updated.
  */
 void RS_MText::setText(QString t) {
-    data.text = std::move(t);
+    m_data.text = std::move(t);
 
     // handle some special flags embedded in the text:
-    if (data.text.left(4) == R"(\A0;)") {
-        data.text = data.text.mid(4);
-        data.valign = RS_MTextData::VABottom;
-    } else if (data.text.left(4) == R"(\A1;)") {
-        data.text = data.text.mid(4);
-        data.valign = RS_MTextData::VAMiddle;
-    } else if (data.text.left(4) == R"(\A2;)") {
-        data.text = data.text.mid(4);
-        data.valign = RS_MTextData::VATop;
+    if (m_data.text.left(4) == R"(\A0;)") {
+        m_data.text = m_data.text.mid(4);
+        m_data.valign = RS_MTextData::VABottom;
+    }
+    else if (m_data.text.left(4) == R"(\A1;)") {
+        m_data.text = m_data.text.mid(4);
+        m_data.valign = RS_MTextData::VAMiddle;
+    }
+    else if (m_data.text.left(4) == R"(\A2;)") {
+        m_data.text = m_data.text.mid(4);
+        m_data.valign = RS_MTextData::VATop;
     }
 
-    if (data.updateMode == RS2::Update) {
+    if (m_data.updateMode == RS2::Update) {
         update();
     }
 }
 
-void RS_MText::setDrawingDirection(
-    RS_MTextData::MTextDrawingDirection direction) {
-  if (data.drawingDirection == direction)
-    return;
-  data.drawingDirection = direction;
-  if (data.updateMode == RS2::Update) {
-    update();
-  }
+void RS_MText::setDrawingDirection(RS_MTextData::MTextDrawingDirection direction) {
+    if (m_data.drawingDirection == direction) {
+        return;
+    }
+    m_data.drawingDirection = direction;
+    if (m_data.updateMode == RS2::Update) { // fixme - why update is only on some setters?
+        update();
+    }
 }
 
 /**
@@ -444,29 +441,37 @@ void RS_MText::setDrawingDirection(
  *
  * @return  1: top left ... 9: bottom right
  */
-int RS_MText::getAlignment() {
-    if (data.valign == RS_MTextData::VATop) {
-        if (data.halign == RS_MTextData::HALeft) {
+int RS_MText::getAlignment() const {
+    if (m_data.valign == RS_MTextData::VATop) {
+        if (m_data.halign == RS_MTextData::HALeft) {
             return 1;
-        } else if (data.halign == RS_MTextData::HACenter) {
+        }
+        if (m_data.halign == RS_MTextData::HACenter) {
             return 2;
-        } else if (data.halign == RS_MTextData::HARight) {
+        }
+        if (m_data.halign == RS_MTextData::HARight) {
             return 3;
         }
-    } else if (data.valign == RS_MTextData::VAMiddle) {
-        if (data.halign == RS_MTextData::HALeft) {
+    }
+    else if (m_data.valign == RS_MTextData::VAMiddle) {
+        if (m_data.halign == RS_MTextData::HALeft) {
             return 4;
-        } else if (data.halign == RS_MTextData::HACenter) {
+        }
+        if (m_data.halign == RS_MTextData::HACenter) {
             return 5;
-        } else if (data.halign == RS_MTextData::HARight) {
+        }
+        if (m_data.halign == RS_MTextData::HARight) {
             return 6;
         }
-    } else if (data.valign == RS_MTextData::VABottom) {
-        if (data.halign == RS_MTextData::HALeft) {
+    }
+    else if (m_data.valign == RS_MTextData::VABottom) {
+        if (m_data.halign == RS_MTextData::HALeft) {
             return 7;
-        } else if (data.halign == RS_MTextData::HACenter) {
+        }
+        if (m_data.halign == RS_MTextData::HACenter) {
             return 8;
-        } else if (data.halign == RS_MTextData::HARight) {
+        }
+        if (m_data.halign == RS_MTextData::HARight) {
             return 9;
         }
     }
@@ -479,30 +484,35 @@ int RS_MText::getAlignment() {
  *
  * @param a 1: top left ... 9: bottom right
  */
-void RS_MText::setAlignment(int a) {
+void RS_MText::setAlignment(const int a) {
     switch (a % 3) {
-        default:
         case 1:
-            data.halign = RS_MTextData::HALeft;
+            m_data.halign = RS_MTextData::HALeft;
             break;
         case 2:
-            data.halign = RS_MTextData::HACenter;
+            m_data.halign = RS_MTextData::HACenter;
             break;
         case 0:
-            data.halign = RS_MTextData::HARight;
+            m_data.halign = RS_MTextData::HARight;
+            break;
+        default:
+            m_data.halign = RS_MTextData::HALeft;
             break;
     }
 
-    switch ((int)ceil(a / 3.0)) {
-        default:
+    const int valign = static_cast<int>(ceil(a / 3.0));
+    switch (valign) {
         case 1:
-            data.valign = RS_MTextData::VATop;
+            m_data.valign = RS_MTextData::VATop;
             break;
         case 2:
-            data.valign = RS_MTextData::VAMiddle;
+            m_data.valign = RS_MTextData::VAMiddle;
             break;
         case 3:
-            data.valign = RS_MTextData::VABottom;
+            m_data.valign = RS_MTextData::VABottom;
+            break;
+        default:
+            m_data.valign = RS_MTextData::VATop;
             break;
     }
 }
@@ -510,52 +520,53 @@ void RS_MText::setAlignment(int a) {
 /**
  * @return Number of lines in this text entity.
  */
-int RS_MText::getNumberOfLines() {
-    return 1 + std::count_if(data.text.cbegin(), data.text.cend(),
-                             [](QChar c) { return c.unicode() == 0xA; });
+int RS_MText::getNumberOfLines() const {
+    return 1 + std::count_if(m_data.text.cbegin(), m_data.text.cend(), [](QChar c) {
+        return c.unicode() == 0xA;
+    });
 }
 
 /**
  * Updates the Inserts (letters) of this text. Called when the
- * text or it's data, position, alignment, .. changes.
+ * text or it's m_data, position, alignment, .. changes.
  * This method also updates the usedTextWidth / usedTextHeight property.
  */
 void RS_MText::update() {
-  RS_DEBUG->print("RS_MText::update");
+    RS_DEBUG->print("RS_MText::update");
 
-  clear();
-  if (isUndone()) {
-    return;
-  }
+    clear();
+    if (isDeleted()) {
+        return;
+    }
 
-  usedTextWidth = 0.0;
-  usedTextHeight = 0.0;
+    m_usedTextWidth = 0.0;
+    m_usedTextHeight = 0.0;
 
-  RS_Font *font{RS_FONTLIST->requestFont(data.style)};
-  if (nullptr == font) {
-    return;
-  }
+    RS_Font* font{RS_FONTLIST->requestFont(m_data.style)};
+    if (nullptr == font) {
+        return;
+    }
 
-  // letterSpace and space are always treated as positive advances here; the
+    // letterSpace and space are always treated as positive advances here; the
   // bidi pass already produced visual L→R order, so the cursor unconditionally
-  // moves rightward during emission.
-  RS_Vector letterPos{0.0, -9.0};
-  const RS_Vector letterSpace{font->getLetterSpacing(), 0.0};
-  const double spaceWidth = font->getWordSpacing();
+  // moves rightward during emission.RS_Vector letterPos{0.0, -9.0};
+    RS_Vector letterPos{0.0, -9.0};
+    const RS_Vector letterSpace{font->getLetterSpacing(), 0.0};
+    const double spaceWidth = font->getWordSpacing();
 
   int lineCounter{0};
 
-  // Every single text line gets stored in this entity container
-  // so we can move the whole line around easily:
-  LC_TextLine *oneLine{new LC_TextLine(this)};
+    // Every single text line gets stored in this entity container
+    // so we can move the whole line around easily:
+    auto oneLine{new LC_TextLine(this)};
 
-  // First every text line is created with
-  //   alignment: top left
-  //   angle: 0
-  //   height: 9.0
-  // Rotation, scaling and centering is done later
+    // First every text line is created with
+    //   alignment: top left
+    //   angle: 0
+    //   height: 9.0
+    // Rotation, scaling and centering is done later
 
-  // Logical-order pass: process MText format codes and accumulate per-line
+    // Logical-order pass: process MText format codes and accumulate per-line
   // segments. Each line's segments are then bidi-reordered and emitted via
   // flushBidiLine(); see the comment on LC_BidiSegment in the header.
   std::vector<LC_BidiSegment> segments;
@@ -566,104 +577,100 @@ void RS_MText::update() {
     oneLine = new LC_TextLine(this);
     letterPos = RS_Vector(0.0, -9.0);
   };
+    for (decltype(m_data.text.length()) i = 0; i < m_data.text.length(); ++i) {
+        auto remaining = m_data.text.mid(i);
+        // Handle \F not followed by {<codePage>}
+        if (remaining.startsWith(R"(\F)") && remaining.indexOf(R"(^\\[Ff]\{[\d\w]*\})") != 0) {
+            segments.push_back(
+          {LC_BidiSegment::Char, m_data.text.at(i), font, 0.0, {}, {}});
+            continue;
+        }
+        if (remaining.startsWith(R"(\\)")) {
+            // Allow escape '\', needed to support "\S" and "\P" in string
+            // "\S" is used for super/subscripts
+            // "\P" is used to start a new line
+            // "\\S" and "\\P" to get literal strings "\S" and "\P"
+            segments.push_back(
+          {LC_BidiSegment::Char, m_data.text.at(i++), font, 0.0, {}, {}});
+            continue;
+        }
 
-  for (decltype(data.text.length()) i = 0; i < data.text.length(); ++i) {
-    // Handle \F not followed by {<codePage>}
-    if (data.text.mid(i).startsWith(R"(\F)") &&
-        data.text.mid(i).indexOf(R"(^\\[Ff]\{[\d\w]*\})") != 0) {
-      segments.push_back(
-          {LC_BidiSegment::Char, data.text.at(i), font, 0.0, {}, {}});
-      continue;
-    } else if (data.text.mid(i).startsWith(R"(\\)")) {
-      // Allow escape '\', needed to support "\S" and "\P" in string
-      // "\S" is used for super/subscripts
-      // "\P" is used to start a new line
-      // "\\S" and "\\P" to get literal strings "\S" and "\P"
-      segments.push_back(
-          {LC_BidiSegment::Char, data.text.at(i++), font, 0.0, {}, {}});
-      continue;
-    }
+        switch (m_data.text.at(i).unicode()) {
+            case 0x0A:
+                // line feed:
+                closeLine();
+                break;
 
-    bool handled{false};
-
-    switch (data.text.at(i).unicode()) {
-    case 0x0A:
-      // line feed:
-      closeLine();
-      break;
-
-    case 0x20:
-      // Space:
-      segments.push_back(
+            case 0x20:
+                // Space:
+                segments.push_back(
           {LC_BidiSegment::Space, QChar(' '), nullptr, spaceWidth, {}, {}});
-      break;
+                break;
 
-    case 0x5C: {
-      // code (e.g. \S, \P, ..)
-      ++i;
-      if (static_cast<int>(data.text.length()) <= i) {
-        continue;
-      }
-      std::uint32_t ch{data.text.toUcs4().at(i)};
-      switch (ch) {
-      case 'P':
-        closeLine();
-        handled = true;
-        break;
+            case 0x5C: {
+                bool handled{false};
+                // code (e.g. \S, \P, ..)
+                ++i;
+                if (static_cast<int>(m_data.text.length()) <= i) {
+                    continue;
+                }
+                const std::uint32_t ch{m_data.text.toUcs4().at(i)};
+                switch (ch) {
+                    case 'P':
+                        closeLine();
+                        handled = true;
+                        break;
 
-      case 'f':
-      case 'F': {
-        // font change
-        //  \f{symbol} changes font to symbol
-        //  \f{} sets font to standard
-        ++i;
-        if ('{' != data.text.at(i).unicode()) {
-          --i;
-          continue;
-        }
+                    case 'f':
+                    case 'F': {
+                        // font change
+                        //  \f{symbol} changes font to symbol
+                        //  \f{} sets font to standard
+                        ++i;
+                        if ('{' != m_data.text.at(i).unicode()) {
+                            --i;
+                            continue;
+                        }
 
-        qsizetype j{data.text.indexOf('}', i)};
-        if (j > i) {
-          QString fontName = data.text.mid(i + 1, j - i - 1);
+                        const qsizetype j{m_data.text.indexOf('}', i)};
+                        if (j > i) {
+                            QString fontName = m_data.text.mid(i + 1, j - i - 1);
 
-          RS_Font *fontNew{RS_FONTLIST->requestFont(fontName)};
-          if (nullptr != fontNew) {
-            font = fontNew;
-          }
-          if (nullptr == font) {
-            font = RS_FONTLIST->requestFont("standard");
-          }
-          i = j;
-        }
-        continue;
-      } // inner case 'f','F'
+                            const auto requestedFont = RS_FONTLIST->requestFont(fontName);
+                            if (requestedFont != nullptr) {
+                                font = requestedFont;
+                            }
+                            else {
+                                font = RS_FONTLIST->requestFont("standard");
+                            }
+                            i = j;
+                        }
+                        continue;
+                    } // inner case 'f','F'
 
-      case 'S': {
-        QString upperText;
-        QString lowerText;
+                    case 'S': {
+                        QString upperText;
+                        QString lowerText;
 
-        // get upper string:
-        ++i;
-        while (static_cast<int>(data.text.length()) > i &&
-               data.text.at(i).unicode() != '^' &&
-               data.text.at(i).unicode() != '\\') {
-          upperText += data.text.at(i);
-          ++i;
-        }
+                        // get upper string:
+                        ++i; // fixme - sand - rework cycles
+                        while (static_cast<int>(m_data.text.length()) > i && m_data.text.at(i).unicode() != '^' && m_data.text.at(i).unicode() !=
+                            '\\') {
+                            upperText += m_data.text.at(i);
+                            ++i;
+                        }
 
-        ++i;
-        if (static_cast<int>(data.text.length()) > i &&
-            '^' == data.text.at(i - 1).unicode() &&
-            ' ' == data.text.at(i).unicode()) {
-          ++i;
-        }
+                        ++i;
+                        if (static_cast<int>(m_data.text.length()) > i && '^' == m_data.text.at(i - 1).unicode() && ' ' == m_data.text.at(i).
+                            unicode()) {
+                            ++i;
+                        }
 
-        // get lower string:
-        while (static_cast<int>(data.text.length()) > i &&
-               ';' != data.text.at(i).unicode()) {
-          lowerText += data.text.at(i);
-          ++i;
-        }
+                        // get lower string:
+                        while (static_cast<int>(m_data.text.length()) > i && ';' != m_data.text.at(i).unicode()) {
+                            lowerText += m_data.text.at(i);
+                            ++i;
+                        }
 
         LC_BidiSegment stack;
         stack.kind = LC_BidiSegment::Stack;
@@ -672,39 +679,40 @@ void RS_MText::update() {
         segments.push_back(std::move(stack));
         handled = true;
 
-        break;
-      } // inner case 'S'
+                        break;
+                    } // inner case 'S'
 
-      default:
-        --i;
-        break;
-      } // inner switch (ch)
+                    default:
+                        --i;
+                        break;
+                } // inner switch (ch)
 
-      if (handled)
-        break;
-    } // outer case 0x5C
+                if (handled) {
+                    break;
+                }
+            } // outer case 0x5C
 
-    // if char is not handled
-    // fall-through
-    default: {
-      // One Letter:
-      segments.push_back(
-          {LC_BidiSegment::Char, data.text.at(i), font, 0.0, {}, {}});
-      break;
-    } // outer default
-    } // outer switch (data.text.at(i).unicode())
-  }   // for (i) loop
+            // if char is not handled
+            // fall-through
+            default: {
+                // One Letter:
+                segments.push_back(
+          {LC_BidiSegment::Char, m_data.text.at(i), font, 0.0, {}, {}});
+                break;
+            } // outer default
+        } // outer switch (m_data.text.at(i).unicode())
+    } // for (i) loop
 
   // Flush any trailing segments belonging to the last line.
   flushBidiLine(*oneLine, segments, letterSpace, letterPos);
 
-  usedTextHeight -=
-          data.height * data.lineSpacingFactor * 5.0 / 3.0 - data.height;
+  m_usedTextHeight -=
+          m_data.height * m_data.lineSpacingFactor * 5.0 / 3.0 - m_data.height;
 
-  updateAddLine(oneLine, lineCounter);
+    updateAddLine(oneLine, lineCounter);
 
-  alignVertically();
-  RS_DEBUG->print("RS_MText::update: OK");
+    alignVertically();
+    RS_DEBUG->print("RS_MText::update: OK");
 }
 
 /**
@@ -757,7 +765,7 @@ void RS_MText::flushBidiLine(LC_TextLine &oneLine,
   // grapheme-aware segment building plus codepoint-based font lookup —
   // broader rendering work, not bidi.
   std::vector<int> visualOrder;
-  if (data.drawingDirection == RS_MTextData::RightToLeft) {
+  if (m_data.drawingDirection == RS_MTextData::RightToLeft) {
     visualOrder.resize(segments.size());
     for (size_t i = 0; i < segments.size(); ++i) {
       visualOrder[i] = static_cast<int>(segments.size() - 1 - i);
@@ -773,7 +781,7 @@ void RS_MText::flushBidiLine(LC_TextLine &oneLine,
       RS_Font *segFont = seg.font;
       if (segFont == nullptr) {
         // Fallback: should not normally happen, but stay defensive.
-        segFont = RS_FONTLIST->requestFont(data.style);
+        segFont = RS_FONTLIST->requestFont(m_data.style);
       }
       if (segFont != nullptr) {
         addLetter(oneLine, seg.codepoint, *segFont, letterSpace,
@@ -787,7 +795,7 @@ void RS_MText::flushBidiLine(LC_TextLine &oneLine,
     case LC_BidiSegment::Stack: {
       double upperWidth = 0.0;
       if (!seg.upperText.isEmpty()) {
-        RS_MText *upper = createUpperLower(seg.upperText, data,
+        RS_MText *upper = createUpperLower(seg.upperText, m_data,
                                            letterPosition + RS_Vector{0., 9.});
         oneLine.addEntity(upper);
         upper->reparent(&oneLine);
@@ -795,7 +803,7 @@ void RS_MText::flushBidiLine(LC_TextLine &oneLine,
       }
       double lowerWidth = 0.0;
       if (!seg.lowerText.isEmpty()) {
-        RS_MText *lower = createUpperLower(seg.lowerText, data,
+        RS_MText *lower = createUpperLower(seg.lowerText, m_data,
                                            letterPosition + RS_Vector{0., 4.});
         oneLine.addEntity(lower);
         lower->reparent(&oneLine);
@@ -811,30 +819,29 @@ void RS_MText::flushBidiLine(LC_TextLine &oneLine,
   segments.clear();
 }
 
-void RS_MText::alignVertically(){
+void RS_MText::alignVertically() {
     // Vertical Align:
-    switch (data.valign) {
+    switch (m_data.valign) {
         case RS_MTextData::VATop: {
             // no change
             break;
         }
         case RS_MTextData::VAMiddle: {
-            RS_EntityContainer::move({0., 0.5 * usedTextHeight});
+            RS_EntityContainer::move({0., 0.5 * m_usedTextHeight});
             break;
         }
         case RS_MTextData::VABottom: {
             // adjust corners for text lines
-            RS_EntityContainer::move({0., usedTextHeight});
+            RS_EntityContainer::move({0., m_usedTextHeight});
             break;
         }
-        default:
-            LC_ERR<<__func__<<"(): line "<<__LINE__<<": invalid Invalid RS_MText::VAlign="<<data.valign;
+        default: LC_ERR << __func__ << "(): line " << __LINE__ << ": invalid Invalid RS_MText::VAlign=" << m_data.valign;
             break;
     }
-    for (RS_Entity *e: std::as_const(*this)) {
-        auto line = dynamic_cast<LC_TextLine *> (e);
+    for (RS_Entity* e : std::as_const(*this)) {
+        const auto line = dynamic_cast<LC_TextLine*>(e);
         if (line != nullptr) {
-            RS_Vector corner =  RS_Vector(line->getMin().rotate(data.insertionPoint, data.angle));
+            auto corner = RS_Vector(line->getMin().rotate(m_data.insertionPoint, m_data.angle));
             RS_Vector size = line->getSize();
             line->setLeftBottomCorner(corner);
             line->setTextSize(size);
@@ -842,27 +849,27 @@ void RS_MText::alignVertically(){
     }
     rotateLinesRefs();
 
-    RS_EntityContainer::rotate(data.insertionPoint, data.angle);
+    RS_EntityContainer::rotate(m_data.insertionPoint, m_data.angle);
 
     forcedCalculateBorders();
 }
 
 void RS_MText::rotateLinesRefs() const {
-    for (RS_Entity *e: std::as_const(*this)) {
-        auto line = dynamic_cast<LC_TextLine *> (e);
+    for (RS_Entity* e : std::as_const(*this)) {
+        const auto line = dynamic_cast<LC_TextLine*>(e);
         if (line != nullptr) {
             RS_Vector corner = line->getLeftBottomCorner();
-            RS_Vector size = line->getTextSize();
-            RS_Vector shiftVector(size.y/2, 0);
-            shiftVector.rotate(data.angle+M_PI_2);
+            const RS_Vector size = line->getTextSize();
+            RS_Vector shiftVector(size.y / 2, 0);
+            shiftVector.rotate(m_data.angle + M_PI_2);
 
             RS_Vector baselineStart = corner + shiftVector;
-            RS_Vector baselineEnd = corner+shiftVector + RS_Vector::polar(size.x, data.angle);
+            RS_Vector baselineEnd = corner + shiftVector + RS_Vector::polar(size.x, m_data.angle);
 
-//            baselineStart.rotate(data.insertionPoint, data.angle);
+            //            baselineStart.rotate(m_data.insertionPoint, m_data.angle);
             line->setBaselineStart(baselineStart);
 
-//            baselineEnd.rotate(data.insertionPoint, data.angle);
+            //            baselineEnd.rotate(m_data.insertionPoint, m_data.angle);
             line->setBaselineEnd(baselineEnd);
         }
     }
@@ -871,32 +878,32 @@ void RS_MText::rotateLinesRefs() const {
 /**
  * Used internally by update() to add a letter to one line
  *
- * @param RS_EntityContainer& oneLine the current entity container
- * @param QChar letter the letter to add
- * @param RS_Font& font the font to use
- * @param const RS_Vector& letterSpace the letter width to use
- * @param RS_Vector& letterPosition the current letter position; will be updated
+ * @param oneLine
+ * @param letter
+ * @param font
+ * @param letterSpace
+ * @param letterPosition
+ * @param oneLine the current entity container
+ * @param letter the letter to add
+ * @param font the font to use
+ * @param letterSpace the letter width to use
+ * @param letterPosition the current letter position; will be updated
  * after addition
  *
  */
-void RS_MText::addLetter(LC_TextLine &oneLine, QChar letter,
-                         RS_Font &font, const RS_Vector &letterSpace,
-                         RS_Vector &letterPosition) {
-    QString letterText{QString(letter)};
+void RS_MText::addLetter(LC_TextLine& oneLine, const QChar letter, RS_Font& font, const RS_Vector& letterSpace, RS_Vector& letterPosition) {
+    auto letterText{QString(letter)};
     if (nullptr == font.findLetter(letterText)) {
-        RS_DEBUG->print("RS_MText::update: missing font for letter( %s ), replaced "
-                        "it with QChar(0xfffd)",
-                        qPrintable(letterText));
+        RS_DEBUG->print("RS_MText::update: missing font for letter( %s ), replaced " "it with QChar(0xfffd)", qPrintable(letterText));
         letterText = QChar(0xfffd);
     }
 
-    LC_LOG << "RS_MText::update: insert a letter at pos:(" << letterPosition.x
-           << ", " << letterPosition.y << ")";
+    LC_LOG << "RS_MText::update: insert a letter at pos:(" << letterPosition.x << ", " << letterPosition.y << ")";
 
-    RS_InsertData d(letterText, letterPosition, RS_Vector(1.0, 1.0), 0.0, 1, 1,
+    const RS_InsertData d(letterText, letterPosition, RS_Vector(1.0, 1.0), 0.0, 1, 1,
                     RS_Vector(0.0, 0.0), font.getLetterList(), RS2::NoUpdate);
 
-    RS_Insert *letterEntity{new RS_Insert(this, d)};
+    const auto letterEntity{new RS_Insert(this, d)};
     letterEntity->setPen(RS_Pen(RS2::FlagInvalid));
     letterEntity->setLayer(nullptr);
     letterEntity->update();
@@ -905,12 +912,11 @@ void RS_MText::addLetter(LC_TextLine &oneLine, QChar letter,
     // Add spacing, if the font is actually wider than word spacing
     double actualWidth = letterEntity->getMax().x - letterEntity->getMin().x;
     if (actualWidth >= font.getWordSpacing() + RS_TOLERANCE) {
-      double letterSpacing = std::max(1., letterSpace.x);
-      double wordSpacing = font.getWordSpacing();
-      actualWidth = wordSpacing + letterSpacing -
-                    std::fmod(actualWidth - wordSpacing, letterSpacing);
+      const double letterSpacing = std::max(1., letterSpace.x);
+      const double wordSpacing = font.getWordSpacing();
+        actualWidth = wordSpacing + letterSpacing - std::fmod(actualWidth - wordSpacing, letterSpacing);
     }
-    LC_LOG<<__LINE__<<": actualWidth: "<<actualWidth;
+    LC_LOG << __LINE__ << ": actualWidth: " << actualWidth;
 
     letterPosition.x += actualWidth;
 
@@ -920,14 +926,23 @@ void RS_MText::addLetter(LC_TextLine &oneLine, QChar letter,
     letterPosition += letterSpace;
 }
 
-RS_MText *RS_MText::createUpperLower(QString text, const RS_MTextData &data,
-                                     const RS_Vector &position) {
-    auto *line = new RS_MText(
-        nullptr, {position, 4.0, 100.0, RS_MTextData::VATop, RS_MTextData::HALeft,
-                  data.drawingDirection, RS_MTextData::Exact, 1.0,
-                  std::move(text), data.style, 0.0, RS2::Update});
+RS_MText* RS_MText::createUpperLower(QString text, const RS_MTextData& data, const RS_Vector& position) {
+    auto* line = new RS_MText(nullptr, {
+                                  position,
+                                  4.0,
+                                  100.0,
+                                  RS_MTextData::VATop,
+                                  RS_MTextData::HALeft,
+                                  data.drawingDirection,
+                                  RS_MTextData::Exact,
+                                  1.0,
+                                  std::move(text),
+                                  data.style,
+                                  0.0,
+                                  RS2::Update
+                              });
     line->setLayer(nullptr);
-    line->setPen({RS2::FlagInvalid});
+    line->setPen(RS_Pen(RS2::FlagInvalid));
     line->calculateBorders();
     return line;
 }
@@ -941,7 +956,7 @@ RS_MText *RS_MText::createUpperLower(QString text, const RS_MTextData &data,
  *
  * @return  distance over the text base-line
  */
-double RS_MText::updateAddLine(LC_TextLine *textLine, int lineCounter) {
+double RS_MText::updateAddLine(LC_TextLine* textLine, const int lineCounter) {
     constexpr double ls = 5.0 / 3.0;
 
     RS_DEBUG->print("RS_MText::updateAddLine: width: %f", textLine->getSize().x);
@@ -951,41 +966,40 @@ double RS_MText::updateAddLine(LC_TextLine *textLine, int lineCounter) {
     // textLine->getSize().x);
 
     // Scale:
-    double scale = data.height / 9.0;
-    textLine->scale(RS_Vector{0., 0.},
-                    RS_Vector(scale, scale));
+    const double scale = m_data.height / 9.0;
+    textLine->scale(RS_Vector{0., 0.}, RS_Vector(scale, scale));
 
     textLine->forcedCalculateBorders();
 
     // Horizontal Align:
-    switch (data.halign) {
+    switch (m_data.halign) {
         case RS_MTextData::HACenter:
             textLine->move(RS_Vector{-0.5 * (textLine->getMin().x + textLine->getMax().x), 0.});
             break;
 
         case RS_MTextData::HARight:
-            textLine->move(RS_Vector{- textLine->getMax().x, 0.});
+            textLine->move(RS_Vector{-textLine->getMax().x, 0.});
             break;
 
         default:
-            textLine->move(RS_Vector{- textLine->getMin().x, 0.});
+            textLine->move(RS_Vector{-textLine->getMin().x, 0.});
             break;
     }
 
     // Update actual text size (before rotating, after scaling!):
-    if (textLine->getSize().x > usedTextWidth) {
-        usedTextWidth = textLine->getSize().x;
+    if (textLine->getSize().x > m_usedTextWidth) {
+        m_usedTextWidth = textLine->getSize().x;
     }
 
-    usedTextHeight += data.height * data.lineSpacingFactor * ls;
+    m_usedTextHeight += m_data.height * m_data.lineSpacingFactor * ls;
 
     // Gets the distance over text base-line (before rotating, after scaling!):
-    double textTail = textLine->getMin().y;
+    const double textTail = textLine->getMin().y;
 
     // Move:
-    textLine->move(data.insertionPoint + RS_Vector{0., -data.height * lineCounter * data.lineSpacingFactor * ls});
+    textLine->move(m_data.insertionPoint + RS_Vector{0., -m_data.height * lineCounter * m_data.lineSpacingFactor * ls});
     // Rotate:
-    // textLine->rotate(data.insertionPoint, data.angle);
+    // textLine->rotate(m_data.insertionPoint, m_data.angle);
 
     textLine->setPen(RS_Pen(RS2::FlagInvalid));
     textLine->setLayer(nullptr);
@@ -995,40 +1009,42 @@ double RS_MText::updateAddLine(LC_TextLine *textLine, int lineCounter) {
     return textTail;
 }
 
-RS_Vector RS_MText::getNearestEndpoint(const RS_Vector &coord,
-                                       double *dist) const {
-    if (dist) {
-        *dist = data.insertionPoint.distanceTo(coord);
+RS_Vector RS_MText::doGetNearestEndpoint(const RS_Vector& coord, double* dist, RS_Entity** entity) const {
+    if (dist != nullptr) {
+        *dist = m_data.insertionPoint.distanceTo(coord);
     }
-    return data.insertionPoint;
+    if (entity != nullptr) {
+        *entity = const_cast<RS_MText*>(this);
+    }
+    return m_data.insertionPoint;
 }
 
 RS_VectorSolutions RS_MText::getRefPoints() const {
-    return {data.insertionPoint};
+    return {m_data.insertionPoint};
 }
 
-RS_Vector RS_MText::getNearestRef(const RS_Vector &coord, double *dist) const {
-    return RS_Entity::getNearestRef(coord, dist);
+RS_Vector RS_MText::doGetNearestRef(const RS_Vector& coord, double* dist) const {
+    return RS_Entity::doGetNearestRef(coord, dist);
 }
 
-RS_Vector RS_MText::getNearestSelectedRef(const RS_Vector &coord, double *dist) const {
-    return RS_Entity::getNearestSelectedRef(coord, dist);
+RS_Vector RS_MText::doGetNearestSelectedRef(const RS_Vector& coord, double* dist) const {
+    return RS_Entity::doGetNearestSelectedRef(coord, dist);
 }
 
-void RS_MText::moveRef([[maybe_unused]]const RS_Vector &ref, const RS_Vector &offset) {
+void RS_MText::moveRef([[maybe_unused]] const RS_Vector& ref, const RS_Vector& offset) {
     move(offset);
 }
 
-void RS_MText::moveSelectedRef([[maybe_unused]]const RS_Vector &ref, const RS_Vector &offset) {
+void RS_MText::moveSelectedRef([[maybe_unused]] const RS_Vector& ref, const RS_Vector& offset) {
     move(offset);
 }
 
-void RS_MText::move(const RS_Vector &offset) {
+void RS_MText::move(const RS_Vector& offset) {
     RS_EntityContainer::move(offset);
-    data.insertionPoint.move(offset);
+    m_data.insertionPoint.move(offset);
     //    update();
-    for (RS_Entity* e: std::as_const(*this)) {
-        auto line = dynamic_cast<LC_TextLine *> (e);
+    for (RS_Entity* e : std::as_const(*this)) {
+        const auto line = dynamic_cast<LC_TextLine*>(e);
         if (line != nullptr) {
             line->moveBaseline(offset);
         }
@@ -1036,86 +1052,86 @@ void RS_MText::move(const RS_Vector &offset) {
     forcedCalculateBorders();
 }
 
-void RS_MText::rotate(const RS_Vector &center, double angle) {
+void RS_MText::rotate(const RS_Vector& center, const double angle) {
     RS_EntityContainer::rotate(center, angle);
-    data.insertionPoint.rotate(center, angle);
+    m_data.insertionPoint.rotate(center, angle);
 
-//    update();
-//    calculateBorders();
+    //    update();
+    //    calculateBorders();
 
-    for (RS_Entity *e: std::as_const(*this)) {
-        auto line = dynamic_cast<LC_TextLine *> (e);
+    for (RS_Entity* e : std::as_const(*this)) {
+        const auto line = dynamic_cast<LC_TextLine*>(e);
         if (line != nullptr) {
             RS_Vector corner = line->getLeftBottomCorner();
-//            corner.rotate(oldInsertionPoint, -data.angle);
+            //            corner.rotate(oldInsertionPoint, -m_data.angle);
             corner.rotate(center, angle);
             line->setLeftBottomCorner(corner);
         }
     }
 
-    data.angle = RS_Math::correctAngle(data.angle + angle);
+    m_data.angle = RS_Math::correctAngle(m_data.angle + angle);
 
     rotateLinesRefs();
 }
 
 // fixme - sand - check whether this function is actually used
-void RS_MText::rotate(const RS_Vector &center, const RS_Vector &angleVector) {
+void RS_MText::rotate(const RS_Vector& center, const RS_Vector& angleVector) {
     RS_EntityContainer::rotate(center, angleVector);
-    data.insertionPoint.rotate(center, angleVector);
-    data.angle = RS_Math::correctAngle(data.angle + angleVector.angle());
- /*   RS_Vector lineRotationVector(angleVector.angle());
-    for (RS_Entity *e: std::as_const(entities)) {
-        auto line = dynamic_cast<LC_TextLine *> (e);
-        if (line != nullptr) {
-            RS_Vector corner = line->getLeftBottomCorner();
-            corner.rotate(center, lineRotationVector);
-        }
-    }
-    data.angle = RS_Math::correctAngle(data.angle + angleVector.angle());
-    rotateLinesRefs();
-    */
+    m_data.insertionPoint.rotate(center, angleVector);
+    m_data.angle = RS_Math::correctAngle(m_data.angle + angleVector.angle());
+    /*   RS_Vector lineRotationVector(angleVector.angle());
+       for (RS_Entity *e: std::as_const(entities)) {
+           auto line = dynamic_cast<LC_TextLine *> (e);
+           if (line != nullptr) {
+               RS_Vector corner = line->getLeftBottomCorner();
+               corner.rotate(center, lineRotationVector);
+           }
+       }
+       m_data.angle = RS_Math::correctAngle(m_data.angle + angleVector.angle());
+       rotateLinesRefs();
+       */
     update();
 }
 
-void RS_MText::scale(const RS_Vector &center, const RS_Vector &factor) {
-    data.insertionPoint.scale(center, factor);
-    data.width *= factor.x;
-    data.height *= factor.x;
+void RS_MText::scale(const RS_Vector& center, const RS_Vector& factor) {
+    m_data.insertionPoint.scale(center, factor);
+    m_data.width *= factor.x;
+    m_data.height *= factor.x;
     update();
 }
 
-void RS_MText::mirror(const RS_Vector &axisPoint1,
-                      const RS_Vector &axisPoint2) {
-    data.insertionPoint.mirror(axisPoint1, axisPoint2);
+void RS_MText::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) {
+    m_data.insertionPoint.mirror(axisPoint1, axisPoint2);
     // double ang = axisPoint1.angleTo(axisPoint2);
-    bool readable = RS_Math::isAngleReadable(data.angle);
+    const bool readable = RS_Math::isAngleReadable(m_data.angle);
 
-    RS_Vector vec = RS_Vector::polar(1.0, data.angle);
+    RS_Vector vec = RS_Vector::polar(1.0, m_data.angle);
     vec.mirror(RS_Vector(0.0, 0.0), axisPoint2 - axisPoint1);
-    data.angle = vec.angle();
+    m_data.angle = vec.angle();
 
     bool corr = false;
-    data.angle = RS_Math::makeAngleReadable(data.angle, readable, &corr);
+    m_data.angle = RS_Math::makeAngleReadable(m_data.angle, readable, &corr);
 
     if (corr) {
-        if (data.halign == RS_MTextData::HALeft) {
-            data.halign = RS_MTextData::HARight;
-        } else if (data.halign == RS_MTextData::HARight) {
-            data.halign = RS_MTextData::HALeft;
+        if (m_data.halign == RS_MTextData::HALeft) {
+            m_data.halign = RS_MTextData::HARight;
         }
-    } else {
-        if (data.valign == RS_MTextData::VATop) {
-            data.valign = RS_MTextData::VABottom;
-        } else if (data.valign == RS_MTextData::VABottom) {
-            data.valign = RS_MTextData::VATop;
+        else if (m_data.halign == RS_MTextData::HARight) {
+            m_data.halign = RS_MTextData::HALeft;
+        }
+    }
+    else {
+        if (m_data.valign == RS_MTextData::VATop) {
+            m_data.valign = RS_MTextData::VABottom;
+        }
+        else if (m_data.valign == RS_MTextData::VABottom) {
+            m_data.valign = RS_MTextData::VATop;
         }
     }
     update();
 }
 
-bool RS_MText::hasEndpointsWithinWindow(const RS_Vector & /*v1*/,
-                                        const RS_Vector & /*v2*/) const
-{
+bool RS_MText::hasEndpointsWithinWindow(const RS_Vector& /*v1*/, const RS_Vector& /*v2*/) const {
     return false;
 }
 
@@ -1123,56 +1139,51 @@ bool RS_MText::hasEndpointsWithinWindow(const RS_Vector & /*v1*/,
  * Implementations must stretch the given range of the entity
  * by the given offset.
  */
-void RS_MText::stretch(const RS_Vector &firstCorner,
-                       const RS_Vector &secondCorner, const RS_Vector &offset) {
-
-    if (getMin().isInWindow(firstCorner, secondCorner) &&
-        getMax().isInWindow(firstCorner, secondCorner)) {
-
+void RS_MText::stretch(const RS_Vector& firstCorner, const RS_Vector& secondCorner, const RS_Vector& offset) {
+    if (getMin().isInWindow(firstCorner, secondCorner) && getMax().isInWindow(firstCorner, secondCorner)) {
         move(offset);
     }
 }
 
 /**
- * Dumps the point's data to stdout.
+ * Dumps the point's m_data to stdout.
  */
-std::ostream &operator<<(std::ostream &os, const RS_MText &p) {
+std::ostream& operator<<(std::ostream& os, const RS_MText& p) {
     os << " Text: " << p.getData() << "\n";
     return os;
 }
 
 #define DEBUG_LINE_POINTS_
 
-void RS_MText::draw(RS_Painter *painter) {
+void RS_MText::draw(RS_Painter* painter) {
 #ifdef DEBUG_LINE_POINTS
     painter->drawRect(view->toGui(getMin()), view->toGui(getMax()));
 #endif
 
-    bool drawAsDraft = painter->isTextLineNotRenderable(getHeight());
-    if (drawAsDraft){
+    const bool drawAsDraft = painter->isTextLineNotRenderable(getHeight());
+    if (drawAsDraft) {
         drawDraft(painter);
         return;
     }
 
-    for (RS_Entity *entity: std::as_const(*this)) {
+    for (RS_Entity* entity : std::as_const(*this)) {
         painter->drawAsChild(entity);
 
 #ifdef DEBUG_LINE_POINTS
-        auto line = dynamic_cast<LC_TextLine*>(entity);
-        if (line != nullptr) {
-            painter->drawRect(view->toGui(line->getBaselineStart())-2, view->toGui(line->getBaselineStart())+2);
-            painter->drawRect(view->toGui(line->getLeftBottomCorner())-4, view->toGui(line->getLeftBottomCorner())+4);
+        auto line = dynamic_cast<LC_TextLine*>(entity); if (line != nullptr) {
+            painter->drawRect(view->toGui(line->getBaselineStart()) - 2, view->toGui(line->getBaselineStart()) + 2);
+            painter->drawRect(view->toGui(line->getLeftBottomCorner()) - 4, view->toGui(line->getLeftBottomCorner()) + 4);
         }
 #endif
     }
 }
 
-void RS_MText::drawDraft(RS_Painter *painter) {
+void RS_MText::drawDraft(RS_Painter* painter) {
 #ifdef DEBUG_LINE_POINTS
     painter->drawRect(painter->toGui(getMin()), painter->toGui(getMax()));
 #endif
-    for (RS_Entity *entity: std::as_const(*this)) {
-        auto line = dynamic_cast<LC_TextLine*>(entity);
+    for (RS_Entity* entity : std::as_const(*this)) {
+        const auto line = dynamic_cast<LC_TextLine*>(entity);
         if (line != nullptr && line->count() > 0) {
             painter->drawLineWCS(line->getBaselineStart(), line->getBaselineEnd());
         }

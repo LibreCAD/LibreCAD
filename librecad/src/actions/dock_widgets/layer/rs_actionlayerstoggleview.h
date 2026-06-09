@@ -37,11 +37,12 @@ class RS_Layer;
  * @author Andrew Mustun
  */
 class RS_ActionLayersToggleView : public RS_ActionInterface {
-	Q_OBJECT
+    Q_OBJECT
 public:
-    RS_ActionLayersToggleView(LC_ActionContext *actionContext,RS_Layer* layer);
-	void init(int status) override;
-	void trigger() override;
+    RS_ActionLayersToggleView(LC_ActionContext* actionContext, RS_Layer* layer);
+    void init(int status) override;
+    void trigger() override;
+
 protected:
     RS_Layer* m_layer = nullptr;
 };

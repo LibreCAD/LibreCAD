@@ -1,5 +1,5 @@
 /****************************************************************************
-*
+ *
 * Options for QuickInfo widget related functions
 
 Copyright (C) 2024 LibreCAD.org
@@ -62,4 +62,4 @@ public:
     void save() const;
 };
 
-#endif // LC_QUICKINFOWIDGETOPTIONS_H
+#endif

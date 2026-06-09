@@ -2,8 +2,8 @@
  * ********************************************************************************
  * This file is part of the LibreCAD project, a 2D CAD program
  *
- * Copyright (C) 2025 LibreCAD.org
- * Copyright (C) 2025 sand1024
+ * Copyright (C) 2026 LibreCAD.org
+ * Copyright (C) 2026 sand1024
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -23,7 +23,6 @@
 
 #ifndef LC_ACTIONINFOMESSAGEBUILDER_H
 #define LC_ACTIONINFOMESSAGEBUILDER_H
-#include <QString>
 
 #include "lc_cursoroverlayinfo.h"
 
@@ -50,4 +49,4 @@ private:
     RS_PreviewActionInterface *m_action;
 };
 
-#endif // LC_ACTIONINFOMESSAGEBUILDER_H
+#endif

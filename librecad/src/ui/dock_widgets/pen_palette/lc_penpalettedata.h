@@ -23,8 +23,10 @@
 **********************************************************************/
 #ifndef LC_PENPALETTEDATA_H
 #define LC_PENPALETTEDATA_H
-#include "rs.h"
+
 #include <QObject>
+
+#include "rs.h"
 
 class LC_PenInfoRegistry;
 class RS_Color;
@@ -67,20 +69,20 @@ public:
     /*
      * Returns the size of pens list
      */
-    int getItemsCount();
+    int getItemsCount() const;
     /**
      * Returns pen info at given position in the list
      * @param index
      * @return
      */
-    LC_PenItem* getItemAt(int index);
+    LC_PenItem* getItemAt(int index) const;
     /**
      * Returns first item with given name. It is expected that names of pen items are unique
      * @param name name of pen
      * @return item if it is found or nullptr
      */
-    LC_PenItem* findItemWithName(QString &name);
-    LC_PenItem *createNewPenItem(QString name);
+    LC_PenItem* findItemWithName(const QString &name) const;
+    LC_PenItem *createNewPenItem(const QString& penName);
 
 signals:
     void modelDataChange();
@@ -95,13 +97,13 @@ private:
      * @param str
      * @return
      */
-    LC_PenItem *fromStringRepresentation(QString &str);
+    LC_PenItem *fromStringRepresentation(const QString &str) const;
     /**
      * Converts pen into string
      * @param item
      * @return
      */
-    QString toStringRepresentation(LC_PenItem *item);
+    QString toStringRepresentation(LC_PenItem *item) const;
     /**
      * pens info registry
      */
@@ -111,8 +113,8 @@ private:
      */
     LC_PenPaletteOptions *m_options = nullptr;
     void createDefaultPens();
-    LC_PenItem *doCreateNewDefaultPenItem(QString penName, RS2::LineType lineType, RS2::LineWidth lineWidth, RS_Color color);
+    LC_PenItem *doCreateNewDefaultPenItem(const QString& penName, RS2::LineType lineType, RS2::LineWidth lineWidth, const RS_Color& color);
     void emitDataChange();
 };
 
-#endif // LC_PENPALETTEDATA_H
+#endif

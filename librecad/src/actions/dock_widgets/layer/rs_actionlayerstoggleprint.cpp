@@ -26,6 +26,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_debug.h"
 #include "rs_graphic.h"
 #include "rs_layer.h"
+#include "rs_selection.h"
 
 class RS_LayerList;
 /**
@@ -41,40 +42,36 @@ RS_ActionLayersTogglePrint::RS_ActionLayersTogglePrint(LC_ActionContext *actionC
 
 void RS_ActionLayersTogglePrint::trigger() {
     RS_DEBUG->print("toggle layer printing");
-    if (m_graphic) {
+    if (m_graphic != nullptr) {
         RS_LayerList* ll = m_graphic->getLayerList();
-        unsigned cnt = 0;
+        bool noLayersToggled = true;
         // toggle selected layers
-        for (auto layer: *ll) {
-            if (!layer) continue;
-            if (!layer->isVisibleInLayerList()) continue;
-            if (!layer->isSelectedInLayerList()) continue;
+        for (const auto layer : *ll) {
+            if (layer == nullptr || !layer->isVisibleInLayerList() || !layer->isSelectedInLayerList()) {
+                continue;
+            }
             m_graphic->toggleLayerPrint(layer);
             deselectEntities(layer);
-            cnt++;
+            noLayersToggled = false;
         }
         // if there wasn't selected layers, toggle active layer
-        if (!cnt) {
+        if (noLayersToggled) {
             m_graphic->toggleLayerPrint(m_layer);
             deselectEntities(m_layer);
         }
     }
     redrawDrawing();
-    finish(false);
+    finish();
 }
 
-void RS_ActionLayersTogglePrint::init(int status) {
+void RS_ActionLayersTogglePrint::init(const int status) {
     RS_ActionInterface::init(status);
     trigger();
 }
 
-void RS_ActionLayersTogglePrint::deselectEntities(RS_Layer* layer)
-{
-    if (!layer) return;
-
-    for(auto e: *m_container){ // // fixme - sand -  iteration over all entities in container
-        if (e && e->isVisible() && e->getLayer() == layer) {
-            e->setSelected(false);
-        }
+void RS_ActionLayersTogglePrint::deselectEntities(RS_Layer* layer) const {
+    if (layer == nullptr) {
+        return;
     }
+    RS_Selection::unselectLayer(m_document, m_viewport, layer);
 }

@@ -37,13 +37,13 @@ class LC_UCSStateWidget : public QWidget{
 public:
     explicit LC_UCSStateWidget(QWidget *parent,const char* name);
     ~LC_UCSStateWidget() override;
-    void update(QIcon icon, QString ucsName, QString ucsInfo);
+    void update(const QIcon& icon, const QString& ucsName, const QString& ucsInfo);
 public slots:
-    void onIconsRefreshed();
+    void onIconsRefreshed() const;
 private:
     Ui::LC_UCSStateWidget *ui;
     int m_iconSize = 24;
     QIcon m_savedIcon;
 };
 
-#endif // LC_UCSSTATEWIDGET_H
+#endif

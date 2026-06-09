@@ -64,13 +64,13 @@ void QG_DlgEllipse::setEntity(RS_Ellipse* e) {
 
     toUI(m_entity->getCenter(), leCenterX, leCenterY);
 
-    double majorAxisLen = m_entity->getMajorRadius();
-    double minorAxisLen = m_entity->getMinorRadius();
+    const double majorAxisLen = m_entity->getMajorRadius();
+    const double minorAxisLen = m_entity->getMinorRadius();
 
     toUIValue(majorAxisLen, leMajor);
     toUIValue(minorAxisLen, leMinor);
 
-    double wcsMajorAngle = m_entity->getMajorP().angle();
+    const double wcsMajorAngle = m_entity->getMajorP().angle();
 
     toUIAngleDeg(wcsMajorAngle, leRotation);
 
@@ -100,7 +100,7 @@ void QG_DlgEllipse::updateEntity() {
     }
     double minor = toWCSValue(leMinor, m_entity->getMinorRadius());
 
-    double rotation = toWCSAngle(leRotation, m_entity->getMajorP().angle());
+    const double rotation = toWCSAngle(leRotation, m_entity->getMajorP().angle());
 
     m_entity->setMajorP(RS_Vector::polar(major, rotation));
     m_entity->setRatio(minor/major);

@@ -28,7 +28,6 @@
 #ifndef RS_PAINTERQT_H
 #define RS_PAINTERQT_H
 
-#include <QPainter>
 #include <QPainterPath>
 
 #include "rs_painter.h"
@@ -84,7 +83,7 @@ public:
     void drawPolyline(const RS_Polyline& polyline, const RS_GraphicView& view) override;
     void drawSplinePoints(const	std::vector<RS_Vector> &controlPoints, bool closed) override;
     void drawSpline(const RS_Spline& spline, const RS_GraphicView& view) override;
-    void drawImg(QImage& img, const RS_Vector& pos,
+    void drawImg(const QImage& img, const RS_Vector& pos,
                                const RS_Vector& u, const RS_Vector& v, const RS_Vector& factor) override;
     void drawTextH(int x1, int y1, int x2, int y2,
                            const QString& text) override;
@@ -149,10 +148,6 @@ public:
     void setMinLineDrawingLen(double minLineDrawingLen);
     void createSolidFillPath(QPainterPath &path, const RS_GraphicView *view, QList<RS_Entity *> entities) override;
     void noCapStyle() override;
-protected:
-
-
-
 };
 
 #endif

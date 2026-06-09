@@ -21,40 +21,40 @@
  ******************************************************************************/
 
 #include "lc_selectwindowoptions.h"
-#include "rs_actionselectwindow.h"
+
+#include "lc_action_select_window.h"
 #include "ui_lc_selectwindowoptions.h"
 
-LC_SelectWindowOptions::LC_SelectWindowOptions()
-:LC_ActionOptionsWidgetBase(RS2::ActionSelectWindow, "Select", "Window"), ui(new Ui::LC_SelectWindowOptions){
+LC_SelectWindowOptionsWidget::LC_SelectWindowOptionsWidget(): ui(new Ui::LC_SelectWindowOptions){
     ui->setupUi(this);
-    connect(ui->cbAll, &QCheckBox::toggled, this, &LC_SelectWindowOptions::onAllToggled);
-    connect(ui->cbLine, &QCheckBox::toggled, this, &LC_SelectWindowOptions::onTypeToggled);
-    connect(ui->cbArc, &QCheckBox::toggled, this, &LC_SelectWindowOptions::onTypeToggled);
-    connect(ui->cbCircle, &QCheckBox::toggled, this, &LC_SelectWindowOptions::onTypeToggled);
-    connect(ui->cbEllipse, &QCheckBox::toggled, this, &LC_SelectWindowOptions::onTypeToggled);
-    connect(ui->cbPoint, &QCheckBox::toggled, this, &LC_SelectWindowOptions::onTypeToggled);
-    connect(ui->cbPolyline, &QCheckBox::toggled, this, &LC_SelectWindowOptions::onTypeToggled);
-    connect(ui->cbText, &QCheckBox::toggled, this, &LC_SelectWindowOptions::onTypeToggled);
-    connect(ui->cbMText, &QCheckBox::toggled, this, &LC_SelectWindowOptions::onTypeToggled);
-    connect(ui->cbSpline, &QCheckBox::toggled, this, &LC_SelectWindowOptions::onTypeToggled);
-    connect(ui->cbInsert, &QCheckBox::toggled, this, &LC_SelectWindowOptions::onTypeToggled);
-    connect(ui->cbImage, &QCheckBox::toggled, this, &LC_SelectWindowOptions::onTypeToggled);
-    connect(ui->cbHatch, &QCheckBox::toggled, this, &LC_SelectWindowOptions::onTypeToggled);
-    connect(ui->cbDimension, &QCheckBox::toggled, this, &LC_SelectWindowOptions::onTypeToggled);
-    connect(ui->cbWipeout, &QCheckBox::toggled, this, &LC_SelectWindowOptions::onTypeToggled);
+    connect(ui->cbAll, &QCheckBox::toggled, this, &LC_SelectWindowOptionsWidget::onAllToggled);
+    connect(ui->cbLine, &QCheckBox::toggled, this, &LC_SelectWindowOptionsWidget::onTypeToggled);
+    connect(ui->cbArc, &QCheckBox::toggled, this, &LC_SelectWindowOptionsWidget::onTypeToggled);
+    connect(ui->cbCircle, &QCheckBox::toggled, this, &LC_SelectWindowOptionsWidget::onTypeToggled);
+    connect(ui->cbEllipse, &QCheckBox::toggled, this, &LC_SelectWindowOptionsWidget::onTypeToggled);
+    connect(ui->cbPoint, &QCheckBox::toggled, this, &LC_SelectWindowOptionsWidget::onTypeToggled);
+    connect(ui->cbPolyline, &QCheckBox::toggled, this, &LC_SelectWindowOptionsWidget::onTypeToggled);
+    connect(ui->cbText, &QCheckBox::toggled, this, &LC_SelectWindowOptionsWidget::onTypeToggled);
+    connect(ui->cbMText, &QCheckBox::toggled, this, &LC_SelectWindowOptionsWidget::onTypeToggled);
+    connect(ui->cbSpline, &QCheckBox::toggled, this, &LC_SelectWindowOptionsWidget::onTypeToggled);
+    connect(ui->cbInsert, &QCheckBox::toggled, this, &LC_SelectWindowOptionsWidget::onTypeToggled);
+    connect(ui->cbImage, &QCheckBox::toggled, this, &LC_SelectWindowOptionsWidget::onTypeToggled);
+    connect(ui->cbHatch, &QCheckBox::toggled, this, &LC_SelectWindowOptionsWidget::onTypeToggled);
+    connect(ui->cbDimension, &QCheckBox::toggled, this, &LC_SelectWindowOptionsWidget::onTypeToggled);
+    connect(ui->cbWipeout, &QCheckBox::toggled, this, &LC_SelectWindowOptionsWidget::onTypeToggled);
     ui->cbWipeout->setVisible(false);
 }
 
-LC_SelectWindowOptions::~LC_SelectWindowOptions(){
+LC_SelectWindowOptionsWidget::~LC_SelectWindowOptionsWidget(){
     delete ui;
 }
 
-void LC_SelectWindowOptions::languageChange(){
+void LC_SelectWindowOptionsWidget::languageChange(){
     ui->retranslateUi(this);
 }
 
-void LC_SelectWindowOptions::doSaveSettings() {
-    save("All", ui->cbAll->isChecked());
+void LC_SelectWindowOptionsWidget::doSaveSettings() {
+    /*save("All", ui->cbAll->isChecked());
     save("Line", ui->cbLine->isChecked());
     save("Arc", ui->cbArc->isChecked());
     save("Circle", ui->cbCircle->isChecked());
@@ -69,109 +69,113 @@ void LC_SelectWindowOptions::doSaveSettings() {
     save("Wipeout", ui->cbWipeout->isChecked());
     save("Dimension", ui->cbDimension->isChecked());
     save("Insert", ui->cbInsert->isChecked());
+    */
 }
 
-void LC_SelectWindowOptions::doSetAction(RS_ActionInterface *a, bool update) {
-    m_action = dynamic_cast<RS_ActionSelectWindow *>(a);
-    bool all;
-    bool line = false;
-    bool arc  = false;
-    bool point = false;
-    bool polyline  = false;
-    bool ellipse  = false;
-    bool circle = false;
-    bool spline = false;
-    bool hatch  = false;
-    bool image  = false;
-    bool text = false;
-    bool mtext = false;
-    bool wipeout = false;
-    bool dimension = false;
-    bool insert = false;
+void LC_SelectWindowOptionsWidget::doUpdateByAction(RS_ActionInterface *a) {
+    m_action = static_cast<LC_ActionSelectWindow *>(a);
+    bool all = false;
+
     QList<RS2::EntityType> entityTypes;
+    const bool update = true;
     if (update){
         all = m_action->isSelectAllEntityTypes();
         entityTypes = m_action->getEntityTypesToSelect();
     }
-    else{
-        all = loadBool("All", true);
-        line = loadBool("Line",false);
-        arc = loadBool("Arc", false);
-        circle = loadBool("Circle", false);
-        point = loadBool("Point", false);
-        ellipse= loadBool("Ellipse",false);
-        spline = loadBool("Spline",false);
-        polyline = loadBool("Polyline", false);
-        text = loadBool("Text", false);
-        mtext = loadBool("MText", false);
-        image = loadBool("Image", false);
-        hatch = loadBool("Hatch", false);
-        wipeout= loadBool("Wipeout", false);
-        dimension = loadBool("Dimension", false);
-        insert = loadBool("Insert", false);
-
-        if (line){
-            entityTypes << RS2::EntityLine;
-        }
-        if (arc){
-            entityTypes << RS2::EntityArc;
-        }
-        if (circle){
-            entityTypes << RS2::EntityCircle;
-        }
-        if (point){
-            entityTypes << RS2::EntityPoint;
-        }
-        if (polyline){
-            entityTypes << RS2::EntityPolyline;
-        }
-        if (ellipse){
-            entityTypes << RS2::EntityEllipse;
-        }
-        if (spline){
-            entityTypes << RS2::EntitySpline;
-            entityTypes << RS2::EntitySplinePoints;
-            entityTypes << RS2::EntityParabola;
-        }
-        if (image){
-            entityTypes << RS2::EntityImage;
-        }
-        if (hatch){
-            entityTypes << RS2::EntityHatch;
-        }
-        if (insert){
-            entityTypes << RS2::EntityInsert;
-        }
-        if (mtext){
-            entityTypes << RS2::EntityMText;
-        }
-        if (text){
-            entityTypes << RS2::EntityText;
-        }
-        if (wipeout){
-//            entityTypes << RS2::EntityText;
-        }
-        if (dimension){
-            entityTypes << RS2::EntityDimRadial;
-            entityTypes << RS2::EntityDimArc;
-            entityTypes << RS2::EntityDimDiametric;
-            entityTypes << RS2::EntityDimLeader;
-            entityTypes << RS2::EntityDimLinear;
-            entityTypes << RS2::EntityDimOrdinate;
-            entityTypes << RS2::EntityTolerance;
-            entityTypes << RS2::EntityDimAngular;
-            entityTypes << RS2::EntityDimAligned;
-        }
-    }
+//     else{
+//         bool line = false;
+//         bool arc  = false;
+//         bool point = false;
+//         bool polyline  = false;
+//         bool ellipse  = false;
+//         bool circle = false;
+//         bool spline = false;
+//         bool hatch  = false;
+//         bool image  = false;
+//         bool text = false;
+//         bool mtext = false;
+//         bool wipeout = false;
+//         bool dimension = false;
+//         bool insert = false;
+//
+//         all = loadBool("All", true);
+//         line = loadBool("Line",false);
+//         arc = loadBool("Arc", false);
+//         circle = loadBool("Circle", false);
+//         point = loadBool("Point", false);
+//         ellipse= loadBool("Ellipse",false);
+//         spline = loadBool("Spline",false);
+//         polyline = loadBool("Polyline", false);
+//         text = loadBool("Text", false);
+//         mtext = loadBool("MText", false);
+//         image = loadBool("Image", false);
+//         hatch = loadBool("Hatch", false);
+//         wipeout= loadBool("Wipeout", false);
+//         dimension = loadBool("Dimension", false);
+//         insert = loadBool("Insert", false);
+//
+//         if (line){
+//             entityTypes << RS2::EntityLine;
+//         }
+//         if (arc){
+//             entityTypes << RS2::EntityArc;
+//         }
+//         if (circle){
+//             entityTypes << RS2::EntityCircle;
+//         }
+//         if (point){
+//             entityTypes << RS2::EntityPoint;
+//         }
+//         if (polyline){
+//             entityTypes << RS2::EntityPolyline;
+//         }
+//         if (ellipse){
+//             entityTypes << RS2::EntityEllipse;
+//         }
+//         if (spline){
+//             entityTypes << RS2::EntitySpline;
+//             entityTypes << RS2::EntitySplinePoints;
+//             entityTypes << RS2::EntityParabola;
+//         }
+//         if (image){
+//             entityTypes << RS2::EntityImage;
+//         }
+//         if (hatch){
+//             entityTypes << RS2::EntityHatch;
+//         }
+//         if (insert){
+//             entityTypes << RS2::EntityInsert;
+//         }
+//         if (mtext){
+//             entityTypes << RS2::EntityMText;
+//         }
+//         if (text){
+//             entityTypes << RS2::EntityText;
+//         }
+//         if (wipeout){
+// //            entityTypes << RS2::EntityText;
+//         }
+//         if (dimension){
+//             entityTypes << RS2::EntityDimRadial;
+//             entityTypes << RS2::EntityDimArc;
+//             entityTypes << RS2::EntityDimDiametric;
+//             entityTypes << RS2::EntityDimLeader;
+//             entityTypes << RS2::EntityDimLinear;
+//             entityTypes << RS2::EntityDimOrdinate;
+//             entityTypes << RS2::EntityTolerance;
+//             entityTypes << RS2::EntityDimAngular;
+//             entityTypes << RS2::EntityDimAligned;
+//         }
+//     }
     setSelectAllToActionAndView(all);
     setEntityTypesToActinAndView(entityTypes);
 }
 
-void LC_SelectWindowOptions::onAllToggled([[maybe_unused]]bool value) {
+void LC_SelectWindowOptionsWidget::onAllToggled([[maybe_unused]]bool value) {
     setSelectAllToActionAndView(ui->cbAll->isChecked());
 }
 
-void LC_SelectWindowOptions::onTypeToggled([[maybe_unused]]bool value) {
+void LC_SelectWindowOptionsWidget::onTypeToggled([[maybe_unused]]bool value) const {
     QList<RS2::EntityType> entityTypes;
     if (ui->cbLine->isChecked()){
         entityTypes << RS2::EntityLine;
@@ -231,7 +235,7 @@ void LC_SelectWindowOptions::onTypeToggled([[maybe_unused]]bool value) {
     }*/
 }
 
-void LC_SelectWindowOptions::setEntityTypesToActinAndView(QList<RS2::EntityType> entityTypes) {
+void LC_SelectWindowOptionsWidget::setEntityTypesToActinAndView(QList<RS2::EntityType> entityTypes) const {
     m_action->setEntityTypesToSelect(entityTypes);
     ui->cbLine->setChecked(false);
     ui->cbArc->setChecked(false);
@@ -247,7 +251,7 @@ void LC_SelectWindowOptions::setEntityTypesToActinAndView(QList<RS2::EntityType>
     ui->cbInsert->setChecked(false);
     ui->cbDimension->setChecked(false);
     ui->cbWipeout->setChecked(false);
-    for (auto t: entityTypes){
+    for (const auto t: std::as_const(entityTypes)){
         switch (t){
             case RS2::EntityLine:
                 ui->cbLine->setChecked(true);
@@ -298,18 +302,17 @@ void LC_SelectWindowOptions::setEntityTypesToActinAndView(QList<RS2::EntityType>
     }
 }
 
-
-void LC_SelectWindowOptions::setSelectAllToActionAndView(bool value) {
+void LC_SelectWindowOptionsWidget::setSelectAllToActionAndView(const bool value) const {
     ui->cbAll->setChecked(value);
     m_action->setSelectAllEntityTypes(value);
-    bool enable = !value;
+    const bool enable = !value;
     enableEntityTypes(enable);
     if (!value){
         onTypeToggled(value);
     }
 }
 
-void LC_SelectWindowOptions::enableEntityTypes(bool enable) const {
+void LC_SelectWindowOptionsWidget::enableEntityTypes(const bool enable) const {
     ui->cbLine->setEnabled(enable);
     ui->cbArc->setEnabled(enable);
     ui->cbCircle->setEnabled(enable);

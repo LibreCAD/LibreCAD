@@ -35,8 +35,8 @@ public:
     /** Constructor
      * @param optTargetWidget if non-NULL, this will be passed to SetTargetWidget().  Defaults to NULL.
      */
-    LC_TabProxyWidget(QWidget* optTargetWidget = nullptr)
-        : _layout(new QStackedLayout(this)), m_targetWidget(nullptr) {
+    explicit LC_TabProxyWidget(QWidget* optTargetWidget = nullptr)
+        : m_layout(new QStackedLayout(this)) {
         setTargetWidget(optTargetWidget);
         setFocusPolicy(Qt::ClickFocus);
     }
@@ -44,18 +44,18 @@ public:
     ~LC_TabProxyWidget() override { setTargetWidget(nullptr); }
 
     /** Set the widget that we want to be a proxy for
-     * @param optTargetWidget the widget we will proxy for, or NULL to disassociate us from any target widget
+     * @param targetWidget the widget we will proxy for, or NULL to disassociate us from any target widget
      * @note the same pointer for (optTargetWidget) can (and should!) be passed to multiple TabProxyWidget objects
      */
-    void setTargetWidget(QWidget* optTargetWidget);
+    void setTargetWidget(QWidget* targetWidget);
     void showEvent(QShowEvent*) override;
     bool eventFilter(QObject* o, QEvent* e) override;
 private:
     void adoptTargetWidget();
     void updateSizeConstraints();
 
-    QStackedLayout* _layout {nullptr};
+    QStackedLayout* m_layout {nullptr};
     QWidget*    m_targetWidget {nullptr};
 };
 
-#endif // LC_TABPROXYWIDGET_H
+#endif

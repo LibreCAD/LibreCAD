@@ -40,14 +40,13 @@ struct LC_LayerTreeModelOptions;
  */
 class LC_LayerTreeModel:public QAbstractItemModel {
     Q_OBJECT
-
 public:
     // columns for treeview
-    enum {
-        EMPTY, VISIBLE, LOCKED, PRINT, CONSTRUCTION, COLOR_SAMPLE, NAME, LAST
+    enum Columns {
+        COLUMN_EMPTY, COLUMN_VISIBLE, COLUMN_LOCKED, COLUMN_PRINT, COLUMN_CONSTRUCTION, COLUMN_COLOR_SAMPLE, COLUMN_NAME, COLUMN_LAST
     };
     // the default icon size
-    static constexpr int ICONWIDTH = 24;
+    static constexpr int ICONWIDTH = 21;
     explicit LC_LayerTreeModel(QObject *parent, LC_LayerTreeModelOptions *options);
     Qt::ItemFlags flags(const QModelIndex &index) const override;
     int columnCount(const QModelIndex &parent) const override;
@@ -55,51 +54,52 @@ public:
     QVariant data(const QModelIndex &index, int role) const override;
     QModelIndex parent(const QModelIndex &index) const override;
     QModelIndex index(int row, int column, const QModelIndex &parent) const override;
-    void setLayerList(RS_LayerList *ll);
-    void proceedActiveLayerChanged(RS_LayerList *ll) const;
-    QList<RS_Layer *> collectLayers(LC_LayerTreeItemAcceptor *acceptor) const;
+    void setLayerList(const RS_LayerList *ll);
+    void proceedActiveLayerChanged(const RS_LayerList *ll) const;
+    QList<RS_Layer *> collectLayers(const LC_LayerTreeItemAcceptor &acceptor) const;
     QModelIndexList getPersistentIndexList() const;
-    LC_LayerTreeItem *getRoot() const {return m_rootItem;};
-    void setFilteringRegexp(const QString &reqgexp, bool highlightMode);
+    LC_LayerTreeItem *getRoot() const {return m_rootItem;}
+    void setFilteringRegexp(const QString &regexp, bool highlightMode);
     Qt::DropActions supportedDropActions() const override{return Qt::CopyAction | Qt::MoveAction;}
     void setCurrentlyDraggingItem(LC_LayerTreeItem *item);
-    LC_LayerTreeItem *getCurrentlyDraggingItem();
+    LC_LayerTreeItem *getCurrentlyDraggingItem() const;
     void setFlatMode(bool mode);
+    bool isFlatMode() const {return m_flatMode;}
     bool performReStructure(LC_LayerTreeItem *source, LC_LayerTreeItem *destination);
     bool convertToType(const QModelIndex &index, int toLayerType);
     QHash<RS_Layer *, RS_Layer *> createLayersCopy(const QModelIndex &selectedIndex);
     LC_LayerTreeItem *getItemForIndex(const QModelIndex &index) const;
     LC_LayerTreeItem *getItemForLayer(RS_Layer *layer) const;
-    bool renameVirtualLayer(LC_LayerTreeItem *pItem, QString &qString);
-    void renamePrimaryLayer(LC_LayerTreeItem *layerItem, QString newName, int newLayerType);
-    QString generateLayersDisplayPathString(LC_LayerTreeItem* item);
-    QStringList getLayersListForRenamedVirtualLayer(LC_LayerTreeItem *virtualLayerItem, QString &newName);
-    QStringList getLayersListForRenamedPrimary(LC_LayerTreeItem* source, QString &newSourceName, int newLayerType);
-    QString createFullLayerName(LC_LayerTreeItem *treeItem, QString &layerName, int layerType, bool newLayer);
+    bool renameVirtualLayer(LC_LayerTreeItem *source, QString &newSourceName);
+    void renamePrimaryLayer(LC_LayerTreeItem *layerItem, const QString& newName, int newLayerType);
+    QString generateLayersDisplayPathString(LC_LayerTreeItem* item) const;
+    QStringList getLayersListForRenamedVirtualLayer(LC_LayerTreeItem *source, QString &newName);
+    QStringList getLayersListForRenamedPrimary(LC_LayerTreeItem* source, const QString &newSourceName, int newLayerType);
+    QString createFullLayerName(LC_LayerTreeItem *treeItem, const QString &layerName, int layerType, bool newLayer);
     int translateColumn(int column) const;
-    LC_LayerTreeModelOptions* getOptions() const {return m_options;};
+    LC_LayerTreeModelOptions* getOptions() const {return m_options;}
     void reset();
-    bool isRegexpApplied() const{return m_hasRegexp;};
+    bool isRegexpApplied() const{return m_hasRegexp;}
 private:
     void rebuildModel(const QList<RS_Layer *> &layersList, const RS_Layer *activeLayer);
-    bool isValidRestructure(LC_LayerTreeItem *source, LC_LayerTreeItem *destination) const;
+    bool isValidRestructure(const LC_LayerTreeItem *source, const LC_LayerTreeItem *destination) const;
     bool doConvertToType(LC_LayerTreeItem *layerItem, int toLayerType);
     QHash<RS_Layer *, RS_Layer *> doCreateLayersCopy(LC_LayerTreeItem *source, bool includeChildren, int newLayerType);
-    bool renameLayers(QList<LC_LayerTreeItem *> layersList, QString &fromNamePrefix, QString &toNamePrefix);
+    bool renameLayers(const QList<LC_LayerTreeItem *>& layersList, const QString &fromNamePrefix, const QString &toNamePrefix);
     void emitDataChanged();
-    QString generateLayersPathString(QList<LC_LayerTreeItem *> items, bool alternateName, QString &alternativeName);
-    QString restoreNamePart(QString name, int layerType);
-    void setupDisplayNames(LC_LayerTreeItem *item);
+    QString generateLayersPathString(const QList<LC_LayerTreeItem *>& itemsPathAsList, bool alternateName, const QString &shouldAlternate) const;
+    QString restoreNamePart(QString name, int layerType) const;
+    void setupDisplayNames(LC_LayerTreeItem *item) const;
     QString findNewUniqueName(const LC_LayerTreeItem *destination, const QString &name, const QString &copyPrefix, const QString &copySuffix, int layerType);
-    QString createItemPathString(LC_LayerTreeItem *item, bool includeSelf, bool alternateItemName, QString &newItemName);
+    QString createItemPathString(LC_LayerTreeItem *item, bool includeSelf, bool alternateSourceName, const QString &newItemName);
     void createFirstLayerCopy(QHash<RS_Layer *, RS_Layer *> &result, LC_LayerTreeItem *source, int newLayerType);
     void doCreateChildLayersCopy(QHash<RS_Layer *, RS_Layer *> &result, LC_LayerTreeItem *source, const QString &oldPrefix, const QString &newPrefix);
     QString createFirstCopiedItemNew(LC_LayerTreeItem *source, int newLayerType);
     QString cleanupLayerName(const QString &layerName) const;
-    QString doGenerateLayersPathString(const QList<LC_LayerTreeItem *> &itemsPathAsList, bool alternateSourceName, QString &alternativeName,
-                                       const QString &usingLayerLayerSeparator);
+    QString doGenerateLayersPathString(const QList<LC_LayerTreeItem *> &itemsPathAsList, bool alternateSourceName, const QString &alternativeName,
+                                       const QString &usingLayerLayerSeparator) const;
     QHash<RS_Layer *, QString> doGetVirtualLayerRenameLayersMap(LC_LayerTreeItem *source, QString &newSourceName);
-    QHash<RS_Layer *, QString> prepareLayerRename(QList<LC_LayerTreeItem *> &layersList, const QString &fromNamePrefix, const QString &toNamePrefix);
+    QHash<RS_Layer *, QString> prepareLayerRename(const QList<LC_LayerTreeItem *> &layersList, const QString &fromNamePrefix, const QString &toNamePrefix);
     bool renameLayersMap(const QHash<RS_Layer *, QString> &layersMap) const;
     QHash<RS_Layer *, QString> doGetPrimaryLayerRenameLayersMap(LC_LayerTreeItem *source, const QString &newSourceName, int newLayerType);
 
@@ -117,7 +117,7 @@ private:
     QIcon m_iconLayerInformationalNotes;
     QIcon m_iconLayerActual;
 
-    int maxIndent{0};
+    int m_maxIndent{0};
 
     // filtering/highlight regexp value
     QRegularExpression m_filteringRegexp{""};
@@ -140,4 +140,4 @@ private:
     void copyChildrenLayers(LC_LayerTreeItem *parent, int newParentLayerType, QHash<RS_Layer *, RS_Layer *> &result);
 };
 
-#endif // QG_LAYERTREEMODEL_H
+#endif

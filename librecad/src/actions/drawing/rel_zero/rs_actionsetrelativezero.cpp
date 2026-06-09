@@ -27,7 +27,7 @@
 #include "rs_actionsetrelativezero.h"
 
 #include "lc_graphicviewport.h"
-#include "rs_document.h"
+#include "lc_undosection.h"
 
 RS_ActionSetRelativeZero::RS_ActionSetRelativeZero(LC_ActionContext *actionContext)
     : RS_PreviewActionInterface("Set the relative Zero",actionContext, RS2::ActionSetRelativeZero)
@@ -37,44 +37,48 @@ RS_ActionSetRelativeZero::RS_ActionSetRelativeZero(LC_ActionContext *actionConte
 RS_ActionSetRelativeZero::~RS_ActionSetRelativeZero() = default;
 
 void RS_ActionSetRelativeZero::trigger(){
-    bool wasLocked = m_viewport->isRelativeZeroLocked();
     if (m_position->valid) {
+        const bool wasLocked = m_viewport->isRelativeZeroLocked();
         m_viewport->lockRelativeZero(false);
+        addSnappedPointToVisualSnap(*m_position);
         moveRelativeZero(*m_position);
-        undoCycleStart();
         RS_Undoable *relativeZeroUndoable = m_viewport->getRelativeZeroUndoable();
         if (relativeZeroUndoable != nullptr) {
-            m_document->addUndoable(relativeZeroUndoable);
+            const LC_UndoSection undo(m_document, m_viewport);
+            undo.addUndoable(relativeZeroUndoable);
         }
-        undoCycleEnd();
         m_viewport->lockRelativeZero(wasLocked);
     }
-    finish(false);
+    finish();
 }
 
-void RS_ActionSetRelativeZero::onMouseLeftButtonRelease([[maybe_unused]]int status, LC_MouseEvent *e) {
+void RS_ActionSetRelativeZero::onMouseLeftButtonRelease([[maybe_unused]]int status, const LC_MouseEvent* e) {
     fireCoordinateEventForSnap(e);
 }
 
-void RS_ActionSetRelativeZero::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {
+void RS_ActionSetRelativeZero::onMouseRightButtonRelease(const int status, [[maybe_unused]] const LC_MouseEvent* e) {
     initPrevious(status);
 }
 
 void RS_ActionSetRelativeZero::onCoordinateEvent( [[maybe_unused]]int status, [[maybe_unused]]bool isZero, const RS_Vector &pos) {
     *m_position = pos;
     trigger();
-    updateMouseButtonHints();
+    updateActionPrompt();
 }
 
-void RS_ActionSetRelativeZero::updateMouseButtonHints(){
+void RS_ActionSetRelativeZero::updateActionPrompt(){
     switch (getStatus()) {
         case 0:
-            updateMouseWidgetTRCancel(tr("Set relative Zero"));
+            updatePromptTRCancel(tr("Set relative Zero"));
             break;
         default:
-            updateMouseWidget();
+            updatePrompt();
             break;
     }
+}
+
+bool RS_ActionSetRelativeZero::isInVisualSnapStatus([[maybe_unused]]int status) {
+    return true;
 }
 
 RS2::CursorType RS_ActionSetRelativeZero::doGetMouseCursor([[maybe_unused]] int status){

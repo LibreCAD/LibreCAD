@@ -34,4 +34,4 @@ protected:
     void createVertexes(double size);
 };
 
-#endif // LC_ARROW_NONE_H
+#endif

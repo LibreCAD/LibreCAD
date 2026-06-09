@@ -33,17 +33,20 @@
 /**
  * Constructor.
  *
+ * @param actionContext
  * @param angle Initial angle in rad.
+ * @param fixedAngle
+ * @param type
  * @param fixedAngle true: The user can't change the angle.
  *                   false: The user can change the angle in a option widget.
  */
-RS_ActionDimLinear::RS_ActionDimLinear(LC_ActionContext *actionContext,double angle,bool _fixedAngle, RS2::ActionType type)
+RS_ActionDimLinear::RS_ActionDimLinear(LC_ActionContext *actionContext,double angle, const bool fixedAngle, const RS2::ActionType type)
     :LC_ActionDimLinearBase("Draw linear dimensions", actionContext, RS2::EntityDimLinear, type),
      m_edata(std::make_unique<RS_DimLinearData>(RS_Vector(0., 0.), RS_Vector(0., 0.), angle, 0.)),
-     m_fixedAngle(_fixedAngle), m_lastStatus(SetExtPoint1){
+     m_fixedAngle{fixedAngle}{
     setUcsAngleDegrees(angle);
     updateOptions();
-    reset();
+    RS_ActionDimLinear::reset();
 }
 
 RS_ActionDimLinear::~RS_ActionDimLinear() = default;
@@ -51,21 +54,21 @@ RS_ActionDimLinear::~RS_ActionDimLinear() = default;
 void RS_ActionDimLinear::reset(){
     RS_ActionDimension::reset();
 
-    double angleDeg = m_fixedAngle ? m_ucsBasisAngleDegrees : 0; // keep selected angle
+    const double angleDeg = m_fixedAngle ? m_ucsBasisAngleDegrees : 0; // keep selected angle
 
     *m_edata = {{}, {}, toWorldAngleFromUCSBasisDegrees(angleDeg), toWorldAngle(0.0)};
 }
 
-void RS_ActionDimLinear::preparePreview(bool alternateMode){
-    double angle = getDimAngle(alternateMode);
-    RS_Vector dirV = RS_Vector::polar(100., angle + M_PI_2);
-    RS_ConstructionLine cl(nullptr,RS_ConstructionLineData(m_edata->extensionPoint2,m_edata->extensionPoint2 + dirV));
+void RS_ActionDimLinear::preparePreview(const bool alternateMode){
+    const double angle = getDimAngle(alternateMode);
+    const RS_Vector dirV = RS_Vector::polar(100., angle + M_PI_2);
+    const RS_ConstructionLine cl(nullptr,RS_ConstructionLineData(m_edata->extensionPoint2,m_edata->extensionPoint2 + dirV));
     m_dimensionData->definitionPoint = cl.getNearestPointOnEntity(m_dimensionData->definitionPoint);
 }
 
 RS_Entity *RS_ActionDimLinear::createDim(RS_EntityContainer* parent){
     m_edata->angle = getDimAngle(m_alternateDimDirection);
-    m_edata->oblique =  toWorldAngle(0.0);
+    m_edata->obliqueAngle =  toWorldAngle(0.0);
     auto *dim = new RS_DimLinear(parent, *m_dimensionData, *m_edata);
     return dim;
 }
@@ -74,7 +77,7 @@ double RS_ActionDimLinear::getUcsAngleDegrees() const{
     return m_ucsBasisAngleDegrees;
 }
 
-void RS_ActionDimLinear::setUcsAngleDegrees(double ucsRelAngleDegrees){
+void RS_ActionDimLinear::setUcsAngleDegrees(const double ucsRelAngleDegrees){
     m_ucsBasisAngleDegrees = ucsRelAngleDegrees;
 }
 
@@ -82,7 +85,7 @@ bool RS_ActionDimLinear::hasFixedAngle() const{
     return m_fixedAngle;
 }
 
-void RS_ActionDimLinear::onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) {
+void RS_ActionDimLinear::onCoordinateEvent(const int status, const bool isZero, const RS_Vector &pos) {
     switch (status){
         case SetAngle:{
             if (isZero){
@@ -99,11 +102,11 @@ void RS_ActionDimLinear::onCoordinateEvent(int status, bool isZero, const RS_Vec
     LC_ActionDimLinearBase::onCoordinateEvent(status, isZero, pos);
 }
 
-bool RS_ActionDimLinear::doProcessCommand(int status, const QString &c) {
+bool RS_ActionDimLinear::doProcessCommand(const int status, const QString &command) {
     bool accept = false;
     switch (status) {
         case SetText: {
-            setText(c);
+            setText(command);
             updateOptions();
             enableCoordinateInput();
             setStatus(m_lastStatus);
@@ -112,7 +115,7 @@ bool RS_ActionDimLinear::doProcessCommand(int status, const QString &c) {
         }
         case SetAngle: {
             double ucsBasisAngleDeg;
-            bool ok = parseToUCSBasisAngle(c, ucsBasisAngleDeg);
+            const bool ok = parseToUCSBasisAngle(command, ucsBasisAngleDeg);
             if (ok){
                 accept = true;
                 m_ucsBasisAngleDegrees = ucsBasisAngleDeg;
@@ -124,13 +127,13 @@ bool RS_ActionDimLinear::doProcessCommand(int status, const QString &c) {
             break;
         }
         default:
-            m_lastStatus = (Status) getStatus();
+            m_lastStatus = static_cast<Status>(getStatus());
             deletePreview();
-            if (checkCommand("text", c)){
+            if (checkCommand("text", command)){
                 disableCoordinateInput();
                 setStatus(SetText);
                 accept = true;
-            } else if (!m_fixedAngle && (checkCommand("angle", c))){
+            } else if (!m_fixedAngle && checkCommand("angle", command)){
                 setStatus(SetAngle);
                 accept = true;
             }
@@ -166,7 +169,7 @@ RS_Vector RS_ActionDimLinear::getExtensionPoint2(){
     return m_edata->extensionPoint2;
 }
 
-double RS_ActionDimLinear::getDimAngle(bool alternateMode){
+double RS_ActionDimLinear::getDimAngle(const bool alternateMode){
 // Todo - sand - option for dim behaviour?
 // This is good place for optional behavior for Hor/Vert dims.
 // Implementation below created dims orthogonal to X and Y axises. 0 in UCS Abs values, ignore basis there??
@@ -175,11 +178,11 @@ double RS_ActionDimLinear::getDimAngle(bool alternateMode){
 
     switch (m_actionType){
         case RS2::ActionDimLinearHor:{
-            double angle = alternateMode ? M_PI_2: 0;
+            const double angle = alternateMode ? M_PI_2: 0;
             return toWorldAngle(angle);
         }
         case RS2::ActionDimLinearVer:{
-            double angle = alternateMode ? 0: M_PI_2;
+            const double angle = alternateMode ? 0: M_PI_2;
             return toWorldAngle(angle);
         }
         default:{
@@ -197,7 +200,7 @@ double RS_ActionDimLinear::getDimAngle(bool alternateMode){
     }
 }
 
-bool RS_ActionDimLinear::checkMaySwitchDimDirection() {
+bool RS_ActionDimLinear::checkMaySwitchDimDirection() const {
     bool maySwitchDirection = m_actionType == RS2::ActionDimLinearHor || m_actionType == RS2::ActionDimLinearVer;
     if (!maySwitchDirection) {
         maySwitchDirection  = !LC_LineMath::isMeaningfulAngle(m_ucsBasisAngleDegrees) || !LC_LineMath::isMeaningfulAngle(m_ucsBasisAngleDegrees - M_PI_2);
@@ -206,9 +209,9 @@ bool RS_ActionDimLinear::checkMaySwitchDimDirection() {
 }
 
 void RS_ActionDimLinear::updateMouseButtonHintForExtPoint2() {
-    bool maySwitchDirection = checkMaySwitchDimDirection();
+    const bool maySwitchDirection = checkMaySwitchDimDirection();
     if (maySwitchDirection) {
-        updateMouseWidgetTRBack(tr("Specify second extension line origin"), MOD_SHIFT_AND_CTRL( MSG_REL_ZERO, tr("Switch Direction")));
+        updatePromptTRBack(tr("Specify second extension line origin"), MOD_SHIFT_AND_CTRL( MSG_REL_ZERO, tr("Switch Direction")));
     }
     else {
         LC_ActionDimLinearBase::updateMouseButtonHintForExtPoint2();
@@ -216,19 +219,19 @@ void RS_ActionDimLinear::updateMouseButtonHintForExtPoint2() {
 }
 
 void RS_ActionDimLinear::updateMouseButtonHintForDefPoint() {
-    bool maySwitchDirection = checkMaySwitchDimDirection();
+    const bool maySwitchDirection = checkMaySwitchDimDirection();
     if (maySwitchDirection) {
-        updateMouseWidgetTRBack(tr("Specify dimension line location"), MOD_SHIFT_AND_CTRL(tr("Snap to Adjacent Dim"), tr("Switch Direction")));
+        updatePromptTRBack(tr("Specify dimension line location"), MOD_SHIFT_AND_CTRL(tr("Snap to Adjacent Dim"), tr("Switch Direction")));
     }
     else {
         LC_ActionDimLinearBase::updateMouseButtonHintForDefPoint();
     }
 }
 
-void RS_ActionDimLinear::setExtensionPoint1(RS_Vector p){
+void RS_ActionDimLinear::setExtensionPoint1(const RS_Vector& p){
     m_edata->extensionPoint1 = p;
 }
 
-void RS_ActionDimLinear::setExtensionPoint2(RS_Vector p){
+void RS_ActionDimLinear::setExtensionPoint2(const RS_Vector& p){
     m_edata->extensionPoint2 = p;
 }

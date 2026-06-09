@@ -33,11 +33,14 @@
 RS_ActionZoomPan::RS_ActionZoomPan(LC_ActionContext *actionContext)
         :RS_ActionInterface("Zoom Panning", actionContext, RS2::ActionZoomPan) {}
 
-void RS_ActionZoomPan::init(int status) {
+void RS_ActionZoomPan::init(const int status) {
     RS_ActionInterface::init(status);
     m_snapMode.clear();
     m_snapMode.restriction = RS2::RestrictNothing;
-    m_x1 = m_y1 = m_x2 = m_y2 = -1;
+    m_x1 = -1;
+    m_y1 = -1;
+    m_x2 = -1;
+    m_y2 = -1;
     setStatus(SetPanStart);
 //    updateMouseButtonHints();
 }
@@ -53,12 +56,12 @@ void RS_ActionZoomPan::trigger() {
         m_y1 = m_y2;
     }
     if(getStatus()==SetPanEnd)    {
-        finish(false);
+        finish();
     }
 }
 
-void RS_ActionZoomPan::finish(bool updateTB) {
-    RS_ActionInterface::finish(updateTB);
+void RS_ActionZoomPan::finish() {
+    RS_ActionInterface::finish();
     m_viewport->setPanning(false);
     redraw();
 }
@@ -94,25 +97,27 @@ void RS_ActionZoomPan::mouseReleaseEvent(QMouseEvent* e) {
             setStatus(SetPanStart);
             m_viewport->setPanning(false);
             m_viewport->notifyChanged();
+            break;
     }
     trigger();
     //RS_DEBUG->print("RS_ActionZoomPan::mousePressEvent(): %f %f", v1.x, v1.y);
 }
 
-void RS_ActionZoomPan::updateMouseButtonHints(){
+void RS_ActionZoomPan::updateActionPrompt(){
     switch (getStatus()) {
         case SetPanStart:
-            updateMouseWidgetTRCancel(tr("Click and drag to pan zoom"));
+            updatePromptTRCancel(tr("Click and drag to pan zoom"));
             break;
         case SetPanning:
-            updateMouseWidgetTRCancel(tr("Zoom panning"));
+            updatePromptTRCancel(tr("Zoom panning"));
             break;
         default:
-            updateMouseWidget();
+            updatePrompt();
+            break;
     }
 }
 
-RS2::CursorType RS_ActionZoomPan::doGetMouseCursor([[maybe_unused]] int status){
+RS2::CursorType RS_ActionZoomPan::doGetMouseCursor([[maybe_unused]] const int status){
     switch (status) {
         case SetPanStart:
             return RS2::OpenHandCursor;

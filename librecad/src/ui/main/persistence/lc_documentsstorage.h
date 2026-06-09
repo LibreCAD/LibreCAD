@@ -1,5 +1,5 @@
 /*******************************************************************************
-*
+ *
  This file is part of the LibreCAD project, a 2D CAD program
 
  Copyright (C) 2025 LibreCAD.org
@@ -24,6 +24,7 @@
 #define LC_DOCUMENTSSTORAGE_H
 
 #include <QObject>
+
 #include "rs.h"
 
 class RS_Graphic;
@@ -39,10 +40,10 @@ public:
     bool saveBlockAs(RS_Graphic* block, const QString& fileName);
     bool autoSaveDocument(RS_Document *document,RS_GraphicView * graphicView, QString& autosaveFileName);
     bool saveDocumentAs(const RS_Document *document,RS_GraphicView * graphicView, bool &cancelled);
-    bool exportGraphics(RS_Graphic *document,const QString &fileName, RS2::FormatType formatType);
+    bool exportGraphics(RS_Graphic *graphic,const QString &fileName, RS2::FormatType formatType);
     bool loadDocument(const RS_Document *document, const QString &fileName, RS2::FormatType type) const;
     bool loadDocument(const RS_Document *document, const QString &fileName) const;
-    bool loadDocumentFromTemplate(const RS_Document *document, RS_GraphicView *graphicView, const QString &fileName, RS2::FormatType type) const;
+    bool loadDocumentFromTemplate(const RS_Document *document, const RS_GraphicView *graphicView, const QString &fileName, RS2::FormatType type) const;
 protected:
     bool doSaveGraphicAs(RS_Graphic* graphic, RS_GraphicView *graphicView, bool &cancelled, const QString& currentFileName = "");
     bool autoSaveGraphic(RS_Graphic *graphic, QString& fileName);
@@ -57,4 +58,4 @@ protected:
     QString createAutoSaveFileName(const QString &path, const QString &filePrefix, const QString &fileName) const;
 };
 
-#endif // LC_DOCUMENTSSTORAGE_H
+#endif

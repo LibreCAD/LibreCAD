@@ -21,43 +21,41 @@
 // **********************************************************************
 //
 
-#include <QXmlStreamWriter>
 #include "lc_xmlwriterqxmlstreamwriter.h"
 
+#include <QXmlStreamWriter>
 
-LC_XMLWriterQXmlStreamWriter::LC_XMLWriterQXmlStreamWriter():
-	xmlWriter(new QXmlStreamWriter(&xml))
-{
-	xmlWriter->setAutoFormatting(true);
-	//xmlWriter->setEncoding("UTF-8");
+LC_XMLWriterQXmlStreamWriter::LC_XMLWriterQXmlStreamWriter() : m_xmlWriter(new QXmlStreamWriter(&m_xml)) {
+    m_xmlWriter->setAutoFormatting(true);
+    //xmlWriter->setEncoding("UTF-8");
 }
 
 LC_XMLWriterQXmlStreamWriter::~LC_XMLWriterQXmlStreamWriter() = default;
 
-void LC_XMLWriterQXmlStreamWriter::createRootElement(const std::string &name, const std::string &namespace_uri) {
-    xmlWriter->writeStartDocument();
-    xmlWriter->writeDefaultNamespace(QString::fromStdString(namespace_uri));
-    xmlWriter->writeStartElement(QString::fromStdString(namespace_uri), QString::fromStdString(name));
+void LC_XMLWriterQXmlStreamWriter::createRootElement(const std::string& name, const std::string& namespace_uri) {
+    m_xmlWriter->writeStartDocument();
+    m_xmlWriter->writeDefaultNamespace(QString::fromStdString(namespace_uri));
+    m_xmlWriter->writeStartElement(QString::fromStdString(namespace_uri), QString::fromStdString(name));
 }
 
-void LC_XMLWriterQXmlStreamWriter::addElement(const std::string &name, const std::string &namespace_uri) {
-    xmlWriter->writeStartElement(QString::fromStdString(namespace_uri), QString::fromStdString(name));
+void LC_XMLWriterQXmlStreamWriter::addElement(const std::string& name, const std::string& namespace_uri) {
+    m_xmlWriter->writeStartElement(QString::fromStdString(namespace_uri), QString::fromStdString(name));
 }
 
-void LC_XMLWriterQXmlStreamWriter::addAttribute(const std::string &name, const std::string &value, const std::string &namespace_uri) {
-    xmlWriter->writeAttribute(QString::fromStdString(namespace_uri), QString::fromStdString(name), QString::fromStdString(value));
+void LC_XMLWriterQXmlStreamWriter::addAttribute(const std::string& name, const std::string& value, const std::string& namespace_uri) {
+    m_xmlWriter->writeAttribute(QString::fromStdString(namespace_uri), QString::fromStdString(name), QString::fromStdString(value));
 }
 
-void LC_XMLWriterQXmlStreamWriter::addNamespaceDeclaration(const std::string &prefix, const std::string &namespace_uri) {
-    xmlWriter->writeNamespace(QString::fromStdString(namespace_uri), QString::fromStdString(prefix));
+void LC_XMLWriterQXmlStreamWriter::addNamespaceDeclaration(const std::string& prefix, const std::string& namespace_uri) {
+    m_xmlWriter->writeNamespace(QString::fromStdString(namespace_uri), QString::fromStdString(prefix));
 }
 
 void LC_XMLWriterQXmlStreamWriter::closeElement() {
-    xmlWriter->writeEndElement();
+    m_xmlWriter->writeEndElement();
 }
 
 std::string LC_XMLWriterQXmlStreamWriter::documentAsString() {
-    xmlWriter->writeEndDocument();
+    m_xmlWriter->writeEndDocument();
 
-    return xml.toStdString();
+    return m_xml.toStdString();
 }

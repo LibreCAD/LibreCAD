@@ -20,6 +20,8 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
 
+#include "lc_svgiconengine.h"
+
 #include <QApplication>
 #include <QAtomicInt>
 #include <QCoreApplication>
@@ -32,18 +34,15 @@
 #include <QStyleOption>
 #include <QSvgRenderer>
 
-#include "lc_svgiconengine.h"
-
-
 enum FileType {PlainSVG, TemplateSVG};
 
 
 namespace LC_SVGIconEngineAPI {
 
-    static const char *KEY_ICONS_OVERRIDES_DIR = "LCI_BaseDir";
-    static const char *KEY_COLOR_MAIN = "LCI_ColorMain";
-    static const char *KEY_COLOR_ACCENT = "LCI_ColorAccent";
-    static const char *KEY_COLOR_BG = "LCI_ColorBack";
+    constexpr auto KEY_ICONS_OVERRIDES_DIR = "LCI_BaseDir";
+    constexpr auto KEY_COLOR_MAIN = "LCI_ColorMain";
+    constexpr auto KEY_COLOR_ACCENT = "LCI_ColorAccent";
+    constexpr auto KEY_COLOR_BG = "LCI_ColorBack";
 
     static constexpr int ANY_STATE = 2;
     static constexpr int ANY_MODE = 4;
@@ -63,7 +62,7 @@ namespace LC_SVGIconEngineAPI {
     };
 
 
-QString getColorAppKeyName(QString baseName, int mode, int state){
+QString getColorAppKeyName(const QString& baseName, const int mode, const int state){
     QString result = baseName;
     switch (mode) {
     case QIcon::Mode::Normal: {
@@ -102,14 +101,14 @@ QString getColorAppKeyName(QString baseName, int mode, int state){
 }
 
 
-inline void setColorAppProperty(QString baseKey, int mode, int state, QString value){
-    QString key = getColorAppKeyName(baseKey, mode, state);
+inline void setColorAppProperty(const QString& baseKey, const int mode, const int state, const QString& value){
+    const QString key = getColorAppKeyName(baseKey, mode, state);
     qApp->setProperty(key.toStdString().c_str(),   value);
 }
 
-inline QString getColorAppProperty(QString baseKey, int mode, int state){
-    QString key = getColorAppKeyName(baseKey, mode, state);
-    QVariant vProperty = qApp->property(key.toStdString().c_str());
+inline QString getColorAppProperty(const QString& baseKey, const int mode, const int state){
+    const QString key = getColorAppKeyName(baseKey, mode, state);
+    const QVariant vProperty = qApp->property(key.toStdString().c_str());
     if (vProperty.isValid()) {
         return vProperty.value<QString>();
     }
@@ -124,31 +123,30 @@ struct LC_SvgFileInfo {
 
 class LC_SvgIconEnginePrivate : public QSharedData {
 public:
-    LC_SvgIconEnginePrivate()
-        : addedPixmaps(0)
-    { stepSerialNum(); }
+    LC_SvgIconEnginePrivate() : addedPixmaps(nullptr) {
+        stepSerialNum();
+    }
 
     ~LC_SvgIconEnginePrivate() { delete addedPixmaps; qDeleteAll(svgFiles);}
 
-    static int hashKey(QIcon::Mode mode, QIcon::State state)  { return (((mode)<<4)|state); }
+    static int hashKey(const QIcon::Mode mode, const QIcon::State state)  { return mode<<4|state; }
 
-    QString pmcKey(const QSize &size, QIcon::Mode mode, QIcon::State state)
-    { return QLatin1String("$lc_svgicon_")
+    QString pmcKey(const QSize &size, const QIcon::Mode mode, const QIcon::State state) const { return QLatin1String("$lc_svgicon_")
                + QString::number(serialNum, 16).append(QLatin1Char('_'))
-               + QString::number((((((qint64(size.width()) << 11) | size.height()) << 11) | mode) << 4) | state, 16); }
+               + QString::number(((static_cast<qint64>(size.width()) << 11 | size.height()) << 11 | mode) << 4 | state, 16); }
 
     void stepSerialNum() { serialNum = lastSerialNum.fetchAndAddRelaxed(1); }
 
     bool tryLoad(QSvgRenderer *renderer, QIcon::Mode mode, QIcon::State state);
     bool tryLoad(QSvgRenderer *renderer, QIcon::Mode baseMode, QIcon::State baseState, QIcon::Mode mode, QIcon::State state, bool &colorsReplaced);
     QIcon::Mode loadDataForModeAndState(QSvgRenderer *renderer, QIcon::Mode mode, QIcon::State state);
-    void checkFileOverride(QIcon::Mode mode, QIcon::State state, FileType fileType, QString plainSVGFileName);
-    void checkFileOverride(QString baseName, QIcon::Mode mode, QIcon::State state, FileType fileType);
-    void checkFileOverrideForAnyState(QString baseName, QIcon::Mode mode, QIcon::State state, FileType fileType);
-    void checkFileOverrideForAnyMode(QString baseName, QIcon::Mode mode, QIcon::State state, FileType fileType);
+    void checkFileOverride(QIcon::Mode mode, QIcon::State state, FileType fileType, const QString& plainSVGFileName);
+    void checkFileOverride(const QString& baseName, QIcon::Mode mode, QIcon::State state, FileType fileType);
+    void checkFileOverrideForAnyState(const QString& baseName, QIcon::Mode mode, QIcon::State state, FileType fileType);
+    void checkFileOverrideForAnyMode(const QString& baseName, QIcon::Mode mode, QIcon::State state, FileType fileType);
 
-    QString getColorForReplacement(QString baseKey, QIcon::Mode mode, QIcon::State state);
-    QString replaceColor(QString content, QString baseColorKey, QIcon::Mode mode, QIcon::State state, QString originalColor);
+    QString getColorForReplacement(const QString& baseKey, QIcon::Mode mode, QIcon::State state);
+    QString replaceColor(QString content, const QString& baseColorKey, QIcon::Mode mode, QIcon::State state, const QString& originalColor);
 
     QHash<int, LC_SvgFileInfo*> svgFiles;
     QHash<int, QPixmap> *addedPixmaps;
@@ -164,14 +162,15 @@ LC_SVGIconEngine::LC_SVGIconEngine()
 LC_SVGIconEngine::LC_SVGIconEngine(const LC_SVGIconEngine &other)
     : QIconEngine(other), d(new LC_SvgIconEnginePrivate){
     d->svgFiles = other.d->svgFiles;
-    if (other.d->addedPixmaps)
+    if (other.d->addedPixmaps) {
         d->addedPixmaps = new QHash<int, QPixmap>(*other.d->addedPixmaps);
+    }
 }
 
 LC_SVGIconEngine::~LC_SVGIconEngine(){}
 
 
-QString getEnrichedFileName(QString baseName, int mode, int state, FileType type){
+QString getEnrichedFileName(const QString& baseName, const int mode, const int state, const FileType type){
     QString result = baseName;
     switch (mode) {
         case QIcon::Mode::Normal: {
@@ -221,12 +220,12 @@ QString getEnrichedFileName(QString baseName, int mode, int state, FileType type
     return result;
 }
 
-void LC_SvgIconEnginePrivate::checkFileOverride(QIcon::Mode mode, QIcon::State state, FileType fileType, QString plainSVGFileName){
-    QFile plainSVGFile = QFile(plainSVGFileName);
+void LC_SvgIconEnginePrivate::checkFileOverride(const QIcon::Mode mode, const QIcon::State state, const FileType fileType, const QString& plainSVGFileName){
+    const auto plainSVGFile = QFile(plainSVGFileName);
     if (plainSVGFile.exists()) {
-        QSvgRenderer renderer(plainSVGFileName);
+        const QSvgRenderer renderer(plainSVGFileName);
         if (renderer.isValid()) {
-            LC_SvgFileInfo* info = new LC_SvgFileInfo();
+            const auto info = new LC_SvgFileInfo();
             info->fileName = plainSVGFileName;
             info->fileType = fileType;
             stepSerialNum();
@@ -235,32 +234,31 @@ void LC_SvgIconEnginePrivate::checkFileOverride(QIcon::Mode mode, QIcon::State s
     }
 }
 
-void LC_SvgIconEnginePrivate::checkFileOverride(QString baseName, QIcon::Mode mode, QIcon::State state, FileType fileType){
-    QString plainSVGFileName = getEnrichedFileName(baseName, mode, state, fileType);
+void LC_SvgIconEnginePrivate::checkFileOverride(const QString& baseName, const QIcon::Mode mode, const QIcon::State state, const FileType fileType){
+    const QString plainSVGFileName = getEnrichedFileName(baseName, mode, state, fileType);
     checkFileOverride(mode, state, fileType, plainSVGFileName);
 }
 
-void LC_SvgIconEnginePrivate::checkFileOverrideForAnyState(QString baseName, QIcon::Mode mode, QIcon::State state, FileType fileType){
-    QString plainSVGFileName = getEnrichedFileName(baseName, mode, LC_SVGIconEngineAPI::ANY_STATE, fileType);
+void LC_SvgIconEnginePrivate::checkFileOverrideForAnyState(const QString& baseName, const QIcon::Mode mode, const QIcon::State state, const FileType fileType){
+    const QString plainSVGFileName = getEnrichedFileName(baseName, mode, LC_SVGIconEngineAPI::ANY_STATE, fileType);
     checkFileOverride(mode, state, fileType, plainSVGFileName);
 }
 
-void LC_SvgIconEnginePrivate::checkFileOverrideForAnyMode(QString baseName, QIcon::Mode mode, QIcon::State state, FileType fileType){
-    QString plainSVGFileName = getEnrichedFileName(baseName, LC_SVGIconEngineAPI::ANY_MODE, LC_SVGIconEngineAPI::ANY_STATE, fileType);
+void LC_SvgIconEnginePrivate::checkFileOverrideForAnyMode(const QString& baseName, const QIcon::Mode mode, const QIcon::State state, const FileType fileType){
+    const QString plainSVGFileName = getEnrichedFileName(baseName, LC_SVGIconEngineAPI::ANY_MODE, LC_SVGIconEngineAPI::ANY_STATE, fileType);
     checkFileOverride(mode, state, fileType, plainSVGFileName);
 }
 
-void LC_SVGIconEngine::addFile(const QString &fileName, const QSize &,
-                               QIcon::Mode mode, QIcon::State state){
+void LC_SVGIconEngine::addFile(const QString &fileName, const QSize &, const QIcon::Mode mode, const QIcon::State state){
     if (!fileName.isEmpty()) {
         // first, try to check that icon override is not provided by the user
         if (fileName.startsWith(":")) {
-            auto application = qApp;
+            const auto application = qApp;
             if (application != nullptr) {
-                auto vBaseDir = application->property(LC_SVGIconEngineAPI::KEY_ICONS_OVERRIDES_DIR);
+                const auto vBaseDir = application->property(LC_SVGIconEngineAPI::KEY_ICONS_OVERRIDES_DIR);
                 if (vBaseDir.isValid()){
-                    QString sBaseDir = vBaseDir.toString();
-                    QDir dirFile(sBaseDir);
+                    const QString sBaseDir = vBaseDir.toString();
+                    const QDir dirFile(sBaseDir);
                     if (dirFile.exists()) {
                         QString noExtensions = fileName.mid(0, fileName.lastIndexOf('.'));
                         if (noExtensions.endsWith(".svg")) { // handle .svg.lc format of file in resources
@@ -274,7 +272,7 @@ void LC_SVGIconEngine::addFile(const QString &fileName, const QSize &,
                             noExtensions = noExtensions.remove(":");
                         }
 
-                        QString baseName = dirFile.absoluteFilePath(noExtensions);
+                        const QString baseName = dirFile.absoluteFilePath(noExtensions);
 
                         // try to find all possible variants for icons overrides.
 
@@ -314,13 +312,13 @@ void LC_SVGIconEngine::addFile(const QString &fileName, const QSize &,
         }
 
         // no icon override is provided by the user, so just check that provided file exists
-        int key = d->hashKey(mode, state);
+        const int key = d->hashKey(mode, state);
         if (!d->svgFiles.contains(key)) {
-            QFile plainSVGFile = QFile(fileName);
+            const auto plainSVGFile = QFile(fileName);
             if (plainSVGFile.exists()) {
-                QSvgRenderer renderer(fileName);
+                const QSvgRenderer renderer(fileName);
                 if (renderer.isValid()) {
-                    LC_SvgFileInfo *info = new LC_SvgFileInfo();
+                    const auto info = new LC_SvgFileInfo();
                     info->fileName = fileName;
                     info->fileType = TemplateSVG;
                     d->stepSerialNum();
@@ -331,15 +329,15 @@ void LC_SVGIconEngine::addFile(const QString &fileName, const QSize &,
     }
 }
 
-QSize LC_SVGIconEngine::actualSize(const QSize &size, QIcon::Mode mode,
-                                 QIcon::State state){
+QSize LC_SVGIconEngine::actualSize(const QSize &size, const QIcon::Mode mode, const QIcon::State state){
     if (d->addedPixmaps) {
-        QPixmap pm = d->addedPixmaps->value(d->hashKey(mode, state));
-        if (!pm.isNull() && pm.size() == size)
+        const QPixmap pm = d->addedPixmaps->value(d->hashKey(mode, state));
+        if (!pm.isNull() && pm.size() == size) {
             return size;
+        }
     }
 
-    QPixmap pm = pixmap(size, mode, state);
+    const QPixmap pm = pixmap(size, mode, state);
     if (pm.isNull()) {
         return QSize();
     }
@@ -347,12 +345,12 @@ QSize LC_SVGIconEngine::actualSize(const QSize &size, QIcon::Mode mode,
 }
 
 namespace {
-    static const char* TEMPLATE_COLOR_MAIN = "#000";
-    static const char* TEMPLATE_COLOR_ACCENT = "#00ff7f";
-    static const char* TEMPLATE_COLOR_BACKGROUND_FILL = "#fff";
+    constexpr auto TEMPLATE_COLOR_MAIN = "#000";
+    constexpr auto TEMPLATE_COLOR_ACCENT = "#00ff7f";
+    constexpr auto TEMPLATE_COLOR_BACKGROUND_FILL = "#fff";
 }
 
-QString LC_SvgIconEnginePrivate::getColorForReplacement(QString baseKey, QIcon::Mode mode, QIcon::State state){
+QString LC_SvgIconEnginePrivate::getColorForReplacement(const QString& baseKey, const QIcon::Mode mode, const QIcon::State state){
     // first, try to find the most exact replacement color that includes mode and state
 
     QString result = LC_SVGIconEngineAPI::getColorAppProperty(baseKey, mode, state);
@@ -365,21 +363,21 @@ QString LC_SvgIconEnginePrivate::getColorForReplacement(QString baseKey, QIcon::
     return result;
 }
 
-QString LC_SvgIconEnginePrivate::replaceColor(QString content, QString baseColorKey, QIcon::Mode mode, QIcon::State state, QString originalColor){
-    QString color = getColorForReplacement(baseColorKey, mode, state);
+QString LC_SvgIconEnginePrivate::replaceColor(QString content, const QString& baseColorKey, const QIcon::Mode mode, const QIcon::State state, const QString& originalColor){
+    const QString color = getColorForReplacement(baseColorKey, mode, state);
     if (!color.isEmpty()  && color != originalColor) {
         content = content.replace(originalColor, color);
     }
     return content;
 }
 
-bool LC_SvgIconEnginePrivate::tryLoad(QSvgRenderer *renderer, QIcon::Mode mode, QIcon::State state){
+bool LC_SvgIconEnginePrivate::tryLoad(QSvgRenderer *renderer, const QIcon::Mode mode, const QIcon::State state){
     bool ok;
     return tryLoad(renderer, mode, state, mode, state, ok);
 }
 
-bool LC_SvgIconEnginePrivate::tryLoad(QSvgRenderer *renderer, QIcon::Mode baseMode, QIcon::State baseState, QIcon::Mode mode, QIcon::State state, bool &colorsReplaced){
-    LC_SvgFileInfo* fileInfo = svgFiles.value(hashKey(baseMode, baseState));
+bool LC_SvgIconEnginePrivate::tryLoad(QSvgRenderer *renderer, const QIcon::Mode baseMode, const QIcon::State baseState, const QIcon::Mode mode, const QIcon::State state, bool &colorsReplaced){
+    const LC_SvgFileInfo* fileInfo = svgFiles.value(hashKey(baseMode, baseState));
     if (fileInfo != nullptr) {
         switch (fileInfo->fileType) {
             case TemplateSVG: {
@@ -392,7 +390,7 @@ bool LC_SvgIconEnginePrivate::tryLoad(QSvgRenderer *renderer, QIcon::Mode baseMo
                     content = replaceColor(content, LC_SVGIconEngineAPI::KEY_COLOR_ACCENT, mode, state, TEMPLATE_COLOR_ACCENT);
                     content = replaceColor(content, LC_SVGIconEngineAPI::KEY_COLOR_BG, mode, state, TEMPLATE_COLOR_BACKGROUND_FILL);
 
-                    QByteArray byteArrayContent = content.toUtf8();
+                    const QByteArray byteArrayContent = content.toUtf8();
                     renderer->load(byteArrayContent);
                     colorsReplaced = true;
                     return true;
@@ -400,7 +398,7 @@ bool LC_SvgIconEnginePrivate::tryLoad(QSvgRenderer *renderer, QIcon::Mode baseMo
                 break;
             }
             case PlainSVG: {
-                QString fileName = fileInfo->fileName;
+                const QString fileName = fileInfo->fileName;
                 renderer->load(fileName);
                 return true;
             }
@@ -409,54 +407,68 @@ bool LC_SvgIconEnginePrivate::tryLoad(QSvgRenderer *renderer, QIcon::Mode baseMo
     return false;
 }
 
-QIcon::Mode LC_SvgIconEnginePrivate::loadDataForModeAndState(QSvgRenderer *renderer, QIcon::Mode mode, QIcon::State state){
-    if (tryLoad(renderer, mode, state))
+QIcon::Mode LC_SvgIconEnginePrivate::loadDataForModeAndState(QSvgRenderer *renderer, const QIcon::Mode mode, const QIcon::State state){
+    if (tryLoad(renderer, mode, state)) {
         return mode;
+    }
 
     bool colorsReplaced = false;
     const QIcon::State oppositeState = (state == QIcon::On) ? QIcon::Off : QIcon::On;
     if (mode == QIcon::Disabled || mode == QIcon::Selected) {
         const QIcon::Mode oppositeMode = (mode == QIcon::Disabled) ? QIcon::Selected : QIcon::Disabled;
 
-        if (tryLoad(renderer, QIcon::Normal, state, mode, state,colorsReplaced))
+        if (tryLoad(renderer, QIcon::Normal, state, mode, state,colorsReplaced)) {
             return colorsReplaced ? mode : QIcon::Normal;
-        if (tryLoad(renderer, QIcon::Active, state, mode, state,colorsReplaced))
+        }
+        if (tryLoad(renderer, QIcon::Active, state, mode, state,colorsReplaced)) {
             return colorsReplaced ? mode : QIcon::Active;
-        if (tryLoad(renderer, mode, oppositeState, mode, state,colorsReplaced))
+        }
+        if (tryLoad(renderer, mode, oppositeState, mode, state,colorsReplaced)) {
             return mode;
-        if (tryLoad(renderer, QIcon::Normal, oppositeState, mode, state,colorsReplaced))
+        }
+        if (tryLoad(renderer, QIcon::Normal, oppositeState, mode, state,colorsReplaced)) {
             return colorsReplaced ? mode : QIcon::Normal;
-        if (tryLoad(renderer, QIcon::Active, oppositeState, mode, state,colorsReplaced))
+        }
+        if (tryLoad(renderer, QIcon::Active, oppositeState, mode, state,colorsReplaced)) {
             return colorsReplaced ? mode : QIcon::Active;
-        if (tryLoad(renderer, oppositeMode, state, mode, state,colorsReplaced))
+        }
+        if (tryLoad(renderer, oppositeMode, state, mode, state,colorsReplaced)) {
             return colorsReplaced ? mode : oppositeMode;
-        if (tryLoad(renderer, oppositeMode, oppositeState, mode, state,colorsReplaced))
+        }
+        if (tryLoad(renderer, oppositeMode, oppositeState, mode, state,colorsReplaced)) {
             return colorsReplaced ? mode : oppositeMode;
+        }
     } else {
         const QIcon::Mode oppositeMode = (mode == QIcon::Normal) ? QIcon::Active : QIcon::Normal;
-        if (tryLoad(renderer, oppositeMode, state, mode, state,colorsReplaced))
+        if (tryLoad(renderer, oppositeMode, state, mode, state,colorsReplaced)) {
             return colorsReplaced ? mode : oppositeMode;
-        if (tryLoad(renderer, mode, oppositeState, mode, state,colorsReplaced))
+        }
+        if (tryLoad(renderer, mode, oppositeState, mode, state,colorsReplaced)) {
             return mode;
-        if (tryLoad(renderer, oppositeMode, oppositeState, mode, state,colorsReplaced))
+        }
+        if (tryLoad(renderer, oppositeMode, oppositeState, mode, state,colorsReplaced)) {
             return colorsReplaced ? mode : oppositeMode;
-        if (tryLoad(renderer, QIcon::Disabled, state, mode, state,colorsReplaced))
+        }
+        if (tryLoad(renderer, QIcon::Disabled, state, mode, state,colorsReplaced)) {
             return colorsReplaced ? mode : QIcon::Disabled;
-        if (tryLoad(renderer, QIcon::Selected, state, mode, state,colorsReplaced))
+        }
+        if (tryLoad(renderer, QIcon::Selected, state, mode, state,colorsReplaced)) {
             return colorsReplaced ? mode : QIcon::Selected;
-        if (tryLoad(renderer, QIcon::Disabled, oppositeState, mode, state,colorsReplaced))
+        }
+        if (tryLoad(renderer, QIcon::Disabled, oppositeState, mode, state,colorsReplaced)) {
             return colorsReplaced ? mode : QIcon::Disabled;
-        if (tryLoad(renderer, QIcon::Selected, oppositeState, mode, state,colorsReplaced))
+        }
+        if (tryLoad(renderer, QIcon::Selected, oppositeState, mode, state,colorsReplaced)) {
             return colorsReplaced ? mode : QIcon::Selected;
+        }
     }
     return QIcon::Normal;
 }
 
-QPixmap LC_SVGIconEngine::pixmap(const QSize &size, QIcon::Mode mode,
-                               QIcon::State state){
+QPixmap LC_SVGIconEngine::pixmap(const QSize &size, const QIcon::Mode mode, const QIcon::State state){
     QPixmap pm;
 
-    QString pmckey(d->pmcKey(size, mode, state));
+    const QString pmckey(d->pmcKey(size, mode, state));
     if (QPixmapCache::find(pmckey, &pm)) {
         if (!pm.isNull()){
            return pm;
@@ -498,19 +510,20 @@ QPixmap LC_SVGIconEngine::pixmap(const QSize &size, QIcon::Mode mode,
             opt.palette = QGuiApplication::palette();
             const QPixmap generated = QApplication::style()->generatedIconPixmap(mode, pm, &opt);
 
-            if (!generated.isNull())
+            if (!generated.isNull()) {
                 pm = generated;
+            }
         }
     }
 
-    if (!pm.isNull())
+    if (!pm.isNull()) {
         QPixmapCache::insert(pmckey, pm);
+    }
 
     return pm;
 }
 
-void LC_SVGIconEngine::addPixmap(const QPixmap &pixmap, QIcon::Mode mode,
-                               QIcon::State state){
+void LC_SVGIconEngine::addPixmap(const QPixmap &pixmap, const QIcon::Mode mode, const QIcon::State state){
     if (!d->addedPixmaps) {
         d->addedPixmaps = new QHash<int, QPixmap>;
     }
@@ -519,8 +532,7 @@ void LC_SVGIconEngine::addPixmap(const QPixmap &pixmap, QIcon::Mode mode,
 }
 
 
-void LC_SVGIconEngine::paint(QPainter *painter, const QRect &rect,
-                           QIcon::Mode mode, QIcon::State state)
+void LC_SVGIconEngine::paint(QPainter *painter, const QRect &rect, const QIcon::Mode mode, const QIcon::State state)
 {
     QSize pixmapSize = rect.size();
     if (painter->device()) {
@@ -537,9 +549,8 @@ QIconEngine *LC_SVGIconEngine::clone() const{
     return new LC_SVGIconEngine(*this);
 }
 
-void LC_SVGIconEngine::virtual_hook(int id, void *data)
-{
-    if (id == QIconEngine::IsNullHook) {
+void LC_SVGIconEngine::virtual_hook(const int id, void *data){
+    if (id == IsNullHook) {
         *reinterpret_cast<bool*>(data) = d->svgFiles.isEmpty() && !d->addedPixmaps;
     }
     QIconEngine::virtual_hook(id, data);

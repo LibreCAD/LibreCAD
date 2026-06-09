@@ -30,15 +30,11 @@
 
 #include "qc_applicationwindow.h"
 #include "qc_mdiwindow.h"
-
 #include "qg_blockwidget.h"
 #include "qg_graphicview.h"
-
 #include "rs_blocklist.h"
 #include "rs_debug.h"
 #include "rs_grid.h"
-
-
 
 QC_DialogFactory::QC_DialogFactory(QWidget* parent, QToolBar* ow,  LC_SnapOptionsWidgetsHolder *snapOptionsHolder) :
   QG_DialogFactory(parent, ow, snapOptionsHolder)
@@ -48,7 +44,7 @@ QC_DialogFactory::QC_DialogFactory(QWidget* parent, QToolBar* ow,  LC_SnapOption
  * Closes the window that is editing the given block.
  */
 void QC_DialogFactory::closeEditBlockWindow(RS_Block* block) {
-    auto& appWindow = QC_ApplicationWindow::getAppWindow();
+    const auto& appWindow = QC_ApplicationWindow::getAppWindow();
     QC_MDIWindow* blockWindow = appWindow->getWindowWithDoc(block);
 
     if (blockWindow != nullptr) {

@@ -29,31 +29,31 @@ class RS_Layer;
 class RS_Graphic;
 
 struct LC_LayersExportOptions {
-    bool m_createSeparateDocumentPerLayer{false};
-    bool m_putEntitiesToOriginalLayer{true};
-    bool m_exportUCSs{false};
-    bool m_exportNamedViews{false};
-    std::list<RS_Layer*> m_layers;
-    QString m_sourceDrawingFileName;
+    bool createSeparateDocumentPerLayer{false};
+    bool putEntitiesToOriginalLayer{true};
+    bool exportUcSs{false};
+    bool exportNamedViews{false};
+    std::list<RS_Layer*> layers;
+    QString sourceDrawingFileName;
 };
 
 struct LC_LayerExportData {
-    QString m_name;
-    RS_Graphic* m_graphic {nullptr};
+    QString name;
+    RS_Graphic* graphic {nullptr};
 };
 
 class LC_LayersExporter {
 public:
   LC_LayersExporter();
-  bool exportLayers(LC_LayersExportOptions* options, RS_Graphic* originalGraphic, std::vector<LC_LayerExportData*> &exportResultList);
+  void exportLayers(const LC_LayersExportOptions* options, RS_Graphic* originalGraphic, std::vector<LC_LayerExportData> &exportResultList);
 protected:
-  bool exportLayersToSingleDocument(LC_LayersExportOptions* options, RS_Graphic* originalGraphic,
-                                    std::vector<LC_LayerExportData*>& exportResultList);
-  bool exportLayersToIndividualDocuments(LC_LayersExportOptions* options, RS_Graphic* rs_graphic,
-                                         std::vector<LC_LayerExportData*>& list);
-  void copyLayerAttributes(RS_Layer* zeroLayer, RS_Layer* originalLayer);
-  void exportUCSList(LC_LayersExportOptions* options, RS_Graphic* originalGraphic, RS_Graphic* graphicToExport);
-  void exportViewsList(LC_LayersExportOptions* options, RS_Graphic* originalGraphic, RS_Graphic* graphicToExport);
+  void exportLayersToSingleDocument(const LC_LayersExportOptions* options, RS_Graphic* originalGraphic,
+                                    std::vector<LC_LayerExportData>& exportResultList);
+  void exportLayersToIndividualDocuments(const LC_LayersExportOptions* options, RS_Graphic* originalGraphic,
+                                         std::vector<LC_LayerExportData>& exportResultList);
+  void copyLayerAttributes(RS_Layer* zeroLayer, const RS_Layer* originalLayer);
+  void exportUCSList(const LC_LayersExportOptions* options, RS_Graphic* originalGraphic, RS_Graphic* graphicToExport);
+  void exportViewsList(const LC_LayersExportOptions* options, RS_Graphic* originalGraphic, RS_Graphic* graphicToExport);
 };
 
-#endif // LC_LAYERSEXPORTER_H
+#endif

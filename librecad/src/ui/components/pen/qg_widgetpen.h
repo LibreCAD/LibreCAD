@@ -35,18 +35,18 @@ class RS_Layer;
 class QG_WidgetPen : public QWidget, public Ui::QG_WidgetPen{
     Q_OBJECT
 public:
-    QG_WidgetPen(QWidget* parent = nullptr, Qt::WindowFlags fl = {});
-    void disableVerticalSpacer();
-    ~QG_WidgetPen();
-    bool isColorUnchanged();
-    bool isLineTypeUnchanged();
-    bool isWidthUnchanged();
+    explicit QG_WidgetPen(QWidget* parent = nullptr, Qt::WindowFlags fl = {});
+    ~QG_WidgetPen() override;
+    void disableVerticalSpacer() const;
+    bool isColorUnchanged() const;
+    bool isLineTypeUnchanged() const;
+    bool isWidthUnchanged() const;
 public slots:
-    void setPen( RS_Pen pen, bool showByLayer, bool showUnchanged, const QString & title );
-    void setPen(RS_Pen pen, RS_Layer* layer, const QString &title);
-    void setPen(RS_Pen pen, RS_Layer* layer, bool showUnchanged, const QString &title);
-    void setPen(RS_Entity *entity, RS_Layer *layer, const QString &title);
-    RS_Pen getPen();
+    void setPen(const RS_Pen& pen, bool showByLayer, bool showUnchanged, const QString & title );
+    void setPen(const RS_Pen& pen, const RS_Layer* layer, const QString &title);
+    void setPen(const RS_Pen& pen, const RS_Layer* layer, bool showUnchanged, const QString &title);
+    void setPen(const RS_Entity* entity, const RS_Layer* layer, const QString &title);
+    RS_Pen getPen() const;
 signals:
     void penChanged();
 protected slots:
@@ -61,4 +61,4 @@ protected:
     void focusOutEvent(QFocusEvent *event) override;
 };
 
-#endif // QG_WIDGETPEN_H
+#endif

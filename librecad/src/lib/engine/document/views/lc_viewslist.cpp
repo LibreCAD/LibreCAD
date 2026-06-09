@@ -37,7 +37,7 @@ void LC_ViewList::add(LC_View *view) {
     }
 
     // check if layer already exists:
-    LC_View *v = find(view->getName());
+    const LC_View *v = find(view->getName());
     if (v == nullptr) {
         m_namedViews.append(view);
     }
@@ -49,7 +49,7 @@ void LC_ViewList::addNew(LC_View *view) {
     }
 
     // check if layer already exists:
-    LC_View *v = find(view->getName());
+    const LC_View *v = find(view->getName());
     if (v == nullptr) {
         m_namedViews.append(view);
         setModified(true);
@@ -79,7 +79,7 @@ void LC_ViewList::edited([[maybe_unused]]LC_View *view) {
 }
 
 LC_View *LC_ViewList::find(const QString &name) const{
-    for (auto v: m_namedViews){
+    for (const auto v: m_namedViews){
         if (v->getName() == name){
             return v;
         }
@@ -91,7 +91,7 @@ int LC_ViewList::getIndex(const QString &name) const{
     int result = -1;
 
     for (int i = 0; i < m_namedViews.size(); i++) {
-        LC_View *v = m_namedViews.at(i);
+        const LC_View *v = m_namedViews.at(i);
         if (v->getName() == name) {
             result = i;
             break;
@@ -104,7 +104,7 @@ int LC_ViewList::getIndex(LC_View *view) const{
     return m_namedViews.indexOf(view);
 }
 
-void LC_ViewList::setModified(bool m) {
+void LC_ViewList::setModified(const bool m) {
     m_modified = m;
     fireModified(m);
 }

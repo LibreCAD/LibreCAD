@@ -13,7 +13,6 @@ class CustomWidgetCreator;
 class CustomWidgetCreator : public QFrame
 {
     Q_OBJECT
-
 public:
     explicit CustomWidgetCreator(QWidget* parent, QMap<QString, QAction*>& a_map);
     ~CustomWidgetCreator();
@@ -32,4 +31,4 @@ private:
     Ui::CustomWidgetCreator* ui;
 };
 
-#endif // CUSTOMWIDGETCREATOR_H
+#endif

@@ -36,13 +36,12 @@ class RS_GraphicView;
  * Interface for main application windows.
  */
 class RS_MainWindowInterface {
-
 public:
-	virtual ~RS_MainWindowInterface() = default;
+    virtual ~RS_MainWindowInterface() = default;
 
-	virtual RS_GraphicView const* getGraphicView() const = 0;
-	virtual RS_Document const* getDocument() const= 0;
-	virtual RS_GraphicView* getGraphicView() = 0;
+    virtual const RS_GraphicView* getGraphicView() const = 0;
+    virtual const RS_Document* getDocument() const = 0;
+    virtual RS_GraphicView* getGraphicView() = 0;
     virtual RS_Document* getDocument() = 0;
 };
 

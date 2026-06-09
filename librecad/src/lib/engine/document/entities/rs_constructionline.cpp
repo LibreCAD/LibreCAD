@@ -24,7 +24,6 @@
 **
 **********************************************************************/
 
-
 #include "rs_constructionline.h"
 
 #include "lc_quadratic.h"
@@ -32,143 +31,131 @@
 #include "rs_math.h"
 #include "rs_painter.h"
 
-
-RS_ConstructionLineData::RS_ConstructionLineData(const RS_Vector& point1,
-						const RS_Vector& point2):
-	point1(point1)
-	,point2(point2)
-{
+RS_ConstructionLineData::RS_ConstructionLineData(const RS_Vector& point1, const RS_Vector& point2) : point1(point1), point2(point2) {
 }
 
-std::ostream& operator << (std::ostream& os,
-								  const RS_ConstructionLineData& ld)
-{
-	os << "(" << ld.point1 <<
-	"/" << ld.point2 <<
-	")";
-	return os;
+std::ostream& operator <<(std::ostream& os, const RS_ConstructionLineData& ld) {
+    os << "(" << ld.point1 << "/" << ld.point2 << ")";
+    return os;
 }
 
 /**
  * Constructor.
  */
-RS_ConstructionLine::RS_ConstructionLine(RS_EntityContainer* parent,
-        const RS_ConstructionLineData& d)
-        :RS_AtomicEntity(parent), data(d) {
-
-    calculateBorders();
+RS_ConstructionLine::RS_ConstructionLine(RS_EntityContainer* parent, const RS_ConstructionLineData& d)
+    : RS_AtomicEntity(parent), m_data(d) {
+    RS_ConstructionLine::calculateBorders();
 }
 
 RS_ConstructionLine::RS_ConstructionLine(const RS_Vector& point1, const RS_Vector& point2)
-    :RS_AtomicEntity(nullptr), data(point1, point2){
+    : RS_AtomicEntity(nullptr), m_data(point1, point2) {
 }
 
 RS_Entity* RS_ConstructionLine::clone() const {
-    RS_ConstructionLine* c = new RS_ConstructionLine(*this);
+    const auto c = new RS_ConstructionLine(*this);
     return c;
 }
 
 void RS_ConstructionLine::calculateBorders() {
-    minV = RS_Vector::minimum(data.point1, data.point2);
-    maxV = RS_Vector::maximum(data.point1, data.point2);
+    m_minV = RS_Vector::minimum(m_data.point1, m_data.point2);
+    m_maxV = RS_Vector::maximum(m_data.point1, m_data.point2);
 }
 
-RS_Vector RS_ConstructionLine::getNearestEndpoint(const RS_Vector& coord,
-        double* dist) const{
+RS_Vector RS_ConstructionLine::doGetNearestEndpoint(const RS_Vector& coord, double* dist, RS_Entity** entity) const {
+    const double dist1 = (m_data.point1 - coord).squared();
+    const double dist2 = (m_data.point2 - coord).squared();
 
-    const double dist1 = (data.point1-coord).squared();
-    const double dist2 = (data.point2-coord).squared();
-
-    if (dist2<dist1) {
-		if (dist) {
+    if (dist2 < dist1) {
+        if (dist != nullptr) {
             *dist = sqrt(dist2);
         }
-        return data.point2;
-    } else {
-		if (dist) {
-            *dist = sqrt(dist1);
-        }
-        return data.point1;
+        return m_data.point2;
     }
+    if (dist != nullptr) {
+        *dist = sqrt(dist1);
+    }
+    if (entity != nullptr) {
+        *entity = const_cast<RS_ConstructionLine*>(this);
+    }
+    return m_data.point1;
 }
 
-RS_Vector RS_ConstructionLine::getNearestPointOnEntity(const RS_Vector& coord,
-        bool /*onEntity*/, double* /*dist*/, RS_Entity** entity) const{
-
-	if (entity) {
+RS_Vector RS_ConstructionLine::doGetNearestPointOnEntity(const RS_Vector& coord, [[maybe_unused]]bool onEntity, [[maybe_unused]]double* dist,
+                                                       RS_Entity** entity) const {
+    if (entity != nullptr) {
         *entity = const_cast<RS_ConstructionLine*>(this);
     }
 
-    RS_Vector ae = data.point2-data.point1;
-    RS_Vector ea = data.point1-data.point2;
-    RS_Vector ap = coord-data.point1;
-//    RS_Vector ep = coord-data.point2;
+    const RS_Vector ae = m_data.point2 - m_data.point1;
+    const RS_Vector ea = m_data.point1 - m_data.point2;
+    const RS_Vector ap = coord - m_data.point1;
+    //    RS_Vector ep = coord-data.point2;
 
-        if (ae.magnitude()<1.0e-6 || ea.magnitude()<1.0e-6) {
-                return RS_Vector(false);
-        }
-
-    // Orthogonal projection from both sides:
-    RS_Vector ba = ae * RS_Vector::dotP(ae, ap)
-                   / (ae.magnitude()*ae.magnitude());
-//    RS_Vector be = ea * RS_Vector::dotP(ea, ep)
-//                   / (ea.magnitude()*ea.magnitude());
-
-    return data.point1+ba;
-}
-
-RS_Vector RS_ConstructionLine::getNearestCenter(const RS_Vector& /*coord*/,
-		double* dist) const{
-
-	if (dist) {
-        *dist = RS_MAXDOUBLE;
+    if (ae.magnitude() < 1.0e-6 || ea.magnitude() < 1.0e-6) {
+        return RS_Vector(false);
     }
 
+    // Orthogonal projection from both sides:
+    const RS_Vector ba = ae * RS_Vector::dotP(ae, ap) / (ae.magnitude() * ae.magnitude());
+    //    RS_Vector be = ea * RS_Vector::dotP(ea, ep)
+    //                   / (ea.magnitude()*ea.magnitude());
+
+    const auto result = m_data.point1 + ba;
+    if (dist != nullptr) {
+        *dist = coord.distanceTo(result);
+    }
+    return result;
+}
+
+RS_Vector RS_ConstructionLine::doGetNearestCenter([[maybe_unused]]const RS_Vector& coord, double* dist, RS_Entity** centerEntity) const {
+    if (dist != nullptr) {
+        *dist = RS_MAXDOUBLE;
+    }
+    if (centerEntity != nullptr) {
+        *centerEntity = const_cast<RS_ConstructionLine*>(this);
+    }
     return RS_Vector(false);
 }
 
 /** @return Copy of data that defines the line. */
-RS_ConstructionLineData const& RS_ConstructionLine::getData() const {
-	return data;
+const RS_ConstructionLineData& RS_ConstructionLine::getData() const {
+    return m_data;
 }
 
 /** @return First definition point. */
-RS_Vector const& RS_ConstructionLine::getPoint1() const {
-	return data.point1;
+const RS_Vector& RS_ConstructionLine::getPoint1() const {
+    return m_data.point1;
 }
+
 /** @return Second definition point. */
-RS_Vector const& RS_ConstructionLine::getPoint2() const {
-	return data.point2;
+const RS_Vector& RS_ConstructionLine::getPoint2() const {
+    return m_data.point2;
 }
 
 /** @return Start point of the entity */
-RS_Vector RS_ConstructionLine::getStartpoint() const
-{
-    return data.point1;
+RS_Vector RS_ConstructionLine::getStartpoint() const {
+    return m_data.point1;
 }
 
 /** @return End point of the entity */
-RS_Vector RS_ConstructionLine::getEndpoint() const
-{
-    return data.point2;
+RS_Vector RS_ConstructionLine::getEndpoint() const {
+    return m_data.point2;
 }
 
 /**
  * @return Direction 1. The angle at which the arc starts at
  * the startpoint.
  */
-double RS_ConstructionLine::getDirection1(void) const
-{
-    return RS_Math::correctAngle( data.point1.angleTo( data.point2));
+double RS_ConstructionLine::getDirection1() const {
+    return RS_Math::correctAngle(m_data.point1.angleTo(m_data.point2));
 }
 
 /**
  * @return Direction 2. The angle at which the arc starts at
  * the endpoint.
  */
-double RS_ConstructionLine::getDirection2(void) const
-{
-    return RS_Math::correctAngle( data.point2.angleTo( data.point1));
+double RS_ConstructionLine::getDirection2() const {
+    return RS_Math::correctAngle(m_data.point2.angleTo(m_data.point1));
 }
 
 /** return the equation of the entity
@@ -180,104 +167,98 @@ m0 x^2 + m1 xy + m2 y^2 + m3 x + m4 y + m5 =0
 for linear:
 m0 x + m1 y + m2 =0
 **/
-LC_Quadratic RS_ConstructionLine::getQuadratic() const
-{
-    std::vector<double> ce(3,0.);
-	auto dvp=data.point2 - data.point1;
-    RS_Vector normal(-dvp.y,dvp.x);
-    ce[0]=normal.x;
-    ce[1]=normal.y;
-    ce[2]= -normal.dotP(data.point2);
+LC_Quadratic RS_ConstructionLine::getQuadratic() const {
+    std::vector<double> ce(3, 0.);
+    const auto dvp = m_data.point2 - m_data.point1;
+    const RS_Vector normal(-dvp.y, dvp.x);
+    ce[0] = normal.x;
+    ce[1] = normal.y;
+    ce[2] = -normal.dotP(m_data.point2);
     return LC_Quadratic(ce);
 }
 
-RS_Vector RS_ConstructionLine::getMiddlePoint() const{
+RS_Vector RS_ConstructionLine::getMiddlePoint() const {
     return RS_Vector(false);
 }
-RS_Vector RS_ConstructionLine::getNearestMiddle(const RS_Vector& /*coord*/,
-        double* dist, const int /*middlePoints*/)const {
-	   if (dist) {
+
+RS_Vector RS_ConstructionLine::doGetNearestMiddle([[maybe_unused]]const RS_Vector& coord, double* dist, [[maybe_unused]]const int middlePoints) const {
+    if (dist != nullptr) {
         *dist = RS_MAXDOUBLE;
     }
     return RS_Vector(false);
 }
 
-RS_Vector RS_ConstructionLine::getNearestDist(double /*distance*/,
-        const RS_Vector& /*coord*/,
-		double* dist) const{
-	if (dist) {
+RS_Vector RS_ConstructionLine::doGetNearestDist([[maybe_unused]]double distance, [[maybe_unused]]const RS_Vector& coord, double* dist) const {
+    if (dist != nullptr) {
         *dist = RS_MAXDOUBLE;
     }
     return RS_Vector(false);
 }
 
-
-double RS_ConstructionLine::getDistanceToPoint(const RS_Vector& coord,
-        RS_Entity** entity,
-        RS2::ResolveLevel /*level*/, double /*solidDist*/) const {
-
+double RS_ConstructionLine::doGetDistanceToPoint(const RS_Vector& coord, RS_Entity** entity, [[maybe_unused]] RS2::ResolveLevel level,
+                                                 [[maybe_unused]] double solidDist) const {
     RS_DEBUG->print("RS_ConstructionLine::getDistanceToPoint");
 
-	if (entity) {
+    if (entity != nullptr) {
         *entity = const_cast<RS_ConstructionLine*>(this);
     }
     //double dist = RS_MAXDOUBLE;
-    RS_Vector se = data.point2-data.point1;
-    double d(se.magnitude());
-    if(d<RS_TOLERANCE) {
+    RS_Vector se = m_data.point2 - m_data.point1;
+    const double d(se.magnitude());
+    if (d < RS_TOLERANCE) {
         //line too short
         return RS_MAXDOUBLE;
     }
-    se.set( se.x/d,-se.y/d); //normalized
-    RS_Vector vpc= coord - data.point1;
+    se.set(se.x / d, -se.y / d); //normalized
+    RS_Vector vpc = coord - m_data.point1;
     vpc.rotate(se); // rotate to use the line as x-axis, and the distance is fabs(y)
-    return ( fabs(vpc.y) );
+    return fabs(vpc.y);
 }
 
 void RS_ConstructionLine::move(const RS_Vector& offset) {
-    data.point1.move(offset);
-    data.point2.move(offset);
+    m_data.point1.move(offset);
+    m_data.point2.move(offset);
     //calculateBorders();
 }
 
-void RS_ConstructionLine::rotate(const RS_Vector& center, double angle) {
-    RS_Vector angleVector(angle);
-    data.point1.rotate(center, angleVector);
-    data.point2.rotate(center, angleVector);
+void RS_ConstructionLine::rotate(const RS_Vector& center, const double angle) {
+    const RS_Vector angleVector(angle);
+    m_data.point1.rotate(center, angleVector);
+    m_data.point2.rotate(center, angleVector);
     //calculateBorders();
 }
 
 void RS_ConstructionLine::rotate(const RS_Vector& center, const RS_Vector& angleVector) {
-    data.point1.rotate(center, angleVector);
-    data.point2.rotate(center, angleVector);
+    m_data.point1.rotate(center, angleVector);
+    m_data.point2.rotate(center, angleVector);
     //calculateBorders();
 }
 
 void RS_ConstructionLine::scale(const RS_Vector& center, const RS_Vector& factor) {
-    data.point1.scale(center, factor);
-    data.point2.scale(center, factor);
+    m_data.point1.scale(center, factor);
+    m_data.point2.scale(center, factor);
     //calculateBorders();
 }
 
 void RS_ConstructionLine::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) {
-    data.point1.mirror(axisPoint1, axisPoint2);
-    data.point2.mirror(axisPoint1, axisPoint2);
+    m_data.point1.mirror(axisPoint1, axisPoint2);
+    m_data.point2.mirror(axisPoint1, axisPoint2);
 }
 
-RS_Entity& RS_ConstructionLine::shear(double k){
-    data.point1.shear(k);
-    data.point2.shear(k);
+RS_Entity& RS_ConstructionLine::shear(const double k) {
+    m_data.point1.shear(k);
+    m_data.point2.shear(k);
     return *this;
 }
 
-void RS_ConstructionLine::draw(RS_Painter *painter) {
-    painter->drawInfiniteWCS(data.point1, data.point2);
+void RS_ConstructionLine::draw(RS_Painter* painter) {
+    painter->drawInfiniteWCS(m_data.point1, m_data.point2);
 }
 
 /**
  * Dumps the point's data to stdout.
  */
-std::ostream& operator << (std::ostream& os, const RS_ConstructionLine& l) {
+std::ostream& operator <<(std::ostream& os, const RS_ConstructionLine& l) {
     os << " ConstructionLine: " << l.getData() << "\n";
     return os;
 }

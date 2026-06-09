@@ -112,8 +112,7 @@ void picPunto::dptFile()
     fileedit->setText(fileName);
 }
 
-bool picPunto::failGUI(QString *msg)
-{
+bool picPunto::failGUI(QString *msg) const {
     double val = scaleedit->text().toDouble();
     if ( val == 0 ) {
         msg->insert(0, tr("Scale Factor is empty or invalid"));
@@ -137,7 +136,7 @@ void picPunto::processFile(Document_Interface *doc)
         QMessageBox::critical ( this, "picPunto", QString(tr("Can't open the file %1")).arg(fileedit->text()) );
          return;
     }
-    QString currlay = currDoc->getCurrentLayer();
+    // QString currlay = currDoc->getCurrentLayer();
     processFilePic(&infile);
     infile.close ();
 
@@ -145,8 +144,7 @@ void picPunto::processFile(Document_Interface *doc)
     currDoc = NULL;
 }
 
-double picPunto::getPValue(QString p)
-{
+double picPunto::getPValue(QString p) const {
     return (p.toDouble() * scale);
 }
 
@@ -317,8 +315,7 @@ void picPunto::readSettings()
     move(pos);
  }
 
-void picPunto::writeSettings()
- {
+void picPunto::writeSettings() const {
     QSettings settings(QSettings::IniFormat, QSettings::UserScope, "LibreCAD", "picfile");
     settings.setValue("pos", pos());
     settings.setValue("size", size());

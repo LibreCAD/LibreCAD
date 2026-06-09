@@ -29,7 +29,7 @@
 class RS_Point;
 
 #include "ui_qg_dlgpoint.h"
-#include "../dialogs/entity/lc_entitypropertiesdlg.h"
+#include "lc_entitypropertiesdlg.h"
 
 class QG_DlgPoint : public LC_EntityPropertiesDlg, public Ui::QG_DlgPoint{
     Q_OBJECT
@@ -51,4 +51,4 @@ protected:
     void updateAttributes();
 };
 
-#endif // QG_DLGPOINT_H
+#endif

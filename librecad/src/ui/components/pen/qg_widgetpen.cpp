@@ -36,25 +36,24 @@
  *  Constructs a QG_WidgetPen as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
  */
-QG_WidgetPen::QG_WidgetPen(QWidget* parent, Qt::WindowFlags fl)
-    : QWidget(parent, fl)
-{
+QG_WidgetPen::QG_WidgetPen(QWidget* parent, const Qt::WindowFlags fl)
+    : QWidget(parent, fl) {
     setupUi(this);
     connect(cbColor, &QG_ColorBox::colorChanged, this, &QG_WidgetPen::onColorChanged);
     connect(cbWidth, &QG_WidthBox::widthChanged, this, &QG_WidgetPen::onWidthChanged);
     connect(cbLineType, &QG_LineTypeBox::lineTypeChanged, this, &QG_WidgetPen::onLineTypeChanged);
-//    cbColor->setFocusPolicy(Qt::StrongFocus);
-//    cbWidth->setFocusPolicy(Qt::StrongFocus);
-//    cbLineType->setFocusPolicy(Qt::StrongFocus);
-//    setTabOrder(cbColor, cbWidth); // cbColor to cbWidth
-//    setTabOrder(cbWidth, cbLineType); // cbColor to cbWidth to cbLineType
+    //    cbColor->setFocusPolicy(Qt::StrongFocus);
+    //    cbWidth->setFocusPolicy(Qt::StrongFocus);
+    //    cbLineType->setFocusPolicy(Qt::StrongFocus);
+    //    setTabOrder(cbColor, cbWidth); // cbColor to cbWidth
+    //    setTabOrder(cbWidth, cbLineType); // cbColor to cbWidth to cbLineType
 }
 
-void QG_WidgetPen::disableVerticalSpacer() {
-    vsSpacerVertical->changeSize(0,0);
+void QG_WidgetPen::disableVerticalSpacer() const {
+    vsSpacerVertical->changeSize(0, 0);
 }
 
-void QG_WidgetPen::onColorChanged([[maybe_unused]]const RS_Color& color) {
+void QG_WidgetPen::onColorChanged([[maybe_unused]] const RS_Color& color) {
     notifyPenChanged();
 }
 
@@ -70,8 +69,7 @@ void QG_WidgetPen::notifyPenChanged() {
     emit penChanged();
 }
 
-void QG_WidgetPen::setPen(RS_Pen pen, bool showByLayer, 
-                          bool showUnchanged, const QString& title) {
+void QG_WidgetPen::setPen(const RS_Pen& pen, const bool showByLayer, const bool showUnchanged, const QString& title) {
     if (!m_initialized) {
         cbColor->init(showByLayer, showUnchanged);
         cbWidth->init(showByLayer, showUnchanged);
@@ -79,9 +77,9 @@ void QG_WidgetPen::setPen(RS_Pen pen, bool showByLayer,
         m_initialized = true;
     }
     if (!showUnchanged) {
-       cbColor->setColor(pen.getColor());
-       cbWidth->setWidth(pen.getWidth());
-       cbLineType->setLineType(pen.getLineType());
+        cbColor->setColor(pen.getColor());
+        cbWidth->setWidth(pen.getWidth());
+        cbLineType->setLineType(pen.getLineType());
     }
 
     if (!title.isEmpty()) {
@@ -89,7 +87,7 @@ void QG_WidgetPen::setPen(RS_Pen pen, bool showByLayer,
     }
 }
 
-void QG_WidgetPen::setPen(RS_Entity* entity, RS_Layer* layer, const QString &title){
+void QG_WidgetPen::setPen(const RS_Entity* entity, const RS_Layer* layer, const QString& title) {
     RS_Pen entityPen = entity->getPen(false);
     RS_Pen entityResolvedPen = entity->getPen(true);
 
@@ -104,19 +102,20 @@ void QG_WidgetPen::setPen(RS_Entity* entity, RS_Layer* layer, const QString &tit
     setPen(entityResolvedPen, layer, title);
 }
 
-void QG_WidgetPen::setPen(RS_Pen pen, RS_Layer* layer, bool showUnchanged, const QString &title){
+void QG_WidgetPen::setPen(const RS_Pen& pen, const RS_Layer* layer, const bool showUnchanged, const QString& title) {
     setPen(pen, true, showUnchanged, title);
-    if (layer != nullptr){
-        RS_Pen layerPen = layer->getPen();
-        RS_Color layerColor = layerPen.getColor();
+    if (layer != nullptr) {
+        const RS_Pen layerPen = layer->getPen();
+        const RS_Color layerColor = layerPen.getColor();
         cbColor->setLayerColor(layerColor);
     }
 }
-void QG_WidgetPen::setPen(RS_Pen pen, RS_Layer* layer, const QString &title){
+
+void QG_WidgetPen::setPen(const RS_Pen& pen, const RS_Layer* layer, const QString& title) {
     setPen(pen, layer, false, title);
 }
 
-RS_Pen QG_WidgetPen::getPen() {
+RS_Pen QG_WidgetPen::getPen() const {
     RS_Pen pen;
 
     pen.setColor(cbColor->getColor());
@@ -126,15 +125,15 @@ RS_Pen QG_WidgetPen::getPen() {
     return pen;
 }
 
-bool QG_WidgetPen::isColorUnchanged() {
+bool QG_WidgetPen::isColorUnchanged() const {
     return cbColor->isUnchanged();
 }
 
-bool QG_WidgetPen::isLineTypeUnchanged() {
+bool QG_WidgetPen::isLineTypeUnchanged() const {
     return cbLineType->isUnchanged();
 }
 
-bool QG_WidgetPen::isWidthUnchanged() {
+bool QG_WidgetPen::isWidthUnchanged() const {
     return cbWidth->isUnchanged();
 }
 
@@ -149,7 +148,7 @@ QG_WidgetPen::~QG_WidgetPen() {
  *  Sets the strings of the subwidgets using the current
  *  language.
  */
-void QG_WidgetPen::languageChange(){
+void QG_WidgetPen::languageChange() {
     retranslateUi(this);
 }
 
@@ -158,7 +157,7 @@ void QG_WidgetPen::languageChange(){
  *  cbColor subwidget.
  */
 void QG_WidgetPen::focusInEvent(QFocusEvent* event) {
-    int reason = event->reason();
+    const int reason = event->reason();
     RS_DEBUG->print(RS_Debug::D_ERROR, "QG_WidgetPen::focusInEvent, reason '%d'", reason);
     //	if ( reason == Qt::BacktabFocusReason )
     //	    cbLineType->setFocus();
@@ -166,7 +165,7 @@ void QG_WidgetPen::focusInEvent(QFocusEvent* event) {
     //	    cbColor->setFocus();
 }
 
-void QG_WidgetPen::focusOutEvent(QFocusEvent *event){
-    int reason = event->reason();
-    RS_DEBUG->print(RS_Debug::D_ERROR,"QG_WidgetPen::focusOutEvent, reason '%d'",reason);
+void QG_WidgetPen::focusOutEvent(QFocusEvent* event) {
+    const int reason = event->reason();
+    RS_DEBUG->print(RS_Debug::D_ERROR, "QG_WidgetPen::focusOutEvent, reason '%d'", reason);
 }

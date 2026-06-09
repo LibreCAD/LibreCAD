@@ -23,6 +23,7 @@
 #include "lc_optionswidgetsholder.h"
 
 #include "lc_shortcuts_manager.h"
+#include "rs_debug.h"
 #include "rs_settings.h"
 #include "ui_lc_optionswidgetsholder.h"
 
@@ -40,13 +41,13 @@ LC_OptionsWidgetsHolder::~LC_OptionsWidgetsHolder(){
     delete ui;
 }
 
-LC_SnapOptionsWidgetsHolder *LC_OptionsWidgetsHolder::getSnapOptionsHolder() {
+LC_SnapOptionsWidgetsHolder *LC_OptionsWidgetsHolder::getSnapOptionsHolder() const {
     return ui->snapOptionsHolder;
 }
 
 #define DEBUG_WIDGETS_COUNT_
 
-void LC_OptionsWidgetsHolder::addOptionsWidget(QWidget *optionsWidget) {
+void LC_OptionsWidgetsHolder::addOptionsWidget(QWidget *optionsWidget) const {
     if (optionsWidget != nullptr) {
         if (m_hasActionIcon) {
             ui->vCurrentActionLine->setVisible(true);
@@ -62,16 +63,16 @@ void LC_OptionsWidgetsHolder::addOptionsWidget(QWidget *optionsWidget) {
     }
 }
 
-void LC_OptionsWidgetsHolder::removeOptionsWidget(QWidget *optionsWidget) {
+void LC_OptionsWidgetsHolder::removeOptionsWidget(QWidget *optionsWidget) const {
     ui->vCurrentActionLine->setVisible(false);
     if (optionsWidget != nullptr) {
 #ifdef DEBUG_WIDGETS_COUNT
         const QObjectList &list = ui->wOptionsWidgetsContainer->children();
         LC_ERR << "OPTION WIDGETS BEFORE: " << list.size();
 #endif
-
-        ui->wOptionsWidgetsContainer->layout()->removeWidget(optionsWidget);
-        optionsWidget->deleteLater();
+        // ui->wOptionsWidgetsContainer->layout()->removeWidget(optionsWidget);
+        optionsWidget->setParent(nullptr);
+        // optionsWidget->deleteLater();
 #ifdef DEBUG_WIDGETS_COUNT
         const QObjectList &listAfter = ui->wOptionsWidgetsContainer->children();
         LC_ERR << "OPTION WIDGETS AFTER: " << listAfter.size();
@@ -80,18 +81,18 @@ void LC_OptionsWidgetsHolder::removeOptionsWidget(QWidget *optionsWidget) {
 }
 
 void LC_OptionsWidgetsHolder::clearActionIcon() {
-   auto i  = QIcon();
+   const auto i  = QIcon();
    m_hasActionIcon = false;
    doSetIcon(i,"");
 }
 
-void LC_OptionsWidgetsHolder::setCurrentQAction(QAction *a) {
+void LC_OptionsWidgetsHolder::setCurrentQAction(const QAction *a) {
     QIcon icon;
     QString text="";
     bool showIcon = a != nullptr && LC_GET_ONE_BOOL("Appearance", "ShowActionIconInOptions", true);
     if (showIcon) {
         // check for actions those icons should not be shown
-        auto property = a->property("_SetAsCurrentActionInView");
+        const auto property = a->property("_SetAsCurrentActionInView");
         if (property.isValid()) {
             showIcon = property.toBool();
         }
@@ -111,7 +112,7 @@ void LC_OptionsWidgetsHolder::setCurrentQAction(QAction *a) {
     doSetIcon(icon, text);
 }
 
-void LC_OptionsWidgetsHolder::doSetIcon(const QIcon &icon, const QString& text) {
-    ui->lCurrentAction->setPixmap(icon.pixmap(iconSize));
+void LC_OptionsWidgetsHolder::doSetIcon(const QIcon &icon, const QString& text) const {
+    ui->lCurrentAction->setPixmap(icon.pixmap(m_iconSize));
     ui->lCurrentAction->setToolTip(tr("Current Action:")+ " " + text);
 }

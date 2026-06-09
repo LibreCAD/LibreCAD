@@ -27,6 +27,7 @@
 #ifndef RS_SCRIPT_H
 #define RS_SCRIPT_H
 
+#include <QString>
 #include <iosfwd>
 
 class QString;
@@ -46,21 +47,20 @@ public:
 
     /** @return the name of this script. */
     QString getName() const {
-        return name;
+        return m_name;
     }
 
     /** @return the full path and file name of this script. */
     QString getPath() const {
-        return path;
+        return m_path;
     }
 
 private:
     //! Script name
-    QString name;
+    QString m_name;
 
     //! Full path to script
-    QString path;
+    QString m_path;
 };
 
 #endif
-

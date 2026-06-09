@@ -24,9 +24,9 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
-#include <QFileOpenEvent>
-
 #include "lc_application.h"
+
+#include <QFileOpenEvent>
 
 LC_Application::LC_Application(int &argc, char **argv)
     : QApplication(argc, argv)
@@ -39,14 +39,14 @@ bool LC_Application::event(QEvent *event)
 #ifdef Q_OS_MAC
     if (QEvent::FileOpen == event->type()) {
         QFileOpenEvent *openEvent = static_cast<QFileOpenEvent *>(event);
-        files.append( openEvent->file());
+        m_files.append( openEvent->file());
     }
 #endif
 
     return QApplication::event(event);
 }
 
-QStringList const& LC_Application::fileList(void) const
+const QStringList& LC_Application::fileList() const
 {
-    return files;
+    return m_files;
 }

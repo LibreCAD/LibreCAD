@@ -34,14 +34,18 @@
  * @author Andrew Mustun
  */
 class RS_ActionZoomScroll : public RS_ActionInterface {
-	Q_OBJECT
+    Q_OBJECT
 public:
-    RS_ActionZoomScroll(RS2::Direction direction,LC_ActionContext *actionContext);
-    RS_ActionZoomScroll(int offsetX, int offsetY,LC_ActionContext *actionContext);
+    RS_ActionZoomScroll(RS2::Direction direction, LC_ActionContext* actionContext);
+    RS_ActionZoomScroll(int offsetX, int offsetY, LC_ActionContext* actionContext);
 
-	void init(int status) override;
-	void trigger() override;
-    bool isSupportsPredecessorAction() override {return true;}
+    void init(int status) override;
+    void trigger() override;
+
+    bool isSupportsPredecessorAction() const override {
+        return true;
+    }
+
 protected:
     RS2::Direction m_direction = RS2::Up;
     bool m_hasOffset = false;

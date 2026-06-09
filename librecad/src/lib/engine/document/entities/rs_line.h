@@ -27,11 +27,13 @@
 
 #ifndef RS_Line_INCLUDE_H
 #define RS_Line_INCLUDE_H
+
 #include "lc_cachedlengthentity.h"
+#include "rs_actiondrawlinehorvert.h"
 class LC_Quadratic;
 
 /**
- * Holds the data that defines a line.
+ * Holds the m_data that defines a line.
  */
 struct RS_LineData {
     RS_LineData() = default;
@@ -40,6 +42,9 @@ struct RS_LineData {
         std::swap(startpoint, endpoint);
     }
     RS_Vector startpoint;
+    /**
+     *
+     */
     RS_Vector endpoint;
 };
 
@@ -60,6 +65,10 @@ public:
 
     RS_Entity* clone() const override;
 
+    ~RS_Line() override {
+        m_highlightedVertex = RS_Vector{false};
+    }
+
     /** @return RS2::EntityLine */
     RS2::EntityType rtti() const override{
         return RS2::EntityLine;
@@ -69,29 +78,29 @@ public:
         return true;
     }
 
-    /** @return Copy of data that defines the line. */
+    /** @return Copy of m_data that defines the line. */
     RS_LineData getData() const{
-        return data;
+        return m_data;
     }
 
     RS_VectorSolutions getRefPoints() const override;
 
     /** @return Start point of the entity */
     RS_Vector getStartpoint() const override{
-        return data.startpoint;
+        return m_data.startpoint;
     }
     /** @return End point of the entity */
     RS_Vector getEndpoint() const override{
-        return data.endpoint;
+        return m_data.endpoint;
     }
     /** Sets the startpoint */
     void setStartpoint(const RS_Vector& s) {
-        data.startpoint = s;
+        m_data.startpoint = s;
         calculateBorders();
     }
     /** Sets the endpoint */
     void setEndpoint(const RS_Vector& e) {
-        data.endpoint = e;
+        m_data.endpoint = e;
         calculateBorders();
     }
     /**
@@ -116,36 +125,36 @@ public:
     RS_Vector prepareTrim(const RS_Vector& trimCoord,const RS_VectorSolutions& trimSol) override;
     void reverse() override;
     /** Sets the y coordinate of the startpoint */
-    void setStartpointY(double val) {
-        data.startpoint.y = val;
+    void setStartpointY(const double val) {
+        m_data.startpoint.y = val;
         calculateBorders();
     }
     /** Sets the y coordinate of the endpoint */
-    void setEndpointY(double val) {
-        data.endpoint.y = val;
+    void setEndpointY(const double val) {
+        m_data.endpoint.y = val;
         calculateBorders();
     }
-    bool hasEndpointsWithinWindow(const RS_Vector& v1, const RS_Vector& v2) const override;
+    bool hasEndpointsWithinWindow(const RS_Vector& firstCorner, const RS_Vector& secondCorner) const override;
 
     /**
      * @return The length of the line.
      */
     void updateLength() override{
-        cachedLength = data.startpoint.distanceTo(data.endpoint);
+        m_cachedLength = m_data.startpoint.distanceTo(m_data.endpoint);
     }
 
     /**
      * @return The angle of the line (from start to endpoint).
      */
     double getAngle1() const{
-        return data.startpoint.angleTo(data.endpoint);
+        return m_data.startpoint.angleTo(m_data.endpoint);
     }
 
     /**
      * @return The angle of the line (from end to startpoint).
      */
     double getAngle2() const{
-        return data.endpoint.angleTo(data.startpoint);
+        return m_data.endpoint.angleTo(m_data.startpoint);
     }
     bool isTangent(const RS_CircleData&  circleData) const override;
 
@@ -155,29 +164,18 @@ public:
     RS_Vector getNormalVector() const;
     double getProjectionValueAlongLine(const RS_Vector& coord) const;
     RS_Vector getMiddlePoint() const override;
-    RS_Vector getNearestEndpoint(const RS_Vector& coord,
-                                 double* dist = nullptr) const override;
-    RS_Vector getNearestPointOnEntity(const RS_Vector& coord,
-                                      bool onEntity = true,
-                                      double* dist = nullptr,
-                                      RS_Entity** entity=nullptr) const override;
+
     //RS_Vector getPointOnEntityAlongLine(const RS_Vector& coord,const double angle,bool onEntity,double* dist,RS_Entity** entity) const;
-    RS_Vector getNearestMiddle(const RS_Vector& coord,
-                               double* dist = nullptr,
-                               int middlePoints = 1) const override;
-    RS_Vector getNearestDist(double distance,
-                             const RS_Vector& coord,
-                             double* dist = nullptr) const override;
-    RS_Vector getNearestDist(double distance, bool startp) const override;
+    RS_Vector getNearestDistToEndpoint(double distance, bool startp) const override;
     /**
      * implementations must revert the direction of an atomic entity
      */
     void revertDirection() override;
-    std::vector<RS_Entity* > offsetTwoSides(const double& distance) const override;
+    std::vector<RS_Entity* > offsetTwoSides(double distance) const override;
     /**
      * the modify offset action
      */
-    bool offset(const RS_Vector& coord, const double& distance) override;
+    bool offset(const RS_Vector& coord, double distance) override;
     void move(const RS_Vector& offset) override;
     void rotate(double angle);
     void rotate(const RS_Vector& center, double angle) override;
@@ -225,9 +223,12 @@ public:
      */
     LC_SecondMoment secondMomentLineIntegral() const override;
 protected:
-    RS_LineData data;
+    RS_LineData m_data;
+    RS_Vector doGetNearestPointOnEntity(const RS_Vector& coord, bool onEntity, double* dist, RS_Entity** entity) const override;
+    RS_Vector doGetNearestEndpoint(const RS_Vector& coord, double* dist, RS_Entity** entity) const override;
+    RS_Vector doGetNearestMiddle(const RS_Vector& coord, double* dist, int middlePoints) const override;
+    RS_Vector doGetNearestDist(double distance, const RS_Vector& coord, double* dist) const override;
 private:
-    RS_Vector highlightedVertex;
-
+    RS_Vector m_highlightedVertex;
 };
-#endif // RS_Line_INCLUDE_H
+#endif

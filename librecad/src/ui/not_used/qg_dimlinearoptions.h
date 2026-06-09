@@ -38,7 +38,6 @@ class Ui_DimLinearOptions;
 class QG_DimLinearOptions : public QWidget
 {
     Q_OBJECT
-
 public:
     QG_DimLinearOptions(QWidget* parent = nullptr, Qt::WindowFlags fl = {});
     ~QG_DimLinearOptions();
@@ -60,4 +59,4 @@ private:
 	std::unique_ptr<Ui::Ui_DimLinearOptions> ui;
 };
 
-#endif // QG_DIMLINEAROPTIONS_H
+#endif

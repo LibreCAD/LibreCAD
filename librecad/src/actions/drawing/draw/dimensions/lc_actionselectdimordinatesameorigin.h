@@ -23,18 +23,23 @@
 
 #ifndef LC_ACTIONSELECTDIMORDINATESAMEORIGIN_H
 #define LC_ACTIONSELECTDIMORDINATESAMEORIGIN_H
-#include "lc_actionsingleentityselectbase.h"
+
+#include "lc_action_select_single_entity_base.h"
+#include "lc_dimordinate.h"
 
 class LC_ActionSelectDimOrdinateSameOrigin:public LC_ActionSingleEntitySelectBase{
     Q_OBJECT
 public:
     explicit LC_ActionSelectDimOrdinateSameOrigin(LC_ActionContext* actionContext);
     ~LC_ActionSelectDimOrdinateSameOrigin() override;
+
+    static QList<RS_Entity*> collectOrdinateDimensionsWithSameBase(const LC_DimOrdinate* dimOrdinate, const RS_Document* document);
+
 protected:
-    void selectOrdinatesWithTheSameBase();
+    void selectOrdinatesWithTheSameBase() const;
     void doTrigger() override;
     bool doCheckMaySelectEntity(RS_Entity* e) override;
     QString doGetMouseButtonHint() override;
 };
 
-#endif // LC_ACTIONSELECTDIMORDINATESAMEORIGIN_H
+#endif

@@ -39,7 +39,7 @@ protected:
     LC_UCSListWidget* m_widget{nullptr};
 protected slots:
     void fillMenu();
-    void menuTriggered(bool checked = false);
+    void menuTriggered(bool checked = false) const;
 };
 
-#endif // LC_UCSLISTBUTTON_H
+#endif

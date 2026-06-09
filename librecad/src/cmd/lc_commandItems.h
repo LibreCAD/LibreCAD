@@ -20,6 +20,9 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
+#ifndef RS_COMMANDITEMS_H
+#define RS_COMMANDITEMS_H
+
 #include <QObject>
 
 #include "rs.h"
@@ -27,8 +30,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 class QString;
 
 struct LC_CommandItem {
-    std::vector<std::pair<QString, QString>> const fullCmdList;
-    std::vector<std::pair<QString, QString>> const shortCmdList;
+    const std::vector<std::pair<QString, QString>> fullCmdList;
+    const std::vector<std::pair<QString, QString>> shortCmdList;
     RS2::ActionType actionType;
 };
 
@@ -181,7 +184,7 @@ const LC_CommandItem g_commandList[] = {
         {
             {{"cross", QObject::tr("cross", "draw cross for circle")}},
             {{"cx", QObject::tr("cx", "draw cross for circle")}},
-            RS2::ActionDrawCross
+            RS2::ActionDrawCenterMark
         },
         {
             {{"bbox", QObject::tr("bbox", "draw bound box")}},
@@ -191,13 +194,18 @@ const LC_CommandItem g_commandList[] = {
         {
             {{"midline", QObject::tr("midline", "draw middle line")}},
             {{"ml", QObject::tr("ml", "draw mid line")}},
-            RS2::ActionDrawLineMiddle
+            RS2::ActionDrawCenterLine
+        },
+        {
+                {{"radiant", QObject::tr("radiant", "draw perspective line")}},
+                {{"rl", QObject::tr("rl", "draw perspective line")}},
+                RS2::ActionDrawLineRadiant
         },
         // draw line of points
         {
             {{"linepoints", QObject::tr("linepoints", "draw line of points")}},
             {{"lpoints", QObject::tr("lpoints", "draw line of points")}},
-            RS2::ActionDrawLinePoints
+            RS2::ActionDrawPointsLine
         },
         {
             {{"midpoint", QObject::tr("midpoint", "draw middle points")}},
@@ -341,53 +349,53 @@ const LC_CommandItem g_commandList[] = {
             {{"circle", QObject::tr("circle", "draw circle")}},
             {{"ci", QObject::tr("ci", "draw circle")},
              {"c", QObject::tr("c", "draw circle")}},   // - v2.2.0r2
-            RS2::ActionDrawCircle
+            RS2::ActionDrawCircleCenterPoint
         },
         // draw 2 point circle
         {
             {{"circle2p", QObject::tr("circle2p", "circle 2 points")}},
             {{"c2", QObject::tr("c2", "circle 2 points")},
              {"c2p", QObject::tr("c2p", "circle 2 points")}},
-            RS2::ActionDrawCircle2P
+            RS2::ActionDrawCircle2Points
         },
         // draw circle 2 points and radius - v2.2.0r2
         {
             {{"circle2pr", QObject::tr("circle2pr", "circle 2 points radius")}},
             {{"cc", QObject::tr("cc", "circle 2 points radius")}},
-            RS2::ActionDrawCircle2PR
+            RS2::ActionDrawCircle2PointsRadius
         },
         // draw 3 point circle
         {
             {{"circle3p", QObject::tr("circle3p", "circle 3 points")}},
             {{"c3", QObject::tr("c3", "circle 3 points")},
              {"c3p", QObject::tr("c3p", "circle 3 points")}},
-            RS2::ActionDrawCircle3P
+            RS2::ActionDrawCircle3Points
         },
         // draw circle with centre point and radius - v2.2.0r2
         {
             {{"circlecr", QObject::tr("circlecr", "circle point radius")}},
             {{"cr", QObject::tr("cr", "circle point radius")},
              {"ccr", QObject::tr("ccr", "circle point radius")}},
-            RS2::ActionDrawCircleCR
+            RS2::ActionDrawCircleCenterRadius
         },
 
         // draw circle tangential to 2 circles and 1 point - v2.2.0r2
         {
             {{"circletan2cp", QObject::tr("circletan2cp", "circle 2 tangent point")}},
             {{"tr", QObject::tr("tr", "circle 2 tangent point")}},
-            RS2::ActionDrawCircleTan2_1P
+            RS2::ActionDrawCircleTangental2Entities1Point
         },
         // draw circle Tangential to 2 Points - v2.2.0r2
         {
             {{"circletan2p", QObject::tr("circletan2p", "circle tangent 2 points")}},
             {{"td", QObject::tr("td", "circle tangent 2 points")}},
-            RS2::ActionDrawCircleTan1_2P
+            RS2::ActionDrawCircleTangental1Entity2Points
         },
         //draw circle tangential to 2 circles with specified radius - v2.2.0r2
         {
             {{"circletan2cr", QObject::tr("circletan2cr", "circle 2 tangent radius")}},
             {{"tc", QObject::tr("tc", "circle 2 tangent radius")}},
-            RS2::ActionDrawCircleTan2
+            RS2::ActionDrawCircleTan2EntitiesRadius
         },
 
         // draw circle tangent to 3 objects
@@ -396,7 +404,7 @@ const LC_CommandItem g_commandList[] = {
             {{"t3", QObject::tr("t3", "circle tangent to 3")},   // - v2.2.0r2
              {"ct3", QObject::tr("ct3", "circle tangent to 3")},
              {"tan3", QObject::tr("tan3", "circle tangent to 3")}},
-            RS2::ActionDrawCircleTan3
+            RS2::ActionDrawCircleTan3Entities
         },
 
         /* CURVE (ARC) COMMANDS */
@@ -479,14 +487,14 @@ const LC_CommandItem g_commandList[] = {
         {
             {{"parabolafd", QObject::tr("parabolafd", "Parabola focus directrix")}},
             {{"plfd", QObject::tr("plfd", "Parabola focus directrix")}},
-            RS2::ActionDrawParabolaFD
+            RS2::ActionDrawParabolaFocusDiretrix
         },
         //draw freehand line
         {
             {{"free", QObject::tr("free", "draw freehand line")}},
             {{"fh", QObject::tr("fh", "draw freehand line")},   // - v2.2.0r2
              {"fhl", QObject::tr("fhl", "draw freehand line")}},
-            RS2::ActionDrawLineFree
+            RS2::ActionDrawLineFreehand
         },
 
         /* ELLIPSE COMMANDS */
@@ -621,6 +629,17 @@ const LC_CommandItem g_commandList[] = {
             {{"is", QObject::tr("is", "invert select")}},
             RS2::ActionSelectInvert
         },
+     {
+                {{"selectquick", QObject::tr("selectquick", "select quick")}},
+                {{"sq", QObject::tr("sq", "select quick")}},
+                RS2::ActionSelectQuick
+        },
+      {
+             {{"smtoggle", QObject::tr("smtoggle", "select mode toggle")}},
+             {{"smt", QObject::tr("smt", "select mode toggle")}},
+            RS2::ActionSelectModeToggle
+            },
+
         /* Remaining select tools require the mouse - no point in adding commands. */
 
         /* DIMENSION COMMANDS */
@@ -728,7 +747,7 @@ const LC_CommandItem g_commandList[] = {
         {
             {{"mod2rot", QObject::tr("mod2rot", "modify - rotate2")}},
             {{"r2", QObject::tr("r2", "modify - rotate2")}},
-            RS2::ActionModifyRotate2
+            RS2::ActionModifyRotateTwice
         },
         // revert (Removed extra space from translation sting.)
         {
@@ -948,9 +967,9 @@ const LC_CommandItem g_commandList[] = {
         /* Snap Middle Manual */
         {
             //list all <full command, translation> pairs
-            {{"snapmiddlemanual", QObject::tr("snapmiddlemanual", "snap middle manual")}}, 
-            {{"snapmanual", QObject::tr("snapmanual", "snap middle manual")}, 
-             {"smm", QObject::tr("smm", "snap middle manual")}}, 
+            {{"snapmiddlemanual", QObject::tr("snapmiddlemanual", "snap middle manual")}},
+            {{"snapmanual", QObject::tr("snapmanual", "snap middle manual")},
+             {"smm", QObject::tr("smm", "snap middle manual")}},
 
             RS2::ActionSnapMiddleManual
         },
@@ -1066,7 +1085,7 @@ const LC_CommandItem g_commandList[] = {
     };
 
     // translations
-std::vector<std::pair<QString, QString>> g_transList={
+inline std::vector<std::pair<QString, QString>> g_transList={
         {"angle",QObject::tr("angle")},
         {"angle1",QObject::tr("angle1")},
         {"angle2",QObject::tr("angle2")},
@@ -1153,10 +1172,20 @@ std::vector<std::pair<QString, QString>> g_transList={
         {"dist_flex",QObject::tr("dist_flex")},
         {"distance",QObject::tr("distance")},
 
+        // line radiant
+         {"radiant",QObject::tr("radiant")},
+         {"active",QObject::tr("active")},
+         {"lentype",QObject::tr("lentype")},
+         {"fixed",QObject::tr("fixed")},
 
         // star
         {"sym",QObject::tr("sym")},
         {"nosym",QObject::tr("nosym")},
+        {"snap",QObject::tr("snap")},
+        {"s",QObject::tr("s", "snap start")},
+        {"m",QObject::tr("m", "snap middle")},
+        {"e",QObject::tr("e", "snap end")},
+
         // commands
 
         /** following are reversed translation,i.e.,from translated to english **/
@@ -1249,3 +1278,5 @@ std::vector<std::pair<QString, QString>> g_transList={
 
         // fixme - add reversive translation for added commands
     };
+
+#endif

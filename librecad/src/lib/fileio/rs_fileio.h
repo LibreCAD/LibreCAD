@@ -27,9 +27,10 @@
 #ifndef RS_FILEIO_H
 #define RS_FILEIO_H
 
-#include <vector>
 #include <functional>
 #include <memory>
+#include <vector>
+
 #include "rs_filterinterface.h"
 
 //RLZ: TODO destructor for clear filterList
@@ -39,49 +40,44 @@
  * @author Andrew Mustun
  */
 class RS_FileIO {
-private:
-    //singleton
-	RS_FileIO()=default;
-	RS_FileIO(RS_FileIO const&) = delete;
-	RS_FileIO& operator = (RS_FileIO const&) = delete;
-	RS_FileIO(RS_FileIO&&) = delete;
-	RS_FileIO& operator = (RS_FileIO&&) = delete;
-	
 public:
     /**
      * @return Instance to the unique import object.
      */
-	static RS_FileIO* instance();
+    static RS_FileIO* instance();
 
-	/**
-	 * @return Filter which can import the given file type.
-	 */
-	std::unique_ptr<RS_FilterInterface> getImportFilter(const QString &fileName,
-										RS2::FormatType t) const;
-	
-	/**
-	 * @return Filter which can export the given file type.
-	 */
-	std::unique_ptr<RS_FilterInterface> getExportFilter(const QString &fileName,
-										RS2::FormatType t) const;
+    /**
+     * @return Filter which can import the given file type.
+     */
+    std::unique_ptr<RS_FilterInterface> getImportFilter(const QString& fileName, RS2::FormatType t) const;
 
-    bool fileImport(RS_Graphic& graphic, const QString& file,
-		RS2::FormatType type = RS2::FormatUnknown);
-		
-    bool fileExport(RS_Graphic& graphic, const QString& file,
-		RS2::FormatType type = RS2::FormatUnknown);
-	/** \brief detectFormat detect file format type
-	 * \param file type
-	 * \param forRead read the file to verify dxf/dxfrw type, default to true
-	 * \return file format type
-	 */
-	static RS2::FormatType detectFormat(QString const& file, bool forRead=true);
+    /**
+     * @return Filter which can export the given file type.
+     */
+    std::unique_ptr<RS_FilterInterface> getExportFilter(const QString& fileName, RS2::FormatType t) const;
+
+    bool fileImport(RS_Graphic& graphic, const QString& file, RS2::FormatType type = RS2::FormatUnknown) const;
+
+    bool fileExport(RS_Graphic& graphic, const QString& file, RS2::FormatType type = RS2::FormatUnknown) const;
+    /** \brief detectFormat detect file format type
+     * \param file type
+     * \param forRead read the file to verify dxf/dxfrw type, default to true
+     * \return file format type
+     */
+    static RS2::FormatType detectFormat(const QString& file, bool forRead = true);
 
 private:
+    /** a list of pointers to static functions to create file filters **/
+    static std::vector<std::function<RS_FilterInterface*()>> getFilters();
 
-/** a list of pointers to static functions to create file filters **/
-	static std::vector<std::function<RS_FilterInterface*()>> getFilters();
+    //singleton
+    RS_FileIO() = default;
+    RS_FileIO(const RS_FileIO&) = delete;
+    RS_FileIO& operator =(const RS_FileIO&) = delete;
+    RS_FileIO(RS_FileIO&&) = delete;
+    RS_FileIO& operator =(RS_FileIO&&) = delete;
+
+
 };
-
 
 #endif

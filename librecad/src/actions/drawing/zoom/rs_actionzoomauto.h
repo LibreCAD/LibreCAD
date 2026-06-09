@@ -35,12 +35,15 @@
  * @author Andrew Mustun
  */
 class RS_ActionZoomAuto : public RS_ActionInterface {
-	Q_OBJECT
+    Q_OBJECT
 public:
-    RS_ActionZoomAuto(LC_ActionContext *actionContext, bool keepAspectRatio=true);
-	void init(int status) override;
-	void trigger() override;
-    bool isSupportsPredecessorAction() override {return true;}
+    explicit RS_ActionZoomAuto(LC_ActionContext* actionContext, bool keepAspectRatio = true);
+    void init(int status) override;
+    void trigger() override;
+
+    bool isSupportsPredecessorAction() const override {
+        return true;
+    }
 protected:
     bool m_keepAspectRatio = false;
 };

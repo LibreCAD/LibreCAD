@@ -28,16 +28,16 @@
 #include "rs.h"
 
 LC_ActionInfoPoint::LC_ActionInfoPoint(LC_ActionContext* actionContext)
-    :RS_PreviewActionInterface("Info Point", actionContext, RS2::ActionInfoPoint), m_position{false}{
+    :RS_PreviewActionInterface("Info Point", actionContext, RS2::ActionInfoPoint){
 }
 
 void LC_ActionInfoPoint::doTrigger() {
     if (m_position.valid){
-       RS_Vector relZero = m_viewport->getRelativeZero();
-       RS_Vector relative = m_position - relZero;
+       const RS_Vector relZero = m_viewport->getRelativeZero();
+       const RS_Vector relative = m_position - relZero;
 
        commandMessage("--- ");
-       bool hasUcs = m_viewport->hasUCS();
+       const bool hasUcs = m_viewport->hasUCS();
        QString message = tr("Absolute: (%1)").arg(formatVector(m_position)).append("\n")
         .append(tr("Relative: (%1)").arg(formatRelative(relative))).append("\n")
         .append(tr("Polar: (%1)").arg(formatPolar(relative))).append("\n")
@@ -49,8 +49,8 @@ void LC_ActionInfoPoint::doTrigger() {
     }
 }
 
-void LC_ActionInfoPoint::onMouseMoveEvent(int status, LC_MouseEvent *e) {
-    RS_Vector mouse = e->snapPoint;
+void LC_ActionInfoPoint::onMouseMoveEvent(const int status, const LC_MouseEvent* e) {
+    const RS_Vector mouse = e->snapPoint;
     switch (status) {
         case SetPoint: {
             if (m_showRefEntitiesOnPreview) {
@@ -64,7 +64,7 @@ void LC_ActionInfoPoint::onMouseMoveEvent(int status, LC_MouseEvent *e) {
     }
 }
 
-void LC_ActionInfoPoint::updateInfoCursor(const RS_Vector &mouse, const RS_Vector &relZero) {
+void LC_ActionInfoPoint::updateInfoCursor(const RS_Vector &mouse, const RS_Vector &relZero) const {
     if (m_infoCursorOverlayPrefs->enabled) {
         msgStart()
             .string (tr("Point Coordinates"))
@@ -77,8 +77,8 @@ void LC_ActionInfoPoint::updateInfoCursor(const RS_Vector &mouse, const RS_Vecto
     }
 }
 
-void LC_ActionInfoPoint::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
-    RS_Vector snap = e->snapPoint;
+void LC_ActionInfoPoint::onMouseLeftButtonRelease(const int status, const LC_MouseEvent* e) {
+    const RS_Vector snap = e->snapPoint;
     switch (status){
         case SetPoint:{
             // todo - if coordinates of the point should be added to the drawing, mode will be useful
@@ -98,12 +98,12 @@ void LC_ActionInfoPoint::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) 
     }
 }
 
-void LC_ActionInfoPoint::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {
+void LC_ActionInfoPoint::onMouseRightButtonRelease(const int status, [[maybe_unused]] const LC_MouseEvent* e) {
     deletePreview();
     initPrevious(status);
 }
 
-void LC_ActionInfoPoint::onCoordinateEvent(int status, [[maybe_unused]] bool isZero,
+void LC_ActionInfoPoint::onCoordinateEvent(const int status, [[maybe_unused]] bool isZero,
                                                          const RS_Vector& mouse) {
     switch (status) {
         case SetPoint: {
@@ -117,17 +117,21 @@ void LC_ActionInfoPoint::onCoordinateEvent(int status, [[maybe_unused]] bool isZ
     }
 }
 
-void LC_ActionInfoPoint::updateMouseButtonHints(){
+void LC_ActionInfoPoint::updateActionPrompt(){
     switch (getStatus()) {
         case SetPoint:
-            updateMouseWidgetTRBack(tr("Select position for coordinates"));
+            updatePromptTRBack(tr("Select position for coordinates"));
                 // MOD_SHIFT_AND_CTRL(tr("Pick relative zero coordinates"), tr("Pick relative coordinates")));
             break;
         default:
-            updateMouseWidget();
+            updatePrompt();
             break;
     }
 }
 RS2::CursorType LC_ActionInfoPoint::doGetMouseCursor([[maybe_unused]] int status){
     return RS2::SelectCursor;
+}
+
+bool LC_ActionInfoPoint::isInVisualSnapStatus(int status) {
+    return (status == SetPoint);
 }

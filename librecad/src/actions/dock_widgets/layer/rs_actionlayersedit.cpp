@@ -39,31 +39,26 @@ RS_ActionLayersEdit::RS_ActionLayersEdit(LC_ActionContext *actionContext)
 
 void RS_ActionLayersEdit::trigger() {
     RS_DEBUG->print("RS_ActionLayersEdit::trigger");
-
-    if (m_graphic) {
-        RS_Layer* layer = RS_DIALOGFACTORY->requestEditLayerDialog(m_graphic->getLayerList());
-
-        if (layer) {
+    if (m_graphic != nullptr) {
+        const RS_Layer* layer = RS_DIALOGFACTORY->requestEditLayerDialog(m_graphic->getLayerList());
+        if (layer != nullptr) {
             m_graphic->editLayer(m_graphic->getActiveLayer(), *layer);
-
             // update updateable entities on the layer that has changed
-
-            for(auto e: *m_graphic){
-
-                RS_Layer* l = e->getLayer();
-                if (l && l->getName()==layer->getName()) {
+            for(const auto e: *m_graphic){
+                const RS_Layer* l = e->getLayer();
+                if (l != nullptr && l->getName()==layer->getName()) {
                     e->update();
                 }
             }
         }
     }
-    finish(false);
+    finish();
 
     // m_graphic->getLayerList()->getLayerWitget()->slotUpdateLayerList();
     redrawDrawing();
 }
 
-void RS_ActionLayersEdit::init(int status) {
+void RS_ActionLayersEdit::init(const int status) {
     RS_ActionInterface::init(status);
     trigger();
 }

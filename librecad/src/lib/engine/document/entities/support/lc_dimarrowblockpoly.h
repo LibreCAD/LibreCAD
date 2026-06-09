@@ -28,9 +28,6 @@
 class LC_DimArrowPoly: public LC_DimArrow{
 public:
     LC_DimArrowPoly(RS_EntityContainer* parent, const RS_Vector &pos, double angle, double size);
-    RS_Vector getNearestEndpoint(const RS_Vector& coord, double* dist) const override;
-    RS_Vector getNearestPointOnEntity(const RS_Vector& coord, bool onEntity, double* dist,
-                                      RS_Entity** entity) const override;
 protected:
     void positionFromZero();
     void doCalculateBorders() override;
@@ -38,18 +35,21 @@ protected:
     void doRotate(const RS_Vector& center, const RS_Vector& angleVector) override;
     void doScale(const RS_Vector& center, const RS_Vector& factor) override;
     void doMirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) override;
-    void initVertexes(int size){m_vertices.resize(size);}
-    void addVertex(RS_Vector vertex) {m_vertices.push_back(vertex);}
-    void addVertex(double x, double y) {m_vertices.push_back({x, y});}
-    void setVertex(int index, RS_Vector vertex) {m_vertices[index] = vertex;}
-    void setVertex(int index, double x, double y) {m_vertices[index] = {x,y};}
-    RS_Vector vertexAt(int index){return m_vertices[index];}
+    void initVertexes(const int size){m_vertices.resize(size);}
+    void addVertex(const RS_Vector& vertex) {m_vertices.push_back(vertex);}
+    void addVertex(double x, double y) {m_vertices.emplace_back(x, y);}
+    void setVertex(const int index, const RS_Vector& vertex) {m_vertices[index] = vertex;}
+    void setVertex(const int index, double x, double y) {m_vertices[index] = {x,y};}
+    RS_Vector vertexAt(const int index) const {return m_vertices[index];}
 
     const std::vector<RS_Vector> &getVertexes() const {
         return m_vertices;
     }
+    RS_Vector doGetNearestPointOnEntity(const RS_Vector& coord, bool onEntity, double* dist,
+                                      RS_Entity** entity) const override;
+    RS_Vector doGetNearestEndpoint(const RS_Vector& coord, double* dist, RS_Entity** entity) const override;
 private:
     std::vector<RS_Vector> m_vertices;
 };
 
-#endif // LC_DIMARROWBLOCKPOLY_H
+#endif

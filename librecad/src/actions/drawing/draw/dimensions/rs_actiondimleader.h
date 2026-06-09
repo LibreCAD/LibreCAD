@@ -28,6 +28,8 @@
 #define RS_ACTIONDIMLEADER_H
 
 #include<memory>
+
+#include "lc_undoabledocumentmodificationaction.h"
 #include "rs_previewactioninterface.h"
 
 class RS_Leader;
@@ -38,10 +40,10 @@ class RS_Leader;
  *
  * @author Andrew Mustun
  */
-class RS_ActionDimLeader:public RS_PreviewActionInterface {
+class RS_ActionDimLeader:public LC_SingleEntityCreationAction {
 Q_OBJECT
 public:
-    RS_ActionDimLeader(LC_ActionContext *actionContext);
+    explicit RS_ActionDimLeader(LC_ActionContext *actionContext);
     ~RS_ActionDimLeader() override;
     void init(int status) override;
     void keyPressEvent(QKeyEvent *) override;
@@ -59,13 +61,13 @@ protected:
     struct ActionData;
     std::unique_ptr<ActionData> m_actionData;
     RS2::CursorType doGetMouseCursor(int status) override;
-    void reset();
-    void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
-    void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
-    void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
+    void reset() const;
+    void onMouseMoveEvent(int status, const LC_MouseEvent* e) override;
+    void onMouseLeftButtonRelease(int status, const LC_MouseEvent* e) override;
+    void onMouseRightButtonRelease(int status, const LC_MouseEvent* e) override;
     bool doProcessCommand(int status, const QString &command) override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
-    void updateMouseButtonHints() override;
-    void doTrigger() override;
+    void updateActionPrompt() override;
+    RS_Entity* doTriggerCreateEntity() override;
 };
 #endif

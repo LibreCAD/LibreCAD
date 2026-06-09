@@ -25,6 +25,7 @@
 **********************************************************************/
 
 #include "rs_eventhandler.h"
+
 #include <QMouseEvent>
 
 #include "lc_coordinates_parser.h"
@@ -41,16 +42,18 @@ namespace {
     }
 
     bool isInactive(const std::shared_ptr<RS_ActionInterface>& action) {
-        return ! isActive(action);
+        return !isActive(action);
     }
 }
 
 /**
  * Constructor.
  */
-RS_EventHandler::RS_EventHandler(RS_GraphicView *parent):QObject(parent), m_coordinatesParser{std::make_unique<LC_CoordinatesParser>(parent)},
-    m_graphicView{parent}{
+RS_EventHandler::RS_EventHandler(RS_GraphicView* parent) : QObject(parent),
+                                                           m_coordinatesParser{std::make_unique<LC_CoordinatesParser>(parent)},
+                                                           m_graphicView{parent} {
 }
+
 /**
  * Destructor.
  */
@@ -64,26 +67,25 @@ RS_EventHandler::~RS_EventHandler() {
     RS_DEBUG->print("RS_EventHandler::~RS_EventHandler: OK");
 }
 
-void RS_EventHandler::uncheckQAction(){
+void RS_EventHandler::uncheckQAction() {
     if (m_QAction != nullptr) {
         m_QAction->setChecked(false);
         m_QAction = nullptr;
     }
-    if (hasAction()){
-        auto lastAction = m_currentActions.last();
+    // if (hasAction()) {
+        // auto lastAction = m_currentActions.last();
         // m_graphicView->notifyActiveAction(lastAction.get()); // ugly fix to properly restore previous action icon etc.
-    }
-    else {
+    // }
+    // else {
         // m_graphicView->notifyNoActiveAction();
-    }
+    // }
 }
 
 /**
  * Go back in current action.
  */
 void RS_EventHandler::back() {
-    QMouseEvent e(QEvent::MouseButtonRelease, QPoint(0,0), QPoint{0, 0},
-                  Qt::RightButton, Qt::RightButton, Qt::NoModifier);
+    QMouseEvent e(QEvent::MouseButtonRelease, QPoint(0, 0), QPoint{0, 0}, Qt::RightButton, Qt::RightButton, Qt::NoModifier);
     mouseReleaseEvent(&e);
     uncheckQAction();
 }
@@ -100,14 +102,16 @@ void RS_EventHandler::enter() {
  * Called by QG_GraphicView
  */
 void RS_EventHandler::mousePressEvent(QMouseEvent* e) {
-    if(hasAction()){
+    if (hasAction()) {
         m_currentActions.last()->mousePressEvent(e);
         e->accept();
-    } else {
+    }
+    else {
         if (m_defaultAction) {
             m_defaultAction->mousePressEvent(e);
             e->accept();
-        } else {
+        }
+        else {
             RS_DEBUG->print("currently no action defined");
             e->ignore();
         }
@@ -118,10 +122,10 @@ void RS_EventHandler::mousePressEvent(QMouseEvent* e) {
  * Called by QG_GraphicView
  */
 void RS_EventHandler::mouseReleaseEvent(QMouseEvent* e) {
-    if(hasAction()){
+    if (hasAction()) {
         //    if (actionIndex>=0 && currentActions[actionIndex] &&
         //            !currentActions[actionIndex]->isFinished()) {
-        std::shared_ptr<RS_ActionInterface> &lastAction = m_currentActions.last();
+        const std::shared_ptr<RS_ActionInterface>& lastAction = m_currentActions.last();
         // LC_ERR<< "call action "<< lastAction->getName();
 
         lastAction->mouseReleaseEvent(e);
@@ -131,27 +135,29 @@ void RS_EventHandler::mouseReleaseEvent(QMouseEvent* e) {
         // Clean up actions - one might be finished now
         cleanUp();
         e->accept();
-    } else {
+    }
+    else {
         if (m_defaultAction) {
             m_defaultAction->mouseReleaseEvent(e);
-        } else {
+        }
+        else {
             e->ignore();
         }
     }
 }
 
 void RS_EventHandler::notifyLastActionFinished() {
-    std::shared_ptr<RS_ActionInterface> &lastAction = m_currentActions.last();
-    int lastActionStatus = lastAction->getStatus();
-    if (lastActionStatus < 0){
+    const std::shared_ptr<RS_ActionInterface>& lastAction = m_currentActions.last();
+    const int lastActionStatus = lastAction->getStatus();
+    if (lastActionStatus < 0) {
         uncheckQAction();
     }
     cleanUp();
 }
 
-void RS_EventHandler::checkLastActionCompletedAndUncheckQAction(const std::shared_ptr<RS_ActionInterface> &lastAction) {
-    int lastActionStatus = lastAction->getStatus();
-    if (lastActionStatus < 0){
+void RS_EventHandler::checkLastActionCompletedAndUncheckQAction(const std::shared_ptr<RS_ActionInterface>& lastAction) {
+    const int lastActionStatus = lastAction->getStatus();
+    if (lastActionStatus < 0) {
         uncheckQAction();
     }
 }
@@ -159,9 +165,9 @@ void RS_EventHandler::checkLastActionCompletedAndUncheckQAction(const std::share
 /**
  * Called by QG_GraphicView
  */
-void RS_EventHandler::mouseMoveEvent(QMouseEvent* e){
-    if(hasAction()) {
-        std::shared_ptr<RS_ActionInterface> &lastAction = m_currentActions.last();
+void RS_EventHandler::mouseMoveEvent(QMouseEvent* e) {
+    if (hasAction()) {
+        const std::shared_ptr<RS_ActionInterface>& lastAction = m_currentActions.last();
         lastAction->mouseMoveEvent(e);
         checkLastActionCompletedAndUncheckQAction(lastAction);
         cleanUp();
@@ -176,9 +182,10 @@ void RS_EventHandler::mouseMoveEvent(QMouseEvent* e){
  * Called by QG_GraphicView
  */
 void RS_EventHandler::mouseLeaveEvent() {
-    if(hasAction()){
+    if (hasAction()) {
         m_currentActions.last()->suspend();
-    } else {
+    }
+    else {
         if (m_defaultAction) {
             m_defaultAction->suspend();
         }
@@ -190,12 +197,13 @@ void RS_EventHandler::mouseLeaveEvent() {
  * Called by QG_GraphicView
  */
 void RS_EventHandler::mouseEnterEvent() {
-    if(hasAction()){
+    if (hasAction()) {
         cleanUp();
         debugActions();
-//        LC_ERR<<__func__<<"(): resume: "<<currentActions.last()->getName();
+        //        LC_ERR<<__func__<<"(): resume: "<<currentActions.last()->getName();
         m_currentActions.last()->resume();
-    } else {
+    }
+    else {
         if (m_defaultAction) {
             m_defaultAction->resume();
         }
@@ -206,11 +214,12 @@ void RS_EventHandler::mouseEnterEvent() {
  * Called by QG_GraphicView
  */
 void RS_EventHandler::keyPressEvent(QKeyEvent* e) {
-    if(hasAction()){
-        std::shared_ptr<RS_ActionInterface> &lastAction = m_currentActions.last();
+    if (hasAction()) {
+        const std::shared_ptr<RS_ActionInterface>& lastAction = m_currentActions.last();
         lastAction->keyPressEvent(e);
         checkLastActionCompletedAndUncheckQAction(lastAction);
-    } else {
+    }
+    else {
         if (m_defaultAction) {
             m_defaultAction->keyPressEvent(e);
         }
@@ -226,9 +235,10 @@ void RS_EventHandler::keyPressEvent(QKeyEvent* e) {
  * Called by QG_GraphicView
  */
 void RS_EventHandler::keyReleaseEvent(QKeyEvent* e) {
-    if(hasAction()){
+    if (hasAction()) {
         m_currentActions.last()->keyReleaseEvent(e);
-    } else {
+    }
+    else {
         if (m_defaultAction) {
             m_defaultAction->keyReleaseEvent(e);
         }
@@ -247,9 +257,9 @@ void RS_EventHandler::commandEvent(RS_CommandEvent* e) {
 
     if (m_coordinateInputEnabled) {
         if (!e->isAccepted()) {
-            if(hasAction()) {
+            if (hasAction()) {
                 bool commandContainsCoordinate = false;
-                QString command = e->getCommand();
+                const QString command = e->getCommand();
                 auto coordinateEvent = m_coordinatesParser->parseCoordinate(command, commandContainsCoordinate);
                 if (commandContainsCoordinate) {
                     if (coordinateEvent.isValid()) {
@@ -262,14 +272,15 @@ void RS_EventHandler::commandEvent(RS_CommandEvent* e) {
                 }
                 else {
                     // send command event directly to current action:
-                    std::shared_ptr<RS_ActionInterface> &lastAction = m_currentActions.last();
+                    const std::shared_ptr<RS_ActionInterface>& lastAction = m_currentActions.last();
                     lastAction->commandEvent(e);
                     if (e->isAccepted()) {
                         checkLastActionCompletedAndUncheckQAction(lastAction);
                         cleanUp();
                     }
                 }
-            }else{
+            }
+            else {
                 //send the command to default action
                 if (m_defaultAction) {
                     m_defaultAction->commandEvent(e);
@@ -282,6 +293,7 @@ void RS_EventHandler::commandEvent(RS_CommandEvent* e) {
 
     RS_DEBUG->print("RS_EventHandler::commandEvent: OK");
 }
+
 /**
  * Enables coordinate input in the command line.
  */
@@ -299,18 +311,17 @@ void RS_EventHandler::disableCoordinateInput() {
 /**
  * @return Current action.
  */
-RS_ActionInterface* RS_EventHandler::getCurrentAction(){
-    if(hasAction()){
+RS_ActionInterface* RS_EventHandler::getCurrentAction() {
+    if (hasAction()) {
         return m_currentActions.last().get();
-    } else {
-        return m_defaultAction.get();
     }
+    return m_defaultAction.get();
 }
 
 /**
  * @return The current default action.
  */
-RS_ActionInterface* RS_EventHandler::getDefaultAction() const{
+RS_ActionInterface* RS_EventHandler::getDefaultAction() const {
     return m_defaultAction.get();
 }
 
@@ -330,25 +341,24 @@ void RS_EventHandler::setDefaultAction(RS_ActionInterface* action) {
  */
 bool RS_EventHandler::setCurrentAction(std::shared_ptr<RS_ActionInterface> action) {
     RS_DEBUG->print("RS_EventHandler::setCurrentAction");
-    if (action==nullptr) {
+    if (action == nullptr) {
         return false;
     }
     // Do not initialize action if it's already the last one.
     // This is attempt to fix crashes of dialogs (like properties) which are called from actions
     // todo - check again, either remove or uncomment
-//    if (hasAction() && currentActions.last().get() == action){
-//        return;
-//    }
+    //    if (hasAction() && currentActions.last().get() == action){
+    //        return;
+    //    }
 
-    LC_LOG<<"RS_EventHandler::setCurrentAction " << action->getName();
+    LC_LOG << "RS_EventHandler::setCurrentAction " << action->getName();
     // Predecessor of the new action or NULL:
-    auto& predecessor = hasAction() ? m_currentActions.last() : m_defaultAction;
+    const auto& predecessor = hasAction() ? m_currentActions.last() : m_defaultAction;
     // Suspend current action:
     if (predecessor != nullptr) {
         predecessor->suspend();
         predecessor->hideOptions();
     }
-
 
     // Set current action:
     m_currentActions.push_back(action);
@@ -377,8 +387,8 @@ bool RS_EventHandler::setCurrentAction(std::shared_ptr<RS_ActionInterface> actio
     RS_DEBUG->print("RS_GraphicView::setCurrentAction: OK");
     // For some actions: action->init() may call finish() within init()
     // If so, the q_action shouldn't be checked
-    if (m_QAction){
-        bool hasActionToCheck = hasAction();
+    if (m_QAction) {
+        const bool hasActionToCheck = hasAction();
         m_QAction->setChecked(hasActionToCheck);
         if (!hasActionToCheck) {
             // m_graphicView->notifyNoActiveAction();
@@ -392,18 +402,16 @@ bool RS_EventHandler::setCurrentAction(std::shared_ptr<RS_ActionInterface> actio
  * is launched to reduce confusion.
  */
 void RS_EventHandler::killSelectActions() {
-    for (auto it=m_currentActions.begin();it != m_currentActions.end();){
-        RS2::ActionType rtti = (*it)->rtti();
-        if (rtti == RS2::ActionSelectSingle ||
-            rtti == RS2::ActionSelectContour ||
-            rtti == RS2::ActionSelectWindow ||
-            rtti == RS2::ActionSelectIntersected ||
-            rtti == RS2::ActionSelectLayer) {
+    for (auto it = m_currentActions.begin(); it != m_currentActions.end();) {
+        const RS2::ActionType rtti = (*it)->rtti();
+        if (rtti == RS2::ActionSelectSingle || rtti == RS2::ActionSelectContour || rtti == RS2::ActionSelectWindow || rtti ==
+            RS2::ActionSelectIntersected || rtti == RS2::ActionSelectLayer) {
             if (isActive(*it)) {
                 (*it)->finish();
             }
-            it= m_currentActions.erase(it);
-        }else{
+            it = m_currentActions.erase(it);
+        }
+        else {
             it++;
         }
     }
@@ -412,18 +420,17 @@ void RS_EventHandler::killSelectActions() {
 /**
  * Kills all running actions. Called when a window is closed.
  */
-void RS_EventHandler::killAllActions()
-{
+void RS_EventHandler::killAllActions() {
     RS_DEBUG->print(__FILE__ ": %s: line %d: begin\n", __func__, __LINE__);
 
-    if (m_QAction)    {
+    if (m_QAction) {
         m_QAction->setChecked(false);
         m_QAction = nullptr;
         // m_graphicView->notifyNoActiveAction();
     }
 
-    for(auto& p: m_currentActions){
-        if (isActive(p)){
+    for (auto& p : m_currentActions) {
+        if (isActive(p)) {
             p->finish();
         }
     }
@@ -440,17 +447,18 @@ void RS_EventHandler::killAllActions()
 /**
  * @return true if the action is within currentActions
  */
-bool RS_EventHandler::isValid(RS_ActionInterface* action) const{
+bool RS_EventHandler::isValid(RS_ActionInterface* action) const {
     return action != nullptr && std::any_of(m_currentActions.cbegin(), m_currentActions.cend(),
-                       [action](const std::shared_ptr<RS_ActionInterface>& entry){
-        return entry.get() == action;});
+                                            [action](const std::shared_ptr<RS_ActionInterface>& entry) {
+                                                return entry.get() == action;
+                                            });
 }
 
 /**
  * @return true if there is at least one action in the action stack.
  */
-bool RS_EventHandler::hasAction(){
-    auto it = std::remove_if(m_currentActions.begin(), m_currentActions.end(), isInactive);
+bool RS_EventHandler::hasAction() {
+    const auto it = std::remove_if(m_currentActions.begin(), m_currentActions.end(), isInactive);
     m_currentActions.erase(it, m_currentActions.end());
     return !m_currentActions.empty();
 }
@@ -462,10 +470,11 @@ void RS_EventHandler::cleanUp() {
     RS_DEBUG->print("RS_EventHandler::cleanUp");
 
     if (hasAction()) {
-        auto lastAction = m_currentActions.last();
+        const auto lastAction = m_currentActions.last();
         lastAction->resume();
         lastAction->showOptions();
-    } else {
+    }
+    else {
         if (m_defaultAction) {
             m_defaultAction->resume();
             m_defaultAction->showOptions();
@@ -477,14 +486,14 @@ void RS_EventHandler::cleanUp() {
 /**
  * Sets the snap mode for all currently active actions.
  */
-void RS_EventHandler::setSnapMode(RS_SnapMode sm) {
-    for(auto& a: m_currentActions){
-        if(isActive(a)) {
+void RS_EventHandler::setSnapMode(const RS_SnapMode sm) {
+    for (auto& a : m_currentActions) {
+        if (isActive(a)) {
             a->setSnapMode(sm);
         }
     }
 
-	if (m_defaultAction) {
+    if (m_defaultAction) {
         m_defaultAction->setSnapMode(sm);
     }
 }
@@ -492,9 +501,9 @@ void RS_EventHandler::setSnapMode(RS_SnapMode sm) {
 /**
  * Sets the snap restriction for all currently active actions.
  */
-void RS_EventHandler::setSnapRestriction(RS2::SnapRestriction sr) {
-    for(auto& a: m_currentActions){
-        if(isActive(a)) {
+void RS_EventHandler::setSnapRestriction(const RS2::SnapRestriction sr) {
+    for (auto& a : m_currentActions) {
+        if (isActive(a)) {
             a->setSnapRestriction(sr);
         }
     }
@@ -504,31 +513,30 @@ void RS_EventHandler::setSnapRestriction(RS2::SnapRestriction sr) {
     }
 }
 
-void RS_EventHandler::debugActions() const{
+void RS_EventHandler::debugActions() const {
     //        std::cout<<"action queue size=:"<<currentActions.size()<<std::endl;
     RS_DEBUG->print("---");
-    for(int i=0;i<m_currentActions.size();++i){
-        if (i == m_currentActions.size() - 1 ) {
+    for (int i = 0; i < m_currentActions.size(); ++i) {
+        if (i == m_currentActions.size() - 1) {
             RS_DEBUG->print("Current");
         }
-        RS_DEBUG->print("Action %03d: %s [%s]",
-                        i, m_currentActions.at(i)->getName().toLatin1().data(),
+        RS_DEBUG->print("Action %03d: %s [%s]", i, m_currentActions.at(i)->getName().toLatin1().data(),
                         m_currentActions.at(i)->isFinished() ? "finished" : "active");
     }
 }
 
-QAction* RS_EventHandler::getQAction(){
-  return m_QAction;
+QAction* RS_EventHandler::getQAction() const {
+    return m_QAction;
 }
 
-void RS_EventHandler::setQAction(QAction* action, bool killOtherActions) {
+void RS_EventHandler::setQAction(QAction* action, const bool forceKillOtherActions) {
     //    LC_ERR << __func__ << "()";
     debugActions();
-    if (killOtherActions) {
+    if (forceKillOtherActions) {
         if (m_QAction != nullptr && action != nullptr && m_QAction != action) {
-            auto property = action->property("RS2:actionType");
+            const auto property = action->property("RS2:actionType");
             if (property.isValid()) {
-                int rtti = property.toInt();
+                const int rtti = property.toInt();
                 if (rtti != RS2::ActionZoomPan && rtti != RS2::ActionSetRelativeZero) {
                     killAllActions();
                 }

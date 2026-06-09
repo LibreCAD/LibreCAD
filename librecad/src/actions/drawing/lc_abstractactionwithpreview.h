@@ -23,7 +23,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef LC_ABSTRACTACTIONWITHPREVIEW_H
 #define LC_ABSTRACTACTIONWITHPREVIEW_H
 
-#include "rs_previewactioninterface.h"
+#include "lc_undoabledocumentmodificationaction.h"
 #include "rs_vector.h"
 
 class RS_Line;
@@ -34,18 +34,18 @@ class RS_Polyline;
  * Utility base class for actions. It includes some basic logic and utilities, that simplifies creation of specific actions
  * and reduces repetitive code, as well as defines generic workflow for various action methods processing.
  */
-class LC_AbstractActionWithPreview :public RS_PreviewActionInterface{
+class LC_AbstractActionWithPreview :public LC_UndoableDocumentModificationAction{
    Q_OBJECT
 public:
     LC_AbstractActionWithPreview(const char *name, LC_ActionContext *actionContext, RS2::ActionType actionType = RS2::ActionNone);
-   // inherited methods with basic template method implementation
+      // inherited methods with basic template method implementation
     void init(int status) override;
-    void finish(bool updateTB) override;
-    void updateMouseButtonHints() override;
+    void finish() override;
+    void updateActionPrompt() override;
     /**
    * Mode that controls where from apply pen
    */
-    enum {
+    enum PenApplyMode{
         PEN_ACTIVE, // use active pen
         PEN_ORIGINAL, // use pen from original entity
         PEN_ORIGINAL_RESOLVED // use resolved pen from original entity
@@ -54,7 +54,7 @@ public:
     /**
      * controls how to apply layer to entity's duplicate
      */
-    enum {
+    enum LayerApplyMode{
         LAYER_ACTIVE, // set layer to active layer
         LAYER_ORIGINAL // use the same layer as original
     };
@@ -82,11 +82,6 @@ protected:
      */
     RS_Vector m_lastSnapPoint  = RS_Vector(false);
 
-    /**
-    * This is "major" status of action - it is used for determining, to which status state should be changed after various intermediate statuses (mostly,
-    * this is needed for support of command events);
-    */
-    int m_mainStatus  = 0;
 
     /**
      * snap mode saved for further restored, convenient if the actions would like to manage current snap (say, for simpler selection of entities)
@@ -107,84 +102,73 @@ protected:
      * @param status current status of action
      * @return true if we need preview
      */
-    virtual bool doCheckMayDrawPreview([[maybe_unused]]LC_MouseEvent *event, int status);
+    virtual bool doCheckMayDrawPreview([[maybe_unused]] const LC_MouseEvent* event, int status);
     /**
      * method for handling
      * @param e
      * @param status
      * @param snapPoint
      */
-    virtual void doOnLeftMouseButtonRelease(LC_MouseEvent *e, int status, const RS_Vector &snapPoint);
-    virtual RS_Vector doGetMouseSnapPoint(LC_MouseEvent *e);
+    virtual void doOnLeftMouseButtonRelease(const LC_MouseEvent* e, int status, const RS_Vector &snapPoint);
+    virtual RS_Vector doGetMouseSnapPoint(const LC_MouseEvent* e);
 
     /**
      * extension point for performing cleanup on action finish
-     * @param updateTB
      */
 
-    virtual void doFinish(bool updateTB);
+    virtual void doFinish();
     /**
      * extension point for processing of back to previous state operation
-     * @param pEvent
+     * @param e
      * @param status
      */
-    virtual void doBack([[maybe_unused]]LC_MouseEvent *pEvent, int status);
+    virtual void doBack([[maybe_unused]] const LC_MouseEvent* e, int status);
 
-    virtual bool onMouseMove([[maybe_unused]]LC_MouseEvent *e, RS_Vector snap, int status);
-    virtual void doPreparePreviewEntities([[maybe_unused]]LC_MouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status);
-    virtual bool doCheckMayTrigger();
+    virtual bool onMouseMove([[maybe_unused]] const LC_MouseEvent* e, RS_Vector snap, int status);
+    virtual void doPreparePreviewEntities([[maybe_unused]] const LC_MouseEvent* e, RS_Vector &snap, QList<RS_Entity *> &list, int status);
     virtual void doAfterTrigger();
     RS2::CursorType doGetMouseCursor(int status) override;
     virtual RS_Vector doGetRelativeZeroAfterTrigger();
     virtual int doGetStatusForInitialSnapToRelativeZero();
-    virtual void doInitialSnapToRelativeZero(RS_Vector relZero);
-    virtual void doMouseMoveEnd(int status, [[maybe_unused]]LC_MouseEvent *e);
-    virtual void doMouseMoveStart(int status, LC_MouseEvent *pEvent);
-    virtual void doPrepareTriggerEntities(QList<RS_Entity *> &list);
+    virtual void doInitialSnapToRelativeZero(const RS_Vector& relZero);
+    virtual void doMouseMoveEnd(int status, [[maybe_unused]] const LC_MouseEvent* e);
+    virtual void doMouseMoveStart(int status, const LC_MouseEvent* e);
+    virtual bool doTriggerEntitiesPrepare(LC_DocumentModificationBatch& ctx);
 
     // additional setup methods, that may be overridden if necessary
 
     // additional triggering action support
     virtual bool isSetActivePenAndLayerOnTrigger();
-    virtual bool isUndoableTrigger();
-    virtual void performTrigger();
-    virtual void performTriggerInsertions();
-    virtual void performTriggerDeletions();
+
     virtual void finishAction();
 
     // trigger on init support (for selected entities)
     virtual bool doCheckMayTriggerOnInit(int status);
     virtual bool isAcceptSelectedEntityToTriggerOnInit(RS_Entity *pEntity);
     virtual void doCreateEntitiesOnTrigger(RS_Entity *entity, QList<RS_Entity *> &list);
-    virtual void performTriggerOnInit(QList<RS_Entity*>  entities);
-    virtual void doPerformOriginalEntitiesDeletionOnInitTrigger(QList<RS_Entity *> &list);
-    virtual void collectEntitiesForTriggerOnInit(QList<RS_Entity*> &selectedEntities, QList<RS_Entity*> &entitiesForTrigger);
+    virtual bool performTriggerOnInit(QList<RS_Entity*>  entities, LC_DocumentModificationBatch & ctx);
+    virtual void doPerformOriginalEntitiesDeletionOnInitTrigger(QList<RS_Entity *> &list, LC_DocumentModificationBatch & ctx);
+    virtual void collectEntitiesForTriggerOnInit(QList<RS_Entity*> &entitiesForTrigger);
 
     // utility functions
-    virtual void drawPreviewForPoint(LC_MouseEvent *e, RS_Vector& snap);
+    virtual void drawPreviewForPoint(const LC_MouseEvent* e, RS_Vector& snap);
 
     // default implementation of right mouse release
-    virtual void onRightMouseButtonRelease(LC_MouseEvent *e, int status);
+    virtual void onRightMouseButtonRelease(const LC_MouseEvent* e, int status);
 
     void unHighlightEntity();
     void highlightEntity(RS_Entity *en);
-    void highlightEntityExplicit(RS_Entity *en, bool highlight);
+    void highlightEntityExplicit(RS_Entity *en, bool highlight) const;
 
     void drawPreviewForLastPoint();
 
-    virtual void checkPreSnapToRelativeZero(int status, LC_MouseEvent *pEvent);
-    virtual bool doCheckMouseEventValidForInitialSnap(LC_MouseEvent *e);
-
-    // main status support
-    void setMainStatus(int status) {m_mainStatus = status; setStatus(status);}
-    void restoreMainStatus(){setStatus(m_mainStatus);}
+    virtual void checkPreSnapToRelativeZero(int status, const LC_MouseEvent* e);
+    virtual bool doCheckMouseEventValidForInitialSnap(const LC_MouseEvent* e);
 
     // snap control support
     void restoreSnapMode();
     void setFreeSnap();
     void setGlobalSnapMode(const RS_SnapMode &mode);
-    void setupAndAddTriggerEntities(const QList<RS_Entity *> &entities);
-    void unSelectEntities(const QList<RS_Entity *> &entities);
     virtual bool isUnselectEntitiesOnInitTrigger();
     void applyPenAndLayerBySourceEntity(const RS_Entity *source, RS_Entity *target, int penMode, int layerMode) const;
     bool checkMayExpandEntity(const RS_Entity *e, const QString &entityName) const;
@@ -193,16 +177,18 @@ protected:
     RS_Line *createLine(const RS_LineData &lineData, QList<RS_Entity *> &list) const;
     virtual void checkAlternativeActionMode(const LC_MouseEvent *e, int status);
     virtual void clearAlternativeActionMode();
-    void updateSnapperAndCoordinateWidget(LC_MouseEvent *e, int status);
-    void doUpdateCoordinateWidgetByMouse(LC_MouseEvent *e);
+    void updateSnapperAndCoordinateWidget(const LC_MouseEvent* e, int status);
+    void doUpdateCoordinateWidgetByMouse(const LC_MouseEvent *e) const;
     void createRefLine(const RS_Vector &startPoint, const RS_Vector &endPoint, QList<RS_Entity *> &list) const;
     void createRefPoint(const RS_Vector &coord, QList<RS_Entity *> &list) const;
     void createRefSelectablePoint(const RS_Vector &coord, QList<RS_Entity *> &list) const;
-    static bool isMouseMove(LC_MouseEvent* e);
+    static bool isMouseMove(const LC_MouseEvent* e);
     void createRefArc(const RS_ArcData &data, QList<RS_Entity *> &list) const;
-    void doTrigger() override;
-    void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
-    void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
-    void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
+   bool doTriggerModifications(LC_DocumentModificationBatch& ctx) override;
+   void doTriggerCompletion(bool success) override;
+   void doTriggerSelections(const LC_DocumentModificationBatch& ctx) override;
+   void onMouseMoveEvent(int status, const LC_MouseEvent* event) override;
+    void onMouseLeftButtonRelease(int status, const LC_MouseEvent* e) override;
+    void onMouseRightButtonRelease(int status, const LC_MouseEvent* e) override;
 };
-#endif // LC_ABSTRACTACTIONWITHPREVIEW_H
+#endif

@@ -39,25 +39,37 @@
  */
 class RS_Undoable : public RS_Flags {
 public:
-	/**
+    /**
      * Runtime type identification for undoables.
      * Note that this is voluntarily. The default implementation 
      * returns RS2::UndoableUnknown.
      */
-	virtual RS2::UndoableType undoRtti() const {
+    virtual RS2::UndoableType undoRtti() const {
         return RS2::UndoableUnknown;
     }
 
-	void changeUndoState();
-	void setUndoState(bool undone);
-	bool isUndone() const;
+    void changeDeleteState();
+    void mark(bool deleted);
+    void markDeleted();
+    void markLive();
 
-	/**
-	 * Can be overwritten by the implementing class to be notified
-	 * when the undo state changes (the undoable becomes visible / invisible).
-	 */
-    virtual void undoStateChanged(bool undone) = 0;
+    /**
+ * Is this entity in the Undo memory and not active?
+ */
+    virtual bool isDeleted() const {
+        return getFlag(RS2::FlagDeleted);
+    }
 
+    bool isAlive() const {
+        return !getFlag(RS2::FlagDeleted);
+    }
+
+protected:
+    /**
+     * Can be overwritten by the implementing class to be notified
+     * when the undo state changes (the undoable becomes visible / invisible).
+     */
+    virtual void deletedStateChanged(bool undone) = 0;
 };
 
 #endif

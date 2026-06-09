@@ -1,5 +1,5 @@
 /*******************************************************************************
-*
+ *
  This file is part of the LibreCAD project, a 2D CAD program
 
  Copyright (C) 2025 LibreCAD.org
@@ -23,6 +23,7 @@
 #define LC_TOOLBARFACTORY_H
 
 #include <QObject>
+
 #include "lc_appwindowaware.h"
 
 class LC_ActionFactory;
@@ -36,7 +37,7 @@ class LC_ActionGroupManager;
 class LC_ToolbarFactory:public QObject, public LC_AppWindowAware {
     Q_OBJECT
 public:
-    explicit LC_ToolbarFactory(QC_ApplicationWindow *main_win);
+    explicit LC_ToolbarFactory(QC_ApplicationWindow *mainWin);
     ~LC_ToolbarFactory() override = default;
     void initToolBars();
 private:
@@ -65,15 +66,15 @@ private:
     QToolBar *createNamedViewsToolbar(const QSizePolicy &toolBarPolicy) const;
     QToolBar *createUCSToolbar(const QSizePolicy &toolBarPolicy);
     QToolBar *createWorkspacesToolbar(const QSizePolicy &toolBarPolicy);
-    QToolBar *createGenericToolbar(const QString &title, const QString &name, QSizePolicy toolBarPolicy, const std::vector<QString> &actionNames, int group) const;
+    QToolBar *createGenericToolbar(const QString &title, const QString &name, const QSizePolicy& toolBarPolicy, const std::vector<QString> &actionNames, int group) const;
     QToolBar *doCreateToolBar(const QString &title, const QString &name, const QSizePolicy &toolBarPolicy, int group) const;
-    QToolBar *createCADToolbar(const QString &title, const QString &name, QSizePolicy toolBarPolicy, const QList<QAction *> &actions) const;
-    QToolBar *genericToolbarWithActions(
-        const QString &title, const QString &name, QSizePolicy toolBarPolicy, const QList<QAction *> &actions, int toolbarGroup) const;
+    QToolBar *createCADToolbar(const QString &title, const QString &name, const QSizePolicy& toolBarPolicy, const QList<QAction *> &actions) const;
+    QToolBar *genericToolbarWithActions(const QString &title, const QString &name, const QSizePolicy& toolBarPolicy, const QList<QAction *> &actions, int toolbarGroup) const;
     QToolButton *toolButton(QToolBar *toolbar, const QString &tooltip, const char *icon, const QList<QAction *> &actions);
     void addToTop(QToolBar *toolbar) const;
     void addToBottom(QToolBar *toolbar) const;
     void addToLeft(QToolBar *toolbar) const;
+    QToolBar* createSelectionToolbar(const QSizePolicy& tbPolicy) const;
     void setToolbarTooltip(QToolBar* toolbar, const QString& text) const;
 };
-#endif // LC_TOOLBARFACTORY_H
+#endif

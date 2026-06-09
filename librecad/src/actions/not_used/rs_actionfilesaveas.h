@@ -29,7 +29,6 @@
 
 #include "rs_actioninterface.h"
 
-
 /**
  * This action class can handle user events to export files
  * in various formats.
@@ -37,10 +36,10 @@
  * @author Andrew Mustun
  */
 class RS_ActionFileSaveAs : public RS_ActionInterface {
-	Q_OBJECT
+    Q_OBJECT
 public:
-    RS_ActionFileSaveAs(LC_ActionContext *actionContext);
-	void init(int status) override;
-	void trigger() override;
+    RS_ActionFileSaveAs(LC_ActionContext* actionContext);
+    void init(int status) override;
+    void trigger() override;
 };
 #endif

@@ -21,6 +21,7 @@
  ******************************************************************************/
 
 #include "lc_overlayentitiescontainer.h"
+
 #include "lc_overlayentity.h"
 #include "rs_painter.h"
 
@@ -31,19 +32,19 @@ LC_OverlayDrawablesContainer::~LC_OverlayDrawablesContainer() {
 }
 
 void LC_OverlayDrawablesContainer::clear() {
-    qDeleteAll(drawables);
-    drawables.clear();
+    qDeleteAll(m_drawables);
+    m_drawables.clear();
 }
 
 LC_OverlayDrawable *LC_OverlayDrawablesContainer::first() {
-    if (!drawables.isEmpty()){
-        return drawables.first();
+    if (!m_drawables.isEmpty()){
+        return m_drawables.first();
     }
     return nullptr;
 }
 
 void LC_OverlayDrawablesContainer::draw(RS_Painter *painter) {
-    foreach (auto *e, drawables){
+    foreach (auto *e, m_drawables){
        e->draw(painter);
     }
 }

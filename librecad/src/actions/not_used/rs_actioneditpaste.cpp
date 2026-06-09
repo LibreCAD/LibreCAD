@@ -88,7 +88,7 @@ void RS_ActionEditPaste::mouseMoveEvent(QMouseEvent* e) {
     drawPreview();
 }
 
-void RS_ActionEditPaste::onMouseLeftButtonRelease([[maybe_unused]]int status, LC_MouseEvent *e) {
+void RS_ActionEditPaste::onMouseLeftButtonRelease([[maybe_unused]]int status, const LC_MouseEvent *e) {
     finishOnTrigger = !e->isControl;
     fireCoordinateEventForSnap(e);
 }

@@ -24,32 +24,29 @@
 **
 **********************************************************************/
 
-
 #include "rs_dialogfactory.h"
+
 #include "rs_debug.h"
 #include "rs_dialogfactoryinterface.h"
 
 /**
  * Private constructor.
  */
-RS_DialogFactory::RS_DialogFactory():
-    factoryObject{nullptr}
-{
+RS_DialogFactory::RS_DialogFactory() : m_factoryObject{nullptr} {
     RS_DEBUG->print("RS_DialogFacgory::RS_DialogFactory");
     RS_DEBUG->print("RS_DialogFacgory::RS_DialogFactory: OK");
 
-    factoryAdapter = new RS_DialogFactoryInterface();
+    m_factoryAdapter = new RS_DialogFactoryInterface();
 }
 
 RS_DialogFactory::~RS_DialogFactory() {
-    delete factoryAdapter;
+    delete m_factoryAdapter;
 }
-
 
 /**
  * @return Instance to the unique font list.
  */
-RS_DialogFactory* RS_DialogFactory::instance(){
+RS_DialogFactory* RS_DialogFactory::instance() {
     static auto* uniqueInstance = new RS_DialogFactory{};
     return uniqueInstance;
 }
@@ -59,26 +56,22 @@ RS_DialogFactory* RS_DialogFactory::instance(){
  */
 void RS_DialogFactory::setFactoryObject(RS_DialogFactoryInterface* fo) {
     RS_DEBUG->print("RS_DialogFactory::setFactoryObject");
-    factoryObject = fo;
+    m_factoryObject = fo;
     RS_DEBUG->print("RS_DialogFactory::setFactoryObject: OK");
 }
-
-
 
 /**
  * @return Factory object. This is never nullptr. If no factory
  * object was set, the default adapter will be returned.
  */
-RS_DialogFactoryInterface* RS_DialogFactory::getFactoryObject()
-{
-	return factoryObject ? factoryObject : factoryAdapter;
+RS_DialogFactoryInterface* RS_DialogFactory::getFactoryObject() const {
+    return (m_factoryObject != nullptr) ? m_factoryObject : m_factoryAdapter;
 }
 
-
-
-void RS_DialogFactory::commandMessage(const QString& m) {
+void RS_DialogFactory::commandMessage(const QString& m) const {
     RS_DEBUG->print("RS_DialogFactory::commandMessage");
 
-    if (factoryObject)
-        factoryObject->commandMessage(m);
+    if (m_factoryObject != nullptr) {
+        m_factoryObject->commandMessage(m);
+    }
 }

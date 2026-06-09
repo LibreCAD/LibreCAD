@@ -41,6 +41,9 @@
 #define RS_TOLERANCE2 1.0e-20
 #define RS_TOLERANCE_ANGLE 1.0e-8
 
+
+
+
 /**
  * Class namespace for various enums along with some simple
  * wrapper methods for converting the enums to the Qt
@@ -49,43 +52,43 @@
  * @author Andrew Mustun
  */
 namespace RS2 {
-
     /**
      * Flags.
      */
     enum Flags : unsigned {
         /** Flag for Undoables. */
-        FlagUndone      = 1<<0,
+        FlagDeleted = 1 << 0,
         /** Entity Visibility. */
-        FlagVisible     = 1<<1,
+        FlagVisible = 1 << 1,
         /** Entity attribute (e.g. color) is defined by layer. */
-        FlagByLayer     = 1<<2,
+        FlagByLayer = 1 << 2,
         /** Entity attribute (e.g. color) defined by block. */
-        FlagByBlock     = 1<<3,
+        FlagByBlock = 1 << 3,
         /** Layer frozen. */
-        FlagFrozen      = 1<<4,
+        FlagFrozen = 1 << 4,
         /** Layer frozen by default. */
-        FlagDefFrozen   = 1<<5,
+        FlagDefFrozen = 1 << 5,
         /** Layer locked. */
-        FlagLocked      = 1<<6,
+        FlagLocked = 1 << 6,
         /** Used for invalid pens. */
-        FlagInvalid     = 1<<7,
+        FlagInvalid = 1 << 7,
         /** Entity in current selection. */
-        FlagSelected    = 1<<8,
+        FlagSelected = 1 << 8,
         /** Polyline closed? */
-        FlagClosed      = 1<<9,
+        FlagClosed = 1 << 9,
         /** Flag for temporary entities (e.g. hatch) */
-        FlagTemp        = 1<<10,
+        FlagTemp = 1 << 10,
         /** Flag for processed entities (optcontour) */
-        FlagProcessed   = 1<<11,
+        FlagProcessed = 1 << 11,
         /** Startpoint selected */
-        FlagSelected1   = 1<<12,
+        FlagSelected1 = 1 << 12,
         /** Endpoint selected */
-        FlagSelected2   = 1<<13,
+        FlagSelected2 = 1 << 13,
         /** Entity is highlighted temporarily (as a user action feedback) */
-        FlagHighlighted = 1<<14,
-        FlagTransparent = 1<<15,
-        FlagHatchChild = 1<<16
+        FlagHighlighted = 1 << 14,
+        FlagTransparent = 1 << 15,
+        FlagHatchChild  = 1 << 16,
+        FlagInVisualSnap  = 1 << 17
     };
 
     /**
@@ -104,95 +107,99 @@ namespace RS2 {
      * be enough to distinguish file types.
      */
     enum FormatType {
-        FormatUnknown,       /**< Unknown / unsupported format. */
-        FormatDXF1,          /**< QCad 1 compatibility DXF format. */
-        FormatDXFRW2018,           /**< DXF format. v2018. */
-        FormatDXFRW,           /**< DXF format. v2007. */
-        FormatDXFRW2004,           /**< DXF format. v2004. */
-        FormatDXFRW2000,           /**< DXF format. v2000. */
-        FormatDXFRW14,           /**< DXF format. v14. */
-        FormatDXFRW12,           /**< DXF format. v12. */
+        FormatUnknown, /**< Unknown / unsupported format. */
+        FormatDXF1, /**< QCad 1 compatibility DXF format. */
+        FormatDXFRW2018, /**< DXF format. v2018. */
+        FormatDXFRW, /**< DXF format. v2007. */
+        FormatDXFRW2004, /**< DXF format. v2004. */
+        FormatDXFRW2000, /**< DXF format. v2000. */
+        FormatDXFRW14, /**< DXF format. v14. */
+        FormatDXFRW12, /**< DXF format. v12. */
 #ifdef DWGSUPPORT
-        FormatDWG,           /**< DWG format. */
+        FormatDWG, /**< DWG format. */
 #endif
-        FormatLFF,           /**< LibreCAD Font File format. */
-        FormatCXF,           /**< CAM Expert Font format. */
-        FormatJWW,           /**< JWW Format type */
-        FormatJWC            /**< JWC Format type */
+        FormatLFF, /**< LibreCAD Font File format. */
+        FormatCXF, /**< CAM Expert Font format. */
+        FormatJWW, /**< JWW Format type */
+        FormatJWC /**< JWC Format type */
     };
 
     /*
         Entity types returned by the rtti() method.
 
         NOTE: Dated 2 January, 2022, by Melwyn Francis Carlo:
-              If adding newer 'EntityDim's to the EntityType enumeration, 
-              then make sure that it is added between 'EntityDimAligned' and 
-              'EntityDimLeader'. If you do not wish to do so, then update the 
-              'RS_ActionDefault::highlightHoveredEntities' function at the 
+              If adding newer 'EntityDim's to the EntityType enumeration,
+              then make sure that it is added between 'EntityDimAligned' and
+              'EntityDimLeader'. If you do not wish to do so, then update the
+              'RS_ActionDefault::highlightHoveredEntities' function at the
               line starting 'if ((entity->rtti() >= EntityDimAligned) ...'.
     */
     enum EntityType : unsigned {
-      EntityUnknown,          /**< Unknown */
-      EntityContainer,        /**< Container */
-      EntityBlock,            /**< Block (Group definition) */
-      EntityFontChar,         /**< Font character */
-      EntityInsert,           /**< Insert (Group instance) */
-      EntityGraphic,          /**< Graphic with layers */
-      EntityPoint,            /**< Point */
-      EntityLine,             /**< Line */
-      EntityPolyline,         /**< Polyline */
-      EntityVertex,           /**< Vertex (part of a polyline) */
-      EntityArc,              /**< Arc */
-      EntityCircle,           /**< Circle */
-      EntityEllipse,          /**< Ellipse */
-      EntityHyperbola,        /**< Hyperbola */
-      EntitySolid,            /**< Solid */
-      EntityConstructionLine, /**< Construction line */
-      EntityMText,            /**< Multi-line Text */
-      EntityText,             /**< Single-line Text */
-      EntityDimAligned,       /**< Aligned Dimension */
-      EntityDimLinear,        /**< Linear Dimension */
-      EntityDimRadial,        /**< Radial Dimension */
-      EntityDimDiametric,     /**< Diametric Dimension */
-      EntityDimAngular,       /**< Angular Dimension */
-      EntityDimArc,           /**< Arc Dimension */
-      EntityDimOrdinate,
-      EntityTolerance,
-      EntityDimLeader,    /**< Leader Dimension */
-      EntityHatch,        /**< Hatch */
-      EntityImage,        /**< Image */
-      EntityWipeout,      /**< Wipeout (background-masking polygon) */
-      EntityMLeader,      /**< Multi-leader (callout with text/block content) */
-      EntitySpline,       /**< Spline */
-      EntitySplinePoints, /**< SplinePoints */
-      EntityParabola,     /**< Parabola */
-      EntityOverlayBox,   /**< OverlayBox */
-      EntityPreview,      /**< Preview Container */
-      EntityPattern,
-      EntityOverlayLine,
-      EntityRefPoint,
-      EntityRefLine,
-      EntityRefConstructionLine,
-      EntityRefArc,
-      EntityRefCircle,
-      EntityRefEllipse,
-      EntityDimArrowBlock
+        EntityUnknown, /**< Unknown */
+        EntityContainer, /**< Container */
+        EntityBlock, /**< Block (Group definition) */
+        EntityFontChar, /**< Font character */
+        EntityInsert, /**< Insert (Group instance) */
+        EntityGraphic, /**< Graphic with layers */
+        EntityPoint, /**< Point */
+        EntityLine, /**< Line */
+        EntityPolyline, /**< Polyline */
+        EntityVertex, /**< Vertex (part of a polyline) */
+        EntityArc, /**< Arc */
+        EntityCircle, /**< Circle */
+        EntityEllipse, /**< Ellipse */
+        EntityHyperbola, /**< Hyperbola */
+        EntitySolid, /**< Solid */
+        EntityConstructionLine, /**< Construction line */
+        EntityMText, /**< Multi-line Text */
+        EntityText, /**< Single-line Text */
+        EntityDimAligned, /**< Aligned Dimension */
+        EntityDimLinear, /**< Linear Dimension */
+        EntityDimRadial, /**< Radial Dimension */
+        EntityDimDiametric, /**< Diametric Dimension */
+        EntityDimAngular, /**< Angular Dimension */
+        EntityDimArc, /**< Arc Dimension */
+        EntityDimOrdinate,
+        EntityTolerance,
+        EntityDimLeader, /**< Leader Dimension */
+        EntityHatch, /**< Hatch */
+        EntityImage, /**< Image */
+        EntityWipeout,      /**< Wipeout (background-masking polygon) */
+        EntityMLeader,      /**< Multi-leader (callout with text/block content) */
+        EntitySpline, /**< Spline */
+        EntitySplinePoints, /**< SplinePoints */
+        EntityParabola, /**< Parabola */
+        EntityOverlayBox, /**< OverlayBox */
+        EntityPreview, /**< Preview Container */
+        EntityPattern,
+        EntityOverlayLine,
+        EntityRefPoint,
+        EntityRefLine,
+        EntityRefConstructionLine,
+        EntityRefArc,
+        EntityRefCircle,
+        EntityRefEllipse,
+        EntitySnapMark,
+        EntitySnapLine,
+        EntitySnapArc,
+        EntitySnapCircle,
+        EntitySnapConstructionLine,
+        EntityDimArrowBlock
     };
 
-    inline bool isDimensionalEntity(EntityType type)  {
+    inline bool isDimensionalEntity(const EntityType type) {
         return (type >= EntityDimAligned) && (type <= EntityDimLeader);
     }
 
-    inline bool isTextEntity(EntityType type) {
+    inline bool isTextEntity(const EntityType type) {
         return (type == EntityText) || (type == EntityMText);
     }
-
 
     /**
      * Action types used by action factories.
      */
     enum ActionType {
-        ActionNone,        /**< Invalid action id. */
+        ActionNone, /**< Invalid action id. */
 
         ActionDefault,
         ActionFileNew,
@@ -254,9 +261,11 @@ namespace RS2 {
         ActionDeselectIntersected,
         ActionSelectInvert,
         ActionSelectLayer,
-        ActionSelectDouble,
+        ActionSelectQuick,
+        ActionSelectGeneric,
         ActionGetSelect,
         ActionGetEntity,
+        ActionSelectModeToggle,
 
         ActionEntityInfoSelectSingle,
 
@@ -270,17 +279,17 @@ namespace RS2 {
         ActionDrawArc2PHeight,
         ActionDrawArcParallel,
         ActionDrawArcTangential,
-        ActionDrawCircle,
-        ActionDrawCircle2P,
-        ActionDrawCircle2PR,
-        ActionDrawCircle3P,
-        ActionDrawCircleCR,
+        ActionDrawCircleCenterPoint,
+        ActionDrawCircle2Points,
+        ActionDrawCircle2PointsRadius,
+        ActionDrawCircle3Points,
+        ActionDrawCircleCenterRadius,
         ActionDrawCircleParallel,
         ActionDrawCircleInscribe,
-        ActionDrawCircleTan2_1P,
-        ActionDrawCircleTan1_2P,
-        ActionDrawCircleTan2,
-        ActionDrawCircleTan3,
+        ActionDrawCircleTangental2Entities1Point,
+        ActionDrawCircleTangental1Entity2Points,
+        ActionDrawCircleTan2EntitiesRadius,
+        ActionDrawCircleTan3Entities,
         ActionDrawCircleByArc,
 
         ActionDrawDual,
@@ -294,17 +303,17 @@ namespace RS2 {
         ActionDrawEllipse1Point,
         ActionDrawEllipseArc1Point,
 
-        ActionDrawHyperbolaFP,
+        ActionDrawHyperbolaFoci2Points,
 
         ActionDrawParabola4Points,
-        ActionDrawParabolaFD,
+        ActionDrawParabolaFocusDiretrix,
 
         ActionDrawHatch,
         ActionDrawImage,
         ActionDrawLine,
         ActionDrawLineAngle,
         ActionDrawLineBisector,
-        ActionDrawLineFree,
+        ActionDrawLineFreehand,
         ActionDrawLineHorVert,
         ActionDrawLineHorizontal,
         ActionDrawLineOrthogonal,
@@ -312,7 +321,7 @@ namespace RS2 {
         ActionDrawLineParallel,
         ActionDrawLineParallelThrough,
         ActionDrawLinePolygonCenCor,
-        ActionDrawLinePolygonCenTan,//add by txmy
+        ActionDrawLinePolygonCenTan, //add by txmy
         ActionDrawLinePolygonCorCor,
         ActionDrawLinePolygonSideSide,
         ActionDrawLineRectangle,
@@ -320,7 +329,8 @@ namespace RS2 {
         ActionDrawLineTangent1,
         ActionDrawLineTangent2,
         ActionDrawLineVertical,
-        ActionDrawLineMiddle,
+        ActionDrawCenterLine,
+        ActionDrawLineRadiant,
         ActionDrawMText,
         ActionDrawPoint,
         ActionDrawSpline,
@@ -341,13 +351,13 @@ namespace RS2 {
         ActionDrawSnakeLine,
         ActionDrawSnakeLineX,
         ActionDrawSnakeLineY,
-        ActionDrawCross,
+        ActionDrawCenterMark,
         ActionDrawLineAngleRel,
         ActionDrawLineOrthogonalRel,
         ActionDrawLineFromPointToLine,
         ActionDrawSliceDivideLine,
         ActionDrawSliceDivideCircle,
-        ActionDrawLinePoints,
+        ActionDrawPointsLine,
         ActionDrawPointsMiddle,
         ActionDrawPointsLattice,
         ActionSelectPoints,
@@ -391,7 +401,7 @@ namespace RS2 {
         ActionModifyMirror,
         ActionModifyMoveRotate,
         ActionModifyRevertDirection,
-        ActionModifyRotate2,
+        ActionModifyRotateTwice,
         ActionModifyEntity,
         ActionModifyTrim,
         ActionModifyTrim2,
@@ -496,7 +506,6 @@ namespace RS2 {
         ActionPenCopy,
         ActionPenSyncFromLayer,
 
-
         ActionUCSCreate,
         ActionUCSSetByDimOrdinate,
         ActionDimOrdByOriginSelect,
@@ -504,25 +513,26 @@ namespace RS2 {
         ActionGTDFCFrame,
 
         ActionInteractivePickPoint,
+        ActionInteractivePickPoint_X,
+        ActionInteractivePickPoint_Y,
         ActionInteractivePickLength,
         ActionInteractivePickAngle,
         /** Needed to loop through all actions */
         ActionLast
     };
 
-    inline bool isInteractiveInputAction(ActionType type) {
-        return type == ActionInteractivePickPoint ||
-               type == ActionInteractivePickLength ||
-               type == ActionInteractivePickAngle;
+    inline bool isInteractiveInputAction(const ActionType type) {
+        return type == ActionInteractivePickPoint || type == ActionInteractivePickPoint_X || type == ActionInteractivePickPoint_Y || type ==
+            ActionInteractivePickLength || type == ActionInteractivePickAngle;
     }
 
     /**
     * Entity ending. Used for returning which end of an entity is meant.
      */
     enum Ending {
-        EndingStart,    /**< Start point. */
-        EndingEnd,      /**< End point. */
-        EndingNone      /**< Neither. */
+        EndingStart, /**< Start point. */
+        EndingEnd, /**< End point. */
+        EndingNone /**< Neither. */
     };
 
     /**
@@ -530,60 +540,59 @@ namespace RS2 {
      * they change. e.g. texts, inserts, ...
      */
     enum UpdateMode {
-        NoUpdate,       /**< No automatic updates. */
-        Update,         /**< Always update automatically when modified. */
-        PreviewUpdate   /**< Update automatically but only for previews (quick update) */
+        NoUpdate, /**< No automatic updates. */
+        Update, /**< Always update automatically when modified. */
+        PreviewUpdate /**< Update automatically but only for previews (quick update) */
     };
 
     /**
      * Drawing mode.
      */
     enum DrawingMode {
-        ModeFull,       /**< Draw everything always detailed (default) */
-        ModeAuto,       /**< Draw details when reasonable */
-        ModePreview,    /**< Draw only in black/white without styles */
-        ModeBW,         /**< Black/white. Can be used for printing. */
-        ModeWB,         /**< White/black, used for export */
+        ModeFull, /**< Draw everything always detailed (default) */
+        ModeAuto, /**< Draw details when reasonable */
+        ModePreview, /**< Draw only in black/white without styles */
+        ModeBW, /**< Black/white. Can be used for printing. */
+        ModeWB, /**< White/black, used for export */
     };
 
     /**
      * Undoable rtti.
      */
     enum UndoableType {
-        UndoableUnknown,    /**< Unknown undoable */
-        UndoableEntity,     /**< Entity */
-        UndoableLayer       /**< Layer */
+        UndoableUnknown, /**< Unknown undoable */
+        UndoableEntity, /**< Entity */
+        UndoableLayer /**< Layer */
     };
 
     /**
      * Units.
      */
     enum Unit {
-        None = 0,               /**< No unit (unit from parent) */
-        Inch = 1,               /**< Inch */
-        Foot = 2,               /**< Foot: 12 Inches */
-        Mile = 3,               /**< Mile: 1760 Yards = 1609 m */
-        Millimeter = 4,         /**< Millimeter: 0.001m */
-        Centimeter = 5,         /**< Centimeter: 0.01m */
-        Meter = 6,              /**< Meter */
-        Kilometer = 7,          /**< Kilometer: 1000m */
-        Microinch = 8,          /**< Microinch: 0.000001 */
-        Mil = 9,                /**< Mil = 0.001 Inch*/
-        Yard = 10,              /**< Yard: 3 Feet */
-        Angstrom = 11,          /**< Angstrom: 10^-10m  */
-        Nanometer = 12,         /**< Nanometer: 10^-9m  */
-        Micron = 13,            /**< Micron: 10^-6m  */
-        Decimeter = 14,         /**< Decimeter: 0.1m */
-        Decameter = 15,         /**< Decameter: 10m */
-        Hectometer = 16,        /**< Hectometer: 100m */
-        Gigameter = 17,         /**< Gigameter: 1000000m */
-        Astro = 18,             /**< Astro: 149.6 x 10^9m */
-        Lightyear = 19,         /**< Lightyear: 9460731798 x 10^6m */
-        Parsec = 20,            /**< Parsec: 30857 x 10^12 */
+        None       = 0, /**< No unit (unit from parent) */
+        Inch       = 1, /**< Inch */
+        Foot       = 2, /**< Foot: 12 Inches */
+        Mile       = 3, /**< Mile: 1760 Yards = 1609 m */
+        Millimeter = 4, /**< Millimeter: 0.001m */
+        Centimeter = 5, /**< Centimeter: 0.01m */
+        Meter      = 6, /**< Meter */
+        Kilometer  = 7, /**< Kilometer: 1000m */
+        Microinch  = 8, /**< Microinch: 0.000001 */
+        Mil        = 9, /**< Mil = 0.001 Inch*/
+        Yard       = 10, /**< Yard: 3 Feet */
+        Angstrom   = 11, /**< Angstrom: 10^-10m  */
+        Nanometer  = 12, /**< Nanometer: 10^-9m  */
+        Micron     = 13, /**< Micron: 10^-6m  */
+        Decimeter  = 14, /**< Decimeter: 0.1m */
+        Decameter  = 15, /**< Decameter: 10m */
+        Hectometer = 16, /**< Hectometer: 100m */
+        Gigameter  = 17, /**< Gigameter: 1000000m */
+        Astro      = 18, /**< Astro: 149.6 x 10^9m */
+        Lightyear  = 19, /**< Lightyear: 9460731798 x 10^6m */
+        Parsec     = 20, /**< Parsec: 30857 x 10^12 */
 
-        LastUnit = 21           /**< Used to iterate through units */
+        LastUnit = 21 /**< Used to iterate through units */
     };
-
 
     /**
      * Format for length values.
@@ -607,9 +616,9 @@ namespace RS2 {
      * Angle Units.
      */
     enum AngleUnit {
-        Deg,               /**< Degrees */
-        Rad,               /**< Radians */
-        Gra                /**< Gradians */
+        Deg, /**< Degrees */
+        Rad, /**< Radians */
+        Gra /**< Gradians */
     };
 
     /**
@@ -660,25 +669,24 @@ namespace RS2 {
         Up, Left, Right, Down
     };
 
-	enum SubWindowMode {
-		CurrentMode = -1, Maximized, Cascade, Tile, TileVertical, TileHorizontal
-	};
+    enum SubWindowMode {
+        CurrentMode = -1, Maximized, Cascade, Tile, TileVertical, TileHorizontal
+    };
 
-	enum TabShape {
-		AnyShape = -1, Rounded, Triangular
-	};
+    enum TabShape {
+        AnyShape = -1, Rounded, Triangular
+    };
 
-	enum TabPosition {
-		AnyPosition = -1, North, South, West, East
-	};
-
+    enum TabPosition {
+        AnyPosition = -1, North, South, West, East
+    };
 
     /**
      * Leader path type.
      */
     enum LeaderPathType {
-        Straight,      /**< Straight line segments */
-        Spline         /**< Splines */
+        Straight, /**< Straight line segments */
+        Spline /**< Splines */
     };
 
     /**
@@ -701,13 +709,13 @@ namespace RS2 {
      * Grid View type
      */
     enum IsoGridViewType {
-        IsoLeft,         /**< Left type isometric view */
-        IsoTop,         /**< Top type isometric view */
-        IsoRight,       /**< Right type isometric view */
+        IsoLeft, /**< Left type isometric view */
+        IsoTop, /**< Top type isometric view */
+        IsoRight, /**< Right type isometric view */
         Ortho
     };
 
-    enum CrossHairType{
+    enum CrossHairType {
         GridCrosshair,
         SpiderWebCrosshair,
     };
@@ -716,106 +724,164 @@ namespace RS2 {
      * Snapping modes
      */
     enum SnapMode {
-        SnapFree,         /**< Free positioning */
-        SnapGrid,         /**< Snap to grid points */
-        SnapEndpoint,     /**< Snap to endpoints */
-        SnapMiddle,       /**< Snap to middle points */
-        SnapCenter,       /**< Snap to centers */
-        SnapOnEntity,     /**< Snap to the next point on an entity */
-        SnapDist,         /**< Snap to points with a distance to an endpoint */
+        SnapFree, /**< Free positioning */
+        SnapGrid, /**< Snap to grid points */
+        SnapEndpoint, /**< Snap to endpoints */
+        SnapMiddle, /**< Snap to middle points */
+        SnapCenter, /**< Snap to centers */
+        SnapOnEntity, /**< Snap to the next point on an entity */
+        SnapDist, /**< Snap to points with a distance to an endpoint */
         SnapIntersection, /**< Snap to intersection */
-        SnapIntersectionManual  /**< Snap to intersection manually */
+        SnapIntersectionManual /**< Snap to intersection manually */
     };
 
     /**
      * Snap restrictions
      */
     enum SnapRestriction {
-        RestrictNothing,        /**< No restriction to snap mode */
-        RestrictHorizontal,     /**< Restrict to 0,180 degrees */
-        RestrictVertical,       /**< Restrict to 90,270 degrees */
-        RestrictOrthogonal      /**< Restrict to 90,180,270,0 degrees */
+        RestrictNothing, /**< No restriction to snap mode */
+        RestrictHorizontal, /**< Restrict to 0,180 degrees */
+        RestrictVertical, /**< Restrict to 90,270 degrees */
+        RestrictOrthogonal /**< Restrict to 90,180,270,0 degrees */
+    };
+
+    enum SnapType {
+        FREE = -1,
+        GRID,
+        ENTITY,
+        ENDPOINT,
+        INTERSECTION,
+        MIDDLE,
+        DISTANCE,
+        CENTER,
+        ANGLE,
+        ANGLE_REL,
+        ANGLE_ON_ENTITY,
+        VISUAL_SNAP,
+        NO_SNAP
+    };
+
+    enum VisualSnapGuideEntityType {
+        VSNAP_NONE,
+        VSNAP_LINE_VERTEX_HORIZONTAL,
+        VSNAP_LINE_VERTEX_VERTICAL,
+        VSNAP_LINE_VERTEX_VERTEX,
+        VSNAP_LINE_VERTEX_ORTHO,
+        VSNAP_LINE_VERTEX_VERTEX_ORTHO,
+        VSNAP_LINE_VERTEX_ANGLE_STEP,
+        VSNAP_LINE_ENDPOINT_TANGENT,
+        VSNAP_LINE_ENDPOINT_NORMAL,
+        VSNAP_LINE_ENDPOINT_ANGLE_STEP,
+        VSNAP_LINE_RAY,
+        VSNAP_LINE_TANGENT1,
+        VSNAP_LINE_TANGENT2,
+        VSNAP_LINE_DISTANCE_TANGENT2,
+        VSNAP_POINT_MIDDLE,
+        VSNAP_POINT_DISTANCE_EXPLICIT,
+        VSNAP_POINT_DISTANCE_VERTEX,
+        VSNAP_POINT_RELATIVE_DISTANCE,
+        VSNAP_POINT_RELATIVE_NORMAL,
+        VSNAP_POINT_RELATIVE_ANGLE_RAY,
+        VSNAP_POINT_RELATIVE_VERTICAL_DX,
+        VSNAP_POINT_RELATIVE_HORIZONTAL_DY,
+        VSNAP_DOC_ENTITY,
+        VSNAP_LINE_RESTR_HORIZONTAL,
+        VSNAP_LINE_RESTR_VERTICAL
+    };
+
+    enum RelativePointParam{
+        REL_POINT_LENGTH,
+        REL_POINT_ANGLE,
+        REL_POINT_DX,
+        REL_POINT_DY,
+        REL_POINT_X,
+        REL_POINT_Y
+    };
+
+    struct LC_VisualSnapIntersectionInfo {
+        VisualSnapGuideEntityType entity1 = RS2::VSNAP_NONE;
+        VisualSnapGuideEntityType entity2 = RS2::VSNAP_NONE;
+        double rayAngle1{-1.0};
+        double rayAngle2{-1.0};
     };
 
     /**
      * Enum of line styles:
      */
-    enum LineType : short{
-        LineByBlock = -2,      /**< Line type defined by block not entity */
-        LineByLayer = -1,     /**< Line type defined by layer not entity */
-        NoPen = 0,            /**< No line at all. */
-        SolidLine = 1,        /**< Normal line. */
+    enum LineType : short {
+        LineByBlock = -2, /**< Line type defined by block not entity */
+        LineByLayer = -1, /**< Line type defined by layer not entity */
+        NoPen       = 0, /**< No line at all. */
+        SolidLine   = 1, /**< Normal line. */
 
-        DotLine = 2,          /**< Dotted line. */
-        DotLineTiny = 3,          /**< Dotted line tiny */
-        DotLine2 = 4,         /**< Dotted line small. */
-        DotLineX2 = 5,        /**< Dotted line large. */
+        DotLine     = 2, /**< Dotted line. */
+        DotLineTiny = 3, /**< Dotted line tiny */
+        DotLine2    = 4, /**< Dotted line small. */
+        DotLineX2   = 5, /**< Dotted line large. */
 
-        DashLine = 6,         /**< Dashed line. */
-        DashLineTiny=7,       /**< Dashed line tiny */
-        DashLine2 = 8,        /**< Dashed line small. */
-        DashLineX2 = 9,       /**< Dashed line large. */
+        DashLine     = 6, /**< Dashed line. */
+        DashLineTiny = 7, /**< Dashed line tiny */
+        DashLine2    = 8, /**< Dashed line small. */
+        DashLineX2   = 9, /**< Dashed line large. */
 
-        DashDotLine = 10,      /**< Alternate dots and dashes. */
-        DashDotLineTiny = 11,      /**< Alternate dots and dashes tiny. */
-        DashDotLine2 = 12,     /**< Alternate dots and dashes small. */
-        DashDotLineX2 = 13,   /**< Alternate dots and dashes large. */
+        DashDotLine     = 10, /**< Alternate dots and dashes. */
+        DashDotLineTiny = 11, /**< Alternate dots and dashes tiny. */
+        DashDotLine2    = 12, /**< Alternate dots and dashes small. */
+        DashDotLineX2   = 13, /**< Alternate dots and dashes large. */
 
-        DivideLine = 14,      /**< dash, dot, dot. */
-        DivideLineTiny = 15,      /**< dash, dot, dot, tiny */
-        DivideLine2 = 16,     /**< dash, dot, dot small. */
-        DivideLineX2 = 17,    /**< dash, dot, dot large. */
+        DivideLine     = 14, /**< dash, dot, dot. */
+        DivideLineTiny = 15, /**< dash, dot, dot, tiny */
+        DivideLine2    = 16, /**< dash, dot, dot small. */
+        DivideLineX2   = 17, /**< dash, dot, dot large. */
 
-        CenterLine = 18,      /**< dash, small dash. */
-        CenterLineTiny = 19,      /**< dash, small dash tiny */
-        CenterLine2 = 20,     /**< dash, small dash small. */
-        CenterLineX2 = 21,    /**< dash, small dash large. */
+        CenterLine     = 18, /**< dash, small dash. */
+        CenterLineTiny = 19, /**< dash, small dash tiny */
+        CenterLine2    = 20, /**< dash, small dash small. */
+        CenterLineX2   = 21, /**< dash, small dash large. */
 
-        BorderLine = 22,      /**< dash, dash, dot. */
-        BorderLineTiny = 23,      /**< dash, dash, dot tiny */
-        BorderLine2 = 24,     /**< dash, dash, dot small. */
-        BorderLineX2 = 25,    /**< dash, dash, dot large. */
+        BorderLine     = 22, /**< dash, dash, dot. */
+        BorderLineTiny = 23, /**< dash, dash, dot tiny */
+        BorderLine2    = 24, /**< dash, dash, dot small. */
+        BorderLineX2   = 25, /**< dash, dash, dot large. */
 
-        LineTypeUnchanged=26,      /**< Line type defined by block not entity */
-        LineSelected=27      /**< Line type for selected */
+        LineTypeUnchanged = 26, /**< Line type defined by block not entity */
+        LineSelected      = 27 /**< Line type for selected */
     };
-
 
     /**
      * Enum of line widths:
      */
     enum LineWidth {
-        Width00 = 0,       /**< Width 1.  (0.00mm) */
-        Width01 = 5,       /**< Width 2.  (0.05mm) */
-        Width02 = 9,       /**< Width 3.  (0.09mm) */
-        Width03 = 13,      /**< Width 4.  (0.13mm) */
-        Width04 = 15,      /**< Width 5.  (0.15mm) */
-        Width05 = 18,      /**< Width 6.  (0.18mm) */
-        Width06 = 20,      /**< Width 7.  (0.20mm) */
-        Width07 = 25,      /**< Width 8.  (0.25mm) */
-        Width08 = 30,      /**< Width 9.  (0.30mm) */
-        Width09 = 35,      /**< Width 10. (0.35mm) */
-        Width10 = 40,      /**< Width 11. (0.40mm) */
-        Width11 = 50,      /**< Width 12. (0.50mm) */
-        Width12 = 53,      /**< Width 13. (0.53mm) */
-        Width13 = 60,      /**< Width 14. (0.60mm) */
-        Width14 = 70,      /**< Width 15. (0.70mm) */
-        Width15 = 80,      /**< Width 16. (0.80mm) */
-        Width16 = 90,      /**< Width 17. (0.90mm) */
-        Width17 = 100,     /**< Width 18. (1.00mm) */
-        Width18 = 106,     /**< Width 19. (1.06mm) */
-        Width19 = 120,     /**< Width 20. (1.20mm) */
-        Width20 = 140,     /**< Width 21. (1.40mm) */
-        Width21 = 158,     /**< Width 22. (1.58mm) */
-        Width22 = 200,     /**< Width 23. (2.00mm) */
-        Width23 = 211,     /**< Width 24. (2.11mm) */
-        WidthByLayer = -1, /**< Line width defined by layer not entity. */
-        WidthByBlock = -2, /**< Line width defined by block not entity. */
-        WidthDefault = -3,  /**< Line width defaults to the predefined line width. */
-        WidthByDIPs = -4,   /*  kLnWtByDIPs*/
+        Width00        = 0, /**< Width 1.  (0.00mm) */
+        Width01        = 5, /**< Width 2.  (0.05mm) */
+        Width02        = 9, /**< Width 3.  (0.09mm) */
+        Width03        = 13, /**< Width 4.  (0.13mm) */
+        Width04        = 15, /**< Width 5.  (0.15mm) */
+        Width05        = 18, /**< Width 6.  (0.18mm) */
+        Width06        = 20, /**< Width 7.  (0.20mm) */
+        Width07        = 25, /**< Width 8.  (0.25mm) */
+        Width08        = 30, /**< Width 9.  (0.30mm) */
+        Width09        = 35, /**< Width 10. (0.35mm) */
+        Width10        = 40, /**< Width 11. (0.40mm) */
+        Width11        = 50, /**< Width 12. (0.50mm) */
+        Width12        = 53, /**< Width 13. (0.53mm) */
+        Width13        = 60, /**< Width 14. (0.60mm) */
+        Width14        = 70, /**< Width 15. (0.70mm) */
+        Width15        = 80, /**< Width 16. (0.80mm) */
+        Width16        = 90, /**< Width 17. (0.90mm) */
+        Width17        = 100, /**< Width 18. (1.00mm) */
+        Width18        = 106, /**< Width 19. (1.06mm) */
+        Width19        = 120, /**< Width 20. (1.20mm) */
+        Width20        = 140, /**< Width 21. (1.40mm) */
+        Width21        = 158, /**< Width 22. (1.58mm) */
+        Width22        = 200, /**< Width 23. (2.00mm) */
+        Width23        = 211, /**< Width 24. (2.11mm) */
+        WidthByLayer   = -1, /**< Line width defined by layer not entity. */
+        WidthByBlock   = -2, /**< Line width defined by block not entity. */
+        WidthDefault   = -3, /**< Line width defaults to the predefined line width. */
+        WidthByDIPs    = -4, /*  kLnWtByDIPs*/
         WidthUnchanged = -10 /* utility type for not changed line width during editing*/
     };
-
 
     /**
      * Wrapper for Qt
@@ -829,30 +895,30 @@ namespace RS2 {
      * Enum of cursor types.
      */
     enum CursorType {
-        ArrowCursor,          /**< ArrowCursor - standard arrow cursor. */
-        UpArrowCursor,        /**< UpArrowCursor - upwards arrow. */
-        CrossCursor,          /**< CrossCursor - crosshair. */
-        WaitCursor,           /**< WaitCursor - hourglass/watch. */
-        IbeamCursor,          /**< IbeamCursor - ibeam/text entry. */
-        SizeVerCursor,        /**< SizeVerCursor - vertical resize. */
-        SizeHorCursor,        /**< SizeHorCursor - horizontal resize. */
-        SizeBDiagCursor,      /**< SizeBDiagCursor - diagonal resize (/). */
-        SizeFDiagCursor,      /**< SizeFDiagCursor - diagonal resize (\). */
-        SizeAllCursor,        /**< SizeAllCursor - all directions resize. */
-        BlankCursor,          /**< BlankCursor - blank/invisible cursor. */
-        SplitVCursor,         /**< SplitVCursor - vertical splitting. */
-        SplitHCursor,         /**< SplitHCursor - horizontal splitting. */
-        PointingHandCursor,   /**< PointingHandCursor - a pointing hand. */
-        ForbiddenCursor,      /**< ForbiddenCursor - a slashed circle. */
-        WhatsThisCursor,      /**< WhatsThisCursor - an arrow with a ?. */
-        OpenHandCursor,       /**< Qt OpenHandCursor */
-        ClosedHandCursor,     /**< Qt ClosedHandCursor */
-        CadCursor,            /**< CadCursor - a bigger cross. */
-        DelCursor,            /**< DelCursor - cursor for choosing entities */
-        SelectCursor,         /**< SelectCursor - for selecting single entities */
-        MagnifierCursor,      /**< MagnifierCursor - a magnifying glass. */
-        MovingHandCursor,      /**< Moving hand - a little flat hand. */
-        NoCursorChange        /**< special value to indicate that no cursor change is requested. */
+        ArrowCursor, /**< ArrowCursor - standard arrow cursor. */
+        UpArrowCursor, /**< UpArrowCursor - upwards arrow. */
+        CrossCursor, /**< CrossCursor - crosshair. */
+        WaitCursor, /**< WaitCursor - hourglass/watch. */
+        IbeamCursor, /**< IbeamCursor - ibeam/text entry. */
+        SizeVerCursor, /**< SizeVerCursor - vertical resize. */
+        SizeHorCursor, /**< SizeHorCursor - horizontal resize. */
+        SizeBDiagCursor, /**< SizeBDiagCursor - diagonal resize (/). */
+        SizeFDiagCursor, /**< SizeFDiagCursor - diagonal resize (\). */
+        SizeAllCursor, /**< SizeAllCursor - all directions resize. */
+        BlankCursor, /**< BlankCursor - blank/invisible cursor. */
+        SplitVCursor, /**< SplitVCursor - vertical splitting. */
+        SplitHCursor, /**< SplitHCursor - horizontal splitting. */
+        PointingHandCursor, /**< PointingHandCursor - a pointing hand. */
+        ForbiddenCursor, /**< ForbiddenCursor - a slashed circle. */
+        WhatsThisCursor, /**< WhatsThisCursor - an arrow with a ?. */
+        OpenHandCursor, /**< Qt OpenHandCursor */
+        ClosedHandCursor, /**< Qt ClosedHandCursor */
+        CadCursor, /**< CadCursor - a bigger cross. */
+        DelCursor, /**< DelCursor - cursor for choosing entities */
+        SelectCursor, /**< SelectCursor - for selecting single entities */
+        MagnifierCursor, /**< MagnifierCursor - a magnifying glass. */
+        MovingHandCursor, /**< Moving hand - a little flat hand. */
+        NoCursorChange /**< special value to indicate that no cursor change is requested. */
     };
 
     /**
@@ -863,109 +929,105 @@ namespace RS2 {
         Custom = FirstPaperFormat,
 
         /* ISO "A" Series */
-        A0,   /* 841 x 1189 mm	33.1 x 46.8 in */
-        A1,   /* 594 x 841 mm	23.4 x 33.1 in */
-        A2,   /* 420 x 594 mm	16.5 x 23.4 in */
-        A3,   /* 297 x 420 mm	11.7 x 16.5 in */
-        A4,   /* 210 x 297 mm	8.3 x 11.7 in  */
+        A0, /* 841 x 1189 mm	33.1 x 46.8 in */
+        A1, /* 594 x 841 mm	23.4 x 33.1 in */
+        A2, /* 420 x 594 mm	16.5 x 23.4 in */
+        A3, /* 297 x 420 mm	11.7 x 16.5 in */
+        A4, /* 210 x 297 mm	8.3 x 11.7 in  */
 
         /* Removed ISO "B" and "C" series, C5E, Comm10E, DLE, (envelope sizes) */
 
         /* US "Office" */
-        Letter,   /* 216 x 279 mm   8.5 x 11.0 in */
-        Legal,    /* 216 x 356 mm   8.5 x 14.0 in */
-        Tabloid,  /* 279 x 432 mm   11.0 x 17.0 in */
-        /* Tabloid = Ledger = ANSI B.  Although, technically, both ANSI B and  
-           Ledger are defined in the qt library as 431.8 mm x 279.4 mm / 17 
-           x 11", while Tabloid is 279 x 432 mm / 11.0 x 17.0 in .  Using either 
-           "Ledger" or "AnsiB" will result in the wrong page orientation when 
+        Letter, /* 216 x 279 mm   8.5 x 11.0 in */
+        Legal, /* 216 x 356 mm   8.5 x 14.0 in */
+        Tabloid, /* 279 x 432 mm   11.0 x 17.0 in */
+        /* Tabloid = Ledger = ANSI B.  Although, technically, both ANSI B and
+           Ledger are defined in the qt library as 431.8 mm x 279.4 mm / 17
+           x 11", while Tabloid is 279 x 432 mm / 11.0 x 17.0 in .  Using either
+           "Ledger" or "AnsiB" will result in the wrong page orientation when
            printing or exporting to PDF.) */
 
         /* ANSI */
         //Ansi_A,   /* 216 x 279 mm	8.5 x 11.0 in */
         //Ansi_B,   /* 279 x 432 mm	11.0 x 17.0 in */
-        Ansi_C,   /* 432 x 559 mm	17.0 x 22.0 in */
-        Ansi_D,   /* 559 x 864 mm	22.0 x 34.0 in */
-        Ansi_E,   /* 864 x 1118 mm	34.0 x 44.0 in */
+        Ansi_C, /* 432 x 559 mm	17.0 x 22.0 in */
+        Ansi_D, /* 559 x 864 mm	22.0 x 34.0 in */
+        Ansi_E, /* 864 x 1118 mm	34.0 x 44.0 in */
 
         /* Architectural */
-        Arch_A,    /* 229 x 305 mm	9.0 x 12.0 in */
-        Arch_B,    /* 305 x 457 mm	12.0 x 18.0 in */
-        Arch_C,    /* 457 x 610 mm	18.0 x 24.0 in */
-        Arch_D,    /* 610 x 914 mm	24.0 x 36.0 in */
-        Arch_E,    /* 914 x 1219 mm	36.0 x 48.0 in */
+        Arch_A, /* 229 x 305 mm	9.0 x 12.0 in */
+        Arch_B, /* 305 x 457 mm	12.0 x 18.0 in */
+        Arch_C, /* 457 x 610 mm	18.0 x 24.0 in */
+        Arch_D, /* 610 x 914 mm	24.0 x 36.0 in */
+        Arch_E, /* 914 x 1219 mm	36.0 x 48.0 in */
 
         NPageFormat
     };
 
-        /**
-         * Items that can be put on a overlay, the items are rendered in this order. Best is to leave snapper as last so
-         * it always shows up
-         */
-        enum OverlayGraphics: short {
-                OverlayEffects = 0,      // special effects, like glowing on hover
-                ActionPreviewEntity = 1, // Action Entities
-                Snapper = 2,             // Snapper
-                InfoCursor = 3,          // Info Cursor
-                LAST
-        };
+    /**
+     * Items that can be put on a overlay, the items are rendered in this order. Best is to leave snapper as last so
+     * it always shows up
+     */
+    enum OverlayGraphics: short {
+        OverlayEffects      = 0, // special effects, like glowing on hover
+        ActionPreviewEntity = 1, // Action Entities
+        Snapper             = 2, // Snapper
+        InfoCursor          = 3, // Info Cursor
+        PermanentHighlights = 4,
+        LAST                = 5
+    };
 
-        //Different re-draw methods to speed up rendering of the screen
-        enum RedrawMethod {
-                RedrawNone = 0,
-                RedrawGrid = 1,
-                RedrawOverlay = 2,
-                RedrawDrawing = 4,
-                RedrawAll = 0xffff
-        };
+    //Different re-draw methods to speed up rendering of the screen
+    enum RedrawMethod {
+        RedrawNone    = 0,
+        RedrawGrid    = 1,
+        RedrawOverlay = 2,
+        RedrawDrawing = 4,
+        RedrawAll     = RedrawGrid + RedrawOverlay + RedrawDrawing
+    };
 
-        /**
-         * Text drawing direction.
-         */
-        enum TextLocaleDirection {
-            locLeftToRight,     /** Left to right **/
-            locRightToLeft      /** Right to Left **/
-        };
+    /**
+     * Text drawing direction.
+     */
+    enum TextLocaleDirection {
+        locLeftToRight, /** Left to right **/
+        locRightToLeft /** Right to Left **/
+    };
 
+    enum EntityDescriptionLevel {
+        DescriptionCatched,
+        DescriptionLong,
+        DescriptionCreating,
+        DescriptionModifying
+    };
 
-        enum EntityDescriptionLevel{
-            DescriptionCatched,
-            DescriptionLong,
-            DescriptionCreating,
-            DescriptionModifying
-        };
+    /**
+     * Curve end point type
+     */
+    enum class EndPointType: short {
+        Start = 0,
+        End   = 1
+    };
+}
 
-        /**
-         * Curve end point type
-         */
-        enum class EndPointType: short {
-            Start = 0,
-            End = 1
-        };
-
-
-};
-
-namespace Text
-{
+namespace Text {
     /**
 * Vertical alignments.
 */
     enum VAlign {
-        VATop,    /**< Top. */
+        VATop, /**< Top. */
         VAMiddle, /**< Middle */
-        VABottom  /**< Bottom */
-      };
+        VABottom /**< Bottom */
+    };
 
     /**
      * Horizontal alignments.
      */
     enum HAlign {
-        HALeft,   /**< Left */
+        HALeft, /**< Left */
         HACenter, /**< Centered */
-        HARight   /**< Right */
-      };
-
+        HARight /**< Right */
+    };
 
     /**
      * MText drawing direction.
@@ -974,23 +1036,23 @@ namespace Text
         LeftToRight, /**< Left to right */
         RightToLeft, /**< Right to left*/
         TopToBottom, /**< Top to bottom */
-        ByStyle      /**< Inherited from associated text style */
-      };
+        ByStyle /**< Inherited from associated text style */
+    };
 
     /**
      * Line spacing style for MTexts.
      */
     enum MTextLineSpacingStyle {
         AtLeast, /**< Taller characters will override */
-        Exact    /**< Taller characters will not override */
-      };
+        Exact /**< Taller characters will not override */
+    };
 
     /**
    * Text drawing direction.
    */
     enum TextGeneration {
-        None,      /**< Normal text */
-        Backward,  /**< Mirrored in X */
+        None, /**< Normal text */
+        Backward, /**< Mirrored in X */
         UpsideDown /**< Mirrored in Y */
     };
 }

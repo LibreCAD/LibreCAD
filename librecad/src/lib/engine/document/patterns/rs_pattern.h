@@ -24,7 +24,6 @@
 **
 **********************************************************************/
 
-
 #ifndef RS_PATTERN_H
 #define RS_PATTERN_H
 
@@ -41,23 +40,25 @@ class RS_PatternList;
  */
 class RS_Pattern : public RS_EntityContainer {
 public:
-    RS_Pattern(const QString& fileName);
+    explicit RS_Pattern(const QString& fileName);
+
     RS2::EntityType rtti() const override {
-		return RS2::EntityPattern;
-	}
+        return RS2::EntityPattern;
+    }
+
     RS_Entity* clone() const override;
 
     virtual bool loadPattern();
-	
+
     /** @return the fileName of this pattern. */
-	QString getFileName() const;
+    QString getFileName() const;
 
 protected:
     //! Pattern file name
-    QString fileName;
+    QString m_fileName;
 
     //! Is this pattern currently loaded into memory?
-    bool loaded = false;
+    bool m_loaded = false;
 };
 
 #endif

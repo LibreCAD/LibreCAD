@@ -25,13 +25,14 @@
 **
 **********************************************************************/
 
-
 #ifndef RS_FILTERINTERFACE_H
 #define RS_FILTERINTERFACE_H
 
-#include "rs_graphic.h"
-
 #include <QObject>
+
+#include "rs.h"
+
+class RS_Graphic;
 
 /**
  * This is the interface that must be implemented for all 
@@ -46,12 +47,12 @@ public:
     /**
      * Constructor.
      */
-	RS_FilterInterface() = default;
+    RS_FilterInterface() = default;
 
     /**
      * Destructor.
      */
-	virtual ~RS_FilterInterface()=default;
+    virtual ~RS_FilterInterface() = default;
 
     /**
      * Checks if this filter can import the given file type.
@@ -59,7 +60,7 @@ public:
      * @retval true if the filter can import the file type 
      * @retval false otherwise.
      */
-    virtual bool canImport(const QString &fileName, RS2::FormatType t) const = 0;
+    virtual bool canImport(const QString& fileName, RS2::FormatType t) const = 0;
 
     /**
      * Checks if this filter can export the given file type.
@@ -67,7 +68,7 @@ public:
      * @return true if the filter can export the file type, 
      *         false otherwise.
      */
-    virtual bool canExport(const QString &fileName, RS2::FormatType t) const = 0;
+    virtual bool canExport(const QString& fileName, RS2::FormatType t) const = 0;
 
     /**
      * The implementation of this method in a inherited format
@@ -89,21 +90,23 @@ public:
      * It is strongly recommend for new implementations to overwrite this method with some useful error messages.
      */
     virtual QString lastError() const {
-        return QObject::tr( "undefined error", "RS_FilterInterface");
-    };
+        return QObject::tr("undefined error", "RS_FilterInterface");
+    }
 
     /**
      * Request the error code for the last import/export action.
      * The default value 0 means no error.
      */
     virtual int lastErrorCode() const {
-        return errorCode;
-    };
+        return m_errorCode;
+    }
 
-    static RS_FilterInterface * createFilter(){return NULL;}
+    static RS_FilterInterface* createFilter() {
+        return nullptr;
+    }
 
 protected:
-    int errorCode {0};  //< error code for last import/export action
+    int m_errorCode{0}; //< error code for last import/export action
 };
 
 #endif

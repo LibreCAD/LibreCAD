@@ -87,8 +87,7 @@ private:
 //    dwgBuffer* bufObj;
     duint32 checksum(duint32 seed, duint8* data, duint64 sz);
 
-private:
-    duint32 securityFlags;
+duint32 securityFlags;
 };
 
-#endif // DWGREADER18_H
+#endif

@@ -31,30 +31,30 @@
 
 struct LC_UCSMarkOptions{
     /** coordinate origin marker */
-    bool m_showUCSZeroMarker = false;
-    bool m_showWCSZeroMarker = true;
-    int m_csZeroMarkerSize = 30;
-    int m_csZeroMarkerFontSize = 10;
-    QString m_csZeroMarkerfontName = "Verdana";
-    QFont m_csZeroMarkerFont = QFont("Arial", 10);
-    RS_Color m_colorXAxisExtension = Qt::red;
-    RS_Color m_colorYAxisExtension = Qt::green;
-    RS_Color m_colorAngleMark = Qt::yellow;
+    bool showUcsZeroMarker = false;
+    bool showWcsZeroMarker = true;
+    int csZeroMarkerSize = 30;
+    int csZeroMarkerFontSize = 10;
+    QString csZeroMarkerfontName = "Verdana";
+    QFont csZeroMarkerFont = QFont("Arial", 10);
+    RS_Color colorXAxisExtension = RS_Color(Qt::red);
+    RS_Color colorYAxisExtension = RS_Color(Qt::green);
+    RS_Color colorAngleMark = RS_Color(Qt::yellow);
     void loadSettings();
 };
 
 
 class LC_OverlayUCSMark:public LC_OverlayDrawable{
 public:
-    LC_OverlayUCSMark(RS_Vector uiOrigin, double xAxisAngle, bool forWcs, LC_UCSMarkOptions *options);
+    LC_OverlayUCSMark(const RS_Vector& uiOrigin, double xAxisAngle, bool forWcs, LC_UCSMarkOptions *options);
     explicit LC_OverlayUCSMark(LC_UCSMarkOptions *options) ;
     void draw(RS_Painter *painter) override;
-    void update(RS_Vector uiPos, double xAngle, bool wcs);
+    void update(const RS_Vector& uiPos, double xAngle, bool wcs);
 protected:
-    RS_Vector uiOrigin;
-    double xAxisAngle;
-    bool forWCS = false;
-    LC_UCSMarkOptions* options;
+    RS_Vector m_uiOrigin;
+    double m_xAxisAngle;
+    bool m_forWcs = false;
+    LC_UCSMarkOptions* m_options;
 };
 
-#endif // LC_UCS_MARK_H
+#endif

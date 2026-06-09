@@ -24,9 +24,11 @@
 #define LC_RELZEROCOORDINATESWIDGET_H
 
 #include <QWidget>
+
+#include "lc_formatter.h"
 #include "lc_graphicviewaware.h"
 #include "lc_graphicviewportlistener.h"
-#include "rs.h"
+#include "rs_vector.h"
 
 class LC_GraphicViewport;
 class RS_Graphic;
@@ -38,25 +40,24 @@ namespace Ui {
 class LC_RelZeroCoordinatesWidget : public QWidget, public LC_GraphicViewAware, public  LC_GraphicViewPortListener{
     Q_OBJECT
 public:
-    explicit LC_RelZeroCoordinatesWidget(QWidget *parent = 0, const char *name = 0);
-    ~LC_RelZeroCoordinatesWidget();
-
-    void clearContent();
-    void setGraphicView( RS_GraphicView * graphic ) override;
+    explicit LC_RelZeroCoordinatesWidget(QWidget *parent = nullptr, const char *name = nullptr);
+    ~LC_RelZeroCoordinatesWidget() override;
+    void clearContent() const;
+    void setGraphicView( RS_GraphicView * gv ) override;
     void setRelativeZero( const RS_Vector & rel, bool updateFormat );
+    void updateFormats();
 public slots:
     void relativeZeroChanged(const RS_Vector &pos);
+    void showRelZero(const RS_Vector& rel) const;
 protected:
     RS_Graphic* m_graphic = nullptr;
     RS_GraphicView* m_graphicView = nullptr;
+    LC_Formatter* m_formatter = nullptr;
     LC_GraphicViewport* m_viewport = nullptr;
-    int m_linearPrecision = 0;
-    RS2::LinearFormat m_linearFormat = RS2::Decimal;
-    int m_anglePrecision = 0;
-    RS2::AngleFormat m_angleFormat = RS2::DegreesDecimal;
+    RS_Vector m_currentRelZero{0,0};
 private:
     void onUCSChanged(LC_UCS *ucs) override;
     Ui::LC_RelZeroCoordinatesWidget *ui;
 };
 
-#endif // LC_RELZEROCOORDINATESWIDGET_H
+#endif

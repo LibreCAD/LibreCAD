@@ -26,11 +26,8 @@
 #include "rs_dimension.h"
 #include "rs_preview.h"
 
-LC_ActionCircleDimBase::LC_ActionCircleDimBase(const char* name, LC_ActionContext *actionContext,  RS2::EntityType dimType, RS2::ActionType actionType)
-  : RS_ActionDimension(name, actionContext, dimType, actionType)
-    , m_entity(nullptr)
-    , m_lastStatus(SetEntity)
-    , m_position(std::make_unique<RS_Vector>()){
+LC_ActionCircleDimBase::LC_ActionCircleDimBase(const char* name, LC_ActionContext *actionContext, const RS2::EntityType dimType, const RS2::ActionType actionType)
+  : RS_ActionDimension(name, actionContext, dimType, actionType), m_position(std::make_unique<RS_Vector>()){
 }
 
 LC_ActionCircleDimBase::~LC_ActionCircleDimBase() = default;
@@ -40,22 +37,24 @@ void LC_ActionCircleDimBase::doInitWithContextEntity(RS_Entity* contextEntity, c
     setDimSourceEntity(contextEntity, false, clickPos);
 }
 
-void LC_ActionCircleDimBase::doTrigger() {
+RS_Entity* LC_ActionCircleDimBase::doTriggerCreateEntity() {
     if (m_entity != nullptr) {
         preparePreview(m_entity, *m_position, m_alternateAngle);
-        auto *newEntity = createDim(m_container);
-
-        setPenAndLayerToActive(newEntity);
+        auto* newEntity = createDim(m_document);
         newEntity->update();
-        undoCycleAdd(newEntity);
-        m_alternateAngle = false;
-        RS_Snapper::finish();
-    } else {
-        RS_DEBUG->print("RS_ActionDimDiametric::trigger: Entity is nullptr\n");
+
+        return newEntity;
     }
+    RS_DEBUG->print("RS_ActionDimDiametric::trigger: Entity is nullptr\n");
+    return nullptr;
 }
 
-void LC_ActionCircleDimBase::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+void LC_ActionCircleDimBase::doTriggerCompletion([[maybe_unused]]bool success) {
+    m_alternateAngle = false;
+    RS_Snapper::finish();
+}
+
+void LC_ActionCircleDimBase::onMouseMoveEvent(const int status, const LC_MouseEvent* e) {
     RS_Vector snap = e->snapPoint;
     switch (status) {
         case SetEntity: {
@@ -65,7 +64,7 @@ void LC_ActionCircleDimBase::onMouseMoveEvent(int status, LC_MouseEvent *e) {
                     highlightHover(en);
                     moveRelativeZero(en->getCenter());
                     if (m_previewShowsFullDimension) {
-                        RS_Vector pointOnCircle = preparePreview(en, snap, e->isControl);
+                        const RS_Vector pointOnCircle = preparePreview(en, snap, e->isControl);
                         auto *d = createDim(m_preview.get());
                         d->update();
                         previewEntity(d);
@@ -79,7 +78,7 @@ void LC_ActionCircleDimBase::onMouseMoveEvent(int status, LC_MouseEvent *e) {
             if (m_entity != nullptr) {
                 highlightSelected(m_entity);
                 *m_position = getSnapAngleAwarePoint(e, m_entity->getCenter(), snap, true);
-                RS_Vector pointOnCircle = preparePreview(m_entity, *m_position, false);
+                const RS_Vector pointOnCircle = preparePreview(m_entity, *m_position, false);
 
                 auto *d = createDim(m_preview.get());
                 m_currentAngle = m_entity->getCenter().angleTo(pointOnCircle);
@@ -96,7 +95,7 @@ void LC_ActionCircleDimBase::onMouseMoveEvent(int status, LC_MouseEvent *e) {
     }
 }
 
-void LC_ActionCircleDimBase::setDimSourceEntity(RS_Entity* en, bool controlPressed, RS_Vector pos) {
+void LC_ActionCircleDimBase::setDimSourceEntity(RS_Entity* en, const bool controlPressed, const RS_Vector& pos) {
     if (isArc(en) || isCircle(en)) {
         m_entity = en;
         const RS_Vector &center = en->getCenter();
@@ -117,13 +116,13 @@ void LC_ActionCircleDimBase::setDimSourceEntity(RS_Entity* en, bool controlPress
     }
 }
 
-void LC_ActionCircleDimBase::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
+void LC_ActionCircleDimBase::onMouseLeftButtonRelease(const int status, const LC_MouseEvent* e) {
     switch (status) {
         case SetEntity: {
             RS_Entity *en = catchEntityByEvent(e, RS2::ResolveAll);
             if (en != nullptr) {
-                bool controlPressed = e->isControl;
-                auto pos = e->snapPoint;
+                const bool controlPressed = e->isControl;
+                const auto pos = e->snapPoint;
                 setDimSourceEntity(en, controlPressed, pos);
             }
             break;
@@ -139,12 +138,12 @@ void LC_ActionCircleDimBase::onMouseLeftButtonRelease(int status, LC_MouseEvent 
     }
 }
 
-void LC_ActionCircleDimBase::onMouseRightButtonRelease(int status, [[maybe_unused]] LC_MouseEvent *e) {
+void LC_ActionCircleDimBase::onMouseRightButtonRelease(const int status, [[maybe_unused]] const LC_MouseEvent* e) {
     deletePreview();
     initPrevious(status);
 }
 
-void LC_ActionCircleDimBase::onCoordinateEvent(int status, [[maybe_unused]] bool isZero, const RS_Vector &coord) {
+void LC_ActionCircleDimBase::onCoordinateEvent(const int status, [[maybe_unused]] bool isZero, const RS_Vector &coord) {
     switch (status) {
         case SetPos: {
             *m_position = coord;
@@ -170,14 +169,14 @@ bool LC_ActionCircleDimBase::doProcessCommand(int status, const QString &c) {
         accept = true;
     }
     else if (checkCommand("text", c)) { // command: text
-        m_lastStatus = (Status)status;
+        m_lastStatus = static_cast<Status>(status);
         disableCoordinateInput();
         setStatus(SetText);
         accept = true;
     }
     else if (status == SetPos) { // setting angle
         double angle;
-        bool ok = parseToUCSBasisAngle(c, angle);
+        const bool ok = parseToUCSBasisAngle(c, angle);
         if (ok) {
             accept = true;
             m_ucsBasisAngleDegrees = angle;
@@ -210,19 +209,19 @@ QStringList LC_ActionCircleDimBase::getAvailableCommands() {
     return cmd;
 }
 
-void LC_ActionCircleDimBase::updateMouseButtonHints() {
+void LC_ActionCircleDimBase::updateActionPrompt() {
     switch (getStatus()) {
         case SetEntity:
-            updateMouseWidgetTRCancel(tr("Select arc or circle entity"), m_angleIsFree ? MOD_NONE : MOD_CTRL(tr("Free angle")));
+            updatePromptTRCancel(tr("Select arc or circle entity"), m_angleIsFree ? MOD_NONE : MOD_CTRL(tr("Free angle")));
             break;
         case SetPos:
-            updateMouseWidgetTRCancel(tr("Specify dimension line position or enter angle:"), MOD_SHIFT_ANGLE_SNAP);
+            updatePromptTRCancel(tr("Specify dimension line position or enter angle:"), MOD_SHIFT_ANGLE_SNAP);
             break;
         case SetText:
-            updateMouseWidget(tr("Enter dimension text:"));
+            updatePrompt(tr("Enter dimension text:"));
             break;
         default:
-            updateMouseWidget();
+            updatePrompt();
             break;
     }
 }
@@ -231,7 +230,7 @@ double LC_ActionCircleDimBase::getUcsAngleDegrees() const {
     return m_ucsBasisAngleDegrees;
 }
 
-void LC_ActionCircleDimBase::setUcsAngleDegrees(double ucsRelAngleDegrees) {
+void LC_ActionCircleDimBase::setUcsAngleDegrees(const double ucsRelAngleDegrees) {
     m_ucsBasisAngleDegrees = ucsRelAngleDegrees;
     m_currentAngle = toWorldAngleFromUCSBasisDegrees(ucsRelAngleDegrees);
 }
@@ -240,11 +239,11 @@ bool LC_ActionCircleDimBase::isAngleIsFree() const {
     return m_angleIsFree;
 }
 
-void LC_ActionCircleDimBase::setAngleIsFree(bool angleIsFree) {
+void LC_ActionCircleDimBase::setAngleIsFree(const bool angleIsFree) {
     this->m_angleIsFree = angleIsFree;
 }
 
-double LC_ActionCircleDimBase::getCurrentAngle() {
-    double angleDeg = toUCSBasisAngleDegrees(m_currentAngle);
+double LC_ActionCircleDimBase::getCurrentAngle() const {
+    const double angleDeg = toUCSBasisAngleDegrees(m_currentAngle);
     return angleDeg;
 }

@@ -31,22 +31,22 @@ LC_ActionPenSyncActiveByLayer::LC_ActionPenSyncActiveByLayer(LC_ActionContext *a
    :RS_ActionInterface("PenSyncByLayer", actionContext, RS2::ActionPenSyncFromLayer){
 }
 
-void LC_ActionPenSyncActiveByLayer::init(int status){
+void LC_ActionPenSyncActiveByLayer::init(const int status){
     RS_ActionInterface::init(status);
     if (status >=0){
-        auto penToolBar = QC_ApplicationWindow::getAppWindow()->getPenToolBar();
+        const auto penToolBar = QC_ApplicationWindow::getAppWindow()->getPenToolBar();
         if (penToolBar != nullptr){
             if (m_graphic != nullptr){
-                RS_Layer *layer = m_graphic->getActiveLayer();
+                const RS_Layer *layer = m_graphic->getActiveLayer();
                 if (layer != nullptr){
-                    RS_Pen layerPen = layer->getPen();
+                    const RS_Pen layerPen = layer->getPen();
                     penToolBar->setLayerLineType(layerPen.getLineType(), true);
                     penToolBar->setLayerWidth(layerPen.getWidth(), true);
                     penToolBar->setLayerColor(layerPen.getColor(), true);
                 }
             }
         }
-        RS_ActionInterface::finish(true);
+        RS_ActionInterface::finish();
         init(-1);
     }
 }

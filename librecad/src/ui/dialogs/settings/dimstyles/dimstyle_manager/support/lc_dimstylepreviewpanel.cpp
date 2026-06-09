@@ -2,8 +2,8 @@
  * ********************************************************************************
  * This file is part of the LibreCAD project, a 2D CAD program
  *
- * Copyright (C) 2025 LibreCAD.org
- * Copyright (C) 2025 sand1024
+ * Copyright (C) 2026 LibreCAD.org
+ * Copyright (C) 2026 sand1024
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -29,7 +29,7 @@
 #include "rs_settings.h"
 #include "ui_lc_dimstylepreviewpanel.h"
 
-void LC_DimStylePreviewPanel::setupButton(bool dockWidgetsFlatIcons, int docWidgetsIconSize, QToolButton* btn) {
+void LC_DimStylePreviewPanel::setupButton(const bool dockWidgetsFlatIcons, int docWidgetsIconSize, QToolButton* btn) {
     btn->setAutoRaise(dockWidgetsFlatIcons);
     btn->setIconSize({docWidgetsIconSize, docWidgetsIconSize});
 }
@@ -41,8 +41,8 @@ LC_DimStylePreviewPanel::LC_DimStylePreviewPanel(QWidget *parent)
 
     LC_GROUP_GUARD("Widgets");
     {
-        bool dockWidgetsFlatIcons = LC_GET_BOOL("DockWidgetsFlatIcons", true);
-        int docWidgetsIconSize = LC_GET_INT("DockWidgetsIconSize", 16);
+        const bool dockWidgetsFlatIcons = LC_GET_BOOL("DockWidgetsFlatIcons", true);
+        const int docWidgetsIconSize = LC_GET_INT("DockWidgetsIconSize", 16);
 
         setupButton(dockWidgetsFlatIcons, docWidgetsIconSize, ui->tbZoomAuto);
         setupButton(dockWidgetsFlatIcons, docWidgetsIconSize, ui->tbZoomIn);
@@ -63,18 +63,18 @@ void LC_DimStylePreviewPanel::setGraphicView(LC_DimStylePreviewGraphicView* gv) 
     connect(ui->tbZoomPan, &QToolButton::pressed, this, &LC_DimStylePreviewPanel::zoomPan);
 }
 
-void LC_DimStylePreviewPanel::zoomOut() {
+void LC_DimStylePreviewPanel::zoomOut() const {
     m_graphicView->getViewPort()->zoomOut(1.137, {});
 }
 
-void LC_DimStylePreviewPanel::zoomIn() {
+void LC_DimStylePreviewPanel::zoomIn() const {
     m_graphicView->getViewPort()->zoomIn(1.137, {});
 }
 
-void LC_DimStylePreviewPanel::zoomAuto() {
+void LC_DimStylePreviewPanel::zoomAuto() const {
     m_graphicView->zoomAuto();
 }
 
-void LC_DimStylePreviewPanel::zoomPan() {
+void LC_DimStylePreviewPanel::zoomPan() const {
     m_graphicView->zoomPan();
 }

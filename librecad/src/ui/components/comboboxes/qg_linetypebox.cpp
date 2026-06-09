@@ -33,7 +33,7 @@
  * to use this constructor.
  */
 QG_LineTypeBox::QG_LineTypeBox(QWidget* parent)
-        : QComboBox(parent) {
+    : QComboBox(parent) {
     m_showByLayer = false;
     m_showUnchanged = false;
     m_unchanged = false;
@@ -44,30 +44,32 @@ QG_LineTypeBox::QG_LineTypeBox(QWidget* parent)
  * combobox for choosing linetypes.
  *
  * @param showByLayer true: Show attribute ByLayer, ByBlock.
+ * @param showUnchanged
+ * @param parent
+ * @param name
  */
-QG_LineTypeBox::QG_LineTypeBox(bool showByLayer, bool showUnchanged, 
-		QWidget* parent, const char* name)
-        : QComboBox(parent) {
+QG_LineTypeBox::QG_LineTypeBox(const bool showByLayer, const bool showUnchanged, QWidget* parent, const char* name)
+    : QComboBox(parent) {
     setObjectName(name);
     m_unchanged = false;
     init(showByLayer, showUnchanged);
 }
-
 
 /**
  * Destructor
  */
 QG_LineTypeBox::~QG_LineTypeBox() = default;
 
-
 /**
  * Initialisation (called from constructor or manually but only
  * once).
  *
  * @param showByLayer true: Show attribute ByLayer, ByBlock.
+ * @param showUnchanged
+ * @param showNoPen
  */
-void QG_LineTypeBox::init(bool showByLayer, bool showUnchanged, bool showNoPen) {
-    LC_LOG<<__func__<<"(): QG_LineTypeBox, begin";
+void QG_LineTypeBox::init(const bool showByLayer, const bool showUnchanged, const bool showNoPen) {
+    LC_LOG << __func__ << "(): QG_LineTypeBox, begin";
     this->m_showByLayer = showByLayer;
     this->m_showUnchanged = showUnchanged;
 
@@ -76,79 +78,78 @@ void QG_LineTypeBox::init(bool showByLayer, bool showUnchanged, bool showNoPen) 
     }
 
     if (showByLayer) {
-        addItem(QIcon(":linetypes/linetype00.lci"), tr("By Layer"), RS2::LineByLayer);
-        addItem(QIcon(":linetypes/linetype00.lci"), tr("By Block"), RS2::LineByBlock);
+        // addItem(QIcon(":linetypes/linetype00.lci"), tr("By Layer"), RS2::LineByLayer);
+        // addItem(QIcon(":linetypes/linetype00.lci"), tr("By Block"), RS2::LineByBlock);
+        addItem(QIcon(":/icons/item_by_layer.lci"), tr("By Layer"), RS2::LineByLayer);
+        addItem(QIcon(":/icons/point_plus_square.lci"), tr("By Block"),RS2::LineByBlock);
     }
     if (showNoPen) {
         addItem(QIcon(":linetypes/linetype00.lci"), tr("No Pen"), RS2::NoPen);
     }
     addItem(QIcon(":linetypes/linetype01.lci"), tr("Continuous"), RS2::SolidLine);
-    addItem(QIcon(":linetypes/linetype02.lci"), tr("Dot"),RS2::DotLine);
-    addItem(QIcon(":linetypes/linetype02.lci"), tr("Dot (tiny)"),RS2::DotLineTiny);
+    addItem(QIcon(":linetypes/linetype02.lci"), tr("Dot"), RS2::DotLine);
+    addItem(QIcon(":linetypes/linetype02.lci"), tr("Dot (tiny)"), RS2::DotLineTiny);
     addItem(QIcon(":linetypes/linetype02.lci"), tr("Dot (small)"), RS2::DotLine2);
     addItem(QIcon(":linetypes/linetype02.lci"), tr("Dot (large)"), RS2::DotLineX2);
-    addItem(QIcon(":linetypes/linetype03.lci"), tr("Dash"),RS2::DashLine);
-    addItem(QIcon(":linetypes/linetype03.lci"), tr("Dash (tiny)"),RS2::DashLineTiny);
-    addItem(QIcon(":linetypes/linetype03.lci"), tr("Dash (small)"),RS2::DashLine2);
-    addItem(QIcon(":linetypes/linetype03.lci"), tr("Dash (large)"),RS2::DashLineX2);
-    addItem(QIcon(":linetypes/linetype04.lci"), tr("Dash Dot"),RS2::DashDotLine);
-    addItem(QIcon(":linetypes/linetype04.lci"), tr("Dash Dot (tiny)"),RS2::DashDotLineTiny);
-    addItem(QIcon(":linetypes/linetype04.lci"), tr("Dash Dot (small)"),RS2::DashDotLine2);
-    addItem(QIcon(":linetypes/linetype04.lci"), tr("Dash Dot (large)"),RS2::DashDotLineX2);
-    addItem(QIcon(":linetypes/linetype05.lci"), tr("Divide"),RS2::DivideLine);
-    addItem(QIcon(":linetypes/linetype05.lci"), tr("Divide (tiny)"),RS2::DivideLineTiny);
-    addItem(QIcon(":linetypes/linetype05.lci"), tr("Divide (small)"),RS2::DivideLine2);
-    addItem(QIcon(":linetypes/linetype05.lci"), tr("Divide (large)"),RS2::DivideLineX2);
-    addItem(QIcon(":linetypes/linetype06.lci"), tr("Center"),RS2::CenterLine);
-    addItem(QIcon(":linetypes/linetype06.lci"), tr("Center (tiny)"),RS2::CenterLineTiny);
-    addItem(QIcon(":linetypes/linetype06.lci"), tr("Center (small)"),RS2::CenterLine2);
-    addItem(QIcon(":linetypes/linetype06.lci"), tr("Center (large)"),RS2::CenterLineX2);
-    addItem(QIcon(":linetypes/linetype07.lci"), tr("Border"),RS2::BorderLine);
-    addItem(QIcon(":linetypes/linetype07.lci"), tr("Border (tiny)"),RS2::BorderLineTiny);
-    addItem(QIcon(":linetypes/linetype07.lci"), tr("Border (small)"),RS2::BorderLine2);
-    addItem(QIcon(":linetypes/linetype07.lci"), tr("Border (large)"),RS2::BorderLineX2);
+    addItem(QIcon(":linetypes/linetype03.lci"), tr("Dash"), RS2::DashLine);
+    addItem(QIcon(":linetypes/linetype03.lci"), tr("Dash (tiny)"), RS2::DashLineTiny);
+    addItem(QIcon(":linetypes/linetype03.lci"), tr("Dash (small)"), RS2::DashLine2);
+    addItem(QIcon(":linetypes/linetype03.lci"), tr("Dash (large)"), RS2::DashLineX2);
+    addItem(QIcon(":linetypes/linetype04.lci"), tr("Dash Dot"), RS2::DashDotLine);
+    addItem(QIcon(":linetypes/linetype04.lci"), tr("Dash Dot (tiny)"), RS2::DashDotLineTiny);
+    addItem(QIcon(":linetypes/linetype04.lci"), tr("Dash Dot (small)"), RS2::DashDotLine2);
+    addItem(QIcon(":linetypes/linetype04.lci"), tr("Dash Dot (large)"), RS2::DashDotLineX2);
+    addItem(QIcon(":linetypes/linetype05.lci"), tr("Divide"), RS2::DivideLine);
+    addItem(QIcon(":linetypes/linetype05.lci"), tr("Divide (tiny)"), RS2::DivideLineTiny);
+    addItem(QIcon(":linetypes/linetype05.lci"), tr("Divide (small)"), RS2::DivideLine2);
+    addItem(QIcon(":linetypes/linetype05.lci"), tr("Divide (large)"), RS2::DivideLineX2);
+    addItem(QIcon(":linetypes/linetype06.lci"), tr("Center"), RS2::CenterLine);
+    addItem(QIcon(":linetypes/linetype06.lci"), tr("Center (tiny)"), RS2::CenterLineTiny);
+    addItem(QIcon(":linetypes/linetype06.lci"), tr("Center (small)"), RS2::CenterLine2);
+    addItem(QIcon(":linetypes/linetype06.lci"), tr("Center (large)"), RS2::CenterLineX2);
+    addItem(QIcon(":linetypes/linetype07.lci"), tr("Border"), RS2::BorderLine);
+    addItem(QIcon(":linetypes/linetype07.lci"), tr("Border (tiny)"), RS2::BorderLineTiny);
+    addItem(QIcon(":linetypes/linetype07.lci"), tr("Border (small)"), RS2::BorderLine2);
+    addItem(QIcon(":linetypes/linetype07.lci"), tr("Border (large)"), RS2::BorderLineX2);
 
     connect(this, &QG_LineTypeBox::activated, this, &QG_LineTypeBox::slotLineTypeChanged);
 
     setCurrentIndex(0);
     slotLineTypeChanged(currentIndex());
-    LC_LOG<<__func__<<"(): QG_LineTypeBox, done";
+    LC_LOG << __func__ << "(): QG_LineTypeBox, done";
 }
 
 /**
  * Sets the currently selected linetype item to the given linetype.
  */
-void QG_LineTypeBox::setLineType(RS2::LineType t) {
-    RS_DEBUG->print("QG_LineTypeBox::setLineType %d\n", (int)t);
+void QG_LineTypeBox::setLineType(const RS2::LineType t) {
+    RS_DEBUG->print("QG_LineTypeBox::setLineType %d\n", t);
     switch (t) {
         case RS2::LineByLayer: {
             if (m_showByLayer) {
-                setCurrentIndex(0 + (int)m_showUnchanged);
-            } else {
-                RS_DEBUG->print(RS_Debug::D_WARNING,
-                                "QG_LineTypeBox::setLineType: "
-                                "Combobox doesn't support linetype BYLAYER");
+                setCurrentIndex(0 + (m_showUnchanged ? 1 : 0));
+            }
+            else {
+                RS_DEBUG->print(RS_Debug::D_WARNING, "QG_LineTypeBox::setLineType: " "Combobox doesn't support linetype BYLAYER");
             }
             break;
         }
         case RS2::LineByBlock: {
             if (m_showByLayer) {
-                setCurrentIndex(1 + (int)m_showUnchanged);
-            } else {
-                RS_DEBUG->print(RS_Debug::D_WARNING,
-                                "QG_LineTypeBox::setLineType: "
-                                "Combobox doesn't support linetype BYBLOCK");
+                setCurrentIndex(1 + (m_showUnchanged ? 1 : 0));
+            }
+            else {
+                RS_DEBUG->print(RS_Debug::D_WARNING, "QG_LineTypeBox::setLineType: " "Combobox doesn't support linetype BYBLOCK");
             }
             break;
         }
-        default:{
-            int index=findData(t);
-            if(t>=0){
+        default: {
+            if (t >= 0) {
+                const int index = findData(t);
                 setCurrentIndex(index);
-            }else{
-                RS_DEBUG->print(RS_Debug::D_WARNING,
-                                "QG_LineTypeBox::setLineType: "
-                                "Combobox doesn't support linetype %d",(int) t);
+            }
+            else {
+                RS_DEBUG->print(RS_Debug::D_WARNING, "QG_LineTypeBox::setLineType: " "Combobox doesn't support linetype %d", t);
             }
         }
     }
@@ -160,15 +161,14 @@ void QG_LineTypeBox::setLineType(RS2::LineType t) {
  *
  * @todo needs an update, but not used currently
  */
-void QG_LineTypeBox::setLayerLineType(RS2::LineType t) {
+void QG_LineTypeBox::setLayerLineType(const RS2::LineType t) {
     if (m_showByLayer) {
         QPixmap pixmap;
-        switch(t) {
+        switch (t) {
             case RS2::NoPen:
                 pixmap = QPixmap(":linetypes/linetype00.lci");
                 break;
-            default:
-            case RS2::SolidLine:
+            default: case RS2::SolidLine:
                 pixmap = QPixmap(":linetypes/linetype01.lci");
                 break;
             case RS2::DashLine:
@@ -199,7 +199,7 @@ void QG_LineTypeBox::setLayerLineType(RS2::LineType t) {
  * offers a dialog to the user that allows him/ her to
  * choose an individual linetype.
  */
-void QG_LineTypeBox::slotLineTypeChanged(int index) {
+void QG_LineTypeBox::slotLineTypeChanged(const int index) {
     RS_DEBUG->print("QG_LineTypeBox::slotLineTypeChanged %d\n", index);
     m_unchanged = false;
     if (m_showByLayer) {
@@ -223,10 +223,11 @@ void QG_LineTypeBox::slotLineTypeChanged(int index) {
                 break;
 
             default:
-                m_currentLineType = (RS2::LineType) itemData(index).toInt();
+                m_currentLineType = static_cast<RS2::LineType>(itemData(index).toInt());
         }
-    } else {
-        m_currentLineType = (RS2::LineType) itemData(index).toInt();
+    }
+    else {
+        m_currentLineType = static_cast<RS2::LineType>(itemData(index).toInt());
     }
     //    RS_DEBUG->print(RS_Debug::D_ERROR, "Current linetype is (%d): %d\n", index, currentLineType);
     RS_DEBUG->print("QG_LineTypeBox::slotLineTypeChanged %d: done\n", index);

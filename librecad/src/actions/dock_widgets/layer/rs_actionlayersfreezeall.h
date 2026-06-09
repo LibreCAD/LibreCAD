@@ -35,12 +35,12 @@
  * @author Andrew Mustun
  */
 class RS_ActionLayersFreezeAll : public RS_ActionInterface {
-	Q_OBJECT
+    Q_OBJECT
 public:
-    RS_ActionLayersFreezeAll(bool freeze,LC_ActionContext *actionContext);
+    RS_ActionLayersFreezeAll(bool freeze, LC_ActionContext* actionContext);
 
-	void init(int status) override;
-	void trigger() override;
+    void init(int status) override;
+    void trigger() override;
 
 private:
     bool m_freeze = false;

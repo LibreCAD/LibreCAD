@@ -37,95 +37,95 @@ FILE *s_logStream = nullptr;
 }
 
 // The implementation to delegate methods to QTextStream
-struct RS_Debug::LogStream::StreamImpl : public QTextStream {
-    StreamImpl(RS_Debug::RS_DebugLevel level) :
-        QTextStream{&m_string, QIODeviceBase::WriteOnly}
-      , m_debugLevel{level}
-    {
+struct RS_Debug::LogStream::StreamImpl : QTextStream {
+    StreamImpl(const RS_DebugLevel level) :
+        QTextStream{&string, WriteOnly}
+      , debugLevel{level}{
     }
 
-    QString m_string;
-    RS_Debug::RS_DebugLevel m_debugLevel = RS_Debug::D_INFORMATIONAL;
+    QString string;
+    RS_DebugLevel debugLevel = D_INFORMATIONAL;
 };
 
-RS_Debug::LogStream::LogStream(RS_Debug::RS_DebugLevel level)
-    : m_pStream(new RS_Debug::LogStream::StreamImpl{level})
+RS_Debug::LogStream::LogStream(const RS_DebugLevel level)
+    : m_pStream(new StreamImpl{level})
 {}
 
 RS_Debug::LogStream::~LogStream() {
     try {
-        if (!m_pStream->m_string.isEmpty())
-            RS_Debug::instance()->print(m_pStream->m_debugLevel, "%s",
-                                        m_pStream->m_string.toStdString().c_str());
+        if (!m_pStream->string.isEmpty()) {
+            instance()->print(m_pStream->debugLevel, "%s",
+                                        m_pStream->string.toStdString().c_str());
+        }
     } catch (...) {
-        RS_Debug::instance()->print(RS_Debug::D_CRITICAL,
+        instance()->print(D_CRITICAL,
                                     "RS_Debug::LogStream:: Failed to log");
     }
     delete m_pStream;
 }
 
 // delegate to QTextStream methods
-RS_Debug::LogStream& RS_Debug::LogStream::operator()(RS_Debug::RS_DebugLevel level) {
-    m_pStream->m_debugLevel = level;
+RS_Debug::LogStream& RS_Debug::LogStream::operator()(const RS_DebugLevel level) {
+    m_pStream->debugLevel = level;
     return *this;
 }
 
-RS_Debug::LogStream& RS_Debug::LogStream::operator<<(QChar ch) {
+RS_Debug::LogStream& RS_Debug::LogStream::operator<<(const QChar ch) {
     *m_pStream << ch;
     return *this;
 }
 
-RS_Debug::LogStream& RS_Debug::LogStream::operator<<(char ch) {
+RS_Debug::LogStream& RS_Debug::LogStream::operator<<(const char ch) {
     *m_pStream << ch;
     return *this;
 }
 
-RS_Debug::LogStream& RS_Debug::LogStream::operator<<(signed short i) {
+RS_Debug::LogStream& RS_Debug::LogStream::operator<<(const signed short i) {
     *m_pStream << i;
     return *this;
 }
 
-RS_Debug::LogStream& RS_Debug::LogStream::operator<<(unsigned short i) {
+RS_Debug::LogStream& RS_Debug::LogStream::operator<<(const unsigned short i) {
     *m_pStream << i;
     return *this;
 }
 
-RS_Debug::LogStream& RS_Debug::LogStream::operator<<(signed int i) {
+RS_Debug::LogStream& RS_Debug::LogStream::operator<<(const signed int i) {
     *m_pStream << i;
     return *this;
 }
 
-RS_Debug::LogStream& RS_Debug::LogStream::operator<<(unsigned int i) {
+RS_Debug::LogStream& RS_Debug::LogStream::operator<<(const unsigned int i) {
     *m_pStream << i;
     return *this;
 }
 
-RS_Debug::LogStream& RS_Debug::LogStream::operator<<(signed long i) {
+RS_Debug::LogStream& RS_Debug::LogStream::operator<<(const signed long i) {
     *m_pStream << i;
     return *this;
 }
 
-RS_Debug::LogStream& RS_Debug::LogStream::operator<<(unsigned long i) {
+RS_Debug::LogStream& RS_Debug::LogStream::operator<<(const unsigned long i) {
     *m_pStream << i;
     return *this;
 }
 
-RS_Debug::LogStream& RS_Debug::LogStream::operator<<(long long i) {
+RS_Debug::LogStream& RS_Debug::LogStream::operator<<(const long long i) {
     *m_pStream << i;
     return *this;
 }
 
-RS_Debug::LogStream& RS_Debug::LogStream::operator<<(unsigned long long i) {
+RS_Debug::LogStream& RS_Debug::LogStream::operator<<(const unsigned long long i) {
     *m_pStream << i;
     return *this;
 }
 
-RS_Debug::LogStream& RS_Debug::LogStream::operator<<(float f) {
+RS_Debug::LogStream& RS_Debug::LogStream::operator<<(const float f) {
     *m_pStream << f;
     return *this;
 }
 
-RS_Debug::LogStream& RS_Debug::LogStream::operator<<(double f) {
+RS_Debug::LogStream& RS_Debug::LogStream::operator<<(const double f) {
     *m_pStream << f;
     return *this;
 }
@@ -135,12 +135,12 @@ RS_Debug::LogStream& RS_Debug::LogStream::operator<<(const QString &s) {
     return *this;
 }
 
-RS_Debug::LogStream& RS_Debug::LogStream::operator<<(QStringView s) {
+RS_Debug::LogStream& RS_Debug::LogStream::operator<<(const QStringView s) {
     *m_pStream << s;
     return *this;
 }
 
-RS_Debug::LogStream& RS_Debug::LogStream::operator<<(QLatin1String s) {
+RS_Debug::LogStream& RS_Debug::LogStream::operator<<(const QLatin1String s) {
     *m_pStream << s;
     return *this;
 }
@@ -166,7 +166,7 @@ RS_Debug::LogStream &RS_Debug::LogStream::operator<<(const RS_Vector & v) {
 }
 // end of QTextStream delegation
 
-void debugHeader(char const *file, char const *func, int line) {
+void debugHeader(const char*file, const char*func, const int line) {
     std::cout << file << " : " << func << " : line " << line << std::endl;
 }
 
@@ -180,9 +180,8 @@ void debugHeader(char const *file, char const *func, int line) {
 RS_Debug *RS_Debug::instance() {
     static RS_Debug *uniqueInstance = nullptr;
     if (uniqueInstance == nullptr) {
-        QDateTime now = QDateTime::currentDateTime();
-        QString nowStr = now.toString("yyyyMMdd_hhmmss");
-
+        // QDateTime now = QDateTime::currentDateTime();
+        // QString nowStr = now.toString("yyyyMMdd_hhmmss");
         uniqueInstance = new RS_Debug;
         s_logStream = stderr;
     }
@@ -198,23 +197,24 @@ RS_Debug::RS_Debug()  :
 
 RS_Debug::~RS_Debug() {
     try {
-        if (s_logStream != nullptr && s_logStream != stderr && s_logStream != stdout)
+        if (s_logStream != nullptr && s_logStream != stderr && s_logStream != stdout) {
             fclose(s_logStream);
+        }
     }
     catch(...) {
         std::cerr<<"RS_Debug::"<<__func__<<":: Failed to close stream";
-
     }
 }
 
 /**
  * Sets the debugging level.
  */
-void RS_Debug::setLevel(RS_DebugLevel level)
+void RS_Debug::setLevel(const RS_DebugLevel level)
 {
 
-    if (m_debugLevel == level)
+    if (m_debugLevel == level) {
         return;
+    }
     m_debugLevel = level;
     print(D_NOTHING, "RS_DEBUG::setLevel(%d)", level);
     print(D_CRITICAL, "RS_DEBUG: Critical");
@@ -228,12 +228,12 @@ void RS_Debug::setLevel(RS_DebugLevel level)
 /**
  * Gets the current debugging level.
  */
-RS_Debug::RS_DebugLevel RS_Debug::getLevel() { return m_debugLevel; }
+RS_Debug::RS_DebugLevel RS_Debug::getLevel() const { return m_debugLevel; }
 
 /**
  * Prints the given message to stdout.
  */
-void RS_Debug::print(const char *format...) {
+void RS_Debug::print(const char *format...)  {
     if (m_debugLevel == D_DEBUGGING) {
         va_list ap;
         va_start(ap, format);
@@ -246,11 +246,13 @@ void RS_Debug::print(const char *format...) {
 
 /**
  * Prints the given message to stdout if the current debug level
- * is lower then the given level
+ * is lower than the given level
  *
  * @param level Debug level.
+ * @param format
+ * @param ...
  */
-void RS_Debug::print(RS_DebugLevel level, const char *format...) {
+void RS_Debug::print(const RS_DebugLevel level, const char *format...) const {
 
     if (m_debugLevel >= level) {
         va_list ap;
@@ -266,10 +268,9 @@ void RS_Debug::print(RS_DebugLevel level, const char *format...) {
  * Prints a time stamp in the format yyyyMMdd_hhmmss.
  */
 void RS_Debug::timestamp() {
-    QDateTime now = QDateTime::currentDateTime();
-    QString nowStr;
+    const QDateTime now = QDateTime::currentDateTime();
 
-    nowStr = now.toString("yyyyMMdd_hh:mm:ss:zzz ");
+    const QString nowStr = now.toString("yyyyMMdd_hh:mm:ss:zzz ");
     fprintf(s_logStream, "%s", nowStr.toLatin1().data());
     fprintf(s_logStream, "\n");
     fflush(s_logStream);
@@ -309,6 +310,6 @@ RS_Debug::LogStream RS_Debug::Log(RS_DebugLevel level) {
  * @param ch a UTF16 char
  * @return RS_Debug::LogStream& to allow chaining
  */
-RS_Debug::LogStream& RS_Debug::LogStream::operator<<(char16_t ch) {
+RS_Debug::LogStream& RS_Debug::LogStream::operator<<(const char16_t ch) {
     return *this << QChar(ch);
 }

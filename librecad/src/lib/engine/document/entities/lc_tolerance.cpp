@@ -20,23 +20,22 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * ********************************************************************************
  */
-#include<iostream>
 #include "lc_tolerance.h"
 
 #include <QRegularExpression>
+#include<iostream>
 
 #include "rs_color.h"
 #include "rs_debug.h"
 #include "rs_document.h"
 #include "rs_filterdxfrw.h"
 #include "rs_line.h"
-#include "rs_text.h"
 #include "rs_units.h"
 
 LC_ToleranceData::~LC_ToleranceData() = default;
 
 LC_Tolerance::LC_Tolerance(RS_EntityContainer* parent, const LC_ToleranceData& d)
-    :RS_EntityContainer(parent), m_toleranceData(d){
+    :RS_EntityContainer(parent), m_joinFirstField{false}, m_toleranceData(d), m_dimtxt{0.0}{
     RS_EntityContainer::calculateBorders();
 }
 
@@ -49,7 +48,7 @@ RS_Entity* LC_Tolerance::clone() const {
 
 void LC_Tolerance::update() {
     clear();
-    if (isUndone()) {
+    if (isDeleted()) {
         return;
     }
 
@@ -59,47 +58,47 @@ void LC_Tolerance::update() {
 }
 
 RS_VectorSolutions LC_Tolerance::getRefPoints() const {
-    return {m_toleranceData.m_insertionPoint};
+    return {m_toleranceData.insertionPoint};
 }
 
 void LC_Tolerance::move(const RS_Vector& offset) {
-    m_toleranceData.m_insertionPoint.move(offset);
+    m_toleranceData.insertionPoint.move(offset);
     update();
 }
 
-void LC_Tolerance::rotate(const RS_Vector& center, double angle) {
-    m_toleranceData.m_insertionPoint.rotate(center, angle);
+void LC_Tolerance::rotate(const RS_Vector& center, const double angle) {
+    m_toleranceData.insertionPoint.rotate(center, angle);
     update();
 }
 
 void LC_Tolerance::rotate(const RS_Vector& center, const RS_Vector& angleVector) {
-    m_toleranceData.m_insertionPoint.rotate(center, angleVector);
+    m_toleranceData.insertionPoint.rotate(center, angleVector);
     update();
 }
 
 void LC_Tolerance::scale(const RS_Vector& center, const RS_Vector& factor) {
-    m_toleranceData.m_insertionPoint.scale(center, factor);
+    m_toleranceData.insertionPoint.scale(center, factor);
     update();
 }
 
 void LC_Tolerance::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) {
-    m_toleranceData.m_insertionPoint.mirror(axisPoint1, axisPoint2);
+    m_toleranceData.insertionPoint.mirror(axisPoint1, axisPoint2);
     update();
 }
 
 void LC_Tolerance::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
-    if (ref.distanceTo(m_toleranceData.m_insertionPoint)<1.0e-4) {
-        m_toleranceData.m_insertionPoint += offset;
+    if (ref.distanceTo(m_toleranceData.insertionPoint)<1.0e-4) {
+        m_toleranceData.insertionPoint += offset;
         update();
     }
 }
 
 std::ostream& operator<<(std::ostream& os, const LC_ToleranceData& td) {
     os << "("
-        << td.m_insertionPoint << ','
-        << td.m_directionVector << ','
-        << td.m_dimStyleName.toLatin1().data() << ','
-        << td.m_textCode.toLatin1().data() << ")";
+        << td.insertionPoint << ','
+        << td.directionVector << ','
+        << td.dimStyleName.toLatin1().data() << ','
+        << td.textCode.toLatin1().data() << ")";
     return os;
 }
 
@@ -116,11 +115,10 @@ QList<QStringList> LC_Tolerance::getFields() const {
     // create list of string lists with field texts:
     QList<QStringList> ret;
 
-    QStringList lines = m_toleranceData.m_textCode.split("^J");
-    for (int k=0; k<lines.length(); k++) {
-        QString line = lines[k];
-        //qDebug() << "line:" << line;
-
+    QStringList lines = m_toleranceData.textCode.split("^J");
+    const qsizetype len = lines.length();
+    for (qsizetype k = 0; k < len; k++) {
+        const QString& line = lines[k];
         QStringList lineFields = line.split("%%v");
         ret.append(lineFields);
     }
@@ -128,12 +126,12 @@ QList<QStringList> LC_Tolerance::getFields() const {
     return ret;
 }
 
-double LC_Tolerance::getTextHeight() {
+double LC_Tolerance::getTextHeight() const {
     return getGraphicVariable("$DIMTXT", 2.5, 40);
 }
 
 // fixme - sand - temporary method, move to entity?
-double LC_Tolerance::getGraphicVariable(const QString& key, double defMM, int code) {
+double LC_Tolerance::getGraphicVariable(const QString& key, const double defMM, const int code) const {
     double v = getGraphicVariableDouble(key, RS_MINDOUBLE);
     if (v <= RS_MINDOUBLE) {
         addGraphicVariable(key, RS_Units::convert(defMM, RS2::Millimeter, getGraphicUnit()), code);
@@ -142,12 +140,12 @@ double LC_Tolerance::getGraphicVariable(const QString& key, double defMM, int co
     return v;
 }
 
-double LC_Tolerance::getDimtxt(bool scale) {
+double LC_Tolerance::getDimtxt(const bool scale) const {
     double v = 2.5;
 
     // get value from override:
-    if (dimtxt>0.0) {
-        v = dimtxt;
+    if (m_dimtxt>0.0) {
+        v = m_dimtxt;
     }
     else {
         v = getTextHeight();
@@ -159,43 +157,43 @@ double LC_Tolerance::getDimtxt(bool scale) {
 
     return v;
 }
-void LC_Tolerance::setDimtxt(double f) {
-    dimtxt = f;
+void LC_Tolerance::setDimtxt(const double f) {
+    m_dimtxt = f;
     update();
 }
 
-double LC_Tolerance::getGeneralScale() {
+double LC_Tolerance::getGeneralScale() const {
     return getGraphicVariable("$DIMSCALE", 1.0, 40);
 }
 
-double LC_Tolerance::getDimscale()  {
+double LC_Tolerance::getDimscale() const {
     // get value from override:
-    if (dimscale>0.0) {
-        return dimscale;
+    if (m_dimscale>0.0) {
+        return m_dimscale;
     }
 
-    double v = getGeneralScale();
+    const double v = getGeneralScale();
     return v;
 }
 
-QString LC_Tolerance::getTextStyle() {
+QString LC_Tolerance::getTextStyle() const {
     return getGraphicVariableString("$DIMTXSTY", "standard");
 }
 
-RS_Color LC_Tolerance::getTextColor() {
+RS_Color LC_Tolerance::getTextColor() const {
     return RS_FilterDXFRW::numberToColor(getGraphicVariableInt("$DIMCLRT", 0));
 }
 
-RS_Pen LC_Tolerance::getPenForText() {
+RS_Pen LC_Tolerance::getPenForText() const {
     RS_Pen result(getTextColor(), RS2::WidthByBlock, RS2::SolidLine);
     return result;
 }
 
-RS_Color LC_Tolerance::getDimensionLineColor() {
+RS_Color LC_Tolerance::getDimensionLineColor() const {
     return RS_FilterDXFRW::numberToColor(getGraphicVariableInt("$DIMCLRD", 0));
 }
 
-RS_Pen LC_Tolerance::getPenForLines() {
+RS_Pen LC_Tolerance::getPenForLines() const {
     // RS_Pen result(RS_Color(RS2::FlagByBlock), RS2::WidthByBlock, RS2::SolidLine);
     RS_Pen result(getDimensionLineColor(), RS2::WidthByBlock, RS2::SolidLine);
     return result;
@@ -216,44 +214,46 @@ void LC_Tolerance::createTextLabels(QList<QList<double>> &divisions) {
     //qDebug() << "text:" << text;
 
     QList<QStringList> fields = getFields();
-    joinFirstField = false;
+    m_joinFirstField = false;
 
+    qint64 qsizetype = fields.length();
     // find out if we need to join the first fields of the first two lines:
-    if (fields.length()>1 && fields[0].length()>0 && fields[1].length()>0) {
+    if (qsizetype > 1 && !fields[0].empty() && !fields[1].empty()) {
         QString field1 = fields[0][0];
         QString field2 = fields[1][0];
-        QRegularExpression reg = QRegularExpression("\\\\F[gG][dD][tT];", QRegularExpression::CaseInsensitiveOption);
+        auto reg = QRegularExpression("\\\\F[gG][dD][tT];", QRegularExpression::CaseInsensitiveOption);
         field1.replace(reg, "\\Fgdt;");
         field2.replace(reg, "\\Fgdt;");
         if (!field1.isEmpty()) {
-            joinFirstField = (field1==field2);
+            m_joinFirstField = field1==field2;
         }
     }
 
     double cursorY = 0;
 
-    double angle = m_toleranceData.m_directionVector.angle();
+    double angle = m_toleranceData.directionVector.angle();
     double textAngle = 0.0;
 
     RS_Pen textPen = getPenForText();
 
-    for (int k=0; k<fields.length(); k++) {
-        QStringList fieldsOfLine = fields[k];
+    for (qint64 k=0; k<qsizetype; k++) {
+        const QStringList& fieldsOfLine = fields[k];
         double cursorX = dimtxt/2.0;
 
         QList<double> row;
         row << 0.0;
         divisions.append(row);
 
+        qint64 len = fieldsOfLine.length();
         // render text strings with distance of dimtxt:
-        for (int i=0; i<fieldsOfLine.length(); i++) {
-            QString field = fieldsOfLine[i];
+        for (qint64 i = 0; i < len; i++) {
+            const QString& field = fieldsOfLine[i];
             LC_ERR << "field:" << field;
             if (field.isEmpty()) {
                 continue;
             }
 
-            RS_MTextData textData = RS_MTextData({cursorX, cursorY},
+            auto textData = RS_MTextData({cursorX, cursorY},
                         dimtxt, 30.0,
                         RS_MTextData::VAMiddle,
                         RS_MTextData::HALeft,
@@ -268,21 +268,20 @@ void LC_Tolerance::createTextLabels(QList<QList<double>> &divisions) {
             addDimComponentEntity(text, textPen);
 
             // move first symbol of first line down if fields are joined:
-            if (k==0 && i==0 && joinFirstField) {
+            if (k==0 && i==0 && m_joinFirstField) {
                 text->move({0, -dimtxt});
             }
 
             cursorX += text->getUsedTextWidth();
             cursorX += dimtxt;
-            divisions.last().push_back(cursorX - dimtxt/2);
+            divisions.last().push_back(cursorX - (dimtxt / 2));
 
-            if (k==1 && i==0 && joinFirstField) {
+            if (k==1 && i==0 && m_joinFirstField) {
                 // skip first symbol of second line if fields are joined:
                 continue;
             }
             text->rotate({0,0},angle);
-            text->move(m_toleranceData.m_insertionPoint);
-
+            text->move(m_toleranceData.insertionPoint);
         }
 
         if (!divisions.isEmpty() && divisions.last().length() ==1) {
@@ -295,21 +294,20 @@ void LC_Tolerance::createTextLabels(QList<QList<double>> &divisions) {
     }
 }
 void LC_Tolerance::createFrameLines(QList<QList<double>> &divisions)  {
-    QList<RS_Line> ret;
 
-    double dimtxt = getDimtxt();
+    const double dimtxt = getDimtxt();
     double offsetY = 0.0;
 
-    RS_Vector location = m_toleranceData.m_insertionPoint;
-    double angle = m_toleranceData.m_directionVector.angle();
+    const RS_Vector location = m_toleranceData.insertionPoint;
+    const double angle = m_toleranceData.directionVector.angle();
 
-    RS_Pen linesPen = getPenForLines();
-
-    for (int i = 0; i < divisions.length(); i++) {
+    const RS_Pen linesPen = getPenForLines();
+    const qint64 divisionsLen = divisions.length();
+    for (qint64 i = 0; i < divisionsLen; i++) {
         //qDebug() << "divisions:" << divisions[i];
 
-        auto current = divisions[i];
-        qsizetype currentLength = current.length();
+        const auto& current = divisions[i];
+        const qsizetype currentLength = current.length();
         // never show vertical lines for empty rows:
         if (currentLength > 1) {
             for (int k = 0; k < currentLength; k++) {
@@ -322,7 +320,7 @@ void LC_Tolerance::createFrameLines(QList<QList<double>> &divisions)  {
             {
                 // top line of current line:
                 double startX = current.first();
-                if (joinFirstField && i == 1 && currentLength > 1) {
+                if (m_joinFirstField && i == 1 && currentLength > 1) {
                     startX = current[1];
                 }
                 RS_Line* line = addDimComponentLine({startX, dimtxt + offsetY}, {current.last(), dimtxt + offsetY}, linesPen);
@@ -333,7 +331,7 @@ void LC_Tolerance::createFrameLines(QList<QList<double>> &divisions)  {
             {
                 // bottom line of current line:
                 double startX = current.first();
-                if (joinFirstField && i == 0 && currentLength > 1) {
+                if (m_joinFirstField && i == 0 && currentLength > 1) {
                     startX = current[1];
                 }
                 RS_Line* line = addDimComponentLine({startX, -dimtxt + offsetY}, {current.last(), -dimtxt + offsetY}, linesPen);
@@ -349,7 +347,7 @@ void LC_Tolerance::createFrameLines(QList<QList<double>> &divisions)  {
 }
 
 RS_Line* LC_Tolerance::addDimComponentLine(RS_Vector start, RS_Vector end, const RS_Pen &pen) {
-    auto line = new RS_Line(this, {start, end});
+    const auto line = new RS_Line(this, {start, end});
     line->setPen(pen);
     line->setLayer(nullptr);
     addEntity(line);

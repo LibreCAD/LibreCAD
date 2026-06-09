@@ -20,7 +20,7 @@
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **
 **********************************************************************************
-*/
+ */
 #ifndef QG_COMMANDHISTORY_H
 #define QG_COMMANDHISTORY_H
 
@@ -32,18 +32,19 @@ class QAction;
  * It's a read only textedit widget.
  * \author ravas
  */
-class QG_CommandHistory : public QTextEdit{
-    Q_OBJECT
-public:
+class QG_CommandHistory : public QTextEdit {
+    Q_OBJECT public:
     explicit QG_CommandHistory(QWidget* parent);
+
 private slots:
     void mouseReleaseEvent(QMouseEvent* event) override;
-	void slotTextChanged();
+    void slotTextChanged() const;
+
 private:
-	/*menu item for Copy*/
-    QAction* m_pCopy = nullptr;
-	/*menu item for Select All*/
-    QAction* m_pSelectAll = nullptr;
+    /*menu item for Copy*/
+    QAction* m_actionCopy = nullptr;
+    /*menu item for Select All*/
+    QAction* m_actionSelectAll = nullptr;
 };
 
-#endif // QG_COMMANDHISTORY_H
+#endif

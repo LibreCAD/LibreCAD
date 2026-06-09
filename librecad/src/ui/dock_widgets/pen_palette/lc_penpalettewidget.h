@@ -40,13 +40,13 @@ class LC_PenPaletteWidget :public LC_GraphicViewAwareWidget, public Ui::LC_PenPa
 public:
     explicit LC_PenPaletteWidget(const QString& title, QWidget* parent);
     ~LC_PenPaletteWidget() override = default ;
-    void setGraphicView(RS_GraphicView *gview) override;
-    void persist();
+    void setGraphicView(RS_GraphicView *gv) override;
+    void persist() const;
 signals:
     void escape();
 public slots:
-    void onTableClicked(QModelIndex modelIndex);
-    void onTableSelectionChanged(const QItemSelection &selected,const QItemSelection &deselected);
+    void onTableClicked(const QModelIndex& modelIndex);
+    void onTableSelectionChanged(const QItemSelection &selected,const QItemSelection &deselected) const;
     void onPenEditorChanged();
     void keyPressEvent(QKeyEvent* e) override;
     void fillPenEditorBySelectedEntityAttributesPen();
@@ -54,10 +54,10 @@ public slots:
     void fillPenEditorByPenToolBarPen();
     void invokeOptionsDialog(bool focusOnFile=false);
     void createOrUpdatePenItem();
-    void applyEditorPenToSelection();
-    void selectEntitiesWithAttributesPenByPenEditor();
-    void selectEntitiesWithDrawingPenByPenEditor();
-    void applyEditorPenToPenToolBar();
+    void applyEditorPenToSelection() const;
+    void selectEntitiesWithAttributesPenByPenEditor() const;
+    void selectEntitiesWithDrawingPenByPenEditor() const;
+    void applyEditorPenToPenToolBar() const;
     void removeActivePenItem();
 
     void applySelectedPenToSelection();
@@ -67,7 +67,7 @@ public slots:
     void removeSelectedPenItem();
     void removeSelectedPenItems();
     void editSelectedPenItem();
-    void filterMaskChanged();
+    void filterMaskChanged() const;
 
     void onTableViewContextMenuInvoked(const QPoint &pos);
     void onPenEditorColorChanged(int index);
@@ -75,12 +75,11 @@ public slots:
     void onPenEditorLineTypeChanged(int index);
     void applySelectedPenItemToActiveLayer();
     void fillPenEditorByActiveLayer();
-    void applyEditorPenToActiveLayer();
-    void onModelChanged();
+    void applyEditorPenToActiveLayer() const;
+    void onModelChanged() const;
     void doDoubleClick();
-    void updatePenToolbarByActiveLayer();
-    void updateWidgetSettings();
-
+    void updatePenToolbarByActiveLayer() const;
+    QLayout* getTopLevelLayout() const override;
 protected:
     // mouse click counter used for handling both single click and double-click on table view
     int m_clicksCount {0};
@@ -94,27 +93,26 @@ protected:
     void initFilteringSection();
     void fillPenEditorByPenItem(LC_PenItem *pen);
     void markEditingPenChanged(bool changed);
-    void updateModel();
+    void updateModel() const;
     void initPenEditor();
-    void doUpdatePenEditorByPenAttributes(const RS_Color &color, RS2::LineWidth &width, RS2::LineType &lineType);
-    void doFillPenEditorByPen(RS_Pen pen);
-    RS_Pen createPenByEditor(const RS_Pen &originalPen);
-    int invokeItemRemovalDialog(QString &penName);
-    void doSelectEntitiesThatMatchToPenAttributes(
-        const RS2::LineType &lineType, const RS2::LineWidth &width, const RS_Color &color, bool colorCheck, bool resolvePens, bool resolveLayers) const;
+    void doUpdatePenEditorByPenAttributes(const RS_Color &color, RS2::LineWidth width, RS2::LineType lineType);
+    void doFillPenEditorByPen(const RS_Pen& pen);
+    RS_Pen createPenByEditor(const RS_Pen &originalPen) const;
+    int invokeItemRemovalDialog(const QString &penName);
+    void doSelectEntitiesThatMatchToPenAttributes(RS2::LineType lineType, RS2::LineWidth width, const RS_Color &color, bool colorCheck, bool resolvePens, bool resolveLayers) const;
     void redrawDrawing() const;
-    void doApplyPenAttributesToSelection(RS2::LineType lineType, RS2::LineWidth width, RS_Color color, bool modifyColor);
+    void doApplyPenAttributesToSelection(RS2::LineType lineType, RS2::LineWidth width, RS_Color color, bool modifyColor) const;
     void showEntitySelectionInfoDialog();
-    QModelIndex getSelectedItemIndex();
-    LC_PenItem *getSelectedPenItem();
-    RS_Pen createPenByPenItem(RS_Pen &pen, LC_PenItem *pItem);
+    QModelIndex getSelectedItemIndex() const;
+    LC_PenItem *getSelectedPenItem() const;
+    RS_Pen createPenByPenItem(RS_Pen &originalPen, LC_PenItem *item);
     void doRemovePenItem(LC_PenItem *penItem);
-    void doRemovePenItems(QList<LC_PenItem *> &penItems);
-    int invokeItemMultiRemovalDialog(QList<LC_PenItem *> &penItems);
-    QList<LC_PenItem *> getSelectedPenItems();
+    void doRemovePenItems(const QList<LC_PenItem *> &penItems);
+    int invokeItemMultiRemovalDialog(const QList<LC_PenItem *> &penItems);
+    QList<LC_PenItem *> getSelectedPenItems() const;
     void doFillPenEditorBySelectedEntity(bool resolvePenOnEntitySelect);
-    void doSelectEntitiesByPenEditor(bool resolvePens, bool resolveLayers);
-    void doSelectEntitiesBySelectedPenItem(bool resolvePens, bool resolveLayers);
+    void doSelectEntitiesByPenEditor(bool resolvePens, bool resolveLayers) const;
+    void doSelectEntitiesBySelectedPenItem(bool resolvePens, bool resolveLayers) const;
     void showNoSelectionDialog(bool hasOnFrozenLayers, bool hasOnLockedLayers) const;
     void initToolBar() const;
     void onTableRowDoubleClicked();
@@ -122,4 +120,4 @@ protected:
     bool invokeUnableToSavePenDataDialog();
     void setLayerList(RS_LayerList *ll);
 };
-#endif // LC_PENPALETTEWIDGET_H
+#endif

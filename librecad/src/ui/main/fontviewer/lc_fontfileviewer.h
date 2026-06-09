@@ -24,16 +24,15 @@
 #ifndef LC_FONTFILEVIEWER_H
 #define LC_FONTFILEVIEWER_H
 
-
 class RS_Document;
 
 class LC_FontFileViewer{
 public:
-    LC_FontFileViewer(RS_Document* doc);
+    explicit LC_FontFileViewer(RS_Document* doc);
     ~LC_FontFileViewer() = default;
-    void drawFontChars();
+    void drawFontChars() const;
 private:
     RS_Document* m_document;
 };
 
-#endif // LC_FONTFILEVIEWER_H
+#endif

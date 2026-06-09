@@ -32,7 +32,7 @@ class RS_Graphic;
 class LC_ActionFileExportMakerCam : public RS_ActionInterface {
     Q_OBJECT
 public:
-    LC_ActionFileExportMakerCam(LC_ActionContext *actionContext);
+    explicit LC_ActionFileExportMakerCam(LC_ActionContext *actionContext);
 
     void init(int status) override;
     void trigger() override;

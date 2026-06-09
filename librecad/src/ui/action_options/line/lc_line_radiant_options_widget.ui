@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>LC_LineRadiantOptionsWidget</class>
+ <widget class="QWidget" name="LC_LineRadiantOptionsWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1053</width>
+    <height>34</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>1</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>1</number>
+   </property>
+   <item row="0" column="2">
+    <widget class="QToolButton" name="tbPickPoint">
+     <property name="toolTip">
+      <string>Pick radiant point coordinates from drawing</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../../res/icons/icons.qrc">
+       <normaloff>:/icons/interactive_pick_point.lci</normaloff>:/icons/interactive_pick_point.lci</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="QComboBox" name="cbPointSelector">
+     <property name="toolTip">
+      <string>Selection of radiant (center) point draw to</string>
+     </property>
+     <item>
+      <property name="text">
+       <string>1</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>2</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>3</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>4</string>
+      </property>
+     </item>
+    </widget>
+   </item>
+   <item row="0" column="3">
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>X:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="11">
+    <widget class="QLineEdit" name="leLength">
+     <property name="toolTip">
+      <string>Length of line to draw</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="7">
+    <widget class="QLineEdit" name="leY">
+     <property name="toolTip">
+      <string>X coordinate of radiant point</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="9">
+    <widget class="QLabel" name="label_4">
+     <property name="text">
+      <string>Length:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="4">
+    <widget class="QLineEdit" name="leX">
+     <property name="toolTip">
+      <string>X coordinate of radiant point</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="5">
+    <widget class="QToolButton" name="tbPickX">
+     <property name="acceptDrops">
+      <bool>false</bool>
+     </property>
+     <property name="toolTip">
+      <string>Pick X coordinate of radiant point from drawing</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../../res/icons/icons.qrc">
+       <normaloff>:/icons/interactive_pick_point_x.lci</normaloff>:/icons/interactive_pick_point_x.lci</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>To point</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="6">
+    <widget class="QLabel" name="label_3">
+     <property name="text">
+      <string>Y:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="10">
+    <widget class="QComboBox" name="cbLengthType">
+     <property name="toolTip">
+      <string>Defines how to handle length parameter</string>
+     </property>
+     <item>
+      <property name="text">
+       <string>Line</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>By X</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>By Y</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>To Point</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Free</string>
+      </property>
+     </item>
+    </widget>
+   </item>
+   <item row="0" column="12">
+    <widget class="QToolButton" name="tbPickLength">
+     <property name="toolTip">
+      <string>Pick length from drawing</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../../res/icons/icons.qrc">
+       <normaloff>:/icons/interactive_pick_distance.lci</normaloff>:/icons/interactive_pick_distance.lci</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="8">
+    <widget class="QToolButton" name="tbPickY">
+     <property name="toolTip">
+      <string>Pick Y coordinate of radiant point from drawing</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../../res/icons/icons.qrc">
+       <normaloff>:/icons/interactive_pick_point_y.lci</normaloff>:/icons/interactive_pick_point_y.lci</iconset>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources>
+  <include location="../../../../res/icons/icons.qrc"/>
+ </resources>
+ <connections/>
+</ui>

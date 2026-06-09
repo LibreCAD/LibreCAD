@@ -26,8 +26,8 @@
 #ifndef QG_DLGOPTIONSGENERAL_H
 #define QG_DLGOPTIONSGENERAL_H
 
-#include "ui_qg_dlgoptionsgeneral.h"
 #include "lc_dialog.h"
+#include "ui_qg_dlgoptionsgeneral.h"
 
 class QColor;
 class QComboBox;
@@ -36,22 +36,24 @@ class QString;
 class QG_DlgOptionsGeneral : public LC_Dialog, public Ui::QG_DlgOptionsGeneral{
     Q_OBJECT
 public:
-    QG_DlgOptionsGeneral(QWidget* parent = nullptr);
+    explicit QG_DlgOptionsGeneral(QWidget* parent = nullptr);
     ~QG_DlgOptionsGeneral() override = default;
     static int m_currentTab;
 protected slots:
     void ok();
     void languageChange();
     void setTemplateFile();
+    void updateMainWindowTitle(bool showVersionInTitle);
     void setLibraryPath();
     void setRestartNeeded();
-    void onAutoBackupChanged(int state);
-    void on_cbVisualizeHoveringClicked();
-    void on_cbPersistentDialogsClicked();
-    void on_cbGridExtendAxisLinesToggled();
-    void on_cbClassicStatusBarToggled();
-    void onCheckNewVersionChanged();
-    void onTabCloseButtonChanged();
+    void onAutoBackupChanged(int state) const;
+    void on_cbVisualizeHoveringClicked() const;
+    void on_cbPersistentDialogsClicked() const;
+    void on_cbGridExtendAxisLinesToggled() const;
+    void on_cbClassicStatusBarToggled() const;
+    void onCheckNewVersionChanged() const;
+    void onTabCloseButtonChanged() const;
+    void onEnableCADDocWidgetsChanged() const;
     void on_tabWidget_currentChanged(int index);
     void on_pb_background_clicked();
     void on_pb_gridPoints_clicked();
@@ -77,12 +79,19 @@ protected slots:
     void on_pbInfoOverlaySnapColor_clicked();
     void on_pbInfoOverlayRelativeColor_clicked();
     void on_pbInfoOverlayCommandPromptColor_clicked();
+    void on_pbVisualSnapGuideEntitiesColor_clicked();
+    void on_pbVisualSnapVertexesColor_clicked();
+    void on_pbVisualSnapProjectedSnapColor_clicked();
+    void on_pbVisualSnapDocEntitiesColor_clicked();
+    void on_pbRelativePositionAssistantBackgroundColor_clicked();
+    void on_pbRelativePositionAssistantFontColor_clicked();
+
     void setVariableFile();
     void setFontsFolder();
     void setTranslationsFolder();
     void setHatchPatternsFolder();
     void setOtherSettingsFolder();
-    bool checkRestartNeeded();
+    bool checkRestartNeeded() const;
     void on_pbOverlayBoxLine_clicked();
     void on_pbOverlayBoxFill_clicked();
     void on_pbOverlayBoxLineInverted_clicked();
@@ -95,7 +104,7 @@ protected slots:
     void onInfoCursorRelativeChanged();
     void onInfoCursorSnapChanged();
     void on_pbDraftModeColor_clicked();
-    void onExpandToolsMenuToggled(bool checked);
+    void onExpandToolsMenuToggled(bool checked) const;
 
     void set_color(QComboBox* combo, QColor custom);
 
@@ -103,23 +112,15 @@ protected slots:
     void importSettings();
 private:
     bool m_restartNeeded=false;
-
     QString m_originalLibraryPath;
-    bool m_originalUseClassicToolbar;
-    bool m_originalAllowsMenusTearOff;
-    bool m_originalExpandedToolsMenu;
-    bool m_originalExpandedToolsMenuTillEntity;
-    bool m_originalShowToolbarTooltips;
-
+    bool m_originalExpandedToolsMenuTillEntity {false};
     int m_initialLanguageGUIIdx{0};
-
     void init();
     void initComboBox(QComboBox* cb, const QString& text);
-    void destroy();
-    void initReferencePoints();
-    void updateLPtSzUnits();
-    void saveReferencePoints();
+    void initReferencePoints() const;
+    void updateLPtSzUnits() const;
+    void saveReferencePoints() const;
     QString selectFolder(const QString& title);
 };
 
-#endif // QG_DLGOPTIONSGENERAL_H
+#endif

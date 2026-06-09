@@ -57,21 +57,16 @@ class RS_Graphic;
 
 class LC_MakerCamSVG {
 public:
-    LC_MakerCamSVG(std::unique_ptr<LC_XMLWriterInterface> xmlWriter,
-                   bool writeInvisibleLayers = true,
-                   bool writeConstructionLayers = true,
-                   bool writeBlocksInline = false,
-                   bool convertEllipsesToBeziers = false,
-                   bool exportImages = false,
-                   bool convertLineTypes = false,
-                   double defaultElementWidth = 1.0,
-                   double defaultDashLinePatternLength = 10.0);
+    LC_MakerCamSVG(std::unique_ptr<LC_XMLWriterInterface> xmlWriter, bool writeInvisibleLayers = true, bool writeConstructionLayers = true,
+                   bool writeBlocksInline = false, bool convertEllipsesToBeziers = false, bool exportImages = false,
+                   bool convertLineTypes = false, double defaultElementWidth = 1.0, double defaultDashLinePatternLength = 10.0);
 
-	~LC_MakerCamSVG() = default;
+    ~LC_MakerCamSVG() = default;
 
     bool generate(RS_Graphic* graphic);
-    std::string resultAsString();
-    void setExportPoints(bool exportPoints) {
+    std::string resultAsString() const;
+
+    void setExportPoints(const bool exportPoints) {
         m_exportPoints = exportPoints;
     }
 
@@ -82,27 +77,27 @@ private:
     void writeBlock(RS_Block* block);
 
     void writeLayers(RS_Document* document);
-    void writeLayer(RS_Document* document, RS_Layer* layer);
+    void writeLayer(RS_Document* document, const RS_Layer* layer);
 
-    void writeEntities(RS_Document* document, RS_Layer* layer);
+    void writeEntities(RS_Document* document, const RS_Layer* layer);
     void writeEntity(RS_Entity* entity);
 
-    void writeInsert(RS_Insert* insert);
-    void writePoint(RS_Point* point);
-    void writeLine(RS_Line* line);
-    void writePolyline(RS_Polyline* polyline);
-    void writeCircle(RS_Circle* circle);
-    void writeArc(RS_Arc* arc);
-    void writeEllipse(RS_Ellipse* ellipse);
-    void writeSpline(RS_Spline* spline);
-    void writeSplinepoints(LC_SplinePoints* splinepoints);
+    void writeInsert(const RS_Insert* insert);
+    void writePoint(const RS_Point* point) const;
+    void writeLine(const RS_Line* line) const;
+    void writePolyline(RS_Polyline* polyline) const;
+    void writeCircle(const RS_Circle* circle) const;
+    void writeArc(const RS_Arc* arc) const;
+    void writeEllipse(RS_Ellipse* ellipse) const;
+    void writeSpline(const RS_Spline* spline);
+    void writeSplinepoints(const LC_SplinePoints* splinepoints);
 
-    void writeCubicBeziers(const std::vector<RS_Vector> &control_points, bool is_closed);
-    void writeQuadraticBeziers(const std::vector<RS_Vector> &control_points, bool is_closed);
-    void writeImage(RS_Image* image);
+    void writeCubicBeziers(const std::vector<RS_Vector>& controlPoints, bool isClosed);
+    void writeQuadraticBeziers(const std::vector<RS_Vector>& controlPoints, bool isClosed);
+    void writeImage(const RS_Image* image) const;
 
-    std::vector<RS_Vector> calcCubicBezierPoints(const std::vector<RS_Vector> &control_points, bool is_closed);
-    std::vector<RS_Vector> calcQuadraticBezierPoints(const std::vector<RS_Vector> &control_points, bool is_closed);
+    std::vector<RS_Vector> calcCubicBezierPoints(const std::vector<RS_Vector>& controlPoints, bool isClosed);
+    std::vector<RS_Vector> calcQuadraticBezierPoints(const std::vector<RS_Vector>& controlPoints, bool isClosed);
 
     static std::string numXml(double value);
     /**
@@ -112,48 +107,47 @@ private:
      * @return
      */
     std::string lengthXml(double value) const;
-    RS_Vector convertToSvg(RS_Vector vector) const;
+    RS_Vector convertToSvg(const RS_Vector& vector) const;
 
     std::string svgPathClose() const;
-    std::string svgPathCurveTo(RS_Vector point, RS_Vector controlpoint1, RS_Vector controlpoint2) const;
-    std::string svgPathQuadraticCurveTo(RS_Vector point, RS_Vector controlpoint) const;
-    std::string svgPathLineTo(RS_Vector point) const;
-    std::string svgPathMoveTo(RS_Vector point) const;
-    std::string svgPathArc(RS_Arc* arc) const;
-    std::string svgPathArc(RS_Vector point, double radius_x, double radius_y, double x_axis_rotation, bool large_arc_flag, bool sweep_flag) const;
+    std::string svgPathCurveTo(const RS_Vector& point, const RS_Vector& controlpoint1, const RS_Vector& controlpoint2) const;
+    std::string svgPathQuadraticCurveTo(const RS_Vector& point, const RS_Vector& controlpoint) const;
+    std::string svgPathLineTo(const RS_Vector& point) const;
+    std::string svgPathMoveTo(const RS_Vector& point) const;
+    std::string svgPathArc(const RS_Arc* arc) const;
+    std::string svgPathArc(const RS_Vector& point, double radiusX, double radiusY, double xAxisRotation, bool largeArcFlag,
+                           bool sweepFlag) const;
     std::string svgPathAnyLineType(RS_Vector startpoint, RS_Vector endpoint, RS2::LineType type) const;
-    std::string getLinePattern(RS_Vector *lastPos, RS_Vector step, RS2::LineType type, double lineScale) const;
-    std::string getPointSegment(RS_Vector *lastPos, RS_Vector step, double lineScale)const;
-    std::string getLineSegment(RS_Vector *lastPos, RS_Vector step, double lineScale, bool x2 = false)const;
+    std::string getLinePattern(RS_Vector* lastPos, RS_Vector step, RS2::LineType type, double lineScale) const;
+    std::string getPointSegment(RS_Vector* lastPos, const RS_Vector& step, double lineScale) const;
+    std::string getLineSegment(RS_Vector* lastPos, const RS_Vector& step, double lineScale, bool x2 = false) const;
 
-
-    RS_Vector calcEllipsePointDerivative(double majorradius, double minorradius, double x_axis_rotation, double angle) const;
+    RS_Vector calcEllipsePointDerivative(double majorRadius, double minorRadius, double xAxisRotation, double angle) const;
 
     static double calcAlpha(double angle);
 
-    std::unique_ptr<LC_XMLWriterInterface> xmlWriter;
+    std::unique_ptr<LC_XMLWriterInterface> m_xmlWriter;
 
-    bool writeInvisibleLayers = false;
-    bool writeConstructionLayers = false;
-    bool writeBlocksInline = false;
-    bool convertEllipsesToBeziers = false;
-    bool exportImages = false;
-    bool convertLineTypes = false;
+    bool m_writeInvisibleLayers = false;
+    bool m_writeConstructionLayers = false;
+    bool m_writeBlocksInline = false;
+    bool m_convertEllipsesToBeziers = false;
+    bool m_exportImages = false;
+    bool m_convertLineTypes = false;
     bool m_exportPoints = false;
-    double defaultElementWidth = 0.;
-    double defaultDashLinePatternLength = 0.;
+    double m_defaultElementWidth = 0.;
+    double m_defaultDashLinePatternLength = 0.;
 
-    RS_Vector min;
-    RS_Vector max;
+    RS_Vector m_min;
+    RS_Vector m_max;
 
-    RS_Vector offset;
+    RS_Vector m_offset;
 
-    std::string unit;
+    std::string m_unit;
     /**
      * @brief lengthFactor factor from current unit to svg length units
      */
-    double lengthFactor = 0.;
-
+    double m_lengthFactor = 0.;
 };
 
 #endif

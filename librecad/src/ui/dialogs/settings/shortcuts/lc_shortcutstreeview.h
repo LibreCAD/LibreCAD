@@ -29,13 +29,13 @@ class LC_ShortcutsTreeModel;
 
 class LC_ShortcutsTreeView:public QTreeView{
 public:
-    LC_ShortcutsTreeView(QWidget *parent = nullptr);
+    explicit LC_ShortcutsTreeView(QWidget *parent = nullptr);
     void setup(LC_ShortcutsTreeModel *treeModel);
     LC_ShortcutsTreeModel *getTreeModel() const;
-    QStringList saveTreeExpansionState();
+    QStringList saveTreeExpansionState() const;
     void expandChildren(const QModelIndex &index);
-    void applyExpandState(QStringList &expandedItems, QModelIndex startIndex);
+    void applyExpandState(QStringList &expandedItems, const QModelIndex& startIndex);
     void restoreTreeExpansionState(QStringList treeExpansionState);
 };
 
-#endif // LC_SHORTCUTSTREEVIEW_H
+#endif

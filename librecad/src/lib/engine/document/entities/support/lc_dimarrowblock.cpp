@@ -23,6 +23,10 @@
 
 #include "lc_dimarrowblock.h"
 
+LC_DimArrow::LC_DimArrow(RS_EntityContainer* parent, const RS_Vector& pos, const double angle, const double size) : RS_AtomicEntity{parent},
+    m_position{pos}, m_angle{angle}, m_arrowSize{size} {
+}
+
 void LC_DimArrow::move(const RS_Vector& offset) {
     // this is just ugly construction that is needed to avoid direct invocation of protected fields.
     // So an additional boilerplate and performance overhead should be created in order to satisfy generic logic
@@ -43,14 +47,14 @@ void LC_DimArrow::move(const RS_Vector& offset) {
     calculateBorders();
 }
 
-void LC_DimArrow::doMove([[maybe_unused]]const RS_Vector& offset) {
+void LC_DimArrow::doMove([[maybe_unused]] const RS_Vector& offset) {
 }
 
-void LC_DimArrow::doRotate([[maybe_unused]]const RS_Vector& center, [[maybe_unused]]const RS_Vector& angleVector) {
+void LC_DimArrow::doRotate([[maybe_unused]] const RS_Vector& center, [[maybe_unused]] const RS_Vector& angleVector) {
 }
 
-void LC_DimArrow::rotate(const RS_Vector& center, double angle) {
-    RS_Vector angleVector(angle);
+void LC_DimArrow::rotate(const RS_Vector& center, const double angle) {
+    const RS_Vector angleVector(angle);
     rotate(center, angleVector);
 }
 
@@ -60,7 +64,7 @@ void LC_DimArrow::rotate(const RS_Vector& center, const RS_Vector& angleVector) 
     calculateBorders();
 }
 
-void LC_DimArrow::doScale([[maybe_unused]]const RS_Vector& center, [[maybe_unused]]const RS_Vector& factor) {
+void LC_DimArrow::doScale([[maybe_unused]] const RS_Vector& center, [[maybe_unused]] const RS_Vector& factor) {
 }
 
 void LC_DimArrow::scale(const RS_Vector& center, const RS_Vector& factor) {
@@ -69,7 +73,7 @@ void LC_DimArrow::scale(const RS_Vector& center, const RS_Vector& factor) {
     calculateBorders();
 }
 
-void LC_DimArrow::doMirror([[maybe_unused]]const RS_Vector& axisPoint1, [[maybe_unused]]const RS_Vector& axisPoint2) {
+void LC_DimArrow::doMirror([[maybe_unused]] const RS_Vector& axisPoint1, [[maybe_unused]] const RS_Vector& axisPoint2) {
 }
 
 void LC_DimArrow::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) {
@@ -78,22 +82,19 @@ void LC_DimArrow::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint
     calculateBorders();
 }
 
-RS_Vector LC_DimArrow::getNearestCenter([[maybe_unused]] const RS_Vector& coord,
-                                        double* dist /*= nullptr*/) const {
+RS_Vector LC_DimArrow::doGetNearestCenter([[maybe_unused]] const RS_Vector& coord, double* dist,
+                                          [[maybe_unused]] RS_Entity** centerEntity) const {
     setDistPtr(dist, RS_MAXDOUBLE);
     return RS_Vector(false);
 }
 
-RS_Vector LC_DimArrow::getNearestMiddle([[maybe_unused]] const RS_Vector& coord,
-                                        double* dist /*= nullptr*/,
-                                        [[maybe_unused]] const int middlePoints /*= 1*/) const {
+RS_Vector LC_DimArrow::doGetNearestMiddle([[maybe_unused]] const RS_Vector& coord, double* dist,
+                                          [[maybe_unused]] const int middlePoints) const {
     setDistPtr(dist, RS_MAXDOUBLE);
     return RS_Vector(false);
 }
 
-RS_Vector LC_DimArrow::getNearestDist([[maybe_unused]] double distance,
-                                      [[maybe_unused]] const RS_Vector& coord,
-                                      double* dist /*= nullptr*/) const {
+RS_Vector LC_DimArrow::doGetNearestDist([[maybe_unused]] double distance, [[maybe_unused]] const RS_Vector& coord, double* dist) const {
     setDistPtr(dist, RS_MAXDOUBLE);
     return RS_Vector(false);
 }
@@ -105,45 +106,45 @@ void LC_DimArrow::setDimLinePoint(const RS_Vector& pos) {
     m_dimLinePoint = pos;
 }
 
-void LC_DimArrow::positionDimLinePointFromZero(const RS_Vector &angleVector) {
+void LC_DimArrow::positionDimLinePointFromZero(const RS_Vector& angleVector) {
     m_dimLinePoint.move(m_position);
     m_dimLinePoint.rotate(m_position, angleVector);
 }
 
 void LC_DimArrow::calculateBorders() {
     resetBorders();
-    minV = RS_Vector::minimum(minV, m_position);
-    maxV = RS_Vector::maximum(maxV, m_position);
+    m_minV = RS_Vector::minimum(m_minV, m_position);
+    m_maxV = RS_Vector::maximum(m_maxV, m_position);
     doCalculateBorders();
 }
 
-RS_Vector LC_DimArrow::getNearestEndpoint([[maybe_unused]]const RS_Vector& coord, [[maybe_unused]]double* dist /*= nullptr*/) const {
+RS_Vector LC_DimArrow::doGetNearestEndpoint([[maybe_unused]] const RS_Vector& coord, [[maybe_unused]] double* dist, RS_Entity** entity) const {
+    if (entity != nullptr) {
+        *entity = const_cast<LC_DimArrow*>(this);
+    }
     return m_position;
 }
 
-void LC_DimArrow::setDistPtr(double* dist, double value) const {
+void LC_DimArrow::setDistPtr(double* dist, const double value) const {
     if (nullptr != dist) {
         *dist = value;
     }
 }
 
-RS_Vector LC_DimArrow::getNearestPointOnEntity(const RS_Vector& coord,
-                                               [[maybe_unused]]bool onEntity /*= true*/,
-                                               double* dist /*= nullptr*/,
-                                              [[maybe_unused]] RS_Entity** entity /*= nullptr*/) const {
+RS_Vector LC_DimArrow::doGetNearestPointOnEntity(const RS_Vector& coord, [[maybe_unused]] bool onEntity, double* dist,
+                                                 [[maybe_unused]] RS_Entity** entity) const {
     *dist = m_position.distanceTo(coord);
     return m_position;
 }
 
-double LC_DimArrow::getDistanceToPoint(const RS_Vector& coord,
-                                    RS_Entity** entity /*= nullptr*/,
-                                    [[maybe_unused]] RS2::ResolveLevel level /*= RS2::ResolveNone*/,
-                                    [[maybe_unused]] double solidDist /*= RS_MAXDOUBLE*/) const{
+double LC_DimArrow::doGetDistanceToPoint(const RS_Vector& coord, RS_Entity** entity /*= nullptr*/,
+                                         [[maybe_unused]] RS2::ResolveLevel level /*= RS2::ResolveNone*/,
+                                         [[maybe_unused]] double solidDist /*= RS_MAXDOUBLE*/) const {
     if (nullptr != entity) {
         *entity = const_cast<LC_DimArrow*>(this);
     }
 
-    double ret {0.0};
-    getNearestPointOnEntity( coord, true, &ret, entity);
+    double ret{0.0};
+    getNearestPointOnEntity(coord, true, &ret, entity);
     return ret;
 }

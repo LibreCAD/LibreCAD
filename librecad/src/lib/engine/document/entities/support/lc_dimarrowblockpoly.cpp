@@ -23,13 +23,12 @@
 
 #include "lc_dimarrowblockpoly.h"
 
-#include <boost/next_prior.hpp>
-
-LC_DimArrowPoly::LC_DimArrowPoly(RS_EntityContainer* parent, const RS_Vector &pos, double angle, double size)
-      : LC_DimArrow(parent,pos,angle,size) {
+LC_DimArrowPoly::LC_DimArrowPoly(RS_EntityContainer* parent, const RS_Vector& pos, const double angle, const double size)
+    : LC_DimArrow(parent, pos, angle, size) {
+    LC_DimArrowPoly::calculateBorders();
 }
 
-RS_Vector LC_DimArrowPoly::getNearestEndpoint(const RS_Vector& coord, double* dist /*= nullptr*/) const {
+RS_Vector LC_DimArrowPoly::doGetNearestEndpoint(const RS_Vector& coord, double* dist, [[maybe_unused]] RS_Entity** entity) const {
     double minDist{RS_MAXDOUBLE};
     double curDist{0.0};
     RS_Vector ret;
@@ -42,7 +41,7 @@ RS_Vector LC_DimArrowPoly::getNearestEndpoint(const RS_Vector& coord, double* di
         }
     }
 
-    auto pos = getPosition();
+    const auto pos = getPosition();
     curDist = pos.distanceTo(coord);
     if (curDist < minDist) {
         ret = pos;
@@ -52,9 +51,8 @@ RS_Vector LC_DimArrowPoly::getNearestEndpoint(const RS_Vector& coord, double* di
     return ret;
 }
 
-RS_Vector LC_DimArrowPoly::getNearestPointOnEntity(const RS_Vector& coord, bool onEntity, double* dist,
-    [[maybe_unused]]RS_Entity** entity) const {
-
+RS_Vector LC_DimArrowPoly::doGetNearestPointOnEntity(const RS_Vector& coord, const bool onEntity, double* dist,
+                                                     [[maybe_unused]] RS_Entity** entity) const {
     //
     // this is not exact and quite generic implementation.
     // it skips specifics of the geometry and relies on vertexes only.
@@ -66,43 +64,42 @@ RS_Vector LC_DimArrowPoly::getNearestPointOnEntity(const RS_Vector& coord, bool 
     // used for drawing as part of dimension ...
 
     RS_Vector ret(false);
-    double currDist {RS_MAXDOUBLE};
-    int next;
-    size_t lastIndex = m_vertices.size() - 2;
+    double currDist{RS_MAXDOUBLE};
+    const size_t lastIndex = m_vertices.size() - 2;
     for (size_t i = 0; i <= lastIndex; i++) {
-        next = i + 1;
+        const size_t next = i + 1;
         auto current = m_vertices[i];
 
-        RS_Vector direction {m_vertices[next] - current};
-        RS_Vector vpc {coord-current};
-        double a {direction.squared()};
-        if( a < RS_TOLERANCE2) {
+        const RS_Vector direction{m_vertices[next] - current};
+        RS_Vector vpc{coord - current};
+        const double a{direction.squared()};
+        if (a < RS_TOLERANCE2) {
             //line too short
             vpc = current;
         }
-        else{
+        else {
             //find projection on line
-            vpc = current + direction * RS_Vector::dotP( vpc, direction) / a;
+            vpc = current + direction * RS_Vector::dotP(vpc, direction) / a;
         }
-        double tmpDist = vpc.distanceTo( coord);
+        const double tmpDist = vpc.distanceTo(coord);
         if (tmpDist < currDist) {
             currDist = tmpDist;
             ret = vpc;
         }
     }
-    if (onEntity && !ret.isInWindowOrdered( minV, maxV)) {
+    if (onEntity && !ret.isInWindowOrdered(m_minV, m_maxV)) {
         // projection point not within range, find the nearest endpoint
-        ret = getNearestEndpoint( coord, dist);
-        currDist = ret.distanceTo( coord);
+        ret = getNearestEndpoint(coord, nullptr,  dist);
+        currDist = ret.distanceTo(coord);
     }
-    setDistPtr( dist, currDist);
+    setDistPtr(dist, currDist);
     return ret;
 }
 
 void LC_DimArrowPoly::positionFromZero() {
-    RS_Vector angleVector(getAngle());
+    const RS_Vector angleVector(getAngle());
     positionDimLinePointFromZero(angleVector);
-    auto position = getPosition();
+    const auto position = getPosition();
     for (auto& vertex : m_vertices) {
         vertex.move(position);
         vertex.rotate(position, angleVector);
@@ -112,9 +109,9 @@ void LC_DimArrowPoly::positionFromZero() {
 }
 
 void LC_DimArrowPoly::doCalculateBorders() {
-    for (const auto vertex : m_vertices) {
-        minV = RS_Vector::minimum(minV, vertex);
-        maxV = RS_Vector::maximum(maxV, vertex);
+    for (const auto& vertex : m_vertices) {
+        m_minV = RS_Vector::minimum(m_minV, vertex);
+        m_maxV = RS_Vector::maximum(m_maxV, vertex);
     }
 }
 

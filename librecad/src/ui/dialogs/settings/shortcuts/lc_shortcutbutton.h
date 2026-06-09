@@ -20,8 +20,8 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
 
-#ifndef LIBRECAD_LC_SHORTCUTBUTTON_H
-#define LIBRECAD_LC_SHORTCUTBUTTON_H
+#ifndef LC_SHORTCUTBUTTON_H
+#define LC_SHORTCUTBUTTON_H
 
 #include <QPushButton>
 
@@ -44,4 +44,4 @@ private:
     int m_keyNum = 0;
 };
 
-#endif //LIBRECAD_LC_SHORTCUTBUTTON_H
+#endif

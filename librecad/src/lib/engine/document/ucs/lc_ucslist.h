@@ -25,6 +25,7 @@
 
 #include <QList>
 #include <memory>
+
 #include "lc_ucs.h"
 
 class LC_UCSListListener {
@@ -47,13 +48,18 @@ public:
         return m_ucsList.count();
     }
 
+    bool isEmpty() const {
+        return m_ucsList.isEmpty();
+    }
+
 /**
  * @return ucs at given position or NULL if it is out of range.
  */
-    LC_UCS *at(unsigned int i) {
+    LC_UCS *at(const unsigned int i) const {
         return m_ucsList.at(i);
     }
 
+    const QList<LC_UCS*>* getItems() const {return &m_ucsList;}
     void add(LC_UCS *ucs);
     void addNew(LC_UCS *ucs);
     void remove(LC_UCS *ucs);
@@ -88,17 +94,17 @@ public:
         }
     }
 
-    void fireModified(bool value) {
-        for (auto l: m_ucsListListeners) {
+    void fireModified(const bool value) {
+        for (const auto l: std::as_const(m_ucsListListeners)) {
             l->ucsListModified(value);
         }
     }
 
     LC_UCS *tryAddUCS(LC_UCS *candidate);
-    LC_UCS *findExisting(LC_UCS *candidate);
+    LC_UCS *findExisting(const LC_UCS *candidate);
     LC_UCS *getWCS() const;
     LC_UCS* getActive() const {return m_activeUCS;}
-    void tryToSetActive(LC_UCS *ucs);
+    void tryToSetActive(const LC_UCS *ucs);
 protected:
     QList<LC_UCS *> m_ucsList;
     QList<LC_UCSListListener *> m_ucsListListeners;
@@ -107,4 +113,4 @@ protected:
     std::unique_ptr<LC_WCS> m_wcs = std::make_unique<LC_WCS>();
 };
 
-#endif // LC_UCSLIST_H
+#endif

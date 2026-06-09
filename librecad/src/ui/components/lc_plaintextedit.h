@@ -1,7 +1,7 @@
 /****************************************************************************
-*
+ *
 * Extended QSTextBrowser with
-*
+ *
 Copyright (C) 2024 LibreCAD.org
 Copyright (C) 2024 sand1024
 
@@ -27,27 +27,19 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 class LC_PlainTextEdit:public QTextBrowser {
 Q_OBJECT
-
-private:
-    QString clickedAnchor;
-
 public:
     explicit LC_PlainTextEdit(QWidget *parent = nullptr):QTextBrowser(parent){
     }
 
-public:
-
     void mousePressEvent(QMouseEvent *e) override{
-        clickedAnchor = (e->button() & Qt::LeftButton) ? anchorAt(e->pos()) :
-                        QString();
+        m_clickedAnchor = (e->button() == Qt::LeftButton) ? anchorAt(e->pos()) : QString();
         QTextBrowser::mousePressEvent(e);
     }
 
     void mouseReleaseEvent(QMouseEvent *e) override{
-        if (e->button() & Qt::LeftButton && !clickedAnchor.isEmpty() &&
-            anchorAt(e->pos()) == clickedAnchor){
-            emit linkActivated(clickedAnchor);
-        }
+        if ((e->button() == Qt::LeftButton) && !m_clickedAnchor.isEmpty() &&
+            anchorAt(e->pos()) == m_clickedAnchor){
+            emit linkActivated(m_clickedAnchor);        }
 
         QTextBrowser::mouseReleaseEvent(e);
     }
@@ -60,7 +52,6 @@ protected:
     void mouseMoveEvent(QMouseEvent *e) override{
         const QString &anchor = anchorAt(e->pos());
         if (anchor.isEmpty()){
-//            LC_ERR<<__func__<<"(): NO Anchor" ;
            emit unhighlighted();
         }
         else{
@@ -68,6 +59,8 @@ protected:
         }
         QTextBrowser::mouseMoveEvent(e);
     }
+private:
+    QString m_clickedAnchor;
 };
 
-#endif // LC_PLAINTEXTEDIT_H
+#endif

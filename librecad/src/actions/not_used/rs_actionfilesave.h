@@ -35,11 +35,11 @@
  * @author Andrew Mustun
  */
 class RS_ActionFileSave : public RS_ActionInterface {
-	Q_OBJECT
+    Q_OBJECT
 public:
-    RS_ActionFileSave(LC_ActionContext *actionContext);
-	void init(int status) override;
-	void trigger() override;
+    RS_ActionFileSave(LC_ActionContext* actionContext);
+    void init(int status) override;
+    void trigger() override;
 };
 
 #endif

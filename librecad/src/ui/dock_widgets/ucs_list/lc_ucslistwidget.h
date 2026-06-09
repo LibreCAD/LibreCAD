@@ -24,9 +24,11 @@
 #define LC_UCSLISTWIDGET_H
 
 #include <QModelIndex>
+
 #include "lc_graphicviewawarewidget.h"
 #include "lc_ucslist.h"
 
+class LC_Formatter;
 class RS_Graphic;
 class RS_GraphicView;
 class LC_UCSListOptions;
@@ -45,24 +47,28 @@ class LC_UCSListWidget : public LC_GraphicViewAwareWidget, LC_UCSListListener{
     Q_OBJECT
 public:
     explicit LC_UCSListWidget(const QString& title, QWidget* parent);
-    virtual ~LC_UCSListWidget();
+    ~LC_UCSListWidget() override;
     void setUCSList(LC_UCSList* viewsList);
+    void updateCurrentUCSWidget(const LC_UCS* ucs) const;
     void setGraphicView(RS_GraphicView* gv) override;
     void reload();
-    void fillUCSList(QList<LC_UCS *> &list);
-    QIcon getUCSTypeIcon(LC_UCS *view);
-    QWidget* createSelectionWidget(QAction* saveViewAction, QAction* defaultAction);
+    void fillUCSList(QList<LC_UCS *> &list) const;
+    QIcon getUCSTypeIcon(const LC_UCS *view) const;
+    QWidget* createSelectionWidget(QAction* createAction, QAction* defaultAction);
     void ucsListModified([[maybe_unused]]bool changed) override{refresh();}
-    QModelIndex getIndexForUCS(LC_UCS *u);
-    void applyUCSByIndex(QModelIndex index);
-    LC_UCS* getActiveUCS();
+    QModelIndex getIndexForUCS(const LC_UCS *u) const;
+    void applyUCSByIndex(const QModelIndex& index) const;
+    LC_UCS* getActiveUCS() const;
+    void removeExistingUCS(LC_UCS* selectedUCS);
+    void removeExistingUCS(const QString& name) const;
+    void renameExistingUCS(const QString& name);
+    void renameExistingUCS(LC_UCS *selectedUCS);
 signals:
     void ucsListChanged();
 public slots:
-    void setWCS();
-    void onViewUCSChanged(LC_UCS* ucs);
+    void setWCS() const;
+    void onViewUCSChanged(const LC_UCS* ucs);
     void setStateWidget(LC_UCSStateWidget *stateWidget);
-    void updateWidgetSettings();
 protected slots:
     void invokeOptionsDialog();
     void saveCurrentUCS();
@@ -71,10 +77,10 @@ protected slots:
     void removeUCS();
     void removeAllUCSs();
     void editUCS();
-    void setUCSByDimOrdinate();
-    void onCustomContextMenu(const QPoint &point);
-    void slotTableClicked(QModelIndex layerIdx);
-    void onTableSelectionChanged(const QItemSelection &selected, const QItemSelection &deselected);
+    void setUCSByDimOrdinate() const;
+    void onCustomContextMenu(const QPoint &pos);
+    void slotTableClicked(const QModelIndex& modelIndex);
+    void onTableSelectionChanged(const QItemSelection &selected, const QItemSelection &deselected) const;
     void onTableDoubleClicked();
 protected:
     LC_UCSList* m_currentUCSList{nullptr};
@@ -86,30 +92,24 @@ protected:
     QAction* m_createUCSAction {nullptr};
     RS_GraphicView *m_graphicView {nullptr};
     LC_GraphicViewport *m_viewport {nullptr};
-    RS2::LinearFormat m_linearFormat;
-    RS2::AngleFormat m_angleFormat;
-    int m_precision;
-    int m_anglePrecision;
-    RS2::Unit m_drawingUnit;
     Ui::LC_UCSListWidget *ui;
-
+    int m_itemHeight = 21;
+    void doRemoveExistingUCS(LC_UCS *ucs) const;
     void initToolbar() const;
     void refresh();
     void updateData(bool restoreSelectionIfPossible);
     void loadOptions();
     void createModel();
-    void applyUCS(LC_UCS* ucs);
-    void previewExistingUCS(LC_UCS* ucs);
+    void applyUCS(LC_UCS* ucs) const;
+    void previewExistingUCS(LC_UCS* ucs) const;
     LC_UCS *getSelectedUCS();
-    void removeExistingUCS(LC_UCS *ucs);
-    QModelIndex getSelectedItemIndex();
-    void renameExistingUCS(QString newName, LC_UCS *ucs);
-    void renameExistingUCS(LC_UCS *selectedUCS);
+    QModelIndex getSelectedItemIndex() const;
+    void renameExistingUCS(const QString& newName, LC_UCS *ucs);
     void updateButtonsState() const;
-    void selectUCS(LC_UCS *ucs);
+    void selectUCS(const LC_UCS *ucs) const;
     int getSingleSelectedRow() const;
-    void restoreSingleSelectedRow(bool restoreSelectionIfPossible, int selectedRow);
-    void loadFormats(RS_Graphic *graphic);
+    void restoreSingleSelectedRow(bool restoreSelectionIfPossible, int selectedRow) const;
+    QLayout* getTopLevelLayout() const override;
 };
 
-#endif // LC_UCSLISTWIDGET_H
+#endif

@@ -38,11 +38,11 @@
 
 namespace
 {
-    bool isSelected(RS_Layer* layer) {
+    bool isSelected(const RS_Layer* layer) {
         return layer != nullptr && layer->isSelectedInLayerList();
     }
 
-    bool isNotFrozen(RS_Layer* layer) {
+    bool isNotFrozen(const RS_Layer* layer) {
         return layer != nullptr && !layer->isFrozen();
     }
 
@@ -51,28 +51,28 @@ namespace
     This action class exports the current selected layers as a drawing file, 
     either as individual files, or combined within a single file.
 */
-LC_ActionLayersExport::LC_ActionLayersExport(LC_ActionContext *actionContext, Mode inputExportMode)
+LC_ActionLayersExport::LC_ActionLayersExport(LC_ActionContext *actionContext, const Mode inputExportMode)
     : RS_ActionInterface("Export selected layer(s)",actionContext, inputExportMode == SelectedMode ? RS2::ActionLayersExportSelected:RS2::ActionLayersExportVisible),
     m_exportMode{inputExportMode}{
-    auto container = actionContext->getEntityContainer() ->getDocument();
+    auto *container = actionContext->getDocument() ->getDocument();
     m_layersList = container->getLayerList();
 }
 
-void LC_ActionLayersExport::init(int status){
+void LC_ActionLayersExport::init(const int status){
     RS_DEBUG->print("LC_ActionLayersExport::init");
     RS_ActionInterface::init(status);
     trigger();
 }
 
-bool LC_ActionLayersExport::collectLayersToExport(LC_LayersExportOptions* exportOptions) {
+bool LC_ActionLayersExport::collectLayersToExport(LC_LayersExportOptions* exportOptions) const {
     RS_LayerList *originalLayersList = m_document->getLayerList();
     // layers to use: by selected or not frozen
-    std::copy_if(originalLayersList->begin(), originalLayersList->end(), std::back_inserter(exportOptions->m_layers),
+    std::copy_if(originalLayersList->begin(), originalLayersList->end(), std::back_inserter(exportOptions->layers),
                  (m_exportMode == SelectedMode) ? isSelected : isNotFrozen);
 
-    if (exportOptions->m_layers.empty())    {
+    if (exportOptions->layers.empty())    {
         /* No export layer found. */
-        QString exportModeString = (m_exportMode == SelectedMode) ? tr("selected", "Layers to export"): tr("visible", "Layers to export");
+        const QString exportModeString = (m_exportMode == SelectedMode) ? tr("selected", "Layers to export"): tr("visible", "Layers to export");
         // fixme - sand - files - use more generic way for message notify!
         QC_ApplicationWindow::getAppWindow()->statusBar()->showMessage( QObject::tr("No %1 layers found").arg(exportModeString),
                                                                         QC_ApplicationWindow::DEFAULT_STATUS_BAR_MESSAGE_TIMEOUT);
@@ -82,10 +82,10 @@ bool LC_ActionLayersExport::collectLayersToExport(LC_LayersExportOptions* export
     return true;
 }
 
-void LC_ActionLayersExport::performExport() {
+void LC_ActionLayersExport::performExport() const {
     LC_LayersExportOptions exportOptions;
     if (collectLayersToExport(&exportOptions)) {
-        auto sourceGraphic = m_document->getGraphic();
+        const auto sourceGraphic = m_document->getGraphic();
         LC_ExportLayersService::exportLayers(exportOptions, sourceGraphic);
     }
 }

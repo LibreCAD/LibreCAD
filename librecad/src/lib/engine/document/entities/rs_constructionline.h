@@ -24,7 +24,6 @@
 **
 **********************************************************************/
 
-
 #ifndef RS_CONSTRUCTIONLINE_H
 #define RS_CONSTRUCTIONLINE_H
 
@@ -36,17 +35,15 @@
  */
 struct RS_ConstructionLineData {
     /**
-	 * Default constructor
+  * Default constructor
      */
     RS_ConstructionLineData() = default;
 
-    RS_ConstructionLineData(const RS_Vector& point1,
-                            const RS_Vector& point2);
+    RS_ConstructionLineData(const RS_Vector& point1, const RS_Vector& point2);
 
     RS_Vector point1;
     RS_Vector point2;
 };
-
 
 /**
  * Class for a construction line entity.
@@ -57,32 +54,27 @@ class RS_ConstructionLine : public RS_AtomicEntity {
 public:
     RS_ConstructionLine() = default;
     RS_ConstructionLine(RS_EntityContainer* parent, const RS_ConstructionLineData& d);
-
     RS_ConstructionLine(const RS_Vector& point1, const RS_Vector& point2);
+    RS_Entity* clone() const override;
+    ~RS_ConstructionLine() override = default;
 
-     RS_Entity* clone() const override;
-
-	virtual ~RS_ConstructionLine()=default;
-
-    /**	@return RS2::EntityConstructionLine */
-    RS2::EntityType rtti() const override{
+    /** @return RS2::EntityConstructionLine */
+    RS2::EntityType rtti() const override {
         return RS2::EntityConstructionLine;
     }
 
     /** @return Copy of data that defines the line. */
-	RS_ConstructionLineData const& getData() const;
-
+    const RS_ConstructionLineData& getData() const;
     /** @return First definition point. */
-	RS_Vector const& getPoint1() const;
+    const RS_Vector& getPoint1() const;
     /** @return Second definition point. */
-	RS_Vector const& getPoint2() const;
-
+    const RS_Vector& getPoint2() const;
     /** @return Start point of the entity */
     RS_Vector getStartpoint() const override;
     /** @return End point of the entity */
     RS_Vector getEndpoint() const override;
-    double getDirection1(void) const override;
-    double getDirection2(void) const override;
+    double getDirection1() const override;
+    double getDirection2() const override;
 
     /** return the equation of the entity
 for quadratic,
@@ -94,24 +86,7 @@ for linear:
 m0 x + m1 y + m2 =0
 **/
     LC_Quadratic getQuadratic() const override;
-    RS_Vector getMiddlePoint(void) const override;
-    RS_Vector getNearestEndpoint(const RS_Vector& coord,
-                                         double* dist = nullptr) const override;
-    RS_Vector getNearestPointOnEntity(const RS_Vector& coord,
-            bool onEntity = true, double* dist = nullptr, RS_Entity** entity=nullptr)const override;
-    RS_Vector getNearestCenter(const RS_Vector& coord,
-                                       double* dist = nullptr) const override;
-    RS_Vector getNearestMiddle(const RS_Vector& coord,
-                                       double* dist = nullptr,
-                                       int middlePoints = 1)const override;
-    RS_Vector getNearestDist(double distance,
-                                     const RS_Vector& coord,
-                                     double* dist = nullptr)const override;
-    double getDistanceToPoint(const RS_Vector& coord,
-                                      RS_Entity** entity=nullptr,
-                                      RS2::ResolveLevel level=RS2::ResolveNone,
-                                      double solidDist = RS_MAXDOUBLE) const override;
-
+    RS_Vector getMiddlePoint() const override;
     void move(const RS_Vector& offset) override;
     void rotate(const RS_Vector& center, double angle) override;
     void rotate(const RS_Vector& center, const RS_Vector& angleVector) override;
@@ -120,16 +95,17 @@ m0 x + m1 y + m2 =0
     RS_Entity& shear(double k) override;
 
     void draw(RS_Painter* painter) override;
-
-    friend std::ostream& operator << (std::ostream& os,
-                                      const RS_ConstructionLine& l);
-
+    friend std::ostream& operator <<(std::ostream& os, const RS_ConstructionLine& l);
     void calculateBorders() override;
-
-
-
+protected:
+    RS_Vector doGetNearestPointOnEntity(const RS_Vector& coord, bool onEntity, double* dist, RS_Entity** entity) const override;
+    double doGetDistanceToPoint(const RS_Vector& coord, RS_Entity** entity, RS2::ResolveLevel level, double solidDist) const override;
+    RS_Vector doGetNearestEndpoint(const RS_Vector& coord, double* dist, RS_Entity** entity) const override;
+    RS_Vector doGetNearestCenter(const RS_Vector& coord, double* dist, RS_Entity** centerEntity) const override;
+    RS_Vector doGetNearestMiddle(const RS_Vector& coord, double* dist, int middlePoints) const override;
+    RS_Vector doGetNearestDist(double distance, const RS_Vector& coord, double* dist) const override;
 private:
-    RS_ConstructionLineData data{};
+    RS_ConstructionLineData m_data;
 };
 
 #endif

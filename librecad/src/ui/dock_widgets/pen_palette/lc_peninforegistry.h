@@ -55,17 +55,17 @@ public:
     QString getLineTypeText(RS2::LineType lineType) const;
     QString getLineWidthText(RS2::LineWidth lineWidth) const;
     QIcon getColorIcon(const RS_Color &color, int iconSizeW, int iconSizeH) const;
-    QString getColorName(const RS_Color &color, int type) const;
+    QString getColorName(const RS_Color &color, ColorNameDisplayMode colorNameMode) const;
 
-    QString getInternalColorString(const RS_Color &color);
-    RS_Color getColorFromInternalString(QString &str);
+    static QString getInternalColorString(const RS_Color &color);
+    static RS_Color getColorFromInternalString(const QString &str);
 
     static bool isUnchangedColor(const RS_Color &color);
 
     static LC_PenInfoRegistry* instance();
     static RS_Color createUnchangedColor();
-    bool hasLineType(int typeCandidate);
-    bool hasLineWidth(int widthCandidate);
+    bool hasLineType(int typeCandidate) const;
+    bool hasLineWidth(int widthCandidate) const;
 private:
 
     QMap<RS2::LineType, QIcon> m_lineTypesIconMap;
@@ -75,16 +75,16 @@ private:
     QMap<QRgba64, QString> m_colorNamesMap;
     QMap<QRgba64, QString> m_standardLCColorNamesMap;
 
-    QIcon m_iconByLayer = QIcon(":/icons/point_blank_square.lci");
-    QIcon m_iconByBlock = QIcon(":/icons/point_plus_square.lci");
+    QIcon m_iconByLayer = QIcon(":/icons/item_by_layer.lci");
+    QIcon m_iconByBlock = QIcon(":/icons/point_plus_square.lci"); // fixme - create custom icon for this?
     QIcon m_iconUnchanged = QIcon(":/icons/point_cross.lci");
 
     void registerLineTypes();
     void registerLineWidths();
-    void doRegisterLineType(const char* iconName, QString labelKey, RS2::LineType lineType);
-    void doRegisterLineWidth(const char* iconName, QString labelKey, RS2::LineWidth lineWidth);
+    void doRegisterLineType(const char* iconName, const QString& labelKey, RS2::LineType lineType);
+    void doRegisterLineWidth(const char* iconName, const QString& labelKey, RS2::LineWidth lineWidth);
     void registerColorNames();
-    void registerLCColor(QColor color, QString name);
+    void registerLCColor(const QColor& color, const QString& colorName);
 };
 
-#endif // LC_PENINFOREGISTRY_H
+#endif

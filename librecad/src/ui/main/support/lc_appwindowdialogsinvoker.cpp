@@ -1,5 +1,5 @@
 /*******************************************************************************
-*
+ *
  This file is part of the LibreCAD project, a 2D CAD program
 
  Copyright (C) 2025 LibreCAD.org
@@ -20,13 +20,12 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
 
+#include "lc_appwindowdialogsinvoker.h"
 
-#include <QFileDialog>
 #include <QImageWriter>
 #include <QMessageBox>
 
 #include "comboboxoption.h"
-#include "lc_appwindowdialogsinvoker.h"
 #include "lc_dlgabout.h"
 #include "lc_dlgnewversionavailable.h"
 #include "lc_widgetoptionsdialog.h"
@@ -41,8 +40,8 @@
 #include "rs_system.h"
 #include "textfileviewer.h"
 
-LC_AppWindowDialogsInvoker::LC_AppWindowDialogsInvoker(QC_ApplicationWindow *appWin)
-  :LC_AppWindowAware(appWin) {
+LC_AppWindowDialogsInvoker::LC_AppWindowDialogsInvoker(QC_ApplicationWindow* appWin)
+    : LC_AppWindowAware(appWin) {
 }
 
 void LC_AppWindowDialogsInvoker::showAboutWindow() const {
@@ -50,31 +49,29 @@ void LC_AppWindowDialogsInvoker::showAboutWindow() const {
     dlg.exec();
 }
 
-void LC_AppWindowDialogsInvoker::showNewVersionAvailableDialog( LC_ReleaseChecker* releaseChecker) const {
+void LC_AppWindowDialogsInvoker::showNewVersionAvailableDialog(const LC_ReleaseChecker* releaseChecker) const {
     LC_DlgNewVersionAvailable dlg(m_appWin, releaseChecker);
     dlg.exec();
 }
 
 void LC_AppWindowDialogsInvoker::showLicenseWindow() const {
-    QDialog dlg(m_appWin); 
-    dlg.setWindowTitle(tr("License"));  // Use non-static tr() since this class likely inherits QObject
+    QDialog dlg(m_appWin);
+    dlg.setWindowTitle(tr("License")); // Use non-static tr() since this class likely inherits QObject
 
-    auto* viewer = new TextFileViewer(&dlg);  // Use raw pointer with parent for Qt ownership
+    auto* viewer = new TextFileViewer(&dlg); // Use raw pointer with parent for Qt ownership
     auto* layout = new QVBoxLayout;
     layout->addWidget(viewer);
     dlg.setLayout(layout);
 
     // Check and add files with error handling
     QStringList missingFiles;
-    std::pair<QString, QString> files[] = {
-	    {"readme.md", "readme"},
-	    {"gpl-2.0.txt", "GPLv2"},
-    };
-    for(const auto& [fileName, title] : files) {
-	const QString file = ":/" + fileName;
+    std::pair<QString, QString> files[] = {{"readme.md", "readme"}, {"gpl-2.0.txt", "GPLv2"},};
+    for (const auto& [fileName, title] : files) {
+        const QString file = ":/" + fileName;
         if (QFile::exists(file)) {
             viewer->addFile(title, file);
-        } else {
+        }
+        else {
             missingFiles << file;
         }
     }
@@ -83,25 +80,26 @@ void LC_AppWindowDialogsInvoker::showLicenseWindow() const {
     if (missingFiles.isEmpty()) {
         // Attempt to set the default file if available
         viewer->setFile("readme");
-        dlg.resize(800, 600);  // Set a reasonable default size for better UX; adjust as needed
-        dlg.exec();  
-    } else {
-        QString errorMsg = tr("The following files could not be loaded:\n") + missingFiles.join("\n");
+        dlg.resize(800, 600); // Set a reasonable default size for better UX; adjust as needed
+        dlg.exec();
+    }
+    else {
+        const QString errorMsg = tr("The following files could not be loaded:\n") + missingFiles.join("\n");
         QMessageBox::warning(&dlg, tr("Error"), errorMsg);
     }
 }
 
 void LC_AppWindowDialogsInvoker::showDeviceOptions() {
-    QDialog dlg (m_appWin);
+    QDialog dlg(m_appWin);
     dlg.setWindowTitle(tr("Device Options"));
-    auto layout = new QVBoxLayout;
-    auto device_combo = new ComboBoxOption(&dlg);
+    const auto layout = new QVBoxLayout;
+    const auto device_combo = new ComboBoxOption(&dlg);
     device_combo->setTitle(tr("Device"));
     device_combo->setOptionsList(QStringList({"Mouse", "Tablet", "Trackpad", "Touchscreen"}));
-    device_combo->setCurrentOption(LC_GET_ONE_STR("Hardware","Device", "Mouse"));
+    device_combo->setCurrentOption(LC_GET_ONE_STR("Hardware", "Device", "Mouse"));
     layout->addWidget(device_combo);
     dlg.setLayout(layout);
-    connect(device_combo, &ComboBoxOption::optionToSave,m_appWin, &QC_ApplicationWindow::updateDevice);
+    connect(device_combo, &ComboBoxOption::optionToSave, m_appWin, &QC_ApplicationWindow::updateDevice);
     dlg.exec();
 }
 
@@ -112,15 +110,15 @@ bool LC_AppWindowDialogsInvoker::showWidgetOptionsDialog() const {
 
 bool LC_AppWindowDialogsInvoker::showGeneralOptionsDialog() const {
     QG_DlgOptionsGeneral dlg(m_appWin);
-    bool  result = dlg.exec() == QDialog::Accepted;
+    const bool result = dlg.exec() == QDialog::Accepted;
     return result;
 }
 
-int LC_AppWindowDialogsInvoker::requestOptionsDrawingDialog(RS_Graphic &graphic, int tabIndex) const {
+int LC_AppWindowDialogsInvoker::requestOptionsDrawingDialog(RS_Graphic& graphic, const int tabIndex) const {
     QG_DlgOptionsDrawing dlg(m_appWin);
     dlg.setGraphic(&graphic);
     dlg.showInitialTab(tabIndex);
-    int result = dlg.exec();
+    const int result = dlg.exec();
     return result;
 }
 
@@ -133,7 +131,7 @@ int LC_AppWindowDialogsInvoker::requestOptionsDrawingDialog(RS_Graphic &graphic,
  * @return QG_ExitDialog::ExitDialogResult the button that was pressed, or -1 if invoked in error
  * @see QG_ExitDialog
  */
-int LC_AppWindowDialogsInvoker::showCloseDialog(const QC_MDIWindow *w, bool showSaveAll) const {
+int LC_AppWindowDialogsInvoker::showCloseDialog(const QC_MDIWindow* w, const bool showSaveAll) const {
     QG_ExitDialog dlg(m_appWin);
     dlg.setShowOptionsForAll(showSaveAll);
     dlg.setTitle(tr("Closing Drawing"));
@@ -142,7 +140,7 @@ int LC_AppWindowDialogsInvoker::showCloseDialog(const QC_MDIWindow *w, bool show
         if (fileName.isEmpty()) {
             fileName = w->windowTitle();
             fileName.remove("[*]");
-            fileName.remove( " [" + tr("Draft Mode") + "]");
+            fileName.remove(" [" + tr("Draft Mode") + "]");
         }
         else if (fileName.length() > 50) {
             fileName = QString("%1...%2").arg(fileName.left(24)).arg(fileName.right(24));
@@ -157,25 +155,27 @@ int LC_AppWindowDialogsInvoker::showCloseDialog(const QC_MDIWindow *w, bool show
 QPair<QString, QString> LC_AppWindowDialogsInvoker::showExportFileSelectionDialog(const QString& drawingFileName) const {
     // read default settings:
     LC_GROUP("Export");
-    QString defDir = LC_GET_STR("ExportImage", RS_SYSTEM->getHomeDir());
-    QString defFilter = LC_GET_STR("ExportImageFilter",
-                                   QString("%1 (%2)(*.%2)").arg(QG_DialogFactory::extToFormat("png")).arg("png"));
+    const QString defDir = LC_GET_STR("ExportImage", RS_SYSTEM->getHomeDir());
+    const QString defFilter = LC_GET_STR("ExportImageFilter",
+                                         QString("%1 (%2)(*.%2)").arg(QG_DialogFactory::extToFormat("png")).arg("png"));
     LC_GROUP_END();
 
     QStringList filters;
     QList<QByteArray> supportedImageFormats = QImageWriter::supportedImageFormats();
     supportedImageFormats.push_back("svg"); // add svg
 
-    for (QString format: supportedImageFormats) {
+    for (QString format : std::as_const(supportedImageFormats)) {
         format = format.toLower();
         QString st;
         if (format == "jpeg" || format == "tiff") {
             // Don't add the aliases
-        } else {
+        }
+        else {
             st = QString("%1 (%2)(*.%2)").arg(QG_DialogFactory::extToFormat(format), format);
         }
-        if (st.length() > 0)
+        if (st.length() > 0) {
             filters.push_back(st);
+        }
     }
     // revise list of filters
     filters.removeDuplicates();
@@ -202,18 +202,18 @@ QPair<QString, QString> LC_AppWindowDialogsInvoker::showExportFileSelectionDialo
             fileName = files[0];
 
             // store new default settings:
-            LC_GROUP_GUARD("Export");{
+            LC_GROUP_GUARD("Export");
+            {
                 LC_SET("ExportImage", QFileInfo(fileName).absolutePath());
-                LC_SET("ExportImageFilter",
-                       fileDlg.selectedNameFilter());
+                LC_SET("ExportImageFilter", fileDlg.selectedNameFilter());
             }
 
             // find out extension:
-            QString filter = fileDlg.selectedNameFilter();
+            const QString filter = fileDlg.selectedNameFilter();
             QString format = "";
-            int i = filter.indexOf("(*.");
+            const int i = filter.indexOf("(*.");
             if (i != -1) {
-                int i2 = filter.indexOf(QRegularExpression("[) ]"), i);
+                const int i2 = filter.indexOf(QRegularExpression("[) ]"), i);
                 format = filter.mid(i + 3, i2 - (i + 3));
                 format = format.toUpper();
             }
@@ -229,7 +229,7 @@ QPair<QString, QString> LC_AppWindowDialogsInvoker::showExportFileSelectionDialo
     return {"", ""};
 }
 
-QPair<QString, RS2::FormatType> LC_AppWindowDialogsInvoker::requestDrawingFileName(RS2::FormatType format) const {
+QPair<QString, RS2::FormatType> LC_AppWindowDialogsInvoker::requestDrawingFileName(const RS2::FormatType format) const {
     QG_FileDialog dlg(m_appWin);
     RS2::FormatType type = format;
     QString dxfPath = dlg.getOpenFile(&type);

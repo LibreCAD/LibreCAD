@@ -19,17 +19,14 @@
  along with this program; if not, write to the Free Software
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
-#include <memory>
+#include "lc_dlgabout.h"
 
 #include <QClipboard>
-#include <QLabel>
 #include <QMimeData>
 #include <QPainter>
-#include <QTextDocument>
-
+#include <memory>
 #include <boost/version.hpp>
 
-#include "lc_dlgabout.h"
 #include "main.h"
 #include "qc_applicationwindow.h"
 #include "ui_lc_dlgabout.h"
@@ -39,13 +36,12 @@
 #endif
 
 namespace {
-
-void aboutImageLabels(QLabel* label)
-{
-    if (label == nullptr)
+void aboutImageLabels(QLabel* label) {
+    if (label == nullptr) {
         return;
+    }
 
-    QString versionLabel = LCReleaseLabel();
+    const QString versionLabel = LCReleaseLabel();
     label->setPixmap(QPixmap{":images/librecad01_" + versionLabel.toLower() + ".png"});
     QPixmap pixmap = label->pixmap();  // Create a mutable copy
 
@@ -53,9 +49,9 @@ void aboutImageLabels(QLabel* label)
     const double factorX = pixmap.width() / 551.;
     const double factorY = pixmap.height() / 171.;
     painter.setPen(QColor(255, 0, 0, 128));
-    QRectF labelRect{QPointF{280. * factorX, 125. * factorY}, QPointF{480. * factorX, 165. * factorY}};
+    const QRectF labelRect{QPointF{280. * factorX, 125. * factorY}, QPointF{480. * factorX, 165. * factorY}};
     QFont font;
-    font.setPixelSize(int(labelRect.height()) - 2);
+    font.setPixelSize(static_cast<int>(labelRect.height()) - 2);
     painter.setFont(font);
     painter.drawText(labelRect, Qt::AlignRight, versionLabel);
 
@@ -67,7 +63,7 @@ LC_DlgAbout::LC_DlgAbout(QWidget *parent)
     : LC_Dialog(parent, "About")
     , ui(std::make_unique<Ui::LC_DlgAbout>()){
     ui->setupUi(this);
-    auto* appWindow = static_cast<QC_ApplicationWindow*>(parent);
+    const auto* appWindow = static_cast<QC_ApplicationWindow*>(parent);
 
     // Compiler macro list in Qt source tree
     // Src/qtbase/src/corelib/global/qcompilerdetection.h
@@ -106,12 +102,12 @@ LC_DlgAbout::LC_DlgAbout(QWidget *parent)
 LC_DlgAbout::~LC_DlgAbout() = default;
 
 void LC_DlgAbout::copyInfo(){
-    QString htmlText = ui->lVersionInfo->text() + "<br>" + tr("System") + ": " + QSysInfo::prettyProductName();
+    const QString htmlText = ui->lVersionInfo->text() + "<br>" + tr("System") + ": " + QSysInfo::prettyProductName();
     QTextDocument doc;
     doc.setHtml(htmlText);
-    QString plainText = doc.toPlainText();
+    const QString plainText = doc.toPlainText();
 
-    QMimeData* mimeData = new QMimeData();
+    const auto mimeData = new QMimeData();
     mimeData->setText(plainText);
     mimeData->setHtml(htmlText);
 

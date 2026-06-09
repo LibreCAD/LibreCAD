@@ -69,37 +69,42 @@ public:
     // ---------------------------------------------------------------------------
     // Default Settings
     // ---------------------------------------------------------------------------
-    static constexpr char const* snap_indicator          = "#FFC200";
-    static constexpr char const* snap_indicator_lines    = "#FFC200";
-    static constexpr char const* background              = "Black";
-    static constexpr char const* color_grid_points       = "Gray";
-    static constexpr char const* color_grid_lines        = "#aeaeff";
-    static constexpr char const* color_meta_grid_points  = "#404040";
-    static constexpr char const* color_meta_grid_lines   = "#55557f";
-    static constexpr char const* select                  = "#A54747";
-    static constexpr char const* highlight         = "#739373";
-    static constexpr char const* start_handle      = "Cyan";
-    static constexpr char const* handle            = "Blue";
-    static constexpr char const* end_handle        = "Blue";
-    static constexpr char const* relativeZeroColor = "Red";
-    static constexpr char const* xAxisColor        = "Red";
-    static constexpr char const* yAxisColor        = "Green";
-    static constexpr char const* previewRefColor   = "Yellow";
-    static constexpr char const* previewRefHighlightColor = "Green";
-    static constexpr char const* overlayBoxLineInverted = "#32ff32";
-    static constexpr char const* overlayBoxFillInverted = "#09ff09";
-    static constexpr char const* overlayBoxLine = "#3232ff";
-    static constexpr char const* overlayBoxFill = "#0909ff";
+    static constexpr auto SNAP_INDICATOR          = "#FFC200";
+    static constexpr auto SNAP_INDICATOR_LINES    = "#FFC200";
+    static constexpr auto BACKGROUND              = "Black";
+    static constexpr auto COLOR_GRID_POINTS       = "Gray";
+    static constexpr auto COLOR_GRID_LINES        = "#aeaeff";
+    static constexpr auto COLOR_META_GRID_POINTS  = "#404040";
+    static constexpr auto COLOR_META_GRID_LINES   = "#55557f";
+    static constexpr auto SELECT                  = "#A54747";
+    static constexpr auto HIGHLIGHT         = "#739373";
+    static constexpr auto START_HANDLE      = "Cyan";
+    static constexpr auto HANDLE            = "Blue";
+    static constexpr auto END_HANDLE        = "Blue";
+    static constexpr auto RELATIVE_ZERO_COLOR = "Red";
+    static constexpr auto X_AXIS_COLOR        = "Red";
+    static constexpr auto Y_AXIS_COLOR        = "Green";
+    static constexpr auto PREVIEW_REF_COLOR   = "Yellow";
+    static constexpr auto PREVIEW_REF_HIGHLIGHT_COLOR = "Green";
+    static constexpr auto OVERLAY_BOX_LINE_INVERTED = "#32ff32";
+    static constexpr auto OVERLAY_BOX_FILL_INVERTED = "#09ff09";
+    static constexpr auto OVERLAY_BOX_LINE = "#3232ff";
+    static constexpr auto OVERLAY_BOX_FILL = "#0909ff";
 
-    static constexpr char const* overlayInfoCursorAbsolutePos = "Yellow";
-    static constexpr char const* overlayInfoCursorSnap = "Cyan";
-    static constexpr char const* overlayInfoCursorRelativePos = "Orange";
-    static constexpr char const* overlayInfoCursorCommandPrompt = "Gray";
+    static constexpr auto OVERLAY_INFO_CURSOR_ABSOLUTE_POS = "Yellow";
+    static constexpr auto OVERLAY_INFO_CURSOR_SNAP = "Cyan";
+    static constexpr auto OVERLAY_INFO_CURSOR_RELATIVE_POS = "Orange";
+    static constexpr auto OVERLAY_INFO_CURSOR_COMMAND_PROMPT = "Gray";
 
-    static constexpr char const* anglesBasisDirection = "#017CFF";
-    static constexpr char const* anglesBasisAngleRay = "#00FFFF";
+    static constexpr auto ANGLES_BASIS_DIRECTION = "#017CFF";
+    static constexpr auto ANGLES_BASIS_ANGLE_RAY = "#00FFFF";
+    static constexpr auto VISUAL_SNAP_VERTEXES = "#00ff00";
+    static constexpr auto VISUAL_SNAP_ENTITIES = "#00ff00";
+    static constexpr auto VISUAL_SNAP_PROJECTED_SNAP = "#00ffff";
+    static constexpr auto VISUAL_SNAP_DOCUMENT_ENTITIES = "#00ff00";
 
-
+    static constexpr auto RELATIVE_POSITION_BACKGROUND = BACKGROUND;
+    static constexpr auto RELATIVE_POSITION_FONT = "Cyan";
 
     // Used to have RAII style GroupGuard: endGroup is called automatically whenever a unique_ptr<GroupGuard>
     // goes out of scope
@@ -129,10 +134,11 @@ public:
 
     // RAII style group guard: endGroup() is called automatically at the end of lifetime of the returned object
     std::unique_ptr<GroupGuard> beginGroupGuard(QString group);
-    void beginGroup(QString group);
+    void beginGroup(const QString& group);
     void endGroup();
 
     bool write(const QString& key, int value);
+    bool write(const QString& key, const QVariant& variant);
     bool writeColor(const QString& key, int value);
     bool write(const QString& key, double value);
     bool writeEntry(const QString& key, const QVariant& value);
@@ -151,20 +157,21 @@ public:
     QString readStr(const QString& key,const QString& def = QString());
     bool readBool(const QString &key, bool defaultValue = false);
     bool readBoolSingle(const QString& group, const QString &key, bool defaultValue = false);
-    QByteArray readByteArraySingle(const QString &group, const QString &key);
-    QByteArray readByteArray(const QString &key);
+    QByteArray readByteArraySingle(const QString &group, const QString &key) const;
+    QByteArray readByteArray(const QString &key) const;
 
-    void clear_all();
-    void clear_geometry();
-    static bool save_is_allowed;
+    void clearAll();
+    void clearGeometry();
+
+    static bool saveIsAllowed;
 
     void emitOptionsChanged();
 
-    static void writePen(QString name, RS_Pen const &pen);
-    static RS_Pen readPen(QString name, RS_Pen &defaultPen);
+    static void writePen(const QString& name, const RS_Pen&pen);
+    static RS_Pen readPen(const QString& name, const RS_Pen &defaultPen);
 
     QSettings* getSettings() const {
-        return settings;
+        return m_settings;
     }
 
     QStringList getAllKeys() const;
@@ -181,9 +188,9 @@ private:
     QVariant readEntryCache(const QString& key);
 
 protected:
-    std::map<QString, QVariant> cache;
+    std::map<QString, QVariant> m_cache;
     QString m_group;
-    QSettings *settings = nullptr;
+    QSettings *m_settings = nullptr;
     static inline RS_Settings* INSTANCE;
 
     bool writeEntrySingle(const QString &group, const QString &key, const QVariant &value);

@@ -1,5 +1,5 @@
 /****************************************************************************
-*
+ *
 * class that process given entity and creates the list of properties of it
 
 Copyright (C) 2024 LibreCAD.org
@@ -23,6 +23,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #define LC_QUICKINFOENTITYDATA_H
 
 #include <QString>
+
+#include "lc_hyperbola.h"
 #include "lc_quickinfobasedata.h"
 #include "rs_dimension.h"
 #include "rs_mtext.h" // fixme - sand - files - extract enums to rs.h
@@ -65,11 +67,11 @@ public:
      * Type of property
      */
     enum PropertyType{
-        VECTOR, // holds coordinate value
-        LINEAR, // holds linear value
-        ANGLE, // holds angle value
-        AREA, // holds area value
-        OTHER // holds generic purpose value
+        PROPERTY_TYPE_VECTOR, // holds coordinate value
+        PROPERTY_TYPE_LINEAR, // holds linear value
+        PROPERTY_TYPE_ANGLE, // holds angle value
+        PROPERTY_TYPE_AREA, // holds area value
+        PROPERTY_TYPE_OTHER // holds generic purpose value
     };
 
     /**
@@ -85,7 +87,7 @@ public:
     /**
      * Property that holds of vector value
      */
-    struct VectorPropertyInfo :public PropertyInfo{
+    struct VectorPropertyInfo : PropertyInfo{
         VectorPropertyInfo(const QString &label, const QString &value, int type, const RS_Vector& coord);
         RS_Vector data;
     };
@@ -93,7 +95,7 @@ public:
     /**
      * Property that holds double value
      */
-    struct DoublePropertyInfo: public PropertyInfo{
+    struct DoublePropertyInfo: PropertyInfo{
         DoublePropertyInfo(const QString &label, const QString &value, int type, double d);
         double data;
     };
@@ -101,10 +103,10 @@ public:
     QString generateView();
     RS_Vector getVectorForIndex(int index) const override;
     QString getValue(int index) const;
-    unsigned long getEntityId() const{return m_entityId;};
+    unsigned long getEntityId() const{return m_entityId;}
     bool updateForCoordinateViewMode(int mode) override;
-    bool processEntity(RS_Entity *en);
-    QString getEntityDescription(RS_Entity *en, RS2::EntityDescriptionLevel shortDescription);
+    bool processEntity(const RS_Entity* en);
+    QString getEntityDescription(const RS_Entity* en, RS2::EntityDescriptionLevel level);
     void clear() override;
     bool hasData() const override;
     void setOptions(LC_QuickInfoOptions *opt);
@@ -136,30 +138,31 @@ protected:
     LC_PenInfoRegistry* m_penRegistry;
 
     void addProperty(const QString& name, const QString &valueStr, PropertyType type);
-    void collectLineProperties(RS_Line* line);
-    void collectCircleProperties(RS_Circle *circle);
-    void collectGenericProperties(RS_Entity *line);
-    void collectArcProperties(RS_Arc *arc);
-    void collectEllipseProperties( RS_Ellipse *ellipse);
-    void collectPointProperties(RS_Point *point);
-    void collectPolylineProperties(RS_Polyline *polyline);
-    void collectInsertProperties(RS_Insert *insert);
-    void collectMTextProperties(RS_MText *pText);
-    void collectTextProperties(RS_Text *text);
-    void collectImageProperties(RS_Image *image);
-    void collectSplineProperties(RS_Spline *spline);
-    void collectSplinePointsProperties(LC_SplinePoints *spline);
-    void collectParabolaProperties(LC_Parabola *parabola);
-    void collectHatchProperties(RS_Hatch *hatch);
-    void collectDimLeaderProperties(RS_Leader *leader);
-    void collectDimArcProperties(LC_DimArc *dim);
-    void collectDimAngularProperties(RS_DimAngular *dim);
-    void collectDimDiametricProperties(RS_DimDiametric *dim);
-    void collectDimRadialProperties(RS_DimRadial *dim);
-    QString getDimensionStyleString(RS_Dimension* dim);
-    void collectDimLinearProperties(RS_DimLinear *dim);
-    void collectDimOrdinateProperties(LC_DimOrdinate* dim);
-    void collectDimAlignedProperties(RS_DimAligned *dim);
+    void collectLineProperties(const RS_Line* line);
+    void collectCircleProperties(const RS_Circle *circle);
+    void collectGenericProperties(const RS_Entity* e);
+    void collectArcProperties(const RS_Arc *arc);
+    void collectEllipseProperties(const RS_Ellipse *ellipse);
+    void collectHyperbolaProperties(const LC_Hyperbola* hyperbola);
+    void collectPointProperties(const RS_Point *point);
+    void collectPolylineProperties(const RS_Polyline *polyline);
+    void collectInsertProperties(const RS_Insert *insert);
+    void collectMTextProperties(const RS_MText *pText);
+    void collectTextProperties(const RS_Text *text);
+    void collectImageProperties(const RS_Image *image);
+    void collectSplineProperties(const RS_Spline* spline);
+    void collectSplinePointsProperties(const LC_SplinePoints* spline);
+    void collectParabolaProperties(const LC_Parabola* parabola);
+    void collectHatchProperties(const RS_Hatch *hatch);
+    void collectDimLeaderProperties(const RS_Leader *leader);
+    void collectDimArcProperties(const LC_DimArc *dim);
+    void collectDimAngularProperties(const RS_DimAngular *dim);
+    void collectDimDiametricProperties(const RS_DimDiametric *dim);
+    void collectDimRadialProperties(const RS_DimRadial *dim);
+    QString getDimensionStyleString(const RS_Dimension* dim);
+    void collectDimLinearProperties(const RS_DimLinear *dim);
+    void collectDimOrdinateProperties(const LC_DimOrdinate* dim);
+    void collectDimAlignedProperties(const RS_DimAligned *dim);
     static QString getHAlignStr(RS_TextData::HAlign align);
     static QString getVAlignStr(RS_TextData::VAlign align);
     static QString getTextGenerationStr(RS_TextData::TextGeneration generation);
@@ -170,38 +173,39 @@ protected:
 
     void addAngleProperty(const QString& name, double value);
     void addRawAngleProperty(const QString& name, double value);
-    void addLinearProperty(const QString& name, double value, PropertyType type=LINEAR);
+    void addLinearProperty(const QString& name, double value, PropertyType type=PROPERTY_TYPE_LINEAR);
     void addAreaProperty(const QString& name, double value);
     void addDoubleProperty(const QString& name, const QString &valueStr, double value, PropertyType type);
-    void addVectorProperty(const QString& name,const RS_Vector &value, PropertyType type=VECTOR);
-    void addDeltaVectorProperty(const QString& name,const RS_Vector &value, PropertyType type=VECTOR);
-    void addVectorProperty(const QString &name, const QString &valueStr, const RS_Vector& coord, PropertyType type=VECTOR);
-    void addVectorProperty(const QString& name, size_t count, const RS_Vector &value, PropertyType type=VECTOR);
-    void addVectorProperty(QString name, int count, const QString &valueStr, const RS_Vector &coord, PropertyType type=VECTOR);
+    void addVectorProperty(const QString& name,const RS_Vector &value, PropertyType type=PROPERTY_TYPE_VECTOR);
+    void addDeltaVectorProperty(const QString& name,const RS_Vector &value, PropertyType type=PROPERTY_TYPE_VECTOR);
+    void addVectorProperty(const QString &name, const QString &valueStr, const RS_Vector& coord, PropertyType type=PROPERTY_TYPE_VECTOR);
+    void addVectorProperty(const QString& name, size_t count, const RS_Vector &value, PropertyType type=PROPERTY_TYPE_VECTOR);
+    void addVectorProperty(QString name, int count, const QString &valueStr, const RS_Vector &coord, PropertyType type=PROPERTY_TYPE_VECTOR);
 
-    QString prepareGenericEntityDescription(RS_Entity* en, const QString &entityName, RS2::EntityDescriptionLevel level);
-    QString prepareLineDescription(RS_Line *line, RS2::EntityDescriptionLevel level);
-    QString prepareCircleDescription(RS_Circle *line, RS2::EntityDescriptionLevel level);
-    QString prepareArcDescription(RS_Arc *line, RS2::EntityDescriptionLevel level);
-    QString prepareEllipseDescription(RS_Ellipse *line, RS2::EntityDescriptionLevel level);
-    QString preparePointDescription(RS_Point *point, RS2::EntityDescriptionLevel level);
-    QString preparePolylineDescription(RS_Polyline *polyline, RS2::EntityDescriptionLevel level);
-    QString prepareInsertDescription(RS_Insert *insert, RS2::EntityDescriptionLevel level);
-    QString prepareMTextDescription(RS_MText *pText, RS2::EntityDescriptionLevel level);
-    QString prepareTextDescription(RS_Text *text, RS2::EntityDescriptionLevel level);
-    QString prepareImageDescription(RS_Image *image, RS2::EntityDescriptionLevel level);
-    QString prepareSplineDescription(RS_Spline *spline, RS2::EntityDescriptionLevel level);
-    QString prepareSplinePointsDescription(LC_SplinePoints *spline, RS2::EntityDescriptionLevel level);
-    QString prepareParabolaDescription(LC_Parabola *parabola, RS2::EntityDescriptionLevel level);
-    QString prepareHatchDescription(RS_Hatch *hatch, RS2::EntityDescriptionLevel level);
-    QString prepareDimLeaderDescription(RS_Leader *leader, RS2::EntityDescriptionLevel level);
-    QString prepareDimArcDescription(LC_DimArc *dim, RS2::EntityDescriptionLevel level);
-    QString prepareDimAngularDescription(RS_DimAngular *dim, RS2::EntityDescriptionLevel level);
-    QString prepareDimDiametricDescription(RS_DimDiametric *dim, RS2::EntityDescriptionLevel level);
-    QString prepareDimRadialDescription(RS_DimRadial *dim, RS2::EntityDescriptionLevel level);
-    QString prepareDimLinearDescription(RS_DimLinear *dim, RS2::EntityDescriptionLevel level);
-    QString prepareDimOrdinateDescription(LC_DimOrdinate *dim, RS2::EntityDescriptionLevel level);
-    QString prepareDimAlignedDescription(RS_DimAligned *dim, RS2::EntityDescriptionLevel level);
+    QString prepareGenericEntityDescription(const RS_Entity* e, const QString &entityTypeName, RS2::EntityDescriptionLevel level);
+    QString prepareLineDescription(const RS_Line *line, RS2::EntityDescriptionLevel level);
+    QString prepareCircleDescription(const RS_Circle *circle, RS2::EntityDescriptionLevel level);
+    QString prepareArcDescription(const RS_Arc *arc, RS2::EntityDescriptionLevel level);
+    QString prepareEllipseDescription(const RS_Ellipse *ellipse, RS2::EntityDescriptionLevel level);
+    QString prepareHyperbolaDescription(const LC_Hyperbola* hyperbola, RS2::EntityDescriptionLevel level);
+    QString preparePointDescription(const RS_Point *point, RS2::EntityDescriptionLevel level);
+    QString preparePolylineDescription(const RS_Polyline *polyline, RS2::EntityDescriptionLevel level);
+    QString prepareInsertDescription(const RS_Insert *insert, RS2::EntityDescriptionLevel level);
+    QString prepareMTextDescription(const RS_MText *pText, RS2::EntityDescriptionLevel level);
+    QString prepareTextDescription(const RS_Text *text, RS2::EntityDescriptionLevel level);
+    QString prepareImageDescription(const RS_Image *image, RS2::EntityDescriptionLevel level);
+    QString prepareSplineDescription(const RS_Spline* spline, RS2::EntityDescriptionLevel level);
+    QString prepareSplinePointsDescription(const LC_SplinePoints* spline, RS2::EntityDescriptionLevel level);
+    QString prepareParabolaDescription(const LC_Parabola* parabola, RS2::EntityDescriptionLevel level);
+    QString prepareHatchDescription(const RS_Hatch *hatch, RS2::EntityDescriptionLevel level);
+    QString prepareDimLeaderDescription(const RS_Leader *leader, RS2::EntityDescriptionLevel level);
+    QString prepareDimArcDescription(const LC_DimArc *dim, RS2::EntityDescriptionLevel level);
+    QString prepareDimAngularDescription(const RS_DimAngular *dim, RS2::EntityDescriptionLevel level);
+    QString prepareDimDiametricDescription(const RS_DimDiametric *dim, RS2::EntityDescriptionLevel level);
+    QString prepareDimRadialDescription(const RS_DimRadial *dim, RS2::EntityDescriptionLevel level);
+    QString prepareDimLinearDescription(const RS_DimLinear *dim, RS2::EntityDescriptionLevel level);
+    QString prepareDimOrdinateDescription(const LC_DimOrdinate *dim, RS2::EntityDescriptionLevel level);
+    QString prepareDimAlignedDescription(const RS_DimAligned *dim, RS2::EntityDescriptionLevel level);
 };
 
-#endif // LC_QUICKINFOENTITYDATA_H
+#endif

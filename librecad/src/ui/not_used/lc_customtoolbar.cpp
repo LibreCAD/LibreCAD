@@ -78,7 +78,7 @@ void LC_CustomToolbar::actions_from_file(
 
 void LC_CustomToolbar::slot_add_or_remove_action() {
     if (most_recent_action) {
-        QString token = most_recent_action->objectName();
+        const QString token = most_recent_action->objectName();
 
         if (state_list.contains(token)) {
             removeAction(most_recent_action);

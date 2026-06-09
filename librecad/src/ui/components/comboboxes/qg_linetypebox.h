@@ -28,34 +28,38 @@
 #define QG_LINETYPEBOX_H
 
 #include <QComboBox>
+
 #include "rs.h"
 
 /**
  * A combobox for choosing a line type.
  */
-class QG_LineTypeBox: public QComboBox {
+class QG_LineTypeBox : public QComboBox {
     Q_OBJECT
 public:
-    QG_LineTypeBox(QWidget* parent=nullptr);
-    QG_LineTypeBox(bool showByLayer, bool showUnchanged, 
-        QWidget* parent=nullptr, const char* name=nullptr);
+    explicit QG_LineTypeBox(QWidget* parent = nullptr);
+    QG_LineTypeBox(bool showByLayer, bool showUnchanged, QWidget* parent = nullptr, const char* name = nullptr);
     ~QG_LineTypeBox() override;
 
     RS2::LineType getLineType() const {
         return m_currentLineType;
     }
-    void setLineType(RS2::LineType w);
-    void setLayerLineType(RS2::LineType w);
+
+    void setLineType(RS2::LineType t);
+    void setLayerLineType(RS2::LineType t);
 
     void init(bool showByLayer, bool showUnchanged, bool showNoPen = false);
-	
-	bool isUnchanged() const {
-		return m_unchanged;
-	}
-private slots:
+
+    bool isUnchanged() const {
+        return m_unchanged;
+    }
+
+private
+    slots :
     void slotLineTypeChanged(int index);
-signals:
+    signals :
     void lineTypeChanged(RS2::LineType);
+
 private:
     RS2::LineType m_currentLineType = RS2::SolidLine;
     bool m_showByLayer = false;

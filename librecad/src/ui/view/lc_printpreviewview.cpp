@@ -21,9 +21,12 @@
  ******************************************************************************/
 
 #include "lc_printpreviewview.h"
+
 #include "lc_printpreviewviewrenderer.h"
 
-LC_PrintPreviewView::LC_PrintPreviewView(QWidget* parent, RS_Document* doc, LC_ActionContext* actionContext):QG_GraphicView(parent, doc, actionContext){};
+LC_PrintPreviewView::LC_PrintPreviewView(QWidget* parent, RS_Document* doc, LC_ActionContext* actionContext) : QG_GraphicView(
+    parent, doc, actionContext) {
+}
 
 LC_PrintPreviewView::~LC_PrintPreviewView() = default;
 
@@ -31,15 +34,15 @@ void LC_PrintPreviewView::createViewRenderer() {
     setRenderer(std::make_unique<LC_PrintPreviewViewRenderer>(getViewPort(), this));
 }
 
-void LC_PrintPreviewView::setDrawingMode(RS2::DrawingMode m) const {
-    auto previewRenderer = dynamic_cast<LC_PrintPreviewViewRenderer *>(getRenderer());
+void LC_PrintPreviewView::setDrawingMode(const RS2::DrawingMode m) const {
+    const auto previewRenderer = dynamic_cast<LC_PrintPreviewViewRenderer*>(getRenderer());
     if (previewRenderer != nullptr) {
         previewRenderer->setDrawingMode(m);
     }
 }
 
 RS2::DrawingMode LC_PrintPreviewView::getDrawingMode() const {
-    auto previewRenderer = dynamic_cast<LC_PrintPreviewViewRenderer *>(getRenderer());
+    const auto previewRenderer = dynamic_cast<LC_PrintPreviewViewRenderer*>(getRenderer());
     if (previewRenderer != nullptr) {
         return previewRenderer->getDrawingMode();
     }

@@ -44,20 +44,28 @@ public:
   ~LC_ActionDrawDual() override = default;
 
   void init(int status) override;
-  void trigger() override;
 
-  void mouseMoveEvent(QMouseEvent* e) override;
-  void mouseReleaseEvent(QMouseEvent* e) override;
-  void coordinateEvent(RS_CoordinateEvent* e) override;
+  void onCoordinateEvent(int status, bool isZero, const RS_Vector& coord) override;
+  void doTriggerSelectionUpdate(bool keepSelected, const LC_DocumentModificationBatch& ctx);
 
-  void updateMouseButtonHints() override;
-  void updateMouseButtonHintsForSelection() override;
-  void doTrigger(bool /*keepSelected*/) override;
+
+protected:
+  void updateActionPromptForSelection() override;
+  void updateActionPromptForSelected(int status) override;
+
+  bool doCheckMayTrigger() override;
+  bool doTriggerModifications(LC_DocumentModificationBatch& ctx) override;
+  void doTriggerCompletion(bool success) override;
+
+
+  void onMouseLeftButtonReleaseSelected(int status, const LC_MouseEvent* event) override;
+  void onMouseRightButtonReleaseSelected(int status, const LC_MouseEvent* event) override;
+  void onMouseMoveEventSelected(int status, const LC_MouseEvent* event) override;
 
 private:
   RS_Vector m_center{false};
 
-  void createDualForSelected();
+  bool createDualForSelected(LC_DocumentModificationBatch& ctx);
   RS_Vector symmetricOf(const RS_Vector& p) const;
 };
 

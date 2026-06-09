@@ -28,6 +28,7 @@
 #define RS_INFOAREA_H
 
 #include <vector>
+
 #include "rs_vector.h"
 
 class QPolygon;
@@ -42,7 +43,7 @@ public:
     void reset();
     void push_back(const RS_Vector &p);
     //whether the point p is already in contour
-    bool duplicated(const RS_Vector &p);
+    bool duplicated(const RS_Vector &p) const;
     void pop_back();
     double getArea() const;
     double getCircumference();
@@ -66,12 +67,12 @@ public:
 
 private:
     void calculate();
-    double calcSubArea(const RS_Vector &p1, const RS_Vector &p2);
+    double calcSubArea(const RS_Vector &p1, const RS_Vector &p2) const;
     std::vector<RS_Vector> m_points;
-    double baseY = 0.;
-    double area = 0.;
-    double circumference = 0.;
-    bool calculationNeeded = false;
+    double m_baseY = 0.;
+    double m_area = 0.;
+    double m_circumference = 0.;
+    bool m_calculationNeeded = false;
 
 public:
     auto begin() -> decltype(m_points.begin()) {
@@ -86,7 +87,6 @@ public:
     auto cend() const -> decltype(m_points.cend()) {
         return m_points.cend();
     }
-
 };
 
 #endif

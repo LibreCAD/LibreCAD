@@ -29,6 +29,7 @@
 #include "lc_graphicviewport.h"
 #include "lc_gridsystem.h"
 #include "lc_isometricgrid.h"
+#include "lc_linemath.h"
 #include "lc_orthogonalgrid.h"
 #include "rs_graphic.h"
 #include "rs_math.h"
@@ -42,20 +43,15 @@
 class RS_Graphic;
 
 namespace {
-
-constexpr int MINIMAL_GRID_UI_STEP = 2;
-
-//maximum number grid points to draw, for performance consideration
-const int maxGridPoints=1000000;
-//minimum grid width to consider
-const double minimumGridWidth=1.0e-8;
+    //minimum grid width to consider
+    constexpr double MINIMUM_GRID_WIDTH = 1.0e-8;
 }
 
 /**
  * Constructor.
  */
 RS_Grid::RS_Grid(LC_GraphicViewport* graphicView)
-    :m_viewport(graphicView)
+    :m_viewport(graphicView), m_minGridSpacing{10}
 {
 }
 
@@ -65,7 +61,11 @@ RS_Grid::RS_Grid(LC_GraphicViewport* graphicView)
  *@coord: the given point
  */
 RS_Vector RS_Grid::snapGrid(const RS_Vector& coord) const {
-   return gridSystem->snapGrid(coord);
+   return m_gridSystem->snapGrid(coord);
+}
+
+RS_Vector RS_Grid::snapGrid(const RS_Vector& coord, const RS_Vector& rayStart, const RS_Vector& rayEnd) const {
+    return m_gridSystem->snapGrid(coord, rayStart, rayEnd);
 }
 
 void RS_Grid::loadSettings(){
@@ -76,11 +76,11 @@ void RS_Grid::loadSettings(){
     auto graphic = m_viewport->getGraphic();
     if (graphic != nullptr) {
         m_isometric = graphic->isIsometricGrid();
-        isoViewType = graphic->getIsoView();
+        m_isoViewType = graphic->getIsoView();
         m_userGrid = graphic->getVariableVector("$GRIDUNIT", RS_Vector(-1.0, -1.0));
     }else {
         m_isometric = LC_GET_ONE_BOOL("Defaults", "IsometricGrid");
-        isoViewType=static_cast<RS2::IsoGridViewType>(LC_GET_ONE_INT("Defaults", "IsoGridView", 0));
+        m_isoViewType=static_cast<RS2::IsoGridViewType>(LC_GET_ONE_INT("Defaults", "IsoGridView", 0));
         m_userGrid.x = LC_GET_STR("GridSpacingX", QString("-1")).toDouble();
         m_userGrid.y = LC_GET_STR("GridSpacingY", QString("-1")).toDouble();
     }
@@ -105,7 +105,7 @@ void RS_Grid::loadSettings(){
     }
 
     int gridWidthPx = LC_GET_INT("GridLinesLineWidth", 1);
-    RS2::LineType gridLineType =  static_cast<RS2::LineType> (LC_GET_INT("GridLinesLineType", RS2::SolidLine));
+    auto gridLineType =  static_cast<RS2::LineType> (LC_GET_INT("GridLinesLineType", RS2::SolidLine));
 
     bool disableGridOnPanning = LC_GET_BOOL("GridDisableWithinPan", false);
     bool drawIsoVerticalForTop = LC_GET_BOOL("GridDrawIsoVerticalForTop", true);
@@ -115,13 +115,13 @@ void RS_Grid::loadSettings(){
 
     LC_GROUP("Colors");
     RS_Color metaGridColor;
-    RS_Color gridColorLines = QColor(LC_GET_STR("gridLines", RS_Settings::color_meta_grid_lines));
-    RS_Color gridColorPoint =  QColor(LC_GET_STR("grid", RS_Settings::color_meta_grid_points));
+    auto gridColorLines = RS_Color(LC_GET_STR("gridLines", RS_Settings::COLOR_META_GRID_LINES));
+    auto gridColorPoint =  RS_Color(LC_GET_STR("grid", RS_Settings::COLOR_META_GRID_POINTS));
      if (linesGrid) {
-         metaGridColor= QColor(LC_GET_STR("meta_grid_lines", RS_Settings::color_meta_grid_lines));
+         metaGridColor= RS_Color(LC_GET_STR("meta_grid_lines", RS_Settings::COLOR_META_GRID_LINES));
      }
      else{
-         metaGridColor= QColor(LC_GET_STR("meta_grid", RS_Settings::color_meta_grid_points));
+         metaGridColor= RS_Color(LC_GET_STR("meta_grid", RS_Settings::COLOR_META_GRID_POINTS));
      }
     LC_GROUP_END();
 
@@ -140,18 +140,18 @@ void RS_Grid::loadSettings(){
     gridOptions->disableGridOnPanning = disableGridOnPanning;
     gridOptions->drawIsometricVerticalsAlways = drawIsoVerticalForTop;
 
-    delete gridSystem;
+    delete m_gridSystem;
 
     if (m_isometric){
-        gridSystem = new LC_IsometricGrid(gridOptions, isoViewType);
+        m_gridSystem = new LC_IsometricGrid(gridOptions, m_isoViewType);
     }
     else{
-        gridSystem = new LC_OrthogonalGrid(gridOptions);
+        m_gridSystem = new LC_OrthogonalGrid(gridOptions);
     }
 }
 
 void RS_Grid::calculateSnapSettings(){
-    if (gridSystem->isValid() || gridSystem->isGridDisabledByPanning(m_viewport)){
+    if (m_gridSystem->isValid() || m_gridSystem->isGridDisabledByPanning(m_viewport)){
         return;
     }
     RS_Vector viewZero;
@@ -159,7 +159,7 @@ void RS_Grid::calculateSnapSettings(){
     RS_Vector metaGridWidthToUse;
     RS_Vector gridWidthToUse;
     prepareGridCalculations(viewZero, viewSize,metaGridWidthToUse, gridWidthToUse);
-    gridSystem->calculateSnapInfo(viewZero, viewSize,metaGridWidthToUse, gridWidthToUse);
+    m_gridSystem->calculateSnapInfo(viewZero, viewSize,metaGridWidthToUse, gridWidthToUse);
     m_gridWidth = gridWidthToUse;
 }
 
@@ -167,7 +167,7 @@ void RS_Grid::calculateSnapSettings(){
  * Updates the grid point array.
  */
 void RS_Grid::calculateGrid() {
-    if (gridSystem->isValid() || gridSystem->isGridDisabledByPanning(m_viewport)){
+    if (m_gridSystem->isValid() || m_gridSystem->isGridDisabledByPanning(m_viewport)){
         return;
     }
 
@@ -177,12 +177,12 @@ void RS_Grid::calculateGrid() {
     RS_Vector gridWidthToUse;
     prepareGridCalculations(viewZero, viewSize,metaGridWidthToUse, gridWidthToUse);
 
-    gridSystem->createGrid(m_viewport, viewZero, viewSize, metaGridWidthToUse, gridWidthToUse);
+    m_gridSystem->createGrid(m_viewport, viewZero, viewSize, metaGridWidthToUse, gridWidthToUse);
     m_gridWidth = gridWidthToUse;
 }
 
 void RS_Grid::prepareGridCalculations(RS_Vector& viewZero,RS_Vector& viewSize,RS_Vector& metaGridWidthToUse,RS_Vector& gridWidthToUse){
-    RS_Vector gridWidth = prepareGridWidth();
+    const RS_Vector gridWidth = prepareGridWidth();
 
     gridWidthToUse = gridWidth;
     metaGridWidthToUse = m_metaGridWidth;
@@ -193,21 +193,22 @@ void RS_Grid::prepareGridCalculations(RS_Vector& viewZero,RS_Vector& viewSize,RS
     // too dense grid for current zoom level
 
     bool hasInfiniteAxis = false;
-    bool undefinedXSize = m_userGrid.x != 0;
-    bool undefinedYSize = m_userGrid.y != 0;
+    const bool undefinedXSize = m_userGrid.x != 0; // fixme - sand - review floating-point comparison
+    const bool undefinedYSize = m_userGrid.y != 0;
 
     hasInfiniteAxis = undefinedYSize != undefinedXSize;
 
     QString gridInfoStr;
     QString metaGridInfoStr;
-    bool squareGrid = gridWidth.x == gridWidth.y;
-    if (!(gridWidth.x>minimumGridWidth && gridWidth.y>minimumGridWidth)){
+
+    if (!(gridWidth.x>MINIMUM_GRID_WIDTH && gridWidth.y>MINIMUM_GRID_WIDTH)){
         gridWidthToUse.valid = false;
         metaGridWidthToUse.valid = false;
     }
     else {
-        double gridWidthGUIX = m_viewport->toGuiDX(gridWidth.x);
-        double gridWidthGUIY = m_viewport->toGuiDY(gridWidth.y);
+        const double gridWidthGUIX = m_viewport->toGuiDX(gridWidth.x);
+        const double gridWidthGUIY = m_viewport->toGuiDY(gridWidth.y);
+        const bool squareGrid = LC_LineMath::isSameLength(gridWidth.x,gridWidth.y);
         if (gridWidthGUIX < m_minGridSpacing  || gridWidthGUIY < m_minGridSpacing){
             gridWidthToUse.valid = false;
         }
@@ -220,8 +221,8 @@ void RS_Grid::prepareGridCalculations(RS_Vector& viewZero,RS_Vector& viewSize,RS
             }
         }
 
-        double metaGridWidthGUIX = m_viewport->toGuiDX(m_metaGridWidth.x);
-        double metaGridWidthGUIY = m_viewport->toGuiDY(m_metaGridWidth.y);
+        const double metaGridWidthGUIX = m_viewport->toGuiDX(m_metaGridWidth.x);
+        const double metaGridWidthGUIY = m_viewport->toGuiDY(m_metaGridWidth.y);
 
         if (metaGridWidthGUIX < m_minGridSpacing  || metaGridWidthGUIY < m_minGridSpacing){
             metaGridWidthToUse.valid = false;
@@ -243,7 +244,7 @@ void RS_Grid::prepareGridCalculations(RS_Vector& viewZero,RS_Vector& viewSize,RS
     viewSize = m_viewport->toUCSFromGui(m_viewport->getWidth(), m_viewport->getHeight());
 
     // populate grid points and metaGrid line positions: pts, metaX, metaY
-    m_gridInfoString = "";
+    m_gridInfoString.clear();
     if (gridWidthToUse.valid){
         if (metaGridWidthToUse.valid){
             m_gridInfoString = QString("%1 / %2").arg(gridInfoStr).arg(metaGridInfoStr);
@@ -258,29 +259,44 @@ void RS_Grid::prepareGridCalculations(RS_Vector& viewZero,RS_Vector& viewSize,RS
         }
     }
 
-    gridSystem->setGridInfiniteState(hasInfiniteAxis, undefinedXSize);
+    m_gridSystem->setGridInfiniteState(hasInfiniteAxis, undefinedXSize);
 }
 
-RS_Vector RS_Grid::prepareGridWidth() {// find out unit:
-
-    RS_Graphic* graphic = m_viewport->getGraphic();
+bool RS_Grid::isGridMetric() const {
+    const RS_Graphic* graphic = m_viewport->getGraphic();
 
     RS2::Unit unit = RS2::None;
-    RS2::LinearFormat format = RS2::Decimal;
+    RS2::LinearFormat format;
     if (graphic != nullptr) {
         unit = graphic->getUnit();
         format = graphic->getLinearFormat();
     }
+    else {
+        format = RS2::Decimal;
+    }
 
-    RS_Vector gridWidth;
+    const bool gridIsMetric = RS_Units::isMetric(unit) || unit == RS2::None || format == RS2::Decimal || format == RS2::Engineering;
+    return gridIsMetric;
+}
+
+bool RS_Grid::isDrawMetaGrid() const {
+    if (m_gridSystem != nullptr) {
+        return m_gridSystem->isDrawMetaGrid();
+    }
+    return true;
+}
+
+RS_Vector RS_Grid::prepareGridWidth() {// find out unit:
+    const bool gridIsMetric = isGridMetric();
+
     // init grid spacing:
     // metric grid:
-    if (RS_Units::isMetric(unit) || unit==RS2::None ||
-        format==RS2::Decimal || format==RS2::Engineering) {
+    RS_Vector gridWidth;
+    if (gridIsMetric) {
         //metric grid
         gridWidth = getMetricGridWidth(m_userGrid, m_scaleGrid, m_minGridSpacing);
-
-    }else {
+    }
+    else {
         // imperial grid:
         gridWidth = getImperialGridWidth(m_userGrid, m_scaleGrid, m_minGridSpacing);
     }
@@ -288,7 +304,7 @@ RS_Vector RS_Grid::prepareGridWidth() {// find out unit:
 }
 
 
-RS_Vector RS_Grid::getMetricGridWidth(RS_Vector const &userGrid, bool scaleGrid, int minGridSpacing) {
+RS_Vector RS_Grid::getMetricGridWidth(const RS_Vector&userGrid, const bool scaleGrid, const int minGridSpacing) {
     RS_Vector gridWidth;
 
     bool hasExplicitUserGrid = false;
@@ -297,21 +313,21 @@ RS_Vector RS_Grid::getMetricGridWidth(RS_Vector const &userGrid, bool scaleGrid,
         gridWidth.x = userGrid.x;
         hasExplicitUserGrid = true;
     } else {
-        gridWidth.x = minimumGridWidth;
+        gridWidth.x = MINIMUM_GRID_WIDTH;
     }
 
     if (userGrid.y > 0.0) {
         gridWidth.y = userGrid.y;
         hasExplicitUserGrid = true;
     } else {
-        gridWidth.y = minimumGridWidth;
+        gridWidth.y = MINIMUM_GRID_WIDTH;
     }
     // auto scale grid
 
     if (scaleGrid){
         double guiGridWithX = m_viewport->toGuiDX(gridWidth.x);
         double guiGridWithY = m_viewport->toGuiDY(gridWidth.y);
-        bool gridSmallerThanMin = guiGridWithX < minGridSpacing || guiGridWithY < minGridSpacing;
+        const bool gridSmallerThanMin = guiGridWithX < minGridSpacing || guiGridWithY < minGridSpacing;
         if (gridSmallerThanMin) {
             do{
                 gridWidth *= 10;
@@ -328,21 +344,19 @@ RS_Vector RS_Grid::getMetricGridWidth(RS_Vector const &userGrid, bool scaleGrid,
             while (true) {
                 decreasingWidth /= 10;
 
-                double guiGridWithX = m_viewport->toGuiDX(decreasingWidth.x);
-                double guiGridWithY = m_viewport->toGuiDY(decreasingWidth.y);
-                if (guiGridWithX < minGridSpacing || guiGridWithY < minGridSpacing){
+                const double guiDecreasingGridWithX = m_viewport->toGuiDX(decreasingWidth.x);
+                const double guiDecreasongGridWithY = m_viewport->toGuiDY(decreasingWidth.y);
+                if (guiDecreasingGridWithX < minGridSpacing || guiDecreasongGridWithY < minGridSpacing){
                     gridWidth = previousWidth;
                     break;
                 }
-                else{
-                    previousWidth = decreasingWidth;
-                }
+                previousWidth = decreasingWidth;
             }
         }
     }
 
     // std::cout<<"RS_Grid::updatePointArray(): gridWidth="<<gridWidth<<std::endl;
-    int metaGridStep = m_metaGridEvery;
+    const int metaGridStep = m_metaGridEvery;
     m_metaGridWidth.x = gridWidth.x * metaGridStep;
     m_metaGridWidth.y = gridWidth.y * metaGridStep;
 
@@ -350,7 +364,7 @@ RS_Vector RS_Grid::getMetricGridWidth(RS_Vector const &userGrid, bool scaleGrid,
     return gridWidth;
 }
 
-RS_Vector RS_Grid::getImperialGridWidth(RS_Vector const &userGrid, bool scaleGrid, int minGridSpacing) {
+RS_Vector RS_Grid::getImperialGridWidth(const RS_Vector&userGrid, const bool scaleGrid, const int minGridSpacing) {
     RS_Vector gridWidth{};
     // RS_DEBUG->print("RS_Grid::update: 005");
     if (userGrid.x > 0.0) {
@@ -367,9 +381,9 @@ RS_Vector RS_Grid::getImperialGridWidth(RS_Vector const &userGrid, bool scaleGri
     // RS_DEBUG->print("RS_Grid::update: 006");
 
     RS2::Unit unit = RS2::None;
-    RS_Graphic *graphic = m_viewport->getGraphic();
+    const RS_Graphic *graphic = m_viewport->getGraphic();
 
-    if (graphic) {
+    if (graphic != nullptr) {
         unit = graphic->getUnit();
     }
 
@@ -381,7 +395,7 @@ RS_Vector RS_Grid::getImperialGridWidth(RS_Vector const &userGrid, bool scaleGri
 
             double guiGridWithX = m_viewport->toGuiDX(gridWidth.x);
             double guiGridWithY = m_viewport->toGuiDY(gridWidth.y);
-            bool gridSmallerThanMin = guiGridWithX < minGridSpacing || guiGridWithY < minGridSpacing;
+            const bool gridSmallerThanMin = guiGridWithX < minGridSpacing || guiGridWithY < minGridSpacing;
             if (scaleGrid || gridSmallerThanMin) {
                 do{
                     if (RS_Math::round(gridWidth.x) >= 36) {
@@ -439,7 +453,7 @@ RS_Vector RS_Grid::getImperialGridWidth(RS_Vector const &userGrid, bool scaleGri
 // metagrid X shows inches..
         m_metaGridWidth.x = 1.0;
 
-        int minGridSpacingX2 = minGridSpacing * 2;
+        const int minGridSpacingX2 = minGridSpacing * 2;
         if (m_viewport->toGuiDX(m_metaGridWidth.x) < minGridSpacingX2) {
 // .. or feet
             m_metaGridWidth.x = 12.0;
@@ -515,7 +529,7 @@ bool RS_Grid::isIsometric() const {
     return m_isometric;
 }
 
-void RS_Grid::setIsometric(bool b) {
+void RS_Grid::setIsometric(const bool b) {
     m_isometric = b;
 }
 
@@ -527,26 +541,26 @@ RS_Vector RS_Grid::getMetaGridWidth() const {
     return m_metaGridWidth;
 }
 
-RS_Vector const &RS_Grid::getCellVector() const {
-    return gridSystem->getCellVector();
+const RS_Vector&RS_Grid::getCellVector() const {
+    return m_gridSystem->getCellVector();
 }
 
-void RS_Grid::setIsoViewType(RS2::IsoGridViewType chType) {
-    isoViewType = chType;
+void RS_Grid::setIsoViewType(const RS2::IsoGridViewType chType) {
+    m_isoViewType = chType;
 }
 
 RS2::IsoGridViewType RS_Grid::getIsoViewType() const {
-    return isoViewType;
+    return m_isoViewType;
 }
 
 
-void RS_Grid::drawGrid(RS_Painter *painter) {
-    gridSystem->draw(painter, m_viewport);
+void RS_Grid::drawGrid(RS_Painter *painter) const {
+    m_gridSystem->draw(painter, m_viewport);
 }
 
-void RS_Grid::invalidate(bool gridOn) {
-    if (gridSystem != nullptr) {
-        gridSystem->invalidate();
+void RS_Grid::invalidate(const bool gridOn) {
+    if (m_gridSystem != nullptr) {
+        m_gridSystem->invalidate();
         if (gridOn) {
             calculateGrid();
         }

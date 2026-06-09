@@ -46,11 +46,11 @@ public:
     QVariant data(const QModelIndex &index, int role) const override;
     QModelIndex parent(const QModelIndex &index) const override;
     QModelIndex index(int row, int column, const QModelIndex &parent) const override;
-    bool isRegexpApplied() const{return m_hasRegexp;};
-    void setFilteringRegexp(QString &reqgexp, bool highlightMode);
+    bool isRegexpApplied() const{return m_hasRegexp;}
+    void setFilteringRegexp(const QString &regexp, bool highlightMode);
     LC_ShortcutTreeItem *getItemForIndex(const QModelIndex &index) const;
     void rebuildModel(LC_ActionGroupManager *pManager);
-    QModelIndexList getPersistentIndexList();
+    QModelIndexList getPersistentIndexList() const;
     void resetAllToDefault();
     int translateColumn(int column) const;
     bool checkForCollisions(LC_ShortcutInfo *shortcutInfo);
@@ -80,4 +80,4 @@ protected:
     void setRootItem(LC_ShortcutTreeItem *rootItem);
 };
 
-#endif // LC_SHORTCUTSTREEMODEL_H
+#endif

@@ -21,40 +21,50 @@
  ******************************************************************************/
 
 #include "lc_highlight.h"
-#include "rs_debug.h"
+
 #include "rs_pen.h"
 
 LC_Highlight::LC_Highlight()= default;
 
-void LC_Highlight::addEntity(RS_Entity* entity, bool selected) {
-    if (entity == nullptr || entity->isUndone()) {
+void LC_Highlight::addEntity(const RS_Entity* entity, const bool selected) {
+    if (entity == nullptr || entity->isDeleted()) {
         return;
     }
-    RS_Entity *duplicatedEntity = entity->clone();
-    RS_Pen pen = entity->getPen(true);
-    duplicatedEntity->setPen(pen);
-
-    duplicatedEntity->setHighlighted(true);
+    RS_Entity *clone = entity->clone();
+    // fixme - sand - review this, probably it's better to return proxy on highlight. That might be useful for images etc,
+    // fixme - sand and potentially may simplify drawing of overlay
+    // RS_Entity *clone = entity->cloneProxy();
+    if (entity->rtti() == RS2::EntityInsert) {
+        clone->update();
+    }
+    const RS_Pen pen = entity->getPen(true);
+    clone->setPen(pen);
+    const bool inVisualSnap = entity->getFlag(RS2::FlagInVisualSnap);
+    if (inVisualSnap) {
+        clone->setFlag(RS2::FlagInVisualSnap);
+    }
+    else {
+        clone->setHighlighted(true);
+    }
     if (selected) {
-        duplicatedEntity->setSelected(true);
+        clone->setSelectionFlag(true);  // fixme - selection - overlay?
     }
 
-    entitiesMap.insert(entity, duplicatedEntity);
-//    entity->setTransparent(true);
-    push_back(duplicatedEntity);
+    m_entitiesMap.insert(entity->getId(), clone);
+    push_back(clone);
 }
 
 bool LC_Highlight::removeEntity(RS_Entity *entity){
     bool result = false;
     if (entity != nullptr){
-        RS_Entity *duplicate = entitiesMap.value(entity, nullptr);
+        const unsigned long long entityId = entity->getId();
+        RS_Entity *duplicate = m_entitiesMap.value(entityId, nullptr);
         if (duplicate != nullptr){
-            entity->setTransparent(false);
-            bool ret = removeEntity(duplicate);
+            const bool ret = removeEntity(duplicate);
             if (ret) {
                 delete duplicate;
             }
-            entitiesMap.remove(entity);
+            m_entitiesMap.remove(entityId);
             if (entity->getParent() == this){
                 delete entity;
             }
@@ -65,14 +75,13 @@ bool LC_Highlight::removeEntity(RS_Entity *entity){
 }
 // fixme - return bool value if actually cleared
 void LC_Highlight::clear(){
-    for (auto it = entitiesMap.keyValueBegin(); it != entitiesMap.keyValueEnd(); ++it) {
-        RS_Entity *entity = it->first;
-        entity->setTransparent(false);
-        if (entity->getParent() == this){
-            delete entity;
+    for (auto it = m_entitiesMap.keyValueBegin(); it != m_entitiesMap.keyValueEnd(); ++it) {
+        const RS_Entity* clone = it->second;
+        if (clone->getParent() == this){
+            delete clone;
         }
     }
-    entitiesMap.clear();
+    m_entitiesMap.clear();
     while (!isEmpty()) {
         delete last();
         pop_back();

@@ -1,0 +1,114 @@
+{
+    "name": "Desert",
+    "settings": [
+        {
+            "colorSvgString": "#50503c",
+            "colorType": "main",
+            "iconMode": "any",
+            "iconState": "any"
+        },
+        {
+            "colorSvgString": "#c5c593",
+            "colorType": "accent",
+            "iconMode": "any",
+            "iconState": "any"
+        },
+        {
+            "colorSvgString": "#d5d5d5",
+            "colorType": "background",
+            "iconMode": "any",
+            "iconState": "any"
+        },
+        {
+            "colorSvgString": "#00007f",
+            "colorType": "main",
+            "iconMode": "active",
+            "iconState": "on"
+        },
+        {
+            "colorSvgString": "#4ed057",
+            "colorType": "accent",
+            "iconMode": "active",
+            "iconState": "on"
+        },
+        {
+            "colorSvgString": "#ff0000",
+            "colorType": "main",
+            "iconMode": "active",
+            "iconState": "off"
+        },
+        {
+            "colorSvgString": "#00ff7f",
+            "colorType": "accent",
+            "iconMode": "active",
+            "iconState": "off"
+        },
+        {
+            "colorSvgString": "#ff0000",
+            "colorType": "main",
+            "iconMode": "normal",
+            "iconState": "on"
+        },
+        {
+            "colorSvgString": "#0000ff",
+            "colorType": "accent",
+            "iconMode": "normal",
+            "iconState": "on"
+        },
+        {
+            "colorSvgString": "#ffff00",
+            "colorType": "main",
+            "iconMode": "selected",
+            "iconState": "on"
+        },
+        {
+            "colorSvgString": "#f4166b",
+            "colorType": "accent",
+            "iconMode": "selected",
+            "iconState": "on"
+        },
+        {
+            "colorSvgString": "#ffff00",
+            "colorType": "accent",
+            "iconMode": "selected",
+            "iconState": "off"
+        },
+        {
+            "colorSvgString": "#9d9d9d",
+            "colorType": "main",
+            "iconMode": "disabled",
+            "iconState": "on"
+        },
+        {
+            "colorSvgString": "#f5f5f5",
+            "colorType": "accent",
+            "iconMode": "disabled",
+            "iconState": "on"
+        },
+        {
+            "colorSvgString": "#e1e1e1",
+            "colorType": "background",
+            "iconMode": "disabled",
+            "iconState": "on"
+        },
+        {
+            "colorSvgString": "#9e9e9e",
+            "colorType": "main",
+            "iconMode": "disabled",
+            "iconState": "off"
+        },
+        {
+            "colorSvgString": "#f0f0f0",
+            "colorType": "accent",
+            "iconMode": "disabled",
+            "iconState": "off"
+        },
+        {
+            "colorSvgString": "#d4d4d4",
+            "colorType": "background",
+            "iconMode": "disabled",
+            "iconState": "off"
+        }
+    ],
+    "type": "LibreCAD Icons Style"
+}

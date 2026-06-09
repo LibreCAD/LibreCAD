@@ -23,19 +23,16 @@
 
 #include "lc_dimstylesexporter.h"
 
-#include <QFile>
 #include <QFileInfo>
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QMessageBox>
 
-#include "lc_dimstyletovariablesmapper.h"
-#include "lc_dimstyleslistmodel.h"
-#include "lc_filenameselectionservice.h"
-
-#include "rs_settings.h"
 #include "lc_dimstyleitem.h"
+#include "lc_dimstyletovariablesmapper.h"
+#include "lc_filenameselectionservice.h"
+#include "rs_settings.h"
 
 LC_DimStylesExporter::LC_DimStylesExporter() {}
 
@@ -58,11 +55,11 @@ bool LC_DimStylesExporter::exportStyles(QWidget* parent, const QList<LC_DimStyle
     LC_DimStyleToVariablesMapper dimstyleToVarDictMapper;
 
     for (const LC_DimStyleItem* dimStyleItem : styles) {
-       auto varDict = new RS_VariableDict();
+       const auto varDict = new RS_VariableDict();
 
-       LC_DimStyle* dimStyle = dimStyleItem->dimStyle();
-       bool basestyle = dimStyleItem->isBaseStyle();
-       LC_DimStyle::ModificationAware::CheckFlagMode savedModifyCheckMode = dimStyle->arrowhead()->getModifyCheckMode();
+       const LC_DimStyle* dimStyle = dimStyleItem->dimStyle();
+       const bool basestyle = dimStyleItem->isBaseStyle();
+       const LC_DimStyle::ModificationAware::CheckFlagMode savedModifyCheckMode = dimStyle->arrowhead()->getModifyCheckMode();
 
        LC_DimStyle::ModificationAware::CheckFlagMode exportModifyCheckMode;
        if (basestyle) {
@@ -101,7 +98,7 @@ bool LC_DimStylesExporter::exportStyles(QWidget* parent, const QList<LC_DimStyle
     objExport.insert("styles", objStyles);
     objExport.insert(G_KEY_FILE_TYPE, QJsonValue::fromVariant(G_DIMSTYLES_FILE_TYPE));
 
-    QJsonDocument doc(objExport);
+    const QJsonDocument doc(objExport);
     QFile jsonFile{fileName};
     if (!jsonFile.open(QFile::WriteOnly)) {
         QMessageBox::critical(parent, tr("Dimension Styles Export Error"),
@@ -120,17 +117,18 @@ bool LC_DimStylesExporter::exportStyles(QWidget* parent, const QList<LC_DimStyle
 
 bool LC_DimStylesExporter::importStyles(QWidget* parent, QList<LC_DimStyle*>& styleItems) {
     QString fileName;
-    if (!obtainFileName(parent, fileName, true, ""))
+    if (!obtainFileName(parent, fileName, true, "")) {
         return false;
+    }
 
-    QFile jsonFile = QFile(fileName);
-    auto errorDialogCaption = tr("Dimension Styles Import Error");
+    auto jsonFile = QFile(fileName);
+    const auto errorDialogCaption = tr("Dimension Styles Import Error");
     if (!jsonFile.open(QFile::ReadOnly)) {
         QMessageBox::critical(parent, errorDialogCaption, tr("Can't open provided file for reading. Dimension styles were not imported."));
         return false;
     }
     QJsonParseError parseError;
-    auto doc = QJsonDocument::fromJson(jsonFile.readAll(), &parseError);
+    const auto doc = QJsonDocument::fromJson(jsonFile.readAll(), &parseError);
     if (parseError.error != QJsonParseError::NoError) {
         QMessageBox::critical(parent, errorDialogCaption, tr("Unexpected error during dimension styles parsing. Message:") + parseError.errorString());
         return false;
@@ -151,13 +149,13 @@ bool LC_DimStylesExporter::importStyles(QWidget* parent, QList<LC_DimStyle*>& st
     for (auto s: styles) {
         auto style = s.toObject();
         QString styleName = style.value("style_name").toString();
-        auto varDict = new RS_VariableDict();
+        const auto varDict = new RS_VariableDict();
         auto values = style.value("vars").toArray();
-        for (auto v: values) {
+        for (auto v: std::as_const(values)) {
             auto variable = v.toObject();
-            int type = variable.value("type").toInt();
+            const int type = variable.value("type").toInt();
             QString value = variable.value("val").toString();
-            int code = variable.value("code").toInt();
+            const int code = variable.value("code").toInt();
             QString varName = variable.value("name").toString();
 
             varDict->add(varName, value, code, type);
@@ -179,8 +177,8 @@ bool LC_DimStylesExporter::importStyles(QWidget* parent, QList<LC_DimStyle*>& st
 }
 
 
-bool LC_DimStylesExporter::obtainFileName(QWidget* parent, QString& fileName, bool forRead, const QString& baseFileName) {
-    QString defaultFileName = forRead ? "LC_DimStyles" : baseFileName;
+bool LC_DimStylesExporter::obtainFileName(QWidget* parent, QString& fileName, const bool forRead, const QString& baseFileName) {
+    const QString defaultFileName = forRead ? "LC_DimStyles" : baseFileName;
     return LC_FileNameSelectionService::doObtainFileName(parent, fileName, forRead, "lcds",
         defaultFileName, tr("Import Dimension Styles"),  tr("Export Dimension Styles"),
         tr("LibreCAD dimension styles file (*.%1)"));

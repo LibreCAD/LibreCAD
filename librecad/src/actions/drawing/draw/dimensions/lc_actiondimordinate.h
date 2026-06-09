@@ -48,13 +48,14 @@ protected:
     void doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) override;
     bool doProcessCommand(int status, const QString& command) override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector& pos) override;
-    void doTrigger() override;
-    LC_DimOrdinate* createDim(RS_Vector leaderEndPoint, bool alternateOrdinate, RS_EntityContainer * container);
-    void onMouseMoveEvent(int status, LC_MouseEvent* event) override;
-    void onMouseLeftButtonRelease(int status, LC_MouseEvent* e) override;
-    void onMouseRightButtonRelease(int status, LC_MouseEvent* e) override;
+    LC_DimOrdinate* createDim(const RS_Vector& leaderEndPoint, bool alternateOrdinate, RS_EntityContainer * container) const;
+    void onMouseMoveEvent(int status, const LC_MouseEvent* e) override;
+    void onMouseLeftButtonRelease(int status, const LC_MouseEvent* e) override;
+    void onMouseRightButtonRelease(int status, const LC_MouseEvent* e) override;
     QStringList doGetAvailableCommands(int status) override;
-    void updateMouseButtonHints() override;
+    void updateActionPrompt() override;
+    RS_Entity* doTriggerCreateEntity() override;
+    void doTriggerCompletion(bool success) override;
 };
 
-#endif // LC_ACTIONDIMORDINATE_H
+#endif

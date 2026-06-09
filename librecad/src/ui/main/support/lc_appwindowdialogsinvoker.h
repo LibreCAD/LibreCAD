@@ -39,7 +39,7 @@ class LC_AppWindowDialogsInvoker : public QObject, public LC_AppWindowAware{
 public:
     explicit LC_AppWindowDialogsInvoker(QC_ApplicationWindow *appWin);
     void showAboutWindow() const;
-    void showNewVersionAvailableDialog(LC_ReleaseChecker* releaseChecker) const;
+    void showNewVersionAvailableDialog(const LC_ReleaseChecker* releaseChecker) const;
     void showLicenseWindow() const;
     void showDeviceOptions();
     bool showWidgetOptionsDialog() const;
@@ -47,7 +47,7 @@ public:
     int requestOptionsDrawingDialog(RS_Graphic& graphic, int tabIndex) const;
     int showCloseDialog(const QC_MDIWindow *w, bool showSaveAll) const;
     QPair<QString, QString> showExportFileSelectionDialog(const QString& drawingFileName) const;
-    QPair<QString, RS2::FormatType> requestDrawingFileName(RS2::FormatType type = RS2::FormatDXFRW) const;
+    QPair<QString, RS2::FormatType> requestDrawingFileName(RS2::FormatType format = RS2::FormatDXFRW) const;
 };
 
-#endif // LC_APPLICATIONWINDOWDIALOGSHELPER_H
+#endif

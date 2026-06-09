@@ -30,22 +30,22 @@ LC_PenItem::LC_PenItem(QString name, const RS_Pen& pen):
     setPen(pen);
 }
 
-LC_PenItem::LC_PenItem(QString name):
+LC_PenItem::LC_PenItem(const QString& name):
     m_name{name}{
     setPen(RS_Pen());
 }
 
-void LC_PenItem::setPen(const RS_Pen& newPen){
-    m_lineType = newPen.getLineType();
-    m_lineWidth = newPen.getWidth();
-    m_color = newPen.getColor();
+void LC_PenItem::setPen(const RS_Pen& pen){
+    m_lineType = pen.getLineType();
+    m_lineWidth = pen.getWidth();
+    m_color = pen.getColor();
 }
 
-RS2::LineType LC_PenItem::getLineType(){
+RS2::LineType LC_PenItem::getLineType() const {
     return m_lineType;
 }
 
-RS2::LineWidth LC_PenItem::getLineWidth(){
+RS2::LineWidth LC_PenItem::getLineWidth() const {
     return m_lineWidth;
 }
 
@@ -53,31 +53,31 @@ RS_Color LC_PenItem::getColor(){
     return m_color;
 }
 
-void LC_PenItem::setLineTypeIcon(QIcon &icon){
+void LC_PenItem::setLineTypeIcon(const QIcon &icon){
     m_iconLineType = icon;
 }
 
-void LC_PenItem::setLineTypeName(QString typeName){
+void LC_PenItem::setLineTypeName(const QString& typeName){
     m_lineTypeName = typeName;
 }
 
-void LC_PenItem::setLineWidthIcon(QIcon &icon){
+void LC_PenItem::setLineWidthIcon(const QIcon &icon){
     m_iconLineWidth = icon;
 }
 
-void LC_PenItem::setLineWidthName(QString wName){
-    m_lineWidthName = wName;
+void LC_PenItem::setLineWidthName(const QString& name){
+    m_lineWidthName = name;
 }
 
-void LC_PenItem::setColorIcon(QIcon &icon){
+void LC_PenItem::setColorIcon(const QIcon &icon){
     m_iconColor = icon;
 }
 
-void LC_PenItem::setLineType(RS2::LineType type){
+void LC_PenItem::setLineType(const RS2::LineType type){
    m_lineType = type;
 }
 
-void LC_PenItem::setLineWidth(RS2::LineWidth width){
+void LC_PenItem::setLineWidth(const RS2::LineWidth width){
     m_lineWidth = width;
 }
 

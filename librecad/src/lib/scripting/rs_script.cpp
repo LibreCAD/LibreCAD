@@ -24,14 +24,15 @@
 **
 **********************************************************************/
 
-#include <iostream>
-#include <QString>
 #include "rs_script.h"
+
+#include <QString>
+
 
 /**
  * Constructor.
  */
 RS_Script::RS_Script(const QString& name, const QString& /*path*/):
-name{name}
+m_name{name}
 {
 }

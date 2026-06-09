@@ -45,8 +45,8 @@ public:
 	virtual ~QG_MainWindowInterface() = default;
 
 	virtual QMainWindow* getMainWindow() = 0;
-	virtual QMainWindow const* getMainWindow() const= 0;
-	virtual QG_ActionHandler const* getActionHandler() const= 0;
+	virtual const QMainWindow* getMainWindow() const= 0;
+	virtual const QG_ActionHandler* getActionHandler() const= 0;
 	virtual QG_ActionHandler* getActionHandler()= 0;
 	virtual void setFocus2() = 0;
 

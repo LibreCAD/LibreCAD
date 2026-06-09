@@ -27,6 +27,7 @@
 #pragma once
 
 #include <memory>
+
 #include "rs_previewactioninterface.h"
 
 class RS_Pen;
@@ -47,10 +48,10 @@ class RS_Pen;
 class LC_ActionSnapMiddleManual : public RS_PreviewActionInterface{
 Q_OBJECT
 public:
-    LC_ActionSnapMiddleManual(LC_ActionContext *actionContext);
+    explicit LC_ActionSnapMiddleManual(LC_ActionContext *actionContext);
     ~LC_ActionSnapMiddleManual() override;
     void init(int status)   override;
-    bool isSupportsPredecessorAction() override {return true;}
+    bool isSupportsPredecessorAction() const override {return true;}
 protected:
     /* Action states */
     enum Status
@@ -63,11 +64,12 @@ protected:
     std::unique_ptr<SnapMiddleManualData> m_actionData;
 
     bool doProcessCommand(int status, const QString& command) override;
-    void onMouseLeftButtonRelease(int status, LC_MouseEvent* e) override;
+    void onMouseLeftButtonRelease(int status, const LC_MouseEvent* e) override;
     void fireUnsetMiddleManual();
-    void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
-    void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
+    void onMouseRightButtonRelease(int status, const LC_MouseEvent* e) override;
+    void onMouseMoveEvent(int status, const LC_MouseEvent* e) override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
-    void updateMouseButtonHints() override;
+    void updateActionPrompt() override;
     QStringList doGetAvailableCommands(int status) override;
+    bool isInVisualSnapStatus(int status) override;
 };

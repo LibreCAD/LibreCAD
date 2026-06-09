@@ -18,7 +18,7 @@
     <number>2</number>
    </property>
    <property name="topMargin">
-    <number>2</number>
+    <number>0</number>
    </property>
    <property name="rightMargin">
     <number>2</number>
@@ -26,118 +26,113 @@
    <property name="bottomMargin">
     <number>2</number>
    </property>
-   <property name="horizontalSpacing">
+   <property name="spacing">
     <number>0</number>
    </property>
-   <item row="0" column="0">
-    <layout class="QHBoxLayout" name="horizontalLayout">
-     <item>
-      <widget class="QToolButton" name="tbAdd">
-       <property name="toolTip">
-        <string>Create new user coordinates system.</string>
-       </property>
-       <property name="styleSheet">
-        <string notr="true"/>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="icon">
-        <iconset resource="../../../../res/icons/icons.qrc">
-         <normaloff>:/icons/ucs_add.lci</normaloff>:/icons/ucs_add.lci</iconset>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QToolButton" name="tbRestore">
-       <property name="toolTip">
-        <string>Restores selected user coordinates system.</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="icon">
-        <iconset resource="../../../../res/icons/icons.qrc">
-         <normaloff>:/icons/ucs_set.lci</normaloff>:/icons/ucs_set.lci</iconset>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QToolButton" name="tbPreview">
-       <property name="toolTip">
-        <string>Preview of coordinate system origin and angle.</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="icon">
-        <iconset resource="../../../../res/icons/icons.qrc">
-         <normaloff>:/icons/ucs_preview.lci</normaloff>:/icons/ucs_preview.lci</iconset>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QToolButton" name="tbUpdate">
-       <property name="toolTip">
-        <string>Saves currently used coordinate system (it is usefull if UCS comes from saved view)</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="icon">
-        <iconset resource="../../../../res/icons/icons.qrc">
-         <normaloff>:/icons/set_ucs.lci</normaloff>:/icons/set_ucs.lci</iconset>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QToolButton" name="tbSetUCSByDimOrdinate">
-       <property name="toolTip">
-        <string>Set UCS by ordinate dimension</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="icon">
-        <iconset resource="../../../../res/icons/icons.qrc">
-         <normaloff>:/icons/ucs_set_by_dimordinate.lci</normaloff>:/icons/ucs_set_by_dimordinate.lci</iconset>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QToolButton" name="tbRename">
-       <property name="toolTip">
-        <string>Edit selected user coordinates name. No-name UCS are temporary and are not saved.</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="icon">
-        <iconset resource="../../../../res/icons/icons.qrc">
-         <normaloff>:/icons/rename_active_block.lci</normaloff>:/icons/rename_active_block.lci</iconset>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QToolButton" name="tbRemove">
-       <property name="toolTip">
-        <string>Removes selected user coordinates system.</string>
-       </property>
-       <property name="text">
-        <string>...</string>
-       </property>
-       <property name="icon">
-        <iconset resource="../../../../res/icons/icons.qrc">
-         <normaloff>:/icons/remove.lci</normaloff>:/icons/remove.lci</iconset>
-       </property>
-      </widget>
-     </item>
-    </layout>
+   <item row="1" column="0">
+    <widget class="QToolButton" name="tbAdd">
+     <property name="toolTip">
+      <string>Create new user coordinates system.</string>
+     </property>
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../../res/icons/icons.qrc">
+       <normaloff>:/icons/ucs_add.lci</normaloff>:/icons/ucs_add.lci</iconset>
+     </property>
+    </widget>
    </item>
-   <item row="0" column="1">
+   <item row="1" column="1">
+    <widget class="QToolButton" name="tbRestore">
+     <property name="toolTip">
+      <string>Restores selected user coordinates system.</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../../res/icons/icons.qrc">
+       <normaloff>:/icons/ucs_set.lci</normaloff>:/icons/ucs_set.lci</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="5">
+    <widget class="QToolButton" name="tbRename">
+     <property name="toolTip">
+      <string>Edit selected user coordinates name. No-name UCS are temporary and are not saved.</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../../res/icons/icons.qrc">
+       <normaloff>:/icons/rename_active_block.lci</normaloff>:/icons/rename_active_block.lci</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="4">
+    <widget class="QToolButton" name="tbSetUCSByDimOrdinate">
+     <property name="toolTip">
+      <string>Set UCS by ordinate dimension</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../../res/icons/icons.qrc">
+       <normaloff>:/icons/ucs_set_by_dimordinate.lci</normaloff>:/icons/ucs_set_by_dimordinate.lci</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0" colspan="9">
+    <widget class="LC_MouseTrackingTableView" name="tvTable">
+     <attribute name="horizontalHeaderMinimumSectionSize">
+      <number>24</number>
+     </attribute>
+     <attribute name="horizontalHeaderStretchLastSection">
+      <bool>true</bool>
+     </attribute>
+     <attribute name="verticalHeaderVisible">
+      <bool>false</bool>
+     </attribute>
+    </widget>
+   </item>
+   <item row="1" column="2">
+    <widget class="QToolButton" name="tbPreview">
+     <property name="toolTip">
+      <string>Preview of coordinate system origin and angle.</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../../res/icons/icons.qrc">
+       <normaloff>:/icons/ucs_preview.lci</normaloff>:/icons/ucs_preview.lci</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="3">
+    <widget class="QToolButton" name="tbUpdate">
+     <property name="toolTip">
+      <string>Saves currently used coordinate system (it is usefull if UCS comes from saved view)</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../../res/icons/icons.qrc">
+       <normaloff>:/icons/set_ucs.lci</normaloff>:/icons/set_ucs.lci</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="7">
     <spacer name="horizontalSpacer">
      <property name="orientation">
-      <enum>Qt::Horizontal</enum>
+      <enum>Qt::Orientation::Horizontal</enum>
      </property>
      <property name="sizeHint" stdset="0">
       <size>
@@ -147,7 +142,21 @@
      </property>
     </spacer>
    </item>
-   <item row="0" column="2">
+   <item row="1" column="6">
+    <widget class="QToolButton" name="tbRemove">
+     <property name="toolTip">
+      <string>Removes selected user coordinates system.</string>
+     </property>
+     <property name="text">
+      <string>...</string>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../../res/icons/icons.qrc">
+       <normaloff>:/icons/remove.lci</normaloff>:/icons/remove.lci</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="8">
     <widget class="QToolButton" name="tbSettings">
      <property name="toolTip">
       <string>Settings</string>
@@ -164,50 +173,15 @@
      </property>
     </widget>
    </item>
-   <item row="2" column="0" colspan="3">
-    <widget class="QTableView" name="tvTable">
-     <attribute name="horizontalHeaderMinimumSectionSize">
-      <number>24</number>
-     </attribute>
-     <attribute name="horizontalHeaderStretchLastSection">
-      <bool>true</bool>
-     </attribute>
-     <attribute name="verticalHeaderVisible">
-      <bool>false</bool>
-     </attribute>
-    </widget>
-   </item>
-   <item row="1" column="0" colspan="3">
-    <layout class="QHBoxLayout" name="layFilter">
-     <item>
-      <widget class="QLineEdit" name="leFilterMask">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-         <horstretch>1</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="minimumSize">
-        <size>
-         <width>50</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="toolTip">
-        <string>Filtering user coordinates by name</string>
-       </property>
-       <property name="placeholderText">
-        <string>Filter...</string>
-       </property>
-       <property name="clearButtonEnabled">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>LC_MouseTrackingTableView</class>
+   <extends>QTableView</extends>
+   <header location="global">lc_mouse_tracking_table_view.h</header>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="../../../../res/icons/icons.qrc"/>
  </resources>

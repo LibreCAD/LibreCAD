@@ -21,7 +21,7 @@
  ******************************************************************************/
 #include "qg_linepolygon2options.h"
 
-#include "rs_actiondrawlinepolygon2.h"
+#include "lc_action_draw_polygon_corner_corner.h"
 #include "rs_debug.h"
 #include "rs_settings.h"
 #include "ui_qg_linepolygon2options.h"

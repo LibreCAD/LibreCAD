@@ -42,16 +42,16 @@ public:
     ~RScodec();
 //    bool encode(int *data, int *parity);
 //    int decode(int *recd);
-    bool encode(unsigned char *data, unsigned char *parity);
+    bool encode(unsigned char *data, unsigned char *parity) const;
     int decode(unsigned char *data);
-    bool isOkey(){return isOk;}
-    const unsigned int* indexOf() {return index_of;}
-    const int* alphaTo() {return alpha_to;}
+    bool isOkey() const {return isOk;}
+    const unsigned int* indexOf() const {return index_of;}
+    const int* alphaTo() const {return alpha_to;}
 
 private:
-    void RSgenerate_gf(unsigned int pp);
+    void RSgenerate_gf(unsigned int pp) const;
     void RSgen_poly();
-    int calcDecode(unsigned char* data, int* recd, int** elp, int* d, int* l, int* u_lu, int* s, int* root, int* loc, int* z, int* err, int* reg, int bb);
+    int calcDecode(unsigned char* data, int* recd, int** elp, int* d, int* l, int* u_lu, int* s, int* root, int* loc, int* z, int* err, int* reg, int bb) const;
 
     int mm; //RS code over GF(2^4)
     int tt; //number of errors that can be corrected
@@ -64,4 +64,4 @@ private:
     int *alpha_to;
 };
 
-#endif // RSCODEC_H
+#endif

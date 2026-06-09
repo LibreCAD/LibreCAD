@@ -35,7 +35,7 @@
  * to use this constructor.
  */
 QG_PatternBox::QG_PatternBox(QWidget* parent)
-        : QComboBox(parent) {
+    : QComboBox(parent) {
 }
 
 /**
@@ -49,9 +49,9 @@ QG_PatternBox::~QG_PatternBox() = default;
 void QG_PatternBox::init() {
     QStringList patterns;
 
-	for (auto const& pa: *RS_PATTERNLIST) {
-		patterns.append(pa.first);
-	}
+    for (const auto& [fst, snd] : *RS_PATTERNLIST) {
+        patterns.append(fst);
+    }
 
     patterns.sort();
     insertItems(0, patterns);
@@ -72,23 +72,22 @@ void QG_PatternBox::setPattern(const QString& pName) {
 }
 
 std::shared_ptr<RS_Pattern> QG_PatternBox::getPattern() {
-	if (m_currentPattern == nullptr || m_currentPattern->countDeep()==0) {
-		m_currentPattern = RS_PATTERNLIST->requestPattern(currentText());
-	}
-	return m_currentPattern;
+    if (m_currentPattern == nullptr || m_currentPattern->countDeep() == 0) {
+        m_currentPattern = RS_PATTERNLIST->requestPattern(currentText());
+    }
+    return m_currentPattern;
 }
 
 /**
  * Called when the pattern has changed. This method 
  * sets the current pattern to the value chosen.
  */
-void QG_PatternBox::slotPatternChanged(int index) {
+void QG_PatternBox::slotPatternChanged(const int index) {
     RS_DEBUG->print("QG_PatternBox::slotPatternChanged %d\n", index);
     m_currentPattern = RS_PATTERNLIST->requestPattern(currentText());
 
     if (m_currentPattern) {
-        RS_DEBUG->print("Current pattern is (%d): %s\n",
-                        index, m_currentPattern->getFileName().toLatin1().data());
+        RS_DEBUG->print("Current pattern is (%d): %s\n", index, m_currentPattern->getFileName().toLatin1().data());
     }
-	emit patternChanged();
+    emit patternChanged();
 }

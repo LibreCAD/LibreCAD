@@ -23,8 +23,8 @@
 #ifndef LC_DLGNEWVERSIONAVAILABLE_H
 #define LC_DLGNEWVERSIONAVAILABLE_H
 
-#include "lc_releasechecker.h"
 #include "lc_dialog.h"
+#include "lc_releasechecker.h"
 
 namespace Ui {
     class LC_DlgNewVersionAvailable;
@@ -33,14 +33,14 @@ namespace Ui {
 class LC_DlgNewVersionAvailable : public LC_Dialog{
     Q_OBJECT
 public:
-    explicit LC_DlgNewVersionAvailable(QWidget *parent, LC_ReleaseChecker* releaseChecker);
+    explicit LC_DlgNewVersionAvailable(QWidget *parent, const LC_ReleaseChecker* releaseChecker);
     ~LC_DlgNewVersionAvailable() override;
 protected slots:
     void onOk();
 private:
     QString m_currentReleaseTag = "";
     QString m_currentPreReleaseTag = "";
-    void setup(LC_ReleaseChecker* releaseChecker);
+    void setup(const LC_ReleaseChecker* releaseChecker);
     Ui::LC_DlgNewVersionAvailable *ui;
 };
-#endif // LC_DLGNEWVERSIONAVAILABLE_H
+#endif

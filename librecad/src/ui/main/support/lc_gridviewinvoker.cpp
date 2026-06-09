@@ -1,5 +1,5 @@
 /*******************************************************************************
-*
+ *
  This file is part of the LibreCAD project, a 2D CAD program
 
  Copyright (C) 2025 LibreCAD.org
@@ -29,7 +29,7 @@
 LC_GridViewInvoker::LC_GridViewInvoker(QC_ApplicationWindow* mainWin):LC_AppWindowAware{mainWin} {
 }
 
-void LC_GridViewInvoker::setGridView(bool toggle, bool isometric, RS2::IsoGridViewType isoGridType) const {
+void LC_GridViewInvoker::setGridView(const bool toggle, const bool isometric, const RS2::IsoGridViewType isoGridType) const {
     if (toggle) {
         RS_GraphicView *view = m_appWin->getCurrentGraphicView();
         if (view != nullptr) {
@@ -38,8 +38,9 @@ void LC_GridViewInvoker::setGridView(bool toggle, bool isometric, RS2::IsoGridVi
                 graphic->setIsometricGrid(isometric);
                 if (isometric) {
                     graphic->setIsoView(isoGridType);
+                    graphic->getSelection()->fireSelectionChanged();
                 }
-                LC_GraphicViewport* viewport = view->getViewPort();
+                const LC_GraphicViewport* viewport = view->getViewPort();
                 viewport->loadGridSettings();
                 updateGridViewActions(isometric, isoGridType);
                 view->redraw();
@@ -49,7 +50,7 @@ void LC_GridViewInvoker::setGridView(bool toggle, bool isometric, RS2::IsoGridVi
     }
 }
 
-void LC_GridViewInvoker::updateGridViewActions(bool isometric, RS2::IsoGridViewType type) const{
+void LC_GridViewInvoker::updateGridViewActions(const bool isometric, const RS2::IsoGridViewType type) const{
     bool viewOrtho = false, viewIsoLeft = false, viewIsoRight = false, viewIsoTop = false;
 
     if (isometric){

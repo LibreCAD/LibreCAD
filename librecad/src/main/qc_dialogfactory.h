@@ -38,6 +38,6 @@
 class QC_DialogFactory: public QG_DialogFactory {
 public:
     QC_DialogFactory(QWidget* parent, QToolBar* ow, LC_SnapOptionsWidgetsHolder *snapOptionsHolder);
-    void closeEditBlockWindow(RS_Block* block = nullptr) override;
+    void closeEditBlockWindow(RS_Block* block) override;
 };
 #endif

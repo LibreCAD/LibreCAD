@@ -32,7 +32,7 @@ class LC_PenPaletteOptions;
 class LC_PenPaletteOptionsDialog : public LC_Dialog, public Ui::LC_PenPaletteOptionsDialog{
     Q_OBJECT
 public:
-    explicit LC_PenPaletteOptionsDialog(QWidget *parent, LC_PenPaletteOptions* m_options, bool focusOnfile);
+    explicit LC_PenPaletteOptionsDialog(QWidget *parent, LC_PenPaletteOptions* options, bool focusOnFile);
     ~LC_PenPaletteOptionsDialog() override;
 public slots:
     void validate();
@@ -40,12 +40,11 @@ protected slots:
     void languageChange();
 private:
     void selectActivePenBGColor();
-    void set_color(QComboBox *combo, QColor &custom);
+    void setComboBoxColor(const QComboBox *combo, const QColor &custom);
     void initComboBox(QComboBox *cb, const QColor &color);
-    LC_PenPaletteOptions* m_options = nullptr;
-    void selectGridColor();
     void selectMatchedItemColor();
     void showInvalidColorMessage(const QString &name);
+    LC_PenPaletteOptions* m_options = nullptr;
 };
 
-#endif // LC_PENPALETTEOPTIONSDIALOG_H
+#endif

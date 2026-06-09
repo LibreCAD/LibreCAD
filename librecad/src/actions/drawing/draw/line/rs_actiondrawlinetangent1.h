@@ -27,7 +27,7 @@
 #ifndef RS_ACTIONDRAWLINETANGENT1_H
 #define RS_ACTIONDRAWLINETANGENT1_H
 
-#include "rs_previewactioninterface.h"
+#include "lc_undoabledocumentmodificationaction.h"
 
 class RS_Line;
 /**
@@ -36,20 +36,22 @@ class RS_Line;
  *
  * @author Andrew Mustun
  */
-class RS_ActionDrawLineTangent1 : public RS_PreviewActionInterface {
+class RS_ActionDrawLineTangent1 : public LC_SingleEntityCreationAction{
     Q_OBJECT
 public:
-    RS_ActionDrawLineTangent1(LC_ActionContext *actionContext);
+    explicit RS_ActionDrawLineTangent1(LC_ActionContext *actionContext);
     ~RS_ActionDrawLineTangent1() override;
 protected:
     void doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) override;
     RS2::CursorType doGetMouseCursor(int status) override;
-    void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
-    void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
-    void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
+    void onMouseLeftButtonRelease(int status, const LC_MouseEvent* e) override;
+    void onMouseRightButtonRelease(int status, const LC_MouseEvent* e) override;
+    void onMouseMoveEvent(int status, const LC_MouseEvent* e) override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
-    void updateMouseButtonHints() override;
-    void doTrigger() override;
+    void updateActionPrompt() override;
+    void doTriggerCompletion(bool success) override;
+    RS_Entity* doTriggerCreateEntity() override;
+    bool isInVisualSnapStatus(int status) override;
 private:
     enum Status {
         SetPoint = InitialActionStatus,     /**< Choose the startpoint. */
@@ -63,7 +65,5 @@ private:
     /** Chosen startpoint */
     std::unique_ptr<RS_Vector> m_point;
     RS_Entity* m_entity;
-
-
 };
 #endif

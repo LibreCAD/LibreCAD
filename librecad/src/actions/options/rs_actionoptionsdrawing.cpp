@@ -29,12 +29,12 @@
 #include "qc_applicationwindow.h"
 #include "rs_graphicview.h"
 
-RS_ActionOptionsDrawing::RS_ActionOptionsDrawing(LC_ActionContext *actionContext, int tabIndex)
+RS_ActionOptionsDrawing::RS_ActionOptionsDrawing(LC_ActionContext *actionContext, const int tabIndex)
         :RS_ActionInterface("Drawing Options",actionContext, RS2::ActionOptionsDrawing) {
     m_tabToShow = tabIndex;
 }
 
-void RS_ActionOptionsDrawing::init(int status) {
+void RS_ActionOptionsDrawing::init(const int status) {
     RS_ActionInterface::init(status);
     trigger();
 }
@@ -45,5 +45,5 @@ void RS_ActionOptionsDrawing::trigger(){
         QC_ApplicationWindow::getAppWindow()->changeDrawingOptions(m_tabToShow);
         m_dialogVisible = false;
     }
-    finish(false);
+    finish();
 }

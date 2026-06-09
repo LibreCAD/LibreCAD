@@ -24,7 +24,6 @@
 **
 **********************************************************************/
 
-
 #ifndef RS_FONTCHAR_H
 #define RS_FONTCHAR_H
 
@@ -43,10 +42,9 @@ public:
      *        an identifier.
      * @param basePoint Base point (offset) of the letter (usually 0/0).
      */
-    RS_FontChar(RS_EntityContainer* parent,
-                const QString& name,
-                RS_Vector basePoint)
-            : RS_Block(parent, RS_BlockData(name, basePoint, false)) {}
+    RS_FontChar(RS_EntityContainer* parent, const QString& name, const RS_Vector& basePoint)
+        : RS_Block(parent, RS_BlockData(name, basePoint, false)) {
+    }
 
     /** @return RS2::EntityFontChar */
     RS2::EntityType rtti() const override {
@@ -54,10 +52,9 @@ public:
     }
 
     /*friend std::ostream& operator << (std::ostream& os, const RS_FontChar& b) {
-       	os << " name: " << b.getName().latin1() << "\n";
-    	os << " entities: " << (RS_EntityContainer&)b << "\n";
-       	return os;
+        os << " name: " << b.getName().latin1() << "\n";
+     os << " entities: " << (RS_EntityContainer&)b << "\n";
+        return os;
 }*/
-protected:
 };
 #endif

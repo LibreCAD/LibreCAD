@@ -29,18 +29,17 @@
 
 #include "rs_actioninterface.h"
 
-
 /**
  * This action class can handle user events to create new blank documents.
  *
  * @author Andrew Mustun
  */
 class RS_ActionFileNew : public RS_ActionInterface {
-	Q_OBJECT
+    Q_OBJECT
 public:
-    RS_ActionFileNew(LC_ActionContext *actionContext);
-	void init(int status) override;
-	void trigger() override;
+    RS_ActionFileNew(LC_ActionContext* actionContext);
+    void init(int status) override;
+    void trigger() override;
 };
 
 #endif

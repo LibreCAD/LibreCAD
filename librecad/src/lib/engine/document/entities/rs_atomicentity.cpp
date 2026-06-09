@@ -23,10 +23,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include "rs_atomicentity.h"
 
-RS_AtomicEntity::RS_AtomicEntity(RS_EntityContainer* parent) : RS_Entity(parent) {}
+RS_AtomicEntity::RS_AtomicEntity(RS_EntityContainer* parent) : RS_Entity(parent) {
+}
 
 bool RS_AtomicEntity::isContainer() const {
-	return false;
+    return false;
 }
 
 /**
@@ -34,21 +35,21 @@ bool RS_AtomicEntity::isContainer() const {
  *  atomic entities.
  */
 bool RS_AtomicEntity::isAtomic() const {
-	return true;
+    return true;
 }
 
 /**
  * @return Always 1 for atomic entities.
  */
-unsigned int RS_AtomicEntity::count() const{
-	return 1;
+unsigned int RS_AtomicEntity::count() const {
+    return 1;
 }
 
 /**
  * @return Always 1 for atomic entities.
  */
-unsigned int RS_AtomicEntity::countDeep() const{
-	return 1;
+unsigned int RS_AtomicEntity::countDeep() const {
+    return 1;
 }
 
 /**
@@ -56,7 +57,7 @@ unsigned int RS_AtomicEntity::countDeep() const{
  * an invalid vector if the entity has no endpoint.
  */
 RS_Vector RS_AtomicEntity::getEndpoint() const {
-	return RS_Vector(false);
+    return RS_Vector(false);
 }
 
 /**
@@ -64,28 +65,31 @@ RS_Vector RS_AtomicEntity::getEndpoint() const {
  * an invalid vector if the entity has no startpoint.
  */
 RS_Vector RS_AtomicEntity::getStartpoint() const {
-	return RS_Vector(false);
+    return RS_Vector(false);
 }
 
 /**
  * Implementation must return the angle in which direction the entity starts.
  */
 double RS_AtomicEntity::getDirection1() const {
-	return 0.0;
+    return 0.0;
 }
 
 /**
  * Implementation must return the angle in which direction the entity starts the opposite way.
  */
 double RS_AtomicEntity::getDirection2() const {
-	return 0.0;
+    return 0.0;
 }
+
 RS_Vector RS_AtomicEntity::getCenter() const {
-	return RS_Vector(false);
+    return RS_Vector(false);
 }
+
 double RS_AtomicEntity::getRadius() const {
-	   return 0.;
-   }
+    return 0.;
+}
+
 /**
 * return the nearest center for snapping
 * @param coord Coordinate (typically a mouse coordinate)
@@ -93,21 +97,26 @@ double RS_AtomicEntity::getRadius() const {
 * distance between 'coord' and the closest center point. The passed
 * pointer can also be NULL in which case the distance will be
 * lost.
+* @param centerEntity
 *
 * @return The closest center point.
 */
-RS_Vector RS_AtomicEntity::getNearestCenter(const RS_Vector& /*coord*/,
-								  double* /*dist*/) const{
-	return RS_Vector(false);
+RS_Vector RS_AtomicEntity::doGetNearestCenter([[maybe_unused]] const RS_Vector& coord, [[maybe_unused]] double* dist,
+                                              [[maybe_unused]] RS_Entity** centerEntity) const {
+    return RS_Vector(false);
 }
+
+
+
 
 /**
  * (De-)selects startpoint.
  */
-void RS_AtomicEntity::setStartpointSelected(bool select) {
+void RS_AtomicEntity::setStartpointSelected(const bool select) {
     if (select) {
         setFlag(RS2::FlagSelected1);
-    } else {
+    }
+    else {
         delFlag(RS2::FlagSelected1);
     }
 }
@@ -115,44 +124,49 @@ void RS_AtomicEntity::setStartpointSelected(bool select) {
 /**
  * (De-)selects endpoint.
  */
-void RS_AtomicEntity::setEndpointSelected(bool select) {
-	if (select) {
-		setFlag(RS2::FlagSelected2);
-	} else {
-		delFlag(RS2::FlagSelected2);
-	}
+void RS_AtomicEntity::setEndpointSelected(const bool select) {
+    if (select) {
+        setFlag(RS2::FlagSelected2);
+    }
+    else {
+        delFlag(RS2::FlagSelected2);
+    }
 }
-bool RS_AtomicEntity::isTangent(const RS_CircleData& /* circleData */) const{
-	return false;
+
+bool RS_AtomicEntity::isTangent(const RS_CircleData& /* circleData */) const {
+    return false;
 }
 
 /**
  * @return True if the entities startpoint is selected.
  */
 bool RS_AtomicEntity::isStartpointSelected() const {
-	return getFlag(RS2::FlagSelected1);
+    return getFlag(RS2::FlagSelected1);
 }
 
 /**
  * @return True if the entities endpoint is selected.
  */
 bool RS_AtomicEntity::isEndpointSelected() const {
-	return getFlag(RS2::FlagSelected2);
+    return getFlag(RS2::FlagSelected2);
 }
 
-void RS_AtomicEntity::revertDirection(){}
+void RS_AtomicEntity::revertDirection() {
+}
 
 /**
  * Implementation must move the startpoint of the entity to
  * the given position.
  */
-void RS_AtomicEntity::moveStartpoint(const RS_Vector& /*pos*/) {}
+void RS_AtomicEntity::moveStartpoint(const RS_Vector& /*pos*/) {
+}
 
 /**
  * Implementation must move the endpoint of the entity to
  * the given position.
  */
-void RS_AtomicEntity::moveEndpoint(const RS_Vector& /*pos*/) {}
+void RS_AtomicEntity::moveEndpoint(const RS_Vector& /*pos*/) {
+}
 
 /**
  * Implementation must trim the startpoint of the entity to
@@ -176,9 +190,8 @@ void RS_AtomicEntity::trimEndpoint(const RS_Vector& pos) {
  * trim entity and 'trimPoint' is the point to which the entity will
  * be trimmed.
  */
-RS2::Ending RS_AtomicEntity::getTrimPoint(const RS_Vector& /*coord*/,
-								 const RS_Vector& /*trimPoint*/) {
-	return RS2::EndingNone;
+RS2::Ending RS_AtomicEntity::getTrimPoint(const RS_Vector& /*coord*/, const RS_Vector& /*trimPoint*/) {
+    return RS2::EndingNone;
 }
 
 /**
@@ -187,12 +200,12 @@ RS2::Ending RS_AtomicEntity::getTrimPoint(const RS_Vector& /*coord*/,
  * trimCoord indicts the trigger trim position
  * trimSol contains intersections
  * */
-RS_Vector RS_AtomicEntity::prepareTrim(const RS_Vector& /*trimCoord*/,
-							  const RS_VectorSolutions& /*trimSol*/) {
-	return RS_Vector(false);
+RS_Vector RS_AtomicEntity::prepareTrim(const RS_Vector& /*trimCoord*/, const RS_VectorSolutions& /*trimSol*/) {
+    return RS_Vector(false);
 }
 
-void RS_AtomicEntity::reverse() {}
+void RS_AtomicEntity::reverse() {
+}
 
 void RS_AtomicEntity::moveSelectedRef(const RS_Vector& ref, const RS_Vector& offset) {
     if (isSelected()) {

@@ -23,11 +23,12 @@
 
 #ifndef LC_ACTIONDIMSTYLEAPPLY_H
 #define LC_ACTIONDIMSTYLEAPPLY_H
+#include "lc_undoabledocumentmodificationaction.h"
 #include "rs_previewactioninterface.h"
 
 class RS_Dimension;
 
-class LC_ActionDimStyleApply:public RS_PreviewActionInterface {
+class LC_ActionDimStyleApply:public LC_UndoableDocumentModificationAction {
     Q_OBJECT
 public:
     // statuses of action
@@ -35,22 +36,27 @@ public:
         SelectEntity = InitialActionStatus,
         ApplyToEntity
     };
-    LC_ActionDimStyleApply(LC_ActionContext *actionContext);
+
+    explicit LC_ActionDimStyleApply(LC_ActionContext *actionContext);
     ~LC_ActionDimStyleApply() override = default;
     void init(int status) override;
-    void finish(bool updateTB) override;
+    void finish() override;
     void setSourceEntity(RS_Entity* en);
 private:
     RS_Dimension* m_srcEntity {nullptr};
+    RS_Dimension* m_entityToApply {nullptr};
+    bool m_applyStyleOverride {false};
     RS2::EntityType m_srcEntityStyleType {RS2::EntityUnknown};
     QString m_srcEntityBaseStyleName;
 protected:
     void doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) override;
     RS2::CursorType doGetMouseCursor(int status) override;
-    void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
-    void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
-    void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
-    void updateMouseButtonHints() override;
+    void onMouseLeftButtonRelease(int status, const LC_MouseEvent* e) override;
+    void onMouseRightButtonRelease(int status, const LC_MouseEvent* e) override;
+    void onMouseMoveEvent(int status, const LC_MouseEvent* event) override;
+    void updateActionPrompt() override;
+    bool doTriggerModifications(LC_DocumentModificationBatch& ctx) override;
+    void doTriggerCompletion(bool success) override;
 };
 
-#endif // LC_ACTIONDIMSTYLEAPPLY_H
+#endif

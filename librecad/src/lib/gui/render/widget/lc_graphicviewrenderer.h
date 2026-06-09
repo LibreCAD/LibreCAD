@@ -22,17 +22,19 @@
 
 #ifndef LC_GRAPHICVIEWRENDERER_H
 #define LC_GRAPHICVIEWRENDERER_H
+
+
 #include "lc_overlayanglesbasemark.h"
 #include "lc_overlayrelativezero.h"
 #include "lc_overlayucszero.h"
+#include "lc_ref_snap_line.h"
 #include "lc_ucs_mark.h"
 #include "lc_widgetviewportrenderer.h"
 
 class RS_EntityContainer;
 class LC_OverlaysManager;
 
-class LC_GraphicViewRenderer:public LC_WidgetViewPortRenderer
-{
+class LC_GraphicViewRenderer:public LC_WidgetViewPortRenderer {
 public:
     LC_GraphicViewRenderer(LC_GraphicViewport *viewport, QPaintDevice* d);
 
@@ -42,10 +44,9 @@ public:
   * @retval false Otherwise.
   */
     bool isDraftMode() const {return m_draftMode;}
-    void setDraftMode(bool dm) { m_draftMode = dm;}
-    bool isTextLineNotRenderable(double uiLineHeight) const override
-    {
-        return uiLineHeight <getMinRenderableTextHeightInPx();
+    void setDraftMode(const bool dm) { m_draftMode = dm;}
+    bool isTextLineNotRenderable(const double uiLineHeight) const override {
+        return uiLineHeight < getMinRenderableTextHeightInPx();
     }
 
     LC_AnglesBaseMarkOptions* anglesBaseOptions() {return &m_anglesBaseOptions;}
@@ -90,9 +91,18 @@ protected:
     /** reference entities on preview color */
     RS_Color m_colorPreviewReferenceHighlightedEntities;
 
+    /** guide entities for visual snap*/
+    RS_Color m_colorVisualSnapGuideEntities;
+    /** vertexes in visual snap*/
+    RS_Color m_colorVisualSnapVertexes;
+    /** projected snap points in visual snap*/
+    RS_Color m_colorVisualSnapProjectedSnap;
+    RS_Color m_colorVisualSnapDocumentEntities;
+
     bool m_lastPaintedHighlighted = false;
     bool m_lastPaintedSelected = false;
     bool m_lastPaintOverlay = false;
+    bool m_lastPenInVisualSnap = false;
     bool m_draftMode = false;
 
     QString m_draftMarkText = QObject::tr("Draft");
@@ -110,16 +120,17 @@ protected:
     void drawLayerEntitiesOver(RS_Painter *painter) override;
     void drawRelativeZero(RS_Painter *painter);
     void drawOverlay(RS_Painter *painter);
-    void drawDraftSign(RS_Painter *painter);
+    void drawDraftSign(RS_Painter *painter) const;
+    void setupRefSnapEntityPen(const RS_Painter* painter, RS_Pen& pen, const LC_RefSnapEntity* ent, bool inVisualSnap) const;
     void drawCoordinateSystems(RS_Painter *painter);
-    void drawEntitiesInOverlay(LC_OverlaysManager *overlaysManager, RS_Painter *painter, RS2::OverlayGraphics overlayType);
-    void drawOverlayEntitiesInOverlay(LC_OverlaysManager *overlaysManager, RS_Painter *painter, RS2::OverlayGraphics overlayType);
+    void drawEntitiesInOverlay(const LC_OverlaysManager *overlaysManager, RS_Painter *painter, RS2::OverlayGraphics overlayType);
+    void drawOverlayEntitiesInOverlay(const LC_OverlaysManager *overlaysManager, RS_Painter *painter, RS2::OverlayGraphics overlayType);
     void drawEntityReferencePoints(RS_Painter *painter, const RS_Entity *e) const;
-    void setPenForEntity(RS_Painter *painter, RS_Entity *e, bool inOverlay);
-    void setPenForDraftEntity(RS_Painter *painter, RS_Entity *e, bool inOverlay);
-    void setPenForOverlayEntity(RS_Painter *painter, RS_Entity *e);
+    void setPenForEntity(RS_Painter *painter, const RS_Entity *e, bool inOverlay);
+    void setPenForDraftEntity(RS_Painter *painter, const RS_Entity *e, bool inOverlay);
+    void setPenForOverlayEntity(RS_Painter *painter, const RS_Entity *e);
     void renderEntity(RS_Painter *painter, RS_Entity *e) override;
     void doSetupBeforeContainerDraw() override;
 };
 
-#endif // LC_GRAPHICVIEWRENDERER_H
+#endif

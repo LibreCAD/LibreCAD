@@ -1,3 +1,26 @@
+/*
+ * ********************************************************************************
+ * This file is part of the LibreCAD project, a 2D CAD program
+ *
+ * Copyright (C) 2026 LibreCAD.org
+ * Copyright (C) 2026 sand1024
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ * ********************************************************************************
+ */
+
 #ifndef LC_MDIAPPLICATIONWINDOW_H
 #define LC_MDIAPPLICATIONWINDOW_H
 #include "mainwindowx.h"
@@ -10,18 +33,18 @@ class RS_GraphicView;
 class QC_MDIWindow;
 class QMdiArea;
 
-class LC_MDIApplicationWindow:public MainWindowX{
+class LC_MDIApplicationWindow : public MainWindowX {
 public:
     LC_MDIApplicationWindow();
 
-   /**
-   * @return Pointer to MdiArea.
-   */
-    QMdiArea const* getMdiArea() const;
+    /**
+    * @return Pointer to MdiArea.
+    */
+    const QMdiArea* getMdiArea() const;
     QMdiArea* getMdiArea();
 
     /**
-	   * @return Pointer to the currently active MDI Window or nullptr if no
+    * @return Pointer to the currently active MDI Window or nullptr if no
      * MDI Window is active.
      */
     const QC_MDIWindow* getCurrentMDIWindow() const;
@@ -40,7 +63,7 @@ public:
      * Implementation from RS_MainWindowInterface (and QS_ScripterHostInterface).
      *
      * @return Pointer to the graphic document of the currently active document
-	    * window or nullptr if no window is available.
+     * window or nullptr if no window is available.
      */
     const RS_Document* getCurrentDocument() const;
     RS_Document* getCurrentDocument();
@@ -51,20 +74,22 @@ public:
     QC_MDIWindow* getWindowWithDoc(const RS_Document* doc);
 
     // activates window with given filename of drawing, if any
-    void activateWindowWithFile(const QString &fileName);
+    void activateWindowWithFile(const QString& fileName);
     void closeAllWindowsWithDoc(const RS_Document* doc);
     virtual void closeWindow(QC_MDIWindow* w) = 0;
     void redrawAll();
-    void enableWidgetList(bool enable, const std::vector<QWidget *> &widgeList);
+    void enableWidgetList(bool enable, const std::vector<QWidget*>& widgeList);
     void enableWidget(QWidget* win, bool enable);
     void doForEachWindow(const std::function<void(QC_MDIWindow*)>& callback) const;
-    void doForEachWindowGraphicView(const std::function<void(QG_GraphicView *, QC_MDIWindow *)>& callback) const;
-    QAction* enableAction(const QString& name, bool enable) const;
-    void enableActions(const std::vector<QString> &actionList, bool enable) const;
+    void doForEachWindowGraphicView(const std::function<void(QG_GraphicView*, QC_MDIWindow*)>& callback) const;
+    void enableAction(const QString& name, bool enable) const;
+    QAction* obtainEnableAction(const QString& name, bool enable) const;
+    void enableActions(const std::vector<QString>& actionList, bool enable) const;
     QAction* checkAction(const QString& name, bool enable) const;
-    void checkActions(const std::vector<QString> &actionList, bool enable) const;
+    void checkActions(const std::vector<QString>& actionList, bool enable) const;
     virtual QAction* getAction(const QString& name) const = 0;
-public slots:
+
+public slots :
     void slotCascade();
     void slotTileHorizontal();
     void slotTileVertical();
@@ -79,28 +104,30 @@ public slots:
     void slotToggleTab();
     void slotTile();
     void slotZoomAuto() const;
-    void slotWindowActivated(QMdiSubWindow *w);
+    void slotWindowActivated(QMdiSubWindow* w);
     void slotWindowActivatedByIndex(int);
     void slotRedockWidgets();
     friend class QC_MDIWindow;
-    QMenu *findMenu(const QString &searchMenu, const QObjectList& thisMenuList, const QString& currentEntry);
+    QMenu* findMenu(const QString& searchMenu, const QObjectList& thisMenuList, const QString& currentEntry);
     void slotBack();
     void onEnterKey();
-protected slots:
+
+protected slots :
     void onCADTabBarIndexChanged(int index) const;
+
 protected:
     /** MdiArea for MDI */
-    QMdiArea* m_mdiAreaCAD {nullptr};
-    QMdiSubWindow* m_activeMdiSubWindow {nullptr};
-    QMdiSubWindow* m_currentSubWindow {nullptr};
+    QMdiArea* m_mdiAreaCAD{nullptr};
+    QMdiSubWindow* m_activeMdiSubWindow{nullptr};
+    QMdiSubWindow* m_currentSubWindow{nullptr};
     QList<QC_MDIWindow*> m_windowList;
-    void doArrangeWindows(RS2::SubWindowMode mode, bool actuallyDont = false);
+    void doArrangeWindows(RS2::SubWindowMode subwindowMode, bool actuallyDont = false);
     void setTabLayout(RS2::TabShape s, RS2::TabPosition p);
     virtual void doActivate(QMdiSubWindow* win);
     void setupCADAreaTabbar();
-    void slotWindowActivatedForced(QMdiSubWindow *w);
-    virtual void doWindowActivated(QMdiSubWindow *w, bool forced) = 0;
-    void doForEachSubWindowGraphicView(const std::function<void(QG_GraphicView *, QC_MDIWindow *)>& callback) const;
+    void slotWindowActivatedForced(QMdiSubWindow* w);
+    virtual void doWindowActivated(QMdiSubWindow* w, bool forced) = 0;
+    void doForEachSubWindowGraphicView(const std::function<void(QG_GraphicView*, QC_MDIWindow*)>& callback) const;
 };
 
-#endif // LC_MDIAPPLICATIONWINDOW_H
+#endif

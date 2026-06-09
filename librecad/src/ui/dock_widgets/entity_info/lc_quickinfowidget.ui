@@ -32,16 +32,19 @@
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <property name="leftMargin">
-    <number>2</number>
+    <number>0</number>
    </property>
    <property name="topMargin">
-    <number>2</number>
+    <number>0</number>
    </property>
    <property name="rightMargin">
     <number>2</number>
    </property>
    <property name="bottomMargin">
     <number>2</number>
+   </property>
+   <property name="verticalSpacing">
+    <number>4</number>
    </property>
    <item row="0" column="0">
     <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -265,7 +268,6 @@ p, li { white-space: pre-wrap; }
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../../../../res/icons/icons.qrc"/>
   <include location="../../../../res/icons/icons.qrc"/>
  </resources>
  <connections/>

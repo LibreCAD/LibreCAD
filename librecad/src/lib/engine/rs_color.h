@@ -25,7 +25,6 @@
 **
 **********************************************************************/
 
-
 #ifndef RS_COLOR_H
 #define RS_COLOR_H
 
@@ -45,24 +44,28 @@
  *
  * @author Andrew Mustun
  */
-class RS_Color: public QColor, public RS_Flags {
+class RS_Color : public QColor, public RS_Flags {
 public:
     RS_Color() = default;
-    RS_Color(int r, int g, int b) :
-        QColor(r, g, b)
-    {}
 
-    RS_Color(int r, int g, int b, int a) : QColor(r, g, b, a)
-    {}
-    RS_Color(const QColor& c) : QColor(c)
-    {}
-    RS_Color(const Qt::GlobalColor color) : QColor(color)
-    {}
-    RS_Color(unsigned int f) : RS_Flags(f)
-    {}
-    RS_Color(QString name) : QColor(name)
-    {}
+    RS_Color(const int r, const int g, const int b) : QColor(r, g, b) {
+    }
 
+    RS_Color(const int r, const int g, const int b, const int a) : QColor(r, g, b, a) {
+    }
+
+    explicit RS_Color(const QColor& c) : QColor(c) {
+    }
+
+    explicit RS_Color(const Qt::GlobalColor color) : QColor(color) {
+    }
+
+    // ReSharper disable once CppNonExplicitConvertingConstructor
+    RS_Color(const unsigned int f) : RS_Flags(f) {
+    }
+
+    explicit RS_Color(const QString& name) : QColor(name) {
+    }
 
     /** @return A copy of this color without flags. */
     RS_Color stripFlags() const {
@@ -79,12 +82,12 @@ public:
         return getFlag(RS2::FlagByBlock);
     }
 
-    QColor toQColor(void) const {
-        return {red(),green(),blue(), alpha()};
+    QColor toQColor() const {
+        return {red(), green(), blue(), alpha()};
     }
 
     //These 3 methods are used for plugins
-    int toIntColor(void) const;
+    int toIntColor() const;
     void fromIntColor(int co);
     int colorDistance(const RS_Color& c) const;
 
@@ -94,26 +97,19 @@ public:
          * Minimum acceptable distance between two colors before visibility
          * enhancement is required. Determined empirically.
          */
-        MinColorDistance = 20,  //< in %
+        MinColorDistance = 20, //< in %
     };
 
-    bool isEqualIgnoringFlags(const RS_Color& c) const{
-        return red()==c.red() &&
-               green()==c.green() &&
-               blue()==c.blue() &&
-               alpha()==c.alpha();
+    bool isEqualIgnoringFlags(const RS_Color& c) const {
+        return red() == c.red() && green() == c.green() && blue() == c.blue() && alpha() == c.alpha();
     }
 
-    void applyFlags(RS_Color& source ){
+    void applyFlags(const RS_Color& source) {
         setFlags(source.getFlags());
     }
 
-    bool operator == (const RS_Color& c) const {
-        return (red()==c.red() &&
-                green()==c.green() &&
-                blue()==c.blue() &&
-                alpha()==c.alpha() &&
-                getFlags()==c.getFlags());
+    bool operator ==(const RS_Color& c) const {
+        return (red() == c.red() && green() == c.green() && blue() == c.blue() && alpha() == c.alpha() && getFlags() == c.getFlags());
     }
 
     // Optional named-color tag, e.g. DWG/DXF AcDbColor "BOOK$ENTRY".

@@ -22,10 +22,11 @@
  */
 
 #include "lc_arrow_none.h"
+
 #include "rs_painter.h"
 
-LC_ArrowNone::LC_ArrowNone(RS_EntityContainer* container, const RS_Vector& point, double dirAngle, double size)
-    :LC_DimArrowPoly(container, point, dirAngle, size){
+LC_ArrowNone::LC_ArrowNone(RS_EntityContainer* container, const RS_Vector& point, const double dirAngle, const double size)
+    : LC_DimArrowPoly(container, point, dirAngle, size) {
     createVertexes(size);
 }
 
@@ -37,13 +38,13 @@ void LC_ArrowNone::draw(RS_Painter* painter) {
     painter->drawLineWCS(getDimLinePoint(), getPosition());
 }
 
-void LC_ArrowNone::createVertexes(double size) {
+void LC_ArrowNone::createVertexes(const double size) {
     initVertexes(2);
 
-    setVertex(0, {-size,0}); // dimline end point
-    setVertex(1,{0,0}); // center point
+    setVertex(0, {-size, 0}); // dimline end point
+    setVertex(1, {0, 0}); // center point
 
-    setDimLinePoint({-size,0});
+    setDimLinePoint({-size, 0});
     positionFromZero();
     calculateBorders();
 }

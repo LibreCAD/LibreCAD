@@ -26,37 +26,39 @@
 **********************************************************************/
 
 
+#include "rs_color.h"
+
 #include <cmath>
 #include <iostream>
 
-#include "rs_color.h"
-
 //This method is used for plugins
-int RS_Color::toIntColor(void) const {
-    if (isByLayer())
+int RS_Color::toIntColor() const {
+    if (isByLayer()) {
         return -1;
-    if (isByBlock())
+    }
+    if (isByBlock()) {
         return -2;
+    }
 //    int tmp1 = red() << 16;
 //    int tmp2 = green() << 8;
 //    int tmp3 = tmp1+tmp2+blue();
-    int cd = (red() << 16) + (green() << 8) + blue();
-        return cd;
-
+    const int cd = (red() << 16) + (green() << 8) + blue();
+    return cd;
 }
 
 //This method is used for plugins
-void RS_Color::fromIntColor(int co) {
-    if (co == -1)
+void RS_Color::fromIntColor(const int co) {
+    if (co == -1) {
         setFlags(RS2::FlagByLayer);
-    else if (co == -2)
+    }
+    else if (co == -2) {
         setFlags(RS2::FlagByBlock);
+    }
     else {
         setRed((co >> 16) & 0xFF);
         setGreen((co >> 8) & 0xFF);
         setBlue(co & 0xFF);
     }
-
 }
 
 /**
@@ -75,10 +77,9 @@ void RS_Color::fromIntColor(int co) {
  *         to 100 (maximum difference)
  */
 int RS_Color::colorDistance(const RS_Color& c) const {
-
-    int myRed {red()};
-    int otherRed {c.red()};
-    int redMean {(myRed + otherRed) / 2};
+    const int myRed {red()};
+    const int otherRed {c.red()};
+    const int redMean {(myRed + otherRed) / 2};
 
     // Convert difference value to percentage using maximum color difference (764.834 / 100)
     return std::lround( std::sqrt( std::pow(otherRed - myRed, 2) * (512 + redMean) / 256

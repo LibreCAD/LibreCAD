@@ -25,10 +25,11 @@
 #define LC_ACTIONINFOPOINT_H
 #include "rs_previewactioninterface.h"
 
+// fixme - add ability to customize the output to cmd! - that will let to collect coordinates in a batch (abs, relative)
 class LC_ActionInfoPoint: public RS_PreviewActionInterface{
     Q_OBJECT
 public:
-    LC_ActionInfoPoint(LC_ActionContext* actionContext);
+    explicit LC_ActionInfoPoint(LC_ActionContext* actionContext);
     ~LC_ActionInfoPoint() override = default;
 
 protected:
@@ -45,13 +46,14 @@ protected:
     CoordinateType m_coordinatesType{POS_ABSOLUTE};
 
     void doTrigger() override;
-    void onMouseMoveEvent(int status, LC_MouseEvent* e) override;
-    void updateInfoCursor(const RS_Vector& mouse, const RS_Vector& relZero);
-    void onMouseLeftButtonRelease(int status, LC_MouseEvent* e) override;
-    void onMouseRightButtonRelease(int status, LC_MouseEvent* e) override;
+    void onMouseMoveEvent(int status, const LC_MouseEvent* e) override;
+    void updateInfoCursor(const RS_Vector& mouse, const RS_Vector& relZero) const;
+    void onMouseLeftButtonRelease(int status, const LC_MouseEvent* e) override;
+    void onMouseRightButtonRelease(int status, const LC_MouseEvent* e) override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector& mouse) override;
-    void updateMouseButtonHints() override;
+    void updateActionPrompt() override;
     RS2::CursorType doGetMouseCursor(int status) override;
+    bool isInVisualSnapStatus(int status) override;
 };
 
-#endif // LC_ACTIONINFOPOINT_H
+#endif

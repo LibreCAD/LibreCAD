@@ -41,31 +41,31 @@ LC_LayerExportOptionsWidget::~LC_LayerExportOptionsWidget(){
     delete ui;
 }
 
-void LC_LayerExportOptionsWidget::onCreateSeparateDrawingToggled([[maybe_unused]] bool enable) {
+void LC_LayerExportOptionsWidget::onCreateSeparateDrawingToggled([[maybe_unused]] bool enable) const {
     ui->cbStoreEntitiesInOriginalLayer->setEnabled(ui->cbCreateSeparateDrawingForLayer->isChecked());
 }
 
-void LC_LayerExportOptionsWidget::fillLayerExportOptions(LC_LayersExportOptions* options) {
-    options->m_exportNamedViews = ui->cbExportNamedViews->isChecked();
-    options->m_exportUCSs = ui->cbExportUCSs->isChecked();
-    options->m_createSeparateDocumentPerLayer  = ui->cbCreateSeparateDrawingForLayer->isChecked();
-    options->m_putEntitiesToOriginalLayer = ui->cbStoreEntitiesInOriginalLayer->isChecked();
+void LC_LayerExportOptionsWidget::fillLayerExportOptions(LC_LayersExportOptions* options) const {
+    options->exportNamedViews = ui->cbExportNamedViews->isChecked();
+    options->exportUcSs = ui->cbExportUCSs->isChecked();
+    options->createSeparateDocumentPerLayer  = ui->cbCreateSeparateDrawingForLayer->isChecked();
+    options->putEntitiesToOriginalLayer = ui->cbStoreEntitiesInOriginalLayer->isChecked();
     saveToOptions();
 }
 
-void LC_LayerExportOptionsWidget::loadFromOptions() {
+void LC_LayerExportOptionsWidget::loadFromOptions() const {
     LC_GROUP_GUARD("Export.Layers");
     {
         ui->cbExportUCSs->setChecked(LC_GET_BOOL("ExportUCS", true));
         ui->cbExportNamedViews->setChecked(LC_GET_BOOL("ExportViews", true));
-        bool separateDocForLayer = LC_GET_BOOL("DocumentPerLayer", false);
+        const bool separateDocForLayer = LC_GET_BOOL("DocumentPerLayer", false);
         ui->cbCreateSeparateDrawingForLayer->setChecked(separateDocForLayer);
         ui->cbStoreEntitiesInOriginalLayer->setChecked(LC_GET_BOOL("EntitiesInOriginalLayer", false));
         ui->cbStoreEntitiesInOriginalLayer->setEnabled(separateDocForLayer);
     }
 }
 
-void LC_LayerExportOptionsWidget::saveToOptions() {
+void LC_LayerExportOptionsWidget::saveToOptions() const {
     LC_GROUP_GUARD("Export.Layers");
     {
         LC_SET("ExportUCS", ui->cbExportUCSs->isChecked());

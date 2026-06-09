@@ -32,18 +32,18 @@ public:
     void init(int status) override;
 private:
     RS_Entity* m_highlightedEntity = nullptr;
-    void updateQuickInfoWidget(RS_Entity *pEntity);
+    void updateQuickInfoWidget(const RS_Entity* pEntity);
     void clearQuickInfoWidget();
-    void highlightHoveredEntity(LC_MouseEvent *event, bool resolveChildren);
-    void highlightAndShowEntityInfo(LC_MouseEvent *e, bool resolveChildren);
-    bool showEntityInfo(RS_Entity* entity, RS_Vector currentMousePosition);
+    void highlightHoveredEntity(const LC_MouseEvent *event, bool resolveChildren);
+    void highlightAndShowEntityInfo(const LC_MouseEvent *e, bool resolveChildren);
+    bool showEntityInfo(const RS_Entity* entity, const RS_Vector& currentMousePosition);
 protected:
     void doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) override;
-    void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
-    void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
-    void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
-    void updateMouseButtonHints() override;
+    void onMouseLeftButtonRelease(int status, const LC_MouseEvent* e) override;
+    void onMouseRightButtonRelease(int status, const LC_MouseEvent* e) override;
+    void onMouseMoveEvent(int status, const LC_MouseEvent* e) override;
+    void updateActionPrompt() override;
     RS2::CursorType doGetMouseCursor(int status) override;
 };
 
-#endif // LC_ACTIONINFOPROPERTIES_H
+#endif

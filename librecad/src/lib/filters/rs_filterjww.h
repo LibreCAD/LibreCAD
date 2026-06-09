@@ -24,18 +24,14 @@
 **
 **********************************************************************/
 
-
 #ifndef RS_FILTERJWW_H
 #define RS_FILTERJWW_H
 
-#include "rs_filterinterface.h"
-
-#include "rs_color.h"
-#include "rs_dimension.h"
-
 #include "dl_creationinterface.h"
 #include "dl_jww.h"
-
+#include "rs_color.h"
+#include "rs_dimension.h"
+#include "rs_filterinterface.h"
 
 class RS_Point;
 class RS_Line;
@@ -52,7 +48,6 @@ class RS_Text;
 class RS_Hatch;
 class RS_Image;
 class RS_Leader;
-class RS_Polyline;
 class DL_WriterA;
 
 /**
@@ -64,23 +59,23 @@ class DL_WriterA;
 class RS_FilterJWW : public RS_FilterInterface, DL_CreationInterface {
 public:
     RS_FilterJWW();
-    ~RS_FilterJWW();
-	
-	/**
-	 * @return RS2::FormatJWW.
-	 */
-	//RS2::FormatType rtti() const{
-	//	return RS2::FormatJWW;
-	//}
+    ~RS_FilterJWW() override;
 
-	/*
+    /**
+  * @return RS2::FormatJWW.
+  */
+    //RS2::FormatType rtti() const{
+    // return RS2::FormatJWW;
+    //}
+
+    /*
     virtual bool canImport(RS2::FormatType t) {
-		return (t==RS2::FormatJWW);
-	}
-	
+  return (t==RS2::FormatJWW);
+ }
+ 
     virtual bool canExport(RS2::FormatType t) {
-		return (t==RS2::FormatJWW || t==RS2::FormatJWW12);
-	}*/
+  return (t==RS2::FormatJWW || t==RS2::FormatJWW12);
+ }*/
 
     // Import:
     bool fileImport(RS_Graphic& g, const QString& file, RS2::FormatType /*type*/) override;
@@ -97,11 +92,19 @@ public:
     void addPolyline(const DL_PolylineData& data) override;
     void addVertex(const DL_VertexData& data) override;
     void addSpline(const DL_SplineData& data) override;
-    void addKnot(const DL_KnotData&) override {}
+
+    void addKnot(const DL_KnotData&) override {
+    }
+
     void addControlPoint(const DL_ControlPointData& data) override;
     void addInsert(const DL_InsertData& data) override;
-    void addTrace(const DL_TraceData& ) override {}
-    void addSolid(const DL_SolidData& ) override {}
+
+    void addTrace(const DL_TraceData&) override {
+    }
+
+    void addSolid(const DL_SolidData&) override {
+    }
+
     void addMTextChunk(const char* text) override;
     void addMText(const DL_MTextData& data) override;
     void addText(const DL_TextData& data) override;
@@ -121,14 +124,15 @@ public:
     void addImage(const DL_ImageData& data) override;
     void linkImage(const DL_ImageDefData& data) override;
     void endEntity() override;
-    void endSequence() override {}
+
+    void endSequence() override {
+    }
 
     void add3dFace(const DL_3dFaceData& data) override;
     void addDimOrdinate(const DL_DimensionData&, const DL_DimOrdinateData&) override;
     void addComment(const char*) override;
 
-    void setVariableVector(const char* key,
-                                   double v1, double v2, double v3, int code) override;
+    void setVariableVector(const char* key, double v1, double v2, double v3, int code) override;
     void setVariableString(const char* key, const char* value, int code) override;
     void setVariableInt(const char* key, int value, int code) override;
     void setVariableDouble(const char* key, double value, int code) override;
@@ -143,30 +147,24 @@ public:
     void writeBlock(DL_WriterA& dw, RS_Block* blk);
     void writeEntity(DL_WriterA& dw, RS_Entity* e);
     void writeEntity(DL_WriterA& dw, RS_Entity* e, const DL_Attributes& attrib);
-	void writePoint(DL_WriterA& dw, RS_Point* p, const DL_Attributes& attrib);
-	void writeLine(DL_WriterA& dw, RS_Line* l, const DL_Attributes& attrib);
-	void writePolyline(DL_WriterA& dw, 
-		RS_Polyline* l, const DL_Attributes& attrib);
-	void writeSpline(DL_WriterA& dw, 
-		RS_Spline* s, const DL_Attributes& attrib);
-	void writeSplinePoints(DL_WriterA& dw,
-		LC_SplinePoints* s, const DL_Attributes& attrib);
-	void writeCircle(DL_WriterA& dw, RS_Circle* c, const DL_Attributes& attrib);
-	void writeArc(DL_WriterA& dw, RS_Arc* a, const DL_Attributes& attrib);
-	void writeEllipse(DL_WriterA& dw, RS_Ellipse* s, const DL_Attributes& attrib);
-	void writeInsert(DL_WriterA& dw, RS_Insert* i, const DL_Attributes& attrib);
+    void writePoint(DL_WriterA& dw, RS_Point* p, const DL_Attributes& attrib);
+    void writeLine(DL_WriterA& dw, RS_Line* l, const DL_Attributes& attrib);
+    void writePolyline(DL_WriterA& dw, RS_Polyline* l, const DL_Attributes& attrib);
+    void writeSpline(DL_WriterA& dw, RS_Spline* s, const DL_Attributes& attrib);
+    void writeSplinePoints(DL_WriterA& dw, LC_SplinePoints* s, const DL_Attributes& attrib);
+    void writeCircle(DL_WriterA& dw, RS_Circle* c, const DL_Attributes& attrib);
+    void writeArc(DL_WriterA& dw, RS_Arc* a, const DL_Attributes& attrib);
+    void writeEllipse(DL_WriterA& dw, RS_Ellipse* s, const DL_Attributes& attrib);
+    void writeInsert(DL_WriterA& dw, RS_Insert* i, const DL_Attributes& attrib);
     void writeText(DL_WriterA& dw, RS_MText* t, const DL_Attributes& attrib);
-	void writeDimension(DL_WriterA& dw, RS_Dimension* d, 
-		const DL_Attributes& attrib);
-	void writeLeader(DL_WriterA& dw, RS_Leader* l, const DL_Attributes& attrib);
-	void writeHatch(DL_WriterA& dw, RS_Hatch* h, const DL_Attributes& attrib);
-	void writeSolid(DL_WriterA& dw, RS_Solid* s, const DL_Attributes& attrib);
-	void writeImage(DL_WriterA& dw, RS_Image* i, const DL_Attributes& attrib);
-	void writeEntityContainer(DL_WriterA& dw, RS_EntityContainer* con, 
-		const DL_Attributes& attrib);
-	void writeAtomicEntities(DL_WriterA& dw, RS_EntityContainer* c, 
-		const DL_Attributes& attrib, RS2::ResolveLevel level);
-	
+    void writeDimension(DL_WriterA& dw, RS_Dimension* d, const DL_Attributes& attrib);
+    void writeLeader(DL_WriterA& dw, RS_Leader* l, const DL_Attributes& attrib);
+    void writeHatch(DL_WriterA& dw, RS_Hatch* h, const DL_Attributes& attrib);
+    void writeSolid(DL_WriterA& dw, RS_Solid* s, const DL_Attributes& attrib);
+    void writeImage(DL_WriterA& dw, RS_Image* i, const DL_Attributes& attrib);
+    void writeEntityContainer(DL_WriterA& dw, RS_EntityContainer* con, const DL_Attributes& attrib);
+    void writeAtomicEntities(DL_WriterA& dw, RS_EntityContainer* c, const DL_Attributes& attrib, RS2::ResolveLevel level);
+
     void writeImageDef(DL_WriterA& dw, RS_Image* i);
 
     void setEntityAttributes(RS_Entity* entity, const DL_Attributes& attrib);
@@ -174,12 +172,11 @@ public:
 
     static QString toDxfString(const QString& string);
     QString toNativeString(const char* data, const QString& encoding);
-    QString getDXFEncoding();
+    QString getDXFEncoding() const;
 
-public:
     RS_Pen attributesToPen(const DL_Attributes& attrib) const;
 
-    static RS_Color numberToColor(int num, bool comp=false);
+    static RS_Color numberToColor(int num, bool comp = false);
     static int colorToNumber(const RS_Color& col);
 
     static RS2::LineType nameToLineType(const QString& name);
@@ -189,28 +186,31 @@ public:
     static RS2::LineWidth numberToWidth(int num);
     static int widthToNumber(RS2::LineWidth width);
 
-	static RS2::AngleFormat numberToAngleFormat(int num);
-	static int angleFormatToNumber(RS2::AngleFormat af);
+    static RS2::AngleFormat numberToAngleFormat(int num);
+    static int angleFormatToNumber(RS2::AngleFormat af);
 
-	static RS2::Unit numberToUnit(int num);
-	static int unitToNumber(RS2::Unit unit);
-	
-	static bool isVariableTwoDimensional(const QString& var);
+    static RS2::Unit numberToUnit(int num);
+    static int unitToNumber(RS2::Unit unit);
 
-    bool canImport(const QString & /*fileName*/, RS2::FormatType t) const override {
-        return (t==RS2::FormatJWW);
+    static bool isVariableTwoDimensional(const QString& var);
+
+    bool canImport(const QString& /*fileName*/, const RS2::FormatType t) const override {
+        return t == RS2::FormatJWW;
     }
 
-    bool canExport(const QString& /*fileName*/, RS2::FormatType t) const override {
-        return (t==RS2::FormatJWW);
+    bool canExport(const QString& /*fileName*/, const RS2::FormatType t) const override {
+        return t == RS2::FormatJWW;
     }
 
-    static RS_FilterInterface *createFilter() {return new RS_FilterJWW();}
+    static RS_FilterInterface* createFilter() {
+        return new RS_FilterJWW();
+    }
+
 private:
     /** Pointer to the graphic we currently operate on. */
     RS_Graphic* graphic = nullptr;
-	/** File name. Used to find out the full path of images. */
-	QString file;
+    /** File name. Used to find out the full path of images. */
+    QString file;
     /** string for concatinating text parts of MTEXT entities. */
     QString mtext;
     /** Pointer to current polyline entity we're adding vertices to. */

@@ -24,7 +24,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef LC_DlgParabola_H
 #define LC_DlgParabola_H
 
-#include "../dialogs/entity/lc_entitypropertiesdlg.h"
+#include "lc_entitypropertiesdlg.h"
 
 class LC_Parabola;
 
@@ -45,12 +45,12 @@ protected slots:
     void languageChange();
 protected:
     void setEntity(LC_Parabola* b);
-    LC_DlgParabola(LC_DlgParabola const&) = delete;
-    LC_DlgParabola& operator =(LC_DlgParabola const&) = delete;
+    LC_DlgParabola(const LC_DlgParabola&) = delete;
+    LC_DlgParabola& operator =(const LC_DlgParabola&) = delete;
     LC_DlgParabola(LC_DlgParabola&&) = delete;
     LC_DlgParabola& operator =(LC_DlgParabola&&) = delete;
     LC_Parabola* m_entity = nullptr;
     std::unique_ptr<Ui::DlgParabola> ui;
 };
 
-#endif // LC_DlgParabola_H
+#endif

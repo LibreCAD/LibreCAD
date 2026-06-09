@@ -20,7 +20,7 @@
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **
 **********************************************************************************
-*/
+ */
 
 #ifndef LG_DIMZEROSBOX_H
 #define LG_DIMZEROSBOX_H
@@ -52,13 +52,13 @@ public:
     explicit LG_DimzerosBox(QWidget *parent = nullptr);
     ~LG_DimzerosBox() override;
     void setLinear();
-    void setData(int i);
-    int getData();
+    void setData(int i) const;
+    int getData() const;
 private:
-    QStandardItemModel *model = nullptr;
-    QListView *view = nullptr;
-    bool dimLine =false;
+    QStandardItemModel *m_model = nullptr;
+    QListView *m_view = nullptr;
+    bool m_dimLine =false;
     int convertDimZin(int v, bool toIdx);
 };
 
-#endif // LG_DIMZEROSBOX_H
+#endif

@@ -23,21 +23,21 @@
 #ifndef RS_ACTIONDRAWELLIPSEINSCRIBE_H
 #define RS_ACTIONDRAWELLIPSEINSCRIBE_H
 
-#include "lc_actiondrawcirclebase.h"
+#include "lc_action_draw_circle_base.h"
 
 /**
  * Draw ellipse by foci and a point on ellipse
  *
  * @author Dongxu Li
  */
-class RS_ActionDrawEllipseInscribe:public LC_ActionDrawCircleBase {
+class RS_ActionDrawEllipseInscribe : public LC_ActionDrawCircleBase {
     Q_OBJECT
 public:
-    RS_ActionDrawEllipseInscribe(LC_ActionContext *actionContext);
+    explicit RS_ActionDrawEllipseInscribe(LC_ActionContext* actionContext);
     ~RS_ActionDrawEllipseInscribe() override;
     void init(int status) override;
     QStringList getAvailableCommands() override;
-    void finish(bool updateTB) override;
+    void finish() override;
 
     void drawSnapper() override;
 
@@ -46,10 +46,10 @@ protected:
      * Action States.
      */
     enum Status {
-        SetLine1  = InitialActionStatus,   //  Setting the First Line.  */
-        SetLine2,   //  Setting the Second Line.  */
-        SetLine3,   //  Setting the Third Line.  */
-        SetLine4   //  Setting the Last Line.  */
+        SetLine1 = InitialActionStatus, //  Setting the First Line.  */
+        SetLine2, //  Setting the Second Line.  */
+        SetLine3, //  Setting the Third Line.  */
+        SetLine4 //  Setting the Last Line.  */
     };
 
     struct Points;
@@ -58,13 +58,13 @@ protected:
     void doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) override;
     RS2::CursorType doGetMouseCursor(int status) override;
     // 4 points on ellipse
-    bool preparePreview(RS_Line* fourthLineCandidate, std::vector<RS_Vector> &tangent);
-    void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
-    void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
-    void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
-    void clearLines(bool checkStatus = false);
-    void updateMouseButtonHints() override;
-
-    void doTrigger() override;
+    bool preparePreview(RS_Line* fourthLineCandidate, std::vector<RS_Vector>& tangent) const;
+    void onMouseLeftButtonRelease(int status, const LC_MouseEvent* e) override;
+    void onMouseRightButtonRelease(int status, const LC_MouseEvent* e) override;
+    void onMouseMoveEvent(int status, const LC_MouseEvent* e) override;
+    void clearLines(bool checkStatus = false) const;
+    void updateActionPrompt() override;
+    void doTriggerCompletion(bool success) override;
+    RS_Entity* doTriggerCreateEntity() override;
 };
 #endif

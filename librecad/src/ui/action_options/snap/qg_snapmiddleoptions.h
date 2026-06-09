@@ -37,18 +37,20 @@ namespace Ui
 class QG_SnapMiddleOptions : public QWidget {
     Q_OBJECT
 public:
-    QG_SnapMiddleOptions(QWidget* parent);
-    ~QG_SnapMiddleOptions();
+    explicit QG_SnapMiddleOptions(QWidget* parent);
+    ~QG_SnapMiddleOptions() override;
     void useMiddlePointsValue(int* i);
     void doShow();
-    int* getMiddlePointsValue();
+    int* getMiddlePointsValue() const;
+signals:
+    void middlePointsChanged();
 protected:
     int* m_middlePoints = nullptr;
 protected slots:
     void languageChange();
-    void on_sbMiddlePoints_valueChanged(int arg1);
+    void on_sbMiddlePoints_valueChanged(int i);
 private:
     void saveSettings();
     std::unique_ptr<Ui::Ui_SnapMiddleOptions> ui;
 };
-#endif // QG_SNAPMIDDLEOPTIONS_H
+#endif

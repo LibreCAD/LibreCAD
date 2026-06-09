@@ -31,25 +31,25 @@ class LC_PrintViewportRenderer :public LC_GraphicViewportRenderer{
 public:
     explicit LC_PrintViewportRenderer(LC_GraphicViewport *viewport, RS_Painter* painter);
     void renderEntity(RS_Painter *painter, RS_Entity *entity) override;
-    RS2::DrawingMode getDrawingMode() {
-        return drawingMode;
+    RS2::DrawingMode getDrawingMode() const {
+        return m_drawingMode;
     }
-    void setDrawingMode(RS2::DrawingMode mode){
-        drawingMode = mode;
+    void setDrawingMode(const RS2::DrawingMode mode){
+        m_drawingMode = mode;
     }
     void setupPainter(RS_Painter *painter) override;
     bool isTextLineNotRenderable([[maybe_unused]]double uiLineHeight) const override
     {
         return false;
     }
-    void setPaperScale(double p){paperScale = p;}
+    void setPaperScale(const double p){m_paperScale = p;}
     void loadSettings() override;
 protected:
-    RS_Painter* painter {nullptr};
-    double paperScale = 1.0;
-    RS2::DrawingMode drawingMode = RS2::DrawingMode::ModeAuto;
+    RS_Painter* m_painter {nullptr};
+    double m_paperScale = 1.0;
+    RS2::DrawingMode m_drawingMode = RS2::DrawingMode::ModeAuto;
     void setPenForPrintingEntity(RS_Painter *painter, RS_Entity *e);
     void doRender() override;
 };
 
-#endif // LC_PRINTVIEWPORTRENDERER_H
+#endif

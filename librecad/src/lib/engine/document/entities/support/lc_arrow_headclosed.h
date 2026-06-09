@@ -38,4 +38,4 @@ private:
     double m_ownAngle;
 };
 
-#endif // LC_ARROWHEADCLOSEDARROW_H
+#endif

@@ -27,7 +27,7 @@
 #ifndef RS_ACTIONDRAWLINETANGENT2_H
 #define RS_ACTIONDRAWLINETANGENT2_H
 
-#include "rs_previewactioninterface.h"
+#include "lc_undoabledocumentmodificationaction.h"
 
 /**
  * This action class can handle user events to draw tangents from circle to
@@ -35,13 +35,13 @@
  *
  * @author Andrew Mustun
  */
-class RS_ActionDrawLineTangent2:public RS_PreviewActionInterface {
+class RS_ActionDrawLineTangent2:public LC_SingleEntityCreationAction {
     Q_OBJECT
 public:
-    RS_ActionDrawLineTangent2(LC_ActionContext *actionContext);
+    explicit RS_ActionDrawLineTangent2(LC_ActionContext *actionContext);
     ~RS_ActionDrawLineTangent2() override;
     void init(int status) override;
-    void finish(bool updateTB) override;
+    void finish() override;
 protected:
     enum Status {
         SetCircle1 = InitialActionStatus,     /**< Choose the startpoint. */
@@ -49,18 +49,19 @@ protected:
         SelectLine      /**<Choose the tangent*/
     };
 
-    void cleanup();
-    void preparePreview(int status, LC_MouseEvent *e);
+    void cleanup() const;
+    void preparePreview(int status, const LC_MouseEvent *e) const;
     struct ActionData;
     std::unique_ptr<ActionData> m_actionData;
 
     void doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) override;
 
     RS2::CursorType doGetMouseCursor(int status) override;
-    void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
-    void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
-    void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
-    void updateMouseButtonHints() override;
-    void doTrigger() override;
+    void onMouseLeftButtonRelease(int status, const LC_MouseEvent* e) override;
+    void onMouseRightButtonRelease(int status, const LC_MouseEvent* e) override;
+    void onMouseMoveEvent(int status, const LC_MouseEvent* e) override;
+    void updateActionPrompt() override;
+    void doTriggerCompletion(bool success) override;
+    RS_Entity* doTriggerCreateEntity() override;
 };
 #endif

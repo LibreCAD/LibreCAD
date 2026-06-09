@@ -21,6 +21,7 @@
  ******************************************************************************/
 
 #include "lc_inputtextdialog.h"
+
 #include "ui_lc_inputtextdialog.h"
 
 LC_InputTextDialog::LC_InputTextDialog(QWidget *parent)
@@ -34,8 +35,7 @@ LC_InputTextDialog::~LC_InputTextDialog(){
 }
 
 QString LC_InputTextDialog::getText(QWidget *parent, const QString &title, const QString &label,
-                       const QStringList &options,
-                       bool allowsEditing,
+                       const QStringList &options, const bool allowsEditing,
                        const QString &text, bool *ok){
     LC_InputTextDialog dlg(parent);
 
@@ -52,10 +52,8 @@ QString LC_InputTextDialog::getText(QWidget *parent, const QString &title, const
         *ok = true;
         return dlg.ui->cbInput->currentText();
     }
-    else{
-        *ok = false;
-        return "";
-    }
+    *ok = false;
+    return "";
 }
 
 int LC_InputTextDialog::selectId(QWidget *parent, const QString &title, const QString &label,
@@ -65,18 +63,16 @@ int LC_InputTextDialog::selectId(QWidget *parent, const QString &title, const QS
     dlg.setWindowTitle(title);
     dlg.ui->lblLabel->setText(label);
 
-    auto cb_input = dlg.ui->cbInput;
+    const auto cb_input = dlg.ui->cbInput;
     cb_input->setEditable(false);
-    for (auto p: options) {
-        cb_input->addItem(p.second, p.first);
+    for (const auto& [fst, snd] : options) {
+        cb_input->addItem(snd, fst);
     }
 
     if (dlg.exec() == Accepted){
         *ok = true;
         return cb_input->itemData(cb_input->currentIndex()).toInt();
     }
-    else{
-        *ok = false;
-        return -1;
-    }
+    *ok = false;
+    return -1;
 }

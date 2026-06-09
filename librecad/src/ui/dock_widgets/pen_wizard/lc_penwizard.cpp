@@ -22,84 +22,77 @@
 ** http://www.gnu.org/licenses/gpl-2.0.html
 **
 **********************************************************************************
-*/
+ */
 
 #include "lc_penwizard.h"
 
-#include <QToolButton>
 #include <QVBoxLayout>
+#include <qnetworkreply.h>
 
 #include "colorwizard.h"
 #include "qc_mdiwindow.h"
 #include "qg_graphicview.h"
 #include "rs_color.h"
+#include "rs_selection.h"
 #include "rs_settings.h"
 
 LC_PenWizard::LC_PenWizard(QWidget* parent)
     : LC_GraphicViewAwareWidget(parent)
       , m_colorWizard(new ColorWizard(this)) {
     // auto frame = new QFrame(this);
-    auto layout = new QVBoxLayout;
-    this->setLayout(layout);
-
-    layout->setContentsMargins(QMargins{});
+    const auto layout = new QVBoxLayout;
+    setLayout(layout);
+    layout->setContentsMargins(1,0, 1, 2);
+    layout->setSpacing(1);
     layout->addWidget(m_colorWizard);
-    layout->addItem(new QSpacerItem(0, 20, QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Minimum));
-
+    layout->addItem(new QSpacerItem(0, 0, QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Minimum));
     connect(m_colorWizard, &ColorWizard::requestingColorChange, this, &LC_PenWizard::setColorForSelected);
     connect(m_colorWizard, &ColorWizard::requestingSelection, this, &LC_PenWizard::selectByColor);
     connect(m_colorWizard, &ColorWizard::colorDoubleClicked, this, &LC_PenWizard::setActivePenColor);
     updateWidgetSettings();
 }
 
-void LC_PenWizard::setColorForSelected(QColor color) {
-    auto graphic = m_graphicView->getGraphic();
+void LC_PenWizard::setColorForSelected(const QColor color) const {
+    const auto graphic = m_graphicView->getGraphic();
     auto pen = graphic->getActivePen();
     pen.setColor(RS_Color(color));
 
-    foreach(auto e, graphic->getEntityList()) {
-        if (e->isSelected()) {
-            e->setPen(pen);
-            e->setSelected(false);
-        }
+    QList<RS_Entity*> selection;
+    if (graphic->collectSelected(selection)) {
+        graphic->undoableModify(m_graphicView->getViewPort(), [selection, pen](LC_DocumentModificationBatch& ctx)-> bool {
+                                    for (const auto e : selection) {
+                                        RS_Entity* clone = e->clone();
+                                        clone->setPen(pen);
+                                        ctx += clone;
+                                        ctx -= e;
+                                    }
+                                    return true;
+                                }, [](const LC_DocumentModificationBatch& ctx, RS_Document* doc)-> void {
+                                    doc->select(ctx.entitiesToAdd);
+                                });
     }
-    m_graphicView->redraw(RS2::RedrawDrawing);
 }
 
-void LC_PenWizard::selectByColor(QColor color) {
-    auto graphic = m_graphicView->getGraphic();
-    foreach(auto e, graphic->getEntityList()) {
-        if (e->getPen().getColor().name() == color.name()) {
-            e->setSelected(true);
-        }
-    }
-    m_graphicView->redraw(RS2::RedrawDrawing);
+void LC_PenWizard::selectByColor(const QColor color) const {
+    const auto graphic = m_graphicView->getGraphic();
+    QString colorName = color.name();
+    const RS_Selection sel(m_graphicView);
+    sel.selectIfMatched(graphic->getEntityList(), true, [colorName](const RS_Entity* e)->bool {
+        return e->getPen().getColor().name() == colorName;
+    });
 }
 
-void LC_PenWizard::setActivePenColor(QColor color) {
-    auto graphic = m_graphicView->getGraphic();
+void LC_PenWizard::setActivePenColor(const QColor color) const {
+    const auto graphic = m_graphicView->getGraphic();
     auto pen = graphic->getActivePen();
     pen.setColor(RS_Color(color));
     graphic->setActivePen(pen);
 }
 
-void LC_PenWizard::setGraphicView(RS_GraphicView* mdiWindow) {
-    m_graphicView = mdiWindow;
+QLayout* LC_PenWizard::getTopLevelLayout() const {
+    return layout();
 }
 
-void LC_PenWizard::updateWidgetSettings() {
-    LC_GROUP("Widgets");
-    {
-        bool flatIcons = LC_GET_BOOL("DockWidgetsFlatIcons", true);
-        int iconSize = LC_GET_INT("DockWidgetsIconSize", 16);
-
-        QSize size(iconSize, iconSize);
-
-        QList<QToolButton*> widgets = this->findChildren<QToolButton*>();
-        foreach(QToolButton *w, widgets) {
-            w->setAutoRaise(flatIcons);
-            w->setIconSize(size);
-        }
-    }
-    LC_GROUP_END();
+void LC_PenWizard::setGraphicView(RS_GraphicView* gview) {
+    m_graphicView = gview;
 }

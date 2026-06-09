@@ -24,4 +24,4 @@ public slots:
     
 };
 
-#endif // PLOT_H
+#endif

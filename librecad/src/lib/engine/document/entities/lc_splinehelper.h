@@ -24,9 +24,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef LC_SPLINEHELPER_H
 #define LC_SPLINEHELPER_H
 
-#include "rs_spline.h"
 #include <cstddef>
 #include <vector>
+
+#include "rs_spline.h"
 
 /**
  * @class LC_SplineHelper
@@ -79,7 +80,7 @@ convertClosedToOpenKnotVector(const std::vector<double> &closedKnotVector,
  *
  * @param openKnots Input open knot vector.
  * @param n Number of control points.
- * @param m Spline order (degree + 1).
+ * @param splineDegree Spline order (degree + 1).
  * @return Closed knot vector, or empty if period <= 0 or invalid sizes.
  */
 std::vector<double>
@@ -331,6 +332,6 @@ void ensureMonotonic(std::vector<double> &knots);
  */
 bool validate(const RS_SplineData &data);
 
-}; // namespace LC_SplineHelper
+} // namespace LC_SplineHelper
 
-#endif // LC_SPLINEHELPER_H
+#endif

@@ -28,6 +28,8 @@
 #include <cstdlib>
 #include <cstring>
 
+// #include "main.h"
+
 #define _POSIX_C_SOURCE 200809L
 #define _GNU_SOURCE
 #define _XOPEN_SOURCE 700
@@ -73,6 +75,7 @@ LONG WINAPI windowsCrashHandler(EXCEPTION_POINTERS* pExceptionInfo)
     if (pFile != nullptr) {
         fprintf(pFile, "=========================================\n");
         fprintf(pFile, "LibreCAD Crash Report\n");
+        // fprintf(pFile, "Version: %s\n", XSTR(LC_VERSION));
         fprintf(pFile, "=========================================\n\n");
 
         SYSTEMTIME st;

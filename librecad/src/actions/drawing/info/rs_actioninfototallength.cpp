@@ -28,7 +28,7 @@
 
 #include "lc_actioninfomessagebuilder.h"
 #include "rs_debug.h"
-#include "rs_entitycontainer.h"
+#include "rs_document.h"
 
 RS_ActionInfoTotalLength::RS_ActionInfoTotalLength(LC_ActionContext *actionContext)
         :LC_ActionPreSelectionAwareBase("Info Total Length",actionContext, RS2::ActionInfoTotalLength){
@@ -42,31 +42,34 @@ bool RS_ActionInfoTotalLength::isAllowTriggerOnEmptySelection() {
     return false;
 }
 
-void RS_ActionInfoTotalLength::doTrigger([[maybe_unused]]bool selected) {
+void RS_ActionInfoTotalLength::doTrigger() {
     RS_DEBUG->print("RS_ActionInfoTotalLength::trigger()");
-    double l=m_container->totalSelectedLength();
+    const auto selectionInfo = m_document->getSelectionInfo();
+    const double length      = selectionInfo.totalLength;
 
-    if (l>0.0) {
-        QString len= formatLinear(l);
+    if (length > 0.0) {
+        const QString len = formatLinear(length);
         commandMessage(tr("Total Length of selected entities: %1").arg(len));
-    } else {
+    }
+    else {
         commandMessage(tr("At least one of the selected entities cannot be measured."));
     }
 
-    finish(false);
+    finish();
 }
 
-void RS_ActionInfoTotalLength::finishMouseMoveOnSelection([[maybe_unused]] LC_MouseEvent *event) {
-    const RS_EntityContainer::LC_SelectionInfo &selectionInfo = m_container->getSelectionInfo();
-    unsigned int selectedCount = selectionInfo.count;
+void RS_ActionInfoTotalLength::finishMouseMoveOnSelection([[maybe_unused]] const LC_MouseEvent* event) {
+    const RS_Document::LC_SelectionInfo &selectionInfo = m_document->getSelectionInfo();
+    const unsigned int selectedCount = selectionInfo.entitiesCount;
     auto builder = msgStart().string(tr("Selected:"), QString::number(selectedCount));
     if (selectedCount > 0) {
-        builder.linear(tr("Total Length:"),selectionInfo.length);
+        builder.linear(tr("Total Length:"),selectionInfo.totalLength);
     }
     builder.toInfoCursorZone2(true);
 }
 
 
-void RS_ActionInfoTotalLength::updateMouseButtonHintsForSelection() {
-    updateMouseWidgetTRCancel(tr("Select to measure total length (Enter to complete)"), MOD_SHIFT_AND_CTRL(tr("Select contour"),tr("Select and finish")));
+void RS_ActionInfoTotalLength::updateActionPromptForSelection() {
+    updatePromptTRCancel(tr("Select to measure total length") + getSelectionCompletionHintMsg(),
+                              MOD_SHIFT_AND_CTRL(tr("Select contour"), tr("Select and finish")));
 }

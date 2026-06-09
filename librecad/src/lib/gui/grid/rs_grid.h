@@ -39,14 +39,12 @@ class LC_GraphicViewport;
 class LC_GridSystem;
 
 class QString;
-namespace lc {
-	namespace geo {
-		class Area;
-	}
+
+namespace lc::geo {
+    class Area;
 }
 
 using LC_Rect = lc::geo::Area;
-
 
 /**
  * This class represents a grid. Grids can be drawn on graphic
@@ -54,58 +52,62 @@ using LC_Rect = lc::geo::Area;
  *
  * @author Andrew Mustun
  */
-class RS_Grid{
+class RS_Grid {
 public:
+    explicit RS_Grid(LC_GraphicViewport* graphicView);
+    void calculateGrid();
+    void calculateSnapSettings();
+    void invalidate(bool gridOn);
 
-	RS_Grid(LC_GraphicViewport* graphicView);
-	void calculateGrid();
-	void calculateSnapSettings();
-	void invalidate(bool gridOn);
+    /**
+ * \brief the closest grid point
+ * \return the closest grid to given point
+ * \param coord the given point
+ */
+    RS_Vector snapGrid(const RS_Vector& coord) const;
+    RS_Vector snapGrid(const RS_Vector& coord, const RS_Vector& rayStart, const RS_Vector& rayEnd) const;
 
-	/**
-	* \brief the closest grid point
-	* \return the closest grid to given point
-	* \param coord the given point
-	*/
-	RS_Vector snapGrid(const RS_Vector& coord) const;
+    void setIsoViewType(RS2::IsoGridViewType chType);
+    RS2::IsoGridViewType getIsoViewType() const;
 
-	void setIsoViewType(RS2::IsoGridViewType chType);
-	RS2::IsoGridViewType getIsoViewType() const;
-
-	/**
-		 * @return Grid info for status widget.
-		 */
-	QString getInfo() const;
-	bool isIsometric() const;
-	void setIsometric(bool b);
+    /**
+   * @return Grid info for status widget.
+   */
+    QString getInfo() const;
+    bool isIsometric() const;
+    void setIsometric(bool b);
     RS_Vector getGridWidth() const;
-	RS_Vector getMetaGridWidth() const;
-	RS_Vector const &getCellVector() const;
-	void loadSettings();
-	void drawGrid(RS_Painter *painter);
-    int getMetaGridEvery(){return m_metaGridEvery;}
-private:
-	//! copy ctor disabled
-    RS_Grid(RS_Grid const&) = delete;
-    RS_Grid& operator = (RS_Grid const&) = delete;
-    //! \{ \brief determine grid width
-    RS_Vector getMetricGridWidth(RS_Vector const& userGrid, bool scaleGrid, int minGridSpacing);
-    RS_Vector getImperialGridWidth(RS_Vector const& userGrid, bool scaleGrid, int minGridSpacing);
-    void prepareGridCalculations(RS_Vector& viewZero,RS_Vector& viewSize,RS_Vector& metaGridWidthToUse,RS_Vector& gridWidthToUse);
-    //! \}
+    RS_Vector getMetaGridWidth() const;
+    const RS_Vector& getCellVector() const;
+    void loadSettings();
+    void drawGrid(RS_Painter* painter) const;
+    bool isGridMetric() const;
 
+    int getMetaGridEvery() const {
+        return m_metaGridEvery;
+    }
+
+    bool isDrawMetaGrid() const;
+
+private:
+    //! copy ctor disabled
+    RS_Grid(const RS_Grid&) = delete;
+    RS_Grid& operator =(const RS_Grid&) = delete;
+    RS_Vector getMetricGridWidth(const RS_Vector& userGrid, bool scaleGrid, int minGridSpacing);
+    RS_Vector getImperialGridWidth(const RS_Vector& userGrid, bool scaleGrid, int minGridSpacing);
+    void prepareGridCalculations(RS_Vector& viewZero, RS_Vector& viewSize, RS_Vector& metaGridWidthToUse, RS_Vector& gridWidthToUse);
     //! Graphic view this grid is connected to.
     LC_GraphicViewport* m_viewport = nullptr;
     QString m_gridInfoString = "";
     RS_Vector m_metaGridWidth;
     RS_Vector m_gridWidth;
     bool m_isometric = false;
-    RS2::IsoGridViewType isoViewType = RS2::IsoLeft;
+    RS2::IsoGridViewType m_isoViewType = RS2::IsoLeft;
     bool m_scaleGrid = true;
     RS_Vector m_userGrid;
     int m_minGridSpacing;
     int m_metaGridEvery{10};
-	LC_GridSystem *gridSystem {nullptr};
+    LC_GridSystem* m_gridSystem{nullptr};
     RS_Vector prepareGridWidth();
 };
 

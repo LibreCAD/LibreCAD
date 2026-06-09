@@ -31,7 +31,7 @@
 RS_ActionDimAligned::RS_ActionDimAligned(LC_ActionContext *actionContext)
     :LC_ActionDimLinearBase("Draw aligned dimensions",actionContext,
         RS2::EntityDimAligned, RS2::ActionDimAligned){
-    reset();
+    RS_ActionDimAligned::reset();
 }
 
 RS_ActionDimAligned::~RS_ActionDimAligned() = default;
@@ -46,8 +46,8 @@ void RS_ActionDimAligned::reset(){
 }
 
 void RS_ActionDimAligned::preparePreview([[maybe_unused]]bool alternativeMode){
-    RS_Vector dirV = RS_Vector::polar(100.,m_edata->extensionPoint1.angleTo(m_edata->extensionPoint2)+ M_PI_2);
-    RS_ConstructionLine cl(nullptr,RS_ConstructionLineData(m_edata->extensionPoint2,m_edata->extensionPoint2 + dirV));
+    const RS_Vector dirV = RS_Vector::polar(100.,m_edata->extensionPoint1.angleTo(m_edata->extensionPoint2)+ M_PI_2);
+    const RS_ConstructionLine cl(nullptr,RS_ConstructionLineData(m_edata->extensionPoint2,m_edata->extensionPoint2 + dirV));
 
     m_dimensionData->definitionPoint =cl.getNearestPointOnEntity(m_dimensionData->definitionPoint);
 }
@@ -57,21 +57,21 @@ RS_Entity *RS_ActionDimAligned::createDim(RS_EntityContainer* parent){
     return dim;
 }
 
-bool RS_ActionDimAligned::doProcessCommand(int status, const QString &c) {
+bool RS_ActionDimAligned::doProcessCommand(const int status, const QString &command) {
     bool accept = false;
     switch (status) {
         case SetText: {
             accept = true;
-            setText(c);
+            setText(command);
             updateOptions();
             setStatus(m_lastStatus);
             enableCoordinateInput();
             break;
         }
         default: {
-            if (checkCommand("text", c)){
+            if (checkCommand("text", command)){
                 accept = true;
-                m_lastStatus = (Status) getStatus();
+                m_lastStatus = static_cast<Status>(getStatus());
                 disableCoordinateInput();
                 setStatus(SetText);
             }
@@ -109,10 +109,10 @@ double RS_ActionDimAligned::getDimAngle([[maybe_unused]] bool alternateMode){
     return m_edata->extensionPoint1.angleTo(m_edata->extensionPoint2);
 }
 
-void RS_ActionDimAligned::setExtensionPoint1(RS_Vector p){
+void RS_ActionDimAligned::setExtensionPoint1(const RS_Vector& p){
     m_edata->extensionPoint1 = p;
 }
 
-void RS_ActionDimAligned::setExtensionPoint2(RS_Vector p){
+void RS_ActionDimAligned::setExtensionPoint2(const RS_Vector& p){
     m_edata->extensionPoint2 = p;
 }

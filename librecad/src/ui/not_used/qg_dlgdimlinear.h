@@ -27,7 +27,7 @@
 #define QG_DLGDIMLINEAR_H
 
 #include "ui_qg_dlgdimlinear.h"
-#include "../dialogs/entity/lc_entitypropertiesdlg.h"
+#include "lc_entitypropertiesdlg.h"
 
 class RS_DimLinear;
 
@@ -45,4 +45,4 @@ protected:
     void setEntity(RS_DimLinear *d);
 };
 
-#endif // QG_DLGDIMLINEAR_H
+#endif

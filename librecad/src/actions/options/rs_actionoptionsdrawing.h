@@ -38,7 +38,7 @@
 class RS_ActionOptionsDrawing : public RS_ActionInterface {
 Q_OBJECT
 public:
-    RS_ActionOptionsDrawing(LC_ActionContext *actionContext, int tabIndex = -1);
+    explicit RS_ActionOptionsDrawing(LC_ActionContext *actionContext, int tabIndex = -1);
     void init(int status) override;
     void trigger() override;
     bool mayBeTerminatedExternally() override {return !m_dialogVisible;}

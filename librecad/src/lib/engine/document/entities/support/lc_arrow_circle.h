@@ -29,7 +29,7 @@
 class LC_ArrowCircle : public LC_DimArrowPoly{
 public:
     enum CircleArrowSubtype {
-        dot, dot_blank, origin_indicator, origin_indicator2
+        DOT, DOT_BLANK, ORIGIN_INDICATOR, ORIGIN_INDICATOR2
     };
     LC_ArrowCircle(RS_EntityContainer* container, const RS_Vector& point, double dirAngle, double size, CircleArrowSubtype subType);
     RS_Entity* clone() const override;
@@ -41,4 +41,4 @@ private:
     CircleArrowSubtype m_subType;
 };
 
-#endif // LC_CIRCLEARROW_H
+#endif

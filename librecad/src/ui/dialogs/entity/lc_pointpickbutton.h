@@ -35,9 +35,9 @@ class LC_PointPickButton : public QWidget {
 public:
     explicit LC_PointPickButton(QWidget *parent = nullptr);
     ~LC_PointPickButton() override;
-    QToolButton* getButton();
+    QToolButton* getButton() const;
 private:
     Ui::LC_PointPickButton *ui;
 };
 
-#endif // LC_POINTPICKBUTTON_H
+#endif

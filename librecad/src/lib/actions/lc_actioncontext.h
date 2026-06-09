@@ -22,11 +22,12 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef LC_ACTIONCONTEXT_H
 #define LC_ACTIONCONTEXT_H
 
-#include <QString>
 #include "lc_latecompletionrequestor.h"
 #include "rs.h"
+#include "rs_graphicview.h"
 #include "rs_vector.h"
 
+class LC_Formatter;
 class RS_Entity;
 class QString;
 
@@ -51,9 +52,8 @@ public:
     virtual RS_ActionInterface* getCurrentAction() {return nullptr;}
     virtual void requestSnapMiddleOptions([[maybe_unused]]int* middlePoints, [[maybe_unused]]bool on) {}
     virtual void hideSnapOptions() {}
-    virtual void updateSelectionWidget([[maybe_unused]]int countSelected, [[maybe_unused]]double selectedLength){}
 
-    virtual void updateMouseWidget([[maybe_unused]]const QString& left,
+    virtual void updateActionPrompt([[maybe_unused]]const QString& left,
                                   [[maybe_unused]]const QString& right,
                                   [[maybe_unused]]const LC_ModifiersInfo& modifiers){}
 
@@ -65,18 +65,22 @@ public:
                                         [[maybe_unused]]const RS_Vector& rel,
                                         [[maybe_unused]]bool updateFormat) {}
 
-    virtual RS_EntityContainer* getEntityContainer();
+    virtual RS_Document* getDocument();
     virtual RS_GraphicView* getGraphicView();
 
     virtual void setDocumentAndView(RS_Document *document, RS_GraphicView *view);
 
     virtual void setSnapMode([[maybe_unused]]const RS_SnapMode &mode) {}
     virtual void setCurrentAction(RS2::ActionType, [[maybe_unused]]void* data){}
-    int getSelectedEntitiesCount() const {return m_selectionCount;}
+
     void saveContextMenuActionContext(RS_Entity* entity, const RS_Vector &position, bool clearEntitySelection);
     void clearContextMenuActionContext();
-    RS_Entity* getContextMenuActionContextEntity();
-    RS_Vector getContextMenuActionClickPosition();
+    RS_Entity* getContextMenuActionContextEntity() const;
+    RS_Vector getContextMenuActionClickPosition() const;
+    bool hasSelection() const;
+    LC_GraphicViewport* getViewport() const {return m_graphicView == nullptr ? nullptr : m_graphicView->getViewPort();}
+    RS_Graphic* getGraphic(bool resolved = true) const  {return m_graphicView == nullptr ? nullptr : m_graphicView->getGraphic(resolved);}
+    LC_Formatter * getFormatter() const;
 
     struct InteractiveInputInfo {
         enum State {
@@ -86,34 +90,46 @@ public:
 
         enum InputType {
             POINT,
+            POINT_X,
+            POINT_Y,
             DISTANCE,
             ANGLE,
             NOTNEEDED,
         };
 
-        State m_state;
-        double m_distance {0};
-        double m_angleRad{0};
-        RS_Vector m_wcsPoint;
-        InputType m_inputType;
-        QString m_requestorTag;
-        LC_LateCompletionRequestor* m_requestor {nullptr};
+        State state {NONE};
+        double distance {0};
+        double angleRad{0};
+        RS_Vector wcsPoint;
+        InputType inputType {NOTNEEDED};
+        QString requestorTag;
+        LC_LateCompletionRequestor* requestor {nullptr};
+
+        void copyTo(InteractiveInputInfo& copy) const {
+            copy.state = state;
+            copy.distance = distance;
+            copy.angleRad  = angleRad;
+            copy.wcsPoint = wcsPoint;
+            copy.inputType = inputType;
+            copy.requestorTag = requestorTag;
+            // don't need requestor in copy!
+        }
     };
 
-    void interactiveInputStart(InteractiveInputInfo::InputType inputType, LC_LateCompletionRequestor* m_requestor, const QString &tag);
+    void interactiveInputStart(InteractiveInputInfo::InputType inputType, LC_LateCompletionRequestor* requestor, const QString &tag);
     void interactiveInputRequestCancel();
     InteractiveInputInfo* getInteractiveInputInfo(){return &m_interactiveInputInfo;}
 protected:
     InteractiveInputInfo m_interactiveInputInfo;
-    RS_EntityContainer * m_entityContainer {nullptr};
+    RS_Document * m_document {nullptr};
     RS_GraphicView * m_graphicView {nullptr};
     int m_selectionCount{0};
     RS_Vector m_contextMenuClickPosition {false};
     RS_Entity* m_contextMenuActionEntity {nullptr};
-    bool m_uselectContextMenuActionEntity {false};
+    bool m_unselectContextMenuActionEntity {false};
 
     void interactiveInputInvoke(InteractiveInputInfo::InputType inputType);
-    void interactiveInputRequest(InteractiveInputInfo::InputType inputType, LC_LateCompletionRequestor* m_requestor, const QString &tag);
+    void interactiveInputRequest(InteractiveInputInfo::InputType inputType, LC_LateCompletionRequestor* requestor, const QString &tag);
 };
 
-#endif // LC_ACTIONCONTEXT_H
+#endif

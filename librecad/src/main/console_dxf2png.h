@@ -26,4 +26,4 @@
 
 int console_dxf2png(int argc, char* argv[]);
 
-#endif // CONSOLE_DXF2PNG_H
+#endif

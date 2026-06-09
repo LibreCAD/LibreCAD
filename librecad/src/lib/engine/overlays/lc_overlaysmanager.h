@@ -23,6 +23,8 @@
 #ifndef LC_OVERLAYSMANAGER_H
 #define LC_OVERLAYSMANAGER_H
 
+#include <array>
+
 #include "rs.h"
 
 class LC_OverlayDrawable;
@@ -36,14 +38,14 @@ public:
     virtual ~LC_OverlaysManager();
     RS_EntityContainer* getEntitiesContainer(RS2::OverlayGraphics position);
     LC_OverlayDrawablesContainer* getDrawablesContainer(RS2::OverlayGraphics position);
-    RS_EntityContainer* entitiesAt(RS2::OverlayGraphics position);
-    LC_OverlayDrawablesContainer* drawablesAt(RS2::OverlayGraphics position);
+    RS_EntityContainer* entitiesAt(RS2::OverlayGraphics position) const;
+    LC_OverlayDrawablesContainer* drawablesAt(RS2::OverlayGraphics position) const;
     void addOverlay(LC_OverlayDrawable* ent, RS2::OverlayGraphics position);
-    void setGraphic(RS_Graphic* graphic);
+    void setGraphic(RS_Graphic* g);
 protected:
-    RS_Graphic* graphic = nullptr;
-    RS_EntityContainer* entities[RS2::OverlayGraphics::LAST];
-    LC_OverlayDrawablesContainer* overlays[RS2::OverlayGraphics::LAST];
+    RS_Graphic* m_graphic = nullptr;
+    std::array<RS_EntityContainer*,RS2::OverlayGraphics::LAST> m_entities;
+    std::array<LC_OverlayDrawablesContainer*,RS2::OverlayGraphics::LAST> m_overlays;
 };
 
-#endif // LC_OVERLAYSMANAGER_H
+#endif

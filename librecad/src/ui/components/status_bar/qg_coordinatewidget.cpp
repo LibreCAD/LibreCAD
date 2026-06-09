@@ -25,6 +25,7 @@
 **********************************************************************/
 #include "qg_coordinatewidget.h"
 
+#include "lc_convert.h"
 #include "lc_graphicviewport.h"
 #include "rs_graphic.h"
 #include "rs_graphicview.h"
@@ -35,7 +36,7 @@
  *  Constructs a QG_CoordinateWidget as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
  */
-QG_CoordinateWidget::QG_CoordinateWidget(QWidget* parent, const char* name, Qt::WindowFlags fl)
+QG_CoordinateWidget::QG_CoordinateWidget(QWidget* parent, const char* name, const Qt::WindowFlags fl)
     : QWidget(parent, fl){
     setObjectName(name);
     setupUi(this);
@@ -46,18 +47,12 @@ QG_CoordinateWidget::QG_CoordinateWidget(QWidget* parent, const char* name, Qt::
     lCoord2b->setText("");
 
     m_graphic = nullptr;
-    m_linearPrecision = 4;
-    m_linearFormat = RS2::Decimal;
-    m_anglePrecision = 2;
-    m_angleFormat = RS2::DegreesDecimal;
 }
 
 /*
  *  Destroys the object and frees any allocated resources
  */
-QG_CoordinateWidget::~QG_CoordinateWidget(){
-    // no need to delete child widgets, Qt does it all for us
-}
+QG_CoordinateWidget::~QG_CoordinateWidget()= default;
 
 /*
  *  Sets the strings of the subwidgets using the current
@@ -72,17 +67,17 @@ void QG_CoordinateWidget::setGraphicView(RS_GraphicView *gv) {
     if (gv != nullptr){
         m_viewport = gv->getViewPort();
         m_graphic = gv->getGraphic(true);
-        if (m_graphic != nullptr) {
-            setCoordinates(0.0, 0.0, 0.0, 0.0, true);
-        }
+        m_formatter = m_viewport->getFormatter();
+        setCoordinates(0.0, 0.0, 0.0, 0.0, true);
     }
     else {
         m_viewport = nullptr;
         m_graphic = nullptr;
+        m_formatter = nullptr;
     }
 }
 
-void QG_CoordinateWidget::setCoordinates(const RS_Vector& wcsAbs, const RS_Vector& wcsDelta, bool updateFormat) {
+void QG_CoordinateWidget::setCoordinates(const RS_Vector& wcsAbs, const RS_Vector& wcsDelta, const bool updateFormat) {
     double ucsX, ucsY, ucsDeltaX, ucsDeltaY;
     if (m_viewport != nullptr){
         m_viewport->toUCS(wcsAbs, ucsX, ucsY);
@@ -97,7 +92,7 @@ void QG_CoordinateWidget::setCoordinates(const RS_Vector& wcsAbs, const RS_Vecto
     setCoordinates(ucsX, ucsY, ucsDeltaX, ucsDeltaY, updateFormat);
 }
 
-void QG_CoordinateWidget::clearContent(){
+void QG_CoordinateWidget::clearContent() const {
     lCoord1->setText("0 , 0");
     lCoord2->setText("@  0 , 0");
     lCoord1b->setText("0 < 0");
@@ -105,59 +100,56 @@ void QG_CoordinateWidget::clearContent(){
 }
 
 void QG_CoordinateWidget::setCoordinates(double ucsX, double ucsY,
-                                         double ucsDeltaX, double ucsDeltaY, bool updateFormat) {
-
+                                         double ucsDeltaX, double ucsDeltaY, const bool updateFormat) {
     if (m_graphic != nullptr) {
-        if (updateFormat) {
-            m_linearFormat = m_graphic->getLinearFormat();
-            m_linearPrecision = m_graphic->getLinearPrecision();
-            m_angleFormat = m_graphic->getAngleFormat();
-            m_anglePrecision = m_graphic->getAnglePrecision();
-        }
-
-        if (!LC_GET_ONE_BOOL("Appearance", "UnitlessGrid", true)){
-            ucsX  = RS_Units::convert(ucsX);
-            ucsY  = RS_Units::convert(ucsY);
-            ucsDeltaX = RS_Units::convert(ucsDeltaX);
-            ucsDeltaY = RS_Units::convert(ucsDeltaY);
-        }
-
-        // abs / rel coordinates:
-        RS2::Unit unit = m_graphic->getUnit();
-        QString absX = RS_Units::formatLinear(ucsX, unit, m_linearFormat, m_linearPrecision);
-        QString absY = RS_Units::formatLinear(ucsY, unit, m_linearFormat, m_linearPrecision);
-        QString relX = RS_Units::formatLinear(ucsDeltaX, unit, m_linearFormat, m_linearPrecision);
-        QString relY = RS_Units::formatLinear(ucsDeltaY, unit, m_linearFormat, m_linearPrecision);
-
-        lCoord1->setText(absX + " , " + absY);
-        lCoord2->setText("@  " + relX + " , " + relY);
-
-        // polar coordinates:
-        RS_Vector v;
-        v = RS_Vector(ucsX, ucsY);
-        QString str;
-        QString rStr = RS_Units::formatLinear(v.magnitude(),unit,m_linearFormat, m_linearPrecision);
-        double ucsAngle = v.angle();
         if (m_viewport != nullptr) {
-            ucsAngle = m_viewport->toBasisUCSAngle(ucsAngle);
+            if (updateFormat) {
+                m_formatter = m_viewport->getFormatter(); // fixme- fmt - most probably it's not necessary
+            }
+
+            if (!LC_GET_ONE_BOOL("Appearance", "UnitlessGrid", true)){
+                ucsX  = RS_Units::convert(ucsX);
+                ucsY  = RS_Units::convert(ucsY);
+                ucsDeltaX = RS_Units::convert(ucsDeltaX);
+                ucsDeltaY = RS_Units::convert(ucsDeltaY);
+            }
+
+            // abs / rel coordinates:
+            const QString absX = m_formatter->formatLinear(ucsX);
+            const QString absY = m_formatter->formatLinear(ucsY);
+            const QString relX = m_formatter->formatLinear(ucsDeltaX);
+            const QString relY = m_formatter->formatLinear(ucsDeltaY);
+
+            lCoord1->setText(absX + " , " + absY);
+            lCoord2->setText("@  " + relX + " , " + relY);
+
+            // polar coordinates:
+            const auto polarCoordinate = RS_Vector(ucsX, ucsY);
+            const QString polarMagnitude = m_formatter->formatLinear(polarCoordinate.magnitude());
+            const double ucsAngle = polarCoordinate.angle();
+
+            const double basicUcsAngle = m_viewport->toBasisUCSAngle(ucsAngle);
+
+            QString angleStr = m_formatter->formatRawAngle(basicUcsAngle);
+
+            lCoord1b->setText(polarMagnitude + " < " + angleStr);
+
+            // relative polar
+            const auto polarRelativeCoordinate = RS_Vector(ucsDeltaX, ucsDeltaY);
+            const QString relPolarMagnitude = m_formatter->formatLinear(polarRelativeCoordinate.magnitude());
+            const double relUcsAngle = polarRelativeCoordinate.angle();
+
+            const double basicRelUcsAngle = m_viewport->toBasisUCSAngle(relUcsAngle);
+
+            angleStr = m_formatter->formatRawAngle(basicRelUcsAngle);
+
+            lCoord2b->setText("@  " + relPolarMagnitude + " < " + angleStr);
+
+            m_absoluteCoordinates = RS_Vector(ucsX, ucsY, 0.0);
+            m_relativeCoordinates = RS_Vector(ucsDeltaX, ucsDeltaY, 0.0);
         }
-
-        QString aStr = RS_Units::formatAngle(ucsAngle, m_angleFormat, m_anglePrecision);
-
-        str = rStr + " < " + aStr;
-        lCoord1b->setText(str);
-
-        v = RS_Vector(ucsDeltaX, ucsDeltaY);
-        rStr = RS_Units::formatLinear(v.magnitude(),unit,m_linearFormat, m_linearPrecision);
-        double relUcsAngle = v.angle();
-        if (m_viewport != nullptr) {
-            relUcsAngle = m_viewport->toBasisUCSAngle(relUcsAngle);
+        else {
+           clearContent();
         }
-        aStr = RS_Units::formatAngle(relUcsAngle, m_angleFormat, m_anglePrecision);
-
-        lCoord2b->setText("@  " + rStr + " < " + aStr);
-
-        m_absoluteCoordinates = RS_Vector(ucsX, ucsY, 0.0);
-        m_relativeCoordinates = RS_Vector(ucsDeltaX, ucsDeltaY, 0.0);
     }
 }

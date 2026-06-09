@@ -52,11 +52,11 @@ struct RS_SplineData {
   RS_SplineData() = default;
 
   /** Constructor with initialization */
-  RS_SplineData(int _degree, bool _closed);
+  RS_SplineData(int degree, bool closed);
 
   /** Check if closed (wrapped) */
   bool isClosed() const { return type == SplineType::WrappedClosed; }
-  void setClosed(bool closed) {
+  void setClosed(const bool closed) {
     type = closed ? SplineType::WrappedClosed : SplineType::ClampedOpen;
   }
 
@@ -159,25 +159,17 @@ public:
 
   /** Adjust knot vector to open clamped form */
   std::vector<double> adjustToOpenClamped(const std::vector<double> &knots,
-                                          size_t num_control, size_t order,
-                                          bool is_natural) const;
+                                          size_t numControl, size_t order,
+                                          bool isNatural) const;
 
   /** Get reference points (unwrapped control points) */
   RS_VectorSolutions getRefPoints() const override;
-
-  /** Nearest reference point (overrides container method) */
-  RS_Vector getNearestRef(const RS_Vector &coord,
-                          double *dist = nullptr) const override;
-
-  /** Nearest selected reference (overrides container method) */
-  RS_Vector getNearestSelectedRef(const RS_Vector &coord,
-                                  double *dist = nullptr) const override;
 
   /** Update polyline approximation */
   void update() override;
 
   /** Fill points for spline approximation */
-  void fillStrokePoints(int splineSegments, std::vector<RS_Vector> &points);
+  void fillStrokePoints(int splineSegments, std::vector<RS_Vector> &points) const;
 
   /** Get start point (invalid if closed) */
   RS_Vector getStartpoint() const override;
@@ -185,21 +177,7 @@ public:
   /** Get end point (invalid if closed) */
   RS_Vector getEndpoint() const override;
 
-  /** Nearest endpoint or control point */
-  RS_Vector getNearestEndpoint(const RS_Vector &coord,
-                               double *dist) const override;
 
-  /** Nearest center (invalid) */
-  RS_Vector getNearestCenter(const RS_Vector &coord,
-                             double *dist) const override;
-
-  /** Nearest middle point (invalid) */
-  RS_Vector getNearestMiddle(const RS_Vector &coord, double *dist,
-                             int middlePoints) const override;
-
-  /** Nearest point at distance (invalid) */
-  RS_Vector getNearestDist(double distance, const RS_Vector &coord,
-                           double *dist) const override;
 
   /** Move by offset */
   void move(const RS_Vector &offset) override;
@@ -320,10 +298,22 @@ public:
   bool validate() const;
 
   friend class RS_FilterDXFRW;
-
+protected:
+    /** Nearest endpoint or control point */
+    RS_Vector doGetNearestEndpoint(const RS_Vector &coord, double *dist, RS_Entity** entity) const override;
+    /** Nearest reference point (overrides container method) */
+    RS_Vector doGetNearestRef(const RS_Vector &coord, double *dist = nullptr) const override;
+    /** Nearest center (invalid) */
+    RS_Vector doGetNearestCenter(const RS_Vector &coord, double *dist, RS_Entity** centerEntity) const override;
+    /** Nearest middle point (invalid) */
+    RS_Vector doGetNearestMiddle(const RS_Vector &coord, double *dist, int middlePoints) const override;
+    /** Nearest selected reference (overrides container method) */
+    RS_Vector doGetNearestSelectedRef(const RS_Vector &coord, double *dist) const override;
+    /** Nearest point at distance (invalid) */
+    RS_Vector doGetNearestDist(double distance, const RS_Vector& coord, double* dist) const override;
 private:
   /** Internal spline data */
-  RS_SplineData data;
+  RS_SplineData m_data;
 
   /**
    * Container for position + exact analytical 1st + 2nd derivatives
@@ -359,15 +349,13 @@ private:
 
   /** Bisection to find zero of derivative */
   double bisectDerivativeZero(double a, double b, double fa, bool isX) const;
-
-  void resetBorders();
   void normalizeKnots();
   double estimateParamAtIndex(size_t index) const;
   void insertKnot(double u);
-  RS_Spline::SplineDerivs evaluateWithDerivs(double t) const;
+  SplineDerivs evaluateWithDerivs(double t) const;
   double getSecondDerivative(double t, bool isX) const;
   double getCurvature(double t) const;
   double getSignedCurvature(double t) const;
 };
 
-#endif // RS_SPLINE_H
+#endif

@@ -25,8 +25,7 @@
 
 #include <QIcon>
 
-
 bool LC_ToleranceUtils::isAllowedDatumName(const QString& datumName) {
-    bool result = !datumName.contains("I") && !datumName.contains("O") && !datumName.contains("Q");
+    const bool result = !datumName.contains("I") && !datumName.contains("O") && !datumName.contains("Q");
     return result;
 }

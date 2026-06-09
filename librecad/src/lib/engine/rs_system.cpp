@@ -42,7 +42,7 @@
 class QString;
 
 RS_System* RS_System::instance() {
-    static RS_System* uniqueInstance = new RS_System();
+    static auto uniqueInstance = new RS_System();
     return uniqueInstance;
 }
 
@@ -53,36 +53,34 @@ RS_System* RS_System::instance() {
  * @param appVersion Application version (e.g. "1.2.3")
  * @param appDirName Application directory name used for
  *     subdirectories in /usr, /etc ~/.
+ * @param arg0
  */
-void RS_System::init(const QString& appName,
-                     const QString& appVersion,
-                     const QString& appDirName,
-                     const char *arg0) {
-    this->appName = appName;
-    this->appVersion = appVersion;
-    this->appDirName = appDirName;
+void RS_System::init(const QString& appName, const QString& appVersion, const QString& appDirName, const char* arg0) {
+    this->m_appName = appName;
+    this->m_appVersion = appVersion;
+    this->m_appDirName = appDirName;
     if (QFile::decodeName( arg0).contains( "/.mount")) {
         // in AppImage QCoreApplication::applicationDirPath() directs to /lib64 of mounted AppImage
         // thus use argv[0] to extract the correct path to librecad executable
-        appDir = QFileInfo( QFile::decodeName( arg0)).absoluteFilePath();
+        m_appDir = QFileInfo( QFile::decodeName( arg0)).absoluteFilePath();
         RS_DEBUG->print("%s\n", (QString("arg0:")+ QString(arg0)).toUtf8().constData());
-        RS_DEBUG->print("%s\n", (QString("appDir:")+ appDir).toUtf8().constData());
+        RS_DEBUG->print("%s\n", (QString("appDir:")+ m_appDir).toUtf8().constData());
     }
     else {
         // in regular application QCoreApplication::applicationDirPath() is preferred, see GitHub #1488
-        appDir = QCoreApplication::applicationDirPath();
-        RS_DEBUG->print("%s\n", (QString("appDir2:")+ appDir).toUtf8().constData());
+        m_appDir = QCoreApplication::applicationDirPath();
+        RS_DEBUG->print("%s\n", (QString("appDir2:")+ m_appDir).toUtf8().constData());
     }
 
     // when appDir is not HOME or CURRENT dir, search appDir too in getDirectoryList()
-    externalAppDir = (!appDir.isEmpty()
-                   && "/" != appDir
-                   && getHomeDir() != appDir
-                   && getCurrentDir() != appDir);
+    m_externalAppDir = (!m_appDir.isEmpty()
+                   && "/" != m_appDir
+                   && getHomeDir() != m_appDir
+                   && getCurrentDir() != m_appDir);
 
     RS_DEBUG->print("RS_System::init: System %s initialized.", appName.toLatin1().data());
-    RS_DEBUG->print("RS_System::init: App dir: %s", appDir.toLatin1().data());
-    initialized = true;
+    RS_DEBUG->print("RS_System::init: App dir: %s", m_appDir.toLatin1().data());
+    m_initialized = true;
 
     initAllLanguagesList();
     initLanguageList();
@@ -92,11 +90,9 @@ void RS_System::init(const QString& appName,
 void RS_System::init(const QString& appName,
                      const QString& appVersion,
                      const QString& appDirName,
-                     const QString& arg0)
-{
+                     const QString& arg0){
     init(appName, appVersion, appDirName, arg0.toLatin1().data());
 }
-
 
 /**
  * Initializes the list of available translations.
@@ -107,41 +103,38 @@ void RS_System::initLanguageList() {
 
     LC_GROUP("Paths"); // fixme settings
 #if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
-    lst += (LC_GET_STR("Translations", "")).split(";", Qt::SkipEmptyParts);
+    lst += LC_GET_STR("Translations", "").split(";", Qt::SkipEmptyParts);
 #else
     lst += (RS_SETTINGS->readEntry("/Translations", "")).split(";", QString::SkipEmptyParts);
 #endif
     LC_GROUP_END();
 
-    for (QStringList::Iterator it = lst.begin();
-         it != lst.end();
-         ++it) {
+    for (auto& it : lst) {
 
-        RS_DEBUG->print("RS_System::initLanguageList: qm file: %s",
-                        (*it).toLatin1().data());
+        RS_DEBUG->print("RS_System::initLanguageList: qm file: %s", it.toLatin1().data());
 
-        int i0 = (*it).lastIndexOf(QString("librecad"),-1,Qt::CaseInsensitive);
-        if (i0 == -1)
-          continue;
-
-        int i1 = (*it).indexOf('_',i0);
-        int i2 = (*it).indexOf('.', i1);
+       const int i0 = it.lastIndexOf(QString("librecad"), -1, Qt::CaseInsensitive);
+        if (i0 == -1){
+            continue;
+       }
+       const int i1 = it.indexOf('_', i0);
+       const int i2 = it.indexOf('.', i1);
         if (i1 == -1 || i2 == -1) {
             continue;
         }
-        QString l = (*it).mid(i1+1, i2-i1-1);
+        QString l = it.mid(i1 + 1, i2 - i1 - 1);
 
-        if (!(languageList.contains(l)) ) {
+        if (!m_languageList.contains(l) ) {
             RS_DEBUG->print("RS_System::initLanguageList: append language: %s",
                             l.toLatin1().data());
-            languageList.append(l);
+            m_languageList.append(l);
         }
     }
     RS_DEBUG->print("RS_System::initLanguageList: OK");
 }
 
 void RS_System::addLocale(RS_Locale *locale) {
-    allKnownLocales.push_back( QSharedPointer<RS_Locale>( locale));
+    m_allKnownLocales.push_back( QSharedPointer<RS_Locale>( locale));
 }
 
 #define LNG(canonical, direction, name) \
@@ -154,7 +147,7 @@ void RS_System::addLocale(RS_Locale *locale) {
 void RS_System::initAllLanguagesList() {
     // RVT uk_AU renamed to uk so that we don't have to change the pootle server
 
-    allKnownLocales.clear();
+    m_allKnownLocales.clear();
     RS_Locale *locale;
     LNG( "ab"   , RS2::locLeftToRight, "Abkhazian")
     LNG( "aa"   , RS2::locLeftToRight, "Afar")
@@ -390,7 +383,6 @@ void RS_System::initAllLanguagesList() {
     LNG( "zu"   , RS2::locLeftToRight, "Zulu")
 }
 
-
 /**
  * Loads a different translation for the application GUI.
  *
@@ -404,7 +396,7 @@ void RS_System::loadTranslation(const QString& lang, const QString& /*langCmd*/)
     //make translation filenames case insensitive, #276
     QString langLower("");
     QString langUpper("");
-    int i0 = lang.indexOf('_');
+    const int i0 = lang.indexOf('_');
     if (i0 >= 2 && lang.size() - i0 >= 2) {
         //contains region code
         langLower = lang.left( i0) + '_' + lang.mid( i0 + 1).toLower();
@@ -419,7 +411,7 @@ void RS_System::loadTranslation(const QString& lang, const QString& /*langCmd*/)
 
     LC_GROUP( "Paths");
 #if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
-    lst += (LC_GET_STR("Translations", "")).split(";", Qt::SkipEmptyParts);
+    lst += LC_GET_STR("Translations", "").split(";", Qt::SkipEmptyParts);
 #else
     lst += (RS_SETTINGS->readEntry( "/Translations", "")).split( ";", QString::SkipEmptyParts);
 #endif
@@ -437,56 +429,49 @@ void RS_System::loadTranslation(const QString& lang, const QString& /*langCmd*/)
         qApp->removeTranslator( tQt);
         delete tQt;
     }
-    QString langFileLower = "librecad_" + langLower + ".qm",
-            langFileUpper = "librecad_" + langUpper + ".qm",
-            langPlugInsLower = "plugins_" + langLower + ".qm",
-            langPlugInsUpper = "plugins_" + langUpper + ".qm",
-            langQtLower = "qt_" + langLower + ".qm",
-            langQtUpper = "qt_" + langUpper + ".qm";
-    QTranslator* t = new QTranslator(0);
+    const QString langFileLower = "librecad_" + langLower + ".qm";
+    const QString langFileUpper = "librecad_" + langUpper + ".qm";
+    const QString langPlugInsLower = "plugins_" + langLower + ".qm";
+    const QString langPlugInsUpper = "plugins_" + langUpper + ".qm";
+    const QString langQtLower = "qt_" + langLower + ".qm";
+    const QString langQtUpper = "qt_" + langUpper + ".qm";
+    auto t = new QTranslator(nullptr);
     for (QStringList::Iterator it = lst.begin();
          it != lst.end();
          ++it) {
 
         // load LibreCAD translations
         if (nullptr == tLibreCAD) {
-            if (t->load( langFileLower, *it) == true
-                    || (  ! langUpper.isEmpty()
-                          && t->load( langFileUpper, *it) == true)) {
+            if (t->load(langFileLower, *it) || (!langUpper.isEmpty() && t->load(langFileUpper, *it))) {
                 tLibreCAD = t;
                 qApp->installTranslator( tLibreCAD);
-                t = new QTranslator(0);
+                t = new QTranslator(nullptr);
             }
         }
 
         // load PlugIns translations
         if (nullptr == tPlugIns) {
-            if (t->load( langPlugInsLower, *it) == true
-                    || (  ! langUpper.isEmpty()
-                          && t->load( langPlugInsUpper, *it) == true)) {
+            if (t->load(langPlugInsLower, *it) || (!langUpper.isEmpty() && t->load(langPlugInsUpper, *it) == true)) {
                 tPlugIns = t;
                 qApp->installTranslator( tPlugIns);
-                t = new QTranslator(0);
+                t = new QTranslator(nullptr);
             }
         }
 
         // load Qt standard dialog translations
         if (nullptr == tQt) {
-            if (t->load( langQtLower, *it) == true
-                    || (  ! langUpper.isEmpty()
-                          && t->load( langQtUpper, *it) == true)) {
+            if (t->load(langQtLower, *it) || (!langUpper.isEmpty() && t->load(langQtUpper, *it))) {
                 tQt = t;
                 qApp->installTranslator( tQt);
-                t = new QTranslator(0);
+                t = new QTranslator(nullptr);
             }
         }
         if (nullptr != tLibreCAD && nullptr != tPlugIns && nullptr != tQt) {
             break;
         }
     }
-    if (nullptr != t) {
-        delete t;
-    }
+
+    delete t;
 }
 
 
@@ -494,18 +479,14 @@ void RS_System::loadTranslation(const QString& lang, const QString& /*langCmd*/)
  * Checks if the system has been initialized and prints a warning
  * otherwise to stderr.
  */
-bool RS_System::checkInit() const
-{
-    if (!initialized) {
+bool RS_System::checkInit() const{
+    if (!m_initialized) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
                         "RS_Syste.m::checkInit: System not initialized.\n"
                         "Use RS_SYSTEM->init(appname, appdirname) to do so.");
     }
-    return initialized;
+    return m_initialized;
 }
-
-
-
 
 /**
  * Creates all given directories in the user's home.
@@ -517,7 +498,6 @@ bool RS_System::createPaths(const QString& directory) {
     return true;
 }
 
-
 /**
  * Create if not exist and return the Application data directory.
  * In OS_WIN32 "c:\documents&settings\<user>\local configuration\application data\LibreCAD"
@@ -526,19 +506,17 @@ bool RS_System::createPaths(const QString& directory) {
  *
  * @return Application data directory.
  */
-QString RS_System::getAppDataDir() const
-{
-    QString appData =
-            QStandardPaths::writableLocation( QStandardPaths::AppDataLocation);
-    QDir dir( appData);
+QString RS_System::getAppDataDir() const{
+    QString appData = QStandardPaths::writableLocation( QStandardPaths::AppDataLocation);
+    const QDir dir( appData);
     if (!dir.exists()) {
-        if (!dir.mkpath( appData))
+        if (!dir.mkpath( appData)) {
             return QString();
+        }
     }
     RS_DEBUG->print("%s\n", (QString("appData: ") + appData).toUtf8().constData());
     return appData;
 }
-
 
 /**
  * Searches for files in an application shared directory in the given
@@ -547,12 +525,11 @@ QString RS_System::getAppDataDir() const
  * @return List of the absolute paths of the files found.
  */
 QStringList RS_System::getFileList(const QString& subDirectory,
-                                   const QString& fileExtension) const
-{
+                                   const QString& fileExtension) const{
     checkInit();
 
     RS_DEBUG->print( "RS_System::getFileList: subdirectory %s ", subDirectory.toLatin1().data());
-    RS_DEBUG->print( "RS_System::getFileList: appDirName %s ", appDirName.toLatin1().data());
+    RS_DEBUG->print( "RS_System::getFileList: appDirName %s ", m_appDirName.toLatin1().data());
     RS_DEBUG->print( "RS_System::getFileList: getCurrentDir %s ", getCurrentDir().toLatin1().data());
 
     QStringList fileList;
@@ -578,97 +555,94 @@ QStringList RS_System::getFileList(const QString& subDirectory,
     return fileList;
 }
 
-
 /**
  * @return List of all directories in subdirectory 'subDirectory' in
  * all possible LibreCAD directories.
  */
-QStringList RS_System::getDirectoryList(const QString& _subDirectory) const
-{
-        QStringList dirList;
-
-    QString subDirectory = QDir::fromNativeSeparators( _subDirectory);
+QStringList RS_System::getDirectoryList(const QString& subDir) const{
+    QStringList dirList;
+    const QString subDirectory = QDir::fromNativeSeparators( subDir);
 
 #ifdef Q_OS_MAC
-    dirList.append(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + "/" + appDirName + "/" + subDirectory);
+    dirList.append(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + "/" + m_appDirName + "/" + subDirectory);
 #endif // Q_OS_MAC
 
 #if (defined(Q_OS_WIN32) || defined(Q_OS_WIN64))
-    dirList.append(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + "/" + appDirName + "/" + subDirectory);
+    dirList.append(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + "/" + m_appDirName + "/" + subDirectory);
 #endif // Q_OS_WIN32 or Q_OS_WIN64
 
     // Unix home directory, it's old style but some people might have stuff there.
-    dirList.append( getHomeDir() + "/." + appDirName + "/" + subDirectory);
+    dirList.append( getHomeDir() + "/." + m_appDirName + "/" + subDirectory);
 
     //local (application) directory has priority over other dirs:
-    if (!subDirectory.compare( "plugins")) {
+    if (subDirectory.compare( "plugins") == 0) {
         // 17 Aug, 2011, Dongxu Li, do not look for plugins in the current folder,
         // we should install plugins to system or ~/.librecad/plugins/
-        if (externalAppDir) {
-            dirList.append( appDir + "/" + subDirectory);
+        if (m_externalAppDir) {
+            dirList.append( m_appDir + "/" + subDirectory);
         }
     }
 
-    RS_DEBUG->print("%s\n", QString("%1(): line %2: dir=%3").arg(__func__).arg(__LINE__).arg(appDir).toUtf8().constData());
+    RS_DEBUG->print("%s\n", QString("%1(): line %2: dir=%3").arg(__func__).arg(__LINE__).arg(m_appDir).toUtf8().constData());
 
 #if (defined(Q_OS_WIN32) || defined(Q_OS_WIN64) || defined(Q_OS_UNIX))
     // for AppImage use relative paths from executable
     // from package manager the executable is in /usr/bin
     // in AppImage the executable is APPDIR/usr/bin
     // so this should work for package manager and AppImage distribution
-    dirList.append( QDir::cleanPath( appDir + "/../share/doc/" + appDirName + "/" + subDirectory));
+    dirList.append( QDir::cleanPath( m_appDir + "/../share/doc/" + m_appDirName + "/" + subDirectory));
 
     // try various locations for different Linux distributions
-    dirList.append( QDir::cleanPath( appDir + "/../share/" + appDirName + "/" + subDirectory));
-    dirList.append( QDir::cleanPath( appDir + "/../lib64/" + appDirName + "/" + subDirectory));
-    dirList.append( QDir::cleanPath( appDir + "/../lib/" + appDirName + "/" + subDirectory));
+    dirList.append( QDir::cleanPath( m_appDir + "/../share/" + m_appDirName + "/" + subDirectory));
+    dirList.append( QDir::cleanPath( m_appDir + "/../lib64/" + m_appDirName + "/" + subDirectory));
+    dirList.append( QDir::cleanPath( m_appDir + "/../lib/" + m_appDirName + "/" + subDirectory));
 
     if (QStringLiteral( "plugins") == subDirectory) {
-        dirList.append( QDir::cleanPath( appDir + "/../lib64/" + appDirName));
-        dirList.append( QDir::cleanPath( appDir + "/../lib/" + appDirName));
+        dirList.append( QDir::cleanPath( m_appDir + "/../lib64/" + m_appDirName));
+        dirList.append( QDir::cleanPath( m_appDir + "/../lib/" + m_appDirName));
     }
 #endif
     for (auto& dir: dirList) {
-
         RS_DEBUG->print("%s\n", QString("%1(): line %2: dir=%3\n").arg(__func__).arg(__LINE__).arg(dir).toUtf8().constData());
     }
 
 #ifdef Q_OS_MAC
     // Apple uses the resource directory
-    if (!appDir.isEmpty() && appDir!="/") {
-        dirList.append( QDir::cleanPath( appDir + "/../Resources/" + subDirectory));
+    if (!m_appDir.isEmpty() && m_appDir!="/") {
+        dirList.append( QDir::cleanPath( m_appDir + "/../Resources/" + subDirectory));
     }
 #endif
 
 #ifndef Q_OS_MAC
     // Add support directory if librecad is run-in-place,
     // not for Apple because it uses resources this is more for unix systems
-    dirList.append( appDir + "/resources/" + subDirectory);
+    dirList.append( m_appDir + "/resources/" + subDirectory);
 #endif
 
     // Individual directories:
     {
         LC_GROUP_GUARD( "Paths");
         {
-            auto option = Qt::SkipEmptyParts;
+            constexpr auto emptyBehavior = Qt::SkipEmptyParts;
+
+            static const QRegularExpression SEP("[;]");
 
             if (subDirectory == "fonts") {
-                QString savedFonts = LC_GET_STR("Fonts", "");
+                const QString savedFonts = LC_GET_STR("Fonts", "");
                 RS_DEBUG->print("saved fonts: %s\n", savedFonts.toUtf8().constData());
-                dirList += (LC_GET_STR("Fonts", "")).split(QRegularExpression("[;]"),
-                                                           option);
-            } else if (subDirectory == "patterns") {
-                dirList += (LC_GET_STR("Patterns", "")).split(QRegularExpression("[;]"),
-                                                              option);
-            } else if (subDirectory.startsWith("scripts")) {
-                dirList += (LC_GET_STR("Scripts", "")).split(QRegularExpression("[;]"),
-                                                             option);
-            } else if (subDirectory.startsWith("library")) {
-                dirList += (LC_GET_STR("Library", "")).split(QRegularExpression("[;]"),
-                                                             option);
-            } else if (subDirectory.startsWith("qm")) {
-                dirList += (LC_GET_STR("Translations", "")).split(QRegularExpression("[;]"),
-                                                                  option);
+                dirList += LC_GET_STR("Fonts", "").split(SEP, emptyBehavior);
+            }
+            else if (subDirectory == "patterns") {
+                dirList += LC_GET_STR("Patterns", "").split(SEP, emptyBehavior);
+            }
+            else if (subDirectory.startsWith("scripts")) {
+                dirList += LC_GET_STR("Scripts", "").split(SEP, emptyBehavior);
+            }
+            else if (subDirectory.startsWith("library")) {
+                dirList += LC_GET_STR("Library", "").split(SEP, emptyBehavior);
+            }
+            else if (subDirectory.startsWith("qm")) {
+                dirList += LC_GET_STR("Translations", "").split(SEP, emptyBehavior);
             }
         }
     }
@@ -694,7 +668,7 @@ QStringList RS_System::getDirectoryList(const QString& _subDirectory) const
  * Languages taken from RFC3066
  */
 QString RS_System::languageToSymbol(const QString& lang) {
-    int i1 = lang.indexOf( ' ');
+    const int i1 = lang.indexOf( ' ');
     QString l = lang;
     if (i1 >= 2){
         l = lang.mid( 0, i1);
@@ -711,17 +685,16 @@ QString RS_System::languageToSymbol(const QString& lang) {
 //    return "";
 }
 
-
 /**
  * Converts a locale code into a readable string
  * (e.g. 'de' to 'German Deutsch'
  * (e.g. 'en_au' to 'English (Australia)'
  */
 QString RS_System::symbolToLanguage(const QString& symb) {
-    RS_Locale loc( symb);
+    const RS_Locale loc( symb);
     QString ret;
 #if QT_VERSION >= QT_VERSION_CHECK(6, 2, 0)
-    QString territory = RS_Locale::territoryToString(loc.territory());
+    const QString territory = RS_Locale::territoryToString(loc.territory());
 #else
     QString territory = RS_Locale::countryToString(loc.country());
 #endif
@@ -743,112 +716,153 @@ QString RS_System::symbolToLanguage(const QString& symb) {
 #endif
         }
     }
-
     return ret;
 }
-
 
 /**
  * Tries to convert the given encoding string to an encoding Qt knows.
  */
 QString RS_System::getEncoding(const QString& str) {
-    QString l=str.toLower();
+    const QString l=str.toLower();
 
     if (l=="latin1" || l=="ansi_1252" || l=="iso-8859-1" ||
             l=="cp819" || l=="csiso" || l=="ibm819" || l=="iso_8859-1" ||
             l=="iso8859-1" || l=="iso-ir-100" || l=="l1") {
         return "Latin1";
-    } else if (l=="big5" || l=="ansi_950" || l=="cn-big5" || l=="csbig5" ||
-               l=="x-x-big5") {
+    }
+    if (l=="big5" || l=="ansi_950" || l=="cn-big5" || l=="csbig5" ||
+        l=="x-x-big5") {
         return "Big5";
-    } else if (l=="big5-hkscs") {
+    }
+    if (l=="big5-hkscs") {
         return "Big5-HKSCS";
-    } else if (l=="eucjp" || l=="euc-jp" || l=="cseucpkdfmtjapanese" ||
-               l=="x-euc" || l=="x-euc-jp") {
+    }
+    if (l=="eucjp" || l=="euc-jp" || l=="cseucpkdfmtjapanese" ||
+        l=="x-euc" || l=="x-euc-jp") {
         return "eucJP";
-    } else if (l=="euckr") {
+    }
+    if (l=="euckr") {
         return "eucKR";
-    } else if (l=="gb2312" || l=="chinese" || l=="cn-gb" ||
-               l=="csgb2312" || l=="csgb231280" || l=="csiso58gb231280" ||
-               l=="gb_2312-80" || l=="gb231280" || l=="gb2312-80" || l=="gbk" ||
-               l=="iso-ir-58") {
+    }
+    if (l=="gb2312" || l=="chinese" || l=="cn-gb" ||
+        l=="csgb2312" || l=="csgb231280" || l=="csiso58gb231280" ||
+        l=="gb_2312-80" || l=="gb231280" || l=="gb2312-80" || l=="gbk" ||
+        l=="iso-ir-58") {
         return "GB2312";
-    } else if (l=="gbk") {
+    }
+   /* if (l=="gbk") { // fixme - sand - same condition as above, dead code
         return "GBK";
-    } else if (l=="gb18030") {
+    }*/
+    if (l=="gb18030") {
         return "GB18030";
-    } else if (l=="jis7") {
+    }
+    if (l=="jis7") {
         return "JIS7";
-    } else if (l=="shift-jis" || l=="ansi_932" || l=="shift_jis" || l=="csShiftJIS" ||
-               l=="cswindows31j" || l=="ms_kanji" || l=="x-ms-cp932" || l=="x-sjis") {
+    }
+    if (l=="shift-jis" || l=="ansi_932" || l=="shift_jis" || l=="csShiftJIS" ||
+        l=="cswindows31j" || l=="ms_kanji" || l=="x-ms-cp932" || l=="x-sjis") {
         return "Shift-JIS";
-    } else if (l=="tscii") {
+    }
+    if (l=="tscii") {
         return "TSCII";
-    } else if (l=="utf88-bit") {
+    }
+    if (l=="utf88-bit") {
         return "utf88-bit";
-    } else if (l=="utf16") {
+    }
+    if (l=="utf16") {
         return "utf16";
-    } else if (l=="utf8" || l=="utf-8") {
+    }
+    if (l=="utf8" || l=="utf-8") {
         return "utf-8";
-    } else if (l=="koi8-r") {
+    }
+    if (l=="koi8-r") {
         return "KOI8-R";
-    } else if (l=="koi8-u") {
+    }
+    if (l=="koi8-u") {
         return "KOI8-U";
-    } else if (l=="iso8859-1") {
+    }
+  /*  if (l=="iso8859-1") { // fixme - sand - same condition as above, dead code
         return "ISO8859-1";
-    } else if (l=="iso8859-2") {
+    }*/
+    if (l=="iso8859-2") {
         return "ISO8859-2";
-    } else if (l=="iso8859-3") {
+    }
+    if (l=="iso8859-3") {
         return "ISO8859-3";
-    } else if (l=="iso8859-4" || l=="ansi_1257") {
+    }
+    if (l=="iso8859-4" || l=="ansi_1257") {
         return "ISO8859-4";
-    } else if (l=="iso8859-5") {
+    }
+    if (l=="iso8859-5") {
         return "ISO8859-5";
-    } else if (l=="iso8859-6" || l=="ansi_1256") {
+    }
+    if (l=="iso8859-6" || l=="ansi_1256") {
         return "ISO8859-6";
-    } else if (l=="iso8859-7" || l=="ansi_1253") {
+    }
+    if (l=="iso8859-7" || l=="ansi_1253") {
         return "ISO8859-7";
-    } else if (l=="iso8859-8") {
+    }
+    if (l=="iso8859-8") {
         return "ISO8859-8";
-    } else if (l=="iso8859-8-i" || l=="ansi_1255") {
+    }
+    if (l=="iso8859-8-i" || l=="ansi_1255") {
         return "ISO8859-8-i";
-    } else if (l=="iso8859-9" || l=="ansi_1254") {
+    }
+    if (l=="iso8859-9" || l=="ansi_1254") {
         return "ISO8859-9";
-    } else if (l=="iso8859-10") {
+    }
+    if (l=="iso8859-10") {
         return "ISO8859-10";
-    } else if (l=="iso8859-13") {
+    }
+    if (l=="iso8859-13") {
         return "ISO8859-13";
-    } else if (l=="iso8859-14") {
+    }
+    if (l=="iso8859-14") {
         return "ISO8859-14";
-    } else if (l=="iso8859-15") {
+    }
+    if (l=="iso8859-15") {
         return "ISO8859-15";
-    } else if (l=="ibm 850") {
+    }
+    if (l=="ibm 850") {
         return "IBM 850";
-    } else if (l=="ibm 866") {
+    }
+    if (l=="ibm 866") {
         return "IBM 866";
-    } else if (l=="cp874") {
+    }
+    if (l=="cp874") {
         return "CP874";
-    } else if (l=="cp1250") {
+    }
+    if (l=="cp1250") {
         return "CP1250";
-    } else if (l=="cp1251" || l=="ansi_1251") {
+    }
+    if (l=="cp1251" || l=="ansi_1251") {
         return "CP1251";
-    } else if (l=="cp1252") {
+    }
+    if (l=="cp1252") {
         return "CP1252";
-    } else if (l=="cp1253") {
+    }
+    if (l=="cp1253") {
         return "CP1253";
-    } else if (l=="cp1254") {
+    }
+    if (l=="cp1254") {
         return "CP1254";
-    } else if (l=="cp1255") {
+    }
+    if (l=="cp1255") {
         return "CP1255";
-    } else if (l=="cp1256") {
+    }
+    if (l=="cp1256") {
         return "CP1256";
-    } else if (l=="cp1257") {
+    }
+    if (l=="cp1257") {
         return "CP1257";
-    } else if (l=="cp1258") {
+    }
+    if (l=="cp1258") {
         return "CP1258";
-    } else if (l=="apple roman") {
+    }
+    if (l=="apple roman") {
         return "Apple Roman";
-    } else if (l=="tis-620") {
+    }
+    if (l=="tis-620") {
         return "TIS-620";
     }
 
@@ -864,126 +878,126 @@ QString RS_System::getEncoding(const QString& str) {
 
  2004-05-13, J Staniek
 */
-static QMap<QByteArray,QByteArray> loc_map;
+static QMap<QByteArray,QByteArray> g_locMap;
 
 QByteArray RS_System::localeToISO(const QByteArray& locale) {
-    if (loc_map.isEmpty()) {
-        loc_map["croatian"]="ISO8859-2";
-        loc_map["cs"]="ISO8859-2";
-        loc_map["cs_CS"]="ISO8859-2";
-        loc_map["cs_CZ"]="ISO8859-2";
-        loc_map["cz"]="ISO8859-2";
-        loc_map["cz_CZ"]="ISO8859-2";
-        loc_map["czech"]="ISO8859-2";
-        loc_map["hr"]="ISO8859-2";
-        loc_map["hr_HR"]="ISO8859-2";
-        loc_map["hu"]="ISO8859-2";
-        loc_map["hu_HU"]="ISO8859-2";
-        loc_map["hungarian"]="ISO8859-2";
-        loc_map["pl"]="ISO8859-2";
-        loc_map["pl_PL"]="ISO8859-2";
-        loc_map["polish"]="ISO8859-2";
-        loc_map["ro"]="ISO8859-2";
-        loc_map["ro_RO"]="ISO8859-2";
-        loc_map["rumanian"]="ISO8859-2";
-        loc_map["serbocroatian"]="ISO8859-2";
-        loc_map["sh"]="ISO8859-2";
-        loc_map["sh_SP"]="ISO8859-2";
-        loc_map["sh_YU"]="ISO8859-2";
-        loc_map["sk"]="ISO8859-2";
-        loc_map["sk_SK"]="ISO8859-2";
-        loc_map["sl"]="ISO8859-2";
-        loc_map["sl_CS"]="ISO8859-2";
-        loc_map["sl_SI"]="ISO8859-2";
-        loc_map["slovak"]="ISO8859-2";
-        loc_map["slovene"]="ISO8859-2";
-        loc_map["sr_SP"]="ISO8859-2";
+    if (g_locMap.isEmpty()) {
+        g_locMap["croatian"]="ISO8859-2";
+        g_locMap["cs"]="ISO8859-2";
+        g_locMap["cs_CS"]="ISO8859-2";
+        g_locMap["cs_CZ"]="ISO8859-2";
+        g_locMap["cz"]="ISO8859-2";
+        g_locMap["cz_CZ"]="ISO8859-2";
+        g_locMap["czech"]="ISO8859-2";
+        g_locMap["hr"]="ISO8859-2";
+        g_locMap["hr_HR"]="ISO8859-2";
+        g_locMap["hu"]="ISO8859-2";
+        g_locMap["hu_HU"]="ISO8859-2";
+        g_locMap["hungarian"]="ISO8859-2";
+        g_locMap["pl"]="ISO8859-2";
+        g_locMap["pl_PL"]="ISO8859-2";
+        g_locMap["polish"]="ISO8859-2";
+        g_locMap["ro"]="ISO8859-2";
+        g_locMap["ro_RO"]="ISO8859-2";
+        g_locMap["rumanian"]="ISO8859-2";
+        g_locMap["serbocroatian"]="ISO8859-2";
+        g_locMap["sh"]="ISO8859-2";
+        g_locMap["sh_SP"]="ISO8859-2";
+        g_locMap["sh_YU"]="ISO8859-2";
+        g_locMap["sk"]="ISO8859-2";
+        g_locMap["sk_SK"]="ISO8859-2";
+        g_locMap["sl"]="ISO8859-2";
+        g_locMap["sl_CS"]="ISO8859-2";
+        g_locMap["sl_SI"]="ISO8859-2";
+        g_locMap["slovak"]="ISO8859-2";
+        g_locMap["slovene"]="ISO8859-2";
+        g_locMap["sr_SP"]="ISO8859-2";
 
-        loc_map["eo"]="ISO8859-3";
+        g_locMap["eo"]="ISO8859-3";
 
-        loc_map["ee"]="ISO8859-4";
-        loc_map["ee_EE"]="ISO8859-4";
+        g_locMap["ee"]="ISO8859-4";
+        g_locMap["ee_EE"]="ISO8859-4";
 
-        loc_map["mk"]="ISO8859-5";
-        loc_map["mk_MK"]="ISO8859-5";
-        loc_map["sp"]="ISO8859-5";
-        loc_map["sp_YU"]="ISO8859-5";
+        g_locMap["mk"]="ISO8859-5";
+        g_locMap["mk_MK"]="ISO8859-5";
+        g_locMap["sp"]="ISO8859-5";
+        g_locMap["sp_YU"]="ISO8859-5";
 
-        loc_map["ar_AA"]="ISO8859-6";
-        loc_map["ar_SA"]="ISO8859-6";
-        loc_map["arabic"]="ISO8859-6";
+        g_locMap["ar_AA"]="ISO8859-6";
+        g_locMap["ar_SA"]="ISO8859-6";
+        g_locMap["arabic"]="ISO8859-6";
 
-        loc_map["el"]="ISO8859-7";
-        loc_map["el_GR"]="ISO8859-7";
-        loc_map["greek"]="ISO8859-7";
+        g_locMap["el"]="ISO8859-7";
+        g_locMap["el_GR"]="ISO8859-7";
+        g_locMap["greek"]="ISO8859-7";
 
-        loc_map["hebrew"]="ISO8859-8";
-        loc_map["he"]="ISO8859-8";
-        loc_map["he_IL"]="ISO8859-8";
-        loc_map["iw"]="ISO8859-8";
-        loc_map["iw_IL"]="ISO8859-8";
+        g_locMap["hebrew"]="ISO8859-8";
+        g_locMap["he"]="ISO8859-8";
+        g_locMap["he_IL"]="ISO8859-8";
+        g_locMap["iw"]="ISO8859-8";
+        g_locMap["iw_IL"]="ISO8859-8";
 
-        loc_map["tr"]="ISO8859-9";
-        loc_map["tr_TR"]="ISO8859-9";
-        loc_map["turkish"]="ISO8859-9";
+        g_locMap["tr"]="ISO8859-9";
+        g_locMap["tr_TR"]="ISO8859-9";
+        g_locMap["turkish"]="ISO8859-9";
 
-        loc_map["lt"]="ISO8859-13";
-        loc_map["lt_LT"]="ISO8859-13";
-        loc_map["lv"]="ISO8859-13";
-        loc_map["lv_LV"]="ISO8859-13";
+        g_locMap["lt"]="ISO8859-13";
+        g_locMap["lt_LT"]="ISO8859-13";
+        g_locMap["lv"]="ISO8859-13";
+        g_locMap["lv_LV"]="ISO8859-13";
 
-        loc_map["et"]="ISO8859-15";
-        loc_map["et_EE"]="ISO8859-15";
-        loc_map["br_FR"]="ISO8859-15";
-        loc_map["ca_ES"]="ISO8859-15";
-        loc_map["de"]="ISO8859-15";
-        loc_map["de_AT"]="ISO8859-15";
-        loc_map["de_BE"]="ISO8859-15";
-        loc_map["de_DE"]="ISO8859-15";
-        loc_map["de_LU"]="ISO8859-15";
-        loc_map["en_IE"]="ISO8859-15";
-        loc_map["es"]="ISO8859-15";
-        loc_map["es_EC"]="ISO8859-15";
-        loc_map["es_ES"]="ISO8859-15";
-        loc_map["eu_ES"]="ISO8859-15";
-        loc_map["fi"]="ISO8859-15";
-        loc_map["fi_FI"]="ISO8859-15";
-        loc_map["finnish"]="ISO8859-15";
-        loc_map["fr"]="ISO8859-15";
-        loc_map["fr_FR"]="ISO8859-15";
-        loc_map["fr_BE"]="ISO8859-15";
-        loc_map["fr_LU"]="ISO8859-15";
-        loc_map["french"]="ISO8859-15";
-        loc_map["ga_IE"]="ISO8859-15";
-        loc_map["gl_ES"]="ISO8859-15";
-        loc_map["it"]="ISO8859-15";
-        loc_map["it_IT"]="ISO8859-15";
-        loc_map["oc_FR"]="ISO8859-15";
-        loc_map["nl"]="ISO8859-15";
-        loc_map["nl_BE"]="ISO8859-15";
-        loc_map["nl_NL"]="ISO8859-15";
-        loc_map["pt"]="ISO8859-15";
-        loc_map["pt_PT"]="ISO8859-15";
-        loc_map["sv_FI"]="ISO8859-15";
-        loc_map["wa_BE"]="ISO8859-15";
+        g_locMap["et"]="ISO8859-15";
+        g_locMap["et_EE"]="ISO8859-15";
+        g_locMap["br_FR"]="ISO8859-15";
+        g_locMap["ca_ES"]="ISO8859-15";
+        g_locMap["de"]="ISO8859-15";
+        g_locMap["de_AT"]="ISO8859-15";
+        g_locMap["de_BE"]="ISO8859-15";
+        g_locMap["de_DE"]="ISO8859-15";
+        g_locMap["de_LU"]="ISO8859-15";
+        g_locMap["en_IE"]="ISO8859-15";
+        g_locMap["es"]="ISO8859-15";
+        g_locMap["es_EC"]="ISO8859-15";
+        g_locMap["es_ES"]="ISO8859-15";
+        g_locMap["eu_ES"]="ISO8859-15";
+        g_locMap["fi"]="ISO8859-15";
+        g_locMap["fi_FI"]="ISO8859-15";
+        g_locMap["finnish"]="ISO8859-15";
+        g_locMap["fr"]="ISO8859-15";
+        g_locMap["fr_FR"]="ISO8859-15";
+        g_locMap["fr_BE"]="ISO8859-15";
+        g_locMap["fr_LU"]="ISO8859-15";
+        g_locMap["french"]="ISO8859-15";
+        g_locMap["ga_IE"]="ISO8859-15";
+        g_locMap["gl_ES"]="ISO8859-15";
+        g_locMap["it"]="ISO8859-15";
+        g_locMap["it_IT"]="ISO8859-15";
+        g_locMap["oc_FR"]="ISO8859-15";
+        g_locMap["nl"]="ISO8859-15";
+        g_locMap["nl_BE"]="ISO8859-15";
+        g_locMap["nl_NL"]="ISO8859-15";
+        g_locMap["pt"]="ISO8859-15";
+        g_locMap["pt_PT"]="ISO8859-15";
+        g_locMap["sv_FI"]="ISO8859-15";
+        g_locMap["wa_BE"]="ISO8859-15";
 
-        loc_map["uk"]="KOI8-U";
-        loc_map["uk_UA"]="KOI8-U";
-        loc_map["ru_YA"]="KOI8-U";
-        loc_map["ukrainian"]="KOI8-U";
+        g_locMap["uk"]="KOI8-U";
+        g_locMap["uk_UA"]="KOI8-U";
+        g_locMap["ru_YA"]="KOI8-U";
+        g_locMap["ukrainian"]="KOI8-U";
 
-        loc_map["be"]="KOI8-R";
-        loc_map["be_BY"]="KOI8-R";
-        loc_map["bg"]="KOI8-R";
-        loc_map["bg_BG"]="KOI8-R";
-        loc_map["bulgarian"]="KOI8-R";
-        loc_map["ba_RU"]="KOI8-R";
-        loc_map["ky"]="KOI8-R";
-        loc_map["ky_KG"]="KOI8-R";
-        loc_map["kk"]="KOI8-R";
-        loc_map["kk_KZ"]="KOI8-R";
+        g_locMap["be"]="KOI8-R";
+        g_locMap["be_BY"]="KOI8-R";
+        g_locMap["bg"]="KOI8-R";
+        g_locMap["bg_BG"]="KOI8-R";
+        g_locMap["bulgarian"]="KOI8-R";
+        g_locMap["ba_RU"]="KOI8-R";
+        g_locMap["ky"]="KOI8-R";
+        g_locMap["ky_KG"]="KOI8-R";
+        g_locMap["kk"]="KOI8-R";
+        g_locMap["kk_KZ"]="KOI8-R";
     }
-    QByteArray l = loc_map[locale];
+    QByteArray l = g_locMap[locale];
     if (l.isEmpty()) {
         return "ISO8859-1";
     }

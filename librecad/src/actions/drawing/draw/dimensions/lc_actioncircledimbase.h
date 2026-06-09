@@ -30,15 +30,13 @@ class RS_Dimension;
 class LC_ActionCircleDimBase:public RS_ActionDimension {
     Q_OBJECT
 public:
-    LC_ActionCircleDimBase(const char* name, LC_ActionContext *actionContext, RS2::EntityType dimType, RS2::ActionType actionType);
-    ~LC_ActionCircleDimBase() override;
-    void updateMouseButtonHints() override;
+    void updateActionPrompt() override;
     QStringList getAvailableCommands() override;
     double getUcsAngleDegrees() const;
-    void setUcsAngleDegrees(double angle);
+    void setUcsAngleDegrees(double ucsRelAngleDegrees);
     bool isAngleIsFree() const;
     void setAngleIsFree(bool angleIsFree);
-    double getCurrentAngle();
+    double getCurrentAngle() const;
 protected:
 
     enum Status {
@@ -59,16 +57,19 @@ protected:
     bool m_alternateAngle = false;
     double m_currentAngle = 0.0;
 
+    LC_ActionCircleDimBase(const char* name, LC_ActionContext *actionContext, RS2::EntityType dimType, RS2::ActionType actionType);
+    ~LC_ActionCircleDimBase() override;
     void doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) override;
-    void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
-    void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
-    void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
-    void setDimSourceEntity(RS_Entity* en, bool controlPressed, RS_Vector pos);
-    bool doProcessCommand(int status, const QString &command) override;
-    void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
+    void onMouseLeftButtonRelease(int status, const LC_MouseEvent* e) override;
+    void onMouseRightButtonRelease(int status, const LC_MouseEvent* e) override;
+    void onMouseMoveEvent(int status, const LC_MouseEvent* e) override;
+    void setDimSourceEntity(RS_Entity* en, bool controlPressed, const RS_Vector& pos);
+    bool doProcessCommand(int status, const QString &c) override;
+    void onCoordinateEvent(int status, bool isZero, const RS_Vector &coord) override;
     virtual RS_Vector preparePreview(RS_Entity *en, RS_Vector &position, bool forcePosition) = 0;
     virtual RS_Dimension* createDim(RS_EntityContainer *parent) const = 0;
-    void doTrigger() override;
+    RS_Entity* doTriggerCreateEntity() override;
+    void doTriggerCompletion(bool success) override;
 };
 
-#endif // LC_ACTIONCIRCLEDIMBASE_H
+#endif

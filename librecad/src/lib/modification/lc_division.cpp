@@ -26,11 +26,11 @@
 #include <QVector>
 #include <cfloat>
 
-#include "rs_entitycontainer.h"
 #include "lc_containertraverser.h"
 #include "lc_linemath.h"
 #include "rs_arc.h"
 #include "rs_circle.h"
+#include "rs_entitycontainer.h"
 #include "rs_information.h"
 #include "rs_line.h"
 #include "rs_math.h"
@@ -38,29 +38,31 @@
 
 class RS_EntityContainer;
 
-LC_Division::LC_Division(RS_EntityContainer *entityContainer):
-    m_container{entityContainer} {
+LC_Division::LC_Division(RS_EntityContainer* entityContainer) : m_container{entityContainer} {
 }
 
 /**
  * determines segment of arc selected by the user
  * @param arc arc
  * @param snap snap point
+ * @param allowEntireArcAsSegment
  * @return segment information
  */
-LC_Division::ArcSegmentData *LC_Division::findArcSegmentBetweenIntersections(RS_Arc *arc, RS_Vector &snap, bool allowEntireArcAsSegment){
-    ArcSegmentData *result = nullptr;
+LC_Division::ArcSegmentData* LC_Division::findArcSegmentBetweenIntersections(const RS_Arc* arc, const RS_Vector& snap,
+                                                                             const bool allowEntireArcAsSegment) {
+    ArcSegmentData* result = nullptr;
     // detect all intersections
-    QVector<RS_Vector> allIntersections = collectAllIntersectionsWithEntity(arc);
+    const QVector<RS_Vector> allIntersections = collectAllIntersectionsWithEntity(arc);
     if (allIntersections.empty()) {
-        if (allowEntireArcAsSegment){ // allowing deletion of complete arcs
+        if (allowEntireArcAsSegment) {
+            // allowing deletion of complete arcs
             result = new ArcSegmentData();
             result->segmentDisposition = SEGMENT_INSIDE;
             result->snapSegmentStartAngle = arc->getAngle1();
             result->snapSegmentEndAngle = arc->getAngle2();
         }
     }
-    else{
+    else {
         // determine selected segment edges
         result = findArcSegmentEdges(arc, snap, allIntersections, allowEntireArcAsSegment);
     }
@@ -71,12 +73,14 @@ LC_Division::ArcSegmentData *LC_Division::findArcSegmentBetweenIntersections(RS_
  * determines segment of circle selected by the user
  * @param circle circle
  * @param snap snap point
+ * @param allowEntireCircleAsSegment
  * @return segment information
  */
-LC_Division::CircleSegmentData *LC_Division::findCircleSegmentBetweenIntersections(RS_Circle *circle, RS_Vector &snap, bool allowEntireCircleAsSegment){
-    CircleSegmentData *result = nullptr;
+LC_Division::CircleSegmentData* LC_Division::findCircleSegmentBetweenIntersections(const RS_Circle* circle, const RS_Vector& snap,
+                                                                                   const bool allowEntireCircleAsSegment) {
+    CircleSegmentData* result = nullptr;
     // detect all intersections
-    QVector<RS_Vector> allIntersections = collectAllIntersectionsWithEntity(circle);
+    const QVector<RS_Vector> allIntersections = collectAllIntersectionsWithEntity(circle);
     if (allIntersections.empty()) {
         if (allowEntireCircleAsSegment) {
             result = new CircleSegmentData();
@@ -84,26 +88,28 @@ LC_Division::CircleSegmentData *LC_Division::findCircleSegmentBetweenIntersectio
             result->snapSegmentEndAngle = M_PI * 2;
         }
     }
-    else{
+    else {
         // determine selected segment edges
         result = findCircleSegmentEdges(circle, snap, allIntersections);
     }
     return result;
 }
 
-
 /**
  * determines segment of line selected by the user
  * @param line line
  * @param snap snap point
+ * @param allowEntireLine
  * @return segment information
  */
-LC_Division::LineSegmentData *LC_Division::findLineSegmentBetweenIntersections(RS_Line *line, RS_Vector &snap, bool allowEntireLine){
-    LineSegmentData *result = nullptr;
+LC_Division::LineSegmentData* LC_Division::findLineSegmentBetweenIntersections(const RS_Line* line, const RS_Vector& snap,
+                                                                               const bool allowEntireLine) {
+    LineSegmentData* result = nullptr;
     // find all intersection points for line
-    QVector<RS_Vector> allIntersections = collectAllIntersectionsWithEntity(line);
+    const QVector<RS_Vector> allIntersections = collectAllIntersectionsWithEntity(line);
     if (allIntersections.empty()) {
-        if (allowEntireLine){ // allow to delete entire line if SHIFT is pressed
+        if (allowEntireLine) {
+            // allow to delete entire line if SHIFT is pressed
             result = new LineSegmentData();
             result->segmentDisposition = SEGMENT_INSIDE;
             result->snapSegmentStart = line->getStartpoint();
@@ -111,13 +117,12 @@ LC_Division::LineSegmentData *LC_Division::findLineSegmentBetweenIntersections(R
             result->snap = snap;
         }
     }
-    else{
+    else {
         // determine segments of line that was selected by the user
         result = findLineSegmentEdges(line, snap, allIntersections, allowEntireLine);
     }
     return result;
 }
-
 
 /**
  * Method finds edges (start and end point) for the segment of line, selected by the user.
@@ -126,21 +131,21 @@ LC_Division::LineSegmentData *LC_Division::findLineSegmentBetweenIntersections(R
  * @param line line
  * @param snap point where the user selected the line
  * @param intersections all intersections
+ * @param allowEntireLineAsSegment
  * @return information about line segment
  */
-LC_Division::LineSegmentData *LC_Division::findLineSegmentEdges(RS_Line *line, RS_Vector &snap, QVector<RS_Vector> intersections,
-    bool allowEntireLineAsSegment){
-    double angle = line->getAngle1();
-    RS_Vector lineStartPoint = line->getStartpoint();
-    RS_Vector lineEndPoint = line->getEndpoint();
+LC_Division::LineSegmentData* LC_Division::findLineSegmentEdges(const RS_Line* line, const RS_Vector& snap,
+                                                                QVector<RS_Vector> intersections, const bool allowEntireLineAsSegment) {
+    const double angle = line->getAngle1();
+    const RS_Vector lineStartPoint = line->getStartpoint();
+    const RS_Vector lineEndPoint = line->getEndpoint();
 
     // rotate all intersection over start point of line, so we can check only x coordinates
 
-    int intersectionsCount = intersections.size();
+    const int intersectionsCount = intersections.size();
     for (int i = 0; i < intersectionsCount; i++) {
         RS_Vector v = intersections.at(i);
-        if (LC_LineMath::isNotMeaningfulDistance(v, lineStartPoint) ||
-            LC_LineMath::isNotMeaningfulDistance(v,lineEndPoint)) {
+        if (LC_LineMath::isNotMeaningfulDistance(v, lineStartPoint) || LC_LineMath::isNotMeaningfulDistance(v, lineEndPoint)) {
             // it means that intersection is in one of edge points of the line,
             // so we'll skip this intersection for further processing
             intersections.replace(i, RS_Vector(false));
@@ -167,32 +172,35 @@ LC_Division::LineSegmentData *LC_Division::findLineSegmentEdges(RS_Line *line, R
     RS_Vector rotatedEndPoint = lineEndPoint;
     rotatedEndPoint.rotate(lineStartPoint, -angle);
 
-    double snapX = rotatedSnap.x;
+    const double snapX = rotatedSnap.x;
 
     // flag to check whether there are intersections on the line (not in edges)
     bool hasNonEdgesIntersection = false;
 
     // iterate over all intersection points
     for (int i = 0; i < intersectionsCount; i++) {
-        RS_Vector v = intersections.at(i);
-        if (v.valid){
+        const RS_Vector v = intersections.at(i);
+        if (v.valid) {
             // this is not edge intersection
             hasNonEdgesIntersection = true;
         }
-        else{
+        else {
             // edge intersection
             continue;
         }
         // position of intersection point on x-axis
-        double vX = v.x;
-        if (vX <= snapX){ // intersection in on left side from snap
-            if (vX >= maxXLeft){
+        const double vX = v.x;
+        if (vX <= snapX) {
+            // intersection in on left side from snap
+            if (vX >= maxXLeft) {
                 // and it's closer than previous to snap
                 maxXLeft = vX;
                 nearestLeft = v;
             }
-        } else { // intersection on right of snap
-            if (vX < minXRight){
+        }
+        else {
+            // intersection on right of snap
+            if (vX < minXRight) {
                 // and it is closer to snap than previously processed
                 minXRight = vX;
                 nearestRight = v;
@@ -201,61 +209,68 @@ LC_Division::LineSegmentData *LC_Division::findLineSegmentEdges(RS_Line *line, R
     }
 
     LineSegmentData* result = nullptr;
-    if (hasNonEdgesIntersection){
+    if (hasNonEdgesIntersection) {
         // check how line is directed
-        bool startOnLeft = rotatedEndPoint.x > lineStartPoint.x;
+        const bool startOnLeft = rotatedEndPoint.x > lineStartPoint.x;
 
         result = new LineSegmentData();
         result->segmentDisposition = SEGMENT_INSIDE;
 
-        if (nearestLeft.valid){
+        if (nearestLeft.valid) {
             // we found intersection point on the left side of snap, so use it
             // restore coordinate
             nearestLeft.rotate(lineStartPoint, angle);
             // based on direction of line, it will be either start or end point of segment
-            if (startOnLeft){
+            if (startOnLeft) {
                 result->snapSegmentStart = nearestLeft;
-            } else {
+            }
+            else {
                 result->snapSegmentEnd = nearestLeft;
             }
-        } else {
+        }
+        else {
             // no intersection between snap point and edge point of line
-            if (startOnLeft){
+            if (startOnLeft) {
                 // selected segment is from start point to intersection point
                 result->segmentDisposition = SEGMENT_TO_START;
                 result->snapSegmentStart = lineStartPoint;
-            } else {
+            }
+            else {
                 // selected segment is from end point to intersection point
                 result->segmentDisposition = SEGMENT_TO_END;
                 result->snapSegmentEnd = lineEndPoint;
             }
         }
 
-        if (nearestRight.valid){
+        if (nearestRight.valid) {
             // we found that there is intersection point between snap and line edge point on right side of line
             // restore intersection position
             nearestRight.rotate(lineStartPoint, angle);
             // base on direction of line, set segment point
-            if (startOnLeft){
+            if (startOnLeft) {
                 result->snapSegmentEnd = nearestRight;
-            } else {
+            }
+            else {
                 result->snapSegmentStart = nearestRight;
             }
-        } else {
+        }
+        else {
             // no intersection between snap point and edge point found
-            if (startOnLeft){
+            if (startOnLeft) {
                 // segment is from intersection point to end point of line
                 result->segmentDisposition = SEGMENT_TO_END;
                 result->snapSegmentEnd = lineEndPoint;
-            } else {
+            }
+            else {
                 // selected segment is from intersection point to start point of line
                 result->segmentDisposition = SEGMENT_TO_START;
                 result->snapSegmentStart = lineStartPoint;
             }
         }
     }
-    else{ // there are intersections only on edges. We may return the entire line as segment if SHIFT is pressed and the user would like to delete the entire entity
-        if (allowEntireLineAsSegment){
+    else {
+        // there are intersections only on edges. We may return the entire line as segment if SHIFT is pressed and the user would like to delete the entire entity
+        if (allowEntireLineAsSegment) {
             result = new LineSegmentData();
             result->segmentDisposition = SEGMENT_INSIDE;
             result->snapSegmentStart = line->getStartpoint();
@@ -264,88 +279,90 @@ LC_Division::LineSegmentData *LC_Division::findLineSegmentEdges(RS_Line *line, R
     }
     return result;
 }
+
 /**
  * Determines coordinates of selected segment for arc
  * @param arc arc
  * @param snap point where the user selected arc
  * @param intersections  all intersection points for arc
+ * @param allowEntireArcAsSegment
  * @return segment data
  */
-LC_Division::ArcSegmentData *LC_Division::findArcSegmentEdges(RS_Arc *arc, RS_Vector &snap, const QVector<RS_Vector>& intersections, bool allowEntireArcAsSegment){
-
+LC_Division::ArcSegmentData* LC_Division::findArcSegmentEdges(const RS_Arc* arc, const RS_Vector& snap,
+                                                              const QVector<RS_Vector>& intersections, const bool allowEntireArcAsSegment) {
     double arcStartAngle = arc->getAngle1();
     double arcEndAngle = arc->getAngle2();
-    double radius = arc->getRadius();
-    bool reversed = arc->isReversed();
+    const double radius = arc->getRadius();
+    const bool reversed = arc->isReversed();
 
-    if (reversed){
+    if (reversed) {
         // for uniform processing of arcs - reverse angles
         arcStartAngle = arcEndAngle;
         arcEndAngle = arc->getAngle1();
     }
-    const RS_Vector &center = arc->getCenter();
-    double snapAngle = center.angleTo(snap);
+    const RS_Vector& center = arc->getCenter();
+    const double snapAngle = center.angleTo(snap);
 
     // angles of intersections nearest to snap
     double nearestLeft = -M_PI;
     double nearestRight = 3 * M_PI;
 
-    int intersectionsCount = intersections.size();
+    const int intersectionsCount = intersections.size();
 
     // we'll rotate angle in such way that start angle of arc becomes 0
-    double correctedSnapAngle = RS_Math::correctAngle(snapAngle - arcStartAngle);
-    double correctedEndAngle = RS_Math::correctAngle(arcEndAngle - arcStartAngle);
+    const double correctedSnapAngle = RS_Math::correctAngle(snapAngle - arcStartAngle);
+    const double correctedEndAngle = RS_Math::correctAngle(arcEndAngle - arcStartAngle);
 
     double minLeft = 0;
     double maxRight = 2 * M_PI;
 
     // coordinates for arc edges
-    RS_Vector arcStartPoint = LC_LineMath::findPointOnCircle(radius, arcStartAngle, center);
-    RS_Vector arcEndPoint = LC_LineMath::findPointOnCircle(radius, arcEndAngle, center);
+    const RS_Vector arcStartPoint = LC_LineMath::findPointOnCircle(radius, arcStartAngle, center);
+    const RS_Vector arcEndPoint = LC_LineMath::findPointOnCircle(radius, arcEndAngle, center);
 
     bool hasNonEdgeIntersections = false;
 
     for (int i = 0; i < intersectionsCount; i++) {
         RS_Vector v = intersections.at(i);
-        if (LC_LineMath::isNotMeaningfulDistance(v, arcStartPoint) ||
-            LC_LineMath::isNotMeaningfulDistance(v,arcEndPoint)) {
+        if (LC_LineMath::isNotMeaningfulDistance(v, arcStartPoint) || LC_LineMath::isNotMeaningfulDistance(v, arcEndPoint)) {
             // this is intersection in edge, skip it
             continue;
         }
-        else{
-            hasNonEdgeIntersections = true;
-        }
+        hasNonEdgeIntersections = true;
 
-        double angleToIntersection = center.angleTo(v);
+        const double angleToIntersection = center.angleTo(v);
 
         // correct angle of
-        double vA = RS_Math::correctAngle(angleToIntersection - arcStartAngle);
+        const double vA = RS_Math::correctAngle(angleToIntersection - arcStartAngle);
 
-        if (vA <= correctedSnapAngle){ // intersection in on left from snap
-            if (vA >= minLeft){
+        if (vA <= correctedSnapAngle) {
+            // intersection in on left from snap
+            if (vA >= minLeft) {
                 nearestLeft = angleToIntersection;
                 minLeft = vA;
             }
-        } else if (vA < correctedEndAngle){ // intersection on right of snap
-            if (vA < maxRight){
+        }
+        else if (vA < correctedEndAngle) {
+            // intersection on right of snap
+            if (vA < maxRight) {
                 nearestRight = angleToIntersection;
                 maxRight = vA;
             }
         }
     }
 
-    ArcSegmentData *result = nullptr;
-    if (hasNonEdgeIntersections){
+    ArcSegmentData* result = nullptr;
+    if (hasNonEdgeIntersections) {
         result = new ArcSegmentData();
         result->segmentDisposition = SEGMENT_INSIDE;
 
-
-        if (nearestLeft != -M_PI){
+        if (nearestLeft != -M_PI) {
             // left intersection from snap found
             result->snapSegmentStartAngle = nearestLeft;
-        } else {
+        }
+        else {
             // no intersection till from snap to end point
-            if (reversed){
+            if (reversed) {
                 result->segmentDisposition = SEGMENT_TO_END;
             }
             else {
@@ -354,26 +371,28 @@ LC_Division::ArcSegmentData *LC_Division::findArcSegmentEdges(RS_Arc *arc, RS_Ve
             result->snapSegmentStartAngle = arcStartAngle;
         }
 
-        if (nearestRight != 3 * M_PI){
+        if (nearestRight != 3 * M_PI) {
             // right intersection is found
-           result->snapSegmentEndAngle = nearestRight;
-
-        } else {
+            result->snapSegmentEndAngle = nearestRight;
+        }
+        else {
             // no intersection till from snap to end point
-            if (reversed){
+            if (reversed) {
                 result->segmentDisposition = SEGMENT_TO_START;
-            } else {
+            }
+            else {
                 result->segmentDisposition = SEGMENT_TO_END;
-             }
+            }
             result->snapSegmentEndAngle = arcEndAngle;
         }
 
-        if (reversed){
+        if (reversed) {
             std::swap(result->snapSegmentEndAngle, result->snapSegmentStartAngle);
         }
     }
-    else { // there are intersections only on edges. We may return the entire line as segment if SHIFT is pressed and the user would like to delete the entire entity
-        if (allowEntireArcAsSegment){
+    else {
+        // there are intersections only on edges. We may return the entire line as segment if SHIFT is pressed and the user would like to delete the entire entity
+        if (allowEntireArcAsSegment) {
             result = new ArcSegmentData();
             result->segmentDisposition = SEGMENT_INSIDE;
             result->snapSegmentStartAngle = arcStartAngle;
@@ -382,6 +401,7 @@ LC_Division::ArcSegmentData *LC_Division::findArcSegmentEdges(RS_Arc *arc, RS_Ve
     }
     return result;
 }
+
 /**
  * Finds selected segment for circle entity. Is is expected that at least 2 intersection point on circle should be present.
  *
@@ -390,23 +410,22 @@ LC_Division::ArcSegmentData *LC_Division::findArcSegmentEdges(RS_Arc *arc, RS_Ve
  * @param intersections intersection points
  * @return segment information
  */
-LC_Division::CircleSegmentData* LC_Division::findCircleSegmentEdges(RS_Circle *circle, RS_Vector &snap,
-                                                                    const QVector<RS_Vector> &intersections){
-
-    CircleSegmentData *result = nullptr;
-    int intersectionsCount = intersections.size();
+LC_Division::CircleSegmentData* LC_Division::findCircleSegmentEdges(const RS_Circle* circle, const RS_Vector& snap,
+                                                                    const QVector<RS_Vector>& intersections) {
+    CircleSegmentData* result = nullptr;
+    const int intersectionsCount = intersections.size();
 
     // for circle, we need at least 2 intersection points for properly divide it.
     // potentially, with 1 intersection it is possible to convert the circle into
     // arc that starts and ends in the intersection point, however, from practical point of
     // view, such a features seems to be more than doubtful...
-    if (intersectionsCount >= 2){
-        const RS_Vector &center = circle->getCenter();
-        double snapAngle = center.angleTo(snap);
+    if (intersectionsCount >= 2) {
+        const RS_Vector& center = circle->getCenter();
+        const double snapAngle = center.angleTo(snap);
         double leftAngle = 0;
         double rightAngle = 0;
-        double maxRight = M_PI*3;
-        double minLeft = -M_PI*3;
+        double maxRight = M_PI * 3;
+        double minLeft = -M_PI * 3;
 
         // first pass - assumes that we're in inner segment between intersection points,
         // so there is one intersection is above snap (top half of circle) and one - below snap (bottom half of
@@ -414,9 +433,9 @@ LC_Division::CircleSegmentData* LC_Division::findCircleSegmentEdges(RS_Circle *c
         for (int i = 0; i < intersectionsCount; i++) {
             RS_Vector v = intersections.at(i);
 
-//            previewRefPoint(v);
+            //            previewRefPoint(v);
 
-            double angleToIntersection = center.angleTo(v);
+            const double angleToIntersection = center.angleTo(v);
 
             // use corrected angle and thus actually we've rotated intersection point over center of circle
             // to -snap angle (so snap is in zero angle). We used this to divide the entire circle on
@@ -426,59 +445,58 @@ LC_Division::CircleSegmentData* LC_Division::findCircleSegmentEdges(RS_Circle *c
             // right angles are more than 0.
             // With such approach, we detect boundaries of snap segment by finding two intersections points
             // from each part of circle with minimal angle to snap point.
-            double vA = RS_Math::correctAnglePlusMinusPi(angleToIntersection - snapAngle);
+            const double vA = RS_Math::correctAnglePlusMinusPi(angleToIntersection - snapAngle);
 
-            bool left = vA < 0;
+            const bool left = vA < 0;
 
-            if (left){
-                if (vA > minLeft){
+            if (left) {
+                if (vA > minLeft) {
                     minLeft = vA;
                     leftAngle = angleToIntersection;
                 }
-            } else {
-                if (vA < maxRight){
+            }
+            else {
+                if (vA < maxRight) {
                     maxRight = vA;
                     rightAngle = angleToIntersection;
                 }
             }
         }
 
-
-        if (maxRight == M_PI*3){
+        if (maxRight == M_PI * 3) {
             // hmm... no intersection points in top half of rotated circle...
             // so we'll need to check intersection with angle that is closest to M_PI,
             // it should be just intersection with minimal angle from snap
-            maxRight =  -M_PI*3;
+            maxRight = -M_PI * 3;
             for (int i = 0; i < intersectionsCount; i++) {
                 RS_Vector v = intersections.at(i);
-                double angleToIntersection = center.angleTo(v);
-                if (angleToIntersection == leftAngle){
+                const double angleToIntersection = center.angleTo(v);
+                if (LC_LineMath::isSameAngle(angleToIntersection, leftAngle)) {
                     continue;
                 }
-                double vA = RS_Math::correctAnglePlusMinusPi(angleToIntersection - snapAngle);
+                const double vA = RS_Math::correctAnglePlusMinusPi(angleToIntersection - snapAngle);
 
-                if (vA > maxRight){
+                if (vA > maxRight) {
                     maxRight = vA;
                     rightAngle = angleToIntersection;
                 }
-
             }
         }
 
-        if (minLeft == -M_PI*3){
+        if (minLeft == -M_PI * 3) {
             // similarly - no intersection points in bottom half of rotated circle...
             // so we'll need to check intersection with angle that is closest to 0,
             // so it should be just intersection with minimal angle from snap
-            minLeft =  M_PI*3;
+            minLeft = M_PI * 3;
             for (int i = 0; i < intersectionsCount; i++) {
                 RS_Vector v = intersections.at(i);
-                double angleToIntersection = center.angleTo(v);
-                if (angleToIntersection == rightAngle){
+                const double angleToIntersection = center.angleTo(v);
+                if (LC_LineMath::isSameAngle(angleToIntersection, rightAngle)) {
                     continue;
                 }
-                double vA = RS_Math::correctAnglePlusMinusPi(angleToIntersection - snapAngle);
+                const double vA = RS_Math::correctAnglePlusMinusPi(angleToIntersection - snapAngle);
 
-                if (vA < minLeft){
+                if (vA < minLeft) {
                     minLeft = vA;
                     leftAngle = angleToIntersection;
                 }
@@ -493,30 +511,29 @@ LC_Division::CircleSegmentData* LC_Division::findCircleSegmentEdges(RS_Circle *c
     return result;
 }
 
-
-
 /**
  * Collects all intersection of given entity with other entities.
  * @param entity entity to check for intersections
  * @return vector of intersection points
  */
-QVector<RS_Vector> LC_Division::collectAllIntersectionsWithEntity(RS_Entity *entity){
+QVector<RS_Vector> LC_Division::collectAllIntersectionsWithEntity(const RS_Entity* entity) const {
     QVector<RS_Vector> result;
     RS_VectorSolutions sol;
     // iterate over all entities
-    for (auto* e: *m_container) {
+    for (const auto* e : *m_container) {
         // consider only visible entities
-        if (e != nullptr && e->isVisible()){
+        if (e != nullptr && e->isVisible()) {
             // select containers / groups:
-            if (e->isContainer()){
+            if (e->isContainer()) {
                 // additional handling for containers
-                auto *ec = static_cast<RS_EntityContainer*>(e);
+                const auto* ec = static_cast<const RS_EntityContainer*>(e);
 
-                for(RS_Entity* e2: lc::LC_ContainerTraverser{*ec, RS2::ResolveAll}.entities()) {
+                for (const RS_Entity* e2 : lc::LC_ContainerTraverser{*ec, RS2::ResolveAll}.entities()) {
                     sol = RS_Information::getIntersection(entity, e2, true);
                     addPointsFromSolutionToList(sol, result);
                 }
-            } else {
+            }
+            else {
                 // just find intersections between entities
                 sol = RS_Information::getIntersection(entity, e, true);
                 // and collect them
@@ -532,12 +549,12 @@ QVector<RS_Vector> LC_Division::collectAllIntersectionsWithEntity(RS_Entity *ent
  * @param sol vector solutions with intersections
  * @param result resulting vector
  */
-void LC_Division::addPointsFromSolutionToList(RS_VectorSolutions &sol, QVector<RS_Vector> &result) const{
-    if (sol.hasValid()){
-        size_t size = sol.size();
+void LC_Division::addPointsFromSolutionToList(RS_VectorSolutions& sol, QVector<RS_Vector>& result) const {
+    if (sol.hasValid()) {
+        const size_t size = sol.size();
         for (size_t i = 0; i < size; i++) {
             const RS_Vector point = sol.at(i);
-            if (point.valid){
+            if (point.valid) {
                 result.append(point);
             }
         }

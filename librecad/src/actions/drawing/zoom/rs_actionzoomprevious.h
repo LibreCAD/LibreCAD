@@ -35,13 +35,16 @@
  * @author Andrew Mustun
  */
 class RS_ActionZoomPrevious : public RS_ActionInterface {
-	Q_OBJECT
+    Q_OBJECT
 public:
-    RS_ActionZoomPrevious(LC_ActionContext *actionContext);
+    explicit RS_ActionZoomPrevious(LC_ActionContext* actionContext);
 
-	void init(int status) override;
-	void trigger() override;
-    bool isSupportsPredecessorAction() override {return true;}
+    void init(int status) override;
+    void trigger() override;
+
+    bool isSupportsPredecessorAction() const override {
+        return true;
+    }
 };
 
 #endif

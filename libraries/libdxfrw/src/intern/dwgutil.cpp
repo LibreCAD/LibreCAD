@@ -299,7 +299,7 @@ bool dwgCompressor::decompress18(duint8 *cbuf, duint8 *dbuf, duint64 csize, duin
     return false;
 }
 
-duint8 dwgCompressor::compressedByte(void)
+duint8 dwgCompressor::compressedByte()
 {
     duint8 result {0};
 
@@ -321,7 +321,7 @@ duint8 dwgCompressor::compressedByte(const duint32 index)
     return 0;
 }
 
-duint32 dwgCompressor::compressedHiByte(void)
+duint32 dwgCompressor::compressedHiByte()
 {
     return static_cast<duint32>(compressedByte()) << 8;
 }
@@ -352,7 +352,7 @@ void dwgCompressor::decompSet(const duint8 value)
     }
 }
 
-bool dwgCompressor::buffersGood(void)
+bool dwgCompressor::buffersGood()
 {
     return compressedGood && decompGood;
 }
@@ -587,42 +587,58 @@ secEnum::DWGSection secEnum::getEnum(const std::string &nameSec){
     //TODO: complete it
     if (nameSec=="AcDb:Header"){
         return HEADER;
-    } else if (nameSec=="AcDb:Classes"){
+    }
+    if (nameSec=="AcDb:Classes"){
         return CLASSES;
-    } else if (nameSec=="AcDb:SummaryInfo"){
+    }
+    if (nameSec=="AcDb:SummaryInfo"){
         return SUMARYINFO;
-    } else if (nameSec=="AcDb:Preview"){
+    }
+    if (nameSec=="AcDb:Preview"){
         return PREVIEW;
-    } else if (nameSec=="AcDb:VBAProject"){
+    }
+    if (nameSec=="AcDb:VBAProject"){
         return VBAPROY;
-    } else if (nameSec=="AcDb:AppInfo"){
+    }
+    if (nameSec=="AcDb:AppInfo"){
         return APPINFO;
-    } else if (nameSec=="AcDb:FileDepList"){
+    }
+    if (nameSec=="AcDb:FileDepList"){
         return FILEDEP;
-    } else if (nameSec=="AcDb:RevHistory"){
+    }
+    if (nameSec=="AcDb:RevHistory"){
         return REVHISTORY;
-    } else if (nameSec=="AcDb:Security"){
+    }
+    if (nameSec=="AcDb:Security"){
         return SECURITY;
-    } else if (nameSec=="AcDb:AcDbObjects"){
+    }
+    if (nameSec=="AcDb:AcDbObjects"){
         return OBJECTS;
-    } else if (nameSec=="AcDb:ObjFreeSpace"){
+    }
+    if (nameSec=="AcDb:ObjFreeSpace"){
         return OBJFREESPACE;
-    } else if (nameSec=="AcDb:Template"){
+    }
+    if (nameSec=="AcDb:Template"){
         return TEMPLATE;
-    } else if (nameSec=="AcDb:Handles"){
+    }
+    if (nameSec=="AcDb:Handles"){
         return HANDLES;
-    } else if (nameSec=="AcDb:AcDsPrototype_1b"){
+    }
+    if (nameSec=="AcDb:AcDsPrototype_1b"){
         return PROTOTYPE;
-    } else if (nameSec=="AcDb:AuxHeader"){
+    }
+    if (nameSec=="AcDb:AuxHeader"){
         return AUXHEADER;
-    } else if (nameSec=="AcDb:Signature"){
+    }
+    if (nameSec=="AcDb:Signature"){
         return SIGNATURE;
-    } else if (nameSec=="AcDb:AppInfoHistory"){ //in ac1021
+    }
+    if (nameSec=="AcDb:AppInfoHistory"){ //in ac1021
         return APPINFOHISTORY;
-//    } else if (nameSec=="AcDb:Extended Entity Data"){
-//        return EXTEDATA;
-//    } else if (nameSec=="AcDb:PROXY ENTITY GRAPHICS"){
-//        return PROXYGRAPHICS;
+        //    } else if (nameSec=="AcDb:Extended Entity Data"){
+        //        return EXTEDATA;
+        //    } else if (nameSec=="AcDb:PROXY ENTITY GRAPHICS"){
+        //        return PROXYGRAPHICS;
     }
     return UNKNOWNS;
 }

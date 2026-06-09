@@ -1,5 +1,5 @@
 /****************************************************************************
-*
+ *
 * Class that holds the list of collected coordinates
 
 Copyright (C) 2024 LibreCAD.org
@@ -23,6 +23,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #define LC_QUICKINFOPOINTSDATA_H
 
 #include <QVector>
+
 #include "lc_quickinfobasedata.h"
 
 class LC_QuickInfoPointsData : public LC_QuickInfoBaseData{
@@ -53,9 +54,9 @@ public:
     void clear() override;
     QString generateView(bool showDistanceAndAngle, bool forceUpdate = false);
     bool removeCoordinate(int index);
-    void setPointInsertionIndex(int index){m_collectedPointsInsertionIndex = index;}
+    void setPointInsertionIndex(const int index){m_collectedPointsInsertionIndex = index;}
     RS_Vector getVectorForIndex(int index) const override;
-    RS_Vector getCollectedCoordinate(int index) const {return m_collectedPoints.at(index)->data;}
+    RS_Vector getCollectedCoordinate(const int index) const {return m_collectedPoints.at(index)->data;}
     int getCollectedCoordinatesCount() const {return m_collectedPoints.size();}
     bool hasData() const override;
 private:
@@ -67,4 +68,4 @@ private:
     PointInfo *createPointInfo(const RS_Vector &point, const RS_Vector &viewCoordinate, const QString &idxValue, bool relative) const;
 };
 
-#endif // LC_QUICKINFOPOINTSDATA_H
+#endif

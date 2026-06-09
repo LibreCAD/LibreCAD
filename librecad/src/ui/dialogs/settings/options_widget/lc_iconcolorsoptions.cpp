@@ -20,6 +20,9 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
 
+#include "lc_iconcolorsoptions.h"
+
+#include <QDir>
 #include <QFile>
 #include <QGuiApplication>
 #include <QPalette>
@@ -28,12 +31,10 @@
 #include <QJsonObject>
 #include <QJsonDocument>
 #include <QJsonArray>
-#include "lc_iconcolorsoptions.h"
 
-#include <QDir>
 
-#include "rs_settings.h"
 #include "rs_debug.h"
+#include "rs_settings.h"
 
 namespace {
     // Light-scheme template defaults — match the SVG template colors so that
@@ -59,7 +60,7 @@ namespace {
             ? DEFAULT_BACKGROUND_DARK : DEFAULT_BACKGROUND_LIGHT;
     }
 }
-
+// fixme - sand - probably it's better to move it so some generic util, as it will be used in several places
 bool LC_IconColorsOptions::isDarkColorScheme() {
 #if QT_VERSION >= QT_VERSION_CHECK(6, 5, 0)
     auto scheme = QGuiApplication::styleHints()->colorScheme();
@@ -72,26 +73,25 @@ bool LC_IconColorsOptions::isDarkColorScheme() {
     return QGuiApplication::palette().color(QPalette::Window).lightnessF() < 0.5;
 }
 
-LC_IconColorsOptions::LC_IconColorsOptions() {
-}
+LC_IconColorsOptions::LC_IconColorsOptions() = default;
 
-LC_IconColorsOptions::LC_IconColorsOptions(LC_IconColorsOptions &other){
-    colors.insert(other.colors);
+LC_IconColorsOptions::LC_IconColorsOptions(const LC_IconColorsOptions& other) {
+    m_colors.insert(other.m_colors);
 }
 
 void LC_IconColorsOptions::resetToDefaults() {
-    colors.clear();
+    m_colors.clear();
     setColor(LC_SVGIconEngineAPI::AnyMode, LC_SVGIconEngineAPI::AnyState, LC_SVGIconEngineAPI::ColorType::Main, defaultMain());
     setColor(LC_SVGIconEngineAPI::AnyMode, LC_SVGIconEngineAPI::AnyState, LC_SVGIconEngineAPI::ColorType::Accent, DEFAULT_ACCENT);
     setColor(LC_SVGIconEngineAPI::AnyMode, LC_SVGIconEngineAPI::AnyState, LC_SVGIconEngineAPI::ColorType::Background, defaultBackground());
 }
 
-void LC_IconColorsOptions::apply(LC_IconColorsOptions &other) {
-  colors.clear();
-  colors.insert(other.colors);
+void LC_IconColorsOptions::apply(const LC_IconColorsOptions& other) {
+    m_colors.clear();
+    m_colors.insert(other.m_colors);
 }
 
-QString LC_IconColorsOptions::getKeyBaseName(LC_SVGIconEngineAPI::ColorType type){
+QString LC_IconColorsOptions::getKeyBaseName(const LC_SVGIconEngineAPI::ColorType type) {
     switch (type) {
         case LC_SVGIconEngineAPI::ColorType::Main:
             return LC_SVGIconEngineAPI::KEY_COLOR_MAIN;
@@ -104,31 +104,35 @@ QString LC_IconColorsOptions::getKeyBaseName(LC_SVGIconEngineAPI::ColorType type
     }
 }
 
-QString LC_IconColorsOptions::getSettingsKeyName(LC_SVGIconEngineAPI::IconMode mode, LC_SVGIconEngineAPI::IconState state, LC_SVGIconEngineAPI::ColorType type){
-    QString keyBase = getKeyBaseName(type);
+QString LC_IconColorsOptions::getSettingsKeyName(const LC_SVGIconEngineAPI::IconMode mode, const LC_SVGIconEngineAPI::IconState state,
+                                                 const LC_SVGIconEngineAPI::ColorType type) {
+    const QString keyBase = getKeyBaseName(type);
     QString keyName = getColorAppKeyName(keyBase, mode, state);
     return keyName;
 }
 
-void LC_IconColorsOptions::loadColor(LC_SVGIconEngineAPI::IconMode mode, LC_SVGIconEngineAPI::IconState state, LC_SVGIconEngineAPI::ColorType type, QString defaultValue){
-    QString settingsKey = getSettingsKeyName(mode, state, type);
-    QString value = LC_GET_STR(settingsKey, defaultValue);
-    int hashKey = iconHashKey(mode, state, type);
-    colors.insert(hashKey, value);
+void LC_IconColorsOptions::loadColor(const LC_SVGIconEngineAPI::IconMode mode, const LC_SVGIconEngineAPI::IconState state,
+                                     const LC_SVGIconEngineAPI::ColorType type, const QString& defaultValue) {
+    const QString settingsKey = getSettingsKeyName(mode, state, type);
+    const QString value = LC_GET_STR(settingsKey, defaultValue);
+    const int hashKey = iconHashKey(mode, state, type);
+    m_colors.insert(hashKey, value);
 }
 
-void LC_IconColorsOptions::saveColor(LC_SVGIconEngineAPI::IconMode mode, LC_SVGIconEngineAPI::IconState state, LC_SVGIconEngineAPI::ColorType type){
-    QString settingsKey = getSettingsKeyName(mode, state, type);
-    int hashKey = iconHashKey(mode, state, type);
-    QString value = colors.value(hashKey);
+void LC_IconColorsOptions::saveColor(const LC_SVGIconEngineAPI::IconMode mode, const LC_SVGIconEngineAPI::IconState state,
+                                     const LC_SVGIconEngineAPI::ColorType type) {
+    const QString settingsKey = getSettingsKeyName(mode, state, type);
+    const int hashKey = iconHashKey(mode, state, type);
+    const QString value = m_colors.value(hashKey);
     LC_SET(settingsKey, value);
 }
 
-void LC_IconColorsOptions::applyColor(LC_SVGIconEngineAPI::IconMode mode, LC_SVGIconEngineAPI::IconState state, LC_SVGIconEngineAPI::ColorType type){
-    int hashKey = iconHashKey(mode, state, type);
-    QString value = colors.value(hashKey);
+void LC_IconColorsOptions::applyColor(const LC_SVGIconEngineAPI::IconMode mode, const LC_SVGIconEngineAPI::IconState state,
+                                      const LC_SVGIconEngineAPI::ColorType type) {
+    const int hashKey = iconHashKey(mode, state, type);
+    const QString value = m_colors.value(hashKey);
 
-    QString keyBase = getKeyBaseName(type);
+    const QString keyBase = getKeyBaseName(type);
     setColorAppProperty(keyBase, mode, state, value);
 }
 
@@ -167,7 +171,7 @@ void LC_IconColorsOptions::loadSettings() {
         loadColor(LC_SVGIconEngineAPI::Disabled, LC_SVGIconEngineAPI::Off, LC_SVGIconEngineAPI::ColorType::Accent, "");
         loadColor(LC_SVGIconEngineAPI::Disabled, LC_SVGIconEngineAPI::Off, LC_SVGIconEngineAPI::ColorType::Background, "");
 
-        iconOverridesDir = LC_GET_STR("IconOverridesDir", "");
+        m_iconOverridesDir = LC_GET_STR("IconOverridesDir", "");
     }
     LC_GROUP_END();
 }
@@ -207,12 +211,12 @@ void LC_IconColorsOptions::save() {
         saveColor(LC_SVGIconEngineAPI::Disabled, LC_SVGIconEngineAPI::Off, LC_SVGIconEngineAPI::ColorType::Accent);
         saveColor(LC_SVGIconEngineAPI::Disabled, LC_SVGIconEngineAPI::Off, LC_SVGIconEngineAPI::ColorType::Background);
 
-        LC_SET("IconOverridesDir", iconOverridesDir);
+        LC_SET("IconOverridesDir", m_iconOverridesDir);
     }
     LC_GROUP_END();
 }
 
-void LC_IconColorsOptions::applyOptions(){
+void LC_IconColorsOptions::applyOptions() {
     applyColor(LC_SVGIconEngineAPI::AnyMode, LC_SVGIconEngineAPI::AnyState, LC_SVGIconEngineAPI::ColorType::Main);
     applyColor(LC_SVGIconEngineAPI::AnyMode, LC_SVGIconEngineAPI::AnyState, LC_SVGIconEngineAPI::ColorType::Accent);
     applyColor(LC_SVGIconEngineAPI::AnyMode, LC_SVGIconEngineAPI::AnyState, LC_SVGIconEngineAPI::ColorType::Background);
@@ -245,151 +249,152 @@ void LC_IconColorsOptions::applyOptions(){
     applyColor(LC_SVGIconEngineAPI::Disabled, LC_SVGIconEngineAPI::Off, LC_SVGIconEngineAPI::ColorType::Accent);
     applyColor(LC_SVGIconEngineAPI::Disabled, LC_SVGIconEngineAPI::Off, LC_SVGIconEngineAPI::ColorType::Background);
 
-    qApp->setProperty(LC_SVGIconEngineAPI::KEY_ICONS_OVERRIDES_DIR,  iconOverridesDir);
+    qApp->setProperty(LC_SVGIconEngineAPI::KEY_ICONS_OVERRIDES_DIR, m_iconOverridesDir);
 }
 
-QString LC_IconColorsOptions::getColor(LC_SVGIconEngineAPI::IconMode mode, LC_SVGIconEngineAPI::IconState state, LC_SVGIconEngineAPI::ColorType type){
-    int key = iconHashKey(mode, state, type);
-    QString result = colors.value(key);
+QString LC_IconColorsOptions::getColor(const LC_SVGIconEngineAPI::IconMode mode, const LC_SVGIconEngineAPI::IconState state,
+                                       const LC_SVGIconEngineAPI::ColorType type) const {
+    const int key = iconHashKey(mode, state, type);
+    QString result = m_colors.value(key);
     return result;
 }
 
-void LC_IconColorsOptions::setColor(LC_SVGIconEngineAPI::IconMode mode, LC_SVGIconEngineAPI::IconState state, LC_SVGIconEngineAPI::ColorType type, QString color){
-    int key = iconHashKey(mode, state, type);
-    colors.insert(key, color);
+void LC_IconColorsOptions::setColor(const LC_SVGIconEngineAPI::IconMode mode, const LC_SVGIconEngineAPI::IconState state,
+                                    const LC_SVGIconEngineAPI::ColorType type, const QString& color) {
+    const int key = iconHashKey(mode, state, type);
+    m_colors.insert(key, color);
 }
 
-void LC_IconColorsOptions::mark(){
-    colorsMarkCopy.clear();
-    colorsMarkCopy.insert(colors);
-    iconOverridesDirMarkCopy = iconOverridesDir;
+void LC_IconColorsOptions::mark() {
+    m_colorsMarkCopy.clear();
+    m_colorsMarkCopy.insert(m_colors);
+    m_iconOverridesDirMarkCopy = m_iconOverridesDir;
 }
 
-void LC_IconColorsOptions::restore(){
-    colors.clear();
-    colors.insert(colorsMarkCopy);
-    colorsMarkCopy.clear();
-    iconOverridesDir = iconOverridesDirMarkCopy;
+void LC_IconColorsOptions::restore() {
+    m_colors.clear();
+    m_colors.insert(m_colorsMarkCopy);
+    m_colorsMarkCopy.clear();
+    m_iconOverridesDir = m_iconOverridesDirMarkCopy;
 }
 
-bool LC_IconColorsOptions::isIconOverridesChanged(){
-    return iconOverridesDir != iconOverridesDirMarkCopy;
+bool LC_IconColorsOptions::isIconOverridesChanged() const {
+    return m_iconOverridesDir != m_iconOverridesDirMarkCopy;
 }
 
-void LC_IconColorsOptions::getAvailableStyles(QStringList& list){
-    QDir dir(iconOverridesDir);
-    QStringList files = dir.entryList( QStringList( "*.lcis"));
-    for(QString& file: files){
-        QString styleName = loadStyleNameFromFile((file));
+void LC_IconColorsOptions::getAvailableStyles(QStringList& list) const {
+    const QDir dir(m_iconOverridesDir);
+    QStringList files = dir.entryList(QStringList("*.lcis"));
+    for (const QString& file : std::as_const(files)) {
+        QString styleName = loadStyleNameFromFile(file);
         if (!styleName.isEmpty()) {
             list << styleName;
         }
     }
 }
+
 namespace {
-    QRegularExpression styleNameCleanupExpression("[^a-zA-Z\\d]");
-    QString styleFileMark("LibreCAD Icons Style");
+    const QRegularExpression REGEXP_STYLE_NAME_CLEANUP("[^a-zA-Z\\d]");
+    const QString STYLE_FILE_MARK("LibreCAD Icons Style");
 }
 
-bool LC_IconColorsOptions::loadFromFile(QString styleName){
-    QString absFileName = getNameOfStyleFile(styleName);
-    QFile jsonFile = QFile(absFileName);
+bool LC_IconColorsOptions::loadFromFile(const QString& styleName) {
+    const QString absFileName = getNameOfStyleFile(styleName);
+    auto jsonFile = QFile(absFileName);
     if (jsonFile.open(QFile::ReadOnly)) {
         QJsonParseError parseError;
-        QJsonDocument doc = QJsonDocument().fromJson(jsonFile.readAll(), &parseError);
+        const QJsonDocument doc = QJsonDocument::fromJson(jsonFile.readAll(), &parseError);
         if (parseError.error != QJsonParseError::NoError) {
             LC_ERR << "Invalid json file. Parsing failed:" << parseError.error << parseError.errorString();
-        } else {
+        }
+        else {
             if (doc.isObject()) {
-                colors.clear();
-                QJsonObject obj = doc.object();
-                auto name = obj.value("name").toString();
-                auto type = obj.value("type").toString();
-                if (styleFileMark == type) {
+                m_colors.clear();
+                const QJsonObject obj = doc.object();
+                // auto name = obj.value("name").toString();
+                const auto type = obj.value("type").toString();
+                if (STYLE_FILE_MARK == type) {
                     QJsonArray settings = obj.value("settings").toArray();
-                    int size = settings.size();
-                    for(int i = 0; i < size; i++){
+                    const qsizetype size = settings.size();
+                    for (qsizetype i = 0; i < size; i++) {
                         QJsonObject settingObj = settings[i].toObject();
                         auto mode = settingObj.value("iconMode").toString();
                         auto state = settingObj.value("iconState").toString();
-                        auto type = settingObj.value("colorType").toString();
-                        auto value = settingObj.value("colorSvgString").toString();
-
+                        auto colorTypeName = settingObj.value("colorType").toString();
 
                         LC_SVGIconEngineAPI::IconMode iconMode;
                         LC_SVGIconEngineAPI::IconState iconState;
                         LC_SVGIconEngineAPI::ColorType colorType;
-                        if (parseIconMode(mode, iconMode) && parseIconState(state, iconState) && parseColorType(type, colorType)){
+                        if (parseIconMode(mode, iconMode) && parseIconState(state, iconState) && parseColorType(colorTypeName, colorType)) {
+                            const auto value = settingObj.value("colorSvgString").toString();
                             setColor(iconMode, iconState, colorType, value);
                         }
                     }
                 }
-                else{
+                else {
                     LC_ERR << "Not an Icons Style";
                 }
             }
-            else{
+            else {
                 LC_ERR << "Not a JSON doc object";
             }
         }
     }
-    else{
+    else {
         LC_ERR << "Can't open json file for reading. Parsing failed:" << absFileName;
     }
     return true;
 }
 
-QString LC_IconColorsOptions::loadStyleNameFromFile(QString fileName){
-    QString absFileName = iconOverridesDir;
-    absFileName.append("/").append(fileName);
+QString LC_IconColorsOptions::loadStyleNameFromFile(const QString& styleName) const {
+    QString absFileName = m_iconOverridesDir;
+    absFileName.append("/").append(styleName);
 
-    QFile jsonFile = QFile(absFileName);
+    auto jsonFile = QFile(absFileName);
     jsonFile.open(QFile::ReadOnly);
-    QJsonDocument doc = QJsonDocument().fromJson(jsonFile.readAll());
-    QJsonObject obj  = doc.object();
-    QString name = obj.value("name").toString();
-    QString type = obj.value("type").toString();
-    if ( styleFileMark == type) {
+    const QJsonDocument doc = QJsonDocument().fromJson(jsonFile.readAll());
+    const QJsonObject obj = doc.object();
+    const QString type = obj.value("type").toString();
+    if (STYLE_FILE_MARK == type) {
+        QString name = obj.value("name").toString();
         return name;
     }
     return "";
 }
 
-
-QString LC_IconColorsOptions::getNameOfStyleFile(const QString &styleName) const{
-    auto correctedName = styleName;
-    correctedName = correctedName.remove(styleNameCleanupExpression);
-    auto fileName = correctedName.append(".lcis");
-    QString absFileName = iconOverridesDir;
+QString LC_IconColorsOptions::getNameOfStyleFile(const QString& name) const {
+    auto correctedName = name;
+    correctedName = correctedName.remove(REGEXP_STYLE_NAME_CLEANUP);
+    const auto fileName = correctedName.append(".lcis");
+    QString absFileName = m_iconOverridesDir;
     absFileName.append("/").append(fileName);
     return absFileName;
 }
 
-bool LC_IconColorsOptions::removeStyle(const QString &styleName) const{
-    QString absFileName = getNameOfStyleFile(styleName);
-    QFile file = QFile(absFileName);
+bool LC_IconColorsOptions::removeStyle(const QString& styleName) const {
+    const QString absFileName = getNameOfStyleFile(styleName);
+    auto file = QFile(absFileName);
     if (file.exists()) {
-       return file.remove();
+        return file.remove();
     }
     return false;
 }
 
-bool LC_IconColorsOptions::saveToFile(const QString &styleName) const {
-
-    QString absFileName = getNameOfStyleFile(styleName);
-    QFile jsonFile = QFile(absFileName);
+bool LC_IconColorsOptions::saveToFile(const QString& styleName) const {
+    const QString absFileName = getNameOfStyleFile(styleName);
+    auto jsonFile = QFile(absFileName);
 
     QJsonObject style;
     style.insert("name", QJsonValue::fromVariant(styleName));
-    style.insert("type", QJsonValue::fromVariant(styleFileMark));
+    style.insert("type", QJsonValue::fromVariant(STYLE_FILE_MARK));
 
-    QJsonArray  settings;
+    QJsonArray settings;
 
     exportColor(LC_SVGIconEngineAPI::AnyMode, LC_SVGIconEngineAPI::AnyState, LC_SVGIconEngineAPI::ColorType::Main, settings);
     exportColor(LC_SVGIconEngineAPI::AnyMode, LC_SVGIconEngineAPI::AnyState, LC_SVGIconEngineAPI::ColorType::Accent, settings);
     exportColor(LC_SVGIconEngineAPI::AnyMode, LC_SVGIconEngineAPI::AnyState, LC_SVGIconEngineAPI::ColorType::Background, settings);
 
-    exportColor(LC_SVGIconEngineAPI::Active, LC_SVGIconEngineAPI::On, LC_SVGIconEngineAPI::ColorType::Main,settings);
+    exportColor(LC_SVGIconEngineAPI::Active, LC_SVGIconEngineAPI::On, LC_SVGIconEngineAPI::ColorType::Main, settings);
     exportColor(LC_SVGIconEngineAPI::Active, LC_SVGIconEngineAPI::On, LC_SVGIconEngineAPI::ColorType::Accent, settings);
     exportColor(LC_SVGIconEngineAPI::Active, LC_SVGIconEngineAPI::On, LC_SVGIconEngineAPI::ColorType::Background, settings);
     exportColor(LC_SVGIconEngineAPI::Active, LC_SVGIconEngineAPI::Off, LC_SVGIconEngineAPI::ColorType::Main, settings);
@@ -419,7 +424,7 @@ bool LC_IconColorsOptions::saveToFile(const QString &styleName) const {
 
     style.insert("settings", settings);
 
-    QJsonDocument doc(style);
+    const QJsonDocument doc(style);
     jsonFile.open(QFile::WriteOnly);
     jsonFile.write(doc.toJson());
 
@@ -427,10 +432,11 @@ bool LC_IconColorsOptions::saveToFile(const QString &styleName) const {
     return false;
 }
 
-void LC_IconColorsOptions::exportColor(LC_SVGIconEngineAPI::IconMode mode, LC_SVGIconEngineAPI::IconState state, LC_SVGIconEngineAPI::ColorType type, QJsonArray &array) const{
-    int hashKey = iconHashKey(mode, state, type);
-    QString value = colors.value(hashKey);
-    if (!value.isEmpty()){
+void LC_IconColorsOptions::exportColor(const LC_SVGIconEngineAPI::IconMode mode, const LC_SVGIconEngineAPI::IconState state,
+                                       const LC_SVGIconEngineAPI::ColorType type, QJsonArray& array) const {
+    const int hashKey = iconHashKey(mode, state, type);
+    const QString value = m_colors.value(hashKey);
+    if (!value.isEmpty()) {
         QJsonObject setting;
         setting.insert("iconMode", QJsonValue::fromVariant(getModeStr(mode)));
         setting.insert("iconState", QJsonValue::fromVariant(getStateStr(state)));
@@ -440,72 +446,72 @@ void LC_IconColorsOptions::exportColor(LC_SVGIconEngineAPI::IconMode mode, LC_SV
     }
 }
 
-const QString LC_IconColorsOptions::getTypeStr(LC_SVGIconEngineAPI::ColorType type) const{
+QString LC_IconColorsOptions::getTypeStr(const LC_SVGIconEngineAPI::ColorType type) const {
     switch (type) {
-        case (LC_SVGIconEngineAPI::ColorType::Background):
+        case LC_SVGIconEngineAPI::ColorType::Background:
             return "background";
-        case (LC_SVGIconEngineAPI::ColorType::Main):
+        case LC_SVGIconEngineAPI::ColorType::Main:
             return "main";
-        case (LC_SVGIconEngineAPI::ColorType::Accent):
+        case LC_SVGIconEngineAPI::ColorType::Accent:
             return "accent";
     }
     return "";
 }
 
-bool LC_IconColorsOptions::parseColorType(const QString &val, LC_SVGIconEngineAPI::ColorType &type) {
-    QString trimmed = val.trimmed();
+bool LC_IconColorsOptions::parseColorType(const QString& val, LC_SVGIconEngineAPI::ColorType& type) {
+    const QString trimmed = val.trimmed();
     bool result = true;
-    if ("background" == trimmed){
+    if ("background" == trimmed) {
         type = LC_SVGIconEngineAPI::ColorType::Background;
     }
-    else if ("main" == trimmed){
+    else if ("main" == trimmed) {
         type = LC_SVGIconEngineAPI::ColorType::Main;
     }
-    else if ("accent" == trimmed){
+    else if ("accent" == trimmed) {
         type = LC_SVGIconEngineAPI::ColorType::Accent;
     }
-    else{
+    else {
         result = false;
     }
     return result;
 }
 
-const QString LC_IconColorsOptions::getStateStr(LC_SVGIconEngineAPI::IconState state) const{
+QString LC_IconColorsOptions::getStateStr(const LC_SVGIconEngineAPI::IconState state) const {
     switch (state) {
-        case (LC_SVGIconEngineAPI::IconState::Off): {
+        case LC_SVGIconEngineAPI::IconState::Off: {
             return "off";
         }
-        case (LC_SVGIconEngineAPI::IconState::On): {
+        case LC_SVGIconEngineAPI::IconState::On: {
             return "on";
         }
-        case (LC_SVGIconEngineAPI::IconState::AnyState): {
+        case LC_SVGIconEngineAPI::IconState::AnyState: {
             return "any";
         }
     }
     return "";
 }
 
-bool LC_IconColorsOptions::parseIconState(const QString &val, LC_SVGIconEngineAPI::IconState &state) {
-    QString trimmed = val.trimmed();
+bool LC_IconColorsOptions::parseIconState(const QString& val, LC_SVGIconEngineAPI::IconState& state) {
+    const QString trimmed = val.trimmed();
     bool result = true;
-    if ("off" == trimmed){
+    if ("off" == trimmed) {
         state = LC_SVGIconEngineAPI::IconState::Off;
     }
-    else if ("on" == trimmed){
+    else if ("on" == trimmed) {
         state = LC_SVGIconEngineAPI::IconState::On;
     }
-    else if ("any" == trimmed){
+    else if ("any" == trimmed) {
         state = LC_SVGIconEngineAPI::IconState::AnyState;
     }
-    else{
+    else {
         result = false;
     }
     return result;
 }
 
-const QString LC_IconColorsOptions::getModeStr(LC_SVGIconEngineAPI::IconMode mode) const {
-    switch (mode){
-        case LC_SVGIconEngineAPI::IconMode::Active:{
+QString LC_IconColorsOptions::getModeStr(const LC_SVGIconEngineAPI::IconMode mode) const {
+    switch (mode) {
+        case LC_SVGIconEngineAPI::IconMode::Active: {
             return "active";
         }
         case LC_SVGIconEngineAPI::IconMode::AnyMode: {
@@ -524,25 +530,25 @@ const QString LC_IconColorsOptions::getModeStr(LC_SVGIconEngineAPI::IconMode mod
     return "";
 }
 
-bool LC_IconColorsOptions::parseIconMode(const QString &val, LC_SVGIconEngineAPI::IconMode &mode) {
-    QString trimmed = val.trimmed();
+bool LC_IconColorsOptions::parseIconMode(const QString& val, LC_SVGIconEngineAPI::IconMode& mode) {
+    const QString trimmed = val.trimmed();
     bool result = true;
-    if ("active" == trimmed){
+    if ("active" == trimmed) {
         mode = LC_SVGIconEngineAPI::IconMode::Active;
     }
-    else if ("any" == trimmed){
+    else if ("any" == trimmed) {
         mode = LC_SVGIconEngineAPI::IconMode::AnyMode;
     }
-    else if ("normal" == trimmed){
+    else if ("normal" == trimmed) {
         mode = LC_SVGIconEngineAPI::IconMode::Normal;
     }
-    else if ("disabled" == trimmed){
+    else if ("disabled" == trimmed) {
         mode = LC_SVGIconEngineAPI::IconMode::Disabled;
     }
-    else if ("selected" == trimmed){
+    else if ("selected" == trimmed) {
         mode = LC_SVGIconEngineAPI::IconMode::Selected;
     }
-    else{
+    else {
         result = false;
     }
     return result;

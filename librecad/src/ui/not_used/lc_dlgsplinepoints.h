@@ -1,7 +1,7 @@
 #ifndef LC_DLGSPLINEPOINTS_H
 #define LC_DLGSPLINEPOINTS_H
 
-#include "../dialogs/entity/lc_entitypropertiesdlg.h"
+#include "lc_entitypropertiesdlg.h"
 
 class LC_SplinePoints;
 
@@ -21,11 +21,11 @@ protected slots:
     void languageChange();
 protected:
     void setEntity(LC_SplinePoints* b);
-    LC_DlgSplinePoints(LC_DlgSplinePoints const&) = delete;
-    LC_DlgSplinePoints& operator = (LC_DlgSplinePoints const&) = delete;
+    LC_DlgSplinePoints(const LC_DlgSplinePoints&) = delete;
+    LC_DlgSplinePoints& operator = (const LC_DlgSplinePoints&) = delete;
     LC_DlgSplinePoints(LC_DlgSplinePoints &&) = delete;
     LC_DlgSplinePoints& operator = (LC_DlgSplinePoints &&) = delete;
     LC_SplinePoints* m_entity;
     std::unique_ptr<Ui::DlgSplinePoints> ui;
 };
-#endif // LC_DLGSPLINEPOINTS_H
+#endif

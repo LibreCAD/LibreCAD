@@ -25,9 +25,9 @@
 **
 **********************************************************************/
 
+#include "rs_undocycle.h"
 
 #include <ostream>
-#include "rs_undocycle.h"
 
 #include "rs_entity.h"
 
@@ -37,65 +37,52 @@ class RS_Entity;
  * more Undoables.
  */
 void RS_UndoCycle::addUndoable(RS_Undoable* u) {
-    if (u != nullptr)
-        undoables.insert(u);
+    if (u != nullptr) {
+        m_undoables.insert(u);
+    }
 }
 
 /**
  * Removes an undoable from the list.
  */
 void RS_UndoCycle::removeUndoable(RS_Undoable* u) {
-    if (u != nullptr)
-        undoables.erase(u);
+    if (u != nullptr) {
+        m_undoables.erase(u);
+    }
 }
 
 /**
  * Return number of undoables in cycle
  */
-size_t RS_UndoCycle::size() const
-{
-    return undoables.size();
+size_t RS_UndoCycle::size() const {
+    return m_undoables.size();
 }
 
-bool RS_UndoCycle::empty() const
-{
-    return undoables.empty();
+bool RS_UndoCycle::empty() const {
+    return m_undoables.empty();
 }
 
-void RS_UndoCycle::changeUndoState()
-{
-	for (RS_Undoable* u: undoables)
-		u->changeUndoState();
+void RS_UndoCycle::changeUndoState() const {
+    for (RS_Undoable* u : m_undoables) {
+        u->changeDeleteState();
+    }
 }
 
-std::set<RS_Undoable*> const& RS_UndoCycle::getUndoables() const
-{
-    return undoables;
+const std::set<RS_Undoable*>& RS_UndoCycle::getUndoables() const {
+    return m_undoables;
 }
 
-
-std::ostream& operator << (std::ostream& os,
-								  RS_UndoCycle& uc) {
-	os << " Undo item: " << "\n";
-	//os << "   Type: ";
-	/*switch (i.type) {
-	case RS2::UndoAdd:
-		os << "RS2::UndoAdd";
-		break;
-	case RS2::UndoDel:
-		os << "RS2::UndoDel";
-		break;
-}*/
-	os << "   Undoable ids: ";
-	for (auto u: uc.undoables) {
-		if (u->undoRtti()==RS2::UndoableEntity) {
-            auto e = static_cast<RS_Entity*>(u);
-			os << e->getId() << (u->isUndone() ? "*" : "") << " ";
-		} else {
-			os << "|";
-		}
-
-	}
-
-	return os;
+std::ostream& operator <<(std::ostream& os, const RS_UndoCycle& uc) {
+    os << " Undo item: " << "\n";
+    os << "   Undoable ids: ";
+    for (const auto u : uc.m_undoables) {
+        if (u->undoRtti() == RS2::UndoableEntity) {
+            const auto e = static_cast<RS_Entity*>(u);
+            os << e->getId() << (u->isDeleted() ? "*" : "") << " ";
+        }
+        else {
+            os << "|";
+        }
+    }
+    return os;
 }

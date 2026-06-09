@@ -21,9 +21,10 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-#ifndef LIBRECAD_LC_PENITEM_H
-#define LIBRECAD_LC_PENITEM_H
-#include <QIcon>
+#ifndef LC_PENITEM_H
+#define LC_PENITEM_H
+
+
 
 #include "lc_peninforegistry.h"
 #include "rs.h"
@@ -36,31 +37,31 @@ class RS_Pen;
 class LC_PenItem {
 public:
     LC_PenItem(QString name, const RS_Pen&);
-    explicit LC_PenItem(QString name);
+    explicit LC_PenItem(const QString& name);
     QString getName()  const {return m_name;}
 
     void setPen(const RS_Pen& pen);
 
-    QIcon getColorIcon() {return m_iconColor;};
-    QIcon getLineTypeIcon() {return m_iconLineType;};
-    QIcon getLineWidthIcon() {return m_iconLineWidth;};
+    QIcon getColorIcon() {return m_iconColor;}
+    QIcon getLineTypeIcon() {return m_iconLineType;}
+    QIcon getLineWidthIcon() {return m_iconLineWidth;}
 
-    QString getColorName() {return m_colorName;};
-    void setColorName(QString &value){m_colorName = value;};
-    QString getLineTypeName() {return m_lineTypeName;};
-    QString getLineWidthName() {return m_lineWidthName;};
-    RS2::LineType getLineType();
+    QString getColorName() {return m_colorName;}
+    void setColorName(const QString &value){m_colorName = value;}
+    QString getLineTypeName() {return m_lineTypeName;}
+    QString getLineWidthName() {return m_lineWidthName;}
+    RS2::LineType getLineType() const;
 
-    bool isMatched() const {return m_matched;};
-    void setMatched(bool value) {m_matched = value;};
-    RS2::LineWidth getLineWidth();
+    bool isMatched() const {return m_matched;}
+    void setMatched(const bool value) {m_matched = value;}
+    RS2::LineWidth getLineWidth() const;
 
     RS_Color getColor();
-    void setLineTypeIcon(QIcon &icon);
-    void setLineTypeName(QString name);
-    void setLineWidthIcon(QIcon &icon);
-    void setLineWidthName(QString name);
-    void setColorIcon(QIcon &icon);
+    void setLineTypeIcon(const QIcon &icon);
+    void setLineTypeName(const QString& typeName);
+    void setLineWidthIcon(const QIcon &icon);
+    void setLineWidthName(const QString& name);
+    void setColorIcon(const QIcon &icon);
     void setLineType(RS2::LineType type);
     void setLineWidth(RS2::LineWidth width);
     void setColor(const RS_Color& col);
@@ -94,4 +95,4 @@ private:
     bool m_matched{false};
 };
 
-#endif //LIBRECAD_LC_PENITEM_H
+#endif

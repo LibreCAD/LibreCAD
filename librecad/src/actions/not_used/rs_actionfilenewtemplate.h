@@ -29,19 +29,18 @@
 
 #include "rs_actioninterface.h"
 
-
 /**
  * This action class can handle user events to create new blank documents loading a template.
  *
  * @author Rallaz
  */
 class RS_ActionFileNewTemplate : public RS_ActionInterface {
-	Q_OBJECT
+    Q_OBJECT
 public:
-    RS_ActionFileNewTemplate(LC_ActionContext *actionContext);
+    RS_ActionFileNewTemplate(LC_ActionContext* actionContext);
 
-	void init(int status) override;
-	void trigger() override;
+    void init(int status) override;
+    void trigger() override;
 };
 
 #endif

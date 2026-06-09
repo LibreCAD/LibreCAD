@@ -55,53 +55,63 @@ namespace RS_Math {
     bool equal(double d1, double d2, double tolerance = 0.);
     bool notEqual(double d1, double d2, double tolerance = 0.);
 
-    double rad2deg(double a);
-    double deg2rad(double a);
-    double rad2gra(double a);
-    double gra2rad(double a);
-    double gra2deg(double a);
+    constexpr double rad2deg(const double a) {
+        return 180. / M_PI * a;
+    }
+    constexpr double deg2rad(const double a) {
+        return M_PI / 180.0 * a;
+    }
+    double rad2gra(double angle);
+    double gra2rad(double angle);
+    double gra2deg(double angle);
     unsigned findGCD(unsigned a, unsigned b);
 
     /**
      * Tests if angle a is between a1 and a2.
      * All angles in radians.
      *
-     * @param a - an angle
-     * @param amin - the start angle
-     * @param amax - the end angle
+     * @param angleRad - an angle
+     * @param angle1 - the start angle
+     * @param angle2 - the end angle
      * @param reversed - whether the range is reversed, default to false
      *        reversed=true for clockwise testing. false for ccw testing.
      * @return true if the angle a is between amin and amax.
      */
-    bool isAngleBetween(double a, double amin, double amax, bool reversed = false);
+    bool isAngleBetween(double angleRad, double angle1, double angle2, bool reversed = false);
     //! \brief correct angle to be within [0, +PI*2.0)
-    double correctAngle(double a);
+    double correctAngle(double angle);
     //! \brief correct angle to be within [-PI, +PI)
-    double correctAnglePlusMinusPi(double a);
-    //! \brief correct angle to be unsigned [0, +PI)
-    double correctAngle0ToPi(double a);
+    double correctAnglePlusMinusPi(double angle);
+    //! \brief correct angle to be unsigned [0, +2PI)
+    double correctAngle0To2Pi(double angle);
+    //! \brief correct angle to be unsigned [0, PI)
+
+    // check whether angles defines the line with the same inclination to x axix (useful for comparing similar lines with different directions, for example)
+    bool isSameInclineAngles(double first, double second, double tolerance);
+
+    double correctAngle0ToPi(double angle);
 
     void calculateAngles(double &angle, double &complementary, double &supplementary, double &alt);
 
     //! \brief angular difference
-    double getAngleDifference(double a1, double a2, bool reversed = false);
+    double getAngleDifference(double angle1, double angle2, bool reversed = false);
     /**
          * @brief getAngleDifferenceU abs of minimum angular difference, unsigned version of angular difference
-         * @param a1,a2 angles
+         * @param angle1,angle2 angles
          * @return the minimum of angular difference a1-a2 and a2-a1
          */
-    double getAngleDifferenceU(double a1, double a2);
+    double getAngleDifferenceU(double angle1, double angle2);
     double makeAngleReadable(double angle, bool readable = true, bool* corrected = nullptr);
     bool isAngleReadable(double angle);
-    bool isSameDirection(double dir1, double dir2, double tol);
+    bool isSameDirection(double angle1, double angle2, double tol);
 
     //! \convert measurement strings with rationals or unit symbols to current unit
-    double convert_unit(const QRegularExpressionMatch&, const QString&, double, double);
-    QString derationalize(const QString& expr);
+    double convertUnit(const QRegularExpressionMatch&, const QString&, double, double);
+    QString derationalize(const QString& expression);
 
     //! \{ \brief evaluate a math string
-    double eval(const QString& expr, double def = 0.0);
-    double eval(const QString& expr, bool* ok);
+    double eval(const QString& expression, double defaultValue = 0.0);
+    double eval(const QString& expression, bool* ok);
     //! \}
 
     std::vector<double> quadraticSolver(const std::vector<double>& ce);
@@ -120,13 +130,13 @@ namespace RS_Math {
     std::vector<double> quarticSolverFull(const std::vector<double>& ce);
     //solver for linear equation set
     /**
-          * Solve linear equation set
-          *@param mt holds the augmented matrix
-          *@param sn holds the solution
-          *@param return true, if the equation set has a unique solution, return false otherwise
-          *
-          *@author: Dongxu Li
-          */
+     * Solve linear equation set
+     *@param m holds the augmented matrix
+     *@param sn holds the solution
+     *@return true, if the equation set has a unique solution, return false otherwise
+      *
+      *@author: Dongxu Li
+     */
     bool linearSolver(const std::vector<std::vector<double>>& m, std::vector<double>& sn);
 
     /** solver quadratic simultaneous equations of a set of two **/
@@ -167,7 +177,7 @@ namespace RS_Math {
          *
          *@\author: Dongxu Li
          */
-    double ellipticIntegral_2(const double& k, const double& phi);
+    double ellipticIntegral_2(double k, double phi);
 
     // The ULP (Unit at Last Place) for a floating point
     /**
@@ -178,10 +188,10 @@ namespace RS_Math {
      */
     template <typename FT>
     std::enable_if_t<std::is_floating_point_v<FT>, FT> ulp(FT x) {
-        if (std::signbit(x))
+        if (std::signbit(x)) {
             return x - std::nexttoward(x, -std::numeric_limits<FT>::infinity());
-        else
-            return std::nexttoward(x, std::numeric_limits<FT>::infinity()) - x;
+        }
+        return std::nexttoward(x, std::numeric_limits<FT>::infinity()) - x;
     }
 
     /**
@@ -210,12 +220,12 @@ namespace RS_Math {
         return RS_Math::less<FT>(x, std::max<FT>(a, b)) && RS_Math::less<FT>(std::min<FT>(a, b), x);
     }
 
-    QString doubleToString(double value, double prec);
-    QString doubleToString(double value, int prec);
+    QString doubleToString(double value, double precision);
+    QString doubleToString(double value, int precision);
 
     void test();
 
-    int getPeriodsCount(double a1, double a2, bool reversed);
-}; // namespace RS_Math
+    int getPeriodsCount(double angle1, double angle2, bool reversed);
+} // namespace RS_Math
 
 #endif

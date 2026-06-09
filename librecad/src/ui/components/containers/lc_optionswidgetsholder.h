@@ -34,19 +34,19 @@ class LC_OptionsWidgetsHolder : public QWidget{
     Q_OBJECT
 public:
     explicit LC_OptionsWidgetsHolder(QWidget *parent = nullptr);
-    ~LC_OptionsWidgetsHolder();
-    void addOptionsWidget(QWidget* optionsWidget);
-    void removeOptionsWidget(QWidget *optionsWidget);
-    LC_SnapOptionsWidgetsHolder *getSnapOptionsHolder();
+    ~LC_OptionsWidgetsHolder() override;
+    void addOptionsWidget(QWidget* optionsWidget) const;
+    void removeOptionsWidget(QWidget *optionsWidget) const;
+    LC_SnapOptionsWidgetsHolder *getSnapOptionsHolder() const;
     void clearActionIcon();
 public slots:
-    void setCurrentQAction(QAction *a);
+    void setCurrentQAction(const QAction *a);
 protected:
-    int iconSize = 24;
+    int m_iconSize = 24;
     bool m_hasActionIcon = false;
 private:
     Ui::LC_OptionsWidgetsHolder *ui;
-    void doSetIcon(const QIcon &icon, const QString& text);
+    void doSetIcon(const QIcon &icon, const QString& text) const;
 };
 
-#endif // LC_OPTIONSWIDGETSHOLDER_H
+#endif

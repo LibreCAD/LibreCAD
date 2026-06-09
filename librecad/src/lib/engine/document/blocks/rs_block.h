@@ -24,7 +24,6 @@
 **
 **********************************************************************/
 
-
 #ifndef RS_BLOCK_H
 #define RS_BLOCK_H
 
@@ -35,22 +34,21 @@
  */
 struct RS_BlockData {
     RS_BlockData() = default;
-    RS_BlockData(const QString& name,
-                 const RS_Vector& basePoint,
-                 bool frozen);
+    RS_BlockData(const QString& name, const RS_Vector& basePoint, bool frozen);
     bool isValid() const;
-/**
- * Block name. Acts as an id.
- */
+    /**
+     * Block name. Acts as an id.
+     */
     QString name;
-/**
- * Base point of the Block. Usually 0/0 since blocks can be moved around
- * using the insertion point of Insert entities.
- */
+    /**
+     * Base point of the Block. Usually 0/0 since blocks can be moved around
+     * using the insertion point of Insert entities.
+     */
     RS_Vector basePoint;
-    bool frozen {false};              //!< Frozen flag
-    mutable bool visibleInBlockList {true};   //!< Visible in block list
-    mutable bool selectedInBlockList {false}; //!< selected in block list
+    bool frozen{false}; //!< Frozen flag
+    // fixme - sand - rework?
+    mutable bool visibleInBlockList{true}; //!< Visible in block list
+    mutable bool selectedInBlockList{false}; //!< selected in block list
 };
 
 /**
@@ -66,31 +64,36 @@ struct RS_BlockData {
  *
  * @author Andrew Mustun
  */
-class   RS_Block : public RS_Document {
-   friend class RS_BlockList;
+class RS_Block : public RS_Document {
+    friend class RS_BlockList;
+
 public:
     /**
      * @param parent The graphic this block belongs to.
      * @param blockData defining data of the block.
      */
-    RS_Block(RS_EntityContainer* parent, const RS_BlockData& d);
+    RS_Block(RS_EntityContainer* parent, const RS_BlockData& blockData);
 
     RS_Entity* clone() const override;
 
     /** @return RS2::EntityBlock */
-    RS2::EntityType rtti() const override{
+    RS2::EntityType rtti() const override {
         return RS2::EntityBlock;
     }
 
     /**
      * @return Name of this block (the name is an Id for this block).
      */
-    QString getName() const {return data.name;}
+    QString getName() const {
+        return m_data.name;
+    }
 
     /**
      * @return base point of this block.
      */
-    RS_Vector   getBasePoint() const {return data.basePoint;}
+    RS_Vector getBasePoint() const {
+        return m_data.basePoint;
+    }
 
     RS_LayerList* getLayerList() override;
     RS_BlockList* getBlockList() override;
@@ -100,26 +103,26 @@ public:
     /**
      * Reimplementation from RS_Document. Does nothing.
      */
-    void newDoc() override {
+    void initForNewDocument() override {
         // do nothing
     }
 
-    friend std::ostream& operator << (std::ostream& os, const RS_Block& b);
+    friend std::ostream& operator <<(std::ostream& os, const RS_Block& b);
 
     /** 
-	 * sets a new name for the block. Only called by blocklist to
-	 * assure that block names stay unique.
-	 */
+  * sets a new name for the block. Only called by blocklist to
+  * assure that block names stay unique.
+  */
     void setName(QString newName) {
-        data.name = std::move(newName);
+        m_data.name = std::move(newName);
     }
-    
-	/**
+
+    /**
      * @retval true if this block is frozen (invisible)
      * @retval false if this block isn't frozen (visible)
      */
     bool isFrozen() const {
-        return data.frozen;
+        return m_data.frozen;
     }
 
     /**
@@ -127,7 +130,7 @@ public:
      * Freezes the block if it's not frozen, thaws the block otherwise
      */
     void toggle() {
-        data.frozen = !data.frozen;
+        m_data.frozen = !m_data.frozen;
     }
 
     /**
@@ -135,27 +138,31 @@ public:
      *
      * @param freeze true: freeze, false: defreeze
      */
-    void freeze(bool freeze) {
-        data.frozen = freeze;
+    void freeze(const bool freeze) {
+        m_data.frozen = freeze;
     }
-	
+
+    bool isVisible() const override;
+
     /**
-     * Sets the parent documents modified status to 'm'.
-     */
-	   void setModified(bool m) override;
+      * Sets the parent documents modified status to 'm'.
+      */
+    void setModified(bool m) override;
 
     /**
      * Sets only this block modified status to 'm'
      * without touching parent document.
      */
-    void setModifiedFlag(bool m) { modified = m; }
+    void setModifiedFlag(const bool m) {
+        m_modified = m;
+    }
 
     /**
      * Sets the visibility of the Block in block list
      *
      * @param v true: visible, false: invisible
      */
-    void visibleInBlockList(bool v);
+    void visibleInBlockList(bool v) const;
 
     /**
      * Returns the visibility of the Block in block list
@@ -184,14 +191,13 @@ public:
      * @return block name chain to the block that contain searched insert
      */
     QStringList findNestedInsert(const QString& bName);
-   void addByBlockLine(const RS_Vector& start, const RS_Vector& end);
+    void addByBlockLine(const RS_Vector& start, const RS_Vector& end);
 
-   void addByBlockEntity(RS_Entity* entity);
+    void addByBlockEntity(const RS_Entity* entity);
+
 
 protected:
-//! Block data
-    RS_BlockData data;
+    RS_BlockData m_data;
 };
-
 
 #endif

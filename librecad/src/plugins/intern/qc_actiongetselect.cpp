@@ -28,33 +28,30 @@
 #include <QKeyEvent>
 
 #include "doc_plugin_interface.h"
-#include "rs_actionselectsingle.h"
+#include "lc_action_select_single.h"
 #include "rs_graphicview.h"
+
 
 class Plugin_Entity;
 
 QC_ActionGetSelect::QC_ActionGetSelect(LC_ActionContext* actionContext)
-    :RS_ActionInterface("Get Select", actionContext, RS2::ActionGetSelect)
-    , m_completed(false)
-    , m_message(std::make_unique<QString>(tr("Select objects:"))){
+    :RS_ActionInterface("Get Select", actionContext, RS2::ActionGetSelect), m_message(std::make_unique<QString>(tr("Select objects:"))){
 }
 
-QC_ActionGetSelect::QC_ActionGetSelect(RS2::EntityType typeToSelect, LC_ActionContext* actionContext)
-    :RS_ActionInterface("Get Select", actionContext, RS2::ActionGetSelect)
-    , m_completed(false)
-    , m_message(std::make_unique<QString>(tr("Select objects:"))),
+QC_ActionGetSelect::QC_ActionGetSelect(const RS2::EntityType typeToSelect, LC_ActionContext* actionContext)
+    :RS_ActionInterface("Get Select", actionContext, RS2::ActionGetSelect), m_message(std::make_unique<QString>(tr("Select objects:"))),
      m_entityTypeToSelect(typeToSelect){
 }
 
 QC_ActionGetSelect::~QC_ActionGetSelect() = default;
 
-void QC_ActionGetSelect::updateMouseButtonHints() {
+void QC_ActionGetSelect::updateActionPrompt() {
     switch (getStatus()) {
         case Select:
-            updateMouseWidget(*m_message, tr("Cancel"));
+            updatePrompt(*m_message, tr("Cancel"));
             break;
         default:
-            updateMouseWidget();
+            updatePrompt();
             break;
     }
 }
@@ -63,27 +60,27 @@ RS2::CursorType QC_ActionGetSelect::doGetMouseCursor([[maybe_unused]] int status
     return RS2::SelectCursor;
 }
 
-void QC_ActionGetSelect::setMessage(QString msg){
+void QC_ActionGetSelect::setMessage(QString msg) const {
     *m_message = std::move(msg);
 }
 
-void QC_ActionGetSelect::init(int status) {
+void QC_ActionGetSelect::init(const int status) {
         RS_ActionInterface::init(status);
         m_graphicView->setCurrentAction(
-                std::make_shared<RS_ActionSelectSingle>(m_entityTypeToSelect,  m_actionContext, this));
+                std::make_shared<LC_ActionSelectSingle>(m_entityTypeToSelect,  m_actionContext, this));
 }
 
 void QC_ActionGetSelect::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::RightButton) {
         m_completed = true;
-        updateMouseWidget();
+        updatePrompt();
         finish();
     }
 }
 
 void QC_ActionGetSelect::keyPressEvent(QKeyEvent* e){
     if (e->key()==Qt::Key_Escape || e->key()==Qt::Key_Enter){
-        updateMouseWidget();
+        updatePrompt();
         finish();
         m_completed = true;
     }
@@ -93,19 +90,15 @@ void QC_ActionGetSelect::keyPressEvent(QKeyEvent* e){
  * Adds all selected entities from 'container' to the selection.
  */
 void QC_ActionGetSelect::getSelected(QList<Plug_Entity *> *se, Doc_plugin_interface *d) const{
-    for (auto e: *m_container) {
-        if (e->isSelected()) {
-            Plugin_Entity *pe = new Plugin_Entity(e, d);
-            se->append(reinterpret_cast<Plug_Entity *>(pe));
-        }
+    QList<RS_Entity*> selection;
+    m_document->collectSelected(selection);
+    for (const auto e: selection) {
+        const auto pe = new Plugin_Entity(e, d);
+        se->append(reinterpret_cast<Plug_Entity*>(pe));
     }
 }
 
-void QC_ActionGetSelect::unselectEntities(){
-    for(auto e: *m_container){ // fixme - iterating all entities for selection
-        if (e->isSelected()) {
-            e->setSelected(false);
-        }
-    }
-    updateSelectionWidget();
+[[deprecated]]
+void QC_ActionGetSelect::unselectEntities() const { // fixme - rework by inlinining
+    unselectAll();
 }

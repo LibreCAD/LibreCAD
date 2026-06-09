@@ -31,7 +31,7 @@
 
 #include "rs_actioninterface.h"
 
-class QG_PrintPreviewOptions;
+class LC_PrintPreviewOptionsWidget;
 
 /**
  * Default action for print preview.
@@ -41,7 +41,7 @@ class QG_PrintPreviewOptions;
 class RS_ActionPrintPreview : public RS_ActionInterface {
     Q_OBJECT
 public:
-    RS_ActionPrintPreview(LC_ActionContext *actionContext);
+    explicit RS_ActionPrintPreview(LC_ActionContext *actionContext);
     ~RS_ActionPrintPreview() override;
 
     void init(int status) override;
@@ -53,30 +53,36 @@ public:
 
     QStringList getAvailableCommands() override;
 
-    void center();
-    void zoomToPage();
-    void fit();
-    bool setScale(double f, bool autoZoom = true);
+    void center() const;
+    void zoomToPage() const;
+    void fit() const;
+    bool setScale(double newScale, bool autoZoom = true) const;
     double getScale() const;
-    void printWarning(const QString& s);
+    void printWarning(const QString& s) const;
     void calcPagesNum(bool multiplePages);
-    bool isLineWidthScaling();
-    void setLineWidthScaling(bool state);
-    void setBlackWhite(bool bw);
-    bool isBlackWhite();
+    bool isLineWidthScaling() const;
+    void setLineWidthScaling(bool state) const;
+    void setBlackWhite(bool bw) const;
+    bool isBlackWhite() const;
 
-    RS2::Unit getUnit();
-    void setPaperScaleFixed(bool fixed);
-    bool isPaperScaleFixed();
+    RS2::Unit getUnit() const;
+    void setPaperScaleFixed(bool fixed) const;
+    bool isPaperScaleFixed() const;
 
-    int getPagesNumHorizontal();
+    int getPagesNumHorizontal() const;
     void setPagesNumHorizontal(int pagesCount);
-    int getPagesNumVertical();
+    int getPagesNumVertical() const;
     void setPagesNumVertical(int pagesCount);
 
-    void invokeSettingsDialog();
-    bool isPortrait();
-    void setPaperOrientation(bool portrait);
+    void invokeSettingsDialog() const;
+    bool isPortrait() const;
+    void setPaperOrientation(bool portrait) const;
+
+    QStringList getStandardPrintScales() const;
+    bool isUseImperialScales() const;
+
+    QStringList readCustomRatios(bool metric, int maxCount);
+    void saveCustomRatios(const QStringList& scales, int startIndex);
 protected:
     /**
     * Action States.
@@ -90,12 +96,15 @@ protected:
     bool m_hasOptions = false;
     bool m_bPaperOffset = false;
 
-    void updateMouseButtonHints() override;
+    void updateActionPrompt() override;
     RS2::CursorType doGetMouseCursor(int status) override;
     bool doProcessCommand(int status, const QString &command) override;
     QString getAdditionalHelpMessage() override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
-    void zoomPageExWithBorder(int borderSize);
+    void zoomPageExWithBorder(int borderSize) const;
     LC_ActionOptionsWidget* createOptionsWidget() override;
+    LC_ActionOptionsPropertiesFiller* createOptionsFiller() override;
+    void doSaveOptions() override;
+    void doLoadOptions() override;
 };
 #endif

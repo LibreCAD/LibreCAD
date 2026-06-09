@@ -32,16 +32,16 @@
  * @param layerType type of layer
  * @return default pen based on settings for the layer type
  */
-RS_Pen LC_LayerTreeModelOptions::getDefaultPen(int layerType) const{
+RS_Pen LC_LayerTreeModelOptions::getDefaultPen(const int layerType) const{
     RS_Pen result;
     switch (layerType){
-        case LC_LayerTreeItem::NORMAL:
+        case RS_Layer::LayerType::NORMAL:
             return defaultPenNormal;
-        case LC_LayerTreeItem::DIMENSIONAL:
+        case RS_Layer::LayerType::DIMENSIONAL:
             return defaultPenDimensional;
-        case LC_LayerTreeItem::INFORMATIONAL:
+        case RS_Layer::LayerType::INFORMATIONAL:
             return defaultPenInformational;
-        case LC_LayerTreeItem::ALTERNATE_POSITION:
+        case RS_Layer::LayerType::ALTERNATE_POSITION:
             return defaultPenAlternatePosition;
         default:
             // in general, this function should not be called for other types of layers...
@@ -57,7 +57,7 @@ void LC_LayerTreeModelOptions::save() const{
         LC_SET("activeLayerBgColor", activeLayerBgColor.name());
         LC_SET("selectedItemBgColor", selectedItemBgColor.name());
         LC_SET("virtualLayerBgColor", virtualLayerBgColor.name());
-        LC_SET("gridColor", itemsGridColor.name());
+        LC_SET("showGrid", showGrid);
 
         LC_SET("namingLayerSeparator", layerLevelSeparator);
         LC_SET("namingInfoSuffix", informationalLayerNameSuffix);
@@ -83,11 +83,11 @@ void LC_LayerTreeModelOptions::save() const{
 void LC_LayerTreeModelOptions::load(){
     LC_GROUP_GUARD("Widget.LayerTree");
     {
-        LC_LayerTreeModelOptions defaults;
+        const LC_LayerTreeModelOptions defaults;
         activeLayerBgColor = QColor(LC_GET_STR("activeLayerBgColor", defaults.activeLayerBgColor.name()));
         selectedItemBgColor = QColor(LC_GET_STR("selectedItemBgColor", defaults.selectedItemBgColor.name()));
         virtualLayerBgColor = QColor(LC_GET_STR("virtualLayerBgColor", defaults.virtualLayerBgColor.name()));
-        itemsGridColor = QColor(LC_GET_STR("gridColor", defaults.itemsGridColor.name()));
+        showGrid = LC_GET_BOOL("showGrid", true);
 
         layerLevelSeparator = LC_GET_STR("namingLayerSeparator", defaults.layerLevelSeparator);
         informationalLayerNameSuffix = LC_GET_STR("namingInfoSuffix", defaults.informationalLayerNameSuffix);

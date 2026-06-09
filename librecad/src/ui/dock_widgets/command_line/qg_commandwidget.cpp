@@ -38,10 +38,9 @@
  *  Constructs a QG_CommandWidget as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
  */
-QG_CommandWidget::QG_CommandWidget(QG_ActionHandler* action_handler, QWidget* parent, const char* name,
-                                   Qt::WindowFlags fl)
-    : QWidget(parent, fl)
-      , m_actionHandler(action_handler) {
+QG_CommandWidget::QG_CommandWidget(QG_ActionHandler* actionHandler, QWidget* parent, const char* name, const Qt::WindowFlags fl)
+    : LC_GraphicViewAwareWidget(parent, name, fl)
+      , m_actionHandler(actionHandler) {
     setObjectName(name);
     setupUi(this);
     connect(leCommand, &QG_CommandEdit::command, this, &QG_CommandWidget::handleCommand);
@@ -54,22 +53,22 @@ QG_CommandWidget::QG_CommandWidget(QG_ActionHandler* action_handler, QWidget* pa
     connect(leCommand, &QG_CommandEdit::message, this, &QG_CommandWidget::appendHistory);
     connect(leCommand, &QG_CommandEdit::keycode, this, &QG_CommandWidget::handleKeycode);
 
-    auto a1 = new QAction(QObject::tr("Keycode mode"), this);
+    const auto a1 = new QAction(QObject::tr("Keycode mode"), this);
     a1->setObjectName("keycode_action");
     a1->setCheckable(true);
     connect(a1, &QAction::toggled, this, &QG_CommandWidget::setKeycodeMode);
     options_button->addAction(a1);
 
     if (LC_GET_ONE_BOOL("Widgets", "KeycodeMode", false)) {
-        leCommand->m_keycode_mode = true;
+        leCommand->setKeyCodeMode(true);
         a1->setChecked(true);
     }
 
-    auto a2 = new QAction(QObject::tr("Load command file"), this);
+    const auto a2 = new QAction(QObject::tr("Load command file"), this);
     connect(a2, &QAction::triggered, this, &QG_CommandWidget::chooseCommandFile);
     options_button->addAction(a2);
 
-    auto a3 = new QAction(QObject::tr("Paste multiple commands"), this);
+    const auto a3 = new QAction(QObject::tr("Paste multiple commands"), this);
     connect(a3, &QAction::triggered, leCommand, &QG_CommandEdit::modifiedPaste);
     options_button->addAction(a3);
 
@@ -89,7 +88,7 @@ QG_CommandWidget::QG_CommandWidget(QG_ActionHandler* action_handler, QWidget* pa
  *  Destroys the object and frees any allocated resources
  */
 QG_CommandWidget::~QG_CommandWidget() {
-    auto action = findChild<QAction*>("keycode_action");
+    const auto action = findChild<QAction*>("keycode_action");
     LC_SET_ONE("Widgets", "KeycodeMode", action->isChecked());
 }
 
@@ -103,16 +102,17 @@ void QG_CommandWidget::languageChange() {
 
 bool QG_CommandWidget::eventFilter(QObject*/*obj*/, QEvent* event) {
     if (event != nullptr && event->type() == QEvent::KeyPress) {
-        auto e = static_cast<QKeyEvent*>(event);
+        const auto e = static_cast<QKeyEvent*>(event);
 
-        int key{e->key()};
+        const int key{e->key()};
         switch (key) {
             case Qt::Key_Return:
-            case Qt::Key_Enter:
-                if (!leCommand->text().size())
+            case Qt::Key_Enter: {
+                if (leCommand->text().size() == 0) {
                     return false;
-                else
-                    break;
+                }
+                break;
+            }
             case Qt::Key_Escape:
                 return false;
             case Qt::Key_Space:
@@ -129,50 +129,50 @@ bool QG_CommandWidget::eventFilter(QObject*/*obj*/, QEvent* event) {
 
         //detect Ctl- Alt- modifier, but not Shift
         //This should avoid filtering shortcuts, such as Ctl-C
-        Qt::KeyboardModifiers modifiers{e->modifiers()};
+        const Qt::KeyboardModifiers modifiers{e->modifiers()};
         if (!(Qt::GroupSwitchModifier == modifiers && Qt::Key_At == key) // let '@' key pass for relative coords
             && modifiers != Qt::KeypadModifier && modifiers & (Qt::KeyboardModifierMask ^ Qt::ShiftModifier) & (Qt::KeyboardModifierMask ^ Qt::ControlModifier)) {
             return false;
         }
-        bool isGraphicViewEvent = (key != Qt::Key_Shift) &&
+        const bool isGraphicViewEvent = (key != Qt::Key_Shift) &&
             (key != Qt::Key_Control) &&
             (key != Qt::Key_Up) &&
             (key != Qt::Key_Left) &&
             (key != Qt::Key_Right) &&
             (key != Qt::Key_Down) &&
             (key != Qt::Key_Plus) &&
-            (key != Qt::Key_Minus);
+            (key != Qt::Key_Minus) &&
+            (key != Qt::Key_Tab);
         // prevent focus for graphic-view specific keys
         if (isGraphicViewEvent) {
-            setFocus();
+            focusWidget();
             QApplication::postEvent(leCommand, e->clone());
             e->accept();
             return true;
         }
-        else {
-            auto eventClone = e->clone();
-            QApplication::postEvent(QC_ApplicationWindow::getAppWindow().get(), eventClone);
-            if (!eventClone->isAccepted()) {
-                QApplication::postEvent(leCommand, e->clone());
-            }
-            e->accept();
-            return true;
+        const auto eventClone = e->clone();
+        QApplication::postEvent(QC_ApplicationWindow::getAppWindow().get(), eventClone);
+        if (!eventClone->isAccepted()) {
+            QApplication::postEvent(leCommand, e->clone());
         }
+        e->accept();
+        return true;
     }
 
     return false;
 }
 
-void QG_CommandWidget::setFocus() {
-    if (!isActiveWindow())
+void QG_CommandWidget::focusWidget() {
+    if (!isActiveWindow()) {
         activateWindow();
+    }
 
-    auto newEvent = new QFocusEvent(QEvent::FocusIn);
+    const auto newEvent = new QFocusEvent(QEvent::FocusIn);
     QApplication::postEvent(leCommand, newEvent);
     leCommand->setFocus();
 }
 
-void QG_CommandWidget::setCommand(const QString& cmd) {
+void QG_CommandWidget::setCommand(const QString& cmd) const {
     if (cmd.isEmpty()) {
         lCommand->setText(tr("Enter Command:"));
     }
@@ -186,23 +186,23 @@ void QG_CommandWidget::setCommand(const QString& cmd) {
     }
 }
 
-void QG_CommandWidget::setInput(const QString& cmd) {
+void QG_CommandWidget::setInput(const QString& cmd) const {
     leCommand->setText(cmd);
     leCommand->setFocus();
 }
 
-void QG_CommandWidget::appendHistory(const QString& msg) {
+void QG_CommandWidget::appendHistory(const QString& msg) const {
     teHistory->append(msg);
 }
 
-void QG_CommandWidget::handleCommand(QString cmd) {
+void QG_CommandWidget::handleCommand(QString cmd) const {
     cmd = cmd.simplified();
     bool isAction = false;
     if (!cmd.isEmpty()) {
         appendHistory(cmd);
     }
 
-    if (m_actionHandler) {
+    if (m_actionHandler != nullptr) {
         isAction = m_actionHandler->command(cmd);
     }
 
@@ -213,16 +213,17 @@ void QG_CommandWidget::handleCommand(QString cmd) {
     leCommand->setText("");
 }
 
-void QG_CommandWidget::spacePressed() {
-    if (m_actionHandler)
+void QG_CommandWidget::spacePressed() const {
+    if (m_actionHandler != nullptr) {
         m_actionHandler->command({});
+    }
 }
 
 // fixme - review ouptput to command widget
 //fixme - add generic help command (as TAB for empy)
 
-void QG_CommandWidget::tabPressed() {
-    if (m_actionHandler) {
+void QG_CommandWidget::tabPressed() const {
+    if (m_actionHandler != nullptr) {
         QString typed = leCommand->text();
 
         // check current command:
@@ -245,16 +246,17 @@ void QG_CommandWidget::tabPressed() {
             const QString proposal = getRootCommand(reducedChoices, typed);
             appendHistory(reducedChoices.join(", "));
             const QString aliasFile = RS_Commands::getAliasFile();
-            if (!aliasFile.isEmpty())
+            if (!aliasFile.isEmpty()) {
                 appendHistory(tr("Command Alias File: %1").arg(aliasFile));
+            }
             leCommand->setText(proposal);
         }
     }
 }
 
-void QG_CommandWidget::escape() {
+void QG_CommandWidget::escape() const {
     //leCommand->clearFocus();
-    if (m_actionHandler) {
+    if (m_actionHandler != nullptr) {
         m_actionHandler->command(QString(tr("escape", "escape, go back from action steps")));
     }
 }
@@ -263,13 +265,13 @@ void QG_CommandWidget::setActionHandler(QG_ActionHandler* ah) {
     m_actionHandler = ah;
 }
 
-void QG_CommandWidget::setCommandMode() {
+void QG_CommandWidget::setCommandMode() const {
     QPalette palette;
     palette.setColor(lCommand->foregroundRole(), Qt::blue);
     lCommand->setPalette(palette);
 }
 
-void QG_CommandWidget::setNormalMode() {
+void QG_CommandWidget::setNormalMode() const {
     QPalette palette;
     palette.setColor(lCommand->foregroundRole(), Qt::black);
     lCommand->setPalette(palette);
@@ -277,27 +279,28 @@ void QG_CommandWidget::setNormalMode() {
 
 QString QG_CommandWidget::getRootCommand(const QStringList& cmdList, const QString& typed) {
     //do we have to check for empty cmdList?
-    if (cmdList.empty())
+    if (cmdList.empty()) {
         return QString();
+    }
 
     //find the shortest string in cmdList
-    auto const& shortestString = *std::min_element(cmdList.begin(), cmdList.end(),
-                                                   [](QString const& a, QString const& b) -> bool {
+    const auto& shortestString = *std::min_element(cmdList.begin(), cmdList.end(),
+                                                   [](const QString& a, const QString& b) -> bool {
                                                        return a.size() < b.size();
                                                    }
         );
-    int const lengthShortestString = shortestString.size();
+    const int lengthShortestString = shortestString.size();
 
     // Now we parse the cmdList list, character of each item by character.
     int low = typed.length();
     int high = lengthShortestString + 1;
 
     while (high > low + 1) {
-        int mid = (high + low) / 2;
+        const int mid = (high + low) / 2;
         bool common = true;
 
-        QString const& proposal = shortestString.left(mid);
-        for (auto const& substring : cmdList) {
+        const QString& proposal = shortestString.left(mid);
+        for (const auto& substring : cmdList) {
             if (!substring.startsWith(proposal)) {
                 common = false;
                 break;
@@ -317,25 +320,25 @@ QString QG_CommandWidget::getRootCommand(const QStringList& cmdList, const QStri
 }
 
 void QG_CommandWidget::chooseCommandFile() {
-    QString path = QFileDialog::getOpenFileName(this);
+    const QString path = QFileDialog::getOpenFileName(this);
     if (!path.isEmpty()) {
         leCommand->readCommandFile(path);
     }
 }
 
-void QG_CommandWidget::handleKeycode(QString code) {
+void QG_CommandWidget::handleKeycode(const QString& code) const {
     if (m_actionHandler->keycode(code)) {
         leCommand->clear();
     }
 }
 
-void QG_CommandWidget::setKeycodeMode(bool state) {
-    leCommand->m_keycode_mode = state;
+void QG_CommandWidget::setKeycodeMode(const bool state) const {
+    leCommand->setKeyCodeMode(state);
 }
 
 void QG_CommandWidget::dockingButtonTriggered(bool /*docked*/) {
-    auto* cmd_dockwidget = QC_ApplicationWindow::getAppWindow()->findChild<QDockWidget*>("command_dockwidget");
-    cmd_dockwidget->setFloating(!cmd_dockwidget->isFloating());
-    m_docking->setText(cmd_dockwidget->isFloating() ? tr("Dock") : tr("Float"));
-    setWindowTitle(cmd_dockwidget->isFloating() ? tr("Command Line") : tr("Cmd"));
+    auto* cmdDockWidget = QC_ApplicationWindow::getAppWindow()->findChild<QDockWidget*>("command_dockwidget");
+    cmdDockWidget->setFloating(!cmdDockWidget->isFloating());
+    m_docking->setText(cmdDockWidget->isFloating() ? tr("Dock") : tr("Float"));
+    setWindowTitle(cmdDockWidget->isFloating() ? tr("Command Line") : tr("Cmd"));
 }

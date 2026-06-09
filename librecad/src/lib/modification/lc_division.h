@@ -72,21 +72,21 @@ public:
         double snapSegmentEndAngle;
     };
 
-    LC_Division(RS_EntityContainer *entityContainer);
+    explicit LC_Division(RS_EntityContainer *entityContainer);
 
-    ArcSegmentData* findArcSegmentBetweenIntersections(RS_Arc* arc, RS_Vector& snap, bool allowEntireArcAsSegment);
-    CircleSegmentData* findCircleSegmentBetweenIntersections(RS_Circle* circle, RS_Vector& snap, bool allowEntireCircleAsSegment);
-    LineSegmentData* findLineSegmentBetweenIntersections(RS_Line* line, RS_Vector& snap, bool allowEntireLine);
+    ArcSegmentData* findArcSegmentBetweenIntersections(const RS_Arc* arc, const RS_Vector& snap, bool allowEntireArcAsSegment);
+    CircleSegmentData* findCircleSegmentBetweenIntersections(const RS_Circle* circle, const RS_Vector& snap, bool allowEntireCircleAsSegment);
+    LineSegmentData* findLineSegmentBetweenIntersections(const RS_Line* line, const RS_Vector& snap, bool allowEntireLine);
 
-    LineSegmentData* findLineSegmentEdges(RS_Line* line, RS_Vector& snap, QVector<RS_Vector> intersections, bool allowEntireLinesAsSegment);
-    ArcSegmentData* findArcSegmentEdges(RS_Arc* arc, RS_Vector& snap, const QVector<RS_Vector>& intersections, bool allowEntireArcAsSegment);
-    CircleSegmentData* findCircleSegmentEdges(RS_Circle* circle, RS_Vector& snap, const QVector<RS_Vector>& intersections);
+    LineSegmentData* findLineSegmentEdges(const RS_Line* line, const RS_Vector& snap, QVector<RS_Vector> intersections, bool allowEntireLineAsSegment);
+    ArcSegmentData* findArcSegmentEdges(const RS_Arc* arc, const RS_Vector& snap, const QVector<RS_Vector>& intersections, bool allowEntireArcAsSegment);
+    CircleSegmentData* findCircleSegmentEdges(const RS_Circle* circle, const RS_Vector& snap, const QVector<RS_Vector>& intersections);
 
-    QVector<RS_Vector> collectAllIntersectionsWithEntity(RS_Entity *entity);
+    QVector<RS_Vector> collectAllIntersectionsWithEntity(const RS_Entity *entity) const;
 private:
     RS_EntityContainer *m_container = nullptr;
 protected:
     void addPointsFromSolutionToList(RS_VectorSolutions& sol, QVector<RS_Vector>& result) const;
 };
 
-#endif // LC_DIVISION_H
+#endif

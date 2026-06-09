@@ -73,7 +73,7 @@
      </property>
      <property name="icon">
       <iconset resource="../../../../res/icons/icons.qrc">
-       <normaloff>:/icons/interactive_pick_distance.lci</normaloff>:/icons/interactive_pick_distance.lci</iconset>
+       <normaloff>:/icons/interactive_pick_point.lci</normaloff>:/icons/interactive_pick_point.lci</iconset>
      </property>
     </widget>
    </item>

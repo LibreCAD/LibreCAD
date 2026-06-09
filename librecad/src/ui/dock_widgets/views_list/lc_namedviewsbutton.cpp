@@ -27,8 +27,8 @@
 #include "lc_namedviewslistwidget.h"
 #include "lc_view.h"
 
-LC_NamedViewsButton::LC_NamedViewsButton(LC_NamedViewsListWidget *w):QToolButton(nullptr), m_widget{w} {
-    setPopupMode(QToolButton::MenuButtonPopup);
+LC_NamedViewsButton::LC_NamedViewsButton(LC_NamedViewsListWidget *widget):QToolButton(nullptr), m_widget{widget} {
+    setPopupMode(MenuButtonPopup);
         m_menu = new QMenu();
     connect(m_menu, &QMenu::aboutToShow, this, &LC_NamedViewsButton::fillMenu);
     setMenu(m_menu);
@@ -40,13 +40,13 @@ void LC_NamedViewsButton::fillMenu() {
     QList<LC_View*> views;
     m_widget->fillViewsList(views);
 
-    int viewsCount = views.count();
-    int actionsCount = m_createdActions.count();
+    const int viewsCount = views.count();
+    const int actionsCount = m_createdActions.count();
     if (viewsCount <= actionsCount){
-        int i;
+        int i = 0;
         for (i = 0;  i < viewsCount; i++){
             QAction* a = m_createdActions.at(i);
-            LC_View* v = views.at(i);
+            const LC_View* v = views.at(i);
             QIcon typeIcon = m_widget->getViewTypeIcon(v);
             a->setText(v->getName());
             a->setIcon(typeIcon);
@@ -58,17 +58,17 @@ void LC_NamedViewsButton::fillMenu() {
         }
     }
     else{
-        int i;
+        int i = 0;
         for (i = 0;  i < actionsCount; i++){
             QAction* a = m_createdActions.at(i);
-            LC_View* v = views.at(i);
+            const LC_View* v = views.at(i);
             QIcon typeIcon = m_widget->getViewTypeIcon(v);
             a->setText(v->getName());
             a->setIcon(typeIcon);
             a->setVisible(true);
         }
         for (; i < viewsCount; i++){
-            LC_View* v = views.at(i);
+            const LC_View* v = views.at(i);
             QString name = v->getName();
             QIcon typeIcon = m_widget->getViewTypeIcon(v);
             auto* action = m_menu->addAction(typeIcon, name);
@@ -82,9 +82,9 @@ void LC_NamedViewsButton::fillMenu() {
 }
 
 void LC_NamedViewsButton::menuTriggered([[maybe_unused]]bool checked) const {
-    auto *action = qobject_cast<QAction*>(sender());
+    const auto *action = qobject_cast<QAction*>(sender());
     if (action != nullptr) {
-        QString viewName = action->text();
+        const QString viewName = action->text();
         m_widget->restoreView(viewName);
     }
 }

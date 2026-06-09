@@ -24,15 +24,12 @@
 **
 **********************************************************************/
 
-
 #ifndef RS_LINETYPEPATTERN_H
 #define RS_LINETYPEPATTERN_H
 
 #include <vector>
-#include <cstddef>
 
-namespace RS2
-{
+namespace RS2 {
     enum LineType : short;
 }
 
@@ -40,14 +37,14 @@ namespace RS2
  * Stores a line type pattern.
  */
 struct RS_LineTypePattern {
-	RS_LineTypePattern(std::initializer_list<double> const& pattern);
+    RS_LineTypePattern(const std::initializer_list<double>& pattern);
 
-	std::vector<double> pattern;
+    std::vector<double> pattern;
     double totalLength = 0.;
-    size_t num = 0;
+    std::size_t num = 0;
 
     // line type to line pattern conversion
-    static const RS_LineTypePattern* getPattern(RS2::LineType entityType);
+    static const RS_LineTypePattern* getPattern(RS2::LineType lineType);
 };
 
 #endif

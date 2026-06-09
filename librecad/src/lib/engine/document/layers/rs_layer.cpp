@@ -20,51 +20,44 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
 
-#include <iostream>
 #include "rs_layer.h"
 
-RS_LayerData::RS_LayerData(const QString& name,
-						   const RS_Pen& pen,
-						   bool frozen,
-						   bool locked):
-	name(name)
-  ,pen(pen)
-  ,frozen(frozen)
-  ,locked(locked)
-{
+#include <iostream>
+
+RS_LayerData::RS_LayerData(const QString& name, const RS_Pen& pen, const bool frozen, const bool locked) : name(name), pen(pen),
+                                                                                                           frozen(frozen), locked(locked) {
 }
 
 /**
  * Constructor.
  */
-RS_Layer::RS_Layer(const QString& name):
-    data(name, RS_Pen(Qt::black, name == "0" ? RS2::Width07 : RS2::Width00,RS2::SolidLine), false, false)
-{
-//    LC_ERR<<name;
+RS_Layer::RS_Layer(const QString& name) : m_data(name, RS_Pen(Qt::black, name == "0" ? RS2::Width07 : RS2::Width00, RS2::SolidLine), false,
+                                               false) {
+    //    LC_ERR<<name;
 }
 
-RS_Layer* RS_Layer::clone() const{
-	return new RS_Layer(*this);
+RS_Layer* RS_Layer::clone() const {
+    return new RS_Layer(*this);
 }
 
 /** sets a new name for this layer. */
 void RS_Layer::setName(const QString& name) {
-	data.name = name;
+    m_data.name = name;
 }
 
 /** @return the name of this layer. */
 QString RS_Layer::getName() const {
-	return data.name;
+    return m_data.name;
 }
 
 /** sets the default pen for this layer. */
 void RS_Layer::setPen(const RS_Pen& pen) {
-	data.pen = pen;
+    m_data.pen = pen;
 }
 
 /** @return default pen for this layer. */
 RS_Pen RS_Layer::getPen() const {
-	return data.pen;
+    return m_data.pen;
 }
 
 /**
@@ -72,8 +65,8 @@ RS_Pen RS_Layer::getPen() const {
  * @retval false if this layer isn't frozen (visible)
  */
 bool RS_Layer::isFrozen() const {
-	return data.frozen;
-	//getFlag(RS2::FlagFrozen);
+    return m_data.frozen;
+    //getFlag(RS2::FlagFrozen);
 }
 
 /**
@@ -81,14 +74,14 @@ bool RS_Layer::isFrozen() const {
  * @retval false the layer still needs to be converted
  */
 bool RS_Layer::isConverted() const {
-	return data.converted;
+    return m_data.converted;
 }
 
 /**
  * Sets the converted flag
  */
-void RS_Layer::setConverted(bool c) {
-	data.converted = c;
+void RS_Layer::setConverted(const bool c) {
+    m_data.converted = c;
 }
 
 /**
@@ -96,8 +89,8 @@ void RS_Layer::setConverted(bool c) {
  * Freezes the layer if it's not frozen, thaws the layer otherwise
  */
 void RS_Layer::toggle() {
-	//toggleFlag(RS2::FlagFrozen);
-	data.frozen = !data.frozen;
+    //toggleFlag(RS2::FlagFrozen);
+    m_data.frozen = !m_data.frozen;
 }
 
 /**
@@ -105,30 +98,30 @@ void RS_Layer::toggle() {
  *
  * @param freeze true: freeze, false: defreeze
  */
-void RS_Layer::freeze(bool freeze) {
-	data.frozen = freeze;
+void RS_Layer::freeze(const bool freeze) {
+    m_data.frozen = freeze;
 }
 
 /**
  * Toggles the lock of this layer.
  */
 void RS_Layer::toggleLock() {
-	//toggleFlag(RS2::FlagFrozen);
-	data.locked = !data.locked;
+    //toggleFlag(RS2::FlagFrozen);
+    m_data.locked = !m_data.locked;
 }
 
 /**
  * Toggles printing of this layer on / off.
  */
 void RS_Layer::togglePrint() {
-	data.print = !data.print;
+    m_data.print = !m_data.print;
 }
 
 /**
  * Toggles construction attribute of this layer on / off.
  */
 void RS_Layer::toggleConstruction() {
-	data.construction = !data.construction;
+    m_data.construction = !m_data.construction;
 }
 
 /**
@@ -136,15 +129,15 @@ void RS_Layer::toggleConstruction() {
  *
  * @param l true: lock, false: unlock
  */
-void RS_Layer::lock(bool l) {
-	data.locked = l;
+void RS_Layer::lock(const bool l) {
+    m_data.locked = l;
 }
 
 /**
  * return the LOCK state of the Layer
  */
-bool RS_Layer::isLocked() const{
-	return data.locked;
+bool RS_Layer::isLocked() const {
+    return m_data.locked;
 }
 
 /**
@@ -152,15 +145,15 @@ bool RS_Layer::isLocked() const{
  *
  * @param l true: visible, false: invisible
  */
-void RS_Layer::visibleInLayerList(bool l) {
-	data.visibleInLayerList = l;
+void RS_Layer::visibleInLayerList(const bool l) {
+    m_data.visibleInLayerList = l;
 }
 
 /**
  * return the visibility of the Layer in layer list
  */
-bool RS_Layer::isVisibleInLayerList() const{
-	return data.visibleInLayerList;
+bool RS_Layer::isVisibleInLayerList() const {
+    return m_data.visibleInLayerList;
 }
 
 /**
@@ -168,15 +161,15 @@ bool RS_Layer::isVisibleInLayerList() const{
  *
  * @param val true: selected, false: deselected
  */
-void RS_Layer::selectedInLayerList(bool val) {
-	data.selectedInLayerList = val;
+void RS_Layer::selectedInLayerList(const bool val) {
+    m_data.selectedInLayerList = val;
 }
 
 /**
  * return selection state of the layer in layer list
  */
 bool RS_Layer::isSelectedInLayerList() const {
-	return data.selectedInLayerList;
+    return m_data.selectedInLayerList;
 }
 
 /**
@@ -184,24 +177,25 @@ bool RS_Layer::isSelectedInLayerList() const {
  *
  * @param print true: print layer, false: don't print layer
  */
-bool RS_Layer::setPrint( const bool print) {
-	return data.print = print;
+bool RS_Layer::setPrint(const bool print) {
+    m_data.print = print;
+    return print;
 }
 
 /**
  * return the PRINT state of the Layer
  */
-bool RS_Layer::isPrint() const{
-	return data.print;
+bool RS_Layer::isPrint() const {
+    return m_data.print;
 }
 
 /**
  * whether the layer is a construction layer
  * The construction layer property is stored
- * in extended data in the DXF layer table
+ * in extended m_data in the DXF layer table
  */
-bool RS_Layer::isConstruction() const{
-	return data.construction;
+bool RS_Layer::isConstruction() const {
+    return m_data.construction;
 }
 
 /**
@@ -209,19 +203,16 @@ bool RS_Layer::isConstruction() const{
  *
  * @param construction true: infinite lines, false: normal layer
  */
-bool RS_Layer::setConstruction( const bool construction){
-	data.construction = construction;
-	return construction;
+bool RS_Layer::setConstruction(const bool construction) {
+    m_data.construction = construction;
+    return construction;
 }
 
 /**
- * Dumps the layers data to stdout.
+ * Dumps the layers m_data to stdout.
  */
-std::ostream& operator << (std::ostream& os, const RS_Layer& l) {
-    os << " name: " << l.getName().toLatin1().data()
-    << " pen: " << l.getPen()
-    << " frozen: " << (int)l.isFrozen()
-    << " address: " << &l
-    << std::endl;
+std::ostream& operator <<(std::ostream& os, const RS_Layer& l) {
+    os << " name: " << l.getName().toLatin1().data() << " pen: " << l.getPen() << " frozen: " << l.isFrozen() << " address: " << &l <<
+        std::endl;
     return os;
 }

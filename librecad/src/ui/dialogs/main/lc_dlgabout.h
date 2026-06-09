@@ -41,4 +41,4 @@ private:
     QString m_info;
 };
 
-#endif // LC_DLGABOUT_H
+#endif

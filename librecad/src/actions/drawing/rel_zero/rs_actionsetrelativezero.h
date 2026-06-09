@@ -41,17 +41,17 @@ class RS_Vector;
 class RS_ActionSetRelativeZero : public RS_PreviewActionInterface {
     Q_OBJECT
 public:
-    RS_ActionSetRelativeZero(LC_ActionContext *actionContext);
+    explicit RS_ActionSetRelativeZero(LC_ActionContext *actionContext);
     ~RS_ActionSetRelativeZero() override;
     void trigger() override;
-    bool isSupportsPredecessorAction() override {return true;}
+    bool isSupportsPredecessorAction() const override {return true;}
 protected:
     std::unique_ptr<RS_Vector> m_position;
     RS2::CursorType doGetMouseCursor(int status) override;
-    void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
-    void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
+    void onMouseLeftButtonRelease(int status, const LC_MouseEvent* e) override;
+    void onMouseRightButtonRelease(int status, const LC_MouseEvent* e) override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
-    void updateMouseButtonHints() override;
-
+    void updateActionPrompt() override;
+    bool isInVisualSnapStatus(int status) override;
 };
 #endif

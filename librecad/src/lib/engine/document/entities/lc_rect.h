@@ -28,36 +28,32 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_vector.h"
 
 //ported from LibreCAD V3
-namespace lc {
-namespace geo {
+namespace lc::geo {
+    typedef RS_Vector Coordinate;
 
-typedef RS_Vector Coordinate;
+    /**
+                  * Class that describes an area or window.
+                  */
+    class Area {
+    public:
+        Area();
+        /**
+                  * Create a new Area. The coordinates coordA and coordB will be ordered so that minP will always be < maxP
+                  * The coordinates are not allowed to describe a volume
+                  *
+                  * @param coordA First coordinate of an area
+                  * @param coordB Second coordinate of an area
+                  */
+        Area(const Coordinate& coordA, const Coordinate& coordB);
 
-/**
-		  * Class that describes an area or window.
-		  */
-class Area {
-
-public:
-	Area();
-	/**
-		  * Create a new Area. The coordinates coordA and coordB will be ordered so that minP will always be < maxP
-		  * The coordinates are not allowed to describe a volume
-		  *
-		  * @param CoordA First coordinate of an area
-		  * @param CoordB Second coordinate of an area
-		  */
-	Area(const Coordinate& coordA, const Coordinate& coordB);
-
-
-	/**
-		 * @brief Area
-		 * given at a coordinate with a given width and height
-		 * @param coordA
-		 * @param width
-		 * @param height
-		 */
-	explicit Area(const Coordinate& coord, double width, double height);
+        /**
+                 * @brief Area
+                 * given at a coordinate with a given width and height
+                 * @param coord
+                 * @param width
+                 * @param height
+                 */
+        explicit Area(const Coordinate& coord, double width, double height);
 
         /**
          * @brief empty(): whether the area is empty
@@ -65,160 +61,160 @@ public:
          */
         bool isEmpty(double tolerance) const;
 
-	/**
-                  * Return the smallest corner
-		  */
-	const Coordinate& minP() const;
+        /**
+                      * Return the smallest corner
+                      */
+        const Coordinate& minP() const;
 
-	/**
-		  * Return the highest corner
-		  */
-	const Coordinate& maxP() const;
-	/**
-		 * @brief topLeftCorner return the upperLeftCorner coordinates
-		 * _minP is considered lowerLeft, _maxP is the upperRight
-		 * @return {_minP.x, _maxP.y}
-		 */
-	Coordinate upperLeftCorner() const;
-	Coordinate upperRightCorner() const;
-	/**
-		 * @brief lowerRightCorner return the lowerRight coordinates
-		 * _minP is considered lowerLeft, _maxP is the upperRight
-		 * @return {_maxP.x, _minP.y}
-		 */
-	Coordinate lowerLeftCorner() const;
-	Coordinate lowerRightCorner() const;
+        /**
+                  * Return the highest corner
+                  */
+        const Coordinate& maxP() const;
+        /**
+                 * @brief topLeftCorner return the upperLeftCorner coordinates
+                 * _minP is considered lowerLeft, _maxP is the upperRight
+                 * @return {_minP.x, _maxP.y}
+                 */
+        Coordinate upperLeftCorner() const;
+        Coordinate upperRightCorner() const;
+        /**
+                 * @brief lowerRightCorner return the lowerRight coordinates
+                 * _minP is considered lowerLeft, _maxP is the upperRight
+                 * @return {_maxP.x, _minP.y}
+                 */
+        Coordinate lowerLeftCorner() const;
+        Coordinate lowerRightCorner() const;
 
-	/**
-		 * @brief width
-		 * Returns the width of this area
-		 * @return
-		 */
-	double width() const;
+        /**
+                 * @brief width
+                 * Returns the width of this area
+                 * @return
+                 */
+        double width() const;
 
-	/**
-		 * @brief height
-		 * Returns the height of this area
-		 * @return
-		 */
-	double height() const;
+        /**
+                 * @brief height
+                 * Returns the height of this area
+                 * @return
+                 */
+        double height() const;
 
-	/**
-		  * @brief Test of a specific point lies within an area
-		  * @param point Point to test against
-		  * @return boolean true of the point is within the area
-		  */
-	bool inArea(const Coordinate& point, double tolerance = 0.) const;
+        /**
+                  * @brief Test of a specific point lies within an area
+                  * @param point Point to test against
+                  * @param tolerance
+                  * @return boolean true of the point is within the area
+                  */
+        bool inArea(const Coordinate& point, double tolerance = 0.) const;
 
-	/**
-		 * @brief inArea
-		 * test if this object's fit's fully in area
-		 * @param area
-		 * @return
-		 */
-	bool inArea(const Area& area) const;
+        /**
+                 * @brief inArea
+                 * test if this object's fit's fully in area
+                 * @param area
+                 * @return
+                 */
+        bool inArea(const Area& area) const;
 
-	/**
-		 * @brief overlaps
-		 * returns true if any overlap is happening between the two area's, even if otherArea fit's within this area
-		 * @param other
-		 * @return
-		 */
-	bool overlaps(const Area& otherArea) const;
+        /**
+                 * @brief overlaps
+                 * returns true if any overlap is happening between the two area's, even if otherArea fit's within this area
+                 * @param otherArea
+                 * @return
+                 */
+        bool overlaps(const Area& otherArea) const;
 
-	/**
-		 * @brief numCornersInside
-		 * count the number of corners this object has in otherArea
-		 * @param other
-		 * @return
-		 */
-	short numCornersInside(const Area& otherArea) const;
+        /**
+                 * @brief numCornersInside
+                 * count the number of corners this object has in otherArea
+                 * @param otherArea
+                 * @return
+                 */
+        short numCornersInside(const Area& otherArea) const;
 
-	/**
-		 * @brief merge
-		 * two area's and expand if required to largest containing area
-		 * @param other
-		 * @return
-		 */
-	Area merge(const Area& other) const;
+        /**
+                 * @brief merge
+                 * two area's and expand if required to largest containing area
+                 * @param other
+                 * @return
+                 */
+        Area merge(const Area& other) const;
 
-	/**
-		  * @brief merge
-		  * two area's and expand if required to largest containing area
-		  * @param other
-		  * @return
-		  */
-	Area merge(const Coordinate& other) const;
+        /**
+                  * @brief merge
+                  * two area's and expand if required to largest containing area
+                  * @param other
+                  * @return
+                  */
+        Area merge(const Coordinate& other) const;
 
-	/**
-         * @brief intersection
-         * the intersection area of two rectangular areas
-		 * @param other
-		 * @param tolerance, tolerance to detect zero size intersection
-         * @return the rectangular intersection of two areas
-		 */
-	Area intersection(const Area& other, double tolerance = 0.) const;
+        /**
+                 * @brief intersection
+                 * the intersection area of two rectangular areas
+                 * @param other
+                 * @param tolerance, tolerance to detect zero size intersection
+                 * @return the rectangular intersection of two areas
+                 */
+        Area intersection(const Area& other, double tolerance = 0.) const;
 
-	/**
-	 * @brief intersects whether two rectangular area
-	 * if the closest distance between two Areas is smaller than tolerance, they
-	 * are considered to have intersection
-	 * @param rhs the other rect
-	 * @return true if closest distance is smaller than or equal to tolerance
-	 */
-	bool intersects(Area const& rhs, double tolerance = 0.) const;
+        /**
+             * @brief intersects whether two rectangular area
+             * if the closest distance between two Areas is smaller than tolerance, they
+             * are considered to have intersection
+             * @param rhs the other rect
+             * @param tolerance
+             * @return true if closest distance is smaller than or equal to tolerance
+             */
+        bool intersects(const Area& rhs, double tolerance = 0.) const;
 
-	/**
-		 * @brief top
-		 * vector of this area
-		 * @return
-		 */
-	Coordinate top() const;
+        /**
+                 * @brief top
+                 * vector of this area
+                 * @return
+                 */
+        Coordinate top() const;
 
-	/**
-		 * @brief bottom
-		 * vector of this area
-		 * @return
-		 */
-	Coordinate bottom() const;
+        /**
+                 * @brief bottom
+                 * vector of this area
+                 * @return
+                 */
+        Coordinate bottom() const;
 
-	/**
-		 * @brief left
-		 * vector for this area
-		 * @return
-		 */
-	Coordinate left() const;
+        /**
+                 * @brief left
+                 * vector for this area
+                 * @return
+                 */
+        Coordinate left() const;
 
-	/**
-		 * @brief right
-		 * vector of this area
-		 * @return
-		 */
-	Coordinate right() const;
+        /**
+                 * @brief right
+                 * vector of this area
+                 * @return
+                 */
+        Coordinate right() const;
 
-	/**
-		 * Increase the area on each side by increaseBy
-		 */
-	Area increaseBy (double increaseBy) const;
-	/**
-	 * @brief vertices generate vertices of the rectangular area
-	 * @return array of vertices by the order {ll, lr, ur, rl} starting with
-	 * lower-left corner, i.e. _minP
-	 */
-	std::array<Coordinate, 4> vertices() const;
+        /**
+                 * Increase the area on each side by increaseBy
+                 */
+        Area increaseBy(double increaseBy) const;
+        /**
+             * @brief vertices generate vertices of the rectangular area
+             * @return array of vertices by the order {ll, lr, ur, rl} starting with
+             * lower-left corner, i.e. _minP
+             */
+        std::array<Coordinate, 4> vertices() const;
 
-	static void unitTest();
+        // static void unitTest();
 
-private:
-	static Coordinate Vector(Coordinate const& p, Coordinate const& q);
-	friend std::ostream& operator<<(std::ostream& os, const Area& area);
+    private:
+        static Coordinate Vector(const Coordinate& p, const Coordinate& q);
+        friend std::ostream& operator<<(std::ostream& os, const Area& area);
 
-private:
-    Coordinate _minP{};
-    Coordinate _maxP{};
-};
-}
+        Coordinate m_minP;
+        Coordinate m_maxP;
+    };
 }
 
 using LC_Rect = lc::geo::Area;
-#endif // LC_RECT_H
+#endif

@@ -1,5 +1,3 @@
-// File: lc_hyperbolaspline.h
-
 /*
  * ********************************************************************************
  * This file is part of the LibreCAD project, a 2D CAD program
@@ -22,6 +20,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * ********************************************************************************
  */
+
+// File: lc_hyperbolaspline.h
 
 #ifndef LC_HYPERBOLASPLINE_H
 #define LC_HYPERBOLASPLINE_H
@@ -50,7 +50,6 @@ namespace LC_HyperbolaSpline
 
   /** Convert hyperbola to DXF spline */
   bool hyperbolaToSpline(const LC_HyperbolaData& hd, DRW_Spline& spl);
-
-};
+}
 
 #endif // LC_HYPERBOLASPLINE_H

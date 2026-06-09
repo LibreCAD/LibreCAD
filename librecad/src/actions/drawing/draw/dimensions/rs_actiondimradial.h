@@ -39,7 +39,7 @@ struct RS_DimRadialData;
 class RS_ActionDimRadial:public LC_ActionCircleDimBase {
 Q_OBJECT
 public:
-    RS_ActionDimRadial(LC_ActionContext *actionContext);
+    explicit RS_ActionDimRadial(LC_ActionContext *actionContext);
     ~RS_ActionDimRadial() override;
 protected:
     /** Data of new dimension */

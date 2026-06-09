@@ -36,7 +36,7 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
-QG_DlgInitial::QG_DlgInitial(QWidget* parent, bool modal, Qt::WindowFlags fl)
+QG_DlgInitial::QG_DlgInitial(QWidget* parent, const bool modal, const Qt::WindowFlags fl)
     : QDialog(parent, fl) {
     setModal(modal);
     setupUi(this);
@@ -55,11 +55,11 @@ void QG_DlgInitial::languageChange(){
     retranslateUi(this);
 }
 
-void QG_DlgInitial::init() {
+void QG_DlgInitial::init() const {
     // Fill combobox with languages:
     QStringList languageList = RS_SYSTEM->getLanguageList();
-    QString defaultLanguage=RS_SYSTEM->symbolToLanguage(QString("en"));
-    for (QString language: languageList) {
+    const QString defaultLanguage=RS_SYSTEM->symbolToLanguage(QString("en"));
+    for (const QString &language: std::as_const(languageList)) {
         QString l = RS_SYSTEM->symbolToLanguage(language);
         cbLanguage->addItem(l, language);
         cbLanguageCmd->addItem(l, language);
@@ -68,7 +68,7 @@ void QG_DlgInitial::init() {
 
     // units:
     for (int i=RS2::None; i<RS2::LastUnit; i++) {
-        cbUnit->addItem(RS_Units::unitToString((RS2::Unit)i));
+        cbUnit->addItem(RS_Units::unitToString(static_cast<RS2::Unit>(i)));
     }
 
     cbUnit->setCurrentIndex( cbUnit->findText("Millimeter") );
@@ -76,11 +76,11 @@ void QG_DlgInitial::init() {
     cbLanguageCmd->setCurrentIndex( cbLanguageCmd->findText(defaultLanguage) );
 }
 
-void QG_DlgInitial::setText(const QString& t) {
+void QG_DlgInitial::setText(const QString& t) const {
     lWelcome->setText(t);
 }
 
-void QG_DlgInitial::setPixmap(const QPixmap& p) {
+void QG_DlgInitial::setPixmap(const QPixmap& p) const {
     lImage->setPixmap(p);
 }
 

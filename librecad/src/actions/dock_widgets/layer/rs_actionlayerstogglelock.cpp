@@ -29,6 +29,7 @@
 #include "rs_debug.h"
 #include "rs_graphic.h"
 #include "rs_layer.h"
+#include "rs_selection.h"
 
 class RS_LayerList;
 
@@ -39,41 +40,36 @@ RS_ActionLayersToggleLock::RS_ActionLayersToggleLock(LC_ActionContext *actionCon
 
 void RS_ActionLayersToggleLock::trigger() {
     RS_DEBUG->print("toggle layer");
-    if (m_graphic) {
+    if (m_graphic != nullptr) {
         RS_LayerList* ll = m_graphic->getLayerList();
-        unsigned cnt = 0;
+        bool noLayersToggled = true;
         // toggle selected layers
-        for (auto layer: *ll) {
-            if (!layer) continue;
-            if (!layer->isVisibleInLayerList()) continue;
-            if (!layer->isSelectedInLayerList()) continue;
+        for (const auto layer : *ll) {
+            if (layer == nullptr || !layer->isVisibleInLayerList() || !layer->isSelectedInLayerList()) {
+                continue;
+            }
             m_graphic->toggleLayerLock(layer);
             deselectEntitiesOnLockedLayer(layer);
-            cnt++;
+            noLayersToggled = false;
         }
         // if there wasn't selected layers, toggle active layer
-        if (!cnt) {
+        if (noLayersToggled) {
             m_graphic->toggleLayerLock(m_layer);
             deselectEntitiesOnLockedLayer(m_layer);
         }
     }
     redrawDrawing();
-    finish(false);
+    finish();
 }
 
-void RS_ActionLayersToggleLock::init(int status) {
+void RS_ActionLayersToggleLock::init(const int status) {
     RS_ActionInterface::init(status);
     trigger();
 }
 
-void RS_ActionLayersToggleLock::deselectEntitiesOnLockedLayer(RS_Layer* layer)
-{
-    if (!layer) return;
-    if (!layer->isLocked()) return;
-
-    for(auto e: *m_container){ // fixme - sand -  interation over all entities in container
-        if (e && e->isVisible() && e->getLayer() == layer) {
-            e->setSelected(false);
-        }
+void RS_ActionLayersToggleLock::deselectEntitiesOnLockedLayer(RS_Layer* layer) const {
+    if (layer == nullptr ||  !layer->isLocked()) {
+        return;
     }
+    RS_Selection::unselectLayer(m_document, m_graphicView->getViewPort(), layer);
 }

@@ -20,17 +20,13 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
-#ifndef LIBRECAD_LC_ACTIONDIMLINEARBASE_H
-#define LIBRECAD_LC_ACTIONDIMLINEARBASE_H
+#ifndef LC_ACTIONDIMLINEARBASE_H
+#define LC_ACTIONDIMLINEARBASE_H
 
 #include "rs_actiondimension.h"
 
 class LC_ActionDimLinearBase : public RS_ActionDimension {
     Q_OBJECT
-public:
-    LC_ActionDimLinearBase(const char* name, LC_ActionContext* actionContext, RS2::EntityType entityType,
-                           RS2::ActionType actionType = RS2::ActionNone);
-    ~LC_ActionDimLinearBase() override;
 protected:
     /**
    * Action States.
@@ -53,25 +49,28 @@ protected:
 
     bool m_alternateDimDirection = false;
 
+    LC_ActionDimLinearBase(const char* name, LC_ActionContext* actionContext, RS2::EntityType dimType,
+                               RS2::ActionType actionType = RS2::ActionNone);
+    ~LC_ActionDimLinearBase() override;
     void doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) override;
     virtual RS_Vector getExtensionPoint1() = 0;
-    virtual void setExtensionPoint1(RS_Vector p) = 0;
-    virtual void setExtensionPoint2(RS_Vector p) = 0;
+    virtual void setExtensionPoint1(const RS_Vector& p) = 0;
+    virtual void setExtensionPoint2(const RS_Vector& p) = 0;
     virtual RS_Vector getExtensionPoint2() = 0;
     virtual void preparePreview(bool alternateMode) = 0;
     virtual double getDimAngle(bool alternateMode) = 0;
-    RS_Vector getAdjacentDimDimSnapPoint(const RS_Vector& ownDimPointToCheck, double snapRange);
+    RS_Vector getAdjacentDimDimSnapPoint(const RS_Vector& ownDimPointToCheck, double snapRange) const;
     RS_Vector adjustDefPointByAdjacentDims(const RS_Vector& mouse, const RS_Vector& extPoint1,
                                            const RS_Vector& extPoint2, double ownDimLineAngle, bool forPreview);
-    RS_Vector adjustByAdjacentDim(RS_Vector mouse, bool forPreview, bool altDirection);
+    RS_Vector adjustByAdjacentDim(const RS_Vector& mouse, bool forPreview, bool altDirection);
     virtual void updateMouseButtonHintForExtPoint2();
     virtual void updateMouseButtonHintForDefPoint();
     virtual RS_Entity* createDim(RS_EntityContainer* parent) = 0;
-    void onMouseLeftButtonRelease(int status, LC_MouseEvent* e) override;
-    void onMouseRightButtonRelease(int status, LC_MouseEvent* e) override;
-    void onMouseMoveEvent(int status, LC_MouseEvent* event) override;
+    void onMouseLeftButtonRelease(int status, const LC_MouseEvent* e) override;
+    void onMouseRightButtonRelease(int status, const LC_MouseEvent* e) override;
+    void onMouseMoveEvent(int status, const LC_MouseEvent* e) override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector& pos) override;
-    void updateMouseButtonHints() override;
-    void doTrigger() override;
+    void updateActionPrompt() override;
+    RS_Entity* doTriggerCreateEntity() override;
 };
-#endif //LIBRECAD_LC_ACTIONDIMLINEARBASE_H
+#endif

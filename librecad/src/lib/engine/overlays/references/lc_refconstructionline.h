@@ -33,4 +33,4 @@ public:
 };
 
 
-#endif // LC_REFCONSTRUCTIONLINE_H
+#endif

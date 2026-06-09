@@ -30,26 +30,26 @@
 
 class LC_ActionInteractivePickBase;
 
-LC_ActionInteractivePickPosition::LC_ActionInteractivePickPosition(LC_ActionContext *actionContext)
-    :LC_ActionInteractivePickBase("InteractivePickPosition", actionContext, RS2::ActionInteractivePickPoint){
+LC_ActionInteractivePickPosition::LC_ActionInteractivePickPosition(LC_ActionContext *actionContext, const RS2::ActionType actionType)
+    :LC_ActionInteractivePickBase("InteractivePickPosition", actionContext, actionType){
 }
 
 LC_ActionInteractivePickPosition::~LC_ActionInteractivePickPosition() = default;
 
-void LC_ActionInteractivePickPosition::init(int status) {
+void LC_ActionInteractivePickPosition::init(const int status) {
     LC_ActionInteractivePickBase::init(status);
 }
 
 void LC_ActionInteractivePickPosition::doSetInteractiveInputValue(LC_ActionContext::InteractiveInputInfo* interactiveInputInfo) {
-    interactiveInputInfo->m_wcsPoint = m_wcsPosition;
+    interactiveInputInfo->wcsPoint = m_wcsPosition;
 }
 
 bool LC_ActionInteractivePickPosition::isInteractiveDataValid() {
     return m_wcsPosition.valid;
 }
 
-void LC_ActionInteractivePickPosition::onMouseMoveEvent(int status, LC_MouseEvent *e) {
-    RS_Vector mouse = e->snapPoint;
+void LC_ActionInteractivePickPosition::onMouseMoveEvent(const int status, const LC_MouseEvent* e) {
+    const RS_Vector mouse = e->snapPoint;
     switch (status) {
         case SetPoint: {
             if (e->isShift) {
@@ -69,7 +69,7 @@ void LC_ActionInteractivePickPosition::onMouseMoveEvent(int status, LC_MouseEven
     }
 }
 
-void LC_ActionInteractivePickPosition::updateInfoCursor(const RS_Vector &mouse, const RS_Vector &relZero) {
+void LC_ActionInteractivePickPosition::updateInfoCursor(const RS_Vector &mouse, const RS_Vector &relZero) const {
     if (m_infoCursorOverlayPrefs->enabled) {
         msgStart()
             .string (tr("Pick Coordinates"))
@@ -82,13 +82,17 @@ void LC_ActionInteractivePickPosition::updateInfoCursor(const RS_Vector &mouse, 
     }
 }
 
-void LC_ActionInteractivePickPosition::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
-    RS_Vector snap = e->snapPoint;
+bool LC_ActionInteractivePickPosition::isInVisualSnapStatus(int status) {
+    return (status == SetPoint);
+}
+
+void LC_ActionInteractivePickPosition::onMouseLeftButtonRelease(const int status, const LC_MouseEvent* e) {
+    const RS_Vector snap = e->snapPoint;
     switch (status){
         case SetPoint:{
             m_coordinatesType = POS_ABSOLUTE;
-            if (e->isControl) {
-                m_coordinatesType = POS_RELATIVE;
+            if (e->isControl && !m_viewport->hasUCS()) {
+                m_coordinatesType = POS_RELATIVE;  // fixme - how to process relative coordinates if UCS applied??? It should be ucsDelta...
             }
             else if (e->isShift) {
                 m_coordinatesType = POS_RELATIVE_ZERO;
@@ -102,7 +106,7 @@ void LC_ActionInteractivePickPosition::onMouseLeftButtonRelease(int status, LC_M
     }
 }
 
-void LC_ActionInteractivePickPosition::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {
+void LC_ActionInteractivePickPosition::onMouseRightButtonRelease(const int status, [[maybe_unused]] const LC_MouseEvent* e) {
     deletePreview();
     if (status == InitialActionStatus) {
         skipInteractiveInput();
@@ -110,23 +114,23 @@ void LC_ActionInteractivePickPosition::onMouseRightButtonRelease(int status, [[m
     initPrevious(status);
 }
 
-void LC_ActionInteractivePickPosition::onCoordinateEvent(int status, [[maybe_unused]] bool isZero,
-                                                         const RS_Vector& mouse) {
+void LC_ActionInteractivePickPosition::onCoordinateEvent(const int status, [[maybe_unused]] bool isZero,
+                                                         const RS_Vector& pos) {
     switch (status) {
         case SetPoint: {
             switch (m_coordinatesType) {
                 case POS_ABSOLUTE: {
-                    m_wcsPosition = mouse;
+                    m_wcsPosition = pos;
                     break;
                 }
                 case POS_RELATIVE: {
-                    RS_Vector relativePosition = m_viewport->getRelativeZero();
-                    RS_Vector relative = mouse - relativePosition;
+                    const RS_Vector relativePosition = m_viewport->getRelativeZero();
+                    const RS_Vector relative = pos - relativePosition;
                     m_wcsPosition = relative;
                     break;
                 }
                 case POS_RELATIVE_ZERO: {
-                    RS_Vector relativePosition = m_viewport->getRelativeZero();
+                    const RS_Vector relativePosition = m_viewport->getRelativeZero();
                     m_wcsPosition = relativePosition;
                     break;
                 }
@@ -142,14 +146,14 @@ void LC_ActionInteractivePickPosition::onCoordinateEvent(int status, [[maybe_unu
     }
 }
 
-void LC_ActionInteractivePickPosition::updateMouseButtonHints(){
+void LC_ActionInteractivePickPosition::updateActionPrompt(){
     switch (getStatus()) {
         case SetPoint:
-            updateMouseWidgetTRBack(tr("Pick coordinates from the drawing"),
-                MOD_SHIFT_AND_CTRL(tr("Pick relative zero coordinates"), tr("Pick relative coordinates")));
+            updatePromptTRBack(tr("Pick coordinates from the drawing"),
+                MOD_SHIFT_AND_CTRL(tr("Pick relative zero coordinates"), m_viewport->hasUCS() ? "" : tr("Pick relative coordinates")));
             break;
         default:
-            updateMouseWidget();
+            updatePrompt();
             break;
     }
 }

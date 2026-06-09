@@ -48,7 +48,7 @@ public:
 //}
 
 private:
-    bool parseSysPage(duint64 sizeCompressed, duint64 sizeUncompressed, duint64 correctionFactor, duint64 offset, duint8 *decompData);
+    bool parseSysPage(duint64 sizeCompressed, duint64 sizeUncompressed, duint64 correctionFactor, duint64 offset, duint8 *decompData) const;
     bool parseDataPage(const dwgSectionInfo &si, duint8 *dData);
 
     std::unique_ptr<duint8 []> objData;
@@ -56,4 +56,4 @@ private:
 
 };
 
-#endif // DWGREADER21_H
+#endif

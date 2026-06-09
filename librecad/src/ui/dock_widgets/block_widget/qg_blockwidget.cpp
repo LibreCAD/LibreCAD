@@ -25,28 +25,24 @@
 **
 **********************************************************************/
 
-#include <algorithm>
-
-#include <QScrollBar>
-#include <QTableView>
-#include <QHeaderView>
-#include <QToolButton>
-#include <QMenu>
-#include <QBoxLayout>
-#include <QLabel>
-#include <QLineEdit>
-#include <QContextMenuEvent>
-#include <QSortFilterProxyModel>
-
-#include "lc_flexlayout.h"
-#include "qg_actionhandler.h"
 #include "qg_blockwidget.h"
 
+#include <QBoxLayout>
+#include <QContextMenuEvent>
+#include <QHeaderView>
+#include <QLineEdit>
+#include <QMenu>
+#include <QScrollBar>
+#include <QToolButton>
+#include <algorithm>
+
 #include "lc_actiongroupmanager.h"
+#include "lc_flexlayout.h"
+#include "lc_mouse_tracking_table_view.h"
+#include "lc_widgets_common.h"
+#include "qg_actionhandler.h"
 #include "rs_blocklist.h"
 #include "rs_debug.h"
-#include "rs_settings.h"
-#include "lc_widgets_common.h"
 #include "rs_graphic.h"
 #include "rs_graphicview.h"
 
@@ -64,9 +60,10 @@ QModelIndex QG_BlockModel::parent ( const QModelIndex & /*index*/ ) const {
     return QModelIndex();
 }
 
-QModelIndex QG_BlockModel::index ( int row, int column, const QModelIndex & /*parent*/ ) const {
-    if ( row >= m_listBlock.size() || row < 0)
+QModelIndex QG_BlockModel::index (const int row, const int column, const QModelIndex & /*parent*/ ) const {
+    if ( row >= m_listBlock.size() || row < 0) {
         return QModelIndex();
+    }
     return createIndex ( row, column);
 }
 
@@ -85,8 +82,9 @@ void QG_BlockModel::setBlockList(RS_BlockList* bl) {
         return;
     }
     for (int i=0; i<bl->count(); ++i) {
-        if ( !bl->at(i)->isUndone() )
+        if ( !bl->at(i)->isDeleted() ) {
             m_listBlock.append(bl->at(i));
+        }
     }
     setActiveBlock(bl->getActive());
     std::sort( m_listBlock.begin(), m_listBlock.end(), blockLessThan);
@@ -96,37 +94,39 @@ void QG_BlockModel::setBlockList(RS_BlockList* bl) {
 }
 
 
-RS_Block *QG_BlockModel::getBlock( int row) const{
-    if ( row >= m_listBlock.size() || row < 0)
+RS_Block *QG_BlockModel::getBlock(const int row) const{
+    if ( row >= m_listBlock.size() || row < 0) {
         return nullptr;
+    }
     return m_listBlock.at(row);
 }
 
 QModelIndex QG_BlockModel::getIndex (RS_Block * blk) const{
-    int row = m_listBlock.indexOf(blk);
-    if (row<0)
+    const int row = m_listBlock.indexOf(blk);
+    if (row<0) {
         return QModelIndex();
+    }
     return createIndex ( row, NAME);
 }
 
-QVariant QG_BlockModel::data ( const QModelIndex & index, int role ) const {
-    if (!index.isValid() || index.row() >= m_listBlock.size())
+QVariant QG_BlockModel::data ( const QModelIndex & index, const int role ) const {
+    if (!index.isValid() || index.row() >= m_listBlock.size()) {
         return QVariant();
+    }
 
-    RS_Block* blk = m_listBlock.at(index.row());
+    const RS_Block* blk = m_listBlock.at(index.row());
 
     if (role ==Qt::DecorationRole && index.column() == VISIBLE) {
         if (!blk->isFrozen()) {
             return m_iconBlockVisible;
-        } else {
-            return m_iconBlockHidden;
         }
+        return m_iconBlockHidden;
     }
     if (role ==Qt::DisplayRole && index.column() == NAME) {
         return blk->getName();
     }
     if (role == Qt::FontRole && index.column() == NAME) {
-        if (m_activeBlock && m_activeBlock == blk) {
+        if ((m_activeBlock != nullptr) && m_activeBlock == blk) {
             QFont font;
             font.setBold(true);
             return font;
@@ -136,11 +136,31 @@ QVariant QG_BlockModel::data ( const QModelIndex & index, int role ) const {
     return QVariant();
 }
 
+class LC_BlockTableItemDelegate : public LC_TableItemDelegateBase {
+public:
+    explicit LC_BlockTableItemDelegate(LC_MouseTrackingTableView* parent) : LC_TableItemDelegateBase(parent) {
+        auto palette = parent->palette();
+        m_gridColor = palette.color(QPalette::Button);
+        m_hoverRowBackgroundColor = palette.color(QPalette::AlternateBase);
+    }
+
+    void doPaint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const override {
+        QStyledItemDelegate::paint(painter, option, index);
+        const bool drawGrid = true; // fixme - add options as part of rework
+        if (drawGrid) {
+            drawHorizontalGridLine(painter, option);
+        }
+    }
+private:
+
+};
+
+
 /**
  * Constructor.
  */
-QG_BlockWidget::QG_BlockWidget(LC_ActionGroupManager* agm,QG_ActionHandler* ah, QWidget* parent,
-                               const char* name, Qt::WindowFlags f)
+QG_BlockWidget::QG_BlockWidget(LC_ActionGroupManager* agm, const QG_ActionHandler* ah, QWidget* parent,
+                               const char* name, const Qt::WindowFlags f)
     : LC_GraphicViewAwareWidget(parent, name, f) {
     m_actionGroupManager = agm;
     m_actionHandler = ah;
@@ -154,7 +174,7 @@ QG_BlockWidget::QG_BlockWidget(LC_ActionGroupManager* agm,QG_ActionHandler* ah, 
     m_proxyModel->setFilterKeyColumn(QG_BlockModel::NAME);  // Filter only on the NAME column
     m_proxyModel->setDynamicSortFilter(false);  // Disable automatic sorting (source model is already sorted)
 
-    m_blockView = new QTableView(this);
+    m_blockView = new LC_MouseTrackingTableView(this);
     m_blockView->setModel (m_proxyModel);
     m_blockView->setShowGrid (false);
     m_blockView->setSelectionMode(QAbstractItemView::ExtendedSelection);
@@ -169,10 +189,10 @@ QG_BlockWidget::QG_BlockWidget(LC_ActionGroupManager* agm,QG_ActionHandler* ah, 
     blockView->setStyleSheet("QWidget {background-color: white;}  QScrollBar{ background-color: none }");
 #endif
     auto* lay = new QVBoxLayout(this);
-    lay->setSpacing ( 2 );
-    lay->setContentsMargins(2, 2, 2, 2);
+    lay->setSpacing(1);
+    lay->setContentsMargins(0, 1, 2, 2);
 
-    auto layButtons = new LC_FlexLayout(0,5,5);
+    const auto layButtons = new LC_FlexLayout(0,3,3);
 
     addToolbarButton(layButtons, RS2::ActionBlocksDefreezeAll);
     addToolbarButton(layButtons, RS2::ActionBlocksFreezeAll);
@@ -200,24 +220,27 @@ QG_BlockWidget::QG_BlockWidget(LC_ActionGroupManager* agm,QG_ActionHandler* ah, 
     connect(m_blockView, &QTableView::clicked, this, &QG_BlockWidget::slotActivated);
     connect(m_blockView->selectionModel(), &QItemSelectionModel::selectionChanged,
             this, &QG_BlockWidget::slotSelectionChanged);
-
+    m_blockView->setTrackingItemDelegate(new LC_BlockTableItemDelegate(m_blockView));
     updateWidgetSettings();
 }
 
-void QG_BlockWidget::addToolbarButton(LC_FlexLayout* layButtons, RS2::ActionType actionType) {
+void QG_BlockWidget::addToolbarButton(LC_FlexLayout* layButtons, const RS2::ActionType actionType) {
     QAction* action = m_actionGroupManager->getActionByType(actionType);
     if (action != nullptr) {
-        auto button = new QToolButton(this);
+        const auto button = new QToolButton(this);
         button->setDefaultAction(action);
         layButtons->addWidget(button);
     }
 }
 
+QLayout* QG_BlockWidget::getTopLevelLayout() const {
+    return layout();
+}
 
 /**
  * Updates the block box from the blocks in the graphic.
  */
-void QG_BlockWidget::update() {
+void QG_BlockWidget::updateWidget() {
     RS_DEBUG->print("QG_BlockWidget::update()");
 
     if (m_blockList==nullptr) {
@@ -247,7 +270,7 @@ void QG_BlockWidget::restoreSelections() const {
     QItemSelectionModel* selectionModel = m_blockView->selectionModel();
     selectionModel->clearSelection();  // Clear first to avoid duplicates
 
-    for (auto block : *m_blockList) {
+    for (const auto block : *m_blockList) {
         if (block == nullptr || !block->isSelectedInBlockList()) {
             continue;
         }
@@ -277,15 +300,15 @@ void QG_BlockWidget::activateBlock(RS_Block* block) {
 
     m_lastBlock = m_blockList->getActive();
     m_blockList->activate(block);
-    int yPos = m_blockView->verticalScrollBar()->value();
-    QModelIndex sourceIdx = m_blockModel->getIndex(block);
+    const int yPos = m_blockView->verticalScrollBar()->value();
+    const QModelIndex sourceIdx = m_blockModel->getIndex(block);
     if (!sourceIdx.isValid()) {
         return;
     }
-    QModelIndex proxyIdx = m_proxyModel->mapFromSource(sourceIdx);
+    const QModelIndex proxyIdx = m_proxyModel->mapFromSource(sourceIdx);
 
     // remember selected status of the block
-    bool selected = block->isSelectedInBlockList();
+    const bool selected = block->isSelectedInBlockList();
 
     if (proxyIdx.isValid()) {
         m_blockView->setCurrentIndex(proxyIdx);
@@ -294,7 +317,7 @@ void QG_BlockWidget::activateBlock(RS_Block* block) {
     m_blockView->viewport()->update();
 
     // restore selected status of the block
-    QItemSelectionModel::SelectionFlag selFlag = selected ? QItemSelectionModel::Select : QItemSelectionModel::Deselect;
+    const QItemSelectionModel::SelectionFlag selFlag = selected ? QItemSelectionModel::Select : QItemSelectionModel::Deselect;
     block->selectedInBlockList(selected);
     if (proxyIdx.isValid()) {
         m_blockView->selectionModel()->select(QItemSelection(proxyIdx, proxyIdx), selFlag);
@@ -310,7 +333,7 @@ void QG_BlockWidget::slotActivated(const QModelIndex &blockIdx) {
         return;
     }
 
-    QModelIndex sourceIdx = m_proxyModel->mapToSource(blockIdx);
+    const QModelIndex sourceIdx = m_proxyModel->mapToSource(blockIdx);
     if (!sourceIdx.isValid()) {
         return;
     }
@@ -349,7 +372,7 @@ void QG_BlockWidget::slotSelectionChanged(
     foreach (QModelIndex proxyIdx, selected.indexes()) {
         QModelIndex sourceIdx = m_proxyModel->mapToSource(proxyIdx);
         if (sourceIdx.isValid()) {
-            RS_Block* block = m_blockModel->getBlock(sourceIdx.row());
+            const RS_Block* block = m_blockModel->getBlock(sourceIdx.row());
             if (block != nullptr) {
                 block->selectedInBlockList(true);
             }
@@ -360,7 +383,7 @@ void QG_BlockWidget::slotSelectionChanged(
     foreach (QModelIndex proxyIdx, deselected.indexes()) {
         QModelIndex sourceIdx = m_proxyModel->mapToSource(proxyIdx);
         if (sourceIdx.isValid()) {
-            RS_Block* block = m_blockModel->getBlock(sourceIdx.row());
+            const RS_Block* block = m_blockModel->getBlock(sourceIdx.row());
             if (block != nullptr) {
                 block->selectedInBlockList(false);
             }
@@ -375,8 +398,8 @@ void QG_BlockWidget::slotSelectionChanged(
 void QG_BlockWidget::contextMenuEvent(QContextMenuEvent *e) {
     // select item (block) in Block List widget first because left-mouse-click event are not to be triggered
     // slotActivated(blockView->currentIndex());
-    auto contextMenu = std::make_unique<QMenu>(this);
-    auto menu = contextMenu.get();
+    const auto contextMenu = std::make_unique<QMenu>(this);
+    const auto menu = contextMenu.get();
     // Actions for all blocks:
     addMenuItem(menu, RS2::ActionBlocksDefreezeAll);
     addMenuItem(menu, RS2::ActionBlocksFreezeAll);
@@ -395,8 +418,8 @@ void QG_BlockWidget::contextMenuEvent(QContextMenuEvent *e) {
     e->accept();
 }
 
-void QG_BlockWidget::addMenuItem(QMenu* contextMenu, RS2::ActionType actionType) {
-    auto action = m_actionGroupManager->getActionByType(actionType);
+void QG_BlockWidget::addMenuItem(QMenu* contextMenu, const RS2::ActionType actionType) const {
+    const auto action = m_actionGroupManager->getActionByType(actionType);
     if (action != nullptr) {
         contextMenu->addAction(action);
     }
@@ -419,7 +442,7 @@ void QG_BlockWidget::keyPressEvent(QKeyEvent* e) {
 
 
 void QG_BlockWidget::blockAdded(RS_Block*) {
-    update();
+    updateWidget();
     if (! m_matchBlockName->text().isEmpty()) {
         slotUpdateBlockList();
     }
@@ -438,39 +461,24 @@ void QG_BlockWidget::slotUpdateBlockList() const {
     if (input.isEmpty()) {
         m_proxyModel->setFilterRegularExpression(QRegularExpression(""));  // Clear filter to show all
     } else {
-        bool hasPattern = input.contains('*') || input.contains('?');
+        const bool hasPattern = input.contains('*') || input.contains('?');
         if (!hasPattern) {
             input = "*" + input + "*";  // Wrap for "contains" matching
         }
-        QRegularExpression rx(QRegularExpression::wildcardToRegularExpression(input), QRegularExpression::CaseInsensitiveOption);
+        const QRegularExpression rx(QRegularExpression::wildcardToRegularExpression(input), QRegularExpression::CaseInsensitiveOption);
         m_proxyModel->setFilterRegularExpression(rx);
     }
 
     restoreSelections();  // Restore after filter change
 }
 
-void QG_BlockWidget::updateWidgetSettings() const {
-    LC_GROUP("Widgets"); {
-        bool flatIcons = LC_GET_BOOL("DockWidgetsFlatIcons", true);
-        int iconSize = LC_GET_INT("DockWidgetsIconSize", 16);
-
-        QSize size(iconSize, iconSize);
-
-        QList<QToolButton *> widgets = this->findChildren<QToolButton *>();
-        foreach(QToolButton *w, widgets) {
-            w->setAutoRaise(flatIcons);
-            w->setIconSize(size);
-        }
-    }
-    LC_GROUP_END();
-}
 
 void QG_BlockWidget::setGraphicView(RS_GraphicView* gv){
     if (gv == nullptr) {
         setBlockList(nullptr);
     }
     else {
-        auto graphic = gv->getGraphic();
+        const auto graphic = gv->getGraphic();
         if (graphic == nullptr) {
             setBlockList(nullptr);
         }
@@ -488,6 +496,5 @@ void QG_BlockWidget::setBlockList(RS_BlockList* blockList) {
     if (blockList != nullptr) {
         m_blockList->addListener(this);
     }
-    update();
+    updateWidget();
 }
-// EOF

@@ -20,8 +20,8 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
 
-#ifndef LIBRECAD_LC_DRAWABLE_H
-#define LIBRECAD_LC_DRAWABLE_H
+#ifndef LC_DRAWABLE_H
+#define LC_DRAWABLE_H
 
 #include "rs.h"
 
@@ -41,10 +41,9 @@ public:
         return RS2::EntityUnknown;
     }
 
-    bool is(RS2::EntityType rttiCandidate) const{
+    bool is(const RS2::EntityType rttiCandidate) const{
         return rtti() == rttiCandidate;
     }
 };
 
-
-#endif //LIBRECAD_LC_DRAWABLE_H
+#endif

@@ -26,26 +26,28 @@
 #ifndef QG_BLOCKDIALOG_H
 #define QG_BLOCKDIALOG_H
 
-#include "ui_qg_blockdialog.h"
 #include "lc_dialog.h"
+#include "ui_qg_blockdialog.h"
 
 class RS_BlockList;
 struct RS_BlockData;
 
-class QG_BlockDialog : public LC_Dialog, public Ui::QG_BlockDialog{
-    Q_OBJECT
-public:
-    QG_BlockDialog(QWidget* parent = nullptr);
-	~QG_BlockDialog() override =default;
-    RS_BlockData getBlockData();
+class QG_BlockDialog : public LC_Dialog, public Ui::QG_BlockDialog {
+    Q_OBJECT public:
+    explicit QG_BlockDialog(QWidget* parent = nullptr);
+    ~QG_BlockDialog() override = default;
+    RS_BlockData getBlockData() const;
+
 public slots:
-    void setBlockList( RS_BlockList * l );
+    void setBlockList(RS_BlockList* l);
     void validate();
     void cancel();
+
 protected:
     RS_BlockList* m_blockList;
+
 protected slots:
     void languageChange();
 };
 
-#endif // QG_BLOCKDIALOG_H
+#endif

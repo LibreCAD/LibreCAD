@@ -42,7 +42,7 @@ RS_ActionInfoDist::RS_ActionInfoDist(LC_ActionContext *actionContext)
 
 RS_ActionInfoDist::~RS_ActionInfoDist() = default;
 
-void RS_ActionInfoDist::init(int status) {
+void RS_ActionInfoDist::init(const int status) {
     RS_PreviewActionInterface::init(status);
 }
 
@@ -52,20 +52,24 @@ void RS_ActionInfoDist::doTrigger() {
     if (m_actionData->point1.valid && m_actionData->point2.valid){
         RS_Vector dV = m_actionData->point2 - m_actionData->point1;
         QStringList dists;
-        for (double a: {dV.magnitude(), dV.x, dV.y, m_actionData->point1.x, m_actionData->point1.y, m_actionData->point2.x, m_actionData->point2.y}) {
+        for (const double a: {dV.magnitude(), dV.x, dV.y, m_actionData->point1.x, m_actionData->point1.y, m_actionData->point2.x, m_actionData->point2.y}) {
             dists << formatLinear(a);
         }
 
-        double wcsAngle = dV.angle();
+        const double wcsAngle = dV.angle();
         QString angle = formatWCSAngle(wcsAngle);
         commandMessage("--- ");
         const QString &templateStr = tr("Distance: %1\nCartesian: (%2 , %3)\nPolar: (%4 < %5)\nStart: (%6 , %7)\nEnd: (%8 , %9)");
-        QString message = templateStr.arg(dists[0],dists[1],dists[2],dists[0],angle, dists[3], dists[4], dists[5], dists[6]);
+        const QString message = templateStr.arg(dists[0],dists[1],dists[2],dists[0],angle, dists[3], dists[4], dists[5], dists[6]);
         commandMessage(message);
     }
 }
 
-void RS_ActionInfoDist::onMouseMoveEvent(int status, LC_MouseEvent *e) {
+bool RS_ActionInfoDist::isInVisualSnapStatus(int status) {
+    return (status == SetPoint1) || (status == SetPoint2);
+}
+
+void RS_ActionInfoDist::onMouseMoveEvent(const int status, const LC_MouseEvent* e) {
     RS_Vector mouse = e->snapPoint;
     switch (status) {
         case SetPoint1: {
@@ -82,7 +86,7 @@ void RS_ActionInfoDist::onMouseMoveEvent(int status, LC_MouseEvent *e) {
                     previewRefPoint(m_actionData->point1);
                     previewRefSelectablePoint(m_actionData->point2);
                 }
-                RS_Vector &startPoint = m_actionData->point1;
+                const RS_Vector &startPoint = m_actionData->point1;
                 updateInfoCursor(mouse, startPoint);
             }
             break;
@@ -92,9 +96,9 @@ void RS_ActionInfoDist::onMouseMoveEvent(int status, LC_MouseEvent *e) {
     }
 }
 
-void RS_ActionInfoDist::updateInfoCursor(const RS_Vector &mouse, const RS_Vector &startPoint) {
+void RS_ActionInfoDist::updateInfoCursor(const RS_Vector &mouse, const RS_Vector &startPoint) const {
     if (m_infoCursorOverlayPrefs->enabled) {
-        double distance = startPoint.distanceTo(mouse);
+        const double distance = startPoint.distanceTo(mouse);
         msg(tr("Info"))
             .linear(tr("Distance:"), distance)
             .wcsAngle(tr("Angle:"), startPoint.angleTo(mouse))
@@ -104,7 +108,7 @@ void RS_ActionInfoDist::updateInfoCursor(const RS_Vector &mouse, const RS_Vector
     }
 }
 
-void RS_ActionInfoDist::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
+void RS_ActionInfoDist::onMouseLeftButtonRelease(const int status, const LC_MouseEvent* e) {
     RS_Vector snap = e->snapPoint;
     switch (status){
         case SetPoint1:{
@@ -112,7 +116,7 @@ void RS_ActionInfoDist::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
             moveRelativeZero(m_actionData->point1);
             break;
         }
-        case (SetPoint2):{
+        case SetPoint2:{
             snap = getSnapAngleAwarePoint(e, m_actionData->point1,  snap);
             fireCoordinateEvent(snap);
             if (!e->isControl){
@@ -125,21 +129,23 @@ void RS_ActionInfoDist::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     }
 }
 
-void RS_ActionInfoDist::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {
+void RS_ActionInfoDist::onMouseRightButtonRelease(const int status, [[maybe_unused]] const LC_MouseEvent* e) {
     deletePreview();
     initPrevious(status);
 }
 
-void RS_ActionInfoDist::onCoordinateEvent(int status, [[maybe_unused]]bool isZero, const RS_Vector &mouse) {
+void RS_ActionInfoDist::onCoordinateEvent(const int status, [[maybe_unused]]bool isZero, const RS_Vector &coord) {
     switch (status) {
         case SetPoint1: {
-            m_actionData->point1 = mouse;
+            m_actionData->point1 = coord;
+            addSnappedPointToVisualSnap(coord);
             setStatus(SetPoint2);
             break;
         }
         case SetPoint2: {
             if (m_actionData->point1.valid){
-                m_actionData->point2 = mouse;
+                addSnappedPointToVisualSnap(coord);
+                m_actionData->point2 = coord;
                 deletePreview();
                 trigger();
                 setStatus(SetPoint1);
@@ -151,16 +157,16 @@ void RS_ActionInfoDist::onCoordinateEvent(int status, [[maybe_unused]]bool isZer
     }
 }
 
-void RS_ActionInfoDist::updateMouseButtonHints(){
+void RS_ActionInfoDist::updateActionPrompt(){
     switch (getStatus()) {
         case SetPoint1:
-            updateMouseWidgetTRCancel(tr("Specify first point of distance"), MOD_SHIFT_RELATIVE_ZERO);
+            updatePromptTRCancel(tr("Specify first point of distance"), MOD_SHIFT_RELATIVE_ZERO);
             break;
         case SetPoint2:
-            updateMouseWidgetTRBack(tr("Specify second point of distance"), MOD_SHIFT_AND_CTRL_ANGLE(tr("Don't move relative zero")));
+            updatePromptTRBack(tr("Specify second point of distance"), MOD_SHIFT_AND_CTRL_ANGLE(tr("Don't move relative zero")));
             break;
         default:
-            updateMouseWidget();
+            updatePrompt();
             break;
     }
 }

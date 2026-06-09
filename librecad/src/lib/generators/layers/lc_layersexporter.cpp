@@ -23,6 +23,7 @@
 
 #include <unordered_set>
 
+#include "lc_entity_type_propertiesprovider.h"
 #include "rs_block.h"
 #include "rs_graphic.h"
 #include "rs_insert.h"
@@ -31,17 +32,18 @@
 LC_LayersExporter::LC_LayersExporter() {
 }
 
-bool LC_LayersExporter::exportLayers(LC_LayersExportOptions* options, RS_Graphic* originalGraphic,
-                                     std::vector<LC_LayerExportData*>& exportResultList) {
-    if (options->m_createSeparateDocumentPerLayer) {
-        return exportLayersToIndividualDocuments(options, originalGraphic, exportResultList);
+void LC_LayersExporter::exportLayers(const LC_LayersExportOptions* options, RS_Graphic* originalGraphic,
+                                     std::vector<LC_LayerExportData>& exportResultList) {
+    if (options->createSeparateDocumentPerLayer) {
+        exportLayersToIndividualDocuments(options, originalGraphic, exportResultList);
     }
     else {
-        return exportLayersToSingleDocument(options, originalGraphic, exportResultList);
+        exportLayersToSingleDocument(options, originalGraphic, exportResultList);
     }
 }
 
-bool LC_LayersExporter::exportLayersToIndividualDocuments(LC_LayersExportOptions* options, RS_Graphic* originalGraphic, std::vector<LC_LayerExportData*>& exportResultList) {
+void LC_LayersExporter::exportLayersToIndividualDocuments(const LC_LayersExportOptions* options, RS_Graphic* originalGraphic,
+                                                          std::vector<LC_LayerExportData>& exportResultList) {
 
     struct LayerExportInfo {
         RS_Layer* exportLayer {nullptr};
@@ -51,26 +53,26 @@ bool LC_LayersExporter::exportLayersToIndividualDocuments(LC_LayersExportOptions
 
     std::unordered_map<RS_Layer*, LayerExportInfo*> exportDataMap;
 
-    auto originalGraphicView = originalGraphic->getGraphicView();
+    const auto originalGraphicView = originalGraphic->getGraphicView();
 
-    for (auto originalLayer : options->m_layers) {
+    for (auto originalLayer : options->layers) {
         auto* exportGraphics = new RS_Graphic();
-        exportGraphics->newDoc();
+        exportGraphics->initForNewDocument();
         exportGraphics->setVariableDictObject(originalGraphic->getVariableDictObject());
         exportGraphics->setGraphicView(originalGraphicView);  // fixme - sand - dependency
 
         auto* exportInfo = new LayerExportInfo();
 
         exportInfo->exportGraphic = exportGraphics;
-        auto zeroLayer = exportInfo->exportGraphic->findLayer("0");
+        const auto zeroLayer = exportInfo->exportGraphic->findLayer("0");
 
-        if (options->m_putEntitiesToOriginalLayer) {
+        if (options->putEntitiesToOriginalLayer) {
             if (originalLayer->getName() == "0") {
                 exportInfo->exportLayer = zeroLayer;
                 copyLayerAttributes(zeroLayer, originalLayer);
             }
             else{
-                auto exportLayer = originalLayer->clone();
+                const auto exportLayer = originalLayer->clone();
                 exportInfo->exportLayer = exportLayer;
                 exportGraphics->addLayer(exportLayer);
             }
@@ -80,34 +82,34 @@ bool LC_LayersExporter::exportLayersToIndividualDocuments(LC_LayersExportOptions
             copyLayerAttributes(zeroLayer, originalLayer);
         }
 
-        exportDataMap.insert({originalLayer,exportInfo});
+        exportDataMap.emplace(originalLayer,exportInfo);
         exportUCSList(options, originalGraphic, exportGraphics);
         exportViewsList(options, originalGraphic, exportGraphics);
 
-        auto* exportData = new LC_LayerExportData();
-        exportData->m_graphic = exportGraphics;
-        exportData->m_name = originalLayer->getName();
+        auto exportData = LC_LayerExportData();
+        exportData.graphic = exportGraphics;
+        exportData.name = originalLayer->getName();
         exportResultList.push_back(exportData);
     }
 
     bool hasBlocks = false;
     for (RS_Entity* originalEntity : *originalGraphic) {
-        if (originalEntity == nullptr || originalEntity->getLayer() == nullptr || originalEntity->isUndone()) {
+        if (originalEntity == nullptr || originalEntity->getLayer() == nullptr || originalEntity->isDeleted()) {
             continue;
         }
 
         RS_Layer* originalLayer = originalEntity->getLayer();
-        auto exportInfo = exportDataMap[originalLayer];
+        const auto exportInfo = exportDataMap[originalLayer];
         if (exportInfo != nullptr) {
             RS_Layer* exportLayer = exportInfo->exportLayer;
-            auto exportEntity = originalEntity->clone();
-            auto exportGraphic = exportInfo->exportGraphic;
+            const auto exportEntity = originalEntity->clone();
+            const auto exportGraphic = exportInfo->exportGraphic;
             exportEntity->reparent(exportGraphic);
             exportEntity->setLayer(exportLayer);
             exportGraphic->addEntity(exportEntity);
 
             if (originalEntity->rtti() == RS2::EntityInsert) {
-                auto* originalInsert = dynamic_cast<RS_Insert*>(originalEntity);
+                const auto* originalInsert = static_cast<RS_Insert*>(originalEntity);
                 RS_Block* originalBlock = originalInsert->getBlockForInsert();
                 exportInfo->originalBlocks.insert(originalBlock);
                 hasBlocks = true;
@@ -116,51 +118,50 @@ bool LC_LayersExporter::exportLayersToIndividualDocuments(LC_LayersExportOptions
     }
 
     if (hasBlocks) {
-        for (auto pair: exportDataMap) {
-            auto exportInfo = pair.second;
+        for (const auto [fst, snd]: exportDataMap) {
+            const auto exportInfo = snd;
             if (!exportInfo->originalBlocks.empty()) {
-                auto exportGraphic = exportInfo->exportGraphic;
-                for (auto originalBlock : exportInfo->originalBlocks) {
-                    auto* exportBlock = dynamic_cast<RS_Block*>(originalBlock->clone());
+                const auto exportGraphic = exportInfo->exportGraphic;
+                for (const auto originalBlock : exportInfo->originalBlocks) {
+                    auto* exportBlock = static_cast<RS_Block*>(originalBlock->clone());
                     exportGraphic->addBlock(exportBlock, false);
                 }
             }
         }
     }
 
-    for (auto pair: exportDataMap) {
-        auto exportInfo = pair.second;
+    for (const auto [fst, snd]: exportDataMap) {
+        const auto exportInfo = snd;
         exportInfo->originalBlocks.clear();
         delete exportInfo;
     }
 
     exportDataMap.clear();
-    return true;
 }
 
-void LC_LayersExporter::copyLayerAttributes(RS_Layer* zeroLayer, RS_Layer* originalLayer) {
+void LC_LayersExporter::copyLayerAttributes(RS_Layer* zeroLayer, const RS_Layer* originalLayer) {
     zeroLayer->setPen(originalLayer->getPen());
     zeroLayer->setConstruction(originalLayer->isConstruction());
     zeroLayer->setPrint(originalLayer->isPrint());
 }
 
-bool LC_LayersExporter::exportLayersToSingleDocument(LC_LayersExportOptions* options, RS_Graphic* originalGraphic,
-                                                     std::vector<LC_LayerExportData*>& exportResultList) {
-    std::unordered_map<RS_Layer*, RS_Layer*, std::hash<RS_Layer*>> layerMap;
+void LC_LayersExporter::exportLayersToSingleDocument(const LC_LayersExportOptions* options, RS_Graphic* originalGraphic,
+                                                     std::vector<LC_LayerExportData>& exportResultList) {
+    std::unordered_map<RS_Layer*, RS_Layer*> layerMap;
 
     auto* exportGraphic = new RS_Graphic();
-    exportGraphic->newDoc();
+    exportGraphic->initForNewDocument();
     exportGraphic->setVariableDictObject(originalGraphic->getVariableDictObject());
     auto zeroLayer = exportGraphic->findLayer("0"); // it's always present, created in newDoc
 
-    for (auto originalLayer : options->m_layers) {
+    for (auto originalLayer : options->layers) {
         if (originalLayer->getName() == "0") {
-            layerMap.insert({originalLayer, zeroLayer});
+            layerMap.emplace(originalLayer, zeroLayer);
             copyLayerAttributes(zeroLayer, originalLayer);
         }
         else {
             RS_Layer* exportLayer = originalLayer->clone();
-            layerMap.insert({originalLayer, exportLayer});
+            layerMap.emplace(originalLayer, exportLayer);
             exportGraphic->addLayer(exportLayer);
         }
     }
@@ -174,20 +175,20 @@ bool LC_LayersExporter::exportLayersToSingleDocument(LC_LayersExportOptions* opt
     std::unordered_set<RS_Block*> usedBlocksSet;
 
     for (RS_Entity* originalEntity : *originalGraphic) {
-        if (originalEntity == nullptr || originalEntity->getLayer() == nullptr || originalEntity->isUndone()) {
+        if (originalEntity == nullptr || originalEntity->getLayer() == nullptr || originalEntity->isDeleted()) {
             continue;
         }
 
         RS_Layer* originalLayer = originalEntity->getLayer();
         if (auto pair = layerMap.find(originalLayer); pair != layerMap.end()) {
-            auto duplicateLayer = pair->second;
+            const auto duplicateLayer = pair->second;
             RS_Entity* exportEntity = originalEntity->clone();
             exportEntity->reparent(exportGraphic);
             exportEntity->setLayer(duplicateLayer);
             exportGraphic->addEntity(exportEntity);
 
             if (originalEntity->rtti() == RS2::EntityInsert) {
-                auto* originalInsert = dynamic_cast<RS_Insert*>(originalEntity);
+                const auto* originalInsert = static_cast<RS_Insert*>(originalEntity);
                 RS_Block* originalBlock = originalInsert->getBlockForInsert();
                 usedBlocksSet.insert(originalBlock);
             }
@@ -195,24 +196,23 @@ bool LC_LayersExporter::exportLayersToSingleDocument(LC_LayersExportOptions* opt
     }
 
     if (!usedBlocksSet.empty()) {
-        for (auto originalBlock : usedBlocksSet) {
-            auto* exportBlock = dynamic_cast<RS_Block*>(originalBlock->clone());
+        for (const auto originalBlock : usedBlocksSet) {
+            auto* exportBlock = static_cast<RS_Block*>(originalBlock->clone());
             exportGraphic->addBlock(exportBlock, false);
         }
     }
 
     usedBlocksSet.clear();
 
-    auto* exportData = new LC_LayerExportData();
-    exportData->m_graphic = exportGraphic;
-    exportData->m_name = "";
+    auto exportData = LC_LayerExportData();
+    exportData.graphic = exportGraphic;
+    exportData.name.clear();
 
     exportResultList.push_back(exportData);
-    return true;
 }
 
-void LC_LayersExporter::exportUCSList(LC_LayersExportOptions* options, RS_Graphic* originalGraphic, RS_Graphic* graphicToExport) {
-    if (options->m_exportUCSs) {
+void LC_LayersExporter::exportUCSList(const LC_LayersExportOptions* options, RS_Graphic* originalGraphic, RS_Graphic* graphicToExport) {
+    if (options->exportUcSs) {
         const auto ucslist = originalGraphic->getUCSList();
         const int ucsCount = ucslist->count();
         for (int i = 0; i < ucsCount; i++) {
@@ -223,8 +223,8 @@ void LC_LayersExporter::exportUCSList(LC_LayersExportOptions* options, RS_Graphi
     }
 }
 
-void LC_LayersExporter::exportViewsList(LC_LayersExportOptions* options, RS_Graphic* originalGraphic, RS_Graphic* graphicToExport) {
-    if (options->m_exportNamedViews) {
+void LC_LayersExporter::exportViewsList(const LC_LayersExportOptions* options, RS_Graphic* originalGraphic, RS_Graphic* graphicToExport) {
+    if (options->exportNamedViews) {
         const auto viewsList = originalGraphic->getViewList();
         const int viewsCount = viewsList->count();
         for (int i =0; i < viewsCount; i++) {

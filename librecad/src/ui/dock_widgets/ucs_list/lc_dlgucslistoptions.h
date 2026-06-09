@@ -38,7 +38,7 @@ public:
     explicit LC_DlgUCSListOptions(LC_UCSListOptions* options, QWidget *parent = nullptr);
     ~LC_DlgUCSListOptions() override;
 public slots:
-    void validate();
+    void validate() const;
 protected slots:
     void languageChange();
 private:
@@ -46,4 +46,4 @@ private:
     LC_UCSListOptions* m_options;
 };
 
-#endif // LC_DLGUCSLISTOPTIONS_H
+#endif

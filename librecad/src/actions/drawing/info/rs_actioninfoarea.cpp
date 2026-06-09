@@ -27,9 +27,9 @@
 #include "rs_actioninfoarea.h"
 
 #include "lc_cursoroverlayinfo.h"
+#include "lc_formatter.h"
 #include "rs_debug.h"
 #include "rs_infoarea.h"
-#include "rs_units.h"
 
     RS_ActionInfoArea::RS_ActionInfoArea(LC_ActionContext *actionContext)
     :RS_PreviewActionInterface("Info Area", actionContext, RS2::ActionInfoArea)
@@ -38,7 +38,7 @@
 
 RS_ActionInfoArea::~RS_ActionInfoArea() = default;
 
-void RS_ActionInfoArea::init(int status) {
+void RS_ActionInfoArea::init(const int status) {
     RS_PreviewActionInterface::init(status);
     if(status==SetFirstPoint){
         m_infoArea = std::make_unique<RS_InfoArea>();
@@ -52,11 +52,16 @@ void RS_ActionInfoArea::init(int status) {
         m_lastPointRequested = false;
         init(SetFirstPoint);
     }
-// fixme - sand - consider displaying information in EntityInfo widget
+
+    bool RS_ActionInfoArea::isInVisualSnapStatus(int status) {
+        return (status == SetFirstPoint) || (status == SetNextPoint);
+    }
+
+    // fixme - sand - consider displaying information in EntityInfo widget
 // fixme - sand - add area info to entity info widget for coordinates mode
 //todo: we regenerate the whole preview, it's possible to generate needed lines only
 /** display area circumference and preview of polygon **/
-void RS_ActionInfoArea::display(bool forPreview){
+void RS_ActionInfoArea::display(const bool forPreview) const {
     if (m_infoArea->size() < 1){
         return;
     }
@@ -79,8 +84,8 @@ void RS_ActionInfoArea::display(bool forPreview){
             break;
         }
         default: {
-            QString const length = formatLinear(m_infoArea->getCircumference());
-            double area = m_infoArea->getArea();
+            const QString length = formatLinear(m_infoArea->getCircumference());
+            const double area = m_infoArea->getArea();
             if (forPreview) {
                 for (int i = 0; i < m_infoArea->size(); i++) {
                     previewLine(m_infoArea->at(i), m_infoArea->at((i + 1) % m_infoArea->size()));
@@ -98,14 +103,14 @@ void RS_ActionInfoArea::display(bool forPreview){
                     QString msg = "\n";
                     msg.append(tr("Circumference: %1").arg(length));
                     msg.append("\n");
-                    msg.append(tr("Area: %1 %2^2").arg(area).arg(RS_Units::unitToString(m_unit)));
+                    msg.append(tr("Area: %1 %2^2").arg(area).arg(m_formatter->linearUnitAsString()));
                     appendInfoCursorZoneMessage(msg, 2, true);
                 }
             }
             else {
                 commandMessage("---");
                 commandMessage(tr("Circumference: %1").arg(length));
-                commandMessage(tr("Area: %1 %2^2").arg(area).arg(RS_Units::unitToString(m_unit)));
+                commandMessage(tr("Area: %1 %2^2").arg(area).arg(m_formatter->linearUnitAsString()));
                 commandMessage("");
             }
             break;
@@ -113,7 +118,7 @@ void RS_ActionInfoArea::display(bool forPreview){
     }
 }
 
-void RS_ActionInfoArea::onMouseMoveEvent(int status, LC_MouseEvent *e){
+void RS_ActionInfoArea::onMouseMoveEvent(const int status, const LC_MouseEvent* e){
     RS_Vector mouse = e->snapPoint;
     switch (status){
         case SetFirstPoint: {
@@ -132,7 +137,7 @@ void RS_ActionInfoArea::onMouseMoveEvent(int status, LC_MouseEvent *e){
     }
 }
 
-void RS_ActionInfoArea::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
+void RS_ActionInfoArea::onMouseLeftButtonRelease(const int status, const LC_MouseEvent* e) {
     RS_Vector snap = e->snapPoint;
     if (status == SetNextPoint){
         snap = getSnapAngleAwarePoint(e, m_infoArea->back(), snap);
@@ -141,23 +146,24 @@ void RS_ActionInfoArea::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
     fireCoordinateEvent(snap);
 }
 
-void RS_ActionInfoArea::onMouseRightButtonRelease([[maybe_unused]]int status, [[maybe_unused]]LC_MouseEvent *e) {
+void RS_ActionInfoArea::onMouseRightButtonRelease([[maybe_unused]]int status, [[maybe_unused]] const LC_MouseEvent* e) {
     trigger();
 //    initPrevious(status);
 }
 
-void RS_ActionInfoArea::onCoordinateEvent(int status, [[maybe_unused]] bool isZero, const RS_Vector &mouse) {
-    bool shouldComplete = m_infoArea->duplicated(mouse) || m_lastPointRequested;
+void RS_ActionInfoArea::onCoordinateEvent(const int status, [[maybe_unused]] bool isZero, const RS_Vector &coord) {
+    const bool shouldComplete = m_infoArea->duplicated(coord) || m_lastPointRequested;
     if (shouldComplete){
-        m_infoArea->push_back(mouse);
-        commandMessage(tr("Closing Point: %1").arg(formatVector(mouse)));
+        m_infoArea->push_back(coord);
+        commandMessage(tr("Closing Point: %1").arg(formatVector(coord)));
         trigger();
         return;
     }
-    moveRelativeZero(mouse);
+    addSnappedPointToVisualSnap(coord);
+    moveRelativeZero(coord);
 
-    m_infoArea->push_back(mouse);
-    commandMessage(tr("Point: %1").arg(formatVector(mouse)));
+    m_infoArea->push_back(coord);
+    commandMessage(tr("Point: %1").arg(formatVector(coord)));
     switch (status) {
         case SetFirstPoint: {
             setStatus(SetNextPoint);
@@ -172,19 +178,19 @@ void RS_ActionInfoArea::onCoordinateEvent(int status, [[maybe_unused]] bool isZe
     }
 }
 
-void RS_ActionInfoArea::updateMouseButtonHints() {
+void RS_ActionInfoArea::updateActionPrompt() {
     switch (getStatus()) {
         case SetFirstPoint:
-            updateMouseWidgetTRCancel(tr("Specify first point of polygon"), MOD_SHIFT_RELATIVE_ZERO);
+            updatePromptTRCancel(tr("Specify first point of polygon"), MOD_SHIFT_RELATIVE_ZERO);
             break;
         case SetNextPoint: {
-            bool enoughPointsForArea = m_infoArea->size() > 1;
-            updateMouseWidgetTRCancel(tr("Specify next point of polygon"), enoughPointsForArea ? MOD_SHIFT_AND_CTRL_ANGLE(tr("Specify point and complete")) :
+            const bool enoughPointsForArea = m_infoArea->size() > 1;
+            updatePromptTRCancel(tr("Specify next point of polygon"), enoughPointsForArea ? MOD_SHIFT_AND_CTRL_ANGLE(tr("Specify point and complete")) :
                                                                            MOD_SHIFT_RELATIVE_ZERO);
             break;
         }
         default:
-            updateMouseWidget();
+            updatePrompt();
             break;
     }
 }

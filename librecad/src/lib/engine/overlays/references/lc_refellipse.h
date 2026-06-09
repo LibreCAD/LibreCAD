@@ -32,4 +32,4 @@ public:
     RS2::EntityType rtti() const override;
     RS_Entity *clone() const override;
 };
-#endif // LC_REFELLIPSE_H
+#endif

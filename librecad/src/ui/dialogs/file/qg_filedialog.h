@@ -28,6 +28,7 @@
 #define QG_FILEDIALOG_H
 
 #include <QFileDialog>
+
 #include "rs.h"
 
 /**
@@ -43,7 +44,7 @@ public:
     /**
 *@ FileType, used to set dialog window title, currently, should be either "drawing" or "block"
 **/
-    QG_FileDialog(QWidget* parent=nullptr, Qt::WindowFlags f={}, FileType type = DrawingFile);
+    explicit QG_FileDialog(QWidget* parent=nullptr, Qt::WindowFlags f={}, FileType type = DrawingFile);
 
     QString getOpenFile(RS2::FormatType* type=nullptr);
     QString getSaveFile(RS2::FormatType* type=nullptr, const QString& currentName = "");
@@ -53,7 +54,7 @@ public:
 
 private:
     RS2::FormatType getType(const QString& filter) const;
-    RS2::FormatType ftype;
+    RS2::FormatType m_type;
     QString fDxfrw2007;
     QString fDxfrw2004;
     QString fDxfrw2000;
@@ -67,7 +68,7 @@ private:
     QString fLff;
     QString fCxf;
     QString fJww;
-    QString name;
+    QString m_name;
 };
 
 #endif

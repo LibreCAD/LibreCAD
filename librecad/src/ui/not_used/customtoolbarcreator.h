@@ -14,7 +14,6 @@ class CustomToolbarCreator;
 class CustomToolbarCreator : public QFrame
 {
     Q_OBJECT
-
 public:
     explicit CustomToolbarCreator(QWidget* parent,
                                   QMap<QString, QAction*>& action_map,
@@ -52,4 +51,4 @@ signals:
     void widgetToDestroy(QString);
 };
 
-#endif // CUSTOMTOOLBARCREATOR_H
+#endif

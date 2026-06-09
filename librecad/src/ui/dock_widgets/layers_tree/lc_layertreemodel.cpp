@@ -1,24 +1,25 @@
-/*******************************************************************************
+/*
+ * ********************************************************************************
+ * This file is part of the LibreCAD project, a 2D CAD program
  *
- This file is part of the LibreCAD project, a 2D CAD program
-
- Copyright (C) 2024 LibreCAD.org
- Copyright (C) 2024 sand1024
-
- This program is free software; you can redistribute it and/or
- modify it under the terms of the GNU General Public License
- as published by the Free Software Foundation; either version 2
- of the License, or (at your option) any later version.
-
- This program is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
-
- You should have received a copy of the GNU General Public License
- along with this program; if not, write to the Free Software
- Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- ******************************************************************************/
+ * Copyright (C) 2026 LibreCAD.org
+ * Copyright (C) 2026 sand1024
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ * ********************************************************************************
+ */
 
 #include "lc_layertreemodel.h"
 
@@ -29,7 +30,7 @@
 #include "rs_layer.h"
 #include "rs_layerlist.h"
 
-LC_LayerTreeModel::LC_LayerTreeModel(QObject * parent, LC_LayerTreeModelOptions *ops) :QAbstractItemModel(parent) {
+LC_LayerTreeModel::LC_LayerTreeModel(QObject * parent, LC_LayerTreeModelOptions *options) :QAbstractItemModel(parent) {
     m_iconLayerVisible = QIcon(":/icons/visible.lci");
     m_iconLayerHidden = QIcon(":/icons/not_visible.lci");
     m_iconLayerDefreeze = QIcon(":/icons/unlocked.lci");
@@ -46,7 +47,7 @@ LC_LayerTreeModel::LC_LayerTreeModel(QObject * parent, LC_LayerTreeModelOptions 
     m_iconLayerInformationalNotes = QIcon(":/icons/mtext.lci");
 
     m_rootItem = new LC_LayerTreeItem();
-    m_options = ops;
+    m_options = options;
 }
 /**
  * Returns amount of child for item defined by given index.
@@ -55,14 +56,17 @@ LC_LayerTreeModel::LC_LayerTreeModel(QObject * parent, LC_LayerTreeModelOptions 
  * @return
  */
 int LC_LayerTreeModel::rowCount ( const QModelIndex & parent ) const {
-
-    LC_LayerTreeItem *parentItem;
-    if (!parent.isValid())
+    const LC_LayerTreeItem* parentItem = nullptr;
+    if (!parent.isValid()) {
         parentItem = m_rootItem;
-    else
+    }
+    else {
         parentItem = getItemForIndex(parent);
-
-    int result = parentItem->childCount();
+    }
+    if (parentItem == nullptr) {
+        return 0;
+    }
+    const int result = parentItem->childCount();
     return result;
 }
 
@@ -72,9 +76,9 @@ int LC_LayerTreeModel::rowCount ( const QModelIndex & parent ) const {
  * @return
  */
 int LC_LayerTreeModel::columnCount([[maybe_unused]] const QModelIndex &parent) const{
-    int result = LAST;
+    int result = COLUMN_LAST;
     if (m_options->hideLayerTypeIcons){
-        result = LAST-1;
+        result = COLUMN_LAST-1;
     }
     return result;
 }
@@ -86,11 +90,13 @@ int LC_LayerTreeModel::columnCount([[maybe_unused]] const QModelIndex &parent) c
  */
 QModelIndex LC_LayerTreeModel::parent ( const QModelIndex & index ) const {
     if (index.isValid()){
-        LC_LayerTreeItem *childItem = getItemForIndex(index);
-        LC_LayerTreeItem *parentItem = childItem->parent();
+        const LC_LayerTreeItem *childItem = getItemForIndex(index);
+        if (childItem != nullptr) {
+            const LC_LayerTreeItem *parentItem = childItem->parent();
 
-        if (parentItem != m_rootItem){
-            return createIndex(parentItem->row(), 0, parentItem);
+            if (parentItem != m_rootItem){
+                return createIndex(parentItem->row(), 0, parentItem);
+            }
         }
     }
     return QModelIndex();
@@ -102,26 +108,29 @@ QModelIndex LC_LayerTreeModel::parent ( const QModelIndex & index ) const {
  * @param parent
  * @return
  */
-QModelIndex LC_LayerTreeModel::index( int row, int column, const QModelIndex & parent ) const {
-    if (!hasIndex(row, column, parent))
+QModelIndex LC_LayerTreeModel::index(const int row, const int column, const QModelIndex & parent ) const {
+    if (!hasIndex(row, column, parent)) {
         return QModelIndex();
+    }
 
-    LC_LayerTreeItem *parentItem;
+    const LC_LayerTreeItem* parentItem = nullptr;
 
-    if (!parent.isValid())
+    if (!parent.isValid()) {
         parentItem = m_rootItem;
-    else
+    }
+    else {
         parentItem = getItemForIndex(parent);
+    }
 
     if (parentItem->isInValid()){
         return QModelIndex();
     }
 
-    LC_LayerTreeItem *childItem = parentItem->child(row);
-    if (childItem)
+    const LC_LayerTreeItem *childItem = parentItem->child(row);
+    if (childItem != nullptr) {
         return createIndex(row, column, childItem);
-    else
-        return QModelIndex();
+    }
+    return QModelIndex();
 }
 
 /**
@@ -131,7 +140,7 @@ QModelIndex LC_LayerTreeModel::index( int row, int column, const QModelIndex & p
  * @brief LC_LayerTreeModel::setLayerList
  * @param ll
  */
-void LC_LayerTreeModel::setLayerList(RS_LayerList* ll) {
+void LC_LayerTreeModel::setLayerList(const RS_LayerList* ll) {
     /* since 4.6 the recommended way is to use begin/endResetModel()
      * TNick <nicu.tofan@gmail.com>
      */
@@ -158,7 +167,7 @@ void LC_LayerTreeModel::setLayerList(RS_LayerList* ll) {
         return s1->getName() < s2->getName();
     } );
 
-    RS_Layer* activeLayer = ll->getActive();
+    const RS_Layer* activeLayer = ll->getActive();
 
     // restore hierarchy
     rebuildModel(listLayer, activeLayer);
@@ -198,24 +207,24 @@ void LC_LayerTreeModel::reset(){
  *
  *
  * @brief LC_LayerTreeModel::rebuildModel
- * @param listLayer
+ * @param layersList
  * @param activeLayer
  */
 
-void LC_LayerTreeModel::rebuildModel(const QList<RS_Layer*> &listLayer, const RS_Layer* activeLayer){
+void LC_LayerTreeModel::rebuildModel(const QList<RS_Layer*> &layersList, const RS_Layer* activeLayer){
 
-    int alternatePositionLayerNameSuffixLen = m_options->alternatePositionLayerNameSuffix.length();
-    int informationLayerNameSuffixLen = m_options->informationalLayerNameSuffix.length();
-    int dimensionalLayerNameSuffixLen = m_options->dimensionalLayerNameSuffix.length();
+    const int alternatePositionLayerNameSuffixLen = m_options->alternatePositionLayerNameSuffix.length();
+    const int informationLayerNameSuffixLen = m_options->informationalLayerNameSuffix.length();
+    const int dimensionalLayerNameSuffixLen = m_options->dimensionalLayerNameSuffix.length();
 
     int number = 0;
 
-    int layersCount = listLayer.count();
+    const int layersCount = layersList.count();
 
     // simply walk by all items in the given list
 
     while (number < layersCount) {
-        RS_Layer * layer = listLayer.at(number);
+        RS_Layer * layer = layersList.at(number);
 
         QString layerFullName = layer->getName();
         QString layerName = layerFullName;
@@ -224,7 +233,7 @@ void LC_LayerTreeModel::rebuildModel(const QList<RS_Layer*> &listLayer, const RS
 
         bool hasRegexpMatch = false;
         if (m_hasRegexp){
-            int pos = 0;
+            constexpr int pos = 0;
             hasRegexpMatch =m_filteringRegexp.match(layerName, pos).hasMatch();
 
             if (m_regexpHighlightMode){
@@ -241,9 +250,6 @@ void LC_LayerTreeModel::rebuildModel(const QList<RS_Layer*> &listLayer, const RS
                 }
             }
         }
-        // split by parts using defined separator of layer levels
-        QStringList nameParts = layerFullName.split(m_options->layerLevelSeparator, Qt::KeepEmptyParts);
-        int partsCount = nameParts.count();
 
         LC_LayerTreeItem* virtualRoot = m_rootItem;
 
@@ -251,7 +257,9 @@ void LC_LayerTreeModel::rebuildModel(const QList<RS_Layer*> &listLayer, const RS
             // do nothing here, no need to restore tree structure
         }
         else{
-
+            // split by parts using defined separator of layer levels
+            QStringList nameParts = layerFullName.split(m_options->layerLevelSeparator, Qt::KeepEmptyParts);
+            const int partsCount = nameParts.count();
             // it's expected that actual layer should be on the last position/
             // Potentially, there might be a clash due to incorrect naming
             // so upper layer in the chain will be not virtual
@@ -273,36 +281,37 @@ void LC_LayerTreeModel::rebuildModel(const QList<RS_Layer*> &listLayer, const RS
 
         // check whether it's helper layer (dimensions, info, alternate position) so we try to find primary layer for this (without _pos)
 
-        int type = LC_LayerTreeItem::NORMAL;
+        RS_Layer::LayerType type = RS_Layer::LayerType::NORMAL;
 
         // determining level item type, name and position based on naming.
         // TODO - actually, a more flexible and generic policy may be used there, and so it will allow to
         // support additional types of layers... however, not sure that it is necessary at the moment
 
         if (layerName.endsWith(m_options->alternatePositionLayerNameSuffix)){
-            type = LC_LayerTreeItem::ALTERNATE_POSITION;
-            QString mainName =  layerName.left(layerName.length() - alternatePositionLayerNameSuffixLen);
+            type = RS_Layer::LayerType::ALTERNATE_POSITION;
+            const QString mainName =  layerName.left(layerName.length() - alternatePositionLayerNameSuffixLen);
             primaryLayerName = mainName;
             if (!m_flatMode){
               layerName = mainName;
             }
         }
         else if (layerName.endsWith(m_options->informationalLayerNameSuffix)){
-            type = LC_LayerTreeItem::INFORMATIONAL;
-            QString mainName = layerName.left(layerName.length() - informationLayerNameSuffixLen);
+            type = RS_Layer::LayerType::INFORMATIONAL;
+            const QString mainName = layerName.left(layerName.length() - informationLayerNameSuffixLen);
             primaryLayerName = mainName;
             if (!m_flatMode){
                layerName = mainName;
             }
         }
         else if (layerName.endsWith(m_options->dimensionalLayerNameSuffix)){
-            type = LC_LayerTreeItem::DIMENSIONAL;
-            QString mainName = layerName.left(layerName.length() - dimensionalLayerNameSuffixLen);
+            type = RS_Layer::LayerType::DIMENSIONAL;
+            const QString mainName = layerName.left(layerName.length() - dimensionalLayerNameSuffixLen);
             primaryLayerName = mainName;
             if (!m_flatMode){
                 layerName = mainName;
             }
         }
+        layer->setLayerType(type);
 
         LC_LayerTreeItem* primaryLayerItem = nullptr;
         if (primaryLayerName.length() > 0){
@@ -333,9 +342,9 @@ void LC_LayerTreeModel::rebuildModel(const QList<RS_Layer*> &listLayer, const RS
         layerItem->setPrimaryItem(primaryLayerItem);
 
 
-        int indent = layerItem->getIndent();
-        if (indent > maxIndent){
-            maxIndent = indent;
+        const int indent = layerItem->getIndent();
+        if (indent > m_maxIndent){
+            m_maxIndent = indent;
         }
 
         // prepare display names (for tree item and hint) of layer
@@ -358,15 +367,15 @@ void LC_LayerTreeModel::rebuildModel(const QList<RS_Layer*> &listLayer, const RS
  * Method calculates display name (that will be shown in UI) for given item as well as full path to the item
  * @param item layer tree item
  */
-void LC_LayerTreeModel::setupDisplayNames(LC_LayerTreeItem* item){
-    QString layerName = item->getName();
+void LC_LayerTreeModel::setupDisplayNames(LC_LayerTreeItem* item) const {
+    const QString layerName = item->getName();
 
     QString displayName = layerName.trimmed();
     // based on settings, display name may be indented or not
     if (m_options->showIndentedName){
-        int ident = item->getIndent() - 1;
+        const int ident = item->getIndent() - 1;
         if (ident > 0){
-            qsizetype justifyWidth = ((qsizetype)ident) * m_options->identSize;
+            const qsizetype justifyWidth = ident * m_options->identSize;
             displayName = layerName.rightJustified(justifyWidth + layerName.length(), ' ', false);
            if (m_options->hideLayerTypeIcons){
                displayName = restoreNamePart(displayName, item->getLayerType()  );
@@ -393,17 +402,19 @@ void LC_LayerTreeModel::setupDisplayNames(LC_LayerTreeItem* item){
 // FIXME - check for duplicate in the same parent
 /**
  * Perform conversion of item denoted by index to specified layer type
- * @param selectedIndex model index for item
+ * @param index model index for item
  * @param toLayerType new layer type
  * @return whether item is converted or not
  */
-bool LC_LayerTreeModel::convertToType(const QModelIndex &selectedIndex, int toLayerType){
+bool LC_LayerTreeModel::convertToType(const QModelIndex &index, const int toLayerType){
     bool result = false;
-    if (selectedIndex.isValid()){
-        LC_LayerTreeItem *layerItem = getItemForIndex(selectedIndex);//
-        if (!layerItem->isZero()){
-            if (!layerItem -> isVirtual()){
-              result = doConvertToType(layerItem, toLayerType);
+    if (index.isValid()){
+        LC_LayerTreeItem *layerItem = getItemForIndex(index);
+        if (layerItem != nullptr) {
+            if (!layerItem->isZero()){
+                if (!layerItem -> isVirtual()){
+                    result = doConvertToType(layerItem, toLayerType);
+                }
             }
         }
     }
@@ -417,19 +428,19 @@ bool LC_LayerTreeModel::convertToType(const QModelIndex &selectedIndex, int toLa
  * @param toLayerType new layer type
  * @return true if renamed
  */
-bool LC_LayerTreeModel::doConvertToType(LC_LayerTreeItem *layerItem , int toLayerType){
+bool LC_LayerTreeModel::doConvertToType(LC_LayerTreeItem *layerItem , const int toLayerType){
     RS_Layer* layer = layerItem->getLayer();
-    QString layerName = layerItem->getName();
+    const QString layerName = layerItem->getName();
 
-    QString originalItemName = cleanupLayerName(layerName);
+    const QString originalItemName = cleanupLayerName(layerName);
 
     // if changing the type will lead to name duplication, we'll not prohibit rename, but mark new layer name as a copy
-    QString prefix = m_options->copiedNamePathPrefix;
-    QString suffix = m_options->copiedNamePathSuffix;
+    const QString prefix = m_options->copiedNamePathPrefix;
+    const QString suffix = m_options->copiedNamePathSuffix;
 
-    QString newItemName = findNewUniqueName(layerItem->parent(), originalItemName, prefix, suffix, toLayerType);
-    QString newName = restoreNamePart(newItemName, toLayerType);
-    QString path = createItemPathString(layerItem, false, true, newName);
+    const QString newItemName = findNewUniqueName(layerItem->parent(), originalItemName, prefix, suffix, toLayerType);
+    const QString newName = restoreNamePart(newItemName, toLayerType);
+    const QString path = createItemPathString(layerItem, false, true, newName);
 
     layer->setName(path);
 
@@ -461,16 +472,16 @@ QString LC_LayerTreeModel::cleanupLayerName(const QString &layerName) const{
  * @param layerType type of the layer
  * @return internal name of the layer that takes into consideration naming convention for layer type
  */
-QString LC_LayerTreeModel::restoreNamePart(QString name, int layerType){
+QString LC_LayerTreeModel::restoreNamePart(QString name, const int layerType) const {
     switch (layerType){
-    case LC_LayerTreeItem::VIRTUAL:
-    case LC_LayerTreeItem::NORMAL:
+    case RS_Layer::LayerType::VIRTUAL:
+    case RS_Layer::LayerType::NORMAL:
         return name;
-    case LC_LayerTreeItem::ALTERNATE_POSITION:
+    case RS_Layer::LayerType::ALTERNATE_POSITION:
         return name.append(m_options->alternatePositionLayerNameSuffix);
-    case LC_LayerTreeItem::DIMENSIONAL:
+    case RS_Layer::LayerType::DIMENSIONAL:
         return name.append(m_options->dimensionalLayerNameSuffix);
-    case LC_LayerTreeItem::INFORMATIONAL:
+    case RS_Layer::LayerType::INFORMATIONAL:
         return name.append(m_options->informationalLayerNameSuffix);
     default:
         return name; // tmp - or empty string?
@@ -481,12 +492,12 @@ QString LC_LayerTreeModel::restoreNamePart(QString name, int layerType){
  * Default naming convention is used.
  * If layer name should be alternated, alternative layer name is used for the last element of created path
  * @param itemsPathAsList list of layer that forms the path
- * @param alternateSourceName alternative layer of the last layer in the path
- * @param alternativeName indicates that name should be alternated
+ * @param alternateName alternative layer of the last layer in the path
+ * @param shouldAlternate indicates that name should be alternated
  * @return generated full name
  */
-QString LC_LayerTreeModel::generateLayersPathString(QList<LC_LayerTreeItem*>  itemsPathAsList, bool alternateSourceName, QString &alternativeName){
-    return doGenerateLayersPathString(itemsPathAsList, alternateSourceName, alternativeName, m_options->layerLevelSeparator);
+QString LC_LayerTreeModel::generateLayersPathString(const QList<LC_LayerTreeItem*>& itemsPathAsList, const bool alternateName, const QString &shouldAlternate) const {
+    return doGenerateLayersPathString(itemsPathAsList, alternateName, shouldAlternate, m_options->layerLevelSeparator);
 }
 
 /**
@@ -497,14 +508,14 @@ QString LC_LayerTreeModel::generateLayersPathString(QList<LC_LayerTreeItem*>  it
  * @param usingLayerLayerSeparator separator that used for path elements
  * @return
  */
-QString LC_LayerTreeModel::doGenerateLayersPathString(const QList<LC_LayerTreeItem*>  &itemsPathAsList, bool alternateSourceName, QString &alternativeName,
-                                                      const QString &usingLayerLayerSeparator){
-    int count = itemsPathAsList.size();
-    QString result = "";
+QString LC_LayerTreeModel::doGenerateLayersPathString(const QList<LC_LayerTreeItem*>  &itemsPathAsList, const bool alternateSourceName, const QString &alternativeName,
+                                                      const QString &usingLayerLayerSeparator) const {
+    const int count = itemsPathAsList.size();
+    QString result;
     // element with list.length() index is model root node, no name there
     // root is the last item in the list
 
-    int startIndex = count-2;
+    const int startIndex = count-2;
     bool skipPrimary = false;
     for (int i = startIndex; i>=0; i--){
         // since we create artificial item ident for secondary layer, we may need to skip it
@@ -513,7 +524,7 @@ QString LC_LayerTreeModel::doGenerateLayersPathString(const QList<LC_LayerTreeIt
         }
         else{
             LC_LayerTreeItem* item = itemsPathAsList.at(i);
-            QString name = item->getName();
+            const QString name = item->getName();
             QString restoredPartName = restoreNamePart(name, item->getLayerType());
             result = result.append(restoredPartName);
             if (i > 0){
@@ -548,18 +559,14 @@ QString LC_LayerTreeModel::doGenerateLayersPathString(const QList<LC_LayerTreeIt
  * @param layerType layer type used for name creation
  * @return new unique name for the layer
  */
-QString  LC_LayerTreeModel::findNewUniqueName(const LC_LayerTreeItem* destination, const QString &name, const QString &copyPrefix, const QString &copySuffix, int layerType){
-   QString result = name;
+QString  LC_LayerTreeModel::findNewUniqueName(const LC_LayerTreeItem* destination, const QString &name, const QString &copyPrefix, const QString &copySuffix, const int layerType){
    int i = 0;
-
-   QString itemName(name);
-   result = itemName;
-
+   QString result = name;
    while (destination->hasChildWithName(result, layerType)){
-       QString nameCopyTry(name);
+       QString nameCopyTry{name};
        result = nameCopyTry.append(copyPrefix).append(QString::number(i)).append(copySuffix);
        i++;
-   }   
+   }
    return result;
 }
 
@@ -572,7 +579,7 @@ QString  LC_LayerTreeModel::findNewUniqueName(const LC_LayerTreeItem* destinatio
  * @param newItemName name that should be used in created path instead of the name of given item, if name if item should be replaced in the path
  * @return full path string
  */
-QString LC_LayerTreeModel::createItemPathString(LC_LayerTreeItem* item, bool includeSelf, bool alternateSourceName, QString &newItemName){
+QString LC_LayerTreeModel::createItemPathString(LC_LayerTreeItem* item, const bool includeSelf, const bool alternateSourceName, const QString &newItemName){
     QList<LC_LayerTreeItem*> sourcePath;
     item->collectPathToParent(sourcePath, includeSelf);
     QString result = generateLayersPathString(sourcePath, alternateSourceName, newItemName);
@@ -590,26 +597,26 @@ QString LC_LayerTreeModel::createItemPathString(LC_LayerTreeItem* item, bool inc
 bool LC_LayerTreeModel::performReStructure(LC_LayerTreeItem*  source, LC_LayerTreeItem*  destination){
 
     bool layersModified = false;
-    bool allowRestructure = isValidRestructure(source, destination);
+    const bool allowRestructure = isValidRestructure(source, destination);
     if (allowRestructure){
-        QString sourceName = source->getName();
+        const QString sourceName = source->getName();
 
         // prefix of names that corresponds to the source item
-        QString originalLayersNamePathToBeReplaced = createItemPathString(source, true, false, sourceName);
+        const QString originalLayersNamePathToBeReplaced = createItemPathString(source, true, false, sourceName);
 
         // check whether within destination item there is an item with the same name as for source
-        QString prefix = m_options->copiedNamePathPrefix;
-        QString suffix = m_options->copiedNamePathSuffix;
-        int sourceLayerType = source->getLayerType();
-        QString newSourceName = findNewUniqueName(destination, sourceName, prefix, suffix, sourceLayerType);
-        QString newName = restoreNamePart(newSourceName, sourceLayerType);
+        const QString prefix = m_options->copiedNamePathPrefix;
+        const QString suffix = m_options->copiedNamePathSuffix;
+        const int sourceLayerType = source->getLayerType();
+        const QString newSourceName = findNewUniqueName(destination, sourceName, prefix, suffix, sourceLayerType);
+        const QString newName = restoreNamePart(newSourceName, sourceLayerType);
         // prefix of layer names that corresponds to the destination item
-        QString replacingLayersNamePath = createItemPathString(destination, true, true, newName);
+        const QString replacingLayersNamePath = createItemPathString(destination, true, true, newName);
 
         // collect layers for children of the source
         QList<LC_LayerTreeItem *> sourceLayersToRename;
-        LC_LayerTreeItemAcceptor acceptAllAcceptor;
-        source->collectDescendantChildren(sourceLayersToRename, &acceptAllAcceptor, true);
+        const LC_LayerTreeItemAcceptor acceptAllAcceptor;
+        source->collectDescendantChildren(sourceLayersToRename, acceptAllAcceptor, true);
 
         // rename collected layers by replacing source prefix to destination prefix in their names
         layersModified = renameLayers(sourceLayersToRename, originalLayersNamePathToBeReplaced, replacingLayersNamePath);
@@ -625,23 +632,21 @@ bool LC_LayerTreeModel::performReStructure(LC_LayerTreeItem*  source, LC_LayerTr
  * @param toNamePrefix new prefix name that will replace old one
  * @return map of where the key is layer and value is new name of the layer
  */
-QHash<RS_Layer*, QString> LC_LayerTreeModel::prepareLayerRename(QList<LC_LayerTreeItem*> &layersList, const QString &fromNamePrefix, const QString &toNamePrefix){
+QHash<RS_Layer*, QString> LC_LayerTreeModel::prepareLayerRename(const QList<LC_LayerTreeItem*> &layersList, const QString &fromNamePrefix, const QString &toNamePrefix){
     QHash<RS_Layer*, QString> result;
-    int layersCount = layersList.length();
-    int fromNamePrefixLen = fromNamePrefix.size();
+    const int layersCount = layersList.length();
+    const int fromNamePrefixLen = fromNamePrefix.size();
     for (int i = 0; i< layersCount; i++){
-        LC_LayerTreeItem* layerItem = layersList.at(i);
+        const LC_LayerTreeItem* layerItem = layersList.at(i);
         RS_Layer* layer = layerItem->getLayer();
-        if (layer){
-            QString name = layer->getName();
-            if (name.startsWith(fromNamePrefix)){
-                // ensure that only first occurrence (prefix) will be replaced there
-                QString newName = name.replace(name.indexOf(fromNamePrefix), fromNamePrefixLen, toNamePrefix);
-                result.insert(layer, newName);
-            }
-        }
-        else{
+        if (layer == nullptr) {
             continue;
+        }
+        QString name = layer->getName();
+        if (name.startsWith(fromNamePrefix)) {
+            // ensure that only first occurrence (prefix) will be replaced there
+            QString newName = name.replace(name.indexOf(fromNamePrefix), fromNamePrefixLen, toNamePrefix);
+            result.insert(layer, newName);
         }
     }
     return result;
@@ -653,10 +658,10 @@ QHash<RS_Layer*, QString> LC_LayerTreeModel::prepareLayerRename(QList<LC_LayerTr
  * @param toNamePrefix new prefix of the layer's name that replaces old one
  * @return true if at least one layer was renamed
  */
-bool LC_LayerTreeModel::renameLayers(QList<LC_LayerTreeItem*> layersList, QString &fromNamePrefix, QString &toNamePrefix){
+bool LC_LayerTreeModel::renameLayers(const QList<LC_LayerTreeItem*>& layersList, const QString &fromNamePrefix, const QString &toNamePrefix){
 
-    QHash<RS_Layer*, QString> layersMap = prepareLayerRename(layersList, fromNamePrefix, toNamePrefix);
-    bool result = renameLayersMap(layersMap);
+    const QHash<RS_Layer*, QString> layersMap = prepareLayerRename(layersList, fromNamePrefix, toNamePrefix);
+    const bool result = renameLayersMap(layersMap);
     return result;
 }
 
@@ -685,14 +690,14 @@ bool LC_LayerTreeModel::renameLayersMap(const QHash<RS_Layer *, QString> &layers
  * @param destination destination item to which source will added as child
  * @return true if moving source to destination is allowed, false otherwise
  */
-bool LC_LayerTreeModel::isValidRestructure(LC_LayerTreeItem*  source, LC_LayerTreeItem*  destination) const{
+bool LC_LayerTreeModel::isValidRestructure(const LC_LayerTreeItem*  source, const LC_LayerTreeItem*  destination) const{
 
     if (source == nullptr){ // should not be possible, yet still
         return false;
     }
 
     // prohibit dropping into own parent, allow dropping to viewport
-    if (!destination->parent()){
+    if (destination->parent() == nullptr) {
         if (source->parent() == m_rootItem){ // avoid duplication of top-level items
             return false;
         }
@@ -707,10 +712,10 @@ bool LC_LayerTreeModel::isValidRestructure(LC_LayerTreeItem*  source, LC_LayerTr
     // don't let to drop on secondary layers
     // tbd- the alternative position layer potentially hold dimensions too... ?
 
-    int destinationLayerType = destination->getLayerType();
-    if (destinationLayerType == LC_LayerTreeItem::DIMENSIONAL ||
-        destinationLayerType == LC_LayerTreeItem::INFORMATIONAL ||
-        destinationLayerType == LC_LayerTreeItem::ALTERNATE_POSITION){
+    const int destinationLayerType = destination->getLayerType();
+    if (destinationLayerType == RS_Layer::LayerType::DIMENSIONAL ||
+        destinationLayerType == RS_Layer::LayerType::INFORMATIONAL ||
+        destinationLayerType == RS_Layer::LayerType::ALTERNATE_POSITION){
         return false;
     }
 
@@ -730,32 +735,31 @@ bool LC_LayerTreeModel::isValidRestructure(LC_LayerTreeItem*  source, LC_LayerTr
      // in general possible, yet looks rather like naming convention
      // error, so we'd rather prohibit it there
 
-     bool destinationVirtual = destination -> isVirtual();
+     const bool destinationVirtual = destination -> isVirtual();
 
      if (source->isVirtual()){
          return destinationVirtual; // virtual layer may be dropped on virtual only
      }
-     else{
-         int sourceItemType = source-> getLayerType();
-         if (sourceItemType == LC_LayerTreeItem::NORMAL){
-             // check that we'll drop it to virtual only
-             return destinationVirtual;
-         }
+    const int sourceItemType = source-> getLayerType();
+    if (sourceItemType == RS_Layer::LayerType::NORMAL){
+        // check that we'll drop it to virtual only
+        return destinationVirtual;
+    }
 
-         // secondary item
-         // let's drop it everywhere so far?
-         // allow dragging items except for "0" layer, yet we already checked for "0"
-         return true;
-     }
+    // secondary item
+    // let's drop it everywhere so far?
+    // allow dragging items except for "0" layer, yet we already checked for "0"
+    return true;
 }
 
 /**
  * Get active layer from layer list and update the model to mark active layer paths accordingly
  * @param ll
  */
-void LC_LayerTreeModel::proceedActiveLayerChanged(RS_LayerList* ll) const {
-    if (ll == nullptr)
+void LC_LayerTreeModel::proceedActiveLayerChanged(const RS_LayerList* ll) const {
+    if (ll == nullptr) {
         return;
+    }
     RS_Layer* activeLayer = ll->getActive();
     // remark items for active layer (without rebuilding entire model)
     m_rootItem->rebuildActivePath(activeLayer);
@@ -780,7 +784,7 @@ LC_LayerTreeItem* LC_LayerTreeModel::getItemForIndex(const QModelIndex &index) c
  * @param column column from model index
  * @return column to use in comparisons
  */
-int LC_LayerTreeModel::translateColumn(int column) const{
+int LC_LayerTreeModel::translateColumn(const int column) const{
     int result = column;
     if (m_options->hideLayerTypeIcons){
         result = column + 1;
@@ -794,139 +798,141 @@ int LC_LayerTreeModel::translateColumn(int column) const{
  * @param role data role
  * @return data for given index and role
  */
-QVariant LC_LayerTreeModel::data ( const QModelIndex & index, int role ) const {
-    if (!index.isValid())
+QVariant LC_LayerTreeModel::data ( const QModelIndex & index, const int role ) const {
+    if (!index.isValid()) {
         return QVariant();
+    }
 
     LC_LayerTreeItem *layerItem = getItemForIndex(index);
-    int col = translateColumn(index.column());
+    if (layerItem == nullptr) {
+        return QVariant();
+    }
+    const int col = translateColumn(index.column());
 
     switch (role) {
-    case Qt::DecorationRole: {
-        switch (col) {
-            case EMPTY: // show layer type icon
-                if (layerItem->isVirtual()){
-                    return m_iconLayerVirtual;
-                } else {
-                    int layerType = layerItem->getLayerType();
+        case Qt::DecorationRole: {
+            switch (col) {
+                case COLUMN_EMPTY: {
+                    // show layer type icon
+                    if (layerItem->isVirtual()) {
+                        return m_iconLayerVirtual;
+                    }
+                    const int layerType = layerItem->getLayerType();
                     switch (layerType) {
-                        case LC_LayerTreeItem::NORMAL:
+                        case RS_Layer::LayerType::NORMAL:
                             return m_iconLayerActual;
-                        case LC_LayerTreeItem::DIMENSIONAL:
+                        case RS_Layer::LayerType::DIMENSIONAL:
                             return m_iconLayerDimensional;
-                        case LC_LayerTreeItem::INFORMATIONAL:
+                        case RS_Layer::LayerType::INFORMATIONAL:
                             return m_iconLayerInformationalNotes;
-                        case LC_LayerTreeItem::ALTERNATE_POSITION:
+                        case RS_Layer::LayerType::ALTERNATE_POSITION:
                             return m_iconLayerAlternatePosition;
                         default: {
                             // we should not be there, it means invalid/unsupported layer type
                             // TODO - flag error
                         }
                     }
+                    break;
                 }
-                break;
-
-            case VISIBLE: // layer's visibility icon
-                if (layerItem->isVisible()){
-                    return m_iconLayerVisible;
+                case COLUMN_VISIBLE: {
+                    // layer's visibility icon
+                    if (layerItem->isVisible()) {
+                        return m_iconLayerVisible;
+                    }
+                    return m_iconLayerHidden;
                 }
-                return m_iconLayerHidden;
-
-            case LOCKED: // layer lock status
-                if (!layerItem->isLocked()){
-                    return m_iconLayerDefreeze;
+                case COLUMN_LOCKED: {
+                    // layer lock status
+                    if (!layerItem->isLocked()) {
+                        return m_iconLayerDefreeze;
+                    }
+                    return m_iconLayerFreeze;
                 }
-                return m_iconLayerFreeze;
-
-            case PRINT: // layer print status
-                if (!layerItem->isPrint()){
-                    return m_iconLayerNoPrint;
+                case COLUMN_PRINT: {
+                    // layer print status
+                    if (!layerItem->isPrint()) {
+                        return m_iconLayerNoPrint;
+                    }
+                    return m_iconLayerPrint;
                 }
-                return m_iconLayerPrint;
-
-            case CONSTRUCTION: // construction flat
-                if (!layerItem->isConstruction()){
-                    return m_iconLayerNoConstruction;
+                case COLUMN_CONSTRUCTION: {
+                    // construction flat
+                    if (!layerItem->isConstruction()) {
+                        return m_iconLayerNoConstruction;
+                    }
+                    return m_iconLayerConstruction;
                 }
-                return m_iconLayerConstruction;
-
-            default:
-                break;
-        }
-        break;
-    }
-
-    case Qt::UserRole:
-        return layerItem->getName();
-
-    case Qt::DisplayRole:
-        if (NAME == col) { // display name of item
-            QString displayName =  layerItem->getDisplayName();
-            return displayName;
-        }
-        break;
-
-    case Qt::BackgroundRole:
-        if (layerItem->isVirtual()){  // background for virtual layer
-            return m_options->virtualLayerBgColor;
-        }
-        else {
-            if(COLOR_SAMPLE == col) {  // layer of color pen
-                RS_Layer* layer = layerItem->getLayer();
-                if (layer){
-                    return layer->getPen().getColor().toQColor();
+                default: {
+                    break;
                 }
             }
-            else if (layerItem->isActiveLayer()){
+            break;
+        }
+        case Qt::UserRole: {
+            return layerItem->getName();
+        }
+        case Qt::DisplayRole: {
+            if (COLUMN_NAME == col) {
+                // display name of item
+                QString displayName = layerItem->getDisplayName();
+                return displayName;
+            }
+            break;
+        }
+        case Qt::BackgroundRole: {
+            if (layerItem->isVirtual()) {
+                // background for virtual layer
+                return m_options->virtualLayerBgColor;
+            }
+            if (layerItem->isActiveLayer()) {
                 return m_options->activeLayerBgColor;
-            }            
-        }
-        break;
-
-    case Qt::FontRole:
-        if (NAME == col) {
-            QFont font;
-            // todo - potentially, that may be also controlled by settings
-
-            // mark active part items as bold
-            if (layerItem->isPartOfActivePath()){
-                font.setBold(true);
             }
-            // mark virtual layers by italic
-            if (layerItem->isVirtual()){
-                font.setItalic(true);
-            }
-            return font;
+            break;
         }
-        break;
+        case Qt::FontRole: {
+            if (COLUMN_NAME == col) {
+                QFont font;
+                // todo - potentially, that may be also controlled by settings
 
-    case Qt::ForegroundRole:{
-
-            if (layerItem -> isMatched()){ // highlighting of items that are matched by filter regexpt
+                // mark active part items as bold
+                if (layerItem->isPartOfActivePath()) {
+                    font.setBold(true);
+                }
+                // mark virtual layers by italic
+                if (layerItem->isVirtual()) {
+                    font.setItalic(true);
+                }
+                return font;
+            }
+            break;
+        }
+        case Qt::ForegroundRole: {
+            if (layerItem->isMatched()) {
+                // highlighting of items that are matched by filter regexpt
                 return m_options->matchedItemColor;
             }
 
-// FIXME - layer color by settings
-//            RS_Layer* layer = layerItem->getLayer();
-//            if (layer){
-//               return layer->getPen().getColor().toQColor();
-//            }
-        break;
-    }
-
-    case Qt::ToolTipRole:{
-        if (m_options->showToolTips){ // show tooltip with full name of layer
-            if (NAME == col) {
-                QString displayName =  layerItem->getFullName();
-                return displayName;
-            }
+            // FIXME - layer color by settings
+            //            RS_Layer* layer = layerItem->getLayer();
+            //            if (layer){
+            //               return layer->getPen().getColor().toQColor();
+            //            }
+            break;
         }
-        break;
-    }
-
-    default:
-        // do nothing;
-        break;
+        case Qt::ToolTipRole: {
+            if (m_options->showToolTips) {
+                // show tooltip with full name of layer
+                if (COLUMN_NAME == col) {
+                    QString displayName = layerItem->getFullName();
+                    return displayName;
+                }
+            }
+            break;
+        }
+        default: {
+            // do nothing;
+            break;
+        }
     }
 
     return QVariant();
@@ -940,17 +946,19 @@ Qt::ItemFlags LC_LayerTreeModel::flags(const QModelIndex & index) const{
     if (!index.isValid()){
         if (m_flatMode){
             return {};
-        } else {
-            // in normal (not flat) mode we'll support of dropping on viewport, and there the index will be invalid
-            return Qt::ItemIsDropEnabled;
         }
+        // in normal (not flat) mode we'll support of dropping on viewport, and there the index will be invalid
+        return Qt::ItemIsDropEnabled;
     }
 
-    int col = translateColumn(index.column());
+    const int col = translateColumn(index.column());
 
-    if (col == NAME) {
+    if (col == COLUMN_NAME) {
         Qt::ItemFlags result = Qt::ItemIsSelectable | Qt::ItemIsEnabled;
-        auto layerItem = getItemForIndex(index);
+        const auto layerItem = getItemForIndex(index);
+        if (layerItem == nullptr) {
+            return {};
+        }
 
         bool dragEnabled = !m_flatMode && m_options->dragDropEnabled; // disable drag&drop in flat mode
 
@@ -968,22 +976,21 @@ Qt::ItemFlags LC_LayerTreeModel::flags(const QModelIndex & index) const{
         // take care of drag&drop
         if (m_currentlyDraggingItem != nullptr && !m_flatMode){
             // check whether it is allowed to drop currently dragging item on this item
-            bool dropEnabled = isValidRestructure(m_currentlyDraggingItem, layerItem);
+            const bool dropEnabled = isValidRestructure(m_currentlyDraggingItem, layerItem);
             if (dropEnabled){
                 result = result  | Qt::ItemIsDropEnabled;
             }
         }
         return result;
     }
-    else
-        return Qt::ItemIsEnabled;
+    return Qt::ItemIsEnabled;
 }
 /**
  * Utility method that returns list of descendent layers based on provided acceptance conditions
  * @param acceptor condition for selecting layers
  * @return list of collected layers
  */
-QList<RS_Layer*> LC_LayerTreeModel::collectLayers(LC_LayerTreeItemAcceptor* acceptor) const {
+QList<RS_Layer*> LC_LayerTreeModel::collectLayers(const LC_LayerTreeItemAcceptor& acceptor) const {
     QList<RS_Layer*> result;
     m_rootItem->collectLayers(result, acceptor);
     return result;
@@ -1003,7 +1010,7 @@ QModelIndexList LC_LayerTreeModel::getPersistentIndexList() const {
  * @param regexp regexp string from filtering box
  * @param highlightMode  mode of filter, if true - items are highlighted, if false - filtered
  */
-void LC_LayerTreeModel::setFilteringRegexp(const QString &regexp, bool highlightMode){
+void LC_LayerTreeModel::setFilteringRegexp(const QString &regexp, const bool highlightMode){
 //   Actually, this is a bit ugly setter as it does not force model rebuild.However, update will be subsequent
 //   call... ok so far, it should not be called externally other than from widget.
 
@@ -1026,9 +1033,9 @@ void LC_LayerTreeModel::emitDataChanged(){
  * @return tree item that stores target level
  */
 LC_LayerTreeItem* LC_LayerTreeModel::getItemForLayer(RS_Layer* layer) const{
-    QG_LayerTreeItemAcceptorSameLayerAs ACCEPT_SAME(layer);
+    const QG_LayerTreeItemAcceptorSameLayerAs acceptSame(layer);
     QList<LC_LayerTreeItem*> items;
-    m_rootItem->collectDescendantChildren(items, &ACCEPT_SAME, false);
+    m_rootItem->collectDescendantChildren(items, acceptSame, false);
 
     LC_LayerTreeItem* result = nullptr;
     if (items.size() == 1){ // only 1 result expected to be returned.
@@ -1043,12 +1050,13 @@ LC_LayerTreeItem* LC_LayerTreeModel::getItemForLayer(RS_Layer* layer) const{
  * @return map of layers. Key - original Layer, Value - new layer (copy)
  */
 QHash<RS_Layer*, RS_Layer*> LC_LayerTreeModel::createLayersCopy(const QModelIndex& selectedIndex){
-    QHash<RS_Layer*, RS_Layer*> result;
     if (selectedIndex.isValid()){
         LC_LayerTreeItem *source = getItemForIndex(selectedIndex);
-        result = doCreateLayersCopy(source, true, source->getLayerType());
+        if (source != nullptr) {
+            return doCreateLayersCopy(source, true, source->getLayerType());
+        }
     }
-    return result;
+    return QHash<RS_Layer*, RS_Layer*>();
 }
 
 /**
@@ -1058,7 +1066,7 @@ QHash<RS_Layer*, RS_Layer*> LC_LayerTreeModel::createLayersCopy(const QModelInde
  * @param newLayerType new layer type
  * @return map of layers, key is original layer, value - original layer's copy
  */
-QHash<RS_Layer*, RS_Layer*> LC_LayerTreeModel::doCreateLayersCopy(LC_LayerTreeItem* source, bool includeChildren, int newLayerType){
+QHash<RS_Layer*, RS_Layer*> LC_LayerTreeModel::doCreateLayersCopy(LC_LayerTreeItem* source, const bool includeChildren, const int newLayerType){
    QHash<RS_Layer*, RS_Layer*> result;
 
    if (source->isVirtual()){
@@ -1068,7 +1076,7 @@ QHash<RS_Layer*, RS_Layer*> LC_LayerTreeModel::doCreateLayersCopy(LC_LayerTreeIt
    }
    else { // just create copy of layer
        createFirstLayerCopy(result, source, newLayerType); // copy single non-virtual layer
-       if (newLayerType == LC_LayerTreeItem::NORMAL){ // if normal layer - we may have secondary ones
+       if (newLayerType == RS_Layer::LayerType::NORMAL){ // if normal layer - we may have secondary ones
            copyChildrenLayers(source, newLayerType, result);
        }
    }
@@ -1080,13 +1088,13 @@ QHash<RS_Layer*, RS_Layer*> LC_LayerTreeModel::doCreateLayersCopy(LC_LayerTreeIt
  * @param newParentLayerType type of parent item
  * @param result map with result (original/copy layers)
  */
-void LC_LayerTreeModel::copyChildrenLayers(LC_LayerTreeItem *parent, int newParentLayerType, QHash<RS_Layer *, RS_Layer *> &result){
-    int childCount = parent->childCount();
+void LC_LayerTreeModel::copyChildrenLayers(LC_LayerTreeItem *parent, const int newParentLayerType, QHash<RS_Layer *, RS_Layer *> &result){
+    const int childCount = parent->childCount();
     if (childCount > 0){
-        QString newLayerNamePart = createFirstCopiedItemNew(parent, newParentLayerType);
-        QString namePrefixReplaceTo = createItemPathString(parent, false, true, newLayerNamePart);
-        QString sourceName = parent->getName();
-        QString namePrefixReplaceFrom = createItemPathString(parent, true, false, sourceName);
+        const QString newLayerNamePart = createFirstCopiedItemNew(parent, newParentLayerType);
+        const QString namePrefixReplaceTo = createItemPathString(parent, false, true, newLayerNamePart);
+        const QString sourceName = parent->getName();
+        const QString namePrefixReplaceFrom = createItemPathString(parent, true, false, sourceName);
         doCreateChildLayersCopy(result, parent, namePrefixReplaceFrom, namePrefixReplaceTo);
     }
 }
@@ -1098,11 +1106,11 @@ void LC_LayerTreeModel::copyChildrenLayers(LC_LayerTreeItem *parent, int newPare
  * @param source source tree item
  * @param newLayerType new layer type
  */
-void LC_LayerTreeModel::createFirstLayerCopy(QHash<RS_Layer*,RS_Layer*> &result, LC_LayerTreeItem* source, int newLayerType){
+void LC_LayerTreeModel::createFirstLayerCopy(QHash<RS_Layer*,RS_Layer*> &result, LC_LayerTreeItem* source, const int newLayerType){
 
-    QString newLayerNamePart = createFirstCopiedItemNew(source, newLayerType);
-    QString newLayerWithType = restoreNamePart(newLayerNamePart, newLayerType);
-    QString newLayerName = createItemPathString(source, false, true, newLayerWithType);
+    const QString newLayerNamePart = createFirstCopiedItemNew(source, newLayerType);
+    const QString newLayerWithType = restoreNamePart(newLayerNamePart, newLayerType);
+    const QString newLayerName = createItemPathString(source, false, true, newLayerWithType);
 
     RS_Layer* sourceLayer = source->getLayer();
     auto* newLayer = new RS_Layer(newLayerName);
@@ -1122,11 +1130,11 @@ void LC_LayerTreeModel::createFirstLayerCopy(QHash<RS_Layer*,RS_Layer*> &result,
 void LC_LayerTreeModel::doCreateChildLayersCopy(QHash<RS_Layer*, RS_Layer*>&result, LC_LayerTreeItem* source, const QString &oldPrefix, const QString &newPrefix){
 
     QList<RS_Layer*> childLayers;
-    LC_LayerTreeItemAcceptor ACCEPT_ALL;
+    const LC_LayerTreeItemAcceptor ACCEPT_ALL;
 
-    source->collectLayers(childLayers, &ACCEPT_ALL, false);
+    source->collectLayers(childLayers, ACCEPT_ALL, false);
 
-    for (auto const& layer: childLayers){
+    for (const auto& layer: std::as_const(childLayers)){
          QString layerName = layer->getName();
          if (layerName.startsWith(oldPrefix)){
              // replace only first occurrence
@@ -1145,11 +1153,11 @@ void LC_LayerTreeModel::doCreateChildLayersCopy(QHash<RS_Layer*, RS_Layer*>&resu
  * @param newLayerType new layer type
  * @return name of the layer
  */
-QString LC_LayerTreeModel::createFirstCopiedItemNew(LC_LayerTreeItem* source, int newLayerType){
-    QString itemName = source->getName();
-    LC_LayerTreeItem *parent = source->parent();
-    QString prefix = m_options->copiedNamePathPrefix;
-    QString suffix = m_options->copiedNamePathSuffix;
+QString LC_LayerTreeModel::createFirstCopiedItemNew(LC_LayerTreeItem* source, const int newLayerType){
+    const QString itemName = source->getName();
+    const LC_LayerTreeItem *parent = source->parent();
+    const QString prefix = m_options->copiedNamePathPrefix;
+    const QString suffix = m_options->copiedNamePathSuffix;
     QString newItemName = findNewUniqueName(parent, itemName, prefix, suffix, newLayerType);
     return newItemName;
 }
@@ -1161,8 +1169,8 @@ QString LC_LayerTreeModel::createFirstCopiedItemNew(LC_LayerTreeItem* source, in
  * @return true if renamed
  */
 bool LC_LayerTreeModel::renameVirtualLayer(LC_LayerTreeItem *source, QString &newSourceName){
-    QHash<RS_Layer *, QString> layersMapToRename = doGetVirtualLayerRenameLayersMap(source, newSourceName);
-    bool result = renameLayersMap(layersMapToRename);
+    const QHash<RS_Layer *, QString> layersMapToRename = doGetVirtualLayerRenameLayersMap(source, newSourceName);
+    const bool result = renameLayersMap(layersMapToRename);
     return result;
 }
 
@@ -1174,11 +1182,11 @@ bool LC_LayerTreeModel::renameVirtualLayer(LC_LayerTreeItem *source, QString &ne
  * @return  display name
  */
 // TODO - decide how to show the path - as original underlying layer name or as part of names...
-QString LC_LayerTreeModel::generateLayersDisplayPathString(LC_LayerTreeItem *item){
+QString LC_LayerTreeModel::generateLayersDisplayPathString(LC_LayerTreeItem *item) const {
     QList<LC_LayerTreeItem*> sourcePathItems;
     item->collectPathToParent(sourcePathItems, false);
-    QString prefix = "";
-    QString separator = m_options->layerLevelSeparator;
+    const QString prefix;
+    const QString separator = m_options->layerLevelSeparator;
     QString result = doGenerateLayersPathString(sourcePathItems, false, prefix, separator);
     return result;
 }
@@ -1191,18 +1199,18 @@ QString LC_LayerTreeModel::generateLayersDisplayPathString(LC_LayerTreeItem *ite
  * @return map of layers and new name for them (after rename)
  */
 QHash<RS_Layer *, QString>  LC_LayerTreeModel::doGetVirtualLayerRenameLayersMap(LC_LayerTreeItem *source, QString &newSourceName){
-    QString sourceName = source->getName();
+    const QString sourceName = source->getName();
 
     // prefix path in layer names that will be replaced as result of rename
-    QString originalLayersNamePathToBeReplaced = createItemPathString(source, true, false, sourceName);
+    const QString originalLayersNamePathToBeReplaced = createItemPathString(source, true, false, sourceName);
 
     // prefix path in layer names that will be assigned as result of rename
-    QString replacingLayersNamePath = createItemPathString(source, false, true, newSourceName);
+    const QString replacingLayersNamePath = createItemPathString(source, false, true, newSourceName);
 
     // collect descendants
     QList<LC_LayerTreeItem *> sourceLayersToRename;
-    LC_LayerTreeItemAcceptor acceptAllAcceptor;
-    source->collectDescendantChildren(sourceLayersToRename, &acceptAllAcceptor, true);
+    const LC_LayerTreeItemAcceptor acceptAllAcceptor;
+    source->collectDescendantChildren(sourceLayersToRename, acceptAllAcceptor, true);
 
     // preparing layers map
     QHash<RS_Layer*, QString> layersToRename = prepareLayerRename(sourceLayersToRename, originalLayersNamePathToBeReplaced, replacingLayersNamePath);
@@ -1219,19 +1227,19 @@ QHash<RS_Layer *, QString>  LC_LayerTreeModel::doGetVirtualLayerRenameLayersMap(
  * @param newLayerType   new type of source layer
  * @return key in the map - layer to be renamed, value - new name of layer
  */
-QHash<RS_Layer *, QString>  LC_LayerTreeModel::doGetPrimaryLayerRenameLayersMap(LC_LayerTreeItem *source, const QString &newSourceName, int newLayerType){
-    QString sourceName = source->getName();
-    int originalLayerType = source->getLayerType();
+QHash<RS_Layer *, QString>  LC_LayerTreeModel::doGetPrimaryLayerRenameLayersMap(LC_LayerTreeItem *source, const QString &newSourceName, const int newLayerType){
+    const QString sourceName = source->getName();
+    const int originalLayerType = source->getLayerType();
 
-    bool typeChanged = newLayerType != originalLayerType;
-    bool nameChanged = sourceName != newSourceName;
+    const bool typeChanged = newLayerType != originalLayerType;
+    const bool nameChanged = sourceName != newSourceName;
 
-    QString originalLayersNamePathToBeReplaced = createItemPathString(source, true, false, sourceName);
+    const QString originalLayersNamePathToBeReplaced = createItemPathString(source, true, false, sourceName);
 
     QList<LC_LayerTreeItem *> sourceLayersToRename;
-    LC_LayerTreeItemAcceptor acceptAllAcceptor;
+    const LC_LayerTreeItemAcceptor acceptAllAcceptor;
 
-    QString newName = restoreNamePart(newSourceName, newLayerType);
+    const QString newName = restoreNamePart(newSourceName, newLayerType);
 
     if (typeChanged){
           // we'll rename only the primary layer itself on type change
@@ -1239,11 +1247,11 @@ QHash<RS_Layer *, QString>  LC_LayerTreeModel::doGetPrimaryLayerRenameLayersMap(
      }
     else if (nameChanged){
             // we'll rename primary layer and it's children
-            source->collectDescendantChildren(sourceLayersToRename, &acceptAllAcceptor, true);
+            source->collectDescendantChildren(sourceLayersToRename, acceptAllAcceptor, true);
     }
 
     //  prefix in layer names that will be used after rename
-    QString replacingLayersNamePath = createItemPathString(source, false, true, newName);
+    const QString replacingLayersNamePath = createItemPathString(source, false, true, newName);
 
     QHash<RS_Layer*, QString> layersToRename = prepareLayerRename(sourceLayersToRename, originalLayersNamePathToBeReplaced, replacingLayersNamePath);
     return layersToRename;
@@ -1252,11 +1260,11 @@ QHash<RS_Layer *, QString>  LC_LayerTreeModel::doGetPrimaryLayerRenameLayersMap(
 /**
  * Returns list of current layer named for layers that will be affected by rename virtual layer operation
  * @param source virtual layer item
- * @param newSourceName new item name
+ * @param newName new item name
  * @return list of names
  */
-QStringList LC_LayerTreeModel::getLayersListForRenamedVirtualLayer(LC_LayerTreeItem *source, QString &newSourceName){
-    QHash<RS_Layer *, QString> layersToRename = doGetVirtualLayerRenameLayersMap(source, newSourceName);
+QStringList LC_LayerTreeModel::getLayersListForRenamedVirtualLayer(LC_LayerTreeItem *source, QString &newName){
+    const QHash<RS_Layer *, QString> layersToRename = doGetVirtualLayerRenameLayersMap(source, newName);
     QStringList result = layersToRename.values();
     return result;
 }
@@ -1268,8 +1276,8 @@ QStringList LC_LayerTreeModel::getLayersListForRenamedVirtualLayer(LC_LayerTreeI
  * @param newLayerType  new layer type
  * @return list of names
  */
-QStringList LC_LayerTreeModel::getLayersListForRenamedPrimary(LC_LayerTreeItem* source, QString &newSourceName, int newLayerType){
-    QHash<RS_Layer *, QString> layersToRename = doGetPrimaryLayerRenameLayersMap(source, newSourceName, newLayerType);
+QStringList LC_LayerTreeModel::getLayersListForRenamedPrimary(LC_LayerTreeItem* source, const QString &newSourceName, const int newLayerType){
+    const QHash<RS_Layer *, QString> layersToRename = doGetPrimaryLayerRenameLayersMap(source, newSourceName, newLayerType);
     QStringList result = layersToRename.values();
     return result;
 }
@@ -1282,9 +1290,9 @@ QStringList LC_LayerTreeModel::getLayersListForRenamedPrimary(LC_LayerTreeItem* 
  * @param newLayer true if name for new layer is generated, false if for existing
  * @return
  */
-QString LC_LayerTreeModel::createFullLayerName(LC_LayerTreeItem *treeItem, QString &layerName, int layerType, bool newLayer){
+QString LC_LayerTreeModel::createFullLayerName(LC_LayerTreeItem *treeItem, const QString &layerName, const int layerType, const bool newLayer){
     QString result;
-    QString newLayerName = restoreNamePart(layerName, layerType);
+    const QString newLayerName = restoreNamePart(layerName, layerType);
     if (treeItem != nullptr){
         result = createItemPathString(treeItem, newLayer, true, newLayerName);
     } else {
@@ -1300,19 +1308,19 @@ QString LC_LayerTreeModel::createFullLayerName(LC_LayerTreeItem *treeItem, QStri
  * @param newName new name of layer item
  * @param newLayerType  new type of layer
  */
-void LC_LayerTreeModel::renamePrimaryLayer(LC_LayerTreeItem *layerItem, QString newName, int newLayerType){
+void LC_LayerTreeModel::renamePrimaryLayer(LC_LayerTreeItem *layerItem, const QString& newName, const int newLayerType){
     RS_Layer* layer = layerItem->getLayer();
     if (layerItem->childCount()==0){ // no secondary layers there, just rename this layer
-        QString newLayerName = createFullLayerName(layerItem, newName, newLayerType, false);
+        const QString newLayerName = createFullLayerName(layerItem, newName, newLayerType, false);
         layer->setName(newLayerName);
     }
     else{ // as we have children, probably they should be renamed too
         if (m_options->renameSecondaryLayersOnPrimaryRename){
-            QHash<RS_Layer *, QString> layersMapToRename = doGetPrimaryLayerRenameLayersMap(layerItem, newName, newLayerType);
+            const QHash<RS_Layer *, QString> layersMapToRename = doGetPrimaryLayerRenameLayersMap(layerItem, newName, newLayerType);
             renameLayersMap(layersMapToRename);
         }
         else{
-            QString newLayerName = createFullLayerName(layerItem, newName, newLayerType, false);
+            const QString newLayerName = createFullLayerName(layerItem, newName, newLayerType, false);
             layer->setName(newLayerName);
         }
     }
@@ -1320,6 +1328,6 @@ void LC_LayerTreeModel::renamePrimaryLayer(LC_LayerTreeItem *layerItem, QString 
 
 void LC_LayerTreeModel::setCurrentlyDraggingItem(LC_LayerTreeItem *item){m_currentlyDraggingItem = item;}
 
-void LC_LayerTreeModel::setFlatMode(bool mode){m_flatMode = mode;}
+void LC_LayerTreeModel::setFlatMode(const bool mode){m_flatMode = mode;}
 
-LC_LayerTreeItem *LC_LayerTreeModel::getCurrentlyDraggingItem() {return m_currentlyDraggingItem;}
+LC_LayerTreeItem *LC_LayerTreeModel::getCurrentlyDraggingItem() const {return m_currentlyDraggingItem;}

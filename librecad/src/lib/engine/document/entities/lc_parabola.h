@@ -37,20 +37,20 @@ struct RS_LineData;
  * Holds the data that defines a parabola.
  * @author Dongxu Li
  */
-struct LC_ParabolaData
-{
+struct LC_ParabolaData{
     /**
     * Default constructor. Leaves the data object uninitialized.
     */
+    // fixme - sand - move outside of entity to creation utility
     static std::vector<LC_ParabolaData> From4Points(const std::vector<RS_Vector>& points);
     static LC_ParabolaData FromEndPointsTangents(
             const std::array<RS_Vector, 2>& endPoints,
             const std::array<RS_Vector, 2>& endTangents);
     LC_ParabolaData() = default;
     LC_ParabolaData(std::array<RS_Vector, 3> controlPoints);
-    RS_LineData GetAxis() const;
-    RS_LineData GetDirectrix() const;
-    RS_Vector GetFocus() const;
+    RS_LineData getAxis() const;
+    RS_LineData getDirectrix() const;
+    RS_Vector getFocus() const;
     bool isValid() const {
       return m_valid;
     }
@@ -60,18 +60,18 @@ struct LC_ParabolaData
     m0 x^2 + m1 xy + m2 y^2 + m3 x + m4 y + m5 =0
     **/
     LC_Quadratic getQuadratic() const;
-    double FindX(const RS_Vector& point) const;
-    RS_Vector FromX(double x) const;
+    double findX(const RS_Vector& point) const;
+    RS_Vector fromX(double x) const;
     /**
      * @brief FromXWithTangent find point on curve and tangent at the given x
      * @param x - the coordinate along the x-direction
      * @return std::array<RS_Vector, 2> - point and tangent
      */
-    std::array<RS_Vector, 2> FromXWithTangent(double x) const;
+    std::array<RS_Vector, 2> fromXWithTangent(double x) const;
 
     // The three control points, and all other properties are calculated from control points
     std::array<RS_Vector, 3> m_controlPoints;
-    void CalculatePrimitives();
+    void calculatePrimitives();
     // properties should be calculated from control points
     RS_Vector m_focus;
     // a vector from the vertex to focus
@@ -195,6 +195,9 @@ public:
      * @return an approximate offset
      */
     std::unique_ptr<LC_Parabola> approximateOffset(double dist) const;
+
+    RS_Vector getFocus() const {return m_data.m_focus;}
+    RS_Vector getVertex() const {return m_data.m_vertex;}
 
 private:
     // rotate a point around the parabola vertex so, the parabola is y= ax^2 + bx + c, with a > 0 after the

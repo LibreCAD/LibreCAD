@@ -27,7 +27,7 @@
 
 #if defined(_MSC_VER) && _MSC_VER > 1000
 #pragma once
-#endif // _MSC_VER > 1000
+#endif
 
 #include "rs_actioninterface.h"
 
@@ -44,21 +44,19 @@ struct LC_LayersExportOptions;
 class LC_ActionLayersExport : public RS_ActionInterface{
 Q_OBJECT
 public:
-    enum Mode
-    {
-        SelectedMode = 0,
-        VisibleMode
-    };
+enum Mode {
+    SelectedMode = 0,
+    VisibleMode
+};
 
     LC_ActionLayersExport( LC_ActionContext *actionContext,
                            Mode inputExportMode);
     void init(int status) override;
-    bool collectLayersToExport(LC_LayersExportOptions* exportOptions);
-    void exportLayers(LC_LayersExportOptions& exportOptions, RS_Graphic* sourceGraphic);
-    void performExport();
+    bool collectLayersToExport(LC_LayersExportOptions* exportOptions) const;
+    void performExport() const;
     void trigger() override;
 private:
     RS_LayerList* m_layersList = nullptr;
     Mode m_exportMode = SelectedMode;
 };
-#endif // LC_ACTIONLAYERSEXPORT_H
+#endif

@@ -49,15 +49,16 @@ public:
         Vertical
     };
 
-public:
-    RS_ActionDimLinear(LC_ActionContext *actionContext, double angle = 0.0, bool fixedAngle = false,
-         RS2::ActionType type = RS2::ActionDimLinear);
+
+
+    explicit RS_ActionDimLinear(LC_ActionContext *actionContext, double angle = 0.0, bool fixedAngle = false,
+                                RS2::ActionType type = RS2::ActionDimLinear);
     ~RS_ActionDimLinear() override;
 
     QStringList getAvailableCommands() override;
 //    void showOptions() override;
     double getUcsAngleDegrees() const;
-    void setUcsAngleDegrees(double a);
+    void setUcsAngleDegrees(double ucsRelAngleDegrees);
     bool hasFixedAngle() const;
 protected:
 
@@ -76,14 +77,14 @@ protected:
 
     void preparePreview(bool alternateMode) override;
     void updateMouseButtonHintForExtPoint2() override;
-    bool checkMaySwitchDimDirection();
+    bool checkMaySwitchDimDirection() const;
     void updateMouseButtonHintForDefPoint() override;
     void reset() override;
     RS_Vector getExtensionPoint1() override;
     RS_Vector getExtensionPoint2() override;
     double getDimAngle(bool alternateMode) override;
-    void setExtensionPoint1(RS_Vector p) override;
-    void setExtensionPoint2(RS_Vector p) override;
+    void setExtensionPoint1(const RS_Vector& p) override;
+    void setExtensionPoint2(const RS_Vector& p) override;
     RS_Entity *createDim(RS_EntityContainer* parent) override;
     bool doProcessCommand(int status, const QString &command) override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;

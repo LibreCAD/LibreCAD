@@ -73,7 +73,8 @@ void DL_WriterA::dxfReal(int gc, double value) const {
             dot = true;
             end = i+2;
             continue;
-        } else if (dot && str[i]!='0') {
+        }
+        if (dot && str[i]!='0') {
             end = i+1;
         }
     }

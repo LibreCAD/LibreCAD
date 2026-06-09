@@ -24,11 +24,13 @@
 #define LC_VIEWSLIST_H
 
 #include <QList>
+
 #include "lc_view.h"
 
 class LC_ViewListListener {
 public:
-    virtual void viewsListModified([[maybe_unused]]bool changed) {};
+    virtual void viewsListModified([[maybe_unused]]bool changed) {}
+    virtual ~LC_ViewListListener() = default;
 };
 
 
@@ -45,10 +47,14 @@ public:
         return m_namedViews.count();
     }
 
+    bool isEmpty() const {
+        return m_namedViews.isEmpty();
+    }
+
 /**
  * @return View at given position or NULL if i is out of range.
  */
-    LC_View *at(unsigned int i) {
+    LC_View *at(const unsigned int i) const {
         return m_namedViews.at(i);
     }
 
@@ -86,8 +92,8 @@ public:
         }
     }
 
-    void fireModified(bool value) {
-        for (auto l: m_viewListListeners) {
+    void fireModified(const bool value) {
+        for (const auto l: std::as_const(m_viewListListeners)) {
             l->viewsListModified(value);
         }
     }
@@ -98,4 +104,4 @@ protected:
     bool m_modified = false;
 };
 
-#endif // LC_VIEWSLIST_H
+#endif

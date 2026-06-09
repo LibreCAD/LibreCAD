@@ -45,17 +45,15 @@ bool LC_ImageExporter::exportToImage(RS_Graphic* graphic, const ExportOptions& o
     // 4) custom background color (i.e transparent)?
     // 5) only visible layers(?)
 
-    bool exportToSvg = options.format.toLower() == "svg";
+    const bool exportToSvg = options.format.toLower() == "svg";
     if (exportToSvg) {
         return exportGraphicToSVG(graphic, options);
     }
-    else {
-        return exportGraphicToImage(graphic,options);
-    }
+    return exportGraphicToImage(graphic,options);
 }
 
 bool LC_ImageExporter::exportGraphicToSVG(RS_Graphic* graphic, const ExportOptions& options) {
-    QSize size = options.size;
+    const QSize size = options.size;
     QSvgGenerator svgGenerator;
     prepareSVGGenerator(options, size, svgGenerator);
     QPaintDevice* buffer = &svgGenerator;
@@ -64,15 +62,15 @@ bool LC_ImageExporter::exportGraphicToSVG(RS_Graphic* graphic, const ExportOptio
 }
 
 bool LC_ImageExporter::exportGraphicToImage(RS_Graphic* graphic, const ExportOptions& options) {
-    QSize size = options.size;
+    const QSize size = options.size;
     auto pixMap = QPixmap(size);
     QPaintDevice* buffer = &pixMap;
     renderGraphic(graphic, options, buffer);
     return savePixmapToImage(options, pixMap);
 }
 
-bool LC_ImageExporter::savePixmapToImage(const LC_ImageExporter::ExportOptions& options, const QPixmap &pixMap) {
-    QImage img = pixMap.toImage();
+bool LC_ImageExporter::savePixmapToImage(const ExportOptions& options, const QPixmap &pixMap) {
+    const QImage img = pixMap.toImage();
     QImageWriter iio;
     iio.setFileName(options.fileName);
     iio.setFormat(options.format.toLatin1());
@@ -88,7 +86,7 @@ bool LC_ImageExporter::savePixmapToImage(const LC_ImageExporter::ExportOptions& 
     return ret;
 }
 
-void LC_ImageExporter::renderGraphic(RS_Graphic* graphic, const LC_ImageExporter::ExportOptions& options, QPaintDevice* buffer) {
+void LC_ImageExporter::renderGraphic(RS_Graphic* graphic, const ExportOptions& options, QPaintDevice* buffer) {
     RS_Painter painter(buffer);
     preparePainter(options, painter);
 
@@ -96,14 +94,14 @@ void LC_ImageExporter::renderGraphic(RS_Graphic* graphic, const LC_ImageExporter
     LC_GraphicViewport viewport;
     prepareViewport(graphic, options, viewport);
 
-    LC_PrintViewportRenderer renderer = LC_PrintViewportRenderer(&viewport, &painter);
+    auto renderer = LC_PrintViewportRenderer(&viewport, &painter);
     renderer.setBackground(options.backgroundBlack ? Qt::black : Qt::white);
     renderer.loadSettings();
     renderer.render();
 }
 
 void LC_ImageExporter::preparePainter(const ExportOptions& options, RS_Painter& painter) {
-    bool black = options.backgroundBlack;
+    const bool black = options.backgroundBlack;
     painter.setBackground(black ? Qt::black : Qt::white);
     if (options.blackAndWhite) {
         painter.setDrawingMode(black ? RS2::ModeWB : RS2::ModeBW);
@@ -120,10 +118,10 @@ void LC_ImageExporter::prepareSVGGenerator(const ExportOptions& options, const Q
 
 void LC_ImageExporter::prepareViewport(RS_Graphic* graphic, const ExportOptions& options, LC_GraphicViewport &viewport) {
     viewport.setSize(options.size.width(), options.size.height());
-    auto borderWidth = options.borders.width();
-    auto borderHeight = options.borders.height();
+    const auto borderWidth = options.borders.width();
+    const auto borderHeight = options.borders.height();
     viewport.setBorders(borderWidth, borderHeight, borderWidth, borderHeight);
-    viewport.setContainer(graphic);
+    viewport.setDocument(graphic);
     viewport.zoomAuto(false);
     viewport.loadSettings();
 }

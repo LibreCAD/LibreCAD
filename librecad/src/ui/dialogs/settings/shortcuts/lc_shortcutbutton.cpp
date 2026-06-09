@@ -32,10 +32,10 @@ LC_ShortcutButton::LC_ShortcutButton(QWidget *parent)
     : QPushButton(parent)
     , m_key({{0, 0, 0, 0}}){
     // Using ShortcutButton::tr() as workaround for QTBUG-34128
-    setToolTip(LC_ShortcutButton::tr("Click and type the new key sequence."));
+    setToolTip(tr("Click and type the new key sequence."));
     setCheckable(true);
-    m_checkedText = LC_ShortcutButton::tr("Stop Recording");
-    m_uncheckedText = LC_ShortcutButton::tr("Record Shortcut");
+    m_checkedText = tr("Stop Recording");
+    m_uncheckedText = tr("Record Shortcut");
     updateText();
     connect(this, &LC_ShortcutButton::toggled, this, &LC_ShortcutButton::handleToggleChange);
 }
@@ -47,9 +47,10 @@ QSize LC_ShortcutButton::sizeHint() const {
         that->setText(m_checkedText);
         m_preferredWidth = QPushButton::sizeHint().width();
         that->setText(m_uncheckedText);
-        int otherWidth = QPushButton::sizeHint().width();
-        if (otherWidth > m_preferredWidth)
+        const int otherWidth = QPushButton::sizeHint().width();
+        if (otherWidth > m_preferredWidth) {
             m_preferredWidth = otherWidth;
+        }
         that->setText(originalText);
     }
     return QSize(m_preferredWidth, QPushButton::sizeHint().height());
@@ -100,8 +101,9 @@ bool LC_ShortcutButton::eventFilter(QObject *obj, QEvent *evt) {
         m_keyNum++;
         k->accept();
         emit keySequenceChanged(QKeySequence(m_key[0], m_key[1], m_key[2], m_key[3]));
-        if (m_keyNum > 3)
+        if (m_keyNum > 3) {
             setChecked(false);
+        }
         return true;
     }
     return QPushButton::eventFilter(obj, evt);
@@ -111,12 +113,14 @@ void LC_ShortcutButton::updateText() {
     setText(isChecked() ? m_checkedText : m_uncheckedText);
 }
 
-void LC_ShortcutButton::handleToggleChange(bool toogleState) {
+void LC_ShortcutButton::handleToggleChange(const bool toggleState) {
     updateText();
-    m_keyNum = m_key[0] = m_key[1] = m_key[2] = m_key[3] = 0;
-    if (toogleState) {
-        if (QApplication::focusWidget()) {
-            QApplication::focusWidget()->clearFocus();
+    m_key.fill(0);
+    m_keyNum = 0;
+    if (toggleState) {
+        auto *focusWidget = QApplication::focusWidget();
+        if (focusWidget != nullptr) {
+            focusWidget->clearFocus();
         } // funny things happen otherwise
         qApp->installEventFilter(this);
     } else {

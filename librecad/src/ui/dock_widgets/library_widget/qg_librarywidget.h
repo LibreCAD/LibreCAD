@@ -26,9 +26,10 @@
 #ifndef QG_LIBRARYWIDGET_H
 #define QG_LIBRARYWIDGET_H
 
-#include <memory>
-#include "lc_graphicviewawarewidget.h"
 #include <QModelIndex>
+#include <memory>
+
+#include "lc_graphicviewawarewidget.h"
 
 class QG_ActionHandler;
 class QListView;
@@ -40,41 +41,41 @@ class QTreeView;
 class QG_LibraryWidget : public LC_GraphicViewAwareWidget{
     Q_OBJECT
 public:
-    QG_LibraryWidget(QG_ActionHandler *action_handler, QWidget* parent = nullptr, const char* name = nullptr, Qt::WindowFlags fl = {});
+    explicit QG_LibraryWidget(const QG_ActionHandler *actionHandler, QWidget* parent = nullptr, const char* name = nullptr, Qt::WindowFlags fl = {});
     ~QG_LibraryWidget() override;
 
     QPushButton* getInsertButton() const{
-        return bInsert;
+        return m_bInsert;
     }
-
     void setGraphicView(RS_GraphicView* gview) override;
-private:
-    QPushButton *bInsert=nullptr;
-    QString getItemDir( QStandardItem * item );
-    QString getItemPath( QStandardItem * item );
-    QIcon getIcon( const QString & dir, const QString & dxfFile, const QString & dxfPath );
-    QString getPathToPixmap( const QString & dir, const QString & dxfFile, const QString & dxfPath );
 public slots:
-    void setActionHandler( QG_ActionHandler * ah );
+    void setActionHandler(const QG_ActionHandler * ah );
     void keyPressEvent( QKeyEvent *e ) override;
     void insert();
     void refresh();
     void scanTree();
     void buildTree();
-    void appendTree( QStandardItem * item, QString directory );
-    void updatePreview( QModelIndex idx );
-    void expandView( QModelIndex idx );
-    void collapseView( QModelIndex idx );
-    void updateWidgetSettings();
+    void appendTree( QStandardItem * item, const QString& directory );
+    void updatePreview(const QModelIndex& idx );
+    void expandView(const QModelIndex& idx ) const;
+    void collapseView(const QModelIndex& idx ) const;
 signals:
-    void escape();private:
-    QG_ActionHandler* actionHandler = nullptr;
-    std::unique_ptr<QStandardItemModel> dirModel;
-    std::unique_ptr<QStandardItemModel> iconModel;
-    QTreeView *dirView = nullptr;
-    QListView *ivPreview = nullptr;
-    QPushButton *bRefresh = nullptr;
-    QPushButton *bRebuild = nullptr;
+    void escape();
+protected:
+    QLayout* getTopLevelLayout() const override;
+private:
+    QPushButton *m_bInsert=nullptr;
+    QString getItemDir(const QStandardItem * item );
+    QString getItemPath(const QStandardItem * item );
+    QIcon getIcon( const QString & dir, const QString & dxfFile, const QString & dxfPath );
+    QString getPathToPixmap( const QString & dir, const QString & dxfFile, const QString & dxfPath );
+    const QG_ActionHandler* m_actionHandler = nullptr;
+    std::unique_ptr<QStandardItemModel> m_dirModel;
+    std::unique_ptr<QStandardItemModel> m_iconModel;
+    QTreeView *m_dirView = nullptr;
+    QListView *m_ivPreview = nullptr;
+    QPushButton *m_bRefresh = nullptr;
+    QPushButton *m_bRebuild = nullptr;
 };
 
-#endif // QG_LIBRARYWIDGET_H
+#endif

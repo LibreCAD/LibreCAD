@@ -1,5 +1,5 @@
 /*******************************************************************************
-*
+ *
  This file is part of the LibreCAD project, a 2D CAD program
 
  Copyright (C) 2025 LibreCAD.org
@@ -23,6 +23,7 @@
 #define LC_EXPORTLAYERSDIALOGSERVICE_H
 
 #include <QObject>
+
 #include "rs.h"
 
 class RS_Graphic;
@@ -40,14 +41,14 @@ protected:
     void doExportLayers(LC_LayersExportOptions& exportOptions, RS_Graphic* sourceGraphic);
     QString paddedIndex(int index, int totalNumber);
     bool selectLayersExportFile(LC_LayersExportOptions& options, LC_FileDialogResult& fileInfo);
-    QString createExportDocumentFileName(bool separateFileForLayer, LC_FileDialogResult &fileInfo,
+    QString createExportDocumentFileName(bool separateFileForLayer, const LC_FileDialogResult &fileInfo,
                                   size_t exportFilesCount, size_t currentExportLayerIndex,
                                   const QString &exportData);
 private:
     std::pair<QString, QString> readDefaultDirAndFilter();
-    void saveDefaultDirAndFilter(LC_FileDialogResult& fileInfo, QString selectedFilter);
+    void saveDefaultDirAndFilter(const LC_FileDialogResult& fileInfo, const QString& selectedFilter);
     RS2::FormatType getFormatType(const QString& formatString);
     void updateFileExtension(LC_FileDialogResult& result, const QString& selectedFilter);
 };
 
-#endif // LC_EXPORTLAYERSDIALOGSERVICE_H
+#endif

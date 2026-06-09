@@ -38,18 +38,18 @@
 #include <QApplication>
 #include <QByteArray>
 #include <QDebug>
+#include <QDir>
 #include <QFileInfo>
 #include <QGuiApplication>
 #include <QMessageBox>
 #include <QPainter>
 #include <QPixmap>
+#include <QPushButton>
 #include <QSettings>
 #include <QSplashScreen>
-
-#include <QDir>
-#include <QPushButton>
 #include <QTimer>
 #include <QToolBar>
+#include <clocale>
 
 #include "console_dxf2pdf.h"
 #include "console_dxf2png.h"
@@ -71,6 +71,7 @@
 #define LC_VERSION "2.2.2-alpha"
 #endif
 
+
 // fixme - sand - files - complete refactoring
 namespace
 {
@@ -81,17 +82,17 @@ const std::string g_lcVersion{"LC_VISION=" XSTR(LC_VERSION)};
     void updateSplash(const std::unique_ptr<QSplashScreen>& splash);
 }
 
-void showFirstLoadSetupDialog(bool first_load) {
+void showFirstLoadSetupDialog(const bool firstLoad) {
     LC_GROUP_GUARD("Defaults");
     {
-        QString unit = LC_GET_STR("Unit", "Invalid");
         // show initial config dialog:
-        if (first_load){
+        if (firstLoad){
             RS_DEBUG->print("main: show initial config dialog..");
             QG_DlgInitial di(nullptr);
-            QPixmap pxm(":/images/intro_librecad.png");
+            const QPixmap pxm(":/images/intro_librecad.png");
             di.setPixmap(pxm);
-            if (di.exec()) {
+            if (di.exec() != 0) {
+                QString unit = LC_GET_STR("Unit", "Invalid"); // fixme - sand - what for? review
                 unit = LC_GET_STR("Unit", "None");
             }
             RS_DEBUG->print("main: show initial config dialog: OK");
@@ -151,8 +152,8 @@ void loadTranslations() {
     RS_DEBUG->print("main: loading translation..");
 
     LC_GROUP("Appearance");
-    QString lang = LC_GET_STR("Language", "en");
-    QString langCmd = LC_GET_STR("LanguageCmd", "en");
+    const QString lang = LC_GET_STR("Language", "en");
+    const QString langCmd = LC_GET_STR("LanguageCmd", "en");
     LC_GROUP_END();
 
     RS_SYSTEM->loadTranslation(lang, langCmd);
@@ -162,13 +163,13 @@ void loadTranslations() {
 void initSystem(char** argv, LC_Application& app) {
     RS_DEBUG->print("param 0: %s", argv[0]);
 
-    QFileInfo prgInfo( QFile::decodeName(argv[0]) );
-    QString prgDir(prgInfo.absolutePath());
+    const QFileInfo prgInfo( QFile::decodeName(argv[0]) );
+    const QString prgDir(prgInfo.absolutePath());
 
     RS_SYSTEM->init(app.applicationName(), app.applicationVersion(), XSTR(QC_APPDIR), prgDir);
 }
 
-void loadFilesOnStartup(QSplashScreen *splash, QC_ApplicationWindow& appWin, [[maybe_unused]]LC_Application& app, QStringList fileList) {
+void loadFilesOnStartup(QSplashScreen *splash, const QC_ApplicationWindow& appWin, [[maybe_unused]]LC_Application& app, QStringList fileList) {
     RS_DEBUG->print("main: loading files..");
 #ifdef __APPLE__
     // get the file list from LC_Application
@@ -192,7 +193,7 @@ int execApplication(LC_Application& app) {
     RS_DEBUG->print("main: entering Qt event loop");
     QCoreApplication::processEvents();
 
-    int return_code = app.exec();
+    const int return_code = app.exec();
 
     RS_DEBUG->print("main: exited Qt event loop");
 
@@ -202,7 +203,7 @@ int execApplication(LC_Application& app) {
 }
 
 //
-bool setupDebugLevel(char level) {
+bool setupDebugLevel(const char level) {
     switch(level){
         case '?' : {
             showDebugSetupHelpMessage();
@@ -301,27 +302,35 @@ int main(int argc, char** argv) {
     // larger than the screen edge would otherwise allow. RoundPreferFloor
     // gives stable integer scales and is the conventional Qt6 hardening.
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
-    QGuiApplication::setHighDpiScaleFactorRoundingPolicy(
-        Qt::HighDpiScaleFactorRoundingPolicy::RoundPreferFloor);
+    QGuiApplication::setHighDpiScaleFactorRoundingPolicy(Qt::HighDpiScaleFactorRoundingPolicy::RoundPreferFloor);
 #endif
+
 
     LC_Application app(argc, argv);
     QCoreApplication::setOrganizationName("LibreCAD");
-    QCoreApplication::setApplicationName("LibreCAD");
-    QCoreApplication::setApplicationVersion(XSTR(LC_VERSION));
+    const auto versionStr = XSTR(LC_VERSION);
+    QCoreApplication::setApplicationVersion(versionStr);
+    QString version(versionStr);
+    if (version.contains("alpha") || version.contains("beta")) {
+         QCoreApplication::setApplicationName("LibreCAD_DEV");
+    }
+    else {
+      QCoreApplication::setApplicationName("LibreCAD");
+    }
 
     // fixme - sand - NEED TO CHECK WHERE lc_svgicons.so is located under linux and mac!!! That's tested for Windows
-    auto appDir = app.applicationDirPath();
-    auto inconEnginesDir = appDir + "/iconengines";
+    const auto appDir = app.applicationDirPath();
+    const auto inconEnginesDir = appDir + "/iconengines";
     app.addLibraryPath(inconEnginesDir);
 
-    RS_Settings::init(app.organizationName(), app.applicationName());
+    auto applicationName = app.applicationName();
+    RS_Settings::init(app.organizationName(), applicationName);
 
     QGuiApplication::setDesktopFileName("librecad");
 
     loadIconsStylingOptions();
 
-    bool first_load = LC_GET_ONE_BOOL("Startup", "FirstLoad", true);
+    const bool first_load = LC_GET_ONE_BOOL("Startup", "FirstLoad", true);
 
     bool allowOptions=true;
     QList<int> argClean;
@@ -378,7 +387,7 @@ int main(int argc, char** argv) {
     showFirstLoadSetupDialog(first_load);
 
     std::unique_ptr<QSplashScreen> splash;
-    bool show_splash = LC_GET_ONE_BOOL("Startup","ShowSplash", true);
+    const bool show_splash = LC_GET_ONE_BOOL("Startup","ShowSplash", true);
 
     if (show_splash){
         splash = std::make_unique<QSplashScreen>();
@@ -393,7 +402,7 @@ int main(int argc, char** argv) {
 
     RS_DEBUG->print("main: creating main window..");
     QC_ApplicationWindow& appWin = *QC_ApplicationWindow::getAppWindow();
-    auto& appWindow = QC_ApplicationWindow::getAppWindow();
+    const auto& appWindow = QC_ApplicationWindow::getAppWindow();
     if (appWindow != nullptr) {
         appWindow->fireIconsRefresh();
     }
@@ -401,7 +410,14 @@ int main(int argc, char** argv) {
     app.installEventFilter(&appWin);
 #endif
     RS_DEBUG->print("main: setting caption");
-    appWin.setWindowTitle(app.applicationName());
+    QString mainWinTitle = applicationName;
+
+    const bool showVersionInTitle = LC_GET_ONE_BOOL("Startup","ShowVersionInTitle", true);
+    if (showVersionInTitle) {
+        mainWinTitle = applicationName + " [" + versionStr + "]";
+    }
+
+    appWin.setWindowTitle(mainWinTitle);
 
     RS_DEBUG->print("main: show main window");
 
@@ -418,7 +434,7 @@ int main(int argc, char** argv) {
     }
     settings.endGroup();
 
-    bool maximize = LC_GET_ONE_BOOL("Startup","Maximize", false);
+    const bool maximize = LC_GET_ONE_BOOL("Startup","Maximize", false);
 
     if (maximize || first_load) {
         appWin.showMaximized();
@@ -445,7 +461,7 @@ int main(int argc, char** argv) {
 
     // parse command line arguments that might not need a launched program:
     // fixme - sand - add support of skipping of loading via cmdline flag
-    QStringList fileList = handleArgs(argc, argv, argClean);
+    const QStringList fileList = handleArgs(argc, argv, argClean);
     loadFilesOnStartup(splash.get(), appWin, app, fileList);
 
     appWin.initCompleted();
@@ -458,7 +474,7 @@ int main(int argc, char** argv) {
     LC_GROUP("Startup");
     {
         // fixme - sand - files - add support of command line flag to suppress version check (may be useful for automation)!
-        bool checkForNewVersion = LC_GET_BOOL("CheckForNewVersions", true);
+        const bool checkForNewVersion = LC_GET_BOOL("CheckForNewVersions", true);
         if (checkForNewVersion) {
             appWin.checkForNewVersion();
         }
@@ -479,7 +495,7 @@ int main(int argc, char** argv) {
  *
  * @return list of files to load on startup.
  */
-QStringList handleArgs(int argc, char** argv, const QList<int>& argClean){
+QStringList handleArgs(const int argc, char** argv, const QList<int>& argClean){
     RS_DEBUG->print("main: handling args..");
     QStringList ret;
 
@@ -488,7 +504,7 @@ QStringList handleArgs(int argc, char** argv, const QList<int>& argClean){
         if (argClean.indexOf(i) >= 0) {
             continue;
         }
-        auto localFileName = argv[i];
+        const auto localFileName = argv[i];
         if (!QString(localFileName).startsWith("-")) {
             auto decodedName = QFile::decodeName(localFileName);
             QFileInfo fileInfo(decodedName);
@@ -508,7 +524,7 @@ QStringList handleArgs(int argc, char** argv, const QList<int>& argClean){
 }
 
 QString LCReleaseLabel(){
-    QString version{XSTR(LC_VERSION)};
+    const QString version{XSTR(LC_VERSION)};
     const std::map<QString, QString> labelMap = {
         {"rc", QObject::tr("Release Candidate")},
         {"beta", QObject::tr("BETA")},
@@ -529,16 +545,17 @@ namespace {
 // Update Splash image to show "ALPHA", "BETA", and "Release Candidate"
 QPixmap getSplashImage(const std::unique_ptr<QSplashScreen>& splash, const QString& label);
 // Update Splash Screen
-    void updateSplash(const std::unique_ptr<QSplashScreen>& splash)
-    {
-        if (splash == nullptr)
+    void updateSplash(const std::unique_ptr<QSplashScreen>& splash) {
+        if (splash == nullptr) {
             return;
+        }
 
-    QString label = LCReleaseLabel();
-        if (label.isEmpty())
+    const QString label = LCReleaseLabel();
+        if (label.isEmpty()) {
             return;
+        }
 
-        QPixmap splashImage = getSplashImage(splash, label);
+        const QPixmap splashImage = getSplashImage(splash, label);
         splash->setPixmap(splashImage);
         splash->setAttribute(Qt::WA_DeleteOnClose);
         splash->show();
@@ -547,19 +564,19 @@ QPixmap getSplashImage(const std::unique_ptr<QSplashScreen>& splash, const QStri
     }
 
 // Update Splash image to show "ALPHA", "BETA", and "Release Candidate"
-    QPixmap getSplashImage(const std::unique_ptr<QSplashScreen>& splash, const QString& label)
-    {
-        if (splash == nullptr)
+    QPixmap getSplashImage(const std::unique_ptr<QSplashScreen>& splash, const QString& label)    {
+        if (splash == nullptr) {
             return {};
+        }
 
         QPixmap pixmapSplash(":/images/splash_librecad.png");
         QPainter painter(&pixmapSplash);
         const double factorX = pixmapSplash.width()/542.;
         const double factorY = pixmapSplash.height()/337.;
         painter.setPen(QColor(255, 0, 0, 128));
-        QRectF labelRect{QPointF{280.*factorX, 130.*factorY}, QPointF{480.*factorX, 170.*factorY}};
+        const QRectF labelRect{QPointF{280.*factorX, 130.*factorY}, QPointF{480.*factorX, 170.*factorY}};
         QFont font;
-        font.setPixelSize(int(labelRect.height()) - 2);
+        font.setPixelSize(static_cast<int>(labelRect.height()) - 2);
         painter.setFont(font);
         painter.drawText(labelRect,Qt::AlignRight, label);
         return pixmapSplash;

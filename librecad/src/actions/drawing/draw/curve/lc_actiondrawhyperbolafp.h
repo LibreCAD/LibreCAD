@@ -24,6 +24,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef LC_ACTIONDRAWHYPERBOLAFP_H
 #define LC_ACTIONDRAWHYPERBOLAFP_H
 
+#include "lc_undoabledocumentmodificationaction.h"
 #include "rs_previewactioninterface.h"
 
 class LC_Hyperbola;
@@ -32,7 +33,7 @@ class LC_Hyperbola;
  * Draw hyperbola by two foci and two points on one branch
  * The two points become start/end points of the drawn arc
  */
-class LC_ActionDrawHyperbolaFP : public RS_PreviewActionInterface {
+class LC_ActionDrawHyperbolaFP : public LC_SingleEntityCreationAction {
   Q_OBJECT
 public:
   /**
@@ -45,29 +46,29 @@ public:
     SetEndPoint     // Setting second point on branch (end point)
   };
 
-  LC_ActionDrawHyperbolaFP(LC_ActionContext* actionContext);
+  explicit LC_ActionDrawHyperbolaFP(LC_ActionContext* actionContext);
   ~LC_ActionDrawHyperbolaFP() override = default;
 
   void init(int status) override;
-  void doTrigger() override;
+  void updateActionPrompt() override;
+protected:
+    RS_Entity* doTriggerCreateEntity() override;
+    void doTriggerCompletion(bool success) override;
 
-  void onMouseLeftButtonRelease(int status, LC_MouseEvent* e) override;
-  void onMouseMoveEvent(int status, LC_MouseEvent* event) override;
-  void onMouseRightButtonRelease(int status, LC_MouseEvent* e) override;
-
-  void onCoordinateEvent(int status, bool isZero, const RS_Vector& pos) override;
-
-  void updateMouseButtonHints() override;
-  RS2::CursorType doGetMouseCursor(int status) override;
-  // Added declaration
-  void reset();
+    void onMouseLeftButtonRelease(int status, const LC_MouseEvent* e) override;
+    void onMouseMoveEvent(int status, const LC_MouseEvent* event) override;
+    void onMouseRightButtonRelease(int status, const LC_MouseEvent* e) override;
+    void onCoordinateEvent(int status, bool isZero, const RS_Vector& pos) override;
+    RS2::CursorType doGetMouseCursor(int status) override;
+    // Added declaration
+    void reset();
+  bool isInVisualSnapStatus(int status) override;
 
 private:
   RS_Vector focus1{}, focus2{};
   RS_Vector startPoint{}, endPoint{};
 
-  void preparePreview();
-  void createHyperbola();
+  void preparePreview() const;
 };
 
-#endif // LC_ACTIONDRAWHYPERBOLAFP_H
+#endif

@@ -32,11 +32,13 @@
 #include <QTimer>
 
 #include "lc_flexlayout.h"
+#include "lc_mouse_tracking_table_view.h"
 #include "lc_penitem.h"
 #include "lc_penpalettedata.h"
 #include "lc_penpalettemodel.h"
 #include "lc_penpaletteoptions.h"
 #include "lc_penpaletteoptionsdialog.h"
+#include "lc_tableitem_delegate_base.h"
 #include "qc_applicationwindow.h"
 #include "qg_pentoolbar.h"
 #include "rs_entity.h"
@@ -44,35 +46,59 @@
 #include "rs_graphicview.h"
 #include "rs_layer.h"
 #include "rs_modification.h"
-#include "rs_settings.h"
-
-
+#include "rs_selection.h"
 
 class QTableView;
 
 /**
  * Delegate used to paint underline lines for table grid
  */
-class LC_PenPaletteGridDelegate:public QStyledItemDelegate {
+class LC_PenPaletteGridDelegate : public LC_TableItemDelegateBase {
 public:
-    explicit LC_PenPaletteGridDelegate(QTableView *parent = nullptr, LC_PenPaletteOptions* options = nullptr):QStyledItemDelegate(parent){
-        this->options = options;
+    explicit LC_PenPaletteGridDelegate(LC_MouseTrackingTableView * parent,
+                                       LC_PenPaletteOptions* options,
+                                       LC_PenPaletteModel* model) : LC_TableItemDelegateBase(parent) {
+        m_options = options;
+        m_model = model;
+        auto palette = parent->palette();
+        m_gridColor = palette.color(QPalette::Button);
+        m_hoverRowBackgroundColor = palette.color(QPalette::AlternateBase);
     }
 
-    void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const override{
-        QStyledItemDelegate::paint(painter, option, index);
-        bool draw = options != nullptr;
-        if (draw){
-            QColor color = options->itemsGridColor;
-            painter->save();
-            painter->setPen(color);
-            painter->drawLine(option.rect.bottomLeft(), option.rect.bottomRight());
-            painter->restore();
+    void doPaint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const override {
+        const int col = index.column();
+        const int actualColor = m_model->translateColumn(col);
+        if (actualColor  == LC_PenPaletteModel::COLUMNS::COLOR_ICON) {
+            const auto pen = m_model->getPen(index.row());
+            if (pen != nullptr){
+                QRect colorRect = option.rect;
+                const int originalWidth = colorRect.width();
+                const int newWidth = colorRect.height() - 8;
+                // center color box in cell
+                const int widthDelta = originalWidth - newWidth;
+                const int leftDelta = widthDelta / 2;
+                const int rightDelta = widthDelta - leftDelta;
+
+                colorRect.adjust(leftDelta+1, 6, -rightDelta-1, -6);
+
+                painter->fillRect(colorRect, Qt::black);
+                colorRect.adjust(1, 1, -1, -1);
+                const auto color = pen->getColor();
+                painter->fillRect(colorRect, color);
+            }
+        }
+        else {
+            QStyledItemDelegate::paint(painter, option, index);
+        }
+        const bool drawGrid = m_options != nullptr && m_options->showGrid;
+        if (drawGrid) {
+            drawHorizontalGridLine(painter, option);
         }
     }
 
 private:
-    LC_PenPaletteOptions* options {nullptr};
+    LC_PenPaletteOptions* m_options{nullptr};
+    LC_PenPaletteModel* m_model {nullptr};
 };
 
 /**
@@ -80,37 +106,33 @@ private:
  * @param title
  * @param parent
  */
-LC_PenPaletteWidget::LC_PenPaletteWidget(const QString& title, QWidget* parent) :
-    LC_GraphicViewAwareWidget(parent),
-    Ui::LC_PenPaletteWidget(){
-
+LC_PenPaletteWidget::LC_PenPaletteWidget(const QString& title, QWidget* parent) : LC_GraphicViewAwareWidget(parent),
+                                                                                  Ui::LC_PenPaletteWidget() {
     setupUi(this);
 
     // make buttons flexible
-    auto *layButtonsFlex = new LC_FlexLayout(0, 5, 5);
+    auto* layButtonsFlex = new LC_FlexLayout(0, 3, 3);
     layButtonsFlex->fillFromLayout(layButtons);
     int buttonsPosition = gridLayout->indexOf(layButtons);
-    QLayoutItem *pItem = gridLayout->takeAt(buttonsPosition);
+    QLayoutItem* pItem = gridLayout->takeAt(buttonsPosition);
     delete pItem;
 
     int settingsWidgetPosition = gridLayout->indexOf(tbSettings);
-//     int settingsWidgetPosition = gridLayout->indexOf(laySettings);
-     QLayoutItem *pLayoutItem = gridLayout->takeAt(settingsWidgetPosition);
-     delete pLayoutItem;
+    QLayoutItem* pLayoutItem = gridLayout->takeAt(settingsWidgetPosition);
+    delete pLayoutItem;
 
     gridLayout->addLayout(layButtonsFlex, 0, 0, 1, 1);
-    gridLayout->addWidget(tbSettings, 0,1,1,1);
-   //  gridLayout->addLayout(laySettings, 0,1,1,1);
-   gridLayout->setAlignment(tbSettings,Qt::AlignTop);
+    gridLayout->addWidget(tbSettings, 0, 1, 1, 1);
+    gridLayout->setAlignment(tbSettings, Qt::AlignTop);
 
     // make controls flexible
 
-    auto *layPenColorFlex = new LC_FlexLayout(0, 5, 5, 45);
+    auto* layPenColorFlex = new LC_FlexLayout(0, 3, 3, 45);
     layPenColorFlex->fillFromLayout(layPenColor);
     layPenColorFlex->fillFromLayout(layTypeWidth);
     layPenColorFlex->setSoftBreakItems({2, 4, 6});
-    layPenColorFlex->setFullWidthItems({1,3,5,7});
-    gridLayout->addLayout(layPenColorFlex,4,0,1, 2);
+    layPenColorFlex->setFullWidthItems({1, 3, 5, 7});
+    gridLayout->addLayout(layPenColorFlex, 4, 0, 1, 2);
 
     setWindowTitle(title);
 
@@ -121,7 +143,7 @@ LC_PenPaletteWidget::LC_PenPaletteWidget(const QString& title, QWidget* parent) 
     // load pens data from storage
     m_penPaletteData = new LC_PenPaletteData(options);
     bool itemsLoaded = m_penPaletteData->loadItems();
-    if (!itemsLoaded){
+    if (!itemsLoaded) {
         // todo... potentially, it is possible to show dialog there - yet probably it's better stay with default pens..
     }
 
@@ -133,11 +155,11 @@ LC_PenPaletteWidget::LC_PenPaletteWidget(const QString& title, QWidget* parent) 
     initToolBar();
 
     // set first pen item
-    if (m_penPaletteModel->rowCount(QModelIndex())>0){
+    if (m_penPaletteModel->rowCount(QModelIndex()) > 0) {
         LC_PenItem* item = m_penPaletteModel->getPen(0);
         m_penPaletteModel->setActivePen(item);
     }
-    else{
+    else {
         tbRemove->setEnabled(false);
     }
     updateWidgetSettings();
@@ -146,7 +168,7 @@ LC_PenPaletteWidget::LC_PenPaletteWidget(const QString& title, QWidget* parent) 
 /**
  * Just initialization of button handlers
  */
-void LC_PenPaletteWidget::initToolBar() const{
+void LC_PenPaletteWidget::initToolBar() const {
     connect(tbEditApplyToSelection, &QToolButton::clicked, this, &LC_PenPaletteWidget::applyEditorPenToSelection);
     connect(tbEditSelectEntities, &QToolButton::clicked, this, &LC_PenPaletteWidget::selectEntitiesWithAttributesPenByPenEditor);
     connect(tbEditSelectEntitiesByResolvedPen, &QToolButton::clicked, this, &LC_PenPaletteWidget::selectEntitiesWithDrawingPenByPenEditor);
@@ -166,45 +188,47 @@ void LC_PenPaletteWidget::initToolBar() const{
 /**
  * setup of table view
  */
-void LC_PenPaletteWidget::initTableView(){
+void LC_PenPaletteWidget::initTableView() {
     tableView->setModel(m_penPaletteModel);
 
-    QHeaderView *horizontalHeader = tableView->horizontalHeader();
-    horizontalHeader->setMinimumSectionSize(24);
+    QHeaderView* horizontalHeader = tableView->horizontalHeader();
+    horizontalHeader->setMinimumSectionSize(21);
     horizontalHeader->setSectionResizeMode(QHeaderView::ResizeMode::ResizeToContents);
     horizontalHeader->setStretchLastSection(true);
     horizontalHeader->hide();
 
     tableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
     tableView->setFocusPolicy(Qt::NoFocus);
-    tableView->setMinimumHeight(140);    
+    tableView->setMinimumHeight(140);
     tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
 
     tableView->setSelectionMode(QAbstractItemView::ExtendedSelection);
+    tableView->setShowGrid(false);
 
-    QHeaderView *verticalHeader = tableView->verticalHeader();
+    QHeaderView* verticalHeader = tableView->verticalHeader();
+    const QFontMetrics fm(font());
+    const int itemHeight = fm.height() + 5;
+    verticalHeader->setDefaultSectionSize(itemHeight);
     verticalHeader->setOffset(2);
     verticalHeader->hide();
 
-    tableView->setColumnWidth(m_penPaletteModel ->translateColumn(LC_PenPaletteModel::COLOR_ICON), LC_PenPaletteModel::ICON_WIDTH);
-    tableView->setColumnWidth(m_penPaletteModel ->translateColumn(LC_PenPaletteModel::COLOR_NAME), LC_PenPaletteModel::ICON_WIDTH * 5);
-    tableView->setColumnWidth(m_penPaletteModel ->translateColumn(LC_PenPaletteModel::TYPE_ICON), LC_PenPaletteModel::ICON_WIDTH);
-    tableView->setColumnWidth(m_penPaletteModel ->translateColumn(LC_PenPaletteModel::WIDTH_ICON), LC_PenPaletteModel::ICON_WIDTH);
+    tableView->setColumnWidth(m_penPaletteModel->translateColumn(LC_PenPaletteModel::COLOR_ICON), itemHeight);
+    tableView->setColumnWidth(m_penPaletteModel->translateColumn(LC_PenPaletteModel::COLOR_NAME), itemHeight * 5);
+    tableView->setColumnWidth(m_penPaletteModel->translateColumn(LC_PenPaletteModel::TYPE_ICON), itemHeight);
+    tableView->setColumnWidth(m_penPaletteModel->translateColumn(LC_PenPaletteModel::WIDTH_ICON), itemHeight);
 #ifndef DONT_FORCE_WIDGETS_CSS
     tableView->setStyleSheet("QWidget {background-color: white;}  QScrollBar{ background-color: none }");
 #endif
 
     connect(tableView, &QTableView::clicked, this, &LC_PenPaletteWidget::onTableClicked);
     connect(tableView, &QTableView::customContextMenuRequested, this, &LC_PenPaletteWidget::onTableViewContextMenuInvoked);
-    connect( tableView->selectionModel(), &QItemSelectionModel::selectionChanged,
-             this, &LC_PenPaletteWidget::onTableSelectionChanged);
-
+    connect(tableView->selectionModel(), &QItemSelectionModel::selectionChanged, this, &LC_PenPaletteWidget::onTableSelectionChanged);
 
     connect(m_penPaletteModel, &LC_PenPaletteModel::modelChange, this, &LC_PenPaletteWidget::onModelChanged);
     connect(m_penPaletteData, &LC_PenPaletteData::modelDataChange, this, &LC_PenPaletteWidget::onPersistentItemsChanged);
 
     tableView->setContextMenuPolicy(Qt::CustomContextMenu);
-    tableView->setItemDelegate(new LC_PenPaletteGridDelegate(tableView, m_penPaletteModel->getOptions()));
+    tableView->setTrackingItemDelegate(new LC_PenPaletteGridDelegate(tableView, m_penPaletteModel->getOptions(), m_penPaletteModel));
 }
 
 /**
@@ -214,15 +238,16 @@ void LC_PenPaletteWidget::initTableView(){
  * If there will not be modifications and the user will exist the application - well, all not saved changes will be lost.
  *
  */
-void LC_PenPaletteWidget::onPersistentItemsChanged(){
-    bool itemsSaved = m_penPaletteData ->saveItems();
-    while (!itemsSaved){
-        bool showOptions = invokeUnableToSavePenDataDialog();
-        if (showOptions){
+void LC_PenPaletteWidget::onPersistentItemsChanged() {
+    bool itemsSaved = m_penPaletteData->saveItems();
+    while (!itemsSaved) {
+        const bool showOptions = invokeUnableToSavePenDataDialog();
+        if (showOptions) {
             invokeOptionsDialog(true);
-            itemsSaved = m_penPaletteData ->saveItems();
+            itemsSaved = m_penPaletteData->saveItems();
         }
-        else{ // user skipped options, so we still cant' save data - yet that's to user. Will ask next time, however
+        else {
+            // user skipped options, so we still cant' save data - yet that's to user. Will ask next time, however
             itemsSaved = true;
         }
     }
@@ -231,20 +256,21 @@ void LC_PenPaletteWidget::onPersistentItemsChanged(){
 /**
  * setup of editor area
  */
-void LC_PenPaletteWidget::initPenEditor(){
+void LC_PenPaletteWidget::initPenEditor() {
     cbColor->init(true, true);
     cbWidth->init(true, true);
     cbType->init(true, true);
     connect(lePenName, &QLineEdit::textChanged, this, &LC_PenPaletteWidget::onPenEditorChanged);
     connect(lePenName, &QLineEdit::returnPressed, this, &LC_PenPaletteWidget::createOrUpdatePenItem);
-    connect(cbColor, &QG_ColorBox::currentIndexChanged,this, &LC_PenPaletteWidget::onPenEditorColorChanged);
-    connect(cbWidth, &QG_WidthBox::currentIndexChanged,this, &LC_PenPaletteWidget::onPenEditorWidthChanged);
-    connect(cbType, &QG_LineTypeBox::currentIndexChanged,this, &LC_PenPaletteWidget::onPenEditorLineTypeChanged);
+    connect(cbColor, &QG_ColorBox::currentIndexChanged, this, &LC_PenPaletteWidget::onPenEditorColorChanged);
+    connect(cbWidth, &QG_WidthBox::currentIndexChanged, this, &LC_PenPaletteWidget::onPenEditorWidthChanged);
+    connect(cbType, &QG_LineTypeBox::currentIndexChanged, this, &LC_PenPaletteWidget::onPenEditorLineTypeChanged);
 }
+
 /**
  * Filtering section initialization
  */
-void LC_PenPaletteWidget::initFilteringSection(){
+void LC_PenPaletteWidget::initFilteringSection() {
     // restore mode for filter
     cbHighlightMode->setChecked(m_penPaletteModel->getOptions()->filterIsInHighlightMode);
     // add handlers
@@ -252,15 +278,14 @@ void LC_PenPaletteWidget::initFilteringSection(){
     connect(cbHighlightMode, &QCheckBox::clicked, this, &LC_PenPaletteWidget::filterMaskChanged);
 }
 
-
 /**
  * Context menu for table view
  * @param pos
  */
-void LC_PenPaletteWidget::onTableViewContextMenuInvoked([[maybe_unused]] const QPoint &pos){
-    int itemsCount = m_penPaletteModel->rowCount(QModelIndex());
-    int selectedItemsCount = tableView->selectionModel()->selectedRows().size();
-    if (itemsCount >0 && selectedItemsCount > 0){
+void LC_PenPaletteWidget::onTableViewContextMenuInvoked([[maybe_unused]] const QPoint& pos) {
+    const int itemsCount = m_penPaletteModel->rowCount(QModelIndex());
+    const int selectedItemsCount = tableView->selectionModel()->selectedRows().size();
+    if (itemsCount > 0 && selectedItemsCount > 0) {
         auto contextMenu = std::make_unique<QMenu>(this);
         /*QLabel *caption = new QLabel(tr("Pens Menu"), this);
         QPalette palette;
@@ -271,21 +296,24 @@ void LC_PenPaletteWidget::onTableViewContextMenuInvoked([[maybe_unused]] const Q
 
         using ActionMemberFunc = void (LC_PenPaletteWidget::*)();
         const auto addActionFunc = [this, &contextMenu](const QString& iconName, const QString& name, ActionMemberFunc func) {
-            contextMenu->addAction(QIcon(":/icons/"+iconName+".lci"), name, this, func);
+            contextMenu->addAction(QIcon(":/icons/" + iconName + ".lci"), name, this, func);
         };
 
-        if (selectedItemsCount == 1){
-            addActionFunc("pen_apply_to_selection",tr("&Apply Pen To Selection"), &LC_PenPaletteWidget::applySelectedPenToSelection);
-            addActionFunc("pen_2_current",tr("&Set As Current Pen"), &LC_PenPaletteWidget::applySelectedPenItemToPenToolBar);
-            addActionFunc("pen_to_layer",tr("&Apply Pen To Active Layer"), &LC_PenPaletteWidget::applySelectedPenItemToActiveLayer);
-            addActionFunc("select_by_pen_resolved",tr("&Select Entities With Attributes Pen"), &LC_PenPaletteWidget::selectEntitiesWithAttributesPenBySelectedPenItem);
-            addActionFunc("select_by_pen_drawing",tr("&Select Entities With Drawing Pen"), &LC_PenPaletteWidget::selectEntitiesWithDrawingPenBySelectedPenItem);
+        if (selectedItemsCount == 1) {
+            addActionFunc("pen_apply_to_selection", tr("&Apply Pen To Selection"), &LC_PenPaletteWidget::applySelectedPenToSelection);
+            addActionFunc("pen_2_current", tr("&Set As Current Pen"), &LC_PenPaletteWidget::applySelectedPenItemToPenToolBar);
+            addActionFunc("pen_to_layer", tr("&Apply Pen To Active Layer"), &LC_PenPaletteWidget::applySelectedPenItemToActiveLayer);
+            addActionFunc("select_by_pen_resolved", tr("&Select Entities With Attributes Pen"),
+                          &LC_PenPaletteWidget::selectEntitiesWithAttributesPenBySelectedPenItem);
+            addActionFunc("select_by_pen_drawing", tr("&Select Entities With Drawing Pen"),
+                          &LC_PenPaletteWidget::selectEntitiesWithDrawingPenBySelectedPenItem);
 
             contextMenu->addSeparator();
-            addActionFunc("rename_active_block",tr("&Edit Pen"), &LC_PenPaletteWidget::editSelectedPenItem);
-            addActionFunc("remove",tr("&Remove Pen"), &LC_PenPaletteWidget::removeSelectedPenItem);
+            addActionFunc("rename_active_block", tr("&Edit Pen"), &LC_PenPaletteWidget::editSelectedPenItem);
+            addActionFunc("remove", tr("&Remove Pen"), &LC_PenPaletteWidget::removeSelectedPenItem);
         }
-        else{ // for multiselect - only rename
+        else {
+            // for multiselect - only rename
             addActionFunc("remove", tr("&Remove Pens"), &LC_PenPaletteWidget::removeSelectedPenItems);
         }
         contextMenu->exec(QCursor::pos());
@@ -295,9 +323,9 @@ void LC_PenPaletteWidget::onTableViewContextMenuInvoked([[maybe_unused]] const Q
 /**
  * Handles changes in the model to properly update remove button
  */
-void LC_PenPaletteWidget::onModelChanged(){
-    int count = m_penPaletteModel->rowCount(QModelIndex());
-    bool hasActivePen  = m_penPaletteModel->getActivePen() != nullptr;
+void LC_PenPaletteWidget::onModelChanged() const {
+    const int count = m_penPaletteModel->rowCount(QModelIndex());
+    const bool hasActivePen = m_penPaletteModel->getActivePen() != nullptr;
     tbRemove->setEnabled((count > 0) && hasActivePen);
 }
 
@@ -305,37 +333,36 @@ void LC_PenPaletteWidget::onModelChanged(){
  * Handler for table item activation
  * @param modelIndex
  */
-void LC_PenPaletteWidget::onTableClicked(QModelIndex modelIndex){
+void LC_PenPaletteWidget::onTableClicked(const QModelIndex& modelIndex) {
     if (!modelIndex.isValid()) {
         return;
     }
 
     // increase clicks count. Double click should be processed additionally, as QT does not work well if both clicked and doubleClicked
     // slots are used for table view.  So on first click - we'll activate item, and start the time for potential double click processing
-    m_clicksCount ++;
+    m_clicksCount++;
 
-    if (m_clicksCount ==1){
-
+    if (m_clicksCount == 1) {
         // if we're in first call, we'll activate clicked row and pen item
 
         LC_PenItem* pen = m_penPaletteModel->getPen(modelIndex.row());
-        if (pen == nullptr)
+        if (pen == nullptr) {
             return;
+        }
 
         // just make pen active and put it into editor
         m_penPaletteModel->setActivePen(pen);
         fillPenEditorByPenItem(pen);
 
         // invoke double click processing via one-shot timer. If double click will occur - we'll handle this on timer's call
-        QStyleHints *styleHints = QGuiApplication::styleHints();
-        int interval = styleHints->mouseDoubleClickInterval();
+        const QStyleHints* styleHints = QGuiApplication::styleHints();
+        const int interval = styleHints->mouseDoubleClickInterval();
         QTimer::singleShot(interval, this, &LC_PenPaletteWidget::doDoubleClick);
     }
-
 }
 
-void LC_PenPaletteWidget::doDoubleClick(){
-    if (m_clicksCount == 2){
+void LC_PenPaletteWidget::doDoubleClick() {
+    if (m_clicksCount == 2) {
         // that's actual double click, call appropriate method
         onTableRowDoubleClicked();
     }
@@ -345,38 +372,36 @@ void LC_PenPaletteWidget::doDoubleClick(){
 
 /**
  * handler for double click on table view item
- * @param index
  */
-void LC_PenPaletteWidget::onTableRowDoubleClicked(){
+void LC_PenPaletteWidget::onTableRowDoubleClicked() {
     // execute command specified by option
-    switch (m_penPaletteModel->getOptions()->doubleClickOnTableMode){
+    switch (m_penPaletteModel->getOptions()->doubleClickOnTableMode) {
         case LC_PenPaletteOptions::DOUBLE_CLICK_DOES_NOTHING:
             break;
         case LC_PenPaletteOptions::DOUBLE_CLICK_SELECT_ENTITIES_BY_ATTRIBUTES_PEN:
             selectEntitiesWithAttributesPenBySelectedPenItem();
             break;
         case LC_PenPaletteOptions::DOUBLE_CLICK_SELECT_ENTITIES_BY_DRAWING_PEN:
-            selectEntitiesWithAttributesPenBySelectedPenItem();
+            selectEntitiesWithAttributesPenByPenEditor();
+            break;
+        default:
             break;
     }
-};
+}
 
 /**
  * Handler for table selection change
  * @param selected
  * @param deselected
  */
-void LC_PenPaletteWidget::onTableSelectionChanged(
-    const QItemSelection &selected,
-        const QItemSelection &deselected){
+void LC_PenPaletteWidget::onTableSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected) const {
+    QItemSelectionModel* selectionModel{tableView->selectionModel()};
 
-    QItemSelectionModel *selectionModel {tableView->selectionModel()};
-
-    for (auto index: selected.indexes()) {
+    for (auto index : selected.indexes()) {
         selectionModel->select(QItemSelection(index, index), QItemSelectionModel::Select);
     }
 
-    for (auto index: deselected.indexes()) {
+    for (auto index : deselected.indexes()) {
         selectionModel->select(QItemSelection(index, index), QItemSelectionModel::Deselect);
     }
 }
@@ -384,25 +409,27 @@ void LC_PenPaletteWidget::onTableSelectionChanged(
 /**
  * Displays options dialogs and applies changes, if necessary
  */
-void LC_PenPaletteWidget::invokeOptionsDialog(bool focusOnFile){
-    LC_PenPaletteOptions * options = m_penPaletteModel->getOptions();
-    LC_PenPaletteOptionsDialog dlg = LC_PenPaletteOptionsDialog(this, options, focusOnFile);
-    QString oldFileName = options->pensFileName;
-    int dialogResult = dlg.exec();
-    if (dialogResult == QDialog::Accepted){
+void LC_PenPaletteWidget::invokeOptionsDialog(const bool focusOnFile) {
+    LC_PenPaletteOptions* options = m_penPaletteModel->getOptions();
+    auto dlg = LC_PenPaletteOptionsDialog(this, options, focusOnFile);
+    const QString oldFileName = options->pensFileName;
+    const int dialogResult = dlg.exec();
+    if (dialogResult == QDialog::Accepted) {
         options->saveToSettings();
         m_penPaletteModel->update(true);
         update();
-        if (!focusOnFile){ // this is normal invocation via settings button
-            QString newFileName = options->pensFileName;
-            if (oldFileName != newFileName){
+        if (!focusOnFile) {
+            // this is normal invocation via settings button
+            const QString newFileName = options->pensFileName;
+            if (oldFileName != newFileName) {
                 // next time, we'll try to read pens from new file. It's safer to do this rather
                 // than save pen items to new file (yet this is still may be possible if the user will
                 // change pens data and so save attempt will be performed to new file...
                 // potentially, it is possible just to save new file in settings and use current file util restart
                 // yet this is also quite a messy way... So let's ask for restart.
-                QMessageBox::warning( this, tr("Pen palette"),
-                                      tr("Location of pens file is changed, please restart the application so new pens file will be used.\n\n"
+                QMessageBox::warning(this, tr("Pen palette"),
+                                     tr(
+                                         "Location of pens file is changed, please restart the application so new pens file will be used.\n\n"
                                          "Please note that if you'll save pen via editor without restart, current pens from palette will be saved "
                                          "in the new file and therefore existing content of it will be overridden."));
             }
@@ -414,66 +441,69 @@ void LC_PenPaletteWidget::invokeOptionsDialog(bool focusOnFile){
  * Creates new pen item or updates existing one (based on pen's name).
  * If name was not changed - pen will be updated, otherwise - new one will be created.
  */
-void LC_PenPaletteWidget::createOrUpdatePenItem(){
-    QString penName = lePenName->text();
-    if (!penName.isEmpty()){
-        QString actualPenName = penName.trimmed();
+void LC_PenPaletteWidget::createOrUpdatePenItem() {
+    const QString penName = lePenName->text();
+    if (!penName.isEmpty()) {
+        const QString actualPenName = penName.trimmed();
 
         // try to find the pen with such name
-        LC_PenItem* penItem = m_penPaletteModel -> findPenForName(actualPenName);
+        LC_PenItem* penItem = m_penPaletteModel->findPenForName(actualPenName);
         bool existingPen = true;
-        if (penItem == nullptr){
+        if (penItem == nullptr) {
             // no pen name found, need to create
             penItem = m_penPaletteModel->createNewItem(penName);
             existingPen = false;
         }
 
         RS2::LineType lineType = RS2::LineType::LineTypeUnchanged;
-        int lineTypeIndex = cbType->currentIndex();
-        if (lineTypeIndex > 0){ // 0 is unchanged
+        const int lineTypeIndex = cbType->currentIndex();
+        if (lineTypeIndex > 0) {
+            // 0 is unchanged
             lineType = cbType->getLineType();
         }
         penItem->setLineType(lineType);
 
         RS2::LineWidth width = RS2::LineWidth::WidthUnchanged;
-        int widthIndex = cbWidth -> currentIndex();
-        if (widthIndex > 0){ // 0 is unchanged
-            width = cbWidth -> getWidth();
+        const int widthIndex = cbWidth->currentIndex();
+        if (widthIndex > 0) {
+            // 0 is unchanged
+            width = cbWidth->getWidth();
         }
 
         penItem->setLineWidth(width);
 
         RS_Color color = LC_PenInfoRegistry::createUnchangedColor();
 
-        int colorIndex = cbColor -> currentIndex();
-        if (colorIndex > 0){
+        const int colorIndex = cbColor->currentIndex();
+        if (colorIndex > 0) {
             color = cbColor->getColor();
         }
 
-        penItem -> setColor(color);
+        penItem->setColor(color);
 
         // store pen in model
-        if (existingPen){
-            m_penPaletteModel-> itemEdited(penItem);
+        if (existingPen) {
+            m_penPaletteModel->itemEdited(penItem);
         }
-        else{
-            m_penPaletteModel -> addItem(penItem);
+        else {
+            m_penPaletteModel->addItem(penItem);
         }
 
         // cleanup pen editor and make it unchanged
         markEditingPenChanged(false);
     }
 }
+
 /**
  * Applies pen item that is currently selected in the table to selected entities in drawing
  */
-void LC_PenPaletteWidget::applySelectedPenToSelection(){
+void LC_PenPaletteWidget::applySelectedPenToSelection() {
     LC_PenItem* item = getSelectedPenItem();
-    if (item != nullptr){
-        RS2::LineType lineType = item->getLineType();
-        RS2::LineWidth width = item->getLineWidth();
-        RS_Color color = item->getColor();
-        bool colorCheck = !LC_PenInfoRegistry::isUnchangedColor(color);
+    if (item != nullptr) {
+        const RS2::LineType lineType = item->getLineType();
+        const RS2::LineWidth width = item->getLineWidth();
+        const RS_Color color = item->getColor();
+        const bool colorCheck = !LC_PenInfoRegistry::isUnchangedColor(color);
 
         doApplyPenAttributesToSelection(lineType, width, color, colorCheck);
 
@@ -484,23 +514,25 @@ void LC_PenPaletteWidget::applySelectedPenToSelection(){
 /**
  * Applies pen from editor to selected entities in drawing
  */
-void LC_PenPaletteWidget::applyEditorPenToSelection(){
-    RS2::LineType lineType;
-    int lineTypeIndex = cbType->currentIndex();
-    lineType = RS2::LineType::LineTypeUnchanged;
-    if (lineTypeIndex > 0){ // not unchanged
+void LC_PenPaletteWidget::applyEditorPenToSelection() const {
+    const int lineTypeIndex = cbType->currentIndex();
+    RS2::LineType lineType = RS2::LineType::LineTypeUnchanged;
+    if (lineTypeIndex > 0) {
+        // not unchanged
         lineType = cbType->getLineType();
     }
     RS2::LineWidth width = RS2::LineWidth::WidthUnchanged;
-    int widthIndex = cbWidth->currentIndex();
-    if (widthIndex > 0){ // 0 is unchanged
+    const int widthIndex = cbWidth->currentIndex();
+    if (widthIndex > 0) {
+        // 0 is unchanged
         width = cbWidth->getWidth();
     }
 
     RS_Color color = LC_PenInfoRegistry::createUnchangedColor();
-    int colorIndex = cbColor->currentIndex();
+    const int colorIndex = cbColor->currentIndex();
     bool colorCheck = false;
-    if (colorIndex > 0){ // 0 is unchanged
+    if (colorIndex > 0) {
+        // 0 is unchanged
         color = cbColor->getColor();
         colorCheck = true;
     }
@@ -519,20 +551,30 @@ void LC_PenPaletteWidget::applyEditorPenToSelection(){
  * @param color
  * @param modifyColor
  */
-void LC_PenPaletteWidget::doApplyPenAttributesToSelection(RS2::LineType lineType, RS2::LineWidth width, RS_Color color, bool modifyColor){
-
-    if (m_graphicView != nullptr){
-        RS_AttributesData data;
-        data.pen = RS_Pen(color, width, lineType);
-        data.layer = "0";
-        data.changeColor = modifyColor;
-        data.changeLineType = lineType != RS2::LineTypeUnchanged;
-        data.changeWidth = width != RS2::WidthUnchanged;
-        data.changeLayer = false;
-
-        RS_EntityContainer container = m_graphicView->getContainer();
-        RS_Modification m(container, m_graphicView->getViewPort());
-        m.changeAttributes(data, false);
+void LC_PenPaletteWidget::doApplyPenAttributesToSelection(RS2::LineType lineType, RS2::LineWidth width, RS_Color color,
+                                                          bool modifyColor) const {
+    if (m_graphicView != nullptr) {
+        const auto doc = m_graphicView->getDocument();
+        const auto selectedSet = doc->getSelection();
+        if (!selectedSet->isEmpty()) {
+            QList<RS_Entity*> selectedEntities;
+            selectedSet->collectSelectedEntities(selectedEntities);
+            if (!selectedEntities.isEmpty()) {
+                doc->undoableModify(m_graphicView->getViewPort(),
+                                    [color, width, lineType, modifyColor, selectedEntities](LC_DocumentModificationBatch& ctx)-> bool {
+                                        RS_AttributesData data;
+                                        data.pen = RS_Pen(color, width, lineType);
+                                        data.changeColor = modifyColor;
+                                        data.changeLineType = lineType != RS2::LineTypeUnchanged;
+                                        data.changeWidth = width != RS2::WidthUnchanged;
+                                        data.changeLayer = false;
+                                        RS_Modification::changeAttributes(selectedEntities, data, ctx);
+                                        return true;
+                                    }, [](const LC_DocumentModificationBatch& ctx, RS_Document* d)-> void {
+                                        d->select(ctx.entitiesToAdd);
+                                    });
+            }
+        }
     }
 }
 
@@ -540,7 +582,7 @@ void LC_PenPaletteWidget::doApplyPenAttributesToSelection(RS2::LineType lineType
  * Picks pen from selected entities attributes and fill pen editor by them.
  * Pen is not resolved, so it corresponds pen stored in selected entity
  */
-void LC_PenPaletteWidget::fillPenEditorBySelectedEntityAttributesPen(){
+void LC_PenPaletteWidget::fillPenEditorBySelectedEntityAttributesPen() {
     doFillPenEditorBySelectedEntity(false);
 }
 
@@ -548,7 +590,7 @@ void LC_PenPaletteWidget::fillPenEditorBySelectedEntityAttributesPen(){
  * Picks pen from selected entities and fill pen editor by them.
  * Pen is resolved, so it corresponds to the pen that is used for actual drawing of selected entity.
  */
-void LC_PenPaletteWidget::fillPenEditorBySelectedEntityDrawingPen(){
+void LC_PenPaletteWidget::fillPenEditorBySelectedEntityDrawingPen() {
     doFillPenEditorBySelectedEntity(true);
 }
 
@@ -557,22 +599,24 @@ void LC_PenPaletteWidget::fillPenEditorBySelectedEntityDrawingPen(){
  * First it checks whether only one entity is selected, an if so - extracts pen's attributes
  * @param resolvePenOnEntitySelect flag that indicates whether resolved pen should be applied to the editor (if true) or just pen from entity's attributes
  */
-void LC_PenPaletteWidget::doFillPenEditorBySelectedEntity(bool resolvePenOnEntitySelect){
-    // first we collect selected entitites
-    QList<RS_Entity *> selectedEntities;
-    auto graphic = m_graphicView->getGraphic();
-    foreach (auto e, graphic->getEntityList()) {
-        if (e->isSelected()){
-            selectedEntities << e;
-        }
+void LC_PenPaletteWidget::doFillPenEditorBySelectedEntity(const bool resolvePenOnEntitySelect) {
+    if (m_graphicView == nullptr) {
+        return;
     }
-    if (selectedEntities.size() != 1){ // only one entity selected is expected
+    // first we collect selected entitites
+    QList<RS_Entity*> selectedEntities;
+    const auto graphic = m_graphicView->getGraphic(true);
+    graphic->collectSelected(selectedEntities);
+
+    if (selectedEntities.size() != 1) {
+        // only one entity selected is expected
         showEntitySelectionInfoDialog();
-    } else {
-        RS_Entity *entity = selectedEntities.at(0);
+    }
+    else {
+        const RS_Entity* entity = selectedEntities.at(0);
 
         // retrieve pen to apply
-        RS_Pen pen = entity->getPen(resolvePenOnEntitySelect);
+        const RS_Pen pen = entity->getPen(resolvePenOnEntitySelect);
 
         // apply pen to editor controls
         doFillPenEditorByPen(pen);
@@ -582,14 +626,14 @@ void LC_PenPaletteWidget::doFillPenEditorBySelectedEntity(bool resolvePenOnEntit
 /**
  * Select entities with attributes pen that matched to pen info that is selected in the table
  */
-void LC_PenPaletteWidget::selectEntitiesWithAttributesPenBySelectedPenItem(){
+void LC_PenPaletteWidget::selectEntitiesWithAttributesPenBySelectedPenItem() {
     doSelectEntitiesBySelectedPenItem(false, false);
 }
 
 /**
  * Select entities with drawing pen that matches pen info that is selected in the table
  */
-void LC_PenPaletteWidget::selectEntitiesWithDrawingPenBySelectedPenItem(){
+void LC_PenPaletteWidget::selectEntitiesWithDrawingPenBySelectedPenItem() {
     doSelectEntitiesBySelectedPenItem(true, true);
 }
 
@@ -598,15 +642,15 @@ void LC_PenPaletteWidget::selectEntitiesWithDrawingPenBySelectedPenItem(){
  * @param resolvePens - flag that indicates that entity's pen should be resolved
  * @param resolveLayers - flat that indicates that entity's layer should be resolved
  */
-void LC_PenPaletteWidget::doSelectEntitiesBySelectedPenItem(bool resolvePens, bool resolveLayers){
+void LC_PenPaletteWidget::doSelectEntitiesBySelectedPenItem(const bool resolvePens, const bool resolveLayers) const {
     // obtain selected item
     LC_PenItem* item = getSelectedPenItem();
-    if (item != nullptr){
+    if (item != nullptr) {
         // prepare pen attributes
-        RS2::LineType lineType = item->getLineType();
-        RS2::LineWidth lineWidth = item->getLineWidth();
-        RS_Color color = item->getColor();
-        bool colorCheck = !LC_PenInfoRegistry::isUnchangedColor(color);
+        const RS2::LineType lineType = item->getLineType();
+        const RS2::LineWidth lineWidth = item->getLineWidth();
+        const RS_Color color = item->getColor();
+        const bool colorCheck = !LC_PenInfoRegistry::isUnchangedColor(color);
 
         // do actual selection of entities by pen
         doSelectEntitiesThatMatchToPenAttributes(lineType, lineWidth, color, colorCheck, resolvePens, resolveLayers);
@@ -616,18 +660,18 @@ void LC_PenPaletteWidget::doSelectEntitiesBySelectedPenItem(bool resolvePens, bo
 /**
  * Selects entities with pen attributes as it is set in editor pen
  */
-void LC_PenPaletteWidget::selectEntitiesWithAttributesPenByPenEditor(){
-    bool resolvePens = false;
-    bool resolveLayers  = false;
+void LC_PenPaletteWidget::selectEntitiesWithAttributesPenByPenEditor() const {
+    constexpr bool resolvePens = false;
+    constexpr bool resolveLayers = false;
     doSelectEntitiesByPenEditor(resolvePens, resolveLayers);
 }
 
 /**
  * Selects entities with drawing pen attributes as it is set in editor pen
  */
-void LC_PenPaletteWidget::selectEntitiesWithDrawingPenByPenEditor(){
-    bool resolvePens = true;
-    bool resolveLayers  = true;
+void LC_PenPaletteWidget::selectEntitiesWithDrawingPenByPenEditor() const {
+    constexpr bool resolvePens = true;
+    constexpr bool resolveLayers = true;
     doSelectEntitiesByPenEditor(resolvePens, resolveLayers);
 }
 
@@ -636,23 +680,25 @@ void LC_PenPaletteWidget::selectEntitiesWithDrawingPenByPenEditor(){
  * @param resolvePens - true if entity's pen should be resolved, false otherwise
  * @param resolveLayers  - true entity's layer should be resolve, false otherwise
  */
-void LC_PenPaletteWidget::doSelectEntitiesByPenEditor(bool resolvePens, bool resolveLayers){
-    RS2::LineType lineType;
-    int lineTypeIndex = cbType->currentIndex();
-    lineType = RS2::LineTypeUnchanged;
-    if (lineTypeIndex > 0){ // not unchanged
+void LC_PenPaletteWidget::doSelectEntitiesByPenEditor(const bool resolvePens, const bool resolveLayers) const {
+    const int lineTypeIndex = cbType->currentIndex();
+    RS2::LineType lineType = RS2::LineTypeUnchanged;
+    if (lineTypeIndex > 0) {
+        // not unchanged
         lineType = cbType->getLineType();
     }
     RS2::LineWidth width = RS2::WidthUnchanged;
-    int widthIndex = cbWidth->currentIndex();
-    if (widthIndex > 0){ // not unchanged
+    const int widthIndex = cbWidth->currentIndex();
+    if (widthIndex > 0) {
+        // not unchanged
         width = cbWidth->getWidth();
     }
 
     RS_Color color = LC_PenInfoRegistry::createUnchangedColor();
-    int colorIndex = cbColor->currentIndex();
+    const int colorIndex = cbColor->currentIndex();
     bool colorCheck = false;
-    if (colorIndex > 0){ // not unchanged
+    if (colorIndex > 0) {
+        // not unchanged
         color = cbColor->getColor();
         colorCheck = true;
     }
@@ -677,61 +723,70 @@ void LC_PenPaletteWidget::doSelectEntitiesByPenEditor(bool resolvePens, bool res
  * @param resolvePens - indicates whether entity's pen should be resolved or not for match
  * @param resolveLayers - indicates whether entity's layer should resolved on not for match
  */
-void LC_PenPaletteWidget::doSelectEntitiesThatMatchToPenAttributes(
-    const RS2::LineType &lineType, const RS2::LineWidth &width, const RS_Color &color, bool colorCheck, bool resolvePens, bool resolveLayers) const{
-    auto graphic = m_graphicView->getGraphic();
+void LC_PenPaletteWidget::doSelectEntitiesThatMatchToPenAttributes(const RS2::LineType lineType, const RS2::LineWidth width,
+                                                                   const RS_Color& color, const bool colorCheck, const bool resolvePens,
+                                                                   const bool resolveLayers) const {
+    if (m_graphicView == nullptr) {
+        return;
+    }
+    const auto graphic = m_graphicView->getGraphic(true);
     int selectedCount = 0;
-    int hasEntitiesOnFrozenLayers = false;
-    int hasEntitiesOnLockedLayers = false;
-        foreach (auto e, graphic->getEntityList()) {
+    bool hasEntitiesOnFrozenLayers = false;
+    bool hasEntitiesOnLockedLayers = false;
+    QList<RS_Entity*> entitiesToSelect;
+    foreach(auto e, graphic->getEntityList()) {
+        // fixme - review and change!
 
-            // based on parameter, we'll use either entity's attributes pen - or resolved pen that is actually used for drawing
-            RS_Pen pen = e->getPen(resolvePens);
+        // based on parameter, we'll use either entity's attributes pen - or resolved pen that is actually used for drawing
+        RS_Pen pen = e->getPen(resolvePens);
 
-            if (lineType != RS2::LineTypeUnchanged){
-                // test linetype match only if target line type is not "unchanged" (which means "any")
-                if (pen.getLineType() != lineType){
-                    continue;
-                }
-            }
-
-            if (width != RS2::WidthUnchanged){
-                // test line width  match only if target line width is not "unchanged" (which means "any")
-                if (width != pen.getWidth()){
-                    continue;
-                }
-            }
-
-            if (colorCheck){
-                // check for color if it is requested by parameter
-                // todo - check and verify equality implementation... should we take care of flags there?
-                if (color != pen.getColor()){
-                    continue;
-                }
-            }
-
-            // additional check - if entity is matched, might it be that it is on layer which is hidden or frozen?
-            RS_Layer *layer = e->getLayer(resolveLayers);
-            if (layer->isFrozen()){
-                hasEntitiesOnFrozenLayers = true;
-            }
-            if (layer->isLocked()){
-                hasEntitiesOnLockedLayers = true;
-            } else {
-                // we are on normal layer and entity is matched - so simply select it
-                e->setSelected(true);
-                selectedCount++;
+        if (lineType != RS2::LineTypeUnchanged) {
+            // test linetype match only if target line type is not "unchanged" (which means "any")
+            if (pen.getLineType() != lineType) {
+                continue;
             }
         }
 
-    if (selectedCount == 0){
+        if (width != RS2::WidthUnchanged) {
+            // test line width  match only if target line width is not "unchanged" (which means "any")
+            if (width != pen.getWidth()) {
+                continue;
+            }
+        }
+
+        if (colorCheck) {
+            // check for color if it is requested by parameter
+            // todo - check and verify equality implementation... should we take care of flags there?
+            if (color != pen.getColor()) {
+                continue;
+            }
+        }
+
+        // additional check - if entity is matched, might it be that it is on layer which is hidden or frozen?
+        const RS_Layer* layer = e->getLayer(resolveLayers);
+        if (layer->isFrozen()) {
+            hasEntitiesOnFrozenLayers = true;
+        }
+        if (layer->isLocked()) {
+            hasEntitiesOnLockedLayers = true;
+        }
+        else {
+            // we are on normal layer and entity is matched - so simply select it
+            entitiesToSelect.append(e);
+            selectedCount++;
+        }
+    }
+
+    if (selectedCount == 0) {
         // no entities are actually selected
-        if (m_penPaletteModel->getOptions()->showNoSelectionMessage){
+        if (m_penPaletteModel->getOptions()->showNoSelectionMessage) {
             // based by options, we'll let know the user that we can't select
             showNoSelectionDialog(hasEntitiesOnFrozenLayers, hasEntitiesOnLockedLayers);
         }
-    } else {
+    }
+    else {
         // just update drawing with selected entities
+        RS_Selection::selectEntitiesList(m_graphicView->getDocument(), m_graphicView->getViewPort(), entitiesToSelect, true);
         redrawDrawing();
     }
 }
@@ -743,15 +798,16 @@ void LC_PenPaletteWidget::doSelectEntitiesThatMatchToPenAttributes(
  * Therefore, if it is necessary to return active pen to "by layer" state, it's necessary to do this manually and set all 3 attributes of pen there.
  * This method eliminates that and simply sets the pen of active layer to pen toolbar in one click.
  */
-void LC_PenPaletteWidget::updatePenToolbarByActiveLayer(){
-    if (!isVisible())
+void LC_PenPaletteWidget::updatePenToolbarByActiveLayer() const {
+    if (!isVisible()) {
         return;
-    QG_PenToolBar *penToolBar = QC_ApplicationWindow::getAppWindow()->getPenToolBar();
-    if (penToolBar != nullptr){
-        if (m_layerList != nullptr){
-            RS_Layer* layer = m_layerList->getActive();
-            if (layer != nullptr){
-                RS_Pen layerPen = layer->getPen();
+    }
+    QG_PenToolBar* penToolBar = QC_ApplicationWindow::getAppWindow()->getPenToolBar();
+    if (penToolBar != nullptr) {
+        if (m_layerList != nullptr) {
+            const RS_Layer* layer = m_layerList->getActive();
+            if (layer != nullptr) {
+                const RS_Pen layerPen = layer->getPen();
                 penToolBar->setLayerLineType(layerPen.getLineType(), true);
                 penToolBar->setLayerWidth(layerPen.getWidth(), true);
                 penToolBar->setLayerColor(layerPen.getColor(), true);
@@ -760,69 +816,75 @@ void LC_PenPaletteWidget::updatePenToolbarByActiveLayer(){
     }
 }
 
+QLayout* LC_PenPaletteWidget::getTopLevelLayout() const {
+    return layout();
+}
+
 /**
  *  Applies attributes of pen in the editor to the pen toolbar.
  *  Only attributes that are not "unchanged" are applied.
  */
-void LC_PenPaletteWidget::applyEditorPenToPenToolBar(){
-    QG_PenToolBar *penToolBar = QC_ApplicationWindow::getAppWindow()->getPenToolBar();
+void LC_PenPaletteWidget::applyEditorPenToPenToolBar() const {
+    QG_PenToolBar* penToolBar = QC_ApplicationWindow::getAppWindow()->getPenToolBar();
 
-    if (penToolBar != nullptr){
-
-        if (m_layerList != nullptr){
-            RS_Layer* layer = m_layerList->getActive();
-            if (layer != nullptr){
-                RS_Pen layerPen = layer->getPen();
-                int lineTypeIndex = cbType->currentIndex();
-                if (lineTypeIndex > 0){ // it is not unchanged value
-                    RS2::LineType lineType = cbType->getLineType();
+    if (penToolBar != nullptr) {
+        if (m_layerList != nullptr) {
+            const RS_Layer* layer = m_layerList->getActive();
+            if (layer != nullptr) {
+                const RS_Pen layerPen = layer->getPen();
+                const int lineTypeIndex = cbType->currentIndex();
+                if (lineTypeIndex > 0) {
+                    // it is not unchanged value
+                    const RS2::LineType lineType = cbType->getLineType();
 
                     // todo... mmm - what is semantic of "by block" in pen toolbar?
-                    if (lineType == RS2::LineType::LineByLayer){
+                    if (lineType == RS2::LineType::LineByLayer) {
                         // we set pen from currently active layer
                         penToolBar->setLayerLineType(layerPen.getLineType(), true);
                     }
-                    else{
+                    else {
                         // set linetype from editor
                         penToolBar->setLineType(lineType);
                     }
                 }
 
-                int widthIndex = cbWidth->currentIndex();
-                if (widthIndex > 0){ // this is not "unchanged" value, so apply it
-                    RS2::LineWidth width = cbWidth->getWidth();
-                    if (width == RS2::LineWidth::WidthByLayer){
+                const int widthIndex = cbWidth->currentIndex();
+                if (widthIndex > 0) {
+                    // this is not "unchanged" value, so apply it
+                    const RS2::LineWidth width = cbWidth->getWidth();
+                    if (width == RS2::LineWidth::WidthByLayer) {
                         // for by layer we use pen from active layer
                         penToolBar->setLayerWidth(layerPen.getWidth(), true);
                     }
-                    else{
+                    else {
                         // set width from editor
                         penToolBar->setWidth(width);
                     }
                 }
 
-                int colorIndex = cbColor->currentIndex();
-                if (colorIndex > 0){ // again, proceed if color is not "unchanged"
-                    RS_Color color = cbColor->getColor();
+                const int colorIndex = cbColor->currentIndex();
+                if (colorIndex > 0) {
+                    // again, proceed if color is not "unchanged"
+                    const RS_Color color = cbColor->getColor();
 
-                    if (color.isByLayer()){
-                        penToolBar->setLayerColor(layerPen.getColor(), true );
+                    if (color.isByLayer()) {
+                        penToolBar->setLayerColor(layerPen.getColor(), true);
                     }
                     else {
                         penToolBar->setColor(color);
                     }
                 }
             }
-      }
-  }
+        }
+    }
 }
 
 /**
  * Fills pen editor by pen attributes from pen toolbar.
  */
-void LC_PenPaletteWidget::fillPenEditorByPenToolBarPen(){
-    QG_PenToolBar* penToolBar  = QC_ApplicationWindow::getAppWindow()->getPenToolBar();
-    if (penToolBar != nullptr){
+void LC_PenPaletteWidget::fillPenEditorByPenToolBarPen() {
+    const QG_PenToolBar* penToolBar = QC_ApplicationWindow::getAppWindow()->getPenToolBar();
+    if (penToolBar != nullptr) {
         doFillPenEditorByPen(penToolBar->getPen());
     }
 }
@@ -830,9 +892,9 @@ void LC_PenPaletteWidget::fillPenEditorByPenToolBarPen(){
 /**
  * Removes pen info item that is currently active (if any) from the model and underlying storage
  */
-void LC_PenPaletteWidget::removeActivePenItem(){
+void LC_PenPaletteWidget::removeActivePenItem() {
     LC_PenItem* activePenItem = m_penPaletteModel->getActivePen();
-    if (activePenItem != nullptr){
+    if (activePenItem != nullptr) {
         doRemovePenItem(activePenItem);
     }
 }
@@ -841,11 +903,11 @@ void LC_PenPaletteWidget::removeActivePenItem(){
  * Do actual removal of specific pen item from the model and underlying storage
  * @param penItem pen to remove
  */
-void LC_PenPaletteWidget::doRemovePenItem(LC_PenItem *penItem){
-    QString penName = penItem->getName();
+void LC_PenPaletteWidget::doRemovePenItem(LC_PenItem* penItem) {
+    const QString penName = penItem->getName();
     // invoke confirmation dialog
-    int dialogResult = invokeItemRemovalDialog(penName);
-    if (dialogResult == QMessageBox::Ok){
+    const int dialogResult = invokeItemRemovalDialog(penName);
+    if (dialogResult == QMessageBox::Ok) {
         // remove in model
         m_penPaletteModel->removeItem(penItem);
         updateModel();
@@ -856,25 +918,26 @@ void LC_PenPaletteWidget::doRemovePenItem(LC_PenItem *penItem){
  * Removes several pen items
  * @param penItems items to remove
  */
-void LC_PenPaletteWidget::doRemovePenItems(QList<LC_PenItem *> &penItems){
+void LC_PenPaletteWidget::doRemovePenItems(const QList<LC_PenItem*>& penItems) {
     // ask for confirmation
-    int dialogResult = invokeItemMultiRemovalDialog(penItems);
-    if (dialogResult == QMessageBox::Ok){
-    // remove each item
-        int count = penItems.count();
-        for (int i=0; i< count; i++) {
+    const int dialogResult = invokeItemMultiRemovalDialog(penItems);
+    if (dialogResult == QMessageBox::Ok) {
+        // remove each item
+        const int count = penItems.count();
+        for (int i = 0; i < count; i++) {
             LC_PenItem* item = penItems.at(i);
             m_penPaletteModel->removeItem(item);
         }
         updateModel();
     }
 }
+
 /**
  * Removes pen item that is currently selected in the table
  */
-void LC_PenPaletteWidget::removeSelectedPenItem(){
+void LC_PenPaletteWidget::removeSelectedPenItem() {
     LC_PenItem* item = getSelectedPenItem();
-    if (item != nullptr){
+    if (item != nullptr) {
         doRemovePenItem(item);
     }
 }
@@ -882,9 +945,9 @@ void LC_PenPaletteWidget::removeSelectedPenItem(){
 /**
  * Removes pen items that are currently selected in the table
  */
-void LC_PenPaletteWidget::removeSelectedPenItems(){
-    QList<LC_PenItem*> items = getSelectedPenItems();
-    if (!items.isEmpty()){
+void LC_PenPaletteWidget::removeSelectedPenItems() {
+    const QList<LC_PenItem*> items = getSelectedPenItems();
+    if (!items.isEmpty()) {
         doRemovePenItems(items);
     }
 }
@@ -893,9 +956,9 @@ void LC_PenPaletteWidget::removeSelectedPenItems(){
  * Perform editing of selected pen item - just make the pen active and
  * fills pen editor by attributes of selected pen item
  */
-void LC_PenPaletteWidget::editSelectedPenItem(){
+void LC_PenPaletteWidget::editSelectedPenItem() {
     LC_PenItem* item = getSelectedPenItem();
-    if (item != nullptr){
+    if (item != nullptr) {
         m_penPaletteModel->setActivePen(item);
         fillPenEditorByPenItem(item);
     }
@@ -905,50 +968,51 @@ void LC_PenPaletteWidget::editSelectedPenItem(){
  * Applies attributes from selected pen item in the pens table to pen toolbar.
  * Only attributes that are not with 'unchanged' value are applied.
  */
-void LC_PenPaletteWidget::applySelectedPenItemToPenToolBar(){
+void LC_PenPaletteWidget::applySelectedPenItemToPenToolBar() {
     LC_PenItem* item = getSelectedPenItem();
-    if (item != nullptr){
-        QG_PenToolBar *penToolBar = QC_ApplicationWindow::getAppWindow()->getPenToolBar();
+    if (item != nullptr) {
+        QG_PenToolBar* penToolBar = QC_ApplicationWindow::getAppWindow()->getPenToolBar();
 
-        if (penToolBar != nullptr){
-            if (m_layerList != nullptr){
+        if (penToolBar != nullptr) {
+            if (m_layerList != nullptr) {
                 // retrieve active layer
-                RS_Layer* layer = m_layerList->getActive();
-                if (layer != nullptr){
-                    RS_Pen layerPen = layer->getPen();
+                const RS_Layer* layer = m_layerList->getActive();
+                if (layer != nullptr) {
+                    const RS_Pen layerPen = layer->getPen();
 
                     // handle line type
-                    RS2::LineType lineType = item->getLineType();
-                    if (lineType != RS2::LineType::LineTypeUnchanged){ // not unchanged
-                        if (lineType == RS2::LineType::LineByLayer){
+                    const RS2::LineType lineType = item->getLineType();
+                    if (lineType != RS2::LineType::LineTypeUnchanged) {
+                        // not unchanged
+                        if (lineType == RS2::LineType::LineByLayer) {
                             // apply attributes from layer if it is by layer
                             penToolBar->setLayerLineType(layerPen.getLineType(), true);
                         }
-                        else{
+                        else {
                             // apply attribute from pen
                             penToolBar->setLineType(lineType);
                         }
                     }
 
                     // handle line width
-                    RS2::LineWidth width = item->getLineWidth();
-                    if (width!=RS2::LineWidth::WidthUnchanged){
-                        if (width == RS2::LineWidth::WidthByLayer){
+                    const RS2::LineWidth width = item->getLineWidth();
+                    if (width != RS2::LineWidth::WidthUnchanged) {
+                        if (width == RS2::LineWidth::WidthByLayer) {
                             // by layer, we rely on layer' attributes
                             penToolBar->setLayerWidth(layerPen.getWidth(), true);
                         }
-                        else{
+                        else {
                             // set width from editor
                             penToolBar->setWidth(width);
                         }
                     }
 
                     // handle color
-                    RS_Color color = item->getColor();
-                    if (!LC_PenInfoRegistry::isUnchangedColor(color)){
-                        if (color.isByLayer()){
+                    const RS_Color color = item->getColor();
+                    if (!LC_PenInfoRegistry::isUnchangedColor(color)) {
+                        if (color.isByLayer()) {
                             // for color by layer we pick actual color from active layer
-                            penToolBar->setLayerColor(layerPen.getColor(), true );
+                            penToolBar->setLayerColor(layerPen.getColor(), true);
                         }
                         else {
                             // set color from editor
@@ -964,18 +1028,19 @@ void LC_PenPaletteWidget::applySelectedPenItemToPenToolBar(){
 /**
  * Here we apply attributes of selected pen item in pens table to current active layer.
  */
-void LC_PenPaletteWidget::applySelectedPenItemToActiveLayer(){
-    LC_PenItem *selectedPenItem = getSelectedPenItem();
-    if (selectedPenItem != nullptr){
-        if (m_layerList != nullptr){
-            RS_Layer *layer = m_layerList->getActive();
-            if (layer != nullptr){
+void LC_PenPaletteWidget::applySelectedPenItemToActiveLayer() {
+    LC_PenItem* selectedPenItem = getSelectedPenItem();
+    if (selectedPenItem != nullptr) {
+        if (m_layerList != nullptr && m_graphicView != nullptr) {
+            RS_Layer* layer = m_layerList->getActive();
+            if (layer != nullptr) {
                 RS_Pen layerPen = layer->getPen();
 
-                RS_Pen penCopy = createPenByPenItem(layerPen, selectedPenItem);
+                const RS_Pen penCopy = createPenByPenItem(layerPen, selectedPenItem);
 
                 layer->setPen(penCopy);
-                m_layerList->activate(layer, true);
+                RS_Graphic* graphic = m_graphicView->getGraphic(true);
+                graphic->activateLayer(layer, true);
             }
         }
         redrawDrawing();
@@ -988,10 +1053,10 @@ void LC_PenPaletteWidget::applySelectedPenItemToActiveLayer(){
  * expect existence of only one selected item.
  * @return selected pen item or null if none
  */
-LC_PenItem *LC_PenPaletteWidget::getSelectedPenItem(){
-    LC_PenItem *selectedPenItem = nullptr;
-    QModelIndex selectedIndex = getSelectedItemIndex();
-    if (selectedIndex.isValid()){
+LC_PenItem* LC_PenPaletteWidget::getSelectedPenItem() const {
+    LC_PenItem* selectedPenItem = nullptr;
+    const QModelIndex selectedIndex = getSelectedItemIndex();
+    if (selectedIndex.isValid()) {
         selectedPenItem = m_penPaletteModel->getItemForIndex(selectedIndex);
     }
     return selectedPenItem;
@@ -1001,17 +1066,17 @@ LC_PenItem *LC_PenPaletteWidget::getSelectedPenItem(){
  * Returns list of pen items selected in pens table
  * @return list of selected items (empty list if none)
  */
-QList<LC_PenItem *> LC_PenPaletteWidget::getSelectedPenItems(){
-    QList<LC_PenItem *> result;
-    QModelIndexList selectedIndexes = tableView->selectionModel()->selectedRows();
-    int count = selectedIndexes.size();
-    for (int i = 0; i < count; i++){
+QList<LC_PenItem*> LC_PenPaletteWidget::getSelectedPenItems() const {
+    QList<LC_PenItem*> result;
+    const QModelIndexList selectedIndexes = tableView->selectionModel()->selectedRows();
+    const int count = selectedIndexes.size();
+    for (int i = 0; i < count; i++) {
         QModelIndex index = selectedIndexes.at(i);
-        LC_PenItem *selectedPenItem = m_penPaletteModel->getItemForIndex(index);
-        if (selectedPenItem != nullptr){
+        LC_PenItem* selectedPenItem = m_penPaletteModel->getItemForIndex(index);
+        if (selectedPenItem != nullptr) {
             result << selectedPenItem;
         }
-    }    
+    }
     return result;
 }
 
@@ -1019,10 +1084,11 @@ QList<LC_PenItem *> LC_PenPaletteWidget::getSelectedPenItems(){
  * Utility method that returns only one selected pen item
  * @return selected item (or null if no selection or more than one item is selected)
  */
-QModelIndex LC_PenPaletteWidget::getSelectedItemIndex(){
+QModelIndex LC_PenPaletteWidget::getSelectedItemIndex() const {
     QModelIndex result;
-    QModelIndexList selectedIndexes = tableView->selectionModel()->selectedRows();
-    if (selectedIndexes.size() == 1){ // only one selected item is expected
+    const QModelIndexList selectedIndexes = tableView->selectionModel()->selectedRows();
+    if (selectedIndexes.size() == 1) {
+        // only one selected item is expected
         result = selectedIndexes.at(0);
     }
     return result;
@@ -1031,11 +1097,11 @@ QModelIndex LC_PenPaletteWidget::getSelectedItemIndex(){
 /**
  * Fills fiels of pen' editor by attributes of pen for active layer
  */
-void LC_PenPaletteWidget::fillPenEditorByActiveLayer(){
-    if (m_layerList != nullptr){
-        RS_Layer *layer = m_layerList->getActive();
-        if (layer != nullptr){
-            RS_Pen pen = layer->getPen();
+void LC_PenPaletteWidget::fillPenEditorByActiveLayer() {
+    if (m_layerList != nullptr) {
+        const RS_Layer* layer = m_layerList->getActive();
+        if (layer != nullptr) {
+            const RS_Pen pen = layer->getPen();
             doFillPenEditorByPen(pen);
         }
     }
@@ -1047,27 +1113,29 @@ void LC_PenPaletteWidget::fillPenEditorByActiveLayer(){
  * @param originalPen original pen to which attributes from pen editor will be applied
  * @return copy of original pen with applied pen attributes from editor
  */
-RS_Pen LC_PenPaletteWidget::createPenByEditor(const RS_Pen &originalPen){
-    RS_Pen penCopy = RS_Pen(originalPen);
+RS_Pen LC_PenPaletteWidget::createPenByEditor(const RS_Pen& originalPen) const {
+    auto penCopy = RS_Pen(originalPen);
 
     // apply linetype
-    int lineTypeIndex = cbType->currentIndex();
-    if (lineTypeIndex > 0){ // not unchanged
-        RS2::LineType lineType = cbType->getLineType();
+    const int lineTypeIndex = cbType->currentIndex();
+    if (lineTypeIndex > 0) {
+        // not unchanged
+        const RS2::LineType lineType = cbType->getLineType();
         penCopy.setLineType(lineType);
     }
 
     // apply line width
-    int widthIndex = cbWidth->currentIndex();
-    if (widthIndex > 0){ // not unchanged
-        RS2::LineWidth width = cbWidth->getWidth();
+    const int widthIndex = cbWidth->currentIndex();
+    if (widthIndex > 0) {
+        // not unchanged
+        const RS2::LineWidth width = cbWidth->getWidth();
         penCopy.setWidth(width);
     }
 
     // apply color
-    int colorIndex = cbColor->currentIndex();
-    if (colorIndex > 0){
-        RS_Color color = cbColor->getColor();
+    const int colorIndex = cbColor->currentIndex();
+    if (colorIndex > 0) {
+        const RS_Color color = cbColor->getColor();
         penCopy.setColor(color);
     }
 
@@ -1082,24 +1150,25 @@ RS_Pen LC_PenPaletteWidget::createPenByEditor(const RS_Pen &originalPen){
  * @param item pen item that holds pen attributes
  * @return copy of original pen with applied pen attributes
  */
-RS_Pen LC_PenPaletteWidget::createPenByPenItem(RS_Pen &originalPen, LC_PenItem *item){
-    RS_Pen penCopy = RS_Pen(originalPen);
+RS_Pen LC_PenPaletteWidget::createPenByPenItem(RS_Pen& originalPen, LC_PenItem* item) {
+    auto penCopy = RS_Pen(originalPen);
 
     // apply linetype
-    RS2::LineType lineType = item->getLineType();
-    if (lineType != RS2::LineType::LineTypeUnchanged){ // not unchanged
+    const RS2::LineType lineType = item->getLineType();
+    if (lineType != RS2::LineType::LineTypeUnchanged) {
+        // not unchanged
         penCopy.setLineType(lineType);
     }
 
     // apply line width
-    RS2::LineWidth lineWidth = item->getLineWidth();
-    if (lineWidth != RS2::LineWidth::WidthUnchanged){
+    const RS2::LineWidth lineWidth = item->getLineWidth();
+    if (lineWidth != RS2::LineWidth::WidthUnchanged) {
         penCopy.setWidth(lineWidth);
     }
 
     // apply color
-    RS_Color color = item->getColor();
-    if (!LC_PenInfoRegistry::isUnchangedColor(color)){
+    const RS_Color color = item->getColor();
+    if (!LC_PenInfoRegistry::isUnchangedColor(color)) {
         penCopy.setColor(color);
     }
     return penCopy;
@@ -1108,21 +1177,22 @@ RS_Pen LC_PenPaletteWidget::createPenByPenItem(RS_Pen &originalPen, LC_PenItem *
 /**
  * Applies pen attributes that are in pen editor to active layer.
  */
-void LC_PenPaletteWidget::applyEditorPenToActiveLayer(){
-    if (m_layerList != nullptr){
+void LC_PenPaletteWidget::applyEditorPenToActiveLayer() const {
+    if (m_layerList != nullptr && m_graphicView != nullptr) {
         RS_Layer* layer = m_layerList->getActive();
-        if (layer != nullptr){
+        if (layer != nullptr) {
             // original pen of layer
-            RS_Pen layerPen = layer->getPen();
+            const RS_Pen layerPen = layer->getPen();
 
             // we create a copy of layer's pen with applied attributes from editor
-            RS_Pen penCopy = createPenByEditor(layerPen);
+            const RS_Pen penCopy = createPenByEditor(layerPen);
 
             // apply pen to the layer
             layer->setPen(penCopy);
 
             // activate layer again for refreshing layers view
-            m_layerList->activate(layer, true);
+            RS_Graphic* graphic = m_graphicView->getGraphic(true);
+            graphic->activateLayer(layer, true);
         }
     }
     redrawDrawing();
@@ -1132,12 +1202,12 @@ void LC_PenPaletteWidget::applyEditorPenToActiveLayer(){
  * Handles changes in filtering section (text or mode flag).
  * Simpy stores the value of filtering mode in setting and updates table model accordingly
  */
-void LC_PenPaletteWidget::filterMaskChanged(){
-    QString mask = leFilterMask->text();
-    bool highlightMode = cbHighlightMode->isChecked();
+void LC_PenPaletteWidget::filterMaskChanged() const {
+    const QString mask = leFilterMask->text();
+    const bool highlightMode = cbHighlightMode->isChecked();
 
     // storing filtering mode in persistent settings
-    LC_PenPaletteOptions *options = m_penPaletteModel->getOptions();
+    LC_PenPaletteOptions* options = m_penPaletteModel->getOptions();
     options->filterIsInHighlightMode = highlightMode;
     options->saveToSettings();
 
@@ -1146,13 +1216,12 @@ void LC_PenPaletteWidget::filterMaskChanged(){
     updateModel();
 }
 
-
 /**
  * Updates table view and pens model
  */
-void LC_PenPaletteWidget::updateModel(){
+void LC_PenPaletteWidget::updateModel() const {
     // complete rebuild of the model and update of UI
-    int yPos = tableView->verticalScrollBar()->value();
+    const int yPos = tableView->verticalScrollBar()->value();
     tableView->verticalScrollBar()->setValue(yPos);
     m_penPaletteModel->update(false);
     tableView->viewport()->update();
@@ -1162,16 +1231,16 @@ void LC_PenPaletteWidget::updateModel(){
  * Fills pen editor by attributes of provided pen item
  * @param pen pen item with attributes
  */
-void LC_PenPaletteWidget::fillPenEditorByPenItem(LC_PenItem *pen){
+void LC_PenPaletteWidget::fillPenEditorByPenItem(LC_PenItem* pen) {
     // set flag that we're in setup of editor to disable handling of data change signals from editor's controls
     m_inEditorControlsSetup = true;
 
     // setup editor
-    QString name = pen->getName();
+    const QString name = pen->getName();
     lePenName->setText(name);
-    RS_Color color = pen->getColor();
-    RS2::LineWidth width = pen->getLineWidth();
-    RS2::LineType lineType = pen->getLineType();
+    const RS_Color color = pen->getColor();
+    const RS2::LineWidth width = pen->getLineWidth();
+    const RS2::LineType lineType = pen->getLineType();
     doUpdatePenEditorByPenAttributes(color, width, lineType);
 
     // allow processing of data change signals from editor controls again
@@ -1182,14 +1251,13 @@ void LC_PenPaletteWidget::fillPenEditorByPenItem(LC_PenItem *pen){
  *  Fill pen editor by attributes from given pen
  * @param pen pen with attributes
  */
-void LC_PenPaletteWidget::doFillPenEditorByPen(RS_Pen pen){    
+void LC_PenPaletteWidget::doFillPenEditorByPen(const RS_Pen& pen) {
     lePenName->setText("");
-    RS_Color color = pen.getColor();
-    RS2::LineWidth width = pen.getWidth();
-    RS2::LineType lineType = pen.getLineType();
+    const RS_Color color = pen.getColor();
+    const RS2::LineWidth width = pen.getWidth();
+    const RS2::LineType lineType = pen.getLineType();
     doUpdatePenEditorByPenAttributes(color, width, lineType);
 }
-
 
 /**
  * Setup controls of pen editors by provided pen attributes
@@ -1197,27 +1265,28 @@ void LC_PenPaletteWidget::doFillPenEditorByPen(RS_Pen pen){
  * @param width line width
  * @param lineType line type
  */
-void LC_PenPaletteWidget::doUpdatePenEditorByPenAttributes(const RS_Color &color, RS2::LineWidth &width, RS2::LineType &lineType){
-
+void LC_PenPaletteWidget::doUpdatePenEditorByPenAttributes(const RS_Color& color, const RS2::LineWidth width,
+                                                           const RS2::LineType lineType) {
     // item with 0 index for all comboboxes in editor is used for "unchanged" value due to editor controls setup
 
     // setup color
-    if (LC_PenInfoRegistry::isUnchangedColor(color)){
+    if (LC_PenInfoRegistry::isUnchangedColor(color)) {
         cbColor->setCurrentIndex(0); // 0 is for unchanged. Potentially that might be incorporated into colorbox...
     }
-    else{      
-        cbColor->setColor(color);    
+    else {
+        cbColor->setColor(color);
     }
 
     // setup linetype
-    if (RS2::WidthUnchanged == width){
+    if (RS2::WidthUnchanged == width) {
         cbWidth->setCurrentIndex(0); // 0 is for unchanged value
-    } else {
+    }
+    else {
         cbWidth->setWidth(width);
     }
 
     // setup line width
-    if (lineType == RS2::LineTypeUnchanged){
+    if (lineType == RS2::LineTypeUnchanged) {
         cbType->setCurrentIndex(0); // 0 is for unchanged value
     }
     else {
@@ -1234,44 +1303,45 @@ void LC_PenPaletteWidget::doUpdatePenEditorByPenAttributes(const RS_Color &color
  * Handles changes in pen editor controls and enable save button if needed
  * @param changed flag whether pen change occurred
  */
-void LC_PenPaletteWidget::markEditingPenChanged(bool changed){
+void LC_PenPaletteWidget::markEditingPenChanged(const bool changed) {
     m_editorChanged = changed;
-    if (changed){
+    if (changed) {
         // first check that we're not invoked from editor setup
-        if (!m_inEditorControlsSetup){
-            QString penName = lePenName->text();
-            if (!penName.isEmpty()){
+        if (!m_inEditorControlsSetup) {
+            const QString penName = lePenName->text();
+            if (!penName.isEmpty()) {
                 tbEditSave->setEnabled(true);
             }
             // as user started the pen editing, remove active pen in table
             m_penPaletteModel->setActivePen(nullptr);
             tableView->update();
         }
-    } else {
+    }
+    else {
         tbEditSave->setEnabled(false);
-    }    
+    }
 }
 
 /**
  * Handlers for controls chane in pen' editor
  */
-void LC_PenPaletteWidget::onPenEditorChanged(){
+void LC_PenPaletteWidget::onPenEditorChanged() {
     markEditingPenChanged(true);
 }
 
-void LC_PenPaletteWidget::onPenEditorColorChanged([[maybe_unused]] int index){
+void LC_PenPaletteWidget::onPenEditorColorChanged([[maybe_unused]] int index) {
     markEditingPenChanged(true);
 }
 
-void LC_PenPaletteWidget::onPenEditorWidthChanged([[maybe_unused]] int index){
+void LC_PenPaletteWidget::onPenEditorWidthChanged([[maybe_unused]] int index) {
     markEditingPenChanged(true);
 }
 
-void LC_PenPaletteWidget::onPenEditorLineTypeChanged([[maybe_unused]] int index){
+void LC_PenPaletteWidget::onPenEditorLineTypeChanged([[maybe_unused]] int index) {
     markEditingPenChanged(true);
 }
 
-void LC_PenPaletteWidget::setGraphicView(RS_GraphicView *gv){
+void LC_PenPaletteWidget::setGraphicView(RS_GraphicView* gv) {
     if (gv == nullptr) {
         setLayerList(nullptr);
         m_graphicView = nullptr;
@@ -1288,15 +1358,15 @@ void LC_PenPaletteWidget::setGraphicView(RS_GraphicView *gv){
     }
 }
 
-void LC_PenPaletteWidget::persist() {
-    m_penPaletteData ->saveItems();
+void LC_PenPaletteWidget::persist() const {
+    m_penPaletteData->saveItems();
 }
 
 /**
  * setter for layers list
  * @param ll
  */
-void LC_PenPaletteWidget::setLayerList(RS_LayerList *ll) {
+void LC_PenPaletteWidget::setLayerList(RS_LayerList* ll) {
     m_layerList = ll;
 }
 
@@ -1305,14 +1375,12 @@ void LC_PenPaletteWidget::setLayerList(RS_LayerList *ll) {
  */
 void LC_PenPaletteWidget::keyPressEvent(QKeyEvent* e) {
     switch (e->key()) {
+        case Qt::Key_Escape: emit escape();
+            break;
 
-    case Qt::Key_Escape:
-        emit escape();
-        break;
-
-    default:
-        QWidget::keyPressEvent(e);
-        break;
+        default:
+            QWidget::keyPressEvent(e);
+            break;
     }
 }
 
@@ -1330,17 +1398,20 @@ void LC_PenPaletteWidget::redrawDrawing() const {
  * @param penName name of pen to be removed
  * @return dialog execution result. If QMessageBox::Ok - remove confirmed
  */
-int LC_PenPaletteWidget::invokeItemRemovalDialog(QString &penName){
-    QString title(QMessageBox::tr("Remove pen"));
-    QStringList text_lines = {QMessageBox::tr("Pen will be removed from palette, drawing entities will not be affected."), "",
-                              QMessageBox::tr("Are you sure you'd like to proceed?"),};
+int LC_PenPaletteWidget::invokeItemRemovalDialog(const QString& penName) {
+    const QString title(QMessageBox::tr("Remove pen"));
+    const QStringList text_lines = {
+        QMessageBox::tr("Pen will be removed from palette, drawing entities will not be affected."),
+        "",
+        QMessageBox::tr("Are you sure you'd like to proceed?"),
+    };
     QStringList detail_lines = {QMessageBox::tr("Pen for removal:"), "",};
     detail_lines << penName;
 
     QMessageBox msgBox(QMessageBox::Warning, title, text_lines.join("\n"), QMessageBox::Ok | QMessageBox::Cancel);
     msgBox.setDetailedText(detail_lines.join("\n"));
 
-    int result = msgBox.exec();
+    const int result = msgBox.exec();
     return result;
 }
 
@@ -1349,13 +1420,16 @@ int LC_PenPaletteWidget::invokeItemRemovalDialog(QString &penName){
  * @param penItems list of pen names to remove
  * @return result of the dialog execution. If QMessageBox::Ok - remove confirmed
  */
-int LC_PenPaletteWidget::invokeItemMultiRemovalDialog(QList<LC_PenItem*> &penItems){
-    QString title(QMessageBox::tr("Remove pens"));
-    QStringList text_lines = {QMessageBox::tr("Pens will be removed from palette, drawing entities will not be affected."), "",
-                              QMessageBox::tr("Are you sure you'd like to proceed?"),};
+int LC_PenPaletteWidget::invokeItemMultiRemovalDialog(const QList<LC_PenItem*>& penItems) {
+    const QString title(QMessageBox::tr("Remove pens"));
+    const QStringList text_lines = {
+        QMessageBox::tr("Pens will be removed from palette, drawing entities will not be affected."),
+        "",
+        QMessageBox::tr("Are you sure you'd like to proceed?"),
+    };
     QStringList detail_lines = {QMessageBox::tr("Pens for removal:"), "",};
-    int count = penItems.count();
-    for (int i = 0; i < count;i++) {
+    const int count = penItems.count();
+    for (int i = 0; i < count; i++) {
         QString penName = penItems.at(i)->getName();
         detail_lines << penName;
     }
@@ -1363,7 +1437,7 @@ int LC_PenPaletteWidget::invokeItemMultiRemovalDialog(QList<LC_PenItem*> &penIte
     QMessageBox msgBox(QMessageBox::Warning, title, text_lines.join("\n"), QMessageBox::Ok | QMessageBox::Cancel);
     msgBox.setDetailedText(detail_lines.join("\n"));
 
-    int result = msgBox.exec();
+    const int result = msgBox.exec();
     return result;
 }
 
@@ -1373,12 +1447,14 @@ int LC_PenPaletteWidget::invokeItemMultiRemovalDialog(QList<LC_PenItem*> &penIte
  * @param hasOnFrozenLayers flag that entities that match pen are present on frozen layers
  * @param hasOnLockedLayers flag that entities that match pen are present on locked layers
  */
-void LC_PenPaletteWidget::showNoSelectionDialog(bool hasOnFrozenLayers, bool hasOnLockedLayers) const{
-    QString title(QMessageBox::tr("Select Entities "));
-    QStringList text_lines = {QMessageBox::tr("There are no entities that matches pen on visible layers."),
-                              (hasOnFrozenLayers) ? QMessageBox::tr("Such entities exist on frozen layers.\n"):"",
-                              (hasOnLockedLayers) ? QMessageBox::tr("Such entities exist on locked layers.\n"):"",
-                              QMessageBox::tr("Please use different pen attributes."),};
+void LC_PenPaletteWidget::showNoSelectionDialog(const bool hasOnFrozenLayers, const bool hasOnLockedLayers) const {
+    const QString title(QMessageBox::tr("Select Entities "));
+    const QStringList text_lines = {
+        QMessageBox::tr("There are no entities that matches pen on visible layers."),
+        (hasOnFrozenLayers) ? QMessageBox::tr("Such entities exist on frozen layers.\n") : "",
+        (hasOnLockedLayers) ? QMessageBox::tr("Such entities exist on locked layers.\n") : "",
+        QMessageBox::tr("Please use different pen attributes."),
+    };
     QMessageBox msgBox(QMessageBox::Warning, title, text_lines.join("\n"), QMessageBox::Ok | QMessageBox::Cancel);
     msgBox.exec();
 }
@@ -1386,9 +1462,9 @@ void LC_PenPaletteWidget::showNoSelectionDialog(bool hasOnFrozenLayers, bool has
 /**
  * Displays message box notifying the user that only one entity should be selected for picking pen attributes
  */
-void LC_PenPaletteWidget::showEntitySelectionInfoDialog(){
-    QString title(QMessageBox::tr("Set pen by entity"));
-    QString text = QMessageBox::tr("Please select only one entity to pick pen setting.");
+void LC_PenPaletteWidget::showEntitySelectionInfoDialog() {
+    const QString title(QMessageBox::tr("Set pen by entity"));
+    const QString text = QMessageBox::tr("Please select only one entity to pick pen setting.");
     QMessageBox msgBox(QMessageBox::Information, title, text, QMessageBox::Ok);
     msgBox.exec();
 }
@@ -1397,27 +1473,12 @@ void LC_PenPaletteWidget::showEntitySelectionInfoDialog(){
  * Displays dialog if error occurred during saving pens data and prompt the user to change location of pens file
  * @return true if user would like to change location
  */
-bool LC_PenPaletteWidget::invokeUnableToSavePenDataDialog(){
-    QString title(QMessageBox::tr("Saving Pens Data"));
-    QString text = QMessageBox::tr("Unable to save pens data to specified pens file. Would you like to specify correct path to the file?");
+bool LC_PenPaletteWidget::invokeUnableToSavePenDataDialog() {
+    const QString title(QMessageBox::tr("Saving Pens Data"));
+    const QString text = QMessageBox::tr(
+        "Unable to save pens data to specified pens file. Would you like to specify correct path to the file?");
     QMessageBox msgBox(QMessageBox::Information, title, text, QMessageBox::Yes | QMessageBox::No);
-    int dlgResult = msgBox.exec();
-    bool result = dlgResult == QMessageBox::Yes;
+    const int dlgResult = msgBox.exec();
+    const bool result = dlgResult == QMessageBox::Yes;
     return result;
-}
-
-void LC_PenPaletteWidget::updateWidgetSettings(){
-    LC_GROUP("Widgets"); {
-        bool flatIcons = LC_GET_BOOL("DockWidgetsFlatIcons", true);
-        int iconSize = LC_GET_INT("DockWidgetsIconSize", 16);
-
-        QSize size(iconSize, iconSize);
-
-        QList<QToolButton *> widgets = this->findChildren<QToolButton *>();
-        foreach(QToolButton *w, widgets) {
-            w->setAutoRaise(flatIcons);
-            w->setIconSize(size);
-        }
-    }
-    LC_GROUP_END();
 }

@@ -29,7 +29,7 @@
 class RS_Insert;
 
 #include "ui_qg_dlginsert.h"
-#include "../dialogs/entity/lc_entitypropertiesdlg.h"
+#include "lc_entitypropertiesdlg.h"
 
 class QG_DlgInsert : public LC_EntityPropertiesDlg, public Ui::QG_DlgInsert{
     Q_OBJECT
@@ -45,4 +45,4 @@ protected:
     void setEntity(RS_Insert *i);
 };
 
-#endif // QG_DLGINSERT_H
+#endif

@@ -23,6 +23,7 @@
 
 #ifndef LC_LASTOPENFILESOPENER_H
 #define LC_LASTOPENFILESOPENER_H
+
 #include <QList>
 
 class QSplashScreen;
@@ -32,16 +33,15 @@ class QC_MDIWindow;
 
 class LC_LastOpenFilesOpener{
 public:
-    LC_LastOpenFilesOpener(QC_ApplicationWindow* m_appWin);
+    explicit LC_LastOpenFilesOpener(QC_ApplicationWindow* appWin);
     ~LC_LastOpenFilesOpener();
-    void openLastOpenFiles(QStringList& fileList,  QSplashScreen* spash);
-    void collectFilesList(const QList<QC_MDIWindow*> &m_windowList,  const QMdiSubWindow* activWindow);
-    void saveSettings();
+    void openLastOpenFiles(QStringList& fileList,  QSplashScreen* splash) const;
+    void collectFilesList(const QList<QC_MDIWindow*> &windowList,  const QMdiSubWindow* activWindow);
+    void saveSettings() const;
 private:
     QString m_openedFiles;
     QString m_activeFile = "";
     QC_ApplicationWindow* m_appWindow;
 };
 
-
-#endif // LC_LASTOPENFILESOPENER_H
+#endif

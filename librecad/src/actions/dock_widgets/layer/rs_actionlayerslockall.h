@@ -29,18 +29,17 @@
 
 #include "rs_actioninterface.h"
 
-
 /**
  * This action class can handle user events to lock/unlock all layers.
  *
  */
 class RS_ActionLayersLockAll : public RS_ActionInterface {
-	Q_OBJECT
+    Q_OBJECT
 public:
-    RS_ActionLayersLockAll(bool lock,LC_ActionContext *actionContext);
+    RS_ActionLayersLockAll(bool lock, LC_ActionContext* actionContext);
 
-	void init(int status) override;
-	void trigger() override;
+    void init(int status) override;
+    void trigger() override;
 
 private:
     bool m_lock = false;

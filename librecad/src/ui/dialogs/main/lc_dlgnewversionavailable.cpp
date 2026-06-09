@@ -21,23 +21,23 @@
  ******************************************************************************/
 
 #include "lc_dlgnewversionavailable.h"
+
 #include "main.h"
 #include "rs_settings.h"
 #include "ui_lc_dlgnewversionavailable.h"
 
-
-LC_DlgNewVersionAvailable::LC_DlgNewVersionAvailable(QWidget *parent,LC_ReleaseChecker* releaseChecker)
+LC_DlgNewVersionAvailable::LC_DlgNewVersionAvailable(QWidget *parent, const LC_ReleaseChecker* releaseChecker)
     : LC_Dialog(parent, "NewVersion")
     , ui(new Ui::LC_DlgNewVersionAvailable){
     ui->setupUi(this);
     connect(ui->buttonBox, &QDialogButtonBox::accepted, this, &LC_DlgNewVersionAvailable::onOk);
     LC_GROUP_GUARD("Startup");
     {
-        bool checkOnStartup = LC_GET_BOOL("CheckForNewVersions", true);
-        bool ignorePreRelease = LC_GET_BOOL("IgnorePreReleaseVersions");
+        const bool checkOnStartup = LC_GET_BOOL("CheckForNewVersions", true);
+        const bool ignorePreRelease = LC_GET_BOOL("IgnorePreReleaseVersions");
 
-        QString ignoredRelease = LC_GET_STR("IgnoredRelease", "");
-        QString ignoredPreRelease = LC_GET_STR("IgnoredPreRelease", "");
+        const QString ignoredRelease = LC_GET_STR("IgnoredRelease", "");
+        const QString ignoredPreRelease = LC_GET_STR("IgnoredPreRelease", "");
 
         ui->cbCheckForNewVersion->setChecked(checkOnStartup);
         ui->cbIgnorePreReleases->setChecked(ignorePreRelease);
@@ -70,15 +70,15 @@ LC_DlgNewVersionAvailable::~LC_DlgNewVersionAvailable(){
     delete ui;
 }
 
-void LC_DlgNewVersionAvailable::setup(LC_ReleaseChecker *releaseChecker) {
+void LC_DlgNewVersionAvailable::setup(const LC_ReleaseChecker *releaseChecker) {
     const LC_ReleaseInfo& latestRelease = releaseChecker->getLatestRelease();
     bool hasNewVersion = false;
     if (latestRelease.isValid()){
         ui->gbRelease->setVisible(true);
         QString releaseTagName = latestRelease.getTagInfo().getTagName();
-        QString labelText = QString("<a href=\"%1\">%2</a>").arg(latestRelease.getHtmlUrl(), releaseTagName);
+        const QString labelText = QString("<a href=\"%1\">%2</a>").arg(latestRelease.getHtmlUrl(), releaseTagName);
         ui->lReleaseName->setText(labelText);
-        QString date = latestRelease.getPublishedDate().toString(Qt::ISODate);
+        const QString date = latestRelease.getPublishedDate().toString(Qt::ISODate);
         ui->lReleasePublishDate->setText(date);
         m_currentReleaseTag = releaseTagName;
         hasNewVersion = true;
@@ -90,9 +90,9 @@ void LC_DlgNewVersionAvailable::setup(LC_ReleaseChecker *releaseChecker) {
     if (latestPreRelease.isValid()){
         ui->gbPreRelease->setVisible(true);
         QString preReleaseTagName = latestPreRelease.getTagInfo().getTagName();
-        QString labelText = QString("<a href=\"%1\">%2</a>").arg(latestPreRelease.getHtmlUrl(), preReleaseTagName);
+        const QString labelText = QString("<a href=\"%1\">%2</a>").arg(latestPreRelease.getHtmlUrl(), preReleaseTagName);
         ui->lPrereleaseName->setText(labelText);
-        QString date = latestPreRelease.getPublishedDate().toString(Qt::ISODate);
+        const QString date = latestPreRelease.getPublishedDate().toString(Qt::ISODate);
         ui->lPreReleasePublishDate->setText(date);
         m_currentPreReleaseTag = preReleaseTagName;
         hasNewVersion = true;
@@ -124,7 +124,7 @@ void LC_DlgNewVersionAvailable::onOk(){
     }
     else{
         if (!ui->cbIgnoredRelease->isChecked()){
-            LC_SET("IgnoredRelease", QString(""));
+            LC_SET("IgnoredRelease", QString());
         }
     }
 
@@ -132,7 +132,7 @@ void LC_DlgNewVersionAvailable::onOk(){
         LC_SET("IgnoredPreRelease", m_currentPreReleaseTag);
     }
     else if (!ui->cbIgnoredPreRelease->isChecked()){
-        LC_SET("IgnoredPreRelease", QString(""));
+        LC_SET("IgnoredPreRelease", QString());
     }
     accept();
 }

@@ -20,32 +20,31 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * ********************************************************************************
  */
-#include<iostream>
 #include "lc_dimordinate.h"
+
+#include<iostream>
 
 #include "lc_linemath.h"
 #include "rs_debug.h"
 #include "rs_graphic.h"
 #include "rs_line.h"
-#include "rs_math.h"
 #include "rs_settings.h"
 #include "rs_text.h"
 
-LC_DimOrdinateData::~LC_DimOrdinateData() = default;
-
-std::ostream& operator << (std::ostream& os,
-                           const LC_DimOrdinateData& dd) {
-    os << "(" << dd.featurePoint << "," << dd.leaderEndPoint<<")";
+std::ostream& operator <<(std::ostream& os, const LC_DimOrdinateData& dd) {
+    os << "(" << dd.featurePoint << "," << dd.leaderEndPoint << ")";
     return os;
 }
 
-LC_DimOrdinate::LC_DimOrdinate(RS_EntityContainer* parent, const RS_DimensionData& d, const LC_DimOrdinateData& ed):
-   RS_Dimension{parent, d}, m_dimOrdinateData{ed}{
-   RS_EntityContainer::calculateBorders();
+LC_DimOrdinate::LC_DimOrdinate(RS_EntityContainer* parent, const RS_DimensionData& d, const LC_DimOrdinateData& ed) : RS_Dimension{
+    parent,
+    d
+}, m_dimOrdinateData{ed} {
+    RS_EntityContainer::calculateBorders();
 }
 
 LC_DimOrdinate::LC_DimOrdinate(const LC_DimOrdinate& other)
-    :RS_Dimension(other), m_dimOrdinateData{other.m_dimOrdinateData} {
+    : RS_Dimension(other), m_dimOrdinateData{other.m_dimOrdinateData} {
 }
 
 RS_Entity* LC_DimOrdinate::clone() const {
@@ -54,15 +53,28 @@ RS_Entity* LC_DimOrdinate::clone() const {
 }
 
 RS_VectorSolutions LC_DimOrdinate::getRefPoints() const {
-    return RS_VectorSolutions({m_dimGenericData.definitionPoint, m_dimOrdinateData.featurePoint, m_dimOrdinateData.leaderEndPoint, m_dimGenericData.middleOfText});
+    return RS_VectorSolutions({
+        m_dimGenericData.definitionPoint,
+        m_dimOrdinateData.featurePoint,
+        m_dimOrdinateData.leaderEndPoint,
+        m_dimGenericData.middleOfText
+    });
 }
 
 RS_Vector LC_DimOrdinate::getFeaturePoint() const {
     return m_dimOrdinateData.featurePoint;
 }
 
-RS_Vector LC_DimOrdinate::getLeaderEndPoint() const{
+void LC_DimOrdinate::setFeaturePoint(const RS_Vector& v) {
+    m_dimOrdinateData.featurePoint = v;
+}
+
+RS_Vector LC_DimOrdinate::getLeaderEndPoint() const {
     return m_dimOrdinateData.leaderEndPoint;
+}
+
+void LC_DimOrdinate::setLeaderPoint(const RS_Vector& v) {
+    m_dimOrdinateData.leaderEndPoint = v;
 }
 
 void LC_DimOrdinate::move(const RS_Vector& offset) {
@@ -72,8 +84,8 @@ void LC_DimOrdinate::move(const RS_Vector& offset) {
     update();
 }
 
-void LC_DimOrdinate::rotate(const RS_Vector& center, double angle) {
-    RS_Vector angleVector(angle);
+void LC_DimOrdinate::rotate(const RS_Vector& center, const double angle) {
+    const RS_Vector angleVector(angle);
     RS_Dimension::rotate(center, angleVector);
 
     m_dimOrdinateData.featurePoint.rotate(center, angleVector);
@@ -107,87 +119,88 @@ void LC_DimOrdinate::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPo
 }
 
 void LC_DimOrdinate::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
-    if (ref.distanceTo(m_dimGenericData.definitionPoint)<1.0e-4) {
+    if (ref.distanceTo(m_dimGenericData.definitionPoint) < 1.0e-4) {
         m_dimGenericData.definitionPoint += offset;
         updateDim(true);
     }
-    else if (ref.distanceTo(m_dimGenericData.middleOfText)<1.0e-4) {
+    else if (ref.distanceTo(m_dimGenericData.middleOfText) < 1.0e-4) {
         m_dimGenericData.middleOfText += offset;
         updateDim(false);
     }
-    else if (ref.distanceTo(m_dimOrdinateData.featurePoint)<1.0e-4) {
+    else if (ref.distanceTo(m_dimOrdinateData.featurePoint) < 1.0e-4) {
         m_dimOrdinateData.featurePoint += offset;
         updateDim(true);
     }
-    else if (ref.distanceTo(m_dimOrdinateData.leaderEndPoint)<1.0e-4) {
+    else if (ref.distanceTo(m_dimOrdinateData.leaderEndPoint) < 1.0e-4) {
         m_dimOrdinateData.leaderEndPoint += offset;
         updateDim(true);
     }
 }
 
 std::ostream& operator<<(std::ostream& os, const LC_DimOrdinate& d) {
-    os << " DimOrdinate: " << d.getData() << "\n" << d.getEData() << "\n";
+    os << " DimOrdinate: " << d.getGenericData() << "\n" << d.getEData() << "\n";
     return os;
 }
 
-void LC_DimOrdinate::determineKneesPositions(const RS_Vector& featurePoint, const RS_Vector& leaderEndPoint,
-                                             RS_Vector& kneeOne, RS_Vector& kneeTwo, RS_Vector& textOffsetV) {
-    bool xAxisRotatedInUCS = LC_LineMath::isMeaningfulAngle(m_dimGenericData.horizontalAxisDirection);
-    bool inXDirection = m_dimOrdinateData.ordinateForX;
-    double legSize = getArrowSize()*2; // fixme - sand - play with factors, settings?
-    double doubleLeg = legSize*2; // fixme - sand - play with factors, settings?
-    double featurePointY = featurePoint.y;
-    double featurePointX = featurePoint.x;
-    double leaderPointX = leaderEndPoint.x;
-    double leaderPointY = leaderEndPoint.y;
+void LC_DimOrdinate::determineKneesPositions(const RS_Vector& featurePoint, const RS_Vector& leaderEndPoint, RS_Vector& kneeOne,
+                                             RS_Vector& kneeTwo, RS_Vector& textOffsetV) const {
+    const bool xAxisRotatedInUCS = LC_LineMath::isMeaningfulAngle(m_dimGenericData.horizontalAxisDirection);
+    const bool inXDirection = m_dimOrdinateData.ordinateForX;
+    const double legSize = getArrowSize() * 2; // fixme - sand - play with factors, settings?
+    const double doubleLeg = legSize * 2; // fixme - sand - play with factors, settings?
+    const double featurePointY = featurePoint.y;
+    const double featurePointX = featurePoint.x;
+    const double leaderPointX = leaderEndPoint.x;
+    const double leaderPointY = leaderEndPoint.y;
     if (inXDirection) {
         kneeOne.x = featurePointX;
         kneeTwo.x = leaderPointX;
 
         if (featurePointY < leaderPointY) {
             kneeOne.y = leaderPointY - doubleLeg;
-            double featureYPlusLeg = featurePointY + legSize;
+            const double featureYPlusLeg = featurePointY + legSize;
             if (kneeOne.y < featureYPlusLeg) {
                 kneeOne.y = featureYPlusLeg;
             }
 
             kneeTwo.y = leaderPointY - legSize;
-            textOffsetV = RS_Vector(0,1);
+            textOffsetV = RS_Vector(0, 1);
         }
         else {
             kneeOne.y = leaderPointY + doubleLeg;
-            double featureYMinusLeg = featurePointY - legSize;
+            const double featureYMinusLeg = featurePointY - legSize;
             if (kneeOne.y > featureYMinusLeg) {
                 kneeOne.y = featureYMinusLeg;
             }
 
             kneeTwo.y = leaderPointY + legSize;
-            textOffsetV = RS_Vector(0,-1);
+            textOffsetV = RS_Vector(0, -1);
         }
     }
-    else {// horizontal, measuring Y
+    else {
+        // horizontal, measuring Y
         kneeOne.y = featurePointY;
         kneeTwo.y = leaderPointY;
 
         if (featurePointX < leaderPointX) {
             kneeOne.x = leaderPointX - doubleLeg;
-            double featureXPlusLeg = featurePointX + legSize;
+            const double featureXPlusLeg = featurePointX + legSize;
             if (kneeOne.x < featureXPlusLeg) {
                 kneeOne.x = featureXPlusLeg;
             }
 
             kneeTwo.x = leaderPointX - legSize;
-            textOffsetV = RS_Vector(1,0);
+            textOffsetV = RS_Vector(1, 0);
         }
         else {
             kneeOne.x = leaderPointX + doubleLeg;
-            double featurePointXMinusLeg = featurePointX - legSize;
+            const double featurePointXMinusLeg = featurePointX - legSize;
             if (kneeOne.x > featurePointXMinusLeg) {
                 kneeOne.x = featurePointXMinusLeg;
             }
 
             kneeTwo.x = leaderPointX + legSize;
-            textOffsetV = RS_Vector(-1,0);
+            textOffsetV = RS_Vector(-1, 0);
         }
     }
 
@@ -200,19 +213,19 @@ void LC_DimOrdinate::determineKneesPositions(const RS_Vector& featurePoint, cons
 void LC_DimOrdinate::doUpdateDim() {
     RS_DEBUG->print("RS_DimLinear::update");
     clear();
-    if (isUndone()) {
+    if (isDeleted()) {
         return;
     }
 
     // general scale (DIMSCALE)
-    double dimscale = getGeneralScale();
+    const double dimscale = getGeneralScale();
     // distance from entities (DIMEXO)
-    double dimexo = getExtensionLineOffset()*dimscale;
+    const double dimexo = getExtensionLineOffset() * dimscale;
 
-    RS_Vector featurePoint = m_dimOrdinateData.featurePoint;
+    const RS_Vector featurePoint = m_dimOrdinateData.featurePoint;
     RS_Vector leaderEndPoint = m_dimOrdinateData.leaderEndPoint;
 
-    bool xAxisRotatedInUCS = LC_LineMath::isMeaningfulAngle(m_dimGenericData.horizontalAxisDirection);
+    const bool xAxisRotatedInUCS = LC_LineMath::isMeaningfulAngle(m_dimGenericData.horizontalAxisDirection);
 
     if (xAxisRotatedInUCS) {
         leaderEndPoint.rotate(featurePoint, -m_dimGenericData.horizontalAxisDirection);
@@ -220,13 +233,13 @@ void LC_DimOrdinate::doUpdateDim() {
 
     RS_Vector kneeOne;
     RS_Vector kneeTwo;
-    RS_Vector textOffsetV;   // normal vector in direction of text offset
+    RS_Vector textOffsetV; // normal vector in direction of text offset
     determineKneesPositions(featurePoint, leaderEndPoint, kneeOne, kneeTwo, textOffsetV);
 
-    auto linePen = getPenExtensionLine(true);
+    const auto linePen = getPenExtensionLine(true);
 
     if (featurePoint.distanceTo(kneeOne) > dimexo) {
-        auto startPoint = featurePoint + textOffsetV*dimexo;
+        auto startPoint = featurePoint + textOffsetV * dimexo;
         if (xAxisRotatedInUCS) {
             startPoint = startPoint.rotate(featurePoint, m_dimGenericData.horizontalAxisDirection);
         }
@@ -236,16 +249,16 @@ void LC_DimOrdinate::doUpdateDim() {
     }
 
     addDimComponentLine(kneeOne, kneeTwo, linePen);
-    addDimComponentLine(kneeTwo,m_dimOrdinateData.leaderEndPoint, linePen);
+    addDimComponentLine(kneeTwo, m_dimOrdinateData.leaderEndPoint, linePen);
 
-    double textHeight = getTextHeight() * dimscale;
-    double dimgap = getDimensionLineGap();
+    const double textHeight = getTextHeight() * dimscale;
+    const double dimgap = getDimensionLineGap();
 
-    bool corrected = false;
     double textWidth = 0;
-    double textAngle = RS_Math::makeAngleReadable(0, true, &corrected);
+    // double textAngle = RS_Math::makeAngleReadable(0, true, &corrected);
+    double textAngle;
 
-    bool inXDirection = m_dimOrdinateData.ordinateForX;
+    const bool inXDirection = m_dimOrdinateData.ordinateForX;
     if (inXDirection) {
         textAngle = M_PI_2;
     }
@@ -255,22 +268,21 @@ void LC_DimOrdinate::doUpdateDim() {
 
     textAngle += m_dimGenericData.horizontalAxisDirection;
 
-    auto* mtext = createDimText({0,0},textHeight,textAngle);
+    auto* mtext = createDimText({0, 0}, textHeight, textAngle);
 
     textWidth = mtext->getUsedTextWidth();
-    textHeight = mtext->getUsedTextHeight();
+    // textHeight = mtext->getUsedTextHeight();
 
-    RS_Vector middlePos;
     RS_Vector textPos;
 
     if (m_dimGenericData.autoText) {
         if (inXDirection) {
             textPos = m_dimOrdinateData.leaderEndPoint; // fixme - positioning of text by x
-            textPos.y = textPos.y + (textOffsetV * (textWidth/2.0+dimgap)).y;
+            textPos.y = textPos.y + (textOffsetV * ((textWidth / 2.0) + dimgap)).y;
         }
         else {
-            textPos = m_dimOrdinateData.leaderEndPoint;// fixme - positioning of text by Y;
-            textPos.x = textPos.x + (textOffsetV * (textWidth/2.0 + dimgap )).x;
+            textPos = m_dimOrdinateData.leaderEndPoint; // fixme - positioning of text by Y;
+            textPos.x = textPos.x + (textOffsetV * ((textWidth / 2.0) + dimgap)).x;
         }
 
         if (xAxisRotatedInUCS) {
@@ -278,15 +290,16 @@ void LC_DimOrdinate::doUpdateDim() {
         }
 
         m_dimGenericData.middleOfText = textPos;
-    } else {
-        middlePos = m_dimGenericData.middleOfText;
-        textPos = middlePos;
+    }
+    else {
+        textPos = m_dimGenericData.middleOfText;
     }
     mtext->move(textPos);
     calculateBorders();
 }
 
-void LC_DimOrdinate::adjustExtensionLineIfFixLength([[maybe_unused]]RS_Line* extLine1, [[maybe_unused]]RS_Line* extLine2, [[maybe_unused]]bool addDimExe) const {
+void LC_DimOrdinate::adjustExtensionLineIfFixLength([[maybe_unused]] RS_Line* extLine1, [[maybe_unused]] RS_Line* extLine2,
+                                                    [[maybe_unused]] bool addDimExe) const {
     // fixme - sand - dims - decide how the fixed len could be supported in general?
     // extension line extension (DIMEXE)
     // double dimexe = getExtensionLineExtension()*dimscale;
@@ -311,19 +324,17 @@ void LC_DimOrdinate::adjustExtensionLineIfFixLength([[maybe_unused]]RS_Line* ext
     }*/
 }
 
-
 QString LC_DimOrdinate::getMeasuredLabel() {
-
-    bool xAxisRotatedInUCS = LC_LineMath::isMeaningfulAngle(m_dimGenericData.horizontalAxisDirection);
+    const bool xAxisRotatedInUCS = LC_LineMath::isMeaningfulAngle(m_dimGenericData.horizontalAxisDirection);
 
     RS_Vector featurePoint = m_dimOrdinateData.featurePoint;
     if (xAxisRotatedInUCS) {
         featurePoint.rotate(m_dimGenericData.definitionPoint, -m_dimGenericData.horizontalAxisDirection);
     }
 
-    RS_Vector delta = ( featurePoint - m_dimGenericData.definitionPoint);
+    const RS_Vector delta = featurePoint - m_dimGenericData.definitionPoint;
 
-    double distance;
+    double distance = NAN;
     if (m_dimOrdinateData.ordinateForX) {
         distance = delta.x;
     }
@@ -331,7 +342,9 @@ QString LC_DimOrdinate::getMeasuredLabel() {
         distance = delta.y;
     }
 
-    double dist = prepareLabelLinearDistance(distance);
-    QString measuredLabel =  createLinearMeasuredLabel(dist);
+    m_dimMeasurement = distance;
+
+    const double dist = prepareLabelLinearDistance(distance);
+    QString measuredLabel = createLinearMeasuredLabel(dist);
     return measuredLabel;
 }

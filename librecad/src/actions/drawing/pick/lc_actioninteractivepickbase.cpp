@@ -27,8 +27,29 @@
 
 #include "lc_actioncontext.h"
 
-LC_ActionInteractivePickBase::LC_ActionInteractivePickBase(const char* name, LC_ActionContext* actionContext, RS2::ActionType actionType)
-    :RS_PreviewActionInterface(name, actionContext, actionType) {}
+LC_ActionInteractivePickBase::LC_ActionInteractivePickBase(const char* name, LC_ActionContext* actionContext, const RS2::ActionType actionType)
+    :RS_PreviewActionInterface(name, actionContext, actionType) {
+}
+
+void LC_ActionInteractivePickBase::createOptionsEditor() {
+    RS_PreviewActionInterface::createOptionsEditor();
+    m_optionsEditor->setup(false, false);
+}
+
+void LC_ActionInteractivePickBase::setPredecessor(std::shared_ptr<RS_ActionInterface> pre) {
+    if (pre != nullptr) {
+        const RS2::ActionType rtti = pre->rtti();
+        if (!RS2::isInteractiveInputAction(rtti)) {
+            // we support predecessor only if previos action is not interactive picK.
+            // otherwise - we'll skip it, as with property sheet it is possible to
+            // invoke precessor twice...
+            RS_PreviewActionInterface::setPredecessor(pre);
+        }
+        else {
+            pre.reset();
+        }
+    }
+}
 
 void LC_ActionInteractivePickBase::doTrigger() {
     if (isInteractiveDataValid()){
@@ -41,30 +62,31 @@ void LC_ActionInteractivePickBase::keyPressEvent(QKeyEvent* e) {
     switch (e->key()) {
         case Qt::Key_Escape: {
             skipInteractiveInput();
-            finish(false);
+            finish();
             break;
         }
         default: {
             RS_PreviewActionInterface::keyPressEvent(e);
+            break;
         }
     }
 }
 
-void LC_ActionInteractivePickBase::skipInteractiveInput() {
-    auto interactiveInputInfo = m_actionContext->getInteractiveInputInfo();
-    if (interactiveInputInfo->m_state == LC_ActionContext::InteractiveInputInfo::REQUESTED) {
-        if (interactiveInputInfo->m_requestor != nullptr) {
-            interactiveInputInfo->m_requestor->onLateRequestCompleted(false);
+void LC_ActionInteractivePickBase::skipInteractiveInput() const {
+    const auto interactiveInputInfo = m_actionContext->getInteractiveInputInfo();
+    if (interactiveInputInfo->state == LC_ActionContext::InteractiveInputInfo::REQUESTED) {
+        if (interactiveInputInfo->requestor != nullptr) {
+            interactiveInputInfo->requestor->onLateRequestCompleted(true);
         }
     }
 }
 
 void LC_ActionInteractivePickBase::storeInteractiveInput() {
-    auto interactiveInputInfo = m_actionContext->getInteractiveInputInfo();
-    if (interactiveInputInfo->m_state == LC_ActionContext::InteractiveInputInfo::REQUESTED) {
+    const auto interactiveInputInfo = m_actionContext->getInteractiveInputInfo();
+    if (interactiveInputInfo->state == LC_ActionContext::InteractiveInputInfo::REQUESTED) {
         doSetInteractiveInputValue(interactiveInputInfo);
-        if (interactiveInputInfo->m_requestor != nullptr) {
-            interactiveInputInfo->m_requestor->onLateRequestCompleted(false);
+        if (interactiveInputInfo->requestor != nullptr) {
+            interactiveInputInfo->requestor->onLateRequestCompleted(false);
         }
     }
 }

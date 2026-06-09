@@ -28,8 +28,8 @@
 #ifndef RS_PAINTER_OLD_H
 #define RS_PAINTER_OLD_H
 
-#include "rs.h"
 #include "qnamespace.h"
+#include "rs.h"
 #include "rs_vector.h"
 
 class RS_Color;
@@ -68,24 +68,24 @@ public:
     /**
      * Sets the drawing mode.
      */
-    void setDrawingMode(RS2::DrawingMode m) {
+    void setDrawingMode(const RS2::DrawingMode m) {
         drawingMode = m;
     }
 
     // When set to true, only entities that are selected will be drawn
-    void setDrawSelectedOnly(bool dso) {
+    void setDrawSelectedOnly(const bool dso) {
         drawSelectedEntities=dso;
     }
 
     // When true, only selected items will be draw
-    bool shouldDrawSelected() {
+    bool shouldDrawSelected() const {
         return drawSelectedEntities;
     }
 
     /**
      * @return Current drawing mode.
      */
-    RS2::DrawingMode getDrawingMode() {
+    RS2::DrawingMode getDrawingMode() const {
         return drawingMode;
     }
 
@@ -104,13 +104,13 @@ public:
     void createArc(QPolygon& pa,
                    const RS_Vector& cp, double radius,
                    double a1, double a2,
-                   bool reversed);
+                   bool reversed) const;
     void createEllipse(QPolygon& pa,
                        const RS_Vector& cp,
                        double radius1, double radius2,
                        double angle,
                        double angle1, double angle2,
-                       bool reversed);
+                       bool reversed) const;
     virtual void drawCircle(const RS_Vector& cp, double radius) = 0;
     virtual void drawEllipse(const RS_Vector& cp,
                              double radius1, double radius2,

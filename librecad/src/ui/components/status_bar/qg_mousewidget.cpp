@@ -33,28 +33,29 @@
  *  Constructs a QG_MouseWidget as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
  */
-QG_MouseWidget::QG_MouseWidget(QWidget* parent, const char* name, Qt::WindowFlags fl)
+QG_MouseWidget::QG_MouseWidget(QWidget* parent, const char* name, const Qt::WindowFlags fl)
     : QWidget(parent, fl){
     setObjectName(name);
     setupUi(this);
-    bool useClassicalStatusBar = LC_GET_ONE_BOOL("Startup", "UseClassicStatusBar", false);
+    const bool useClassicalStatusBar = LC_GET_ONE_BOOL("Startup", "UseClassicStatusBar", false);
 
     LC_GROUP_GUARD("Widgets");
     {
-        bool custom_size = LC_GET_BOOL("AllowToolbarIconSize", false);
-        iconSize = custom_size ? LC_GET_INT("ToolbarIconSize", 24) : 24;
-        int height{64};
+        const bool custom_size = LC_GET_BOOL("AllowToolbarIconSize", false);
+        m_iconSize = custom_size ? LC_GET_INT("ToolbarIconSize", 24) : 24;
+
 
         if (useClassicalStatusBar) {
-            int allow_statusbar_height = LC_GET_BOOL("AllowStatusbarHeight", false);
-            if (allow_statusbar_height) {
+            int height{64};
+            const bool allowStatusbarHeight = LC_GET_BOOL("AllowStatusbarHeight", false);
+            if (allowStatusbarHeight) {
                 height = LC_GET_INT("StatusbarHeight", 64);
             }
 
             setMinimumHeight(height);
             setMaximumHeight(height);
 
-            int halfHeight = height / 2 - 2;
+            const int halfHeight = height / 2 - 2;
 
             lblCtrl->setMinimumSize(halfHeight, halfHeight);
             lblCtrl->setMaximumSize(halfHeight, halfHeight);
@@ -72,9 +73,9 @@ QG_MouseWidget::QG_MouseWidget(QWidget* parent, const char* name, Qt::WindowFlag
     lMousePixmap->setPixmap(QPixmap(":/icons/mouse.lci")/*.scaled(height, height)*/);
 }
 
-void QG_MouseWidget::updatePixmap(QString iconName, QLabel *label){
-    int width = label->pixmap().width();
-    int height = label->pixmap().height();
+void QG_MouseWidget::updatePixmap(const QString& iconName, QLabel *label){
+    const int width = label->pixmap().width();
+    const int height = label->pixmap().height();
     label->setPixmap(QIcon(iconName).pixmap(width, height));
 }
 
@@ -107,8 +108,8 @@ void QG_MouseWidget::setHelp(const QString& left, const QString& right, const LC
     const QString &ctrlMessage = modifiersInfo.getCtrlMessage();
     setupModifier(lblCtrl, ctrlMessage);
 
-    QString leftText = left;
-    QString rightText = right;
+    const QString leftText = left;
+    const QString rightText = right;
 
     lLeftButton->setText(leftText);
     lLeftButton->setToolTip(leftText);
@@ -127,21 +128,21 @@ void QG_MouseWidget::setupModifier(QLabel *btn, const QString& helpMsg) const{
     }
 }
 
-void QG_MouseWidget::clearActionIcon(){
-    const QIcon icon = QIcon();
+void QG_MouseWidget::clearActionIcon() const {
+    const auto icon = QIcon();
     setActionIcon(icon);
     lCurrentAction->setToolTip("");
 }
 
-void QG_MouseWidget::setActionIcon(QIcon icon) {
-    lCurrentAction->setPixmap(icon.pixmap(iconSize));
+void QG_MouseWidget::setActionIcon(const QIcon& icon) const {
+    lCurrentAction->setPixmap(icon.pixmap(m_iconSize));
 }
 
-void QG_MouseWidget::setCurrentQAction(QAction *a) {
+void QG_MouseWidget::setCurrentQAction(const QAction *a) {
     QIcon icon;
     if (a != nullptr){
         icon = a->icon();
-        QString toolTip = LC_ShortcutsManager::getPlainActionToolTip(a);
+        const QString toolTip = LC_ShortcutsManager::getPlainActionToolTip(a);
         lCurrentAction->setToolTip(tr("Current Action:")+ " " + toolTip);
     }
 

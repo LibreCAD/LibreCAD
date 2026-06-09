@@ -25,9 +25,9 @@
 #include "lc_namedviewslistoptions.h"
 #include "ui_lc_dlgnamedviewslistoptions.h"
 
-LC_DlgNamedViewsListOptions::LC_DlgNamedViewsListOptions(LC_NamedViewsListOptions* opts, QWidget *parent)
+LC_DlgNamedViewsListOptions::LC_DlgNamedViewsListOptions(LC_NamedViewsListOptions* options, QWidget *parent)
     : LC_Dialog(parent,"NamedViewsListOptions")
-    , ui(new Ui::LC_DlgNamedViewsListOptions),m_options{opts}{
+    , ui(new Ui::LC_DlgNamedViewsListOptions),m_options{options}{
     ui->setupUi(this);
 
     ui->cbShowTooltip->setChecked(m_options->showViewInfoToolTip);
@@ -40,8 +40,9 @@ LC_DlgNamedViewsListOptions::LC_DlgNamedViewsListOptions(LC_NamedViewsListOption
     ui->cbColumnUCSType->setChecked(m_options->showColumnUCSType);
     ui->cbColumnUCSDetails->setChecked(m_options->showColumnUCSDetails);
     ui->cbShowColumnVIewDetails->setChecked(m_options->showColumnViewDetails);
+    ui->cbShowGrid->setChecked(m_options->showGrid);
 
-    QObject::connect(ui->buttonBox, &QDialogButtonBox::accepted, this, &LC_DlgNamedViewsListOptions::validate);
+    connect(ui->buttonBox, &QDialogButtonBox::accepted, this, &LC_DlgNamedViewsListOptions::validate);
 }
 
 LC_DlgNamedViewsListOptions::~LC_DlgNamedViewsListOptions(){
@@ -63,4 +64,5 @@ void LC_DlgNamedViewsListOptions::validate() const {
     m_options->showColumnUCSType = ui->cbColumnUCSType->isChecked();
     m_options->showColumnUCSDetails = ui->cbColumnUCSDetails->isChecked();
     m_options->showColumnViewDetails = ui->cbShowColumnVIewDetails->isChecked();
+    m_options->showGrid = ui->cbShowGrid->isChecked();
 }

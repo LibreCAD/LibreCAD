@@ -28,10 +28,6 @@
 #define QG_GRAPHICVIEW_H
 
 #include <mutex>
-#include <cstdlib>
-
-#include <QString>
-#include <QWidget>
 
 #include "lc_ucslist.h"
 #include "rs.h"
@@ -39,6 +35,7 @@
 #include "rs_graphicview.h"
 #include "rs_layerlistlistener.h"
 
+class LC_RelativePointInputWidget;
 struct LC_UCSMarkOptions;
 class QEnterEvent;
 class QG_ScrollBar;
@@ -61,20 +58,18 @@ class QG_GraphicView:   public RS_GraphicView,
                         public LC_UCSListListener{
     Q_OBJECT
 public:
+    void initRelativePointInputWidget();
     // fixme - sand - files - restore - what if action context is null?? As for hatch dialog?
     explicit QG_GraphicView(QWidget *parent,  RS_Document *doc = nullptr, LC_ActionContext* actionContext = nullptr);
     ~QG_GraphicView() override;
 
     int getWidth() const override;
     int getHeight() const override;
-    void redraw(RS2::RedrawMethod method=RS2::RedrawAll) override;
+    void redraw(RS2::RedrawMethod method=RS2::RedrawAll, bool immediately = false) override;
     void adjustOffsetControls() override;
     void adjustZoomControls() override;
-    void setMouseCursor(RS2::CursorType c) override;
+    void setMouseCursor(RS2::CursorType cursorType) override;
     void updateGridStatusWidget(QString text) override;
-protected:
-    void dragEnterEvent(QDragEnterEvent* event) override;
-public:
     void loadSettings() override;
 
     // Methods from RS_LayerListListener Interface:
@@ -90,21 +85,23 @@ public:
 
     /**
      * @brief setOffset
-     * @param ox, offset X
-     * @param oy, offset Y
+     * @param ox offset X
+     * @param oy offset Y
      */
     void setOffset(int ox, int oy);
 
-    void setAntialiasing(bool state);
+    void setAntialiasing(bool state) const;
+    bool isAntialiasing() const;
     bool isDraftMode() const;
     void setDraftMode(bool dm);
-    void setDraftLinesMode(bool mode);
+    void setDraftLinesMode(bool mode) const;
+    bool isDraftLinesMode() const;
 
     void setCursorHiding(bool state);
     void addScrollbars();
-    bool hasScrollbars();
+    bool hasScrollbars() const;
     void setCurrentQAction(QAction* q_action);
-    QString obtainEntityDescription(RS_Entity *entity, RS2::EntityDescriptionLevel shortDescription) override;
+    QString obtainEntityDescription(const RS_Entity* entity, RS2::EntityDescriptionLevel shortDescription) override;
     virtual void initView();
     const QString& getDeviceName() const {
         return m_device;
@@ -112,19 +109,22 @@ public:
     void setDeviceName(QString deviceName) {
         m_device = std::move(deviceName);
     }
-    const QList<QAction*>& getRecentActions() const {return m_recent_actions;}
+    const QList<QAction*>& getRecentActions() const {return m_recentActions;}
     LC_ActionContext* getActionContext() const {return m_actionContext;}
-    void launchEditProperty(RS_Entity *entity);
+    void launchEditProperty(RS_Entity *entity) const;
+    void keyPressEvent(QKeyEvent* e) override;
+    void highlightUCSLocation(LC_UCS *ucs) override;
 protected slots:
     void slotHScrolled(int value);
     void slotVScrolled(int value);
 protected:
-    void mousePressEvent(QMouseEvent* e) override;
+    void dragEnterEvent(QDragEnterEvent* event) override;
+    void mousePressEvent(QMouseEvent* event) override;
     bool invokeContextMenuForMouseEvent(QMouseEvent* e);
     void mouseDoubleClickEvent(QMouseEvent* e) override;
-    bool isMouseReleaseEventForDefaultAction(QMouseEvent* event);
-    void mouseReleaseEvent(QMouseEvent* e) override;
-    void mouseMoveEvent(QMouseEvent* e) override;
+    bool isMouseReleaseEventForDefaultAction(const QMouseEvent* event);
+    void mouseReleaseEvent(QMouseEvent* event) override;
+    void mouseMoveEvent(QMouseEvent* event) override;
     virtual bool proceedEvent(QEvent* event);
     void tabletEvent(QTabletEvent* e) override;
     void leaveEvent(QEvent*) override;
@@ -132,29 +132,27 @@ protected:
     void focusInEvent(QFocusEvent*) override;
     void focusOutEvent(QFocusEvent*) override;
     void wheelEvent(QWheelEvent* e) override;
-    void keyPressEvent(QKeyEvent* e) override;
     void keyReleaseEvent(QKeyEvent* e) override;
-    bool event(QEvent * e) override;
-    void doZoom(RS2::ZoomDirection direction, RS_Vector& center, double zoom_factor);
+    bool event(QEvent * event) override;
+    void doZoom(RS2::ZoomDirection direction, const RS_Vector& center, double zoomFactor) const;
     void paintEvent(QPaintEvent *)override;
     void resizeEvent(QResizeEvent* e) override;
     void switchToAction(RS2::ActionType actionType, void* data = nullptr) const;
-    RS_Entity* catchContextEntity(QMouseEvent* event, RS_Vector& clickPos);
-    void autoPanStep();
-    void highlightUCSLocation(LC_UCS *ucs) override;
+    RS_Entity* catchContextEntity(const QMouseEvent* event, RS_Vector& clickPos) const;
+    void autoPanStep() const;
     void ucsHighlightStep();
 
     virtual void createViewRenderer();
     // For auto panning by the cursor close to the view border
-    void startAutoPanTimer(QMouseEvent *e);
-    bool isAutoPan(QMouseEvent* e) const;
-    void deleteActionContext();
+    void startAutoPanTimer(const QMouseEvent *event);
+    bool isAutoPan(const QMouseEvent* event) const;
+    void deleteActionContext() const;
 signals:
     void xbutton1_released();
     void gridStatusChanged(QString);
 private:
     QString m_device;
-    QList<QAction*> m_recent_actions;
+    QList<QAction*> m_recentActions;
 
     //! Horizontal scrollbar.
     QG_ScrollBar* m_hScrollBar = nullptr;
@@ -177,12 +175,10 @@ private:
 
     //! Keep tracks of if we are currently doing a high-resolution scrolling
     bool m_isSmoothScrolling;
-
     std::unique_ptr<LC_UCSMarkOptions> m_ucsMarkOptions;
-
     bool m_scrollbars{false};
-    bool m_cursor_hiding{false};
-    bool m_selectCursor_hiding{false};
+    bool m_cursorHiding{false};
+    bool m_selectCursorHiding{false};
     bool m_invertZoomDirection{false};
     bool m_invertHorizontalScroll {false};
     bool m_invertVerticalScroll {false};
@@ -192,14 +188,12 @@ private:
     std::unique_ptr<AutoPanData> m_panData;
     struct UCSHighlightData;
     std::unique_ptr<UCSHighlightData> m_ucsHighlightData;
-
     LC_ActionContext* m_actionContext {nullptr};
 
-    void showEntityPropertiesDialog(RS_Entity *entity);
-    void editAction(RS_Entity &entity);
+    void showEntityPropertiesDialog(RS_Entity *entity) const;
+    void editAction(RS_Entity &entity) const;
     // for scroll bar adjustment
     std::mutex m_scrollbarMutex;
-
 };
 
 #endif

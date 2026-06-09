@@ -21,6 +21,7 @@
  ******************************************************************************/
 
 #include "lc_snapoptionswidgetsholder.h"
+
 #include "ui_lc_snapoptionswidgetsholder.h"
 
 LC_SnapOptionsWidgetsHolder::LC_SnapOptionsWidgetsHolder(QWidget *parent)
@@ -42,14 +43,14 @@ void LC_SnapOptionsWidgetsHolder::languageChange(){
     ui->retranslateUi(this);
 }
 
-void LC_SnapOptionsWidgetsHolder::hideSnapOptions(){
+void LC_SnapOptionsWidgetsHolder::hideSnapOptions() const {
     ui->snapDistanceOptions->hide();
     ui->snapMiddleOptions->hide();
     hideSeparator();
     updateParent();
 }
 
-void LC_SnapOptionsWidgetsHolder::hideSeparator() {
+void LC_SnapOptionsWidgetsHolder::hideSeparator() const {
     if (m_widgetOnLeftWithinContainer){
         ui->lineRight->hide();
     }
@@ -58,7 +59,7 @@ void LC_SnapOptionsWidgetsHolder::hideSeparator() {
     }
 }
 
-void LC_SnapOptionsWidgetsHolder::showSeparator() {
+void LC_SnapOptionsWidgetsHolder::showSeparator() const {
     if (m_widgetOnLeftWithinContainer){
         ui->lineRight->show();
     }
@@ -68,7 +69,7 @@ void LC_SnapOptionsWidgetsHolder::showSeparator() {
     updateParent();
 }
 
-void LC_SnapOptionsWidgetsHolder::showSnapMiddleOptions(int* middlePoints, bool on){
+void LC_SnapOptionsWidgetsHolder::showSnapMiddleOptions(int* middlePoints, const bool on) const {
     if (on){
         ui->snapMiddleOptions->useMiddlePointsValue(middlePoints);
         ui->snapMiddleOptions->doShow();
@@ -84,11 +85,11 @@ void LC_SnapOptionsWidgetsHolder::showSnapMiddleOptions(int* middlePoints, bool 
 }
 
 void LC_SnapOptionsWidgetsHolder::updateParent() const {
-    auto* parentWidget = dynamic_cast<QWidget *>(parent());
+    auto* parentWidget = static_cast<QWidget *>(parent());
     parentWidget->update();
 }
 
-void LC_SnapOptionsWidgetsHolder::showSnapDistOptions(double* dist, bool on){
+void LC_SnapOptionsWidgetsHolder::showSnapDistOptions(double* dist, const bool on) const {
     if (on){
         ui->snapDistanceOptions->useSnapDistanceValue(dist);
         ui->snapDistanceOptions->doShow();
@@ -102,17 +103,17 @@ void LC_SnapOptionsWidgetsHolder::showSnapDistOptions(double* dist, bool on){
     }
 }
 
-void LC_SnapOptionsWidgetsHolder::updateBy(LC_SnapOptionsWidgetsHolder *other) {
+void LC_SnapOptionsWidgetsHolder::updateBy(const LC_SnapOptionsWidgetsHolder *other) const {
     // ugly method used to restore state of snap options if switch of settings occured...
     // this allows to change location of snap options without the application restart
-    bool snapDistanceOn = other->ui->snapDistanceOptions->isVisible();
+    const bool snapDistanceOn = other->ui->snapDistanceOptions->isVisible();
     if (snapDistanceOn) {
         double* dist = other->ui->snapDistanceOptions->getDistanceValue();
         ui->snapDistanceOptions->useSnapDistanceValue(dist);
         ui->snapDistanceOptions->doShow();
         showSeparator();
     }
-    bool snapMiddleOn = other->ui->snapMiddleOptions->isVisible();
+    const bool snapMiddleOn = other->ui->snapMiddleOptions->isVisible();
     if (snapMiddleOn){
         int* num = other->ui->snapMiddleOptions->getMiddlePointsValue();
         ui->snapMiddleOptions->useMiddlePointsValue(num);

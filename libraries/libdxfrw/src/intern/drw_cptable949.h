@@ -17196,4 +17196,4 @@ static const int DRW_DoubleTable949[][2] = {
     {0xFDFE, 0x8A70}, //17048 #CJK UNIFIED IDEOGRAPH
 };
 
-#endif // DRW_CPTABLE949_H
+#endif

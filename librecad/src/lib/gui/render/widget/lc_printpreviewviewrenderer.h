@@ -49,4 +49,4 @@ private:
     double m_paperScale = 1.0;
 };
 
-#endif // LC_PRINTPREVIEWVIEWRENDERER_H
+#endif

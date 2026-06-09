@@ -33,8 +33,7 @@ public:
                                                    bool forRead,
                                                    const QString& extensionStr,
                                                    const QString& defaultFileName,
-                                                   const QString& captionForImport, const QString& captionForExport,
-                                                   QString fileNameFilter);
+                                                   const QString& captionForImport, const QString& captionForExport, const QString& fileNameFilter);
 };
 
-#endif // LC_FILENAMESELECTIONSERVICE_H
+#endif

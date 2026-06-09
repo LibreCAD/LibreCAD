@@ -29,6 +29,7 @@
 #ifndef RS_COMMANDS_H
 #define RS_COMMANDS_H
 
+#include <QStringList>
 #include <map>
 
 #include "rs.h"
@@ -55,9 +56,9 @@ public:
     static RS_Commands* instance();
 
     QStringList complete(const QString& cmd) const;
-    // The case sensitive version
+    // The case-sensitive version
     RS2::ActionType commandToAction(const QString& cmd) const;
-    // The case insensitive version
+    // The case-insensitive version
     RS2::ActionType cmdToAction(const QString& cmd, bool verbose = true) const;
     RS2::ActionType keycodeToAction(const QString& code) const;
 
@@ -70,6 +71,13 @@ public:
 
     static QString getAliasFile();
     void updateAlias();
+
+    QString getCommandForAction(RS2::ActionType action) {
+        if (m_actionToCommand.count(action)) {
+            return m_actionToCommand[action];
+        }
+        return "";
+    }
 
     ~RS_Commands()=delete;
     RS_Commands(const RS_Commands &) = delete;

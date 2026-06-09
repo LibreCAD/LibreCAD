@@ -22,10 +22,9 @@
 
 #include "lc_actiongroupmanager.h"
 
-#include "qc_applicationwindow.h"
 #include "lc_actiongroup.h"
 #include "lc_shortcuts_manager.h"
-
+#include "qc_applicationwindow.h"
 
 namespace Sorting
 {
@@ -69,32 +68,33 @@ QList<LC_ActionGroup *> LC_ActionGroupManager::toolGroups() const {
 }
 
 QList<LC_ActionGroup *> LC_ActionGroupManager::allGroupsList() {
-    QList<LC_ActionGroup *> ag_list = findChildren<LC_ActionGroup *>();
-    sortGroupsByName(ag_list);
-    return ag_list;
+    QList<LC_ActionGroup *> agList = findChildren<LC_ActionGroup *>();
+    sortGroupsByName(agList);
+    return agList;
 }
 
 QMap<QString, LC_ActionGroup *> LC_ActionGroupManager::allGroups() {
-    QList<LC_ActionGroup *> ag_list = findChildren<LC_ActionGroup *>();
-    sortGroupsByName(ag_list);
+    QList<LC_ActionGroup *> actionGroupList = findChildren<LC_ActionGroup *>();
+    sortGroupsByName(actionGroupList);
 
-    QMap<QString, LC_ActionGroup *> ag_map;
+    QMap<QString, LC_ActionGroup *> actionGroupMap;
 
-    for (auto ag: ag_list) {
-        ag_map[ag->objectName()] = ag;
+    for (const auto ag: std::as_const(actionGroupList)) {
+        actionGroupMap[ag->objectName()] = ag;
     }
 
-    return ag_map;
+    return actionGroupMap;
 }
 
-void LC_ActionGroupManager::toggleExclusiveSnapMode(bool state) {
-    auto snap = getGroupByName("snap");
-    auto snap_actions = snap->actions();
+void LC_ActionGroupManager::toggleExclusiveSnapMode(const bool state) {
+    const auto snap = getGroupByName("snap");
+    Q_ASSERT(snap != nullptr);
+    auto snapActions = snap->actions();
 
-    QList<bool> temp_memory;
+    QList<bool> tempSnapState;
 
-    for (auto action: snap_actions) {
-        temp_memory << action->isChecked();
+    for (const auto action: std::as_const(snapActions)) {
+        tempSnapState << action->isChecked();
         if (action->isChecked()) {
             action->activate(QAction::Trigger);
             action->setChecked(false);
@@ -103,18 +103,19 @@ void LC_ActionGroupManager::toggleExclusiveSnapMode(bool state) {
 
     snap->setExclusive(state);
 
-    if (!snap_memory.isEmpty()) {
-        for (int i = 0; i < snap_actions.size(); ++i) {
-            if (snap_memory.at(i) == true)
-                snap_actions.at(i)->activate(QAction::Trigger);
+    if (!m_snapState.isEmpty()) {
+        for (int i = 0; i < snapActions.size(); ++i) {
+            if (m_snapState.at(i) == true) {
+                snapActions.at(i)->activate(QAction::Trigger);
+            }
         }
     }
-    snap_memory = temp_memory;
+    m_snapState = tempSnapState;
 }
 
-void LC_ActionGroupManager::toggleTools(bool state) {
-    for (auto group: toolGroups()) {
-        for (auto action: group->actions()) {
+void LC_ActionGroupManager::toggleTools(const bool state) const {
+    for (const auto group: toolGroups()) {
+        for (const auto action: group->actions()) {
             action->setDisabled(state);
         }
     }
@@ -124,32 +125,32 @@ void LC_ActionGroupManager::onOptionsChanged() const {
     m_shortcutsManager->updateActionTooltips(m_actionsMap);
 }
 
-void LC_ActionGroupManager::assignShortcutsToActions(QMap<QString, QAction *> &map, std::vector<LC_ShortcutInfo> &shortcutsList) const {
+void LC_ActionGroupManager::assignShortcutsToActions(const QMap<QString, QAction *> &map, const std::vector<LC_ShortcutInfo> &shortcutsList) const {
     m_shortcutsManager->assignShortcutsToActions(map, shortcutsList);
 }
 
 int LC_ActionGroupManager::loadShortcuts([[maybe_unused]] const QMap<QString, QAction *> &map) {
     m_shortcutsManager->init();
-    int loadResult = m_shortcutsManager->loadShortcuts(m_actionsMap);
+    const int loadResult = m_shortcutsManager->loadShortcuts(m_actionsMap);
     return loadResult;
 }
 
 int LC_ActionGroupManager::loadShortcuts(const QString &fileName, QMap<QString, QKeySequence> *result) const {
-    int loadResult = m_shortcutsManager->loadShortcuts(fileName, result);
+    const int loadResult = m_shortcutsManager->loadShortcuts(fileName, result);
     return loadResult;
 }
 
 int LC_ActionGroupManager::saveShortcuts(const QList<LC_ShortcutInfo*> &shortcutsList, const QString &fileName) const {
-    int saveResult = m_shortcutsManager->saveShortcuts(fileName, shortcutsList);
+    const int saveResult = m_shortcutsManager->saveShortcuts(fileName, shortcutsList);
     return saveResult;
 }
 
 int LC_ActionGroupManager::saveShortcuts(QMap<QString, LC_ShortcutInfo *> shortcutsMap) {
-    int saveResult = m_shortcutsManager->saveShortcuts(shortcutsMap, m_actionsMap);
+    const int saveResult = m_shortcutsManager->saveShortcuts(shortcutsMap, m_actionsMap);
     return saveResult;
 }
 
-const QString LC_ActionGroupManager::getShortcutsMappingsFolder() const {
+QString LC_ActionGroupManager::getShortcutsMappingsFolder() const {
     return m_shortcutsManager->getShortcutsMappingsFolder();
 }
 
@@ -165,7 +166,7 @@ bool LC_ActionGroupManager::hasActionGroup(const QString& categoryName) const {
     return m_actionGroups.contains(categoryName);
 }
 
-LC_ActionGroup* LC_ActionGroupManager::getActionGroup(const QString& groupName) {
+LC_ActionGroup* LC_ActionGroupManager::getActionGroup(const QString& groupName) const {
     return m_actionGroups.value(groupName, nullptr);
 }
 
@@ -175,7 +176,7 @@ bool LC_ActionGroupManager::isActionTypeSetsTheIcon([[maybe_unused]]RS2::ActionT
     return true;
 }
 
-void LC_ActionGroupManager::associateQActionWithActionType(QAction *action, RS2::ActionType actionType){
+void LC_ActionGroupManager::associateQActionWithActionType(QAction *action, const RS2::ActionType actionType){
     action->setProperty("RS2:actionType", actionType);
 }
 
@@ -191,19 +192,19 @@ LC_ActionGroup* LC_ActionGroupManager::getGroupByName(const QString& name) const
     return nullptr;
 }
 
-void LC_ActionGroupManager::addActionGroup(const QString& name, LC_ActionGroup* actionGroup, bool toolsGroup) {
+void LC_ActionGroupManager::addActionGroup(const QString& name, LC_ActionGroup* actionGroup, const bool isToolsGroup) {
     m_actionGroups.insert(name, actionGroup);
-    if (toolsGroup) {
+    if (isToolsGroup) {
        m_toolsGroups << actionGroup;
     }
 }
 
 void LC_ActionGroupManager::completeInit(){
-   for (const auto action: m_actionsMap) {
+   for (const auto action: std::as_const(m_actionsMap)) {
        if (action != nullptr) { // fixme - sand - check where from null may be inserted to action map
            auto property = action->property("RS2:actionType");
            if (property.isValid()) {
-               auto actionType = property.value<RS2::ActionType>();
+               const auto actionType = property.value<RS2::ActionType>();
                if (isActionTypeSetsTheIcon(actionType)){
                    m_actionsByTypes.insert(actionType, action);
                }
@@ -212,6 +213,6 @@ void LC_ActionGroupManager::completeInit(){
    }
 }
 
-QAction* LC_ActionGroupManager::getActionByType(RS2::ActionType actionType){
+QAction* LC_ActionGroupManager::getActionByType(const RS2::ActionType actionType) const {
     return m_actionsByTypes.value(actionType);
 }

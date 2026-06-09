@@ -34,6 +34,7 @@
 /**
  * Holds the data that defines a angular dimension entity.
  */
+// fixme - sand - no copy assignment operator!
 struct RS_DimAngularData
 {
     RS_DimAngularData();
@@ -42,8 +43,10 @@ struct RS_DimAngularData
     /**
      * Constructor with initialisation.
      *
-     * @param definitionPoint Definition point of the angular dimension.
-     * @param leader Leader length.
+     * @param definitionPoint1 Definition point of the angular dimension.
+     * @param definitionPoint2
+     * @param definitionPoint3
+     * @param definitionPoint4
      */
     RS_DimAngularData(const RS_Vector& definitionPoint1,
                       const RS_Vector& definitionPoint2,
@@ -62,34 +65,29 @@ std::ostream& operator << (std::ostream& os, const RS_DimAngularData& dd);
 /**
  * Holds the DXF variables that defines a angular dimension entity.
  */
+// fixme - sand - no copy assignment operator!
 struct LC_DimAngularVars
 {
-    explicit LC_DimAngularVars(const double _dimscale,
-                               const double _dimexo,
-                               const double _dimexe,
-                               const double _dimtxt,
-                               const double _dimgap,
-                               const double _arrowSize,
-                               const double _tickSize);
+    explicit LC_DimAngularVars(double dimscale, double dimexo, double dimexe, double dimtxt, double dimgap, double arrowSize, double tickSize);
 
     explicit LC_DimAngularVars(const LC_DimAngularVars& av);
 
-    double scale(void) const {
+    double scale() const {
         return dimscale;
     }
-    double exo(void) const {
+    double exo() const {
         return dimexo;
     }
-    double exe(void) const {
+    double exe() const {
         return dimexe;
     }
-    double txt(void) const {
+    double txt() const {
         return dimtxt;
     }
-    double gap(void) const {
+    double gap() const {
         return dimgap;
     }
-    double arrow(void) const {
+    double arrow() const {
         return arrowSize;
     }
 
@@ -114,6 +112,7 @@ std::ostream& operator << (std::ostream& os, const LC_DimAngularVars& dd);
  *
  * @author Andrew Mustun
  */
+// fixme - sand - no copy assignment operator!
 class RS_DimAngular : public RS_Dimension
 {
     friend std::ostream& operator << (std::ostream& os, const RS_DimAngular& d);
@@ -143,18 +142,36 @@ public:
     RS_Vector getCenter() const override;
 
 
-
-    RS_Vector getDefinitionPoint1() {
+    RS_Vector getDefinitionPoint1() const {
         return m_dimAngularData.definitionPoint1;
     }
-    RS_Vector getDefinitionPoint2() {
+
+    void setDefinitionPoint1(const RS_Vector& p) {
+        m_dimAngularData.definitionPoint1 = p;
+    }
+
+    RS_Vector getDefinitionPoint2() const {
         return m_dimAngularData.definitionPoint2;
     }
-    RS_Vector getDefinitionPoint3() {
+
+    void setDefinitionPoint2(const RS_Vector& p) {
+        m_dimAngularData.definitionPoint2 = p;
+    }
+
+    RS_Vector getDefinitionPoint3() const {
         return m_dimAngularData.definitionPoint3;
     }
-    RS_Vector getDefinitionPoint4() {
+
+    void setDefinitionPoint3(const RS_Vector& p) {
+        m_dimAngularData.definitionPoint3 = p;
+    }
+
+    RS_Vector getDefinitionPoint4() const {
         return m_dimAngularData.definitionPoint4;
+    }
+
+    void setDefinitionPoint4(const RS_Vector& p) {
+        m_dimAngularData.definitionPoint4 = p;
     }
 
     void update() override;
@@ -170,17 +187,14 @@ protected:
     void doUpdateDim() override;
 
 private:
-    void calcDimension(void);
-    void fixDimension(void);
+    void calcDimension();
+    void fixDimension();
     void extensionLine(const RS_ConstructionLine& dimLine,
                        const RS_Vector& dimPoint,
                        const RS_Vector& dirStart,
                        const RS_Vector& dirEnd,
                        const LC_DimAngularVars& av);
-    void arrow(const RS_Vector& point,
-               const double angle,
-               const double direction,
-               const bool outsideArrows,
+    void arrow(const RS_Vector& point, double angle, double direction, bool outsideArrows,
                const LC_DimAngularVars& av);
 
     RS_Vector   dimDir1s;

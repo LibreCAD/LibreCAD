@@ -20,9 +20,9 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
 
-#include <QApplication>
 #include "lc_shortcuts_manager.h"
 
+#include <QApplication>
 #include <QDir>
 #include <QFile>
 
@@ -31,26 +31,24 @@
 #include "rs_settings.h"
 #include "rs_system.h"
 
-const char* LC_ShortcutsManager::PROPERTY_SHORTCUT_BACKUP = "tooltip.original";
-
-LC_ShortcutsManager::LC_ShortcutsManager() {}
+LC_ShortcutsManager::LC_ShortcutsManager() = default;
 
 int LC_ShortcutsManager::saveShortcuts(
     QMap<QString, LC_ShortcutInfo *> &shortcuts, QMap<QString, QAction *> &actionsMap) const {
 
     applyShortcutsMapToActionsMap(shortcuts, actionsMap);
     updateActionTooltips(actionsMap);
-    
-    QString defaultShortcutsFileName = getDefaultShortcutsFileName();
 
-    int saveResult = LC_ShortcutsStorage::saveShortcuts(defaultShortcutsFileName, shortcuts.values(), false);
+    const QString defaultShortcutsFileName = getDefaultShortcutsFileName();
+
+    const int saveResult = LC_ShortcutsStorage::saveShortcuts(defaultShortcutsFileName, shortcuts.values(), false);
     return saveResult;
 }
 
 int LC_ShortcutsManager::loadShortcuts(QMap<QString, QAction *> &actionsMap) const {
-    QString defaultFileName = getDefaultShortcutsFileName();
-    QMap<QString, QKeySequence> shortcuts = QMap<QString, QKeySequence>();
-    int loadResult = loadShortcuts(defaultFileName, &shortcuts);
+    const QString defaultFileName = getDefaultShortcutsFileName();
+    auto shortcuts = QMap<QString, QKeySequence>();
+    const int loadResult = loadShortcuts(defaultFileName, &shortcuts);
     if (loadResult == LC_ShortcutsStorage::OK){
         applyKeySequencesMapToActionsMap(shortcuts, actionsMap);
     }
@@ -58,9 +56,8 @@ int LC_ShortcutsManager::loadShortcuts(QMap<QString, QAction *> &actionsMap) con
     return loadResult;
 }
 
-
 int LC_ShortcutsManager::saveShortcuts(const QString &fileName, const QList<LC_ShortcutInfo *> &shortcutsList) const {
-    int result = LC_ShortcutsStorage::saveShortcuts(fileName, shortcutsList);
+    const int result = LC_ShortcutsStorage::saveShortcuts(fileName, shortcutsList);
     return result;
 }
 
@@ -69,16 +66,16 @@ int LC_ShortcutsManager::loadShortcuts(const QString &filename, QMap<QString, QK
 }
 
 void LC_ShortcutsManager::updateActionTooltips(const QMap<QString, QAction *> &actionsMap) const {
-    bool showShortcutsInActionsTooltips = LC_GET_ONE_BOOL("Appearance","ShowKeyboardShortcutsInTooltips", true);
+    const bool showShortcutsInActionsTooltips = LC_GET_ONE_BOOL("Appearance","ShowKeyboardShortcutsInTooltips", true);
     updateActionShortcutTooltips(actionsMap, showShortcutsInActionsTooltips);
 }
 
-void LC_ShortcutsManager::init() {
-    QString defaultFileName = getDefaultShortcutsFileName();
+void LC_ShortcutsManager::init() const {
+    const QString defaultFileName = getDefaultShortcutsFileName();
     if (!defaultFileName.isEmpty()) {
-        QFile defaultFile(defaultFileName);
+        const QFile defaultFile(defaultFileName);
         if (defaultFile.exists()) {
-            QString backupFileName = defaultFileName + ".bak";
+            const QString backupFileName = defaultFileName + ".bak";
             QFile::copy(defaultFileName, backupFileName);
         }
     }
@@ -103,8 +100,7 @@ void LC_ShortcutsManager::applyKeySequencesMapToActionsMap(QMap<QString, QKeySeq
     }
 }
 
-void LC_ShortcutsManager::assignShortcutsToActions(const QMap<QString, QAction *> &map,
-                                                    std::vector<LC_ShortcutInfo> &shortcutsList) const {
+void LC_ShortcutsManager::assignShortcutsToActions(const QMap<QString, QAction *> &map, const std::vector<LC_ShortcutInfo> &shortcutsList) const {
     for (const LC_ShortcutInfo &a: shortcutsList){
         QAction* createdAction = map[a.getName()];
         if (createdAction != nullptr){
@@ -121,7 +117,7 @@ void LC_ShortcutsManager::assignShortcutsToActions(const QMap<QString, QAction *
     }
 }
 
-QString LC_ShortcutsManager::getPlainActionToolTip(QAction* action){
+QString LC_ShortcutsManager::getPlainActionToolTip(const QAction* action){
     if (action != nullptr) {
         if (!action->shortcut().isEmpty()) {
             QString tooltip = action->property(PROPERTY_SHORTCUT_BACKUP).toString();
@@ -136,7 +132,7 @@ QString LC_ShortcutsManager::getPlainActionToolTip(QAction* action){
 }
 
 
-void LC_ShortcutsManager::updateActionShortcutTooltips(const QMap<QString, QAction *> &map, bool enable) const {
+void LC_ShortcutsManager::updateActionShortcutTooltips(const QMap<QString, QAction *> &map, const bool enable) const {
     if (enable){
         for (auto [key, action]: map.asKeyValueRange()) {
             if (action != nullptr) {
@@ -152,7 +148,7 @@ void LC_ShortcutsManager::updateActionShortcutTooltips(const QMap<QString, QActi
                     if (shortcutTextColor.value() == 0) {
                         shortCutTextColorName = "gray";  // special handling for black because lighter() does not work there [QTBUG-9343].
                     } else {
-                        int factor = (shortcutTextColor.value() < 128) ? 150 : 50;
+                        const int factor = (shortcutTextColor.value() < 128) ? 150 : 50;
                         shortCutTextColorName = shortcutTextColor.lighter(factor).name();
                     }
                     action->setToolTip(QString(
@@ -184,8 +180,9 @@ void LC_ShortcutsManager::updateActionShortcutTooltips(const QMap<QString, QActi
 QString LC_ShortcutsManager::strippedActionText(QString s) const{
     s.remove( QString::fromLatin1("..."));
     for (int i = 0; i < s.size(); ++i) {
-        if (s.at(i) == QLatin1Char('&'))
+        if (s.at(i) == QLatin1Char('&')) {
             s.remove(i, 1);
+        }
     }
     return s.trimmed();
 }
@@ -196,6 +193,6 @@ QString LC_ShortcutsManager::getShortcutsMappingsFolder() const {
 }
 
 QString LC_ShortcutsManager::getDefaultShortcutsFileName() const {
-    QString path =  getShortcutsMappingsFolder() + "/shortcuts.lcsc";
+    const QString path =  getShortcutsMappingsFolder() + "/shortcuts.lcsc";
     return QDir::toNativeSeparators(path);
 }

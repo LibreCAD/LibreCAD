@@ -1,5 +1,5 @@
 /****************************************************************************
-*
+ *
 * Options Dialog for QuickInfo widget related functions
 
 Copyright (C) 2024 LibreCAD.org
@@ -32,14 +32,13 @@ namespace Ui
 
 class LC_QuickInfoWidgetOptionsDialog : public LC_Dialog{
     Q_OBJECT
-
 public:
-    explicit LC_QuickInfoWidgetOptionsDialog(QWidget *parent, LC_QuickInfoOptions *pOptions);
+    explicit LC_QuickInfoWidgetOptionsDialog(QWidget *parent, LC_QuickInfoOptions *options);
     ~LC_QuickInfoWidgetOptionsDialog() override;
 
 public slots:
     void validate();
-    void onDefaultActionAutoClicked();
+    void onDefaultActionAutoClicked() const;
 
 protected slots:
     void languageChange();
@@ -49,4 +48,4 @@ private:
     LC_QuickInfoOptions *m_options;
 };
 
-#endif // LC_QUICKINFOWIDGETOPTIONSDIALOG_H
+#endif

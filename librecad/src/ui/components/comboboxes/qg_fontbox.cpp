@@ -35,7 +35,9 @@
  * to use this constructor.
  */
 QG_FontBox::QG_FontBox(QWidget* parent)
-        : QComboBox(parent) {}
+    : QComboBox(parent) {
+}
+
 /**
  * Initialisation (called from constructor or manually but only
  * once).
@@ -43,18 +45,18 @@ QG_FontBox::QG_FontBox(QWidget* parent)
 void QG_FontBox::init() {
     QStringList fonts;
 
-	for(auto const& f: * RS_FONTLIST){
-		if(fonts.contains(f->getFileName())){
-			DEBUG_HEADER
-			qDebug()<<__func__<<": WARNING: duplicated font: "<<f->getFileName();
-			continue;
-		}
+    for (const auto& f : *RS_FONTLIST) {
+        if (fonts.contains(f->getFileName())) {
+            DEBUG_HEADER
+            qDebug() << __func__ << ": WARNING: duplicated font: " << f->getFileName();
+            continue;
+        }
 
-		fonts.append(f->getFileName());
-	}
+        fonts.append(f->getFileName());
+    }
     addItems(fonts);
 
-    connect(this, &QG_FontBox::activated,this, &QG_FontBox::slotFontChanged);
+    connect(this, &QG_FontBox::activated, this, &QG_FontBox::slotFontChanged);
 
     setCurrentIndex(0);
     slotFontChanged(currentIndex());
@@ -65,24 +67,23 @@ void QG_FontBox::init() {
  */
 void QG_FontBox::setFont(const QString& fName) {
     RS_DEBUG->print("QG_FontBox::setFont %s\n", fName.toLatin1().data());
-    setItemText(currentIndex(),fName);
+    setItemText(currentIndex(), fName);
     slotFontChanged(currentIndex());
 }
 
-RS_Font* QG_FontBox::getFont() const{
-	return m_currentFont;
+RS_Font* QG_FontBox::getFont() const {
+    return m_currentFont;
 }
 
 /**
  * Called when the font has changed. This method 
  * sets the current font to the value chosen.
  */
-void QG_FontBox::slotFontChanged(int index) {
+void QG_FontBox::slotFontChanged(const int index) {
     RS_DEBUG->print("QG_FontBox::slotFontChanged %d\n", index);
     m_currentFont = RS_FONTLIST->requestFont(currentText());
-	if (m_currentFont) {
-        RS_DEBUG->print("Current font is (%d): %s\n",
-                        index, m_currentFont->getFileName().toLatin1().data());
+    if (m_currentFont != nullptr) {
+        RS_DEBUG->print("Current font is (%d): %s\n", index, m_currentFont->getFileName().toLatin1().data());
     }
     emit fontChanged(m_currentFont);
 }

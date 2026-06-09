@@ -25,10 +25,10 @@
 **
 **********************************************************************/
 
+#include "rs.h"
+
 #include<limits>
 #include<map>
-
-#include "rs.h"
 
 namespace {
 
@@ -70,8 +70,9 @@ std::map<int, RS2::LineWidth> constructInt2LineWidth() {
 std::map<RS2::LineWidth, int> constructReversedMap(const std::map<int, RS2::LineWidth>& originalMap) {
     std::map<RS2::LineWidth, int> reverseMap;
 
-    for(const auto [key, lineWidth]: originalMap)
+    for(const auto [key, lineWidth]: originalMap) {
         reverseMap[lineWidth] = key;
+    }
 
     return reverseMap;
 }
@@ -82,28 +83,31 @@ const std::map<int, RS2::LineWidth>& getInt2LineWidthMap() {
 }
 }
 
-RS2::LineWidth RS2::intToLineWidth(int w) {
+RS2::LineWidth RS2::intToLineWidth(const int w) {
     // for w < 3, return Width00
     // if (w <= 2) return Width00;
-    const std::map<int, RS2::LineWidth>& int2LineWidthMap = getInt2LineWidthMap();
-    auto it = int2LineWidthMap.find(w);
+    const std::map<int, LineWidth>& int2LineWidthMap = getInt2LineWidthMap();
+    const auto it = int2LineWidthMap.find(w);
     return (it != int2LineWidthMap.cend()) ? it->second : Width00;
 }
 
-int RS2::lineWidthToInt(LineWidth lw){
-    static const std::map<RS2::LineWidth, int> g_lineWidth2int = constructReversedMap(getInt2LineWidthMap());
-    auto it = g_lineWidth2int.find(lw);
+int RS2::lineWidthToInt(const LineWidth lw){
+    static const std::map<LineWidth, int> g_lineWidth2int = constructReversedMap(getInt2LineWidthMap());
+    const auto it = g_lineWidth2int.find(lw);
     return (it != g_lineWidth2int.cend()) ? it->second : -2;
 }
 
-RS2::LineWidth RS2::dxfInt2lineWidth(int i){
+RS2::LineWidth RS2::dxfInt2lineWidth(const int i){
     if (i<0) {
-        if (i==-1)
+        if (i==-1) {
             return WidthByLayer;
-        else if (i==-2)
+        }
+        if (i==-2) {
             return WidthByBlock;
-        else if (i==-3)
+        }
+        if (i==-3) {
             return WidthDefault;
+        }
     } else if (i<3) {
         return Width00;
     } else if (i<7) {
@@ -157,7 +161,7 @@ RS2::LineWidth RS2::dxfInt2lineWidth(int i){
     return WidthDefault;
 }
 
-int RS2::lineWidth2dxfInt(LineWidth lw){
+int RS2::lineWidth2dxfInt(const LineWidth lw){
     switch (lw){
         case WidthByLayer:
             return -1;

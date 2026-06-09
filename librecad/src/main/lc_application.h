@@ -29,20 +29,14 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include <QApplication>
 
-class LC_Application : public QApplication
-{
-    Q_OBJECT
-
-public:
-    explicit LC_Application(int &argc, char **argv);
-
-    QStringList const& fileList(void) const;
-
+class LC_Application : public QApplication {
+    Q_OBJECT public:
+    explicit LC_Application(int& argc, char** argv);
+    const QStringList& fileList() const;
 protected:
-    bool event(QEvent *event) Q_DECL_OVERRIDE;
-
+    bool event(QEvent* event) Q_DECL_OVERRIDE;
 private:
-    QStringList files;
+    QStringList m_files;
 };
 
-#endif // LC_APPLICATION_H
+#endif

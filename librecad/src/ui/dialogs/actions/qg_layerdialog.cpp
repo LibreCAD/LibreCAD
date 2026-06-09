@@ -38,7 +38,7 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
-QG_LayerDialog::QG_LayerDialog(QWidget* parent, QString name)
+QG_LayerDialog::QG_LayerDialog(QWidget* parent, const QString& name)
     : LC_Dialog(parent, "LayerProperties") {
     setObjectName(name);
     setupUi(this);
@@ -68,17 +68,17 @@ void QG_LayerDialog::setLayer(RS_Layer* l) {
     }
 }
 
-void QG_LayerDialog::updateLayer() {
+void QG_LayerDialog::updateLayer() const {
     m_layer->setName(leName->text());
     m_layer->setPen(wPen->getPen());
     m_layer->setConstruction(cbConstructionLayer->isChecked());
 }
 
 void QG_LayerDialog::validate() {
-    if (m_layerList &&
-        (m_editLayer == false || m_layerName != leName->text())) {
-        RS_Layer* l = m_layerList->find(leName->text());
-        if (l) {
+    if ((m_layerList != nullptr) &&
+        (!m_editLayer || m_layerName != leName->text())) {
+        const RS_Layer* l = m_layerList->find(leName->text());
+        if (l != nullptr) {
             QMessageBox::information(parentWidget(),
                                      QMessageBox::tr("Layer Properties"),
                                      QMessageBox::tr("Layer with a name \"%1\" "
@@ -89,11 +89,13 @@ void QG_LayerDialog::validate() {
             leName->setFocus();
             leName->selectAll();
         }
-        else
+        else {
             accept();
+        }
     }
-    else
+    else {
         accept();
+    }
 }
 
 void QG_LayerDialog::setLayerList(RS_LayerList* ll) {
@@ -102,17 +104,17 @@ void QG_LayerDialog::setLayerList(RS_LayerList* ll) {
 
 void QG_LayerDialog::init() {
     leName->setFocus();
-    m_layer = NULL;
-    m_layerList = NULL;
-    m_layerName = "";
+    m_layer = nullptr;
+    m_layerList = nullptr;
+    m_layerName.clear();
     m_editLayer = false;
 }
 
-void QG_LayerDialog::setEditLayer(bool el) {
+void QG_LayerDialog::setEditLayer(const bool el) {
     m_editLayer = el;
 }
 
 //! @return a reference to the QLineEdit object.
-QLineEdit* QG_LayerDialog::getQLineEdit() {
+QLineEdit* QG_LayerDialog::getQLineEdit() const {
     return leName;
 }

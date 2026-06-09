@@ -39,7 +39,7 @@ struct RS_DimAngularData;
 class RS_ActionDimAngular : public RS_ActionDimension{
     Q_OBJECT
 public:
-    RS_ActionDimAngular(LC_ActionContext *actionContext);
+    explicit RS_ActionDimAngular(LC_ActionContext *actionContext);
     ~RS_ActionDimAngular() override;
     QStringList getAvailableCommands() override;
 protected:
@@ -60,17 +60,18 @@ protected:
     int         m_quadrantOffset {0};             ///< Offset on starting determineQuadrant
     void doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) override;
     void reset() override;
-    RS_LineData justify( RS_Line* line, const RS_Vector &click);
+    RS_LineData justify(const RS_Line* line, const RS_Vector &click) const;
     void lineOrder(const RS_Vector &dimPos, RS_LineData& ld1, RS_LineData& ld2);
-    int determineQuadrant(const double angle);
-    bool setData(const RS_Vector& dimPos, const bool calcCenter = false);
-    void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
-    void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
+    int determineQuadrant(double angle) const;
+    bool setData(const RS_Vector& dimPos, bool calcCenter = false);
+    void onMouseLeftButtonRelease(int status, const LC_MouseEvent* e) override;
+    void onMouseMoveEvent(int status, const LC_MouseEvent* e) override;
     void setFirstLine(RS_Entity* en, const RS_Vector& pos);
-    void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
+    void onMouseRightButtonRelease(int status, const LC_MouseEvent* e) override;
     bool doProcessCommand(int status, const QString &command) override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
-    void updateMouseButtonHints() override;
-    void doTrigger() override;
+    void updateActionPrompt() override;
+    void doTriggerCompletion(bool success) override;
+    RS_Entity* doTriggerCreateEntity() override;
 };
 #endif

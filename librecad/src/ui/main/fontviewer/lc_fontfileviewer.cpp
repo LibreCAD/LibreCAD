@@ -21,8 +21,9 @@
  * ********************************************************************************
  */
 
-#ifndef LC_FontFileViewer_INCUDE_H
-#define LC_FontFileViewer_INCUDE_H
+#ifndef LC_FONTFILEVIEWER_INCUDE_H
+#define LC_FONTFILEVIEWER_INCUDE_H
+
 #include "lc_fontfileviewer.h"
 
 #include "rs_block.h"
@@ -36,10 +37,10 @@
 LC_FontFileViewer::LC_FontFileViewer(RS_Document* doc): m_document{doc} {
 }
 
-void LC_FontFileViewer::drawFontChars() {
+void LC_FontFileViewer::drawFontChars() const {
     RS_BlockList* bl = m_document->getBlockList();
     double sep = m_document->getGraphic()->getVariableDouble("LetterSpacing", 3.0);
-    double h = sep/3;
+    const double h = sep/3;
     sep = sep*3;
     int columnCount = LC_GET_ONE_INT("Render", "FontLettersColumnsCount", 10);
     if (columnCount == 0) {
@@ -53,7 +54,7 @@ void LC_FontFileViewer::drawFontChars() {
     double maxLetterWidth  = 0;
 
     for (int i=0; i<bl->count(); ++i) {
-        RS_Block* ch = bl->at(i);
+        const RS_Block* ch = bl->at(i);
         maxLetterHeight = std::max(maxLetterHeight, ch->getSize().y);
         maxLetterWidth = std::max(maxLetterWidth, ch->getSize().x);
     }
@@ -61,16 +62,16 @@ void LC_FontFileViewer::drawFontChars() {
     double currentLetterX  = 0;
 
     for (int i=0; i<bl->count(); ++i) {
-        RS_Block* ch = bl->at(i);
+        const RS_Block* ch = bl->at(i);
         RS_InsertData data(ch->getName(), RS_Vector(currentColumn*sep,currentLetterY), RS_Vector(1,1), 0, 1, 1, RS_Vector(0,0));
         currentLetterX += maxLetterWidth + sep;
-        auto in = new RS_Insert(m_document, data);
+        const auto in = new RS_Insert(m_document, data);
         m_document->addEntity(in);
-        QString uCode = (ch->getName()).mid(1,4);
+        QString uCode = ch->getName().mid(1,4);
         RS_MTextData datatx(RS_Vector(currentColumn*sep,currentLetterY-h), h, 4*h, RS_MTextData::VATop,
                            RS_MTextData::HALeft, RS_MTextData::ByStyle, RS_MTextData::AtLeast,
                            1, uCode, "standard", 0);
-        auto tx = new RS_MText(m_document, datatx);
+        const auto tx = new RS_MText(m_document, datatx);
         m_document->addEntity(tx);
 
         currentColumn ++;
@@ -83,4 +84,4 @@ void LC_FontFileViewer::drawFontChars() {
     }
 }
 
-#endif // LC_FontFileViewer_INCUDE_H
+#endif

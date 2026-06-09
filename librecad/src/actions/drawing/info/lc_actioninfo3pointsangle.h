@@ -28,7 +28,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 class LC_ActionInfo3PointsAngle :public RS_PreviewActionInterface{
 Q_OBJECT
 public:
-    LC_ActionInfo3PointsAngle(LC_ActionContext *actionContext);
+     explicit LC_ActionInfo3PointsAngle(LC_ActionContext *actionContext);
     ~LC_ActionInfo3PointsAngle() override;
 protected:
     enum Status{
@@ -43,13 +43,14 @@ protected:
     bool m_restartFromNewPoint = false;
 
     RS2::CursorType doGetMouseCursor(int status) override;
-    void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
-    void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
-    void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
+    void onMouseLeftButtonRelease(int status, const LC_MouseEvent* e) override;
+    void onMouseRightButtonRelease(int status, const LC_MouseEvent* e) override;
+    void onMouseMoveEvent(int status, const LC_MouseEvent* e) override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
-    void updateMouseButtonHints() override;
-    void updateInfoCursor(const RS_Vector &mouse, const RS_Vector &startPoint);
-    void updateInfoCursor(const RS_Vector &mouse,  const RS_Vector &point2, const RS_Vector &startPoint);
+    void updateActionPrompt() override;
+    void updateInfoCursor(const RS_Vector &mouse, const RS_Vector &startPoint) const;
+    void updateInfoCursor(const RS_Vector &mouse,  const RS_Vector &point2, const RS_Vector &startPoint) const;
     void doTrigger() override;
+    bool isInVisualSnapStatus(int status) override;
 };
-#endif // LC_ACTIONINFO3POINTSANGLE_H
+#endif

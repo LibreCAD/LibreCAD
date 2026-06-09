@@ -28,7 +28,7 @@
 class LC_ArrowDot: public LC_DimArrowPoly{
 public:
     enum DotArrowSubtype {
-        small, blank
+        SMALL, BLANK
     };
     LC_ArrowDot(RS_EntityContainer* container, const RS_Vector& point, double dirAngle, double size, DotArrowSubtype subType);
     RS_Entity* clone() const override;
@@ -40,4 +40,4 @@ private:
     DotArrowSubtype m_subType;
 };
 
-#endif // LC_ARROW_DOT_H
+#endif

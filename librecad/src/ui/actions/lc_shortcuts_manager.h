@@ -20,8 +20,8 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
 
-#ifndef LIBRECAD_LC_SHORTCUTS_MANAGER_H
-#define LIBRECAD_LC_SHORTCUTS_MANAGER_H
+#ifndef LC_SHORTCUTS_MANAGER_H
+#define LC_SHORTCUTS_MANAGER_H
 
 #include "lc_shortcutinfo.h"
 
@@ -30,23 +30,23 @@ public:
     LC_ShortcutsManager();
     ~LC_ShortcutsManager() = default;
     int saveShortcuts(QMap<QString, LC_ShortcutInfo*> &shortcuts, QMap<QString, QAction *> &actionsMap) const;
-    int saveShortcuts(const QString &fileName, const QList<LC_ShortcutInfo *> &items) const;
-    void assignShortcutsToActions(const QMap<QString, QAction *> &map,
-                                 std::vector<LC_ShortcutInfo> &shortcutsList) const;
+    int saveShortcuts(const QString &fileName, const QList<LC_ShortcutInfo *> &shortcutsList) const;
+    void assignShortcutsToActions(const QMap<QString, QAction *> &map, const std::vector<LC_ShortcutInfo> &shortcutsList) const;
     int loadShortcuts(const QString &filename, QMap<QString, QKeySequence> *result) const;
-    int loadShortcuts(QMap<QString, QAction *> &map) const;
+    int loadShortcuts(QMap<QString, QAction *> &actionsMap) const;
     QString getShortcutsMappingsFolder() const;
     void updateActionTooltips(const QMap<QString, QAction *> &actionsMap) const;
-    void init();
+    void init() const;
 
-    static QString getPlainActionToolTip(QAction* action);
+    static QString getPlainActionToolTip(const QAction* action);
 protected:
 
-    static const char* PROPERTY_SHORTCUT_BACKUP;
+    static constexpr auto PROPERTY_SHORTCUT_BACKUP = "tooltip.original";
+
     void applyShortcutsMapToActionsMap(QMap<QString, LC_ShortcutInfo *> &shortcuts, QMap<QString, QAction *> &actionsMap) const;
     void updateActionShortcutTooltips(const QMap<QString, QAction *> &map, bool enable) const;
     QString strippedActionText(QString s) const;
     QString getDefaultShortcutsFileName() const;
     void applyKeySequencesMapToActionsMap(QMap<QString, QKeySequence> &shortcuts, QMap<QString, QAction *> &actionsMap) const;
 };
-#endif //LIBRECAD_LC_SHORTCUTS_MANAGER_H
+#endif

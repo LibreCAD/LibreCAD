@@ -23,29 +23,25 @@
 **
 ******************************************************************************/
 
-#include <QtCore>
-#include <QCoreApplication>
-#include <QApplication>
+#include "console_dxf2pdf.h"
 
+#include <QApplication>
+#include <QCoreApplication>
+#include <QtCore>
+
+#include "main.h"
+#include "pdf_print_loop.h"
 #include "rs_debug.h"
 #include "rs_fontlist.h"
 #include "rs_patternlist.h"
 #include "rs_settings.h"
 #include "rs_system.h"
 
-#include "main.h"
+static RS_Vector parsePageSizeArg(const QString&);
+static void parsePagesNumArg(const QString&, PdfPrintParams&);
+static void parseMarginsArg(const QString&, PdfPrintParams&);
 
-#include "console_dxf2pdf.h"
-#include "pdf_print_loop.h"
-
-
-static RS_Vector parsePageSizeArg(QString);
-static void parsePagesNumArg(QString, PdfPrintParams&);
-static void parseMarginsArg(QString, PdfPrintParams&);
-
-
-int console_dxf2pdf(int argc, char* argv[])
-{
+int console_dxf2pdf(int argc, char* argv[]){
     RS_DEBUG->setLevel(RS_Debug::D_NOTHING);
 
     QApplication app(argc, argv);
@@ -131,8 +127,9 @@ int console_dxf2pdf(int argc, char* argv[])
 
     const QStringList args = parser.positionalArguments();
 
-    if (args.isEmpty() || (args.size() == 1 && args[0] == "dxf2pdf"))
+    if (args.isEmpty() || (args.size() == 1 && args[0] == "dxf2pdf")) {
         parser.showHelp(EXIT_FAILURE);
+    }
 
     PdfPrintParams params;
 
@@ -142,15 +139,17 @@ int console_dxf2pdf(int argc, char* argv[])
     params.monochrome = parser.isSet(monoOpt);
     params.pageSize = parsePageSizeArg(parser.value(pageSizeOpt));
 
-    bool resOk;
+    bool resOk = false;
     int res = parser.value(resOpt).toInt(&resOk);
-    if (resOk)
+    if (resOk) {
         params.resolution = res;
+    }
 
-    bool scaleOk;
+    bool scaleOk = false;
     double scale = parser.value(scaleOpt).toDouble(&scaleOk);
-    if (scaleOk)
+    if (scaleOk) {
         params.scale = scale;
+    }
 
     parseMarginsArg(parser.value(marginsOpt), params);
     parsePagesNumArg(parser.value(pagesNumOpt), params);
@@ -158,7 +157,7 @@ int console_dxf2pdf(int argc, char* argv[])
     params.outFile = parser.value(outFileOpt);
     params.outDir = parser.value(outDirOpt);
 
-    for (auto arg : args) {
+    for (const auto &arg : args) {
         QFileInfo dxfFileInfo(arg);
         const QString sfx = dxfFileInfo.suffix().toLower();
         if (sfx != "dxf" && sfx != "dwg")
@@ -166,8 +165,9 @@ int console_dxf2pdf(int argc, char* argv[])
         params.dxfFiles.append(arg);
     }
 
-    if (params.dxfFiles.isEmpty())
+    if (params.dxfFiles.isEmpty()) {
         parser.showHelp(EXIT_FAILURE);
+    }
 
     if (!params.outDir.isEmpty()) {
         // Create output directory
@@ -180,7 +180,7 @@ int console_dxf2pdf(int argc, char* argv[])
     RS_FONTLIST->init();
     RS_PATTERNLIST->init();
 
-    PdfPrintLoop *loop = new PdfPrintLoop(params, &app);
+    auto *loop = new PdfPrintLoop(params, &app);
 
     QObject::connect(loop, SIGNAL(finished()), &app, SLOT(quit()));
 
@@ -189,20 +189,19 @@ int console_dxf2pdf(int argc, char* argv[])
     return app.exec();
 }
 
-
-static RS_Vector parsePageSizeArg(QString arg)
-{
+static RS_Vector parsePageSizeArg(const QString& arg){
     RS_Vector v(0.0, 0.0);
 
-    if (arg.isEmpty())
+    if (arg.isEmpty()) {
         return v;
+    }
 
-    QRegularExpression re("^(?<width>\\d+)[x|X]{1}(?<height>\\d+)$");
-    QRegularExpressionMatch match = re.match(arg);
+    const QRegularExpression re("^(?<width>\\d+)[x|X]{1}(?<height>\\d+)$");
+    const QRegularExpressionMatch match = re.match(arg);
 
     if (match.hasMatch()) {
-        QString width = match.captured("width");
-        QString height = match.captured("height");
+        const QString width = match.captured("width");
+        const QString height = match.captured("height");
         v.x = width.toDouble();
         v.y = height.toDouble();
     } else {
@@ -212,18 +211,17 @@ static RS_Vector parsePageSizeArg(QString arg)
     return v;
 }
 
-
-static void parsePagesNumArg(QString arg, PdfPrintParams& params)
-{
-    if (arg.isEmpty())
+static void parsePagesNumArg(const QString& arg, PdfPrintParams& params){
+    if (arg.isEmpty()) {
         return;
+    }
 
-    QRegularExpression re("^(?<horiz>\\d+)[x|X](?<vert>\\d+)$");
-    QRegularExpressionMatch match = re.match(arg);
+    const QRegularExpression re("^(?<horiz>\\d+)[x|X](?<vert>\\d+)$");
+    const QRegularExpressionMatch match = re.match(arg);
 
     if (match.hasMatch()) {
-        QString h = match.captured("horiz");
-        QString v = match.captured("vert");
+        const QString h = match.captured("horiz");
+        const QString v = match.captured("vert");
         params.pagesH = h.toInt();
         params.pagesV = v.toInt();
     } else {
@@ -231,23 +229,22 @@ static void parsePagesNumArg(QString arg, PdfPrintParams& params)
     }
 }
 
-
-static void parseMarginsArg(QString arg, PdfPrintParams& params)
-{
-    if (arg.isEmpty())
+static void parseMarginsArg(const QString& arg, PdfPrintParams& params){
+    if (arg.isEmpty()) {
         return;
+    }
 
-    QRegularExpression re("^(?<left>\\d+(?:\\.\\d+)?),"
+    const QRegularExpression re("^(?<left>\\d+(?:\\.\\d+)?),"
                           "(?<top>\\d+(?:\\.\\d+)?),"
                           "(?<right>\\d+(?:\\.\\d+)?),"
                           "(?<bottom>\\d+(?:\\.\\d+)?)$");
-    QRegularExpressionMatch match = re.match(arg);
+    const QRegularExpressionMatch match = re.match(arg);
 
     if (match.hasMatch()) {
-        QString left = match.captured("left");
-        QString top = match.captured("top");
-        QString right = match.captured("right");
-        QString bottom = match.captured("bottom");
+        const QString left = match.captured("left");
+        const QString top = match.captured("top");
+        const QString right = match.captured("right");
+        const QString bottom = match.captured("bottom");
         params.margins.left = left.toDouble();
         params.margins.top = top.toDouble();
         params.margins.right = right.toDouble();

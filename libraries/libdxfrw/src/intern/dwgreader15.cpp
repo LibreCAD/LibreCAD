@@ -25,8 +25,9 @@ bool dwgReader15::readMetaData() {
     version = parent->getVersion();
     decoder.setVersion(version, false);
     DRW_DBG("dwgReader15::readMetaData\n");
-    if (! fileBuf->setPosition(13))
+    if (! fileBuf->setPosition(13)) {
         return false;
+    }
     previewImagePos = fileBuf->getRawLong32();
     DRW_DBG("previewImagePos (seekerImageData) = "); DRW_DBG(previewImagePos);
     /* MEASUREMENT system variable 2 bytes*/
@@ -35,17 +36,21 @@ bool dwgReader15::readMetaData() {
     duint16 cp = fileBuf->getRawShort16();
     DRW_DBG("\ncodepage= "); DRW_DBG(cp); DRW_DBG("\n");
     if (cp == 29) //TODO RLZ: locate wath code page and correct this
+    {
         decoder.setCodePage("ANSI_1252", false);
-    if (cp == 30)
+    }
+    if (cp == 30) {
         decoder.setCodePage("ANSI_1252", false);
+    }
     return true;
 }
 
 bool dwgReader15::readFileHeader() {
     bool ret = true;
     DRW_DBG("dwgReader15::readFileHeader\n");
-    if (! fileBuf->setPosition(21))
+    if (! fileBuf->setPosition(21)) {
         return false;
+    }
     duint32 count = fileBuf->getRawLong32();
     DRW_DBG("count records= "); DRW_DBG(count); DRW_DBG("\n");
 
@@ -85,8 +90,9 @@ bool dwgReader15::readFileHeader() {
             std::cerr << "\nUnsupported section number\n";
         }
     }
-    if (! fileBuf->isGood())
+    if (! fileBuf->isGood()) {
         return false;
+    }
     DRW_DBG("\nposition after read section locator records= "); DRW_DBG(fileBuf->getPosition());
     DRW_DBG(", bit are= "); DRW_DBG(fileBuf->getBitPos());
     duint32 ckcrc = fileBuf->crc8(0,0,fileBuf->getPosition());
@@ -120,9 +126,12 @@ bool dwgReader15::readDwgHeader(DRW_Header& hdr){
     DRW_DBG("dwgReader15::readDwgHeader\n");
     dwgSectionInfo si = sections[secEnum::HEADER];
     if (si.Id<0)//not found, ends
+    {
         return false;
-    if (!fileBuf->setPosition(si.address))
+    }
+    if (!fileBuf->setPosition(si.address)) {
         return false;
+    }
     std::vector<duint8> tmpByteStr(si.size);
     fileBuf->getBytes(tmpByteStr.data(), si.size);
     dwgBuffer buff(tmpByteStr.data(), si.size, &decoder);
@@ -137,9 +146,12 @@ bool dwgReader15::readDwgClasses(){
     DRW_DBG("\ndwgReader15::readDwgClasses\n");
     dwgSectionInfo si = sections[secEnum::CLASSES];
     if (si.Id<0)//not found, ends
+    {
         return false;
-    if (!fileBuf->setPosition(si.address))
+    }
+    if (!fileBuf->setPosition(si.address)) {
         return false;
+    }
 
     DRW_DBG("classes section sentinel= ");
     checkSentinel(fileBuf.get(), secEnum::CLASSES, true);
@@ -154,7 +166,7 @@ bool dwgReader15::readDwgClasses(){
     dwgBuffer buff(tmpByteStr.data(), size, &decoder);
     size--; //reduce 1 byte instead of check pos + bitPos
     while (size > buff.getPosition()) {
-        DRW_Class *cl = new DRW_Class();
+        auto cl = new DRW_Class();
         cl->parseDwg(version, &buff, &buff);
         classesmap[cl->classNum] = cl;
     }
@@ -169,7 +181,9 @@ bool dwgReader15::readDwgHandles() {
     DRW_DBG("\ndwgReader15::readDwgHandles\n");
     dwgSectionInfo si = sections[secEnum::HANDLES];
     if (si.Id<0)//not found, ends
+    {
         return false;
+    }
 
     bool ret = dwgReader::readDwgHandles(fileBuf.get(), si.address, si.size);
     return ret;
@@ -195,4 +209,3 @@ bool dwgReader15::readDwgBlocks(DRW_Interface& intfa) {
     ret = dwgReader::readDwgBlocks(intfa, fileBuf.get());
     return ret;
 }
-

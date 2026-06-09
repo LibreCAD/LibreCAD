@@ -39,7 +39,7 @@ struct RS_HatchData;
 class RS_ActionDrawHatch : public LC_ActionPreSelectionAwareBase {
 Q_OBJECT
 public:
-    RS_ActionDrawHatch(LC_ActionContext *actionContext);
+    explicit RS_ActionDrawHatch(LC_ActionContext *actionContext);
     ~RS_ActionDrawHatch() override;
     void init(int status) override;
     void setShowArea(bool s);
@@ -52,11 +52,13 @@ protected:
     };
     std::unique_ptr<RS_HatchData> m_hatchData;
     bool m_bShowArea{true};
-    void updateMouseButtonHintsForSelection() override;
-    void doTrigger(bool keepSelected) override;
+    void updateActionPromptForSelection() override;
     bool isAllowTriggerOnEmptySelection() override;
     RS2::CursorType doGetMouseCursorSelected(int status) override;
     void doSelectEntity(RS_Entity* entityToSelect, bool selectContour) const override;
     bool isEntityAllowedToSelect(RS_Entity *ent) const override;
+    bool doTriggerModifications(LC_DocumentModificationBatch& ctx) override;
+    void doTriggerCompletion(bool success) override;
+    void doTriggerSelectionUpdate(bool keepSelected, const LC_DocumentModificationBatch& ctx) override;
 };
 #endif

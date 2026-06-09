@@ -29,7 +29,7 @@
 
 #if _MSC_VER > 1000
 #pragma once
-#endif // _MSC_VER > 1000
+#endif
 
 #include <fstream>
 #include <string>
@@ -47,11 +47,13 @@
  */
 class DL_WriterA : public DL_Writer {
 public:
-    DL_WriterA(const char* fname, DL_Codes::version version=VER_2000)
-            : DL_Writer(version), m_ofile(fname) {}
-    virtual ~DL_WriterA() = default;
+    DL_WriterA(const char* fname, DL_Codes::version version = VER_2000)
+        : DL_Writer(version), m_ofile(fname) {
+    }
 
-	bool openFailed() const;
+    ~DL_WriterA() override = default;
+
+    bool openFailed() const;
     void close() const;
     void dxfReal(int gc, double value) const override;
     void dxfInt(int gc, int value) const override;
@@ -59,15 +61,13 @@ public:
     void dxfString(int gc, const char* value) const override;
     void dxfString(int gc, const std::string& value) const override;
 
-	static void strReplace(char* str, char src, char dest);
+    static void strReplace(char* str, char src, char dest);
 
 private:
     /**
      * DXF file to be created.
      */
     mutable std::ofstream m_ofile;
-
 };
 
 #endif
-

@@ -31,31 +31,30 @@
 #include "document_interface.h"
 #include "rs_graphic.h"
 
+class LC_GraphicViewport;
 class LC_ActionContext;
 class Doc_plugin_interface;
 
-class convLTW
-{
+class convLTW{
 public:
     convLTW();
-    QString lt2str(enum RS2::LineType lt);
-    QString lw2str(enum RS2::LineWidth lw);
+    QString lt2str(RS2::LineType lt) const;
+    QString lw2str(RS2::LineWidth lw) const;
     QString intColor2str(int col);
-    enum RS2::LineType str2lt(QString s);
-    enum RS2::LineWidth str2lw(QString w);
+    RS2::LineType str2lt(const QString& s) const;
+    RS2::LineWidth str2lw(const QString& w) const;
 private:
     QHash<RS2::LineType, QString> lType;
     QHash<RS2::LineWidth, QString> lWidth;
 };
 
-class Plugin_Entity
-{
+class Plugin_Entity{
 public:
     Plugin_Entity(RS_Entity* ent, Doc_plugin_interface* d);
     Plugin_Entity(RS_EntityContainer* parent, enum DPI::ETYPE type);
     virtual ~Plugin_Entity();
-    bool isValid(){if (entity) return true; else return false;}
-    RS_Entity* getEnt() {return entity;}
+    bool isValid() const { return entity != nullptr;}
+    RS_Entity* getEnt() const {return entity;}
     virtual RS2::EntityType getEntityType();
     virtual void getData(QHash<int, QVariant> *data);
     virtual void updateData(QHash<int, QVariant> *data);
@@ -63,7 +62,7 @@ public:
     virtual void updatePolylineData(QList<Plug_VertexData> *data);
 
     virtual void move(QPointF offset, DPI::Disposition disp = DPI::DELETE_ORIGINAL);
-    virtual void moveRotate(QPointF const& offset, QPointF const& center, double angle, DPI::Disposition disp = DPI::DELETE_ORIGINAL);
+    virtual void moveRotate(const QPointF& offset, const QPointF& center, double angle, DPI::Disposition disp = DPI::DELETE_ORIGINAL);
     virtual void rotate(QPointF center, double angle, DPI::Disposition disp = DPI::DELETE_ORIGINAL);
     virtual void scale(QPointF center, QPointF factor, DPI::Disposition disp = DPI::DELETE_ORIGINAL);
     virtual QString intColor2str(int color);
@@ -73,24 +72,23 @@ private:
     Doc_plugin_interface* dpi = nullptr;
 };
 
-class Doc_plugin_interface : public Document_Interface
-{
+class Doc_plugin_interface : public Document_Interface{
 public:
     Doc_plugin_interface(LC_ActionContext* actionContext, QWidget* parent);
     void updateView() override;
     void addPoint(QPointF *start) override;
     void addLine(QPointF *start, QPointF *end) override;
-    void addMText(QString txt, QString sty, QPointF *start,
-            double height, double angle, DPI::HAlign ha,  DPI::VAlign va);
+    void addMText(const QString& txt, const QString& sty, const QPointF *start,
+            double height, double angle, DPI::HAlign ha,  DPI::VAlign va) const;
     void addText(QString txt, QString sty, QPointF *start,
             double height, double angle, DPI::HAlign ha,  DPI::VAlign va) override;
 
     void addCircle(QPointF *start, qreal radius) override;
     void addArc(QPointF *start, qreal radius, qreal a1, qreal a2) override;
     void addEllipse(QPointF *start, QPointF *end, qreal ratio, qreal a1, qreal a2) override;
-     void addLines(std::vector<QPointF> const& points, bool closed=false) override;
-     void addPolyline(std::vector<Plug_VertexData> const& points, bool closed=false) override;
-     void addSplinePoints(std::vector<QPointF> const& points, bool closed=false) override;
+     void addLines(const std::vector<QPointF>& points, bool closed=false) override;
+     void addPolyline(const std::vector<Plug_VertexData>& points, bool closed=false) override;
+     void addSplinePoints(const std::vector<QPointF>& points, bool closed=false) override;
     void addImage(int handle, QPointF *start, QPointF *uvr, QPointF *vvr,
                   int w, int h, QString name, int br, int con, int fade) override;
     void addInsert(QString name, QPointF ins, QPointF scale, qreal rot) override;
@@ -98,7 +96,7 @@ public:
     void addEntity(Plug_Entity *handle) override;
     Plug_Entity *newEntity( enum DPI::ETYPE type) override;
     void removeEntity(Plug_Entity *ent) override;
-    void updateEntity(RS_Entity *org, RS_Entity *newe);
+    void updateEntity(RS_Entity *original, RS_Entity *clone) const;
 
     void setLayer(QString name) override;
     QString getCurrentLayer() override;
@@ -109,7 +107,7 @@ public:
     void getCurrentLayerProperties(int *c, DPI::LineWidth *w, DPI::LineType *t) override;
     void getCurrentLayerProperties(int *c, QString *w, QString *t) override;
     void setCurrentLayerProperties(int c, DPI::LineWidth w, DPI::LineType t) override;
-    void setCurrentLayerProperties(int c, QString const& w, QString const& t) override;
+    void setCurrentLayerProperties(int c, const QString& w, const QString& t) override;
 
     bool getPoint(QPointF *point, const QString& message, QPointF *base) override;
     Plug_Entity *getEnt(const QString& message) override;
@@ -127,10 +125,10 @@ public:
     bool getInt(int *num, const QString& message, const QString& title) override;
     bool getReal(qreal *num, const QString& message, const QString& title) override;
     bool getString(QString *txt, const QString& message, const QString& title) override;
-    QString realToStr(const qreal num, const int units = 0, const int prec = 0) override;
+    QString realToStr(qreal num, int units = 0, int prec = 0) override;
 
-    //method to handle undo in Plugin_Entity 
-    bool addToUndo(RS_Entity* current, RS_Entity* modified, DPI::Disposition how);
+    //method to handle undo in Plugin_Entity
+    bool addToUndo(RS_Entity* current, RS_Entity* modified, DPI::Disposition how) const;
 private:
     // Helper for performing entity selection (API-like interface):
     // - Handles both general and typed selection via typeToSelect parameter.
@@ -141,10 +139,11 @@ private:
     // Example: performSelect(a, RS2::EntityType::EntityLine, "Select lines", sel);
     bool  performSelect(RS2::EntityType typeToSelect, const QString& message, QList<Plug_Entity *>* sel, bool clearSel = true);
 
-    RS_Document *doc;
-    RS_Graphic *docGr;
-    RS_GraphicView *gView;
-    QWidget* main_window;
+    RS_Document *m_document;
+    LC_GraphicViewport *m_viewport;
+    RS_Graphic *m_docGr;
+    RS_GraphicView *m_graphicView;
+    QWidget* m_mainWindow;
     LC_ActionContext* m_actionContext;
 };
 
@@ -152,4 +151,4 @@ private:
 void addCircle(QPointF *start);			->Without start
 more...
 */
-#endif // DOC_PLUGIN_INTERFACE_H
+#endif

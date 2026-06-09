@@ -24,7 +24,6 @@
 **
 **********************************************************************/
 
-
 #include "qg_snapdistoptions.h"
 
 #include <QToolBar>
@@ -39,11 +38,10 @@
  *  name 'name' and widget flags set to 'f'.
  */
 QG_SnapDistOptions::QG_SnapDistOptions(QWidget* parent)
-    : QWidget(parent)
-	, ui(new Ui::Ui_SnapDistOptions{}){
+    : QWidget(parent), m_dist{nullptr}, ui(new Ui::Ui_SnapDistOptions{}) {
     ui->setupUi(this);
     connect(ui->leDist, &QLineEdit::editingFinished, this, &QG_SnapDistOptions::onDistEditingFinished);
-    connect(ui->tbPickDistance,  &QToolButton::clicked, this, &QG_SnapDistOptions::onPickDistanceClicked);
+    connect(ui->tbPickDistance, &QToolButton::clicked, this, &QG_SnapDistOptions::onPickDistanceClicked);
 }
 
 /*
@@ -55,30 +53,30 @@ QG_SnapDistOptions::~QG_SnapDistOptions() = default;
  *  Sets the strings of the subwidgets using the current
  *  language.
  */
-void QG_SnapDistOptions::languageChange(){
+void QG_SnapDistOptions::languageChange() {
     ui->retranslateUi(this);
 }
 
 void QG_SnapDistOptions::saveSettings() {
     LC_SET_ONE("Snap", "Distance", ui->leDist->text());
+    emit distanceChanged();
 }
 
 void QG_SnapDistOptions::useSnapDistanceValue(double* d) {
     m_dist = d;
-    QString distance = LC_GET_ONE_STR("Snap","Distance", "1.0");
-
-    *m_dist= RS_Math::eval(distance, 1.0);
-    QString value = QString::number(*m_dist, 'g', 6);
+    const QString distance = LC_GET_ONE_STR("Snap", "Distance", "1.0");
+    *m_dist = RS_Math::eval(distance, 1.0);
+    const QString value = QString::number(*m_dist, 'g', 6);
     ui->leDist->setText(value);
 }
 
-void QG_SnapDistOptions::onPickDistanceClicked([[maybe_unused]]bool clicked) {
+void QG_SnapDistOptions::onPickDistanceClicked([[maybe_unused]] bool clicked) {
     LC_ActionContext* context = QC_ApplicationWindow::getAppWindow()->getActionContext();
     context->interactiveInputStart(LC_ActionContext::InteractiveInputInfo::DISTANCE, this, "dist");
 }
 
 void QG_SnapDistOptions::onDistEditingFinished() {
-    if (m_dist) {
+    if (m_dist != nullptr) {
         QString value = ui->leDist->text();
         *m_dist = RS_Math::eval(value, 1.0);
         value = QString::number(*m_dist, 'g', 6);
@@ -88,29 +86,29 @@ void QG_SnapDistOptions::onDistEditingFinished() {
 }
 
 void QG_SnapDistOptions::doShow() {
-    bool interactiveInputControlsAutoRaise = LC_GET_ONE_BOOL("Widgets", "PickValueButtonsFlatIcons", true);
-    bool interactiveInputControlsVisible = LC_GET_ONE_BOOL("Defaults", "InteractiveInputEnabled", true);
+    const bool interactiveInputControlsAutoRaise = LC_GET_ONE_BOOL("Widgets", "PickValueButtonsFlatIcons", true);
+    const bool interactiveInputControlsVisible = LC_GET_ONE_BOOL("Defaults", "InteractiveInputEnabled", true);
     ui->tbPickDistance->setVisible(interactiveInputControlsVisible);
     ui->tbPickDistance->setAutoRaise(interactiveInputControlsAutoRaise);
 
-    bool requestFocus = !isVisible();
+    const bool requestFocus = !isVisible();
     show();
-    if (requestFocus){
+    if (requestFocus) {
         ui->leDist->setFocus();
     }
 }
 
-double* QG_SnapDistOptions::getDistanceValue() {
+double* QG_SnapDistOptions::getDistanceValue() const {
     return m_dist;
 }
 
-void QG_SnapDistOptions::onLateRequestCompleted(bool shouldBeSkipped) {
+void QG_SnapDistOptions::onLateRequestCompleted(const bool shouldBeSkipped) {
     LC_ActionContext* context = QC_ApplicationWindow::getAppWindow()->getActionContext();
     if (!shouldBeSkipped) {
-        auto inputInfo = context->getInteractiveInputInfo();
-        if (inputInfo->m_inputType == LC_ActionContext::InteractiveInputInfo::DISTANCE && inputInfo->m_requestorTag == "dist") {
-            *m_dist = inputInfo->m_distance;
-            auto value = QString::number(*m_dist, 'g', 6);
+        const auto inputInfo = context->getInteractiveInputInfo();
+        if (inputInfo->inputType == LC_ActionContext::InteractiveInputInfo::DISTANCE && inputInfo->requestorTag == "dist") {
+            *m_dist = inputInfo->distance;
+            const auto value = QString::number(*m_dist, 'g', 6);
             ui->leDist->setText(value);
             ui->leDist->setFocus();
             saveSettings();

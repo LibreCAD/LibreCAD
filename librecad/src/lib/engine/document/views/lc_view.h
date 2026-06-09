@@ -23,32 +23,32 @@
 #ifndef LC_VIEW_H
 #define LC_VIEW_H
 
-#include "rs_vector.h"
 #include "lc_ucs.h"
+#include "rs_vector.h"
 
 class LC_View{
 public:
     LC_View();
     explicit LC_View(const QString &name);
 
-    LC_View* clone();
+    LC_View* clone() const;
     QString getName()const {return m_name;}
     void setName(const QString& name);
-    void setCenter(RS_Vector c);
+    void setCenter(const RS_Vector& c);
     RS_Vector getCenter() const ;
-    void setSize(RS_Vector s);
+    void setSize(const RS_Vector& s);
     RS_Vector getSize() const ;
-    void setTargetPoint(RS_Vector p);
+    void setTargetPoint(const RS_Vector& p);
     RS_Vector getTargetPoint() const ;
-    void setViewDirection(RS_Vector dir);
-    const RS_Vector getViewDirection() const;
+    void setViewDirection(const RS_Vector& dir);
+    RS_Vector getViewDirection() const;
     void setLensLen(double d);
     double getLensLen() const;
     void setCameraPlottable(bool b);
     bool isCameraPlottable() const ;
     bool isHasUCS() const;
-    void setRenderMode(int i) {m_renderMode = i;};
-    long getRenderMode() const {return m_renderMode;};
+    void setRenderMode(const int i) {m_renderMode = i;}
+    long getRenderMode() const {return m_renderMode;}
     void setBackClippingPlaneOffset(double d);
     double getBackClippingPlaneOffset() const ;
     void setFrontClippingPlaneOffset(double d);
@@ -61,8 +61,8 @@ public:
     int getViewMode() const;
     void setUCS(LC_UCS *pUcs);
     LC_UCS* getUCS() const;
-    bool isForPaperView() {return  m_flags & 1;}
-    void setForPaperView(bool forPaper) {
+    bool isForPaperView() const {return  (m_flags & 1) != 0;}
+    void setForPaperView(const bool forPaper) {
         if (forPaper) {
             m_flags |= 1;
         }
@@ -90,4 +90,4 @@ protected:
     LC_UCS* m_ucs {nullptr};
 };
 
-#endif // LC_VIEW_H
+#endif

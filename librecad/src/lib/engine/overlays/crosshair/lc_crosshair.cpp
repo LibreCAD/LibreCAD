@@ -25,42 +25,37 @@
 #include "lc_graphicviewport.h"
 #include "rs_painter.h"
 
-LC_Crosshair::LC_Crosshair(const RS_Vector& coord,
-                           int shapeType,
-                           int linesType,
-                           const RS_Pen& linesPen,
-                           int pointSize,
-                           int pointType)
-     :wcsPos(coord){
-     this->indicatorShape = shapeType;
-     this->linesShape = linesType;
-     this->linesPen = linesPen;
-     this->pointSize = pointSize;
-     this->pointType = pointType;
+LC_Crosshair::LC_Crosshair(const RS_Vector& coord, const int shapeType, const int linesType,
+                           const RS_Pen& linesPen, const int pointSize, const int pointType)
+     :m_wcsPos(coord){
+     this->m_indicatorShape = shapeType;
+     this->m_linesShape = linesType;
+     this->m_linesPen = linesPen;
+     this->m_pointSize = pointSize;
+     this->m_pointType = pointType;
 }
 
-double LC_Crosshair::drawIndicator(RS_Painter* painter, const RS_Vector& uiPos)
-{
+double LC_Crosshair::drawIndicator(RS_Painter* painter, const RS_Vector& uiPos) const {
     double offset = 0.0;
-      switch (indicatorShape) {
+      switch (m_indicatorShape) {
           case Circle: {
               offset = 4.0;
               painter->drawCircleUIDirect(uiPos, offset);
               break;
           }
           case Point:{
-              int screenPDSize = painter->determinePointScreenSize(pointSize);
+              const int screenPDSize = painter->determinePointScreenSize(m_pointSize);
               offset = screenPDSize;
-              painter->drawPointEntityUI(uiPos, pointType, screenPDSize);
+              painter->drawPointEntityUI(uiPos, m_pointType, screenPDSize);
               break;
           }
           case Square: {
-              double a = 6.0;
+              constexpr double a = 6.0; // fixme - sand - candidate for option?
               offset = a;
-              RS_Vector p1 = uiPos + RS_Vector(-a, a);
-              RS_Vector p2 = uiPos + RS_Vector(a, a);
-              RS_Vector p3 = uiPos + RS_Vector(a, -a);
-              RS_Vector p4 = uiPos + RS_Vector(-a, -a);
+              const RS_Vector p1 = uiPos + RS_Vector(-a, a);
+              const RS_Vector p2 = uiPos + RS_Vector(a, a);
+              const RS_Vector p3 = uiPos + RS_Vector(a, -a);
+              const RS_Vector p4 = uiPos + RS_Vector(-a, -a);
 
               painter->drawLineUISimple(p1,p2);
               painter->drawLineUISimple(p2,p3);
@@ -79,36 +74,36 @@ double LC_Crosshair::drawIndicator(RS_Painter* painter, const RS_Vector& uiPos)
 }
 
 void LC_Crosshair::draw(RS_Painter *painter) {
-    RS_Vector uiCoord = painter->toGui(wcsPos);
+    const RS_Vector uiCoord = painter->toGui(m_wcsPos);
 
-    if (indicatorShape != NoShape) {
-        painter->setPen(shapePen);
+    if (m_indicatorShape != NoShape) {
+        painter->setPen(m_shapePen);
     }
 
-    double offset = drawIndicator(painter, uiCoord);
+    const double offset = drawIndicator(painter, uiCoord);
 
-    LC_GraphicViewport* viewport = painter->getViewPort();
+    const LC_GraphicViewport* viewport = painter->getViewPort();
 
-    int width = viewport->getWidth();
-    int height = viewport->getHeight();
+    const int width = viewport->getWidth();
+    const int height = viewport->getHeight();
 
-    painter->setPen(linesPen);
+    painter->setPen(m_linesPen);
 
-    switch (linesShape){
+    switch (m_linesShape){
         case Spiderweb:{
-            RS_Vector p1(0, 0);
-            RS_Vector p2(0, height);
-            RS_Vector p3(width, 0);
-            RS_Vector p4(width, height);
+            const RS_Vector p1(0, 0);
+            const RS_Vector p2(0, height);
+            const RS_Vector p3(width, 0);
+            const RS_Vector p4(width, height);
             drawCrosshairLines(painter, uiCoord, offset, p1, p2, p3, p4);
             break;
         }
         case Adaptive:{
             if (viewport->isGridIsometric()){
-                RS2::IsoGridViewType chType= viewport->getIsoViewType();
+                const RS2::IsoGridViewType chType= viewport->getIsoViewType();
                 RS_Vector direction1;
                 RS_Vector direction2(0.,1.);
-                double l=width+height;
+                const double l=width+height;
                 switch(chType){
                 case RS2::IsoRight:
                     direction1=RS_Vector(M_PI*5./6.)*l;
@@ -122,10 +117,10 @@ void LC_Crosshair::draw(RS_Painter *painter) {
                     direction1=RS_Vector(M_PI*1./6.)*l;
                     direction2=RS_Vector(M_PI*5./6.)*l;
                 }
-                RS_Vector p1 = uiCoord - direction1;
-                RS_Vector p2 = uiCoord + direction1;
-                RS_Vector p3 = uiCoord - direction2;
-                RS_Vector p4 = uiCoord + direction2;
+                const RS_Vector p1 = uiCoord - direction1;
+                const RS_Vector p2 = uiCoord + direction1;
+                const RS_Vector p3 = uiCoord - direction2;
+                const RS_Vector p4 = uiCoord + direction2;
                 drawCrosshairLines(painter, uiCoord, offset, p1, p2, p3, p4);
                 break;
             }
@@ -133,10 +128,10 @@ void LC_Crosshair::draw(RS_Painter *painter) {
             [[fallthrough]];
         }
         case Crosshair:{
-            RS_Vector p1(0, uiCoord.y);
-            RS_Vector p2(uiCoord.x, 0);
-            RS_Vector p3(uiCoord.x, height);
-            RS_Vector p4(width, uiCoord.y);
+            const RS_Vector p1(0, uiCoord.y);
+            const RS_Vector p2(uiCoord.x, 0);
+            const RS_Vector p3(uiCoord.x, height);
+            const RS_Vector p4(width, uiCoord.y);
             drawCrosshairLines(painter, uiCoord, offset, p1, p2, p3, p4);
             break;
         }
@@ -146,23 +141,23 @@ void LC_Crosshair::draw(RS_Painter *painter) {
 }
 
 void LC_Crosshair::setLinesPen(const RS_Pen &pen) {
-    linesPen = pen;
+    m_linesPen = pen;
 }
 
-void LC_Crosshair::setPointType(int type) {
-    pointType = type;
+void LC_Crosshair::setPointType(const int type) {
+    m_pointType = type;
 }
 
-void LC_Crosshair::setPointSize(int size) {
-    pointSize = size;
+void LC_Crosshair::setPointSize(const int size) {
+    m_pointSize = size;
 }
 
-void LC_Crosshair::drawCrosshairLines(RS_Painter *painter, const RS_Vector &guiCoord, double offset,
+void LC_Crosshair::drawCrosshairLines(RS_Painter *painter, const RS_Vector &guiCoord, const double offset,
                                       const RS_Vector &p1, const RS_Vector &p2, const RS_Vector &p3, const RS_Vector &p4) const {
-    RS_Vector offset1 = RS_Vector::polar(offset, guiCoord.angleTo(p1));
-    RS_Vector offset2 = RS_Vector::polar(offset, guiCoord.angleTo(p2));
-    RS_Vector offset3 = RS_Vector::polar(offset, guiCoord.angleTo(p3));
-    RS_Vector offset4 = RS_Vector::polar(offset, guiCoord.angleTo(p4));
+    const RS_Vector offset1 = RS_Vector::polar(offset, guiCoord.angleTo(p1));
+    const RS_Vector offset2 = RS_Vector::polar(offset, guiCoord.angleTo(p2));
+    const RS_Vector offset3 = RS_Vector::polar(offset, guiCoord.angleTo(p3));
+    const RS_Vector offset4 = RS_Vector::polar(offset, guiCoord.angleTo(p4));
 
     painter->drawLineUISimple(guiCoord + offset1, p1);
     painter->drawLineUISimple(guiCoord + offset2 , p2);

@@ -25,8 +25,8 @@
 
 #include "rs_painter.h"
 
-LC_ArrowTick::LC_ArrowTick(RS_EntityContainer* container, const RS_Vector& point, double dirAngle, double size,bool arc)
-    :LC_DimArrowPoly(container, point, dirAngle, size), m_architectural{arc} {
+LC_ArrowTick::LC_ArrowTick(RS_EntityContainer* container, const RS_Vector& point, const double dirAngle, const double size, const bool arc)
+    : LC_DimArrowPoly(container, point, dirAngle, size), m_architectural{arc} {
     createVertexes(size);
 }
 
@@ -47,16 +47,16 @@ void LC_ArrowTick::draw(RS_Painter* painter) {
     // tick should be devined.
 }
 
-void LC_ArrowTick::createVertexes(double size) {
+void LC_ArrowTick::createVertexes(const double size) {
     initVertexes(4);
     double halfSize = size * 0.5;
 
-    setVertex(0, {0,0}); // dimline end point
-    setVertex(1,{0,0}); // center point
+    setVertex(0, {0, 0}); // dimline end point
+    setVertex(1, {0, 0}); // center point
     setVertex(2, {-halfSize, -halfSize}); //corner
     setVertex(3, {halfSize, halfSize}); // corner
 
-    setDimLinePoint({-size,0});
+    setDimLinePoint({-size, 0});
 
     positionFromZero();
     calculateBorders();

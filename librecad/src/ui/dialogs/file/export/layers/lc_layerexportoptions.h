@@ -1,5 +1,5 @@
 /*******************************************************************************
-*
+ *
  This file is part of the LibreCAD project, a 2D CAD program
 
  Copyright (C) 2025 LibreCAD.org
@@ -36,14 +36,14 @@ class LC_LayerExportOptionsWidget : public QWidget{
 public:
     explicit LC_LayerExportOptionsWidget(QWidget *parent = nullptr);
     ~LC_LayerExportOptionsWidget() override;
-    void fillLayerExportOptions(LC_LayersExportOptions *options);
+    void fillLayerExportOptions(LC_LayersExportOptions *options) const;
 protected:
-    void loadFromOptions();
-    void saveToOptions();
+    void loadFromOptions() const;
+    void saveToOptions() const;
 protected slots:
-    void onCreateSeparateDrawingToggled(bool enable);
+    void onCreateSeparateDrawingToggled(bool enable) const;
 private:
     Ui::LC_LayerExportOptionsWidget *ui;
 };
 
-#endif // LC_LAYEREXPORTOPTIONS_H
+#endif

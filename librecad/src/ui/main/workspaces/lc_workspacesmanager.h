@@ -24,7 +24,6 @@
 #define LC_WORKSPACESMANAGER_H
 
 #include <QObject>
-#include <QList>
 
 class QC_ApplicationWindow;
 
@@ -41,16 +40,16 @@ public:
     void init(QC_ApplicationWindow* win);
     void persist();
     bool isWorkspacesFileExists();
-    bool hasWorkspaces();
+    bool hasWorkspaces() const;
 protected:
     struct LC_Workspace {
-        int id;
+        int id{0};
         QString name;
         QString geometry;
-        int windowWidth;
-        int windowHeight;
-        int windowX;
-        int windowY;
+        int windowWidth {0};
+        int windowHeight{0};
+        int windowX{0};
+        int windowY{0};
         QString widgetsState;
 
         bool dockAreaLeftActive = false;
@@ -59,15 +58,26 @@ protected:
         bool dockAreaBottomActive = false;
         bool docAreaFloatingActive = false;
 
+        bool tbAreaLeftActive = false;
+        bool tbAreaRightActive = false;
+        bool tbAreaToptActive = false;
+        bool tbAreaBottomActive = false;
+        bool tbAreaFloatingActive = false;
+
         int iconsSizeToolbar = 24;
         int iconsSizeLeftDock = 24;
         int iconsSizeRightDoc = 16;
         int columnCountLeftDoc = 6;
 
+        int columnCountLeftAllDoc = 5;
+        int iconsSizeLeftAllDock = 22;
+
         bool extendMenu = false;
         bool extendMenuTillEntities = false;
 
         bool showStatusBar = false;
+        bool showMainMenu = true;
+        bool showFullScreen= true;
     };
 
     int m_workspaceID = 0;
@@ -84,7 +94,7 @@ protected:
     void loadWorkspaces();
     void saveWorkspaces(QWidget* parent = nullptr);
     void restoreGeometryAndState(const LC_Workspace &workspace, QC_ApplicationWindow &appWin) const;
-    void fillIconsAndMenuState(LC_WorkspacesManager::LC_Workspace &workspace);
+    static void fillIconsAndMenuState(LC_Workspace &workspace);
 };
 
-#endif // LC_PERSPECTIVESMANAGER_H
+#endif

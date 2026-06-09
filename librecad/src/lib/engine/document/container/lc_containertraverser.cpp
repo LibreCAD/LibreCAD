@@ -28,30 +28,26 @@
 #include "rs.h"
 #include "rs_entity.h"
 #include "rs_entitycontainer.h"
-#include "rs_information.h"
-
 
 namespace {
 
 // ParentNode used to track containers during traversing
 struct ParentNode
 {
-    ParentNode(const RS_EntityContainer* container, int index):
+    ParentNode(const RS_EntityContainer* container, const int index):
         container{container}
         , index{index}
     {}
 
     // Whether the index is valid within the current parent node
-    bool isValid() const
-    {
-        return container != nullptr && index >= 0 && size_t(index) + 1 <= container->count();
+    bool isValid() const{
+        return container != nullptr && index >= 0 && static_cast<size_t>(index) + 1 <= container->count();
     }
     const RS_EntityContainer* container = nullptr;
     int index = 0;
 };
 
-bool isText(const RS_Entity& entity)
-{
+bool isText(const RS_Entity& entity){
     switch (entity.rtti()) {
     case RS2::EntityText:
     case RS2::EntityMText:
@@ -67,18 +63,17 @@ namespace lc {
 
 // pImp struct
 struct LC_ContainerTraverser::Data {
-    Data(const RS_EntityContainer& container, RS2::ResolveLevel level):
+    Data(const RS_EntityContainer& container, const RS2::ResolveLevel level):
         container{&container}
         , indices{{&container, 0}}
-        , level{level}
-    {
+        , level{level}{
     }
 
     // whether to traverse into
-    bool canResolve(const RS_Entity* entity) const
-    {
-        if (entity == nullptr || !entity->isContainer())
+    bool canResolve(const RS_Entity* entity) const{
+        if (entity == nullptr || !entity->isContainer()) {
             return false;
+        }
         switch(level) {
         case RS2::ResolveNone:
             return false;
@@ -99,34 +94,29 @@ struct LC_ContainerTraverser::Data {
 };
 
 LC_ContainerTraverser::LC_ContainerTraverser(const RS_EntityContainer& container,
-                                             RS2::ResolveLevel level,
-                                             LC_ContainerTraverser::Direction direction):
-    m_pImp{std::make_unique<LC_ContainerTraverser::Data>(container, level)}
-    , m_direction{direction}
-{
+                                             RS2::ResolveLevel level, const Direction direction):
+    m_pImp{std::make_unique<Data>(container, level)}
+    , m_direction{direction}{
 }
 
 LC_ContainerTraverser::~LC_ContainerTraverser() = default;
 
-std::vector<RS_Entity*> LC_ContainerTraverser::entities()
-{
+std::vector<RS_Entity*> LC_ContainerTraverser::entities() const {
     std::vector<RS_Entity*> ret;
     // collecting entities by the DFS order
     collect(ret, m_pImp->container);
     return ret;
 }
 
-void LC_ContainerTraverser::collect(std::vector<RS_Entity*>& items, const RS_EntityContainer* container) const
-{
-    if (container == nullptr)
-        return;
-
+void LC_ContainerTraverser::collect(std::vector<RS_Entity*>& items, const RS_EntityContainer* container) const {
     for (RS_Entity* entity: std::as_const(*container)) {
-        if (entity == nullptr)
+        if (entity == nullptr) {
             continue;
-
-        if (entity->isContainer() && m_pImp->canResolve(container)) {
-            collect(items, static_cast<RS_EntityContainer*>(entity));
+        }
+        // if (entity->isContainer() && m_pImp->canResolve(entity)) {
+        if (entity->isContainer() && m_pImp->canResolve(entity)) { // fixme - CHECK THIS, previously it was canResolve(container), but shouldn't it check the entity?
+            const auto subContainer = static_cast<RS_EntityContainer*>(entity);
+            collect(items, subContainer);
         } else {
             items.push_back(entity);
         }
@@ -144,18 +134,18 @@ RS_Entity* LC_ContainerTraverser::next()
     return get();
 }
 
-RS_Entity* LC_ContainerTraverser::prev()
-{
+RS_Entity* LC_ContainerTraverser::prev() const {
     // create a traverser with reverted direction
     // so the next traversed node is the previous of the current traverser
-    LC_ContainerTraverser revTraverser{*m_pImp->container, m_pImp->level, LC_ContainerTraverser::Direction::Backword};
+    LC_ContainerTraverser revTraverser{*m_pImp->container, m_pImp->level, Direction::Backword};
     revTraverser.m_direction = (m_direction == Direction::Forward) ?
-                                   Direction::Backword : Direction::Backword;
+                                   Direction::Forward : Direction::Backword;
 
     // revert the indices
     for (ParentNode& node: revTraverser.m_pImp->indices) {
-        if (node.isValid())
+        if (node.isValid()) {
             node.index = node.container->count() - 1 - node.index;
+        }
     }
 
     // the previous.
@@ -167,18 +157,17 @@ RS_Entity* LC_ContainerTraverser::prev()
     return revTraverser.get();
 }
 
-RS_Entity* LC_ContainerTraverser::last()
-{
-    LC_ContainerTraverser revTraverser{*m_pImp->container, m_pImp->level, LC_ContainerTraverser::Direction::Backword};
+RS_Entity* LC_ContainerTraverser::last() const {
+    LC_ContainerTraverser revTraverser{*m_pImp->container, m_pImp->level, Direction::Backword};
     return revTraverser.get();
 }
 
-RS_Entity* LC_ContainerTraverser::get()
-{
-    if (m_pImp->indices.empty())
+RS_Entity* LC_ContainerTraverser::get(){
+    if (m_pImp->indices.empty()) {
         return nullptr;
+    }
     auto& [container, ii] = m_pImp->indices.back();
-    if (ii < 0 || size_t(ii) >= container->count()) {
+    if (ii < 0 || ii >= container->count()) {
         // exhausted the current
         m_pImp->indices.pop_back();
         return get();
@@ -197,7 +186,7 @@ RS_Entity* LC_ContainerTraverser::get()
 size_t LC_ContainerTraverser::currentIndex() const
 {
     if (!m_pImp->indices.empty() && !m_pImp->indices.back().container->empty()) {
-        size_t index = m_pImp->indices.back().index;
+        const size_t index = m_pImp->indices.back().index;
         if (m_direction == Direction::Backword) {
             return m_pImp->indices.back().container->count() - 1 - index;
         }

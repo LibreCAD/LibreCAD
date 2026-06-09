@@ -1,5 +1,5 @@
 /*******************************************************************************
-*
+ *
  This file is part of the LibreCAD project, a 2D CAD program
 
  Copyright (C) 2025 LibreCAD.org
@@ -25,4 +25,4 @@
 
 #define DONT_FORCE_WIDGETS_CSS
 
-#endif // LC_WIDGETS_COMMON_H
+#endif

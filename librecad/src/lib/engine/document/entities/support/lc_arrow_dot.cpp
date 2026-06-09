@@ -2,8 +2,8 @@
  * ********************************************************************************
  * This file is part of the LibreCAD project, a 2D CAD program
  *
- * Copyright (C) 2025 LibreCAD.org
- * Copyright (C) 2025 sand1024
+ * Copyright (C) 2026 LibreCAD.org
+ * Copyright (C) 2026 sand1024
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -25,8 +25,7 @@
 
 #include "rs_painter.h"
 
-LC_ArrowDot::LC_ArrowDot(RS_EntityContainer* container, const RS_Vector& point, double dirAngle, double size,
-                         DotArrowSubtype subType):
+LC_ArrowDot::LC_ArrowDot(RS_EntityContainer* container, const RS_Vector& point, const double dirAngle, const double size, const DotArrowSubtype subType):
     LC_DimArrowPoly(container, point, dirAngle, size),
     m_subType{subType}{
     createVertexes(size);
@@ -37,14 +36,14 @@ RS_Entity* LC_ArrowDot::clone() const {
 }
 
 void LC_ArrowDot::draw(RS_Painter* painter) {
-    double arrowSize = getArrowSize();
+    const double arrowSize = getArrowSize();
 
     switch (m_subType) {
-        case (blank): {
+        case BLANK: {
             painter->drawCircleWCS(vertexAt(2), arrowSize*0.25);
             break;
         }
-        case small: {
+        case SMALL: {
             painter->drawFilledCircleWCS(vertexAt(2), arrowSize*0.1);
             break;
         }
@@ -52,10 +51,10 @@ void LC_ArrowDot::draw(RS_Painter* painter) {
     painter->drawLineWCS(vertexAt(0), vertexAt(1));
 }
 
-void LC_ArrowDot::createVertexes(double size) {
+void LC_ArrowDot::createVertexes(const double size) {
     initVertexes(6);
 
-    double radius = (m_subType == blank) ? size * 0.25 : size * 0.1;
+    double radius = (m_subType == BLANK) ? size * 0.25 : size * 0.1;
 
     setVertex(0, {-size,0}); // dimline end
     setVertex(1, {-radius,0}); // connection line

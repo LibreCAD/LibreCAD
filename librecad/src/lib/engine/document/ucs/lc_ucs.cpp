@@ -31,44 +31,42 @@ LC_UCS LC_WCS::instance = LC_WCS();
 
 LC_UCS::LC_UCS() {}
 
-LC_UCS::LC_UCS(QString n) {
-    m_name = n;
-}
+LC_UCS::LC_UCS(const QString& name): m_name{name} {}
 
-void LC_UCS::setElevation(double d) {
+void LC_UCS::setElevation(const double d) {
     m_ucsElevation = d;
 }
 
-void LC_UCS::setOrigin(RS_Vector o) {
+void LC_UCS::setOrigin(const RS_Vector& o) {
   m_ucsOrigin = o;
 }
 
-void LC_UCS::setXAxis(RS_Vector pos) {
+void LC_UCS::setXAxis(const RS_Vector& pos) {
   m_ucsXAxis = pos;
 }
 
-void LC_UCS::setYAxis(RS_Vector axis) {
+void LC_UCS::setYAxis(const RS_Vector& axis) {
   m_ucsYAxis = axis;
 }
 
-void LC_UCS::setOrthoType(int type) {
+void LC_UCS::setOrthoType(const int type) {
   m_ucsOrthoType = type;
 }
 
 void LC_UCS::setName(const QString &name) {
-    LC_UCS::m_name = name;
+    m_name = name;
 }
 
-const QString LC_UCS::getName() const {
+QString LC_UCS::getName() const {
     return m_name;
 }
 
-const RS_Vector LC_UCS::getOrthoOrigin() const {
+RS_Vector LC_UCS::getOrthoOrigin() const {
     return m_orthoOrigin;
 }
 
 void LC_UCS::setOrthoOrigin(const RS_Vector &orthoOrigin) {
-    LC_UCS::m_orthoOrigin = orthoOrigin;
+    m_orthoOrigin = orthoOrigin;
 }
 
 long LC_UCS::getNamedUcsId() const {
@@ -84,14 +82,14 @@ bool LC_UCS::isValidName([[maybe_unused]]const QString &nameCandidate) {
     return true;
 }
 
-bool LC_UCS::isSameTo(LC_UCS *other) {
+bool LC_UCS::isSameTo(const LC_UCS *other) const {
     bool result = false;
     if (other != nullptr){
 //        if (isUCS() == other->isUCS()) {
             if (m_ucsOrthoType == other->getOrthoType()) {
                 if (LC_LineMath::isNotMeaningfulDistance(other->getOrigin(), getOrigin())) { // same origin
-                    double ownAngle = RS_Math::correctAnglePlusMinusPi(getXAxisDirection());
-                    double otherAngle = RS_Math::correctAnglePlusMinusPi(other->getXAxisDirection());
+                    const double ownAngle = RS_Math::correctAnglePlusMinusPi(getXAxisDirection());
+                    const double otherAngle = RS_Math::correctAnglePlusMinusPi(other->getXAxisDirection());
                     result = RS_Math::getAngleDifference(ownAngle, otherAngle) < RS_TOLERANCE_ANGLE;
                 }
             }
@@ -101,22 +99,22 @@ bool LC_UCS::isSameTo(LC_UCS *other) {
 }
 
 
-RS2::IsoGridViewType LC_UCS::getIsoGridViewType() {
+RS2::IsoGridViewType LC_UCS::getIsoGridViewType() const {
     RS2::IsoGridViewType isoType = RS2::Ortho;
     switch (m_ucsOrthoType){
-        case LC_UCS::FRONT:
-        case LC_UCS::BACK:
+        case FRONT:
+        case BACK:
             break;
-        case LC_UCS::LEFT:{
+        case LEFT:{
             isoType = RS2::IsoLeft;
             break;
         }
-        case LC_UCS::RIGHT:{
+        case RIGHT:{
             isoType = RS2::IsoRight;
             break;
         }
-        case LC_UCS::TOP:
-        case LC_UCS::BOTTOM:{
+        case TOP:
+        case BOTTOM:{
             isoType = RS2::IsoTop;
             break;
         }
@@ -127,8 +125,8 @@ RS2::IsoGridViewType LC_UCS::getIsoGridViewType() {
     return isoType;
 }
 
-bool LC_UCS::isIsometric() {
-    return m_ucsOrthoType != LC_UCS::NON_ORTHO;
+bool LC_UCS::isIsometric() const {
+    return m_ucsOrthoType != NON_ORTHO;
 }
 
 LC_WCS::LC_WCS():
@@ -137,7 +135,7 @@ LC_WCS::LC_WCS():
 
 LC_UCS::~LC_UCS() = default;
 
-LC_UCS* LC_UCS::clone() {
+LC_UCS* LC_UCS::clone() const {
     auto* clone = new LC_UCS();
     clone->m_name =  m_name;
     clone->m_ucsOrigin = m_ucsOrigin;

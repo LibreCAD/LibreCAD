@@ -30,23 +30,23 @@
 struct RS_TextData;
 
 struct LC_ToleranceData {
-    LC_ToleranceData(const RS_Vector& m_insertion_point, const RS_Vector& m_direction_vector,
-        const QString& m_text_code, const QString& m_dim_style_name)
-        : m_insertionPoint{m_insertion_point},
-          m_directionVector{m_direction_vector},
-          m_textCode{m_text_code},
-          m_dimStyleName{m_dim_style_name} {
+    LC_ToleranceData(const RS_Vector& insertionPoint, const RS_Vector& directionVector,
+        const QString& textCode, const QString& dimStyleName)
+        : insertionPoint{insertionPoint},
+          directionVector{directionVector},
+          textCode{textCode},
+          dimStyleName{dimStyleName} {
     }
 
     ~LC_ToleranceData();
 
-    RS_Vector m_insertionPoint;
-    RS_Vector m_directionVector;
-    QString m_textCode;
-    QString m_dimStyleName;
+    RS_Vector insertionPoint;
+    RS_Vector directionVector;
+    QString textCode;
+    QString dimStyleName;
 };
 
-std::ostream& operator <<(std::ostream& os, const LC_ToleranceData& dd);
+std::ostream& operator <<(std::ostream& os, const LC_ToleranceData& td);
 
 class LC_Tolerance:public RS_EntityContainer{
 public:
@@ -66,8 +66,8 @@ public:
 
     LC_ToleranceData getData() const {return m_toleranceData;}
 
-    QString getTextCode() const {return m_toleranceData.m_textCode;}
-    RS_Vector getInsertPoint() const {return m_toleranceData.m_insertionPoint;}
+    QString getTextCode() const {return m_toleranceData.textCode;}
+    RS_Vector getInsertPoint() const {return m_toleranceData.insertionPoint;}
 
     RS_VectorSolutions getRefPoints() const override;
     void move(const RS_Vector& offset) override;
@@ -78,30 +78,30 @@ public:
     void moveRef(const RS_Vector& ref, const RS_Vector& offset) override;
 
     friend std::ostream& operator <<(std::ostream& os, const LC_Tolerance& d);
-    void setTextCode(const QString& textCode) {m_toleranceData.m_textCode = textCode;};
+    void setTextCode(const QString& textCode) {m_toleranceData.textCode = textCode;}
 protected:
     void doUpdate();
     QList<QStringList> getFields() const;
-    double getTextHeight();
-    double getGraphicVariable(const QString& key, double defMM, int code);
-    double getDimtxt(bool scale = true);
+    double getTextHeight() const;
+    double getGraphicVariable(const QString& key, double defMM, int code) const;
+    double getDimtxt(bool scale = true) const;
     void setDimtxt(double f);
-    double getGeneralScale();
-    double getDimscale();
-    QString getTextStyle();
-    RS_Color getTextColor();
-    RS_Pen getPenForText();
-    RS_Color getDimensionLineColor();
-    RS_Pen getPenForLines();
+    double getGeneralScale() const;
+    double getDimscale() const;
+    QString getTextStyle() const;
+    RS_Color getTextColor() const;
+    RS_Pen getPenForText() const;
+    RS_Color getDimensionLineColor() const;
+    RS_Pen getPenForLines() const;
     void createTextLabels(QList<QList<double>>& divisions);
     void createFrameLines(QList<QList<double>>& divisions);
     RS_Line* addDimComponentLine(RS_Vector start, RS_Vector end, const RS_Pen& pen);
     void addDimComponentEntity(RS_Entity* en, const RS_Pen& pen);
-    mutable bool joinFirstField;
+    mutable bool m_joinFirstField;
 private:
     LC_ToleranceData m_toleranceData;
-    double dimscale = 1.0; // fixme - sand
-    double dimtxt;
+    double m_dimscale = 1.0; // fixme - sand
+    double m_dimtxt = 1.0;
 };
 
-#endif // LC_TOLERANCE_H
+#endif

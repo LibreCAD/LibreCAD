@@ -23,8 +23,9 @@
 ** This copyright notice MUST APPEAR in all copies of the script!  
 **
 **********************************************************************/
-#include <QMessageBox>
 #include "qg_blockdialog.h"
+
+#include <QMessageBox>
 
 #include "rs_block.h"
 #include "rs_blocklist.h"
@@ -38,7 +39,7 @@
  *  true to construct a modal dialog.
  */
 QG_BlockDialog::QG_BlockDialog(QWidget* parent)
-    : LC_Dialog(parent, "BlockProperties"){
+    : LC_Dialog(parent, "BlockProperties"), m_blockList{nullptr}{
     setupUi(this);
 }
 
@@ -54,23 +55,23 @@ void QG_BlockDialog::setBlockList(RS_BlockList* l) {
     RS_DEBUG->print("QG_BlockDialog::setBlockList");
 
     m_blockList = l;
-    if (m_blockList) {
-        RS_Block* block = m_blockList->getActive();
-        if (block) {
+    if (m_blockList != nullptr) {
+        const RS_Block* block = m_blockList->getActive();
+        if (block != nullptr) {
             leName->setText(block->getName());
         }
     }
 }
 
-RS_BlockData QG_BlockDialog::getBlockData() {
+RS_BlockData QG_BlockDialog::getBlockData() const {
     return RS_BlockData(leName->text(), RS_Vector(0.0,0.0), false);
 }
 
 void QG_BlockDialog::validate() {
-    QString name = leName->text();
+    const QString name = leName->text();
 
     if (!name.isEmpty()) {
-        if (m_blockList && !m_blockList->find(name)) {
+        if ((m_blockList != nullptr) && (m_blockList->find(name) == nullptr)) {
             accept();
         } else {
             QMessageBox::warning( this, tr("Renaming Block"),

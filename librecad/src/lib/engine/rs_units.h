@@ -40,15 +40,13 @@ class QString;
  * @author Andrew Mustun
  */
 class RS_Units{
-private:
-    static RS2::Unit currentDrawingUnits;
 public:
-    static void setCurrentDrawingUnits(RS2::Unit input_units){
-        currentDrawingUnits = input_units;
+    static void setCurrentDrawingUnits(const RS2::Unit inputUnits){
+        m_currentDrawingUnits = inputUnits;
     }
 
     static RS2::Unit getCurrentDrawingUnits(){
-        return currentDrawingUnits;
+        return m_currentDrawingUnits;
     }
 
     //static char* unit2sign(RS2::Unit unit);
@@ -99,12 +97,14 @@ public:
     static double dpiToScale(double dpi, RS2::Unit unit);
     static double scaleToDpi(double scale, RS2::Unit unit);
 
-    static QString replaceSurveyorsAnglesByDecimalDegrees(QString val, bool *ok, QString& errorMsg);
-    static QString replaceRadiantAnglesByDecimalDegrees(QString& val, bool *ok);
-    static QString replaceGradAnglesByDecimalDegrees(QString& val, bool *ok);
-    static QString replaceExplicitDegreesByDecimalDegrees(QString& val, bool *ok);
-    static QString replaceExplicitBearingAnglesByDecimalDegrees(QString& val, bool *ok);
+    static QString replaceSurveyorsAnglesByDecimalDegrees(const QString& val, bool *ok, QString& errorMsg);
+    static QString replaceRadiantAnglesByDecimalDegrees(const QString& val, bool *ok);
+    static QString replaceGradAnglesByDecimalDegrees(const QString& val, bool *ok);
+    static QString replaceExplicitDegreesByDecimalDegrees(const QString& val, bool *ok);
+    static QString replaceExplicitBearingAnglesByDecimalDegrees(const QString& val, bool *ok);
     static QString replaceAllPotentialAnglesByDecimalDegrees(const QString& val, bool *ok);
     static double evalAngleValue(const QString &c, bool *ok);
+private:
+    static RS2::Unit m_currentDrawingUnits;
 };
 #endif

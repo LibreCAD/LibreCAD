@@ -25,8 +25,9 @@
 
 #ifndef LC_UNDOSECTION_H
 #define LC_UNDOSECTION_H
+#include "rs_document.h"
 
-
+class RS_Entity;
 class RS_Document;
 class RS_Undoable;
 class LC_GraphicViewport;
@@ -44,15 +45,21 @@ class LC_GraphicViewport;
 */
 class LC_UndoSection {
 public:
-    LC_UndoSection(RS_Document * doc, LC_GraphicViewport *view, bool handleUndo = true);
+    LC_UndoSection(RS_Document * doc, LC_GraphicViewport *view);
     ~LC_UndoSection();
 
-    void addUndoable(RS_Undoable * undoable);
-
+    void addUndoable(RS_Undoable* u) const;
+    bool undoableExecute(const RS_Document::FunUndoable& doUndoable, const RS_Document::FunSelection& doSelection) const;
+    bool undoableExecute(const RS_Document::FunUndoable& doUndoable) const;
+protected:
+    void setupAndUndoableAdd(const QList<RS_Entity*>& entitiesToInsert, bool setActiveLayer, bool setActivePen) const;
+    void undoableReplace(RS_Entity* entityToDelete, RS_Entity* entityToAdd) const;
+    void undoableDelete(RS_Entity* e) const;
+    void undoableAdd(RS_Entity* e) const;
+    friend class Doc_plugin_interface;
 private:
-    RS_Document *document {nullptr};
-    LC_GraphicViewport* viewport {nullptr};
-    bool valid {true};
+    RS_Document *m_document {nullptr};
+    LC_GraphicViewport* m_viewport {nullptr};
 };
 
-#endif // LC_UNDOSECTION_H
+#endif

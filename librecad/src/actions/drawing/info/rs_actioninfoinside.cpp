@@ -25,10 +25,12 @@
 **********************************************************************/
 
 
+#include "rs_actioninfoinside.h"
+
 #include <QMouseEvent>
 
 #include "lc_actioncontext.h"
-#include "rs_actioninfoinside.h"
+#include "rs_document.h"
 #include "rs_entitycontainer.h"
 #include "rs_information.h"
 #include "rs_vector.h"
@@ -38,10 +40,11 @@ RS_ActionInfoInside::RS_ActionInfoInside(LC_ActionContext *actionContext)
     , m_point(std::make_unique<RS_Vector>())
     , m_contour(std::make_unique<RS_EntityContainer>())
 {
-    RS_EntityContainer* container = actionContext->getEntityContainer();
-    for(auto* e: container->getEntityList()){
-        if (e->isSelected()) {
-            m_contour->addEntity(e);
+    const RS_Document* container = actionContext->getDocument();
+    QList<RS_Entity*> selection;
+    if (container->collectSelected(selection)) {
+        for(const auto* e: std::as_const(selection)){
+           m_contour->addEntity(e);
         }
     }
 }
@@ -55,7 +58,7 @@ void RS_ActionInfoInside::trigger() {
     } else {
         commandMessage(tr("Point is outside selected contour."));
     }
-    finish(false);
+    finish();
 }
 
 void RS_ActionInfoInside::mouseMoveEvent(QMouseEvent* e) {
@@ -72,17 +75,17 @@ void RS_ActionInfoInside::onMouseLeftButtonRelease([[maybe_unused]]int status, Q
     trigger();
 }
 
-void RS_ActionInfoInside::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionInfoInside::onMouseRightButtonRelease(const int status, [[maybe_unused]]QMouseEvent *e) {
     initPrevious(status);
 }
 
-void RS_ActionInfoInside::updateMouseButtonHints() {
+void RS_ActionInfoInside::updateActionPrompt() {
     switch (getStatus()) {
         case 0:
-            updateMouseWidgetTRCancel(tr("Specify point"));
+            updatePromptTRCancel(tr("Specify point"));
             break;
         default:
-            updateMouseWidget();
+            updatePrompt();
             break;
     }
 }

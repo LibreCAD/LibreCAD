@@ -28,8 +28,8 @@
 #include "lc_shortcuts_manager.h"
 #include "rs_settings.h"
 
-LC_QTStatusbarManager::LC_QTStatusbarManager(QStatusBar *sBar):QObject(sBar) {
-    m_statusBar = sBar;
+LC_QTStatusbarManager::LC_QTStatusbarManager(QStatusBar *statusBar):QObject(statusBar) {
+    m_statusBar = statusBar;
 }
 
 void LC_QTStatusbarManager::setActionHelp(const QString &left, [[maybe_unused]]const QString &right, const LC_ModifiersInfo &modifiersInfo) const {
@@ -64,7 +64,7 @@ void LC_QTStatusbarManager::setActionHelp(const QString &left, [[maybe_unused]]c
     }
 }
 
-void LC_QTStatusbarManager::setCurrentQAction(QAction *a) {
+void LC_QTStatusbarManager::setCurrentQAction(const QAction *a) {
     if (m_actionPromptEnabled && m_statusBar->isVisible()) {
         m_actionToolTip = LC_ShortcutsManager::getPlainActionToolTip(a);
     }
@@ -72,7 +72,7 @@ void LC_QTStatusbarManager::setCurrentQAction(QAction *a) {
 
 void LC_QTStatusbarManager::loadSettings() {
     LC_GROUP_GUARD("Startup");{
-        bool useClassicalStatusBar = LC_GET_BOOL("UseClassicStatusBar", false);
+        const bool useClassicalStatusBar = LC_GET_BOOL("UseClassicStatusBar", false);
         if (useClassicalStatusBar) {
             m_actionPromptEnabled = false;
         } else {

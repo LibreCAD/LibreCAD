@@ -31,9 +31,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 namespace {
 
 // Glowing effects on Mouse hover
-    constexpr double minimumHoverTolerance = 3.0;
-    constexpr double hoverToleranceFactor1 = 1.0;
-    constexpr double hoverToleranceFactor2 = 10.0;
+    constexpr double MINIMUM_HOVER_TOLERANCE = 3.0;
+    constexpr double HOVER_TOLERANCE_FACTOR1 = 1.0;
+    constexpr double HOVER_TOLERANCE_FACTOR2 = 10.0;
 
     // whether the entity supports glowing effects on mouse hovering
     bool allowMouseOverGlowing(const RS_Entity *entity) {
@@ -58,7 +58,7 @@ namespace {
 LC_ActionInfoProperties::LC_ActionInfoProperties(LC_ActionContext *actionContext)
     :RS_PreviewActionInterface("Entity Info", actionContext, RS2::ActionInfoProperties){}
 
-void LC_ActionInfoProperties::init(int status){
+void LC_ActionInfoProperties::init(const int status){
     if (status >=0){
         // update widget
         LC_QuickInfoWidget *entityInfoWidget = QC_ApplicationWindow::getAppWindow()->getEntityInfoWidget();
@@ -75,61 +75,62 @@ void LC_ActionInfoProperties::doInitWithContextEntity(RS_Entity* contextEntity, 
     finish();
 }
 
-void LC_ActionInfoProperties::onMouseLeftButtonRelease([[maybe_unused]]int status, LC_MouseEvent *e) {
+void LC_ActionInfoProperties::onMouseLeftButtonRelease([[maybe_unused]]int status, const LC_MouseEvent* e) {
     // notify widget
     highlightAndShowEntityInfo(e, e->isControl);
     setStatus(-1);
     finish();
 }
 
-void LC_ActionInfoProperties::onMouseRightButtonRelease([[maybe_unused]]int status, [[maybe_unused]]LC_MouseEvent *e) {
+void LC_ActionInfoProperties::onMouseRightButtonRelease([[maybe_unused]]int status, [[maybe_unused]] const LC_MouseEvent* e) {
     setStatus(-1);
     finish();
 }
 
-void LC_ActionInfoProperties::onMouseMoveEvent([[maybe_unused]]int status, LC_MouseEvent *e) {
+void LC_ActionInfoProperties::onMouseMoveEvent([[maybe_unused]] const int status, const LC_MouseEvent* e) {
     highlightAndShowEntityInfo(e, e->isControl);
 }
 
-void LC_ActionInfoProperties::highlightAndShowEntityInfo(LC_MouseEvent *e, bool resolveChildren){
-    RS_Vector mouse = e->graphPoint;
+void LC_ActionInfoProperties::highlightAndShowEntityInfo(const LC_MouseEvent *e, const bool resolveChildren){
+    const RS_Vector mouse = e->graphPoint;
     updateCoordinateWidgetByRelZero(mouse);
     deleteSnapper();
     highlightHoveredEntity(e, resolveChildren);
 }
 
-bool LC_ActionInfoProperties::showEntityInfo(RS_Entity* entity, RS_Vector currentMousePosition) {
-    bool shouldShowQuickInfoWidget = true; // todo - read from options as there will be support
+bool LC_ActionInfoProperties::showEntityInfo(const RS_Entity* entity, const RS_Vector& currentMousePosition) {
+    constexpr bool shouldShowQuickInfoWidget = true; // todo - read from options as there will be support
     if (!entity->isVisible() || (entity->isLocked() && !shouldShowQuickInfoWidget)){
         clearQuickInfoWidget();
         return true;
     }
 
     const double hoverToleranceFactor = entity->is(RS2::EntityEllipse)
-                                            ? hoverToleranceFactor1
-                                            : hoverToleranceFactor2;
+                                            ? HOVER_TOLERANCE_FACTOR1
+                                            : HOVER_TOLERANCE_FACTOR2;
 
     const double hoverTolerance { hoverToleranceFactor / m_viewport->getFactor().magnitude() };
 
-    auto entityType = entity->rtti();
-    double hoverTolerance_adjusted = ((entityType != RS2::EntityEllipse) && (hoverTolerance < minimumHoverTolerance))
-                                         ? minimumHoverTolerance
+    const auto entityType = entity->rtti();
+    double hoverToleranceAdjusted = (entityType != RS2::EntityEllipse) && (hoverTolerance < MINIMUM_HOVER_TOLERANCE)
+                                         ? MINIMUM_HOVER_TOLERANCE
                                          : hoverTolerance;
 
-    double screenTolerance = toGraphDX( (int)(0.01*std::min(m_viewport->getWidth(), m_viewport->getHeight())));
-    hoverTolerance_adjusted = std::min(hoverTolerance_adjusted, screenTolerance);
+    const int minEdge = std::min<int>(m_viewport->getWidth(), m_viewport->getHeight());
+    const double screenTolerance = toGraphDX( static_cast<int>(0.01 * minEdge));
+    hoverToleranceAdjusted = std::min<double>(hoverToleranceAdjusted, screenTolerance);
 
     bool isPointOnEntity = false;
 
 
     if (RS2::isDimensionalEntity(entityType) || RS2::isTextEntity(entityType)) {
-        double nearestDistanceTo_pointOnEntity = 0.;
-        entity->getNearestPointOnEntity(currentMousePosition, true, &nearestDistanceTo_pointOnEntity);
-        if (nearestDistanceTo_pointOnEntity <= hoverTolerance_adjusted) {
+        double nearestDistanceToPointOnEntity = 0.;
+        entity->getNearestPointOnEntity(currentMousePosition, true, &nearestDistanceToPointOnEntity);
+        if (nearestDistanceToPointOnEntity <= hoverToleranceAdjusted) {
             isPointOnEntity = true;
         }
     } else {
-        isPointOnEntity = entity->isPointOnEntity(currentMousePosition, hoverTolerance_adjusted);
+        isPointOnEntity = entity->isPointOnEntity(currentMousePosition, hoverToleranceAdjusted);
     }
 
     // Glowing effect on mouse hovering
@@ -145,9 +146,9 @@ bool LC_ActionInfoProperties::showEntityInfo(RS_Entity* entity, RS_Vector curren
     return false;
 }
 
-void LC_ActionInfoProperties::highlightHoveredEntity(LC_MouseEvent* event, bool resolveChildren){
-    RS_Vector currentMousePosition = event->graphPoint;
-    RS_Entity* entity = catchEntityByEvent(event, resolveChildren ? RS2::ResolveAllButTextImage : RS2::ResolveNone);
+void LC_ActionInfoProperties::highlightHoveredEntity(const LC_MouseEvent* event, const bool resolveChildren){
+    const RS_Vector currentMousePosition = event->graphPoint;
+    const RS_Entity* entity = catchEntityByEvent(event, resolveChildren ? RS2::ResolveAllButTextImage : RS2::ResolveNone);
 
     if (entity == nullptr) {
         clearQuickInfoWidget();
@@ -156,7 +157,7 @@ void LC_ActionInfoProperties::highlightHoveredEntity(LC_MouseEvent* event, bool 
     showEntityInfo(entity, currentMousePosition);
 }
 
-void LC_ActionInfoProperties::updateQuickInfoWidget(RS_Entity *pEntity){
+void LC_ActionInfoProperties::updateQuickInfoWidget(const RS_Entity* pEntity){
     LC_QuickInfoWidget *entityInfoWidget = QC_ApplicationWindow::getAppWindow()->getEntityInfoWidget();
     if (entityInfoWidget != nullptr){
         entityInfoWidget->processEntity(pEntity);
@@ -167,8 +168,8 @@ void LC_ActionInfoProperties::clearQuickInfoWidget(){
     updateQuickInfoWidget(nullptr);
 }
 
-void LC_ActionInfoProperties::updateMouseButtonHints(){
-    updateMouseWidgetTRCancel(tr("Select entity"), MOD_CTRL(tr("Select child entities")));
+void LC_ActionInfoProperties::updateActionPrompt(){
+    updatePromptTRCancel(tr("Select entity"), MOD_CTRL(tr("Select child entities")));
 }
 
 RS2::CursorType LC_ActionInfoProperties::doGetMouseCursor([[maybe_unused]]int status) {

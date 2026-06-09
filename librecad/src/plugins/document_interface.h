@@ -35,22 +35,22 @@ class QString;
 namespace DPI {
     //! Vertical alignments.
     enum VAlign {
-        VAlignTop,      /*!< Top. */
-        VAlignMiddle,   /*!< Middle */
-        VAlignBottom    /*!< Bottom */
+        VAlignTop, /*!< Top. */
+        VAlignMiddle, /*!< Middle */
+        VAlignBottom /*!< Bottom */
     };
 
     //! Horizontal alignments.
     enum HAlign {
-        HAlignLeft,     /*!< Left */
-        HAlignCenter,   /*!< Centered */
-        HAlignRight     /*!< Right */
+        HAlignLeft, /*!< Left */
+        HAlignCenter, /*!< Centered */
+        HAlignRight /*!< Right */
     };
 
     //! Options for what to do with originals in a modification
     enum Disposition {
-	DELETE_ORIGINAL,
-	KEEP_ORIGINAL
+        DELETE_ORIGINAL,
+        KEEP_ORIGINAL
     };
 
     //! Entity's type.
@@ -63,13 +63,13 @@ namespace DPI {
         ELLIPSE,
         IMAGE,
         OVERLAYBOX,
-        SOLID,/*end atomicEntity, start entityContainer*/
+        SOLID, /*end atomicEntity, start entityContainer*/
         MTEXT,
         TEXT,
         INSERT,
         POLYLINE,
         SPLINE,
-		SPLINEPOINTS,
+        SPLINEPOINTS,
         HATCH,
         DIMLEADER,
         DIMALIGNED,
@@ -85,136 +85,136 @@ namespace DPI {
     //! Entity's data (dxf like).
 
     enum EDATA {
-        ETYPE=0,        /*!< enum: entity type */
-        TEXTCONTENT=1,  /*!< QString: text string */
-        BLKNAME=2,      /*!< QString: block name */
-        EID=5,          /*!< qulonglong: entity identifier */
-        LTYPE=6,        /*!< QString: line type */
-        TXTSTYLE=7,     /*!< QString: text style */
-        LAYER=8,        /*!< QString: layer */
-        STARTX=10,      /*!< double: start x coordinate */
-        ENDX=11,        /*!< double: end x coordinate, or U-vector for images */
-        VVECTORX=12,    /*!< double: V-vector for images, x coordinate */
-        SIZEU=13,       /*!< double: image U size (width) */
-        STARTY=20,      /*!< double: start y coordinate */
-        ENDY=21,        /*!< double: end y coordinate, or U-vector for images */
-        VVECTORY=22,    /*!< double: V-vector for images, y coordinate */
-        SIZEV=23,       /*!< double: image V size (height) */
-        STARTZ=30,      /*!< double: start z coordinate always 0 */
-        ENDZ=30,        /*!< double: end z coordinate always 0 */
-        LWIDTH=38,      /*!< QString: line width */  //verify number
-        RADIUS=39,      /*!< double: radius */
-        HEIGHT=40,      /*!< double: text height or ellipse ratio*/
-        XSCALE=41,      /*!< double: x insert scale */
-        YSCALE=42,      /*!< double: y insert scale */
-        ZSCALE=43,      /*!< double: z insert scale always 1? */
-        COLSPACE = 44,  ///< double: insert column spacing
-        ROWSPACE = 45,  ///< double: insert row spacing
-        LTSCALE=48,     /*!< line type scale (not in LibreCAD) */
-        STARTANGLE=50,  /*!< double: arc start angle or rotation angle for insert and text */
-        ENDANGLE=51,    /*!< double: arc end angle */
-        VISIBLE=60,     /*!< int: 1 visible, 0 invisible (reversed from dxf spec, but more logic*/
-        COLOR=62,       /*!< int: -1 ByLayer, -2 ByBlock, other 24 bit RGB color: entity color */
-        CLOSEPOLY=70,   /*!< int: closed polyline 0=open, 1=closed */
-        COLCOUNT = 70,  ///< int: insert number of columns
-        ROWCOUNT = 71,  ///< int: insert number of rows
-        TXTALIGNH=72,   /*!< enum: horizontal alignment for text */
-        TXTALIGNV=73,   /*!< enum: vertical alignment for text */
-        REVERSED=291 /*!< bool: true if arc is reversed (clockwise) */
+        ETYPE       = 0, /*!< enum: entity type */
+        TEXTCONTENT = 1, /*!< QString: text string */
+        BLKNAME     = 2, /*!< QString: block name */
+        EID         = 5, /*!< qulonglong: entity identifier */
+        LTYPE       = 6, /*!< QString: line type */
+        TXTSTYLE    = 7, /*!< QString: text style */
+        LAYER       = 8, /*!< QString: layer */
+        STARTX      = 10, /*!< double: start x coordinate */
+        ENDX        = 11, /*!< double: end x coordinate, or U-vector for images */
+        VVECTORX    = 12, /*!< double: V-vector for images, x coordinate */
+        SIZEU       = 13, /*!< double: image U size (width) */
+        STARTY      = 20, /*!< double: start y coordinate */
+        ENDY        = 21, /*!< double: end y coordinate, or U-vector for images */
+        VVECTORY    = 22, /*!< double: V-vector for images, y coordinate */
+        SIZEV       = 23, /*!< double: image V size (height) */
+        STARTZ      = 30, /*!< double: start z coordinate always 0 */
+        ENDZ        = 30, /*!< double: end z coordinate always 0 */
+        LWIDTH      = 38, /*!< QString: line width */ //verify number
+        RADIUS      = 39, /*!< double: radius */
+        HEIGHT      = 40, /*!< double: text height or ellipse ratio*/
+        XSCALE      = 41, /*!< double: x insert scale */
+        YSCALE      = 42, /*!< double: y insert scale */
+        ZSCALE      = 43, /*!< double: z insert scale always 1? */
+        COLSPACE    = 44, ///< double: insert column spacing
+        ROWSPACE    = 45, ///< double: insert row spacing
+        LTSCALE     = 48, /*!< line type scale (not in LibreCAD) */
+        STARTANGLE  = 50, /*!< double: arc start angle or rotation angle for insert and text */
+        ENDANGLE    = 51, /*!< double: arc end angle */
+        VISIBLE     = 60, /*!< int: 1 visible, 0 invisible (reversed from dxf spec, but more logic*/
+        COLOR       = 62, /*!< int: -1 ByLayer, -2 ByBlock, other 24 bit RGB color: entity color */
+        CLOSEPOLY   = 70, /*!< int: closed polyline 0=open, 1=closed */
+        COLCOUNT    = 70, ///< int: insert number of columns
+        ROWCOUNT    = 71, ///< int: insert number of rows
+        TXTALIGNH   = 72, /*!< enum: horizontal alignment for text */
+        TXTALIGNV   = 73, /*!< enum: vertical alignment for text */
+        REVERSED    = 291 /*!< bool: true if arc is reversed (clockwise) */
     };
-//Note about 24 bit RGB color:
-//    decimal integer 1632041, in hex 18 E7 29, in RGB dec 24,231,41
-// example red RGB dec 255,0,0; hex FF0000; decimal integer 16711680
+
+    //Note about 24 bit RGB color:
+    //    decimal integer 1632041, in hex 18 E7 29, in RGB dec 24,231,41
+    // example red RGB dec 255,0,0; hex FF0000; decimal integer 16711680
 
     enum LineWidth {
-        Width00 = 0,       /**< Width 1.  (0.00mm) */
-        Width01 = 5,       /**< Width 2.  (0.05mm) */
-        Width02 = 9,       /**< Width 3.  (0.09mm) */
-        Width03 = 13,      /**< Width 4.  (0.13mm) */
-        Width04 = 15,      /**< Width 5.  (0.15mm) */
-        Width05 = 18,      /**< Width 6.  (0.18mm) */
-        Width06 = 20,      /**< Width 7.  (0.20mm) */
-        Width07 = 25,      /**< Width 8.  (0.25mm) */
-        Width08 = 30,      /**< Width 9.  (0.30mm) */
-        Width09 = 35,      /**< Width 10. (0.35mm) */
-        Width10 = 40,      /**< Width 11. (0.40mm) */
-        Width11 = 50,      /**< Width 12. (0.50mm) */
-        Width12 = 53,      /**< Width 13. (0.53mm) */
-        Width13 = 60,      /**< Width 14. (0.60mm) */
-        Width14 = 70,      /**< Width 15. (0.70mm) */
-        Width15 = 80,      /**< Width 16. (0.80mm) */
-        Width16 = 90,      /**< Width 17. (0.90mm) */
-        Width17 = 100,     /**< Width 18. (1.00mm) */
-        Width18 = 106,     /**< Width 19. (1.06mm) */
-        Width19 = 120,     /**< Width 20. (1.20mm) */
-        Width20 = 140,     /**< Width 21. (1.40mm) */
-        Width21 = 158,     /**< Width 22. (1.58mm) */
-        Width22 = 200,     /**< Width 23. (2.00mm) */
-        Width23 = 211,     /**< Width 24. (2.11mm) */
+        Width00      = 0, /**< Width 1.  (0.00mm) */
+        Width01      = 5, /**< Width 2.  (0.05mm) */
+        Width02      = 9, /**< Width 3.  (0.09mm) */
+        Width03      = 13, /**< Width 4.  (0.13mm) */
+        Width04      = 15, /**< Width 5.  (0.15mm) */
+        Width05      = 18, /**< Width 6.  (0.18mm) */
+        Width06      = 20, /**< Width 7.  (0.20mm) */
+        Width07      = 25, /**< Width 8.  (0.25mm) */
+        Width08      = 30, /**< Width 9.  (0.30mm) */
+        Width09      = 35, /**< Width 10. (0.35mm) */
+        Width10      = 40, /**< Width 11. (0.40mm) */
+        Width11      = 50, /**< Width 12. (0.50mm) */
+        Width12      = 53, /**< Width 13. (0.53mm) */
+        Width13      = 60, /**< Width 14. (0.60mm) */
+        Width14      = 70, /**< Width 15. (0.70mm) */
+        Width15      = 80, /**< Width 16. (0.80mm) */
+        Width16      = 90, /**< Width 17. (0.90mm) */
+        Width17      = 100, /**< Width 18. (1.00mm) */
+        Width18      = 106, /**< Width 19. (1.06mm) */
+        Width19      = 120, /**< Width 20. (1.20mm) */
+        Width20      = 140, /**< Width 21. (1.40mm) */
+        Width21      = 158, /**< Width 22. (1.58mm) */
+        Width22      = 200, /**< Width 23. (2.00mm) */
+        Width23      = 211, /**< Width 24. (2.11mm) */
         WidthByLayer = -1, /**< Line width defined by layer not entity. */
         WidthByBlock = -2, /**< Line width defined by block not entity. */
-        WidthDefault = -3  /**< Line width defaults to the predefined line width. */
+        WidthDefault = -3 /**< Line width defaults to the predefined line width. */
     };
 
     enum LineType {
-        NoPen = 0,            /**< No line at all. */
-        SolidLine = 1,        /**< Normal line. */
-        DotLine = 2,          /**< Dotted line. */
-        DotLine2 = 3,         /**< Dotted line small. */
-        DotLineX2 = 4,        /**< Dotted line large. */
-        DashLine = 5,         /**< Dashed line. */
-        DashLine2 = 6,        /**< Dashed line small. */
-        DashLineX2 = 7,       /**< Dashed line large. */
-        DashDotLine = 8,      /**< Alternate dots and dashes. */
-        DashDotLine2 = 9,     /**< Alternate dots and dashes small. */
-        DashDotLineX2 = 10,   /**< Alternate dots and dashes large. */
-        DivideLine = 11,      /**< dash, dot, dot. */
-        DivideLine2 = 12,     /**< dash, dot, dot small. */
-        DivideLineX2 = 13,    /**< dash, dot, dot large. */
-        CenterLine = 14,      /**< dash, small dash. */
-        CenterLine2 = 15,     /**< dash, small dash small. */
-        CenterLineX2 = 16,    /**< dash, small dash large. */
-        BorderLine = 17,      /**< dash, dash, dot. */
-        BorderLine2 = 18,     /**< dash, dash, dot small. */
-        BorderLineX2 = 19,    /**< dash, dash, dot large. */
-        LineByLayer = -1,     /**< Line type defined by layer not entity */
-        LineByBlock = -2      /**< Line type defined by block not entity */
+        NoPen         = 0, /**< No line at all. */
+        SolidLine     = 1, /**< Normal line. */
+        DotLine       = 2, /**< Dotted line. */
+        DotLine2      = 3, /**< Dotted line small. */
+        DotLineX2     = 4, /**< Dotted line large. */
+        DashLine      = 5, /**< Dashed line. */
+        DashLine2     = 6, /**< Dashed line small. */
+        DashLineX2    = 7, /**< Dashed line large. */
+        DashDotLine   = 8, /**< Alternate dots and dashes. */
+        DashDotLine2  = 9, /**< Alternate dots and dashes small. */
+        DashDotLineX2 = 10, /**< Alternate dots and dashes large. */
+        DivideLine    = 11, /**< dash, dot, dot. */
+        DivideLine2   = 12, /**< dash, dot, dot small. */
+        DivideLineX2  = 13, /**< dash, dot, dot large. */
+        CenterLine    = 14, /**< dash, small dash. */
+        CenterLine2   = 15, /**< dash, small dash small. */
+        CenterLineX2  = 16, /**< dash, small dash large. */
+        BorderLine    = 17, /**< dash, dash, dot. */
+        BorderLine2   = 18, /**< dash, dash, dot small. */
+        BorderLineX2  = 19, /**< dash, dash, dot large. */
+        LineByLayer   = -1, /**< Line type defined by layer not entity */
+        LineByBlock   = -2 /**< Line type defined by block not entity */
     };
 
     enum EntColor {
         das,
     };
-
 }
 
-class Plug_VertexData
-{
+class Plug_VertexData {
 public:
-    Plug_VertexData(QPointF p, double b){
+    Plug_VertexData(const QPointF p, const double b) {
         point = p;
         bulge = b;
     }
+
     QPointF point;
     double bulge;
 };
 
 //! Wrapper for access entities from plugins.
- /*!
- *  Wrapper class for create, access and modify entities from plugins.
- *  TODO: terminate access function -> getData()
- *        terminate implementation of modify function -> updateData()
- *        terminate implementation of create function (ctor called from document)
- *           can't create entities:
- *           - atomic = CONSTRUCTIONLINE, OVERLAYBOX, SOLID,
- *           - container = INSERT, POLYLINE, SPLINE, HATCH, DIMLEADER,
- *             DIMALIGNED, DIMLINEAR, DIMRADIAL, DIMDIAMETRIC, DIMANGULAR,
- *        verify destructor if needed or not to delete entity
- * @author Rallaz
- */
-class Plug_Entity
-{
+/*!
+*  Wrapper class for create, access and modify entities from plugins.
+*  TODO: terminate access function -> getData()
+*        terminate implementation of modify function -> updateData()
+*        terminate implementation of create function (ctor called from document)
+*           can't create entities:
+*           - atomic = CONSTRUCTIONLINE, OVERLAYBOX, SOLID,
+*           - container = INSERT, POLYLINE, SPLINE, HATCH, DIMLEADER,
+*             DIMALIGNED, DIMLINEAR, DIMRADIAL, DIMDIAMETRIC, DIMANGULAR,
+*        verify destructor if needed or not to delete entity
+* @author Rallaz
+*/
+class Plug_Entity {
 public:
-    virtual ~Plug_Entity() {}
+    virtual ~Plug_Entity() {
+    }
 
     virtual int getEntityType();
 
@@ -223,21 +223,21 @@ public:
     * The data is a QHash with the EDATA keys relevant to the type of entity
     *  \param data pointer to a QHash<int, QVariant> to store the entity data.
     */
-    virtual void getData(QHash<int, QVariant> *data) = 0;
+    virtual void getData(QHash<int, QVariant>* data) = 0;
 
     //! Update the entity data.
     /*!
     * The data is a QHash with the EDATA keys relevant to the type of entity
     *  \param data pointer to a QHash<int, QVariant> with the entity data.
     */
-    virtual void updateData(QHash<int, QVariant> *data) = 0;
+    virtual void updateData(QHash<int, QVariant>* data) = 0;
 
     //! Obtain the polyline list of vertex.
     /*!
     * The data is a QList to store a Plug_VertexData for heach vertex form the polyline
     *  \param data pointer to a QList<Plug_VertexData> to store the vertex list.
     */
-    virtual void getPolylineData(QList<Plug_VertexData> *data) = 0;
+    virtual void getPolylineData(QList<Plug_VertexData>* data) = 0;
 
     //! Update the polyline list of vertex.
     /*!
@@ -245,14 +245,14 @@ public:
     * polyline the current vertex are removed and replaced for the new list.
     *  \param data pointer to a QList<Plug_VertexData> with the coordinates vertex's.
     */
-    virtual void updatePolylineData(QList<Plug_VertexData> *data) = 0;
+    virtual void updatePolylineData(QList<Plug_VertexData>* data) = 0;
 
     //! Move the entity.
     /*!
     *  \param offset move the entity by the given QPointF.
     *  \param disp whether to delete the original entity or keep it
     */
-    virtual void move(QPointF offset, DPI::Disposition disp = DPI::DELETE_ORIGINAL ) = 0;
+    virtual void move(QPointF offset, DPI::Disposition disp = DPI::DELETE_ORIGINAL) = 0;
 
     //! Move and rotate the entity.
     /*!
@@ -261,7 +261,7 @@ public:
     *  \param angle angle to rotate
     *  \param disp whether to delete the original entity or keep it
     */
-    virtual void moveRotate(QPointF const& offset, QPointF const& center, double angle, DPI::Disposition disp = DPI::DELETE_ORIGINAL) = 0;
+    virtual void moveRotate(const QPointF& offset, const QPointF& center, double angle, DPI::Disposition disp = DPI::DELETE_ORIGINAL) = 0;
 
     //! rotate the entity.
     /*!
@@ -287,18 +287,17 @@ public:
 };
 
 //! Interface for communicate plugins.
- /*!
- * Class for communicate plugins with document (drawing).
- * entities without add*() function:
- * atomic = CONSTRUCTIONLINE, OVERLAYBOX, SOLID,
- * container = INSERT, POLYLINE, SPLINE, HATCH, DIMLEADER,
- * DIMALIGNED, DIMLINEAR, DIMRADIAL, DIMDIAMETRIC, DIMANGULAR,
- * TODO: memory assignation and cleanup in plugin
- *   added----    implementation of function -> deleteEntity()
- * @author Rallaz
- */
-class Document_Interface
-{
+/*!
+* Class for communicate plugins with document (drawing).
+* entities without add*() function:
+* atomic = CONSTRUCTIONLINE, OVERLAYBOX, SOLID,
+* container = INSERT, POLYLINE, SPLINE, HATCH, DIMLEADER,
+* DIMALIGNED, DIMLINEAR, DIMRADIAL, DIMDIAMETRIC, DIMANGULAR,
+* TODO: memory assignation and cleanup in plugin
+*   added----    implementation of function -> deleteEntity()
+* @author Rallaz
+*/
+class Document_Interface {
 public:
     Document_Interface() = default;
     virtual ~Document_Interface() = default;
@@ -311,14 +310,14 @@ public:
     /*! Add point entity to current document with current attributes.
     *  \param start point coordinate.
     */
-    virtual void addPoint(QPointF *start) = 0;
+    virtual void addPoint(QPointF* start) = 0;
 
     //! Add line entity to current document.
     /*! Add line entity to current document with current attributes.
     *  \param start start point coordinate.
     *  \param end end point coordinate.
     */
-    virtual void addLine(QPointF *start, QPointF *end) = 0;
+    virtual void addLine(QPointF* start, QPointF* end) = 0;
 
     //! Add text entity to current document.
     /*! Add text entity to current document with current attributes
@@ -330,57 +329,70 @@ public:
     *  \param ha horizontal alignment of text
     *  \param va vertical alignment of text
     */
-    virtual void addText(QString txt, QString sty, QPointF *start, double height,
-                double angle, DPI::HAlign ha,  DPI::VAlign va) = 0;
+    virtual void addText(QString txt, QString sty, QPointF* start, double height, double angle, DPI::HAlign ha, DPI::VAlign va) = 0;
 
     //! Add circle entity to current document.
     /*! Add circle entity to current document with current attributes.
     *  \param start center point coordinate.
     *  \param radius radius for circle.
     */
-    virtual void addCircle(QPointF *start, qreal radius) = 0;
+    virtual void addCircle(QPointF* start, qreal radius) = 0;
 
     //! Add arc entity to current document.
     /*! Add arc of circumference entity to current document with current attributes.
     *  \param start center point coordinate.
     *  \param radius radius for circle.
+    *  \param a1
+    *  \param a2
     */
-    virtual void addArc(QPointF *start, qreal radius, qreal a1, qreal a2) = 0;
+    virtual void addArc(QPointF* start, qreal radius, qreal a1, qreal a2);
 
     //! Add ellipse entity to current document.
     /*! Add ellipse entity to current document with current attributes.
     *  \param start center point coordinate.
+    *  \param end
+    *  \param ratio
+    *  \param a1
+    *  \param a2
     *  \param radius radius for arc.
     */
-    virtual void addEllipse(QPointF *start, QPointF *end, qreal ratio, qreal a1, qreal a2) = 0;
+    virtual void addEllipse(QPointF* start, QPointF* end, qreal ratio, qreal a1, qreal a2) = 0;
 
     //! Add addLine entity to current document.
     /*! Add addLine entity to current document with current attributes; polyline is by lines.
     *  \param points of line segments
     *  \param closed whether line is closed
     */
-    virtual void addLines(std::vector<QPointF> const& points, bool closed=false) = 0;
+    virtual void addLines(const std::vector<QPointF>& points, bool closed = false) = 0;
 
     //! Add polyline entity to current document.
     /*! Add polyline entity to current document with current attributes.
     *  \param points polyline points
     *  \param closed whether polyline is closed
     */
-    virtual void addPolyline(std::vector<Plug_VertexData> const& points, bool closed=false) = 0;
+    virtual void addPolyline(const std::vector<Plug_VertexData>& points, bool closed = false) = 0;
     //! Add LC_SplinePoints entity to current document.
     /*! Add splinepoints entity to current document with current attributes.
     *  \param points interpolation points
     *  \param closed whether splinepoints is closed
     */
-    virtual void addSplinePoints(std::vector<QPointF> const& points, bool closed=false) = 0;
+    virtual void addSplinePoints(const std::vector<QPointF>& points, bool closed = false) = 0;
 
     //! Add image entity to current document.
     /*! Add image entity to current document with current attributes.
     *  \param start start point coordinate.
+    *  \param uvr
+    *  \param vvr
+    *  \param w
+    *  \param h
+    *  \param name
+    *  \param br
+    *  \param con
+    *  \param fade
     *  \param end end point coordinate.
     */
-    virtual void addImage(int handle, QPointF *start, QPointF *uvr, QPointF *vvr,
-                  int w, int h, QString name, int br, int con, int fade) = 0;
+    virtual void addImage(int handle, QPointF* start, QPointF* uvr, QPointF* vvr, int w, int h, QString name, int br, int con,
+                          int fade) = 0;
 
     //! Add insert entity to current document.
     /*! Add a block insert entity to current document with current attributes.
@@ -402,7 +414,7 @@ public:
     /*! Add a entity to current document with the data sets with Plug_Entity.updateData().
     *  \param handle a pointer to Plug_Entity.
     */
-    virtual void addEntity(Plug_Entity *handle) = 0;
+    virtual void addEntity(Plug_Entity* handle) = 0;
 
     //! Create a new Plug_Entity.
     /*! Create a new Plug_Entity of type ETYPE with default data.
@@ -411,13 +423,13 @@ public:
     *  \param type an DPI::ETYPE type.
     *  \return handle to pointer of Plug_Entity with type DPI::ETYPE or NULL if fail.
     */
-    virtual Plug_Entity *newEntity(enum DPI::ETYPE type) = 0;
+    virtual Plug_Entity* newEntity(enum DPI::ETYPE type) = 0;
 
     //! Remove a Entity.
     /*! Remove a entity from current drawing.
     *  \param ent handle to pointer of Plug_Entity.
     */
-    virtual void removeEntity(Plug_Entity *ent) = 0;
+    virtual void removeEntity(Plug_Entity* ent) = 0;
 
     //! Set the current layer in current document.
     /*! Set the current layer in current document, if not exist create it.
@@ -449,11 +461,10 @@ public:
     */
     virtual bool deleteLayer(QString name) = 0;
 
-    virtual void getCurrentLayerProperties(int *c, DPI::LineWidth *w, DPI::LineType *t) = 0;
-    virtual void getCurrentLayerProperties(int *c, QString *w, QString *t) = 0;
+    virtual void getCurrentLayerProperties(int* c, DPI::LineWidth* w, DPI::LineType* t) = 0;
+    virtual void getCurrentLayerProperties(int* c, QString* w, QString* t) = 0;
     virtual void setCurrentLayerProperties(int c, DPI::LineWidth w, DPI::LineType t) = 0;
-	virtual void setCurrentLayerProperties(int c, QString const& w,
-										   QString const& t) = 0;
+    virtual void setCurrentLayerProperties(int c, const QString& w, const QString& t) = 0;
 
     //! Gets a point.
     /*! Prompt message or an default message to the user asking for a point.
@@ -464,7 +475,7 @@ public:
     * \return true if success.
     * \return false if fail, i.e. user cancel.
     */
-    virtual bool getPoint(QPointF *point, const QString& message = "", QPointF *base = 0) = 0;
+    virtual bool getPoint(QPointF* point, const QString& message = "", QPointF* base = nullptr) = 0;
 
     //! Select a entity.
     /*! Prompt message or a default message to the user asking for a single selection.
@@ -472,7 +483,7 @@ public:
     * \param message an optional QString with prompt message.
     * \return a Plug_Entity handle the selected entity or NULL.
     */
-    virtual Plug_Entity *getEnt(const QString& message = "") = 0;
+    virtual Plug_Entity* getEnt(const QString& message = "") = 0;
 
     //! Gets a entities selection.
     /*! Prompt message or an default message to the user asking for a selection.
@@ -482,7 +493,7 @@ public:
     * \return true if success.
     * \return false if fail, i.e. user cancel.
     */
-    virtual bool getSelect(QList<Plug_Entity *> *sel, const QString& message = "") = 0;
+    virtual bool getSelect(QList<Plug_Entity*>* sel, const QString& message = "") = 0;
 
     //! Gets a entities selection based on the provided type.
     /*! Prompt message or an default message to the user asking for a selection.
@@ -493,7 +504,7 @@ public:
     * \return true if success.
     * \return false if fail, i.e. user cancel.
     */
-    virtual bool getSelectByType(QList<Plug_Entity *> *sel, enum DPI::ETYPE type, const QString& message = "") = 0;
+    virtual bool getSelectByType(QList<Plug_Entity*>* sel, enum DPI::ETYPE type, const QString& message = "") = 0;
 
     //! Gets all entities in document.
     /*! You can delete all, the Plug_Entity and the returned QList wen no more needed.
@@ -502,18 +513,18 @@ public:
     * \return true if success.
     * \return false if fail, i.e. user cancel.
     */
-    virtual bool getAllEntities(QList<Plug_Entity *> *sel, bool visible = false) = 0;
+    virtual bool getAllEntities(QList<Plug_Entity*>* sel, bool visible = false) = 0;
 
     virtual void unselectEntities() = 0;
 
-    virtual bool getVariableInt(const QString& key, int *num) = 0;
-    virtual bool getVariableDouble(const QString& key, double *num) = 0;
-    virtual bool addVariable(const QString& key, int value, int code=70) = 0;
-    virtual bool addVariable(const QString& key, double value, int code=40) = 0;
+    virtual bool getVariableInt(const QString& key, int* num) = 0;
+    virtual bool getVariableDouble(const QString& key, double* num) = 0;
+    virtual bool addVariable(const QString& key, int value, int code = 70) = 0;
+    virtual bool addVariable(const QString& key, double value, int code = 40) = 0;
 
-    virtual bool getInt(int *num, const QString& message = "", const QString& title = "") = 0;
-    virtual bool getReal(qreal *num, const QString& message = "", const QString& title = "") = 0;
-    virtual bool getString(QString *txt, const QString& message = "", const QString& title = "") = 0;
+    virtual bool getInt(int* num, const QString& message = "", const QString& title = "") = 0;
+    virtual bool getReal(qreal* num, const QString& message = "", const QString& title = "") = 0;
+    virtual bool getString(QString* txt, const QString& message = "", const QString& title = "") = 0;
 
     //! Convert real to string.
     /*! Convert a real number to string using indicated units format & precision. If omitted
@@ -525,8 +536,10 @@ public:
     * \param prec number of decimals added in the string.
     * \return a string with the converted number.
     */
-    virtual QString realToStr(const qreal num, const int units = 0, const int prec = 0) = 0;
+    virtual QString realToStr(qreal num, int units = 0, int prec = 0) = 0;
 };
 
+inline void Document_Interface::addArc([[maybe_unused]]QPointF* start, [[maybe_unused]]qreal radius,[[maybe_unused]]qreal a1, [[maybe_unused]]qreal a2) {
+}
 
-#endif // DOCUMENT_INTERFACE_H
+#endif

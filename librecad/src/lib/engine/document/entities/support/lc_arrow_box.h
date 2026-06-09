@@ -2,8 +2,8 @@
  * ********************************************************************************
  * This file is part of the LibreCAD project, a 2D CAD program
  *
- * Copyright (C) 2025 LibreCAD.org
- * Copyright (C) 2025 sand1024
+ * Copyright (C) 2026 LibreCAD.org
+ * Copyright (C) 2026 sand1024
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -23,11 +23,12 @@
 
 #ifndef LC_BOXARROW_H
 #define LC_BOXARROW_H
+
 #include "lc_dimarrowblockpoly.h"
 
 class LC_ArrowBox: public LC_DimArrowPoly {
 public:
-    LC_ArrowBox(RS_EntityContainer* container, const RS_Vector& point, double dirAngle, double size, bool filled);
+    LC_ArrowBox(RS_EntityContainer* container, const RS_Vector& pos, double dirAngle, double size, bool filled);
     RS_Entity* clone() const override;
     void draw(RS_Painter* painter) override;
 protected:
@@ -36,4 +37,4 @@ private:
     bool m_filled;
 };
 
-#endif // LC_BOXARROW_H
+#endif

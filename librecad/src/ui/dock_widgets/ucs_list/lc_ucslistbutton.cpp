@@ -23,19 +23,18 @@
 #include "lc_ucslistbutton.h"
 
 #include <QMenu>
-#include <QModelIndex>
 
 #include "lc_ucs.h"
 #include "lc_ucslistwidget.h"
 
-LC_UCSListButton::LC_UCSListButton(LC_UCSListWidget *w):QToolButton(nullptr), m_widget{w} {
-    setPopupMode(QToolButton::MenuButtonPopup);
+LC_UCSListButton::LC_UCSListButton(LC_UCSListWidget *widget):QToolButton(nullptr), m_widget{widget} {
+    setPopupMode(MenuButtonPopup);
     m_menu = new QMenu();
     connect(m_menu, &QMenu::aboutToShow, this, &LC_UCSListButton::fillMenu);
     setMenu(m_menu);
 }
 
-void LC_UCSListButton::enableSubActions(bool value){
+void LC_UCSListButton::enableSubActions(const bool value){
     if (value){
         setMenu(m_menu);
     }
@@ -50,15 +49,15 @@ void LC_UCSListButton::fillMenu() {
     QList<LC_UCS*> ucsList;
     m_widget->fillUCSList(ucsList);
 
-    auto activeUCS = m_widget->getActiveUCS();
+    const auto activeUCS = m_widget->getActiveUCS();
 
-    int ucsCount = ucsList.count();
-    int actionsCount = m_createdActions.count();
+    const int ucsCount = ucsList.count();
+    const int actionsCount = m_createdActions.count();
     if (ucsCount <= actionsCount){
-        int i;
+        int i = 0;
         for (i = 0; i < ucsCount; i++){
-            auto a = m_createdActions.at(i);
-            auto u = ucsList.at(i);
+            const auto a = m_createdActions.at(i);
+            const auto u = ucsList.at(i);
             auto typeIcon = m_widget->getUCSTypeIcon(u);
             a->setText(u->getName());
             a->setIcon(typeIcon);
@@ -73,10 +72,10 @@ void LC_UCSListButton::fillMenu() {
         }
     }
     else{
-        int i;
+        int i = 0;
         for (i = 0;  i < actionsCount; i++){
-            auto a = m_createdActions.at(i);
-            auto u = ucsList.at(i);
+            const auto a = m_createdActions.at(i);
+            const auto u = ucsList.at(i);
             auto typeIcon = m_widget->getUCSTypeIcon(u);
             a->setText(u->getName());
             a->setIcon(typeIcon);
@@ -86,7 +85,7 @@ void LC_UCSListButton::fillMenu() {
             a->setProperty("_UCS_IDX", QVariant(modelIndex));
         }
         for (; i < ucsCount; i++){
-            auto u = ucsList.at(i);
+            const auto u = ucsList.at(i);
             auto name = u->getName();
             auto typeIcon = m_widget->getUCSTypeIcon(u);
             auto* a = m_menu->addAction(typeIcon, name);
@@ -102,12 +101,12 @@ void LC_UCSListButton::fillMenu() {
     }
 }
 
-void LC_UCSListButton::menuTriggered([[maybe_unused]]bool checked){
-    auto *action = qobject_cast<QAction*>(sender());
+void LC_UCSListButton::menuTriggered([[maybe_unused]]bool checked) const {
+    const auto *action = qobject_cast<QAction*>(sender());
     if (action != nullptr) {
-        QVariant variant = action->property("_UCS_IDX");
+        const QVariant variant = action->property("_UCS_IDX");
         if (variant.isValid()){
-            QModelIndex index = variant.toModelIndex();
+            const QModelIndex index = variant.toModelIndex();
             m_widget->applyUCSByIndex(index);
         }
     }

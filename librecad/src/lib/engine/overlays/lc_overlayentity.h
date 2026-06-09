@@ -29,8 +29,6 @@ class LC_OverlayDrawable:public LC_Drawable {
 public:
     explicit LC_OverlayDrawable() = default;
     ~LC_OverlayDrawable() override = default;
-protected:
-
 };
 
-#endif // LC_OVERLAYENTITY_H
+#endif

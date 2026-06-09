@@ -24,58 +24,55 @@
 #include "rs_actionselect.h"
 
 #include "lc_actioncontext.h"
-#include "../drawing/selection/rs_actionselectsingle.h"
+#include "lc_action_select_single.h"
 #include "rs_dialogfactoryinterface.h"
 #include "rs_entitycontainer.h"
 #include "rs_graphicview.h"
 
-
-RS_ActionSelect::RS_ActionSelect(LC_ActionContext *actionContext,
-                                 RS2::ActionType nextAction,
-                                 QList<RS2::EntityType> allowedEntityTypes)
-	:RS_ActionInterface("Select Entities", actionContext, RS2::ActionSelect)
-    ,nextAction(nextAction)
-    , entityTypeList(std::move(allowedEntityTypes)){
+RS_ActionSelect::RS_ActionSelect(LC_ActionContext* actionContext, RS2::ActionType nextAction, QList<RS2::EntityType> allowedEntityTypes)
+    : RS_ActionInterface("Select Entities", actionContext, RS2::ActionSelect), nextAction(nextAction),
+      entityTypeList(std::move(allowedEntityTypes)) {
 }
 
 void RS_ActionSelect::init(int status) {
     RS_ActionInterface::init(status);
-    if(status >= 0 ) {
+    if (status >= 0) {
         // fixme - sand - files direct action creation!
         m_graphicView->setCurrentAction(std::make_shared<RS_ActionSelectSingle>(m_actionContext, this, entityTypeList));
     }
     deleteSnapper();
 }
 
-void RS_ActionSelect::resume(){
+void RS_ActionSelect::resume() {
     RS_ActionInterface::resume();
     deleteSnapper();
 }
 
-void RS_ActionSelect::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e){
+void RS_ActionSelect::onMouseRightButtonRelease(int status, [[maybe_unused]] QMouseEvent* e) {
     initPrevious(status);
 }
 
 int RS_ActionSelect::countSelected() const {
     int ret = m_container->countSelected();
-    if (ret == 0){
+    if (ret == 0) {
         commandMessage(tr("No entity selected!"));
     }
     return ret;
 }
 
 void RS_ActionSelect::updateMouseButtonHints() {
-    switch(nextAction) {
+    switch (nextAction) {
         default:
             updateMouseWidget();
     }
 }
-RS2::CursorType RS_ActionSelect::doGetMouseCursor([[maybe_unused]] int status){
+
+RS2::CursorType RS_ActionSelect::doGetMouseCursor([[maybe_unused]] int status) {
     return isFinished() ? RS2::ArrowCursor : RS2::SelectCursor;
 }
 
-void RS_ActionSelect::keyPressEvent(QKeyEvent* e){
-    if (e->key()==Qt::Key_Enter && countSelected() > 0){
+void RS_ActionSelect::keyPressEvent(QKeyEvent* e) {
+    if (e->key() == Qt::Key_Enter && countSelected() > 0) {
         finish();
         switchToAction(nextAction);
     }

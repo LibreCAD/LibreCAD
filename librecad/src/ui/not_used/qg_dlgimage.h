@@ -26,7 +26,7 @@
 #define QG_DLGIMAGE_H
 
 #include "ui_qg_dlgimage.h"
-#include "../dialogs/entity/lc_entitypropertiesdlg.h"
+#include "lc_entitypropertiesdlg.h"
 
 class RS_Image;
 
@@ -50,4 +50,4 @@ private:
     double m_scale = 1.;
 };
 
-#endif // QG_DLGIMAGE_H
+#endif

@@ -42,28 +42,28 @@ RS_ActionLayersToggleView::RS_ActionLayersToggleView(LC_ActionContext *actionCon
 
 void RS_ActionLayersToggleView::trigger() {
     RS_DEBUG->print("toggle layer");
-    if (m_graphic) {
+    if (m_graphic != nullptr) {
         RS_LayerList* ll = m_graphic->getLayerList();
-        unsigned cnt = 0;
+        bool noLayersToggled = true;
         // toggle selected layers
-        for (auto layer: *ll) {
-            if (!layer) continue;
-            if (!layer->isVisibleInLayerList()) continue;
-            if (!layer->isSelectedInLayerList()) continue;
+        for (const auto layer : *ll) {
+            if (layer == nullptr || !layer->isVisibleInLayerList() || !layer->isSelectedInLayerList()) {
+                continue;
+            }
             m_graphic->toggleLayer(layer);
-            cnt++;
+            noLayersToggled = false;
         }
         // if there wasn't selected layers, toggle active layer
-        if (!cnt) {
+        if (noLayersToggled) {
             m_graphic->toggleLayer(m_layer);
         }
         m_graphic->updateInserts();
-        m_container->calculateBorders();
+        m_document->calculateBorders();
     }
-    finish(false);
+    finish();
 }
 
-void RS_ActionLayersToggleView::init(int status) {
+void RS_ActionLayersToggleView::init(const int status) {
     RS_ActionInterface::init(status);
     trigger();
 }

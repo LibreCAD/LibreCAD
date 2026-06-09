@@ -83,8 +83,8 @@ public:
     duint32 defineBlock(const std::string& name, const DRW_Coord& basePoint);
 
     bool getPreview();
-    DRW::Version getVersion(){return version;}
-    DRW::error getError(){return error;}
+    DRW::Version getVersion() const {return version;}
+    DRW::error getError() const {return error;}
     /// Per-entity parseDwg failures accumulated during the load. These
     /// are warnings — the file still loads with the surviving entities.
     /// Zero on a clean load. Surface alongside the entity count so users
@@ -106,8 +106,7 @@ private:
     bool processDwg();
     static std::unique_ptr< dwgReader > createReaderForVersion(DRW::Version version, std::ifstream *stream, dwgRW *p);
 
-private:
-    DRW::Version version { DRW::UNKNOWNV };
+DRW::Version version { DRW::UNKNOWNV };
     DRW::error error { DRW::BAD_NONE };
     std::string fileName;
     bool applyExt { false }; /*apply extrusion in entities to conv in 2D?*/
@@ -132,4 +131,4 @@ private:
 /// after one release cycle once internal renames are propagated.
 using dwgR = dwgRW;
 
-#endif // LIBDWGR_H
+#endif

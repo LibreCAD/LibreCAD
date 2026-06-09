@@ -21,16 +21,16 @@
  * ********************************************************************************
  */
 
+
+#include "lc_workspacesmanager.h"
+
 #include <QGuiApplication>
+#include <QFile>
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QMessageBox>
 #include <QScreen>
-
-#include "lc_workspacesmanager.h"
-
-#include <QFile>
 
 #include "qc_applicationwindow.h"
 #include "rs_debug.h"
@@ -90,13 +90,13 @@ LC_WorkspacesManager::~LC_WorkspacesManager() {
 }
 
 void LC_WorkspacesManager::getWorkspaces(QList<QPair<int, QString>> &workspacesList){
-    for(auto p: m_workspacesList){
+    for(const auto p: std::as_const(m_workspacesList)){
         workspacesList << QPair<int, QString>(p->id, p->name);
     }
 }
 
 void LC_WorkspacesManager::getWorkspaceNames(QStringList &workspacesList){
-    for(auto p: m_workspacesList){
+    for(const auto p: std::as_const(m_workspacesList)){
         workspacesList << p->name;
     }
 }
@@ -124,20 +124,17 @@ void LC_WorkspacesManager::saveWorkspace(QString name,QWidget*  parent){
     saveWorkspaces(parent);
 }
 
-void LC_WorkspacesManager::deleteWorkspace(int id){
-    LC_Workspace perspective;
+void LC_WorkspacesManager::deleteWorkspace(const int id){
     QList<LC_Workspace *>::iterator it = m_workspacesList.begin();
     while (it != m_workspacesList.end()) {
         if ((*it)->id == id) {
-            LC_Workspace* w = *it;
+            const LC_Workspace* w = *it;
             m_workspacesList.erase(it);
             delete w;
             saveWorkspaces();
             return;
         }
-        else {
-            ++it;
-        }
+        ++it;
     }
     saveWorkspaces();
 }
@@ -160,11 +157,15 @@ void LC_WorkspacesManager::activateWorkspace(int id){
     }
 }
 
-void LC_WorkspacesManager::fillIconsAndMenuState(LC_WorkspacesManager::LC_Workspace &workspace){
+void LC_WorkspacesManager::fillIconsAndMenuState(LC_Workspace &workspace){
     LC_GROUP("Widgets");
     {
         workspace.columnCountLeftDoc = LC_GET_INT("LeftToolbarColumnsCount", 5);
+        workspace.columnCountLeftAllDoc = LC_GET_INT("LeftToolbarAllColumnsCount", 5);
+
         workspace.iconsSizeLeftDock = LC_GET_INT("LeftToolbarIconSize", 24);
+        workspace.iconsSizeLeftAllDock = LC_GET_INT("LeftToolbarAllIconSize", 24);
+
         workspace.iconsSizeRightDoc = LC_GET_INT("DockWidgetsIconSize", 16);
         workspace.iconsSizeToolbar = LC_GET_INT("ToolbarIconSize", 25);
     }
@@ -176,13 +177,18 @@ void LC_WorkspacesManager::fillIconsAndMenuState(LC_WorkspacesManager::LC_Worksp
     }
     LC_GROUP_END();
 
-    workspace.showStatusBar = LC_GET_ONE_BOOL("Appearance", "StatusBarVisible", false);
+    LC_GROUP_GUARD("Appearance");
+    {
+        workspace.showStatusBar = LC_GET_BOOL("StatusBarVisible", false);
+        workspace.showMainMenu = LC_GET_BOOL("MainMenuVisible", true);
+        workspace.showFullScreen = LC_GET_BOOL("FullscreenMode", false);
+    }
 }
 
 void LC_WorkspacesManager::fillBySettings(LC_Workspace &workspace){
     LC_GROUP("Geometry");
     {
-        auto geometryB64 = LC_GET_STR("WindowGeometry");
+        const auto geometryB64 = LC_GET_STR("WindowGeometry");
 
         workspace.geometry = geometryB64;
         workspace.windowWidth = LC_GET_INT("WindowWidth", 1024);
@@ -197,10 +203,14 @@ void LC_WorkspacesManager::fillBySettings(LC_Workspace &workspace){
         workspace.dockAreaToptActive = LC_GET_BOOL("TopDockArea", false);
         workspace.dockAreaBottomActive = LC_GET_BOOL("BottomDockArea", false);
         workspace.docAreaFloatingActive = LC_GET_BOOL("FloatingDockwidgets", false);
+
+        workspace.tbAreaLeftActive = LC_GET_BOOL("LeftTBArea", false);
+        workspace.tbAreaRightActive = LC_GET_BOOL("RightTBArea", true);
+        workspace.tbAreaToptActive = LC_GET_BOOL("TopTBArea", false);
+        workspace.tbAreaBottomActive = LC_GET_BOOL("BottomTBArea", false);
+        // workspace.docAreaFloatingActive = LC_GET_BOOL("FloatingDockwidgets", false);
     }
     LC_GROUP_END();
-
-    workspace.showStatusBar = LC_GET_ONE_BOOL("Appearance", "StatusBarVisible", false);
 
     fillIconsAndMenuState(workspace);
 }
@@ -208,8 +218,8 @@ void LC_WorkspacesManager::fillBySettings(LC_Workspace &workspace){
 
 void LC_WorkspacesManager::fillByState(LC_Workspace &workspace){
     QC_ApplicationWindow& appWin = *QC_ApplicationWindow::getAppWindow();
-    QString geometryB64 = appWin.saveGeometry().toBase64(QByteArray::Base64Encoding);
-    QString stateB64 = appWin.saveState().toBase64(QByteArray::Base64Encoding);
+    const QString geometryB64 = appWin.saveGeometry().toBase64(QByteArray::Base64Encoding);
+    const QString stateB64 = appWin.saveState().toBase64(QByteArray::Base64Encoding);
     workspace.geometry = geometryB64;
     workspace.widgetsState = stateB64;
     workspace.windowHeight = appWin.height();
@@ -217,11 +227,20 @@ void LC_WorkspacesManager::fillByState(LC_Workspace &workspace){
     workspace.windowX = appWin.x();
     workspace.windowY = appWin.y();
 
-    workspace.dockAreaLeftActive = appWin.getDockAreas().left->isChecked();
-    workspace.dockAreaRightActive = appWin.getDockAreas().right->isChecked();
-    workspace.dockAreaBottomActive = appWin.getDockAreas().bottom->isChecked();
-    workspace.dockAreaToptActive = appWin.getDockAreas().top->isChecked();
-    workspace.docAreaFloatingActive = appWin.getDockAreas().floating->isChecked();
+    const auto& dockAreaToggleActions = appWin.getDockAreaToggleActions();
+    workspace.dockAreaLeftActive = dockAreaToggleActions.left->isChecked();
+    workspace.dockAreaRightActive = dockAreaToggleActions.right->isChecked();
+    workspace.dockAreaBottomActive = dockAreaToggleActions.bottom->isChecked();
+    workspace.dockAreaToptActive = dockAreaToggleActions.top->isChecked();
+    workspace.docAreaFloatingActive = dockAreaToggleActions.floating->isChecked();
+
+    const auto& tbAreaToggleActions = appWin.getToolbarAreaToggleActions();
+
+    workspace.tbAreaLeftActive = tbAreaToggleActions.left->isChecked();
+    workspace.tbAreaRightActive = tbAreaToggleActions.right->isChecked();
+    workspace.tbAreaBottomActive = tbAreaToggleActions.bottom->isChecked();
+    workspace.tbAreaToptActive = tbAreaToggleActions.top->isChecked();
+    // workspace.docAreaFloatingActive = appWin.getDockAreas().floating->isChecked();
 
     fillIconsAndMenuState(workspace);
 }
@@ -235,17 +254,26 @@ void LC_WorkspacesManager::applyToSettings(const LC_Workspace &workspace){
         LC_SET("WindowY", workspace.windowY);
         LC_SET("WindowX", workspace.windowX);
         LC_SET("StateOfWidgets",workspace.widgetsState);
+
         LC_SET("LeftDockArea", workspace.dockAreaLeftActive);
         LC_SET("RightDockArea", workspace.dockAreaRightActive);
         LC_SET("TopDockArea", workspace.dockAreaToptActive);
         LC_SET("BottomDockArea", workspace.dockAreaBottomActive);
         LC_SET("FloatingDockwidgets", workspace.docAreaFloatingActive);
+
+        LC_SET("LeftTBArea", workspace.tbAreaLeftActive);
+        LC_SET("RightTBArea", workspace.tbAreaRightActive);
+        LC_SET("TopTBArea", workspace.tbAreaToptActive);
+        LC_SET("BottomTBArea", workspace.tbAreaBottomActive);
     }
     LC_GROUP_END();
     LC_GROUP("Widgets");
     {
         LC_SET("LeftToolbarColumnsCount", workspace.columnCountLeftDoc);
+        LC_SET("LeftToolbarAllColumnsCount", workspace.columnCountLeftAllDoc);
+
         LC_SET("LeftToolbarIconSize", workspace.iconsSizeLeftDock);
+        LC_SET("LeftToolbarAllIconSize", workspace.iconsSizeLeftAllDock);
         LC_SET("DockWidgetsIconSize", workspace.iconsSizeRightDoc);
         LC_SET("ToolbarIconSize", workspace.iconsSizeToolbar);
     }
@@ -260,6 +288,8 @@ void LC_WorkspacesManager::applyToSettings(const LC_Workspace &workspace){
     LC_GROUP("Appearance");
     {
         LC_SET("StatusBarVisible",workspace.showStatusBar);
+        LC_SET("MainMenuVisible", workspace.showMainMenu);
+        LC_SET("FullscreenMode", workspace.showFullScreen);
     }
 }
 
@@ -268,30 +298,38 @@ void LC_WorkspacesManager::restoreGeometryAndState(const LC_Workspace &workspace
     restoreGeometryAndState(workspace, appWin);
 }
 
-void LC_WorkspacesManager::restoreGeometryAndState(const LC_WorkspacesManager::LC_Workspace &workspace, QC_ApplicationWindow &appWin) const {
+void LC_WorkspacesManager::restoreGeometryAndState(const LC_Workspace &workspace, QC_ApplicationWindow &appWin) const {
     appWin.setUpdatesEnabled(false);
 
-    auto widgetsState = QByteArray::fromBase64(workspace.widgetsState.toUtf8(), QByteArray::Base64Encoding);
+    const auto widgetsState = QByteArray::fromBase64(workspace.widgetsState.toUtf8(), QByteArray::Base64Encoding);
     appWin.restoreState(widgetsState);
 
-    appWin.getDockAreas().left->setChecked(workspace.dockAreaLeftActive);
-    appWin.getDockAreas().right->setChecked(workspace.dockAreaRightActive);
-    appWin.getDockAreas().bottom->setChecked(workspace.dockAreaBottomActive);
-    appWin.getDockAreas().top->setChecked(workspace.dockAreaToptActive);
-    appWin.getDockAreas().floating->setChecked(workspace.docAreaFloatingActive);
+    const auto& dockAreas = appWin.getDockAreaToggleActions();
+    dockAreas.left->setChecked(workspace.dockAreaLeftActive);
+    dockAreas.right->setChecked(workspace.dockAreaRightActive);
+    dockAreas.bottom->setChecked(workspace.dockAreaBottomActive);
+    dockAreas.top->setChecked(workspace.dockAreaToptActive);
+    dockAreas.floating->setChecked(workspace.docAreaFloatingActive);
+
+    const auto& tbAreas = appWin.getToolbarAreaToggleActions();
+    tbAreas.left->setChecked(workspace.tbAreaLeftActive);
+    tbAreas.right->setChecked(workspace.tbAreaRightActive);
+    tbAreas.bottom->setChecked(workspace.tbAreaBottomActive);
+    tbAreas.top->setChecked(workspace.tbAreaToptActive);
+    // dockAreas.floating->setChecked(workspace.docAreaFloatingActive);
 
     appWin.rebuildMenuIfNecessary();
     appWin.setIconSize(QSize(workspace.iconsSizeToolbar, workspace.iconsSizeToolbar));
 
-    auto geometry = QByteArray::fromBase64(workspace.geometry.toUtf8(), QByteArray::Base64Encoding);
+    const auto geometry = QByteArray::fromBase64(workspace.geometry.toUtf8(), QByteArray::Base64Encoding);
     if (!geometry.isEmpty()) {
         appWin.restoreGeometry(geometry);
     } else {
         // fallback
-        int windowWidth = workspace.windowWidth;
-        int windowHeight = workspace.windowHeight;
-        int windowX = workspace.windowX;
-        int windowY = workspace.windowY;
+        const int windowWidth = workspace.windowWidth;
+        const int windowHeight = workspace.windowHeight;
+        const int windowX = workspace.windowX;
+        const int windowY = workspace.windowY;
         appWin.resize(windowWidth, windowHeight);
         appWin.move(windowX, windowY);
     }
@@ -304,6 +342,7 @@ void LC_WorkspacesManager::restoreGeometryAndState(const LC_WorkspacesManager::L
     clampWidgetToScreen(appWin);
 
     appWin.slotViewStatusBar(workspace.showStatusBar);
+    appWin.toggleMainMenu(workspace.showMainMenu);
     appWin.setUpdatesEnabled(true);
     appWin.fireWidgetSettingsChanged();
 }
@@ -328,35 +367,35 @@ void LC_WorkspacesManager::persist(){
 }
 
 QString LC_WorkspacesManager::getWorkspacesFileName(){
-    QString settingsDir = LC_GET_ONE_STR("Paths","OtherSettingsDir", RS_System::instance()->getAppDataDir()).trimmed();
+    const QString settingsDir = LC_GET_ONE_STR("Paths","OtherSettingsDir", RS_System::instance()->getAppDataDir()).trimmed();
     QString workspacesFile = settingsDir + "/workspaces.lcws";
     return workspacesFile;
 }
 
 void LC_WorkspacesManager::createWorkspacesFileBackupCopy(const QString& workspacesFile) {
     // do backup of file on start
-    QString backupFileName = workspacesFile + ".bak";
+    const QString backupFileName = workspacesFile + ".bak";
     QFile::copy(workspacesFile, backupFileName);
 }
 
 void LC_WorkspacesManager::loadWorkspaces(){
-    QString workspacesFile = getWorkspacesFileName();
+    const QString workspacesFile = getWorkspacesFileName();
     if (!workspacesFile.isEmpty()) {
         QFile jsonFile(workspacesFile);
         if (jsonFile.exists()) {
             if (jsonFile.open(QFile::ReadOnly)) {
                 createWorkspacesFileBackupCopy(workspacesFile);
                 QJsonParseError parseError;
-                auto doc = QJsonDocument::fromJson(jsonFile.readAll(), &parseError);
+                const auto doc = QJsonDocument::fromJson(jsonFile.readAll(), &parseError);
                 if (parseError.error != QJsonParseError::NoError) {
                     LC_ERR << "Unexpected error during workspaces parsing. Message:" + parseError.errorString();
                 }
                 else {
-                    bool canParse;
+                    bool canParse = false;
                     QJsonObject obj;
                     if (doc.isObject()) {
                         obj = doc.object();
-                        auto type = obj.value("type").toString();
+                        const auto type = obj.value("type").toString();
                         canParse = "LibreCAD Workspaces file" == type;
                     } else {
                         canParse = false;
@@ -367,7 +406,7 @@ void LC_WorkspacesManager::loadWorkspaces(){
                         m_lastActivatedId = obj.value("lastActivatedId").toInt(0);
                         QJsonArray jsonArray = obj.value("workspaces").toArray();
                         m_workspacesList.clear();
-                            for(const auto& value: jsonArray) {
+                            for(const auto& value: std::as_const(jsonArray)) {
                                 QJsonObject wsObj = value.toObject();
 
                                 auto* p = new LC_Workspace;
@@ -388,14 +427,21 @@ void LC_WorkspacesManager::loadWorkspaces(){
                                 p->docAreaFloatingActive = wsObj["dockFloat"].toBool();
 
                                 p->columnCountLeftDoc = wsObj["columnCountLeftDock"].toInt(6);
+                                p->columnCountLeftAllDoc = wsObj["columnCountLeftAllDock"].toInt(6);
+
                                 p->iconsSizeToolbar = wsObj["iconSizeToolbar"].toInt(24);
+
                                 p->iconsSizeLeftDock = wsObj["iconSizeLeftDock"].toInt(24);
+                                p->iconsSizeLeftAllDock = wsObj["iconSizeLeftAllDock"].toInt(24);
+
                                 p->iconsSizeRightDoc = wsObj["iconSizeRightDock"].toInt(16);
 
                                 p->extendMenu  = wsObj["expandMenu"].toBool(false);
                                 p->extendMenuTillEntities = wsObj["expandMenuTillEntity"].toBool(false);
 
                                 p->showStatusBar  = wsObj["statusBarVisible"].toBool(false);
+                                p->showMainMenu  = wsObj["mainMenuBarVisible"].toBool(true);
+                                p->showFullScreen  = wsObj["fullScreenMode"].toBool(true);
 
                                 m_workspacesList << p;
                             }
@@ -413,20 +459,20 @@ void LC_WorkspacesManager::loadWorkspaces(){
 }
 
 bool LC_WorkspacesManager::isWorkspacesFileExists(){
-    QString workspacesFile = getWorkspacesFileName();
+    const QString workspacesFile = getWorkspacesFileName();
     if (!workspacesFile.isEmpty()) {
-        QFile file(workspacesFile);
+        const QFile file(workspacesFile);
         return file.exists();
     }
     return false;
 }
 
-bool LC_WorkspacesManager::hasWorkspaces(){
+bool LC_WorkspacesManager::hasWorkspaces() const {
     return !m_workspacesList.isEmpty();
 }
 
 void LC_WorkspacesManager::saveWorkspaces(QWidget* parent){
-    QString workspacesFile = getWorkspacesFileName();
+    const QString workspacesFile = getWorkspacesFileName();
     if (!workspacesFile.isEmpty()) {
         QFile file(workspacesFile);
         if (file.open(QFile::WriteOnly)) {
@@ -437,7 +483,7 @@ void LC_WorkspacesManager::saveWorkspaces(QWidget* parent){
 
             QJsonArray perspectivesArray;
 
-            for (auto p: m_workspacesList) {
+            for (const auto p: std::as_const(m_workspacesList)) {
                 QJsonObject wsObj;
 
                 wsObj.insert("name", QJsonValue::fromVariant(p->name));
@@ -456,20 +502,27 @@ void LC_WorkspacesManager::saveWorkspaces(QWidget* parent){
                 wsObj.insert("dockFloat", QJsonValue::fromVariant(p->dockAreaBottomActive));
 
                 wsObj.insert("columnCountLeftDock", QJsonValue::fromVariant(p->columnCountLeftDoc));
+                wsObj.insert("columnCountLeftAllDock", QJsonValue::fromVariant(p->columnCountLeftAllDoc));
+
                 wsObj.insert("iconSizeToolbar", QJsonValue::fromVariant(p->iconsSizeToolbar));
+
                 wsObj.insert("iconSizeLeftDock", QJsonValue::fromVariant(p->iconsSizeLeftDock));
+                wsObj.insert("iconSizeLeftAllDock", QJsonValue::fromVariant(p->iconsSizeLeftAllDock));
+
                 wsObj.insert("iconSizeRightDock", QJsonValue::fromVariant(p->iconsSizeRightDoc));
 
                 wsObj.insert("expandMenu", QJsonValue::fromVariant(p->extendMenu));
                 wsObj.insert("expandMenuTillEntity", QJsonValue::fromVariant(p->extendMenuTillEntities));
                 wsObj.insert("statusBarVisible", QJsonValue::fromVariant(p->showStatusBar));
+                wsObj.insert("mainMenuBarVisible", QJsonValue::fromVariant(p->showMainMenu));
+                wsObj.insert("fullScreenMode", QJsonValue::fromVariant(p->showFullScreen));
 
                 perspectivesArray.append(wsObj);
             }
 
             objSettings.insert("workspaces", perspectivesArray);
 
-            QJsonDocument doc(objSettings);
+            const QJsonDocument doc(objSettings);
             file.write(doc.toJson());
         } else {
             if (parent != nullptr) {

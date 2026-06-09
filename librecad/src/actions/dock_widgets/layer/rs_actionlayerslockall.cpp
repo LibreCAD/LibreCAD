@@ -25,30 +25,28 @@
 **********************************************************************/
 
 #include "rs_actionlayerslockall.h"
+
 #include "rs_debug.h"
 #include "rs_graphic.h"
 
-RS_ActionLayersLockAll::RS_ActionLayersLockAll(bool lock, LC_ActionContext *actionContext)
+RS_ActionLayersLockAll::RS_ActionLayersLockAll(const bool lock, LC_ActionContext *actionContext)
         :RS_ActionInterface("Lock all Layers",actionContext, RS2::ActionLayersLockAll) {
-
     this->m_lock = lock;
 }
 
 void RS_ActionLayersLockAll::trigger() {
     RS_DEBUG->print("RS_ActionLayersLockAll::trigger");
-    if (m_graphic) {
-
+    if (m_graphic != nullptr) {
         // Deselect entities before locking all layers
-        if (m_lock && m_container) {
-            m_container->setSelected(false);
+        if (m_lock) {
+            unselectAll();
         }
-
         m_graphic->lockAllLayers(m_lock);
     }
-    finish(false);
+    finish();
 }
 
-void RS_ActionLayersLockAll::init(int status) {
+void RS_ActionLayersLockAll::init(const int status) {
     RS_ActionInterface::init(status);
     trigger();
 }

@@ -28,27 +28,30 @@
 #define QG_WIDTHBOX_H
 
 #include <QComboBox>
+
 #include "rs.h"
 
 /**
  * A combobox for choosing a line width.
  */
-class QG_WidthBox: public QComboBox {
+class QG_WidthBox : public QComboBox {
     Q_OBJECT
 public:
-	QG_WidthBox(QWidget* parent=nullptr, const char* name=nullptr);
-    QG_WidthBox(bool showByLayer, bool showUnchanged,
-				QWidget* parent=nullptr, const char* name=nullptr);
-    ~QG_WidthBox() override =default;
+    explicit QG_WidthBox(QWidget* parent = nullptr, const char* name = nullptr);
+    QG_WidthBox(bool showByLayer, bool showUnchanged, QWidget* parent = nullptr, const char* name = nullptr);
+    ~QG_WidthBox() override = default;
     RS2::LineWidth getWidth() const;
     void setWidth(RS2::LineWidth w);
     void setLayerWidth(RS2::LineWidth w);
     void init(bool showByLayer, bool showUnchanged);
     bool isUnchanged() const;
-private slots:
+
+private
+    slots :
     void slotWidthChanged(int index);
-signals:
+    signals :
     void widthChanged(RS2::LineWidth);
+
 private:
     RS2::LineWidth m_currentWidth = RS2::Width00;
     std::map<RS2::LineWidth, int> m_width2Index;

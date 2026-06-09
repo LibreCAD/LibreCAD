@@ -28,44 +28,41 @@
 #include "rs_flags.h"
 
 /** Constructor with initialisation to the given flags. */
-RS_Flags::RS_Flags(unsigned f):
-	flags(f)
-{
+RS_Flags::RS_Flags(const unsigned f) : m_flags(f) {
 }
 
-
 unsigned RS_Flags::getFlags() const {
-	return flags;
+    return m_flags;
 }
 
 void RS_Flags::resetFlags() {
-	flags=0;
+    m_flags = 0;
 }
 
-void RS_Flags::setFlags(unsigned f) {
-	flags=f;
+void RS_Flags::setFlags(const unsigned f) {
+    m_flags = f;
 }
 
-void RS_Flags::setFlag(unsigned f) {
-	flags |= f;
+void RS_Flags::setFlag(const unsigned f) {
+    m_flags |= f;
 }
 
-void RS_Flags::delFlag(unsigned f) {
-	flags &= ~f;
+void RS_Flags::delFlag(const unsigned f) {
+    m_flags &= ~f;
 }
 
-void RS_Flags::toggleFlag(unsigned f) {
-	flags ^= f;
+void RS_Flags::toggleFlag(const unsigned f) {
+    m_flags ^= f;
 }
 
-bool RS_Flags::getFlag(unsigned f) const {
-	return flags&f;
+bool RS_Flags::getFlag(const unsigned f) const {
+    return m_flags & f;
 }
 
-bool RS_Flags::isSet(unsigned f) const {
-    return flags&f;
+bool RS_Flags::isSet(const unsigned f) const {
+    return m_flags & f;
 }
 
-bool RS_Flags::isNotSet(unsigned f) const {
-    return !(flags&f);
+bool RS_Flags::isNotSet(const unsigned f) const {
+    return !(m_flags & f);
 }

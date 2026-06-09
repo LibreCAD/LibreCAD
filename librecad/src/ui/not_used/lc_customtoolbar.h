@@ -7,7 +7,6 @@
 class LC_CustomToolbar : public QToolBar
 {
     Q_OBJECT
-
 public:
 
     LC_CustomToolbar(QWidget* parent);
@@ -28,4 +27,4 @@ public slots:
 
 };
 
-#endif // LC_CUSTOMTOOLBAR_H
+#endif

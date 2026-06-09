@@ -27,6 +27,7 @@
 #define RS_LOCALE_H
 
 #include <QLocale>
+
 #include "rs.h"
 
 /**
@@ -34,31 +35,30 @@
   * (c) 2011 R. van Twisk
   *
   **/
-class RS_Locale :public QLocale {
+class RS_Locale : public QLocale {
 public:
     RS_Locale() = default;
-    RS_Locale(const QString &_canonical);
-	/* without virtual destructor => warning: deleting object of polymorphic  
-	 * class type 'RS_Locale' which has non-virtual destructor might cause 
-	 * undefined behaviour [-Wdelete-non-virtual-dtor]
-	 * 
-	 * TNick <nicu.tofan@gmail.com>
+    explicit RS_Locale(const QString& canonical);
+    /* without virtual destructor => warning: deleting object of polymorphic  
+  * class type 'RS_Locale' which has non-virtual destructor might cause 
+  * undefined behaviour [-Wdelete-non-virtual-dtor]
+  * 
+  * TNick <nicu.tofan@gmail.com>
      */
     virtual ~RS_Locale() = default;
-	
 
-    virtual void setCanonical(const QString &_canonical);
+    virtual void setCanonical(const QString& canonical);
     virtual void setDirection(RS2::TextLocaleDirection direction);
-    virtual void setName(const QString &_name);
+    virtual void setName(const QString& name);
     virtual QString name() const;
-    static QString toCanonical(const QString &canonical);
+    static QString toCanonical(const QString& canonical);
 
     QString getCanonical() const;
     QString getName() const;
 
 protected:
-    QString canonical;
-    QString localeName;
-    int direction = RS2::locLeftToRight;
+    QString m_canonical;
+    QString m_localeName;
+    int m_direction = RS2::locLeftToRight;
 };
 #endif

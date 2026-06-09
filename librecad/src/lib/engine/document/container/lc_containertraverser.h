@@ -22,8 +22,8 @@
 **
 **********************************************************************************/
 
-#ifndef LC_ContainerTraverser_H
-#define LC_ContainerTraverser_H
+#ifndef LC_CONTAINERTRAVERSER_H
+#define LC_CONTAINERTRAVERSER_H
 
 #include <memory>
 #include <vector>
@@ -62,6 +62,7 @@ namespace lc {
  *   important, if traverse must be customized based on the current entity.
  * @author Dongxu Li
  */
+// fixme - sand - review and find why sometimes it returns non-unique entities (same entity is in list more than once)
 class LC_ContainerTraverser {
 public:
 
@@ -74,7 +75,7 @@ public:
 
     LC_ContainerTraverser(const RS_EntityContainer& container,
                           RS2::ResolveLevel level,
-                          LC_ContainerTraverser::Direction direction = Direction::Forward);
+                          Direction direction = Direction::Forward);
 
     ~LC_ContainerTraverser();
 
@@ -91,7 +92,7 @@ public:
      *                 and the value of the next()
      * @return - the last entity, as defined by the traverser
      */
-    RS_Entity* last();
+    RS_Entity* last() const;
 
     /**
      * @brief next() - intended to replace RS_Container::nextEntity()
@@ -105,7 +106,7 @@ public:
      *                calling this method does NOT modify the traverser position
      * @return the previous entity traversed
      */
-    RS_Entity* prev();
+    RS_Entity* prev() const;
 
     /**
      * @brief entities - collect entities in the current container according to
@@ -113,7 +114,7 @@ public:
      *                   Calling this method does not modify the traverser position
      * @return std::vector<RS_Entity*> - collected entities in the container
      */
-    std::vector<RS_Entity*> entities();
+    std::vector<RS_Entity*> entities() const;
 
 private:
     // traverse by one step
@@ -124,10 +125,8 @@ private:
     size_t currentIndex() const;
 
     struct Data;
-    std::unique_ptr<LC_ContainerTraverser::Data> m_pImp;
-    LC_ContainerTraverser::Direction m_direction = Direction::Forward;
+    std::unique_ptr<Data> m_pImp;
+    Direction m_direction = Direction::Forward;
 };
 }
-#endif // LC_ContainerTraverser_H
-
-
+#endif

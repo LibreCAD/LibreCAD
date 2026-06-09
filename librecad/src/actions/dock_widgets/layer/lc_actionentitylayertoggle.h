@@ -34,7 +34,7 @@ public:
     LC_ActionLayerToggle(LC_ActionContext* context, RS2::ActionType actionType);
 protected:
     void doWithLayer(RS_Graphic* graphic, RS_Layer* layer) override;
-    void updateMouseButtonHintsForSelection() override;
+    void updateActionPromptForSelection() override;
 };
 
-#endif // LC_ACTIONLAYERTOGGLE_H
+#endif

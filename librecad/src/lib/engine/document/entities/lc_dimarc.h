@@ -26,37 +26,37 @@
 
 #if defined(_MSC_VER) && _MSC_VER > 1000
 #pragma once
-#endif // _MSC_VER > 1000
+#endif
 
 #include "rs_dimension.h"
 
 class RS_Arc;
-
+// fixme - sand - no assignment operator!
 struct LC_DimArcData {
     LC_DimArcData() = default;
     LC_DimArcData(const LC_DimArcData& other);
-    LC_DimArcData(double input_radius,
-                  double input_arcLength,
-                  const RS_Vector& input_centre,
-                  const RS_Vector& input_endAngle,
-                  const RS_Vector& input_startAngle);
-
-    double radius = 0.;
-    double arcLength = 0.;
+    LC_DimArcData(double radius,
+                  double arcLength,
+                  const RS_Vector& centre,
+                  const RS_Vector& endAngle,
+                  const RS_Vector& startAngle);
     RS_Vector centre;
     RS_Vector endAngle;
     RS_Vector startAngle;
+    double radius = 0.;
+    double arcLength = 0.;
 };
 
-std::ostream& operator <<(std::ostream& os, const LC_DimArcData& input_dimArcData);
+std::ostream& operator <<(std::ostream& os, const LC_DimArcData& dimArc);
 
+// fixme - sand - no copy assignment operator!
 class LC_DimArc : public RS_Dimension {
-    friend std::ostream& operator <<(std::ostream& os, const LC_DimArc& input_dimArc);
+    friend std::ostream& operator <<(std::ostream& os, const LC_DimArc& dimArc);
 public:
     LC_DimArc(const LC_DimArc& other);
     LC_DimArc(RS_EntityContainer* parent,
-              const RS_DimensionData& input_commonDimData,
-              const LC_DimArcData& input_dimArcData);
+              const RS_DimensionData& commonDimData,
+              const LC_DimArcData& dimArcData);
 
     RS_Entity* clone() const override;
 
@@ -88,6 +88,10 @@ public:
         return m_dimArcData.centre;
     }
 
+    void setCenter(const RS_Vector& v) {
+        m_dimArcData.centre = v;
+    }
+
     QString getMeasuredLabel() override;
 
     void update() override;
@@ -101,21 +105,19 @@ protected:
     LC_DimArcData m_dimArcData;
     void doUpdateDim() override;
 private:
-    RS_Vector arrowStartPoint;
-    RS_Vector arrowEndPoint;
-    RS_Vector dimStartPoint;
-    RS_Vector dimEndPoint;
-    RS_Line* extLine1 = nullptr;
-    RS_Line* extLine2 = nullptr;
-    RS_Arc* dimArc1 = nullptr;
-    RS_Arc* dimArc2 = nullptr;
+    RS_Vector m_arrowStartPoint;
+    RS_Vector m_arrowEndPoint;
+    RS_Vector m_dimStartPoint;
+    RS_Vector m_dimEndPoint;
+    RS_Line* m_extLine1 = nullptr;
+    RS_Line* m_extLine2 = nullptr;
+    RS_Arc* m_dimArc1 = nullptr;
+    RS_Arc* m_dimArc2 = nullptr;
 
     void calcDimension();
-    RS_Vector truncateVector(const RS_Vector input_vector);
-    void arrow(const RS_Vector& point,
-               const double angle,
-               const double direction,
+    RS_Vector truncateVector(const RS_Vector& v);
+    void arrow(const RS_Vector& point, double angle, double direction,
                const RS_Pen& pen);
 };
 
-#endif // LC_DIMARC_H
+#endif

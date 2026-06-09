@@ -34,8 +34,7 @@
 /**
  * Holds the data that defines a solid.
  */
-struct RS_SolidData
-{
+struct RS_SolidData {
     /**
      * Default constructor. Leaves the data object uninitialized.
      */
@@ -44,89 +43,55 @@ struct RS_SolidData
     /**
      * Constructor for a solid with 3 corners.
      */
-    RS_SolidData(const RS_Vector& corner1,
-                 const RS_Vector& corner2,
-                 const RS_Vector& corner3);
+    RS_SolidData(const RS_Vector& corner1, const RS_Vector& corner2, const RS_Vector& corner3);
 
     /**
      * Constructor for a solid with 4 corners.
      */
-    RS_SolidData(const RS_Vector& corner1,
-                 const RS_Vector& corner2,
-                 const RS_Vector& corner3,
-                 const RS_Vector& corner4);
+    RS_SolidData(const RS_Vector& corner1, const RS_Vector& corner2, const RS_Vector& corner3, const RS_Vector& corner4);
 
     enum Corners {
         FirstCorner = 0,
-        Triangle = 3,
-        MaxCorners
+        Triangle    = 3,
+        MaxCorners  = 4
     };
 
-    std::array<RS_Vector, MaxCorners> corner;
+    std::array<RS_Vector, MaxCorners> corners;
 };
 
-
-std::ostream& operator << (std::ostream& os, const RS_SolidData& pd);
+std::ostream& operator <<(std::ostream& os, const RS_SolidData& pd);
 
 /**
  * Class for a solid entity (e.g. dimension arrows).
  *
  * @author Andrew Mustun
  */
-class RS_Solid : public RS_AtomicEntity
-{
+class RS_Solid : public RS_AtomicEntity {
 public:
-    RS_Solid(RS_EntityContainer* parent,
-             const RS_SolidData& d);
-        RS_Solid(const RS_SolidData& d);
+    RS_Solid(RS_EntityContainer* parent, const RS_SolidData& d);
+    explicit RS_Solid(const RS_SolidData& d);
 
     RS_Entity* clone() const override;
 
     /** @return RS_ENTITY_POINT */
-    RS2::EntityType rtti() const  override
-    {
+    RS2::EntityType rtti() const override {
         return RS2::EntitySolid;
     }
 
     /** @return Copy of data that defines the point. */
-    RS_SolidData const& getData() const
-    {
-        return data;
+    const RS_SolidData& getData() const {
+        return m_data;
     }
 
     /** @return true if this is a triangle. */
-    bool isTriangle() const
-    {
-        return !data.corner[3].valid;
+    bool isTriangle() const {
+        return !m_data.corners[3].valid;
     }
 
     RS_Vector getCorner(int num) const;
     RS_Vector unsafeGetCorner(int num) const;
 
-    void shapeArrow(const RS_Vector& point,
-                    double angle,
-                    double arrowSize);
-
-    RS_Vector getNearestEndpoint(const RS_Vector& coord,
-                                 double* dist = nullptr) const override;
-    RS_Vector getNearestPointOnEntity(const RS_Vector& coord,
-                                      bool onEntity = true,
-                                      double* dist = nullptr,
-                                      RS_Entity** entity = nullptr) const override;
-    RS_Vector getNearestCenter(const RS_Vector& coord,
-                               double* dist = nullptr) const override;
-    RS_Vector getNearestMiddle(const RS_Vector& coord,
-                               double* dist = nullptr,
-                               int middlePoints = 1) const override;
-    RS_Vector getNearestDist(double distance,
-                             const RS_Vector& coord,
-                             double* dist = nullptr) const override;
-
-    double getDistanceToPoint(const RS_Vector& coord,
-                              RS_Entity** entity = nullptr,
-                              RS2::ResolveLevel level = RS2::ResolveNone,
-                              double solidDist = RS_MAXDOUBLE) const override;
-
+    void shapeArrow(const RS_Vector& point, double angle, double arrowSize);
     void move(const RS_Vector& offset) override;
     void rotate(const RS_Vector& center, double angle) override;
     void rotate(const RS_Vector& center, const RS_Vector& angleVector) override;
@@ -135,7 +100,7 @@ public:
 
     void draw(RS_Painter* painter) override;
 
-    friend std::ostream& operator << (std::ostream& os, const RS_Solid& p);
+    friend std::ostream& operator <<(std::ostream& os, const RS_Solid& p);
 
     /** Recalculates the borders of this entity. */
     void calculateBorders() override;
@@ -146,12 +111,17 @@ public:
     bool isInCrossWindow(const RS_Vector& v1, const RS_Vector& v2) const;
 
 protected:
-    RS_SolidData data;
-
+    RS_SolidData m_data;
+    RS_Vector doGetNearestPointOnEntity(const RS_Vector& coord, bool onEntity, double* dist, RS_Entity** entity) const override;
+    double doGetDistanceToPoint(const RS_Vector& coord, RS_Entity** entity, RS2::ResolveLevel level, double solidDist) const override;
+    RS_Vector doGetNearestEndpoint(const RS_Vector& coord, double* dist, RS_Entity** entity) const override;
+    RS_Vector doGetNearestCenter(const RS_Vector& coord, double* dist, RS_Entity** centerEntity) const override;
+    RS_Vector doGetNearestMiddle(const RS_Vector& coord, double* dist, int middlePoints) const override;
+    RS_Vector doGetNearestDist(double distance, const RS_Vector& coord, double* dist) const override;
 private:
     //helper method for getNearestPointOnEntity
-    bool sign (const RS_Vector& v1, const RS_Vector& v2, const RS_Vector& v3) const;
-    void setDistPtr(double *dist, double value) const;
+    bool sign(const RS_Vector& v1, const RS_Vector& v2, const RS_Vector& v3) const;
+    void setDistPtr(double* dist, double value) const;
 };
 
 #endif

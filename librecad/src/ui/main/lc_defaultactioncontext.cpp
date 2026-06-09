@@ -1,5 +1,5 @@
 /*******************************************************************************
-*
+ *
  This file is part of the LibreCAD project, a 2D CAD program
 
  Copyright (C) 2025 LibreCAD.org
@@ -22,13 +22,12 @@
 
 #include "lc_defaultactioncontext.h"
 
-#include "lc_actionoptionsmanager.h"
+#include "lc_action_options_manager.h"
 #include "lc_qtstatusbarmanager.h"
 #include "qg_actionhandler.h"
 #include "qg_commandwidget.h"
 #include "qg_coordinatewidget.h"
 #include "qg_mousewidget.h"
-#include "qg_selectionwidget.h"
 
 LC_DefaultActionContext::LC_DefaultActionContext(QG_ActionHandler* actionHandler):m_actionHandler{actionHandler} {
 }
@@ -41,27 +40,24 @@ void LC_DefaultActionContext::removeOptionsWidget(LC_ActionOptionsWidget *widget
     m_actionOptionsManager->removeOptionsWidget(widget);
 }
 
-void LC_DefaultActionContext::requestSnapDistOptions(double *dist, bool on){
+void LC_DefaultActionContext::requestSnapDistOptions(double *dist, const bool on){
     m_actionOptionsManager->requestSnapDistOptions(dist, on);
 }
 
-void LC_DefaultActionContext::requestSnapMiddleOptions(int *middlePoints, bool on){
+void LC_DefaultActionContext::requestSnapMiddleOptions(int *middlePoints, const bool on){
     m_actionOptionsManager->requestSnapMiddleOptions(middlePoints, on);
+}
+
+void LC_DefaultActionContext::setPropertySheetWidget(LC_PropertySheetWidget* widget) {
+    m_propertySheetWidget = widget;
+    m_actionOptionsManager->setPropertySheetWidget(widget);
 }
 
 void LC_DefaultActionContext::hideSnapOptions(){
     m_actionOptionsManager->hideSnapOptions();
 }
-
-void LC_DefaultActionContext::updateSelectionWidget(int countSelected, double selectedLength){
-    if (m_selectionWidget != nullptr) {
-        m_selectionWidget->setNumber(countSelected);
-        m_selectionWidget->setTotalLength(selectedLength);
-    }
-    m_selectionCount = countSelected;
-}
-
-void LC_DefaultActionContext::updateMouseWidget(const QString &left, const QString &right, const LC_ModifiersInfo &modifiers){
+[[deprecated]]
+void LC_DefaultActionContext::updateActionPrompt(const QString &left, const QString &right, const LC_ModifiersInfo &modifiers){
     if (m_mouseWidget != nullptr) {
         m_mouseWidget->setHelp(left, right, modifiers);
     }
@@ -87,7 +83,7 @@ void LC_DefaultActionContext::commandPrompt(const QString &message){
     }
 }
 
-void LC_DefaultActionContext::updateCoordinateWidget(const RS_Vector &abs, const RS_Vector &rel, bool updateFormat){
+void LC_DefaultActionContext::updateCoordinateWidget(const RS_Vector &abs, const RS_Vector &rel, const bool updateFormat){
     if (m_coordinateWidget != nullptr) {
         m_coordinateWidget->setCoordinates(abs, rel, updateFormat);
     }
@@ -104,7 +100,7 @@ void LC_DefaultActionContext::setSnapMode(const RS_SnapMode& mode) {
     m_actionHandler->setSnaps(mode);
 }
 
-void LC_DefaultActionContext::setCurrentAction(RS2::ActionType action, void* data) {
+void LC_DefaultActionContext::setCurrentAction(const RS2::ActionType action, void* data) {
     m_actionHandler->setCurrentAction(action, data);
 }
 
@@ -112,6 +108,6 @@ RS_ActionInterface* LC_DefaultActionContext::getCurrentAction() {
     return m_actionHandler->getCurrentAction();
 }
 
-void LC_DefaultActionContext::deleteActionHandler() {
+void LC_DefaultActionContext::deleteActionHandler() const {
     delete m_actionHandler;
 }

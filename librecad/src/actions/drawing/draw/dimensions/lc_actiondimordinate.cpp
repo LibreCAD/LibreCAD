@@ -26,7 +26,6 @@
 #include "lc_actioncontext.h"
 #include "lc_dimordinate.h"
 #include "lc_graphicviewport.h"
-#include "lc_ucs.h"
 #include "rs_document.h"
 #include "rs_polyline.h"
 #include "rs_preview.h"
@@ -36,9 +35,8 @@ class RS_Polyline;
 struct LC_ActionDimOrdinate::ActionData {
     ActionData() = default;
     ~ActionData() = default;
-    RS_Vector m_wcsFeaturePoint;
-    RS_Vector m_leaderEndPoint;
-    bool directionX = false;
+    RS_Vector wcsFeaturePoint;
+    RS_Vector leaderEndPoint;
     bool ctrlPressed = false;
 };
 
@@ -53,14 +51,14 @@ void LC_ActionDimOrdinate::doInitWithContextEntity(RS_Entity* contextEntity, con
     RS_Vector pos;
     auto entity = contextEntity;
     if (isPolyline(entity)) {
-        auto polyline = static_cast<RS_Polyline*>(contextEntity);
+        const auto polyline = static_cast<RS_Polyline*>(contextEntity);
         entity = polyline->getNearestEntity(clickPos);
     }
     if (isLine(entity)) {
-        auto startPoint = entity->getStartpoint();
-        auto endPoint = entity->getEndpoint();
-        double distToStart = startPoint.distanceTo(clickPos);
-        double distToEnd = endPoint.distanceTo(clickPos);
+        const auto startPoint = entity->getStartpoint();
+        const auto endPoint = entity->getEndpoint();
+        const double distToStart = startPoint.distanceTo(clickPos);
+        const double distToEnd = endPoint.distanceTo(clickPos);
         if (distToEnd < distToStart) {
             pos = endPoint;
         }
@@ -75,33 +73,33 @@ void LC_ActionDimOrdinate::doInitWithContextEntity(RS_Entity* contextEntity, con
         return;
     }
 
-    m_actionData->m_wcsFeaturePoint = pos;
+    m_actionData->wcsFeaturePoint = pos;
     moveRelativeZero(pos);
     setStatus(SetLeaderEnd);
 }
 
-void LC_ActionDimOrdinate::doTrigger() {
-    LC_DimOrdinate* dim  = createDim(m_actionData->m_leaderEndPoint, m_actionData->ctrlPressed, m_document);
+RS_Entity* LC_ActionDimOrdinate::doTriggerCreateEntity() {
+    LC_DimOrdinate* dim  = createDim(m_actionData->leaderEndPoint, m_actionData->ctrlPressed, m_document);
+    return dim;
+}
 
-    setPenAndLayerToActive(dim);
-    undoCycleAdd(dim);
-
+void LC_ActionDimOrdinate::doTriggerCompletion([[maybe_unused]]bool success) {
     m_actionData->ctrlPressed = false;
     m_dimensionData->text = "";
     setStatus(SetFeaturePoint);
 }
 
- LC_DimOrdinate*  LC_ActionDimOrdinate::createDim(RS_Vector leaderEndPoint, bool alternateOrdinate, RS_EntityContainer* container) {
+LC_DimOrdinate*  LC_ActionDimOrdinate::createDim(const RS_Vector& leaderEndPoint, const bool alternateOrdinate, RS_EntityContainer* container) const {
     double horAxisDirection = 0;
     RS_Vector originPoint;
     m_viewport->fillCurrentUCSInfo(originPoint, horAxisDirection);
 
     m_dimensionData->definitionPoint = originPoint;
     m_dimensionData->horizontalAxisDirection = horAxisDirection;
-    RS_Vector ucsFeaturePoint = toUCS(m_actionData->m_wcsFeaturePoint);
-    RS_Vector ucsLeaderPoint = toUCS(leaderEndPoint);
+    const RS_Vector ucsFeaturePoint = toUCS(m_actionData->wcsFeaturePoint);
+    const RS_Vector ucsLeaderPoint = toUCS(leaderEndPoint);
 
-    RS_Vector deltaInUCS = ucsLeaderPoint-ucsFeaturePoint;
+    const RS_Vector deltaInUCS = ucsLeaderPoint-ucsFeaturePoint;
 
     bool ordinateForX = std::abs(deltaInUCS.x) < std::abs(deltaInUCS.y);
 
@@ -109,31 +107,28 @@ void LC_ActionDimOrdinate::doTrigger() {
         ordinateForX = !ordinateForX;
     }
 
-    LC_DimOrdinateData dimOrdinateData (m_actionData->m_wcsFeaturePoint,leaderEndPoint, ordinateForX);
+    const LC_DimOrdinateData dimOrdinateData (m_actionData->wcsFeaturePoint,leaderEndPoint, ordinateForX);
     auto* dimOrdinate = new LC_DimOrdinate(container,*m_dimensionData, dimOrdinateData);
     dimOrdinate->update();
     return dimOrdinate;
 }
 
-void LC_ActionDimOrdinate::onMouseMoveEvent(int status, LC_MouseEvent* e) {
+void LC_ActionDimOrdinate::onMouseMoveEvent(const int status, const LC_MouseEvent* e) {
     RS_Vector mouse = e->snapPoint;
     switch (status) {
-        case (SetFeaturePoint): {
+        case SetFeaturePoint: {
             trySnapToRelZeroCoordinateEvent(e);
             break;
         }
-        case (SetLeaderEnd): {
-            mouse = getSnapAngleAwarePoint(e, m_actionData->m_wcsFeaturePoint, mouse, true);
+        case SetLeaderEnd: {
+            mouse = getSnapAngleAwarePoint(e, m_actionData->wcsFeaturePoint, mouse, true);
 
-            RS_Vector originPoint;
-            LC_DimOrdinate* dimOrdinate = createDim(mouse, e->isControl, m_preview.get());
+            const LC_DimOrdinate* dimOrdinate = createDim(mouse, e->isControl, m_preview.get());
 
             previewEntityToCreate(dimOrdinate);
-
             if (m_showRefEntitiesOnPreview) {
                 previewRefSelectablePoint(mouse);
-                previewRefPoint(m_actionData->m_wcsFeaturePoint);
-                previewRefPoint(originPoint);
+                previewRefPoint(m_actionData->wcsFeaturePoint);
             }
             break;
         }
@@ -142,7 +137,7 @@ void LC_ActionDimOrdinate::onMouseMoveEvent(int status, LC_MouseEvent* e) {
     }
 }
 
-bool LC_ActionDimOrdinate::doProcessCommand(int status, const QString& command) {
+bool LC_ActionDimOrdinate::doProcessCommand(const int status, const QString& command) {
     bool accept = false;
     switch (status) {
         case SetText: {
@@ -154,7 +149,7 @@ bool LC_ActionDimOrdinate::doProcessCommand(int status, const QString& command) 
             break;
         }
         default:
-            m_lastStatus = (State) getStatus();
+            m_lastStatus = static_cast<State>(getStatus());
             deletePreview();
             if (checkCommand("text", command)) {
                 disableCoordinateInput();
@@ -166,16 +161,16 @@ bool LC_ActionDimOrdinate::doProcessCommand(int status, const QString& command) 
     return accept;
 }
 
-void LC_ActionDimOrdinate::onCoordinateEvent(int status, [[maybe_unused]]bool isZero, const RS_Vector& pos) {
+void LC_ActionDimOrdinate::onCoordinateEvent(const int status, [[maybe_unused]]bool isZero, const RS_Vector& pos) {
     switch (status) {
         case SetFeaturePoint: {
-            m_actionData->m_wcsFeaturePoint = pos;
+            m_actionData->wcsFeaturePoint = pos;
             moveRelativeZero(pos);
             setStatus(SetLeaderEnd);
             break;
         }
         case SetLeaderEnd: {
-            m_actionData->m_leaderEndPoint = pos;
+            m_actionData->leaderEndPoint = pos;
             trigger();
             break;
         }
@@ -184,7 +179,7 @@ void LC_ActionDimOrdinate::onCoordinateEvent(int status, [[maybe_unused]]bool is
     }
 }
 
-void LC_ActionDimOrdinate::onMouseLeftButtonRelease(int status, LC_MouseEvent* e) {
+void LC_ActionDimOrdinate::onMouseLeftButtonRelease(const int status, const LC_MouseEvent* e) {
     RS_Vector snap = e->snapPoint;
     if (status == SetFeaturePoint){
         // less restrictive snap
@@ -192,12 +187,12 @@ void LC_ActionDimOrdinate::onMouseLeftButtonRelease(int status, LC_MouseEvent* e
     }
     else if (status == SetLeaderEnd) {
         m_actionData->ctrlPressed = e->isControl;
-        snap = getSnapAngleAwarePoint(e, m_actionData->m_wcsFeaturePoint, snap);
+        snap = getSnapAngleAwarePoint(e, m_actionData->wcsFeaturePoint, snap);
     }
     fireCoordinateEvent(snap);
 }
 
-void LC_ActionDimOrdinate::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent* e) {
+void LC_ActionDimOrdinate::onMouseRightButtonRelease(const int status, [[maybe_unused]] const LC_MouseEvent* e) {
     initPrevious(status);
 }
 
@@ -205,15 +200,15 @@ QStringList LC_ActionDimOrdinate::doGetAvailableCommands([[maybe_unused]]int sta
     return {command("text")};
 }
 
-void LC_ActionDimOrdinate::updateMouseButtonHints() {
-    int status = getStatus();
+void LC_ActionDimOrdinate::updateActionPrompt() {
+    const int status = getStatus();
     switch (status) {
         case SetFeaturePoint: {
-            updateMouseWidgetTRCancel(tr("Specify first point"), MOD_SHIFT_RELATIVE_ZERO);
+            updatePromptTRCancel(tr("Specify first point"), MOD_SHIFT_RELATIVE_ZERO);
             break;
         }
         case SetLeaderEnd: {
-            updateMouseWidgetTRCancel(tr("Specify leader end point"), MOD_SHIFT_AND_CTRL_ANGLE(tr("Change Ordinate")));
+            updatePromptTRCancel(tr("Specify leader end point"), MOD_SHIFT_AND_CTRL_ANGLE(tr("Change Ordinate")));
             break;
         }
         default:

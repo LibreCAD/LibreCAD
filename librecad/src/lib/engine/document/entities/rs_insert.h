@@ -24,7 +24,6 @@
 **
 **********************************************************************/
 
-
 #ifndef RS_INSERT_H
 #define RS_INSERT_H
 
@@ -35,51 +34,48 @@ class RS_BlockList;
 /**
  * Holds the data that defines an insert.
  */
+// fixme - sand - no copy assignment operator!
 struct RS_InsertData {
     /**
      * Default constructor.
      */
     RS_InsertData() = default;
 
-    RS_InsertData(const RS_InsertData &other);
+    RS_InsertData(const RS_InsertData& other);
 
-	/**
-	 * @param name The name of the block used as an identifier.
-	 * @param insertionPoint Insertion point of the block.
-	 * @param scaleFactor Scale factor in x / y.
-	 * @param angle Rotation angle.
-	 * @param cols Number of cols if we insert a whole array.
-	 * @param rows Number of rows if we insert a whole array.
-	 * @param spacing Spacing between rows and cols.
-	 * @param blockSource Source for the block to insert if other than parent.
-	 *    Normally blocks are requested from the entity's parent but the
-	 *    block can also come from another resource. RS_Text uses that
-	 *    to share the blocks (letters) from a font.
-	 * @param updateMode RS2::Update will update the insert entity instantly
-	 *    RS2::NoUpdate will not update the insert. You can update
-	 *	  it later manually using the update() method. This is
-	 *    often the case since you might want to adjust attributes
-	 *    after creating an insert entity.
-	 */
-	RS_InsertData(const QString& name,
-				  RS_Vector insertionPoint,
-				  RS_Vector scaleFactor,
-				  double angle,
-				  int cols, int rows, RS_Vector spacing,
-                  RS_BlockList* blockSource = nullptr,
-				  RS2::UpdateMode updateMode = RS2::Update);
+    /**
+     * @param name The name of the block used as an identifier.
+     * @param insertionPoint Insertion point of the block.
+     * @param scaleFactor Scale factor in x / y.
+     * @param angle Rotation angle.
+     * @param cols Number of cols if we insert a whole array.
+     * @param rows Number of rows if we insert a whole array.
+     * @param spacing Spacing between rows and cols.
+     * @param blockSource Source for the block to insert if other than parent.
+     *    Normally blocks are requested from the entity's parent but the
+     *    block can also come from another resource. RS_Text uses that
+     *    to share the blocks (letters) from a font.
+     * @param updateMode RS2::Update will update the insert entity instantly
+     *    RS2::NoUpdate will not update the insert. You can update
+     *	  it later manually using the update() method. This is
+     *    often the case since you might want to adjust attributes
+     *    after creating an insert entity.
+     */
+    RS_InsertData(const QString& name, const RS_Vector& insertionPoint, const RS_Vector& scaleFactor, double angle, int cols, int rows,
+                  const RS_Vector& spacing, RS_BlockList* blockSource = nullptr, RS2::UpdateMode updateMode = RS2::Update);
 
-	QString name;
-	RS_Vector insertionPoint;
-	RS_Vector scaleFactor;
-    double angle=0.;
-    int cols=0, rows=0;
-	RS_Vector spacing;
+    QString name = "";
+    RS_Vector insertionPoint;
+    RS_Vector scaleFactor;
+    double angle = 0.;
+    int cols = 0;
+    int rows = 0;
+    RS_Vector spacing;
     RS_BlockList* blockSource = nullptr;
     RS2::UpdateMode updateMode{};
 };
 
-std::ostream& operator << (std::ostream& os, const RS_InsertData& d);
+std::ostream& operator <<(std::ostream& os, const RS_InsertData& d);
 
 /**
  * An insert inserts a block into the drawing at a certain location
@@ -92,30 +88,29 @@ std::ostream& operator << (std::ostream& os, const RS_InsertData& d);
  */
 class RS_Insert : public RS_EntityContainer {
 public:
-    RS_Insert(RS_EntityContainer* parent,
-              const RS_InsertData& d);
+    RS_Insert(RS_EntityContainer* parent, const RS_InsertData& d);
 
     RS_Entity* clone() const override;
 
     /** @return RS2::EntityInsert */
-    RS2::EntityType rtti() const  override{
+    RS2::EntityType rtti() const override {
         return RS2::EntityInsert;
     }
 
     /** @return Copy of m_data that defines the insert. **/
-    RS_InsertData getData() const{
+    RS_InsertData getData() const {
         return m_data;
     }
 
-        /**
-         * Reimplementation of reparent. Invalidates m_block cache pointer.
-         */
-    void reparent(RS_EntityContainer* parent)  override{
-                RS_Entity::reparent(parent);
-                m_block = nullptr;
+    /**
+     * Reimplementation of reparent. Invalidates m_block cache pointer.
+     */
+    void reparent(RS_EntityContainer* newParent) override {
+        RS_Entity::reparent(newParent);
+        m_block = nullptr;
     }
 
-	RS_Block* getBlockForInsert() const;
+    RS_Block* getBlockForInsert() const;
 
     void update() override;
 
@@ -131,6 +126,7 @@ public:
     RS_Vector getInsertionPoint() const {
         return m_data.insertionPoint;
     }
+
     void setInsertionPoint(const RS_Vector& i) {
         m_data.insertionPoint = i;
     }
@@ -146,7 +142,8 @@ public:
     double getAngle() const {
         return m_data.angle;
     }
-    void setAngle(double a) {
+
+    void setAngle(const double a) {
         m_data.angle = a;
     }
 
@@ -154,7 +151,7 @@ public:
         return m_data.cols;
     }
 
-    void setCols(int c) {
+    void setCols(const int c) {
         m_data.cols = c;
     }
 
@@ -162,7 +159,7 @@ public:
         return m_data.rows;
     }
 
-    void setRows(int r) {
+    void setRows(const int r) {
         m_data.rows = r;
     }
 
@@ -177,11 +174,10 @@ public:
     bool isVisible() const override;
 
     RS_VectorSolutions getRefPoints() const override;
-    RS_Vector getMiddlePoint(void) const  override{
+
+    RS_Vector getMiddlePoint() const override {
         return {};
     }
-    RS_Vector getNearestRef(const RS_Vector& coord,
-                            double* dist = nullptr) const override;
 
     void move(const RS_Vector& offset) override;
     void rotate(const RS_Vector& center, double angle) override;
@@ -189,12 +185,13 @@ public:
     void scale(const RS_Vector& center, const RS_Vector& factor) override;
     void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) override;
 
-    friend std::ostream& operator << (std::ostream& os, const RS_Insert& i);
+    friend std::ostream& operator <<(std::ostream& os, const RS_Insert& i);
 
 protected:
-    RS_InsertData m_data{};
+    RS_InsertData m_data;
     mutable RS_Block* m_block = nullptr;
-};
 
+    RS_Vector doGetNearestRef(const RS_Vector& coord, double* dist = nullptr) const override;
+};
 
 #endif

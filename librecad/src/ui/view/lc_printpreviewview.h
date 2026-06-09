@@ -47,4 +47,4 @@ protected:
     void createViewRenderer() override;
 };
 
-#endif // LC_PRINTPREVIEWVIEW_H
+#endif

@@ -25,28 +25,28 @@
 #define LC_DIMORIDINAL_H
 
 #include "rs_dimension.h"
-
+// fixme - sand - no assignment operator!
 struct LC_DimOrdinateData {
-    LC_DimOrdinateData(const RS_Vector& feature_point, const RS_Vector& leader_end_point, bool ordinateX)
-        : featurePoint{feature_point},
-          leaderEndPoint{leader_end_point},
+    LC_DimOrdinateData(const RS_Vector& featurePoint, const RS_Vector& leaderEndPoint, const bool ordinateX)
+        : featurePoint{featurePoint},
+          leaderEndPoint{leaderEndPoint},
           ordinateForX{ordinateX} {
     }
 
     LC_DimOrdinateData(const LC_DimOrdinateData& other)
       :featurePoint{other.featurePoint}, leaderEndPoint{other.leaderEndPoint}, ordinateForX{other.ordinateForX}{
-    }
+}
 
-    ~LC_DimOrdinateData();
+~LC_DimOrdinateData() = default;
 
-    RS_Vector featurePoint{false};
-    RS_Vector leaderEndPoint{false};
+RS_Vector featurePoint{false};
+RS_Vector leaderEndPoint{false};
 
-    bool ordinateForX{false};
+bool ordinateForX{false};
 };
 
 std::ostream& operator <<(std::ostream& os, const LC_DimOrdinateData& dd);
-
+// fixme - sand - no assignment operator!
 class LC_DimOrdinate : public RS_Dimension {
 public:
     LC_DimOrdinate(RS_EntityContainer* parent,
@@ -70,14 +70,16 @@ public:
         return m_dimOrdinateData.ordinateForX;
     }
 
-    void setForXDirection(bool value) {
+    void setForXDirection(const bool value) {
         m_dimOrdinateData.ordinateForX = value;
     }
 
     RS_VectorSolutions getRefPoints() const override;
 
     RS_Vector getFeaturePoint() const;
+    void setFeaturePoint(const RS_Vector& v);
     RS_Vector getLeaderEndPoint() const;
+    void setLeaderPoint(const RS_Vector& v);
 
     void move(const RS_Vector& offset) override;
     void rotate(const RS_Vector& center, double angle) override;
@@ -89,7 +91,7 @@ public:
     friend std::ostream& operator <<(std::ostream& os, const LC_DimOrdinate& d);
 protected:
     void determineKneesPositions(const RS_Vector& featurePoint, const RS_Vector& leaderEndPoint, RS_Vector& kneeOne,
-                                 RS_Vector& kneeTwo, RS_Vector& textOffsetV);
+                                 RS_Vector& kneeTwo, RS_Vector& textOffsetV) const;
     void doUpdateDim() override;
     void adjustExtensionLineIfFixLength(RS_Line* extLine1, RS_Line* extLine2, bool addDimExe) const;
 private:
@@ -98,4 +100,4 @@ private:
 
 
 
-#endif // LC_DIMORIDINAL_H
+#endif

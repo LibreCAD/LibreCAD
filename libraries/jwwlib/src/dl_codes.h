@@ -33,7 +33,7 @@
 
 #if _MSC_VER > 1000
 #pragma once
-#endif // _MSC_VER > 1000
+#endif
 
 #if defined(__OS2__)||defined(__EMX__)||defined(_WIN32)
 # ifndef strcasecmp
@@ -538,4 +538,3 @@ const double dxfColors[][3] = {
 #define PCS_TRANS_CODE      3
 
 #endif
-

@@ -39,11 +39,11 @@ class RS_Vector;
 class RS_ActionSnapIntersectionManual : public RS_PreviewActionInterface {
     Q_OBJECT
 public:
-    RS_ActionSnapIntersectionManual(LC_ActionContext *actionContext);
+    explicit RS_ActionSnapIntersectionManual(LC_ActionContext *actionContext);
     ~RS_ActionSnapIntersectionManual() override;
     void init(int status) override;
     void trigger() override;
-    bool isSupportsPredecessorAction() override {return true;}
+    bool isSupportsPredecessorAction() const override {return true;}
 protected:
 
     /**
@@ -59,9 +59,9 @@ protected:
     std::unique_ptr<RS_Vector> m_coord;
 
     RS2::CursorType doGetMouseCursor(int status) override;
-    void onMouseLeftButtonRelease(int status, LC_MouseEvent *e) override;
-    void onMouseRightButtonRelease(int status, LC_MouseEvent *e) override;
-    void onMouseMoveEvent(int status, LC_MouseEvent *event) override;
-    void updateMouseButtonHints() override;
+    void onMouseLeftButtonRelease(int status, const LC_MouseEvent* e) override;
+    void onMouseRightButtonRelease(int status, const LC_MouseEvent* e) override;
+    void onMouseMoveEvent(int status, const LC_MouseEvent* e) override;
+    void updateActionPrompt() override;
 };
 #endif

@@ -1,5 +1,5 @@
 /*******************************************************************************
-*
+ *
  This file is part of the LibreCAD project, a 2D CAD program
 
  Copyright (C) 2025 LibreCAD.org
@@ -23,6 +23,7 @@
 #define LC_WORKSPACESHELPER_H
 
 #include<QObject>
+
 #include "lc_appwindowaware.h"
 
 class LC_WorkspacesManager;
@@ -30,18 +31,18 @@ class LC_WorkspacesManager;
 class LC_WorkspacesInvoker: public QObject, public LC_AppWindowAware{
      Q_OBJECT
 public:
-    LC_WorkspacesInvoker(QC_ApplicationWindow* mainWin);
+     explicit LC_WorkspacesInvoker(QC_ApplicationWindow* mainWin);
      ~LC_WorkspacesInvoker() override;
-     void saveWorkspace(bool on);
-     void fillWorkspacesList(QList<QPair<int, QString>>& list);
-     void applyWorkspaceById(int id);
-     void removeWorkspace(bool on);
-     void restoreWorkspace(bool on);
-     void init();
-     void persist();
-     bool hasWorkspaces();
+     void saveWorkspace(bool on) const;
+     void fillWorkspacesList(QList<QPair<int, QString>>& list) const;
+     void applyWorkspaceById(int id) const;
+     void removeWorkspace(bool on) const;
+     void restoreWorkspace(bool on) const;
+     void init() const;
+     void persist() const;
+     bool hasWorkspaces() const;
  private:
     std::unique_ptr<LC_WorkspacesManager> m_workspacesManager;
 };
 
-#endif // LC_WORKSPACESHELPER_H
+#endif

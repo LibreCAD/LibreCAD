@@ -15,6 +15,7 @@ SOURCES += src/lc_svgiconengineplugin.cpp \
 
 HEADERS += \
     src/lc_svgiconengine.h
+    src/lc_svgiconengineplugin.h
 
 DISTFILES += src/lc_svgicons.json
 

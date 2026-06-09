@@ -32,7 +32,7 @@ class LC_LayerTreeModel;
 
 class LC_LayerTreeView:public QTreeView{
 public:
-    LC_LayerTreeView(QWidget *parent = nullptr);
+    explicit LC_LayerTreeView(QWidget *parent = nullptr);
     void setup(LC_LayerTreeModel *treeModel);
     QStringList saveTreeExpansionState() const;
     void restoreTreeExpansionState(QStringList treeExpansionState);
@@ -42,11 +42,8 @@ protected:
     void dragEnterEvent(QDragEnterEvent *event) override;
     void dragLeaveEvent(QDragLeaveEvent *event) override;
     void dropEvent(QDropEvent *event) override;
-
 private:
     void applyExpandState(QStringList &expandedItems, const QModelIndex& startIndex);
     LC_LayerTreeModel *getTreeModel() const;
 };
-
-
-#endif // QG_LAYERWIDGETTREEVIEW_H
+#endif

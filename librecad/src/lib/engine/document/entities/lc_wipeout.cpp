@@ -32,7 +32,7 @@
 #include "rs_painter.h"
 
 LC_Wipeout::LC_Wipeout(RS_EntityContainer *parent, LC_WipeoutData d)
-    : RS_AtomicEntity(parent), data(std::move(d)) {
+    : RS_AtomicEntity(parent), m_data(std::move(d)) {
   calculateBorders();
 }
 
@@ -43,31 +43,31 @@ RS_Entity *LC_Wipeout::clone() const {
 }
 
 void LC_Wipeout::calculateBorders() {
-  if (data.vertices.empty()) {
-    minV = RS_Vector(0., 0.);
-    maxV = RS_Vector(0., 0.);
+  if (m_data.vertices.empty()) {
+    m_minV = RS_Vector(0., 0.);
+    m_maxV = RS_Vector(0., 0.);
     return;
   }
-  RS_Vector lo = data.vertices.front();
+  RS_Vector lo = m_data.vertices.front();
   RS_Vector hi = lo;
-  for (const RS_Vector &v : data.vertices) {
+  for (const RS_Vector &v : m_data.vertices) {
     lo.x = std::min(lo.x, v.x);
     lo.y = std::min(lo.y, v.y);
     hi.x = std::max(hi.x, v.x);
     hi.y = std::max(hi.y, v.y);
   }
-  minV = lo;
-  maxV = hi;
+  m_minV = lo;
+  m_maxV = hi;
 }
 
 void LC_Wipeout::draw(RS_Painter *painter) {
-  if (painter == nullptr || data.vertices.size() < 3) {
+  if (painter == nullptr || m_data.vertices.size() < 3) {
     return;
   }
 
   QPolygonF uiPoly;
-  uiPoly.reserve(static_cast<int>(data.vertices.size()));
-  for (const RS_Vector &v : data.vertices) {
+  uiPoly.reserve(static_cast<int>(m_data.vertices.size()));
+  for (const RS_Vector &v : m_data.vertices) {
     const RS_Vector ui = painter->toGui(v);
     uiPoly << QPointF(ui.x, ui.y);
   }
@@ -79,18 +79,17 @@ void LC_Wipeout::draw(RS_Painter *painter) {
   painter->fillPolygonUI(uiPoly);
   painter->setPen(savedPen);
 
-  for (size_t i = 0; i < data.vertices.size(); ++i) {
-    const RS_Vector &a = data.vertices[i];
-    const RS_Vector &b = data.vertices[(i + 1) % data.vertices.size()];
+  for (size_t i = 0; i < m_data.vertices.size(); ++i) {
+    const RS_Vector &a = m_data.vertices[i];
+    const RS_Vector &b = m_data.vertices[(i + 1) % m_data.vertices.size()];
     painter->drawLineWCS(a, b);
   }
 }
 
-RS_Vector LC_Wipeout::getNearestEndpoint(const RS_Vector &coord,
-                                         double *dist) const {
+RS_Vector LC_Wipeout::doGetNearestEndpoint(const RS_Vector& coord, double* dist, RS_Entity** entity) const{
   RS_Vector nearest{false};
   double bestSq = RS_MAXDOUBLE;
-  for (const RS_Vector &v : data.vertices) {
+  for (const RS_Vector &v : m_data.vertices) {
     const double dSq = (v - coord).squared();
     if (dSq < bestSq) {
       bestSq = dSq;
@@ -103,56 +102,57 @@ RS_Vector LC_Wipeout::getNearestEndpoint(const RS_Vector &coord,
   return nearest;
 }
 
-RS_Vector LC_Wipeout::getNearestPointOnEntity(const RS_Vector &coord,
-                                              bool /*onEntity*/, double *dist,
-                                              RS_Entity **entity) const {
+RS_Vector LC_Wipeout::doGetNearestPointOnEntity(const RS_Vector& coord, bool onEntity, double* dist,
+    RS_Entity** entity) const {
   if (entity != nullptr) {
     *entity = const_cast<LC_Wipeout *>(this);
   }
-  return getNearestEndpoint(coord, dist);
+  return doGetNearestEndpoint(coord, dist, nullptr);
 }
 
-RS_Vector LC_Wipeout::getNearestCenter(const RS_Vector &coord,
-                                       double *dist) const {
-  if (data.vertices.empty()) {
+RS_Vector LC_Wipeout::doGetNearestCenter(const RS_Vector& coord, double* dist, RS_Entity** centerEntity) const {
+  if (m_data.vertices.empty()) {
     return RS_Vector{false};
   }
   RS_Vector centroid(0., 0.);
-  for (const RS_Vector &v : data.vertices) {
+  for (const RS_Vector &v : m_data.vertices) {
     centroid += v;
   }
-  centroid /= static_cast<double>(data.vertices.size());
+  centroid /= static_cast<double>(m_data.vertices.size());
   if (dist != nullptr) {
     *dist = (centroid - coord).magnitude();
   }
   return centroid;
 }
 
-RS_Vector LC_Wipeout::getNearestMiddle(const RS_Vector &coord, double *dist,
-                                       int /*middlePoints*/) const {
+RS_Vector LC_Wipeout::doGetNearestMiddle(const RS_Vector& coord, double* dist, int middlePoints) const {
   return getNearestCenter(coord, dist);
 }
 
-RS_Vector LC_Wipeout::getNearestDist(double /*distance*/,
-                                     const RS_Vector &coord,
-                                     double *dist) const {
-  return getNearestEndpoint(coord, dist);
+RS_Vector LC_Wipeout::doGetNearestDist(double distance, const RS_Vector& coord, double* dist) const {
+  return doGetNearestEndpoint(coord, dist, nullptr);
 }
 
-double LC_Wipeout::getDistanceToPoint(const RS_Vector &coord,
-                                      RS_Entity **entity,
-                                      RS2::ResolveLevel /*level*/,
-                                      double /*solidDist*/) const {
+double LC_Wipeout::doGetDistanceToPoint(const RS_Vector& coord, RS_Entity** entity, RS2::ResolveLevel level,
+    double solidDist) const {
   double dist = RS_MAXDOUBLE;
-  getNearestEndpoint(coord, &dist);
+  doGetNearestEndpoint(coord, &dist, nullptr);
   if (entity != nullptr) {
     *entity = const_cast<LC_Wipeout *>(this);
   }
   return dist;
 }
 
+RS_Vector LC_Wipeout::doGetNearestRef(const RS_Vector& coord, double* dist) const {
+    return RS_AtomicEntity::doGetNearestRef(coord, dist);
+}
+
+RS_Vector LC_Wipeout::doGetNearestSelectedRef(const RS_Vector& coord, double* dist) const {
+    return RS_AtomicEntity::doGetNearestSelectedRef(coord, dist);
+}
+
 void LC_Wipeout::move(const RS_Vector &offset) {
-  for (RS_Vector &v : data.vertices) {
+  for (RS_Vector &v : m_data.vertices) {
     v.move(offset);
   }
   calculateBorders();
@@ -163,14 +163,14 @@ void LC_Wipeout::rotate(const RS_Vector &center, double angle) {
 }
 
 void LC_Wipeout::rotate(const RS_Vector &center, const RS_Vector &angleVector) {
-  for (RS_Vector &v : data.vertices) {
+  for (RS_Vector &v : m_data.vertices) {
     v.rotate(center, angleVector);
   }
   calculateBorders();
 }
 
 void LC_Wipeout::scale(const RS_Vector &center, const RS_Vector &factor) {
-  for (RS_Vector &v : data.vertices) {
+  for (RS_Vector &v : m_data.vertices) {
     v.scale(center, factor);
   }
   calculateBorders();
@@ -178,7 +178,7 @@ void LC_Wipeout::scale(const RS_Vector &center, const RS_Vector &factor) {
 
 void LC_Wipeout::mirror(const RS_Vector &axisPoint1,
                         const RS_Vector &axisPoint2) {
-  for (RS_Vector &v : data.vertices) {
+  for (RS_Vector &v : m_data.vertices) {
     v.mirror(axisPoint1, axisPoint2);
   }
   calculateBorders();

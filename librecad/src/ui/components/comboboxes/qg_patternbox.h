@@ -34,18 +34,21 @@ class RS_Pattern;
 /**
  * A combobox for choosing a pattern name.
  */
-class QG_PatternBox: public QComboBox {
+class QG_PatternBox : public QComboBox {
     Q_OBJECT
 public:
-    QG_PatternBox(QWidget* parent=nullptr);
+    explicit QG_PatternBox(QWidget* parent = nullptr);
     ~QG_PatternBox() override;
     std::shared_ptr<RS_Pattern> getPattern();
     void setPattern(const QString& pName);
     void init();
-private slots:
+
+private
+    slots :
     void slotPatternChanged(int index);
-signals:
-	void patternChanged();
+    signals :
+    void patternChanged();
+
 private:
     std::shared_ptr<RS_Pattern> m_currentPattern;
 };

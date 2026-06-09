@@ -28,9 +28,22 @@
 #ifndef RS_PREVIEW_H
 #define RS_PREVIEW_H
 
+#include "rs_document.h"
 #include "rs_entitycontainer.h"
+#include "rs_layerlist.h"
 
 class LC_GraphicViewport;
+
+class LC_PreviewDocument: public RS_Document {
+public:
+    explicit LC_PreviewDocument(RS_EntityContainer *parent):RS_Document(parent){}
+    ~LC_PreviewDocument() override = default;
+    RS_LayerList* getLayerList() override {return nullptr;}
+    RS_BlockList* getBlockList() override {return nullptr;}
+    LC_DimStylesList* getDimStyleList() override {return nullptr;}
+    LC_TextStyleList* getTextStyleList() override {return nullptr;}
+    void initForNewDocument() override {}
+};
 
 /**
  * This class supports previewing. The RS_Snapper class uses
@@ -39,27 +52,32 @@ class LC_GraphicViewport;
  *
  * @author Andrew Mustun
  */
-class RS_Preview : public RS_EntityContainer {
+class RS_Preview : public LC_PreviewDocument {
 public:
     RS_Preview(RS_EntityContainer* parent, LC_GraphicViewport* viewport);
     RS2::EntityType rtti() const override{
         return RS2::EntityPreview;
     }
-    void addEntity(RS_Entity* entity) override;
+    void addEntity(const RS_Entity* entity) override;
     void calcRectCorners(const RS_Vector& worldCorner1, const RS_Vector& worldCorner3, RS_Vector& worldCorner2,
                          RS_Vector& worldCorner4) const;
-    void addCloneOf(RS_Entity* entity, LC_GraphicViewport* view);
-    void addSelectionFrom(RS_EntityContainer& container, LC_GraphicViewport* view);
     void addAllFrom(RS_EntityContainer& container, LC_GraphicViewport* view);
+    void addClonesFromList(const QList<RS_Entity*>& list);
+    void addAllFromList(const QList<RS_Entity*>& list);
+    void addAllFromList(const std::list<RS_Entity*>& list);
     void addStretchablesFrom(RS_EntityContainer& container, LC_GraphicViewport* view,
-                                     const RS_Vector& v1, const RS_Vector& v2);
-    void draw(RS_Painter* painter) override;
+                             const RS_Vector& v1, const RS_Vector& v2);
     void addReferenceEntitiesToContainer(RS_EntityContainer* container);
+    void draw(RS_Painter* painter) override;
     void clear() override;
-    int getMaxAllowedEntities();
+    int getMaxAllowedEntities() const;
+
 private:
     unsigned int m_maxEntities {0};
     QList<RS_Entity*> m_referenceEntities;
     LC_GraphicViewport* m_viewport {nullptr};
 };
+
+
+
 #endif

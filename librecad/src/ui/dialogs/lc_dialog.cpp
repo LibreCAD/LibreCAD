@@ -21,6 +21,7 @@
  ******************************************************************************/
 
 #include "lc_dialog.h"
+
 #include "rs_settings.h"
 
 // fixme - sand - review all dialogs and actions and make all conversions (double/string, angle/string and vise versa consistent)!
@@ -43,17 +44,17 @@ QString LC_Dialog::getPositionSettingsGroupName() const{
 
 void LC_Dialog::loadDialogPosition() {
     LC_GROUP("Appearance");
-    bool persistentDialogPositions = LC_GET_BOOL("PersistDialogPositions", false);
-    bool restoreSizeOnly = LC_GET_BOOL("PersistDialogRestoreSizeOnly", false);
+    const bool persistentDialogPositions = LC_GET_BOOL("PersistDialogPositions", false);
+    const bool restoreSizeOnly = LC_GET_BOOL("PersistDialogRestoreSizeOnly", false);
     if (persistentDialogPositions) {
         LC_GROUP_GUARD(getPositionSettingsGroupName());
         {
-            bool hasSettings = LC_GET_BOOL("hasPosition");
+            const bool hasSettings = LC_GET_BOOL("hasPosition");
             if (hasSettings) {
-                int x = LC_GET_INT("X", 0);
-                int y = LC_GET_INT("Y", 0);
-                int h = LC_GET_INT("Height", 0);
-                int w = LC_GET_INT("Width", 0);
+                const int x = LC_GET_INT("X", 0);
+                const int y = LC_GET_INT("Y", 0);
+                const int h = LC_GET_INT("Height", 0);
+                const int w = LC_GET_INT("Width", 0);
                 if (x > 0 && y > 0 && h > 0 && w > 0) {
                     if (!restoreSizeOnly) {
                         move(x, y);
@@ -66,7 +67,7 @@ void LC_Dialog::loadDialogPosition() {
 }
 
 void LC_Dialog::saveDialogPosition() const {
-    bool persistentDialogPositions = LC_GET_ONE_BOOL("Appearance","PersistDialogPositions", false);
+    const bool persistentDialogPositions = LC_GET_ONE_BOOL("Appearance","PersistDialogPositions", false);
     if (persistentDialogPositions) {
         LC_GROUP_GUARD(getPositionSettingsGroupName());
         {
@@ -75,10 +76,10 @@ void LC_Dialog::saveDialogPosition() const {
             const QPoint &point = pos();
             const QSize &size = QWidget::size();
 
-            int x = point.x();
-            int y = point.y();
-            int h = size.height();
-            int w = size.width();
+            const int x = point.x();
+            const int y = point.y();
+            const int h = size.height();
+            const int w = size.width();
             LC_SET("X", x);
             LC_SET("Y", y);
             LC_SET("Height", h);

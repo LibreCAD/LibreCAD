@@ -21,61 +21,58 @@
  ******************************************************************************/
 
 #include "lc_overlayanglesbasemark.h"
-#include "rs_settings.h"
+
 #include "rs_painter.h"
+#include "rs_settings.h"
 
 void LC_AnglesBaseMarkOptions::loadSettings() {
     LC_GROUP("Appearance");
     {
-        m_showAnglesBaseMark =  LC_GET_BOOL("AnglesBasisMarkEnabled", true);
-        m_displayPolicy = LC_GET_INT("AnglesBasisMarkPolicy", SHOW_ALWAYS);
+        showAnglesBaseMark = LC_GET_BOOL("AnglesBasisMarkEnabled", true);
+        displayPolicy = LC_GET_INT("AnglesBasisMarkPolicy", SHOW_ALWAYS);
 
-        int zeroMarkerSize = LC_GET_INT("ZeroMarkerSize", 30);
-        m_markerRadius = zeroMarkerSize / 2;
+        const int zeroMarkerSize = LC_GET_INT("ZeroMarkerSize", 30);
+        markerRadius = zeroMarkerSize / 2;
     }
     LC_GROUP_GUARD("Colors");
     {
-        m_colorAnglePointer = QColor(LC_GET_STR("angles_basis_angleray", RS_Settings::anglesBasisAngleRay));
-        m_colorDirectionType = QColor(LC_GET_STR("angles_basis_direction", RS_Settings::anglesBasisDirection));
-        // m_colorRadius = QColor(LC_GET_STR("colorAnglesBaseRadius", RS_Settings::anglesBasisDirection));
-        m_colorRadius = m_colorDirectionType;
+        colorAnglePointer = RS_Color(LC_GET_STR("angles_basis_angleray", RS_Settings::ANGLES_BASIS_ANGLE_RAY));
+        colorDirectionType = RS_Color(LC_GET_STR("angles_basis_direction", RS_Settings::ANGLES_BASIS_DIRECTION));
+        // m_colorRadius = RS_Color(LC_GET_STR("colorAnglesBaseRadius", RS_Settings::anglesBasisDirection));
+        colorRadius = colorDirectionType;
     }
 }
 
-LC_OverlayAnglesBaseMark::LC_OverlayAnglesBaseMark(RS_Vector uiOrigin, double ucsAngle, bool counterClockWise, LC_AnglesBaseMarkOptions *opt)
-   :origin{uiOrigin}
-    , baseAngle{ucsAngle}
-    , dirCounterClockWise{counterClockWise}
-    , options{opt}
-{}
-
-LC_OverlayAnglesBaseMark::LC_OverlayAnglesBaseMark(LC_AnglesBaseMarkOptions *options):
-    options{options}
-{
+LC_OverlayAnglesBaseMark::LC_OverlayAnglesBaseMark(const RS_Vector& uiOrigin, const double baseAngle, const bool counterClockWise,
+                                                   LC_AnglesBaseMarkOptions* options)
+    : m_origin{uiOrigin}, m_baseAngle{baseAngle}, m_dirCounterClockWise{counterClockWise}, m_options{options} {
 }
 
-void LC_OverlayAnglesBaseMark::update(const RS_Vector &uiOrigin, double angle, bool counterclock) {
-  baseAngle = angle;
-  dirCounterClockWise = counterclock;
-  origin = uiOrigin;
+void LC_OverlayAnglesBaseMark::update(const RS_Vector& uiOrigin, const double angle, const bool counterclockwise) {
+    m_baseAngle = angle;
+    m_dirCounterClockWise = counterclockwise;
+    m_origin = uiOrigin;
 }
 
-void LC_OverlayAnglesBaseMark::draw(RS_Painter *painter) {
-    RS_Pen penRadius(options->m_colorRadius, RS2::Width00, RS2::SolidLine);
+LC_OverlayAnglesBaseMark::LC_OverlayAnglesBaseMark(LC_AnglesBaseMarkOptions* options) : m_options{options} {
+}
+
+void LC_OverlayAnglesBaseMark::draw(RS_Painter* painter) {
+    RS_Pen penRadius(m_options->colorRadius, RS2::Width00, RS2::SolidLine);
     penRadius.setScreenWidth(0);
     painter->setPen(penRadius);
 
-    int radius = options->m_markerRadius;
-    painter->drawCircleUIDirect(origin, radius);
+    int radius = m_options->markerRadius;
+    painter->drawCircleUIDirect(m_origin, radius);
 
-    RS_Pen penAngle(options->m_colorAnglePointer, RS2::Width00, RS2::SolidLine);
+    RS_Pen penAngle(m_options->colorAnglePointer, RS2::Width00, RS2::SolidLine);
     penAngle.setScreenWidth(0);
     painter->setPen(penAngle);
 
-    RS_Vector angleEnd = origin.relative(radius, -baseAngle);
-    painter->drawLineUISimple(origin, angleEnd);
+    RS_Vector angleEnd = m_origin.relative(radius, -m_baseAngle);
+    painter->drawLineUISimple(m_origin, angleEnd);
 
-    RS_Pen penDirection(options->m_colorRadius, RS2::Width00, RS2::SolidLine);
+    RS_Pen penDirection(m_options->colorRadius, RS2::Width00, RS2::SolidLine);
     penDirection.setScreenWidth(2);
     painter->setPen(penDirection);
 
@@ -86,11 +83,11 @@ void LC_OverlayAnglesBaseMark::draw(RS_Painter *painter) {
 
     RS_Vector arrowPoint;
 
-    if (dirCounterClockWise){
-        arrowPoint = RS_Vector(origin.x, origin.y + radius);
+    if (m_dirCounterClockWise) {
+        arrowPoint = RS_Vector(m_origin.x, m_origin.y + radius);
     }
-    else{
-        arrowPoint = RS_Vector(origin.x, origin.y - radius);
+    else {
+        arrowPoint = RS_Vector(m_origin.x, m_origin.y - radius);
     }
 
     createArrowShape(arrowPoint, arrowAngle, arrowSize, p1, p2, p3);
@@ -98,12 +95,13 @@ void LC_OverlayAnglesBaseMark::draw(RS_Painter *painter) {
     painter->fillTriangleUI(p1, p2, p3);
 }
 
-void LC_OverlayAnglesBaseMark::createArrowShape(const RS_Vector& point,double angle,double arrowSize, RS_Vector& p1, RS_Vector &p2, RS_Vector &p3){
-    double arrowSide {arrowSize / cos(0.165)};
-    double cosv1 {cos( angle + 0.165) * arrowSide};
-    double sinv1 {sin( angle + 0.165) * arrowSide};
-    double cosv2 {cos( angle - 0.165) * arrowSide};
-    double sinv2 {sin( angle - 0.165) * arrowSide};
+void LC_OverlayAnglesBaseMark::createArrowShape(const RS_Vector& point, const double angle, const double arrowSize, RS_Vector& p1,
+                                                RS_Vector& p2, RS_Vector& p3) {
+    const double arrowSide{arrowSize / cos(0.165)};
+    const double cosv1{cos(angle + 0.165) * arrowSide};
+    const double sinv1{sin(angle + 0.165) * arrowSide};
+    const double cosv2{cos(angle - 0.165) * arrowSide};
+    const double sinv2{sin(angle - 0.165) * arrowSide};
 
     p1 = point;
     p2 = RS_Vector(point.x - cosv1, point.y - sinv1);

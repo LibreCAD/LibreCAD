@@ -35,6 +35,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_line.h"
 #include "rs_point.h"
 #include "rs_preview.h"
+#include "rs_selection.h"
 
 /**
  * Utility base class for actions. It includes some basic logic and utilities, that simplifies creation of specific actions
@@ -53,22 +54,20 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * - defined extensions points
 
  * @param name
- * @param container
- * @param graphicView
+ * @param actionContext
+ * @param actionType
  */
-LC_AbstractActionWithPreview::LC_AbstractActionWithPreview(const char *name,LC_ActionContext *actionContext,RS2::ActionType actionType)
-    :RS_PreviewActionInterface(name, actionContext, actionType),
-    m_highlightedEntity{nullptr}{
+LC_AbstractActionWithPreview::LC_AbstractActionWithPreview(const char *name,LC_ActionContext *actionContext, const RS2::ActionType actionType)
+    :LC_UndoableDocumentModificationAction(name, actionContext, actionType){
 }
 
-void LC_AbstractActionWithPreview::collectEntitiesForTriggerOnInit(QList<RS_Entity*> &selectedEntities, QList<RS_Entity*> &entitiesForTrigger) {
-    for (RS_Entity *e: *m_container) {
-        if (!e->isUndone() && e->isSelected()){
-            selectedEntities << e;
-            // check whether specific entity is suitable for processing
-            if (isAcceptSelectedEntityToTriggerOnInit(e)){
-                entitiesForTrigger << e;
-            }
+void LC_AbstractActionWithPreview::collectEntitiesForTriggerOnInit(QList<RS_Entity*> &entitiesForTrigger) {
+    QList<RS_Entity*> selection;
+    m_document->collectSelected(selection);
+    for (RS_Entity *e: std::as_const(selection)) {
+        // check whether specific entity is suitable for processing
+        if (isAcceptSelectedEntityToTriggerOnInit(e)) {
+            entitiesForTrigger << e;
         }
     }
 }
@@ -78,39 +77,30 @@ void LC_AbstractActionWithPreview::collectEntitiesForTriggerOnInit(QList<RS_Enti
  * and specific action may handle them)
  * @param status status
  */
-void LC_AbstractActionWithPreview::init(int status){
+void LC_AbstractActionWithPreview::init(const int status){
     RS_PreviewActionInterface::init(status);
     // check whether we may trigger with such status
     // fixme - refactor to separate methods
     if (doCheckMayTriggerOnInit(getStatus())){
         // collect selected entities
 
-        QList<RS_Entity*> selectedEntities;
         QList<RS_Entity*> entitiesForTrigger;
-        collectEntitiesForTriggerOnInit(selectedEntities, entitiesForTrigger);
+        collectEntitiesForTriggerOnInit(entitiesForTrigger);
         if (!entitiesForTrigger.isEmpty()){
             showOptions(); // use this as simplest way to read settings for the action
-            if (m_document){
-                // take care of undo cycle
-                if (isUndoableTrigger()){
-                    undoCycleStart();
-                    // invoke trigger
-                    performTriggerOnInit(entitiesForTrigger);
-                    undoCycleEnd();
-                } else {
-                    performTriggerOnInit(entitiesForTrigger);
-                }
+            if (m_document != nullptr){
+                m_document->undoableModify(m_viewport, [this, entitiesForTrigger](LC_DocumentModificationBatch& ctx)->bool {
+                    return performTriggerOnInit(entitiesForTrigger, ctx);
+                });
             }
-            entitiesForTrigger.clear();
             // as we've completed - finish the action
             finishAction();
             // if necessary - unselect currently selected entities
             if (isUnselectEntitiesOnInitTrigger()){
-                unSelectEntities(selectedEntities);
+                unselectAll();
             }
             redrawDrawing();
         }
-        selectedEntities.clear();
     }
 }
 
@@ -136,11 +126,12 @@ bool LC_AbstractActionWithPreview::isAcceptSelectedEntityToTriggerOnInit([[maybe
  * Extension point - will perform deletion of entities (if needed) by inherited actions as part of
  * trigger on init process (i.e - some original selected entities.
  * @param list list of entities
+ * @param ctx
  */
-void LC_AbstractActionWithPreview::doPerformOriginalEntitiesDeletionOnInitTrigger([[maybe_unused]]QList<RS_Entity *> &list){}
+void LC_AbstractActionWithPreview::doPerformOriginalEntitiesDeletionOnInitTrigger([[maybe_unused]]QList<RS_Entity *> &list, [[maybe_unused]]LC_DocumentModificationBatch & ctx){}
 
 
-void LC_AbstractActionWithPreview::updateSnapperAndCoordinateWidget([[maybe_unused]]LC_MouseEvent* e, [[maybe_unused]]int status){
+void LC_AbstractActionWithPreview::updateSnapperAndCoordinateWidget([[maybe_unused]] const LC_MouseEvent* e, [[maybe_unused]]int status){
     // todo - actually, this is a bit ugly to call snap point  - yet as side effect, it will draw snapper and update coordinates widget..
 //    snapPoint(e);
 }
@@ -150,26 +141,30 @@ void LC_AbstractActionWithPreview::updateSnapperAndCoordinateWidget([[maybe_unus
  * Method is useful for actions states that do not call snapPoint() method on mouse move (which, in turn, updates the widget)
  * @param e
  */
-void LC_AbstractActionWithPreview::doUpdateCoordinateWidgetByMouse(LC_MouseEvent* e){
-    RS_Vector mouse = e->graphPoint;
+void LC_AbstractActionWithPreview::doUpdateCoordinateWidgetByMouse(const LC_MouseEvent* e) const {
+    const RS_Vector mouse = e->graphPoint;
     updateCoordinateWidgetByRelZero(mouse);
 }
-
 
 /**
  * Creation of entities on init trigger
  * @param entities selected entities to trigger
+ * @param ctx
  */
-void LC_AbstractActionWithPreview::performTriggerOnInit(QList<RS_Entity*>  entities){
-    QList<RS_Entity*> createdEntities;
+bool LC_AbstractActionWithPreview::performTriggerOnInit(QList<RS_Entity*>  entities, LC_DocumentModificationBatch & ctx){
+
     // only valid entities are there, so we can create do trigger action for each of them
-    for (auto e: entities){
-        doCreateEntitiesOnTrigger(e, createdEntities);
+    for (const auto e: entities){
+        if (e != nullptr) {
+            doCreateEntitiesOnTrigger(e, ctx.entitiesToAdd);
+        }
     }
-    doPerformOriginalEntitiesDeletionOnInitTrigger(entities);
+    doPerformOriginalEntitiesDeletionOnInitTrigger(entities, ctx);
     // do setup of layer and pen and add to drawing
-    setupAndAddTriggerEntities(createdEntities);
-    createdEntities.clear();
+    if (!isSetActivePenAndLayerOnTrigger()) {
+        ctx.dontSetActiveLayerAndPen();
+    }
+    return true;
 }
 
 /**
@@ -186,94 +181,32 @@ void LC_AbstractActionWithPreview::doCreateEntitiesOnTrigger([[maybe_unused]]RS_
 bool LC_AbstractActionWithPreview::isUnselectEntitiesOnInitTrigger(){
     return true;
 }
-/**
- * Default implementation of trigger method. First checks whether all conditions are fine for the trigger via doCheckMayTrigger().
- *
- * If trigger may be executed, checks whether trigger represents undoable operation and if it is so, wraps actual trigger processing into undo cycle.
- * if not - just delegate trigger processing to performTrigger method.
- *
- */
-void LC_AbstractActionWithPreview::doTrigger() {
-    if (doCheckMayTrigger()){
-        if (m_document){
-            if (isUndoableTrigger()){
-                undoCycleStart();
-                performTrigger();
-                undoCycleEnd();
-            } else {
-                performTrigger();
-            }
+
+bool LC_AbstractActionWithPreview::doTriggerModifications(LC_DocumentModificationBatch& ctx) {
+    // collect entities that should be created in the list
+    const bool result = doTriggerEntitiesPrepare(ctx);
+    if (result) {
+        const bool setActiveLayerAndPen = isSetActivePenAndLayerOnTrigger();
+        if (!setActiveLayerAndPen) {
+            ctx.dontSetActiveLayerAndPen();
+        }
+
+        const RS_Vector newRelativeZeroPosition = doGetRelativeZeroAfterTrigger();
+        if (newRelativeZeroPosition.valid){
+            moveRelativeZero(newRelativeZeroPosition);
         }
     }
+    return result;
+}
 
+void LC_AbstractActionWithPreview::doTriggerCompletion([[maybe_unused]]bool success) {
+    doAfterTrigger(); // inherited actions may do additional processing there
     // cleanup alternative mode after trigger
     clearAlternativeActionMode();
 }
 
-
-/**
- * Template method for performing trigger operation. Actual processing is delegated to corresponding methods.
- * First, methods executes insertion of entities, than performs deletion of entities.
- * Based on provided point, may set new relative zero.
- * The last step is potential cleanup of data not needed after trigger completion
- */
-void LC_AbstractActionWithPreview::performTrigger(){
-    performTriggerInsertions();
-    performTriggerDeletions();
-    RS_Vector newRelativeZeroPosition = doGetRelativeZeroAfterTrigger();
-    if (newRelativeZeroPosition.valid){
-        moveRelativeZero(newRelativeZeroPosition);
-    }
-    doAfterTrigger(); // inherited actions may do additional processing there
-}
-
-/**
- * Method that handles insertion entities, that are created during trigger operation.
- * Method collects entities that should be inserted (created in doPrepareTriggerEntities method) in the list,
- * and iterates over them but setting layer and pen (if needed) and adding entities to container and document.
- */
-void LC_AbstractActionWithPreview::performTriggerInsertions(){
-    QList<RS_Entity*> entities;
-    // collect entities that should be created in the list
-    doPrepareTriggerEntities(entities);
-    setupAndAddTriggerEntities(entities);
-    entities.clear();
-}
-
-/**
- * Perform setup of layer and pen for entity created for trigger (if needed) and adds entity to container and document
- * @param entities list of entities
- */
-void LC_AbstractActionWithPreview::setupAndAddTriggerEntities(const QList<RS_Entity *> &entities){
-    // check whether layer and pen should be set to active. If not  - it's up to doPrepareTriggerEntities to perform proper setup of pen and layer
-    bool setActiveLayerAndPen = isSetActivePenAndLayerOnTrigger();
-    bool undoableTrigger = isUndoableTrigger();
-    for (auto ent: entities) {
-        if (setActiveLayerAndPen){
-            // do setup
-            setPenAndLayerToActive(ent);
-        }
-        m_container->addEntity(ent);
-        if (undoableTrigger){
-            m_document->addUndoable(ent);
-        }
-    }
-}
-
-/**
- * Extension method that checks whether all data are collected and trigger may be invoked.
- * @return true if trigger() may be executed.
- */
-bool LC_AbstractActionWithPreview::doCheckMayTrigger(){
-    return true;
-}
-
-/**
- * Controls whether trigger should be within undoable cycle
- * @return true if trigger execution should be within undo cycle
- */
-bool LC_AbstractActionWithPreview::isUndoableTrigger(){
-    return true;
+void LC_AbstractActionWithPreview::doTriggerSelections(const LC_DocumentModificationBatch& ctx) {
+    LC_UndoableDocumentModificationAction::doTriggerSelections(ctx);
 }
 
 /**
@@ -293,9 +226,9 @@ void LC_AbstractActionWithPreview::doAfterTrigger(){}
 /**
  * Major expansion method that should create entities that should be inserted to the drawing as result of action's trigger.
  * Method should create entities and add to provided list.
- * @param list list of entities to which created entities should be added.
+ * @param ctx list of entities to which created entities should be added.
  */
-void LC_AbstractActionWithPreview::doPrepareTriggerEntities([[maybe_unused]]QList<RS_Entity *> &list){}
+bool LC_AbstractActionWithPreview::doTriggerEntitiesPrepare([[maybe_unused]]LC_DocumentModificationBatch& ctx){return false;}
 
 /**
  * Extension method that returns position for setting relative zero after trigger operation execution
@@ -306,37 +239,29 @@ RS_Vector LC_AbstractActionWithPreview::doGetRelativeZeroAfterTrigger(){
 }
 
 /**
- * Extension method that might be used by inherited actions for performing deletions of some entities from drawing as result of trigger operation execution.
- * Called as part of trigger() execution workflow.
- */
-void LC_AbstractActionWithPreview::performTriggerDeletions(){}
-
-/**
  * Default implementation of finish. It removes highlight on entity (if any),
  * allows additional processing and cleanup in inherited doFinish() and calls super method.
- * @param updateTB
  */
-void LC_AbstractActionWithPreview::finish(bool updateTB){
+void LC_AbstractActionWithPreview::finish(){
     unHighlightEntity();
-    doFinish(updateTB);
-    RS_PreviewActionInterface::finish(updateTB);
+    doFinish();
+    RS_PreviewActionInterface::finish();
 }
 
 /**
  * Extension point for inherited actions for implementing cleanup logic that occurs during action finish()
- * @param updateTB
  */
-void LC_AbstractActionWithPreview::doFinish([[maybe_unused]]bool updateTB){}
+void LC_AbstractActionWithPreview::doFinish(){}
 
-void LC_AbstractActionWithPreview::onMouseLeftButtonRelease(int status, LC_MouseEvent *e) {
+void LC_AbstractActionWithPreview::onMouseLeftButtonRelease(const int status, const LC_MouseEvent* e) {
     checkAlternativeActionMode(e, status);
-    RS_Vector snapped = doGetMouseSnapPoint(e);
+    const RS_Vector snapped = doGetMouseSnapPoint(e);
     doOnLeftMouseButtonRelease(e, status, snapped);
     unHighlightEntity();
     clearAlternativeActionMode();
 }
 
-void LC_AbstractActionWithPreview::onMouseRightButtonRelease(int status, LC_MouseEvent *e) {
+void LC_AbstractActionWithPreview::onMouseRightButtonRelease(const int status, const LC_MouseEvent* e) {
     checkAlternativeActionMode(e, status);
     onRightMouseButtonRelease(e, status);
     clearAlternativeActionMode();
@@ -358,6 +283,7 @@ void LC_AbstractActionWithPreview::clearAlternativeActionMode(){
  * Also, this method may be overridden for more sophisticated modes and modifiers
  * support.
  * @param e mouse event
+ * @param status
  */
 void LC_AbstractActionWithPreview::checkAlternativeActionMode([[maybe_unused]]const LC_MouseEvent *e, [[maybe_unused]]int status){
     m_alternativeActionMode = e->isShift;
@@ -370,8 +296,8 @@ void LC_AbstractActionWithPreview::checkAlternativeActionMode([[maybe_unused]]co
  * @param e original mouse event
  * @return point that should be used as snap for mouse even
  */
-RS_Vector LC_AbstractActionWithPreview::doGetMouseSnapPoint(LC_MouseEvent *e){
-    RS_Vector snap = e->snapPoint;
+RS_Vector LC_AbstractActionWithPreview::doGetMouseSnapPoint(const LC_MouseEvent* e){
+    const RS_Vector snap = e->snapPoint;
     return snap;
 }
 
@@ -381,8 +307,9 @@ RS_Vector LC_AbstractActionWithPreview::doGetMouseSnapPoint(LC_MouseEvent *e){
  * @param status current status of the action
  * @param snapPoint snap point for mouse event (after  doGetMouseSnapPoint method)
  */
-void LC_AbstractActionWithPreview::doOnLeftMouseButtonRelease([[maybe_unused]]LC_MouseEvent *e, [[maybe_unused]]int status, [[maybe_unused]]const RS_Vector &snapPoint){}
-
+void LC_AbstractActionWithPreview::doOnLeftMouseButtonRelease([[maybe_unused]] const LC_MouseEvent* e, [[maybe_unused]] int status,
+                                                              [[maybe_unused]] const RS_Vector& snapPoint) {
+}
 
 /**
  * Default template method implementation for processing of right mouse button release event.
@@ -390,7 +317,7 @@ void LC_AbstractActionWithPreview::doOnLeftMouseButtonRelease([[maybe_unused]]LC
  * @param e original mouse event
  * @param status current status of action.
  */
-void LC_AbstractActionWithPreview::onRightMouseButtonRelease(LC_MouseEvent *e, int status){
+void LC_AbstractActionWithPreview::onRightMouseButtonRelease(const LC_MouseEvent* e, const int status){
     deletePreview();
     unHighlightEntity();
     doBack(e, status);
@@ -399,17 +326,16 @@ void LC_AbstractActionWithPreview::onRightMouseButtonRelease(LC_MouseEvent *e, i
 /**
  * Default implementation for processing back/cancel operation. Simply returns to previous status of the action.
  * Inherited actions should override this method for additional logic.
- * @param pEvent original mouse event
+ * @param e original mouse event
  * @param status current status of the action
  */
-void LC_AbstractActionWithPreview::doBack([[maybe_unused]]LC_MouseEvent *pEvent, int status){
+void LC_AbstractActionWithPreview::doBack([[maybe_unused]] const LC_MouseEvent* e, const int status){
     initPrevious(status);
 }
 
-bool LC_AbstractActionWithPreview::doCheckMayDrawPreview([[maybe_unused]]LC_MouseEvent *event, [[maybe_unused]]int status){
+bool LC_AbstractActionWithPreview::doCheckMayDrawPreview([[maybe_unused]] const LC_MouseEvent* event, [[maybe_unused]]int status){
     return true;
 }
-
 
 /**
  * Utility method to highlighting provided entity. That entity will be also stored for further un-highlighting.
@@ -427,7 +353,7 @@ void LC_AbstractActionWithPreview::highlightEntity(RS_Entity* en){
  * Un-highlights previously highlighted and saved entity. Method is pair for highlightEntity() method.
  */
 void LC_AbstractActionWithPreview::unHighlightEntity(){
-    if(m_highlightedEntity){
+    if(m_highlightedEntity != nullptr){
         m_highlightedEntity->setHighlighted(false);
         redraw(RS2::RedrawDrawing);
         m_highlightedEntity = nullptr;
@@ -439,7 +365,7 @@ void LC_AbstractActionWithPreview::unHighlightEntity(){
  * @param en entity to highlight
  * @param highlight true if the entity should be highlighted, false otherwise
  */
-void LC_AbstractActionWithPreview::highlightEntityExplicit(RS_Entity* en, bool highlight){
+void LC_AbstractActionWithPreview::highlightEntityExplicit(RS_Entity* en, const bool highlight) const {
     en->setHighlighted(highlight);
     redraw(RS2::RedrawDrawing);
 }
@@ -453,21 +379,22 @@ void LC_AbstractActionWithPreview::highlightEntityExplicit(RS_Entity* en, bool h
  * If it is decided that preview should be drawn, creates it for determined snap point.
  * At the end, performs post-processing/cleanup via delegation to doMouseMoveEnd method.
  *
- * @param e original mouse event
+ * @param status
+ * @param event original mouse event
  */
 
-void LC_AbstractActionWithPreview::onMouseMoveEvent(int status, LC_MouseEvent *e) {
-    checkAlternativeActionMode(e, status);
-    doMouseMoveStart(status, e);
-    checkPreSnapToRelativeZero(status, e);
-    status = getStatus();
+void LC_AbstractActionWithPreview::onMouseMoveEvent(const int status, const LC_MouseEvent* event) {
+    checkAlternativeActionMode(event, status);
+    doMouseMoveStart(status, event);
+    checkPreSnapToRelativeZero(status, event);
+    const int actualStatus = getStatus();
 
-    if (doCheckMayDrawPreview(e, status)){ // check whether preview may be drawn according to state etc.
-        RS_Vector snap = doGetMouseSnapPoint(e);
-        bool shouldDrawPreview = onMouseMove(e, snap, status); // delegate processing to inherited actions
+    if (doCheckMayDrawPreview(event, actualStatus)){ // check whether preview may be drawn according to state etc.
+        RS_Vector snap = doGetMouseSnapPoint(event);
+        const bool shouldDrawPreview = onMouseMove(event, snap, actualStatus); // delegate processing to inherited actions
         if (shouldDrawPreview){
             unHighlightEntity();
-            drawPreviewForPoint(e, snap);
+            drawPreviewForPoint(event, snap);
             m_lastSnapPoint = snap; // store snap point for later use (like redraw preview on options change)
         }
         else{
@@ -476,28 +403,26 @@ void LC_AbstractActionWithPreview::onMouseMoveEvent(int status, LC_MouseEvent *e
         redraw();
     }
     else{
-        updateSnapperAndCoordinateWidget(e, status);
+        updateSnapperAndCoordinateWidget(event, actualStatus);
     }
     drawHighlights();
-    doMouseMoveEnd(status, e);
+    doMouseMoveEnd(actualStatus, event);
     clearAlternativeActionMode();
 }
-
 
 /**
  * Extension point for inherited actions. Called on start of mouse move event processing and lets the action to do some preparations.
  * @param status status of the action
- * @param pEvent mouse event
+ * @param e mouse event
  */
-void LC_AbstractActionWithPreview::doMouseMoveStart([[maybe_unused]]int status, [[maybe_unused]]LC_MouseEvent *pEvent){}
+void LC_AbstractActionWithPreview::doMouseMoveStart([[maybe_unused]]int status, [[maybe_unused]] const LC_MouseEvent* e){}
 
 /**
  * Extension point for inherited actions. Called at the of mouse move event processing and lets the action to do some cleanup after mouse move event processing.
  * @param status status of the action
- * @param pEvent mouse event
+ * @param e mouse event
  */
-void LC_AbstractActionWithPreview::doMouseMoveEnd([[maybe_unused]]int status, [[maybe_unused]]LC_MouseEvent *e){}
-
+void LC_AbstractActionWithPreview::doMouseMoveEnd([[maybe_unused]]int status, [[maybe_unused]] const LC_MouseEvent* e){}
 
 /**
  * Performs initial pre-snap to current relative zero point if shift is pressed.
@@ -509,11 +434,11 @@ void LC_AbstractActionWithPreview::doMouseMoveEnd([[maybe_unused]]int status, [[
  * @param status current status of the action
  * @param e original mouse event
  */
-void LC_AbstractActionWithPreview::checkPreSnapToRelativeZero(int status, LC_MouseEvent *e){
+void LC_AbstractActionWithPreview::checkPreSnapToRelativeZero(const int status, const LC_MouseEvent* e){
     if (doCheckMouseEventValidForInitialSnap(e)){ // do pre-snap if SHIFT Pressed
         // check whether status is valid for pre-snap
         if (status == doGetStatusForInitialSnapToRelativeZero()){
-            RS_Vector relZero = getRelativeZero();
+            const RS_Vector relZero = getRelativeZero();
             if (relZero.valid){
                 // do actual pre-snap in delegate
                 doInitialSnapToRelativeZero(relZero);
@@ -530,7 +455,7 @@ void LC_AbstractActionWithPreview::checkPreSnapToRelativeZero(int status, LC_Mou
  * @param e mouse event
  * @return true if initial pre-snap to relative zero may be triggered by the mouse event
  */
-bool LC_AbstractActionWithPreview::doCheckMouseEventValidForInitialSnap([[maybe_unused]]LC_MouseEvent *e){
+bool LC_AbstractActionWithPreview::doCheckMouseEventValidForInitialSnap([[maybe_unused]] const LC_MouseEvent* e){
     return m_alternativeActionMode;
 }
 
@@ -550,7 +475,7 @@ int LC_AbstractActionWithPreview::doGetStatusForInitialSnapToRelativeZero(){
  * update the status of the action accordingly (to move to the next status).
  * @param relZero relative zero point.
  */
-void LC_AbstractActionWithPreview::doInitialSnapToRelativeZero([[maybe_unused]]RS_Vector relZero){}
+void LC_AbstractActionWithPreview::doInitialSnapToRelativeZero([[maybe_unused]] const RS_Vector& relZero){}
 
 
 /**
@@ -560,7 +485,7 @@ void LC_AbstractActionWithPreview::doInitialSnapToRelativeZero([[maybe_unused]]R
  * @param status status of the action
  * @return true if preview should be shown, false otherwise.
  */
-bool LC_AbstractActionWithPreview::onMouseMove([[maybe_unused]]LC_MouseEvent *e, [[maybe_unused]]RS_Vector snap, [[maybe_unused]]int status){ return true;}
+bool LC_AbstractActionWithPreview::onMouseMove([[maybe_unused]] const LC_MouseEvent* e, [[maybe_unused]]RS_Vector snap, [[maybe_unused]]int status){ return true;}
 
 /**
  * Draws preview for given point.
@@ -570,18 +495,17 @@ bool LC_AbstractActionWithPreview::onMouseMove([[maybe_unused]]LC_MouseEvent *e,
  * @param e
  * @param snap base point (snap point) for preview displaying.
  */
-void LC_AbstractActionWithPreview::drawPreviewForPoint(LC_MouseEvent *e, RS_Vector& snap){
+void LC_AbstractActionWithPreview::drawPreviewForPoint(const LC_MouseEvent* e, RS_Vector& snap){
     QList<RS_Entity*> entitiesForPreview; // here we'll collect the list of entities for preview
     // do actual creation of preview entities
     doPreparePreviewEntities(e, snap, entitiesForPreview, getStatus());
     // adding collected entities to preview
-    for (auto ent: entitiesForPreview){
+    for (const auto ent: std::as_const(entitiesForPreview)){
         previewEntity(ent);
     }
     // draw
     drawPreview();
 }
-
 
 /**
  * redraws preview in it's last point. This is used if the user would like to change some option
@@ -609,10 +533,9 @@ void LC_AbstractActionWithPreview::drawPreviewForLastPoint(){
  * @param list list of entities to which preview entities should be added
  * @param status current status of the action
  */
-void LC_AbstractActionWithPreview::doPreparePreviewEntities([[maybe_unused]]LC_MouseEvent *e, [[maybe_unused]]RS_Vector &snap, [[maybe_unused]]QList<RS_Entity *> &list, [[maybe_unused]]int status){}
-
-
-
+void LC_AbstractActionWithPreview::doPreparePreviewEntities([[maybe_unused]] const LC_MouseEvent* e, [[maybe_unused]] RS_Vector& snap,
+                                                            [[maybe_unused]] QList<RS_Entity*>& list, [[maybe_unused]] int status) {
+}
 
 /**
  * Returns cursor for the given state. Default implementation returns CadCursor, inherited actions may add more sophisticated processing.
@@ -628,8 +551,8 @@ RS2::CursorType LC_AbstractActionWithPreview::doGetMouseCursor([[maybe_unused]]i
  */
 void LC_AbstractActionWithPreview::finishAction(){
     init(-1);
-    updateMouseButtonHints();
-    finish(true);
+    updateActionPrompt();
+    finish();
     m_graphicView->repaint();
 }
 
@@ -638,7 +561,7 @@ void LC_AbstractActionWithPreview::finishAction(){
  * May be used by actions that would like to control snap mode during their operations (say, for simplicity of entities selection).
  */
 void LC_AbstractActionWithPreview::restoreSnapMode(){
-    RS_SnapMode restoredMode = RS_SnapMode::fromInt(m_savedSnapMode);
+    const RS_SnapMode restoredMode = RS_SnapMode::fromInt(m_savedSnapMode);
     setGlobalSnapMode(restoredMode);
 }
 
@@ -662,23 +585,13 @@ void LC_AbstractActionWithPreview::setFreeSnap(){
 }
 
 /**
- * Utility method for un-selecting list of provided entities
- * @param entities list of entities
- */
-void LC_AbstractActionWithPreview::unSelectEntities(const QList<RS_Entity*>& entities){
-    for (auto original: entities) {
-        original ->setSelected(false);
-    }
-}
-
-/**
  * Utility method that applies pen and layer to target entity based on provided source entity and provided modes
  * @param source source entity to pick attributes (if needed)
  * @param target entity to which attributes are applied
  * @param penMode value of pen mode enum
  * @param layerMode value of layer mode enum
  */
-void LC_AbstractActionWithPreview::applyPenAndLayerBySourceEntity(const RS_Entity *source, RS_Entity *target, int penMode, int layerMode) const{
+void LC_AbstractActionWithPreview::applyPenAndLayerBySourceEntity(const RS_Entity *source, RS_Entity *target, const int penMode, const int layerMode) const{
     switch (penMode) {
         case PEN_ACTIVE: {
             target->setPenToActive();
@@ -689,7 +602,7 @@ void LC_AbstractActionWithPreview::applyPenAndLayerBySourceEntity(const RS_Entit
             break;
         }
         case PEN_ORIGINAL_RESOLVED: {
-            RS_Pen pen = source->getPen(true);
+            const RS_Pen pen = source->getPen(true);
             target->setPen(pen);
             break;
         }
@@ -712,8 +625,8 @@ void LC_AbstractActionWithPreview::applyPenAndLayerBySourceEntity(const RS_Entit
     }
 }
 
-void LC_AbstractActionWithPreview::updateMouseButtonHints(){
-    updateMouseWidget();
+void LC_AbstractActionWithPreview::updateActionPrompt(){
+    updatePrompt();
 }
 
 /**
@@ -725,13 +638,13 @@ void LC_AbstractActionWithPreview::updateMouseButtonHints(){
  */
 bool LC_AbstractActionWithPreview::checkMayExpandEntity(const RS_Entity *e, const QString &entityName) const{
     bool mayDivide = false;
-    bool locked = e->isLocked();
+    const bool locked = e->isLocked();
     if (locked){
         if (!entityName.isEmpty()){
             commandMessage(entityName + tr(" is not divided as it is locked."));
         }
     } else {
-        RS_EntityContainer *pContainer = e->getParent();
+        const RS_EntityContainer *pContainer = e->getParent();
         if (pContainer != nullptr){
             if (pContainer->is(RS2::EntityPolyline)){
                 mayDivide = false;
@@ -755,7 +668,7 @@ bool LC_AbstractActionWithPreview::checkMayExpandEntity(const RS_Entity *e, cons
  * @return created point entity
  */
 RS_Point* LC_AbstractActionWithPreview::createPoint(const RS_Vector &coord, QList<RS_Entity *> &list) const{
-    auto *result = new RS_Point(m_container, coord);
+    auto *result = new RS_Point(m_document, coord);
     list << result;
     return result;
 }
@@ -785,13 +698,13 @@ void LC_AbstractActionWithPreview::createRefSelectablePoint(const RS_Vector &coo
  * @return created line
  */
 RS_Line* LC_AbstractActionWithPreview::createLine(const RS_Vector &startPoint, const RS_Vector &endPoint, QList<RS_Entity *> &list) const{
-    auto *result = new RS_Line(m_container, startPoint, endPoint);
+    auto *result = new RS_Line(m_document, startPoint, endPoint);
     list << result;
     return result;
 }
 
 RS_Line* LC_AbstractActionWithPreview::createLine(const RS_LineData &lineData, QList<RS_Entity *> &list) const{
-    auto *result = new RS_Line(m_container, lineData);
+    auto *result = new RS_Line(m_document, lineData);
     list << result;
     return result;
 }
@@ -806,6 +719,6 @@ void LC_AbstractActionWithPreview::createRefArc(const RS_ArcData &data, QList<RS
         list << result;
 }
 
-bool LC_AbstractActionWithPreview::isMouseMove(LC_MouseEvent *e){
+bool LC_AbstractActionWithPreview::isMouseMove(const LC_MouseEvent *e){
     return e->originalEvent->type() == QMouseEvent::MouseMove;
 }

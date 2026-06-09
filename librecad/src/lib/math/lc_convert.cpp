@@ -24,32 +24,32 @@
 
 #include <QRegularExpression>
 
-#include "rs_math.h"
 #include "lc_linemath.h"
 #include "rs_debug.h"
+#include "rs_math.h"
 #include "rs_settings.h"
 #include "rs_units.h"
 
 // fixme - sand - review the entire codebase and insure uniform string/double and vice-versa conversion
-QString LC_Convert::asString(double value, int precision){
+QString LC_Convert::asString(double value, const int precision){
     if (LC_LineMath::isNotMeaningful(value)){
         value = 0.0;
     }
     return QString::number(value, 'g', precision);
 }
 
-QString LC_Convert::asStringAngle(double value, int precision){
+QString LC_Convert::asStringAngle(double value, const int precision){
     if (!LC_LineMath::isMeaningfulAngle(value)){
         value = 0.0;
     }
     return QString::number(value, 'g', precision);
 }
 
-QString LC_Convert::asStringAngleDeg(double value, int precision){
+QString LC_Convert::asStringAngleDeg(double value, const int precision){
     if (!LC_LineMath::isMeaningfulAngle(value)){
         value = 0.0;
     }
-    double angleDeg = RS_Math::rad2deg(value);
+    const double angleDeg = RS_Math::rad2deg(value);
     return QString::number(angleDeg, 'g', precision);
 }
 
@@ -62,9 +62,9 @@ QString LC_Convert::asStringAngleDeg(double value, int precision){
  * @param positiveOnly if true, positive value (via std::abs()) will be always returned, false - otherwise.
  * @return true if string was converted without errors
  */
-bool LC_Convert::toDouble(const QString& strValue, double &res, double notMeaningful, bool positiveOnly){
+bool LC_Convert::toDouble(const QString& strValue, double &res, const double notMeaningful, const bool positiveOnly){
     bool ok = false;
-    double x = RS_Math::eval(strValue, &ok);
+    const double x = RS_Math::eval(strValue, &ok);
     if(ok){
         res = LC_LineMath::getMeaningful(x, notMeaningful);
         if (positiveOnly){
@@ -82,25 +82,31 @@ bool LC_Convert::toDouble(const QString& strValue, double &res, double notMeanin
  * @param positiveOnly if true, positive value (via std::abs()) will be always returned, false - otherwise.
  * @return true if string was converted without errors
  */
-bool LC_Convert::toDoubleAngleRad(const QString& strValue, double &res, double notMeaningful, bool positiveOnly){
+bool LC_Convert::toDoubleAngleRad(const QString& strValue, double &res, const double notMeaningful, const bool positiveOnly){
     double radValue;
-    bool result = parseToToDoubleAngleDegrees(strValue, radValue, notMeaningful, positiveOnly);
+    const bool result = parseToToDoubleAngleDegrees(strValue, radValue, notMeaningful, positiveOnly);
     if (result){
-        res = RS_Math::deg2rad(radValue);
+        const double resRad = RS_Math::deg2rad(radValue);
+        res = RS_Math::correctAngle(resRad);
     }
     return result;
 }
 
 
-bool LC_Convert::parseToToDoubleAngleDegrees(const QString& strValue, double &res, double notMeaningful, bool positiveOnly){
+bool LC_Convert::parseToToDoubleAngleDegrees(const QString& strValue, double &res, const double notMeaningful, const bool positiveOnly){
     bool ok = false;
-    bool doNotAllowNonDecimalAnglesInput = LC_GET_ONE_BOOL("CADPreferences", "InputAnglesAsDecimalsOnly", false);
+    const bool doNotAllowNonDecimalAnglesInput = LC_GET_ONE_BOOL("CADPreferences", "InputAnglesAsDecimalsOnly", false);
     double angleDegrees;
+    // cleanup degree size, if any
     if (doNotAllowNonDecimalAnglesInput){
-        angleDegrees = RS_Math::eval(strValue, &ok);
+        QString stringToEval = strValue;
+        stringToEval = stringToEval.remove( QChar(0xB0));
+        angleDegrees = RS_Math::eval(stringToEval, &ok);
     }
     else{
-        QString stringToEval = RS_Units::replaceAllPotentialAnglesByDecimalDegrees(strValue, &ok);
+        QString stringToEval = strValue;
+        stringToEval = stringToEval.remove( QChar(0xB0));
+        stringToEval = RS_Units::replaceAllPotentialAnglesByDecimalDegrees(stringToEval, &ok);
         angleDegrees = RS_Math::eval(stringToEval, &ok);
     }
     if(ok){
@@ -112,8 +118,6 @@ bool LC_Convert::parseToToDoubleAngleDegrees(const QString& strValue, double &re
     return ok;
 }
 
-
-
 /**
    * @{description}       Update a length string to support fraction
    *                      (1 1/2") to (1+1/2")
@@ -122,52 +126,64 @@ bool LC_Convert::parseToToDoubleAngleDegrees(const QString& strValue, double &re
 QString LC_Convert::updateForFraction(QString input) {
     // if the expression is already valid, bypass fraction processing
     bool okay = false;
-    double value = RS_Math::eval(input, &okay);
-    if (okay)
+    const double value = RS_Math::eval(input, &okay);
+    if (okay) {
         return QString{}.setNum(value, 'g', 10);
+    }
 
     // support fraction at the end: (1'1/2) => (1 1/2')
-    QRegularExpression rx{R"((\D*)([\d]+)\s*(['"])([\d]+)/([\d]+)\s*$)"};
-    QRegularExpressionMatch match = rx.match(input);
+    static const QRegularExpression rx{R"((\D*)([\d]+)\s*(['"])([\d]+)/([\d]+)\s*$)"};
+
+    const QRegularExpressionMatch match = rx.match(input);
     if (match.hasMatch()) {
-        qsizetype pos = match.capturedStart();
+        const qsizetype pos = match.capturedStart();
         input = input.left(pos) + match.captured(1) + match.captured(2) + " " + match.captured(4) + "/" +
                 match.captured(5) + match.captured(3);
     }
-    std::vector<std::tuple<QRegularExpression, int, int>> regexps{
+    static std::array<std::tuple<QRegularExpression, int, int>, 3> regexps{
                 {{QRegularExpression{R"((\D*)([\d]+)\s+([\d]+)/([\d]+)\s*([\D$]))"},3, 5},
                     {QRegularExpression{R"((\D*)([\d]+)\s+([\d]+)/([\d]+)\s*(['"]))"},3, 5},
                     {QRegularExpression{R"((\D*)\s*([\d]+)/([\d]+)\s*([\D$]))"},2, 4},}};
+
     LC_LOG << "input=" << input;
-    for (auto &[rx, index, tailI]: regexps)
-        input = evaluateFraction(input, rx, index, tailI).replace(QRegularExpression(R"(\s+)"), QString{});
+    static QRegularExpression expression(R"(\s+)");
+    for (auto &[regx, index, tailI]: regexps) {
+        input = evaluateFraction(input, regx, index, tailI).replace(expression, QString{});
+    }
     LC_LOG << "eval: " << input;
     return input;
 }
 
-QString LC_Convert::evaluateFraction(QString input, QRegularExpression rx, int index, int tailI) {
-
-    QString copy = input;
-    QString tail = QString{R"(\)"} + QString::number(tailI);
-    QRegularExpressionMatch match = rx.match(copy);
+QString LC_Convert::evaluateFraction(QString input, const QRegularExpression& rx, const int index, const int tailI) {
+    const QString copy = input;
+    const QRegularExpressionMatch match = rx.match(copy);
 
     if (match.hasMatch()) {
-        qsizetype pos = match.capturedStart();
+        const qsizetype pos = match.capturedStart();
         LC_ERR << "Evaluate: " << copy;
-        QString formula = ((index != 2) ? match.captured(2) + "+" : QString{}) + match.captured(index) + "/" +
+        const QString formula = ((index != 2) ? match.captured(2) + "+" : QString{}) + match.captured(index) + "/" +
                           match.captured(index + 1);
         LC_ERR << "formula=" << formula;
-        QString value = QString{}.setNum(RS_Math::eval(formula), 'g', 10);
+        const QString value = QString{}.setNum(RS_Math::eval(formula), 'g', 10);
         LC_ERR << "formula=" << formula << ": value=" << value;
+
+        const QString tail = QString{R"(\)"} + QString::number(tailI);
+
         return input.left(pos)
                + input.mid(pos, match.capturedLength()).replace(rx, R"( \1)" + value + tail)
                + evaluateFraction(input.right(input.size() - pos - match.capturedLength()), rx, index, tailI);
     }
     return input;
 }
-
-double LC_Convert::evalAngleValue(const QString &angleStr, bool &ok2) {
+[[deprecated]] // fixme - garbase value if doNotAllow is true and ok is valse?
+double LC_Convert::evalAngleValue(const QString& angleStr, bool& ok2) {
     double angleDegrees;
     ok2 = parseToToDoubleAngleDegrees(angleStr, angleDegrees, 0.0, false);
     return angleDegrees;
+}
+
+bool LC_Convert::toInt(const QString& strVal, int& res) {
+    bool ok;
+    res = strVal.toInt(&ok);
+    return ok;
 }

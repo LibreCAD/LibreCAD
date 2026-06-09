@@ -44,7 +44,6 @@ class QC_ApplicationWindow;
  */
 class QC_GraphicView : public QG_GraphicView {
     Q_OBJECT
-
 public:
     QC_GraphicView(RS_Document* doc, QWidget* parent=0);
 	virtual ~QC_GraphicView()=default;

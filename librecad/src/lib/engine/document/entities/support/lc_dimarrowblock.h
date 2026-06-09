@@ -28,12 +28,7 @@
 
 class LC_DimArrow: public RS_AtomicEntity{
 public:
-    LC_DimArrow(RS_EntityContainer* parent, const RS_Vector &pos, double angle, double size)
-        : RS_AtomicEntity{parent},
-          m_position{pos},
-          m_angle{angle},
-          m_arrowSize{size} {
-    }
+    LC_DimArrow(RS_EntityContainer* parent, const RS_Vector &pos, double angle, double size);
     RS2::EntityType rtti() const override {return RS2::EntityDimArrowBlock;}
 
     void move(const RS_Vector& offset) override;
@@ -41,16 +36,9 @@ public:
     void rotate(const RS_Vector& center, const RS_Vector& angleVector) override;
     void scale(const RS_Vector& center, const RS_Vector& factor) override;
     void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) override;
-    RS_Vector getNearestCenter(const RS_Vector& coord, double* dist) const override;
-    RS_Vector getNearestMiddle(const RS_Vector& coord, double* dist, int middlePoints) const override;
-    RS_Vector getNearestDist(double distance, const RS_Vector& coord, double* dist) const override;
     void calculateBorders() override;
-    RS_Vector getNearestEndpoint(const RS_Vector& coord, double* dist) const override;
-    RS_Vector getNearestPointOnEntity(const RS_Vector& coord, bool onEntity, double* dist, RS_Entity** entity) const override;
-    double getDistanceToPoint(const RS_Vector& coord, RS_Entity** entity, RS2::ResolveLevel level,
-                              double solidDist) const override;
     double getAngle() const {return m_angle;}
-    void setAngle(double angle) {m_angle = angle;}
+    void setAngle(const double angle) {m_angle = angle;}
     double getArrowSize() const {return m_arrowSize;}
     RS_Vector getPosition() const {return m_position;}
     RS_Vector getDimLinePoint () const {return m_dimLinePoint;}
@@ -63,11 +51,17 @@ protected:
     virtual void doCalculateBorders();
     void setDimLinePoint(const RS_Vector& pos);
     void positionDimLinePointFromZero(const RS_Vector &angleVector);
-private:    
-    RS_Vector m_position {};
+    RS_Vector doGetNearestPointOnEntity(const RS_Vector& coord, bool onEntity, double* dist, RS_Entity** entity) const override;
+    double doGetDistanceToPoint(const RS_Vector& coord, RS_Entity** entity, RS2::ResolveLevel level, double solidDist) const override;
+    RS_Vector doGetNearestEndpoint(const RS_Vector& coord, double* dist, RS_Entity** entity) const override;
+    RS_Vector doGetNearestCenter(const RS_Vector& coord, double* dist, RS_Entity** centerEntity) const override;
+    RS_Vector doGetNearestMiddle(const RS_Vector& coord, double* dist, int middlePoints) const override;
+    RS_Vector doGetNearestDist(double distance, const RS_Vector& coord, double* dist) const override;
+private:
+    RS_Vector m_position;
     double m_angle {0.0};
     double m_arrowSize {0.0};
-    RS_Vector m_dimLinePoint {};
+    RS_Vector m_dimLinePoint;
 };
 
-#endif // LC_DIMARROWBLOCK_H
+#endif

@@ -42,4 +42,4 @@ public slots:
 	/** resizes window to 640x480 for screen shots */
 	void slotTestResize1024();
 };
-#endif // LC_SIMPLETESTS_H
+#endif

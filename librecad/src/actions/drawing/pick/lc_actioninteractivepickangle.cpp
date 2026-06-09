@@ -25,7 +25,6 @@
 
 #include "lc_actioninfomessagebuilder.h"
 #include "lc_cursoroverlayinfo.h"
-#include "lc_graphicviewport.h"
 #include "lc_linemath.h"
 #include "rs_information.h"
 #include "rs_line.h"
@@ -37,7 +36,7 @@ LC_ActionInteractivePickAngle::LC_ActionInteractivePickAngle(LC_ActionContext* a
 LC_ActionInteractivePickAngle::~LC_ActionInteractivePickAngle() {
 }
 
-void LC_ActionInteractivePickAngle::init(int status) {
+void LC_ActionInteractivePickAngle::init(const int status) {
     LC_ActionInteractivePickBase::init(status);
 }
 
@@ -47,14 +46,14 @@ bool LC_ActionInteractivePickAngle::isInteractiveDataValid() {
 
 void LC_ActionInteractivePickAngle::doSetInteractiveInputValue(
     LC_ActionContext::InteractiveInputInfo* interactiveInputInfo) {
-    interactiveInputInfo->m_angleRad = m_angle;
+    interactiveInputInfo->angleRad = m_angle;
 }
 
 RS2::CursorType LC_ActionInteractivePickAngle::doGetMouseCursor([[maybe_unused]]int status) {
     return RS2::CadCursor;
 }
 
-void LC_ActionInteractivePickAngle::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent* e) {
+void LC_ActionInteractivePickAngle::onMouseRightButtonRelease(const int status, [[maybe_unused]] const LC_MouseEvent* e) {
     if (status == SetSecondLine) {
         setStatus(SetPoint1);
     }
@@ -63,17 +62,17 @@ void LC_ActionInteractivePickAngle::onMouseRightButtonRelease(int status, [[mayb
     }
 }
 
-void LC_ActionInteractivePickAngle::onMouseMoveEvent(int status, LC_MouseEvent* e) {
+void LC_ActionInteractivePickAngle::onMouseMoveEvent(const int status, const LC_MouseEvent* e) {
     RS_Vector mouse = e->snapPoint;
     switch (status){
         case SetPoint1:{
-            auto ent = catchAndDescribe(e, RS2::EntityLine, RS2::ResolveAll);
+            const auto ent = catchAndDescribe(e, RS2::EntityLine, RS2::ResolveAll);
             if (ent != nullptr) {
                 if (e->isControl) {
                     highlightHover(ent);
-                    auto point = ent->getNearestPointOnEntity(mouse, true);
                     if (m_showRefEntitiesOnPreview) {
-                        RS_Vector endpointToUse = ent->getEndpoint();
+                        const auto point = ent->getNearestPointOnEntity(mouse, true);
+                        const RS_Vector endpointToUse = ent->getEndpoint();
                         previewSnapAngleMark(point, endpointToUse);
                     }
                 }
@@ -103,8 +102,8 @@ void LC_ActionInteractivePickAngle::onMouseMoveEvent(int status, LC_MouseEvent* 
                 previewRefLine(m_point1, m_point2);
                 previewRefLine(m_point2, mouse);
 
-                double distance1 = m_point2.distanceTo(m_point1);
-                double distance2 = m_point2.distanceTo(mouse);
+                const double distance1 = m_point2.distanceTo(m_point1);
+                const double distance2 = m_point2.distanceTo(mouse);
                 if (distance2 < distance1) {
                     previewRefArc(m_point2, mouse, m_point1, true);
                 }
@@ -115,19 +114,19 @@ void LC_ActionInteractivePickAngle::onMouseMoveEvent(int status, LC_MouseEvent* 
             break;
         }
         case SetSecondLine: {
-            auto en = catchAndDescribe(e, RS2::ResolveAll);
+            const auto en = catchAndDescribe(e, RS2::ResolveAll);
             highlightSelected(m_entity1);
             if (m_showRefEntitiesOnPreview) {
                 previewRefPoint(m_point1);
             }
             if (isLine(en)){ // fixme - support of polyline
-                RS_VectorSolutions const &sol = RS_Information::getIntersection(m_entity1, en, false);
+                const RS_VectorSolutions &sol = RS_Information::getIntersection(m_entity1, en, false);
                 if (sol.hasValid()){
                     highlightHover(en);
                     if (m_showRefEntitiesOnPreview) {
-                        RS_Vector p2 = en->getNearestPointOnEntity(mouse);
+                        const RS_Vector p2 = en->getNearestPointOnEntity(mouse);
                         previewRefSelectablePoint(p2);
-                        RS_Vector intersection = sol.get(0);
+                        const RS_Vector intersection = sol.get(0);
                         updateInfoCursor2(p2,intersection);
                         previewRefArc(intersection, m_point1, p2, true);
                         previewRefPoint(intersection);
@@ -148,10 +147,10 @@ void LC_ActionInteractivePickAngle::onMouseMoveEvent(int status, LC_MouseEvent* 
     }
 }
 
-void LC_ActionInteractivePickAngle::updateInfoCursor2(const RS_Vector &point2, const RS_Vector &intersection) {
+void LC_ActionInteractivePickAngle::updateInfoCursor2(const RS_Vector &point2, const RS_Vector &intersection) const {
     if (m_infoCursorOverlayPrefs->enabled){
-        double angle1 = intersection.angleTo(m_point1);
-        double angle2 = intersection.angleTo(point2);
+        const double angle1 = intersection.angleTo(m_point1);
+        const double angle2 = intersection.angleTo(point2);
         double angle = LC_LineMath::angleFor3Points(m_point1, intersection, point2);
 
         double angleComplementary, angleSupplementary, angleAlt;
@@ -169,16 +168,16 @@ void LC_ActionInteractivePickAngle::updateInfoCursor2(const RS_Vector &point2, c
     }
 }
 
-void LC_ActionInteractivePickAngle::onMouseLeftButtonRelease(int status, LC_MouseEvent* e) {
+void LC_ActionInteractivePickAngle::onMouseLeftButtonRelease(const int status, const LC_MouseEvent* e) {
     RS_Vector snapped = e->snapPoint;
     switch (status){
         case SetPoint1:{
             if (e->isControl) {
-                auto ent = catchAndDescribe(e, RS2::EntityLine, RS2::ResolveAll);
+                const auto ent = catchAndDescribe(e, RS2::EntityLine, RS2::ResolveAll);
                 if (ent != nullptr) {
-                    auto line = dynamic_cast<RS_Line*>(ent);
-                    double wcsLineAngle = line->getAngle1();
-                    double ucsAngle = toUCSBasisAngle(wcsLineAngle);
+                    const auto line = static_cast<RS_Line*>(ent);
+                    const double wcsLineAngle = line->getAngle1();
+                    const double ucsAngle = toUCSBasisAngle(wcsLineAngle);
                     // m_angle = RS_Math::correctAngle0ToPi(ucsAngle);
                     m_angle = ucsAngle;
 
@@ -193,7 +192,7 @@ void LC_ActionInteractivePickAngle::onMouseLeftButtonRelease(int status, LC_Mous
                 }
             }
             else if (e->isShift) {
-                auto ent = catchAndDescribe(e, RS2::EntityLine, RS2::ResolveAll);
+                const auto ent = catchAndDescribe(e, RS2::EntityLine, RS2::ResolveAll);
                 if (ent != nullptr) {
                     m_entity1 = ent;
                     m_point1 = ent->getNearestPointOnEntity(snapped, true);
@@ -208,9 +207,9 @@ void LC_ActionInteractivePickAngle::onMouseLeftButtonRelease(int status, LC_Mous
         case SetPoint2: {
             snapped = getSnapAngleAwarePoint(e, m_point1, snapped, false,e->isShift);
             if (e->isControl) {
-                double wcsPointAngle = m_point1.angleTo(snapped);
-                double ucsAngle = toUCSBasisAngle(wcsPointAngle);
-                m_angle = RS_Math::correctAngle0ToPi(ucsAngle);
+                const double wcsPointAngle = m_point1.angleTo(snapped);
+                const double ucsAngle = toUCSBasisAngle(wcsPointAngle);
+                m_angle = RS_Math::correctAngle0To2Pi(ucsAngle);
                 m_mayTrigger = true;
                 trigger();
             }
@@ -226,14 +225,14 @@ void LC_ActionInteractivePickAngle::onMouseLeftButtonRelease(int status, LC_Mous
             break;
         }
         case SetSecondLine: {
-            auto ent = catchAndDescribe(e, RS2::EntityLine, RS2::ResolveAll);
+            const auto ent = catchAndDescribe(e, RS2::EntityLine, RS2::ResolveAll);
             if (ent != nullptr) {
-                RS_VectorSolutions const &sol = RS_Information::getIntersection(m_entity1, ent, false);
+                const RS_VectorSolutions&sol = RS_Information::getIntersection(m_entity1, ent, false);
                 if (sol.hasValid()) {
-                    auto point2 = ent->getNearestPointOnEntity(snapped, true);
-                    auto intersection = sol.get(0);
-                    double angle = LC_LineMath::angleFor3Points(m_point1, intersection, point2);
-                    m_angle = RS_Math::correctAngle0ToPi(angle);
+                    const auto point2 = ent->getNearestPointOnEntity(snapped, true);
+                    const auto intersection = sol.get(0);
+                    const double angle = LC_LineMath::angleFor3Points(m_point1, intersection, point2);
+                    m_angle = RS_Math::correctAngle0To2Pi(angle);
                     double angleComplementary, angleSupplementary, angleAlt;
                     RS_Math::calculateAngles(m_angle, angleComplementary, angleSupplementary, angleAlt);
                     if (e->isShift) {
@@ -253,7 +252,7 @@ void LC_ActionInteractivePickAngle::onMouseLeftButtonRelease(int status, LC_Mous
     }
 }
 
-void LC_ActionInteractivePickAngle::onCoordinateEvent(int status,[[maybe_unused]] bool isZero, const RS_Vector& pos) {
+void LC_ActionInteractivePickAngle::onCoordinateEvent(const int status,[[maybe_unused]] bool isZero, const RS_Vector& pos) {
     switch (status){
         case SetPoint1:{
             m_point1 = pos;
@@ -282,31 +281,32 @@ void LC_ActionInteractivePickAngle::onCoordinateEvent(int status,[[maybe_unused]
     }
 }
 
-void LC_ActionInteractivePickAngle::updateMouseButtonHints() {
-    int status = getStatus();
+void LC_ActionInteractivePickAngle::updateActionPrompt() {
+    const int status = getStatus();
     switch (status){
         case SetPoint1:{
-            updateMouseWidgetTRCancel(tr("Select first edge point of angle"), MOD_SHIFT_AND_CTRL(tr("Select first line/Pick Supplementary"), tr("Pick from line")));
+            updatePromptTRCancel(tr("Select first edge point of angle"), MOD_SHIFT_AND_CTRL(tr("Select first line/Pick Supplementary"), tr("Pick from line")));
             break;
         }
         case SetPoint2:{
-            updateMouseWidgetTRCancel(tr("Select second (intersection) point of angle"), MOD_SHIFT_AND_CTRL_ANGLE(tr("Pick angle")));
+            updatePromptTRCancel(tr("Select second (intersection) point of angle"), MOD_SHIFT_AND_CTRL_ANGLE(tr("Pick angle")));
             break;
         }
         case SetPoint3:{
-            updateMouseWidgetTRCancel(tr("Select second edge point of angle"), MOD_SHIFT_AND_CTRL(MSG_ANGLE_SNAP, tr("Pick Supplementary")));
+            updatePromptTRCancel(tr("Select second edge point of angle"), MOD_SHIFT_AND_CTRL(MSG_ANGLE_SNAP, tr("Pick Supplementary")));
             break;
         }
         case SetSecondLine: {
-            updateMouseWidgetTRBack(tr("Specify second line"), MOD_SHIFT_AND_CTRL(tr("Pick Complementary"), tr("Pick Supplementary")));
+            updatePromptTRBack(tr("Specify second line"), MOD_SHIFT_AND_CTRL(tr("Pick Complementary"), tr("Pick Supplementary")));
             break;
         }
         default:
-            updateMouseWidget();
+            updatePrompt();
+            break;
     }
 }
 
-void LC_ActionInteractivePickAngle::updateInfoCursor(const RS_Vector &mouse, const RS_Vector &point2, const RS_Vector &startPoint) {
+void LC_ActionInteractivePickAngle::updateInfoCursor(const RS_Vector &mouse, const RS_Vector &point2, const RS_Vector &startPoint) const {
     if (m_infoCursorOverlayPrefs->enabled) {
 
         double angle = LC_LineMath::angleFor3Points(m_point1, point2, mouse);
@@ -330,7 +330,7 @@ void LC_ActionInteractivePickAngle::updateInfoCursor(const RS_Vector &mouse, con
     }
 }
 
-void LC_ActionInteractivePickAngle::updateInfoCursor(const RS_Vector& mouse, const RS_Vector& startPoint) {
+void LC_ActionInteractivePickAngle::updateInfoCursor(const RS_Vector& mouse, const RS_Vector& startPoint) const {
     if (m_infoCursorOverlayPrefs->enabled){
         msg(tr("Pick Angle"))
             .linear(tr("Distance:"), startPoint.distanceTo(mouse))
@@ -343,4 +343,8 @@ void LC_ActionInteractivePickAngle::updateInfoCursor(const RS_Vector& mouse, con
 
 void LC_ActionInteractivePickAngle::doTrigger() {
     LC_ActionInteractivePickBase::doTrigger();
+}
+
+bool LC_ActionInteractivePickAngle::isInVisualSnapStatus(int status) {
+    return (status == SetPoint1) || (status == SetPoint2) || (status == SetPoint3);
 }

@@ -26,16 +26,16 @@
 #include <QMouseEvent>
 
 LC_MenuActivator::LC_MenuActivator()
-    :m_keyModifiers{NONE}, m_eventType{CLICK_RELEASE}, m_button{RIGHT}{
+    : m_button{RIGHT}{
     update();
 }
 
-LC_MenuActivator::LC_MenuActivator(const QString& shortcutString, bool ctrl, bool alt, bool shift, Button button, Type type, bool entityRequired, RS2::EntityType entityType)
-    :m_keyModifiers{NONE}, m_eventType{type}, m_requiresEntity{entityRequired}, m_entityType{entityType}, m_button{button}, m_shortcutString{shortcutString}{
+LC_MenuActivator::LC_MenuActivator(const QString& shortcutString, const bool ctrl, const bool alt, const bool shift, const Button button, const Type type, const bool entityRequired, const RS2::EntityType entityType)
+    : m_eventType{type}, m_requiresEntity{entityRequired}, m_entityType{entityType}, m_button{button}, m_shortcutString{shortcutString}{
     setKeys(ctrl, alt, shift);
 }
 
-LC_MenuActivator::LC_MenuActivator(LC_MenuActivator& other) {
+LC_MenuActivator::LC_MenuActivator(const LC_MenuActivator& other) {
     m_shortcutString = other.m_shortcutString;
     m_button = other.m_button;
     m_eventType = other.m_eventType;
@@ -44,11 +44,11 @@ LC_MenuActivator::LC_MenuActivator(LC_MenuActivator& other) {
     m_menuName = other.m_menuName;
 }
 
-LC_MenuActivator* LC_MenuActivator::getCopy() {
+LC_MenuActivator* LC_MenuActivator::getCopy() const {
     return new LC_MenuActivator(*this);
 }
 
-void LC_MenuActivator::copyTo(LC_MenuActivator& other) {
+void LC_MenuActivator::copyTo(LC_MenuActivator& other) const {
     other.m_shortcutString = m_shortcutString;
     other.m_button = m_button;
     other.m_eventType = m_eventType;
@@ -56,8 +56,8 @@ void LC_MenuActivator::copyTo(LC_MenuActivator& other) {
     other.m_requiresEntity = m_requiresEntity;
 }
 
-bool LC_MenuActivator::isEventApplicable(QMouseEvent* event) {
-    auto type = event->type();
+bool LC_MenuActivator::isEventApplicable(const QMouseEvent* event) const {
+    const auto type = event->type();
 
     switch (type) {
         case QEvent::MouseButtonRelease: {
@@ -67,7 +67,7 @@ bool LC_MenuActivator::isEventApplicable(QMouseEvent* event) {
             break;
         }
         case QEvent::MouseButtonDblClick: {
-            if (m_eventType != DOUBLE_CLICK) {
+            if (m_eventType != DBL_CLICK) {
                 return false;
             }
             break;
@@ -76,27 +76,27 @@ bool LC_MenuActivator::isEventApplicable(QMouseEvent* event) {
             return false;
     }
 
-    auto modifiers = event->modifiers();
+    const auto modifiers = event->modifiers();
 
-    bool eventShift = modifiers & Qt::ShiftModifier;
-    bool ownShift = m_keyModifiers & SHIFT;
+    const bool eventShift = modifiers & Qt::ShiftModifier;
+    const bool ownShift = m_keyModifiers & SHIFT;
     if (eventShift != ownShift) {
         return false;
     }
 
-    bool eventCtrl = modifiers & Qt::ControlModifier;
-    bool ownCtrl = m_keyModifiers & CTRL;
+    const bool eventCtrl = modifiers & Qt::ControlModifier;
+    const bool ownCtrl = m_keyModifiers & CTRL;
     if (eventCtrl != ownCtrl) {
         return false;
     }
 
-    bool eventAlt = modifiers & Qt::AltModifier;
-    bool ownAlt = m_keyModifiers & ALT;
+    const bool eventAlt = modifiers & Qt::AltModifier;
+    const bool ownAlt = m_keyModifiers & ALT;
     if (eventAlt != ownAlt) {
         return false;
     }
 
-    auto button = event->button();
+    const auto button = event->button();
     switch (button) {
         case Qt::LeftButton: {
             if (m_button != LEFT) {
@@ -141,14 +141,14 @@ bool LC_MenuActivator::isEventApplicable(QMouseEvent* event) {
     return true;
 }
 
-bool LC_MenuActivator::isSameAs(LC_MenuActivator* other) {
+bool LC_MenuActivator::isSameAs(const LC_MenuActivator* other) const {
     if (other != nullptr) {
         return other->getShortcut() == m_shortcutString;
     }
     return false;
 }
 
-void LC_MenuActivator::parseEntityType(QString entityTypeStr, bool& requiresEntity, RS2::EntityType& entityType) {
+void LC_MenuActivator::parseEntityType(const QString& entityTypeStr, bool& requiresEntity, RS2::EntityType& entityType) {
     requiresEntity = true;
     if ("NE" == entityTypeStr) {
         requiresEntity = false;
@@ -221,17 +221,17 @@ void LC_MenuActivator::parseEntityType(QString entityTypeStr, bool& requiresEnti
     }
 }
 
-LC_MenuActivator* LC_MenuActivator::fromShortcut(QString& shortcut){
+LC_MenuActivator* LC_MenuActivator::fromShortcut(const QString& shortcut){
     auto str = shortcut.trimmed().toUpper();
-    int size = str.length();
+    const int size = str.length();
     if (size != 7) {
         return nullptr;
     }
-    bool shift = str[0] == 'S';
-    bool ctrl = str[1] == 'C';
-    bool alt = str[2] == 'A';
+    const bool shift = str[0] == 'S';
+    const bool ctrl = str[1] == 'C';
+    const bool alt = str[2] == 'A';
 
-    auto buttonName = str[3];
+    const auto buttonName = str[3];
     Button button;
     if (buttonName == 'L') {
         button = LEFT;
@@ -248,8 +248,8 @@ LC_MenuActivator* LC_MenuActivator::fromShortcut(QString& shortcut){
     else if (buttonName == 'F') {
         button = FORWARD;
     }
-    else if (buttonName == 'B') {
-        button = BACK;
+    else if (buttonName == 'T') {
+        button = TASK;
     }
     else {
         return nullptr;
@@ -257,7 +257,7 @@ LC_MenuActivator* LC_MenuActivator::fromShortcut(QString& shortcut){
 
     Type type;
     if (str[4] == 'D') {
-        type = DOUBLE_CLICK;
+        type = DBL_CLICK;
     }
     else if (str[4] == 'C') {
         type = CLICK_RELEASE;
@@ -346,13 +346,11 @@ QString LC_MenuActivator::getEntityTypeStr() const {
                 return "AE";
         }
     }
-    else {
-        return "NE";
-    }
+    return "NE";
 }
 
 void LC_MenuActivator::update() {
-    m_shortcutString = "";
+    m_shortcutString.clear();
     if (m_keyModifiers & SHIFT) {
         m_shortcutString.append("S");
     }
@@ -398,11 +396,11 @@ void LC_MenuActivator::update() {
         m_shortcutString.append("D");
     }
 
-    QString entityTypeStr = getEntityTypeStr();
+    const QString entityTypeStr = getEntityTypeStr();
     m_shortcutString.append(entityTypeStr);
 }
 
-void LC_MenuActivator::setKeys(bool ctrl, bool alt, bool shift) {
+void LC_MenuActivator::setKeys(const bool ctrl, const bool alt, const bool shift) {
     m_keyModifiers = NONE;
     if (ctrl) {
         m_keyModifiers |= CTRL;
@@ -419,8 +417,8 @@ QString LC_MenuActivator::getShortcut() const {
     return m_shortcutString;
 }
 
-QString LC_MenuActivator::getEventView() {
-    QString result = "";
+QString LC_MenuActivator::getEventView() const {
+    QString result;
     if (m_keyModifiers & CTRL) {
         result.append("CTRL+");
     }
@@ -430,7 +428,6 @@ QString LC_MenuActivator::getEventView() {
     if (m_keyModifiers & SHIFT) {
         result.append("SHIFT+");
     }
-
     if (m_button == LEFT) {
         result.append(QObject::tr("Left-"));
     }
@@ -449,7 +446,6 @@ QString LC_MenuActivator::getEventView() {
     if (m_button == TASK) {
         result.append(QObject::tr("Task-"));
     }
-
     if (m_eventType == CLICK_RELEASE) {
         result.append(QObject::tr("Click"));
     }
@@ -459,7 +455,7 @@ QString LC_MenuActivator::getEventView() {
     return result;
 }
 
-QString LC_MenuActivator::getShortcutView() {
+QString LC_MenuActivator::getShortcutView() const {
     QString result = getEventView();
     result.append(" | ");
     if (m_requiresEntity) {
@@ -558,11 +554,11 @@ QString LC_MenuActivator::getShortcutView() {
     return result;
 }
 
-void LC_MenuActivator::setButtonType(Button type) {
+void LC_MenuActivator::setButtonType(const Button type) {
     m_button = type;
 }
 
-void LC_MenuActivator::setEventType(Type event) {
+void LC_MenuActivator::setEventType(const Type event) {
     m_eventType = event;
 }
 
@@ -570,13 +566,13 @@ LC_MenuActivator::Type LC_MenuActivator::getEventType() const {
     return m_eventType;
 }
 
-void LC_MenuActivator::getKeysState(bool& ctrl, bool& alt, bool& shift) {
+void LC_MenuActivator::getKeysState(bool& ctrl, bool& alt, bool& shift) const {
     ctrl = m_keyModifiers & CTRL;
     alt = m_keyModifiers & ALT;
     shift = m_keyModifiers & SHIFT;
 }
 
-bool LC_MenuActivator::hasKeys() {
+bool LC_MenuActivator::hasKeys() const {
     return m_keyModifiers != NONE;
 }
 
@@ -596,7 +592,7 @@ bool LC_MenuActivator::isEntityRequired() const {
     return m_requiresEntity;
 }
 
-void LC_MenuActivator::setEntityRequired(bool value) {
+void LC_MenuActivator::setEntityRequired(const bool value) {
     m_requiresEntity = value;
 }
 
@@ -604,6 +600,11 @@ RS2::EntityType LC_MenuActivator::getEntityType() const {
     return m_entityType;
 }
 
-void LC_MenuActivator::setEntityType(RS2::EntityType entityType) {
+void LC_MenuActivator::setEntityType(const RS2::EntityType entityType) {
     m_entityType = entityType;
+}
+
+LC_MenuActivator& LC_MenuActivator::operator=(const LC_MenuActivator& src) {
+    src.copyTo(*this);
+    return *this;
 }

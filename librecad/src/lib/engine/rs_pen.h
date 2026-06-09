@@ -28,6 +28,7 @@
 #ifndef RS_PEN_H
 #define RS_PEN_H
 
+#include "lc_linemath.h"
 #include "rs.h"
 #include "rs_color.h"
 #include "rs_flags.h"
@@ -49,9 +50,7 @@ public:
     /**
      * Creates a pen with the given attributes.
      */
-    RS_Pen(const RS_Color& color,
-           RS2::LineWidth width,
-           RS2::LineType type){
+    RS_Pen(const RS_Color& color, const RS2::LineWidth width, const RS2::LineType type) {
         setColor(color);
         setWidth(width);
         setLineType(type);
@@ -66,8 +65,7 @@ public:
      *   RS_Pen p(RS2::FlagInvalid);
      * </pre>
      */
-    RS_Pen(unsigned int f) : RS_Flags(f) {
-    }
+    explicit RS_Pen(const unsigned int f) : RS_Flags(f) {}
     //RS_Pen(const RS_Pen& pen) : RS_Flags(pen.getFlags()) {
     //    lineType = pen.lineType;
     //    width = pen.width;
@@ -75,70 +73,70 @@ public:
     //}
 
     RS2::LineType getLineType() const {
-        return lineType;
+        return m_lineType;
     }
-    void setLineType(RS2::LineType t) {
-        lineType = t;
+    void setLineType(const RS2::LineType t) {
+        m_lineType = t;
     }
     RS2::LineWidth getWidth() const {
-        return width;
+        return m_width;
     }
-    void setWidth(RS2::LineWidth w) {
-        width = w;
+    void setWidth(const RS2::LineWidth w) {
+        m_width = w;
     }
     double getScreenWidth() const {
-        return screenWidth;
+        return m_screenWidth;
     }
-    void setScreenWidth(double w) {
-        screenWidth = w;
+    void setScreenWidth(const double w) {
+        m_screenWidth = w;
     }
 
     RS_Color getColor() const {
-        return color;
+        return m_color;
     }
 
     void setColor(const RS_Color& c) {
-        color = c;
+        m_color = c;
     }
 
-    inline void setColorFromPen(const RS_Pen& pen){
-        color = pen.color;
+    void setColorFromPen(const RS_Pen& pen){
+        m_color = pen.m_color;
     }
 
-    inline void setWidthFromPen(const RS_Pen& pen){
-        width = pen.width;
+    void setWidthFromPen(const RS_Pen& pen){
+        m_width = pen.m_width;
     }
 
-    inline void setLineTypeFromPen(const RS_Pen& pen){
-        lineType = pen.lineType;
+    void setLineTypeFromPen(const RS_Pen& pen){
+        m_lineType = pen.m_lineType;
     }
 
-    inline bool isColorByLayer() const {
-        return color.getFlag(RS2::FlagByLayer);
+    bool isColorByLayer() const {
+        return m_color.getFlag(RS2::FlagByLayer);
     }
 
-    inline bool isColorByBlock() const {
-        return color.getFlag(RS2::FlagByBlock);
+    bool isColorByBlock() const {
+        return m_color.getFlag(RS2::FlagByBlock);
     }
 
-    inline bool isWidthByLayer() const {
-        return width == RS2::WidthByLayer;
+    bool isWidthByLayer() const {
+        return m_width == RS2::WidthByLayer;
     }
 
-    inline bool isWidthByBlock() const {
-        return width == RS2::WidthByBlock;
+    bool isWidthByBlock() const {
+        return m_width == RS2::WidthByBlock;
     }
 
-    inline bool isLineTypeByLayer() const {
-        return lineType == RS2::LineByLayer;
+    bool isLineTypeByLayer() const {
+        return m_lineType == RS2::LineByLayer;
     }
 
-    inline bool isLineTypeByBlock() const {
-        return lineType == RS2::LineByBlock;
+    bool isLineTypeByBlock() const {
+        return m_lineType == RS2::LineByBlock;
     }
 
     bool hasByLayerAttributes() const {
-        return color.getFlag(RS2::FlagByLayer) ||  width == RS2::WidthByLayer || lineType == RS2::LineByLayer;
+        return m_color.getFlag(RS2::FlagByLayer) ||  m_width == RS2::WidthByLayer || m_lineType == RS2::LineByLayer;
     }
 
     bool isValid() const {
@@ -146,10 +144,14 @@ public:
     }
 
     float getAlpha() const {
-        return alpha;
+        return m_alpha;
     }
-    void setAlpha(float a) {
-        alpha = a;
+    void setAlpha(const float a) {
+        m_alpha = a;
+    }
+
+    bool isFullyOpaque() const {
+        return std::abs(m_alpha - 1.0) < RS_TOLERANCE;
     }
 
     //RS_Pen& operator = (const RS_Pen& p) {
@@ -162,18 +164,19 @@ public:
     //}
 
     bool operator == (const RS_Pen& p) const {
-        return (lineType==p.lineType && width==p.width && color==p.color);
+        return m_lineType==p.m_lineType && m_width==p.m_width && m_color==p.m_color;
     }
 
-    bool isSameAs(const RS_Pen &p, const double &patternOffset) const{
-        return (lineType==p.lineType && width==p.width && color==p.color && alpha == p.alpha && m_dashOffset == patternOffset && !getFlag(RS2::FlagInvalid));
+    bool isSameAs(const RS_Pen& p, const double patternOffset) const {
+        return m_lineType == p.m_lineType && m_width == p.m_width && m_color == p.m_color && LC_LineMath::isSameLength(m_alpha, p.m_alpha) &&
+            LC_LineMath::isSameLength(m_dashOffset, patternOffset) && !getFlag(RS2::FlagInvalid);
     }
 
     void updateBy(const RS_Pen & p){
-        color = p.color;
-        lineType = p.lineType;
-        width = p.width;
-        alpha = p.alpha;
+        m_color = p.m_color;
+        m_lineType = p.m_lineType;
+        m_width = p.m_width;
+        m_alpha = p.m_alpha;
         m_dashOffset = p.m_dashOffset;
         setFlags(p.getFlags());
         delFlag(RS2::FlagInvalid);
@@ -184,7 +187,7 @@ public:
     }
 
     // accessor/mutator for dash pattern offset
-    void setDashOffset(double offset){
+    void setDashOffset(const double offset){
         m_dashOffset = offset;
     }
 
@@ -197,11 +200,11 @@ public:
 
 
 private:
-    RS2::LineType lineType = RS2::SolidLine;
-    RS2::LineWidth width = RS2::Width00;
-    double screenWidth = 0.;
-    RS_Color color{};
-    float alpha = 1.;
+    RS2::LineType m_lineType = RS2::SolidLine;
+    RS2::LineWidth m_width = RS2::Width00;
+    double m_screenWidth = 0.;
+    RS_Color m_color;
+    float m_alpha = 1.;
     double m_dashOffset = 0.;
 };
 

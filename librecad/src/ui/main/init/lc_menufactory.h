@@ -23,13 +23,11 @@
 #ifndef LC_MENUFACTORY_H
 #define LC_MENUFACTORY_H
 
-#include <QObject>
-#include <qdockwidget.h>
+#include <qtoolbar.h>
 
 #include "lc_actioncontext.h"
-#include "lc_actionfactory.h"
-#include "lc_appwindowaware.h"
-#include "rs_entity.h"
+#include "lc_menufactory_graphicview.h"
+#include "lc_menufactory_main.h"
 
 class QG_GraphicView;
 class QC_MDIWindow;
@@ -37,43 +35,16 @@ class QMenuBar;
 class QAction;
 class QMenu;
 class LC_ActionGroupManager;
+class QC_ApplicationWindow;
 
-class LC_MenuFactory: public QObject, public LC_AppWindowAware{
-    Q_OBJECT
-public:
-    explicit LC_MenuFactory(QC_ApplicationWindow* main_win);
-    void recreateMainMenuIfNeeded(QMenuBar *menuBar);
-    void createMainMenu(QMenuBar* menu_bar);
-    void onWorkspaceMenuAboutToShow(const QList<QC_MDIWindow *> &window_list);
-    QMenu* createMainWindowPopupMenu() const;
-    QMenu* createGraphicViewPopupMenu(QG_GraphicView* graphicView, RS_Entity* contextEntity,
-                                      const RS_Vector& contextPosition, QStringList& actionNames, bool mayInvokeDefaultMenu);
-
-    QMenu * getRecentFilesMenu() const{
-        return m_menuRecentFiles;
-    }
-protected:
-    LC_ActionGroupManager* m_actionGroupManager = nullptr;
-    LC_ActionFactory *m_actionFactory = nullptr;
-
-    struct MenuOptions {
-        bool expandToolsMenu = false;
-        bool expandToolsTillEntity = false;
-
-        bool isDifferent(MenuOptions& other){
-            return expandToolsMenu != other.expandToolsMenu || expandToolsTillEntity != other.expandToolsTillEntity;
-        }
-
-        void apply(MenuOptions &other){
-            expandToolsMenu = other.expandToolsMenu;
-            expandToolsTillEntity = other.expandToolsTillEntity;
-        };
-    };
-
-    MenuOptions m_menuOptions;
-
-    // --- Menus ---
-
+struct LC_MenusHolder {
+    QMenu* m_menuRecentFiles{nullptr};
+    QMenu* m_menuDockAreas {nullptr};
+    QMenu* m_menuToolBarAreas {nullptr};
+    QMenu* m_menuDockWidgets {nullptr};
+    QMenu* m_menuCADDockWidgets {nullptr};
+    QMenu* m_menuToolbars {nullptr};
+    QMenu* m_menuCADToolbars {nullptr};
     QMenu* m_menuFile {nullptr};
     QMenu* m_menuSettings {nullptr};
     QMenu* m_menuEdit {nullptr};
@@ -82,68 +53,27 @@ protected:
     QMenu* m_menuWorkspace {nullptr};
     QMenu* m_menuHelp {nullptr};
     QMenu* m_menuToolsCombined {nullptr};
-
-    QMenu* m_menuRecentFiles{nullptr};
-    QMenu* m_menuDockareas {nullptr};
-    QMenu* m_menuDockWidgets {nullptr};
-    QMenu* m_menuCADDockWidgets {nullptr};
-    QMenu* m_menuToolbars {nullptr};
-    QMenu* m_menuCADToolbars {nullptr};
-
-    bool m_allowTearOffMenus = true;
-
-    void prepareWorkspaceMenuComponents();
-    void createToolsMenu(QMenuBar *menu_bar, QList<QMenu *> &topMenuMenus);
-    void createHelpMenu(QMenuBar *menu_bar, QList<QMenu *> &topMenuMenus);
-    void createFileMenu(QMenuBar *menu_bar, QList<QMenu *> &topMenuMenus);
-    void createSettingsMenu(QMenuBar *menu_bar, QList<QMenu *> &topMenuMenus);
-    void createEditMenu(QMenuBar *menu_bar, QList<QMenu *> &topMenuMenus);
-    void createViewMenu(QMenuBar *menu_bar, QList<QMenu *> &topMenuMenus);
-    void createPluginsMenu(QMenuBar *menu_bar, QList<QMenu *> &topMenuMenus);
-    void createWorkspaceMenu(QMenuBar *menu_bar, QList<QMenu *> &topMenuMenus);
-    void findViewAndUCSToggleActions(QList<QDockWidget*> dockwidgetsList, QAction*& namedViewsToggleViewAction,
-                                     QAction*& ucsToggleViewAction);
-    void doCreateMenus(QMenuBar *menu_bar, bool firstCreation);
-
-    void addProxyActions(QMenu* menu, RS_Entity* entity, const RS_Vector& pos, LC_ActionContext* actionContext,
-                         const std::vector<QString>& actionNames) const;
-    void addActionProxy(QMenu* menu, QAction* srcAction, RS_Entity* entity, const RS_Vector& pos,
-                           LC_ActionContext* actionContext) const;
-    void addActionProxy(QMenu* menu, const QString& actionName, RS_Entity* entity, const RS_Vector& pos,
-                        LC_ActionContext* actionContext) const;
-
-    QAction* urlActionTR(const QString& title, const char *url);
-    void addAction(QMenu *menu, const char *actionName) const;
-    void addActions(QMenu *result, const std::vector<QString> &actionNames) const;
-    QMenu* subMenuWithActions(QMenu *parent, const QString& title, const QString& name, const char *icon, const QList<QAction *> &actions) const;
-    QMenu* menu(const QString& title, const QString& name, QMenuBar* parent) const;
-    QMenu *menu(const QString& title, const QString& name,  QMenuBar *parent, const std::vector<QString> &actionNames) const;
-    QMenu *doCreateSubMenu(QMenu *parent, const QString& title, const QString& name, const char *icon, bool supportTearOff = true) const;
-    QMenu *subMenu(QMenu *parent, const QString& title, const QString& name, const char *icon, const std::vector<QString> &actionNames, bool supportTearOff = true) const;
-    void createToolsMenuCombined(QMenuBar *menu_bar, QList<QMenu *> &topMenuMenus);
-    void createToolsMenuExpanded(QMenuBar *menu_bar, QList<QMenu *> &topMenuMenus) const;
-    void createGVMenuView(QMenu* ctxMenu);
-    void createGVMenuFiles(QMenu* menu);
-    void createGVMenuEntitySpecific(QMenu* contextMenu, QG_GraphicView* graphicView, RS_Entity* entity, const RS_Vector& pos);
-    void createGVEditPropertiesAction(QMenu* menu, QG_GraphicView* graphicView, RS_Entity* entity);
-    void createGVEditPropertiesAction(QMenu* menu, QG_GraphicView* graphicView, RS_Entity* entity, const QString &actionText);
-    void createGVMenuModifyGeneral(QMenu* contextMenu, QG_GraphicView* graphicView, RS_Entity* entity, const RS_Vector& pos,
-                                   LC_ActionContext* actionContext);
-    void createGVMenuSelect(QMenu* ctxMenu, RS_Entity* contextEntity,const  RS_Vector &contextPosition,
-                            LC_ActionContext* actionContext, int selectionCount);
-    void createGVMenuRecent(QG_GraphicView* graphicView, QMenu* ctxMenu, LC_ActionContext* actionContext,
-                            RS_Entity* contextEntity, const RS_Vector &contextPosition, bool hasEntity);
-
-    void createGVMenuEdit(QMenu* ctxMenu, LC_ActionContext* actionContext,RS_Entity* contextEntity, const RS_Vector &contextPosition);
-    void createGVMenuOptions(QMenu* ctxMenu);
-    QMenu* addProxyActionsSubMenu(QMenu* menu, const QString &subMenuName, const char* subMenuIconName, RS_Entity* entity,
-                                  const RS_Vector& pos, LC_ActionContext* actionContext,
-                                  const std::vector<QString>& actionNames) const;
-    QMenu* createGraphicViewDefaultPopupMenu(QG_GraphicView* graphicView,
-                                             RS_Entity* contextEntity, const RS_Vector& contextPosition);
-    QMenu* createGraphicViewCustomPopupMenu(QG_GraphicView* graphicView,
-                                            RS_Entity* contextEntity, const RS_Vector& contextPosition,
-                                            QStringList& actionNames);
 };
 
-#endif // LC_MENUFACTORY_H
+class LC_MenuFactory{
+public:
+    explicit LC_MenuFactory(QC_ApplicationWindow* mainWin);
+    void recreateMainMenuIfNeeded(QMenuBar *menuBar) {m_menuFactoryMain.recreateMainMenuIfNeeded(menuBar);}
+    void createMainMenu(QMenuBar* menuBar) {m_menuFactoryMain.createMainMenu(menuBar);}
+    void onWorkspaceMenuAboutToShow(const QList<QC_MDIWindow *> &windowList) {m_menuFactoryMain.onWorkspaceMenuAboutToShow(windowList);}
+    QMenu* createMainWindowPopupMenu() const {return m_menuFactoryMain.createMainWindowPopupMenu();}
+    QMenu * getRecentFilesMenu() const{ return m_menuFactoryMain.getRecentFilesMenu();}
+    QMenu* createGraphicViewPopupMenu(QG_GraphicView* graphicView, RS_Entity* contextEntity,
+                                      const RS_Vector& contextPosition, QStringList& actionNames, bool mayInvokeDefaultMenu) {
+        return m_menuFactoryGraphicView.createGraphicViewPopupMenu(graphicView, contextEntity, contextPosition, actionNames, mayInvokeDefaultMenu);
+    }
+
+    void recreateToolbarsMenu();
+
+protected:
+   LC_MenusHolder m_menusHolder;
+   LC_MenuFactoryMain m_menuFactoryMain;
+   LC_MenuFactoryGraphicView m_menuFactoryGraphicView;
+};
+
+#endif

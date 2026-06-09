@@ -5,6 +5,7 @@ qt_add_plugin(
         SHARED
         src/lc_svgiconengine.h
         src/lc_svgicons.json
+        src/lc_svgiconengineplugin.h
         src/lc_svgiconengineplugin.cpp
         src/lc_svgiconengine.cpp
 )
@@ -28,12 +29,12 @@ target_link_libraries(
         Qt6::Svg
 )
 
-set_target_properties( ${PLUGIN_NAME} PROPERTIES
-        LIBRARY_OUTPUT_NAME  ${PLUGIN_NAME}  # Creates lc_svgiconplugin.dll
+set_target_properties(${PLUGIN_NAME} PROPERTIES
+        LIBRARY_OUTPUT_NAME ${PLUGIN_NAME}  # Creates lc_svgiconplugin.dll
         RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}
 )
 
-if(WIN32)
+if (WIN32)
     SET(RC_SOURCE src/lc_svgicons.rc)
-    target_sources( ${PLUGIN_NAME} PRIVATE ${RC_SOURCE})
-endif()
+    target_sources(${PLUGIN_NAME} PRIVATE ${RC_SOURCE})
+endif ()

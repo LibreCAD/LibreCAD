@@ -40,7 +40,7 @@ class QCheckBox;
 namespace {
 
 /* Constant variables initialization - START */
-    QStringList filtersStringList = {
+    const QStringList FILTERS_STRING_LIST = {
         /* Drawing filters */
         "Drawing Exchange DXF 2007 (*.dxf)",
         "Drawing Exchange DXF 2004 (*.dxf)",
@@ -60,7 +60,7 @@ namespace {
 #endif
     };
 
-    QList<RS2::FormatType> filtersTypeList =
+    const QList<RS2::FormatType> FILTERS_TYPE_LIST =
     {
         /* Drawing filters */
         RS2::FormatDXFRW,
@@ -85,23 +85,23 @@ namespace {
             Number of values pertaining to the open file dialog mode,
             as defined in one of the relevant lists below.
         */
-    [[maybe_unused]] const int numberOf_openFileModes = 0;
+    [[maybe_unused]] constexpr int NUMBER_OF_OPEN_FILE_MODES = 0;
 
-    const QStringList filterSettingsPaths =
+    const QStringList FILTER_SETTINGS_PATHS =
     {
         "/SaveDrawingFilter", /* SaveDrawing mode           */
         "/SaveDrawingFilter", /* ExportLayersSelected mode  */
         "/SaveDrawingFilter" /* ExportLayersVisible mode   */
     };
 
-    const QStringList fileIOSettingsPaths =
+    const QStringList FILE_IO_SETTINGS_PATHS =
     {
         "/Save", /* SaveDrawing mode           */
         "/Save", /* ExportLayersSelected mode  */
         "/Save" /* ExportLayersVisible mode   */
     };
 
-    const int defaultFilters_indices[] =
+    constexpr int DEFAULT_FILTERS_INDICES[] =
     {
         /* List of save modes. */
         0, /* SaveDrawing mode           */
@@ -109,14 +109,13 @@ namespace {
         0 /* ExportLayersVisible mode   */
     };
 
-    const QStringList fileDialogTitles =
+    const QStringList FILE_DIALOG_TITLES =
     {
         /* List of save modes. */
         "Save Drawing as", /* SaveDrawing mode           */
         "Export selected layer(s)", /* ExportLayersSelected mode  */
         "Export visible layer(s)" /* ExportLayersVisible mode   */
     };
-
 
     void updateFileExtension(LC_FileDialogService::FileDialogResult& result, const QString& selectedFilter) {
         QString saveFileExtension = selectedFilter.mid (selectedFilter.lastIndexOf ('.'));
@@ -131,15 +130,15 @@ namespace {
     }
 
     RS2::FormatType getFormatType(const QString& formatString){
-        int index = filtersStringList.indexOf(formatString);
-        return (index >= 0 && index < filtersTypeList.count()) ? filtersTypeList.at(index) : RS2::FormatDXFRW;
+        const int index = FILTERS_STRING_LIST.indexOf(formatString);
+        return (index >= 0 && index < FILTERS_TYPE_LIST.count()) ? FILTERS_TYPE_LIST.at(index) : RS2::FormatDXFRW;
     }
 
     std::pair<QString, QString> readDefaultDirFilter() {
         LC_GROUP_GUARD("Paths");
         {
             QString defaultDir = LC_GET_STR("Save", QDir::toNativeSeparators(QDir::homePath()));
-            QString defaultFilter = LC_GET_STR("SaveDrawingFilter", filtersStringList.at(0));
+            QString defaultFilter = LC_GET_STR("SaveDrawingFilter", FILTERS_STRING_LIST.at(0));
             return {defaultDir, defaultFilter};
         }
     }
@@ -149,50 +148,51 @@ namespace {
     This service class centralizes the file I/O user interface.
 */
 // fixme - sand - decide what to do with this method, whether it's possible to have truly reusable generic file dialogs service?
-LC_FileDialogService::FileDialogResult LC_FileDialogService::getFileDetails (FileDialogMode const& fileDialogMode,
+LC_FileDialogService::FileDialogResult LC_FileDialogService::getFileDetails (const FileDialogMode fileDialogMode,
                                                                              const QString &currentFileName){
     RS_DEBUG->print("LC_FileDialogService::getFileName");
 
-    std::pair<QString, QString> defaultDirFilter = readDefaultDirFilter();
+    auto [initialDir, nameFilter] = readDefaultDirFilter();
 
     // If the caller passes the current file path, use its directory as the
     // starting location and pre-select its base name (without extension).
-    QString initialDir = defaultDirFilter.first;
     QString preselectName;
     if (!currentFileName.isEmpty()) {
         QFileInfo fi(currentFileName);
-        if (fi.dir().exists())
+        if (fi.dir().exists()) {
             initialDir = fi.absolutePath();
+        }
         preselectName = fi.baseName();
     }
 
     auto saveFileDialog = std::make_unique<QFileDialog>( nullptr,
-                                                         fileDialogTitles.at (fileDialogMode),
+                                                         FILE_DIALOG_TITLES.at (fileDialogMode),
                                                          initialDir,
-                                                         filtersStringList.join(";;"));
+                                                         FILTERS_STRING_LIST.join(";;"));
 
-    saveFileDialog->selectNameFilter (defaultDirFilter.second);
-    if (!preselectName.isEmpty())
+    saveFileDialog->selectNameFilter (nameFilter);
+    if (!preselectName.isEmpty()) {
         saveFileDialog->selectFile(preselectName);
+    }
     saveFileDialog->setAcceptMode (QFileDialog::AcceptSave);
     saveFileDialog->setOption (QFileDialog::HideNameFilterDetails, false);
 
-    bool useQtFileDialog = LC_GET_ONE_BOOL("Defaults","UseQtFileOpenDialog");
+    const bool useQtFileDialog = LC_GET_ONE_BOOL("Defaults","UseQtFileOpenDialog");
     saveFileDialog->setOption (QFileDialog::DontUseNativeDialog, useQtFileDialog);
 
     // Styling the QFileDialog widget
-    std::unique_ptr<QCheckBox> checkBox_combinedSave;
+    std::unique_ptr<QCheckBox> checkBoxCombinedSave;
 
     if ((fileDialogMode == ExportLayersSelected) || (fileDialogMode == ExportLayersVisible))    {
        saveFileDialog->setOption (QFileDialog::DontUseNativeDialog, true);
        QLayout* layout = saveFileDialog->layout();
        if (layout != nullptr) {
-           checkBox_combinedSave = std::make_unique<QCheckBox>(QObject::tr("Combine all layers"));
+           checkBoxCombinedSave = std::make_unique<QCheckBox>(QObject::tr("Combine all layers"));
            // layout->addWidget(checkBox_combinedSave.get());
 
-           auto* exportOptionsWidget = new LC_LayerExportOptionsWidget(saveFileDialog.get());
            auto* gridLayout = dynamic_cast<QGridLayout*>(layout);
            if (gridLayout != nullptr) {
+               auto* exportOptionsWidget = new LC_LayerExportOptionsWidget(saveFileDialog.get());
                gridLayout->addWidget(exportOptionsWidget, 5, 0, 1, 3);
            }
        }
@@ -213,31 +213,32 @@ LC_FileDialogService::FileDialogResult LC_FileDialogService::getFileDetails (Fil
 
             /* Confirm if the user wants to overwrite an existing file. */
             if (QFileInfo::exists(result.filePath)) {
-                int replaceFileResponse = QMessageBox::warning(
+                const int replaceFileResponse = QMessageBox::warning(
                     QApplication::activeWindow(),
-                    fileDialogTitles.at(fileDialogMode),
+                    FILE_DIALOG_TITLES.at(fileDialogMode),
                     QObject::tr(R"(File "%1" already exists. Do you want to replace it?)").arg(result.fileName),
                     QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel, QMessageBox::Cancel
                 );
 
-                if (replaceFileResponse != QMessageBox::Yes)
+                if (replaceFileResponse != QMessageBox::Yes) {
                     continue;
+                }
             }
 
-            if (checkBox_combinedSave != nullptr)
-                result.checkState = checkBox_combinedSave->checkState();
+            if (checkBoxCombinedSave != nullptr) {
+                result.checkState = checkBoxCombinedSave->checkState();
+            }
 
             LC_GROUP_GUARD("Paths");
             {
-                LC_SET(fileIOSettingsPaths.at(fileDialogMode), result.dirPath);
-                LC_SET(filterSettingsPaths.at(fileDialogMode), selectedFilter);
+                LC_SET(FILE_IO_SETTINGS_PATHS.at(fileDialogMode), result.dirPath);
+                LC_SET(FILTER_SETTINGS_PATHS.at(fileDialogMode), selectedFilter);
             }
 
             break;
-        } else {
-            result = {};
-            break;
         }
+        result = {};
+        break;
     }
 
     RS_DEBUG->print("LC_FileDialogService::getFileName: OK");
