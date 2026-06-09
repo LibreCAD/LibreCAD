@@ -148,17 +148,32 @@ namespace {
     This service class centralizes the file I/O user interface.
 */
 // fixme - sand - decide what to do with this method, whether it's possible to have truly reusable generic file dialogs service?
-LC_FileDialogService::FileDialogResult LC_FileDialogService::getFileDetails (const FileDialogMode fileDialogMode){
+LC_FileDialogService::FileDialogResult LC_FileDialogService::getFileDetails (const FileDialogMode fileDialogMode,
+                                                                             const QString &currentFileName){
     RS_DEBUG->print("LC_FileDialogService::getFileName");
 
-    auto [directory, nameFilter] = readDefaultDirFilter();
+    auto [initialDir, nameFilter] = readDefaultDirFilter();
 
-    const auto saveFileDialog = std::make_unique<QFileDialog>( nullptr,
+    // If the caller passes the current file path, use its directory as the
+    // starting location and pre-select its base name (without extension).
+    QString preselectName;
+    if (!currentFileName.isEmpty()) {
+        QFileInfo fi(currentFileName);
+        if (fi.dir().exists()) {
+            initialDir = fi.absolutePath();
+        }
+        preselectName = fi.baseName();
+    }
+
+    auto saveFileDialog = std::make_unique<QFileDialog>( nullptr,
                                                          FILE_DIALOG_TITLES.at (fileDialogMode),
-                                                         directory,
+                                                         initialDir,
                                                          FILTERS_STRING_LIST.join(";;"));
 
     saveFileDialog->selectNameFilter (nameFilter);
+    if (!preselectName.isEmpty()) {
+        saveFileDialog->selectFile(preselectName);
+    }
     saveFileDialog->setAcceptMode (QFileDialog::AcceptSave);
     saveFileDialog->setOption (QFileDialog::HideNameFilterDetails, false);
 

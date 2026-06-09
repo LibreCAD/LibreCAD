@@ -75,7 +75,11 @@ void PathBuilder::append(RS_Entity* entity) {
   case RS2::EntityEllipse:
     appendEllipse(static_cast<RS_Ellipse*>(entity));
     break;
-  case RS2::EntitySpline:
+  case RS2::EntitySplinePoints:
+    // LC_SplinePoints (rtti EntitySplinePoints) — analytical quadratic
+    // segments via the spline-points helper. The legacy case label here
+    // was RS2::EntitySpline which never matched (RS_Spline is non-atomic
+    // and a different class); the cast to LC_SplinePoints* was unsound.
     appendSplinePoints(static_cast<LC_SplinePoints*>(entity));
     break;
   case RS2::EntityParabola:
@@ -164,27 +168,47 @@ void PathBuilder::appendSplinePoints(LC_SplinePoints* spline) {
       return;
   }
 
-  const auto& points = spline->getPoints();
-  if (points.empty()) {
-      return;
-  }
+  // Iterate quadratic segments using the same indexing as
+  // LC_SplinePoints::fillStrokePoints: i = 1..iSplines, where
+  //   closed: iSplines = N control points
+  //   open:   iSplines = N - 2 control points
+  // GetQuadPoints uses the internal control-point representation regardless
+  // of whether the source was useControlPoints=true or splinePoints-based
+  // (UpdateControlPoints regenerates them either way), so iterating over
+  // controlPoints is correct for both modes.
+  const size_t n = spline->getData().controlPoints.size();
+  if (n < 2)
+    return;
 
-  const size_t n_points = points.size();
-  const size_t num_segs = spline->isClosed() ? n_points : n_points - 1;
-  if (num_segs == 0) {
-    lineTo(spline->getEndpoint());
+  const bool closed = spline->isClosed();
+  const size_t iSplines = closed ? n : (n >= 3 ? n - 2 : 0);
+  if (iSplines == 0) {
+    // Degenerate: 2-point open spline degenerates to a line.
+    if (!closed && n == 2) {
+      lineTo(spline->getData().controlPoints[1]);
+    }
     return;
   }
 
-  // Current position assumed at start of first segment
-  for (size_t i = 0; i < num_segs; ++i) {
+  bool emittedMoveTo = false;
+  for (size_t i = 1; i <= iSplines; ++i) {
     RS_Vector start, ctrl, end;
-    if (spline->getQuadPoints(int(i), &start, &ctrl, &end) != 0) {
-      m_path.moveTo(toGuiPoint(start));  // Ensure start (rare fallback)
-      m_path.quadTo(toGuiPoint(ctrl), toGuiPoint(end));
-    } else {
-      lineTo(end);  // Linear fallback
+    int npts = spline->GetQuadPoints(int(i), &start, &ctrl, &end);
+    if (npts < 3) {
+      if (npts >= 2 && start.valid && end.valid) {
+        if (!emittedMoveTo) {
+          m_path.moveTo(toGuiPoint(start));
+          emittedMoveTo = true;
+        }
+        m_path.lineTo(toGuiPoint(end));
+      }
+      continue;
     }
+    if (!emittedMoveTo) {
+      m_path.moveTo(toGuiPoint(start));
+      emittedMoveTo = true;
+    }
+    m_path.quadTo(toGuiPoint(ctrl), toGuiPoint(end));
   }
 }
 

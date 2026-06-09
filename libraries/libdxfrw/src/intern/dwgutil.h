@@ -2,6 +2,7 @@
 **  libDXFrw - Library to read/write DXF files (ascii & binary)              **
 **                                                                           **
 **  Copyright (C) 2011-2015 José F. Soriano, rallazz@gmail.com               **
+**  Copyright (C) 2026 LibreCAD (librecad.org)                                **
 **                                                                           **
 **  This library is free software, licensed under the terms of the GNU       **
 **  General Public License as published by the Free Software Foundation,     **
@@ -20,8 +21,12 @@ namespace DRW {
 }
 
 namespace dwgRSCodec {
-    void decode239I(duint8 *in, duint8 *out, duint32 blk);
-    void decode251I(duint8 *in, duint8 *out, duint32 blk);
+    /// Returns true if all codewords decoded cleanly; false if any block had
+    /// uncorrectable Reed-Solomon errors. Output buffer is still populated
+    /// with whatever the codec recovered, so callers can decide whether to
+    /// bail or continue best-effort.
+    bool decode239I(duint8 *in, duint8 *out, duint32 blk);
+    bool decode251I(duint8 *in, duint8 *out, duint32 blk);
 }
 
 class dwgCompressor {
@@ -100,6 +105,67 @@ private:
     static const duint8 CopyOrder21_32[];
     static const duint8 *CopyOrder21[Block21OrderArray];
 };
+
+/// 16-byte section sentinel byte sequences used by R13/R14/R2000 DWG.
+/// Each sentinel marks the start or end of a section in the on-disk
+/// file. Byte values match libreDWG common.c:100-177 (and the ODA
+/// Open Design Specification, which lists the same sequences).
+/// Each BEGIN sentinel is the byte-wise XOR-0xFF complement of its END
+/// pair (with the file-header end sentinel having no paired begin).
+///
+/// Used by the read path (dwgReader::checkSentinel) and by the
+/// forthcoming write path to bracket sections in the output stream.
+namespace dwgSentinels {
+    /// Closing sentinel for the file header / section-locator block.
+    /// Appears after the section locator records and their CRC16.
+    /// No paired begin sentinel — the file header has no leading magic.
+    extern const duint8 FILE_HEADER_END[16];
+
+    /// HEADER section (AcDb:Header — header variables). LibreDWG names
+    /// these VARIABLE_BEGIN / VARIABLE_END.
+    extern const duint8 HEADER_BEGIN[16];
+    extern const duint8 HEADER_END[16];
+
+    /// CLASSES section (AcDb:Classes). LibreDWG names CLASS_BEGIN/END.
+    extern const duint8 CLASSES_BEGIN[16];
+    extern const duint8 CLASSES_END[16];
+
+    /// PREVIEW section (the thumbnail image block, when present).
+    /// LibreDWG names THUMBNAIL_BEGIN/END.
+    extern const duint8 PREVIEW_BEGIN[16];
+    extern const duint8 PREVIEW_END[16];
+
+    /// Second-header block. Appears between the OBJECTS section and
+    /// the object map / handles section in R13/R14/R2000.
+    extern const duint8 SECOND_HEADER_BEGIN[16];
+    extern const duint8 SECOND_HEADER_END[16];
+}
+
+/// Padded version strings for DWG file header (offset 0, 6+5 bytes).
+/// The version string is 6 bytes ("AC1015" for R2000) followed by 5
+/// reserved bytes that are conventionally NUL.  Together they fill the
+/// first 11 bytes of the file. Byte 12 is the maintenance-release byte
+/// and is set separately by the writer.
+namespace dwgVersionString {
+    /// AC1009 — R12 (DXF-only in libdxfrw; here for completeness).
+    extern const char R12[6];
+    /// AC1012 — R13.
+    extern const char R13[6];
+    /// AC1014 — R14.
+    extern const char R14[6];
+    /// AC1015 — R2000 (R2000-only writer target).
+    extern const char R2000[6];
+    /// AC1018 — R2004.
+    extern const char R2004[6];
+    /// AC1021 — R2007.
+    extern const char R2007[6];
+    /// AC1024 — R2010.
+    extern const char R2010[6];
+    /// AC1027 — R2013.
+    extern const char R2013[6];
+    /// AC1032 — R2018.
+    extern const char R2018[6];
+}
 
 namespace secEnum {
     enum DWGSection {

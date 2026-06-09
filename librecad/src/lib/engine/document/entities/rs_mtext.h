@@ -27,6 +27,8 @@
 #ifndef RS_MTEXT_H
 #define RS_MTEXT_H
 
+#include <vector>
+
 #include "rs_entitycontainer.h"
 
 class RS_Text;
@@ -156,7 +158,17 @@ public:
 
     void update() override;
 
-    int getNumberOfLines() const;
+    /**
+   * Run the Unicode Bidirectional Algorithm (UAX#9) on @p text and return the
+   * visual-order permutation: @c result[k] is the logical index of the
+   * character that should be rendered at the k-th visual position (left to
+   * right). Uses Qt's text engine. Object-replacement characters (U+FFFC) act
+   * as neutral placeholders so callers can substitute embedded objects after
+   * reordering.
+   */
+  static std::vector<int>
+  computeBidiVisualOrder(const QString &text,
+                         Qt::LayoutDirection baseDirection);int getNumberOfLines() const;
 
     RS_Vector getInsertionPoint() const {
         return m_data.insertionPoint;
@@ -259,6 +271,10 @@ public:
     //		return -1.0;
     //	}
 
+    /**
+   * @return The insertion point as endpoint.
+   */
+    RS_Vector getNearestEndpoint(const RS_Vector &coord, double *dist = nullptr) const override;
     RS_VectorSolutions getRefPoints() const override;
 
     void move(const RS_Vector& offset) override;
@@ -308,8 +324,25 @@ protected:
     RS_Vector doGetNearestRef(const RS_Vector& coord, double* dist) const override;
     RS_Vector doGetNearestSelectedRef(const RS_Vector& coord, double* dist) const override;
 
+    /**
+     * Per-character record built during the logical-order pass and consumed by
+     * flushBidiLine() in visual order after Unicode bidi reordering.
+     */
+    struct LC_BidiSegment {
+      enum Kind { Char, Space, Stack };
+      Kind kind = Char;
+      QChar codepoint;         ///< for Char
+      RS_Font *font = nullptr; ///< for Char: active font when parsed
+      double width = 0.0;      ///< for Space: advance width
+      QString upperText;       ///< for Stack: upper text (super-/numerator)
+      QString lowerText;       ///< for Stack: lower text (sub-/denominator)
+    };
+
     double updateAddLine(LC_TextLine* textLine, int lineCounter);
     void addLetter(LC_TextLine& oneLine, QChar letter, RS_Font& font, const RS_Vector& letterSpace, RS_Vector& letterPosition);
+    void flushBidiLine(LC_TextLine &oneLine,
+                       std::vector<LC_BidiSegment> &segments,
+                       const RS_Vector &letterSpace, RS_Vector &letterPosition);
     void alignVertically();
     static RS_MText* createUpperLower(QString text, const RS_MTextData& data, const RS_Vector& position);
     RS_MTextData m_data;

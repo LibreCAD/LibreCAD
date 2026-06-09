@@ -40,6 +40,7 @@
 #include <QDebug>
 #include <QDir>
 #include <QFileInfo>
+#include <QGuiApplication>
 #include <QMessageBox>
 #include <QPainter>
 #include <QPixmap>
@@ -294,8 +295,16 @@ int main(int argc, char** argv) {
 
     RS_DEBUG->setLevel(RS_Debug::D_WARNING);
 
-    // scaling for better support of Plasma/KDE - LibreCAD#2529
-    QGuiApplication::setHighDpiScaleFactorRoundingPolicy(Qt::HighDpiScaleFactorRoundingPolicy::PassThrough);
+    // Per-monitor DPI rounding policy must be set BEFORE QGuiApplication
+    // construction. Qt6's default is PassThrough (full fractional scales
+    // honoured); on Windows with 125% / 150% scaling that leaks subpixel
+    // metrics into widget layouts and can grow a window 1-2 logical pixels
+    // larger than the screen edge would otherwise allow. RoundPreferFloor
+    // gives stable integer scales and is the conventional Qt6 hardening.
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    QGuiApplication::setHighDpiScaleFactorRoundingPolicy(Qt::HighDpiScaleFactorRoundingPolicy::RoundPreferFloor);
+#endif
+
 
     LC_Application app(argc, argv);
     QCoreApplication::setOrganizationName("LibreCAD");

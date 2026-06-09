@@ -34,8 +34,34 @@
 #include "rs_insert.h"
 #include "rs_line.h"
 #include "rs_math.h"
+#include "rs_mtext.h"
 #include "rs_painter.h"
 #include "rs_pen.h"
+
+namespace {
+/**
+ * Resolve the UAX#9 base direction for an RS_Text update pass. Honors an
+ * explicit @c LeftToRight / @c RightToLeft setting when set; for @c ByContent
+ * scans the string for the first strong-directional character and uses that
+ * (UAX#9 P-rules), defaulting to LTR when there is no strong character.
+ */
+Qt::LayoutDirection
+resolveTextBaseDirection(const QString &text,
+                         RS_TextData::DrawingDirection setting) {
+  if (setting == RS_TextData::LeftToRight)
+    return Qt::LeftToRight;
+  if (setting == RS_TextData::RightToLeft)
+    return Qt::RightToLeft;
+  for (int i = 0; i < text.size(); ++i) {
+    const QChar::Direction d = text.at(i).direction();
+    if (d == QChar::DirL)
+      return Qt::LeftToRight;
+    if (d == QChar::DirR || d == QChar::DirAL)
+      return Qt::RightToLeft;
+  }
+  return Qt::LeftToRight;
+}
+} // namespace
 
 class RS_Font;
 
@@ -94,6 +120,15 @@ void RS_Text::setText(const QString& t) {
         update();
         //calculateBorders();
     }
+}
+
+void RS_Text::setDrawingDirection(RS_TextData::DrawingDirection direction) {
+  if (data.drawingDirection == direction)
+    return;
+  data.drawingDirection = direction;
+  if (data.updateMode == RS2::Update) {
+    update();
+  }
 }
 
 /**
@@ -212,6 +247,9 @@ void RS_Text::setAlignment(const int a) {
             m_data.halign = RS_TextData::HAMiddle;
         }
     }
+    if (data.updateMode == RS2::Update) {  // fixme - sand - why it's only there? that's logic should be in all setter? or it's artefact?
+      update();
+    }
 }
 
 /**
@@ -260,20 +298,42 @@ void RS_Text::update() {
     //   height: 9.0
     // Rotation, scaling and centering is done later
 
-    // For every letter:
-    for (qsizetype i = 0; i < m_data.text.length(); ++i) {
-        // Space:
-        if (m_data.text.at(i).unicode() == 0x20) {
-            letterPos += space;
+    // Visual ordering depends on the drawingDirection setting:
+    //   * RightToLeft: pure positional reversal — matches AutoCAD semantics
+    //     and the editor mirror. UAX#9 alone leaves EN digits direction-
+    //     immune, so widget and canvas would diverge for "1234" otherwise.
+    //   * ByContent (and the other settings): UAX#9 with first-strong base
+    //     detection so embedded strong-RTL runs (Hebrew/Arabic) still
+    //     display in correct visual order.
+    std::vector<int> visual;
+    if (m_data.drawingDirection == RS_TextData::RightToLeft) {
+      visual.resize(m_data.text.size());
+      for (int i = 0; i < m_data.text.size(); ++i) {
+        visual[i] = m_data.text.size() - 1 - i;
+      }
+    } else {
+      const Qt::LayoutDirection baseDir =
+          resolveTextBaseDirection(m_data.text, m_data.drawingDirection);
+      visual = RS_MText::computeBidiVisualOrder(m_data.text, baseDir); // fixme - sand - it's better to use separate utility
+    }
+
+    for (int logIdx : visual) {
+      const QChar ch = m_data.text.at(logIdx);
+      // Space:
+      if (ch.unicode() == 0x20) {
+        letterPos += space;
+      } else {
+        // One Letter:
+        QString letterText = QString(ch);
+        if (font->findLetter(letterText) == nullptr) {
+          RS_DEBUG->print("RS_Text::update: missing font for letter( %s ), "
+                          "replaced it with QChar(0xfffd)",
+                          qPrintable(letterText));
+          letterText = QChar(0xfffd);
         }
-        else {
-            // One Letter:
-            auto letterText = QString(m_data.text.at(i));
-            if (font->findLetter(letterText) == nullptr) {
-                RS_DEBUG->print("RS_Text::update: missing font for letter( %s ), replaced it with QChar(0xfffd)",qPrintable(letterText));
-                letterText = QChar(0xfffd);
-            }
-            RS_DEBUG->print("RS_Text::update: insert a " "letter at pos: %f/%f", letterPos.x, letterPos.y);
+        RS_DEBUG->print("RS_Text::update: insert a "
+                        "letter at pos: %f/%f",
+                        letterPos.x, letterPos.y);
 
             RS_InsertData d(letterText, letterPos, RS_Vector(1.0, 1.0), 0.0, 1, 1, RS_Vector(0.0, 0.0), font->getLetterList(),
                             RS2::NoUpdate);
@@ -284,7 +344,7 @@ void RS_Text::update() {
             letter->update();
             letter->forcedCalculateBorders();
 
-            auto letterWidth = RS_Vector(letter->getMax().x - letterPos.x, 0.0);
+        auto letterWidth = RS_Vector(letter->getMax().x - letterPos.x, 0.0);
             if (letterWidth.x < 0) {
                 letterWidth.x = -letterSpace.x;
             }

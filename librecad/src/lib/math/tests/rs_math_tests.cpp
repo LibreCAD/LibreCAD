@@ -4,7 +4,7 @@
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
 ** Copyright (C) 2025 LibreCAD (librecad.org)
-** Copyright (C) 2025 Dongxu Li github.com/dxli
+** Copyright (C) 2025 Dongxu Li (github.com/dxli)
 **
 **
 ** This program is free software; you can redistribute it and/or

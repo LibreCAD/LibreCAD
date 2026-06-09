@@ -595,31 +595,34 @@ RS_Vector RS_Ellipse::doGetNearestPointOnEntity(const RS_Vector& coord, const bo
     //double ea;
     std::vector<std::pair<double, double>> directions;
     for (double cosTheta : roots) {
-        if (std::abs(twoax - (twoa2b2 * cosTheta)) > RS_TOLERANCE) {
-            const double sinTheta = twoby * cosTheta / (twoax - twoa2b2 * cosTheta); //sine
-            directions.emplace_back(cosTheta, sinTheta);
+      // Skip spurious roots from squaring during the quartic derivation —
+      // they have |cos| > 1 and do not correspond to any real angle on the
+      // ellipse. Without this filter, plugging such a root into the
+      // (cosTheta, sinTheta) → (a*cos, b*sin) mapping would yield an
+      // off-ellipse point that could undercut the true minimum distance.
+      if (std::abs(cosTheta) > 1.0 + RS_TOLERANCE)
+        continue;
+      double const c = std::clamp(cosTheta, -1.0, 1.0);  if (std::abs(twoax - (twoa2b2 * c)) > RS_TOLERANCE) {
+            const double sinTheta = twoby * c / (twoax - twoa2b2 * c);
+        directions.emplace_back(c, sinTheta);
         }
         else {
-            directions.emplace_back(0., 1.);
-            directions.emplace_back(0., -1.);
-        }
+        directions.emplace_back(0., 1.);
+        directions.emplace_back(0., -1.);
+      }
     }
-    for (const auto& [cosTheta, sinTheta] : directions) {
-        //I don't understand the reason yet, but I can do without checking whether sine/cosine are valid
-        //if (std::abs(s) > 1. ) continue;
-        const double d2 = twoa2b2 + ((twoax - 2. * cosTheta * twoa2b2) * cosTheta) + (twoby * sinTheta);
-        if (std::signbit(d2)) {
-            continue; // fartherest
-        }
-        RS_Vector vp3{a * cosTheta, b * sinTheta};
-        const double d = (vp3 - ret).squared();
-        //        std::cout<<i<<" Checking: cos= "<<roots[i]<<" sin= "<<s<<" angle= "<<atan2(roots[i],s)<<" ds2= "<<d<<" d="<<d2<<std::endl;
-        if (ret.valid && d > dDistance) {
-            continue;
-        }
-        ret = vp3;
-        dDistance = d;
-        //			ea=atan2(roots[i],s);
+    // The quartic yields every critical point of the squared distance — both
+    // minima and maxima. The global minimum is the critical point with the
+    // smallest squared distance, so simply compare distances and keep the
+    // smallest; no second-derivative test is needed.
+    RS_Vector const query = ret;
+    for (const auto &[cosTheta, sinTheta] : directions) {
+      RS_Vector vp3{a * cosTheta, b * sinTheta};
+      double d = (vp3 - query).squared();
+      if (d >= dDistance)
+        continue;
+      ret = vp3;
+      dDistance = d;
     }
     if (!ret.valid) {
         //this should not happen
@@ -1771,6 +1774,10 @@ void RS_Ellipse::draw(RS_Painter* painter) {
   QPainterPath path(startPos);
   path.moveTo(startPos);
   createPainterPath(painter, path);
+  // A full ellipse is a closed contour; close the subpath so the stroke uses
+  // the pen's join style at the closure point rather than its cap style.
+  if (!isArc())
+    path.closeSubpath();
   painter->drawPath(path);
 }
 
@@ -1782,7 +1789,25 @@ void RS_Ellipse::createPainterPath(RS_Painter* painter, QPainterPath& path) cons
     }
     auto getParamFunc = [this](const RS_Vector& vp) { return getEllipseAngle(vp); };
     auto getPointFunc = [this](double param) { return getEllipsePoint(param); };
-    painter->pathForEntity(path, this, baseAngle, fullAngleLength, getParamFunc, getPointFunc, getMajorRadius());
+    // pathForParametricCurve calibrates the step assuming an arc with constant
+    // curvature radius equal to approxRadius and uniform-arc-length sampling.
+    // We sample uniformly in the ellipse's angle parameter t, so combining the
+    // local arc length |r'(t)| = sqrt(a^2 sin^2 t + b^2 cos^2 t) with the local
+    // curvature radius rho(t) yields the per-segment error
+    //     e(t) = (ab)^3 h^4 / (24 (a^2 sin^2 t + b^2 cos^2 t)^(5/2))
+    // which is maximized at the SHARPER axis tip (smallest a^2 s^2 + b^2 c^2).
+    // The bound is e_max = max(a,b)^3 h^4 / (24 min(a,b)^2), so passing
+    // approxRadius = max^3 / min^2 keeps the calibration's 1-px target valid.
+    const double a = getMajorRadius();
+    const double b = getMinorRadius();
+    const double maxSemi = std::max(a, b);
+    const double minSemi = std::min(a, b);
+    const double approxRadius =
+        (minSemi > RS_TOLERANCE)
+            ? (maxSemi * maxSemi * maxSemi) / (minSemi * minSemi)
+            : maxSemi;
+    painter->pathForEntity(path, this, baseAngle, fullAngleLength, getParamFunc,
+                           getPointFunc, approxRadius);
 }
 
 /**

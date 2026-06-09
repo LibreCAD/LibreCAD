@@ -29,6 +29,7 @@
 #define RS_COLOR_H
 
 #include <QColor>
+#include <QString>
 
 #include "rs.h"
 #include "rs_flags.h"
@@ -111,7 +112,16 @@ public:
         return (red() == c.red() && green() == c.green() && blue() == c.blue() && alpha() == c.alpha() && getFlags() == c.getFlags());
     }
 
-    friend std::ostream& operator <<(std::ostream& os, const RS_Color& c);
+    // Optional named-color tag, e.g. DWG/DXF AcDbColor "BOOK$ENTRY".
+    // Passive metadata: not part of equality, not used by rendering.
+    const QString &colorName() const { return m_colorName; }
+    void setColorName(const QString &n) { m_colorName = n; }
+    bool hasColorName() const { return !m_colorName.isEmpty(); }
+
+    friend std::ostream& operator << (std::ostream& os, const RS_Color& c);
+
+  private:
+    QString m_colorName;
 };
 
 #endif

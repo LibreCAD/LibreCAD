@@ -5,6 +5,7 @@
 ** Copyright (C) 2021 A. Stebich (librecad@mail.lordofbikes.de)
 ** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
+** Copyright (C) 2026 LibreCAD (librecad.org)
 **
 **
 ** This file may be distributed and/or modified under the terms of the
@@ -143,13 +144,14 @@ bool RS_FileIO::fileImport(RS_Graphic& graphic, const QString& file, const RS2::
  * \param forRead
  * \return file format type
  */
-RS2::FormatType RS_FileIO::detectFormat(const QString& file, const bool forRead) {
-    // look up table
-    std::map<QString, RS2::FormatType> list{{"dxf", RS2::FormatDXFRW}, {"cxf", RS2::FormatCXF}, {"lff", RS2::FormatLFF}};
-    // only read support for dwg
-    if (forRead) {
-        list["dwg"] = RS2::FormatDWG;
-    }
+RS2::FormatType RS_FileIO::detectFormat(const QString & file, bool forRead){
+// look up table
+    std::map<QString, RS2::FormatType> list{
+        {"dxf", RS2::FormatDXFRW},
+        {"cxf", RS2::FormatCXF},
+        {"lff", RS2::FormatLFF}
+    };
+    list["dwg"] = RS2::FormatDWG;
 
     const QString extension = QFileInfo(file).suffix().toLower();
     RS2::FormatType type = (list.find(extension) != list.end()) ? list[extension] : RS2::FormatUnknown;

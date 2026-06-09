@@ -2,6 +2,7 @@
 **  libDXFrw - Library to read/write DXF files (ascii & binary)              **
 **                                                                           **
 **  Copyright (C) 2011-2015 José F. Soriano, rallazz@gmail.com               **
+**  Copyright (C) 2026 LibreCAD (librecad.org)                                **
 **                                                                           **
 **  This library is free software, licensed under the terms of the GNU       **
 **  General Public License as published by the Free Software Foundation,     **
@@ -15,6 +16,60 @@
 #include "dwgutil.h"
 #include "rscodec.h"
 #include "../libdwgr.h"
+
+// Section sentinel byte sequences. Values verified against libreDWG
+// common.c:100-177 and the ODA Open Design Specification v5.4.1.
+// Each pair of BEGIN/END is the byte-wise XOR-0xFF of the other.
+namespace dwgSentinels {
+    const duint8 FILE_HEADER_END[16] = {
+        0x95, 0xA0, 0x4E, 0x28, 0x99, 0x82, 0x1A, 0xE5,
+        0x5E, 0x41, 0xE0, 0x5F, 0x9D, 0x3A, 0x4D, 0x00
+    };
+    const duint8 HEADER_BEGIN[16] = {
+        0xCF, 0x7B, 0x1F, 0x23, 0xFD, 0xDE, 0x38, 0xA9,
+        0x5F, 0x7C, 0x68, 0xB8, 0x4E, 0x6D, 0x33, 0x5F
+    };
+    const duint8 HEADER_END[16] = {
+        0x30, 0x84, 0xE0, 0xDC, 0x02, 0x21, 0xC7, 0x56,
+        0xA0, 0x83, 0x97, 0x47, 0xB1, 0x92, 0xCC, 0xA0
+    };
+    const duint8 CLASSES_BEGIN[16] = {
+        0x8D, 0xA1, 0xC4, 0xB8, 0xC4, 0xA9, 0xF8, 0xC5,
+        0xC0, 0xDC, 0xF4, 0x5F, 0xE7, 0xCF, 0xB6, 0x8A
+    };
+    const duint8 CLASSES_END[16] = {
+        0x72, 0x5E, 0x3B, 0x47, 0x3B, 0x56, 0x07, 0x3A,
+        0x3F, 0x23, 0x0B, 0xA0, 0x18, 0x30, 0x49, 0x75
+    };
+    const duint8 PREVIEW_BEGIN[16] = {
+        0x1F, 0x25, 0x6D, 0x07, 0xD4, 0x36, 0x28, 0x28,
+        0x9D, 0x57, 0xCA, 0x3F, 0x9D, 0x44, 0x10, 0x2B
+    };
+    const duint8 PREVIEW_END[16] = {
+        0xE0, 0xDA, 0x92, 0xF8, 0x2B, 0xC9, 0xD7, 0xD7,
+        0x62, 0xA8, 0x35, 0xC0, 0x62, 0xBB, 0xEF, 0xD4
+    };
+    const duint8 SECOND_HEADER_BEGIN[16] = {
+        0xD4, 0x7B, 0x21, 0xCE, 0x28, 0x93, 0x9F, 0xBF,
+        0x53, 0x24, 0x40, 0x09, 0x12, 0x3C, 0xAA, 0x01
+    };
+    const duint8 SECOND_HEADER_END[16] = {
+        0x2B, 0x84, 0xDE, 0x31, 0xD7, 0x6C, 0x60, 0x40,
+        0xAC, 0xDB, 0xBF, 0xF6, 0xED, 0xC3, 0x55, 0xFE
+    };
+}
+
+namespace dwgVersionString {
+    const char R12[6]   = {'A','C','1','0','0','9'};
+    const char R13[6]   = {'A','C','1','0','1','2'};
+    const char R14[6]   = {'A','C','1','0','1','4'};
+    const char R2000[6] = {'A','C','1','0','1','5'};
+    const char R2004[6] = {'A','C','1','0','1','8'};
+    const char R2007[6] = {'A','C','1','0','2','1'};
+    const char R2010[6] = {'A','C','1','0','2','4'};
+    const char R2013[6] = {'A','C','1','0','2','7'};
+    const char R2018[6] = {'A','C','1','0','3','2'};
+}
 
 /** utility function
  * convert a int to string in hex
@@ -39,8 +94,9 @@ std::string toHexStr(int n){
  * @param out : output data (at least 239*blk bytes)
  * @param blk number of codewords ( 1 cw == 255 bytes)
  */
-void dwgRSCodec::decode239I(unsigned char *in, unsigned char *out, duint32 blk){
+bool dwgRSCodec::decode239I(unsigned char *in, unsigned char *out, duint32 blk){
     int k=0;
+    bool allOk = true;
     unsigned char data[255];
     RScodec rsc(0x96, 8, 8); //(255, 239)
     for (duint32 i=0; i<blk; i++){
@@ -50,13 +106,16 @@ void dwgRSCodec::decode239I(unsigned char *in, unsigned char *out, duint32 blk){
             k +=blk;
         }
         int r = rsc.decode(data);
-        if (r<0)
+        if (r<0) {
             DRW_DBG("\nWARNING: dwgRSCodec::decode239I, can't correct all errors");
+            allOk = false;
+        }
         k = i*239;
         for (int j=0; j<239; j++) {
             out[k++] = data[j];
         }
     }
+    return allOk;
 }
 
 /**
@@ -65,8 +124,9 @@ void dwgRSCodec::decode239I(unsigned char *in, unsigned char *out, duint32 blk){
  * @param out : output data (at least 251*blk bytes)
  * @param blk number of codewords ( 1 cw == 255 bytes)
  */
-void dwgRSCodec::decode251I(unsigned char *in, unsigned char *out, duint32 blk){
+bool dwgRSCodec::decode251I(unsigned char *in, unsigned char *out, duint32 blk){
     int k=0;
+    bool allOk = true;
     unsigned char data[255];
     RScodec rsc(0xB8, 8, 2); //(255, 251)
     for (duint32 i=0; i<blk; i++){
@@ -76,13 +136,16 @@ void dwgRSCodec::decode251I(unsigned char *in, unsigned char *out, duint32 blk){
             k +=blk;
         }
         int r = rsc.decode(data);
-        if (r<0)
+        if (r<0) {
             DRW_DBG("\nWARNING: dwgRSCodec::decode251I, can't correct all errors");
+            allOk = false;
+        }
         k = i*251;
         for (int j=0; j<251; j++) {
             out[k++] = data[j];
         }
     }
+    return allOk;
 }
 
 duint8 *dwgCompressor::compressedBuffer {nullptr};

@@ -42,6 +42,10 @@ public:
     void getAvailableStyles(QStringList &list) const;
     void resetToDefaults();
     void apply(const LC_IconColorsOptions &other);
+    // Returns true if the active Qt color scheme (or, on Qt < 6.5, the
+    // current QPalette) indicates dark mode. Used to seed icon defaults
+    // so #000 strokes don't disappear against a dark toolbar.
+    static bool isDarkColorScheme();
     void setIconsOverridesDir(const QString& path) {m_iconOverridesDir = path;}
     QString getIconsOverridesDir() {return m_iconOverridesDir;}
     bool loadFromFile(const QString& styleName);

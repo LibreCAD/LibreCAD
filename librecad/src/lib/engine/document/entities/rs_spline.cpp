@@ -785,8 +785,18 @@ void RS_Spline::setFitPoints(const std::vector<RS_Vector> &fitPoints, const bool
 
   // interpolate as open, close afterwards
 
-  const size_t num = fp.size();
-  const int p = m_data.degree; //= std::clamp(m_data.degree, 1, 3);
+  size_t num = fp.size();
+  // A clamped degree-p B-spline needs at least p+1 control points. When the
+  // caller asks for degree p with fewer than p+1 fit points, lower the working
+  // degree to (num-1) so the interpolation produces a valid spline (single
+  // Bezier patch of the highest degree the data supports).  Without this
+  // clamp, the basis-function loop below indexes A[row][idx-1] past sys=num-2
+  // and corrupts memory.
+  int p = std::clamp(static_cast<int>(m_data.degree), 1, 3);
+  if (p > static_cast<int>(num) - 1) {
+      p = static_cast<int>(num) - 1;
+  }
+  m_data.degree = static_cast<size_t>(p);
   assert(p >= 1 && p <= 3);
   const size_t n = num - 1;
 
@@ -839,7 +849,12 @@ void RS_Spline::setFitPoints(const std::vector<RS_Vector> &fitPoints, const bool
   m_data.controlPoints[0] = fp.front();
   m_data.controlPoints[n] = fp.back();
 
-  if (num <= static_cast<size_t>(p + 1)) {
+  // Only short-circuit when there is no interior system to solve (sys == 0).
+  // The previous cutoff `num <= p+1` skipped the solve for cases like num=4,
+  // p=3 (a single cubic Bezier interpolating 4 fit points), leaving the
+  // interior control points as RS_Vector(false) — which read back as (0,0)
+  // and produced a collapsed spline.
+  if (num <= 2) {
     if (closed) {
         setClosed(true);
     }

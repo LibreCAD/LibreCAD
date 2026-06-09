@@ -4,6 +4,7 @@
 **
 ** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
+** Copyright (C) 2026 LibreCAD (librecad.org)
 **
 **
 ** This file may be distributed and/or modified under the terms of the
@@ -55,20 +56,24 @@ namespace {
         }
     }
 
-    /**
-     * @brief hasExtension whether the file name as proper extension for the the format type
-     * @param fileName - file name
-     * @param ftype - the format type
-     * @return bool - true, if the file name extension matches the format
-     */
-    bool hasExtension(const QString& fileName, RS2::FormatType ftype) {
-        // QString extension = getExtension(ftype); // fixme - reivew, why extension is not used there???
-        const QStringList supported = {".cxf", ".dxf", ".lff"};
-        auto testExt = [&fileName, ftype](const QString& ext) {
-            return getExtension(ftype) == ext && fileName.endsWith(ext, Qt::CaseInsensitive);
-        };
-        return std::any_of(supported.cbegin(), supported.cend(), testExt);
-    }
+/**
+ * @brief hasExtension whether the file name as proper extension for the the format type
+ * @param fileName - file name
+ * @param type - the format type
+ * @return bool - true, if the file name extension matches the format
+ */
+bool hasExtension(const QString& fileName, RS2::FormatType ftype)
+{
+    QString extension = getExtension(ftype);
+#ifdef DWGSUPPORT
+    QStringList supported = {".cxf", ".dxf", ".lff", ".dwg"};
+#else
+    QStringList supported = {".cxf", ".dxf", ".lff"};
+#endif
+    auto testExt = [&fileName, ftype](const QString& ext) {
+        return getExtension(ftype) == ext && fileName.endsWith(ext, Qt::CaseInsensitive);};
+    return std::any_of(supported.cbegin(), supported.cend(), testExt);
+}
 } // anonymouse namespace
 
 RS2::FormatType QG_FileDialog::getType(const QString& filter) const {
@@ -225,6 +230,9 @@ QString QG_FileDialog::getSaveFile(RS2::FormatType* type, const QString& current
     filters << fDxfrw2007 << fDxfrw2004 << fDxfrw2000 << fDxfrw14 << fDxfrw12 << fJww << fLff << fCxf;
 #else
     filters << fDxfrw2007 << fDxfrw2004 << fDxfrw2000 << fDxfrw14 << fDxfrw12 << fLff << fCxf;
+#endif
+#ifdef DWGSUPPORT
+    filters << fDwg;
 #endif
 
     m_type = RS2::FormatDXFRW;

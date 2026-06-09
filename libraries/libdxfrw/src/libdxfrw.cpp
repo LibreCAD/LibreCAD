@@ -31,15 +31,14 @@
 dxfRW::dxfRW(const char* name){
     DRW_DBGSL(DRW_dbg::Level::None);
     fileName = name;
-    reader = nullptr;
-    writer = nullptr;
+    // fixme - initialize
+    // reader = nullptr;
+    // writer = nullptr;
     applyExt = false;
     elParts = 128; //parts number when convert ellipse to polyline
 }
 dxfRW::~dxfRW(){
-    delete reader;
-    delete writer;
-    for (auto it=imageDef.begin(); it!=imageDef.end(); ++it) {
+    for (auto it=imageDef.begin(); it!=imageDef.end(); ++it)
         delete *it;
     }
     imageDef.clear();
@@ -71,21 +70,21 @@ bool dxfRW::readAscii(DRW_Interface *interface_, bool ext, std::string& content)
     reader = new dxfReaderAscii(&filestr);
     bool isOk {processDxf()};
     setVersion((DRW::Version) reader->getVersion());
-    delete reader;
-    reader = nullptr;
+    reader.reset();
     return isOk;
 }
 
 bool dxfRW::read(DRW_Interface *interface_, bool ext){
     drw_assert(fileName.empty() == false);
-    if (nullptr == interface_) {
-         ERR_UNKNOWN;
-    }
     applyExt = ext;
     std::ifstream filestr;
+    if (nullptr == interface_) {
+        return setError(DRW::BAD_UNKNOWN);
+    }
     DRW_DBG("dxfRW::read 1def\n");
     filestr.open (fileName.c_str(), std::ios_base::in | std::ios::binary);
-    if (!filestr.is_open() || !filestr.good()) {
+    if (!filestr.is_open()
+        || !filestr.good()) {
         return setError(DRW::BAD_OPEN);
     }
 
@@ -97,25 +96,56 @@ bool dxfRW::read(DRW_Interface *interface_, bool ext){
     filestr.close();
     iface = interface_;
     DRW_DBG("dxfRW::read 2\n");
-    if (strncmp(line, line2, 21) == 0) {
+    // `line` is filled by an unterminated 22-byte read; compare by exact
+    // length to avoid strcmp reading past the buffer when the sentinel
+    // bytes don't include an embedded NUL.
+    if (std::memcmp(line, line2, sizeof(line)) == 0) {
         filestr.open (fileName.c_str(), std::ios_base::in | std::ios::binary);
         binFile = true;
         //skip sentinel
         filestr.seekg (22, std::ios::beg);
-        reader = new dxfReaderBinary(&filestr);
+        reader = std::make_unique<dxfReaderBinary>(&filestr);
         DRW_DBG("dxfRW::read binary file\n");
     } else {
         binFile = false;
         filestr.open (fileName.c_str(), std::ios_base::in);
-        reader = new dxfReaderAscii(&filestr);
+        reader = std::make_unique<dxfReaderAscii>(&filestr);
     }
 
     bool isOk {processDxf()};
     filestr.close();
-    setVersion((DRW::Version) reader->getVersion());
-    delete reader;
-    reader = nullptr;
+    version = (DRW::Version) reader->getVersion();
+    reader.reset();
     return isOk;
+}
+
+bool dxfRW::readAscii(DRW_Interface *interface_, bool ext, std::string& content) {
+    if (nullptr == interface_) {
+        return setError(DRW::BAD_UNKNOWN);
+    }
+    applyExt = ext;
+    iface = interface_;
+    std::istringstream strstream(content);
+    reader = std::make_unique<dxfReaderAscii>(&strstream);
+    bool isOk {processDxf()};
+    version = (DRW::Version) reader->getVersion();
+    reader.reset();
+    return isOk;
+}
+
+int dxfRW::getBlockRecordHandleToWrite(const std::string& blockName) const {
+    auto it = blockMap.find(blockName);
+    return (it != blockMap.end()) ? it->second : -1;
+}
+
+int dxfRW::getTextStyleHandle(const std::string& styleName) const {
+    if (!styleName.empty()) {
+        std::string upper = styleName;
+        std::transform(upper.begin(), upper.end(), upper.begin(), ::toupper);
+        auto it = textStyleMap.find(upper);
+        if (it != textStyleMap.end()) return it->second;
+    }
+    return -1;
 }
 
 bool dxfRW::write(DRW_Interface *interface_, DRW::Version ver, bool bin){
@@ -128,11 +158,11 @@ bool dxfRW::write(DRW_Interface *interface_, DRW::Version ver, bool bin){
         filestr.open (fileName.c_str(), std::ios_base::out | std::ios::binary | std::ios::trunc);
         //write sentinel
         filestr << "AutoCAD Binary DXF\r\n" << (char)26 << '\0';
-        writer = new dxfWriterBinary(&filestr);
+        writer = std::make_unique<dxfWriterBinary>(&filestr);
         DRW_DBG("dxfRW::read binary file\n");
     } else {
         filestr.open (fileName.c_str(), std::ios_base::out | std::ios::trunc);
-        writer = new dxfWriterAscii(&filestr);
+        writer = std::make_unique<dxfWriterAscii>(&filestr);
         std::string comm = std::string("dxfrw ") + std::string(DRW_VERSION);
         writeString(999, comm);
     }
@@ -170,8 +200,7 @@ bool dxfRW::write(DRW_Interface *interface_, DRW::Version ver, bool bin){
     filestr.flush();
     filestr.close();
     isOk = true;
-    delete writer;
-    writer = nullptr;
+    writer.reset();
     return isOk;
 }
 
@@ -623,12 +652,28 @@ bool dxfRW::writeEntity(DRW_Entity *ent) {
         writeUtf8Caps(8, ent->layer);
         writeUtf8Caps(6, ent->lineType);
     }
+
     writeInt16(62, ent->color);
     if (afterAC1015 && ent->color24 >= 0) {
         writeInt32(420, ent->color24);
     }
-    if (afterAC1014) {
+    if (afterAC1015 && !ent->colorName.empty()) {
+        writeUtf8String(430, ent->colorName);
+    }
+    if (version > DRW::AC1018 && ent->shadow != DRW::CastAndReceieveShadows) {
+        writeInt16(284, static_cast<int>(ent->shadow));
+    }
+    if (afterAC1015 && ent->material != DRW::MaterialByLayer) {
+        writeUtf8String(347, toHexStr(static_cast<int>(ent->material)));
+    }
+    if (version > DRW::AC1014) {
         writeInt16(370, DRW_LW_Conv::lineWidth2dxfInt(ent->lWeight));
+    }
+    if (afterAC1015 && ent->plotStyle != DRW::DefaultPlotStyle) {
+        writeUtf8String(390, toHexStr(ent->plotStyle));
+    }
+    if (afterAC1015 && ent->transparency != DRW::Opaque) {
+        writeInt32(440, ent->transparency);
     }
     if (version >= DRW::AC1014) {
         writeAppData(ent->appData);
@@ -739,9 +784,10 @@ bool dxfRW::writeLayer(DRW_Layer *ent){
     if (afterAC1012) {
         writeString(330, "2");
     }
-    if (afterAC1009) {
-        writeSymTypeRecord("Layer");
-        writeUtf8String(2, ent->name);
+    if (version > DRW::AC1009) {
+        writer->writeString(100, "AcDbSymbolTableRecord");
+        writer->writeString(100, "AcDbLayerTableRecord");
+        writer->writeUtf8String(2, ent->name);
     } else {
         writeUtf8Caps(2, ent->name);
     }
@@ -772,7 +818,7 @@ bool dxfRW::writeUCS(DRW_UCS* ent){
     if (afterAC1009) {
         writeString(5, toHexStr(++entCount));
         if (afterAC1012) {
-            writeString(330, "42");
+            writeString(330, "7");
             // 	Soft-pointer ID/handle to owner object, fixme - check whether id is fixed as for layers?
         }
         writeSymTypeRecord("UCS");
@@ -804,7 +850,7 @@ bool dxfRW::writeView(DRW_View *ent){
     if (afterAC1009) {
         writeString(5, toHexStr(++entCount));
         if (afterAC1012) {
-            writeString(330, "42");
+            writeString(330, "6");
             // 	Soft-pointer ID/handle to owner object, fixme - check whether id is fixed as for layers?
         }
         writeSymTypeRecord("View");
@@ -830,33 +876,37 @@ bool dxfRW::writeView(DRW_View *ent){
     writeInt16(71, ent->viewMode);
     writeInt16(281, ent->renderMode);
 
-    writeBool(72, ent->hasUCS);
-    writeBool(73, ent->cameraPlottable);
 
-    /*
-     * fixme - investigate deep whether we should support these attributes
-    writeString(332, "42"); // Soft-pointer ID/handle to background object (optional)
-    writeString(334, "42"); // Soft-pointer ID/handle to live section object (optional)
-    writeString(348, "42"); // Hard-pointer ID/handle to visual style object (optional)
-    */
+    if (afterAC1009) {
+        writeInt16(281, static_cast<int>(ent->renderMode));
+        writeBool(72, ent->hasUCS);
+        writeBool(73, ent->cameraPlottable);
+        /*
+         * fixme - investigate deep whether we should support these attributes
+        writeString(332, "42"); // Soft-pointer ID/handle to background object (optional)
+        writeString(334, "42"); // Soft-pointer ID/handle to live section object (optional)
+        writeString(348, "42"); // Hard-pointer ID/handle to visual style object (optional)
+        */
 
-    if (ent->hasUCS){
-        writeCoord(110, ent->ucsOrigin);
-        writeCoord(111, ent->ucsXAxis);
-        writeCoord(112, ent->ucsYAxis);
-        writeInt16(79, ent->ucsOrthoType);
-        writeDouble(146, ent->ucsElevation);
+        if (ent->hasUCS){
+            writeCoord(110, ent->ucsOrigin);
+            writeCoord(111, ent->ucsXAxis);
+            writeCoord(112, ent->ucsYAxis);
+            writeInt16(79, ent->ucsOrthoType);
+            writeDouble(146, ent->ucsElevation);
 
-   /*
-     * fixme - investigate deep whether we should support these attributes
-    //ID/handle of AcDbUCSTableRecord if UCS is a named UCS. If not present, then UCS is unnamed (appears only if code 72 is set to 1)
-    writeString(345, "42");
-    // Soft-pointer ID/handle to live section object (optional)
-    writeString(346, "42");
-    */
+            /*
+              * fixme - investigate deep whether we should support these attributes
+             //ID/handle of AcDbUCSTableRecord if UCS is a named UCS. If not present, then UCS is unnamed (appears only if code 72 is set to 1)
+             writeString(345, "42");
+             // Soft-pointer ID/handle to live section object (optional)
+             writeString(346, "42");
+             */
+        }
     }
     return true;
 }
+
 
 bool dxfRW::writeTextstyle(DRW_Textstyle *ent){
     writeName("STYLE");
@@ -877,7 +927,7 @@ bool dxfRW::writeTextstyle(DRW_Textstyle *ent){
         writeSymTypeRecord("TextStyle");
         writeUtf8String(2, ent->name);
     } else {
-        writeUtf8Caps(2, ent->name);
+        writer->writeUtf8Caps(2, ent->name);
     }
     writeInt16(70, ent->flags);
     writeDouble(40, ent->height);
@@ -1147,6 +1197,7 @@ bool dxfRW::writeDimstyle(DRW_Dimstyle *ent) {
     }
     return true;
 }
+
 
 bool dxfRW::writeAppId(DRW_AppId *ent){
     std::string strname = ent->name;
@@ -1427,6 +1478,7 @@ bool dxfRW::writeSpline(DRW_Spline *ent){
             auto crd = ent->controllist.at(i);
             writeCoord(10, *crd);
         }
+        //fit points: required for splinepoints / fit-point-driven splines
         for (int i = 0;  i< ent->nfit; i++){
             auto crd = ent->fitlist.at(i);
             writeCoord(11, *crd);
@@ -1500,10 +1552,37 @@ bool dxfRW::writeHatch(DRW_Hatch *ent){
                             writeInt16(73, a->isccw);
                             break;
                         }
-                        case DRW::SPLINE:
-                            //RLZ: spline boundary writeme
-                            //                        writeInt16(72, 4);
+                        case DRW::SPLINE:{
+                            writer->writeInt16(72, 4);
+                            DRW_Spline* sp = (DRW_Spline*)loop->objlist.at(j).get();
+                            writer->writeInt32(94, sp->degree);
+                            const bool rational = (sp->flags & 0x4) != 0;
+                            const bool periodic = (sp->flags & 0x2) != 0;
+                            writer->writeInt16(73, rational ? 1 : 0);
+                            writer->writeInt16(74, periodic ? 1 : 0);
+                            writer->writeInt32(95, static_cast<int>(sp->knotslist.size()));
+                            writer->writeInt32(96, static_cast<int>(sp->controllist.size()));
+                            for (double k : sp->knotslist) {
+                                writer->writeDouble(40, k);
+                            }
+                            for (size_t k = 0; k < sp->controllist.size(); ++k) {
+                                const auto& cp = sp->controllist[k];
+                                if (!cp) continue;
+                                writer->writeDouble(10, cp->x);
+                                writer->writeDouble(20, cp->y);
+                                if (rational) {
+                                    double w = (k < sp->weightlist.size()) ? sp->weightlist[k] : 1.0;
+                                    writer->writeDouble(42, w);
+                                }
+                            }
+                            writer->writeInt32(97, static_cast<int>(sp->fitlist.size()));
+                            for (const auto& fp : sp->fitlist) {
+                                if (!fp) continue;
+                                writer->writeDouble(11, fp->x);
+                                writer->writeDouble(21, fp->y);
+                            }
                             break;
+                        }
                         default:
                             break;
                     }
@@ -1519,10 +1598,30 @@ bool dxfRW::writeHatch(DRW_Hatch *ent){
             writeInt16(77, ent->doubleflag);
             writeInt16(78, ent->deflines);
         }
-/*        if (ent->deflines > 0){
-            writeInt16(78, ent->deflines);
-        }*/
-        writeInt32(98, 0);
+        // Seed points (group 98 = count, then 10/20 pairs).
+        const int seedCount = static_cast<int>(ent->seedPoints.size());
+        writeInt32(98, seedCount);
+        for (const DRW_Coord &pt : ent->seedPoints) {
+            writeDouble(10, pt.x);
+            writeDouble(20, pt.y);
+        }
+        // Gradient block (R2004+ DXF; codes 450-470 + 463/421/63 per stop).
+        if (ent->isGradient) {
+            writeInt32(450, ent->isGradient);
+            writeInt32(451, ent->gradReserved);
+            writeDouble(460, ent->gradAngle);
+            writeDouble(461, ent->gradShift);
+            writeInt32(452, ent->singleColor);
+            writeDouble(462, ent->gradTint);
+            writeInt32(453, static_cast<int>(ent->gradColors.size()));
+            for (const DRW_Hatch::GradientStop &stop : ent->gradColors) {
+                writeDouble(463, stop.value);
+                writeInt32(421, stop.rgb);
+                if (stop.aciColor != 0)
+                    writeInt32(63, stop.aciColor);
+            }
+            writeUtf8String(470, ent->gradName);
+        }
     } else {
         //RLZ: TODO verify in acad12
     }
@@ -1560,7 +1659,7 @@ bool dxfRW::writeDimension(DRW_Dimension *ent) {
         writeEntity(ent);
         writeSubClass("Dimension");
         if (!ent->getName().empty()){
-            writeString(2, ent->getName());
+            writeString(2, ent->getName());  // write name??
         }
 
         writeCoord(10, ent->getDefPoint());
@@ -1751,6 +1850,95 @@ bool dxfRW::writeText(DRW_Text *ent) {
     return true;
 }
 
+// fixme - sand - rework to shorter form
+bool dxfRW::writeMLine(DRW_MLine *ent) {
+    if (version <= DRW::AC1009) return true;  // MLINE is R13+
+    writer->writeString(0, "MLINE");
+    writeEntity(ent);
+    writer->writeString(100, "AcDbMline");
+    writer->writeUtf8String(2, ent->styleName);
+    if (ent->styleHandle != 0) {
+        writer->writeString(340, toHexStr(static_cast<int>(ent->styleHandle)));
+    }
+    writer->writeDouble(40, ent->scale);
+    writer->writeInt16(70, ent->justification);
+    writer->writeInt16(71, ent->openClosed);
+    writer->writeInt16(72, static_cast<int>(ent->vertlist.size()));
+    writer->writeInt16(73, static_cast<int>(ent->numLines));
+    writer->writeDouble(10, ent->basePoint.x);
+    writer->writeDouble(20, ent->basePoint.y);
+    writer->writeDouble(30, ent->basePoint.z);
+    if (ent->extPoint.x != 0.0 || ent->extPoint.y != 0.0 || ent->extPoint.z != 1.0) {
+        writer->writeDouble(210, ent->extPoint.x);
+        writer->writeDouble(220, ent->extPoint.y);
+        writer->writeDouble(230, ent->extPoint.z);
+    }
+    for (const auto& v : ent->vertlist) {
+        writer->writeDouble(11, v.position.x);
+        writer->writeDouble(21, v.position.y);
+        writer->writeDouble(31, v.position.z);
+        writer->writeDouble(12, v.vertexDir.x);
+        writer->writeDouble(22, v.vertexDir.y);
+        writer->writeDouble(32, v.vertexDir.z);
+        writer->writeDouble(13, v.miterDir.x);
+        writer->writeDouble(23, v.miterDir.y);
+        writer->writeDouble(33, v.miterDir.z);
+        for (int li = 0; li < ent->numLines; ++li) {
+            const auto& seg = (li < static_cast<int>(v.segParms.size()))
+                                  ? v.segParms[li] : std::vector<double>{};
+            const auto& fill = (li < static_cast<int>(v.areaFillParms.size()))
+                                   ? v.areaFillParms[li] : std::vector<double>{};
+            writer->writeInt16(74, static_cast<int>(seg.size()));
+            for (double p : seg) writer->writeDouble(41, p);
+            writer->writeInt16(75, static_cast<int>(fill.size()));
+            for (double p : fill) writer->writeDouble(42, p);
+        }
+    }
+    if (!ent->extData.empty()) {
+        writeExtData(ent->extData);
+    }
+    return true;
+}
+
+// fixme - sand - rework to shorter form
+bool dxfRW::writeUnderlay(DRW_Underlay *ent) {
+    if (version <= DRW::AC1009) return true;  // R13+ only
+    const char* tag = (ent->kind == DRW_Underlay::DGN) ? "DGNUNDERLAY"
+                    : (ent->kind == DRW_Underlay::DWF) ? "DWFUNDERLAY"
+                    : "PDFUNDERLAY";
+    writer->writeString(0, tag);
+    writeEntity(ent);
+    writer->writeString(100, "AcDbUnderlayReference");
+    if (ent->definitionHandle != 0) {
+        writer->writeString(340, toHexStr(static_cast<int>(ent->definitionHandle)));
+    }
+    writer->writeDouble(10, ent->position.x);
+    writer->writeDouble(20, ent->position.y);
+    writer->writeDouble(30, ent->position.z);
+    if (ent->scale.x != 1.0 || ent->scale.y != 1.0 || ent->scale.z != 1.0) {
+        writer->writeDouble(41, ent->scale.x);
+        writer->writeDouble(42, ent->scale.y);
+        writer->writeDouble(43, ent->scale.z);
+    }
+    writer->writeDouble(50, ent->rotation);
+    if (ent->extPoint.x != 0.0 || ent->extPoint.y != 0.0 || ent->extPoint.z != 1.0) {
+        writer->writeDouble(210, ent->extPoint.x);
+        writer->writeDouble(220, ent->extPoint.y);
+        writer->writeDouble(230, ent->extPoint.z);
+    }
+    writer->writeInt16(280, ent->flags);
+    writer->writeInt16(281, ent->contrast);
+    writer->writeInt16(282, ent->fade);
+    for (const auto& v : ent->clipBoundary) {
+        writer->writeDouble(11, v.x);
+        writer->writeDouble(21, v.y);
+    }
+    if (!ent->extData.empty()) {
+        writeExtData(ent->extData);
+    }
+    return true;
+}
+
 bool dxfRW::writeMText(DRW_MText *ent){
     if (afterAC1009) {
         writeName("MTEXT");
@@ -1775,6 +1963,9 @@ bool dxfRW::writeMText(DRW_MText *ent){
         writeInt16(73, ent->alignV);
         writeDouble(44, ent->interlin);
 //RLZ ... 11, 21, 31 needed?
+        if (!ent->extData.empty()) {
+            writeExtData(ent->extData);
+        }
     } else {
         //RLZ: TODO convert mtext in text lines (not exist in acad 12)
     }
@@ -1836,6 +2027,92 @@ DRW_ImageDef* dxfRW::writeImage(DRW_Image *ent, std::string name){
         return id;
     }
     return nullptr; //not exist in acad 12
+}
+
+
+// fixme - sand - to shorter form
+// MULTILEADER DXF write.  Mirrors the entity-level field set captured by
+// DRW_MLeader::parseCode.  The CONTEXT_DATA{} block is NOT emitted yet —
+// a full faithful round-trip requires walking all roots/leader-lines
+// with their control-flow markers (302/304 open, 305/303/301 close);
+// follow-up.  For now the entity is written as a recognisable
+// AcDbMLeader stub plus its scalar fields; consumers that read it back
+// see all the override flags + style fields preserved.
+bool dxfRW::writeMultiLeader(DRW_MLeader *ent){
+    if (version <= DRW::AC1009) {
+        return false;  // not in ACAD R12 / earlier
+    }
+    writer->writeString(0, "MULTILEADER");
+    writeEntity(ent);
+    writer->writeString(100, "AcDbMLeader");
+    writer->writeInt32(90, ent->overrideFlags);
+    writer->writeInt16(170, ent->leaderType);
+    writer->writeInt32(91, ent->leaderColor);
+    writer->writeInt32(171, ent->leaderLineWeight);
+    writer->writeBool(290, ent->landingEnabled);
+    writer->writeBool(291, ent->doglegEnabled);
+    writer->writeDouble(41, ent->landingDistance);
+    writer->writeDouble(42, ent->defaultArrowHeadSize);
+    writer->writeInt16(172, ent->styleContentType);
+    writer->writeInt16(173, ent->styleLeftAttach);
+    writer->writeInt16(95, ent->styleRightAttach);
+    writer->writeInt16(174, ent->styleTextAngleType);
+    writer->writeInt16(175, ent->unknown175);
+    writer->writeInt32(92, ent->styleTextColor);
+    writer->writeBool(292, ent->styleTextFrameEnabled);
+    writer->writeInt32(93, ent->styleBlockColor);
+    writer->writeDouble(43, ent->styleBlockRotation);
+    writer->writeInt16(176, ent->styleAttachmentType);
+    writer->writeBool(293, ent->isAnnotative);
+    writer->writeBool(294, ent->isTextDirectionNegative);
+    writer->writeInt16(178, ent->ipeAlign);
+    writer->writeInt16(179, ent->justification);
+    writer->writeDouble(45, ent->scaleFactor);
+    writer->writeInt16(271, ent->attachmentDirection);
+    writer->writeInt16(273, ent->styleTopAttach);
+    writer->writeInt16(272, ent->styleBottomAttach);
+    writer->writeBool(295, ent->leaderExtendedToText);
+    return true;
+}
+
+bool dxfRW::writeWipeout(DRW_Image *ent){
+    // WIPEOUT inherits AcDbRasterImage's group codes plus an AcDbWipeout
+    // subclass marker carrying the polygon (91 + 14/24) and frame flag (290).
+    // No AcDbRasterImageDef is written: WIPEOUT carries no actual raster.
+    if (version <= DRW::AC1009) {
+        return false; // not in ACAD R12 / earlier
+    }
+    writer->writeString(0, "WIPEOUT");
+    writeEntity(ent);
+    writer->writeString(100, "AcDbRasterImage");
+    writer->writeDouble(10, ent->basePoint.x);
+    writer->writeDouble(20, ent->basePoint.y);
+    writer->writeDouble(30, ent->basePoint.z);
+    writer->writeDouble(11, ent->secPoint.x);
+    writer->writeDouble(21, ent->secPoint.y);
+    writer->writeDouble(31, ent->secPoint.z);
+    writer->writeDouble(12, ent->vVector.x);
+    writer->writeDouble(22, ent->vVector.y);
+    writer->writeDouble(32, ent->vVector.z);
+    writer->writeDouble(13, ent->sizeu);
+    writer->writeDouble(23, ent->sizev);
+    writer->writeInt16(70, 1);             // image-display flags
+    writer->writeInt16(280, ent->clip);    // 1 = clipping enabled
+    writer->writeInt16(281, ent->brightness);
+    writer->writeInt16(282, ent->contrast);
+    writer->writeInt16(283, ent->fade);
+    writer->writeString(100, "AcDbWipeout");
+    writer->writeInt32(90, 0);             // class version
+    writer->writeInt32(91, static_cast<dint32>(ent->clipPath.size()));
+    for (const DRW_Coord& v : ent->clipPath) {
+        writer->writeDouble(14, v.x);
+        writer->writeDouble(24, v.y);
+    }
+    // Group 290 is the R2010+ Clip mode (0 = mask outside, 1 = mask inside);
+    // this is shared with IMAGE and is NOT a frame-display flag.  WIPEOUTFRAME
+    // (whether the polygon outline is drawn) is global, in WIPEOUTVARIABLES.
+    writer->writeBool(290, ent->clipMode);
+    return true;
 }
 
 bool dxfRW::writeBlockRecord(std::string name){
@@ -1908,7 +2185,7 @@ bool dxfRW::writeBlock(DRW_Block *bk){
 
 void dxfRW::writeViewPortTable() {
     writeTableStart("VPORT", "8", 1);
-    dimstyleStd =false;
+    dimstyleStd =false;  // fixme - sand - review this..
     iface->writeVports();
     if (!dimstyleStd) {
         DRW_Vport portact;
@@ -1977,28 +2254,63 @@ void dxfRW::writeStyleTable() {
     writeTableEnd();
 }
 
+// fixme - review
 void dxfRW::writeUCSTable() {
-    writeTableStart("UCS", "7", 0);
+    // writeTableStart("UCS", "7", 0);
+    writer->writeString(0, "TABLE");
+    writer->writeString(2, "UCS");
+    if (version > DRW::AC1009) {
+        writer->writeString(5, "7");
+        if (version > DRW::AC1014) {
+            writer->writeString(330, "0");
+        }
+        writer->writeString(100, "AcDbSymbolTable");
+    }
+    writer->writeInt16(70, 0);
     iface->writeUCSs();
     writeTableEnd();
 }
 
+// fixme - review
 void dxfRW::writeViewTable() {
-    writeTableStart("VIEW", "6", 0);
+    // writeTableStart("VIEW", "6", 0);
+    writer->writeString(0, "TABLE");
+    writer->writeString(2, "VIEW");
+    if (version > DRW::AC1009) {
+        writer->writeString(5, "6");
+        if (version > DRW::AC1014) {
+            writer->writeString(330, "0");
+        }
+        writer->writeString(100, "AcDbSymbolTable");
+    }
+    writer->writeInt16(70, 0);
     iface->writeViews();
     writeTableEnd();
 }
 
+
+// fixme - sand - compare and review this
 void dxfRW::writeAppIdTable() {
-    writeTableStart("APPID", "9", 1);
-    writeName("APPID");
-    if (afterAC1009) {
-        writeString(5, "12");
-        if (afterAC1014) {
-            writeString(330, "9");
+    writer->writeString(0, "TABLE");
+    writer->writeString(2, "APPID");
+    if (version > DRW::AC1009) {
+        writer->writeString(5, "9");
+        if (version > DRW::AC1014) {
+            writer->writeString(330, "0");
         }
-        writeSymTypeRecord("RegApp");
+        writer->writeString(100, "AcDbSymbolTable");
     }
+    writer->writeInt16(70, 1); //end table def
+    writer->writeString(0, "APPID");
+    if (version > DRW::AC1009) {
+        writer->writeString(5, "12");
+        if (version > DRW::AC1014) {
+            writer->writeString(330, "9");
+        }
+        writer->writeString(100, "AcDbSymbolTableRecord");
+        writer->writeString(100, "AcDbRegAppTableRecord");
+    }
+
     writeString(2, "ACAD");
     writeInt16(70, 0);
     iface->writeAppId();
@@ -2050,15 +2362,28 @@ void dxfRW::writeBlockRecordTable() {
 }
 
 void dxfRW::writeDimStyleTable() {
-    writeTableStart("DIMSTYLE", "A", 1);
-    if (afterAC1014) {
-        writeSubClass("DimStyleTable");
-        writeInt16(71, 1); //end table def
+    writer->writeString(0, "TABLE");
+    writer->writeString(2, "DIMSTYLE");
+    if (version > DRW::AC1009) {
+        writer->writeString(5, "A");
+        if (version > DRW::AC1014) {
+            writer->writeString(330, "0");
+        }
+        writer->writeString(100, "AcDbSymbolTable");
     }
-
-    // dimstyleStd =false;
+    writer->writeInt16(70, 1); //end table def
+    if (version > DRW::AC1014) {
+        writer->writeString(100, "AcDbDimStyleTable");
+        writer->writeInt16(71, 1); //end table def
+    }
+    dimstyleStd =false;
     iface->writeDimstyles();
-    writeTableEnd();
+    if (!dimstyleStd) {
+        DRW_Dimstyle dsty;
+        dsty.name = "Standard";
+        writeDimstyle(&dsty);
+    }
+    writer->writeString(0, "ENDTAB");
 }
 
 bool dxfRW::writeTables() {
@@ -2090,6 +2415,7 @@ bool dxfRW::writeBlocks() {
     } else
         writeString(2, "$MODEL_SPACE");
     writeInt16(70, 0);
+    // fixme - sand - use zero
     writeDouble(10, 0.0);
     writeDouble(20, 0.0);
     writeDouble(30, 0.0);
@@ -2244,6 +2570,18 @@ bool dxfRW::writeObjects() {
     return true;
 }
 
+bool dxfRW::writeExtData( // fixme - this is version from master!
+    const std::vector<std::shared_ptr<DRW_Variant>> &ed) {
+    // Re-pack as raw pointers so we share the existing implementation. The
+    // raw pointers do not own — same lifetime as the shared_ptrs in @p ed.
+    std::vector<DRW_Variant*> raw;
+    raw.reserve(ed.size());
+    for (const auto &sp : ed) {
+        if (sp) raw.push_back(sp.get());
+    }
+    return writeExtData(raw);
+}
+
 bool dxfRW::writeExtData(const std::vector<DRW_Variant*> &ed){
     for (auto it=ed.begin(); it!=ed.end(); ++it){
         switch ((*it)->code()) {
@@ -2251,7 +2589,6 @@ bool dxfRW::writeExtData(const std::vector<DRW_Variant*> &ed){
             case 1001:
             case 1002:
             case 1003:
-            case 1004:
             case 1005: {
                 int cc = (*it)->code();
                 if ((*it)->type() == DRW_Variant::STRING)
@@ -2259,30 +2596,59 @@ bool dxfRW::writeExtData(const std::vector<DRW_Variant*> &ed){
                 //            writeUtf8String((*it)->code, (*it)->content.s);
                 break;
             }
+            case 1004: {
+                // DXF code 1004 is binary chunk data; emitted as a hex-encoded
+                // string. Both BINARY (from DWG path) and STRING (from a DXF
+                // round-trip that already hex-encoded the bytes) variants are
+                // accepted.
+                if ((*it)->type() == DRW_Variant::BINARY) {
+                    const std::vector<duint8>* bytes = (*it)->binary();
+                    std::string hex;
+                    if (bytes != nullptr) {
+                        static const char hexDigits[] = "0123456789ABCDEF";
+                        hex.reserve(bytes->size() * 2);
+                        for (duint8 b : *bytes) {
+                            hex.push_back(hexDigits[(b >> 4) & 0xF]);
+                            hex.push_back(hexDigits[b & 0xF]);
+                        }
+                    }
+                    writer->writeUtf8String(1004, hex);
+                } else if ((*it)->type() == DRW_Variant::STRING) {
+                    writer->writeUtf8String(1004, *(*it)->content.s);
+                }
+                break;
+            }
             case 1010:
             case 1011:
             case 1012:
-            case 1013:
+            case 1013: {
                 if ((*it)->type() == DRW_Variant::COORD) {
                     writeDouble((*it)->code(), (*it)->content.v->x);
                     writeDouble((*it)->code() + 10, (*it)->content.v->y);
                     writeDouble((*it)->code() + 20, (*it)->content.v->z);
                 }
                 break;
+            }
             case 1040:
             case 1041:
-            case 1042:
-                if ((*it)->type() == DRW_Variant::DOUBLE)
+            case 1042: {
+                if ((*it)->type() == DRW_Variant::DOUBLE) {
                     writeDouble((*it)->code(), (*it)->content.d);
+                }
                 break;
-            case 1070:
-                if ((*it)->type() == DRW_Variant::INTEGER)
+            }
+            case 1070: {
+                if ((*it)->type() == DRW_Variant::INTEGER) {
                     writeInt16((*it)->code(), (*it)->content.i);
+                }
                 break;
-            case 1071:
-                if ((*it)->type() == DRW_Variant::INTEGER)
+            }
+            case 1071: {
+                if ((*it)->type() == DRW_Variant::INTEGER) {
                     writeInt32((*it)->code(), (*it)->content.i);
+                }
                 break;
+            }
             default:
                 break;
         }
@@ -2360,7 +2726,6 @@ bool dxfRW::processDxf() {
                     }
                     else {
                         //TODO handle CLASSES
-
                         DRW_DBG(sectionname);
                         DRW_DBG(" section unknown or not supported\n");
                         continue;
@@ -2635,10 +3000,10 @@ bool dxfRW::processBlocks() {
     DRW_DBG("dxfRW::processBlocks\n");
     int code;
     std::string sectionstr;
-    while (readRec(&code)) {
+    while (reader->readRec(&code)) {
         DRW_DBG(code); DRW_DBG("\n");
         if (code == 0) {
-            sectionstr = getString();
+            sectionstr = reader->getString();
             DRW_DBG(sectionstr); DRW_DBG("\n");
             if (sectionstr == "BLOCK") {
                 processBlock();
@@ -2693,27 +3058,32 @@ bool dxfRW::processEntities(bool isblock) {
             processed = processCircle();
         } else if (nextentity == "ARC") {
             processed = processArc();
-        } else if (nextentity == "POINT") {
-            processed = processPoint();
+        } else if (nextentity == "INSERT") {
+            processed = processInsert();
         } else if (nextentity == "LWPOLYLINE") {
             processed = processLWPolyline();
         } else if (nextentity == "POLYLINE") {
             processed = processPolyline();
-        }else if (nextentity == "TEXT") {
+        } else if (nextentity == "TEXT") {
             processed = processText();
         } else if (nextentity == "MTEXT") {
             processed = processMText();
-        } else if (nextentity == "HATCH") {
-            processed = processHatch();
         } else if (nextentity == "DIMENSION") {
             processed = processDimension();
-        } else if (nextentity == "INSERT") {
-            processed = processInsert();
+        } else if (nextentity == "MLINE") {
+            processed = processMLine();
+        } else if (nextentity == "PDFUNDERLAY"
+                   || nextentity == "DGNUNDERLAY"
+                   || nextentity == "DWFUNDERLAY") {
+            processed = processUnderlay(nextentity);
+        } else if (nextentity == "HATCH") {
+            processed = processHatch();
         } else if (nextentity == "TOLERANCE") {
             processed = processTolerance();
         } else if (nextentity == "SOLID") {
             processed = processSolid();
-        }else if (nextentity == "SPLINE") {
+        }
+        else if (nextentity == "SPLINE") {
             processed = processSpline();
         }else if (nextentity == "LEADER") {
             processed = processLeader();
@@ -2723,15 +3093,22 @@ bool dxfRW::processEntities(bool isblock) {
             processed = processViewport();
         } else if (nextentity == "IMAGE") {
             processed = processImage();
-        } else if (nextentity == "TRACE") {
-            processed = processTrace();
+        } else if (nextentity == "POINT") {
+            processed = processPoint();
+        } else if (nextentity == "XLINE") {
+            processed = processXline();
+        } else if (nextentity == "WIPEOUT") {
+            processed = processWipeout();
+        } else if (nextentity == "MULTILEADER") {
+            processed = processMultiLeader();
         } else if (nextentity == "3DFACE") {
             processed = process3dface();
         } else if (nextentity == "RAY") {
             processed = processRay();
-        } else if (nextentity == "XLINE") {
-            processed = processXline();
-        } else if (nextentity == "ARC_DIMENSION") {
+        } else if (nextentity == "TRACE") {
+            processed = processTrace();
+        }
+        else if (nextentity == "ARC_DIMENSION") {
             processed = processArcDimension();
         } else {
             if (!readRec(&code)) {
@@ -2789,6 +3166,8 @@ bool dxfRW::processEllipse() {
     DRW_Ellipse ellipse;
     return doProcessEntity(ellipse, [this](DRW_Entity* e){
         auto ent = static_cast<DRW_Ellipse*>(e);
+        if (applyExt)
+            ent->applyExtrusion();
         iface->addEllipse(*ent);
     });
 }
@@ -2798,6 +3177,9 @@ bool dxfRW::processTrace() {
     DRW_Trace trace;
     return doProcessEntity(trace,[this](DRW_Entity* e){
         auto ent = static_cast<DRW_Trace*>(e);
+        if (applyExt) {
+            ent->applyExtrusion();
+        }
         iface->addTrace(*ent);
     });
 }
@@ -2807,6 +3189,9 @@ bool dxfRW::processSolid() {
     DRW_Solid solid;
     return doProcessEntity(solid,[this](DRW_Entity* e){
         auto ent = static_cast<DRW_Solid*>(e);
+        if (applyExt) {
+            ent->applyExtrusion();
+        }
         iface->addSolid(*ent);
     });
 }
@@ -2846,6 +3231,47 @@ bool dxfRW::processLine() {
         iface->addLine(*ent);
     });
 }
+// fixme- sand - rework to DRW_ParseableEntity
+bool dxfRW::processMLine() {
+    DRW_DBG("dxfRW::processMLine\n");
+    int code;
+    DRW_MLine mline;
+    while (reader->readRec(&code)) {
+        DRW_DBG(code); DRW_DBG("\n");
+        if (0 == code) {
+            nextentity = reader->getString();
+            DRW_DBG(nextentity); DRW_DBG("\n");
+            iface->addMLine(&mline);
+            return true;
+        }
+        if (!mline.parseCode(code, reader)) {
+            return setError(DRW::BAD_CODE_PARSED);
+        }
+    }
+    return setError(DRW::BAD_READ_ENTITIES);
+}
+
+bool dxfRW::processUnderlay(const std::string& kind) {
+    DRW_DBG("dxfRW::processUnderlay\n");
+    int code;
+    DRW_Underlay u;
+    if (kind == "DGNUNDERLAY") u.kind = DRW_Underlay::DGN;
+    else if (kind == "DWFUNDERLAY") u.kind = DRW_Underlay::DWF;
+    while (reader->readRec(&code)) {
+        DRW_DBG(code); DRW_DBG("\n");
+        if (0 == code) {
+            nextentity = reader->getString();
+            DRW_DBG(nextentity); DRW_DBG("\n");
+            iface->addUnderlay(&u);
+            return true;
+        }
+        if (!u.parseCode(code, reader)) {
+            return setError(DRW::BAD_CODE_PARSED);
+        }
+    }
+    return setError(DRW::BAD_READ_ENTITIES);
+}
+
 
 bool dxfRW::processRay() {
     DRW_DBG("dxfRW::processRay\n");
@@ -2870,6 +3296,9 @@ bool dxfRW::processCircle() {
     DRW_Circle circle;
     return doProcessEntity(circle, [this](DRW_Entity* e){
         auto ent = static_cast<DRW_Circle*>(e);
+        if (applyExt) {
+            ent->applyExtrusion();
+        }
         iface->addCircle(*ent);
     });
 }
@@ -2879,6 +3308,9 @@ bool dxfRW::processArc() {
     DRW_Arc arc;
     return doProcessEntity(arc, [this](DRW_Entity* e){
         auto ent = static_cast<DRW_Arc*>(e);
+        if (applyExt) {
+            ent->applyExtrusion();
+        }
         iface->addArc(*ent);
     });
 }
@@ -2897,6 +3329,9 @@ bool dxfRW::processLWPolyline() {
     DRW_LWPolyline pl;
     return doProcessEntity(pl, [this](DRW_Entity* e){
         auto ent = static_cast<DRW_LWPolyline*>(e);
+        if (applyExt) {
+            ent->applyExtrusion();
+        }
         iface->addLWPolyline(*ent);
     });
 }
@@ -3008,6 +3443,30 @@ bool dxfRW::processImage() {
    });
 }
 
+// MULTILEADER DXF read.  Captures the entity-level scalar fields via
+// DRW_MLeader::parseCode.  Nested CONTEXT_DATA{} / LEADER{} / LEADER_LINE{}
+// blocks use control-flow group codes (300/302/304 open + 301/303/305 close)
+// — Phase 8 keeps the body capture minimal; Phase 9 / follow-up will wire
+// the full nested-block state machine.
+bool dxfRW::processMultiLeader() {
+    DRW_DBG("dxfRW::processMultiLeader");
+    int code;
+    DRW_MLeader e;
+    while (reader->readRec(&code)) {
+        DRW_DBG(code); DRW_DBG("\n");
+        if (0 == code) {
+            nextentity = reader->getString();
+            DRW_DBG(nextentity); DRW_DBG("\n");
+            iface->addMLeader(&e);
+            return true;
+        }
+        if (!e.parseCode(code, reader)) {
+            return setError(DRW::BAD_CODE_PARSED);
+        }
+    }
+    return setError(DRW::BAD_READ_ENTITIES);
+}
+
 bool dxfRW::processArcDimension() {
     DRW_DBG("dxfRW::processArcDimension");
     int code;
@@ -3024,6 +3483,54 @@ bool dxfRW::processArcDimension() {
 
         if (!dim.parseCode(code, reader)) {
             return setError( DRW::BAD_CODE_PARSED);
+        }
+    }
+    return setError(DRW::BAD_READ_ENTITIES);
+}
+
+// fixme - sand - rework to DRW_ParseableEntity
+
+// MULTILEADER DXF read.  Captures the entity-level scalar fields via
+// DRW_MLeader::parseCode.  Nested CONTEXT_DATA{} / LEADER{} / LEADER_LINE{}
+// blocks use control-flow group codes (300/302/304 open + 301/303/305 close)
+// — Phase 8 keeps the body capture minimal; Phase 9 / follow-up will wire
+// the full nested-block state machine.
+bool dxfRW::processMultiLeader() {
+    DRW_DBG("dxfRW::processMultiLeader");
+    int code;
+    DRW_MLeader e;
+    while (reader->readRec(&code)) {
+        DRW_DBG(code); DRW_DBG("\n");
+        if (0 == code) {
+            nextentity = reader->getString();
+            DRW_DBG(nextentity); DRW_DBG("\n");
+            iface->addMLeader(&e);
+            return true;
+        }
+        if (!e.parseCode(code, reader)) {
+            return setError(DRW::BAD_CODE_PARSED);
+        }
+    }
+    return setError(DRW::BAD_READ_ENTITIES);
+}
+bool dxfRW::processWipeout() {
+    // WIPEOUT shares DRW_Image's group codes (subclass marker AcDbRasterImage)
+    // plus AcDbWipeout-specific codes 91/14/24/290 already handled by
+    // DRW_Image::parseCode.  Differs from processImage only in the callback.
+    DRW_DBG("dxfRW::processWipeout");
+    int code;
+    DRW_Image img;
+    while (reader->readRec(&code)) {
+        DRW_DBG(code); DRW_DBG("\n");
+        if (0 == code) {
+            nextentity = reader->getString();
+            DRW_DBG(nextentity); DRW_DBG("\n");
+            iface->addWipeout(&img);
+            return true;
+        }
+
+        if (!img.parseCode(code, reader)) {
+            return setError(DRW::BAD_CODE_PARSED);
         }
     }
     return setError(DRW::BAD_READ_ENTITIES);
@@ -3145,7 +3652,7 @@ bool dxfRW::writePlotSettings(DRW_PlotSettings *ent) {
     writeName("PLOTSETTINGS");
     // writeUtf8String(4, ent->plotViewName);
     writeString(5, toHexStr(++entCount));
-    writeSubClass("PlotSettings");
+    writeSubClass("AcDbPlotSettings");
     writeUtf8String(6, ent->plotViewName);
     writeUtf8String(7, ent->currentStyleName);
     writeDouble(40, ent->marginLeftMM);

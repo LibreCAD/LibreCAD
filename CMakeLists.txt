@@ -343,7 +343,11 @@ set (SHARED_SOURCES
      libraries/libdxfrw/src/intern/drw_textcodec.h
      libraries/libdxfrw/src/intern/dwgbuffer.cpp
      libraries/libdxfrw/src/intern/dwgbuffer.h
-     libraries/libdxfrw/src/intern/dwgreader.cpp
+     libraries/libdxfrw/src/intern/dwgbufferw.cpp
+    libraries/libdxfrw/src/intern/dwgbufferw.h
+    libraries/libdxfrw/src/intern/dwgwriter.h
+    libraries/libdxfrw/src/intern/dwgwriter15.cpp
+    libraries/libdxfrw/src/intern/dwgwriter15.hlibraries/libdxfrw/src/intern/dwgreader.cpp
      libraries/libdxfrw/src/intern/dwgreader.h
      libraries/libdxfrw/src/intern/dwgreader15.cpp
      libraries/libdxfrw/src/intern/dwgreader15.h
@@ -355,7 +359,8 @@ set (SHARED_SOURCES
      libraries/libdxfrw/src/intern/dwgreader24.h
      libraries/libdxfrw/src/intern/dwgreader27.cpp
      libraries/libdxfrw/src/intern/dwgreader27.h
-     libraries/libdxfrw/src/intern/dwgutil.cpp
+     libraries/libdxfrw/src/intern/dwgreader32.cpp
+    libraries/libdxfrw/src/intern/dwgreader32.hlibraries/libdxfrw/src/intern/dwgutil.cpp
      libraries/libdxfrw/src/intern/dwgutil.h
      libraries/libdxfrw/src/intern/dxfreader.cpp
      libraries/libdxfrw/src/intern/dxfreader.h
@@ -870,12 +875,16 @@ set (SHARED_SOURCES
      librecad/src/lib/engine/document/entities/rs_hatch.cpp
      librecad/src/lib/engine/document/entities/rs_hatch.h
      librecad/src/lib/engine/document/entities/rs_image.cpp
-     librecad/src/lib/engine/document/entities/rs_image.h
+     librecad/src/lib/engine/document/entities/rs_image.hlibrecad/src/lib/engine/document/entities/lc_wipeout.cpp
+    librecad/src/lib/engine/document/entities/lc_wipeout.h
      librecad/src/lib/engine/document/entities/rs_insert.cpp
      librecad/src/lib/engine/document/entities/rs_insert.h
      librecad/src/lib/engine/document/entities/rs_leader.cpp
      librecad/src/lib/engine/document/entities/rs_leader.h
-     librecad/src/lib/engine/document/entities/rs_line.cpp
+     librecad/src/lib/engine/document/entities/lc_mleader.cpp
+    librecad/src/lib/engine/document/entities/lc_mleader.h
+    librecad/src/lib/engine/document/entities/lc_textbidi.cpp
+    librecad/src/lib/engine/document/entities/lc_textbidi.hlibrecad/src/lib/engine/document/entities/rs_line.cpp
      librecad/src/lib/engine/document/entities/rs_line.h
      librecad/src/lib/engine/document/entities/rs_mtext.cpp
      librecad/src/lib/engine/document/entities/rs_mtext.h
@@ -1029,7 +1038,8 @@ set (SHARED_SOURCES
      librecad/src/lib/fileio/rs_fileio.cpp
      librecad/src/lib/fileio/rs_fileio.h
      librecad/src/lib/filters/lc_hyperbolaspline.cpp
-     librecad/src/lib/filters/lc_hyperbolaspline.h
+     librecad/src/lib/filters/lc_hyperbolaspline.hlibrecad/src/lib/filters/lc_parabolaspline.cpp
+    librecad/src/lib/filters/lc_parabolaspline.h
      librecad/src/lib/filters/rs_filtercxf.cpp
      librecad/src/lib/filters/rs_filterdxf1.cpp
      librecad/src/lib/filters/rs_filterdxf1.h
@@ -1434,6 +1444,10 @@ set (SHARED_SOURCES
      librecad/src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.h
     librecad/src/ui/dialogs/entity/lc_hatchpropertieseditingwidget.cpp
     librecad/src/ui/dialogs/entity/lc_hatchpropertieseditingwidget.h
+     librecad/src/ui/dialogs/entity/lc_mtextpropertieseditingwidget.cpp
+    librecad/src/ui/dialogs/entity/lc_mtextpropertieseditingwidget.h
+    librecad/src/ui/dialogs/entity/lc_textpropertieseditingwidget.cpp
+    librecad/src/ui/dialogs/entity/lc_textpropertieseditingwidget.h
      librecad/src/ui/dialogs/entity/lc_entitypropertiesdlg.cpp
      librecad/src/ui/dialogs/entity/lc_entitypropertiesdlg.h
      librecad/src/ui/dialogs/entity/lc_entitypropertieseditor.cpp
@@ -2184,7 +2198,6 @@ target_link_libraries (librecad PRIVATE
 )
 install (TARGETS librecad RUNTIME DESTINATION bin)
 
-#set(CMAKE_AUTOUIC_OPTIONS --connections string)
 # Translations
 set (TS_DIR librecad/ts)
 set (TS_FILES
@@ -2277,18 +2290,33 @@ if (BUILD_TESTS)
     add_subdirectory (externals/Catch2)
 
     # Define test executable
-    qt_add_executable (librecad_tests
-                       # this is needed to allow testing methods used by main()
-                       # main() is excluded when BUILD_TEST=ON
-                       ${MAIN_SOURCES}
-                       ${LIBRECAD_RES}
-                       ### The actual tests
-                       librecad/src/lib/engine/document/entities/tests/lc_splinehelper_tests.cpp
-                       librecad/src/lib/engine/document/entities/tests/lc_hyperbola_tests.cpp
-                       librecad/src/lib/engine/document/entities/tests/rs_ellipse_tests.cpp
-                       librecad/src/lib/engine/document/entities/tests/rs_spline_tests.cpp
-                       librecad/src/lib/engine/document/entities/tests/rs_hatch_tests.cpplibrecad/src/lib/math/tests/rs_math_tests.cpp
-                       librecad/src/lib/math/tests/lc_quadratic_tests.cpp
+    qt_add_executable(librecad_tests
+	# this is needed to allow testing methods used by main()
+	# main() is excluded when BUILD_TEST=ON
+	${MAIN_SOURCES}
+        ${LIBRECAD_RES}
+	### The actual tests
+        librecad/src/lib/engine/document/entities/tests/lc_splinehelper_tests.cpp
+        librecad/src/lib/engine/document/entities/tests/lc_hyperbola_tests.cpp
+        librecad/src/lib/engine/document/entities/tests/lc_parabola_tests.cpp
+        librecad/src/lib/engine/document/entities/tests/rs_ellipse_tests.cpp
+        librecad/src/lib/engine/document/entities/tests/rs_spline_tests.cpp
+        librecad/src/lib/engine/document/entities/tests/rs_hatch_tests.cpp
+        librecad/src/lib/engine/document/entities/tests/lc_textbidi_tests.cpp
+        librecad/src/lib/engine/document/entities/tests/rs_mtext_bidi_tests.cpp
+        librecad/src/lib/engine/document/entities/tests/rs_text_bidi_tests.cpp
+        librecad/src/lib/math/tests/rs_math_tests.cpp
+        librecad/src/lib/math/tests/lc_quadratic_tests.cpp
+        librecad/src/lib/filters/tests/dwg_buffer_round_trip_tests.cpp
+        librecad/src/lib/filters/tests/dwg_entity_encode_round_trip_tests.cpp
+        librecad/src/lib/filters/tests/dwg_header_encode_round_trip_tests.cpp
+        librecad/src/lib/filters/tests/dwg_smoke_tests.cpp
+        librecad/src/lib/filters/tests/dwg_write_smoke_tests.cpp
+        librecad/src/lib/filters/tests/eed_tests.cpp
+        librecad/src/lib/filters/tests/dbcolor_tests.cpp
+        librecad/src/lib/filters/tests/entity_metadata_tests.cpp
+        librecad/src/lib/filters/tests/mline_tests.cpp
+        librecad/src/lib/filters/tests/underlay_tests.cpp
     )
 
     # Include directories for rs_math.h and other dependencies
@@ -2311,5 +2339,5 @@ if (BUILD_TESTS)
     # Enable C++17 for the test target (matching LibreCAD's standard)
     target_compile_features (librecad_tests PRIVATE cxx_std_17)
     # compiling time defines
-    target_compile_definitions (librecad_tests PRIVATE BUILD_TESTS=1)
+    target_compile_definitions (librecad_tests PRIVATE BUILD_TESTS=1 DWGSUPPORT)
 endif ()

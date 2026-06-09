@@ -128,7 +128,7 @@ VIAddVersionKey "LegalCopyright" "LibreCAD Team"
 ; Component descriptions
 !insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
   !insertmacro MUI_DESCRIPTION_TEXT ${SecMain} "The core files required to run LibreCAD."
-  !insertmacro MUI_DESCRIPTION_TEXT ${SecAssoc} "Associate .dxf files with LibreCAD so double-clicking them opens in the application."
+  !insertmacro MUI_DESCRIPTION_TEXT ${SecAssoc} "Associate .dxf and .dwg files with LibreCAD so double-clicking them opens in the application."
 !insertmacro MUI_FUNCTION_DESCRIPTION_END
 ;--------------------------------
 ; Installer Sections
@@ -191,27 +191,43 @@ Section "Main Section" SecMain
   WriteRegDWORD HKLM "${UNINSTKEY}" "NoRepair" 1
   ; Check for errors on uninstaller registration
 SectionEnd
-Section "Associate .dxf files" SecAssoc
+Section "Associate .dxf and .dwg files" SecAssoc
   ; Set registry view (same as main section)
   SetRegView ${REG_VIEW}
-  ; File association for .dxf
-  ; Backup existing association if not already ours
+
+  ; ── .dxf ──────────────────────────────────────────────────────────────────
+  ; Back up existing association if not already ours
   ReadRegStr $R0 HKCR ".dxf" ""
   ${If} $R0 != "LibreCAD.DXF"
     WriteRegStr HKLM "${APPREG}" "OldDXFAssoc" $R0
   ${EndIf}
   ClearErrors
-  ; Set new association
-  WriteRegStr HKCR ".dxf" "" "LibreCAD.DXF"
-  WriteRegStr HKCR "LibreCAD.DXF" "" "DXF File"
-  WriteRegStr HKCR "LibreCAD.DXF\DefaultIcon" "" "$INSTDIR\LibreCAD.exe,0"
+  WriteRegStr HKCR ".dxf"                         "" "LibreCAD.DXF"
+  WriteRegStr HKCR "LibreCAD.DXF"                 "" "AutoCAD DXF Drawing"
+  WriteRegStr HKCR "LibreCAD.DXF\DefaultIcon"     "" "$INSTDIR\librecad.ico,0"
   WriteRegStr HKCR "LibreCAD.DXF\shell\open\command" "" '"$INSTDIR\LibreCAD.exe" "%1"'
-  ; Check for errors
   ${If} ${Errors}
     MessageBox MB_OK|MB_ICONEXCLAMATION "Failed to set .dxf file association!"
     Abort
   ${EndIf}
-  ; Notify Windows of changes
+
+  ; ── .dwg ──────────────────────────────────────────────────────────────────
+  ; Back up existing association if not already ours
+  ReadRegStr $R0 HKCR ".dwg" ""
+  ${If} $R0 != "LibreCAD.DWG"
+    WriteRegStr HKLM "${APPREG}" "OldDWGAssoc" $R0
+  ${EndIf}
+  ClearErrors
+  WriteRegStr HKCR ".dwg"                         "" "LibreCAD.DWG"
+  WriteRegStr HKCR "LibreCAD.DWG"                 "" "AutoCAD DWG Drawing"
+  WriteRegStr HKCR "LibreCAD.DWG\DefaultIcon"     "" "$INSTDIR\librecad.ico,0"
+  WriteRegStr HKCR "LibreCAD.DWG\shell\open\command" "" '"$INSTDIR\LibreCAD.exe" "%1"'
+  ${If} ${Errors}
+    MessageBox MB_OK|MB_ICONEXCLAMATION "Failed to set .dwg file association!"
+    Abort
+  ${EndIf}
+
+  ; Notify Windows Shell of all association changes at once
   System::Call 'shell32::SHChangeNotify(i 0x08000000, i 0, i 0, i 0)'
 SectionEnd
 Section "Uninstall"
@@ -221,7 +237,7 @@ Section "Uninstall"
   Delete "$DESKTOP\${APPNAME}.lnk"
   RMDir /r "$SMPROGRAMS\${APPNAME}"
   RMDir /r "$INSTDIR"
-  ; Restore file association for .dxf if it was ours
+  ; ── Restore .dxf association ────────────────────────────────────────────────
   DeleteRegKey HKCR "LibreCAD.DXF"
   ReadRegStr $R0 HKCR ".dxf" ""
   ${If} $R0 == "LibreCAD.DXF"
@@ -231,9 +247,23 @@ Section "Uninstall"
     ${Else}
       WriteRegStr HKCR ".dxf" "" $R1
     ${EndIf}
-    ; Notify Windows of changes
-    System::Call 'shell32::SHChangeNotify(i 0x08000000, i 0, i 0, i 0)'
   ${EndIf}
+
+  ; ── Restore .dwg association ────────────────────────────────────────────────
+  DeleteRegKey HKCR "LibreCAD.DWG"
+  ReadRegStr $R0 HKCR ".dwg" ""
+  ${If} $R0 == "LibreCAD.DWG"
+    ReadRegStr $R1 HKLM "${APPREG}" "OldDWGAssoc"
+    ${If} $R1 == ""
+      DeleteRegKey HKCR ".dwg"
+    ${Else}
+      WriteRegStr HKCR ".dwg" "" $R1
+    ${EndIf}
+  ${EndIf}
+
+  ; Notify Windows Shell of all association changes at once
+  System::Call 'shell32::SHChangeNotify(i 0x08000000, i 0, i 0, i 0)'
+
   DeleteRegKey HKLM "${APPREG}"
   DeleteRegKey HKLM "${UNINSTKEY}"
 SectionEnd

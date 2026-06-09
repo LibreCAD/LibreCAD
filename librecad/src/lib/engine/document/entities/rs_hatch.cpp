@@ -128,52 +128,72 @@ bool RS_Hatch::validate() {
     }
 
     try {
-        // Collect atomic entities from loop subcontainers into a deduplicated set
-        std::set<RS_Entity*> contourEdges;
-        std::vector<RS_Entity*> loops;
-        for(RS_Entity* en: std::as_const(*this)) {
-            if (en == nullptr || ! en->isContainer()) {
-                continue;
-            }
-
-            lc::LC_ContainerTraverser traverser{*static_cast<RS_EntityContainer*>(en), RS2::ResolveAll};
-            for (RS_Entity* entity : traverser.entities()) {
-                if (entity != nullptr && entity->isAtomic()) {
-                    contourEdges.insert(entity);
-                }
-            }
-            loops.push_back(en);
-        }
-
-        // Now safely clear the original container (temporarily disable ownership)
+      // Collect child loop containers and rebuild the container list.
+      std::vector<RS_Entity *> loops;
+      for (RS_Entity *en : std::as_const(*this)) {
+        if (en != nullptr && en->isContainer())
+          loops.push_back(en);
+      }
         setOwner(false);
         clear();
         setOwner(true);
         std::copy(loops.begin(), loops.end(), std::back_inserter(*this));
 
-        // Clean up zero-length entities in the flat container
-        avoidZeroLength(contourEdges);
-
-        // Build a working copy of the contour edges (owned clones) so that any
-        // coordinate transforms applied for pattern alignment do not mutate the
-        // original boundary entities stored in *this.
-        RS_EntityContainer edgeContainer{nullptr, true};
-        for (RS_Entity* e : contourEdges) {
-            edgeContainer.addEntity(e->clone());
+        // Compute the combined bounding box of all boundary edges (for the
+        // pattern-rotation centre, which must be the same for every container
+        // so that all loops rotate into the same axis-aligned frame).
+        RS_Vector bbMin(RS_MAXDOUBLE, RS_MAXDOUBLE);
+        RS_Vector bbMax(-RS_MAXDOUBLE, -RS_MAXDOUBLE);
+        for (RS_Entity *en : loops) {
+          auto *cont = static_cast<RS_EntityContainer *>(en);
+          cont->forcedCalculateBorders();
+          bbMin.x = std::min(bbMin.x, cont->getMin().x);
+          bbMin.y = std::min(bbMin.y, cont->getMin().y);
+          bbMax.x = std::max(bbMax.x, cont->getMax().x);
+          bbMax.y = std::max(bbMax.y, cont->getMax().y);
         }
-        edgeContainer.forcedCalculateBorders();
+        const RS_Vector rotCenter = (bbMin + bbMax) * 0.5;
 
-        // For pattern hatches: rotate the working copy by -angle so that tiling
-        // can be done in an axis-aligned frame; updatePatternHatch rotates the
-        // trimmed lines back by +angle.  Solid hatches keep WCS coordinates so
-        // that solid-fill paths and moments are computed correctly.
-        if (!isSolid()) {
-            const RS_Vector center = (edgeContainer.getMin() + edgeContainer.getMax()) * 0.5;
-            edgeContainer.rotate(center, -m_data.angle);
+        // Process each DWG boundary loop container through LoopExtractor
+        // independently.  Merging all loops into one flat container before
+        // extraction causes cross-contamination at shared corner points
+        // (common in architectural drawings), creating spurious zero-area
+        // paths that consume edge references and silently discard real loops.
+        std::vector<std::unique_ptr<RS_EntityContainer>> allExtracted;
+
+        for (RS_Entity *en : loops) {
+          std::set<RS_Entity *> edges;
+          lc::LC_ContainerTraverser traverser{
+              *static_cast<RS_EntityContainer *>(en), RS2::ResolveAll};
+          for (RS_Entity *entity : traverser.entities()) {
+            if (entity != nullptr && entity->isAtomic())
+              edges.insert(entity);
+          }
+          avoidZeroLength(edges);
+          if (edges.empty())
+            continue;
+
+          RS_EntityContainer perLoopCont{nullptr, true};
+          for (RS_Entity *e : edges)
+            perLoopCont.addEntity(e->clone());
+
+          // For pattern hatches apply the rotation before extraction so the
+          // extracted loop coordinates are in the axis-aligned tiling frame.
+          if (!isSolid())
+            perLoopCont.rotate(rotCenter, -m_data.angle);
+
+          LC_LoopUtils::LoopExtractor extractor{perLoopCont};
+          auto extracted = extractor.extract();
+          for (auto &loop : extracted)
+            allExtracted.push_back(std::move(loop));
         }
 
-        const LC_LoopUtils::LoopOptimizer optimizer{edgeContainer};
-        const auto results = optimizer.getResults();
+        if (allExtracted.empty())
+          throw std::runtime_error(
+              "Loop optimization failed: no loops generated");
+
+        LC_LoopUtils::LoopSorter sorter{std::move(allExtracted)};
+        auto results = sorter.getResults();
 
         if (!results || results->empty()) {
             throw std::runtime_error("Loop optimization failed: no loops generated");
@@ -202,6 +222,10 @@ bool RS_Hatch::validate() {
  */
 int RS_Hatch::countLoops() const {
     return static_cast<int>(m_orderedLoops->size());
+}
+
+int RS_Hatch::countAllLoops() const {
+  return static_cast<int>(m_boundaryContainers.size());
 }
 
 /**

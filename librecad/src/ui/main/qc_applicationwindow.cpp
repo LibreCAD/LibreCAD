@@ -30,13 +30,17 @@
 #include "qc_applicationwindow.h"
 
 #include <QCloseEvent>
+#include <QGuiApplication>
 #include <QDockWidget>
 #include <QMdiArea>
 #include <QMessageBox>
 #include <QMimeData>
 #include <QPushButton>
 #include <QStatusBar>
+#include <QStyleHints>
 #include <QTimer>
+
+#include "lc_iconcolorsoptions.h"
 
 #include "lc_action_block_library_insert.h"
 #include "lc_action_options_manager.h"
@@ -122,6 +126,32 @@ QC_ApplicationWindow::QC_ApplicationWindow() {
 
     LC_ApplicationWindowInitializer initializer(this);
     initializer.initApplication();
+
+#if QT_VERSION >= QT_VERSION_CHECK(6, 5, 0)
+    // Re-apply icon styling defaults when the OS color scheme flips so the
+    // toolbar icons don't go invisible on a newly-dark palette. Stored user
+    // overrides are preserved because loadColor() returns the stored value
+    // when present and falls back to the (now theme-aware) default only
+    // when the key is absent.
+    connect(QGuiApplication::styleHints(), &QStyleHints::colorSchemeChanged,
+            this, [this](Qt::ColorScheme) {
+                LC_IconColorsOptions opts;
+                opts.loadSettings();
+                opts.applyOptions();
+                fireIconsRefresh();
+            });
+#endif
+
+    // Re-paint toolbars when the OS-level primary screen changes (e.g. the
+    // user swaps which monitor is primary while LibreCAD is running). The
+    // canvas's own m_isHiDpi state is computed once at LC_GraphicViewRenderer
+    // construction and currently does NOT re-evaluate here — see the
+    // // fixme - sand comment at lc_graphicviewrenderer.cpp:43. Tracking that
+    // through to the per-MDI-window renderer is follow-up work documented in
+    // Task D of the plan; this connect at least refreshes icons and any
+    // listener wired to iconsRefreshed().
+    connect(qApp, &QGuiApplication::primaryScreenChanged,
+            this, [this](QScreen*) { fireIconsRefresh(); });
 }
 
 /**
@@ -998,6 +1028,40 @@ void QC_ApplicationWindow::autoZoomAfterLoad(const QG_GraphicView* graphicView) 
     }
 }
 
+int QC_ApplicationWindow::maybeSurfaceBlocksDock(RS_Graphic *graphic) {
+  if (graphic == nullptr || m_blockWidget == nullptr)
+    return 0;
+  if (graphic->countDeep() != 0)
+    return 0;
+
+  RS_BlockList *blockList = m_blockWidget->getBlockList();
+  if (blockList == nullptr)
+    return 0;
+
+  int hits = 0;
+  for (int i = 0; i < blockList->count(); ++i) {
+    RS_Block *block = blockList->at(i);
+    if (block == nullptr || block->isUndone())
+      continue;
+    // *Model_Space / *Paper_Space[N] are pseudo-blocks that mirror the
+    // ENTITIES section; surfacing them is pointless.
+    if (block->getName().startsWith('*'))
+      continue;
+    if (block->countDeep() > 0)
+      ++hits;
+  }
+  if (hits == 0)
+    return 0;
+
+  if (auto *dock = qobject_cast<QDockWidget *>(m_blockWidget->parentWidget())) {
+    dock->show();
+    dock->raise();
+    if (dock->isFloating())
+      dock->activateWindow();
+  }
+  return hits;
+}
+
 void QC_ApplicationWindow::openFile(const QString& fileName, const RS2::FormatType type) {
     if (!QFileInfo::exists(fileName)) {
         m_commandWidget->appendHistory(tr("File '%1' does not exist. Opening aborted").arg(fileName));
@@ -1058,14 +1122,25 @@ void QC_ApplicationWindow::openFile(const QString& fileName, const RS2::FormatTy
 
     const auto graphicView = w->getGraphicView();
     autoZoomAfterLoad(graphicView);
-
     const auto graphic = graphicView->getGraphic(true);
     if (graphic != nullptr) {
         graphic->setModified(false);
     }
 
-    const QString message = tr("Loaded document: ") + fileName;
-    notificationMessage(message, 2000);
+    int blocksWithGeometry = maybeSurfaceBlocksDock(graphic);
+    QString message;
+    int messageTimeout = 0;
+    if (blocksWithGeometry > 0) {
+      message = tr("Loaded %1 — modelspace is empty; %n block(s) in the Blocks "
+                   "dock contain geometry.",
+                   "", blocksWithGeometry)
+                    .arg(fileName);
+      messageTimeout = 8000;
+    } else {
+      message = tr("Loaded document: ") + fileName;
+      messageTimeout = 2000;
+    }
+    notificationMessage(message, messageTimeout);
 
     QApplication::restoreOverrideCursor();
 }

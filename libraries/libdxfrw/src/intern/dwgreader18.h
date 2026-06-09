@@ -2,6 +2,7 @@
 **  libDXFrw - Library to read/write DXF files (ascii & binary)              **
 **                                                                           **
 **  Copyright (C) 2011-2015 José F. Soriano, rallazz@gmail.com               **
+**  Copyright (C) 2026 LibreCAD (librecad.org)                                **
 **                                                                           **
 **  This library is free software, licensed under the terms of the GNU       **
 **  General Public License as published by the Free Software Foundation,     **
@@ -41,7 +42,7 @@ static const int DRW_magicNumEnd18[] = {
 
 class dwgReader18 : public dwgReader {
 public:
-    dwgReader18(std::ifstream *stream, dwgR *p):dwgReader(stream, p){
+    dwgReader18(std::ifstream *stream, dwgRW *p):dwgReader(stream, p){
     }
     bool readMetaData() override;
     bool readFileHeader() override;
@@ -78,11 +79,12 @@ protected:
     std::unique_ptr<duint8[]> objData;
     duint64 uncompSize;
 
+    bool parseSysPage(duint8 *decompSec, duint32 decompSize); //called: Section page map: 0x41630e3b
+    bool parseDataPage(const dwgSectionInfo &si/*, duint8 *dData*/); //called ???: Section map: 0x4163003b
+
 private:
     void genMagicNumber();
 //    dwgBuffer* bufObj;
-    bool parseSysPage(duint8 *decompSec, duint32 decompSize); //called: Section page map: 0x41630e3b
-    bool parseDataPage(const dwgSectionInfo &si/*, duint8 *dData*/); //called ???: Section map: 0x4163003b
     duint32 checksum(duint32 seed, duint8* data, duint64 sz);
 
 duint32 securityFlags;

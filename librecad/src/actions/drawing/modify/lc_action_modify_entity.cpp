@@ -112,13 +112,18 @@ bool LC_ActionModifyEntity::doTriggerModifications(LC_DocumentModificationBatch&
                 case RS2::EntityInsert:
                 case RS2::EntityPolyline:
                 case RS2::EntityImage:
-                case RS2::EntityHatch: {
-                    // editing via delayed invocation in editor to support interactive input
-                    m_propertiesEditor = new LC_EntityPropertiesEditor(m_actionContext, this);
-                    m_allowExternalTermination = false;
-                    m_propertiesEditor->editEntity(parent, m_clonedEntity, m_viewport);
-                    hasDialog = false;
-                    break;
+                case RS2::EntityHatch:
+                case RS2::EntityText:
+                case RS2::EntityMText: {
+                  // editing via delayed invocation in editor to support
+                  // interactive input
+                  m_propertiesEditor =
+                      new LC_EntityPropertiesEditor(m_actionContext, this);
+                  m_allowExternalTermination = false;
+                  m_propertiesEditor->editEntity(parent, m_clonedEntity,
+                                                 m_viewport);
+                  hasDialog = false;
+                  break;
                 }
                 case RS2::EntityDimAligned:
                 case RS2::EntityDimAngular:
@@ -128,14 +133,6 @@ bool LC_ActionModifyEntity::doTriggerModifications(LC_DocumentModificationBatch&
                 case RS2::EntityDimOrdinate:
                 case RS2::EntityDimLinear: {
                     editDialog = new LC_DlgDimension(parent, m_viewport, static_cast<RS_Dimension*>(m_clonedEntity));
-                    break;
-                }
-                case RS2::EntityMText: {
-                    editDialog = new QG_DlgMText(parent, m_viewport, static_cast<RS_MText*>(m_clonedEntity), false);
-                    break;
-                }
-                case RS2::EntityText: {
-                    editDialog = new QG_DlgText(parent, m_viewport, static_cast<RS_Text*>(m_clonedEntity), false);
                     break;
                 }
                 default:

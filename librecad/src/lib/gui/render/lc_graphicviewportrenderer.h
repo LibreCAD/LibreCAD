@@ -62,7 +62,13 @@ class LC_GraphicViewportRenderer{
     bool getLineWidthScaling() const{
         return m_scaleLineWidth;
     }
-protected:
+
+    /** Active drawing background color, used by entities (e.g. LC_Wipeout)
+     *  that need to mask using the viewport background.  Tracks
+     * setBackgroundColor() in concrete renderer subclasses. */
+    RS_Color getBackgroundColor() const { return m_colorBackground; }
+
+  protected:
     QPaintDevice* m_paintDevice = nullptr;
     LC_GraphicViewport* m_viewport = nullptr;
     RS_Graphic* m_graphic = nullptr;

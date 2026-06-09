@@ -558,6 +558,10 @@ void RS_Circle::draw(RS_Painter* painter)
          // Build the actual path (fast or clipped depending on visibility)
   createPainterPath(painter, path);
 
+  // A circle is a closed contour; close the subpath so the stroke uses the
+  // pen's join style at the closure point rather than its cap style (which
+  // would otherwise leave a visible notch on thick strokes).
+  path.closeSubpath();
   painter->drawPath(path);
 }
 

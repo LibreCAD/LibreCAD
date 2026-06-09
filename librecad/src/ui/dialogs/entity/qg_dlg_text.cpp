@@ -228,7 +228,9 @@ void QG_DlgText::setEntity(RS_Text* t, const bool isNew) {
  * Updates the text entity represented by the dialog to fit the choices of the user.
  */
 void QG_DlgText::updateEntity() {
-    if (m_entity != nullptr) {
+    if (m_entity == nullptr) {
+        return;
+    }
         m_entity->setStyle(cbFont->currentText());
         m_entity->setHeight(leHeight->text().toDouble());
         m_entity->setWidthRel(leWidthRel->text().toDouble());
@@ -242,13 +244,9 @@ void QG_DlgText::updateEntity() {
             m_entity->setLayer(cbLayer->getLayer());
         }
         m_entity->update();
-    }
+
 }
 
-
-/*void QG_DlgText::setwidthRel(double rel) {
-    lWidthRel->setText(rel);
-}*/
 
 void QG_DlgText::setAlignmentTL() const {
     setAlignment(1);
@@ -439,15 +437,7 @@ void QG_DlgText::setFont(const QString& f) {
         cbFont->setCurrentIndex(index);
         m_font = cbFont->getFont();
     }
-//    defaultChanged(false);
 }
-
-/*void QG_DlgText::defaultChanged(bool) {
-    if (cbDefault->isChecked() && font) {
-        leLineSpacingFactor->setText(
-                        QString("%1").arg(font->getLineSpacingFactor()));
-    }
-}*/
 
 void QG_DlgText::loadText() {
     const QString fn = QFileDialog::getOpenFileName( this, QString(), QString());

@@ -3,6 +3,7 @@
 **                                                                           **
 **  Copyright (C) 2016-2022 A. Stebich (librecad@mail.lordofbikes.de)        **
 **  Copyright (C) 2011-2015 José F. Soriano, rallazz@gmail.com               **
+**  Copyright (C) 2026 LibreCAD (librecad.org)                                **
 **                                                                           **
 **  This library is free software, licensed under the terms of the GNU       **
 **  General Public License as published by the Free Software Foundation,     **
@@ -12,10 +13,12 @@
 ******************************************************************************/
 
 #include "drw_header.h"
+#include <cmath>
 #include "intern/dxfreader.h"
 #include "intern/dxfwriter.h"
 #include "intern/drw_dbg.h"
 #include "intern/dwgbuffer.h"
+#include "intern/dwgbufferw.h"
 
 DRW_Header::DRW_Header() {
     linetypeCtrl = layerCtrl = styleCtrl = dimstyleCtrl = appidCtrl = 0;
@@ -29,7 +32,7 @@ void DRW_Header::addComment(std::string c){
     comments += c;
 }
 
-bool DRW_Header::parseCode(int code, dxfReader *reader){
+bool DRW_Header::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
     if (nullptr == curr && 9 != code) {
         DRW_DBG("invalid header code: ");
         DRW_DBG(code);
@@ -38,46 +41,20 @@ bool DRW_Header::parseCode(int code, dxfReader *reader){
     }
 
     switch (code) {
-    case 9: {
+    case 9:
+        curr = new DRW_Variant();
         name = reader->getString();
-        if ("$CUSTOMPROPERTYTAG" == name) {
-            waitingFor = CUSTOM_VAR_NAME;
-        }
-        else if ("$CUSTOMPROPERTY" == name) {
-            waitingFor = CUSTOM_VAR_VALUE;
-        }
-        else {
-            waitingFor = VARIABLE_VALUE;
-            curr = new DRW_Variant();
-            if (version < DRW::AC1015 && name == "$DIMUNIT")
-                name="$DIMLUNIT";
-            vars[name]=curr;
+        if (version < DRW::AC1015 && name == "$DIMUNIT")
+            name="$DIMLUNIT";
+        vars[name]=curr;
+        break;
+    case 1:
+        curr->addString(code, reader->getUtf8String());
+        if (name =="$ACADVER") {
+            reader->setVersion(*curr->content.s, true);
+            version = reader->getVersion();
         }
         break;
-    }
-    case 1: {
-        auto value = reader->getUtf8String();
-        switch (waitingFor) {
-            case VARIABLE_VALUE: {
-                curr->addString(code, value);
-                if (name =="$ACADVER") {
-                    reader->setVersion(*curr->content.s, true);
-                    version = reader->getVersion();
-                }
-                break;
-            }
-            case CUSTOM_VAR_NAME: {
-                currentCustomVarName = value;
-                break;
-            }
-            case CUSTOM_VAR_VALUE: {
-                auto var = new DRW_Variant(1, value);
-                customVars[currentCustomVarName]=var;
-                break;
-            }
-        }
-        break;
-    }
     case 2:
         curr->addString(code, reader->getUtf8String());
         break;
@@ -140,160 +117,7 @@ bool DRW_Header::parseCode(int code, dxfReader *reader){
     return true;
 }
 
-void DRW_Header::writeVar(dxfWriter* writer, std::string name, double defaultValue, int varCode) {
-    double varDouble;
-    writer->writeString(9, name);
-    if (getDouble(name, &varDouble)) {
-        writer->writeDouble(varCode, varDouble);
-    }
-    else {
-        writer->writeDouble(varCode, defaultValue);
-    }
-}
-
-void DRW_Header::writeVar(dxfWriter* writer, std::string name, int defaultValue, int varCode) {
-    int varInt;
-    writer->writeString(9, name);
-    if (getInt(name, &varInt)) {
-        writer->writeInt16(varCode, varInt);
-    }
-    else {
-        writer->writeInt16(varCode, defaultValue);
-    }
-}
-
-void DRW_Header::writeVar(dxfWriter* writer, DRW::Version ver, std::string name, std::string defaultValue, int varCode) {
-    std::string varStr;
-    writer->writeString(9, name);
-    if (getStr(name, &varStr)) {
-        if (ver == DRW::AC1009) {
-            writer->writeUtf8Caps(varCode, varStr);
-        }
-        else {
-            writer->writeUtf8String(varCode, varStr);
-        }
-    }
-    else {
-        writer->writeString(varCode, defaultValue);
-    }
-}
-
-void DRW_Header::writeDimVars(dxfWriter* writer, DRW::Version ver) {
-    writeVar(writer, "$DIMSCALE", 2.5);
-    writeVar(writer, "$DIMASZ", 2.5);
-    writeVar(writer, "$DIMEXO", 0.625);
-    writeVar(writer, "$DIMDLI", 3.75);
-    writeVar(writer, "$DIMRND", 0.0);
-    writeVar(writer, "$DIMDLE", 0.0);
-    writeVar(writer, "$DIMEXE", 1.25);
-    writeVar(writer, "$DIMTP", 0.0);
-    writeVar(writer, "$DIMTM", 0.0);
-    writeVar(writer, "$DIMTXT", 2.5);
-    writeVar(writer, "$DIMCEN", 2.5);
-    writeVar(writer, "$DIMTSZ", 0.0);
-
-    writeVar(writer, "$DIMTOL", 0);
-    writeVar(writer, "$DIMLIM", 0);
-    writeVar(writer, "$DIMTIH", 0);
-    writeVar(writer, "$DIMTOH", 0);
-    writeVar(writer, "$DIMSE1", 0);
-    writeVar(writer, "$DIMSE2", 0);
-    writeVar(writer, "$DIMTAD", 1);
-    writeVar(writer, "$DIMZIN", 8);
-
-    writeVar(writer, ver, "$DIMBLK");
-
-    writeVar(writer, "$DIMASO", 1);
-    writeVar(writer, "$DIMSHO", 1);
-
-    writeVar(writer, ver, "$DIMPOST");
-    writeVar(writer, ver, "$DIMAPOST");
-
-    writeVar(writer, "$DIMALT", 0);
-    writeVar(writer, "$DIMALTD", 3);
-    writeVar(writer, "$DIMALTF", 0.03937);
-    writeVar(writer, "$DIMLFAC", 1.0);
-    writeVar(writer, "$DIMTOFL", 1);
-    writeVar(writer, "$DIMTVP", 0.0);
-    writeVar(writer, "$DIMTIX", 0);
-    writeVar(writer, "$DIMSOXD", 0);
-    writeVar(writer, "$DIMSAH", 0);
-
-    writeVar(writer, ver, "$DIMBLK1");
-    writeVar(writer, ver, "$DIMBLK2");
-    writeVar(writer, ver, "$DIMSTYLE", "STANDARD", 2);
-    writeVar(writer, "$DIMCLRD", 0);
-    writeVar(writer, "$DIMCLRE", 0);
-    writeVar(writer, "$DIMCLRT", 0);
-    writeVar(writer, "$DIMTFAC", 1.0);
-    writeVar(writer, "$DIMGAP", 0.625);
-    //post r12 dim vars
-    if (ver > DRW::AC1009) {
-        writeVar(writer, "$DIMJUST", 0);
-        writeVar(writer, "$DIMSD1", 0);
-        writeVar(writer, "$DIMSD2", 0);
-        writeVar(writer, "$DIMTOLJ", 0);
-        writeVar(writer, "$DIMTZIN", 8);
-        writeVar(writer, "$DIMALTZ", 0);
-        writeVar(writer, "$DIMALTTZ", 0);
-        writeVar(writer, "$DIMUPT", 0);
-        writeVar(writer, "$DIMDEC", 2);
-        writeVar(writer, "$DIMTDEC", 2);
-        writeVar(writer, "$DIMALTU", 2);
-        writeVar(writer, "$DIMALTTD", 3);
-
-        writeVar(writer, ver, "$DIMTXSTY", "STANDARD", 7);
-
-        writeVar(writer, "$DIMAUNIT", 0);
-        writeVar(writer, "$DIMADEC", 0);
-        writeVar(writer, "$DIMALTRND", 0.0);
-        writeVar(writer, "$DIMAZIN", 0);
-        writeVar(writer, "$DIMDSEP", 44);
-        writeVar(writer, "$DIMATFIT", 3);
-        writeVar(writer, "$DIMFRAC", 0);
-
-        writeVar(writer, ver, "$DIMLDRBLK", "STANDARD");
-
-        //verify if exist "$DIMLUNIT" or obsolete "$DIMUNIT" (pre v2000)
-        int varInt;
-        if ( !getInt("$DIMLUNIT", &varInt) ){
-            if (!getInt("$DIMUNIT", &varInt))
-                varInt = 2;
-        }
-        //verify valid values from 1 to 6
-        if (varInt<1 || varInt>6)
-            varInt = 2;
-        if (ver > DRW::AC1014) {
-            writer->writeString(9, "$DIMLUNIT");
-            writer->writeInt16(70, varInt);
-        } else {
-            writer->writeString(9, "$DIMUNIT");
-            writer->writeInt16(70, varInt);
-        }
-
-        writeVar(writer, "$DIMLWD", -2);
-        writeVar(writer, "$DIMLWE", -2);
-        writeVar(writer, "$DIMTMOVE", 0);
-
-        if (ver > DRW::AC1018) {// and post v2004 dim vars
-            writeVar(writer, "$DIMFXL", 1.0);
-            writeVar(writer, "$DIMFXLON", 0);
-            writeVar(writer, "$DIMJOGANG", 0.7854);
-            writeVar(writer, "$DIMTFILL", 0);
-            writeVar(writer, "$DIMTFILLCLR", 0);
-            writeVar(writer, "$DIMARCSYM", 0);
-
-            writeVar(writer, ver, "$DIMLTYPE", "", 6);
-            writeVar(writer, ver, "$DIMLTEX1", "", 6);
-            writeVar(writer, ver, "$DIMLTEX2", "", 6);
-            if (ver > DRW::AC1021) {// and post v2007 dim vars
-                writeVar(writer, "$DIMTXTDIRECTION", 0);
-            }
-        }// end post v2004 dim vars
-    }//end post r12 dim vars
-}
-
-void DRW_Header::write(dxfWriter *writer, DRW::Version ver){
+void DRW_Header::write(const std::unique_ptr<dxfWriter>& writer, DRW::Version ver){
 /*RLZ: TODO complete all vars to AC1024*/
     double varDouble;
     int varInt;
@@ -387,13 +211,31 @@ void DRW_Header::write(dxfWriter *writer, DRW::Version ver){
         writer->writeDouble(10, 420.0);
         writer->writeDouble(20, 297.0);
     }
-
-    writeVar(writer, "$ORTHOMODE", 0);
-    writeVar(writer, "$REGENMODE", 1);
-    writeVar(writer, "$FILLMODE", 1);
-    writeVar(writer, "$QTEXTMODE", 0);
-    writeVar(writer, "$MIRRTEXT", 0);
-
+    writer->writeString(9, "$ORTHOMODE");
+    if (getInt("$ORTHOMODE", &varInt))
+        writer->writeInt16(70, varInt);
+    else
+        writer->writeInt16(70, 0);
+    writer->writeString(9, "$REGENMODE");
+    if (getInt("$REGENMODE", &varInt))
+        writer->writeInt16(70, varInt);
+    else
+        writer->writeInt16(70, 1);
+    writer->writeString(9, "$FILLMODE");
+    if (getInt("$FILLMODE", &varInt))
+        writer->writeInt16(70, varInt);
+    else
+        writer->writeInt16(70, 1);
+    writer->writeString(9, "$QTEXTMODE");
+    if (getInt("$QTEXTMODE", &varInt))
+        writer->writeInt16(70, varInt);
+    else
+        writer->writeInt16(70, 0);
+    writer->writeString(9, "$MIRRTEXT");
+    if (getInt("$MIRRTEXT", &varInt))
+        writer->writeInt16(70, varInt);
+    else
+        writer->writeInt16(70, 0);
     if (ver == DRW::AC1009){
         writer->writeString(9, "$DRAGMODE");
         if (getInt("$DRAGMODE", &varInt))
@@ -470,7 +312,442 @@ void DRW_Header::write(dxfWriter *writer, DRW::Version ver){
             writer->writeInt16(70, 0);
     }
 
-    writeDimVars(writer, ver);
+    writer->writeString(9, "$DIMSCALE");
+    if (getDouble("$DIMSCALE", &varDouble))
+        writer->writeDouble(40, varDouble);
+    else
+        writer->writeDouble(40, 2.5);
+    writer->writeString(9, "$DIMASZ");
+    if (getDouble("$DIMASZ", &varDouble))
+        writer->writeDouble(40, varDouble);
+    else
+        writer->writeDouble(40, 2.5);
+    writer->writeString(9, "$DIMEXO");
+    if (getDouble("$DIMEXO", &varDouble))
+        writer->writeDouble(40, varDouble);
+    else
+        writer->writeDouble(40, 0.625);
+    writer->writeString(9, "$DIMDLI");
+    if (getDouble("$DIMDLI", &varDouble))
+        writer->writeDouble(40, varDouble);
+    else
+        writer->writeDouble(40, 3.75);
+    writer->writeString(9, "$DIMRND");
+    if (getDouble("$DIMRND", &varDouble))
+        writer->writeDouble(40, varDouble);
+    else
+        writer->writeDouble(40, 0.0);
+    writer->writeString(9, "$DIMDLE");
+    if (getDouble("$DIMDLE", &varDouble))
+        writer->writeDouble(40, varDouble);
+    else
+        writer->writeDouble(40, 0.0);
+    writer->writeString(9, "$DIMEXE");
+    if (getDouble("$DIMEXE", &varDouble))
+        writer->writeDouble(40, varDouble);
+    else
+        writer->writeDouble(40, 1.25);
+    writer->writeString(9, "$DIMTP");
+    if (getDouble("$DIMTP", &varDouble))
+        writer->writeDouble(40, varDouble);
+    else
+        writer->writeDouble(40, 0.0);
+    writer->writeString(9, "$DIMTM");
+    if (getDouble("$DIMTM", &varDouble))
+        writer->writeDouble(40, varDouble);
+    else
+        writer->writeDouble(40, 0.0);
+    writer->writeString(9, "$DIMTXT");
+    if (getDouble("$DIMTXT", &varDouble))
+        writer->writeDouble(40, varDouble);
+    else
+        writer->writeDouble(40, 2.5);
+    writer->writeString(9, "$DIMCEN");
+    if (getDouble("$DIMCEN", &varDouble))
+        writer->writeDouble(40, varDouble);
+    else
+        writer->writeDouble(40, 2.5);
+    writer->writeString(9, "$DIMTSZ");
+    if (getDouble("$DIMTSZ", &varDouble))
+        writer->writeDouble(40, varDouble);
+    else
+        writer->writeDouble(40, 0.0);
+    writer->writeString(9, "$DIMTOL");
+    if (getInt("$DIMTOL", &varInt))
+        writer->writeInt16(70, varInt);
+    else
+        writer->writeInt16(70, 0);
+    writer->writeString(9, "$DIMLIM");
+    if (getInt("$DIMLIM", &varInt))
+        writer->writeInt16(70, varInt);
+    else
+        writer->writeInt16(70, 0);
+    writer->writeString(9, "$DIMTIH");
+    if (getInt("$DIMTIH", &varInt))
+        writer->writeInt16(70, varInt);
+    else
+        writer->writeInt16(70, 0);
+    writer->writeString(9, "$DIMTOH");
+    if (getInt("$DIMTOH", &varInt))
+        writer->writeInt16(70, varInt);
+    else
+        writer->writeInt16(70, 0);
+    writer->writeString(9, "$DIMSE1");
+    if (getInt("$DIMSE1", &varInt))
+        writer->writeInt16(70, varInt);
+    else
+        writer->writeInt16(70, 0);
+    writer->writeString(9, "$DIMSE2");
+    if (getInt("$DIMSE2", &varInt))
+        writer->writeInt16(70, varInt);
+    else
+        writer->writeInt16(70, 0);
+    writer->writeString(9, "$DIMTAD");
+    if (getInt("$DIMTAD", &varInt))
+        writer->writeInt16(70, varInt);
+    else
+        writer->writeInt16(70, 1);
+    writer->writeString(9, "$DIMZIN");
+    if (getInt("$DIMZIN", &varInt))
+        writer->writeInt16(70, varInt);
+    else
+        writer->writeInt16(70, 8);
+    writer->writeString(9, "$DIMBLK");
+    if (getStr("$DIMBLK", &varStr))
+        if (ver == DRW::AC1009)
+            writer->writeUtf8Caps(1, varStr);
+        else
+            writer->writeUtf8String(1, varStr);
+    else
+        writer->writeString(1, "");
+    writer->writeString(9, "$DIMASO");
+    if (getInt("$DIMASO", &varInt))
+        writer->writeInt16(70, varInt);
+    else
+        writer->writeInt16(70, 1);
+    writer->writeString(9, "$DIMSHO");
+    if (getInt("$DIMSHO", &varInt))
+        writer->writeInt16(70, varInt);
+    else
+        writer->writeInt16(70, 1);
+    writer->writeString(9, "$DIMPOST");
+    if (getStr("$DIMPOST", &varStr))
+        if (ver == DRW::AC1009)
+            writer->writeUtf8Caps(1, varStr);
+        else
+            writer->writeUtf8String(1, varStr);
+    else
+        writer->writeString(1, "");
+    writer->writeString(9, "$DIMAPOST");
+    if (getStr("$DIMAPOST", &varStr))
+        if (ver == DRW::AC1009)
+            writer->writeUtf8Caps(1, varStr);
+        else
+            writer->writeUtf8String(1, varStr);
+    else
+        writer->writeString(1, "");
+    writer->writeString(9, "$DIMALT");
+    if (getInt("$DIMALT", &varInt))
+        writer->writeInt16(70, varInt);
+    else
+        writer->writeInt16(70, 0);
+    writer->writeString(9, "$DIMALTD");
+    if (getInt("$DIMALTD", &varInt))
+        writer->writeInt16(70, varInt);
+    else
+        writer->writeInt16(70, 3);
+    writer->writeString(9, "$DIMALTF");
+    if (getDouble("$DIMALTF", &varDouble))
+        writer->writeDouble(40, varDouble);
+    else
+        writer->writeDouble(40, 0.03937);
+    writer->writeString(9, "$DIMLFAC");
+    if (getDouble("$DIMLFAC", &varDouble))
+        writer->writeDouble(40, varDouble);
+    else
+        writer->writeDouble(40, 1.0);
+    writer->writeString(9, "$DIMTOFL");
+    if (getInt("$DIMTOFL", &varInt))
+        writer->writeInt16(70, varInt);
+    else
+        writer->writeInt16(70, 1);
+    writer->writeString(9, "$DIMTVP");
+    if (getDouble("$DIMTVP", &varDouble))
+        writer->writeDouble(40, varDouble);
+    else
+        writer->writeDouble(40, 0.0);
+    writer->writeString(9, "$DIMTIX");
+    if (getInt("$DIMTIX", &varInt))
+        writer->writeInt16(70, varInt);
+    else
+        writer->writeInt16(70, 0);
+    writer->writeString(9, "$DIMSOXD");
+    if (getInt("$DIMSOXD", &varInt))
+        writer->writeInt16(70, varInt);
+    else
+        writer->writeInt16(70, 0);
+    writer->writeString(9, "$DIMSAH");
+    if (getInt("$DIMSAH", &varInt))
+        writer->writeInt16(70, varInt);
+    else
+        writer->writeInt16(70, 0);
+    writer->writeString(9, "$DIMBLK1");
+    if (getStr("$DIMBLK1", &varStr))
+        if (ver == DRW::AC1009)
+            writer->writeUtf8Caps(1, varStr);
+        else
+            writer->writeUtf8String(1, varStr);
+    else
+        writer->writeString(1, "");
+    writer->writeString(9, "$DIMBLK2");
+    if (getStr("$DIMBLK2", &varStr))
+        if (ver == DRW::AC1009)
+            writer->writeUtf8Caps(1, varStr);
+        else
+            writer->writeUtf8String(1, varStr);
+    else
+        writer->writeString(1, "");
+    writer->writeString(9, "$DIMSTYLE");
+    if (getStr("$DIMSTYLE", &varStr))
+        if (ver == DRW::AC1009)
+            writer->writeUtf8Caps(2, varStr);
+        else
+            writer->writeUtf8String(2, varStr);
+    else
+        writer->writeString(2, "STANDARD");
+    writer->writeString(9, "$DIMCLRD");
+    if (getInt("$DIMCLRD", &varInt))
+        writer->writeInt16(70, varInt);
+    else
+        writer->writeInt16(70, 0);
+    writer->writeString(9, "$DIMCLRE");
+    if (getInt("$DIMCLRE", &varInt))
+        writer->writeInt16(70, varInt);
+    else
+        writer->writeInt16(70, 0);
+    writer->writeString(9, "$DIMCLRT");
+    if (getInt("$DIMCLRT", &varInt))
+        writer->writeInt16(70, varInt);
+    else
+        writer->writeInt16(70, 0);
+    writer->writeString(9, "$DIMTFAC");
+    if (getDouble("$DIMTFAC", &varDouble))
+        writer->writeDouble(40, varDouble);
+    else
+        writer->writeDouble(40, 1.0);
+    writer->writeString(9, "$DIMGAP");
+    if (getDouble("$DIMGAP", &varDouble))
+        writer->writeDouble(40, varDouble);
+    else
+        writer->writeDouble(40, 0.625);
+    //post r12 dim vars
+    if (ver > DRW::AC1009) {
+        writer->writeString(9, "$DIMJUST");
+        if (getInt("$DIMJUST", &varInt))
+            writer->writeInt16(70, varInt);
+        else
+            writer->writeInt16(70, 0);
+        writer->writeString(9, "$DIMSD1");
+        if (getInt("$DIMSD1", &varInt))
+            writer->writeInt16(70, varInt);
+        else
+            writer->writeInt16(70, 0);
+        writer->writeString(9, "$DIMSD2");
+        if (getInt("$DIMSD2", &varInt))
+            writer->writeInt16(70, varInt);
+        else
+            writer->writeInt16(70, 0);
+        writer->writeString(9, "$DIMTOLJ");
+        if (getInt("$DIMTOLJ", &varInt))
+            writer->writeInt16(70, varInt);
+        else
+            writer->writeInt16(70, 0);
+        writer->writeString(9, "$DIMTZIN");
+        if (getInt("$DIMTZIN", &varInt))
+            writer->writeInt16(70, varInt);
+        else
+            writer->writeInt16(70, 8);
+        writer->writeString(9, "$DIMALTZ");
+        if (getInt("$DIMALTZ", &varInt))
+            writer->writeInt16(70, varInt);
+        else
+            writer->writeInt16(70, 0);
+        writer->writeString(9, "$DIMALTTZ");
+        if (getInt("$DIMALTTZ", &varInt))
+            writer->writeInt16(70, varInt);
+        else
+            writer->writeInt16(70, 0);
+        writer->writeString(9, "$DIMUPT");
+        if (getInt("$DIMUPT", &varInt))
+            writer->writeInt16(70, varInt);
+        else
+            writer->writeInt16(70, 0);
+        writer->writeString(9, "$DIMDEC");
+        if (getInt("$DIMDEC", &varInt))
+            writer->writeInt16(70, varInt);
+        else
+            writer->writeInt16(70, 2);
+        writer->writeString(9, "$DIMTDEC");
+        if (getInt("$DIMTDEC", &varInt))
+            writer->writeInt16(70, varInt);
+        else
+            writer->writeInt16(70, 2);
+        writer->writeString(9, "$DIMALTU");
+        if (getInt("$DIMALTU", &varInt))
+            writer->writeInt16(70, varInt);
+        else
+            writer->writeInt16(70, 2);
+        writer->writeString(9, "$DIMALTTD");
+        if (getInt("$DIMALTTD", &varInt))
+            writer->writeInt16(70, varInt);
+        else
+            writer->writeInt16(70, 3);
+        writer->writeString(9, "$DIMTXSTY");
+        if (getStr("$DIMTXSTY", &varStr))
+            if (ver == DRW::AC1009)
+                writer->writeUtf8Caps(7, varStr);
+            else
+                writer->writeUtf8String(7, varStr);
+        else
+            writer->writeString(7, "STANDARD");
+        writer->writeString(9, "$DIMAUNIT");
+        if (getInt("$DIMAUNIT", &varInt))
+            writer->writeInt16(70, varInt);
+        else
+            writer->writeInt16(70, 0);
+        writer->writeString(9, "$DIMADEC");
+        if (getInt("$DIMADEC", &varInt))
+            writer->writeInt16(70, varInt);
+        else
+            writer->writeInt16(70, 0);
+        writer->writeString(9, "$DIMALTRND");
+        if (getDouble("$DIMALTRND", &varDouble))
+            writer->writeDouble(40, varDouble);
+        else
+            writer->writeDouble(40, 0.0);
+        writer->writeString(9, "$DIMAZIN");
+        if (getInt("$DIMAZIN", &varInt))
+            writer->writeInt16(70, varInt);
+        else
+            writer->writeInt16(70, 0);
+        writer->writeString(9, "$DIMDSEP");
+        if (getInt("$DIMDSEP", &varInt))
+            writer->writeInt16(70, varInt);
+        else
+            writer->writeInt16(70, 44);
+        writer->writeString(9, "$DIMATFIT");
+        if (getInt("$DIMATFIT", &varInt))
+            writer->writeInt16(70, varInt);
+        else
+            writer->writeInt16(70, 3);
+        writer->writeString(9, "$DIMFRAC");
+        if (getInt("$DIMFRAC", &varInt))
+            writer->writeInt16(70, varInt);
+        else
+            writer->writeInt16(70, 0);
+        writer->writeString(9, "$DIMLDRBLK");
+        if (getStr("$DIMLDRBLK", &varStr))
+            if (ver == DRW::AC1009)
+                writer->writeUtf8Caps(1, varStr);
+            else
+                writer->writeUtf8String(1, varStr);
+        else
+            writer->writeString(1, "STANDARD");
+    //verify if exist "$DIMLUNIT" or obsolete "$DIMUNIT" (pre v2000)
+        if ( !getInt("$DIMLUNIT", &varInt) ){
+            if (!getInt("$DIMUNIT", &varInt))
+                varInt = 2;
+        }
+        //verify valid values from 1 to 6
+        if (varInt<1 || varInt>6)
+            varInt = 2;
+        if (ver > DRW::AC1014) {
+            writer->writeString(9, "$DIMLUNIT");
+            writer->writeInt16(70, varInt);
+        } else {
+            writer->writeString(9, "$DIMUNIT");
+            writer->writeInt16(70, varInt);
+        }
+        writer->writeString(9, "$DIMLWD");
+        if (getInt("$DIMLWD", &varInt))
+            writer->writeInt16(70, varInt);
+        else
+            writer->writeInt16(70, -2);
+        writer->writeString(9, "$DIMLWE");
+        if (getInt("$DIMLWE", &varInt))
+            writer->writeInt16(70, varInt);
+        else
+            writer->writeInt16(70, -2);
+        writer->writeString(9, "$DIMTMOVE");
+        if (getInt("$DIMTMOVE", &varInt))
+            writer->writeInt16(70, varInt);
+        else
+            writer->writeInt16(70, 0);
+
+        if (ver > DRW::AC1018) {// and post v2004 dim vars
+            writer->writeString(9, "$DIMFXL");
+            if (getDouble("$DIMFXL", &varDouble))
+                writer->writeDouble(40, varDouble);
+            else
+                writer->writeDouble(40, 1.0);
+            writer->writeString(9, "$DIMFXLON");
+            if (getInt("$DIMFXLON", &varInt))
+                writer->writeInt16(70, varInt);
+            else
+                writer->writeInt16(70, 0);
+            writer->writeString(9, "$DIMJOGANG");
+            if (getDouble("$DIMJOGANG", &varDouble))
+                writer->writeDouble(40, varDouble);
+            else
+                writer->writeDouble(40, 0.7854);
+            writer->writeString(9, "$DIMTFILL");
+            if (getInt("$DIMTFILL", &varInt))
+                writer->writeInt16(70, varInt);
+            else
+                writer->writeInt16(70, 0);
+            writer->writeString(9, "$DIMTFILLCLR");
+            if (getInt("$DIMTFILLCLR", &varInt))
+                writer->writeInt16(70, varInt);
+            else
+                writer->writeInt16(70, 0);
+            writer->writeString(9, "$DIMARCSYM");
+            if (getInt("$DIMARCSYM", &varInt))
+                writer->writeInt16(70, varInt);
+            else
+                writer->writeInt16(70, 0);
+            writer->writeString(9, "$DIMLTYPE");
+            if (getStr("$DIMLTYPE", &varStr))
+                if (ver == DRW::AC1009)
+                    writer->writeUtf8Caps(6, varStr);
+                else
+                    writer->writeUtf8String(6, varStr);
+            else
+                writer->writeString(6, "");
+            writer->writeString(9, "$DIMLTEX1");
+            if (getStr("$DIMLTEX1", &varStr))
+                if (ver == DRW::AC1009)
+                    writer->writeUtf8Caps(6, varStr);
+                else
+                    writer->writeUtf8String(6, varStr);
+            else
+                writer->writeString(6, "");
+            writer->writeString(9, "$DIMLTEX2");
+            if (getStr("$DIMLTEX2", &varStr))
+                if (ver == DRW::AC1009)
+                    writer->writeUtf8Caps(6, varStr);
+                else
+                    writer->writeUtf8String(6, varStr);
+            else
+                writer->writeString(6, "");
+            if (ver > DRW::AC1021) {// and post v2007 dim vars
+                writer->writeString(9, "$DIMTXTDIRECTION");
+                if (getInt("$DIMTXTDIRECTION", &varInt))
+                    writer->writeInt16(70, varInt);
+                else
+                    writer->writeInt16(70, 0);
+            }
+        }// end post v2004 dim vars
+    }//end post r12 dim vars
 
     writer->writeString(9, "$LUNITS");
     if (getInt("$LUNITS", &varInt))
@@ -1487,7 +1764,7 @@ bool DRW_Header::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer *hBbuf
     duint32 endBitPos = 160; //start bit: 16 sentinel + 4 size
     DRW_DBG("\nbyte size of data: "); DRW_DBG(size);
     if ((DRW::AC1024 <= version && 3 < maintenanceVersion)
-        || DRW::AC1032 <= version) { //2010+
+        || DRW::AC1032 <= version) { //2010+ MV>3
         duint32 hSize = buf->getRawLong32();
         endBitPos += 32; //start bit: + 4 height size
         DRW_DBG("\n2010+ & MV> 3, height 32b: "); DRW_DBG(hSize);
@@ -1639,14 +1916,14 @@ bool DRW_Header::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer *hBbuf
     ddouble64 msec, day;
     day = buf->getBitLong();
     msec = buf->getBitLong();
-    while (msec > 0)
+    while (msec >= 1)
         msec /=10;
     vars["TDCREATE"]=new DRW_Variant(40, day+msec);//RLZ: TODO convert to day.msec
 //    vars["TDCREATE"]=new DRW_Variant(40, buf->getBitLong());//RLZ: TODO convert to day.msec
 //    vars["TDCREATE"]=new DRW_Variant(40, buf->getBitLong());
     day = buf->getBitLong();
     msec = buf->getBitLong();
-    while (msec > 0)
+    while (msec >= 1)
         msec /=10;
     vars["TDUPDATE"]=new DRW_Variant(40, day+msec);//RLZ: TODO convert to day.msec
 //    vars["TDUPDATE"]=new DRW_Variant(40, buf->getBitLong());//RLZ: TODO convert to day.msec
@@ -1658,14 +1935,14 @@ bool DRW_Header::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer *hBbuf
     }
     day = buf->getBitLong();
     msec = buf->getBitLong();
-    while (msec > 0)
+    while (msec >= 1)
         msec /=10;
     vars["TDINDWG"]=new DRW_Variant(40, day+msec);//RLZ: TODO convert to day.msec
 //    vars["TDINDWG"]=new DRW_Variant(40, buf->getBitLong());//RLZ: TODO convert to day.msec
 //    vars["TDINDWG"]=new DRW_Variant(40, buf->getBitLong());//RLZ: TODO convert to day.msec
     day = buf->getBitLong();
     msec = buf->getBitLong();
-    while (msec > 0)
+    while (msec >= 1)
         msec /=10;
     vars["TDUSRTIMER"]=new DRW_Variant(40, day+msec);//RLZ: TODO convert to day.msec
 //    vars["TDUSRTIMER"]=new DRW_Variant(40, buf->getBitLong());//RLZ: TODO convert to day.msec
@@ -1673,6 +1950,7 @@ bool DRW_Header::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer *hBbuf
     vars["CECOLOR"]=new DRW_Variant(62, buf->getCmColor(version));//RLZ: TODO read CMC or EMC color
     dwgHandle HANDSEED = buf->getHandle();//always present in data stream
     DRW_DBG("\nHANDSEED: "); DRW_DBGHL(HANDSEED.code, HANDSEED.size, HANDSEED.ref);
+    handSeed = HANDSEED.ref;
     dwgHandle CLAYER = hBbuf->getHandle();
     DRW_DBG("\nCLAYER: "); DRW_DBGHL(CLAYER.code, CLAYER.size, CLAYER.ref);
     dwgHandle TEXTSTYLE = hBbuf->getHandle();
@@ -1717,6 +1995,7 @@ bool DRW_Header::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer *hBbuf
     vars["INSBASE"]=new DRW_Variant(10, buf->get3BitDouble());
     vars["EXTMIN"]=new DRW_Variant(10, buf->get3BitDouble());
     vars["EXTMAX"]=new DRW_Variant(10, buf->get3BitDouble());
+
     vars["LIMMIN"]=new DRW_Variant(10, buf->get2RawDouble());
     vars["LIMMAX"]=new DRW_Variant(10, buf->get2RawDouble());
     vars["ELEVATION"]=new DRW_Variant(40, buf->getBitDouble());
@@ -2118,7 +2397,7 @@ bool DRW_Header::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer *hBbuf
 
     buf->setPosition(size+16+4); //read size +16 start sentinel + 4 size
     if ((DRW::AC1024 <= version && 3 < maintenanceVersion)
-        || DRW::AC1032 <= version) { //2010+
+        || DRW::AC1032 <= version) { //2010+ MV>3
         buf->getRawLong32();//advance 4 bytes (hisize)
     }
     DRW_DBG("\nsetting position to: "); DRW_DBG(buf->getPosition());
@@ -2130,7 +2409,7 @@ bool DRW_Header::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer *hBbuf
     }
 
     //temporary code to show header end sentinel
-    [[maybe_unused]] duint64 sz= 0; //buf->size()-1;
+    duint64 sz= buf->size()-1;
     if (version < DRW::AC1018) {//pre 2004
         sz= buf->size()-16;
         buf->setPosition(sz);
@@ -2179,6 +2458,440 @@ bool DRW_Header::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer *hBbuf
     return result;
 }
 
+// ---------------------------------------------------------------------------
+// DRW_Header::encodeDwg — Phase 3a (drafted 2026-05-14)
+// ---------------------------------------------------------------------------
+// Inverse of parseDwg.  Emits the bit-packed HEADER section body for R2000
+// (AC1015).  The caller (dwgWriter15::writeDwgHeader) has already emitted
+// the 16-byte begin sentinel + 4-byte RL section-size placeholder; this
+// function appends the variable stream starting right after them.  The
+// caller appends the 16-byte end sentinel + 2-byte CRC16 LE after we return
+// and back-patches the size placeholder.
+//
+// For R2000 the handle stream is INLINE with the data stream — buf and
+// hBbuf are the same accumulator.  Future versions will diverge.
+//
+// Order of emission must match parseDwg EXACTLY.  See deep-review notes
+// in /Users/dli/.claude/plans/dwg-write-phase3-tables-objects.md for the
+// 13-handle control-handle block and the conditional layout.
+
+namespace {
+    /// Look up a 1-bit boolean var in DRW_Header::vars; default 0.
+    duint8 boolVar(const DRW_Header& hdr, const std::string& name) {
+        auto it = hdr.vars.find(name);
+        if (it == hdr.vars.end() || !it->second) return 0;
+        return static_cast<duint8>(it->second->i_val() & 1);
+    }
+    /// Look up a BS/BL int var; default 0 (or caller-supplied default).
+    dint32 intVar(const DRW_Header& hdr, const std::string& name, dint32 def = 0) {
+        auto it = hdr.vars.find(name);
+        if (it == hdr.vars.end() || !it->second) return def;
+        return it->second->i_val();
+    }
+    /// Look up a BD float var; default 0.0 (or caller-supplied).
+    double dblVar(const DRW_Header& hdr, const std::string& name, double def = 0.0) {
+        auto it = hdr.vars.find(name);
+        if (it == hdr.vars.end() || !it->second) return def;
+        return it->second->d_val();
+    }
+    /// Look up a 3BD coord var; default {0,0,0}.
+    DRW_Coord coordVar(const DRW_Header& hdr, const std::string& name) {
+        auto it = hdr.vars.find(name);
+        if (it == hdr.vars.end() || !it->second
+            || it->second->type() != DRW_Variant::COORD
+            || it->second->coord() == nullptr) {
+            return {0.0, 0.0, 0.0};
+        }
+        return *it->second->coord();
+    }
+    /// Look up a TV string var; default empty.
+    UTF8STRING strVar(const DRW_Header& hdr, const std::string& name) {
+        auto it = hdr.vars.find(name);
+        if (it == hdr.vars.end() || !it->second
+            || it->second->type() != DRW_Variant::STRING) {
+            return {};
+        }
+        return UTF8STRING(it->second->c_str());
+    }
+    /// Build a hard-pointer handle (code 4) referring to `ref`.  Returns
+    /// the null handle when ref==0, which matches what parseDwg sees in
+    /// an empty document.
+    dwgHandle makeHardPtr(duint32 ref) {
+        dwgHandle h;
+        h.code = (ref == 0) ? 0 : 4;
+        h.ref  = ref;
+        h.size = 0;
+        if (ref != 0) {
+            duint32 t = ref;
+            while (t != 0) { t >>= 8; ++h.size; }
+        }
+        return h;
+    }
+    /// Build a soft-owner handle (code 3) — used for the XDic-style
+    /// owner references in the HEADER's control-handle block.
+    dwgHandle makeSoftOwner(duint32 ref) {
+        dwgHandle h;
+        h.code = (ref == 0) ? 0 : 3;
+        h.ref  = ref;
+        h.size = 0;
+        if (ref != 0) {
+            duint32 t = ref;
+            while (t != 0) { t >>= 8; ++h.size; }
+        }
+        return h;
+    }
+    /// Decompose a stored double (TDCREATE-style "day.msec_fraction") back
+    /// into the two BLs parseDwg reads.  Inverse of:
+    ///   day = getBitLong(); msec = getBitLong();
+    ///   while (msec >= 1) msec /= 10;
+    ///   stored = day + msec;
+    /// For an empty header (stored == 0.0) the result is (0, 0).  Real
+    /// fixture defaults still round-trip exactly because msec is always
+    /// represented as fractional part * 10^k for some k.
+    void splitTimeVar(double stored, dint32& day, dint32& msecOut) {
+        day = static_cast<dint32>(stored);
+        double frac = stored - static_cast<double>(day);
+        if (frac == 0.0) { msecOut = 0; return; }
+        // Reverse the divide-by-10 loop: multiply by 10 until the result
+        // is integer (the original msec value).  Cap at 10 iterations to
+        // avoid pathological FP cases.
+        for (int i = 0; i < 10; ++i) {
+            frac *= 10.0;
+            double rounded = std::round(frac);
+            if (std::abs(frac - rounded) < 1e-9 && rounded != 0.0) {
+                msecOut = static_cast<dint32>(rounded);
+                return;
+            }
+        }
+        msecOut = static_cast<dint32>(std::round(frac));
+    }
+} // namespace
+
+bool DRW_Header::encodeDwg(DRW::Version version, dwgBufferW *buf, dwgBufferW *hBbuf) {
+    if (version != DRW::AC1015) return false;  // R2000 only for v1
+
+    // -------- Unknown 4 BDs (parseDwg:1789-1792) ----------------------------
+    buf->putBitDouble(0.0);
+    buf->putBitDouble(0.0);
+    buf->putBitDouble(0.0);
+    buf->putBitDouble(0.0);
+
+    // -------- 4 CP8 string unknowns (parseDwg:1793-1798) --------------------
+    // Gated on `version < AC1021` (2007-).  R2000 hits this branch — emit
+    // four empty CP8 strings (BS length=0).
+    buf->putCP8Text(std::string());
+    buf->putCP8Text(std::string());
+    buf->putCP8Text(std::string());
+    buf->putCP8Text(std::string());
+
+    // -------- Unknown longs (parseDwg:1799-1800) ----------------------------
+    // parseDwg comments call these "Unknown long1 (24L)" and "(0L)".  Real
+    // R2000 files have 24 and 0 respectively.
+    buf->putBitLong(24);
+    buf->putBitLong(0);
+
+    // -------- Current-view handle (parseDwg:1804-1807) ----------------------
+    // Gated on `version < AC1018` (pre-R2004).  R2000 hits this branch —
+    // emit a null handle.  Reads from the handle stream (== buf for R2000).
+    hBbuf->putHandle(makeHardPtr(0));
+
+    // -------- 9 single-bit vars (parseDwg:1808-1819; R2000-relevant set) ----
+    buf->putBit(boolVar(*this, "DIMASO"));
+    buf->putBit(boolVar(*this, "DIMSHO"));
+    buf->putBit(boolVar(*this, "PLINEGEN"));
+    buf->putBit(boolVar(*this, "ORTHOMODE"));
+    buf->putBit(boolVar(*this, "REGENMODE"));
+    buf->putBit(boolVar(*this, "FILLMODE"));
+    buf->putBit(boolVar(*this, "QTEXTMODE"));
+    buf->putBit(boolVar(*this, "PSLTSCALE"));
+    buf->putBit(boolVar(*this, "LIMCHECK"));
+
+    // -------- 11 more single-bit vars (parseDwg:1824-1844) ------------------
+    buf->putBit(boolVar(*this, "USRTIMER"));
+    buf->putBit(boolVar(*this, "SKPOLY"));
+    buf->putBit(boolVar(*this, "ANGDIR"));
+    buf->putBit(boolVar(*this, "SPLFRAME"));
+    buf->putBit(boolVar(*this, "MIRRTEXT"));
+    buf->putBit(boolVar(*this, "WORLDVIEW"));
+    buf->putBit(boolVar(*this, "TILEMODE"));
+    buf->putBit(boolVar(*this, "PLIMCHECK"));
+    buf->putBit(boolVar(*this, "VISRETAIN"));
+    buf->putBit(boolVar(*this, "DISPSILH"));
+    buf->putBit(boolVar(*this, "PELLIPSE"));
+
+    // -------- PROXIGRAPHICS through PDMODE (parseDwg:1845-1861) -------------
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "PROXIGRAPHICS", 1)));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "TREEDEPTH", 3020)));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "LUNITS", 2)));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "LUPREC", 4)));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "AUNITS", 0)));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "AUPREC", 0)));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "ATTMODE", 1)));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "PDMODE", 0)));
+
+    // -------- USERI1..5 + spline/surface family (parseDwg:1870-1888) --------
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "USERI1")));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "USERI2")));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "USERI3")));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "USERI4")));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "USERI5")));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "SPLINESEGS", 8)));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "SURFU", 6)));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "SURFV", 6)));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "SURFTYPE", 6)));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "SURFTAB1", 6)));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "SURFTAB2", 6)));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "SPLINETYPE", 6)));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "SHADEDGE", 3)));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "SHADEDIF", 70)));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "UNITMODE")));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "MAXACTVP", 64)));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "ISOLINES", 4)));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "CMLJUST")));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "TEXTQLTY", 50)));
+
+    // -------- LTSCALE through CELTSCALE (parseDwg:1889-1909) ----------------
+    buf->putBitDouble(dblVar(*this, "LTSCALE", 1.0));
+    buf->putBitDouble(dblVar(*this, "TEXTSIZE", 2.5));
+    buf->putBitDouble(dblVar(*this, "TRACEWID", 1.0));
+    buf->putBitDouble(dblVar(*this, "SKETCHINC", 1.0));
+    buf->putBitDouble(dblVar(*this, "FILLETRAD", 0.0));
+    buf->putBitDouble(dblVar(*this, "THICKNESS", 0.0));
+    buf->putBitDouble(dblVar(*this, "ANGBASE", 0.0));
+    buf->putBitDouble(dblVar(*this, "PDSIZE", 0.0));
+    buf->putBitDouble(dblVar(*this, "PLINEWID", 0.0));
+    buf->putBitDouble(dblVar(*this, "USERR1", 0.0));
+    buf->putBitDouble(dblVar(*this, "USERR2", 0.0));
+    buf->putBitDouble(dblVar(*this, "USERR3", 0.0));
+    buf->putBitDouble(dblVar(*this, "USERR4", 0.0));
+    buf->putBitDouble(dblVar(*this, "USERR5", 0.0));
+    buf->putBitDouble(dblVar(*this, "CHAMFERA", 0.0));
+    buf->putBitDouble(dblVar(*this, "CHAMFERB", 0.0));
+    buf->putBitDouble(dblVar(*this, "CHAMFERC", 0.0));
+    buf->putBitDouble(dblVar(*this, "CHAMFERD", 0.0));
+    buf->putBitDouble(dblVar(*this, "FACETRES", 0.5));
+    buf->putBitDouble(dblVar(*this, "CMLSCALE", 1.0));
+    buf->putBitDouble(dblVar(*this, "CELTSCALE", 1.0));
+
+    // -------- MENU string (R2004-, including R2000) -------------------------
+    buf->putCP8Text(strVar(*this, "MENU"));
+
+    // -------- TDCREATE / TDUPDATE / TDINDWG / TDUSRTIMER (4 pairs of BLs) ---
+    {
+        dint32 day, msec;
+        splitTimeVar(dblVar(*this, "TDCREATE"), day, msec);
+        buf->putBitLong(day);
+        buf->putBitLong(msec);
+    }
+    {
+        dint32 day, msec;
+        splitTimeVar(dblVar(*this, "TDUPDATE"), day, msec);
+        buf->putBitLong(day);
+        buf->putBitLong(msec);
+    }
+    {
+        dint32 day, msec;
+        splitTimeVar(dblVar(*this, "TDINDWG"), day, msec);
+        buf->putBitLong(day);
+        buf->putBitLong(msec);
+    }
+    {
+        dint32 day, msec;
+        splitTimeVar(dblVar(*this, "TDUSRTIMER"), day, msec);
+        buf->putBitLong(day);
+        buf->putBitLong(msec);
+    }
+
+    // -------- CECOLOR + first handle block (parseDwg:1947-1963) -------------
+    buf->putCmColor(version, static_cast<duint16>(intVar(*this, "CECOLOR", 256)));
+    // HANDSEED — emitted into the DATA stream (`buf`), not hBbuf.
+    // Stored in DRW_Header::handSeed (set by parseDwg on read; settable
+    // by the writer caller from the HandleAllocator's high-water mark
+    // for fresh documents).  A zero value emits as a null handle —
+    // libdxfrw round-trip tolerates it, but AutoCAD will refresh
+    // HANDSEED to `max(handle)+1` on first save and mark the file
+    // modified.  See Risk 4j.
+    buf->putHandle(makeHardPtr(handSeed));
+    // The following 5 handles emit to the HANDLE stream.  For R2000 the
+    // handle stream is inline (buf == hBbuf in our usage).
+    hBbuf->putHandle(makeHardPtr(0));  // CLAYER
+    hBbuf->putHandle(makeHardPtr(0));  // TEXTSTYLE
+    hBbuf->putHandle(makeHardPtr(0));  // CELTYPE
+    hBbuf->putHandle(makeHardPtr(0));  // DIMSTYLE
+    hBbuf->putHandle(makeHardPtr(0));  // CMLSTYLE
+
+    // -------- Paper-space view block (parseDwg:1965-1989) -------------------
+    buf->putBitDouble(dblVar(*this, "PSVPSCALE", 1.0));
+    buf->put3BitDouble(coordVar(*this, "PINSBASE"));
+    buf->put3BitDouble(coordVar(*this, "PEXTMIN"));
+    buf->put3BitDouble(coordVar(*this, "PEXTMAX"));
+    buf->put2RawDouble(coordVar(*this, "PLIMMIN"));
+    buf->put2RawDouble(coordVar(*this, "PLIMMAX"));
+    buf->putBitDouble(dblVar(*this, "PELEVATION"));
+    buf->put3BitDouble(coordVar(*this, "PUCSORG"));
+    buf->put3BitDouble(coordVar(*this, "PUCSXDIR"));
+    buf->put3BitDouble(coordVar(*this, "PUCSYDIR"));
+    hBbuf->putHandle(makeHardPtr(0));  // PUCSNAME
+    hBbuf->putHandle(makeHardPtr(0));  // PUCSORTHOREF
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "PUCSORTHOVIEW")));
+    hBbuf->putHandle(makeHardPtr(0));  // PUCSBASE
+    buf->put3BitDouble(coordVar(*this, "PUCSORGTOP"));
+    buf->put3BitDouble(coordVar(*this, "PUCSORGBOTTOM"));
+    buf->put3BitDouble(coordVar(*this, "PUCSORGLEFT"));
+    buf->put3BitDouble(coordVar(*this, "PUCSORGRIGHT"));
+    buf->put3BitDouble(coordVar(*this, "PUCSORGFRONT"));
+    buf->put3BitDouble(coordVar(*this, "PUCSORGBACK"));
+
+    // -------- Model-space view block (parseDwg:1991-2018) -------------------
+    buf->put3BitDouble(coordVar(*this, "INSBASE"));
+    buf->put3BitDouble(coordVar(*this, "EXTMIN"));
+    buf->put3BitDouble(coordVar(*this, "EXTMAX"));
+    buf->put2RawDouble(coordVar(*this, "LIMMIN"));
+    buf->put2RawDouble(coordVar(*this, "LIMMAX"));
+    buf->putBitDouble(dblVar(*this, "ELEVATION"));
+    buf->put3BitDouble(coordVar(*this, "UCSORG"));
+    buf->put3BitDouble(coordVar(*this, "UCSXDIR"));
+    buf->put3BitDouble(coordVar(*this, "UCSYDIR"));
+    hBbuf->putHandle(makeHardPtr(0));  // UCSNAME
+    hBbuf->putHandle(makeHardPtr(0));  // UCSORTHOREF
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "UCSORTHOVIEW")));
+    hBbuf->putHandle(makeHardPtr(0));  // UCSBASE
+    buf->put3BitDouble(coordVar(*this, "UCSORGTOP"));
+    buf->put3BitDouble(coordVar(*this, "UCSORGBOTTOM"));
+    buf->put3BitDouble(coordVar(*this, "UCSORGLEFT"));
+    buf->put3BitDouble(coordVar(*this, "UCSORGRIGHT"));
+    buf->put3BitDouble(coordVar(*this, "UCSORGFRONT"));
+    buf->put3BitDouble(coordVar(*this, "UCSORGBACK"));
+    buf->putCP8Text(strVar(*this, "DIMPOST"));
+    buf->putCP8Text(strVar(*this, "DIMAPOST"));
+
+    // -------- DIM* values for R2000 (parseDwg:2053-2129; R14 branch dropped)
+    buf->putBitDouble(dblVar(*this, "DIMSCALE", 1.0));
+    buf->putBitDouble(dblVar(*this, "DIMASZ", 0.18));
+    buf->putBitDouble(dblVar(*this, "DIMEXO", 0.0625));
+    buf->putBitDouble(dblVar(*this, "DIMDLI", 0.38));
+    buf->putBitDouble(dblVar(*this, "DIMEXE", 0.18));
+    buf->putBitDouble(dblVar(*this, "DIMRND", 0.0));
+    buf->putBitDouble(dblVar(*this, "DIMDLE", 0.0));
+    buf->putBitDouble(dblVar(*this, "DIMTP", 0.0));
+    buf->putBitDouble(dblVar(*this, "DIMTM", 0.0));
+    // R2000+: 6 bits then 3 BS
+    buf->putBit(boolVar(*this, "DIMTOL"));
+    buf->putBit(boolVar(*this, "DIMLIM"));
+    buf->putBit(boolVar(*this, "DIMTIH"));
+    buf->putBit(boolVar(*this, "DIMTOH"));
+    buf->putBit(boolVar(*this, "DIMSE1"));
+    buf->putBit(boolVar(*this, "DIMSE2"));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "DIMTAD")));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "DIMZIN")));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "DIMAZIN")));
+    buf->putBitDouble(dblVar(*this, "DIMTXT", 0.18));
+    buf->putBitDouble(dblVar(*this, "DIMCEN", 0.09));
+    buf->putBitDouble(dblVar(*this, "DIMTSZ", 0.0));
+    buf->putBitDouble(dblVar(*this, "DIMALTF", 25.4));
+    buf->putBitDouble(dblVar(*this, "DIMLFAC", 1.0));
+    buf->putBitDouble(dblVar(*this, "DIMTVP", 0.0));
+    buf->putBitDouble(dblVar(*this, "DIMTFAC", 1.0));
+    buf->putBitDouble(dblVar(*this, "DIMGAP", 0.09));
+    // R2000+: DIMALTRND + 5 more DIM bits
+    buf->putBitDouble(dblVar(*this, "DIMALTRND", 0.0));
+    buf->putBit(boolVar(*this, "DIMALT"));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "DIMALTD", 2)));
+    buf->putBit(boolVar(*this, "DIMTOFL"));
+    buf->putBit(boolVar(*this, "DIMSAH"));
+    buf->putBit(boolVar(*this, "DIMTIX"));
+    buf->putBit(boolVar(*this, "DIMSOXD"));
+    // 3 CMC colors
+    buf->putCmColor(version, static_cast<duint16>(intVar(*this, "DIMCLRD")));
+    buf->putCmColor(version, static_cast<duint16>(intVar(*this, "DIMCLRE")));
+    buf->putCmColor(version, static_cast<duint16>(intVar(*this, "DIMCLRT")));
+    // R2000+ DIM BS family
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "DIAMDEC")));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "DIMDEC", 4)));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "DIMTDEC", 4)));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "DIMALTU", 2)));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "DIMALTTD", 2)));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "DIMAUNIT")));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "DIMFAC")));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "DIMLUNIT", 2)));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "DIMDSEP", '.')));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "DIMTMOVE")));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "DIMJUST")));
+    buf->putBit(boolVar(*this, "DIMSD1"));
+    buf->putBit(boolVar(*this, "DIMSD2"));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "DIMTOLJ", 1)));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "DIMTZIN")));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "DIMALTZ")));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "DIMALTTZ")));
+    buf->putBit(boolVar(*this, "DIMUPT"));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "DIMATFIT", 3)));
+
+    // -------- DIM handles (R2000+: 5 handles) (parseDwg:2139-2148) ----------
+    hBbuf->putHandle(makeHardPtr(0));  // DIMTXSTY
+    hBbuf->putHandle(makeHardPtr(0));  // DIMLDRBLK
+    hBbuf->putHandle(makeHardPtr(0));  // DIMBLK
+    hBbuf->putHandle(makeHardPtr(0));  // DIMBLK1
+    hBbuf->putHandle(makeHardPtr(0));  // DIMBLK2
+
+    // -------- DIMLWD, DIMLWE (R2000+: 2 BS) (parseDwg:2159-2160) ------------
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "DIMLWD", -2)));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "DIMLWE", -2)));
+
+    // -------- Control-handle block (parseDwg:2162-2199, 13 handles) ---------
+    // For R2000, version < AC1018 is true so vpEntHeaderCtrl IS emitted.
+    // The trailing 3 NOD dict handles are emitted as null per Phase 3 sub-plan.
+    hBbuf->putHandle(makeHardPtr(blockCtrl));           // BLOCK_CONTROL  (0x01)
+    hBbuf->putHandle(makeHardPtr(layerCtrl));           // LAYER_CONTROL  (0x02)
+    hBbuf->putHandle(makeHardPtr(styleCtrl));           // STYLE_CONTROL  (0x03)
+    hBbuf->putHandle(makeHardPtr(linetypeCtrl));        // LTYPE_CONTROL  (0x05)
+    hBbuf->putHandle(makeHardPtr(viewCtrl));            // VIEW_CONTROL   (0x06)
+    hBbuf->putHandle(makeHardPtr(ucsCtrl));             // UCS_CONTROL    (0x07)
+    hBbuf->putHandle(makeHardPtr(vportCtrl));           // VPORT_CONTROL  (0x08)
+    hBbuf->putHandle(makeHardPtr(appidCtrl));           // APPID_CONTROL  (0x09)
+    hBbuf->putHandle(makeHardPtr(dimstyleCtrl));        // DIMSTYLE_CONTROL (0x0A)
+    hBbuf->putHandle(makeHardPtr(vpEntHeaderCtrl));     // VPORT_ENTITY_HEADER_CONTROL (R2000 only, 0x0B)
+    hBbuf->putHandle(makeSoftOwner(0));                 // DICT ACAD_GROUP (Phase 3.5: 0x0D)
+    hBbuf->putHandle(makeSoftOwner(0));                 // DICT ACAD_MLINESTYLE (Phase 3.5: 0x0E)
+    hBbuf->putHandle(makeSoftOwner(0));                 // DICT NAMED OBJS (Phase 3.5: 0x0C)
+
+    // -------- Post-control TSTACKALIGN/TSTACKSIZE + 3 NOD-related dict handles
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "TSTACKALIGN", 1)));
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "TSTACKSIZE", 70)));
+    buf->putCP8Text(strVar(*this, "HYPERLINKBASE"));
+    buf->putCP8Text(strVar(*this, "STYLESHEET"));
+    hBbuf->putHandle(makeSoftOwner(0));  // DICT LAYOUTS    (Phase 3.5)
+    hBbuf->putHandle(makeSoftOwner(0));  // DICT PLOTSETTINGS (Phase 3.5)
+    hBbuf->putHandle(makeSoftOwner(0));  // DICT PLOTSTYLES   (Phase 3.5)
+
+    // -------- Flags (BL) + INSUNITS (BS) + CEPSNTYPE (BS) -------------------
+    buf->putBitLong(0);  // Flags — 8 sub-fields per parseDwg comment; defaults to 0
+    buf->putBitShort(static_cast<duint16>(intVar(*this, "INSUNITS")));
+    duint16 cepsntype = static_cast<duint16>(intVar(*this, "CEPSNTYPE"));
+    buf->putBitShort(cepsntype);
+    if (cepsntype == 3) {
+        hBbuf->putHandle(makeHardPtr(0));  // CPSNID
+    }
+    buf->putCP8Text(strVar(*this, "FINGERPRINTGUID"));
+    buf->putCP8Text(strVar(*this, "VERSIONGUID"));
+
+    // -------- 5 reserved-block handles (parseDwg:2258-2267) -----------------
+    // PAPER_SPACE, MODEL_SPACE block headers + BYLAYER, BYBLOCK, CONTINUOUS
+    // linetype records.  Reserved handles 0x18, 0x17, 0x10, 0x0F, 0x11.
+    hBbuf->putHandle(makeHardPtr(0x18));  // BLOCK PAPER_SPACE
+    hBbuf->putHandle(makeHardPtr(0x17));  // BLOCK MODEL_SPACE
+    hBbuf->putHandle(makeHardPtr(0x10));  // LTYPE BYLAYER
+    hBbuf->putHandle(makeHardPtr(0x0F));  // LTYPE BYBLOCK
+    hBbuf->putHandle(makeHardPtr(0x11));  // LTYPE CONTINUOUS
+
+    // -------- R14+ trailing 4 BS unknowns (parseDwg:2307-2312) --------------
+    buf->putBitShort(0);
+    buf->putBitShort(0);
+    buf->putBitShort(0);
+    buf->putBitShort(0);
+
+    return true;
+}
+
 int DRW_Header::measurement(const int unit) {
     switch (unit) {
         case Units::Inch:
@@ -2188,8 +2901,10 @@ int DRW_Header::measurement(const int unit) {
         case Units::Mil:
         case Units::Yard:
             return Units::English;
+
         default:
             break;
     }
+
     return Units::Metric;
 }

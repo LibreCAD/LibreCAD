@@ -1,0 +1,261 @@
+/****************************************************************************
+**
+** This file is part of the LibreCAD project, a 2D CAD program
+**
+** Copyright (C) 2026 LibreCAD (librecad.org)
+** Copyright (C) 2026 Dongxu Li (github.com/dxli)
+**
+** This program is free software; you can redistribute it and/or
+** modify it under the terms of the GNU General Public License
+** as published by the Free Software Foundation; either version 2
+** of the License, or (at your option) any later version.
+**
+** This program is distributed in the hope that it will be useful,
+** but WITHOUT ANY WARRANTY; without even the implied warranty of
+** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+** GNU General Public License for more details.
+**
+**********************************************************************/
+
+/**
+ * Entity-metadata sidecar tests — covers transparency / material /
+ * plotStyle / shadow / visualstyle round-trip preservation through
+ * RS_Entity. The libdxfrw read+write paths (parseCode + writeEntity)
+ * are tested via in-memory DXF round-trip below.
+ */
+
+#include <catch2/catch_test_macros.hpp>
+
+#include <cstdio>
+#include <filesystem>
+#include <fstream>
+#include <memory>
+#include <sstream>
+
+#include "rs_line.h"
+#include "rs_vector.h"
+
+#include "drw_entities.h"
+#include "libdxfrw.h"
+
+TEST_CASE("RS_Entity: sidecar defaults are zero", "[entity_metadata]") {
+  RS_Line line(RS_Vector{0., 0., 0.}, RS_Vector{1., 1., 0.});
+  REQUIRE(line.materialHandle() == 0u);
+  REQUIRE(line.plotStyleHandle() == 0u);
+  REQUIRE(line.shadowMode() == 0);
+  REQUIRE(line.fullVisualStyleHandle() == 0u);
+  REQUIRE(line.faceVisualStyleHandle() == 0u);
+  REQUIRE(line.edgeVisualStyleHandle() == 0u);
+}
+
+TEST_CASE("RS_Entity: material/plotStyle/shadow round-trip",
+          "[entity_metadata]") {
+  RS_Line line(RS_Vector{0., 0., 0.}, RS_Vector{1., 1., 0.});
+
+  line.setMaterialHandle(0xABCDu);
+  line.setPlotStyleHandle(0x1234u);
+  line.setShadowMode(2);
+
+  REQUIRE(line.materialHandle() == 0xABCDu);
+  REQUIRE(line.plotStyleHandle() == 0x1234u);
+  REQUIRE(line.shadowMode() == 2);
+}
+
+TEST_CASE("RS_Entity: visual-style handles round-trip", "[entity_metadata]") {
+  RS_Line line(RS_Vector{0., 0., 0.}, RS_Vector{1., 1., 0.});
+  line.setVisualStyleHandles(0xAAAAu, 0xBBBBu, 0xCCCCu);
+  REQUIRE(line.fullVisualStyleHandle() == 0xAAAAu);
+  REQUIRE(line.faceVisualStyleHandle() == 0xBBBBu);
+  REQUIRE(line.edgeVisualStyleHandle() == 0xCCCCu);
+}
+
+TEST_CASE("RS_Entity: copy ctor preserves sidecars", "[entity_metadata]") {
+  RS_Line src(RS_Vector{0., 0., 0.}, RS_Vector{1., 1., 0.});
+  src.setMaterialHandle(0x77u);
+  src.setPlotStyleHandle(0x88u);
+  src.setShadowMode(3);
+  src.setVisualStyleHandles(0x11u, 0x22u, 0x33u);
+
+  RS_Line copy(src);
+  REQUIRE(copy.materialHandle() == 0x77u);
+  REQUIRE(copy.plotStyleHandle() == 0x88u);
+  REQUIRE(copy.shadowMode() == 3);
+  REQUIRE(copy.fullVisualStyleHandle() == 0x11u);
+  REQUIRE(copy.faceVisualStyleHandle() == 0x22u);
+  REQUIRE(copy.edgeVisualStyleHandle() == 0x33u);
+
+  // Mutating the source must not affect the copy.
+  src.setMaterialHandle(0u);
+  REQUIRE(src.materialHandle() == 0u);
+  REQUIRE(copy.materialHandle() == 0x77u);
+}
+
+TEST_CASE("RS_Entity: setting sidecars to zero clears them",
+          "[entity_metadata]") {
+  RS_Line line(RS_Vector{0., 0., 0.}, RS_Vector{1., 1., 0.});
+  line.setMaterialHandle(0xFFu);
+  line.setMaterialHandle(0u);
+  REQUIRE(line.materialHandle() == 0u);
+}
+
+namespace {
+
+// Stub base that satisfies every DRW_Interface pure virtual with an
+// empty body. Test-specific interfaces below override only what they
+// need.
+class StubInterface : public DRW_Interface {
+public:
+  void addHeader(const DRW_Header *) override {}
+  void addLType(const DRW_LType &) override {}
+  void addLayer(const DRW_Layer &) override {}
+  void addDimStyle(const DRW_Dimstyle &) override {}
+  void addVport(const DRW_Vport &) override {}
+  void addTextStyle(const DRW_Textstyle &) override {}
+  void addAppId(const DRW_AppId &) override {}
+  void addBlock(const DRW_Block &) override {}
+  void setBlock(const int) override {}
+  void endBlock() override {}
+  void addPoint(const DRW_Point &) override {}
+  void addLine(const DRW_Line &) override {}
+  void addRay(const DRW_Ray &) override {}
+  void addXline(const DRW_Xline &) override {}
+  void addArc(const DRW_Arc &) override {}
+  void addCircle(const DRW_Circle &) override {}
+  void addEllipse(const DRW_Ellipse &) override {}
+  void addLWPolyline(const DRW_LWPolyline &) override {}
+  void addPolyline(const DRW_Polyline &) override {}
+  void addSpline(const DRW_Spline *) override {}
+  void addKnot(const DRW_Entity &) override {}
+  void addInsert(const DRW_Insert &) override {}
+  void addTrace(const DRW_Trace &) override {}
+  void add3dFace(const DRW_3Dface &) override {}
+  void addSolid(const DRW_Solid &) override {}
+  void addMText(const DRW_MText &) override {}
+  void addText(const DRW_Text &) override {}
+  void addDimAlign(const DRW_DimAligned *) override {}
+  void addDimLinear(const DRW_DimLinear *) override {}
+  void addDimRadial(const DRW_DimRadial *) override {}
+  void addDimDiametric(const DRW_DimDiametric *) override {}
+  void addDimAngular(const DRW_DimAngular *) override {}
+  void addDimAngular3P(const DRW_DimAngular3p *) override {}
+  void addDimOrdinate(const DRW_DimOrdinate *) override {}
+  void addLeader(const DRW_Leader *) override {}
+  void addHatch(const DRW_Hatch *) override {}
+  void addViewport(const DRW_Viewport &) override {}
+  void addImage(const DRW_Image *) override {}
+  void addWipeout(const DRW_Image *) override {}
+  void addMLeader(const DRW_MLeader *) override {}
+  void addMLeaderStyle(const DRW_MLeaderStyle *) override {}
+  void linkImage(const DRW_ImageDef *) override {}
+  void addComment(const char *) override {}
+  void addPlotSettings(const DRW_PlotSettings *) override {}
+  void writeHeader(DRW_Header &) override {}
+  void writeBlocks() override {}
+  void writeBlockRecords() override {}
+  void writeEntities() override {}
+  void writeLTypes() override {}
+  void writeLayers() override {}
+  void writeTextstyles() override {}
+  void writeVports() override {}
+  void writeDimstyles() override {}
+  void writeObjects() override {}
+  void writeAppId() override {}
+};
+
+class SingleLineCapture : public StubInterface {
+public:
+  bool m_gotLine = false;
+  DRW_Line m_captured;
+  void addLine(const DRW_Line &d) override {
+    if (!m_gotLine) {
+      m_captured = d;
+      m_gotLine = true;
+    }
+  }
+};
+
+class SingleLineEmitter : public StubInterface {
+public:
+  DRW_Line m_line;
+  dxfRW *m_rw = nullptr;
+  void writeEntities() override { m_rw->writeLine(&m_line); }
+};
+
+} // namespace
+
+TEST_CASE("DXF round-trip: 284/347/390/430/440 survive write+read",
+          "[entity_metadata][dxf_roundtrip]") {
+  const auto path = std::filesystem::temp_directory_path() /
+                    "librecad_entity_metadata_roundtrip.dxf";
+  std::filesystem::remove(path);
+
+  SingleLineEmitter emitter;
+  emitter.m_line.basePoint = DRW_Coord(0.0, 0.0, 0.0);
+  emitter.m_line.secPoint = DRW_Coord(1.0, 1.0, 0.0);
+  emitter.m_line.layer = "0";
+  emitter.m_line.color = 256;                        // ByLayer
+  emitter.m_line.transparency = (0x03 << 24) | 0x80; // 50% alpha
+  emitter.m_line.material = 0xABCDu;
+  emitter.m_line.plotStyle = 0x1234;
+  emitter.m_line.shadow = static_cast<DRW::ShadowMode>(2); // ReceiveOnly
+  emitter.m_line.colorName = "RAL$RAL 1003";
+
+  {
+    dxfRW w(path.string().c_str());
+    emitter.m_rw = &w;
+    REQUIRE(w.write(&emitter, DRW::AC1021, false)); // R2007 ASCII
+  }
+
+  SingleLineCapture capture;
+  {
+    dxfRW r(path.string().c_str());
+    REQUIRE(r.read(&capture, /*ext=*/true));
+  }
+
+  REQUIRE(capture.m_gotLine);
+  CHECK(capture.m_captured.transparency == ((0x03 << 24) | 0x80));
+  CHECK(capture.m_captured.material == 0xABCDu);
+  CHECK(capture.m_captured.plotStyle == 0x1234);
+  CHECK(static_cast<int>(capture.m_captured.shadow) == 2);
+  CHECK(capture.m_captured.colorName == "RAL$RAL 1003");
+
+  std::filesystem::remove(path);
+}
+
+TEST_CASE("DXF round-trip: default-valued entity emits no metadata codes",
+          "[entity_metadata][dxf_roundtrip]") {
+  const auto path = std::filesystem::temp_directory_path() /
+                    "librecad_entity_metadata_default.dxf";
+  std::filesystem::remove(path);
+
+  SingleLineEmitter emitter;
+  emitter.m_line.basePoint = DRW_Coord(0.0, 0.0, 0.0);
+  emitter.m_line.secPoint = DRW_Coord(1.0, 1.0, 0.0);
+  emitter.m_line.layer = "0";
+  emitter.m_line.color = 256;
+  // All metadata fields left at default sentinels.
+
+  {
+    dxfRW w(path.string().c_str());
+    emitter.m_rw = &w;
+    REQUIRE(w.write(&emitter, DRW::AC1021, false));
+  }
+
+  // Read the file as text and assert the metadata group codes are
+  // absent — confirms the skip-on-default write guards work.
+  std::ifstream in(path);
+  std::stringstream buf;
+  buf << in.rdbuf();
+  const std::string content = buf.str();
+
+  // Each appears as "\n<code>\n..." in DXF ASCII. Only check codes
+  // that are entity-unique — 284 collides with DIMSTYLE::dimtzin
+  // and 390 is also emitted by LTYPE writes, so they appear in the
+  // file regardless of entity content. 347/430/440 are entity-only
+  // and prove the skip-on-default guards work.
+  CHECK(content.find("\n347\n") == std::string::npos);
+  CHECK(content.find("\n430\n") == std::string::npos);
+  CHECK(content.find("\n440\n") == std::string::npos);
+
+  std::filesystem::remove(path);
+}

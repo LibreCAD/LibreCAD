@@ -4,7 +4,7 @@
 ** This file was created for the LibreCAD project (librecad.org), a 2D CAD program.
 **
 ** Copyright (C) 2026 librecad (www.librecad.org)
-** Copyright (C) 2026 Dongxu Li github.com/dxli
+** Copyright (C) 2026 Dongxu Li (github.com/dxli)
 **
 ** This program is free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License
@@ -101,15 +101,25 @@ struct LC_SecondMoment {
         return *this;
     }
     LC_SecondMoment operator+(const LC_SecondMoment& o) const {
-        return {ixx+o.ixx, iyy+o.iyy, ixy+o.ixy};
+        return {ixx + o.ixx, iyy + o.iyy, ixy + o.ixy};
     }
     LC_SecondMoment operator-(const LC_SecondMoment& o) const {
-        return {ixx-o.ixx, iyy-o.iyy, ixy-o.ixy};
+        return {ixx - o.ixx, iyy - o.iyy, ixy - o.ixy};
     }
     LC_SecondMoment operator-() const { return {-ixx, -iyy, -ixy}; }
 
     /**
      * @brief Shift origin to new point using the parallel-axis theorem.
+     *
+     * FIXME: This formula is wrong for the documented `ixx = ∬x²dA` /
+     * `iyy = ∬y²dA` convention. The correct parallel-axis shift for ixx is
+     * `+area*dx*dx`, not `+area*dy*dy` (and vice versa for iyy). This
+     * matches `getCentral` below, which uses the right formula. New callers
+     * should NOT use `shifted`; perform the shift inline (see
+     * `LC_Hyperbola::firstMomentLineIntegral` for an example). Existing
+     * callers (RS_Ellipse arc moments, lc_parabola) are deferred — they
+     * have the same bug and will be fixed in a follow-up that swaps the
+     * formula here and audits all callers together.
      */
     LC_SecondMoment shifted(double dx, double dy, double area) const {
         return {

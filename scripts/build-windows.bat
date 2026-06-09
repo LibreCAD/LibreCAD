@@ -42,6 +42,28 @@ if NOT exist windows\LibreCAD.exe (
 )
 echo windeployqt: deploying from %CD%
 windeployqt6.exe --release --compiler-runtime windows\LibreCAD.exe
+rem Copy MSVC runtime DLLs (VCRUNTIME140_1.dll, MSVCP140*.dll, ...) into windows\
+rem so the NSIS installer is self-contained. windeployqt --compiler-runtime on
+rem Qt 6 only copies vc_redist.<arch>.exe (when present), not the DLLs.
+rem Skip silently for non-MSVC builds where vswhere/VC143.CRT won't be available.
+where cl >nul 2>nul
+if %errorlevel% equ 0 (
+    set "LC_VC_ARCH=%LC_ARCH%"
+    if "!LC_VC_ARCH!"=="" (
+        if "%PROCESSOR_ARCHITECTURE%"=="ARM64" (
+            set "LC_VC_ARCH=ARM64"
+        ) else if "%PROCESSOR_ARCHITECTURE%"=="AMD64" (
+            set "LC_VC_ARCH=AMD64"
+        ) else (
+            set "LC_VC_ARCH=x86"
+        )
+    )
+    echo Copying MSVC runtime DLLs for !LC_VC_ARCH! into windows\
+    powershell.exe -ExecutionPolicy Bypass -File "%~dp0copy-vc-runtime.ps1" -Architecture !LC_VC_ARCH! -Destination "%CD%\windows"
+    if errorlevel 1 (
+        echo [WARNING] copy-vc-runtime.ps1 failed; installer may be missing VCRUNTIME140_1.dll etc.
+    )
+)
 for %%f in (librecad\ts\*.ts plugins\ts\*.ts) do (
   lrelease.exe "%%f"
 )

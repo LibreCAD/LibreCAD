@@ -34,6 +34,8 @@
 #include "lc_mdiapplicationwindow.h"
 #include "lc_plugininvoker.h"
 
+class RS_Graphic;
+class RS_GraphicView;
 class LC_PropertySheetWidget;
 class LC_ActionGroupManager;
 class LC_ActionGroup;
@@ -333,6 +335,12 @@ public:
     }
 
     void commandMessage(const QString& msg) const;
+    // If a freshly opened drawing has empty modelspace but at least one
+    // user-named block (i.e. not a *Model_Space / *Paper_Space variant)
+    // contains geometry, raise the Blocks dock so the user can see what's
+    // there.  Returns the count of non-empty user blocks (0 means trigger
+    // didn't fire and the dock is left alone).
+    int maybeSurfaceBlocksDock(RS_Graphic *graphic);
     LC_ActionGroup* getActionGroup(const QString& groupName) const;
     LC_ActionContext* getActionContext() const;
 

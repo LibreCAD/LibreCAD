@@ -15,6 +15,7 @@
 #include <fstream>
 #include <string>
 #include <sstream>
+#include <limits>
 #include <vector>
 #include "drw_dbg.h"
 #include "dwgreader21.h"
@@ -69,7 +70,10 @@ bool dwgReader21::parseSysPage(duint64 sizeCompressed, duint64 sizeUncompressed,
         return false;
     }
     std::vector<duint8> tmpDataRaw(fpsize);
-    fileBuf->getBytes(&tmpDataRaw.front(), fpsize);
+    if (!fileBuf->getBytes(&tmpDataRaw.front(), fpsize)) {
+        DRW_DBG("\nERROR: dwgReader21::parseSysPage: short read of RS-encoded data\n");
+        return false;
+    }
     std::vector<duint8> tmpDataRS(fpsize);
     dwgRSCodec::decode239I(&tmpDataRaw.front(), &tmpDataRS.front(), fpsize/255);
 
@@ -85,7 +89,10 @@ bool dwgReader21::parseDataPage(const dwgSectionInfo &si, duint8 *dData){
         }
 
         std::vector<duint8> tmpPageRaw(pi.size);
-        fileBuf->getBytes(&tmpPageRaw.front(), pi.size);
+        if (!fileBuf->getBytes(&tmpPageRaw.front(), pi.size)) {
+            DRW_DBG("\nERROR: dwgReader21::parseDataPage: short read of page data\n");
+            return false;
+        }
     #ifdef DRW_DBG_DUMP
         DRW_DBG("\nSection OBJECTS raw data=\n");
         for (unsigned int i=0, j=0; i< pi.size;i++) {
@@ -97,7 +104,7 @@ bool dwgReader21::parseDataPage(const dwgSectionInfo &si, duint8 *dData){
 
         std::vector<duint8> tmpPageRS(pi.size);
 
-        duint8 chunks =pi.size / 255;
+        duint32 chunks = pi.size / 255;
         dwgRSCodec::decode251I(&tmpPageRaw.front(), &tmpPageRS.front(), chunks);
     #ifdef DRW_DBG_DUMP
         DRW_DBG("\nSection OBJECTS RS data=\n");
@@ -134,9 +141,11 @@ bool dwgReader21::readFileHeader() {
     DRW_DBG("\n\ndwgReader21::parsing file header\n");
     if (! fileBuf->setPosition(0x80)) {
         return false;
+    duint8 fileHdrRaw[0x2FD]{};//0x3D8 - zero-init: avoid using uninitialized memory if read is short
+    if (!fileBuf->getBytes(fileHdrRaw, 0x2FD)) {
+        DRW_DBG("\nERROR: dwgReader21: file too small to contain RS-encoded file header (need 0x37D = 893 bytes)\n");
+        return false;
     }
-    duint8 fileHdrRaw[0x2FD];//0x3D8
-    fileBuf->getBytes(fileHdrRaw, 0x2FD);
     duint8 fileHdrdRS[0x2CD];
     dwgRSCodec::decode239I(fileHdrRaw, fileHdrdRS, 3);
 
@@ -161,15 +170,32 @@ bool dwgReader21::readFileHeader() {
 
     int fileHdrDataLength = 0x110;
     std::vector<duint8> fileHdrData;
+    // The compressed/uncompressed length must fit within the remaining RS-decoded
+    // header buffer (0x2CD bytes, with ~24 bytes already consumed). Reject obviously
+    // bogus values from a failed RS decode.
+    constexpr int kMaxFileHdrCompLen = 0x2CD;
     if (fileHdrCompLength < 0) {
-        fileHdrDataLength = fileHdrCompLength * -1;
+        if (fileHdrCompLength == std::numeric_limits<dint32>::min()
+            || -fileHdrCompLength > kMaxFileHdrCompLen) {
+            DRW_DBG("\nERROR: dwgReader21: fileHdrCompLength out of range (uncompressed)\n");
+            return false;
+        }
+        fileHdrDataLength = -fileHdrCompLength;
         fileHdrData.resize(fileHdrDataLength);
-        fileHdrBuf.getBytes(&fileHdrData.front(), fileHdrDataLength);
+        if (!fileHdrBuf.getBytes(&fileHdrData.front(), fileHdrDataLength)) {
+            return false;
+        }
     }
     else {
         DRW_DBG("\ndwgReader21:: file header are compressed:\n");
+        if (fileHdrCompLength > kMaxFileHdrCompLen) {
+            DRW_DBG("\nERROR: dwgReader21: fileHdrCompLength out of range (compressed)\n");
+            return false;
+        }
         std::vector<duint8> compByteStr(fileHdrCompLength);
-        fileHdrBuf.getBytes(compByteStr.data(), fileHdrCompLength);
+        if (!fileHdrBuf.getBytes(compByteStr.data(), fileHdrCompLength)) {
+            return false;
+        }
         fileHdrData.resize(fileHdrDataLength);
         if (!dwgCompressor::decompress21(compByteStr.data(), &fileHdrData.front(),
                                          fileHdrCompLength, fileHdrDataLength)) {
@@ -232,6 +258,13 @@ bool dwgReader21::readFileHeader() {
     DRW_DBG("\nHeader CRC64 = "); DRW_DBGH(fileHdrDataBuf.getRawLong64()); DRW_DBG("\n");
 
     DRW_DBG("\ndwgReader21::parse page map:\n");
+    // Sanity-check sizes before allocating to avoid crash if the file header
+    // RS decode produced garbage values (e.g. when decode239I can't correct all errors).
+    const duint64 kMaxMapSize = 128 * 1024 * 1024; // 128 MB hard cap
+    if (PagesMapSizeUncompressed > kMaxMapSize || PagesMapSizeCompressed > kMaxMapSize) {
+        DRW_DBG("\nERROR: dwgReader21: PagesMap sizes out of range, likely RS decode failure\n");
+        return false;
+    }
     std::vector<duint8> PagesMapData(PagesMapSizeUncompressed);
 
     if (!parseSysPage(PagesMapSizeCompressed, PagesMapSizeUncompressed,
@@ -262,6 +295,10 @@ bool dwgReader21::readFileHeader() {
     }
 
     DRW_DBG("\n*** dwgReader21: Processing Section Map ***\n");
+    if (SectionsMapSizeUncompressed > kMaxMapSize || SectionsMapSizeCompressed > kMaxMapSize) {
+        DRW_DBG("\nERROR: dwgReader21: SectionsMap sizes out of range\n");
+        return false;
+    }
     std::vector<duint8> SectionsMapData( SectionsMapSizeUncompressed);
     dwgPageInfo sectionMap = sectionPageMapTmp[SectionsMapId];
     if (!parseSysPage( SectionsMapSizeCompressed, SectionsMapSizeUncompressed,

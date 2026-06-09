@@ -97,7 +97,7 @@ bool dxfReader::readRec(int *codeData) {
 
     return (filestr->good());
 }
-int dxfReader::getHandleId(){
+int dxfReader::getHandleString(){
     int res;
 #if defined(__APPLE__)
     int Succeeded = sscanf ( strData.c_str(), "%x", &res );
@@ -110,7 +110,6 @@ int dxfReader::getHandleId(){
 #endif
     return res;
 }
-
 
 bool dxfReaderBinary::readCode(int *code) {
     unsigned short *int16p;
@@ -165,10 +164,10 @@ bool dxfReaderBinary::readInt16() {
 
 bool dxfReaderBinary::readInt32() {
     type = INT32;
-    unsigned *int32p;
+    unsigned int *int32p;
     char buffer[4];
     filestr->read(buffer,4);
-    int32p = (unsigned *) buffer;
+    int32p = (unsigned int *) buffer;
     intData = *int32p;
     DRW_DBG(intData); DRW_DBG("\n");
     return (filestr->good());
@@ -286,3 +285,4 @@ bool dxfReaderAscii::readBool() {
     }
     return false;
 }
+

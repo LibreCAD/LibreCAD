@@ -2,6 +2,7 @@
 **  libDXFrw - Library to read/write DXF files (ascii & binary)              **
 **                                                                           **
 **  Copyright (C) 2011-2015 José F. Soriano, rallazz@gmail.com               **
+**  Copyright (C) 2026 LibreCAD (librecad.org)                                **
 **                                                                           **
 **  This library is free software, licensed under the terms of the GNU       **
 **  General Public License as published by the Free Software Foundation,     **
@@ -16,10 +17,12 @@
 #include <unordered_map>
 #include <list>
 #include <memory>
+#include <vector>
 #include "drw_textcodec.h"
 #include "dwgutil.h"
 #include "dwgbuffer.h"
 #include "../libdwgr.h"
+#include "../drw_entities.h"
 
 class objHandle{
 public:
@@ -103,7 +106,6 @@ public:
 class DRW_ObjControl : public DRW_TableEntry {
 public:
     DRW_ObjControl() { reset();}
-    ~DRW_ObjControl() override = default;
 
     // hmm-- is DRW_TableEntry::reset() intended to be virtual??
     void reset(){
@@ -114,9 +116,11 @@ public:
 
 
 class dwgReader {
-    friend class dwgR;
+    // friend the real class (not the legacy `using dwgR = dwgRW;` alias —
+    // C++ does not allow `friend class <typedef-name>;`).
+    friend class dwgRW;
 public:
-    dwgReader(std::ifstream *stream, dwgR *p)
+    dwgReader(std::ifstream *stream, dwgRW *p)
        :fileBuf{ new dwgBuffer(stream) }
        ,parent{p}
     {
@@ -156,6 +160,12 @@ protected:
     bool readDwgEntities(DRW_Interface& intfa, dwgBuffer *dbuf);
     bool readDwgObjects(DRW_Interface& intfa, dwgBuffer *dbuf);
     bool readPlineVertex(DRW_Polyline& pline, dwgBuffer *dbuf);
+    // Walk a block_record's child entities in firstEH..lastEH chain (pre-2004)
+    // or entMap order (2004+) and dispatch each via readDwgEntity.  Used for
+    // both named blocks (entities go into the active block) and modelspace /
+    // paperspace (called post-endBlock so entities go into the interface's
+    // modelspace container).
+    bool walkBlockRecordEntities(DRW_Block_Record* bkr, dwgBuffer *dbuf, DRW_Interface& intfa);
 
 public:
     std::unordered_map<duint32, objHandle>ObjectMap;
@@ -167,16 +177,59 @@ public:
     std::unordered_map<duint32, DRW_Textstyle*> stylemap;
     std::unordered_map<duint32, DRW_Dimstyle*> dimstylemap;
     std::unordered_map<duint32, DRW_Vport*> vportmap;
-    // std::unordered_map<duint32, DRW_Block_Record*> blockRecordmap;
+    std::unordered_map<duint32, DRW_Block_Record*> blockRecordmap;
+
+    /// Resolved DBCOLOR (AcDbColor) lookup, populated as the OBJECTS section
+    /// is decoded.  Key: handle of the AcDbColor object.  Value: pair of
+    /// (24-bit RGB, display name) — entities referencing this handle (via
+    /// ENC flag 0x40) get color24 + colorName patched from this map after
+    /// their parseDwg returns.  Names are formatted as "BOOK$ENTRY" when a
+    /// book name is present, otherwise just the entry name.
+    std::unordered_map<duint32, std::pair<dint32, std::string>> dbColorMap;
+    /// MLINESTYLE handle → style name. Populated as MLINESTYLE objects are
+    /// parsed; consumed by the entryParse template hook to stamp
+    /// styleName onto each MLINE entity post-parse (DXF code 2 / DWG 340
+    /// resolves to a name only after the OBJECTS section is read).
+    std::unordered_map<duint32, std::string> mlineStyleNameMap;
+
+    /// SCALE (AcDbScale) handle → entry. Populated as SCALE objects are
+    /// parsed in the OBJECTS section. Foundation for per-viewport-scale
+    /// resolution: annotation-scaled MLEADER/MTEXT/DIMENSION entities
+    /// reference these handles via their AcDbAnnotScaleObjectContextData
+    /// chain.  scaleFactor() == drawingUnits / paperUnits.
+    std::unordered_map<duint32, DRW_Scale> scaleMap;
+
+    /// Per-entity parseDwg failures accumulated across readDwgBlocks /
+    /// readDwgEntities / walkBlockRecordEntities / readPlineVertex.
+    /// These are reported as warnings — they do not fail the section.
+    /// Section-level (structural) failures still propagate via the
+    /// bool return from each section method.
+    size_t m_entityParseFailures = 0;
+    /// Custom-class entities (oType >= 500, recName not in our hardcoded
+    /// dwgType map) that fell through readDwgEntity's default branch and
+    /// got stuffed into objObjectMap.  Keyed by the DXF recName (eg
+    /// "STDPART2D", "ACDBVISUALSTYLE", "ACMBOMROW").  These are
+    /// vendor-extension entities — typically AutoCAD Mechanical / Civil
+    /// proxy-capable graphics — whose geometry never reaches the
+    /// renderer.  Surface to the user so they know what's missing.
+    std::unordered_map<std::string, size_t> m_skippedCustomClasses;
     std::unordered_map<duint32, DRW_AppId*> appIdmap;
+    std::unordered_map<duint32, DRW_View*> viewmap;
+    std::unordered_map<duint32, DRW_UCS*> ucsmap;
+
+    // Buffers for ATTRIB attached-attlist routing in processDwgEntity.
+    // m_pendingInserts: INSERT entities awaiting their ATTRIB children + SEQEND
+    //                   before being dispatched to addInsert.  Keyed by INSERT handle.
+    // m_orphanAttribs:  ATTRIB entities seen before their owning INSERT.
+    //                   Keyed by parent (INSERT) handle.
+    std::unordered_map<duint32, DRW_Insert> m_pendingInserts;
+    std::unordered_map<duint32, std::vector<std::shared_ptr<DRW_Attrib>>> m_orphanAttribs;
 //    duint32 currBlock;
     duint8 maintenanceVersion{0};
 
-    DRW_ParsingContext parsingContext;
-
 protected:
     std::unique_ptr<dwgBuffer> fileBuf;
-    dwgR *parent{nullptr};
+    dwgRW *parent{nullptr};
     DRW::Version version{DRW::UNKNOWNV};
 
 //seeker (position) for the beginning sentinel of the image data (R13 to R15)
@@ -200,6 +253,26 @@ private:
             parseAttribs(&e);
             nextEntLink = e.nextEntLink;
             prevEntLink = e.prevEntLink;
+            // Resolve AcDbColor reference (ENC flag 0x40) against the
+            // OBJECTS-section DBCOLOR map populated by readDwgObject.
+            // Patches color24 and colorName onto the entity for downstream
+            // filters (DXF code 420 / 430).  Non-entity Ts that lack these
+            // fields are still accepted because every T derives from
+            // DRW_Entity which exposes them.
+            if (e.acDbColorHandle != 0) {
+                auto it = dbColorMap.find(e.acDbColorHandle);
+                if (it != dbColorMap.end()) {
+                    // color24 patched only if not already inline-set by
+                    // ENC RGB (flag 0x80 path). Inline ENC name (flags
+                    // 0x41/0x42) takes precedence over the DBCOLOR target's
+                    // name — libreDWG model: these are entity-level
+                    // overrides distinct from the DBCOLOR's own name.
+                    if (it->second.first >= 0 && e.color24 == -1)
+                        e.color24 = it->second.first;
+                    if (!it->second.second.empty() && e.colorName.empty())
+                        e.colorName = it->second.second;
+                }
+            }
         }
 
         return ret;
