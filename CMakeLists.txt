@@ -347,7 +347,8 @@ set (SHARED_SOURCES
     libraries/libdxfrw/src/intern/dwgbufferw.h
     libraries/libdxfrw/src/intern/dwgwriter.h
     libraries/libdxfrw/src/intern/dwgwriter15.cpp
-    libraries/libdxfrw/src/intern/dwgwriter15.hlibraries/libdxfrw/src/intern/dwgreader.cpp
+    libraries/libdxfrw/src/intern/dwgwriter15.h
+    libraries/libdxfrw/src/intern/dwgreader.cpp
      libraries/libdxfrw/src/intern/dwgreader.h
      libraries/libdxfrw/src/intern/dwgreader15.cpp
      libraries/libdxfrw/src/intern/dwgreader15.h
@@ -360,7 +361,8 @@ set (SHARED_SOURCES
      libraries/libdxfrw/src/intern/dwgreader27.cpp
      libraries/libdxfrw/src/intern/dwgreader27.h
      libraries/libdxfrw/src/intern/dwgreader32.cpp
-    libraries/libdxfrw/src/intern/dwgreader32.hlibraries/libdxfrw/src/intern/dwgutil.cpp
+    libraries/libdxfrw/src/intern/dwgreader32.h
+        libraries/libdxfrw/src/intern/dwgutil.cpp
      libraries/libdxfrw/src/intern/dwgutil.h
      libraries/libdxfrw/src/intern/dxfreader.cpp
      libraries/libdxfrw/src/intern/dxfreader.h
@@ -875,7 +877,8 @@ set (SHARED_SOURCES
      librecad/src/lib/engine/document/entities/rs_hatch.cpp
      librecad/src/lib/engine/document/entities/rs_hatch.h
      librecad/src/lib/engine/document/entities/rs_image.cpp
-     librecad/src/lib/engine/document/entities/rs_image.hlibrecad/src/lib/engine/document/entities/lc_wipeout.cpp
+     librecad/src/lib/engine/document/entities/rs_image.h
+        librecad/src/lib/engine/document/entities/lc_wipeout.cpp
     librecad/src/lib/engine/document/entities/lc_wipeout.h
      librecad/src/lib/engine/document/entities/rs_insert.cpp
      librecad/src/lib/engine/document/entities/rs_insert.h
@@ -884,7 +887,8 @@ set (SHARED_SOURCES
      librecad/src/lib/engine/document/entities/lc_mleader.cpp
     librecad/src/lib/engine/document/entities/lc_mleader.h
     librecad/src/lib/engine/document/entities/lc_textbidi.cpp
-    librecad/src/lib/engine/document/entities/lc_textbidi.hlibrecad/src/lib/engine/document/entities/rs_line.cpp
+    librecad/src/lib/engine/document/entities/lc_textbidi.h
+        librecad/src/lib/engine/document/entities/rs_line.cpp
      librecad/src/lib/engine/document/entities/rs_line.h
      librecad/src/lib/engine/document/entities/rs_mtext.cpp
      librecad/src/lib/engine/document/entities/rs_mtext.h
@@ -1038,7 +1042,8 @@ set (SHARED_SOURCES
      librecad/src/lib/fileio/rs_fileio.cpp
      librecad/src/lib/fileio/rs_fileio.h
      librecad/src/lib/filters/lc_hyperbolaspline.cpp
-     librecad/src/lib/filters/lc_hyperbolaspline.hlibrecad/src/lib/filters/lc_parabolaspline.cpp
+     librecad/src/lib/filters/lc_hyperbolaspline.h
+        librecad/src/lib/filters/lc_parabolaspline.cpp
     librecad/src/lib/filters/lc_parabolaspline.h
      librecad/src/lib/filters/rs_filtercxf.cpp
      librecad/src/lib/filters/rs_filterdxf1.cpp
@@ -2143,8 +2148,6 @@ set (MUPARSER_SOURCES
      libraries/muparser/src/muParserError.cpp
      libraries/muparser/src/muParserInt.cpp
      libraries/muparser/src/muParserTokenReader.cpp
-     librecad/src/lib/actions/visual_snap/lc_visual_snap_solution_solver.cpp
-     librecad/src/lib/actions/visual_snap/lc_visual_snap_solution_solver.h
 )
 
 # Static library from shared sources

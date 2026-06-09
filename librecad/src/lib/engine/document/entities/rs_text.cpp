@@ -123,12 +123,12 @@ void RS_Text::setText(const QString& t) {
 }
 
 void RS_Text::setDrawingDirection(RS_TextData::DrawingDirection direction) {
-  if (data.drawingDirection == direction)
-    return;
-  data.drawingDirection = direction;
-  if (data.updateMode == RS2::Update) {
-    update();
-  }
+    if (m_data.drawingDirection == direction)
+        return;
+    m_data.drawingDirection = direction;
+    if (m_data.updateMode == RS2::Update) {
+        update();
+    }
 }
 
 /**
@@ -247,7 +247,7 @@ void RS_Text::setAlignment(const int a) {
             m_data.halign = RS_TextData::HAMiddle;
         }
     }
-    if (data.updateMode == RS2::Update) {  // fixme - sand - why it's only there? that's logic should be in all setter? or it's artefact?
+    if (m_data.updateMode == RS2::Update) {  // fixme - sand - why it's only there? that's logic should be in all setter? or it's artefact?
       update();
     }
 }

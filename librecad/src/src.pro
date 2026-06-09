@@ -96,6 +96,8 @@ win32 {
     }
 
     QMAKE_CXXFLAGS += -Wa,-mbig-obj
+
+    LIBS += -ldbghelp
 }
 
 DEFINES += LC_VERSION=\"$$LC_VERSION\"
@@ -2228,17 +2230,12 @@ FORMS = ui/action_options/circle/lc_circle_by_arc_options_widget.ui \
        ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui \
        ui/dialogs/entity/lc_propertieseditingwidget_hyperbola.ui \
        ui/dialogs/entity/lc_hatchpropertieseditingwidget.ui \
+       ui/dialogs/entity/lc_textpropertieseditingwidget.ui \
+       ui/dialogs/entity/lc_mtextpropertieseditingwidget.ui \
        ui/dialogs/entity/lc_propertieseditingwidget_image.ui \
        ui/dialogs/entity/lc_propertieseditingwidget_insert.ui \
        ui/dialogs/entity/lc_propertieseditingwidget_line.ui \
-       ui/dialogs/entity/lc_propertieseditingwidget_parabola.ui \
-       ui/dialogs/entity/lc_mtextpropertieseditingwidget.ui \
-       ui/dialogs/entity/lc_textpropertieseditingwidget.ui \
-       ui/dialogs/entity/lc_hyperbolapropertieseditingwidget.ui \
-       ui/dialogs/entity/lc_imagepropertieseditingwidget.ui \
-       ui/dialogs/entity/lc_insertpropertieseditingwidget.ui \
-       ui/dialogs/entity/lc_linepropertieseditingwidget.ui \
-       ui/dialogs/entity/lc_parabolapropertieseditingwidget.ui \
+       ui/dialogs/entity/lc_propertieseditingwidget_parabola.ui \       
        ui/dialogs/entity/lc_pointpickbutton.ui \
        ui/dialogs/entity/lc_propertieseditingwidget_point.ui \
        ui/dialogs/entity/lc_propertieseditingwidget_polyline.ui \

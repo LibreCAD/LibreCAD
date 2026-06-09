@@ -22,6 +22,7 @@
 #include <vector>
 #include "drw_base.h"
 
+class DRW_ParsingContext;
 class dxfReader;
 class dxfWriter;
 class dwgBuffer;
@@ -70,7 +71,7 @@ class dwgBufferW;
 *  Base class for tables entries
 *  @author Rallaz
 */
-class DRW_TableEntry {
+class DRW_TableEntry: public DRW_ParseableEntity{
 public:
     DRW_TableEntry() = default;
 
@@ -81,6 +82,8 @@ public:
 
         extData.clear();
     }
+
+
 
     DRW_TableEntry(const DRW_TableEntry& e) :
         tType {e.tType},
@@ -100,10 +103,8 @@ public:
         }
     }
 
-protected:
-    virtual bool parseCode(int code, const std::unique_ptr<dxfReader>& reader);
-    virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) = 0;
-    bool parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer* strBuf, duint32 bs=0);
+    virtual DRW_TableEntry* newInstance() {return nullptr;}
+
     void reset() {
         flags = 0;
         for (auto it = extData.begin(); it != extData.end(); ++it) {
@@ -112,6 +113,12 @@ protected:
         extData.clear();
         curr = nullptr;
     }
+    virtual bool parseCode(int code, const std::unique_ptr<dxfReader>& reader);
+protected:
+
+    virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) = 0;
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer* strBuf, duint32 bs=0);
+
 
 public:
     DRW::TTYPE tType {DRW::UNKNOWNT};  /*!< enum: entity type, code 0 */
@@ -142,17 +149,8 @@ class DRW_Dimstyle : public DRW_TableEntry {
     SETOBJFRIENDS
 public:
     DRW_Dimstyle() { reset();}
-    ~DRW_Dimstyle() {
-        for (auto& kv : vars) delete kv.second;
-    }
+    ~DRW_Dimstyle() override;
 
-    void add(const std::string& key, int code, int value) { vars[key] = new DRW_Variant(code, value); }
-    void add(const std::string& key, int code, double value) { vars[key] = new DRW_Variant(code, value); }
-    void add(const std::string& key, int code, std::string value) { vars[key] = new DRW_Variant(code, UTF8STRING(value)); }
-    DRW_Variant* get(const std::string& key) const {
-        auto it = vars.find(key);
-        return (it != vars.end()) ? it->second : nullptr;
-    }
 
     void reset(){
         tType = DRW::DIMSTYLE;
@@ -179,11 +177,34 @@ public:
         DRW_TableEntry::reset();
     }
 
-protected:
-    bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
-    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    class ValueHolder {
+    public:
+        bool has() const {return m_var != nullptr;}
+        UTF8STRING sval() const {return m_var->c_str();} // string value
+        double dval() const {return m_var->d_val();} // double value
+        int ival() const {return m_var->i_val();} // int value
+        void update(DRW_Variant* var) {m_var = var;}
+    private:
+        DRW_Variant* m_var{nullptr};
+    };
 
-public:
+    DRW_TableEntry* newInstance() override {return new DRW_Dimstyle();}
+
+    bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
+    DRW_Variant* get(const std::string& key) const;
+    bool get(const std::string& key, ValueHolder& holder) const;
+    bool get(const std::string& key, double& var) const;
+    bool get(const std::string& key, int& var) const;
+    bool get(const std::string& key, UTF8STRING& var) const;
+
+    void add(const std::string& key, int code, int value);
+    void add(const std::string& key, int code, double value);
+    void add(const std::string& key, int code, UTF8STRING value);
+
+    std::unordered_map<std::string,DRW_Variant*> vars;
+
+    // todo - actually, fields are mostly used for debug purposes, as they are filled on parsing of DXF only.
+    // todo - so actually they should be removed later
     //V12
     UTF8STRING dimpost;       /*!< code 3 */
     UTF8STRING dimapost;      /*!< code 4 */
@@ -216,6 +237,20 @@ public:
     int dimtoh;               /*!< code 74 */
     int dimse1;               /*!< code 75 */
     int dimse2;               /*!< code 76 */
+
+    // UTF8STRING dimltext1;        /*!< code  347, code 343 V2000+ */
+    // UTF8STRING dimltext2;       /*!< code  349, code 344 V2000+ */
+    // UTF8STRING dimltype;        /*!< code 346 V2000+ */
+    int dimltext1;        /*!<  code  347, code 343 V2000+ handle to line type */
+    int dimltext2;       /*!< code  349, code 344 V2000+ */
+    int dimltype;                /*!< code 345 V2000+, ref to linetype */
+
+    int dimtfillclr;           /*!< code 70 */
+    int dimtfill;              /*!< code 69 */
+    int dimtxtdirection;       /*!< code 292 */
+
+    double mleaderscale; // fixme - code!
+
     int dimtad;               /*!< code 77 */
     int dimzin;               /*!< code 78 */
     int dimazin;              /*!< code 79 V2000+ */
@@ -254,8 +289,18 @@ public:
     UTF8STRING dimldrblk;     /*!< code 341 V2000+ */
     int dimlwd;               /*!< code 371 V2000+ */
     int dimlwe;               /*!< code 372 V2000+ */
-    std::map<std::string, DRW_Variant*> vars; /*!< extra/override variables written after standard fields */
-};
+    int dymarcsym;
+
+protected:
+    void resolveBlockRecordNameByHandle(DRW_ParsingContext& ctx,const std::string& unresolvedKey,
+                          const std::string &resolvedKey, int code);
+    void resolveTextStyleNameByHandle(DRW_ParsingContext& ctx, const std::string& unresolvedKey,
+                                      const std::string& resolvedKey, int code);
+    void resolveLineTypeNameByHandle(DRW_ParsingContext& ctx, const std::string& unresolvedKey,
+                                     const std::string& resolvedKey, int code);
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    bool resolveRefs(DRW_ParsingContext& ctx);
+};;
 
 
 //! Class to handle line type entries
@@ -289,6 +334,9 @@ public:
         for (auto it: ltPath) { path.push_back(it); }
     }
 
+    DRW_TableEntry* newInstance() {
+        return new DRW_LType();
+    }
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
@@ -359,6 +407,9 @@ public:
         DRW_TableEntry::reset();
     }
 
+    DRW_TableEntry* newInstance() {
+        return new DRW_Block_Record();
+    }
 protected:
     bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
 
@@ -972,11 +1023,27 @@ public:
     UTF8STRING sheetName;
 };
 
-/** Holds per-write-session maps populated during DXF writing. */
+class DRW_ParsingContext {
+public:
+    DRW_ParsingContext() = default;
+    ~DRW_ParsingContext();
+
+    std::string resolveBlockRecordName(int handle);
+    std::string resolveLineTypeName(int handle);
+    std::string resolveTextStyleName(int handle);
+
+    std::unordered_map<duint32, DRW_LType*> lineTypeMap;
+    std::unordered_map<duint32, DRW_Block_Record*> blockRecordMap;
+    std::unordered_map<duint32, DRW_Textstyle*> textStyles;
+};
+
 class DRW_WritingContext {
 public:
     DRW_WritingContext() = default;
-    std::vector<std::pair<std::string, int>> lineTypesMap; /*!< uppercase name -> handle */
+    ~DRW_WritingContext();
+    std::vector<std::pair<std::string, int>> lineTypesMap;
+    std::unordered_map<std::string,int> blockMap;
+    std::unordered_map<std::string,int> textStyleMap;
 };
 
 namespace DRW {

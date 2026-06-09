@@ -40,7 +40,7 @@ class LC_ExtDataTag {
   };
 
 public:
-  LC_ExtDataTag() = default;
+  LC_ExtDataTag();
   LC_ExtDataTag(int code, const RS_Vector &value);
   LC_ExtDataTag(int code, int value);
   LC_ExtDataTag(int code, double value);

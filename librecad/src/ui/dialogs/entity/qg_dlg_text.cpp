@@ -70,7 +70,7 @@ void QG_DlgText::init() {
     m_font=nullptr;
     m_entity = nullptr;
     m_isNew = false;
-    leOblique->setDisabled(true);
+    // leOblique->setDisabled(true);
     updateUniCharComboBox(0);
     updateUniCharButton(0);
 
@@ -87,8 +87,9 @@ void QG_DlgText::init() {
     setTabOrder(wPen, cbFont); // Pen compound widget -> Font widget
     setTabOrder(cbFont, leHeight); // etc
     setTabOrder(leHeight, leAngle);
-    setTabOrder(leAngle, leOblique);
-    setTabOrder(leOblique, leWidthRel);
+    // setTabOrder(leAngle, leOblique);
+    // setTabOrder(leOblique, leWidthRel);
+    setTabOrder(leAngle, leWidthRel);
     setTabOrder(leWidthRel, bTL);
     setTabOrder(bTL, bTC);
     setTabOrder(bTC, bTR);

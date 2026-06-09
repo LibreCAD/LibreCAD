@@ -72,6 +72,12 @@ LC_PropertyEnumComboBoxView::LC_PropertyEnumComboBoxView(LC_PropertyEnum* proper
     : LC_PropertyViewTyped(property) {
 }
 
+LC_PropertyEnumComboBoxView::~LC_PropertyEnumComboBoxView() {
+    if (m_editorCombobox != nullptr) {
+        m_editorCombobox->disablePaint(true);
+    }
+}
+
 bool LC_PropertyEnumComboBoxView::doPropertyValueToStr(QString& strValue) const {
     const LC_EnumDescriptor* descriptor = typedProperty().getEnumDescriptor();
     const LC_EnumValueDescriptor* valueDescriptor = descriptor != nullptr ? descriptor->findByValue(propertyValue()) : nullptr;
@@ -87,15 +93,15 @@ QWidget* LC_PropertyEnumComboBoxView::doCreateValueEditor(QWidget* parent, const
     if (descriptor == nullptr) {
         return nullptr;
     }
-    auto cb = new LC_PropertyComboBox(this, parent);
-    descriptor->doProcessEachEnumValue([cb](const LC_EnumValueDescriptor& value) -> bool {
-        cb->addItem(value.getDisplayName(), QVariant(value.getValue()));
+    m_editorCombobox = new LC_PropertyComboBox(this, parent);
+    descriptor->doProcessEachEnumValue([this](const LC_EnumValueDescriptor& value) -> bool {
+        m_editorCombobox->addItem(value.getDisplayName(), QVariant(value.getValue()));
         return true;
     });
-    cb->setGeometry(rect);
-    new LC_PropertyEnumComboBoxViewHandler(this, *cb);
+    m_editorCombobox->setGeometry(rect);
+    new LC_PropertyEnumComboBoxViewHandler(this, *m_editorCombobox);
     if (isInplaceEditAllowed(ctx)) {
-        cb->showPopup();
+        m_editorCombobox->showPopup();
     }
-    return cb;
+    return m_editorCombobox;
 }

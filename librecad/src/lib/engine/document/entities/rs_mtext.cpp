@@ -430,10 +430,10 @@ void RS_MText::setDrawingDirection(RS_MTextData::MTextDrawingDirection direction
     if (m_data.drawingDirection == direction) {
         return;
     }
-  m_data.drawingDirection = direction;
-  if (m_data.updateMode == RS2::Update) {
-    update();
-  }
+    m_data.drawingDirection = direction;
+    if (m_data.updateMode == RS2::Update) { // fixme - why update is only on some setters?
+        update();
+    }
 }
 
 /**
@@ -550,7 +550,8 @@ void RS_MText::update() {
     // letterSpace and space are always treated as positive advances here; the
   // bidi pass already produced visual L→R order, so the cursor unconditionally
   // moves rightward during emission.RS_Vector letterPos{0.0, -9.0};
-    constRS_Vector letterSpace{font->getLetterSpacing(), 0.0};
+    RS_Vector letterPos{0.0, -9.0};
+    const RS_Vector letterSpace{font->getLetterSpacing(), 0.0};
     const double spaceWidth = font->getWordSpacing();
 
   int lineCounter{0};
@@ -764,7 +765,7 @@ void RS_MText::flushBidiLine(LC_TextLine &oneLine,
   // grapheme-aware segment building plus codepoint-based font lookup —
   // broader rendering work, not bidi.
   std::vector<int> visualOrder;
-  if (data.drawingDirection == RS_MTextData::RightToLeft) {
+  if (m_data.drawingDirection == RS_MTextData::RightToLeft) {
     visualOrder.resize(segments.size());
     for (size_t i = 0; i < segments.size(); ++i) {
       visualOrder[i] = static_cast<int>(segments.size() - 1 - i);
@@ -780,7 +781,7 @@ void RS_MText::flushBidiLine(LC_TextLine &oneLine,
       RS_Font *segFont = seg.font;
       if (segFont == nullptr) {
         // Fallback: should not normally happen, but stay defensive.
-        segFont = RS_FONTLIST->requestFont(data.style);
+        segFont = RS_FONTLIST->requestFont(m_data.style);
       }
       if (segFont != nullptr) {
         addLetter(oneLine, seg.codepoint, *segFont, letterSpace,
@@ -794,7 +795,7 @@ void RS_MText::flushBidiLine(LC_TextLine &oneLine,
     case LC_BidiSegment::Stack: {
       double upperWidth = 0.0;
       if (!seg.upperText.isEmpty()) {
-        RS_MText *upper = createUpperLower(seg.upperText, data,
+        RS_MText *upper = createUpperLower(seg.upperText, m_data,
                                            letterPosition + RS_Vector{0., 9.});
         oneLine.addEntity(upper);
         upper->reparent(&oneLine);
@@ -802,7 +803,7 @@ void RS_MText::flushBidiLine(LC_TextLine &oneLine,
       }
       double lowerWidth = 0.0;
       if (!seg.lowerText.isEmpty()) {
-        RS_MText *lower = createUpperLower(seg.lowerText, data,
+        RS_MText *lower = createUpperLower(seg.lowerText, m_data,
                                            letterPosition + RS_Vector{0., 4.});
         oneLine.addEntity(lower);
         lower->reparent(&oneLine);

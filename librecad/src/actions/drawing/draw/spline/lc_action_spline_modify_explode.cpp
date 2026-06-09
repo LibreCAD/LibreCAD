@@ -34,9 +34,11 @@
 #include "rs_spline.h"
 
 namespace {
-    // fixme - sand - think about support parabola as other splines
+    // Parabola is a quadratic Bezier (3 control points), so the base
+    // LC_SplinePoints stroking infrastructure handles it directly.
+    const EntityTypeList g_enTypeList = {RS2::EntitySpline, RS2::EntitySplinePoints,
+                                         RS2::EntityParabola};
 
-    const EntityTypeList g_enTypeList = {RS2::EntitySpline, RS2::EntitySplinePoints/*, RS2::EntityParabola*/};
 }
 
 // fixme - potentially, the action may be expanded even more - and used to expand circle, arcs, and ellipses to lines.

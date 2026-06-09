@@ -36,6 +36,7 @@
 #include <QString>
 
 #include "drw_base.h"
+#include "lc_hyperbola.h"
 #include "lc_quadratic.h"
 #include "rs_arc.h"
 #include "rs_block.h"

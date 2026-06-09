@@ -63,7 +63,7 @@ protected slots:
 protected:
     void setAlignment(QToolButton& button);
     void layoutDirectionChanged() const;
-    void applyDirectionVisuals();
+    void applyDirectionVisuals() const;
     bool m_isNew = false;
     bool m_saveSettings = true;
     RS_MText* m_entity = nullptr;

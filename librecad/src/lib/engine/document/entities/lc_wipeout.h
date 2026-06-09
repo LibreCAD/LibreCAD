@@ -47,28 +47,12 @@ public:
 
   RS2::EntityType rtti() const override { return RS2::EntityWipeout; }
 
-  const LC_WipeoutData &getData() const { return data; }
-  const std::vector<RS_Vector> &getVertices() const { return data.vertices; }
+  const LC_WipeoutData &getData() const { return m_data; }
+  const std::vector<RS_Vector> &getVertices() const { return m_data.vertices; }
 
   void calculateBorders() override;
   void draw(RS_Painter *painter) override;
 
-  RS_Vector getNearestEndpoint(const RS_Vector &coord,
-                               double *dist = nullptr) const override;
-  RS_Vector
-  getNearestPointOnEntity(const RS_Vector &coord, bool onEntity = true,
-                          double *dist = nullptr,
-                          RS_Entity **entity = nullptr) const override;
-  RS_Vector getNearestCenter(const RS_Vector &coord,
-                             double *dist = nullptr) const override;
-  RS_Vector getNearestMiddle(const RS_Vector &coord, double *dist = nullptr,
-                             int middlePoints = 1) const override;
-  RS_Vector getNearestDist(double distance, const RS_Vector &coord,
-                           double *dist = nullptr) const override;
-  double getDistanceToPoint(const RS_Vector &coord,
-                            RS_Entity **entity = nullptr,
-                            RS2::ResolveLevel level = RS2::ResolveNone,
-                            double solidDist = RS_MAXDOUBLE) const override;
 
   void move(const RS_Vector &offset) override;
   void rotate(const RS_Vector &center, double angle) override;
@@ -79,7 +63,24 @@ public:
   RS_Entity &shear([[maybe_unused]] double k) override { return *this; }
 
 protected:
-  LC_WipeoutData data;
+  LC_WipeoutData m_data;
+
+  RS_Vector doGetNearestEndpoint(const RS_Vector& coord, double* dist, RS_Entity** entity) const override;
+  RS_Vector doGetNearestRef(const RS_Vector& coord, double* dist) const override;
+  RS_Vector doGetNearestSelectedRef(const RS_Vector& coord, double* dist) const override;
+  RS_Vector doGetNearestCenter(const RS_Vector& coord, double* dist, RS_Entity** centerEntity) const override;
+  RS_Vector doGetNearestPointOnEntity(const RS_Vector& coord, bool onEntity,
+                                      double* dist,
+                                      RS_Entity** entity) const override;
+  RS_Vector doGetNearestMiddle(const RS_Vector& coord, double* dist,
+                               int middlePoints) const override;
+  RS_Vector doGetNearestDist(double distance, const RS_Vector& coord,
+                             double* dist = nullptr) const override;
+  double doGetDistanceToPoint(const RS_Vector& coord,
+                              RS_Entity** entity = nullptr,
+                              RS2::ResolveLevel level = RS2::ResolveNone,
+                              double solidDist = RS_MAXDOUBLE) const override;
+
 };
 
-#endif // LC_WIPEOUT_H
+#endif

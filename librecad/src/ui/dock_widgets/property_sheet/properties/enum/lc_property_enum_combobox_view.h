@@ -27,16 +27,19 @@
 #include "lc_property_enum.h"
 #include "lc_property_view_typed.h"
 
+class LC_PropertyComboBox;
+
 class LC_PropertyEnumComboBoxView : public LC_PropertyViewTyped<LC_PropertyEnum> {
     Q_DISABLE_COPY(LC_PropertyEnumComboBoxView)
 
 public:
     static const QByteArray VIEW_NAME;
     explicit LC_PropertyEnumComboBoxView(LC_PropertyEnum* property);
-
+    ~LC_PropertyEnumComboBoxView() override;
 protected:
     QWidget* doCreateValueEditor(QWidget* parent, const QRect& rect, const EditActivationContext* ctx) override;
     bool doPropertyValueToStr(QString& strValue) const override;
+    LC_PropertyComboBox* m_editorCombobox = nullptr;
 };
 
 #endif

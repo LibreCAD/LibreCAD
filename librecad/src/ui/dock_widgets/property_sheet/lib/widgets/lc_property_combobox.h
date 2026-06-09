@@ -37,7 +37,6 @@ public:
     void disablePaint(bool v) {m_paintDisabled = v;}
 protected:
     virtual void doCustomPaint(QPainter& painter, const QRect& rect);
-
 private:
     void paintEvent(QPaintEvent* event) override;
     LC_PropertyView* m_view;

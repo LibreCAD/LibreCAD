@@ -270,49 +270,48 @@ bool LC_Hyperbola::createFromQuadratic(const LC_Quadratic &q) {
   LC_Hyperbola::calculateBorders();
   LC_Hyperbola::updateLength();
 
-    return true;
+  return true;
 }
 
 //=====================================================================
-bool LC_Hyperbola::createFromQuadratic(const std::vector<double>& coeffs) {
-    if (coeffs.size() < 6) {
-        return false;
-    }
-    const LC_Quadratic q(coeffs);
-    return createFromQuadratic(q);
+bool LC_Hyperbola::createFromQuadratic(const std::vector<double> &coeffs) {
+  if (coeffs.size() < 6)
+    return false;
+  LC_Quadratic q(coeffs);
+  return createFromQuadratic(q);
 }
 
 //=====================================================================
 // Entity interface
 //=====================================================================
-RS_Entity* LC_Hyperbola::clone() const {
-    return new LC_Hyperbola(*this);
+RS_Entity *LC_Hyperbola::clone() const {
+  return new LC_Hyperbola(*this);
 }
 
 RS_VectorSolutions LC_Hyperbola::getFoci() const {
-    const double e = std::sqrt(1.0 + m_data.ratio * m_data.ratio);
-    const RS_Vector vp = m_data.majorP * e;
-    RS_VectorSolutions sol;
-    sol.push_back(m_data.center + vp);
-    sol.push_back(m_data.center - vp);
-    return sol;
+  double e = std::sqrt(1.0 + m_data.ratio * m_data.ratio);
+  RS_Vector vp = m_data.majorP * e;
+  RS_VectorSolutions sol;
+  sol.push_back(m_data.center + vp);
+  sol.push_back(m_data.center - vp);
+  return sol;
 }
 
 RS_VectorSolutions LC_Hyperbola::getRefPoints() const {
-    RS_VectorSolutions sol;
+  RS_VectorSolutions sol;
 
-    if (!m_valid) {
-        return sol;
-    }
+  if (!m_valid) {
+    return sol;
+  }
 
-    // Center (always included)
-    sol.push_back(m_data.center);
+  // Center (always included)
+  sol.push_back(m_data.center);
 
-    // Primary vertex (on the selected branch)
-    const RS_Vector primaryVertex = getPrimaryVertex();
-    if (primaryVertex.valid) {
-        sol.push_back(primaryVertex);
-    }
+  // Primary vertex (on the selected branch)
+  RS_Vector primaryVertex = getPrimaryVertex();
+  if (primaryVertex.valid) {
+    sol.push_back(primaryVertex);
+  }
   // Secondary vertex (opposite branch). For unbounded full hyperbolas the
   // user expects to snap to either vertex (analogous to the two endpoints
   // of an ellipse's major axis). For a bounded arc this is still meaningful
@@ -324,46 +323,41 @@ RS_VectorSolutions LC_Hyperbola::getRefPoints() const {
     sol.push_back(secondaryVertex);
   }
 
-    // Foci
-    const RS_Vector f1 = m_data.getFocus1();
-    const RS_Vector f2 = m_data.getFocus2();
-    if (f1.valid) {
-        sol.push_back(f1);
-    }
-    if (f2.valid) {
-        sol.push_back(f2);
-    }
+  // Foci
+  RS_Vector f1 = m_data.getFocus1();
+  RS_Vector f2 = m_data.getFocus2();
+  if (f1.valid)
+    sol.push_back(f1);
+  if (f2.valid)
+    sol.push_back(f2);
 
-    // Start and end points (only for bounded arcs)
-    if (std::abs(m_data.angle1) >= RS_TOLERANCE || std::abs(m_data.angle2) >= RS_TOLERANCE) {
-        const RS_Vector start = getStartpoint();
-        const RS_Vector end = getEndpoint();
+  // Start and end points (only for bounded arcs)
+  if (std::abs(m_data.angle1) >= RS_TOLERANCE ||
+      std::abs(m_data.angle2) >= RS_TOLERANCE) {
+    RS_Vector start = getStartpoint();
+    RS_Vector end = getEndpoint();
 
-        if (start.valid) {
-            sol.push_back(start);
-        }
-        if (end.valid) {
-            sol.push_back(end);
-        }
-    }
+    if (start.valid)
+      sol.push_back(start);
+    if (end.valid)
+      sol.push_back(end);
+  }
 
-    return sol;
+  return sol;
 }
 
 //=====================================================================
 RS_Vector LC_Hyperbola::getStartpoint() const {
-    if (isInfinite()) {
-        return RS_Vector(false);
-    }
-    return getPoint(m_data.angle1, m_data.reversed);
+  if (isInfinite())
+    return RS_Vector(false);
+  return getPoint(m_data.angle1, m_data.reversed);
 }
 
 //=====================================================================
 RS_Vector LC_Hyperbola::getEndpoint() const {
-    if (isInfinite()) {
-        return RS_Vector(false);
-    }
-    return getPoint(m_data.angle2, m_data.reversed);
+  if (isInfinite())
+    return RS_Vector(false);
+  return getPoint(m_data.angle2, m_data.reversed);
 }
 
 /**
@@ -388,122 +382,119 @@ RS_Vector LC_Hyperbola::getEndpoint() const {
  *
  * @return Point at the arc-length midpoint, or RS_Vector(false) if unbounded or invalid
  */
-RS_Vector LC_Hyperbola::getMiddlePoint() const {
-    if (!m_valid) {
-        return RS_Vector(false);
-    }
+RS_Vector LC_Hyperbola::getMiddlePoint() const
+{
+  if (!m_valid) {
+    return RS_Vector(false);
+  }
 
-    // Unbounded hyperbola has infinite length → no meaningful midpoint
-    if (isInfinite()) {
-        return RS_Vector(false);
-    }
+         // Unbounded hyperbola has infinite length → no meaningful midpoint
+         if (isInfinite()) {
+           return RS_Vector(false);
+         }
 
-    const double totalLength = getLength();
-    if (std::isinf(totalLength) || totalLength <= 0.0) {
-        return RS_Vector(false);
-    }
+  double totalLength = getLength();
+  if (std::isinf(totalLength) || totalLength <= 0.0) {
+    return RS_Vector(false);
+  }
 
-    // Midpoint is at half the total arc length.
-    // Use the center as a dummy coordinate — side detection is not needed for the true midpoint.
-    return getNearestDist(totalLength * 0.5, m_data.center);
+         // Midpoint is at half the total arc length.
+         // Use the center as a dummy coordinate — side detection is not needed for the true midpoint.
+  return getNearestDist(totalLength * 0.5, m_data.center);
 }
 
 //=====================================================================
 // Tangent methods
 //=====================================================================
 double LC_Hyperbola::getDirection1() const {
-    const RS_Vector p = getStartpoint();
-    if (!p.valid) {
-        return 0.0;
-    }
-    return getTangentDirection(p).angle();
+  RS_Vector p = getStartpoint();
+  if (!p.valid)
+    return 0.0;
+  return getTangentDirection(p).angle();
 }
 
 double LC_Hyperbola::getDirection2() const {
-    const RS_Vector p = getEndpoint();
-    if (!p.valid) {
-        return 0.0;
-    }
-    return getTangentDirection(p).angle();
+  RS_Vector p = getEndpoint();
+  if (!p.valid)
+    return 0.0;
+  return getTangentDirection(p).angle();
 }
 
 //=====================================================================
 RS_Vector LC_Hyperbola::getTangentDirectionParam(double parameter) const {
-    const double a = getMajorRadius();
-    const double b = getMinorRadius();
+  double a = getMajorRadius();
+  double b = getMinorRadius();
 
-    double dx = a * std::sinh(parameter);
-    const double dy = b * std::cosh(parameter);
-    if (m_data.reversed) {
-        dx = -dx;
-    }
+  double dx = a * std::sinh(parameter);
+  double dy = b * std::cosh(parameter);
+  if (m_data.reversed)
+    dx = -dx;
 
-    RS_Vector tangent{dx, dy};
-    tangent.rotate(m_data.majorP.angle());
-    return tangent.normalized();
+  RS_Vector tangent{dx, dy};
+  tangent.rotate(m_data.majorP.angle());
+  return tangent.normalized();
 }
 
-RS_Vector LC_Hyperbola::getTangentDirection(const RS_Vector& point) const {
-    const double phi = getParamFromPoint(point, m_data.reversed);
-    return getTangentDirectionParam(phi);
+RS_Vector LC_Hyperbola::getTangentDirection(const RS_Vector &point) const {
+  double phi = getParamFromPoint(point, m_data.reversed);
+  return getTangentDirectionParam(phi);
 }
 
 //=====================================================================
-RS_VectorSolutions LC_Hyperbola::getTangentPoint(const RS_Vector& point) const {
-    if (!m_valid || !point.valid) {
-        return RS_VectorSolutions();
-    }
+RS_VectorSolutions LC_Hyperbola::getTangentPoint(const RS_Vector &point) const {
+  if (!m_valid || !point.valid)
+    return RS_VectorSolutions();
 
-    LC_Quadratic hyper = getQuadratic();
-    if (!hyper.isValid()) {
-        return RS_VectorSolutions();
-    }
+  LC_Quadratic hyper = getQuadratic();
+  if (!hyper.isValid())
+    return RS_VectorSolutions();
 
-    std::vector<double> coef = hyper.getCoefficients();
-    double A = coef[0], B = coef[1], C = coef[2];
-    double D = coef[3], E = coef[4], F = coef[5];
+  std::vector<double> coef = hyper.getCoefficients();
+  double A = coef[0], B = coef[1], C = coef[2];
+  double D = coef[3], E = coef[4], F = coef[5];
 
-    double px = point.x, py = point.y;
+  double px = point.x, py = point.y;
 
-    double polarA = A * px + (B / 2.0) * py + D / 2.0;
-    double polarB = (B / 2.0) * px + C * py + E / 2.0;
-    double polarK = D / 2.0 * px + E / 2.0 * py + F;
+  double polarA = A * px + (B / 2.0) * py + D / 2.0;
+  double polarB = (B / 2.0) * px + C * py + E / 2.0;
+  double polarK = D / 2.0 * px + E / 2.0 * py + F;
 
-    if (std::abs(polarA) < RS_TOLERANCE && std::abs(polarB) < RS_TOLERANCE) {
-        return RS_VectorSolutions();
-    }
+  if (std::abs(polarA) < RS_TOLERANCE && std::abs(polarB) < RS_TOLERANCE) {
+    return RS_VectorSolutions();
+  }
 
-    // Pick the larger-magnitude coefficient as the denominator to avoid
+  // Pick the larger-magnitude coefficient as the denominator to avoid
   // catastrophic cancellation / division-by-zero when one of polarA, polarB
-  // is near zero but the other is not.RS_Vector p1, p2;
-    if (std::abs(polarB) >= std::abs(polarA)) {
-        p1 = RS_Vector(0.0, -polarK / polarB);
-        p2 = RS_Vector(1.0, (-polarK - polarA) / polarB);
+  // is near zero but the other is not.
+  RS_Vector p1, p2;
+  if (std::abs(polarB) >= std::abs(polarA)) {
+    p1 = RS_Vector(0.0, -polarK / polarB);
+    p2 = RS_Vector(1.0, (-polarK - polarA) / polarB);
+  } else {
+    p1 = RS_Vector(-polarK / polarA, 0.0);
+    p2 = RS_Vector((-polarK - polarB) / polarA, 1.0);
+  }
+
+  RS_Line polar(nullptr, RS_LineData(p1, p2));
+
+  RS_VectorSolutions sol =
+      LC_Quadratic::getIntersection(hyper, polar.getQuadratic());
+
+  RS_VectorSolutions tangents;
+  for (size_t i = 0; i < sol.getNumber(); ++i) {
+    RS_Vector tp = sol.get(i);
+    if (!tp.valid)
+      continue;
+
+    RS_Vector radius = tp - point;
+    RS_Vector tangentDir = getTangentDirection(tp);
+    if (tangentDir.valid &&
+        std::abs(RS_Vector::dotP(radius, tangentDir)) < RS_TOLERANCE * 10.0) {
+      tangents.push_back(tp);
     }
-    else {
-        p1 = RS_Vector(-polarK / polarA, 0.0);
-        p2 = RS_Vector((-polarK - polarB) / polarA, 1.0);
-    }
+  }
 
-    RS_Line polar(nullptr, RS_LineData(p1, p2));
-
-    RS_VectorSolutions sol = LC_Quadratic::getIntersection(hyper, polar.getQuadratic());
-
-    RS_VectorSolutions tangents;
-    for (size_t i = 0; i < sol.getNumber(); ++i) {
-        RS_Vector tp = sol.get(i);
-        if (!tp.valid) {
-            continue;
-        }
-
-        RS_Vector radius = tp - point;
-        RS_Vector tangentDir = getTangentDirection(tp);
-        if (tangentDir.valid && std::abs(RS_Vector::dotP(radius, tangentDir)) < RS_TOLERANCE * 10.0) {
-            tangents.push_back(tp);
-        }
-    }
-
-    return tangents;
+  return tangents;
 }
 
 //=====================================================================
@@ -511,29 +502,30 @@ RS_VectorSolutions LC_Hyperbola::getTangentPoint(const RS_Vector& point) const {
 //=====================================================================
 //=====================================================================
 RS_Vector LC_Hyperbola::getPoint(double phi, bool useReversed) const {
-    const double a = getMajorRadius();
-    const double b = getMinorRadius();
-    if (a < RS_TOLERANCE || b < RS_TOLERANCE) {
-        return RS_Vector(false);
-    }
+  const double a = getMajorRadius();
+  const double b = getMinorRadius();
+  if (a < RS_TOLERANCE || b < RS_TOLERANCE)
+    return RS_Vector(false);
 
-    const double ch = std::cosh(phi);
-    const double sh = std::sinh(phi);
+  double ch = std::cosh(phi);
+  double sh = std::sinh(phi);
 
-    const RS_Vector local(useReversed ? -a * ch : a * ch, b * sh);
+  RS_Vector local(useReversed ? -a * ch : a * ch, b * sh);
 
-    return localToWorld(local);
+  return localToWorld(local);
 }
 
 //=====================================================================
-RS_Vector LC_Hyperbola::worldToLocal(const RS_Vector& world) const {
-    const RS_Vector local = (world - getCenter()).rotated(-getAngle());
-    return local;
+RS_Vector LC_Hyperbola::worldToLocal(const RS_Vector& world) const
+{
+  RS_Vector local = (world - getCenter()).rotated(- getAngle());
+  return local;
 }
 
 //=====================================================================
-RS_Vector LC_Hyperbola::localToWorld(const RS_Vector& local) const {
-    return local.rotated(getAngle()) + getCenter();
+RS_Vector LC_Hyperbola::localToWorld(const RS_Vector& local) const
+{
+  return local.rotated(getAngle()) + getCenter();
 }
 
 /**
@@ -562,17 +554,19 @@ RS_Vector LC_Hyperbola::localToWorld(const RS_Vector& local) const {
  * @param branchReversed  Ignored — branch is automatically detected from geometry
  * @return                Hyperbolic parameter φ, or NaN if point is not on the hyperbola
  */
-double LC_Hyperbola::getParamFromPoint(const RS_Vector& p, bool /*branchReversed*/) const {
-    if (!m_valid || !p.valid) {
-        return std::numeric_limits<double>::quiet_NaN();
-    }
+double LC_Hyperbola::getParamFromPoint(const RS_Vector& p,
+                                       bool /*branchReversed*/) const
+{
+  if (!m_valid || !p.valid) {
+    return std::numeric_limits<double>::quiet_NaN();
+  }
 
-    const double a = getMajorRadius();
-    const double b = getMinorRadius();
+  const double a = getMajorRadius();
+  const double b = getMinorRadius();
 
-    if (a < RS_TOLERANCE || b < RS_TOLERANCE) {
-        return std::numeric_limits<double>::quiet_NaN();
-    }
+  if (a < RS_TOLERANCE || b < RS_TOLERANCE) {
+    return std::numeric_limits<double>::quiet_NaN();
+  }
 
          // Transform point to local coordinate system:
          // - Translate so center is at origin
@@ -587,195 +581,186 @@ double LC_Hyperbola::getParamFromPoint(const RS_Vector& p, bool /*branchReversed
   // caller (moveRef, moveStartpoint/moveEndpoint, scale, mirror, prepareTrim,
   // getNearestPointOnEntity initial guess) actually needs.
 
-    // Primary recovery: φ from y-coordinate (sinh is odd and strictly increasing)
-    const double y_local = local.y;
-  doublesinh_phi = y_local / b;
-    const double phi = std::asinh(sinh_phi);
+  // Primary recovery: φ from y-coordinate (sinh is odd and strictly increasing)
+  double y_local = local.y;
+  double sinh_phi = y_local / b;
+  double phi = std::asinh(sinh_phi);
 
-    //        // Reconstruct expected x from φ
-    // double cosh_phi = std::cosh(phi);
-    // double x_expected = a * cosh_phi;
+  //        // Reconstruct expected x from φ
+  // double cosh_phi = std::cosh(phi);
+  // double x_expected = a * cosh_phi;
 
-    //        // Determine which branch the point belongs to by sign of x_local
-    //        // m_data.reversed == true means left branch (x negative in local
+  //        // Determine which branch the point belongs to by sign of x_local
+  //        // m_data.reversed == true means left branch (x negative in local
   //        coords)
-    // //bool pointOnLeftBranch = (x_local < 0.0);
+  // //bool pointOnLeftBranch = (x_local < 0.0);
 
-    //        // Expected x sign based on m_data.reversed
-    // double expectedSign = m_data.reversed ? -1.0 : 1.0;
+  //        // Expected x sign based on m_data.reversed
+  // double expectedSign = m_data.reversed ? -1.0 : 1.0;
 
-    //        // Check consistency: reconstructed |x| should match, and sign should align with branch
-    // double x_expected_signed = expectedSign * x_expected;
+  //        // Check consistency: reconstructed |x| should match, and sign should align with branch
+  // double x_expected_signed = expectedSign * x_expected;
 
-    // if (std::abs(x_local - x_expected_signed) > RS_TOLERANCE * a) {
-    //   // Point does not lie on this hyperbola branch
-    //   return std::numeric_limits<double>::quiet_NaN();
-    // }
+  // if (std::abs(x_local - x_expected_signed) > RS_TOLERANCE * a) {
+  //   // Point does not lie on this hyperbola branch
+  //   return std::numeric_limits<double>::quiet_NaN();
+  // }
 
-    //        // For left branch (reversed=true), φ is defined such that cosh(φ) is still positive,
-    //        // so the same φ works for both branches — no sign flip needed
-    return phi;
+  //        // For left branch (reversed=true), φ is defined such that cosh(φ) is still positive,
+  //        // so the same φ works for both branches — no sign flip needed
+  return phi;
 }
 
 //=====================================================================
-bool LC_Hyperbola::isInClipRect(const RS_Vector& p, const LC_Rect& rect) const {
-    return p.valid && rect.inArea(p);
+bool LC_Hyperbola::isInClipRect(const RS_Vector &p, const LC_Rect& rect) const {
+  return p.valid && rect.inArea(p);
 }
 
 //=====================================================================
 // Rendering
 //=====================================================================
 
-void LC_Hyperbola::draw(RS_Painter* painter) {
-    if ((painter == nullptr) || !isValid()) {
+void LC_Hyperbola::draw(RS_Painter *painter) {
+  if (!painter || !isValid())
+    return;
+
+  const LC_Rect &clip = painter->getWcsBoundingRect();
+  if (clip.isEmpty(RS_TOLERANCE))
+    return;
+
+  double xmin = clip.minP().x, xmax = clip.maxP().x;
+  double ymin = clip.minP().y, ymax = clip.maxP().y;
+
+  double a = getMajorRadius(), b = getMinorRadius();
+  if (a < RS_TOLERANCE || b < RS_TOLERANCE)
+    return;
+
+  painter->save();
+  std::shared_ptr<double> painterRestore{&a, [painter](void*) {
+      painter->restore(); }};
+
+  double guiPixel = std::min(painter->toGuiDX(1.0), painter->toGuiDY(1.0));
+  double maxWorldError = 1.0 / guiPixel;
+
+  std::vector<RS_Vector> pts;
+  pts.reserve(300);
+
+  bool isFull = isInfinite();
+
+  auto processBranch = [&, painter](bool rev) {
+    std::vector<double> params;
+
+    RS_Line borders[4] = {
+        RS_Line(nullptr,
+                RS_LineData(RS_Vector(xmin, ymin), RS_Vector(xmax, ymin))),
+        RS_Line(nullptr,
+                RS_LineData(RS_Vector(xmax, ymin), RS_Vector(xmax, ymax))),
+        RS_Line(nullptr,
+                RS_LineData(RS_Vector(xmax, ymax), RS_Vector(xmin, ymax))),
+        RS_Line(nullptr,
+                RS_LineData(RS_Vector(xmin, ymax), RS_Vector(xmin, ymin)))};
+
+    for (const auto &line : borders) {
+      RS_VectorSolutions sol =
+          LC_Quadratic::getIntersection(getQuadratic(), line.getQuadratic());
+      for (const RS_Vector &intersection : sol) {
+        double phiCur = getParamFromPoint(intersection);
+        if (std::isnan(phiCur) || phiCur < m_data.angle1 ||
+            phiCur > m_data.angle2)
+          continue;
+        if (isInClipRect(intersection, clip)) {
+          params.push_back(phiCur);
+        }
+      }
+    }
+
+    if (params.empty()) {
+      RS_Vector test = getPoint((m_data.angle1 + m_data.angle2) * 0.5, rev);
+      if (test.valid && isInClipRect(test, clip)) {
+        params = {m_data.angle1, m_data.angle2};
+      } else {
         return;
+      }
+    } else {
+      params.push_back(m_data.angle1);
+      params.push_back(m_data.angle2);
+      std::sort(params.begin(), params.end());
+      auto last =
+          std::unique(params.begin(), params.end(), [](double a, double b) {
+            return std::abs(a - b) < RS_TOLERANCE_ANGLE;
+          });
+      params.erase(last, params.end());
     }
 
-    const LC_Rect& clip = painter->getWcsBoundingRect();
-    if (clip.isEmpty(RS_TOLERANCE)) {
-        return;
+    for (size_t i = 0; i + 1 < params.size(); ++i) {
+      double start = params[i];
+      double end = params[i + 1];
+      RS_Vector middle = getPoint((start + end) * 0.5, rev);
+      pts.clear();
+      if (isInClipRect(middle, clip)) {
+        adaptiveSample(pts, start, end, rev, maxWorldError);
+        painter->drawSplinePointsWCS(pts, false);
+      }
     }
+  };
 
-    const double xmin = clip.minP().x, xmax = clip.maxP().x;
-    const double ymin = clip.minP().y, ymax = clip.maxP().y;
-
-    double a = getMajorRadius(), b = getMinorRadius();
-    if (a < RS_TOLERANCE || b < RS_TOLERANCE) {
-        return;
-    }
-
-    painter->save();
-    std::shared_ptr<double> painterRestore{
-        &a,
-        [painter](void*) {
-            painter->restore();
-        }
-    };
-
-    const double guiPixel = std::min(painter->toGuiDX(1.0), painter->toGuiDY(1.0));
-    const double maxWorldError = 1.0 / guiPixel;
-
-    std::vector<RS_Vector> pts;
-    pts.reserve(300);
-
-    const bool isFull = isInfinite();
-
-    auto processBranch = [&, painter](bool rev) {
-        std::vector<double> params;
-
-        RS_Line borders[4] = {
-            RS_Line(nullptr, RS_LineData(RS_Vector(xmin, ymin), RS_Vector(xmax, ymin))),
-            RS_Line(nullptr, RS_LineData(RS_Vector(xmax, ymin), RS_Vector(xmax, ymax))),
-            RS_Line(nullptr, RS_LineData(RS_Vector(xmax, ymax), RS_Vector(xmin, ymax))),
-            RS_Line(nullptr, RS_LineData(RS_Vector(xmin, ymax), RS_Vector(xmin, ymin)))
-        };
-
-        for (const auto& line : borders) {
-            RS_VectorSolutions sol = LC_Quadratic::getIntersection(getQuadratic(), line.getQuadratic());
-            for (const RS_Vector& intersection : sol) {
-                double phiCur = getParamFromPoint(intersection);
-                if (std::isnan(phiCur) || phiCur < m_data.angle1 ||
-            phiCur > m_data.angle2) {
-                    continue;
-                }
-                if (isInClipRect(intersection, clip)) {
-                    params.push_back(phiCur);
-                }
-            }
-        }
-
-        if (params.empty()) {
-            const RS_Vector test = getPoint((m_data.angle1 + m_data.angle2) * 0.5, rev);
-            if (test.valid && isInClipRect(test, clip)) {
-                params = {m_data.angle1, m_data.angle2};
-            }
-            else {
-                return;
-            }
-        }
-        else {
-            params.push_back(m_data.angle1);
-            params.push_back(m_data.angle2);
-            std::sort(params.begin(), params.end());
-            const auto last = std::unique(params.begin(), params.end(), [](double a, double b) {
-                return std::abs(a - b) < RS_TOLERANCE_ANGLE;
-            });
-            params.erase(last, params.end());
-        }
-
-        for (size_t i = 0; i + 1 < params.size(); ++i) {
-            const double start = params[i];
-            const double end = params[i + 1];
-            RS_Vector middle = getPoint((start + end) * 0.5, rev);
-            pts.clear();
-            if (isInClipRect(middle, clip)) {
-                adaptiveSample(pts, start, end, rev, maxWorldError);
-                painter->drawSplinePointsWCS(pts, false);
-            }
-        }
-    };
-
-    if (isFull) {
-        processBranch(false);
-        processBranch(true);
-    }
-    else {
-        processBranch(m_data.reversed);
-    }
+  if (isFull) {
+    processBranch(false);
+    processBranch(true);
+  } else {
+    processBranch(m_data.reversed);
+  }
 }
 
 //=====================================================================
-void LC_Hyperbola::adaptiveSample(std::vector<RS_Vector>& out, double phiStart, double phiEnd, bool rev, double maxError) const {
-    if (phiStart > phiEnd) {
-        std::swap(phiStart, phiEnd);
+void LC_Hyperbola::adaptiveSample(std::vector<RS_Vector> &out, double phiStart,
+                                  double phiEnd, bool rev,
+                                  double maxError) const {
+  if (phiStart > phiEnd)
+    std::swap(phiStart, phiEnd);
+
+  std::vector<std::pair<double, RS_Vector>> points;
+  points.reserve(256);
+
+  std::function<void(double, double)> subdiv = [&](double pa, double pb) {
+    RS_Vector A = getPoint(pa, rev);
+    RS_Vector B = getPoint(pb, rev);
+    if (!A.valid || !B.valid)
+      return;
+
+    double pm = (pa + pb) * 0.5;
+    RS_Vector M = getPoint(pm, rev);
+    if (!M.valid)
+      return;
+
+    double sagitta = (M - (A + B) * 0.5).magnitude();
+    double estimatedMaxError = sagitta * 1.15;
+
+    if (estimatedMaxError < maxError || (pb - pa) < 0.05) {
+      points.emplace_back(pa, A);
+      points.emplace_back(pb, B);
+      return;
     }
 
-    std::vector<std::pair<double, RS_Vector>> points;
-    points.reserve(256);
+    subdiv(pa, pm);
+    subdiv(pm, pb);
+  };
 
-    std::function<void(double, double)> subdiv = [&](double pa, double pb) {
-        RS_Vector A = getPoint(pa, rev);
-        RS_Vector B = getPoint(pb, rev);
-        if (!A.valid || !B.valid) {
-            return;
-        }
+  RS_Vector first = getPoint(phiStart, rev);
+  if (first.valid)
+    points.emplace_back(phiStart, first);
 
-        const double pm = (pa + pb) * 0.5;
-        const RS_Vector M = getPoint(pm, rev);
-        if (!M.valid) {
-            return;
-        }
+  subdiv(phiStart, phiEnd);
 
-        const double sagitta = (M - (A + B) * 0.5).magnitude();
-        const double estimatedMaxError = sagitta * 1.15;
+  std::sort(points.begin(), points.end(),
+            [](const auto &a, const auto &b) { return a.first < b.first; });
 
-        if (estimatedMaxError < maxError || (pb - pa) < 0.05) {
-            points.emplace_back(pa, A);
-            points.emplace_back(pb, B);
-            return;
-        }
-
-        subdiv(pa, pm);
-        subdiv(pm, pb);
-    };
-
-    RS_Vector first = getPoint(phiStart, rev);
-    if (first.valid) {
-        points.emplace_back(phiStart, first);
+  out.reserve(out.size() + points.size());
+  for (const auto &kv : points) {
+    if (out.empty() || out.back().distanceTo(kv.second) > RS_TOLERANCE) {
+      out.push_back(kv.second);
     }
-
-    subdiv(phiStart, phiEnd);
-
-    std::sort(points.begin(), points.end(), [](const auto& a, const auto& b) {
-        return a.first < b.first;
-    });
-
-    out.reserve(out.size() + points.size());
-    for (const auto& kv : points) {
-        if (out.empty() || out.back().distanceTo(kv.second) > RS_TOLERANCE) {
-            out.push_back(kv.second);
-        }
-    }
+  }
 }
 
 //=====================================================================
@@ -809,79 +794,70 @@ void LC_Hyperbola::adaptiveSample(std::vector<RS_Vector>& out, double phiStart, 
  * @return               Point in the middle 50% of the arc closest to `coord`,
  *                       or RS_Vector(false) if hyperbola is invalid/unbounded
  */
-RS_Vector LC_Hyperbola::doGetNearestMiddle(const RS_Vector& coord, double* dist, int middlePoints) const {
-    Q_UNUSED(middlePoints); // Only one middle point is provided
+RS_Vector LC_Hyperbola::doGetNearestMiddle(const RS_Vector& coord,
+                                         double* dist,
+                                         int middlePoints) const
+{
+  Q_UNUSED(middlePoints);  // Only one middle point is provided
 
-    if (!m_valid) {
-        if (dist != nullptr) {
-            *dist = RS_MAXDOUBLE;
-        }
-        return RS_Vector(false);
-    }
+  if (!m_valid) {
+    if (dist) *dist = RS_MAXDOUBLE;
+    return RS_Vector(false);
+  }
 
-    // Unbounded hyperbola has no defined middle
-    if (isInfinite()) {
-        if (dist != nullptr) {
-            *dist = RS_MAXDOUBLE;
-        }
-        return RS_Vector(false);
-    }
+         // Unbounded hyperbola has no defined middle
+  if (isInfinite()) {
+    if (dist) *dist = RS_MAXDOUBLE;
+    return RS_Vector(false);
+  }
 
-    const double totalLength = getLength();
-    if (std::isinf(totalLength) || totalLength <= 0.0) {
-        if (dist != nullptr) {
-            *dist = RS_MAXDOUBLE;
-        }
-        return RS_Vector(false);
-    }
+  double totalLength = getLength();
+  if (std::isinf(totalLength) || totalLength <= 0.0) {
+    if (dist) *dist = RS_MAXDOUBLE;
+    return RS_Vector(false);
+  }
 
-    // Define middle zone: central 50% of arc length
-    const double middleStart = totalLength * 0.25;
-    const double middleEnd = totalLength * 0.75;
+         // Define middle zone: central 50% of arc length
+  double middleStart = totalLength * 0.25;
+  double middleEnd   = totalLength * 0.75;
 
-    // Find geometrically closest point on the entire arc
-    const RS_Vector nearest = getNearestPointOnEntity(coord, true);
-    if (!nearest.valid) {
-        if (dist != nullptr) {
-            *dist = RS_MAXDOUBLE;
-        }
-        return RS_Vector(false);
-    }
+         // Find geometrically closest point on the entire arc
+  RS_Vector nearest = getNearestPointOnEntity(coord, true);
+  if (!nearest.valid) {
+    if (dist) *dist = RS_MAXDOUBLE;
+    return RS_Vector(false);
+  }
 
-    // Compute arc distance from startpoint to the nearest point
-    const double phi_nearest = getParamFromPoint(nearest, m_data.reversed);
-    if (std::isnan(phi_nearest)) {
-        if (dist != nullptr) {
-            *dist = RS_MAXDOUBLE;
-        }
-        return RS_Vector(false);
-    }
+         // Compute arc distance from startpoint to the nearest point
+  double phi_nearest = getParamFromPoint(nearest, m_data.reversed);
+  if (std::isnan(phi_nearest)) {
+    if (dist) *dist = RS_MAXDOUBLE;
+    return RS_Vector(false);
+  }
 
-    const double arcToNearest = std::abs(getArcLength(m_data.angle1, phi_nearest));
+  double arcToNearest = std::abs(getArcLength(m_data.angle1, phi_nearest));
 
-    double targetArcFromStart;
-    if (arcToNearest >= middleStart && arcToNearest <= middleEnd) {
-        // Nearest point is already in middle zone → use it
-        targetArcFromStart = arcToNearest;
-    }
-    else if (arcToNearest < middleStart) {
-        // Too close to start → clamp to beginning of middle zone
-        targetArcFromStart = middleStart;
-    }
-    else {
-        // Too close to end → clamp to end of middle zone
-        targetArcFromStart = middleEnd;
-    }
+  double targetArcFromStart;
+  if (arcToNearest >= middleStart && arcToNearest <= middleEnd) {
+    // Nearest point is already in middle zone → use it
+    targetArcFromStart = arcToNearest;
+  } else if (arcToNearest < middleStart) {
+    // Too close to start → clamp to beginning of middle zone
+    targetArcFromStart = middleStart;
+  } else {
+    // Too close to end → clamp to end of middle zone
+    targetArcFromStart = middleEnd;
+  }
 
-    // Use existing high-precision method to get point at target arc distance
-    // Dummy coordinate (center) — side selection irrelevant since we specify exact distance
-    const RS_Vector middlePoint = getNearestDist(targetArcFromStart, m_data.center);
+         // Use existing high-precision method to get point at target arc distance
+         // Dummy coordinate (center) — side selection irrelevant since we specify exact distance
+  RS_Vector middlePoint = getNearestDist(targetArcFromStart, m_data.center);
 
-    if (dist != nullptr) {
-        *dist = coord.distanceTo(middlePoint);
-    }
+  if (dist) {
+    *dist = coord.distanceTo(middlePoint);
+  }
 
-    return middlePoint;
+  return middlePoint;
 }
 
 /**
@@ -936,93 +912,93 @@ RS_Vector LC_Hyperbola::doGetNearestMiddle(const RS_Vector& coord, double* dist,
  * @param onEntity Restrict to bounded arc
  * @return Tangent point, or invalid if no real solution or outside bounds
  */
-RS_Vector LC_Hyperbola::getNearestOrthTan(const RS_Vector& /*coord*/, const RS_Line& normal, bool onEntity) const {
-    if (!m_valid) {
-        return RS_Vector(false);
-    }
+RS_Vector LC_Hyperbola::getNearestOrthTan(const RS_Vector& /*coord*/,
+                                          const RS_Line& normal,
+                                          bool onEntity) const
+{
+  if (!m_valid)
+    return RS_Vector(false);
 
-    RS_Vector n{normal.getDirection1()};
+  RS_Vector n{normal.getDirection1()};
 
-    n = n.normalized();
+  n = n.normalized();
 
-    const double cos_th = std::cos(m_data.majorP.angle());
-    const double sin_th = std::sin(m_data.majorP.angle());
-    const double a = getMajorRadius();
-    const double b = getMinorRadius();
-    const int sign_x = m_data.reversed ? -1 : 1;
+  double cos_th = std::cos(m_data.majorP.angle());
+  double sin_th = std::sin(m_data.majorP.angle());
+  double a = getMajorRadius();
+  double b = getMinorRadius();
+  int sign_x = m_data.reversed ? -1 : 1;
 
-    const double K = sign_x * a * (cos_th * n.x + sin_th * n.y);
-    const double M = b * (-sin_th * n.x + cos_th * n.y);
+  double K = sign_x * a * (cos_th * n.x + sin_th * n.y);
+  double M = b * (-sin_th * n.x + cos_th * n.y);
 
-    if (std::abs(K) < RS_TOLERANCE) {
-        return RS_Vector(false); // no solution
-    }
+  if (std::abs(K) < RS_TOLERANCE) return RS_Vector(false);  // no solution
 
-    const double tanh_phi = -M / K;
+  double tanh_phi = - M / K;
 
-    if (std::abs(tanh_phi) >= 1.0 - RS_TOLERANCE) {
-        return RS_Vector(false);
-    }
+  if (std::abs(tanh_phi) >= 1.0 - RS_TOLERANCE) return RS_Vector(false);
 
-    const double phi = std::atanh(tanh_phi);
+  double phi = std::atanh(tanh_phi);
 
-    if (onEntity && !isInfinite()) {
-        const double phi_min = std::min(m_data.angle1, m_data.angle2);
-        const double phi_max = std::max(m_data.angle1, m_data.angle2);
-        if (phi < phi_min - RS_TOLERANCE || phi > phi_max + RS_TOLERANCE) {
-            return RS_Vector(false);
-        }
-    }
+  if (onEntity && !isInfinite()) {
+    double phi_min = std::min(m_data.angle1, m_data.angle2);
+    double phi_max = std::max(m_data.angle1, m_data.angle2);
+    if (phi < phi_min - RS_TOLERANCE || phi > phi_max + RS_TOLERANCE) return RS_Vector(false);
+  }
 
-    return getPoint(phi, m_data.reversed);
+  return getPoint(phi, m_data.reversed);
 }
 
-bool LC_Hyperbola::isInfinite() const {
-    return RS_Math::equal(m_data.angle1, 0.) && RS_Math::equal(m_data.angle2, 0.);
+bool LC_Hyperbola::isInfinite() const
+{
+  return RS_Math::equal(m_data.angle1, 0.) && RS_Math::equal(m_data.angle2, 0.);
 }
+
 
 // Directed arc length from phi1 to phi2 (signed based on order)
 double LC_Hyperbola::getArcLength(double phi1, double phi2) const {
-    if (!m_valid) {
-        return 0.0;
-    }
+  if (!m_valid)
+    return 0.0;
 
-    if (isInfinite()) {
-        return RS_MAXDOUBLE;
-    }
+  if (isInfinite())
+    return RS_MAXDOUBLE;
 
-    const bool forward = phi2 > phi1;
-    const double p_min = std::min(phi1, phi2);
-    const double p_max = std::max(phi1, phi2);
+  bool forward = phi2 > phi1;
+  double p_min = std::min(phi1, phi2);
+  double p_max = std::max(phi1, phi2);
 
-    double a = getMajorRadius();
-    const double ecc = getEccentricity();
-    double ecc2 = ecc * ecc;
+  double a = getMajorRadius();
+  double ecc = getEccentricity();
+  double ecc2 = ecc * ecc;
 
-    auto integrand = [a, ecc2](double phi) -> double {
-        const double ch = std::cosh(phi);
-        const double inner = std::max(0., ecc2 * ch * ch - 1.0);
-        return a * std::sqrt(inner);
-    };
+  auto integrand = [a, ecc2](double phi) -> double {
+    double ch = std::cosh(phi);
+    double inner = std::max(0., ecc2 * ch * ch - 1.0);
+    return a * std::sqrt(inner);
+  };
 
-    double result = 0.0;
-    double abs_error = 0.0;
+  double result = 0.0;
+  double abs_error = 0.0;
 
-    // Split at zero if interval contains the vertex (singularity point)
-    if (p_min < 0.0 && p_max > 0.0) {
-        const double part1 = boost::math::quadrature::gauss_kronrod<double, 61>::integrate(integrand, p_min, 0.0, 0, 1e-12, &abs_error);
-        const double part2 = boost::math::quadrature::gauss_kronrod<double, 61>::integrate(integrand, 0.0, p_max, 0, 1e-12, &abs_error);
-        result = part1 + part2;
-    }
-    else {
-        result = boost::math::quadrature::gauss_kronrod<double, 61>::integrate(integrand, p_min, p_max, 0, 1e-12, &abs_error);
-    }
+  // Split at zero if interval contains the vertex (singularity point)
+  if (p_min < 0.0 && p_max > 0.0) {
+    double part1 =
+        boost::math::quadrature::gauss_kronrod<double, 61>::integrate(
+            integrand, p_min, 0.0, 0, 1e-12, &abs_error);
+    double part2 =
+        boost::math::quadrature::gauss_kronrod<double, 61>::integrate(
+            integrand, 0.0, p_max, 0, 1e-12, &abs_error);
+    result = part1 + part2;
+  } else {
+    result = boost::math::quadrature::gauss_kronrod<double, 61>::integrate(
+        integrand, p_min, p_max, 0, 1e-12, &abs_error);
+  }
 
-    return forward ? result : -result;
+  return forward ? result : -result;
 }
 
 /**
- * @brief doGetNearestDist
+ * @brief getNearestDist
  * Returns the point on the bounded hyperbola arc at the specified arc-length
  * distance from the endpoint closest to the provided coordinate.
  *
@@ -1034,135 +1010,112 @@ double LC_Hyperbola::getArcLength(double phi1, double phi2) const {
  * @param dist       Optional: computed arc distance from start to returned point
  * @return Point at requested distance, or invalid on failure
  */
-RS_Vector LC_Hyperbola::doGetNearestDist(double distance, const RS_Vector& coord, double* dist) const {
-    if (!m_valid || isInfinite()) {
-        return RS_Vector(false);
-    }
+RS_Vector LC_Hyperbola::doGetNearestDist(double distance,
+                                       const RS_Vector& coord,
+                                       double* dist) const
+{
+  if (!m_valid || isInfinite())
+    return RS_Vector(false);
 
-    const double totalLength = getLength();
-    if (totalLength <= std::abs(distance)) {
-        return RS_Vector(false);
-    }
+  double totalLength = getLength();
+  if (totalLength <= std::abs(distance))
+    return RS_Vector(false);
 
-    const double phi0 = getParamFromPoint(coord, m_data.reversed);
-    const bool fromStart =
+  double phi0 = getParamFromPoint(coord, m_data.reversed);
+  const bool fromStart =
       std::abs(phi0 - m_data.angle1) <= std::abs(phi0 - m_data.angle2);
 
-    const double targetArcFromStart = fromStart ? distance : totalLength - distance;
+  double targetArcFromStart = fromStart ? distance : totalLength - distance;
 
-    if (distance < 0.0 || targetArcFromStart < 0.0 || targetArcFromStart > totalLength + RS_TOLERANCE) {
-        return RS_Vector(false);
-    }
+  if (distance < 0.0 || targetArcFromStart < 0.0 || targetArcFromStart > totalLength + RS_TOLERANCE)
+    return RS_Vector(false);
 
-    if (dist != nullptr) {
-        *dist = targetArcFromStart;
-    }
+  if (dist)
+    *dist = targetArcFromStart;
 
-    const double a = getMajorRadius();
-    const double ecc2 = getEccentricity() * getEccentricity();
+  double a = getMajorRadius();
+  double ecc2 = getEccentricity() * getEccentricity();
 
-    // Initial guess from nearest point on curve
+         // Initial guess from nearest point on curve
 
-    using std::asinh, std::cosh, std::sinh;
-    double phi = asinh(sinh(m_data.angle1) +
+  using std::asinh, std::cosh, std::sinh;
+  double phi = asinh(sinh(m_data.angle1) +
                      targetArcFromStart / totalLength *
                          (sinh(m_data.angle2) - sinh(m_data.angle1)));
-    if (std::isnan(phi)) {
-        phi = m_data.angle1;
+  if (std::isnan(phi))
+    phi = m_data.angle1;
+
+  constexpr int maxIter = 30;
+  constexpr double tol = 1e-12;
+
+  bool converged = false;
+  for (int i = 0; i < maxIter; ++i) {
+    double s = getArcLength(m_data.angle1, phi);
+    double ds_dphi_current = a * std::sqrt(ecc2 * cosh(phi) * cosh(phi) - 1.0);
+    if (ds_dphi_current < RS_TOLERANCE) break;
+
+    double residual = targetArcFromStart - s;
+    double delta = residual / ds_dphi_current;
+    phi += delta;
+
+    // LC_LOG<<__func__<<"(): "<<i<<": phi="<<phi<<", "<<s<<"("<<targetArcFromStart<<"): "<<residual;
+    if (std::abs(delta) < tol) {
+      converged = true;
+      break;
+    }
+  }
+
+         // Bisection fallback if Newton fails
+  if (!converged) {
+    double phiLow = std::min(m_data.angle1, m_data.angle2) - 30.0;
+    double phiHigh = std::max(m_data.angle1, m_data.angle2) + 30.0;
+
+    double sLow = getArcLength(m_data.angle1, phiLow);
+    double sHigh = getArcLength(m_data.angle1, phiHigh);
+
+    while (sLow > targetArcFromStart) {
+      phiLow -= 30.0;
+      sLow = getArcLength(m_data.angle1, phiLow);
+    }
+    while (sHigh < targetArcFromStart) {
+      phiHigh += 30.0;
+      sHigh = getArcLength(m_data.angle1, phiHigh);
     }
 
-    constexpr int maxIter = 30;
-    constexpr double tol = 1e-12;
+    for (int i = 0; i < 80; ++i) {
+      phi = 0.5 * (phiLow + phiHigh);
+      double s = getArcLength(m_data.angle1, phi);
+      if (std::abs(s - targetArcFromStart) < 1e-9) break;
 
-    bool converged = false;
-    for (int i = 0; i < maxIter; ++i) {
-        const double s = getArcLength(m_data.angle1, phi);
-        const double ds_dphi_current = a * std::sqrt(ecc2 * cosh(phi) * cosh(phi) - 1.0);
-        if (ds_dphi_current < RS_TOLERANCE) {
-            break;
-        }
-
-        const double residual = targetArcFromStart - s;
-        const double delta = residual / ds_dphi_current;
-        phi += delta;
-
-        // LC_LOG<<__func__<<"(): "<<i<<": phi="<<phi<<", "<<s<<"("<<targetArcFromStart<<"): "<<residual;
-        if (std::abs(delta) < tol) {
-            converged = true;
-            break;
-        }
+      if (s < targetArcFromStart) phiLow = phi;
+      else phiHigh = phi;
     }
+  }
 
-    // Bisection fallback if Newton fails
-    if (!converged) {
-        double phiLow = std::min(m_data.angle1, m_data.angle2) - 30.0;
-        double phiHigh = std::max(m_data.angle1, m_data.angle2) + 30.0;
-
-        double sLow = getArcLength(m_data.angle1, phiLow);
-        double sHigh = getArcLength(m_data.angle1, phiHigh);
-
-        while (sLow > targetArcFromStart) {
-            phiLow -= 30.0;
-            sLow = getArcLength(m_data.angle1, phiLow);
-        }
-        while (sHigh < targetArcFromStart) {
-            phiHigh += 30.0;
-            sHigh = getArcLength(m_data.angle1, phiHigh);
-        }
-
-        for (int i = 0; i < 80; ++i) {
-            phi = 0.5 * (phiLow + phiHigh);
-            const double s = getArcLength(m_data.angle1, phi);
-            if (std::abs(s - targetArcFromStart) < 1e-9) {
-                break;
-            }
-
-            if (s < targetArcFromStart) {
-                phiLow = phi;
-            }
-            else {
-                phiHigh = phi;
-            }
-        }
-    }
-
-    return getPoint(phi, m_data.reversed);
+  return getPoint(phi, m_data.reversed);
 }
 
 //=====================================================================
 // Transformations
 //=====================================================================
 
-void LC_Hyperbola::move(const RS_Vector& offset) {
-    m_data.center += offset;
+void LC_Hyperbola::move(const RS_Vector &offset) {
+  m_data.center += offset;
   calculateBorders();
 }
 
-void LC_Hyperbola::rotate(const RS_Vector& center, double angle) {
-    rotate(center, RS_Vector{angle});
+void LC_Hyperbola::rotate(const RS_Vector &center, double angle) {
+  rotate(center, RS_Vector{angle});
 }
 
-void LC_Hyperbola::rotate(const RS_Vector& center, const RS_Vector& angleVector) {
-    m_data.center.rotate(center, angleVector);
-    m_data.majorP.rotate(angleVector);
+void LC_Hyperbola::rotate(const RS_Vector &center,
+                          const RS_Vector &angleVector) {
+  m_data.center.rotate(center, angleVector);
+  m_data.majorP.rotate(angleVector);
   calculateBorders();
   updateLength();
 }
 
-void LC_Hyperbola::scale(const RS_Vector& center, const RS_Vector& factor) {
-    data.center.scale(center, factor);
-    RS_VectorSolutions foci = getFoci();
-    RS_Vector vpStart = getStartpoint();
-    RS_Vector vpEnd = getEndpoint();
-    foci.scale(center, factor);
-    vpStart.scale(center, factor);
-    vpEnd.scale(center, factor);
-    *this = LC_Hyperbola{foci[0], foci[1], vpStart};
-    data.angle1 = getParamFromPoint(vpStart);
-    data.angle2 = getParamFromPoint(vpEnd);
-    if (data.angle1 > data.angle2) {
-        std::swap(data.angle1, data.angle2);
-    }
 void LC_Hyperbola::scale(const RS_Vector &center, const RS_Vector &factor) {
   // NOTE: assigning `*this = LC_Hyperbola{...}` would clobber base-class
   // state (parent, layer, pen, selection). Mutate `m_data` in place instead
@@ -1199,25 +1152,24 @@ void LC_Hyperbola::scale(const RS_Vector &center, const RS_Vector &factor) {
   updateLength();
 }
 
-void LC_Hyperbola::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) {
-    if (axisPoint1 == axisPoint2) {
-        return;
-    }
-    RS_Vector vpStart = getStartpoint();
-    RS_Vector vpEnd = getEndpoint();
-    auto mirrorFunc = [&axisPoint1, &axisPoint2](RS_Vector& vp) {
-        return vp.mirror(axisPoint1, axisPoint2);
-    };
-    mirrorFunc(m_data.center);
-    m_data.majorP.mirror(RS_Vector(0, 0), axisPoint2 - axisPoint1);
-    // m_data.reversed = !m_data.reversed;
-    m_data.angle2 = getParamFromPoint(mirrorFunc(vpStart));
-    m_data.angle1 = getParamFromPoint(mirrorFunc(vpEnd));
-    if (m_data.angle1 > m_data.angle2) {
-        std::swap(m_data.angle1, m_data.angle2);
-    }
+void LC_Hyperbola::mirror(const RS_Vector &axisPoint1,
+                          const RS_Vector &axisPoint2) {
+  if (axisPoint1 == axisPoint2)
+    return;
+  RS_Vector vpStart = getStartpoint();
+  RS_Vector vpEnd = getEndpoint();
+  auto mirrorFunc = [&axisPoint1, &axisPoint2](RS_Vector& vp) {
+    return vp.mirror(axisPoint1, axisPoint2);
+  };
+  mirrorFunc(m_data.center);
+  m_data.majorP.mirror(RS_Vector(0, 0), axisPoint2 - axisPoint1);
+  // m_data.reversed = !m_data.reversed;
+  m_data.angle2 = getParamFromPoint(mirrorFunc(vpStart));
+  m_data.angle1 = getParamFromPoint(mirrorFunc(vpEnd));
+  if (m_data.angle1 > m_data.angle2)
+    std::swap(m_data.angle1, m_data.angle2);
 
-    LC_Hyperbola::calculateBorders();
+  LC_Hyperbola::calculateBorders();
   LC_Hyperbola::updateLength();
 }
 
@@ -1242,8 +1194,7 @@ void LC_Hyperbola::revertDirection() {
 //=====================================================================
 // Minimal overrides
 //=====================================================================
-RS_Vector LC_Hyperbola::getNearestCenter(const RS_Vector &coord,
-                                         double *dist) const {
+RS_Vector LC_Hyperbola::doGetNearestCenter(const RS_Vector& coord, double* dist, RS_Entity** entity) const {
   if (!m_valid || !coord.valid) {
     if (dist)
       *dist = RS_MAXDOUBLE;
@@ -1254,63 +1205,56 @@ RS_Vector LC_Hyperbola::getNearestCenter(const RS_Vector &coord,
   return m_data.center;
 }
 
-RS_Vector LC_Hyperbola::doGetNearestEndpoint(const RS_Vector& coord, double* dist, RS_Entity** entity) const {
-    if (dist != nullptr) {
-        *dist = RS_MAXDOUBLE;
-    }
-    if (!m_valid || !coord.valid) {
-        return RS_Vector(false);
-    }
+RS_Vector LC_Hyperbola::doGetNearestEndpoint(const RS_Vector &coord, double *dist, RS_Entity** entity) const {
+  if (dist)
+    *dist = RS_MAXDOUBLE;
+  if (!m_valid || !coord.valid) {
+    return RS_Vector(false);
+  }
 
-    // For unbounded hyperbolas (full branch), there are no defined endpoints
-    if (isInfinite()) {
-        return RS_Vector(false);
-    }
+  // For unbounded hyperbolas (full branch), there are no defined endpoints
+  if (isInfinite()) {
+    return RS_Vector(false);
+  }
 
-    double distance = RS_MAXDOUBLE;
-    RS_Vector ret{false};
-    for (const RS_Vector& vp : {getStartpoint(), getEndpoint()}) {
-        if (vp.valid) {
-            const double dvp = vp.distanceTo(coord);
-            if (dvp < distance) {
-                distance = dvp;
-                ret = vp;
-            }
-        }
+  double distance = RS_MAXDOUBLE;
+  RS_Vector ret{false};
+  for (const RS_Vector &vp : {getStartpoint(), getEndpoint()}) {
+    if (vp.valid) {
+      double dvp = vp.distanceTo(coord);
+      if (dvp < distance) {
+        distance = dvp;
+        ret = vp;
+      }
     }
-    if (dist != nullptr) {
-        *dist = distance;
-    }
-    if (entity != nullptr) {
-        *entity = const_cast<LC_Hyperbola*>(this);
-    }
-    return ret;
+  }
+  if (dist != nullptr)
+    *dist = distance;
+  return ret;
 }
 
 //=====================================================================
-RS_Vector LC_Hyperbola::doGetNearestPointOnEntity(const RS_Vector& coord, bool onEntity, double* dist, RS_Entity** entity) const {
-    if (!m_valid || !coord.valid) {
-        if (dist != nullptr) {
-            *dist = RS_MAXDOUBLE;
-        }
-        return RS_Vector(false);
-    }
+RS_Vector LC_Hyperbola::doGetNearestPointOnEntity(const RS_Vector &coord,
+                                                bool onEntity, double *dist,
+                                                RS_Entity **entity) const {
+  if (!m_valid || !coord.valid) {
+    if (dist)
+      *dist = RS_MAXDOUBLE;
+    return RS_Vector(false);
+  }
 
-    if (entity != nullptr) {
-        *entity = const_cast<LC_Hyperbola*>(this);
-    }
+  if (entity)
+    *entity = const_cast<LC_Hyperbola *>(this);
 
-    // For unbounded (full-branch)
-    hyperbolas, fall through to the same
+  // For unbounded (full-branch) hyperbolas, fall through to the same
   // parametric quartic search as bounded arcs but with very wide phi bounds
-        // (cosh(30) already saturates double precision). The previous heuristic
-        // returned the vertex regardless of `coord`, which is wrong for any point
-        // not near the vertex.
-
-        // TODO: full hyperbolas have two branches; this implementation searches the
-        // active `m_data.reversed` branch. A future improvement should also
-        // evaluate the opposite branch and return the closer candidate.
-        const bool unbounded = isInfinite();
+  // (cosh(30) already saturates double precision). The previous heuristic
+  // returned the vertex regardless of `coord`, which is wrong for any point
+  // not near the vertex.
+  // TODO: full hyperbolas have two branches; this implementation searches the
+  // active `m_data.reversed` branch. A future improvement should also
+  // evaluate the opposite branch and return the closer candidate.
+  const bool unbounded = isInfinite();
 
   // Initial parametric guess from coord projection
   double phiGuess = getParamFromPoint(coord, m_data.reversed);
@@ -1318,266 +1262,261 @@ RS_Vector LC_Hyperbola::doGetNearestPointOnEntity(const RS_Vector& coord, bool o
     phiGuess = unbounded ? 0.0 : (m_data.angle1 + m_data.angle2) * 0.5;
   }
 
-    // Effective arc range: real bounds for arcs, wide finite range for full
+  // Effective arc range: real bounds for arcs, wide finite range for full
   // curves.
-    double phiMin = unbounded ? -30.0 : std::min(m_data.angle1, m_data.angle2);
-    double phiMax = unbounded ? 30.0 : std::max(m_data.angle1, m_data.angle2);
-    phiGuess = std::max(phiMin, std::min(phiMax, phiGuess));
+  double phiMin = unbounded ? -30.0 : std::min(m_data.angle1, m_data.angle2);
+  double phiMax = unbounded ? 30.0 : std::max(m_data.angle1, m_data.angle2);
+  phiGuess = std::max(phiMin, std::min(phiMax, phiGuess));
 
-    // Evaluate distance squared at endpoints and initial guess
-    RS_Vector pStart = getPoint(m_data.angle1, m_data.reversed);
-    RS_Vector pEnd = getPoint(m_data.angle2, m_data.reversed);
-    RS_Vector pGuess = getPoint(phiGuess, m_data.reversed);
+  // Evaluate distance squared at endpoints and initial guess
+  RS_Vector pStart = getPoint(m_data.angle1, m_data.reversed);
+  RS_Vector pEnd = getPoint(m_data.angle2, m_data.reversed);
+  RS_Vector pGuess = getPoint(phiGuess, m_data.reversed);
 
-    double d2Start = coord.squaredTo(pStart);
-    double d2End = coord.squaredTo(pEnd);
-    double d2Guess = coord.squaredTo(pGuess);
+  double d2Start = coord.squaredTo(pStart);
+  double d2End = coord.squaredTo(pEnd);
+  double d2Guess = coord.squaredTo(pGuess);
 
-    double minD2 = std::min({d2Start, d2End, d2Guess});
-    RS_Vector nearest = (minD2 == d2Start) ? pStart : (minD2 == d2End ? pEnd : pGuess);
+  double minD2 = std::min({d2Start, d2End, d2Guess});
+  RS_Vector nearest =
+      (minD2 == d2Start) ? pStart : (minD2 == d2End ? pEnd : pGuess);
 
-    // Now solve the exact quartic equation for critical points
-    // Distance squared: d²(phi) = (x(phi) - px)² + (y(phi) - py)²
-    // d(d²)/dphi = 0 ⇒ (x - px) x' + (y - py) y' = 0
+  // Now solve the exact quartic equation for critical points
+  // Distance squared: d²(phi) = (x(phi) - px)² + (y(phi) - py)²
+  // d(d²)/dphi = 0 ⇒ (x - px) x' + (y - py) y' = 0
 
-    double px = coord.x, py = coord.y;
-    double cx = m_data.center.x, cy = m_data.center.y;
-    double aa = m_data.majorP.magnitude(); // semi-major a
-    double bb = aa * m_data.ratio; // semi-minor b
-    double ct = std::cos(m_data.majorP.angle());
-    double st = std::sin(m_data.majorP.angle());
+  double px = coord.x, py = coord.y;
+  double cx = m_data.center.x, cy = m_data.center.y;
+  double aa = m_data.majorP.magnitude(); // semi-major a
+  double bb = aa * m_data.ratio;         // semi-minor b
+  double ct = std::cos(m_data.majorP.angle());
+  double st = std::sin(m_data.majorP.angle());
 
-    double A = aa * ct;
-    double B = -bb * st;
-    double C = aa * st;
-    double D = bb * ct;
+  double A = aa * ct;
+  double B = -bb * st;
+  double C = aa * st;
+  double D = bb * ct;
 
-    // Coefficients of the quartic: tanh⁴ + p tanh³ + q tanh² + r tanh + s = 0
-    double dx = cx + A - px;
-    double dy = cy + C - py;
+  // Coefficients of the quartic: tanh⁴ + p tanh³ + q tanh² + r tanh + s = 0
+  double dx = cx + A - px;
+  double dy = cy + C - py;
 
-    double p = 4.0 * (A * dx + C * dy) / (B * dx + D * dy);
-    double q = (dx * dx + dy * dy - aa * aa + bb * bb) / (B * dx + D * dy) * 2.0 - p * p / 2.0 - 3.0;
-    double r = -p * (q + 5.0);
-    double s = -(dx * dx + dy * dy - aa * aa - bb * bb) / (B * dx + D * dy) - q;
+  double p = 4.0 * (A * dx + C * dy) / (B * dx + D * dy);
+  double q = (dx * dx + dy * dy - aa * aa + bb * bb) / (B * dx + D * dy) * 2.0 -
+             p * p / 2.0 - 3.0;
+  double r = -p * (q + 5.0);
+  double s = -(dx * dx + dy * dy - aa * aa - bb * bb) / (B * dx + D * dy) - q;
 
-    std::vector<double> ce = {s, r, q, p, 1.0}; // t^4 + p t^3 + q t^2 + r t + s = 0
+  std::vector<double> ce = {s, r, q, p,
+                            1.0}; // t^4 + p t^3 + q t^2 + r t + s = 0
 
-    std::vector<double> roots = RS_Math::quarticSolverFull(ce);
+  std::vector<double> roots = RS_Math::quarticSolverFull(ce);
 
-    // Evaluate all valid real roots
-    for (double t : roots) {
-        if (std::abs(B * dx + D * dy) < RS_TOLERANCE) {
-            continue; // degenerate case skipped
-        }
+  // Evaluate all valid real roots
+  for (double t : roots) {
+    if (std::abs(B * dx + D * dy) < RS_TOLERANCE)
+      continue; // degenerate case skipped
 
-        double phi = std::atanh(t);
-        if (std::isnan(phi) || std::isinf(phi)) {
-            continue;
-        }
+    double phi = std::atanh(t);
+    if (std::isnan(phi) || std::isinf(phi))
+      continue;
 
-        // Check if phi is within the arc range
-        bool inRange = (phi >= phiMin - RS_TOLERANCE_ANGLE && phi <= phiMax + RS_TOLERANCE_ANGLE);
+    // Check if phi is within the arc range
+    bool inRange = (phi >= phiMin - RS_TOLERANCE_ANGLE &&
+                    phi <= phiMax + RS_TOLERANCE_ANGLE);
 
-        if (onEntity && !inRange) {
-            continue;
-        }
+    if (onEntity && !inRange)
+      continue;
 
-        RS_Vector cand = getPoint(phi, m_data.reversed);
-        if (!cand.valid) {
-            continue;
-        }
+    RS_Vector cand = getPoint(phi, m_data.reversed);
+    if (!cand.valid)
+      continue;
 
-        double d2Cand = coord.squaredTo(cand);
+    double d2Cand = coord.squaredTo(cand);
 
-        if (onEntity) {
-            // For onEntity=true, clamp to arc endpoints if outside
-            if (!inRange) {
-                double d2StartNew = coord.squaredTo(pStart);
-                double d2EndNew = coord.squaredTo(pEnd);
-                if (d2StartNew < minD2) {
-                    minD2 = d2StartNew;
-                    nearest = pStart;
-                }
-                if (d2EndNew < minD2) {
-                    minD2 = d2EndNew;
-                    nearest = pEnd;
-                }
-                continue;
-            }
-        }
-
-        if (d2Cand < minD2 - RS_TOLERANCE) {
-            minD2 = d2Cand;
-            nearest = cand;
-        }
-    }
-
-    // Final fallback to endpoints if onEntity
     if (onEntity) {
-        if (coord.squaredTo(pStart) < minD2) {
-            minD2 = coord.squaredTo(pStart);
-            nearest = pStart;
+      // For onEntity=true, clamp to arc endpoints if outside
+      if (!inRange) {
+        double d2StartNew = coord.squaredTo(pStart);
+        double d2EndNew = coord.squaredTo(pEnd);
+        if (d2StartNew < minD2) {
+          minD2 = d2StartNew;
+          nearest = pStart;
         }
-        if (coord.squaredTo(pEnd) < minD2) {
-            minD2 = coord.squaredTo(pEnd);
-            nearest = pEnd;
+        if (d2EndNew < minD2) {
+          minD2 = d2EndNew;
+          nearest = pEnd;
         }
+        continue;
+      }
     }
 
-    if (dist != nullptr) {
-        *dist = std::sqrt(minD2);
+    if (d2Cand < minD2 - RS_TOLERANCE) {
+      minD2 = d2Cand;
+      nearest = cand;
     }
-    return nearest;
+  }
+
+  // Final fallback to endpoints if onEntity
+  if (onEntity) {
+    if (coord.squaredTo(pStart) < minD2) {
+      minD2 = coord.squaredTo(pStart);
+      nearest = pStart;
+    }
+    if (coord.squaredTo(pEnd) < minD2) {
+      minD2 = coord.squaredTo(pEnd);
+      nearest = pEnd;
+    }
+  }
+
+  if (dist)
+    *dist = std::sqrt(minD2);
+  return nearest;
 }
 
 //=====================================================================
-double LC_Hyperbola::doGetDistanceToPoint(const RS_Vector& coord, RS_Entity** entity, RS2::ResolveLevel /*level*/,
+double LC_Hyperbola::doGetDistanceToPoint(const RS_Vector &coord,
+                                        RS_Entity **entity,
+                                        RS2::ResolveLevel /*level*/,
                                         double /*solidDist*/) const {
-    if (entity != nullptr) {
-        *entity = nullptr;
-    }
+  if (entity)
+    *entity = nullptr;
 
-    if (!m_valid || !coord.valid) {
-        return RS_MAXDOUBLE;
-    }
+  if (!m_valid || !coord.valid) {
+    return RS_MAXDOUBLE;
+  }
 
-    double dist = RS_MAXDOUBLE;
-    getNearestPointOnEntity(coord, true, &dist, entity);
+  double dist = RS_MAXDOUBLE;
+  getNearestPointOnEntity(coord, true, &dist, entity);
 
-    if ((entity != nullptr) && *entity == nullptr && dist < RS_MAXDOUBLE) {
-        *entity = const_cast<LC_Hyperbola*>(this);
-    }
+  if (entity && *entity == nullptr && dist < RS_MAXDOUBLE) {
+    *entity = const_cast<LC_Hyperbola *>(this);
+  }
 
-    return dist;
+  return dist;
 }
 
 //=====================================================================
-bool LC_Hyperbola::doIsPointOnEntity(const RS_Vector& coord, double tolerance) const {
-    if (!m_valid || !coord.valid) {
-        return false;
-    }
+bool LC_Hyperbola::doIsPointOnEntity(const RS_Vector &coord,
+                                   double tolerance) const {
+  if (!m_valid || !coord.valid)
+    return false;
 
-    double dist = RS_MAXDOUBLE;
-    getNearestPointOnEntity(coord, true, &dist);
-    return dist <= tolerance;
+  double dist = RS_MAXDOUBLE;
+  getNearestPointOnEntity(coord, true, &dist);
+  return dist <= tolerance;
 }
 
 //=====================================================================
 LC_Quadratic LC_Hyperbola::getQuadratic() const {
-    std::vector<double> ce(6, 0.);
-    ce[0] = m_data.majorP.squared();
-    ce[2] = -m_data.ratio * m_data.ratio * ce[0];
-    if (ce[0] < RS_TOLERANCE2 && std::abs(ce[2]) < RS_TOLERANCE2) {
-        return LC_Quadratic();
-    }
-    ce[0] = 1. / ce[0];
-    ce[2] = 1. / ce[2];
-    ce[5] = -1.;
-    LC_Quadratic ret(ce);
-    ret.rotate(getAngle());
-    ret.move(m_data.center);
-    return ret;
+  std::vector<double> ce(6, 0.);
+  ce[0] = m_data.majorP.squared();
+  ce[2] = -m_data.ratio * m_data.ratio * ce[0];
+  if (ce[0] < RS_TOLERANCE2 && std::abs(ce[2]) < RS_TOLERANCE2) {
+    return LC_Quadratic();
+  }
+  ce[0] = 1. / ce[0];
+  ce[2] = 1. / ce[2];
+  ce[5] = -1.;
+  LC_Quadratic ret(ce);
+  ret.rotate(getAngle());
+  ret.move(m_data.center);
+  return ret;
 }
 
 //=====================================================================
 void LC_Hyperbola::calculateBorders() {
-    m_minV = RS_Vector(RS_MAXDOUBLE, RS_MAXDOUBLE);
-    m_maxV = RS_Vector(RS_MINDOUBLE, RS_MINDOUBLE);
+  m_minV = RS_Vector(RS_MAXDOUBLE, RS_MAXDOUBLE);
+  m_maxV = RS_Vector(RS_MINDOUBLE, RS_MINDOUBLE);
 
-    if (!m_valid) {
-        return;
-    }
+  if (!m_valid)
+    return;
 
-    // Full unbounded hyperbola → infinite bounds
-    if (isInfinite()) {
-        m_minV = RS_Vector(-RS_MAXDOUBLE, -RS_MAXDOUBLE);
-        m_maxV = RS_Vector(RS_MAXDOUBLE, RS_MAXDOUBLE);
-        return;
-    }
+  // Full unbounded hyperbola → infinite bounds
+  if (isInfinite()) {
+    m_minV = RS_Vector(-RS_MAXDOUBLE, -RS_MAXDOUBLE);
+    m_maxV = RS_Vector(RS_MAXDOUBLE, RS_MAXDOUBLE);
+    return;
+  }
 
-    // Limited arc on single branch
-    double phiStart = m_data.angle1;
-    double phiEnd = m_data.angle2;
+  // Limited arc on single branch
+  double phiStart = m_data.angle1;
+  double phiEnd = m_data.angle2;
 
-    // No normalization needed — hyperbolic φ is over all real numbers
-    // Ensure start ≤ end for consistent processing
-    if (phiStart > phiEnd) {
-        std::swap(phiStart, phiEnd);
-    }
+  // No normalization needed — hyperbolic φ is over all real numbers
+  // Ensure start ≤ end for consistent processing
+  if (phiStart > phiEnd)
+    std::swap(phiStart, phiEnd);
 
-    // Branch offset handled in getPoint() — use raw angles here
+  // Branch offset handled in getPoint() — use raw angles here
 
-    // Analytical extrema along global X and Y axes
-    const double rot = getAngle();
-    RS_Vector dirX(cos(rot), sin(rot));
-    RS_Vector dirY(-sin(rot), cos(rot));
+  // Analytical extrema along global X and Y axes
+  double rot = getAngle();
+  RS_Vector dirX(cos(rot), sin(rot));
+  RS_Vector dirY(-sin(rot), cos(rot));
 
-    auto addExtrema = [&](const RS_Vector& dir) {
-        const double dx = dir.x, dy = dir.y;
-        if (std::abs(dx) < RS_TOLERANCE && std::abs(dy) < RS_TOLERANCE) {
-            return;
+  auto addExtrema = [&](const RS_Vector &dir) {
+    double dx = dir.x, dy = dir.y;
+    if (std::abs(dx) < RS_TOLERANCE && std::abs(dy) < RS_TOLERANCE)
+      return;
+
+    double tanh_phi = -(getMinorRadius() * dy) / (getMajorRadius() * dx);
+    if (std::abs(tanh_phi) >= 1.0)
+      return; // no real solution
+
+    double phi = std::atanh(tanh_phi);
+    // Check both solutions (phi and phi + π) — but only one will be on the
+    // correct branch
+    for (int sign = 0; sign < 2; ++sign) {
+      double phi_cand = phi + sign * M_PI;
+      if (phi_cand >= phiStart - RS_TOLERANCE &&
+          phi_cand <= phiEnd + RS_TOLERANCE) {
+        RS_Vector p = getPoint(phi_cand, m_data.reversed);
+        if (p.valid) {
+          m_minV = RS_Vector::minimum(m_minV, p);
+          m_maxV = RS_Vector::maximum(m_maxV, p);
         }
-
-        const double tanh_phi = -(getMinorRadius() * dy) / (getMajorRadius() * dx);
-        if (std::abs(tanh_phi) >= 1.0) {
-            return; // no real solution
-        }
-
-        const double phi = std::atanh(tanh_phi);
-        // Check both solutions (phi and phi + π) — but only one will be on the
-        // correct branch
-        for (int sign = 0; sign < 2; ++sign) {
-            const double phi_cand = phi + sign * M_PI;
-            if (phi_cand >= phiStart - RS_TOLERANCE && phi_cand <= phiEnd + RS_TOLERANCE) {
-                RS_Vector p = getPoint(phi_cand, m_data.reversed);
-                if (p.valid) {
-                    m_minV = RS_Vector::minimum(m_minV, p);
-                    m_maxV = RS_Vector::maximum(m_maxV, p);
-                }
-            }
-        }
-    };
-
-    addExtrema(RS_Vector(1.0, 0.0)); // global X
-    addExtrema(RS_Vector(0.0, 1.0)); // global Y
-
-    // Endpoints
-    const RS_Vector start = getPoint(phiStart, m_data.reversed);
-    const RS_Vector end = getPoint(phiEnd, m_data.reversed);
-    if (start.valid) {
-        m_minV = RS_Vector::minimum(m_minV, start);
-        m_maxV = RS_Vector::maximum(m_maxV, start);
+      }
     }
-    if (end.valid) {
-        m_minV = RS_Vector::minimum(m_minV, end);
-        m_maxV = RS_Vector::maximum(m_maxV, end);
-    }
+  };
 
-    // Safety expansion
-    const double expand = RS_TOLERANCE * 100.0;
-    m_minV -= RS_Vector(expand, expand);
-    m_maxV += RS_Vector(expand, expand);
+  addExtrema(RS_Vector(1.0, 0.0)); // global X
+  addExtrema(RS_Vector(0.0, 1.0)); // global Y
+
+  // Endpoints
+  RS_Vector start = getPoint(phiStart, m_data.reversed);
+  RS_Vector end = getPoint(phiEnd, m_data.reversed);
+  if (start.valid) {
+    m_minV = RS_Vector::minimum(m_minV, start);
+    m_maxV = RS_Vector::maximum(m_maxV, start);
+  }
+  if (end.valid) {
+    m_minV = RS_Vector::minimum(m_minV, end);
+    m_maxV = RS_Vector::maximum(m_maxV, end);
+  }
+
+  // Safety expansion
+  double expand = RS_TOLERANCE * 100.0;
+  m_minV -= RS_Vector(expand, expand);
+  m_maxV += RS_Vector(expand, expand);
 }
 
 //=====================================================================
 double LC_Hyperbola::getLength() const {
-    if (!m_valid) {
-        return 0.0;
-    }
+  if (!m_valid)
+    return 0.0;
 
-    return getArcLength(m_data.angle1, m_data.angle2);
+  return getArcLength(m_data.angle1, m_data.angle2);
 }
 
 void LC_Hyperbola::updateLength() {
-    m_cachedLength = LC_Hyperbola::getLength();
+  m_cachedLength = LC_Hyperbola::getLength();
 }
 
 //=====================================================================
-void LC_Hyperbola::setFocus1(const RS_Vector& f1) {
-    if (!f1.valid || !m_valid) {
-        return;
-    }
+void LC_Hyperbola::setFocus1(const RS_Vector &f1) {
+  if (!f1.valid || !m_valid)
+    return;
 
   // Capture original arc bounds before rebuilding so we can re-project them
   // onto the new geometry (mirrors the moveRef pattern). The constructor
@@ -1595,10 +1534,10 @@ void LC_Hyperbola::setFocus1(const RS_Vector& f1) {
   if (!currentPoint.valid)
     return;
 
-    const LC_HyperbolaData newData(f1, f2, currentPoint);
-    if (newData.isValid()) {
-        m_data = newData;
-        m_valid = true;
+  LC_HyperbolaData newData(f1, f2, currentPoint);
+  if (newData.isValid()) {
+    m_data = newData;
+    m_valid = true;
     if (hadBounds) {
       const double phiStart = getParamFromPoint(originalStart, m_data.reversed);
       const double phiEnd = getParamFromPoint(originalEnd, m_data.reversed);
@@ -1609,15 +1548,14 @@ void LC_Hyperbola::setFocus1(const RS_Vector& f1) {
       if (m_data.angle1 > m_data.angle2)
         std::swap(m_data.angle1, m_data.angle2);
     }
-        calculateBorders();
-        updateLength();
-    }
+    calculateBorders();
+    updateLength();
+  }
 }
 
-void LC_Hyperbola::setFocus2(const RS_Vector& f2) {
-    if (!f2.valid || !m_valid) {
-        return;
-    }
+void LC_Hyperbola::setFocus2(const RS_Vector &f2) {
+  if (!f2.valid || !m_valid)
+    return;
 
   const RS_Vector originalStart = getStartpoint();
   const RS_Vector originalEnd = getEndpoint();
@@ -1631,10 +1569,10 @@ void LC_Hyperbola::setFocus2(const RS_Vector& f2) {
   if (!currentPoint.valid)
     return;
 
-    const LC_HyperbolaData newData(f1, f2, currentPoint);
-    if (newData.isValid()) {
-        m_data = newData;
-        m_valid = true;
+  LC_HyperbolaData newData(f1, f2, currentPoint);
+  if (newData.isValid()) {
+    m_data = newData;
+    m_valid = true;
     if (hadBounds) {
       const double phiStart = getParamFromPoint(originalStart, m_data.reversed);
       const double phiEnd = getParamFromPoint(originalEnd, m_data.reversed);
@@ -1645,15 +1583,14 @@ void LC_Hyperbola::setFocus2(const RS_Vector& f2) {
       if (m_data.angle1 > m_data.angle2)
         std::swap(m_data.angle1, m_data.angle2);
     }
-        calculateBorders();
-        updateLength();
-    }
+    calculateBorders();
+    updateLength();
+  }
 }
 
-void LC_Hyperbola::setPointOnCurve(const RS_Vector& p) {
-    if (!p.valid || !m_valid) {
-        return;
-    }
+void LC_Hyperbola::setPointOnCurve(const RS_Vector &p) {
+  if (!p.valid || !m_valid)
+    return;
 
   const RS_Vector originalStart = getStartpoint();
   const RS_Vector originalEnd = getEndpoint();
@@ -1662,10 +1599,10 @@ void LC_Hyperbola::setPointOnCurve(const RS_Vector& p) {
   RS_Vector f1 = m_data.getFocus1();
   RS_Vector f2 = m_data.getFocus2();
 
-    const LC_HyperbolaData newData(f1, f2, p);
-    if (newData.isValid()) {
-        m_data = newData;
-        m_valid = true;
+  LC_HyperbolaData newData(f1, f2, p);
+  if (newData.isValid()) {
+    m_data = newData;
+    m_valid = true;
     if (hadBounds) {
       const double phiStart = getParamFromPoint(originalStart, m_data.reversed);
       const double phiEnd = getParamFromPoint(originalEnd, m_data.reversed);
@@ -1676,9 +1613,9 @@ void LC_Hyperbola::setPointOnCurve(const RS_Vector& p) {
       if (m_data.angle1 > m_data.angle2)
         std::swap(m_data.angle1, m_data.angle2);
     }
-        calculateBorders();
-        updateLength();
-    }
+    calculateBorders();
+    updateLength();
+  }
 }
 
 //=====================================================================
@@ -1691,47 +1628,44 @@ void LC_Hyperbola::setRatio(double r) {
 }
 
 void LC_Hyperbola::setMinorRadius(double b) {
-    if (b <= 0.0 || !m_valid) {
-        return;
-    }
-    const double a = getMajorRadius();
-    if (a >= RS_TOLERANCE) {
-        m_data.ratio = b / a;
-        calculateBorders();
-        updateLength();
-    }
+  if (b <= 0.0 || !m_valid)
+    return;
+  double a = getMajorRadius();
+  if (a >= RS_TOLERANCE) {
+    m_data.ratio = b / a;
+    calculateBorders();
+    updateLength();
+  }
 }
 
 //=====================================================================
-void LC_Hyperbola::setPrimaryVertex(const RS_Vector& v) {
-    if (!v.valid || !m_valid) {
-        return;
-    }
+void LC_Hyperbola::setPrimaryVertex(const RS_Vector &v) {
+  if (!v.valid || !m_valid)
+    return;
 
-    RS_Vector dir = m_data.majorP;
-    if (dir.squared() < RS_TOLERANCE2) {
-        return;
-    }
-    dir.normalize();
+  RS_Vector dir = m_data.majorP;
+  if (dir.squared() < RS_TOLERANCE2)
+    return;
+  dir.normalize();
 
-    const RS_Vector expectedVertex = m_data.reversed ? m_data.center - dir * getMajorRadius() : m_data.center + dir * getMajorRadius();
+  RS_Vector expectedVertex = m_data.reversed
+                                 ? m_data.center - dir * getMajorRadius()
+                                 : m_data.center + dir * getMajorRadius();
 
-    const RS_Vector offset = v - expectedVertex;
-    const double distanceAlongAxis = offset.dotP(dir);
+  RS_Vector offset = v - expectedVertex;
+  double distanceAlongAxis = offset.dotP(dir);
 
-    const double newA = std::abs(getMajorRadius() + distanceAlongAxis);
-    if (newA < RS_TOLERANCE) {
-        return;
-    }
+  double newA = std::abs(getMajorRadius() + distanceAlongAxis);
+  if (newA < RS_TOLERANCE)
+    return;
 
-    // Adjust majorP magnitude
-    m_data.majorP = dir * newA;
-    if (m_data.reversed) {
-        m_data.majorP = -m_data.majorP; // preserve direction for left branch
-    }
+  // Adjust majorP magnitude
+  m_data.majorP = dir * newA;
+  if (m_data.reversed)
+    m_data.majorP = -m_data.majorP; // preserve direction for left branch
 
-    calculateBorders();
-    updateLength();
+  calculateBorders();
+  updateLength();
 }
 
 // ==========================================================================
@@ -1747,125 +1681,121 @@ void LC_Hyperbola::setPrimaryVertex(const RS_Vector& v) {
  *
  * After any change, bounded arc is preserved by re-projecting original endpoints.
  */
-void LC_Hyperbola::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
-    // Store original start/end points BEFORE change
-    const RS_Vector originalStart = getStartpoint();
-    const RS_Vector originalEnd = getEndpoint();
-    const bool hadBounds = originalStart.valid && originalEnd.valid;
+void LC_Hyperbola::moveRef(const RS_Vector& ref, const RS_Vector& offset)
+{
+  // Store original start/end points BEFORE change
+  RS_Vector originalStart = getStartpoint();
+  RS_Vector originalEnd   = getEndpoint();
+  bool hadBounds = originalStart.valid && originalEnd.valid;
 
-    const RS_Vector newRef = ref + offset;
+  RS_Vector newRef = ref + offset;
 
-    if (ref.distanceTo(m_data.center) < RS_TOLERANCE) {
-        m_data.center = newRef;
-
-    }else if (ref.distanceTo(getPrimaryVertex()) < RS_TOLERANCE) {
-        const RS_Vector dir = newRef - m_data.center;
-        if (dir.magnitude() > RS_TOLERANCE) {
-            m_data.majorP = dir.normalized() * getMajorRadius();
-        }
+  if (ref.distanceTo(m_data.center) < RS_TOLERANCE) {
+    m_data.center = newRef;
+  } else if (ref.distanceTo(getPrimaryVertex()) < RS_TOLERANCE) {
+    RS_Vector dir = newRef - m_data.center;
+    if (dir.magnitude() > RS_TOLERANCE) {
+      m_data.majorP = dir.normalized() * getMajorRadius();
     }
-    else if (!isInfinite()) {
-        // Start or end point movement
-        if (ref.distanceTo(originalStart) < RS_TOLERANCE) {
-            const double phi = getParamFromPoint(newRef, m_data.reversed);
-            if (!std::isnan(phi)) {
-                m_data.angle1 = phi;
-            }
+  } else if (!isInfinite()) {
+    // Start or end point movement
+    if (ref.distanceTo(originalStart) < RS_TOLERANCE) {
+      double phi = getParamFromPoint(newRef, m_data.reversed);
+      if (!std::isnan(phi)) {
+        m_data.angle1 = phi;
+      }
+    }
+    else if (ref.distanceTo(originalEnd) < RS_TOLERANCE) {
+      double phi = getParamFromPoint(newRef, m_data.reversed);
+      if (!std::isnan(phi)) {
+        m_data.angle2 = phi;
+      }
+    }
+    else {
+      // Focus movement (fallback)
+      RS_Vector f1 = getFocus1();
+      RS_Vector f2 = getFocus2();
+
+      RS_Vector fixedPoint = originalStart.valid ? originalStart : getMiddlePoint();
+      if (!fixedPoint.valid) fixedPoint = getPrimaryVertex();
+
+      if (ref.distanceTo(f1) < RS_TOLERANCE) {
+        LC_HyperbolaData newData(newRef, f2, fixedPoint);
+        if (newData.majorP.squared() >= RS_TOLERANCE2) {
+          m_data = newData;
         }
-        else if (ref.distanceTo(originalEnd) < RS_TOLERANCE) {
-            const double phi = getParamFromPoint(newRef, m_data.reversed);
-            if (!std::isnan(phi)) {
-                m_data.angle2 = phi;
-            }
+      }
+      else if (ref.distanceTo(f2) < RS_TOLERANCE) {
+        LC_HyperbolaData newData(f1, newRef, fixedPoint);
+        if (newData.majorP.squared() >= RS_TOLERANCE2) {
+          m_data = newData;
         }
-        else {
-            // Focus movement (fallback)
-            const RS_Vector f1 = getFocus1();
-            const RS_Vector f2 = getFocus2();
+      }
+      else {
+        return;  // Not recognized
+      }
 
-            RS_Vector fixedPoint = originalStart.valid ? originalStart : getMiddlePoint();
-            if (!fixedPoint.valid) {
-                fixedPoint = getPrimaryVertex();
-            }
-
-            if (ref.distanceTo(f1) < RS_TOLERANCE) {
-                const LC_HyperbolaData newData(newRef, f2, fixedPoint);
-                if (newData.majorP.squared() >= RS_TOLERANCE2) {
-                    m_data = newData;
-                }
-            }
-            else if (ref.distanceTo(f2) < RS_TOLERANCE) {
-                const LC_HyperbolaData newData(f1, newRef, fixedPoint);
-                if (newData.majorP.squared() >= RS_TOLERANCE2) {
-                    m_data = newData;
-                }
-            }
-            else {
-                return; // Not recognized
-            }
-
-            // Re-project original endpoints after focus move
-            if (hadBounds) {
-                const double phiStart = getParamFromPoint(originalStart, m_data.reversed);
-                const double phiEnd = getParamFromPoint(originalEnd, m_data.reversed);
+             // Re-project original endpoints after focus move
+      if (hadBounds) {
+        double phiStart = getParamFromPoint(originalStart, m_data.reversed);
+        double phiEnd = getParamFromPoint(originalEnd, m_data.reversed);
 
         if (!std::isnan(phiStart))
           m_data.angle1 = phiStart;
         if (!std::isnan(phiEnd))
           m_data.angle2 = phiEnd;
 
-                if (m_data.angle1 > m_data.angle2) {
-                    std::swap(m_data.angle1, m_data.angle2);
-                }
-            }
-        }
+        if (m_data.angle1 > m_data.angle2)
+          std::swap(m_data.angle1, m_data.angle2);
+      }
     }
+  }
 
-    calculateBorders();
-    updateLength();
+  calculateBorders();
+  updateLength();
 }
 
 // ============================================================================
 RS_Vector LC_Hyperbola::getPrimaryVertex() const {
-    if (!m_valid) {
-        return RS_Vector(false);
-    }
+  if (!m_valid) {
+    return RS_Vector(false);
+  }
 
-    const double a = getMajorRadius();
-    if (a < RS_TOLERANCE) {
-        return RS_Vector(false);
-    }
+  double a = getMajorRadius();
+  if (a < RS_TOLERANCE) {
+    return RS_Vector(false);
+  }
 
-    // majorP already contains the vector from center to the right-branch vertex
-    // with magnitude = a and correct direction
-    RS_Vector vertex = m_data.center + m_data.majorP;
+  // majorP already contains the vector from center to the right-branch vertex
+  // with magnitude = a and correct direction
+  RS_Vector vertex = m_data.center + m_data.majorP;
 
-    if (m_data.reversed) {
-        // For left branch, the primary vertex is on the opposite side
-        vertex = m_data.center - m_data.majorP;
-    }
+  if (m_data.reversed) {
+    // For left branch, the primary vertex is on the opposite side
+    vertex = m_data.center - m_data.majorP;
+  }
 
-    return vertex;
+  return vertex;
 }
 
 //=====================================================================
 // Grip editing: move start/end points
 //=====================================================================
-void LC_Hyperbola::moveStartpoint(const RS_Vector& pos) {
-    if (!m_valid || !pos.valid) {
-        return;
-    }
+void LC_Hyperbola::moveStartpoint(const RS_Vector &pos) {
+  if (!m_valid || !pos.valid)
+    return;
 
-    // Unbounded hyperbolas have no defined endpoints
-    if (isInfinite()) {
-        RS_DEBUG->print(RS_Debug::D_WARNING, "LC_Hyperbola::moveStartpoint: ignored on unbounded hyperbola");
-        return;
-    }
+  // Unbounded hyperbolas have no defined endpoints
+  if (isInfinite()) {
+    RS_DEBUG->print(
+        RS_Debug::D_WARNING,
+        "LC_Hyperbola::moveStartpoint: ignored on unbounded hyperbola");
+    return;
+  }
 
-    const RS_Vector newStart = getNearestPointOnEntity(pos, true);
-    if (!newStart.valid) {
-        return;
-    }
+  RS_Vector newStart = getNearestPointOnEntity(pos, true);
+  if (!newStart.valid)
+    return;
 
   // Trim semantics: set the start parameter to the new point and leave the
   // end parameter untouched. (Earlier code preserved the angular span,
@@ -1875,33 +1805,33 @@ void LC_Hyperbola::moveStartpoint(const RS_Vector& pos) {
     return;
   m_data.angle1 = newPhi1;
 
-    calculateBorders();
-    updateLength();
+  calculateBorders();
+  updateLength();
 }
 
 //=====================================================================
-void LC_Hyperbola::moveEndpoint(const RS_Vector& pos) {
-    if (!m_valid || !pos.valid) {
-        return;
-    }
+void LC_Hyperbola::moveEndpoint(const RS_Vector &pos) {
+  if (!m_valid || !pos.valid)
+    return;
 
-    if (isInfinite()) {
-        RS_DEBUG->print(RS_Debug::D_WARNING, "LC_Hyperbola::moveEndpoint: ignored on unbounded hyperbola");
-        return;
-    }
+  if (isInfinite()) {
+    RS_DEBUG->print(
+        RS_Debug::D_WARNING,
+        "LC_Hyperbola::moveEndpoint: ignored on unbounded hyperbola");
+    return;
+  }
 
-    const RS_Vector newEnd = getNearestPointOnEntity(pos, true);
-    if (!newEnd.valid) {
-        return;
-    }
+  RS_Vector newEnd = getNearestPointOnEntity(pos, true);
+  if (!newEnd.valid)
+    return;
 
   const double newPhi2 = getParamFromPoint(newEnd, m_data.reversed);
   if (std::isnan(newPhi2))
     return;
   m_data.angle2 = newPhi2;
 
-    calculateBorders();
-    updateLength();
+  calculateBorders();
+  updateLength();
 }
 
 //=====================================================================
@@ -1913,55 +1843,56 @@ void LC_Hyperbola::moveEndpoint(const RS_Vector& pos) {
  *
  * @return Signed line integral ∮ x dy
  */
-double LC_Hyperbola::areaLineIntegral() const {
-    if (!m_valid || isInfinite()) {
-        return 0.0;
-    }
+double LC_Hyperbola::areaLineIntegral() const
+{
+  if (!m_valid || isInfinite())
+    return 0.0;
 
-    const double phi1 = m_data.angle1;
-    const double phi2 = m_data.angle2;
+  double phi1 = m_data.angle1;
+  double phi2 = m_data.angle2;
 
-    const double a = getMajorRadius();
-    const double b = getMinorRadius();
-    const double a2 = a * a;
-    const double b2 = b * b;
-    const double cx = m_data.center.x;
-    // double cy = m_data.center.y;
-    const double cos_th = std::cos(m_data.majorP.angle());
-    const double sin_th = std::sin(m_data.majorP.angle());
-    const double cos2_th = cos_th * cos_th - sin_th * sin_th;
-    const double sin2_th = 2. * cos_th * sin_th;
+  double a = getMajorRadius();
+  double b = getMinorRadius();
+  double a2 = a*a;
+  double b2 = b*b;
+  double cx = m_data.center.x;
+  // double cy = m_data.center.y;
+  double cos_th = std::cos(m_data.majorP.angle());
+  double sin_th = std::sin(m_data.majorP.angle());
+  double cos2_th = cos_th*cos_th - sin_th*sin_th;
+  double sin2_th = 2. * cos_th*sin_th;
 
-    const double R = a * sin_th;
-    const double S = b * cos_th;
+  double R = a * sin_th;
+  double S = b * cos_th;
 
-    const double c1 = (a2 - b2) / 8.;
-    const double c2 = a * b / 4.;
-    const double c3 = a * b / 2.;
+  double c1 = (a2 - b2)/8.;
+  double c2 = a * b / 4.;
+  double c3 = a * b /2.;
 
-    // The undetermined integral function for \(\int x\,dy\) is
-    //  \(\mathbf{F(t)=}\frac{\mathbf{a}^{\mathbf{2}}\mathbf{-b}^{\mathbf{2}}}{\mathbf{8}}\sin// \mathbf{(2\alpha )}\cosh \mathbf{(2t)+
-    // }\frac{\mathbf{ab}}{\mathbf{4}}\cos \mathbf{(2\alpha )}\sinh \mathbf{(2t)+
-    // }\frac{\mathbf{ab}}{\mathbf{2}}\mathbf{t+
-    //c}_{\mathbf{x}}\mathbf{(a}\sin \mathbf{\alpha }\cosh \mathbf{t+b}\cos// \mathbf{\alpha }\sinh \mathbf{t)+C}\)
-    // Reversed branch: x_local = -a·cosh φ flips the sign of every term that
+  // The undetermined integral function for \(\int x\,dy\) is
+  //  \(\mathbf{F(t)=}\frac{\mathbf{a}^{\mathbf{2}}\mathbf{-b}^{\mathbf{2}}}{\mathbf{8}}\sin
+  //  \mathbf{(2\alpha )}\cosh \mathbf{(2t)+
+  // }\frac{\mathbf{ab}}{\mathbf{4}}\cos \mathbf{(2\alpha )}\sinh \mathbf{(2t)+
+  // }\frac{\mathbf{ab}}{\mathbf{2}}\mathbf{t+
+  // c}_{\mathbf{x}}\mathbf{(a}\sin \mathbf{\alpha }\cosh \mathbf{t+b}\cos
+  // \mathbf{\alpha }\sinh \mathbf{t)+C}\)
+  // Reversed branch: x_local = -a·cosh φ flips the sign of every term that
   // carries a single power of `a` from the local x coordinate. The cxTerm
   // also flips because R/S sit in front of the local-x and local-y
   // contributions to world x.
-  const double sx = m_data.reversed ? -1.0 : 1.0;auto primitive = [&](double phi) -> double {
-        const double c1Term = c1 * sin2_th * std::cosh(2. * phi);
-        const double c2Term = c2 * cos2_th * std::sinh(2. * phi);
-        const double cxTerm = cx * sx *(R * std::cosh(phi) + S * std::sinh(phi));
-        return sx * (c1Term + c2Term + c3 * phi) + cxTerm;
-    };
+  const double sx = m_data.reversed ? -1.0 : 1.0;
+  auto primitive = [&](double phi) -> double {
+    double c1Term = c1 * sin2_th * std::cosh(2. * phi);
+    double c2Term = c2 * cos2_th * std::sinh(2. * phi);
+    double cxTerm = cx * sx * (R * std::cosh(phi) + S * std::sinh(phi));
+    return sx * (c1Term + c2Term + c3 * phi) + cxTerm;
+  };
 
   return primitive(phi2) - primitive(phi1);
 }
 
 double LC_Hyperbola::computeLocalArea(double phi1, double phi2) const {
-  if (isInfinite()) {
-      return 0.0;
-  }
+  if (isInfinite()) return 0.0;
   const double a = getMajorRadius();
   const double b = getMinorRadius();
   // areaLineIntegral = ∫ x dy ∝ ab cosh², so for the left branch (x_local =
@@ -1980,9 +1911,7 @@ LC_FirstMoment LC_Hyperbola::computeLocalFirstMoment(double phi1, double phi2) c
   //   cosh φ)
   // For the reversed (left) branch x_local = -a·cosh, so x² is unchanged
   // (mx unaffected) and x doesn't appear in my (also unaffected).
-  if (isInfinite()) {
-      return {};
-  }
+  if (isInfinite()) return {};
   const double a = getMajorRadius();
   const double b = getMinorRadius();
   auto F_mx = [&](double phi) {
@@ -2003,9 +1932,7 @@ LC_SecondMoment LC_Hyperbola::computeLocalSecondMoment(double phi1, double phi2)
   //   ixy =  ½ ∫ x² y dy =  (a²b²/8)·cosh⁴ φ
   // For reversed (left) branch x_local = -a·cosh, so x³ flips sign (ixx) but
   // x² does not (iyy and ixy unaffected).
-  if (isInfinite()) {
-      return {};
-  }
+  if (isInfinite()) return {};
   const double a = getMajorRadius();
   const double b = getMinorRadius();
   const double sx = m_data.reversed ? -1.0 : 1.0;
@@ -2053,9 +1980,8 @@ LC_SecondMoment shiftSecondMomentToOrigin(const LC_SecondMoment &local,
 } // namespace
 
 LC_FirstMoment LC_Hyperbola::firstMomentLineIntegral() const {
-  if (!m_valid || isInfinite()) {
-      return {};
-  }
+  if (!m_valid || isInfinite())
+    return {};
   const double phi = getAngle();
   const double cx = m_data.center.x;
   const double cy = m_data.center.y;
@@ -2074,9 +2000,8 @@ LC_FirstMoment LC_Hyperbola::firstMomentLineIntegral() const {
 }
 
 LC_SecondMoment LC_Hyperbola::secondMomentLineIntegral() const {
-  if (!m_valid || isInfinite()) {
-      return {};
-  }
+  if (!m_valid || isInfinite())
+    return {};
   const double phi = getAngle();
   const double cx = m_data.center.x;
   const double cy = m_data.center.y;
@@ -2090,31 +2015,29 @@ LC_SecondMoment LC_Hyperbola::secondMomentLineIntegral() const {
   return shiftSecondMomentToOrigin(local.rotated(phi), cx, cy, area);
 }
 //=====================================================================
-RS_Vector LC_Hyperbola::dualLineTangentPoint(const RS_Vector& line) const {
-    if (!m_valid || !line.valid) {
-        return RS_Vector(false);
-    }
-    // u x + v y + 1 = 0
-    // coordinates : dual
-    // real coordinates is rotated from canonical
-    // (u; v)^T (M X) + 1 =0
-    // Equivalent to rotation in dual coordinates, but opposite angle
-    // ( M^T (u; v)^T) X + 1 = 0
-    const RS_Vector uv = RS_Vector{line}.rotate(-m_data.majorP.angle());
-    // slope = (a sinh, b cosh)
-    // u a sinh + v b cosh = 0,
-    // phi = atanh(- (vb)/(ua))
+RS_Vector LC_Hyperbola::dualLineTangentPoint(const RS_Vector &line) const {
+  if (!m_valid || !line.valid) {
+    return RS_Vector(false);
+  }
+  // u x + v y + 1 = 0
+  // coordinates : dual
+  // real coordinates is rotated from canonical
+  // (u; v)^T (M X) + 1 =0
+  // Equivalent to rotation in dual coordinates, but opposite angle
+  // ( M^T (u; v)^T) X + 1 = 0
+  RS_Vector uv = RS_Vector{line}.rotate(-m_data.majorP.angle());
+  // slope = (a sinh, b cosh)
+  // u a sinh + v b cosh = 0,
+  // phi = atanh(- (vb)/(ua))
 
-    // No horizontal tangent lines for canonical form
-    if (std::abs(uv.x) < RS_TOLERANCE_ANGLE) {
-        return RS_Vector{false};
-    }
-    const double r = -getRatio() * uv.y / uv.x;
-    if (std::abs(r) > 1. - RS_TOLERANCE) {
-        return RS_Vector{false};
-    }
+  // No horizontal tangent lines for canonical form
+  if (std::abs(uv.x) < RS_TOLERANCE_ANGLE)
+    return RS_Vector{false};
+  double r = -getRatio() * uv.y / uv.x;
+  if (std::abs(r) > 1. - RS_TOLERANCE)
+    return RS_Vector{false};
 
-    return getPoint(std::atanh(r), false);
+  return getPoint(std::atanh(r), false);
 }
 
 //=====================================================================
@@ -2135,35 +2058,36 @@ RS_Vector LC_Hyperbola::dualLineTangentPoint(const RS_Vector& line) const {
  * @return EndingStart if trimming/extending start point, EndingEnd for end point,
  *         EndingNone if invalid/unbounded
  */
-RS2::Ending LC_Hyperbola::getTrimPoint(const RS_Vector& trimCoord, const RS_Vector& trimPoint) {
-    if (!m_valid || !trimPoint.valid || !trimCoord.valid || isInfinite()) {
-        return RS2::EndingNone;
-    }
+RS2::Ending LC_Hyperbola::getTrimPoint(const RS_Vector& trimCoord,
+                                       const RS_Vector& trimPoint)
+{
+  if (!m_valid || !trimPoint.valid || !trimCoord.valid || isInfinite()) {
+    return RS2::EndingNone;
+  }
 
-    // Project click point onto current hyperbola arc
-    RS_Vector nearest = getNearestPointOnEntity(trimCoord, true);
-    if (!nearest.valid) {
-        nearest = trimCoord; // fallback
-    }
+         // Project click point onto current hyperbola arc
+  RS_Vector nearest = getNearestPointOnEntity(trimCoord, true);
+  if (!nearest.valid) {
+    nearest = trimCoord;  // fallback
+  }
 
-    const double phi_click = getParamFromPoint(nearest, m_data.reversed);
-    const double phi_inter = getParamFromPoint(trimPoint, m_data.reversed);
+  double phi_click = getParamFromPoint(nearest, m_data.reversed);
+  double phi_inter = getParamFromPoint(trimPoint, m_data.reversed);
 
-    if (std::isnan(phi_click) || std::isnan(phi_inter)) {
-        // Fallback to geometric distance if param recovery fails
-        const RS_Vector start = getStartpoint();
-        const RS_Vector end = getEndpoint();
-        if (!start.valid || !end.valid) {
-            return RS2::EndingNone;
-        }
+  if (std::isnan(phi_click) || std::isnan(phi_inter)) {
+    // Fallback to geometric distance if param recovery fails
+    RS_Vector start = getStartpoint();
+    RS_Vector end   = getEndpoint();
+    if (!start.valid || !end.valid) return RS2::EndingNone;
 
-        return (nearest.distanceTo(start) < nearest.distanceTo(end)) ? RS2::EndingStart : RS2::EndingEnd;
-    }
+    return (nearest.distanceTo(start) < nearest.distanceTo(end))
+               ? RS2::EndingStart : RS2::EndingEnd;
+  }
 
-    // Keep the side containing the click point
-    // If intersection is on the "start" side of click → move startpoint
-    // Otherwise → move endpoint
-    return (phi_inter < phi_click) ? RS2::EndingStart : RS2::EndingEnd;
+         // Keep the side containing the click point
+         // If intersection is on the "start" side of click → move startpoint
+         // Otherwise → move endpoint
+  return (phi_inter < phi_click) ? RS2::EndingStart : RS2::EndingEnd;
 }
 
 /**
@@ -2176,67 +2100,64 @@ RS2::Ending LC_Hyperbola::getTrimPoint(const RS_Vector& trimCoord, const RS_Vect
  * @param trimSol    All intersection solutions
  * @return Chosen intersection point (closest along parametric branch to click)
  */
-RS_Vector LC_Hyperbola::prepareTrim(const RS_Vector& trimCoord, const RS_VectorSolutions& trimSol) {
-    if (!m_valid || trimSol.empty() || isInfinite()) {
-        return RS_Vector(false);
+RS_Vector LC_Hyperbola::prepareTrim(const RS_Vector& trimCoord,
+                                    const RS_VectorSolutions& trimSol)
+{
+  if (!m_valid || trimSol.empty() || isInfinite()) {
+    return RS_Vector(false);
+  }
+
+         // Project click onto current arc to get reference parameter
+  RS_Vector nearest = getNearestPointOnEntity(trimCoord, false);
+  if (!nearest.valid) {
+    nearest = trimCoord;
+  }
+
+  double phi_ref = getParamFromPoint(nearest, m_data.reversed);
+  if (std::isnan(phi_ref)) {
+    return RS_Vector(false);
+  }
+
+  RS_Vector bestSol(false);
+  double minDeltaPhi = RS_MAXDOUBLE;
+
+         // Choose intersection with smallest |Δφ| from click position
+  for (const RS_Vector& intersect : trimSol) {
+    if (!intersect.valid)
+      continue;
+
+    // RS_Vector proj = getNearestPointOnEntity(sol, false);
+    // if (!proj.valid) proj = sol;
+
+    double phi = getParamFromPoint(intersect, m_data.reversed);
+    if (std::isnan(phi))
+      continue;
+
+    double deltaPhi = std::abs(phi - phi_ref);
+    if (deltaPhi < minDeltaPhi) {
+      minDeltaPhi = deltaPhi;
+      bestSol = intersect;
     }
+  }
 
-    // Project click onto current arc to get reference parameter
-    RS_Vector nearest = getNearestPointOnEntity(trimCoord, false);
-    if (!nearest.valid) {
-        nearest = trimCoord;
-    }
+  if (!bestSol.valid)
+    return RS_Vector(false);
 
-    const double phi_ref = getParamFromPoint(nearest, m_data.reversed);
-    if (std::isnan(phi_ref)) {
-        return RS_Vector(false);
-    }
+  double newPhi = getParamFromPoint(bestSol, m_data.reversed);
 
-    RS_Vector bestSol(false);
-    double minDeltaPhi = RS_MAXDOUBLE;
+  // Use getTrimPoint() with the chosen intersection to decide which end to move
+  RS2::Ending side = getTrimPoint(trimCoord, bestSol);
 
-    // Choose intersection with smallest |Δφ| from click position
-    for (const RS_Vector& intersect : trimSol) {
-        if (!intersect.valid) {
-            continue;
-        }
+  if (side == RS2::EndingStart) {
+    m_data.angle1 = newPhi;
+  } else if (side == RS2::EndingEnd) {
+    m_data.angle2 = newPhi;
+  } else {
+    return RS_Vector(false);
+  }
 
-        // RS_Vector proj = getNearestPointOnEntity(sol, false);
-        // if (!proj.valid) proj = sol;
+  calculateBorders();
+  updateLength();
 
-        const double phi = getParamFromPoint(intersect, m_data.reversed);
-        if (std::isnan(phi)) {
-            continue;
-        }
-
-        const double deltaPhi = std::abs(phi - phi_ref);
-        if (deltaPhi < minDeltaPhi) {
-            minDeltaPhi = deltaPhi;
-            bestSol = intersect;
-        }
-    }
-
-    if (!bestSol.valid) {
-        return RS_Vector(false);
-    }
-
-    const double newPhi = getParamFromPoint(bestSol, m_data.reversed);
-
-    // Use getTrimPoint() with the chosen intersection to decide which end to move
-    const RS2::Ending side = getTrimPoint(trimCoord, bestSol);
-
-    if (side == RS2::EndingStart) {
-        m_data.angle1 = newPhi;
-    }
-    else if (side == RS2::EndingEnd) {
-        m_data.angle2 = newPhi;
-    }
-    else {
-        return RS_Vector(false);
-    }
-
-    calculateBorders();
-    updateLength();
-
-    return bestSol;
+  return bestSol;
 }

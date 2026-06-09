@@ -61,7 +61,7 @@ void DRW_Entity::calculateAxis(DRW_Coord extPoint){
 *   apply extrusion in a point using arbitrary axis (previous calculated)
 *  @author Rallaz
 */
-void DRW_Entity::extrudePoint(DRW_Coord extPoint, DRW_Coord *point){
+void DRW_Entity::extrudePoint(DRW_Coord extPoint, DRW_Coord *point) const{
     double px, py, pz;
     px = (extAxisX.x*point->x)+(extAxisY.x*point->y)+(extPoint.x*point->z);
     py = (extAxisX.y*point->x)+(extAxisY.y*point->y)+(extPoint.y*point->z);
@@ -266,7 +266,7 @@ bool DRW_Entity::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer* strBu
     while (extDataSize>0 && buf->isGood()) {
         dwgHandle ah = buf->getHandle();
         DRW_DBG("App Handle: "); DRW_DBGHL(ah.code, ah.size, ah.ref);
-        duint8 *tmpExtData = new duint8[extDataSize];
+        auto tmpExtData = new duint8[extDataSize];
         buf->getBytes(tmpExtData, extDataSize);
         dwgBuffer tmpExtDataBuf(tmpExtData, extDataSize, buf->decoder);
 
@@ -1806,13 +1806,11 @@ bool DRW_Tolerance::parseCode(int code, const std::unique_ptr<dxfReader>& reader
     return true;
 }
 
-bool DRW_Tolerance::parseDwg(DRW::Version v, dwgBuffer *buf, duint32 bs){
-    (void) v;
-    (void) buf;
-    (void) bs;
+bool DRW_Tolerance::parseDwg([[maybe_unused]]DRW::Version v, [[maybe_unused]]dwgBuffer* buf,[[maybe_unused]] duint32 bs) {
     DRW_DBG("\n********************** parsing TOLERANCE from DWG is not yet implemented **************************\n");
     return true;
 }
+
 
 bool DRW_Block::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
     switch (code) {
@@ -1986,51 +1984,6 @@ bool DRW_Insert::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
 void DRW_Entity::init([[maybe_unused]] const DRW_Entity& rhs) {
 }
 
-bool DRW_Tolerance::parseCode(int code, dxfReader* reader) {
-    switch (code) {
-        case 10:
-            insertionPoint.x = reader->getDouble();
-            break;
-        case 20:
-            insertionPoint.y = reader->getDouble();
-            break;
-        case 30:
-            insertionPoint.z = reader->getDouble();
-            break;
-        case 11:
-            xAxisDirectionVector.x = reader->getDouble();
-            break;
-        case 21:
-            xAxisDirectionVector.y = reader->getDouble();
-            break;
-        case 31:
-            xAxisDirectionVector.z = reader->getDouble();
-            break;
-        case 210:
-            extPoint.x = reader->getDouble();
-            break;
-        case 220:
-            extPoint.y = reader->getDouble();
-            break;
-        case 230:
-            extPoint.z = reader->getDouble();
-            break;
-        case 1:
-            text = reader->getUtf8String();
-            break;
-        case 3:
-            dimStyleName = reader->getUtf8String();
-            break;
-        default:
-            return DRW_Entity::parseCode(code, reader);
-    }
-    return true;
-}
-
-bool DRW_Tolerance::parseDwg([[maybe_unused]]DRW::Version v, [[maybe_unused]]dwgBuffer* buf,[[maybe_unused]] duint32 bs) {
-    DRW_DBG("PARSING TOLERANCE FROM DWG IS NOT SUPPORTED!!!");
-    return true;
-}
 
 void DRW_LWPolyline::applyExtrusion(){
     if (haveExtrusion) {

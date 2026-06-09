@@ -265,10 +265,10 @@ LC_ParabolaData::LC_ParabolaData(std::array<RS_Vector, 3> controlPoints):
     m_controlPoints{std::move(controlPoints)}
   , m_valid{true}
 {
-    CalculatePrimitives();
+    calculatePrimitives();
 }
 
-void LC_ParabolaData::CalculatePrimitives()
+void LC_ParabolaData::calculatePrimitives()
 {
     // shift the first control point to origin
     // After shifting the parabola is: 2 t (1-t) c1 + t^2 c2
@@ -303,15 +303,15 @@ void LC_ParabolaData::CalculatePrimitives()
     m_focus = m_vertex + m_axis;
 }
 
-RS_LineData LC_ParabolaData::GetAxis() const
+RS_LineData LC_ParabolaData::getAxis() const
 {
     const RS_Vector vp = (m_controlPoints.front() + m_controlPoints.back())*0.5 - m_vertex;
     return {m_vertex, m_vertex + m_axis*(0.5*vp.dotP(m_axis)/m_axis.squared())};
 }
 
-RS_Vector LC_ParabolaData::GetFocus() const { return m_focus; }
+RS_Vector LC_ParabolaData::getFocus() const { return m_focus; }
 
-RS_LineData LC_ParabolaData::GetDirectrix() const {
+RS_LineData LC_ParabolaData::getDirectrix() const {
   if (!m_valid)
     return {};
   // The directrix is perpendicular to the axis, at the focal distance h
@@ -325,21 +325,21 @@ RS_LineData LC_ParabolaData::GetDirectrix() const {
   return {midpoint - perp * halfWidth, midpoint + perp * halfWidth};
 }
 
-double LC_ParabolaData::FindX(const RS_Vector& point) const
+double LC_ParabolaData::findX(const RS_Vector& point) const
 {
     // in regular coordinates (4hy=x^2)
     const RS_Vector vp = RS_Vector{point}.rotate(m_vertex, M_PI/2 - m_axis.angle()) - m_vertex;
     return vp.x;
 }
 
-RS_Vector LC_ParabolaData::FromX(double x) const
+RS_Vector LC_ParabolaData::fromX(double x) const
 {
     // in regular coordinates (4hy=x^2)
     const RS_Vector vp = RS_Vector{x, x*x/(4.*m_axis.magnitude())}.rotate(m_axis.angle() - M_PI/2) + m_vertex;
     return vp;
 }
 
-std::array<RS_Vector, 2> LC_ParabolaData::FromXWithTangent(double x) const
+std::array<RS_Vector, 2> LC_ParabolaData::fromXWithTangent(double x) const
 {
     const double h = m_vertex.distanceTo(m_focus) * 0.5;
     return {RS_Vector{x, x*x/(4.*h)}.rotate(m_axis.angle() - M_PI/2) + m_vertex,
@@ -425,7 +425,7 @@ RS_Vector LC_Parabola::dualLineTangentPoint(const RS_Vector& line) const
     // x=-2h uv.x/(uv.y)
     if (std::abs(uv.y) < RS_TOLERANCE)
         return RS_Vector{false};
-    return m_data.FromX(-2. * m_data.m_axis.magnitude() * uv.x / uv.y);
+    return m_data.fromX(-2. * m_data.m_axis.magnitude() * uv.x / uv.y);
 }
 
 
@@ -574,7 +574,7 @@ void LC_Parabola::revertDirection()
 }
 
 void LC_Parabola::update() {
-  m_data.CalculatePrimitives();
+  m_data.calculatePrimitives();
   LC_SplinePoints::getData() = convert2SplineData(m_data);
   calculateBorders();
 }
@@ -593,8 +593,8 @@ RS_Vector LC_Parabola::getNearestOrthTan([[maybe_unused]] const RS_Vector& coord
     const double h = m_data.m_axis.magnitude();
     const double x = -2. * h * line.x / line.y;
     if (onEntity) {
-      const double x0 = m_data.FindX(getStartpoint());
-      const double x1 = m_data.FindX(getEndpoint());
+      const double x0 = m_data.findX(getStartpoint());
+      const double x1 = m_data.findX(getEndpoint());
       if (std::signbit(x - x0) == std::signbit(x - x1))
         return RS_Vector{false};
     }
@@ -773,8 +773,8 @@ double LC_Parabola::getLength() const
   if (h < RS_TOLERANCE)
     return 0.0;
 
-  double x1 = m_data.FindX(getStartpoint());
-  double x2 = m_data.FindX(getEndpoint());
+  double x1 = m_data.findX(getStartpoint());
+  double x2 = m_data.findX(getEndpoint());
 
   double xmin = std::min(x1, x2);
   double xmax = std::max(x1, x2);

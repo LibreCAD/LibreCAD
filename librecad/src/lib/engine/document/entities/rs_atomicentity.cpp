@@ -106,6 +106,9 @@ RS_Vector RS_AtomicEntity::doGetNearestCenter([[maybe_unused]] const RS_Vector& 
     return RS_Vector(false);
 }
 
+
+
+
 /**
  * (De-)selects startpoint.
  */

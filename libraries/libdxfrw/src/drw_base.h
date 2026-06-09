@@ -18,6 +18,7 @@
 
 #include <string>
 #include <cmath>
+#include <memory>
 #include <unordered_map>
 #include <vector>
 
@@ -229,6 +230,13 @@ double x{0};
     double z{0};
 };
 
+class dxfReader;
+
+class DRW_ParseableEntity {
+public:
+    virtual ~DRW_ParseableEntity() = default;
+    virtual bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) = 0;
+};
 
 //! Class to handle vertex
 /*!

@@ -141,6 +141,7 @@ bool dwgReader21::readFileHeader() {
     DRW_DBG("\n\ndwgReader21::parsing file header\n");
     if (! fileBuf->setPosition(0x80)) {
         return false;
+    }
     duint8 fileHdrRaw[0x2FD]{};//0x3D8 - zero-init: avoid using uninitialized memory if read is short
     if (!fileBuf->getBytes(fileHdrRaw, 0x2FD)) {
         DRW_DBG("\nERROR: dwgReader21: file too small to contain RS-encoded file header (need 0x37D = 893 bytes)\n");

@@ -36,12 +36,12 @@ class LC_PropertyView {
     Q_DISABLE_COPY(LC_PropertyView)
 
 public:
-    enum ChildExpandsionViewStyle {
+    enum ChildExpandingIndicatorViewStyle {
         ExpansionStyleQtDefault,
         ExpansionStyleCustom,
     };
 
-    static void setChildExpansionStyle(const ChildExpandsionViewStyle style) {
+    static void setChildExpansionStyle(const ChildExpandingIndicatorViewStyle style) {
         m_expandedIndicatorStyle = style;
     }
 
@@ -130,7 +130,7 @@ protected:
     bool m_shiftHasChildren = true;
     bool m_shiftNoChildren = false;
 
-    static ChildExpandsionViewStyle m_expandedIndicatorStyle;
+    static ChildExpandingIndicatorViewStyle m_expandedIndicatorStyle;
 
     static QColor disabledTextColor(const QStylePainter& painter);
     static QColor activeTextColor(const QStylePainter& painter);

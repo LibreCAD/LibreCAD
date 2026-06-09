@@ -178,7 +178,7 @@ static QString dwgVersionDisplay(DRW::Version v) {
 }
 
 QString RS_FilterDXFRW::lastError() const{
-    switch (errorCode) {
+    switch (m_errorCode) {
     case DRW::BAD_NONE:
         return (QObject::tr( "no DXF/DWG error", "RS_FilterDXFRW"));
     case DRW::BAD_OPEN:
@@ -273,6 +273,7 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic& g, const QString& file, [[maybe_unus
         RS_DEBUG->print("RS_FilterDXFRW::fileImport: reading DWG file");
         if (RS_DEBUG->getLevel() == RS_Debug::D_DEBUGGING) {
             dwgr.setDebug(DRW::DebugLevel::Debug);
+        }
         bool success = dwgr.read(this, true);
         // Capture the recognized version BEFORE acting on the result so
         // BAD_VERSION error reporting (printDwgError / lastError) can
@@ -3915,7 +3916,7 @@ void RS_FilterDXFRW::writeBlocks() {
         // Register each user block so INSERT entities can reference them by name.
         for (unsigned i = 0; i < m_graphic->countBlocks(); i++) {
             RS_Block *blk = m_graphic->blockAt(i);
-            if (!blk->isUndone()) {
+            if (!blk->isDeleted()) {
                 DRW_Coord bp{blk->getBasePoint().x, blk->getBasePoint().y,
                              blk->getBasePoint().z};
                 m_dwgW->defineBlock(blk->getName().toUtf8().constData(), bp);
@@ -4807,7 +4808,7 @@ void RS_FilterDXFRW::writeEntities(){
   }
   for (RS_Entity *e :
        lc::LC_ContainerTraverser{*m_graphic, RS2::ResolveNone}.entities()) {
-    if (e->getFlag(RS2::FlagUndone))
+    if (e->getFlag(RS2::FlagDeleted))
       continue;
     if (consumed.find(e) != consumed.end())
       continue;
@@ -4922,7 +4923,7 @@ void RS_FilterDXFRW::reconstructMLines(RS_EntityContainer *container,
   std::map<QString, std::vector<MLineEntry>> groups;
   for (RS_Entity *e :
        lc::LC_ContainerTraverser{*container, RS2::ResolveNone}.entities()) {
-    if (e->getFlag(RS2::FlagUndone))
+    if (e->getFlag(RS2::FlagDeleted))
       continue;
     if (e->rtti() != RS2::EntityPolyline)
       continue;
@@ -5075,7 +5076,7 @@ void RS_FilterDXFRW::reconstructUnderlays(RS_EntityContainer *container,
   // reconstructs ONE DRW_Underlay (no group/sibling matching like MLINE).
   for (RS_Entity *e :
        lc::LC_ContainerTraverser{*container, RS2::ResolveNone}.entities()) {
-    if (e->getFlag(RS2::FlagUndone))
+    if (e->getFlag(RS2::FlagDeleted))
       continue;
     if (e->rtti() != RS2::EntityPolyline)
       continue;
@@ -5309,9 +5310,11 @@ void RS_FilterDXFRW::writeLWPolyline(const RS_Polyline* l) {
 /**
  * Writes the given polyline entity to the file (old style).
  */
-void RS_FilterDXFRW::writePolyline(RS_Polyline* p) {
-    if (m_dwgW) return;  // DWG has no old-style POLYLINE entity
-    if (p == nullptr)
+void RS_FilterDXFRW::writePolyline(const RS_Polyline* p) {
+    if (m_dwgW) {
+        return;  // DWG has no old-style POLYLINE entity
+    }
+    if (p == nullptr){
         return;
     }
 
@@ -5905,7 +5908,7 @@ void RS_FilterDXFRW::writeDimension(RS_Dimension* d) {
 /**
  * Writes the given leader entity to the file.
  */
-void RS_FilterDXFRW::writeLeader(RS_Leader* l) {
+void RS_FilterDXFRW::writeLeader(const RS_Leader* l) {
     if (m_dwgW) return;
     if (l->count() <= 0) {
         RS_DEBUG->print(RS_Debug::D_WARNING, "dropping leader with no vertices");

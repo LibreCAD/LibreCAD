@@ -272,7 +272,7 @@ void RS_Painter::drawPointEntityUI(const RS_Vector& uiPos, const int pdmode, con
 }
 
 RS_Color RS_Painter::getBackgroundColor() const {
-  return renderer ? renderer->getBackgroundColor() : RS_Color{};
+  return (m_renderer != nullptr) ? m_renderer->getBackgroundColor() : RS_Color{};
 }
 
 void RS_Painter::drawSolidWCS(const RS_VectorSolutions& wcsVertices) {
@@ -848,8 +848,7 @@ void RS_Painter::addEllipseArcToPath(QPainterPath& localPath, const RS_Vector& u
     }
 }
 
-void RS_Painter::drawEllipseSegmentBySplinePointsUI(const RS_Vector& uiRadii, double startRad, double lenRad, QPainterPath &path, bool closed)
-{
+void RS_Painter::drawEllipseSegmentBySplinePointsUI(const RS_Vector& uiRadii, double startRad, double lenRad, QPainterPath &path, bool closed) const {
   // The interpolating-quadratic-spline error for samples taken uniformly in the
   // ellipse angle parameter is e_max = max(a,b)^3 * h^4 / (24 * min(a,b)^2)
   // (derivation in RS_Ellipse::createPainterPath). Using just max(a,b) as in a

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>949</width>
+    <width>964</width>
     <height>698</height>
    </rect>
   </property>
@@ -39,7 +39,7 @@
    <item row="1" column="0">
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>7</number>
+      <number>8</number>
      </property>
      <widget class="QWidget" name="tabAppearance">
       <attribute name="title">
@@ -6542,38 +6542,6 @@
     <hint type="destinationlabel">
      <x>20</x>
      <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>btTemplate</sender>
-   <signal>clicked()</signal>
-   <receiver>QG_DlgOptionsGeneral</receiver>
-   <slot>setTemplateFile()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>682</x>
-     <y>193</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>322</x>
-     <y>201</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>btPathLibrary</sender>
-   <signal>clicked()</signal>
-   <receiver>QG_DlgOptionsGeneral</receiver>
-   <slot>setLibraryPath()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>682</x>
-     <y>193</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>322</x>
-     <y>201</y>
     </hint>
    </hints>
   </connection>

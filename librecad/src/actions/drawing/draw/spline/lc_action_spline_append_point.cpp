@@ -173,9 +173,11 @@ RS_Entity *LC_ActionSplineAppendPoint::createModifiedSplineEntity(RS_Entity *e, 
     RS_Entity* result = nullptr;
     switch (e->rtti()){
         case RS2::EntitySplinePoints:{
-            auto* clone = static_cast<LC_SplinePoints *>(e->clone());
-            if (splinePoints == nullptr)
+            auto* splinePoints = dynamic_cast<LC_SplinePoints *>(e); // not sure this check is actually needed there
+            if (splinePoints == nullptr) {
                 break;
+            }
+            auto* clone = static_cast<LC_SplinePoints*>(e->clone());
             LC_SplinePointsData &data = clone->getData();
             const bool hasSplinePoints = !data.splinePoints.empty(); // handle spline point data magic :(
             if (fromStart){

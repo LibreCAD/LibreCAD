@@ -126,7 +126,7 @@ struct RS_MTextData {
     /** Rotation angle */
     double angle = 0.;
     /** Update mode */
-    RS2::UpdateMode updateMode = RS2::NoUpdate;
+    RS2::UpdateMode updateMode = RS2::NoUpdate;// fixme - sand - review this flag. It seems it's just a helper, so it's not consistent with other entities
 };
 
 std::ostream& operator<<(std::ostream& os, const RS_MTextData& td);
@@ -217,9 +217,7 @@ public:
         return m_data.drawingDirection;
     }
 
-    void setDrawingDirection(const RS_MTextData::MTextDrawingDirection direction) {
-        m_data.drawingDirection = direction;
-    }
+    void setDrawingDirection(const RS_MTextData::MTextDrawingDirection direction);
 
     RS_MTextData::MTextLineSpacingStyle getLineSpacingStyle() const {
         return m_data.lineSpacingStyle;
@@ -274,7 +272,6 @@ public:
     /**
    * @return The insertion point as endpoint.
    */
-    RS_Vector getNearestEndpoint(const RS_Vector &coord, double *dist = nullptr) const override;
     RS_VectorSolutions getRefPoints() const override;
 
     void move(const RS_Vector& offset) override;
@@ -309,7 +306,6 @@ protected:
         const RS_Vector& getBaselineEnd() const;
         void setBaselineEnd(const RS_Vector& v);
         void moveBaseline(const RS_Vector& offset);
-
     protected:
         RS_Vector m_textSize;
         RS_Vector m_leftBottomCorner;

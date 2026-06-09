@@ -283,7 +283,7 @@ void QG_DlgMText::setEntity(RS_MText* t, const bool isNew) {
     applyDirectionVisuals();
 }
 
-void QG_DlgMText::layoutDirectionChanged const()
+void QG_DlgMText::layoutDirectionChanged() const
 {
   const bool leftToRight = rbLeftToRight->isChecked();
   rbRightToLeft->setChecked(!leftToRight);
@@ -339,7 +339,7 @@ void QG_DlgMText::layoutDirectionChanged const()
   applyDirectionVisuals();
 }
 
-void QG_DlgMText::applyDirectionVisuals() {
+void QG_DlgMText::applyDirectionVisuals() const {
   const bool leftToRight = rbLeftToRight->isChecked();
   const Qt::LayoutDirection direction =
       leftToRight ? Qt::LeftToRight : Qt::RightToLeft;

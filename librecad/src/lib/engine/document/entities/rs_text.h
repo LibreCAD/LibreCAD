@@ -265,7 +265,7 @@ public:
     /**
      * @return The insertion point as endpoint.
      */
-    RS_Vector getNearestEndpoint(const RS_Vector& coord, double* dist = nullptr)const override;
+
      RS_VectorSolutions getRefPoints() const override;
 
     void move(const RS_Vector& offset) override;

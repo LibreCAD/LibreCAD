@@ -63,6 +63,12 @@ QG_DlgOptionsGeneral::QG_DlgOptionsGeneral(QWidget *parent)
     connect(hatchpatterns_button, &QToolButton::clicked,
             this, &QG_DlgOptionsGeneral::setHatchPatternsFolder);
 
+    connect(btTemplate, &QToolButton::clicked,
+            this, &QG_DlgOptionsGeneral::setTemplateFile);
+
+    connect(btPathLibrary, &QToolButton::clicked,
+            this, &QG_DlgOptionsGeneral::setLibraryPath);
+
     // starting Qt-6.7.0, use QCheckBox::checkStateChanged
 #if QT_VERSION >= QT_VERSION_CHECK(6, 7, 0)
     const auto stateChangedSignal = &QCheckBox::checkStateChanged;
@@ -75,10 +81,8 @@ QG_DlgOptionsGeneral::QG_DlgOptionsGeneral(QWidget *parent)
             this, &QG_DlgOptionsGeneral::on_cbVisualizeHoveringClicked);
     connect(cbPersistentDialogs, stateChangedSignal,
             this, &QG_DlgOptionsGeneral::on_cbPersistentDialogsClicked);
-    connect(translation_button, &QToolButton::clicked,
-            this, &QG_DlgOptionsGeneral::setTranslationsFolder);
-    connect(hatchpatterns_button, &QToolButton::clicked,
-            this, &QG_DlgOptionsGeneral::setHatchPatternsFolder);
+
+
     connect(cbAutoBackup, stateChangedSignal,
             this, &QG_DlgOptionsGeneral::onAutoBackupChanged);
     connect(cbVisualizeHovering, stateChangedSignal,

@@ -193,7 +193,7 @@ void PathBuilder::appendSplinePoints(LC_SplinePoints* spline) {
   bool emittedMoveTo = false;
   for (size_t i = 1; i <= iSplines; ++i) {
     RS_Vector start, ctrl, end;
-    int npts = spline->GetQuadPoints(int(i), &start, &ctrl, &end);
+    int npts = spline->getQuadPoints(int(i), &start, &ctrl, &end);
     if (npts < 3) {
       if (npts >= 2 && start.valid && end.valid) {
         if (!emittedMoveTo) {

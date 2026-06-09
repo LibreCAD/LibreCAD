@@ -33,13 +33,16 @@
 
 const QByteArray LC_PropertyView::ATTR_VIRTUAL = QByteArrayLiteral("_virtual");
 
-LC_PropertyView::ChildExpandsionViewStyle LC_PropertyView::m_expandedIndicatorStyle = ExpansionStyleQtDefault;
+// default indicator seems is missing under Windows11 and t
+// LC_PropertyView::ChildExpandingIndicatorViewStyle LC_PropertyView::m_expandedIndicatorStyle = ExpansionStyleQtDefault;
+LC_PropertyView::ChildExpandingIndicatorViewStyle LC_PropertyView::m_expandedIndicatorStyle = ExpansionStyleCustom;
 
 LC_PropertyView::LC_PropertyView(LC_Property* property)
     : m_property{property}, m_stateProperty(nullptr) {
 }
 
 LC_PropertyView::~LC_PropertyView() {
+    m_stateProperty = nullptr;
 }
 
 void LC_PropertyView::init() {
@@ -170,7 +173,8 @@ void LC_PropertyView::buildPartChildrenExpansion(LC_PropertyPaintContext& ctx, Q
     if (m_expandedIndicatorStyle == ExpansionStyleCustom) {
         part.funPaint = [this](const LC_PropertyPaintContext& paintContext, const LC_PropertyViewPart& p) {
             auto& painter = *paintContext.painter;
-            const QRectF indicatorRect = p.rect;
+            QRectF indicatorRect = p.rect;
+            indicatorRect = indicatorRect.adjusted(2, 2, -2, -2); // make it smaller
             const qreal side = indicatorRect.height() / 3.5;
             const QColor fillClr = paintContext.getPalette().color(QPalette::Text);
             const QColor outlineClr = (p.isPushedOrUnderCursor()) ? Qt::blue : paintContext.getPalette().color(QPalette::Text);

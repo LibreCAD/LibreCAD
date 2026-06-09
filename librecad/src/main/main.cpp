@@ -308,9 +308,15 @@ int main(int argc, char** argv) {
 
     LC_Application app(argc, argv);
     QCoreApplication::setOrganizationName("LibreCAD");
-    QCoreApplication::setApplicationName("LibreCAD");
     const auto versionStr = XSTR(LC_VERSION);
     QCoreApplication::setApplicationVersion(versionStr);
+    QString version(versionStr);
+    if (version.contains("alpha") || version.contains("beta")) {
+         QCoreApplication::setApplicationName("LibreCAD_DEV");
+    }
+    else {
+      QCoreApplication::setApplicationName("LibreCAD");
+    }
 
     // fixme - sand - NEED TO CHECK WHERE lc_svgicons.so is located under linux and mac!!! That's tested for Windows
     const auto appDir = app.applicationDirPath();

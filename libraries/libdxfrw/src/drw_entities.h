@@ -106,7 +106,7 @@ class DrwEntityEncodeTestAccess;  // test-only friend; defined in
 *  Base class for entities
 *  @author Rallaz
 */
-class DRW_Entity {
+class DRW_Entity:public DRW_ParseableEntity {
     SETENTFRIENDS
 public:
     //initializes default values
@@ -519,11 +519,11 @@ public:
         extPoint.z = 1;
         dimStyleName = "STANDARD";
     }
-    virtual void applyExtrusion() override {}
+    void applyExtrusion() override {}
 
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
-    virtual bool parseDwg(DRW::Version v, dwgBuffer *buf, duint32 bs=0) override;
+    bool parseDwg(DRW::Version v, dwgBuffer *buf, duint32 bs=0) override;
 
 public:
     UTF8STRING text;                  /*!< Visual representation of the tolerance, code 1 */
@@ -1764,11 +1764,11 @@ public:
         eType = DRW::MLEADER;
     }
 
-    virtual void applyExtrusion() override {}
+    void applyExtrusion() override {}
 
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
-    virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
 
 public:
     DRW_MLeaderAnnotContext context;

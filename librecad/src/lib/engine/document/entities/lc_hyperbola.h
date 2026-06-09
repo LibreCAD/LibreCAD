@@ -136,14 +136,6 @@ public:
     return true;
   }
 
-  RS_Vector getNearestCenter(const RS_Vector &coord,
-                             double *dist = nullptr) const override;
-
-  RS_Vector getNearestMiddle(const RS_Vector &coord, double *dist = nullptr,
-                             int middlePoints = 1) const override;
-
-  RS_Vector getNearestDist(double distance, const RS_Vector &coord,
-                           double *dist = nullptr) const override;
 
   double getDirection1() const override;
   double getDirection2() const override;
@@ -329,6 +321,9 @@ private:
   RS_Vector localToWorld(const RS_Vector& local) const;
 
 protected:
+    RS_Vector doGetNearestCenter(const RS_Vector& coord, double* dist, RS_Entity** entity) const override;
+
+
     RS_Vector doGetNearestMiddle(const RS_Vector &coord, double *dist,
                              int middlePoints) const override;
 

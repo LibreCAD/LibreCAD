@@ -1041,7 +1041,7 @@ int QC_ApplicationWindow::maybeSurfaceBlocksDock(RS_Graphic *graphic) {
   int hits = 0;
   for (int i = 0; i < blockList->count(); ++i) {
     RS_Block *block = blockList->at(i);
-    if (block == nullptr || block->isUndone())
+    if (block == nullptr || block->isDeleted())
       continue;
     // *Model_Space / *Paper_Space[N] are pseudo-blocks that mirror the
     // ENTITIES section; surfacing them is pointless.
