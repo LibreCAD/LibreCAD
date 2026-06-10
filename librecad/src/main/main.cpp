@@ -569,7 +569,11 @@ QPixmap getSplashImage(const std::unique_ptr<QSplashScreen>& splash, const QStri
             return {};
         }
 
-        QPixmap pixmapSplash(":/images/splash_librecad.png");
+        auto splashFileName = ":/images/splash_librecad.png";
+        if (LC_IconColorsOptions::isDarkColorScheme()) {
+            splashFileName = ":/images/splash_librecad_dark.svg";
+        }
+        QPixmap pixmapSplash(splashFileName);
         QPainter painter(&pixmapSplash);
         const double factorX = pixmapSplash.width()/542.;
         const double factorY = pixmapSplash.height()/337.;

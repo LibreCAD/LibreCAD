@@ -40,7 +40,7 @@ void LC_ActionUCSCreate::doSaveOptions() {
 
 void LC_ActionUCSCreate::doLoadOptions() {
     m_angle = loadDouble("Angle", 0.0);
-    m_fixedAngle = loadBool("AngleIsFixed", true);
+    m_fixedAngle = loadBool("AngleIsFixed", false);
 }
 
 bool LC_ActionUCSCreate::isInVisualSnapStatus(int status) {

@@ -58,7 +58,7 @@ class LC_VisualSnapManager : public QObject {
     void invalidateSolution() const;
 
     void previewVertex(RS_EntityContainer* preview, const LC_VisualSnapVertex* point, bool remove) const;
-    bool hasVisualSnap() const;
+    bool hasVisualSnap(bool ignoreLastSnapData = false) const;
 
     void setViewport(LC_GraphicViewport* viewport) {
         m_viewport = viewport;

@@ -1707,9 +1707,9 @@ void QC_ApplicationWindow:: keyPressEvent(QKeyEvent* e) {
                         e->accept();
                         doDefaultProcessing = false;
                     }
-                    else if (currentAction->hasVisualSnap()) { // fixme - should we rely on hardcoded shortcut or it's better to use some action?
+                    else if (currentAction->isVisualSnapApplicable() && currentAction->hasVisualSnap(true)) { // fixme - should we rely on hardcoded shortcut or it's better to use some action?
                         if (e->modifiers() && e->modifiers() & Qt::ShiftModifier) {
-                            currentAction->removePrevioustVisualSnapAddition();
+                            currentAction->removePreviousVisualSnapAddition();
                             e->accept();
                         } else {
                             currentAction->stopVisualSnap();

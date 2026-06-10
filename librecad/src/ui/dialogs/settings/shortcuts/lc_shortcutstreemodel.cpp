@@ -22,6 +22,8 @@
 
 #include "lc_shortcutstreemodel.h"
 
+#include <QApplication>
+
 #include "lc_actiongroup.h"
 #include "lc_actiongroupmanager.h"
 #include "lc_shortcuttreeitem.h"
@@ -166,13 +168,18 @@ QVariant LC_ShortcutsTreeModel::data(const QModelIndex &index, const int role) c
                 }
                 break;
             }
-            case Qt::BackgroundRole:
-                if (mappingItem->isGroup()){  // background for virtual layer
-//                return options->virtualLayerBgColor;
-                    return QColor(0xf5f5f5);
+            case Qt::BackgroundRole: {
+                if (mappingItem->isGroup()){
+                    QPalette palette = QApplication::palette();
+
+                    // Option A: Subtle contrast (alternate item view color)
+                    return palette.color(QPalette::AlternateBase);
+
+                    // Option B: Distinct panel contrast (window container color)
+                    // return palette.color(QPalette::Window);
                 }
                 break;
-
+            }
             case Qt::FontRole: {
                 QFont font;
                 if (mappingItem->isModified()){

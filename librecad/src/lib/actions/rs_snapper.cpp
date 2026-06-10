@@ -1808,13 +1808,13 @@ void RS_Snapper::stopVisualSnap() const {
     clearVisualSnap();
 }
 
-void RS_Snapper::removePrevioustVisualSnapAddition() {
+void RS_Snapper::removePreviousVisualSnapAddition() {
     m_visualSnapManager->removeLastAddition();
     onVisualSnapSolutionRefresh();
 }
 
-bool RS_Snapper::hasVisualSnap() const {
-    return m_visualSnapManager->hasVisualSnap();
+bool RS_Snapper::hasVisualSnap(bool ignoreLastSnapData) const {
+    return m_visualSnapManager->hasVisualSnap(ignoreLastSnapData);
 }
 
 // get catching entity distance in graph distance

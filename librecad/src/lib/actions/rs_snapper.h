@@ -189,15 +189,16 @@ class RS_Snapper : public QObject {
     int getSnapMiddlePoints() const;
     double getSnapDistance() const;
 
-    bool hasVisualSnap() const;
+    bool hasVisualSnap(bool ignoreLastSnapData = false) const;
     void stopVisualSnap() const;
-    void removePrevioustVisualSnapAddition();
+    void removePreviousVisualSnapAddition();
     double getAngleStep() const {
         return m_snapToAngleStep;
     }
     const RS_Vector& getRelativeZero() const;
     virtual void refreshBySettings();
     void lockVisualSnap(bool performLock) const;
+    virtual bool isVisualSnapApplicable();
 protected:
     struct ImpData {
         RS_Vector snapCoord{false};
@@ -323,7 +324,6 @@ protected:
     virtual void onVisualSnapPointRegistered([[maybe_unused]]LC_VisualSnapVertex* point, [[maybe_unused]]bool remove) {}
     virtual void onVisualSnapEntityRegistered([[maybe_unused]]RS_Entity* point);
     virtual void onVisualSnapSolutionRefresh() {}
-    virtual bool isVisualSnapApplicable();
     virtual void clearVisualSnap() const;
 
     void snapEndpoint(const RS_Vector& mouseCoord, double& ds2Min) const;

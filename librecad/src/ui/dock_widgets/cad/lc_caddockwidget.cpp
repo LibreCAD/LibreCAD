@@ -25,13 +25,14 @@
 // This file was first published at: github.com/r-a-v-a-s/LibreCAD.git
 
 // fixme - sand - add support of flex layout, with it potentially will be possible to support something ribbon-like
-// oh - just have and options (hor/ver
-// orientation)
+// oh - just have and options (hor/ver  orientation)
 
 #include "lc_caddockwidget.h"
 
 #include <QFrame>
 #include <QGridLayout>
+#include <QScrollArea>
+#include <QScrollBar>
 #include <QToolButton>
 
 #include "rs_settings.h"
@@ -40,7 +41,14 @@ LC_CADDockWidget::LC_CADDockWidget(QWidget *parent, const bool allTools)
     : QDockWidget(parent), m_frame(new QFrame(this)),
       m_gridLayout(new QGridLayout), m_allTools{allTools} {
   m_frame->setContentsMargins(0, 0, 0, 0);
-  setWidget(m_frame);
+
+  m_scrollArea = new QScrollArea(this);
+  m_scrollArea->setWidgetResizable(true);
+  m_scrollArea->setFrameStyle(QFrame::NoFrame); // Avoid double borders with the dock widget
+  m_scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff); // Clip horizontally instead of showing scrollbars
+  m_scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+  m_scrollArea->setWidget(m_frame);
+  setWidget(m_scrollArea);
   m_gridLayout->setSpacing(0);
   m_gridLayout->setContentsMargins(0, 0, 0, 0);
   m_frame->setLayout(m_gridLayout);
@@ -63,10 +71,14 @@ void LC_CADDockWidget::addActions(const QList<QAction *> &list, int columns, con
     toolButton->setDefaultAction(item);
     toolButton->setAutoRaise(flatButton);
     toolButton->setIconSize(QSize(iconSize, iconSize));
+
+    toolButton->setFixedSize(QSize(iconSize + 8, iconSize + 8));
+
     const int count = m_gridLayout->count();
     if (columns == 0) {
        columns = 5;
     }
+
     m_gridLayout->addWidget(toolButton, count / columns, count % columns);
   }
 
@@ -92,6 +104,9 @@ void LC_CADDockWidget::doUpdateWidgetSettings(int leftToolbarColumnsCount, const
   foreach (QToolButton *w, widgets) {
     w->setAutoRaise(leftToolbarFlatIcons);
     w->setIconSize(size);
+
+    w->setFixedSize(QSize(leftToolbarIconSize + 8, leftToolbarIconSize + 8));
+
     m_gridLayout->removeWidget(w);
     const int count = newGridLayout->count();
     newGridLayout->addWidget(w, count / leftToolbarColumnsCount,
@@ -102,6 +117,11 @@ void LC_CADDockWidget::doUpdateWidgetSettings(int leftToolbarColumnsCount, const
   addSpacers(newGridLayout, leftToolbarColumnsCount);
   m_frame->setLayout(newGridLayout);
   m_gridLayout = newGridLayout;
+
+  m_columns = leftToolbarColumnsCount;
+  m_iconSize = leftToolbarIconSize;
+
+  updateMinimumWidth();
 }
 
 void LC_CADDockWidget::updateWidgetSettings() {
@@ -119,4 +139,39 @@ void LC_CADDockWidget::updateWidgetSettings() {
   }
   doUpdateWidgetSettings(columnsCount, iconSize, flatIcons);
   LC_GROUP_END();
+}
+
+void LC_CADDockWidget::updateMinimumWidth() {
+    if (!m_scrollArea) return;
+
+    // Mathematically calculate the exact horizontal space required by the grid
+    const int contentWidth = m_columns * (m_iconSize + 8);
+
+    // Retrieve the OS vertical scrollbar width
+    int sbWidth = m_scrollArea->verticalScrollBar()->sizeHint().width();
+    if (sbWidth <= 0) {
+        sbWidth = 16;
+    }
+
+    // Account for m_frame's Raised border shadows
+    const int framePadding = 2 * m_frame->lineWidth();
+
+    const int totalMinWidth = contentWidth + sbWidth + framePadding;
+
+    m_scrollArea->setMinimumWidth(totalMinWidth);
+    setMinimumWidth(totalMinWidth);
+
+
+    updateGeometry();
+}
+
+QSize LC_CADDockWidget::minimumSizeHint() const {
+    QSize baseHint = QDockWidget::minimumSizeHint();
+    if (m_scrollArea != nullptr) {
+        const int minW = m_scrollArea->minimumWidth();
+        if (minW > 0) {
+            baseHint.setWidth(minW);
+        }
+    }
+    return baseHint;
 }

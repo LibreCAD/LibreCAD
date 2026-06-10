@@ -998,7 +998,7 @@ void RS_PreviewActionInterface::onMouseRightButtonRelease(const int status, QMou
     if (hasVisualSnap()) {
         const bool control = isControl(e);
         if (control) {
-            removePrevioustVisualSnapAddition();
+            removePreviousVisualSnapAddition();
             e->accept();
             return;
         }

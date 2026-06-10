@@ -191,7 +191,7 @@ void LC_VisualSnapManager::previewVertex(RS_EntityContainer* preview, const LC_V
     }
 }
 
-bool LC_VisualSnapManager::hasVisualSnap() const {
+bool LC_VisualSnapManager::hasVisualSnap(bool ignoreLastSnapData) const {
     lock();
     bool result = !m_snapData->isEmpty();
     if (!result) {
@@ -199,7 +199,7 @@ bool LC_VisualSnapManager::hasVisualSnap() const {
             result = !m_solution->guidingEntities.empty();
         }
     }
-    if (!result) {
+    if (!result && !ignoreLastSnapData) {
         result = m_snapData->isLastSnappedPointValid() && (m_options.autoAddSnappedPointToVisualSnap && m_options.autoAddGuidesForLastSnapOnly);
     }
     unlock();

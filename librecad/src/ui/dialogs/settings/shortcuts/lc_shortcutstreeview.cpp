@@ -53,9 +53,8 @@ public:
                 }
             }
             if (draw){
-                /*LC_LayerTreeModelOptions* options = treeModel->getOptions();
-                QColor color = options->itemsGridColor;*/
-                const auto color = QColor(0xd3d3d3);
+                // const auto color = option.palette.color(QPalette::Mid);
+                const auto color = option.palette.color(QPalette::Window);
                 painter->save();
                 painter->setPen(color);
                 painter->drawRect(option.rect);

@@ -26,6 +26,7 @@
 
 #include <QDockWidget>
 
+class QScrollArea;
 class QFrame;
 class QGridLayout;
 
@@ -38,12 +39,18 @@ public:
     void doUpdateWidgetSettings(int leftToolbarColumnsCount,
                                 int leftToolbarIconSize,
                                 bool leftToolbarFlatIcons);
+    QSize minimumSizeHint() const override;
   private:
     QFrame* m_frame = nullptr;
     QGridLayout* m_gridLayout = nullptr;
     bool m_allTools = false;
+    int m_columns{5};
+    int m_iconSize{24};
+    QScrollArea *m_scrollArea{nullptr};
+    void updateMinimumWidth();
 public slots:
     void updateWidgetSettings();
+
 };
 
 #endif

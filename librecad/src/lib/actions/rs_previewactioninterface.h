@@ -84,6 +84,7 @@ public:
     void tryAddVisualGuidingPointForCurrentPoint(bool hasLength, bool hasAngle, bool hasDx, bool hasDy, bool hasNormal);
     void addProjectedRelativePointToVisualSnap(const LC_RelativePositionData* relativePositionData, bool applyProjectedPosition);
     void moveMouseToRefreshPreview(const RS_Vector& wcsPos);
+    bool isVisualSnapApplicable() override;
 protected:
     RS_PreviewActionInterface(const QString& actionName,LC_ActionContext *actionContext,RS2::ActionType actionType = RS2::ActionNone);
     ~RS_PreviewActionInterface() override;
@@ -126,7 +127,6 @@ protected:
     void drawPreview();
     void drawHighlights() const;
     void drawPreviewAndHighlights();
-    bool isVisualSnapApplicable() override;
 
     void addToHighlights(RS_Entity *e, bool enable = true) const;
 

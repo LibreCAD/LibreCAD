@@ -37,7 +37,9 @@
 #ifdef _WIN32
 #include <windows.h>
 #include <DbgHelp.h>
+#ifdef _MSC_VER
 #pragma comment(lib, "DbgHelp.lib")
+#endif
 #elif defined(__linux__) || defined(__APPLE__)
 #include <signal.h>
 #include <execinfo.h>
