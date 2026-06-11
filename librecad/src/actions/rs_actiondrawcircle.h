@@ -47,7 +47,7 @@ public:
      */
     enum Status {
         SetCenter,       /**< Setting the center point. */
-        SetRadius        /**< Setting the radius. */
+        SetPoint         /**< Setting the point on the circle. */
     };
 
 public:
@@ -64,8 +64,7 @@ public:
 	void mouseMoveEvent(QMouseEvent* e) override;
 	void mouseReleaseEvent(QMouseEvent* e) override;
 	
-	void coordinateEvent(RS_CoordinateEvent* e) override;
-	void commandEvent(RS_CommandEvent* e) override;
+    void coordinateEvent(RS_CoordinateEvent* e) override;
 	
 	void hideOptions() override;
 	void showOptions() override;
