@@ -567,6 +567,33 @@ TEST_CASE("DXF unmodeled OBJECT is captured verbatim, not dropped (slice A1)", "
   REQUIRE(weird.groups.size() == 3);  // 5, 330, 70
 }
 
+TEST_CASE("DXF BREAKDATA/BREAKPOINTREF are raw-captured, not dropped (write-review 7.2)",
+          "[dxf][rawobject][breakdata]") {
+  // processBreakData/processBreakPointRef previously called only their typed
+  // add* callbacks (no DXF writer for either), so both were silently dropped on
+  // DXF->DXF. They now also raw-capture (mirroring processScale), and the
+  // raw-net replay loop re-emits them.
+  RawObjectCapture cap;
+  const char *dxf =
+      "0\nSECTION\n2\nOBJECTS\n"
+      "0\nBREAKDATA\n5\nA1\n330\nA0\n100\nAcDbBreakData\n90\n2\n331\nB5\n"
+      "0\nBREAKPOINTREF\n5\nA2\n330\nA1\n100\nAcDbBreakPointRef\n90\n0\n10\n1.0\n20\n2.0\n30\n0.0\n"
+      "0\nENDSEC\n0\nEOF\n";
+  readDxf(dxf, cap, "lc_breakdata.dxf");
+
+  REQUIRE(cap.m_objects.size() == 2);
+  const DRW_RawDxfObject &bd = cap.m_objects[0];
+  CHECK(bd.name == "BREAKDATA");
+  CHECK(bd.handle == 0xA1u);
+  REQUIRE(bd.groups.size() == 5);  // 5, 330, 100, 90, 331
+  CHECK(bd.groups[0].code() == 5);
+  CHECK(bd.groups[2].code() == 100);
+  const DRW_RawDxfObject &bp = cap.m_objects[1];
+  CHECK(bp.name == "BREAKPOINTREF");
+  CHECK(bp.handle == 0xA2u);
+  CHECK(bp.groups.size() >= 5);
+}
+
 TEST_CASE("DXF unmodeled ENTITY is captured verbatim, not dropped (slice A4)", "[dxf][rawentity]") {
   RawEntityCapture cap;
   // An unknown entity and a standalone ATTDEF (no typed DXF dispatch) — both

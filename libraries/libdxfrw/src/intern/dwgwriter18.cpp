@@ -504,8 +504,13 @@ bool dwgWriter18::finalize() {
                        static_cast<std::uint32_t>(section.m_data.size()));
     }
 
+    // AuxHeader is an R2004+ section (AC1018+); the builder + auxHeaderRawVersion
+    // already handle AC1018/AC1021/AC1024 (return 25/27/29), so the old
+    // >=AC1027 gate needlessly dropped it from the two commonest modern targets
+    // (AC1018, AC1024), which AutoCAD then flags. Lower to >=AC1018.
+    // (write-review pass-2 medium / plan 3.5)
     const std::vector<std::uint8_t> auxHeaderData =
-        (m_version >= DRW::AC1027) ? buildAuxHeaderContent(m_version, m_header)
+        (m_version >= DRW::AC1018) ? buildAuxHeaderContent(m_version, m_header)
                                    : std::vector<std::uint8_t>();
     const bool hasAuxHeader = !auxHeaderData.empty();
 

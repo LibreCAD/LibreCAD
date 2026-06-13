@@ -2002,7 +2002,16 @@ bool dwgReader::readDwgObject(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                         || cit->second->className == "AcDbDimAssoc") {
                         DRW_DimensionAssociation e;
                         ret = e.parseDwg(version, &buff, bs);
-                        if (ret) intfa.addDimensionAssociation(e);
+                        if (ret) {
+                            intfa.addDimensionAssociation(e);
+                            // Also raw-capture so it survives write — the filter
+                            // has no addDimensionAssociation override (base no-op),
+                            // so without this DIMASSOC is dropped (94 objs/11 files).
+                            // Every neighbor (SUN@2024, CELLSTYLEMAP, FIELDLIST…)
+                            // co-emits this companion; DIMASSOC was the only one
+                            // missing it. (write-review P3 #8)
+                            intfa.addUnsupportedObject(makeRawObject(oType, cit->second));
+                        }
                         break;
                     }
                     if (rn == "ACAD_EVALUATION_GRAPH"

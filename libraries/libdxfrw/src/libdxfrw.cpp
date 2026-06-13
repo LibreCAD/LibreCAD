@@ -17,6 +17,7 @@
 #include <algorithm>
 #include <cmath>
 #include <cstdlib>
+#include <set>
 #include <sstream>
 #include <cassert>
 #include "intern/drw_textcodec.h"
@@ -643,83 +644,95 @@ bool dxfRW::writeDimstyle(DRW_Dimstyle *ent){
         writer->writeUtf8String(6, ent->dimblk1);
     if ( version == DRW::AC1009 || !(ent->dimblk2.empty()) )
         writer->writeUtf8String(7, ent->dimblk2);
-    writer->writeDouble(40, ent->dimscale);
-    writer->writeDouble(41, ent->dimasz);
-    writer->writeDouble(42, ent->dimexo);
-    writer->writeDouble(43, ent->dimdli);
-    writer->writeDouble(44, ent->dimexe);
-    writer->writeDouble(45, ent->dimrnd);
-    writer->writeDouble(46, ent->dimdle);
-    writer->writeDouble(47, ent->dimtp);
-    writer->writeDouble(48, ent->dimtm);
+    // De-dup: the prepareDRWDimStyle* helpers populate ent->vars (via d.add)
+    // with the real modified values; the POD members below keep reset() defaults.
+    // Emitting both produced DUPLICATE DXF group codes (default + real) that ezdxf
+    // flags. Route the POD writes through guards that skip any code already in
+    // ent->vars, so the vars loop below emits the single real value. (P3 #6)
+    std::set<int> dimVarCodes;
+    for (auto& kv : ent->vars)
+        if (kv.second) dimVarCodes.insert(kv.second->code());
+    auto wD = [&](int code, double val) {
+        if (!dimVarCodes.count(code)) writer->writeDouble(code, val); };
+    auto wI = [&](int code, int val) {
+        if (!dimVarCodes.count(code)) writer->writeInt16(code, val); };
+    wD(40, ent->dimscale);
+    wD(41, ent->dimasz);
+    wD(42, ent->dimexo);
+    wD(43, ent->dimdli);
+    wD(44, ent->dimexe);
+    wD(45, ent->dimrnd);
+    wD(46, ent->dimdle);
+    wD(47, ent->dimtp);
+    wD(48, ent->dimtm);
     if ( version > DRW::AC1018 || ent->dimfxl !=0 )
-        writer->writeDouble(49, ent->dimfxl);
-    writer->writeDouble(140, ent->dimtxt);
-    writer->writeDouble(141, ent->dimcen);
-    writer->writeDouble(142, ent->dimtsz);
-    writer->writeDouble(143, ent->dimaltf);
-    writer->writeDouble(144, ent->dimlfac);
-    writer->writeDouble(145, ent->dimtvp);
-    writer->writeDouble(146, ent->dimtfac);
-    writer->writeDouble(147, ent->dimgap);
+        wD(49, ent->dimfxl);
+    wD(140, ent->dimtxt);
+    wD(141, ent->dimcen);
+    wD(142, ent->dimtsz);
+    wD(143, ent->dimaltf);
+    wD(144, ent->dimlfac);
+    wD(145, ent->dimtvp);
+    wD(146, ent->dimtfac);
+    wD(147, ent->dimgap);
     if (version > DRW::AC1014) {
-        writer->writeDouble(148, ent->dimaltrnd);
+        wD(148, ent->dimaltrnd);
     }
-    writer->writeInt16(71, ent->dimtol);
-    writer->writeInt16(72, ent->dimlim);
-    writer->writeInt16(73, ent->dimtih);
-    writer->writeInt16(74, ent->dimtoh);
-    writer->writeInt16(75, ent->dimse1);
-    writer->writeInt16(76, ent->dimse2);
-    writer->writeInt16(77, ent->dimtad);
-    writer->writeInt16(78, ent->dimzin);
+    wI(71, ent->dimtol);
+    wI(72, ent->dimlim);
+    wI(73, ent->dimtih);
+    wI(74, ent->dimtoh);
+    wI(75, ent->dimse1);
+    wI(76, ent->dimse2);
+    wI(77, ent->dimtad);
+    wI(78, ent->dimzin);
     if (version > DRW::AC1014) {
-        writer->writeInt16(79, ent->dimazin);
+        wI(79, ent->dimazin);
     }
-    writer->writeInt16(170, ent->dimalt);
-    writer->writeInt16(171, ent->dimaltd);
-    writer->writeInt16(172, ent->dimtofl);
-    writer->writeInt16(173, ent->dimsah);
-    writer->writeInt16(174, ent->dimtix);
-    writer->writeInt16(175, ent->dimsoxd);
-    writer->writeInt16(176, ent->dimclrd);
-    writer->writeInt16(177, ent->dimclre);
-    writer->writeInt16(178, ent->dimclrt);
+    wI(170, ent->dimalt);
+    wI(171, ent->dimaltd);
+    wI(172, ent->dimtofl);
+    wI(173, ent->dimsah);
+    wI(174, ent->dimtix);
+    wI(175, ent->dimsoxd);
+    wI(176, ent->dimclrd);
+    wI(177, ent->dimclre);
+    wI(178, ent->dimclrt);
     if (version > DRW::AC1014) {
-        writer->writeInt16(179, ent->dimadec);
+        wI(179, ent->dimadec);
     }
     if (version > DRW::AC1009) {
         if (version < DRW::AC1015)
-            writer->writeInt16(270, ent->dimunit);
-        writer->writeInt16(271, ent->dimdec);
-        writer->writeInt16(272, ent->dimtdec);
-        writer->writeInt16(273, ent->dimaltu);
-        writer->writeInt16(274, ent->dimalttd);
-        writer->writeInt16(275, ent->dimaunit);
+            wI(270, ent->dimunit);
+        wI(271, ent->dimdec);
+        wI(272, ent->dimtdec);
+        wI(273, ent->dimaltu);
+        wI(274, ent->dimalttd);
+        wI(275, ent->dimaunit);
     }
     if (version > DRW::AC1014) {
-        writer->writeInt16(276, ent->dimfrac);
-        writer->writeInt16(277, ent->dimlunit);
-        writer->writeInt16(278, ent->dimdsep);
-        writer->writeInt16(279, ent->dimtmove);
+        wI(276, ent->dimfrac);
+        wI(277, ent->dimlunit);
+        wI(278, ent->dimdsep);
+        wI(279, ent->dimtmove);
     }
     if (version > DRW::AC1009) {
-        writer->writeInt16(280, ent->dimjust);
-        writer->writeInt16(281, ent->dimsd1);
-        writer->writeInt16(282, ent->dimsd2);
-        writer->writeInt16(283, ent->dimtolj);
-        writer->writeInt16(284, ent->dimtzin);
-        writer->writeInt16(285, ent->dimaltz);
-        writer->writeInt16(286, ent->dimaltttz);
+        wI(280, ent->dimjust);
+        wI(281, ent->dimsd1);
+        wI(282, ent->dimsd2);
+        wI(283, ent->dimtolj);
+        wI(284, ent->dimtzin);
+        wI(285, ent->dimaltz);
+        wI(286, ent->dimaltttz);
         if (version < DRW::AC1015)
-            writer->writeInt16(287, ent->dimfit);
-        writer->writeInt16(288, ent->dimupt);
+            wI(287, ent->dimfit);
+        wI(288, ent->dimupt);
     }
     if (version > DRW::AC1014) {
-        writer->writeInt16(289, ent->dimatfit);
+        wI(289, ent->dimatfit);
     }
     if ( version > DRW::AC1018 && ent->dimfxlon !=0 )
-        writer->writeInt16(290, ent->dimfxlon);
+        wI(290, ent->dimfxlon);
     if (version > DRW::AC1009) {
         std::string txstyname = ent->dimtxsty;
         std::transform(txstyname.begin(), txstyname.end(), txstyname.begin(),::toupper);
@@ -736,8 +749,8 @@ bool dxfRW::writeDimstyle(DRW_Dimstyle *ent){
             int blkHandle = (*(blockMap.find(ent->dimldrblk))).second;
             writer->writeUtf8String(341, toHexStr(blkHandle));
         }
-        writer->writeInt16(371, ent->dimlwd);
-        writer->writeInt16(372, ent->dimlwe);
+        wI(371, ent->dimlwd);
+        wI(372, ent->dimlwe);
     }
     for (auto& kv : ent->vars) {
         DRW_Variant* v = kv.second;
@@ -4382,14 +4395,18 @@ bool dxfRW::processBreakData() {
     DRW_DBG("dxfRW::processBreakData");
     int code;
     DRW_BreakData data;
+    DRW_RawDxfObject raw;       //data-only type: also preserved for DXF re-emit
+    raw.name = nextentity;
     while (reader->readRec(&code)) {
         DRW_DBG(code); DRW_DBG("\n");
         if (code == 0) {
             nextentity = reader->getString();
             DRW_DBG(nextentity); DRW_DBG("\n");
             iface->addBreakData(data);
+            iface->addRawDxfObject(raw);  // else dropped on DXF->DXF (no typed writer)
             return true;
         }
+        captureRawGroup(raw, code);
         if (!data.parseCode(code, reader))
             return setError(DRW::BAD_CODE_PARSED);
     }
@@ -4400,14 +4417,18 @@ bool dxfRW::processBreakPointRef() {
     DRW_DBG("dxfRW::processBreakPointRef");
     int code;
     DRW_BreakPointRef ref;
+    DRW_RawDxfObject raw;       //data-only type: also preserved for DXF re-emit
+    raw.name = nextentity;
     while (reader->readRec(&code)) {
         DRW_DBG(code); DRW_DBG("\n");
         if (code == 0) {
             nextentity = reader->getString();
             DRW_DBG(nextentity); DRW_DBG("\n");
             iface->addBreakPointRef(ref);
+            iface->addRawDxfObject(raw);  // else dropped on DXF->DXF (no typed writer)
             return true;
         }
+        captureRawGroup(raw, code);
         if (!ref.parseCode(code, reader))
             return setError(DRW::BAD_CODE_PARSED);
     }
