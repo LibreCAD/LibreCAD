@@ -4058,16 +4058,22 @@ bool DRW_MLeaderStyle::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint3
     // textStyleHandle 342 — handle stream
     leftAttachment      = buf->getBitShort();
     rightAttachment     = buf->getBitShort();
-    // R2010+ adds text angle type BS 175 between the attachments and the
-    // alignment type — gated by the spec's "IsNewFormat OR DXF" predicate.
-    if (version >= DRW::AC1024) {
+    // textAngleType(175) + alwaysAlignTextLeft(297) are gated on the object's
+    // own class_version >= 2, NOT the file version. libreDWG (dwg2.spec
+    // MLEADERSTYLE): R2010+ reads class_version (179) from the stream, while
+    // R2007 (AC1021) does NOT write it but forces class_version = 2 — so these
+    // fields ARE present on R2007. styleVersion defaults to 2 (drw_objects.h),
+    // so styleVersion>=2 is true for both AC1021 and AC1024+. The old
+    // `version>=AC1024` gate dropped them on AC1021 → whole-record desync for
+    // ODA/AutoCAD. (write-review #21)
+    if (styleVersion >= 2) {
         textAngleType   = buf->getBitShort();
     }
     textAlignmentType   = buf->getBitShort();
     textColor           = buf->getCmColor(version);
     textHeight          = buf->getBitDouble();
     textFrameEnabled    = buf->getBit();
-    if (version >= DRW::AC1024) {
+    if (styleVersion >= 2) {
         alwaysAlignTextLeft = buf->getBit();
     }
     alignSpace          = buf->getBitDouble();
@@ -4931,13 +4937,15 @@ bool DRW_MLeaderStyle::encodeDwg(DRW::Version version, dwgBufferW *buf,
     sb->putVariableText(version, textDefault);
     buf->putBitShort(static_cast<std::int16_t>(leftAttachment));
     buf->putBitShort(static_cast<std::int16_t>(rightAttachment));
-    if (version >= DRW::AC1024)
+    // Gate on class_version>=2 (styleVersion), not file version — see parseDwg.
+    // styleVersion defaults to 2 so AC1021 emits these too (libreDWG parity).
+    if (styleVersion >= 2)
         buf->putBitShort(static_cast<std::int16_t>(textAngleType));
     buf->putBitShort(static_cast<std::int16_t>(textAlignmentType));
     buf->putCmColor(version, static_cast<std::uint16_t>(textColor));
     buf->putBitDouble(textHeight);
     buf->putBit(textFrameEnabled ? 1 : 0);
-    if (version >= DRW::AC1024)
+    if (styleVersion >= 2)
         buf->putBit(alwaysAlignTextLeft ? 1 : 0);
     buf->putBitDouble(alignSpace);
     buf->putCmColor(version, static_cast<std::uint16_t>(blockColor));

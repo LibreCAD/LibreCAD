@@ -323,6 +323,16 @@ bool dxfRW::writeEntity(DRW_Entity *ent, bool captureSourceHandle) {
     if (version > DRW::AC1015 && !ent->colorName.empty()) {
         writer->writeUtf8String(430, ent->colorName);
     }
+    // linetype scale(48) + visibility(60) — both read by DRW_Entity::parseCode
+    // and symmetric on the DWG path; previously dropped on DXF save, so a
+    // per-entity linetype scale or an invisible entity was lost on DWG→DXF.
+    // 60: 0=visible (default, omitted), 1=invisible. (write-review pass-2 #11)
+    if (version > DRW::AC1009 && ent->ltypeScale != 1.0) {
+        writer->writeDouble(48, ent->ltypeScale);
+    }
+    if (version > DRW::AC1009 && !ent->visible) {
+        writer->writeInt16(60, 1);
+    }
     if (version > DRW::AC1018 && ent->shadow != DRW::CastAndReceieveShadows) {
         writer->writeInt16(284, static_cast<int>(ent->shadow));
     }
@@ -863,6 +873,11 @@ bool dxfRW::writeLine(DRW_Line *ent) {
     if (version > DRW::AC1009) {
         writer->writeString(100, "AcDbLine");
     }
+    // thickness(39) — reader + DWG encoder both preserve it; omitting it
+    // flattened thick 2.5D profiles on DXF save.
+    if (ent->thickness != 0) {
+        writer->writeDouble(39, ent->thickness);
+    }
     writer->writeDouble(10, ent->basePoint.x);
     writer->writeDouble(20, ent->basePoint.y);
     if (ent->basePoint.z != 0.0 || ent->secPoint.z != 0.0) {
@@ -873,6 +888,14 @@ bool dxfRW::writeLine(DRW_Line *ent) {
     } else {
         writer->writeDouble(11, ent->secPoint.x);
         writer->writeDouble(21, ent->secPoint.y);
+    }
+    // extrusion(210/220/230) — default 0,0,1; reader consumes it. Omitting it
+    // re-imported out-of-plane lines in the WCS XY plane.
+    DRW_Coord crd = ent->extPoint;
+    if (crd.x != 0 || crd.y != 0 || crd.z != 1) {
+        writer->writeDouble(210, crd.x);
+        writer->writeDouble(220, crd.y);
+        writer->writeDouble(230, crd.z);
     }
     return true;
 }
@@ -954,6 +977,11 @@ bool dxfRW::writeArc(DRW_Arc *ent) {
     if (version > DRW::AC1009) {
         writer->writeString(100, "AcDbCircle");
     }
+    // thickness(39) belongs to the AcDbCircle subclass (precedes the AcDbArc
+    // marker); reader + DWG encoder preserve it.
+    if (ent->thickness != 0) {
+        writer->writeDouble(39, ent->thickness);
+    }
     writer->writeDouble(10, ent->basePoint.x);
     writer->writeDouble(20, ent->basePoint.y);
     if (ent->basePoint.z != 0.0) {
@@ -994,6 +1022,15 @@ bool dxfRW::writeEllipse(DRW_Ellipse *ent){
         writer->writeDouble(40, ent->ratio);
         writer->writeDouble(41, ent->staparam);
         writer->writeDouble(42, ent->endparam);
+        // extrusion(210/220/230) — a tilted-plane ellipse loses its orientation
+        // (and partial arcs can flip sweep) without it; reader + applyExtrusion
+        // depend on it. Default 0,0,1.
+        DRW_Coord crd = ent->extPoint;
+        if (crd.x != 0 || crd.y != 0 || crd.z != 1) {
+            writer->writeDouble(210, crd.x);
+            writer->writeDouble(220, crd.y);
+            writer->writeDouble(230, crd.z);
+        }
     } else {
         DRW_Polyline pol;
         //RLZ: copy properties
@@ -1108,6 +1145,14 @@ bool dxfRW::writeLWPolyline(DRW_LWPolyline *ent){
                 writer->writeDouble(42, v->bulge);
             if (version > DRW::AC1021 && v->identifier != 0)
                 writer->writeInt32(91, v->identifier);
+        }
+        // extrusion(210/220/230) — UCS/extruded plines flatten to WCS without it
+        // (reader reads it, DWG encoder preserves it). Default 0,0,1.
+        DRW_Coord crd = ent->extPoint;
+        if (crd.x != 0 || crd.y != 0 || crd.z != 1) {
+            writer->writeDouble(210, crd.x);
+            writer->writeDouble(220, crd.y);
+            writer->writeDouble(230, crd.z);
         }
     } else {
         //RLZ: TODO convert lwpolyline in polyline (not exist in acad 12)
@@ -1617,8 +1662,19 @@ bool dxfRW::writeDimension(DRW_Dimension *ent) {
         if ( ent->getTextLineFactor() != 1)
             writer->writeDouble(41, ent->getTextLineFactor());
         writer->writeUtf8String(3, ent->getStyle());
-        if ( ent->getDir() != 0)
+        // Measurement(42), horizontal direction(51) and flip-arrow flags(74/75)
+        // — the DXF reader consumes all four (drw_entities.cpp parseCode) and the
+        // DWG encoder writes hdir/flipArrow1/flipArrow2; emit them for symmetry.
+        if (ent->measureValue != 0)
+            writer->writeDouble(42, ent->measureValue);
+        if (ent->getDir() != 0)
             writer->writeDouble(53, ent->getDir());
+        if (ent->hdir != 0)
+            writer->writeDouble(51, ent->hdir);
+        if (ent->getFlipArrow1())
+            writer->writeInt16(74, 1);
+        if (ent->getFlipArrow2())
+            writer->writeInt16(75, 1);
         writer->writeDouble(210, ent->getExtrusion().x);
         writer->writeDouble(220, ent->getExtrusion().y);
         writer->writeDouble(230, ent->getExtrusion().z);
@@ -1738,6 +1794,13 @@ bool dxfRW::writeInsert(DRW_Insert *ent){
     writer->writeInt16(71, ent->rowcount);
     writer->writeDouble(44, ent->colspace);
     writer->writeDouble(45, ent->rowspace);
+    // extrusion(210/220/230) — OCS inserts re-import in the wrong plane without
+    // it (reader reads it, DWG encoder preserves it). Default 0,0,1.
+    if (ent->extPoint.x != 0 || ent->extPoint.y != 0 || ent->extPoint.z != 1) {
+        writer->writeDouble(210, ent->extPoint.x);
+        writer->writeDouble(220, ent->extPoint.y);
+        writer->writeDouble(230, ent->extPoint.z);
+    }
     //Trailing block attributes + terminating SEQEND (mirrors writePolyline).
     if (hasAttribs) {
         for (const auto &att : ent->attlist) {
@@ -1755,6 +1818,8 @@ bool dxfRW::writeAttrib(DRW_Attrib *ent){
     writeEntity(ent);
     if (version > DRW::AC1009)
         writer->writeString(100, "AcDbText");
+    if (ent->thickness != 0)  // reader + DWG encoder preserve thickness(39)
+        writer->writeDouble(39, ent->thickness);
     writer->writeDouble(10, ent->basePoint.x);
     writer->writeDouble(20, ent->basePoint.y);
     writer->writeDouble(30, ent->basePoint.z);
@@ -1796,7 +1861,8 @@ bool dxfRW::writeText(DRW_Text *ent){
     if (version > DRW::AC1009) {
         writer->writeString(100, "AcDbText");
     }
-//    writer->writeDouble(39, ent->thickness);
+    if (ent->thickness != 0)  // reader + DWG encoder preserve thickness(39)
+        writer->writeDouble(39, ent->thickness);
     writer->writeDouble(10, ent->basePoint.x);
     writer->writeDouble(20, ent->basePoint.y);
     writer->writeDouble(30, ent->basePoint.z);
@@ -2657,8 +2723,11 @@ bool dxfRW::writeObjects() {
         DRW_ImageDef *id = imageDef.at(i);
         writer->writeString(0, "IMAGEDEF");
         writer->writeString(5, toHexStr(id->handle) );
-        if (version > DRW::AC1014) {
-//            writer->writeString(330, "0"); handle to DICTIONARY
+        // Owner 330 = the AcDbRasterImageDef dictionary (imgDictH). A missing
+        // owner triggers an INVALID_OWNER_HANDLE audit/repair in ezdxf/AutoCAD.
+        // imgDictH is non-empty whenever imageDef is non-empty (set above).
+        if (version > DRW::AC1014 && !imgDictH.empty()) {
+            writer->writeString(330, imgDictH);
         }
         writer->writeString(102, "{ACAD_REACTORS");
         for (auto it=id->reactors.begin() ; it != id->reactors.end(); ++it ) {

@@ -174,6 +174,14 @@ public:
   void writeEntities() override { m_rw->writeInsert(&m_insert); }
 };
 
+// Emits a single LINE on write (for the thickness/extrusion field-drop test).
+class LineEmitter : public StubInterface {
+public:
+  DRW_Line m_line;
+  dxfRW *m_rw = nullptr;
+  void writeEntities() override { m_rw->writeLine(&m_line); }
+};
+
 // Captures the first TOLERANCE entity.
 class ToleranceCapture : public StubInterface {
 public:
@@ -372,6 +380,75 @@ TEST_CASE("DXF INSERT attlist round-trips through write+read (slice B2)",
   CHECK(cap.m_captured.attlist[1]->tag == "REV");
   CHECK(cap.m_captured.attlist[1]->text == "B");
   CHECK((cap.m_captured.attlist[1]->attribFlags & 0x1) == 1);
+
+  std::filesystem::remove(path);
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("DXF LINE thickness(39)+extrusion(210/220/230) round-trip "
+          "(write-review B1)", "[dxf][line][dxf_roundtrip]") {
+  // Regression for the DXF field-drop fixes: writeLine used to emit neither
+  // thickness nor extrusion, flattening thick / out-of-plane lines on DXF save
+  // even though the reader and DWG encoder both preserve them.
+  const auto path =
+      std::filesystem::temp_directory_path() / "lc_line_thick_extr.dxf";
+  std::filesystem::remove(path);
+
+  LineEmitter emitter;
+  emitter.m_line.layer = "0";
+  emitter.m_line.basePoint = DRW_Coord(1.0, 2.0, 0.0);
+  emitter.m_line.secPoint = DRW_Coord(4.0, 6.0, 0.0);
+  emitter.m_line.thickness = 2.5;
+  emitter.m_line.extPoint = DRW_Coord(0.0, 1.0, 0.0);  // non-default normal
+
+  {
+    dxfRW w(path.string().c_str());
+    emitter.m_rw = &w;
+    REQUIRE(w.write(&emitter, DRW::AC1021, false));
+  }
+
+  LineCapture cap;
+  {
+    dxfRW r(path.string().c_str());
+    REQUIRE(r.read(&cap, /*ext=*/true));
+  }
+
+  REQUIRE(cap.m_callCount == 1);
+  CHECK(cap.m_captured.thickness == 2.5);          // 39 survived (was dropped)
+  CHECK(cap.m_captured.extPoint.x == 0.0);         // 210/220/230 survived
+  CHECK(cap.m_captured.extPoint.y == 1.0);
+  CHECK(cap.m_captured.extPoint.z == 0.0);
+
+  std::filesystem::remove(path);
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("DXF entity visibility(60) round-trip (write-review pass-2 #11)",
+          "[dxf][line][dxf_roundtrip]") {
+  // writeEntity now emits code 60 for an invisible entity; the reader parses it
+  // back into DRW_Entity::visible. (Default-visible entities omit 60.)
+  const auto path =
+      std::filesystem::temp_directory_path() / "lc_line_invisible.dxf";
+  std::filesystem::remove(path);
+
+  LineEmitter emitter;
+  emitter.m_line.layer = "0";
+  emitter.m_line.basePoint = DRW_Coord(0.0, 0.0, 0.0);
+  emitter.m_line.secPoint = DRW_Coord(1.0, 1.0, 0.0);
+  emitter.m_line.visible = false;  // -> code 60 = 1
+
+  {
+    dxfRW w(path.string().c_str());
+    emitter.m_rw = &w;
+    REQUIRE(w.write(&emitter, DRW::AC1021, false));
+  }
+  LineCapture cap;
+  {
+    dxfRW r(path.string().c_str());
+    REQUIRE(r.read(&cap, /*ext=*/true));
+  }
+  REQUIRE(cap.m_callCount == 1);
+  CHECK(cap.m_captured.visible == false);  // 60 survived (was dropped)
 
   std::filesystem::remove(path);
 }

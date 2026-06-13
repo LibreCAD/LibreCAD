@@ -5943,10 +5943,14 @@ void RS_FilterDXFRW::writeHeader(DRW_Header& data){
         }
         ++it;
     }
-    v = m_graphic->getMin();
-    v = m_graphic->getMax();
-    data.addCoord("$EXTMIN", DRW_Coord(v.x, v.y, 0.0), 0);
-    data.addCoord("$EXTMAX", DRW_Coord(v.x, v.y, 0.0), 0);
+    // $EXTMIN must use getMin() and $EXTMAX getMax(); the previous code
+    // overwrote vmin with getMax() before reading it, so $EXTMIN==$EXTMAX
+    // (a degenerate point bbox → broken ZOOM-EXTENTS/auto-scale) on every
+    // DWG+DXF write, and the Z extent was forced to 0. (write-review P3 #3)
+    const RS_Vector vmin = m_graphic->getMin();
+    const RS_Vector vmax = m_graphic->getMax();
+    data.addCoord("$EXTMIN", DRW_Coord(vmin.x, vmin.y, vmin.z), 0);
+    data.addCoord("$EXTMAX", DRW_Coord(vmax.x, vmax.y, vmax.z), 0);
 
     //when saving a block, there is no active layer. ignore it to avoid crash
     if(m_graphic->getActiveLayer()==0) {
@@ -10773,6 +10777,10 @@ void RS_FilterDXFRW::setEntityAttributes(RS_Entity* entity,
     entity->setVisualStyleHandles(attrib->fullVisualStyleHandle,
                                   attrib->faceVisualStyleHandle,
                                   attrib->edgeVisualStyleHandle);
+    // Visibility (DXF code 60 / DWG invisible bit) — import side of the
+    // two-way fix; getEntityAttributes now exports it. (write-review P3 #11)
+    entity->setVisible(attrib->visible);
+
     // Source DXF/DWG handle (code 5). Lets the writer build an old->new
     // handle map for refs that target model entities (F3a; GROUP code-340).
     if (attrib->handle != DRW::NoHandle)
@@ -10840,6 +10848,12 @@ void RS_FilterDXFRW::getEntityAttributes(DRW_Entity* ent, const RS_Entity* entit
       int alphaByte = static_cast<int>(pen.getAlpha() * 255.0f + 0.5f);
       ent->transparency = (0x03 << 24) | (alphaByte & 0xFF);
     }
+
+    // Visibility (DXF code 60 / DWG invisible bit). The writer honors
+    // ent->visible (writeEntity emits 60 when invisible; encodeDwgCommon sets
+    // the DWG bit), but this boundary never populated it, so an invisible
+    // entity round-tripped as visible. (write-review P3 #11)
+    ent->visible = entity->isVisible();
 
     // Passive metadata sidecars — emit only when overridden.
     if (entity->materialHandle() != 0)

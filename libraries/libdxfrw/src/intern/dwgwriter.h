@@ -76,6 +76,12 @@ public:
                           "AcDbMLeader", "MULTILEADER", false, 0x1F2});
         registerDwgClass({502, 0x401, "ACAD",
                           "AcDbLight", "LIGHT", false, 0x1F2});
+        // HELIX (class 503): DRW_Helix::encodeDwg sets oType=503 but the class
+        // was never registered, so libdxfrw's own reader (and ODA) dropped the
+        // type — the spline body bytes were correct but unparseable. Mirror the
+        // siblings above. (write-review #14)
+        registerDwgClass({503, 0x401, "ACAD",
+                          "AcDbHelix", "HELIX", false, 0x1F2});
     }
 
     virtual ~dwgWriter() = default;

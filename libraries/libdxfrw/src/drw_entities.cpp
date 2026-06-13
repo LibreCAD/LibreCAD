@@ -929,7 +929,11 @@ bool DRW_Entity::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
         ltypeScale = reader->getDouble();
         break;
     case 60:
-        visible = reader->getBool();
+        // DXF code 60: 0 = visible, 1 = invisible. The previous `getBool()`
+        // inverted it (60==1 → visible=true). Match the spec + the DWG path
+        // (DRW_Entity::parseDwg `visible = (invisibleFlag & 1) == 0`). Exposed
+        // once writeEntity began emitting 60 for invisible entities.
+        visible = (reader->getInt32() & 1) == 0;
         break;
     case 420:
         color24 = reader->getInt32();
@@ -1264,8 +1268,20 @@ bool DRW_Entity::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer* strBu
             DRW_DBG("graphData size outside object body\n");
             return false;
         }
-        if (!buf->moveBitPos(static_cast<std::int32_t>(graphDataSize * 8)))
-            return false;
+        // Capture the proxy-graphics byte stream instead of skipping it. These
+        // are cached drawable primitives (lines/arcs/polylines/text) that any
+        // reader can render for proxy/custom entities (STDPART2D, AEC_*, tables)
+        // — previously discarded via moveBitPos, leaving proxyGraphics empty.
+        // dwgBuffer::getBytes is bit-aware (reconstructs each byte at a non-zero
+        // bitPos), so it lands at the exact same position moveBitPos(8N) did.
+        // (write-review #32 / read-coverage gap #1)
+        if (graphDataSize > 0) {
+            proxyGraphics.resize(graphDataSize);
+            if (!buf->getBytes(reinterpret_cast<std::uint8_t*>(&proxyGraphics[0]),
+                               graphDataSize))
+                return false;
+            numProxyGraph = static_cast<int>(graphDataSize);
+        }
     }
     if (version < DRW::AC1015) {//14-
         objSize = buf->getRawLong32();  //RL 32bits object size in bits
@@ -5824,7 +5840,20 @@ bool DRW_Hatch::encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t b
                         if (isRational)
                             buf->putBitDouble(cp->z);  // weight stored in z
                     }
-                    // fit points + tangents (R2010+) omitted for R2000 target
+                    // Fit points + start/end tangents (R2010+). The reader
+                    // unconditionally consumes this block for version>AC1021
+                    // (drw_entities.cpp ~5655), so a writer that stops after the
+                    // control points desyncs the bitstream at the next field on
+                    // every AC1024/AC1027/AC1032 spline-edge hatch. (write-review #2)
+                    if (version > DRW::AC1021) { //2010+
+                        buf->putBitLong(static_cast<std::int32_t>(sp->fitlist.size()));
+                        for (const auto& fp : sp->fitlist) {
+                            DRW_Coord f2{fp->x, fp->y, 0.0};
+                            buf->put2RawDouble(f2);
+                        }
+                        buf->put2RawDouble(sp->tgStart);
+                        buf->put2RawDouble(sp->tgEnd);
+                    }
                 } else {
                     return false;  // unknown edge type
                 }
@@ -6777,9 +6806,12 @@ bool DRW_Dimension::encodeDwgDimBase(DRW::Version version, dwgBufferW *buf,
     (strBuf ? strBuf : buf)->putVariableText(version, text);
     buf->putBitDouble(rot);
     buf->putBitDouble(hdir);
-    const DRW_Coord zeroCoord{0.0, 0.0, 0.0};
-    buf->put3BitDouble(zeroCoord);  // inspoint — not stored, emit zero
-    buf->putBitDouble(0.0);         // insRot_code54 — not stored
+    // ins_scale (3BD) of the dimension's anonymous block — not stored by the
+    // reader, but ODA/libreDWG default it to (1,1,1) (dwg.spec FIELD_3BD_1), not
+    // (0,0,0). A zero scale is degenerate for ODA consumers. (write-review #46)
+    const DRW_Coord insScale{1.0, 1.0, 1.0};
+    buf->put3BitDouble(insScale);
+    buf->putBitDouble(0.0);         // ins_rotation (code 54) — default 0, not stored
     // R2000 (version > AC1014): alignment, spacing, line factor, measure
     buf->putBitShort(static_cast<std::uint16_t>(align));
     buf->putBitShort(static_cast<std::uint16_t>(linesty));
