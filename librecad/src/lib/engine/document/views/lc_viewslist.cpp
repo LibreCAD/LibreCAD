@@ -79,8 +79,11 @@ void LC_ViewList::edited([[maybe_unused]]LC_View *view) {
 }
 
 LC_View *LC_ViewList::find(const QString &name) const{
+    // NFC-normalize both sides so an NFD-form named view still matches an
+    // NFC lookup. Mirrors RS_LayerList::find.
+    const QString k = name.normalized(QString::NormalizationForm_C);
     for (auto v: m_namedViews){
-        if (v->getName() == name){
+        if (v->getName().normalized(QString::NormalizationForm_C) == k){
             return v;
         }
     }
@@ -88,11 +91,12 @@ LC_View *LC_ViewList::find(const QString &name) const{
 }
 
 int LC_ViewList::getIndex(const QString &name) const{
+    const QString k = name.normalized(QString::NormalizationForm_C);
     int result = -1;
 
     for (int i = 0; i < m_namedViews.size(); i++) {
         LC_View *v = m_namedViews.at(i);
-        if (v->getName() == name) {
+        if (v->getName().normalized(QString::NormalizationForm_C) == k) {
             result = i;
             break;
         }

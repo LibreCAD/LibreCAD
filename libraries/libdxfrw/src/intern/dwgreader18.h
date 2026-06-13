@@ -77,7 +77,7 @@ public:
 
 protected:
     std::unique_ptr<std::uint8_t[]> objData;
-    std::uint64_t uncompSize;
+    std::uint64_t uncompSize{0};
 
     bool captureRawDwgDataSections();
     bool parseSysPage(std::uint8_t *decompSec, std::uint32_t decompSize); //called: Section page map: 0x41630e3b

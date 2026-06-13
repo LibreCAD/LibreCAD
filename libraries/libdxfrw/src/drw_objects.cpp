@@ -21,6 +21,7 @@
 #include "intern/drw_dbg.h"
 #include "intern/drw_reserve.h"
 #include "intern/dwgutil.h"
+#include "intern/dwgreader.h"
 
 namespace {
 
@@ -873,14 +874,47 @@ DRW_DBG("\n***************************** parsing table entry *******************
         DRW_DBG(" dxfCode: "); DRW_DBG(dxfCode);
         switch (dxfCode){
         case 0:{
-            std::uint8_t strLength = tmpExtDataBuf.getRawChar8();
-            DRW_DBG(" strLength: "); DRW_DBG(strLength);
-            std::uint16_t cp = tmpExtDataBuf.getBERawShort16();
-            DRW_DBG(" str codepage: "); DRW_DBG(cp);
-            for (int i=0;i< strLength+1;i++) {//string length + null terminating char
-                std::uint8_t dxfChar = tmpExtDataBuf.getRawChar8();
-                DRW_DBG(" dxfChar: "); DRW_DBG(dxfChar);
+            // ODA DWG spec §28 EED string item. Two encodings:
+            //  - R2007+: 2-byte char count + UTF-16LE bytes (no per-string codepage).
+            //  - R13–R2004: 1-byte length + 2-byte BE codepage hint + bytes + NUL.
+            std::string s;
+            if (version > DRW::AC1018) {
+                if (tmpExtDataBuf.numRemainingBytes() < 2) break;
+                std::uint16_t nChars = tmpExtDataBuf.getRawShort16();
+                if (nChars > 0) {
+                    std::uint64_t byteLen = static_cast<std::uint64_t>(nChars) * 2;
+                    if ((std::uint64_t)tmpExtDataBuf.numRemainingBytes() < byteLen) break;
+                    std::vector<std::uint8_t> bytes(byteLen);
+                    tmpExtDataBuf.getBytes(bytes.data(), byteLen);
+                    for (std::uint16_t i = 0; i < nChars; ++i) {
+                        std::uint16_t c = static_cast<std::uint16_t>(bytes[2*i]) |
+                                   (static_cast<std::uint16_t>(bytes[2*i+1]) << 8);
+                        if (c < 0x80) {
+                            s.push_back(static_cast<char>(c));
+                        } else if (c < 0x800) {
+                            s.push_back(static_cast<char>(0xC0 | (c >> 6)));
+                            s.push_back(static_cast<char>(0x80 | (c & 0x3F)));
+                        } else {
+                            s.push_back(static_cast<char>(0xE0 | (c >> 12)));
+                            s.push_back(static_cast<char>(0x80 | ((c >> 6) & 0x3F)));
+                            s.push_back(static_cast<char>(0x80 | (c & 0x3F)));
+                        }
+                    }
+                }
+            } else {
+                std::uint8_t strLength = tmpExtDataBuf.getRawChar8();
+                DRW_DBG(" strLength: "); DRW_DBG(strLength);
+                std::uint16_t cp = tmpExtDataBuf.getBERawShort16();
+                DRW_DBG(" str codepage: "); DRW_DBG(cp);
+                if (strLength > 0 && tmpExtDataBuf.numRemainingBytes() >= strLength) {
+                    std::string raw(strLength, '\0');
+                    tmpExtDataBuf.getBytes(reinterpret_cast<std::uint8_t*>(&raw[0]), strLength);
+                    s = decodeEedString(cp, raw, tmpExtDataBuf.decoder);
+                }
+                if (tmpExtDataBuf.numRemainingBytes() > 0)
+                    tmpExtDataBuf.getRawChar8(); // optional trailing NUL
             }
+            extData.push_back(new DRW_Variant(1000, s));
             break;
         }
         default:

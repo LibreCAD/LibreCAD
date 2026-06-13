@@ -10706,7 +10706,13 @@ void RS_FilterDXFRW::setEntityAttributes(RS_Entity* entity,
     RS_Pen pen;
     pen.setColor(Qt::black);
     pen.setLineType(RS2::SolidLine);
-    QString layName = toNativeString(QString::fromUtf8(attrib->layer.c_str()));
+    // A layer name is an identifier, NOT MTEXT content: do NOT run it through
+    // toNativeString (which caret-decodes ^X, expands \P/%%c, strips font
+    // tags). Decoding here corrupts names that legitimately contain '^' and,
+    // worse, desyncs the entity from its layer record — addLayer() below
+    // stores the RAW name (lay.name = attrib->layer), so a decoded layName
+    // would never match it. Use the verbatim UTF-8 name on both paths.
+    QString layName = QString::fromUtf8(attrib->layer.c_str());
 
     // Layer: add layer in case it doesn't exist:
     if (!m_graphic->findLayer(layName)) {
@@ -11394,11 +11400,33 @@ QString RS_FilterDXFRW::toNativeString(const QString& data) {
     }
     res.append(data.mid(j));
 
+    // AutoCAD caret convention: ^X → chr((X-64) mod 126); ^Space → '^'
+    // literal. Mirrors ezdxf tools/text.py:501. Run BEFORE the \P/\~ pass
+    // so ^J (LF), ^M (CR), ^I (TAB) decode first; also subsumes the prior
+    // hard-coded "^I → 4 spaces" rule with the general formula (^I → TAB).
+    QString caretDecoded;
+    caretDecoded.reserve(res.size());
+    for (int k = 0; k < res.size(); ++k) {
+        const QChar ch = res.at(k);
+        if (ch.unicode() == 0x5E /* '^' */ && k + 1 < res.size()) {
+            const QChar nx = res.at(k + 1);
+            if (nx.unicode() == 0x20) {
+                caretDecoded.append(QChar(0x5E)); // ^space → literal ^
+            } else {
+                const int code = (static_cast<int>(nx.unicode()) - 64) % 126;
+                caretDecoded.append(QChar(static_cast<ushort>(code < 0 ? code + 126 : code)));
+            }
+            ++k; // consume the X
+        } else {
+            caretDecoded.append(ch);
+        }
+    }
+    res = std::move(caretDecoded);
+
     // Replace literal escape sequences. Each replace() mutates in place;
     // the prior `res = res.replace(...)` was an unnecessary self-assignment.
     res.replace(QLatin1StringView("\\P"), QLatin1StringView("\n"));   // line feed
     res.replace(QLatin1StringView("\\~"), QLatin1StringView(" "));    // space
-    res.replace(QLatin1StringView("^I"),  QLatin1StringView("    ")); // tab → 4 spaces (RLZ)
     // diameter / degree / plus-minus — case-insensitive match of %%c / %%C etc.
     // (RLZ: Empty_set is 0x2205, diameter is 0x2300 — needs to be in all fonts.)
     res.replace(QLatin1StringView("%%c"), QStringLiteral("⌀"), Qt::CaseInsensitive);

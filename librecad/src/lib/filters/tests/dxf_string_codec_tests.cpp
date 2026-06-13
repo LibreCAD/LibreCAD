@@ -116,12 +116,33 @@ QString toNativeStringReference(const QString& data) {
     }
     res.append(data.mid(j));
 
+    // AutoCAD caret convention: ^X → chr((X-64) mod 126); ^Space → '^'.
+    // Mirrors the optimised toNativeString (refreshed for the i18n caret
+    // generalization). Runs before \P/\~ so ^J/^M decode first.
+    {
+        QString tmp;
+        tmp.reserve(res.size());
+        for (int k = 0; k < res.size(); ++k) {
+            const QChar ch = res.at(k);
+            if (ch.unicode() == 0x5E && k + 1 < res.size()) {
+                const QChar nx = res.at(k + 1);
+                if (nx.unicode() == 0x20) {
+                    tmp.append(QChar(0x5E));
+                } else {
+                    const int code = (static_cast<int>(nx.unicode()) - 64) % 126;
+                    tmp.append(QChar(static_cast<ushort>(code < 0 ? code + 126 : code)));
+                }
+                ++k;
+            } else {
+                tmp.append(ch);
+            }
+        }
+        res = std::move(tmp);
+    }
     // Line feed:
     res = res.replace(QRegularExpression("\\\\P"), "\n");
     // Space:
     res = res.replace(QRegularExpression("\\\\~"), " ");
-    // Tab:
-    res = res.replace(QRegularExpression("\\^I"), "    ");//RLZ: change 4 spaces for \t when mtext have support for tab
     // diameter:
     res = res.replace(QRegularExpression("%%[cC]"), QChar(0x2300));//RLZ: Empty_set is 0x2205, diameter is 0x2300 need to add in all fonts
     // degree:
@@ -233,7 +254,7 @@ TEST_CASE("toNativeString: empty and trivial", "[dxf_codec][to_native]") {
 TEST_CASE("toNativeString: each escape decoded", "[dxf_codec][to_native]") {
     requireNativeEqual(QStringLiteral("a\\Pb"));        // \P → \n
     requireNativeEqual(QStringLiteral("a\\~b"));        // \~ → space
-    requireNativeEqual(QStringLiteral("a^Ib"));         // ^I → 4 spaces
+    requireNativeEqual(QStringLiteral("a^Ib"));         // ^I → TAB (caret-decode)
     requireNativeEqual(QStringLiteral("%%c10"));         // %%c → ⌀
     requireNativeEqual(QStringLiteral("%%C10"));         // %%C → ⌀
     requireNativeEqual(QStringLiteral("90%%d"));         // %%d → °

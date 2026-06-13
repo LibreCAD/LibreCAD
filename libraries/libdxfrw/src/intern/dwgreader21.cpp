@@ -36,7 +36,8 @@ bool dwgReader21::readMetaData() {
     previewImagePos = fileBuf->getRawLong32();
     DRW_DBG("previewImagePos (seekerImageData) = "); DRW_DBG(previewImagePos);
     DRW_DBG("\n\napp writer version= "); DRW_DBGH(fileBuf->getRawChar8());
-    DRW_DBG("\napp writer maintenance version= "); DRW_DBGH(fileBuf->getRawChar8());
+    appMaintenanceVersion = fileBuf->getRawChar8(); // byte 0x12 — hSize gate
+    DRW_DBG("\napp writer maintenance version= "); DRW_DBGH(appMaintenanceVersion);
     std::uint16_t cp = fileBuf->getRawShort16();
     DRW_DBG("\ncodepage= "); DRW_DBG(cp);
     if (const char* cpName = dwgCodePageName(cp))
@@ -78,7 +79,8 @@ bool dwgReader21::parseSysPage(std::uint64_t sizeCompressed, std::uint64_t sizeU
         return false;
     }
 
-    return dwgCompressor::decompress21(tmpDataRS.data(), decompData, sizeCompressed, sizeUncompressed);
+    dwgCompressor comp;
+    return comp.decompress21(tmpDataRS.data(), decompData, sizeCompressed, sizeUncompressed);
 }
 
 bool dwgReader21::parseDataPage(const dwgSectionInfo &si, std::uint8_t *dData){
@@ -137,7 +139,8 @@ bool dwgReader21::parseDataPage(const dwgSectionInfo &si, std::uint8_t *dData){
         DRW_DBG("\noffset: ");
         DRW_DBG(static_cast<unsigned long long>(pi.startOffset));
         std::uint8_t *pageData = dData + pi.startOffset;
-        if (!dwgCompressor::decompress21(tmpPageRS.data(), pageData, pi.cSize, pi.uSize)) {
+        dwgCompressor comp;
+        if (!comp.decompress21(tmpPageRS.data(), pageData, pi.cSize, pi.uSize)) {
             return false;
         }
 
@@ -219,8 +222,9 @@ bool dwgReader21::readFileHeader() {
             return false;
         }
         fileHdrData.resize(fileHdrDataLength);
-        if (!dwgCompressor::decompress21(compByteStr.data(), &fileHdrData.front(),
-                                         fileHdrCompLength, fileHdrDataLength)) {
+        dwgCompressor comp;
+        if (!comp.decompress21(compByteStr.data(), &fileHdrData.front(),
+                               fileHdrCompLength, fileHdrDataLength)) {
             return false;
         }
     }

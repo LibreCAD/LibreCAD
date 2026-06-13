@@ -94,6 +94,15 @@ bool dwgReader18::parseSysPage(std::uint8_t *decompSec, std::uint32_t decompSize
         if (!comp.decompress18(tmpCompSec.data(), decompSec, compSize, decompSize)) {
             return false;
         }
+        // System pages (page map, section map) are FIXED-SIZE: the whole
+        // decompSize must be produced. Unlike data pages (input-bounded),
+        // a short fill here means a truncated page map -> reject, rather
+        // than silently walking a partially-zeroed map.
+        if (comp.decompressedBytes() != decompSize) {
+            DRW_DBG("parseSysPage: short decompression (" );
+            DRW_DBG(comp.decompressedBytes()); DRW_DBG(" of "); DRW_DBG(decompSize); DRW_DBG(")\n");
+            return false;
+        }
     }
     return true;
 }
@@ -103,21 +112,116 @@ bool dwgReader18::parseDataPage(const dwgSectionInfo &si/*, std::uint8_t *dData*
     DRW_DBG("\nparseDataPage\n ");
     if (si.size == 0)
         return false;
-    objData.reset(new std::uint8_t[si.size]);
-    std::fill(objData.get(), objData.get() + si.size, 0);
+    // Buffer model (libreDWG read_2004_compressed_section): the decompressed
+    // buffer is num_pages × maxSize ("Max Decompressed Size" from the section
+    // descriptor; 0x7400 in real AutoCAD files) and page k's startOffset is
+    // k × maxSize. Each page decompresses INPUT-BOUNDED (by its compressed
+    // data) with an output window of maxSize at its startOffset. The previous
+    // model — buffer of si.size, output capped at the page header's uSize —
+    // truncated real sections (e.g. the CLASSES string stream lives past
+    // uSize) and rejected multi-page sections whose startOffset (k × 0x7400)
+    // exceeds si.size. libdxfrw's own writer emits maxSize == dataSize with a
+    // single page at offset 0, so for round-trip files this degenerates to
+    // the old sizing.
+    const std::uint64_t pageCap = (si.maxSize != 0) ? si.maxSize : si.size;
+    // Crafted-file hardening. Guard the multiply BEFORE the total-size cap so
+    // a huge pageCount x maxSize descriptor cannot wrap std::uint64_t past the
+    // check. For multi-page geometry (the k x maxSize model of real AutoCAD
+    // files, maxSize normally 0x7400) additionally cap the per-page window at
+    // libreDWG's loosest per-type max; single-page sections keep only the
+    // total cap because libdxfrw's own writer legitimately emits one page with
+    // maxSize == dataSize (which can exceed any per-page bound).
+    constexpr std::uint64_t maxPageCap  = 0x144400;   // libreDWG per-type max
+    constexpr std::uint64_t maxBufSize  = 0x2f000000; // libreDWG total cap
+    if (pageCap == 0 || pageCap > maxBufSize
+        || (si.pages.size() > 1 && pageCap > maxPageCap)
+        || si.pages.size() > maxBufSize / pageCap) {
+        DRW_DBG("parseDataPage: invalid page geometry (pageCap/pageCount)\n");
+        return false;
+    }
+    // ODA p.29: all-zero pages are NOT written to file, so pages.size() counts
+    // only the WRITTEN pages — a section with trailing zero pages needs a
+    // buffer large enough for its declared si.size (rounded up to pageCap), not
+    // just written_pages × pageCap. (No zero-page section exists in the current
+    // corpus, where si.size == written_pages × pageCap, so this is a no-op there.)
+    std::uint64_t bufSize = static_cast<std::uint64_t>(si.pages.size()) * pageCap;
+    const std::uint64_t sizeRounded = ((si.size + pageCap - 1) / pageCap) * pageCap;
+    if (sizeRounded > bufSize && sizeRounded <= maxBufSize)
+        bufSize = sizeRounded;
+    if (bufSize == 0 || bufSize > maxBufSize) {
+        DRW_DBG("parseDataPage: invalid decompression buffer size\n");
+        return false;
+    }
+    objData.reset(new std::uint8_t[bufSize]);
+    std::fill(objData.get(), objData.get() + bufSize, 0);
+    uncompSize = bufSize; // buffer size for section readers' dwgBuffer spans
 
+    // libdxfrw produces AC1018-format data pages even for AC1024/AC1027
+    // (it has no Reed-Solomon ENCODER), whereas real AutoCAD R2010+ files
+    // RS-encode each page. The page format therefore cannot be decided from
+    // the version alone — it must be detected per page. An AC1018-format
+    // compressed data page carries the section-page-type magic 0x4163043b in
+    // its 32-byte (address-keyed, decrypted) header; an RS-encoded page's
+    // first 32 bytes are RS codewords that decrypt to a non-matching value.
+    // So: magic match -> AC1018 decode (libdxfrw's own files + real R2004);
+    // else, for AC1021+, -> Reed-Solomon decode (real R2010+).
+    constexpr std::uint32_t ac18DataPageType = 0x4163043b;
     for (auto it=si.pages.begin(); it!=si.pages.end(); ++it){
         dwgPageInfo pi = it->second;
-        if (pi.startOffset > si.size || pi.dataSize > si.size - pi.startOffset) {
-            DRW_DBG("parseDataPage: page range exceeds section size\n");
-            return false;
-        }
         if (!fileBuf->setPosition(pi.address))
             return false;
-        //decript section header
         std::uint8_t hdrData[32];
-        fileBuf->getBytes(hdrData, 32);
+        if (!fileBuf->getBytes(hdrData, 32))
+            return false;
         dwgCompressor::decrypt18Hdr(hdrData, 32, pi.address);
+        std::uint32_t pageType = static_cast<std::uint32_t>(hdrData[0])
+                            | (static_cast<std::uint32_t>(hdrData[1]) << 8)
+                            | (static_cast<std::uint32_t>(hdrData[2]) << 16)
+                            | (static_cast<std::uint32_t>(hdrData[3]) << 24);
+
+        if (pageType != ac18DataPageType) {
+            // Not an AC1018 page. For AC1021+ this is a Reed-Solomon-encoded
+            // page (real AutoCAD R2010+); decode the whole page then
+            // decompress21. (Pre-AC1021 has no other page format -> error.)
+            if (version < DRW::AC1021) {
+                DRW_DBG("parseDataPage: bad page type "); DRW_DBGH(pageType); DRW_DBG("\n");
+                return false;
+            }
+            if (pi.startOffset > bufSize || pi.uSize > bufSize - pi.startOffset) {
+                DRW_DBG("parseDataPage (AC1021+): page range exceeds buffer size\n");
+                return false;
+            }
+            if (pi.size > fileBuf->size()
+                || pi.address > fileBuf->size() - pi.size) {
+                DRW_DBG("parseDataPage (AC1021+): page extends past end of file\n");
+                return false;
+            }
+            if (!fileBuf->setPosition(pi.address))
+                return false;
+            std::vector<std::uint8_t> tmpPageRaw(pi.size);
+            if (!fileBuf->getBytes(&tmpPageRaw.front(), pi.size)) {
+                DRW_DBG("parseDataPage (AC1021+): short read of page data\n");
+                return false;
+            }
+            std::vector<std::uint8_t> tmpPageRS(pi.size);
+            std::uint32_t chunks = pi.size / 255;
+            if (!dwgRSCodec::decode251I(tmpPageRaw.data(), tmpPageRS.data(), chunks)) {
+                DRW_DBG("parseDataPage (AC1021+): RS decode failed\n");
+                return false;
+            }
+            std::uint8_t *pageData = objData.get() + pi.startOffset;
+            dwgCompressor comp;
+            if (!comp.decompress21(tmpPageRS.data(), pageData, pi.cSize, pi.uSize)) {
+                return false;
+            }
+            continue;
+        }
+
+        // ---- AC1018 page format: 32-byte encrypted header + compressed data ----
+        if (pi.startOffset > bufSize || pageCap > bufSize - pi.startOffset) {
+            DRW_DBG("parseDataPage: page range exceeds buffer size\n");
+            return false;
+        }
         DRW_DBG("Section  "); DRW_DBG(si.name); DRW_DBG(" page header=\n");
         for (unsigned int i=0, j=0; i< 32;i++) {
             DRW_DBGH( static_cast<unsigned char>(hdrData[i]));
@@ -155,7 +259,10 @@ bool dwgReader18::parseDataPage(const dwgSectionInfo &si/*, std::uint8_t *dData*
         DRW_DBG("\n      data checksum= "); DRW_DBGH(bufHdr.getRawLong32()); DRW_DBG("\n");
 
         //get compressed data
-        if (pi.address > UINT64_MAX - 32 || pi.cSize > pi.size) {
+        if (pi.address > UINT64_MAX - 32 || pi.cSize > pi.size
+            || pi.cSize > fileBuf->size()
+            || pi.address + 32 + pi.cSize > fileBuf->size()) {
+            DRW_DBG("parseDataPage: compressed page extends past end of file\n");
             return false;
         }
         std::vector<std::uint8_t> cData(pi.cSize);
@@ -189,29 +296,30 @@ bool dwgReader18::parseDataPage(const dwgSectionInfo &si/*, std::uint8_t *dData*
             return false;
         }
 
-        if (headerStartOffset != pi.startOffset || pi.uSize > si.size - pi.startOffset) {
-            DRW_DBG("parseDataPage: decompressed page range exceeds section size\n");
+        if (headerStartOffset != pi.startOffset) {
+            DRW_DBG("parseDataPage: page header start offset mismatch\n");
             return false;
         }
-        if (pi.dataSize != 0 && pi.uSize > pi.dataSize) {
-            DRW_DBG("parseDataPage: decompressed page size exceeds declared page data size\n");
-            return false;
-        }
+        // Decompress input-bounded (the page's compressed bytes) with an
+        // output window of pageCap at the page's startOffset — libreDWG's
+        // dec.byte = address; dec.size = dec.byte + max_decomp_size. The page
+        // header's uSize is NOT the real content limit: the actual content
+        // can extend past it up to maxSize (e.g. the CLASSES string stream).
         std::uint8_t* oData = objData.get() + pi.startOffset;
         if (si.compressed == 1) {
             // type 1 = store (no compression)
-            if (cData.size() != pi.uSize) {
-                return false;
-            }
-            std::copy(cData.begin(), cData.end(), oData);
+            const std::uint64_t copyLen =
+                static_cast<std::uint64_t>(cData.size()) < pageCap
+                    ? static_cast<std::uint64_t>(cData.size()) : pageCap;
+            std::copy(cData.begin(), cData.begin() + copyLen, oData);
         } else {
             DRW_DBG("decompressing ");
             DRW_DBG(static_cast<unsigned long long>(pi.cSize));
-            DRW_DBG(" bytes in ");
-            DRW_DBG(static_cast<unsigned long long>(pi.uSize));
+            DRW_DBG(" bytes, window ");
+            DRW_DBG(static_cast<unsigned long long>(pageCap));
             DRW_DBG(" bytes\n");
             dwgCompressor comp;
-            if (!comp.decompress18(cData.data(), oData, pi.cSize, pi.uSize)) {
+            if (!comp.decompress18(cData.data(), oData, pi.cSize, pageCap)) {
                 return false;
             }
         }
@@ -231,7 +339,8 @@ bool dwgReader18::readMetaData() {
     previewImagePos = fileBuf->getRawLong32(); //+ page header size (0x20).
     DRW_DBG("\npreviewImagePos (seekerImageData) = "); DRW_DBG(previewImagePos);
     DRW_DBG("\napp Dwg version= "); DRW_DBGH(fileBuf->getRawChar8()); DRW_DBG(", ");
-    DRW_DBG("\napp maintenance version= "); DRW_DBGH(fileBuf->getRawChar8());
+    appMaintenanceVersion = fileBuf->getRawChar8(); // byte 0x12 — hSize gate
+    DRW_DBG("\napp maintenance version= "); DRW_DBGH(appMaintenanceVersion);
     std::uint16_t cp = fileBuf->getRawShort16();
     DRW_DBG("\ncodepage= "); DRW_DBG(cp);
     if (const char* cpName = dwgCodePageName(cp))
@@ -468,9 +577,9 @@ bool dwgReader18::readDwgHeader(DRW_Header& hdr){
         return false;
     bool ret = parseDataPage(si/*, objData*/);
     //global store for uncompressed data of all pages
-    uncompSize=si.size;
+    // uncompSize set by parseDataPage (num_pages x maxSize buffer model)
     if (ret) {
-        dwgBuffer dataBuf(objData.get(), si.size, &decoder);
+        dwgBuffer dataBuf(objData.get(), uncompSize, &decoder);
         DRW_DBG("Header section sentinel= ");
         checkSentinel(&dataBuf, secEnum::HEADER, true);
         if (version == DRW::AC1018){
@@ -496,7 +605,7 @@ bool dwgReader18::readDwgClasses(){
     }
 
     //global store for uncompressed data of all pages
-    uncompSize=si.size;
+    // uncompSize set by parseDataPage (num_pages x maxSize buffer model)
     dwgBuffer dataBuf(objData.get(), uncompSize, &decoder);
 
     DRW_DBG("classes section sentinel= ");
@@ -504,7 +613,7 @@ bool dwgReader18::readDwgClasses(){
 
     std::uint32_t size = dataBuf.getRawLong32();
     DRW_DBG("\ndata size in bytes "); DRW_DBG(size);
-    if ((DRW::AC1024 <= version && 3 < maintenanceVersion)
+    if ((DRW::AC1024 <= version && 3 < appMaintenanceVersion)
         || DRW::AC1032 <= version) { //2010+ MV>3
         std::uint32_t hSize = dataBuf.getRawLong32();
         DRW_DBG("\n2010+ & MV> 3, height 32b: "); DRW_DBG(hSize);
@@ -537,10 +646,10 @@ bool dwgReader18::readDwgClasses(){
         strBuf = &strBuff;
         //byte offset to the bit-stream start: 16 (start sentinel) + 4 (size)
         //+ 4 (hSize, only when read) = 20 or 24 bytes. -1 bit for the endBit.
-        //The hSize gating must match the read-side gate at lines 458-462,
-        //otherwise AC1024 RTM files (maintenanceVersion <= 3) misalign by
+        //The hSize gating must match the size-read gate above (line ~598),
+        //otherwise AC1024 RTM files (appMaintenanceVersion <= 3) misalign by
         //32 bits and fail BAD_READ_CLASSES.
-        bool hasHSize = ((DRW::AC1024 <= version && 3 < maintenanceVersion)
+        bool hasHSize = ((DRW::AC1024 <= version && 3 < appMaintenanceVersion)
                          || DRW::AC1032 <= version);
         std::uint32_t strStartPos = bitSize + (hasHSize ? 191 : 159);
         DRW_DBG("\nstrStartPos: "); DRW_DBG(strStartPos);
@@ -643,7 +752,7 @@ bool dwgReader18::readDwgHandles() {
     }
 
     //global store for uncompressed data of all pages
-    uncompSize=si.size;
+    // uncompSize set by parseDataPage (num_pages x maxSize buffer model)
     dwgBuffer dataBuf(objData.get(), uncompSize, &decoder);
 
     bool ret {dwgReader::readDwgHandles(&dataBuf, 0, si.size)};
@@ -673,7 +782,7 @@ bool dwgReader18::readDwgTables(DRW_Header& hdr) {
     }
 
     //global store for uncompressed data of all pages
-    uncompSize=si.size;
+    // uncompSize set by parseDataPage (num_pages x maxSize buffer model)
     dwgBuffer dataBuf(objData.get(), uncompSize, &decoder);
 
     //Do not delete objData in this point, needed in the remaining code
@@ -687,7 +796,7 @@ bool dwgReader18::readDwgTables(DRW_Header& hdr) {
     // Restore OBJECTS data after raw-section capture, which reuses objData.
     if (!parseDataPage(si))
         return false;
-    uncompSize = si.size;
+    // uncompSize set by parseDataPage (num_pages x maxSize buffer model)
     return true;
 }
 

@@ -52,35 +52,42 @@ public:
     bool decompress18(std::uint8_t *cbuf, std::uint8_t *dbuf, std::uint64_t csize, std::uint64_t dsize);
     static void decrypt18Hdr(std::uint8_t *buf, std::uint64_t size, std::uint64_t offset);
 //    static void decrypt18Data(std::uint8_t *buf, std::uint32_t size, std::uint32_t offset);
-    static bool decompress21(std::uint8_t *cbuf, std::uint8_t *dbuf, std::uint64_t csize, std::uint64_t dsize);
+    bool decompress21(std::uint8_t *cbuf, std::uint8_t *dbuf, std::uint64_t csize, std::uint64_t dsize);
+
+    // Number of decompressed bytes produced by the last decompress18/21 call.
+    // Callers of fixed-size pages (parseSysPage) require an exact-window fill;
+    // data pages are input-bounded so a partial fill is normal.
+    std::uint32_t decompressedBytes() const { return decompPos; }
 
 private:
     std::uint32_t litLength18();
-    static std::uint32_t litLength21(std::uint8_t opCode);
-    static bool copyCompBytes21(std::uint32_t length);
-    static void readInstructions21(std::uint8_t &opCode, std::uint32_t &sourceOffset, std::uint32_t &length);
+    std::uint32_t litLength21(std::uint8_t opCode);
+    bool copyCompBytes21(std::uint32_t length);
+    void readInstructions21(std::uint8_t &opCode, std::uint32_t &sourceOffset, std::uint32_t &length);
 
     std::uint32_t longCompressionOffset();
     std::uint32_t long20CompressionOffset();
     std::uint32_t twoByteOffset(std::uint32_t *ll);
 
-    static std::uint8_t compressedByte(void);
-    static std::uint8_t compressedByte(const std::uint32_t index);
-    static std::uint32_t compressedHiByte(void);
-    static bool compressedInc(const std::int32_t inc = 1);
-    static std::uint8_t decompByte(const std::uint32_t index);
-    static void decompSet(const std::uint8_t value);
-    static bool buffersGood(void);
-    static void copyBlock21(const std::uint32_t length);
+    std::uint8_t compressedByte(void);
+    std::uint8_t compressedByte(const std::uint32_t index);
+    std::uint32_t compressedHiByte(void);
+    bool compressedInc(const std::int32_t inc = 1);
+    std::uint8_t decompByte(const std::uint32_t index);
+    void decompSet(const std::uint8_t value);
+    bool buffersGood(void);
+    void copyBlock21(const std::uint32_t length);
 
-    static std::uint8_t *compressedBuffer;
-    static std::uint32_t compressedSize;
-    static std::uint32_t compressedPos;
-    static bool    compressedGood;
-    static std::uint8_t *decompBuffer;
-    static std::uint32_t decompSize;
-    static std::uint32_t decompPos;
-    static bool    decompGood;
+    // Decode state — instance members (formerly static, which made decompress
+    // non-reentrant and was a verbose/non-verbose nondeterminism hazard).
+    std::uint8_t *compressedBuffer{nullptr};
+    std::uint32_t compressedSize{0};
+    std::uint32_t compressedPos{0};
+    bool    compressedGood{true};
+    std::uint8_t *decompBuffer{nullptr};
+    std::uint32_t decompSize{0};
+    std::uint32_t decompPos{0};
+    bool    decompGood{true};
 
     static const std::uint8_t CopyOrder21_01[];
     static const std::uint8_t CopyOrder21_02[];

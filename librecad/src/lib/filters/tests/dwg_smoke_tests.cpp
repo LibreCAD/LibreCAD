@@ -4537,3 +4537,59 @@ TEST_CASE("DWG ACAD_TABLE entities render through anonymous table blocks") {
   CHECK(iface.tableCellContents >= 1);
   CHECK(iface.tableTextContents >= 1);
 }
+
+// ── R2004+ section buffer-model regression pins (deep-review 2026-06-12) ──────
+// These pin the num_pages x maxSize input-bounded buffer model that unlocked
+// R2004/R2010/R2013 reads. They depend on the dwg_samples corpus and skip
+// gracefully when it is absent (the fixtures are not committed).
+namespace {
+bool readSample(const char* file, DwgResult& out) {
+  const char* home = std::getenv("HOME");
+  if (!home) return false;
+  const std::string path = std::string(home) + "/dev/dwg_samples/" + file;
+  if (!std::filesystem::exists(path)) return false;
+  out = readDwg(path, /*verbose=*/false);
+  return true;
+}
+}  // namespace
+
+TEST_CASE("DWG R2004 multi-page section (AcDbObjects at 3 x 0x7400) reads",
+          "[dwg][r2004][buffermodel]") {
+  // arc_2004's AcDbObjects page sits at startOffset 0x15C00 == 3 x 0x7400, so a
+  // load that yields entities proves the multi-page (k x maxSize) buffer model.
+  DwgResult r;
+  if (!readSample("arc_2004.dwg", r)) {
+    SUCCEED("~/dev/dwg_samples/arc_2004.dwg absent; skipping multi-page pin");
+    return;
+  }
+  CHECK(r.error == DRW::BAD_NONE);
+  CHECK(r.version == DRW::AC1018);
+  CHECK(r.entities >= 1);
+}
+
+TEST_CASE("DWG R2010 CLASSES content past page uSize decodes",
+          "[dwg][r2010][buffermodel]") {
+  // arc_2010's CLASSES string stream lives past the page-header uSize (992);
+  // a successful read with entities proves the output window is maxSize, not
+  // uSize (the old uSize cap zeroed the string stream -> BAD_READ_CLASSES).
+  DwgResult r;
+  if (!readSample("arc_2010.dwg", r)) {
+    SUCCEED("~/dev/dwg_samples/arc_2010.dwg absent; skipping past-uSize pin");
+    return;
+  }
+  CHECK(r.error == DRW::BAD_NONE);
+  CHECK(r.version == DRW::AC1024);
+  CHECK(r.entities >= 1);
+}
+
+TEST_CASE("DWG R2013 reads (dwgReader27 inherits the buffer-model fixes)",
+          "[dwg][r2013][buffermodel]") {
+  DwgResult r;
+  if (!readSample("arc_2013.dwg", r)) {
+    SUCCEED("~/dev/dwg_samples/arc_2013.dwg absent; skipping R2013 pin");
+    return;
+  }
+  CHECK(r.error == DRW::BAD_NONE);
+  CHECK(r.version == DRW::AC1027);
+  CHECK(r.entities >= 1);
+}

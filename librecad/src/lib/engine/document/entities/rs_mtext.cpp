@@ -604,7 +604,13 @@ void RS_MText::update() {
       if (static_cast<int>(data.text.length()) <= i) {
         continue;
       }
-      std::uint32_t ch{data.text.toUcs4().at(i)};
+      // `i` is a UTF-16 code-unit index into data.text; index the QString
+      // directly. The previous `data.text.toUcs4().at(i)` indexed a UCS-4
+      // array with a UTF-16 offset — out of bounds / wrong codepoint once any
+      // non-BMP (surrogate-pair) char precedes `i`. All inner cases below are
+      // ASCII ('P','f','F','S'), so a BMP code unit is sufficient and a
+      // non-BMP unit correctly falls to default (--i).
+      char16_t ch{data.text.at(i).unicode()};
       switch (ch) {
       case 'P':
         closeLine();

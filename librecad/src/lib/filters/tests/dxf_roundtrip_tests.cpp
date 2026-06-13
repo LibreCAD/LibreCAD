@@ -44,6 +44,8 @@
 #include "lc_dwgadvancedmetadata.h"
 #include "rs_filterdxfrw.h"
 #include "rs_graphic.h"
+#include "rs_entity.h"
+#include "rs_layer.h"
 #include "rs_settings.h"
 
 namespace {
@@ -1102,4 +1104,45 @@ TEST_CASE("DXF MESH round-trips losslessly via the raw net (real geometry)",
   CHECK(meshVertexCount(graphic2.dwgAdvancedMetadata()) == 8);  // survives DXF->DXF
   std::filesystem::remove(src);
   std::filesystem::remove(out);
+}
+
+// Regression for the i18n layer-name fix: a layer name is an identifier, not
+// MTEXT content, so it must NOT be run through toNativeString (which would
+// caret-decode "^I" -> TAB). Before the fix, setEntityAttributes decoded the
+// entity's layer name to "A<TAB>B" while addLayer stored the raw "A^IB",
+// orphaning the entity from its own layer record.
+TEST_CASE("DXF import preserves a caret-bearing layer name verbatim",
+          "[dxf][roundtrip][filter][i18n]") {
+  ensureSettings();
+  const std::string src = tmpFile("caretlayer.dxf");
+  std::filesystem::remove(src);
+
+  // A LINE whose layer (group 8) is the literal identifier "A^IB". The layer
+  // is auto-created by setEntityAttributes (no LAYER table entry needed).
+  const std::string dxf =
+      "0\nSECTION\n2\nENTITIES\n"
+      "0\nLINE\n8\nA^IB\n10\n0.0\n20\n0.0\n30\n0.0\n11\n10.0\n21\n10.0\n31\n0.0\n"
+      "0\nENDSEC\n0\nEOF\n";
+  writeText(src, dxf);
+
+  RS_Graphic graphic;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(src),
+                              RS2::FormatDXFRW));
+  }
+
+  // The layer must exist under the verbatim name, and NOT under the
+  // caret-decoded form.
+  CHECK(graphic.findLayer(QStringLiteral("A^IB")) != nullptr);
+  CHECK(graphic.findLayer(QStringLiteral("A\tB")) == nullptr);
+
+  // The imported entity must resolve to that same layer (not be orphaned).
+  RS_Entity *first = graphic.firstEntity();
+  REQUIRE(first != nullptr);
+  RS_Layer *layer = first->getLayer();
+  REQUIRE(layer != nullptr);
+  CHECK(layer->getName() == QStringLiteral("A^IB"));
+
+  std::filesystem::remove(src);
 }

@@ -42,6 +42,24 @@ public:
 /// ids so the caller keeps the ANSI_1252 default (no worse than before).
 const char* dwgCodePageName(std::uint16_t cp);
 
+/// Inverse of dwgCodePageName(): map a DRW_TextCodec ANSI codepage name to
+/// the DWG file-header codepage integer used on disk. Returns 30 (ANSI_1252)
+/// for `nullptr`, the literal "ANSI_1252", or any name not in the round-trip
+/// set. Used by writers to emit the codepage byte at the file-header offset
+/// matching the reader's expected offset.
+std::uint16_t dwgCodePageId(const char* name);
+
+/// Decode an EED-attached pre-R2007 string from its source codepage to UTF-8.
+/// `cp` is the DWG codepage integer carried per-EED-string (ODA DWG spec §28
+/// "RS_BE codepage"). When `cp` resolves via dwgCodePageName(), build a
+/// temporary AC1015-bound DRW_TextCodec for that codepage and decode through
+/// it. Otherwise fall back to the file-level @p fallback decoder. Empty input
+/// returns empty. R2007+ entity-EED strings are UTF-16LE and bypass this
+/// helper entirely (caller handles them inline).
+std::string decodeEedString(std::uint16_t cp,
+                            const std::string& raw,
+                            DRW_TextCodec* fallback);
+
 //until 2000 = 2000-
 //since 2004 except 2007 = 2004+
 // 2007 = 2007
@@ -243,6 +261,13 @@ public:
     std::unordered_map<std::uint32_t, std::vector<std::shared_ptr<DRW_Attrib>>> m_orphanAttribs;
 //    std::uint32_t currBlock;
     std::uint8_t maintenanceVersion{0};
+    // Application maintenance release version (file-header byte 0x12). This —
+    // NOT maintenanceVersion (byte 0x0B, the "maintenance release version") —
+    // is the field that gates the R2010+ hSize/bitsize_hi reads (libreDWG
+    // calls byte 0x0B `is_maint` and reads its gate field `maint_version` from
+    // 0x12). On ODA-converted files both bytes are > 3 so the distinction is
+    // invisible, but genuine AutoCAD RTM files can have 0x0B <= 3 with 0x12 > 3.
+    std::uint8_t appMaintenanceVersion{0};
 
 protected:
     std::unique_ptr<dwgBuffer> fileBuf;

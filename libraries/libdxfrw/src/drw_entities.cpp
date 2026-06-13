@@ -25,6 +25,7 @@
 #include "intern/drw_textcodec.h"
 #include "intern/drw_dbg.h"
 #include "intern/drw_reserve.h"
+#include "intern/dwgreader.h"
 
 namespace {
 
@@ -1151,11 +1152,10 @@ bool DRW_Entity::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer* strBu
                     if (tmpExtDataBuf.numRemainingBytes() < 3) break;
                     std::uint8_t strLength = tmpExtDataBuf.getRawChar8();
                     std::uint16_t cp = tmpExtDataBuf.getBERawShort16();
-                    (void)cp; //per-string codepage hint dropped; file-level codec used
                     if (strLength > 0 && tmpExtDataBuf.numRemainingBytes() >= strLength) {
                         std::string raw(strLength, '\0');
                         tmpExtDataBuf.getBytes(reinterpret_cast<std::uint8_t*>(&raw[0]), strLength);
-                        s = tmpExtDataBuf.decoder ? tmpExtDataBuf.decoder->toUtf8(raw) : raw;
+                        s = decodeEedString(cp, raw, tmpExtDataBuf.decoder);
                     }
                     //consume the optional trailing NUL terminator if present
                     if (tmpExtDataBuf.numRemainingBytes() > 0) {

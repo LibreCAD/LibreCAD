@@ -359,8 +359,8 @@ void dwgBufferW::putCP8Text(const std::string& utf8) {
 }
 
 void dwgBufferW::putUCSText(const std::string& utf8) {
-    // Convert UTF-8 to UTF-16LE code units (BMP only — sufficient for
-    // printable ASCII + Latin-1 content found in typical DWG files).
+    // Convert UTF-8 to UTF-16LE code units. BMP codepoints emit one unit;
+    // astral codepoints (U+10000..U+10FFFF) emit a surrogate pair.
     std::vector<std::uint16_t> units;
     for (size_t i = 0; i < utf8.size(); ) {
         unsigned char c = static_cast<unsigned char>(utf8[i]);
@@ -376,6 +376,12 @@ void dwgBufferW::putUCSText(const std::string& utf8) {
             cp = (cp << 6) | (static_cast<unsigned char>(utf8[i+1]) & 0x3F);
             cp = (cp << 6) | (static_cast<unsigned char>(utf8[i+2]) & 0x3F);
             i += 3;
+        } else if ((c & 0xF8) == 0xF0 && i + 3 < utf8.size()) {
+            cp = (c & 0x07);
+            cp = (cp << 6) | (static_cast<unsigned char>(utf8[i+1]) & 0x3F);
+            cp = (cp << 6) | (static_cast<unsigned char>(utf8[i+2]) & 0x3F);
+            cp = (cp << 6) | (static_cast<unsigned char>(utf8[i+3]) & 0x3F);
+            i += 4;
         } else {
             cp = '?'; ++i;  // replacement for malformed input
         }

@@ -56,6 +56,45 @@ const char* dwgCodePageName(std::uint16_t cp) {
     }
 }
 
+std::uint16_t dwgCodePageId(const char* name) {
+    if (name == nullptr) return 30;
+    // Round-trip set: map back exactly the names dwgCodePageName() emits.
+    // 31 (GB2312) and 39 both resolve to "ANSI_936"; pick 39 (Simplified
+    // Chinese / GBK superset) for the inverse direction.
+    const std::string n(name);
+    if (n == "ANSI_1250") return 28;
+    if (n == "ANSI_1251") return 29;
+    if (n == "ANSI_1252") return 30;
+    if (n == "ANSI_1253") return 32;
+    if (n == "ANSI_1254") return 33;
+    if (n == "ANSI_1255") return 34;
+    if (n == "ANSI_1256") return 35;
+    if (n == "ANSI_1257") return 36;
+    if (n == "ANSI_874")  return 37;
+    if (n == "ANSI_932")  return 38;
+    if (n == "ANSI_936")  return 39;
+    if (n == "ANSI_949")  return 40;
+    if (n == "ANSI_950")  return 41;
+    if (n == "ANSI_1258") return 44;
+    return 30; // fallback
+}
+
+std::string decodeEedString(std::uint16_t cp,
+                            const std::string& raw,
+                            DRW_TextCodec* fallback) {
+    if (raw.empty())
+        return std::string{};
+    if (const char* name = dwgCodePageName(cp)) {
+        // Build an AC1015-bound codec so setCodePage() selects the table
+        // converter for `name` (the AC1021+ branch would pick UTF-16 instead).
+        DRW_TextCodec codec;
+        codec.setVersion(DRW::AC1015, /*dxfFormat=*/false);
+        codec.setCodePage(name, /*dxfFormat=*/false);
+        return codec.toUtf8(raw);
+    }
+    return fallback ? fallback->toUtf8(raw) : raw;
+}
+
 dwgReader::~dwgReader() {
     mapCleanUp(ltypemap);
     mapCleanUp(layermap);
@@ -157,7 +196,9 @@ std::string dwgReader::findTableName(DRW::TTYPE table, std::int32_t handle){
 }
 
 bool dwgReader::readDwgHeader(DRW_Header& hdr, dwgBuffer *buf, dwgBuffer *hBuf){
-    bool ret = hdr.parseDwg(version, buf, hBuf, maintenanceVersion);
+    // The R2010+ bitsize_hi gate inside parseDwg keys off the APP maintenance
+    // version (byte 0x12), not byte 0x0B — see appMaintenanceVersion in dwgreader.h.
+    bool ret = hdr.parseDwg(version, buf, hBuf, appMaintenanceVersion);
     //RLZ: copy objectControl handles
     return ret;
 }

@@ -1786,6 +1786,9 @@ if(BUILD_TESTS)
         librecad/src/lib/filters/tests/dxf_object_tests.cpp
         librecad/src/lib/filters/tests/dxf_roundtrip_tests.cpp
         librecad/src/lib/filters/tests/dxf_corpus_tests.cpp
+        librecad/src/lib/filters/tests/i18n_codec_tests.cpp
+        librecad/src/lib/filters/tests/i18n_caret_nfc_tests.cpp
+        librecad/src/lib/filters/tests/dwg_decompress18_tests.cpp
         librecad/src/lib/engine/settings/tests/rs_settings_migration_tests.cpp
     )
 

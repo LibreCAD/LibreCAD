@@ -79,7 +79,21 @@ QString decodeWithCodePage(const std::string& text, const QString& encoding)
         return codec->toUnicode(text.c_str());
     }
 #endif
-    return QString::fromStdString(text);
+    // The requested codec is unavailable. JWW is a Japanese format whose
+    // file bytes are Shift-JIS — falling through to `fromStdString` (which
+    // is `fromUtf8` on Qt 6) would mojibake any non-ASCII content. Try
+    // Shift-JIS explicitly before giving up.
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    if (auto sjis = QStringConverter::encodingForName("Shift-JIS")) {
+        QStringDecoder dec{*sjis};
+        return dec(QByteArray::fromRawData(text.data(), qsizetype(text.size())));
+    }
+#else
+    if (QTextCodec* sjis = QTextCodec::codecForName("Shift-JIS")) {
+        return sjis->toUnicode(text.c_str());
+    }
+#endif
+    return QString::fromUtf8(text.data(), qsizetype(text.size()));
 }
 }
 
