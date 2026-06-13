@@ -1005,8 +1005,13 @@ bool dwgReader::walkBlockRecordEntities(DRW_Block_Record* bkr, dwgBuffer *dbuf, 
         while (nextH != 0) {
             auto mit = ObjectMap.find(nextH);
             if (mit == ObjectMap.end()) {
+                // A broken/garbage nextEntLink at the chain end (common in real
+                // R13–R2000 files) must NOT fail the BLOCKS section: the
+                // remaining entities still sit in ObjectMap and are recovered by
+                // the subsequent readDwgEntities sweep. Treat as a soft warning
+                // (libreDWG parity) — stop chasing this chain but keep ret true.
                 DRW_DBG("\nWARNING: Entity of block not found\n");
-                ret = false;
+                ++m_entityParseFailures;
                 break;
             }
             oc = mit->second;
@@ -1022,8 +1027,11 @@ bool dwgReader::walkBlockRecordEntities(DRW_Block_Record* bkr, dwgBuffer *dbuf, 
             std::uint32_t nextH = *it;
             auto mit = ObjectMap.find(nextH);
             if (mit == ObjectMap.end()) {
+                // Soft warning, not a section failure (libreDWG parity): a
+                // missing entMap handle is recovered by the readDwgEntities
+                // sweep. See the pre-2004 branch above for the rationale.
                 DRW_DBG("\nWARNING: Entity of block not found\n");
-                ret = false;
+                ++m_entityParseFailures;
                 continue;
             }
             oc = mit->second;

@@ -35,7 +35,6 @@
 #include <cmath>
 #include <cstring>
 #include <filesystem>
-#include <fstream>
 #include <iomanip>
 #include <iostream>
 #include <map>
@@ -4592,4 +4591,42 @@ TEST_CASE("DWG R2013 reads (dwgReader27 inherits the buffer-model fixes)",
   CHECK(r.error == DRW::BAD_NONE);
   CHECK(r.version == DRW::AC1027);
   CHECK(r.entities >= 1);
+}
+
+// Regression pin for the pre-2004 (R13/R14/R2000) BLOCKS-walk fix: a broken
+// nextEntLink at the *Model_Space chain end used to set ret=false and report
+// BAD_READ_BLOCKS even though every drawable entity was delivered (recovered
+// by the readDwgEntities sweep). The canonical libdxfrw sample files
+// example_r13/r14/2000.dwg + TS1.dwg all tripped it; libreDWG reads them fine.
+// Fixtures live in ~/doc/dwg{,2,3} (not committed) -> skip gracefully if absent.
+TEST_CASE("DWG R13/R14/R2000 sample files read OK (BLOCKS-walk regression)",
+          "[dwg][r2000][blockswalk]") {
+  const char* home = std::getenv("HOME");
+  if (!home) { SUCCEED("no HOME"); return; }
+  struct Want { const char* file; DRW::Version ver; };
+  const Want wants[] = {
+    {"example_r13.dwg",  DRW::AC1012},
+    {"example_r14.dwg",  DRW::AC1014},
+    {"example_2000.dwg", DRW::AC1015},
+    {"TS1.dwg",          DRW::AC1015},
+  };
+  int checked = 0;
+  for (const Want& w : wants) {
+    std::string path;
+    for (const std::string& dir : {std::string(home) + "/doc/dwg",
+                                   std::string(home) + "/doc/dwg2",
+                                   std::string(home) + "/doc/dwg3"}) {
+      std::string cand = dir + "/" + w.file;
+      if (std::filesystem::exists(cand)) { path = cand; break; }
+    }
+    if (path.empty()) continue;
+    ++checked;
+    DwgResult r = readDwg(path, /*verbose=*/false);
+    INFO(w.file);
+    CHECK(r.error == DRW::BAD_NONE);   // was BAD_READ_BLOCKS before the fix
+    CHECK(r.version == w.ver);
+    CHECK(r.entities >= 1);
+  }
+  if (checked == 0)
+    SUCCEED("~/doc/dwg{,2,3} canonical samples absent; skipping BLOCKS-walk pin");
 }
