@@ -255,6 +255,14 @@ bool dwgRW::write(DRW_Interface *interface_, DRW::Version ver, bool bin) {
     else
         writer = std::make_unique<dwgWriter15>(&filestr, &header);
 
+    // Seed caller-reserved handles into the writer's HandleAllocator BEFORE
+    // any defineBlock()/next() mint (writeBlocks runs below).  Without this a
+    // block-record handle minted from 0x30 can collide with a fixed-type
+    // OBJECT's preserved low handle → duplicate object-map entry →
+    // writeDwgHandles() fails → BAD_OPEN aborts the whole save. (P3 #1)
+    for (std::uint32_t h : m_reservedHandles)
+        writer->reserveHandle(h);
+
     iface->writeDwgClasses();
 
     // If the caller did not set HANDSEED explicitly, seed it from the

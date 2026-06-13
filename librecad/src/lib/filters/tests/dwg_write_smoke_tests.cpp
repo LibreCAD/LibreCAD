@@ -2469,6 +2469,62 @@ TEST_CASE("dwgRW writes and reads DICTIONARY metadata",
     }
 }
 
+// Reproduction + fix for the P3 #1 handle-collision save-abort. A user block
+// (defineBlock mints handles starting at 0x30) plus a fixed-type OBJECT that
+// carries a preserved low handle equal to a minted block handle yields a
+// duplicate object-map entry -> writeDwgHandles() fails -> BAD_OPEN aborts the
+// whole save. dwgRW::reserveHandle() reserves the preserved handle BEFORE
+// writeBlocks so defineBlock mints past it.
+class BlockDictCollisionIface : public EmptyIface {
+public:
+    dwgRW *m_writer {nullptr};
+    std::uint32_t m_dictHandle {0x30u};  // == defineBlock's first mint
+    void writeBlocks() override {
+        if (m_writer != nullptr)
+            m_writer->defineBlock("COLLIDE", DRW_Coord{0.0, 0.0, 0.0});
+    }
+    void writeObjects() override {
+        if (m_writer == nullptr)
+            return;
+        DRW_Dictionary d;
+        d.handle = m_dictHandle;
+        d.parentHandle = 0xCu;
+        DRW_Dictionary::Entry e;
+        e.m_name = "ACAD_GROUP";
+        e.m_handle = 0x7A2u;
+        d.m_entries.push_back(e);
+        // Deliberately NOT REQUIRE: the duplicate is caught later in
+        // writeDwgHandles(), so the collision surfaces in write()'s return.
+        m_writer->writeDictionary(&d);
+    }
+};
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("dwgRW::reserveHandle prevents the block/object handle-collision abort",
+          "[dwg-write][reserve]") {
+    // (a) WITHOUT reserve: defineBlock mints 0x30 (blockRecH); the DICTIONARY's
+    //     preserved handle 0x30 duplicates it -> writeDwgHandles fails -> BAD_OPEN.
+    {
+        const std::string path = tempPath("reserve_collision_a.dwg");
+        dwgRW writer(path.c_str());
+        BlockDictCollisionIface iface;
+        iface.m_writer = &writer;
+        CHECK_FALSE(writer.write(&iface, DRW::AC1015, /*bin=*/false));
+        std::remove(path.c_str());
+    }
+    // (b) WITH reserve: reserving 0x30 up front makes defineBlock mint 0x31, so
+    //     the DICTIONARY's 0x30 no longer collides -> the save succeeds.
+    {
+        const std::string path = tempPath("reserve_collision_b.dwg");
+        dwgRW writer(path.c_str());
+        BlockDictCollisionIface iface;
+        iface.m_writer = &writer;
+        writer.reserveHandle(0x30u);
+        CHECK(writer.write(&iface, DRW::AC1015, /*bin=*/false));
+        std::remove(path.c_str());
+    }
+}
+
 // NOLINTNEXTLINE(readability-identifier-naming)
 TEST_CASE("dwgRW writes and reads XRECORD metadata",
           "[dwg-write][xrecord]") {

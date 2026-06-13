@@ -5366,6 +5366,32 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic& g, const QString& file, RS2::FormatT
         m_version = (dwgVer == DRW::AC1018) ? 1018 : 1015;
         m_exactColor = false;
         m_dwgW = new dwgRW(QFile::encodeName(file).constData());
+        // P3 #1: reserve every preserved fixed-type OBJECT + raw-object handle
+        // BEFORE write() so defineBlock() (which mints user-block handles from
+        // 0x30) can never mint a handle a later object re-emits -> no duplicate
+        // object-map entry -> no writeDwgHandles() failure -> no BAD_OPEN whole-
+        // file abort. Mirrors the DXF reserve pass (this DWG branch previously
+        // had none); reserving a handle that is ultimately not emitted is
+        // harmless (next() simply skips it). Validated by the [dwg-write][reserve]
+        // unit test.
+        {
+            const auto &md = g.dwgAdvancedMetadata();
+            auto reserveAll = [&](const auto &records) {
+                for (const auto &r : records)
+                    if (r.handle != 0)
+                        m_dwgW->reserveHandle(r.handle);
+            };
+            reserveAll(md.rawObjects());
+            reserveAll(md.placeholders());
+            reserveAll(md.dictionaries());
+            reserveAll(md.xrecords());
+            reserveAll(md.groups());
+            reserveAll(md.layouts());
+            reserveAll(md.mlineStyles());
+            reserveAll(md.dictionaryVars());
+            reserveAll(md.fieldLists());
+            reserveAll(md.fields());
+        }
         bool success = m_dwgW->write(this, dwgVer, false);
         delete m_dwgW;
         m_dwgW = nullptr;

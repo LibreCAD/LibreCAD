@@ -16,6 +16,7 @@
 
 #include <string>
 #include <memory>
+#include <set>
 #include <unordered_map>
 //#include <deque>
 #include "drw_entities.h"
@@ -90,6 +91,18 @@ public:
     /// `writeEntities`); returns 0 if invoked outside that window.
     std::uint32_t defineBlock(const std::string& name, const DRW_Coord& basePoint,
                         int insUnits = 0);
+
+    /// Reserve a preserved source handle BEFORE write() so it can never be
+    /// minted by defineBlock()/next() during the write.  The caller (filter)
+    /// uses this for fixed-type OBJECTS (DICTIONARY/XRECORD/GROUP/LAYOUT/
+    /// ACDBPLACEHOLDER/MLINESTYLE) and raw objects that carry a low source
+    /// handle: without it, a block-record handle minted by defineBlock can
+    /// collide with such an object's preserved handle → duplicate object-map
+    /// entry → writeDwgHandles() fails → BAD_OPEN aborts the whole save.
+    /// Reserved handles are seeded into the writer at the top of write()
+    /// (before writeBlocks); calling this is a no-op once write() has run.
+    /// Mirrors `dxfRW::reserveHandle`. (write-review P3 #1)
+    void reserveHandle(std::uint32_t h) { m_reservedHandles.insert(h); }
 
     /// Table-record registration API — invoked from the iface's writeLTypes/
     /// writeLayers/etc. callbacks.  Each method normalises the name, deduplicates
@@ -184,6 +197,10 @@ private:
     DRW_Interface *iface { nullptr };
     std::unique_ptr< dwgReader > reader;
     std::unique_ptr< dwgWriter > writer;
+    /// Handles reserved by the caller via reserveHandle() before write();
+    /// seeded into the writer's HandleAllocator before writeBlocks so a
+    /// preserved source handle can't be minted by defineBlock. (P3 #1)
+    std::set<std::uint32_t> m_reservedHandles;
     /// Caller-populated on write via `iface->writeHeader(header)` —
     /// mirrors `dxfRW`'s local `DRW_Header header;` at the top of
     /// `dxfRW::write`.  Owned for the lifetime of the writer instance.
