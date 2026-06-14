@@ -44,9 +44,8 @@ public:
             m_treeModel = tm;
             m_options = tm->getOptions();
             const auto palette = parent->palette();
-            m_gridColor = palette.color(QPalette::Button);
             m_customHoverTextColor = palette.color(QPalette::WindowText);
-            m_hoverBackgrounColor = palette.color(QPalette::Button);
+            m_hoverBackgroundColor = palette.color(QPalette::Mid);
         }
     }
 
@@ -96,20 +95,20 @@ public:
         bool isSelected = opt.state & QStyle::State_Selected;
 
         if (isHovered && !isSelected) {
-            opt.backgroundBrush = m_hoverBackgrounColor;
+            opt.backgroundBrush = m_hoverBackgroundColor;
 
-            QColor textColor = getTextColor(AutoContrast, m_hoverBackgrounColor, opt);
+            QColor textColor = getTextColor(AutoContrast, m_hoverBackgroundColor, opt);
 
             QPalette palette = opt.palette;
             palette.setColor(QPalette::Text, textColor);
             palette.setColor(QPalette::WindowText, textColor);
             palette.setColor(QPalette::HighlightedText, textColor);
-            palette.setColor(QPalette::Highlight, m_hoverBackgrounColor);
-            palette.setColor(QPalette::AlternateBase, m_hoverBackgrounColor);
+            palette.setColor(QPalette::Highlight, m_hoverBackgroundColor);
+            palette.setColor(QPalette::AlternateBase, m_hoverBackgroundColor);
 
             opt.palette = palette;
             opt.state |= QStyle::State_Selected; // Enable highlight text rendering
-            opt.backgroundBrush = QBrush(m_hoverBackgrounColor);
+            opt.backgroundBrush = QBrush(m_hoverBackgroundColor);
         }
         QStyledItemDelegate::paint(painter, opt, index);
         if (col >= 0){
@@ -140,7 +139,7 @@ public:
                     }
                 }
                 if (drawGrid){
-                    const QColor color = m_gridColor;
+                    const auto color = option.palette.color(QPalette::Window);
                     painter->save();
                     painter->setPen(color);
                     painter->drawRect(option.rect);
@@ -153,8 +152,7 @@ public:
 private:
     LC_LayerTreeView* m_treeView;
     LC_LayerTreeModel* m_treeModel{nullptr};
-    QColor m_gridColor;
-    QColor m_hoverBackgrounColor;
+    QColor m_hoverBackgroundColor;
     QColor m_customHoverTextColor;
     LC_LayerTreeModelOptions* m_options;
 };

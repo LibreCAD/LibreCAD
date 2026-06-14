@@ -23,15 +23,36 @@
 **********************************************************************/
 #include "lc_penpaletteoptions.h"
 
+#include <QApplication>
+#include <QPalette>
+
+#include "lc_iconcolorsoptions.h"
 #include "rs_settings.h"
 #include "rs_system.h"
+
+
+
+void LC_PenPaletteOptions::loadDefaults(bool isDark) {
+    QPalette palette = QApplication::palette();
+
+    if (isDark) {
+        activeItemBGColor = palette.color(QPalette::Mid);
+        matchedItemColor = QColor("blue");
+    }
+    else {
+        activeItemBGColor = palette.color(QPalette::Mid);
+        matchedItemColor = QColor("blue");
+    }
+}
+
 /**
  * Straightforwards storing options to settings
  */
-void LC_PenPaletteOptions:: loadFromSettings(){
+void LC_PenPaletteOptions::loadFromSettings(){
     LC_GROUP_GUARD("Widget.PenPalette");
     {
-        const LC_PenPaletteOptions defaults;
+        LC_PenPaletteOptions defaults;
+        defaults.loadDefaults(LC_IconColorsOptions::isDarkColorScheme());
         activeItemBGColor = QColor(LC_GET_STR("activeItemBgColor", defaults.activeItemBGColor.name()));
         matchedItemColor = QColor(LC_GET_STR("matchedItemBgColor", defaults.matchedItemColor.name()));
         showGrid = LC_GET_BOOL("showGrid", true);

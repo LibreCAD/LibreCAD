@@ -37,7 +37,6 @@ public slots:
 protected:
     int m_hoverRow = -1;
     QColor m_hoverRowBackgroundColor = Qt::red;
-    QColor m_gridColor;
     QTableView* m_tableView {nullptr};
     void paintBackground(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const;
     void drawHorizontalGridLine(QPainter* painter, const QStyleOptionViewItem& option) const;

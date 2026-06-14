@@ -94,6 +94,7 @@ public:
      * Saves options in settings
      */
     void saveToSettings() const;
+    void loadDefaults(bool isDark);
     /**
      * loads options from settings
      */

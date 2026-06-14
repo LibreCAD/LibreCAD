@@ -140,7 +140,6 @@ class LC_BlockTableItemDelegate : public LC_TableItemDelegateBase {
 public:
     explicit LC_BlockTableItemDelegate(LC_MouseTrackingTableView* parent) : LC_TableItemDelegateBase(parent) {
         auto palette = parent->palette();
-        m_gridColor = palette.color(QPalette::Button);
         m_hoverRowBackgroundColor = palette.color(QPalette::AlternateBase);
     }
 

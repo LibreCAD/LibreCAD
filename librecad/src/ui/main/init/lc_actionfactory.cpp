@@ -675,7 +675,7 @@ void LC_ActionFactory::createFileActionsUncheckable(QMap<QString, QAction *> &ma
         {"FileCloseAll",    &QC_ApplicationWindow::slotFileCloseAll,    tr("Close All"),          ":/icons/close_all.lci"},
         {"FilePrintPDF",    &QC_ApplicationWindow::slotFilePrintPDF,    tr("Export as PDF"),      ":/icons/export_pdf.lci"},
         {"BlocksImport",    &QC_ApplicationWindow::slotImportBlock,     tr("&Block"),             ":/icons/insert_active_block.lci"},
-        {"FileNew",         &QC_ApplicationWindow::slotFileNewFromDefaultTemplate,         tr("&New"),               ":/icons/new.lci",               "document-new"},
+        {"FileNew",         &QC_ApplicationWindow::slotFileNewFromDefaultTemplate, tr("&New"),        ":/icons/new.lci",               "document-new"},
         {"FileNewTemplate", &QC_ApplicationWindow::slotFileNewFromTemplate, tr("New From &Template"), ":/icons/new_from_template.lci", "document-new"},// fixme - check
         {"FileOpen",        &QC_ApplicationWindow::slotFileOpen,        tr("&Open..."),           ":/icons/open.lci",              "document-open"},
         {"FileSave",        &QC_ApplicationWindow::slotFileSave,        tr("&Save"),              ":/icons/save.lci",              "document-save"},

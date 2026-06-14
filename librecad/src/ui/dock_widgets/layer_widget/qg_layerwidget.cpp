@@ -184,8 +184,7 @@ public:
     explicit LC_LayerTableItemDelegate(QTableView* parent, QG_LayerModel* model) : LC_TableItemDelegateBase(parent) {
         m_model = model;
         auto palette = parent->palette();
-        m_gridColor = palette.color(QPalette::Button);
-        m_hoverRowBackgroundColor = palette.color(QPalette::AlternateBase);
+        m_hoverRowBackgroundColor = palette.color(QPalette::Mid);
     }
 
     void doPaint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const override {

@@ -58,7 +58,8 @@ void LC_TableItemDelegateBase::paintBackground(QPainter* painter, const QStyleOp
 }
 
 void LC_TableItemDelegateBase::drawHorizontalGridLine(QPainter* painter, const QStyleOptionViewItem& option) const {
-    const QColor color = m_gridColor;
+    // const QColor color = m_gridColor;
+    const auto color = option.palette.color(QPalette::Window);
     painter->save();
     painter->setPen(color);
     painter->drawLine(option.rect.bottomLeft(), option.rect.bottomRight());

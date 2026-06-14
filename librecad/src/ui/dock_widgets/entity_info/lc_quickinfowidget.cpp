@@ -1,5 +1,5 @@
 /****************************************************************************
-**
+*
 * Widget that provides information about entities attributes and collected
 * coordinates.
 

@@ -24,8 +24,29 @@
 
 #include "lc_layertreemodel_options.h"
 
+#include <QApplication>
+#include <QPalette>
+
+#include "lc_iconcolorsoptions.h"
 #include "lc_layertreeitem.h"
 #include "rs_settings.h"
+
+void LC_LayerTreeModelOptions::loadDefaults(bool isDark) {
+    QPalette palette = QApplication::palette();
+
+    if (isDark) {
+        matchedItemColor = QColor("blue");
+        virtualLayerBgColor  = palette.color(QPalette::AlternateBase);
+        selectedItemBgColor  = palette.color(QPalette::Highlight);
+        activeLayerBgColor  = palette.color(QPalette::Mid);
+    }
+    else {
+        matchedItemColor = QColor("blue");
+        virtualLayerBgColor  = QColor( 245,245,245);
+        selectedItemBgColor  = QColor( 245,245,245);
+        activeLayerBgColor  = QColor( "white");
+    }
+}
 
 /**
  * Returns pen that will be used as default for creation of the layer with given type
@@ -81,9 +102,11 @@ void LC_LayerTreeModelOptions::save() const{
 }
 
 void LC_LayerTreeModelOptions::load(){
+
     LC_GROUP_GUARD("Widget.LayerTree");
     {
-        const LC_LayerTreeModelOptions defaults;
+        LC_LayerTreeModelOptions defaults;
+        defaults.loadDefaults(LC_IconColorsOptions::isDarkColorScheme());
         activeLayerBgColor = QColor(LC_GET_STR("activeLayerBgColor", defaults.activeLayerBgColor.name()));
         selectedItemBgColor = QColor(LC_GET_STR("selectedItemBgColor", defaults.selectedItemBgColor.name()));
         virtualLayerBgColor = QColor(LC_GET_STR("virtualLayerBgColor", defaults.virtualLayerBgColor.name()));

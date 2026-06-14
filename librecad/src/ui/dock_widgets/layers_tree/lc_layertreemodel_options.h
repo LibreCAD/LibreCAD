@@ -58,6 +58,8 @@ struct LC_LayerTreeModelOptions{
     RS_Pen defaultPenInformational = RS_Pen(Qt::magenta, RS2::Width02,RS2::SolidLine);
     RS_Pen defaultPenAlternatePosition =  RS_Pen(Qt::cyan, RS2::Width00,RS2::SolidLine);
 
+    void loadDefaults(bool isDark);
+
     RS_Pen getDefaultPen(int layerType) const;
     void load();
     void save() const;
