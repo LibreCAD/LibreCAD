@@ -175,6 +175,8 @@ bool dwgRW::read(DRW_Interface *interface_, bool ext){
         m_skippedCustomClasses = reader->m_skippedCustomClasses;
         m_skippedUnsupportedObjects = reader->m_skippedUnsupportedObjects;
         m_decodedProxyPrimitives = reader->m_decodedProxyPrimitives;
+        m_layerNameOrder = reader->m_layerNameOrder;
+        m_ltypeNameOrder = reader->m_ltypeNameOrder;
         reader.reset();
     }
 

@@ -4908,3 +4908,173 @@ TEST_CASE("proxy graphics decoded from DXF", "[proxy]") {
   CHECK(cap.last.basePoint.y == Catch::Approx(200.0));
   CHECK(cap.last.radious == Catch::Approx(7.5));
 }
+
+// ---- proxy decoder: remaining-opcode unit pins (CI-safe, hand-crafted) ----
+namespace {
+void pgU32(std::string& s, std::uint32_t v) {
+  for (int i = 0; i < 4; ++i) s.push_back(char((v >> (8 * i)) & 0xFF));
+}
+void pgD(std::string& s, double v) { char b[8]; std::memcpy(b, &v, 8); s.append(b, 8); }
+// Append a chunk: 4-byte size (=8+payload) + 4-byte type + payload bytes.
+void pgChunk(std::string& s, std::uint32_t type, const std::string& payload) {
+  pgU32(s, static_cast<std::uint32_t>(8 + payload.size())); pgU32(s, type); s += payload;
+}
+std::string pgCirclePayload() { // CIRCLE: center+radius+normal
+  std::string p; pgD(p,0); pgD(p,0); pgD(p,0); pgD(p,1.0); pgD(p,0); pgD(p,0); pgD(p,1.0); return p;
+}
+struct PgColorCap : public TypeTrackingIface {
+  DRW_Circle last; int n = 0;
+  void addCircle(const DRW_Circle& e) override { last = e; ++n; }
+};
+} // namespace
+
+// op22 ATTRIBUTE_TRUE_COLOR: the high flag byte selects RGB/ACI/BYLAYER/BYBLOCK
+// (was unconditionally masked as RGB — 100% of corpus chunks mis-rendered).
+TEST_CASE("proxy op22 true-color flag dispatch", "[proxy]") {
+  auto runWithColor = [](std::uint32_t raw) {
+    std::string blob(8, '\0');
+    std::string cp; pgU32(cp, raw);
+    pgChunk(blob, 22, cp);                 // ATTRIBUTE_TRUE_COLOR
+    pgChunk(blob, 2, pgCirclePayload());   // CIRCLE inherits the colour state
+    PgColorCap cap; DRW_Point parent;      // parent.color defaults to ByLayer
+    DRW_ProxyGraphicDecoder::decode(blob, DRW::AC1024, cap, parent);
+    return cap.last;
+  };
+  SECTION("RGB (0xC2) → color24") {
+    DRW_Circle c = runWithColor(0xC2FF8040u);
+    CHECK(c.color24 == 0xFF8040);
+  }
+  SECTION("ACI (0xC3) → indexed color") {
+    DRW_Circle c = runWithColor(0xC3000007u);
+    CHECK(c.color == 7);
+    CHECK(c.color24 == -1);   // not stored as RGB
+  }
+  SECTION("BYLAYER (0xC0) → no spurious black RGB") {
+    DRW_Circle c = runWithColor(0xC0000000u);
+    CHECK(c.color24 == -1);   // the old bug stored 0 (black) here
+  }
+}
+
+// op5 CIRCULAR_ARC_3P: ASYMMETRIC pin (p1 at 0°, p3 at 90°, p2 at 45° on the
+// minor-arc side) so a p2/p3 wire-arg swap or start/end mix-up is caught.
+TEST_CASE("proxy op5 circular-arc-3p remap", "[proxy]") {
+  const double s = 5.0 / std::sqrt(2.0);
+  std::string pay;
+  pgD(pay, 5.0); pgD(pay, 0.0); pgD(pay, 0.0); // p1 (start) @ 0°
+  pgD(pay, s);   pgD(pay, s);   pgD(pay, 0.0); // p2 (def) @ 45°
+  pgD(pay, 0.0); pgD(pay, 5.0); pgD(pay, 0.0); // p3 (end) @ 90°
+  std::string blob(8, '\0'); pgChunk(blob, 5, pay);
+  struct Cap : public TypeTrackingIface {
+    DRW_Arc last; int n = 0;
+    void addArc(const DRW_Arc& e) override { last = e; ++n; }
+  } cap;
+  DRW_Point parent;
+  int n = DRW_ProxyGraphicDecoder::decode(blob, DRW::AC1024, cap, parent);
+  REQUIRE(n == 1);
+  CHECK(cap.last.basePoint.x == Catch::Approx(0.0).margin(1e-9)); // circumcenter
+  CHECK(cap.last.basePoint.y == Catch::Approx(0.0).margin(1e-9));
+  CHECK(cap.last.radious == Catch::Approx(5.0));
+  CHECK(cap.last.staangle == Catch::Approx(0.0).margin(1e-9));        // from p1
+  CHECK(cap.last.endangle == Catch::Approx(M_PI / 2.0));             // from WIRE p3, not p2
+}
+
+// op11 TEXT2 + op38 UNICODE_TEXT2: string is read FIRST, then the
+// <2l>/<4d>/<5L> metadata block.  Pins the field order + UTF-16LE transcode.
+TEST_CASE("proxy op11/op38 text2", "[proxy]") {
+  struct Cap : public TypeTrackingIface {
+    std::vector<DRW_Text> texts;
+    void addText(const DRW_Text& e) override { texts.push_back(e); }
+  };
+  auto textTail = [](std::string& p, double h) {
+    pgU32(p, 0); pgU32(p, 0);                        // <2l> ignore_len, raw
+    pgD(p, h); pgD(p, 1.0); pgD(p, 0.0); pgD(p, 0.0); // <4d> height,width,oblique,tracking
+    for (int i = 0; i < 5; ++i) pgU32(p, 0);          // <5L> flags
+  };
+  SECTION("op11 TEXT2 (cp1252)") {
+    std::string p;
+    pgD(p,1.0); pgD(p,2.0); pgD(p,0.0);   // start
+    pgD(p,0.0); pgD(p,0.0); pgD(p,1.0);   // normal
+    pgD(p,1.0); pgD(p,0.0); pgD(p,0.0);   // dir → angle 0
+    p += "AB"; p.push_back('\0');         // padded string
+    while (p.size() % 4) p.push_back('\0'); // align to 4
+    textTail(p, 7.0);
+    std::string blob(8, '\0'); pgChunk(blob, 11, p);
+    Cap cap; DRW_Point parent;
+    int n = DRW_ProxyGraphicDecoder::decode(blob, DRW::AC1024, cap, parent);
+    REQUIRE(n == 1); REQUIRE(cap.texts.size() == 1);
+    CHECK(cap.texts[0].text == "AB");
+    CHECK(cap.texts[0].basePoint.x == Catch::Approx(1.0));
+    CHECK(cap.texts[0].height == Catch::Approx(7.0));
+    CHECK(cap.texts[0].angle == Catch::Approx(0.0));
+  }
+  SECTION("op38 UNICODE_TEXT2 (UTF-16LE)") {
+    std::string p;
+    pgD(p,0.0); pgD(p,0.0); pgD(p,0.0);   // start
+    pgD(p,0.0); pgD(p,0.0); pgD(p,1.0);   // normal
+    pgD(p,1.0); pgD(p,0.0); pgD(p,0.0);   // dir
+    // "Hi" in UTF-16LE + double-NUL terminator, then align to 4
+    p.push_back('H'); p.push_back('\0'); p.push_back('i'); p.push_back('\0');
+    p.push_back('\0'); p.push_back('\0');
+    while (p.size() % 4) p.push_back('\0');
+    textTail(p, 3.0);
+    std::string blob(8, '\0'); pgChunk(blob, 38, p);
+    Cap cap; DRW_Point parent;
+    int n = DRW_ProxyGraphicDecoder::decode(blob, DRW::AC1024, cap, parent);
+    REQUIRE(n == 1); REQUIRE(cap.texts.size() == 1);
+    CHECK(cap.texts[0].text == "Hi");
+    CHECK(cap.texts[0].height == Catch::Approx(3.0));
+  }
+}
+
+// op16/op18/op23 attribute resolution: layer/linetype by index (offset 0 for
+// libdxfrw, NOT ezdxf's +2), sentinels, and the lineweight two's-complement.
+TEST_CASE("proxy op16/18/23 attribute resolution", "[proxy]") {
+  std::vector<std::string> layers = {"L0", "L1", "L2"};
+  std::vector<std::string> ltypes = {"DASHED", "DOTTED"};
+  auto run = [&](std::uint32_t layIdx, std::uint32_t ltIdx, std::uint32_t lw) {
+    std::string blob(8, '\0');
+    std::string a; pgU32(a, layIdx); pgChunk(blob, 16, a);
+    std::string b; pgU32(b, ltIdx);  pgChunk(blob, 18, b);
+    std::string c; pgU32(c, lw);     pgChunk(blob, 23, c);
+    pgChunk(blob, 2, pgCirclePayload());
+    PgColorCap cap; DRW_Point parent;
+    DRW_ProxyGraphicDecoder::decode(blob, DRW::AC1024, cap, parent, layers, ltypes);
+    return cap.last;
+  };
+  SECTION("by-index, offset 0") {
+    DRW_Circle c = run(2, 1, 13);
+    CHECK(c.layer == "L2");
+    CHECK(c.lineType == "DOTTED");          // index 1 → ltypes[1], NOT ltypes[3]
+    CHECK(c.lWeight == DRW_LW_Conv::dxfInt2lineWidth(13));
+  }
+  SECTION("linetype sentinels") {
+    CHECK(run(0, 32766u, 0).lineType == "BYBLOCK");
+    CHECK(run(0, 32767u, 0).lineType == "BYLAYER");
+  }
+  SECTION("out-of-range layer inherits parent") {
+    DRW_Circle c = run(99u, 1, 0);
+    CHECK(c.layer == "0");                  // parent default, not garbage
+  }
+}
+
+// Dev-local regression pin for the op16/op18 index→name mapping: libdxfrw's
+// layer / linetype storage order MUST equal the dwgread/LibreDWG oracle order
+// (offset 0), else resolved proxy attributes would be silently wrong-but-in-
+// range.  Ground truth baked from the oracle cross-check on gripper.dwg.
+TEST_CASE("proxy attr layer-order oracle pin", "[.dwg_proxy_attr]") {
+  const char* home = std::getenv("HOME");
+  if (!home) { SUCCEED("no HOME"); return; }
+  const std::string f = std::string(home) + "/doc/dwg2/gripper.dwg";
+  if (!std::filesystem::exists(f)) { SUCCEED("gripper.dwg absent"); return; }
+  TypeTrackingIface iface;
+  dwgR reader(f.c_str());
+  REQUIRE(reader.read(&iface, true));
+  const auto& L = reader.getLayerNameOrder();
+  const auto& T = reader.getLtypeNameOrder();
+  REQUIRE(L.size() == 21);
+  CHECK(L[0]  == "0");    CHECK(L[1]  == "AM_0"); CHECK(L[2] == "3");
+  CHECK(L[15] == "AM_7"); CHECK(L[17] == "AM_4"); CHECK(L[20] == "BV1");
+  REQUIRE(T.size() >= 21);
+  CHECK(T[0] == "Continuous");
+  CHECK(T[5] == "AM_ISO08W050x2"); // offset-0: ezdxf's +2 would name T[7]
+}

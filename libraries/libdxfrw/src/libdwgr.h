@@ -184,6 +184,11 @@ public:
     /// graphics of raw-net custom entities (STDPART2D, AEC_*, …). Non-zero
     /// means previously-invisible geometry now renders.
     size_t getDecodedProxyPrimitives() const { return m_decodedProxyPrimitives; }
+    /// Layer / linetype names in file storage order — the index space the
+    /// proxy-graphics ATTRIBUTE_LAYER/LINETYPE opcodes reference. Exposed for
+    /// regression-testing the index→name mapping against the dwgread oracle.
+    const std::vector<std::string>& getLayerNameOrder() const { return m_layerNameOrder; }
+    const std::vector<std::string>& getLtypeNameOrder() const { return m_ltypeNameOrder; }
 bool testReader();
     void setDebug(DRW::DebugLevel lvl);
 
@@ -227,6 +232,10 @@ private:
     /// Captured from reader->m_decodedProxyPrimitives before reader.reset()
     /// so getDecodedProxyPrimitives() works post-read.
     size_t m_decodedProxyPrimitives { 0 };
+    /// Captured layer / linetype storage order (proxy index space) before
+    /// reader.reset() so the getters work post-read.
+    std::vector<std::string> m_layerNameOrder;
+    std::vector<std::string> m_ltypeNameOrder;
 
 };
 

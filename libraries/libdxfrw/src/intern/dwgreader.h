@@ -196,6 +196,14 @@ public:
     std::unordered_map<std::uint32_t, objHandle>remainingMap; //stores the objects & entities not read in all processes, for debug only
     std::unordered_map<std::uint32_t, DRW_LType*> ltypemap;
     std::unordered_map<std::uint32_t, DRW_Layer*> layermap;
+    /// Layer / linetype names in file storage order (the handlesList iteration
+    /// order). This is the index space the proxy-graphics ATTRIBUTE_LAYER(16) /
+    /// ATTRIBUTE_LINETYPE(18) opcodes reference; each slot is index-aligned with
+    /// the control's handlesList (empty string for a missing record). Verified
+    /// byte-identical to the dwgread/LibreDWG layer order. See
+    /// DRW_ProxyGraphicDecoder::decode.
+    std::vector<std::string> m_layerNameOrder;
+    std::vector<std::string> m_ltypeNameOrder;
     std::unordered_map<std::uint32_t, DRW_Block*> blockmap;
     std::unordered_map<std::uint32_t, DRW_Textstyle*> stylemap;
     std::unordered_map<std::uint32_t, DRW_Dimstyle*> dimstylemap;

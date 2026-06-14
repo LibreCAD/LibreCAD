@@ -383,6 +383,7 @@ bool dwgReader::readDwgTables(DRW_Header& hdr, dwgBuffer *dbuf) {
             mit = ObjectMap.find(*it);
             if (mit==ObjectMap.end()) {
                 DRW_DBG("\nWARNING: LineType not found\n");
+                m_ltypeNameOrder.emplace_back(); // keep proxy index alignment
             } else {
                 oc = mit->second;
                 ObjectMap.erase(mit);
@@ -400,6 +401,7 @@ bool dwgReader::readDwgTables(DRW_Header& hdr, dwgBuffer *dbuf) {
                 dwgBuffer lbuff(tmpByteStr.data(), lsize, &decoder);
                 ret2 = lt->parseDwg(version, &lbuff, bs);
                 ltypemap[lt->handle] = lt;
+                m_ltypeNameOrder.push_back(lt->name); // proxy op18 index space
                 if (!ret2)
                     DRW_DBG("\nWARNING: LineType record parseDwg failed (handle skipped)\n");
             }
@@ -441,6 +443,7 @@ bool dwgReader::readDwgTables(DRW_Header& hdr, dwgBuffer *dbuf) {
             mit = ObjectMap.find(*it);
             if (mit==ObjectMap.end()) {
                 DRW_DBG("\nWARNING: Layer not found (handle skipped)\n");
+                m_layerNameOrder.emplace_back(); // keep proxy index alignment
             } else {
                 oc = mit->second;
                 ObjectMap.erase(mit);
@@ -457,6 +460,7 @@ bool dwgReader::readDwgTables(DRW_Header& hdr, dwgBuffer *dbuf) {
                 dwgBuffer buff(tmpByteStr.data(), size, &decoder);
                 ret2 = la->parseDwg(version, &buff, bs);
                 layermap[la->handle] = la;
+                m_layerNameOrder.push_back(la->name); // proxy op16 index space
                 if (!ret2)
                     DRW_DBG("\nWARNING: Layer record parseDwg failed (handle skipped)\n");
             }
@@ -1741,7 +1745,8 @@ bool dwgReader::readDwgEntity(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                     if (host.parseDwg(version, &buff, bs)
                         && host.proxyGraphics.size() >= 16) {
                         m_decodedProxyPrimitives += DRW_ProxyGraphicDecoder::decode(
-                            host.proxyGraphics, version, intfa, host);
+                            host.proxyGraphics, version, intfa, host,
+                            m_layerNameOrder, m_ltypeNameOrder);
                     }
                 }
                 intfa.addUnsupportedObject(raw);
