@@ -42,13 +42,18 @@ LC_CADDockWidget::LC_CADDockWidget(QWidget *parent, const bool allTools)
       m_gridLayout(new QGridLayout), m_allTools{allTools} {
   m_frame->setContentsMargins(0, 0, 0, 0);
 
-  m_scrollArea = new QScrollArea(this);
-  m_scrollArea->setWidgetResizable(true);
-  m_scrollArea->setFrameStyle(QFrame::NoFrame); // Avoid double borders with the dock widget
-  m_scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff); // Clip horizontally instead of showing scrollbars
-  m_scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
-  m_scrollArea->setWidget(m_frame);
-  setWidget(m_scrollArea);
+  if (allTools) {
+      m_scrollArea = new QScrollArea(this);
+      m_scrollArea->setWidgetResizable(true);
+      m_scrollArea->setFrameStyle(QFrame::NoFrame); // Avoid double borders with the dock widget
+      m_scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff); // Clip horizontally instead of showing scrollbars
+      m_scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+      m_scrollArea->setWidget(m_frame);
+      setWidget(m_scrollArea);
+  }
+  else {
+      setWidget(m_frame);
+  }
   m_gridLayout->setSpacing(0);
   m_gridLayout->setContentsMargins(0, 0, 0, 0);
   m_frame->setLayout(m_gridLayout);
