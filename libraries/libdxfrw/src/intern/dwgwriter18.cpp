@@ -78,26 +78,70 @@ struct DataSectionDesc {
 
 // --- R2004 page builders -----------------------------------------------------
 
+// Emit the variable-length literal-run length in the R2004 (AC1018) LZ77 form,
+// i.e. the exact inverse of dwgCompressor::litLength18 (which returns
+// `cont + ll + 3`). `n` must be >= 4 (litLength18 cannot produce 0 < n < 4);
+// system sections are always larger. Single byte for 4..18; a 0x00 trigger then
+// 0xFF-chained bytes for >= 19.
+static void putLitLen18(std::vector<std::uint8_t>& out, std::uint32_t n) {
+    if (n <= 18) {
+        out.push_back(static_cast<std::uint8_t>(n - 3));   // ll in 0x01..0x0F
+        return;
+    }
+    out.push_back(0x00);                                   // trigger extended form
+    std::uint32_t rem = n - 18;
+    while (rem > 0xFF) { out.push_back(0x00); rem -= 0xFF; }
+    out.push_back(static_cast<std::uint8_t>(rem));         // final ll in 1..255
+}
+
+// Compress a system section as an R2004-LZ77 *literal-only* stream: one initial
+// literal run covering the whole input, no back-references. The decompressor's
+// output window fills on that run, so its opcode loop never executes and no
+// terminator is needed (matches dwgCompressor::decompress18 and libreDWG's
+// decompress_R2004_section, which both loop while output < decompSize).
+// Conformant readers UNCONDITIONALLY decompress the Section/Data Page Map
+// (libreDWG decode.c:1453); a store-mode page (compType 1) therefore decoded to
+// garbage -> wrong section addresses -> every R2004+ file libdxfrw wrote was
+// undecodable. (write-review EMPIRICAL #1 / plan 3.1)
+static std::vector<std::uint8_t> compressSysSection(const std::uint8_t* data,
+                                                    std::uint32_t n) {
+    std::vector<std::uint8_t> out;
+    out.reserve(n + 6);
+    putLitLen18(out, n);
+    out.insert(out.end(), data, data + n);
+    return out;
+}
+
+// --- R2004 page builders (legacy comment retained below) ---------------------
+
 // Build a sys page (Section Page Map or Data Section Map).
 // Layout: +0 pageType  +4 decompSize  +8 compSize  +12 compType  +16 checksum
-//         +20 data
+//         +20 compressed data.
+// The data is R2004-LZ77-compressed (literal-only) because conformant readers
+// decompress system pages unconditionally; see compressSysSection.  The page
+// checksum is computed over the COMPRESSED bytes (matches the reader, which
+// checksums the on-disk compressed payload).
 static std::vector<std::uint8_t> buildSysPage(std::uint32_t pageType,
                                         const std::uint8_t* data, std::uint32_t dataSz) {
+    const std::vector<std::uint8_t> comp = compressSysSection(data, dataSz);
+    const std::uint32_t compSz = static_cast<std::uint32_t>(comp.size());
+
     std::vector<std::uint8_t> pg;
-    pg.reserve(20 + dataSz);
+    pg.reserve(20 + compSz);
     putRL(pg, pageType);    // +0
-    putRL(pg, dataSz);      // +4 decompressed size (= data size, store mode)
-    putRL(pg, dataSz);      // +8 compressed size (= data size, store mode)
-    putRL(pg, 1);           // +12 compression type 1 = store
+    putRL(pg, dataSz);      // +4 decompressed size
+    putRL(pg, compSz);      // +8 compressed size
+    putRL(pg, 2);           // +12 compression type 2 = compressed
     putRL(pg, 0);           // +16 checksum placeholder
 
-    // Compute checksum: seed over header[0..15] with [16..19]=0, then over data.
+    // Checksum: seed over header[0..15] with [16..19]=0, then over the
+    // compressed payload (parseSysPage / libreDWG both checksum compressed bytes).
     std::uint32_t ckH = dwgUtil::checksum18(0, pg.data(), 20);
-    std::uint32_t ckD = dwgUtil::checksum18(ckH, data, dataSz);
+    std::uint32_t ckD = dwgUtil::checksum18(ckH, comp.data(), compSz);
     patchRL(pg, 16, ckD);
 
-    if (dataSz != 0)
-        pg.insert(pg.end(), data, data + dataSz);
+    if (compSz != 0)
+        pg.insert(pg.end(), comp.begin(), comp.end());
     return pg;
 }
 

@@ -37,6 +37,7 @@
 #include <catch2/catch_test_macros.hpp>
 
 #include <cstdio>
+#include <cstdlib>
 #include <cstring>
 #include <filesystem>
 #include <fstream>
@@ -4946,6 +4947,69 @@ TEST_CASE("dwgRW round-trip preserves a 4-dash linetype",
             REQUIRE(reader.getError() == DRW::BAD_NONE);
         }
         REQUIRE(cap.m_dash4Path == 4);  // body dashes survive; object parse stays in sync
+        std::remove(path.c_str());
+    }
+}
+
+// ============================================================================
+// PHASE 0 — cross-tool readback harness. Emits a DWG per writable version with
+// libdxfrw, then runs libreDWG `dwgread` (an independent conformant reader) on
+// it. This is the validation GATE for the R2004+ container work (plan 3.x): the
+// symmetric self-tests cannot see container defects, but dwgread can. Opt-in
+// (`[.dwg_readback]`, hidden) + skip-when-absent, so it never breaks the default
+// suite or CI runners without libreDWG. Oracle: $DWGREAD or ~/dev/libredwg/programs/dwgread.
+namespace {
+struct ReadbackResult { bool found; bool ok; std::string output; };
+
+ReadbackResult dwgReadback(const std::string& path) {
+    const char* env = std::getenv("DWGREAD");
+    const char* home = std::getenv("HOME");
+    std::string exe = env ? std::string(env)
+                          : (std::string(home ? home : "") + "/dev/libredwg/programs/dwgread");
+    if (!std::filesystem::exists(exe))
+        return {false, false, ""};
+    const std::string cmd = "\"" + exe + "\" \"" + path + "\" 2>&1";
+    std::string out;
+    FILE* pipe = popen(cmd.c_str(), "r");
+    if (!pipe)
+        return {true, false, "popen failed"};
+    char buf[4096];
+    while (fgets(buf, sizeof(buf), pipe) != nullptr)
+        out += buf;
+    const int rc = pclose(pipe);
+    // dwgread prints "ERROR 0x...." and returns non-zero on a fatal decode
+    // failure (e.g. "Failed to read R2004 Section Page Map" -> 0x400). Per-object
+    // "bit_read_* buffer overflow" lines are warnings, not fatal (that is the
+    // separate R2000 accounting issue, plan 3.6), so they don't fail this gate.
+    const bool ok = (rc == 0)
+                 && out.find("ERROR 0x") == std::string::npos
+                 && out.find("Failed to read") == std::string::npos;
+    return {true, ok, out};
+}
+}  // namespace
+
+TEST_CASE("DWG cross-tool readback: libreDWG dwgread decodes libdxfrw output",
+          "[.dwg_readback]") {
+    struct V { DRW::Version ver; const char* tag; };
+    const V versions[] = {
+        {DRW::AC1015, "AC1015"}, {DRW::AC1018, "AC1018"}, {DRW::AC1024, "AC1024"},
+        {DRW::AC1027, "AC1027"}, {DRW::AC1032, "AC1032"},
+    };
+    for (const V& v : versions) {
+        const std::string path =
+            tempPath((std::string("readback_") + v.tag + ".dwg").c_str());
+        {
+            dwgRW writer(path.c_str());
+            EmptyIface iface;
+            REQUIRE(writer.write(&iface, v.ver, /*bin=*/false));
+        }
+        ReadbackResult r = dwgReadback(path);
+        if (!r.found) {
+            SUCCEED("dwgread absent; skipping cross-tool readback gate");
+            return;
+        }
+        INFO(v.tag << " dwgread output:\n" << r.output);
+        CHECK(r.ok);
         std::remove(path.c_str());
     }
 }
