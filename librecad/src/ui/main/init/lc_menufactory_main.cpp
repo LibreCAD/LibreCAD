@@ -418,16 +418,16 @@ void LC_MenuFactoryMain::prepareWorkspaceMenuComponents() const {
                                                  "TopDockAreaToggle",
                                                  "BottomDockAreaToggle",
                                                  "FloatingDockwidgetsToggle"
-                                             });
+                                             }, m_allowTearOffMenus);
 
     m_menusHolder->m_menuToolBarAreas = subMenu(menuWorkspace, tr("Toolbar Areas"), "tbareas", nullptr, {
                                   "LeftTBAreaToggle",
                                   "RightTBAreaToggle",
                                   "TopTBAreaToggle",
                                   "BottomTBAreaToggle"
-                              });
+                              }, m_allowTearOffMenus);
 
-    m_menusHolder->m_menuDockWidgets = doCreateSubMenu(menuWorkspace, tr("Wid&gets"), "dockwidgets", nullptr);
+    m_menusHolder->m_menuDockWidgets = doCreateSubMenu(menuWorkspace, tr("Wid&gets"), "dockwidgets", nullptr, m_allowTearOffMenus);
 
     m_menusHolder->m_menuDockWidgets->addSeparator();
 
@@ -455,7 +455,7 @@ void LC_MenuFactoryMain::prepareWorkspaceMenuComponents() const {
     const bool cadDocWidgetsAreEnabled = LC_GET_ONE_BOOL("Startup", "EnableLeftSidebar", true);
 
     if (cadDocWidgetsAreEnabled) {
-        const auto menuCADDockWidgets = doCreateSubMenu(menuWorkspace, tr("CAD Wid&gets"), "caddockwidgets", nullptr);
+        const auto menuCADDockWidgets = doCreateSubMenu(menuWorkspace, tr("CAD Wid&gets"), "caddockwidgets", nullptr, m_allowTearOffMenus);
         m_menusHolder->m_menuCADDockWidgets = menuCADDockWidgets;
         auto actions = QList<QAction*>();
         QAction* megaMenuAction = nullptr;
@@ -480,7 +480,7 @@ void LC_MenuFactoryMain::prepareWorkspaceMenuComponents() const {
         }
     }
 
-    const auto menuToolbars = doCreateSubMenu(menuWorkspace, tr("&Toolbars"), "toolbars", nullptr);
+    const auto menuToolbars = doCreateSubMenu(menuWorkspace, tr("&Toolbars"), "toolbars", nullptr, m_allowTearOffMenus);
     m_menusHolder->m_menuToolbars = menuToolbars;
 
     QList<QToolBar*> toolbarsList = m_appWin->findChildren<QToolBar*>();
@@ -501,7 +501,7 @@ void LC_MenuFactoryMain::prepareWorkspaceMenuComponents() const {
         }
 
         m_appWin->sortWidgetsByGroupAndTitle(cadToolbarsList);
-        m_menusHolder->m_menuCADToolbars = doCreateSubMenu(menuWorkspace, tr("&CAD Toolbars"), "cadtoolbars", nullptr);
+        m_menusHolder->m_menuCADToolbars = doCreateSubMenu(menuWorkspace, tr("&CAD Toolbars"), "cadtoolbars", nullptr, m_allowTearOffMenus);
         for (const QToolBar* tb : std::as_const(cadToolbarsList)) {
             m_menusHolder->m_menuCADToolbars->QWidget::addAction(tb->toggleViewAction());
         }
@@ -673,9 +673,23 @@ QAction* LC_MenuFactoryMain::urlActionTR(const QString& title, const char* url) 
     return result;
 }
 
+class QCDynamicMenu : public QMenu {
+public:
+    using QMenu::QMenu;
+
+protected:
+    void hideEvent(QHideEvent *event) override {
+        QMenu::hideEvent(event);
+        if (!isTearOffMenuVisible()) {
+            this->deleteLater();
+        }
+    }
+};
+
 QMenu* LC_MenuFactoryMain::createMainWindowPopupMenu() const {
-    auto* result = new QMenu(tr("Context"));
-    result->setAttribute(Qt::WA_DeleteOnClose);
+    auto* result = new QCDynamicMenu(tr("Context"), QC_ApplicationWindow::getAppWindow().get());
+    // result->setAttribute(Qt::WA_DeleteOnClose);
+    // result->setTearOffEnabled(m_allowTearOffMenus);
 
         addActions(result, {
            "Fullscreen",
@@ -691,25 +705,29 @@ QMenu* LC_MenuFactoryMain::createMainWindowPopupMenu() const {
 
     result->addSeparator();
 
-    auto* tmpToolbarsMenu = new QMenu(tr("Toolbars"), result);
+    auto* tmpToolbarsMenu = new QMenu(tr("Toolbars"));
     tmpToolbarsMenu->addActions(m_menusHolder->m_menuToolbars->actions());
+    tmpToolbarsMenu->setTearOffEnabled(m_allowTearOffMenus);
     result->addMenu(tmpToolbarsMenu);
 
-    auto* tmpWidgetsMenu = new QMenu(tr("Widgets"), result);
+    auto* tmpWidgetsMenu = new QMenu(tr("Widgets"));
     tmpWidgetsMenu->addActions(m_menusHolder->m_menuDockWidgets->actions());
+    tmpWidgetsMenu->setTearOffEnabled(m_allowTearOffMenus);
     result->addMenu(tmpWidgetsMenu);
 
     result->addSeparator();
 
     bool needSeparator = false;
     if (m_menusHolder->m_menuCADDockWidgets != nullptr) {
-        auto* tmpCADWidgetsMenu = new QMenu(tr("CAD Widgets"), result);
+        auto* tmpCADWidgetsMenu = new QMenu(tr("CAD Widgets"));
+        tmpCADWidgetsMenu->setTearOffEnabled(m_allowTearOffMenus);
         tmpCADWidgetsMenu->addActions(m_menusHolder->m_menuCADDockWidgets->actions());
         result->addMenu(tmpCADWidgetsMenu);
         needSeparator = true;
     }
     if (m_menusHolder->m_menuCADToolbars != nullptr) {
-        auto* tmpCADToolbarsMenu = new QMenu(tr("CAD Toolbars"), result);
+        auto* tmpCADToolbarsMenu = new QMenu(tr("CAD Toolbars"));
+        tmpCADToolbarsMenu->setTearOffEnabled(m_allowTearOffMenus);
         tmpCADToolbarsMenu->addActions(m_menusHolder->m_menuCADToolbars->actions());
         result->addMenu(tmpCADToolbarsMenu);
         needSeparator = true;
