@@ -2871,6 +2871,121 @@ bool DRW_ModelerGeometry::parseDwg(DRW::Version v, dwgBuffer *buf, std::uint32_t
     return ret;
 }
 
+// DRW_Mesh::parseDwg — AcDbSubDMesh, field order per libreDWG dwg2.spec:2523
+// (DWG bitstream order, NOT the DXF group-code order). R2010+ only in practice
+// (the custom-class dispatch only fires when classesmap names "MESH").
+bool DRW_Mesh::parseDwg(DRW::Version v, dwgBuffer *buf, std::uint32_t bs){
+    bool ret = DRW_Entity::parseDwg(v, buf, nullptr, bs);
+    if (!ret)
+        return ret;
+    DRW_DBG("\n***************************** parsing MESH (AcDbSubDMesh) *****************\n");
+
+    // Loose OOM/corruption guard: a count can't exceed the bits left in the
+    // object (each item is >= 1 bit; crease/face values are bit-packed and may be
+    // far below 1 byte each, so a per-byte bound would falsely reject valid data).
+    auto sane = [&](std::int32_t n) {
+        return n >= 0
+            && static_cast<std::int64_t>(n)
+                   <= static_cast<std::int64_t>(buf->numRemainingBytes()) * 8 + 8;
+    };
+
+    version     = buf->getBitShort();        // BS dlevel (71)
+    blendCrease = buf->getBit() != 0;        // B is_watertight (72)
+
+    const std::int32_t nSubdiv = buf->getBitLong();   // BL num_subdiv_vertex (91)
+    if (!sane(nSubdiv)) return false;
+    subdivisionLevel = nSubdiv;
+    subdivVertices.reserve(static_cast<size_t>(nSubdiv));
+    for (std::int32_t i = 0; i < nSubdiv && buf->isGood(); ++i)
+        subdivVertices.push_back(buf->get3BitDouble());
+
+    const std::int32_t nVert = buf->getBitLong();     // BL num_vertex (92)
+    if (!sane(nVert)) return false;
+    vertices.reserve(static_cast<size_t>(nVert));
+    for (std::int32_t i = 0; i < nVert && buf->isGood(); ++i)
+        vertices.push_back(buf->get3BitDouble());
+
+    // faces (93) is a FLAT BL stream of length num_faces; each face is
+    // [count, idx0, idx1, ...]. num_faces is the stream length, not the polygon
+    // count — group on the fly.
+    std::int32_t remaining = buf->getBitLong();       // BL num_faces (93)
+    if (!sane(remaining)) return false;
+    while (remaining > 0 && buf->isGood()) {
+        const std::int32_t cnt = buf->getBitLong();
+        --remaining;
+        if (cnt < 0 || cnt > remaining)
+            break;  // corrupt face run
+        std::vector<std::int32_t> face;
+        face.reserve(static_cast<size_t>(cnt));
+        for (std::int32_t j = 0; j < cnt && buf->isGood(); ++j) {
+            face.push_back(buf->getBitLong());
+            --remaining;
+        }
+        faces.push_back(std::move(face));
+    }
+
+    const std::int32_t nEdges = buf->getBitLong();    // BL num_edges (94)
+    if (!sane(nEdges)) return false;
+    edges.reserve(static_cast<size_t>(nEdges));
+    for (std::int32_t i = 0; i < nEdges && buf->isGood(); ++i) {
+        const std::int32_t from = buf->getBitLong();
+        const std::int32_t to   = buf->getBitLong();
+        edges.emplace_back(from, to);
+    }
+
+    const std::int32_t nCrease = buf->getBitLong();   // BL num_crease (95)
+    if (!sane(nCrease)) return false;
+    creases.reserve(static_cast<size_t>(nCrease));
+    for (std::int32_t i = 0; i < nCrease && buf->isGood(); ++i)
+        creases.push_back(buf->getBitDouble());
+
+    buf->getBit();  // unknown_b1
+    buf->getBit();  // unknown_b2
+
+    ret = DRW_Entity::parseDwgEntHandle(v, buf);
+    return ret;
+}
+
+// DRW_Mesh::parseCode — DXF read (codes 71/72/91/92/10·20·30/93/90/94/95/140).
+// The 90 stream is shared by faces (after 93) and edges (after 94); m_dxfState
+// sequences which one is being filled (mirrors DRW_Image::parseCode's stateful
+// 91/14/24 WIPEOUT-vertex accumulation).
+bool DRW_Mesh::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
+    switch (code) {
+    case 71: version = reader->getInt32(); return true;
+    case 72: blendCrease = reader->getInt32() != 0; return true;
+    case 91: subdivisionLevel = reader->getInt32(); return true;
+    case 92: /* base-vertex count */ vertices.reserve(reader->getInt32()); return true;
+    case 10: vertices.emplace_back(); vertices.back().x = reader->getDouble(); return true;
+    case 20: if (!vertices.empty()) vertices.back().y = reader->getDouble(); return true;
+    case 30: if (!vertices.empty()) vertices.back().z = reader->getDouble(); return true;
+    case 93: m_dxfState = 93; m_dxfPending = 0; return true;  // start face stream
+    case 94: m_dxfState = 94; m_dxfEdgeFrom = -1; (void)reader->getInt32(); return true;  // edge count
+    case 90: {
+        const std::int32_t val = reader->getInt32();
+        if (m_dxfState == 93) {
+            // flat face stream: when no face is in progress, val is the next
+            // face's vertex count; otherwise val is a vertex index.
+            if (m_dxfPending == 0) {
+                faces.emplace_back();
+                m_dxfPending = (val > 0) ? val : 0;
+            } else {
+                if (!faces.empty()) faces.back().push_back(val);
+                --m_dxfPending;
+            }
+        } else if (m_dxfState == 94) {
+            if (m_dxfEdgeFrom < 0) m_dxfEdgeFrom = val;
+            else { edges.emplace_back(m_dxfEdgeFrom, val); m_dxfEdgeFrom = -1; }
+        }
+        return true;
+    }
+    case 95: m_dxfState = 95; creases.reserve(static_cast<size_t>(std::max(0, reader->getInt32()))); return true;
+    case 140: creases.push_back(reader->getDouble()); return true;
+    default:
+        return DRW_Entity::parseCode(code, reader);
+    }
+}
+
 bool DRW_Shape::parseDwg(DRW::Version v, dwgBuffer *buf, std::uint32_t bs){
     m_bodyBitSize = bs;
     bool ret = DRW_Entity::parseDwg(v, buf, nullptr, bs);

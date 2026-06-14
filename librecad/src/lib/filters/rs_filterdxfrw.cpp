@@ -11038,6 +11038,32 @@ void RS_FilterDXFRW::add3dFace(const DRW_3Dface& data) {
     m_currentContainer->addEntity(polyline);
 }
 
+void RS_FilterDXFRW::addMesh(const DRW_Mesh& data) {
+    RS_DEBUG->print("RS_FilterDXFRW::addMesh: %zu vertices, %zu faces",
+                    data.vertices.size(), data.faces.size());
+    // Render the base-cage faces as closed polylines (LibreCAD is 2D; Z dropped,
+    // matching add3dFace). Each face is a list of vertex indices into vertices[].
+    for (const auto& face : data.faces) {
+        if (face.size() < 2)
+            continue;
+        RS_PolylineData d(RS_Vector(false), RS_Vector(false), /*closed=*/true);
+        auto *polyline = new RS_Polyline(m_currentContainer, d);
+        setEntityAttributes(polyline, &data);
+        bool any = false;
+        for (std::int32_t idx : face) {
+            if (idx < 0 || static_cast<size_t>(idx) >= data.vertices.size())
+                continue;
+            const DRW_Coord& v = data.vertices[static_cast<size_t>(idx)];
+            polyline->addVertex(RS_Vector(v.x, v.y), 0.0);
+            any = true;
+        }
+        if (any)
+            m_currentContainer->addEntity(polyline);
+        else
+            delete polyline;
+    }
+}
+
 void RS_FilterDXFRW::addComment(const char*) {
     RS_DEBUG->print("RS_FilterDXF::addComment(const char*) not yet implemented.");
 }

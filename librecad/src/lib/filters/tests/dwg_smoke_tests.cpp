@@ -34,6 +34,7 @@
 #include <cctype>
 #include <cmath>
 #include <cstring>
+#include <algorithm>
 #include <filesystem>
 #include <iomanip>
 #include <iostream>
@@ -4629,4 +4630,105 @@ TEST_CASE("DWG R13/R14/R2000 sample files read OK (BLOCKS-walk regression)",
   }
   if (checked == 0)
     SUCCEED("~/doc/dwg{,2,3} canonical samples absent; skipping BLOCKS-walk pin");
+}
+
+
+// ============================================================================
+// READ FEATURE-COVERAGE scans (hidden, corpus-dependent, skip-when-absent).
+// ============================================================================
+
+// Aggregate skipped-class / skipped-object telemetry + handled-type histogram
+// across ~/doc/dwg{,2,3}. Diagnostic (no hard assertions) — surfaces what the
+// reader still drops so coverage work can be prioritized.
+TEST_CASE("DWG coverage scan: aggregate skip telemetry across corpus",
+          "[.coverage]") {
+  const char* home = std::getenv("HOME");
+  if (!home) { SUCCEED("no HOME"); return; }
+  std::map<std::string, std::size_t> skippedClasses, skippedObjects;
+  std::map<std::string, int> handledTypes;
+  int files = 0, okFiles = 0;
+  for (const std::string& dir : {std::string(home) + "/doc/dwg",
+                                 std::string(home) + "/doc/dwg2",
+                                 std::string(home) + "/doc/dwg3"}) {
+    if (!std::filesystem::exists(dir)) continue;
+    for (const auto& de : std::filesystem::directory_iterator(dir)) {
+      const auto ext = de.path().extension().string();
+      if (ext != ".dwg" && ext != ".DWG") continue;
+      ++files;
+      DRW::setCustomDebugPrinter(new DRW::DebugPrinter());
+      TypeTrackingIface iface;
+      try {
+        dwgR reader(de.path().string().c_str());
+        if (reader.read(&iface, true) && reader.getError() == DRW::BAD_NONE)
+          ++okFiles;
+        for (const auto& kv : reader.getSkippedCustomClasses())
+          skippedClasses[kv.first] += kv.second;
+        for (const auto& kv : reader.getSkippedUnsupportedObjects())
+          skippedObjects[kv.first] += kv.second;
+        for (const auto& kv : iface.typeCounts)
+          handledTypes[kv.first] += kv.second;
+      } catch (...) {}
+    }
+  }
+  if (files == 0) { SUCCEED("~/doc/dwg{,2,3} absent; skipping coverage scan"); return; }
+  auto dump = [](const char* title, std::map<std::string, std::size_t> m) {
+    std::vector<std::pair<std::string, std::size_t>> v(m.begin(), m.end());
+    std::sort(v.begin(), v.end(),
+              [](const auto& a, const auto& b) { return a.second > b.second; });
+    std::cerr << title << " (" << v.size() << " distinct):\n";
+    for (const auto& kv : v) std::cerr << "  " << kv.second << "  " << kv.first << "\n";
+  };
+  std::cerr << "\nCOVERAGE: files=" << files << " ok=" << okFiles << "\n";
+  std::cerr << "-- handled entity types --\n";
+  for (const auto& kv : handledTypes) std::cerr << "  " << kv.second << "  " << kv.first << "\n";
+  dump("-- skipped CUSTOM CLASSES (renderable-ish gaps)", skippedClasses);
+  dump("-- skipped UNSUPPORTED OBJECTS (mostly metadata)", skippedObjects);
+  SUCCEED("coverage scan complete");
+}
+
+// MESH is now decoded (not raw-netted): across the corpus, no file should still
+// report MESH/AcDbSubDMesh in getSkippedCustomClasses(), and where MESH exists
+// it must deliver geometry. Skip-when-absent (corpus is developer-local).
+TEST_CASE("DWG MESH decoded + delivered, not skipped", "[.dwg_readback_corpus]") {
+  const char* home = std::getenv("HOME");
+  if (!home) { SUCCEED("no HOME"); return; }
+  struct MeshProbe : public TypeTrackingIface {
+    int meshCount = 0;
+    std::size_t meshVertices = 0, meshFaces = 0;
+    void addMesh(const DRW_Mesh& d) override {
+      ++meshCount;
+      meshVertices += d.vertices.size();
+      meshFaces += d.faces.size();
+    }
+  };
+  int meshCount = 0, filesStillSkippingMesh = 0;
+  std::size_t meshVerts = 0;
+  bool anyFile = false;
+  for (const std::string& dir : {std::string(home) + "/doc/dwg",
+                                 std::string(home) + "/doc/dwg2",
+                                 std::string(home) + "/doc/dwg3"}) {
+    if (!std::filesystem::exists(dir)) continue;
+    for (const auto& de : std::filesystem::directory_iterator(dir)) {
+      const auto ext = de.path().extension().string();
+      if (ext != ".dwg" && ext != ".DWG") continue;
+      anyFile = true;
+      DRW::setCustomDebugPrinter(new DRW::DebugPrinter());
+      MeshProbe probe;
+      try {
+        dwgR reader(de.path().string().c_str());
+        reader.read(&probe, true);
+        meshCount += probe.meshCount;
+        meshVerts += probe.meshVertices;
+        const auto sk = reader.getSkippedCustomClasses();
+        if (sk.find("MESH") != sk.end() || sk.find("AcDbSubDMesh") != sk.end())
+          ++filesStillSkippingMesh;
+      } catch (...) {}
+    }
+  }
+  if (!anyFile) { SUCCEED("~/doc/dwg{,2,3} absent; skipping MESH probe"); return; }
+  std::cerr << "\nMESH probe: meshCount=" << meshCount << " vertices=" << meshVerts
+            << " filesStillSkippingMESH=" << filesStillSkippingMesh << "\n";
+  CHECK(filesStillSkippingMesh == 0);  // MESH no longer falls to the raw net
+  if (meshCount == 0) { SUCCEED("no MESH entities in local corpus"); return; }
+  CHECK(meshVerts >= 1);  // geometry actually delivered
 }

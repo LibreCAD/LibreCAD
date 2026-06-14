@@ -268,6 +268,7 @@ private:
     bool processHatch();
     bool processSpline();
     bool process3dface();
+    bool processMesh();
     bool processViewport();
     bool processImage();
     bool processImageDef();

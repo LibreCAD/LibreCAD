@@ -3549,6 +3549,8 @@ bool dxfRW::processEntities(bool isblock) {
             processed = processSpline();
         } else if (nextentity == "3DFACE") {
             processed = process3dface();
+        } else if (nextentity == "MESH") {
+            processed = processMesh();
         } else if (nextentity == "VIEWPORT") {
             processed = processViewport();
         } else if (nextentity == "IMAGE") {
@@ -3645,6 +3647,25 @@ bool dxfRW::processSolid() {
         }
     }
 
+    return setError(DRW::BAD_READ_ENTITIES);
+}
+
+bool dxfRW::processMesh() {
+    DRW_DBG("dxfRW::processMesh");
+    int code;
+    DRW_Mesh mesh;
+    while (reader->readRec(&code)) {
+        DRW_DBG(code); DRW_DBG("\n");
+        if (0 == code) {
+            nextentity = reader->getString();
+            DRW_DBG(nextentity); DRW_DBG("\n");
+            iface->addMesh(mesh);
+            return true;
+        }
+        if (!mesh.parseCode(code, reader)) {
+            return setError(DRW::BAD_CODE_PARSED);
+        }
+    }
     return setError(DRW::BAD_READ_ENTITIES);
 }
 

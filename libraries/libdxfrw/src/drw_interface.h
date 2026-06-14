@@ -177,6 +177,11 @@ public:
      *  implement it. */
     virtual void addHelix(const DRW_Helix* data) { (void) data; }
 
+    /** Called for every MESH (AcDbSubDMesh) subdivision-surface entity. Default
+     *  no-op so readers can deliver MESH without forcing every consumer to
+     *  implement it (trailing-virtual ABI convention, static-link only). */
+    virtual void addMesh(const DRW_Mesh& data) { (void) data; }
+
 	/** Called for every spline knot value */
     virtual void addKnot(const DRW_Entity& data) = 0;
 

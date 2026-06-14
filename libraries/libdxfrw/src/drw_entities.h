@@ -60,7 +60,7 @@ namespace DRW {
         LIGHT,
         LINE,
         LWPOLYLINE,
-//        MESH,
+        MESH,
         MLINE,
 //        MLEADERSTYLE,
         MLEADER,
@@ -582,6 +582,41 @@ public:
     std::uint32_t m_historyHandle = 0;
     std::vector<std::uint8_t> m_rawBytes;
     std::vector<DRW_ModelerPayloadRange> m_payloadRanges;
+};
+
+//! MESH entity (AcDbSubDMesh) — subdivision-surface mesh.
+/*!
+*  Unlike ACIS solids, a MESH carries full vertex/face/edge topology, so it is
+*  decodable to real geometry. Renderable: LibreCAD decomposes the base-cage
+*  faces into polylines. R2010+ DWG (custom class "MESH"/"AcDbSubDMesh").
+*  @author LibreCAD
+*/
+class DRW_Mesh : public DRW_Entity {
+    SETENTFRIENDS
+public:
+    DRW_Mesh() { eType = DRW::MESH; }
+    void applyExtrusion() override {}
+
+protected:
+    bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
+    bool parseDwg(DRW::Version v, dwgBuffer *buf, std::uint32_t bs=0) override;
+
+public:
+    std::uint16_t version = 2;          /*!< subdivision-mesh version, code 71 */
+    bool blendCrease = false;           /*!< blend-crease flag, code 72 */
+    std::int32_t subdivisionLevel = 0;  /*!< subdivision level, code 91 */
+    std::vector<DRW_Coord> subdivVertices;  /*!< refined vertices (code 10, count 91) */
+    std::vector<DRW_Coord> vertices;        /*!< base-cage vertices (code 10, count 92) */
+    /*!< each face = list of vertex indices into `vertices` (flat stream, count 93) */
+    std::vector<std::vector<std::int32_t>> faces;
+    std::vector<std::pair<std::int32_t,std::int32_t>> edges;  /*!< edge index pairs, count 94 */
+    std::vector<double> creases;        /*!< per-edge crease values, code 140, count 95 */
+
+private:
+    // DXF parseCode accumulation state (codes are interleaved/sequenced).
+    int m_dxfState = 0;  // 0=none, 93=reading faces, 94=reading edges
+    std::int32_t m_dxfPending = 0;  // remaining items in current 90-stream
+    std::int32_t m_dxfEdgeFrom = -1;  // half-read edge pair
 };
 
 //! SHAPE entity shell. The SHX glyph itself is not interpreted here.

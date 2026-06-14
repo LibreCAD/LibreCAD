@@ -1640,6 +1640,13 @@ bool dwgReader::readDwgEntity(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                         }
                         break;
                     }
+                    if (rn == "MESH" || cn == "AcDbSubDMesh") {
+                        DRW_Mesh e;
+                        if (entryParse(e, buff, bs, ret)) {
+                            intfa.addMesh(e);
+                        }
+                        break;
+                    }
                     if (rn == "LIGHT" || cn == "AcDbLight") {
                         DRW_Light e;
                         if (entryParse(e, buff, bs, ret)) {

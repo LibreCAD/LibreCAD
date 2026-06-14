@@ -154,6 +154,7 @@ public:
     void addTolerance(const DRW_Tolerance& tol) override;
     void addSolid(const DRW_Solid& data) override;
     void addModelerGeometry(const DRW_ModelerGeometry &data) override;
+    void addMesh(const DRW_Mesh &data) override;
     void addLight(const DRW_Light &data) override;
     void addMText(const DRW_MText& data) override;
     /** Build an RS_MText from a DRW_MText payload, handling alignment / drawing

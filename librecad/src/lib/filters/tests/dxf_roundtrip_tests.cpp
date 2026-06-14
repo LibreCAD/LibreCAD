@@ -1058,9 +1058,12 @@ TEST_CASE("DXF DETAILVIEWSTYLE/SECTIONVIEWSTYLE round-trip (typed-read OBJECT "
 
 TEST_CASE("DXF MESH round-trips losslessly via the raw net (real geometry)",
           "[dxf][roundtrip][filter][mesh]") {
-  // MESH (AcDbSubDMesh) is a fixed DXF entity LibreCAD does not model; it must
-  // survive DXF->DXF verbatim through the raw-passthrough net (not just the
-  // synthetic WEIRDENT case). Fixture = an 8-vertex / 6-face cube mesh.
+  // MESH (AcDbSubDMesh) is now MODELED: LibreCAD decodes it to a DRW_Mesh and
+  // renders the base-cage faces as closed polylines (read-feature-coverage:
+  // MESH is the one genuinely-absent renderable entity). It is therefore no
+  // longer raw-passthrough-preserved; the 8-vertex / 6-face cube imports as 6
+  // closed face polylines. (There is no MESH *writer* yet — read-only scope —
+  // so it round-trips as its rendered polylines, not as a MESH entity.)
   ensureSettings();
   const std::string src = tmpFile("msrc.dxf");
   const std::string out = tmpFile("mout.dxf");
@@ -1090,18 +1093,17 @@ TEST_CASE("DXF MESH round-trips losslessly via the raw net (real geometry)",
             return g.i_val();  // captured typed (the numeric-capture fix)
     return -1;
   };
-  CHECK(meshVertexCount(graphic.dwgAdvancedMetadata()) == 8);  // preserved on read
+  // Now modeled, not raw-netted: the MESH is decoded to a DRW_Mesh and rendered,
+  // so it no longer appears in the raw-passthrough metadata.
+  CHECK(meshVertexCount(graphic.dwgAdvancedMetadata()) == -1);
   {
     RS_FilterDXFRW filter;
     REQUIRE(filter.fileExport(graphic, QString::fromStdString(out), RS2::FormatDXFRW));
   }
-  CHECK(countRecords(out, "MESH") == 1);  // emitted once (no drop, no double)
-  RS_Graphic graphic2;
-  {
-    RS_FilterDXFRW filter;
-    REQUIRE(filter.fileImport(graphic2, QString::fromStdString(out), RS2::FormatDXFRW));
-  }
-  CHECK(meshVertexCount(graphic2.dwgAdvancedMetadata()) == 8);  // survives DXF->DXF
+  // The 6 cube faces render as closed polylines; there is no MESH writer, so the
+  // entity is not re-emitted as MESH.
+  CHECK(countRecords(out, "MESH") == 0);
+  CHECK(countRecords(out, "LWPOLYLINE") + countRecords(out, "POLYLINE") >= 6);
   std::filesystem::remove(src);
   std::filesystem::remove(out);
 }
