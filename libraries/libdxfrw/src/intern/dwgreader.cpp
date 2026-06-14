@@ -20,6 +20,7 @@
 #include "dwgreader.h"
 #include "drw_textcodec.h"
 #include "drw_dbg.h"
+#include "proxygraphicdecoder.h"
 
 namespace {
     //helper function to cleanup pointers in Look Up Tables
@@ -29,6 +30,20 @@ namespace {
         for (auto& item: table)
             delete item.second;
     }
+
+    // Minimal concrete entity whose only job is to run DRW_Entity's
+    // class-agnostic common-prologue parser (handle/EED/graphData/layer/…).
+    // Raw-net custom entities (STDPART2D, AEC_*) are emitted byte-for-byte by
+    // makeRawEntity and never parsed, so their proxyGraphics is empty; this host
+    // lets us lift the cached graphData bytes without modelling the unknown
+    // class body.  parseDwg runs only the common DATA prologue (it does NOT read
+    // the handle stream), which is exactly the section that carries graphData.
+    struct ProxyHostEntity : public DRW_Entity {
+        void applyExtrusion() override {}
+        bool parseDwg(DRW::Version v, dwgBuffer *b, std::uint32_t bsz = 0) override {
+            return DRW_Entity::parseDwg(v, b, nullptr, bsz);
+        }
+    };
 }
 
 // DWG file-header codepage id -> DRW_TextCodec ANSI name (libreDWG
@@ -1685,6 +1700,23 @@ bool dwgReader::readDwgEntity(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                 if (cit != classesmap.end() && cit->second) {
                     raw.m_recordName = cit->second->recName;
                     raw.m_className = cit->second->className;
+                }
+                // Recover cached PROXY GRAPHICS before raw-netting: this class is
+                // unmodelled, but it may carry a self-contained primitive stream
+                // (STDPART2D, AEC_WALL/WINDOW/DOOR, …) that any reader can render.
+                // makeRawEntity never parses, so proxyGraphics is empty here; run
+                // the class-agnostic common prologue on a throwaway host purely to
+                // lift the graphData bytes (buff is unconsumed at this fall-through
+                // — every typed arm above breaks), then decode them into render
+                // primitives.  The raw object is STILL emitted below for lossless
+                // round-trip; decoding only adds extra renderable geometry.
+                {
+                    ProxyHostEntity host;
+                    if (host.parseDwg(version, &buff, bs)
+                        && host.proxyGraphics.size() >= 16) {
+                        m_decodedProxyPrimitives += DRW_ProxyGraphicDecoder::decode(
+                            host.proxyGraphics, version, intfa, host);
+                    }
                 }
                 intfa.addUnsupportedObject(raw);
                 objObjectMap[obj.handle]= obj;

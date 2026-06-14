@@ -958,6 +958,33 @@ bool DRW_Entity::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
     case 440:
         transparency = reader->getInt32();
         break;
+    case 92:
+    case 160:
+        // Proxy entity graphics byte count (ODA §20.4.95): 92 for R13–R2007,
+        // 160 for R2010+.  Introduces the 310 hex chunks below; gating the 310
+        // capture on this keeps unrelated binary-310 streams out of the proxy
+        // buffer.  (Entities that repurpose 92 — e.g. MESH — handle it in their
+        // own parseCode and never reach here.)
+        numProxyGraph = reader->getInt32();
+        break;
+    case 310:
+        if (numProxyGraph != 0) {
+            // Proxy graphics binary, hex-encoded across many ≤254-char chunks.
+            const std::string& hex = reader->getString();
+            proxyGraphics.reserve(proxyGraphics.size() + hex.size() / 2);
+            auto hexVal = [](char c) -> int {
+                if (c >= '0' && c <= '9') return c - '0';
+                if (c >= 'a' && c <= 'f') return c - 'a' + 10;
+                if (c >= 'A' && c <= 'F') return c - 'A' + 10;
+                return -1;
+            };
+            for (std::size_t i = 0; i + 1 < hex.size(); i += 2) {
+                int hi = hexVal(hex[i]), lo = hexVal(hex[i + 1]);
+                if (hi < 0 || lo < 0) break;
+                proxyGraphics.push_back(static_cast<char>((hi << 4) | lo));
+            }
+        }
+        break;
     case 1000:
     case 1001:
     case 1002:

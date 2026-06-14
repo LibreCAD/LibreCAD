@@ -180,6 +180,10 @@ public:
     /// Unsupported OBJECTS-section records encountered during read. Keyed by
     /// DXF recName for custom classes or by fixed type code for fixed objects.
     std::unordered_map<std::string, size_t> getSkippedUnsupportedObjects() const;
+    /// Number of render primitives recovered by decoding the cached proxy
+    /// graphics of raw-net custom entities (STDPART2D, AEC_*, …). Non-zero
+    /// means previously-invisible geometry now renders.
+    size_t getDecodedProxyPrimitives() const { return m_decodedProxyPrimitives; }
 bool testReader();
     void setDebug(DRW::DebugLevel lvl);
 
@@ -220,6 +224,9 @@ private:
     /// Captured from reader->m_skippedUnsupportedObjects before reader.reset()
     /// so getSkippedUnsupportedObjects() works post-read.
     std::unordered_map<std::string, size_t> m_skippedUnsupportedObjects;
+    /// Captured from reader->m_decodedProxyPrimitives before reader.reset()
+    /// so getDecodedProxyPrimitives() works post-read.
+    size_t m_decodedProxyPrimitives { 0 };
 
 };
 

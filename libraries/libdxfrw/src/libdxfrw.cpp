@@ -25,6 +25,7 @@
 #include "intern/dxfwriter.h"
 #include "intern/drw_dbg.h"
 #include "intern/dwgutil.h"
+#include "intern/proxygraphicdecoder.h"
 
 #define FIRSTHANDLE 48
 
@@ -4877,14 +4878,23 @@ bool dxfRW::processRawEntity() {
     int code;
     DRW_RawDxfObject ent;
     ent.name = nextentity;
+    // Accumulate any cached proxy graphics (codes 92/160 + 310) via the common
+    // entity parser so we can decode it into render primitives — same path as
+    // the DWG reader.  proxyHost is a throwaway carrier; the raw object is still
+    // delivered verbatim for round-trip.
+    DRW_Point proxyHost;
     while (reader->readRec(&code)) {
         DRW_DBG(code); DRW_DBG("\n");
         if (0 == code) {
             nextentity = reader->getString();
             DRW_DBG(nextentity); DRW_DBG("\n");
+            if (proxyHost.proxyGraphics.size() >= 16)
+                DRW_ProxyGraphicDecoder::decode(proxyHost.proxyGraphics, version,
+                                                *iface, proxyHost);
             iface->addRawDxfEntity(ent);
             return true;  //found new entity, ENDSEC or ENDBLK, terminate
         }
+        proxyHost.parseCode(code, reader); // captures layer + proxyGraphics
         captureRawGroup(ent, code);
     }
 

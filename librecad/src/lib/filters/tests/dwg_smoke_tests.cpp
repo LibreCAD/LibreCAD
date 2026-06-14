@@ -30,6 +30,7 @@
  */
 
 #include <catch2/catch_test_macros.hpp>
+#include <catch2/catch_approx.hpp>
 
 #include <cctype>
 #include <cmath>
@@ -49,8 +50,10 @@
 
 #include "drw_base.h"
 #include "drw_interface.h"
+#include "intern/proxygraphicdecoder.h"
 #include "intern/drw_dbg.h"
 #include "libdwgr.h"
+#include "libdxfrw.h"
 
 // LibreCAD entity headers for end-to-end DRW→RS_Hatch pipeline tests.
 #include "lc_containertraverser.h"
@@ -4704,6 +4707,9 @@ TEST_CASE("DWG MESH decoded + delivered, not skipped", "[.dwg_readback_corpus]")
   int meshCount = 0, filesStillSkippingMesh = 0;
   std::size_t meshVerts = 0;
   bool anyFile = false;
+  // Proxy-graphics telemetry (Part 2): a STDPART2D carrier must yield decoded
+  // primitives — previously-invisible cached geometry now rendered.
+  std::size_t proxyPrims = 0, filesWithStdpart = 0, stdpartFilesWithProxy = 0;
   for (const std::string& dir : {std::string(home) + "/doc/dwg",
                                  std::string(home) + "/doc/dwg2",
                                  std::string(home) + "/doc/dwg3"}) {
@@ -4722,13 +4728,114 @@ TEST_CASE("DWG MESH decoded + delivered, not skipped", "[.dwg_readback_corpus]")
         const auto sk = reader.getSkippedCustomClasses();
         if (sk.find("MESH") != sk.end() || sk.find("AcDbSubDMesh") != sk.end())
           ++filesStillSkippingMesh;
+        const std::size_t np = reader.getDecodedProxyPrimitives();
+        proxyPrims += np;
+        if (sk.find("STDPART2D") != sk.end()) {
+          ++filesWithStdpart;            // STDPART2D still raw-netted (round-trip)
+          if (np > 0) ++stdpartFilesWithProxy;
+        }
       } catch (...) {}
     }
   }
   if (!anyFile) { SUCCEED("~/doc/dwg{,2,3} absent; skipping MESH probe"); return; }
   std::cerr << "\nMESH probe: meshCount=" << meshCount << " vertices=" << meshVerts
             << " filesStillSkippingMESH=" << filesStillSkippingMesh << "\n";
+  std::cerr << "PROXY probe: decodedPrimitives=" << proxyPrims
+            << " filesWithSTDPART2D=" << filesWithStdpart
+            << " ofThoseWithDecodedProxy=" << stdpartFilesWithProxy << "\n";
   CHECK(filesStillSkippingMesh == 0);  // MESH no longer falls to the raw net
+  // Every STDPART2D file should now surface decoded proxy primitives while the
+  // raw object is still preserved for round-trip.
+  if (filesWithStdpart > 0) CHECK(stdpartFilesWithProxy == filesWithStdpart);
   if (meshCount == 0) { SUCCEED("no MESH entities in local corpus"); return; }
   CHECK(meshVerts >= 1);  // geometry actually delivered
+}
+
+// Durable, CI-safe unit pin for the proxy-graphics decoder: a hand-crafted
+// blob (8-byte header + one CIRCLE chunk + one CIRCULAR_ARC chunk) exercising
+// the framing loop, the byte-aligned little-endian ByteStream, the 4-byte
+// alignment and the CIRCLE/ARC emission.  Coordinates are checked exactly —
+// this pins the field byte-orders the ezdxf port depends on.  Verified byte-
+// identical against ezdxf's own ProxyGraphic on a real corpus STDPART2D blob.
+TEST_CASE("proxy graphics decoder unit", "[proxy]") {
+  auto putU32 = [](std::string& s, std::uint32_t v) {
+    for (int i = 0; i < 4; ++i) s.push_back(char((v >> (8 * i)) & 0xFF));
+  };
+  auto putD = [](std::string& s, double v) {
+    char b[8]; std::memcpy(b, &v, 8); s.append(b, 8); // host LE
+  };
+  std::string blob(8, '\0');                 // 8-byte header (skipped)
+  // CIRCLE (type 2): center(3d) + radius(d) + normal(3d) = 56-byte payload
+  putU32(blob, 8 + 56); putU32(blob, 2);
+  putD(blob, 10.0); putD(blob, 20.0); putD(blob, 0.0);   // center
+  putD(blob, 5.0);                                       // radius
+  putD(blob, 0.0); putD(blob, 0.0); putD(blob, 1.0);     // normal
+  // CIRCULAR_ARC (type 4): center(3d)+radius(d)+normal(3d)+startVec(3d)+sweep(d)
+  // = 24+8+24+24+8 = 88-byte payload.
+  putU32(blob, 8 + 88); putU32(blob, 4);
+  putD(blob, 1.0); putD(blob, 2.0); putD(blob, 0.0);     // center
+  putD(blob, 3.0);                                       // radius
+  putD(blob, 0.0); putD(blob, 0.0); putD(blob, 1.0);     // normal (Z)
+  putD(blob, 1.0); putD(blob, 0.0); putD(blob, 0.0);     // start vec → angle 0
+  putD(blob, M_PI / 2.0);                                // sweep = 90°
+
+  struct Cap : public TypeTrackingIface {
+    int circles = 0, arcs = 0;
+    DRW_Circle lastC; DRW_Arc lastA;
+    void addCircle(const DRW_Circle& e) override { ++circles; lastC = e; }
+    void addArc(const DRW_Arc& e) override { ++arcs; lastA = e; }
+  } cap;
+  DRW_Point parent;
+  int n = DRW_ProxyGraphicDecoder::decode(blob, DRW::AC1024, cap, parent);
+
+  REQUIRE(n == 2);
+  REQUIRE(cap.circles == 1);
+  REQUIRE(cap.arcs == 1);
+  CHECK(cap.lastC.basePoint.x == Catch::Approx(10.0));
+  CHECK(cap.lastC.basePoint.y == Catch::Approx(20.0));
+  CHECK(cap.lastC.radious == Catch::Approx(5.0));
+  CHECK(cap.lastA.basePoint.x == Catch::Approx(1.0));
+  CHECK(cap.lastA.radious == Catch::Approx(3.0));
+  CHECK(cap.lastA.staangle == Catch::Approx(0.0));           // start vec (1,0) → 0 rad
+  CHECK(cap.lastA.endangle == Catch::Approx(M_PI / 2.0));    // 0 + 90° sweep
+}
+
+// DXF parity (Part 2.3): an unmodeled DXF entity carrying proxy graphics
+// (group 92 length + group 310 hex) is decoded into render primitives on read,
+// via DRW_Entity::parseCode + dxfRW::processRawEntity. Mirrors the DWG path.
+TEST_CASE("proxy graphics decoded from DXF", "[proxy]") {
+  // Build the same CIRCLE blob as the unit test, then hex-encode it.
+  auto putU32 = [](std::string& s, std::uint32_t v) {
+    for (int i = 0; i < 4; ++i) s.push_back(char((v >> (8 * i)) & 0xFF));
+  };
+  auto putD = [](std::string& s, double v) { char b[8]; std::memcpy(b, &v, 8); s.append(b, 8); };
+  std::string blob(8, '\0');
+  putU32(blob, 8 + 56); putU32(blob, 2);
+  putD(blob, 100.0); putD(blob, 200.0); putD(blob, 0.0);   // center
+  putD(blob, 7.5);                                         // radius
+  putD(blob, 0.0); putD(blob, 0.0); putD(blob, 1.0);       // normal
+  std::string hex;
+  static const char* H = "0123456789ABCDEF";
+  for (unsigned char c : blob) { hex.push_back(H[c >> 4]); hex.push_back(H[c & 0xF]); }
+
+  std::string dxf =
+      "0\nSECTION\n2\nENTITIES\n"
+      "0\nACAD_PROXY_ENTITY\n8\nproxylayer\n"
+      "92\n" + std::to_string(blob.size()) + "\n"
+      "310\n" + hex + "\n"
+      "0\nENDSEC\n0\nEOF\n";
+  const std::string path =
+      (std::filesystem::temp_directory_path() / "proxy_parity.dxf").string();
+  { std::ofstream out(path); out << dxf; }
+
+  struct Cap : public TypeTrackingIface {
+    int circles = 0; DRW_Circle last;
+    void addCircle(const DRW_Circle& e) override { ++circles; last = e; }
+  } cap;
+  dxfRW reader(path.c_str());
+  REQUIRE(reader.read(&cap, false));
+  REQUIRE(cap.circles == 1);
+  CHECK(cap.last.basePoint.x == Catch::Approx(100.0));
+  CHECK(cap.last.basePoint.y == Catch::Approx(200.0));
+  CHECK(cap.last.radious == Catch::Approx(7.5));
 }

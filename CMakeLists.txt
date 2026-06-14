@@ -309,6 +309,8 @@ set(SHARED_SOURCES
     libraries/libdxfrw/src/intern/dwgreader32.h
     libraries/libdxfrw/src/intern/dwgutil.cpp
     libraries/libdxfrw/src/intern/dwgutil.h
+    libraries/libdxfrw/src/intern/proxygraphicdecoder.cpp
+    libraries/libdxfrw/src/intern/proxygraphicdecoder.h
     libraries/libdxfrw/src/intern/dxfreader.cpp
     libraries/libdxfrw/src/intern/dxfreader.h
     libraries/libdxfrw/src/intern/dxfwriter.cpp

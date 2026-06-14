@@ -42,6 +42,7 @@ set(libdxfrw_srcs
   src/intern/dwgreader27.cpp
   src/intern/dwgreader32.cpp
   src/intern/dwgutil.cpp
+  src/intern/proxygraphicdecoder.cpp
   src/intern/dxfreader.cpp
   src/intern/dxfwriter.cpp
   src/intern/rscodec.cpp
@@ -79,6 +80,7 @@ set(libdxfrw_hdrs
   src/intern/dwgreader27.h
   src/intern/dwgreader32.h
   src/intern/dwgutil.h
+  src/intern/proxygraphicdecoder.h
   src/intern/dxfreader.h
   src/intern/dxfwriter.h
   src/intern/rscodec.h

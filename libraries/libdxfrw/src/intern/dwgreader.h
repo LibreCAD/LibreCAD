@@ -243,6 +243,11 @@ public:
     /// proxy-capable graphics — whose geometry never reaches the
     /// renderer.  Surface to the user so they know what's missing.
     std::unordered_map<std::string, size_t> m_skippedCustomClasses;
+    /// Count of render primitives recovered by decoding the cached proxy
+    /// graphics of raw-net custom entities (STDPART2D, AEC_*, …) — these are
+    /// emitted through the interface IN ADDITION to the raw object, so a
+    /// non-zero value means previously-invisible geometry now renders.
+    size_t m_decodedProxyPrimitives = 0;
     /// OBJECTS-section records that libdxfrw still cannot decode. Unlike
     /// m_skippedCustomClasses, this also includes non-graphical metadata such
     /// as reactors, filters, TABLECONTENT, dynamic-block graphs, etc.

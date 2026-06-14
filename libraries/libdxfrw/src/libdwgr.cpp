@@ -174,6 +174,7 @@ bool dwgRW::read(DRW_Interface *interface_, bool ext){
         m_classesCrcMismatch = reader->m_classesCrcMismatch;
         m_skippedCustomClasses = reader->m_skippedCustomClasses;
         m_skippedUnsupportedObjects = reader->m_skippedUnsupportedObjects;
+        m_decodedProxyPrimitives = reader->m_decodedProxyPrimitives;
         reader.reset();
     }
 
