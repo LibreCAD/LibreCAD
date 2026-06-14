@@ -1670,6 +1670,32 @@ bool dwgReader::readDwgEntity(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                         }
                         break;
                     }
+                    if (rn == "SURFACE" || rn == "EXTRUDEDSURFACE" || rn == "REVOLVEDSURFACE"
+                        || rn == "LOFTEDSURFACE" || rn == "SWEPTSURFACE" || rn == "PLANESURFACE"
+                        || cn == "AcDbSurface" || cn == "AcDbExtrudedSurface"
+                        || cn == "AcDbRevolvedSurface" || cn == "AcDbLoftedSurface"
+                        || cn == "AcDbSweptSurface" || cn == "AcDbPlaneSurface"
+                        || cn == "AcDbNurbSurface") {
+                        // AcDbSurface family ⊂ AcDbModelerGeometry: reuse the ACIS
+                        // path used for 3DSOLID/REGION/BODY (cases 37-39). The
+                        // surface-specific trailing fields (u/v isolines, sweep/loft
+                        // options) are not modelled, but the ACIS blob and the
+                        // history handle live in the common modeler prologue, and
+                        // the raw carrier preserves the full object for round-trip.
+                        // Tagged E3DSOLID so parseDwg reads the modeler history
+                        // handle that surfaces share via AcDbModelerGeometry.
+                        DRW_ModelerGeometry e(DRW::E3DSOLID);
+                        if (entryParse(e, buff, bs, ret)) {
+                            e.m_objectSize = static_cast<std::uint32_t>(size);
+                            e.m_rawBytes = tmpByteStr;
+                            intfa.addModelerGeometry(e);
+                        }
+                        // Always emit the lossless raw carrier (even on parse
+                        // failure) so the surface round-trips; break to skip the
+                        // generic skipped-custom-class fall-through.
+                        intfa.addUnsupportedObject(makeRawEntity(oType, cit->second));
+                        break;
+                    }
                     if (rn == "PDFUNDERLAY" || rn == "DGNUNDERLAY" || rn == "DWFUNDERLAY"
                         || cn == "AcDbPdfReference" || cn == "AcDbDgnReference"
                         || cn == "AcDbDwfReference") {

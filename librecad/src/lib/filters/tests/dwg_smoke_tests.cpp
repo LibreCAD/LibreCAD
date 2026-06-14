@@ -1540,6 +1540,75 @@ TEST_CASE("DWG corpus: load all files in ~/doc/dwg3/", "[.dwg3]") {
             << "  Total: " << paths.size() << "\n";
 }
 
+// makeall-plus.dwg (AC1032/R2018) is a "make-everything" torture file with ~179
+// distinct DWG types. This deep diagnostic enumerates exactly which entity types
+// libdxfrw surfaces versus which it leaves in the skipped-custom-class telemetry,
+// so coverage gaps (surfaces, pointcloud, section) are measurable, not inferred.
+// Run: ./librecad_tests "[.dwg_makeall]" -s
+TEST_CASE("DWG makeall-plus.dwg: deep coverage diagnostic", "[.dwg_makeall]") {
+  const char *home = getenv("HOME");
+  if (!home) {
+    SUCCEED("HOME not set; skipping");
+    return;
+  }
+  const std::string path = std::string(home) + "/doc/dwg3/makeall-plus.dwg";
+  if (!std::filesystem::is_regular_file(path)) {
+    SUCCEED("makeall-plus.dwg not present; skipping");
+    return;
+  }
+
+  // Counts EVERY delivery path, including those the shared TypeTrackingIface
+  // ignores: MESH, modeler geometry (3DSOLID/REGION/BODY/SURFACE), and the raw
+  // unsupported-object carrier.
+  struct CoverageIface : public TypeTrackingIface {
+    int meshes = 0, modelerGeoms = 0, unsupported = 0;
+    std::map<std::string, int> unsupportedByName;
+    void addMesh(const DRW_Mesh &e) override {
+      trackT(e, "MESH");
+      ++meshes;
+    }
+    void addModelerGeometry(const DRW_ModelerGeometry &) override {
+      ++modelerGeoms;
+      typeCounts["(modeler-geometry)"]++;
+    }
+    void addUnsupportedObject(const DRW_UnsupportedObject &e) override {
+      ++unsupported;
+      unsupportedByName[e.m_recordName.empty() ? "(unnamed)" : e.m_recordName]++;
+    }
+  } iface;
+
+  DRW::setCustomDebugPrinter(new DRW::DebugPrinter()); // silent
+  dwgR reader(path.c_str());
+  const bool ok = reader.read(&iface, true);
+
+  std::cout << "\n=== makeall-plus.dwg coverage ===\n";
+  std::cout << "ok=" << ok << "  error=" << errorStr(reader.getError())
+            << "  version=" << versionStr(reader.getVersion()) << "\n";
+  std::cout << "blocks=" << iface.blocks << "  layers=" << iface.layers
+            << "  entity-callbacks=" << iface.total() << "\n";
+  std::cout << "meshes=" << iface.meshes
+            << "  modelerGeoms=" << iface.modelerGeoms
+            << "  unsupportedObjects=" << iface.unsupported
+            << "  decodedProxyPrimitives=" << reader.getDecodedProxyPrimitives()
+            << "\n";
+
+  std::cout << "\nHandled entity type distribution:\n";
+  for (const auto &[t, c] : iface.typeCounts)
+    std::cout << "  " << std::left << std::setw(22) << t << c << "\n";
+
+  std::cout << "\n*** Skipped custom CLASSES (entity-pass; THE coverage gap) ***\n";
+  for (const auto &[name, c] : reader.getSkippedCustomClasses())
+    std::cout << "  " << std::left << std::setw(34) << name << c << "\n";
+
+  std::cout << "\nSkipped unsupported OBJECTS (objects-pass):\n";
+  for (const auto &[name, c] : reader.getSkippedUnsupportedObjects())
+    std::cout << "  " << std::left << std::setw(34) << name << c << "\n";
+
+  std::cout << "\nUnsupported raw carriers delivered (by record name):\n";
+  for (const auto &[name, c] : iface.unsupportedByName)
+    std::cout << "  " << std::left << std::setw(34) << name << c << "\n";
+}
+
 TEST_CASE("DWG corpus: load all files in ~/doc/dwg2/") {
   const char *home = getenv("HOME");
   if (!home) {
