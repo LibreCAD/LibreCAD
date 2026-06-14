@@ -94,6 +94,12 @@ static void putLitLen18(std::vector<std::uint8_t>& out, std::uint32_t n) {
     out.push_back(static_cast<std::uint8_t>(rem));         // final ll in 1..255
 }
 
+// Byte count putLitLen18 emits for length n — used to size the self-referential
+// Section Page Map page analytically (avoids a build/measure iteration).
+static std::uint32_t litLen18Bytes(std::uint32_t n) {
+    return (n <= 18) ? 1u : ((n - 19) / 0xFF + 2);
+}
+
 // Compress a system section as an R2004-LZ77 *literal-only* stream: one initial
 // literal run covering the whole input, no back-references. The decompressor's
 // output window fills on that run, so its opcode loop never executes and no
@@ -404,15 +410,21 @@ static std::vector<std::uint8_t> buildFileHeader(std::uint64_t secPageMapAddr,
     vrl(40, numPages);  // last section page Id = last page in Section Page Map
     vrll(44, lastPageEndAddr - 0x100);  // last section page end addr (relative: - 0x100)
     vrll(52, 0);         // start of second header = 0
-    vrl(60, 0);          // gap amount
-    vrl(64, numPages);   // section page amount
+    vrl(60, 0);          // @0x3c numgaps = 0
+    // @0x40 numsections: libreDWG checks (pages-in-map == numgaps + numsections);
+    // with no gaps this is the TOTAL page count (data pages + DSM + SPM), == numPages.
+    vrl(64, numPages);
     vrl(68, 0x20);
     vrl(72, 0x80);
     vrl(76, 0x40);
-    vrl(80, static_cast<std::uint32_t>(-1));  // Section Page Map Id (informational)
-    vrll(84, secPageMapAddr - 0x100);   // Section Page Map address (relative)
-    vrl(92, secMapId);           // Section Map Id
-    vrl(96, numPages);           // Section page array size
+    // @0x50 section_map_id = the Section-Page-Map's OWN page id (the last/highest
+    // page). libreDWG searches the page map for this number; it was hardcoded -1
+    // ("section_map_id -1 not found"). It equals last_section_id (@0x28) here
+    // because the SPM is the last page. (plan 3.2)
+    vrl(80, numPages);
+    vrll(84, secPageMapAddr - 0x100);   // @0x54 section_map_address (SPM, relative)
+    vrl(92, secMapId);           // @0x5c section_info_id = Data-Section-Map page id
+    vrl(96, numPages);           // @0x60 section_array_size = total page count
     vrl(100, 0);                 // Gap array size
     vrl(104, 0);                 // CRC32 placeholder (zeroed for computation)
 
@@ -572,15 +584,32 @@ bool dwgWriter18::finalize() {
     const std::uint64_t addrDsm = nextAddr;
     std::uint64_t addrSPM = addrDsm + static_cast<std::uint64_t>(dsmPage.size());
 
-    // Build Section Page Map sys page.
+    // Build Section Page Map sys page. The SPM must list EVERY page INCLUDING
+    // ITSELF: libreDWG (decode.c:1427/1501) searches the page map for the entry
+    // whose number == section_map_id (= the SPM's own page id) and sums all
+    // listed page sizes to validate last_section_address. Omitting the self-entry
+    // gave "section_map_id -1 not found" + "Invalid last_section_address" and
+    // left the file undecodable past the page map. (write-review pass-2 #3 / plan 3.2)
+    // The SPM size is self-referential; compute it analytically — the self-entry
+    // grows the content by exactly one 8-byte (number,size) pair and the
+    // compressed sys-page size is deterministic (20-byte header + lit-len + content).
     std::vector<std::uint32_t> pageSizes;
     pageSizes.reserve(dataPages.size() + 2);
     for (const std::vector<std::uint8_t>& page : dataPages)
         pageSizes.push_back(static_cast<std::uint32_t>(page.size()));
-    pageSizes.push_back(static_cast<std::uint32_t>(dsmPage.size()));
+    pageSizes.push_back(static_cast<std::uint32_t>(dsmPage.size()));   // DSM page
+    const std::uint32_t spmContentSize =
+        static_cast<std::uint32_t>((pageSizes.size() + 1) * 8);  // +1: SPM self-entry
+    const std::uint32_t spmPageSizePredicted =
+        20 + litLen18Bytes(spmContentSize) + spmContentSize;
+    pageSizes.push_back(spmPageSizePredicted);                        // SPM self-page
     auto spmData = buildSectionPageMapContent(pageSizes);
     auto spmPage = buildSysPage(0x41630e3b, spmData.data(),
                                 static_cast<std::uint32_t>(spmData.size()));
+    // The analytic self-size MUST equal the built page size, else the page map
+    // is internally inconsistent (would re-introduce the addressing bug).
+    if (spmPage.size() != spmPageSizePredicted)
+        return false;
 
     // Build the 0x100-byte file header.
     // lastPageEndAddr = byte address just past the end of the last page listed
@@ -589,7 +618,7 @@ bool dwgWriter18::finalize() {
     const std::uint32_t dataSectionMapPageId = nextPageId;
     auto fileHdr = buildFileHeader(addrSPM, dataSectionMapPageId,
                                    addrSPM + static_cast<std::uint64_t>(spmPage.size()),
-                                   static_cast<std::uint32_t>(pageSizes.size()),
+                                   static_cast<std::uint32_t>(pageSizes.size()),  // total pages (incl SPM)
                                    fileHeaderVersion());
 
     // Write everything.
