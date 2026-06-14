@@ -498,6 +498,42 @@ bool dwgWriter18::writeDwgClasses() {
     return true;
 }
 
+// Build the AcDb:AppInfo section content (libreDWG appinfo.spec). T16 here is a
+// byte string: RS byte-length + that many raw bytes (bit_read_T16 reads RC). The
+// <R2007 (AC1018) layout omits class_version + checksums and orders the strings
+// comment/product/version; the R2007+ (AC1024+) layout prepends class_version,
+// orders version/comment/product, and precedes each with a 16-byte checksum
+// (zeros accepted by the reader). version != "Teigha"/"AutoCAD" -> is_teigha false.
+static std::vector<std::uint8_t> buildAppInfoContent(DRW::Version version) {
+    std::vector<std::uint8_t> v;
+    auto putRS = [&](std::uint16_t x) {
+        v.push_back(static_cast<std::uint8_t>(x));
+        v.push_back(static_cast<std::uint8_t>(x >> 8));
+    };
+    auto putT16 = [&](const std::string& s) {
+        putRS(static_cast<std::uint16_t>(s.size()));
+        v.insert(v.end(), s.begin(), s.end());
+    };
+    auto putChecksum = [&]() { for (int i = 0; i < 16; ++i) v.push_back(0); };
+    const std::string name = "AppInfoDataList";
+    const std::string ver  = "LibreCAD";
+    if (version < DRW::AC1021) {           // R2004 (<R2007)
+        putT16(name);
+        putRL(v, 3);                       // num_strings
+        putT16("");                        // comment
+        putT16("");                        // product_info
+        putT16(ver);                       // version
+    } else {                               // R2007+ (AC1024/27/32)
+        putRL(v, 3);                       // class_version
+        putT16(name);
+        putRL(v, 3);                       // num_strings
+        putChecksum(); putT16(ver);        // version
+        putChecksum(); putT16("");         // comment
+        putChecksum(); putT16("");         // product_info
+    }
+    return v;
+}
+
 // --- dwgWriter18::finalize ---------------------------------------------------
 
 bool dwgWriter18::finalize() {
@@ -573,6 +609,17 @@ bool dwgWriter18::finalize() {
     if (hasAuxHeader) {
         appendDataPage("AcDb:AuxHeader", auxHeaderData.data(),
                        static_cast<std::uint32_t>(auxHeaderData.size()));
+    }
+
+    // AcDb:AppInfo — without it libreDWG logs "Failed to read AppInfo section"
+    // and AutoCAD flags the file "created by other software / may be corrupt".
+    // (write-review pass-3 / plan 3.4)
+    const std::vector<std::uint8_t> appInfoData =
+        (m_version >= DRW::AC1018) ? buildAppInfoContent(m_version)
+                                   : std::vector<std::uint8_t>();
+    if (!appInfoData.empty()) {
+        appendDataPage("AcDb:AppInfo", appInfoData.data(),
+                       static_cast<std::uint32_t>(appInfoData.size()));
     }
 
     // Build the Data Section Map sys page.
