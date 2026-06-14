@@ -507,7 +507,7 @@ std::uint32_t dwgWriter15::defineBlock(const std::string& name,
         if (m_version > DRW::AC1014 && m_version < DRW::AC1024) {
             body.putRawLong32(0);              // objSize stub (R2000/R2004 only)
         }
-        body.putHandle(makeHardPtr(blockRecH));
+        body.putHandle(makeOwnHandle(blockRecH));  // own handle: code 0 (plan 3.6)
         body.putBitShort(0);                   // extDataSize
         body.putBitLong(0);                    // numReactors
         if (m_version > DRW::AC1015) {
@@ -570,7 +570,7 @@ bool dwgWriter15::emitDeferredBlockControl() {
     if (m_version > DRW::AC1014 && m_version < DRW::AC1024) {
         body.putRawLong32(0);  // objSize stub (R2000/R2004 only)
     }
-    body.putHandle(makeHardPtr(reservedHandle::BLOCK_CONTROL));
+    body.putHandle(makeOwnHandle(reservedHandle::BLOCK_CONTROL));  // own handle: code 0 (plan 3.6)
     body.putBitShort(0);  // extDataSize
     body.putBitLong(0);   // numReactors
     if (m_version > DRW::AC1015) {
@@ -621,7 +621,7 @@ void dwgWriter15::emitBlockRecord(std::uint32_t handle, const std::string& name,
     if (m_version > DRW::AC1014 && m_version < DRW::AC1024) {
         body.putRawLong32(0);              // objSize stub (R2000/R2004 only)
     }
-    body.putHandle(makeHardPtr(handle));
+    body.putHandle(makeOwnHandle(handle));  // own handle: code 0 (plan 3.6)
     body.putBitShort(0);                   // extDataSize
     body.putBitLong(0);                    // numReactors
     if (m_version > DRW::AC1015) {
@@ -691,7 +691,7 @@ void dwgWriter15::emitTableRecord(std::uint16_t typeCode, std::uint32_t handle,
     if (m_version > DRW::AC1014 && m_version < DRW::AC1024) {
         body.putRawLong32(0);  // objSize placeholder (R2000/R2004 only)
     }
-    body.putHandle(makeHardPtr(handle));
+    body.putHandle(makeOwnHandle(handle));  // own handle: code 0, not code 4 (plan 3.6)
     body.putBitShort(0);   // extDataSize
     body.putBitLong(0);    // numReactors
     if (m_version > DRW::AC1015) {
@@ -727,7 +727,12 @@ static void emitRecordPreamble(dwgBufferW& body, DRW::Version version,
     body.putObjType(version, otype);
     if (version > DRW::AC1014 && version < DRW::AC1024)
         body.putRawLong32(0);
-    body.putHandle(makeHardPtr(handle));
+    // The object's OWN handle at the start of the object data must use code 0
+    // (handle-holder), not a code-4 reference: a code-4 here desyncs the whole
+    // object on read ("Invalid object handle ... @7.2"). The control objects via
+    // emitControlObject already use makeOwnHandle; the table records did not.
+    // (write-review / plan 3.6)
+    body.putHandle(makeOwnHandle(handle));
     body.putBitShort(0);
     body.putBitLong(0);
     if (version > DRW::AC1015)
