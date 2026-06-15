@@ -704,13 +704,9 @@ RS_Insert* RS_Modification::paste(const RS_PasteData& data, RS_Graphic* source) 
           RS_Insert* origInsert = static_cast<RS_Insert*>(e);
           RS_Insert* newInsert = static_cast<RS_Insert*>(e2);
           // Preserve and compose
-          newInsert->setAngle(origInsert->getAngle() - data.angle);
+          newInsert->setAngle(origInsert->getAngle());
           newInsert->setScale(origInsert->getScale());
           newInsert->update();
-        } else {
-          if (std::abs(scale.x)>RS_TOLERANCE && std::abs(scale.y)>RS_TOLERANCE) {
-            e2->scale(b->getBasePoint(), scale);
-          }
         }
 
         b->addEntity(e2);
@@ -718,7 +714,7 @@ RS_Insert* RS_Modification::paste(const RS_PasteData& data, RS_Graphic* source) 
     }
 
            // create insert:
-    RS_InsertData d(name, data.insertionPoint, RS_Vector(1.0,1.0), data.angle, 1,1, RS_Vector(0.0,0.0), nullptr, RS2::Update);  // Use data.angle and force update
+    RS_InsertData d(name, data.insertionPoint, scale, data.angle, 1,1, RS_Vector(0.0,0.0), nullptr, RS2::Update);  // Use data.angle and force update
     RS_Insert* ret = new RS_Insert(m_graphic, d);
     ret->setLayer(m_graphic->getActiveLayer());
 
