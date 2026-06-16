@@ -176,8 +176,10 @@ int console_dxf2png(int argc, char* argv[])
     if (outFile.isEmpty()) {
         outFile = dxfFileInfo.path() + "/" + fn + "." + args[0].mid(args[0].size()-3);
     } else {
-        outFile = dxfFileInfo.path() + "/" + outFile;
+        outFile = QFileInfo(outFile).isAbsolute() ? outFile : dxfFileInfo.path() + "/" + outFile;
     }
+
+    RS_FONTLIST->init();
 
     // Open the file and process the graphics
 
