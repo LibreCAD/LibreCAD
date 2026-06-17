@@ -106,25 +106,32 @@ QC_MDIWindow::~QC_MDIWindow()
 {
     RS_DEBUG->print("~QC_MDIWindow: begin");
     try {
-    if(!(graphicView != nullptr && graphicView->isCleanUp())){
+        if (!(graphicView != nullptr && graphicView->isCleanUp())) {
 
-		//do not clear layer/block lists, if application is being closed
+            //do not clear layer/block lists, if application is being closed
 
-		if (document->getLayerList()) {
-			document->getLayerList()->removeListener(graphicView);
-			document->getLayerList()->removeListener(this);
-		}
+            if (document->getLayerList()) {
+                document->getLayerList()->removeListener(graphicView);
+                document->getLayerList()->removeListener(this);
+            }
 
-		if (document->getBlockList()) {
-			document->getBlockList()->removeListener(graphicView);
-			document->getBlockList()->removeListener(this);
-		}
+            if (document->getBlockList()) {
+                document->getBlockList()->removeListener(graphicView);
+                document->getBlockList()->removeListener(this);
+            }
 
-        if (m_owner) {
-			delete document;
-		}
-		document = nullptr;
-	}
+            // Remove listeners from the graphic (added in commit 1a8202f)
+            // to avoid crashes when the window is closed and a new shape is drawn
+            RS_Graphic* graphic = document->getGraphic();
+            if (nullptr != graphic) {
+                graphic->removeLayerListListener(this);
+                graphic->removeBlockListListener(this);
+            }
+
+            if (m_owner) {
+                delete document;
+            }
+        }
     } catch (...) {
         LC_ERR<<__func__<<"(): received exception";
     }
