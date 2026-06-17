@@ -61,8 +61,10 @@ void QG_DlgInitial::init() {
     QString defaultLanguage=RS_SYSTEM->symbolToLanguage(QString("en"));
     for (QString language: languageList) {
         QString l = RS_SYSTEM->symbolToLanguage(language);
-        cbLanguage->addItem(l, language);
-        cbLanguageCmd->addItem(l, language);
+        if (!l.isEmpty() && cbLanguage->findData(language) == -1) {
+            cbLanguage->addItem(l, language);
+            cbLanguageCmd->addItem(l, language);
+        }
     }
 
 
