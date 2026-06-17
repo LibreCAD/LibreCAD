@@ -42,7 +42,7 @@ QG_ModifyOffsetOptions::QG_ModifyOffsetOptions()
     connect(ui->cbCurrentAttr, &QCheckBox::clicked, this, &QG_ModifyOffsetOptions::cbUseCurrentAttributesClicked);
     connect(ui->cbCurrentLayer, &QCheckBox::clicked, this, &QG_ModifyOffsetOptions::cbUseCurrentLayerClicked);
     connect(ui->leDist, &QLineEdit::editingFinished, this, &QG_ModifyOffsetOptions::onDistEditingFinished);
-    connect(ui->sbNumberOfCopies, &QSpinBox::valueChanged, this, &QG_ModifyOffsetOptions::onNumberOfCopiesValueChanged);
+    connect(ui->sbNumberOfCopies, QOverload<int>::of(&QSpinBox::valueChanged), this, &QG_ModifyOffsetOptions::onNumberOfCopiesValueChanged);
     connect(ui->cbFixedDistance, &QCheckBox::clicked, this, &QG_ModifyOffsetOptions::onFixedDistanceClicked);
     pickDistanceSetup("distance", ui->tbPickDistance, ui->leDist);
 }

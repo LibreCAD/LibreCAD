@@ -120,12 +120,52 @@ public:
     static RS_Settings *instance();
 
     /**
+     * Schema major version. Bumped only when LibreCAD's settings layout
+     * changes incompatibly with a prior major release. Decoupled from
+     * LC_VERSION on purpose: LC_VERSION carries git suffixes and
+     * alpha/beta/rc labels that should not gate a settings migration.
+     *
+     * The QSettings application name is "LibreCAD-<N>" where N is this
+     * constant; each major gets its own backing store and migrations
+     * across majors copy from the highest-numbered prior store.
+     */
+    static constexpr int LC_SETTINGS_SCHEMA_MAJOR = 2;
+
+    /**
      * Initialize the system.
+     *
+     * If `appKey` matches "LibreCAD-<integer>" and the resulting store
+     * is empty, scans for a prior-major sibling store under the same
+     * `companyKey` (highest match wins) and finally falls back to the
+     * legacy un-versioned name "LibreCAD". On hit, copies the prior
+     * store into the current one and stamps `_migratedFrom`,
+     * `_schemaMajor`, `_schemaMinor` sentinels at the top level.
      *
      * @param companyKey Company Key
      * @param appKey Application key
      */
     static void init(const QString& companyKey, const QString& appKey);
+
+    /**
+     * Recursively copy all groups and keys from `src` to `dst`. Schema
+     * meta-state keys at the top level (any key starting with "_") are
+     * skipped so the prior major's meta-state does not pollute the new
+     * store.
+     */
+    static void copyAll(QSettings* src, QSettings* dst);
+
+    /**
+     * Probe for a prior-major sibling store under `companyKey`. Returns
+     * the app name that was copied from (e.g., "LibreCAD-1") and stamps
+     * `_migratedFrom` / `_schemaMajor` / `_schemaMinor` on `dst`. Returns
+     * an empty string if no prior store was found.
+     *
+     * Search order: "LibreCAD-(currentMajor-1)", "LibreCAD-(currentMajor-2)",
+     * ..., "LibreCAD-1", then the legacy un-versioned "LibreCAD".
+     */
+    static QString migrateFromPriorMajor(const QString& companyKey,
+                                         QSettings* dst,
+                                         int currentMajor);
 
     // RAII style group guard: endGroup() is called automatically at the end of lifetime of the returned object
     std::unique_ptr<GroupGuard> beginGroupGuard(QString group);

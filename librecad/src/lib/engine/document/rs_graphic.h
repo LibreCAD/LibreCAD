@@ -24,10 +24,13 @@
 #ifndef RS_GRAPHIC_H
 #define RS_GRAPHIC_H
 
+#include <array>
+#include <cstdint>
 #include <memory>
 #include <QDateTime>
 
 #include "lc_dimstyle.h"
+#include "lc_dwgadvancedmetadata.h"
 #include "lc_ucslist.h"
 #include "lc_viewslist.h"
 #include "rs_blocklist.h"
@@ -44,6 +47,17 @@ class QString;
 
 class LC_View;
 class QG_LayerWidget;
+
+/**
+ * Thin alias over the DWG layout record persisted by libdxfrw's reader.
+ *
+ * Exposing the round-trip-grade record directly keeps the LibreCAD-side
+ * API zero-cost (no field-copy boilerplate) while routing all mutations
+ * through dedicated RS_Graphic setters that bump the modified flag. The
+ * UI layer (PR 10 tab bar, PR 11 plot dialog) consumes this type via
+ * RS_Graphic::layouts() / RS_Graphic::findLayout().
+ */
+using LC_Layout = LC_DwgAdvancedMetadata::LayoutRecord;
 
 class LC_GraphicModificationListener {
 public:
@@ -79,6 +93,60 @@ public:
     LC_TextStyleList* getTextStyleList() override {return &textStyleList;}
     void addDimStyle(LC_DimStyle* style) {dimstyleList.addDimStyle(style);}
     void newDoc() override;
+    LC_DwgAdvancedMetadata& dwgAdvancedMetadata() {return m_dwgAdvancedMetadata;}
+    const LC_DwgAdvancedMetadata& dwgAdvancedMetadata() const {return m_dwgAdvancedMetadata;}
+
+    // ---- Paper-space layouts (PR 9 — DWG OBJECTS surface) -----------
+    /**
+     * Read-only view of the paper-space layouts loaded with the drawing.
+     * Backed by LC_DwgAdvancedMetadata::layouts(); populated by
+     * RS_FilterDXFRW::addLayout during DWG import.  UI code (PR 10 tab
+     * bar) should call this then route mutations through the dedicated
+     * setLayoutMargins / setActiveLayoutHandle setters below — those
+     * bump the modified flag, whereas reaching directly into
+     * dwgAdvancedMetadata() does not.
+     */
+    const std::vector<LC_Layout>& layouts() const {
+        return m_dwgAdvancedMetadata.layouts();
+    }
+    /** @return pointer to the layout record matching @p handle, or nullptr. */
+    const LC_Layout* findLayout(std::uint32_t handle) const;
+
+    /**
+     * Active layout handle (paper-space tab the UI currently shows).
+     * Defaults to 0 — meaning the modelspace / first paper-space layout
+     * is implicitly active, matching legacy behavior.  PR 10 wires this
+     * into the new tab bar; PR 11 wires it into the plot dialog.
+     */
+    std::uint32_t activeLayoutHandle() const { return m_activeLayoutHandle; }
+    void setActiveLayoutHandle(std::uint32_t handle);
+
+    /** Per-layout paper margin setter — mutates the matching LayoutRecord
+     *  in dwgAdvancedMetadata() and bumps the modified flag.  Returns
+     *  false if @p handle has no matching layout. */
+    bool setLayoutMargins(std::uint32_t handle,
+                          double left, double top,
+                          double right, double bottom);
+
+    /**
+     * Active layout's paper margins in millimeters (left/top/right/bottom).
+     *
+     * When activeLayoutHandle() resolves to a stored LayoutRecord, returns
+     * that record's PlotSettings margins.  Otherwise (DXF / no layouts
+     * loaded / unmatched handle) falls back to the legacy document-level
+     * getMarginLeft/Top/Right/Bottom — preserving the existing plot dialog
+     * behavior for DXF documents.
+     */
+    std::array<double, 4> activeLayoutMargins() const;
+
+    /**
+     * Active layout's paper margin setter — writes to the matching
+     * LayoutRecord when activeLayoutHandle() resolves, falls back to
+     * setMargins() otherwise.  Negative components are skipped to mirror
+     * the legacy setMargins() / setLayoutMargins() convention.
+     */
+    void setActiveLayoutMargins(double left, double top,
+                                double right, double bottom);
     // Wrappers for Layer functions:
     void clearLayers() {layerList.clear();}
     unsigned countLayers() const {return layerList.count();}
@@ -302,6 +370,11 @@ private:
     LC_UCSList ucsList;
     LC_DimStylesList dimstyleList;
     LC_TextStyleList textStyleList;
+    LC_DwgAdvancedMetadata m_dwgAdvancedMetadata;
+
+    /** Active paper-space layout handle.  0 == "no explicit selection"
+     *  (legacy behavior — UI defaults to modelspace / first layout). */
+    std::uint32_t m_activeLayoutHandle = 0;
 
     //if set to true, will refuse to modify paper scale
     bool paperScaleFixed = false;

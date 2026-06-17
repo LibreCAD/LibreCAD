@@ -1,8 +1,20 @@
 QT   += core gui svg widgets
 
+include(../../settings.pri)
+
+macx|unix {
+    # qmake can accidentally pick up ignored MOC files left by an in-source
+    # Qt build. Remove them before dependency scanning so the generated build
+    # directory MOC is used for the active Qt version.
+    system(rm -f "$$PWD/lc_svgiconengineplugin.moc" "$$PWD/moc_predefs.h")
+}
+
+INCLUDEPATH = $$OUT_PWD $$INCLUDEPATH
+macx|unix:QMAKE_CXXFLAGS += -iquote $$OUT_PWD
+
 TARGET = lc_svgicons
 TEMPLATE = lib
-CONFIG += plugin
+CONFIG += plugin no_include_pwd
 
 DEFINES += QT_DEPRECATED_WARNINGS
 

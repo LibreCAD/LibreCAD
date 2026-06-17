@@ -36,13 +36,13 @@ LC_Rectangle1PointOptions::LC_Rectangle1PointOptions() :
     connect(ui->leX, &QLineEdit::editingFinished, this, &LC_Rectangle1PointOptions::onLenXEditingFinished);
 
     connect(ui->leAngle, &QLineEdit::editingFinished, this, &LC_Rectangle1PointOptions::onAngleEditingFinished);
-    connect(ui->cbCorners, &QComboBox::currentIndexChanged, this, &LC_Rectangle1PointOptions::onCornersIndexChanged);
-    connect(ui->cbSnapPoint, &QComboBox::currentIndexChanged, this,&LC_Rectangle1PointOptions::onSnapPointIndexChanged);
+    connect(ui->cbCorners, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &LC_Rectangle1PointOptions::onCornersIndexChanged);
+    connect(ui->cbSnapPoint, QOverload<int>::of(&QComboBox::currentIndexChanged), this,&LC_Rectangle1PointOptions::onSnapPointIndexChanged);
 
     connect(ui->cbPolyline, &QCheckBox::clicked ,this, &LC_Rectangle1PointOptions::onUsePolylineClicked);
     connect(ui->cbSnapRadiusCenter, &QCheckBox::clicked, this, &LC_Rectangle1PointOptions::onSnapToCornerArcCenterClicked);
     connect(ui->cbInnerSize, &QCheckBox::clicked, this, &LC_Rectangle1PointOptions::onInnerSizeClicked);
-    connect(ui->cbEdges, &QComboBox::currentIndexChanged, this, &LC_Rectangle1PointOptions::onEdgesIndexChanged);
+    connect(ui->cbEdges, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &LC_Rectangle1PointOptions::onEdgesIndexChanged);
     connect(ui->chkFixedBaseAngle, &QCheckBox::clicked, this, &LC_Rectangle1PointOptions::onBaseAngleFixedClicked);
     connect(ui->cbFreeAngle, &QCheckBox::clicked, this, &LC_Rectangle1PointOptions::onFreeAngleClicked);
 

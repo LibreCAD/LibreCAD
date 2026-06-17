@@ -16,6 +16,7 @@
 
 #include <string>
 #include <memory>
+#include <set>
 #include <unordered_map>
 //#include <deque>
 #include "drw_entities.h"
@@ -39,8 +40,7 @@ public:
     bool read(DRW_Interface *interface_, bool ext);
 
     /// Write the in-memory model (driven via DRW_Interface callbacks)
-    /// out to the file named at construction.  v1 supports `DRW::AC1015`
-    /// (R2000) only; other versions return false with `BAD_VERSION`.
+    /// out to the file named at construction.
     /// The `bin` parameter is ignored — DWG is always binary — but
     /// kept for API symmetry with `dxfRW::write`.  Returns true on
     /// success, false on error; error code accessible via `getError()`.
@@ -72,6 +72,15 @@ public:
     bool writeAttdef(DRW_Attdef *ent);
     bool writeHatch(DRW_Hatch *ent);
     bool writeDimension(DRW_Dimension *ent);
+    bool writeTolerance(DRW_Tolerance *ent);
+    bool writeLight(DRW_Light *ent);
+    bool writeMLine(DRW_MLine *ent);
+    bool writePolyline(DRW_Polyline *ent);
+    bool writeLeader(DRW_Leader *ent);
+    bool writeMLeader(DRW_MLeader *ent);
+    bool writeViewport(DRW_Viewport *ent);
+    bool writeShape(DRW_Shape *ent);
+    bool writeOle2Frame(DRW_Ole2Frame *ent);
 
     /// Define an empty user-block.  Allocates fresh Block_Record + Block
     /// + ENDBLK handles, emits all three into the object stream, and
@@ -80,7 +89,70 @@ public:
     /// `blockRecH.ref` on subsequent `DRW_Insert` entities.  Must be
     /// invoked from the iface's `writeBlocks()` callback (before
     /// `writeEntities`); returns 0 if invoked outside that window.
-    duint32 defineBlock(const std::string& name, const DRW_Coord& basePoint);
+    std::uint32_t defineBlock(const std::string& name, const DRW_Coord& basePoint,
+                        int insUnits = 0);
+
+    /// Reserve a preserved source handle BEFORE write() so it can never be
+    /// minted by defineBlock()/next() during the write.  The caller (filter)
+    /// uses this for fixed-type OBJECTS (DICTIONARY/XRECORD/GROUP/LAYOUT/
+    /// ACDBPLACEHOLDER/MLINESTYLE) and raw objects that carry a low source
+    /// handle: without it, a block-record handle minted by defineBlock can
+    /// collide with such an object's preserved handle → duplicate object-map
+    /// entry → writeDwgHandles() fails → BAD_OPEN aborts the whole save.
+    /// Reserved handles are seeded into the writer at the top of write()
+    /// (before writeBlocks); calling this is a no-op once write() has run.
+    /// Mirrors `dxfRW::reserveHandle`. (write-review P3 #1)
+    void reserveHandle(std::uint32_t h) { m_reservedHandles.insert(h); }
+
+    /// Table-record registration API — invoked from the iface's writeLTypes/
+    /// writeLayers/etc. callbacks.  Each method normalises the name, deduplicates
+    /// against standard entries, allocates a handle, and queues the record for
+    /// emission in writeDwgObjects().  Returns false if invoked outside write().
+    bool addLType(DRW_LType *ent);
+    bool addLayer(DRW_Layer *ent);
+    bool addTextstyle(DRW_Textstyle *ent);
+    bool addView(DRW_View *ent);
+    bool addVport(DRW_Vport *ent);
+    bool addDimstyle(DRW_Dimstyle *ent);
+    bool addAppId(DRW_AppId *ent);
+    bool writeAcDbPlaceholder(DRW_AcDbPlaceholder *object);
+    bool registerSunObjectClass(DRW_Sun *object);
+    bool writeSun(DRW_Sun *object);
+    bool registerMLeaderStyleObjectClass(DRW_MLeaderStyle *object);
+    bool writeMLeaderStyle(DRW_MLeaderStyle *object);
+    bool writeDictionary(DRW_Dictionary *object);
+    bool writeXRecord(DRW_XRecord *object);
+    bool writeLayout(DRW_Layout *object);
+    bool writeGroup(DRW_Group *object);
+    bool registerRasterVariablesObjectClass(DRW_RasterVariables *object);
+    bool writeRasterVariables(DRW_RasterVariables *object);
+    bool registerGeoDataObjectClass(DRW_GeoData *object);
+    bool writeGeoData(DRW_GeoData *object);
+    bool registerSpatialFilterObjectClass(DRW_SpatialFilter *object);
+    bool writeSpatialFilter(DRW_SpatialFilter *object);
+    // PR 8d.2a — five small no-storage OBJECTS families.
+    bool registerScaleObjectClass(DRW_Scale *object);
+    bool writeScale(DRW_Scale *object);
+    bool registerIDBufferObjectClass(DRW_IDBuffer *object);
+    bool writeIDBuffer(DRW_IDBuffer *object);
+    bool registerLayerIndexObjectClass(DRW_LayerIndex *object);
+    bool writeLayerIndex(DRW_LayerIndex *object);
+    bool registerSpatialIndexObjectClass(DRW_SpatialIndex *object);
+    bool writeSpatialIndex(DRW_SpatialIndex *object);
+    bool registerDictionaryVarObjectClass(DRW_DictionaryVar *object);
+    bool writeDictionaryVar(DRW_DictionaryVar *object);
+    // PR 8d.2b — four larger no-storage OBJECTS families.
+    bool registerDictionaryWithDefaultObjectClass(DRW_DictionaryWithDefault *object);
+    bool writeDictionaryWithDefault(DRW_DictionaryWithDefault *object);
+    bool registerSortEntsTableObjectClass(DRW_SortEntsTable *object);
+    bool writeSortEntsTable(DRW_SortEntsTable *object);
+    bool registerFieldListObjectClass(DRW_FieldList *object);
+    bool writeFieldList(DRW_FieldList *object);
+    bool registerFieldObjectClass(DRW_Field *object);
+    bool writeField(DRW_Field *object);
+    bool registerRawDwgObjectClass(const DRW_UnsupportedObject *object);
+    bool writeRawDwgObject(DRW_UnsupportedObject *object);
+    bool writeRawDwgSection(const DRW_RawDwgSection *section);
 
     bool getPreview();
     DRW::Version getVersion(){return version;}
@@ -90,6 +162,13 @@ public:
     /// Zero on a clean load. Surface alongside the entity count so users
     /// know how many entities were skipped.
     size_t getEntityParseFailures() const;
+    /// Per-object parseDwg failures accumulated during the OBJECTS-section
+    /// load. Like getEntityParseFailures, these are non-fatal warnings — the
+    /// file still loads with the surviving objects. Zero on a clean load.
+    size_t getObjectParseFailures() const;
+    /// R13/R15 CLASSES-section CRC mismatches (warn-only — a mismatch no longer
+    /// fails the import). Non-fatal diagnostic; zero on a clean load.
+    size_t getClassesCrcMismatch() const;
     /// Vendor-extension custom-class entities (oType >= 500) silently
     /// dropped because libdxfrw has no parser for their proprietary
     /// binary layout — typically AutoCAD Mechanical (AmgStdPart aka
@@ -98,6 +177,18 @@ public:
     /// DXF recName, value is the instance count.  Empty on a stock
     /// AutoCAD file.  Caller can format a user-facing summary.
     std::unordered_map<std::string, size_t> getSkippedCustomClasses() const;
+    /// Unsupported OBJECTS-section records encountered during read. Keyed by
+    /// DXF recName for custom classes or by fixed type code for fixed objects.
+    std::unordered_map<std::string, size_t> getSkippedUnsupportedObjects() const;
+    /// Number of render primitives recovered by decoding the cached proxy
+    /// graphics of raw-net custom entities (STDPART2D, AEC_*, …). Non-zero
+    /// means previously-invisible geometry now renders.
+    size_t getDecodedProxyPrimitives() const { return m_decodedProxyPrimitives; }
+    /// Layer / linetype names in file storage order — the index space the
+    /// proxy-graphics ATTRIBUTE_LAYER/LINETYPE opcodes reference. Exposed for
+    /// regression-testing the index→name mapping against the dwgread oracle.
+    const std::vector<std::string>& getLayerNameOrder() const { return m_layerNameOrder; }
+    const std::vector<std::string>& getLtypeNameOrder() const { return m_ltypeNameOrder; }
 bool testReader();
     void setDebug(DRW::DebugLevel lvl);
 
@@ -115,6 +206,10 @@ private:
     DRW_Interface *iface { nullptr };
     std::unique_ptr< dwgReader > reader;
     std::unique_ptr< dwgWriter > writer;
+    /// Handles reserved by the caller via reserveHandle() before write();
+    /// seeded into the writer's HandleAllocator before writeBlocks so a
+    /// preserved source handle can't be minted by defineBlock. (P3 #1)
+    std::set<std::uint32_t> m_reservedHandles;
     /// Caller-populated on write via `iface->writeHeader(header)` —
     /// mirrors `dxfRW`'s local `DRW_Header header;` at the top of
     /// `dxfRW::write`.  Owned for the lifetime of the writer instance.
@@ -122,9 +217,25 @@ private:
     /// Captured from reader->m_entityParseFailures before reader.reset()
     /// so getEntityParseFailures() works post-read.
     size_t m_entityParseFailures { 0 };
+    /// Captured from reader->m_objectParseFailures before reader.reset()
+    /// so getObjectParseFailures() works post-read.
+    size_t m_objectParseFailures { 0 };
+    /// Captured from reader->m_classesCrcMismatch before reader.reset()
+    /// so getClassesCrcMismatch() works post-read.
+    size_t m_classesCrcMismatch { 0 };
     /// Captured from reader->m_skippedCustomClasses before reader.reset()
     /// so getSkippedCustomClasses() works post-read.
     std::unordered_map<std::string, size_t> m_skippedCustomClasses;
+    /// Captured from reader->m_skippedUnsupportedObjects before reader.reset()
+    /// so getSkippedUnsupportedObjects() works post-read.
+    std::unordered_map<std::string, size_t> m_skippedUnsupportedObjects;
+    /// Captured from reader->m_decodedProxyPrimitives before reader.reset()
+    /// so getDecodedProxyPrimitives() works post-read.
+    size_t m_decodedProxyPrimitives { 0 };
+    /// Captured layer / linetype storage order (proxy index space) before
+    /// reader.reset() so the getters work post-read.
+    std::vector<std::string> m_layerNameOrder;
+    std::vector<std::string> m_ltypeNameOrder;
 
 };
 

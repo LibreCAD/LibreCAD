@@ -22,6 +22,8 @@
 
 #include "lc_dimstyleslist.h"
 
+#include <QMap>
+
 #include "lc_dimstyle.h"
 
 LC_DimStylesList::LC_DimStylesList() {
@@ -34,9 +36,15 @@ LC_DimStylesList::~LC_DimStylesList() {
 }
 
 LC_DimStyle *LC_DimStylesList::findByName(const QString &name) const {
-    //
+    // NFC-normalize both sides (chokepoint for findByBaseNameAndType /
+    // resolveByBaseName too) so a style round-tripped through a toolchain
+    // emitting decomposed (NFD) Unicode still matches a composed (NFC)
+    // lookup. The '$' NAME_SEPARATOR is ASCII, so suffix parsing is
+    // unaffected. Mirrors RS_BlockList::find / LC_TextStyleList::find.
+    const QString k = name.normalized(QString::NormalizationForm_C);
     for (auto v: m_stylesList){
-        if (v->getName().compare(name, Qt::CaseInsensitive) == 0){
+        if (v->getName().normalized(QString::NormalizationForm_C)
+                .compare(k, Qt::CaseInsensitive) == 0){
             return v;
         }
     }

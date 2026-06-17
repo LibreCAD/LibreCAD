@@ -23,6 +23,7 @@
 
 #ifndef LC_ENTITYPROPERTIESEDITORSUPPORT_H
 #define LC_ENTITYPROPERTIESEDITORSUPPORT_H
+#include <QPair>
 #include <QString>
 
 #include "rs_vector.h"

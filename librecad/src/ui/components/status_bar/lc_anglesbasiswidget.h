@@ -23,6 +23,7 @@
 #ifndef LC_ANGLESBASISWIDGET_H
 #define LC_ANGLESBASISWIDGET_H
 
+#include <QIcon>
 #include <QWidget>
 #include "lc_graphicviewaware.h"
 

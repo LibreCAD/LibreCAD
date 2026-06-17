@@ -27,6 +27,7 @@
 #define QG_LIBRARYWIDGET_H
 
 #include <memory>
+#include <QIcon>
 #include "lc_graphicviewawarewidget.h"
 #include <QModelIndex>
 

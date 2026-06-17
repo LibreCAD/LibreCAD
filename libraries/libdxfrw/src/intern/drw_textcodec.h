@@ -43,6 +43,11 @@ public:
     std::string decodeText(int c);
     std::string encodeNum(int c);
     int decodeNum(const std::string& s, int *b);
+    /// Decode a `\M+cXXXX` MIF escape (8 chars; c=selector 1..5, XXXX=hex
+    /// of a 2-byte sequence in the selector's codepage) to UTF-8.
+    /// Selector mapping: 1→ANSI_932, 2→ANSI_950, 3→ANSI_949,
+    /// 4→Johab(fallback ANSI_1252), 5→ANSI_936. Returns empty on invalid.
+    std::string encodeMifText(const std::string& tok);
     const int *table{nullptr};
     int cpLength;
 };

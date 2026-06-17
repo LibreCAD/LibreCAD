@@ -64,7 +64,7 @@ QG_PrintPreviewOptions::QG_PrintPreviewOptions()
             scale(ui->cbScale->currentText());
         ui->cbScale->blockSignals(false);
     });
-        connect(ui->cbScale, &QComboBox::currentIndexChanged, [this](int index){
+        connect(ui->cbScale, QOverload<int>::of(&QComboBox::currentIndexChanged), [this](int index){
         ui->cbScale->blockSignals(true);
         scale(ui->cbScale->itemText(index));
         ui->cbScale->blockSignals(false);
@@ -79,8 +79,8 @@ QG_PrintPreviewOptions::QG_PrintPreviewOptions()
     connect(ui->tbPortait, &QToolButton::clicked, this, &QG_PrintPreviewOptions::onPortraitClicked);
     connect(ui->tbLandscape, &QToolButton::clicked, this, &QG_PrintPreviewOptions::onLandscapeClicked);
 
-    connect(ui->sbPagesVertical, &QSpinBox::valueChanged, this, &QG_PrintPreviewOptions::onVerticalPagesValueChanges);
-    connect(ui->sbPagessHorizontal, &QSpinBox::valueChanged, this, &QG_PrintPreviewOptions::onHorizontalPagesValueChanges);
+    connect(ui->sbPagesVertical, QOverload<int>::of(&QSpinBox::valueChanged), this, &QG_PrintPreviewOptions::onVerticalPagesValueChanges);
+    connect(ui->sbPagessHorizontal, QOverload<int>::of(&QSpinBox::valueChanged), this, &QG_PrintPreviewOptions::onHorizontalPagesValueChanges);
 
     ui->cbTiledPrint->setChecked(false);
     ui->wTiledPrint->setVisible(false);

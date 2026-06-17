@@ -24,22 +24,30 @@
 **
 **********************************************************************/
 
+#include <array>
 #include<cstdlib>
+#include <cmath>
+#include <set>
 #include <stack>
 #include<utility>
 
 #include <QDir>
 #include <QFile>
 #include <QFileInfo>
+#include <QLocale>
 #include <QRegularExpression>
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 #include <QStringConverter>
+#endif
 #include <QStringList>
 
 #include "dxf_format.h"
 #include "lc_containertraverser.h"
 #include "lc_defaults.h"
+#include "lc_dimarc.h"
 #include "lc_dimarrowregistry.h"
 #include "lc_dimordinate.h"
+#include "lc_dwgadvancedmetadata.h"
 #include "lc_dimstyle.h"
 #include "lc_extentitydata.h"
 #include "lc_hyperbola.h"
@@ -89,10 +97,787 @@
 
 namespace {
 
-// convert DRW_Coord to RS_Vector
-RS_Vector coordToVector(const std::shared_ptr<DRW_Coord>& c) {
-    return c ? RS_Vector(c->x, c->y) : RS_Vector(false);
+constexpr int kImportedSplineFallbackSamples = 96;
+
+bool differsFromUnitWeight(double weight) {
+    return std::fabs(weight - 1.0) > 1e-12;
+}
+
+bool hasRationalSplineWeights(const DRW_Spline* data) {
+    if (data == nullptr)
+        return false;
+    return (data->flags & 0x4) != 0 ||
+           std::any_of(data->weightlist.begin(), data->weightlist.end(), differsFromUnitWeight);
+}
+
+bool buildSplineDataFromDrw(const DRW_Spline* source, RS_SplineData& target) {
+    if (source == nullptr || source->degree < 1 || source->controllist.empty())
+        return false;
+
+    const size_t degree = static_cast<size_t>(source->degree);
+    const size_t controlCount = source->controllist.size();
+    if (controlCount < degree + 1)
+        return false;
+
+    const size_t requiredKnots = controlCount + degree + 1;
+    if (source->knotslist.size() < requiredKnots)
+        return false;
+
+    const bool closed = (source->flags & 0x3) != 0;
+    target = RS_SplineData(source->degree, closed);
+    target.type = closed ? RS_SplineData::SplineType::WrappedClosed
+                         : RS_SplineData::SplineType::ClampedOpen;
+
+    target.knotslist.assign(source->knotslist.begin(),
+                            source->knotslist.begin() + requiredKnots);
+
+    target.controlPoints.reserve(controlCount);
+    target.weights.reserve(controlCount);
+    const bool rational = hasRationalSplineWeights(source);
+    for (size_t i = 0; i < controlCount; ++i) {
+        const auto& control = source->controllist[i];
+        if (!control)
+            return false;
+        target.controlPoints.push_back({control->x, control->y});
+        double weight = 1.0;
+        if (rational && i < source->weightlist.size())
+            weight = source->weightlist[i];
+        if (weight <= 0.0 || !std::isfinite(weight))
+            return false;
+        target.weights.push_back(weight);
+    }
+
+    return true;
+}
+
+constexpr double kTableFallbackDimension = 1.0;
+constexpr double kTableFallbackMinTextHeight = 0.1;
+
+enum class TableFallbackCellKind {
+    Empty,
+    PlainText,
+    PlaceholderField,
+    PlaceholderBlock,
+    PlaceholderAttribute,
+    PlaceholderUnknown
 };
+
+struct TableFallbackCellDisplay {
+    QString text;
+    TableFallbackCellKind kind = TableFallbackCellKind::Empty;
+};
+
+TableFallbackCellDisplay tableCellDisplay(const DRW_TableCell& cell,
+                                          bool tableParseComplete) {
+    auto placeholder = [](TableFallbackCellKind kind, const char *text) {
+        TableFallbackCellDisplay display;
+        display.kind = kind;
+        display.text = QString::fromLatin1(text);
+        return display;
+    };
+
+    if (!tableParseComplete || cell.m_geometryFlags != 0
+        || cell.m_geometryHandle != 0 || cell.m_overrideFlags != 0
+        || cell.m_isMerged) {
+        return placeholder(TableFallbackCellKind::PlaceholderUnknown, "[TABLE]");
+    }
+
+    for (const DRW_TableCellContent& content : cell.m_contents) {
+        if (content.m_type == 4)
+            return placeholder(TableFallbackCellKind::PlaceholderBlock, "[BLOCK]");
+        if (content.m_type == 2 || content.m_handle != 0)
+            return placeholder(TableFallbackCellKind::PlaceholderField, "[FIELD]");
+        if (!content.m_text.empty()) {
+            return {QString::fromUtf8(content.m_text.c_str()),
+                    TableFallbackCellKind::PlainText};
+        }
+        if (!content.m_value.m_valueString.empty()) {
+            return {QString::fromUtf8(content.m_value.m_valueString.c_str()),
+                    TableFallbackCellKind::PlainText};
+        }
+        if (content.m_type != 0 && content.m_type != 1)
+            return placeholder(TableFallbackCellKind::PlaceholderUnknown, "[TABLE]");
+    }
+    if (cell.m_blockHandle != 0)
+        return placeholder(TableFallbackCellKind::PlaceholderBlock, "[BLOCK]");
+    if (cell.m_valueHandle != 0)
+        return placeholder(TableFallbackCellKind::PlaceholderField, "[FIELD]");
+    for (const DRW_TableCellAttribute& attribute : cell.m_attributes) {
+        if (!attribute.m_text.empty()) {
+            return {QString::fromUtf8(attribute.m_text.c_str()),
+                    TableFallbackCellKind::PlaceholderAttribute};
+        }
+        if (attribute.m_attdefHandle != 0)
+            return placeholder(TableFallbackCellKind::PlaceholderAttribute, "[ATTR]");
+    }
+    if (!cell.m_attributes.empty())
+        return placeholder(TableFallbackCellKind::PlaceholderAttribute, "[ATTR]");
+    return {};
+}
+
+bool tableFallbackCellIsPlaceholder(TableFallbackCellKind kind) {
+    return kind != TableFallbackCellKind::PlainText
+           && kind != TableFallbackCellKind::Empty;
+}
+
+double tableColumnWidth(const DRW_TableContent& content, size_t index,
+                        RS_FilterDXFRW::TableFallbackRenderSummary *summary) {
+    if (index < content.m_columns.size()
+        && std::isfinite(content.m_columns[index].m_width)
+        && content.m_columns[index].m_width > 0.0) {
+        return content.m_columns[index].m_width;
+    }
+    if (summary != nullptr)
+        ++summary->clampedDimensionCount;
+    return kTableFallbackDimension;
+}
+
+double tableRowHeight(const DRW_TableContent& content, size_t index,
+                      RS_FilterDXFRW::TableFallbackRenderSummary *summary) {
+    if (index < content.m_rows.size()
+        && std::isfinite(content.m_rows[index].m_height)
+        && content.m_rows[index].m_height > 0.0) {
+        return content.m_rows[index].m_height;
+    }
+    if (summary != nullptr)
+        ++summary->clampedDimensionCount;
+    return kTableFallbackDimension;
+}
+
+DRW_UnsupportedObject rawObjectFromMetadata(
+    const LC_DwgAdvancedMetadata::RawObjectRecord& record) {
+    DRW_UnsupportedObject object;
+    object.m_objectType = record.objectType;
+    object.m_handle = record.handle;
+    object.m_bodyBitSize = record.bodyBitSize;
+    object.m_objectOffset = record.objectOffset;
+    object.m_objectSize = record.objectSize;
+    object.m_isEntity = record.isEntity;
+    object.m_isCustomClass = record.isCustomClass;
+    object.m_recordName = record.recordName;
+    object.m_className = record.className;
+    object.m_rawBytes = record.rawBytes;
+    return object;
+}
+
+bool isSunRawObject(const LC_DwgAdvancedMetadata::RawObjectRecord& record) {
+    return record.recordName == "SUN" || record.className == "AcDbSun";
+}
+
+bool isAcDbPlaceholderRawObject(
+    const LC_DwgAdvancedMetadata::RawObjectRecord& record) {
+    return record.objectType == 80 || record.recordName == "ACDBPLACEHOLDER"
+        || record.className == "AcDbPlaceHolder";
+}
+
+bool isMLeaderStyleRawObject(
+    const LC_DwgAdvancedMetadata::RawObjectRecord& record) {
+    return record.recordName == "MLEADERSTYLE"
+        || record.className == "AcDbMLeaderStyle";
+}
+
+// DICTIONARY raw-object predicate.  Fixed type 42 is the universal ODA
+// identifier; recordName / className fallbacks cover custom-class-emitted
+// dictionaries (rare but spec-allowed).
+bool isDictionaryRawObject(
+    const LC_DwgAdvancedMetadata::RawObjectRecord& record) {
+    return record.objectType == 42 || record.recordName == "DICTIONARY"
+        || record.className == "AcDbDictionary";
+}
+
+// XRECORD raw-object predicate.  Fixed type 79 (0x4f) is the universal ODA
+// identifier; the custom-class branch in dwgreader still emits raw bytes
+// under the AcDbXrecord recName/className for non-fixed XRECORDs.
+bool isXRecordRawObject(
+    const LC_DwgAdvancedMetadata::RawObjectRecord& record) {
+    return record.objectType == 79 || record.recordName == "XRECORD"
+        || record.className == "AcDbXrecord";
+}
+
+// LAYOUT raw-object predicate.  Fixed type 82 + recordName/className
+// fallback for vendor extensions.
+bool isLayoutRawObject(
+    const LC_DwgAdvancedMetadata::RawObjectRecord& record) {
+    return record.objectType == 82 || record.recordName == "LAYOUT"
+        || record.className == "AcDbLayout";
+}
+
+// GROUP raw-object predicate.  Fixed type 72 (ODA §20.4.72) + recordName/
+// className fallback for vendor extensions.
+bool isGroupRawObject(
+    const LC_DwgAdvancedMetadata::RawObjectRecord& record) {
+    return record.objectType == 72 || record.recordName == "GROUP"
+        || record.className == "AcDbGroup";
+}
+
+// RASTERVARIABLES raw-object predicate.  Custom-class object (no fixed
+// ODA type) — keyed on recordName/className per dwgreader's dispatch.
+bool isRasterVariablesRawObject(
+    const LC_DwgAdvancedMetadata::RawObjectRecord& record) {
+    return record.recordName == "RASTERVARIABLES"
+        || record.className == "AcDbRasterVariables";
+}
+
+// GEODATA raw-object predicate.  Custom-class (no fixed ODA type).
+bool isGeoDataRawObject(
+    const LC_DwgAdvancedMetadata::RawObjectRecord& record) {
+    return record.recordName == "GEODATA"
+        || record.className == "AcDbGeoData";
+}
+
+// SPATIAL_FILTER raw-object predicate.  Custom-class (no fixed ODA type).
+bool isSpatialFilterRawObject(
+    const LC_DwgAdvancedMetadata::RawObjectRecord& record) {
+    return record.recordName == "SPATIAL_FILTER"
+        || record.className == "AcDbSpatialFilter";
+}
+
+// PR 8d.2a — five small no-storage OBJECTS families.  All custom-class
+// (no fixed ODA type); recordName / className strings must match the
+// dwgreader.cpp dispatch (case-sensitive).
+bool isScaleRawObject(
+    const LC_DwgAdvancedMetadata::RawObjectRecord& record) {
+    return record.recordName == "SCALE"
+        || record.className == "AcDbScale";
+}
+
+bool isIDBufferRawObject(
+    const LC_DwgAdvancedMetadata::RawObjectRecord& record) {
+    return record.recordName == "IDBUFFER"
+        || record.className == "AcDbIdBuffer";
+}
+
+bool isLayerIndexRawObject(
+    const LC_DwgAdvancedMetadata::RawObjectRecord& record) {
+    return record.recordName == "LAYER_INDEX"
+        || record.className == "AcDbLayerIndex";
+}
+
+bool isSpatialIndexRawObject(
+    const LC_DwgAdvancedMetadata::RawObjectRecord& record) {
+    return record.recordName == "SPATIAL_INDEX"
+        || record.className == "AcDbSpatialIndex";
+}
+
+bool isDictionaryVarRawObject(
+    const LC_DwgAdvancedMetadata::RawObjectRecord& record) {
+    return record.recordName == "DICTIONARYVAR"
+        || record.className == "AcDbDictionaryVar";
+}
+
+// PR 8d.2b — four larger no-storage OBJECTS families.  recordName /
+// className strings must match dwgreader.cpp dispatch (case-sensitive).
+bool isDictionaryWithDefaultRawObject(
+    const LC_DwgAdvancedMetadata::RawObjectRecord& record) {
+    return record.recordName == "ACDBDICTIONARYWDFLT"
+        || record.recordName == "DICTIONARYWDFLT"
+        || record.className == "AcDbDictionaryWithDefault";
+}
+
+bool isSortEntsTableRawObject(
+    const LC_DwgAdvancedMetadata::RawObjectRecord& record) {
+    return record.recordName == "SORTENTSTABLE"
+        || record.className == "AcDbSortentsTable";
+}
+
+bool isFieldListRawObject(
+    const LC_DwgAdvancedMetadata::RawObjectRecord& record) {
+    return record.recordName == "FIELDLIST"
+        || record.className == "AcDbFieldList";
+}
+
+bool isFieldRawObject(
+    const LC_DwgAdvancedMetadata::RawObjectRecord& record) {
+    return record.recordName == "FIELD"
+        || record.className == "AcDbField";
+}
+
+bool hasReplayableRawMLeaderStyle(const LC_DwgAdvancedMetadata& metadata,
+                                  std::uint32_t handle) {
+    if (handle == 0)
+        return false;
+    for (const auto& record : metadata.rawObjects()) {
+        if (record.handle == handle && isMLeaderStyleRawObject(record)
+            && LC_DwgAdvancedMetadata::rawReplayBlocker(record)
+                   == LC_DwgAdvancedMetadata::ReplayBlocker::None) {
+            return true;
+        }
+    }
+    return false;
+}
+
+DRW_AcDbPlaceholder placeholderFromMetadata(
+    const LC_DwgAdvancedMetadata::PlaceholderRecord& record) {
+    DRW_AcDbPlaceholder placeholder;
+    placeholder.handle = record.handle;
+    placeholder.parentHandle = static_cast<int>(record.parentHandle);
+    return placeholder;
+}
+
+DRW_Dictionary dictionaryFromMetadata(
+    const LC_DwgAdvancedMetadata::DictionaryRecord& record) {
+    DRW_Dictionary dictionary;
+    dictionary.handle = record.handle;
+    dictionary.parentHandle = static_cast<int>(record.parentHandle);
+    dictionary.cloning = record.cloning;
+    dictionary.hardOwner = record.hardOwner;
+    dictionary.name = record.name;
+    dictionary.m_entries.reserve(record.entries.size());
+    for (const auto& er : record.entries) {
+        DRW_Dictionary::Entry entry;
+        entry.m_name = er.name;
+        entry.m_handle = er.handle;
+        dictionary.m_entries.push_back(std::move(entry));
+    }
+    return dictionary;
+}
+
+DRW_XRecord xrecordFromMetadata(
+    const LC_DwgAdvancedMetadata::XRecordRecord& record) {
+    DRW_XRecord xrecord;
+    xrecord.handle = record.handle;
+    xrecord.parentHandle = static_cast<int>(record.parentHandle);
+    xrecord.m_cloning = record.cloning;
+    xrecord.m_values = record.values;
+    xrecord.m_handleValues = record.handleValues;
+    return xrecord;
+}
+
+DRW_Layout layoutFromMetadata(
+    const LC_DwgAdvancedMetadata::LayoutRecord& record) {
+    DRW_Layout layout;
+    layout.handle = record.handle;
+    layout.parentHandle = static_cast<int>(record.parentHandle);
+    // PlotSettings prefix.
+    layout.pageSetupName = record.pageSetupName;
+    layout.printerConfig = record.printerConfig;
+    layout.plotLayoutFlags = record.plotLayoutFlags;
+    layout.marginLeft = record.marginLeft;
+    layout.marginBottom = record.marginBottom;
+    layout.marginRight = record.marginRight;
+    layout.marginTop = record.marginTop;
+    layout.paperWidth = record.paperWidth;
+    layout.paperHeight = record.paperHeight;
+    layout.paperSize = record.paperSize;
+    layout.plotOriginX = record.plotOriginX;
+    layout.plotOriginY = record.plotOriginY;
+    layout.paperUnits = record.paperUnits;
+    layout.plotRotation = record.plotRotation;
+    layout.plotType = record.plotType;
+    layout.windowMinX = record.windowMinX;
+    layout.windowMinY = record.windowMinY;
+    layout.windowMaxX = record.windowMaxX;
+    layout.windowMaxY = record.windowMaxY;
+    layout.plotViewName = record.plotViewName;
+    layout.realWorldUnits = record.realWorldUnits;
+    layout.drawingUnits = record.drawingUnits;
+    layout.currentStyleSheet = record.currentStyleSheet;
+    layout.scaleType = record.scaleType;
+    layout.scaleFactor = record.scaleFactor;
+    layout.paperImageOriginX = record.paperImageOriginX;
+    layout.paperImageOriginY = record.paperImageOriginY;
+    layout.shadePlotMode = record.shadePlotMode;
+    layout.shadePlotResLevel = record.shadePlotResLevel;
+    layout.shadePlotCustomDPI = record.shadePlotCustomDPI;
+    // Layout-specific.
+    layout.name = record.name;
+    layout.layoutFlags = record.layoutFlags;
+    layout.tabOrder = record.tabOrder;
+    layout.ucsOrigin = record.ucsOrigin;
+    layout.limMinX = record.limMinX;
+    layout.limMinY = record.limMinY;
+    layout.limMaxX = record.limMaxX;
+    layout.limMaxY = record.limMaxY;
+    layout.insPoint = record.insPoint;
+    layout.ucsXAxis = record.ucsXAxis;
+    layout.ucsYAxis = record.ucsYAxis;
+    layout.elevation = record.elevation;
+    layout.orthoViewType = record.orthoViewType;
+    layout.extMin = record.extMin;
+    layout.extMax = record.extMax;
+    layout.viewportCount = record.viewportCount;
+    layout.plotViewHandle.ref = record.plotViewHandle;
+    layout.visualStyleHandle.ref = record.visualStyleHandle;
+    layout.paperSpaceBlockRecordHandle.ref = record.paperSpaceBlockRecordHandle;
+    layout.lastActiveViewportHandle.ref = record.lastActiveViewportHandle;
+    layout.baseUcsHandle.ref = record.baseUcsHandle;
+    layout.namedUcsHandle.ref = record.namedUcsHandle;
+    layout.viewportHandles = record.viewportHandles;
+    return layout;
+}
+
+DRW_Group groupFromMetadata(
+    const LC_DwgAdvancedMetadata::GroupRecord& record) {
+    DRW_Group group;
+    group.handle = record.handle;
+    group.parentHandle = static_cast<int>(record.parentHandle);
+    group.m_description = record.description;
+    group.m_isUnnamed = record.isUnnamed;
+    group.m_selectable = record.selectable;
+    group.m_entityHandles = record.entityHandles;
+    return group;
+}
+
+DRW_RasterVariables rasterVariablesFromMetadata(
+    const LC_DwgAdvancedMetadata::RasterVariablesRecord& record) {
+    DRW_RasterVariables rv;
+    rv.handle = record.handle;
+    rv.parentHandle = static_cast<int>(record.parentHandle);
+    rv.m_classVersion = record.classVersion;
+    rv.m_imageFrame = record.imageFrame;
+    rv.m_imageQuality = record.imageQuality;
+    rv.m_units = record.units;
+    return rv;
+}
+
+DRW_GeoData geoDataFromMetadata(
+    const LC_DwgAdvancedMetadata::GeoDataRecord& record) {
+    DRW_GeoData gd;
+    gd.handle = record.handle;
+    gd.parentHandle = static_cast<int>(record.parentHandle);
+    gd.m_hostBlockHandle = record.hostBlockHandle;
+    gd.m_version = record.version;
+    gd.m_coordinatesType = record.coordinatesType;
+    gd.m_horizontalUnits = record.horizontalUnits;
+    gd.m_verticalUnits = record.verticalUnits;
+    gd.m_horizontalUnitScale = record.horizontalUnitScale;
+    gd.m_verticalUnitScale = record.verticalUnitScale;
+    gd.m_coordinateSystemDefinition = record.coordinateSystemDefinition;
+    gd.m_geoRssTag = record.geoRssTag;
+    gd.m_designPoint = record.designPoint;
+    gd.m_referencePoint = record.referencePoint;
+    gd.m_upDirection = record.upDirection;
+    gd.m_northDirection = record.northDirection;
+    gd.m_scaleEstimationMethod = record.scaleEstimationMethod;
+    gd.m_userSpecifiedScaleFactor = record.userSpecifiedScaleFactor;
+    gd.m_enableSeaLevelCorrection = record.enableSeaLevelCorrection;
+    gd.m_seaLevelElevation = record.seaLevelElevation;
+    gd.m_coordinateProjectionRadius = record.coordinateProjectionRadius;
+    gd.m_observationFromTag = record.observationFromTag;
+    gd.m_observationToTag = record.observationToTag;
+    gd.m_observationCoverageTag = record.observationCoverageTag;
+    gd.m_points.reserve(record.meshPoints.size());
+    for (const auto& mp : record.meshPoints) {
+        DRW_GeoMeshPoint point;
+        point.m_source = mp.source;
+        point.m_destination = mp.destination;
+        gd.m_points.push_back(point);
+    }
+    gd.m_faces.reserve(record.meshFaces.size());
+    for (const auto& mf : record.meshFaces) {
+        DRW_GeoMeshFace face;
+        face.m_index1 = mf.index1;
+        face.m_index2 = mf.index2;
+        face.m_index3 = mf.index3;
+        gd.m_faces.push_back(face);
+    }
+    return gd;
+}
+
+DRW_SpatialFilter spatialFilterFromMetadata(
+    const LC_DwgAdvancedMetadata::SpatialFilterRecord& record) {
+    DRW_SpatialFilter sf;
+    sf.handle = record.handle;
+    sf.parentHandle = static_cast<int>(record.parentHandle);
+    sf.m_boundaryPoints = record.boundaryPoints;
+    sf.m_normal = record.normal;
+    sf.m_origin = record.origin;
+    sf.m_displayBoundary = record.displayBoundary;
+    sf.m_clipFrontPlane = record.clipFrontPlane;
+    sf.m_clipBackPlane = record.clipBackPlane;
+    sf.m_frontDistance = record.frontDistance;
+    sf.m_backDistance = record.backDistance;
+    sf.m_inverseInsertTransform = record.inverseInsertTransform;
+    sf.m_insertTransform = record.insertTransform;
+    return sf;
+}
+
+// PR 8d.2a — five small no-storage OBJECTS families.  Flat field-copy
+// builders matching the addX captures above.
+DRW_Scale scaleFromMetadata(
+    const LC_DwgAdvancedMetadata::ScaleRecord& record) {
+    DRW_Scale s;
+    s.handle = record.handle;
+    s.parentHandle = static_cast<int>(record.parentHandle);
+    s.name = record.name;
+    s.flag = record.flag;
+    s.paperUnits = record.paperUnits;
+    s.drawingUnits = record.drawingUnits;
+    s.isUnitScale = record.isUnitScale;
+    return s;
+}
+
+DRW_MLineStyle mlineStyleFromMetadata(
+    const LC_DwgAdvancedMetadata::MLineStyleRecord& record) {
+    DRW_MLineStyle s;
+    s.handle = record.handle;
+    s.parentHandle = static_cast<int>(record.parentHandle);
+    s.name = record.name;
+    s.flags = record.flags;
+    s.description = record.description;
+    s.fillColor = record.fillColor;
+    s.startAngle = record.startAngle;
+    s.endAngle = record.endAngle;
+    s.elements.reserve(record.elements.size());
+    for (const auto& er : record.elements) {
+        DRW_MLineElement e;
+        e.offset = er.offset;
+        e.color = er.color;
+        e.linetype = er.linetype;
+        s.elements.push_back(std::move(e));
+    }
+    return s;
+}
+
+DRW_WipeoutVariables wipeoutVariablesFromMetadata(
+    const LC_DwgAdvancedMetadata::WipeoutVariablesRecord& record) {
+    DRW_WipeoutVariables w;
+    w.handle = record.handle;
+    w.parentHandle = static_cast<int>(record.parentHandle);
+    w.m_displayFrame = static_cast<std::uint16_t>(record.displayFrame);
+    return w;
+}
+
+DRW_IDBuffer idBufferFromMetadata(
+    const LC_DwgAdvancedMetadata::IDBufferRecord& record) {
+    DRW_IDBuffer b;
+    b.handle = record.handle;
+    b.parentHandle = static_cast<int>(record.parentHandle);
+    b.classVersion = record.classVersion;
+    b.objIds = record.objIds;
+    return b;
+}
+
+DRW_LayerIndex layerIndexFromMetadata(
+    const LC_DwgAdvancedMetadata::LayerIndexRecord& record) {
+    DRW_LayerIndex li;
+    li.handle = record.handle;
+    li.parentHandle = static_cast<int>(record.parentHandle);
+    li.timestamp1 = record.timestamp1;
+    li.timestamp2 = record.timestamp2;
+    li.entries.reserve(record.entries.size());
+    for (const auto& er : record.entries) {
+        DRW_LayerIndexEntry e;
+        e.indexLong = er.indexLong;
+        e.name = er.name;
+        e.entryHandle = er.entryHandle;
+        li.entries.push_back(std::move(e));
+    }
+    return li;
+}
+
+DRW_SpatialIndex spatialIndexFromMetadata(
+    const LC_DwgAdvancedMetadata::SpatialIndexRecord& record) {
+    DRW_SpatialIndex si;
+    si.handle = record.handle;
+    si.parentHandle = static_cast<int>(record.parentHandle);
+    si.timestamp1 = record.timestamp1;
+    si.timestamp2 = record.timestamp2;
+    return si;
+}
+
+DRW_DictionaryVar dictionaryVarFromMetadata(
+    const LC_DwgAdvancedMetadata::DictionaryVarRecord& record) {
+    DRW_DictionaryVar dv;
+    dv.handle = record.handle;
+    dv.parentHandle = static_cast<int>(record.parentHandle);
+    dv.m_schema = record.schema;
+    dv.m_value = record.value;
+    return dv;
+}
+
+// PR 8d.2b — four larger no-storage OBJECTS families.  Flat field-copy
+// builders matching the addX captures above.
+DRW_DictionaryWithDefault dictionaryWithDefaultFromMetadata(
+    const LC_DwgAdvancedMetadata::DictionaryWithDefaultRecord& record) {
+    DRW_DictionaryWithDefault dwd;
+    dwd.handle = record.handle;
+    dwd.parentHandle = static_cast<int>(record.parentHandle);
+    dwd.cloning = record.cloning;
+    dwd.hardOwner = record.hardOwner;
+    dwd.name = record.name;
+    dwd.m_entries.reserve(record.entries.size());
+    for (const auto& er : record.entries) {
+        DRW_Dictionary::Entry entry;
+        entry.m_name = er.name;
+        entry.m_handle = er.handle;
+        dwd.m_entries.push_back(std::move(entry));
+    }
+    dwd.m_defaultEntryHandle = record.defaultEntryHandle;
+    return dwd;
+}
+
+DRW_SortEntsTable sortEntsTableFromMetadata(
+    const LC_DwgAdvancedMetadata::SortEntsTableRecord& record) {
+    DRW_SortEntsTable se;
+    se.handle = record.handle;
+    se.parentHandle = static_cast<int>(record.parentHandle);
+    se.m_sortHandles = record.sortHandles;
+    se.m_blockOwnerHandle = record.blockOwnerHandle;
+    se.m_entityHandles = record.entityHandles;
+    return se;
+}
+
+DRW_FieldList fieldListFromMetadata(
+    const LC_DwgAdvancedMetadata::FieldListRecord& record) {
+    DRW_FieldList fl;
+    fl.handle = record.handle;
+    fl.parentHandle = static_cast<int>(record.parentHandle);
+    fl.m_unknown = record.unknown;
+    fl.m_fieldHandles = record.fieldHandles;
+    return fl;
+}
+
+DRW_CadValue cadValueFromRecord(
+    const LC_DwgAdvancedMetadata::CadValueRecord& cr) {
+    DRW_CadValue cv;
+    cv.m_formatFlags = cr.formatFlags;
+    cv.m_dataType = cr.dataType;
+    cv.m_dataSize = cr.dataSize;
+    cv.m_unitType = cr.unitType;
+    cv.m_value = cr.value;
+    cv.m_formatString = cr.formatString;
+    cv.m_valueString = cr.valueString;
+    cv.m_handle = cr.handle;
+    cv.m_rawData = cr.rawData;
+    return cv;
+}
+
+DRW_Field fieldFromMetadata(
+    const LC_DwgAdvancedMetadata::FieldRecord& record) {
+    DRW_Field f;
+    f.handle = record.handle;
+    f.parentHandle = static_cast<int>(record.parentHandle);
+    f.m_evaluatorId = record.evaluatorId;
+    f.m_fieldCode = record.fieldCode;
+    f.m_formatString = record.formatString;
+    f.m_evaluationOptionFlags = record.evaluationOptionFlags;
+    f.m_filingOptionFlags = record.filingOptionFlags;
+    f.m_fieldStateFlags = record.fieldStateFlags;
+    f.m_evaluationStatusFlags = record.evaluationStatusFlags;
+    f.m_evaluationErrorCode = record.evaluationErrorCode;
+    f.m_evaluationErrorMessage = record.evaluationErrorMessage;
+    f.m_value = cadValueFromRecord(record.value);
+    f.m_valueString = record.valueString;
+    f.m_valueStringLength = record.valueStringLength;
+    f.m_childHandles = record.childHandles;
+    f.m_objectHandles = record.objectHandles;
+    f.m_childValues.reserve(record.childValues.size());
+    for (const auto& cv : record.childValues) {
+        DRW_Field::ChildValue dcv;
+        dcv.m_key = cv.key;
+        dcv.m_value = cadValueFromRecord(cv.value);
+        f.m_childValues.push_back(std::move(dcv));
+    }
+    return f;
+}
+
+DRW_Sun sunFromMetadata(const LC_DwgAdvancedMetadata::SunRecord& record) {
+    DRW_Sun sun;
+    sun.handle = record.handle;
+    sun.parentHandle = static_cast<int>(record.parentHandle);
+    sun.m_classVersion = record.classVersion;
+    sun.m_isOn = record.isOn;
+    sun.m_color = record.color;
+    sun.m_intensity = record.intensity;
+    sun.m_hasShadow = record.hasShadow;
+    sun.m_julianDay = record.julianDay;
+    sun.m_milliseconds = record.milliseconds;
+    sun.m_isDaylightSavings = record.isDaylightSavings;
+    sun.m_shadowType = record.shadowType;
+    sun.m_shadowMapSize = record.shadowMapSize;
+    sun.m_shadowSoftness = record.shadowSoftness;
+    return sun;
+}
+
+DRW_MLeaderStyle mleaderStyleFromMetadata(
+    const LC_DwgAdvancedMetadata::MLeaderStyleRecord& record) {
+    DRW_MLeaderStyle style;
+    style.handle = record.handle;
+    style.parentHandle = static_cast<int>(record.parentHandle);
+    style.name = record.name;
+    style.styleVersion = record.styleVersion != 0 ? record.styleVersion : 2;
+    style.contentType = record.contentType;
+    style.drawMLeaderOrder = record.drawMLeaderOrder;
+    style.drawLeaderOrder = record.drawLeaderOrder;
+    style.maxLeaderPoints = record.maxLeaderPoints;
+    style.firstSegmentAngle = record.firstSegmentAngle;
+    style.secondSegmentAngle = record.secondSegmentAngle;
+    style.leaderType = record.leaderType;
+    style.leaderColor = record.leaderColor;
+    style.leaderLineTypeHandle.ref = record.leaderLineTypeHandle;
+    style.leaderLineWeight = record.leaderLineWeight;
+    style.landingEnabled = record.landingEnabled;
+    style.landingGap = record.landingGap;
+    style.autoIncludeLanding = record.autoIncludeLanding;
+    style.landingDistance = record.landingDistance;
+    style.description = record.description;
+    style.arrowHeadBlockHandle.ref = record.arrowHeadBlockHandle;
+    style.arrowHeadSize = record.arrowHeadSize;
+    style.textDefault = record.textDefault;
+    style.textStyleHandle.ref = record.textStyleHandle;
+    style.leftAttachment = record.leftAttachment;
+    style.rightAttachment = record.rightAttachment;
+    style.textAngleType = record.textAngleType;
+    style.textAlignmentType = record.textAlignmentType;
+    style.textColor = record.textColor;
+    style.textHeight = record.textHeight;
+    style.textFrameEnabled = record.textFrameEnabled;
+    style.alwaysAlignTextLeft = record.alwaysAlignTextLeft;
+    style.alignSpace = record.alignSpace;
+    style.blockHandle.ref = record.blockHandle;
+    style.blockColor = record.blockColor;
+    style.blockScale = record.blockScale;
+    style.blockScaleEnabled = record.blockScaleEnabled;
+    style.blockRotation = record.blockRotation;
+    style.blockRotationEnabled = record.blockRotationEnabled;
+    style.blockConnectionType = record.blockConnectionType;
+    style.scaleFactor = record.scaleFactor;
+    style.propertyChanged = record.propertyChanged;
+    style.isAnnotative = record.isAnnotative;
+    style.breakSize = record.breakSize;
+    style.attachmentDirection = record.attachmentDirection;
+    style.topAttachment = record.topAttachment;
+    style.bottomAttachment = record.bottomAttachment;
+    style.textExtended = record.textExtended;
+    return style;
+}
+
+std::unique_ptr<LC_SplinePoints> approximateDrwSpline(
+    RS_EntityContainer* parent, const DRW_Spline* data) {
+    RS_SplineData splineData;
+    if (!buildSplineDataFromDrw(data, splineData))
+        return nullptr;
+
+    const size_t degree = static_cast<size_t>(data->degree);
+    const size_t controlCount = splineData.controlPoints.size();
+    const double tmin = splineData.knotslist[degree];
+    const double tmax = splineData.knotslist[controlCount];
+    if (!std::isfinite(tmin) || !std::isfinite(tmax) || tmax <= tmin)
+        return nullptr;
+
+    LC_SplinePointsData sampled((data->flags & 0x3) != 0, false);
+    sampled.useControlPoints = false;
+    sampled.splinePoints.reserve(kImportedSplineFallbackSamples + 1);
+    for (int i = 0; i <= kImportedSplineFallbackSamples; ++i) {
+        const double u = tmin + (tmax - tmin) *
+                         (static_cast<double>(i) / kImportedSplineFallbackSamples);
+        const RS_Vector point = RS_Spline::evaluateNURBS(splineData, u);
+        if (!point.valid)
+            return nullptr;
+        sampled.splinePoints.push_back(point);
+    }
+
+    if (sampled.closed && sampled.splinePoints.size() > 1 &&
+        sampled.splinePoints.front().distanceTo(sampled.splinePoints.back()) <= 1e-8) {
+        sampled.splinePoints.pop_back();
+    }
+
+    if (sampled.splinePoints.size() < 2)
+        return nullptr;
+
+    return std::make_unique<LC_SplinePoints>(parent, std::move(sampled));
+}
 
 }
 
@@ -196,7 +981,7 @@ QString RS_FilterDXFRW::lastError() const{
     case DRW::BAD_READ_FILE_HEADER:
         return (QObject::tr( "error reading DXF/DWG file header", "RS_FilterDXFRW"));
     case DRW::BAD_READ_HEADER:
-        return (QObject::tr( "error reading DXF/DWG header dara", "RS_FilterDXFRW"));
+        return (QObject::tr( "error reading DXF/DWG header data", "RS_FilterDXFRW"));
     case DRW::BAD_READ_HANDLES:
         return (QObject::tr( "error reading DXF/DWG object map", "RS_FilterDXFRW"));
     case DRW::BAD_READ_CLASSES:
@@ -235,6 +1020,12 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic& g, const QString& file, [[maybe_unus
     m_graphic = &g;
     m_currentContainer = m_graphic;
     m_dummyContainer = new RS_EntityContainer(nullptr, true);
+    // RAII: free the scratch container on every return path (success and the
+    // BAD_VERSION / parse-failure early returns), not just the success path.
+    struct DummyContainerGuard {
+        RS_EntityContainer** p;
+        ~DummyContainerGuard() { delete *p; *p = nullptr; }
+    } dummyGuard{&m_dummyContainer};
 
     this->m_file = file;
     // Register the file being loaded into the XREF recursion guard so
@@ -261,6 +1052,15 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic& g, const QString& file, [[maybe_unus
     //reset library version
     m_isLibDxfRw = false;
     m_libDxfRwVersion = 0;
+    m_unsupportedDwgObjects.clear();
+    m_graphic->dwgAdvancedMetadata().clear();
+    // Clear per-import caches so a reused filter instance does not carry stale
+    // (and, for m_blockHash, potentially dangling) state across imports. XREF
+    // sub-imports use a separate child filter, so this never wipes parent state.
+    m_blockHash.clear();
+    m_mlineStyleCache.clear();
+    m_underlayDefMap.clear();
+    m_xrefBlockNames.clear();
 
 #ifdef DWGSUPPORT
     if (type == RS2::FormatDWG) {
@@ -274,8 +1074,11 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic& g, const QString& file, [[maybe_unus
         // name the format the user supplied. dwgR::version is set by
         // openFile() even on the BAD_VERSION fork.
         m_dwgVersion = dwgr.getVersion();
+        // Persist the source version on the document so the export filter can
+        // gate raw-replay (emit + CLASSES registration) on source==target.
+        m_graphic->dwgAdvancedMetadata().setSourceDwgVersion(m_dwgVersion);
         RS_DEBUG->print("RS_FilterDXFRW::fileImport: reading DWG file: OK");
-        RS_DIALOGFACTORY->commandMessage(QObject::tr("Opened dwg file version %1.").arg(printDwgVersion(dwgr.getVersion())));
+        RS_DIALOGFACTORY->commandMessage(QObject::tr("Opened DWG file version %1.").arg(printDwgVersion(dwgr.getVersion())));
         const size_t parseFailures = dwgr.getEntityParseFailures();
         if (parseFailures > 0) {
           RS_DIALOGFACTORY->commandMessage(
@@ -315,6 +1118,32 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic& g, const QString& file, [[maybe_unus
                   "These are typically AutoCAD Mechanical or other "
                   "vertical-product "
                   "custom classes that libdxfrw cannot decode.")
+                  .arg(totalSkipped)
+                  .arg(breakdown));
+        }
+        const auto unsupportedObjects = dwgr.getSkippedUnsupportedObjects();
+        if (!unsupportedObjects.empty()) {
+          size_t totalSkipped = 0;
+          std::vector<std::pair<QString, size_t>> sorted;
+          sorted.reserve(unsupportedObjects.size());
+          for (const auto &kv : unsupportedObjects) {
+            totalSkipped += kv.second;
+            sorted.emplace_back(QString::fromStdString(kv.first), kv.second);
+          }
+          std::sort(
+              sorted.begin(), sorted.end(),
+              [](const auto &a, const auto &b) { return a.second > b.second; });
+          QStringList top;
+          const size_t showN = std::min<size_t>(3, sorted.size());
+          for (size_t i = 0; i < showN; ++i)
+            top << QString("%1×%2").arg(sorted[i].second).arg(sorted[i].first);
+          QString breakdown = top.join(QLatin1String(", "));
+          if (sorted.size() > showN)
+            breakdown += QObject::tr(", and %n more object type(s)", "",
+                                     static_cast<int>(sorted.size() - showN));
+          RS_DIALOGFACTORY->commandMessage(
+              QObject::tr("DWG load: %1 unsupported metadata object(s) skipped "
+                          "(%2). Drawing geometry may still be complete.")
                   .arg(totalSkipped)
                   .arg(breakdown));
         }
@@ -367,7 +1196,6 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic& g, const QString& file, [[maybe_unus
     }
 #endif
 
-    delete m_dummyContainer;
     /*set current layer */
     auto cl = m_graphic->findLayer(m_graphic->getVariableString("$CLAYER", "0"));
 	if (cl ){
@@ -501,6 +1329,8 @@ void RS_FilterDXFRW::addDimStyle(const DRW_Dimstyle& data){
  * Implementation of the method which handles vports.
  */
 void RS_FilterDXFRW::addVport(const DRW_Vport &data) {
+    if (m_graphic != nullptr)
+        m_graphic->dwgAdvancedMetadata().addVport(data);
     QString name = QString::fromStdString(data.name);
     if (name.toLower() == "*active") {
         data.grid == 1? m_graphic->setGridOn(true):m_graphic->setGridOn(false);
@@ -528,7 +1358,12 @@ void RS_FilterDXFRW::addUCS(const DRW_UCS &data) {
     RS_DEBUG->print("RS_FilterDXF::addUCS: creating ucs");
 
     QString name = QString::fromUtf8(data.name.c_str());
+    if (m_graphic != nullptr)
+        m_graphic->dwgAdvancedMetadata().addUcs(data);
     if (!name.isEmpty() && m_graphic->findNamedUCS(name) != nullptr) {
+        const int existingIndex = m_graphic->getUCSList()->getIndex(name);
+        m_graphic->dwgAdvancedMetadata().mapUcsToDocumentItem(
+            data.handle, data.name, existingIndex);
         return;
     }
 
@@ -550,6 +1385,9 @@ void RS_FilterDXFRW::addUCS(const DRW_UCS &data) {
 
     RS_DEBUG->print("RS_FilterDXF::addUCS: add ucs to graphic");
     m_graphic->addUCS(ucs);
+    const int documentItemIndex = m_graphic->getUCSList()->getIndex(name);
+    m_graphic->dwgAdvancedMetadata().mapUcsToDocumentItem(
+        data.handle, data.name, documentItemIndex);
     RS_DEBUG->print("RS_FilterDXF::addUCS: OK");
 }
 
@@ -558,8 +1396,14 @@ void RS_FilterDXFRW::addView(const DRW_View &data) {
     RS_DEBUG->print("  adding view: %s", data.name.c_str());
     RS_DEBUG->print("RS_FilterDXF::addView: creating view");
 
+    if (m_graphic != nullptr) {
+        m_graphic->dwgAdvancedMetadata().addView(data);
+    }
     QString name = QString::fromUtf8(data.name.c_str());
     if (!name.isEmpty() && m_graphic->findNamedView(name) != nullptr) {
+        const int existingIndex = m_graphic->getViewList()->getIndex(name);
+        m_graphic->dwgAdvancedMetadata().mapViewToDocumentItem(
+            data.handle, data.name, existingIndex);
         return;
     }
     auto* view = new LC_View(name);
@@ -604,7 +1448,15 @@ void RS_FilterDXFRW::addView(const DRW_View &data) {
 
     RS_DEBUG->print("RS_FilterDXF::addView: add view to graphic");
     m_graphic->addNamedView(view);
+    const int documentItemIndex = m_graphic->getViewList()->getIndex(name);
+    m_graphic->dwgAdvancedMetadata().mapViewToDocumentItem(
+        data.handle, data.name, documentItemIndex);
     RS_DEBUG->print("RS_FilterDXF::addView: OK");
+}
+
+void RS_FilterDXFRW::addVisualStyle(const DRW_VisualStyle& data) {
+    if (m_graphic != nullptr)
+        m_graphic->dwgAdvancedMetadata().addVisualStyle(data);
 }
 
 /**
@@ -623,6 +1475,7 @@ void RS_FilterDXFRW::addBlock(const DRW_Block& data) {
     if (mid.toLower() != "paper_space" && mid.toLower() != "model_space") {
             RS_Vector bp(data.basePoint.x, data.basePoint.y);
             auto block = new RS_Block(m_graphic, RS_BlockData(name, bp, false ));
+            block->setInsertionUnits(data.insUnits);
             //block->setFlags(flags);
 
             if (m_graphic->addBlock(block)) {
@@ -932,6 +1785,31 @@ void RS_FilterDXFRW::addLine(const DRW_Line& data) {
     RS_DEBUG->print("RS_FilterDXF::addLine: OK");
 }
 
+namespace {
+// F2 type-fidelity sidecar markers. LibreCAD's RS model is 2D-lossy for these
+// types (RAY/XLINE -> RS_Line, TRACE -> RS_Solid, 3DFACE -> RS_Polyline drops
+// Z and edge flags), so the original DRW type + FULL geometry is stashed as
+// XDATA on the converted RS entity at read; a write pre-pass rebuilds the
+// native DRW type and consumes the RS entity.
+constexpr const char *kRayMarker = "LibreCAD_RAY";
+constexpr const char *kXlineMarker = "LibreCAD_XLINE";
+constexpr const char *kTraceMarker = "LibreCAD_TRACE";
+constexpr const char *k3dFaceMarker = "LibreCAD_3DFACE";
+
+// Append a type-fidelity sidecar (marker + payload variants) to whatever
+// XDATA the entity already carries from setEntityAttributes().
+void appendTypeSidecar(RS_Entity *entity, const char *marker,
+                       std::vector<std::shared_ptr<DRW_Variant>> payload) {
+  std::vector<std::shared_ptr<DRW_Variant>> ext;
+  if (entity->hasDrwExtData())
+    ext = entity->getDrwExtData();
+  ext.push_back(std::make_shared<DRW_Variant>(1001, std::string(marker)));
+  for (auto &p : payload)
+    ext.push_back(std::move(p));
+  entity->setDrwExtData(std::move(ext));
+}
+} // namespace
+
 /**
  * Implementation of the method which handles ray entities.
  */
@@ -951,6 +1829,14 @@ void RS_FilterDXFRW::addRay(const DRW_Ray& data) {
     auto entity = new RS_Line{m_currentContainer, {v1, v2}};
     RS_DEBUG->print("RS_FilterDXF::addRay: set attributes");
     setEntityAttributes(entity, &data);
+
+    // F2 sidecar: base point + direction (preserve Z for full fidelity).
+    std::vector<std::shared_ptr<DRW_Variant>> payload;
+    payload.push_back(std::make_shared<DRW_Variant>(
+        1010, DRW_Coord(data.basePoint.x, data.basePoint.y, data.basePoint.z)));
+    payload.push_back(std::make_shared<DRW_Variant>(
+        1011, DRW_Coord(data.secPoint.x, data.secPoint.y, data.secPoint.z)));
+    appendTypeSidecar(entity, kRayMarker, std::move(payload));
 
     RS_DEBUG->print("RS_FilterDXF::addRay: add entity");
 
@@ -979,6 +1865,14 @@ void RS_FilterDXFRW::addXline(const DRW_Xline& data) {
     auto entity = new RS_Line{m_currentContainer, {v1, v2}};
     RS_DEBUG->print("RS_FilterDXF::addXline: set attributes");
     setEntityAttributes(entity, &data);
+
+    // F2 sidecar: base point + direction (preserve Z for full fidelity).
+    std::vector<std::shared_ptr<DRW_Variant>> payload;
+    payload.push_back(std::make_shared<DRW_Variant>(
+        1010, DRW_Coord(data.basePoint.x, data.basePoint.y, data.basePoint.z)));
+    payload.push_back(std::make_shared<DRW_Variant>(
+        1011, DRW_Coord(data.secPoint.x, data.secPoint.y, data.secPoint.z)));
+    appendTypeSidecar(entity, kXlineMarker, std::move(payload));
 
     RS_DEBUG->print("RS_FilterDXF::addXline: add entity");
 
@@ -1057,6 +1951,23 @@ void RS_FilterDXFRW::addTrace(const DRW_Trace& data) {
     }
 
     setEntityAttributes(entity, &data);
+
+    // F2 sidecar: only for a genuine TRACE (addSolid() routes SOLID here too,
+    // and a SOLID must stay a SOLID). Store all 4 corners with Z (the RS_Solid
+    // is 2D-lossy) so the write pre-pass can rebuild the native TRACE.
+    if (data.eType == DRW::DXF_TRACE) {
+        std::vector<std::shared_ptr<DRW_Variant>> payload;
+        payload.push_back(std::make_shared<DRW_Variant>(
+            1010, DRW_Coord(data.basePoint.x, data.basePoint.y, data.basePoint.z)));
+        payload.push_back(std::make_shared<DRW_Variant>(
+            1011, DRW_Coord(data.secPoint.x, data.secPoint.y, data.secPoint.z)));
+        payload.push_back(std::make_shared<DRW_Variant>(
+            1012, DRW_Coord(data.thirdPoint.x, data.thirdPoint.y, data.thirdPoint.z)));
+        payload.push_back(std::make_shared<DRW_Variant>(
+            1013, DRW_Coord(data.fourPoint.x, data.fourPoint.y, data.fourPoint.z)));
+        appendTypeSidecar(entity, kTraceMarker, std::move(payload));
+    }
+
     m_currentContainer->addEntity(entity);
 }
 
@@ -1087,6 +1998,27 @@ void RS_FilterDXFRW::addSolid(const DRW_Solid& data) {
     addTrace(data);
 }
 
+void RS_FilterDXFRW::addModelerGeometry(const DRW_ModelerGeometry &data) {
+    // TODO: Preserve/render ACIS SAT/SAB bodies when LibreCAD grows native
+    // modeler-geometry support. For now this shell prevents silent loss.
+    if (m_graphic != nullptr) {
+        m_graphic->dwgAdvancedMetadata().addModelerGeometry(data);
+    }
+    RS_DEBUG->print("RS_FilterDXFRW::addModelerGeometry: type %d handle %d history %d",
+                    static_cast<int>(data.eType),
+                    static_cast<int>(data.handle),
+                    static_cast<int>(data.m_historyHandle));
+}
+
+void RS_FilterDXFRW::addLight(const DRW_Light &data) {
+    if (m_graphic != nullptr) {
+        m_graphic->dwgAdvancedMetadata().addLight(data);
+    }
+    RS_DEBUG->print("RS_FilterDXFRW::addLight: %s handle %d",
+                    data.m_name.empty() ? "(unnamed)" : data.m_name.c_str(),
+                    static_cast<int>(data.handle));
+}
+
 /**
  * Implementation of the method which handles lightweight polyline entities.
  */
@@ -1107,6 +2039,38 @@ void RS_FilterDXFRW::addLWPolyline(const DRW_LWPolyline& data) {
     }
 
     polyline->appendVertexs(verList);
+    const bool defaultExtrusion = data.extPoint.x == 0.0
+        && data.extPoint.y == 0.0
+        && data.extPoint.z == 1.0;
+    bool hasVertexMetadata = false;
+    for (const auto& v : data.vertlist) {
+        if (v && (v->stawidth != 0.0 || v->endwidth != 0.0
+                  || v->identifier != 0)) {
+            hasVertexMetadata = true;
+            break;
+        }
+    }
+    if (data.width != 0.0 || data.elevation != 0.0 || data.thickness != 0.0
+        || !defaultExtrusion || hasVertexMetadata) {
+        std::vector<std::shared_ptr<DRW_Variant>> ext;
+        ext.push_back(std::make_shared<DRW_Variant>(
+            1001, std::string("LibreCAD_LWPOLYLINE")));
+        ext.push_back(std::make_shared<DRW_Variant>(1040, data.width));
+        ext.push_back(std::make_shared<DRW_Variant>(1040, data.elevation));
+        ext.push_back(std::make_shared<DRW_Variant>(1040, data.thickness));
+        ext.push_back(std::make_shared<DRW_Variant>(1010, data.extPoint));
+        ext.push_back(std::make_shared<DRW_Variant>(
+            1070, std::int32_t{static_cast<int>(data.vertlist.size())}));
+        for (const auto& v : data.vertlist) {
+            ext.push_back(std::make_shared<DRW_Variant>(
+                1040, v ? v->stawidth : 0.0));
+            ext.push_back(std::make_shared<DRW_Variant>(
+                1040, v ? v->endwidth : 0.0));
+            ext.push_back(std::make_shared<DRW_Variant>(
+                1071, std::int32_t{v ? v->identifier : 0}));
+        }
+        polyline->setDrwExtData(std::move(ext));
+    }
     m_currentContainer->addEntity(polyline.release());
 }
 
@@ -1120,6 +2084,21 @@ void RS_FilterDXFRW::addMLineStyle(const DRW_MLineStyle &data) {
   QString key = QString::fromUtf8(data.name.c_str());
   if (!key.isEmpty()) {
     m_mlineStyleCache[key] = data;
+  }
+  //Durable metadata (in ADDITION to the transient cache addMLine uses to
+  //decompose). The DWG reader populates ONLY this; the DXF->DXF path keeps
+  //MLINESTYLE in the raw net, so writeObjects dedups by handle to avoid a
+  //double-emit.
+  if (m_graphic != nullptr) {
+    m_graphic->dwgAdvancedMetadata().addMLineStyle(data);
+  }
+}
+
+void RS_FilterDXFRW::addWipeoutVariables(const DRW_WipeoutVariables &data) {
+  //DWG read populates only this typed metadata; DXF read also keeps it in the
+  //raw net (writeObjects dedups by handle). Enables DWG->DXF typed re-emit.
+  if (m_graphic != nullptr) {
+    m_graphic->dwgAdvancedMetadata().addWipeoutVariables(data);
   }
 }
 
@@ -1201,12 +2180,12 @@ void RS_FilterDXFRW::addMLine(const DRW_MLine *data) {
     ext.push_back(std::make_shared<DRW_Variant>(1000, data->styleName));
     ext.push_back(std::make_shared<DRW_Variant>(1040, data->scale));
     ext.push_back(
-        std::make_shared<DRW_Variant>(1070, dint32{data->justification}));
-    ext.push_back(std::make_shared<DRW_Variant>(1070, dint32{N}));
-    ext.push_back(std::make_shared<DRW_Variant>(1070, dint32{i}));
+        std::make_shared<DRW_Variant>(1070, std::int32_t{data->justification}));
+    ext.push_back(std::make_shared<DRW_Variant>(1070, std::int32_t{N}));
+    ext.push_back(std::make_shared<DRW_Variant>(1070, std::int32_t{i}));
     ext.push_back(std::make_shared<DRW_Variant>(1040, effOffsets[i]));
     ext.push_back(
-        std::make_shared<DRW_Variant>(1070, dint32{data->openClosed}));
+        std::make_shared<DRW_Variant>(1070, std::int32_t{data->openClosed}));
     if (i == 0) {
       // Anchor carries baseline + miter for each vertex.
       for (const auto &v : data->vertlist) {
@@ -1232,6 +2211,24 @@ void RS_FilterDXFRW::linkUnderlay(const DRW_UnderlayDefinition *d) {
     return;
   RS_DEBUG->print("RS_FilterDXFRW::linkUnderlay: %s", d->filename.c_str());
   m_underlayDefMap[d->handle] = *d;
+  if (m_graphic != nullptr)
+    m_graphic->dwgAdvancedMetadata().addUnderlayDefinition(*d);
+}
+
+void RS_FilterDXFRW::addShape(const DRW_Shape &data) {
+  if (m_graphic != nullptr)
+    m_graphic->dwgAdvancedMetadata().addShape(data);
+  RS_DEBUG->print("RS_FilterDXFRW::addShape: index %d style %d",
+                  static_cast<int>(data.m_shapeIndex),
+                  static_cast<int>(data.m_shapeFileHandle));
+}
+
+void RS_FilterDXFRW::addOle2Frame(const DRW_Ole2Frame &data) {
+  if (m_graphic != nullptr)
+    m_graphic->dwgAdvancedMetadata().addOle2Frame(data);
+  RS_DEBUG->print("RS_FilterDXFRW::addOle2Frame: bytes %d declared %d",
+                  static_cast<int>(data.m_payloadByteCount),
+                  static_cast<int>(data.m_declaredPayloadLength));
 }
 
 /**
@@ -1254,6 +2251,7 @@ void RS_FilterDXFRW::addUnderlay(const DRW_Underlay *data) {
   // 2D extrusion (extPoint == (0,0,1)), OCS == WCS modulo position +
   // scale + rotation. LibreCAD is 2D so we project z-up regardless.
   std::vector<RS_Vector> verts;
+  const bool fallbackPreviewGenerated = true;
   if (data->clipBoundary.size() >= 3) {
     verts.reserve(data->clipBoundary.size());
     for (const auto &v : data->clipBoundary) {
@@ -1304,17 +2302,20 @@ void RS_FilterDXFRW::addUnderlay(const DRW_Underlay *data) {
   ext.push_back(std::make_shared<DRW_Variant>(1000, underlayId.toStdString()));
   ext.push_back(std::make_shared<DRW_Variant>(1000, std::string(kindStr)));
   ext.push_back(std::make_shared<DRW_Variant>(
-      1071, dint32{static_cast<int>(data->definitionHandle)}));
+      1071, std::int32_t{static_cast<int>(data->definitionHandle)}));
   ext.push_back(std::make_shared<DRW_Variant>(
       1010, DRW_Coord(data->position.x, data->position.y, data->position.z)));
   ext.push_back(std::make_shared<DRW_Variant>(1040, data->scale.x));
   ext.push_back(std::make_shared<DRW_Variant>(1040, data->scale.y));
   ext.push_back(std::make_shared<DRW_Variant>(1040, data->rotation));
-  ext.push_back(std::make_shared<DRW_Variant>(1070, dint32{data->flags}));
-  ext.push_back(std::make_shared<DRW_Variant>(1070, dint32{data->contrast}));
-  ext.push_back(std::make_shared<DRW_Variant>(1070, dint32{data->fade}));
+  ext.push_back(std::make_shared<DRW_Variant>(1070, std::int32_t{data->flags}));
+  ext.push_back(std::make_shared<DRW_Variant>(1070, std::int32_t{data->contrast}));
+  ext.push_back(std::make_shared<DRW_Variant>(1070, std::int32_t{data->fade}));
   polyline->setDrwExtData(std::move(ext));
 
+  if (m_graphic != nullptr)
+    m_graphic->dwgAdvancedMetadata().addUnderlay(
+        *data, fallbackPreviewGenerated);
   m_currentContainer->addEntity(polyline);
 }
 
@@ -1327,6 +2328,13 @@ void RS_FilterDXFRW::addPolyline(const DRW_Polyline& data) {
         // the polyline is a polygon mesh
         int M = data.vertexcount;
         int N = data.facecount;
+        const bool canRenderFallback =
+            M > 0 && N > 0
+            && data.vertlist.size() == static_cast<size_t>(M * N)
+            && data.curvetype == 0;
+        if (m_graphic != nullptr)
+            m_graphic->dwgAdvancedMetadata().addMeshPolyline(
+                data, canRenderFallback);
         if (M <= 0 || N <= 0 || data.vertlist.size() != static_cast<size_t>(M * N)) {
             return; // invalid mesh
         }
@@ -1335,6 +2343,71 @@ void RS_FilterDXFRW::addPolyline(const DRW_Polyline& data) {
         }
         bool closedM = (data.flags & 0x1);  // closed in M direction
         bool closedN = (data.flags & 0x20); // closed in N direction
+        const std::string meshId = std::string("polyline_mesh_")
+            + std::to_string(data.handle);
+        const int meshElementCount = M + N;
+        auto makeMeshExtData = [&](int elementIndex, const std::string& role,
+                                   int roleIndex, bool anchor) {
+            std::vector<std::shared_ptr<DRW_Variant>> ext;
+            ext.push_back(std::make_shared<DRW_Variant>(
+                1001, std::string("LibreCAD_POLYLINE_MESH")));
+            ext.push_back(std::make_shared<DRW_Variant>(1000, meshId));
+            ext.push_back(std::make_shared<DRW_Variant>(1000, role));
+            ext.push_back(std::make_shared<DRW_Variant>(
+                1070, std::int32_t{elementIndex}));
+            ext.push_back(std::make_shared<DRW_Variant>(
+                1070, std::int32_t{meshElementCount}));
+            ext.push_back(std::make_shared<DRW_Variant>(
+                1070, std::int32_t{roleIndex}));
+            ext.push_back(std::make_shared<DRW_Variant>(
+                1070, std::int32_t{data.flags}));
+            ext.push_back(std::make_shared<DRW_Variant>(
+                1070, std::int32_t{M}));
+            ext.push_back(std::make_shared<DRW_Variant>(
+                1070, std::int32_t{N}));
+            ext.push_back(std::make_shared<DRW_Variant>(
+                1070, std::int32_t{data.smoothM}));
+            ext.push_back(std::make_shared<DRW_Variant>(
+                1070, std::int32_t{data.smoothN}));
+            ext.push_back(std::make_shared<DRW_Variant>(
+                1070, std::int32_t{data.curvetype}));
+            if (anchor) {
+                for (const auto& vertex : data.vertlist) {
+                    if (!vertex) {
+                        continue;
+                    }
+                    ext.push_back(std::make_shared<DRW_Variant>(
+                        1010,
+                        DRW_Coord{vertex->basePoint.x, vertex->basePoint.y,
+                                  vertex->basePoint.z}));
+                }
+            }
+            return ext;
+        };
+        auto addMeshSidecarMetadata = [&](const RS_Entity* entity,
+                                          int elementIndex,
+                                          const std::string& role,
+                                          int roleIndex, bool anchor) {
+            if (m_graphic == nullptr || entity == nullptr)
+                return;
+            LC_DwgAdvancedMetadata::MeshSidecarRecord record;
+            record.sourceHandle = data.handle;
+            record.fallbackEntityId = entity->getId();
+            record.meshId = meshId;
+            record.role = role;
+            record.elementIndex = elementIndex;
+            record.elementCount = meshElementCount;
+            record.roleIndex = roleIndex;
+            record.flags = data.flags;
+            record.mCount = M;
+            record.nCount = N;
+            record.smoothM = data.smoothM;
+            record.smoothN = data.smoothN;
+            record.curveType = data.curvetype;
+            record.sourceVertexCount = anchor ? data.vertlist.size() : 0u;
+            record.anchor = anchor;
+            m_graphic->dwgAdvancedMetadata().addMeshSidecar(std::move(record));
+        };
 
         // Add row polylines (along N direction)
         for (int i = 0; i < M; i++) {
@@ -1346,6 +2419,8 @@ void RS_FilterDXFRW::addPolyline(const DRW_Polyline& data) {
                 RS_Vector pos(v->basePoint.x, v->basePoint.y);
                 pl->addVertex(pos, 0.0, false);
             }
+            pl->setDrwExtData(makeMeshExtData(i, "row", i, i == 0));
+            addMeshSidecarMetadata(pl.get(), i, "row", i, i == 0);
             m_currentContainer->addEntity(pl.release());
         }
 
@@ -1359,6 +2434,9 @@ void RS_FilterDXFRW::addPolyline(const DRW_Polyline& data) {
                 RS_Vector pos(v->basePoint.x, v->basePoint.y);
                 pl->addVertex(pos, 0.0, false);
             }
+            pl->setDrwExtData(
+                makeMeshExtData(M + j, "column", j, false));
+            addMeshSidecarMetadata(pl.get(), M + j, "column", j, false);
             m_currentContainer->addEntity(pl.release());
         }
         return;
@@ -1367,15 +2445,68 @@ void RS_FilterDXFRW::addPolyline(const DRW_Polyline& data) {
     if (data.flags & 0x40) {
         // the polyline is a polyface mesh
         std::vector<RS_Vector> vertices;
+        std::vector<DRW_Coord> sourceVertices;
+        std::vector<std::shared_ptr<DRW_Vertex>> faceRecords;
         for (const std::shared_ptr<DRW_Vertex>& v : data.vertlist) {
-            if ((v->flags & 0x40) == 0) { // vertex
+            if (!v) {
+                continue;
+            }
+            const bool coordinateVertex =
+                v->dwgSubtype() == DRW_Vertex::DwgSubtype::Polyface
+                || ((v->flags & 0x40) != 0 && (v->flags & 0x80) != 0);
+            const bool faceRecord =
+                v->dwgSubtype() == DRW_Vertex::DwgSubtype::PolyfaceFace
+                || ((v->flags & 0x80) != 0 && (v->flags & 0x40) == 0);
+            if (coordinateVertex) {
                 vertices.emplace_back(v->basePoint.x, v->basePoint.y);
+                sourceVertices.emplace_back(v->basePoint.x, v->basePoint.y,
+                                            v->basePoint.z);
+            }
+            else if (faceRecord) {
+                faceRecords.push_back(v);
             }
         }
+        const std::string polyfaceId = std::string("polyline_pface_")
+            + std::to_string(data.handle);
+        auto makePolyfaceExtData =
+            [&](const DRW_Vertex& face, int faceIndex, bool anchor) {
+                std::vector<std::shared_ptr<DRW_Variant>> ext;
+                ext.push_back(std::make_shared<DRW_Variant>(
+                    1001, std::string("LibreCAD_POLYLINE_PFACE")));
+                ext.push_back(std::make_shared<DRW_Variant>(
+                    1000, polyfaceId));
+                ext.push_back(std::make_shared<DRW_Variant>(
+                    1070, std::int32_t{faceIndex}));
+                ext.push_back(std::make_shared<DRW_Variant>(
+                    1070, std::int32_t{static_cast<int>(faceRecords.size())}));
+                ext.push_back(std::make_shared<DRW_Variant>(
+                    1070, std::int32_t{data.flags}));
+                ext.push_back(std::make_shared<DRW_Variant>(
+                    1070, std::int32_t{data.vertexcount}));
+                ext.push_back(std::make_shared<DRW_Variant>(
+                    1070, std::int32_t{data.facecount}));
+                ext.push_back(std::make_shared<DRW_Variant>(
+                    1070, std::int32_t{face.vindex1}));
+                ext.push_back(std::make_shared<DRW_Variant>(
+                    1070, std::int32_t{face.vindex2}));
+                ext.push_back(std::make_shared<DRW_Variant>(
+                    1070, std::int32_t{face.vindex3}));
+                ext.push_back(std::make_shared<DRW_Variant>(
+                    1070, std::int32_t{face.vindex4}));
+                if (anchor) {
+                    for (const auto& coord : sourceVertices) {
+                        ext.push_back(std::make_shared<DRW_Variant>(
+                            1010, coord));
+                    }
+                }
+                return ext;
+            };
         // add faces as closed polylines
-        for (const std::shared_ptr<DRW_Vertex>& f : data.vertlist) {
-            if ((f->flags & 0x40) != 0) { // face
-                std::vector<int> indices = {{f->vindex1, f->vindex2, f->vindex3, f->vindex4}};
+        for (size_t faceIndex = 0; faceIndex < faceRecords.size();
+             ++faceIndex) {
+                const auto& f = faceRecords[faceIndex];
+                std::vector<int> indices = {{f->vindex1, f->vindex2,
+                                             f->vindex3, f->vindex4}};
                 int num_points = (f->vindex4 == 0) ? 3 : 4;
                 RS_PolylineData pd(RS_Vector(), RS_Vector(), true); // closed
                 auto pl = std::make_unique<RS_Polyline>(m_currentContainer, pd);
@@ -1390,9 +2521,11 @@ void RS_FilterDXFRW::addPolyline(const DRW_Polyline& data) {
                     pl->addVertex(vertices[idx - 1], 0.0);
                 }
                 if (valid) {
+                    pl->setDrwExtData(
+                        makePolyfaceExtData(*f, static_cast<int>(faceIndex),
+                                            faceIndex == 0));
                     m_currentContainer->addEntity(pl.release());
                 }
-            }
         }
         return;
     }
@@ -1481,8 +2614,9 @@ void RS_FilterDXFRW::addSpline(const DRW_Spline* data) {
         return;  // Conic handled successfully
     }
 
-    // Spline points case (degree 2, more than 3 control points)
-    if (data->degree == 2) {
+    // Spline points case. Weighted degree-2 splines are exact rational conics
+    // or NURBS segments; keep them on the RS_Spline path so weights survive.
+    if (data->degree == 2 && !hasRationalSplineWeights(data)) {
         bool closed = (data->flags & 0x1) == 0x1;
         bool controlOnly = data->nfit == 0;
 
@@ -1506,8 +2640,24 @@ void RS_FilterDXFRW::addSpline(const DRW_Spline* data) {
         return;
     }
 
-    // General spline (degree 1–3)
-    if (data->degree < 1 || data->degree > 3) {
+    // General spline (degree 1-3)
+    if (data->degree < 1) {
+        RS_DEBUG->print(RS_Debug::D_WARNING,
+                        "RS_FilterDXFRW::addSpline: unsupported spline degree %d", data->degree);
+        return;
+    }
+    if (data->degree > 3) {
+        std::unique_ptr<LC_SplinePoints> sampled = approximateDrwSpline(m_currentContainer, data);
+        if (sampled) {
+            RS_DEBUG->print(RS_Debug::D_WARNING,
+                            "RS_FilterDXFRW::addSpline: approximating unsupported spline degree %d",
+                            data->degree);
+            setEntityAttributes(sampled.get(), data);
+            sampled->update();
+            m_currentContainer->addEntity(sampled.release());
+            return;
+        }
+
         RS_DEBUG->print(RS_Debug::D_WARNING,
                         "RS_FilterDXFRW::addSpline: unsupported spline degree %d", data->degree);
         return;
@@ -1562,6 +2712,19 @@ void RS_FilterDXFRW::addSpline(const DRW_Spline* data) {
     }
 
     spline->update();
+}
+
+/**
+ * Handles a HELIX entity. LibreCAD has no native helix; the entity is mapped
+ * to its spline approximation via addSpline. The AcDbHelix axis/turns metadata
+ * (radius, turns, turnHeight, axisVector, ...) is preserved across a DWG
+ * round-trip but is not represented in the RS entity model, so it is dropped
+ * on import.
+ */
+void RS_FilterDXFRW::addHelix(const DRW_Helix* data) {
+    RS_DEBUG->print("RS_FilterDXFRW::addHelix: mapping HELIX to spline "
+                    "approximation (axis/turns metadata dropped)");
+    addSpline(data);
 }
 
 /**
@@ -1641,6 +2804,165 @@ void RS_FilterDXFRW::addInsert(const DRW_Insert& data) {
       textEntity->update();
       m_currentContainer->addEntity(textEntity.release());
     }
+}
+
+void RS_FilterDXFRW::addTable(const DRW_Table& data) {
+    TableFallbackRenderSummary fallbackSummary;
+    const bool fallbackRendered = addTableFallback(data, &fallbackSummary);
+    if (m_graphic != nullptr) {
+        m_graphic->dwgAdvancedMetadata().addTable(data, fallbackRendered);
+        LC_DwgAdvancedMetadata::TableFallbackRenderSummary metadataSummary;
+        metadataSummary.tableHandle = data.handle;
+        metadataSummary.gridEntityCount = fallbackSummary.gridEntityCount;
+        metadataSummary.textEntityCount = fallbackSummary.textEntityCount;
+        metadataSummary.placeholderEntityCount =
+            fallbackSummary.placeholderEntityCount;
+        metadataSummary.unresolvedTextStyleCount =
+            fallbackSummary.unresolvedTextStyleCount;
+        metadataSummary.clampedDimensionCount =
+            fallbackSummary.clampedDimensionCount;
+        m_graphic->dwgAdvancedMetadata().updateTableFallbackRenderSummary(
+            metadataSummary);
+    }
+    addInsert(data);
+}
+
+bool RS_FilterDXFRW::addTableFallback(
+    const DRW_Table& data, TableFallbackRenderSummary *summary) {
+    if (!data.m_hasSemanticContent || data.m_content.m_rows.empty()
+        || data.m_content.m_columns.empty() || m_currentContainer == nullptr) {
+        return false;
+    }
+
+    const DRW_TableContent& content = data.m_content;
+    const RS_Vector origin(data.basePoint.x, data.basePoint.y, data.basePoint.z);
+    RS_Vector xAxis(data.m_horizontalDirection.x, data.m_horizontalDirection.y,
+                    data.m_horizontalDirection.z);
+    if (!xAxis.valid || xAxis.magnitude() <= RS_TOLERANCE) {
+        xAxis = RS_Vector::polar(1.0, data.angle);
+    } else {
+        xAxis.set(xAxis.x / xAxis.magnitude(), xAxis.y / xAxis.magnitude(),
+                  xAxis.z / xAxis.magnitude());
+    }
+    const RS_Vector yAxis = RS_Vector(-xAxis.y, xAxis.x, 0.0);
+
+    std::vector<double> columnOffsets;
+    columnOffsets.reserve(content.m_columns.size() + 1);
+    columnOffsets.push_back(0.0);
+    for (size_t column = 0; column < content.m_columns.size(); ++column) {
+        columnOffsets.push_back(
+            columnOffsets.back() + tableColumnWidth(content, column, summary));
+    }
+
+    std::vector<double> rowOffsets;
+    rowOffsets.reserve(content.m_rows.size() + 1);
+    rowOffsets.push_back(0.0);
+    for (size_t row = 0; row < content.m_rows.size(); ++row) {
+        rowOffsets.push_back(
+            rowOffsets.back() + tableRowHeight(content, row, summary));
+    }
+
+    auto tablePoint = [&](double x, double y) {
+        return origin + xAxis * x - yAxis * y;
+    };
+    auto addFallbackRecord = [&](RS_Entity *entity, int row, int column,
+                                 LC_DwgAdvancedMetadata::TableFallbackRole role) {
+        if (m_graphic == nullptr || entity == nullptr)
+            return;
+        LC_DwgAdvancedMetadata::TableFallbackEntityRecord record;
+        record.tableHandle = data.handle;
+        record.sourceHandle = data.handle;
+        record.row = row;
+        record.column = column;
+        record.role = role;
+        record.entityId = entity->getId();
+        m_graphic->dwgAdvancedMetadata().addTableFallbackEntity(record);
+    };
+    auto addBorder = [&](const RS_Vector& a, const RS_Vector& b,
+                         int row, int column) {
+        auto *line = new RS_Line{m_currentContainer, {a, b}};
+        setEntityAttributes(line, &data);
+        line->update();
+        addFallbackRecord(line, row, column,
+                          LC_DwgAdvancedMetadata::TableFallbackRole::GridLine);
+        if (summary != nullptr)
+            ++summary->gridEntityCount;
+        m_currentContainer->addEntity(line);
+    };
+
+    for (size_t column = 0; column < columnOffsets.size(); ++column) {
+        const double x = columnOffsets[column];
+        addBorder(tablePoint(x, 0.0), tablePoint(x, rowOffsets.back()),
+                  -1, static_cast<int>(column));
+    }
+    for (size_t row = 0; row < rowOffsets.size(); ++row) {
+        const double y = rowOffsets[row];
+        addBorder(tablePoint(0.0, y), tablePoint(columnOffsets.back(), y),
+                  static_cast<int>(row), -1);
+    }
+
+    bool renderedText = false;
+    QString style = m_textStyle;
+    prepareTextStyleName(style);
+    const double angle = std::atan2(xAxis.y, xAxis.x);
+    for (size_t row = 0; row < content.m_rows.size(); ++row) {
+        const auto& tableRow = content.m_rows[row];
+        const size_t cellCount = std::min(tableRow.m_cells.size(),
+                                          content.m_columns.size());
+        for (size_t column = 0; column < cellCount; ++column) {
+            const DRW_TableCell& tableCell = tableRow.m_cells[column];
+            TableFallbackCellDisplay display =
+                tableCellDisplay(tableCell, data.m_semanticContentComplete);
+            if (display.text.isEmpty())
+                continue;
+            const bool placeholder =
+                tableFallbackCellIsPlaceholder(display.kind);
+            QString text = toNativeString(display.text);
+            const double left = columnOffsets[column];
+            const double right = columnOffsets[column + 1];
+            const double top = rowOffsets[row];
+            const double bottom = rowOffsets[row + 1];
+            const double cellHeight = std::max(0.1, bottom - top);
+            const double cellWidth = std::max(0.1, right - left);
+            const RS_Vector insertion = tablePoint(left + cellWidth * 0.08,
+                                                   top + cellHeight * 0.25);
+            double textHeight = cellHeight * 0.35;
+            if (tableCell.m_contentHeight > 0.0
+                && std::isfinite(tableCell.m_contentHeight)) {
+                textHeight = tableCell.m_contentHeight;
+            } else if (tableCell.m_height > 0.0
+                       && std::isfinite(tableCell.m_height)) {
+                textHeight = tableCell.m_height * 0.35;
+            }
+            textHeight = std::max(kTableFallbackMinTextHeight, textHeight);
+            if (summary != nullptr
+                && (tableCell.m_textStyleHandle != 0
+                    || tableCell.m_textStyleOverrideHandle != 0)) {
+                ++summary->unresolvedTextStyleCount;
+            }
+            RS_MTextData textData(insertion, textHeight, cellWidth * 0.84,
+                                  RS_MTextData::VATop, RS_MTextData::HALeft,
+                                  RS_MTextData::LeftToRight, RS_MTextData::AtLeast,
+                                  1.0, text, style, angle, RS2::NoUpdate);
+            auto *mtext = new RS_MText(m_currentContainer, textData);
+            setEntityAttributes(mtext, &data);
+            mtext->update();
+            addFallbackRecord(
+                mtext, static_cast<int>(row), static_cast<int>(column),
+                placeholder
+                    ? LC_DwgAdvancedMetadata::TableFallbackRole::Placeholder
+                    : LC_DwgAdvancedMetadata::TableFallbackRole::CellText);
+            if (summary != nullptr) {
+                ++summary->textEntityCount;
+                if (placeholder)
+                    ++summary->placeholderEntityCount;
+            }
+            m_currentContainer->addEntity(mtext);
+            renderedText = true;
+        }
+    }
+
+    return renderedText || columnOffsets.size() > 1 || rowOffsets.size() > 1;
 }
 
 void RS_FilterDXFRW::prepareTextStyleName(QString& sty) const {
@@ -1921,9 +3243,9 @@ void RS_FilterDXFRW::fillEntityExtData(std::vector<std::shared_ptr<DRW_Variant>>
                       // (DXF group 1004). The DXF writer hex-encodes them
                       // on emit; the DWG path will use the raw bytes.
                       const QByteArray &bytes = tag->bytes();
-                      std::vector<duint8> raw(bytes.size());
+                      std::vector<std::uint8_t> raw(bytes.size());
                       for (int i = 0; i < bytes.size(); ++i) {
-                        raw[i] = static_cast<duint8>(bytes[i]);
+                        raw[i] = static_cast<std::uint8_t>(bytes[i]);
                       }
                       extData.push_back(
                           std::make_shared<DRW_Variant>(1004, std::move(raw)));
@@ -2360,7 +3682,7 @@ void RS_FilterDXFRW::addDimStyleOverrideToExtendedData(LC_ExtEntityData* extEnti
         auto blockName = leader->arrowBlockName();
         if (!blockName.isEmpty()) {
             auto blkName = blockName.toStdString();
-            int blkHandle = m_dxfW->getBlockRecordHandleToWrite(blkName);
+            int blkHandle = m_dxfW != nullptr ? m_dxfW->getBlockRecordHandleToWrite(blkName) : -1;
             if(blkHandle > 0) {
                 group->addRef(341, toHexStr(blkHandle));
             }
@@ -2370,7 +3692,7 @@ void RS_FilterDXFRW::addDimStyleOverrideToExtendedData(LC_ExtEntityData* extEnti
         auto blockName = arrowhead->sameBlockName();
         if (!blockName.isEmpty()) {
             auto blkName = blockName.toStdString();
-            int blkHandle = m_dxfW->getBlockRecordHandleToWrite(blkName);
+            int blkHandle = m_dxfW != nullptr ? m_dxfW->getBlockRecordHandleToWrite(blkName) : -1;
             if(blkHandle > 0) {
                 group->addRef(342, toHexStr(blkHandle));
             }
@@ -2380,7 +3702,7 @@ void RS_FilterDXFRW::addDimStyleOverrideToExtendedData(LC_ExtEntityData* extEnti
         auto blockName = arrowhead->arrowHeadBlockNameFirst();
         if (!blockName.isEmpty()) {
             auto blkName = blockName.toStdString();
-            int blkHandle = m_dxfW->getBlockRecordHandleToWrite(blkName);
+            int blkHandle = m_dxfW != nullptr ? m_dxfW->getBlockRecordHandleToWrite(blkName) : -1;
             if(blkHandle > 0) {
                 group->addRef(343, toHexStr(blkHandle));
             }
@@ -2391,7 +3713,7 @@ void RS_FilterDXFRW::addDimStyleOverrideToExtendedData(LC_ExtEntityData* extEnti
         auto blockName = arrowhead->arrowHeadBlockNameSecond();
         if (!blockName.isEmpty()) {
             auto blkName = blockName.toStdString();
-            int blkHandle = m_dxfW->getBlockRecordHandleToWrite(blkName);
+            int blkHandle = m_dxfW != nullptr ? m_dxfW->getBlockRecordHandleToWrite(blkName) : -1;
             if(blkHandle > 0) {
                 group->addRef(344, toHexStr(blkHandle));
             }
@@ -2944,6 +4266,29 @@ void RS_FilterDXFRW::addDimAngular3P(const DRW_DimAngular3p* data) {
     m_currentContainer->addEntity(entity);
 }
 
+void RS_FilterDXFRW::addDimArc(const DRW_DimArc* data) {
+    RS_DEBUG->print("RS_FilterDXFRW::addDimArc");
+    RS_DimensionData dd = convDimensionData(data);
+    RS_Vector centre(data->getArcCenter().x, data->getArcCenter().y);
+    double radius = dd.definitionPoint.distanceTo(centre);
+    LC_DimArcData arcData(
+        radius,
+        radius * std::abs(data->arcEndAngle - data->arcStartAngle),
+        centre,
+        RS_Vector::polar(1.0, data->arcEndAngle),
+        RS_Vector::polar(1.0, data->arcStartAngle)
+    );
+    arcData.arcSymbol = data->arcSymbol;
+    arcData.isPartial = data->isPartial;
+    arcData.hasLeader = data->hasLeader;
+    arcData.leaderPt1 = RS_Vector(data->getLeaderPt1().x, data->getLeaderPt1().y);
+    arcData.leaderPt2 = RS_Vector(data->leaderPt2.x, data->leaderPt2.y);
+    auto dimEntity = new LC_DimArc(m_currentContainer, dd, arcData);
+    setEntityAttributes(dimEntity, data);
+    dimEntity->update();
+    m_currentContainer->addEntity(dimEntity);
+}
+
 void RS_FilterDXFRW::addDimOrdinate(const DRW_DimOrdinate* data) {
     RS_DEBUG->print("RS_FilterDXFRW::addDimOrdinate(const DL_DimensionData&, const DL_DimOrdinateData&) not yet implemented");
     RS_DimensionData dimensionData = convDimensionData(data);
@@ -3198,6 +4543,8 @@ void RS_FilterDXFRW::addHatch(const DRW_Hatch *data) {
 
         RS_Entity* e = nullptr;
         if ((loop->type & 2) == 2){   //polyline, convert to lines & arcs
+            if (loop->objlist.empty())
+                continue;
             DRW_LWPolyline* pline = static_cast<DRW_LWPolyline*>(loop->objlist.at(0).get());
             RS_Polyline polyline{nullptr,
                                  RS_PolylineData(RS_Vector(false), RS_Vector(false), pline->flags)};
@@ -3321,6 +4668,11 @@ void RS_FilterDXFRW::addHatch(const DRW_Hatch *data) {
  */
 void RS_FilterDXFRW::addImage(const DRW_Image *data) {
     RS_DEBUG->print("RS_FilterDXF::addImage");
+    if (m_graphic != nullptr && data != nullptr)
+        m_graphic->dwgAdvancedMetadata().addRasterImage(*data, false);
+
+    if (data == nullptr)
+        return;
 
     RS_Vector ip(data->basePoint.x, data->basePoint.y);
     RS_Vector uv(data->secPoint.x, data->secPoint.y);
@@ -3351,6 +4703,8 @@ void RS_FilterDXFRW::addImage(const DRW_Image *data) {
  */
 void RS_FilterDXFRW::addWipeout(const DRW_Image *data) {
   RS_DEBUG->print("RS_FilterDXFRW::addWipeout");
+  if (m_graphic != nullptr && data != nullptr)
+    m_graphic->dwgAdvancedMetadata().addRasterImage(*data, true);
   if (data == nullptr || data->clipPath.empty()) {
     return;
   }
@@ -3381,13 +4735,16 @@ void RS_FilterDXFRW::addWipeout(const DRW_Image *data) {
  * MLEADER carries a multi-root callout structure plus either text or block
  * content.  This conversion captures the geometric structure (roots →
  * leader lines → points) and content reference.  Style-handle resolution
- * (against LC_MLeaderStyleList) is deferred to Phase 7; for now we copy
- * the entity-level overrides as effective values.
+ * (against LC_MLeaderStyleList) is still metadata-only, but we preserve the
+ * DWG handle references needed for native re-export.
  */
 void RS_FilterDXFRW::addMLeader(const DRW_MLeader *data) {
   RS_DEBUG->print("RS_FilterDXFRW::addMLeader");
   if (data == nullptr)
     return;
+  if (m_graphic != nullptr) {
+    m_graphic->dwgAdvancedMetadata().addMLeader(*data);
+  }
 
   LC_MLeaderData md;
   md.roots.reserve(data->context.roots.size());
@@ -3448,6 +4805,15 @@ void RS_FilterDXFRW::addMLeader(const DRW_MLeader *data) {
   md.doglegEnabled = data->doglegEnabled;
   md.contentType = data->styleContentType;
   md.scaleFactor = data->scaleFactor;
+  md.dwgStyleHandle = data->styleHandle.ref;
+  md.dwgLeaderLineTypeHandle = data->leaderLineTypeHandle.ref;
+  md.dwgArrowHeadHandle = data->arrowHeadHandle.ref;
+  md.dwgTextStyleHandle = data->styleTextStyleHandle.ref != 0
+                              ? data->styleTextStyleHandle.ref
+                              : data->context.textStyleHandle.ref;
+  md.dwgBlockHandle = data->styleBlockHandle.ref != 0
+                          ? data->styleBlockHandle.ref
+                          : data->context.blockTableRecordHandle.ref;
 
   auto m = std::make_unique<LC_MLeader>(m_currentContainer, std::move(md));
   setEntityAttributes(m.get(), data);
@@ -3455,15 +4821,340 @@ void RS_FilterDXFRW::addMLeader(const DRW_MLeader *data) {
 }
 
 /**
- * MLEADERSTYLE dictionary entry capture.  Phase 5 currently just logs
- * receipt; Phase 7 will store the styles in an LC_MLeaderStyleList on
- * the document so MLEADERs can resolve their style references.
+ * MLEADERSTYLE dictionary entry capture. Styles are kept in the DWG advanced
+ * metadata store for future style resolution and raw/native round-trip work;
+ * the current LC_MLeader entity still copies effective scalar values from the
+ * entity itself.
  */
 void RS_FilterDXFRW::addMLeaderStyle(const DRW_MLeaderStyle *data) {
   if (data == nullptr)
     return;
+  if (m_graphic != nullptr) {
+    m_graphic->dwgAdvancedMetadata().addMLeaderStyle(*data);
+  }
   RS_DEBUG->print("RS_FilterDXFRW::addMLeaderStyle: %s",
                   data->name.empty() ? "(unnamed)" : data->name.c_str());
+}
+
+void RS_FilterDXFRW::addDetailViewStyle(const DRW_DetailViewStyle &data) {
+  if (m_graphic != nullptr) {
+    m_graphic->dwgAdvancedMetadata().addDetailViewStyle(data);
+  }
+  RS_DEBUG->print("RS_FilterDXFRW::addDetailViewStyle: %s",
+                  data.m_modelDoc.m_displayName.empty()
+                      ? data.m_modelDoc.m_description.c_str()
+                      : data.m_modelDoc.m_displayName.c_str());
+}
+
+void RS_FilterDXFRW::addSectionViewStyle(const DRW_SectionViewStyle &data) {
+  if (m_graphic != nullptr) {
+    m_graphic->dwgAdvancedMetadata().addSectionViewStyle(data);
+  }
+  RS_DEBUG->print("RS_FilterDXFRW::addSectionViewStyle: %s",
+                  data.m_modelDoc.m_displayName.empty()
+                      ? data.m_modelDoc.m_description.c_str()
+                      : data.m_modelDoc.m_displayName.c_str());
+}
+
+void RS_FilterDXFRW::addBreakData(const DRW_BreakData &data) {
+  if (m_graphic != nullptr) {
+    m_graphic->dwgAdvancedMetadata().addBreakData(data);
+  }
+  RS_DEBUG->print("RS_FilterDXFRW::addBreakData: %d refs",
+                  static_cast<int>(data.m_pointRefHandles.size()));
+}
+
+void RS_FilterDXFRW::addBreakPointRef(const DRW_BreakPointRef &data) {
+  if (m_graphic != nullptr) {
+    m_graphic->dwgAdvancedMetadata().addBreakPointRef(data);
+  }
+  RS_DEBUG->print("RS_FilterDXFRW::addBreakPointRef: %d",
+                  static_cast<int>(data.handle));
+}
+
+void RS_FilterDXFRW::addGroup(const DRW_Group &data) {
+  if (m_graphic != nullptr) {
+    m_graphic->dwgAdvancedMetadata().addGroup(data);
+  }
+  RS_DEBUG->print("RS_FilterDXFRW::addGroup: %s (%d handles)",
+                  data.m_description.empty() ? "(unnamed)" : data.m_description.c_str(),
+                  static_cast<int>(data.m_entityHandles.size()));
+}
+
+void RS_FilterDXFRW::addImageDefinitionReactor(const DRW_ImageDefinitionReactor &data) {
+  if (m_graphic != nullptr) {
+    m_graphic->dwgAdvancedMetadata().addImageDefinitionReactor(data);
+  }
+  RS_DEBUG->print("RS_FilterDXFRW::addImageDefinitionReactor: class version %d",
+                  static_cast<int>(data.m_classVersion));
+}
+
+void RS_FilterDXFRW::addRasterVariables(const DRW_RasterVariables &data) {
+  if (m_graphic != nullptr) {
+    m_graphic->dwgAdvancedMetadata().addRasterVariables(data);
+  }
+  RS_DEBUG->print("RS_FilterDXFRW::addRasterVariables: frame %d quality %d units %d",
+                  data.m_imageFrame,
+                  data.m_imageQuality,
+                  data.m_units);
+}
+
+void RS_FilterDXFRW::addSpatialFilter(const DRW_SpatialFilter &data) {
+  if (m_graphic != nullptr) {
+    m_graphic->dwgAdvancedMetadata().addSpatialFilter(data);
+  }
+  RS_DEBUG->print("RS_FilterDXFRW::addSpatialFilter: %d boundary points",
+                  static_cast<int>(data.m_boundaryPoints.size()));
+}
+
+void RS_FilterDXFRW::addGeoData(const DRW_GeoData &data) {
+  if (m_graphic != nullptr) {
+    m_graphic->dwgAdvancedMetadata().addGeoData(data);
+  }
+  RS_DEBUG->print("RS_FilterDXFRW::addGeoData: version %d",
+                  static_cast<int>(data.m_version));
+}
+
+void RS_FilterDXFRW::addTableGeometry(const DRW_TableGeometry &data) {
+  if (m_graphic != nullptr) {
+    m_graphic->dwgAdvancedMetadata().addTableGeometry(data);
+  }
+  RS_DEBUG->print("RS_FilterDXFRW::addTableGeometry: %d x %d",
+                  static_cast<int>(data.m_rowCount),
+                  static_cast<int>(data.m_columnCount));
+}
+
+void RS_FilterDXFRW::addTableStyle(const DRW_TableStyle &data) {
+  if (m_graphic != nullptr) {
+    m_graphic->dwgAdvancedMetadata().addTableStyle(data);
+  }
+  RS_DEBUG->print("RS_FilterDXFRW::addTableStyle: %s",
+                  data.m_name.empty() ? "(unnamed)" : data.m_name.c_str());
+}
+
+void RS_FilterDXFRW::addTableContent(const DRW_TableContentObject &data) {
+  if (m_graphic != nullptr) {
+    m_graphic->dwgAdvancedMetadata().addTableContent(data);
+  }
+  RS_DEBUG->print("RS_FilterDXFRW::addTableContent: %d x %d",
+                  static_cast<int>(data.m_content.m_rows.size()),
+                  static_cast<int>(data.m_content.m_columns.size()));
+}
+
+void RS_FilterDXFRW::addCellStyleMap(const DRW_CellStyleMap &data) {
+  if (m_graphic != nullptr) {
+    m_graphic->dwgAdvancedMetadata().addCellStyleMap(data);
+  }
+  RS_DEBUG->print("RS_FilterDXFRW::addCellStyleMap: %d styles",
+                  static_cast<int>(data.m_cellStyles.size()));
+}
+
+void RS_FilterDXFRW::addRawDxfObject(const DRW_RawDxfObject &data) {
+  if (m_graphic != nullptr) {
+    m_graphic->dwgAdvancedMetadata().addRawDxfObject(data);
+  }
+}
+
+void RS_FilterDXFRW::addRawDxfEntity(const DRW_RawDxfObject &data) {
+  if (m_graphic != nullptr) {
+    m_graphic->dwgAdvancedMetadata().addRawDxfEntity(data);
+  }
+}
+
+void RS_FilterDXFRW::addDxfClass(const DRW_Class &data) {
+  if (m_graphic != nullptr) {
+    m_graphic->dwgAdvancedMetadata().addDxfClass(data);
+  }
+}
+
+void RS_FilterDXFRW::addUnsupportedObject(const DRW_UnsupportedObject &data) {
+  if (m_graphic != nullptr) {
+    m_graphic->dwgAdvancedMetadata().addUnsupportedObject(data);
+  }
+  m_unsupportedDwgObjects.push_back(data);
+  RS_DEBUG->print("RS_FilterDXFRW::addUnsupportedObject: %s handle %d (%d bytes)",
+                  data.m_recordName.empty() ? "(fixed)" : data.m_recordName.c_str(),
+                  static_cast<int>(data.m_handle),
+                  static_cast<int>(data.m_rawBytes.size()));
+}
+
+void RS_FilterDXFRW::addRawDwgSection(const DRW_RawDwgSection &data) {
+  if (m_graphic != nullptr) {
+    m_graphic->dwgAdvancedMetadata().addRawDwgSection(data);
+  }
+  RS_DEBUG->print("RS_FilterDXFRW::addRawDwgSection: %s (%d bytes)",
+                  data.m_name.c_str(), static_cast<int>(data.m_data.size()));
+}
+
+void RS_FilterDXFRW::addAcDbPlaceholder(const DRW_AcDbPlaceholder &data) {
+  if (m_graphic != nullptr) {
+    m_graphic->dwgAdvancedMetadata().addAcDbPlaceholder(data);
+  }
+  RS_DEBUG->print("RS_FilterDXFRW::addAcDbPlaceholder: %d",
+                  static_cast<int>(data.handle));
+}
+
+void RS_FilterDXFRW::addSun(const DRW_Sun &data) {
+  if (m_graphic != nullptr) {
+    m_graphic->dwgAdvancedMetadata().addSun(data);
+  }
+  RS_DEBUG->print("RS_FilterDXFRW::addSun: handle %d on=%d",
+                  static_cast<int>(data.handle),
+                  data.m_isOn ? 1 : 0);
+}
+
+void RS_FilterDXFRW::addDictionary(const DRW_Dictionary &data) {
+  if (m_graphic != nullptr) {
+    m_graphic->dwgAdvancedMetadata().addDictionary(data);
+  }
+  RS_DEBUG->print("RS_FilterDXFRW::addDictionary: handle %d entries=%d",
+                  static_cast<int>(data.handle),
+                  static_cast<int>(data.m_entries.size()));
+}
+
+void RS_FilterDXFRW::addXRecord(const DRW_XRecord &data) {
+  if (m_graphic != nullptr) {
+    m_graphic->dwgAdvancedMetadata().addXRecord(data);
+  }
+  RS_DEBUG->print("RS_FilterDXFRW::addXRecord: handle %d values=%d",
+                  static_cast<int>(data.handle),
+                  static_cast<int>(data.m_values.size()));
+}
+
+void RS_FilterDXFRW::addLayout(const DRW_Layout &data) {
+  if (m_graphic != nullptr) {
+    m_graphic->dwgAdvancedMetadata().addLayout(data);
+    // PR 11 — populate activeLayoutHandle on first import.  AutoCAD uses
+    // tabOrder=0 for the default-visible paper-space layout; if no layout
+    // carries tabOrder=0 (rare — most DWGs have one), fall back to the
+    // first layout added so the UI still has a non-zero handle to display.
+    // setActiveLayoutHandle bumps the modified flag only on actual change,
+    // so re-loading the same DWG idempotently leaves the dirty state alone.
+    if (m_graphic->activeLayoutHandle() == 0u && data.handle != 0u) {
+        const bool isDefaultTab = data.tabOrder == 0;
+        const bool isFirstLayout = m_graphic->layouts().size() == 1;
+        if (isDefaultTab || isFirstLayout) {
+            m_graphic->setActiveLayoutHandle(data.handle);
+        }
+    }
+  }
+  RS_DEBUG->print("RS_FilterDXFRW::addLayout: handle %d name=%s viewports=%d",
+                  static_cast<int>(data.handle),
+                  data.name.c_str(),
+                  static_cast<int>(data.viewportHandles.size()));
+}
+
+// PR 8d.2a — five small no-storage OBJECTS families.  All custom-class
+// (≥ 500); the filter routes each call into round-trip-grade metadata
+// storage so RS_FilterDXFRW::writeObjects can dispatch the native writer.
+void RS_FilterDXFRW::addScale(const DRW_Scale &data) {
+  if (m_graphic != nullptr) {
+    m_graphic->dwgAdvancedMetadata().addScale(data);
+  }
+  RS_DEBUG->print("RS_FilterDXFRW::addScale: handle %d name=%s factor=%f",
+                  static_cast<int>(data.handle),
+                  data.name.c_str(),
+                  data.scaleFactor());
+}
+
+void RS_FilterDXFRW::addIDBuffer(const DRW_IDBuffer &data) {
+  if (m_graphic != nullptr) {
+    m_graphic->dwgAdvancedMetadata().addIDBuffer(data);
+  }
+  RS_DEBUG->print("RS_FilterDXFRW::addIDBuffer: handle %d ids=%d",
+                  static_cast<int>(data.handle),
+                  static_cast<int>(data.objIds.size()));
+}
+
+void RS_FilterDXFRW::addLayerIndex(const DRW_LayerIndex &data) {
+  if (m_graphic != nullptr) {
+    m_graphic->dwgAdvancedMetadata().addLayerIndex(data);
+  }
+  RS_DEBUG->print("RS_FilterDXFRW::addLayerIndex: handle %d entries=%d",
+                  static_cast<int>(data.handle),
+                  static_cast<int>(data.entries.size()));
+}
+
+void RS_FilterDXFRW::addSpatialIndex(const DRW_SpatialIndex &data) {
+  if (m_graphic != nullptr) {
+    m_graphic->dwgAdvancedMetadata().addSpatialIndex(data);
+  }
+  RS_DEBUG->print("RS_FilterDXFRW::addSpatialIndex: handle %d ts=%u/%u",
+                  static_cast<int>(data.handle),
+                  static_cast<unsigned>(data.timestamp1),
+                  static_cast<unsigned>(data.timestamp2));
+}
+
+void RS_FilterDXFRW::addDictionaryVar(const DRW_DictionaryVar &data) {
+  if (m_graphic != nullptr) {
+    m_graphic->dwgAdvancedMetadata().addDictionaryVar(data);
+  }
+  RS_DEBUG->print("RS_FilterDXFRW::addDictionaryVar: handle %d schema=%d",
+                  static_cast<int>(data.handle),
+                  data.m_schema);
+}
+
+// PR 8d.2b — four larger no-storage OBJECTS families.  All custom-class
+// (513-516); filter routes each call into round-trip-grade metadata storage
+// so RS_FilterDXFRW::writeObjects can dispatch the native writer.
+void RS_FilterDXFRW::addDictionaryWithDefault(const DRW_DictionaryWithDefault &data) {
+  if (m_graphic != nullptr) {
+    m_graphic->dwgAdvancedMetadata().addDictionaryWithDefault(data);
+  }
+  RS_DEBUG->print("RS_FilterDXFRW::addDictionaryWithDefault: handle %d entries=%d default=%d",
+                  static_cast<int>(data.handle),
+                  static_cast<int>(data.m_entries.size()),
+                  static_cast<int>(data.m_defaultEntryHandle));
+}
+
+void RS_FilterDXFRW::addSortEntsTable(const DRW_SortEntsTable &data) {
+  if (m_graphic != nullptr) {
+    m_graphic->dwgAdvancedMetadata().addSortEntsTable(data);
+  }
+  RS_DEBUG->print("RS_FilterDXFRW::addSortEntsTable: handle %d entries=%d block=%d",
+                  static_cast<int>(data.handle),
+                  static_cast<int>(data.m_entityHandles.size()),
+                  static_cast<int>(data.m_blockOwnerHandle));
+}
+
+void RS_FilterDXFRW::addFieldList(const DRW_FieldList &data) {
+  if (m_graphic != nullptr) {
+    m_graphic->dwgAdvancedMetadata().addFieldList(data);
+  }
+  RS_DEBUG->print("RS_FilterDXFRW::addFieldList: handle %d fields=%d",
+                  static_cast<int>(data.handle),
+                  static_cast<int>(data.m_fieldHandles.size()));
+}
+
+void RS_FilterDXFRW::addField(const DRW_Field &data) {
+  if (m_graphic != nullptr) {
+    m_graphic->dwgAdvancedMetadata().addField(data);
+  }
+  RS_DEBUG->print("RS_FilterDXFRW::addField: handle %d evaluator=%s code=%s",
+                  static_cast<int>(data.handle),
+                  data.m_evaluatorId.c_str(),
+                  data.m_fieldCode.c_str());
+}
+
+void RS_FilterDXFRW::addAssociativeObject(const DRW_AssociativeObject &data) {
+  // TODO: Reconstruct associative dimension/dynamic-block relationship graphs
+  // from these shell objects after native consumers exist.
+  if (m_graphic != nullptr) {
+    m_graphic->dwgAdvancedMetadata().addAssociativeObject(data);
+  }
+  RS_DEBUG->print("RS_FilterDXFRW::addAssociativeObject: %s handle %d",
+                  data.m_recordName.empty() ? "(assoc)" : data.m_recordName.c_str(),
+                  static_cast<int>(data.handle));
+}
+
+void RS_FilterDXFRW::addAcShHistoryObject(const DRW_AcShHistoryObject &data) {
+  // TODO: Connect ACSH history nodes to 3DSOLID modeler geometry history.
+  if (m_graphic != nullptr) {
+    m_graphic->dwgAdvancedMetadata().addAcShObject(data);
+  }
+  RS_DEBUG->print("RS_FilterDXFRW::addAcShHistoryObject: %s handle %d",
+                  data.m_recordName.empty() ? "(acsh)" : data.m_recordName.c_str(),
+                  static_cast<int>(data.handle));
 }
 
 /**
@@ -3471,6 +5162,11 @@ void RS_FilterDXFRW::addMLeaderStyle(const DRW_MLeaderStyle *data) {
  */
 void RS_FilterDXFRW::linkImage(const DRW_ImageDef *data) {
     RS_DEBUG->print("RS_FilterDXFRW::linkImage");
+    if (m_graphic != nullptr && data != nullptr)
+        m_graphic->dwgAdvancedMetadata().addImageDefinition(*data);
+
+    if (data == nullptr)
+        return;
 
     int handle = data->handle;
     QString sfile(QString::fromUtf8(data->name.c_str()));
@@ -3541,6 +5237,14 @@ void RS_FilterDXFRW::addHeader(const DRW_Header* data){
 
     for (auto it = data->vars.begin() ; it != data->vars.end(); ++it ) {
         QString key = QString::fromStdString((*it).first);
+        // DWG-read header vars arrive under bare keys (e.g. "LUPREC"), while the
+        // app (and the DXF path) query them $-prefixed ("$LUPREC"). Normalize
+        // here so DWG-stored vars are reachable. DXF keys already start with '$'
+        // (drw_header.cpp), so the guard makes this a no-op for that path and
+        // prevents double-prefixing ("$$ACADVER").
+        if (!key.startsWith('$')) {
+            key.prepend('$');
+        }
         DRW_Variant *var = (*it).second;
         switch (var->type()) {
         case DRW_Variant::COORD:
@@ -3657,11 +5361,38 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic& g, const QString& file, RS2::FormatT
 #endif
 
 #ifdef DWGSUPPORT
-    if (type == RS2::FormatDWG) {
-        m_version = 1015;
+    if (type == RS2::FormatDWG || type == RS2::FormatDWG2004) {
+        DRW::Version dwgVer = (type == RS2::FormatDWG2004) ? DRW::AC1018 : DRW::AC1015;
+        m_version = (dwgVer == DRW::AC1018) ? 1018 : 1015;
         m_exactColor = false;
         m_dwgW = new dwgRW(QFile::encodeName(file).constData());
-        bool success = m_dwgW->write(this, DRW::AC1015, false);
+        // P3 #1: reserve every preserved fixed-type OBJECT + raw-object handle
+        // BEFORE write() so defineBlock() (which mints user-block handles from
+        // 0x30) can never mint a handle a later object re-emits -> no duplicate
+        // object-map entry -> no writeDwgHandles() failure -> no BAD_OPEN whole-
+        // file abort. Mirrors the DXF reserve pass (this DWG branch previously
+        // had none); reserving a handle that is ultimately not emitted is
+        // harmless (next() simply skips it). Validated by the [dwg-write][reserve]
+        // unit test.
+        {
+            const auto &md = g.dwgAdvancedMetadata();
+            auto reserveAll = [&](const auto &records) {
+                for (const auto &r : records)
+                    if (r.handle != 0)
+                        m_dwgW->reserveHandle(r.handle);
+            };
+            reserveAll(md.rawObjects());
+            reserveAll(md.placeholders());
+            reserveAll(md.dictionaries());
+            reserveAll(md.xrecords());
+            reserveAll(md.groups());
+            reserveAll(md.layouts());
+            reserveAll(md.mlineStyles());
+            reserveAll(md.dictionaryVars());
+            reserveAll(md.fieldLists());
+            reserveAll(md.fields());
+        }
+        bool success = m_dwgW->write(this, dwgVer, false);
         delete m_dwgW;
         m_dwgW = nullptr;
         return success;
@@ -3699,6 +5430,342 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic& g, const QString& file, RS2::FormatT
     m_dxfW = new dxfRW(QFile::encodeName(file));
     // fixme - sand - save to binary format enabling/disabling!!
     bool binary = false;
+
+    // Before write(): (1) reserve every verbatim code-5 handle preserved in the
+    // raw-passthrough net (rawDxfObjects/rawDxfEntities re-emit their original
+    // handle) in the codec's HandleAllocator so a minted handle can never
+    // collide with a preserved raw handle, AND a preserved raw handle that lands
+    // in the codec's fixed-low band (0x10-0x25) is skipped by next() too — this
+    // is the DWG-path reserve-and-preserve mechanism (dwgWriter::reserveHandle),
+    // and (2) register a DXF CLASS record for each custom-class object present in
+    // the raw net so AutoCAD/ODA accept those instances (entry + instance co-emit).
+    {
+        const auto &metadata = g.dwgAdvancedMetadata();
+        std::vector<DRW_Class> classes;
+        std::map<std::string, std::size_t> classIdx;
+        std::map<std::string, DRW_Class> sourceClasses;
+        for (const DRW_Class &cls : metadata.dxfClasses()) {
+            if (!cls.recName.empty())
+                sourceClasses.emplace(cls.recName, cls);
+        }
+        auto registerClassFor = [&](const std::string &recordName) {
+            DRW_Class cls;
+            auto sourceIt = sourceClasses.find(recordName);
+            if (sourceIt != sourceClasses.end()) {
+                cls = sourceIt->second;
+            } else if (!dxfRW::dxfClassForRecordName(recordName, cls)) {
+                return;
+            }
+            auto it = classIdx.find(recordName);
+            if (it == classIdx.end()) {
+                cls.instanceCount = 1;
+                classIdx.emplace(recordName, classes.size());
+                classes.push_back(cls);
+            } else {
+                ++classes[it->second].instanceCount;
+            }
+        };
+        std::set<std::uint32_t> rawObjectHandles;
+        for (const DRW_RawDxfObject &o : metadata.rawDxfObjects()) {
+            if (o.handle != 0) {
+                m_dxfW->reserveHandle(o.handle);
+                rawObjectHandles.insert(o.handle);
+            }
+            registerClassFor(o.name);
+        }
+        for (const DRW_RawDxfObject &e : metadata.rawDxfEntities()) {
+            if (e.handle != 0)
+                m_dxfW->reserveHandle(e.handle);
+            registerClassFor(e.name);  //custom ENTITIES need a CLASS too
+        }
+
+        //F4: the routed data-only OBJECTS (SUN/SCALE/DICTIONARYVAR/
+        //RASTERVARIABLES) are typed-emitted on DWG->DXF (the DWG reader does NOT
+        //put them in the raw net — see writeObjects). For each such record that
+        //will be typed-emitted (ReplayAllowed, nonzero handle, NOT already in the
+        //raw net → not double-counted), reserve its verbatim code-5 handle so a
+        //minted handle can't collide, and register the same CLASS the raw-net
+        //objects use (else AutoCAD/ezdxf drop the instance). The dedup predicate
+        //here MUST match writeObjects' emitTyped.
+        auto reserveTyped = [&](std::uint32_t handle,
+                                LC_DwgAdvancedMetadata::ReplayState state,
+                                const char *recordName) {
+            if (handle == 0
+                || state != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                || rawObjectHandles.count(handle) != 0)
+                return;
+            m_dxfW->reserveHandle(handle);
+            registerClassFor(recordName);
+        };
+        for (const auto &record : metadata.suns())
+            reserveTyped(record.handle, record.replayState, "SUN");
+        for (const auto &record : metadata.scales())
+            reserveTyped(record.handle, record.replayState, "SCALE");
+        for (const auto &record : metadata.dictionaryVars())
+            reserveTyped(record.handle, record.replayState, "DICTIONARYVAR");
+        for (const auto &record : metadata.rasterVariables())
+            reserveTyped(record.handle, record.replayState, "RASTERVARIABLES");
+        //SLICE 2: WIPEOUTVARIABLES is a CUSTOM class -> reserve + register CLASS.
+        for (const auto &record : metadata.wipeoutVariables())
+            reserveTyped(record.handle, record.replayState, "WIPEOUTVARIABLES");
+        //SLICE 1: MLINESTYLE is a FIXED built-in -> reserve its handle but
+        //register NO CLASS (it is intentionally absent from dxfClassForRecordName).
+        for (const auto &record : metadata.mlineStyles()) {
+            if (record.handle == 0
+                || record.replayState
+                       != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                || rawObjectHandles.count(record.handle) != 0)
+                continue;
+            m_dxfW->reserveHandle(record.handle);
+        }
+
+        if (!classes.empty())
+            m_dxfW->setDxfClasses(classes);
+
+        // (3) Re-attach raw-net-routed named dictionaries to the codec's
+        // regenerated root NamedObjectsDictionary (handle C). The child dict NAME
+        // is not on the child object — it lives in the SOURCE root dict's entry
+        // list (the typed DictionaryRecord with parentHandle==0). Build the
+        // (name, verbatim-handle) entries for the codec, and a suppression set so
+        // the source ACAD_GROUP dict (codec regenerates it at D) and any C/D
+        // collisions are not re-emitted. The source root dict itself is never in
+        // the raw net (processDictionary skips parentHandle==0).
+        m_dxfSuppressedObjectHandles.clear();
+        m_dxfEmittedNamedDictHandles.clear();
+        std::uint32_t sourceRootHandle = 0;
+        std::uint32_t acadGroupHandle = 0;
+        std::map<std::uint32_t, std::string> rootEntryName;  // child handle -> name
+        for (const auto &d : metadata.dictionaries()) {
+            if (d.parentHandle != 0)
+                continue;
+            sourceRootHandle = d.handle;
+            for (const auto &e : d.entries) {
+                if (e.name == "ACAD_GROUP")
+                    acadGroupHandle = e.handle;
+                else
+                    rootEntryName.emplace(e.handle, e.name);
+            }
+        }
+        if (acadGroupHandle != 0)
+            m_dxfSuppressedObjectHandles.insert(acadGroupHandle);
+
+        // (3a) Structural-collision remap. The codec emits its own table/block
+        // records and root dictionaries at FIXED low handles (table heads, LAYER
+        // 0x10, APPID 0x12, LTYPE 0x14-0x16, BLOCK_RECORD/BLOCK/ENDBLK 0x1C-0x21,
+        // root C / ACAD_GROUP D). Real source files reuse those very handles for
+        // unrelated OBJECTS (extension dicts, material dicts, xrecords) preserved
+        // verbatim in the raw net — an unavoidable raw-vs-fixed-structural
+        // collision the reserve-and-preserve mechanism alone cannot break (both
+        // want the same handle). The fixed structural set is non-negotiable (the
+        // codec's 330/350 cross-refs are literals), so the colliding raw objects
+        // are remapped to fresh allocator handles; writeRawDxfObject rewrites the
+        // object's own handle AND every reference to a remapped handle, keeping
+        // the raw subtree internally consistent. 0xC/0xD raw dicts are suppressed
+        // (the codec regenerates root/group) and so are NOT remapped.
+        static const std::set<std::uint32_t> kFixedStructural = {
+            0x1,  0x2,  0x3,  0x5,  0x6,  0x7,  0x8,  0x9,  0xA,
+            0x10, 0x12, 0x14, 0x15, 0x16,
+            0x1C, 0x1D, 0x1E, 0x1F, 0x20, 0x21};
+        std::map<std::uint32_t, std::uint32_t> handleRemap;
+        auto remapIfColliding = [&](std::uint32_t h) {
+            if (h == 0 || kFixedStructural.count(h) == 0)
+                return;
+            if (h == 0xCu || h == 0xDu ||
+                m_dxfSuppressedObjectHandles.count(h) != 0)
+                return;  // suppressed, not emitted -> nothing to remap
+            if (handleRemap.count(h) != 0)
+                return;
+            handleRemap.emplace(h, m_dxfW->allocHandle());
+        };
+        for (const DRW_RawDxfObject &o : metadata.rawDxfObjects())
+            remapIfColliding(o.handle);
+        for (const DRW_RawDxfObject &e : metadata.rawDxfEntities())
+            remapIfColliding(e.handle);
+        // setHandleRemap is pushed AFTER the named-dict block below so any remap
+        // a colliding named-dict handle adds is included in the codec's table.
+
+        std::vector<std::pair<std::string, std::string>> rootEntries;
+        for (const DRW_RawDxfObject &o : metadata.rawDxfObjects()) {
+            if (o.name != "DICTIONARY" && o.name != "ACDBDICTIONARYWDFLT")
+                continue;
+            if (o.handle == 0xCu || o.handle == 0xDu) {  // collide with fixed C/D
+                m_dxfSuppressedObjectHandles.insert(o.handle);
+                continue;
+            }
+            if (o.handle == acadGroupHandle)
+                continue;  // already suppressed
+            if (o.parentHandle != sourceRootHandle)
+                continue;  // only direct root children get a root entry
+            auto it = rootEntryName.find(o.handle);
+            if (it == rootEntryName.end())
+                continue;  // name not recoverable -> cannot re-attach
+            std::string handleStr;  // code-5; matches the (possibly remapped) re-emit
+            for (const DRW_Variant &g : o.groups)
+                if (g.code() == 5) {
+                    handleStr = g.c_str();
+                    break;
+                }
+            // If this child dict's handle was remapped (structural collision), the
+            // root entry must point at the NEW handle so the 350 ref resolves.
+            auto rm = handleRemap.find(o.handle);
+            if (rm != handleRemap.end())
+                handleStr = m_dxfW->toHexStrHandle(rm->second);
+            if (!handleStr.empty())
+                rootEntries.emplace_back(it->second, handleStr);
+        }
+
+        // (3b) F4-followup: DWG->DXF parent dictionaries for the data-only
+        // OBJECTS. On the DWG path the only INVALID_OWNER_HANDLE fixes ezdxf
+        // applies are data-only OBJECTS (SUN / SCALE / DICTIONARYVAR /
+        // RASTERVARIABLES) whose 330 owner is a named dictionary that LibreCAD
+        // does not regenerate (e.g. ACAD_DICTIONARYVAR @0x70 owning the
+        // DICTIONARYVARs). Emit EXACTLY those parent dictionaries as real,
+        // C-owned OBJECTS so the children resolve to a valid owner; keep ONLY the
+        // entries that target an object we actually emit (the data-only children)
+        // so the dict introduces no new dangling 350. We deliberately do NOT emit
+        // the dictionaries whose children are unmodeled objects LibreCAD drops
+        // (ACAD_VISUALSTYLE / ACAD_MATERIAL / ACAD_MLINESTYLE / ACAD_LAYOUT ...):
+        // emitting those would replace one missing-owner fix with many
+        // dangling-entry fixes and corrupt cross-refs.
+        //
+        // The set of objects we emit on this path (their code-5 handles):
+        // the ReplayAllowed, non-raw-net data-only records (matches writeObjects'
+        // emitTyped), plus the raw-net objects (re-emitted verbatim above).
+        std::set<std::uint32_t> emittedObjectHandles = rawObjectHandles;
+        std::set<std::uint32_t> neededParents;  // 330 owners we must materialize
+        auto noteDataOnly = [&](std::uint32_t handle, std::uint32_t parent,
+                                LC_DwgAdvancedMetadata::ReplayState state) {
+            if (handle == 0
+                || state != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                || rawObjectHandles.count(handle) != 0)
+                return;  // not emitted on this path
+            emittedObjectHandles.insert(handle);
+            if (parent != 0)
+                neededParents.insert(parent);
+        };
+        for (const auto &r : metadata.suns())
+            noteDataOnly(r.handle, r.parentHandle, r.replayState);
+        for (const auto &r : metadata.scales())
+            noteDataOnly(r.handle, r.parentHandle, r.replayState);
+        for (const auto &r : metadata.dictionaryVars())
+            noteDataOnly(r.handle, r.parentHandle, r.replayState);
+        for (const auto &r : metadata.rasterVariables())
+            noteDataOnly(r.handle, r.parentHandle, r.replayState);
+        for (const auto &r : metadata.mlineStyles())
+            noteDataOnly(r.handle, r.parentHandle, r.replayState);
+        for (const auto &r : metadata.wipeoutVariables())
+            noteDataOnly(r.handle, r.parentHandle, r.replayState);
+
+        std::vector<DRW_Dictionary> namedDicts;
+        std::set<std::uint32_t> emittedDictHandles;
+        for (const auto &d : metadata.dictionaries()) {
+            if (d.parentHandle == 0)
+                continue;  // source root: harvested for names only
+            if (d.handle == 0 || d.handle == 0xCu || d.handle == 0xDu)
+                continue;
+            if (d.handle == acadGroupHandle)
+                continue;
+            if (m_dxfSuppressedObjectHandles.count(d.handle) != 0)
+                continue;
+            if (rawObjectHandles.count(d.handle) != 0)
+                continue;  // DXF-read dict already round-tripped via the raw net
+            if (neededParents.count(d.handle) == 0)
+                continue;  // not a parent of any object we emit -> skip
+            if (emittedDictHandles.count(d.handle) != 0)
+                continue;  // de-dup (dictionaries() may list a handle once, guard anyway)
+
+            // Reserve + structural-collision remap, mirroring the raw path so a
+            // dict handle landing on a fixed literal is moved.
+            m_dxfW->reserveHandle(d.handle);
+            remapIfColliding(d.handle);
+            auto remapOf = [&](std::uint32_t h) {
+                auto rm = handleRemap.find(h);
+                return rm != handleRemap.end() ? rm->second : h;
+            };
+            DRW_Dictionary dict = dictionaryFromMetadata(d);
+            dict.handle = remapOf(d.handle);
+            // Owner: re-point a child of the source root at C (handle 0 ->
+            // writeObjectOwner emits "C"). If the explicit parent is itself an
+            // emitted dict, keep it (remapped); otherwise fall back to C so the
+            // dict is never itself a dangling-owner object.
+            std::uint32_t parent = static_cast<std::uint32_t>(d.parentHandle);
+            if (parent == sourceRootHandle || neededParents.count(parent) == 0)
+                dict.parentHandle = 0;
+            else
+                dict.parentHandle = static_cast<int>(remapOf(parent));
+            // Keep ONLY entries whose target is an object we actually emit, so the
+            // dict adds no dangling 350.
+            std::vector<DRW_Dictionary::Entry> keptEntries;
+            keptEntries.reserve(dict.m_entries.size());
+            for (auto &entry : dict.m_entries) {
+                if (emittedObjectHandles.count(entry.m_handle) == 0)
+                    continue;
+                entry.m_handle = remapOf(entry.m_handle);
+                keptEntries.push_back(entry);
+            }
+            dict.m_entries = std::move(keptEntries);
+            namedDicts.push_back(std::move(dict));
+            emittedDictHandles.insert(d.handle);
+            m_dxfEmittedNamedDictHandles.insert(d.handle);
+
+            // Re-attach under root C so the dict object is reachable. Use the
+            // harvested name if known, else the source dict name, else a synthetic.
+            auto nameIt = rootEntryName.find(d.handle);
+            std::string entryName = nameIt != rootEntryName.end()
+                                        ? nameIt->second
+                                        : (!d.name.empty() ? d.name : std::string());
+            if (!entryName.empty())
+                rootEntries.emplace_back(
+                    entryName, m_dxfW->toHexStrHandle(remapOf(d.handle)));
+        }
+        if (!namedDicts.empty())
+            m_dxfW->setNamedDictObjects(namedDicts);
+
+        // (4) F3: typed GROUP emit (both directions). GROUP is read into typed
+        // metadata only (processGroup -> addGroup; never routed to the DXF raw
+        // net — confirmed against the DXF reader's processGroup which makes no
+        // addRawDxfObject call), so there is no raw-net dedup to do here. The
+        // codec mints each group's handle, augments the ACAD_GROUP D dict, and
+        // resolves member entityHandles (SOURCE handles) through the source->minted
+        // map captured during writeEntity. The source ACAD_GROUP dict is already
+        // suppressed above (acadGroupHandle); the codec regenerates D.
+        //
+        // Group NAMES live in the ACAD_GROUP dict's entries (groupName ->
+        // groupHandle), not on the GROUP record; harvest them. Unnamed groups
+        // (isUnnamed) carry a generated "*An" name AutoCAD assigns; synthesize a
+        // stable "*A<n>" when no name is recoverable so the D-dict entry + GROUP
+        // are still well-formed.
+        std::map<std::uint32_t, std::string> groupHandleToName;
+        for (const auto &d : metadata.dictionaries()) {
+            if (d.handle != acadGroupHandle || acadGroupHandle == 0)
+                continue;
+            for (const auto &e : d.entries)
+                groupHandleToName.emplace(e.handle, e.name);
+        }
+        std::vector<DRW_Group> groupsToWrite;
+        groupsToWrite.reserve(metadata.groups().size());
+        int unnamedSeq = 0;
+        for (const auto &record : metadata.groups()) {
+            if (record.replayState
+                != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed)
+                continue;
+            DRW_Group group = groupFromMetadata(record);
+            auto nameIt = groupHandleToName.find(record.handle);
+            if (nameIt != groupHandleToName.end() && !nameIt->second.empty())
+                group.name = nameIt->second;
+            else
+                group.name = "*A" + std::to_string(++unnamedSeq);
+            groupsToWrite.push_back(std::move(group));
+        }
+        if (!groupsToWrite.empty())
+            m_dxfW->setGroups(groupsToWrite);
+
+        if (!handleRemap.empty())
+            m_dxfW->setHandleRemap(handleRemap);
+
+        if (!rootEntries.empty())
+            m_dxfW->setRootDictEntries(rootEntries);
+    }
 
 //    bool success = m_dxfW->write(this, exportVersion, false); //ascii
     bool success = m_dxfW->write(this, exportVersion, binary); //binary
@@ -3798,7 +5865,8 @@ void RS_FilterDXFRW::writeBlockRecords(){
         blk = m_graphic->blockAt(i);
         if (!blk->isUndone()){
             RS_DEBUG->print("writing block record: %s", (const char*)blk->getName().toLocal8Bit());
-            m_dxfW->writeBlockRecord(blk->getName().toUtf8().data());
+            m_dxfW->writeBlockRecord(blk->getName().toUtf8().data(),
+                                     blk->getInsertionUnits());
         }
     }
 }
@@ -3815,7 +5883,8 @@ void RS_FilterDXFRW::writeBlocks() {
             if (!blk->isUndone()) {
                 DRW_Coord bp{blk->getBasePoint().x, blk->getBasePoint().y,
                              blk->getBasePoint().z};
-                m_dwgW->defineBlock(blk->getName().toUtf8().constData(), bp);
+                m_dwgW->defineBlock(blk->getName().toUtf8().constData(), bp,
+                                    blk->getInsertionUnits());
             }
         }
         return;
@@ -3869,7 +5938,6 @@ void RS_FilterDXFRW::writeHeader(DRW_Header& data){
 /*TODO $ISOMETRICGRID == $SNAPSTYLE and "GRID on/off" not handled because is part of
  active vport to save is required read/write VPORT table */
     QHash<QString, RS_Variable>vars = m_graphic->getVariableDict();
-    QHash<QString, RS_Variable>::iterator it = vars.begin();
     if (!vars.contains ( "$DWGCODEPAGE" )) {
 //RLZ: TODO verify this
         m_codePage = RS_SYSTEM->localeToISO(QLocale::system().name().toLocal8Bit());
@@ -3877,6 +5945,7 @@ void RS_FilterDXFRW::writeHeader(DRW_Header& data){
         vars.insert(QString("$DWGCODEPAGE"), RS_Variable(m_codePage, 0) );
     }
 
+    QHash<QString, RS_Variable>::iterator it = vars.begin();
     while (it != vars.end()) {
         auto value = it.value();
         int code = value.getCode();
@@ -3900,10 +5969,14 @@ void RS_FilterDXFRW::writeHeader(DRW_Header& data){
         }
         ++it;
     }
-    v = m_graphic->getMin();
-    v = m_graphic->getMax();
-    data.addCoord("$EXTMIN", DRW_Coord(v.x, v.y, 0.0), 0);
-    data.addCoord("$EXTMAX", DRW_Coord(v.x, v.y, 0.0), 0);
+    // $EXTMIN must use getMin() and $EXTMAX getMax(); the previous code
+    // overwrote vmin with getMax() before reading it, so $EXTMIN==$EXTMAX
+    // (a degenerate point bbox → broken ZOOM-EXTENTS/auto-scale) on every
+    // DWG+DXF write, and the Z extent was forced to 0. (write-review P3 #3)
+    const RS_Vector vmin = m_graphic->getMin();
+    const RS_Vector vmax = m_graphic->getMax();
+    data.addCoord("$EXTMIN", DRW_Coord(vmin.x, vmin.y, vmin.z), 0);
+    data.addCoord("$EXTMAX", DRW_Coord(vmax.x, vmax.y, vmax.z), 0);
 
     //when saving a block, there is no active layer. ignore it to avoid crash
     if(m_graphic->getActiveLayer()==0) {
@@ -3924,10 +5997,272 @@ void RS_FilterDXFRW::writeHeader(DRW_Header& data){
     }
 }
 
+void RS_FilterDXFRW::writeDwgClasses() {
+#ifdef DWGSUPPORT
+    if (m_dwgW == nullptr || m_graphic == nullptr)
+        return;
+    const auto& metadata = m_graphic->dwgAdvancedMetadata();
+    const bool canWriteModernObjects = m_dwgW->getVersion() >= DRW::AC1021;
+    // PR 13f — custom-class registration gate for the RasterVariables /
+    // GeoData / SpatialFilter families.  Broadened from AC1021+ to AC1015+
+    // because their encoders + parsers are version-clean (only the
+    // standard `version > AC1018` split-buffer routing).  The dispatch
+    // loop in writeObjects uses a matching `canRegisterCustomClassObjects`
+    // gate so the CLASSES section entry and the OBJECTS instance land
+    // together (otherwise the reader's class lookup fails and the object
+    // is silently dropped).
+    const bool canRegisterCustomClassObjects =
+        m_dwgW->getVersion() >= DRW::AC1015;
+    std::set<std::uint32_t> nativeSunHandles;
+    std::set<std::uint32_t> nativeMLeaderStyleHandles;
+    std::set<std::uint32_t> nativeRasterVariablesHandles;
+    std::set<std::uint32_t> nativeGeoDataHandles;
+    std::set<std::uint32_t> nativeSpatialFilterHandles;
+    std::set<std::uint32_t> nativeScaleHandles;
+    std::set<std::uint32_t> nativeIDBufferHandles;
+    std::set<std::uint32_t> nativeLayerIndexHandles;
+    std::set<std::uint32_t> nativeSpatialIndexHandles;
+    std::set<std::uint32_t> nativeDictionaryVarHandles;
+    std::set<std::uint32_t> nativeDictionaryWithDefaultHandles;
+    std::set<std::uint32_t> nativeSortEntsTableHandles;
+    std::set<std::uint32_t> nativeFieldListHandles;
+    std::set<std::uint32_t> nativeFieldHandles;
+    if (canWriteModernObjects) {
+        for (const auto& record : metadata.suns()) {
+            if (record.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                || record.handle == 0) {
+                continue;
+            }
+            DRW_Sun sun = sunFromMetadata(record);
+            if (m_dwgW->registerSunObjectClass(&sun))
+                nativeSunHandles.insert(record.handle);
+        }
+        for (const auto& record : metadata.mleaderStyles()) {
+            if (record.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                || record.handle == 0
+                || hasReplayableRawMLeaderStyle(metadata, record.handle)) {
+                continue;
+            }
+            DRW_MLeaderStyle style = mleaderStyleFromMetadata(record);
+            if (m_dwgW->registerMLeaderStyleObjectClass(&style))
+                nativeMLeaderStyleHandles.insert(record.handle);
+        }
+        // RASTERVARIABLES / GEODATA / SPATIAL_FILTER registration moved
+        // below to the `canRegisterCustomClassObjects` block (PR 13f).
+        // PR 13g — SCALE / IDBUFFER / LAYER_INDEX / SPATIAL_INDEX /
+        // DICTIONARYVAR registration moved below to the same block.
+        // PR 13h — DICTIONARYWDFLT / SORTENTSTABLE / FIELDLIST / FIELD
+        // registration moved below to the `canRegisterCustomClassObjects`
+        // block.
+    }
+
+    // PR 13f — custom-class families with version-clean encoders +
+    // round-trip-grade Records register here on the broadened
+    // `canRegisterCustomClassObjects` gate (≥AC1015) instead of the
+    // AC1021+ `canWriteModernObjects` gate.  The matching dispatch loop
+    // in writeObjects uses the same gate so the CLASSES section entry and
+    // the OBJECTS instance always land together.
+    if (canRegisterCustomClassObjects) {
+        // RASTERVARIABLES (AcDbRasterVariables, custom class 505) — must be
+        // registered here, BEFORE writeDwgClasses() emits the CLASSES section.
+        // PR 8d.1b + PR 13f.
+        for (const auto& record : metadata.rasterVariables()) {
+            if (record.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                || record.handle == 0) {
+                continue;
+            }
+            DRW_RasterVariables rv = rasterVariablesFromMetadata(record);
+            if (m_dwgW->registerRasterVariablesObjectClass(&rv))
+                nativeRasterVariablesHandles.insert(record.handle);
+        }
+        // GEODATA (AcDbGeoData, custom class 506) — PR 8d.1c + PR 13f.
+        for (const auto& record : metadata.geoData()) {
+            if (record.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                || record.handle == 0) {
+                continue;
+            }
+            DRW_GeoData gd = geoDataFromMetadata(record);
+            if (m_dwgW->registerGeoDataObjectClass(&gd))
+                nativeGeoDataHandles.insert(record.handle);
+        }
+        // SPATIAL_FILTER (AcDbSpatialFilter, custom class 507) — PR 8d.1d +
+        // PR 13f.
+        for (const auto& record : metadata.spatialFilters()) {
+            if (record.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                || record.handle == 0) {
+                continue;
+            }
+            DRW_SpatialFilter sf = spatialFilterFromMetadata(record);
+            if (m_dwgW->registerSpatialFilterObjectClass(&sf))
+                nativeSpatialFilterHandles.insert(record.handle);
+        }
+        // PR 13g — SCALE / IDBUFFER / LAYER_INDEX / SPATIAL_INDEX /
+        // DICTIONARYVAR (custom classes 508-512).  Encoders are version-
+        // clean; SPATIAL_INDEX additionally gates its common-handle prefix
+        // on `version > AC1018` (mirrors its parser).  All 5 default to
+        // enabled in `isDwgClassEnabled` (no per-class gate needed in
+        // dwgwriter.h).
+        for (const auto& record : metadata.scales()) {
+            if (record.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                || record.handle == 0) {
+                continue;
+            }
+            DRW_Scale s = scaleFromMetadata(record);
+            if (m_dwgW->registerScaleObjectClass(&s))
+                nativeScaleHandles.insert(record.handle);
+        }
+        for (const auto& record : metadata.idBuffers()) {
+            if (record.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                || record.handle == 0) {
+                continue;
+            }
+            DRW_IDBuffer b = idBufferFromMetadata(record);
+            if (m_dwgW->registerIDBufferObjectClass(&b))
+                nativeIDBufferHandles.insert(record.handle);
+        }
+        for (const auto& record : metadata.layerIndexes()) {
+            if (record.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                || record.handle == 0) {
+                continue;
+            }
+            DRW_LayerIndex li = layerIndexFromMetadata(record);
+            if (m_dwgW->registerLayerIndexObjectClass(&li))
+                nativeLayerIndexHandles.insert(record.handle);
+        }
+        for (const auto& record : metadata.spatialIndexes()) {
+            if (record.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                || record.handle == 0) {
+                continue;
+            }
+            DRW_SpatialIndex si = spatialIndexFromMetadata(record);
+            if (m_dwgW->registerSpatialIndexObjectClass(&si))
+                nativeSpatialIndexHandles.insert(record.handle);
+        }
+        for (const auto& record : metadata.dictionaryVars()) {
+            if (record.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                || record.handle == 0) {
+                continue;
+            }
+            DRW_DictionaryVar dv = dictionaryVarFromMetadata(record);
+            if (m_dwgW->registerDictionaryVarObjectClass(&dv))
+                nativeDictionaryVarHandles.insert(record.handle);
+        }
+        // PR 13h — DICTIONARYWDFLT / SORTENTSTABLE / FIELDLIST / FIELD
+        // (custom classes 513-516).  Encoders are version-clean (FIELD
+        // has a parser-mirrored `version < AC1021` branch for the
+        // legacy m_formatString TV).  All 4 default to enabled in
+        // `isDwgClassEnabled`.
+        for (const auto& record : metadata.dictionariesWithDefault()) {
+            if (record.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                || record.handle == 0) {
+                continue;
+            }
+            DRW_DictionaryWithDefault dwd =
+                dictionaryWithDefaultFromMetadata(record);
+            if (m_dwgW->registerDictionaryWithDefaultObjectClass(&dwd))
+                nativeDictionaryWithDefaultHandles.insert(record.handle);
+        }
+        for (const auto& record : metadata.sortEntsTables()) {
+            if (record.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                || record.handle == 0) {
+                continue;
+            }
+            DRW_SortEntsTable se = sortEntsTableFromMetadata(record);
+            if (m_dwgW->registerSortEntsTableObjectClass(&se))
+                nativeSortEntsTableHandles.insert(record.handle);
+        }
+        for (const auto& record : metadata.fieldLists()) {
+            if (record.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                || record.handle == 0) {
+                continue;
+            }
+            DRW_FieldList fl = fieldListFromMetadata(record);
+            if (m_dwgW->registerFieldListObjectClass(&fl))
+                nativeFieldListHandles.insert(record.handle);
+        }
+        for (const auto& record : metadata.fields()) {
+            if (record.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                || record.handle == 0) {
+                continue;
+            }
+            DRW_Field f = fieldFromMetadata(record);
+            if (m_dwgW->registerFieldObjectClass(&f))
+                nativeFieldHandles.insert(record.handle);
+        }
+    }
+
+    for (const auto& record : metadata.rawObjects()) {
+        // Version guard: never register a CLASSES entry for a raw object whose
+        // captured bytes are from a different DWG version than the file being
+        // written. Without this, registerRawDwgObjectClass below would add an
+        // orphan CLASSES entry (numInstances=1) for an object the emit loop in
+        // writeObjects then drops on the same guard — a CLASSES/OBJECT
+        // mismatch AutoCAD rejects. Mirrors the emit-loop guard.
+        if (metadata.sourceDwgVersion() != DRW::UNKNOWNV
+            && metadata.sourceDwgVersion() != m_dwgW->getVersion()) {
+            continue;
+        }
+        if (record.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+            || !record.isCustomClass) {
+            continue;
+        }
+        if (nativeSunHandles.count(record.handle) != 0 && isSunRawObject(record))
+            continue;
+        if (nativeMLeaderStyleHandles.count(record.handle) != 0
+            && isMLeaderStyleRawObject(record))
+            continue;
+        if (nativeRasterVariablesHandles.count(record.handle) != 0
+            && isRasterVariablesRawObject(record))
+            continue;
+        if (nativeGeoDataHandles.count(record.handle) != 0
+            && isGeoDataRawObject(record))
+            continue;
+        if (nativeSpatialFilterHandles.count(record.handle) != 0
+            && isSpatialFilterRawObject(record))
+            continue;
+        // PR 8d.2a — five small no-storage OBJECTS families.
+        if (nativeScaleHandles.count(record.handle) != 0
+            && isScaleRawObject(record))
+            continue;
+        if (nativeIDBufferHandles.count(record.handle) != 0
+            && isIDBufferRawObject(record))
+            continue;
+        if (nativeLayerIndexHandles.count(record.handle) != 0
+            && isLayerIndexRawObject(record))
+            continue;
+        if (nativeSpatialIndexHandles.count(record.handle) != 0
+            && isSpatialIndexRawObject(record))
+            continue;
+        if (nativeDictionaryVarHandles.count(record.handle) != 0
+            && isDictionaryVarRawObject(record))
+            continue;
+        // PR 8d.2b — four larger no-storage OBJECTS families.
+        if (nativeDictionaryWithDefaultHandles.count(record.handle) != 0
+            && isDictionaryWithDefaultRawObject(record))
+            continue;
+        if (nativeSortEntsTableHandles.count(record.handle) != 0
+            && isSortEntsTableRawObject(record))
+            continue;
+        if (nativeFieldListHandles.count(record.handle) != 0
+            && isFieldListRawObject(record))
+            continue;
+        if (nativeFieldHandles.count(record.handle) != 0
+            && isFieldRawObject(record))
+            continue;
+        DRW_UnsupportedObject object = rawObjectFromMetadata(record);
+        m_dwgW->registerRawDwgObjectClass(&object);
+    }
+#endif
+}
+
 void RS_FilterDXFRW::writeLType(const UTF8STRING& lTypeName, const UTF8STRING& ltDescription, int ltSize,
                                 double ltLength, const std::vector<double>& ltPath) {
     DRW_LType ltype;
     ltype.updateValues(lTypeName, ltDescription, ltSize, ltLength, ltPath);
+    if (m_dwgW) {
+        m_dwgW->addLType(&ltype);
+        return;
+    }
     m_dxfW->writeLineType(&ltype);
 }
 
@@ -4008,7 +6343,12 @@ void RS_FilterDXFRW::writeLayers(){
             lay.extData.push_back(new DRW_Variant(1070, 1));
             // RS_DEBUG->print(RS_Debug::D_WARNING, "RS_FilterDXF::writeLayers: layer %s saved as construction layer", lay.name.c_str());
         }
-        m_dxfW->writeLayer(&lay);
+        if (m_dwgW) {
+            m_dwgW->addLayer(&lay);
+        }
+        else {
+            m_dxfW->writeLayer(&lay);
+        }
     }
 }
 
@@ -4104,7 +6444,25 @@ void RS_FilterDXFRW::writeViews() {
 //            vie.namedUCS_ID = ucs.
 //            vie.baseUCS_ID = ucs.
         }
-        m_dxfW->writeView(&vie);
+        if (const auto* viewMetadata =
+                m_graphic->dwgAdvancedMetadata().findViewByName(vie.name)) {
+            vie.namedUCS_ID = viewMetadata->namedUcsHandle;
+            vie.baseUCS_ID = viewMetadata->baseUcsHandle;
+            vie.m_useDefaultLights = viewMetadata->useDefaultLights;
+            vie.m_defaultLightingType = viewMetadata->defaultLightingType;
+            vie.m_brightness = viewMetadata->brightness;
+            vie.m_contrast = viewMetadata->contrast;
+            vie.m_ambientColor = viewMetadata->ambientColor;
+            vie.m_backgroundHandle = viewMetadata->backgroundHandle;
+            vie.m_visualStyleHandle = viewMetadata->visualStyleHandle;
+            vie.m_sunHandle = viewMetadata->sunHandle;
+            vie.m_liveSectionHandle = viewMetadata->liveSectionHandle;
+        }
+        if (m_dwgW != nullptr) {
+            m_dwgW->addView(&vie);
+        } else {
+            m_dxfW->writeView(&vie);
+        }
     }
 }
 
@@ -4196,7 +6554,12 @@ void RS_FilterDXFRW::writeTextstyles(){
          ts.name = (it.key()).toStdString();
          ts.font = it.value().toStdString();
 //         ts.flags;
-         m_dxfW->writeTextstyle( &ts );
+         if (m_dwgW) {
+             m_dwgW->addTextstyle(&ts);
+         }
+         else {
+             m_dxfW->writeTextstyle(&ts);
+         }
          ++it;
      }
 }
@@ -4231,6 +6594,10 @@ void RS_FilterDXFRW::writeVports(){
         vp.center.x = (gv->getWidth() - viewport->getOffsetX()) / (fac.x * 2.0);
         vp.center.y = (gv->getHeight() - viewport->getOffsetY()) / (fac.y * 2.0);
     }
+    if (m_dwgW) {
+        m_dwgW->addVport(&vp);
+        return;
+    }
     m_dxfW->writeVport(&vp);
 }
 
@@ -4240,7 +6607,12 @@ void RS_FilterDXFRW::writeDimstyles(){
     for (auto ds: *stylesList) {
         DRW_Dimstyle dst;
         prepareDRWDimStyle(dst, ds);
-        m_dxfW->writeDimstyle(&dst);
+        if (m_dwgW) {
+            m_dwgW->addDimstyle(&dst);
+        }
+        else {
+            m_dxfW->writeDimstyle(&dst);
+        }
     }
 }
 
@@ -4270,7 +6642,7 @@ void RS_FilterDXFRW::prepareDRWDimStyleArrows(DRW_Dimstyle& d, LC_DimStyle* ds) 
         QString blockName = arrow->sameBlockName();
         if (!blockName.isEmpty()) {
             auto blkName = blockName.toStdString();
-            int blkHandle = m_dxfW->getBlockRecordHandleToWrite(blkName);
+            int blkHandle = m_dxfW != nullptr ? m_dxfW->getBlockRecordHandleToWrite(blkName) : -1;
             if(blkHandle > 0) {
                 d.add("_$DIMBLK", 342, toHexStr(blkHandle).toStdString());
             }
@@ -4281,7 +6653,7 @@ void RS_FilterDXFRW::prepareDRWDimStyleArrows(DRW_Dimstyle& d, LC_DimStyle* ds) 
         QString blockName = arrow->arrowHeadBlockNameFirst();
         if (!blockName.isEmpty()) {
             auto blkName = blockName.toStdString();
-            int blkHandle = m_dxfW->getBlockRecordHandleToWrite(blkName);
+            int blkHandle = m_dxfW != nullptr ? m_dxfW->getBlockRecordHandleToWrite(blkName) : -1;
             if(blkHandle > 0) {
                 d.add("_$DIMBLK1", 343, toHexStr(blkHandle).toStdString());
             }
@@ -4292,7 +6664,7 @@ void RS_FilterDXFRW::prepareDRWDimStyleArrows(DRW_Dimstyle& d, LC_DimStyle* ds) 
         QString blockName = arrow->arrowHeadBlockNameSecond();
         if (!blockName.isEmpty()) {
             auto blkName = blockName.toStdString();
-            int blkHandle = m_dxfW->getBlockRecordHandleToWrite(blkName);
+            int blkHandle = m_dxfW != nullptr ? m_dxfW->getBlockRecordHandleToWrite(blkName) : -1;
             if(blkHandle > 0) {
                 d.add("_$DIMBLK2", 344, toHexStr(blkHandle).toStdString());
             }
@@ -4417,6 +6789,9 @@ void RS_FilterDXFRW::prepareDRWDimStyleDimLine(DRW_Dimstyle& d, LC_DimStyle* ds)
 }
 
 int RS_FilterDXFRW::findLineTypeHandleToWrite(const QString& name) const {
+    if (m_dxfW == nullptr) {
+        return -1;
+    }
     std::string lineName = name.toUpper().toStdString();
     for (auto p: m_dxfW->getWritingContext()->lineTypesMap) {
         if (p.first.compare(lineName) == 0) {
@@ -4434,7 +6809,7 @@ void RS_FilterDXFRW::prepareDRWDimStyleText(DRW_Dimstyle& d, LC_DimStyle* ds) {
 
     if (text->checkModifyState(LC_DimStyle::Text::$DIMTXSTY)) {
         auto styleName = text->style().toStdString();
-        int styleHandle = m_dxfW->getTextStyleHandle(styleName);
+        int styleHandle = m_dxfW != nullptr ? m_dxfW->getTextStyleHandle(styleName) : -1;
         if(styleHandle > 0) {
             d.add("$DIMTXSTY", 340, toHexStr(styleHandle).toStdString());
         }
@@ -4590,7 +6965,7 @@ void RS_FilterDXFRW::prepareDRWDimStyleLeader(DRW_Dimstyle& d, LC_DimStyle* ds) 
         QString blockName = leader->arrowBlockName();
         if (!blockName.isEmpty()) {
             auto blkName = blockName.toStdString();
-            int blkHandle = m_dxfW->getBlockRecordHandleToWrite(blkName);
+            int blkHandle = m_dxfW != nullptr ? m_dxfW->getBlockRecordHandleToWrite(blkName) : -1;
             if(blkHandle > 0) {
                 d.add("_$DIMLDRBLK", 341, toHexStr(blkHandle).toStdString());
             }
@@ -4651,7 +7026,1163 @@ void RS_FilterDXFRW::prepareDRWDimStyle(DRW_Dimstyle &d, LC_DimStyle* ds) {
 }
 
 void RS_FilterDXFRW::writeObjects() {
-    if (m_dwgW) return;  // DWG writer handles object section internally
+    if (m_dwgW) {
+        const auto& metadata = m_graphic->dwgAdvancedMetadata();
+        const bool canWriteModernObjects = m_dwgW->getVersion() >= DRW::AC1021;
+        // PR 13a/b/c/d — DICTIONARY (ODA fixed type 42), XRECORD (type 79),
+        // GROUP (type 72), LAYOUT (type 82), and ACDBPLACEHOLDER (type 80)
+        // are universally available since R2000.  Their encoders gate
+        // AC1018+-only fields (e.g., LAYOUT shadePlot* + viewportCount
+        // RawLong32 + plotViewHandle) on `version >= DRW::AC1018`, and
+        // the AC1015-only plotViewName branch on `version < DRW::AC1018`.
+        // ACDBPLACEHOLDER's encoder has no version-gated body fields —
+        // only the standard string/handle split-buffer routing on
+        // `version > AC1018`.  Encoder smoke tests cover
+        // AC1015/AC1018/AC1024/AC1027/AC1032 round-trip (see
+        // `[dictionary]` / `[xrecord]` / `[group]` / `[layout]` /
+        // `[placeholder]` cases).  Broaden the dispatch gate for these
+        // families from AC1021+ to AC1015+ ahead of the long-tail
+        // families which still need their own validation.
+        const bool canWriteFixedTypeObjects =
+            m_dwgW->getVersion() >= DRW::AC1015;
+        // PR 13f — custom-class families with version-clean encoders +
+        // round-trip-grade Records dispatch on the broadened gate
+        // (≥AC1015).  Matches the same gate used in writeDwgClasses for
+        // the CLASSES section entry registration; the entry and the
+        // OBJECTS instance must land together or the reader's class
+        // lookup fails and the object is silently dropped (see plan's
+        // "Discovered during PR 13f" notes).
+        const bool canRegisterCustomClassObjects =
+            m_dwgW->getVersion() >= DRW::AC1015;
+        std::set<std::uint32_t> nativeSunHandles;
+        std::set<std::uint32_t> nativePlaceholderHandles;
+        std::set<std::uint32_t> nativeMLeaderStyleHandles;
+        std::set<std::uint32_t> nativeDictionaryHandles;
+        std::set<std::uint32_t> nativeXRecordHandles;
+        std::set<std::uint32_t> nativeLayoutHandles;
+        std::set<std::uint32_t> nativeGroupHandles;
+        std::set<std::uint32_t> nativeRasterVariablesHandles;
+        std::set<std::uint32_t> nativeGeoDataHandles;
+        std::set<std::uint32_t> nativeSpatialFilterHandles;
+        // PR 8d.2a — five small no-storage OBJECTS families.
+        std::set<std::uint32_t> nativeScaleHandles;
+        std::set<std::uint32_t> nativeIDBufferHandles;
+        std::set<std::uint32_t> nativeLayerIndexHandles;
+        std::set<std::uint32_t> nativeSpatialIndexHandles;
+        std::set<std::uint32_t> nativeDictionaryVarHandles;
+        // PR 8d.2b — four larger no-storage OBJECTS families.
+        std::set<std::uint32_t> nativeDictionaryWithDefaultHandles;
+        std::set<std::uint32_t> nativeSortEntsTableHandles;
+        std::set<std::uint32_t> nativeFieldListHandles;
+        std::set<std::uint32_t> nativeFieldHandles;
+        int nativeSunObjects = 0;
+        int nativePlaceholderObjects = 0;
+        int nativeMLeaderStyleObjects = 0;
+        int nativeDictionaryObjects = 0;
+        int nativeXRecordObjects = 0;
+        int nativeLayoutObjects = 0;
+        int nativeGroupObjects = 0;
+        int nativeRasterVariablesObjects = 0;
+        int nativeGeoDataObjects = 0;
+        int nativeSpatialFilterObjects = 0;
+        int nativeScaleObjects = 0;
+        int nativeIDBufferObjects = 0;
+        int nativeLayerIndexObjects = 0;
+        int nativeSpatialIndexObjects = 0;
+        int nativeDictionaryVarObjects = 0;
+        // PR 8d.2b — four larger no-storage OBJECTS families.
+        int nativeDictionaryWithDefaultObjects = 0;
+        int nativeSortEntsTableObjects = 0;
+        int nativeFieldListObjects = 0;
+        int nativeFieldObjects = 0;
+        if (canWriteModernObjects) {
+            for (const auto& record : metadata.suns()) {
+                if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                    && record.handle != 0) {
+                    nativeSunHandles.insert(record.handle);
+                }
+            }
+            // ACDBPLACEHOLDER handle-set construction moved below to the
+            // `canWriteFixedTypeObjects` block (PR 13d) — fixed type 80
+            // is available since R2000 and the encoder is version-clean.
+            for (const auto& record : metadata.mleaderStyles()) {
+                if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                    && record.handle != 0
+                    && !hasReplayableRawMLeaderStyle(metadata, record.handle)) {
+                    nativeMLeaderStyleHandles.insert(record.handle);
+                }
+            }
+            // DICTIONARY / XRECORD / LAYOUT / GROUP handle-set construction
+            // moved below to the `canWriteFixedTypeObjects` block
+            // (PR 13a/b/c) so the broadened gate applies even when
+            // canWriteModernObjects is false (AC1015/AC1018 export path).
+            // RASTERVARIABLES / GEODATA / SPATIAL_FILTER handle-set
+            // construction moved to the `canRegisterCustomClassObjects`
+            // block (PR 13f).
+            // PR 8d.2a — five small no-storage OBJECTS families.
+            // Handle-set construction moved to the
+            // `canRegisterCustomClassObjects` block (PR 13g).
+            // PR 8d.2b — four larger no-storage OBJECTS families.
+            // Handle-set construction moved to the
+            // `canRegisterCustomClassObjects` block (PR 13h).
+        }
+        // PR 13f — RASTERVARIABLES / GEODATA / SPATIAL_FILTER handle-set
+        // construction sits in its own broadened block (≥AC1015) so the
+        // raw-replay blocker (below) skips raw bytes for these handles at
+        // AC1015/AC1018 too.
+        if (canRegisterCustomClassObjects) {
+            // RASTERVARIABLES (AcDbRasterVariables, custom class 505) —
+            // round-trip-grade RasterVariablesRecord captures every encoder
+            // field (classVersion, imageFrame, imageQuality, units).  PR 8d.1.
+            for (const auto& record : metadata.rasterVariables()) {
+                if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                    && record.handle != 0) {
+                    nativeRasterVariablesHandles.insert(record.handle);
+                }
+            }
+            // GEODATA (AcDbGeoData, custom class 506) — round-trip-grade
+            // GeoDataRecord extended in PR 8d.1c to capture all encoder
+            // fields (designPoint, referencePoint, up/north direction,
+            // scale estimation, sea-level correction, observation tags,
+            // mesh points + faces).
+            for (const auto& record : metadata.geoData()) {
+                if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                    && record.handle != 0) {
+                    nativeGeoDataHandles.insert(record.handle);
+                }
+            }
+            // SPATIAL_FILTER (AcDbSpatialFilter, custom class 507) —
+            // round-trip-grade SpatialFilterRecord extended in PR 8d.1d to
+            // capture boundary points + 4x3 clip transform matrices.
+            for (const auto& record : metadata.spatialFilters()) {
+                if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                    && record.handle != 0) {
+                    nativeSpatialFilterHandles.insert(record.handle);
+                }
+            }
+            // PR 13g — SCALE / IDBUFFER / LAYER_INDEX / SPATIAL_INDEX /
+            // DICTIONARYVAR (custom classes 508-512) handle-set
+            // construction.
+            for (const auto& record : metadata.scales()) {
+                if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                    && record.handle != 0) {
+                    nativeScaleHandles.insert(record.handle);
+                }
+            }
+            for (const auto& record : metadata.idBuffers()) {
+                if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                    && record.handle != 0) {
+                    nativeIDBufferHandles.insert(record.handle);
+                }
+            }
+            for (const auto& record : metadata.layerIndexes()) {
+                if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                    && record.handle != 0) {
+                    nativeLayerIndexHandles.insert(record.handle);
+                }
+            }
+            for (const auto& record : metadata.spatialIndexes()) {
+                if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                    && record.handle != 0) {
+                    nativeSpatialIndexHandles.insert(record.handle);
+                }
+            }
+            for (const auto& record : metadata.dictionaryVars()) {
+                if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                    && record.handle != 0) {
+                    nativeDictionaryVarHandles.insert(record.handle);
+                }
+            }
+            // PR 13h — DICTIONARYWDFLT / SORTENTSTABLE / FIELDLIST / FIELD
+            // (custom classes 513-516) handle-set construction.
+            for (const auto& record : metadata.dictionariesWithDefault()) {
+                if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                    && record.handle != 0) {
+                    nativeDictionaryWithDefaultHandles.insert(record.handle);
+                }
+            }
+            for (const auto& record : metadata.sortEntsTables()) {
+                if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                    && record.handle != 0) {
+                    nativeSortEntsTableHandles.insert(record.handle);
+                }
+            }
+            for (const auto& record : metadata.fieldLists()) {
+                if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                    && record.handle != 0) {
+                    nativeFieldListHandles.insert(record.handle);
+                }
+            }
+            for (const auto& record : metadata.fields()) {
+                if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                    && record.handle != 0) {
+                    nativeFieldHandles.insert(record.handle);
+                }
+            }
+        }
+        // PR 13a/b/c — DICTIONARY / XRECORD / GROUP / LAYOUT handle-set
+        // construction sits in its own broadened block (≥ AC1015) so the
+        // raw-replay blocker (below) skips raw bytes for these handles at
+        // AC1015/AC1018 too.
+        if (canWriteFixedTypeObjects) {
+            for (const auto& record : metadata.placeholders()) {
+                if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                    && record.handle != 0) {
+                    nativePlaceholderHandles.insert(record.handle);
+                }
+            }
+            for (const auto& record : metadata.dictionaries()) {
+                if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                    && record.handle != 0) {
+                    nativeDictionaryHandles.insert(record.handle);
+                }
+            }
+            for (const auto& record : metadata.xrecords()) {
+                if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                    && record.handle != 0) {
+                    nativeXRecordHandles.insert(record.handle);
+                }
+            }
+            for (const auto& record : metadata.groups()) {
+                if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                    && record.handle != 0) {
+                    nativeGroupHandles.insert(record.handle);
+                }
+            }
+            for (const auto& record : metadata.layouts()) {
+                if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                    && record.handle != 0) {
+                    nativeLayoutHandles.insert(record.handle);
+                }
+            }
+        }
+
+        bool hasBlockedReplay = false;
+        int blockedInvalidated = 0;
+        int blockedReplaced = 0;
+        int blockedEntityReplay = 0;
+        int blockedMissingRawBytes = 0;
+        int blockedMissingClassMetadata = 0;
+        int blockedWriterRejected = 0;
+        int blockedVersionMismatch = 0;
+        int replayedObjects = 0;
+        int replayedSections = 0;
+        const LC_DwgAdvancedMetadata::RawObjectFamilyCounts rawFamilyCounts =
+            metadata.rawObjectFamilyCounts();
+        const LC_DwgAdvancedMetadata::TableNativeWriterBlockerCounts tableBlockers =
+            metadata.tableNativeWriterBlockerCounts(m_dwgW->getVersion());
+        const LC_DwgAdvancedMetadata::MLeaderWriterBlockerCounts mleaderBlockers =
+            metadata.mleaderWriterBlockerCounts();
+        const LC_DwgAdvancedMetadata::AdvancedEntityWriterBlockerCounts
+            advancedEntityBlockers =
+                metadata.advancedEntityWriterBlockerCounts(m_dwgW->getVersion());
+        const LC_DwgAdvancedMetadata::ModelerPayloadCounts modelerPayloads =
+            metadata.modelerPayloadCounts();
+        const LC_DwgAdvancedMetadata::MeshWriterBlockerCounts meshBlockers =
+            metadata.meshWriterBlockerCounts();
+        const LC_DwgAdvancedMetadata::ExternalReferenceCounts externalRefs =
+            metadata.externalReferenceCounts();
+        const LC_DwgAdvancedMetadata::ShapeOleWriterBlockerCounts shapeOleBlockers =
+            metadata.shapeOleWriterBlockerCounts();
+        const LC_DwgAdvancedMetadata::VisualMetadataWriterBlockerCounts
+            visualBlockers =
+                metadata.visualMetadataWriterBlockerCounts(m_dwgW->getVersion());
+        const LC_DwgAdvancedMetadata::AssociativeShellCounts associativeShells =
+            metadata.associativeShellCounts();
+        const LC_DwgAdvancedMetadata::AssociativePrefixCounts associativePrefixes =
+            metadata.associativePrefixCounts();
+        LC_DwgAdvancedMetadata::GraphReplayPolicyCounts graphReplayPolicy =
+            metadata.graphReplayPolicyCounts();
+        for (const auto& record : metadata.rawDwgSections()) {
+            if (record.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed) {
+                hasBlockedReplay = true;
+                ++blockedInvalidated;
+                continue;
+            }
+            if (metadata.sourceDwgVersion() != DRW::UNKNOWNV
+                && metadata.sourceDwgVersion() != m_dwgW->getVersion()) {
+                hasBlockedReplay = true;
+                ++blockedVersionMismatch;
+                continue;
+            }
+            DRW_RawDwgSection section;
+            section.m_name = record.name;
+            section.m_version = record.version;
+            section.m_data = record.data;
+            if (m_dwgW->writeRawDwgSection(&section)) {
+                ++replayedSections;
+            } else {
+                hasBlockedReplay = true;
+                ++blockedWriterRejected;
+            }
+        }
+        for (const auto& record : metadata.rawObjects()) {
+            if (nativeSunHandles.count(record.handle) != 0 && isSunRawObject(record)) {
+                hasBlockedReplay = true;
+                ++blockedReplaced;
+                continue;
+            }
+            if (nativePlaceholderHandles.count(record.handle) != 0
+                && isAcDbPlaceholderRawObject(record)) {
+                hasBlockedReplay = true;
+                ++blockedReplaced;
+                continue;
+            }
+            if (nativeMLeaderStyleHandles.count(record.handle) != 0
+                && isMLeaderStyleRawObject(record)) {
+                hasBlockedReplay = true;
+                ++blockedReplaced;
+                continue;
+            }
+            if (nativeDictionaryHandles.count(record.handle) != 0
+                && isDictionaryRawObject(record)) {
+                hasBlockedReplay = true;
+                ++blockedReplaced;
+                continue;
+            }
+            if (nativeXRecordHandles.count(record.handle) != 0
+                && isXRecordRawObject(record)) {
+                hasBlockedReplay = true;
+                ++blockedReplaced;
+                continue;
+            }
+            if (nativeLayoutHandles.count(record.handle) != 0
+                && isLayoutRawObject(record)) {
+                hasBlockedReplay = true;
+                ++blockedReplaced;
+                continue;
+            }
+            if (nativeGroupHandles.count(record.handle) != 0
+                && isGroupRawObject(record)) {
+                hasBlockedReplay = true;
+                ++blockedReplaced;
+                continue;
+            }
+            if (nativeRasterVariablesHandles.count(record.handle) != 0
+                && isRasterVariablesRawObject(record)) {
+                hasBlockedReplay = true;
+                ++blockedReplaced;
+                continue;
+            }
+            if (nativeGeoDataHandles.count(record.handle) != 0
+                && isGeoDataRawObject(record)) {
+                hasBlockedReplay = true;
+                ++blockedReplaced;
+                continue;
+            }
+            if (nativeSpatialFilterHandles.count(record.handle) != 0
+                && isSpatialFilterRawObject(record)) {
+                hasBlockedReplay = true;
+                ++blockedReplaced;
+                continue;
+            }
+            // PR 8d.2a — five small no-storage OBJECTS families.
+            if (nativeScaleHandles.count(record.handle) != 0
+                && isScaleRawObject(record)) {
+                hasBlockedReplay = true;
+                ++blockedReplaced;
+                continue;
+            }
+            if (nativeIDBufferHandles.count(record.handle) != 0
+                && isIDBufferRawObject(record)) {
+                hasBlockedReplay = true;
+                ++blockedReplaced;
+                continue;
+            }
+            if (nativeLayerIndexHandles.count(record.handle) != 0
+                && isLayerIndexRawObject(record)) {
+                hasBlockedReplay = true;
+                ++blockedReplaced;
+                continue;
+            }
+            if (nativeSpatialIndexHandles.count(record.handle) != 0
+                && isSpatialIndexRawObject(record)) {
+                hasBlockedReplay = true;
+                ++blockedReplaced;
+                continue;
+            }
+            if (nativeDictionaryVarHandles.count(record.handle) != 0
+                && isDictionaryVarRawObject(record)) {
+                hasBlockedReplay = true;
+                ++blockedReplaced;
+                continue;
+            }
+            // PR 8d.2b — four larger no-storage OBJECTS families.
+            if (nativeDictionaryWithDefaultHandles.count(record.handle) != 0
+                && isDictionaryWithDefaultRawObject(record)) {
+                hasBlockedReplay = true;
+                ++blockedReplaced;
+                continue;
+            }
+            if (nativeSortEntsTableHandles.count(record.handle) != 0
+                && isSortEntsTableRawObject(record)) {
+                hasBlockedReplay = true;
+                ++blockedReplaced;
+                continue;
+            }
+            if (nativeFieldListHandles.count(record.handle) != 0
+                && isFieldListRawObject(record)) {
+                hasBlockedReplay = true;
+                ++blockedReplaced;
+                continue;
+            }
+            if (nativeFieldHandles.count(record.handle) != 0
+                && isFieldRawObject(record)) {
+                hasBlockedReplay = true;
+                ++blockedReplaced;
+                continue;
+            }
+            // Version guard: raw bytes are only byte-for-byte valid for the
+            // exact source version. If the target write version differs, drop
+            // the raw object (no malformed bytes) and count it. The matching
+            // guard in writeDwgClasses skips its CLASSES registration so no
+            // orphan CLASSES entry is left behind.
+            if (metadata.sourceDwgVersion() != DRW::UNKNOWNV
+                && metadata.sourceDwgVersion() != m_dwgW->getVersion()) {
+                hasBlockedReplay = true;
+                ++blockedVersionMismatch;
+                continue;
+            }
+            const LC_DwgAdvancedMetadata::ReplayBlocker blocker =
+                LC_DwgAdvancedMetadata::rawReplayBlocker(record);
+            if (blocker != LC_DwgAdvancedMetadata::ReplayBlocker::None) {
+                hasBlockedReplay = true;
+                if (blocker == LC_DwgAdvancedMetadata::ReplayBlocker::Invalidated)
+                    ++blockedInvalidated;
+                else if (blocker == LC_DwgAdvancedMetadata::ReplayBlocker::Replaced)
+                    ++blockedReplaced;
+                else if (blocker == LC_DwgAdvancedMetadata::ReplayBlocker::EntityReplayUnsupported)
+                    ++blockedEntityReplay;
+                else if (blocker == LC_DwgAdvancedMetadata::ReplayBlocker::MissingRawBytes)
+                    ++blockedMissingRawBytes;
+                else if (blocker == LC_DwgAdvancedMetadata::ReplayBlocker::MissingClassMetadata)
+                    ++blockedMissingClassMetadata;
+                continue;
+            }
+            DRW_UnsupportedObject object = rawObjectFromMetadata(record);
+            if (m_dwgW->writeRawDwgObject(&object)) {
+                ++replayedObjects;
+            } else {
+                hasBlockedReplay = true;
+                ++blockedWriterRejected;
+            }
+        }
+        if (canWriteModernObjects) {
+            // ACDBPLACEHOLDER dispatch moved below to the
+            // `canWriteFixedTypeObjects` block (PR 13d).
+            // PR 13d — SUN stays gated AC1021+ — custom class 503 was
+            // introduced in R2007 and the encoder explicitly rejects
+            // below AC1021 (see DRW_Sun::encodeDwg at drw_objects.cpp:
+            // `if (buf == nullptr || version < DRW::AC1021) return
+            // false`).  Do not move into canWriteFixedTypeObjects.
+            for (const auto& record : metadata.suns()) {
+                if (record.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                    || record.handle == 0) {
+                    continue;
+                }
+                DRW_Sun sun = sunFromMetadata(record);
+                if (m_dwgW->writeSun(&sun)) {
+                    ++nativeSunObjects;
+                } else {
+                    hasBlockedReplay = true;
+                    ++blockedWriterRejected;
+                }
+            }
+            // PR 13e — MLeaderStyle stays gated AC1021+ — the encoder
+            // requires R2007+ (see DRW_MLeaderStyle::encodeDwg at
+            // drw_objects.cpp:4275: `if (version < DRW::AC1021) return
+            // false`).  Do not move into canWriteFixedTypeObjects.
+            for (const auto& record : metadata.mleaderStyles()) {
+                if (nativeMLeaderStyleHandles.count(record.handle) == 0)
+                    continue;
+                DRW_MLeaderStyle style = mleaderStyleFromMetadata(record);
+                if (m_dwgW->writeMLeaderStyle(&style)) {
+                    ++nativeMLeaderStyleObjects;
+                } else {
+                    hasBlockedReplay = true;
+                    ++blockedWriterRejected;
+                }
+            }
+            // DICTIONARY / XRECORD / LAYOUT / GROUP dispatch moved below
+            // to the `canWriteFixedTypeObjects` block (PR 13a/b/c).
+            // RASTERVARIABLES / GEODATA / SPATIAL_FILTER dispatch moved
+            // to the `canRegisterCustomClassObjects` block (PR 13f).
+            // PR 8d.2a — SCALE / IDBUFFER / LAYER_INDEX / SPATIAL_INDEX /
+            // DICTIONARYVAR dispatch moved to the
+            // `canRegisterCustomClassObjects` block (PR 13g).
+            // PR 8d.2b — four larger no-storage OBJECTS families.
+            // Dispatch moved to the `canRegisterCustomClassObjects` block
+            // (PR 13h).
+        }
+        // PR 13a/b/c/d — DICTIONARY / XRECORD / GROUP / LAYOUT /
+        // ACDBPLACEHOLDER native dispatch.  Gate broadened from AC1021+ to
+        // AC1015+ now that the encoder smoke tests cover the full
+        // AC1015/AC1018/AC1024/AC1027/AC1032 range (see
+        // `[dwg-write][dictionary]`, `[dwg-write][xrecord]`,
+        // `[dwg-write][group]`, `[dwg-write][layout]`,
+        // `[dwg-write][placeholder]` cases).  Sits outside the `if
+        // (canWriteModernObjects)` block so the broadened gate also
+        // applies at AC1015/AC1018.
+        if (canWriteFixedTypeObjects) {
+            for (const auto& record : metadata.placeholders()) {
+                if (record.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                    || record.handle == 0) {
+                    continue;
+                }
+                DRW_AcDbPlaceholder placeholder = placeholderFromMetadata(record);
+                if (m_dwgW->writeAcDbPlaceholder(&placeholder)) {
+                    ++nativePlaceholderObjects;
+                } else {
+                    hasBlockedReplay = true;
+                    ++blockedWriterRejected;
+                }
+            }
+            for (const auto& record : metadata.dictionaries()) {
+                if (nativeDictionaryHandles.count(record.handle) == 0)
+                    continue;
+                DRW_Dictionary dictionary = dictionaryFromMetadata(record);
+                if (m_dwgW->writeDictionary(&dictionary)) {
+                    ++nativeDictionaryObjects;
+                } else {
+                    hasBlockedReplay = true;
+                    ++blockedWriterRejected;
+                }
+            }
+            for (const auto& record : metadata.xrecords()) {
+                if (nativeXRecordHandles.count(record.handle) == 0)
+                    continue;
+                DRW_XRecord xrecord = xrecordFromMetadata(record);
+                if (m_dwgW->writeXRecord(&xrecord)) {
+                    ++nativeXRecordObjects;
+                } else {
+                    hasBlockedReplay = true;
+                    ++blockedWriterRejected;
+                }
+            }
+            for (const auto& record : metadata.groups()) {
+                if (nativeGroupHandles.count(record.handle) == 0)
+                    continue;
+                DRW_Group group = groupFromMetadata(record);
+                if (m_dwgW->writeGroup(&group)) {
+                    ++nativeGroupObjects;
+                } else {
+                    hasBlockedReplay = true;
+                    ++blockedWriterRejected;
+                }
+            }
+            for (const auto& record : metadata.layouts()) {
+                if (nativeLayoutHandles.count(record.handle) == 0)
+                    continue;
+                DRW_Layout layout = layoutFromMetadata(record);
+                if (m_dwgW->writeLayout(&layout)) {
+                    ++nativeLayoutObjects;
+                } else {
+                    hasBlockedReplay = true;
+                    ++blockedWriterRejected;
+                }
+            }
+        }
+        // PR 13f — RASTERVARIABLES / GEODATA / SPATIAL_FILTER native
+        // dispatch.  Gate broadened from AC1021+ to AC1015+ now that the
+        // smoke tests cover AC1015/AC1018/AC1024/AC1027/AC1032 (see
+        // `[dwg-write][rastervariables]`, `[dwg-write][geodata]`,
+        // `[dwg-write][spatial-filter]`).  Matches the
+        // `canRegisterCustomClassObjects` gate used in writeDwgClasses so
+        // the CLASSES section entry and the OBJECTS instance always land
+        // together.
+        if (canRegisterCustomClassObjects) {
+            for (const auto& record : metadata.rasterVariables()) {
+                if (nativeRasterVariablesHandles.count(record.handle) == 0)
+                    continue;
+                DRW_RasterVariables rv = rasterVariablesFromMetadata(record);
+                if (m_dwgW->writeRasterVariables(&rv)) {
+                    ++nativeRasterVariablesObjects;
+                } else {
+                    hasBlockedReplay = true;
+                    ++blockedWriterRejected;
+                }
+            }
+            for (const auto& record : metadata.geoData()) {
+                if (nativeGeoDataHandles.count(record.handle) == 0)
+                    continue;
+                DRW_GeoData gd = geoDataFromMetadata(record);
+                if (m_dwgW->writeGeoData(&gd)) {
+                    ++nativeGeoDataObjects;
+                } else {
+                    hasBlockedReplay = true;
+                    ++blockedWriterRejected;
+                }
+            }
+            for (const auto& record : metadata.spatialFilters()) {
+                if (nativeSpatialFilterHandles.count(record.handle) == 0)
+                    continue;
+                DRW_SpatialFilter sf = spatialFilterFromMetadata(record);
+                if (m_dwgW->writeSpatialFilter(&sf)) {
+                    ++nativeSpatialFilterObjects;
+                } else {
+                    hasBlockedReplay = true;
+                    ++blockedWriterRejected;
+                }
+            }
+            // PR 13g — SCALE / IDBUFFER / LAYER_INDEX / SPATIAL_INDEX /
+            // DICTIONARYVAR (custom classes 508-512) dispatch.  Smoke
+            // tests at AC1015/AC1018 confirm the encoders + parsers
+            // round-trip cleanly; SPATIAL_INDEX's pre-R2007 opaque body
+            // path is exercised at AC1015/AC1018.
+            for (const auto& record : metadata.scales()) {
+                if (nativeScaleHandles.count(record.handle) == 0)
+                    continue;
+                DRW_Scale s = scaleFromMetadata(record);
+                if (m_dwgW->writeScale(&s)) {
+                    ++nativeScaleObjects;
+                } else {
+                    hasBlockedReplay = true;
+                    ++blockedWriterRejected;
+                }
+            }
+            for (const auto& record : metadata.idBuffers()) {
+                if (nativeIDBufferHandles.count(record.handle) == 0)
+                    continue;
+                DRW_IDBuffer b = idBufferFromMetadata(record);
+                if (m_dwgW->writeIDBuffer(&b)) {
+                    ++nativeIDBufferObjects;
+                } else {
+                    hasBlockedReplay = true;
+                    ++blockedWriterRejected;
+                }
+            }
+            for (const auto& record : metadata.layerIndexes()) {
+                if (nativeLayerIndexHandles.count(record.handle) == 0)
+                    continue;
+                DRW_LayerIndex li = layerIndexFromMetadata(record);
+                if (m_dwgW->writeLayerIndex(&li)) {
+                    ++nativeLayerIndexObjects;
+                } else {
+                    hasBlockedReplay = true;
+                    ++blockedWriterRejected;
+                }
+            }
+            for (const auto& record : metadata.spatialIndexes()) {
+                if (nativeSpatialIndexHandles.count(record.handle) == 0)
+                    continue;
+                DRW_SpatialIndex si = spatialIndexFromMetadata(record);
+                if (m_dwgW->writeSpatialIndex(&si)) {
+                    ++nativeSpatialIndexObjects;
+                } else {
+                    hasBlockedReplay = true;
+                    ++blockedWriterRejected;
+                }
+            }
+            for (const auto& record : metadata.dictionaryVars()) {
+                if (nativeDictionaryVarHandles.count(record.handle) == 0)
+                    continue;
+                DRW_DictionaryVar dv = dictionaryVarFromMetadata(record);
+                if (m_dwgW->writeDictionaryVar(&dv)) {
+                    ++nativeDictionaryVarObjects;
+                } else {
+                    hasBlockedReplay = true;
+                    ++blockedWriterRejected;
+                }
+            }
+            // PR 13h — DICTIONARYWDFLT / SORTENTSTABLE / FIELDLIST / FIELD
+            // (custom classes 513-516) dispatch.  Smoke tests at AC1015/
+            // AC1018 confirm the encoders + parsers round-trip cleanly;
+            // FIELD exercises the parser-mirrored `version < AC1021`
+            // m_formatString branch.
+            for (const auto& record : metadata.dictionariesWithDefault()) {
+                if (nativeDictionaryWithDefaultHandles.count(record.handle) == 0)
+                    continue;
+                DRW_DictionaryWithDefault dwd =
+                    dictionaryWithDefaultFromMetadata(record);
+                if (m_dwgW->writeDictionaryWithDefault(&dwd)) {
+                    ++nativeDictionaryWithDefaultObjects;
+                } else {
+                    hasBlockedReplay = true;
+                    ++blockedWriterRejected;
+                }
+            }
+            for (const auto& record : metadata.sortEntsTables()) {
+                if (nativeSortEntsTableHandles.count(record.handle) == 0)
+                    continue;
+                DRW_SortEntsTable se = sortEntsTableFromMetadata(record);
+                if (m_dwgW->writeSortEntsTable(&se)) {
+                    ++nativeSortEntsTableObjects;
+                } else {
+                    hasBlockedReplay = true;
+                    ++blockedWriterRejected;
+                }
+            }
+            for (const auto& record : metadata.fieldLists()) {
+                if (nativeFieldListHandles.count(record.handle) == 0)
+                    continue;
+                DRW_FieldList fl = fieldListFromMetadata(record);
+                if (m_dwgW->writeFieldList(&fl)) {
+                    ++nativeFieldListObjects;
+                } else {
+                    hasBlockedReplay = true;
+                    ++blockedWriterRejected;
+                }
+            }
+            for (const auto& record : metadata.fields()) {
+                if (nativeFieldHandles.count(record.handle) == 0)
+                    continue;
+                DRW_Field f = fieldFromMetadata(record);
+                if (m_dwgW->writeField(&f)) {
+                    ++nativeFieldObjects;
+                } else {
+                    hasBlockedReplay = true;
+                    ++blockedWriterRejected;
+                }
+            }
+        }
+        if (replayedObjects > 0) {
+            RS_DEBUG->print("RS_FilterDXFRW::writeObjects: replayed %d raw DWG objects",
+                            replayedObjects);
+        }
+        if (replayedSections > 0) {
+            RS_DEBUG->print("RS_FilterDXFRW::writeObjects: replayed %d raw DWG data sections",
+                            replayedSections);
+        }
+        if (rawFamilyCounts.total() > 0) {
+            RS_DEBUG->print(
+                "RS_FilterDXFRW::writeObjects: raw DWG object families "
+                "assoc=%d eval-graph=%d dynamic-block=%d object-context=%d unknown=%d",
+                static_cast<int>(rawFamilyCounts.associative),
+                static_cast<int>(rawFamilyCounts.evaluationGraph),
+                static_cast<int>(rawFamilyCounts.dynamicBlock),
+                static_cast<int>(rawFamilyCounts.objectContext),
+                static_cast<int>(rawFamilyCounts.unknown));
+        }
+        if (nativeSunObjects > 0) {
+            RS_DEBUG->print("RS_FilterDXFRW::writeObjects: wrote %d native SUN objects",
+                            nativeSunObjects);
+        }
+        if (nativePlaceholderObjects > 0) {
+            RS_DEBUG->print(
+                "RS_FilterDXFRW::writeObjects: wrote %d native ACDBPLACEHOLDER objects",
+                nativePlaceholderObjects);
+        }
+        if (nativeMLeaderStyleObjects > 0) {
+            RS_DEBUG->print(
+                "RS_FilterDXFRW::writeObjects: wrote %d native MLEADERSTYLE objects",
+                nativeMLeaderStyleObjects);
+        }
+        if (nativeDictionaryObjects > 0) {
+            RS_DEBUG->print(
+                "RS_FilterDXFRW::writeObjects: wrote %d native DICTIONARY objects",
+                nativeDictionaryObjects);
+        }
+        if (nativeXRecordObjects > 0) {
+            RS_DEBUG->print(
+                "RS_FilterDXFRW::writeObjects: wrote %d native XRECORD objects",
+                nativeXRecordObjects);
+        }
+        if (nativeLayoutObjects > 0) {
+            RS_DEBUG->print(
+                "RS_FilterDXFRW::writeObjects: wrote %d native LAYOUT objects",
+                nativeLayoutObjects);
+        }
+        if (nativeGroupObjects > 0) {
+            RS_DEBUG->print(
+                "RS_FilterDXFRW::writeObjects: wrote %d native GROUP objects",
+                nativeGroupObjects);
+        }
+        if (nativeRasterVariablesObjects > 0) {
+            RS_DEBUG->print(
+                "RS_FilterDXFRW::writeObjects: wrote %d native RASTERVARIABLES objects",
+                nativeRasterVariablesObjects);
+        }
+        if (nativeGeoDataObjects > 0) {
+            RS_DEBUG->print(
+                "RS_FilterDXFRW::writeObjects: wrote %d native GEODATA objects",
+                nativeGeoDataObjects);
+        }
+        if (nativeSpatialFilterObjects > 0) {
+            RS_DEBUG->print(
+                "RS_FilterDXFRW::writeObjects: wrote %d native SPATIAL_FILTER objects",
+                nativeSpatialFilterObjects);
+        }
+        // PR 8d.2a — five small no-storage OBJECTS families.
+        if (nativeScaleObjects > 0) {
+            RS_DEBUG->print(
+                "RS_FilterDXFRW::writeObjects: wrote %d native SCALE objects",
+                nativeScaleObjects);
+        }
+        if (nativeIDBufferObjects > 0) {
+            RS_DEBUG->print(
+                "RS_FilterDXFRW::writeObjects: wrote %d native IDBUFFER objects",
+                nativeIDBufferObjects);
+        }
+        if (nativeLayerIndexObjects > 0) {
+            RS_DEBUG->print(
+                "RS_FilterDXFRW::writeObjects: wrote %d native LAYER_INDEX objects",
+                nativeLayerIndexObjects);
+        }
+        if (nativeSpatialIndexObjects > 0) {
+            RS_DEBUG->print(
+                "RS_FilterDXFRW::writeObjects: wrote %d native SPATIAL_INDEX objects",
+                nativeSpatialIndexObjects);
+        }
+        if (nativeDictionaryVarObjects > 0) {
+            RS_DEBUG->print(
+                "RS_FilterDXFRW::writeObjects: wrote %d native DICTIONARYVAR objects",
+                nativeDictionaryVarObjects);
+        }
+        // PR 8d.2b — four larger no-storage OBJECTS families.
+        if (nativeDictionaryWithDefaultObjects > 0) {
+            RS_DEBUG->print(
+                "RS_FilterDXFRW::writeObjects: wrote %d native DICTIONARYWDFLT objects",
+                nativeDictionaryWithDefaultObjects);
+        }
+        if (nativeSortEntsTableObjects > 0) {
+            RS_DEBUG->print(
+                "RS_FilterDXFRW::writeObjects: wrote %d native SORTENTSTABLE objects",
+                nativeSortEntsTableObjects);
+        }
+        if (nativeFieldListObjects > 0) {
+            RS_DEBUG->print(
+                "RS_FilterDXFRW::writeObjects: wrote %d native FIELDLIST objects",
+                nativeFieldListObjects);
+        }
+        if (nativeFieldObjects > 0) {
+            RS_DEBUG->print(
+                "RS_FilterDXFRW::writeObjects: wrote %d native FIELD objects",
+                nativeFieldObjects);
+        }
+        if (modelerPayloads.recordCount > 0) {
+            const RS_Debug::RS_DebugLevel level =
+                modelerPayloads.inconsistentSplit > 0
+                    ? RS_Debug::D_WARNING
+                    : RS_Debug::D_DEBUGGING;
+            RS_DEBUG->print(
+                level,
+                "DWG modeler geometry payloads: records=%d SAT=%d SAB=%d "
+                "unknown=%d split-inconsistent=%d marker-body=%d marker-handle=%d",
+                static_cast<int>(modelerPayloads.recordCount),
+                static_cast<int>(modelerPayloads.sat),
+                static_cast<int>(modelerPayloads.sab),
+                static_cast<int>(modelerPayloads.unknown),
+                static_cast<int>(modelerPayloads.inconsistentSplit),
+                static_cast<int>(modelerPayloads.markerInBody),
+                static_cast<int>(modelerPayloads.markerInHandleStream));
+        }
+        if (associativeShells.recordCount > 0) {
+            RS_DEBUG->print(
+                "DWG associative/action shells: records=%d network=%d action=%d "
+                "dependency=%d geom-dependency=%d action-param=%d value-param=%d/%d "
+                "prefix=%d/%d single-dep=%d compound=%d prefix-status=%d "
+                "complete=%d partial=%d overflow=%d handles=%d values=%d unknown=%d",
+                static_cast<int>(associativeShells.recordCount),
+                static_cast<int>(associativeShells.network),
+                static_cast<int>(associativeShells.action),
+                static_cast<int>(associativeShells.dependency),
+                static_cast<int>(associativeShells.geometryDependency),
+                static_cast<int>(associativeShells.actionParamRecords),
+                static_cast<int>(associativeShells.parsedValueParamRecords),
+                static_cast<int>(associativeShells.valueParamRecords),
+                static_cast<int>(associativeShells.parsedActionParamPrefixes),
+                static_cast<int>(associativeShells.actionParamRecords),
+                static_cast<int>(associativeShells.singleDependencyActionParamPrefixes),
+                static_cast<int>(associativeShells.compoundActionParamPrefixes),
+                static_cast<int>(associativePrefixes.prefixCount),
+                static_cast<int>(associativePrefixes.complete),
+                static_cast<int>(associativePrefixes.partial),
+                static_cast<int>(associativePrefixes.boundedCountOverflow),
+                static_cast<int>(associativePrefixes.decodedHandleCount),
+                static_cast<int>(associativePrefixes.decodedValueCount),
+                static_cast<int>(associativeShells.unknown));
+        }
+        const size_t graphReplayKnownFamilies =
+            (graphReplayPolicy.preserved.total()
+             - graphReplayPolicy.preserved.unknown)
+            + (graphReplayPolicy.suppressed.total()
+               - graphReplayPolicy.suppressed.unknown);
+        if (graphReplayKnownFamilies > 0
+            || graphReplayPolicy.totalSemanticOnly() > 0
+            || graphReplayPolicy.totalReasons() > 0) {
+            RS_DEBUG->print(
+                graphReplayPolicy.suppressed.total() > 0
+                        || graphReplayPolicy.totalReasons() > 0
+                    ? RS_Debug::D_WARNING
+                    : RS_Debug::D_DEBUGGING,
+                "DWG graph replay policy: preserved dimassoc=%d eval=%d "
+                "assoc=%d dynamic-block=%d object-context=%d acsh=%d unknown=%d "
+                "suppressed dimassoc=%d eval=%d assoc=%d dynamic-block=%d "
+                "object-context=%d acsh=%d unknown=%d semantic-only assoc=%d "
+                "acsh=%d reasons edited=%d missing-target=%d evaluator=%d "
+                "parser-partial=%d fallback-edited=%d native-replaced=%d "
+                "cycle-path=%d owner-deleted=%d raw-invalidated=%d "
+                "raw-replaced=%d entity=%d missing-bytes=%d missing-class=%d",
+                static_cast<int>(graphReplayPolicy.preserved.dimensionAssociation),
+                static_cast<int>(graphReplayPolicy.preserved.evaluationGraph),
+                static_cast<int>(graphReplayPolicy.preserved.acDbAssoc),
+                static_cast<int>(graphReplayPolicy.preserved.dynamicBlock),
+                static_cast<int>(graphReplayPolicy.preserved.objectContext),
+                static_cast<int>(graphReplayPolicy.preserved.acShHistory),
+                static_cast<int>(graphReplayPolicy.preserved.unknown),
+                static_cast<int>(graphReplayPolicy.suppressed.dimensionAssociation),
+                static_cast<int>(graphReplayPolicy.suppressed.evaluationGraph),
+                static_cast<int>(graphReplayPolicy.suppressed.acDbAssoc),
+                static_cast<int>(graphReplayPolicy.suppressed.dynamicBlock),
+                static_cast<int>(graphReplayPolicy.suppressed.objectContext),
+                static_cast<int>(graphReplayPolicy.suppressed.acShHistory),
+                static_cast<int>(graphReplayPolicy.suppressed.unknown),
+                static_cast<int>(graphReplayPolicy.semanticOnlyAssociative),
+                static_cast<int>(graphReplayPolicy.semanticOnlyAcSh),
+                static_cast<int>(graphReplayPolicy.editedEntity),
+                static_cast<int>(graphReplayPolicy.missingTarget),
+                static_cast<int>(graphReplayPolicy.unsupportedEvaluator),
+                static_cast<int>(graphReplayPolicy.parserPartial),
+                static_cast<int>(graphReplayPolicy.fallbackGeometryEdited),
+                static_cast<int>(graphReplayPolicy.nativeReplacement),
+                static_cast<int>(graphReplayPolicy.cyclePathInvalidated),
+                static_cast<int>(graphReplayPolicy.ownerDeleted),
+                static_cast<int>(graphReplayPolicy.invalidated),
+                static_cast<int>(graphReplayPolicy.replaced),
+                static_cast<int>(graphReplayPolicy.entityReplayUnsupported),
+                static_cast<int>(graphReplayPolicy.missingRawBytes),
+                static_cast<int>(graphReplayPolicy.missingClassMetadata));
+        }
+        if (tableBlockers.tableCount > 0 && tableBlockers.totalBlockers() > 0) {
+            RS_DEBUG->print(
+                RS_Debug::D_WARNING,
+                "Native DWG table writing blocked: tables=%d eligible-text=%d "
+                "layout-direct=%d layout-separate=%d layout-embedded=%d "
+                "layout-unsupported=%d semantic=%d version=%d ambiguous-layout=%d "
+                "owner=%d style=%d cell-style=%d unknown-ranges=%d "
+                "incomplete-ranges=%d override=%d break=%d geometry=%d "
+                "merged=%d field=%d block=%d attributes=%d unknown-content=%d "
+                "value-payload=%d edited-fallback=%d missing-fallback-links=%d "
+                "anon-block=%d text-style=%d linetype=%d raw-invalidated=%d "
+                "raw-replaced=%d dimensions=%d",
+                static_cast<int>(tableBlockers.tableCount),
+                static_cast<int>(tableBlockers.eligibleTextOnly),
+                static_cast<int>(tableBlockers.legacyDirectLayout),
+                static_cast<int>(tableBlockers.separateTableContentLayout),
+                static_cast<int>(tableBlockers.embeddedTableContentLayout),
+                static_cast<int>(tableBlockers.unsupportedLayout),
+                static_cast<int>(tableBlockers.noSemanticTableContent),
+                static_cast<int>(tableBlockers.unsupportedTableVersion),
+                static_cast<int>(tableBlockers.ambiguousTableContentStorage),
+                static_cast<int>(tableBlockers.missingOwnerHandle),
+                static_cast<int>(tableBlockers.unresolvedTableStyle),
+                static_cast<int>(tableBlockers.unresolvedCellStyleMap),
+                static_cast<int>(tableBlockers.unknownSubrecordRange),
+                static_cast<int>(tableBlockers.incompleteSubrecordRange),
+                static_cast<int>(tableBlockers.overrideMask),
+                static_cast<int>(tableBlockers.breakData),
+                static_cast<int>(tableBlockers.geometryTail),
+                static_cast<int>(tableBlockers.mergedCell),
+                static_cast<int>(tableBlockers.fieldContent),
+                static_cast<int>(tableBlockers.blockContent),
+                static_cast<int>(tableBlockers.attributeContent),
+                static_cast<int>(tableBlockers.unknownCellContent),
+                static_cast<int>(tableBlockers.incompleteValuePayload),
+                static_cast<int>(tableBlockers.editedFallback),
+                static_cast<int>(tableBlockers.missingFallbackAttachment),
+                static_cast<int>(tableBlockers.anonymousBlockPolicyUnresolved),
+                static_cast<int>(tableBlockers.unresolvedTextStyle),
+                static_cast<int>(tableBlockers.unresolvedLineType),
+                static_cast<int>(tableBlockers.rawReplayInvalidated),
+                static_cast<int>(tableBlockers.rawReplayReplaced),
+                static_cast<int>(tableBlockers.nonPositiveDimension));
+        }
+        if (mleaderBlockers.mleaderCount > 0 && mleaderBlockers.totalBlockers() > 0) {
+            RS_DEBUG->print(
+                RS_Debug::D_WARNING,
+                "Native DWG MLEADER writing limited: mleaders=%d unresolved-style=%d "
+                "missing-text=%d block=%d tolerance=%d overrides=%d geometry=%d "
+                "invalidated=%d replaced=%d",
+                static_cast<int>(mleaderBlockers.mleaderCount),
+                static_cast<int>(mleaderBlockers.unresolvedStyle),
+                static_cast<int>(mleaderBlockers.missingTextContent),
+                static_cast<int>(mleaderBlockers.blockContent),
+                static_cast<int>(mleaderBlockers.toleranceContent),
+                static_cast<int>(mleaderBlockers.overrideFlags),
+                static_cast<int>(mleaderBlockers.missingLeaderGeometry),
+                static_cast<int>(mleaderBlockers.invalidated),
+                static_cast<int>(mleaderBlockers.replaced));
+        }
+        if (meshBlockers.meshCount > 0 && meshBlockers.totalBlockers() > 0) {
+            RS_DEBUG->print(
+                RS_Debug::D_WARNING,
+                "Native DWG mesh writing blocked: meshes=%d sidecars=%d "
+                "range-complete=%d range-missing=%d range-incomplete=%d "
+                "crease=%d subdivision=%d fallback-only=%d edited-fallback=%d "
+                "owner-class=%d malformed-counts=%d invalidated=%d replaced=%d",
+                static_cast<int>(meshBlockers.meshCount),
+                static_cast<int>(meshBlockers.sidecarCount),
+                static_cast<int>(meshBlockers.completeRawRange),
+                static_cast<int>(meshBlockers.missingRawRange),
+                static_cast<int>(meshBlockers.incompleteRawRange),
+                static_cast<int>(meshBlockers.missingCreaseData),
+                static_cast<int>(meshBlockers.unsupportedSubdivisionData),
+                static_cast<int>(meshBlockers.fallbackOnlyPreview),
+                static_cast<int>(meshBlockers.editedFallback),
+                static_cast<int>(meshBlockers.missingOwnerOrClassHandle),
+                static_cast<int>(meshBlockers.malformedCountRelationships),
+                static_cast<int>(meshBlockers.invalidated),
+                static_cast<int>(meshBlockers.replaced));
+        }
+        if (externalRefs.imageEntities > 0 || externalRefs.wipeouts > 0
+            || externalRefs.underlays > 0
+            || externalRefs.imageDefinitions > 0
+            || externalRefs.underlayDefinitions > 0) {
+            const bool hasExternalIssues =
+                externalRefs.totalPathIssues() > 0
+                || externalRefs.missingDefinitionHandles > 0
+                || externalRefs.malformedClips > 0;
+            RS_DEBUG->print(
+                hasExternalIssues ? RS_Debug::D_WARNING
+                                  : RS_Debug::D_DEBUGGING,
+                "DWG external references: images=%d wipeouts=%d image-defs=%d "
+                "underlays=%d underlay-defs=%d raster-vars=%d path-empty=%d "
+                "path-relative=%d path-missing=%d external=%d scheme=%d "
+                "case-candidate=%d missing-def=%d orphan-def=%d clip-none=%d "
+                "clip-rect=%d clip-poly=%d clip-bad=%d inverted=%d hidden-frame=%d",
+                static_cast<int>(externalRefs.imageEntities),
+                static_cast<int>(externalRefs.wipeouts),
+                static_cast<int>(externalRefs.imageDefinitions),
+                static_cast<int>(externalRefs.underlays),
+                static_cast<int>(externalRefs.underlayDefinitions),
+                static_cast<int>(externalRefs.rasterVariables),
+                static_cast<int>(externalRefs.emptyPaths),
+                static_cast<int>(externalRefs.relativePaths),
+                static_cast<int>(externalRefs.absoluteMissingPaths),
+                static_cast<int>(externalRefs.externalPaths),
+                static_cast<int>(externalRefs.unsupportedSchemes),
+                static_cast<int>(externalRefs.caseMismatchCandidates),
+                static_cast<int>(externalRefs.missingDefinitionHandles),
+                static_cast<int>(externalRefs.definitionsWithoutEntities),
+                static_cast<int>(externalRefs.noBoundaryClips),
+                static_cast<int>(externalRefs.rectangularClips),
+                static_cast<int>(externalRefs.polygonalClips),
+                static_cast<int>(externalRefs.malformedClips),
+                static_cast<int>(externalRefs.invertedClips),
+                static_cast<int>(externalRefs.hiddenFrames));
+        }
+        if (shapeOleBlockers.shapeCount > 0
+            || shapeOleBlockers.ole2FrameCount > 0) {
+            RS_DEBUG->print(
+                shapeOleBlockers.totalBlockers() > 0
+                    ? RS_Debug::D_WARNING
+                    : RS_Debug::D_DEBUGGING,
+                "DWG shape/OLE writer blockers: shapes=%d ole2=%d "
+                "missing-style=%d unresolved-style=%d missing-ole=%d "
+                "truncated-ole=%d oversized-ole=%d edited-preview=%d "
+                "unsupported-ole=%d raw-missing=%d raw-incomplete=%d "
+                "invalidated=%d replaced=%d",
+                static_cast<int>(shapeOleBlockers.shapeCount),
+                static_cast<int>(shapeOleBlockers.ole2FrameCount),
+                static_cast<int>(shapeOleBlockers.missingStyleHandle),
+                static_cast<int>(shapeOleBlockers.unresolvedShapeStyle),
+                static_cast<int>(shapeOleBlockers.missingOlePayload),
+                static_cast<int>(shapeOleBlockers.truncatedOlePayload),
+                static_cast<int>(shapeOleBlockers.oversizedOlePayload),
+                static_cast<int>(shapeOleBlockers.editedPreviewFrame),
+                static_cast<int>(shapeOleBlockers.unsupportedOlePayloadRegeneration),
+                static_cast<int>(shapeOleBlockers.missingRawRange),
+                static_cast<int>(shapeOleBlockers.incompleteRawRange),
+                static_cast<int>(shapeOleBlockers.invalidated),
+                static_cast<int>(shapeOleBlockers.replaced));
+        }
+        if (visualBlockers.recordCount > 0 || visualBlockers.rawPayloads > 0) {
+            RS_DEBUG->print(
+                visualBlockers.totalBlockers() > 0
+                    ? RS_Debug::D_WARNING
+                    : RS_Debug::D_DEBUGGING,
+                "DWG visual metadata export policy: records=%d raw=%d "
+                "raw-replayable=%d raw-suppressed=%d ucs=%d base-ucs=%d "
+                "visual-style=%d sun=%d background=%d live-section=%d "
+                "owner-layout=%d raw-invalidated=%d raw-replaced=%d "
+                "unsupported-visual-style=%d",
+                static_cast<int>(visualBlockers.recordCount),
+                static_cast<int>(visualBlockers.rawPayloads),
+                static_cast<int>(visualBlockers.replayableRawPayloads),
+                static_cast<int>(visualBlockers.suppressedRawPayloads),
+                static_cast<int>(visualBlockers.unresolvedUcs),
+                static_cast<int>(visualBlockers.unresolvedBaseUcs),
+                static_cast<int>(visualBlockers.unresolvedVisualStyle),
+                static_cast<int>(visualBlockers.unresolvedSun),
+                static_cast<int>(visualBlockers.unresolvedBackground),
+                static_cast<int>(visualBlockers.unresolvedLiveSection),
+                static_cast<int>(visualBlockers.missingOwnerOrLayout),
+                static_cast<int>(visualBlockers.invalidatedRawPayload),
+                static_cast<int>(visualBlockers.replacedNativeUnavailablePayload),
+                static_cast<int>(visualBlockers.unsupportedVisualStyleWriter));
+        }
+        if (advancedEntityBlockers.recordCount > 0
+            && advancedEntityBlockers.totalBlockers() > 0) {
+            RS_DEBUG->print(
+                RS_Debug::D_WARNING,
+                "DWG advanced entity writer readiness: records=%d mesh=%d "
+                "shape=%d ole2=%d image=%d wipeout=%d underlay=%d "
+                "mleader=%d arc-dim=%d unknown=%d native=%d raw=%d "
+                "fallback=%d edited-fallback=%d metadata=%d payload=%d "
+                "advanced-content=%d oda-complete=%d oda-partial=%d "
+                "oda-absent=%d",
+                static_cast<int>(advancedEntityBlockers.recordCount),
+                static_cast<int>(advancedEntityBlockers.mesh),
+                static_cast<int>(advancedEntityBlockers.shape),
+                static_cast<int>(advancedEntityBlockers.ole2Frame),
+                static_cast<int>(advancedEntityBlockers.rasterImage),
+                static_cast<int>(advancedEntityBlockers.wipeout),
+                static_cast<int>(advancedEntityBlockers.underlay),
+                static_cast<int>(advancedEntityBlockers.mleader),
+                static_cast<int>(advancedEntityBlockers.arcDimension),
+                static_cast<int>(advancedEntityBlockers.unknown),
+                static_cast<int>(advancedEntityBlockers.nativeWriterAvailable),
+                static_cast<int>(advancedEntityBlockers.rawReplayAvailable),
+                static_cast<int>(advancedEntityBlockers.fallbackAvailable),
+                static_cast<int>(advancedEntityBlockers.editedFallbackInvalidated),
+                static_cast<int>(advancedEntityBlockers.missingRequiredMetadata),
+                static_cast<int>(advancedEntityBlockers.missingPayloadBytes),
+                static_cast<int>(advancedEntityBlockers.unsupportedAdvancedContent),
+                static_cast<int>(advancedEntityBlockers.odaComplete),
+                static_cast<int>(advancedEntityBlockers.odaPartial),
+                static_cast<int>(advancedEntityBlockers.odaAbsent));
+        }
+        const size_t nativeSemanticRecords =
+            static_cast<size_t>(nativeSunObjects + nativePlaceholderObjects
+                                + nativeMLeaderStyleObjects
+                                + nativeDictionaryObjects
+                                + nativeXRecordObjects
+                                + nativeLayoutObjects
+                                + nativeGroupObjects
+                                + nativeRasterVariablesObjects
+                                + nativeGeoDataObjects
+                                + nativeSpatialFilterObjects);
+        const size_t semanticOnlyRecords =
+            metadata.semanticOnlyRecordCount() > nativeSemanticRecords
+                ? metadata.semanticOnlyRecordCount() - nativeSemanticRecords
+                : 0;
+        const bool hasSemanticOnlyReplayable = semanticOnlyRecords > 0;
+        if (hasBlockedReplay || hasSemanticOnlyReplayable) {
+            RS_DEBUG->print(
+                RS_Debug::D_WARNING,
+                "Some DWG advanced metadata still cannot be emitted natively; "
+                "unchanged raw OBJECTS/data sections are replayed where safe, "
+                "while entities and semantic-only records remain diagnostic-only");
+            if (hasBlockedReplay) {
+                RS_DEBUG->print(
+                    RS_Debug::D_WARNING,
+                    "Blocked raw DWG replay: invalidated=%d replaced=%d entity=%d "
+                    "missing-bytes=%d missing-class=%d writer-rejected=%d "
+                    "version-mismatch=%d (objects=%d sections=%d)",
+                    blockedInvalidated, blockedReplaced, blockedEntityReplay,
+                    blockedMissingRawBytes, blockedMissingClassMetadata,
+                    blockedWriterRejected, blockedVersionMismatch,
+                    replayedObjects, replayedSections);
+            }
+            if (semanticOnlyRecords > 0) {
+                RS_DEBUG->print(
+                    RS_Debug::D_WARNING,
+                    "Semantic-only DWG metadata records not emitted natively: %d",
+                    static_cast<int>(semanticOnlyRecords));
+            }
+        }
+        return;  // DWG writer handles object section internally
+    }
     /* PLOTSETTINGS */
     DRW_PlotSettings ps;
     QString horizXvert = QString("%1x%2").arg(m_graphic->getPagesNumHoriz())
@@ -4662,21 +8193,141 @@ void RS_FilterDXFRW::writeObjects() {
     ps.marginRight = m_graphic->getMarginRight();
     ps.marginBottom = m_graphic->getMarginBottom();
     m_dxfW->writePlotSettings(&ps);
+
+    //Slice A2: re-emit OBJECTS captured verbatim on read (A1) so a LibreCAD DXF
+    //round-trip preserves unmodeled objects rather than dropping them. Records live
+    //on the graphic, so this (separate) write-filter instance still sees them.
+    //Skip handles the codec regenerates itself (source ACAD_GROUP dict, C/D
+    //collisions — see m_dxfSuppressedObjectHandles set up in fileExport) so routed
+    //named dictionaries don't duplicate the root/group dictionaries.
+    if (m_graphic != nullptr) {
+        for (const DRW_RawDxfObject &rawObject :
+                 m_graphic->dwgAdvancedMetadata().rawDxfObjects()) {
+            if (rawObject.handle != 0
+                && m_dxfSuppressedObjectHandles.count(rawObject.handle) != 0)
+                continue;
+            DRW_RawDxfObject object = rawObject;
+            m_dxfW->writeRawDxfObject(&object);
+        }
+
+        //F4: typed DXF emit for the routed data-only OBJECTS the DWG reader stores
+        //ONLY in typed metadata (NOT the raw net) — SUN/SCALE/DICTIONARYVAR/
+        //RASTERVARIABLES. On DWG->DXF these are absent from the raw net, so the
+        //loop above never emits them; emit them natively here so the type is
+        //preserved. DEDUP vs the raw net: a DXF-READ object lives in BOTH the
+        //typed metadata AND the raw net (processSun calls addSun AND
+        //addRawDxfObject), so it was already re-emitted above — skip the typed
+        //emit when its code-5 handle is already in the raw net to avoid a
+        //double-emit. (Build the raw-handle set once.) Only ReplayAllowed,
+        //nonzero-handle records are emitted; handles are reserved and a CLASS
+        //record is registered in fileExport's pre-write pass.
+        const auto &metadata = m_graphic->dwgAdvancedMetadata();
+        std::set<std::uint32_t> rawHandles;
+        for (const DRW_RawDxfObject &o : metadata.rawDxfObjects())
+            if (o.handle != 0)
+                rawHandles.insert(o.handle);
+        auto emitTyped = [&](std::uint32_t handle,
+                             LC_DwgAdvancedMetadata::ReplayState state) {
+            return handle != 0
+                && state == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                && rawHandles.count(handle) == 0;
+        };
+        //F4f-3: owner fallback. A data-only OBJECT's 330 parent must resolve to
+        //an object that actually exists in the output, else ezdxf deletes the
+        //object (INVALID_OWNER_HANDLE). A parent is reachable iff it is 0 (->
+        //root C), a named parent dict we emit (F4f-2), or a raw-net object
+        //re-emitted verbatim. Otherwise (e.g. a SUN owned by a per-viewport ACAD
+        //dict LibreCAD never materializes) zero it so writeObjectOwner emits C.
+        auto resolveOwner = [&](std::uint32_t parent) -> int {
+            if (parent == 0
+                || m_dxfEmittedNamedDictHandles.count(parent) != 0
+                || rawHandles.count(parent) != 0)
+                return static_cast<int>(parent);
+            return 0;  // dangling -> owner C
+        };
+        for (const auto &record : metadata.suns()) {
+            if (!emitTyped(record.handle, record.replayState))
+                continue;
+            DRW_Sun sun = sunFromMetadata(record);
+            sun.parentHandle = resolveOwner(record.parentHandle);
+            m_dxfW->writeSun(&sun);
+        }
+        for (const auto &record : metadata.scales()) {
+            if (!emitTyped(record.handle, record.replayState))
+                continue;
+            DRW_Scale scale = scaleFromMetadata(record);
+            scale.parentHandle = resolveOwner(record.parentHandle);
+            m_dxfW->writeScale(&scale);
+        }
+        for (const auto &record : metadata.dictionaryVars()) {
+            if (!emitTyped(record.handle, record.replayState))
+                continue;
+            DRW_DictionaryVar dv = dictionaryVarFromMetadata(record);
+            dv.parentHandle = resolveOwner(record.parentHandle);
+            m_dxfW->writeDictionaryVar(&dv);
+        }
+        for (const auto &record : metadata.rasterVariables()) {
+            if (!emitTyped(record.handle, record.replayState))
+                continue;
+            DRW_RasterVariables rv = rasterVariablesFromMetadata(record);
+            rv.parentHandle = resolveOwner(record.parentHandle);
+            m_dxfW->writeRasterVariables(&rv);
+        }
+        //SLICE 1: MLINESTYLE (FIXED built-in, no CLASS). DWG read populates only
+        //typed metadata; DXF read keeps it in the raw net (so emitTyped dedups by
+        //handle). The STANDARD mline style is present in most drawings.
+        for (const auto &record : metadata.mlineStyles()) {
+            if (!emitTyped(record.handle, record.replayState))
+                continue;
+            DRW_MLineStyle style = mlineStyleFromMetadata(record);
+            style.parentHandle = resolveOwner(record.parentHandle);
+            m_dxfW->writeMLineStyle(&style);
+        }
+        //SLICE 2: WIPEOUTVARIABLES (custom, CLASS registered). Same dedup-vs-raw
+        //-net + owner re-attach as the other data-only OBJECTS.
+        for (const auto &record : metadata.wipeoutVariables()) {
+            if (!emitTyped(record.handle, record.replayState))
+                continue;
+            DRW_WipeoutVariables wv = wipeoutVariablesFromMetadata(record);
+            wv.parentHandle = resolveOwner(record.parentHandle);
+            m_dxfW->writeWipeoutVariables(&wv);
+        }
+    }
 }
 
 void RS_FilterDXFRW::writeAppId(){
     DRW_AppId ai;
     ai.name ="LibreCad";
-    m_dxfW->writeAppId(&ai);
+    if (m_dwgW) {
+        m_dwgW->addAppId(&ai);
+    }
+    else {
+        m_dxfW->writeAppId(&ai);
+    }
 
     ai.name ="ACAD_DSTYLE_DIMTALN";
-    m_dxfW->writeAppId(&ai);
+    if (m_dwgW) {
+        m_dwgW->addAppId(&ai);
+    }
+    else {
+        m_dxfW->writeAppId(&ai);
+    }
 
     ai.name ="ACAD_DSTYLE_DIMJAG_POSITION";
-    m_dxfW->writeAppId(&ai);
+    if (m_dwgW) {
+        m_dwgW->addAppId(&ai);
+    }
+    else {
+        m_dxfW->writeAppId(&ai);
+    }
 
     ai.name ="ACAD_DSTYLE_DIMJAG";
-    m_dxfW->writeAppId(&ai);
+    if (m_dwgW) {
+        m_dwgW->addAppId(&ai);
+    }
+    else {
+        m_dxfW->writeAppId(&ai);
+    }
 
     // ACAD_DSTYLE_DIMJAG
     // fixme - sand - probably we can add version there, check format
@@ -4686,10 +8337,15 @@ void RS_FilterDXFRW::writeEntities(){
   // Pre-pass: reconstruct MLINE entities from decomposed polylines that
   // carry LibreCAD_MLINE XDATA. Consumed polylines are emitted as
   // MLINE; the rest fall through to the normal write path.
-  // DWG writer has no MLINE/UNDERLAY — skip reconstruction passes.
   std::set<RS_Entity *> consumed;
+  reconstructPolylineSidecars(m_graphic, consumed);
+  reconstructMLines(m_graphic, consumed);
+  // F2: rebuild RAY/XLINE/TRACE/3DFACE from their type-fidelity sidecars.
+  // Both the DXF and DWG writers expose writeRay/writeXline/writeTrace/
+  // write3dface, so this runs for either output.
+  reconstructTypedConversions(m_graphic, consumed);
+  // DWG writer has no UNDERLAY encoder yet — keep that reconstruction DXF-only.
   if (!m_dwgW) {
-    reconstructMLines(m_graphic, consumed);
     reconstructUnderlays(m_graphic, consumed);
   }
   for (RS_Entity *e :
@@ -4699,6 +8355,18 @@ void RS_FilterDXFRW::writeEntities(){
     if (consumed.find(e) != consumed.end())
       continue;
     writeEntity(e);
+  }
+
+  //Slice A2 (entities): re-emit ENTITIES captured verbatim on read (A4) so a
+  //LibreCAD DXF round-trip preserves unmodeled entities (incl. standalone ATTDEF)
+  //rather than dropping them. DXF-only: the DWG writer has its own object/entity
+  //path. Records live on the graphic, shared across read/write filter instances.
+  if (!m_dwgW && m_graphic != nullptr) {
+    for (const DRW_RawDxfObject &rawEntity :
+             m_graphic->dwgAdvancedMetadata().rawDxfEntities()) {
+      DRW_RawDxfObject entity = rawEntity;
+      m_dxfW->writeRawDxfObject(&entity);
+    }
   }
 }
 
@@ -4719,6 +8387,265 @@ struct MLineEntry {
   std::vector<DRW_Coord> miterDirs;
 };
 
+struct LWPolylineMeta {
+  double width = 0.0;
+  double elevation = 0.0;
+  double thickness = 0.0;
+  DRW_Coord extrusion {0.0, 0.0, 1.0};
+  int vertexCount = 0;
+  std::vector<double> startWidths;
+  std::vector<double> endWidths;
+  std::vector<int> identifiers;
+};
+
+std::optional<LWPolylineMeta> extractLWPolylineMeta(RS_Entity *e) {
+  if (!e || !e->hasDrwExtData())
+    return std::nullopt;
+  const auto &ext = e->getDrwExtData();
+  bool inGroup = false;
+  LWPolylineMeta meta;
+  int seen1040 = 0; // 0=width, 1=elevation, 2=thickness, then vertex widths
+  bool gotMarker = false;
+
+  for (const auto &sp : ext) {
+    if (!sp)
+      continue;
+    const int code = sp->code();
+    if (code == 1001) {
+      inGroup = (std::string{sp->c_str()} == "LibreCAD_LWPOLYLINE");
+      if (inGroup)
+        gotMarker = true;
+      continue;
+    }
+    if (!inGroup)
+      continue;
+
+    switch (code) {
+    case 1040: {
+      const double d = sp->d_val();
+      if (seen1040 == 0)
+        meta.width = d;
+      else if (seen1040 == 1)
+        meta.elevation = d;
+      else if (seen1040 == 2)
+        meta.thickness = d;
+      else if ((seen1040 - 3) % 2 == 0)
+        meta.startWidths.push_back(d);
+      else
+        meta.endWidths.push_back(d);
+      ++seen1040;
+      break;
+    }
+    case 1010: {
+      const auto *c = sp->coord();
+      if (c)
+        meta.extrusion = *c;
+      break;
+    }
+    case 1070:
+      if (meta.vertexCount == 0)
+        meta.vertexCount = static_cast<int>(sp->i_val());
+      break;
+    case 1071:
+      meta.identifiers.push_back(static_cast<int>(sp->i_val()));
+      break;
+    default:
+      break;
+    }
+  }
+
+  if (!gotMarker)
+    return std::nullopt;
+  return meta;
+}
+
+struct MeshSidecarEntry {
+  RS_Entity *entity = nullptr;
+  QString meshId;
+  QString role;
+  int elementIndex = -1;
+  int elementCount = 0;
+  int roleIndex = -1;
+  int flags = 0;
+  int mCount = 0;
+  int nCount = 0;
+  int smoothM = 0;
+  int smoothN = 0;
+  int curveType = 0;
+  std::vector<DRW_Coord> sourceVertices;
+};
+
+struct PolyfaceSidecarEntry {
+  RS_Entity *entity = nullptr;
+  QString polyfaceId;
+  int faceIndex = -1;
+  int faceCount = 0;
+  int flags = 0;
+  int vertexCount = 0;
+  int originalFaceCount = 0;
+  std::array<int, 4> indices {{0, 0, 0, 0}};
+  std::vector<DRW_Coord> sourceVertices;
+};
+
+std::vector<RS_Vector> collectPolylineVertices(RS_Polyline *polyline) {
+  std::vector<RS_Vector> vertices;
+  if (polyline == nullptr)
+    return vertices;
+
+  const RS_AtomicEntity *lastAtomic = nullptr;
+  for (RS_Entity *sub :
+       lc::LC_ContainerTraverser{*polyline, RS2::ResolveNone}.entities()) {
+    if (sub == nullptr || !sub->isAtomic())
+      continue;
+    const auto *atomic = static_cast<const RS_AtomicEntity *>(sub);
+    vertices.push_back(atomic->getStartpoint());
+    lastAtomic = atomic;
+  }
+  if (lastAtomic != nullptr && !polyline->isClosed())
+    vertices.push_back(lastAtomic->getEndpoint());
+
+  return vertices;
+}
+
+bool pointsMatch2D(const RS_Vector &point, const DRW_Coord &coord) {
+  return std::abs(point.x - coord.x) <= RS_TOLERANCE
+      && std::abs(point.y - coord.y) <= RS_TOLERANCE;
+}
+
+std::optional<MeshSidecarEntry> extractMeshSidecar(RS_Entity *e) {
+  if (!e || !e->hasDrwExtData())
+    return std::nullopt;
+
+  MeshSidecarEntry meta;
+  meta.entity = e;
+  bool inGroup = false;
+  bool gotMarker = false;
+  int seen1000 = 0;
+  int seen1070 = 0;
+
+  for (const auto &sp : e->getDrwExtData()) {
+    if (!sp)
+      continue;
+    const int code = sp->code();
+    if (code == 1001) {
+      inGroup = (std::string{sp->c_str()} == "LibreCAD_POLYLINE_MESH");
+      if (inGroup)
+        gotMarker = true;
+      continue;
+    }
+    if (!inGroup)
+      continue;
+
+    switch (code) {
+    case 1000: {
+      const QString value = QString::fromStdString(std::string{sp->c_str()});
+      if (seen1000 == 0)
+        meta.meshId = value;
+      else if (seen1000 == 1)
+        meta.role = value;
+      ++seen1000;
+      break;
+    }
+    case 1070: {
+      const int value = static_cast<int>(sp->i_val());
+      if (seen1070 == 0)
+        meta.elementIndex = value;
+      else if (seen1070 == 1)
+        meta.elementCount = value;
+      else if (seen1070 == 2)
+        meta.roleIndex = value;
+      else if (seen1070 == 3)
+        meta.flags = value;
+      else if (seen1070 == 4)
+        meta.mCount = value;
+      else if (seen1070 == 5)
+        meta.nCount = value;
+      else if (seen1070 == 6)
+        meta.smoothM = value;
+      else if (seen1070 == 7)
+        meta.smoothN = value;
+      else if (seen1070 == 8)
+        meta.curveType = value;
+      ++seen1070;
+      break;
+    }
+    case 1010: {
+      const auto *coord = sp->coord();
+      if (coord)
+        meta.sourceVertices.push_back(*coord);
+      break;
+    }
+    default:
+      break;
+    }
+  }
+
+  if (!gotMarker || meta.meshId.isEmpty())
+    return std::nullopt;
+  return meta;
+}
+
+std::optional<PolyfaceSidecarEntry> extractPolyfaceSidecar(RS_Entity *e) {
+  if (!e || !e->hasDrwExtData())
+    return std::nullopt;
+
+  PolyfaceSidecarEntry meta;
+  meta.entity = e;
+  bool inGroup = false;
+  bool gotMarker = false;
+  int seen1070 = 0;
+
+  for (const auto &sp : e->getDrwExtData()) {
+    if (!sp)
+      continue;
+    const int code = sp->code();
+    if (code == 1001) {
+      inGroup = (std::string{sp->c_str()} == "LibreCAD_POLYLINE_PFACE");
+      if (inGroup)
+        gotMarker = true;
+      continue;
+    }
+    if (!inGroup)
+      continue;
+
+    switch (code) {
+    case 1000:
+      if (meta.polyfaceId.isEmpty())
+        meta.polyfaceId = QString::fromStdString(std::string{sp->c_str()});
+      break;
+    case 1070: {
+      const int value = static_cast<int>(sp->i_val());
+      if (seen1070 == 0)
+        meta.faceIndex = value;
+      else if (seen1070 == 1)
+        meta.faceCount = value;
+      else if (seen1070 == 2)
+        meta.flags = value;
+      else if (seen1070 == 3)
+        meta.vertexCount = value;
+      else if (seen1070 == 4)
+        meta.originalFaceCount = value;
+      else if (seen1070 >= 5 && seen1070 < 9)
+        meta.indices[seen1070 - 5] = value;
+      ++seen1070;
+      break;
+    }
+    case 1010: {
+      const auto *coord = sp->coord();
+      if (coord)
+        meta.sourceVertices.push_back(*coord);
+      break;
+    }
+    default:
+      break;
+    }
+  }
+
+  if (!gotMarker || meta.polyfaceId.isEmpty())
+    return std::nullopt;
+  return meta;
+}
+
 // Walk the entity's drwExtData (XDATA stream) and extract LibreCAD_MLINE
 // metadata. Returns nullopt if the marker isn't present. The XDATA layout
 // matches RS_FilterDXFRW::addMLine's emission schema.
@@ -4731,7 +8658,6 @@ std::optional<MLineEntry> extractMLineMeta(RS_Entity *e) {
   int seen1000 = 0; // 0 = mlineId, 1 = styleName
   int seen1040 = 0; // 0 = scale, 1 = offset
   int seen1070 = 0; // 0 = just, 1 = N, 2 = i, 3 = flags
-  int seen1011 = 0; // baseline.x emitted as DRW_Coord
   for (const auto &sp : ext) {
     if (!sp)
       continue;
@@ -4780,7 +8706,6 @@ std::optional<MLineEntry> extractMLineMeta(RS_Entity *e) {
       if (c)
         m.baselineVerts.push_back(*c);
       m.isAnchor = true;
-      ++seen1011;
       break;
     }
     case 1013: {
@@ -4799,6 +8724,225 @@ std::optional<MLineEntry> extractMLineMeta(RS_Entity *e) {
   return m;
 }
 } // namespace
+
+void RS_FilterDXFRW::reconstructPolylineSidecars(
+    RS_EntityContainer *container, std::set<RS_Entity *> &consumed) {
+  if (container == nullptr)
+    return;
+
+  std::map<QString, std::vector<MeshSidecarEntry>> meshGroups;
+  std::map<QString, std::vector<PolyfaceSidecarEntry>> polyfaceGroups;
+
+  for (RS_Entity *entity :
+       lc::LC_ContainerTraverser{*container, RS2::ResolveNone}.entities()) {
+    if (entity == nullptr || entity->getFlag(RS2::FlagUndone)
+        || consumed.find(entity) != consumed.end()
+        || entity->rtti() != RS2::EntityPolyline) {
+      continue;
+    }
+    if (auto meshMeta = extractMeshSidecar(entity))
+      meshGroups[meshMeta->meshId].push_back(std::move(*meshMeta));
+    else if (auto polyfaceMeta = extractPolyfaceSidecar(entity))
+      polyfaceGroups[polyfaceMeta->polyfaceId].push_back(
+          std::move(*polyfaceMeta));
+  }
+
+  for (auto &[meshId, entries] : meshGroups) {
+    (void)meshId;
+    if (entries.empty())
+      continue;
+
+    const MeshSidecarEntry *anchor = nullptr;
+    for (const auto &entry : entries) {
+      if (!entry.sourceVertices.empty()) {
+        anchor = &entry;
+        break;
+      }
+    }
+    if (anchor == nullptr || anchor->mCount <= 0 || anchor->nCount <= 0)
+      continue;
+
+    const int mCount = anchor->mCount;
+    const int nCount = anchor->nCount;
+    const int expectedElementCount = mCount + nCount;
+    if (anchor->elementCount != expectedElementCount
+        || static_cast<int>(entries.size()) != expectedElementCount
+        || static_cast<int>(anchor->sourceVertices.size()) != mCount * nCount) {
+      continue;
+    }
+
+    bool valid = true;
+    std::vector<bool> seenElements(expectedElementCount, false);
+    for (const auto &entry : entries) {
+      if (entry.elementIndex < 0 || entry.elementIndex >= expectedElementCount
+          || seenElements[entry.elementIndex] || entry.mCount != mCount
+          || entry.nCount != nCount || entry.elementCount != expectedElementCount) {
+        valid = false;
+        break;
+      }
+      seenElements[entry.elementIndex] = true;
+
+      auto *polyline = static_cast<RS_Polyline *>(entry.entity);
+      const std::vector<RS_Vector> visible = collectPolylineVertices(polyline);
+      if (entry.role == "row") {
+        if (entry.roleIndex < 0 || entry.roleIndex >= mCount
+            || static_cast<int>(visible.size()) != nCount) {
+          valid = false;
+          break;
+        }
+        for (int j = 0; j < nCount; ++j) {
+          const DRW_Coord &coord =
+              anchor->sourceVertices[entry.roleIndex * nCount + j];
+          if (!pointsMatch2D(visible[j], coord)) {
+            valid = false;
+            break;
+          }
+        }
+      }
+      else if (entry.role == "column") {
+        if (entry.roleIndex < 0 || entry.roleIndex >= nCount
+            || static_cast<int>(visible.size()) != mCount) {
+          valid = false;
+          break;
+        }
+        for (int i = 0; i < mCount; ++i) {
+          const DRW_Coord &coord =
+              anchor->sourceVertices[i * nCount + entry.roleIndex];
+          if (!pointsMatch2D(visible[i], coord)) {
+            valid = false;
+            break;
+          }
+        }
+      }
+      else {
+        valid = false;
+      }
+      if (!valid)
+        break;
+    }
+    if (!valid)
+      continue;
+
+    DRW_Polyline polyline;
+    polyline.flags = anchor->flags | 0x10;
+    polyline.vertexcount = mCount;
+    polyline.facecount = nCount;
+    polyline.smoothM = anchor->smoothM;
+    polyline.smoothN = anchor->smoothN;
+    polyline.curvetype = anchor->curveType;
+    getEntityAttributes(&polyline, anchor->entity);
+    for (const DRW_Coord &coord : anchor->sourceVertices) {
+      DRW_Vertex vertex(coord.x, coord.y, coord.z, 0.0);
+      vertex.setDwgSubtype(DRW_Vertex::DwgSubtype::Mesh);
+      polyline.addVertex(vertex);
+    }
+
+    if (m_dwgW)
+      m_dwgW->writePolyline(&polyline);
+    else if (m_dxfW)
+      m_dxfW->writePolyline(&polyline);
+
+    for (const auto &entry : entries)
+      consumed.insert(entry.entity);
+  }
+
+  for (auto &[polyfaceId, entries] : polyfaceGroups) {
+    (void)polyfaceId;
+    if (entries.empty())
+      continue;
+
+    const PolyfaceSidecarEntry *anchor = nullptr;
+    for (const auto &entry : entries) {
+      if (!entry.sourceVertices.empty()) {
+        anchor = &entry;
+        break;
+      }
+    }
+    if (anchor == nullptr || anchor->vertexCount <= 0
+        || anchor->faceCount <= 0) {
+      continue;
+    }
+
+    if (static_cast<int>(entries.size()) != anchor->faceCount
+        || static_cast<int>(anchor->sourceVertices.size())
+               != anchor->vertexCount) {
+      continue;
+    }
+
+    bool valid = true;
+    std::vector<bool> seenFaces(anchor->faceCount, false);
+    for (const auto &entry : entries) {
+      if (entry.faceIndex < 0 || entry.faceIndex >= anchor->faceCount
+          || seenFaces[entry.faceIndex] || entry.faceCount != anchor->faceCount
+          || entry.vertexCount != anchor->vertexCount) {
+        valid = false;
+        break;
+      }
+      seenFaces[entry.faceIndex] = true;
+
+      const int expectedPoints = entry.indices[3] == 0 ? 3 : 4;
+      auto *polyline = static_cast<RS_Polyline *>(entry.entity);
+      const std::vector<RS_Vector> visible = collectPolylineVertices(polyline);
+      if (static_cast<int>(visible.size()) != expectedPoints) {
+        valid = false;
+        break;
+      }
+      for (int i = 0; i < expectedPoints; ++i) {
+        const int vertexIndex = std::abs(entry.indices[i]);
+        if (vertexIndex < 1 || vertexIndex > anchor->vertexCount) {
+          valid = false;
+          break;
+        }
+        if (!pointsMatch2D(visible[i],
+                           anchor->sourceVertices[vertexIndex - 1])) {
+          valid = false;
+          break;
+        }
+      }
+      if (!valid)
+        break;
+    }
+    if (!valid)
+      continue;
+
+    std::sort(entries.begin(), entries.end(),
+              [](const PolyfaceSidecarEntry &lhs,
+                 const PolyfaceSidecarEntry &rhs) {
+                return lhs.faceIndex < rhs.faceIndex;
+              });
+
+    DRW_Polyline polyline;
+    polyline.flags = anchor->flags | 0x40;
+    polyline.vertexcount = anchor->vertexCount;
+    polyline.facecount = anchor->faceCount;
+    getEntityAttributes(&polyline, anchor->entity);
+
+    for (const DRW_Coord &coord : anchor->sourceVertices) {
+      DRW_Vertex vertex(coord.x, coord.y, coord.z, 0.0);
+      vertex.flags = 0x40 | 0x80;
+      vertex.setDwgSubtype(DRW_Vertex::DwgSubtype::Polyface);
+      polyline.addVertex(vertex);
+    }
+    for (const auto &entry : entries) {
+      DRW_Vertex face;
+      face.flags = 0x80;
+      face.vindex1 = entry.indices[0];
+      face.vindex2 = entry.indices[1];
+      face.vindex3 = entry.indices[2];
+      face.vindex4 = entry.indices[3];
+      face.setDwgSubtype(DRW_Vertex::DwgSubtype::PolyfaceFace);
+      polyline.addVertex(face);
+    }
+
+    if (m_dwgW)
+      m_dwgW->writePolyline(&polyline);
+    else if (m_dxfW)
+      m_dxfW->writePolyline(&polyline);
+
+    for (const auto &entry : entries)
+      consumed.insert(entry.entity);
+  }
+}
 
 void RS_FilterDXFRW::reconstructMLines(RS_EntityContainer *container,
                                        std::set<RS_Entity *> &consumed) {
@@ -4851,10 +8995,10 @@ void RS_FilterDXFRW::reconstructMLines(RS_EntityContainer *container,
     DRW_MLine ml;
     ml.styleName = anchor->styleName.toStdString();
     ml.scale = anchor->scale;
-    ml.justification = static_cast<duint8>(anchor->justification);
+    ml.justification = static_cast<std::uint8_t>(anchor->justification);
     ml.openClosed = anchor->openClosed;
-    ml.numLines = static_cast<duint8>(N);
-    ml.numVerts = static_cast<duint16>(anchor->baselineVerts.size());
+    ml.numLines = static_cast<std::uint8_t>(N);
+    ml.numVerts = static_cast<std::uint16_t>(anchor->baselineVerts.size());
     if (!anchor->baselineVerts.empty()) {
       ml.basePoint = anchor->baselineVerts.front();
     }
@@ -4876,9 +9020,155 @@ void RS_FilterDXFRW::reconstructMLines(RS_EntityContainer *container,
       ml.vertlist.push_back(std::move(v));
     }
 
-    m_dxfW->writeMLine(&ml);
+    if (m_dwgW)
+      m_dwgW->writeMLine(&ml);
+    else if (m_dxfW)
+      m_dxfW->writeMLine(&ml);
     for (const auto &m : entries)
       consumed.insert(m.entity);
+  }
+}
+
+namespace {
+// One parsed F2 type-fidelity sidecar (marker + payload coords/flag).
+struct TypedConversionSidecar {
+  QString marker;                 // LibreCAD_RAY / _XLINE / _TRACE / _3DFACE
+  std::vector<DRW_Coord> coords;  // 1010.. payload coordinates
+  int flag = 0;                   // 1070 invisible-edge flag (3DFACE only)
+};
+
+// Find a single F2 type-fidelity sidecar on an RS entity's XDATA, if present.
+// The marker codes match those written by appendTypeSidecar() at read time.
+std::optional<TypedConversionSidecar>
+extractTypedConversionSidecar(RS_Entity *e) {
+  if (!e || !e->hasDrwExtData())
+    return std::nullopt;
+  TypedConversionSidecar meta;
+  bool inGroup = false;
+  for (const auto &sp : e->getDrwExtData()) {
+    if (!sp)
+      continue;
+    const int code = sp->code();
+    if (code == 1001) {
+      const std::string app{sp->c_str()};
+      if (app == "LibreCAD_RAY" || app == "LibreCAD_XLINE" ||
+          app == "LibreCAD_TRACE" || app == "LibreCAD_3DFACE") {
+        meta.marker = QString::fromStdString(app);
+        inGroup = true;
+      } else {
+        inGroup = false;
+      }
+      continue;
+    }
+    if (!inGroup)
+      continue;
+    if (code >= 1010 && code <= 1013) {
+      if (const DRW_Coord *crd = sp->coord())
+        meta.coords.push_back(*crd);
+    } else if (code == 1070) {
+      meta.flag = static_cast<int>(sp->i_val());
+    }
+  }
+  if (meta.marker.isEmpty())
+    return std::nullopt;
+  return meta;
+}
+} // namespace
+
+void RS_FilterDXFRW::reconstructTypedConversions(
+    RS_EntityContainer *container, std::set<RS_Entity *> &consumed) {
+  if (!container)
+    return;
+
+  for (RS_Entity *e :
+       lc::LC_ContainerTraverser{*container, RS2::ResolveNone}.entities()) {
+    if (e->getFlag(RS2::FlagUndone))
+      continue;
+    if (consumed.find(e) != consumed.end())
+      continue;
+    auto meta = extractTypedConversionSidecar(e);
+    if (!meta)
+      continue;
+
+    // Build the native DRW entity with full geometry. Attributes (layer,
+    // color, linetype, ...) come from getEntityAttributes(); afterwards the
+    // F2 sidecar markers are stripped so the rebuilt native type does not
+    // carry them back out as XDATA.
+    auto emitNative = [&](DRW_Entity *drw) {
+      getEntityAttributes(drw, e);
+      // Drop the F2 sidecar groups from the re-emitted XDATA so the rebuilt
+      // native type does not carry the marker back out.
+      std::vector<std::shared_ptr<DRW_Variant>> filtered;
+      bool inGroup = false;
+      for (const auto &v : drw->extData) {
+        if (v && v->code() == 1001) {
+          const std::string app{v->c_str()};
+          inGroup = (app == "LibreCAD_RAY" || app == "LibreCAD_XLINE" ||
+                     app == "LibreCAD_TRACE" || app == "LibreCAD_3DFACE");
+          if (inGroup)
+            continue;
+        }
+        if (inGroup)
+          continue;
+        filtered.push_back(v);
+      }
+      drw->extData = std::move(filtered);
+    };
+
+    if (meta->marker == "LibreCAD_RAY") {
+      if (meta->coords.size() < 2)
+        continue;
+      DRW_Ray ray;
+      ray.basePoint = meta->coords[0];
+      ray.secPoint = meta->coords[1];
+      emitNative(&ray);
+      if (m_dwgW)
+        m_dwgW->writeRay(&ray);
+      else if (m_dxfW)
+        m_dxfW->writeRay(&ray);
+      consumed.insert(e);
+    } else if (meta->marker == "LibreCAD_XLINE") {
+      if (meta->coords.size() < 2)
+        continue;
+      DRW_Xline xline;
+      xline.basePoint = meta->coords[0];
+      xline.secPoint = meta->coords[1];
+      emitNative(&xline);
+      if (m_dwgW)
+        m_dwgW->writeXline(&xline);
+      else if (m_dxfW)
+        m_dxfW->writeXline(&xline);
+      consumed.insert(e);
+    } else if (meta->marker == "LibreCAD_TRACE") {
+      if (meta->coords.size() < 4)
+        continue;
+      DRW_Trace trace;
+      trace.basePoint = meta->coords[0];
+      trace.secPoint = meta->coords[1];
+      trace.thirdPoint = meta->coords[2];
+      trace.fourPoint = meta->coords[3];
+      emitNative(&trace);
+      if (m_dwgW)
+        m_dwgW->writeTrace(&trace);
+      else if (m_dxfW)
+        m_dxfW->writeTrace(&trace);
+      consumed.insert(e);
+    } else if (meta->marker == "LibreCAD_3DFACE") {
+      if (meta->coords.size() < 4)
+        continue;
+      DRW_3Dface face;
+      face.basePoint = meta->coords[0];
+      face.secPoint = meta->coords[1];
+      face.thirdPoint = meta->coords[2];
+      face.fourPoint = meta->coords[3];
+      face.invisibleflag = meta->flag;
+      emitNative(&face);
+      if (m_dwgW)
+        m_dwgW->write3dface(&face);
+      else if (m_dxfW)
+        m_dxfW->write3dface(&face);
+      consumed.insert(e);
+    }
   }
 }
 
@@ -4912,8 +9202,10 @@ void RS_FilterDXFRW::writeEntity(RS_Entity* e){
         writeSpline(static_cast<RS_Spline*>(e));
         break;
     case RS2::EntitySplinePoints:
-    case RS2::EntityParabola:
         writeSplinePoints(static_cast<LC_SplinePoints*>(e));
+        break;
+    case RS2::EntityParabola:
+        writeParabola(static_cast<LC_Parabola*>(e));
         break;
 //    case RS2::EntityVertex:
 //        break;
@@ -4932,10 +9224,14 @@ void RS_FilterDXFRW::writeEntity(RS_Entity* e){
     case RS2::EntityDimAngular:
     case RS2::EntityDimRadial:
     case RS2::EntityDimDiametric:
+    case RS2::EntityDimArc:
         writeDimension(static_cast<RS_Dimension*>(e));
         break;
     case RS2::EntityDimLeader:
         writeLeader(static_cast<RS_Leader*>(e));
+        break;
+    case RS2::EntityTolerance:
+        writeTolerance(static_cast<LC_Tolerance*>(e));
         break;
     case RS2::EntityHatch:
         writeHatch(static_cast<RS_Hatch*>(e));
@@ -5002,7 +9298,7 @@ void RS_FilterDXFRW::reconstructUnderlays(RS_EntityContainer *container,
         break;
       }
       case 1071:
-        u.definitionHandle = static_cast<duint32>(sp->i_val());
+        u.definitionHandle = static_cast<std::uint32_t>(sp->i_val());
         break;
       case 1010: {
         const auto *c = sp->coord();
@@ -5026,11 +9322,11 @@ void RS_FilterDXFRW::reconstructUnderlays(RS_EntityContainer *container,
       case 1070: {
         const int v = static_cast<int>(sp->i_val());
         if (seen1070 == 0)
-          u.flags = static_cast<duint8>(v);
+          u.flags = static_cast<std::uint8_t>(v);
         else if (seen1070 == 1)
-          u.contrast = static_cast<duint8>(v);
+          u.contrast = static_cast<std::uint8_t>(v);
         else if (seen1070 == 2)
-          u.fade = static_cast<duint8>(v);
+          u.fade = static_cast<std::uint8_t>(v);
         ++seen1070;
         break;
       }
@@ -5188,6 +9484,23 @@ void RS_FilterDXFRW::writeLWPolyline(RS_Polyline* l) {
     }
     pol.vertexnum = pol.vertlist.size();
     getEntityAttributes(&pol, l);
+    auto lwMeta = extractLWPolylineMeta(l);
+    if (lwMeta) {
+        pol.width = lwMeta->width;
+        pol.elevation = lwMeta->elevation;
+        pol.thickness = lwMeta->thickness;
+        pol.extPoint = lwMeta->extrusion;
+        if (lwMeta->vertexCount == static_cast<int>(pol.vertlist.size())) {
+            for (size_t i = 0; i < pol.vertlist.size(); ++i) {
+                if (i < lwMeta->startWidths.size())
+                    pol.vertlist[i]->stawidth = lwMeta->startWidths[i];
+                if (i < lwMeta->endWidths.size())
+                    pol.vertlist[i]->endwidth = lwMeta->endWidths[i];
+                if (i < lwMeta->identifiers.size())
+                    pol.vertlist[i]->identifier = lwMeta->identifiers[i];
+            }
+        }
+    }
     if (m_dwgW) { m_dwgW->writeLWPolyline(&pol); return; }
     m_dxfW->writeLWPolyline(&pol);
 }
@@ -5196,7 +9509,6 @@ void RS_FilterDXFRW::writeLWPolyline(RS_Polyline* l) {
  * Writes the given polyline entity to the file (old style).
  */
 void RS_FilterDXFRW::writePolyline(RS_Polyline* p) {
-    if (m_dwgW) return;  // DWG has no old-style POLYLINE entity
     if (p == nullptr)
         return;
 
@@ -5248,6 +9560,7 @@ void RS_FilterDXFRW::writePolyline(RS_Polyline* p) {
         }
     }
     getEntityAttributes(&pol, p);
+    if (m_dwgW) { m_dwgW->writePolyline(&pol); return; }
     m_dxfW->writePolyline(&pol);
 }
 
@@ -5293,6 +9606,9 @@ void RS_FilterDXFRW::writeSpline(RS_Spline *s) {
         sp.controllist.push_back(std::make_shared<DRW_Coord>(v.x, v.y));
     }
     sp.weightlist = s->getUnwrappedWeights();
+    if (std::any_of(sp.weightlist.begin(), sp.weightlist.end(), differsFromUnitWeight)) {
+        sp.flags |= 0x04;
+    }
 
     sp.ncontrol = sp.controllist.size();
     sp.degree = s->getDegree();
@@ -5353,30 +9669,47 @@ void RS_FilterDXFRW::writeSplinePoints(LC_SplinePoints *s){
 		sp.flags = 8;
 	}
 
-	sp.ncontrol = nCtrls;
-	sp.degree = 2;
-	sp.nknots = nCtrls + 3;
-
 	LC_SplinePointsData &data = s->getData();
-	sp.nfit = data.splinePoints.size();
 	auto const& fitPoints = data.splinePoints;
+	const bool writeFitScenario = !data.useControlPoints && fitPoints.size() >= 2;
+	sp.degree = 2;
+	sp.nfit = static_cast<std::int32_t>(fitPoints.size());
+
+	if (writeFitScenario) {
+		sp.m_scenario = 2;
+		sp.m_knotParam = 0;
+		sp.ncontrol = 0;
+		sp.nknots = 0;
+		sp.tolfit = 0.0000001;
+		const RS_Vector startTangent = fitPoints[1] - fitPoints[0];
+		const RS_Vector endTangent = fitPoints.back() - fitPoints[fitPoints.size() - 2];
+		sp.tgStart = DRW_Coord{startTangent.x, startTangent.y, 0.0};
+		sp.tgEnd = DRW_Coord{endTangent.x, endTangent.y, 0.0};
+	} else {
+		sp.ncontrol = nCtrls;
+		sp.nknots = nCtrls + 3;
+	}
 
 	// write spline knots:
-	for(int i = 1; i <= sp.nknots; i++){
-		if(i <= 3){
-			sp.knotslist.push_back(0.0);
-		}
-		else if(i <= nCtrls){
-			sp.knotslist.push_back((i - 3.0)/(nCtrls - 2.0));
-		}
-		else{
-			sp.knotslist.push_back(1.0);
+	if (!writeFitScenario) {
+		for(int i = 1; i <= sp.nknots; i++){
+			if(i <= 3){
+				sp.knotslist.push_back(0.0);
+			}
+			else if(i <= nCtrls){
+				sp.knotslist.push_back((i - 3.0)/(nCtrls - 2.0));
+			}
+			else{
+				sp.knotslist.push_back(1.0);
+			}
 		}
 	}
 
 	// write spline control points:
-	for (auto const& v : cp) {
-		sp.controllist.push_back(std::make_shared<DRW_Coord>(v.x, v.y));
+	if (!writeFitScenario) {
+		for (auto const& v : cp) {
+			sp.controllist.push_back(std::make_shared<DRW_Coord>(v.x, v.y));
+		}
 	}
 
 	// fit points
@@ -5386,8 +9719,10 @@ void RS_FilterDXFRW::writeSplinePoints(LC_SplinePoints *s){
 
 	getEntityAttributes(&sp, s);
 	if (m_dwgW) {
-		sp.fitlist.clear();  // DWG scenario 1 only: encoder picks scenario 2 when fitlist
-		sp.nfit = 0;         // is non-empty, corrupting the stream; control pts are exact.
+		if (!writeFitScenario) {
+			sp.fitlist.clear();
+			sp.nfit = 0;
+		}
 		m_dwgW->writeSpline(&sp);
 		return;
 	}
@@ -5428,6 +9763,21 @@ void RS_FilterDXFRW::writeHyperbola(LC_Hyperbola* h) {
     DRW_Spline spl;
     getEntityAttributes(&spl, h);
     if (LC_HyperbolaSpline::hyperbolaToSpline(h->getData(), spl)) {
+        if (m_dwgW) { m_dwgW->writeSpline(&spl); return; }
+        if (m_dxfW) m_dxfW->writeSpline(&spl);
+    }
+}
+
+/**
+ * Write a parabola entity as its canonical non-rational quadratic SPLINE.
+ */
+void RS_FilterDXFRW::writeParabola(LC_Parabola* p) {
+    if (p == nullptr || !p->getData().isValid())
+        return;
+
+    DRW_Spline spl;
+    getEntityAttributes(&spl, p);
+    if (LC_ParabolaSpline::parabolaToSpline(p->getData(), spl)) {
         if (m_dwgW) { m_dwgW->writeSpline(&spl); return; }
         if (m_dxfW) m_dxfW->writeSpline(&spl);
     }
@@ -5557,7 +9907,7 @@ void RS_FilterDXFRW::writeMText(RS_MText* t) {
           text->extData.push_back(
               std::make_shared<DRW_Variant>(1001, std::string("LibreCad")));
           text->extData.push_back(
-              std::make_shared<DRW_Variant>(1071, dint32{1}));
+              std::make_shared<DRW_Variant>(1071, std::int32_t{1}));
         }
                 if (t->getLineSpacingStyle() == RS_MTextData::AtLeast) {
 		    text->alignV = static_cast<DRW_Text::VAlign>(1);
@@ -5694,10 +10044,10 @@ void RS_FilterDXFRW::writeDimension(RS_Dimension* d) {
                 auto* dd = new DRW_DimAngular3p();
                 dim = dd;
                 dim->type = 5 + 32;
-                dd->setFirstLine(DRW_Coord(da->getDefinitionPoint().x, da->getDefinitionPoint().y, 0.0)); //13
-                dd->setSecondLine(DRW_Coord(da->getDefinitionPoint().x, da->getDefinitionPoint().y, 0.0)); //14
-                dd->SetVertexPoint(DRW_Coord(da->getDefinitionPoint().x, da->getDefinitionPoint().y, 0.0)); //15
-                dd->setDimPoint(DRW_Coord(da->getDefinitionPoint().x, da->getDefinitionPoint().y, 0.0)); //10
+                dd->setFirstLine  (DRW_Coord(da->getDefinitionPoint1().x, da->getDefinitionPoint1().y, 0.0)); //13
+                dd->setSecondLine (DRW_Coord(da->getDefinitionPoint2().x, da->getDefinitionPoint2().y, 0.0)); //14
+                dd->SetVertexPoint(DRW_Coord(da->getDefinitionPoint3().x, da->getDefinitionPoint3().y, 0.0)); //15
+                dd->setDimPoint   (DRW_Coord(da->getDefinitionPoint().x,  da->getDefinitionPoint().y,  0.0)); //10
             }
             else {
                 auto* dd = new DRW_DimAngular();
@@ -5724,6 +10074,33 @@ void RS_FilterDXFRW::writeDimension(RS_Dimension* d) {
             dd->setFirstLine(DRW_Coord(da->getFeaturePoint().x, da->getFeaturePoint().y, 0.0));
             break;
         }
+        case RS2::EntityDimArc: {
+            auto* da = static_cast<LC_DimArc*>(d);
+            auto* dd = new DRW_DimArc();
+            dim = dd;
+            RS_Vector centre = da->getCenter();
+            double r = da->getRadius();
+            double a0 = da->getStartAngle();
+            double a1 = da->getEndAngle();
+            double amid = (a0 + a1) / 2.0;
+            dd->setArcCenter  (DRW_Coord(centre.x, centre.y, 0.));
+            dd->setArcDefPoint(DRW_Coord(centre.x + r * std::cos(amid),
+                                          centre.y + r * std::sin(amid), 0.));
+            dd->setExtLine1   (DRW_Coord(centre.x + r * std::cos(a0),
+                                          centre.y + r * std::sin(a0), 0.));
+            dd->setExtLine2   (DRW_Coord(centre.x + r * std::cos(a1),
+                                          centre.y + r * std::sin(a1), 0.));
+            dd->arcStartAngle = a0;
+            dd->arcEndAngle   = a1;
+            dd->arcSymbol = da->getArcSymbol();
+            dd->isPartial = da->getIsPartial();
+            dd->hasLeader = da->getHasLeader();
+            if (da->getLeaderPt1().valid)
+                dd->setLeaderPt1(DRW_Coord(da->getLeaderPt1().x, da->getLeaderPt1().y, 0.));
+            if (da->getLeaderPt2().valid)
+                dd->leaderPt2 = DRW_Coord(da->getLeaderPt2().x, da->getLeaderPt2().y, 0.);
+            break;
+        }
         default: {
             //default to DimLinear
             auto dl = static_cast<RS_DimLinear*>(d);
@@ -5743,7 +10120,7 @@ void RS_FilterDXFRW::writeDimension(RS_Dimension* d) {
     dim->setStyle (d->getStyle().toUtf8().data());
     dim->setAlign (attachmentPoint);
     dim->setTextLineStyle(d->getLineSpacingStyle());
-    dim->setText (toDxfString(d->getText()).toUtf8().data());
+    dim->setText (toDxfString(d->getLabel(false)).toUtf8().data());
     dim->setTextLineFactor(d->getLineSpacingFactor());
     dim->setHDir(d->getHDir());
     dim->setFlipArrow1(d->isFlipArrow1());
@@ -5765,18 +10142,46 @@ void RS_FilterDXFRW::writeDimension(RS_Dimension* d) {
     delete dim;
 }
 
+void RS_FilterDXFRW::writeTolerance(LC_Tolerance* t) {
+    if (t == nullptr)
+        return;
+
+    DRW_Tolerance tol;
+    getEntityAttributes(&tol, t);
+    const LC_ToleranceData data = t->getData();
+    tol.insertionPoint = DRW_Coord(data.m_insertionPoint.x,
+                                   data.m_insertionPoint.y, 0.0);
+    tol.xAxisDirectionVector = DRW_Coord(data.m_directionVector.x,
+                                         data.m_directionVector.y, 0.0);
+    tol.extPoint = DRW_Coord(0.0, 0.0, 1.0);
+    tol.text = toDxfString(data.m_textCode).toUtf8().constData();
+    const QString style = data.m_dimStyleName.isEmpty()
+        ? m_dimStyle
+        : data.m_dimStyleName;
+    tol.dimStyleName = style.toUtf8().constData();
+
+    if (m_dwgW) {
+        m_dwgW->writeTolerance(&tol);
+        return;
+    }
+    if (m_dxfW) {
+        m_dxfW->writeTolerance(&tol);
+    }
+}
+
 /**
  * Writes the given leader entity to the file.
  */
 void RS_FilterDXFRW::writeLeader(RS_Leader* l) {
-    if (m_dwgW) return;
     if (l->count() <= 0) {
         RS_DEBUG->print(RS_Debug::D_WARNING, "dropping leader with no vertices");
+        return;
     }
 
     DRW_Leader leader;
     getEntityAttributes(&leader, l);
-    leader.style = "Standard";
+    const QString styleName = l->getData().m_styleName;
+    leader.style = (styleName.isEmpty() ? "Standard" : styleName.toUtf8().toStdString());
     leader.arrow = l->hasArrowHead();
     leader.leadertype = 0;
     leader.flag = 3;
@@ -5784,18 +10189,30 @@ void RS_FilterDXFRW::writeLeader(RS_Leader* l) {
     leader.hookflag = 0;
     leader.textheight = 1;
     leader.textwidth = 10;
-    leader.vertnum = l->count();
-	RS_Line* li =nullptr;
-    for(RS_Entity* v: lc::LC_ContainerTraverser{*l, RS2::ResolveNone}.entities()){
-        if (v->rtti()==RS2::EntityLine) {
+
+    RS_Line* li = nullptr;
+    for (RS_Entity* v: lc::LC_ContainerTraverser{*l, RS2::ResolveNone}.entities()) {
+        if (v->rtti() == RS2::EntityLine) {
             li = static_cast<RS_Line*>(v);
-			leader.vertexlist.push_back(std::make_shared<DRW_Coord>(li->getStartpoint().x, li->getStartpoint().y, 0.0));
+            leader.vertexlist.push_back(std::make_shared<DRW_Coord>(
+                li->getStartpoint().x, li->getStartpoint().y, 0.0));
         }
     }
-	if (li){
-		leader.vertexlist.push_back(std::make_shared<DRW_Coord>(li->getEndpoint().x, li->getEndpoint().y, 0.0));
-	}
+    if (li) {
+        leader.vertexlist.push_back(std::make_shared<DRW_Coord>(
+            li->getEndpoint().x, li->getEndpoint().y, 0.0));
+    }
 
+    if (leader.vertexlist.size() < 2) {
+        RS_DEBUG->print(RS_Debug::D_WARNING, "dropping leader with fewer than 2 vertices");
+        return;
+    }
+    leader.vertnum = static_cast<int>(leader.vertexlist.size());
+
+    if (m_dwgW) {
+        m_dwgW->writeLeader(&leader);
+        return;
+    }
     m_dxfW->writeLeader(&leader);
 }
 
@@ -5819,11 +10236,11 @@ makeDrwSplineFromSplinePoints(const LC_SplinePoints *sp) {
   if (d.useControlPoints && !d.controlPoints.empty()) {
     for (const auto &v : d.controlPoints)
       drw->controllist.push_back(std::make_shared<DRW_Coord>(v.x, v.y, 0.0));
-    drw->ncontrol = static_cast<dint32>(d.controlPoints.size());
+    drw->ncontrol = static_cast<std::int32_t>(d.controlPoints.size());
   } else {
     for (const auto &v : d.splinePoints)
       drw->fitlist.push_back(std::make_shared<DRW_Coord>(v.x, v.y, 0.0));
-    drw->nfit = static_cast<dint32>(d.splinePoints.size());
+    drw->nfit = static_cast<std::int32_t>(d.splinePoints.size());
   }
   return drw;
 }
@@ -5835,7 +10252,7 @@ makeDrwSplineFromSplinePoints(const LC_SplinePoints *sp) {
 std::shared_ptr<DRW_Spline> makeDrwSplineFromRSSpline(const RS_Spline *sp) {
   auto drw = std::make_shared<DRW_Spline>();
   const auto &sd = sp->getData();
-  drw->degree = static_cast<dint32>(sd.degree);
+  drw->degree = static_cast<std::int32_t>(sd.degree);
 
   const auto cps = sp->getControlPoints();
   const auto ws = sp->getWeights();
@@ -5853,12 +10270,12 @@ std::shared_ptr<DRW_Spline> makeDrwSplineFromRSSpline(const RS_Spline *sp) {
     drw->controllist.push_back(
         std::make_shared<DRW_Coord>(cps[i].x, cps[i].y, w));
   }
-  drw->ncontrol = static_cast<dint32>(cps.size());
+  drw->ncontrol = static_cast<std::int32_t>(cps.size());
   if (isRational) {
     drw->weightlist = ws;
   }
   drw->knotslist = sd.knotslist;
-  drw->nknots = static_cast<dint32>(sd.knotslist.size());
+  drw->nknots = static_cast<std::int32_t>(sd.knotslist.size());
   return drw;
 }
 
@@ -6092,17 +10509,12 @@ void RS_FilterDXFRW::writeWipeout(LC_Wipeout *w) {
 }
 
 /**
- * Serialize an LC_MLeader to DXF MULTILEADER.  Phase 9 emits the
- * entity-level scalar fields (override flags, leader type/color/weight,
- * landing/dogleg, attachment types, content type, etc.).  The full
- * AcDbMLeaderObjectContextData CONTEXT_DATA{} block (root → leader
- * line → point hierarchy + content branch) is NOT emitted yet — a
- * full faithful round-trip needs the control-flow group-code state
- * machine.  Read-side parser can recover what was written; consumers
- * that depend on geometric round-trip will need the follow-up.
+ * Serialize an LC_MLeader. DWG AC1024+ writes a native text-content
+ * MULTILEADER subset with context roots, leader lines, and text content.
+ * DXF keeps the older scalar/context writer. Unsupported complex content
+ * still falls back to visible LEADER/MTEXT geometry on DWG export.
  */
 void RS_FilterDXFRW::writeMLeader(LC_MLeader *m) {
-  if (m_dwgW) return;
   if (m == nullptr)
     return;
   DRW_MLeader e;
@@ -6119,6 +10531,135 @@ void RS_FilterDXFRW::writeMLeader(LC_MLeader *m) {
   e.doglegEnabled = d.doglegEnabled;
   e.styleContentType = d.contentType;
   e.scaleFactor = d.scaleFactor;
+  e.classVersion = 2;
+  e.context.roots.reserve(d.roots.size());
+  for (const auto &sourceRoot : d.roots) {
+    DRW_MLeaderRoot root;
+    root.isContentValid = sourceRoot.connectionPoint.valid;
+    root.unknown291 = sourceRoot.direction.valid;
+    root.connectionPoint = DRW_Coord(sourceRoot.connectionPoint.x,
+                                     sourceRoot.connectionPoint.y,
+                                     sourceRoot.connectionPoint.z);
+    root.direction = DRW_Coord(sourceRoot.direction.x, sourceRoot.direction.y,
+                               sourceRoot.direction.z);
+    root.leaderIndex = static_cast<std::int32_t>(e.context.roots.size());
+    root.landingDistance = sourceRoot.landingDistance;
+    root.attachmentDirection = static_cast<std::uint16_t>(sourceRoot.attachmentDirection);
+    root.leaderLines.reserve(sourceRoot.leaderLines.size());
+    for (const auto &sourceLine : sourceRoot.leaderLines) {
+      DRW_MLeaderLeaderLine line;
+      line.leaderLineIndex = sourceLine.leaderLineIndex;
+      line.leaderType = static_cast<std::uint16_t>(d.leaderType);
+      line.color = d.leaderColor;
+      line.lineWeight = e.lWeight;
+      line.arrowSize = d.arrowSize;
+      line.overrideFlags = 0;
+      line.points.reserve(sourceLine.points.size());
+      for (const RS_Vector &point : sourceLine.points)
+        line.points.emplace_back(point.x, point.y, point.z);
+      root.leaderLines.push_back(std::move(line));
+    }
+    e.context.roots.push_back(std::move(root));
+  }
+  e.context.overallScale = d.scaleFactor;
+  e.context.contentBasePoint = DRW_Coord(d.contentBasePoint.x,
+                                         d.contentBasePoint.y,
+                                         d.contentBasePoint.z);
+  e.context.textHeight = d.textHeight > 0.0 ? d.textHeight : 1.0;
+  e.context.arrowHeadSize = d.arrowSize;
+  e.context.landingGap = d.landingDistance;
+  e.context.hasTextContents = d.hasTextContents;
+  e.context.textLabel = toDxfString(d.textLabel).toUtf8().data();
+  e.context.textNormal = DRW_Coord(0.0, 0.0, 1.0);
+  const RS_Vector textLocation =
+      d.textLocation.valid ? d.textLocation : d.contentBasePoint;
+  e.context.textLocation = DRW_Coord(textLocation.x, textLocation.y,
+                                     textLocation.z);
+  e.context.textDirection = DRW_Coord(std::cos(d.textRotation),
+                                      std::sin(d.textRotation), 0.0);
+  e.context.textRotation = d.textRotation;
+  e.context.boundaryWidth = d.boundaryWidth;
+  e.context.boundaryHeight = d.boundaryHeight;
+  e.context.lineSpacingFactor = 1.0;
+  e.context.lineSpacingStyle = 1;
+  e.context.textColor = d.textColor;
+  e.context.alignment = 1;
+  e.context.flowDirection = 1;
+  e.context.bgScaleFactor = 1.5;
+  e.context.basePoint = DRW_Coord(d.basePoint.x, d.basePoint.y, d.basePoint.z);
+  e.context.baseDirection = DRW_Coord(1.0, 0.0, 0.0);
+  e.context.baseVertical = DRW_Coord(0.0, 1.0, 0.0);
+  e.styleHandle.ref = d.dwgStyleHandle;
+  e.leaderLineTypeHandle.ref = d.dwgLeaderLineTypeHandle;
+  e.arrowHeadHandle.ref = d.dwgArrowHeadHandle;
+  e.styleTextStyleHandle.ref = d.dwgTextStyleHandle;
+  e.styleBlockHandle.ref = d.dwgBlockHandle;
+  e.context.textStyleHandle.ref = d.dwgTextStyleHandle;
+  e.context.blockTableRecordHandle.ref = d.dwgBlockHandle;
+  for (DRW_MLeaderRoot &root : e.context.roots) {
+    for (DRW_MLeaderLeaderLine &line : root.leaderLines) {
+      line.lineTypeHandle.ref = d.dwgLeaderLineTypeHandle;
+      line.arrowHandle.ref = d.dwgArrowHeadHandle;
+    }
+  }
+  if (m_dwgW) {
+    if (m_version >= 1024 && d.hasTextContents && !d.textLabel.isEmpty()
+        && m_dwgW->writeMLeader(&e)) {
+      return;
+    }
+    if (d.hasBlockContents) {
+      RS_DEBUG->print(RS_Debug::D_WARNING,
+                      "MLEADER block content is exported as leader fallback geometry; native block-content DWG writing is not implemented");
+    }
+    bool wroteGeometry = false;
+    for (const auto &root : d.roots) {
+      for (const auto &line : root.leaderLines) {
+        if (line.points.size() < 2)
+          continue;
+        DRW_Leader leader;
+        getEntityAttributes(&leader, m);
+        leader.style = d.styleName.isEmpty() ? "Standard" : d.styleName.toStdString();
+        leader.arrow = true;
+        leader.leadertype = d.leaderType == 2 ? 1 : 0;
+        leader.flag = 3;
+        leader.hookline = 0;
+        leader.hookflag = 0;
+        leader.textheight = d.textHeight > 0.0 ? d.textHeight : 1.0;
+        leader.textwidth = d.boundaryWidth > 0.0 ? d.boundaryWidth : 10.0;
+        leader.vertnum = static_cast<int>(line.points.size());
+        leader.vertexlist.reserve(line.points.size());
+        for (const RS_Vector &point : line.points) {
+          leader.vertexlist.push_back(
+              std::make_shared<DRW_Coord>(point.x, point.y, point.z));
+        }
+        m_dwgW->writeLeader(&leader);
+        wroteGeometry = true;
+      }
+    }
+    if (d.hasTextContents && !d.textLabel.isEmpty()) {
+      DRW_MText text;
+      getEntityAttributes(&text, m);
+      const RS_Vector insertion =
+          d.textLocation.valid ? d.textLocation : d.contentBasePoint;
+      text.basePoint.x = insertion.x;
+      text.basePoint.y = insertion.y;
+      text.basePoint.z = insertion.z;
+      text.height = d.textHeight > 0.0 ? d.textHeight : 1.0;
+      text.angle = d.textRotation * 180.0 / M_PI;
+      text.style =
+          d.textStyleName.isEmpty() ? "Standard" : d.textStyleName.toStdString();
+      text.text = toDxfString(d.textLabel).toUtf8().data();
+      text.widthscale = d.boundaryWidth;
+      text.interlin = 1.0;
+      m_dwgW->writeMText(&text);
+      wroteGeometry = true;
+    }
+    if (!wroteGeometry) {
+      RS_DEBUG->print(RS_Debug::D_WARNING,
+                      "dropping MLEADER with no writable leader/text geometry");
+    }
+    return;
+  }
   m_dxfW->writeMultiLeader(&e);
 }
 
@@ -6195,7 +10736,13 @@ void RS_FilterDXFRW::setEntityAttributes(RS_Entity* entity,
     RS_Pen pen;
     pen.setColor(Qt::black);
     pen.setLineType(RS2::SolidLine);
-    QString layName = toNativeString(QString::fromUtf8(attrib->layer.c_str()));
+    // A layer name is an identifier, NOT MTEXT content: do NOT run it through
+    // toNativeString (which caret-decodes ^X, expands \P/%%c, strips font
+    // tags). Decoding here corrupts names that legitimately contain '^' and,
+    // worse, desyncs the entity from its layer record — addLayer() below
+    // stores the RAW name (lay.name = attrib->layer), so a decoded layName
+    // would never match it. Use the verbatim UTF-8 name on both paths.
+    QString layName = QString::fromUtf8(attrib->layer.c_str());
 
     // Layer: add layer in case it doesn't exist:
     if (!m_graphic->findLayer(layName)) {
@@ -6256,6 +10803,14 @@ void RS_FilterDXFRW::setEntityAttributes(RS_Entity* entity,
     entity->setVisualStyleHandles(attrib->fullVisualStyleHandle,
                                   attrib->faceVisualStyleHandle,
                                   attrib->edgeVisualStyleHandle);
+    // Visibility (DXF code 60 / DWG invisible bit) — import side of the
+    // two-way fix; getEntityAttributes now exports it. (write-review P3 #11)
+    entity->setVisible(attrib->visible);
+
+    // Source DXF/DWG handle (code 5). Lets the writer build an old->new
+    // handle map for refs that target model entities (F3a; GROUP code-340).
+    if (attrib->handle != DRW::NoHandle)
+      entity->setSourceHandle(attrib->handle);
 
     // Preserve any XDATA / EED that came in with the entity. Stored
     // verbatim on RS_Entity so a later getEntityAttributes() can spit
@@ -6273,6 +10828,13 @@ void RS_FilterDXFRW::setEntityAttributes(RS_Entity* entity,
  */
 void RS_FilterDXFRW::getEntityAttributes(DRW_Entity* ent, const RS_Entity* entity) {
 //DRW_Entity RS_FilterDXFRW::getEntityAttributes(RS_Entity* /*entity*/) {
+
+    // F3: DXF export seeds ent->handle with the entity's SOURCE handle as a
+    // source->minted remap key (used to resolve GROUP 340 members). DWG export
+    // must leave the handle unset so the DWG writer can allocate from its single
+    // table/entity/object namespace; otherwise imported source handles can
+    // collide with deferred table records already reserved by this writer.
+    ent->handle = m_dwgW ? 0 : entity->sourceHandle();
 
     // Layer:
     RS_Layer* layer = entity->getLayer();
@@ -6312,6 +10874,12 @@ void RS_FilterDXFRW::getEntityAttributes(DRW_Entity* ent, const RS_Entity* entit
       int alphaByte = static_cast<int>(pen.getAlpha() * 255.0f + 0.5f);
       ent->transparency = (0x03 << 24) | (alphaByte & 0xFF);
     }
+
+    // Visibility (DXF code 60 / DWG invisible bit). The writer honors
+    // ent->visible (writeEntity emits 60 when invisible; encodeDwgCommon sets
+    // the DWG bit), but this boundary never populated it, so an invisible
+    // entity round-tripped as visible. (write-review P3 #11)
+    ent->visible = entity->isVisible();
 
     // Passive metadata sidecars — emit only when overridden.
     if (entity->materialHandle() != 0)
@@ -6452,7 +11020,48 @@ void RS_FilterDXFRW::add3dFace(const DRW_3Dface& data) {
     polyline->addVertex(v3, 0.0);
     polyline->addVertex(v4, 0.0);
 
+    // F2 sidecar: the RS_Polyline drops Z + the invisible-edge flags, so store
+    // all 4 corners with Z and the flag (code 70) for native 3DFACE rebuild.
+    std::vector<std::shared_ptr<DRW_Variant>> payload;
+    payload.push_back(std::make_shared<DRW_Variant>(
+        1010, DRW_Coord(data.basePoint.x, data.basePoint.y, data.basePoint.z)));
+    payload.push_back(std::make_shared<DRW_Variant>(
+        1011, DRW_Coord(data.secPoint.x, data.secPoint.y, data.secPoint.z)));
+    payload.push_back(std::make_shared<DRW_Variant>(
+        1012, DRW_Coord(data.thirdPoint.x, data.thirdPoint.y, data.thirdPoint.z)));
+    payload.push_back(std::make_shared<DRW_Variant>(
+        1013, DRW_Coord(data.fourPoint.x, data.fourPoint.y, data.fourPoint.z)));
+    payload.push_back(std::make_shared<DRW_Variant>(
+        1070, std::int32_t{data.invisibleflag}));
+    appendTypeSidecar(polyline, k3dFaceMarker, std::move(payload));
+
     m_currentContainer->addEntity(polyline);
+}
+
+void RS_FilterDXFRW::addMesh(const DRW_Mesh& data) {
+    RS_DEBUG->print("RS_FilterDXFRW::addMesh: %zu vertices, %zu faces",
+                    data.vertices.size(), data.faces.size());
+    // Render the base-cage faces as closed polylines (LibreCAD is 2D; Z dropped,
+    // matching add3dFace). Each face is a list of vertex indices into vertices[].
+    for (const auto& face : data.faces) {
+        if (face.size() < 2)
+            continue;
+        RS_PolylineData d(RS_Vector(false), RS_Vector(false), /*closed=*/true);
+        auto *polyline = new RS_Polyline(m_currentContainer, d);
+        setEntityAttributes(polyline, &data);
+        bool any = false;
+        for (std::int32_t idx : face) {
+            if (idx < 0 || static_cast<size_t>(idx) >= data.vertices.size())
+                continue;
+            const DRW_Coord& v = data.vertices[static_cast<size_t>(idx)];
+            polyline->addVertex(RS_Vector(v.x, v.y), 0.0);
+            any = true;
+        }
+        if (any)
+            m_currentContainer->addEntity(polyline);
+        else
+            delete polyline;
+    }
 }
 
 void RS_FilterDXFRW::addComment(const char*) {
@@ -6795,87 +11404,100 @@ DRW_LW_Conv::lineWidth RS_FilterDXFRW::widthToNumber(RS2::LineWidth width) {
  * - %%%p for a plus/minus sign
  */
 QString RS_FilterDXFRW::toDxfString(const QString& str) {
-    QString res = "";
-    int j=0;
-    for (int i=0; i<str.length(); ++i) {
-        int c = str.at(i).unicode();
-        if (c>175 || c<11){
-            res.append(str.mid(j,i-j));
-            j=i;
+    QString res;
+    res.reserve(str.length() + 16);
 
-            switch (c) {
-                case 0x0A:
-                    res += "\\P";
-                    break;
-                // diameter:
-                case 0x2205: //RLZ: Empty_set, diameter is 0x2300 need to add in all fonts
-                case 0x2300:
-                    res += "%%C";
-                    break;
-                // degree:
-                case 0x00B0:
-                    res += "%%D";
-                    break;
-                // plus/minus
-                case 0x00B1:
-                    res += "%%P";
-                    break;
-                default:
-                    j--;
-                    break;
-            }
-            j++;
+    for (const QChar& qchar : str) {
+        switch (qchar.unicode()) {
+        case 0x0A:
+            res.append(uR"(\P)");
+            break;
+        case 0x2205:
+        case 0x2300:
+            res.append(u"%%C");
+            break;
+        case 0x00B0:
+            res.append(u"%%D");
+            break;
+        case 0x00B1:
+            res.append(u"%%P");
+            break;
+        default:
+            res.append(qchar);
+            break;
         }
     }
-    res.append(str.mid(j));
     return res;
 }
+
 
 /**
  * Converts a DXF encoded string into a native Unicode string.
  */
 QString RS_FilterDXFRW::toNativeString(const QString& data) {
     QString res;
+    const int n = data.length();
 
     // Ignore font tags:
     int j = 0;
-    for (int i=0; i<data.length(); ++i) {
-        if (data.at(i).unicode() == 0x7B){ //is '{' ?
-            if (data.at(i+1).unicode() == 0x5c){ //and is "{\" ?
-                //check known codes
-                if ( (data.at(i+2).unicode() == 0x66) || //is "\f" ?
-                     (data.at(i+2).unicode() == 0x48) || //is "\H" ?
-                     (data.at(i+2).unicode() == 0x43)    //is "\C" ?
-                   ) {
-                    //found tag, append parsed part
-                    res.append(data.mid(j,i-j));
-                    qsizetype pos = data.indexOf(QChar(0x7D), i+3);//find '}'
-                    if (pos <0) break; //'}' not found
-                    QString tmp = data.mid(i+1, pos-i-1);
-                    do {
-                        tmp = tmp.remove(0,tmp.indexOf(QChar{0x3B}, 0)+1 );//remove to ';'
-                    } while(tmp.startsWith("\\f") || tmp.startsWith("\\H") || tmp.startsWith("\\C"));
-                    res.append(tmp);
-                    i = j = pos;
-                    ++j;
-                }
-            }
-        }
+    for (int i=0; i<n; ++i) {
+        // Need at least "{\X" available — bounds-check before any at(i+N).
+        if (i + 2 >= n) break;
+        if (data.at(i).unicode() != 0x7B) continue; //is '{' ?
+        if (data.at(i+1).unicode() != 0x5c) continue; //and is "{\" ?
+        const ushort tagChar = data.at(i+2).unicode();
+        if (tagChar != 0x66 && tagChar != 0x48 && tagChar != 0x43) continue; // "\f" "\H" "\C"
+
+        //found tag, append parsed part
+        res.append(data.mid(j, i-j));
+        qsizetype pos = data.indexOf(QChar(0x7D), i+3); //find '}'
+        if (pos < 0) break; //'}' not found
+        QString tmp = data.mid(i+1, pos-i-1);
+        do {
+            qsizetype semi = tmp.indexOf(QChar(0x3B), 0); //find ';'
+            if (semi < 0) break; // malformed: no ';' — bail to avoid infinite loop
+            tmp.remove(0, semi + 1);
+        } while (tmp.startsWith(QLatin1StringView("\\f"))
+              || tmp.startsWith(QLatin1StringView("\\H"))
+              || tmp.startsWith(QLatin1StringView("\\C")));
+        res.append(tmp);
+        i = pos;
+        j = pos + 1;
     }
     res.append(data.mid(j));
 
-    // Line feed:
-    res = res.replace(QRegularExpression("\\\\P"), "\n");
-    // Space:
-    res = res.replace(QRegularExpression("\\\\~"), " ");
-    // Tab:
-    res = res.replace(QRegularExpression("\\^I"), "    ");//RLZ: change 4 spaces for \t when mtext have support for tab
-    // diameter:
-    res = res.replace(QRegularExpression("%%[cC]"), QChar(0x2300));//RLZ: Empty_set is 0x2205, diameter is 0x2300 need to add in all fonts
-    // degree:
-    res = res.replace(QRegularExpression("%%[dD]"), QChar(0x00B0));
-    // plus/minus
-    res = res.replace(QRegularExpression("%%[pP]"), QChar(0x00B1));
+    // AutoCAD caret convention: ^X → chr((X-64) mod 126); ^Space → '^'
+    // literal. Mirrors ezdxf tools/text.py:501. Run BEFORE the \P/\~ pass
+    // so ^J (LF), ^M (CR), ^I (TAB) decode first; also subsumes the prior
+    // hard-coded "^I → 4 spaces" rule with the general formula (^I → TAB).
+    QString caretDecoded;
+    caretDecoded.reserve(res.size());
+    for (int k = 0; k < res.size(); ++k) {
+        const QChar ch = res.at(k);
+        if (ch.unicode() == 0x5E /* '^' */ && k + 1 < res.size()) {
+            const QChar nx = res.at(k + 1);
+            if (nx.unicode() == 0x20) {
+                caretDecoded.append(QChar(0x5E)); // ^space → literal ^
+            } else {
+                const int code = (static_cast<int>(nx.unicode()) - 64) % 126;
+                caretDecoded.append(QChar(static_cast<ushort>(code < 0 ? code + 126 : code)));
+            }
+            ++k; // consume the X
+        } else {
+            caretDecoded.append(ch);
+        }
+    }
+    res = std::move(caretDecoded);
+
+    // Replace literal escape sequences. Each replace() mutates in place;
+    // the prior `res = res.replace(...)` was an unnecessary self-assignment.
+    res.replace(QLatin1StringView("\\P"), QLatin1StringView("\n"));   // line feed
+    res.replace(QLatin1StringView("\\~"), QLatin1StringView(" "));    // space
+    // diameter / degree / plus-minus — case-insensitive match of %%c / %%C etc.
+    // (RLZ: Empty_set is 0x2205, diameter is 0x2300 — needs to be in all fonts.)
+    res.replace(QLatin1StringView("%%c"), QStringLiteral("⌀"), Qt::CaseInsensitive);
+    res.replace(QLatin1StringView("%%d"), QStringLiteral("°"), Qt::CaseInsensitive);
+    res.replace(QLatin1StringView("%%p"), QStringLiteral("±"), Qt::CaseInsensitive);
 
     return res;
 }
@@ -7548,7 +12170,7 @@ LC_DimStyle *RS_FilterDXFRW::createDimStyle(const DRW_Dimstyle &s) {
     return result;
 }
 
-bool RS_FilterDXFRW::resolveBlockNameByHandle(duint32 blockHandle, QString& blockName) const {
+bool RS_FilterDXFRW::resolveBlockNameByHandle(std::uint32_t blockHandle, QString& blockName) const {
     std::string name = m_dxfR->getReadingContext()->resolveBlockRecordName(blockHandle);
     if (name.empty()) {
         return false;

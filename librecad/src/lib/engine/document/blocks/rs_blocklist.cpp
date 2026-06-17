@@ -214,8 +214,11 @@ RS_Block* RS_BlockList::find(const QString& name) {
     }
 	// Todo : reduce this from O(N) to O(log(N)) complexity based on sorted list or hash
 	//DFS
+    // NFC-normalize both sides so a block round-tripped through tools that
+    // emit decomposed (NFD) Unicode still matches a composed (NFC) lookup.
+    const QString k = name.normalized(QString::NormalizationForm_C);
 	for(RS_Block* b: m_blocks) {
-		if (b->getName()==name) {
+		if (b->getName().normalized(QString::NormalizationForm_C) == k) {
 			return b;
 		}
 	}
@@ -233,8 +236,10 @@ RS_Block* RS_BlockList::findCaseInsensitive(const QString& name) const {
     }
     // Todo : reduce this from O(N) to O(log(N)) complexity based on sorted list or hash
     //DFS
+    const QString k = name.normalized(QString::NormalizationForm_C);
     for(RS_Block* b: m_blocks) {
-        if (b->getName().compare(name, Qt::CaseInsensitive) == 0) {
+        if (b->getName().normalized(QString::NormalizationForm_C)
+                .compare(k, Qt::CaseInsensitive) == 0) {
             return b;
         }
     }

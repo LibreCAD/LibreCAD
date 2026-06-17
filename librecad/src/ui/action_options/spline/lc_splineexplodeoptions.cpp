@@ -34,7 +34,7 @@ LC_SplineExplodeOptions::LC_SplineExplodeOptions()
     connect(ui->cbLayer, &QCheckBox::toggled, this, &LC_SplineExplodeOptions::cbUseCurrentLayerClicked);
     connect(ui->cbCustomSegmentsCount, &QCheckBox::toggled, this, &LC_SplineExplodeOptions::cbCustomSegmentCountClicked);
     connect(ui->cbPolyline, &QCheckBox::toggled, this, &LC_SplineExplodeOptions::cbPolylineClicked);
-    connect(ui->sbSegmentsCount, &QSpinBox::valueChanged, this, &LC_SplineExplodeOptions::sbSegmentsCountValueChanged);
+    connect(ui->sbSegmentsCount, QOverload<int>::of(&QSpinBox::valueChanged), this, &LC_SplineExplodeOptions::sbSegmentsCountValueChanged);
 }
 
 LC_SplineExplodeOptions::~LC_SplineExplodeOptions(){

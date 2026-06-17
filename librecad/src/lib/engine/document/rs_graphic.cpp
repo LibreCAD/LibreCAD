@@ -247,6 +247,7 @@ void RS_Graphic::removeLayer(RS_Layer* layer) {
  */
 void RS_Graphic::newDoc() {
     RS_DEBUG->print("RS_Graphic::newDoc");
+    m_dwgAdvancedMetadata.clear();
     clear();
     clearLayers();
     clearBlocks();
@@ -828,6 +829,86 @@ void RS_Graphic::setPagesNum(int horiz, int vert) {
         pagesNumH = horiz;
     if (vert > 0)
         pagesNumV = vert;
+}
+
+// ---- Paper-space layouts (PR 9) -----------------------------------------
+
+const LC_Layout* RS_Graphic::findLayout(std::uint32_t handle) const {
+    if (handle == 0) {
+        return nullptr;
+    }
+    const auto& records = m_dwgAdvancedMetadata.layouts();
+    for (const auto& record : records) {
+        if (record.handle == handle) {
+            return &record;
+        }
+    }
+    return nullptr;
+}
+
+void RS_Graphic::setActiveLayoutHandle(std::uint32_t handle) {
+    if (m_activeLayoutHandle == handle) {
+        return;
+    }
+    m_activeLayoutHandle = handle;
+    setModified(true);
+}
+
+bool RS_Graphic::setLayoutMargins(std::uint32_t handle,
+                                  double left, double top,
+                                  double right, double bottom) {
+    if (handle == 0) {
+        return false;
+    }
+    auto& records = m_dwgAdvancedMetadata.layouts();
+    for (auto& record : records) {
+        if (record.handle != handle) {
+            continue;
+        }
+        bool changed = false;
+        if (left >= 0.0 && record.marginLeft != left) {
+            record.marginLeft = left;
+            changed = true;
+        }
+        if (top >= 0.0 && record.marginTop != top) {
+            record.marginTop = top;
+            changed = true;
+        }
+        if (right >= 0.0 && record.marginRight != right) {
+            record.marginRight = right;
+            changed = true;
+        }
+        if (bottom >= 0.0 && record.marginBottom != bottom) {
+            record.marginBottom = bottom;
+            changed = true;
+        }
+        if (changed) {
+            setModified(true);
+        }
+        return true;
+    }
+    return false;
+}
+
+std::array<double, 4> RS_Graphic::activeLayoutMargins() const {
+    if (m_activeLayoutHandle != 0) {
+        if (const LC_Layout* match = findLayout(m_activeLayoutHandle)) {
+            return {match->marginLeft, match->marginTop,
+                    match->marginRight, match->marginBottom};
+        }
+    }
+    return {marginLeft, marginTop, marginRight, marginBottom};
+}
+
+void RS_Graphic::setActiveLayoutMargins(double left, double top,
+                                        double right, double bottom) {
+    if (m_activeLayoutHandle != 0
+        && setLayoutMargins(m_activeLayoutHandle, left, top, right, bottom)) {
+        return;
+    }
+    // Fall through to document-singleton margins for DXF / no-layout
+    // documents and for active handles that don't match a stored record.
+    setMargins(left, top, right, bottom);
 }
 
 void RS_Graphic::setPagesNum(const QString &horizXvert) {

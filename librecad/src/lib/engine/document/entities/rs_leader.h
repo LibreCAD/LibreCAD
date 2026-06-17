@@ -104,6 +104,7 @@ public:
 protected:
     RS_LeaderData data;
     bool empty = true;
+    RS_Vector m_lastVertex{false};
     void doUpdateDim() override;
 };
 

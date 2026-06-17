@@ -30,6 +30,7 @@
 
 #include <memory>
 
+#include <QIcon>
 #include <QWidget>
 #include "lc_graphicviewportlistener.h"
 #include "rs.h"

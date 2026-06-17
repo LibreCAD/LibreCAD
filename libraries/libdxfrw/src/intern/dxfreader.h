@@ -23,6 +23,7 @@ public:
         INT64,
         DOUBLE,
         BOOL,
+        BINARY,
         INVALID
     };
     enum TYPE type;
@@ -31,7 +32,7 @@ public:
         filestr = stream;
         type = INVALID;
     }
-    virtual ~dxfReader(){}
+    virtual ~dxfReader() = default;
     bool readRec(int *code);
 
     std::string getString() {return strData;}
@@ -74,7 +75,7 @@ private:
 class dxfReaderBinary : public dxfReader {
 public:
     dxfReaderBinary(std::istream *stream):dxfReader(stream){skip = false; }
-    virtual ~dxfReaderBinary() {}
+    virtual ~dxfReaderBinary() = default;
     virtual bool readCode(int *code);
     virtual bool readString(std::string *text);
     virtual bool readString();
@@ -89,7 +90,7 @@ public:
 class dxfReaderAscii : public dxfReader {
 public:
     dxfReaderAscii(std::istream *stream):dxfReader(stream){skip = true; }
-    virtual ~dxfReaderAscii(){}
+    virtual ~dxfReaderAscii() = default;
     virtual bool readCode(int *code);
     virtual bool readString(std::string *text);
     virtual bool readString();

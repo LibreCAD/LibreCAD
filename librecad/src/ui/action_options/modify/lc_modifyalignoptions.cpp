@@ -38,7 +38,7 @@ LC_ModifyAlignOptions::LC_ModifyAlignOptions()
     connect(ui->tbHalignMiddle, &QToolButton::toggled, this, &LC_ModifyAlignOptions::onHAlignChanged);
     connect(ui->tbHalignRight, &QToolButton::toggled, this, &LC_ModifyAlignOptions::onHAlignChanged);
     connect(ui->tbHAlignNone, &QToolButton::toggled, this, &LC_ModifyAlignOptions::onHAlignChanged);
-    connect(ui->cbAlignTo, &QComboBox::currentIndexChanged, this, &LC_ModifyAlignOptions::onAlignToIndexChanged);
+    connect(ui->cbAlignTo, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &LC_ModifyAlignOptions::onAlignToIndexChanged);
 }
 
 LC_ModifyAlignOptions::~LC_ModifyAlignOptions(){

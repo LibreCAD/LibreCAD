@@ -34,8 +34,8 @@ LC_PasteTransformOptions::LC_PasteTransformOptions()
     connect(ui->leArraySpacingY, &QLineEdit::editingFinished, this, &LC_PasteTransformOptions::onArraySpacingYEditingFinished);
     connect(ui->leArrayAngle, &QLineEdit::editingFinished, this, &LC_PasteTransformOptions::onArrayAngleEditingFinished);
     connect(ui->cbArray, &QCheckBox::clicked, this, &LC_PasteTransformOptions::onArrayClicked);
-    connect(ui->sbArrayX, &QSpinBox::valueChanged, this, &LC_PasteTransformOptions::onArrayXCountChanged);
-    connect(ui->sbArrayY, &QSpinBox::valueChanged, this, &LC_PasteTransformOptions::onArrayYCountChanged);
+    connect(ui->sbArrayX, QOverload<int>::of(&QSpinBox::valueChanged), this, &LC_PasteTransformOptions::onArrayXCountChanged);
+    connect(ui->sbArrayY, QOverload<int>::of(&QSpinBox::valueChanged), this, &LC_PasteTransformOptions::onArrayYCountChanged);
     connect(ui->cbSameAngles, &QCheckBox::clicked, this, &LC_PasteTransformOptions::cbSameAnglesClicked);
 
     pickDistanceSetup("spacingX", ui->tbPickArraySpacingX, ui->leArraySpacingX);

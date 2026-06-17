@@ -1092,8 +1092,12 @@ RS_Vector RS_Snapper::doSnapToAngle(const RS_Vector &currentCoord, const RS_Vect
 }
 
 RS_Vector RS_Snapper::toGraph(const QMouseEvent* e) const{
-     const QPointF &pointF = e->position();
-     RS_Vector result = m_viewport->toWorldFromUi(pointF.x(), pointF.y());
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    const QPointF pointF = e->position();
+#else
+    const QPointF pointF = e->localPos();
+#endif
+    RS_Vector result = m_viewport->toWorldFromUi(pointF.x(), pointF.y());
     return result;
 }
 

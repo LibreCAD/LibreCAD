@@ -38,7 +38,7 @@ LC_StarOptions::LC_StarOptions() :
     connect(ui->cbRadiusOuter, &QCheckBox::clicked, this, &LC_StarOptions::onRadiusOuterClicked);
     connect(ui->leRadusOuter, &QLineEdit::editingFinished, this, &LC_StarOptions::onRadiusOuterEditingFinished);
     connect(ui->cbPolyline, &QCheckBox::clicked, this, &LC_StarOptions::onPolylineClicked);
-    connect(ui->sbNumber, &QSpinBox::valueChanged, this, &LC_StarOptions::onNumberChanged);
+    connect(ui->sbNumber, QOverload<int>::of(&QSpinBox::valueChanged), this, &LC_StarOptions::onNumberChanged);
     pickDistanceSetup("radiusOuter", ui->tbPickRadiusOuter, ui->leRadusOuter);
     pickDistanceSetup("radiusInner", ui->tbPickRadiusInner, ui->leRadiusInner);
 }

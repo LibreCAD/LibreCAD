@@ -34,7 +34,7 @@ QG_LinePolygonOptions::QG_LinePolygonOptions()
     : LC_ActionOptionsWidgetBase(RS2::ActionNone, "Draw", "LinePolygon")
     , ui(new Ui::Ui_LinePolygonOptions{}){
     ui->setupUi(this);
-    connect(ui->sbNumber, &QSpinBox::valueChanged, this, &QG_LinePolygonOptions::onNumberValueChanged);
+    connect(ui->sbNumber, QOverload<int>::of(&QSpinBox::valueChanged), this, &QG_LinePolygonOptions::onNumberValueChanged);
     connect(ui->cbPolyline, &QCheckBox::toggled, this, &QG_LinePolygonOptions::onPolylineToggled);
     connect(ui->cbRadius, &QCheckBox::toggled, this, &QG_LinePolygonOptions::onRadiusToggled);
     connect(ui->cbVertexToVertex, &QCheckBox::toggled, this, &QG_LinePolygonOptions::onVertexToggled);

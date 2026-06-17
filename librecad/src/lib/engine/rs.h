@@ -113,7 +113,8 @@ namespace RS2 {
         FormatDXFRW14,           /**< DXF format. v14. */
         FormatDXFRW12,           /**< DXF format. v12. */
 #ifdef DWGSUPPORT
-        FormatDWG,           /**< DWG format. */
+        FormatDWG,           /**< DWG format (R2000, AC1015). */
+        FormatDWG2004,       /**< DWG format (R2004, AC1018). */
 #endif
         FormatLFF,           /**< LibreCAD Font File format. */
         FormatCXF,           /**< CAM Expert Font format. */
@@ -125,11 +126,8 @@ namespace RS2 {
         Entity types returned by the rtti() method.
 
         NOTE: Dated 2 January, 2022, by Melwyn Francis Carlo:
-              If adding newer 'EntityDim's to the EntityType enumeration, 
-              then make sure that it is added between 'EntityDimAligned' and 
-              'EntityDimLeader'. If you do not wish to do so, then update the 
-              'RS_ActionDefault::highlightHoveredEntities' function at the 
-              line starting 'if ((entity->rtti() >= EntityDimAligned) ...'.
+              If adding newer 'EntityDim's to the EntityType enumeration,
+              update isDimensionalEntity() below.
     */
     enum EntityType : unsigned {
       EntityUnknown,          /**< Unknown */
@@ -180,7 +178,19 @@ namespace RS2 {
     };
 
     inline bool isDimensionalEntity(EntityType type)  {
-        return (type >= EntityDimAligned) && (type <= EntityDimLeader);
+        switch (type) {
+            case EntityDimAligned:
+            case EntityDimLinear:
+            case EntityDimRadial:
+            case EntityDimDiametric:
+            case EntityDimAngular:
+            case EntityDimArc:
+            case EntityDimOrdinate:
+            case EntityDimLeader:
+                return true;
+            default:
+                return false;
+        }
     }
 
     inline bool isTextEntity(EntityType type) {

@@ -1432,6 +1432,7 @@ void RS_FilterDXF::writeVariables(DL_WriterA& dw) {
     while (it != vars.end()) {
         // exclude variables that are not known to DXF 12:
         if (!DL_Dxf::checkVariable(it.key().toLatin1(), dxf.getVersion())) {
+            ++it;
             continue;
         }
 

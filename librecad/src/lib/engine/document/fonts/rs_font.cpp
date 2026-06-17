@@ -28,6 +28,11 @@
 
 #include <QRegularExpression>
 #include <QTextStream>
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#include <QStringConverter>
+#else
+#include <QTextCodec>
+#endif
 #include "rs_font.h"
 
 #include <QFileInfo>
@@ -74,6 +79,21 @@ std::pair<QString, bool> extractFontChar(const QString& line)
     }
     char32_t ucsCode{code};
     return {QString::fromUcs4(&ucsCode, 1), true};
+}
+
+void setTextStreamEncoding(QTextStream& stream, const QString& encoding)
+{
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    const auto qEncoding = QStringConverter::encodingForName(encoding.toLatin1());
+    if (qEncoding) {
+        stream.setEncoding(*qEncoding);
+    }
+#else
+    QTextCodec* codec = QTextCodec::codecForName(encoding.toLatin1());
+    if (codec != nullptr) {
+        stream.setCodec(codec);
+    }
+#endif
 }
 }
 
@@ -215,7 +235,7 @@ void RS_Font::readCXF(const QString& path) {
             } else if (identifier.toLower()=="name") {
                 names.append(value);
             } else if (identifier.toLower()=="encoding") {
-                ts.setEncoding(QStringConverter::encodingForName(value.toLatin1()).value());
+                setTextStreamEncoding(ts, value);
                 encoding = value;
             }
         }
@@ -237,12 +257,12 @@ void RS_Font::readCXF(const QString& path) {
             else if (line.indexOf(']')>=3) {
                 int i = line.indexOf(']');
                 QString mid = line.mid(1, i-1);
-                ch = QString::fromUtf8(mid.toLatin1()).first(1);
+                ch = QString::fromUtf8(mid.toLatin1()).left(1);
             }
 
             // read normal ascii character:
             else {
-                ch = line.first(1);
+                ch = line.left(1);
             }
 
             // create new letter:
@@ -359,7 +379,7 @@ void RS_Font::readLFF(const QString& path) {
             } else if (identifier.toLower()=="license") {
                 fileLicense = value;
             } else if (identifier.toLower()=="encoding") {
-                ts.setEncoding(QStringConverter::encodingForName(value.toLatin1()).value());
+                setTextStreamEncoding(ts, value);
                 encoding = value;
             } else if (identifier.toLower()=="created") {
                 fileCreate = value;

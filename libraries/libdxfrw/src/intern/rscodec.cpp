@@ -98,7 +98,7 @@ void RScodec::RSgen_poly() {
         gg[i] = 1 ;
         for (j=i-1; j>0; j--)
             if (gg[j] != 0) {
-                if (gg[j]<0) { isOk=false; return; }
+                if (gg[j]<0 || gg[j]>nn) { isOk=false; return; }  // bound both ends of index_of[]
                 tmp = (index_of[gg[j]]+i)%nn;
                 if (tmp<0) { isOk=false; return; }
                 gg[j] = gg[j-1]^ alpha_to[tmp] ;

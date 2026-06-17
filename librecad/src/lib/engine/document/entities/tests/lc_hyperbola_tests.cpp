@@ -88,7 +88,7 @@ TEST_CASE("Hyperbola ↔ DRW_Spline round-trip validation",
 
     // Basic spline structure checks
     REQUIRE(spl.degree == 2);
-    REQUIRE(spl.flags == 8);
+    REQUIRE(spl.flags == (0x08 | 0x04));
     REQUIRE(spl.controllist.size() == 3);
     REQUIRE(spl.weightlist.size() == 3);
     REQUIRE(spl.knotslist.size() == 6);
@@ -199,7 +199,7 @@ TEST_CASE("Hyperbola ↔ DRW_Spline round-trip validation",
 
     // === Validate spline structure ===
     REQUIRE(spl.degree == 2);
-    REQUIRE(spl.flags == 8);
+    REQUIRE(spl.flags == (0x08 | 0x04));
     REQUIRE(spl.controllist.size() == 3);
     REQUIRE(spl.weightlist.size() == 3);
 

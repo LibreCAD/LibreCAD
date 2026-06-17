@@ -13,22 +13,101 @@
 
 #include <cstdio>
 #include <cstdlib>
-#include <iostream>
 #include <fstream>
+#include <limits>
 #include <string>
 #include <sstream>
 #include "dwgreader.h"
 #include "drw_textcodec.h"
 #include "drw_dbg.h"
+#include "proxygraphicdecoder.h"
 
 namespace {
     //helper function to cleanup pointers in Look Up Tables
     template<typename T>
-    void mapCleanUp(std::unordered_map<duint32, T*>& table)
+    void mapCleanUp(std::unordered_map<std::uint32_t, T*>& table)
     {
         for (auto& item: table)
             delete item.second;
     }
+
+    // Minimal concrete entity whose only job is to run DRW_Entity's
+    // class-agnostic common-prologue parser (handle/EED/graphData/layer/…).
+    // Raw-net custom entities (STDPART2D, AEC_*) are emitted byte-for-byte by
+    // makeRawEntity and never parsed, so their proxyGraphics is empty; this host
+    // lets us lift the cached graphData bytes without modelling the unknown
+    // class body.  parseDwg runs only the common DATA prologue (it does NOT read
+    // the handle stream), which is exactly the section that carries graphData.
+    struct ProxyHostEntity : public DRW_Entity {
+        void applyExtrusion() override {}
+        bool parseDwg(DRW::Version v, dwgBuffer *b, std::uint32_t bsz = 0) override {
+            return DRW_Entity::parseDwg(v, b, nullptr, bsz);
+        }
+    };
+}
+
+// DWG file-header codepage id -> DRW_TextCodec ANSI name (libreDWG
+// codepages.h:35-82). Only codec-recognized names are mapped; unknown/rare ids
+// (UTF-16, Johab, CP866, US-ASCII, ...) return nullptr so the caller keeps the
+// ANSI_1252 default. 31 (GB2312) maps to its CP936 superset.
+const char* dwgCodePageName(std::uint16_t cp) {
+    switch (cp) {
+        case 28: return "ANSI_1250";  // Central/East European
+        case 29: return "ANSI_1251";  // Cyrillic
+        case 30: return "ANSI_1252";  // Western European
+        case 31: return "ANSI_936";   // GB2312 (Simplified Chinese, CP936 superset)
+        case 32: return "ANSI_1253";  // Greek
+        case 33: return "ANSI_1254";  // Turkish
+        case 34: return "ANSI_1255";  // Hebrew
+        case 35: return "ANSI_1256";  // Arabic
+        case 36: return "ANSI_1257";  // Baltic
+        case 37: return "ANSI_874";   // Thai
+        case 38: return "ANSI_932";   // Japanese (Shift-JIS)
+        case 39: return "ANSI_936";   // Simplified Chinese
+        case 40: return "ANSI_949";   // Korean (Wansung)
+        case 41: return "ANSI_950";   // Traditional Chinese (Big5)
+        case 44: return "ANSI_1258";  // Vietnamese
+        default: return nullptr;      // unknown id: keep ANSI_1252 default
+    }
+}
+
+std::uint16_t dwgCodePageId(const char* name) {
+    if (name == nullptr) return 30;
+    // Round-trip set: map back exactly the names dwgCodePageName() emits.
+    // 31 (GB2312) and 39 both resolve to "ANSI_936"; pick 39 (Simplified
+    // Chinese / GBK superset) for the inverse direction.
+    const std::string n(name);
+    if (n == "ANSI_1250") return 28;
+    if (n == "ANSI_1251") return 29;
+    if (n == "ANSI_1252") return 30;
+    if (n == "ANSI_1253") return 32;
+    if (n == "ANSI_1254") return 33;
+    if (n == "ANSI_1255") return 34;
+    if (n == "ANSI_1256") return 35;
+    if (n == "ANSI_1257") return 36;
+    if (n == "ANSI_874")  return 37;
+    if (n == "ANSI_932")  return 38;
+    if (n == "ANSI_936")  return 39;
+    if (n == "ANSI_949")  return 40;
+    if (n == "ANSI_950")  return 41;
+    if (n == "ANSI_1258") return 44;
+    return 30; // fallback
+}
+
+std::string decodeEedString(std::uint16_t cp,
+                            const std::string& raw,
+                            DRW_TextCodec* fallback) {
+    if (raw.empty())
+        return std::string{};
+    if (const char* name = dwgCodePageName(cp)) {
+        // Build an AC1015-bound codec so setCodePage() selects the table
+        // converter for `name` (the AC1021+ branch would pick UTF-16 instead).
+        DRW_TextCodec codec;
+        codec.setVersion(DRW::AC1015, /*dxfFormat=*/false);
+        codec.setCodePage(name, /*dxfFormat=*/false);
+        return codec.toUtf8(raw);
+    }
+    return fallback ? fallback->toUtf8(raw) : raw;
 }
 
 dwgReader::~dwgReader() {
@@ -50,8 +129,8 @@ void dwgReader::parseAttribs(DRW_Entity* e) {
         return;
     }
 
-    duint32 ltref =e->lTypeH.ref;
-    duint32 lyref =e->layerH.ref;
+    std::uint32_t ltref =e->lTypeH.ref;
+    std::uint32_t lyref =e->layerH.ref;
     auto lt_it = ltypemap.find(ltref);
     if (lt_it != ltypemap.end()) {
         e->lineType = (lt_it->second)->name;
@@ -90,7 +169,7 @@ void dwgReader::parseAttribs(DRW_Entity* e) {
     e->pendingLayerRefResolutions.clear();
 }
 
-std::string dwgReader::findTableName(DRW::TTYPE table, dint32 handle){
+std::string dwgReader::findTableName(DRW::TTYPE table, std::int32_t handle){
     std::string name;
     switch (table){
     case DRW::STYLE:{
@@ -132,16 +211,42 @@ std::string dwgReader::findTableName(DRW::TTYPE table, dint32 handle){
 }
 
 bool dwgReader::readDwgHeader(DRW_Header& hdr, dwgBuffer *buf, dwgBuffer *hBuf){
-    bool ret = hdr.parseDwg(version, buf, hBuf, maintenanceVersion);
+    // The R2010+ bitsize_hi gate inside parseDwg keys off the APP maintenance
+    // version (byte 0x12), not byte 0x0B — see appMaintenanceVersion in dwgreader.h.
+    bool ret = hdr.parseDwg(version, buf, hBuf, appMaintenanceVersion);
     //RLZ: copy objectControl handles
     return ret;
 }
 
-//RLZ: TODO add check instead print
-bool dwgReader::checkSentinel(dwgBuffer *buf, enum secEnum::DWGSection, bool start){
-    DRW_UNUSED(start);
-    for (int i=0; i<16;i++) {
-        DRW_DBGH(buf->getRawChar8()); DRW_DBG(" ");
+bool dwgReader::checkSentinel(dwgBuffer *buf, enum secEnum::DWGSection sec, bool start){
+    std::uint8_t readBytes[16];
+    for (int i = 0; i < 16; i++) {
+        readBytes[i] = buf->getRawChar8();
+        DRW_DBGH(readBytes[i]); DRW_DBG(" ");
+    }
+    const std::uint8_t* expected = nullptr;
+    switch (sec) {
+        case secEnum::FILEHEADER:
+            if (!start) expected = dwgSentinels::FILE_HEADER_END;
+            break;
+        case secEnum::HEADER:
+            expected = start ? dwgSentinels::HEADER_BEGIN : dwgSentinels::HEADER_END;
+            break;
+        case secEnum::CLASSES:
+            expected = start ? dwgSentinels::CLASSES_BEGIN : dwgSentinels::CLASSES_END;
+            break;
+        default:
+            break;
+    }
+    if (expected != nullptr) {
+        for (int i = 0; i < 16; i++) {
+            if (readBytes[i] != expected[i]) {
+                DRW_DBG("\ncheckSentinel: mismatch at byte "); DRW_DBG(i);
+                DRW_DBG(" got "); DRW_DBGH(readBytes[i]);
+                DRW_DBG(" expected "); DRW_DBGH(expected[i]); DRW_DBG("\n");
+                return false;
+            }
+        }
     }
     return true;
 }
@@ -153,20 +258,22 @@ bool dwgReader::checkSentinel(dwgBuffer *buf, enum secEnum::DWGSection, bool sta
  *  2 bytes size + data bytes
  *  last section are 2 bytes size + 2 bytes crc (size value always 2)
 **/
-bool dwgReader::readDwgHandles(dwgBuffer *dbuf, duint64 offset, duint64 size) {
+bool dwgReader::readDwgHandles(dwgBuffer *dbuf, std::uint64_t offset, std::uint64_t size) {
     DRW_DBG("\ndwgReader::readDwgHandles\n");
+    if (size > dbuf->size() || offset > dbuf->size() - size)
+        return false;
     if (!dbuf->setPosition(offset))
         return false;
 
-    duint32 maxPos = offset + size;
+    std::uint64_t maxPos = offset + size;
     DRW_DBG("\nSection HANDLES offset= "); DRW_DBG(offset);
     DRW_DBG("\nSection HANDLES size= "); DRW_DBG(size);
     DRW_DBG("\nSection HANDLES maxPos= "); DRW_DBG(maxPos);
 
-    int startPos = offset;
+    std::uint64_t startPos = offset;
     bool end = false;
 
-    std::vector<duint8> tmpByteStr;
+    std::vector<std::uint8_t> tmpByteStr;
     /* According to Open Design Specification for .dwg files Version 5.4.1
      * chapter 23.1 (page 251), section list is terminated by empty section
      * (section consisting only of the checksum). When we find, we finish
@@ -174,30 +281,46 @@ bool dwgReader::readDwgHandles(dwgBuffer *dbuf, duint64 offset, duint64 size) {
      */
     while (!end && (maxPos > dbuf->getPosition())) {
         DRW_DBG("\nstart handles section buf->curPosition()= "); DRW_DBG(dbuf->getPosition()); DRW_DBG("\n");
-        duint16 size = dbuf->getBERawShort16();
-        DRW_DBG("object map section size= "); DRW_DBG(size); DRW_DBG("\n");
+        std::uint16_t pageSize = dbuf->getBERawShort16();
+        DRW_DBG("object map section size= "); DRW_DBG(pageSize); DRW_DBG("\n");
+        if (pageSize < 2 || startPos > maxPos || pageSize > maxPos - startPos) {
+            DRW_DBG("object map section size out of range\n");
+            return false;
+        }
         dbuf->setPosition(startPos);
-        tmpByteStr.resize(size);
-        dbuf->getBytes(tmpByteStr.data(), size);
-        dwgBuffer buff(tmpByteStr.data(), size, &decoder);
-        if (size != 2){
-            buff.setPosition(2);
+        tmpByteStr.resize(pageSize);
+        if (!dbuf->getBytes(tmpByteStr.data(), pageSize))
+            return false;
+        dwgBuffer buff(tmpByteStr.data(), pageSize, &decoder);
+        if (pageSize != 2){
+            if (!buff.setPosition(2))
+                return false;
             int lastHandle = 0;
             int lastLoc = 0;
             //read data
-            while(buff.getPosition()< size){
+            while(buff.getPosition()< pageSize){
+                std::uint64_t prevPos = buff.getPosition();
                 lastHandle += buff.getUModularChar();
                 DRW_DBG("object map lastHandle= "); DRW_DBGH(lastHandle);
                 lastLoc += buff.getModularChar();
                 DRW_DBG(" lastLoc= "); DRW_DBG(lastLoc); DRW_DBG("\n");
-                ObjectMap[lastHandle]= objHandle(0, lastHandle, lastLoc);
+                if (!buff.isGood() || buff.getPosition() <= prevPos)
+                    return false;
+                if (lastHandle <= 0)
+                    return false;
+                const auto handleKey = static_cast<std::uint32_t>(lastHandle);
+                if (ObjectMap.find(handleKey) != ObjectMap.end()) {
+                    DRW_DBG("duplicate object-map handle\n");
+                    return false;
+                }
+                ObjectMap[handleKey] = objHandle(0, handleKey, lastLoc);
             }
         } else {
 	    end = true;
 	}
         //verify crc
-        duint16 crcCalc = buff.crc8(0xc0c1,0,size);
-        duint16 crcRead = dbuf->getBERawShort16();
+        std::uint16_t crcCalc = buff.crc8(0xc0c1,0,pageSize);
+        std::uint16_t crcRead = dbuf->getBERawShort16();
         DRW_DBG("object map section crc8 read= "); DRW_DBG(crcRead);
         DRW_DBG("\nobject map section crc8 calculated= "); DRW_DBG(crcCalc);
         DRW_DBG("\nobject section buf->curPosition()= "); DRW_DBG(dbuf->getPosition()); DRW_DBG("\n");
@@ -221,9 +344,9 @@ bool dwgReader::readDwgTables(DRW_Header& hdr, dwgBuffer *dbuf) {
     bool ret = true;
     bool ret2 = true;
     objHandle oc;
-    dint16 oType;
-    duint32 bs = 0; //bit size of handle stream 2010+
-    std::vector<duint8> tmpByteStr;
+    std::int16_t oType;
+    std::uint32_t bs = 0; //bit size of handle stream 2010+
+    std::vector<std::uint8_t> tmpByteStr;
 
     //parse linetypes, start with linetype Control
     auto mit = ObjectMap.find(hdr.linetypeCtrl);
@@ -260,6 +383,7 @@ bool dwgReader::readDwgTables(DRW_Header& hdr, dwgBuffer *dbuf) {
             mit = ObjectMap.find(*it);
             if (mit==ObjectMap.end()) {
                 DRW_DBG("\nWARNING: LineType not found\n");
+                m_ltypeNameOrder.emplace_back(); // keep proxy index alignment
             } else {
                 oc = mit->second;
                 ObjectMap.erase(mit);
@@ -277,6 +401,7 @@ bool dwgReader::readDwgTables(DRW_Header& hdr, dwgBuffer *dbuf) {
                 dwgBuffer lbuff(tmpByteStr.data(), lsize, &decoder);
                 ret2 = lt->parseDwg(version, &lbuff, bs);
                 ltypemap[lt->handle] = lt;
+                m_ltypeNameOrder.push_back(lt->name); // proxy op18 index space
                 if (!ret2)
                     DRW_DBG("\nWARNING: LineType record parseDwg failed (handle skipped)\n");
             }
@@ -318,6 +443,7 @@ bool dwgReader::readDwgTables(DRW_Header& hdr, dwgBuffer *dbuf) {
             mit = ObjectMap.find(*it);
             if (mit==ObjectMap.end()) {
                 DRW_DBG("\nWARNING: Layer not found (handle skipped)\n");
+                m_layerNameOrder.emplace_back(); // keep proxy index alignment
             } else {
                 oc = mit->second;
                 ObjectMap.erase(mit);
@@ -334,6 +460,7 @@ bool dwgReader::readDwgTables(DRW_Header& hdr, dwgBuffer *dbuf) {
                 dwgBuffer buff(tmpByteStr.data(), size, &decoder);
                 ret2 = la->parseDwg(version, &buff, bs);
                 layermap[la->handle] = la;
+                m_layerNameOrder.push_back(la->name); // proxy op16 index space
                 if (!ret2)
                     DRW_DBG("\nWARNING: Layer record parseDwg failed (handle skipped)\n");
             }
@@ -343,7 +470,7 @@ bool dwgReader::readDwgTables(DRW_Header& hdr, dwgBuffer *dbuf) {
     //set linetype in layer
     for (auto it=layermap.begin(); it!=layermap.end(); ++it) {
         DRW_Layer *ly = it->second;
-        duint32 ref =ly->lTypeH.ref;
+        std::uint32_t ref =ly->lTypeH.ref;
         auto lt_it = ltypemap.find(ref);
         if (lt_it != ltypemap.end()){
             ly->lineType = (lt_it->second)->name;
@@ -418,7 +545,7 @@ bool dwgReader::readDwgTables(DRW_Header& hdr, dwgBuffer *dbuf) {
         ObjectMap.erase(mit);
         DRW_ObjControl dimstyControl;
         dbuf->setPosition(oc.loc);
-        duint32 size = dbuf->getModularShort();
+        std::uint32_t size = dbuf->getModularShort();
         if (version > DRW::AC1021) //2010+
             bs = dbuf->getUModularChar();
         else
@@ -787,7 +914,7 @@ bool dwgReader::readDwgTables(DRW_Header& hdr, dwgBuffer *dbuf) {
 bool dwgReader::readDwgBlocks(DRW_Interface& intfa, dwgBuffer *dbuf){
     bool ret = true;
     bool ret2 = true;
-    duint32 bs =0;
+    std::uint32_t bs =0;
     DRW_DBG("\nobject map total size= "); DRW_DBG(ObjectMap.size());
 
     for (auto it=blockRecordmap.begin(); it != blockRecordmap.end(); ++it){
@@ -814,7 +941,7 @@ bool dwgReader::readDwgBlocks(DRW_Interface& intfa, dwgBuffer *dbuf){
         else
             bs = 0;
 
-        std::vector<duint8> tmpByteStr(size);
+        std::vector<std::uint8_t> tmpByteStr(size);
         dbuf->getBytes(tmpByteStr.data(), size);
         dwgBuffer buff(tmpByteStr.data(), size, &decoder);
         DRW_Block bk;
@@ -824,11 +951,8 @@ bool dwgReader::readDwgBlocks(DRW_Interface& intfa, dwgBuffer *dbuf){
         //complete block entity with block record data
         bk.basePoint = bkr->basePoint;
         bk.flags = bkr->flags;
+        bk.insUnits = bkr->insUnits;
         bk.xrefPath = bkr->xrefPath;
-        intfa.addBlock(bk);
-        //and update block record name
-        bkr->name = bk.name;
-
         /**read & send block entities**/
         // Modelspace / paperspace block_records have no DWG-side parent
         // handle (the legacy "330 not set like dxf in ModelSpace & PaperSpace"
@@ -840,7 +964,12 @@ bool dwgReader::readDwgBlocks(DRW_Interface& intfa, dwgBuffer *dbuf){
         const bool deferredEntityWalk = (bk.parentHandle == DRW::NoHandle);
         if (deferredEntityWalk) {
             bk.parentHandle = bkr->handle;
-        } else {
+        }
+        intfa.addBlock(bk);
+        //and update block record name
+        bkr->name = bk.name;
+
+        if (!deferredEntityWalk) {
             ret2 = walkBlockRecordEntities(bkr, dbuf, intfa);
             ret = ret && ret2;
         }
@@ -868,7 +997,6 @@ bool dwgReader::readDwgBlocks(DRW_Interface& intfa, dwgBuffer *dbuf){
         end.isEnd = true;
         ret2 = end.parseDwg(version, &buff1, bs);
         ret = ret && ret2;
-        if (bk.parentHandle == DRW::NoHandle) bk.parentHandle= bkr->handle;
         parseAttribs(&end);
         intfa.endBlock();
 
@@ -892,12 +1020,17 @@ bool dwgReader::walkBlockRecordEntities(DRW_Block_Record* bkr, dwgBuffer *dbuf, 
     objHandle oc;
 
     if (version < DRW::AC1018) { //pre 2004
-        duint32 nextH = bkr->firstEH;
+        std::uint32_t nextH = bkr->firstEH;
         while (nextH != 0) {
             auto mit = ObjectMap.find(nextH);
             if (mit == ObjectMap.end()) {
+                // A broken/garbage nextEntLink at the chain end (common in real
+                // R13–R2000 files) must NOT fail the BLOCKS section: the
+                // remaining entities still sit in ObjectMap and are recovered by
+                // the subsequent readDwgEntities sweep. Treat as a soft warning
+                // (libreDWG parity) — stop chasing this chain but keep ret true.
                 DRW_DBG("\nWARNING: Entity of block not found\n");
-                ret = false;
+                ++m_entityParseFailures;
                 break;
             }
             oc = mit->second;
@@ -910,11 +1043,14 @@ bool dwgReader::walkBlockRecordEntities(DRW_Block_Record* bkr, dwgBuffer *dbuf, 
         }
     } else { //2004+
         for (auto it = bkr->entMap.begin(); it != bkr->entMap.end(); ++it) {
-            duint32 nextH = *it;
+            std::uint32_t nextH = *it;
             auto mit = ObjectMap.find(nextH);
             if (mit == ObjectMap.end()) {
+                // Soft warning, not a section failure (libreDWG parity): a
+                // missing entMap handle is recovered by the readDwgEntities
+                // sweep. See the pre-2004 branch above for the rationale.
                 DRW_DBG("\nWARNING: Entity of block not found\n");
-                ret = false;
+                ++m_entityParseFailures;
                 continue;
             }
             oc = mit->second;
@@ -930,78 +1066,89 @@ bool dwgReader::readPlineVertex(DRW_Polyline& pline, dwgBuffer *dbuf){
     bool ret = true;
     bool ret2 = true;
     objHandle oc;
-    duint32 bs = 0;
+    std::uint32_t bs = 0;
 
     // Vertex chain walking must not clobber the outer block-walk's
     // nextEntLink/prevEntLink — readDwgBlocks reads them after readPlineVertex
     // returns to advance to the polyline's next sibling.  Save/restore so the
     // caller's iteration survives.
-    const duint32 savedNext = nextEntLink;
-    const duint32 savedPrev = prevEntLink;
+    const std::uint32_t savedNext = nextEntLink;
+    const std::uint32_t savedPrev = prevEntLink;
+
+    // Helper lambda: find a vertex handle in ObjectMap first, then fall back
+    // to objObjectMap (pre-processed by the unordered readDwgEntities sweep
+    // when vertex handles hash before the polyline handle).
+    auto findVertex = [&](std::uint32_t h) -> bool {
+        auto mit = ObjectMap.find(h);
+        if (mit != ObjectMap.end()) {
+            oc = mit->second;
+            ObjectMap.erase(mit);
+            return true;
+        }
+        auto omit = objObjectMap.find(h);
+        if (omit != objObjectMap.end()) {
+            oc = omit->second;
+            objObjectMap.erase(omit);
+            return true;
+        }
+        return false;
+    };
 
     if (version < DRW::AC1018) { //pre 2004
-        duint32 nextH = pline.firstEH;
+        std::uint32_t nextH = pline.firstEH;
         while (nextH != 0){
-            auto mit = ObjectMap.find(nextH);
-            if (mit==ObjectMap.end()) {
+            if (!findVertex(nextH)) {
                 nextH = 0;//end while if entity not found
                 DRW_DBG("\nWARNING: pline vertex not found\n");
                 ret = false;
                 continue;
-            } else {//foud entity reads it
-                oc = mit->second;
-                ObjectMap.erase(mit);
-                DRW_Vertex vt;
-                dbuf->setPosition(oc.loc);
-                //RLZ: verify if pos is ok
-                int size = dbuf->getModularShort();
-                if (version > DRW::AC1021) {//2010+
-                    bs = dbuf->getUModularChar();
-                }
-                std::vector<duint8> tmpByteStr(size);
-                dbuf->getBytes(tmpByteStr.data(), size);
-                dwgBuffer buff(tmpByteStr.data(), size, &decoder);
-                dint16 oType = buff.getObjType(version);
-                buff.resetPosition();
-                DRW_DBG(" object type= "); DRW_DBG(oType); DRW_DBG("\n");
-                ret2 = vt.parseDwg(version, &buff, bs, pline.basePoint.z);
-                pline.addVertex(vt);
-                if (!ret2) ++m_entityParseFailures; // per-vertex parse failure: warning, not section failure
-                if (nextH == pline.lastEH)
-                    nextH = 0; //redundant, but prevent read errors
-                else
-                    nextH = vt.nextEntLink;
             }
+            DRW_Vertex vt;
+            dbuf->setPosition(oc.loc);
+            //RLZ: verify if pos is ok
+            int size = dbuf->getModularShort();
+            if (version > DRW::AC1021) {//2010+
+                bs = dbuf->getUModularChar();
+            }
+            std::vector<std::uint8_t> tmpByteStr(size);
+            dbuf->getBytes(tmpByteStr.data(), size);
+            dwgBuffer buff(tmpByteStr.data(), size, &decoder);
+            std::int16_t oType = buff.getObjType(version);
+            buff.resetPosition();
+            DRW_DBG(" object type= "); DRW_DBG(oType); DRW_DBG("\n");
+            ret2 = vt.parseDwg(version, &buff, bs, pline.basePoint.z);
+            pline.addVertex(vt);
+            if (!ret2) ++m_entityParseFailures; // per-vertex parse failure: warning, not section failure
+            if (nextH == pline.lastEH)
+                nextH = 0; //redundant, but prevent read errors
+            else
+                nextH = vt.nextEntLink;
         }
     } else {//2004+
-        for (std::list<duint32>::iterator it = pline.hadlesList.begin() ; it != pline.hadlesList.end(); ++it){
-            duint32 nextH = *it;
-            auto mit = ObjectMap.find(nextH);
-            if (mit==ObjectMap.end()) {
-                DRW_DBG("\nWARNING: Entity of block not found\n");
+        for (std::list<std::uint32_t>::iterator it = pline.hadlesList.begin() ; it != pline.hadlesList.end(); ++it){
+            std::uint32_t nextH = *it;
+            if (!findVertex(nextH)) {
+                DRW_DBG("\nWARNING: pline vertex not found\n");
                 ret = false;
                 continue;
-            } else {//foud entity reads it
-                oc = mit->second;
-                ObjectMap.erase(mit);
-                DRW_DBG("\nPline vertex, parsing entity: "); DRW_DBGH(oc.handle); DRW_DBG(", pos: "); DRW_DBG(oc.loc); DRW_DBG("\n");
-                DRW_Vertex vt;
-                dbuf->setPosition(oc.loc);
-                //RLZ: verify if pos is ok
-                int size = dbuf->getModularShort();
-                if (version > DRW::AC1021) {//2010+
-                    bs = dbuf->getUModularChar();
-                }
-                std::vector<duint8> tmpByteStr(size);
-                dbuf->getBytes(tmpByteStr.data(), size);
-                dwgBuffer buff(tmpByteStr.data(), size, &decoder);
-                dint16 oType = buff.getObjType(version);
-                buff.resetPosition();
-                DRW_DBG(" object type= "); DRW_DBG(oType); DRW_DBG("\n");
-                ret2 = vt.parseDwg(version, &buff, bs, pline.basePoint.z);
-                pline.addVertex(vt);
-                if (!ret2) ++m_entityParseFailures; // per-vertex parse failure: warning, not section failure
             }
+            DRW_DBG("\nPline vertex, parsing entity: "); DRW_DBGH(oc.handle); DRW_DBG(", pos: "); DRW_DBG(oc.loc); DRW_DBG("\n");
+            DRW_Vertex vt;
+            dbuf->setPosition(oc.loc);
+            //RLZ: verify if pos is ok
+            int size = dbuf->getModularShort();
+            if (version > DRW::AC1021) {//2010+
+                bs = dbuf->getUModularChar();
+            }
+            std::vector<std::uint8_t> tmpByteStr(size);
+            dbuf->getBytes(tmpByteStr.data(), size);
+            dwgBuffer buff(tmpByteStr.data(), size, &decoder);
+            std::int16_t oType = buff.getObjType(version);
+            buff.resetPosition();
+            DRW_DBG(" object type= "); DRW_DBG(oType); DRW_DBG("\n");
+            ret2 = vt.parseDwg(version, &buff, bs, pline.basePoint.z);
+            pline.addVertex(vt);
+            if (!ret2) ++m_entityParseFailures; // per-vertex parse failure: warning, not section failure
         }
     }//end 2004+
 
@@ -1052,29 +1199,70 @@ bool dwgReader::readDwgEntities(DRW_Interface& intfa, dwgBuffer *dbuf){
  */
 bool dwgReader::readDwgEntity(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& intfa){
     bool ret = true;
-    duint32 bs = 0;
+    std::uint32_t bs = 0;
 
     nextEntLink = prevEntLink = 0;// set to 0 to skip unimplemented entities
-    dbuf->setPosition(obj.loc);
+    const std::uint64_t frameStart = obj.loc;
+    dbuf->setPosition(frameStart);
     //verify if position is ok:
     if (!dbuf->isGood()){
         DRW_DBG(" Warning: readDwgEntity, bad location\n");
         return false;
     }
     int size = dbuf->getModularShort();
+    if (size < 0) {
+        DRW_DBG(" Warning: readDwgEntity, negative size\n");
+        return false;
+    }
     if (version > DRW::AC1021) {//2010+
         bs = dbuf->getUModularChar();
     }
-    std::vector<duint8> tmpByteStr(size);
+    const std::uint64_t bodyStart = dbuf->getPosition();
+    const auto bodySize = static_cast<std::uint64_t>(size);
+    if (bodyStart > dbuf->size() || bodySize > dbuf->size() - bodyStart
+        || dbuf->size() - bodyStart - bodySize < 2) {
+        DRW_DBG(" Warning: readDwgEntity, frame size out of range\n");
+        return false;
+    }
+    if (frameStart > static_cast<std::uint64_t>(std::numeric_limits<std::int32_t>::max())
+        || bodyStart + bodySize > static_cast<std::uint64_t>(std::numeric_limits<std::int32_t>::max())) {
+        DRW_DBG(" Warning: readDwgEntity, frame CRC range out of range\n");
+        return false;
+    }
+    std::vector<std::uint8_t> tmpByteStr(size);
     dbuf->getBytes(tmpByteStr.data(), size);
+    std::uint16_t crcRead = dbuf->getRawShort16();
+    std::uint16_t crcCalc = dbuf->crc8(0xC0C1,
+                                       static_cast<std::int32_t>(frameStart),
+                                       static_cast<std::int32_t>(bodyStart + bodySize));
+    if (crcRead != crcCalc) {
+        DRW_DBG(" Warning: readDwgEntity, CRC mismatch\n");
+        return false;
+    }
     //verify if getBytes is ok:
     if (!dbuf->isGood()) {
         DRW_DBG(" Warning: readDwgEntity, bad size\n");
         return false;
     }
     dwgBuffer buff(tmpByteStr.data(), size, &decoder);
-    dint16 oType = buff.getObjType(version);
+    std::int16_t oType = buff.getObjType(version);
     buff.resetPosition();
+    auto makeRawEntity = [&](int rawType, const DRW_Class *cls = nullptr) {
+        DRW_UnsupportedObject raw;
+        raw.m_objectType = rawType;
+        raw.m_handle = obj.handle;
+        raw.m_bodyBitSize = bs;
+        raw.m_objectOffset = obj.loc;
+        raw.m_objectSize = static_cast<std::uint32_t>(size);
+        raw.m_isEntity = true;
+        raw.m_isCustomClass = cls != nullptr;
+        if (cls != nullptr) {
+            raw.m_recordName = cls->recName;
+            raw.m_className = cls->className;
+        }
+        raw.m_rawBytes = tmpByteStr;
+        return raw;
+    };
 
     if (oType > 499){
         auto it = classesmap.find(oType);
@@ -1155,7 +1343,7 @@ bool dwgReader::readDwgEntity(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
             entryParse(*a, buff, bs, localRet);
             if (localRet) {
                 a->style = findTableName(DRW::STYLE, a->styleH.ref);
-                const duint32 ownerH = a->parentHandle;
+                const std::uint32_t ownerH = a->parentHandle;
                 auto pendIt = m_pendingInserts.find(ownerH);
                 if (pendIt != m_pendingInserts.end()) {
                     pendIt->second.attlist.push_back(a);
@@ -1178,7 +1366,7 @@ bool dwgReader::readDwgEntity(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
             entryParse(*a, buff, bs, localRet);
             if (localRet) {
                 a->style = findTableName(DRW::STYLE, a->styleH.ref);
-                const duint32 ownerH = a->parentHandle;
+                const std::uint32_t ownerH = a->parentHandle;
                 auto pendIt = m_pendingInserts.find(ownerH);
                 if (pendIt != m_pendingInserts.end()) {
                     pendIt->second.attlist.push_back(a);
@@ -1238,6 +1426,33 @@ bool dwgReader::readDwgEntity(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
             DRW_3Dface e;
             if (entryParse( e, buff, bs, ret)) {
                 intfa.add3dFace(e);
+            }
+            break; }
+        case 37: {
+            DRW_ModelerGeometry e(DRW::REGION);
+            if (entryParse(e, buff, bs, ret)) {
+                e.m_objectSize = static_cast<std::uint32_t>(size);
+                e.m_rawBytes = tmpByteStr;
+                intfa.addModelerGeometry(e);
+                intfa.addUnsupportedObject(makeRawEntity(oType));
+            }
+            break; }
+        case 38: {
+            DRW_ModelerGeometry e(DRW::E3DSOLID);
+            if (entryParse(e, buff, bs, ret)) {
+                e.m_objectSize = static_cast<std::uint32_t>(size);
+                e.m_rawBytes = tmpByteStr;
+                intfa.addModelerGeometry(e);
+                intfa.addUnsupportedObject(makeRawEntity(oType));
+            }
+            break; }
+        case 39: {
+            DRW_ModelerGeometry e(DRW::BODY);
+            if (entryParse(e, buff, bs, ret)) {
+                e.m_objectSize = static_cast<std::uint32_t>(size);
+                e.m_rawBytes = tmpByteStr;
+                intfa.addModelerGeometry(e);
+                intfa.addUnsupportedObject(makeRawEntity(oType));
             }
             break; }
         case 20: {
@@ -1320,6 +1535,17 @@ bool dwgReader::readDwgEntity(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                 intfa.addTrace(e);
             }
             break; }
+        case 33: {
+            DRW_Shape e;
+            if (entryParse(e, buff, bs, ret)) {
+                e.m_objectSize = static_cast<std::uint32_t>(size);
+                e.m_rawBytes = tmpByteStr;
+                intfa.addShape(e);
+                intfa.addUnsupportedObject(makeRawEntity(oType));
+            } else {
+                intfa.addUnsupportedObject(makeRawEntity(oType));
+            }
+            break; }
         case 34: {
             DRW_Viewport e;
             if (entryParse( e, buff, bs, ret)) {
@@ -1354,6 +1580,17 @@ bool dwgReader::readDwgEntity(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                 intfa.addXline(e);
             }
             break; }
+        case 74: {
+            DRW_Ole2Frame e;
+            if (entryParse(e, buff, bs, ret)) {
+                e.m_objectSize = static_cast<std::uint32_t>(size);
+                e.m_rawBytes = tmpByteStr;
+                intfa.addOle2Frame(e);
+                intfa.addUnsupportedObject(makeRawEntity(oType));
+            } else {
+                intfa.addUnsupportedObject(makeRawEntity(oType));
+            }
+            break; }
         case 101: {
             DRW_Image e;
             if (entryParse( e, buff, bs, ret)) {
@@ -1370,6 +1607,16 @@ bool dwgReader::readDwgEntity(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                 // tools can distinguish "missing dispatch case" from
                 // "intentionally-skipped custom class".
                 auto cit = classesmap.find(oType);
+                if (cit != classesmap.end() && cit->second
+                    && (cit->second->recName == "ARC_DIMENSION"
+                        || cit->second->className == "AcDbArcDimension")) {
+                    DRW_DimArc e;
+                    if (entryParse(e, buff, bs, ret)) {
+                        e.style = findTableName(DRW::DIMSTYLE, e.dimStyleH.ref);
+                        intfa.addDimArc(&e);
+                    }
+                    break;
+                }
                 if (cit != classesmap.end() && cit->second
                     && cit->second->recName == "WIPEOUT") {
                     // WIPEOUT inherits the IMAGE binary layout; reuse parser.
@@ -1392,9 +1639,67 @@ bool dwgReader::readDwgEntity(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                     }
                     break;
                 }
+                if (version > DRW::AC1018 && cit != classesmap.end() && cit->second
+                    && (cit->second->recName == "ACAD_TABLE"
+                        || cit->second->className == "AcDbTable")) {
+                    DRW_Table e;
+                    if (entryParse(e, buff, bs, ret)) {
+                        e.name = findTableName(DRW::BLOCK_RECORD, e.blockRecH.ref);
+                        intfa.addTable(e);
+                    }
+                    break;
+                }
                 if (cit != classesmap.end() && cit->second) {
                     const std::string& rn = cit->second->recName;
                     const std::string& cn = cit->second->className;
+                    if (rn == "HELIX" || cn == "AcDbHelix") {
+                        DRW_Helix e;
+                        if (entryParse(e, buff, bs, ret)) {
+                            intfa.addHelix(&e);
+                        }
+                        break;
+                    }
+                    if (rn == "MESH" || cn == "AcDbSubDMesh") {
+                        DRW_Mesh e;
+                        if (entryParse(e, buff, bs, ret)) {
+                            intfa.addMesh(e);
+                        }
+                        break;
+                    }
+                    if (rn == "LIGHT" || cn == "AcDbLight") {
+                        DRW_Light e;
+                        if (entryParse(e, buff, bs, ret)) {
+                            intfa.addLight(e);
+                            intfa.addUnsupportedObject(makeRawEntity(oType, cit->second));
+                        }
+                        break;
+                    }
+                    if (rn == "SURFACE" || rn == "EXTRUDEDSURFACE" || rn == "REVOLVEDSURFACE"
+                        || rn == "LOFTEDSURFACE" || rn == "SWEPTSURFACE" || rn == "PLANESURFACE"
+                        || cn == "AcDbSurface" || cn == "AcDbExtrudedSurface"
+                        || cn == "AcDbRevolvedSurface" || cn == "AcDbLoftedSurface"
+                        || cn == "AcDbSweptSurface" || cn == "AcDbPlaneSurface"
+                        || cn == "AcDbNurbSurface") {
+                        // AcDbSurface family ⊂ AcDbModelerGeometry: reuse the ACIS
+                        // path used for 3DSOLID/REGION/BODY (cases 37-39). The
+                        // surface-specific trailing fields (u/v isolines, sweep/loft
+                        // options) are not modelled, but the ACIS blob and the
+                        // history handle live in the common modeler prologue, and
+                        // the raw carrier preserves the full object for round-trip.
+                        // Tagged E3DSOLID so parseDwg reads the modeler history
+                        // handle that surfaces share via AcDbModelerGeometry.
+                        DRW_ModelerGeometry e(DRW::E3DSOLID);
+                        if (entryParse(e, buff, bs, ret)) {
+                            e.m_objectSize = static_cast<std::uint32_t>(size);
+                            e.m_rawBytes = tmpByteStr;
+                            intfa.addModelerGeometry(e);
+                        }
+                        // Always emit the lossless raw carrier (even on parse
+                        // failure) so the surface round-trips; break to skip the
+                        // generic skipped-custom-class fall-through.
+                        intfa.addUnsupportedObject(makeRawEntity(oType, cit->second));
+                        break;
+                    }
                     if (rn == "PDFUNDERLAY" || rn == "DGNUNDERLAY" || rn == "DWFUNDERLAY"
                         || cn == "AcDbPdfReference" || cn == "AcDbDgnReference"
                         || cn == "AcDbDwfReference") {
@@ -1406,13 +1711,45 @@ bool dwgReader::readDwgEntity(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                         // else default PDF
                         if (entryParse(e, buff, bs, ret)) {
                             intfa.addUnderlay(&e);
-                        }
-                        break;
+	                        }
+	                        break;
+	                    }
+	                }
+	                if (cit != classesmap.end() && cit->second
+	                    && cit->second->entityFlag == 0) {
+	                    objObjectMap[obj.handle]= obj;
+	                    DRW_DBG("[entity-pass-defer-custom-object "); DRW_DBG(oType);
+	                    DRW_DBG(" "); DRW_DBG(cit->second->recName.c_str()); DRW_DBG("]\n");
+	                    break;
+	                }
+	                const char* className = (cit != classesmap.end() && cit->second)
+	                                          ? cit->second->recName.c_str()
+	                                          : "(unknown)";
+                DRW_UnsupportedObject raw;
+                raw = makeRawEntity(oType, (cit != classesmap.end() && cit->second) ? cit->second : nullptr);
+                if (cit != classesmap.end() && cit->second) {
+                    raw.m_recordName = cit->second->recName;
+                    raw.m_className = cit->second->className;
+                }
+                // Recover cached PROXY GRAPHICS before raw-netting: this class is
+                // unmodelled, but it may carry a self-contained primitive stream
+                // (STDPART2D, AEC_WALL/WINDOW/DOOR, …) that any reader can render.
+                // makeRawEntity never parses, so proxyGraphics is empty here; run
+                // the class-agnostic common prologue on a throwaway host purely to
+                // lift the graphData bytes (buff is unconsumed at this fall-through
+                // — every typed arm above breaks), then decode them into render
+                // primitives.  The raw object is STILL emitted below for lossless
+                // round-trip; decoding only adds extra renderable geometry.
+                {
+                    ProxyHostEntity host;
+                    if (host.parseDwg(version, &buff, bs)
+                        && host.proxyGraphics.size() >= 16) {
+                        m_decodedProxyPrimitives += DRW_ProxyGraphicDecoder::decode(
+                            host.proxyGraphics, version, intfa, host,
+                            m_layerNameOrder, m_ltypeNameOrder);
                     }
                 }
-                const char* className = (cit != classesmap.end() && cit->second)
-                                          ? cit->second->recName.c_str()
-                                          : "(unknown)";
+                intfa.addUnsupportedObject(raw);
                 objObjectMap[obj.handle]= obj;
                 DRW_DBG("[custom-class-skipped "); DRW_DBG(oType);
                 DRW_DBG(" "); DRW_DBG(className); DRW_DBG("]\n");
@@ -1436,20 +1773,25 @@ bool dwgReader::readDwgEntity(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
 }
 
 bool dwgReader::readDwgObjects(DRW_Interface& intfa, dwgBuffer *dbuf){
-    bool ret = true;
-
-    duint32 i=0;
+    std::uint32_t i=0;
     DRW_DBG("\nentities map total size= "); DRW_DBG(ObjectMap.size());
     DRW_DBG("\nobjects map total size= "); DRW_DBG(objObjectMap.size());
+    // Per-object parseDwg failures are warnings, not section failures —
+    // each object is read from its own ObjectMap location, so one bad
+    // record cannot corrupt the next. Mirrors readDwgEntities resilience.
+    size_t failures = 0;
     auto itB=objObjectMap.begin();
     auto itE=objObjectMap.end();
     while (itB != itE){
-        if (ret) {
-            // once readDwgObject() failed, just clear the ObjectMap
-            ret = readDwgObject(dbuf, itB->second, intfa);
-        }
+        if (!readDwgObject(dbuf, itB->second, intfa)) ++failures;
         objObjectMap.erase(itB);
         itB=objObjectMap.begin();
+    }
+    if (failures > 0) {
+        DRW_DBG("readDwgObjects: ");
+        DRW_DBG(failures);
+        DRW_DBG(" objects failed to parse (warnings, not section failure)\n");
+        m_objectParseFailures += failures;
     }
     if (DRW_DBGGL == DRW_dbg::Level::Debug) {
         for (auto it=remainingMap.begin(); it != remainingMap.end(); ++it){
@@ -1458,7 +1800,7 @@ bool dwgReader::readDwgObjects(DRW_Interface& intfa, dwgBuffer *dbuf){
         }
         DRW_DBG("\n");
     }
-    return ret;
+    return true;
 }
 
 /**
@@ -1466,35 +1808,86 @@ bool dwgReader::readDwgObjects(DRW_Interface& intfa, dwgBuffer *dbuf){
  */
 bool dwgReader::readDwgObject(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& intfa){
     bool ret = true;
-    duint32 bs = 0;
+    std::uint32_t bs = 0;
 
-        dbuf->setPosition(obj.loc);
+        const std::uint64_t frameStart = obj.loc;
+        dbuf->setPosition(frameStart);
         //verify if position is ok:
         if (!dbuf->isGood()){
             DRW_DBG(" Warning: readDwgObject, bad location\n");
             return false;
         }
         int size = dbuf->getModularShort();
+        if (size < 0) {
+            DRW_DBG(" Warning: readDwgObject, negative size\n");
+            return false;
+        }
         if (version > DRW::AC1021) {//2010+
             bs = dbuf->getUModularChar();
         }
-        duint8 *tmpByteStr = new duint8[size];
-        dbuf->getBytes(tmpByteStr, size);
+        const std::uint64_t bodyStart = dbuf->getPosition();
+        const auto bodySize = static_cast<std::uint64_t>(size);
+        if (bodyStart > dbuf->size() || bodySize > dbuf->size() - bodyStart
+            || dbuf->size() - bodyStart - bodySize < 2) {
+            DRW_DBG(" Warning: readDwgObject, frame size out of range\n");
+            return false;
+        }
+        if (frameStart > static_cast<std::uint64_t>(std::numeric_limits<std::int32_t>::max())
+            || bodyStart + bodySize > static_cast<std::uint64_t>(std::numeric_limits<std::int32_t>::max())) {
+            DRW_DBG(" Warning: readDwgObject, frame CRC range out of range\n");
+            return false;
+        }
+        std::vector<std::uint8_t> tmpByteStr(size);
+        dbuf->getBytes(tmpByteStr.data(), size);
+        std::uint16_t crcRead = dbuf->getRawShort16();
+        std::uint16_t crcCalc = dbuf->crc8(0xC0C1,
+                                           static_cast<std::int32_t>(frameStart),
+                                           static_cast<std::int32_t>(bodyStart + bodySize));
+        if (crcRead != crcCalc) {
+            DRW_DBG(" Warning: readDwgObject, CRC mismatch\n");
+            return false;
+        }
         //verify if getBytes is ok:
         if (!dbuf->isGood()){
             DRW_DBG(" Warning: readDwgObject, bad size\n");
-            delete[]tmpByteStr;
             return false;
         }
-        dwgBuffer buff(tmpByteStr, size, &decoder);
+        dwgBuffer buff(tmpByteStr.data(), size, &decoder);
         //oType are set parsing entities
-        dint16 oType = obj.type;
+        std::int16_t oType = obj.type;
+        auto makeRawObject = [&](int rawType, const DRW_Class *cls = nullptr) {
+            DRW_UnsupportedObject raw;
+            raw.m_objectType = rawType;
+            raw.m_handle = obj.handle;
+            raw.m_bodyBitSize = bs;
+            raw.m_objectOffset = obj.loc;
+            raw.m_objectSize = static_cast<std::uint32_t>(size);
+            raw.m_isEntity = false;
+            raw.m_isCustomClass = cls != nullptr;
+            if (cls != nullptr) {
+                raw.m_recordName = cls->recName;
+                raw.m_className = cls->className;
+            }
+            raw.m_rawBytes = tmpByteStr;
+            return raw;
+        };
 
         switch (oType){
         case 42: { //DICTIONARY (ODA fixed type 42)
             DRW_Dictionary e;
             ret = e.parseDwg(version, &buff, bs);
-            intfa.addDictionary(e);
+            if (ret) {
+                intfa.addDictionary(e);
+                intfa.addUnsupportedObject(makeRawObject(oType));
+            }
+            break; }
+        case 79: { //XRECORD (ODA fixed type 0x4f)
+            DRW_XRecord e;
+            ret = e.parseDwg(version, &buff, bs);
+            if (ret) {
+                intfa.addXRecord(e);
+                intfa.addUnsupportedObject(makeRawObject(oType));
+            }
             break; }
         case 73: { //MLINESTYLE (ODA fixed type 73)
             DRW_MLineStyle e;
@@ -1505,18 +1898,39 @@ bool dwgReader::readDwgObject(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                 // is fully parsed (entries usually appear before OBJECTS,
                 // so this map is consulted in case 47 dispatch).
                 mlineStyleNameMap[obj.handle] = e.name;
+                intfa.addMLineStyle(e);
+                intfa.addUnsupportedObject(makeRawObject(oType));
             }
-            intfa.addMLineStyle(e);
+            break; }
+        case 72: { //GROUP (ODA fixed type 72)
+            DRW_Group e;
+            ret = e.parseDwg(version, &buff, bs);
+            if (ret) {
+                intfa.addGroup(e);
+                intfa.addUnsupportedObject(makeRawObject(oType));
+            }
             break; }
         case 82: { //LAYOUT (ODA fixed type 82)
             DRW_Layout e;
             ret = e.parseDwg(version, &buff, bs);
-            intfa.addLayout(e);
+            if (ret) {
+                intfa.addLayout(e);
+                intfa.addUnsupportedObject(makeRawObject(oType));
+            }
+            break; }
+        case 80: { //ACDBPLACEHOLDER (ODA fixed type 0x50)
+            DRW_AcDbPlaceholder e;
+            ret = e.parseDwg(version, &buff, bs);
+            if (ret) {
+                intfa.addAcDbPlaceholder(e);
+                intfa.addUnsupportedObject(makeRawObject(oType));
+            }
             break; }
         case 102: {
             DRW_ImageDef e;
             ret = e.parseDwg(version, &buff, bs);
-            intfa.linkImage(&e);
+            if (ret)
+                intfa.linkImage(&e);
             break; }
         default:
             // Custom-class objects (oType >= 500) — look up by classesmap
@@ -1527,10 +1941,320 @@ bool dwgReader::readDwgObject(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                 auto cit = classesmap.find(oType);
                 if (cit != classesmap.end() && cit->second) {
                     const std::string& rn = cit->second->recName;
+                    if (rn == "DICTIONARYVAR"
+                        || cit->second->className == "AcDbDictionaryVar") {
+                        DRW_DictionaryVar e;
+                        ret = e.parseDwg(version, &buff, bs);
+                        if (ret) {
+                            intfa.addDictionaryVar(e);
+                            intfa.addUnsupportedObject(makeRawObject(oType, cit->second));
+                        }
+                        break;
+                    }
+                    if (rn == "ACDBDICTIONARYWDFLT"
+                        || rn == "DICTIONARYWDFLT"
+                        || cit->second->className == "AcDbDictionaryWithDefault") {
+                        DRW_DictionaryWithDefault e;
+                        ret = e.parseDwg(version, &buff, bs);
+                        if (ret) {
+                            intfa.addDictionaryWithDefault(e);
+                            intfa.addUnsupportedObject(makeRawObject(oType, cit->second));
+                        }
+                        break;
+                    }
+                    if (rn == "XRECORD"
+                        || cit->second->className == "AcDbXrecord") {
+                        DRW_XRecord e;
+                        ret = e.parseDwg(version, &buff, bs);
+                        if (ret) {
+                            intfa.addXRecord(e);
+                            intfa.addUnsupportedObject(makeRawObject(oType, cit->second));
+                        }
+                        break;
+                    }
+                    if (rn == "FIELD"
+                        || cit->second->className == "AcDbField") {
+                        DRW_Field e;
+                        ret = e.parseDwg(version, &buff, bs);
+                        if (ret) {
+                            intfa.addField(e);
+                            intfa.addUnsupportedObject(makeRawObject(oType, cit->second));
+                        }
+                        break;
+                    }
+                    if (rn == "FIELDLIST"
+                        || cit->second->className == "AcDbFieldList") {
+                        DRW_FieldList e;
+                        ret = e.parseDwg(version, &buff, bs);
+                        if (ret) {
+                            intfa.addFieldList(e);
+                            intfa.addUnsupportedObject(makeRawObject(oType, cit->second));
+                        }
+                        break;
+                    }
+                    if (rn == "RASTERVARIABLES"
+                        || cit->second->className == "AcDbRasterVariables") {
+                        DRW_RasterVariables e;
+                        ret = e.parseDwg(version, &buff, bs);
+                        if (ret) {
+                            intfa.addRasterVariables(e);
+                            intfa.addUnsupportedObject(makeRawObject(oType, cit->second));
+                        }
+                        break;
+                    }
+                    if (rn == "WIPEOUTVARIABLES"
+                        || cit->second->className == "AcDbWipeoutVariables") {
+                        DRW_WipeoutVariables e;
+                        ret = e.parseDwg(version, &buff, bs);
+                        if (ret) {
+                            intfa.addWipeoutVariables(e);
+                            intfa.addUnsupportedObject(makeRawObject(oType, cit->second));
+                        }
+                        break;
+                    }
+                    if (rn == "SORTENTSTABLE"
+                        || cit->second->className == "AcDbSortentsTable") {
+                        DRW_SortEntsTable e;
+                        ret = e.parseDwg(version, &buff, bs);
+                        if (ret) {
+                            intfa.addSortEntsTable(e);
+                            intfa.addUnsupportedObject(makeRawObject(oType, cit->second));
+                        }
+                        break;
+                    }
+                    if (rn == "MATERIAL"
+                        || cit->second->className == "AcDbMaterial") {
+                        DRW_Material e;
+                        ret = e.parseDwg(version, &buff, bs);
+                        // MATERIAL's parser is truncated (name + description
+                        // only); raw replay captures the full byte image so
+                        // the round-trip stays faithful regardless. (Phase 2b.1)
+                        if (ret) {
+                            intfa.addMaterial(e);
+                            intfa.addUnsupportedObject(makeRawObject(oType, cit->second));
+                        }
+                        break;
+                    }
+                    if (rn == "TABLESTYLE"
+                        || cit->second->className == "AcDbTableStyle") {
+                        DRW_TableStyle e;
+                        ret = e.parseDwg(version, &buff, bs);
+                        // Raw replay preserves the full byte image; native
+                        // table writer (when active) claims the handle and
+                        // suppresses double-emit. (Phase 2b.2)
+                        if (ret) {
+                            intfa.addTableStyle(e);
+                            intfa.addUnsupportedObject(makeRawObject(oType, cit->second));
+                        }
+                        break;
+                    }
+                    if (rn == "TABLECONTENT"
+                        || cit->second->className == "AcDbTableContent") {
+                        DRW_TableContentObject e;
+                        ret = e.parseDwg(version, &buff, bs);
+                        if (ret) {
+                            intfa.addTableContent(e);
+                            intfa.addUnsupportedObject(makeRawObject(oType, cit->second));
+                        }
+                        break;
+                    }
+                    if (rn == "CELLSTYLEMAP"
+                        || cit->second->className == "AcDbCellStyleMap") {
+                        DRW_CellStyleMap e;
+                        ret = e.parseDwg(version, &buff, bs);
+                        if (ret) {
+                            intfa.addCellStyleMap(e);
+                            intfa.addUnsupportedObject(makeRawObject(oType, cit->second));
+                        }
+                        break;
+                    }
+                    if (rn == "DIMASSOC"
+                        || cit->second->className == "AcDbDimAssoc") {
+                        DRW_DimensionAssociation e;
+                        ret = e.parseDwg(version, &buff, bs);
+                        if (ret) {
+                            intfa.addDimensionAssociation(e);
+                            // Also raw-capture so it survives write — the filter
+                            // has no addDimensionAssociation override (base no-op),
+                            // so without this DIMASSOC is dropped (94 objs/11 files).
+                            // Every neighbor (SUN@2024, CELLSTYLEMAP, FIELDLIST…)
+                            // co-emits this companion; DIMASSOC was the only one
+                            // missing it. (write-review P3 #8)
+                            intfa.addUnsupportedObject(makeRawObject(oType, cit->second));
+                        }
+                        break;
+                    }
+                    if (rn == "ACAD_EVALUATION_GRAPH"
+                        || cit->second->className == "AcDbEvalGraph") {
+                        DRW_EvaluationGraph e;
+                        ret = e.parseDwg(version, &buff, bs);
+                        // Raw replay preserves the full byte image. (Phase 2b.4)
+                        if (ret) {
+                            intfa.addEvaluationGraph(e);
+                            intfa.addUnsupportedObject(makeRawObject(oType, cit->second));
+                        }
+                        break;
+                    }
+                    if (rn == "SUN" || cit->second->className == "AcDbSun") {
+                        DRW_Sun e;
+                        ret = e.parseDwg(version, &buff, bs);
+                        if (ret) {
+                            intfa.addSun(e);
+                            intfa.addUnsupportedObject(makeRawObject(oType, cit->second));
+                        }
+                        break;
+                    }
+                    if (rn == "ACDBASSOCACTION"
+                        || rn == "ACDBASSOCNETWORK"
+                        || rn == "ACDBASSOCDEPENDENCY"
+                        || rn == "ACDBASSOCGEOMDEPENDENCY"
+                        || rn == "ACDBASSOCPERSSUBENTMANAGER"
+                        || rn == "ACDBPERSSUBENTMANAGER"
+                        || rn == "ACDBASSOCALIGNEDDIMACTIONBODY"
+                        || rn == "ACDBASSOCVERTEXACTIONPARAM"
+                        || rn == "ACDBASSOCOSNAPPOINTREFACTIONPARAM") {
+                        DRW_AssociativeObject e(rn);
+                        ret = e.parseDwg(version, &buff, bs);
+                        if (ret) {
+                            intfa.addAssociativeObject(e);
+                            intfa.addUnsupportedObject(makeRawObject(oType, cit->second));
+                        }
+                        break;
+                    }
+                    if (rn == "ACSH_HISTORY_CLASS"
+                        || rn == "ACSH_SWEEP_CLASS") {
+                        DRW_AcShHistoryObject e(rn);
+                        ret = e.parseDwg(version, &buff, bs);
+                        if (ret) {
+                            intfa.addAcShHistoryObject(e);
+                            intfa.addUnsupportedObject(makeRawObject(oType, cit->second));
+                        }
+                        break;
+                    }
+                    if (rn == "ACDBDETAILVIEWSTYLE" || rn == "DETAILVIEWSTYLE"
+                        || cit->second->className == "AcDbDetailViewStyle") {
+                        DRW_DetailViewStyle e;
+                        ret = e.parseDwg(version, &buff, bs);
+                        // Raw replay preserves the full byte image (version
+                        // guard blocks cross-version replay). (Phase 2b.3)
+                        if (ret) {
+                            intfa.addDetailViewStyle(e);
+                            intfa.addUnsupportedObject(makeRawObject(oType, cit->second));
+                        }
+                        break;
+                    }
+                    if (rn == "ACDBSECTIONVIEWSTYLE" || rn == "SECTIONVIEWSTYLE"
+                        || cit->second->className == "AcDbSectionViewStyle") {
+                        DRW_SectionViewStyle e;
+                        ret = e.parseDwg(version, &buff, bs);
+                        if (ret) {
+                            intfa.addSectionViewStyle(e);
+                            intfa.addUnsupportedObject(makeRawObject(oType, cit->second));
+                        }
+                        break;
+                    }
+                    if (rn == "BREAKDATA"
+                        || cit->second->className == "AcDbBreakData") {
+                        DRW_BreakData e;
+                        ret = e.parseDwg(version, &buff, bs);
+                        if (ret) intfa.addBreakData(e);
+                        break;
+                    }
+                    if (rn == "BREAKPOINTREF"
+                        || cit->second->className == "AcDbBreakPointRef") {
+                        DRW_BreakPointRef e;
+                        ret = e.parseDwg(version, &buff, bs);
+                        if (ret) intfa.addBreakPointRef(e);
+                        break;
+                    }
+                    if (rn == "GEODATA"
+                        || cit->second->className == "AcDbGeoData") {
+                        DRW_GeoData e;
+                        ret = e.parseDwg(version, &buff, bs);
+                        if (ret) {
+                            intfa.addGeoData(e);
+                            intfa.addUnsupportedObject(makeRawObject(oType, cit->second));
+                        }
+                        break;
+                    }
+                    if (rn == "IMAGEDEF_REACTOR"
+                        || cit->second->className == "AcDbRasterImageDefReactor") {
+                        DRW_ImageDefinitionReactor e;
+                        ret = e.parseDwg(version, &buff, bs);
+                        // Preserving the reactor object keeps each raster
+                        // IMAGE entity's reactor handle non-dangling. (Phase 2b.4)
+                        if (ret) {
+                            intfa.addImageDefinitionReactor(e);
+                            intfa.addUnsupportedObject(makeRawObject(oType, cit->second));
+                        }
+                        break;
+                    }
+                    if (rn == "SPATIAL_FILTER"
+                        || cit->second->className == "AcDbSpatialFilter") {
+                        DRW_SpatialFilter e;
+                        ret = e.parseDwg(version, &buff, bs);
+                        if (ret) {
+                            intfa.addSpatialFilter(e);
+                            intfa.addUnsupportedObject(makeRawObject(oType, cit->second));
+                        }
+                        break;
+                    }
+                    // IDBUFFER (AcDbIdBuffer) — ODA §20.4.79. List of object
+                    // handles, used by selection filters (LAYER_INDEX entries
+                    // point to one of these for the per-layer entity set).
+                    if (rn == "IDBUFFER"
+                        || cit->second->className == "AcDbIdBuffer") {
+                        DRW_IDBuffer e;
+                        ret = e.parseDwg(version, &buff, bs);
+                        if (ret) {
+                            intfa.addIDBuffer(e);
+                            intfa.addUnsupportedObject(makeRawObject(oType, cit->second));
+                        }
+                        break;
+                    }
+                    // LAYER_INDEX (AcDbLayerIndex) — ODA §20.4.83. Per-layer
+                    // entity index, used for partial-load drawings.
+                    if (rn == "LAYER_INDEX"
+                        || cit->second->className == "AcDbLayerIndex") {
+                        DRW_LayerIndex e;
+                        ret = e.parseDwg(version, &buff, bs);
+                        if (ret) {
+                            intfa.addLayerIndex(e);
+                            intfa.addUnsupportedObject(makeRawObject(oType, cit->second));
+                        }
+                        break;
+                    }
+                    // SPATIAL_INDEX (AcDbSpatialIndex) — ODA §20.4.95.
+                    // Spatial entity index; only timestamps are parsed
+                    // (body beyond is opaque per ODA spec).
+                    if (rn == "SPATIAL_INDEX"
+                        || cit->second->className == "AcDbSpatialIndex") {
+                        DRW_SpatialIndex e;
+                        ret = e.parseDwg(version, &buff, bs);
+                        if (ret) {
+                            intfa.addSpatialIndex(e);
+                            intfa.addUnsupportedObject(makeRawObject(oType, cit->second));
+                        }
+                        break;
+                    }
+                    if (rn == "TABLEGEOMETRY"
+                        || cit->second->className == "AcDbTableGeometry") {
+                        DRW_TableGeometry e;
+                        ret = e.parseDwg(version, &buff, bs);
+                        // Raw replay preserves the full byte image. (Phase 2b.4)
+                        if (ret) {
+                            intfa.addTableGeometry(e);
+                            intfa.addUnsupportedObject(makeRawObject(oType, cit->second));
+                        }
+                        break;
+                    }
                     if (rn == "MLEADERSTYLE") {
                         DRW_MLeaderStyle e;
                         ret = e.parseDwg(version, &buff, bs);
-                        intfa.addMLeaderStyle(&e);
+                        if (ret) {
+                            intfa.addMLeaderStyle(&e);
+                            intfa.addUnsupportedObject(makeRawObject(oType, cit->second));
+                        }
                         break;
                     }
                     // recName is the DXF CLASSES section record name (code 1),
@@ -1580,6 +2304,7 @@ bool dwgReader::readDwgObject(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                         if (ret) {
                             scaleMap[obj.handle] = e;
                             intfa.addScale(e);
+                            intfa.addUnsupportedObject(makeRawObject(oType, cit->second));
                         }
                         break;
                     }
@@ -1592,7 +2317,12 @@ bool dwgReader::readDwgObject(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                         || cit->second->className == "AcDbVisualStyle") {
                         DRW_VisualStyle e;
                         ret = e.parseDwg(version, &buff, bs);
-                        if (ret) intfa.addVisualStyle(e);
+                        // Parser is a no-op stub; raw replay preserves the
+                        // full byte image for round-trip. (Phase 2b.1)
+                        if (ret) {
+                            intfa.addVisualStyle(e);
+                            intfa.addUnsupportedObject(makeRawObject(oType, cit->second));
+                        }
                         break;
                     }
                     // UNDERLAYDEFINITION — AcDb{Pdf,Dgn,Dwf}Definition.
@@ -1619,19 +2349,43 @@ bool dwgReader::readDwgObject(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                 }
             }
             //not supported object or entity add to remaining map for debug
+            {
+                std::string objectName;
+                std::string recordName;
+                std::string className;
+                if (oType >= 500) {
+                    auto cit = classesmap.find(oType);
+                    if (cit != classesmap.end() && cit->second) {
+                        recordName = cit->second->recName;
+                        className = cit->second->className;
+                        objectName = recordName.empty() ? className : recordName;
+                    }
+                }
+                if (objectName.empty())
+                    objectName = "type-" + std::to_string(oType);
+                ++m_skippedUnsupportedObjects[objectName];
+                DRW_UnsupportedObject raw = makeRawObject(
+                    oType, (oType >= 500 && classesmap.find(oType) != classesmap.end())
+                               ? classesmap.find(oType)->second
+                               : nullptr);
+                raw.m_recordName = recordName;
+                raw.m_className = className;
+                intfa.addUnsupportedObject(raw);
+                DRW_DBG("[unsupported-object-skipped "); DRW_DBG(objectName.c_str());
+                DRW_DBG("]\n");
+            }
             remainingMap[obj.handle]= obj;
             break;
         }
         if (!ret){
             DRW_DBG("Warning: Object type "); DRW_DBG(oType);DRW_DBG("has failed, handle: "); DRW_DBG(obj.handle); DRW_DBG("\n");
         }
-        delete[]tmpByteStr;
     return ret;
 }
 
 
 
-bool DRW_ObjControl::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
+bool DRW_ObjControl::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs){
 int unkData=0;
     bool ret = DRW_TableEntry::parseDwg(version, buf, nullptr, bs);
     DRW_DBG("\n***************************** parsing object control entry *********************************************\n");
@@ -1680,4 +2434,3 @@ int unkData=0;
     }
     return buf->isGood();
 }
-

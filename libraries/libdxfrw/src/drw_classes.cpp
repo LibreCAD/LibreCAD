@@ -40,11 +40,16 @@ bool DRW_Class::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer *strBuf
     DRW_DBG(", entity flag: "); DRW_DBGH(entityFlag);
 
     if (version > DRW::AC1015) {//2004+
+        // ODA + libreDWG read_2004_section_classes (decode.c:2367-2371):
+        //   num_instances BL, dwg_version BS, maint_version BS, unknown_1 BL,
+        //   unknown_2 BL. (libreDWG's BL variant for dwg/maint is #if 0 dead
+        //   code.) BS and BL share encodings for values < 256, so this only
+        //   matters once a class trailer carries a >= 256 dwg/maint version.
         instanceCount = buf->getBitLong();
         DRW_DBG("\nInstance Count: "); DRW_DBG(instanceCount);
-        duint32 dwgVersion = buf->getBitLong();
+        std::uint32_t dwgVersion = buf->getBitShort();
         DRW_DBG("\nDWG version: "); DRW_DBG(dwgVersion);
-        DRW_DBG("\nmaintenance version: "); DRW_DBG(buf->getBitLong());
+        DRW_DBG("\nmaintenance version: "); DRW_DBG(buf->getBitShort());
         DRW_DBG("\nunknown 1: "); DRW_DBG(buf->getBitLong());
         DRW_DBG("\nunknown 2: "); DRW_DBG(buf->getBitLong());
     }
@@ -84,5 +89,10 @@ void DRW_Class::toDwgType(){
     else if (recName == "IMAGEDEF")
         dwgType = 102;
     else
-        dwgType =0;
+        dwgType = 0;
+    // NOTE: ARC_DIMENSION must NOT be added here. It has no fixed DWG type < 500.
+    // Its classNum (>= 500) is assigned by the DWG class table at read time and by
+    // writeDwgClasses() at write time. Dispatch goes via classesmap recName lookup
+    // in dwgreader.cpp default: block. Adding dwgType=27 (or any < 500) would silently
+    // redirect ARC_DIMENSION entities to the wrong parser (POINT is case 27).
 }

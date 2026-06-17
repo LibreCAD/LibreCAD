@@ -29,9 +29,9 @@ LC_LineJoinOptions::LC_LineJoinOptions() :
     m_action(nullptr){
     ui->setupUi(this);
 
-    connect(ui->cbLine1EdgeMode, &QComboBox::currentIndexChanged,this, &LC_LineJoinOptions::onEdgeModelLine1IndexChanged);
-    connect(ui->cbLine2EdgeMode, &QComboBox::currentIndexChanged,this, &LC_LineJoinOptions::onEdgeModelLine2IndexChanged);
-    connect(ui->cbAttributesSource, &QComboBox::currentIndexChanged, this, &LC_LineJoinOptions::onAttributesSourceIndexChanged);
+    connect(ui->cbLine1EdgeMode, QOverload<int>::of(&QComboBox::currentIndexChanged),this, &LC_LineJoinOptions::onEdgeModelLine1IndexChanged);
+    connect(ui->cbLine2EdgeMode, QOverload<int>::of(&QComboBox::currentIndexChanged),this, &LC_LineJoinOptions::onEdgeModelLine2IndexChanged);
+    connect(ui->cbAttributesSource, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &LC_LineJoinOptions::onAttributesSourceIndexChanged);
 
     connect(ui->cbPolyline, &QCheckBox::clicked, this, &LC_LineJoinOptions::onUsePolylineClicked);
     connect(ui->cbRemoveOriginals, &QCheckBox::clicked, this, &LC_LineJoinOptions::onRemoveOriginalsClicked);

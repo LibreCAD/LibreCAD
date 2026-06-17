@@ -37,7 +37,7 @@ QG_SplineOptions::QG_SplineOptions()
     m_action(nullptr), ui(new Ui::Ui_SplineOptions{}){
     ui->setupUi(this);
 
-    connect(ui->cbDegree, &QComboBox::currentIndexChanged, this, &QG_SplineOptions::onDegreeIndexChanged);
+    connect(ui->cbDegree, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &QG_SplineOptions::onDegreeIndexChanged);
     connect(ui->cbClosed, &QCheckBox::clicked,  this, &QG_SplineOptions::onClosedClicked);
     connect(ui->bUndo, &QToolButton::clicked,  this, &QG_SplineOptions::undo);
 }

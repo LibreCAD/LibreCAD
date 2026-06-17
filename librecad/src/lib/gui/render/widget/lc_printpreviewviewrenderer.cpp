@@ -26,6 +26,7 @@
 #include "rs_graphic.h"
 #include "rs_math.h"
 #include "rs_painter.h"
+#include "rs_units.h"
 
 #define DEBUG_PRINT_PREVIEW_POINTS_NO
 
@@ -73,10 +74,16 @@ void LC_PrintPreviewViewRenderer::drawPaper(RS_Painter *painter) {
     double paperFactorX = painter->toGuiDX(1.0) / m_paperScale;
     double paperFactorY = painter->toGuiDX(1.0) / m_paperScale;
 
-    int marginLeft = (int) (graphic->getMarginLeftInUnits() * paperFactorX);
-    int marginTop = (int) (graphic->getMarginTopInUnits() * paperFactorY);
-    int marginRight = (int) (graphic->getMarginRightInUnits() * paperFactorX);
-    int marginBottom = (int) (graphic->getMarginBottomInUnits() * paperFactorY);
+    // PR 11 — pull margins from the active LayoutRecord when one is set,
+    // otherwise fall back to the document singleton via activeLayoutMargins().
+    // Returned values are millimeters; convert to graphic units for the
+    // pixel-mapping arithmetic below.
+    const auto previewMm = graphic->activeLayoutMargins();
+    const RS2::Unit previewUnit = graphic->getUnit();
+    int marginLeft = (int) (RS_Units::convert(previewMm[0], RS2::Millimeter, previewUnit) * paperFactorX);
+    int marginTop = (int) (RS_Units::convert(previewMm[1], RS2::Millimeter, previewUnit) * paperFactorY);
+    int marginRight = (int) (RS_Units::convert(previewMm[2], RS2::Millimeter, previewUnit) * paperFactorX);
+    int marginBottom = (int) (RS_Units::convert(previewMm[3], RS2::Millimeter, previewUnit) * paperFactorY);
 
     const RS_Vector &wcsLeftBottomCorner = (RS_Vector(0, 0) - pinsbase) / m_paperScale;
     const RS_Vector &wcsTopBottomCorner = (printAreaSize - pinsbase) / m_paperScale;

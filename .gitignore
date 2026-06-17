@@ -115,3 +115,4 @@ core.*
 # pixi environments
 .pixi
 *.egg-info
+node_modules

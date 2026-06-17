@@ -30,14 +30,12 @@ bool dwgReader15::readMetaData() {
     previewImagePos = fileBuf->getRawLong32();
     DRW_DBG("previewImagePos (seekerImageData) = "); DRW_DBG(previewImagePos);
     /* MEASUREMENT system variable 2 bytes*/
-    duint16 meas = fileBuf->getRawShort16();
+    std::uint16_t meas = fileBuf->getRawShort16();
     DRW_DBG("\nMEASUREMENT (0 = English, 1 = Metric)= "); DRW_DBG(meas);
-    duint16 cp = fileBuf->getRawShort16();
+    std::uint16_t cp = fileBuf->getRawShort16();
     DRW_DBG("\ncodepage= "); DRW_DBG(cp); DRW_DBG("\n");
-    if (cp == 29) //TODO RLZ: locate wath code page and correct this
-        decoder.setCodePage("ANSI_1252", false);
-    if (cp == 30)
-        decoder.setCodePage("ANSI_1252", false);
+    if (const char* cpName = dwgCodePageName(cp))
+        decoder.setCodePage(cpName, false);
     return true;
 }
 
@@ -46,13 +44,13 @@ bool dwgReader15::readFileHeader() {
     DRW_DBG("dwgReader15::readFileHeader\n");
     if (! fileBuf->setPosition(21))
         return false;
-    duint32 count = fileBuf->getRawLong32();
+    std::uint32_t count = fileBuf->getRawLong32();
     DRW_DBG("count records= "); DRW_DBG(count); DRW_DBG("\n");
 
     for (unsigned int i = 0; i < count; i++) {
-        duint8 rec = fileBuf->getRawChar8();
-        duint32 address = fileBuf->getRawLong32();
-        duint32 size = fileBuf->getRawLong32();
+        std::uint8_t rec = fileBuf->getRawChar8();
+        std::uint32_t address = fileBuf->getRawLong32();
+        std::uint32_t size = fileBuf->getRawLong32();
         dwgSectionInfo si;
         si.Id = rec;
         si.size = size;
@@ -89,7 +87,7 @@ bool dwgReader15::readFileHeader() {
         return false;
     DRW_DBG("\nposition after read section locator records= "); DRW_DBG(fileBuf->getPosition());
     DRW_DBG(", bit are= "); DRW_DBG(fileBuf->getBitPos());
-    duint32 ckcrc = fileBuf->crc8(0,0,fileBuf->getPosition());
+    std::uint32_t ckcrc = fileBuf->crc8(0,0,fileBuf->getPosition());
     DRW_DBG("\nfile header crc8 0 result= "); DRW_DBG(ckcrc);
     switch (count){
     case 3:
@@ -123,7 +121,7 @@ bool dwgReader15::readDwgHeader(DRW_Header& hdr){
         return false;
     if (!fileBuf->setPosition(si.address))
         return false;
-    std::vector<duint8> tmpByteStr(si.size);
+    std::vector<std::uint8_t> tmpByteStr(si.size);
     fileBuf->getBytes(tmpByteStr.data(), si.size);
     dwgBuffer buff(tmpByteStr.data(), si.size, &decoder);
     DRW_DBG("Header section sentinel= ");
@@ -144,12 +142,13 @@ bool dwgReader15::readDwgClasses(){
     DRW_DBG("classes section sentinel= ");
     checkSentinel(fileBuf.get(), secEnum::CLASSES, true);
 
-    duint32 size = fileBuf->getRawLong32();
+    std::uint32_t size = fileBuf->getRawLong32();
     if (size != (si.size - 38)) {
         DRW_DBG("\nWARNING dwgReader15::readDwgClasses size are "); DRW_DBG(size);
         DRW_DBG(" and secSize - 38 are "); DRW_DBG(si.size - 38); DRW_DBG("\n");
     }
-    std::vector<duint8> tmpByteStr(size);
+    const std::uint32_t classDataSize = size;  // 1.5a: preserve before the -- below
+    std::vector<std::uint8_t> tmpByteStr(size);
     fileBuf->getBytes(tmpByteStr.data(), size);
     dwgBuffer buff(tmpByteStr.data(), size, &decoder);
     size--; //reduce 1 byte instead of check pos + bitPos
@@ -158,11 +157,36 @@ bool dwgReader15::readDwgClasses(){
         cl->parseDwg(version, &buff, &buff);
         classesmap[cl->classNum] = cl;
     }
-     DRW_DBG("\nCRC: "); DRW_DBGH(fileBuf->getRawShort16());
+     // 1.5a: validate the R13/R15 CLASSES CRC (crc16 0xC0C1). The writer
+     // (dwgwriter15.cpp) covers [sectionStart+16, end) = the RL size field
+     // (4 bytes) + class data, matching libreDWG's [address+16, address+
+     // size-18]. Here that is [si.address+16, si.address+20+classDataSize].
+     // crc8 saves/restores fileBuf's position, so it is safe to call before
+     // reading the stored CRC. The 1.1 negative-range guard protects against
+     // a corrupt size. (crc8 returns 0 on a read failure; treat that as a
+     // mismatch only when the stored CRC is non-zero.)
+     std::uint16_t crcCalc = fileBuf->crc8(0xc0c1,
+                                     static_cast<std::int32_t>(si.address + 16),
+                                     static_cast<std::int32_t>(si.address + 20 + classDataSize));
+     std::uint16_t crcRead = fileBuf->getRawShort16();
+     bool crcOk = (crcCalc == crcRead);
+     if (!crcOk) {
+         // WARN-ONLY: a CLASSES CRC mismatch is non-fatal — failing it discarded
+         // the WHOLE drawing (processDwg short-circuits all later sections) for a
+         // single drifted byte from a deviating third-party writer, inconsistent
+         // with the warn-only BEGIN sentinel (:145). The class-number map still
+         // parsed; track the mismatch as a diagnostic instead. (crc8 returns 0 on
+         // a stream read failure; a spurious 0==0 match there is acceptable for a
+         // diagnostic-only counter.)
+         ++m_classesCrcMismatch;
+         DRW_DBG("\nWARNING dwgReader15::readDwgClasses CRC mismatch: calc=");
+         DRW_DBGH(crcCalc); DRW_DBG(" read="); DRW_DBGH(crcRead); DRW_DBG("\n");
+     }
      DRW_DBG("\nclasses section end sentinel= ");
-     checkSentinel(fileBuf.get(), secEnum::CLASSES, false);
-     bool ret = buff.isGood();
-     return ret;
+     // 1.4: honor the END sentinel (fail on mismatch). The BEGIN sentinel
+     // (:145) and the CRC above stay warn-only to tolerate benign drift.
+     bool endOk = checkSentinel(fileBuf.get(), secEnum::CLASSES, false);
+     return buff.isGood() && endOk;
 }
 
 bool dwgReader15::readDwgHandles() {

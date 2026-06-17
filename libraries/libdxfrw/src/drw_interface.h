@@ -19,19 +19,19 @@
 #include "drw_objects.h"
 #include "drw_header.h"
 
+class DRW_Class;
+
 /**
  * Abstract class (interface) for communicate dxfReader with the application.
- * Inherit your class which takes care of the entities in the 
- * processed DXF file from this interface. 
+ * Inherit your class which takes care of the entities in the
+ * processed DXF file from this interface.
  *
  * @author Rallaz
  */
 class DRW_Interface {
 public:
-    DRW_Interface() {
-    }
-    virtual ~DRW_Interface() {
-    }
+    DRW_Interface() = default;
+    virtual ~DRW_Interface() = default;
 
     /** Called when header is parsed.  */
     virtual void addHeader(const DRW_Header* data) = 0;
@@ -56,10 +56,48 @@ public:
     virtual void addTolerance(const DRW_Tolerance& data) { (void) data; }
     /** Called for every Dictionary (named-object container, ODA fixed type 42). */
     virtual void addDictionary(const DRW_Dictionary& data) { (void) data; }
+    /** Called for every Dictionary-with-default object. */
+    virtual void addDictionaryWithDefault(const DRW_DictionaryWithDefault& data) { (void) data; }
+    /** Called for every DictionaryVar object. */
+    virtual void addDictionaryVar(const DRW_DictionaryVar& data) { (void) data; }
+    /** Called for every XRECORD object. */
+    virtual void addXRecord(const DRW_XRecord& data) { (void) data; }
+    /** Called for every FIELD object. */
+    virtual void addField(const DRW_Field& data) { (void) data; }
+    /** Called for every FIELDLIST object. */
+    virtual void addFieldList(const DRW_FieldList& data) { (void) data; }
+    /** Called for every RASTERVARIABLES object. */
+    virtual void addRasterVariables(const DRW_RasterVariables& data) { (void) data; }
+    /** Called for every WIPEOUTVARIABLES object (global display-frame flag). */
+    virtual void addWipeoutVariables(const DRW_WipeoutVariables& data) { (void) data; }
+    /** Called for every SORTENTSTABLE object. */
+    virtual void addSortEntsTable(const DRW_SortEntsTable& data) { (void) data; }
+    /** Called for every MATERIAL object. */
+    virtual void addMaterial(const DRW_Material& data) { (void) data; }
+    /** Called for every TABLESTYLE object. */
+    virtual void addTableStyle(const DRW_TableStyle& data) { (void) data; }
+    /** Called for every standalone TABLECONTENT object. */
+    virtual void addTableContent(const DRW_TableContentObject& data) { (void) data; }
+    /** Called for every CELLSTYLEMAP object. */
+    virtual void addCellStyleMap(const DRW_CellStyleMap& data) { (void) data; }
     /** Called for every Layout (paperspace, ODA fixed type 82). */
     virtual void addLayout(const DRW_Layout& data) { (void) data; }
     /** Called for every MLineStyle (ODA fixed type 73). */
     virtual void addMLineStyle(const DRW_MLineStyle& data) { (void) data; }
+    /** Called for unsupported DWG object/entity payloads kept as raw bytes. */
+    virtual void addUnsupportedObject(const DRW_UnsupportedObject& data) { (void) data; }
+    /** Called for unsupported DWG data sections kept as raw bytes. */
+    virtual void addRawDwgSection(const DRW_RawDwgSection& data) { (void) data; }
+    //! Lossless DXF passthrough (slice A1): an OBJECTS-section object libdxfrw does
+    //! not model is delivered verbatim so it can be re-emitted unchanged.
+    virtual void addRawDxfObject(const DRW_RawDxfObject& data) { (void) data; }
+    //! Lossless DXF passthrough (slice A4): an ENTITIES/BLOCKS entity libdxfrw does
+    //! not model (incl. standalone ATTDEF) delivered verbatim for unchanged re-emit.
+    virtual void addRawDxfEntity(const DRW_RawDxfObject& data) { (void) data; }
+    //! Parsed DXF CLASSES-section entry. Default no-op keeps older consumers
+    //! source-compatible while filters that preserve raw custom data can retain
+    //! exact class metadata for re-emission.
+    virtual void addDxfClass(const DRW_Class& data) { (void) data; }
 
     /**
      * Called for every block. Note: all entities added after this
@@ -117,6 +155,10 @@ public:
      *  must defer filename resolution.
      */
     virtual void addUnderlay(const DRW_Underlay* data) { (void)data; }
+    /** Called for every SHAPE entity. Default no-op; LibreCAD stores metadata. */
+    virtual void addShape(const DRW_Shape& data) { (void)data; }
+    /** Called for every OLE2FRAME entity. Default no-op; payload is opaque. */
+    virtual void addOle2Frame(const DRW_Ole2Frame& data) { (void)data; }
 
     /** Called for every UNDERLAYDEFINITION (Pdf/Dgn/Dwf) object.
      *  Carries the filename + sheet name that UNDERLAY entities reference
@@ -129,18 +171,36 @@ public:
 
     /** Called for every spline */
     virtual void addSpline(const DRW_Spline* data) = 0;
-	
+
+    /** Called for every helix (AcDbHelix). Default delegates nothing; the
+     *  base no-op lets readers add HELIX without forcing every consumer to
+     *  implement it. */
+    virtual void addHelix(const DRW_Helix* data) { (void) data; }
+
+    /** Called for every MESH (AcDbSubDMesh) subdivision-surface entity. Default
+     *  no-op so readers can deliver MESH without forcing every consumer to
+     *  implement it (trailing-virtual ABI convention, static-link only). */
+    virtual void addMesh(const DRW_Mesh& data) { (void) data; }
+
 	/** Called for every spline knot value */
     virtual void addKnot(const DRW_Entity& data) = 0;
 
     /** Called for every insert. */
     virtual void addInsert(const DRW_Insert& data) = 0;
-    
+    /** Called for every ACAD_TABLE entity. Defaults to INSERT rendering. */
+    virtual void addTable(const DRW_Table& data) { addInsert(data); }
+
     /** Called for every trace start */
     virtual void addTrace(const DRW_Trace& data) = 0;
-    
+
     /** Called for every 3dface start */
     virtual void add3dFace(const DRW_3Dface& data) = 0;
+
+    /** Called for REGION/3DSOLID/BODY opaque modeler geometry shells. */
+    virtual void addModelerGeometry(const DRW_ModelerGeometry& data) { (void) data; }
+
+    /** Called for LIGHT entity metadata. */
+    virtual void addLight(const DRW_Light& data) { (void) data; }
 
     /** Called for every solid start */
     virtual void addSolid(const DRW_Solid& data) = 0;
@@ -153,49 +213,54 @@ public:
     virtual void addText(const DRW_Text& data) = 0;
 
     /**
-     * Called for every aligned dimension entity. 
+     * Called for every aligned dimension entity.
      */
     virtual void addDimAlign(const DRW_DimAligned *data) = 0;
     /**
-     * Called for every linear or rotated dimension entity. 
+     * Called for every linear or rotated dimension entity.
      */
     virtual void addDimLinear(const DRW_DimLinear *data) = 0;
 
 	/**
-     * Called for every radial dimension entity. 
+     * Called for every radial dimension entity.
      */
     virtual void addDimRadial(const DRW_DimRadial *data) = 0;
 
 	/**
-     * Called for every diametric dimension entity. 
+     * Called for every diametric dimension entity.
      */
     virtual void addDimDiametric(const DRW_DimDiametric *data) = 0;
 
 	/**
-     * Called for every angular dimension (2 lines version) entity. 
+     * Called for every angular dimension (2 lines version) entity.
      */
     virtual void addDimAngular(const DRW_DimAngular *data) = 0;
 
 	/**
-     * Called for every angular dimension (3 points version) entity. 
+     * Called for every angular dimension (3 points version) entity.
      */
     virtual void addDimAngular3P(const DRW_DimAngular3p *data) = 0;
-	
+
     /**
-     * Called for every ordinate dimension entity. 
+     * Called for every ordinate dimension entity.
      */
     virtual void addDimOrdinate(const DRW_DimOrdinate *data) = 0;
-    
-    /** 
-	 * Called for every leader start. 
+
+    /**
+     * Called for every arc length dimension entity (ARC_DIMENSION).
+     */
+    virtual void addDimArc(const DRW_DimArc *data) = 0;
+
+    /**
+	 * Called for every leader start.
 	 */
     virtual void addLeader(const DRW_Leader *data) = 0;
-	
-	/** 
-	 * Called for every hatch entity. 
+
+	/**
+	 * Called for every hatch entity.
 	 */
     virtual void addHatch(const DRW_Hatch *data) = 0;
-	
+
     /**
      * Called for every viewport entity.
      */
@@ -259,6 +324,42 @@ public:
      * (drawingUnits / paperUnits, e.g. "1:48" → 48).
      */
     virtual void addScale(const DRW_Scale& data) { (void) data; }
+    /** Called for every DIMASSOC associative-dimension metadata object. */
+    virtual void addDimensionAssociation(const DRW_DimensionAssociation& data) { (void) data; }
+    /** Called for every ACAD_EVALUATION_GRAPH dynamic/associative metadata object. */
+    virtual void addEvaluationGraph(const DRW_EvaluationGraph& data) { (void) data; }
+    /** Called for every DETAILVIEWSTYLE model-document view style object. */
+    virtual void addDetailViewStyle(const DRW_DetailViewStyle& data) { (void) data; }
+    /** Called for every SECTIONVIEWSTYLE model-document view style object. */
+    virtual void addSectionViewStyle(const DRW_SectionViewStyle& data) { (void) data; }
+    /** Called for every BREAKDATA broken-view/dimension-break metadata object. */
+    virtual void addBreakData(const DRW_BreakData& data) { (void) data; }
+    /** Called for every BREAKPOINTREF broken-view reference metadata object. */
+    virtual void addBreakPointRef(const DRW_BreakPointRef& data) { (void) data; }
+    /** Called for every GROUP object. */
+    virtual void addGroup(const DRW_Group& data) { (void) data; }
+    /** Called for every IMAGEDEF_REACTOR object. */
+    virtual void addImageDefinitionReactor(const DRW_ImageDefinitionReactor& data) { (void) data; }
+    /** Called for every SPATIAL_FILTER xref clipping object. */
+    virtual void addSpatialFilter(const DRW_SpatialFilter& data) { (void) data; }
+    /** Called for every GEODATA geolocation metadata object. */
+    virtual void addGeoData(const DRW_GeoData& data) { (void) data; }
+    /** Called for every TABLEGEOMETRY cache object. */
+    virtual void addTableGeometry(const DRW_TableGeometry& data) { (void) data; }
+    /** Called for ACDBPLACEHOLDER fixed objects. */
+    virtual void addAcDbPlaceholder(const DRW_AcDbPlaceholder& data) { (void) data; }
+    /** Called for SUN view/vport lighting objects. */
+    virtual void addSun(const DRW_Sun& data) { (void) data; }
+    /** Called for ACDBASSOC* action/dependency/action-param shell objects. */
+    virtual void addAssociativeObject(const DRW_AssociativeObject& data) { (void) data; }
+    /** Called for ACSH_* history/action shell objects. */
+    virtual void addAcShHistoryObject(const DRW_AcShHistoryObject& data) { (void) data; }
+    /** Called for IDBUFFER objects (ODA §20.4.79). */
+    virtual void addIDBuffer(const DRW_IDBuffer& data) { (void) data; }
+    /** Called for LAYER_INDEX objects (ODA §20.4.83). */
+    virtual void addLayerIndex(const DRW_LayerIndex& data) { (void) data; }
+    /** Called for SPATIAL_INDEX objects (ODA §20.4.95). */
+    virtual void addSpatialIndex(const DRW_SpatialIndex& data) { (void) data; }
 
     /**
      * Called for every comment in the DXF file (code 999).
@@ -271,6 +372,10 @@ public:
     virtual void addPlotSettings(const DRW_PlotSettings *data) = 0;
 
     virtual void writeHeader(DRW_Header& data) = 0;
+    /** DWG-only pre-CLASSES callback. Implementations may register imported
+     * custom classes or raw replay payloads before the binary CLASSES section
+     * is emitted. DXF writers ignore this hook. */
+    virtual void writeDwgClasses() {}
     virtual void writeBlocks() = 0;
     virtual void writeBlockRecords() = 0;
     virtual void writeEntities() = 0;

@@ -33,10 +33,10 @@ LC_LineFromPointToLineOptions::LC_LineFromPointToLineOptions() :
 
     connect(ui->cbOrthogonal, &QCheckBox::clicked, this, &LC_LineFromPointToLineOptions::onOrthogonalClicked);
     connect(ui->leAngle, &QLineEdit::editingFinished, this, &LC_LineFromPointToLineOptions::onAngleEditingFinished);
-    connect(ui->cbSizeMode, &QComboBox::currentIndexChanged, this, &LC_LineFromPointToLineOptions::onSizeModeIndexChanged);
+    connect(ui->cbSizeMode, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &LC_LineFromPointToLineOptions::onSizeModeIndexChanged);
     connect(ui->leLength, &QLineEdit::editingFinished, this, &LC_LineFromPointToLineOptions::onLengthEditingFinished);
     connect(ui->leOffset, &QLineEdit::editingFinished, this, &LC_LineFromPointToLineOptions::onEndOffsetEditingFinished);
-    connect(ui->cbSnap, &QComboBox::currentIndexChanged,this, &LC_LineFromPointToLineOptions::onSnapModeIndexChanged);
+    connect(ui->cbSnap, QOverload<int>::of(&QComboBox::currentIndexChanged),this, &LC_LineFromPointToLineOptions::onSnapModeIndexChanged);
 
     pickAngleSetup("angle", ui->tbPickAngle, ui->leAngle);
     pickDistanceSetup("length", ui->tbPickLength, ui->leLength);

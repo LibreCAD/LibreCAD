@@ -36,7 +36,7 @@ QG_LineBisectorOptions::QG_LineBisectorOptions()
 	, ui(new Ui::Ui_LineBisectorOptions{}){
     ui->setupUi(this);
     connect(ui->leLength, &QLineEdit::editingFinished, this, &QG_LineBisectorOptions::onLengthEditingFinished);
-    connect(ui->sbNumber, &QSpinBox::valueChanged, this, &QG_LineBisectorOptions::onNumberValueChanged);
+    connect(ui->sbNumber, QOverload<int>::of(&QSpinBox::valueChanged), this, &QG_LineBisectorOptions::onNumberValueChanged);
 
     pickDistanceSetup("length", ui->tbPickLength, ui->leLength);
 }

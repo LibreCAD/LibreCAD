@@ -38,7 +38,7 @@ QG_LineAngleOptions::QG_LineAngleOptions()
 
     connect(ui->leAngle, &QLineEdit::editingFinished, this, &QG_LineAngleOptions::onAngleEditingFinished);
     connect(ui->leLength, &QLineEdit::editingFinished, this, &QG_LineAngleOptions::onLengthEditingFinished);
-    connect(ui->cbSnapPoint, &QComboBox::currentIndexChanged, this, &QG_LineAngleOptions::onSnapPointCurrentIndexChanged);
+    connect(ui->cbSnapPoint, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &QG_LineAngleOptions::onSnapPointCurrentIndexChanged);
     connect(ui->cbForAnglesBasis, &QCheckBox::toggled, this, &QG_LineAngleOptions::onAnglesBasisToggled);
 
     pickAngleSetup("angle", ui->tbPickAngle, ui->leAngle);

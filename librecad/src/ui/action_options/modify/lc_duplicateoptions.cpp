@@ -31,8 +31,8 @@ LC_DuplicateOptions::LC_DuplicateOptions():
     connect(ui->leOffsetX, &QLineEdit::editingFinished, this, &LC_DuplicateOptions::onOffsetXEditingFinished);
     connect(ui->leOffsetY, &QLineEdit::editingFinished, this, &LC_DuplicateOptions::onOffsetYEditingFinished);
     connect(ui->cbInPlace, &QCheckBox::clicked, this, &LC_DuplicateOptions::onInPlaceClicked);
-    connect(ui->cbPen, &QComboBox::currentIndexChanged, this, &LC_DuplicateOptions::onPenModeIndexChanged);
-    connect(ui->cbLayer, &QComboBox::currentIndexChanged, this, &LC_DuplicateOptions::onLayerModeIndexChanged);
+    connect(ui->cbPen, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &LC_DuplicateOptions::onPenModeIndexChanged);
+    connect(ui->cbLayer, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &LC_DuplicateOptions::onLayerModeIndexChanged);
 
     pickDistanceSetup("offsetX", ui->tbPickOffsetX, ui->leOffsetX);
     pickDistanceSetup("offsetY", ui->tbPickOffsetY, ui->leOffsetY);

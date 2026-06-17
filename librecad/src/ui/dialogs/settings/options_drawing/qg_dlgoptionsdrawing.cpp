@@ -44,6 +44,7 @@
 #include "lc_dlgnewcustomvariable.h"
 #include "lc_dlgnewdimstyle.h"
 #include "lc_inputtextdialog.h"
+#include "lc_tolerance.h"
 #include "qc_applicationwindow.h"
 #include "rs_debug.h"
 #include "rs_filterdxfrw.h"
@@ -107,8 +108,8 @@ void QG_DlgOptionsDrawing::connectUserVarsTab() {
 }
 
 void QG_DlgOptionsDrawing::_to_remove_ConnectLegacyDimsTab() {
-    connect(cbDimLUnit, &QComboBox::activated, this, &QG_DlgOptionsDrawing::updateDimLengthPrecision);
-    connect(cbDimAUnit, &QComboBox::activated, this, &QG_DlgOptionsDrawing::updateDimAnglePrecision);
+    connect(cbDimLUnit, QOverload<int>::of(&QComboBox::activated), this, &QG_DlgOptionsDrawing::updateDimLengthPrecision);
+    connect(cbDimAUnit, QOverload<int>::of(&QComboBox::activated), this, &QG_DlgOptionsDrawing::updateDimAnglePrecision);
     connect(cbDimFxLon, &QCheckBox::toggled, this, &QG_DlgOptionsDrawing::onDimFxLonToggled);
 }
 
@@ -140,7 +141,7 @@ QG_DlgOptionsDrawing::~QG_DlgOptionsDrawing(){
 }
 
 void QG_DlgOptionsDrawing::connectPaperTab() {
-    connect(cbPaperFormat, &QComboBox::activated, this, &QG_DlgOptionsDrawing::updatePaperSize);
+    connect(cbPaperFormat, QOverload<int>::of(&QComboBox::activated), this, &QG_DlgOptionsDrawing::updatePaperSize);
     connect(lePaperWidth, &QLineEdit::textChanged, this, &QG_DlgOptionsDrawing::updatePaperPreview);
     connect(lePaperHeight, &QLineEdit::textChanged, this, &QG_DlgOptionsDrawing::updatePaperPreview);
     connect(rbLandscape, &QRadioButton::toggled, this, &QG_DlgOptionsDrawing::onLandscapeToggled);
@@ -151,13 +152,13 @@ void QG_DlgOptionsDrawing::connectPaperTab() {
 }
 
 void QG_DlgOptionsDrawing::connectUnitTab() {
-    connect(cbUnit, &QComboBox::activated, this, &QG_DlgOptionsDrawing::updateUnitsPreview);
-    connect(cbLengthFormat, &QComboBox::activated, this, &QG_DlgOptionsDrawing::updateLengthPrecision);
-    connect(cbLengthFormat, &QComboBox::activated, this, &QG_DlgOptionsDrawing::updateUnitsPreview);
-    connect(cbLengthPrecision, &QComboBox::activated, this, &QG_DlgOptionsDrawing::updateUnitsPreview);
-    connect(cbAngleFormat, &QComboBox::activated, this, &QG_DlgOptionsDrawing::updateAnglePrecision);
-    connect(cbAngleFormat, &QComboBox::activated, this, &QG_DlgOptionsDrawing::updateUnitsPreview);
-    connect(cbAnglePrecision, &QComboBox::activated, this, &QG_DlgOptionsDrawing::updateUnitsPreview);
+    connect(cbUnit, QOverload<int>::of(&QComboBox::activated), this, &QG_DlgOptionsDrawing::updateUnitsPreview);
+    connect(cbLengthFormat, QOverload<int>::of(&QComboBox::activated), this, &QG_DlgOptionsDrawing::updateLengthPrecision);
+    connect(cbLengthFormat, QOverload<int>::of(&QComboBox::activated), this, &QG_DlgOptionsDrawing::updateUnitsPreview);
+    connect(cbLengthPrecision, QOverload<int>::of(&QComboBox::activated), this, &QG_DlgOptionsDrawing::updateUnitsPreview);
+    connect(cbAngleFormat, QOverload<int>::of(&QComboBox::activated), this, &QG_DlgOptionsDrawing::updateAnglePrecision);
+    connect(cbAngleFormat, QOverload<int>::of(&QComboBox::activated), this, &QG_DlgOptionsDrawing::updateUnitsPreview);
+    connect(cbAnglePrecision, QOverload<int>::of(&QComboBox::activated), this, &QG_DlgOptionsDrawing::updateUnitsPreview);
 }
 
 void QG_DlgOptionsDrawing::connectGridTab() {
@@ -287,20 +288,38 @@ void QG_DlgOptionsDrawing::setupDimStylesTab() {
 void QG_DlgOptionsDrawing::collectStylesUsage(QMap<QString, int>& map) {
     for (RS_Entity* e : m_graphic->getEntityList()) {
         auto entityType = e->rtti();
-        if (!e->isUndone() && RS2::isDimensionalEntity(entityType)) {
-            auto* dim = dynamic_cast<RS_Dimension*>(e);
-            QString styleName = dim->getStyle();
+        if (e->isUndone()) {
+            continue;
+        }
 
-            auto dimStyleForNameAndType = m_graphic->getDimStyleByName(styleName, entityType);
-            if (dimStyleForNameAndType != nullptr) {
-                QString resolvedStyleName = dimStyleForNameAndType->getName();
-                int value = map.value(resolvedStyleName, 0);
-                value++;
-                map[resolvedStyleName] = value;
+        QString styleName;
+        if (RS2::isDimensionalEntity(entityType)) {
+            auto* dim = dynamic_cast<RS_Dimension*>(e);
+            if (dim == nullptr) {
+                continue;
             }
-            else {
-               // weird case - style is referenced in entity, but is not present in dim styles... looks like DXF error
+            styleName = dim->getStyle();
+        }
+        else if (entityType == RS2::EntityTolerance) {
+            auto* tolerance = dynamic_cast<LC_Tolerance*>(e);
+            if (tolerance == nullptr) {
+                continue;
             }
+            styleName = tolerance->getData().m_dimStyleName;
+        }
+        else {
+            continue;
+        }
+
+        auto dimStyleForNameAndType = m_graphic->getDimStyleByName(styleName, entityType);
+        if (dimStyleForNameAndType != nullptr) {
+            QString resolvedStyleName = dimStyleForNameAndType->getName();
+            int value = map.value(resolvedStyleName, 0);
+            value++;
+            map[resolvedStyleName] = value;
+        }
+        else {
+           // weird case - style is referenced in entity, but is not present in dim styles... looks like DXF error
         }
     }
 }
@@ -983,10 +1002,19 @@ void QG_DlgOptionsDrawing::setupPaperTab() {
     leMarginTop->blockSignals(block);
     leMarginBottom->blockSignals(block);
 
-    leMarginLeft->setText(QString::number(m_graphic->getMarginLeftInUnits()));
-    leMarginTop->setText(QString::number(m_graphic->getMarginTopInUnits()));
-    leMarginRight->setText(QString::number(m_graphic->getMarginRightInUnits()));
-    leMarginBottom->setText(QString::number(m_graphic->getMarginBottomInUnits()));
+    // PR 11 — pull margins from the active LayoutRecord when one is set
+    // (DWG with paper-space layouts), otherwise fall back to the document
+    // singleton via activeLayoutMargins() so DXF imports stay byte-identical.
+    const auto activeMargins = m_graphic->activeLayoutMargins();
+    const RS2::Unit graphicUnit = m_graphic->getUnit();
+    leMarginLeft->setText(QString::number(
+        RS_Units::convert(activeMargins[0], RS2::Millimeter, graphicUnit)));
+    leMarginTop->setText(QString::number(
+        RS_Units::convert(activeMargins[1], RS2::Millimeter, graphicUnit)));
+    leMarginRight->setText(QString::number(
+        RS_Units::convert(activeMargins[2], RS2::Millimeter, graphicUnit)));
+    leMarginBottom->setText(QString::number(
+        RS_Units::convert(activeMargins[3], RS2::Millimeter, graphicUnit)));
 
     block = false;
     leMarginLeft->blockSignals(block);
@@ -1486,11 +1514,22 @@ void QG_DlgOptionsDrawing::validatePaperTab() {
         rbLandscape->setChecked(landscape);
     }
 
-    // Pager margins:
-    m_graphic->setMarginsInUnits(RS_Math::eval(leMarginLeft->text()),
-                                 RS_Math::eval(leMarginTop->text()),
-                                 RS_Math::eval(leMarginRight->text()),
-                                 RS_Math::eval(leMarginBottom->text()));
+    // Pager margins — PR 11: route to the active LayoutRecord when one is
+    // set, fall back to the document singleton otherwise.  Convert the
+    // user-entered values from graphic units to millimeters here so the
+    // RS_Graphic API stays unit-agnostic (matches setMarginsInUnits).
+    {
+        const RS2::Unit graphicUnit = m_graphic->getUnit();
+        const double leftMm  = RS_Units::convert(
+            RS_Math::eval(leMarginLeft->text()), graphicUnit, RS2::Millimeter);
+        const double topMm   = RS_Units::convert(
+            RS_Math::eval(leMarginTop->text()), graphicUnit, RS2::Millimeter);
+        const double rightMm = RS_Units::convert(
+            RS_Math::eval(leMarginRight->text()), graphicUnit, RS2::Millimeter);
+        const double bottomMm = RS_Units::convert(
+            RS_Math::eval(leMarginBottom->text()), graphicUnit, RS2::Millimeter);
+        m_graphic->setActiveLayoutMargins(leftMm, topMm, rightMm, bottomMm);
+    }
     // Number of pages:
     m_graphic->setPagesNum(sbPagesNumH->value(),
                            sbPagesNumV->value());
@@ -1828,18 +1867,23 @@ void QG_DlgOptionsDrawing::updatePaperPreview() {
     int previewW = gvPaperPreview->width() - 10;
     int previewH = gvPaperPreview->height() - 10;
     double scale = qMin(previewW / paperW, previewH / paperH);
+    // PR 11 — fallback (text parse failed) reads from the active layout
+    // via activeLayoutMargins() so the preview reflects the same source
+    // the read path above already populated.
+    const auto previewMargins = m_graphic->activeLayoutMargins();
+    const RS2::Unit previewUnit = m_graphic->getUnit();
     int lMargin = qRound(RS_Math::eval(leMarginLeft->text(),-1) * scale);
     if (lMargin < 0.0)
-        lMargin = m_graphic->getMarginLeftInUnits();
+        lMargin = RS_Units::convert(previewMargins[0], RS2::Millimeter, previewUnit);
     int tMargin = qRound(RS_Math::eval(leMarginTop->text(),-1) * scale);
     if (tMargin < 0.0)
-        tMargin = m_graphic->getMarginTopInUnits();
+        tMargin = RS_Units::convert(previewMargins[1], RS2::Millimeter, previewUnit);
     int rMargin = qRound(RS_Math::eval(leMarginRight->text(),-1) * scale);
     if (rMargin < 0.0)
-        rMargin = m_graphic->getMarginRightInUnits();
+        rMargin = RS_Units::convert(previewMargins[2], RS2::Millimeter, previewUnit);
     int bMargin = qRound(RS_Math::eval(leMarginBottom->text(),-1) * scale);
     if (bMargin < 0.0)
-        bMargin = m_graphic->getMarginBottomInUnits();
+        bMargin = RS_Units::convert(previewMargins[3], RS2::Millimeter, previewUnit);
     int printAreaW = qRound(paperW*scale) - lMargin - rMargin;
     int printAreaH = qRound(paperH*scale) - tMargin - bMargin;
     m_paperScene->clear();

@@ -72,6 +72,10 @@ struct RS_Entity::Impl {
     quint32 m_fullVisualStyleH = 0; // DWG R2010+
     quint32 m_faceVisualStyleH = 0;
     quint32 m_edgeVisualStyleH = 0;
+    // Source DXF/DWG entity handle (group code 5) captured on import. 0 = not
+    // set / minted by LibreCAD. Lets the writer build an old->new handle map
+    // for refs that point at model entities (e.g. GROUP code-340 members).
+    quint32 m_sourceHandle = 0;
 
     void fromOther(Impl* other) {
         if (other != nullptr) {
@@ -95,6 +99,7 @@ struct RS_Entity::Impl {
             m_fullVisualStyleH = other->m_fullVisualStyleH;
             m_faceVisualStyleH = other->m_faceVisualStyleH;
             m_edgeVisualStyleH = other->m_edgeVisualStyleH;
+            m_sourceHandle = other->m_sourceHandle;
         }
     }
 };
@@ -1079,6 +1084,8 @@ void RS_Entity::setVisualStyleHandles(quint32 full, quint32 face,
   m_pImpl->m_faceVisualStyleH = face;
   m_pImpl->m_edgeVisualStyleH = edge;
 }
+quint32 RS_Entity::sourceHandle() const { return m_pImpl->m_sourceHandle; }
+void RS_Entity::setSourceHandle(quint32 h) { m_pImpl->m_sourceHandle = h; }
 
 //! constructionLayer contains entities of infinite length, constructionLayer doesn't show up in print
 bool RS_Entity::isConstruction(bool typeCheck) const{

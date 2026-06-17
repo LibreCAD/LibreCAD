@@ -581,6 +581,9 @@ public:
     quint32 faceVisualStyleHandle() const;
     quint32 edgeVisualStyleHandle() const;
     void setVisualStyleHandles(quint32 full, quint32 face, quint32 edge);
+    /// Source DXF/DWG entity handle (group code 5) from import. 0 if unset.
+    quint32 sourceHandle() const;
+    void setSourceHandle(quint32 h);
 
     friend std::ostream &operator<<(std::ostream &os, RS_Entity &e);
     /** Recalculates the borders of this entity. */

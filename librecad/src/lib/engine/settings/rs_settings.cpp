@@ -25,12 +25,52 @@
 **********************************************************************/
 
 // RVT_PORT changed QSettings s(QSettings::Ini) to QSettings s("./qcad.ini", QSettings::IniFormat);
+#include <QFileInfo>
+#include <QRegularExpression>
 #include <QSettings>
 
 #include "rs_debug.h"
 #include "rs_settings.h"
 
 #include "rs_pen.h"
+
+namespace {
+    constexpr const char* G_KEY_MIGRATED_FROM = "_migratedFrom";
+    constexpr const char* G_KEY_SCHEMA_MAJOR  = "_schemaMajor";
+    constexpr const char* G_KEY_SCHEMA_MINOR  = "_schemaMinor";
+    constexpr const char* G_LEGACY_APP_NAME   = "LibreCAD";
+
+    // App names matching "LibreCAD-<integer>" are versioned production
+    // stores; everything else (e.g. "LibreCAD-tests") opts out of
+    // migration so unit tests don't inherit real user settings.
+    bool isVersionedAppName(const QString& appKey) {
+        static const QRegularExpression re(QStringLiteral("^LibreCAD-\\d+$"));
+        return re.match(appKey).hasMatch();
+    }
+
+    // Cross-platform "does this QSettings store have any LibreCAD-owned
+    // data?" check. allKeys() is NOT reliable here: on macOS, NSUserDefaults
+    // falls through to the global domain so allKeys() returns dozens of
+    // com/apple/* system keys even when our app-specific plist has never
+    // been written.
+    //
+    // For file-backed formats (Linux .conf, macOS .plist, IniFormat) we
+    // check the backing file's existence — Qt only creates the file on
+    // sync() when there's data to write, so non-existence proves
+    // emptiness.
+    //
+    // For the Windows registry path (Q_OS_WIN + NativeFormat), the registry
+    // does not leak global keys, so childGroups()/childKeys() at the root
+    // are reliable.
+    bool isStoreEmpty(QSettings& s) {
+#ifdef Q_OS_WIN
+        if (s.format() == QSettings::NativeFormat) {
+            return s.childGroups().isEmpty() && s.childKeys().isEmpty();
+        }
+#endif
+        return !QFileInfo::exists(s.fileName());
+    }
+}
 
 RS_Settings::GroupGuard::GroupGuard(const QString &group):m_group{group} {}
 
@@ -64,7 +104,83 @@ RS_Settings *RS_Settings::instance() {
  */
 void RS_Settings::init(const QString &companyKey,const QString &appKey) {
     auto* settings = new QSettings(companyKey, appKey);
+
+    // First-run migration: if this is a versioned production store and
+    // it's empty, look for a prior-major sibling and copy its contents.
+    // Test app names (e.g. "LibreCAD-tests") skip migration so test
+    // runs don't inherit real user settings from prior majors.
+    if (isVersionedAppName(appKey) && isStoreEmpty(*settings)) {
+        migrateFromPriorMajor(companyKey, settings,
+                              LC_SETTINGS_SCHEMA_MAJOR);
+    }
+
+    // Always stamp the current schema major so future tooling can
+    // distinguish stores by major. The schema-minor field is the hook
+    // for any within-major schema break a future patch needs to apply.
+    settings->setValue(QLatin1String(G_KEY_SCHEMA_MAJOR),
+                       LC_SETTINGS_SCHEMA_MAJOR);
+    int schemaMinor = settings->value(
+        QLatin1String(G_KEY_SCHEMA_MINOR), 0).toInt();
+    // (no within-major migrations yet — when one lands, bump schemaMinor
+    //  here as: if (schemaMinor < 1) { ...; schemaMinor = 1; })
+    settings->setValue(QLatin1String(G_KEY_SCHEMA_MINOR), schemaMinor);
+
     INSTANCE = new RS_Settings(settings);
+}
+
+void RS_Settings::copyAll(QSettings* src, QSettings* dst) {
+    // Copy keys at the current group level. Skip top-level keys
+    // beginning with "_" — those are schema meta-state that must not
+    // be inherited across major versions.
+    const bool atRoot = src->group().isEmpty();
+    for (const QString& key : src->childKeys()) {
+        if (atRoot && key.startsWith(QLatin1Char('_'))) {
+            continue;
+        }
+        dst->setValue(key, src->value(key));
+    }
+    // Recurse into child groups so arbitrarily-deep nesting is handled
+    // (Qt's allKeys() returns flat slash-paths, but childGroups() is
+    // one level at a time).
+    for (const QString& group : src->childGroups()) {
+        src->beginGroup(group);
+        dst->beginGroup(group);
+        copyAll(src, dst);
+        dst->endGroup();
+        src->endGroup();
+    }
+}
+
+QString RS_Settings::migrateFromPriorMajor(const QString& companyKey,
+                                            QSettings* dst,
+                                            int currentMajor) {
+    auto tryCopy = [&](const QString& priorApp) -> bool {
+        QSettings prior(companyKey, priorApp);
+        if (isStoreEmpty(prior)) {
+            return false;
+        }
+        copyAll(&prior, dst);
+        dst->setValue(QLatin1String(G_KEY_MIGRATED_FROM), priorApp);
+        dst->setValue(QLatin1String(G_KEY_SCHEMA_MAJOR), currentMajor);
+        // Reset within-major schema state — prior major's _schemaMinor
+        // is meaningless under the new major's schema.
+        dst->setValue(QLatin1String(G_KEY_SCHEMA_MINOR), 0);
+        return true;
+    };
+
+    // Search versioned siblings, highest-numbered first.
+    for (int n = currentMajor - 1; n >= 1; --n) {
+        const QString priorApp = QStringLiteral("LibreCAD-%1").arg(n);
+        if (tryCopy(priorApp)) {
+            return priorApp;
+        }
+    }
+    // Final fallback: the legacy un-versioned name — catches users
+    // upgrading from any pre-versioning LibreCAD release.
+    if (tryCopy(QLatin1String(G_LEGACY_APP_NAME))) {
+        return QLatin1String(G_LEGACY_APP_NAME);
+    }
+    return QString();
 }
 
 RS_Settings::RS_Settings(QSettings *qsettings) {

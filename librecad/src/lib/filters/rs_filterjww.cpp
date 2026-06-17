@@ -25,7 +25,12 @@
 **********************************************************************/
 
 #include <QRegularExpression>
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#include <QByteArray>
 #include <QStringConverter>
+#else
+#include <QTextCodec>
+#endif
 
 #include <QFile>
 #include <QFileInfo>
@@ -59,6 +64,38 @@
 #include "rs_math.h"
 #include "rs_debug.h"
 
+namespace {
+QString decodeWithCodePage(const std::string& text, const QString& encoding)
+{
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    const auto qEncoding = QStringConverter::encodingForName(encoding.toLatin1());
+    if (qEncoding) {
+        QStringDecoder decoder{*qEncoding};
+        return decoder(QByteArray::fromRawData(text.data(), qsizetype(text.size())));
+    }
+#else
+    QTextCodec* codec = QTextCodec::codecForName(encoding.toLatin1());
+    if (codec != nullptr) {
+        return codec->toUnicode(text.c_str());
+    }
+#endif
+    // The requested codec is unavailable. JWW is a Japanese format whose
+    // file bytes are Shift-JIS — falling through to `fromStdString` (which
+    // is `fromUtf8` on Qt 6) would mojibake any non-ASCII content. Try
+    // Shift-JIS explicitly before giving up.
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    if (auto sjis = QStringConverter::encodingForName("Shift-JIS")) {
+        QStringDecoder dec{*sjis};
+        return dec(QByteArray::fromRawData(text.data(), qsizetype(text.size())));
+    }
+#else
+    if (QTextCodec* sjis = QTextCodec::codecForName("Shift-JIS")) {
+        return sjis->toUnicode(text.c_str());
+    }
+#endif
+    return QString::fromUtf8(text.data(), qsizetype(text.size()));
+}
+}
 
 /**
  * Default constructor.
@@ -212,10 +249,7 @@ void RS_FilterJWW::addBlock(const DL_BlockData& data) {
                         QString enc = RS_System::getEncoding(
                                                                 variables.getString("$DWGCODEPAGE", "ANSI_1252"));
                         // get the codec for Japanese
-                        QString blName = data.name.c_str();
-                        std::optional<QStringConverter::Encoding> encoding = QStringConverter::encodingForName(enc.toLatin1());
-                        if(encoding)
-                                blName = QStringEncoder{QStringEncoder::Utf8}(QString::fromStdString(data.name));
+                        QString blName = decodeWithCodePage(data.name, enc);
 //////////////////////////////
                         RS_Block* block =
                                 new RS_Block(graphic,
@@ -2470,10 +2504,7 @@ void RS_FilterJWW::setEntityAttributes(RS_Entity* entity,
                 QString enc = RS_System::getEncoding(
                                                         variables.getString("$DWGCODEPAGE", "ANSI_1252"));
                 // get the codec for Japanese
-                QString lName = attrib.getLayer().c_str();
-                auto encoding = QStringConverter::encodingForName(enc.toLatin1());
-                if(encoding)
-                        lName = QStringEncoder{QStringEncoder::Utf8}(QString::fromStdString(attrib.getLayer()));
+                QString lName = decodeWithCodePage(attrib.getLayer(), enc);
 				if (!graphic->findLayer(lName)) {
                         addLayer(DL_LayerData(attrib.getLayer(), 0));
                 }
@@ -3067,9 +3098,7 @@ QString RS_FilterJWW::toNativeString(const char* data, const QString& encoding) 
      *	  the string through a textcoder.
      *	--------------------------------------------------------------------- */
     if (!res.contains("\\U+")) {
-        auto qEncoding = QStringConverter::encodingForName(encoding.toLatin1());
-        if (qEncoding)
-            res = QStringEncoder{QStringEncoder::Utf8}(data);
+        res = decodeWithCodePage(data, encoding);
     }
 
     // Line feed:

@@ -25,10 +25,12 @@ class dxfWriter;
 class dwgBuffer;
 class dwgBufferW;
 class DrwHeaderEncodeTestAccess;  // test-only friend; defined in tests/dwg_header_encode_round_trip_tests.cpp
+class dwgWriter24;                // forward declaration for friend access
 
 #define SETHDRFRIENDS  friend class dxfRW; \
                        friend class dwgReader; \
                        friend class dwgWriter15; \
+                       friend class dwgWriter24; \
                        friend class DrwHeaderEncodeTestAccess;
 
 //! Class to handle header entries
@@ -90,6 +92,7 @@ public:
     DRW_Header& operator=(const DRW_Header &h) {
        if(this != &h) {
            clearVars();
+           this->curr = nullptr;   // clearVars() freed what curr pointed at
            this->version = h.version;
            this->comments = h.comments;
            for (auto it=h.vars.begin(); it!=h.vars.end(); ++it){
@@ -113,17 +116,29 @@ public:
     /// HANDSEED accessors.  The DWG writer uses these to propagate the
     /// document's high-water-mark handle so AutoCAD does not refresh
     /// HANDSEED on first save.  See [Risk 4j] in the writer plan.
-    duint32 getHandSeed() const { return handSeed; }
-    void    setHandSeed(duint32 h) { handSeed = h; }
+    std::uint32_t getHandSeed() const { return handSeed; }
+    void    setHandSeed(std::uint32_t h) { handSeed = h; }
+
+    /// Stream offset of the $HANDSEED value field written by the ASCII DXF
+    /// header writer (DRW_Header::write).  The value is emitted as a fixed
+    /// 8-hex-digit placeholder so dxfRW can seek back here after the OBJECTS
+    /// section and overwrite it with the final handle high-water mark
+    /// (highWaterHandle).  -1 means "not recorded" (binary DXF / pre-2000).
+    std::streampos m_handseedValueOffset {std::streampos(-1)};
+    /// Fixed character width of the back-patchable $HANDSEED value field.
+    static constexpr int kHandseedFieldWidth = 8;
 
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader);
-    bool parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer *hBbuf, duint8 mv=0);
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer *hBbuf, std::uint8_t mv=0);
     /// Inverse of parseDwg: emits the bit-packed body of the HEADER
     /// section.  For R2000 (AC1015), `buf` and `hBbuf` may alias the
     /// same accumulator since the handle stream is inline.  Order of
     /// emission matches parseDwg byte-for-byte.
-    bool encodeDwg(DRW::Version version, dwgBufferW *buf, dwgBufferW *hBbuf);
+    /// For R2007+ (AC1021+), TV/TU header strings are written to `strBuf`
+    /// (the separate string stream); dwgWriter appends them + the footer.
+    bool encodeDwg(DRW::Version version, dwgBufferW *buf, dwgBufferW *hBbuf,
+                   dwgBufferW *strBuf = nullptr);
 private:
     bool getDouble(std::string key, double *varDouble);
     bool getInt(std::string key, int *varInt);
@@ -137,6 +152,16 @@ private:
             delete it->second;
         customVars.clear();
     }
+    /// Store v under key in vars, freeing any previously-stored variant
+    /// (avoids a leak when a header variable appears more than once).
+    /// Updates curr so subsequent parseCode value reads land in v.
+    void storeVar(const std::string& key, DRW_Variant* v) {
+        auto it = vars.find(key);
+        if (it != vars.end() && it->second != v)
+            delete it->second;
+        vars[key] = v;
+        curr = v;
+    }
 
 public:
     std::unordered_map<std::string,DRW_Variant*> vars;
@@ -147,23 +172,23 @@ private:
     DRW_Variant* curr {nullptr};
     int version; //to use on read
 
-    duint32 linetypeCtrl;
-    duint32 layerCtrl;
-    duint32 styleCtrl;
-    duint32 dimstyleCtrl;
-    duint32 appidCtrl;
-    duint32 blockCtrl;
-    duint32 viewCtrl;
-    duint32 ucsCtrl;
-    duint32 vportCtrl;
-    duint32 vpEntHeaderCtrl;
+    std::uint32_t linetypeCtrl;
+    std::uint32_t layerCtrl;
+    std::uint32_t styleCtrl;
+    std::uint32_t dimstyleCtrl;
+    std::uint32_t appidCtrl;
+    std::uint32_t blockCtrl;
+    std::uint32_t viewCtrl;
+    std::uint32_t ucsCtrl;
+    std::uint32_t vportCtrl;
+    std::uint32_t vpEntHeaderCtrl;
     /// HANDSEED: the document's high-water-mark allocated handle.
     /// parseDwg captures it from the data stream; encodeDwg writes it
     /// back.  Default 0 means "fresh document — encoder emits null and
     /// AutoCAD will refresh it on first save".  For round-trip
     /// preservation, populate via the captured value from the source
     /// file.
-    duint32 handSeed {0};
+    std::uint32_t handSeed {0};
 
     int measurement(const int unit);
 };

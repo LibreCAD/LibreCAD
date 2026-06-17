@@ -26,6 +26,7 @@
 #include "rs_debug.h"
 
 #include <QDateTime>
+#include <QIODevice>
 #include <QString>
 #include <QTextStream>
 #include <iostream>
@@ -39,7 +40,7 @@ FILE *s_logStream = nullptr;
 // The implementation to delegate methods to QTextStream
 struct RS_Debug::LogStream::StreamImpl : public QTextStream {
     StreamImpl(RS_Debug::RS_DebugLevel level) :
-        QTextStream{&m_string, QIODeviceBase::WriteOnly}
+        QTextStream{&m_string, QIODevice::WriteOnly}
       , m_debugLevel{level}
     {
     }

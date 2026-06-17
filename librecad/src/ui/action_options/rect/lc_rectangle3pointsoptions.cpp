@@ -34,13 +34,13 @@ LC_Rectangle3PointsOptions::LC_Rectangle3PointsOptions() :
     connect(ui->leLenY, &QLineEdit::editingFinished, this, &LC_Rectangle3PointsOptions::onLenYEditingFinished);
     connect(ui->leX, &QLineEdit::editingFinished, this, &LC_Rectangle3PointsOptions::onLenXEditingFinished);
     connect(ui->leInnerAngle, &QLineEdit::editingFinished, this, &LC_Rectangle3PointsOptions::onInnerAngleEditingFinished);
-    connect(ui->cbCorners, &QComboBox::currentIndexChanged, this, &LC_Rectangle3PointsOptions::onCornersIndexChanged);
+    connect(ui->cbCorners, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &LC_Rectangle3PointsOptions::onCornersIndexChanged);
     connect(ui->cbPolyline, &QCheckBox::clicked, this, &LC_Rectangle3PointsOptions::onUsePolylineClicked);
     connect(ui->cbQuadrangle,&QCheckBox::clicked, this, &LC_Rectangle3PointsOptions::onQuadrangleClicked);
     connect(ui->cbFixedInnerAngle, &QCheckBox::clicked, this, &LC_Rectangle3PointsOptions::onInnerAngleFixedClicked);
     connect(ui->chkFixedBaseAngle, &QCheckBox::clicked, this, &LC_Rectangle3PointsOptions::onBaseAngleFixedClicked);
     connect(ui->cbSnapRadiusCenter, &QCheckBox::clicked, this, &LC_Rectangle3PointsOptions::onSnapToCornerArcCenterClicked);
-    connect(ui->cbEdges,&QComboBox::currentIndexChanged, this, &LC_Rectangle3PointsOptions::onEdgesIndexChanged);
+    connect(ui->cbEdges, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &LC_Rectangle3PointsOptions::onEdgesIndexChanged);
 
     pickAngleSetup("angleBase", ui->tbPickAngleBase, ui->leAngle);
     pickAngleSetup("angleInner", ui->tbPickAngleInner, ui->leInnerAngle);

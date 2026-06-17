@@ -864,7 +864,11 @@ void QG_GraphicView::leaveEvent(QEvent* e) {
     QWidget::leaveEvent(e);
 }
 
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 void QG_GraphicView::enterEvent(QEnterEvent* e) {
+#else
+void QG_GraphicView::enterEvent(QEvent* e) {
+#endif
     getEventHandler()->mouseEnterEvent();
     QWidget::enterEvent(e);
 }

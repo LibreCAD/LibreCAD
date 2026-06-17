@@ -23,6 +23,7 @@
 #ifndef LC_WORKSPACELISTBUTTON_H
 #define LC_WORKSPACELISTBUTTON_H
 
+#include <QIcon>
 #include <QToolButton>
 
 class QC_ApplicationWindow;

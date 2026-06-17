@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -65,7 +65,7 @@ class PluginCapabilities {
 class QC_PluginInterface
 {
 public:
-    virtual ~QC_PluginInterface() {}
+    virtual ~QC_PluginInterface() = default;
     virtual QString name() const = 0;
     virtual PluginCapabilities getCapabilities() const = 0;
     virtual void execComm(Document_Interface *doc, QWidget *parent, QString cmd) = 0;
@@ -78,4 +78,3 @@ Q_DECLARE_INTERFACE(QC_PluginInterface, LC_DocumentInterface_iid)
 
 
 #endif
-

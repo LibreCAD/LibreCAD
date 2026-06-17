@@ -25,8 +25,19 @@ namespace dwgRSCodec {
     /// uncorrectable Reed-Solomon errors. Output buffer is still populated
     /// with whatever the codec recovered, so callers can decide whether to
     /// bail or continue best-effort.
-    bool decode239I(duint8 *in, duint8 *out, duint32 blk);
-    bool decode251I(duint8 *in, duint8 *out, duint32 blk);
+    bool decode239I(std::uint8_t *in, std::uint8_t *out, std::uint32_t blk);
+    bool decode251I(std::uint8_t *in, std::uint8_t *out, std::uint32_t blk);
+}
+
+namespace dwgUtil {
+    /// Adler-32-variant checksum used by R2004 (AC1018) section pages
+    /// and their headers.  Extracted from the private dwgReader18::checksum
+    /// so the R2004 writer can produce matching checksums without subclassing.
+    std::uint32_t checksum18(std::uint32_t seed, const std::uint8_t* data, std::uint64_t sz);
+
+    /// Standard CRC-32/ISO-HDLC (same table as dwgBuffer::crc32).  Used
+    /// by the R2004 writer to compute the encrypted variable-header CRC.
+    std::uint32_t crc32(std::uint32_t seed, const std::uint8_t* data, std::uint32_t sz);
 }
 
 class dwgCompressor {
@@ -38,72 +49,79 @@ class dwgCompressor {
 public:
     dwgCompressor()=default;
 
-    bool decompress18(duint8 *cbuf, duint8 *dbuf, duint64 csize, duint64 dsize);
-    static void decrypt18Hdr(duint8 *buf, duint64 size, duint64 offset);
-//    static void decrypt18Data(duint8 *buf, duint32 size, duint32 offset);
-    static bool decompress21(duint8 *cbuf, duint8 *dbuf, duint64 csize, duint64 dsize);
+    bool decompress18(std::uint8_t *cbuf, std::uint8_t *dbuf, std::uint64_t csize, std::uint64_t dsize);
+    static void decrypt18Hdr(std::uint8_t *buf, std::uint64_t size, std::uint64_t offset);
+//    static void decrypt18Data(std::uint8_t *buf, std::uint32_t size, std::uint32_t offset);
+    bool decompress21(std::uint8_t *cbuf, std::uint8_t *dbuf, std::uint64_t csize, std::uint64_t dsize);
+
+    // Number of decompressed bytes produced by the last decompress18/21 call.
+    // Callers of fixed-size pages (parseSysPage) require an exact-window fill;
+    // data pages are input-bounded so a partial fill is normal.
+    std::uint32_t decompressedBytes() const { return decompPos; }
 
 private:
-    duint32 litLength18();
-    static duint32 litLength21(duint8 opCode);
-    static bool copyCompBytes21(duint32 length);
-    static void readInstructions21(duint8 &opCode, duint32 &sourceOffset, duint32 &length);
+    std::uint32_t litLength18();
+    std::uint32_t litLength21(std::uint8_t opCode);
+    bool copyCompBytes21(std::uint32_t length);
+    void readInstructions21(std::uint8_t &opCode, std::uint32_t &sourceOffset, std::uint32_t &length);
 
-    duint32 longCompressionOffset();
-    duint32 long20CompressionOffset();
-    duint32 twoByteOffset(duint32 *ll);
+    std::uint32_t longCompressionOffset();
+    std::uint32_t long20CompressionOffset();
+    std::uint32_t twoByteOffset(std::uint32_t *ll);
 
-    static duint8 compressedByte(void);
-    static duint8 compressedByte(const duint32 index);
-    static duint32 compressedHiByte(void);
-    static bool compressedInc(const dint32 inc = 1);
-    static duint8 decompByte(const duint32 index);
-    static void decompSet(const duint8 value);
-    static bool buffersGood(void);
-    static void copyBlock21(const duint32 length);
+    std::uint8_t compressedByte(void);
+    std::uint8_t compressedByte(const std::uint32_t index);
+    std::uint32_t compressedHiByte(void);
+    bool compressedInc(const std::int32_t inc = 1);
+    std::uint8_t decompByte(const std::uint32_t index);
+    void decompSet(const std::uint8_t value);
+    bool buffersGood(void);
+    void copyBlock21(const std::uint32_t length);
 
-    static duint8 *compressedBuffer;
-    static duint32 compressedSize;
-    static duint32 compressedPos;
-    static bool    compressedGood;
-    static duint8 *decompBuffer;
-    static duint32 decompSize;
-    static duint32 decompPos;
-    static bool    decompGood;
+    // Decode state — instance members (formerly static, which made decompress
+    // non-reentrant and was a verbose/non-verbose nondeterminism hazard).
+    std::uint8_t *compressedBuffer{nullptr};
+    std::uint32_t compressedSize{0};
+    std::uint32_t compressedPos{0};
+    bool    compressedGood{true};
+    std::uint8_t *decompBuffer{nullptr};
+    std::uint32_t decompSize{0};
+    std::uint32_t decompPos{0};
+    bool    decompGood{true};
 
-    static const duint8 CopyOrder21_01[];
-    static const duint8 CopyOrder21_02[];
-    static const duint8 CopyOrder21_03[];
-    static const duint8 CopyOrder21_04[];
-    static const duint8 CopyOrder21_05[];
-    static const duint8 CopyOrder21_06[];
-    static const duint8 CopyOrder21_07[];
-    static const duint8 CopyOrder21_08[];
-    static const duint8 CopyOrder21_09[];
-    static const duint8 CopyOrder21_10[];
-    static const duint8 CopyOrder21_11[];
-    static const duint8 CopyOrder21_12[];
-    static const duint8 CopyOrder21_13[];
-    static const duint8 CopyOrder21_14[];
-    static const duint8 CopyOrder21_15[];
-    static const duint8 CopyOrder21_16[];
-    static const duint8 CopyOrder21_17[];
-    static const duint8 CopyOrder21_18[];
-    static const duint8 CopyOrder21_19[];
-    static const duint8 CopyOrder21_20[];
-    static const duint8 CopyOrder21_21[];
-    static const duint8 CopyOrder21_22[];
-    static const duint8 CopyOrder21_23[];
-    static const duint8 CopyOrder21_24[];
-    static const duint8 CopyOrder21_25[];
-    static const duint8 CopyOrder21_26[];
-    static const duint8 CopyOrder21_27[];
-    static const duint8 CopyOrder21_28[];
-    static const duint8 CopyOrder21_29[];
-    static const duint8 CopyOrder21_30[];
-    static const duint8 CopyOrder21_31[];
-    static const duint8 CopyOrder21_32[];
-    static const duint8 *CopyOrder21[Block21OrderArray];
+    static const std::uint8_t CopyOrder21_01[];
+    static const std::uint8_t CopyOrder21_02[];
+    static const std::uint8_t CopyOrder21_03[];
+    static const std::uint8_t CopyOrder21_04[];
+    static const std::uint8_t CopyOrder21_05[];
+    static const std::uint8_t CopyOrder21_06[];
+    static const std::uint8_t CopyOrder21_07[];
+    static const std::uint8_t CopyOrder21_08[];
+    static const std::uint8_t CopyOrder21_09[];
+    static const std::uint8_t CopyOrder21_10[];
+    static const std::uint8_t CopyOrder21_11[];
+    static const std::uint8_t CopyOrder21_12[];
+    static const std::uint8_t CopyOrder21_13[];
+    static const std::uint8_t CopyOrder21_14[];
+    static const std::uint8_t CopyOrder21_15[];
+    static const std::uint8_t CopyOrder21_16[];
+    static const std::uint8_t CopyOrder21_17[];
+    static const std::uint8_t CopyOrder21_18[];
+    static const std::uint8_t CopyOrder21_19[];
+    static const std::uint8_t CopyOrder21_20[];
+    static const std::uint8_t CopyOrder21_21[];
+    static const std::uint8_t CopyOrder21_22[];
+    static const std::uint8_t CopyOrder21_23[];
+    static const std::uint8_t CopyOrder21_24[];
+    static const std::uint8_t CopyOrder21_25[];
+    static const std::uint8_t CopyOrder21_26[];
+    static const std::uint8_t CopyOrder21_27[];
+    static const std::uint8_t CopyOrder21_28[];
+    static const std::uint8_t CopyOrder21_29[];
+    static const std::uint8_t CopyOrder21_30[];
+    static const std::uint8_t CopyOrder21_31[];
+    static const std::uint8_t CopyOrder21_32[];
+    static const std::uint8_t *CopyOrder21[Block21OrderArray];
 };
 
 /// 16-byte section sentinel byte sequences used by R13/R14/R2000 DWG.
@@ -119,26 +137,26 @@ namespace dwgSentinels {
     /// Closing sentinel for the file header / section-locator block.
     /// Appears after the section locator records and their CRC16.
     /// No paired begin sentinel — the file header has no leading magic.
-    extern const duint8 FILE_HEADER_END[16];
+    extern const std::uint8_t FILE_HEADER_END[16];
 
     /// HEADER section (AcDb:Header — header variables). LibreDWG names
     /// these VARIABLE_BEGIN / VARIABLE_END.
-    extern const duint8 HEADER_BEGIN[16];
-    extern const duint8 HEADER_END[16];
+    extern const std::uint8_t HEADER_BEGIN[16];
+    extern const std::uint8_t HEADER_END[16];
 
     /// CLASSES section (AcDb:Classes). LibreDWG names CLASS_BEGIN/END.
-    extern const duint8 CLASSES_BEGIN[16];
-    extern const duint8 CLASSES_END[16];
+    extern const std::uint8_t CLASSES_BEGIN[16];
+    extern const std::uint8_t CLASSES_END[16];
 
     /// PREVIEW section (the thumbnail image block, when present).
     /// LibreDWG names THUMBNAIL_BEGIN/END.
-    extern const duint8 PREVIEW_BEGIN[16];
-    extern const duint8 PREVIEW_END[16];
+    extern const std::uint8_t PREVIEW_BEGIN[16];
+    extern const std::uint8_t PREVIEW_END[16];
 
     /// Second-header block. Appears between the OBJECTS section and
     /// the object map / handles section in R13/R14/R2000.
-    extern const duint8 SECOND_HEADER_BEGIN[16];
-    extern const duint8 SECOND_HEADER_END[16];
+    extern const std::uint8_t SECOND_HEADER_BEGIN[16];
+    extern const std::uint8_t SECOND_HEADER_END[16];
 }
 
 /// Padded version strings for DWG file header (offset 0, 6+5 bytes).

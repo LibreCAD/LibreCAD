@@ -4,6 +4,11 @@ project(LibreCAD VERSION 2.2.2)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+# Set policies
+if(POLICY CMP0167)
+    cmake_policy(SET CMP0167 NEW)
+endif()
+
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOUIC_OPTIONS --connections string)
 
@@ -11,6 +16,12 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
 add_compile_definitions(QC_APPDIR=librecad)
+# Suppress WrapVulkanHeaders warning
+set(WrapVulkanHeaders_FIND_QUIETLY ON)
+find_package(WrapVulkanHeaders QUIET)
+
+# Explicitly disable Vulkan to avoid warnings
+set(QT_NO_VULKAN 1)
 find_package(Qt6 COMPONENTS Gui Core Widgets PrintSupport Svg Network REQUIRED)
 find_package(Qt6 REQUIRED COMPONENTS LinguistTools)
 find_package(Boost REQUIRED)
@@ -278,6 +289,10 @@ set(SHARED_SOURCES
     libraries/libdxfrw/src/intern/dwgwriter.h
     libraries/libdxfrw/src/intern/dwgwriter15.cpp
     libraries/libdxfrw/src/intern/dwgwriter15.h
+    libraries/libdxfrw/src/intern/dwgwriter18.cpp
+    libraries/libdxfrw/src/intern/dwgwriter18.h
+    libraries/libdxfrw/src/intern/dwgwriter24.cpp
+    libraries/libdxfrw/src/intern/dwgwriter24.h
     libraries/libdxfrw/src/intern/dwgreader.cpp
     libraries/libdxfrw/src/intern/dwgreader.h
     libraries/libdxfrw/src/intern/dwgreader15.cpp
@@ -294,6 +309,8 @@ set(SHARED_SOURCES
     libraries/libdxfrw/src/intern/dwgreader32.h
     libraries/libdxfrw/src/intern/dwgutil.cpp
     libraries/libdxfrw/src/intern/dwgutil.h
+    libraries/libdxfrw/src/intern/proxygraphicdecoder.cpp
+    libraries/libdxfrw/src/intern/proxygraphicdecoder.h
     libraries/libdxfrw/src/intern/dxfreader.cpp
     libraries/libdxfrw/src/intern/dxfreader.h
     libraries/libdxfrw/src/intern/dxfwriter.cpp
@@ -1514,6 +1531,8 @@ set(SHARED_SOURCES
     librecad/src/ui/main/persistence/lc_documentsstorage.h
     librecad/src/ui/main/qc_applicationwindow.cpp
     librecad/src/ui/main/qc_applicationwindow.h
+    librecad/src/ui/main/lc_layouttabbar.cpp
+    librecad/src/ui/main/lc_layouttabbar.h
     librecad/src/ui/main/qc_mdiwindow.cpp
     librecad/src/ui/main/qc_mdiwindow.h
     librecad/src/ui/main/release_check/lc_releasechecker.cpp
@@ -1593,6 +1612,8 @@ endif()
 
 set(MAIN_SOURCES
     librecad/src/main/main.cpp
+    librecad/src/main/console_dxf2dwg.cpp
+    librecad/src/main/console_dxf2dwg.h
     librecad/src/main/console_dxf2pdf/console_dxf2pdf.cpp
     librecad/src/main/console_dxf2pdf/console_dxf2pdf.h
     librecad/src/main/console_dxf2pdf/pdf_print_loop.cpp
@@ -1606,17 +1627,36 @@ set(MAIN_SOURCES
 
 # Main executable
 qt_add_executable(librecad
-	${MAIN_SOURCES}
+    ${MAIN_SOURCES}
 )
+
+# On macOS, make it a bundle and set info.plist
+if(APPLE)
+    set_target_properties(librecad PROPERTIES
+        MACOSX_BUNDLE TRUE
+        MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/librecad/src/macos/Info.plist"
+    )
+endif()
+
 target_include_directories(librecad PRIVATE
         ${SHARED_INCLUDES}
 )
-
+target_compile_definitions(librecad PRIVATE
+    DWGSUPPORT
+)
 target_link_libraries(librecad PRIVATE
    librecad_lib
    Qt6::Core Qt6::Widgets Qt6::Gui Qt6::PrintSupport Qt6::Svg Qt6::Network
 )
-install(TARGETS librecad RUNTIME DESTINATION bin)
+
+if(APPLE)
+    install(TARGETS librecad
+        RUNTIME DESTINATION bin
+        BUNDLE DESTINATION bin
+    )
+else()
+    install(TARGETS librecad RUNTIME DESTINATION bin)
+endif()
 
 # Translations
 set(TS_DIR librecad/ts)
@@ -1687,6 +1727,8 @@ set(TS_FILES
     librecad/ts/librecad_zh_cn.ts
     librecad/ts/librecad_zh_tw.ts
 )
+
+# Use qt_add_translations normally, the language warnings are harmless
 qt_add_translations(librecad TS_FILE_DIR ${TS_DIR} TS_FILES ${TS_FILES})
 
 # Optional ttf2lff
@@ -1730,13 +1772,26 @@ if(BUILD_TESTS)
         librecad/src/lib/filters/tests/dwg_buffer_round_trip_tests.cpp
         librecad/src/lib/filters/tests/dwg_entity_encode_round_trip_tests.cpp
         librecad/src/lib/filters/tests/dwg_header_encode_round_trip_tests.cpp
+        librecad/src/lib/filters/tests/dwg_header_app_vars_tests.cpp
+        librecad/src/lib/filters/tests/dwg_visibility_read_tests.cpp
+        librecad/src/lib/filters/tests/dwg_object_encode_round_trip_tests.cpp
         librecad/src/lib/filters/tests/dwg_smoke_tests.cpp
         librecad/src/lib/filters/tests/dwg_write_smoke_tests.cpp
         librecad/src/lib/filters/tests/eed_tests.cpp
         librecad/src/lib/filters/tests/dbcolor_tests.cpp
         librecad/src/lib/filters/tests/entity_metadata_tests.cpp
+        librecad/src/lib/filters/tests/rs_graphic_layouts_tests.cpp
         librecad/src/lib/filters/tests/mline_tests.cpp
         librecad/src/lib/filters/tests/underlay_tests.cpp
+        librecad/src/lib/filters/tests/dxf_string_codec_tests.cpp
+        librecad/src/lib/filters/tests/dxf_attribute_tests.cpp
+        librecad/src/lib/filters/tests/dxf_object_tests.cpp
+        librecad/src/lib/filters/tests/dxf_roundtrip_tests.cpp
+        librecad/src/lib/filters/tests/dxf_corpus_tests.cpp
+        librecad/src/lib/filters/tests/i18n_codec_tests.cpp
+        librecad/src/lib/filters/tests/i18n_caret_nfc_tests.cpp
+        librecad/src/lib/filters/tests/dwg_decompress18_tests.cpp
+        librecad/src/lib/engine/settings/tests/rs_settings_migration_tests.cpp
     )
 
     # Include directories for rs_math.h and other dependencies
