@@ -386,12 +386,20 @@ void RS_ActionDrawLine::redo(){
                 break;
             }
             case HA_SetEndpoint: {
-                switchToAction(RS2::ActionEditRedo);
+                // Issue #2608: re-add the entity directly via the document undo
+                // stack. Do NOT use switchToAction(RS2::ActionEditRedo): the redo
+                // action is a one-shot that finishes inside init(), which makes
+                // LC_EventHandler drop back to the default action and destroy
+                // *this* while redo() is still on the stack (use-after-free).
+                // Mirrors how undo() above performs m_document->undo() directly.
+                m_document->redo();
+                m_graphicView->redraw(RS2::RedrawDrawing);
                 setStatus(SetEndpoint);
                 break;
             }
             case HA_Close: {
-                switchToAction(RS2::ActionEditRedo);
+                m_document->redo();
+                m_graphicView->redraw(RS2::RedrawDrawing);
                 setStatus(SetStartpoint);
                 break;
             }
