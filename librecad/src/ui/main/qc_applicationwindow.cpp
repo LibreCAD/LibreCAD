@@ -1190,19 +1190,26 @@ void QC_ApplicationWindow::slotFileSaveAll(){
  * Autosave.
  */
 void QC_ApplicationWindow::autoSaveCurrentDrawing() {
-    RS_DEBUG->print("QC_ApplicationWindow::slotFileAutoSave(): begin");
+    RS_DEBUG->print("QC_ApplicationWindow::autoSaveCurrentDrawing(): begin");
     if (!LC_GET_ONE_BOOL("Defaults", "AutoBackupDocument", true)) {
+        RS_DEBUG->print("QC_ApplicationWindow::autoSaveCurrentDrawing(): AutoBackupDocument disabled");
         startAutoSaveTimer(false);
         return;
     }
     showStatusMessage(tr("Auto-saving drawing..."), 2000);
 
     QC_MDIWindow *w = getCurrentMDIWindow();
+    RS_DEBUG->print("QC_ApplicationWindow::autoSaveCurrentDrawing(): current window=%p", w);
     if (w != nullptr) {
         QString autosaveFileName;
+        RS_DEBUG->print("QC_ApplicationWindow::autoSaveCurrentDrawing(): calling autoSaveDocument");
         if (w->autoSaveDocument(autosaveFileName)) {
+            RS_DEBUG->print("QC_ApplicationWindow::autoSaveCurrentDrawing(): auto-save succeeded, file='%s'", 
+                            autosaveFileName.toLatin1().data());
             showStatusMessage(tr("Auto-saved drawing"), 2000);
         } else {
+            RS_DEBUG->print("QC_ApplicationWindow::autoSaveCurrentDrawing(): auto-save failed, file='%s'", 
+                            autosaveFileName.toLatin1().data());
             // error
             m_autosaveTimer->stop();
             QMessageBox::information(this, QMessageBox::tr("Warning"),
@@ -1210,6 +1217,8 @@ void QC_ApplicationWindow::autoSaveCurrentDrawing() {
                                         "Auto-save disabled.").arg(autosaveFileName),QMessageBox::Ok);
             showStatusMessage(tr("Auto-saving failed"), 2000);
         }
+    } else {
+        RS_DEBUG->print("QC_ApplicationWindow::autoSaveCurrentDrawing(): no current window");
     }
 }
 

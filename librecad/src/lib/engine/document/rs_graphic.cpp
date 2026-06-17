@@ -101,6 +101,8 @@ RS_Graphic::RS_Graphic(RS_EntityContainer* parent)
         pagesNumV(1)
         , autosaveFilename{ "Unnamed"}{
 
+    RS_DEBUG->print("RS_Graphic constructor: autosaveFilename initialized as '%s'", autosaveFilename.toLatin1().data());
+
     LC_GROUP_GUARD("Defaults");
     {
         setUnit(RS_Units::stringToUnit(LC_GET_ONE_STR("Defaults", "Unit", "None")));
@@ -246,13 +248,14 @@ void RS_Graphic::removeLayer(RS_Layer* layer) {
  * A default layer (0) is created.
  */
 void RS_Graphic::newDoc() {
-    RS_DEBUG->print("RS_Graphic::newDoc");
+    RS_DEBUG->print("RS_Graphic::newDoc: before clear, autosaveFilename='%s'", autosaveFilename.toLatin1().data());
     m_dwgAdvancedMetadata.clear();
     clear();
     clearLayers();
     clearBlocks();
     addLayer(new RS_Layer("0"));
     setModified(false);
+    RS_DEBUG->print("RS_Graphic::newDoc: after clear, autosaveFilename='%s'", autosaveFilename.toLatin1().data());
 }
 
 void RS_Graphic::clearVariables() {
@@ -544,7 +547,7 @@ RS2::AngleFormat RS_Graphic::getAngleFormat() const
         case 3:
             return RS2::Radians;
         case 4:
-            return RS2::Surveyors;        
+            return RS2::Surveyors;
         default:
             return RS2::DegreesDecimal;
     }
