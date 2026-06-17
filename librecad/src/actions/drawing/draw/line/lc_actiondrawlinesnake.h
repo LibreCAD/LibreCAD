@@ -35,7 +35,10 @@ public:
     void next();
     void undo();
     void redo();
-    void polyline();
+    /// Converts the drawn lines to a polyline. Returns true if it switched to
+    /// another action (which destroys *this*); the caller must not touch this/
+    /// members afterwards when it returns true (Issue #2608).
+    bool polyline();
     bool mayClose();
     bool mayUndo() const;
     bool mayStart() override;
