@@ -124,10 +124,21 @@ void RS_System::initLanguageList() {
         }
         QString l = file.mid(i1+1, i2-i1-1);
 
-        if (!(languageList.contains(l, Qt::CaseInsensitive)) ) {
-            RS_DEBUG->print("RS_System::initLanguageList: append language: %s",
+        // Validate language code using Qt Locale
+        QLocale locale(l);
+        if (locale == QLocale::c()) {
+            RS_DEBUG->print("RS_System::initLanguageList: invalid locale: %s",
                             l.toLatin1().data());
-            languageList.append(l);
+            continue;
+        }
+
+        // Use Qt Locale to get the canonical language code
+        QString canonicalCode = locale.name();
+
+        if (!(languageList.contains(canonicalCode, Qt::CaseInsensitive)) ) {
+            RS_DEBUG->print("RS_System::initLanguageList: append language: %s",
+                            canonicalCode.toLatin1().data());
+            languageList.append(canonicalCode);
         }
     }
     RS_DEBUG->print("RS_System::initLanguageList: OK");
