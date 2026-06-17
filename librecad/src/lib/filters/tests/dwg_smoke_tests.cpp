@@ -4758,6 +4758,62 @@ TEST_CASE("DWG coverage scan: aggregate skip telemetry across corpus",
   SUCCEED("coverage scan complete");
 }
 
+// Per-file corpus audit: one TSV line per .dwg in ~/doc/dwg{,2,3} so an external
+// script can join libdxfrw's read result against the LibreDWG oracle and flag
+// real failures (oracle ok, we error) and incomplete reads (entity-count
+// divergence). Counts EVERY delivery path. Run: ./librecad_tests "[.audit]" -s
+TEST_CASE("DWG corpus audit: per-file TSV vs oracle", "[.audit]") {
+  const char* home = std::getenv("HOME");
+  if (!home) { SUCCEED("no HOME"); return; }
+  struct AuditIface : public TypeTrackingIface {
+    int meshes = 0, modelerGeoms = 0, unsupported = 0;
+    void addMesh(const DRW_Mesh& e) override { trackT(e, "MESH"); ++meshes; }
+    void addModelerGeometry(const DRW_ModelerGeometry&) override { ++modelerGeoms; }
+    void addUnsupportedObject(const DRW_UnsupportedObject&) override { ++unsupported; }
+  };
+  std::cout << "AUDIT\tdir\tfile\tversion\terror\tentities\tblocks\tlayers"
+               "\tmodeler\tmeshes\tunsupported\tproxyPrims\tskippedClasses\n";
+  for (const std::string& dir : {std::string(home) + "/doc/dwg",
+                                 std::string(home) + "/doc/dwg2",
+                                 std::string(home) + "/doc/dwg3"}) {
+    if (!std::filesystem::exists(dir)) continue;
+    std::vector<std::filesystem::path> files;
+    for (const auto& de : std::filesystem::directory_iterator(dir)) {
+      const auto ext = de.path().extension().string();
+      if (ext != ".dwg" && ext != ".DWG") continue;
+      if (de.path().filename().string().front() == '#') continue;
+      files.push_back(de.path());
+    }
+    std::sort(files.begin(), files.end());
+    const std::string dirName = std::filesystem::path(dir).filename().string();
+    for (const auto& p : files) {
+      DRW::setCustomDebugPrinter(new DRW::DebugPrinter());
+      AuditIface iface;
+      DRW::error err = DRW::BAD_UNKNOWN;
+      DRW::Version ver = DRW::UNKNOWNV;
+      std::size_t proxyPrims = 0;
+      std::string skipped;
+      try {
+        dwgR reader(p.string().c_str());
+        reader.read(&iface, true);
+        err = reader.getError();
+        ver = reader.getVersion();
+        proxyPrims = reader.getDecodedProxyPrimitives();
+        for (const auto& kv : reader.getSkippedCustomClasses())
+          skipped += kv.first + ":" + std::to_string(kv.second) + ",";
+      } catch (...) { err = DRW::BAD_UNKNOWN; }
+      const int totalEnt = iface.total() + iface.modelerGeoms;
+      std::cout << "AUDIT\t" << dirName << "\t" << p.filename().string() << "\t"
+                << versionStr(ver) << "\t" << errorStr(err) << "\t" << totalEnt
+                << "\t" << iface.blocks << "\t" << iface.layers << "\t"
+                << iface.modelerGeoms << "\t" << iface.meshes << "\t"
+                << iface.unsupported << "\t" << proxyPrims << "\t"
+                << (skipped.empty() ? "-" : skipped) << "\n";
+    }
+  }
+  SUCCEED("audit complete");
+}
+
 // MESH is now decoded (not raw-netted): across the corpus, no file should still
 // report MESH/AcDbSubDMesh in getSkippedCustomClasses(), and where MESH exists
 // it must deliver geometry. Skip-when-absent (corpus is developer-local).
