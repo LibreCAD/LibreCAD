@@ -2369,6 +2369,11 @@ public:
 
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
+    /* DXF CONTEXT_DATA{} state machine (§20.4.86).  Routes the nested-block
+       group codes (whose meaning depends on the open block) into `context`.
+       Returns true when the code belongs to the context block (consumed);
+       false when at entity level so parseCode falls through to its own switch. */
+    bool parseDxfContextCode(int code, const std::unique_ptr<dxfReader>& reader);
     virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
     virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0,
                            dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
@@ -2435,6 +2440,12 @@ public:
 
     /* R2013+ */
     bool leaderExtendedToText = false;                              /*!< code 295 */
+
+private:
+    /* Transient DXF parse state for the CONTEXT_DATA{} nested-block machine:
+       0 = entity level, 1 = inside CONTEXT_DATA{}, 2 = inside LEADER{},
+       3 = inside LEADER_LINE{}.  Not serialized; reset per fresh entity. */
+    int m_dxfCtxState = 0;
 };
 
 //! Class to handle viewport entity
