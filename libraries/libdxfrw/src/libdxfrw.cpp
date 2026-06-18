@@ -4381,6 +4381,12 @@ bool dxfRW::processObjects() {
         else if ("WIPEOUTVARIABLES" == nextentity) {
             processed = processWipeoutVariables();
         }
+        else if ("MATERIAL" == nextentity) {
+            processed = processMaterial();
+        }
+        else if ("GEODATA" == nextentity) {
+            processed = processGeoData();
+        }
         else {
             //Slice A1: never silently drop an unmodeled object — capture its
             //group codes verbatim for lossless re-emit instead of skipping.
@@ -4453,6 +4459,56 @@ bool dxfRW::processBreakData() {
             DRW_DBG(nextentity); DRW_DBG("\n");
             iface->addBreakData(data);
             iface->addRawDxfObject(raw);  // else dropped on DXF->DXF (no typed writer)
+            return true;
+        }
+        captureRawGroup(raw, code);
+        if (!data.parseCode(code, reader))
+            return setError(DRW::BAD_CODE_PARSED);
+    }
+    return setError(DRW::BAD_READ_OBJECTS);
+}
+
+// MATERIAL (AcDbMaterial): structured DXF read of name/description (matching the
+// DWG parser + dwgTs), plus full raw-net preservation for lossless DXF re-emit
+// (the visual-property fields are not modeled, only round-tripped).
+bool dxfRW::processMaterial() {
+    DRW_DBG("dxfRW::processMaterial");
+    int code;
+    DRW_Material data;
+    DRW_RawDxfObject raw;
+    raw.name = nextentity;
+    while (reader->readRec(&code)) {
+        DRW_DBG(code); DRW_DBG("\n");
+        if (code == 0) {
+            nextentity = reader->getString();
+            DRW_DBG(nextentity); DRW_DBG("\n");
+            iface->addMaterial(data);
+            iface->addRawDxfObject(raw);  // no typed writer: raw re-emits on DXF->DXF
+            return true;
+        }
+        captureRawGroup(raw, code);
+        if (!data.parseCode(code, reader))
+            return setError(DRW::BAD_CODE_PARSED);
+    }
+    return setError(DRW::BAD_READ_OBJECTS);
+}
+
+// GEODATA (AcDbGeoData): structured DXF read of the scalar geolocation fields,
+// plus full raw-net preservation (the coordinate-mesh lists are round-tripped
+// raw only — see DRW_GeoData::parseCode).
+bool dxfRW::processGeoData() {
+    DRW_DBG("dxfRW::processGeoData");
+    int code;
+    DRW_GeoData data;
+    DRW_RawDxfObject raw;
+    raw.name = nextentity;
+    while (reader->readRec(&code)) {
+        DRW_DBG(code); DRW_DBG("\n");
+        if (code == 0) {
+            nextentity = reader->getString();
+            DRW_DBG(nextentity); DRW_DBG("\n");
+            iface->addGeoData(data);
+            iface->addRawDxfObject(raw);  // no typed writer: raw re-emits on DXF->DXF
             return true;
         }
         captureRawGroup(raw, code);

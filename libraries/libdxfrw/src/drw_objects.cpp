@@ -3555,6 +3555,24 @@ bool DRW_SortEntsTable::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint
     return true;
 }
 
+bool DRW_Material::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
+    // AcDbMaterial: only the name (1) and description (2) are decoded — the
+    // visual-property fields (color/ambient/diffuse/specular/maps/...) are not
+    // modeled here.  This matches dwgTs's MATERIAL decode (name + description);
+    // the full record is still preserved by the raw-net for DXF round-trip.
+    switch (code) {
+    case 1:
+        m_name = reader->getUtf8String();
+        break;
+    case 2:
+        m_description = reader->getUtf8String();
+        break;
+    default:
+        return DRW_TableEntry::parseCode(code, reader);
+    }
+    return true;
+}
+
 bool DRW_Material::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs){
     dwgBuffer sBuff = *buf;
     dwgBuffer *sBuf = buf;
@@ -5170,6 +5188,47 @@ bool DRW_SpatialFilter::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint
     DRW_DBG("SPATIAL_FILTER boundary points: ");
     DRW_DBG(static_cast<int>(m_boundaryPoints.size())); DRW_DBG("\n");
     return buf->isGood() && hBuf->isGood();
+}
+
+bool DRW_GeoData::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
+    // AcDbGeoData DXF (R2010+ version 2/3).  Decodes the scalar geolocation
+    // fields; the coordinate-mesh point/face lists (codes 13/23/14/24 ... 93/96)
+    // are left to the raw-net (their 13/23/14/24 interleave needs a point cursor
+    // — a follow-up).  Code mapping cross-checked against dwgTs
+    // parseObjectsGeoSpatialDxf.ts.
+    switch (code) {
+    case 90:  m_version = reader->getInt32(); break;
+    case 70:  m_coordinatesType = reader->getInt32(); break;
+    case 10:  m_designPoint.x = reader->getDouble(); break;
+    case 20:  m_designPoint.y = reader->getDouble(); break;
+    case 30:  m_designPoint.z = reader->getDouble(); break;
+    case 11:  m_referencePoint.x = reader->getDouble(); break;
+    case 21:  m_referencePoint.y = reader->getDouble(); break;
+    case 31:  m_referencePoint.z = reader->getDouble(); break;
+    case 40:  m_horizontalUnitScale = reader->getDouble(); break;
+    case 41:  m_verticalUnitScale = reader->getDouble(); break;
+    case 91:  m_horizontalUnits = reader->getInt32(); break;
+    case 92:  m_verticalUnits = reader->getInt32(); break;
+    case 210: m_upDirection.x = reader->getDouble(); break;
+    case 220: m_upDirection.y = reader->getDouble(); break;
+    case 230: m_upDirection.z = reader->getDouble(); break;
+    case 12:  m_northDirection.x = reader->getDouble(); break;
+    case 22:  m_northDirection.y = reader->getDouble(); break;
+    case 95:  m_scaleEstimationMethod = reader->getInt32(); break;
+    case 141: m_userSpecifiedScaleFactor = reader->getDouble(); break;
+    case 294: m_enableSeaLevelCorrection = (reader->getInt32() != 0); break;
+    case 142: m_seaLevelElevation = reader->getDouble(); break;
+    case 143: m_coordinateProjectionRadius = reader->getDouble(); break;
+    case 301: // coordinate-system definition (chunked; ^J -> newline)
+    case 303: m_coordinateSystemDefinition += reader->getUtf8String(); break;
+    case 302: m_geoRssTag = reader->getUtf8String(); break;
+    case 305: m_observationFromTag = reader->getUtf8String(); break;
+    case 306: m_observationToTag = reader->getUtf8String(); break;
+    case 307: m_observationCoverageTag = reader->getUtf8String(); break;
+    default:
+        return DRW_TableEntry::parseCode(code, reader);
+    }
+    return true;
 }
 
 bool DRW_GeoData::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs){

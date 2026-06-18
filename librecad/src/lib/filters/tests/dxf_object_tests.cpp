@@ -1229,3 +1229,75 @@ TEST_CASE("DXF header write tolerates bare vs $-prefixed key convention (dxf-str
       {{"9", "$VERSIONGUID"},
        {"2", "{FFEEDDCC-0000-0000-0000-AABBCCDDEEFF}"}}));
 }
+
+// ── Preservation parity: structured DXF read of objects previously raw-only ──
+namespace {
+class MaterialCapture : public StubInterface {
+public:
+  int m_callCount = 0;
+  int m_rawCount = 0;
+  DRW_Material m_captured;
+  void addMaterial(const DRW_Material &d) override {
+    if (m_callCount == 0) m_captured = d;
+    ++m_callCount;
+  }
+  void addRawDxfObject(const DRW_RawDxfObject &) override { ++m_rawCount; }
+};
+
+class GeoDataCapture : public StubInterface {
+public:
+  int m_callCount = 0;
+  DRW_GeoData m_captured;
+  void addGeoData(const DRW_GeoData &d) override {
+    if (m_callCount == 0) m_captured = d;
+    ++m_callCount;
+  }
+};
+} // namespace
+
+TEST_CASE("DXF MATERIAL is read into a DRW_Material (name + description)",
+          "[dxf][material][preservation]") {
+  MaterialCapture cap;
+  const char *dxf =
+      "0\nSECTION\n2\nOBJECTS\n"
+      "0\nMATERIAL\n5\nEF\n330\nC\n100\nAcDbMaterial\n"
+      "1\nBrass\n2\nPolished brass material\n"
+      "0\nENDSEC\n0\nEOF\n";
+  readDxf(dxf, cap, "lc_material_read.dxf");
+
+  REQUIRE(cap.m_callCount == 1);
+  CHECK(cap.m_captured.m_name == "Brass");
+  CHECK(cap.m_captured.m_description == "Polished brass material");
+  // Dual-mode: also preserved raw for lossless DXF re-emit.
+  CHECK(cap.m_rawCount == 1);
+}
+
+TEST_CASE("DXF GEODATA is read into a DRW_GeoData (scalar geolocation fields)",
+          "[dxf][geodata][preservation]") {
+  GeoDataCapture cap;
+  const char *dxf =
+      "0\nSECTION\n2\nOBJECTS\n"
+      "0\nGEODATA\n5\nF0\n330\n1F\n100\nAcDbGeoData\n"
+      "90\n3\n70\n2\n"
+      "10\n100.0\n20\n200.0\n30\n0.0\n"
+      "11\n12.5\n21\n55.25\n31\n0.0\n"
+      "40\n1.0\n41\n1.0\n"
+      "95\n1\n141\n2.5\n294\n1\n142\n123.0\n"
+      "302\ngeo-rss-tag\n"
+      "0\nENDSEC\n0\nEOF\n";
+  readDxf(dxf, cap, "lc_geodata_read.dxf");
+
+  REQUIRE(cap.m_callCount == 1);
+  const DRW_GeoData &g = cap.m_captured;
+  CHECK(g.m_version == 3);
+  CHECK(g.m_coordinatesType == 2);
+  CHECK(g.m_designPoint.x == 100.0);
+  CHECK(g.m_designPoint.y == 200.0);
+  CHECK(g.m_referencePoint.x == 12.5);
+  CHECK(g.m_referencePoint.y == 55.25);
+  CHECK(g.m_scaleEstimationMethod == 1);
+  CHECK(g.m_userSpecifiedScaleFactor == 2.5);
+  CHECK(g.m_enableSeaLevelCorrection == true);
+  CHECK(g.m_seaLevelElevation == 123.0);
+  CHECK(g.m_geoRssTag == "geo-rss-tag");
+}
