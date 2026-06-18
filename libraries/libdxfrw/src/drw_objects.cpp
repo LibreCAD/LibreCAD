@@ -6463,6 +6463,24 @@ bool DRW_BreakPointRef::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint
 // VISUALSTYLE (AcDbVisualStyle) — stub parser per ODA spec §20.4.95.
 // Reads only what's needed for round-trip identity; full visual-style
 // data (60+ fields) is irrelevant to LibreCAD's 2D rendering. Each
+bool DRW_VisualStyle::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
+    // AcDbVisualStyle DXF: description (2 / 4) + style type (70).  Matches
+    // dwgTs's VISUALSTYLE decode; the per-property render settings (face/edge/
+    // display) stay round-tripped raw only.
+    switch (code) {
+    case 2:
+    case 4:
+        desc = reader->getUtf8String();
+        break;
+    case 70:
+        type = reader->getInt32();
+        break;
+    default:
+        return DRW_TableEntry::parseCode(code, reader);
+    }
+    return true;
+}
+
 // object is parsed from a size-bounded buffer so any unread tail is
 // safely discarded by the caller.
 bool DRW_VisualStyle::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs){

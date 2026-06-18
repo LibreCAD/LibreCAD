@@ -2232,6 +2232,7 @@ public:
     DRW_VisualStyle() { reset(); }
     void reset() { tType = DRW::VISUALSTYLE; desc.clear(); type = 0; }
 protected:
+    bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
 public:
     UTF8STRING desc;       /*!< description (TV in DWG) */

@@ -1301,3 +1301,30 @@ TEST_CASE("DXF GEODATA is read into a DRW_GeoData (scalar geolocation fields)",
   CHECK(g.m_seaLevelElevation == 123.0);
   CHECK(g.m_geoRssTag == "geo-rss-tag");
 }
+
+namespace {
+class VisualStyleCapture : public StubInterface {
+public:
+  int m_callCount = 0;
+  DRW_VisualStyle m_captured;
+  void addVisualStyle(const DRW_VisualStyle &d) override {
+    if (m_callCount == 0) m_captured = d;
+    ++m_callCount;
+  }
+};
+} // namespace
+
+TEST_CASE("DXF VISUALSTYLE is read into a DRW_VisualStyle (desc + type)",
+          "[dxf][visualstyle][preservation]") {
+  VisualStyleCapture cap;
+  const char *dxf =
+      "0\nSECTION\n2\nOBJECTS\n"
+      "0\nVISUALSTYLE\n5\nF1\n330\nC\n100\nAcDbVisualStyle\n"
+      "2\nConceptual\n70\n5\n"
+      "0\nENDSEC\n0\nEOF\n";
+  readDxf(dxf, cap, "lc_visualstyle_read.dxf");
+
+  REQUIRE(cap.m_callCount == 1);
+  CHECK(cap.m_captured.desc == "Conceptual");
+  CHECK(cap.m_captured.type == 5);
+}

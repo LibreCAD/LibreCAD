@@ -237,6 +237,7 @@ private:
     bool processBreakPointRef();
     bool processMaterial();
     bool processGeoData();
+    bool processVisualStyle();
 
     bool processLType();
     bool processLayer();

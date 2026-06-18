@@ -4387,6 +4387,10 @@ bool dxfRW::processObjects() {
         else if ("GEODATA" == nextentity) {
             processed = processGeoData();
         }
+        else if ("VISUALSTYLE" == nextentity
+                 || "ACDB_VISUALSTYLE_CLASS" == nextentity) {
+            processed = processVisualStyle();
+        }
         else {
             //Slice A1: never silently drop an unmodeled object — capture its
             //group codes verbatim for lossless re-emit instead of skipping.
@@ -4508,6 +4512,31 @@ bool dxfRW::processGeoData() {
             nextentity = reader->getString();
             DRW_DBG(nextentity); DRW_DBG("\n");
             iface->addGeoData(data);
+            iface->addRawDxfObject(raw);  // no typed writer: raw re-emits on DXF->DXF
+            return true;
+        }
+        captureRawGroup(raw, code);
+        if (!data.parseCode(code, reader))
+            return setError(DRW::BAD_CODE_PARSED);
+    }
+    return setError(DRW::BAD_READ_OBJECTS);
+}
+
+// VISUALSTYLE (AcDbVisualStyle): structured DXF read of description + style type,
+// plus full raw-net preservation (the per-property face/edge/display settings are
+// round-tripped raw only — matches dwgTs's VISUALSTYLE decode depth).
+bool dxfRW::processVisualStyle() {
+    DRW_DBG("dxfRW::processVisualStyle");
+    int code;
+    DRW_VisualStyle data;
+    DRW_RawDxfObject raw;
+    raw.name = nextentity;
+    while (reader->readRec(&code)) {
+        DRW_DBG(code); DRW_DBG("\n");
+        if (code == 0) {
+            nextentity = reader->getString();
+            DRW_DBG(nextentity); DRW_DBG("\n");
+            iface->addVisualStyle(data);
             iface->addRawDxfObject(raw);  // no typed writer: raw re-emits on DXF->DXF
             return true;
         }
