@@ -266,6 +266,7 @@ private:
     bool processMLine();
     bool processUnderlay(const std::string& kind);
     bool processHatch();
+    bool processMPolygon();
     bool processSpline();
     bool process3dface();
     bool processMesh();

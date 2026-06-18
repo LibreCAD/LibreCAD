@@ -5420,8 +5420,12 @@ bool DRW_Hatch::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
         associative = reader->getInt32();
         break;
     case 72:        /*edge type*/
-        if (ispol){ //if is polyline is a has-bulge flag
-            if (pline) pline->flags = (pline->flags & ~1) | (reader->getInt32() ? 1 : 0);
+        if (ispol){ // polyline path: 72 is the has-bulge flag. Do NOT fold it
+            // into pline->flags — bit 0 there is the *closed* flag (set by code
+            // 73), and the per-vertex bulges arrive via code 42 regardless. Some
+            // writers (e.g. ezdxf MPOLYGON) emit 73 before 72; the old code let
+            // 72 clear the closed bit 73 had just set, leaving the boundary open
+            // so RS_Hatch::validate() rejected the area.
             break;
         } else if (reader->getInt32() == 1){ //line
             addLine();
@@ -5552,7 +5556,9 @@ bool DRW_Hatch::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
             break;
         }
         if (arc) arc->isccw = reader->getInt32();
-        else if (pline) pline->flags = reader->getInt32();
+        // polyline path: 73 is the is-closed flag -> set bit 0 only, leaving the
+        // rest of pline->flags untouched (order-independent vs code 72).
+        else if (pline) pline->flags = (pline->flags & ~1) | (reader->getInt32() ? 1 : 0);
         break;
     case 74:
         // Spline edge: 74 is the periodic flag (1 = periodic/closed).
@@ -5694,6 +5700,35 @@ bool DRW_Hatch::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
     }
 
     return true;
+}
+
+bool DRW_MPolygon::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
+    // MPOLYGON shares HATCH's boundary/pattern/gradient codes, so delegate those
+    // to DRW_Hatch::parseCode. It adds a trailer that plain HATCH never emits:
+    //   63 / 421 / 430  fill color (ACI / RGB / book-name) — the filled area's
+    //                   color, which may differ from the boundary outline color;
+    //   11 / 21         boundary x-direction vector (no render impact; left to
+    //                   the base, which ignores it outside an edge context);
+    //   99              count of degenerate boundary paths.
+    // 63/421 are also gradient sub-codes in HATCH, so only claim them here when no
+    // gradient is being accumulated (gradColors empty) — otherwise defer to base.
+    switch (code) {
+    case 63:
+        if (gradColors.empty()) { fillColorAci = reader->getInt32(); return true; }
+        break;
+    case 421:
+        if (gradColors.empty()) { fillColorRgb = reader->getInt32(); return true; }
+        break;
+    case 430:
+        fillColorName = reader->getUtf8String();
+        return true;
+    case 99:
+        degenerateLoops = reader->getInt32();
+        return true;
+    default:
+        break;
+    }
+    return DRW_Hatch::parseCode(code, reader);
 }
 
 bool DRW_Hatch::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs){

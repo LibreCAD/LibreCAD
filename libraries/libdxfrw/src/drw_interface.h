@@ -262,6 +262,14 @@ public:
     virtual void addHatch(const DRW_Hatch *data) = 0;
 
     /**
+     * Called for every MPOLYGON (AcDbMPolygon) entity.  Default renders it as a
+     * hatch (it is hatch-derived: same boundary loops, solid flag and pattern).
+     * Override only if the MPOLYGON-specific fill color / outline needs distinct
+     * treatment.
+     */
+    virtual void addMPolygon(const DRW_MPolygon *data) { addHatch(data); }
+
+    /**
      * Called for every viewport entity.
      */
     virtual void addViewport(const DRW_Viewport& data) = 0;

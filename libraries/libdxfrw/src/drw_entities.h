@@ -86,6 +86,7 @@ namespace DRW {
         VIEWPORT,
 //        WIPEOUT, //WIPEOUTVARIABLE
         XLINE,
+        MPOLYGON,
         UNKNOWN
     };
 
@@ -1746,6 +1747,38 @@ private:
     /* Remaining code-330 values to consume as boundary source handles.
        Set when code-97 is interpreted as the per-loop boundary count. */
     int m_boundaryHandleCount = 0;
+};
+
+//! Class to handle MPOLYGON (AcDbMPolygon) entity.
+/*!
+*  AcDbMPolygon is a hatch-derived filled polygon used mainly by AutoCAD Map 3D /
+*  Civil. Its boundary loops, solid flag and pattern share HATCH's representation,
+*  so it stores into a DRW_Hatch and renders through the existing addHatch path.
+*  It only adds a trailing fill-color, an x-direction vector and a degenerate-path
+*  count that plain HATCH does not carry. The DWG binary layout also differs (a
+*  leading style field, gradient before elevation); only the DXF read path is wired
+*  here — the DWG binary parser is a follow-up (no real-world DWG sample exists to
+*  validate against). Dispatched in dxfRW::processMPolygon via classesmap recName
+*  "MPOLYGON" / className "AcDbMPolygon".
+*/
+class DRW_MPolygon : public DRW_Hatch {
+    SETENTFRIENDS
+public:
+    DRW_MPolygon() {
+        eType = DRW::MPOLYGON;
+    }
+
+    /* MPOLYGON-only fill color (DXF 63 ACI / 421 RGB / 430 name). Distinct from
+       the entity color: the fill may differ from the boundary outline color. */
+    int fillColorAci {0};      /*!< fill color ACI index, code 63 */
+    int fillColorRgb {-1};     /*!< fill color 24-bit RGB, code 421 (-1 = unset) */
+    UTF8STRING fillColorName;  /*!< fill color book/name, code 430 */
+    double xDirX {0.0};        /*!< boundary x-direction vector x, code 11 */
+    double xDirY {0.0};        /*!< boundary x-direction vector y, code 21 */
+    int degenerateLoops {0};   /*!< count of degenerate boundary paths, code 99 */
+
+protected:
+    bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
 };
 
 //! Class to handle image entity

@@ -3546,6 +3546,8 @@ bool dxfRW::processEntities(bool isblock) {
             processed = processUnderlay(nextentity);
         } else if (nextentity == "HATCH") {
             processed = processHatch();
+        } else if (nextentity == "MPOLYGON") {
+            processed = processMPolygon();
         } else if (nextentity == "SPLINE") {
             processed = processSpline();
         } else if (nextentity == "3DFACE") {
@@ -4190,6 +4192,31 @@ bool dxfRW::processWipeout() {
         }
 
         if (!img.parseCode(code, reader)) {
+            return setError(DRW::BAD_CODE_PARSED);
+        }
+    }
+
+    return setError(DRW::BAD_READ_ENTITIES);
+}
+
+// MPOLYGON (AcDbMPolygon) DXF read.  Boundary loops, solid flag and pattern share
+// HATCH's group codes; DRW_MPolygon::parseCode delegates those to DRW_Hatch and
+// additionally captures the MPOLYGON-only fill-color / degenerate-count trailer.
+// Delivered via addMPolygon (defaults to addHatch, so it renders as a hatch).
+bool dxfRW::processMPolygon() {
+    DRW_DBG("dxfRW::processMPolygon");
+    int code;
+    DRW_MPolygon poly;
+    while (reader->readRec(&code)) {
+        DRW_DBG(code); DRW_DBG("\n");
+        if (0 == code) {
+            nextentity = reader->getString();
+            DRW_DBG(nextentity); DRW_DBG("\n");
+            iface->addMPolygon(&poly);
+            return true;  //found new entity or ENDSEC, terminate
+        }
+
+        if (!poly.parseCode(code, reader)) {
             return setError(DRW::BAD_CODE_PARSED);
         }
     }
