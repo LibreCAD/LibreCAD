@@ -605,8 +605,8 @@
         <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="196"/>
         <source>radius=%1 is too small for points selected
 distance between points=%2 is larger than diameter=%3</source>
-        <translation>raadius=% 1 on valitud punktide jaoks liiga väike
-punktide vaheline kaugus=% 2 on suurem kui diameeter= % 3</translation>
+        <translation>raadius=%1 on valitud punktide jaoks liiga väike
+punktide vaheline kaugus=%2 on suurem kui diameeter= %3</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="208"/>
@@ -708,7 +708,7 @@ punktide vaheline kaugus=% 2 on suurem kui diameeter= % 3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="146"/>
         <source>Dual created around center (%1 entities)</source>
-        <translation>Tsentri ümber loodud duaal (% 1 olem)</translation>
+        <translation>Tsentri ümber loodud duaal (%1 olem)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="159"/>
@@ -883,8 +883,8 @@ või [x|y|p|number|edges]</translation>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="537"/>
         <source>Specify distance (%1)
 or [%2]</source>
-        <translation>Määra kaugus (% 1)
-või [% 2]</translation>
+        <translation>Määra kaugus (%1)
+või [%2]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="534"/>
@@ -900,8 +900,8 @@ või [% 2]</translation>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="542"/>
         <source>Specify  distance (angle %1 deg)
 or [%2]</source>
-        <translation>Määra kaugus (nurk% 1 deg)
-või [% 2]</translation>
+        <translation>Määra kaugus (nurk%1 deg)
+või [%2]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="547"/>
@@ -1013,13 +1013,13 @@ või [% 2]</translation>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="477"/>
         <source>Specify direction (x or y) or [%1]</source>
-        <translation>Määra suund (x või y) või [% 1]</translation>
+        <translation>Määra suund (x või y) või [%1]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="491"/>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="495"/>
         <source>Specify distance (%1) or [%2]</source>
-        <translation>Määra kaugus (% 1) või [% 2]</translation>
+        <translation>Määra kaugus (%1) või [%2]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="134"/>
@@ -1051,17 +1051,17 @@ või [% 2]</translation>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="501"/>
         <source>Specify distance (%1 deg) or [%2]</source>
-        <translation>Määra kaugus (% 1 deg) või [% 2]</translation>
+        <translation>Määra kaugus (%1 deg) või [%2]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="516"/>
         <source>Specify angle or [%1]</source>
-        <translation>Nurga või [% 1] määramine</translation>
+        <translation>Nurga või [%1] määramine</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="528"/>
         <source>Specify point or [%1]</source>
-        <translation>Määra punkt või [% 1]</translation>
+        <translation>Määra punkt või [%1]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="577"/>
@@ -1360,7 +1360,7 @@ või [% 2]</translation>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="231"/>
         <source>Specify next control point or [%1]</source>
-        <translation>Järgmise kontrollpunkti või [% 1] määramine</translation>
+        <translation>Järgmise kontrollpunkti või [%1] määramine</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="231"/>
@@ -3297,13 +3297,13 @@ Alternative: %4
 Start Edge Point: (%5 , %6)
 Intersection Point :(%7, %8)
 End Edge Point: (%9 , %10)</source>
-        <translation>Nurk:% 1
-Täiendav:% 2
-Täiendav:% 3
-Alternatiiv:% 4
-Servipunkti algus: (% 5 ,% 6)
-Ristumispunkt: (% 7,% 8)
-Lõpu servapunkt: (% 9,% 10)</translation>
+        <translation>Nurk:%1
+Täiendav:%2
+Täiendav:%3
+Alternatiiv:%4
+Servipunkti algus: (%5 ,%6)
+Ristumispunkt: (%7,%8)
+Lõpu servapunkt: (%9,%10)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="149"/>
@@ -3370,27 +3370,27 @@ Lõpu servapunkt: (% 9,% 10)</translation>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="41"/>
         <source>Absolute: (%1)</source>
-        <translation>Absoluutne: (% 1)</translation>
+        <translation>Absoluutne: (%1)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="42"/>
         <source>Relative: (%1)</source>
-        <translation>Suhteline: (% 1)</translation>
+        <translation>Suhteline: (%1)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="43"/>
         <source>Polar: (%1)</source>
-        <translation>Polaarne: (% 1)</translation>
+        <translation>Polaarne: (%1)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="44"/>
         <source>Polar Relative: (%1)</source>
-        <translation>Polaarsuhe: (% 1)</translation>
+        <translation>Polaarsuhe: (%1)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="46"/>
         <source>Absolute WCS: (%1)</source>
-        <translation>Absoluutne WCS: (% 1)</translation>
+        <translation>Absoluutne WCS: (%1)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="70"/>
@@ -3711,7 +3711,7 @@ Lõpu servapunkt: (% 9,% 10)</translation>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayerscmd.cpp" line="53"/>
         <source>Enter layer name to %1</source>
-        <translation>Sisesta kihi nimi% 1</translation>
+        <translation>Sisesta kihi nimi%1</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayerscmd.cpp" line="53"/>
@@ -4509,7 +4509,7 @@ Lõpu servapunkt: (% 9,% 10)</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="163"/>
         <source>LibreCAD Shortcuts file (*.%1)</source>
-        <translation>LibreCAD kiirklahvide fail (*.% 1)</translation>
+        <translation>LibreCAD kiirklahvide fail (*.%1)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="198"/>
@@ -4684,7 +4684,7 @@ Kas olete kindel, et kavatsete muudatused kõrvale jätta?</translation>
         <source>Save changes to the following item?
 %1</source>
         <translation>Kas salvestada muudatused järgmises elemendis?
-% 1</translation>
+%1</translation>
     </message>
     <message>
         <location filename="../src/ui/main/support/lc_appwindowdialogsinvoker.cpp" line="185"/>
@@ -4998,7 +4998,7 @@ Kas olete kindel, et kavatsete muudatused kõrvale jätta?</translation>
         <location filename="../src/ui/components/creators/lc_creatorinvoker.cpp" line="83"/>
         <location filename="../src/ui/components/creators/lc_creatorinvoker.cpp" line="115"/>
         <source>Toolbar: %1 (Custom)</source>
-        <translation>Tööriistariba:% 1 (kohandatud)</translation>
+        <translation>Tööriistariba:%1 (kohandatud)</translation>
     </message>
 </context>
 <context>
@@ -5345,7 +5345,7 @@ Kas olete kindel, et kavatsete muudatused kõrvale jätta?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="186"/>
         <source>LibreCAD dimension styles file (*.%1)</source>
-        <translation>LibreCAD dimensiooni stiilide fail (*.% 1)</translation>
+        <translation>LibreCAD dimensiooni stiilide fail (*.%1)</translation>
     </message>
 </context>
 <context>
@@ -5394,17 +5394,17 @@ Kas olete kindel, et kavatsete muudatused kõrvale jätta?</translation>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="76"/>
         <source>Version: &lt;b&gt;%1&lt;/b&gt;</source>
-        <translation>Versioon: &lt;b&gt;% 1&lt;/b&gt;</translation>
+        <translation>Versioon: &lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="78"/>
         <source>Compiler: Clang %1.%2.%3</source>
-        <translation>Kompilaator: Clang% 1.% 2.% 3</translation>
+        <translation>Kompilaator: Clang%1.%2.%3</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="80"/>
         <source>Compiler: GNU GCC %1.%2.%3</source>
-        <translation>Kompilaator: GNU GCC% 1.% 2.% 3</translation>
+        <translation>Kompilaator: GNU GCC%1.%2.%3</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="82"/>
@@ -5414,17 +5414,17 @@ Kas olete kindel, et kavatsete muudatused kõrvale jätta?</translation>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="84"/>
         <source>Compiled on: %1</source>
-        <translation>Kompileeritud:% 1</translation>
+        <translation>Kompileeritud:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="85"/>
         <source>Qt Version: %1</source>
-        <translation>Qt versioon:% 1</translation>
+        <translation>Qt versioon:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="86"/>
         <source>Boost Version: %1.%2.%3</source>
-        <translation>Tõukeversioon:% 1.% 2.% 3</translation>
+        <translation>Tõukeversioon:%1.%2.%3</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="96"/>
@@ -6582,7 +6582,7 @@ Kas olete kindel, et kavatsete muudatused kõrvale jätta?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1831"/>
         <source>Includes a prefix in the alternate dimension text. You can enter text or use control codes to display special symbols. For example, entering the control code %%c displays the diameter symbol. (DIMAPOST system variable)</source>
-        <translation>Varumõõtme tekstis sisaldub eesliide. Võite sisestada teksti või kasutada juhtkoode, et kuvada spetsiaalseid sümboleid. Näiteks näitab kontrollkoodi%% c sisestamine diameetri sümbolit. (DIMAPOST süsteemimuutuja)</translation>
+        <translation>Varumõõtme tekstis sisaldub eesliide. Võite sisestada teksti või kasutada juhtkoode, et kuvada spetsiaalseid sümboleid. Näiteks näitab kontrollkoodi%%c sisestamine diameetri sümbolit. (DIMAPOST süsteemimuutuja)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1845"/>
@@ -7532,7 +7532,7 @@ Kas olete kindel, et kavatsete muudatused kõrvale jätta?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="102"/>
         <source>Menu Assignment - &quot;%1&quot; Menu</source>
-        <translation>Menüü omistamine - &quot;% 1&quot; menüü</translation>
+        <translation>Menüü omistamine - &quot;%1&quot; menüü</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="106"/>
@@ -7677,7 +7677,7 @@ Kas olete kindel, et kavatsete muudatused kõrvale jätta?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="250"/>
         <source>NOTE: This shortcut is already assigned to &quot;%1&quot; menu and that menu will be unassigned on save!</source>
-        <translation>MÄRKUS: see kiirklahv on juba määratud menüüsse &quot;% 1&quot; ja see menüü salvestatakse!</translation>
+        <translation>MÄRKUS: see kiirklahv on juba määratud menüüsse &quot;%1&quot; ja see menüü salvestatakse!</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="254"/>
@@ -7971,7 +7971,7 @@ Kas olete kindel, et kavatsete muudatused kõrvale jätta?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.cpp" line="145"/>
         <source>Provided name of dimension style (%1) is not unique! Please enter another one.</source>
-        <translation>Dimensioonistiili (% 1) nimi ei ole unikaalne! Palun sisesta veel üks.</translation>
+        <translation>Dimensioonistiili (%1) nimi ei ole unikaalne! Palun sisesta veel üks.</translation>
     </message>
 </context>
 <context>
@@ -8771,7 +8771,7 @@ Kas olete kindel, et kavatsete muudatused kõrvale jätta?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="203"/>
         <source>Are you sure you&apos;d like to unassign &quot;%1&quot; menu? Note: Just an invocation shortcut will be removed and menu will not be deleted.</source>
-        <translation>Kas tõesti eemaldada menüü &quot;% 1&quot;? Märkus.: Eemaldatakse ainult kiirklahv ja menüüd ei kustutata.</translation>
+        <translation>Kas tõesti eemaldada menüü &quot;%1&quot;? Märkus.: Eemaldatakse ainult kiirklahv ja menüüd ei kustutata.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="216"/>
@@ -8794,12 +8794,12 @@ Kas olete kindel, et kavatsete muudatused kõrvale jätta?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="430"/>
         <source>Remove %1</source>
-        <translation>Eemalda% 1</translation>
+        <translation>Eemalda%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="431"/>
         <source>Are you sure you&apos;d like to remove  %2&quot;%1&quot;?</source>
-        <translation>Kas tõesti eemaldada% 2&quot;% 1&quot;?</translation>
+        <translation>Kas tõesti eemaldada%2&quot;%1&quot;?</translation>
     </message>
 </context>
 <context>
@@ -9206,7 +9206,7 @@ Kas olete kindel, et kavatsete muudatused kõrvale jätta?</translation>
     <message>
         <location filename="../src/ui/dialogs/file/export/image/lc_exporttoimageservice.cpp" line="62"/>
         <source>Exported: %1</source>
-        <translation>Eksporditud:% 1</translation>
+        <translation>Eksporditud:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/image/lc_exporttoimageservice.cpp" line="65"/>
@@ -10315,7 +10315,7 @@ Ehituskihi sisu ei tohiks olla väljatrükis.</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="189"/>
         <source>Invalid value provide for %1 color.
 Please specify a different value.</source>
-        <translation>Vigane väärtus määrab% 1 värvi.
+        <translation>Vigane väärtus määrab%1 värvi.
 Palun määra teistsugune väärtus.</translation>
     </message>
     <message>
@@ -12467,7 +12467,7 @@ Hoiatus: seda tegevust ei saa tagasi võtta!</translation>
  &quot;%1&quot;?
  Warning: this action can NOT be undone!</source>
         <translation>Kas kindlasti kustutada vaade
-&quot;% 1&quot;?
+&quot;%1&quot;?
 Hoiatus: seda tegevust ei saa tagasi võtta!</translation>
     </message>
     <message>
@@ -12479,7 +12479,7 @@ Hoiatus: seda tegevust ei saa tagasi võtta!</translation>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="302"/>
         <source>Are you sure to delete views %1?
 Warning: this action can NOT be undone!</source>
-        <translation>Kas tõesti kustutada vaated% 1?
+        <translation>Kas tõesti kustutada vaated%1?
 Hoiatus: seda tegevust ei saa tagasi võtta!</translation>
     </message>
     <message>
@@ -15880,7 +15880,7 @@ p, li { white- space: pre- wrap; }
     <message>
         <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="45"/>
         <source>LibreCAD settings file (*.%1)</source>
-        <translation>LibreCAD seadistustefail (*.% 1)</translation>
+        <translation>LibreCAD seadistustefail (*.%1)</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="91"/>
@@ -16732,7 +16732,7 @@ p, li { white- space: pre- wrap; }
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="67"/>
         <source>Toolbar: %1</source>
-        <translation>Tööriistariba:% 1</translation>
+        <translation>Tööriistariba:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="73"/>
@@ -17089,7 +17089,7 @@ Hoiatus: seda tegevust ei saa tagasi võtta!</translation>
  &quot;%1&quot;?
  Warning: this action can NOT be undone!</source>
         <translation>Kas tõesti kustutada UCS?
-&quot;% 1&quot;?
+&quot;%1&quot;?
 Hoiatus: seda tegevust ei saa tagasi võtta!</translation>
     </message>
     <message>
@@ -17101,7 +17101,7 @@ Hoiatus: seda tegevust ei saa tagasi võtta!</translation>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="378"/>
         <source>Are you sure to delete UCS %1?
 Warning: this action can NOT be undone!</source>
-        <translation>Kas tõesti kustutada UCS% 1?
+        <translation>Kas tõesti kustutada UCS%1?
 Hoiatus: seda tegevust ei saa tagasi võtta!</translation>
     </message>
     <message>
@@ -17374,7 +17374,7 @@ Hoiatus: seda tegevust ei saa tagasi võtta!</translation>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="429"/>
         <source>Toolbar: %1</source>
-        <translation>Tööriistariba:% 1</translation>
+        <translation>Tööriistariba:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="213"/>
@@ -17944,7 +17944,7 @@ Palun kontrolli õigusi.</translation>
 Please check the permissions.
 Auto-save disabled.</source>
         <translation>Faili automaatne salvestamine nurjus
-% 1
+%1
 Palun kontrolli õigusi.
 Automaatne salvestamine keelatud.</translation>
     </message>
@@ -17989,18 +17989,18 @@ Automaatne salvestamine keelatud.</translation>
 %1
 Please check its existence and permissions.</source>
         <translation>Faili avamine nurjus
-% 1
+%1
 Palun kontrollige nende olemasolu ja õigusi.</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1023"/>
         <source>File &apos;%1&apos; does not exist. Opening aborted</source>
-        <translation>Faili &apos;% 1&apos; ei ole olemas. Avamine katkestati</translation>
+        <translation>Faili &apos;%1&apos; ei ole olemas. Avamine katkestati</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="226"/>
         <source>Saving drawing: %1</source>
-        <translation>Joonise salvestamine:% 1</translation>
+        <translation>Joonise salvestamine:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="232"/>
@@ -18020,12 +18020,12 @@ Palun kontrollige nende olemasolu ja õigusi.</translation>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="365"/>
         <source>&amp;Save %1</source>
-        <translation>&amp; Salvesta% 1</translation>
+        <translation>&amp; Salvesta%1</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="366"/>
         <source>Save %1 &amp;as...</source>
-        <translation>Salvestage% 1 &amp; as...</translation>
+        <translation>Salvestage%1 &amp; as...</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1084"/>
@@ -18288,7 +18288,7 @@ Palun kontrollige nende olemasolu ja õigusi.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="210"/>
         <source>Unknown command: %1</source>
-        <translation>Tundmatu käsk:% 1</translation>
+        <translation>Tundmatu käsk:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.ui" line="102"/>
@@ -18320,7 +18320,7 @@ Palun kontrollige nende olemasolu ja õigusi.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="249"/>
         <source>Command Alias File: %1</source>
-        <translation>Käsk Alias Fail:% 1</translation>
+        <translation>Käsk Alias Fail:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="339"/>
@@ -20380,7 +20380,7 @@ See rekursiivselt muudab kõiki ploki üksusi.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="400"/>
         <source>Are you sure you&apos;d like to delete property [%1]?</source>
-        <translation>Kas tõesti kustutada omadus [% 1]?</translation>
+        <translation>Kas tõesti kustutada omadus [%1]?</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="422"/>
@@ -20447,7 +20447,7 @@ See rekursiivselt muudab kõiki ploki üksusi.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="642"/>
         <source>Enter new unique name of dimension style (was &quot;%1&quot;):</source>
-        <translation>Sisesta mõõdestiili uus unikaalne nimi (oli &quot;% 1&quot;):</translation>
+        <translation>Sisesta mõõdestiili uus unikaalne nimi (oli &quot;%1&quot;):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="662"/>
@@ -20470,12 +20470,12 @@ See rekursiivselt muudab kõiki ploki üksusi.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="684"/>
         <source>Are you sure you want to remove the dimension style &quot;%1&quot; together with child styles?</source>
-        <translation>Kas tõesti eemaldada dimensioonistiili &quot;% 1&quot; koos lapsestiilidega?</translation>
+        <translation>Kas tõesti eemaldada dimensioonistiili &quot;%1&quot; koos lapsestiilidega?</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="692"/>
         <source>Are you sure you want to remove the dimension style &quot;%1&quot;?</source>
-        <translation>Kas tõesti eemaldada mõõtmestiil &quot;% 1&quot;?</translation>
+        <translation>Kas tõesti eemaldada mõõtmestiil &quot;%1&quot;?</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="929"/>
@@ -25131,52 +25131,52 @@ Küpsetamiseks vajalik vaikeastme väärtus</translation>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="124"/>
         <source>Drawing Exchange DXF 2000 %1</source>
-        <translation>Vahetuse DXF 2000% 1 joonistamine</translation>
+        <translation>Vahetuse DXF 2000%1 joonistamine</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="126"/>
         <source>Drawing Exchange DXF R12 %1</source>
-        <translation>Vahetus DXF R12% 1 joonis</translation>
+        <translation>Vahetus DXF R12%1 joonis</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="129"/>
         <source>LFF Font %1</source>
-        <translation>LFF Font% 1</translation>
+        <translation>LFF Font%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="133"/>
         <source>QCad Font %1</source>
-        <translation>QCad Font% 1</translation>
+        <translation>QCad Font%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="134"/>
         <source>Jww Drawing %1</source>
-        <translation>Jw joonistamine% 1</translation>
+        <translation>Jw joonistamine%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="127"/>
         <source>Drawing Exchange %1</source>
-        <translation>Vahetuse% 1 joonistamine</translation>
+        <translation>Vahetuse%1 joonistamine</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="135"/>
         <source>QCad 1.x file %1</source>
-        <translation>QCad 1. x fail% 1</translation>
+        <translation>QCad 1. x fail%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="122"/>
         <source>Drawing Exchange DXF 2007 %1</source>
-        <translation>Vahetuse DXF 2007% 1 joonistamine</translation>
+        <translation>Vahetuse DXF 2007%1 joonistamine</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="123"/>
         <source>Drawing Exchange DXF 2004 %1</source>
-        <translation>Vahetuse DXF 2004% 1 joonistamine</translation>
+        <translation>Vahetuse DXF 2004%1 joonistamine</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="125"/>
         <source>Drawing Exchange DXF R14 %1</source>
-        <translation>Joonistamine Exchange DXF R14% 1</translation>
+        <translation>Joonistamine Exchange DXF R14%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="138"/>
@@ -25193,17 +25193,17 @@ Küpsetamiseks vajalik vaikeastme väärtus</translation>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="163"/>
         <source>Open %1</source>
-        <translation>Ava% 1</translation>
+        <translation>Ava%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="253"/>
         <source>Save %1 As</source>
-        <translation>% 1 salvestamine kui</translation>
+        <translation>%1 salvestamine kui</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="131"/>
         <source>dwg Drawing %1</source>
-        <translation>dwg Joonistamine% 1</translation>
+        <translation>dwg Joonistamine%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="235"/>
@@ -25594,7 +25594,7 @@ p, li { white- space: pre- wrap; }
     <message>
         <location filename="../src/ui/main/support/qg_recentfiles.cpp" line="177"/>
         <source>&amp;%1 %2</source>
-        <translation>&amp;% 1% 2</translation>
+        <translation>&amp;%1%2</translation>
     </message>
 </context>
 <context>
@@ -25630,7 +25630,7 @@ p, li { white- space: pre- wrap; }
     <message>
         <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="171"/>
         <source>Relative zero position is %1</source>
-        <translation>Suhteline nullpositsioon on% 1</translation>
+        <translation>Suhteline nullpositsioon on%1</translation>
     </message>
     <message>
         <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="171"/>
@@ -25645,7 +25645,7 @@ p, li { white- space: pre- wrap; }
     <message>
         <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="176"/>
         <source>Coordinate system: %1</source>
-        <translation>Koordinaatide süsteem:% 1</translation>
+        <translation>Koordinaatide süsteem:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="176"/>
@@ -25824,7 +25824,7 @@ p, li { white- space: pre- wrap; }
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="191"/>
         <source>Layer &quot;%1&quot; and all entities on it will be removed.
 This action can NOT be undone.</source>
-        <translation>Kihi &quot;% 1&quot; ja kõik sellel olevad olemid eemaldatakse.
+        <translation>Kihi &quot;%1&quot; ja kõik sellel olevad olemid eemaldatakse.
 Seda toimingut ei saa tagasi võtta.</translation>
     </message>
     <message>
@@ -25894,7 +25894,7 @@ Seda toimingut ei saa tagasi võtta.</translation>
 [%1].
 Please specify a different name.</source>
         <translation>Proovige luua kiht dubleeriva nimega. Topeltkihi nimi on
-[% 1]
+[%1]
 Palun määra teine nimi.</translation>
     </message>
     <message>
@@ -25947,7 +25947,7 @@ Clear filtering mask and repeat.</source>
 [%1].
 Please specify a different name.</source>
         <translation>Selline laps on juba olemas.
-[% 1]
+[%1]
 Palun määra teine nimi.</translation>
     </message>
     <message>
@@ -25956,7 +25956,7 @@ Palun määra teine nimi.</translation>
 [%1].
 </source>
         <translation>Selline laps on juba olemas.
-[% 1].</translation>
+[%1].</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1165"/>
@@ -26001,7 +26001,7 @@ Kui ei, siis väärtused „Kihtide järgi” jäävad samaks ja seega määrab 
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.cpp" line="218"/>
         <source>Invalid value provided for %1 color.
 Please specify a different value.</source>
-        <translation>% 1 värvile on antud vigane väärtus.
+        <translation>%1 värvile on antud vigane väärtus.
 Palun määra teistsugune väärtus.</translation>
     </message>
     <message>
@@ -26244,12 +26244,12 @@ Tahad sa seda asendada?</translation>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="458"/>
         <source>LFF Font %1</source>
-        <translation>LFF Font% 1</translation>
+        <translation>LFF Font%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="460"/>
         <source>Jww %1</source>
-        <translation>Jww% 1</translation>
+        <translation>Jww%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="936"/>
@@ -26314,12 +26314,12 @@ Tahad sa seda asendada?</translation>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="451"/>
         <source>Old Drawing Exchange %1</source>
-        <translation>Vana joonistusvahetus% 1</translation>
+        <translation>Vana joonistusvahetus%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="455"/>
         <source>dwg Drawing %1</source>
-        <translation>dwg Joonistamine% 1</translation>
+        <translation>dwg Joonistamine%1</translation>
     </message>
     <message>
         <source>DWG support is not complete!</source>
@@ -26380,7 +26380,7 @@ Tahad sa seda asendada?</translation>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="68"/>
         <source>: duplicated command: %1 is already taken by %2</source>
-        <translation>: dubleeritud käsk:% 1 on juba võetud% 2 poolt</translation>
+        <translation>: dubleeritud käsk:%1 on juba võetud%2 poolt</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="884"/>
@@ -27473,37 +27473,37 @@ Tahad sa seda asendada?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="261"/>
         <location filename="../src/cmd/rs_commands.cpp" line="316"/>
         <source>cannot change meaning of commands. Refused to reuse command %1 to mean %2</source>
-        <translation>ei saa muuta käskude tähendust. Keeldus käsu% 1 taaskasutamisest keskmisena% 2</translation>
+        <translation>ei saa muuta käskude tähendust. Keeldus käsu%1 taaskasutamisest keskmisena%2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="300"/>
         <source>requesting alias(%1) for unknown command(%2): ignored</source>
-        <translation>tundmatu käsu (% 2) otsitav alias (% 1): ignoreeritud</translation>
+        <translation>tundmatu käsu (%2) otsitav alias (%1): ignoreeritud</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="310"/>
         <source>reusing an existing alias: was %1=%2, changed to %1=%3</source>
-        <translation>olemasoleva aliase taaskasutamine: oli% 1=% 2, muudetud asukohaks% 1=% 3</translation>
+        <translation>olemasoleva aliase taaskasutamine: oli%1=%2, muudetud asukohaks%1=%3</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="391"/>
         <source>RS_Commands:: command not found: %1</source>
-        <translation>RS  käsud: käsku ei leitud:% 1</translation>
+        <translation>RS  käsud: käsku ei leitud:%1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="416"/>
         <source>keycode: %1 (%2)</source>
-        <translation>võtmekood:% 1 (% 2)</translation>
+        <translation>võtmekood:%1 (%2)</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="418"/>
         <source>invalid keycode: %1</source>
-        <translation>vigane võtmekood:% 1</translation>
+        <translation>vigane võtmekood:%1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="433"/>
         <source>Command not found: %1</source>
-        <translation>Käsku ei leitud:% 1</translation>
+        <translation>Käsku ei leitud:%1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="472"/>
@@ -27624,7 +27624,7 @@ Tahad sa seda asendada?</translation>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="77"/>
         <source>No %1 layers found</source>
-        <translation>% 1 kihte ei leitud</translation>
+        <translation>%1 kihte ei leitud</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="92"/>
@@ -29768,12 +29768,12 @@ Tahad sa seda asendada?</translation>
         <location filename="../src/ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp" line="180"/>
         <location filename="../src/ui/dialogs/file/export/layers/lc_filedialogservice.cpp" line="219"/>
         <source>File &quot;%1&quot; already exists. Do you want to replace it?</source>
-        <translation>Fail &quot;% 1&quot; on juba olemas. Kas tahad selle asendada?</translation>
+        <translation>Fail &quot;%1&quot; on juba olemas. Kas tahad selle asendada?</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="38"/>
         <source>/CustomColor%1</source>
-        <translation>/CustomColor% 1</translation>
+        <translation>/CustomColor%1</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="39"/>
@@ -29837,7 +29837,7 @@ Tahad sa seda asendada?</translation>
     <message>
         <location filename="../src/lib/engine/document/container/rs_entitycontainer.cpp" line="1687"/>
         <source>Hatch failed due to a gap=%1 between (%2, %3) and (%4, %5)</source>
-        <translation>Hakk nurjus tühiku=% 1 tõttu (% 2,% 3) ja (% 4,% 5) vahel</translation>
+        <translation>Hakk nurjus tühiku=%1 tõttu (%2,%3) ja (%4,%5) vahel</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/patterns/rs_patternlist.cpp" line="66"/>
@@ -29847,12 +29847,12 @@ Tahad sa seda asendada?</translation>
     <message>
         <location filename="../src/lib/engine/document/patterns/rs_patternlist.cpp" line="93"/>
         <source>Hatch:: loading pattern failed: %1</source>
-        <translation>Hakk: laadimine nurjus:% 1</translation>
+        <translation>Hakk: laadimine nurjus:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/main/persistence/lc_documentsstorage.cpp" line="197"/>
         <source>File on disk modified. Please save to another file to avoid data loss! File modified: %1</source>
-        <translation>Fail kettal muudetud. Palun salvestage teise faili, et vältida andmete kadumist! Faili muudetud:% 1</translation>
+        <translation>Fail kettal muudetud. Palun salvestage teise faili, et vältida andmete kadumist! Faili muudetud:%1</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="180"/>
@@ -30204,7 +30204,7 @@ Tahad sa seda asendada?</translation>
     <message>
         <location filename="../src/lib/engine/document/rs_graphic.cpp" line="741"/>
         <source>Invalid printing scale %1. Cannot fit print preview to page</source>
-        <translation>Vigane trükiskaala% 1. Trüki eelvaatluse sobitamine leheküljele nurjus</translation>
+        <translation>Vigane trükiskaala%1. Trüki eelvaatluse sobitamine leheküljele nurjus</translation>
     </message>
     <message>
         <location filename="../src/lib/printing/lc_printing.cpp" line="160"/>
@@ -30920,17 +30920,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="146"/>
         <source>radius=%1 is invalid (expression)</source>
-        <translation>radius=% 1 on vigane (väljend)</translation>
+        <translation>radius=%1 on vigane (väljend)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="148"/>
         <source>radius=%1 is invalid (negative)</source>
-        <translation>radius=% 1 on vigane (negatiivne)</translation>
+        <translation>radius=%1 on vigane (negatiivne)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="151"/>
         <source>radius=%1 is invalid (zero)</source>
-        <translation>raadius=% 1 on vigane (null)</translation>
+        <translation>raadius=%1 on vigane (null)</translation>
     </message>
 </context>
 <context>
@@ -30994,7 +30994,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2.cpp" line="246"/>
         <source>No common tangential circle for radius &apos;%1&apos;</source>
-        <translation>Puudub ühine puutering raadiusele &apos;% 1&apos;</translation>
+        <translation>Puudub ühine puutering raadiusele &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
@@ -31164,7 +31164,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="178"/>
         <source>Total distance %1 is smaller than distance between foci</source>
-        <translation>Kogukaugus% 1 on väiksem kui fookuste vaheline kaugus</translation>
+        <translation>Kogukaugus%1 on väiksem kui fookuste vaheline kaugus</translation>
     </message>
 </context>
 <context>
@@ -31235,7 +31235,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="177"/>
         <source>Total hatch area = %1</source>
-        <translation>Luugi kogupindala =% 1</translation>
+        <translation>Luugi kogupindala =%1</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="203"/>
@@ -31638,7 +31638,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="756"/>
         <source>Specify next point or [%1]</source>
-        <translation>Järgmise punkti või [% 1] määramine</translation>
+        <translation>Järgmise punkti või [%1] määramine</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="758"/>
@@ -31854,10 +31854,10 @@ Complementary: %2
 Supplementary: %3
 Alternative: %4
 </source>
-        <translation>Nurk:% 1
-Täiendav:% 2
-Täiendav:% 3
-Alternatiiv:% 4</translation>
+        <translation>Nurk:%1
+Täiendav:%2
+Täiendav:%3
+Alternatiiv:%4</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="140"/>
@@ -31867,12 +31867,12 @@ Supplementary: %3
 Alternative: %4
 Intersection: (%5 , %6)
 Intersection :@(%7, %8)</source>
-        <translation>Nurk:% 1
-Täiendav:% 2
-Täiendav:% 3
-Alternatiiv:% 4
-Ristmik: (% 5 ,% 6)
-Ristmik: @ (% 7,% 8)</translation>
+        <translation>Nurk:%1
+Täiendav:%2
+Täiendav:%3
+Alternatiiv:%4
+Ristmik: (%5 ,%6)
+Ristmik: @ (%7,%8)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="253"/>
@@ -31961,12 +31961,12 @@ Ristmik: @ (% 7,% 8)</translation>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="153"/>
         <source>Closing Point: %1</source>
-        <translation>Sulgemispunkt:% 1</translation>
+        <translation>Sulgemispunkt:%1</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="160"/>
         <source>Point: %1</source>
-        <translation>Punkt:% 1</translation>
+        <translation>Punkt:%1</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="182"/>
@@ -31987,7 +31987,7 @@ Ristmik: @ (% 7,% 8)</translation>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="101"/>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="108"/>
         <source>Area: %1 %2^2</source>
-        <translation>Ala:% 1% 2^2</translation>
+        <translation>Ala:%1%2^2</translation>
     </message>
 </context>
 <context>
@@ -31999,11 +31999,11 @@ Cartesian: (%2 , %3)
 Polar: (%4 &lt; %5)
 Start: (%6 , %7)
 End: (%8 , %9)</source>
-        <translation>Kaugus:% 1
-Cartesian: (% 2 ,% 3)
-Polaarne: (% 4 &lt;% 5)
-Algus: (% 6 ,% 7)
-Lõpp: (% 8 ,% 9)</translation>
+        <translation>Kaugus:%1
+Cartesian: (%2 ,%3)
+Polaarne: (%4 &lt;%5)
+Algus: (%6 ,%7)
+Lõpp: (%8 ,%9)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="98"/>
@@ -32055,11 +32055,11 @@ Cartesian: (%2 , %3)
 Polar: (%4 &lt; %5)
 Point On Entity: (%6 , %7)
 Point: (%8 , %9)</source>
-        <translation>Kaugus:% 1
-Cartesian: (% 2 ,% 3)
-Polaarne: (% 4 &lt;% 5)
-Punkt olemil: (% 6 ,% 7)
-Punkt: (% 8 ,% 9)</translation>
+        <translation>Kaugus:%1
+Cartesian: (%2 ,%3)
+Polaarne: (%4 &lt;%5)
+Punkt olemil: (%6 ,%7)
+Punkt: (%8 ,%9)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="275"/>
@@ -32213,7 +32213,7 @@ Punkt: (% 8 ,% 9)</translation>
     <message>
         <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="64"/>
         <source>Cannot open file &apos;%1&apos;</source>
-        <translation>Faili &apos;% 1&apos; avamine nurjus</translation>
+        <translation>Faili &apos;%1&apos; avamine nurjus</translation>
     </message>
 </context>
 <context>
@@ -32864,7 +32864,7 @@ Punkt: (% 8 ,% 9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="421"/>
         <source>Specify first entity or enter radius &lt;%1&gt;</source>
-        <translation>Määra esimene olem või sisesta raadius &lt;% 1&gt;</translation>
+        <translation>Määra esimene olem või sisesta raadius &lt;%1&gt;</translation>
     </message>
 </context>
 <context>
@@ -33342,12 +33342,12 @@ Punkt: (% 8 ,% 9)</translation>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="160"/>
         <source>Printout offset in paper coordinates by (%1, %2)</source>
-        <translation>Väljatrüki nihe paberkoordinaatides (% 1,% 2)</translation>
+        <translation>Väljatrüki nihe paberkoordinaatides (%1,%2)</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="163"/>
         <source>Printout offset in graph coordinates by (%1, %2)</source>
-        <translation>Väljatrüki nihe graafiku koordinaatides (% 1,% 2)</translation>
+        <translation>Väljatrüki nihe graafiku koordinaatides (%1,%2)</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="185"/>

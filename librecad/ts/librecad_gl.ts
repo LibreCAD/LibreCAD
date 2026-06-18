@@ -889,7 +889,7 @@ Ou resucitou Otero Pedrayo ou és un fantasmón de carallo (acepto o ripio)</tra
         <source>Specify distance (%1)
 or [%2]</source>
         <translation>Distancia (%1)
-ou [% 2]</translation>
+ou [%2]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="537"/>
@@ -901,7 +901,7 @@ ou [% 2]</translation>
         <source>Specify  distance (angle %1 deg)
 or [%2]</source>
         <translation>Especifique a distancia (ángulo %1 deg)
-ou [% 2]</translation>
+ou [%2]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="547"/>
@@ -1061,7 +1061,7 @@ ou [% 2]</translation>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="528"/>
         <source>Specify point or [%1]</source>
-        <translation>Indicar [% 1]</translation>
+        <translation>Indicar [%1]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="577"/>
@@ -25898,7 +25898,7 @@ Esta acción NON pode ser desfeita despois.</translation>
 [%1].
 Please specify a different name.</source>
         <translation>Crear unha capa co nome duplicado. O nome duplicado é
-[% 1]
+[%1]
 Por favor, especifica outro nome.</translation>
     </message>
     <message>
@@ -25951,7 +25951,7 @@ Clear filtering mask and repeat.</source>
 [%1].
 Please specify a different name.</source>
         <translation>Este neno xa existe para
-[% 1]
+[%1]
 Por favor, especifica outro nome.</translation>
     </message>
     <message>
@@ -25960,7 +25960,7 @@ Por favor, especifica outro nome.</translation>
 [%1].
 </source>
         <translation>Este neno xa existe para
-[% 1].</translation>
+[%1].</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1165"/>
@@ -26838,7 +26838,7 @@ Quere reemprazalo?</translation>
     <message>
         <location filename="../src/ui/main/persistence/lc_documentsstorage.cpp" line="197"/>
         <source>File on disk modified. Please save to another file to avoid data loss! File modified: %1</source>
-        <translation>Ficheiro modificado no disco. Por favor, garde noutro ficheiro para evitar a perda de datos! Ficheiro modificado:% 1</translation>
+        <translation>Ficheiro modificado no disco. Por favor, garde noutro ficheiro para evitar a perda de datos! Ficheiro modificado:%1</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/container/rs_entitycontainer.cpp" line="1687"/>

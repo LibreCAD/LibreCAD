@@ -3306,7 +3306,7 @@ End Edge Point: (%9 , %10)</source>
 המונחים:%2
 תוספת: %3
 אפשרות: %4
-התחל Edge Point: (% 5,%6)
+התחל Edge Point: (%5,%6)
 המונחים: (%7,%8)
 End Edge Point: (%9,%10)</translation>
     </message>
@@ -29455,7 +29455,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/engine/document/container/rs_entitycontainer.cpp" line="1687"/>
         <source>Hatch failed due to a gap=%1 between (%2, %3) and (%4, %5)</source>
-        <translation>Hatch נכשלה בשל פער=%1 בין (%2,%3) לבין (% 4,% 5)</translation>
+        <translation>Hatch נכשלה בשל פער=%1 בין (%2,%3) לבין (%4,%5)</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/patterns/rs_patternlist.cpp" line="66"/>
@@ -31859,7 +31859,7 @@ Intersection :@(%7, %8)</source>
 המונחים:%2
 תוספת: %3
 אפשרות: %4
-סעיף: (% 5,%6)
+סעיף: (%5,%6)
 המונחים:@%7,%8)</translation>
     </message>
     <message>
@@ -32005,8 +32005,8 @@ Start: (%6 , %7)
 End: (%8 , %9)</source>
         <translation>מרחק: %1
 קרטסיאן: (%2,%3)
-Polar: (% 4 &lt;%)
-התחל: (% 6,%7)
+Polar: (%4 &lt;%)
+התחל: (%6,%7)
 (%8,%9)</translation>
     </message>
     <message>
@@ -32061,8 +32061,8 @@ Point On Entity: (%6 , %7)
 Point: (%8 , %9)</source>
         <translation>מרחק: %1
 קרטסיאן: (%2,%3)
-Polar: (% 4 &lt;%)
-נקודה על Entity: (% 6,%7)
+Polar: (%4 &lt;%)
+נקודה על Entity: (%6,%7)
 (%8,%9)</translation>
     </message>
     <message>

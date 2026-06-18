@@ -3306,9 +3306,9 @@ End Edge Point: (%9 , %10)</source>
 पूरक: %2
 पूरक: %3
 वैकल्पिक: %4
-स्टार्ट एज प्वाइंट: (% 5, %6)
+स्टार्ट एज प्वाइंट: (%5, %6)
 इंटरसेक्शन प्वाइंट:(%7,%8)
-एंड एज प्वाइंट: (% 9,% 10)</translation>
+एंड एज प्वाइंट: (%9,%10)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="149"/>
@@ -3370,27 +3370,27 @@ End Edge Point: (%9 , %10)</source>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="41"/>
         <source>Absolute: (%1)</source>
-        <translation>पूर्ण: (% 1)</translation>
+        <translation>पूर्ण: (%1)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="42"/>
         <source>Relative: (%1)</source>
-        <translation>सापेक्ष: (% 1)</translation>
+        <translation>सापेक्ष: (%1)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="43"/>
         <source>Polar: (%1)</source>
-        <translation>ध्रुवीय: (% 1)</translation>
+        <translation>ध्रुवीय: (%1)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="44"/>
         <source>Polar Relative: (%1)</source>
-        <translation>ध्रुवीय सापेक्ष: (% 1)</translation>
+        <translation>ध्रुवीय सापेक्ष: (%1)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="46"/>
         <source>Absolute WCS: (%1)</source>
-        <translation>पूर्ण WCS: (% 1)</translation>
+        <translation>पूर्ण WCS: (%1)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="70"/>
@@ -7971,7 +7971,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.cpp" line="145"/>
         <source>Provided name of dimension style (%1) is not unique! Please enter another one.</source>
-        <translation>आयाम शैली (% 1) का नाम अद्वितीय नहीं है! कृपया एक दूसरे को दर्ज करें।.</translation>
+        <translation>आयाम शैली (%1) का नाम अद्वितीय नहीं है! कृपया एक दूसरे को दर्ज करें।.</translation>
     </message>
 </context>
 <context>
@@ -21371,7 +21371,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="684"/>
         <source>Are you sure you want to remove the dimension style &quot;%1&quot; together with child styles?</source>
-        <translation>क्या आपको यकीन है कि आप बच्चे की शैलियों के साथ &quot;% 1&quot; आयाम शैली को हटाना चाहते हैं?</translation>
+        <translation>क्या आपको यकीन है कि आप बच्चे की शैलियों के साथ &quot;%1&quot; आयाम शैली को हटाना चाहते हैं?</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="692"/>
@@ -25790,7 +25790,7 @@ P, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.cpp" line="84"/>
         <source>Layer with a name &quot;%1&quot; already exists. Please specify a different name.</source>
-        <translation>पहले से ही &quot;% 1&quot; नाम के साथ परत मौजूद है। कृपया एक अलग नाम निर्दिष्ट करें।.</translation>
+        <translation>पहले से ही &quot;%1&quot; नाम के साथ परत मौजूद है। कृपया एक अलग नाम निर्दिष्ट करें।.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="190"/>
@@ -25810,7 +25810,7 @@ This action can NOT be undone.</source>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="203"/>
         <source>Layer &quot;%1&quot; can never be removed.</source>
-        <translation>परत &quot;% 1&quot; कभी हटाया नहीं जा सकता।.</translation>
+        <translation>परत &quot;%1&quot; कभी हटाया नहीं जा सकता।.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="264"/>
@@ -32000,10 +32000,10 @@ Polar: (%4 &lt; %5)
 Start: (%6 , %7)
 End: (%8 , %9)</source>
         <translation>दूरी: %1
-कार्टेशियन: (% 2,% 3)
+कार्टेशियन: (%2,%3)
 निर्यातक:91% - 100%
 प्रारंभ: (%6, %7)
-अंत: (% 8, %9)</translation>
+अंत: (%8, %9)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="98"/>
@@ -32056,10 +32056,10 @@ Polar: (%4 &lt; %5)
 Point On Entity: (%6 , %7)
 Point: (%8 , %9)</source>
         <translation>दूरी: %1
-कार्टेशियन: (% 2,% 3)
+कार्टेशियन: (%2,%3)
 निर्यातक:91% - 100%
 पॉइंट ऑन एंटिटी: (%6, %7)
-अंक: (% 8, %9)</translation>
+अंक: (%8, %9)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="275"/>

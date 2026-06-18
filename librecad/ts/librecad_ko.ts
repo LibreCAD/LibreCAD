@@ -899,7 +899,7 @@ or [%2]</source>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="542"/>
         <source>Specify  distance (angle %1 deg)
 or [%2]</source>
-        <translation>거리를 지정하십시오 (angle % 1 deg)
+        <translation>거리를 지정하십시오 (angle %1 deg)
 또는 [%2]</translation>
     </message>
     <message>

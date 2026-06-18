@@ -708,7 +708,7 @@ Vzdálenost mezi body=%2 je větší než průměr=%3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="146"/>
         <source>Dual created around center (%1 entities)</source>
-        <translation>Dual created around centre (% 1 entities)</translation>
+        <translation>Dual created around centre (%1 entities)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="159"/>
@@ -888,8 +888,8 @@ nebo [x = 124; y = 124; p = 124; počet = 124; hrany]</translation>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="537"/>
         <source>Specify distance (%1)
 or [%2]</source>
-        <translation>Upřesněte vzdálenost (% 1)
-nebo [% 2]</translation>
+        <translation>Upřesněte vzdálenost (%1)
+nebo [%2]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="537"/>
@@ -900,8 +900,8 @@ nebo [% 2]</translation>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="542"/>
         <source>Specify  distance (angle %1 deg)
 or [%2]</source>
-        <translation>Upřesněte vzdálenost (úhel% 1 °)
-nebo [% 2]</translation>
+        <translation>Upřesněte vzdálenost (úhel%1 °)
+nebo [%2]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="547"/>
@@ -1013,13 +1013,13 @@ nebo [% 2]</translation>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="477"/>
         <source>Specify direction (x or y) or [%1]</source>
-        <translation>Upřesněte směr (x nebo y) nebo [% 1]</translation>
+        <translation>Upřesněte směr (x nebo y) nebo [%1]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="491"/>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="495"/>
         <source>Specify distance (%1) or [%2]</source>
-        <translation>Uveďte vzdálenost (% 1) nebo [% 2]</translation>
+        <translation>Uveďte vzdálenost (%1) nebo [%2]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="134"/>
@@ -1051,17 +1051,17 @@ nebo [% 2]</translation>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="501"/>
         <source>Specify distance (%1 deg) or [%2]</source>
-        <translation>Upřesněte vzdálenost (% 1 deg) nebo [% 2]</translation>
+        <translation>Upřesněte vzdálenost (%1 deg) nebo [%2]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="516"/>
         <source>Specify angle or [%1]</source>
-        <translation>Upřesněte úhel nebo [% 1]</translation>
+        <translation>Upřesněte úhel nebo [%1]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="528"/>
         <source>Specify point or [%1]</source>
-        <translation>Upřesněte bod nebo [% 1]</translation>
+        <translation>Upřesněte bod nebo [%1]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="577"/>
@@ -3297,13 +3297,13 @@ Alternative: %4
 Start Edge Point: (%5 , %6)
 Intersection Point :(%7, %8)
 End Edge Point: (%9 , %10)</source>
-        <translation>Úhel:% 1
-Doplňková položka:% 2
-Doplňující:% 3
-Alternativa:% 4
-Start Edge Point: (% 5,% 6)
-Intersection Point: (% 7,% 8)
-Konec hrany: (% 9,% 10)</translation>
+        <translation>Úhel:%1
+Doplňková položka:%2
+Doplňující:%3
+Alternativa:%4
+Start Edge Point: (%5,%6)
+Intersection Point: (%7,%8)
+Konec hrany: (%9,%10)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="149"/>
@@ -3370,27 +3370,27 @@ Konec hrany: (% 9,% 10)</translation>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="41"/>
         <source>Absolute: (%1)</source>
-        <translation>Absolutní: (% 1)</translation>
+        <translation>Absolutní: (%1)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="42"/>
         <source>Relative: (%1)</source>
-        <translation>Relativní: (% 1)</translation>
+        <translation>Relativní: (%1)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="43"/>
         <source>Polar: (%1)</source>
-        <translation>Polar: (% 1)</translation>
+        <translation>Polar: (%1)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="44"/>
         <source>Polar Relative: (%1)</source>
-        <translation>Polární relativní: (% 1)</translation>
+        <translation>Polární relativní: (%1)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="46"/>
         <source>Absolute WCS: (%1)</source>
-        <translation>Absolutní WCS: (% 1)</translation>
+        <translation>Absolutní WCS: (%1)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="70"/>
@@ -3711,7 +3711,7 @@ Konec hrany: (% 9,% 10)</translation>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayerscmd.cpp" line="53"/>
         <source>Enter layer name to %1</source>
-        <translation>Zadejte název vrstvy do% 1</translation>
+        <translation>Zadejte název vrstvy do%1</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayerscmd.cpp" line="53"/>
@@ -4509,7 +4509,7 @@ Konec hrany: (% 9,% 10)</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="163"/>
         <source>LibreCAD Shortcuts file (*.%1)</source>
-        <translation>Soubor zkratek LibreCAD (*.% 1)</translation>
+        <translation>Soubor zkratek LibreCAD (*.%1)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="198"/>
@@ -4690,7 +4690,7 @@ Jste si jistý, že se chystáte zahodit změny?</translation>
         <source>Save changes to the following item?
 %1</source>
         <translation>Uložit změny do následující položky?
-% 1</translation>
+%1</translation>
     </message>
     <message>
         <location filename="../src/ui/main/support/lc_appwindowdialogsinvoker.cpp" line="185"/>
@@ -5004,7 +5004,7 @@ Jste si jistý, že se chystáte zahodit změny?</translation>
         <location filename="../src/ui/components/creators/lc_creatorinvoker.cpp" line="83"/>
         <location filename="../src/ui/components/creators/lc_creatorinvoker.cpp" line="115"/>
         <source>Toolbar: %1 (Custom)</source>
-        <translation>Nástrojová lišta:% 1 (Vlastní)</translation>
+        <translation>Nástrojová lišta:%1 (Vlastní)</translation>
     </message>
 </context>
 <context>
@@ -5351,7 +5351,7 @@ Jste si jistý, že se chystáte zahodit změny?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="186"/>
         <source>LibreCAD dimension styles file (*.%1)</source>
-        <translation>Soubor s rozměry LibreCAD (*.% 1)</translation>
+        <translation>Soubor s rozměry LibreCAD (*.%1)</translation>
     </message>
 </context>
 <context>
@@ -5400,17 +5400,17 @@ Jste si jistý, že se chystáte zahodit změny?</translation>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="76"/>
         <source>Version: &lt;b&gt;%1&lt;/b&gt;</source>
-        <translation>Verze: &lt; b &gt;% 1 &lt; / b &gt;</translation>
+        <translation>Verze: &lt; b &gt;%1 &lt; / b &gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="78"/>
         <source>Compiler: Clang %1.%2.%3</source>
-        <translation>Kompiler: Clang% 1.% 2.% 3</translation>
+        <translation>Kompiler: Clang%1.%2.%3</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="80"/>
         <source>Compiler: GNU GCC %1.%2.%3</source>
-        <translation>Kompiler: GNU GCC% 1.% 2.% 3</translation>
+        <translation>Kompiler: GNU GCC%1.%2.%3</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="82"/>
@@ -5420,17 +5420,17 @@ Jste si jistý, že se chystáte zahodit změny?</translation>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="84"/>
         <source>Compiled on: %1</source>
-        <translation>Sestaveno na:% 1</translation>
+        <translation>Sestaveno na:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="85"/>
         <source>Qt Version: %1</source>
-        <translation>Qt verze:% 1</translation>
+        <translation>Qt verze:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="86"/>
         <source>Boost Version: %1.%2.%3</source>
-        <translation>Posílit verzi:% 1.% 2.% 3</translation>
+        <translation>Posílit verzi:%1.%2.%3</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="96"/>
@@ -6590,7 +6590,7 @@ Jste si jistý, že se chystáte zahodit změny?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1831"/>
         <source>Includes a prefix in the alternate dimension text. You can enter text or use control codes to display special symbols. For example, entering the control code %%c displays the diameter symbol. (DIMAPOST system variable)</source>
-        <translation>Obsahuje prefix v textu alternativního rozměru. Pro zobrazení speciálních symbolů můžete zadat text nebo použít ovládací kódy. Například zadání kontrolního kódu%% c zobrazuje symbol průměru. (Proměnná systému DIMAPOST)</translation>
+        <translation>Obsahuje prefix v textu alternativního rozměru. Pro zobrazení speciálních symbolů můžete zadat text nebo použít ovládací kódy. Například zadání kontrolního kódu%%c zobrazuje symbol průměru. (Proměnná systému DIMAPOST)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1845"/>
@@ -7540,7 +7540,7 @@ Jste si jistý, že se chystáte zahodit změny?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="102"/>
         <source>Menu Assignment - &quot;%1&quot; Menu</source>
-        <translation>Přidělení nabídky - &quot;% 1&quot; Nabídka</translation>
+        <translation>Přidělení nabídky - &quot;%1&quot; Nabídka</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="106"/>
@@ -7685,7 +7685,7 @@ Jste si jistý, že se chystáte zahodit změny?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="250"/>
         <source>NOTE: This shortcut is already assigned to &quot;%1&quot; menu and that menu will be unassigned on save!</source>
-        <translation>POZNÁMKA: Tato zkratka je již zařazena do menu &quot;% 1&quot; a toto menu bude při uložení odevzdáno!</translation>
+        <translation>POZNÁMKA: Tato zkratka je již zařazena do menu &quot;%1&quot; a toto menu bude při uložení odevzdáno!</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="254"/>
@@ -7979,7 +7979,7 @@ Jste si jistý, že se chystáte zahodit změny?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.cpp" line="145"/>
         <source>Provided name of dimension style (%1) is not unique! Please enter another one.</source>
-        <translation>Název rozměru (% 1) není jedinečný! Prosím, zadejte další.</translation>
+        <translation>Název rozměru (%1) není jedinečný! Prosím, zadejte další.</translation>
     </message>
 </context>
 <context>
@@ -8779,7 +8779,7 @@ Jste si jistý, že se chystáte zahodit změny?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="203"/>
         <source>Are you sure you&apos;d like to unassign &quot;%1&quot; menu? Note: Just an invocation shortcut will be removed and menu will not be deleted.</source>
-        <translation>Jste si jisti, že byste chtěli oddělit menu &quot;% 1&quot;? Poznámka: Odstraní se pouze zkratka vyvolání a menu nebude smazáno.</translation>
+        <translation>Jste si jisti, že byste chtěli oddělit menu &quot;%1&quot;? Poznámka: Odstraní se pouze zkratka vyvolání a menu nebude smazáno.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="216"/>
@@ -8802,12 +8802,12 @@ Jste si jistý, že se chystáte zahodit změny?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="430"/>
         <source>Remove %1</source>
-        <translation>Odstranit% 1</translation>
+        <translation>Odstranit%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="431"/>
         <source>Are you sure you&apos;d like to remove  %2&quot;%1&quot;?</source>
-        <translation>Určitě chcete odstranit% 2 &quot;% 1&quot;?</translation>
+        <translation>Určitě chcete odstranit%2 &quot;%1&quot;?</translation>
     </message>
 </context>
 <context>
@@ -9214,7 +9214,7 @@ Jste si jistý, že se chystáte zahodit změny?</translation>
     <message>
         <location filename="../src/ui/dialogs/file/export/image/lc_exporttoimageservice.cpp" line="62"/>
         <source>Exported: %1</source>
-        <translation>Vývoz:% 1</translation>
+        <translation>Vývoz:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/image/lc_exporttoimageservice.cpp" line="65"/>
@@ -12475,7 +12475,7 @@ Varování: Tato akce nemůže být zrušena!</translation>
  &quot;%1&quot;?
  Warning: this action can NOT be undone!</source>
         <translation>Určitě smažete pohled
-&quot;% 1&quot;?
+&quot;%1&quot;?
 Varování: Tato akce nemůže být zrušena!</translation>
     </message>
     <message>
@@ -12487,7 +12487,7 @@ Varování: Tato akce nemůže být zrušena!</translation>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="302"/>
         <source>Are you sure to delete views %1?
 Warning: this action can NOT be undone!</source>
-        <translation>Určitě smažete zobrazení% 1?
+        <translation>Určitě smažete zobrazení%1?
 Varování: Tato akce nemůže být zrušena!</translation>
     </message>
     <message>
@@ -15890,7 +15890,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="45"/>
         <source>LibreCAD settings file (*.%1)</source>
-        <translation>Soubor nastavení LibreCAD (*.% 1)</translation>
+        <translation>Soubor nastavení LibreCAD (*.%1)</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="91"/>
@@ -16742,7 +16742,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="67"/>
         <source>Toolbar: %1</source>
-        <translation>Nástrojová lišta:% 1</translation>
+        <translation>Nástrojová lišta:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="73"/>
@@ -17099,7 +17099,7 @@ Varování: Tato akce nemůže být zrušena!</translation>
  &quot;%1&quot;?
  Warning: this action can NOT be undone!</source>
         <translation>Určitě odstraníte UCS
-&quot;% 1&quot;?
+&quot;%1&quot;?
 Varování: Tato akce nemůže být zrušena!</translation>
     </message>
     <message>
@@ -17111,7 +17111,7 @@ Varování: Tato akce nemůže být zrušena!</translation>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="378"/>
         <source>Are you sure to delete UCS %1?
 Warning: this action can NOT be undone!</source>
-        <translation>Opravdu smažete UCS% 1?
+        <translation>Opravdu smažete UCS%1?
 Varování: Tato akce nemůže být zrušena!</translation>
     </message>
     <message>
@@ -17384,7 +17384,7 @@ Varování: Tato akce nemůže být zrušena!</translation>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="429"/>
         <source>Toolbar: %1</source>
-        <translation>Nástrojová lišta:% 1</translation>
+        <translation>Nástrojová lišta:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="213"/>
@@ -17999,18 +17999,18 @@ Automatické ukládání bylo vypnuto.</translation>
 %1
 Please check its existence and permissions.</source>
         <translation>Nelze otevřít soubor
-% 1
+%1
 Prosím zkontrolujte jeho existenci a oprávnění.</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1023"/>
         <source>File &apos;%1&apos; does not exist. Opening aborted</source>
-        <translation>Soubor &apos;% 1&apos; neexistuje. Otevření přerušeno</translation>
+        <translation>Soubor &apos;%1&apos; neexistuje. Otevření přerušeno</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="226"/>
         <source>Saving drawing: %1</source>
-        <translation>Uložení výkresu:% 1</translation>
+        <translation>Uložení výkresu:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="232"/>
@@ -18030,12 +18030,12 @@ Prosím zkontrolujte jeho existenci a oprávnění.</translation>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="365"/>
         <source>&amp;Save %1</source>
-        <translation>Uložit% 1</translation>
+        <translation>Uložit%1</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="366"/>
         <source>Save %1 &amp;as...</source>
-        <translation>Uložit% 1 a jako...</translation>
+        <translation>Uložit%1 a jako...</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1084"/>
@@ -18331,7 +18331,7 @@ Prosím zkontrolujte jeho existenci a oprávnění.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="249"/>
         <source>Command Alias File: %1</source>
-        <translation>Příkaz Alias Soubor:% 1</translation>
+        <translation>Příkaz Alias Soubor:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="339"/>
@@ -20391,7 +20391,7 @@ To rekurzivně upravuje všechny entity samotného bloku.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="400"/>
         <source>Are you sure you&apos;d like to delete property [%1]?</source>
-        <translation>Určitě chcete smazat vlastnost [% 1]?</translation>
+        <translation>Určitě chcete smazat vlastnost [%1]?</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="422"/>
@@ -20458,7 +20458,7 @@ To rekurzivně upravuje všechny entity samotného bloku.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="642"/>
         <source>Enter new unique name of dimension style (was &quot;%1&quot;):</source>
-        <translation>Zadejte nový jedinečný název rozměrového stylu (byl &quot;% 1&quot;):</translation>
+        <translation>Zadejte nový jedinečný název rozměrového stylu (byl &quot;%1&quot;):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="662"/>
@@ -20481,12 +20481,12 @@ To rekurzivně upravuje všechny entity samotného bloku.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="684"/>
         <source>Are you sure you want to remove the dimension style &quot;%1&quot; together with child styles?</source>
-        <translation>Jste si jisti, že chcete odstranit rozměr stylu &quot;% 1&quot; spolu s dětským stylem?</translation>
+        <translation>Jste si jisti, že chcete odstranit rozměr stylu &quot;%1&quot; spolu s dětským stylem?</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="692"/>
         <source>Are you sure you want to remove the dimension style &quot;%1&quot;?</source>
-        <translation>Opravdu chcete odstranit rozměr &quot;% 1&quot;?</translation>
+        <translation>Opravdu chcete odstranit rozměr &quot;%1&quot;?</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="929"/>
@@ -25605,7 +25605,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/main/support/qg_recentfiles.cpp" line="177"/>
         <source>&amp;%1 %2</source>
-        <translation>&amp;% 1% 2</translation>
+        <translation>&amp;%1%2</translation>
     </message>
 </context>
 <context>
@@ -25641,7 +25641,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="171"/>
         <source>Relative zero position is %1</source>
-        <translation>Relativní nulová pozice je% 1</translation>
+        <translation>Relativní nulová pozice je%1</translation>
     </message>
     <message>
         <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="171"/>
@@ -25656,7 +25656,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="176"/>
         <source>Coordinate system: %1</source>
-        <translation>Souřadnice:% 1</translation>
+        <translation>Souřadnice:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="176"/>
@@ -25835,7 +25835,7 @@ p, li {white- space: pre- wrap;}
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="191"/>
         <source>Layer &quot;%1&quot; and all entities on it will be removed.
 This action can NOT be undone.</source>
-        <translation>Vrstva &quot;% 1&quot; a všechny subjekty na ní budou odstraněny.
+        <translation>Vrstva &quot;%1&quot; a všechny subjekty na ní budou odstraněny.
 Tato akce nemůže být zrušena.</translation>
     </message>
     <message>
@@ -25907,7 +25907,7 @@ Tato akce nemůže být zrušena.</translation>
 [%1].
 Please specify a different name.</source>
         <translation>Pokuste se vytvořit vrstvu s duplikačním názvem. Název duplikované vrstvy je
-[% 1].
+[%1].
 Prosím uveďte jiný název.</translation>
     </message>
     <message>
@@ -25962,7 +25962,7 @@ Vymažte filtr a opakujte.</translation>
 [%1].
 Please specify a different name.</source>
         <translation>Taková dětská vrstva již existuje pro
-[% 1].
+[%1].
 Prosím uveďte jiný název.</translation>
     </message>
     <message>
@@ -25971,7 +25971,7 @@ Prosím uveďte jiný název.</translation>
 [%1].
 </source>
         <translation>Taková dětská vrstva již existuje pro
-[% 1].</translation>
+[%1].</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1165"/>
@@ -26922,7 +26922,7 @@ Přejete si ho přepsat?</translation>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="68"/>
         <source>: duplicated command: %1 is already taken by %2</source>
-        <translation>: duplicated command:% 1 is already taken by% 2</translation>
+        <translation>: duplicated command:%1 is already taken by%2</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="884"/>
@@ -28015,37 +28015,37 @@ Přejete si ho přepsat?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="261"/>
         <location filename="../src/cmd/rs_commands.cpp" line="316"/>
         <source>cannot change meaning of commands. Refused to reuse command %1 to mean %2</source>
-        <translation>nemůže změnit význam příkazů. Odmítnuto obnovit příkaz% 1 na průměr% 2</translation>
+        <translation>nemůže změnit význam příkazů. Odmítnuto obnovit příkaz%1 na průměr%2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="300"/>
         <source>requesting alias(%1) for unknown command(%2): ignored</source>
-        <translation>žádost o alias (% 1) pro neznámý příkaz (% 2): ignorováno</translation>
+        <translation>žádost o alias (%1) pro neznámý příkaz (%2): ignorováno</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="310"/>
         <source>reusing an existing alias: was %1=%2, changed to %1=%3</source>
-        <translation>reuse an existing alias: was% 1 =% 2, changed to% 1 =% 3</translation>
+        <translation>reuse an existing alias: was%1 =%2, changed to%1 =%3</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="391"/>
         <source>RS_Commands:: command not found: %1</source>
-        <translation>RS _ Příkazy:: příkaz nenalezen:% 1</translation>
+        <translation>RS _ Příkazy:: příkaz nenalezen:%1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="416"/>
         <source>keycode: %1 (%2)</source>
-        <translation>klíčový kód:% 1 (% 2)</translation>
+        <translation>klíčový kód:%1 (%2)</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="418"/>
         <source>invalid keycode: %1</source>
-        <translation>neplatný klíčový kód:% 1</translation>
+        <translation>neplatný klíčový kód:%1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="433"/>
         <source>Command not found: %1</source>
-        <translation>Příkaz nenalezen:% 1</translation>
+        <translation>Příkaz nenalezen:%1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="472"/>
@@ -28160,7 +28160,7 @@ Přejete si ho přepsat?</translation>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="77"/>
         <source>No %1 layers found</source>
-        <translation>Nenalezeno% 1 vrstev</translation>
+        <translation>Nenalezeno%1 vrstev</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="92"/>
@@ -30026,12 +30026,12 @@ Přejete si ho přepsat?</translation>
         <location filename="../src/ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp" line="180"/>
         <location filename="../src/ui/dialogs/file/export/layers/lc_filedialogservice.cpp" line="219"/>
         <source>File &quot;%1&quot; already exists. Do you want to replace it?</source>
-        <translation>Soubor &quot;% 1&quot; již existuje. Chceš ho vyměnit?</translation>
+        <translation>Soubor &quot;%1&quot; již existuje. Chceš ho vyměnit?</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="38"/>
         <source>/CustomColor%1</source>
-        <translation>/ Vlastní barva% 1</translation>
+        <translation>/ Vlastní barva%1</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="39"/>
@@ -30100,7 +30100,7 @@ Přejete si ho přepsat?</translation>
     <message>
         <location filename="../src/lib/engine/document/patterns/rs_patternlist.cpp" line="93"/>
         <source>Hatch:: loading pattern failed: %1</source>
-        <translation>Poklop:: načítání selhalo:% 1</translation>
+        <translation>Poklop:: načítání selhalo:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="41"/>
@@ -30240,7 +30240,7 @@ Přejete si ho přepsat?</translation>
     <message>
         <location filename="../src/lib/engine/document/rs_graphic.cpp" line="741"/>
         <source>Invalid printing scale %1. Cannot fit print preview to page</source>
-        <translation>Neplatná stupnice tisku% 1. Nelze vložit náhled tisku do stránky</translation>
+        <translation>Neplatná stupnice tisku%1. Nelze vložit náhled tisku do stránky</translation>
     </message>
     <message>
         <location filename="../src/lib/printing/lc_printing.cpp" line="160"/>
@@ -30956,17 +30956,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="146"/>
         <source>radius=%1 is invalid (expression)</source>
-        <translation>poloměr =% 1 je neplatný (výraz)</translation>
+        <translation>poloměr =%1 je neplatný (výraz)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="148"/>
         <source>radius=%1 is invalid (negative)</source>
-        <translation>poloměr =% 1 je neplatný (negativní)</translation>
+        <translation>poloměr =%1 je neplatný (negativní)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="151"/>
         <source>radius=%1 is invalid (zero)</source>
-        <translation>poloměr =% 1 je neplatný (nula)</translation>
+        <translation>poloměr =%1 je neplatný (nula)</translation>
     </message>
 </context>
 <context>
@@ -31030,7 +31030,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2.cpp" line="246"/>
         <source>No common tangential circle for radius &apos;%1&apos;</source>
-        <translation>Žádný společný tangenciální kruh pro poloměr &apos;% 1&apos;</translation>
+        <translation>Žádný společný tangenciální kruh pro poloměr &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
@@ -31200,7 +31200,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="178"/>
         <source>Total distance %1 is smaller than distance between foci</source>
-        <translation>Celková vzdálenost% 1 je menší než vzdálenost mezi foci</translation>
+        <translation>Celková vzdálenost%1 je menší než vzdálenost mezi foci</translation>
     </message>
 </context>
 <context>
@@ -31890,10 +31890,10 @@ Complementary: %2
 Supplementary: %3
 Alternative: %4
 </source>
-        <translation>Úhel:% 1
-Doplňková položka:% 2
-Doplňující:% 3
-Alternativa:% 4</translation>
+        <translation>Úhel:%1
+Doplňková položka:%2
+Doplňující:%3
+Alternativa:%4</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="140"/>
@@ -31903,12 +31903,12 @@ Supplementary: %3
 Alternative: %4
 Intersection: (%5 , %6)
 Intersection :@(%7, %8)</source>
-        <translation>Úhel:% 1
-Doplňková položka:% 2
-Doplňující:% 3
-Alternativa:% 4
-Intersekce: (% 5,% 6)
-Rozhraní: @ (% 7,% 8)</translation>
+        <translation>Úhel:%1
+Doplňková položka:%2
+Doplňující:%3
+Alternativa:%4
+Intersekce: (%5,%6)
+Rozhraní: @ (%7,%8)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="253"/>
@@ -31997,12 +31997,12 @@ Rozhraní: @ (% 7,% 8)</translation>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="153"/>
         <source>Closing Point: %1</source>
-        <translation>Závěrečný bod:% 1</translation>
+        <translation>Závěrečný bod:%1</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="160"/>
         <source>Point: %1</source>
-        <translation>Bod:% 1</translation>
+        <translation>Bod:%1</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="182"/>
@@ -32023,7 +32023,7 @@ Rozhraní: @ (% 7,% 8)</translation>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="101"/>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="108"/>
         <source>Area: %1 %2^2</source>
-        <translation>Plocha:% 1% 2 ^ 2</translation>
+        <translation>Plocha:%1%2 ^ 2</translation>
     </message>
 </context>
 <context>
@@ -32035,11 +32035,11 @@ Cartesian: (%2 , %3)
 Polar: (%4 &lt; %5)
 Start: (%6 , %7)
 End: (%8 , %9)</source>
-        <translation>Vzdálenost:% 1
-Kartéza: (% 2,% 3)
-Polar: (% 4 &lt;% 5)
-Start: (% 6,% 7)
-Konec: (% 8,% 9)</translation>
+        <translation>Vzdálenost:%1
+Kartéza: (%2,%3)
+Polar: (%4 &lt;%5)
+Start: (%6,%7)
+Konec: (%8,%9)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="98"/>
@@ -32091,11 +32091,11 @@ Cartesian: (%2 , %3)
 Polar: (%4 &lt; %5)
 Point On Entity: (%6 , %7)
 Point: (%8 , %9)</source>
-        <translation>Vzdálenost:% 1
-Kartéza: (% 2,% 3)
-Polar: (% 4 &lt;% 5)
-Bod u subjektu: (% 6,% 7)
-Bod: (% 8,% 9)</translation>
+        <translation>Vzdálenost:%1
+Kartéza: (%2,%3)
+Polar: (%4 &lt;%5)
+Bod u subjektu: (%6,%7)
+Bod: (%8,%9)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="275"/>
@@ -32900,7 +32900,7 @@ Bod: (% 8,% 9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="421"/>
         <source>Specify first entity or enter radius &lt;%1&gt;</source>
-        <translation>Upřesněte první subjekt nebo zadejte poloměr &lt;% 1 &gt;</translation>
+        <translation>Upřesněte první subjekt nebo zadejte poloměr &lt;%1 &gt;</translation>
     </message>
 </context>
 <context>

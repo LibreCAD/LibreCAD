@@ -605,8 +605,8 @@
         <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="196"/>
         <source>radius=%1 is too small for points selected
 distance between points=%2 is larger than diameter=%3</source>
-        <translation>raza=% 1 este prea mică pentru punctele selectate
-distanța dintre puncte=%2 este mai mare decât diametrul = % 3</translation>
+        <translation>raza=%1 este prea mică pentru punctele selectate
+distanța dintre puncte=%2 este mai mare decât diametrul = %3</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="208"/>
@@ -708,7 +708,7 @@ distanța dintre puncte=%2 este mai mare decât diametrul = % 3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="146"/>
         <source>Dual created around center (%1 entities)</source>
-        <translation>Dual creat în jurul centrului (% 1 entități)</translation>
+        <translation>Dual creat în jurul centrului (%1 entități)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="159"/>
@@ -888,8 +888,8 @@ sau[x</translation>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="537"/>
         <source>Specify distance (%1)
 or [%2]</source>
-        <translation>Specifică distanța (% 1)
-fie [% 2]</translation>
+        <translation>Specifică distanța (%1)
+fie [%2]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="537"/>
@@ -900,8 +900,8 @@ fie [% 2]</translation>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="542"/>
         <source>Specify  distance (angle %1 deg)
 or [%2]</source>
-        <translation>A se specifica distanța (unghiul% 1 deg)
-fie [% 2]</translation>
+        <translation>A se specifica distanța (unghiul%1 deg)
+fie [%2]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="547"/>
@@ -1013,13 +1013,13 @@ fie [% 2]</translation>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="477"/>
         <source>Specify direction (x or y) or [%1]</source>
-        <translation>A se specifica direcția (x sau y) sau [% 1]</translation>
+        <translation>A se specifica direcția (x sau y) sau [%1]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="491"/>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="495"/>
         <source>Specify distance (%1) or [%2]</source>
-        <translation>Specificați distanța (% 1) sau [% 2]</translation>
+        <translation>Specificați distanța (%1) sau [%2]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="134"/>
@@ -1051,17 +1051,17 @@ fie [% 2]</translation>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="501"/>
         <source>Specify distance (%1 deg) or [%2]</source>
-        <translation>A se specifica distanța (% 1 deg) sau [% 2]</translation>
+        <translation>A se specifica distanța (%1 deg) sau [%2]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="516"/>
         <source>Specify angle or [%1]</source>
-        <translation>Specifică unghiul sau [% 1]</translation>
+        <translation>Specifică unghiul sau [%1]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="528"/>
         <source>Specify point or [%1]</source>
-        <translation>A se preciza punctul sau [% 1]</translation>
+        <translation>A se preciza punctul sau [%1]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="577"/>
@@ -1360,7 +1360,7 @@ fie [% 2]</translation>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="231"/>
         <source>Specify next control point or [%1]</source>
-        <translation>Specifică următorul punct de control sau [% 1]</translation>
+        <translation>Specifică următorul punct de control sau [%1]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="231"/>
@@ -3297,13 +3297,13 @@ Alternative: %4
 Start Edge Point: (%5 , %6)
 Intersection Point :(%7, %8)
 End Edge Point: (%9 , %10)</source>
-        <translation>Unghi:% 1
-Suplimentar:% 2
-Suplimentar:% 3
-Alternativ:% 4
-Start Edge Point: (% 5,% 6)
-Punctul de intersecţie: (% 7, %8)
-Punct final: (% 9,% 10)</translation>
+        <translation>Unghi:%1
+Suplimentar:%2
+Suplimentar:%3
+Alternativ:%4
+Start Edge Point: (%5,%6)
+Punctul de intersecţie: (%7, %8)
+Punct final: (%9,%10)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="149"/>
@@ -3370,27 +3370,27 @@ Punct final: (% 9,% 10)</translation>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="41"/>
         <source>Absolute: (%1)</source>
-        <translation>Absolut: (% 1)</translation>
+        <translation>Absolut: (%1)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="42"/>
         <source>Relative: (%1)</source>
-        <translation>Relație: (% 1)</translation>
+        <translation>Relație: (%1)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="43"/>
         <source>Polar: (%1)</source>
-        <translation>Polar: (% 1)</translation>
+        <translation>Polar: (%1)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="44"/>
         <source>Polar Relative: (%1)</source>
-        <translation>Relație polară: (% 1)</translation>
+        <translation>Relație polară: (%1)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="46"/>
         <source>Absolute WCS: (%1)</source>
-        <translation>WCS absolută: (% 1)</translation>
+        <translation>WCS absolută: (%1)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="70"/>
@@ -3711,7 +3711,7 @@ Punct final: (% 9,% 10)</translation>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayerscmd.cpp" line="53"/>
         <source>Enter layer name to %1</source>
-        <translation>Introduceți numele stratului la% 1</translation>
+        <translation>Introduceți numele stratului la%1</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayerscmd.cpp" line="53"/>
@@ -4509,7 +4509,7 @@ Punct final: (% 9,% 10)</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="163"/>
         <source>LibreCAD Shortcuts file (*.%1)</source>
-        <translation>Fișier de comenzi rapide LibreCAD (*.% 1)</translation>
+        <translation>Fișier de comenzi rapide LibreCAD (*.%1)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="198"/>
@@ -4684,7 +4684,7 @@ Eşti sigur că vei renunţa la schimbări?</translation>
         <source>Save changes to the following item?
 %1</source>
         <translation>Salvați modificările la următorul element?
-% 1</translation>
+%1</translation>
     </message>
     <message>
         <location filename="../src/ui/main/support/lc_appwindowdialogsinvoker.cpp" line="185"/>
@@ -4998,7 +4998,7 @@ Eşti sigur că vei renunţa la schimbări?</translation>
         <location filename="../src/ui/components/creators/lc_creatorinvoker.cpp" line="83"/>
         <location filename="../src/ui/components/creators/lc_creatorinvoker.cpp" line="115"/>
         <source>Toolbar: %1 (Custom)</source>
-        <translation>Bara de unelte:% 1 (Custom)</translation>
+        <translation>Bara de unelte:%1 (Custom)</translation>
     </message>
 </context>
 <context>
@@ -5345,7 +5345,7 @@ Eşti sigur că vei renunţa la schimbări?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="186"/>
         <source>LibreCAD dimension styles file (*.%1)</source>
-        <translation>Fișier stiluri de dimensiune LibreCAD (*.% 1)</translation>
+        <translation>Fișier stiluri de dimensiune LibreCAD (*.%1)</translation>
     </message>
 </context>
 <context>
@@ -5394,17 +5394,17 @@ Eşti sigur că vei renunţa la schimbări?</translation>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="76"/>
         <source>Version: &lt;b&gt;%1&lt;/b&gt;</source>
-        <translation>Versiune: &lt;b&gt;% 1&lt;/b&gt;</translation>
+        <translation>Versiune: &lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="78"/>
         <source>Compiler: Clang %1.%2.%3</source>
-        <translation>Compiler: Clang% 1.% 2.% 3</translation>
+        <translation>Compiler: Clang%1.%2.%3</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="80"/>
         <source>Compiler: GNU GCC %1.%2.%3</source>
-        <translation>Compiler: GNU GCC% 1.% 2.% 3</translation>
+        <translation>Compiler: GNU GCC%1.%2.%3</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="82"/>
@@ -5414,17 +5414,17 @@ Eşti sigur că vei renunţa la schimbări?</translation>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="84"/>
         <source>Compiled on: %1</source>
-        <translation>Compilat pe:% 1</translation>
+        <translation>Compilat pe:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="85"/>
         <source>Qt Version: %1</source>
-        <translation>Versiune Qt:% 1</translation>
+        <translation>Versiune Qt:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="86"/>
         <source>Boost Version: %1.%2.%3</source>
-        <translation>Boost Version:% 1.% 2.% 3</translation>
+        <translation>Boost Version:%1.%2.%3</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="96"/>
@@ -7532,7 +7532,7 @@ Eşti sigur că vei renunţa la schimbări?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="102"/>
         <source>Menu Assignment - &quot;%1&quot; Menu</source>
-        <translation>Atribuirea meniului - Meniul &quot;% 1 &quot;</translation>
+        <translation>Atribuirea meniului - Meniul &quot;%1 &quot;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="106"/>
@@ -7677,7 +7677,7 @@ Eşti sigur că vei renunţa la schimbări?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="250"/>
         <source>NOTE: This shortcut is already assigned to &quot;%1&quot; menu and that menu will be unassigned on save!</source>
-        <translation>NOTĂ: Această scurtătură este deja atribuită meniului &quot;% 1 &quot; și acel meniu va fi nealocat la salvare!</translation>
+        <translation>NOTĂ: Această scurtătură este deja atribuită meniului &quot;%1 &quot; și acel meniu va fi nealocat la salvare!</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="254"/>
@@ -7971,7 +7971,7 @@ Eşti sigur că vei renunţa la schimbări?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.cpp" line="145"/>
         <source>Provided name of dimension style (%1) is not unique! Please enter another one.</source>
-        <translation>Numele stilului de dimensiune furnizat (% 1) nu este unic! Introduceți încă unul.</translation>
+        <translation>Numele stilului de dimensiune furnizat (%1) nu este unic! Introduceți încă unul.</translation>
     </message>
 </context>
 <context>
@@ -8771,7 +8771,7 @@ Eşti sigur că vei renunţa la schimbări?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="203"/>
         <source>Are you sure you&apos;d like to unassign &quot;%1&quot; menu? Note: Just an invocation shortcut will be removed and menu will not be deleted.</source>
-        <translation>Sigur doriți să dezactivați meniul &quot;% 1 &quot;? Notă: Doar o scurtătură de invocare va fi eliminată și meniul nu va fi șters.</translation>
+        <translation>Sigur doriți să dezactivați meniul &quot;%1 &quot;? Notă: Doar o scurtătură de invocare va fi eliminată și meniul nu va fi șters.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="216"/>
@@ -8794,12 +8794,12 @@ Eşti sigur că vei renunţa la schimbări?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="430"/>
         <source>Remove %1</source>
-        <translation>Elimină% 1</translation>
+        <translation>Elimină%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="431"/>
         <source>Are you sure you&apos;d like to remove  %2&quot;%1&quot;?</source>
-        <translation>Sigur doriți să eliminați% 2&quot;% 1 &quot;?</translation>
+        <translation>Sigur doriți să eliminați%2&quot;%1 &quot;?</translation>
     </message>
 </context>
 <context>
@@ -9206,7 +9206,7 @@ Eşti sigur că vei renunţa la schimbări?</translation>
     <message>
         <location filename="../src/ui/dialogs/file/export/image/lc_exporttoimageservice.cpp" line="62"/>
         <source>Exported: %1</source>
-        <translation>Exportat:% 1</translation>
+        <translation>Exportat:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/image/lc_exporttoimageservice.cpp" line="65"/>
@@ -10315,7 +10315,7 @@ Conținutul unui plan de construcție nu trebuie să apară în imprimerie.</tra
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="189"/>
         <source>Invalid value provide for %1 color.
 Please specify a different value.</source>
-        <translation>Valoarea nevalidă asigură culoarea% 1.
+        <translation>Valoarea nevalidă asigură culoarea%1.
 Vă rugăm să specificați o valoare diferită.</translation>
     </message>
     <message>
@@ -12467,7 +12467,7 @@ Atenție: această acțiune NU poate fi anulată!</translation>
  &quot;%1&quot;?
  Warning: this action can NOT be undone!</source>
         <translation>Sigur ștergeți vizualizarea
-&quot;% 1 &quot;?
+&quot;%1 &quot;?
 Atenție: această acțiune NU poate fi anulată!</translation>
     </message>
     <message>
@@ -12479,7 +12479,7 @@ Atenție: această acțiune NU poate fi anulată!</translation>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="302"/>
         <source>Are you sure to delete views %1?
 Warning: this action can NOT be undone!</source>
-        <translation>Sigur ștergeți vizualizarea% 1?
+        <translation>Sigur ștergeți vizualizarea%1?
 Atenție: această acțiune NU poate fi anulată!</translation>
     </message>
     <message>
@@ -15880,7 +15880,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="45"/>
         <source>LibreCAD settings file (*.%1)</source>
-        <translation>Fișier setări libreCAD (*.% 1)</translation>
+        <translation>Fișier setări libreCAD (*.%1)</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="91"/>
@@ -16732,7 +16732,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="67"/>
         <source>Toolbar: %1</source>
-        <translation>Bara de unelte:% 1</translation>
+        <translation>Bara de unelte:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="73"/>
@@ -17089,7 +17089,7 @@ Atenție: această acțiune NU poate fi anulată!</translation>
  &quot;%1&quot;?
  Warning: this action can NOT be undone!</source>
         <translation>Sigur ștergeți UCS
-&quot;% 1 &quot;?
+&quot;%1 &quot;?
 Atenție: această acțiune NU poate fi anulată!</translation>
     </message>
     <message>
@@ -17101,7 +17101,7 @@ Atenție: această acțiune NU poate fi anulată!</translation>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="378"/>
         <source>Are you sure to delete UCS %1?
 Warning: this action can NOT be undone!</source>
-        <translation>Sigur ștergeți UCS% 1?
+        <translation>Sigur ștergeți UCS%1?
 Atenție: această acțiune NU poate fi anulată!</translation>
     </message>
     <message>
@@ -17374,7 +17374,7 @@ Atenție: această acțiune NU poate fi anulată!</translation>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="429"/>
         <source>Toolbar: %1</source>
-        <translation>Bara de unelte:% 1</translation>
+        <translation>Bara de unelte:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="213"/>
@@ -17989,18 +17989,18 @@ Autosalvare dezactivata.</translation>
 %1
 Please check its existence and permissions.</source>
         <translation>Nu pot deschide fișierul
-% 1
+%1
 Vă rugăm să verificaţi existenţa şi permisiunile sale.</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1023"/>
         <source>File &apos;%1&apos; does not exist. Opening aborted</source>
-        <translation>Fișierul &quot;% 1 &quot; nu există. Deschiderea anulată</translation>
+        <translation>Fișierul &quot;%1 &quot; nu există. Deschiderea anulată</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="226"/>
         <source>Saving drawing: %1</source>
-        <translation>Salvare desen:% 1</translation>
+        <translation>Salvare desen:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="232"/>
@@ -18020,12 +18020,12 @@ Vă rugăm să verificaţi existenţa şi permisiunile sale.</translation>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="365"/>
         <source>&amp;Save %1</source>
-        <translation>&amp; Salvează% 1</translation>
+        <translation>&amp; Salvează%1</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="366"/>
         <source>Save %1 &amp;as...</source>
-        <translation>Salvează% 1 &amp;as...</translation>
+        <translation>Salvează%1 &amp;as...</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1084"/>
@@ -18321,7 +18321,7 @@ Vă rugăm să verificaţi existenţa şi permisiunile sale.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="249"/>
         <source>Command Alias File: %1</source>
-        <translation>Comandă fișier Alias:% 1</translation>
+        <translation>Comandă fișier Alias:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="339"/>
@@ -20381,7 +20381,7 @@ Acest lucru modifică recursiv toate entitățile blocului în sine.</translatio
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="400"/>
         <source>Are you sure you&apos;d like to delete property [%1]?</source>
-        <translation>Sigur doriți să ștergeți proprietatea [% 1]?</translation>
+        <translation>Sigur doriți să ștergeți proprietatea [%1]?</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="422"/>
@@ -20448,7 +20448,7 @@ Acest lucru modifică recursiv toate entitățile blocului în sine.</translatio
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="642"/>
         <source>Enter new unique name of dimension style (was &quot;%1&quot;):</source>
-        <translation>Introduceți un nou nume unic al stilului de dimensiune (a fost &quot;% 1):</translation>
+        <translation>Introduceți un nou nume unic al stilului de dimensiune (a fost &quot;%1):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="662"/>
@@ -20471,12 +20471,12 @@ Acest lucru modifică recursiv toate entitățile blocului în sine.</translatio
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="684"/>
         <source>Are you sure you want to remove the dimension style &quot;%1&quot; together with child styles?</source>
-        <translation>Sigur doriți să eliminați stilul de dimensiune &quot;% 1 &quot; împreună cu stilurile de copii?</translation>
+        <translation>Sigur doriți să eliminați stilul de dimensiune &quot;%1 &quot; împreună cu stilurile de copii?</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="692"/>
         <source>Are you sure you want to remove the dimension style &quot;%1&quot;?</source>
-        <translation>Sigur doriți să eliminați stilul de dimensiune &quot;% 1 &quot;?</translation>
+        <translation>Sigur doriți să eliminați stilul de dimensiune &quot;%1 &quot;?</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="929"/>
@@ -25167,22 +25167,22 @@ deci valoarea implicită a treptei necesare pentru coacere</translation>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="122"/>
         <source>Drawing Exchange DXF 2007 %1</source>
-        <translation>Desen Exchange DXF 2007% 1</translation>
+        <translation>Desen Exchange DXF 2007%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="123"/>
         <source>Drawing Exchange DXF 2004 %1</source>
-        <translation>Desen Exchange DXF 2004% 1</translation>
+        <translation>Desen Exchange DXF 2004%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="125"/>
         <source>Drawing Exchange DXF R14 %1</source>
-        <translation>Desen Exchange DXF R14% 1</translation>
+        <translation>Desen Exchange DXF R14%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="131"/>
         <source>dwg Drawing %1</source>
-        <translation>dwg desen% 1</translation>
+        <translation>dwg desen%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="138"/>
@@ -25199,7 +25199,7 @@ deci valoarea implicită a treptei necesare pentru coacere</translation>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="163"/>
         <source>Open %1</source>
-        <translation>Deschide% 1</translation>
+        <translation>Deschide%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="235"/>
@@ -25209,7 +25209,7 @@ deci valoarea implicită a treptei necesare pentru coacere</translation>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="253"/>
         <source>Save %1 As</source>
-        <translation>Salvează% 1 ca</translation>
+        <translation>Salvează%1 ca</translation>
     </message>
 </context>
 <context>
@@ -25595,7 +25595,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/main/support/qg_recentfiles.cpp" line="177"/>
         <source>&amp;%1 %2</source>
-        <translation>&amp;% 1% 2</translation>
+        <translation>&amp;%1%2</translation>
     </message>
 </context>
 <context>
@@ -25631,7 +25631,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="171"/>
         <source>Relative zero position is %1</source>
-        <translation>Poziția relativă zero este% 1</translation>
+        <translation>Poziția relativă zero este%1</translation>
     </message>
     <message>
         <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="171"/>
@@ -25646,7 +25646,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="176"/>
         <source>Coordinate system: %1</source>
-        <translation>Sistem de coordonate:% 1</translation>
+        <translation>Sistem de coordonate:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="176"/>
@@ -25825,7 +25825,7 @@ p, li {white- space: pre- wrap;}
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="191"/>
         <source>Layer &quot;%1&quot; and all entities on it will be removed.
 This action can NOT be undone.</source>
-        <translation>Stratul &quot;% 1 &quot; și toate entitățile de pe el vor fi eliminate.
+        <translation>Stratul &quot;%1 &quot; și toate entitățile de pe el vor fi eliminate.
 Această acțiune NU poate fi anulată.</translation>
     </message>
     <message>
@@ -25897,7 +25897,7 @@ Această acțiune NU poate fi anulată.</translation>
 [%1].
 Please specify a different name.</source>
         <translation>Încercarea de a crea strat cu nume duplicat. Denumirea stratului duplicat este
-[% 1].
+[%1].
 Vă rugăm să specificați un nume diferit.</translation>
     </message>
     <message>
@@ -25950,7 +25950,7 @@ Clear filtering mask and repeat.</source>
 [%1].
 Please specify a different name.</source>
         <translation>Un astfel de strat de copii există deja pentru
-[% 1].
+[%1].
 Vă rugăm să specificați un nume diferit.</translation>
     </message>
     <message>
@@ -25959,7 +25959,7 @@ Vă rugăm să specificați un nume diferit.</translation>
 [%1].
 </source>
         <translation>Un astfel de strat de copii există deja pentru
-[% 1].</translation>
+[%1].</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1165"/>
@@ -26004,7 +26004,7 @@ Dacă nu, valorile „În funcție de strat” vor rămâne, iar penița stratul
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.cpp" line="218"/>
         <source>Invalid value provided for %1 color.
 Please specify a different value.</source>
-        <translation>Valoare nevalidă furnizată pentru culoarea% 1.
+        <translation>Valoare nevalidă furnizată pentru culoarea%1.
 Vă rugăm să specificați o valoare diferită.</translation>
     </message>
     <message>
@@ -26611,12 +26611,12 @@ Doriti sa il inlocuiti cu acesta?</translation>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="451"/>
         <source>Old Drawing Exchange %1</source>
-        <translation>Schimb de desen vechi% 1</translation>
+        <translation>Schimb de desen vechi%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="455"/>
         <source>dwg Drawing %1</source>
-        <translation>dwg desen% 1</translation>
+        <translation>dwg desen%1</translation>
     </message>
     <message>
         <source>DWG support is not complete!</source>
@@ -27775,32 +27775,32 @@ Doriti sa il inlocuiti cu acesta?</translation>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="300"/>
         <source>requesting alias(%1) for unknown command(%2): ignored</source>
-        <translation>solicitarea aliasului (% 1) pentru comanda necunoscută (% 2): ignorat</translation>
+        <translation>solicitarea aliasului (%1) pentru comanda necunoscută (%2): ignorat</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="310"/>
         <source>reusing an existing alias: was %1=%2, changed to %1=%3</source>
-        <translation>refolosind un alias existent: a fost% 1=% 2, schimbat în% 1=% 3</translation>
+        <translation>refolosind un alias existent: a fost%1=%2, schimbat în%1=%3</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="391"/>
         <source>RS_Commands:: command not found: %1</source>
-        <translation>RS  Comenzi:: comanda nu a fost găsită:% 1</translation>
+        <translation>RS  Comenzi:: comanda nu a fost găsită:%1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="416"/>
         <source>keycode: %1 (%2)</source>
-        <translation>cod cheie:% 1 (% 2)</translation>
+        <translation>cod cheie:%1 (%2)</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="418"/>
         <source>invalid keycode: %1</source>
-        <translation>cod de cheie invalid:% 1</translation>
+        <translation>cod de cheie invalid:%1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="433"/>
         <source>Command not found: %1</source>
-        <translation>Comandă negăsită:% 1</translation>
+        <translation>Comandă negăsită:%1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="472"/>
@@ -27921,7 +27921,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="77"/>
         <source>No %1 layers found</source>
-        <translation>Nu s- au găsit straturi% 1</translation>
+        <translation>Nu s- au găsit straturi%1</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="92"/>
@@ -29771,12 +29771,12 @@ Doriti sa il inlocuiti cu acesta?</translation>
         <location filename="../src/ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp" line="180"/>
         <location filename="../src/ui/dialogs/file/export/layers/lc_filedialogservice.cpp" line="219"/>
         <source>File &quot;%1&quot; already exists. Do you want to replace it?</source>
-        <translation>Fișierul &quot;% 1 &quot; există deja. Vrei s-o înlocuieşti?</translation>
+        <translation>Fișierul &quot;%1 &quot; există deja. Vrei s-o înlocuieşti?</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="38"/>
         <source>/CustomColor%1</source>
-        <translation>/CustomColor% 1</translation>
+        <translation>/CustomColor%1</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="39"/>
@@ -29840,7 +29840,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     <message>
         <location filename="../src/lib/engine/document/container/rs_entitycontainer.cpp" line="1687"/>
         <source>Hatch failed due to a gap=%1 between (%2, %3) and (%4, %5)</source>
-        <translation>Hatch a eșuat din cauza unui decalaj=% 1 între (% 2,% 3) și (% 4,% 5)</translation>
+        <translation>Hatch a eșuat din cauza unui decalaj=%1 între (%2,%3) și (%4,%5)</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/patterns/rs_patternlist.cpp" line="66"/>
@@ -29850,12 +29850,12 @@ Doriti sa il inlocuiti cu acesta?</translation>
     <message>
         <location filename="../src/lib/engine/document/patterns/rs_patternlist.cpp" line="93"/>
         <source>Hatch:: loading pattern failed: %1</source>
-        <translation>Hatch:: modelul de încărcare a eșuat:% 1</translation>
+        <translation>Hatch:: modelul de încărcare a eșuat:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/main/persistence/lc_documentsstorage.cpp" line="197"/>
         <source>File on disk modified. Please save to another file to avoid data loss! File modified: %1</source>
-        <translation>Fișier pe disc modificat. Vă rugăm să salvați la un alt fișier pentru a evita pierderea de date! Fișier modificat:% 1</translation>
+        <translation>Fișier pe disc modificat. Vă rugăm să salvați la un alt fișier pentru a evita pierderea de date! Fișier modificat:%1</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="180"/>
@@ -30208,7 +30208,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     <message>
         <location filename="../src/lib/engine/document/rs_graphic.cpp" line="741"/>
         <source>Invalid printing scale %1. Cannot fit print preview to page</source>
-        <translation>Scala de imprimare nevalidă% 1. Nu se poate potrivi previzualizare imprimare în pagină</translation>
+        <translation>Scala de imprimare nevalidă%1. Nu se poate potrivi previzualizare imprimare în pagină</translation>
     </message>
     <message>
         <location filename="../src/lib/printing/lc_printing.cpp" line="160"/>
@@ -30924,17 +30924,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="146"/>
         <source>radius=%1 is invalid (expression)</source>
-        <translation>raza =% 1 este invalidă (exprimare)</translation>
+        <translation>raza =%1 este invalidă (exprimare)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="148"/>
         <source>radius=%1 is invalid (negative)</source>
-        <translation>raza=% 1 este invalidă (negativ)</translation>
+        <translation>raza=%1 este invalidă (negativ)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="151"/>
         <source>radius=%1 is invalid (zero)</source>
-        <translation>raza =% 1 este invalidă (zero)</translation>
+        <translation>raza =%1 este invalidă (zero)</translation>
     </message>
 </context>
 <context>
@@ -30998,7 +30998,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2.cpp" line="246"/>
         <source>No common tangential circle for radius &apos;%1&apos;</source>
-        <translation>Niciun cerc tangential comun pentru raza &quot;% 1 &quot;</translation>
+        <translation>Niciun cerc tangential comun pentru raza &quot;%1 &quot;</translation>
     </message>
 </context>
 <context>
@@ -31168,7 +31168,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="178"/>
         <source>Total distance %1 is smaller than distance between foci</source>
-        <translation>Distanța totală% 1 este mai mică decât distanța dintre foci</translation>
+        <translation>Distanța totală%1 este mai mică decât distanța dintre foci</translation>
     </message>
 </context>
 <context>
@@ -31239,7 +31239,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="177"/>
         <source>Total hatch area = %1</source>
-        <translation>Suprafață totală a trapei =% 1</translation>
+        <translation>Suprafață totală a trapei =%1</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="203"/>
@@ -31858,10 +31858,10 @@ Complementary: %2
 Supplementary: %3
 Alternative: %4
 </source>
-        <translation>Unghi:% 1
-Suplimentar:% 2
-Suplimentar:% 3
-Alternativ:% 4</translation>
+        <translation>Unghi:%1
+Suplimentar:%2
+Suplimentar:%3
+Alternativ:%4</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="140"/>
@@ -31871,12 +31871,12 @@ Supplementary: %3
 Alternative: %4
 Intersection: (%5 , %6)
 Intersection :@(%7, %8)</source>
-        <translation>Unghi:% 1
-Suplimentar:% 2
-Suplimentar:% 3
-Alternativ:% 4
-Intersecție: (% 5, %6)
-Intersecție:@ (% 7, %8)</translation>
+        <translation>Unghi:%1
+Suplimentar:%2
+Suplimentar:%3
+Alternativ:%4
+Intersecție: (%5, %6)
+Intersecție:@ (%7, %8)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="253"/>
@@ -31965,12 +31965,12 @@ Intersecție:@ (% 7, %8)</translation>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="153"/>
         <source>Closing Point: %1</source>
-        <translation>Punct de închidere:% 1</translation>
+        <translation>Punct de închidere:%1</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="160"/>
         <source>Point: %1</source>
-        <translation>Punct:% 1</translation>
+        <translation>Punct:%1</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="182"/>
@@ -31991,7 +31991,7 @@ Intersecție:@ (% 7, %8)</translation>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="101"/>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="108"/>
         <source>Area: %1 %2^2</source>
-        <translation>Suprafață:% 1% 2^2</translation>
+        <translation>Suprafață:%1%2^2</translation>
     </message>
 </context>
 <context>
@@ -32003,11 +32003,11 @@ Cartesian: (%2 , %3)
 Polar: (%4 &lt; %5)
 Start: (%6 , %7)
 End: (%8 , %9)</source>
-        <translation>Distanță:% 1
-Cartezian: (% 2,% 3)
-Polar: (% 4 &lt; %5)
-Start: (% 6 ,% 7)
-Sfârşit: (% 8,% 9)</translation>
+        <translation>Distanță:%1
+Cartezian: (%2,%3)
+Polar: (%4 &lt; %5)
+Start: (%6 ,%7)
+Sfârşit: (%8,%9)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="98"/>
@@ -32059,11 +32059,11 @@ Cartesian: (%2 , %3)
 Polar: (%4 &lt; %5)
 Point On Entity: (%6 , %7)
 Point: (%8 , %9)</source>
-        <translation>Distanță:% 1
-Cartezian: (% 2,% 3)
-Polar: (% 4 &lt; %5)
+        <translation>Distanță:%1
+Cartezian: (%2,%3)
+Polar: (%4 &lt; %5)
 Punctul privind entitatea: (%6,%7)
-Punct: (% 8,% 9)</translation>
+Punct: (%8,%9)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="275"/>
@@ -32868,7 +32868,7 @@ Punct: (% 8,% 9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="421"/>
         <source>Specify first entity or enter radius &lt;%1&gt;</source>
-        <translation>Specificați prima entitate sau introduceți raza &lt;% 1&gt;</translation>
+        <translation>Specificați prima entitate sau introduceți raza &lt;%1&gt;</translation>
     </message>
 </context>
 <context>
@@ -33346,12 +33346,12 @@ Punct: (% 8,% 9)</translation>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="160"/>
         <source>Printout offset in paper coordinates by (%1, %2)</source>
-        <translation>Offset printout în coordonate de hârtie de (% 1,% 2)</translation>
+        <translation>Offset printout în coordonate de hârtie de (%1,%2)</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="163"/>
         <source>Printout offset in graph coordinates by (%1, %2)</source>
-        <translation>Offset printout în coordonate grafice de (% 1,% 2)</translation>
+        <translation>Offset printout în coordonate grafice de (%1,%2)</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="185"/>

@@ -708,7 +708,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="146"/>
         <source>Dual created around center (%1 entities)</source>
-        <translation>在中間 (% 1 個單位) 有雙相產生</translation>
+        <translation>在中間 (%1 個單位) 有雙相產生</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="159"/>
@@ -888,8 +888,8 @@ or[x|y|p|number|edges]</source>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="537"/>
         <source>Specify distance (%1)
 or [%2]</source>
-        <translation>指定相距 (% 1)
-或 [% 2]</translation>
+        <translation>指定相距 (%1)
+或 [%2]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="537"/>
@@ -900,8 +900,8 @@ or [%2]</source>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="542"/>
         <source>Specify  distance (angle %1 deg)
 or [%2]</source>
-        <translation>指定相距 (角% 1 deg)
-或 [% 2]</translation>
+        <translation>指定相距 (角%1 deg)
+或 [%2]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="547"/>
@@ -1013,13 +1013,13 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="477"/>
         <source>Specify direction (x or y) or [%1]</source>
-        <translation>指定取向 (x或y) 或 [% 1]</translation>
+        <translation>指定取向 (x或y) 或 [%1]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="491"/>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="495"/>
         <source>Specify distance (%1) or [%2]</source>
-        <translation>指定相距 (% 1) 或 [% 2]</translation>
+        <translation>指定相距 (%1) 或 [%2]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="134"/>
@@ -1051,17 +1051,17 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="501"/>
         <source>Specify distance (%1 deg) or [%2]</source>
-        <translation>指定相距 (% 1 deg) 或 [% 2]</translation>
+        <translation>指定相距 (%1 deg) 或 [%2]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="516"/>
         <source>Specify angle or [%1]</source>
-        <translation>指定角度或 [% 1]</translation>
+        <translation>指定角度或 [%1]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="528"/>
         <source>Specify point or [%1]</source>
-        <translation>指定點或 [% 1]</translation>
+        <translation>指定點或 [%1]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="577"/>
@@ -1360,7 +1360,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="231"/>
         <source>Specify next control point or [%1]</source>
-        <translation>指定下一個控制點或 [% 1]</translation>
+        <translation>指定下一個控制點或 [%1]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="231"/>
@@ -3297,13 +3297,13 @@ Alternative: %4
 Start Edge Point: (%5 , %6)
 Intersection Point :(%7, %8)
 End Edge Point: (%9 , %10)</source>
-        <translation>角度 :% 1
-相補 :% 2
-相補 :% 3
-替代 :% 4
-開始邊緣點 (% 5,% 6)
-交接點 : (% 7,% 8)
-結束邊緣點 (% 9,% 10)</translation>
+        <translation>角度 :%1
+相補 :%2
+相補 :%3
+替代 :%4
+開始邊緣點 (%5,%6)
+交接點 : (%7,%8)
+結束邊緣點 (%9,%10)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="149"/>
@@ -3370,27 +3370,27 @@ End Edge Point: (%9 , %10)</source>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="41"/>
         <source>Absolute: (%1)</source>
-        <translation>絕對 (% 1)</translation>
+        <translation>絕對 (%1)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="42"/>
         <source>Relative: (%1)</source>
-        <translation>相對 (% 1)</translation>
+        <translation>相對 (%1)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="43"/>
         <source>Polar: (%1)</source>
-        <translation>极地 (% 1)</translation>
+        <translation>极地 (%1)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="44"/>
         <source>Polar Relative: (%1)</source>
-        <translation>相對极 : (% 1)</translation>
+        <translation>相對极 : (%1)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="46"/>
         <source>Absolute WCS: (%1)</source>
-        <translation>絕對 WCS (% 1)</translation>
+        <translation>絕對 WCS (%1)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="70"/>
@@ -3711,7 +3711,7 @@ End Edge Point: (%9 , %10)</source>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayerscmd.cpp" line="53"/>
         <source>Enter layer name to %1</source>
-        <translation>輸入層名到% 1</translation>
+        <translation>輸入層名到%1</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayerscmd.cpp" line="53"/>
@@ -4509,7 +4509,7 @@ End Edge Point: (%9 , %10)</source>
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="163"/>
         <source>LibreCAD Shortcuts file (*.%1)</source>
-        <translation>LibreCAD 捷徑檔案 (*.% 1)</translation>
+        <translation>LibreCAD 捷徑檔案 (*.%1)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="198"/>
@@ -4690,7 +4690,7 @@ Are you sure you are going to discard changes?</source>
         <source>Save changes to the following item?
 %1</source>
         <translation>要儲存以下項目的變更嗎 ?
-% 1</translation>
+%1</translation>
     </message>
     <message>
         <location filename="../src/ui/main/support/lc_appwindowdialogsinvoker.cpp" line="185"/>
@@ -5004,7 +5004,7 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/components/creators/lc_creatorinvoker.cpp" line="83"/>
         <location filename="../src/ui/components/creators/lc_creatorinvoker.cpp" line="115"/>
         <source>Toolbar: %1 (Custom)</source>
-        <translation>工具列 :% 1 (自訂)</translation>
+        <translation>工具列 :%1 (自訂)</translation>
     </message>
 </context>
 <context>
@@ -5351,7 +5351,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="186"/>
         <source>LibreCAD dimension styles file (*.%1)</source>
-        <translation>LibreCAD 尺寸樣式檔案 (*.% 1)</translation>
+        <translation>LibreCAD 尺寸樣式檔案 (*.%1)</translation>
     </message>
 </context>
 <context>
@@ -5405,12 +5405,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="78"/>
         <source>Compiler: Clang %1.%2.%3</source>
-        <translation>編譯器: Clang% 1.% 2.% 3</translation>
+        <translation>編譯器: Clang%1.%2.%3</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="80"/>
         <source>Compiler: GNU GCC %1.%2.%3</source>
-        <translation>編譯: GNU GCC% 1.% 2.% 3</translation>
+        <translation>編譯: GNU GCC%1.%2.%3</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="82"/>
@@ -5420,17 +5420,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="84"/>
         <source>Compiled on: %1</source>
-        <translation>已編譯于 :% 1</translation>
+        <translation>已編譯于 :%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="85"/>
         <source>Qt Version: %1</source>
-        <translation>Qt 版本 :% 1</translation>
+        <translation>Qt 版本 :%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="86"/>
         <source>Boost Version: %1.%2.%3</source>
-        <translation>提示版本 :% 1.% 2.% 3</translation>
+        <translation>提示版本 :%1.%2.%3</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="96"/>
@@ -7540,7 +7540,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="102"/>
         <source>Menu Assignment - &quot;%1&quot; Menu</source>
-        <translation>選單指定 - &quot;% 1&quot; 選單</translation>
+        <translation>選單指定 - &quot;%1&quot; 選單</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="106"/>
@@ -7685,7 +7685,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="250"/>
         <source>NOTE: This shortcut is already assigned to &quot;%1&quot; menu and that menu will be unassigned on save!</source>
-        <translation>注意: 此捷徑已被指派到 &quot;% 1&quot; 選單上, 而選單將被取出 !</translation>
+        <translation>注意: 此捷徑已被指派到 &quot;%1&quot; 選單上, 而選單將被取出 !</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="254"/>
@@ -7979,7 +7979,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.cpp" line="145"/>
         <source>Provided name of dimension style (%1) is not unique! Please enter another one.</source>
-        <translation>提供尺寸樣式 (% 1) 的名稱不是唯一的 ! 請再入一入.</translation>
+        <translation>提供尺寸樣式 (%1) 的名稱不是唯一的 ! 請再入一入.</translation>
     </message>
 </context>
 <context>
@@ -8779,7 +8779,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="203"/>
         <source>Are you sure you&apos;d like to unassign &quot;%1&quot; menu? Note: Just an invocation shortcut will be removed and menu will not be deleted.</source>
-        <translation>您確定要取出選單% 1 嗎 ? 注意: 只取取取捷徑而選單不被刪除 .</translation>
+        <translation>您確定要取出選單%1 嗎 ? 注意: 只取取取捷徑而選單不被刪除 .</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="216"/>
@@ -8802,12 +8802,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="430"/>
         <source>Remove %1</source>
-        <translation>移除% 1</translation>
+        <translation>移除%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="431"/>
         <source>Are you sure you&apos;d like to remove  %2&quot;%1&quot;?</source>
-        <translation>您確定要移除% 2&quot;% 1 嗎 ?</translation>
+        <translation>您確定要移除%2&quot;%1 嗎 ?</translation>
     </message>
 </context>
 <context>
@@ -9214,7 +9214,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/file/export/image/lc_exporttoimageservice.cpp" line="62"/>
         <source>Exported: %1</source>
-        <translation>已匯出 :% 1</translation>
+        <translation>已匯出 :%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/image/lc_exporttoimageservice.cpp" line="65"/>
@@ -10323,7 +10323,7 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="189"/>
         <source>Invalid value provide for %1 color.
 Please specify a different value.</source>
-        <translation>不合法的值提供% 1 顏色 。
+        <translation>不合法的值提供%1 顏色 。
 請指定不同的值 .</translation>
     </message>
     <message>
@@ -12475,7 +12475,7 @@ Please specify a different value.</source>
  &quot;%1&quot;?
  Warning: this action can NOT be undone!</source>
         <translation>您確定要刪除檢視
-&quot;% 1&quot; ?
+&quot;%1&quot; ?
 警告: 此動作無法被解除 !</translation>
     </message>
     <message>
@@ -12487,7 +12487,7 @@ Please specify a different value.</source>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="302"/>
         <source>Are you sure to delete views %1?
 Warning: this action can NOT be undone!</source>
-        <translation>您確定要刪除檢視% 1 ?
+        <translation>您確定要刪除檢視%1 ?
 警告: 此動作無法被解除 !</translation>
     </message>
     <message>
@@ -15890,7 +15890,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="45"/>
         <source>LibreCAD settings file (*.%1)</source>
-        <translation>LibreCAD 設定檔 (*.% 1)</translation>
+        <translation>LibreCAD 設定檔 (*.%1)</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="91"/>
@@ -16742,7 +16742,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="67"/>
         <source>Toolbar: %1</source>
-        <translation>工具列 :% 1</translation>
+        <translation>工具列 :%1</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="73"/>
@@ -17099,7 +17099,7 @@ p, li { white-space: pre-wrap; }
  &quot;%1&quot;?
  Warning: this action can NOT be undone!</source>
         <translation>您確定要刪除 UCS
-&quot;% 1&quot; ?
+&quot;%1&quot; ?
 警告: 此動作無法被解除 !</translation>
     </message>
     <message>
@@ -17111,7 +17111,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="378"/>
         <source>Are you sure to delete UCS %1?
 Warning: this action can NOT be undone!</source>
-        <translation>您確定要刪除 UCS% 1 ?
+        <translation>您確定要刪除 UCS%1 ?
 警告: 此動作無法被解除 !</translation>
     </message>
     <message>
@@ -17384,7 +17384,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="429"/>
         <source>Toolbar: %1</source>
-        <translation>工具列 :% 1</translation>
+        <translation>工具列 :%1</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="213"/>
@@ -17866,7 +17866,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="226"/>
         <source>Saving drawing: %1</source>
-        <translation>保存繪圖 :% 1</translation>
+        <translation>保存繪圖 :%1</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="232"/>
@@ -17886,12 +17886,12 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="365"/>
         <source>&amp;Save %1</source>
-        <translation>儲存% 1( S)</translation>
+        <translation>儲存%1( S)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="366"/>
         <source>Save %1 &amp;as...</source>
-        <translation>另存% 1 (A)...</translation>
+        <translation>另存%1 (A)...</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="795"/>
@@ -17995,13 +17995,13 @@ Please check the permissions.</source>
 %1
 Please check its existence and permissions.</source>
         <translation>無法開啟檔案
-% 1
+%1
 請檢查它的存在和權限 .</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1023"/>
         <source>File &apos;%1&apos; does not exist. Opening aborted</source>
-        <translation>檔案% 1 不存在 。 開啟已中止</translation>
+        <translation>檔案%1 不存在 。 開啟已中止</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1084"/>
@@ -18323,7 +18323,7 @@ Auto-save disabled.</source>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="249"/>
         <source>Command Alias File: %1</source>
-        <translation>命令別名檔案 :% 1</translation>
+        <translation>命令別名檔案 :%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="258"/>
@@ -21290,7 +21290,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="400"/>
         <source>Are you sure you&apos;d like to delete property [%1]?</source>
-        <translation>您確定要刪除屬性 [% 1] ?</translation>
+        <translation>您確定要刪除屬性 [%1] ?</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="422"/>
@@ -21357,7 +21357,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="642"/>
         <source>Enter new unique name of dimension style (was &quot;%1&quot;):</source>
-        <translation>輸入尺寸樣式的新獨有名稱 (是 &quot;% 1&quot; ) :</translation>
+        <translation>輸入尺寸樣式的新獨有名稱 (是 &quot;%1&quot; ) :</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="662"/>
@@ -21380,12 +21380,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="684"/>
         <source>Are you sure you want to remove the dimension style &quot;%1&quot; together with child styles?</source>
-        <translation>您確定要把尺寸樣式 &quot;% 1&quot; 和子樣式一起去掉嗎 ?</translation>
+        <translation>您確定要把尺寸樣式 &quot;%1&quot; 和子樣式一起去掉嗎 ?</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="692"/>
         <source>Are you sure you want to remove the dimension style &quot;%1&quot;?</source>
-        <translation>您確定要去除尺寸樣式% 1 嗎 ?</translation>
+        <translation>您確定要去除尺寸樣式%1 嗎 ?</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="929"/>
@@ -25636,7 +25636,7 @@ p, li { white-space: pre-wrap; }&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot;
     <message>
         <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="171"/>
         <source>Relative zero position is %1</source>
-        <translation>相對的零位置是% 1</translation>
+        <translation>相對的零位置是%1</translation>
     </message>
     <message>
         <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="171"/>
@@ -25651,7 +25651,7 @@ p, li { white-space: pre-wrap; }&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot;
     <message>
         <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="176"/>
         <source>Coordinate system: %1</source>
-        <translation>座標系統 :% 1</translation>
+        <translation>座標系統 :%1</translation>
     </message>
     <message>
         <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="176"/>
@@ -25810,7 +25810,7 @@ p, li { white-space: pre-wrap; }&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot;
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="191"/>
         <source>Layer &quot;%1&quot; and all entities on it will be removed.
 This action can NOT be undone.</source>
-        <translation>第% 1 層及其上的所有實體被移除 。
+        <translation>第%1 層及其上的所有實體被移除 。
 此動作無法被解除 .</translation>
     </message>
     <message>
@@ -25898,7 +25898,7 @@ This action can NOT be undone.</source>
 [%1].
 Please specify a different name.</source>
         <translation>試想用相複名稱建立地層 。 相复制的地層名稱是
-[% 1].
+[%1].
 請指定不同的名稱 .</translation>
     </message>
     <message>
@@ -25953,7 +25953,7 @@ Clear filtering mask and repeat.</source>
 [%1].
 Please specify a different name.</source>
         <translation>此子層已存在
-[% 1].
+[%1].
 請指定不同的名稱 .</translation>
     </message>
     <message>
@@ -25962,7 +25962,7 @@ Please specify a different name.</source>
 [%1].
 </source>
         <translation>此子層已存在
-[% 1].</translation>
+[%1].</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1165"/>
@@ -26011,7 +26011,7 @@ If No - &quot;By Layer&quot; values remains and so pen of target layer will defi
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.cpp" line="218"/>
         <source>Invalid value provided for %1 color.
 Please specify a different value.</source>
-        <translation>为% 1 顏色提供無效的值 。
+        <translation>为%1 顏色提供無效的值 。
 請指定不同的值 .</translation>
     </message>
     <message>
@@ -26937,7 +26937,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="68"/>
         <source>: duplicated command: %1 is already taken by %2</source>
-        <translation>: 有重复的命令 :% 1被% 2 取走</translation>
+        <translation>: 有重复的命令 :%1被%2 取走</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="884"/>
@@ -29741,37 +29741,37 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="261"/>
         <location filename="../src/cmd/rs_commands.cpp" line="316"/>
         <source>cannot change meaning of commands. Refused to reuse command %1 to mean %2</source>
-        <translation>不能變更命令的意義 。 拒絕再用命令% 1 以表示% 2</translation>
+        <translation>不能變更命令的意義 。 拒絕再用命令%1 以表示%2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="300"/>
         <source>requesting alias(%1) for unknown command(%2): ignored</source>
-        <translation>就未知的命令 (% 2) 要求取別名 (% 1) : 被忽略</translation>
+        <translation>就未知的命令 (%2) 要求取別名 (%1) : 被忽略</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="310"/>
         <source>reusing an existing alias: was %1=%2, changed to %1=%3</source>
-        <translation>重用已存在的化名 :% 1% 2, 已變更为% 1% 3</translation>
+        <translation>重用已存在的化名 :%1%2, 已變更为%1%3</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="391"/>
         <source>RS_Commands:: command not found: %1</source>
-        <translation>RS Commands:: 找不到命令 :% 1</translation>
+        <translation>RS Commands:: 找不到命令 :%1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="416"/>
         <source>keycode: %1 (%2)</source>
-        <translation>金鑰碼 :% 1 (% 2)</translation>
+        <translation>金鑰碼 :%1 (%2)</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="418"/>
         <source>invalid keycode: %1</source>
-        <translation>無效的金鑰碼 :% 1</translation>
+        <translation>無效的金鑰碼 :%1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="433"/>
         <source>Command not found: %1</source>
-        <translation>找不到命令 :% 1</translation>
+        <translation>找不到命令 :%1</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1081"/>
@@ -29865,7 +29865,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="77"/>
         <source>No %1 layers found</source>
-        <translation>未找到% 1 層</translation>
+        <translation>未找到%1 層</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterinterface.h" line="92"/>
@@ -30011,12 +30011,12 @@ Do you want to replace it?</source>
         <location filename="../src/ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp" line="180"/>
         <location filename="../src/ui/dialogs/file/export/layers/lc_filedialogservice.cpp" line="219"/>
         <source>File &quot;%1&quot; already exists. Do you want to replace it?</source>
-        <translation>檔案% 1 已存在 。 你想取而代之?</translation>
+        <translation>檔案%1 已存在 。 你想取而代之?</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="38"/>
         <source>/CustomColor%1</source>
-        <translation>/自訂顏色% 1</translation>
+        <translation>/自訂顏色%1</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="39"/>
@@ -30074,7 +30074,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/engine/document/container/rs_entitycontainer.cpp" line="1687"/>
         <source>Hatch failed due to a gap=%1 between (%2, %3) and (%4, %5)</source>
-        <translation>由于 (% 2,% 3) 和 (% 4,% 5) 有差距而失敗了</translation>
+        <translation>由于 (%2,%3) 和 (%4,%5) 有差距而失敗了</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/patterns/rs_patternlist.cpp" line="66"/>
@@ -30084,12 +30084,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/engine/document/patterns/rs_patternlist.cpp" line="93"/>
         <source>Hatch:: loading pattern failed: %1</source>
-        <translation>批次:: 載入模式失敗 :% 1</translation>
+        <translation>批次:: 載入模式失敗 :%1</translation>
     </message>
     <message>
         <location filename="../src/ui/main/persistence/lc_documentsstorage.cpp" line="197"/>
         <source>File on disk modified. Please save to another file to avoid data loss! File modified: %1</source>
-        <translation>有磁碟上的文件已修改 。 請儲存到其他檔案以避免數據損失! 已修改檔案 :% 1</translation>
+        <translation>有磁碟上的文件已修改 。 請儲存到其他檔案以避免數據損失! 已修改檔案 :%1</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="41"/>
@@ -30229,7 +30229,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/engine/document/rs_graphic.cpp" line="741"/>
         <source>Invalid printing scale %1. Cannot fit print preview to page</source>
-        <translation>不合法的列印比例% 1 。 無法相對列印預覽到頁面</translation>
+        <translation>不合法的列印比例%1 。 無法相對列印預覽到頁面</translation>
     </message>
     <message>
         <location filename="../src/lib/printing/lc_printing.cpp" line="160"/>
@@ -30930,17 +30930,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="146"/>
         <source>radius=%1 is invalid (expression)</source>
-        <translation>半徑% 1 不合法 (表示)</translation>
+        <translation>半徑%1 不合法 (表示)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="148"/>
         <source>radius=%1 is invalid (negative)</source>
-        <translation>半徑% 1 無效 (負數)</translation>
+        <translation>半徑%1 無效 (負數)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="151"/>
         <source>radius=%1 is invalid (zero)</source>
-        <translation>半徑% 1 不合法 (零)</translation>
+        <translation>半徑%1 不合法 (零)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="131"/>
@@ -31004,7 +31004,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2.cpp" line="246"/>
         <source>No common tangential circle for radius &apos;%1&apos;</source>
-        <translation>半徑% 1 有相關的相關圓圈</translation>
+        <translation>半徑%1 有相關的相關圓圈</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2.cpp" line="277"/>
@@ -31255,7 +31255,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="177"/>
         <source>Total hatch area = %1</source>
-        <translation>總孵出地區 =% 1</translation>
+        <translation>總孵出地區 =%1</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="185"/>
@@ -31879,10 +31879,10 @@ Complementary: %2
 Supplementary: %3
 Alternative: %4
 </source>
-        <translation>角度 :% 1
-相補 :% 2
-相補 :% 3
-替代 :% 4</translation>
+        <translation>角度 :%1
+相補 :%2
+相補 :%3
+替代 :%4</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="140"/>
@@ -31892,12 +31892,12 @@ Supplementary: %3
 Alternative: %4
 Intersection: (%5 , %6)
 Intersection :@(%7, %8)</source>
-        <translation>角度 :% 1
-相補 :% 2
-相補 :% 3
-替代 :% 4
-相交 : (% 5,% 6)
-相接區 : @ (% 7,% 8)</translation>
+        <translation>角度 :%1
+相補 :%2
+相補 :%3
+替代 :%4
+相交 : (%5,%6)
+相接區 : @ (%7,%8)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="253"/>
@@ -31987,17 +31987,17 @@ Intersection :@(%7, %8)</source>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="101"/>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="108"/>
         <source>Area: %1 %2^2</source>
-        <translation>區域 :% 1% 2^2</translation>
+        <translation>區域 :%1%2^2</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="153"/>
         <source>Closing Point: %1</source>
-        <translation>關閉點 :% 1</translation>
+        <translation>關閉點 :%1</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="160"/>
         <source>Point: %1</source>
-        <translation>點 :% 1</translation>
+        <translation>點 :%1</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="182"/>
@@ -32024,11 +32024,11 @@ Cartesian: (%2 , %3)
 Polar: (%4 &lt; %5)
 Start: (%6 , %7)
 End: (%8 , %9)</source>
-        <translation>相距 :% 1
-笛卡尔 : (% 2,% 3)
-极地 (% 4 &lt;% 5)
-開始 (% 6,% 7)
-結束 (% 8,% 9)</translation>
+        <translation>相距 :%1
+笛卡尔 : (%2,%3)
+极地 (%4 &lt;%5)
+開始 (%6,%7)
+結束 (%8,%9)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="98"/>
@@ -32080,11 +32080,11 @@ Cartesian: (%2 , %3)
 Polar: (%4 &lt; %5)
 Point On Entity: (%6 , %7)
 Point: (%8 , %9)</source>
-        <translation>相距 :% 1
-笛卡尔 : (% 2,% 3)
-极地 (% 4 &lt;% 5)
-在實體上指點 (% 6,% 7)
-點 (% 8,% 9)</translation>
+        <translation>相距 :%1
+笛卡尔 : (%2,%3)
+极地 (%4 &lt;%5)
+在實體上指點 (%6,%7)
+點 (%8,%9)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="275"/>
@@ -32879,7 +32879,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="421"/>
         <source>Specify first entity or enter radius &lt;%1&gt;</source>
-        <translation>指定第一個實體或輸入半徑% 1&gt;</translation>
+        <translation>指定第一個實體或輸入半徑%1&gt;</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="424"/>
@@ -33362,12 +33362,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="160"/>
         <source>Printout offset in paper coordinates by (%1, %2)</source>
-        <translation>在 (% 1,% 2) 相抵以出出纸座標</translation>
+        <translation>在 (%1,%2) 相抵以出出纸座標</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="163"/>
         <source>Printout offset in graph coordinates by (%1, %2)</source>
-        <translation>由 (% 1,% 2) 在圖形座標中相抵列印出</translation>
+        <translation>由 (%1,%2) 在圖形座標中相抵列印出</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="177"/>

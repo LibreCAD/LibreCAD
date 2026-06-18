@@ -605,8 +605,8 @@
         <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="196"/>
         <source>radius=%1 is too small for points selected
 distance between points=%2 is larger than diameter=%3</source>
-        <translation>radius =% 1 terlalu kecil untuk titik yang dipilih
-jarak antara titik =% 2 lebih besar dari diameter =% 3</translation>
+        <translation>radius =%1 terlalu kecil untuk titik yang dipilih
+jarak antara titik =%2 lebih besar dari diameter =%3</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="208"/>
@@ -708,7 +708,7 @@ jarak antara titik =% 2 lebih besar dari diameter =% 3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="146"/>
         <source>Dual created around center (%1 entities)</source>
-        <translation>Dual tercipta di tengah (% 1 entitas)</translation>
+        <translation>Dual tercipta di tengah (%1 entitas)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="159"/>
@@ -883,8 +883,8 @@ atau [x 12.4; y = 124; p = 124; nomor 124; sisi]</translation>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="537"/>
         <source>Specify distance (%1)
 or [%2]</source>
-        <translation>Spesifikasikan jarak (% 1)
-atau [% 2]</translation>
+        <translation>Spesifikasikan jarak (%1)
+atau [%2]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="534"/>
@@ -900,8 +900,8 @@ atau [% 2]</translation>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="542"/>
         <source>Specify  distance (angle %1 deg)
 or [%2]</source>
-        <translation>Spesifikasikan jarak (sudut% 1 deg)
-atau [% 2]</translation>
+        <translation>Spesifikasikan jarak (sudut%1 deg)
+atau [%2]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="547"/>
@@ -1013,13 +1013,13 @@ atau [% 2]</translation>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="477"/>
         <source>Specify direction (x or y) or [%1]</source>
-        <translation>Tentukan arah (x atau y) atau [% 1]</translation>
+        <translation>Tentukan arah (x atau y) atau [%1]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="491"/>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="495"/>
         <source>Specify distance (%1) or [%2]</source>
-        <translation>Spesifikasikan jarak (% 1) atau [% 2]</translation>
+        <translation>Spesifikasikan jarak (%1) atau [%2]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="134"/>
@@ -1360,7 +1360,7 @@ atau [% 2]</translation>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="231"/>
         <source>Specify next control point or [%1]</source>
-        <translation>Spesifikasikan titik kontrol berikutnya atau [% 1]</translation>
+        <translation>Spesifikasikan titik kontrol berikutnya atau [%1]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="231"/>
@@ -3297,13 +3297,13 @@ Alternative: %4
 Start Edge Point: (%5 , %6)
 Intersection Point :(%7, %8)
 End Edge Point: (%9 , %10)</source>
-        <translation>Sudut:% 1
-Selesai:% 2
-Tambahan:% 3
-Alternatif:% 4
-Awal Titik Tepi: (% 5,% 6)
-Titik Intersection: (% 7,% 8)
-Titik Akhir Edge: (% 9,% 10)</translation>
+        <translation>Sudut:%1
+Selesai:%2
+Tambahan:%3
+Alternatif:%4
+Awal Titik Tepi: (%5,%6)
+Titik Intersection: (%7,%8)
+Titik Akhir Edge: (%9,%10)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="149"/>
@@ -3370,27 +3370,27 @@ Titik Akhir Edge: (% 9,% 10)</translation>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="41"/>
         <source>Absolute: (%1)</source>
-        <translation>Absolute: (% 1)</translation>
+        <translation>Absolute: (%1)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="42"/>
         <source>Relative: (%1)</source>
-        <translation>Relatif: (% 1)</translation>
+        <translation>Relatif: (%1)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="43"/>
         <source>Polar: (%1)</source>
-        <translation>Polar: (% 1)</translation>
+        <translation>Polar: (%1)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="44"/>
         <source>Polar Relative: (%1)</source>
-        <translation>Relatif Polar: (% 1)</translation>
+        <translation>Relatif Polar: (%1)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="46"/>
         <source>Absolute WCS: (%1)</source>
-        <translation>WCS Absolute: (% 1)</translation>
+        <translation>WCS Absolute: (%1)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="70"/>
@@ -3711,7 +3711,7 @@ Titik Akhir Edge: (% 9,% 10)</translation>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayerscmd.cpp" line="53"/>
         <source>Enter layer name to %1</source>
-        <translation>Masukkan nama lapis ke% 1</translation>
+        <translation>Masukkan nama lapis ke%1</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayerscmd.cpp" line="53"/>
@@ -4509,7 +4509,7 @@ Titik Akhir Edge: (% 9,% 10)</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="163"/>
         <source>LibreCAD Shortcuts file (*.%1)</source>
-        <translation>Berkas Jalan Pintas LibreCAD (*.% 1)</translation>
+        <translation>Berkas Jalan Pintas LibreCAD (*.%1)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="198"/>
@@ -4684,7 +4684,7 @@ Anda yakin akan mengabaikan perubahan?</translation>
         <source>Save changes to the following item?
 %1</source>
         <translation>Simpan perubahan ke butir berikut?
-% 1</translation>
+%1</translation>
     </message>
     <message>
         <location filename="../src/ui/main/support/lc_appwindowdialogsinvoker.cpp" line="185"/>
@@ -4998,7 +4998,7 @@ Anda yakin akan mengabaikan perubahan?</translation>
         <location filename="../src/ui/components/creators/lc_creatorinvoker.cpp" line="83"/>
         <location filename="../src/ui/components/creators/lc_creatorinvoker.cpp" line="115"/>
         <source>Toolbar: %1 (Custom)</source>
-        <translation>Bilah Alat:% 1 (Ubahan)</translation>
+        <translation>Bilah Alat:%1 (Ubahan)</translation>
     </message>
 </context>
 <context>
@@ -5345,7 +5345,7 @@ Anda yakin akan mengabaikan perubahan?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="186"/>
         <source>LibreCAD dimension styles file (*.%1)</source>
-        <translation>Berkas gaya dimensi LibreCAD (*.% 1)</translation>
+        <translation>Berkas gaya dimensi LibreCAD (*.%1)</translation>
     </message>
 </context>
 <context>
@@ -5394,17 +5394,17 @@ Anda yakin akan mengabaikan perubahan?</translation>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="76"/>
         <source>Version: &lt;b&gt;%1&lt;/b&gt;</source>
-        <translation>Versi: &lt; b &gt;% 1 &lt; / b &gt;</translation>
+        <translation>Versi: &lt; b &gt;%1 &lt; / b &gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="78"/>
         <source>Compiler: Clang %1.%2.%3</source>
-        <translation>Kompailer: Klang% 1.% 2.% 3</translation>
+        <translation>Kompailer: Klang%1.%2.%3</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="80"/>
         <source>Compiler: GNU GCC %1.%2.%3</source>
-        <translation>Kompailer: GNU GCC% 1.% 2.% 3</translation>
+        <translation>Kompailer: GNU GCC%1.%2.%3</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="82"/>
@@ -5414,17 +5414,17 @@ Anda yakin akan mengabaikan perubahan?</translation>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="84"/>
         <source>Compiled on: %1</source>
-        <translation>Dikompilasi pada:% 1</translation>
+        <translation>Dikompilasi pada:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="85"/>
         <source>Qt Version: %1</source>
-        <translation>Versi Qt:% 1</translation>
+        <translation>Versi Qt:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="86"/>
         <source>Boost Version: %1.%2.%3</source>
-        <translation>Versi Boost:% 1.% 2.% 3</translation>
+        <translation>Versi Boost:%1.%2.%3</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="96"/>
@@ -6582,7 +6582,7 @@ Anda yakin akan mengabaikan perubahan?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1831"/>
         <source>Includes a prefix in the alternate dimension text. You can enter text or use control codes to display special symbols. For example, entering the control code %%c displays the diameter symbol. (DIMAPOST system variable)</source>
-        <translation>Termasuk awalan dalam teks dimensi alternatif. Anda dapat memasukkan teks atau menggunakan kode kontrol untuk menampilkan simbol khusus. Misalnya, memasuki kode kendali%% c menampilkan simbol diameter. (DIMAPOST variabel sistem)</translation>
+        <translation>Termasuk awalan dalam teks dimensi alternatif. Anda dapat memasukkan teks atau menggunakan kode kontrol untuk menampilkan simbol khusus. Misalnya, memasuki kode kendali%%c menampilkan simbol diameter. (DIMAPOST variabel sistem)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1845"/>
@@ -7532,7 +7532,7 @@ Anda yakin akan mengabaikan perubahan?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="102"/>
         <source>Menu Assignment - &quot;%1&quot; Menu</source>
-        <translation>Penugasan Menu - &quot;% 1&quot; Menu</translation>
+        <translation>Penugasan Menu - &quot;%1&quot; Menu</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="106"/>
@@ -7677,7 +7677,7 @@ Anda yakin akan mengabaikan perubahan?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="250"/>
         <source>NOTE: This shortcut is already assigned to &quot;%1&quot; menu and that menu will be unassigned on save!</source>
-        <translation>CATATAN: Jalan pintas ini telah diberikan ke menu &quot;% 1&quot; dan menu tersebut akan tidak ditugaskan pada menyimpan!</translation>
+        <translation>CATATAN: Jalan pintas ini telah diberikan ke menu &quot;%1&quot; dan menu tersebut akan tidak ditugaskan pada menyimpan!</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="254"/>
@@ -7971,7 +7971,7 @@ Anda yakin akan mengabaikan perubahan?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.cpp" line="145"/>
         <source>Provided name of dimension style (%1) is not unique! Please enter another one.</source>
-        <translation>Menyediakan nama dari gaya dimensi (% 1) tidak unik! Silakan masukkan yang lain.</translation>
+        <translation>Menyediakan nama dari gaya dimensi (%1) tidak unik! Silakan masukkan yang lain.</translation>
     </message>
 </context>
 <context>
@@ -8771,7 +8771,7 @@ Anda yakin akan mengabaikan perubahan?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="203"/>
         <source>Are you sure you&apos;d like to unassign &quot;%1&quot; menu? Note: Just an invocation shortcut will be removed and menu will not be deleted.</source>
-        <translation>Anda yakin ingin menghapus menu &quot;% 1&quot;? Catatan: Hanya sebuah jalan pintas pemanggilan yang akan dihapus dan menu tidak akan dihapus.</translation>
+        <translation>Anda yakin ingin menghapus menu &quot;%1&quot;? Catatan: Hanya sebuah jalan pintas pemanggilan yang akan dihapus dan menu tidak akan dihapus.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="216"/>
@@ -8794,12 +8794,12 @@ Anda yakin akan mengabaikan perubahan?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="430"/>
         <source>Remove %1</source>
-        <translation>Hapus% 1</translation>
+        <translation>Hapus%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="431"/>
         <source>Are you sure you&apos;d like to remove  %2&quot;%1&quot;?</source>
-        <translation>Anda yakin ingin menghapus% 2 &quot;% 1&quot;?</translation>
+        <translation>Anda yakin ingin menghapus%2 &quot;%1&quot;?</translation>
     </message>
 </context>
 <context>
@@ -9206,7 +9206,7 @@ Anda yakin akan mengabaikan perubahan?</translation>
     <message>
         <location filename="../src/ui/dialogs/file/export/image/lc_exporttoimageservice.cpp" line="62"/>
         <source>Exported: %1</source>
-        <translation>Exported:% 1</translation>
+        <translation>Exported:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/image/lc_exporttoimageservice.cpp" line="65"/>
@@ -10315,7 +10315,7 @@ Isi Lapisan Konstruksi seharusnya tidak muncul di cetakan.</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="189"/>
         <source>Invalid value provide for %1 color.
 Please specify a different value.</source>
-        <translation>Nilai tidak valid untuk warna% 1.
+        <translation>Nilai tidak valid untuk warna%1.
 Silakan nyatakan nilai yang berbeda.</translation>
     </message>
     <message>
@@ -12467,7 +12467,7 @@ Peringatan: aksi ini TIDAK dapat dibatalkan!</translation>
  &quot;%1&quot;?
  Warning: this action can NOT be undone!</source>
         <translation>Anda yakin untuk menghapus tampilan
-&quot;% 1&quot;?
+&quot;%1&quot;?
 Peringatan: aksi ini TIDAK dapat dibatalkan!</translation>
     </message>
     <message>
@@ -12479,7 +12479,7 @@ Peringatan: aksi ini TIDAK dapat dibatalkan!</translation>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="302"/>
         <source>Are you sure to delete views %1?
 Warning: this action can NOT be undone!</source>
-        <translation>Anda yakin akan menghapus tilikan% 1?
+        <translation>Anda yakin akan menghapus tilikan%1?
 Peringatan: aksi ini TIDAK dapat dibatalkan!</translation>
     </message>
     <message>
@@ -15880,7 +15880,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="45"/>
         <source>LibreCAD settings file (*.%1)</source>
-        <translation>Berkas pengaturan LibreCAD (*.% 1)</translation>
+        <translation>Berkas pengaturan LibreCAD (*.%1)</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="91"/>
@@ -16732,7 +16732,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="67"/>
         <source>Toolbar: %1</source>
-        <translation>Batang Alat:% 1</translation>
+        <translation>Batang Alat:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="73"/>
@@ -17089,7 +17089,7 @@ Peringatan: aksi ini TIDAK dapat dibatalkan!</translation>
  &quot;%1&quot;?
  Warning: this action can NOT be undone!</source>
         <translation>Anda yakin untuk menghapus UCS
-&quot;% 1&quot;?
+&quot;%1&quot;?
 Peringatan: aksi ini TIDAK dapat dibatalkan!</translation>
     </message>
     <message>
@@ -17101,7 +17101,7 @@ Peringatan: aksi ini TIDAK dapat dibatalkan!</translation>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="378"/>
         <source>Are you sure to delete UCS %1?
 Warning: this action can NOT be undone!</source>
-        <translation>Anda yakin untuk menghapus UCS% 1?
+        <translation>Anda yakin untuk menghapus UCS%1?
 Peringatan: aksi ini TIDAK dapat dibatalkan!</translation>
     </message>
     <message>
@@ -17374,7 +17374,7 @@ Peringatan: aksi ini TIDAK dapat dibatalkan!</translation>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="429"/>
         <source>Toolbar: %1</source>
-        <translation>Batang Alat:% 1</translation>
+        <translation>Batang Alat:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="213"/>
@@ -17861,7 +17861,7 @@ Peringatan: aksi ini TIDAK dapat dibatalkan!</translation>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="226"/>
         <source>Saving drawing: %1</source>
-        <translation>Menyimpan gambar:% 1</translation>
+        <translation>Menyimpan gambar:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="232"/>
@@ -17881,12 +17881,12 @@ Peringatan: aksi ini TIDAK dapat dibatalkan!</translation>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="365"/>
         <source>&amp;Save %1</source>
-        <translation>&amp; Simpan% 1 @ action: button</translation>
+        <translation>&amp; Simpan%1 @ action: button</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="366"/>
         <source>Save %1 &amp;as...</source>
-        <translation>Simpan% 1 &amp; sebagai...</translation>
+        <translation>Simpan%1 &amp; sebagai...</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="795"/>
@@ -17896,7 +17896,7 @@ Peringatan: aksi ini TIDAK dapat dibatalkan!</translation>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="741"/>
         <source>Block &apos;%1&apos;</source>
-        <translation>Blok &apos;% 1&apos;</translation>
+        <translation>Blok &apos;%1&apos;</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="744"/>
@@ -17941,7 +17941,7 @@ Peringatan: aksi ini TIDAK dapat dibatalkan!</translation>
 %1
 Please check the permissions.</source>
         <translation>Tidak dapat membuka berkas
-% 1
+%1
 Silakan periksa perizinan.</translation>
     </message>
     <message>
@@ -17962,7 +17962,7 @@ Silakan periksa perizinan.</translation>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="237"/>
         <source>Saved drawing: %1</source>
-        <translation>Gambar tersimpan:% 1</translation>
+        <translation>Gambar tersimpan:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="249"/>
@@ -17980,13 +17980,13 @@ Silakan periksa perizinan.</translation>
 %1
 Please check its existence and permissions.</source>
         <translation>Tidak dapat membuka berkas
-% 1
+%1
 Silakan periksa keberadaannya dan perizinan.</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1023"/>
         <source>File &apos;%1&apos; does not exist. Opening aborted</source>
-        <translation>Berkas &apos;% 1&apos; tidak ada. Membuka digugurkan</translation>
+        <translation>Berkas &apos;%1&apos; tidak ada. Membuka digugurkan</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1084"/>
@@ -18012,7 +18012,7 @@ Silakan periksa keberadaannya dan perizinan.</translation>
 Please check the permissions.
 Auto-save disabled.</source>
         <translation>Tidak dapat auto- menyimpan berkas
-% 1
+%1
 Silakan periksa perizinan.
 Penyimpanan otomatis dinonaktifkan.</translation>
     </message>
@@ -18034,7 +18034,7 @@ Penyimpanan otomatis dinonaktifkan.</translation>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="196"/>
         <source>Print preview for %1</source>
-        <translation>Pratilik cetak untuk% 1</translation>
+        <translation>Pratilik cetak untuk%1</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1424"/>
@@ -18099,7 +18099,7 @@ Penyimpanan otomatis dinonaktifkan.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_blockdialog.cpp" line="77"/>
         <source>Could not name block. A block named &quot;%1&quot; already exists.</source>
-        <translation>Tidak dapat nama blok. Blok bernama &quot;% 1&quot; sudah ada.</translation>
+        <translation>Tidak dapat nama blok. Blok bernama &quot;%1&quot; sudah ada.</translation>
     </message>
 </context>
 <context>
@@ -18308,12 +18308,12 @@ Penyimpanan otomatis dinonaktifkan.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="210"/>
         <source>Unknown command: %1</source>
-        <translation>Perintah tidak dikenal:% 1</translation>
+        <translation>Perintah tidak dikenal:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="249"/>
         <source>Command Alias File: %1</source>
-        <translation>Perintah Berkas Alias:% 1</translation>
+        <translation>Perintah Berkas Alias:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="258"/>
@@ -21280,7 +21280,7 @@ Hal ini secara rekursif memodifikasi semua entitas Blok itu sendiri.</translatio
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="400"/>
         <source>Are you sure you&apos;d like to delete property [%1]?</source>
-        <translation>Anda yakin ingin menghapus properti [% 1]?</translation>
+        <translation>Anda yakin ingin menghapus properti [%1]?</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="422"/>
@@ -21347,7 +21347,7 @@ Hal ini secara rekursif memodifikasi semua entitas Blok itu sendiri.</translatio
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="642"/>
         <source>Enter new unique name of dimension style (was &quot;%1&quot;):</source>
-        <translation>Masukkan nama unik baru dari gaya dimensi (adalah &quot;% 1&quot;):</translation>
+        <translation>Masukkan nama unik baru dari gaya dimensi (adalah &quot;%1&quot;):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="662"/>
@@ -21370,12 +21370,12 @@ Hal ini secara rekursif memodifikasi semua entitas Blok itu sendiri.</translatio
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="684"/>
         <source>Are you sure you want to remove the dimension style &quot;%1&quot; together with child styles?</source>
-        <translation>Anda yakin ingin menghapus gaya dimensi &quot;% 1&quot; bersama dengan gaya anak?</translation>
+        <translation>Anda yakin ingin menghapus gaya dimensi &quot;%1&quot; bersama dengan gaya anak?</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="692"/>
         <source>Are you sure you want to remove the dimension style &quot;%1&quot;?</source>
-        <translation>Anda yakin ingin menghapus gaya dimensi &quot;% 1&quot;?</translation>
+        <translation>Anda yakin ingin menghapus gaya dimensi &quot;%1&quot;?</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="929"/>
@@ -25130,57 +25130,57 @@ sehingga nilai langkah baku dibutuhkan untuk baking</translation>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="124"/>
         <source>Drawing Exchange DXF 2000 %1</source>
-        <translation>Menggambar Pertukaran DXF 2000% 1</translation>
+        <translation>Menggambar Pertukaran DXF 2000%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="126"/>
         <source>Drawing Exchange DXF R12 %1</source>
-        <translation>Drawing Exchange DXF R12% 1</translation>
+        <translation>Drawing Exchange DXF R12%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="129"/>
         <source>LFF Font %1</source>
-        <translation>Fonta LFF% 1</translation>
+        <translation>Fonta LFF%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="133"/>
         <source>QCad Font %1</source>
-        <translation>Fonta QCad% 1</translation>
+        <translation>Fonta QCad%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="134"/>
         <source>Jww Drawing %1</source>
-        <translation>Jww Menggambar% 1</translation>
+        <translation>Jww Menggambar%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="127"/>
         <source>Drawing Exchange %1</source>
-        <translation>Pertukaran Gambar% 1</translation>
+        <translation>Pertukaran Gambar%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="122"/>
         <source>Drawing Exchange DXF 2007 %1</source>
-        <translation>Drawing Exchange DXF 2007% 1</translation>
+        <translation>Drawing Exchange DXF 2007%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="123"/>
         <source>Drawing Exchange DXF 2004 %1</source>
-        <translation>Menggambar Pertukaran DXF 2004% 1</translation>
+        <translation>Menggambar Pertukaran DXF 2004%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="125"/>
         <source>Drawing Exchange DXF R14 %1</source>
-        <translation>Drawing Exchange DXF R14% 1</translation>
+        <translation>Drawing Exchange DXF R14%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="131"/>
         <source>dwg Drawing %1</source>
-        <translation>wrg Menggambar% 1</translation>
+        <translation>wrg Menggambar%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="135"/>
         <source>QCad 1.x file %1</source>
-        <translation>Berkas QCad 1.x% 1</translation>
+        <translation>Berkas QCad 1.x%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="138"/>
@@ -25197,7 +25197,7 @@ sehingga nilai langkah baku dibutuhkan untuk baking</translation>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="163"/>
         <source>Open %1</source>
-        <translation>Buka% 1</translation>
+        <translation>Buka%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="235"/>
@@ -25207,7 +25207,7 @@ sehingga nilai langkah baku dibutuhkan untuk baking</translation>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="253"/>
         <source>Save %1 As</source>
-        <translation>Simpan% 1 Sebagai</translation>
+        <translation>Simpan%1 Sebagai</translation>
     </message>
 </context>
 <context>
@@ -25593,7 +25593,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/main/support/qg_recentfiles.cpp" line="177"/>
         <source>&amp;%1 %2</source>
-        <translation>&amp;% 1% 2 @ action: button</translation>
+        <translation>&amp;%1%2 @ action: button</translation>
     </message>
 </context>
 <context>
@@ -25629,7 +25629,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="171"/>
         <source>Relative zero position is %1</source>
-        <translation>Posisi relatif nol adalah% 1</translation>
+        <translation>Posisi relatif nol adalah%1</translation>
     </message>
     <message>
         <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="171"/>
@@ -25644,7 +25644,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="176"/>
         <source>Coordinate system: %1</source>
-        <translation>Sistem koordinat:% 1</translation>
+        <translation>Sistem koordinat:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="176"/>
@@ -25789,7 +25789,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.cpp" line="84"/>
         <source>Layer with a name &quot;%1&quot; already exists. Please specify a different name.</source>
-        <translation>Lapis dengan nama &quot;% 1&quot; sudah ada. Silakan nyatakan nama lain.</translation>
+        <translation>Lapis dengan nama &quot;%1&quot; sudah ada. Silakan nyatakan nama lain.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="190"/>
@@ -25803,13 +25803,13 @@ p, li {white- space: pre- wrap;}
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="191"/>
         <source>Layer &quot;%1&quot; and all entities on it will be removed.
 This action can NOT be undone.</source>
-        <translation>Lapis &quot;% 1&quot; dan semua entitas di atasnya akan dihapus.
+        <translation>Lapis &quot;%1&quot; dan semua entitas di atasnya akan dihapus.
 Aksi ini TIDAK dapat dibatalkan.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="203"/>
         <source>Layer &quot;%1&quot; can never be removed.</source>
-        <translation>Lapis &quot;% 1&quot; tidak pernah dapat dihapus.</translation>
+        <translation>Lapis &quot;%1&quot; tidak pernah dapat dihapus.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="264"/>
@@ -25861,7 +25861,7 @@ Aksi ini TIDAK dapat dibatalkan.</translation>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="456"/>
         <source>Block &quot;%1&quot; and all its entities will be removed.</source>
-        <translation>Blok &quot;% 1&quot; dan semua entitasnya akan dihapus.</translation>
+        <translation>Blok &quot;%1&quot; dan semua entitasnya akan dihapus.</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="514"/>
@@ -25891,7 +25891,7 @@ Aksi ini TIDAK dapat dibatalkan.</translation>
 [%1].
 Please specify a different name.</source>
         <translation>Mencoba untuk membuat lapis dengan nama menduplikasi. Nama lapis ganda adalah
-[% 1].
+[%1].
 Silakan nyatakan nama lain.</translation>
     </message>
     <message>
@@ -25944,7 +25944,7 @@ Clear filtering mask and repeat.</source>
 [%1].
 Please specify a different name.</source>
         <translation>Lapisan anak tersebut sudah ada untuk
-[% 1].
+[%1].
 Silakan nyatakan nama lain.</translation>
     </message>
     <message>
@@ -25953,7 +25953,7 @@ Silakan nyatakan nama lain.</translation>
 [%1].
 </source>
         <translation>Lapisan anak tersebut sudah ada untuk
-[% 1].</translation>
+[%1].</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1165"/>
@@ -25998,7 +25998,7 @@ Jika Tidak - nilai &quot;Berdasarkan Lapisan&quot; akan tetap dan pena lapisan t
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.cpp" line="218"/>
         <source>Invalid value provided for %1 color.
 Please specify a different value.</source>
-        <translation>Nilai tidak valid disediakan untuk warna% 1.
+        <translation>Nilai tidak valid disediakan untuk warna%1.
 Silakan nyatakan nilai yang berbeda.</translation>
     </message>
     <message>
@@ -26589,43 +26589,43 @@ Silakan nyatakan nilai yang berbeda.</translation>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="391"/>
         <source>%1 already exists.
 Do you want to replace it?</source>
-        <translation>% 1 sudah ada.
+        <translation>%1 sudah ada.
 Apakah Anda ingin menggantinya?</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="451"/>
         <source>Old Drawing Exchange %1</source>
-        <translation>Old Drawing Exchange% 1</translation>
+        <translation>Old Drawing Exchange%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="452"/>
         <source>Drawing Exchange %1</source>
-        <translation>Pertukaran Gambar% 1</translation>
+        <translation>Pertukaran Gambar%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="455"/>
         <source>dwg Drawing %1</source>
-        <translation>wrg Menggambar% 1</translation>
+        <translation>wrg Menggambar%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="457"/>
         <source>QCad 1.x file %1</source>
-        <translation>Berkas QCad 1.x% 1</translation>
+        <translation>Berkas QCad 1.x%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="458"/>
         <source>LFF Font %1</source>
-        <translation>Fonta LFF% 1</translation>
+        <translation>Fonta LFF%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="459"/>
         <source>Font %1</source>
-        <translation>Fonta% 1</translation>
+        <translation>Fonta%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="460"/>
         <source>Jww %1</source>
-        <translation>Jww% 1</translation>
+        <translation>Jww%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="484"/>
@@ -26713,7 +26713,7 @@ Apakah Anda ingin menggantinya?</translation>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="68"/>
         <source>: duplicated command: %1 is already taken by %2</source>
-        <translation>: perintah duplikasi:% 1 telah diambil oleh% 2</translation>
+        <translation>: perintah duplikasi:%1 telah diambil oleh%2</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="884"/>
@@ -29517,37 +29517,37 @@ Apakah Anda ingin menggantinya?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="261"/>
         <location filename="../src/cmd/rs_commands.cpp" line="316"/>
         <source>cannot change meaning of commands. Refused to reuse command %1 to mean %2</source>
-        <translation>tidak dapat mengubah makna perintah. Menolak penggunaan ulang perintah% 1 berarti% 2</translation>
+        <translation>tidak dapat mengubah makna perintah. Menolak penggunaan ulang perintah%1 berarti%2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="300"/>
         <source>requesting alias(%1) for unknown command(%2): ignored</source>
-        <translation>meminta alias (% 1) untuk perintah tidak dikenal (% 2): diabaikan</translation>
+        <translation>meminta alias (%1) untuk perintah tidak dikenal (%2): diabaikan</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="310"/>
         <source>reusing an existing alias: was %1=%2, changed to %1=%3</source>
-        <translation>menggunakan kembali alias yang sudah ada:% 1 =% 2, berubah ke% 1 =% 3</translation>
+        <translation>menggunakan kembali alias yang sudah ada:%1 =%2, berubah ke%1 =%3</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="391"/>
         <source>RS_Commands:: command not found: %1</source>
-        <translation>RS _ Commands:: perintah tidak ditemukan:% 1</translation>
+        <translation>RS _ Commands:: perintah tidak ditemukan:%1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="416"/>
         <source>keycode: %1 (%2)</source>
-        <translation>keycode:% 1 (% 2)</translation>
+        <translation>keycode:%1 (%2)</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="418"/>
         <source>invalid keycode: %1</source>
-        <translation>keycode tidak valid:% 1</translation>
+        <translation>keycode tidak valid:%1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="433"/>
         <source>Command not found: %1</source>
-        <translation>Perintah tak ditemukan:% 1</translation>
+        <translation>Perintah tak ditemukan:%1</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1081"/>
@@ -29641,7 +29641,7 @@ Apakah Anda ingin menggantinya?</translation>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="77"/>
         <source>No %1 layers found</source>
-        <translation>Lapisan% 1 tidak ditemukan</translation>
+        <translation>Lapisan%1 tidak ditemukan</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterinterface.h" line="92"/>
@@ -29771,12 +29771,12 @@ Apakah Anda ingin menggantinya?</translation>
         <location filename="../src/ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp" line="180"/>
         <location filename="../src/ui/dialogs/file/export/layers/lc_filedialogservice.cpp" line="219"/>
         <source>File &quot;%1&quot; already exists. Do you want to replace it?</source>
-        <translation>Berkas &quot;% 1&quot; sudah ada. Apakah Anda ingin menggantinya?</translation>
+        <translation>Berkas &quot;%1&quot; sudah ada. Apakah Anda ingin menggantinya?</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="38"/>
         <source>/CustomColor%1</source>
-        <translation>/ Warna Pelanggan% 1</translation>
+        <translation>/ Warna Pelanggan%1</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="39"/>
@@ -29834,7 +29834,7 @@ Apakah Anda ingin menggantinya?</translation>
     <message>
         <location filename="../src/lib/engine/document/container/rs_entitycontainer.cpp" line="1687"/>
         <source>Hatch failed due to a gap=%1 between (%2, %3) and (%4, %5)</source>
-        <translation>Hatch gagal karena jeda =% 1 diantara (% 2,% 3) dan (% 4,% 5)</translation>
+        <translation>Hatch gagal karena jeda =%1 diantara (%2,%3) dan (%4,%5)</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/patterns/rs_patternlist.cpp" line="66"/>
@@ -29844,12 +29844,12 @@ Apakah Anda ingin menggantinya?</translation>
     <message>
         <location filename="../src/lib/engine/document/patterns/rs_patternlist.cpp" line="93"/>
         <source>Hatch:: loading pattern failed: %1</source>
-        <translation>Hatch:: pola pemuatan gagal:% 1</translation>
+        <translation>Hatch:: pola pemuatan gagal:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/main/persistence/lc_documentsstorage.cpp" line="197"/>
         <source>File on disk modified. Please save to another file to avoid data loss! File modified: %1</source>
-        <translation>Berkas pada disk yang diubah. Silakan simpan ke berkas lain untuk menghindari kehilangan data! Berkas diubah:% 1</translation>
+        <translation>Berkas pada disk yang diubah. Silakan simpan ke berkas lain untuk menghindari kehilangan data! Berkas diubah:%1</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="180"/>
@@ -30200,7 +30200,7 @@ Apakah Anda ingin menggantinya?</translation>
     <message>
         <location filename="../src/lib/engine/document/rs_graphic.cpp" line="741"/>
         <source>Invalid printing scale %1. Cannot fit print preview to page</source>
-        <translation>Skala pencetakan% 1 tidak valid. Tidak dapat memenuhi pratinjau cetak ke halaman</translation>
+        <translation>Skala pencetakan%1 tidak valid. Tidak dapat memenuhi pratinjau cetak ke halaman</translation>
     </message>
     <message>
         <location filename="../src/lib/printing/lc_printing.cpp" line="160"/>
@@ -30901,17 +30901,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="146"/>
         <source>radius=%1 is invalid (expression)</source>
-        <translation>radius =% 1 tidak valid (ekspresi)</translation>
+        <translation>radius =%1 tidak valid (ekspresi)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="148"/>
         <source>radius=%1 is invalid (negative)</source>
-        <translation>radius =% 1 tidak valid (negatif)</translation>
+        <translation>radius =%1 tidak valid (negatif)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="151"/>
         <source>radius=%1 is invalid (zero)</source>
-        <translation>radius =% 1 tidak valid (nol)</translation>
+        <translation>radius =%1 tidak valid (nol)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="131"/>
@@ -30975,7 +30975,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2.cpp" line="246"/>
         <source>No common tangential circle for radius &apos;%1&apos;</source>
-        <translation>Tidak ada lingkaran tangensial umum untuk radius &apos;% 1&apos;</translation>
+        <translation>Tidak ada lingkaran tangensial umum untuk radius &apos;%1&apos;</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2.cpp" line="277"/>
@@ -31140,7 +31140,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="178"/>
         <source>Total distance %1 is smaller than distance between foci</source>
-        <translation>Total jarak% 1 lebih kecil dari jarak antara fokus</translation>
+        <translation>Total jarak%1 lebih kecil dari jarak antara fokus</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="180"/>
@@ -31226,7 +31226,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="177"/>
         <source>Total hatch area = %1</source>
-        <translation>Total area menetas =% 1</translation>
+        <translation>Total area menetas =%1</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="185"/>
@@ -31284,7 +31284,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawline.cpp" line="274"/>
         <source>Specify next point or [%1]</source>
-        <translation>Spesifikasikan titik berikutnya atau [% 1]</translation>
+        <translation>Spesifikasikan titik berikutnya atau [%1]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawline.cpp" line="276"/>
@@ -31421,7 +31421,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallel.cpp" line="135"/>
         <source>Specify Distance &lt;%1&gt; or select entity or [%2]</source>
-        <translation>Spesifikasikan Jarak &lt;% 1 &gt; atau pilih entitas atau [% 2]</translation>
+        <translation>Spesifikasikan Jarak &lt;%1 &gt; atau pilih entitas atau [%2]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallel.cpp" line="109"/>
@@ -31681,7 +31681,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="756"/>
         <source>Specify next point or [%1]</source>
-        <translation>Spesifikasikan titik berikutnya atau [% 1]</translation>
+        <translation>Spesifikasikan titik berikutnya atau [%1]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="758"/>
@@ -31709,7 +31709,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/spline/rs_actiondrawspline.cpp" line="227"/>
         <source>Specify next control point or [%1]</source>
-        <translation>Spesifikasikan titik kontrol berikutnya atau [% 1]</translation>
+        <translation>Spesifikasikan titik kontrol berikutnya atau [%1]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/rs_actiondrawspline.cpp" line="229"/>
@@ -31850,10 +31850,10 @@ Complementary: %2
 Supplementary: %3
 Alternative: %4
 </source>
-        <translation>Sudut:% 1
-Selesai:% 2
-Tambahan:% 3
-Alternatif:% 4</translation>
+        <translation>Sudut:%1
+Selesai:%2
+Tambahan:%3
+Alternatif:%4</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="140"/>
@@ -31863,12 +31863,12 @@ Supplementary: %3
 Alternative: %4
 Intersection: (%5 , %6)
 Intersection :@(%7, %8)</source>
-        <translation>Sudut:% 1
-Selesai:% 2
-Tambahan:% 3
-Alternatif:% 4
-Interseksi: (% 5,% 6)
-Interseksi: @ (% 7,% 8)</translation>
+        <translation>Sudut:%1
+Selesai:%2
+Tambahan:%3
+Alternatif:%4
+Interseksi: (%5,%6)
+Interseksi: @ (%7,%8)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="253"/>
@@ -31958,17 +31958,17 @@ Interseksi: @ (% 7,% 8)</translation>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="101"/>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="108"/>
         <source>Area: %1 %2^2</source>
-        <translation>Area:% 1% 2 ^ 2</translation>
+        <translation>Area:%1%2 ^ 2</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="153"/>
         <source>Closing Point: %1</source>
-        <translation>Titik Menutup:% 1</translation>
+        <translation>Titik Menutup:%1</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="160"/>
         <source>Point: %1</source>
-        <translation>Titik:% 1</translation>
+        <translation>Titik:%1</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="182"/>
@@ -31995,11 +31995,11 @@ Cartesian: (%2 , %3)
 Polar: (%4 &lt; %5)
 Start: (%6 , %7)
 End: (%8 , %9)</source>
-        <translation>Jarak:% 1
-Kartesian: (% 2,% 3)
-Polar: (% 4 &lt;% 5)
-Awal: (% 6,% 7)
-Akhir: (% 8,% 9)</translation>
+        <translation>Jarak:%1
+Kartesian: (%2,%3)
+Polar: (%4 &lt;%5)
+Awal: (%6,%7)
+Akhir: (%8,%9)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="98"/>
@@ -32051,11 +32051,11 @@ Cartesian: (%2 , %3)
 Polar: (%4 &lt; %5)
 Point On Entity: (%6 , %7)
 Point: (%8 , %9)</source>
-        <translation>Jarak:% 1
-Kartesian: (% 2,% 3)
-Polar: (% 4 &lt;% 5)
-Titik Entitas: (% 6,% 7)
-Titik: (% 8,% 9)</translation>
+        <translation>Jarak:%1
+Kartesian: (%2,%3)
+Polar: (%4 &lt;%5)
+Titik Entitas: (%6,%7)
+Titik: (%8,%9)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="275"/>
@@ -32127,7 +32127,7 @@ Titik: (% 8,% 9)</translation>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="51"/>
         <source>Total Length of selected entities: %1</source>
-        <translation>Panjang dari entitas yang dipilih:% 1</translation>
+        <translation>Panjang dari entitas yang dipilih:%1</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="53"/>
@@ -32850,7 +32850,7 @@ Titik: (% 8,% 9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="421"/>
         <source>Specify first entity or enter radius &lt;%1&gt;</source>
-        <translation>Nyatakan entitas pertama atau masukkan radius &lt;% 1 &gt;</translation>
+        <translation>Nyatakan entitas pertama atau masukkan radius &lt;%1 &gt;</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="424"/>
@@ -33333,12 +33333,12 @@ Titik: (% 8,% 9)</translation>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="160"/>
         <source>Printout offset in paper coordinates by (%1, %2)</source>
-        <translation>Ofset cetak dalam koordinat kertas dengan (% 1,% 2)</translation>
+        <translation>Ofset cetak dalam koordinat kertas dengan (%1,%2)</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="163"/>
         <source>Printout offset in graph coordinates by (%1, %2)</source>
-        <translation>Ofset cetak dalam koordinat grafik dengan (% 1,% 2)</translation>
+        <translation>Ofset cetak dalam koordinat grafik dengan (%1,%2)</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="177"/>
@@ -33550,7 +33550,7 @@ Titik: (% 8,% 9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiontoolregeneratedimensions.cpp" line="63"/>
         <source>Regenerated %1 dimension entities</source>
-        <translation>Regenerasi entitas dimensi% 1</translation>
+        <translation>Regenerasi entitas dimensi%1</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiontoolregeneratedimensions.cpp" line="66"/>
