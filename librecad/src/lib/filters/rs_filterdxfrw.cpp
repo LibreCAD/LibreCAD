@@ -4793,8 +4793,15 @@ void RS_FilterDXFRW::addMLeader(const DRW_MLeader *data) {
         RS_Vector(data->context.blockScale.x, data->context.blockScale.y,
                   data->context.blockScale.z);
     md.blockRotation = data->context.blockRotation;
-    // blockName resolved from blockTableRecordHandle when block lookup
-    // is wired via the document — Phase 7 follow-up.
+    // Resolve the content block handle -> block name so LC_MLeader can render
+    // the block symbol the leader points at.  The context's
+    // blockTableRecordHandle is authoritative; fall back to the entity-level
+    // style block handle.
+    std::uint32_t blockHandle = data->context.blockTableRecordHandle.ref != 0
+                                    ? data->context.blockTableRecordHandle.ref
+                                    : data->styleBlockHandle.ref;
+    if (blockHandle != 0)
+      resolveBlockNameByHandle(blockHandle, md.blockName);
   }
 
   md.leaderType = data->leaderType;
@@ -12171,6 +12178,11 @@ LC_DimStyle *RS_FilterDXFRW::createDimStyle(const DRW_Dimstyle &s) {
 }
 
 bool RS_FilterDXFRW::resolveBlockNameByHandle(std::uint32_t blockHandle, QString& blockName) const {
+    // The reading context lives on the DXF reader; it is null on the DWG read
+    // path (and after the reader is torn down).  Resolution by handle is a
+    // DXF-only facility — bail out safely otherwise.
+    if (m_dxfR == nullptr)
+        return false;
     std::string name = m_dxfR->getReadingContext()->resolveBlockRecordName(blockHandle);
     if (name.empty()) {
         return false;

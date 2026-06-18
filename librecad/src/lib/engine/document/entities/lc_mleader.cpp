@@ -17,6 +17,7 @@
 
 #include <algorithm>
 
+#include "rs_insert.h"
 #include "rs_mtext.h"
 #include "rs_painter.h"
 
@@ -115,6 +116,7 @@ void LC_MLeader::draw(RS_Painter *painter) {
   }
 
   drawTextContent(painter);
+  drawBlockContent(painter);
 }
 
 bool LC_MLeader::textContentData(RS_MTextData &out) const {
@@ -153,6 +155,35 @@ void LC_MLeader::drawTextContent(RS_Painter *painter) {
   mtext.setLayer(getLayer());
   mtext.update();
   mtext.draw(painter);
+}
+
+bool LC_MLeader::blockContentData(RS_InsertData &out) const {
+  if (!data.hasBlockContents || data.blockName.isEmpty() ||
+      !data.blockLocation.valid)
+    return false;
+  // A zero scale component would collapse the block; default such axes to 1.
+  const RS_Vector scale(data.blockScale.x != 0.0 ? data.blockScale.x : 1.0,
+                        data.blockScale.y != 0.0 ? data.blockScale.y : 1.0);
+  out = RS_InsertData(data.blockName, data.blockLocation, scale,
+                      data.blockRotation, 1, 1, RS_Vector(0.0, 0.0), nullptr,
+                      RS2::NoUpdate);
+  return true;
+}
+
+void LC_MLeader::drawBlockContent(RS_Painter *painter) {
+  // Block-content multileaders point at a block symbol instead of text. Like
+  // the text branch this is rendered transiently (the block round-trips via the
+  // leader data, not as a persistent sibling insert). RS_Insert::update()
+  // resolves the block by name from the graphic and clones its geometry; if the
+  // name is unknown it draws nothing (harmless).
+  RS_InsertData id;
+  if (!blockContentData(id))
+    return;
+  RS_Insert insert(getParent(), id);
+  insert.setPen(getPen());
+  insert.setLayer(getLayer());
+  insert.update();
+  insert.draw(painter);
 }
 
 RS_Vector LC_MLeader::getNearestEndpoint(const RS_Vector &coord,

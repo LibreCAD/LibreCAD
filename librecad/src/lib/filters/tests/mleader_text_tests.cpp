@@ -31,6 +31,7 @@
 #include <catch2/catch_test_macros.hpp>
 
 #include "lc_mleader.h"
+#include "rs_insert.h"
 #include "rs_mtext.h"
 
 TEST_CASE("LC_MLeader maps text content to RS_MTextData", "[mleader][text]") {
@@ -84,4 +85,51 @@ TEST_CASE("LC_MLeader with no text content yields no RS_MTextData",
   empty.textLocation = RS_Vector(1.0, 1.0);
   LC_MLeader me(nullptr, empty);
   CHECK_FALSE(me.textContentData(td));
+}
+
+TEST_CASE("LC_MLeader maps block content to RS_InsertData", "[mleader][block]") {
+  LC_MLeaderData d;
+  d.hasBlockContents = true;
+  d.blockName = "CALLOUT";
+  d.blockLocation = RS_Vector(5.0, 6.0);
+  d.blockScale = RS_Vector(2.0, 3.0, 1.0);
+  d.blockRotation = 1.25;
+  LC_MLeader m(nullptr, d);
+
+  RS_InsertData id;
+  REQUIRE(m.blockContentData(id));
+  CHECK(id.name == QString("CALLOUT"));
+  CHECK(id.insertionPoint.x == 5.0);
+  CHECK(id.insertionPoint.y == 6.0);
+  CHECK(id.scaleFactor.x == 2.0);
+  CHECK(id.scaleFactor.y == 3.0);
+  CHECK(id.angle == 1.25);
+}
+
+TEST_CASE("LC_MLeader block content with a zero scale axis defaults to 1",
+          "[mleader][block]") {
+  LC_MLeaderData d;
+  d.hasBlockContents = true;
+  d.blockName = "X";
+  d.blockLocation = RS_Vector(0.0, 0.0);
+  d.blockScale = RS_Vector(0.0, 0.0, 0.0); // unset in the context
+  LC_MLeader m(nullptr, d);
+  RS_InsertData id;
+  REQUIRE(m.blockContentData(id));
+  CHECK(id.scaleFactor.x == 1.0);
+  CHECK(id.scaleFactor.y == 1.0);
+}
+
+TEST_CASE("LC_MLeader with no/empty block content yields no RS_InsertData",
+          "[mleader][block]") {
+  RS_InsertData id;
+  LC_MLeaderData none;          // hasBlockContents defaults to false
+  LC_MLeader mn(nullptr, none);
+  CHECK_FALSE(mn.blockContentData(id));
+
+  LC_MLeaderData noName;
+  noName.hasBlockContents = true; // flagged but unresolved name
+  noName.blockLocation = RS_Vector(1.0, 1.0);
+  LC_MLeader mu(nullptr, noName);
+  CHECK_FALSE(mu.blockContentData(id));
 }

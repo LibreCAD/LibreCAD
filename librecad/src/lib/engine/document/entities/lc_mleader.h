@@ -21,6 +21,7 @@
 #include "rs_atomicentity.h"
 
 struct RS_MTextData;
+struct RS_InsertData;
 
 /**
  * One leader-line within an LC_MLeader root: an ordered point list that
@@ -148,9 +149,17 @@ public:
      */
     bool textContentData(RS_MTextData &out) const;
 
+    /**
+     * Build the RS_InsertData for block content (the block symbol the leader
+     * points at).  @return false when there is no renderable block content.
+     */
+    bool blockContentData(RS_InsertData &out) const;
+
   protected:
     /** Render the MText annotation transiently (see definition). */
     void drawTextContent(RS_Painter *painter);
+    /** Render the block content transiently (see definition). */
+    void drawBlockContent(RS_Painter *painter);
 
     LC_MLeaderData data;
 };
