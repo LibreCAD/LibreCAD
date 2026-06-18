@@ -17,6 +17,7 @@
 
 #include <algorithm>
 
+#include "rs_mtext.h"
 #include "rs_painter.h"
 
 LC_MLeader::LC_MLeader() : RS_AtomicEntity(nullptr) {}
@@ -112,6 +113,46 @@ void LC_MLeader::draw(RS_Painter *painter) {
       painter->drawSolidWCS({tip, w1, w2});
     }
   }
+
+  drawTextContent(painter);
+}
+
+bool LC_MLeader::textContentData(RS_MTextData &out) const {
+  if (!data.hasTextContents || !data.textLocation.valid ||
+      data.textLabel.isEmpty())
+    return false;
+
+  // Fall back to a scale-derived height when the context carries none, so the
+  // label is never invisible (height 0).
+  const double height =
+      data.textHeight > 0.0
+          ? data.textHeight
+          : (data.scaleFactor > 0.0 ? data.scaleFactor : 1.0) * 2.5;
+
+  out = RS_MTextData(data.textLocation, height, data.boundaryWidth,
+                     RS_MTextData::VAMiddle, RS_MTextData::HALeft,
+                     RS_MTextData::LeftToRight, RS_MTextData::Exact, 1.0,
+                     data.textLabel, data.textStyleName, data.textRotation,
+                     RS2::NoUpdate);
+  return true;
+}
+
+void LC_MLeader::drawTextContent(RS_Painter *painter) {
+  // Render the MText annotation. LC_MLeader is atomic and round-trips its text
+  // via RS_FilterDXFRW::writeMLeader, so the label must NOT be a persistent
+  // sibling entity (that would duplicate the text on export). Build a transient
+  // RS_MText here instead, reusing the full MTEXT layout pipeline. It is
+  // parented to this entity's container so glyph/font resolution finds the
+  // graphic. Rebuilt per draw (multileaders are few); caching is a perf
+  // follow-up.
+  RS_MTextData td;
+  if (!textContentData(td))
+    return;
+  RS_MText mtext(getParent(), td);
+  mtext.setPen(getPen());
+  mtext.setLayer(getLayer());
+  mtext.update();
+  mtext.draw(painter);
 }
 
 RS_Vector LC_MLeader::getNearestEndpoint(const RS_Vector &coord,

@@ -1629,10 +1629,13 @@ bool dwgReader::readDwgEntity(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                 }
                 if (cit != classesmap.end() && cit->second
                     && cit->second->recName == "MULTILEADER") {
-                    // MULTILEADER (AcDbMLeader, ODA spec §20.4.48).  Phase 2
-                    // delivers the entity in a stub-parsed state so consumers
-                    // can count it; Phase 3 fills in the entity-level fields,
-                    // Phase 4 the embedded MLeaderAnnotContext.
+                    // MULTILEADER (AcDbMLeader, ODA spec §20.4.48).
+                    // DRW_MLeader::parseDwg fully decodes the entity: the
+                    // embedded MLeaderAnnotContext (roots, leader lines, text/
+                    // block content), the entity-level fields, and the handle
+                    // stream.  The DXF read path (dxfRW::processMultiLeader)
+                    // still captures only entity-level scalars — the nested
+                    // CONTEXT_DATA{} block parser is a follow-up.
                     DRW_MLeader e;
                     if (entryParse(e, buff, bs, ret)) {
                         intfa.addMLeader(&e);

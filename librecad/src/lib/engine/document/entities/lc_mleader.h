@@ -20,6 +20,8 @@
 
 #include "rs_atomicentity.h"
 
+struct RS_MTextData;
+
 /**
  * One leader-line within an LC_MLeader root: an ordered point list that
  * the renderer connects with straight or spline segments per leader type.
@@ -139,7 +141,17 @@ public:
                 const RS_Vector &axisPoint2) override;
     RS_Entity &shear([[maybe_unused]] double k) override { return *this; }
 
+    /**
+     * Build the RS_MTextData for the text annotation from the leader data.
+     * @return false when there is no renderable text content. Exposed (testable)
+     * because it is the error-prone data mapping; the painting itself is GUI.
+     */
+    bool textContentData(RS_MTextData &out) const;
+
   protected:
+    /** Render the MText annotation transiently (see definition). */
+    void drawTextContent(RS_Painter *painter);
+
     LC_MLeaderData data;
 };
 
