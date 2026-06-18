@@ -1,8 +1,103 @@
-.TH TTF2LFF 1 "July 2012" "Debian GNU/Linux"
+.TH TTF2LFF 1 "June 2025" "Debian GNU/Linux"
 .SH NAME
-ttf2lff \- ttf to lff converter.
+ttf2lff \- TrueType to LibreCAD Font Format (LFF) converter
+.SH SYNOPSIS
+.B ttf2lff
+[\fIoptions\fR] \fIinput.ttf output.lff\fR
 .SH DESCRIPTION
-ttf2lff is a font converter. It convert fonts in ttf format to lff format useful
-to use with LibreCAD or another app that uses this format.
+.B ttf2lff
+converts fonts in TrueType format (.ttf, .otf) to LibreCAD Font Format (LFF).
+The LFF format is used by LibreCAD for vector fonts in drawings.
 
-ttf2lff invocation parameters are printed to the console if ttf2lff is called without parameters.
+.SH OPTIONS
+.TP
+.BR \-n ", " \-\-nodes " \fIN\fR"
+Number of nodes for quadratic and cubic spline approximation (default: 4)
+.TP
+.BR \-a ", " \-\-author " \fITEXT\fR"
+Author name for font metadata
+.TP
+.BR \-l ", " \-\-letterspacing " \fIN\fR"
+Letter spacing (default: 3.0)
+.TP
+.BR \-w ", " \-\-wordspacing " \fIN\fR"
+Word spacing (default: 6.75)
+.TP
+.BR \-f ", " \-\-linespacing " \fIN\fR"
+Line spacing factor (default: 1.0)
+.TP
+.BR \-d ", " \-\-precision " \fIN\fR"
+Number of decimal digits (default: 6)
+.TP
+.BR \-L ", " \-\-license " \fITEXT\fR"
+Font license
+
+.SS "Tuning Options (from python-lff)"
+.TP
+.BR \-z ", " \-\-zerovector
+Remove duplicate consecutive vertices. This eliminates redundant points that can occur from bezier curve approximations.
+.TP
+.BR \-r ", " \-\-round
+Round vertex coordinates to a grid. Use with \fB\-g\fR to set grid size.
+.TP
+.BR \-g ", " \-\-grid " \fIN\fR"
+Grid size for vertex rounding (default: 0.0001)
+.TP
+.BR \-m ", " \-\-mergepath
+Merge paths that share the same start/end vertex. This combines adjacent polylines.
+.TP
+.BR \-e ", " \-\-nestedchar
+Analyze for nested characters (glyphs that could reference other glyphs).
+.TP
+.BR \-c ", " \-\-nocomment
+Remove comments from glyph definitions.
+.TP
+.BR \-t ", " \-\-tuning
+Apply all tuning options at once.
+
+.TP
+.BR \-h ", " \-\-help
+Display help message and exit.
+
+.SH EXAMPLE
+Convert a font with default settings:
+.PP
+.nf
+.B ttf2lff input.ttf output.lff
+.fi
+.PP
+
+Convert with all tuning options enabled:
+.PP
+.nf
+.B ttf2lff \-\-tuning \-\-author "John Doe" input.ttf output.lff
+.fi
+.PP
+
+Convert with specific tuning options:
+.PP
+.nf
+.B ttf2lff -a "Jane Smith" -n 8 -z -r -g 0.001 -m input.ttf output.lff
+.fi
+
+.SH "LFF FORMAT"
+The LibreCAD Font Format (LFF) is a vector font format.
+Each glyph consists of polylines with vertices separated by semicolons.
+Coordinates are comma-separated x,y values.
+
+Example glyph:
+.PP
+.nf
+[#0041] A
+0,0;3,9;6,9
+1,0;4,0
+.fi
+
+.SH "SEE ALSO"
+.BR librecad (1)
+.PP
+LFF Font Format specification: https://github.com/LibreCAD/LibreCAD/wiki/LFF-Font-Format
+.SH AUTHOR
+Original code by Rallaz (rallazz@gmail.com)
+.PP
+Tuning algorithms inspired by python-lff project (https://github.com/siwf/python-lff)
