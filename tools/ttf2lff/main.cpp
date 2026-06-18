@@ -33,16 +33,19 @@
 #include <cctype>
 #include <cerrno>
 #include <cmath>
+#include <cstdint>
 #include <cstdlib>
 #include <cstring>
 #include <fstream>
 #include <iomanip>
 #include <iostream>
+#include <limits>
 #include <map>
 #include <memory>
 #include <set>
 #include <sstream>
 #include <string>
+#include <unordered_map>
 #include <vector>
 
 #include <ft2build.h>
@@ -163,17 +166,19 @@ struct Polyline {
     }
 };
 
-struct Glyph;
-bool glyphContainsPoint(const Glyph& glyph, double x, double y);
+struct GlyphReference {
+    unsigned int charCode = 0;
+};
 
 struct Glyph {
     unsigned int charCode;
     std::string symbol;
+    std::vector<GlyphReference> references;
     std::vector<Polyline> polylines;
     std::string comment;
     BoundingBox bbox;
 
-    bool isEmpty() const { return polylines.empty(); }
+    bool isEmpty() const { return references.empty() && polylines.empty(); }
 
     void updateBoundingBox() {
         if (polylines.empty()) {
@@ -296,7 +301,7 @@ TuningOptions tuningOptions;
 // Forward declarations
 int moveTo(FT_Vector* to, void* /*fp*/);
 int lineTo(FT_Vector* to, void* /*fp*/);
-int conicTo(FT_Vector* control, FT_Vector* to, void* /*fp*/);
+int conicTo(FT_Vector* /*control*/, FT_Vector* to, void* /*fp*/);
 int cubicTo(FT_Vector* control1, FT_Vector* control2, FT_Vector* to, void* /*fp*/);
 
 // Global converter instance (for callbacks)
@@ -350,7 +355,7 @@ int lineTo(FT_Vector* to, void* /*fp*/) {
     return 0;
 }
 
-int conicTo(FT_Vector* control, FT_Vector* to, void* /*fp*/) {
+int conicTo(FT_Vector* /*control*/, FT_Vector* to, void* /*fp*/) {
     if (!g_converter) return 0;
     auto& firstpass = g_converter->getFirstPass();
     auto& xMin = g_converter->getXMin();
@@ -390,6 +395,135 @@ int cubicTo(FT_Vector* /*control1*/, FT_Vector* /*control2*/, FT_Vector* to, voi
         }
     }
     return 0;
+}
+
+struct OutlineBuildContext {
+    int nodes = 4;
+    bool hasCurrent = false;
+    FT_Vector currentPoint = {0, 0};
+    Polyline currentPolyline;
+    std::vector<Polyline> rawPolylines;
+};
+
+void finishCurrentPolyline(OutlineBuildContext& context)
+{
+    if (context.currentPolyline.vertices.size() >= 2) {
+        context.rawPolylines.push_back(context.currentPolyline);
+    }
+    context.currentPolyline = Polyline();
+}
+
+void appendOutlinePoint(OutlineBuildContext& context, double x, double y)
+{
+    context.currentPolyline.vertices.emplace_back(x, y, 0.0);
+}
+
+int buildMoveTo(FT_Vector* to, void* user)
+{
+    auto* context = static_cast<OutlineBuildContext*>(user);
+    finishCurrentPolyline(*context);
+    appendOutlinePoint(*context, to->x, to->y);
+    context->currentPoint = *to;
+    context->hasCurrent = true;
+    return 0;
+}
+
+int buildLineTo(FT_Vector* to, void* user)
+{
+    auto* context = static_cast<OutlineBuildContext*>(user);
+    appendOutlinePoint(*context, to->x, to->y);
+    context->currentPoint = *to;
+    context->hasCurrent = true;
+    return 0;
+}
+
+int buildConicTo(FT_Vector* control, FT_Vector* to, void* user)
+{
+    auto* context = static_cast<OutlineBuildContext*>(user);
+    const FT_Vector from = context->currentPoint;
+    const int steps = std::max(1, context->nodes);
+
+    for (int i = 1; i <= steps; ++i) {
+        const double t = static_cast<double>(i) / steps;
+        const double mt = 1.0 - t;
+        const double x = mt * mt * from.x + 2.0 * mt * t * control->x + t * t * to->x;
+        const double y = mt * mt * from.y + 2.0 * mt * t * control->y + t * t * to->y;
+        appendOutlinePoint(*context, x, y);
+    }
+
+    context->currentPoint = *to;
+    context->hasCurrent = true;
+    return 0;
+}
+
+int buildCubicTo(FT_Vector* control1, FT_Vector* control2, FT_Vector* to, void* user)
+{
+    auto* context = static_cast<OutlineBuildContext*>(user);
+    const FT_Vector from = context->currentPoint;
+    const int steps = std::max(1, context->nodes);
+
+    for (int i = 1; i <= steps; ++i) {
+        const double t = static_cast<double>(i) / steps;
+        const double mt = 1.0 - t;
+        const double x = mt * mt * mt * from.x
+                       + 3.0 * mt * mt * t * control1->x
+                       + 3.0 * mt * t * t * control2->x
+                       + t * t * t * to->x;
+        const double y = mt * mt * mt * from.y
+                       + 3.0 * mt * mt * t * control1->y
+                       + 3.0 * mt * t * t * control2->y
+                       + t * t * t * to->y;
+        appendOutlinePoint(*context, x, y);
+    }
+
+    context->currentPoint = *to;
+    context->hasCurrent = true;
+    return 0;
+}
+
+static const FT_Outline_Funcs glyphBuildFuncs = {
+    (FT_Outline_MoveTo_Func) buildMoveTo,
+    (FT_Outline_LineTo_Func) buildLineTo,
+    (FT_Outline_ConicTo_Func) buildConicTo,
+    (FT_Outline_CubicTo_Func) buildCubicTo,
+    0,
+    0
+};
+
+std::vector<Polyline> buildPolylinesFromOutline(FT_Outline& outline, int nodes, double factor, FT_Error& error)
+{
+    OutlineBuildContext context;
+    context.nodes = nodes;
+
+    error = FT_Outline_Decompose(&outline, &glyphBuildFuncs, &context);
+    if (error) {
+        return {};
+    }
+
+    finishCurrentPolyline(context);
+    if (context.rawPolylines.empty()) {
+        return {};
+    }
+
+    double xMin = std::numeric_limits<double>::max();
+    for (const auto& polyline : context.rawPolylines) {
+        for (const auto& vertex : polyline.vertices) {
+            xMin = std::min(xMin, vertex.x);
+        }
+    }
+
+    std::vector<Polyline> polylines;
+    polylines.reserve(context.rawPolylines.size());
+    for (auto polyline : context.rawPolylines) {
+        for (auto& vertex : polyline.vertices) {
+            vertex.x = (vertex.x - xMin) * factor;
+            vertex.y *= factor;
+        }
+        polyline.updateBoundingBox();
+        polylines.push_back(std::move(polyline));
+    }
+
+    return polylines;
 }
 
 /**
@@ -433,15 +567,240 @@ double roundToGrid(double value) {
     return std::round(value / tuningOptions.roundGrid) * tuningOptions.roundGrid;
 }
 
-/**
- * Convert vertex to string representation
- */
-std::string vertexToString(const Vertex& v) {
-    std::string result = clearZeros(roundToGrid(v.x)) + "," + clearZeros(roundToGrid(v.y));
-    if (v.bulge != 0.0) {
-        result += ",A" + clearZeros(v.bulge);
+std::string formatCharCode(unsigned int charCode)
+{
+    std::ostringstream stream;
+    stream << std::hex << std::nouppercase << std::setfill('0');
+    if (charCode <= 0xffff) {
+        stream << std::setw(4);
     }
-    return result;}
+    stream << charCode;
+    return stream.str();
+}
+
+bool canReferenceGlyph(unsigned int charCode)
+{
+    // LibreCAD's LFF header discovery currently extracts four hex digits.
+    return charCode <= 0xffff;
+}
+
+bool shouldWriteHeaderSymbol(FT_ULong charcode)
+{
+    if (charcode == 0x7f) {
+        return false;
+    }
+    if (charcode < 0x20) {
+        return false;
+    }
+    if (charcode >= 0x80 && charcode <= 0x9f) {
+        return false;
+    }
+    return true;
+}
+
+std::string serializePolyline(const Polyline& polyline)
+{
+    std::ostringstream stream;
+    for (size_t i = 0; i < polyline.vertices.size(); ++i) {
+        const auto& vertex = polyline.vertices[i];
+        if (i > 0) {
+            stream << ';';
+        }
+        stream << clearZeros(vertex.x) << ',' << clearZeros(vertex.y);
+        if (vertex.bulge != 0.0) {
+            stream << ",A" << clearZeros(vertex.bulge);
+        }
+    }
+    return stream.str();
+}
+
+struct PathEntry {
+    uint32_t id = 0;
+    int count = 0;
+};
+
+using PathMultiset = std::vector<PathEntry>;
+
+struct GlyphPathInfo {
+    PathMultiset paths;
+    std::vector<uint32_t> polylinePathIds;
+    int pathCount = 0;
+    size_t serializedBytes = 0;
+    size_t refBytes = 0;
+    uint32_t rarestPathId = std::numeric_limits<uint32_t>::max();
+    unsigned int charCode = 0;
+    bool refable = false;
+};
+
+uint32_t internPathId(const std::string& path,
+                      std::unordered_map<std::string, uint32_t>& pathIds,
+                      std::vector<std::string>& pathText)
+{
+    const auto found = pathIds.find(path);
+    if (found != pathIds.end()) {
+        return found->second;
+    }
+
+    const uint32_t id = static_cast<uint32_t>(pathText.size());
+    pathText.push_back(path);
+    pathIds.emplace(pathText.back(), id);
+    return id;
+}
+
+PathMultiset compactPathIds(std::vector<uint32_t>& ids)
+{
+    PathMultiset paths;
+    if (ids.empty()) {
+        return paths;
+    }
+
+    std::sort(ids.begin(), ids.end());
+    for (const uint32_t id : ids) {
+        if (!paths.empty() && paths.back().id == id) {
+            ++paths.back().count;
+        } else {
+            paths.push_back({id, 1});
+        }
+    }
+
+    return paths;
+}
+
+GlyphPathInfo buildGlyphPathInfo(const Glyph& glyph,
+                                 std::unordered_map<std::string, uint32_t>& pathIds,
+                                 std::vector<std::string>& pathText)
+{
+    GlyphPathInfo info;
+    info.charCode = glyph.charCode;
+    info.refable = canReferenceGlyph(glyph.charCode);
+    info.refBytes = 1 + formatCharCode(glyph.charCode).size() + 1;
+    info.polylinePathIds.reserve(glyph.polylines.size());
+
+    std::vector<uint32_t> ids;
+    for (const auto& polyline : glyph.polylines) {
+        if (polyline.vertices.size() < 2) {
+            info.polylinePathIds.push_back(std::numeric_limits<uint32_t>::max());
+            continue;
+        }
+        const uint32_t id = internPathId(serializePolyline(polyline), pathIds, pathText);
+        info.polylinePathIds.push_back(id);
+        ids.push_back(id);
+        ++info.pathCount;
+        info.serializedBytes += pathText[id].size() + 1;
+    }
+
+    info.paths = compactPathIds(ids);
+    return info;
+}
+
+int pathCount(const PathMultiset& paths)
+{
+    int count = 0;
+    for (const auto& entry : paths) {
+        count += entry.count;
+    }
+    return count;
+}
+
+bool containsPathMultiset(const PathMultiset& haystack, const PathMultiset& needle)
+{
+    size_t i = 0;
+    size_t j = 0;
+
+    while (i < haystack.size() && j < needle.size()) {
+        if (haystack[i].id < needle[j].id) {
+            ++i;
+            continue;
+        }
+        if (haystack[i].id > needle[j].id) {
+            return false;
+        }
+        if (haystack[i].count < needle[j].count) {
+            return false;
+        }
+        ++i;
+        ++j;
+    }
+
+    return j == needle.size();
+}
+
+void subtractPathMultiset(PathMultiset& haystack, const PathMultiset& needle)
+{
+    PathMultiset result;
+    result.reserve(haystack.size());
+
+    size_t i = 0;
+    size_t j = 0;
+    while (i < haystack.size()) {
+        PathEntry entry = haystack[i];
+        if (j < needle.size() && entry.id == needle[j].id) {
+            entry.count -= needle[j].count;
+            ++j;
+        } else if (j < needle.size() && entry.id > needle[j].id) {
+            ++j;
+            continue;
+        }
+        if (entry.count > 0) {
+            result.push_back(entry);
+        }
+        ++i;
+    }
+
+    haystack = std::move(result);
+}
+
+bool decrementPathEntry(PathMultiset& paths, uint32_t id)
+{
+    for (auto it = paths.begin(); it != paths.end(); ++it) {
+        if (it->id != id) {
+            continue;
+        }
+        --it->count;
+        if (it->count == 0) {
+            paths.erase(it);
+        }
+        return true;
+    }
+    return false;
+}
+
+bool removePolylineMultiset(Glyph& glyph, std::vector<uint32_t>& polylinePathIds, const PathMultiset& paths)
+{
+    PathMultiset remaining = paths;
+    std::vector<bool> remove(glyph.polylines.size(), false);
+    const uint32_t invalidPathId = std::numeric_limits<uint32_t>::max();
+
+    if (polylinePathIds.size() != glyph.polylines.size()) {
+        return false;
+    }
+    for (size_t i = 0; i < glyph.polylines.size(); ++i) {
+        const uint32_t id = polylinePathIds[i];
+        if (id != invalidPathId && decrementPathEntry(remaining, id)) {
+            remove[i] = true;
+        }
+    }
+
+    if (!remaining.empty()) {
+        return false;
+    }
+
+    std::vector<Polyline> kept;
+    std::vector<uint32_t> keptPathIds;
+    kept.reserve(glyph.polylines.size());
+    keptPathIds.reserve(polylinePathIds.size());
+    for (size_t i = 0; i < glyph.polylines.size(); ++i) {
+        if (!remove[i]) {
+            kept.push_back(std::move(glyph.polylines[i]));
+            keptPathIds.push_back(polylinePathIds[i]);
+        }
+    }
+
+    glyph.polylines = std::move(kept);
+    polylinePathIds = std::move(keptPathIds);
+    glyph.updateBoundingBox();
+    return true;
+}
 
 /**
  * TUNING ALGORITHMS (from python-lff)
@@ -574,244 +933,152 @@ void applyMergePath(Glyph& glyph) {
     }
 }
 
-BoundingBox computeBoundingBox(const Glyph& glyph) {
-    if (glyph.isEmpty()) return BoundingBox();
-
-    double xMin = std::numeric_limits<double>::max();
-    double yMin = std::numeric_limits<double>::max();
-    double xMax = std::numeric_limits<double>::lowest();
-    double yMax = std::numeric_limits<double>::lowest();
-
-    for (const auto& poly : glyph.polylines) {
-        for (const auto& v : poly.vertices) {
-            xMin = std::min(xMin, v.x);
-            yMin = std::min(yMin, v.y);
-            xMax = std::max(xMax, v.x);
-            yMax = std::max(yMax, v.y);
-        }
-    }
-
-    return BoundingBox(xMin, yMin, xMax, yMax);
-}
-
-double computePolygonArea(const std::vector<Vertex>& vertices) {
-    if (vertices.size() < 3) return 0.0;
-
-    double area = 0.0;
-    size_t n = vertices.size();
-
-    for (size_t i = 0; i < n; ++i) {
-        size_t j = (i + 1) % n;
-        area += vertices[i].x * vertices[j].y;
-        area -= vertices[j].x * vertices[i].y;
-    }
-
-    return std::abs(area) / 2.0;
-}
-
-double computeGlyphArea(const Glyph& glyph) {
-    double totalArea = 0.0;
-    for (const auto& poly : glyph.polylines) {
-        totalArea += computePolygonArea(poly.vertices);
-    }
-    return totalArea;
-}
-
-bool pointInPolygon(double x, double y, const std::vector<Vertex>& vertices) {
-    bool inside = false;
-    size_t n = vertices.size();
-
-    for (size_t i = 0, j = n - 1; i < n; j = i++) {
-        double xi = vertices[i].x, yi = vertices[i].y;
-        double xj = vertices[j].x, yj = vertices[j].y;
-
-        if (((yi > y) != (yj > y)) &&
-            (x < (xj - xi) * (y - yi) / (yj - yi) + xi)) {
-            inside = !inside;
-        }
-    }
-
-    return inside;
-}
-
-bool glyphContainsPoint(const Glyph& glyph, double x, double y) {
-    if (x < glyph.bbox.xMin || x > glyph.bbox.xMax || y < glyph.bbox.yMin || y > glyph.bbox.yMax) {
-        return false;
-    }
-
-    for (const auto& poly : glyph.polylines) {
-        if (poly.vertices.empty()) continue;
-
-        if (x < poly.bbox.xMin || x > poly.bbox.xMax || y < poly.bbox.yMin || y > poly.bbox.yMax) {
-            continue;
-        }
-
-        if (pointInPolygon(x, y, poly.vertices)) {
-            return true;
-        }
-    }
-    return false;
-}
-
-/**
- * NestedChar: Find nested characters in glyphs
- * In LFF format, nested chars are referenced like [C0041] meaning copy char 0x0041
- *
- * NOTE: This feature is currently disabled because LFF polylines are open strokes,
- * not closed polygons. The pointInPolygon algorithm assumes closed polygons,
- * causing false positives.
- */
-void applyNestedChar(Glyph& glyph) {
-    // Disabled - see note above
-    // if (!tuningOptions.nestedChar) return;
-}
-
 /**
  * Find duplicate glyphs and nested characters, replace with nested references
- * Uses efficient spatial partitioning to avoid O(N*N) complexity
- *
- * NOTE: This feature is currently disabled because LFF polylines are open strokes,
- * not closed polygons. The pointInPolygon algorithm assumes closed polygons,
- * causing false positives.
+ * Uses structural path-subset matching, because LFF Cxxxx references replay
+ * exact glyph paths rather than filled outline containment.
  */
-void findAndReplaceNestedChars() {
-    // Disabled - see note above
-    return;
-
-    /*
-    // Original implementation kept for reference
-    if (!g_converter) return;
-    if (!tuningOptions.nestedChar) return;
-
+size_t findAndReplaceNestedChars() {
+    if (!g_converter) return 0;
+    if (!tuningOptions.nestedChar) return 0;
     auto& glyphBuffer = g_converter->getGlyphBuffer();
-    size_t glyphCount = glyphBuffer.size();
+    const size_t glyphCount = glyphBuffer.size();
 
-    if (glyphCount < 2) return;
+    if (glyphCount < 2) return 0;
 
-    std::map<std::string, std::vector<size_t>> glyphFingerprints;
-
-    for (size_t i = 0; i < glyphCount; ++i) {
-        const auto& glyph = glyphBuffer[i];
-        if (glyph.isEmpty()) continue;
-
-        std::string fingerprint;
-        for (const auto& poly : glyph.polylines) {
-            for (const auto& v : poly.vertices) {
-                fingerprint += clearZeros(v.x) + "," + clearZeros(v.y) + ",";
-                if (v.bulge != 0.0) {
-                    fingerprint += "A" + clearZeros(v.bulge) + ",";
-                }
-            }
-        }
-
-        glyphFingerprints[fingerprint].push_back(i);
-    }
-
-    for (const auto& pair : glyphFingerprints) {
-        if (pair.second.size() > 1) {
-            size_t originalIdx = pair.second[0];
-            unsigned int originalCharCode = glyphBuffer[originalIdx].charCode;
-
-            for (size_t i = 1; i < pair.second.size(); ++i) {
-                size_t duplicateIdx = pair.second[i];
-                glyphBuffer[duplicateIdx].polylines.clear();
-                glyphBuffer[duplicateIdx].comment = "[C" + std::to_string(originalCharCode) + "]";
-            }
-        }
-    }
-
-    struct GlyphInfo {
-        size_t index;
-        BoundingBox bbox;
-        double area;
-        bool hasPolylines;
-        int vertexCount;
-    };
-
-    std::vector<GlyphInfo> glyphInfos;
+    std::unordered_map<std::string, uint32_t> pathIds;
+    std::vector<std::string> pathText;
+    std::vector<GlyphPathInfo> glyphInfos;
+    pathIds.reserve(glyphCount * 8);
+    pathText.reserve(glyphCount * 8);
     glyphInfos.reserve(glyphCount);
 
     for (size_t i = 0; i < glyphCount; ++i) {
-        auto& glyph = glyphBuffer[i];
-        if (glyph.isEmpty()) {
-            glyphInfos.push_back({i, BoundingBox(), 0.0, false, 0});
-            continue;
-        }
-
-        bool hasPolylines = !glyph.polylines.empty();
-        if (!hasPolylines) {
-            glyphInfos.push_back({i, BoundingBox(), 0.0, false, 0});
-            continue;
-        }
-
-        glyph.updateBoundingBox();
-        double area = computeGlyphArea(glyph);
-        int vertexCount = 0;
-        for (const auto& poly : glyph.polylines) {
-            vertexCount += poly.vertices.size();
-        }
-        glyphInfos.push_back({i, glyph.bbox, area, true, vertexCount});
+        glyphInfos.push_back(buildGlyphPathInfo(glyphBuffer[i], pathIds, pathText));
     }
 
-    std::sort(glyphInfos.begin(), glyphInfos.end(), [](const GlyphInfo& a, const GlyphInfo& b) {
-        return a.area < b.area;
-    });
+    std::vector<int> pathFrequency(pathText.size(), 0);
+    for (const auto& info : glyphInfos) {
+        for (const auto& entry : info.paths) {
+            ++pathFrequency[entry.id];
+        }
+    }
 
-    std::vector<bool> processed(glyphCount, false);
-    long long containmentChecks = 0;
-
+    // Exact containment filter: if candidate paths are a subset of a target,
+    // the candidate's rarest path must also be one of the target's paths.
+    std::vector<std::vector<size_t>> rarestPathIndex(pathText.size());
     for (size_t i = 0; i < glyphInfos.size(); ++i) {
-        const auto& innerInfo = glyphInfos[i];
-        if (!innerInfo.hasPolylines || processed[innerInfo.index]) continue;
+        auto& info = glyphInfos[i];
+        if (info.paths.empty()) {
+            continue;
+        }
 
-        const auto& innerGlyph = glyphBuffer[innerInfo.index];
-        if (innerGlyph.polylines.empty()) continue;
+        auto rarest = info.paths.front().id;
+        for (const auto& entry : info.paths) {
+            if (pathFrequency[entry.id] < pathFrequency[rarest] ||
+                (pathFrequency[entry.id] == pathFrequency[rarest] && entry.id < rarest)) {
+                rarest = entry.id;
+            }
+        }
+        info.rarestPathId = rarest;
+        rarestPathIndex[info.rarestPathId].push_back(i);
+    }
 
-        for (size_t j = i + 1; j < glyphInfos.size(); ++j) {
-            const auto& outerInfo = glyphInfos[j];
-            if (!outerInfo.hasPolylines || processed[outerInfo.index]) continue;
+    struct Candidate {
+        size_t index;
+        int savings;
+        int pathTotal;
+        unsigned int charCode;
+    };
 
-            if (!outerInfo.bbox.contains(innerInfo.bbox)) continue;
+    size_t replacementCount = 0;
+    std::vector<unsigned int> seen(glyphCount, 0);
+    unsigned int seenStamp = 1;
 
-            // Inner must be significantly smaller than outer
-            if (innerInfo.area >= outerInfo.area * 0.5) continue;
+    for (size_t targetIndex = 0; targetIndex < glyphCount; ++targetIndex) {
+        Glyph& target = glyphBuffer[targetIndex];
+        const GlyphPathInfo& targetInfo = glyphInfos[targetIndex];
+        PathMultiset activePaths = targetInfo.paths;
+        if (activePaths.empty()) {
+            continue;
+        }
 
-            containmentChecks++;
-            double sampleX = (innerInfo.bbox.xMin + innerInfo.bbox.xMax) / 2.0;
-            double sampleY = (innerInfo.bbox.yMin + innerInfo.bbox.yMax) / 2.0;
+        std::vector<uint32_t> activePolylinePathIds = targetInfo.polylinePathIds;
+        std::vector<size_t> candidateIndexes;
+        if (seenStamp == 0) {
+            std::fill(seen.begin(), seen.end(), 0);
+            seenStamp = 1;
+        }
 
-            // Check center point first
-            if (!glyphContainsPoint(glyphBuffer[outerInfo.index], sampleX, sampleY)) continue;
-
-            // Check all 4 corners of inner bounding box
-            bool allCornersInside = true;
-            std::vector<std::pair<double, double>> corners = {
-                {innerInfo.bbox.xMin, innerInfo.bbox.yMin},
-                {innerInfo.bbox.xMax, innerInfo.bbox.yMin},
-                {innerInfo.bbox.xMin, innerInfo.bbox.yMax},
-                {innerInfo.bbox.xMax, innerInfo.bbox.yMax}
-            };
-
-            for (const auto& corner : corners) {
-                if (!glyphContainsPoint(glyphBuffer[outerInfo.index], corner.first, corner.second)) {
-                    allCornersInside = false;
-                    break;
+        for (const auto& activeEntry : activePaths) {
+            for (const size_t candidateIndex : rarestPathIndex[activeEntry.id]) {
+                if (candidateIndex == targetIndex || seen[candidateIndex] == seenStamp) {
+                    continue;
                 }
+                seen[candidateIndex] = seenStamp;
+                candidateIndexes.push_back(candidateIndex);
+            }
+        }
+        ++seenStamp;
+
+        std::vector<Candidate> candidates;
+        for (const size_t candidateIndex : candidateIndexes) {
+            const GlyphPathInfo& candidateInfo = glyphInfos[candidateIndex];
+            if (candidateInfo.paths.empty() || !candidateInfo.refable) {
+                continue;
+            }
+            if (candidateInfo.pathCount > targetInfo.pathCount) {
+                continue;
+            }
+            if (candidateInfo.pathCount == targetInfo.pathCount &&
+                targetInfo.charCode <= candidateInfo.charCode) {
+                continue;
+            }
+            if (!containsPathMultiset(activePaths, candidateInfo.paths)) {
+                continue;
+            }
+            if (candidateInfo.serializedBytes <= candidateInfo.refBytes) {
+                continue;
             }
 
-            if (!allCornersInside) continue;
+            const int savings = static_cast<int>(candidateInfo.serializedBytes - candidateInfo.refBytes);
+            candidates.push_back({candidateIndex, savings, candidateInfo.pathCount, candidateInfo.charCode});
+        }
 
-            std::cerr << "Nested: inner=" << std::hex << glyphBuffer[innerInfo.index].charCode
-                      << " outer=" << glyphBuffer[outerInfo.index].charCode << std::dec
-                      << " innerArea=" << innerInfo.area << " outerArea=" << outerInfo.area << std::endl;
+        std::sort(candidates.begin(), candidates.end(), [](const Candidate& left, const Candidate& right) {
+            if (left.savings != right.savings) {
+                return left.savings > right.savings;
+            }
+            if (left.pathTotal != right.pathTotal) {
+                return left.pathTotal > right.pathTotal;
+            }
+            return left.charCode < right.charCode;
+        });
 
-            glyphBuffer[innerInfo.index].polylines.clear();
-            glyphBuffer[innerInfo.index].comment = "[C" + std::to_string(glyphBuffer[outerInfo.index].charCode) + "]";
-            processed[innerInfo.index] = true;
-            break;
+        int activeCount = targetInfo.pathCount;
+        for (const Candidate& selected : candidates) {
+            const GlyphPathInfo& selectedInfo = glyphInfos[selected.index];
+            if (!containsPathMultiset(activePaths, selectedInfo.paths)) {
+                continue;
+            }
+            if (activeCount == selectedInfo.pathCount && target.charCode <= selectedInfo.charCode) {
+                continue;
+            }
+            if (!removePolylineMultiset(target, activePolylinePathIds, selectedInfo.paths)) {
+                continue;
+            }
+
+            target.references.insert(target.references.begin(), GlyphReference{selectedInfo.charCode});
+            subtractPathMultiset(activePaths, selectedInfo.paths);
+            activeCount -= selectedInfo.pathCount;
+            ++replacementCount;
+            if (activePaths.empty()) {
+                break;
+            }
         }
     }
-    */
+
+    return replacementCount;
 }
 
 /**
@@ -836,7 +1103,6 @@ void applyTuning() {
         applyZeroVector(glyph);
         applyRoundVertex(glyph);
         applyMergePath(glyph);
-        applyNestedChar(glyph);
         applyNoComment(glyph);
     }
 }
@@ -847,9 +1113,13 @@ void applyTuning() {
 void writeGlyph(std::ofstream& fp, const Glyph& glyph) {
     // Write glyph header
     if (glyph.symbol.empty()) {
-        fp << "\n[#" << std::hex << std::setfill('0') << std::setw(4) << glyph.charCode << std::dec << "]\n";
+        fp << "\n[#" << formatCharCode(glyph.charCode) << "]\n";
     } else {
-        fp << "\n[#" << std::hex << std::setfill('0') << std::setw(4) << glyph.charCode << std::dec << "] " << glyph.symbol << "\n";
+        fp << "\n[#" << formatCharCode(glyph.charCode) << "] " << glyph.symbol << "\n";
+    }
+
+    for (const auto& reference : glyph.references) {
+        fp << "C" << formatCharCode(reference.charCode) << "\n";
     }
 
     // Write polylines
@@ -900,30 +1170,30 @@ FT_Error convertGlyph(TTF2LFFConverter& converter, FT_ULong charcode, bool buffe
         return error;
     }
 
-    FTGlyphPtr glyph(glyph_raw);
-    FT_OutlineGlyph og = (FT_OutlineGlyph)glyph.get();
     if (face->glyph->format != ft_glyph_format_outline) {
         std::cerr << "Not an outline font\n";
+        FT_Done_Glyph(glyph_raw);
+        return 0;
     }
 
+    FTGlyphPtr glyph(glyph_raw);
+    FT_OutlineGlyph og = (FT_OutlineGlyph)glyph.get();
+
     auto& glyphBuffer = converter.getGlyphBuffer();
-    auto& factor = converter.getFactor();
     auto& xMin = converter.getXMin();
     auto& nodes = converter.getNodes();
     auto& firstpass = converter.getFirstPass();
     auto& startcontour = converter.getStartContour();
-    auto& prevx = converter.getPrevX();
-    auto& prevy = converter.getPrevY();
-    auto& yMax = converter.getYMax();
-    auto& outputFile = converter.getOutputFile();
+    auto& factor = converter.getFactor();
 
     if (bufferOnly) {
         // Create new glyph entry
         Glyph newGlyph;
         newGlyph.charCode = static_cast<unsigned int>(charcode);
 
-        // Try to get the unicode symbol
-        if (charcode <= 0x10FFFF && charcode != 0xFFFD &&
+        // Try to get a printable unicode symbol for the header comment.
+        if (shouldWriteHeaderSymbol(charcode) &&
+            charcode <= 0x10FFFF && charcode != 0xFFFD &&
             !(charcode >= 0xD800 && charcode <= 0xDFFF)) {
             // Valid Unicode codepoint (not surrogate, not replacement char)
             std::string s;
@@ -946,48 +1216,11 @@ FT_Error convertGlyph(TTF2LFFConverter& converter, FT_ULong charcode, bool buffe
             newGlyph.symbol = s;
         }
 
-        // Calculate xMin from outline points
-        xMin = 1000.0;
-        short numContours = og->outline.n_contours;
-        short* contours = (short*)og->outline.contours;
-        FT_Vector* points = og->outline.points;
-
-        for (int c = 0; c < numContours; ++c) {
-            int end = contours[c];
-            for (int p = 0; p <= end; ++p) {
-                if (points[p].x < xMin) {
-                    xMin = points[p].x;
-                }
-            }
-        }
-
-        // Trace outline and collect vertices into polylines
-        int start = 0;
-        for (int c = 0; c < numContours; ++c) {
-            int end = contours[c];
-
-            Polyline poly;
-
-            for (int p = start; p <= end; ++p) {
-                Vertex v((points[p].x - xMin) * factor, points[p].y * factor, 0.0);
-
-                // Skip duplicate vertices (ZeroVector)
-                if (tuningOptions.zeroVector && !poly.vertices.empty()) {
-                    const Vertex& prev = poly.vertices.back();
-                    if (std::abs(prev.x - v.x) < 1e-9 && std::abs(prev.y - v.y) < 1e-9) {
-                        continue;
-                    }
-                }
-
-                poly.vertices.push_back(v);
-            }
-
-            if (!poly.vertices.empty()) {
-                poly.updateBoundingBox();
-                newGlyph.polylines.push_back(poly);
-            }
-
-            start = end + 1;
+        FT_Error buildError = 0;
+        newGlyph.polylines = buildPolylinesFromOutline(og->outline, nodes, factor, buildError);
+        if (buildError) {
+            std::cerr << "FT_Outline_Decompose: " << FT_StrError(buildError) << std::endl;
+            return buildError;
         }
 
         // Add to buffer
@@ -1274,8 +1507,8 @@ int main(int argc, char* argv[]) {
     // Find and replace nested characters
     if (tuningOptions.nestedChar) {
         std::cout << "Finding nested characters...\n";
-        findAndReplaceNestedChars();
-        std::cout << "Nested character processing complete\n";
+        const size_t nestedCount = findAndReplaceNestedChars();
+        std::cout << "Nested character processing complete: " << nestedCount << " references\n";
     }
 
     // Write buffered glyphs to file
