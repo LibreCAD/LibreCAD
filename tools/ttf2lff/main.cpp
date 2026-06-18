@@ -1,9 +1,10 @@
 /****************************************************************************
 ** $Id: main.cpp $
 **
-** Copyright (C) 2011 Rallaz - rallazz@gmail.com
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
-** Copyright (C) 2025 LibreCAD contributors
+** Copyright (C) 2011 Rallaz - rallazz@gmail.com
+** Copyright (C) 2025 LibreCAD (librecad.org)
+** Copyright (C) 2026 Dongxu Li (github.com/dxli)
 **
 ** This file is part of the ttf2lff project.
 **
