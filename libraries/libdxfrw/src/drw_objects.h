@@ -1395,6 +1395,7 @@ public:
         DRW_TableEntry::reset();
     }
 protected:
+    bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
     bool encodeDwg(DRW::Version version, dwgBufferW *buf,
                    dwgBufferW *strBuf = nullptr,
@@ -1403,6 +1404,11 @@ public:
     std::vector<std::uint32_t> m_sortHandles;
     std::uint32_t m_blockOwnerHandle = 0;
     std::vector<std::uint32_t> m_entityHandles;
+private:
+    /* DXF: true once past the "100 AcDbSortentsTable" marker, so body codes
+       330/331/5 (block owner / entity handles / sort handles) are not confused
+       with the object's own header handle (5) and owner (330). */
+    bool m_dxfInBody = false;
 };
 
 //! Class to handle MATERIAL (AcDbMaterial) identity fields.
@@ -1872,6 +1878,7 @@ public:
     }
 
 protected:
+    bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
 
 public:
@@ -1880,6 +1887,10 @@ public:
     bool m_isTransSpace = false;
     std::uint8_t m_rotatedDimensionType = 0;
     std::vector<DRW_DimensionAssociationOsnapRef> m_osnapRefs;
+private:
+    /* DXF: true once past "100 AcDbDimAssoc" — body code 330 is the dimension
+       handle, not the object owner. */
+    bool m_dxfInBody = false;
 };
 
 struct DRW_EvaluationGraphNode {

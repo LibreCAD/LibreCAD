@@ -5201,6 +5201,67 @@ bool DRW_Group::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs)
     return buf->isGood() && hBuf->isGood();
 }
 
+bool DRW_DimensionAssociation::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
+    // AcDbDimAssoc DXF.  Gated by "100 AcDbDimAssoc" so body 330 is the
+    // dimension handle (not the object owner).  Osnap-ref blocks open with code
+    // 1 (className) then 72 (osnap type) + 331 (object handle); refs are kept in
+    // arrival order (mapping to first/second/... point by associativity-flag bit
+    // is a refinement).  Code map per dwgTs parseObjectsSortEntsAndDimAssocDxf.ts.
+    if (code == 100) {
+        if (reader->getString() == "AcDbDimAssoc")
+            m_dxfInBody = true;
+        return true;
+    }
+    if (m_dxfInBody) {
+        switch (code) {
+        case 330: m_dimensionHandle = reader->getHandleString(); return true;
+        case 90:  m_associativityFlags = reader->getInt32(); return true;
+        case 70:  m_rotatedDimensionType =
+                      static_cast<std::uint8_t>(reader->getInt32()); return true;
+        case 71:  m_isTransSpace = (reader->getInt32() != 0); return true;
+        case 1: { // opens a new osnap reference block
+            DRW_DimensionAssociationOsnapRef ref;
+            ref.m_className = reader->getUtf8String();
+            m_osnapRefs.push_back(ref);
+            return true;
+        }
+        case 72:
+            if (!m_osnapRefs.empty())
+                m_osnapRefs.back().m_objectOsnapType =
+                    static_cast<std::uint8_t>(reader->getInt32());
+            return true;
+        case 331:
+            if (!m_osnapRefs.empty())
+                m_osnapRefs.back().m_objectHandle = reader->getHandleString();
+            return true;
+        default: break;
+        }
+    }
+    return DRW_TableEntry::parseCode(code, reader);
+}
+
+bool DRW_SortEntsTable::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
+    // AcDbSortentsTable DXF.  Body codes reuse the header handle codes, so the
+    // "100 AcDbSortentsTable" marker gates them: before it, 5/330 are the
+    // object's own handle/owner (base); after it, 330=block owner and the
+    // 331(entity)/5(sort) pairs build the draw-order map.  Code map per dwgTs
+    // parseObjectsSortEntsAndDimAssocDxf.ts.
+    if (code == 100) {
+        if (reader->getString() == "AcDbSortentsTable")
+            m_dxfInBody = true;
+        return true;
+    }
+    if (m_dxfInBody) {
+        switch (code) {
+        case 330: m_blockOwnerHandle = reader->getHandleString(); return true;
+        case 331: m_entityHandles.push_back(reader->getHandleString()); return true;
+        case 5:   m_sortHandles.push_back(reader->getHandleString()); return true;
+        default: break;
+        }
+    }
+    return DRW_TableEntry::parseCode(code, reader);
+}
+
 bool DRW_ImageDefinitionReactor::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
     // AcDbRasterImageDefReactor DXF: a single class-version field (90).
     switch (code) {

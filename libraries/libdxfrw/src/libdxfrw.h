@@ -242,6 +242,8 @@ private:
     bool processSpatialFilter();
     bool processTableStyle();
     bool processMLeaderStyle();
+    bool processSortEntsTable();
+    bool processDimAssoc();
 
     bool processLType();
     bool processLayer();

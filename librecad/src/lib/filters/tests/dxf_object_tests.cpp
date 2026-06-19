@@ -1458,3 +1458,70 @@ TEST_CASE("DXF IMAGEDEF_REACTOR is read into a DRW_ImageDefinitionReactor",
   REQUIRE(cap.m_callCount == 1);
   CHECK(cap.m_captured.m_classVersion == 2);
 }
+
+namespace {
+class SortEntsTableCapture : public StubInterface {
+public:
+  int m_callCount = 0;
+  DRW_SortEntsTable m_captured;
+  void addSortEntsTable(const DRW_SortEntsTable &d) override {
+    if (m_callCount == 0) m_captured = d;
+    ++m_callCount;
+  }
+};
+class DimAssocCapture : public StubInterface {
+public:
+  int m_callCount = 0;
+  DRW_DimensionAssociation m_captured;
+  void addDimensionAssociation(const DRW_DimensionAssociation &d) override {
+    if (m_callCount == 0) m_captured = d;
+    ++m_callCount;
+  }
+};
+} // namespace
+
+TEST_CASE("DXF SORTENTSTABLE is read into a DRW_SortEntsTable (draw order)",
+          "[dxf][sortents][preservation]") {
+  SortEntsTableCapture cap;
+  // 5/330 before the 100 marker are the object's own handle/owner; after it,
+  // 330=block owner and 331/5 are the entity/sort pairs.
+  const char *dxf =
+      "0\nSECTION\n2\nOBJECTS\n"
+      "0\nSORTENTSTABLE\n5\n355\n330\n1A\n100\nAcDbSortentsTable\n"
+      "330\n1F\n331\n35A\n5\n354\n331\n35B\n5\n356\n"
+      "0\nENDSEC\n0\nEOF\n";
+  readDxf(dxf, cap, "lc_sortents_read.dxf");
+  REQUIRE(cap.m_callCount == 1);
+  const DRW_SortEntsTable &s = cap.m_captured;
+  CHECK(s.m_blockOwnerHandle == 0x1Fu);
+  REQUIRE(s.m_entityHandles.size() == 2);
+  REQUIRE(s.m_sortHandles.size() == 2);
+  CHECK(s.m_entityHandles[0] == 0x35Au);
+  CHECK(s.m_entityHandles[1] == 0x35Bu);
+  CHECK(s.m_sortHandles[0] == 0x354u);
+  CHECK(s.m_sortHandles[1] == 0x356u);
+}
+
+TEST_CASE("DXF DIMASSOC is read into a DRW_DimensionAssociation",
+          "[dxf][dimassoc][preservation]") {
+  DimAssocCapture cap;
+  const char *dxf =
+      "0\nSECTION\n2\nOBJECTS\n"
+      "0\nDIMASSOC\n5\n521\n330\n1A\n100\nAcDbDimAssoc\n"
+      "330\n500\n90\n3\n70\n0\n71\n0\n"
+      "1\nAcDbOsnapPointRef\n72\n1\n331\n510\n"
+      "1\nAcDbOsnapPointRef\n72\n7\n331\n511\n"
+      "0\nENDSEC\n0\nEOF\n";
+  readDxf(dxf, cap, "lc_dimassoc_read.dxf");
+  REQUIRE(cap.m_callCount == 1);
+  const DRW_DimensionAssociation &a = cap.m_captured;
+  CHECK(a.m_dimensionHandle == 0x500u);
+  CHECK(a.m_associativityFlags == 3u);
+  CHECK(a.m_isTransSpace == false);
+  REQUIRE(a.m_osnapRefs.size() == 2);
+  CHECK(a.m_osnapRefs[0].m_className == "AcDbOsnapPointRef");
+  CHECK(a.m_osnapRefs[0].m_objectOsnapType == 1);
+  CHECK(a.m_osnapRefs[0].m_objectHandle == 0x510u);
+  CHECK(a.m_osnapRefs[1].m_objectOsnapType == 7);
+  CHECK(a.m_osnapRefs[1].m_objectHandle == 0x511u);
+}

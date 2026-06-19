@@ -4403,6 +4403,12 @@ bool dxfRW::processObjects() {
         else if ("MLEADERSTYLE" == nextentity) {
             processed = processMLeaderStyle();
         }
+        else if ("SORTENTSTABLE" == nextentity) {
+            processed = processSortEntsTable();
+        }
+        else if ("DIMASSOC" == nextentity) {
+            processed = processDimAssoc();
+        }
         else {
             //Slice A1: never silently drop an unmodeled object — capture its
             //group codes verbatim for lossless re-emit instead of skipping.
@@ -4637,6 +4643,50 @@ bool dxfRW::processMLeaderStyle() {
         if (code == 0) {
             nextentity = reader->getString();
             iface->addMLeaderStyle(&data);
+            iface->addRawDxfObject(raw);
+            return true;
+        }
+        captureRawGroup(raw, code);
+        if (!data.parseCode(code, reader))
+            return setError(DRW::BAD_CODE_PARSED);
+    }
+    return setError(DRW::BAD_READ_OBJECTS);
+}
+
+// SORTENTSTABLE (AcDbSortentsTable): structured DXF read of the draw-order map
+// (block owner + entity/sort handle pairs) + raw-net preservation.
+bool dxfRW::processSortEntsTable() {
+    DRW_DBG("dxfRW::processSortEntsTable");
+    int code;
+    DRW_SortEntsTable data;
+    DRW_RawDxfObject raw;
+    raw.name = nextentity;
+    while (reader->readRec(&code)) {
+        if (code == 0) {
+            nextentity = reader->getString();
+            iface->addSortEntsTable(data);
+            iface->addRawDxfObject(raw);
+            return true;
+        }
+        captureRawGroup(raw, code);
+        if (!data.parseCode(code, reader))
+            return setError(DRW::BAD_CODE_PARSED);
+    }
+    return setError(DRW::BAD_READ_OBJECTS);
+}
+
+// DIMASSOC (AcDbDimAssoc): structured DXF read of the associative-dimension
+// metadata (dimension handle, flags, osnap refs) + raw-net preservation.
+bool dxfRW::processDimAssoc() {
+    DRW_DBG("dxfRW::processDimAssoc");
+    int code;
+    DRW_DimensionAssociation data;
+    DRW_RawDxfObject raw;
+    raw.name = nextentity;
+    while (reader->readRec(&code)) {
+        if (code == 0) {
+            nextentity = reader->getString();
+            iface->addDimensionAssociation(data);
             iface->addRawDxfObject(raw);
             return true;
         }
