@@ -281,21 +281,19 @@ jobs:
         run: |
           curl -# -L -o boost.7z https://archives.boost.io/release/1.87.0/source/boost_1_87_0.7z
           7z x -o. -y boost.7z
-          mkdir -p boost/include
-          mv boost_1_87_0/boost boost/include/
+          mv boost_1_87_0 boost
           rm boost.7z
           pwd
-          ls -ld boost/include/boost/version.hpp
+          ls -ld boost/boost/version.hpp
         shell: bash
 
       - name: Configure CMake
         run: |
-          cmake.exe -S . -B generated -G "Visual Studio 17 2022" -DBoost_INCLUDE_DIR=%BOOST_ROOT%/include -DBoost_LIBRARY_DIRS=%BOOST_ROOT%/lib
+          cmake.exe -S . -B generated -G "Visual Studio 17 2022" -DBOOST_ROOT="%CD%\boost"
         shell: cmd
         env:
           BUILD_TYPE: release
           MSVC_VER_NUMBER: "Visual Studio 17 2022"
-          BOOST_ROOT: boost
           CMAKE_CXX_FLAGS: " /MP8"
 
       - name: Build
@@ -401,21 +399,19 @@ jobs:
         run: |
           curl -# -L -o boost.7z https://archives.boost.io/release/1.87.0/source/boost_1_87_0.7z
           7z x -o. -y boost.7z
-          mkdir -p boost/include
-          mv boost_1_87_0/boost boost/include/
+          mv boost_1_87_0 boost
           rm boost.7z
           pwd
-          ls -ld boost/include/boost/version.hpp
+          ls -ld boost/boost/version.hpp
         shell: bash
 
       - name: Configure CMake
         run: |
-          cmake.exe -S . -B generated -G "Visual Studio 17 2022" -A ARM64 -DBoost_INCLUDE_DIR=%BOOST_ROOT%/include -DBoost_LIBRARY_DIRS=%BOOST_ROOT%/lib
+          cmake.exe -S . -B generated -G "Visual Studio 17 2022" -A ARM64 -DBOOST_ROOT="%CD%\boost"
         shell: cmd
         env:
           BUILD_TYPE: release
           MSVC_VER_NUMBER: "Visual Studio 17 2022"
-          BOOST_ROOT: boost
           CMAKE_CXX_FLAGS: " /MP8"
 
       - name: Build

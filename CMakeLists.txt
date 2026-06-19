@@ -1638,7 +1638,7 @@ qt_add_executable(librecad
 if(APPLE)
     set_target_properties(librecad PROPERTIES
         MACOSX_BUNDLE TRUE
-        MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/librecad/src/macos/Info.plist"
+        MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/librecad/src/Info.plist.app"
     )
 endif()
 
@@ -1752,6 +1752,8 @@ add_subdirectory(plugins)
 option(BUILD_TESTS "Build unit tests for LibreCAD" OFF)
 
 if(BUILD_TESTS)
+    enable_testing()
+
     # Add Catch2 as a subdirectory (assumes Catch2 is in externals/Catch2)
     add_subdirectory(externals/Catch2)
 
@@ -1823,4 +1825,10 @@ if(BUILD_TESTS)
     target_compile_features(librecad_tests PRIVATE cxx_std_17)
     # compiling time defines
     target_compile_definitions(librecad_tests PRIVATE BUILD_TESTS=1 DWGSUPPORT)
+
+    add_test(NAME librecad_tests COMMAND $<TARGET_FILE:librecad_tests>)
+    set_tests_properties(librecad_tests PROPERTIES
+        WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
+        ENVIRONMENT "QT_QPA_PLATFORM=offscreen"
+    )
 endif()
