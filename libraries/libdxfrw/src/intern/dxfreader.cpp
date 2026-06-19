@@ -39,8 +39,8 @@ bool dxfReader::readRec(int *codeData) {
         valueOk = readInt16();
     else if (code > 89 && code < 100) //TODO this is an int 32b
         valueOk = readInt32();
-    else if (code == 100 || code == 102 || code == 105)
-        valueOk = readString();
+    else if (code == 100 || code == 101 || code == 102 || code == 105)
+        valueOk = readString(); //101 = "Embedded Object" marker (string, not int16)
     else if (code > 109 && code < 150) //skip not used at the v2012
         valueOk = readDouble();
     else if (code > 159 && code < 170) //skip not used at the v2012
