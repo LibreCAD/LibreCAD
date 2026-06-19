@@ -24,7 +24,25 @@ find_package(WrapVulkanHeaders QUIET)
 set(QT_NO_VULKAN 1)
 find_package(Qt6 COMPONENTS Gui Core Widgets PrintSupport Svg Network REQUIRED)
 find_package(Qt6 REQUIRED COMPONENTS LinguistTools)
-find_package(Boost REQUIRED)
+
+# LibreCAD only uses header-only Boost components.  The Windows CI installs
+# Boost from the source archive, which provides headers but no BoostConfig.cmake.
+find_path(Boost_INCLUDE_DIR
+    NAMES boost/version.hpp
+    HINTS
+        "${BOOST_ROOT}"
+        "$ENV{BOOST_ROOT}"
+        "${Boost_ROOT}"
+        "$ENV{Boost_ROOT}"
+        "${BOOST_INCLUDEDIR}"
+        "$ENV{BOOST_INCLUDEDIR}"
+    PATH_SUFFIXES include
+)
+if(NOT Boost_INCLUDE_DIR)
+    message(FATAL_ERROR "Boost headers not found. Set BOOST_ROOT or Boost_INCLUDE_DIR to a directory containing boost/version.hpp.")
+endif()
+set(Boost_INCLUDE_DIRS "${Boost_INCLUDE_DIR}")
+
 find_package(Freetype)
 
 # Define all sources (as before)
