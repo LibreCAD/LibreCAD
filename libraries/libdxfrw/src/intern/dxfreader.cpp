@@ -128,6 +128,29 @@ bool dxfReaderBinary::readCode(int *code) {
     return true;
 }
 
+bool dxfReaderBinaryR12::readCode(int *code) {
+    unsigned char b = 0;
+    filestr->read(reinterpret_cast<char*>(&b), 1);
+    if (!filestr->good())
+        return false;
+    if (b == 255) {
+        // 0xFF is the extended-data escape: the real 16-bit LE group code
+        // follows in the next two bytes (R12 carries xdata codes >= 255 this
+        // way). Matches ezdxf binary_tags_loader.
+        unsigned char buffer[2] = {};
+        filestr->read(reinterpret_cast<char*>(buffer), 2);
+        if (!filestr->good())
+            return false;
+        *code = static_cast<int>(buffer[0])
+            | (static_cast<int>(buffer[1]) << 8);
+    } else {
+        *code = static_cast<int>(b);
+    }
+    DRW_DBG(*code); DRW_DBG("\n");
+
+    return true;
+}
+
 bool dxfReaderBinary::readString() {
     type = STRING;
     std::getline(*filestr, strData, '\0');

@@ -75,23 +75,32 @@ bool dxfRW::read(DRW_Interface *interface_, bool ext){
         return setError(DRW::BAD_OPEN);
     }
 
-    char line[22];
+    char line[24]{};
     char line2[22] = "AutoCAD Binary DXF\r\n";
     line2[20] = (char)26;
     line2[21] = '\0';
-    filestr.read (line, 22);
+    // Read the 22-byte sentinel plus the first 2 bytes of the group stream so
+    // the binary sub-format can be detected before any group is parsed.
+    filestr.read (line, 24);
     filestr.close();
     iface = interface_;
     DRW_DBG("dxfRW::read 2\n");
-    // `line` is filled by an unterminated 22-byte read; compare by exact
+    // `line` is filled by an unterminated read; compare the sentinel by exact
     // length to avoid strcmp reading past the buffer when the sentinel
     // bytes don't include an embedded NUL.
-    if (std::memcmp(line, line2, sizeof(line)) == 0) {
+    if (std::memcmp(line, line2, 22) == 0) {
         filestr.open (fileName.c_str(), std::ios_base::in | std::ios::binary);
         binFile = true;
         //skip sentinel
         filestr.seekg (22, std::ios::beg);
-        reader = std::make_unique<dxfReaderBinary>(&filestr);
+        // R12/AC1009 binary uses 1-byte group codes; R13+ uses 2-byte LE. The
+        // first group is always code 0 (SECTION): R12 => bytes 00 'S' (byte[1]
+        // != 0); R13+ => bytes 00 00. So a non-zero second byte selects the
+        // 1-byte reader.
+        if (static_cast<unsigned char>(line[23]) != 0)
+            reader = std::make_unique<dxfReaderBinaryR12>(&filestr);
+        else
+            reader = std::make_unique<dxfReaderBinary>(&filestr);
         DRW_DBG("dxfRW::read binary file\n");
     } else {
         binFile = false;
