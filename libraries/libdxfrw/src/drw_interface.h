@@ -364,6 +364,8 @@ public:
     virtual void addPointCloudDef(const DRW_PointCloudDef& data) { (void) data; }
     /** Called for every SUNSTUDY (AcDbSunStudy) object. */
     virtual void addSunStudy(const DRW_SunStudy& data) { (void) data; }
+    /** Called for every render-settings (AcDbRenderSettings family) object. */
+    virtual void addRenderSettings(const DRW_RenderSettings& data) { (void) data; }
     /** Called for ACDBASSOC* action/dependency/action-param shell objects. */
     virtual void addAssociativeObject(const DRW_AssociativeObject& data) { (void) data; }
     /** Called for ACSH_* history/action shell objects. */

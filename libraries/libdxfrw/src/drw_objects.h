@@ -81,7 +81,8 @@ namespace DRW {
          SPATIALINDEX,
          BACKGROUND,
          POINTCLOUDDEF,
-         SUNSTUDY
+         SUNSTUDY,
+         RENDERSETTINGS
      };
 
 //pending VP_ENT_HDR, LONG_TRANSACTION,
@@ -1549,6 +1550,48 @@ protected:
 private:
     int m_seen90 = 0;
     int m_seen290 = 0;
+};
+
+//! Render-settings object family (AcDbRenderSettings / Global / Environment /
+//! Entry / MentalRay / RapidRT).  These DXF records are POSITIONAL — codes 90/1/
+//! 290/70/280/40 repeat and are assigned by order, not by distinct codes — so
+//! the raw values are captured into per-code vectors (matching dwgTs's internal
+//! representation) and the well-documented kinds (Environment, Global) get named
+//! fields via finalize().  DXF-only structured capture; DWG stays raw.  Not
+//! rendered by LibreCAD — read parity with dwgTs.
+class DRW_RenderSettings : public DRW_TableEntry {
+    SETOBJFRIENDS
+public:
+    enum Kind { Settings, Global, Environment, Entry, RapidRT, MentalRay };
+    DRW_RenderSettings() { tType = DRW::RENDERSETTINGS; }
+
+    Kind m_kind = Settings;
+    std::int32_t m_classVersion = 0;       /*!< first code 90 */
+    UTF8STRING m_name;                     /*!< first code 1 (filename/preset/save name) */
+    /* positional value capture */
+    std::vector<std::int32_t> m_longs;     /*!< code 90 */
+    std::vector<UTF8STRING>   m_strings;   /*!< code 1 */
+    std::vector<bool>         m_bools;     /*!< code 290 */
+    std::vector<std::int32_t> m_shorts;    /*!< code 70 */
+    std::vector<std::int32_t> m_bytes;     /*!< code 280 (RC) */
+    std::vector<double>       m_doubles;   /*!< code 40 */
+    /* named fields finalized for the documented kinds */
+    bool m_fogEnabled = false;
+    bool m_fogBackgroundEnabled = false;
+    bool m_environmentImageEnabled = false;
+    int m_fogColorR = 0, m_fogColorG = 0, m_fogColorB = 0;
+    double m_fogDensityNear = 0.0, m_fogDensityFar = 0.0;
+    double m_fogDistanceNear = 0.0, m_fogDistanceFar = 0.0;
+    std::int32_t m_procedure = 0;          /*!< Global: longs[1] */
+    std::int32_t m_destination = 0;        /*!< Global: longs[2] */
+
+    //! Assign named fields from the captured vectors (after the parse loop).
+    void finalize();
+protected:
+    bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
+    bool parseDwg(DRW::Version /*v*/, dwgBuffer * /*buf*/, std::uint32_t /*bs*/=0) override {
+        return true;  // DXF-only object; DWG never dispatches a typed instance.
+    }
 };
 
 struct DRW_TableStyleBorder {

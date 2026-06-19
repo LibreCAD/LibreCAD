@@ -247,6 +247,7 @@ private:
     bool processBackground();
     bool processPointCloudDef();
     bool processSunStudy();
+    bool processRenderSettings();
 
     bool processLType();
     bool processLayer();

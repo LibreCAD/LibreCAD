@@ -3555,6 +3555,48 @@ bool DRW_SortEntsTable::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint
     return true;
 }
 
+bool DRW_RenderSettings::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
+    // Positional record: accumulate per-code value vectors (the named meaning is
+    // by order, resolved per-kind in finalize()).  Code map per dwgTs
+    // parseObjectsRenderDxf.ts.
+    switch (code) {
+    case 90:
+        m_longs.push_back(reader->getInt32());
+        if (m_longs.size() == 1) m_classVersion = m_longs.front();
+        break;
+    case 1:
+        m_strings.push_back(reader->getUtf8String());
+        if (m_strings.size() == 1) m_name = m_strings.front();
+        break;
+    case 290: m_bools.push_back(reader->getInt32() != 0); break;
+    case 70:  m_shorts.push_back(reader->getInt32()); break;
+    case 280: m_bytes.push_back(reader->getInt32()); break;
+    case 40:  m_doubles.push_back(reader->getDouble()); break;
+    default:
+        return DRW_TableEntry::parseCode(code, reader);
+    }
+    return true;
+}
+
+void DRW_RenderSettings::finalize(){
+    const auto lng = [&](std::size_t i, std::int32_t d){
+        return i < m_longs.size() ? m_longs[i] : d; };
+    const auto bl  = [&](std::size_t i){ return i < m_bools.size() ? m_bools[i] : false; };
+    const auto byt = [&](std::size_t i){ return i < m_bytes.size() ? m_bytes[i] : 0; };
+    const auto dbl = [&](std::size_t i){ return i < m_doubles.size() ? m_doubles[i] : 0.0; };
+    if (m_kind == Environment) {
+        m_fogEnabled = bl(0);
+        m_fogBackgroundEnabled = bl(1);
+        m_environmentImageEnabled = bl(2);
+        m_fogColorR = byt(0); m_fogColorG = byt(1); m_fogColorB = byt(2);
+        m_fogDensityNear = dbl(0); m_fogDensityFar = dbl(1);
+        m_fogDistanceNear = dbl(2); m_fogDistanceFar = dbl(3);
+    } else if (m_kind == Global) {
+        m_procedure = lng(1, 0);
+        m_destination = lng(2, 0);
+    }
+}
+
 bool DRW_SunStudy::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
     // AcDbSunStudy DXF: scalar configuration only.  Codes 90/91/290 are reused
     // by the date/hour lists (a positional state machine in dwgTs); here only

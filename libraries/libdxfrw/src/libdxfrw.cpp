@@ -4426,6 +4426,12 @@ bool dxfRW::processObjects() {
         else if ("SUNSTUDY" == nextentity) {
             processed = processSunStudy();
         }
+        else if ("RENDERSETTINGS" == nextentity || "RENDERGLOBAL" == nextentity
+                 || "RENDERENVIRONMENT" == nextentity || "RENDERENTRY" == nextentity
+                 || "RAPIDRTRENDERSETTINGS" == nextentity
+                 || "MENTALRAYRENDERSETTINGS" == nextentity) {
+            processed = processRenderSettings();
+        }
         else {
             //Slice A1: never silently drop an unmodeled object — capture its
             //group codes verbatim for lossless re-emit instead of skipping.
@@ -4790,6 +4796,36 @@ bool dxfRW::processSunStudy() {
         if (code == 0) {
             nextentity = reader->getString();
             iface->addSunStudy(data);
+            iface->addRawDxfObject(raw);
+            return true;
+        }
+        captureRawGroup(raw, code);
+        if (!data.parseCode(code, reader))
+            return setError(DRW::BAD_CODE_PARSED);
+    }
+    return setError(DRW::BAD_READ_OBJECTS);
+}
+
+// AcDbRenderSettings family (settings/global/environment/entry/mentalray/
+// rapidrt): positional DXF capture into DRW_RenderSettings (kind from the entity
+// name; vectors finalized into named fields) + raw-net preservation.
+bool dxfRW::processRenderSettings() {
+    DRW_DBG("dxfRW::processRenderSettings");
+    int code;
+    DRW_RenderSettings data;
+    if (nextentity == "RENDERGLOBAL") data.m_kind = DRW_RenderSettings::Global;
+    else if (nextentity == "RENDERENVIRONMENT") data.m_kind = DRW_RenderSettings::Environment;
+    else if (nextentity == "RENDERENTRY") data.m_kind = DRW_RenderSettings::Entry;
+    else if (nextentity == "RAPIDRTRENDERSETTINGS") data.m_kind = DRW_RenderSettings::RapidRT;
+    else if (nextentity == "MENTALRAYRENDERSETTINGS") data.m_kind = DRW_RenderSettings::MentalRay;
+    else data.m_kind = DRW_RenderSettings::Settings;
+    DRW_RawDxfObject raw;
+    raw.name = nextentity;
+    while (reader->readRec(&code)) {
+        if (code == 0) {
+            nextentity = reader->getString();
+            data.finalize();
+            iface->addRenderSettings(data);
             iface->addRawDxfObject(raw);
             return true;
         }

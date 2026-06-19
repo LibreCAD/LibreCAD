@@ -1709,3 +1709,78 @@ TEST_CASE("DXF SUNSTUDY is read into a DRW_SunStudy (scalar config)",
   CHECK(s.m_visualStyleHandle == 0x2E2u);
   CHECK(s.m_textStyleHandle == 0x2E3u);
 }
+
+namespace {
+class RenderSettingsCapture : public StubInterface {
+public:
+  int m_callCount = 0;
+  DRW_RenderSettings m_captured;
+  void addRenderSettings(const DRW_RenderSettings &d) override {
+    if (m_callCount == 0) m_captured = d;
+    ++m_callCount;
+  }
+};
+} // namespace
+
+TEST_CASE("DXF RENDERENVIRONMENT decodes named fog fields (positional)",
+          "[dxf][rendersettings][preservation]") {
+  RenderSettingsCapture cap;
+  // 90 classVersion, 290×3 (fogEnabled, fogBgEnabled, envImgEnabled),
+  // 280×3 RC fogColor, 40×4 fog densities/distances, 1 filename.
+  const char *dxf =
+      "0\nSECTION\n2\nOBJECTS\n"
+      "0\nRENDERENVIRONMENT\n5\n2F0\n330\nC\n100\nAcDbRenderEnvironment\n"
+      "90\n1\n290\n1\n290\n0\n290\n1\n280\n10\n280\n20\n280\n30\n"
+      "40\n0.1\n40\n0.9\n40\n5.0\n40\n50.0\n1\nbg.hdr\n"
+      "0\nENDSEC\n0\nEOF\n";
+  readDxf(dxf, cap, "lc_renderenv_read.dxf");
+  REQUIRE(cap.m_callCount == 1);
+  const DRW_RenderSettings &r = cap.m_captured;
+  CHECK(r.m_kind == DRW_RenderSettings::Environment);
+  CHECK(r.m_classVersion == 1);
+  CHECK(r.m_fogEnabled == true);
+  CHECK(r.m_fogBackgroundEnabled == false);
+  CHECK(r.m_environmentImageEnabled == true);
+  CHECK(r.m_fogColorR == 10);
+  CHECK(r.m_fogColorG == 20);
+  CHECK(r.m_fogColorB == 30);
+  CHECK(r.m_fogDensityNear == 0.1);
+  CHECK(r.m_fogDensityFar == 0.9);
+  CHECK(r.m_fogDistanceNear == 5.0);
+  CHECK(r.m_fogDistanceFar == 50.0);
+  CHECK(r.m_name == "bg.hdr");
+}
+
+TEST_CASE("DXF RENDERGLOBAL + RENDERSETTINGS capture class version + vectors",
+          "[dxf][rendersettings][preservation]") {
+  {
+    RenderSettingsCapture cap;
+    const char *dxf =
+        "0\nSECTION\n2\nOBJECTS\n"
+        "0\nRENDERGLOBAL\n5\n2F1\n330\nC\n100\nAcDbRenderGlobal\n"
+        "90\n1\n90\n2\n90\n3\n290\n1\n290\n0\n1\nout.png\n"
+        "0\nENDSEC\n0\nEOF\n";
+    readDxf(dxf, cap, "lc_renderglobal_read.dxf");
+    REQUIRE(cap.m_callCount == 1);
+    CHECK(cap.m_captured.m_kind == DRW_RenderSettings::Global);
+    CHECK(cap.m_captured.m_classVersion == 1);
+    CHECK(cap.m_captured.m_procedure == 2);
+    CHECK(cap.m_captured.m_destination == 3);
+    CHECK(cap.m_captured.m_name == "out.png");
+  }
+  {
+    RenderSettingsCapture cap;
+    const char *dxf =
+        "0\nSECTION\n2\nOBJECTS\n"
+        "0\nRENDERSETTINGS\n5\n2F2\n330\nC\n100\nAcDbRenderSettings\n"
+        "90\n1\n1\npreset\n70\n2\n40\n12.5\n"
+        "0\nENDSEC\n0\nEOF\n";
+    readDxf(dxf, cap, "lc_rendersettings_read.dxf");
+    REQUIRE(cap.m_callCount == 1);
+    CHECK(cap.m_captured.m_kind == DRW_RenderSettings::Settings);
+    CHECK(cap.m_captured.m_classVersion == 1);
+    CHECK(cap.m_captured.m_name == "preset");
+    REQUIRE(cap.m_captured.m_doubles.size() == 1);
+    CHECK(cap.m_captured.m_doubles[0] == 12.5);
+  }
+}
