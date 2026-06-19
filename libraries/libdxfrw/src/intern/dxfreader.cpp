@@ -100,7 +100,12 @@ bool dxfReader::readRec(int *codeData) {
         //break in binary files because the conduct is unpredictable
         return false;
 
-    return valueOk && (filestr->good());
+    // Use !fail() not good(): std::getline that reads a final record WITHOUT a
+    // trailing newline sets eofbit (good()==false) on an otherwise SUCCESSFUL
+    // extraction (fail()==false). good() would wrongly reject that last record;
+    // a genuine failed read sets failbit, which !fail() still catches. (Binary
+    // readers gate on their own good() check, so this is a no-op for them.)
+    return valueOk && (!filestr->fail());
 }
 int dxfReader::getHandleString(){
     int res;
@@ -262,7 +267,7 @@ bool dxfReaderBinary::readBool() {
 bool dxfReaderAscii::readCode(int *code) {
     std::string text;
     std::getline(*filestr, text);
-    if (!filestr->good())
+    if (filestr->fail())  // !fail(): accept a final newline-less line (eofbit set, fail() clear)
         return false;
     if (!text.empty() && text.at(text.size()-1) == '\r')
         text.erase(text.size()-1);
@@ -286,7 +291,7 @@ bool dxfReaderAscii::readString(std::string *text) {
     std::getline(*filestr, *text);
     if (!text->empty() && text->at(text->size()-1) == '\r')
         text->erase(text->size()-1);
-    return (filestr->good());
+    return (!filestr->fail());
 }
 
 bool dxfReaderAscii::readString() {
@@ -295,7 +300,7 @@ bool dxfReaderAscii::readString() {
     if (!strData.empty() && strData.at(strData.size()-1) == '\r')
         strData.erase(strData.size()-1);
     DRW_DBG(strData); DRW_DBG("\n");
-    return (filestr->good());
+    return (!filestr->fail());
 }
 
 bool dxfReaderAscii::readBinary() {
