@@ -644,6 +644,11 @@ public:
     std::uint16_t m_shapeIndex = 0;
     DRW_Coord m_extrusion {0.0, 0.0, 1.0};
     std::uint32_t m_shapeFileHandle = 0;
+    std::string m_styleName;  /*!< name of the SHAPEFILE/STYLE record (DXF code 2);
+                                   resolved from m_shapeFileHandle on DWG read. The
+                                   DWG stores only m_shapeIndex; the per-glyph name
+                                   lives in the external .shx, so DXF round-trips the
+                                   style-record name (as libredwg/ACadSharp do). */
     std::uint32_t m_objectSize = 0;
     std::uint32_t m_bodyBitSize = 0;
     std::vector<std::uint8_t> m_rawBytes;

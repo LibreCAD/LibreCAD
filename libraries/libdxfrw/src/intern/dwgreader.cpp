@@ -1540,6 +1540,9 @@ bool dwgReader::readDwgEntity(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
             if (entryParse(e, buff, bs, ret)) {
                 e.m_objectSize = static_cast<std::uint32_t>(size);
                 e.m_rawBytes = tmpByteStr;
+                // Resolve the SHAPEFILE/STYLE record name for DXF code 2 (the DWG
+                // stores only the glyph index); same findTableName pattern as MTEXT.
+                e.m_styleName = findTableName(DRW::STYLE, e.m_shapeFileHandle);
                 intfa.addShape(e);
                 intfa.addUnsupportedObject(makeRawEntity(oType));
             } else {

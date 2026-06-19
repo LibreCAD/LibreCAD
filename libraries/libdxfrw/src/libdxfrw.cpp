@@ -2120,6 +2120,37 @@ bool dxfRW::writeLight(DRW_Light *ent) {
     return true;
 }
 
+bool dxfRW::writeShape(DRW_Shape *ent) {
+    // DXF SHAPE (AcDbShape). The DWG stores only a glyph index; the glyph name
+    // lives in the external .shx and is unrecoverable, so group 2 carries the
+    // SHAPEFILE/STYLE record name (resolved on read), matching libredwg/ACadSharp.
+    // m_rotation/m_oblique are radians (DRW_Shape::parseDwg keeps them un-scaled,
+    // unlike DRW_Text) -> convert to DXF degrees.
+    writer->writeString(0, "SHAPE");
+    writeEntity(ent);
+    if (version > DRW::AC1009)
+        writer->writeString(100, "AcDbShape");
+    if (ent->m_thickness != 0.0)
+        writer->writeDouble(39, ent->m_thickness);
+    writer->writeDouble(10, ent->m_insertionPoint.x);
+    writer->writeDouble(20, ent->m_insertionPoint.y);
+    writer->writeDouble(30, ent->m_insertionPoint.z);
+    writer->writeDouble(40, ent->m_scale);            // size
+    if (!ent->m_styleName.empty())
+        writer->writeUtf8String(2, ent->m_styleName); // shape (style) name
+    writer->writeDouble(50, ent->m_rotation * ARAD);  // radians -> degrees
+    if (ent->m_widthFactor != 1.0)
+        writer->writeDouble(41, ent->m_widthFactor);
+    if (ent->m_oblique != 0.0)
+        writer->writeDouble(51, ent->m_oblique * ARAD);
+    if (ent->m_extrusion.x != 0.0 || ent->m_extrusion.y != 0.0 || ent->m_extrusion.z != 1.0) {
+        writer->writeDouble(210, ent->m_extrusion.x);
+        writer->writeDouble(220, ent->m_extrusion.y);
+        writer->writeDouble(230, ent->m_extrusion.z);
+    }
+    return true;
+}
+
 bool dxfRW::writeViewport(DRW_Viewport *ent) {
     writer->writeString(0, "VIEWPORT");
     writeEntity(ent);

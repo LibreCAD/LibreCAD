@@ -8404,6 +8404,26 @@ void RS_FilterDXFRW::writeEntities(){
         m_dxfW->writeLight(&light);
       }
     }
+    // SHAPE entities read from a DWG live only on the metadata shelf (no RS_Shape
+    // model) -> re-emit as typed AcDbShape so DWG->DXF preserves them. Group 2 is
+    // the resolved SHAPEFILE/STYLE record name (the glyph index is not round-
+    // trippable without the .shx; this matches libredwg/ACadSharp output).
+    for (const auto &rec : m_graphic->dwgAdvancedMetadata().shapes()) {
+      DRW_Shape shape;
+      shape.handle = rec.handle;
+      shape.parentHandle = rec.parentHandle;
+      shape.m_shapeFileHandle = rec.shapeFileHandle;
+      shape.m_shapeIndex = rec.shapeIndex;
+      shape.m_styleName = rec.styleName;
+      shape.m_insertionPoint = rec.insertionPoint;
+      shape.m_extrusion = rec.extrusion;
+      shape.m_scale = rec.scale;
+      shape.m_rotation = rec.rotation;
+      shape.m_oblique = rec.oblique;
+      shape.m_widthFactor = rec.widthFactor;
+      shape.m_thickness = rec.thickness;
+      m_dxfW->writeShape(&shape);
+    }
   }
 }
 

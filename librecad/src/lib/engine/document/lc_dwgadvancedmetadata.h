@@ -568,6 +568,7 @@ public:
         std::uint32_t parentHandle = 0;
         std::uint32_t shapeFileHandle = 0;
         std::uint16_t shapeIndex = 0;
+        std::string styleName;  // SHAPEFILE/STYLE record name (DXF code 2)
         DRW_Coord insertionPoint;
         DRW_Coord extrusion;
         double scale = 1.0;
@@ -2725,6 +2726,7 @@ public:
         record.parentHandle = shape.parentHandle;
         record.shapeFileHandle = shape.m_shapeFileHandle;
         record.shapeIndex = shape.m_shapeIndex;
+        record.styleName = shape.m_styleName;
         record.insertionPoint = shape.m_insertionPoint;
         record.extrusion = shape.m_extrusion;
         record.scale = shape.m_scale;
