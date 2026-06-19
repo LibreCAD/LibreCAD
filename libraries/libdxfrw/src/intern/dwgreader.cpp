@@ -2055,10 +2055,15 @@ bool dwgReader::readDwgObject(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                         || cit->second->className == "AcDbTableContent") {
                         DRW_TableContentObject e;
                         ret = e.parseDwg(version, &buff, bs);
-                        if (ret) {
+                        if (ret)
                             intfa.addTableContent(e);
-                            intfa.addUnsupportedObject(makeRawObject(oType, cit->second));
-                        }
+                        // Raw-capture unconditionally: parseDwg declines for
+                        // <=AC1018 (only the R2007+ body layout is implemented),
+                        // so preserve the verbatim bytes instead of dropping the
+                        // object. TABLECONTENT legitimately appears in AC1018
+                        // files (tables since AutoCAD 2005); P1 exposed this.
+                        intfa.addUnsupportedObject(makeRawObject(oType, cit->second));
+                        ret = true;  // delivered (typed or raw), not a loss
                         break;
                     }
                     if (rn == "CELLSTYLEMAP"
