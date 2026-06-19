@@ -2080,27 +2080,31 @@ bool dwgReader::readDwgObject(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                         || cit->second->className == "AcDbDimAssoc") {
                         DRW_DimensionAssociation e;
                         ret = e.parseDwg(version, &buff, bs);
-                        if (ret) {
+                        if (ret)
                             intfa.addDimensionAssociation(e);
-                            // Also raw-capture so it survives write — the filter
-                            // has no addDimensionAssociation override (base no-op),
-                            // so without this DIMASSOC is dropped (94 objs/11 files).
-                            // Every neighbor (SUN@2024, CELLSTYLEMAP, FIELDLIST…)
-                            // co-emits this companion; DIMASSOC was the only one
-                            // missing it. (write-review P3 #8)
-                            intfa.addUnsupportedObject(makeRawObject(oType, cit->second));
-                        }
+                        // Raw-capture unconditionally: (1) the filter has no
+                        // addDimensionAssociation override (base no-op), AND
+                        // (2) parseDwg declines for <=AC1018 (only the R2007+ body
+                        // layout is implemented), so without an unconditional raw
+                        // emit DIMASSOC is dropped on R2000/R2004 — DIMASSOC
+                        // legitimately appears since AutoCAD 2002 (e.g. ACadSharp
+                        // sample_AC1018, exposed by P1'). (write-review P3 #8)
+                        intfa.addUnsupportedObject(makeRawObject(oType, cit->second));
+                        ret = true;  // delivered (typed or raw) — not a loss
                         break;
                     }
                     if (rn == "ACAD_EVALUATION_GRAPH"
                         || cit->second->className == "AcDbEvalGraph") {
                         DRW_EvaluationGraph e;
                         ret = e.parseDwg(version, &buff, bs);
-                        // Raw replay preserves the full byte image. (Phase 2b.4)
-                        if (ret) {
+                        // Raw replay preserves the full byte image (Phase 2b.4).
+                        // Unconditional: parseDwg declines for <=AC1018 (R2007+
+                        // body layout only) — eval graphs appear since AutoCAD
+                        // 2006, so preserve verbatim rather than drop.
+                        if (ret)
                             intfa.addEvaluationGraph(e);
-                            intfa.addUnsupportedObject(makeRawObject(oType, cit->second));
-                        }
+                        intfa.addUnsupportedObject(makeRawObject(oType, cit->second));
+                        ret = true;  // delivered (typed or raw) — not a loss
                         break;
                     }
                     if (rn == "SUN" || cit->second->className == "AcDbSun") {
