@@ -3029,8 +3029,11 @@ bool dxfRW::processClasses() {
     auto finishClass = [&]() -> bool {
         if (!reading)
             return true;
-        if (cls.recName.empty() || cls.className.empty()) {
-            DRW_DBG("malformed CLASS record: missing record/class name\n");
+        // AutoCAD legitimately emits internal proxy classes (e.g. DbBEditSession)
+        // with an empty code-1 record name; only an empty C++ class name (code 2)
+        // is structurally invalid. Rejecting an empty recName aborts the whole read.
+        if (cls.className.empty()) {
+            DRW_DBG("malformed CLASS record: missing class name\n");
             return false;
         }
         iface->addDxfClass(cls);
