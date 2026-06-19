@@ -8424,6 +8424,23 @@ void RS_FilterDXFRW::writeEntities(){
       shape.m_thickness = rec.thickness;
       m_dxfW->writeShape(&shape);
     }
+    // OLE2FRAME entities read from a DWG live only on the metadata shelf -> re-emit
+    // as typed AcDbOle2Frame. pt1/pt2 (frame rectangle) were decoded from the OLE
+    // payload header on read; the opaque payload is replayed verbatim (group 310).
+    for (const auto &rec : m_graphic->dwgAdvancedMetadata().ole2Frames()) {
+      if (rec.payloadBytes.empty())
+        continue;  // nothing to preserve (truncated/absent payload)
+      DRW_Ole2Frame ole;
+      ole.handle = rec.handle;
+      ole.parentHandle = rec.parentHandle;
+      ole.m_flags = rec.flags;
+      ole.m_mode = rec.mode;
+      ole.m_oleVersion = rec.oleVersion;
+      ole.m_pt1 = rec.pt1;
+      ole.m_pt2 = rec.pt2;
+      ole.m_payloadBytes = rec.payloadBytes;
+      m_dxfW->writeOle2Frame(&ole);
+    }
   }
 }
 

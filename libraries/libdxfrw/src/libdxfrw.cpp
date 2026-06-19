@@ -2151,6 +2151,46 @@ bool dxfRW::writeShape(DRW_Shape *ent) {
     return true;
 }
 
+bool dxfRW::writeOle2Frame(DRW_Ole2Frame *ent) {
+    // DXF OLE2FRAME (AcDbOle2Frame). Field order/codes per ACadSharp + dwgread:
+    // 70 version, 3 client, 10/11 frame corners, 71 type, 72 mode, 73 (const 3),
+    // 90 length, 310 binary (hex chunks), 1 "OLE" trailer. pt1/pt2 were decoded
+    // from the OLE payload header on read; the payload is replayed verbatim.
+    writer->writeString(0, "OLE2FRAME");
+    writeEntity(ent);
+    if (version > DRW::AC1009)
+        writer->writeString(100, "AcDbOle2Frame");
+    writer->writeInt16(70, static_cast<int>(ent->m_oleVersion));
+    writer->writeUtf8String(3, ent->m_oleClient);
+    writer->writeDouble(10, ent->m_pt1.x);
+    writer->writeDouble(20, ent->m_pt1.y);
+    writer->writeDouble(30, ent->m_pt1.z);
+    writer->writeDouble(11, ent->m_pt2.x);
+    writer->writeDouble(21, ent->m_pt2.y);
+    writer->writeDouble(31, ent->m_pt2.z);
+    writer->writeInt16(71, static_cast<int>(ent->m_flags));  // OLE object type
+    writer->writeInt16(72, static_cast<int>(ent->m_mode));   // tile/paper-space mode
+    writer->writeInt16(73, 3);                               // undocumented, always 3
+    writer->writeInt32(90, static_cast<int>(ent->m_payloadBytes.size()));
+    // group 310: payload as hex, 127 bytes (254 hex chars) per record (AutoCAD/
+    // dwgread convention; the binary-DXF writer hex-decodes and re-chunks).
+    static const char hexd[] = "0123456789ABCDEF";
+    const std::vector<std::uint8_t>& data = ent->m_payloadBytes;
+    for (std::size_t off = 0; off < data.size(); off += 127) {
+        const std::size_t n = std::min<std::size_t>(127, data.size() - off);
+        std::string chunk;
+        chunk.reserve(n * 2);
+        for (std::size_t i = 0; i < n; ++i) {
+            const std::uint8_t b = data[off + i];
+            chunk.push_back(hexd[b >> 4]);
+            chunk.push_back(hexd[b & 0x0F]);
+        }
+        writer->writeString(310, chunk);
+    }
+    writer->writeString(1, "OLE");
+    return true;
+}
+
 bool dxfRW::writeViewport(DRW_Viewport *ent) {
     writer->writeString(0, "VIEWPORT");
     writeEntity(ent);

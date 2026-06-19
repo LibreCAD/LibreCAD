@@ -683,6 +683,14 @@ public:
     std::uint32_t m_bodyBitSize = 0;
     std::vector<std::uint8_t> m_rawBytes;
     std::vector<std::uint8_t> m_payloadBytes; /*!< opaque OLE payload, captured on read (Phase 6.2) */
+    // DXF fields. m_flags is the OLE object type (DXF 71); m_mode is tile mode
+    // (DXF 72); m_r2000TrailingByte is lock_aspect (DXF 73). oleVersion (70) and
+    // oleClient (3) are effectively constant. pt1/pt2 (DXF 10/11) are the frame
+    // rectangle, NOT stored as DWG fields — decoded from the OLE payload header.
+    std::uint16_t m_oleVersion = 2;     /*!< DXF 70 */
+    std::string   m_oleClient = "OLE";  /*!< DXF 3  */
+    DRW_Coord     m_pt1;                /*!< DXF 10/20/30 upper-left  */
+    DRW_Coord     m_pt2;                /*!< DXF 11/21/31 lower-right */
 
 protected:
     bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0,

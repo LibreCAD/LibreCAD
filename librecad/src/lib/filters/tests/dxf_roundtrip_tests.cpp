@@ -431,6 +431,61 @@ TEST_CASE("DXF export re-emits DWG-read SHAPE entities", "[dxf][roundtrip][filte
   std::filesystem::remove(out);
 }
 
+// D4 write-path: an OLE2FRAME read from a DWG lands only on the metadata shelf;
+// the export now re-emits it as a typed AcDbOle2Frame with its frame rectangle
+// (10/11) and the opaque OLE payload replayed verbatim (group 310).
+TEST_CASE("DXF export re-emits DWG-read OLE2FRAME entities", "[dxf][roundtrip][filter][ole]") {
+  ensureSettings();
+  const std::string src = tmpFile("olesrc.dxf");
+  const std::string out = tmpFile("ole.dxf");
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+
+  const std::string dxf =
+      "0\nSECTION\n2\nENTITIES\n"
+      "0\nLINE\n8\n0\n10\n0.0\n20\n0.0\n30\n0.0\n11\n10.0\n21\n10.0\n31\n0.0\n"
+      "0\nENDSEC\n0\nEOF\n";
+  writeText(src, dxf);
+
+  RS_Graphic graphic;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(src),
+                              RS2::FormatDXFRW));
+  }
+
+  const std::size_t payloadLen = 300;  // > 254 so the 310 stream is multi-chunk
+  {
+    DRW_Ole2Frame ole;
+    ole.handle = 0x300;
+    ole.parentHandle = 0x1F;
+    ole.m_flags = 2;   // embedded
+    ole.m_mode = 0;
+    ole.m_pt1.x = 1.0; ole.m_pt1.y = 6.0;  // upper-left
+    ole.m_pt2.x = 5.0; ole.m_pt2.y = 2.0;  // lower-right
+    ole.m_payloadBytes.resize(payloadLen);
+    for (std::size_t i = 0; i < payloadLen; ++i)
+      ole.m_payloadBytes[i] = static_cast<std::uint8_t>(i & 0xFF);
+    graphic.dwgAdvancedMetadata().addOle2Frame(ole);
+  }
+
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out),
+                              RS2::FormatDXFRW));
+  }
+
+  CHECK(countRecords(out, "OLE2FRAME") == 1);
+  CHECK(recordHasCode(out, "OLE2FRAME", "100")); // AcDbOle2Frame subclass marker
+  CHECK(recordHasCode(out, "OLE2FRAME", "10"));  // upper-left
+  CHECK(recordHasCode(out, "OLE2FRAME", "11"));  // lower-right
+  CHECK(recordHasCode(out, "OLE2FRAME", "90"));  // payload length
+  CHECK(recordHasCode(out, "OLE2FRAME", "310")); // binary payload
+
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+}
+
 TEST_CASE("DXF CLASSES section round-trips source custom entity metadata",
           "[dxf][roundtrip][filter][classes]") {
   ensureSettings();

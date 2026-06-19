@@ -16,6 +16,7 @@
 #include <cmath>
 #include <cstdio>
 #include <cstdlib>
+#include <cstring>
 #include <limits>
 #include <vector>
 #include "drw_entities.h"
@@ -3121,6 +3122,28 @@ bool DRW_Ole2Frame::parseDwg(DRW::Version v, dwgBuffer *buf, std::uint32_t bs){
     if (v > DRW::AC1014 && buf->numRemainingBytes() > 0) {
         m_hasR2000TrailingByte = true;
         m_r2000TrailingByte = buf->getRawChar8();
+    }
+
+    // Decode the frame rectangle (DXF 10/11) from the OLE header. AutoCAD/ODA do
+    // NOT store pt1/pt2 as DWG fields; they live in the first ~0x80 bytes of the
+    // payload as raw little-endian doubles. (libredwg's dwg_decode_ole2 is a stub
+    // that hardcodes one sample file's corners.) Layout reverse-engineered and
+    // validated on TS1 + Extruder2: byte 0x00 == 0x80 marker; upper-left @0x02,
+    // lower-right @0x32, 3 doubles each. Guarded so a non-finite/short payload
+    // simply leaves pt1/pt2 at the origin (payload still preserved).
+    if (m_payloadBytes.size() >= 0x4a && m_payloadBytes[0] == 0x80) {
+        auto rd = [&](std::size_t off) {
+            double d = 0.0;
+            std::memcpy(&d, m_payloadBytes.data() + off, sizeof(double));
+            return d;
+        };
+        DRW_Coord ul(rd(0x02), rd(0x0a), rd(0x12));
+        DRW_Coord lr(rd(0x32), rd(0x3a), rd(0x42));
+        if (std::isfinite(ul.x) && std::isfinite(ul.y) && std::isfinite(ul.z)
+            && std::isfinite(lr.x) && std::isfinite(lr.y) && std::isfinite(lr.z)) {
+            m_pt1 = ul;
+            m_pt2 = lr;
+        }
     }
 
     ret = DRW_Entity::parseDwgEntHandle(v, buf);
