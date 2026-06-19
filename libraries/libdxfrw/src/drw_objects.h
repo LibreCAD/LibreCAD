@@ -82,7 +82,8 @@ namespace DRW {
          BACKGROUND,
          POINTCLOUDDEF,
          SUNSTUDY,
-         RENDERSETTINGS
+         RENDERSETTINGS,
+         SECTIONOBJ
      };
 
 //pending VP_ENT_HDR, LONG_TRANSACTION,
@@ -1592,6 +1593,37 @@ protected:
     bool parseDwg(DRW::Version /*v*/, dwgBuffer * /*buf*/, std::uint32_t /*bs*/=0) override {
         return true;  // DXF-only object; DWG never dispatches a typed instance.
     }
+};
+
+//! Section objects: SECTION_MANAGER (live flag + section-object handle list) and
+//! SECTION_SETTINGS (class version / section type / generation options + the
+//! destination block).  Body codes reuse the owner handle code 330, so the
+//! "100 AcDbSection*" marker gates them.  The nested per-type geometry-settings
+//! REPEAT is left to the raw-net.  DXF-only structured decode; DWG stays raw.
+class DRW_Section : public DRW_TableEntry {
+    SETOBJFRIENDS
+public:
+    enum Kind { Manager, Settings };
+    DRW_Section() { tType = DRW::SECTIONOBJ; }
+
+    Kind m_kind = Manager;
+    /* manager */
+    bool m_isLive = false;                       /*!< code 70 */
+    std::int32_t m_sectionCount = 0;             /*!< code 90 (manager) */
+    std::vector<std::uint32_t> m_sectionHandles; /*!< body code 330 */
+    /* settings */
+    std::int32_t m_classVersion = 0;             /*!< ints[0] (90/91) */
+    std::int32_t m_sectionType = 0;              /*!< ints[1] */
+    std::int32_t m_generationOptions = 0;        /*!< ints[2] */
+    std::uint32_t m_destinationBlockHandle = 0;  /*!< code 331 */
+protected:
+    bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
+    bool parseDwg(DRW::Version /*v*/, dwgBuffer * /*buf*/, std::uint32_t /*bs*/=0) override {
+        return true;  // DXF-only object; DWG never dispatches a typed instance.
+    }
+private:
+    bool m_dxfInBody = false;
+    std::vector<std::int32_t> m_settingsInts;    /*!< settings: 90/91 accumulation */
 };
 
 struct DRW_TableStyleBorder {

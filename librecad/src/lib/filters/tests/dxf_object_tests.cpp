@@ -1784,3 +1784,53 @@ TEST_CASE("DXF RENDERGLOBAL + RENDERSETTINGS capture class version + vectors",
     CHECK(cap.m_captured.m_doubles[0] == 12.5);
   }
 }
+
+namespace {
+class SectionCapture : public StubInterface {
+public:
+  int m_callCount = 0;
+  DRW_Section m_captured;
+  void addSection(const DRW_Section &d) override {
+    if (m_callCount == 0) m_captured = d;
+    ++m_callCount;
+  }
+};
+} // namespace
+
+TEST_CASE("DXF SECTIONMANAGER is read into a DRW_Section (live + handles)",
+          "[dxf][section][preservation]") {
+  SectionCapture cap;
+  // 330 before the 100 marker is the owner; 330s after are section handles.
+  const char *dxf =
+      "0\nSECTION\n2\nOBJECTS\n"
+      "0\nSECTIONMANAGER\n5\n300\n330\nC\n100\nAcDbSectionManager\n"
+      "70\n1\n90\n2\n330\n3A0\n330\n3A1\n"
+      "0\nENDSEC\n0\nEOF\n";
+  readDxf(dxf, cap, "lc_sectionmanager_read.dxf");
+  REQUIRE(cap.m_callCount == 1);
+  const DRW_Section &s = cap.m_captured;
+  CHECK(s.m_kind == DRW_Section::Manager);
+  CHECK(s.m_isLive == true);
+  CHECK(s.m_sectionCount == 2);
+  REQUIRE(s.m_sectionHandles.size() == 2);
+  CHECK(s.m_sectionHandles[0] == 0x3A0u);
+  CHECK(s.m_sectionHandles[1] == 0x3A1u);
+}
+
+TEST_CASE("DXF SECTIONSETTINGS is read into a DRW_Section (type triple)",
+          "[dxf][section][preservation]") {
+  SectionCapture cap;
+  const char *dxf =
+      "0\nSECTION\n2\nOBJECTS\n"
+      "0\nSECTIONSETTINGS\n5\n301\n330\nC\n100\nAcDbSectionSettings\n"
+      "90\n1\n91\n2\n90\n4\n331\n3B0\n"
+      "0\nENDSEC\n0\nEOF\n";
+  readDxf(dxf, cap, "lc_sectionsettings_read.dxf");
+  REQUIRE(cap.m_callCount == 1);
+  const DRW_Section &s = cap.m_captured;
+  CHECK(s.m_kind == DRW_Section::Settings);
+  CHECK(s.m_classVersion == 1);
+  CHECK(s.m_sectionType == 2);
+  CHECK(s.m_generationOptions == 4);
+  CHECK(s.m_destinationBlockHandle == 0x3B0u);
+}

@@ -3555,6 +3555,42 @@ bool DRW_SortEntsTable::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint
     return true;
 }
 
+bool DRW_Section::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
+    // SECTION_MANAGER / SECTION_SETTINGS DXF.  Body code 330 reuses the owner
+    // handle code, so the "100 AcDbSection*" marker gates the body.  Code map
+    // per dwgTs parseObjectsSectionFamilyDxf.ts.
+    if (code == 100) { m_dxfInBody = true; return true; }
+    if (!m_dxfInBody)
+        return DRW_TableEntry::parseCode(code, reader);
+    if (m_kind == Manager) {
+        switch (code) {
+        case 70:  m_isLive = (reader->getInt32() != 0); return true;
+        case 90:  m_sectionCount = reader->getInt32(); return true;
+        case 330: {
+            const std::uint32_t h = reader->getHandleString();
+            if (h != 0) m_sectionHandles.push_back(h);
+            return true;
+        }
+        default: break;
+        }
+    } else { // Settings
+        switch (code) {
+        case 90:
+        case 91: {
+            m_settingsInts.push_back(reader->getInt32());
+            const std::size_t n = m_settingsInts.size();
+            if (n == 1) m_classVersion = m_settingsInts[0];
+            else if (n == 2) m_sectionType = m_settingsInts[1];
+            else if (n == 3) m_generationOptions = m_settingsInts[2];
+            return true;
+        }
+        case 331: m_destinationBlockHandle = reader->getHandleString(); return true;
+        default: break;
+        }
+    }
+    return DRW_TableEntry::parseCode(code, reader);
+}
+
 bool DRW_RenderSettings::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
     // Positional record: accumulate per-code value vectors (the named meaning is
     // by order, resolved per-kind in finalize()).  Code map per dwgTs

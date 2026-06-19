@@ -4432,6 +4432,11 @@ bool dxfRW::processObjects() {
                  || "MENTALRAYRENDERSETTINGS" == nextentity) {
             processed = processRenderSettings();
         }
+        else if ("SECTIONMANAGER" == nextentity || "ACDBSECTIONMANAGER" == nextentity
+                 || "SECTION_MANAGER" == nextentity || "SECTIONSETTINGS" == nextentity
+                 || "ACDBSECTIONSETTINGS" == nextentity || "SECTION_SETTINGS" == nextentity) {
+            processed = processSection();
+        }
         else {
             //Slice A1: never silently drop an unmodeled object — capture its
             //group codes verbatim for lossless re-emit instead of skipping.
@@ -4826,6 +4831,33 @@ bool dxfRW::processRenderSettings() {
             nextentity = reader->getString();
             data.finalize();
             iface->addRenderSettings(data);
+            iface->addRawDxfObject(raw);
+            return true;
+        }
+        captureRawGroup(raw, code);
+        if (!data.parseCode(code, reader))
+            return setError(DRW::BAD_CODE_PARSED);
+    }
+    return setError(DRW::BAD_READ_OBJECTS);
+}
+
+// SECTION_MANAGER / SECTION_SETTINGS: structured DXF read into DRW_Section
+// (kind from the entity name) + raw-net preservation.
+bool dxfRW::processSection() {
+    DRW_DBG("dxfRW::processSection");
+    int code;
+    DRW_Section data;
+    if (nextentity == "SECTIONSETTINGS" || nextentity == "ACDBSECTIONSETTINGS"
+        || nextentity == "SECTION_SETTINGS")
+        data.m_kind = DRW_Section::Settings;
+    else
+        data.m_kind = DRW_Section::Manager;
+    DRW_RawDxfObject raw;
+    raw.name = nextentity;
+    while (reader->readRec(&code)) {
+        if (code == 0) {
+            nextentity = reader->getString();
+            iface->addSection(data);
             iface->addRawDxfObject(raw);
             return true;
         }
