@@ -58,5 +58,5 @@ void LC_PropertiesEditingWidgetLine::onStartEditingFinished() const {
 }
 
 void LC_PropertiesEditingWidgetLine::onEndEditingFinished() const {
-    m_entity->setEndpoint(toWCS(ui->leEndX, ui->leEndY, m_entity->getStartpoint()));
+    m_entity->setEndpoint(toWCS(ui->leEndX, ui->leEndY, m_entity->getEndpoint()));
 }
