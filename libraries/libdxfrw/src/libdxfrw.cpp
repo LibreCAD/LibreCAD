@@ -4409,6 +4409,14 @@ bool dxfRW::processObjects() {
         else if ("DIMASSOC" == nextentity) {
             processed = processDimAssoc();
         }
+        else if ("SOLIDBACKGROUND" == nextentity || "SOLID_BACKGROUND" == nextentity
+                 || "GRADIENTBACKGROUND" == nextentity || "GRADIENT_BACKGROUND" == nextentity
+                 || "GROUNDPLANEBACKGROUND" == nextentity || "GROUND_PLANE_BACKGROUND" == nextentity
+                 || "IMAGEBACKGROUND" == nextentity || "IMAGE_BACKGROUND" == nextentity
+                 || "IBLBACKGROUND" == nextentity || "IBL_BACKGROUND" == nextentity
+                 || "SKYLIGHTBACKGROUND" == nextentity || "SKYLIGHT_BACKGROUND" == nextentity) {
+            processed = processBackground();
+        }
         else {
             //Slice A1: never silently drop an unmodeled object — capture its
             //group codes verbatim for lossless re-emit instead of skipping.
@@ -4687,6 +4695,41 @@ bool dxfRW::processDimAssoc() {
         if (code == 0) {
             nextentity = reader->getString();
             iface->addDimensionAssociation(data);
+            iface->addRawDxfObject(raw);
+            return true;
+        }
+        captureRawGroup(raw, code);
+        if (!data.parseCode(code, reader))
+            return setError(DRW::BAD_CODE_PARSED);
+    }
+    return setError(DRW::BAD_READ_OBJECTS);
+}
+
+// AcDb*Background OBJECTS (solid/gradient/ground-plane/image/IBL/skylight):
+// structured DXF read into DRW_Background (kind set from the entity name) + raw-
+// net preservation.  DWG stays raw (no DWG parser).  Not rendered by LibreCAD.
+bool dxfRW::processBackground() {
+    DRW_DBG("dxfRW::processBackground");
+    int code;
+    DRW_Background data;
+    if (nextentity == "GRADIENTBACKGROUND" || nextentity == "GRADIENT_BACKGROUND")
+        data.m_kind = DRW_Background::Gradient;
+    else if (nextentity == "GROUNDPLANEBACKGROUND" || nextentity == "GROUND_PLANE_BACKGROUND")
+        data.m_kind = DRW_Background::GroundPlane;
+    else if (nextentity == "IMAGEBACKGROUND" || nextentity == "IMAGE_BACKGROUND")
+        data.m_kind = DRW_Background::Image;
+    else if (nextentity == "IBLBACKGROUND" || nextentity == "IBL_BACKGROUND")
+        data.m_kind = DRW_Background::Ibl;
+    else if (nextentity == "SKYLIGHTBACKGROUND" || nextentity == "SKYLIGHT_BACKGROUND")
+        data.m_kind = DRW_Background::Skylight;
+    else
+        data.m_kind = DRW_Background::Solid;
+    DRW_RawDxfObject raw;
+    raw.name = nextentity;
+    while (reader->readRec(&code)) {
+        if (code == 0) {
+            nextentity = reader->getString();
+            iface->addBackground(data);
             iface->addRawDxfObject(raw);
             return true;
         }

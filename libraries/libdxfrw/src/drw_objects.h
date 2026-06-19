@@ -78,7 +78,8 @@ namespace DRW {
          ACSHHISTORYOBJECT,
          IDBUFFER,
          LAYERINDEX,
-         SPATIALINDEX
+         SPATIALINDEX,
+         BACKGROUND
      };
 
 //pending VP_ENT_HDR, LONG_TRANSACTION,
@@ -1428,6 +1429,60 @@ protected:
 public:
     UTF8STRING m_name;
     UTF8STRING m_description;
+};
+
+//! Render background object family (AcDb*Background: solid / gradient / ground-
+//! plane / image / IBL / skylight).  A single class with a `m_kind` discriminator
+//! (set from the entity name) because the variants share the OBJECTS-section slot
+//! and overload group codes (notably 90).  DXF-only structured decode; DWG stays
+//! raw-preserved.  Not rendered by LibreCAD (viewport backdrops) — read parity
+//! with dwgTs.
+class DRW_Background : public DRW_TableEntry {
+    SETOBJFRIENDS
+public:
+    enum Kind { Solid, Gradient, GroundPlane, Image, Ibl, Skylight };
+    DRW_Background() { tType = DRW::BACKGROUND; }
+
+    Kind m_kind = Solid;
+    std::int32_t m_classVersion = 0;
+    /* solid / gradient / ground-plane colors (raw DXF color ints) */
+    int m_solidColor = 0;
+    int m_colorTop = 0;            /*!< gradient code 90(#2) */
+    int m_colorMiddle = 0;        /*!< gradient code 91 */
+    int m_colorBottom = 0;        /*!< gradient code 92 */
+    double m_horizon = 0.0;       /*!< gradient code 140 */
+    double m_height = 0.0;        /*!< gradient code 141 */
+    double m_rotation = 0.0;      /*!< gradient code 142 / ibl code 40 */
+    int m_colorSkyZenith = 0;     /*!< ground-plane code 90(#2) */
+    int m_colorSkyHorizon = 0;    /*!< code 91 */
+    int m_colorUndergroundHorizon = 0; /*!< code 92 */
+    int m_colorUndergroundAzimuth = 0; /*!< code 93 */
+    int m_colorNear = 0;          /*!< code 94 */
+    int m_colorFar = 0;           /*!< code 95 */
+    /* image */
+    UTF8STRING m_fileName;        /*!< image code 300 */
+    bool m_fitToScreen = false;   /*!< code 290 */
+    bool m_maintainAspect = false;/*!< code 291 */
+    bool m_useTiling = false;     /*!< code 292 */
+    DRW_Coord m_offset;           /*!< code 140/240 */
+    DRW_Coord m_scale{1.0, 1.0, 0.0}; /*!< code 142/242 */
+    /* ibl */
+    UTF8STRING m_iblName;         /*!< ibl code 1 */
+    bool m_enabled = false;       /*!< ibl code 290(#1) */
+    bool m_displayImage = false;  /*!< ibl code 290(#2) */
+    std::uint32_t m_secondaryBackgroundHandle = 0; /*!< ibl code 340 */
+    /* skylight */
+    std::uint32_t m_sunHandle = 0; /*!< skylight code 340 */
+protected:
+    bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
+    // DXF-only object: the DWG read path never dispatches a typed Background
+    // (those stay raw-preserved), so parseDwg is an unused stub.
+    bool parseDwg(DRW::Version /*v*/, dwgBuffer * /*buf*/, std::uint32_t /*bs*/=0) override {
+        return true;
+    }
+private:
+    int m_seen90 = 0;             /*!< gradient/ground-plane/solid: 90 appears twice */
+    int m_seen290 = 0;            /*!< ibl: 290 appears twice (enable, displayImage) */
 };
 
 struct DRW_TableStyleBorder {

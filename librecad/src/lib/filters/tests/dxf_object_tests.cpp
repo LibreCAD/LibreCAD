@@ -1525,3 +1525,90 @@ TEST_CASE("DXF DIMASSOC is read into a DRW_DimensionAssociation",
   CHECK(a.m_osnapRefs[1].m_objectOsnapType == 7);
   CHECK(a.m_osnapRefs[1].m_objectHandle == 0x511u);
 }
+
+namespace {
+class BackgroundCapture : public StubInterface {
+public:
+  int m_callCount = 0;
+  DRW_Background m_captured;
+  void addBackground(const DRW_Background &d) override {
+    if (m_callCount == 0) m_captured = d;
+    ++m_callCount;
+  }
+};
+} // namespace
+
+TEST_CASE("DXF GRADIENTBACKGROUND is read into a DRW_Background",
+          "[dxf][background][preservation]") {
+  BackgroundCapture cap;
+  // 90 appears twice: class version, then color_top.
+  const char *dxf =
+      "0\nSECTION\n2\nOBJECTS\n"
+      "0\nGRADIENTBACKGROUND\n5\n2A0\n330\nC\n100\nAcDbGradientBackground\n"
+      "90\n1\n90\n100\n91\n200\n92\n300\n140\n0.5\n141\n0.25\n142\n1.57\n"
+      "0\nENDSEC\n0\nEOF\n";
+  readDxf(dxf, cap, "lc_gradientbg_read.dxf");
+  REQUIRE(cap.m_callCount == 1);
+  const DRW_Background &b = cap.m_captured;
+  CHECK(b.m_kind == DRW_Background::Gradient);
+  CHECK(b.m_classVersion == 1);
+  CHECK(b.m_colorTop == 100);
+  CHECK(b.m_colorMiddle == 200);
+  CHECK(b.m_colorBottom == 300);
+  CHECK(b.m_horizon == 0.5);
+  CHECK(b.m_height == 0.25);
+  CHECK(b.m_rotation == 1.57);
+}
+
+TEST_CASE("DXF IMAGEBACKGROUND is read into a DRW_Background",
+          "[dxf][background][preservation]") {
+  BackgroundCapture cap;
+  const char *dxf =
+      "0\nSECTION\n2\nOBJECTS\n"
+      "0\nIMAGEBACKGROUND\n5\n2A1\n330\nC\n100\nAcDbImageBackground\n"
+      "90\n1\n300\nsky.jpg\n290\n1\n291\n0\n292\n1\n"
+      "140\n2.0\n142\n1.5\n"
+      "0\nENDSEC\n0\nEOF\n";
+  readDxf(dxf, cap, "lc_imagebg_read.dxf");
+  REQUIRE(cap.m_callCount == 1);
+  const DRW_Background &b = cap.m_captured;
+  CHECK(b.m_kind == DRW_Background::Image);
+  CHECK(b.m_fileName == "sky.jpg");
+  CHECK(b.m_fitToScreen == true);
+  CHECK(b.m_maintainAspect == false);
+  CHECK(b.m_useTiling == true);
+  CHECK(b.m_offset.x == 2.0);
+  CHECK(b.m_scale.x == 1.5);
+  // offset.y/scale.y (DXF 240/242) are unreadable by libdxfrw's dxfReader (the
+  // 240-269 code range is an unhandled gap) — preserved raw, not decoded here.
+}
+
+TEST_CASE("DXF SKYLIGHTBACKGROUND + SOLIDBACKGROUND read into DRW_Background",
+          "[dxf][background][preservation]") {
+  {
+    BackgroundCapture cap;
+    const char *dxf =
+        "0\nSECTION\n2\nOBJECTS\n"
+        "0\nSKYLIGHTBACKGROUND\n5\n2A2\n330\nC\n100\nAcDbSkyBackground\n"
+        "90\n2\n340\n2BC\n"
+        "0\nENDSEC\n0\nEOF\n";
+    readDxf(dxf, cap, "lc_skybg_read.dxf");
+    REQUIRE(cap.m_callCount == 1);
+    CHECK(cap.m_captured.m_kind == DRW_Background::Skylight);
+    CHECK(cap.m_captured.m_classVersion == 2);
+    CHECK(cap.m_captured.m_sunHandle == 0x2BCu);
+  }
+  {
+    BackgroundCapture cap;
+    const char *dxf =
+        "0\nSECTION\n2\nOBJECTS\n"
+        "0\nSOLIDBACKGROUND\n5\n2A3\n330\nC\n100\nAcDbSolidBackground\n"
+        "90\n1\n90\n255\n"
+        "0\nENDSEC\n0\nEOF\n";
+    readDxf(dxf, cap, "lc_solidbg_read.dxf");
+    REQUIRE(cap.m_callCount == 1);
+    CHECK(cap.m_captured.m_kind == DRW_Background::Solid);
+    CHECK(cap.m_captured.m_classVersion == 1);
+    CHECK(cap.m_captured.m_solidColor == 255);
+  }
+}

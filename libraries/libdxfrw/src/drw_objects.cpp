@@ -3573,6 +3573,76 @@ bool DRW_Material::parseCode(int code, const std::unique_ptr<dxfReader>& reader)
     return true;
 }
 
+bool DRW_Background::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
+    // AcDb*Background DXF.  Group codes are overloaded across the six variants
+    // (90 in particular appears twice for solid/gradient/ground-plane), so they
+    // are interpreted per m_kind (set from the entity name).  Code map per dwgTs
+    // parseObjectsBackgroundSunLightDxf.ts.
+    switch (code) {
+    case 90:
+        if (m_kind == Gradient) {
+            if (m_seen90 == 0) m_classVersion = reader->getInt32();
+            else if (m_seen90 == 1) m_colorTop = reader->getInt32();
+            ++m_seen90;
+        } else if (m_kind == GroundPlane) {
+            if (m_seen90 == 0) m_classVersion = reader->getInt32();
+            else if (m_seen90 == 1) m_colorSkyZenith = reader->getInt32();
+            ++m_seen90;
+        } else if (m_kind == Solid) {
+            if (m_seen90 == 0) m_classVersion = reader->getInt32();
+            else if (m_seen90 == 1) m_solidColor = reader->getInt32();
+            ++m_seen90;
+        } else {
+            m_classVersion = reader->getInt32();  // image/ibl/skylight: single 90
+        }
+        break;
+    case 91:
+        if (m_kind == Gradient) m_colorMiddle = reader->getInt32();
+        else if (m_kind == GroundPlane) m_colorSkyHorizon = reader->getInt32();
+        break;
+    case 92:
+        if (m_kind == Gradient) m_colorBottom = reader->getInt32();
+        else if (m_kind == GroundPlane) m_colorUndergroundHorizon = reader->getInt32();
+        break;
+    case 93: if (m_kind == GroundPlane) m_colorUndergroundAzimuth = reader->getInt32(); break;
+    case 94: if (m_kind == GroundPlane) m_colorNear = reader->getInt32(); break;
+    case 95: if (m_kind == GroundPlane) m_colorFar = reader->getInt32(); break;
+    case 140:
+        if (m_kind == Gradient) m_horizon = reader->getDouble();
+        else if (m_kind == Image) m_offset.x = reader->getDouble();
+        break;
+    case 141: if (m_kind == Gradient) m_height = reader->getDouble(); break;
+    case 142:
+        if (m_kind == Gradient) m_rotation = reader->getDouble();
+        else if (m_kind == Image) m_scale.x = reader->getDouble();
+        break;
+    // NOTE: image-background offset.y/scale.y use DXF codes 240/242, which
+    // libdxfrw's dxfReader does not classify (the 240-269 range is an unhandled
+    // gap in dxfreader.cpp readRec) — those Y components are left to the raw-net
+    // until the reader's code-range table is extended.
+    case 40:  if (m_kind == Ibl) m_rotation = reader->getDouble(); break;
+    case 1:   if (m_kind == Ibl) m_iblName = reader->getUtf8String(); break;
+    case 300: if (m_kind == Image) m_fileName = reader->getUtf8String(); break;
+    case 290:
+        if (m_kind == Image) m_fitToScreen = (reader->getInt32() != 0);
+        else if (m_kind == Ibl) {
+            if (m_seen290 == 0) m_enabled = (reader->getInt32() != 0);
+            else m_displayImage = (reader->getInt32() != 0);
+            ++m_seen290;
+        }
+        break;
+    case 291: if (m_kind == Image) m_maintainAspect = (reader->getInt32() != 0); break;
+    case 292: if (m_kind == Image) m_useTiling = (reader->getInt32() != 0); break;
+    case 340:
+        if (m_kind == Ibl) m_secondaryBackgroundHandle = reader->getHandleString();
+        else if (m_kind == Skylight) m_sunHandle = reader->getHandleString();
+        break;
+    default:
+        return DRW_TableEntry::parseCode(code, reader);
+    }
+    return true;
+}
+
 bool DRW_Material::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs){
     dwgBuffer sBuff = *buf;
     dwgBuffer *sBuf = buf;

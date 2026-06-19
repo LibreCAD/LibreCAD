@@ -244,6 +244,7 @@ private:
     bool processMLeaderStyle();
     bool processSortEntsTable();
     bool processDimAssoc();
+    bool processBackground();
 
     bool processLType();
     bool processLayer();
