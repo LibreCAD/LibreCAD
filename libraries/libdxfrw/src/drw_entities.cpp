@@ -2118,7 +2118,7 @@ bool DRW_MText::encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t b
     if (version > DRW::AC1015) {            // R2004+: background flags BL
         buf->putBitLong(m_backgroundFlags);
         if ((m_backgroundFlags & 0x01) || (version >= DRW::AC1032 && (m_backgroundFlags & 0x10))) {
-            buf->putBitLong(m_backgroundScale);
+            buf->putBitDouble(m_backgroundScale);  // BitDouble (matches the read fix)
             buf->putCmColor(version, static_cast<std::uint16_t>(m_backgroundColor));
             buf->putBitLong(m_backgroundTransparency);
         }
@@ -4423,7 +4423,7 @@ static bool parseEmbeddedMTextDwg(DRW::Version version, dwgBuffer *buf,
         mtext.m_backgroundFlags = buf->getBitLong();
         if ((mtext.m_backgroundFlags & 0x01)
             || (version >= DRW::AC1032 && (mtext.m_backgroundFlags & 0x10))) {
-            mtext.m_backgroundScale = buf->getBitLong();
+            mtext.m_backgroundScale = buf->getBitDouble();  // BitDouble, not BitLong
             mtext.m_backgroundColor = static_cast<int>(buf->getCmColor(version, nullptr, sBuf));
             mtext.m_backgroundTransparency = buf->getBitLong();
         }
@@ -4561,7 +4561,7 @@ static bool encodeEmbeddedMTextDwg(DRW::Version version, dwgBufferW *buf,
     buf->putBitLong(mtext.m_backgroundFlags);
     if ((mtext.m_backgroundFlags & 0x01)
         || (mtext.m_backgroundFlags & 0x10)) {
-        buf->putBitLong(mtext.m_backgroundScale);
+        buf->putBitDouble(mtext.m_backgroundScale);  // BitDouble, not BitLong
         buf->putCmColor(version, static_cast<std::uint16_t>(mtext.m_backgroundColor));
         buf->putBitLong(mtext.m_backgroundTransparency);
     }
@@ -5126,8 +5126,13 @@ bool DRW_MText::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs)
         fill with drawing fill color. */
         m_backgroundFlags = buf->getBitLong();
         if ((m_backgroundFlags & 0x01) || (version >= DRW::AC1032 && (m_backgroundFlags & 0x10))) {
-            /* Background scale factor BL Present if background flags = 1, default = 1.5*/
-            m_backgroundScale = buf->getBitLong();
+            /* Background-fill box scale, present if background flags & 1 (default
+               1.5). It is a BitDouble, NOT a BitLong: reading it as BL consumes
+               the wrong bit width and desyncs the stream so the following CMC
+               fill-colour reads garbage and the entity body overruns (parse fails
+               on every MTEXT with background fill, e.g. sample_AC1018). ACadSharp
+               reads ReadBitDouble here. */
+            m_backgroundScale = buf->getBitDouble();
             /* Background color CMC Present if background flags = 1 */
             m_backgroundColor = static_cast<int>(buf->getCmColor(version, nullptr, sBuf));
             /** @todo buf->getCMC */
@@ -5847,15 +5852,23 @@ bool DRW_Hatch::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs)
                     }
                     if (version > DRW::AC1021) { //2010+
                         spline->nfit = buf->getBitLong();
-                        if (!DRW::reserve( spline->fitlist, spline->nfit)) {
-                            return false;
+                        // Fit points AND the start/end tangents are present only
+                        // when nfit > 0 (matches ACadSharp's `if (nfitPoints > 0)`).
+                        // Reading the two tangents unconditionally on an nfit==0
+                        // spline edge over-runs the entity body and fails the parse
+                        // (e.g. svg/export_sample.dwg: a degree-3 non-rational
+                        // spline boundary edge with 9 control points / 0 fit points).
+                        if (spline->nfit > 0) {
+                            if (!DRW::reserve( spline->fitlist, spline->nfit)) {
+                                return false;
+                            }
+                            for (std::int32_t j = 0; j < spline->nfit;++j){
+                                std::shared_ptr<DRW_Coord> crd = std::make_shared<DRW_Coord>(buf->get2RawDouble());
+                                spline->fitlist.push_back(crd);
+                            }
+                            spline->tgStart = buf->get2RawDouble();
+                            spline->tgEnd = buf->get2RawDouble();
                         }
-                        for (std::int32_t j = 0; j < spline->nfit;++j){
-                            std::shared_ptr<DRW_Coord> crd = std::make_shared<DRW_Coord>(buf->get2RawDouble());
-                            spline->fitlist.push_back(crd);
-                        }
-                        spline->tgStart = buf->get2RawDouble();
-                        spline->tgEnd = buf->get2RawDouble();
                     }
                 }
             }

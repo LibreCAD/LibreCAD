@@ -1313,7 +1313,7 @@ public:
     double interlin;              /*!< linespacing factor, code 44 */
     std::uint16_t linespacingStyle = 1; /*!< linespacing style, code 73 (1=at least, 2=exact) */
     std::int32_t m_backgroundFlags = 0;
-    std::int32_t m_backgroundScale = 0;
+    double m_backgroundScale = 0.0; /*!< background-fill box scale (DWG BitDouble) */
     int m_backgroundColor = 0;
     std::int32_t m_backgroundTransparency = 0;
     bool m_r2018IsNotAnnotative = false;
