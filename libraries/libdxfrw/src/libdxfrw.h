@@ -238,6 +238,10 @@ private:
     bool processMaterial();
     bool processGeoData();
     bool processVisualStyle();
+    bool processImageDefReactor();
+    bool processSpatialFilter();
+    bool processTableStyle();
+    bool processMLeaderStyle();
 
     bool processLType();
     bool processLayer();

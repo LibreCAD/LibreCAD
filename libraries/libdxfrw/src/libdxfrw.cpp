@@ -4391,6 +4391,18 @@ bool dxfRW::processObjects() {
                  || "ACDB_VISUALSTYLE_CLASS" == nextentity) {
             processed = processVisualStyle();
         }
+        else if ("IMAGEDEF_REACTOR" == nextentity) {
+            processed = processImageDefReactor();
+        }
+        else if ("SPATIAL_FILTER" == nextentity) {
+            processed = processSpatialFilter();
+        }
+        else if ("TABLESTYLE" == nextentity) {
+            processed = processTableStyle();
+        }
+        else if ("MLEADERSTYLE" == nextentity) {
+            processed = processMLeaderStyle();
+        }
         else {
             //Slice A1: never silently drop an unmodeled object — capture its
             //group codes verbatim for lossless re-emit instead of skipping.
@@ -4538,6 +4550,94 @@ bool dxfRW::processVisualStyle() {
             DRW_DBG(nextentity); DRW_DBG("\n");
             iface->addVisualStyle(data);
             iface->addRawDxfObject(raw);  // no typed writer: raw re-emits on DXF->DXF
+            return true;
+        }
+        captureRawGroup(raw, code);
+        if (!data.parseCode(code, reader))
+            return setError(DRW::BAD_CODE_PARSED);
+    }
+    return setError(DRW::BAD_READ_OBJECTS);
+}
+
+// IMAGEDEF_REACTOR (AcDbRasterImageDefReactor): structured DXF read of the
+// class-version field + raw-net preservation for lossless DXF re-emit.
+bool dxfRW::processImageDefReactor() {
+    DRW_DBG("dxfRW::processImageDefReactor");
+    int code;
+    DRW_ImageDefinitionReactor data;
+    DRW_RawDxfObject raw;
+    raw.name = nextentity;
+    while (reader->readRec(&code)) {
+        if (code == 0) {
+            nextentity = reader->getString();
+            iface->addImageDefinitionReactor(data);
+            iface->addRawDxfObject(raw);
+            return true;
+        }
+        captureRawGroup(raw, code);
+        if (!data.parseCode(code, reader))
+            return setError(DRW::BAD_CODE_PARSED);
+    }
+    return setError(DRW::BAD_READ_OBJECTS);
+}
+
+// SPATIAL_FILTER (AcDbSpatialFilter): structured DXF read of the clip boundary +
+// planes + raw-net preservation.
+bool dxfRW::processSpatialFilter() {
+    DRW_DBG("dxfRW::processSpatialFilter");
+    int code;
+    DRW_SpatialFilter data;
+    DRW_RawDxfObject raw;
+    raw.name = nextentity;
+    while (reader->readRec(&code)) {
+        if (code == 0) {
+            nextentity = reader->getString();
+            iface->addSpatialFilter(data);
+            iface->addRawDxfObject(raw);
+            return true;
+        }
+        captureRawGroup(raw, code);
+        if (!data.parseCode(code, reader))
+            return setError(DRW::BAD_CODE_PARSED);
+    }
+    return setError(DRW::BAD_READ_OBJECTS);
+}
+
+// TABLESTYLE (AcDbTableStyle): structured DXF read of the top-level fields +
+// raw-net preservation (nested row/cell styles round-tripped raw only).
+bool dxfRW::processTableStyle() {
+    DRW_DBG("dxfRW::processTableStyle");
+    int code;
+    DRW_TableStyle data;
+    DRW_RawDxfObject raw;
+    raw.name = nextentity;
+    while (reader->readRec(&code)) {
+        if (code == 0) {
+            nextentity = reader->getString();
+            iface->addTableStyle(data);
+            iface->addRawDxfObject(raw);
+            return true;
+        }
+        captureRawGroup(raw, code);
+        if (!data.parseCode(code, reader))
+            return setError(DRW::BAD_CODE_PARSED);
+    }
+    return setError(DRW::BAD_READ_OBJECTS);
+}
+
+// MLEADERSTYLE (AcDbMLeaderStyle): structured DXF read of the full scalar record
+// + raw-net preservation.  Delivered via addMLeaderStyle (pointer callback).
+bool dxfRW::processMLeaderStyle() {
+    DRW_DBG("dxfRW::processMLeaderStyle");
+    int code;
+    DRW_MLeaderStyle data;
+    DRW_RawDxfObject raw;
+    raw.name = nextentity;
+    while (reader->readRec(&code)) {
+        if (code == 0) {
+            nextentity = reader->getString();
+            iface->addMLeaderStyle(&data);
+            iface->addRawDxfObject(raw);
             return true;
         }
         captureRawGroup(raw, code);

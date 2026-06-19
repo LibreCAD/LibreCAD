@@ -266,6 +266,7 @@ class DRW_ImageDefinitionReactor : public DRW_TableEntry {
 public:
     DRW_ImageDefinitionReactor() { tType = DRW::IMAGEDEFREACTOR; }
 protected:
+    bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
 public:
     std::int32_t m_classVersion = 0;
@@ -279,6 +280,7 @@ public:
 
     DRW_SpatialFilter() { tType = DRW::SPATIALFILTER; }
 protected:
+    bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
     bool encodeDwg(DRW::Version version, dwgBufferW *buf,
                    dwgBufferW *strBuf = nullptr,
@@ -1503,6 +1505,7 @@ public:
         DRW_TableEntry::reset();
     }
 protected:
+    bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
 public:
     UTF8STRING m_name;
@@ -1719,6 +1722,7 @@ public:
         tType = DRW::MLEADERSTYLE;
     }
 protected:
+    bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
 public:
     bool encodeDwg(DRW::Version version, dwgBufferW *buf,

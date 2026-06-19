@@ -1328,3 +1328,133 @@ TEST_CASE("DXF VISUALSTYLE is read into a DRW_VisualStyle (desc + type)",
   CHECK(cap.m_captured.desc == "Conceptual");
   CHECK(cap.m_captured.type == 5);
 }
+
+namespace {
+class TableStyleCapture : public StubInterface {
+public:
+  int m_callCount = 0;
+  DRW_TableStyle m_captured;
+  void addTableStyle(const DRW_TableStyle &d) override {
+    if (m_callCount == 0) m_captured = d;
+    ++m_callCount;
+  }
+};
+class MLeaderStyleCapture : public StubInterface {
+public:
+  int m_callCount = 0;
+  DRW_MLeaderStyle m_captured;
+  void addMLeaderStyle(const DRW_MLeaderStyle *d) override {
+    if (m_callCount == 0 && d) m_captured = *d;
+    ++m_callCount;
+  }
+};
+class SpatialFilterCapture : public StubInterface {
+public:
+  int m_callCount = 0;
+  DRW_SpatialFilter m_captured;
+  void addSpatialFilter(const DRW_SpatialFilter &d) override {
+    if (m_callCount == 0) m_captured = d;
+    ++m_callCount;
+  }
+};
+class ImageDefReactorCapture : public StubInterface {
+public:
+  int m_callCount = 0;
+  DRW_ImageDefinitionReactor m_captured;
+  void addImageDefinitionReactor(const DRW_ImageDefinitionReactor &d) override {
+    if (m_callCount == 0) m_captured = d;
+    ++m_callCount;
+  }
+};
+} // namespace
+
+TEST_CASE("DXF TABLESTYLE is read into a DRW_TableStyle (top-level fields)",
+          "[dxf][tablestyle][preservation]") {
+  TableStyleCapture cap;
+  const char *dxf =
+      "0\nSECTION\n2\nOBJECTS\n"
+      "0\nTABLESTYLE\n5\n1C0\n330\nC\n100\nAcDbTableStyle\n"
+      "3\nMyStyle\n70\n1\n71\n2\n40\n0.06\n41\n0.07\n280\n1\n281\n0\n"
+      "0\nENDSEC\n0\nEOF\n";
+  readDxf(dxf, cap, "lc_tablestyle_read.dxf");
+  REQUIRE(cap.m_callCount == 1);
+  CHECK(cap.m_captured.m_name == "MyStyle");
+  CHECK(cap.m_captured.m_flowDirection == 1);
+  CHECK(cap.m_captured.m_flags == 2);
+  CHECK(cap.m_captured.m_horizontalCellMargin == 0.06);
+  CHECK(cap.m_captured.m_verticalCellMargin == 0.07);
+  CHECK(cap.m_captured.m_titleSuppressed == true);
+  CHECK(cap.m_captured.m_headerSuppressed == false);
+}
+
+TEST_CASE("DXF MLEADERSTYLE is read into a DRW_MLeaderStyle",
+          "[dxf][mleaderstyle][preservation]") {
+  MLeaderStyleCapture cap;
+  const char *dxf =
+      "0\nSECTION\n2\nOBJECTS\n"
+      "0\nMLEADERSTYLE\n5\n1D0\n330\nC\n100\nAcDbMLeaderStyle\n"
+      "3\nStandard\n300\nDefault Text\n170\n2\n90\n2\n"
+      "40\n0.5\n41\n0.75\n173\n1\n44\n2.5\n45\n3.0\n"
+      "290\n1\n291\n0\n142\n1.5\n296\n1\n"
+      "340\n1E\n342\n20\n343\n21\n271\n2\n"
+      "0\nENDSEC\n0\nEOF\n";
+  readDxf(dxf, cap, "lc_mleaderstyle_read.dxf");
+  REQUIRE(cap.m_callCount == 1);
+  const DRW_MLeaderStyle &s = cap.m_captured;
+  CHECK(s.description == "Standard");
+  CHECK(s.textDefault == "Default Text");
+  CHECK(s.contentType == 2);
+  CHECK(s.maxLeaderPoints == 2);
+  CHECK(s.firstSegmentAngle == 0.5);
+  CHECK(s.secondSegmentAngle == 0.75);
+  CHECK(s.leaderType == 1);
+  CHECK(s.arrowHeadSize == 2.5);
+  CHECK(s.textHeight == 3.0);
+  CHECK(s.landingEnabled == true);
+  CHECK(s.autoIncludeLanding == false);
+  CHECK(s.scaleFactor == 1.5);
+  CHECK(s.isAnnotative == true);
+  CHECK(s.attachmentDirection == 2);
+  CHECK(s.leaderLineTypeHandle.ref == 0x1Eu);
+  CHECK(s.textStyleHandle.ref == 0x20u);
+  CHECK(s.blockHandle.ref == 0x21u);
+}
+
+TEST_CASE("DXF SPATIAL_FILTER is read into a DRW_SpatialFilter",
+          "[dxf][spatialfilter][preservation]") {
+  SpatialFilterCapture cap;
+  const char *dxf =
+      "0\nSECTION\n2\nOBJECTS\n"
+      "0\nSPATIAL_FILTER\n5\n1B0\n330\nC\n100\nAcDbFilter\n"
+      "100\nAcDbSpatialFilter\n"
+      "70\n3\n10\n0.0\n20\n0.0\n10\n10.0\n20\n0.0\n10\n10.0\n20\n10.0\n"
+      "210\n0.0\n220\n0.0\n230\n1.0\n11\n1.0\n21\n2.0\n31\n0.0\n"
+      "71\n1\n72\n0\n73\n1\n41\n5.5\n"
+      "0\nENDSEC\n0\nEOF\n";
+  readDxf(dxf, cap, "lc_spatialfilter_read.dxf");
+  REQUIRE(cap.m_callCount == 1);
+  const DRW_SpatialFilter &f = cap.m_captured;
+  REQUIRE(f.m_boundaryPoints.size() == 3);
+  CHECK(f.m_boundaryPoints[1].x == 10.0);
+  CHECK(f.m_boundaryPoints[2].y == 10.0);
+  CHECK(f.m_normal.z == 1.0);
+  CHECK(f.m_origin.x == 1.0);
+  CHECK(f.m_origin.y == 2.0);
+  CHECK(f.m_displayBoundary == true);
+  CHECK(f.m_clipFrontPlane == false);
+  CHECK(f.m_clipBackPlane == true);
+  CHECK(f.m_backDistance == 5.5);
+}
+
+TEST_CASE("DXF IMAGEDEF_REACTOR is read into a DRW_ImageDefinitionReactor",
+          "[dxf][imagedefreactor][preservation]") {
+  ImageDefReactorCapture cap;
+  const char *dxf =
+      "0\nSECTION\n2\nOBJECTS\n"
+      "0\nIMAGEDEF_REACTOR\n5\n1A0\n330\n1A\n100\nAcDbRasterImageDefReactor\n"
+      "90\n2\n"
+      "0\nENDSEC\n0\nEOF\n";
+  readDxf(dxf, cap, "lc_imagedefreactor_read.dxf");
+  REQUIRE(cap.m_callCount == 1);
+  CHECK(cap.m_captured.m_classVersion == 2);
+}

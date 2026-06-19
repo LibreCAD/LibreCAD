@@ -3596,6 +3596,25 @@ bool DRW_Material::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t 
     return true;
 }
 
+bool DRW_TableStyle::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
+    // AcDbTableStyle DXF: the top-level scalar fields.  The nested per-cell
+    // styles / row styles (data/header/title) need a sub-record state machine
+    // and are left to the raw-net (round-tripped, not structurally decoded) —
+    // matching dwgTs's TABLESTYLE DXF decode depth.
+    switch (code) {
+    case 3:   m_name = reader->getUtf8String(); break;
+    case 70:  m_flowDirection = reader->getInt32(); break;
+    case 71:  m_flags = reader->getInt32(); break;
+    case 40:  m_horizontalCellMargin = reader->getDouble(); break;
+    case 41:  m_verticalCellMargin = reader->getDouble(); break;
+    case 280: m_titleSuppressed = (reader->getInt32() != 0); break;
+    case 281: m_headerSuppressed = (reader->getInt32() != 0); break;
+    default:
+        return DRW_TableEntry::parseCode(code, reader);
+    }
+    return true;
+}
+
 bool DRW_TableStyle::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs){
     dwgBuffer sBuff = *buf;
     dwgBuffer *sBuf = buf;
@@ -4038,6 +4057,62 @@ bool DRW_MLineStyle::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_
 // non-fatal so the OBJECTS-section scan stays aligned even if a
 // particular style record drifts.  Handle slots are deferred to the
 // trailing handle stream and resolved by the LibreCAD-side filter.
+bool DRW_MLeaderStyle::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
+    // AcDbMLeaderStyle DXF.  All-scalar record (handles via 340-343); code map
+    // matches the per-field comments on the class + dwgTs's MLEADERSTYLE decode.
+    switch (code) {
+    case 179: styleVersion = reader->getInt32(); break;
+    case 170: contentType = reader->getInt32(); break;
+    case 171: drawMLeaderOrder = reader->getInt32(); break;
+    case 172: drawLeaderOrder = reader->getInt32(); break;
+    case 90:  maxLeaderPoints = reader->getInt32(); break;
+    case 40:  firstSegmentAngle = reader->getDouble(); break;
+    case 41:  secondSegmentAngle = reader->getDouble(); break;
+    case 173: leaderType = reader->getInt32(); break;
+    case 91:  leaderColor = reader->getInt32(); break;
+    case 92:  leaderLineWeight = reader->getInt32(); break;
+    case 290: landingEnabled = (reader->getInt32() != 0); break;
+    case 42:  landingGap = reader->getDouble(); break;
+    case 291: autoIncludeLanding = (reader->getInt32() != 0); break;
+    case 43:  landingDistance = reader->getDouble(); break;
+    case 3:   description = reader->getUtf8String(); break;
+    case 44:  arrowHeadSize = reader->getDouble(); break;
+    case 300: textDefault = reader->getUtf8String(); break;
+    case 174: leftAttachment = reader->getInt32(); break;
+    case 178: rightAttachment = reader->getInt32(); break;
+    case 175: textAngleType = reader->getInt32(); break;
+    case 176: textAlignmentType = reader->getInt32(); break;
+    case 93:  textColor = reader->getInt32(); break;
+    case 45:  textHeight = reader->getDouble(); break;
+    case 292: textFrameEnabled = (reader->getInt32() != 0); break;
+    case 297: alwaysAlignTextLeft = (reader->getInt32() != 0); break;
+    case 46:  alignSpace = reader->getDouble(); break;
+    case 94:  blockColor = reader->getInt32(); break;
+    case 47:  blockScale.x = reader->getDouble(); break;
+    case 49:  blockScale.y = reader->getDouble(); break;
+    case 140: blockScale.z = reader->getDouble(); break;
+    case 293: blockScaleEnabled = (reader->getInt32() != 0); break;
+    case 141: blockRotation = reader->getDouble(); break;
+    case 294: blockRotationEnabled = (reader->getInt32() != 0); break;
+    case 177: blockConnectionType = reader->getInt32(); break;
+    case 142: scaleFactor = reader->getDouble(); break;
+    case 295: propertyChanged = (reader->getInt32() != 0); break;
+    case 296: isAnnotative = (reader->getInt32() != 0); break;
+    case 143: breakSize = reader->getDouble(); break;
+    case 271: attachmentDirection = reader->getInt32(); break;
+    case 273: topAttachment = reader->getInt32(); break;
+    case 272: bottomAttachment = reader->getInt32(); break;
+    case 298: textExtended = (reader->getInt32() != 0); break;
+    case 340: leaderLineTypeHandle.ref = reader->getHandleString(); break;
+    case 341: arrowHeadBlockHandle.ref = reader->getHandleString(); break;
+    case 342: textStyleHandle.ref = reader->getHandleString(); break;
+    case 343: blockHandle.ref = reader->getHandleString(); break;
+    default:
+        return DRW_TableEntry::parseCode(code, reader);
+    }
+    return true;
+}
+
 bool DRW_MLeaderStyle::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs){
     dwgBuffer sBuff = *buf;
     dwgBuffer *sBuf = buf;
@@ -5126,6 +5201,16 @@ bool DRW_Group::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs)
     return buf->isGood() && hBuf->isGood();
 }
 
+bool DRW_ImageDefinitionReactor::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
+    // AcDbRasterImageDefReactor DXF: a single class-version field (90).
+    switch (code) {
+    case 90: m_classVersion = reader->getInt32(); break;
+    default:
+        return DRW_TableEntry::parseCode(code, reader);
+    }
+    return true;
+}
+
 bool DRW_ImageDefinitionReactor::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs){
     dwgBuffer sBuff = *buf;
     dwgBuffer *sBuf = version > DRW::AC1018 ? &sBuff : buf;
@@ -5141,6 +5226,33 @@ bool DRW_ImageDefinitionReactor::parseDwg(DRW::Version version, dwgBuffer *buf, 
     m_classVersion = buf->getBitLong();
     DRW_UNUSED(sBuf);
     return buf->isGood() && hBuff.isGood();
+}
+
+bool DRW_SpatialFilter::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
+    // AcDbSpatialFilter / AcDbFilter DXF: the clip boundary polygon, the OCS
+    // normal + origin, the display/clip-plane flags and the back clip distance.
+    // The boundary-relative insert matrices (a run of code-40 doubles) and the
+    // front-clip distance are left to the raw-net (the code-40 stream needs the
+    // ezdxf "last 24 are the two matrices" heuristic; not worth the fragility
+    // here since LibreCAD does not apply the clip).
+    switch (code) {
+    case 10: m_boundaryPoints.push_back(DRW_Coord(reader->getDouble(), 0.0, 0.0)); break;
+    case 20: if (!m_boundaryPoints.empty()) m_boundaryPoints.back().y = reader->getDouble(); break;
+    case 210: m_normal.x = reader->getDouble(); break;
+    case 220: m_normal.y = reader->getDouble(); break;
+    case 230: m_normal.z = reader->getDouble(); break;
+    case 11: m_origin.x = reader->getDouble(); break;
+    case 21: m_origin.y = reader->getDouble(); break;
+    case 31: m_origin.z = reader->getDouble(); break;
+    case 71: m_displayBoundary = (reader->getInt32() != 0); break;
+    case 72: m_clipFrontPlane = (reader->getInt32() != 0); break;
+    case 73: m_clipBackPlane = (reader->getInt32() != 0); break;
+    case 41: m_backDistance = reader->getDouble(); break;
+    case 70: reader->getInt32(); break;  // boundary vertex count (advisory)
+    default:
+        return DRW_TableEntry::parseCode(code, reader);
+    }
+    return true;
 }
 
 bool DRW_SpatialFilter::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs){
