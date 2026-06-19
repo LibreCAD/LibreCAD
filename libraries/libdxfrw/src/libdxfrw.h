@@ -246,6 +246,7 @@ private:
     bool processDimAssoc();
     bool processBackground();
     bool processPointCloudDef();
+    bool processSunStudy();
 
     bool processLType();
     bool processLayer();

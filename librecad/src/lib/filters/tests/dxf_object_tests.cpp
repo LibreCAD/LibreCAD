@@ -1660,3 +1660,52 @@ TEST_CASE("DXF POINTCLOUDDEFREACTOR is read (class version only)",
   CHECK(cap.m_captured.m_kind == DRW_PointCloudDef::Reactor);
   CHECK(cap.m_captured.m_classVersion == 2);
 }
+
+namespace {
+class SunStudyCapture : public StubInterface {
+public:
+  int m_callCount = 0;
+  DRW_SunStudy m_captured;
+  void addSunStudy(const DRW_SunStudy &d) override {
+    if (m_callCount == 0) m_captured = d;
+    ++m_callCount;
+  }
+};
+} // namespace
+
+TEST_CASE("DXF SUNSTUDY is read into a DRW_SunStudy (scalar config)",
+          "[dxf][sunstudy][preservation]") {
+  SunStudyCapture cap;
+  const char *dxf =
+      "0\nSECTION\n2\nOBJECTS\n"
+      "0\nSUNSTUDY\n5\n2E0\n330\nC\n100\nAcDbSunStudy\n"
+      "90\n1\n1\nStudy1\n2\nMy study\n3\nSet\n4\nSubset\n70\n2\n"
+      "290\n1\n291\n0\n292\n1\n293\n1\n294\n0\n"
+      "93\n100\n94\n200\n95\n10\n74\n5\n75\n4\n76\n2\n77\n2\n40\n0.5\n"
+      "341\n2E1\n342\n2E2\n343\n2E3\n"
+      "0\nENDSEC\n0\nEOF\n";
+  readDxf(dxf, cap, "lc_sunstudy_read.dxf");
+  REQUIRE(cap.m_callCount == 1);
+  const DRW_SunStudy &s = cap.m_captured;
+  CHECK(s.m_classVersion == 1);
+  CHECK(s.m_setupName == "Study1");
+  CHECK(s.m_description == "My study");
+  CHECK(s.m_sheetSetName == "Set");
+  CHECK(s.m_sheetSubsetName == "Subset");
+  CHECK(s.m_outputType == 2);
+  CHECK(s.m_useSubset == true);
+  CHECK(s.m_selectDatesFromCalendar == false);
+  CHECK(s.m_selectRangeOfDates == true);
+  CHECK(s.m_lockViewports == true);
+  CHECK(s.m_labelViewports == false);
+  CHECK(s.m_startTime == 100);
+  CHECK(s.m_endTime == 200);
+  CHECK(s.m_interval == 10);
+  CHECK(s.m_viewportCount == 4);
+  CHECK(s.m_rowCount == 2);
+  CHECK(s.m_columnCount == 2);
+  CHECK(s.m_spacing == 0.5);
+  CHECK(s.m_viewHandle == 0x2E1u);
+  CHECK(s.m_visualStyleHandle == 0x2E2u);
+  CHECK(s.m_textStyleHandle == 0x2E3u);
+}

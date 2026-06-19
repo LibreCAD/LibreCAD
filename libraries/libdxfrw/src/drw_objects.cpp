@@ -3555,6 +3555,40 @@ bool DRW_SortEntsTable::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint
     return true;
 }
 
+bool DRW_SunStudy::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
+    // AcDbSunStudy DXF: scalar configuration only.  Codes 90/91/290 are reused
+    // by the date/hour lists (a positional state machine in dwgTs); here only
+    // the FIRST 90 (class version) and FIRST 290 (use_subset) are taken, the
+    // rest of those lists are left to the raw-net.  291-294 are distinct codes.
+    switch (code) {
+    case 90:  if (m_seen90++ == 0) m_classVersion = reader->getInt32(); break;
+    case 1:   m_setupName = reader->getUtf8String(); break;
+    case 2:   m_description = reader->getUtf8String(); break;
+    case 3:   m_sheetSetName = reader->getUtf8String(); break;
+    case 4:   m_sheetSubsetName = reader->getUtf8String(); break;
+    case 70:  m_outputType = static_cast<std::int16_t>(reader->getInt32()); break;
+    case 290: if (m_seen290++ == 0) m_useSubset = (reader->getInt32() != 0); break;
+    case 291: m_selectDatesFromCalendar = (reader->getInt32() != 0); break;
+    case 292: m_selectRangeOfDates = (reader->getInt32() != 0); break;
+    case 293: m_lockViewports = (reader->getInt32() != 0); break;
+    case 294: m_labelViewports = (reader->getInt32() != 0); break;
+    case 93:  m_startTime = reader->getInt32(); break;
+    case 94:  m_endTime = reader->getInt32(); break;
+    case 95:  m_interval = reader->getInt32(); break;
+    case 74:  m_shadePlotType = static_cast<std::int16_t>(reader->getInt32()); break;
+    case 75:  m_viewportCount = static_cast<std::int16_t>(reader->getInt32()); break;
+    case 76:  m_rowCount = static_cast<std::int16_t>(reader->getInt32()); break;
+    case 77:  m_columnCount = static_cast<std::int16_t>(reader->getInt32()); break;
+    case 40:  m_spacing = reader->getDouble(); break;
+    case 341: m_viewHandle = reader->getHandleString(); break;
+    case 342: m_visualStyleHandle = reader->getHandleString(); break;
+    case 343: m_textStyleHandle = reader->getHandleString(); break;
+    default:
+        return DRW_TableEntry::parseCode(code, reader);
+    }
+    return true;
+}
+
 bool DRW_PointCloudDef::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
     // AcDbPointCloudDef / ...DefEx DXF.  Reactors carry only the class version.
     // Code map per dwgTs parseObjectsPointCloudDxf.ts (code 160 is a reader-

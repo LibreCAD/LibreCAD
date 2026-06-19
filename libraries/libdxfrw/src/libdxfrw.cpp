@@ -4423,6 +4423,9 @@ bool dxfRW::processObjects() {
                  || "POINTCLOUDDEFREACTOREX" == nextentity) {
             processed = processPointCloudDef();
         }
+        else if ("SUNSTUDY" == nextentity) {
+            processed = processSunStudy();
+        }
         else {
             //Slice A1: never silently drop an unmodeled object — capture its
             //group codes verbatim for lossless re-emit instead of skipping.
@@ -4765,6 +4768,28 @@ bool dxfRW::processPointCloudDef() {
         if (code == 0) {
             nextentity = reader->getString();
             iface->addPointCloudDef(data);
+            iface->addRawDxfObject(raw);
+            return true;
+        }
+        captureRawGroup(raw, code);
+        if (!data.parseCode(code, reader))
+            return setError(DRW::BAD_CODE_PARSED);
+    }
+    return setError(DRW::BAD_READ_OBJECTS);
+}
+
+// SUNSTUDY (AcDbSunStudy): structured DXF read of the scalar study config +
+// raw-net preservation (date/hour lists left raw).
+bool dxfRW::processSunStudy() {
+    DRW_DBG("dxfRW::processSunStudy");
+    int code;
+    DRW_SunStudy data;
+    DRW_RawDxfObject raw;
+    raw.name = nextentity;
+    while (reader->readRec(&code)) {
+        if (code == 0) {
+            nextentity = reader->getString();
+            iface->addSunStudy(data);
             iface->addRawDxfObject(raw);
             return true;
         }

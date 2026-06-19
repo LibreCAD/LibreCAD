@@ -80,7 +80,8 @@ namespace DRW {
          LAYERINDEX,
          SPATIALINDEX,
          BACKGROUND,
-         POINTCLOUDDEF
+         POINTCLOUDDEF,
+         SUNSTUDY
      };
 
 //pending VP_ENT_HDR, LONG_TRANSACTION,
@@ -1507,6 +1508,47 @@ protected:
     bool parseDwg(DRW::Version /*v*/, dwgBuffer * /*buf*/, std::uint32_t /*bs*/=0) override {
         return true;  // DXF-only object; DWG never dispatches a typed instance.
     }
+};
+
+//! SUNSTUDY (AcDbSunStudy) object.  Decodes the scalar study configuration
+//! (names, output type, viewport grid, date range, handles).  The date/hour
+//! lists (overloaded codes 90/91/290 driven by a state machine) are left to the
+//! raw-net.  DXF-only structured decode; DWG stays raw.  Not rendered.
+class DRW_SunStudy : public DRW_TableEntry {
+    SETOBJFRIENDS
+public:
+    DRW_SunStudy() { tType = DRW::SUNSTUDY; }
+
+    std::int32_t m_classVersion = 0;  /*!< code 90 (first) */
+    UTF8STRING m_setupName;           /*!< code 1 */
+    UTF8STRING m_description;         /*!< code 2 */
+    UTF8STRING m_sheetSetName;        /*!< code 3 */
+    UTF8STRING m_sheetSubsetName;     /*!< code 4 */
+    std::int16_t m_outputType = 0;    /*!< code 70 */
+    bool m_useSubset = false;         /*!< code 290 (first) */
+    bool m_selectDatesFromCalendar = false; /*!< code 291 */
+    bool m_selectRangeOfDates = false;/*!< code 292 */
+    bool m_lockViewports = false;     /*!< code 293 */
+    bool m_labelViewports = false;    /*!< code 294 */
+    std::int32_t m_startTime = 0;     /*!< code 93 */
+    std::int32_t m_endTime = 0;       /*!< code 94 */
+    std::int32_t m_interval = 0;      /*!< code 95 */
+    std::int16_t m_shadePlotType = 0; /*!< code 74 */
+    std::int16_t m_viewportCount = 0; /*!< code 75 */
+    std::int16_t m_rowCount = 0;      /*!< code 76 */
+    std::int16_t m_columnCount = 0;   /*!< code 77 */
+    double m_spacing = 0.0;           /*!< code 40 */
+    std::uint32_t m_viewHandle = 0;        /*!< code 341 */
+    std::uint32_t m_visualStyleHandle = 0; /*!< code 342 */
+    std::uint32_t m_textStyleHandle = 0;   /*!< code 343 */
+protected:
+    bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
+    bool parseDwg(DRW::Version /*v*/, dwgBuffer * /*buf*/, std::uint32_t /*bs*/=0) override {
+        return true;  // DXF-only object; DWG never dispatches a typed instance.
+    }
+private:
+    int m_seen90 = 0;
+    int m_seen290 = 0;
 };
 
 struct DRW_TableStyleBorder {
