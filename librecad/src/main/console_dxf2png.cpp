@@ -22,8 +22,8 @@
 **
 ******************************************************************************/
 
+#include <cstdlib>
 #include <memory>
-#include <set>
 
 #include <QApplication>
 #include <QCoreApplication>
@@ -31,6 +31,7 @@
 #include <QtCore>
 #include <QtSvg>
 
+#include "console_command_utils.h"
 #include "main.h"
 
 #include "qc_applicationwindow.h"
@@ -72,158 +73,191 @@ bool slotFileExport(RS_Graphic* graphic,
                     bool bw=true);
 
 namespace {
-// find the image format from the file extension; default to png
-QString getFormatFromFile(const QString& fileName)
-{
-    QList<QByteArray> supportedImageFormats = QImageWriter::supportedImageFormats();
-    supportedImageFormats.push_back("svg"); // add svg
 
-    for (QString format: supportedImageFormats) {
-        format = format.toLower();
-        if (fileName.endsWith(format, Qt::CaseInsensitive))
-            return format;
+struct ImageCommandSpec {
+    QString commandName;
+    QString inputExt;
+    QString inputLabel;
+    QString outputExt;
+    QString outputLabel;
+    QStringList acceptedExts;
+};
+
+bool exportOneImageFile(const ImageCommandSpec& spec, const QString& inputFile,
+                        const QString& outputFile, const QSize& outputSize) {
+    std::unique_ptr<RS_Document> doc = openDocAndSetGraphic(inputFile);
+    if (doc == nullptr || doc->getGraphic() == nullptr)
+        return false;
+
+    RS_Graphic *graphic = doc->getGraphic();
+
+    LC_LOG << "Printing" << inputFile << "to" << outputFile << ">>>>";
+
+    touchGraphic(graphic);
+
+    bool ret = false;
+    if (spec.outputExt.compare(QStringLiteral("svg"), Qt::CaseInsensitive) == 0) {
+        ret = LC_ActionFileExportMakerCam::writeSvg(outputFile, *graphic);
+    } else {
+        QSize borders = QSize(5, 5);
+        bool black = false;
+        bool bw = false;
+        ret = slotFileExport(graphic, outputFile, spec.outputExt.toUpper(), outputSize,
+                             borders, black, bw);
     }
-    return "png";
-}
+
+    qDebug() << "Printing" << inputFile << "to" << outputFile
+             << (ret ? "Done" : "Failed");
+    return ret;
 }
 
-/////////
-/// \brief console_dxf2png is called if librecad
-/// as console dxf2png tool for converting DXF to PNG.
-/// \param argc
-/// \param argv
-/// \return
-///
-int console_dxf2png(int argc, char* argv[])
-{
+int runImageCommand(int argc, char* argv[], const ImageCommandSpec& spec) {
     RS_DEBUG->setLevel(RS_Debug::D_NOTHING);
 
-    QApplication app(argc, argv);
+    const LC_Console::CommandContext context =
+        LC_Console::contextForCommand(argc, argv, spec.commandName);
+    LC_Console::NormalizedArgv normalizedArgs(argc, argv, context);
+    int normalizedArgc = normalizedArgs.argc();
+    char** normalizedArgv = normalizedArgs.argv();
+
+    QApplication app(normalizedArgc, normalizedArgv);
     QCoreApplication::setOrganizationName("LibreCAD");
     QCoreApplication::setApplicationName("LibreCAD");
     QCoreApplication::setApplicationVersion(XSTR(LC_VERSION));
 
-    QFileInfo prgInfo(QFile::decodeName(argv[0]));
-    QString prgDir(prgInfo.absolutePath());
+    QFileInfo prgInfo(QFile::decodeName(normalizedArgv[0]));
+    const QString prgDir(prgInfo.absolutePath());
+    const QByteArray prgDirBytes = prgDir.toLatin1();
     RS_Settings::init(app.organizationName(), app.applicationName());
     RS_SYSTEM->init(app.applicationName(), app.applicationVersion(),
-        XSTR(QC_APPDIR), prgDir.toLatin1().data());
+                    XSTR(QC_APPDIR), prgDirBytes.constData());
 
     QCommandLineParser parser;
 
-    QString appDesc;
-    QString librecad;
-    std::set<QString> allowed = {"dxf2png", "dxf2svg"};
-    if (allowed.count(prgInfo.baseName()) == 0) {
-        librecad = prgInfo.filePath();
-        for (const auto& prog: allowed)
-            appDesc += "\n" + prog + " usage: " + prgInfo.filePath()
-            + " " + prog +" [options] <dxf_files>\n";
-    }
-    appDesc += "\nPrint a DXF file to a PNG/SVG file.";
-    appDesc += "\n\n";
-    appDesc += "Examples:\n\n";
-    appDesc += "  " + librecad + " dxf2png *.dxf";
-    appDesc += "    -- print a dxf file to a png file with the same name.\n";
-    parser.setApplicationDescription(appDesc);
+    QStringList appDesc;
+    const QString command = context.displayCommand();
+    appDesc << "";
+    appDesc << spec.commandName + " usage: " + command +
+                   QString(" [options] <%1_files>").arg(spec.inputExt);
+    appDesc << "";
+    appDesc << QString("Print %1 file(s) to %2 file(s).")
+                   .arg(spec.inputLabel, spec.outputLabel);
+    if (spec.inputExt == "dxf")
+        appDesc << QString("DWG input is accepted for compatibility; prefer dwg2%1 for DWG files.")
+                       .arg(spec.outputExt);
+    appDesc << "";
+    appDesc << "Examples:";
+    appDesc << "";
+    appDesc << "  " + command + QString(" *.%1").arg(spec.inputExt);
+    appDesc << "    -- print all input files to " + spec.outputLabel +
+                   " files with the same names.";
+    parser.setApplicationDescription(appDesc.join("\n"));
 
     parser.addHelpOption();
     parser.addVersionOption();
 
-    QCommandLineOption outFileOpt(QStringList() << "o" << "outfile",
-        "Output PNG file.", "file");
+    QCommandLineOption outFileOpt(QStringList() << "o" << "output" << "outfile",
+        "Output file (single input only).", "file");
     parser.addOption(outFileOpt);
 
     QCommandLineOption pngSizeOpt(QStringList() << "r" << "resolution",
-        "Output PNG size (Width x Height) in pixels.", "WxH");
+        "Output size (Width x Height) in pixels.", "WxH");
     parser.addOption(pngSizeOpt);
 
-    parser.addPositionalArgument("<dxf_files>", "Input DXF file");
+    QCommandLineOption outDirOpt(QStringList() << "t" << "directory",
+        "Target output directory.", "path");
+    parser.addOption(outDirOpt);
+
+    parser.addPositionalArgument("<" + spec.inputExt + "_files>",
+        "Input " + spec.inputLabel + " file(s)");
 
     parser.process(app);
 
     const QStringList args = parser.positionalArguments();
 
-    if (args.isEmpty() || (args.size() == 1 && (args[0] == "dxf2png" || args[0] == "dxf2svg")))
+    if (args.isEmpty())
         parser.showHelp(EXIT_FAILURE);
+
     // Set PNG size from user input
     QSize pngSize = parsePngSizeArg(parser.value(pngSizeOpt)); // If nothing, use default values.
 
-    QStringList dxfFiles;
-
-    for (auto arg : args) {
-        QFileInfo dxfFileInfo(arg);
-        const QString sfx = dxfFileInfo.suffix().toLower();
-        if (sfx != "dxf" && sfx != "dwg")
-          continue; // Skip files without .dxf/.dwg extension
-        dxfFiles.append(arg);
+    const QStringList inputFiles = LC_Console::collectInputFiles(args, spec.acceptedExts);
+    if (inputFiles.isEmpty()) {
+        qCritical("ERROR: no %s files found in arguments.",
+                  qPrintable(LC_Console::extensionDescription(spec.acceptedExts)));
+        return EXIT_FAILURE;
     }
 
-    if (dxfFiles.isEmpty())
-        parser.showHelp(EXIT_FAILURE);
+    if (LC_Console::containsDwgInput(inputFiles) &&
+        !LC_Console::dwgSupportAvailable()) {
+        qCritical("ERROR: DWG input requires a build with DWGSUPPORT enabled.");
+        return EXIT_FAILURE;
+    }
 
-    // Output setup
+    const QString outFile = parser.value(outFileOpt);
+    const QString outDir = parser.value(outDirOpt);
+    QString outputOptionsError;
+    if (!LC_Console::validateOutputOptions(inputFiles.size(), outFile, outDir,
+                                           false, false,
+                                           &outputOptionsError)) {
+        qCritical("ERROR: %s", qPrintable(outputOptionsError));
+        return EXIT_FAILURE;
+    }
 
-    QString& dxfFile = dxfFiles[0];
-
-    QFileInfo dxfFileInfo(dxfFile);
-    QString fn = dxfFileInfo.completeBaseName(); // original DXF file name
-    if(fn.isEmpty())
-        fn = "unnamed";
-
-    // Set output filename from user input if present
-    QString outFile = parser.value(outFileOpt);
-    if (outFile.isEmpty()) {
-        outFile = dxfFileInfo.path() + "/" + fn + "." + args[0].mid(args[0].size()-3);
-    } else {
-        outFile = QFileInfo(outFile).isAbsolute() ? outFile : dxfFileInfo.path() + "/" + outFile;
+    QString dirError;
+    if (!LC_Console::ensureOutputDirectory(outDir, &dirError)) {
+        qCritical("ERROR: %s.", qPrintable(dirError));
+        return EXIT_FAILURE;
     }
 
     RS_FONTLIST->init();
+    RS_PATTERNLIST->init();
 
-    // Open the file and process the graphics
-
-    std::unique_ptr<RS_Document> doc = openDocAndSetGraphic(dxfFile);
-
-    if (doc == nullptr || doc->getGraphic() == nullptr)
-        return 1;
-    RS_Graphic *graphic = doc->getGraphic();
-
-    LC_LOG << "Printing" << dxfFile << "to" << outFile << ">>>>";
-
-    touchGraphic(graphic);
-
-    // Start of the actual conversion
-
-    LC_LOG<< "QC_ApplicationWindow::slotFileExport()";
-
-    // read default settings:
-    LC_GROUP_GUARD("Export"); // fixme settings
-    QString defDir = dxfFileInfo.path();
-
-    // find out extension:
-    QString format = getFormatFromFile(outFile).toUpper();
-
-    // append extension to file:
-    if (!QFileInfo(fn).fileName().contains(".")) {
-        fn.push_back("." + format.toLower());
+    int failed = 0;
+    for (const QString& inputFile : inputFiles) {
+        const QString outputFile = outFile.isEmpty()
+            ? LC_Console::defaultOutputPath(inputFile, spec.outputExt, outDir)
+            : outFile;
+        if (!exportOneImageFile(spec, inputFile, outputFile, pngSize))
+            ++failed;
     }
 
-    bool ret = false;
-    if (format.compare("SVG", Qt::CaseInsensitive) == 0) {
-        ret = LC_ActionFileExportMakerCam::writeSvg(outFile, *graphic);
-    } else {
-        QSize borders = QSize(5, 5);
-        bool black = false;
-        bool bw = false;
-        ret = slotFileExport(graphic, outFile, format, pngSize, borders,
-                       black, bw);
-    }
-
-    qDebug() << "Printing" << dxfFile << "to" << outFile << (ret ? "Done" : "Failed");
-    return 0;
+    return failed == 0 ? EXIT_SUCCESS : EXIT_FAILURE;
 }
 
+} // namespace
+
+int console_dxf2png(int argc, char* argv[])
+{
+    return runImageCommand(argc, argv,
+        {QStringLiteral("dxf2png"), QStringLiteral("dxf"), QStringLiteral("DXF"),
+         QStringLiteral("png"), QStringLiteral("PNG"),
+         LC_Console::acceptedExtensions(QStringLiteral("dxf"), {QStringLiteral("dwg")})});
+}
+
+int console_dwg2png(int argc, char* argv[])
+{
+    return runImageCommand(argc, argv,
+        {QStringLiteral("dwg2png"), QStringLiteral("dwg"), QStringLiteral("DWG"),
+         QStringLiteral("png"), QStringLiteral("PNG"),
+         LC_Console::acceptedExtensions(QStringLiteral("dwg"))});
+}
+
+int console_dxf2svg(int argc, char* argv[])
+{
+    return runImageCommand(argc, argv,
+        {QStringLiteral("dxf2svg"), QStringLiteral("dxf"), QStringLiteral("DXF"),
+         QStringLiteral("svg"), QStringLiteral("SVG"),
+         LC_Console::acceptedExtensions(QStringLiteral("dxf"), {QStringLiteral("dwg")})});
+}
+
+int console_dwg2svg(int argc, char* argv[])
+{
+    return runImageCommand(argc, argv,
+        {QStringLiteral("dwg2svg"), QStringLiteral("dwg"), QStringLiteral("DWG"),
+         QStringLiteral("svg"), QStringLiteral("SVG"),
+         LC_Console::acceptedExtensions(QStringLiteral("dwg"))});
+}
 
 static std::unique_ptr<RS_Document> openDocAndSetGraphic(QString dxfFile){
     auto doc = std::make_unique<RS_Graphic>();

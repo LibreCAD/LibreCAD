@@ -25,5 +25,8 @@
 #define CONSOLE_DXF2PNG_H
 
 int console_dxf2png(int argc, char* argv[]);
+int console_dwg2png(int argc, char* argv[]);
+int console_dxf2svg(int argc, char* argv[]);
+int console_dwg2svg(int argc, char* argv[]);
 
 #endif // CONSOLE_DXF2PNG_H

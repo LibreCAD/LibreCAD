@@ -1612,6 +1612,8 @@ endif()
 
 set(MAIN_SOURCES
     librecad/src/main/main.cpp
+    librecad/src/main/console_command_utils.cpp
+    librecad/src/main/console_command_utils.h
     librecad/src/main/console_dxf2dwg.cpp
     librecad/src/main/console_dxf2dwg.h
     librecad/src/main/console_dxf2pdf/console_dxf2pdf.cpp
@@ -1795,6 +1797,7 @@ if(BUILD_TESTS)
         librecad/src/lib/filters/tests/i18n_caret_nfc_tests.cpp
         librecad/src/lib/filters/tests/dwg_decompress18_tests.cpp
         librecad/src/lib/engine/settings/tests/rs_settings_migration_tests.cpp
+        librecad/src/main/tests/console_command_utils_tests.cpp
     )
 
     # Include directories for rs_math.h and other dependencies
