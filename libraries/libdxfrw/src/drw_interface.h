@@ -360,6 +360,8 @@ public:
     virtual void addSun(const DRW_Sun& data) { (void) data; }
     /** Called for every render background (AcDb*Background) object. */
     virtual void addBackground(const DRW_Background& data) { (void) data; }
+    /** Called for every point-cloud definition (AcDbPointCloudDef*) object. */
+    virtual void addPointCloudDef(const DRW_PointCloudDef& data) { (void) data; }
     /** Called for ACDBASSOC* action/dependency/action-param shell objects. */
     virtual void addAssociativeObject(const DRW_AssociativeObject& data) { (void) data; }
     /** Called for ACSH_* history/action shell objects. */

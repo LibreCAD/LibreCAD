@@ -79,7 +79,8 @@ namespace DRW {
          IDBUFFER,
          LAYERINDEX,
          SPATIALINDEX,
-         BACKGROUND
+         BACKGROUND,
+         POINTCLOUDDEF
      };
 
 //pending VP_ENT_HDR, LONG_TRANSACTION,
@@ -1483,6 +1484,29 @@ protected:
 private:
     int m_seen90 = 0;             /*!< gradient/ground-plane/solid: 90 appears twice */
     int m_seen290 = 0;            /*!< ibl: 290 appears twice (enable, displayImage) */
+};
+
+//! Point-cloud definition objects (AcDbPointCloudDef / ...DefEx and their
+//! reactors).  File reference + load state + WCS extents.  DXF-only structured
+//! decode; DWG stays raw.  Not rendered by LibreCAD (point clouds) — read parity
+//! with dwgTs.
+class DRW_PointCloudDef : public DRW_TableEntry {
+    SETOBJFRIENDS
+public:
+    enum Kind { Definition, DefinitionEx, Reactor };
+    DRW_PointCloudDef() { tType = DRW::POINTCLOUDDEF; }
+
+    Kind m_kind = Definition;
+    std::int32_t m_classVersion = 0;  /*!< code 90 */
+    UTF8STRING m_sourceFilename;      /*!< code 1 (definition/ex) */
+    bool m_isLoaded = false;          /*!< code 280 */
+    DRW_Coord m_extentsMin;           /*!< code 10/20/30 */
+    DRW_Coord m_extentsMax;           /*!< code 11/21/31 */
+protected:
+    bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
+    bool parseDwg(DRW::Version /*v*/, dwgBuffer * /*buf*/, std::uint32_t /*bs*/=0) override {
+        return true;  // DXF-only object; DWG never dispatches a typed instance.
+    }
 };
 
 struct DRW_TableStyleBorder {

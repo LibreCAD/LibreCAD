@@ -4417,6 +4417,12 @@ bool dxfRW::processObjects() {
                  || "SKYLIGHTBACKGROUND" == nextentity || "SKYLIGHT_BACKGROUND" == nextentity) {
             processed = processBackground();
         }
+        else if ("POINTCLOUDDEFINITION" == nextentity
+                 || "POINTCLOUDDEFINITIONEX" == nextentity
+                 || "POINTCLOUDDEFREACTOR" == nextentity
+                 || "POINTCLOUDDEFREACTOREX" == nextentity) {
+            processed = processPointCloudDef();
+        }
         else {
             //Slice A1: never silently drop an unmodeled object — capture its
             //group codes verbatim for lossless re-emit instead of skipping.
@@ -4730,6 +4736,35 @@ bool dxfRW::processBackground() {
         if (code == 0) {
             nextentity = reader->getString();
             iface->addBackground(data);
+            iface->addRawDxfObject(raw);
+            return true;
+        }
+        captureRawGroup(raw, code);
+        if (!data.parseCode(code, reader))
+            return setError(DRW::BAD_CODE_PARSED);
+    }
+    return setError(DRW::BAD_READ_OBJECTS);
+}
+
+// AcDbPointCloudDef / ...DefEx and reactors: structured DXF read into
+// DRW_PointCloudDef (kind from the entity name) + raw-net preservation.
+bool dxfRW::processPointCloudDef() {
+    DRW_DBG("dxfRW::processPointCloudDef");
+    int code;
+    DRW_PointCloudDef data;
+    if (nextentity == "POINTCLOUDDEFINITIONEX")
+        data.m_kind = DRW_PointCloudDef::DefinitionEx;
+    else if (nextentity == "POINTCLOUDDEFREACTOR"
+             || nextentity == "POINTCLOUDDEFREACTOREX")
+        data.m_kind = DRW_PointCloudDef::Reactor;
+    else
+        data.m_kind = DRW_PointCloudDef::Definition;
+    DRW_RawDxfObject raw;
+    raw.name = nextentity;
+    while (reader->readRec(&code)) {
+        if (code == 0) {
+            nextentity = reader->getString();
+            iface->addPointCloudDef(data);
             iface->addRawDxfObject(raw);
             return true;
         }

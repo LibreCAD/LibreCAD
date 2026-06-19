@@ -3555,6 +3555,26 @@ bool DRW_SortEntsTable::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint
     return true;
 }
 
+bool DRW_PointCloudDef::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
+    // AcDbPointCloudDef / ...DefEx DXF.  Reactors carry only the class version.
+    // Code map per dwgTs parseObjectsPointCloudDxf.ts (code 160 is a reader-
+    // "skipped" range, left to the raw-net).
+    switch (code) {
+    case 90:  m_classVersion = reader->getInt32(); break;
+    case 1:   m_sourceFilename = reader->getUtf8String(); break;
+    case 280: m_isLoaded = (reader->getInt32() != 0); break;
+    case 10:  m_extentsMin.x = reader->getDouble(); break;
+    case 20:  m_extentsMin.y = reader->getDouble(); break;
+    case 30:  m_extentsMin.z = reader->getDouble(); break;
+    case 11:  m_extentsMax.x = reader->getDouble(); break;
+    case 21:  m_extentsMax.y = reader->getDouble(); break;
+    case 31:  m_extentsMax.z = reader->getDouble(); break;
+    default:
+        return DRW_TableEntry::parseCode(code, reader);
+    }
+    return true;
+}
+
 bool DRW_Material::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
     // AcDbMaterial: only the name (1) and description (2) are decoded — the
     // visual-property fields (color/ambient/diffuse/specular/maps/...) are not

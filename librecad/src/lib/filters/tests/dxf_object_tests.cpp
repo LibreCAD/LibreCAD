@@ -1612,3 +1612,51 @@ TEST_CASE("DXF SKYLIGHTBACKGROUND + SOLIDBACKGROUND read into DRW_Background",
     CHECK(cap.m_captured.m_solidColor == 255);
   }
 }
+
+namespace {
+class PointCloudDefCapture : public StubInterface {
+public:
+  int m_callCount = 0;
+  DRW_PointCloudDef m_captured;
+  void addPointCloudDef(const DRW_PointCloudDef &d) override {
+    if (m_callCount == 0) m_captured = d;
+    ++m_callCount;
+  }
+};
+} // namespace
+
+TEST_CASE("DXF POINTCLOUDDEFINITION is read into a DRW_PointCloudDef",
+          "[dxf][pointcloud][preservation]") {
+  PointCloudDefCapture cap;
+  const char *dxf =
+      "0\nSECTION\n2\nOBJECTS\n"
+      "0\nPOINTCLOUDDEFINITION\n5\n2D0\n330\nC\n100\nAcDbPointCloudDef\n"
+      "90\n1\n1\nscan.rcp\n280\n1\n"
+      "10\n-5.0\n20\n-6.0\n30\n0.0\n11\n5.0\n21\n6.0\n31\n2.0\n"
+      "0\nENDSEC\n0\nEOF\n";
+  readDxf(dxf, cap, "lc_pointclouddef_read.dxf");
+  REQUIRE(cap.m_callCount == 1);
+  const DRW_PointCloudDef &p = cap.m_captured;
+  CHECK(p.m_kind == DRW_PointCloudDef::Definition);
+  CHECK(p.m_classVersion == 1);
+  CHECK(p.m_sourceFilename == "scan.rcp");
+  CHECK(p.m_isLoaded == true);
+  CHECK(p.m_extentsMin.x == -5.0);
+  CHECK(p.m_extentsMin.y == -6.0);
+  CHECK(p.m_extentsMax.x == 5.0);
+  CHECK(p.m_extentsMax.z == 2.0);
+}
+
+TEST_CASE("DXF POINTCLOUDDEFREACTOR is read (class version only)",
+          "[dxf][pointcloud][preservation]") {
+  PointCloudDefCapture cap;
+  const char *dxf =
+      "0\nSECTION\n2\nOBJECTS\n"
+      "0\nPOINTCLOUDDEFREACTOR\n5\n2D1\n330\nC\n100\nAcDbPointCloudDefReactor\n"
+      "90\n2\n"
+      "0\nENDSEC\n0\nEOF\n";
+  readDxf(dxf, cap, "lc_pointcloudreactor_read.dxf");
+  REQUIRE(cap.m_callCount == 1);
+  CHECK(cap.m_captured.m_kind == DRW_PointCloudDef::Reactor);
+  CHECK(cap.m_captured.m_classVersion == 2);
+}

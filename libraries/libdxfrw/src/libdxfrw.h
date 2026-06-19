@@ -245,6 +245,7 @@ private:
     bool processSortEntsTable();
     bool processDimAssoc();
     bool processBackground();
+    bool processPointCloudDef();
 
     bool processLType();
     bool processLayer();
