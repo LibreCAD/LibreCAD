@@ -305,6 +305,72 @@ TEST_CASE("DXF round-trip via RS_FilterDXFRW preserves unmodeled object + entity
   std::filesystem::remove(out);
 }
 
+// D4 write-path: a LIGHT read from a DWG lands only on the metadata shelf
+// (LibreCAD has no RS_Light), so DWG->DXF export used to silently drop it.
+// writeEntities now re-emits metadata.lights() as typed AcDbLight entities
+// (R2007+). Seed a light directly and confirm it survives the DXF export.
+TEST_CASE("DXF export re-emits DWG-read LIGHT entities", "[dxf][roundtrip][filter][light]") {
+  ensureSettings();
+  const std::string src = tmpFile("lightsrc.dxf");
+  const std::string out = tmpFile("light.dxf");
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+
+  // Minimal valid DXF (one LINE) to set the graphic up like a real import.
+  const std::string dxf =
+      "0\nSECTION\n2\nENTITIES\n"
+      "0\nLINE\n8\n0\n10\n0.0\n20\n0.0\n30\n0.0\n11\n10.0\n21\n10.0\n31\n0.0\n"
+      "0\nENDSEC\n0\nEOF\n";
+  writeText(src, dxf);
+
+  RS_Graphic graphic;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(src),
+                              RS2::FormatDXFRW));
+  }
+
+  // Seed a LIGHT on the metadata shelf, exactly as the DWG read path would.
+  {
+    DRW_Light light;
+    light.handle = 0x300;
+    light.parentHandle = 0x1F;  // Model_Space BLOCK_RECORD
+    light.m_name = "TESTLIGHT";
+    light.m_type = 2;           // point light
+    light.m_status = true;
+    light.m_intensity = 0.75;
+    light.m_position.x = 1.0; light.m_position.y = 2.0; light.m_position.z = 3.0;
+    light.m_target.x = 4.0; light.m_target.y = 5.0; light.m_target.z = 6.0;
+    light.m_hotspotAngle = 45.0;
+    light.m_falloffAngle = 60.0;
+    graphic.dwgAdvancedMetadata().addLight(light);
+  }
+
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out),
+                              RS2::FormatDXFRW));  // AC1021 (R2007+)
+  }
+
+  CHECK(countRecords(out, "LIGHT") == 1);
+  CHECK(recordHasCode(out, "LIGHT", "100"));  // AcDbLight subclass marker
+  CHECK(recordHasCode(out, "LIGHT", "1"));    // name
+  CHECK(recordHasCode(out, "LIGHT", "40"));   // intensity
+  CHECK(recordHasCode(out, "LIGHT", "10"));   // position
+
+  bool sawName = false;
+  std::ifstream in(out);
+  std::string line;
+  while (std::getline(in, line)) {
+    if (!line.empty() && line.back() == '\r') line.pop_back();
+    if (line == "TESTLIGHT") { sawName = true; break; }
+  }
+  CHECK(sawName);
+
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+}
+
 TEST_CASE("DXF CLASSES section round-trips source custom entity metadata",
           "[dxf][roundtrip][filter][classes]") {
   ensureSettings();

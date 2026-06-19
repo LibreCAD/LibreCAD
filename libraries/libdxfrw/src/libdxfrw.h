@@ -113,6 +113,7 @@ public:
     bool writeTolerance(DRW_Tolerance *ent);
     bool writeHatch(DRW_Hatch *ent);
     bool writeViewport(DRW_Viewport *ent);
+    bool writeLight(DRW_Light *ent);
     DRW_ImageDef *writeImage(DRW_Image *ent, std::string name);
     bool writeWipeout(DRW_Image *ent);
     bool writeMultiLeader(DRW_MLeader *ent);

@@ -2080,6 +2080,46 @@ bool dxfRW::writeMText(DRW_MText *ent){
     return true;
 }
 
+bool dxfRW::writeLight(DRW_Light *ent) {
+    // AcDbLight is an R2007+ (AC1021+) entity; pre-R2007 DXF has no LIGHT entity,
+    // so skip rather than emit something AutoCAD/ezdxf would reject. Lights read
+    // from a DWG are carried on LibreCAD's metadata shelf and would otherwise be
+    // dropped on DWG->DXF export; this re-emits them (D4 write-path preservation).
+    if (version < DRW::AC1021)
+        return false;
+    writer->writeString(0, "LIGHT");
+    writeEntity(ent);
+    writer->writeString(100, "AcDbLight");
+    writer->writeInt32(90, static_cast<int>(ent->m_classVersion));
+    writer->writeUtf8String(1, ent->m_name);
+    writer->writeInt16(70, static_cast<int>(ent->m_type));
+    writer->writeBool(290, ent->m_status);
+    // ACI index in 63; a packed true-color value goes in 421 instead.
+    if (ent->m_color < 256)
+        writer->writeInt16(63, static_cast<int>(ent->m_color));
+    else
+        writer->writeInt32(421, static_cast<int>(ent->m_color));
+    writer->writeBool(291, ent->m_plotGlyph);
+    writer->writeDouble(40, ent->m_intensity);
+    writer->writeDouble(10, ent->m_position.x);
+    writer->writeDouble(20, ent->m_position.y);
+    writer->writeDouble(30, ent->m_position.z);
+    writer->writeDouble(11, ent->m_target.x);
+    writer->writeDouble(21, ent->m_target.y);
+    writer->writeDouble(31, ent->m_target.z);
+    writer->writeInt16(72, static_cast<int>(ent->m_attenuationType));
+    writer->writeBool(292, ent->m_useAttenuationLimits);
+    writer->writeDouble(41, ent->m_attenuationStartLimit);
+    writer->writeDouble(42, ent->m_attenuationEndLimit);
+    writer->writeDouble(50, ent->m_hotspotAngle);
+    writer->writeDouble(51, ent->m_falloffAngle);
+    writer->writeBool(293, ent->m_castShadows);
+    writer->writeInt16(73, static_cast<int>(ent->m_shadowType));
+    writer->writeInt32(91, static_cast<int>(ent->m_shadowMapSize));
+    writer->writeInt16(280, static_cast<int>(ent->m_shadowMapSoftness));
+    return true;
+}
+
 bool dxfRW::writeViewport(DRW_Viewport *ent) {
     writer->writeString(0, "VIEWPORT");
     writeEntity(ent);

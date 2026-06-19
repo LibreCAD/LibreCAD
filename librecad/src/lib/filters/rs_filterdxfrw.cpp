@@ -8374,6 +8374,36 @@ void RS_FilterDXFRW::writeEntities(){
       DRW_RawDxfObject entity = rawEntity;
       m_dxfW->writeRawDxfObject(&entity);
     }
+    // LIGHT entities read from a DWG live only on the metadata shelf (no RS_Light
+    // model), so without this loop a DWG->DXF export silently drops them. Re-emit
+    // them as typed AcDbLight (R2007+; writeLight no-ops on older DXF targets).
+    if (m_dxfW->getVersion() >= DRW::AC1021) {
+      for (const auto &rec : m_graphic->dwgAdvancedMetadata().lights()) {
+        DRW_Light light;
+        light.handle = rec.handle;
+        light.parentHandle = rec.parentHandle;
+        light.m_classVersion = rec.classVersion;
+        light.m_name = rec.name;
+        light.m_type = rec.type;
+        light.m_status = rec.status;
+        light.m_color = rec.color;
+        light.m_plotGlyph = rec.plotGlyph;
+        light.m_intensity = rec.intensity;
+        light.m_position = rec.position;
+        light.m_target = rec.target;
+        light.m_attenuationType = rec.attenuationType;
+        light.m_useAttenuationLimits = rec.useAttenuationLimits;
+        light.m_attenuationStartLimit = rec.attenuationStartLimit;
+        light.m_attenuationEndLimit = rec.attenuationEndLimit;
+        light.m_hotspotAngle = rec.hotspotAngle;
+        light.m_falloffAngle = rec.falloffAngle;
+        light.m_castShadows = rec.castShadows;
+        light.m_shadowType = rec.shadowType;
+        light.m_shadowMapSize = rec.shadowMapSize;
+        light.m_shadowMapSoftness = rec.shadowMapSoftness;
+        m_dxfW->writeLight(&light);
+      }
+    }
   }
 }
 
