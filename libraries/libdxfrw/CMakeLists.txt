@@ -35,6 +35,7 @@ set(libdxfrw_srcs
   src/intern/dwgwriter27.cpp
   src/intern/dwgwriter32.cpp
   src/intern/dwgreader.cpp
+  src/intern/dwgreaderR11.cpp
   src/intern/dwgreader15.cpp
   src/intern/dwgreader18.cpp
   src/intern/dwgreader21.cpp
@@ -73,6 +74,7 @@ set(libdxfrw_hdrs
   src/intern/dwgwriter27.h
   src/intern/dwgwriter32.h
   src/intern/dwgreader.h
+  src/intern/dwgreaderR11.h
   src/intern/dwgreader15.h
   src/intern/dwgreader18.h
   src/intern/dwgreader21.h

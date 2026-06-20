@@ -295,6 +295,8 @@ set(SHARED_SOURCES
     libraries/libdxfrw/src/intern/dwgwriter24.h
     libraries/libdxfrw/src/intern/dwgreader.cpp
     libraries/libdxfrw/src/intern/dwgreader.h
+    libraries/libdxfrw/src/intern/dwgreaderR11.cpp
+    libraries/libdxfrw/src/intern/dwgreaderR11.h
     libraries/libdxfrw/src/intern/dwgreader15.cpp
     libraries/libdxfrw/src/intern/dwgreader15.h
     libraries/libdxfrw/src/intern/dwgreader18.cpp

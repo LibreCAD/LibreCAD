@@ -5134,3 +5134,29 @@ TEST_CASE("proxy attr layer-order oracle pin", "[.dwg_proxy_attr]") {
   CHECK(T[0] == "Continuous");
   CHECK(T[5] == "AM_ISO08W050x2"); // offset-0: ezdxf's +2 would name T[7]
 }
+
+// Pre-R13 (AC1009/R11) minimal read support. The corpus lives in the
+// developer-local LibreDWG checkout; skip gracefully if absent. dwgReaderR11
+// reads the ENTITIES section's non-chained geometry (LINE/POINT/CIRCLE/ARC/
+// TEXT/SOLID/TRACE/3DFACE); INSERT/POLYLINE/blocks are a follow-up.
+TEST_CASE("DWG pre-R13: read AC1009/R11 entities section") {
+  const char *home = getenv("HOME");
+  if (!home) {
+    SUCCEED("HOME not set; skipping pre-R13 test");
+    return;
+  }
+  const std::string dir =
+      std::string(home) + "/dev/libredwg/test/test-data/r11/";
+  const std::string path = dir + "entities-2d.dwg";
+  std::ifstream probe(path, std::ios::binary);
+  if (!probe.good()) {
+    SUCCEED("pre-R13 corpus absent; skipping");
+    return;
+  }
+  probe.close();
+
+  const DwgResult r = readDwg(path);
+  CHECK(r.ok);                          // was BAD_VERSION before R11 support
+  CHECK(r.version == DRW::AC1009);
+  CHECK(r.entities >= 7);               // 7 non-chained entities in the section
+}
