@@ -5158,6 +5158,6 @@ TEST_CASE("DWG pre-R13: read AC1009/R11 entities section") {
   const DwgResult r = readDwg(path);
   CHECK(r.ok);                          // was BAD_VERSION before R11 support
   CHECK(r.version == DRW::AC1009);
-  CHECK(r.entities >= 22);              // + inserts + attrib/attdef text
+  CHECK(r.entities >= 23);              // + inserts + attrib/attdef + dimension block
   CHECK(r.blocks >= 3);                 // BLOCK1 / BLOCK2 / *D
 }

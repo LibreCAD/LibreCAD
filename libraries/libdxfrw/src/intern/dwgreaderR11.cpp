@@ -378,6 +378,21 @@ bool dwgReaderR11::readEntityR11(DRW_Interface& intfa) {
             e.layer = curLayer;
             intfa.addText(e);
             break; }
+        case R11_DIMENSION: {
+            // A dimension's graphics (lines/arrows/text) live in an anonymous
+            // *D block referenced by the first common field (block, HANDLE 2,2 =
+            // RS index). Render it by inserting that block; the typed dimension
+            // (defpoints/measurement) is dropped (rendering-first). The block was
+            // already delivered by readDwgBlocks.
+            const std::uint16_t blockIdx = fileBuf->getRawShort16();
+            if (blockIdx < m_blockNames.size() && !m_blockNames[blockIdx].empty()) {
+                DRW_Insert e;
+                e.name = m_blockNames[blockIdx];
+                e.basePoint = DRW_Coord(0.0, 0.0, 0.0);  // *D geometry is in WCS
+                e.layer = curLayer;
+                intfa.addInsert(e);
+            }
+            break; }
         default:
             // Unhandled type (INSERT/ATTRIB/ATTDEF/SHAPE/DIMENSION/...) -> skipped
             // for now; counted as a parse "miss" but not a failure (advance by size).
