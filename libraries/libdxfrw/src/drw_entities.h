@@ -86,6 +86,7 @@ namespace DRW {
         VIEWPORT,
 //        WIPEOUT, //WIPEOUTVARIABLE
         XLINE,
+        MPOLYGON,
         UNKNOWN
     };
 
@@ -643,6 +644,11 @@ public:
     std::uint16_t m_shapeIndex = 0;
     DRW_Coord m_extrusion {0.0, 0.0, 1.0};
     std::uint32_t m_shapeFileHandle = 0;
+    std::string m_styleName;  /*!< name of the SHAPEFILE/STYLE record (DXF code 2);
+                                   resolved from m_shapeFileHandle on DWG read. The
+                                   DWG stores only m_shapeIndex; the per-glyph name
+                                   lives in the external .shx, so DXF round-trips the
+                                   style-record name (as libredwg/ACadSharp do). */
     std::uint32_t m_objectSize = 0;
     std::uint32_t m_bodyBitSize = 0;
     std::vector<std::uint8_t> m_rawBytes;
@@ -677,6 +683,14 @@ public:
     std::uint32_t m_bodyBitSize = 0;
     std::vector<std::uint8_t> m_rawBytes;
     std::vector<std::uint8_t> m_payloadBytes; /*!< opaque OLE payload, captured on read (Phase 6.2) */
+    // DXF fields. m_flags is the OLE object type (DXF 71); m_mode is tile mode
+    // (DXF 72); m_r2000TrailingByte is lock_aspect (DXF 73). oleVersion (70) and
+    // oleClient (3) are effectively constant. pt1/pt2 (DXF 10/11) are the frame
+    // rectangle, NOT stored as DWG fields — decoded from the OLE payload header.
+    std::uint16_t m_oleVersion = 2;     /*!< DXF 70 */
+    std::string   m_oleClient = "OLE";  /*!< DXF 3  */
+    DRW_Coord     m_pt1;                /*!< DXF 10/20/30 upper-left  */
+    DRW_Coord     m_pt2;                /*!< DXF 11/21/31 lower-right */
 
 protected:
     bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0,
@@ -1312,7 +1326,7 @@ public:
     double interlin;              /*!< linespacing factor, code 44 */
     std::uint16_t linespacingStyle = 1; /*!< linespacing style, code 73 (1=at least, 2=exact) */
     std::int32_t m_backgroundFlags = 0;
-    std::int32_t m_backgroundScale = 0;
+    double m_backgroundScale = 0.0; /*!< background-fill box scale (DWG BitDouble) */
     int m_backgroundColor = 0;
     std::int32_t m_backgroundTransparency = 0;
     bool m_r2018IsNotAnnotative = false;
@@ -1746,6 +1760,38 @@ private:
     /* Remaining code-330 values to consume as boundary source handles.
        Set when code-97 is interpreted as the per-loop boundary count. */
     int m_boundaryHandleCount = 0;
+};
+
+//! Class to handle MPOLYGON (AcDbMPolygon) entity.
+/*!
+*  AcDbMPolygon is a hatch-derived filled polygon used mainly by AutoCAD Map 3D /
+*  Civil. Its boundary loops, solid flag and pattern share HATCH's representation,
+*  so it stores into a DRW_Hatch and renders through the existing addHatch path.
+*  It only adds a trailing fill-color, an x-direction vector and a degenerate-path
+*  count that plain HATCH does not carry. The DWG binary layout also differs (a
+*  leading style field, gradient before elevation); only the DXF read path is wired
+*  here — the DWG binary parser is a follow-up (no real-world DWG sample exists to
+*  validate against). Dispatched in dxfRW::processMPolygon via classesmap recName
+*  "MPOLYGON" / className "AcDbMPolygon".
+*/
+class DRW_MPolygon : public DRW_Hatch {
+    SETENTFRIENDS
+public:
+    DRW_MPolygon() {
+        eType = DRW::MPOLYGON;
+    }
+
+    /* MPOLYGON-only fill color (DXF 63 ACI / 421 RGB / 430 name). Distinct from
+       the entity color: the fill may differ from the boundary outline color. */
+    int fillColorAci {0};      /*!< fill color ACI index, code 63 */
+    int fillColorRgb {-1};     /*!< fill color 24-bit RGB, code 421 (-1 = unset) */
+    UTF8STRING fillColorName;  /*!< fill color book/name, code 430 */
+    double xDirX {0.0};        /*!< boundary x-direction vector x, code 11 */
+    double xDirY {0.0};        /*!< boundary x-direction vector y, code 21 */
+    int degenerateLoops {0};   /*!< count of degenerate boundary paths, code 99 */
+
+protected:
+    bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
 };
 
 //! Class to handle image entity
@@ -2336,6 +2382,11 @@ public:
 
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
+    /* DXF CONTEXT_DATA{} state machine (§20.4.86).  Routes the nested-block
+       group codes (whose meaning depends on the open block) into `context`.
+       Returns true when the code belongs to the context block (consumed);
+       false when at entity level so parseCode falls through to its own switch. */
+    bool parseDxfContextCode(int code, const std::unique_ptr<dxfReader>& reader);
     virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
     virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0,
                            dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
@@ -2402,6 +2453,12 @@ public:
 
     /* R2013+ */
     bool leaderExtendedToText = false;                              /*!< code 295 */
+
+private:
+    /* Transient DXF parse state for the CONTEXT_DATA{} nested-block machine:
+       0 = entity level, 1 = inside CONTEXT_DATA{}, 2 = inside LEADER{},
+       3 = inside LEADER_LINE{}.  Not serialized; reset per fresh entity. */
+    int m_dxfCtxState = 0;
 };
 
 //! Class to handle viewport entity

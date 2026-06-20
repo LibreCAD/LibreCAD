@@ -708,7 +708,7 @@ distância entre pontos=%2 maior que o diâmetro=%3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="146"/>
         <source>Dual created around center (%1 entities)</source>
-        <translation>Dual criado em torno do centro (% 1 entidades)</translation>
+        <translation>Dual criado em torno do centro (%1 entidades)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="159"/>
@@ -881,8 +881,8 @@ ou[x&apos;y&apos;p&apos;number&apos;edges]</translation>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="537"/>
         <source>Specify distance (%1)
 or [%2]</source>
-        <translation>Especificar a distância (% 1)
-quer [% 2]</translation>
+        <translation>Especificar a distância (%1)
+quer [%2]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="534"/>
@@ -900,8 +900,8 @@ quer [% 2]</translation>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="542"/>
         <source>Specify  distance (angle %1 deg)
 or [%2]</source>
-        <translation>Especificar a distância (ângulo% 1 deg)
-quer [% 2]</translation>
+        <translation>Especificar a distância (ângulo%1 deg)
+quer [%2]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="547"/>
@@ -1013,13 +1013,13 @@ quer [% 2]</translation>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="477"/>
         <source>Specify direction (x or y) or [%1]</source>
-        <translation>Especificar direção (x ou y) ou [% 1]</translation>
+        <translation>Especificar direção (x ou y) ou [%1]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="491"/>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="495"/>
         <source>Specify distance (%1) or [%2]</source>
-        <translation>Especificar distância (% 1) ou [% 2]</translation>
+        <translation>Especificar distância (%1) ou [%2]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="134"/>
@@ -1051,17 +1051,17 @@ quer [% 2]</translation>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="501"/>
         <source>Specify distance (%1 deg) or [%2]</source>
-        <translation>Especificar distância (% 1 deg) ou [% 2]</translation>
+        <translation>Especificar distância (%1 deg) ou [%2]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="516"/>
         <source>Specify angle or [%1]</source>
-        <translation>Especificar o ângulo ou [% 1]</translation>
+        <translation>Especificar o ângulo ou [%1]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="528"/>
         <source>Specify point or [%1]</source>
-        <translation>Especificar ponto ou [% 1]</translation>
+        <translation>Especificar ponto ou [%1]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="577"/>
@@ -3297,13 +3297,13 @@ Alternative: %4
 Start Edge Point: (%5 , %6)
 Intersection Point :(%7, %8)
 End Edge Point: (%9 , %10)</source>
-        <translation>Ângulo:% 1
-Complementar:% 2
-Suplementar:% 3
-Alternativa:% 4
-Ponto de Margem Inicial: (% 5 ,% 6)
-Ponto de Intersecção :(% 7,% 8)
-Ponto de extremidade: (% 9 ,% 10)</translation>
+        <translation>Ângulo:%1
+Complementar:%2
+Suplementar:%3
+Alternativa:%4
+Ponto de Margem Inicial: (%5 ,%6)
+Ponto de Intersecção :(%7,%8)
+Ponto de extremidade: (%9 ,%10)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="149"/>
@@ -3370,27 +3370,27 @@ Ponto de extremidade: (% 9 ,% 10)</translation>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="41"/>
         <source>Absolute: (%1)</source>
-        <translation>Absoluto: (% 1)</translation>
+        <translation>Absoluto: (%1)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="42"/>
         <source>Relative: (%1)</source>
-        <translation>Relativo: (% 1)</translation>
+        <translation>Relativo: (%1)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="43"/>
         <source>Polar: (%1)</source>
-        <translation>Polar: (% 1)</translation>
+        <translation>Polar: (%1)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="44"/>
         <source>Polar Relative: (%1)</source>
-        <translation>Relativo Polar: (% 1)</translation>
+        <translation>Relativo Polar: (%1)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="46"/>
         <source>Absolute WCS: (%1)</source>
-        <translation>WCS absoluto: (% 1)</translation>
+        <translation>WCS absoluto: (%1)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="70"/>
@@ -3711,7 +3711,7 @@ Ponto de extremidade: (% 9 ,% 10)</translation>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayerscmd.cpp" line="53"/>
         <source>Enter layer name to %1</source>
-        <translation>Indique o nome da camada para% 1</translation>
+        <translation>Indique o nome da camada para%1</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayerscmd.cpp" line="53"/>
@@ -4509,7 +4509,7 @@ Ponto de extremidade: (% 9 ,% 10)</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="163"/>
         <source>LibreCAD Shortcuts file (*.%1)</source>
-        <translation>Ficheiro de Atalhos LibreCAD (*.% 1)</translation>
+        <translation>Ficheiro de Atalhos LibreCAD (*.%1)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="198"/>
@@ -4690,7 +4690,7 @@ Tem a certeza que vai descartar as alterações?</translation>
         <source>Save changes to the following item?
 %1</source>
         <translation>Gravar as alterações no item seguinte?
-% 1</translation>
+%1</translation>
     </message>
     <message>
         <location filename="../src/ui/main/support/lc_appwindowdialogsinvoker.cpp" line="185"/>
@@ -5004,7 +5004,7 @@ Tem a certeza que vai descartar as alterações?</translation>
         <location filename="../src/ui/components/creators/lc_creatorinvoker.cpp" line="83"/>
         <location filename="../src/ui/components/creators/lc_creatorinvoker.cpp" line="115"/>
         <source>Toolbar: %1 (Custom)</source>
-        <translation>Barra de ferramentas:% 1 (Personalizado)</translation>
+        <translation>Barra de ferramentas:%1 (Personalizado)</translation>
     </message>
 </context>
 <context>
@@ -5351,7 +5351,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="186"/>
         <source>LibreCAD dimension styles file (*.%1)</source>
-        <translation>Ficheiro de estilos de dimensão LibreCAD (*.% 1)</translation>
+        <translation>Ficheiro de estilos de dimensão LibreCAD (*.%1)</translation>
     </message>
 </context>
 <context>
@@ -5400,17 +5400,17 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="76"/>
         <source>Version: &lt;b&gt;%1&lt;/b&gt;</source>
-        <translation>Versão: &lt;b&gt;% 1&lt;/b&gt;</translation>
+        <translation>Versão: &lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="78"/>
         <source>Compiler: Clang %1.%2.%3</source>
-        <translation>Compilador: Clang% 1.% 2.% 3</translation>
+        <translation>Compilador: Clang%1.%2.%3</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="80"/>
         <source>Compiler: GNU GCC %1.%2.%3</source>
-        <translation>Compilador: GNU GCC% 1.% 2.% 3</translation>
+        <translation>Compilador: GNU GCC%1.%2.%3</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="82"/>
@@ -5420,17 +5420,17 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="84"/>
         <source>Compiled on: %1</source>
-        <translation>Compilado em:% 1</translation>
+        <translation>Compilado em:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="85"/>
         <source>Qt Version: %1</source>
-        <translation>Versão do Qt:% 1</translation>
+        <translation>Versão do Qt:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="86"/>
         <source>Boost Version: %1.%2.%3</source>
-        <translation>Boost Versão:% 1.% 2.% 3</translation>
+        <translation>Boost Versão:%1.%2.%3</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="96"/>
@@ -7540,7 +7540,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="102"/>
         <source>Menu Assignment - &quot;%1&quot; Menu</source>
-        <translation>Atribuição do Menu - &quot;% 1&quot; Menu</translation>
+        <translation>Atribuição do Menu - &quot;%1&quot; Menu</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="106"/>
@@ -7685,7 +7685,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="250"/>
         <source>NOTE: This shortcut is already assigned to &quot;%1&quot; menu and that menu will be unassigned on save!</source>
-        <translation>NOTA: Este atalho já está atribuído ao menu &quot;% 1&quot; e esse menu não será atribuído ao gravar!</translation>
+        <translation>NOTA: Este atalho já está atribuído ao menu &quot;%1&quot; e esse menu não será atribuído ao gravar!</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="254"/>
@@ -7979,7 +7979,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.cpp" line="145"/>
         <source>Provided name of dimension style (%1) is not unique! Please enter another one.</source>
-        <translation>Desde que o nome do estilo de dimensão (% 1) não seja único! Por favor, insira outro.</translation>
+        <translation>Desde que o nome do estilo de dimensão (%1) não seja único! Por favor, insira outro.</translation>
     </message>
 </context>
 <context>
@@ -8779,7 +8779,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="203"/>
         <source>Are you sure you&apos;d like to unassign &quot;%1&quot; menu? Note: Just an invocation shortcut will be removed and menu will not be deleted.</source>
-        <translation>Tem a certeza de que deseja desactivar o menu &quot;% 1&quot;? Nota: Apenas um atalho de invocação será removido e o menu não será excluído.</translation>
+        <translation>Tem a certeza de que deseja desactivar o menu &quot;%1&quot;? Nota: Apenas um atalho de invocação será removido e o menu não será excluído.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="216"/>
@@ -8802,12 +8802,12 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="430"/>
         <source>Remove %1</source>
-        <translation>Remover% 1</translation>
+        <translation>Remover%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="431"/>
         <source>Are you sure you&apos;d like to remove  %2&quot;%1&quot;?</source>
-        <translation>Você tem certeza que gostaria de remover% 2&quot;% 1&quot;?</translation>
+        <translation>Você tem certeza que gostaria de remover%2&quot;%1&quot;?</translation>
     </message>
 </context>
 <context>
@@ -9214,7 +9214,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dialogs/file/export/image/lc_exporttoimageservice.cpp" line="62"/>
         <source>Exported: %1</source>
-        <translation>Exportado:% 1</translation>
+        <translation>Exportado:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/image/lc_exporttoimageservice.cpp" line="65"/>
@@ -10323,7 +10323,7 @@ O conteúdo de uma Camada de Construção não deve aparecer na impressão.</tra
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="189"/>
         <source>Invalid value provide for %1 color.
 Please specify a different value.</source>
-        <translation>O valor inválido fornece a cor% 1.
+        <translation>O valor inválido fornece a cor%1.
 Por favor, indique um valor diferente.</translation>
     </message>
     <message>
@@ -12475,7 +12475,7 @@ Aviso: esta ação NÃO pode ser desfeita!</translation>
  &quot;%1&quot;?
  Warning: this action can NOT be undone!</source>
         <translation>Tem a certeza de apagar a vista
-&quot;% 1&quot;?
+&quot;%1&quot;?
 Aviso: esta ação NÃO pode ser desfeita!</translation>
     </message>
     <message>
@@ -12487,7 +12487,7 @@ Aviso: esta ação NÃO pode ser desfeita!</translation>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="302"/>
         <source>Are you sure to delete views %1?
 Warning: this action can NOT be undone!</source>
-        <translation>Tem a certeza de apagar as vistas% 1?
+        <translation>Tem a certeza de apagar as vistas%1?
 Aviso: esta ação NÃO pode ser desfeita!</translation>
     </message>
     <message>
@@ -15890,7 +15890,7 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="45"/>
         <source>LibreCAD settings file (*.%1)</source>
-        <translation>Arquivo de configurações do LibreCAD (*.% 1)</translation>
+        <translation>Arquivo de configurações do LibreCAD (*.%1)</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="91"/>
@@ -16746,7 +16746,7 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="67"/>
         <source>Toolbar: %1</source>
-        <translation>Barra de ferramentas:% 1</translation>
+        <translation>Barra de ferramentas:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="73"/>
@@ -17103,7 +17103,7 @@ Aviso: esta ação NÃO pode ser desfeita!</translation>
  &quot;%1&quot;?
  Warning: this action can NOT be undone!</source>
         <translation>Tem a certeza de apagar o UCS
-&quot;% 1&quot;?
+&quot;%1&quot;?
 Aviso: esta ação NÃO pode ser desfeita!</translation>
     </message>
     <message>
@@ -17115,7 +17115,7 @@ Aviso: esta ação NÃO pode ser desfeita!</translation>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="378"/>
         <source>Are you sure to delete UCS %1?
 Warning: this action can NOT be undone!</source>
-        <translation>Tem a certeza de apagar o UCS% 1?
+        <translation>Tem a certeza de apagar o UCS%1?
 Aviso: esta ação NÃO pode ser desfeita!</translation>
     </message>
     <message>
@@ -17413,7 +17413,7 @@ Aviso: esta ação NÃO pode ser desfeita!</translation>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="429"/>
         <source>Toolbar: %1</source>
-        <translation>Barra de ferramentas:% 1</translation>
+        <translation>Barra de ferramentas:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="446"/>
@@ -18334,7 +18334,7 @@ Favor checar se o arquivo existe e suas permissões.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="249"/>
         <source>Command Alias File: %1</source>
-        <translation>Ficheiro Nome do Comando:% 1</translation>
+        <translation>Ficheiro Nome do Comando:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="339"/>
@@ -21306,7 +21306,7 @@ Isso modifica recursivamente todas as entidades do próprio bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="400"/>
         <source>Are you sure you&apos;d like to delete property [%1]?</source>
-        <translation>Tem certeza de que gostaria de excluir propriedade [% 1]?</translation>
+        <translation>Tem certeza de que gostaria de excluir propriedade [%1]?</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="422"/>
@@ -21373,7 +21373,7 @@ Isso modifica recursivamente todas as entidades do próprio bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="642"/>
         <source>Enter new unique name of dimension style (was &quot;%1&quot;):</source>
-        <translation>Indique o novo nome único do estilo de dimensão (foi &quot;% 1):</translation>
+        <translation>Indique o novo nome único do estilo de dimensão (foi &quot;%1):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="662"/>
@@ -21396,12 +21396,12 @@ Isso modifica recursivamente todas as entidades do próprio bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="684"/>
         <source>Are you sure you want to remove the dimension style &quot;%1&quot; together with child styles?</source>
-        <translation>Tem a certeza de que deseja remover o estilo de dimensão &quot;% 1&quot; juntamente com os estilos filhos?</translation>
+        <translation>Tem a certeza de que deseja remover o estilo de dimensão &quot;%1&quot; juntamente com os estilos filhos?</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="692"/>
         <source>Are you sure you want to remove the dimension style &quot;%1&quot;?</source>
-        <translation>Tem a certeza de que deseja remover o estilo de dimensão &quot;% 1&quot;?</translation>
+        <translation>Tem a certeza de que deseja remover o estilo de dimensão &quot;%1&quot;?</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="929"/>
@@ -25644,7 +25644,7 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="171"/>
         <source>Relative zero position is %1</source>
-        <translation>Posição zero relativa é% 1</translation>
+        <translation>Posição zero relativa é%1</translation>
     </message>
     <message>
         <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="171"/>
@@ -25659,7 +25659,7 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="176"/>
         <source>Coordinate system: %1</source>
-        <translation>Sistema de coordenadas:% 1</translation>
+        <translation>Sistema de coordenadas:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="176"/>
@@ -25838,7 +25838,7 @@ p, li { espaço em branco: pre- wrap; }
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="191"/>
         <source>Layer &quot;%1&quot; and all entities on it will be removed.
 This action can NOT be undone.</source>
-        <translation>A camada &quot;% 1&quot; e todas as entidades nela serão removidas.
+        <translation>A camada &quot;%1&quot; e todas as entidades nela serão removidas.
 Essa ação NÃO pode ser desfeita.</translation>
     </message>
     <message>
@@ -25908,7 +25908,7 @@ Essa ação NÃO pode ser desfeita.</translation>
 [%1].
 Please specify a different name.</source>
         <translation>Tentativa de criar camada com o nome duplicado. O nome da camada duplicada é
-[% 1].
+[%1].
 Por favor, indique um nome diferente.</translation>
     </message>
     <message>
@@ -25963,7 +25963,7 @@ Limpe o filtro e repita.</translation>
 [%1].
 Please specify a different name.</source>
         <translation>Essa camada infantil já existe para
-[% 1].
+[%1].
 Por favor, indique um nome diferente.</translation>
     </message>
     <message>
@@ -25972,7 +25972,7 @@ Por favor, indique um nome diferente.</translation>
 [%1].
 </source>
         <translation>Essa camada infantil já existe para
-[% 1].</translation>
+[%1].</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1165"/>
@@ -26021,7 +26021,7 @@ Se Não, os valores &quot;Por Camada&quot; permanecerão, e a caneta da camada d
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.cpp" line="218"/>
         <source>Invalid value provided for %1 color.
 Please specify a different value.</source>
-        <translation>Valor inválido fornecido para a cor% 1.
+        <translation>Valor inválido fornecido para a cor%1.
 Por favor, indique um valor diferente.</translation>
     </message>
     <message>
@@ -26945,7 +26945,7 @@ Deseja substituí-lo?</translation>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="68"/>
         <source>: duplicated command: %1 is already taken by %2</source>
-        <translation>: comando duplicado:% 1 já está tomado por% 2</translation>
+        <translation>: comando duplicado:%1 já está tomado por%2</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="884"/>
@@ -28038,37 +28038,37 @@ Deseja substituí-lo?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="261"/>
         <location filename="../src/cmd/rs_commands.cpp" line="316"/>
         <source>cannot change meaning of commands. Refused to reuse command %1 to mean %2</source>
-        <translation>não pode mudar o significado dos comandos. Recusado a reutilizar o comando% 1 como sendo% 2</translation>
+        <translation>não pode mudar o significado dos comandos. Recusado a reutilizar o comando%1 como sendo%2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="300"/>
         <source>requesting alias(%1) for unknown command(%2): ignored</source>
-        <translation>solicitando alias(% 1) para o comando desconhecido(% 2): ignorado</translation>
+        <translation>solicitando alias(%1) para o comando desconhecido(%2): ignorado</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="310"/>
         <source>reusing an existing alias: was %1=%2, changed to %1=%3</source>
-        <translation>a usar um apelido existente: foi% 1=% 2, alterado para% 1=% 3</translation>
+        <translation>a usar um apelido existente: foi%1=%2, alterado para%1=%3</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="391"/>
         <source>RS_Commands:: command not found: %1</source>
-        <translation>RS  Comandos:: comando não encontrado:% 1</translation>
+        <translation>RS  Comandos:: comando não encontrado:%1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="416"/>
         <source>keycode: %1 (%2)</source>
-        <translation>código de chave:% 1 (% 2)</translation>
+        <translation>código de chave:%1 (%2)</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="418"/>
         <source>invalid keycode: %1</source>
-        <translation>código de chave inválido:% 1</translation>
+        <translation>código de chave inválido:%1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="433"/>
         <source>Command not found: %1</source>
-        <translation>Comando não encontrado:% 1</translation>
+        <translation>Comando não encontrado:%1</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="204"/>
@@ -28184,7 +28184,7 @@ Deseja substituí-lo?</translation>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="77"/>
         <source>No %1 layers found</source>
-        <translation>Nenhuma camada% 1 encontrada</translation>
+        <translation>Nenhuma camada%1 encontrada</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="92"/>
@@ -30026,12 +30026,12 @@ Deseja substituí-lo?</translation>
         <location filename="../src/ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp" line="180"/>
         <location filename="../src/ui/dialogs/file/export/layers/lc_filedialogservice.cpp" line="219"/>
         <source>File &quot;%1&quot; already exists. Do you want to replace it?</source>
-        <translation>O arquivo &quot;% 1&quot; já existe. Queres substituí-lo?</translation>
+        <translation>O arquivo &quot;%1&quot; já existe. Queres substituí-lo?</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="38"/>
         <source>/CustomColor%1</source>
-        <translation>/Cor personalizada% 1</translation>
+        <translation>/Cor personalizada%1</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="39"/>
@@ -30100,7 +30100,7 @@ Deseja substituí-lo?</translation>
     <message>
         <location filename="../src/lib/engine/document/patterns/rs_patternlist.cpp" line="93"/>
         <source>Hatch:: loading pattern failed: %1</source>
-        <translation>Hatch:: o padrão de carregamento falhou:% 1</translation>
+        <translation>Hatch:: o padrão de carregamento falhou:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="41"/>
@@ -30240,7 +30240,7 @@ Deseja substituí-lo?</translation>
     <message>
         <location filename="../src/lib/engine/document/rs_graphic.cpp" line="741"/>
         <source>Invalid printing scale %1. Cannot fit print preview to page</source>
-        <translation>Escala de impressão inválida% 1. Não é possível ajustar a antevisão da impressão à página</translation>
+        <translation>Escala de impressão inválida%1. Não é possível ajustar a antevisão da impressão à página</translation>
     </message>
     <message>
         <location filename="../src/lib/printing/lc_printing.cpp" line="160"/>
@@ -30956,17 +30956,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="146"/>
         <source>radius=%1 is invalid (expression)</source>
-        <translation>raio=% 1 é inválido (expressão)</translation>
+        <translation>raio=%1 é inválido (expressão)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="148"/>
         <source>radius=%1 is invalid (negative)</source>
-        <translation>raio=% 1 é inválido (negativo)</translation>
+        <translation>raio=%1 é inválido (negativo)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="151"/>
         <source>radius=%1 is invalid (zero)</source>
-        <translation>raio=% 1 é inválido (zero)</translation>
+        <translation>raio=%1 é inválido (zero)</translation>
     </message>
 </context>
 <context>
@@ -31030,7 +31030,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2.cpp" line="246"/>
         <source>No common tangential circle for radius &apos;%1&apos;</source>
-        <translation>Nenhum círculo tangencial comum para o raio &apos;% 1&apos;</translation>
+        <translation>Nenhum círculo tangencial comum para o raio &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
@@ -31200,7 +31200,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="178"/>
         <source>Total distance %1 is smaller than distance between foci</source>
-        <translation>A distância total% 1 é menor do que a distância entre focos</translation>
+        <translation>A distância total%1 é menor do que a distância entre focos</translation>
     </message>
 </context>
 <context>
@@ -31884,10 +31884,10 @@ Complementary: %2
 Supplementary: %3
 Alternative: %4
 </source>
-        <translation>Ângulo:% 1
-Complementar:% 2
-Suplementar:% 3
-Alternativa:% 4</translation>
+        <translation>Ângulo:%1
+Complementar:%2
+Suplementar:%3
+Alternativa:%4</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="140"/>
@@ -31897,12 +31897,12 @@ Supplementary: %3
 Alternative: %4
 Intersection: (%5 , %6)
 Intersection :@(%7, %8)</source>
-        <translation>Ângulo:% 1
-Complementar:% 2
-Suplementar:% 3
-Alternativa:% 4
-Intersecção: (% 5,% 6)
-Intersecção : @ (% 7,% 8)</translation>
+        <translation>Ângulo:%1
+Complementar:%2
+Suplementar:%3
+Alternativa:%4
+Intersecção: (%5,%6)
+Intersecção : @ (%7,%8)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="253"/>
@@ -31991,12 +31991,12 @@ Intersecção : @ (% 7,% 8)</translation>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="153"/>
         <source>Closing Point: %1</source>
-        <translation>Ponto de encerramento:% 1</translation>
+        <translation>Ponto de encerramento:%1</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="160"/>
         <source>Point: %1</source>
-        <translation>Ponto:% 1</translation>
+        <translation>Ponto:%1</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="178"/>
@@ -32023,7 +32023,7 @@ Intersecção : @ (% 7,% 8)</translation>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="101"/>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="108"/>
         <source>Area: %1 %2^2</source>
-        <translation>Área:% 1% 2^2</translation>
+        <translation>Área:%1%2^2</translation>
     </message>
 </context>
 <context>
@@ -32035,11 +32035,11 @@ Cartesian: (%2 , %3)
 Polar: (%4 &lt; %5)
 Start: (%6 , %7)
 End: (%8 , %9)</source>
-        <translation>Distância:% 1
-Cartesiano: (% 2 ,% 3)
-Polar: (% 4 &lt;% 5)
-Início: (% 6 ,% 7)
-Fim: (% 8,% 9)</translation>
+        <translation>Distância:%1
+Cartesiano: (%2 ,%3)
+Polar: (%4 &lt;%5)
+Início: (%6 ,%7)
+Fim: (%8,%9)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="98"/>
@@ -32091,11 +32091,11 @@ Cartesian: (%2 , %3)
 Polar: (%4 &lt; %5)
 Point On Entity: (%6 , %7)
 Point: (%8 , %9)</source>
-        <translation>Distância:% 1
-Cartesiano: (% 2 ,% 3)
-Polar: (% 4 &lt;% 5)
-Ponto sobre a Entidade: (% 6 ,% 7)
-Ponto: (% 8,% 9)</translation>
+        <translation>Distância:%1
+Cartesiano: (%2 ,%3)
+Polar: (%4 &lt;%5)
+Ponto sobre a Entidade: (%6 ,%7)
+Ponto: (%8,%9)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="275"/>
@@ -32900,7 +32900,7 @@ Ponto: (% 8,% 9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="421"/>
         <source>Specify first entity or enter radius &lt;%1&gt;</source>
-        <translation>Especificar primeira entidade ou inserir raio &lt;% 1&gt;</translation>
+        <translation>Especificar primeira entidade ou inserir raio &lt;%1&gt;</translation>
     </message>
 </context>
 <context>

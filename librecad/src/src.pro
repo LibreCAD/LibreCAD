@@ -611,6 +611,7 @@ HEADERS += \
     lib/modification/rs_selection.h \
     lib/math/rs_math.h \
     lib/math/lc_quadratic.h \
+    main/console_command_utils.h \
     main/console_dxf2png.h \
     test/lc_simpletests.h \
     lib/generators/makercamsvg/lc_makercamsvg.h \
@@ -928,6 +929,7 @@ SOURCES += \
     lib/modification/rs_selection.cpp \
     lib/engine/rs_color.cpp \
     lib/engine/rs_pen.cpp \
+    main/console_command_utils.cpp \
     main/console_dxf2png.cpp \
     test/lc_simpletests.cpp \
     lib/generators/makercamsvg/lc_xmlwriterqxmlstreamwriter.cpp \

@@ -26,6 +26,7 @@
 
 #include "lc_filedialogservice.h"
 #include "qg_filedialog.h"
+#include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_dialogfactoryinterface.h"
 #include "rs_document.h"
@@ -205,7 +206,7 @@ bool LC_DocumentsStorage::doSave(RS_Graphic* graphic, bool sameFile) {
 
     /*	Save drawing file if able to created associated object. */
     if (!actualName.isEmpty()) {
-        graphic->prepareForSave(); 
+        graphic->prepareForSave();
         result = RS_FileIO::instance()->fileExport(*graphic, actualName, actualType);
         QFileInfo actualFileInfo(actualName);
         graphic->markSaved(actualFileInfo.lastModified());
@@ -226,23 +227,32 @@ bool LC_DocumentsStorage::doSave(RS_Graphic* graphic, bool sameFile) {
 
 bool LC_DocumentsStorage::autoSaveGraphic(RS_Graphic* graphic, QString& fileName) {
     bool ret = false;
+    RS_DEBUG->print("LC_DocumentsStorage::autoSaveGraphic: isModified=%d", graphic->isModified());
     if (graphic->isModified()) {
         RS2::FormatType actualType = graphic->getFormatType();
+        RS_DEBUG->print("LC_DocumentsStorage::autoSaveGraphic: formatType=%d", static_cast<int>(actualType));
         if (actualType == RS2::FormatUnknown) {
             actualType = RS2::FormatDXFRW;
+            RS_DEBUG->print("LC_DocumentsStorage::autoSaveGraphic: formatType unknown, defaulting to DXFRW");
         }
         QString autosaveFileName = graphic->getAutoSaveFileName();
+        RS_DEBUG->print("LC_DocumentsStorage::autoSaveGraphic: autosaveFileName='%s'", autosaveFileName.toLatin1().data());
         if (!autosaveFileName.isEmpty()) {
+            RS_DEBUG->print("LC_DocumentsStorage::autoSaveGraphic: attempting export to '%s'", autosaveFileName.toLatin1().data());
             ret = RS_FileIO::instance()->fileExport(*graphic, autosaveFileName, actualType);
+            RS_DEBUG->print("LC_DocumentsStorage::autoSaveGraphic: export result=%d", ret);
             /*
              fixme - sand - don't mark file as non-modified on auto-save.
              *QFileInfo finfo(autosaveFileName);
             graphic->markSaved(finfo.lastModified());
             */
+        } else {
+            RS_DEBUG->print("LC_DocumentsStorage::autoSaveGraphic: autosaveFileName is empty, skipping export");
         }
         fileName = autosaveFileName;
     } else {
         // file not modified
+        RS_DEBUG->print("LC_DocumentsStorage::autoSaveGraphic: file not modified, skipping");
         ret = true;
     }
     return ret;

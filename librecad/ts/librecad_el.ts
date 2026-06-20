@@ -708,7 +708,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="146"/>
         <source>Dual created around center (%1 entities)</source>
-        <translation>Διπλή δημιουργία γύρω από το κέντρο (% 1 οντότητες)</translation>
+        <translation>Διπλή δημιουργία γύρω από το κέντρο (%1 οντότητες)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="159"/>
@@ -881,8 +881,8 @@ or[x|y|p|number|edges]</source>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="537"/>
         <source>Specify distance (%1)
 or [%2]</source>
-        <translation>Καθορίστε απόσταση (% 1)
-ή [% 2]</translation>
+        <translation>Καθορίστε απόσταση (%1)
+ή [%2]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="534"/>
@@ -900,8 +900,8 @@ or [%2]</source>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="542"/>
         <source>Specify  distance (angle %1 deg)
 or [%2]</source>
-        <translation>Καθορίστε απόσταση (angle% 1 deg)
-ή [% 2]</translation>
+        <translation>Καθορίστε απόσταση (angle%1 deg)
+ή [%2]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="547"/>
@@ -1013,13 +1013,13 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="477"/>
         <source>Specify direction (x or y) or [%1]</source>
-        <translation>Ορισμός κατεύθυνσης (x ή y) ή [% 1]</translation>
+        <translation>Ορισμός κατεύθυνσης (x ή y) ή [%1]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="491"/>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="495"/>
         <source>Specify distance (%1) or [%2]</source>
-        <translation>Καθορίστε απόσταση (% 1) ή [% 2]</translation>
+        <translation>Καθορίστε απόσταση (%1) ή [%2]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="134"/>
@@ -1051,17 +1051,17 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="501"/>
         <source>Specify distance (%1 deg) or [%2]</source>
-        <translation>Καθορίστε απόσταση (% 1 deg) ή [% 2]</translation>
+        <translation>Καθορίστε απόσταση (%1 deg) ή [%2]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="516"/>
         <source>Specify angle or [%1]</source>
-        <translation>Ορισμός γωνίας ή [% 1]</translation>
+        <translation>Ορισμός γωνίας ή [%1]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="528"/>
         <source>Specify point or [%1]</source>
-        <translation>Προσδιορίστε το σημείο ή [% 1]</translation>
+        <translation>Προσδιορίστε το σημείο ή [%1]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="577"/>
@@ -3297,13 +3297,13 @@ Alternative: %4
 Start Edge Point: (%5 , %6)
 Intersection Point :(%7, %8)
 End Edge Point: (%9 , %10)</source>
-        <translation>Γωνία:% 1
-Συμπληρωματικό:% 2
+        <translation>Γωνία:%1
+Συμπληρωματικό:%2
 Συμπληρωματικό: %3
-Εναλλακτική λύση:% 4
-Σημείο ακρίδας εκκίνησης: (% 5 ,% 6)
-Σημείο διατομής:(% 7,% 8)
-Σημείο άκρου τέλους: (% 9 ,% 10)</translation>
+Εναλλακτική λύση:%4
+Σημείο ακρίδας εκκίνησης: (%5 ,%6)
+Σημείο διατομής:(%7,%8)
+Σημείο άκρου τέλους: (%9 ,%10)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="149"/>
@@ -3370,27 +3370,27 @@ End Edge Point: (%9 , %10)</source>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="41"/>
         <source>Absolute: (%1)</source>
-        <translation>Απόλυτο: (% 1)</translation>
+        <translation>Απόλυτο: (%1)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="42"/>
         <source>Relative: (%1)</source>
-        <translation>Σχετικό: (% 1)</translation>
+        <translation>Σχετικό: (%1)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="43"/>
         <source>Polar: (%1)</source>
-        <translation>Πολικός: (% 1)</translation>
+        <translation>Πολικός: (%1)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="44"/>
         <source>Polar Relative: (%1)</source>
-        <translation>Πολικός συγγενής: (% 1)</translation>
+        <translation>Πολικός συγγενής: (%1)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="46"/>
         <source>Absolute WCS: (%1)</source>
-        <translation>Απόλυτο WCS: (% 1)</translation>
+        <translation>Απόλυτο WCS: (%1)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="70"/>
@@ -3711,7 +3711,7 @@ End Edge Point: (%9 , %10)</source>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayerscmd.cpp" line="53"/>
         <source>Enter layer name to %1</source>
-        <translation>Εισάγετε όνομα στρώματος στο% 1</translation>
+        <translation>Εισάγετε όνομα στρώματος στο%1</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayerscmd.cpp" line="53"/>
@@ -4684,7 +4684,7 @@ Are you sure you are going to discard changes?</source>
         <source>Save changes to the following item?
 %1</source>
         <translation>Αποθήκευση αλλαγών στο ακόλουθο αντικείμενο;
-% 1</translation>
+%1</translation>
     </message>
     <message>
         <location filename="../src/ui/main/support/lc_appwindowdialogsinvoker.cpp" line="185"/>
@@ -4998,7 +4998,7 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/components/creators/lc_creatorinvoker.cpp" line="83"/>
         <location filename="../src/ui/components/creators/lc_creatorinvoker.cpp" line="115"/>
         <source>Toolbar: %1 (Custom)</source>
-        <translation>Γραμμή εργαλείων:% 1 (Προσαρμοσμένο)</translation>
+        <translation>Γραμμή εργαλείων:%1 (Προσαρμοσμένο)</translation>
     </message>
 </context>
 <context>
@@ -5394,17 +5394,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="76"/>
         <source>Version: &lt;b&gt;%1&lt;/b&gt;</source>
-        <translation>Έκδοση: &lt;b&gt;% 1&lt;/b&gt;</translation>
+        <translation>Έκδοση: &lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="78"/>
         <source>Compiler: Clang %1.%2.%3</source>
-        <translation>Μεταγλωττιστής: Clang% 1.% 2.% 3</translation>
+        <translation>Μεταγλωττιστής: Clang%1.%2.%3</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="80"/>
         <source>Compiler: GNU GCC %1.%2.%3</source>
-        <translation>Συλλογή: GNU GCC% 1.% 2.% 3</translation>
+        <translation>Συλλογή: GNU GCC%1.%2.%3</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="82"/>
@@ -5414,17 +5414,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="84"/>
         <source>Compiled on: %1</source>
-        <translation>Συναρμολογημένο σε:% 1</translation>
+        <translation>Συναρμολογημένο σε:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="85"/>
         <source>Qt Version: %1</source>
-        <translation>Έκδοση Qt:% 1</translation>
+        <translation>Έκδοση Qt:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="86"/>
         <source>Boost Version: %1.%2.%3</source>
-        <translation>Ενισχύστε την έκδοση:% 1.% 2.% 3</translation>
+        <translation>Ενισχύστε την έκδοση:%1.%2.%3</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="96"/>
@@ -7971,7 +7971,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.cpp" line="145"/>
         <source>Provided name of dimension style (%1) is not unique! Please enter another one.</source>
-        <translation>Το παρεχόμενο όνομα του στυλ διάστασης (% 1) δεν είναι μοναδικό! Παρακαλώ εισάγετε άλλο ένα.</translation>
+        <translation>Το παρεχόμενο όνομα του στυλ διάστασης (%1) δεν είναι μοναδικό! Παρακαλώ εισάγετε άλλο ένα.</translation>
     </message>
 </context>
 <context>
@@ -8794,12 +8794,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="430"/>
         <source>Remove %1</source>
-        <translation>Αφαίρεση% 1</translation>
+        <translation>Αφαίρεση%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="431"/>
         <source>Are you sure you&apos;d like to remove  %2&quot;%1&quot;?</source>
-        <translation>Είστε σίγουροι ότι θέλετε να αφαιρέσετε το% 2&quot;% 1&quot;?</translation>
+        <translation>Είστε σίγουροι ότι θέλετε να αφαιρέσετε το%2&quot;%1&quot;?</translation>
     </message>
 </context>
 <context>
@@ -9206,7 +9206,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/file/export/image/lc_exporttoimageservice.cpp" line="62"/>
         <source>Exported: %1</source>
-        <translation>Εξαγωγή:% 1</translation>
+        <translation>Εξαγωγή:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/image/lc_exporttoimageservice.cpp" line="65"/>
@@ -10315,7 +10315,7 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="189"/>
         <source>Invalid value provide for %1 color.
 Please specify a different value.</source>
-        <translation>Μη έγκυρη τιμή παρέχει το% 1 χρώμα.
+        <translation>Μη έγκυρη τιμή παρέχει το%1 χρώμα.
 Παρακαλώ προσδιορίστε μια διαφορετική τιμή.</translation>
     </message>
     <message>
@@ -12479,7 +12479,7 @@ Please specify a different value.</source>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="302"/>
         <source>Are you sure to delete views %1?
 Warning: this action can NOT be undone!</source>
-        <translation>Είστε σίγουροι ότι διαγράψατε τις προβολές% 1;
+        <translation>Είστε σίγουροι ότι διαγράψατε τις προβολές%1;
 Προειδοποίηση: αυτή η ενέργεια ΔΕΝ μπορεί να αναιρεθεί!</translation>
     </message>
     <message>
@@ -15880,7 +15880,7 @@ p, li { white- space: pre- wrap;}
     <message>
         <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="45"/>
         <source>LibreCAD settings file (*.%1)</source>
-        <translation>Αρχείο ρυθμίσεων LibreCAD (*.% 1)</translation>
+        <translation>Αρχείο ρυθμίσεων LibreCAD (*.%1)</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="91"/>
@@ -16732,7 +16732,7 @@ p, li { white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="67"/>
         <source>Toolbar: %1</source>
-        <translation>Γραμμή εργαλείων:% 1</translation>
+        <translation>Γραμμή εργαλείων:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="73"/>
@@ -17101,7 +17101,7 @@ p, li { white- space: pre- wrap;}
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="378"/>
         <source>Are you sure to delete UCS %1?
 Warning: this action can NOT be undone!</source>
-        <translation>Είστε σίγουροι ότι διαγράψατε το UCS% 1;
+        <translation>Είστε σίγουροι ότι διαγράψατε το UCS%1;
 Προειδοποίηση: αυτή η ενέργεια ΔΕΝ μπορεί να αναιρεθεί!</translation>
     </message>
     <message>
@@ -17399,7 +17399,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="429"/>
         <source>Toolbar: %1</source>
-        <translation>Γραμμή εργαλείων:% 1</translation>
+        <translation>Γραμμή εργαλείων:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="446"/>
@@ -18000,7 +18000,7 @@ Please check its existence and permissions.</source>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="226"/>
         <source>Saving drawing: %1</source>
-        <translation>Αποθήκευση σχεδίου:% 1</translation>
+        <translation>Αποθήκευση σχεδίου:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="232"/>
@@ -18020,12 +18020,12 @@ Please check its existence and permissions.</source>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="365"/>
         <source>&amp;Save %1</source>
-        <translation>&amp; Αποθήκευση% 1</translation>
+        <translation>&amp; Αποθήκευση%1</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="366"/>
         <source>Save %1 &amp;as...</source>
-        <translation>Αποθήκευση% 1 &amp; ως...</translation>
+        <translation>Αποθήκευση%1 &amp; ως...</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1084"/>
@@ -18321,7 +18321,7 @@ Please check its existence and permissions.</source>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="249"/>
         <source>Command Alias File: %1</source>
-        <translation>Αρχείο ψευδώνυμα εντολής:% 1</translation>
+        <translation>Αρχείο ψευδώνυμα εντολής:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="339"/>
@@ -20382,7 +20382,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="400"/>
         <source>Are you sure you&apos;d like to delete property [%1]?</source>
-        <translation>Σίγουρα θέλετε να διαγράψετε την ιδιότητα [% 1]?</translation>
+        <translation>Σίγουρα θέλετε να διαγράψετε την ιδιότητα [%1]?</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="422"/>
@@ -25637,7 +25637,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="171"/>
         <source>Relative zero position is %1</source>
-        <translation>Σχετική μηδενική θέση είναι% 1</translation>
+        <translation>Σχετική μηδενική θέση είναι%1</translation>
     </message>
     <message>
         <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="171"/>
@@ -25652,7 +25652,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="176"/>
         <source>Coordinate system: %1</source>
-        <translation>Σύστημα συντεταγμένων:% 1</translation>
+        <translation>Σύστημα συντεταγμένων:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="176"/>
@@ -25901,7 +25901,7 @@ This action can NOT be undone.</source>
 [%1].
 Please specify a different name.</source>
         <translation>Προσπάθησε να δημιουργήσεις στρώμα με διπλό όνομα. Διπλό όνομα στρώματος
-[% 1].
+[%1].
 Παρακαλώ προσδιορίστε ένα διαφορετικό όνομα.</translation>
     </message>
     <message>
@@ -25954,7 +25954,7 @@ Clear filtering mask and repeat.</source>
 [%1].
 Please specify a different name.</source>
         <translation>Ένα τέτοιο στρώμα παιδιών υπάρχει ήδη για
-[% 1].
+[%1].
 Παρακαλώ προσδιορίστε ένα διαφορετικό όνομα.</translation>
     </message>
     <message>
@@ -25963,7 +25963,7 @@ Please specify a different name.</source>
 [%1].
 </source>
         <translation>Ένα τέτοιο στρώμα παιδιών υπάρχει ήδη για
-[% 1].</translation>
+[%1].</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1165"/>
@@ -26008,7 +26008,7 @@ If No - &quot;By Layer&quot; values remains and so pen of target layer will defi
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.cpp" line="218"/>
         <source>Invalid value provided for %1 color.
 Please specify a different value.</source>
-        <translation>Μη έγκυρη τιμή που παρέχεται για% 1 χρώμα.
+        <translation>Μη έγκυρη τιμή που παρέχεται για%1 χρώμα.
 Παρακαλώ προσδιορίστε μια διαφορετική τιμή.</translation>
     </message>
     <message>
@@ -26729,7 +26729,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="68"/>
         <source>: duplicated command: %1 is already taken by %2</source>
-        <translation>: διπλή εντολή:% 1 έχει ήδη ληφθεί από% 2</translation>
+        <translation>: διπλή εντολή:%1 έχει ήδη ληφθεί από%2</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="884"/>
@@ -27822,37 +27822,37 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="261"/>
         <location filename="../src/cmd/rs_commands.cpp" line="316"/>
         <source>cannot change meaning of commands. Refused to reuse command %1 to mean %2</source>
-        <translation>δεν μπορεί να αλλάξει το νόημα των εντολών. Απορρίφθηκε η επαναχρησιμοποίηση της εντολής% 1 στο μέσο% 2</translation>
+        <translation>δεν μπορεί να αλλάξει το νόημα των εντολών. Απορρίφθηκε η επαναχρησιμοποίηση της εντολής%1 στο μέσο%2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="300"/>
         <source>requesting alias(%1) for unknown command(%2): ignored</source>
-        <translation>αίτηση ψευδωνύμου(% 1) για άγνωστη εντολή(% 2): αγνοείται</translation>
+        <translation>αίτηση ψευδωνύμου(%1) για άγνωστη εντολή(%2): αγνοείται</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="310"/>
         <source>reusing an existing alias: was %1=%2, changed to %1=%3</source>
-        <translation>επαναχρησιμοποίηση ενός υπάρχοντος ψευδωνύμου: ήταν% 1=% 2, άλλαξε σε% 1=% 3</translation>
+        <translation>επαναχρησιμοποίηση ενός υπάρχοντος ψευδωνύμου: ήταν%1=%2, άλλαξε σε%1=%3</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="391"/>
         <source>RS_Commands:: command not found: %1</source>
-        <translation>RS  commands:: η εντολή δε βρέθηκε:% 1</translation>
+        <translation>RS  commands:: η εντολή δε βρέθηκε:%1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="416"/>
         <source>keycode: %1 (%2)</source>
-        <translation>κωδικός κλειδιού:% 1 (% 2)</translation>
+        <translation>κωδικός κλειδιού:%1 (%2)</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="418"/>
         <source>invalid keycode: %1</source>
-        <translation>μη έγκυρος κωδικός κλειδιού:% 1</translation>
+        <translation>μη έγκυρος κωδικός κλειδιού:%1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="433"/>
         <source>Command not found: %1</source>
-        <translation>Η εντολή δε βρέθηκε:% 1</translation>
+        <translation>Η εντολή δε βρέθηκε:%1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="472"/>
@@ -27973,7 +27973,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="77"/>
         <source>No %1 layers found</source>
-        <translation>Δε βρέθηκαν στρώματα% 1</translation>
+        <translation>Δε βρέθηκαν στρώματα%1</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="92"/>
@@ -30002,7 +30002,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="38"/>
         <source>/CustomColor%1</source>
-        <translation>/CustomColor% 1</translation>
+        <translation>/CustomColor%1</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="39"/>
@@ -30071,7 +30071,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/engine/document/patterns/rs_patternlist.cpp" line="93"/>
         <source>Hatch:: loading pattern failed: %1</source>
-        <translation>Αποτυχία καταπακτής:: Αποτυχία φόρτωσης:% 1</translation>
+        <translation>Αποτυχία καταπακτής:: Αποτυχία φόρτωσης:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="41"/>
@@ -30211,7 +30211,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/engine/document/rs_graphic.cpp" line="741"/>
         <source>Invalid printing scale %1. Cannot fit print preview to page</source>
-        <translation>Μη έγκυρη κλίμακα εκτύπωσης% 1. Αδυναμία προσαρμογής προεπισκόπησης εκτύπωσης στη σελίδα</translation>
+        <translation>Μη έγκυρη κλίμακα εκτύπωσης%1. Αδυναμία προσαρμογής προεπισκόπησης εκτύπωσης στη σελίδα</translation>
     </message>
     <message>
         <location filename="../src/lib/printing/lc_printing.cpp" line="160"/>
@@ -30927,17 +30927,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="146"/>
         <source>radius=%1 is invalid (expression)</source>
-        <translation>ακτίνα=% 1 δεν είναι έγκυρη (έκφραση)</translation>
+        <translation>ακτίνα=%1 δεν είναι έγκυρη (έκφραση)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="148"/>
         <source>radius=%1 is invalid (negative)</source>
-        <translation>ακτίνα=% 1 είναι άκυρη (αρνητική)</translation>
+        <translation>ακτίνα=%1 είναι άκυρη (αρνητική)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="151"/>
         <source>radius=%1 is invalid (zero)</source>
-        <translation>ακτίνα=% 1 είναι άκυρη (μηδέν)</translation>
+        <translation>ακτίνα=%1 είναι άκυρη (μηδέν)</translation>
     </message>
 </context>
 <context>
@@ -31001,7 +31001,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2.cpp" line="246"/>
         <source>No common tangential circle for radius &apos;%1&apos;</source>
-        <translation>Δεν υπάρχει κοινός εφαπτόμενος κύκλος για ακτίνα &apos;% 1&apos;</translation>
+        <translation>Δεν υπάρχει κοινός εφαπτόμενος κύκλος για ακτίνα &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
@@ -31171,7 +31171,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="178"/>
         <source>Total distance %1 is smaller than distance between foci</source>
-        <translation>Η συνολική απόσταση% 1 είναι μικρότερη από την απόσταση μεταξύ foci</translation>
+        <translation>Η συνολική απόσταση%1 είναι μικρότερη από την απόσταση μεταξύ foci</translation>
     </message>
 </context>
 <context>
@@ -31861,10 +31861,10 @@ Complementary: %2
 Supplementary: %3
 Alternative: %4
 </source>
-        <translation>Γωνία:% 1
-Συμπληρωματικό:% 2
+        <translation>Γωνία:%1
+Συμπληρωματικό:%2
 Συμπληρωματικό: %3
-Εναλλακτική λύση:% 4</translation>
+Εναλλακτική λύση:%4</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="140"/>
@@ -31874,12 +31874,12 @@ Supplementary: %3
 Alternative: %4
 Intersection: (%5 , %6)
 Intersection :@(%7, %8)</source>
-        <translation>Γωνία:% 1
-Συμπληρωματικό:% 2
+        <translation>Γωνία:%1
+Συμπληρωματικό:%2
 Συμπληρωματικό: %3
-Εναλλακτική λύση:% 4
-Διατομή: (% 5 ,% 6)
-Διατομή:@(% 7,% 8)</translation>
+Εναλλακτική λύση:%4
+Διατομή: (%5 ,%6)
+Διατομή:@(%7,%8)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="253"/>
@@ -31968,12 +31968,12 @@ Intersection :@(%7, %8)</source>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="153"/>
         <source>Closing Point: %1</source>
-        <translation>Σημείο λήξης:% 1</translation>
+        <translation>Σημείο λήξης:%1</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="160"/>
         <source>Point: %1</source>
-        <translation>Σημείο:% 1</translation>
+        <translation>Σημείο:%1</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="182"/>
@@ -31994,7 +31994,7 @@ Intersection :@(%7, %8)</source>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="101"/>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="108"/>
         <source>Area: %1 %2^2</source>
-        <translation>Περιοχή:% 1% 2^ 2</translation>
+        <translation>Περιοχή:%1%2^ 2</translation>
     </message>
 </context>
 <context>
@@ -32006,11 +32006,11 @@ Cartesian: (%2 , %3)
 Polar: (%4 &lt; %5)
 Start: (%6 , %7)
 End: (%8 , %9)</source>
-        <translation>Απόσταση:% 1
-Καρτέσια: (% 2, %3)
-Πολική: (% 4 &lt; %5)
-Έναρξη: (% 6 ,% 7)
-Τέλος: (% 8 ,% 9)</translation>
+        <translation>Απόσταση:%1
+Καρτέσια: (%2, %3)
+Πολική: (%4 &lt; %5)
+Έναρξη: (%6 ,%7)
+Τέλος: (%8 ,%9)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="98"/>
@@ -32062,11 +32062,11 @@ Cartesian: (%2 , %3)
 Polar: (%4 &lt; %5)
 Point On Entity: (%6 , %7)
 Point: (%8 , %9)</source>
-        <translation>Απόσταση:% 1
-Καρτέσια: (% 2, %3)
-Πολική: (% 4 &lt; %5)
-(% 6 ,% 7)
-Σημείο: (% 8 ,% 9)</translation>
+        <translation>Απόσταση:%1
+Καρτέσια: (%2, %3)
+Πολική: (%4 &lt; %5)
+(%6 ,%7)
+Σημείο: (%8 ,%9)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="275"/>
@@ -32871,7 +32871,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="421"/>
         <source>Specify first entity or enter radius &lt;%1&gt;</source>
-        <translation>Προσδιορίστε την πρώτη οντότητα ή εισάγετε ακτίνα &lt;% 1&gt;</translation>
+        <translation>Προσδιορίστε την πρώτη οντότητα ή εισάγετε ακτίνα &lt;%1&gt;</translation>
     </message>
 </context>
 <context>
@@ -33349,12 +33349,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="160"/>
         <source>Printout offset in paper coordinates by (%1, %2)</source>
-        <translation>Μετατόπιση εκτύπωσης σε συντεταγμένες χαρτιού κατά (% 1,% 2)</translation>
+        <translation>Μετατόπιση εκτύπωσης σε συντεταγμένες χαρτιού κατά (%1,%2)</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="163"/>
         <source>Printout offset in graph coordinates by (%1, %2)</source>
-        <translation>Μετατόπιση εκτύπωσης σε συντεταγμένες γραφήματος κατά (% 1,% 2)</translation>
+        <translation>Μετατόπιση εκτύπωσης σε συντεταγμένες γραφήματος κατά (%1,%2)</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="185"/>

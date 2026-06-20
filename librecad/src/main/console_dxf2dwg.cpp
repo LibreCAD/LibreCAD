@@ -22,11 +22,14 @@
 **
 ****************************************************************************/
 
+#include <cstdlib>
+
 #include <QCommandLineParser>
 #include <QCoreApplication>
 #include <QDir>
 #include <QFileInfo>
 
+#include "console_command_utils.h"
 #include "console_dxf2dwg.h"
 #include "main.h"
 #include "rs.h"
@@ -118,20 +121,24 @@ int runConversion(int argc, char** argv,
 
     // Fix 4: QCoreApplication suffices — no GUI widgets needed now that
     // RS_FileIO::fileImport uses the errorCallback path in this tool.
-    QCoreApplication app(argc, argv);
+    const LC_Console::CommandContext context =
+        LC_Console::contextForCommand(argc, argv, commandName);
+    LC_Console::NormalizedArgv normalizedArgs(argc, argv, context);
+    int normalizedArgc = normalizedArgs.argc();
+    char** normalizedArgv = normalizedArgs.argv();
+
+    QCoreApplication app(normalizedArgc, normalizedArgv);
     QCoreApplication::setOrganizationName("LibreCAD");
     QCoreApplication::setApplicationName("LibreCAD");
     QCoreApplication::setApplicationVersion(XSTR(LC_VERSION));
 
-    QFileInfo prgInfo(QFile::decodeName(argv[0]));
     RS_Settings::init(app.organizationName(), app.applicationName());
-    RS_SYSTEM->init(app.applicationName(), app.applicationVersion(), XSTR(QC_APPDIR), argv[0]);
+    RS_SYSTEM->init(app.applicationName(), app.applicationVersion(), XSTR(QC_APPDIR),
+                    normalizedArgv[0]);
 
     QCommandLineParser parser;
 
-    QString execName = prgInfo.filePath();
-    if (prgInfo.baseName() != commandName)
-        execName += " " + commandName;
+    const QString execName = context.displayCommand();
 
     QStringList appDesc;
     appDesc << "";
@@ -157,13 +164,13 @@ int runConversion(int argc, char** argv,
         QObject::tr("Target output directory."), "path");
     parser.addOption(outDirOpt);
 
-    QCommandLineOption versionOpt(QStringList() << "v" << "version",
+    QCommandLineOption versionOpt(QStringList() << "V" << "dxf-version",
         QObject::tr("DXF output version: r12, r14, r2000, r2004, r2007 (default), r2018."), "version");
     if (allowVersionOption)
         parser.addOption(versionOpt);
 
 #ifdef DWGSUPPORT
-    QCommandLineOption dwgVersionOpt(QStringList() << "dwg-version",
+    QCommandLineOption dwgVersionOpt(QStringList() << "V" << "dwg-version",
         QObject::tr("DWG output version: r2000 (default), r2004."), "version");
     if (outputExt == "dwg")
         parser.addOption(dwgVersionOpt);
@@ -175,7 +182,7 @@ int runConversion(int argc, char** argv,
     parser.process(app);
 
     const QStringList args = parser.positionalArguments();
-    if (args.isEmpty() || (args.size() == 1 && args[0] == commandName))
+    if (args.isEmpty())
         parser.showHelp(EXIT_FAILURE);
 
     RS2::FormatType outFmt = defaultOutputFmt;
@@ -201,19 +208,8 @@ int runConversion(int argc, char** argv,
     QString outFile = parser.value(outFileOpt);
     QString outDir  = parser.value(outDirOpt);
 
-    // Fix 6: -o and -t are mutually exclusive
-    if (!outFile.isEmpty() && !outDir.isEmpty()) {
-        qCritical("ERROR: -o/--output and -t/--directory are mutually exclusive.");
-        return EXIT_FAILURE;
-    }
-
-    QStringList inputFiles;
-    for (const auto& arg : args) {
-        QFileInfo fi(arg);
-        if (fi.suffix().toLower() != inputExt)
-            continue;
-        inputFiles.append(arg);
-    }
+    const QStringList inputFiles =
+        LC_Console::collectInputFiles(args, LC_Console::acceptedExtensions(inputExt));
 
     // Fix 8: clear diagnostic instead of dumping the full help page
     if (inputFiles.isEmpty()) {
@@ -221,13 +217,22 @@ int runConversion(int argc, char** argv,
         return EXIT_FAILURE;
     }
 
-    if (inputFiles.size() > 1 && !outFile.isEmpty()) {
-        qCritical("ERROR: -o/--output can only be used with a single input file.");
+    if (inputExt == "dwg" && !LC_Console::dwgSupportAvailable()) {
+        qCritical("ERROR: DWG input requires a build with DWGSUPPORT enabled.");
         return EXIT_FAILURE;
     }
 
-    if (!outDir.isEmpty() && !QDir().mkpath(outDir)) {
-        qCritical("ERROR: cannot create directory '%s'.", qPrintable(outDir));
+    QString outputOptionsError;
+    if (!LC_Console::validateOutputOptions(inputFiles.size(), outFile, outDir,
+                                           false, false,
+                                           &outputOptionsError)) {
+        qCritical("ERROR: %s", qPrintable(outputOptionsError));
+        return EXIT_FAILURE;
+    }
+
+    QString dirError;
+    if (!LC_Console::ensureOutputDirectory(outDir, &dirError)) {
+        qCritical("ERROR: %s.", qPrintable(dirError));
         return EXIT_FAILURE;
     }
 
@@ -250,9 +255,7 @@ int runConversion(int argc, char** argv,
         if (!outFile.isEmpty()) {
             outputFile = outFile;
         } else {
-            QFileInfo fi(inputFile);
-            QString base = fi.completeBaseName() + "." + outputExt;
-            outputFile = (outDir.isEmpty() ? fi.absolutePath() : outDir) + "/" + base;
+            outputFile = LC_Console::defaultOutputPath(inputFile, outputExt, outDir);
         }
 
         if (!convertFile(inputFile, outputFile, outFmt))
@@ -278,8 +281,14 @@ int consoleDxf2dwg(int argc, char** argv) {
 }
 
 int consoleDwg2dxf(int argc, char** argv) {
+#ifndef DWGSUPPORT
+    (void)argc; (void)argv;
+    qCritical("ERROR: DWG input requires a build with DWGSUPPORT enabled.");
+    return EXIT_FAILURE;
+#else
     return runConversion(argc, argv,
                          "dwg2dxf", "dwg", "dxf",
                          RS2::FormatDXFRW,
                          true);
+#endif
 }

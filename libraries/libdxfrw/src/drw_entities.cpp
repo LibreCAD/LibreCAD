@@ -16,6 +16,7 @@
 #include <cmath>
 #include <cstdio>
 #include <cstdlib>
+#include <cstring>
 #include <limits>
 #include <vector>
 #include "drw_entities.h"
@@ -2118,7 +2119,7 @@ bool DRW_MText::encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t b
     if (version > DRW::AC1015) {            // R2004+: background flags BL
         buf->putBitLong(m_backgroundFlags);
         if ((m_backgroundFlags & 0x01) || (version >= DRW::AC1032 && (m_backgroundFlags & 0x10))) {
-            buf->putBitLong(m_backgroundScale);
+            buf->putBitDouble(m_backgroundScale);  // BitDouble (matches the read fix)
             buf->putCmColor(version, static_cast<std::uint16_t>(m_backgroundColor));
             buf->putBitLong(m_backgroundTransparency);
         }
@@ -3121,6 +3122,28 @@ bool DRW_Ole2Frame::parseDwg(DRW::Version v, dwgBuffer *buf, std::uint32_t bs){
     if (v > DRW::AC1014 && buf->numRemainingBytes() > 0) {
         m_hasR2000TrailingByte = true;
         m_r2000TrailingByte = buf->getRawChar8();
+    }
+
+    // Decode the frame rectangle (DXF 10/11) from the OLE header. AutoCAD/ODA do
+    // NOT store pt1/pt2 as DWG fields; they live in the first ~0x80 bytes of the
+    // payload as raw little-endian doubles. (libredwg's dwg_decode_ole2 is a stub
+    // that hardcodes one sample file's corners.) Layout reverse-engineered and
+    // validated on TS1 + Extruder2: byte 0x00 == 0x80 marker; upper-left @0x02,
+    // lower-right @0x32, 3 doubles each. Guarded so a non-finite/short payload
+    // simply leaves pt1/pt2 at the origin (payload still preserved).
+    if (m_payloadBytes.size() >= 0x4a && m_payloadBytes[0] == 0x80) {
+        auto rd = [&](std::size_t off) {
+            double d = 0.0;
+            std::memcpy(&d, m_payloadBytes.data() + off, sizeof(double));
+            return d;
+        };
+        DRW_Coord ul(rd(0x02), rd(0x0a), rd(0x12));
+        DRW_Coord lr(rd(0x32), rd(0x3a), rd(0x42));
+        if (std::isfinite(ul.x) && std::isfinite(ul.y) && std::isfinite(ul.z)
+            && std::isfinite(lr.x) && std::isfinite(lr.y) && std::isfinite(lr.z)) {
+            m_pt1 = ul;
+            m_pt2 = lr;
+        }
     }
 
     ret = DRW_Entity::parseDwgEntHandle(v, buf);
@@ -4423,7 +4446,7 @@ static bool parseEmbeddedMTextDwg(DRW::Version version, dwgBuffer *buf,
         mtext.m_backgroundFlags = buf->getBitLong();
         if ((mtext.m_backgroundFlags & 0x01)
             || (version >= DRW::AC1032 && (mtext.m_backgroundFlags & 0x10))) {
-            mtext.m_backgroundScale = buf->getBitLong();
+            mtext.m_backgroundScale = buf->getBitDouble();  // BitDouble, not BitLong
             mtext.m_backgroundColor = static_cast<int>(buf->getCmColor(version, nullptr, sBuf));
             mtext.m_backgroundTransparency = buf->getBitLong();
         }
@@ -4561,7 +4584,7 @@ static bool encodeEmbeddedMTextDwg(DRW::Version version, dwgBufferW *buf,
     buf->putBitLong(mtext.m_backgroundFlags);
     if ((mtext.m_backgroundFlags & 0x01)
         || (mtext.m_backgroundFlags & 0x10)) {
-        buf->putBitLong(mtext.m_backgroundScale);
+        buf->putBitDouble(mtext.m_backgroundScale);  // BitDouble, not BitLong
         buf->putCmColor(version, static_cast<std::uint16_t>(mtext.m_backgroundColor));
         buf->putBitLong(mtext.m_backgroundTransparency);
     }
@@ -5126,8 +5149,13 @@ bool DRW_MText::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs)
         fill with drawing fill color. */
         m_backgroundFlags = buf->getBitLong();
         if ((m_backgroundFlags & 0x01) || (version >= DRW::AC1032 && (m_backgroundFlags & 0x10))) {
-            /* Background scale factor BL Present if background flags = 1, default = 1.5*/
-            m_backgroundScale = buf->getBitLong();
+            /* Background-fill box scale, present if background flags & 1 (default
+               1.5). It is a BitDouble, NOT a BitLong: reading it as BL consumes
+               the wrong bit width and desyncs the stream so the following CMC
+               fill-colour reads garbage and the entity body overruns (parse fails
+               on every MTEXT with background fill, e.g. sample_AC1018). ACadSharp
+               reads ReadBitDouble here. */
+            m_backgroundScale = buf->getBitDouble();
             /* Background color CMC Present if background flags = 1 */
             m_backgroundColor = static_cast<int>(buf->getCmColor(version, nullptr, sBuf));
             /** @todo buf->getCMC */
@@ -5420,8 +5448,12 @@ bool DRW_Hatch::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
         associative = reader->getInt32();
         break;
     case 72:        /*edge type*/
-        if (ispol){ //if is polyline is a has-bulge flag
-            if (pline) pline->flags = (pline->flags & ~1) | (reader->getInt32() ? 1 : 0);
+        if (ispol){ // polyline path: 72 is the has-bulge flag. Do NOT fold it
+            // into pline->flags — bit 0 there is the *closed* flag (set by code
+            // 73), and the per-vertex bulges arrive via code 42 regardless. Some
+            // writers (e.g. ezdxf MPOLYGON) emit 73 before 72; the old code let
+            // 72 clear the closed bit 73 had just set, leaving the boundary open
+            // so RS_Hatch::validate() rejected the area.
             break;
         } else if (reader->getInt32() == 1){ //line
             addLine();
@@ -5552,7 +5584,9 @@ bool DRW_Hatch::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
             break;
         }
         if (arc) arc->isccw = reader->getInt32();
-        else if (pline) pline->flags = reader->getInt32();
+        // polyline path: 73 is the is-closed flag -> set bit 0 only, leaving the
+        // rest of pline->flags untouched (order-independent vs code 72).
+        else if (pline) pline->flags = (pline->flags & ~1) | (reader->getInt32() ? 1 : 0);
         break;
     case 74:
         // Spline edge: 74 is the periodic flag (1 = periodic/closed).
@@ -5696,6 +5730,35 @@ bool DRW_Hatch::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
     return true;
 }
 
+bool DRW_MPolygon::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
+    // MPOLYGON shares HATCH's boundary/pattern/gradient codes, so delegate those
+    // to DRW_Hatch::parseCode. It adds a trailer that plain HATCH never emits:
+    //   63 / 421 / 430  fill color (ACI / RGB / book-name) — the filled area's
+    //                   color, which may differ from the boundary outline color;
+    //   11 / 21         boundary x-direction vector (no render impact; left to
+    //                   the base, which ignores it outside an edge context);
+    //   99              count of degenerate boundary paths.
+    // 63/421 are also gradient sub-codes in HATCH, so only claim them here when no
+    // gradient is being accumulated (gradColors empty) — otherwise defer to base.
+    switch (code) {
+    case 63:
+        if (gradColors.empty()) { fillColorAci = reader->getInt32(); return true; }
+        break;
+    case 421:
+        if (gradColors.empty()) { fillColorRgb = reader->getInt32(); return true; }
+        break;
+    case 430:
+        fillColorName = reader->getUtf8String();
+        return true;
+    case 99:
+        degenerateLoops = reader->getInt32();
+        return true;
+    default:
+        break;
+    }
+    return DRW_Hatch::parseCode(code, reader);
+}
+
 bool DRW_Hatch::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs){
     dwgBuffer sBuff = *buf;
     dwgBuffer *sBuf = buf;
@@ -5812,15 +5875,23 @@ bool DRW_Hatch::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs)
                     }
                     if (version > DRW::AC1021) { //2010+
                         spline->nfit = buf->getBitLong();
-                        if (!DRW::reserve( spline->fitlist, spline->nfit)) {
-                            return false;
+                        // Fit points AND the start/end tangents are present only
+                        // when nfit > 0 (matches ACadSharp's `if (nfitPoints > 0)`).
+                        // Reading the two tangents unconditionally on an nfit==0
+                        // spline edge over-runs the entity body and fails the parse
+                        // (e.g. svg/export_sample.dwg: a degree-3 non-rational
+                        // spline boundary edge with 9 control points / 0 fit points).
+                        if (spline->nfit > 0) {
+                            if (!DRW::reserve( spline->fitlist, spline->nfit)) {
+                                return false;
+                            }
+                            for (std::int32_t j = 0; j < spline->nfit;++j){
+                                std::shared_ptr<DRW_Coord> crd = std::make_shared<DRW_Coord>(buf->get2RawDouble());
+                                spline->fitlist.push_back(crd);
+                            }
+                            spline->tgStart = buf->get2RawDouble();
+                            spline->tgEnd = buf->get2RawDouble();
                         }
-                        for (std::int32_t j = 0; j < spline->nfit;++j){
-                            std::shared_ptr<DRW_Coord> crd = std::make_shared<DRW_Coord>(buf->get2RawDouble());
-                            spline->fitlist.push_back(crd);
-                        }
-                        spline->tgStart = buf->get2RawDouble();
-                        spline->tgEnd = buf->get2RawDouble();
                     }
                 }
             }
@@ -7360,14 +7431,155 @@ bool DRW_Leader::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs
 }
 
 // Phase 1 placeholder: skeleton class is in place but no parser yet.
+// DXF CONTEXT_DATA{} nested-block state machine (§20.4.86).  The nested blocks
+// open with 300 "CONTEXT_DATA{" / 302 "LEADER{" / 304 "LEADER_LINE{" and close
+// with the distinct codes 301 / 303 / 305, so the open block is tracked with a
+// single state int (no stack needed).  The numeric group codes are overloaded
+// by block — e.g. 40 is the overall scale in CONTEXT, the landing distance in
+// LEADER and the arrow size in LEADER_LINE; 10/20/30 are the content base point,
+// the connection point and a polyline vertex respectively — so they are routed
+// per state into `context`.  Returns true when the code belongs to the context
+// block (consumed); false at entity level so parseCode handles it.
+bool DRW_MLeader::parseDxfContextCode(int code, const std::unique_ptr<dxfReader>& reader){
+    switch (code) {                              // block open/close markers
+    case 300: m_dxfCtxState = 1; return true;    // "CONTEXT_DATA{"
+    case 301: m_dxfCtxState = 0; return true;    // "}" end context
+    case 302: context.roots.emplace_back(); m_dxfCtxState = 2; return true; // "LEADER{"
+    case 303: m_dxfCtxState = m_dxfCtxState ? 1 : 0; return true;           // "}" end leader
+    case 304:
+        if (reader->getString() == "LEADER_LINE{") {
+            if (!context.roots.empty())
+                context.roots.back().leaderLines.emplace_back();
+            m_dxfCtxState = 3;
+            return true;
+        }
+        if (m_dxfCtxState == 1) { context.textLabel = reader->getUtf8String(); return true; }
+        return false;                            // not in context: defer (unused)
+    case 305: m_dxfCtxState = 2; return true;    // "}" end leader line
+    default: break;
+    }
+
+    if (m_dxfCtxState == 0)
+        return false;                            // entity level — parseCode handles it
+
+    if (m_dxfCtxState == 3) {                    // LEADER_LINE{}: a polyline + overrides
+        DRW_MLeaderRoot* root = context.roots.empty() ? nullptr : &context.roots.back();
+        DRW_MLeaderLeaderLine* line =
+            (root && !root->leaderLines.empty()) ? &root->leaderLines.back() : nullptr;
+        if (line) switch (code) {
+            case 10: line->points.emplace_back(reader->getDouble(), 0.0, 0.0); return true;
+            case 20: if (!line->points.empty()) line->points.back().y = reader->getDouble(); return true;
+            case 30: if (!line->points.empty()) line->points.back().z = reader->getDouble(); return true;
+            case 40: line->arrowSize = reader->getDouble(); return true;
+            case 90: line->segmentIndex = reader->getInt32(); return true;
+            case 91: line->leaderLineIndex = reader->getInt32(); return true;
+            case 92: line->color = reader->getInt32(); return true;
+            case 93: line->overrideFlags = reader->getInt32(); return true;
+            case 170: line->leaderType = reader->getInt32(); return true;
+            case 171: line->lineWeight = reader->getInt32(); return true;
+            default: break;
+        }
+        return true;                             // swallow other line codes
+    }
+
+    if (m_dxfCtxState == 2) {                     // LEADER{}: one root attachment
+        DRW_MLeaderRoot* root = context.roots.empty() ? nullptr : &context.roots.back();
+        if (root) switch (code) {
+            case 290: root->isContentValid = (reader->getInt32() != 0); return true;
+            case 291: root->unknown291 = (reader->getInt32() != 0); return true;
+            case 10: root->connectionPoint.x = reader->getDouble(); return true;
+            case 20: root->connectionPoint.y = reader->getDouble(); return true;
+            case 30: root->connectionPoint.z = reader->getDouble(); return true;
+            case 11: root->direction.x = reader->getDouble(); return true;
+            case 21: root->direction.y = reader->getDouble(); return true;
+            case 31: root->direction.z = reader->getDouble(); return true;
+            case 90: root->leaderIndex = reader->getInt32(); return true;
+            case 40: root->landingDistance = reader->getDouble(); return true;
+            case 271: root->attachmentDirection = reader->getInt32(); return true;
+            default: break;
+        }
+        return true;                             // swallow other leader codes
+    }
+
+    switch (code) {                              // m_dxfCtxState == 1: CONTEXT_DATA{}
+    case 40: context.overallScale = reader->getDouble(); return true;
+    case 10: context.contentBasePoint.x = reader->getDouble(); return true;
+    case 20: context.contentBasePoint.y = reader->getDouble(); return true;
+    case 30: context.contentBasePoint.z = reader->getDouble(); return true;
+    case 41: context.textHeight = reader->getDouble(); return true;
+    case 140: context.arrowHeadSize = reader->getDouble(); return true;
+    case 145: context.landingGap = reader->getDouble(); return true;
+    case 174: context.styleLeftAttach = reader->getInt32(); return true;
+    case 175: context.styleRightAttach = reader->getInt32(); return true;
+    case 176: context.textAlignType = reader->getInt32(); return true;
+    case 177: context.attachmentType = reader->getInt32(); return true;
+    case 290: context.hasTextContents = (reader->getInt32() != 0); return true;
+    /* text-content branch */
+    case 11: context.textNormal.x = reader->getDouble(); return true;
+    case 21: context.textNormal.y = reader->getDouble(); return true;
+    case 31: context.textNormal.z = reader->getDouble(); return true;
+    case 12: context.textLocation.x = reader->getDouble(); return true;
+    case 22: context.textLocation.y = reader->getDouble(); return true;
+    case 32: context.textLocation.z = reader->getDouble(); return true;
+    case 13: context.textDirection.x = reader->getDouble(); return true;
+    case 23: context.textDirection.y = reader->getDouble(); return true;
+    case 33: context.textDirection.z = reader->getDouble(); return true;
+    case 42: context.textRotation = reader->getDouble(); return true;
+    case 43: context.boundaryWidth = reader->getDouble(); return true;
+    case 44: context.boundaryHeight = reader->getDouble(); return true;
+    case 45: context.lineSpacingFactor = reader->getDouble(); return true;
+    case 170: context.lineSpacingStyle = reader->getInt32(); return true;
+    case 90: context.textColor = reader->getInt32(); return true;
+    case 171: context.alignment = reader->getInt32(); return true;
+    case 172: context.flowDirection = reader->getInt32(); return true;
+    case 91: context.bgFillColor = reader->getInt32(); return true;
+    case 141: context.bgScaleFactor = reader->getDouble(); return true;
+    case 92: context.bgTransparency = reader->getInt32(); return true;
+    case 291: context.bgFillEnabled = (reader->getInt32() != 0); return true;
+    case 292: context.bgMaskFillOn = (reader->getInt32() != 0); return true;
+    case 173: context.columnType = reader->getInt32(); return true;
+    case 293: context.textHeightAuto = (reader->getInt32() != 0); return true;
+    case 142: context.columnWidth = reader->getDouble(); return true;
+    case 143: context.columnGutter = reader->getDouble(); return true;
+    case 294: context.columnFlowReversed = (reader->getInt32() != 0); return true;
+    case 144: context.columnSizes.push_back(reader->getDouble()); return true;
+    case 295: context.wordBreak = (reader->getInt32() != 0); return true;
+    /* block-content branch */
+    case 296: context.hasContentsBlock = (reader->getInt32() != 0); return true;
+    case 14: context.blockNormal.x = reader->getDouble(); return true;
+    case 24: context.blockNormal.y = reader->getDouble(); return true;
+    case 34: context.blockNormal.z = reader->getDouble(); return true;
+    case 15: context.blockLocation.x = reader->getDouble(); return true;
+    case 25: context.blockLocation.y = reader->getDouble(); return true;
+    case 35: context.blockLocation.z = reader->getDouble(); return true;
+    case 16: context.blockScale.x = reader->getDouble(); return true;
+    case 26: context.blockScale.y = reader->getDouble(); return true;
+    case 36: context.blockScale.z = reader->getDouble(); return true;
+    case 46: context.blockRotation = reader->getDouble(); return true;
+    case 93: context.blockColor = reader->getInt32(); return true;
+    /* common tail */
+    case 110: context.basePoint.x = reader->getDouble(); return true;
+    case 120: context.basePoint.y = reader->getDouble(); return true;
+    case 130: context.basePoint.z = reader->getDouble(); return true;
+    case 111: context.baseDirection.x = reader->getDouble(); return true;
+    case 121: context.baseDirection.y = reader->getDouble(); return true;
+    case 131: context.baseDirection.z = reader->getDouble(); return true;
+    case 112: context.baseVertical.x = reader->getDouble(); return true;
+    case 122: context.baseVertical.y = reader->getDouble(); return true;
+    case 132: context.baseVertical.z = reader->getDouble(); return true;
+    case 297: context.isNormalReversed = (reader->getInt32() != 0); return true;
+    case 272: context.styleBottomAttach = reader->getInt32(); return true;
+    case 273: context.styleTopAttach = reader->getInt32(); return true;
+    default: return true;                        // swallow any other context code
+    }
+}
+
 bool DRW_MLeader::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
-    // DXF MULTILEADER (ODA spec §20.4.48 mapped to DXF group codes).  The
-    // entity-level fields read here mirror the DWG body parser; the
-    // embedded CONTEXT_DATA{} block (§20.4.86) uses group 100 nested
-    // subclass markers + control-flow markers (302 LEADER{, 304 LEADER_LINE{,
-    // 305 }, 303 }, 301 }) and is parsed via the libdxfrw DXF state machine.
-    // Phase 8 captures a minimal subset (entity-level scalars + basic
-    // CONTEXT_DATA points); a full DXF round-trip is Phase 9 follow-up.
+    // The embedded CONTEXT_DATA{} block (§20.4.86) is routed by the nested-block
+    // state machine; the remaining (entity-level) fields are read below and
+    // mirror the DWG body parser.
+    if (parseDxfContextCode(code, reader))
+        return true;
     switch (code) {
     case 170: leaderType = reader->getInt32(); break;
     case 171: leaderLineWeight = reader->getInt32(); break;

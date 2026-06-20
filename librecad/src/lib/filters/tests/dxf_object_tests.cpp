@@ -1229,3 +1229,608 @@ TEST_CASE("DXF header write tolerates bare vs $-prefixed key convention (dxf-str
       {{"9", "$VERSIONGUID"},
        {"2", "{FFEEDDCC-0000-0000-0000-AABBCCDDEEFF}"}}));
 }
+
+// ── Preservation parity: structured DXF read of objects previously raw-only ──
+namespace {
+class MaterialCapture : public StubInterface {
+public:
+  int m_callCount = 0;
+  int m_rawCount = 0;
+  DRW_Material m_captured;
+  void addMaterial(const DRW_Material &d) override {
+    if (m_callCount == 0) m_captured = d;
+    ++m_callCount;
+  }
+  void addRawDxfObject(const DRW_RawDxfObject &) override { ++m_rawCount; }
+};
+
+class GeoDataCapture : public StubInterface {
+public:
+  int m_callCount = 0;
+  DRW_GeoData m_captured;
+  void addGeoData(const DRW_GeoData &d) override {
+    if (m_callCount == 0) m_captured = d;
+    ++m_callCount;
+  }
+};
+} // namespace
+
+TEST_CASE("DXF MATERIAL is read into a DRW_Material (name + description)",
+          "[dxf][material][preservation]") {
+  MaterialCapture cap;
+  const char *dxf =
+      "0\nSECTION\n2\nOBJECTS\n"
+      "0\nMATERIAL\n5\nEF\n330\nC\n100\nAcDbMaterial\n"
+      "1\nBrass\n2\nPolished brass material\n"
+      "0\nENDSEC\n0\nEOF\n";
+  readDxf(dxf, cap, "lc_material_read.dxf");
+
+  REQUIRE(cap.m_callCount == 1);
+  CHECK(cap.m_captured.m_name == "Brass");
+  CHECK(cap.m_captured.m_description == "Polished brass material");
+  // Dual-mode: also preserved raw for lossless DXF re-emit.
+  CHECK(cap.m_rawCount == 1);
+}
+
+TEST_CASE("DXF GEODATA is read into a DRW_GeoData (scalar geolocation fields)",
+          "[dxf][geodata][preservation]") {
+  GeoDataCapture cap;
+  const char *dxf =
+      "0\nSECTION\n2\nOBJECTS\n"
+      "0\nGEODATA\n5\nF0\n330\n1F\n100\nAcDbGeoData\n"
+      "90\n3\n70\n2\n"
+      "10\n100.0\n20\n200.0\n30\n0.0\n"
+      "11\n12.5\n21\n55.25\n31\n0.0\n"
+      "40\n1.0\n41\n1.0\n"
+      "95\n1\n141\n2.5\n294\n1\n142\n123.0\n"
+      "302\ngeo-rss-tag\n"
+      "0\nENDSEC\n0\nEOF\n";
+  readDxf(dxf, cap, "lc_geodata_read.dxf");
+
+  REQUIRE(cap.m_callCount == 1);
+  const DRW_GeoData &g = cap.m_captured;
+  CHECK(g.m_version == 3);
+  CHECK(g.m_coordinatesType == 2);
+  CHECK(g.m_designPoint.x == 100.0);
+  CHECK(g.m_designPoint.y == 200.0);
+  CHECK(g.m_referencePoint.x == 12.5);
+  CHECK(g.m_referencePoint.y == 55.25);
+  CHECK(g.m_scaleEstimationMethod == 1);
+  CHECK(g.m_userSpecifiedScaleFactor == 2.5);
+  CHECK(g.m_enableSeaLevelCorrection == true);
+  CHECK(g.m_seaLevelElevation == 123.0);
+  CHECK(g.m_geoRssTag == "geo-rss-tag");
+}
+
+namespace {
+class VisualStyleCapture : public StubInterface {
+public:
+  int m_callCount = 0;
+  DRW_VisualStyle m_captured;
+  void addVisualStyle(const DRW_VisualStyle &d) override {
+    if (m_callCount == 0) m_captured = d;
+    ++m_callCount;
+  }
+};
+} // namespace
+
+TEST_CASE("DXF VISUALSTYLE is read into a DRW_VisualStyle (desc + type)",
+          "[dxf][visualstyle][preservation]") {
+  VisualStyleCapture cap;
+  const char *dxf =
+      "0\nSECTION\n2\nOBJECTS\n"
+      "0\nVISUALSTYLE\n5\nF1\n330\nC\n100\nAcDbVisualStyle\n"
+      "2\nConceptual\n70\n5\n"
+      "0\nENDSEC\n0\nEOF\n";
+  readDxf(dxf, cap, "lc_visualstyle_read.dxf");
+
+  REQUIRE(cap.m_callCount == 1);
+  CHECK(cap.m_captured.desc == "Conceptual");
+  CHECK(cap.m_captured.type == 5);
+}
+
+namespace {
+class TableStyleCapture : public StubInterface {
+public:
+  int m_callCount = 0;
+  DRW_TableStyle m_captured;
+  void addTableStyle(const DRW_TableStyle &d) override {
+    if (m_callCount == 0) m_captured = d;
+    ++m_callCount;
+  }
+};
+class MLeaderStyleCapture : public StubInterface {
+public:
+  int m_callCount = 0;
+  DRW_MLeaderStyle m_captured;
+  void addMLeaderStyle(const DRW_MLeaderStyle *d) override {
+    if (m_callCount == 0 && d) m_captured = *d;
+    ++m_callCount;
+  }
+};
+class SpatialFilterCapture : public StubInterface {
+public:
+  int m_callCount = 0;
+  DRW_SpatialFilter m_captured;
+  void addSpatialFilter(const DRW_SpatialFilter &d) override {
+    if (m_callCount == 0) m_captured = d;
+    ++m_callCount;
+  }
+};
+class ImageDefReactorCapture : public StubInterface {
+public:
+  int m_callCount = 0;
+  DRW_ImageDefinitionReactor m_captured;
+  void addImageDefinitionReactor(const DRW_ImageDefinitionReactor &d) override {
+    if (m_callCount == 0) m_captured = d;
+    ++m_callCount;
+  }
+};
+} // namespace
+
+TEST_CASE("DXF TABLESTYLE is read into a DRW_TableStyle (top-level fields)",
+          "[dxf][tablestyle][preservation]") {
+  TableStyleCapture cap;
+  const char *dxf =
+      "0\nSECTION\n2\nOBJECTS\n"
+      "0\nTABLESTYLE\n5\n1C0\n330\nC\n100\nAcDbTableStyle\n"
+      "3\nMyStyle\n70\n1\n71\n2\n40\n0.06\n41\n0.07\n280\n1\n281\n0\n"
+      "0\nENDSEC\n0\nEOF\n";
+  readDxf(dxf, cap, "lc_tablestyle_read.dxf");
+  REQUIRE(cap.m_callCount == 1);
+  CHECK(cap.m_captured.m_name == "MyStyle");
+  CHECK(cap.m_captured.m_flowDirection == 1);
+  CHECK(cap.m_captured.m_flags == 2);
+  CHECK(cap.m_captured.m_horizontalCellMargin == 0.06);
+  CHECK(cap.m_captured.m_verticalCellMargin == 0.07);
+  CHECK(cap.m_captured.m_titleSuppressed == true);
+  CHECK(cap.m_captured.m_headerSuppressed == false);
+}
+
+TEST_CASE("DXF MLEADERSTYLE is read into a DRW_MLeaderStyle",
+          "[dxf][mleaderstyle][preservation]") {
+  MLeaderStyleCapture cap;
+  const char *dxf =
+      "0\nSECTION\n2\nOBJECTS\n"
+      "0\nMLEADERSTYLE\n5\n1D0\n330\nC\n100\nAcDbMLeaderStyle\n"
+      "3\nStandard\n300\nDefault Text\n170\n2\n90\n2\n"
+      "40\n0.5\n41\n0.75\n173\n1\n44\n2.5\n45\n3.0\n"
+      "290\n1\n291\n0\n142\n1.5\n296\n1\n"
+      "340\n1E\n342\n20\n343\n21\n271\n2\n"
+      "0\nENDSEC\n0\nEOF\n";
+  readDxf(dxf, cap, "lc_mleaderstyle_read.dxf");
+  REQUIRE(cap.m_callCount == 1);
+  const DRW_MLeaderStyle &s = cap.m_captured;
+  CHECK(s.description == "Standard");
+  CHECK(s.textDefault == "Default Text");
+  CHECK(s.contentType == 2);
+  CHECK(s.maxLeaderPoints == 2);
+  CHECK(s.firstSegmentAngle == 0.5);
+  CHECK(s.secondSegmentAngle == 0.75);
+  CHECK(s.leaderType == 1);
+  CHECK(s.arrowHeadSize == 2.5);
+  CHECK(s.textHeight == 3.0);
+  CHECK(s.landingEnabled == true);
+  CHECK(s.autoIncludeLanding == false);
+  CHECK(s.scaleFactor == 1.5);
+  CHECK(s.isAnnotative == true);
+  CHECK(s.attachmentDirection == 2);
+  CHECK(s.leaderLineTypeHandle.ref == 0x1Eu);
+  CHECK(s.textStyleHandle.ref == 0x20u);
+  CHECK(s.blockHandle.ref == 0x21u);
+}
+
+TEST_CASE("DXF SPATIAL_FILTER is read into a DRW_SpatialFilter",
+          "[dxf][spatialfilter][preservation]") {
+  SpatialFilterCapture cap;
+  const char *dxf =
+      "0\nSECTION\n2\nOBJECTS\n"
+      "0\nSPATIAL_FILTER\n5\n1B0\n330\nC\n100\nAcDbFilter\n"
+      "100\nAcDbSpatialFilter\n"
+      "70\n3\n10\n0.0\n20\n0.0\n10\n10.0\n20\n0.0\n10\n10.0\n20\n10.0\n"
+      "210\n0.0\n220\n0.0\n230\n1.0\n11\n1.0\n21\n2.0\n31\n0.0\n"
+      "71\n1\n72\n0\n73\n1\n41\n5.5\n"
+      "0\nENDSEC\n0\nEOF\n";
+  readDxf(dxf, cap, "lc_spatialfilter_read.dxf");
+  REQUIRE(cap.m_callCount == 1);
+  const DRW_SpatialFilter &f = cap.m_captured;
+  REQUIRE(f.m_boundaryPoints.size() == 3);
+  CHECK(f.m_boundaryPoints[1].x == 10.0);
+  CHECK(f.m_boundaryPoints[2].y == 10.0);
+  CHECK(f.m_normal.z == 1.0);
+  CHECK(f.m_origin.x == 1.0);
+  CHECK(f.m_origin.y == 2.0);
+  CHECK(f.m_displayBoundary == true);
+  CHECK(f.m_clipFrontPlane == false);
+  CHECK(f.m_clipBackPlane == true);
+  CHECK(f.m_backDistance == 5.5);
+}
+
+TEST_CASE("DXF IMAGEDEF_REACTOR is read into a DRW_ImageDefinitionReactor",
+          "[dxf][imagedefreactor][preservation]") {
+  ImageDefReactorCapture cap;
+  const char *dxf =
+      "0\nSECTION\n2\nOBJECTS\n"
+      "0\nIMAGEDEF_REACTOR\n5\n1A0\n330\n1A\n100\nAcDbRasterImageDefReactor\n"
+      "90\n2\n"
+      "0\nENDSEC\n0\nEOF\n";
+  readDxf(dxf, cap, "lc_imagedefreactor_read.dxf");
+  REQUIRE(cap.m_callCount == 1);
+  CHECK(cap.m_captured.m_classVersion == 2);
+}
+
+namespace {
+class SortEntsTableCapture : public StubInterface {
+public:
+  int m_callCount = 0;
+  DRW_SortEntsTable m_captured;
+  void addSortEntsTable(const DRW_SortEntsTable &d) override {
+    if (m_callCount == 0) m_captured = d;
+    ++m_callCount;
+  }
+};
+class DimAssocCapture : public StubInterface {
+public:
+  int m_callCount = 0;
+  DRW_DimensionAssociation m_captured;
+  void addDimensionAssociation(const DRW_DimensionAssociation &d) override {
+    if (m_callCount == 0) m_captured = d;
+    ++m_callCount;
+  }
+};
+} // namespace
+
+TEST_CASE("DXF SORTENTSTABLE is read into a DRW_SortEntsTable (draw order)",
+          "[dxf][sortents][preservation]") {
+  SortEntsTableCapture cap;
+  // 5/330 before the 100 marker are the object's own handle/owner; after it,
+  // 330=block owner and 331/5 are the entity/sort pairs.
+  const char *dxf =
+      "0\nSECTION\n2\nOBJECTS\n"
+      "0\nSORTENTSTABLE\n5\n355\n330\n1A\n100\nAcDbSortentsTable\n"
+      "330\n1F\n331\n35A\n5\n354\n331\n35B\n5\n356\n"
+      "0\nENDSEC\n0\nEOF\n";
+  readDxf(dxf, cap, "lc_sortents_read.dxf");
+  REQUIRE(cap.m_callCount == 1);
+  const DRW_SortEntsTable &s = cap.m_captured;
+  CHECK(s.m_blockOwnerHandle == 0x1Fu);
+  REQUIRE(s.m_entityHandles.size() == 2);
+  REQUIRE(s.m_sortHandles.size() == 2);
+  CHECK(s.m_entityHandles[0] == 0x35Au);
+  CHECK(s.m_entityHandles[1] == 0x35Bu);
+  CHECK(s.m_sortHandles[0] == 0x354u);
+  CHECK(s.m_sortHandles[1] == 0x356u);
+}
+
+TEST_CASE("DXF DIMASSOC is read into a DRW_DimensionAssociation",
+          "[dxf][dimassoc][preservation]") {
+  DimAssocCapture cap;
+  const char *dxf =
+      "0\nSECTION\n2\nOBJECTS\n"
+      "0\nDIMASSOC\n5\n521\n330\n1A\n100\nAcDbDimAssoc\n"
+      "330\n500\n90\n3\n70\n0\n71\n0\n"
+      "1\nAcDbOsnapPointRef\n72\n1\n331\n510\n"
+      "1\nAcDbOsnapPointRef\n72\n7\n331\n511\n"
+      "0\nENDSEC\n0\nEOF\n";
+  readDxf(dxf, cap, "lc_dimassoc_read.dxf");
+  REQUIRE(cap.m_callCount == 1);
+  const DRW_DimensionAssociation &a = cap.m_captured;
+  CHECK(a.m_dimensionHandle == 0x500u);
+  CHECK(a.m_associativityFlags == 3u);
+  CHECK(a.m_isTransSpace == false);
+  REQUIRE(a.m_osnapRefs.size() == 2);
+  CHECK(a.m_osnapRefs[0].m_className == "AcDbOsnapPointRef");
+  CHECK(a.m_osnapRefs[0].m_objectOsnapType == 1);
+  CHECK(a.m_osnapRefs[0].m_objectHandle == 0x510u);
+  CHECK(a.m_osnapRefs[1].m_objectOsnapType == 7);
+  CHECK(a.m_osnapRefs[1].m_objectHandle == 0x511u);
+}
+
+namespace {
+class BackgroundCapture : public StubInterface {
+public:
+  int m_callCount = 0;
+  DRW_Background m_captured;
+  void addBackground(const DRW_Background &d) override {
+    if (m_callCount == 0) m_captured = d;
+    ++m_callCount;
+  }
+};
+} // namespace
+
+TEST_CASE("DXF GRADIENTBACKGROUND is read into a DRW_Background",
+          "[dxf][background][preservation]") {
+  BackgroundCapture cap;
+  // 90 appears twice: class version, then color_top.
+  const char *dxf =
+      "0\nSECTION\n2\nOBJECTS\n"
+      "0\nGRADIENTBACKGROUND\n5\n2A0\n330\nC\n100\nAcDbGradientBackground\n"
+      "90\n1\n90\n100\n91\n200\n92\n300\n140\n0.5\n141\n0.25\n142\n1.57\n"
+      "0\nENDSEC\n0\nEOF\n";
+  readDxf(dxf, cap, "lc_gradientbg_read.dxf");
+  REQUIRE(cap.m_callCount == 1);
+  const DRW_Background &b = cap.m_captured;
+  CHECK(b.m_kind == DRW_Background::Gradient);
+  CHECK(b.m_classVersion == 1);
+  CHECK(b.m_colorTop == 100);
+  CHECK(b.m_colorMiddle == 200);
+  CHECK(b.m_colorBottom == 300);
+  CHECK(b.m_horizon == 0.5);
+  CHECK(b.m_height == 0.25);
+  CHECK(b.m_rotation == 1.57);
+}
+
+TEST_CASE("DXF IMAGEBACKGROUND is read into a DRW_Background",
+          "[dxf][background][preservation]") {
+  BackgroundCapture cap;
+  const char *dxf =
+      "0\nSECTION\n2\nOBJECTS\n"
+      "0\nIMAGEBACKGROUND\n5\n2A1\n330\nC\n100\nAcDbImageBackground\n"
+      "90\n1\n300\nsky.jpg\n290\n1\n291\n0\n292\n1\n"
+      "140\n2.0\n142\n1.5\n"
+      "0\nENDSEC\n0\nEOF\n";
+  readDxf(dxf, cap, "lc_imagebg_read.dxf");
+  REQUIRE(cap.m_callCount == 1);
+  const DRW_Background &b = cap.m_captured;
+  CHECK(b.m_kind == DRW_Background::Image);
+  CHECK(b.m_fileName == "sky.jpg");
+  CHECK(b.m_fitToScreen == true);
+  CHECK(b.m_maintainAspect == false);
+  CHECK(b.m_useTiling == true);
+  CHECK(b.m_offset.x == 2.0);
+  CHECK(b.m_scale.x == 1.5);
+  // offset.y/scale.y (DXF 240/242) are unreadable by libdxfrw's dxfReader (the
+  // 240-269 code range is an unhandled gap) — preserved raw, not decoded here.
+}
+
+TEST_CASE("DXF SKYLIGHTBACKGROUND + SOLIDBACKGROUND read into DRW_Background",
+          "[dxf][background][preservation]") {
+  {
+    BackgroundCapture cap;
+    const char *dxf =
+        "0\nSECTION\n2\nOBJECTS\n"
+        "0\nSKYLIGHTBACKGROUND\n5\n2A2\n330\nC\n100\nAcDbSkyBackground\n"
+        "90\n2\n340\n2BC\n"
+        "0\nENDSEC\n0\nEOF\n";
+    readDxf(dxf, cap, "lc_skybg_read.dxf");
+    REQUIRE(cap.m_callCount == 1);
+    CHECK(cap.m_captured.m_kind == DRW_Background::Skylight);
+    CHECK(cap.m_captured.m_classVersion == 2);
+    CHECK(cap.m_captured.m_sunHandle == 0x2BCu);
+  }
+  {
+    BackgroundCapture cap;
+    const char *dxf =
+        "0\nSECTION\n2\nOBJECTS\n"
+        "0\nSOLIDBACKGROUND\n5\n2A3\n330\nC\n100\nAcDbSolidBackground\n"
+        "90\n1\n90\n255\n"
+        "0\nENDSEC\n0\nEOF\n";
+    readDxf(dxf, cap, "lc_solidbg_read.dxf");
+    REQUIRE(cap.m_callCount == 1);
+    CHECK(cap.m_captured.m_kind == DRW_Background::Solid);
+    CHECK(cap.m_captured.m_classVersion == 1);
+    CHECK(cap.m_captured.m_solidColor == 255);
+  }
+}
+
+namespace {
+class PointCloudDefCapture : public StubInterface {
+public:
+  int m_callCount = 0;
+  DRW_PointCloudDef m_captured;
+  void addPointCloudDef(const DRW_PointCloudDef &d) override {
+    if (m_callCount == 0) m_captured = d;
+    ++m_callCount;
+  }
+};
+} // namespace
+
+TEST_CASE("DXF POINTCLOUDDEFINITION is read into a DRW_PointCloudDef",
+          "[dxf][pointcloud][preservation]") {
+  PointCloudDefCapture cap;
+  const char *dxf =
+      "0\nSECTION\n2\nOBJECTS\n"
+      "0\nPOINTCLOUDDEFINITION\n5\n2D0\n330\nC\n100\nAcDbPointCloudDef\n"
+      "90\n1\n1\nscan.rcp\n280\n1\n"
+      "10\n-5.0\n20\n-6.0\n30\n0.0\n11\n5.0\n21\n6.0\n31\n2.0\n"
+      "0\nENDSEC\n0\nEOF\n";
+  readDxf(dxf, cap, "lc_pointclouddef_read.dxf");
+  REQUIRE(cap.m_callCount == 1);
+  const DRW_PointCloudDef &p = cap.m_captured;
+  CHECK(p.m_kind == DRW_PointCloudDef::Definition);
+  CHECK(p.m_classVersion == 1);
+  CHECK(p.m_sourceFilename == "scan.rcp");
+  CHECK(p.m_isLoaded == true);
+  CHECK(p.m_extentsMin.x == -5.0);
+  CHECK(p.m_extentsMin.y == -6.0);
+  CHECK(p.m_extentsMax.x == 5.0);
+  CHECK(p.m_extentsMax.z == 2.0);
+}
+
+TEST_CASE("DXF POINTCLOUDDEFREACTOR is read (class version only)",
+          "[dxf][pointcloud][preservation]") {
+  PointCloudDefCapture cap;
+  const char *dxf =
+      "0\nSECTION\n2\nOBJECTS\n"
+      "0\nPOINTCLOUDDEFREACTOR\n5\n2D1\n330\nC\n100\nAcDbPointCloudDefReactor\n"
+      "90\n2\n"
+      "0\nENDSEC\n0\nEOF\n";
+  readDxf(dxf, cap, "lc_pointcloudreactor_read.dxf");
+  REQUIRE(cap.m_callCount == 1);
+  CHECK(cap.m_captured.m_kind == DRW_PointCloudDef::Reactor);
+  CHECK(cap.m_captured.m_classVersion == 2);
+}
+
+namespace {
+class SunStudyCapture : public StubInterface {
+public:
+  int m_callCount = 0;
+  DRW_SunStudy m_captured;
+  void addSunStudy(const DRW_SunStudy &d) override {
+    if (m_callCount == 0) m_captured = d;
+    ++m_callCount;
+  }
+};
+} // namespace
+
+TEST_CASE("DXF SUNSTUDY is read into a DRW_SunStudy (scalar config)",
+          "[dxf][sunstudy][preservation]") {
+  SunStudyCapture cap;
+  const char *dxf =
+      "0\nSECTION\n2\nOBJECTS\n"
+      "0\nSUNSTUDY\n5\n2E0\n330\nC\n100\nAcDbSunStudy\n"
+      "90\n1\n1\nStudy1\n2\nMy study\n3\nSet\n4\nSubset\n70\n2\n"
+      "290\n1\n291\n0\n292\n1\n293\n1\n294\n0\n"
+      "93\n100\n94\n200\n95\n10\n74\n5\n75\n4\n76\n2\n77\n2\n40\n0.5\n"
+      "341\n2E1\n342\n2E2\n343\n2E3\n"
+      "0\nENDSEC\n0\nEOF\n";
+  readDxf(dxf, cap, "lc_sunstudy_read.dxf");
+  REQUIRE(cap.m_callCount == 1);
+  const DRW_SunStudy &s = cap.m_captured;
+  CHECK(s.m_classVersion == 1);
+  CHECK(s.m_setupName == "Study1");
+  CHECK(s.m_description == "My study");
+  CHECK(s.m_sheetSetName == "Set");
+  CHECK(s.m_sheetSubsetName == "Subset");
+  CHECK(s.m_outputType == 2);
+  CHECK(s.m_useSubset == true);
+  CHECK(s.m_selectDatesFromCalendar == false);
+  CHECK(s.m_selectRangeOfDates == true);
+  CHECK(s.m_lockViewports == true);
+  CHECK(s.m_labelViewports == false);
+  CHECK(s.m_startTime == 100);
+  CHECK(s.m_endTime == 200);
+  CHECK(s.m_interval == 10);
+  CHECK(s.m_viewportCount == 4);
+  CHECK(s.m_rowCount == 2);
+  CHECK(s.m_columnCount == 2);
+  CHECK(s.m_spacing == 0.5);
+  CHECK(s.m_viewHandle == 0x2E1u);
+  CHECK(s.m_visualStyleHandle == 0x2E2u);
+  CHECK(s.m_textStyleHandle == 0x2E3u);
+}
+
+namespace {
+class RenderSettingsCapture : public StubInterface {
+public:
+  int m_callCount = 0;
+  DRW_RenderSettings m_captured;
+  void addRenderSettings(const DRW_RenderSettings &d) override {
+    if (m_callCount == 0) m_captured = d;
+    ++m_callCount;
+  }
+};
+} // namespace
+
+TEST_CASE("DXF RENDERENVIRONMENT decodes named fog fields (positional)",
+          "[dxf][rendersettings][preservation]") {
+  RenderSettingsCapture cap;
+  // 90 classVersion, 290×3 (fogEnabled, fogBgEnabled, envImgEnabled),
+  // 280×3 RC fogColor, 40×4 fog densities/distances, 1 filename.
+  const char *dxf =
+      "0\nSECTION\n2\nOBJECTS\n"
+      "0\nRENDERENVIRONMENT\n5\n2F0\n330\nC\n100\nAcDbRenderEnvironment\n"
+      "90\n1\n290\n1\n290\n0\n290\n1\n280\n10\n280\n20\n280\n30\n"
+      "40\n0.1\n40\n0.9\n40\n5.0\n40\n50.0\n1\nbg.hdr\n"
+      "0\nENDSEC\n0\nEOF\n";
+  readDxf(dxf, cap, "lc_renderenv_read.dxf");
+  REQUIRE(cap.m_callCount == 1);
+  const DRW_RenderSettings &r = cap.m_captured;
+  CHECK(r.m_kind == DRW_RenderSettings::Environment);
+  CHECK(r.m_classVersion == 1);
+  CHECK(r.m_fogEnabled == true);
+  CHECK(r.m_fogBackgroundEnabled == false);
+  CHECK(r.m_environmentImageEnabled == true);
+  CHECK(r.m_fogColorR == 10);
+  CHECK(r.m_fogColorG == 20);
+  CHECK(r.m_fogColorB == 30);
+  CHECK(r.m_fogDensityNear == 0.1);
+  CHECK(r.m_fogDensityFar == 0.9);
+  CHECK(r.m_fogDistanceNear == 5.0);
+  CHECK(r.m_fogDistanceFar == 50.0);
+  CHECK(r.m_name == "bg.hdr");
+}
+
+TEST_CASE("DXF RENDERGLOBAL + RENDERSETTINGS capture class version + vectors",
+          "[dxf][rendersettings][preservation]") {
+  {
+    RenderSettingsCapture cap;
+    const char *dxf =
+        "0\nSECTION\n2\nOBJECTS\n"
+        "0\nRENDERGLOBAL\n5\n2F1\n330\nC\n100\nAcDbRenderGlobal\n"
+        "90\n1\n90\n2\n90\n3\n290\n1\n290\n0\n1\nout.png\n"
+        "0\nENDSEC\n0\nEOF\n";
+    readDxf(dxf, cap, "lc_renderglobal_read.dxf");
+    REQUIRE(cap.m_callCount == 1);
+    CHECK(cap.m_captured.m_kind == DRW_RenderSettings::Global);
+    CHECK(cap.m_captured.m_classVersion == 1);
+    CHECK(cap.m_captured.m_procedure == 2);
+    CHECK(cap.m_captured.m_destination == 3);
+    CHECK(cap.m_captured.m_name == "out.png");
+  }
+  {
+    RenderSettingsCapture cap;
+    const char *dxf =
+        "0\nSECTION\n2\nOBJECTS\n"
+        "0\nRENDERSETTINGS\n5\n2F2\n330\nC\n100\nAcDbRenderSettings\n"
+        "90\n1\n1\npreset\n70\n2\n40\n12.5\n"
+        "0\nENDSEC\n0\nEOF\n";
+    readDxf(dxf, cap, "lc_rendersettings_read.dxf");
+    REQUIRE(cap.m_callCount == 1);
+    CHECK(cap.m_captured.m_kind == DRW_RenderSettings::Settings);
+    CHECK(cap.m_captured.m_classVersion == 1);
+    CHECK(cap.m_captured.m_name == "preset");
+    REQUIRE(cap.m_captured.m_doubles.size() == 1);
+    CHECK(cap.m_captured.m_doubles[0] == 12.5);
+  }
+}
+
+namespace {
+class SectionCapture : public StubInterface {
+public:
+  int m_callCount = 0;
+  DRW_Section m_captured;
+  void addSection(const DRW_Section &d) override {
+    if (m_callCount == 0) m_captured = d;
+    ++m_callCount;
+  }
+};
+} // namespace
+
+TEST_CASE("DXF SECTIONMANAGER is read into a DRW_Section (live + handles)",
+          "[dxf][section][preservation]") {
+  SectionCapture cap;
+  // 330 before the 100 marker is the owner; 330s after are section handles.
+  const char *dxf =
+      "0\nSECTION\n2\nOBJECTS\n"
+      "0\nSECTIONMANAGER\n5\n300\n330\nC\n100\nAcDbSectionManager\n"
+      "70\n1\n90\n2\n330\n3A0\n330\n3A1\n"
+      "0\nENDSEC\n0\nEOF\n";
+  readDxf(dxf, cap, "lc_sectionmanager_read.dxf");
+  REQUIRE(cap.m_callCount == 1);
+  const DRW_Section &s = cap.m_captured;
+  CHECK(s.m_kind == DRW_Section::Manager);
+  CHECK(s.m_isLive == true);
+  CHECK(s.m_sectionCount == 2);
+  REQUIRE(s.m_sectionHandles.size() == 2);
+  CHECK(s.m_sectionHandles[0] == 0x3A0u);
+  CHECK(s.m_sectionHandles[1] == 0x3A1u);
+}
+
+TEST_CASE("DXF SECTIONSETTINGS is read into a DRW_Section (type triple)",
+          "[dxf][section][preservation]") {
+  SectionCapture cap;
+  const char *dxf =
+      "0\nSECTION\n2\nOBJECTS\n"
+      "0\nSECTIONSETTINGS\n5\n301\n330\nC\n100\nAcDbSectionSettings\n"
+      "90\n1\n91\n2\n90\n4\n331\n3B0\n"
+      "0\nENDSEC\n0\nEOF\n";
+  readDxf(dxf, cap, "lc_sectionsettings_read.dxf");
+  REQUIRE(cap.m_callCount == 1);
+  const DRW_Section &s = cap.m_captured;
+  CHECK(s.m_kind == DRW_Section::Settings);
+  CHECK(s.m_classVersion == 1);
+  CHECK(s.m_sectionType == 2);
+  CHECK(s.m_generationOptions == 4);
+  CHECK(s.m_destinationBlockHandle == 0x3B0u);
+}

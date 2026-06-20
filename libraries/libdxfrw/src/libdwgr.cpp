@@ -19,6 +19,7 @@
 #include "intern/drw_dbg.h"
 #include "intern/drw_textcodec.h"
 #include "intern/dwgreader.h"
+#include "intern/dwgreaderR11.h"
 #include "intern/dwgwriter.h"
 #include "intern/dwgwriter15.h"
 #include "intern/dwgwriter18.h"
@@ -884,9 +885,10 @@ std::unique_ptr<dwgReader> dwgRW::createReaderForVersion(DRW::Version version, s
        case DRW::AC1002:
        case DRW::AC1003:
        case DRW::AC1004:
-       case DRW::AC1006:
-       case DRW::AC1009:
-           break;
+       case DRW::AC1006:   // R10: container is similar but dwgread has no working
+           break;          //      oracle for it, so keep it unsupported for now
+       case DRW::AC1009:   // R11: minimal read support (validatable vs dwgread)
+           return std::unique_ptr< dwgReader >( new dwgReaderR11( stream, p) );
 
        case DRW::AC1012:
        case DRW::AC1014:

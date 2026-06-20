@@ -605,8 +605,8 @@
         <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="196"/>
         <source>radius=%1 is too small for points selected
 distance between points=%2 is larger than diameter=%3</source>
-        <translation>polmer=% 1 je premajhen za izbrane točke
-razdalja med točkami =% 2 je večja od premera = % 3</translation>
+        <translation>polmer=%1 je premajhen za izbrane točke
+razdalja med točkami =%2 je večja od premera = %3</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="208"/>
@@ -708,7 +708,7 @@ razdalja med točkami =% 2 je večja od premera = % 3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="146"/>
         <source>Dual created around center (%1 entities)</source>
-        <translation>Dvojno ustvarjeno okoli središča (% 1 entitet)</translation>
+        <translation>Dvojno ustvarjeno okoli središča (%1 entitet)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="159"/>
@@ -876,8 +876,8 @@ ali [x</translation>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="537"/>
         <source>Specify distance (%1)
 or [%2]</source>
-        <translation>Določite razdaljo (% 1)
-ali [% 2]</translation>
+        <translation>Določite razdaljo (%1)
+ali [%2]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="534"/>
@@ -900,8 +900,8 @@ ali [% 2]</translation>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="542"/>
         <source>Specify  distance (angle %1 deg)
 or [%2]</source>
-        <translation>Določite razdaljo (kot% 1 deg)
-ali [% 2]</translation>
+        <translation>Določite razdaljo (kot%1 deg)
+ali [%2]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="547"/>
@@ -1013,13 +1013,13 @@ ali [% 2]</translation>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="477"/>
         <source>Specify direction (x or y) or [%1]</source>
-        <translation>Navedite smer (x ali y) ali [% 1]</translation>
+        <translation>Navedite smer (x ali y) ali [%1]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="491"/>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="495"/>
         <source>Specify distance (%1) or [%2]</source>
-        <translation>Določite razdaljo (% 1) ali [% 2]</translation>
+        <translation>Določite razdaljo (%1) ali [%2]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="134"/>
@@ -1051,17 +1051,17 @@ ali [% 2]</translation>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="501"/>
         <source>Specify distance (%1 deg) or [%2]</source>
-        <translation>Določite razdaljo (% 1 deg) ali [% 2]</translation>
+        <translation>Določite razdaljo (%1 deg) ali [%2]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="516"/>
         <source>Specify angle or [%1]</source>
-        <translation>Navedite kot ali [% 1]</translation>
+        <translation>Navedite kot ali [%1]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="528"/>
         <source>Specify point or [%1]</source>
-        <translation>Navedite točko ali [% 1]</translation>
+        <translation>Navedite točko ali [%1]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="577"/>
@@ -1360,7 +1360,7 @@ ali [% 2]</translation>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="231"/>
         <source>Specify next control point or [%1]</source>
-        <translation>Navedite naslednjo kontrolno točko ali [% 1]</translation>
+        <translation>Navedite naslednjo kontrolno točko ali [%1]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="231"/>
@@ -3302,13 +3302,13 @@ Alternative: %4
 Start Edge Point: (%5 , %6)
 Intersection Point :(%7, %8)
 End Edge Point: (%9 , %10)</source>
-        <translation>Kot:% 1
-Dopolnilo:% 2
+        <translation>Kot:%1
+Dopolnilo:%2
 Dodatno: %3
 Alternativa: %4
-Točka začetnega roba: (% 5 ,% 6)
-Prerezna točka :(% 7,% 8)
-Točka končnega roba: (% 9 ,% 10)</translation>
+Točka začetnega roba: (%5 ,%6)
+Prerezna točka :(%7,%8)
+Točka končnega roba: (%9 ,%10)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="149"/>
@@ -3370,27 +3370,27 @@ Točka končnega roba: (% 9 ,% 10)</translation>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="41"/>
         <source>Absolute: (%1)</source>
-        <translation>Absolutno: (% 1)</translation>
+        <translation>Absolutno: (%1)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="42"/>
         <source>Relative: (%1)</source>
-        <translation>Relativni: (% 1)</translation>
+        <translation>Relativni: (%1)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="43"/>
         <source>Polar: (%1)</source>
-        <translation>Polar: (% 1)</translation>
+        <translation>Polar: (%1)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="44"/>
         <source>Polar Relative: (%1)</source>
-        <translation>Polarni sorodnik: (% 1)</translation>
+        <translation>Polarni sorodnik: (%1)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="46"/>
         <source>Absolute WCS: (%1)</source>
-        <translation>Absolutni WCS: (% 1)</translation>
+        <translation>Absolutni WCS: (%1)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="70"/>
@@ -3711,7 +3711,7 @@ Točka končnega roba: (% 9 ,% 10)</translation>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayerscmd.cpp" line="53"/>
         <source>Enter layer name to %1</source>
-        <translation>Vnesite ime sloja v% 1</translation>
+        <translation>Vnesite ime sloja v%1</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayerscmd.cpp" line="53"/>
@@ -4509,7 +4509,7 @@ Točka končnega roba: (% 9 ,% 10)</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="163"/>
         <source>LibreCAD Shortcuts file (*.%1)</source>
-        <translation>Datoteka LibreCAD Bližnjice (*.% 1)</translation>
+        <translation>Datoteka LibreCAD Bližnjice (*.%1)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="198"/>
@@ -4684,7 +4684,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
         <source>Save changes to the following item?
 %1</source>
         <translation>Shranim spremembe v naslednji postavki?
-% 1</translation>
+%1</translation>
     </message>
     <message>
         <location filename="../src/ui/main/support/lc_appwindowdialogsinvoker.cpp" line="185"/>
@@ -4998,7 +4998,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
         <location filename="../src/ui/components/creators/lc_creatorinvoker.cpp" line="83"/>
         <location filename="../src/ui/components/creators/lc_creatorinvoker.cpp" line="115"/>
         <source>Toolbar: %1 (Custom)</source>
-        <translation>Orodjarna:% 1 (Carina)</translation>
+        <translation>Orodjarna:%1 (Carina)</translation>
     </message>
 </context>
 <context>
@@ -5345,7 +5345,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="186"/>
         <source>LibreCAD dimension styles file (*.%1)</source>
-        <translation>Datoteka z dimenzijami LibreCAD (*.% 1)</translation>
+        <translation>Datoteka z dimenzijami LibreCAD (*.%1)</translation>
     </message>
 </context>
 <context>
@@ -5394,17 +5394,17 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="76"/>
         <source>Version: &lt;b&gt;%1&lt;/b&gt;</source>
-        <translation>Različica: &lt;b&gt;% 1 &lt;/b&gt;</translation>
+        <translation>Različica: &lt;b&gt;%1 &lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="78"/>
         <source>Compiler: Clang %1.%2.%3</source>
-        <translation>Prevajalnik: Clang% 1.% 2.% 3</translation>
+        <translation>Prevajalnik: Clang%1.%2.%3</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="80"/>
         <source>Compiler: GNU GCC %1.%2.%3</source>
-        <translation>Prevajalnik: GNU GCC% 1.% 2.% 3</translation>
+        <translation>Prevajalnik: GNU GCC%1.%2.%3</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="82"/>
@@ -5414,17 +5414,17 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="84"/>
         <source>Compiled on: %1</source>
-        <translation>Prevedeno:% 1</translation>
+        <translation>Prevedeno:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="85"/>
         <source>Qt Version: %1</source>
-        <translation>Različica Qt:% 1</translation>
+        <translation>Različica Qt:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="86"/>
         <source>Boost Version: %1.%2.%3</source>
-        <translation>Različica za povečanje:% 1.% 2.% 3</translation>
+        <translation>Različica za povečanje:%1.%2.%3</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="96"/>
@@ -6582,7 +6582,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1831"/>
         <source>Includes a prefix in the alternate dimension text. You can enter text or use control codes to display special symbols. For example, entering the control code %%c displays the diameter symbol. (DIMAPOST system variable)</source>
-        <translation>Vključuje predpono v besedilo nadomestne dimenzije. Za prikaz posebnih simbolov lahko vnesete besedilo ali uporabite kontrolne kode. Na primer, vnos kontrolne kode %% c prikazuje simbol premera. (sistemska spremenljivka DIMAPOST)</translation>
+        <translation>Vključuje predpono v besedilo nadomestne dimenzije. Za prikaz posebnih simbolov lahko vnesete besedilo ali uporabite kontrolne kode. Na primer, vnos kontrolne kode %%c prikazuje simbol premera. (sistemska spremenljivka DIMAPOST)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1845"/>
@@ -7532,7 +7532,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="102"/>
         <source>Menu Assignment - &quot;%1&quot; Menu</source>
-        <translation>Dodelitev menija - »% 1 «</translation>
+        <translation>Dodelitev menija - »%1 «</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="106"/>
@@ -7677,7 +7677,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="250"/>
         <source>NOTE: This shortcut is already assigned to &quot;%1&quot; menu and that menu will be unassigned on save!</source>
-        <translation>OPOMBA: Ta bližnjica je že dodeljena meniju »% 1 « in ta meni bo ob shranjevanju nedodeljen!</translation>
+        <translation>OPOMBA: Ta bližnjica je že dodeljena meniju »%1 « in ta meni bo ob shranjevanju nedodeljen!</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="254"/>
@@ -7971,7 +7971,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.cpp" line="145"/>
         <source>Provided name of dimension style (%1) is not unique! Please enter another one.</source>
-        <translation>Pod pogojem, da ime dimenzijskega sloga (% 1) ni edinstveno! Prosim, vnesite še enega.</translation>
+        <translation>Pod pogojem, da ime dimenzijskega sloga (%1) ni edinstveno! Prosim, vnesite še enega.</translation>
     </message>
 </context>
 <context>
@@ -8771,7 +8771,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="203"/>
         <source>Are you sure you&apos;d like to unassign &quot;%1&quot; menu? Note: Just an invocation shortcut will be removed and menu will not be deleted.</source>
-        <translation>Ali ste prepričani, da želite oddati meni »% 1 «? Opomba: Samo invokacijska bližnjica bo odstranjena in meni ne bo izbrisan.</translation>
+        <translation>Ali ste prepričani, da želite oddati meni »%1 «? Opomba: Samo invokacijska bližnjica bo odstranjena in meni ne bo izbrisan.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="216"/>
@@ -8794,12 +8794,12 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="430"/>
         <source>Remove %1</source>
-        <translation>Odstrani% 1</translation>
+        <translation>Odstrani%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="431"/>
         <source>Are you sure you&apos;d like to remove  %2&quot;%1&quot;?</source>
-        <translation>Ste prepričani, da želite odstraniti% 2 »% 1 «?</translation>
+        <translation>Ste prepričani, da želite odstraniti%2 »%1 «?</translation>
     </message>
 </context>
 <context>
@@ -9206,7 +9206,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/dialogs/file/export/image/lc_exporttoimageservice.cpp" line="62"/>
         <source>Exported: %1</source>
-        <translation>Izvozi:% 1</translation>
+        <translation>Izvozi:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/image/lc_exporttoimageservice.cpp" line="65"/>
@@ -10315,7 +10315,7 @@ Vsebina gradbene plasti se ne sme pojaviti v izpisu.</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="189"/>
         <source>Invalid value provide for %1 color.
 Please specify a different value.</source>
-        <translation>Neveljavna vrednost zagotavlja barvo% 1.
+        <translation>Neveljavna vrednost zagotavlja barvo%1.
 Prosimo, navedite drugačno vrednost.</translation>
     </message>
     <message>
@@ -12467,7 +12467,7 @@ Opozorilo: tega dejanja ni mogoče preklicati!</translation>
  &quot;%1&quot;?
  Warning: this action can NOT be undone!</source>
         <translation>Ali ste prepričani, da izbrišete prikaz
-»% 1 «?
+»%1 «?
 Opozorilo: tega dejanja ni mogoče preklicati!</translation>
     </message>
     <message>
@@ -12479,7 +12479,7 @@ Opozorilo: tega dejanja ni mogoče preklicati!</translation>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="302"/>
         <source>Are you sure to delete views %1?
 Warning: this action can NOT be undone!</source>
-        <translation>Ali ste prepričani, da boste zbrisali poglede% 1?
+        <translation>Ali ste prepričani, da boste zbrisali poglede%1?
 Opozorilo: tega dejanja ni mogoče preklicati!</translation>
     </message>
     <message>
@@ -15880,7 +15880,7 @@ p, li {beli prostor: pre- wrap; }
     <message>
         <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="45"/>
         <source>LibreCAD settings file (*.%1)</source>
-        <translation>Datoteka z nastavitvami LibreCAD (*.% 1)</translation>
+        <translation>Datoteka z nastavitvami LibreCAD (*.%1)</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="91"/>
@@ -16732,7 +16732,7 @@ p, li {beli prostor: pre- wrap; }
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="67"/>
         <source>Toolbar: %1</source>
-        <translation>Orodjarna:% 1</translation>
+        <translation>Orodjarna:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="73"/>
@@ -17089,7 +17089,7 @@ Opozorilo: tega dejanja ni mogoče preklicati!</translation>
  &quot;%1&quot;?
  Warning: this action can NOT be undone!</source>
         <translation>Ste prepričani, da izbrišete UCS
-»% 1 «?
+»%1 «?
 Opozorilo: tega dejanja ni mogoče preklicati!</translation>
     </message>
     <message>
@@ -17101,7 +17101,7 @@ Opozorilo: tega dejanja ni mogoče preklicati!</translation>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="378"/>
         <source>Are you sure to delete UCS %1?
 Warning: this action can NOT be undone!</source>
-        <translation>Ali ste prepričani, da boste zbrisali UCS% 1?
+        <translation>Ali ste prepričani, da boste zbrisali UCS%1?
 Opozorilo: tega dejanja ni mogoče preklicati!</translation>
     </message>
     <message>
@@ -17374,7 +17374,7 @@ Opozorilo: tega dejanja ni mogoče preklicati!</translation>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="429"/>
         <source>Toolbar: %1</source>
-        <translation>Orodjarna:% 1</translation>
+        <translation>Orodjarna:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="213"/>
@@ -17989,18 +17989,18 @@ Samodejno shranjevanje zaustalvjeno.</translation>
 %1
 Please check its existence and permissions.</source>
         <translation>Ni moč odpreti datoteke
-% 1
+%1
 Prosim preverite njegov obstoj in dovoljenja.</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1023"/>
         <source>File &apos;%1&apos; does not exist. Opening aborted</source>
-        <translation>Datoteka »% 1 « ne obstaja. Odpiranje prekinjeno</translation>
+        <translation>Datoteka »%1 « ne obstaja. Odpiranje prekinjeno</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="226"/>
         <source>Saving drawing: %1</source>
-        <translation>Shranjevanje risbe:% 1</translation>
+        <translation>Shranjevanje risbe:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="232"/>
@@ -18020,7 +18020,7 @@ Prosim preverite njegov obstoj in dovoljenja.</translation>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="365"/>
         <source>&amp;Save %1</source>
-        <translation>&amp; Shrani% 1</translation>
+        <translation>&amp; Shrani%1</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="366"/>
@@ -18290,7 +18290,7 @@ Prosim preverite njegov obstoj in dovoljenja.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="210"/>
         <source>Unknown command: %1</source>
-        <translation>Neznan ukaz:% 1</translation>
+        <translation>Neznan ukaz:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.ui" line="102"/>
@@ -18322,7 +18322,7 @@ Prosim preverite njegov obstoj in dovoljenja.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="249"/>
         <source>Command Alias File: %1</source>
-        <translation>Datoteka ukaznega imena:% 1</translation>
+        <translation>Datoteka ukaznega imena:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="339"/>
@@ -20382,7 +20382,7 @@ To rekurzivno spreminja vse entitete bloka.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="400"/>
         <source>Are you sure you&apos;d like to delete property [%1]?</source>
-        <translation>Ste prepričani, da želite zbrisati premoženje [% 1]?</translation>
+        <translation>Ste prepričani, da želite zbrisati premoženje [%1]?</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="422"/>
@@ -20449,7 +20449,7 @@ To rekurzivno spreminja vse entitete bloka.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="642"/>
         <source>Enter new unique name of dimension style (was &quot;%1&quot;):</source>
-        <translation>Vnesite novo edinstveno ime sloga dimenzije (je bil »% 1 «):</translation>
+        <translation>Vnesite novo edinstveno ime sloga dimenzije (je bil »%1 «):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="662"/>
@@ -20472,12 +20472,12 @@ To rekurzivno spreminja vse entitete bloka.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="684"/>
         <source>Are you sure you want to remove the dimension style &quot;%1&quot; together with child styles?</source>
-        <translation>Ste prepričani, da želite odstraniti slog dimenzij »% 1 « skupaj s stili otrok?</translation>
+        <translation>Ste prepričani, da želite odstraniti slog dimenzij »%1 « skupaj s stili otrok?</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="692"/>
         <source>Are you sure you want to remove the dimension style &quot;%1&quot;?</source>
-        <translation>Ali res želite odstraniti slog dimenzije »% 1 «?</translation>
+        <translation>Ali res želite odstraniti slog dimenzije »%1 «?</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="929"/>
@@ -25133,52 +25133,52 @@ Privzeta vrednost koraka, potrebna za peko</translation>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="124"/>
         <source>Drawing Exchange DXF 2000 %1</source>
-        <translation>Izmenjava risanja DXF 2000% 1</translation>
+        <translation>Izmenjava risanja DXF 2000%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="126"/>
         <source>Drawing Exchange DXF R12 %1</source>
-        <translation>Izmenjava risanja DXF R12% 1</translation>
+        <translation>Izmenjava risanja DXF R12%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="129"/>
         <source>LFF Font %1</source>
-        <translation>Pisava LFF% 1</translation>
+        <translation>Pisava LFF%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="133"/>
         <source>QCad Font %1</source>
-        <translation>Pisava QCad% 1</translation>
+        <translation>Pisava QCad%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="134"/>
         <source>Jww Drawing %1</source>
-        <translation>Risba Jww% 1</translation>
+        <translation>Risba Jww%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="127"/>
         <source>Drawing Exchange %1</source>
-        <translation>Izmenjava risanja% 1</translation>
+        <translation>Izmenjava risanja%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="135"/>
         <source>QCad 1.x file %1</source>
-        <translation>QCad 1.x datoteka% 1</translation>
+        <translation>QCad 1.x datoteka%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="122"/>
         <source>Drawing Exchange DXF 2007 %1</source>
-        <translation>Izmenjava risanja DXF 2007% 1</translation>
+        <translation>Izmenjava risanja DXF 2007%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="123"/>
         <source>Drawing Exchange DXF 2004 %1</source>
-        <translation>Izmenjava risanja DXF 2004% 1</translation>
+        <translation>Izmenjava risanja DXF 2004%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="125"/>
         <source>Drawing Exchange DXF R14 %1</source>
-        <translation>Izmenjava risanja DXF R14% 1</translation>
+        <translation>Izmenjava risanja DXF R14%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="138"/>
@@ -25195,17 +25195,17 @@ Privzeta vrednost koraka, potrebna za peko</translation>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="163"/>
         <source>Open %1</source>
-        <translation>Odpri% 1</translation>
+        <translation>Odpri%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="253"/>
         <source>Save %1 As</source>
-        <translation>Shrani% 1 kot</translation>
+        <translation>Shrani%1 kot</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="131"/>
         <source>dwg Drawing %1</source>
-        <translation>risba dwg% 1</translation>
+        <translation>risba dwg%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="235"/>
@@ -25596,7 +25596,7 @@ p, li {beli prostor: pre- wrap; }
     <message>
         <location filename="../src/ui/main/support/qg_recentfiles.cpp" line="177"/>
         <source>&amp;%1 %2</source>
-        <translation>&amp;% 1% 2</translation>
+        <translation>&amp;%1%2</translation>
     </message>
 </context>
 <context>
@@ -25632,7 +25632,7 @@ p, li {beli prostor: pre- wrap; }
     <message>
         <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="171"/>
         <source>Relative zero position is %1</source>
-        <translation>Relativni ničelni položaj je% 1</translation>
+        <translation>Relativni ničelni položaj je%1</translation>
     </message>
     <message>
         <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="171"/>
@@ -25647,7 +25647,7 @@ p, li {beli prostor: pre- wrap; }
     <message>
         <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="176"/>
         <source>Coordinate system: %1</source>
-        <translation>Koordinatni sistem:% 1</translation>
+        <translation>Koordinatni sistem:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="176"/>
@@ -25793,7 +25793,7 @@ p, li {beli prostor: pre- wrap; }
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="203"/>
         <source>Layer &quot;%1&quot; can never be removed.</source>
-        <translation>Plast »% 1 « ni mogoče odstraniti.</translation>
+        <translation>Plast »%1 « ni mogoče odstraniti.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="343"/>
@@ -25808,7 +25808,7 @@ p, li {beli prostor: pre- wrap; }
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="456"/>
         <source>Block &quot;%1&quot; and all its entities will be removed.</source>
-        <translation>Blok »% 1 « in vsi njegovi subjekti bodo odstranjeni.</translation>
+        <translation>Blok »%1 « in vsi njegovi subjekti bodo odstranjeni.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.cpp" line="83"/>
@@ -25820,13 +25820,13 @@ p, li {beli prostor: pre- wrap; }
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.cpp" line="84"/>
         <source>Layer with a name &quot;%1&quot; already exists. Please specify a different name.</source>
-        <translation>Plast z imenom »% 1 « že obstaja. Navedite drugo ime.</translation>
+        <translation>Plast z imenom »%1 « že obstaja. Navedite drugo ime.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="191"/>
         <source>Layer &quot;%1&quot; and all entities on it will be removed.
 This action can NOT be undone.</source>
-        <translation>Plast »% 1 « in vsi subjekti na njej bodo odstranjeni.
+        <translation>Plast »%1 « in vsi subjekti na njej bodo odstranjeni.
 Tega dejanja ni mogoče razveljaviti.</translation>
     </message>
     <message>
@@ -25900,7 +25900,7 @@ Tega dejanja ni mogoče razveljaviti.</translation>
 [%1].
 Please specify a different name.</source>
         <translation>Poskusi ustvariti plast z dvojnim imenom. Podvojeno ime plasti je
-[% 1].
+[%1].
 Navedite drugo ime.</translation>
     </message>
     <message>
@@ -25953,7 +25953,7 @@ Clear filtering mask and repeat.</source>
 [%1].
 Please specify a different name.</source>
         <translation>Takšna otroška plast že obstaja za
-[% 1].
+[%1].
 Navedite drugo ime.</translation>
     </message>
     <message>
@@ -25962,7 +25962,7 @@ Navedite drugo ime.</translation>
 [%1].
 </source>
         <translation>Takšna otroška plast že obstaja za
-[% 1].</translation>
+[%1].</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1165"/>
@@ -26007,7 +26007,7 @@ If No - &quot;By Layer&quot; values remains and so pen of target layer will defi
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.cpp" line="218"/>
         <source>Invalid value provided for %1 color.
 Please specify a different value.</source>
-        <translation>Neveljavna vrednost za barvo% 1.
+        <translation>Neveljavna vrednost za barvo%1.
 Prosimo, navedite drugačno vrednost.</translation>
     </message>
     <message>
@@ -26106,7 +26106,7 @@ Prosimo, navedite drugačno vrednost.</translation>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="391"/>
         <source>%1 already exists.
 Do you want to replace it?</source>
-        <translation>% 1 že obstaja.
+        <translation>%1 že obstaja.
 Jo želiš zamenjati?</translation>
     </message>
     <message>
@@ -26172,17 +26172,17 @@ Jo želiš zamenjati?</translation>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="452"/>
         <source>Drawing Exchange %1</source>
-        <translation>Izmenjava risanja% 1</translation>
+        <translation>Izmenjava risanja%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="457"/>
         <source>QCad 1.x file %1</source>
-        <translation>QCad 1.x datoteka% 1</translation>
+        <translation>QCad 1.x datoteka%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="459"/>
         <source>Font %1</source>
-        <translation>Pisava% 1</translation>
+        <translation>Pisava%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="576"/>
@@ -26197,7 +26197,7 @@ Jo želiš zamenjati?</translation>
     <message>
         <location filename="../src/ui/main/support/lc_lastopenfilesopener.cpp" line="62"/>
         <source>Loading File %1..</source>
-        <translation>Nalaganje datoteke% 1..</translation>
+        <translation>Nalaganje datoteke%1..</translation>
     </message>
     <message>
         <location filename="../src/main/main.cpp" line="425"/>
@@ -26245,12 +26245,12 @@ Jo želiš zamenjati?</translation>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="458"/>
         <source>LFF Font %1</source>
-        <translation>Pisava LFF% 1</translation>
+        <translation>Pisava LFF%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="460"/>
         <source>Jww %1</source>
-        <translation>Jww% 1</translation>
+        <translation>Jww%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="936"/>
@@ -26315,22 +26315,22 @@ Jo želiš zamenjati?</translation>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="451"/>
         <source>Old Drawing Exchange %1</source>
-        <translation>Stara izmenjava risanja% 1</translation>
+        <translation>Stara izmenjava risanja%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="455"/>
         <source>dwg Drawing %1</source>
-        <translation>risba dwg% 1</translation>
+        <translation>risba dwg%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="574"/>
         <source>All Image Files (%1)</source>
-        <translation>Vse datoteke s sliko (% 1)</translation>
+        <translation>Vse datoteke s sliko (%1)</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="68"/>
         <source>: duplicated command: %1 is already taken by %2</source>
-        <translation>: podvojen ukaz:% 1 je že prevzel% 2</translation>
+        <translation>: podvojen ukaz:%1 je že prevzel%2</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="884"/>
@@ -27423,37 +27423,37 @@ Jo želiš zamenjati?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="261"/>
         <location filename="../src/cmd/rs_commands.cpp" line="316"/>
         <source>cannot change meaning of commands. Refused to reuse command %1 to mean %2</source>
-        <translation>ne more spremeniti pomena ukazov. Zavrnjeno za ponovno uporabo ukaza% 1 v pomeni% 2</translation>
+        <translation>ne more spremeniti pomena ukazov. Zavrnjeno za ponovno uporabo ukaza%1 v pomeni%2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="300"/>
         <source>requesting alias(%1) for unknown command(%2): ignored</source>
-        <translation>zahtevano ime(% 1) za neznan ukaz(% 2): prezrto</translation>
+        <translation>zahtevano ime(%1) za neznan ukaz(%2): prezrto</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="310"/>
         <source>reusing an existing alias: was %1=%2, changed to %1=%3</source>
-        <translation>ponovna uporaba obstoječega vzdevka: bil% 1=% 2, spremenjen v% 1=% 3</translation>
+        <translation>ponovna uporaba obstoječega vzdevka: bil%1=%2, spremenjen v%1=%3</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="391"/>
         <source>RS_Commands:: command not found: %1</source>
-        <translation>Ukazi RS:: ukaz ni najden:% 1</translation>
+        <translation>Ukazi RS:: ukaz ni najden:%1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="416"/>
         <source>keycode: %1 (%2)</source>
-        <translation>keycode:% 1 (% 2)</translation>
+        <translation>keycode:%1 (%2)</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="418"/>
         <source>invalid keycode: %1</source>
-        <translation>neveljavna koda ključa:% 1</translation>
+        <translation>neveljavna koda ključa:%1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="433"/>
         <source>Command not found: %1</source>
-        <translation>Ukaz ni najden:% 1</translation>
+        <translation>Ukaz ni najden:%1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="472"/>
@@ -27898,7 +27898,7 @@ Jo želiš zamenjati?</translation>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="77"/>
         <source>No %1 layers found</source>
-        <translation>Ni najdenih slojev% 1</translation>
+        <translation>Ni najdenih slojev%1</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="92"/>
@@ -29718,12 +29718,12 @@ Jo želiš zamenjati?</translation>
         <location filename="../src/ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp" line="180"/>
         <location filename="../src/ui/dialogs/file/export/layers/lc_filedialogservice.cpp" line="219"/>
         <source>File &quot;%1&quot; already exists. Do you want to replace it?</source>
-        <translation>Datoteka »% 1 « že obstaja. Jo želiš zamenjati?</translation>
+        <translation>Datoteka »%1 « že obstaja. Jo želiš zamenjati?</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="38"/>
         <source>/CustomColor%1</source>
-        <translation>/CustomColor% 1</translation>
+        <translation>/CustomColor%1</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="39"/>
@@ -29787,7 +29787,7 @@ Jo želiš zamenjati?</translation>
     <message>
         <location filename="../src/lib/engine/document/container/rs_entitycontainer.cpp" line="1687"/>
         <source>Hatch failed due to a gap=%1 between (%2, %3) and (%4, %5)</source>
-        <translation>Hatch ni uspel zaradi vrzeli=% 1 med (% 2,% 3) in (% 4,% 5)</translation>
+        <translation>Hatch ni uspel zaradi vrzeli=%1 med (%2,%3) in (%4,%5)</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/patterns/rs_patternlist.cpp" line="66"/>
@@ -29797,12 +29797,12 @@ Jo želiš zamenjati?</translation>
     <message>
         <location filename="../src/lib/engine/document/patterns/rs_patternlist.cpp" line="93"/>
         <source>Hatch:: loading pattern failed: %1</source>
-        <translation>Hatch:: Nalaganje vzorca ni uspelo:% 1</translation>
+        <translation>Hatch:: Nalaganje vzorca ni uspelo:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/main/persistence/lc_documentsstorage.cpp" line="197"/>
         <source>File on disk modified. Please save to another file to avoid data loss! File modified: %1</source>
-        <translation>Datoteka na disku spremenjena. Prosimo, shranite v drugo datoteko, da se izognete izgubi podatkov! Datoteka spremenjena:% 1</translation>
+        <translation>Datoteka na disku spremenjena. Prosimo, shranite v drugo datoteko, da se izognete izgubi podatkov! Datoteka spremenjena:%1</translation>
     </message>
     <message>
         <source>DWG support is not complete!</source>
@@ -30212,7 +30212,7 @@ Jo želiš zamenjati?</translation>
     <message>
         <location filename="../src/lib/engine/document/rs_graphic.cpp" line="741"/>
         <source>Invalid printing scale %1. Cannot fit print preview to page</source>
-        <translation>Neveljavna lestvica za tiskanje% 1. Ni moč pripeti ogleda tiskanja na stran</translation>
+        <translation>Neveljavna lestvica za tiskanje%1. Ni moč pripeti ogleda tiskanja na stran</translation>
     </message>
     <message>
         <location filename="../src/lib/printing/lc_printing.cpp" line="160"/>
@@ -30928,17 +30928,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="146"/>
         <source>radius=%1 is invalid (expression)</source>
-        <translation>polmer =% 1 ni veljaven (izraz)</translation>
+        <translation>polmer =%1 ni veljaven (izraz)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="148"/>
         <source>radius=%1 is invalid (negative)</source>
-        <translation>polmer =% 1 ni veljaven (negativni)</translation>
+        <translation>polmer =%1 ni veljaven (negativni)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="151"/>
         <source>radius=%1 is invalid (zero)</source>
-        <translation>polmer =% 1 ni veljaven (nič)</translation>
+        <translation>polmer =%1 ni veljaven (nič)</translation>
     </message>
 </context>
 <context>
@@ -31002,7 +31002,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2.cpp" line="246"/>
         <source>No common tangential circle for radius &apos;%1&apos;</source>
-        <translation>Ni skupnega tangencialnega kroga za polmer »% 1 «</translation>
+        <translation>Ni skupnega tangencialnega kroga za polmer »%1 «</translation>
     </message>
 </context>
 <context>
@@ -31172,7 +31172,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="178"/>
         <source>Total distance %1 is smaller than distance between foci</source>
-        <translation>Skupna razdalja% 1 je manjša od razdalje med foci</translation>
+        <translation>Skupna razdalja%1 je manjša od razdalje med foci</translation>
     </message>
 </context>
 <context>
@@ -31243,7 +31243,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="177"/>
         <source>Total hatch area = %1</source>
-        <translation>Skupna površina lopute =% 1</translation>
+        <translation>Skupna površina lopute =%1</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="203"/>
@@ -31296,7 +31296,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawline.cpp" line="274"/>
         <source>Specify next point or [%1]</source>
-        <translation>Navedite naslednjo točko ali [% 1]</translation>
+        <translation>Navedite naslednjo točko ali [%1]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawline.cpp" line="276"/>
@@ -31433,7 +31433,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallel.cpp" line="135"/>
         <source>Specify Distance &lt;%1&gt; or select entity or [%2]</source>
-        <translation>Določite razdaljo &lt;% 1&gt; ali izberite entiteto ali [% 2]</translation>
+        <translation>Določite razdaljo &lt;%1&gt; ali izberite entiteto ali [%2]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallel.cpp" line="109"/>
@@ -31646,7 +31646,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="756"/>
         <source>Specify next point or [%1]</source>
-        <translation>Navedite naslednjo točko ali [% 1]</translation>
+        <translation>Navedite naslednjo točko ali [%1]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="758"/>
@@ -31721,7 +31721,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/spline/rs_actiondrawspline.cpp" line="227"/>
         <source>Specify next control point or [%1]</source>
-        <translation>Navedite naslednjo kontrolno točko ali [% 1]</translation>
+        <translation>Navedite naslednjo kontrolno točko ali [%1]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/rs_actiondrawspline.cpp" line="229"/>
@@ -31862,8 +31862,8 @@ Complementary: %2
 Supplementary: %3
 Alternative: %4
 </source>
-        <translation>Kot:% 1
-Dopolnilo:% 2
+        <translation>Kot:%1
+Dopolnilo:%2
 Dodatno: %3
 Alternativa: %4</translation>
     </message>
@@ -31875,12 +31875,12 @@ Supplementary: %3
 Alternative: %4
 Intersection: (%5 , %6)
 Intersection :@(%7, %8)</source>
-        <translation>Kot:% 1
-Dopolnilo:% 2
+        <translation>Kot:%1
+Dopolnilo:%2
 Dodatno: %3
 Alternativa: %4
-Prerez: (% 5 ,% 6)
-Prerez :@(% 7,% 8)</translation>
+Prerez: (%5 ,%6)
+Prerez :@(%7,%8)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="253"/>
@@ -31964,17 +31964,17 @@ Prerez :@(% 7,% 8)</translation>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="99"/>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="107"/>
         <source>Circumference: %1</source>
-        <translation>Okolica:% 1</translation>
+        <translation>Okolica:%1</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="153"/>
         <source>Closing Point: %1</source>
-        <translation>Končna točka:% 1</translation>
+        <translation>Končna točka:%1</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="160"/>
         <source>Point: %1</source>
-        <translation>Točka:% 1</translation>
+        <translation>Točka:%1</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="182"/>
@@ -31995,7 +31995,7 @@ Prerez :@(% 7,% 8)</translation>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="101"/>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="108"/>
         <source>Area: %1 %2^2</source>
-        <translation>Površina:% 1% 2^ 2</translation>
+        <translation>Površina:%1%2^ 2</translation>
     </message>
 </context>
 <context>
@@ -32007,11 +32007,11 @@ Cartesian: (%2 , %3)
 Polar: (%4 &lt; %5)
 Start: (%6 , %7)
 End: (%8 , %9)</source>
-        <translation>Razdalja:% 1
-Kartezij: (% 2 ,% 3)
-polarna: (% 4 &lt;% 5)
-Začetek: (% 6 ,% 7)
-Konec: (% 8 ,% 9)</translation>
+        <translation>Razdalja:%1
+Kartezij: (%2 ,%3)
+polarna: (%4 &lt;%5)
+Začetek: (%6 ,%7)
+Konec: (%8 ,%9)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="98"/>
@@ -32063,11 +32063,11 @@ Cartesian: (%2 , %3)
 Polar: (%4 &lt; %5)
 Point On Entity: (%6 , %7)
 Point: (%8 , %9)</source>
-        <translation>Razdalja:% 1
-Kartezij: (% 2 ,% 3)
-polarna: (% 4 &lt;% 5)
-Točka o subjektu: (% 6 ,% 7)
-Točka: (% 8 ,% 9)</translation>
+        <translation>Razdalja:%1
+Kartezij: (%2 ,%3)
+polarna: (%4 &lt;%5)
+Točka o subjektu: (%6 ,%7)
+Točka: (%8 ,%9)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="275"/>
@@ -32139,7 +32139,7 @@ Točka: (% 8 ,% 9)</translation>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="51"/>
         <source>Total Length of selected entities: %1</source>
-        <translation>Skupna dolžina izbranih subjektov:% 1</translation>
+        <translation>Skupna dolžina izbranih subjektov:%1</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="53"/>
@@ -32221,7 +32221,7 @@ Točka: (% 8 ,% 9)</translation>
     <message>
         <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="64"/>
         <source>Cannot open file &apos;%1&apos;</source>
-        <translation>Ni moč odpreti datoteke »% 1 «</translation>
+        <translation>Ni moč odpreti datoteke »%1 «</translation>
     </message>
 </context>
 <context>
@@ -32872,7 +32872,7 @@ Točka: (% 8 ,% 9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="421"/>
         <source>Specify first entity or enter radius &lt;%1&gt;</source>
-        <translation>Navedite prvi subjekt ali vnesite polmer &lt;% 1&gt;</translation>
+        <translation>Navedite prvi subjekt ali vnesite polmer &lt;%1&gt;</translation>
     </message>
 </context>
 <context>
@@ -33350,12 +33350,12 @@ Točka: (% 8 ,% 9)</translation>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="160"/>
         <source>Printout offset in paper coordinates by (%1, %2)</source>
-        <translation>Zamik izpisa v papirnih koordinatah za (% 1,% 2)</translation>
+        <translation>Zamik izpisa v papirnih koordinatah za (%1,%2)</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="163"/>
         <source>Printout offset in graph coordinates by (%1, %2)</source>
-        <translation>Odmik izpisa v koordinatah grafa za (% 1,% 2)</translation>
+        <translation>Odmik izpisa v koordinatah grafa za (%1,%2)</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="185"/>
@@ -33562,7 +33562,7 @@ Točka: (% 8 ,% 9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiontoolregeneratedimensions.cpp" line="63"/>
         <source>Regenerated %1 dimension entities</source>
-        <translation>Regenerirani subjekti dimenzije% 1</translation>
+        <translation>Regenerirani subjekti dimenzije%1</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiontoolregeneratedimensions.cpp" line="66"/>

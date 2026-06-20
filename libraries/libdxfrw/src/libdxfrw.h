@@ -113,6 +113,9 @@ public:
     bool writeTolerance(DRW_Tolerance *ent);
     bool writeHatch(DRW_Hatch *ent);
     bool writeViewport(DRW_Viewport *ent);
+    bool writeLight(DRW_Light *ent);
+    bool writeShape(DRW_Shape *ent);
+    bool writeOle2Frame(DRW_Ole2Frame *ent);
     DRW_ImageDef *writeImage(DRW_Image *ent, std::string name);
     bool writeWipeout(DRW_Image *ent);
     bool writeMultiLeader(DRW_MLeader *ent);
@@ -235,6 +238,20 @@ private:
     bool processSectionViewStyle();
     bool processBreakData();
     bool processBreakPointRef();
+    bool processMaterial();
+    bool processGeoData();
+    bool processVisualStyle();
+    bool processImageDefReactor();
+    bool processSpatialFilter();
+    bool processTableStyle();
+    bool processMLeaderStyle();
+    bool processSortEntsTable();
+    bool processDimAssoc();
+    bool processBackground();
+    bool processPointCloudDef();
+    bool processSunStudy();
+    bool processRenderSettings();
+    bool processSection();
 
     bool processLType();
     bool processLayer();
@@ -266,6 +283,7 @@ private:
     bool processMLine();
     bool processUnderlay(const std::string& kind);
     bool processHatch();
+    bool processMPolygon();
     bool processSpline();
     bool process3dface();
     bool processMesh();

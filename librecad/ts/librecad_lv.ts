@@ -708,7 +708,7 @@ attālums starp punktiem=%2 ir lielāks nekā diametrs=%3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="146"/>
         <source>Dual created around center (%1 entities)</source>
-        <translation>Dual izveidots ap centru (% 1 vienības)</translation>
+        <translation>Dual izveidots ap centru (%1 vienības)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="159"/>
@@ -888,8 +888,8 @@ vai [x]y]p</translation>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="537"/>
         <source>Specify distance (%1)
 or [%2]</source>
-        <translation>Norādīt attālumu (% 1)
-vai [% 2]</translation>
+        <translation>Norādīt attālumu (%1)
+vai [%2]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="537"/>
@@ -900,8 +900,8 @@ vai [% 2]</translation>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="542"/>
         <source>Specify  distance (angle %1 deg)
 or [%2]</source>
-        <translation>Norādīt attālumu (leņķis% 1 deg)
-vai [% 2]</translation>
+        <translation>Norādīt attālumu (leņķis%1 deg)
+vai [%2]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="547"/>
@@ -1013,13 +1013,13 @@ vai [% 2]</translation>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="477"/>
         <source>Specify direction (x or y) or [%1]</source>
-        <translation>Norādīt virzienu (x vai y) vai [% 1]</translation>
+        <translation>Norādīt virzienu (x vai y) vai [%1]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="491"/>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="495"/>
         <source>Specify distance (%1) or [%2]</source>
-        <translation>Norādīt attālumu (% 1) vai [% 2]</translation>
+        <translation>Norādīt attālumu (%1) vai [%2]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="134"/>
@@ -1051,17 +1051,17 @@ vai [% 2]</translation>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="501"/>
         <source>Specify distance (%1 deg) or [%2]</source>
-        <translation>Norādīt attālumu (% 1 deg) vai [% 2]</translation>
+        <translation>Norādīt attālumu (%1 deg) vai [%2]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="516"/>
         <source>Specify angle or [%1]</source>
-        <translation>Norādīt leņķi vai [% 1]</translation>
+        <translation>Norādīt leņķi vai [%1]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="528"/>
         <source>Specify point or [%1]</source>
-        <translation>Norādīt punktu vai [% 1]</translation>
+        <translation>Norādīt punktu vai [%1]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="577"/>
@@ -3297,13 +3297,13 @@ Alternative: %4
 Start Edge Point: (%5 , %6)
 Intersection Point :(%7, %8)
 End Edge Point: (%9 , %10)</source>
-        <translation>Leņķis:% 1
-Papildinājums:% 2
+        <translation>Leņķis:%1
+Papildinājums:%2
 Papildinājums: %3
 Alternatīvs: %4
-Sākuma malu punkts: (% 5 ,% 6)
-Sadaļas punkts:(% 7,% 8)
-Beigu malas punkts: (% 9 ,% 10)</translation>
+Sākuma malu punkts: (%5 ,%6)
+Sadaļas punkts:(%7,%8)
+Beigu malas punkts: (%9 ,%10)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="149"/>
@@ -3370,27 +3370,27 @@ Beigu malas punkts: (% 9 ,% 10)</translation>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="41"/>
         <source>Absolute: (%1)</source>
-        <translation>Absolūtais: (% 1)</translation>
+        <translation>Absolūtais: (%1)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="42"/>
         <source>Relative: (%1)</source>
-        <translation>Relatīvs: (% 1)</translation>
+        <translation>Relatīvs: (%1)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="43"/>
         <source>Polar: (%1)</source>
-        <translation>Polārs: (% 1)</translation>
+        <translation>Polārs: (%1)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="44"/>
         <source>Polar Relative: (%1)</source>
-        <translation>Polārais relatīvais: (% 1)</translation>
+        <translation>Polārais relatīvais: (%1)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="46"/>
         <source>Absolute WCS: (%1)</source>
-        <translation>Absolūtais WCS: (% 1)</translation>
+        <translation>Absolūtais WCS: (%1)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="70"/>
@@ -3711,7 +3711,7 @@ Beigu malas punkts: (% 9 ,% 10)</translation>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayerscmd.cpp" line="53"/>
         <source>Enter layer name to %1</source>
-        <translation>Ievadiet slāņa nosaukumu uz% 1</translation>
+        <translation>Ievadiet slāņa nosaukumu uz%1</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayerscmd.cpp" line="53"/>
@@ -4509,7 +4509,7 @@ Beigu malas punkts: (% 9 ,% 10)</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="163"/>
         <source>LibreCAD Shortcuts file (*.%1)</source>
-        <translation>LibreCAD īsceļu fails (*.% 1)</translation>
+        <translation>LibreCAD īsceļu fails (*.%1)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="198"/>
@@ -4684,7 +4684,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
         <source>Save changes to the following item?
 %1</source>
         <translation>Saglabāt izmaiņas šajā pozīcijā?
-% 1</translation>
+%1</translation>
     </message>
     <message>
         <location filename="../src/ui/main/support/lc_appwindowdialogsinvoker.cpp" line="185"/>
@@ -4998,7 +4998,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
         <location filename="../src/ui/components/creators/lc_creatorinvoker.cpp" line="83"/>
         <location filename="../src/ui/components/creators/lc_creatorinvoker.cpp" line="115"/>
         <source>Toolbar: %1 (Custom)</source>
-        <translation>Rīkjosla:% 1 (Muita)</translation>
+        <translation>Rīkjosla:%1 (Muita)</translation>
     </message>
 </context>
 <context>
@@ -5345,7 +5345,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="186"/>
         <source>LibreCAD dimension styles file (*.%1)</source>
-        <translation>LibreCAD dimensiju stilu fails (*.% 1)</translation>
+        <translation>LibreCAD dimensiju stilu fails (*.%1)</translation>
     </message>
 </context>
 <context>
@@ -5394,17 +5394,17 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="76"/>
         <source>Version: &lt;b&gt;%1&lt;/b&gt;</source>
-        <translation>Versija: &lt;b&gt;% 1&lt;/b&gt;</translation>
+        <translation>Versija: &lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="78"/>
         <source>Compiler: Clang %1.%2.%3</source>
-        <translation>Kompilators: Clang% 1.% 2.% 3</translation>
+        <translation>Kompilators: Clang%1.%2.%3</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="80"/>
         <source>Compiler: GNU GCC %1.%2.%3</source>
-        <translation>Kompilators: GNU GCC% 1.% 2.% 3</translation>
+        <translation>Kompilators: GNU GCC%1.%2.%3</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="82"/>
@@ -5414,17 +5414,17 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="84"/>
         <source>Compiled on: %1</source>
-        <translation>Kompilēts ar:% 1</translation>
+        <translation>Kompilēts ar:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="85"/>
         <source>Qt Version: %1</source>
-        <translation>Qt versija:% 1</translation>
+        <translation>Qt versija:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="86"/>
         <source>Boost Version: %1.%2.%3</source>
-        <translation>Sākuma versija:% 1.% 2.% 3</translation>
+        <translation>Sākuma versija:%1.%2.%3</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="96"/>
@@ -7532,7 +7532,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="102"/>
         <source>Menu Assignment - &quot;%1&quot; Menu</source>
-        <translation>Izvēlnes uzdevums - &quot;% 1&quot; izvēlne</translation>
+        <translation>Izvēlnes uzdevums - &quot;%1&quot; izvēlne</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="106"/>
@@ -7677,7 +7677,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="250"/>
         <source>NOTE: This shortcut is already assigned to &quot;%1&quot; menu and that menu will be unassigned on save!</source>
-        <translation>PIEZĪME: Šis īsceļš jau ir piešķirts izvēlnē &quot;% 1&quot; un ka izvēlne netiks piešķirta saglabāšanai!</translation>
+        <translation>PIEZĪME: Šis īsceļš jau ir piešķirts izvēlnē &quot;%1&quot; un ka izvēlne netiks piešķirta saglabāšanai!</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="254"/>
@@ -7971,7 +7971,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.cpp" line="145"/>
         <source>Provided name of dimension style (%1) is not unique! Please enter another one.</source>
-        <translation>Piedāvātais dimensijas stila nosaukums (% 1) nav unikāls! Lūdzu, ievadiet citu.</translation>
+        <translation>Piedāvātais dimensijas stila nosaukums (%1) nav unikāls! Lūdzu, ievadiet citu.</translation>
     </message>
 </context>
 <context>
@@ -8771,7 +8771,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="203"/>
         <source>Are you sure you&apos;d like to unassign &quot;%1&quot; menu? Note: Just an invocation shortcut will be removed and menu will not be deleted.</source>
-        <translation>Vai tiešām vēlaties noņemt &quot;% 1&quot; izvēlni? Piezīme: Tiks noņemts tikai atsauksmju īsceļš un izvēlne netiks izdzēsta.</translation>
+        <translation>Vai tiešām vēlaties noņemt &quot;%1&quot; izvēlni? Piezīme: Tiks noņemts tikai atsauksmju īsceļš un izvēlne netiks izdzēsta.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="216"/>
@@ -8794,12 +8794,12 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="430"/>
         <source>Remove %1</source>
-        <translation>Noņemt% 1</translation>
+        <translation>Noņemt%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="431"/>
         <source>Are you sure you&apos;d like to remove  %2&quot;%1&quot;?</source>
-        <translation>Vai tiešām vēlaties noņemt% 2&quot;% 1&quot;?</translation>
+        <translation>Vai tiešām vēlaties noņemt%2&quot;%1&quot;?</translation>
     </message>
 </context>
 <context>
@@ -9206,7 +9206,7 @@ Vai tiešām izmetīsi izmaiņas?</translation>
     <message>
         <location filename="../src/ui/dialogs/file/export/image/lc_exporttoimageservice.cpp" line="62"/>
         <source>Exported: %1</source>
-        <translation>Eksportēts:% 1</translation>
+        <translation>Eksportēts:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/image/lc_exporttoimageservice.cpp" line="65"/>
@@ -10315,7 +10315,7 @@ Būvslāņa saturam nevajadzētu parādīties izdrukā.</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="189"/>
         <source>Invalid value provide for %1 color.
 Please specify a different value.</source>
-        <translation>Nederīga vērtība nodrošina% 1 krāsu.
+        <translation>Nederīga vērtība nodrošina%1 krāsu.
 Lūdzu, norādiet citu vērtību.</translation>
     </message>
     <message>
@@ -12467,7 +12467,7 @@ Brīdinājums: šo darbību nevar atsaukt!</translation>
  &quot;%1&quot;?
  Warning: this action can NOT be undone!</source>
         <translation>Vai tiešām dzēst skatu
-&quot;% 1&quot;?
+&quot;%1&quot;?
 Brīdinājums: šo darbību nevar atsaukt!</translation>
     </message>
     <message>
@@ -12479,7 +12479,7 @@ Brīdinājums: šo darbību nevar atsaukt!</translation>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="302"/>
         <source>Are you sure to delete views %1?
 Warning: this action can NOT be undone!</source>
-        <translation>Vai tiešām dzēst skatus% 1?
+        <translation>Vai tiešām dzēst skatus%1?
 Brīdinājums: šo darbību nevar atsaukt!</translation>
     </message>
     <message>
@@ -15880,7 +15880,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="45"/>
         <source>LibreCAD settings file (*.%1)</source>
-        <translation>LibreCAD iestatījumu fails (*.% 1)</translation>
+        <translation>LibreCAD iestatījumu fails (*.%1)</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="91"/>
@@ -16736,7 +16736,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="67"/>
         <source>Toolbar: %1</source>
-        <translation>Rīkjosla:% 1</translation>
+        <translation>Rīkjosla:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="73"/>
@@ -17093,7 +17093,7 @@ Brīdinājums: šo darbību nevar atsaukt!</translation>
  &quot;%1&quot;?
  Warning: this action can NOT be undone!</source>
         <translation>Vai tiešām dzēst UCS
-&quot;% 1&quot;?
+&quot;%1&quot;?
 Brīdinājums: šo darbību nevar atsaukt!</translation>
     </message>
     <message>
@@ -17105,7 +17105,7 @@ Brīdinājums: šo darbību nevar atsaukt!</translation>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="378"/>
         <source>Are you sure to delete UCS %1?
 Warning: this action can NOT be undone!</source>
-        <translation>Vai tiešām dzēst UCS% 1?
+        <translation>Vai tiešām dzēst UCS%1?
 Brīdinājums: šo darbību nevar atsaukt!</translation>
     </message>
     <message>
@@ -17403,7 +17403,7 @@ Brīdinājums: šo darbību nevar atsaukt!</translation>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="429"/>
         <source>Toolbar: %1</source>
-        <translation>Rīkjosla:% 1</translation>
+        <translation>Rīkjosla:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="446"/>
@@ -18004,7 +18004,7 @@ Lūdzu, pārbaudiet, vai tā eksistē un vai ir pareizas atļaujas.</translation
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="226"/>
         <source>Saving drawing: %1</source>
-        <translation>Saglabā rasējumu:% 1</translation>
+        <translation>Saglabā rasējumu:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="232"/>
@@ -18024,12 +18024,12 @@ Lūdzu, pārbaudiet, vai tā eksistē un vai ir pareizas atļaujas.</translation
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="365"/>
         <source>&amp;Save %1</source>
-        <translation>&amp;Saglabāt% 1</translation>
+        <translation>&amp;Saglabāt%1</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="366"/>
         <source>Save %1 &amp;as...</source>
-        <translation>Saglabāt% 1 kā...</translation>
+        <translation>Saglabāt%1 kā...</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1084"/>
@@ -18325,7 +18325,7 @@ Lūdzu, pārbaudiet, vai tā eksistē un vai ir pareizas atļaujas.</translation
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="249"/>
         <source>Command Alias File: %1</source>
-        <translation>Komandas Alias fails:% 1</translation>
+        <translation>Komandas Alias fails:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="339"/>
@@ -20385,7 +20385,7 @@ Tas rekursīvi maina visas bloka vienības.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="400"/>
         <source>Are you sure you&apos;d like to delete property [%1]?</source>
-        <translation>Vai tiešām vēlaties dzēst īpašumu [% 1]?</translation>
+        <translation>Vai tiešām vēlaties dzēst īpašumu [%1]?</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="422"/>
@@ -20452,7 +20452,7 @@ Tas rekursīvi maina visas bloka vienības.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="642"/>
         <source>Enter new unique name of dimension style (was &quot;%1&quot;):</source>
-        <translation>Ievadiet jauno dimensijas stila unikālo nosaukumu (bija &quot;% 1&quot;):</translation>
+        <translation>Ievadiet jauno dimensijas stila unikālo nosaukumu (bija &quot;%1&quot;):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="662"/>
@@ -20475,12 +20475,12 @@ Tas rekursīvi maina visas bloka vienības.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="684"/>
         <source>Are you sure you want to remove the dimension style &quot;%1&quot; together with child styles?</source>
-        <translation>Vai tiešām vēlaties noņemt dimensijas stilu &quot;% 1&quot; kopā ar bērnu stiliem?</translation>
+        <translation>Vai tiešām vēlaties noņemt dimensijas stilu &quot;%1&quot; kopā ar bērnu stiliem?</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="692"/>
         <source>Are you sure you want to remove the dimension style &quot;%1&quot;?</source>
-        <translation>Vai tiešām vēlaties izņemt dimensijas stilu &quot;% 1&quot;?</translation>
+        <translation>Vai tiešām vēlaties izņemt dimensijas stilu &quot;%1&quot;?</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="929"/>
@@ -25635,7 +25635,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="171"/>
         <source>Relative zero position is %1</source>
-        <translation>Relatīvā nulles pozīcija ir% 1</translation>
+        <translation>Relatīvā nulles pozīcija ir%1</translation>
     </message>
     <message>
         <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="171"/>
@@ -25650,7 +25650,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="176"/>
         <source>Coordinate system: %1</source>
-        <translation>Koordinātu sistēma:% 1</translation>
+        <translation>Koordinātu sistēma:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="176"/>
@@ -25900,7 +25900,7 @@ This action can NOT be undone.</source>
 [%1].
 Please specify a different name.</source>
         <translation>Mēģināt izveidot slāni ar dublējošu nosaukumu. Dublēts slāņa nosaukums ir
-[% 1].
+[%1].
 Lūdzu norādiet citu nosaukumu.</translation>
     </message>
     <message>
@@ -25953,7 +25953,7 @@ Clear filtering mask and repeat.</source>
 [%1].
 Please specify a different name.</source>
         <translation>Šāds bērnu slānis jau pastāv
-[% 1].
+[%1].
 Lūdzu norādiet citu nosaukumu.</translation>
     </message>
     <message>
@@ -25962,7 +25962,7 @@ Lūdzu norādiet citu nosaukumu.</translation>
 [%1].
 </source>
         <translation>Šāds bērnu slānis jau pastāv
-[% 1].</translation>
+[%1].</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1165"/>
@@ -26007,7 +26007,7 @@ Ja Nē, vērtības &quot;Pēc slāņa&quot; paliks nemainīgas, un tā mērķsl�
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.cpp" line="218"/>
         <source>Invalid value provided for %1 color.
 Please specify a different value.</source>
-        <translation>Nederīga% 1 krāsas vērtība.
+        <translation>Nederīga%1 krāsas vērtība.
 Lūdzu, norādiet citu vērtību.</translation>
     </message>
     <message>
@@ -26933,7 +26933,7 @@ Vai vēlaties to aizvietot?</translation>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="68"/>
         <source>: duplicated command: %1 is already taken by %2</source>
-        <translation>: dublētu komandu:% 1 jau ņem% 2</translation>
+        <translation>: dublētu komandu:%1 jau ņem%2</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="884"/>
@@ -28026,37 +28026,37 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="261"/>
         <location filename="../src/cmd/rs_commands.cpp" line="316"/>
         <source>cannot change meaning of commands. Refused to reuse command %1 to mean %2</source>
-        <translation>nevar mainīt komandu nozīmi. Atsacīšanās atkārtoti izmantot komandu% 1 uz vidējo% 2</translation>
+        <translation>nevar mainīt komandu nozīmi. Atsacīšanās atkārtoti izmantot komandu%1 uz vidējo%2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="300"/>
         <source>requesting alias(%1) for unknown command(%2): ignored</source>
-        <translation>pieprasīt aizstājvārdu(% 1) nezināmai komandai(% 2): ignorēts</translation>
+        <translation>pieprasīt aizstājvārdu(%1) nezināmai komandai(%2): ignorēts</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="310"/>
         <source>reusing an existing alias: was %1=%2, changed to %1=%3</source>
-        <translation>atkārtoti izmantojot esošu aizstājvārdu: bija% 1=% 2, mainīts uz% 1=% 3</translation>
+        <translation>atkārtoti izmantojot esošu aizstājvārdu: bija%1=%2, mainīts uz%1=%3</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="391"/>
         <source>RS_Commands:: command not found: %1</source>
-        <translation>RS  komandas:: komanda nav atrasta:% 1</translation>
+        <translation>RS  komandas:: komanda nav atrasta:%1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="416"/>
         <source>keycode: %1 (%2)</source>
-        <translation>atslēgas kods:% 1 (% 2)</translation>
+        <translation>atslēgas kods:%1 (%2)</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="418"/>
         <source>invalid keycode: %1</source>
-        <translation>nederīgs atslēgas kods:% 1</translation>
+        <translation>nederīgs atslēgas kods:%1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="433"/>
         <source>Command not found: %1</source>
-        <translation>Komanda nav atrasta:% 1</translation>
+        <translation>Komanda nav atrasta:%1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="472"/>
@@ -28171,7 +28171,7 @@ Vai vēlaties to aizvietot?</translation>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="77"/>
         <source>No %1 layers found</source>
-        <translation>Nav atrasti% 1 slāņi</translation>
+        <translation>Nav atrasti%1 slāņi</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="92"/>
@@ -29997,12 +29997,12 @@ Vai vēlaties to aizvietot?</translation>
         <location filename="../src/ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp" line="180"/>
         <location filename="../src/ui/dialogs/file/export/layers/lc_filedialogservice.cpp" line="219"/>
         <source>File &quot;%1&quot; already exists. Do you want to replace it?</source>
-        <translation>Fails &quot;% 1&quot; jau pastāv. Vai vēlaties to aizvietot?</translation>
+        <translation>Fails &quot;%1&quot; jau pastāv. Vai vēlaties to aizvietot?</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="38"/>
         <source>/CustomColor%1</source>
-        <translation>Color% 1</translation>
+        <translation>Color%1</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="39"/>
@@ -30071,7 +30071,7 @@ Vai vēlaties to aizvietot?</translation>
     <message>
         <location filename="../src/lib/engine/document/patterns/rs_patternlist.cpp" line="93"/>
         <source>Hatch:: loading pattern failed: %1</source>
-        <translation>Hatch:: Neizdevās ielādēt paraugu:% 1</translation>
+        <translation>Hatch:: Neizdevās ielādēt paraugu:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="41"/>
@@ -30211,7 +30211,7 @@ Vai vēlaties to aizvietot?</translation>
     <message>
         <location filename="../src/lib/engine/document/rs_graphic.cpp" line="741"/>
         <source>Invalid printing scale %1. Cannot fit print preview to page</source>
-        <translation>Nederīga drukas skala% 1. Neizdevās pievienot drukas priekšskatījumu lapai</translation>
+        <translation>Nederīga drukas skala%1. Neizdevās pievienot drukas priekšskatījumu lapai</translation>
     </message>
     <message>
         <location filename="../src/lib/printing/lc_printing.cpp" line="160"/>
@@ -30927,17 +30927,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="146"/>
         <source>radius=%1 is invalid (expression)</source>
-        <translation>rādiuss=% 1 nav derīgs (ekspresija)</translation>
+        <translation>rādiuss=%1 nav derīgs (ekspresija)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="148"/>
         <source>radius=%1 is invalid (negative)</source>
-        <translation>rādiuss=% 1 nav derīgs (negatīvs)</translation>
+        <translation>rādiuss=%1 nav derīgs (negatīvs)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="151"/>
         <source>radius=%1 is invalid (zero)</source>
-        <translation>rādiuss=% 1 nav derīgs (nulle)</translation>
+        <translation>rādiuss=%1 nav derīgs (nulle)</translation>
     </message>
 </context>
 <context>
@@ -31001,7 +31001,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2.cpp" line="246"/>
         <source>No common tangential circle for radius &apos;%1&apos;</source>
-        <translation>Nav parasta tangenciāla apļa rādiusam &apos;% 1&apos;</translation>
+        <translation>Nav parasta tangenciāla apļa rādiusam &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
@@ -31171,7 +31171,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="178"/>
         <source>Total distance %1 is smaller than distance between foci</source>
-        <translation>Kopējais attālums% 1 ir mazāks par attālumu starp foci</translation>
+        <translation>Kopējais attālums%1 ir mazāks par attālumu starp foci</translation>
     </message>
 </context>
 <context>
@@ -31861,8 +31861,8 @@ Complementary: %2
 Supplementary: %3
 Alternative: %4
 </source>
-        <translation>Leņķis:% 1
-Papildinājums:% 2
+        <translation>Leņķis:%1
+Papildinājums:%2
 Papildinājums: %3
 Alternatīvs: %4</translation>
     </message>
@@ -31874,12 +31874,12 @@ Supplementary: %3
 Alternative: %4
 Intersection: (%5 , %6)
 Intersection :@(%7, %8)</source>
-        <translation>Leņķis:% 1
-Papildinājums:% 2
+        <translation>Leņķis:%1
+Papildinājums:%2
 Papildinājums: %3
 Alternatīvs: %4
-Sadaļa: (% 5 , %6)
-Sadaļa :@(% 7,% 8)</translation>
+Sadaļa: (%5 , %6)
+Sadaļa :@(%7,%8)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="253"/>
@@ -31968,12 +31968,12 @@ Sadaļa :@(% 7,% 8)</translation>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="153"/>
         <source>Closing Point: %1</source>
-        <translation>Aizvēršanas punkts:% 1</translation>
+        <translation>Aizvēršanas punkts:%1</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="160"/>
         <source>Point: %1</source>
-        <translation>Punkts:% 1</translation>
+        <translation>Punkts:%1</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="182"/>
@@ -31994,7 +31994,7 @@ Sadaļa :@(% 7,% 8)</translation>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="101"/>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="108"/>
         <source>Area: %1 %2^2</source>
-        <translation>Laukums:% 1% 2^2</translation>
+        <translation>Laukums:%1%2^2</translation>
     </message>
 </context>
 <context>
@@ -32006,11 +32006,11 @@ Cartesian: (%2 , %3)
 Polar: (%4 &lt; %5)
 Start: (%6 , %7)
 End: (%8 , %9)</source>
-        <translation>Attālums:% 1
-Kartēziskais: (% 2,% 3)
-Polārais: (% 4 &lt; %5)
-Sākums: (% 6 ,% 7)
-Beigas: (% 8 ,% 9)</translation>
+        <translation>Attālums:%1
+Kartēziskais: (%2,%3)
+Polārais: (%4 &lt; %5)
+Sākums: (%6 ,%7)
+Beigas: (%8 ,%9)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="98"/>
@@ -32062,11 +32062,11 @@ Cartesian: (%2 , %3)
 Polar: (%4 &lt; %5)
 Point On Entity: (%6 , %7)
 Point: (%8 , %9)</source>
-        <translation>Attālums:% 1
-Kartēziskais: (% 2,% 3)
-Polārais: (% 4 &lt; %5)
+        <translation>Attālums:%1
+Kartēziskais: (%2,%3)
+Polārais: (%4 &lt; %5)
 Punkts par vienību: (%6 , %7)
-Punkts: (% 8 , %9)</translation>
+Punkts: (%8 , %9)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="275"/>
@@ -32871,7 +32871,7 @@ Punkts: (% 8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="421"/>
         <source>Specify first entity or enter radius &lt;%1&gt;</source>
-        <translation>Norādīt pirmo entītiju vai ievadīt rādiusu &lt;% 1&gt;</translation>
+        <translation>Norādīt pirmo entītiju vai ievadīt rādiusu &lt;%1&gt;</translation>
     </message>
 </context>
 <context>

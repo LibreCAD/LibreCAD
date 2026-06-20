@@ -7,6 +7,9 @@
 !/.github
 !/librecad/src/lib/debug/
 
+# cmake files
+CMakeFiles/
+meta_types/
 # Apple generated directories
 build/
 LibreCAD.app/

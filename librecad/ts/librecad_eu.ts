@@ -899,7 +899,7 @@ edo [%2]</translation>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="542"/>
         <source>Specify  distance (angle %1 deg)
 or [%2]</source>
-        <translation>Zehaztu distantzia (% 1 deg angelua)
+        <translation>Zehaztu distantzia (%1 deg angelua)
 edo [%2]</translation>
     </message>
     <message>
@@ -7531,7 +7531,7 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="102"/>
         <source>Menu Assignment - &quot;%1&quot; Menu</source>
-        <translation>Menu-esleipena - &quot;% 1&quot; menua</translation>
+        <translation>Menu-esleipena - &quot;%1&quot; menua</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="106"/>
@@ -7676,7 +7676,7 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="250"/>
         <source>NOTE: This shortcut is already assigned to &quot;%1&quot; menu and that menu will be unassigned on save!</source>
-        <translation>OHARRA: lasterbide hau &quot;% 1&quot; menuari esleitu zaio eta menu hori ez da gordeko!</translation>
+        <translation>OHARRA: lasterbide hau &quot;%1&quot; menuari esleitu zaio eta menu hori ez da gordeko!</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="254"/>
@@ -8770,7 +8770,7 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="203"/>
         <source>Are you sure you&apos;d like to unassign &quot;%1&quot; menu? Note: Just an invocation shortcut will be removed and menu will not be deleted.</source>
-        <translation>Ziur zaude &quot;% 1&quot; menua esleitu nahi duzula? Oharra: Dei-tekla bat bakarrik kenduko da eta menua ez da ezabatuko.</translation>
+        <translation>Ziur zaude &quot;%1&quot; menua esleitu nahi duzula? Oharra: Dei-tekla bat bakarrik kenduko da eta menua ez da ezabatuko.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="216"/>
@@ -20450,7 +20450,7 @@ Honek errekurtsiboki aldatzen ditu blokearen entitate guztiak.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="642"/>
         <source>Enter new unique name of dimension style (was &quot;%1&quot;):</source>
-        <translation>Sartu dimentsio-estiloaren izen berezi berria (&apos;% 1&apos; zen):</translation>
+        <translation>Sartu dimentsio-estiloaren izen berezi berria (&apos;%1&apos; zen):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="662"/>
@@ -20473,12 +20473,12 @@ Honek errekurtsiboki aldatzen ditu blokearen entitate guztiak.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="684"/>
         <source>Are you sure you want to remove the dimension style &quot;%1&quot; together with child styles?</source>
-        <translation>Ziur zaude &quot;% 1&quot; dimentsio-estiloa haur-estiloekin batera kendu nahi duzula?</translation>
+        <translation>Ziur zaude &quot;%1&quot; dimentsio-estiloa haur-estiloekin batera kendu nahi duzula?</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="692"/>
         <source>Are you sure you want to remove the dimension style &quot;%1&quot;?</source>
-        <translation>Ziur zaude &quot;% 1&quot; dimentsio-estiloa kendu nahi duzula?</translation>
+        <translation>Ziur zaude &quot;%1&quot; dimentsio-estiloa kendu nahi duzula?</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="929"/>
@@ -25159,7 +25159,7 @@ beraz, labean egiteko behar den urrats-balio lehenetsia</translation>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="127"/>
         <source>Drawing Exchange %1</source>
-        <translation>% 1 trukea marrazten</translation>
+        <translation>%1 trukea marrazten</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="135"/>
@@ -25809,7 +25809,7 @@ p, li { zuriunea: aurreitzulbira; }
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="456"/>
         <source>Block &quot;%1&quot; and all its entities will be removed.</source>
-        <translation>&quot;% 1&quot; blokea eta bere entitate guztiak ezabatuko dira.</translation>
+        <translation>&quot;%1&quot; blokea eta bere entitate guztiak ezabatuko dira.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.cpp" line="83"/>
@@ -25821,13 +25821,13 @@ p, li { zuriunea: aurreitzulbira; }
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.cpp" line="84"/>
         <source>Layer with a name &quot;%1&quot; already exists. Please specify a different name.</source>
-        <translation>&quot;% 1&quot; izeneko geruza badago lehendik. Zehaztu beste izen bat.</translation>
+        <translation>&quot;%1&quot; izeneko geruza badago lehendik. Zehaztu beste izen bat.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="191"/>
         <source>Layer &quot;%1&quot; and all entities on it will be removed.
 This action can NOT be undone.</source>
-        <translation>&quot;% 1&quot; geruza eta bertako entitate guztiak ezabatuko dira.
+        <translation>&quot;%1&quot; geruza eta bertako entitate guztiak ezabatuko dira.
 Ekintza hau ezin da desegin.</translation>
     </message>
     <message>
@@ -26169,7 +26169,7 @@ Ordeztea nahi duzu?</translation>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="452"/>
         <source>Drawing Exchange %1</source>
-        <translation>% 1 trukea marrazten</translation>
+        <translation>%1 trukea marrazten</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="457"/>
@@ -27420,7 +27420,7 @@ Ordeztea nahi duzu?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="261"/>
         <location filename="../src/cmd/rs_commands.cpp" line="316"/>
         <source>cannot change meaning of commands. Refused to reuse command %1 to mean %2</source>
-        <translation>ezin da komandoen esanahia aldatu. % 1 komandoa %2ra itzultzeko uko egin dio</translation>
+        <translation>ezin da komandoen esanahia aldatu. %1 komandoa %2ra itzultzeko uko egin dio</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="300"/>
@@ -29715,12 +29715,12 @@ Ordeztea nahi duzu?</translation>
         <location filename="../src/ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp" line="180"/>
         <location filename="../src/ui/dialogs/file/export/layers/lc_filedialogservice.cpp" line="219"/>
         <source>File &quot;%1&quot; already exists. Do you want to replace it?</source>
-        <translation>&quot;% 1&quot; fitxategia badago lehendik ere. Ordeztea nahi duzu?</translation>
+        <translation>&quot;%1&quot; fitxategia badago lehendik ere. Ordeztea nahi duzu?</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="38"/>
         <source>/CustomColor%1</source>
-        <translation>/Kolore pertsonalizatua% 1</translation>
+        <translation>/Kolore pertsonalizatua%1</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="39"/>

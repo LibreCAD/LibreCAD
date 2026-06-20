@@ -51,6 +51,7 @@
 #include <QTimer>
 #include <QToolBar>
 
+#include "console_command_utils.h"
 #include "console_dxf2dwg.h"
 #include "console_dxf2pdf.h"
 #include "console_dxf2png.h"
@@ -101,13 +102,16 @@ void showFirstLoadSetupDialog(bool first_load) {
 }
 
 int showHelpMessage() {
-    qDebug()<<"Usage: librecad [command] <options> <dxf file>";
+    qDebug()<<"Usage: librecad [command] <options> <input file>";
     qDebug()<<"";
     qDebug()<<"Commands:";
     qDebug()<<"";
-    qDebug()<<"  dxf2pdf\tRun librecad as console dxf2pdf tool. Use -h for help.";
-    qDebug()<<"  dxf2png\tRun librecad as console dxf2png tool. Use -h for help.";
-    qDebug()<<"  dxf2svg\tRun librecad as console dxf2svg tool. Use -h for help.";
+    qDebug()<<"  dxf2pdf\tConvert DXF file(s) to PDF. Use -h for help.";
+    qDebug()<<"  dwg2pdf\tConvert DWG file(s) to PDF. Use -h for help.";
+    qDebug()<<"  dxf2png\tConvert DXF file(s) to PNG. Use -h for help.";
+    qDebug()<<"  dwg2png\tConvert DWG file(s) to PNG. Use -h for help.";
+    qDebug()<<"  dxf2svg\tConvert DXF file(s) to SVG. Use -h for help.";
+    qDebug()<<"  dwg2svg\tConvert DWG file(s) to SVG. Use -h for help.";
     qDebug()<<"  dxf2dwg\tConvert DXF file(s) to DWG. Use -h for help.";
     qDebug()<<"  dwg2dxf\tConvert DWG file(s) to DXF. Use -h for help.";
     qDebug()<<"";
@@ -282,23 +286,26 @@ int main(int argc, char** argv) {
     //
     //     dxf2pdf [options] ...
     //
-    for (int i = 0; i < qMin(argc, 2); i++) {
-        QString arg(argv[i]);
-        if (i == 0) {
-            arg = QFileInfo(QFile::decodeName(argv[i])).baseName();
-        }
-        if (arg.compare("dxf2pdf") == 0) {
+    const LC_Console::CommandContext consoleCommand =
+        LC_Console::detectCommand(argc, argv, LC_Console::converterCommandNames());
+    if (!consoleCommand.commandName.isEmpty()) {
+        const QString& command = consoleCommand.commandName;
+        if (command == "dxf2pdf")
             return console_dxf2pdf(argc, argv);
-        }
-        if (arg.compare("dxf2png") == 0 || arg == "dxf2svg") {
+        if (command == "dwg2pdf")
+            return console_dwg2pdf(argc, argv);
+        if (command == "dxf2png")
             return console_dxf2png(argc, argv);
-        }
-        if (arg.compare("dxf2dwg") == 0) {
+        if (command == "dwg2png")
+            return console_dwg2png(argc, argv);
+        if (command == "dxf2svg")
+            return console_dxf2svg(argc, argv);
+        if (command == "dwg2svg")
+            return console_dwg2svg(argc, argv);
+        if (command == "dxf2dwg")
             return consoleDxf2dwg(argc, argv);
-        }
-        if (arg.compare("dwg2dxf") == 0) {
+        if (command == "dwg2dxf")
             return consoleDwg2dxf(argc, argv);
-        }
     }
 
     RS_DEBUG->setLevel(RS_Debug::D_WARNING);

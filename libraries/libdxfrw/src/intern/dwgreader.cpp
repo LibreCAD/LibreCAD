@@ -1540,6 +1540,9 @@ bool dwgReader::readDwgEntity(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
             if (entryParse(e, buff, bs, ret)) {
                 e.m_objectSize = static_cast<std::uint32_t>(size);
                 e.m_rawBytes = tmpByteStr;
+                // Resolve the SHAPEFILE/STYLE record name for DXF code 2 (the DWG
+                // stores only the glyph index); same findTableName pattern as MTEXT.
+                e.m_styleName = findTableName(DRW::STYLE, e.m_shapeFileHandle);
                 intfa.addShape(e);
                 intfa.addUnsupportedObject(makeRawEntity(oType));
             } else {
@@ -1629,10 +1632,13 @@ bool dwgReader::readDwgEntity(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                 }
                 if (cit != classesmap.end() && cit->second
                     && cit->second->recName == "MULTILEADER") {
-                    // MULTILEADER (AcDbMLeader, ODA spec §20.4.48).  Phase 2
-                    // delivers the entity in a stub-parsed state so consumers
-                    // can count it; Phase 3 fills in the entity-level fields,
-                    // Phase 4 the embedded MLeaderAnnotContext.
+                    // MULTILEADER (AcDbMLeader, ODA spec §20.4.48).
+                    // DRW_MLeader::parseDwg fully decodes the entity: the
+                    // embedded MLeaderAnnotContext (roots, leader lines, text/
+                    // block content), the entity-level fields, and the handle
+                    // stream.  The DXF read path (dxfRW::processMultiLeader)
+                    // still captures only entity-level scalars — the nested
+                    // CONTEXT_DATA{} block parser is a follow-up.
                     DRW_MLeader e;
                     if (entryParse(e, buff, bs, ret)) {
                         intfa.addMLeader(&e);
@@ -2052,10 +2058,15 @@ bool dwgReader::readDwgObject(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                         || cit->second->className == "AcDbTableContent") {
                         DRW_TableContentObject e;
                         ret = e.parseDwg(version, &buff, bs);
-                        if (ret) {
+                        if (ret)
                             intfa.addTableContent(e);
-                            intfa.addUnsupportedObject(makeRawObject(oType, cit->second));
-                        }
+                        // Raw-capture unconditionally: parseDwg declines for
+                        // <=AC1018 (only the R2007+ body layout is implemented),
+                        // so preserve the verbatim bytes instead of dropping the
+                        // object. TABLECONTENT legitimately appears in AC1018
+                        // files (tables since AutoCAD 2005); P1 exposed this.
+                        intfa.addUnsupportedObject(makeRawObject(oType, cit->second));
+                        ret = true;  // delivered (typed or raw), not a loss
                         break;
                     }
                     if (rn == "CELLSTYLEMAP"
@@ -2072,27 +2083,31 @@ bool dwgReader::readDwgObject(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                         || cit->second->className == "AcDbDimAssoc") {
                         DRW_DimensionAssociation e;
                         ret = e.parseDwg(version, &buff, bs);
-                        if (ret) {
+                        if (ret)
                             intfa.addDimensionAssociation(e);
-                            // Also raw-capture so it survives write — the filter
-                            // has no addDimensionAssociation override (base no-op),
-                            // so without this DIMASSOC is dropped (94 objs/11 files).
-                            // Every neighbor (SUN@2024, CELLSTYLEMAP, FIELDLIST…)
-                            // co-emits this companion; DIMASSOC was the only one
-                            // missing it. (write-review P3 #8)
-                            intfa.addUnsupportedObject(makeRawObject(oType, cit->second));
-                        }
+                        // Raw-capture unconditionally: (1) the filter has no
+                        // addDimensionAssociation override (base no-op), AND
+                        // (2) parseDwg declines for <=AC1018 (only the R2007+ body
+                        // layout is implemented), so without an unconditional raw
+                        // emit DIMASSOC is dropped on R2000/R2004 — DIMASSOC
+                        // legitimately appears since AutoCAD 2002 (e.g. ACadSharp
+                        // sample_AC1018, exposed by P1'). (write-review P3 #8)
+                        intfa.addUnsupportedObject(makeRawObject(oType, cit->second));
+                        ret = true;  // delivered (typed or raw) — not a loss
                         break;
                     }
                     if (rn == "ACAD_EVALUATION_GRAPH"
                         || cit->second->className == "AcDbEvalGraph") {
                         DRW_EvaluationGraph e;
                         ret = e.parseDwg(version, &buff, bs);
-                        // Raw replay preserves the full byte image. (Phase 2b.4)
-                        if (ret) {
+                        // Raw replay preserves the full byte image (Phase 2b.4).
+                        // Unconditional: parseDwg declines for <=AC1018 (R2007+
+                        // body layout only) — eval graphs appear since AutoCAD
+                        // 2006, so preserve verbatim rather than drop.
+                        if (ret)
                             intfa.addEvaluationGraph(e);
-                            intfa.addUnsupportedObject(makeRawObject(oType, cit->second));
-                        }
+                        intfa.addUnsupportedObject(makeRawObject(oType, cit->second));
+                        ret = true;  // delivered (typed or raw) — not a loss
                         break;
                     }
                     if (rn == "SUN" || cit->second->className == "AcDbSun") {

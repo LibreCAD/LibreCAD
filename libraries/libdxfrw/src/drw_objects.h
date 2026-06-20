@@ -78,7 +78,12 @@ namespace DRW {
          ACSHHISTORYOBJECT,
          IDBUFFER,
          LAYERINDEX,
-         SPATIALINDEX
+         SPATIALINDEX,
+         BACKGROUND,
+         POINTCLOUDDEF,
+         SUNSTUDY,
+         RENDERSETTINGS,
+         SECTIONOBJ
      };
 
 //pending VP_ENT_HDR, LONG_TRANSACTION,
@@ -266,6 +271,7 @@ class DRW_ImageDefinitionReactor : public DRW_TableEntry {
 public:
     DRW_ImageDefinitionReactor() { tType = DRW::IMAGEDEFREACTOR; }
 protected:
+    bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
 public:
     std::int32_t m_classVersion = 0;
@@ -279,6 +285,7 @@ public:
 
     DRW_SpatialFilter() { tType = DRW::SPATIALFILTER; }
 protected:
+    bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
     bool encodeDwg(DRW::Version version, dwgBufferW *buf,
                    dwgBufferW *strBuf = nullptr,
@@ -315,6 +322,7 @@ public:
 
     DRW_GeoData() { tType = DRW::GEODATA; }
 protected:
+    bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
     bool encodeDwg(DRW::Version version, dwgBufferW *buf,
                    dwgBufferW *strBuf = nullptr,
@@ -1392,6 +1400,7 @@ public:
         DRW_TableEntry::reset();
     }
 protected:
+    bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
     bool encodeDwg(DRW::Version version, dwgBufferW *buf,
                    dwgBufferW *strBuf = nullptr,
@@ -1400,6 +1409,11 @@ public:
     std::vector<std::uint32_t> m_sortHandles;
     std::uint32_t m_blockOwnerHandle = 0;
     std::vector<std::uint32_t> m_entityHandles;
+private:
+    /* DXF: true once past the "100 AcDbSortentsTable" marker, so body codes
+       330/331/5 (block owner / entity handles / sort handles) are not confused
+       with the object's own header handle (5) and owner (330). */
+    bool m_dxfInBody = false;
 };
 
 //! Class to handle MATERIAL (AcDbMaterial) identity fields.
@@ -1414,10 +1428,202 @@ public:
         DRW_TableEntry::reset();
     }
 protected:
+    bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
 public:
     UTF8STRING m_name;
     UTF8STRING m_description;
+};
+
+//! Render background object family (AcDb*Background: solid / gradient / ground-
+//! plane / image / IBL / skylight).  A single class with a `m_kind` discriminator
+//! (set from the entity name) because the variants share the OBJECTS-section slot
+//! and overload group codes (notably 90).  DXF-only structured decode; DWG stays
+//! raw-preserved.  Not rendered by LibreCAD (viewport backdrops) — read parity
+//! with dwgTs.
+class DRW_Background : public DRW_TableEntry {
+    SETOBJFRIENDS
+public:
+    enum Kind { Solid, Gradient, GroundPlane, Image, Ibl, Skylight };
+    DRW_Background() { tType = DRW::BACKGROUND; }
+
+    Kind m_kind = Solid;
+    std::int32_t m_classVersion = 0;
+    /* solid / gradient / ground-plane colors (raw DXF color ints) */
+    int m_solidColor = 0;
+    int m_colorTop = 0;            /*!< gradient code 90(#2) */
+    int m_colorMiddle = 0;        /*!< gradient code 91 */
+    int m_colorBottom = 0;        /*!< gradient code 92 */
+    double m_horizon = 0.0;       /*!< gradient code 140 */
+    double m_height = 0.0;        /*!< gradient code 141 */
+    double m_rotation = 0.0;      /*!< gradient code 142 / ibl code 40 */
+    int m_colorSkyZenith = 0;     /*!< ground-plane code 90(#2) */
+    int m_colorSkyHorizon = 0;    /*!< code 91 */
+    int m_colorUndergroundHorizon = 0; /*!< code 92 */
+    int m_colorUndergroundAzimuth = 0; /*!< code 93 */
+    int m_colorNear = 0;          /*!< code 94 */
+    int m_colorFar = 0;           /*!< code 95 */
+    /* image */
+    UTF8STRING m_fileName;        /*!< image code 300 */
+    bool m_fitToScreen = false;   /*!< code 290 */
+    bool m_maintainAspect = false;/*!< code 291 */
+    bool m_useTiling = false;     /*!< code 292 */
+    DRW_Coord m_offset;           /*!< code 140/240 */
+    DRW_Coord m_scale{1.0, 1.0, 0.0}; /*!< code 142/242 */
+    /* ibl */
+    UTF8STRING m_iblName;         /*!< ibl code 1 */
+    bool m_enabled = false;       /*!< ibl code 290(#1) */
+    bool m_displayImage = false;  /*!< ibl code 290(#2) */
+    std::uint32_t m_secondaryBackgroundHandle = 0; /*!< ibl code 340 */
+    /* skylight */
+    std::uint32_t m_sunHandle = 0; /*!< skylight code 340 */
+protected:
+    bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
+    // DXF-only object: the DWG read path never dispatches a typed Background
+    // (those stay raw-preserved), so parseDwg is an unused stub.
+    bool parseDwg(DRW::Version /*v*/, dwgBuffer * /*buf*/, std::uint32_t /*bs*/=0) override {
+        return true;
+    }
+private:
+    int m_seen90 = 0;             /*!< gradient/ground-plane/solid: 90 appears twice */
+    int m_seen290 = 0;            /*!< ibl: 290 appears twice (enable, displayImage) */
+};
+
+//! Point-cloud definition objects (AcDbPointCloudDef / ...DefEx and their
+//! reactors).  File reference + load state + WCS extents.  DXF-only structured
+//! decode; DWG stays raw.  Not rendered by LibreCAD (point clouds) — read parity
+//! with dwgTs.
+class DRW_PointCloudDef : public DRW_TableEntry {
+    SETOBJFRIENDS
+public:
+    enum Kind { Definition, DefinitionEx, Reactor };
+    DRW_PointCloudDef() { tType = DRW::POINTCLOUDDEF; }
+
+    Kind m_kind = Definition;
+    std::int32_t m_classVersion = 0;  /*!< code 90 */
+    UTF8STRING m_sourceFilename;      /*!< code 1 (definition/ex) */
+    bool m_isLoaded = false;          /*!< code 280 */
+    DRW_Coord m_extentsMin;           /*!< code 10/20/30 */
+    DRW_Coord m_extentsMax;           /*!< code 11/21/31 */
+protected:
+    bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
+    bool parseDwg(DRW::Version /*v*/, dwgBuffer * /*buf*/, std::uint32_t /*bs*/=0) override {
+        return true;  // DXF-only object; DWG never dispatches a typed instance.
+    }
+};
+
+//! SUNSTUDY (AcDbSunStudy) object.  Decodes the scalar study configuration
+//! (names, output type, viewport grid, date range, handles).  The date/hour
+//! lists (overloaded codes 90/91/290 driven by a state machine) are left to the
+//! raw-net.  DXF-only structured decode; DWG stays raw.  Not rendered.
+class DRW_SunStudy : public DRW_TableEntry {
+    SETOBJFRIENDS
+public:
+    DRW_SunStudy() { tType = DRW::SUNSTUDY; }
+
+    std::int32_t m_classVersion = 0;  /*!< code 90 (first) */
+    UTF8STRING m_setupName;           /*!< code 1 */
+    UTF8STRING m_description;         /*!< code 2 */
+    UTF8STRING m_sheetSetName;        /*!< code 3 */
+    UTF8STRING m_sheetSubsetName;     /*!< code 4 */
+    std::int16_t m_outputType = 0;    /*!< code 70 */
+    bool m_useSubset = false;         /*!< code 290 (first) */
+    bool m_selectDatesFromCalendar = false; /*!< code 291 */
+    bool m_selectRangeOfDates = false;/*!< code 292 */
+    bool m_lockViewports = false;     /*!< code 293 */
+    bool m_labelViewports = false;    /*!< code 294 */
+    std::int32_t m_startTime = 0;     /*!< code 93 */
+    std::int32_t m_endTime = 0;       /*!< code 94 */
+    std::int32_t m_interval = 0;      /*!< code 95 */
+    std::int16_t m_shadePlotType = 0; /*!< code 74 */
+    std::int16_t m_viewportCount = 0; /*!< code 75 */
+    std::int16_t m_rowCount = 0;      /*!< code 76 */
+    std::int16_t m_columnCount = 0;   /*!< code 77 */
+    double m_spacing = 0.0;           /*!< code 40 */
+    std::uint32_t m_viewHandle = 0;        /*!< code 341 */
+    std::uint32_t m_visualStyleHandle = 0; /*!< code 342 */
+    std::uint32_t m_textStyleHandle = 0;   /*!< code 343 */
+protected:
+    bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
+    bool parseDwg(DRW::Version /*v*/, dwgBuffer * /*buf*/, std::uint32_t /*bs*/=0) override {
+        return true;  // DXF-only object; DWG never dispatches a typed instance.
+    }
+private:
+    int m_seen90 = 0;
+    int m_seen290 = 0;
+};
+
+//! Render-settings object family (AcDbRenderSettings / Global / Environment /
+//! Entry / MentalRay / RapidRT).  These DXF records are POSITIONAL — codes 90/1/
+//! 290/70/280/40 repeat and are assigned by order, not by distinct codes — so
+//! the raw values are captured into per-code vectors (matching dwgTs's internal
+//! representation) and the well-documented kinds (Environment, Global) get named
+//! fields via finalize().  DXF-only structured capture; DWG stays raw.  Not
+//! rendered by LibreCAD — read parity with dwgTs.
+class DRW_RenderSettings : public DRW_TableEntry {
+    SETOBJFRIENDS
+public:
+    enum Kind { Settings, Global, Environment, Entry, RapidRT, MentalRay };
+    DRW_RenderSettings() { tType = DRW::RENDERSETTINGS; }
+
+    Kind m_kind = Settings;
+    std::int32_t m_classVersion = 0;       /*!< first code 90 */
+    UTF8STRING m_name;                     /*!< first code 1 (filename/preset/save name) */
+    /* positional value capture */
+    std::vector<std::int32_t> m_longs;     /*!< code 90 */
+    std::vector<UTF8STRING>   m_strings;   /*!< code 1 */
+    std::vector<bool>         m_bools;     /*!< code 290 */
+    std::vector<std::int32_t> m_shorts;    /*!< code 70 */
+    std::vector<std::int32_t> m_bytes;     /*!< code 280 (RC) */
+    std::vector<double>       m_doubles;   /*!< code 40 */
+    /* named fields finalized for the documented kinds */
+    bool m_fogEnabled = false;
+    bool m_fogBackgroundEnabled = false;
+    bool m_environmentImageEnabled = false;
+    int m_fogColorR = 0, m_fogColorG = 0, m_fogColorB = 0;
+    double m_fogDensityNear = 0.0, m_fogDensityFar = 0.0;
+    double m_fogDistanceNear = 0.0, m_fogDistanceFar = 0.0;
+    std::int32_t m_procedure = 0;          /*!< Global: longs[1] */
+    std::int32_t m_destination = 0;        /*!< Global: longs[2] */
+
+    //! Assign named fields from the captured vectors (after the parse loop).
+    void finalize();
+protected:
+    bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
+    bool parseDwg(DRW::Version /*v*/, dwgBuffer * /*buf*/, std::uint32_t /*bs*/=0) override {
+        return true;  // DXF-only object; DWG never dispatches a typed instance.
+    }
+};
+
+//! Section objects: SECTION_MANAGER (live flag + section-object handle list) and
+//! SECTION_SETTINGS (class version / section type / generation options + the
+//! destination block).  Body codes reuse the owner handle code 330, so the
+//! "100 AcDbSection*" marker gates them.  The nested per-type geometry-settings
+//! REPEAT is left to the raw-net.  DXF-only structured decode; DWG stays raw.
+class DRW_Section : public DRW_TableEntry {
+    SETOBJFRIENDS
+public:
+    enum Kind { Manager, Settings };
+    DRW_Section() { tType = DRW::SECTIONOBJ; }
+
+    Kind m_kind = Manager;
+    /* manager */
+    bool m_isLive = false;                       /*!< code 70 */
+    std::int32_t m_sectionCount = 0;             /*!< code 90 (manager) */
+    std::vector<std::uint32_t> m_sectionHandles; /*!< body code 330 */
+    /* settings */
+    std::int32_t m_classVersion = 0;             /*!< ints[0] (90/91) */
+    std::int32_t m_sectionType = 0;              /*!< ints[1] */
+    std::int32_t m_generationOptions = 0;        /*!< ints[2] */
+    std::uint32_t m_destinationBlockHandle = 0;  /*!< code 331 */
+protected:
+    bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
+    bool parseDwg(DRW::Version /*v*/, dwgBuffer * /*buf*/, std::uint32_t /*bs*/=0) override {
+        return true;  // DXF-only object; DWG never dispatches a typed instance.
+    }
+private:
+    bool m_dxfInBody = false;
+    std::vector<std::int32_t> m_settingsInts;    /*!< settings: 90/91 accumulation */
 };
 
 struct DRW_TableStyleBorder {
@@ -1501,6 +1707,7 @@ public:
         DRW_TableEntry::reset();
     }
 protected:
+    bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
 public:
     UTF8STRING m_name;
@@ -1717,6 +1924,7 @@ public:
         tType = DRW::MLEADERSTYLE;
     }
 protected:
+    bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
 public:
     bool encodeDwg(DRW::Version version, dwgBufferW *buf,
@@ -1866,6 +2074,7 @@ public:
     }
 
 protected:
+    bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
 
 public:
@@ -1874,6 +2083,10 @@ public:
     bool m_isTransSpace = false;
     std::uint8_t m_rotatedDimensionType = 0;
     std::vector<DRW_DimensionAssociationOsnapRef> m_osnapRefs;
+private:
+    /* DXF: true once past "100 AcDbDimAssoc" — body code 330 is the dimension
+       handle, not the object owner. */
+    bool m_dxfInBody = false;
 };
 
 struct DRW_EvaluationGraphNode {
@@ -2230,6 +2443,7 @@ public:
     DRW_VisualStyle() { reset(); }
     void reset() { tType = DRW::VISUALSTYLE; desc.clear(); type = 0; }
 protected:
+    bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
 public:
     UTF8STRING desc;       /*!< description (TV in DWG) */

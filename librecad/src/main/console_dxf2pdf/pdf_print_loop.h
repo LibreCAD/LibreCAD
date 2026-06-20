@@ -31,7 +31,7 @@
 
 
 struct PdfPrintParams {
-        QStringList dxfFiles;
+        QStringList inputFiles;
         QString outDir;
         QString outFile;
         int resolution = 1200;
@@ -70,13 +70,13 @@ public slots:
 
 signals:
 
-    void finished();
+    void finished(int exitCode);
 
 private:
     PdfPrintParams params{};
 
-    void printOneDxfToOnePdf(const QString&);
-    void printManyDxfToOnePdf();
+    bool printOneFileToOnePdf(const QString&);
+    int printManyFilesToOnePdf();
 };
 
 #endif

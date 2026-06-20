@@ -889,7 +889,7 @@ veya [x|y|p|sayılar)</translation>
         <source>Specify distance (%1)
 or [%2]</source>
         <translation>Mesafe (%1)
-(% 2)</translation>
+(%2)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="537"/>
@@ -901,7 +901,7 @@ or [%2]</source>
         <source>Specify  distance (angle %1 deg)
 or [%2]</source>
         <translation>Uzaklığı ( %1 deg)
-(% 2)</translation>
+(%2)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="547"/>
@@ -3299,10 +3299,10 @@ Intersection Point :(%7, %8)
 End Edge Point: (%9 , %10)</source>
         <translation>Şekil: %1
 Tamamlayıcı: %2
-Tamamlayıcı:% 34
+Tamamlayıcı:%34
 Alternatif: %4
 Start Edge Point: (%5, %6)
-Intersection Point% 7, %8)
+Intersection Point%7, %8)
 End Edge Point: (%9, %10)</translation>
     </message>
     <message>
@@ -22714,7 +22714,7 @@ Bu, Bloğun kendisinin tüm varlıklarını yinelemeli olarak değiştirir.</tra
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2767"/>
         <source>(0 =&gt; 5% relative to screen size)</source>
-        <translation>(0:% 5 ekran büyüklüğüne göre)</translation>
+        <translation>(0:%5 ekran büyüklüğüne göre)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2706"/>
@@ -27686,7 +27686,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="261"/>
         <location filename="../src/cmd/rs_commands.cpp" line="316"/>
         <source>cannot change meaning of commands. Refused to reuse command %1 to mean %2</source>
-        <translation>komutların anlamını değiştiremez. %2 demek için% 1&apos;i yeniden kullanmak için refüzyon</translation>
+        <translation>komutların anlamını değiştiremez. %2 demek için%1&apos;i yeniden kullanmak için refüzyon</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="300"/>
@@ -31890,7 +31890,7 @@ Alternative: %4
 </source>
         <translation>Şekil: %1
 Tamamlayıcı: %2
-Tamamlayıcı:% 34
+Tamamlayıcı:%34
 Alternatif: %4</translation>
     </message>
     <message>
@@ -31903,7 +31903,7 @@ Intersection: (%5 , %6)
 Intersection :@(%7, %8)</source>
         <translation>Şekil: %1
 Tamamlayıcı: %2
-Tamamlayıcı:% 34
+Tamamlayıcı:%34
 Alternatif: %4
 Intersection: (%5, %6)
 Intersection:@(%7,%8)</translation>

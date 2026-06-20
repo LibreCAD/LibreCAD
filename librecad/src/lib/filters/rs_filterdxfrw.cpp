@@ -4793,8 +4793,15 @@ void RS_FilterDXFRW::addMLeader(const DRW_MLeader *data) {
         RS_Vector(data->context.blockScale.x, data->context.blockScale.y,
                   data->context.blockScale.z);
     md.blockRotation = data->context.blockRotation;
-    // blockName resolved from blockTableRecordHandle when block lookup
-    // is wired via the document — Phase 7 follow-up.
+    // Resolve the content block handle -> block name so LC_MLeader can render
+    // the block symbol the leader points at.  The context's
+    // blockTableRecordHandle is authoritative; fall back to the entity-level
+    // style block handle.
+    std::uint32_t blockHandle = data->context.blockTableRecordHandle.ref != 0
+                                    ? data->context.blockTableRecordHandle.ref
+                                    : data->styleBlockHandle.ref;
+    if (blockHandle != 0)
+      resolveBlockNameByHandle(blockHandle, md.blockName);
   }
 
   md.leaderType = data->leaderType;
@@ -8366,6 +8373,73 @@ void RS_FilterDXFRW::writeEntities(){
              m_graphic->dwgAdvancedMetadata().rawDxfEntities()) {
       DRW_RawDxfObject entity = rawEntity;
       m_dxfW->writeRawDxfObject(&entity);
+    }
+    // LIGHT entities read from a DWG live only on the metadata shelf (no RS_Light
+    // model), so without this loop a DWG->DXF export silently drops them. Re-emit
+    // them as typed AcDbLight (R2007+; writeLight no-ops on older DXF targets).
+    if (m_dxfW->getVersion() >= DRW::AC1021) {
+      for (const auto &rec : m_graphic->dwgAdvancedMetadata().lights()) {
+        DRW_Light light;
+        light.handle = rec.handle;
+        light.parentHandle = rec.parentHandle;
+        light.m_classVersion = rec.classVersion;
+        light.m_name = rec.name;
+        light.m_type = rec.type;
+        light.m_status = rec.status;
+        light.m_color = rec.color;
+        light.m_plotGlyph = rec.plotGlyph;
+        light.m_intensity = rec.intensity;
+        light.m_position = rec.position;
+        light.m_target = rec.target;
+        light.m_attenuationType = rec.attenuationType;
+        light.m_useAttenuationLimits = rec.useAttenuationLimits;
+        light.m_attenuationStartLimit = rec.attenuationStartLimit;
+        light.m_attenuationEndLimit = rec.attenuationEndLimit;
+        light.m_hotspotAngle = rec.hotspotAngle;
+        light.m_falloffAngle = rec.falloffAngle;
+        light.m_castShadows = rec.castShadows;
+        light.m_shadowType = rec.shadowType;
+        light.m_shadowMapSize = rec.shadowMapSize;
+        light.m_shadowMapSoftness = rec.shadowMapSoftness;
+        m_dxfW->writeLight(&light);
+      }
+    }
+    // SHAPE entities read from a DWG live only on the metadata shelf (no RS_Shape
+    // model) -> re-emit as typed AcDbShape so DWG->DXF preserves them. Group 2 is
+    // the resolved SHAPEFILE/STYLE record name (the glyph index is not round-
+    // trippable without the .shx; this matches libredwg/ACadSharp output).
+    for (const auto &rec : m_graphic->dwgAdvancedMetadata().shapes()) {
+      DRW_Shape shape;
+      shape.handle = rec.handle;
+      shape.parentHandle = rec.parentHandle;
+      shape.m_shapeFileHandle = rec.shapeFileHandle;
+      shape.m_shapeIndex = rec.shapeIndex;
+      shape.m_styleName = rec.styleName;
+      shape.m_insertionPoint = rec.insertionPoint;
+      shape.m_extrusion = rec.extrusion;
+      shape.m_scale = rec.scale;
+      shape.m_rotation = rec.rotation;
+      shape.m_oblique = rec.oblique;
+      shape.m_widthFactor = rec.widthFactor;
+      shape.m_thickness = rec.thickness;
+      m_dxfW->writeShape(&shape);
+    }
+    // OLE2FRAME entities read from a DWG live only on the metadata shelf -> re-emit
+    // as typed AcDbOle2Frame. pt1/pt2 (frame rectangle) were decoded from the OLE
+    // payload header on read; the opaque payload is replayed verbatim (group 310).
+    for (const auto &rec : m_graphic->dwgAdvancedMetadata().ole2Frames()) {
+      if (rec.payloadBytes.empty())
+        continue;  // nothing to preserve (truncated/absent payload)
+      DRW_Ole2Frame ole;
+      ole.handle = rec.handle;
+      ole.parentHandle = rec.parentHandle;
+      ole.m_flags = rec.flags;
+      ole.m_mode = rec.mode;
+      ole.m_oleVersion = rec.oleVersion;
+      ole.m_pt1 = rec.pt1;
+      ole.m_pt2 = rec.pt2;
+      ole.m_payloadBytes = rec.payloadBytes;
+      m_dxfW->writeOle2Frame(&ole);
     }
   }
 }
@@ -12171,6 +12245,11 @@ LC_DimStyle *RS_FilterDXFRW::createDimStyle(const DRW_Dimstyle &s) {
 }
 
 bool RS_FilterDXFRW::resolveBlockNameByHandle(std::uint32_t blockHandle, QString& blockName) const {
+    // The reading context lives on the DXF reader; it is null on the DWG read
+    // path (and after the reader is torn down).  Resolution by handle is a
+    // DXF-only facility — bail out safely otherwise.
+    if (m_dxfR == nullptr)
+        return false;
     std::string name = m_dxfR->getReadingContext()->resolveBlockRecordName(blockHandle);
     if (name.empty()) {
         return false;

@@ -262,6 +262,14 @@ public:
     virtual void addHatch(const DRW_Hatch *data) = 0;
 
     /**
+     * Called for every MPOLYGON (AcDbMPolygon) entity.  Default renders it as a
+     * hatch (it is hatch-derived: same boundary loops, solid flag and pattern).
+     * Override only if the MPOLYGON-specific fill color / outline needs distinct
+     * treatment.
+     */
+    virtual void addMPolygon(const DRW_MPolygon *data) { addHatch(data); }
+
+    /**
      * Called for every viewport entity.
      */
     virtual void addViewport(const DRW_Viewport& data) = 0;
@@ -350,6 +358,16 @@ public:
     virtual void addAcDbPlaceholder(const DRW_AcDbPlaceholder& data) { (void) data; }
     /** Called for SUN view/vport lighting objects. */
     virtual void addSun(const DRW_Sun& data) { (void) data; }
+    /** Called for every render background (AcDb*Background) object. */
+    virtual void addBackground(const DRW_Background& data) { (void) data; }
+    /** Called for every point-cloud definition (AcDbPointCloudDef*) object. */
+    virtual void addPointCloudDef(const DRW_PointCloudDef& data) { (void) data; }
+    /** Called for every SUNSTUDY (AcDbSunStudy) object. */
+    virtual void addSunStudy(const DRW_SunStudy& data) { (void) data; }
+    /** Called for every render-settings (AcDbRenderSettings family) object. */
+    virtual void addRenderSettings(const DRW_RenderSettings& data) { (void) data; }
+    /** Called for every SECTION_MANAGER / SECTION_SETTINGS object. */
+    virtual void addSection(const DRW_Section& data) { (void) data; }
     /** Called for ACDBASSOC* action/dependency/action-param shell objects. */
     virtual void addAssociativeObject(const DRW_AssociativeObject& data) { (void) data; }
     /** Called for ACSH_* history/action shell objects. */

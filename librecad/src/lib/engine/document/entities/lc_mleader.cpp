@@ -17,6 +17,8 @@
 
 #include <algorithm>
 
+#include "rs_insert.h"
+#include "rs_mtext.h"
 #include "rs_painter.h"
 
 LC_MLeader::LC_MLeader() : RS_AtomicEntity(nullptr) {}
@@ -112,6 +114,76 @@ void LC_MLeader::draw(RS_Painter *painter) {
       painter->drawSolidWCS({tip, w1, w2});
     }
   }
+
+  drawTextContent(painter);
+  drawBlockContent(painter);
+}
+
+bool LC_MLeader::textContentData(RS_MTextData &out) const {
+  if (!data.hasTextContents || !data.textLocation.valid ||
+      data.textLabel.isEmpty())
+    return false;
+
+  // Fall back to a scale-derived height when the context carries none, so the
+  // label is never invisible (height 0).
+  const double height =
+      data.textHeight > 0.0
+          ? data.textHeight
+          : (data.scaleFactor > 0.0 ? data.scaleFactor : 1.0) * 2.5;
+
+  out = RS_MTextData(data.textLocation, height, data.boundaryWidth,
+                     RS_MTextData::VAMiddle, RS_MTextData::HALeft,
+                     RS_MTextData::LeftToRight, RS_MTextData::Exact, 1.0,
+                     data.textLabel, data.textStyleName, data.textRotation,
+                     RS2::NoUpdate);
+  return true;
+}
+
+void LC_MLeader::drawTextContent(RS_Painter *painter) {
+  // Render the MText annotation. LC_MLeader is atomic and round-trips its text
+  // via RS_FilterDXFRW::writeMLeader, so the label must NOT be a persistent
+  // sibling entity (that would duplicate the text on export). Build a transient
+  // RS_MText here instead, reusing the full MTEXT layout pipeline. It is
+  // parented to this entity's container so glyph/font resolution finds the
+  // graphic. Rebuilt per draw (multileaders are few); caching is a perf
+  // follow-up.
+  RS_MTextData td;
+  if (!textContentData(td))
+    return;
+  RS_MText mtext(getParent(), td);
+  mtext.setPen(getPen());
+  mtext.setLayer(getLayer());
+  mtext.update();
+  mtext.draw(painter);
+}
+
+bool LC_MLeader::blockContentData(RS_InsertData &out) const {
+  if (!data.hasBlockContents || data.blockName.isEmpty() ||
+      !data.blockLocation.valid)
+    return false;
+  // A zero scale component would collapse the block; default such axes to 1.
+  const RS_Vector scale(data.blockScale.x != 0.0 ? data.blockScale.x : 1.0,
+                        data.blockScale.y != 0.0 ? data.blockScale.y : 1.0);
+  out = RS_InsertData(data.blockName, data.blockLocation, scale,
+                      data.blockRotation, 1, 1, RS_Vector(0.0, 0.0), nullptr,
+                      RS2::NoUpdate);
+  return true;
+}
+
+void LC_MLeader::drawBlockContent(RS_Painter *painter) {
+  // Block-content multileaders point at a block symbol instead of text. Like
+  // the text branch this is rendered transiently (the block round-trips via the
+  // leader data, not as a persistent sibling insert). RS_Insert::update()
+  // resolves the block by name from the graphic and clones its geometry; if the
+  // name is unknown it draws nothing (harmless).
+  RS_InsertData id;
+  if (!blockContentData(id))
+    return;
+  RS_Insert insert(getParent(), id);
+  insert.setPen(getPen());
+  insert.setLayer(getLayer());
+  insert.update();
+  insert.draw(painter);
 }
 
 RS_Vector LC_MLeader::getNearestEndpoint(const RS_Vector &coord,

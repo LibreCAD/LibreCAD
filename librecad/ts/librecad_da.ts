@@ -605,8 +605,8 @@
         <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="196"/>
         <source>radius=%1 is too small for points selected
 distance between points=%2 is larger than diameter=%3</source>
-        <translation>radius =% 1 er for lille for valgte punkter
-distance mellem punkter =% 2 er større end diameter =% 3</translation>
+        <translation>radius =%1 er for lille for valgte punkter
+distance mellem punkter =%2 er større end diameter =%3</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="208"/>
@@ -708,7 +708,7 @@ distance mellem punkter =% 2 er større end diameter =% 3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="146"/>
         <source>Dual created around center (%1 entities)</source>
-        <translation>Dobbelt oprettet omkring centrum (% 1 enheder)</translation>
+        <translation>Dobbelt oprettet omkring centrum (%1 enheder)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="159"/>
@@ -1048,17 +1048,17 @@ eller [%2]</translation>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="501"/>
         <source>Specify distance (%1 deg) or [%2]</source>
-        <translation>Angiv afstand (% 1 deg) eller [% 2]</translation>
+        <translation>Angiv afstand (%1 deg) eller [%2]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="516"/>
         <source>Specify angle or [%1]</source>
-        <translation>Angiv vinkel eller [% 1]</translation>
+        <translation>Angiv vinkel eller [%1]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="528"/>
         <source>Specify point or [%1]</source>
-        <translation>Angiv punkt eller [% 1]</translation>
+        <translation>Angiv punkt eller [%1]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="577"/>
@@ -1357,7 +1357,7 @@ eller [%2]</translation>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="231"/>
         <source>Specify next control point or [%1]</source>
-        <translation>Angiv næste kontrolpunkt eller [% 1]</translation>
+        <translation>Angiv næste kontrolpunkt eller [%1]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="231"/>
@@ -3294,13 +3294,13 @@ Alternative: %4
 Start Edge Point: (%5 , %6)
 Intersection Point :(%7, %8)
 End Edge Point: (%9 , %10)</source>
-        <translation>Vinkel:% 1
-Supplerende:% 2
-Supplerende:% 3
-Alternativ:% 4
-Start kantpunkt: (% 5,% 6)
-Intersection Point: (% 7,% 8)
-Slutkantpunkt: (% 9,% 10)</translation>
+        <translation>Vinkel:%1
+Supplerende:%2
+Supplerende:%3
+Alternativ:%4
+Start kantpunkt: (%5,%6)
+Intersection Point: (%7,%8)
+Slutkantpunkt: (%9,%10)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="149"/>
@@ -3367,27 +3367,27 @@ Slutkantpunkt: (% 9,% 10)</translation>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="41"/>
         <source>Absolute: (%1)</source>
-        <translation>Absolut: (% 1)</translation>
+        <translation>Absolut: (%1)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="42"/>
         <source>Relative: (%1)</source>
-        <translation>Relativ: (% 1)</translation>
+        <translation>Relativ: (%1)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="43"/>
         <source>Polar: (%1)</source>
-        <translation>Polar: (% 1)</translation>
+        <translation>Polar: (%1)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="44"/>
         <source>Polar Relative: (%1)</source>
-        <translation>Polar Relativ: (% 1)</translation>
+        <translation>Polar Relativ: (%1)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="46"/>
         <source>Absolute WCS: (%1)</source>
-        <translation>Absolut WCS: (% 1)</translation>
+        <translation>Absolut WCS: (%1)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="70"/>
@@ -3708,7 +3708,7 @@ Slutkantpunkt: (% 9,% 10)</translation>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayerscmd.cpp" line="53"/>
         <source>Enter layer name to %1</source>
-        <translation>Indtast lagnavn til% 1</translation>
+        <translation>Indtast lagnavn til%1</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayerscmd.cpp" line="53"/>
@@ -4506,7 +4506,7 @@ Slutkantpunkt: (% 9,% 10)</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="163"/>
         <source>LibreCAD Shortcuts file (*.%1)</source>
-        <translation>LibreCAD genvejsfil (*.% 1)</translation>
+        <translation>LibreCAD genvejsfil (*.%1)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="198"/>
@@ -4687,7 +4687,7 @@ Er du sikker på, at du vil kassere ændringer?</translation>
         <source>Save changes to the following item?
 %1</source>
         <translation>Gem ændringer til følgende punkt?
-% 1</translation>
+%1</translation>
     </message>
     <message>
         <location filename="../src/ui/main/support/lc_appwindowdialogsinvoker.cpp" line="185"/>
@@ -5001,7 +5001,7 @@ Er du sikker på, at du vil kassere ændringer?</translation>
         <location filename="../src/ui/components/creators/lc_creatorinvoker.cpp" line="83"/>
         <location filename="../src/ui/components/creators/lc_creatorinvoker.cpp" line="115"/>
         <source>Toolbar: %1 (Custom)</source>
-        <translation>Værktøjslinje:% 1 (Brugerdefineret)</translation>
+        <translation>Værktøjslinje:%1 (Brugerdefineret)</translation>
     </message>
 </context>
 <context>
@@ -5348,7 +5348,7 @@ Er du sikker på, at du vil kassere ændringer?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="186"/>
         <source>LibreCAD dimension styles file (*.%1)</source>
-        <translation>LibreCAD dimension stil- fil (*.% 1)</translation>
+        <translation>LibreCAD dimension stil- fil (*.%1)</translation>
     </message>
 </context>
 <context>
@@ -5397,17 +5397,17 @@ Er du sikker på, at du vil kassere ændringer?</translation>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="76"/>
         <source>Version: &lt;b&gt;%1&lt;/b&gt;</source>
-        <translation>Version: &lt; b &gt;% 1 &lt; / b &gt;</translation>
+        <translation>Version: &lt; b &gt;%1 &lt; / b &gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="78"/>
         <source>Compiler: Clang %1.%2.%3</source>
-        <translation>Kompiler: Klang% 1.% 2.% 3</translation>
+        <translation>Kompiler: Klang%1.%2.%3</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="80"/>
         <source>Compiler: GNU GCC %1.%2.%3</source>
-        <translation>Kompiler: GNU GCC% 1.% 2.% 3</translation>
+        <translation>Kompiler: GNU GCC%1.%2.%3</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="82"/>
@@ -5417,17 +5417,17 @@ Er du sikker på, at du vil kassere ændringer?</translation>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="84"/>
         <source>Compiled on: %1</source>
-        <translation>Kompileret på:% 1</translation>
+        <translation>Kompileret på:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="85"/>
         <source>Qt Version: %1</source>
-        <translation>Qt Version:% 1</translation>
+        <translation>Qt Version:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="86"/>
         <source>Boost Version: %1.%2.%3</source>
-        <translation>Boost version:% 1.% 2.% 3</translation>
+        <translation>Boost version:%1.%2.%3</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="96"/>
@@ -6587,7 +6587,7 @@ Er du sikker på, at du vil kassere ændringer?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1831"/>
         <source>Includes a prefix in the alternate dimension text. You can enter text or use control codes to display special symbols. For example, entering the control code %%c displays the diameter symbol. (DIMAPOST system variable)</source>
-        <translation>Inkluderer et præfiks i den alternative dimension tekst. Du kan indtaste tekst eller bruge kontrolkoder til at vise særlige symboler. For eksempel viser indtastning af kontrolkoden%% c diametersymbolet. (DIMAPOST system variabel)</translation>
+        <translation>Inkluderer et præfiks i den alternative dimension tekst. Du kan indtaste tekst eller bruge kontrolkoder til at vise særlige symboler. For eksempel viser indtastning af kontrolkoden%%c diametersymbolet. (DIMAPOST system variabel)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1845"/>
@@ -7537,7 +7537,7 @@ Er du sikker på, at du vil kassere ændringer?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="102"/>
         <source>Menu Assignment - &quot;%1&quot; Menu</source>
-        <translation>Menutildeling - menuen &quot;% 1&quot;</translation>
+        <translation>Menutildeling - menuen &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="106"/>
@@ -7682,7 +7682,7 @@ Er du sikker på, at du vil kassere ændringer?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="250"/>
         <source>NOTE: This shortcut is already assigned to &quot;%1&quot; menu and that menu will be unassigned on save!</source>
-        <translation>BEMÆRK: Denne genvej er allerede tildelt menuen &quot;% 1&quot;, og denne menu vil ikke blive tildelt ved gem!</translation>
+        <translation>BEMÆRK: Denne genvej er allerede tildelt menuen &quot;%1&quot;, og denne menu vil ikke blive tildelt ved gem!</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="254"/>
@@ -7976,7 +7976,7 @@ Er du sikker på, at du vil kassere ændringer?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.cpp" line="145"/>
         <source>Provided name of dimension style (%1) is not unique! Please enter another one.</source>
-        <translation>Forudsat navn på dimensionsstil (% 1) er ikke unikt! Vær venlig at indtaste en anden.</translation>
+        <translation>Forudsat navn på dimensionsstil (%1) er ikke unikt! Vær venlig at indtaste en anden.</translation>
     </message>
 </context>
 <context>
@@ -8776,7 +8776,7 @@ Er du sikker på, at du vil kassere ændringer?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="203"/>
         <source>Are you sure you&apos;d like to unassign &quot;%1&quot; menu? Note: Just an invocation shortcut will be removed and menu will not be deleted.</source>
-        <translation>Er du sikker på at du vil aftildele menuen &quot;% 1&quot;? Bemærk: Bare en invocation genvej vil blive fjernet og menuen vil ikke blive slettet.</translation>
+        <translation>Er du sikker på at du vil aftildele menuen &quot;%1&quot;? Bemærk: Bare en invocation genvej vil blive fjernet og menuen vil ikke blive slettet.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="216"/>
@@ -8799,12 +8799,12 @@ Er du sikker på, at du vil kassere ændringer?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="430"/>
         <source>Remove %1</source>
-        <translation>Fjern% 1</translation>
+        <translation>Fjern%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="431"/>
         <source>Are you sure you&apos;d like to remove  %2&quot;%1&quot;?</source>
-        <translation>Er du sikker på at du vil fjerne% 2 &quot;% 1&quot;?</translation>
+        <translation>Er du sikker på at du vil fjerne%2 &quot;%1&quot;?</translation>
     </message>
 </context>
 <context>
@@ -9211,7 +9211,7 @@ Er du sikker på, at du vil kassere ændringer?</translation>
     <message>
         <location filename="../src/ui/dialogs/file/export/image/lc_exporttoimageservice.cpp" line="62"/>
         <source>Exported: %1</source>
-        <translation>Eksporteret:% 1</translation>
+        <translation>Eksporteret:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/image/lc_exporttoimageservice.cpp" line="65"/>
@@ -10320,7 +10320,7 @@ Indholdet af et byggelag bør ikke vises i udskrift.</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="189"/>
         <source>Invalid value provide for %1 color.
 Please specify a different value.</source>
-        <translation>Ugyldig værdi angiver farve% 1.
+        <translation>Ugyldig værdi angiver farve%1.
 Angiv en anden værdi.</translation>
     </message>
     <message>
@@ -12472,7 +12472,7 @@ Advarsel: denne handling kan IKKE gøres om!</translation>
  &quot;%1&quot;?
  Warning: this action can NOT be undone!</source>
         <translation>Er du sikker på at slette visning
-&quot;% 1&quot;?
+&quot;%1&quot;?
 Advarsel: denne handling kan IKKE gøres om!</translation>
     </message>
     <message>
@@ -12484,7 +12484,7 @@ Advarsel: denne handling kan IKKE gøres om!</translation>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="302"/>
         <source>Are you sure to delete views %1?
 Warning: this action can NOT be undone!</source>
-        <translation>Er du sikker på at slette visninger% 1?
+        <translation>Er du sikker på at slette visninger%1?
 Advarsel: denne handling kan IKKE gøres om!</translation>
     </message>
     <message>
@@ -15887,7 +15887,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="45"/>
         <source>LibreCAD settings file (*.%1)</source>
-        <translation>LibreCAD- indstillingsfil (*.% 1)</translation>
+        <translation>LibreCAD- indstillingsfil (*.%1)</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="91"/>
@@ -16739,7 +16739,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="67"/>
         <source>Toolbar: %1</source>
-        <translation>Værktøjslinje:% 1</translation>
+        <translation>Værktøjslinje:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="73"/>
@@ -17096,7 +17096,7 @@ Advarsel: denne handling kan IKKE gøres om!</translation>
  &quot;%1&quot;?
  Warning: this action can NOT be undone!</source>
         <translation>Er du sikker på at slette UCS
-&quot;% 1&quot;?
+&quot;%1&quot;?
 Advarsel: denne handling kan IKKE gøres om!</translation>
     </message>
     <message>
@@ -17108,7 +17108,7 @@ Advarsel: denne handling kan IKKE gøres om!</translation>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="378"/>
         <source>Are you sure to delete UCS %1?
 Warning: this action can NOT be undone!</source>
-        <translation>Er du sikker på at slette UCS% 1?
+        <translation>Er du sikker på at slette UCS%1?
 Advarsel: denne handling kan IKKE gøres om!</translation>
     </message>
     <message>
@@ -17381,7 +17381,7 @@ Advarsel: denne handling kan IKKE gøres om!</translation>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="429"/>
         <source>Toolbar: %1</source>
-        <translation>Værktøjslinje:% 1</translation>
+        <translation>Værktøjslinje:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="213"/>
@@ -17993,18 +17993,18 @@ Auto-save disabled.</source>
 %1
 Please check its existence and permissions.</source>
         <translation>Kan ikke åbne filen
-% 1
+%1
 Tjek dens eksistens og tilladelser.</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1023"/>
         <source>File &apos;%1&apos; does not exist. Opening aborted</source>
-        <translation>Filen &quot;% 1&quot; eksisterer ikke. Åbning afbrudt</translation>
+        <translation>Filen &quot;%1&quot; eksisterer ikke. Åbning afbrudt</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="226"/>
         <source>Saving drawing: %1</source>
-        <translation>Gemmer tegning:% 1</translation>
+        <translation>Gemmer tegning:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="232"/>
@@ -18024,12 +18024,12 @@ Tjek dens eksistens og tilladelser.</translation>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="365"/>
         <source>&amp;Save %1</source>
-        <translation>&amp; Gem% 1</translation>
+        <translation>&amp; Gem%1</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="366"/>
         <source>Save %1 &amp;as...</source>
-        <translation>Gem% 1 &amp; som...</translation>
+        <translation>Gem%1 &amp; som...</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1084"/>
@@ -18292,7 +18292,7 @@ Tjek dens eksistens og tilladelser.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="210"/>
         <source>Unknown command: %1</source>
-        <translation>Ukendt kommando:% 1</translation>
+        <translation>Ukendt kommando:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.ui" line="102"/>
@@ -18324,7 +18324,7 @@ Tjek dens eksistens og tilladelser.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="249"/>
         <source>Command Alias File: %1</source>
-        <translation>KommandoAlias- fil:% 1</translation>
+        <translation>KommandoAlias- fil:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="339"/>
@@ -20389,7 +20389,7 @@ Dette rekursivt modificerer alle enheder af blokken selv.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="400"/>
         <source>Are you sure you&apos;d like to delete property [%1]?</source>
-        <translation>Er du sikker på at du vil slette ejendom [% 1]?</translation>
+        <translation>Er du sikker på at du vil slette ejendom [%1]?</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="422"/>
@@ -20456,7 +20456,7 @@ Dette rekursivt modificerer alle enheder af blokken selv.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="642"/>
         <source>Enter new unique name of dimension style (was &quot;%1&quot;):</source>
-        <translation>Indtast nyt unikt navn på dimensionsstil (var &quot;% 1&quot;):</translation>
+        <translation>Indtast nyt unikt navn på dimensionsstil (var &quot;%1&quot;):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="662"/>
@@ -20479,12 +20479,12 @@ Dette rekursivt modificerer alle enheder af blokken selv.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="684"/>
         <source>Are you sure you want to remove the dimension style &quot;%1&quot; together with child styles?</source>
-        <translation>Er du sikker på at du vil fjerne dimensionsstilen &quot;% 1&quot; sammen med børnestilarter?</translation>
+        <translation>Er du sikker på at du vil fjerne dimensionsstilen &quot;%1&quot; sammen med børnestilarter?</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="692"/>
         <source>Are you sure you want to remove the dimension style &quot;%1&quot;?</source>
-        <translation>Er du sikker på at du vil fjerne dimensionsstilen &quot;% 1&quot;?</translation>
+        <translation>Er du sikker på at du vil fjerne dimensionsstilen &quot;%1&quot;?</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="929"/>
@@ -25135,52 +25135,52 @@ så standard trin værdi kræves til bagning</translation>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="124"/>
         <source>Drawing Exchange DXF 2000 %1</source>
-        <translation>Tegnebørs DXF 2000% 1</translation>
+        <translation>Tegnebørs DXF 2000%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="126"/>
         <source>Drawing Exchange DXF R12 %1</source>
-        <translation>Tegnebørs DXF R12% 1</translation>
+        <translation>Tegnebørs DXF R12%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="129"/>
         <source>LFF Font %1</source>
-        <translation>LFF skrifttype% 1</translation>
+        <translation>LFF skrifttype%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="133"/>
         <source>QCad Font %1</source>
-        <translation>QCad skrifttype% 1</translation>
+        <translation>QCad skrifttype%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="134"/>
         <source>Jww Drawing %1</source>
-        <translation>JW- tegning% 1</translation>
+        <translation>JW- tegning%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="127"/>
         <source>Drawing Exchange %1</source>
-        <translation>Tegnebørs% 1</translation>
+        <translation>Tegnebørs%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="135"/>
         <source>QCad 1.x file %1</source>
-        <translation>QCad 1. x- fil% 1</translation>
+        <translation>QCad 1. x- fil%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="122"/>
         <source>Drawing Exchange DXF 2007 %1</source>
-        <translation>Tegnebørs DXF 2007% 1</translation>
+        <translation>Tegnebørs DXF 2007%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="123"/>
         <source>Drawing Exchange DXF 2004 %1</source>
-        <translation>Tegnebørs DXF 2004% 1</translation>
+        <translation>Tegnebørs DXF 2004%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="125"/>
         <source>Drawing Exchange DXF R14 %1</source>
-        <translation>Tegnebørs DXF R14% 1</translation>
+        <translation>Tegnebørs DXF R14%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="138"/>
@@ -25197,17 +25197,17 @@ så standard trin værdi kræves til bagning</translation>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="163"/>
         <source>Open %1</source>
-        <translation>Åbn% 1</translation>
+        <translation>Åbn%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="253"/>
         <source>Save %1 As</source>
-        <translation>Gem% 1 som</translation>
+        <translation>Gem%1 som</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="131"/>
         <source>dwg Drawing %1</source>
-        <translation>dwg tegning% 1</translation>
+        <translation>dwg tegning%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="235"/>
@@ -25598,7 +25598,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/main/support/qg_recentfiles.cpp" line="177"/>
         <source>&amp;%1 %2</source>
-        <translation>&amp;% 1% 2</translation>
+        <translation>&amp;%1%2</translation>
     </message>
 </context>
 <context>
@@ -25634,7 +25634,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="171"/>
         <source>Relative zero position is %1</source>
-        <translation>Relativ nulstilling er% 1</translation>
+        <translation>Relativ nulstilling er%1</translation>
     </message>
     <message>
         <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="171"/>
@@ -25649,7 +25649,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="176"/>
         <source>Coordinate system: %1</source>
-        <translation>Koordinatsystem:% 1</translation>
+        <translation>Koordinatsystem:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="176"/>
@@ -25828,7 +25828,7 @@ p, li {white- space: pre- wrap;}
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="191"/>
         <source>Layer &quot;%1&quot; and all entities on it will be removed.
 This action can NOT be undone.</source>
-        <translation>Layer &quot;% 1&quot; og alle enheder på den vil blive fjernet.
+        <translation>Layer &quot;%1&quot; og alle enheder på den vil blive fjernet.
 Denne handling kan IKKE gøres om.</translation>
     </message>
     <message>
@@ -25898,7 +25898,7 @@ Denne handling kan IKKE gøres om.</translation>
 [%1].
 Please specify a different name.</source>
         <translation>Forsøg at skabe lag med duplikerende navn. Duplikeret lagnavn er
-[% 1].
+[%1].
 Angiv et andet navn.</translation>
     </message>
     <message>
@@ -25953,7 +25953,7 @@ Ryd filtreringsmaske og gentag.</translation>
 [%1].
 Please specify a different name.</source>
         <translation>Et sådant børnelag findes allerede for
-[% 1].
+[%1].
 Angiv et andet navn.</translation>
     </message>
     <message>
@@ -25962,7 +25962,7 @@ Angiv et andet navn.</translation>
 [%1].
 </source>
         <translation>Et sådant børnelag findes allerede for
-[% 1].</translation>
+[%1].</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1165"/>
@@ -26011,7 +26011,7 @@ Hvis Nej – vil værdien &quot;Efter lag&quot; forblive, og pennen for mållage
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.cpp" line="218"/>
         <source>Invalid value provided for %1 color.
 Please specify a different value.</source>
-        <translation>Ugyldig værdi angivet for farven% 1.
+        <translation>Ugyldig værdi angivet for farven%1.
 Angiv en anden værdi.</translation>
     </message>
     <message>
@@ -26254,12 +26254,12 @@ Vil du overskrive den?</translation>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="458"/>
         <source>LFF Font %1</source>
-        <translation>LFF skrifttype% 1</translation>
+        <translation>LFF skrifttype%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="460"/>
         <source>Jww %1</source>
-        <translation>Jwh% 1</translation>
+        <translation>Jwh%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="936"/>
@@ -26324,12 +26324,12 @@ Vil du overskrive den?</translation>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="451"/>
         <source>Old Drawing Exchange %1</source>
-        <translation>Gammel tegnebørs% 1</translation>
+        <translation>Gammel tegnebørs%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="455"/>
         <source>dwg Drawing %1</source>
-        <translation>dwg tegning% 1</translation>
+        <translation>dwg tegning%1</translation>
     </message>
     <message>
         <source>DWG support is not complete!</source>
@@ -26390,7 +26390,7 @@ Vil du overskrive den?</translation>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="68"/>
         <source>: duplicated command: %1 is already taken by %2</source>
-        <translation>: duplikeret kommando:% 1 er allerede taget af% 2</translation>
+        <translation>: duplikeret kommando:%1 er allerede taget af%2</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="884"/>
@@ -27483,37 +27483,37 @@ Vil du overskrive den?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="261"/>
         <location filename="../src/cmd/rs_commands.cpp" line="316"/>
         <source>cannot change meaning of commands. Refused to reuse command %1 to mean %2</source>
-        <translation>kan ikke ændre betydningen af kommandoer. Nægter at genbruge kommandoen% 1 til at betyde% 2</translation>
+        <translation>kan ikke ændre betydningen af kommandoer. Nægter at genbruge kommandoen%1 til at betyde%2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="300"/>
         <source>requesting alias(%1) for unknown command(%2): ignored</source>
-        <translation>anmoder om alias (% 1) for ukendt kommando (% 2): ignoreret</translation>
+        <translation>anmoder om alias (%1) for ukendt kommando (%2): ignoreret</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="310"/>
         <source>reusing an existing alias: was %1=%2, changed to %1=%3</source>
-        <translation>genbruge et eksisterende alias: var% 1 =% 2, ændret til% 1 =% 3</translation>
+        <translation>genbruge et eksisterende alias: var%1 =%2, ændret til%1 =%3</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="391"/>
         <source>RS_Commands:: command not found: %1</source>
-        <translation>RS _ Kommandoer:: kommando ikke fundet:% 1</translation>
+        <translation>RS _ Kommandoer:: kommando ikke fundet:%1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="416"/>
         <source>keycode: %1 (%2)</source>
-        <translation>keycode:% 1 (% 2)</translation>
+        <translation>keycode:%1 (%2)</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="418"/>
         <source>invalid keycode: %1</source>
-        <translation>ugyldig nøglekode:% 1</translation>
+        <translation>ugyldig nøglekode:%1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="433"/>
         <source>Command not found: %1</source>
-        <translation>Kommando ikke fundet:% 1</translation>
+        <translation>Kommando ikke fundet:%1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="472"/>
@@ -27634,7 +27634,7 @@ Vil du overskrive den?</translation>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="77"/>
         <source>No %1 layers found</source>
-        <translation>Ingen% 1- lag fundet</translation>
+        <translation>Ingen%1- lag fundet</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="92"/>
@@ -29794,12 +29794,12 @@ Vil du overskrive den?</translation>
         <location filename="../src/ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp" line="180"/>
         <location filename="../src/ui/dialogs/file/export/layers/lc_filedialogservice.cpp" line="219"/>
         <source>File &quot;%1&quot; already exists. Do you want to replace it?</source>
-        <translation>Filen &quot;% 1&quot; eksisterer allerede. Vil du erstatte den?</translation>
+        <translation>Filen &quot;%1&quot; eksisterer allerede. Vil du erstatte den?</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="38"/>
         <source>/CustomColor%1</source>
-        <translation>/ Brugerfarve% 1</translation>
+        <translation>/ Brugerfarve%1</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="39"/>
@@ -29863,7 +29863,7 @@ Vil du overskrive den?</translation>
     <message>
         <location filename="../src/lib/engine/document/container/rs_entitycontainer.cpp" line="1687"/>
         <source>Hatch failed due to a gap=%1 between (%2, %3) and (%4, %5)</source>
-        <translation>Hatch mislykkedes på grund af et mellemrum =% 1 mellem (% 2,% 3) og (% 4,% 5)</translation>
+        <translation>Hatch mislykkedes på grund af et mellemrum =%1 mellem (%2,%3) og (%4,%5)</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/patterns/rs_patternlist.cpp" line="66"/>
@@ -29873,12 +29873,12 @@ Vil du overskrive den?</translation>
     <message>
         <location filename="../src/lib/engine/document/patterns/rs_patternlist.cpp" line="93"/>
         <source>Hatch:: loading pattern failed: %1</source>
-        <translation>Hatch:: indlæsningsmønster mislykkedes:% 1</translation>
+        <translation>Hatch:: indlæsningsmønster mislykkedes:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/main/persistence/lc_documentsstorage.cpp" line="197"/>
         <source>File on disk modified. Please save to another file to avoid data loss! File modified: %1</source>
-        <translation>Fil på disk ændret. Gem til en anden fil for at undgå tab af data! Fil ændret:% 1</translation>
+        <translation>Fil på disk ændret. Gem til en anden fil for at undgå tab af data! Fil ændret:%1</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="180"/>
@@ -30230,7 +30230,7 @@ Vil du overskrive den?</translation>
     <message>
         <location filename="../src/lib/engine/document/rs_graphic.cpp" line="741"/>
         <source>Invalid printing scale %1. Cannot fit print preview to page</source>
-        <translation>Ugyldig udskriftsskala% 1. Kan ikke passe til udskrift- forhåndsvisning til side</translation>
+        <translation>Ugyldig udskriftsskala%1. Kan ikke passe til udskrift- forhåndsvisning til side</translation>
     </message>
     <message>
         <location filename="../src/lib/printing/lc_printing.cpp" line="160"/>
@@ -30946,17 +30946,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="146"/>
         <source>radius=%1 is invalid (expression)</source>
-        <translation>radius =% 1 er ugyldig (udtryk)</translation>
+        <translation>radius =%1 er ugyldig (udtryk)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="148"/>
         <source>radius=%1 is invalid (negative)</source>
-        <translation>radius =% 1 er ugyldig (negativ)</translation>
+        <translation>radius =%1 er ugyldig (negativ)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="151"/>
         <source>radius=%1 is invalid (zero)</source>
-        <translation>radius =% 1 er ugyldig (nul)</translation>
+        <translation>radius =%1 er ugyldig (nul)</translation>
     </message>
 </context>
 <context>
@@ -31020,7 +31020,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2.cpp" line="246"/>
         <source>No common tangential circle for radius &apos;%1&apos;</source>
-        <translation>Ingen fælles tangentiel cirkel for radius &apos;% 1&apos;</translation>
+        <translation>Ingen fælles tangentiel cirkel for radius &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
@@ -31190,7 +31190,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="178"/>
         <source>Total distance %1 is smaller than distance between foci</source>
-        <translation>Den samlede afstand% 1 er mindre end afstanden mellem foci</translation>
+        <translation>Den samlede afstand%1 er mindre end afstanden mellem foci</translation>
     </message>
 </context>
 <context>
@@ -31261,7 +31261,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="177"/>
         <source>Total hatch area = %1</source>
-        <translation>Samlet lugeareal =% 1</translation>
+        <translation>Samlet lugeareal =%1</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="203"/>
@@ -31664,7 +31664,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="756"/>
         <source>Specify next point or [%1]</source>
-        <translation>Angiv næste punkt eller [% 1]</translation>
+        <translation>Angiv næste punkt eller [%1]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="758"/>
@@ -31739,7 +31739,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/spline/rs_actiondrawspline.cpp" line="227"/>
         <source>Specify next control point or [%1]</source>
-        <translation>Angiv næste kontrolpunkt eller [% 1]</translation>
+        <translation>Angiv næste kontrolpunkt eller [%1]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/rs_actiondrawspline.cpp" line="229"/>
@@ -31880,10 +31880,10 @@ Complementary: %2
 Supplementary: %3
 Alternative: %4
 </source>
-        <translation>Vinkel:% 1
-Supplerende:% 2
-Supplerende:% 3
-Alternativ:% 4</translation>
+        <translation>Vinkel:%1
+Supplerende:%2
+Supplerende:%3
+Alternativ:%4</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="140"/>
@@ -31893,12 +31893,12 @@ Supplementary: %3
 Alternative: %4
 Intersection: (%5 , %6)
 Intersection :@(%7, %8)</source>
-        <translation>Vinkel:% 1
-Supplerende:% 2
-Supplerende:% 3
-Alternativ:% 4
-Intersektion: (% 5,% 6)
-Intersektion: @ (% 7,% 8)</translation>
+        <translation>Vinkel:%1
+Supplerende:%2
+Supplerende:%3
+Alternativ:%4
+Intersektion: (%5,%6)
+Intersektion: @ (%7,%8)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="253"/>
@@ -31987,12 +31987,12 @@ Intersektion: @ (% 7,% 8)</translation>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="153"/>
         <source>Closing Point: %1</source>
-        <translation>Slutpunkt:% 1</translation>
+        <translation>Slutpunkt:%1</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="160"/>
         <source>Point: %1</source>
-        <translation>Point:% 1</translation>
+        <translation>Point:%1</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="182"/>
@@ -32013,7 +32013,7 @@ Intersektion: @ (% 7,% 8)</translation>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="101"/>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="108"/>
         <source>Area: %1 %2^2</source>
-        <translation>Område:% 1% 2 ^ 2</translation>
+        <translation>Område:%1%2 ^ 2</translation>
     </message>
 </context>
 <context>
@@ -32025,11 +32025,11 @@ Cartesian: (%2 , %3)
 Polar: (%4 &lt; %5)
 Start: (%6 , %7)
 End: (%8 , %9)</source>
-        <translation>Afstand:% 1
-Kartesisk: (% 2,% 3)
-Polar: (% 4 &lt;% 5)
-Start: (% 6,% 7)
-Ende: (% 8,% 9)</translation>
+        <translation>Afstand:%1
+Kartesisk: (%2,%3)
+Polar: (%4 &lt;%5)
+Start: (%6,%7)
+Ende: (%8,%9)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="98"/>
@@ -32081,11 +32081,11 @@ Cartesian: (%2 , %3)
 Polar: (%4 &lt; %5)
 Point On Entity: (%6 , %7)
 Point: (%8 , %9)</source>
-        <translation>Afstand:% 1
-Kartesisk: (% 2,% 3)
-Polar: (% 4 &lt;% 5)
-Point on Entity: (% 6,% 7)
-Point: (% 8,% 9)</translation>
+        <translation>Afstand:%1
+Kartesisk: (%2,%3)
+Polar: (%4 &lt;%5)
+Point on Entity: (%6,%7)
+Point: (%8,%9)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="275"/>
@@ -32239,7 +32239,7 @@ Point: (% 8,% 9)</translation>
     <message>
         <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="64"/>
         <source>Cannot open file &apos;%1&apos;</source>
-        <translation>Kan ikke åbne filen &quot;% 1&quot;</translation>
+        <translation>Kan ikke åbne filen &quot;%1&quot;</translation>
     </message>
 </context>
 <context>
@@ -32890,7 +32890,7 @@ Point: (% 8,% 9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="421"/>
         <source>Specify first entity or enter radius &lt;%1&gt;</source>
-        <translation>Angiv første enhed eller indtast radius &lt;% 1 &gt;</translation>
+        <translation>Angiv første enhed eller indtast radius &lt;%1 &gt;</translation>
     </message>
 </context>
 <context>
@@ -33368,12 +33368,12 @@ Point: (% 8,% 9)</translation>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="160"/>
         <source>Printout offset in paper coordinates by (%1, %2)</source>
-        <translation>Udskrift forskudt i papirkoordinater med (% 1,% 2)</translation>
+        <translation>Udskrift forskudt i papirkoordinater med (%1,%2)</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="163"/>
         <source>Printout offset in graph coordinates by (%1, %2)</source>
-        <translation>Udskriftsforskydning i grafkoordinater med (% 1,% 2)</translation>
+        <translation>Udskriftsforskydning i grafkoordinater med (%1,%2)</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="185"/>

@@ -720,7 +720,7 @@ avståndet mellan punkterna=%2 är större än diametern=%3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="146"/>
         <source>Dual created around center (%1 entities)</source>
-        <translation>Dual skapad runt centrum (% 1 enheter)</translation>
+        <translation>Dual skapad runt centrum (%1 enheter)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="159"/>
@@ -8884,7 +8884,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="203"/>
         <source>Are you sure you&apos;d like to unassign &quot;%1&quot; menu? Note: Just an invocation shortcut will be removed and menu will not be deleted.</source>
-        <translation>Är du säker på att du vill avstå från &quot;% 1&quot; menyn? Obs!: Bara en faktureringsgenväg tas bort och menyn raderas inte.</translation>
+        <translation>Är du säker på att du vill avstå från &quot;%1&quot; menyn? Obs!: Bara en faktureringsgenväg tas bort och menyn raderas inte.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="216"/>
@@ -21062,7 +21062,7 @@ Välj den enhet som du vill använda för nya ritningar och ditt önskade språk
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="642"/>
         <source>Enter new unique name of dimension style (was &quot;%1&quot;):</source>
-        <translation>Ange nytt unikt namn på dimensionsstil (var &quot;% 1&quot;):</translation>
+        <translation>Ange nytt unikt namn på dimensionsstil (var &quot;%1&quot;):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="662"/>
@@ -33759,7 +33759,7 @@ Polar: (%4 &lt; %5)
 Start: (%6 , %7)
 End: (%8 , %9)</source>
         <translation>Avstånd: %1
-Kartesiska: (% 2,%3)
+Kartesiska: (%2,%3)
 Polar: (%4 &lt; %5)
 Start: (%6, %7)
 Slut: (%8, %9)</translation>
@@ -33831,7 +33831,7 @@ Polar: (%4 &lt; %5)
 Point On Entity: (%6 , %7)
 Point: (%8 , %9)</source>
         <translation>Avstånd: %1
-Kartesiska: (% 2,%3)
+Kartesiska: (%2,%3)
 Polar: (%4 &lt; %5)
 Point On Entity: (%6,%7)
 Poäng: (%8, %9)</translation>

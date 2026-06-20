@@ -87,6 +87,16 @@ public:
     virtual bool readBool();
 };
 
+// Pre-R13 (R12/AC1009) binary DXF uses 1-byte group codes instead of the
+// 2-byte little-endian codes of R13+. Only readCode differs; every value
+// reader (string/double/int/...) is identical, so inherit them all.
+class dxfReaderBinaryR12 : public dxfReaderBinary {
+public:
+    dxfReaderBinaryR12(std::istream *stream):dxfReaderBinary(stream){}
+    virtual ~dxfReaderBinaryR12() = default;
+    virtual bool readCode(int *code) override;
+};
+
 class dxfReaderAscii : public dxfReader {
 public:
     dxfReaderAscii(std::istream *stream):dxfReader(stream){skip = true; }

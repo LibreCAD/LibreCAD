@@ -39,8 +39,8 @@ bool dxfReader::readRec(int *codeData) {
         valueOk = readInt16();
     else if (code > 89 && code < 100) //TODO this is an int 32b
         valueOk = readInt32();
-    else if (code == 100 || code == 102 || code == 105)
-        valueOk = readString();
+    else if (code == 100 || code == 101 || code == 102 || code == 105)
+        valueOk = readString(); //101 = "Embedded Object" marker (string, not int16)
     else if (code > 109 && code < 150) //skip not used at the v2012
         valueOk = readDouble();
     else if (code > 159 && code < 170) //skip not used at the v2012
@@ -100,7 +100,12 @@ bool dxfReader::readRec(int *codeData) {
         //break in binary files because the conduct is unpredictable
         return false;
 
-    return valueOk && (filestr->good());
+    // Use !fail() not good(): std::getline that reads a final record WITHOUT a
+    // trailing newline sets eofbit (good()==false) on an otherwise SUCCESSFUL
+    // extraction (fail()==false). good() would wrongly reject that last record;
+    // a genuine failed read sets failbit, which !fail() still catches. (Binary
+    // readers gate on their own good() check, so this is a no-op for them.)
+    return valueOk && (!filestr->fail());
 }
 int dxfReader::getHandleString(){
     int res;
@@ -123,6 +128,29 @@ bool dxfReaderBinary::readCode(int *code) {
         return false;
     *code = static_cast<int>(buffer[0])
         | (static_cast<int>(buffer[1]) << 8);
+    DRW_DBG(*code); DRW_DBG("\n");
+
+    return true;
+}
+
+bool dxfReaderBinaryR12::readCode(int *code) {
+    unsigned char b = 0;
+    filestr->read(reinterpret_cast<char*>(&b), 1);
+    if (!filestr->good())
+        return false;
+    if (b == 255) {
+        // 0xFF is the extended-data escape: the real 16-bit LE group code
+        // follows in the next two bytes (R12 carries xdata codes >= 255 this
+        // way). Matches ezdxf binary_tags_loader.
+        unsigned char buffer[2] = {};
+        filestr->read(reinterpret_cast<char*>(buffer), 2);
+        if (!filestr->good())
+            return false;
+        *code = static_cast<int>(buffer[0])
+            | (static_cast<int>(buffer[1]) << 8);
+    } else {
+        *code = static_cast<int>(b);
+    }
     DRW_DBG(*code); DRW_DBG("\n");
 
     return true;
@@ -239,7 +267,7 @@ bool dxfReaderBinary::readBool() {
 bool dxfReaderAscii::readCode(int *code) {
     std::string text;
     std::getline(*filestr, text);
-    if (!filestr->good())
+    if (filestr->fail())  // !fail(): accept a final newline-less line (eofbit set, fail() clear)
         return false;
     if (!text.empty() && text.at(text.size()-1) == '\r')
         text.erase(text.size()-1);
@@ -263,7 +291,7 @@ bool dxfReaderAscii::readString(std::string *text) {
     std::getline(*filestr, *text);
     if (!text->empty() && text->at(text->size()-1) == '\r')
         text->erase(text->size()-1);
-    return (filestr->good());
+    return (!filestr->fail());
 }
 
 bool dxfReaderAscii::readString() {
@@ -272,7 +300,7 @@ bool dxfReaderAscii::readString() {
     if (!strData.empty() && strData.at(strData.size()-1) == '\r')
         strData.erase(strData.size()-1);
     DRW_DBG(strData); DRW_DBG("\n");
-    return (filestr->good());
+    return (!filestr->fail());
 }
 
 bool dxfReaderAscii::readBinary() {

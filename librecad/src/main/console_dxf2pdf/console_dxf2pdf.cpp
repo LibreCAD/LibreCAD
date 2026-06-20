@@ -23,6 +23,8 @@
 **
 ******************************************************************************/
 
+#include <cstdlib>
+
 #include <QtCore>
 #include <QCoreApplication>
 #include <QApplication>
@@ -33,6 +35,7 @@
 #include "rs_settings.h"
 #include "rs_system.h"
 
+#include "console_command_utils.h"
 #include "main.h"
 
 #include "console_dxf2pdf.h"
@@ -43,39 +46,52 @@ static RS_Vector parsePageSizeArg(QString);
 static void parsePagesNumArg(QString, PdfPrintParams&);
 static void parseMarginsArg(QString, PdfPrintParams&);
 
+namespace {
 
-int console_dxf2pdf(int argc, char* argv[])
-{
+struct PdfCommandSpec {
+    QString commandName;
+    QString inputExt;
+    QString inputLabel;
+    QStringList acceptedExts;
+};
+
+int runPdfCommand(int argc, char* argv[], const PdfCommandSpec& spec) {
     RS_DEBUG->setLevel(RS_Debug::D_NOTHING);
 
-    QApplication app(argc, argv);
+    const LC_Console::CommandContext context =
+        LC_Console::contextForCommand(argc, argv, spec.commandName);
+    LC_Console::NormalizedArgv normalizedArgs(argc, argv, context);
+    int normalizedArgc = normalizedArgs.argc();
+    char** normalizedArgv = normalizedArgs.argv();
+
+    QApplication app(normalizedArgc, normalizedArgv);
     QCoreApplication::setOrganizationName("LibreCAD");
     QCoreApplication::setApplicationName("LibreCAD");
     QCoreApplication::setApplicationVersion(XSTR(LC_VERSION));
 
-    QFileInfo prgInfo(QFile::decodeName(argv[0]));
     RS_Settings::init(app.organizationName(), app.applicationName());
-    RS_SYSTEM->init( app.applicationName(), app.applicationVersion(), XSTR(QC_APPDIR), argv[0]);
+    RS_SYSTEM->init(app.applicationName(), app.applicationVersion(), XSTR(QC_APPDIR),
+                    normalizedArgv[0]);
 
     QCommandLineParser parser;
 
     QStringList appDesc;
-    QString librecad( prgInfo.filePath());
-    if (prgInfo.baseName() != "dxf2pdf") {
-        librecad += " dxf2pdf"; // executable is not dxf2pdf, thus argv[1] must be 'dxf2pdf'
-        appDesc << "";
-        appDesc << "dxf2pdf " + QObject::tr( "usage: ") + librecad + QObject::tr( " [options] <dxf_files>");
-    }
+    const QString command = context.displayCommand();
     appDesc << "";
-    appDesc << "Print a bunch of DXF files to PDF file(s).";
+    appDesc << spec.commandName + " " + QObject::tr("usage: ") + command +
+                   QObject::tr(" [options] <%1_files>").arg(spec.inputExt);
+    appDesc << "";
+    appDesc << QObject::tr("Print %1 file(s) to PDF file(s).").arg(spec.inputLabel);
+    if (spec.commandName == "dxf2pdf")
+        appDesc << QObject::tr("DWG input is accepted for compatibility; prefer dwg2pdf for DWG files.");
     appDesc << "";
     appDesc << "Examples:";
     appDesc << "";
-    appDesc << "  " + librecad + QObject::tr( " *.dxf");
-    appDesc << "    " + QObject::tr( "-- print all dxf files to pdf files with the same names.");
+    appDesc << "  " + command + QObject::tr(" *.%1").arg(spec.inputExt);
+    appDesc << "    " + QObject::tr("-- print all %1 files to PDF files with the same names.").arg(spec.inputExt.toUpper());
     appDesc << "";
-    appDesc << "  " + librecad + QObject::tr( " -o some.pdf *.dxf");
-    appDesc << "    " + QObject::tr( "-- print all dxf files to 'some.pdf' file.");
+    appDesc << "  " + command + QObject::tr(" -o some.pdf *.%1").arg(spec.inputExt);
+    appDesc << "    " + QObject::tr("-- print all %1 files to 'some.pdf'.").arg(spec.inputExt.toUpper());
     parser.setApplicationDescription( appDesc.join( "\n"));
 
     parser.addHelpOption();
@@ -98,11 +114,11 @@ int console_dxf2pdf(int argc, char* argv[])
     parser.addOption(monoOpt);
 
     QCommandLineOption pageSizeOpt(QStringList() << "p" << "paper",
-        QObject::tr( "Paper size (Width x Height) in mm.", "WxH"));
+        QObject::tr( "Paper size (Width x Height) in mm."), "WxH");
     parser.addOption(pageSizeOpt);
 
     QCommandLineOption resOpt(QStringList() << "r" << "resolution",
-        QObject::tr( "Output resolution (DPI).", "integer"));
+        QObject::tr( "Output resolution (DPI)."), "integer");
     parser.addOption(resOpt);
 
     QCommandLineOption scaleOpt(QStringList() << "s" << "scale",
@@ -117,7 +133,7 @@ int console_dxf2pdf(int argc, char* argv[])
         QObject::tr( "Print on multiple pages (Horiz. x Vert.)."), "HxV");
     parser.addOption(pagesNumOpt);
 
-    QCommandLineOption outFileOpt(QStringList() << "o" << "outfile",
+    QCommandLineOption outFileOpt(QStringList() << "o" << "output" << "outfile",
         QObject::tr( "Output PDF file.", "file"), "outfile");
     parser.addOption(outFileOpt);
 
@@ -125,13 +141,14 @@ int console_dxf2pdf(int argc, char* argv[])
         QObject::tr( "Target output directory."), "path");
     parser.addOption(outDirOpt);
 
-    parser.addPositionalArgument(QObject::tr( "<dxf_files>"), QObject::tr( "Input DXF file(s)"));
+    parser.addPositionalArgument(QObject::tr("<%1_files>").arg(spec.inputExt),
+        QObject::tr("Input %1 file(s)").arg(spec.inputLabel));
 
     parser.process(app);
 
     const QStringList args = parser.positionalArguments();
 
-    if (args.isEmpty() || (args.size() == 1 && args[0] == "dxf2pdf"))
+    if (args.isEmpty())
         parser.showHelp(EXIT_FAILURE);
 
     PdfPrintParams params;
@@ -158,23 +175,24 @@ int console_dxf2pdf(int argc, char* argv[])
     params.outFile = parser.value(outFileOpt);
     params.outDir = parser.value(outDirOpt);
 
-    for (auto arg : args) {
-        QFileInfo dxfFileInfo(arg);
-        const QString sfx = dxfFileInfo.suffix().toLower();
-        if (sfx != "dxf" && sfx != "dwg")
-          continue; // Skip files without .dxf/.dwg extension
-        params.dxfFiles.append(arg);
+    params.inputFiles = LC_Console::collectInputFiles(args, spec.acceptedExts);
+
+    if (params.inputFiles.isEmpty()) {
+        qCritical("ERROR: no %s files found in arguments.",
+                  qPrintable(LC_Console::extensionDescription(spec.acceptedExts)));
+        return EXIT_FAILURE;
     }
 
-    if (params.dxfFiles.isEmpty())
-        parser.showHelp(EXIT_FAILURE);
+    if (LC_Console::containsDwgInput(params.inputFiles) &&
+        !LC_Console::dwgSupportAvailable()) {
+        qCritical("ERROR: DWG input requires a build with DWGSUPPORT enabled.");
+        return EXIT_FAILURE;
+    }
 
-    if (!params.outDir.isEmpty()) {
-        // Create output directory
-        if (!QDir().mkpath(params.outDir)) {
-            qDebug() << "ERROR: Cannot create directory" << params.outDir;
-            return EXIT_FAILURE;
-        }
+    QString dirError;
+    if (!LC_Console::ensureOutputDirectory(params.outDir, &dirError)) {
+        qCritical("ERROR: %s.", qPrintable(dirError));
+        return EXIT_FAILURE;
     }
 
     RS_FONTLIST->init();
@@ -182,11 +200,33 @@ int console_dxf2pdf(int argc, char* argv[])
 
     PdfPrintLoop *loop = new PdfPrintLoop(params, &app);
 
-    QObject::connect(loop, SIGNAL(finished()), &app, SLOT(quit()));
+    QObject::connect(loop, &PdfPrintLoop::finished, &app,
+                     [&app](int exitCode) { app.exit(exitCode); });
 
     QTimer::singleShot(0, loop, SLOT(run()));
 
     return app.exec();
+}
+
+} // namespace
+
+int console_dxf2pdf(int argc, char* argv[])
+{
+    return runPdfCommand(argc, argv,
+                         {QStringLiteral("dxf2pdf"),
+                          QStringLiteral("dxf"),
+                          QStringLiteral("DXF"),
+                          LC_Console::acceptedExtensions(QStringLiteral("dxf"),
+                                                         {QStringLiteral("dwg")})});
+}
+
+int console_dwg2pdf(int argc, char* argv[])
+{
+    return runPdfCommand(argc, argv,
+                         {QStringLiteral("dwg2pdf"),
+                          QStringLiteral("dwg"),
+                          QStringLiteral("DWG"),
+                          LC_Console::acceptedExtensions(QStringLiteral("dwg"))});
 }
 
 

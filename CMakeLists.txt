@@ -24,7 +24,25 @@ find_package(WrapVulkanHeaders QUIET)
 set(QT_NO_VULKAN 1)
 find_package(Qt6 COMPONENTS Gui Core Widgets PrintSupport Svg Network REQUIRED)
 find_package(Qt6 REQUIRED COMPONENTS LinguistTools)
-find_package(Boost REQUIRED)
+
+# LibreCAD only uses header-only Boost components.  The Windows CI installs
+# Boost from the source archive, which provides headers but no BoostConfig.cmake.
+find_path(Boost_INCLUDE_DIR
+    NAMES boost/version.hpp
+    HINTS
+        "${BOOST_ROOT}"
+        "$ENV{BOOST_ROOT}"
+        "${Boost_ROOT}"
+        "$ENV{Boost_ROOT}"
+        "${BOOST_INCLUDEDIR}"
+        "$ENV{BOOST_INCLUDEDIR}"
+    PATH_SUFFIXES include
+)
+if(NOT Boost_INCLUDE_DIR)
+    message(FATAL_ERROR "Boost headers not found. Set BOOST_ROOT or Boost_INCLUDE_DIR to a directory containing boost/version.hpp.")
+endif()
+set(Boost_INCLUDE_DIRS "${Boost_INCLUDE_DIR}")
+
 find_package(Freetype)
 
 # Define all sources (as before)
@@ -295,6 +313,8 @@ set(SHARED_SOURCES
     libraries/libdxfrw/src/intern/dwgwriter24.h
     libraries/libdxfrw/src/intern/dwgreader.cpp
     libraries/libdxfrw/src/intern/dwgreader.h
+    libraries/libdxfrw/src/intern/dwgreaderR11.cpp
+    libraries/libdxfrw/src/intern/dwgreaderR11.h
     libraries/libdxfrw/src/intern/dwgreader15.cpp
     libraries/libdxfrw/src/intern/dwgreader15.h
     libraries/libdxfrw/src/intern/dwgreader18.cpp
@@ -1612,6 +1632,8 @@ endif()
 
 set(MAIN_SOURCES
     librecad/src/main/main.cpp
+    librecad/src/main/console_command_utils.cpp
+    librecad/src/main/console_command_utils.h
     librecad/src/main/console_dxf2dwg.cpp
     librecad/src/main/console_dxf2dwg.h
     librecad/src/main/console_dxf2pdf/console_dxf2pdf.cpp
@@ -1634,7 +1656,7 @@ qt_add_executable(librecad
 if(APPLE)
     set_target_properties(librecad PROPERTIES
         MACOSX_BUNDLE TRUE
-        MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/librecad/src/macos/Info.plist"
+        MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/librecad/src/Info.plist.app"
     )
 endif()
 
@@ -1748,6 +1770,8 @@ add_subdirectory(plugins)
 option(BUILD_TESTS "Build unit tests for LibreCAD" OFF)
 
 if(BUILD_TESTS)
+    enable_testing()
+
     # Add Catch2 as a subdirectory (assumes Catch2 is in externals/Catch2)
     add_subdirectory(externals/Catch2)
 
@@ -1786,12 +1810,16 @@ if(BUILD_TESTS)
         librecad/src/lib/filters/tests/dxf_string_codec_tests.cpp
         librecad/src/lib/filters/tests/dxf_attribute_tests.cpp
         librecad/src/lib/filters/tests/dxf_object_tests.cpp
+        librecad/src/lib/filters/tests/mpolygon_tests.cpp
+        librecad/src/lib/filters/tests/mleader_text_tests.cpp
+        librecad/src/lib/filters/tests/mleader_dxf_context_tests.cpp
         librecad/src/lib/filters/tests/dxf_roundtrip_tests.cpp
         librecad/src/lib/filters/tests/dxf_corpus_tests.cpp
         librecad/src/lib/filters/tests/i18n_codec_tests.cpp
         librecad/src/lib/filters/tests/i18n_caret_nfc_tests.cpp
         librecad/src/lib/filters/tests/dwg_decompress18_tests.cpp
         librecad/src/lib/engine/settings/tests/rs_settings_migration_tests.cpp
+        librecad/src/main/tests/console_command_utils_tests.cpp
     )
 
     # Include directories for rs_math.h and other dependencies
@@ -1815,4 +1843,10 @@ if(BUILD_TESTS)
     target_compile_features(librecad_tests PRIVATE cxx_std_17)
     # compiling time defines
     target_compile_definitions(librecad_tests PRIVATE BUILD_TESTS=1 DWGSUPPORT)
+
+    add_test(NAME librecad_tests COMMAND $<TARGET_FILE:librecad_tests>)
+    set_tests_properties(librecad_tests PROPERTIES
+        WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
+        ENVIRONMENT "QT_QPA_PLATFORM=offscreen"
+    )
 endif()

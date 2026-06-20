@@ -3178,7 +3178,7 @@ static DwgFixtureManifestEntry fixtureManifestEntryFromJson(
 }
 
 TEST_CASE("DWG fixture manifest is valid JSON and optional by default",
-          "[entity_metadata][dwg_fixtures]") {
+          "[.dwg_fixtures]") {
   QFile manifest("libraries/libdxfrw/testdata/dwg-fixtures.json");
   REQUIRE(manifest.open(QIODevice::ReadOnly));
   QJsonParseError error;

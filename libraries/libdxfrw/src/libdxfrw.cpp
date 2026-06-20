@@ -75,23 +75,32 @@ bool dxfRW::read(DRW_Interface *interface_, bool ext){
         return setError(DRW::BAD_OPEN);
     }
 
-    char line[22];
+    char line[24]{};
     char line2[22] = "AutoCAD Binary DXF\r\n";
     line2[20] = (char)26;
     line2[21] = '\0';
-    filestr.read (line, 22);
+    // Read the 22-byte sentinel plus the first 2 bytes of the group stream so
+    // the binary sub-format can be detected before any group is parsed.
+    filestr.read (line, 24);
     filestr.close();
     iface = interface_;
     DRW_DBG("dxfRW::read 2\n");
-    // `line` is filled by an unterminated 22-byte read; compare by exact
+    // `line` is filled by an unterminated read; compare the sentinel by exact
     // length to avoid strcmp reading past the buffer when the sentinel
     // bytes don't include an embedded NUL.
-    if (std::memcmp(line, line2, sizeof(line)) == 0) {
+    if (std::memcmp(line, line2, 22) == 0) {
         filestr.open (fileName.c_str(), std::ios_base::in | std::ios::binary);
         binFile = true;
         //skip sentinel
         filestr.seekg (22, std::ios::beg);
-        reader = std::make_unique<dxfReaderBinary>(&filestr);
+        // R12/AC1009 binary uses 1-byte group codes; R13+ uses 2-byte LE. The
+        // first group is always code 0 (SECTION): R12 => bytes 00 'S' (byte[1]
+        // != 0); R13+ => bytes 00 00. So a non-zero second byte selects the
+        // 1-byte reader.
+        if (static_cast<unsigned char>(line[23]) != 0)
+            reader = std::make_unique<dxfReaderBinaryR12>(&filestr);
+        else
+            reader = std::make_unique<dxfReaderBinary>(&filestr);
         DRW_DBG("dxfRW::read binary file\n");
     } else {
         binFile = false;
@@ -2071,6 +2080,117 @@ bool dxfRW::writeMText(DRW_MText *ent){
     return true;
 }
 
+bool dxfRW::writeLight(DRW_Light *ent) {
+    // AcDbLight is an R2007+ (AC1021+) entity; pre-R2007 DXF has no LIGHT entity,
+    // so skip rather than emit something AutoCAD/ezdxf would reject. Lights read
+    // from a DWG are carried on LibreCAD's metadata shelf and would otherwise be
+    // dropped on DWG->DXF export; this re-emits them (D4 write-path preservation).
+    if (version < DRW::AC1021)
+        return false;
+    writer->writeString(0, "LIGHT");
+    writeEntity(ent);
+    writer->writeString(100, "AcDbLight");
+    writer->writeInt32(90, static_cast<int>(ent->m_classVersion));
+    writer->writeUtf8String(1, ent->m_name);
+    writer->writeInt16(70, static_cast<int>(ent->m_type));
+    writer->writeBool(290, ent->m_status);
+    // ACI index in 63; a packed true-color value goes in 421 instead.
+    if (ent->m_color < 256)
+        writer->writeInt16(63, static_cast<int>(ent->m_color));
+    else
+        writer->writeInt32(421, static_cast<int>(ent->m_color));
+    writer->writeBool(291, ent->m_plotGlyph);
+    writer->writeDouble(40, ent->m_intensity);
+    writer->writeDouble(10, ent->m_position.x);
+    writer->writeDouble(20, ent->m_position.y);
+    writer->writeDouble(30, ent->m_position.z);
+    writer->writeDouble(11, ent->m_target.x);
+    writer->writeDouble(21, ent->m_target.y);
+    writer->writeDouble(31, ent->m_target.z);
+    writer->writeInt16(72, static_cast<int>(ent->m_attenuationType));
+    writer->writeBool(292, ent->m_useAttenuationLimits);
+    writer->writeDouble(41, ent->m_attenuationStartLimit);
+    writer->writeDouble(42, ent->m_attenuationEndLimit);
+    writer->writeDouble(50, ent->m_hotspotAngle);
+    writer->writeDouble(51, ent->m_falloffAngle);
+    writer->writeBool(293, ent->m_castShadows);
+    writer->writeInt16(73, static_cast<int>(ent->m_shadowType));
+    writer->writeInt32(91, static_cast<int>(ent->m_shadowMapSize));
+    writer->writeInt16(280, static_cast<int>(ent->m_shadowMapSoftness));
+    return true;
+}
+
+bool dxfRW::writeShape(DRW_Shape *ent) {
+    // DXF SHAPE (AcDbShape). The DWG stores only a glyph index; the glyph name
+    // lives in the external .shx and is unrecoverable, so group 2 carries the
+    // SHAPEFILE/STYLE record name (resolved on read), matching libredwg/ACadSharp.
+    // m_rotation/m_oblique are radians (DRW_Shape::parseDwg keeps them un-scaled,
+    // unlike DRW_Text) -> convert to DXF degrees.
+    writer->writeString(0, "SHAPE");
+    writeEntity(ent);
+    if (version > DRW::AC1009)
+        writer->writeString(100, "AcDbShape");
+    if (ent->m_thickness != 0.0)
+        writer->writeDouble(39, ent->m_thickness);
+    writer->writeDouble(10, ent->m_insertionPoint.x);
+    writer->writeDouble(20, ent->m_insertionPoint.y);
+    writer->writeDouble(30, ent->m_insertionPoint.z);
+    writer->writeDouble(40, ent->m_scale);            // size
+    if (!ent->m_styleName.empty())
+        writer->writeUtf8String(2, ent->m_styleName); // shape (style) name
+    writer->writeDouble(50, ent->m_rotation * ARAD);  // radians -> degrees
+    if (ent->m_widthFactor != 1.0)
+        writer->writeDouble(41, ent->m_widthFactor);
+    if (ent->m_oblique != 0.0)
+        writer->writeDouble(51, ent->m_oblique * ARAD);
+    if (ent->m_extrusion.x != 0.0 || ent->m_extrusion.y != 0.0 || ent->m_extrusion.z != 1.0) {
+        writer->writeDouble(210, ent->m_extrusion.x);
+        writer->writeDouble(220, ent->m_extrusion.y);
+        writer->writeDouble(230, ent->m_extrusion.z);
+    }
+    return true;
+}
+
+bool dxfRW::writeOle2Frame(DRW_Ole2Frame *ent) {
+    // DXF OLE2FRAME (AcDbOle2Frame). Field order/codes per ACadSharp + dwgread:
+    // 70 version, 3 client, 10/11 frame corners, 71 type, 72 mode, 73 (const 3),
+    // 90 length, 310 binary (hex chunks), 1 "OLE" trailer. pt1/pt2 were decoded
+    // from the OLE payload header on read; the payload is replayed verbatim.
+    writer->writeString(0, "OLE2FRAME");
+    writeEntity(ent);
+    if (version > DRW::AC1009)
+        writer->writeString(100, "AcDbOle2Frame");
+    writer->writeInt16(70, static_cast<int>(ent->m_oleVersion));
+    writer->writeUtf8String(3, ent->m_oleClient);
+    writer->writeDouble(10, ent->m_pt1.x);
+    writer->writeDouble(20, ent->m_pt1.y);
+    writer->writeDouble(30, ent->m_pt1.z);
+    writer->writeDouble(11, ent->m_pt2.x);
+    writer->writeDouble(21, ent->m_pt2.y);
+    writer->writeDouble(31, ent->m_pt2.z);
+    writer->writeInt16(71, static_cast<int>(ent->m_flags));  // OLE object type
+    writer->writeInt16(72, static_cast<int>(ent->m_mode));   // tile/paper-space mode
+    writer->writeInt16(73, 3);                               // undocumented, always 3
+    writer->writeInt32(90, static_cast<int>(ent->m_payloadBytes.size()));
+    // group 310: payload as hex, 127 bytes (254 hex chars) per record (AutoCAD/
+    // dwgread convention; the binary-DXF writer hex-decodes and re-chunks).
+    static const char hexd[] = "0123456789ABCDEF";
+    const std::vector<std::uint8_t>& data = ent->m_payloadBytes;
+    for (std::size_t off = 0; off < data.size(); off += 127) {
+        const std::size_t n = std::min<std::size_t>(127, data.size() - off);
+        std::string chunk;
+        chunk.reserve(n * 2);
+        for (std::size_t i = 0; i < n; ++i) {
+            const std::uint8_t b = data[off + i];
+            chunk.push_back(hexd[b >> 4]);
+            chunk.push_back(hexd[b & 0x0F]);
+        }
+        writer->writeString(310, chunk);
+    }
+    writer->writeString(1, "OLE");
+    return true;
+}
+
 bool dxfRW::writeViewport(DRW_Viewport *ent) {
     writer->writeString(0, "VIEWPORT");
     writeEntity(ent);
@@ -3029,8 +3149,11 @@ bool dxfRW::processClasses() {
     auto finishClass = [&]() -> bool {
         if (!reading)
             return true;
-        if (cls.recName.empty() || cls.className.empty()) {
-            DRW_DBG("malformed CLASS record: missing record/class name\n");
+        // AutoCAD legitimately emits internal proxy classes (e.g. DbBEditSession)
+        // with an empty code-1 record name; only an empty C++ class name (code 2)
+        // is structurally invalid. Rejecting an empty recName aborts the whole read.
+        if (cls.className.empty()) {
+            DRW_DBG("malformed CLASS record: missing class name\n");
             return false;
         }
         iface->addDxfClass(cls);
@@ -3546,6 +3669,8 @@ bool dxfRW::processEntities(bool isblock) {
             processed = processUnderlay(nextentity);
         } else if (nextentity == "HATCH") {
             processed = processHatch();
+        } else if (nextentity == "MPOLYGON") {
+            processed = processMPolygon();
         } else if (nextentity == "SPLINE") {
             processed = processSpline();
         } else if (nextentity == "3DFACE") {
@@ -4197,6 +4322,31 @@ bool dxfRW::processWipeout() {
     return setError(DRW::BAD_READ_ENTITIES);
 }
 
+// MPOLYGON (AcDbMPolygon) DXF read.  Boundary loops, solid flag and pattern share
+// HATCH's group codes; DRW_MPolygon::parseCode delegates those to DRW_Hatch and
+// additionally captures the MPOLYGON-only fill-color / degenerate-count trailer.
+// Delivered via addMPolygon (defaults to addHatch, so it renders as a hatch).
+bool dxfRW::processMPolygon() {
+    DRW_DBG("dxfRW::processMPolygon");
+    int code;
+    DRW_MPolygon poly;
+    while (reader->readRec(&code)) {
+        DRW_DBG(code); DRW_DBG("\n");
+        if (0 == code) {
+            nextentity = reader->getString();
+            DRW_DBG(nextentity); DRW_DBG("\n");
+            iface->addMPolygon(&poly);
+            return true;  //found new entity or ENDSEC, terminate
+        }
+
+        if (!poly.parseCode(code, reader)) {
+            return setError(DRW::BAD_CODE_PARSED);
+        }
+    }
+
+    return setError(DRW::BAD_READ_ENTITIES);
+}
+
 
 bool dxfRW::processDimension() {
     DRW_DBG("dxfRW::processDimension");
@@ -4354,6 +4504,62 @@ bool dxfRW::processObjects() {
         else if ("WIPEOUTVARIABLES" == nextentity) {
             processed = processWipeoutVariables();
         }
+        else if ("MATERIAL" == nextentity) {
+            processed = processMaterial();
+        }
+        else if ("GEODATA" == nextentity) {
+            processed = processGeoData();
+        }
+        else if ("VISUALSTYLE" == nextentity
+                 || "ACDB_VISUALSTYLE_CLASS" == nextentity) {
+            processed = processVisualStyle();
+        }
+        else if ("IMAGEDEF_REACTOR" == nextentity) {
+            processed = processImageDefReactor();
+        }
+        else if ("SPATIAL_FILTER" == nextentity) {
+            processed = processSpatialFilter();
+        }
+        else if ("TABLESTYLE" == nextentity) {
+            processed = processTableStyle();
+        }
+        else if ("MLEADERSTYLE" == nextentity) {
+            processed = processMLeaderStyle();
+        }
+        else if ("SORTENTSTABLE" == nextentity) {
+            processed = processSortEntsTable();
+        }
+        else if ("DIMASSOC" == nextentity) {
+            processed = processDimAssoc();
+        }
+        else if ("SOLIDBACKGROUND" == nextentity || "SOLID_BACKGROUND" == nextentity
+                 || "GRADIENTBACKGROUND" == nextentity || "GRADIENT_BACKGROUND" == nextentity
+                 || "GROUNDPLANEBACKGROUND" == nextentity || "GROUND_PLANE_BACKGROUND" == nextentity
+                 || "IMAGEBACKGROUND" == nextentity || "IMAGE_BACKGROUND" == nextentity
+                 || "IBLBACKGROUND" == nextentity || "IBL_BACKGROUND" == nextentity
+                 || "SKYLIGHTBACKGROUND" == nextentity || "SKYLIGHT_BACKGROUND" == nextentity) {
+            processed = processBackground();
+        }
+        else if ("POINTCLOUDDEFINITION" == nextentity
+                 || "POINTCLOUDDEFINITIONEX" == nextentity
+                 || "POINTCLOUDDEFREACTOR" == nextentity
+                 || "POINTCLOUDDEFREACTOREX" == nextentity) {
+            processed = processPointCloudDef();
+        }
+        else if ("SUNSTUDY" == nextentity) {
+            processed = processSunStudy();
+        }
+        else if ("RENDERSETTINGS" == nextentity || "RENDERGLOBAL" == nextentity
+                 || "RENDERENVIRONMENT" == nextentity || "RENDERENTRY" == nextentity
+                 || "RAPIDRTRENDERSETTINGS" == nextentity
+                 || "MENTALRAYRENDERSETTINGS" == nextentity) {
+            processed = processRenderSettings();
+        }
+        else if ("SECTIONMANAGER" == nextentity || "ACDBSECTIONMANAGER" == nextentity
+                 || "SECTION_MANAGER" == nextentity || "SECTIONSETTINGS" == nextentity
+                 || "ACDBSECTIONSETTINGS" == nextentity || "SECTION_SETTINGS" == nextentity) {
+            processed = processSection();
+        }
         else {
             //Slice A1: never silently drop an unmodeled object — capture its
             //group codes verbatim for lossless re-emit instead of skipping.
@@ -4426,6 +4632,356 @@ bool dxfRW::processBreakData() {
             DRW_DBG(nextentity); DRW_DBG("\n");
             iface->addBreakData(data);
             iface->addRawDxfObject(raw);  // else dropped on DXF->DXF (no typed writer)
+            return true;
+        }
+        captureRawGroup(raw, code);
+        if (!data.parseCode(code, reader))
+            return setError(DRW::BAD_CODE_PARSED);
+    }
+    return setError(DRW::BAD_READ_OBJECTS);
+}
+
+// MATERIAL (AcDbMaterial): structured DXF read of name/description (matching the
+// DWG parser + dwgTs), plus full raw-net preservation for lossless DXF re-emit
+// (the visual-property fields are not modeled, only round-tripped).
+bool dxfRW::processMaterial() {
+    DRW_DBG("dxfRW::processMaterial");
+    int code;
+    DRW_Material data;
+    DRW_RawDxfObject raw;
+    raw.name = nextentity;
+    while (reader->readRec(&code)) {
+        DRW_DBG(code); DRW_DBG("\n");
+        if (code == 0) {
+            nextentity = reader->getString();
+            DRW_DBG(nextentity); DRW_DBG("\n");
+            iface->addMaterial(data);
+            iface->addRawDxfObject(raw);  // no typed writer: raw re-emits on DXF->DXF
+            return true;
+        }
+        captureRawGroup(raw, code);
+        if (!data.parseCode(code, reader))
+            return setError(DRW::BAD_CODE_PARSED);
+    }
+    return setError(DRW::BAD_READ_OBJECTS);
+}
+
+// GEODATA (AcDbGeoData): structured DXF read of the scalar geolocation fields,
+// plus full raw-net preservation (the coordinate-mesh lists are round-tripped
+// raw only — see DRW_GeoData::parseCode).
+bool dxfRW::processGeoData() {
+    DRW_DBG("dxfRW::processGeoData");
+    int code;
+    DRW_GeoData data;
+    DRW_RawDxfObject raw;
+    raw.name = nextentity;
+    while (reader->readRec(&code)) {
+        DRW_DBG(code); DRW_DBG("\n");
+        if (code == 0) {
+            nextentity = reader->getString();
+            DRW_DBG(nextentity); DRW_DBG("\n");
+            iface->addGeoData(data);
+            iface->addRawDxfObject(raw);  // no typed writer: raw re-emits on DXF->DXF
+            return true;
+        }
+        captureRawGroup(raw, code);
+        if (!data.parseCode(code, reader))
+            return setError(DRW::BAD_CODE_PARSED);
+    }
+    return setError(DRW::BAD_READ_OBJECTS);
+}
+
+// VISUALSTYLE (AcDbVisualStyle): structured DXF read of description + style type,
+// plus full raw-net preservation (the per-property face/edge/display settings are
+// round-tripped raw only — matches dwgTs's VISUALSTYLE decode depth).
+bool dxfRW::processVisualStyle() {
+    DRW_DBG("dxfRW::processVisualStyle");
+    int code;
+    DRW_VisualStyle data;
+    DRW_RawDxfObject raw;
+    raw.name = nextentity;
+    while (reader->readRec(&code)) {
+        DRW_DBG(code); DRW_DBG("\n");
+        if (code == 0) {
+            nextentity = reader->getString();
+            DRW_DBG(nextentity); DRW_DBG("\n");
+            iface->addVisualStyle(data);
+            iface->addRawDxfObject(raw);  // no typed writer: raw re-emits on DXF->DXF
+            return true;
+        }
+        captureRawGroup(raw, code);
+        if (!data.parseCode(code, reader))
+            return setError(DRW::BAD_CODE_PARSED);
+    }
+    return setError(DRW::BAD_READ_OBJECTS);
+}
+
+// IMAGEDEF_REACTOR (AcDbRasterImageDefReactor): structured DXF read of the
+// class-version field + raw-net preservation for lossless DXF re-emit.
+bool dxfRW::processImageDefReactor() {
+    DRW_DBG("dxfRW::processImageDefReactor");
+    int code;
+    DRW_ImageDefinitionReactor data;
+    DRW_RawDxfObject raw;
+    raw.name = nextentity;
+    while (reader->readRec(&code)) {
+        if (code == 0) {
+            nextentity = reader->getString();
+            iface->addImageDefinitionReactor(data);
+            iface->addRawDxfObject(raw);
+            return true;
+        }
+        captureRawGroup(raw, code);
+        if (!data.parseCode(code, reader))
+            return setError(DRW::BAD_CODE_PARSED);
+    }
+    return setError(DRW::BAD_READ_OBJECTS);
+}
+
+// SPATIAL_FILTER (AcDbSpatialFilter): structured DXF read of the clip boundary +
+// planes + raw-net preservation.
+bool dxfRW::processSpatialFilter() {
+    DRW_DBG("dxfRW::processSpatialFilter");
+    int code;
+    DRW_SpatialFilter data;
+    DRW_RawDxfObject raw;
+    raw.name = nextentity;
+    while (reader->readRec(&code)) {
+        if (code == 0) {
+            nextentity = reader->getString();
+            iface->addSpatialFilter(data);
+            iface->addRawDxfObject(raw);
+            return true;
+        }
+        captureRawGroup(raw, code);
+        if (!data.parseCode(code, reader))
+            return setError(DRW::BAD_CODE_PARSED);
+    }
+    return setError(DRW::BAD_READ_OBJECTS);
+}
+
+// TABLESTYLE (AcDbTableStyle): structured DXF read of the top-level fields +
+// raw-net preservation (nested row/cell styles round-tripped raw only).
+bool dxfRW::processTableStyle() {
+    DRW_DBG("dxfRW::processTableStyle");
+    int code;
+    DRW_TableStyle data;
+    DRW_RawDxfObject raw;
+    raw.name = nextentity;
+    while (reader->readRec(&code)) {
+        if (code == 0) {
+            nextentity = reader->getString();
+            iface->addTableStyle(data);
+            iface->addRawDxfObject(raw);
+            return true;
+        }
+        captureRawGroup(raw, code);
+        if (!data.parseCode(code, reader))
+            return setError(DRW::BAD_CODE_PARSED);
+    }
+    return setError(DRW::BAD_READ_OBJECTS);
+}
+
+// MLEADERSTYLE (AcDbMLeaderStyle): structured DXF read of the full scalar record
+// + raw-net preservation.  Delivered via addMLeaderStyle (pointer callback).
+bool dxfRW::processMLeaderStyle() {
+    DRW_DBG("dxfRW::processMLeaderStyle");
+    int code;
+    DRW_MLeaderStyle data;
+    DRW_RawDxfObject raw;
+    raw.name = nextentity;
+    while (reader->readRec(&code)) {
+        if (code == 0) {
+            nextentity = reader->getString();
+            iface->addMLeaderStyle(&data);
+            iface->addRawDxfObject(raw);
+            return true;
+        }
+        captureRawGroup(raw, code);
+        if (!data.parseCode(code, reader))
+            return setError(DRW::BAD_CODE_PARSED);
+    }
+    return setError(DRW::BAD_READ_OBJECTS);
+}
+
+// SORTENTSTABLE (AcDbSortentsTable): structured DXF read of the draw-order map
+// (block owner + entity/sort handle pairs) + raw-net preservation.
+bool dxfRW::processSortEntsTable() {
+    DRW_DBG("dxfRW::processSortEntsTable");
+    int code;
+    DRW_SortEntsTable data;
+    DRW_RawDxfObject raw;
+    raw.name = nextentity;
+    while (reader->readRec(&code)) {
+        if (code == 0) {
+            nextentity = reader->getString();
+            iface->addSortEntsTable(data);
+            iface->addRawDxfObject(raw);
+            return true;
+        }
+        captureRawGroup(raw, code);
+        if (!data.parseCode(code, reader))
+            return setError(DRW::BAD_CODE_PARSED);
+    }
+    return setError(DRW::BAD_READ_OBJECTS);
+}
+
+// DIMASSOC (AcDbDimAssoc): structured DXF read of the associative-dimension
+// metadata (dimension handle, flags, osnap refs) + raw-net preservation.
+bool dxfRW::processDimAssoc() {
+    DRW_DBG("dxfRW::processDimAssoc");
+    int code;
+    DRW_DimensionAssociation data;
+    DRW_RawDxfObject raw;
+    raw.name = nextentity;
+    while (reader->readRec(&code)) {
+        if (code == 0) {
+            nextentity = reader->getString();
+            iface->addDimensionAssociation(data);
+            iface->addRawDxfObject(raw);
+            return true;
+        }
+        captureRawGroup(raw, code);
+        if (!data.parseCode(code, reader))
+            return setError(DRW::BAD_CODE_PARSED);
+    }
+    return setError(DRW::BAD_READ_OBJECTS);
+}
+
+// AcDb*Background OBJECTS (solid/gradient/ground-plane/image/IBL/skylight):
+// structured DXF read into DRW_Background (kind set from the entity name) + raw-
+// net preservation.  DWG stays raw (no DWG parser).  Not rendered by LibreCAD.
+bool dxfRW::processBackground() {
+    DRW_DBG("dxfRW::processBackground");
+    int code;
+    DRW_Background data;
+    if (nextentity == "GRADIENTBACKGROUND" || nextentity == "GRADIENT_BACKGROUND")
+        data.m_kind = DRW_Background::Gradient;
+    else if (nextentity == "GROUNDPLANEBACKGROUND" || nextentity == "GROUND_PLANE_BACKGROUND")
+        data.m_kind = DRW_Background::GroundPlane;
+    else if (nextentity == "IMAGEBACKGROUND" || nextentity == "IMAGE_BACKGROUND")
+        data.m_kind = DRW_Background::Image;
+    else if (nextentity == "IBLBACKGROUND" || nextentity == "IBL_BACKGROUND")
+        data.m_kind = DRW_Background::Ibl;
+    else if (nextentity == "SKYLIGHTBACKGROUND" || nextentity == "SKYLIGHT_BACKGROUND")
+        data.m_kind = DRW_Background::Skylight;
+    else
+        data.m_kind = DRW_Background::Solid;
+    DRW_RawDxfObject raw;
+    raw.name = nextentity;
+    while (reader->readRec(&code)) {
+        if (code == 0) {
+            nextentity = reader->getString();
+            iface->addBackground(data);
+            iface->addRawDxfObject(raw);
+            return true;
+        }
+        captureRawGroup(raw, code);
+        if (!data.parseCode(code, reader))
+            return setError(DRW::BAD_CODE_PARSED);
+    }
+    return setError(DRW::BAD_READ_OBJECTS);
+}
+
+// AcDbPointCloudDef / ...DefEx and reactors: structured DXF read into
+// DRW_PointCloudDef (kind from the entity name) + raw-net preservation.
+bool dxfRW::processPointCloudDef() {
+    DRW_DBG("dxfRW::processPointCloudDef");
+    int code;
+    DRW_PointCloudDef data;
+    if (nextentity == "POINTCLOUDDEFINITIONEX")
+        data.m_kind = DRW_PointCloudDef::DefinitionEx;
+    else if (nextentity == "POINTCLOUDDEFREACTOR"
+             || nextentity == "POINTCLOUDDEFREACTOREX")
+        data.m_kind = DRW_PointCloudDef::Reactor;
+    else
+        data.m_kind = DRW_PointCloudDef::Definition;
+    DRW_RawDxfObject raw;
+    raw.name = nextentity;
+    while (reader->readRec(&code)) {
+        if (code == 0) {
+            nextentity = reader->getString();
+            iface->addPointCloudDef(data);
+            iface->addRawDxfObject(raw);
+            return true;
+        }
+        captureRawGroup(raw, code);
+        if (!data.parseCode(code, reader))
+            return setError(DRW::BAD_CODE_PARSED);
+    }
+    return setError(DRW::BAD_READ_OBJECTS);
+}
+
+// SUNSTUDY (AcDbSunStudy): structured DXF read of the scalar study config +
+// raw-net preservation (date/hour lists left raw).
+bool dxfRW::processSunStudy() {
+    DRW_DBG("dxfRW::processSunStudy");
+    int code;
+    DRW_SunStudy data;
+    DRW_RawDxfObject raw;
+    raw.name = nextentity;
+    while (reader->readRec(&code)) {
+        if (code == 0) {
+            nextentity = reader->getString();
+            iface->addSunStudy(data);
+            iface->addRawDxfObject(raw);
+            return true;
+        }
+        captureRawGroup(raw, code);
+        if (!data.parseCode(code, reader))
+            return setError(DRW::BAD_CODE_PARSED);
+    }
+    return setError(DRW::BAD_READ_OBJECTS);
+}
+
+// AcDbRenderSettings family (settings/global/environment/entry/mentalray/
+// rapidrt): positional DXF capture into DRW_RenderSettings (kind from the entity
+// name; vectors finalized into named fields) + raw-net preservation.
+bool dxfRW::processRenderSettings() {
+    DRW_DBG("dxfRW::processRenderSettings");
+    int code;
+    DRW_RenderSettings data;
+    if (nextentity == "RENDERGLOBAL") data.m_kind = DRW_RenderSettings::Global;
+    else if (nextentity == "RENDERENVIRONMENT") data.m_kind = DRW_RenderSettings::Environment;
+    else if (nextentity == "RENDERENTRY") data.m_kind = DRW_RenderSettings::Entry;
+    else if (nextentity == "RAPIDRTRENDERSETTINGS") data.m_kind = DRW_RenderSettings::RapidRT;
+    else if (nextentity == "MENTALRAYRENDERSETTINGS") data.m_kind = DRW_RenderSettings::MentalRay;
+    else data.m_kind = DRW_RenderSettings::Settings;
+    DRW_RawDxfObject raw;
+    raw.name = nextentity;
+    while (reader->readRec(&code)) {
+        if (code == 0) {
+            nextentity = reader->getString();
+            data.finalize();
+            iface->addRenderSettings(data);
+            iface->addRawDxfObject(raw);
+            return true;
+        }
+        captureRawGroup(raw, code);
+        if (!data.parseCode(code, reader))
+            return setError(DRW::BAD_CODE_PARSED);
+    }
+    return setError(DRW::BAD_READ_OBJECTS);
+}
+
+// SECTION_MANAGER / SECTION_SETTINGS: structured DXF read into DRW_Section
+// (kind from the entity name) + raw-net preservation.
+bool dxfRW::processSection() {
+    DRW_DBG("dxfRW::processSection");
+    int code;
+    DRW_Section data;
+    if (nextentity == "SECTIONSETTINGS" || nextentity == "ACDBSECTIONSETTINGS"
+        || nextentity == "SECTION_SETTINGS")
+        data.m_kind = DRW_Section::Settings;
+    else
+        data.m_kind = DRW_Section::Manager;
+    DRW_RawDxfObject raw;
+    raw.name = nextentity;
+    while (reader->readRec(&code)) {
+        if (code == 0) {
+            nextentity = reader->getString();
+            iface->addSection(data);
+            iface->addRawDxfObject(raw);
             return true;
         }
         captureRawGroup(raw, code);

@@ -605,8 +605,8 @@
         <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="196"/>
         <source>radius=%1 is too small for points selected
 distance between points=%2 is larger than diameter=%3</source>
-        <translation>รัศมี =% 1 เล็กเกินไปสําหรับจุดที่เลือกไว้
-ระยะห่างระหว่างจุด=% 2 มากกว่าเส้นผ่าศูนย์กลาง = % 3</translation>
+        <translation>รัศมี =%1 เล็กเกินไปสําหรับจุดที่เลือกไว้
+ระยะห่างระหว่างจุด=%2 มากกว่าเส้นผ่าศูนย์กลาง = %3</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcircle2pr.cpp" line="208"/>
@@ -708,7 +708,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="146"/>
         <source>Dual created around center (%1 entities)</source>
-        <translation>ดูลถูกสร้างรอบ ๆ ศูนย์ (% 1 องค์กร)</translation>
+        <translation>ดูลถูกสร้างรอบ ๆ ศูนย์ (%1 องค์กร)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="159"/>
@@ -876,8 +876,8 @@ or[x|y|p|number|edges]</source>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="537"/>
         <source>Specify distance (%1)
 or [%2]</source>
-        <translation>กําหนดระยะห่าง (% 1)
-หรือ [% 2]</translation>
+        <translation>กําหนดระยะห่าง (%1)
+หรือ [%2]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="534"/>
@@ -900,8 +900,8 @@ or [%2]</source>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="542"/>
         <source>Specify  distance (angle %1 deg)
 or [%2]</source>
-        <translation>ระยะห่างที่ระบุ (มุม% 1 dg)
-หรือ [% 2]</translation>
+        <translation>ระยะห่างที่ระบุ (มุม%1 dg)
+หรือ [%2]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="547"/>
@@ -1013,13 +1013,13 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="477"/>
         <source>Specify direction (x or y) or [%1]</source>
-        <translation>กําหนดทิศทาง (x หรือ y) หรือ [% 1]</translation>
+        <translation>กําหนดทิศทาง (x หรือ y) หรือ [%1]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="491"/>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="495"/>
         <source>Specify distance (%1) or [%2]</source>
-        <translation>ระบุระยะห่าง (% 1) หรือ [% 2]</translation>
+        <translation>ระบุระยะห่าง (%1) หรือ [%2]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="134"/>
@@ -1051,17 +1051,17 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="501"/>
         <source>Specify distance (%1 deg) or [%2]</source>
-        <translation>กําหนดระยะห่าง (% 1 deg) หรือ [% 2]</translation>
+        <translation>กําหนดระยะห่าง (%1 deg) หรือ [%2]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="516"/>
         <source>Specify angle or [%1]</source>
-        <translation>กําหนดมุมหรือ [% 1]</translation>
+        <translation>กําหนดมุมหรือ [%1]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="528"/>
         <source>Specify point or [%1]</source>
-        <translation>จุดระบุ [% 1]</translation>
+        <translation>จุดระบุ [%1]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="577"/>
@@ -1360,7 +1360,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="231"/>
         <source>Specify next control point or [%1]</source>
-        <translation>ระบุจุดควบคุมถัดไป [% 1]</translation>
+        <translation>ระบุจุดควบคุมถัดไป [%1]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="231"/>
@@ -1712,7 +1712,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="289"/>
         <source>&amp;Append spline point</source>
-        <translation>&amp; อยู่เหนือ% 1 ตัวปัจจุบัน</translation>
+        <translation>&amp; อยู่เหนือ%1 ตัวปัจจุบัน</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="291"/>
@@ -3297,13 +3297,13 @@ Alternative: %4
 Start Edge Point: (%5 , %6)
 Intersection Point :(%7, %8)
 End Edge Point: (%9 , %10)</source>
-        <translation>มุม:% 1
-คอมพลีเมนต์:% 2
-ความอิ่มตัว:% 3
-ตัวเลือก:% 4
-จุดเริ่มขอบ: (% 5, % 6)
-จุดตัด (% 7, % 8)
-จุดสิ้นสุด: (% 9, % 10)</translation>
+        <translation>มุม:%1
+คอมพลีเมนต์:%2
+ความอิ่มตัว:%3
+ตัวเลือก:%4
+จุดเริ่มขอบ: (%5, %6)
+จุดตัด (%7, %8)
+จุดสิ้นสุด: (%9, %10)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="149"/>
@@ -3370,27 +3370,27 @@ End Edge Point: (%9 , %10)</source>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="41"/>
         <source>Absolute: (%1)</source>
-        <translation>สัมบูรณ์: (% 1)</translation>
+        <translation>สัมบูรณ์: (%1)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="42"/>
         <source>Relative: (%1)</source>
-        <translation>ความสัมพันธ์: (% 1)</translation>
+        <translation>ความสัมพันธ์: (%1)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="43"/>
         <source>Polar: (%1)</source>
-        <translation>โพลา: (% 1)</translation>
+        <translation>โพลา: (%1)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="44"/>
         <source>Polar Relative: (%1)</source>
-        <translation>พื้นหลัง: (% 1)</translation>
+        <translation>พื้นหลัง: (%1)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="46"/>
         <source>Absolute WCS: (%1)</source>
-        <translation>สัมบูรณ์ WCS: (% 1)</translation>
+        <translation>สัมบูรณ์ WCS: (%1)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="70"/>
@@ -3711,7 +3711,7 @@ End Edge Point: (%9 , %10)</source>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayerscmd.cpp" line="53"/>
         <source>Enter layer name to %1</source>
-        <translation>ป้อนชื่อเลเยอร์เป็น% 1</translation>
+        <translation>ป้อนชื่อเลเยอร์เป็น%1</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayerscmd.cpp" line="53"/>
@@ -4509,7 +4509,7 @@ End Edge Point: (%9 , %10)</source>
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="163"/>
         <source>LibreCAD Shortcuts file (*.%1)</source>
-        <translation>แฟ้มปุ่มพิมพ์ลัด LibreCAD (*.% 1)</translation>
+        <translation>แฟ้มปุ่มพิมพ์ลัด LibreCAD (*.%1)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="198"/>
@@ -4684,7 +4684,7 @@ Are you sure you are going to discard changes?</source>
         <source>Save changes to the following item?
 %1</source>
         <translation>บันทึกการเปลี่ยนแปลงไปยังรายการต่อไปนี้หรือไม่?
-% 1</translation>
+%1</translation>
     </message>
     <message>
         <location filename="../src/ui/main/support/lc_appwindowdialogsinvoker.cpp" line="185"/>
@@ -4998,7 +4998,7 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/components/creators/lc_creatorinvoker.cpp" line="83"/>
         <location filename="../src/ui/components/creators/lc_creatorinvoker.cpp" line="115"/>
         <source>Toolbar: %1 (Custom)</source>
-        <translation>แถบเครื่องมือ:% 1 (Custom)</translation>
+        <translation>แถบเครื่องมือ:%1 (Custom)</translation>
     </message>
 </context>
 <context>
@@ -5345,7 +5345,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="186"/>
         <source>LibreCAD dimension styles file (*.%1)</source>
-        <translation>แฟ้มรูปแบบ libreCAD (*.% 1)</translation>
+        <translation>แฟ้มรูปแบบ libreCAD (*.%1)</translation>
     </message>
 </context>
 <context>
@@ -5394,17 +5394,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="76"/>
         <source>Version: &lt;b&gt;%1&lt;/b&gt;</source>
-        <translation>รุ่น: &lt;b&gt;% 1</translation>
+        <translation>รุ่น: &lt;b&gt;%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="78"/>
         <source>Compiler: Clang %1.%2.%3</source>
-        <translation>คอมไพล์: CLang% 1% 2% 3</translation>
+        <translation>คอมไพล์: CLang%1%2%3</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="80"/>
         <source>Compiler: GNU GCC %1.%2.%3</source>
-        <translation>ผู้คอมไพล์: GNUCT GC% 1% 2% 3</translation>
+        <translation>ผู้คอมไพล์: GNUCT GC%1%2%3</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="82"/>
@@ -5414,12 +5414,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="84"/>
         <source>Compiled on: %1</source>
-        <translation>ถูกคอมไพล์เมื่อ:% 1</translation>
+        <translation>ถูกคอมไพล์เมื่อ:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="85"/>
         <source>Qt Version: %1</source>
-        <translation>รุ่นของ Qt:% 1</translation>
+        <translation>รุ่นของ Qt:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.cpp" line="86"/>
@@ -7532,7 +7532,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="102"/>
         <source>Menu Assignment - &quot;%1&quot; Menu</source>
-        <translation>การกําหนดเมนู - เมนู &quot;% 1&quot;</translation>
+        <translation>การกําหนดเมนู - เมนู &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="106"/>
@@ -7677,7 +7677,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="250"/>
         <source>NOTE: This shortcut is already assigned to &quot;%1&quot; menu and that menu will be unassigned on save!</source>
-        <translation>หมายเหตุ: ปุ่มพิมพ์ลัดนี้ถูกกําหนดให้เป็นเมนู &quot;% 1&quot; อยู่แล้ว และเมนูนี้จะยังไม่ถูกเซ็นเมื่อทําการบันทึก!</translation>
+        <translation>หมายเหตุ: ปุ่มพิมพ์ลัดนี้ถูกกําหนดให้เป็นเมนู &quot;%1&quot; อยู่แล้ว และเมนูนี้จะยังไม่ถูกเซ็นเมื่อทําการบันทึก!</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="254"/>
@@ -7971,7 +7971,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.cpp" line="145"/>
         <source>Provided name of dimension style (%1) is not unique! Please enter another one.</source>
-        <translation>ชื่อของรูปแบบมิติ (% 1) ไม่ซ้ํากัน! กรุณาใส่อีกอัน.</translation>
+        <translation>ชื่อของรูปแบบมิติ (%1) ไม่ซ้ํากัน! กรุณาใส่อีกอัน.</translation>
     </message>
 </context>
 <context>
@@ -8771,7 +8771,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="203"/>
         <source>Are you sure you&apos;d like to unassign &quot;%1&quot; menu? Note: Just an invocation shortcut will be removed and menu will not be deleted.</source>
-        <translation>คุณแน่ใจหรือว่าต้องการจะยกเลิกเมนู &quot;% 1&quot;? ข้อควรจํา: จะทําการลบปุ่มพิมพ์ลัดการวิงวอนออกไป และเมนูจะไม่ถูกลบ.</translation>
+        <translation>คุณแน่ใจหรือว่าต้องการจะยกเลิกเมนู &quot;%1&quot;? ข้อควรจํา: จะทําการลบปุ่มพิมพ์ลัดการวิงวอนออกไป และเมนูจะไม่ถูกลบ.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="216"/>
@@ -8794,12 +8794,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="430"/>
         <source>Remove %1</source>
-        <translation>เอา% 1 ออก</translation>
+        <translation>เอา%1 ออก</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgwidgetcreator.cpp" line="431"/>
         <source>Are you sure you&apos;d like to remove  %2&quot;%1&quot;?</source>
-        <translation>คุณแน่ใจหรือว่าต้องการจะลบ% 2% 1?</translation>
+        <translation>คุณแน่ใจหรือว่าต้องการจะลบ%2%1?</translation>
     </message>
 </context>
 <context>
@@ -9206,7 +9206,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/file/export/image/lc_exporttoimageservice.cpp" line="62"/>
         <source>Exported: %1</source>
-        <translation>ส่งออก:% 1</translation>
+        <translation>ส่งออก:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/image/lc_exporttoimageservice.cpp" line="65"/>
@@ -10050,7 +10050,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="77"/>
         <source>Layer Level Name Separator</source>
-        <translation>เลเยอร์% 1</translation>
+        <translation>เลเยอร์%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="97"/>
@@ -10315,7 +10315,7 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="189"/>
         <source>Invalid value provide for %1 color.
 Please specify a different value.</source>
-        <translation>ค่าที่ไม่พอสําหรับ% 1 สี
+        <translation>ค่าที่ไม่พอสําหรับ%1 สี
 โปรดระบุค่าอื่น.</translation>
     </message>
     <message>
@@ -12467,7 +12467,7 @@ Please specify a different value.</source>
  &quot;%1&quot;?
  Warning: this action can NOT be undone!</source>
         <translation>คุณแน่ใจหรือไม่ที่จะลบมุมมอง
-&quot;% 1&quot;?
+&quot;%1&quot;?
 คําเตือน: การกระทํานี้ไม่สามารถยกเลิกได้!</translation>
     </message>
     <message>
@@ -12479,7 +12479,7 @@ Please specify a different value.</source>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="302"/>
         <source>Are you sure to delete views %1?
 Warning: this action can NOT be undone!</source>
-        <translation>คุณแน่ใจหรือว่า ต้องการลบมุมมอง% 1?
+        <translation>คุณแน่ใจหรือว่า ต้องการลบมุมมอง%1?
 คําเตือน: การกระทํานี้ไม่สามารถยกเลิกได้!</translation>
     </message>
     <message>
@@ -15880,7 +15880,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="45"/>
         <source>LibreCAD settings file (*.%1)</source>
-        <translation>แฟ้มการตั้งค่า LibreCAAD (*.% 1)</translation>
+        <translation>แฟ้มการตั้งค่า LibreCAAD (*.%1)</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="91"/>
@@ -16732,7 +16732,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="67"/>
         <source>Toolbar: %1</source>
-        <translation>แถบเครื่องมือ:% 1</translation>
+        <translation>แถบเครื่องมือ:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="73"/>
@@ -17089,7 +17089,7 @@ p, li {white- space: pre- wrap;}
  &quot;%1&quot;?
  Warning: this action can NOT be undone!</source>
         <translation>คุณแน่ใจหรือไม่ที่จะลบ UCS
-&quot;% 1&quot;?
+&quot;%1&quot;?
 คําเตือน: การกระทํานี้ไม่สามารถยกเลิกได้!</translation>
     </message>
     <message>
@@ -17101,7 +17101,7 @@ p, li {white- space: pre- wrap;}
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="378"/>
         <source>Are you sure to delete UCS %1?
 Warning: this action can NOT be undone!</source>
-        <translation>คุณแน่ใจหรือไม่ที่จะลบ UCSS% 1?
+        <translation>คุณแน่ใจหรือไม่ที่จะลบ UCSS%1?
 คําเตือน: การกระทํานี้ไม่สามารถยกเลิกได้!</translation>
     </message>
     <message>
@@ -17399,7 +17399,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="429"/>
         <source>Toolbar: %1</source>
-        <translation>แถบเครื่องมือ:% 1</translation>
+        <translation>แถบเครื่องมือ:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="446"/>
@@ -18020,12 +18020,12 @@ Please check its existence and permissions.</source>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="365"/>
         <source>&amp;Save %1</source>
-        <translation>บันทึก% 1</translation>
+        <translation>บันทึก%1</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="366"/>
         <source>Save %1 &amp;as...</source>
-        <translation>บันทึก% 1 เป็น...</translation>
+        <translation>บันทึก%1 เป็น...</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1084"/>
@@ -18099,7 +18099,7 @@ Please check its existence and permissions.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_blockdialog.cpp" line="77"/>
         <source>Could not name block. A block named &quot;%1&quot; already exists.</source>
-        <translation>ไม่สามารถเปลี่ยนชื่อบล็อกได้ มีบล็อกที่ชื่อ &quot;% 1&quot; อยู่แล้ว.</translation>
+        <translation>ไม่สามารถเปลี่ยนชื่อบล็อกได้ มีบล็อกที่ชื่อ &quot;%1&quot; อยู่แล้ว.</translation>
     </message>
 </context>
 <context>
@@ -18319,7 +18319,7 @@ Please check its existence and permissions.</source>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="249"/>
         <source>Command Alias File: %1</source>
-        <translation>แฟ้มคําสั่ง Alias:% 1</translation>
+        <translation>แฟ้มคําสั่ง Alias:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="339"/>
@@ -20379,7 +20379,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="400"/>
         <source>Are you sure you&apos;d like to delete property [%1]?</source>
-        <translation>คุณแน่ใจหรือว่าต้องการจะลบคุณสมบัติ [% 1]?</translation>
+        <translation>คุณแน่ใจหรือว่าต้องการจะลบคุณสมบัติ [%1]?</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="422"/>
@@ -20446,7 +20446,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="642"/>
         <source>Enter new unique name of dimension style (was &quot;%1&quot;):</source>
-        <translation>ป้อนชื่อใหม่ของรูปแบบมิติ (เป็น &quot;% 1&quot;):</translation>
+        <translation>ป้อนชื่อใหม่ของรูปแบบมิติ (เป็น &quot;%1&quot;):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="662"/>
@@ -20469,12 +20469,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="684"/>
         <source>Are you sure you want to remove the dimension style &quot;%1&quot; together with child styles?</source>
-        <translation>คุณแน่ใจหรือว่าต้องการจะลบรูปแบบมิติ &quot;% 1&quot; ร่วมกับรูปแบบเด็ก?</translation>
+        <translation>คุณแน่ใจหรือว่าต้องการจะลบรูปแบบมิติ &quot;%1&quot; ร่วมกับรูปแบบเด็ก?</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="692"/>
         <source>Are you sure you want to remove the dimension style &quot;%1&quot;?</source>
-        <translation>คุณแน่ใจหรือว่าต้องการจะลบรูปแบบมิติ &quot;% 1&quot; นี้?</translation>
+        <translation>คุณแน่ใจหรือว่าต้องการจะลบรูปแบบมิติ &quot;%1&quot; นี้?</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="929"/>
@@ -25130,52 +25130,52 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="124"/>
         <source>Drawing Exchange DXF 2000 %1</source>
-        <translation>วาดแลกเปลี่ยน DXF 2000% 1</translation>
+        <translation>วาดแลกเปลี่ยน DXF 2000%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="126"/>
         <source>Drawing Exchange DXF R12 %1</source>
-        <translation>วาดแลกเปลี่ยน DXF R12% 1</translation>
+        <translation>วาดแลกเปลี่ยน DXF R12%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="129"/>
         <source>LFF Font %1</source>
-        <translation>แบบอักษร LF% 1</translation>
+        <translation>แบบอักษร LF%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="133"/>
         <source>QCad Font %1</source>
-        <translation>แบบอักษร QCad% 1</translation>
+        <translation>แบบอักษร QCad%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="134"/>
         <source>Jww Drawing %1</source>
-        <translation>วาดภาพ Jww% 1</translation>
+        <translation>วาดภาพ Jww%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="127"/>
         <source>Drawing Exchange %1</source>
-        <translation>แลกเปลี่ยน% 1</translation>
+        <translation>แลกเปลี่ยน%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="135"/>
         <source>QCad 1.x file %1</source>
-        <translation>แฟ้ม% 1 QCad</translation>
+        <translation>แฟ้ม%1 QCad</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="122"/>
         <source>Drawing Exchange DXF 2007 %1</source>
-        <translation>วาดแลกเปลี่ยน DXF 2007% 1</translation>
+        <translation>วาดแลกเปลี่ยน DXF 2007%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="123"/>
         <source>Drawing Exchange DXF 2004 %1</source>
-        <translation>วาดแลกเปลี่ยน DXF 2004% 1</translation>
+        <translation>วาดแลกเปลี่ยน DXF 2004%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="125"/>
         <source>Drawing Exchange DXF R14 %1</source>
-        <translation>วาดแลกเปลี่ยน DXF R14% 1</translation>
+        <translation>วาดแลกเปลี่ยน DXF R14%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="138"/>
@@ -25192,17 +25192,17 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="163"/>
         <source>Open %1</source>
-        <translation>เปิด% 1</translation>
+        <translation>เปิด%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="253"/>
         <source>Save %1 As</source>
-        <translation>บันทึก% 1 เป็น</translation>
+        <translation>บันทึก%1 เป็น</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="131"/>
         <source>dwg Drawing %1</source>
-        <translation>วาดโดย dwg% 1</translation>
+        <translation>วาดโดย dwg%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="235"/>
@@ -25593,7 +25593,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/main/support/qg_recentfiles.cpp" line="177"/>
         <source>&amp;%1 %2</source>
-        <translation>&amp;% 1% 2</translation>
+        <translation>&amp;%1%2</translation>
     </message>
 </context>
 <context>
@@ -25629,7 +25629,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="171"/>
         <source>Relative zero position is %1</source>
-        <translation>ตําแหน่งศูนย์สัมพัทธ์คือ% 1</translation>
+        <translation>ตําแหน่งศูนย์สัมพัทธ์คือ%1</translation>
     </message>
     <message>
         <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="171"/>
@@ -25644,7 +25644,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="176"/>
         <source>Coordinate system: %1</source>
-        <translation>ระบบพิกัด:% 1</translation>
+        <translation>ระบบพิกัด:%1</translation>
     </message>
     <message>
         <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="176"/>
@@ -25790,7 +25790,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="203"/>
         <source>Layer &quot;%1&quot; can never be removed.</source>
-        <translation>ไม่สามารถลบเลเยอร์% 1 ได้.</translation>
+        <translation>ไม่สามารถลบเลเยอร์%1 ได้.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="343"/>
@@ -25805,7 +25805,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="456"/>
         <source>Block &quot;%1&quot; and all its entities will be removed.</source>
-        <translation>บล็อค &quot;% 1&quot; และทุกโฟลเดอร์จะถูกลบออกไป.</translation>
+        <translation>บล็อค &quot;%1&quot; และทุกโฟลเดอร์จะถูกลบออกไป.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.cpp" line="83"/>
@@ -25817,13 +25817,13 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.cpp" line="84"/>
         <source>Layer with a name &quot;%1&quot; already exists. Please specify a different name.</source>
-        <translation>มีเลเยอร์ที่ชื่อ &quot;% 1&quot; อยู่แล้ว โปรดระบุชื่ออื่น.</translation>
+        <translation>มีเลเยอร์ที่ชื่อ &quot;%1&quot; อยู่แล้ว โปรดระบุชื่ออื่น.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="191"/>
         <source>Layer &quot;%1&quot; and all entities on it will be removed.
 This action can NOT be undone.</source>
-        <translation>เลเยอร์ &quot;% 1&quot; และทุกหน่วยงานบนมันจะถูกลบออกไป
+        <translation>เลเยอร์ &quot;%1&quot; และทุกหน่วยงานบนมันจะถูกลบออกไป
 การกระทํานี้ไม่สามารถยกเลิกได้.</translation>
     </message>
     <message>
@@ -25891,7 +25891,7 @@ This action can NOT be undone.</source>
 [%1].
 Please specify a different name.</source>
         <translation>การพยายามสร้างเลเยอร์ด้วยชื่อ dockling ชื่อเลเยอร์ซ้ํากัน
-[% 1].
+[%1].
 โปรดระบุชื่ออื่น.</translation>
     </message>
     <message>
@@ -25944,7 +25944,7 @@ Clear filtering mask and repeat.</source>
 [%1].
 Please specify a different name.</source>
         <translation>ชั้นของเด็กดังกล่าวมีอยู่แล้วสําหรับ
-[% 1].
+[%1].
 โปรดระบุชื่ออื่น.</translation>
     </message>
     <message>
@@ -25953,7 +25953,7 @@ Please specify a different name.</source>
 [%1].
 </source>
         <translation>ชั้นของเด็กดังกล่าวมีอยู่แล้วสําหรับ
-[% 1].</translation>
+[%1].</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1165"/>
@@ -25998,7 +25998,7 @@ If No - &quot;By Layer&quot; values remains and so pen of target layer will defi
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.cpp" line="218"/>
         <source>Invalid value provided for %1 color.
 Please specify a different value.</source>
-        <translation>ค่าที่ตั้งค่าไม่ได้สําหรับ% 1
+        <translation>ค่าที่ตั้งค่าไม่ได้สําหรับ%1
 โปรดระบุค่าอื่น.</translation>
     </message>
     <message>
@@ -26097,7 +26097,7 @@ Please specify a different value.</source>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="391"/>
         <source>%1 already exists.
 Do you want to replace it?</source>
-        <translation>มี% 1 อยู่แล้ว
+        <translation>มี%1 อยู่แล้ว
 คุณต้องการแทนที่มันหรือไม่?</translation>
     </message>
     <message>
@@ -26163,17 +26163,17 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="452"/>
         <source>Drawing Exchange %1</source>
-        <translation>แลกเปลี่ยน% 1</translation>
+        <translation>แลกเปลี่ยน%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="457"/>
         <source>QCad 1.x file %1</source>
-        <translation>แฟ้ม% 1 QCad</translation>
+        <translation>แฟ้ม%1 QCad</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="459"/>
         <source>Font %1</source>
-        <translation>แบบอักษร% 1</translation>
+        <translation>แบบอักษร%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="576"/>
@@ -26188,7 +26188,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/main/support/lc_lastopenfilesopener.cpp" line="62"/>
         <source>Loading File %1..</source>
-        <translation>กําลังโหลดแฟ้ม% 1.</translation>
+        <translation>กําลังโหลดแฟ้ม%1.</translation>
     </message>
     <message>
         <location filename="../src/main/main.cpp" line="425"/>
@@ -26236,12 +26236,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="458"/>
         <source>LFF Font %1</source>
-        <translation>แบบอักษร LF% 1</translation>
+        <translation>แบบอักษร LF%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="460"/>
         <source>Jww %1</source>
-        <translation>Jww% 1</translation>
+        <translation>Jww%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="936"/>
@@ -26306,22 +26306,22 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="451"/>
         <source>Old Drawing Exchange %1</source>
-        <translation>แลกเปลี่ยนภาพเก่า% 1</translation>
+        <translation>แลกเปลี่ยนภาพเก่า%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="455"/>
         <source>dwg Drawing %1</source>
-        <translation>วาดโดย dwg% 1</translation>
+        <translation>วาดโดย dwg%1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="574"/>
         <source>All Image Files (%1)</source>
-        <translation>แฟ้มรูปภาพทั้งหมด (% 1)</translation>
+        <translation>แฟ้มรูปภาพทั้งหมด (%1)</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="68"/>
         <source>: duplicated command: %1 is already taken by %2</source>
-        <translation>&apos;: คําสั่งที่ซ้ํากัน:% 1 มีการใช้โดย% 2 อยู่แล้ว</translation>
+        <translation>&apos;: คําสั่งที่ซ้ํากัน:%1 มีการใช้โดย%2 อยู่แล้ว</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="884"/>
@@ -26393,7 +26393,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="456"/>
         <source>spline2</source>
         <comment>spline through points</comment>
-        <translation>อยู่เหนือ% 1 ตัวปัจจุบัน</translation>
+        <translation>อยู่เหนือ%1 ตัวปัจจุบัน</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="458"/>
@@ -27414,37 +27414,37 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="261"/>
         <location filename="../src/cmd/rs_commands.cpp" line="316"/>
         <source>cannot change meaning of commands. Refused to reuse command %1 to mean %2</source>
-        <translation>ไม่สามารถเปลี่ยนความหมายของคําสั่งได้ ปฏิเสธไม่ให้ใช้คําสั่ง% 1 ซ้ํา เพื่อหมายถึง% 2</translation>
+        <translation>ไม่สามารถเปลี่ยนความหมายของคําสั่งได้ ปฏิเสธไม่ให้ใช้คําสั่ง%1 ซ้ํา เพื่อหมายถึง%2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="300"/>
         <source>requesting alias(%1) for unknown command(%2): ignored</source>
-        <translation>ต้องการชื่อแฟ้ม (% 1) สําหรับคําสั่งที่ไม่รู้จัก (% 2): ไม่สนใจ</translation>
+        <translation>ต้องการชื่อแฟ้ม (%1) สําหรับคําสั่งที่ไม่รู้จัก (%2): ไม่สนใจ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="310"/>
         <source>reusing an existing alias: was %1=%2, changed to %1=%3</source>
-        <translation>การใช้นามแฝงที่มีอยู่แล้ว: คือ% 1=% 2, เปลี่ยนเป็น% 1=% 3</translation>
+        <translation>การใช้นามแฝงที่มีอยู่แล้ว: คือ%1=%2, เปลี่ยนเป็น%1=%3</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="391"/>
         <source>RS_Commands:: command not found: %1</source>
-        <translation>RSS คําสั่ง: ไม่พบคําสั่ง:% 1</translation>
+        <translation>RSS คําสั่ง: ไม่พบคําสั่ง:%1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="416"/>
         <source>keycode: %1 (%2)</source>
-        <translation>รหัสกุญแจ:% 1 (% 2)</translation>
+        <translation>รหัสกุญแจ:%1 (%2)</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="418"/>
         <source>invalid keycode: %1</source>
-        <translation>รหัสกุญแจไม่ถูกต้อง:% 1</translation>
+        <translation>รหัสกุญแจไม่ถูกต้อง:%1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="433"/>
         <source>Command not found: %1</source>
-        <translation>ไม่พบคําสั่ง:% 1</translation>
+        <translation>ไม่พบคําสั่ง:%1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="472"/>
@@ -27559,7 +27559,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/actions/dock_widgets/layer/lc_actionlayersexport.cpp" line="77"/>
         <source>No %1 layers found</source>
-        <translation>ไม่พบ% 1 ชั้น</translation>
+        <translation>ไม่พบ%1 ชั้น</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="92"/>
@@ -29379,12 +29379,12 @@ Do you want to replace it?</source>
         <location filename="../src/ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp" line="180"/>
         <location filename="../src/ui/dialogs/file/export/layers/lc_filedialogservice.cpp" line="219"/>
         <source>File &quot;%1&quot; already exists. Do you want to replace it?</source>
-        <translation>มีแฟ้ม &quot;% 1&quot; อยู่แล้ว คุณต้องการแทนที่มันหรือไม่?</translation>
+        <translation>มีแฟ้ม &quot;%1&quot; อยู่แล้ว คุณต้องการแทนที่มันหรือไม่?</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="38"/>
         <source>/CustomColor%1</source>
-        <translation>ตัวกรอง% 1</translation>
+        <translation>ตัวกรอง%1</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="39"/>
@@ -29448,7 +29448,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/engine/document/container/rs_entitycontainer.cpp" line="1687"/>
         <source>Hatch failed due to a gap=%1 between (%2, %3) and (%4, %5)</source>
-        <translation>แฮทเชอร์ล้มเหลว เนื่องจากช่องว่าง =% 1 ระหว่าง (% 2,% 3) และ (% 4,% 5)</translation>
+        <translation>แฮทเชอร์ล้มเหลว เนื่องจากช่องว่าง =%1 ระหว่าง (%2,%3) และ (%4,%5)</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/patterns/rs_patternlist.cpp" line="66"/>
@@ -29458,12 +29458,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/engine/document/patterns/rs_patternlist.cpp" line="93"/>
         <source>Hatch:: loading pattern failed: %1</source>
-        <translation>แฮทเชอร์: การโหลดรูปแบบ:% 1 ล้มเหลว</translation>
+        <translation>แฮทเชอร์: การโหลดรูปแบบ:%1 ล้มเหลว</translation>
     </message>
     <message>
         <location filename="../src/ui/main/persistence/lc_documentsstorage.cpp" line="197"/>
         <source>File on disk modified. Please save to another file to avoid data loss! File modified: %1</source>
-        <translation>แฟ้มบนดิสก์ถูกแก้ไขแล้ว โปรดบันทึกไปยังแฟ้มอื่นเพื่อหลีกเลี่ยงการสูญเสียข้อมูล! แก้ไขแฟ้ม:% 1</translation>
+        <translation>แฟ้มบนดิสก์ถูกแก้ไขแล้ว โปรดบันทึกไปยังแฟ้มอื่นเพื่อหลีกเลี่ยงการสูญเสียข้อมูล! แก้ไขแฟ้ม:%1</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="204"/>
@@ -30200,7 +30200,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/engine/document/rs_graphic.cpp" line="741"/>
         <source>Invalid printing scale %1. Cannot fit print preview to page</source>
-        <translation>ระดับการพิมพ์% 1 ไม่ถูกต้อง ไม่สามารถพิมพ์ภาพตัวอย่างไปยังหน้าได้</translation>
+        <translation>ระดับการพิมพ์%1 ไม่ถูกต้อง ไม่สามารถพิมพ์ภาพตัวอย่างไปยังหน้าได้</translation>
     </message>
     <message>
         <location filename="../src/lib/printing/lc_printing.cpp" line="160"/>
@@ -30916,17 +30916,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="146"/>
         <source>radius=%1 is invalid (expression)</source>
-        <translation>รัศมี =% 1 ไม่ถูกต้อง (การคลายแฟ้ม)</translation>
+        <translation>รัศมี =%1 ไม่ถูกต้อง (การคลายแฟ้ม)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="148"/>
         <source>radius=%1 is invalid (negative)</source>
-        <translation>รัศมี =% 1 ไม่ถูกต้อง (ลบ)</translation>
+        <translation>รัศมี =%1 ไม่ถูกต้อง (ลบ)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcirclecr.cpp" line="151"/>
         <source>radius=%1 is invalid (zero)</source>
-        <translation>รัศมี =% 1 ไม่ถูกต้อง (ศูนย์)</translation>
+        <translation>รัศมี =%1 ไม่ถูกต้อง (ศูนย์)</translation>
     </message>
 </context>
 <context>
@@ -30990,7 +30990,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/circle/rs_actiondrawcircletan2.cpp" line="246"/>
         <source>No common tangential circle for radius &apos;%1&apos;</source>
-        <translation>ไม่มีวงกลมสัมผัสทั่วไปสําหรับรัศมี &apos;% 1&apos;</translation>
+        <translation>ไม่มีวงกลมสัมผัสทั่วไปสําหรับรัศมี &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
@@ -31160,7 +31160,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="178"/>
         <source>Total distance %1 is smaller than distance between foci</source>
-        <translation>ระยะทางทั้งหมด% 1 น้อยกว่าระยะห่างระหว่างจุดโฟกัส</translation>
+        <translation>ระยะทางทั้งหมด%1 น้อยกว่าระยะห่างระหว่างจุดโฟกัส</translation>
     </message>
 </context>
 <context>
@@ -31231,7 +31231,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="177"/>
         <source>Total hatch area = %1</source>
-        <translation>พื้นที่ฟักทั้งหมด =% 1</translation>
+        <translation>พื้นที่ฟักทั้งหมด =%1</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="203"/>
@@ -31284,7 +31284,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawline.cpp" line="274"/>
         <source>Specify next point or [%1]</source>
-        <translation>ระบุจุดต่อไป [% 1]</translation>
+        <translation>ระบุจุดต่อไป [%1]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawline.cpp" line="276"/>
@@ -31426,7 +31426,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallel.cpp" line="135"/>
         <source>Specify Distance &lt;%1&gt; or select entity or [%2]</source>
-        <translation>ระบุระยะห่าง &lt;% 1 &gt; หรือเลือกรายการหรือ [% 2]</translation>
+        <translation>ระบุระยะห่าง &lt;%1 &gt; หรือเลือกรายการหรือ [%2]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineparallel.cpp" line="138"/>
@@ -31639,7 +31639,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="756"/>
         <source>Specify next point or [%1]</source>
-        <translation>ระบุจุดต่อไป [% 1]</translation>
+        <translation>ระบุจุดต่อไป [%1]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/rs_actiondrawpolyline.cpp" line="758"/>
@@ -31709,7 +31709,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/spline/rs_actiondrawspline.cpp" line="227"/>
         <source>Specify next control point or [%1]</source>
-        <translation>ระบุจุดควบคุมถัดไป [% 1]</translation>
+        <translation>ระบุจุดควบคุมถัดไป [%1]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/rs_actiondrawspline.cpp" line="229"/>
@@ -31834,10 +31834,10 @@ Complementary: %2
 Supplementary: %3
 Alternative: %4
 </source>
-        <translation>มุม:% 1
-คอมพลีเมนต์:% 2
-ความอิ่มตัว:% 3
-ตัวเลือก:% 4</translation>
+        <translation>มุม:%1
+คอมพลีเมนต์:%2
+ความอิ่มตัว:%3
+ตัวเลือก:%4</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="140"/>
@@ -31847,12 +31847,12 @@ Supplementary: %3
 Alternative: %4
 Intersection: (%5 , %6)
 Intersection :@(%7, %8)</source>
-        <translation>มุม:% 1
-คอมพลีเมนต์:% 2
-ความอิ่มตัว:% 3
-ตัวเลือก:% 4
-อินเตอร์เซก: (% 5, % 6)
-อินเตอร์เซก: @(% 7, % 8)</translation>
+        <translation>มุม:%1
+คอมพลีเมนต์:%2
+ความอิ่มตัว:%3
+ตัวเลือก:%4
+อินเตอร์เซก: (%5, %6)
+อินเตอร์เซก: @(%7, %8)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="147"/>
@@ -31952,17 +31952,17 @@ Intersection :@(%7, %8)</source>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="99"/>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="107"/>
         <source>Circumference: %1</source>
-        <translation>การประมวลผล:% 1</translation>
+        <translation>การประมวลผล:%1</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="153"/>
         <source>Closing Point: %1</source>
-        <translation>จุดปิด:% 1</translation>
+        <translation>จุดปิด:%1</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="160"/>
         <source>Point: %1</source>
-        <translation>จุด:% 1</translation>
+        <translation>จุด:%1</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="178"/>
@@ -31983,7 +31983,7 @@ Intersection :@(%7, %8)</source>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="101"/>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="108"/>
         <source>Area: %1 %2^2</source>
-        <translation>พื้นที่:% 1% 2^2</translation>
+        <translation>พื้นที่:%1%2^2</translation>
     </message>
 </context>
 <context>
@@ -31995,11 +31995,11 @@ Cartesian: (%2 , %3)
 Polar: (%4 &lt; %5)
 Start: (%6 , %7)
 End: (%8 , %9)</source>
-        <translation>ระยะห่าง:% 1
-Cartesian: (% 2)% 3
-โพลา: (% 4 &lt;% 5)
-เริ่ม: (% 6, % 7)
-จบ: (% 8, % 9)</translation>
+        <translation>ระยะห่าง:%1
+Cartesian: (%2)%3
+โพลา: (%4 &lt;%5)
+เริ่ม: (%6, %7)
+จบ: (%8, %9)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="98"/>
@@ -32051,11 +32051,11 @@ Cartesian: (%2 , %3)
 Polar: (%4 &lt; %5)
 Point On Entity: (%6 , %7)
 Point: (%8 , %9)</source>
-        <translation>ระยะห่าง:% 1
-Cartesian: (% 2)% 3
-โพลา: (% 4 &lt;% 5)
-จุดบนความจุ: (% 6, % 7)
-จุด: (% 8, % 9)</translation>
+        <translation>ระยะห่าง:%1
+Cartesian: (%2)%3
+โพลา: (%4 &lt;%5)
+จุดบนความจุ: (%6, %7)
+จุด: (%8, %9)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist2.cpp" line="275"/>
@@ -32127,7 +32127,7 @@ Cartesian: (% 2)% 3
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="51"/>
         <source>Total Length of selected entities: %1</source>
-        <translation>ความยาวรวมขององค์กรที่เลือก:% 1</translation>
+        <translation>ความยาวรวมขององค์กรที่เลือก:%1</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="53"/>
@@ -32209,7 +32209,7 @@ Cartesian: (% 2)% 3
     <message>
         <location filename="../src/actions/dock_widgets/library/rs_actionlibraryinsert.cpp" line="64"/>
         <source>Cannot open file &apos;%1&apos;</source>
-        <translation>ไม่สามารถเปิดแฟ้ม &apos;% 1&apos; ได้</translation>
+        <translation>ไม่สามารถเปิดแฟ้ม &apos;%1&apos; ได้</translation>
     </message>
 </context>
 <context>
@@ -32860,7 +32860,7 @@ Cartesian: (% 2)% 3
     <message>
         <location filename="../src/actions/drawing/modify/rs_actionmodifyround.cpp" line="421"/>
         <source>Specify first entity or enter radius &lt;%1&gt;</source>
-        <translation>ระบุรายการแรกหรือป้อนรัศมี &lt;% 1 &gt;</translation>
+        <translation>ระบุรายการแรกหรือป้อนรัศมี &lt;%1 &gt;</translation>
     </message>
 </context>
 <context>
@@ -33338,12 +33338,12 @@ Cartesian: (% 2)% 3
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="160"/>
         <source>Printout offset in paper coordinates by (%1, %2)</source>
-        <translation>ปรับค่าการพิมพ์ในพิกัดกระดาษ โดย (% 1,% 2)</translation>
+        <translation>ปรับค่าการพิมพ์ในพิกัดกระดาษ โดย (%1,%2)</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="163"/>
         <source>Printout offset in graph coordinates by (%1, %2)</source>
-        <translation>ปรับค่าการพิมพ์ในพิกัดกราฟโดย (% 1,% 2)</translation>
+        <translation>ปรับค่าการพิมพ์ในพิกัดกราฟโดย (%1,%2)</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="185"/>
@@ -33550,7 +33550,7 @@ Cartesian: (% 2)% 3
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiontoolregeneratedimensions.cpp" line="63"/>
         <source>Regenerated %1 dimension entities</source>
-        <translation>สร้างส่วน% 1 ใหม่</translation>
+        <translation>สร้างส่วน%1 ใหม่</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiontoolregeneratedimensions.cpp" line="66"/>

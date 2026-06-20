@@ -568,6 +568,7 @@ public:
         std::uint32_t parentHandle = 0;
         std::uint32_t shapeFileHandle = 0;
         std::uint16_t shapeIndex = 0;
+        std::string styleName;  // SHAPEFILE/STYLE record name (DXF code 2)
         DRW_Coord insertionPoint;
         DRW_Coord extrusion;
         double scale = 1.0;
@@ -597,6 +598,10 @@ public:
         bool previewFrameAvailable = false;
         bool previewFrameInvalidated = false;
         ReplayState replayState = ReplayState::ReplayAllowed;
+        std::uint16_t oleVersion = 2;            // DXF 70
+        DRW_Coord pt1;                           // DXF 10/20/30 upper-left
+        DRW_Coord pt2;                           // DXF 11/21/31 lower-right
+        std::vector<std::uint8_t> payloadBytes;  // opaque OLE payload (DXF 310)
     };
 
     struct ShapeOleWriterBlockerCounts {
@@ -2725,6 +2730,7 @@ public:
         record.parentHandle = shape.parentHandle;
         record.shapeFileHandle = shape.m_shapeFileHandle;
         record.shapeIndex = shape.m_shapeIndex;
+        record.styleName = shape.m_styleName;
         record.insertionPoint = shape.m_insertionPoint;
         record.extrusion = shape.m_extrusion;
         record.scale = shape.m_scale;
@@ -2754,6 +2760,10 @@ public:
         record.hasR2000TrailingByte = ole2Frame.m_hasR2000TrailingByte;
         record.r2000TrailingByte = ole2Frame.m_r2000TrailingByte;
         record.rawByteCount = ole2Frame.m_rawBytes.size();
+        record.oleVersion = ole2Frame.m_oleVersion;
+        record.pt1 = ole2Frame.m_pt1;
+        record.pt2 = ole2Frame.m_pt2;
+        record.payloadBytes = ole2Frame.m_payloadBytes;
         m_ole2Frames.push_back(record);
     }
 

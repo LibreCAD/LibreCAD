@@ -3555,6 +3555,226 @@ bool DRW_SortEntsTable::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint
     return true;
 }
 
+bool DRW_Section::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
+    // SECTION_MANAGER / SECTION_SETTINGS DXF.  Body code 330 reuses the owner
+    // handle code, so the "100 AcDbSection*" marker gates the body.  Code map
+    // per dwgTs parseObjectsSectionFamilyDxf.ts.
+    if (code == 100) { m_dxfInBody = true; return true; }
+    if (!m_dxfInBody)
+        return DRW_TableEntry::parseCode(code, reader);
+    if (m_kind == Manager) {
+        switch (code) {
+        case 70:  m_isLive = (reader->getInt32() != 0); return true;
+        case 90:  m_sectionCount = reader->getInt32(); return true;
+        case 330: {
+            const std::uint32_t h = reader->getHandleString();
+            if (h != 0) m_sectionHandles.push_back(h);
+            return true;
+        }
+        default: break;
+        }
+    } else { // Settings
+        switch (code) {
+        case 90:
+        case 91: {
+            m_settingsInts.push_back(reader->getInt32());
+            const std::size_t n = m_settingsInts.size();
+            if (n == 1) m_classVersion = m_settingsInts[0];
+            else if (n == 2) m_sectionType = m_settingsInts[1];
+            else if (n == 3) m_generationOptions = m_settingsInts[2];
+            return true;
+        }
+        case 331: m_destinationBlockHandle = reader->getHandleString(); return true;
+        default: break;
+        }
+    }
+    return DRW_TableEntry::parseCode(code, reader);
+}
+
+bool DRW_RenderSettings::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
+    // Positional record: accumulate per-code value vectors (the named meaning is
+    // by order, resolved per-kind in finalize()).  Code map per dwgTs
+    // parseObjectsRenderDxf.ts.
+    switch (code) {
+    case 90:
+        m_longs.push_back(reader->getInt32());
+        if (m_longs.size() == 1) m_classVersion = m_longs.front();
+        break;
+    case 1:
+        m_strings.push_back(reader->getUtf8String());
+        if (m_strings.size() == 1) m_name = m_strings.front();
+        break;
+    case 290: m_bools.push_back(reader->getInt32() != 0); break;
+    case 70:  m_shorts.push_back(reader->getInt32()); break;
+    case 280: m_bytes.push_back(reader->getInt32()); break;
+    case 40:  m_doubles.push_back(reader->getDouble()); break;
+    default:
+        return DRW_TableEntry::parseCode(code, reader);
+    }
+    return true;
+}
+
+void DRW_RenderSettings::finalize(){
+    const auto lng = [&](std::size_t i, std::int32_t d){
+        return i < m_longs.size() ? m_longs[i] : d; };
+    const auto bl  = [&](std::size_t i){ return i < m_bools.size() ? m_bools[i] : false; };
+    const auto byt = [&](std::size_t i){ return i < m_bytes.size() ? m_bytes[i] : 0; };
+    const auto dbl = [&](std::size_t i){ return i < m_doubles.size() ? m_doubles[i] : 0.0; };
+    if (m_kind == Environment) {
+        m_fogEnabled = bl(0);
+        m_fogBackgroundEnabled = bl(1);
+        m_environmentImageEnabled = bl(2);
+        m_fogColorR = byt(0); m_fogColorG = byt(1); m_fogColorB = byt(2);
+        m_fogDensityNear = dbl(0); m_fogDensityFar = dbl(1);
+        m_fogDistanceNear = dbl(2); m_fogDistanceFar = dbl(3);
+    } else if (m_kind == Global) {
+        m_procedure = lng(1, 0);
+        m_destination = lng(2, 0);
+    }
+}
+
+bool DRW_SunStudy::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
+    // AcDbSunStudy DXF: scalar configuration only.  Codes 90/91/290 are reused
+    // by the date/hour lists (a positional state machine in dwgTs); here only
+    // the FIRST 90 (class version) and FIRST 290 (use_subset) are taken, the
+    // rest of those lists are left to the raw-net.  291-294 are distinct codes.
+    switch (code) {
+    case 90:  if (m_seen90++ == 0) m_classVersion = reader->getInt32(); break;
+    case 1:   m_setupName = reader->getUtf8String(); break;
+    case 2:   m_description = reader->getUtf8String(); break;
+    case 3:   m_sheetSetName = reader->getUtf8String(); break;
+    case 4:   m_sheetSubsetName = reader->getUtf8String(); break;
+    case 70:  m_outputType = static_cast<std::int16_t>(reader->getInt32()); break;
+    case 290: if (m_seen290++ == 0) m_useSubset = (reader->getInt32() != 0); break;
+    case 291: m_selectDatesFromCalendar = (reader->getInt32() != 0); break;
+    case 292: m_selectRangeOfDates = (reader->getInt32() != 0); break;
+    case 293: m_lockViewports = (reader->getInt32() != 0); break;
+    case 294: m_labelViewports = (reader->getInt32() != 0); break;
+    case 93:  m_startTime = reader->getInt32(); break;
+    case 94:  m_endTime = reader->getInt32(); break;
+    case 95:  m_interval = reader->getInt32(); break;
+    case 74:  m_shadePlotType = static_cast<std::int16_t>(reader->getInt32()); break;
+    case 75:  m_viewportCount = static_cast<std::int16_t>(reader->getInt32()); break;
+    case 76:  m_rowCount = static_cast<std::int16_t>(reader->getInt32()); break;
+    case 77:  m_columnCount = static_cast<std::int16_t>(reader->getInt32()); break;
+    case 40:  m_spacing = reader->getDouble(); break;
+    case 341: m_viewHandle = reader->getHandleString(); break;
+    case 342: m_visualStyleHandle = reader->getHandleString(); break;
+    case 343: m_textStyleHandle = reader->getHandleString(); break;
+    default:
+        return DRW_TableEntry::parseCode(code, reader);
+    }
+    return true;
+}
+
+bool DRW_PointCloudDef::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
+    // AcDbPointCloudDef / ...DefEx DXF.  Reactors carry only the class version.
+    // Code map per dwgTs parseObjectsPointCloudDxf.ts (code 160 is a reader-
+    // "skipped" range, left to the raw-net).
+    switch (code) {
+    case 90:  m_classVersion = reader->getInt32(); break;
+    case 1:   m_sourceFilename = reader->getUtf8String(); break;
+    case 280: m_isLoaded = (reader->getInt32() != 0); break;
+    case 10:  m_extentsMin.x = reader->getDouble(); break;
+    case 20:  m_extentsMin.y = reader->getDouble(); break;
+    case 30:  m_extentsMin.z = reader->getDouble(); break;
+    case 11:  m_extentsMax.x = reader->getDouble(); break;
+    case 21:  m_extentsMax.y = reader->getDouble(); break;
+    case 31:  m_extentsMax.z = reader->getDouble(); break;
+    default:
+        return DRW_TableEntry::parseCode(code, reader);
+    }
+    return true;
+}
+
+bool DRW_Material::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
+    // AcDbMaterial: only the name (1) and description (2) are decoded — the
+    // visual-property fields (color/ambient/diffuse/specular/maps/...) are not
+    // modeled here.  This matches dwgTs's MATERIAL decode (name + description);
+    // the full record is still preserved by the raw-net for DXF round-trip.
+    switch (code) {
+    case 1:
+        m_name = reader->getUtf8String();
+        break;
+    case 2:
+        m_description = reader->getUtf8String();
+        break;
+    default:
+        return DRW_TableEntry::parseCode(code, reader);
+    }
+    return true;
+}
+
+bool DRW_Background::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
+    // AcDb*Background DXF.  Group codes are overloaded across the six variants
+    // (90 in particular appears twice for solid/gradient/ground-plane), so they
+    // are interpreted per m_kind (set from the entity name).  Code map per dwgTs
+    // parseObjectsBackgroundSunLightDxf.ts.
+    switch (code) {
+    case 90:
+        if (m_kind == Gradient) {
+            if (m_seen90 == 0) m_classVersion = reader->getInt32();
+            else if (m_seen90 == 1) m_colorTop = reader->getInt32();
+            ++m_seen90;
+        } else if (m_kind == GroundPlane) {
+            if (m_seen90 == 0) m_classVersion = reader->getInt32();
+            else if (m_seen90 == 1) m_colorSkyZenith = reader->getInt32();
+            ++m_seen90;
+        } else if (m_kind == Solid) {
+            if (m_seen90 == 0) m_classVersion = reader->getInt32();
+            else if (m_seen90 == 1) m_solidColor = reader->getInt32();
+            ++m_seen90;
+        } else {
+            m_classVersion = reader->getInt32();  // image/ibl/skylight: single 90
+        }
+        break;
+    case 91:
+        if (m_kind == Gradient) m_colorMiddle = reader->getInt32();
+        else if (m_kind == GroundPlane) m_colorSkyHorizon = reader->getInt32();
+        break;
+    case 92:
+        if (m_kind == Gradient) m_colorBottom = reader->getInt32();
+        else if (m_kind == GroundPlane) m_colorUndergroundHorizon = reader->getInt32();
+        break;
+    case 93: if (m_kind == GroundPlane) m_colorUndergroundAzimuth = reader->getInt32(); break;
+    case 94: if (m_kind == GroundPlane) m_colorNear = reader->getInt32(); break;
+    case 95: if (m_kind == GroundPlane) m_colorFar = reader->getInt32(); break;
+    case 140:
+        if (m_kind == Gradient) m_horizon = reader->getDouble();
+        else if (m_kind == Image) m_offset.x = reader->getDouble();
+        break;
+    case 141: if (m_kind == Gradient) m_height = reader->getDouble(); break;
+    case 142:
+        if (m_kind == Gradient) m_rotation = reader->getDouble();
+        else if (m_kind == Image) m_scale.x = reader->getDouble();
+        break;
+    // NOTE: image-background offset.y/scale.y use DXF codes 240/242, which
+    // libdxfrw's dxfReader does not classify (the 240-269 range is an unhandled
+    // gap in dxfreader.cpp readRec) — those Y components are left to the raw-net
+    // until the reader's code-range table is extended.
+    case 40:  if (m_kind == Ibl) m_rotation = reader->getDouble(); break;
+    case 1:   if (m_kind == Ibl) m_iblName = reader->getUtf8String(); break;
+    case 300: if (m_kind == Image) m_fileName = reader->getUtf8String(); break;
+    case 290:
+        if (m_kind == Image) m_fitToScreen = (reader->getInt32() != 0);
+        else if (m_kind == Ibl) {
+            if (m_seen290 == 0) m_enabled = (reader->getInt32() != 0);
+            else m_displayImage = (reader->getInt32() != 0);
+            ++m_seen290;
+        }
+        break;
+    case 291: if (m_kind == Image) m_maintainAspect = (reader->getInt32() != 0); break;
+    case 292: if (m_kind == Image) m_useTiling = (reader->getInt32() != 0); break;
+    case 340:
+        if (m_kind == Ibl) m_secondaryBackgroundHandle = reader->getHandleString();
+        else if (m_kind == Skylight) m_sunHandle = reader->getHandleString();
+        break;
+    default:
+        return DRW_TableEntry::parseCode(code, reader);
+    }
+    return true;
+}
+
 bool DRW_Material::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs){
     dwgBuffer sBuff = *buf;
     dwgBuffer *sBuf = buf;
@@ -3575,6 +3795,25 @@ bool DRW_Material::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t 
 
     DRW_DBG("material name: "); DRW_DBG(m_name.c_str());
     DRW_DBG(" description: "); DRW_DBG(m_description.c_str()); DRW_DBG("\n");
+    return true;
+}
+
+bool DRW_TableStyle::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
+    // AcDbTableStyle DXF: the top-level scalar fields.  The nested per-cell
+    // styles / row styles (data/header/title) need a sub-record state machine
+    // and are left to the raw-net (round-tripped, not structurally decoded) —
+    // matching dwgTs's TABLESTYLE DXF decode depth.
+    switch (code) {
+    case 3:   m_name = reader->getUtf8String(); break;
+    case 70:  m_flowDirection = reader->getInt32(); break;
+    case 71:  m_flags = reader->getInt32(); break;
+    case 40:  m_horizontalCellMargin = reader->getDouble(); break;
+    case 41:  m_verticalCellMargin = reader->getDouble(); break;
+    case 280: m_titleSuppressed = (reader->getInt32() != 0); break;
+    case 281: m_headerSuppressed = (reader->getInt32() != 0); break;
+    default:
+        return DRW_TableEntry::parseCode(code, reader);
+    }
     return true;
 }
 
@@ -4020,6 +4259,62 @@ bool DRW_MLineStyle::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_
 // non-fatal so the OBJECTS-section scan stays aligned even if a
 // particular style record drifts.  Handle slots are deferred to the
 // trailing handle stream and resolved by the LibreCAD-side filter.
+bool DRW_MLeaderStyle::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
+    // AcDbMLeaderStyle DXF.  All-scalar record (handles via 340-343); code map
+    // matches the per-field comments on the class + dwgTs's MLEADERSTYLE decode.
+    switch (code) {
+    case 179: styleVersion = reader->getInt32(); break;
+    case 170: contentType = reader->getInt32(); break;
+    case 171: drawMLeaderOrder = reader->getInt32(); break;
+    case 172: drawLeaderOrder = reader->getInt32(); break;
+    case 90:  maxLeaderPoints = reader->getInt32(); break;
+    case 40:  firstSegmentAngle = reader->getDouble(); break;
+    case 41:  secondSegmentAngle = reader->getDouble(); break;
+    case 173: leaderType = reader->getInt32(); break;
+    case 91:  leaderColor = reader->getInt32(); break;
+    case 92:  leaderLineWeight = reader->getInt32(); break;
+    case 290: landingEnabled = (reader->getInt32() != 0); break;
+    case 42:  landingGap = reader->getDouble(); break;
+    case 291: autoIncludeLanding = (reader->getInt32() != 0); break;
+    case 43:  landingDistance = reader->getDouble(); break;
+    case 3:   description = reader->getUtf8String(); break;
+    case 44:  arrowHeadSize = reader->getDouble(); break;
+    case 300: textDefault = reader->getUtf8String(); break;
+    case 174: leftAttachment = reader->getInt32(); break;
+    case 178: rightAttachment = reader->getInt32(); break;
+    case 175: textAngleType = reader->getInt32(); break;
+    case 176: textAlignmentType = reader->getInt32(); break;
+    case 93:  textColor = reader->getInt32(); break;
+    case 45:  textHeight = reader->getDouble(); break;
+    case 292: textFrameEnabled = (reader->getInt32() != 0); break;
+    case 297: alwaysAlignTextLeft = (reader->getInt32() != 0); break;
+    case 46:  alignSpace = reader->getDouble(); break;
+    case 94:  blockColor = reader->getInt32(); break;
+    case 47:  blockScale.x = reader->getDouble(); break;
+    case 49:  blockScale.y = reader->getDouble(); break;
+    case 140: blockScale.z = reader->getDouble(); break;
+    case 293: blockScaleEnabled = (reader->getInt32() != 0); break;
+    case 141: blockRotation = reader->getDouble(); break;
+    case 294: blockRotationEnabled = (reader->getInt32() != 0); break;
+    case 177: blockConnectionType = reader->getInt32(); break;
+    case 142: scaleFactor = reader->getDouble(); break;
+    case 295: propertyChanged = (reader->getInt32() != 0); break;
+    case 296: isAnnotative = (reader->getInt32() != 0); break;
+    case 143: breakSize = reader->getDouble(); break;
+    case 271: attachmentDirection = reader->getInt32(); break;
+    case 273: topAttachment = reader->getInt32(); break;
+    case 272: bottomAttachment = reader->getInt32(); break;
+    case 298: textExtended = (reader->getInt32() != 0); break;
+    case 340: leaderLineTypeHandle.ref = reader->getHandleString(); break;
+    case 341: arrowHeadBlockHandle.ref = reader->getHandleString(); break;
+    case 342: textStyleHandle.ref = reader->getHandleString(); break;
+    case 343: blockHandle.ref = reader->getHandleString(); break;
+    default:
+        return DRW_TableEntry::parseCode(code, reader);
+    }
+    return true;
+}
+
 bool DRW_MLeaderStyle::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs){
     dwgBuffer sBuff = *buf;
     dwgBuffer *sBuf = buf;
@@ -5108,6 +5403,77 @@ bool DRW_Group::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs)
     return buf->isGood() && hBuf->isGood();
 }
 
+bool DRW_DimensionAssociation::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
+    // AcDbDimAssoc DXF.  Gated by "100 AcDbDimAssoc" so body 330 is the
+    // dimension handle (not the object owner).  Osnap-ref blocks open with code
+    // 1 (className) then 72 (osnap type) + 331 (object handle); refs are kept in
+    // arrival order (mapping to first/second/... point by associativity-flag bit
+    // is a refinement).  Code map per dwgTs parseObjectsSortEntsAndDimAssocDxf.ts.
+    if (code == 100) {
+        if (reader->getString() == "AcDbDimAssoc")
+            m_dxfInBody = true;
+        return true;
+    }
+    if (m_dxfInBody) {
+        switch (code) {
+        case 330: m_dimensionHandle = reader->getHandleString(); return true;
+        case 90:  m_associativityFlags = reader->getInt32(); return true;
+        case 70:  m_rotatedDimensionType =
+                      static_cast<std::uint8_t>(reader->getInt32()); return true;
+        case 71:  m_isTransSpace = (reader->getInt32() != 0); return true;
+        case 1: { // opens a new osnap reference block
+            DRW_DimensionAssociationOsnapRef ref;
+            ref.m_className = reader->getUtf8String();
+            m_osnapRefs.push_back(ref);
+            return true;
+        }
+        case 72:
+            if (!m_osnapRefs.empty())
+                m_osnapRefs.back().m_objectOsnapType =
+                    static_cast<std::uint8_t>(reader->getInt32());
+            return true;
+        case 331:
+            if (!m_osnapRefs.empty())
+                m_osnapRefs.back().m_objectHandle = reader->getHandleString();
+            return true;
+        default: break;
+        }
+    }
+    return DRW_TableEntry::parseCode(code, reader);
+}
+
+bool DRW_SortEntsTable::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
+    // AcDbSortentsTable DXF.  Body codes reuse the header handle codes, so the
+    // "100 AcDbSortentsTable" marker gates them: before it, 5/330 are the
+    // object's own handle/owner (base); after it, 330=block owner and the
+    // 331(entity)/5(sort) pairs build the draw-order map.  Code map per dwgTs
+    // parseObjectsSortEntsAndDimAssocDxf.ts.
+    if (code == 100) {
+        if (reader->getString() == "AcDbSortentsTable")
+            m_dxfInBody = true;
+        return true;
+    }
+    if (m_dxfInBody) {
+        switch (code) {
+        case 330: m_blockOwnerHandle = reader->getHandleString(); return true;
+        case 331: m_entityHandles.push_back(reader->getHandleString()); return true;
+        case 5:   m_sortHandles.push_back(reader->getHandleString()); return true;
+        default: break;
+        }
+    }
+    return DRW_TableEntry::parseCode(code, reader);
+}
+
+bool DRW_ImageDefinitionReactor::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
+    // AcDbRasterImageDefReactor DXF: a single class-version field (90).
+    switch (code) {
+    case 90: m_classVersion = reader->getInt32(); break;
+    default:
+        return DRW_TableEntry::parseCode(code, reader);
+    }
+    return true;
+}
+
 bool DRW_ImageDefinitionReactor::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs){
     dwgBuffer sBuff = *buf;
     dwgBuffer *sBuf = version > DRW::AC1018 ? &sBuff : buf;
@@ -5123,6 +5489,33 @@ bool DRW_ImageDefinitionReactor::parseDwg(DRW::Version version, dwgBuffer *buf, 
     m_classVersion = buf->getBitLong();
     DRW_UNUSED(sBuf);
     return buf->isGood() && hBuff.isGood();
+}
+
+bool DRW_SpatialFilter::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
+    // AcDbSpatialFilter / AcDbFilter DXF: the clip boundary polygon, the OCS
+    // normal + origin, the display/clip-plane flags and the back clip distance.
+    // The boundary-relative insert matrices (a run of code-40 doubles) and the
+    // front-clip distance are left to the raw-net (the code-40 stream needs the
+    // ezdxf "last 24 are the two matrices" heuristic; not worth the fragility
+    // here since LibreCAD does not apply the clip).
+    switch (code) {
+    case 10: m_boundaryPoints.push_back(DRW_Coord(reader->getDouble(), 0.0, 0.0)); break;
+    case 20: if (!m_boundaryPoints.empty()) m_boundaryPoints.back().y = reader->getDouble(); break;
+    case 210: m_normal.x = reader->getDouble(); break;
+    case 220: m_normal.y = reader->getDouble(); break;
+    case 230: m_normal.z = reader->getDouble(); break;
+    case 11: m_origin.x = reader->getDouble(); break;
+    case 21: m_origin.y = reader->getDouble(); break;
+    case 31: m_origin.z = reader->getDouble(); break;
+    case 71: m_displayBoundary = (reader->getInt32() != 0); break;
+    case 72: m_clipFrontPlane = (reader->getInt32() != 0); break;
+    case 73: m_clipBackPlane = (reader->getInt32() != 0); break;
+    case 41: m_backDistance = reader->getDouble(); break;
+    case 70: reader->getInt32(); break;  // boundary vertex count (advisory)
+    default:
+        return DRW_TableEntry::parseCode(code, reader);
+    }
+    return true;
 }
 
 bool DRW_SpatialFilter::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs){
@@ -5170,6 +5563,47 @@ bool DRW_SpatialFilter::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint
     DRW_DBG("SPATIAL_FILTER boundary points: ");
     DRW_DBG(static_cast<int>(m_boundaryPoints.size())); DRW_DBG("\n");
     return buf->isGood() && hBuf->isGood();
+}
+
+bool DRW_GeoData::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
+    // AcDbGeoData DXF (R2010+ version 2/3).  Decodes the scalar geolocation
+    // fields; the coordinate-mesh point/face lists (codes 13/23/14/24 ... 93/96)
+    // are left to the raw-net (their 13/23/14/24 interleave needs a point cursor
+    // — a follow-up).  Code mapping cross-checked against dwgTs
+    // parseObjectsGeoSpatialDxf.ts.
+    switch (code) {
+    case 90:  m_version = reader->getInt32(); break;
+    case 70:  m_coordinatesType = reader->getInt32(); break;
+    case 10:  m_designPoint.x = reader->getDouble(); break;
+    case 20:  m_designPoint.y = reader->getDouble(); break;
+    case 30:  m_designPoint.z = reader->getDouble(); break;
+    case 11:  m_referencePoint.x = reader->getDouble(); break;
+    case 21:  m_referencePoint.y = reader->getDouble(); break;
+    case 31:  m_referencePoint.z = reader->getDouble(); break;
+    case 40:  m_horizontalUnitScale = reader->getDouble(); break;
+    case 41:  m_verticalUnitScale = reader->getDouble(); break;
+    case 91:  m_horizontalUnits = reader->getInt32(); break;
+    case 92:  m_verticalUnits = reader->getInt32(); break;
+    case 210: m_upDirection.x = reader->getDouble(); break;
+    case 220: m_upDirection.y = reader->getDouble(); break;
+    case 230: m_upDirection.z = reader->getDouble(); break;
+    case 12:  m_northDirection.x = reader->getDouble(); break;
+    case 22:  m_northDirection.y = reader->getDouble(); break;
+    case 95:  m_scaleEstimationMethod = reader->getInt32(); break;
+    case 141: m_userSpecifiedScaleFactor = reader->getDouble(); break;
+    case 294: m_enableSeaLevelCorrection = (reader->getInt32() != 0); break;
+    case 142: m_seaLevelElevation = reader->getDouble(); break;
+    case 143: m_coordinateProjectionRadius = reader->getDouble(); break;
+    case 301: // coordinate-system definition (chunked; ^J -> newline)
+    case 303: m_coordinateSystemDefinition += reader->getUtf8String(); break;
+    case 302: m_geoRssTag = reader->getUtf8String(); break;
+    case 305: m_observationFromTag = reader->getUtf8String(); break;
+    case 306: m_observationToTag = reader->getUtf8String(); break;
+    case 307: m_observationCoverageTag = reader->getUtf8String(); break;
+    default:
+        return DRW_TableEntry::parseCode(code, reader);
+    }
+    return true;
 }
 
 bool DRW_GeoData::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs){
@@ -6404,6 +6838,24 @@ bool DRW_BreakPointRef::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint
 // VISUALSTYLE (AcDbVisualStyle) — stub parser per ODA spec §20.4.95.
 // Reads only what's needed for round-trip identity; full visual-style
 // data (60+ fields) is irrelevant to LibreCAD's 2D rendering. Each
+bool DRW_VisualStyle::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
+    // AcDbVisualStyle DXF: description (2 / 4) + style type (70).  Matches
+    // dwgTs's VISUALSTYLE decode; the per-property render settings (face/edge/
+    // display) stay round-tripped raw only.
+    switch (code) {
+    case 2:
+    case 4:
+        desc = reader->getUtf8String();
+        break;
+    case 70:
+        type = reader->getInt32();
+        break;
+    default:
+        return DRW_TableEntry::parseCode(code, reader);
+    }
+    return true;
+}
+
 // object is parsed from a size-bounded buffer so any unread tail is
 // safely discarded by the caller.
 bool DRW_VisualStyle::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs){
