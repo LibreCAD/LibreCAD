@@ -210,6 +210,12 @@ bool dwgReaderR11::readEntityR11(DRW_Interface& intfa) {
     auto rd3 = [&]() { DRW_Coord c; c.x = fileBuf->getRawDouble();
                        c.y = fileBuf->getRawDouble(); c.z = fileBuf->getRawDouble();
                        return c; };
+    auto readTv = [&]() {  // pre-R13 length-prefixed string: RS count + bytes
+        const std::uint16_t n = fileBuf->getRawShort16();
+        std::string s; s.reserve(n);
+        for (std::uint16_t i = 0; i < n; ++i)
+            s.push_back(static_cast<char>(fileBuf->getRawChar8()));
+        return s; };
 
     if (!deleted) {
         switch (type) {
@@ -353,6 +359,24 @@ bool dwgReaderR11::readEntityR11(DRW_Interface& intfa) {
                 e.name = m_blockNames[blockIdx];
             e.layer = curLayer;
             intfa.addInsert(e);
+            break; }
+        case R11_ATTRIB:
+        case R11_ATTDEF: {
+            // Attribute (value, follows an INSERT) / attribute definition (in a
+            // block). Both are text annotations -> render the visible text as TEXT
+            // (the tag/prompt typing is dropped; rendering-first).
+            DRW_Text e;
+            e.basePoint = fileBuf->get2RawDouble();
+            e.basePoint.z = elevation;
+            e.height = rd();
+            e.text = readTv();                 // ATTRIB value / ATTDEF default
+            if (type == R11_ATTDEF) readTv();  // ATTDEF prompt (not rendered)
+            readTv();                          // tag (not rendered)
+            fileBuf->getRawChar8();            // attribute flags (RC 70)
+            if (opts & 0x01) e.angle = rd();   // rotation (shared TEXT opt bit)
+            e.thickness = thickness;
+            e.layer = curLayer;
+            intfa.addText(e);
             break; }
         default:
             // Unhandled type (INSERT/ATTRIB/ATTDEF/SHAPE/DIMENSION/...) -> skipped
