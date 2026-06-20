@@ -393,6 +393,26 @@ bool dwgReaderR11::readEntityR11(DRW_Interface& intfa) {
                 intfa.addInsert(e);
             }
             break; }
+        case R11_SHAPE: {
+            // Non-rendering in LibreCAD (kept as metadata), but read so it is not
+            // a parse miss. style handle/index resolution is a follow-up.
+            DRW_Shape e;
+            e.m_insertionPoint = fileBuf->get2RawDouble();
+            e.m_insertionPoint.z = elevation;
+            e.m_scale = rd();
+            fileBuf->getRawShort16();           // style handle (RS for R11)
+            if (opts & 0x01) e.m_rotation = rd();
+            intfa.addShape(e);
+            break; }
+        case R11_VIEWPORT: {
+            DRW_Viewport e;
+            e.basePoint = rd3();                 // center (3RD)
+            e.pswidth = rd();                    // width
+            e.psheight = rd();                   // height
+            fileBuf->getRawShort16();            // viewport id (RS)
+            e.layer = curLayer;
+            intfa.addViewport(e);
+            break; }
         default:
             // Unhandled type (INSERT/ATTRIB/ATTDEF/SHAPE/DIMENSION/...) -> skipped
             // for now; counted as a parse "miss" but not a failure (advance by size).
