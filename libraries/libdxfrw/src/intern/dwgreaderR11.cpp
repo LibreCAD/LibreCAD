@@ -88,8 +88,13 @@ bool dwgReaderR11::readDwgTables(DRW_Header& /*hdr*/) {
     return true;  // tables (layer/ltype/style/block names) -> follow-up
 }
 
-bool dwgReaderR11::readDwgBlocks(DRW_Interface& /*intfa*/) {
-    return true;  // block-definition section -> follow-up
+bool dwgReaderR11::readDwgBlocks(DRW_Interface& intfa) {
+    // The BLOCKS section has the same flat record format as ENTITIES; each
+    // BLOCK(12) opens a block scope (addBlock), its child entities follow, and
+    // ENDBLK(13) closes it (endBlock) -- handled in readEntityR11.
+    DRW_DBG("\n=== pre-R13 BLOCKS section ["); DRW_DBGH(m_blocksStart);
+    DRW_DBG(","); DRW_DBGH(m_blocksEnd); DRW_DBG(") ===\n");
+    return readEntitySection(m_blocksStart, m_blocksEnd, intfa);
 }
 
 bool dwgReaderR11::readDwgEntities(DRW_Interface& intfa) {
@@ -241,8 +246,46 @@ bool dwgReaderR11::readEntityR11(DRW_Interface& intfa) {
             }
             intfa.add3dFace(e);
             break; }
+        case R11_POLYLINE: {
+            // Opens a vertex accumulation; VERTEX records append, SEQEND delivers.
+            m_curPoly = std::make_unique<DRW_Polyline>();
+            m_curPoly->basePoint.z = elevation;
+            m_curPoly->thickness = thickness;
+            if (opts & 0x01) m_curPoly->flags = fileBuf->getRawChar8(); // closed/3d bits
+            break; }
+        case R11_VERTEX: {
+            DRW_Coord p = fileBuf->get2RawDouble();
+            double bulge = 0.0;
+            if (opts & 0x01) rd();        // start width
+            if (opts & 0x02) rd();        // end width
+            if (opts & 0x04) bulge = rd();
+            if (m_curPoly)
+                m_curPoly->addVertex(DRW_Vertex(p.x, p.y, elevation, bulge));
+            break; }
+        case R11_SEQEND: {
+            if (m_curPoly) { intfa.addPolyline(*m_curPoly); m_curPoly.reset(); }
+            break; }
+        case R11_BLOCK: {
+            DRW_Coord base = fileBuf->get2RawDouble();
+            auto readTv = [&]() { const std::uint16_t n = fileBuf->getRawShort16();
+                std::string s; s.reserve(n);
+                for (std::uint16_t i = 0; i < n; ++i)
+                    s.push_back(static_cast<char>(fileBuf->getRawChar8()));
+                return s; };
+            std::string xref, name;
+            if (opts & 0x02) xref = readTv();   // xref path name
+            if (opts & 0x04) name = readTv();   // block name (inline)
+            DRW_Block blk;
+            blk.basePoint = base; blk.basePoint.z = elevation;
+            blk.name = name;
+            blk.xrefPath = xref;
+            intfa.addBlock(blk);                // opens the block scope
+            break; }
+        case R11_ENDBLK: {
+            intfa.endBlock();                   // closes the block scope
+            break; }
         default:
-            // Unhandled type (INSERT/POLYLINE/VERTEX/SEQEND/BLOCK/... ) -> skipped
+            // Unhandled type (INSERT/ATTRIB/ATTDEF/SHAPE/DIMENSION/...) -> skipped
             // for now; counted as a parse "miss" but not a failure (advance by size).
             ++m_entityParseFailures;
             break;

@@ -14,6 +14,8 @@
 #ifndef DWGREADERR11_H
 #define DWGREADERR11_H
 
+#include <memory>
+
 #include "drw_textcodec.h"
 #include "dwgreader.h"
 
@@ -53,6 +55,10 @@ private:
     // Decode one entity at the current buffer position; always leaves the
     // buffer at recStart+size. Returns false only on an unrecoverable desync.
     bool readEntityR11(DRW_Interface& intfa);
+
+    // POLYLINE..VERTEX..SEQEND accumulate across consecutive records; the
+    // POLYLINE opens this, each VERTEX appends, SEQEND delivers + clears it.
+    std::unique_ptr<DRW_Polyline> m_curPoly;
 };
 
 #endif // DWGREADERR11_H
