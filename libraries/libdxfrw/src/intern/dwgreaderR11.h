@@ -59,6 +59,13 @@ private:
     // POLYLINE..VERTEX..SEQEND accumulate across consecutive records; the
     // POLYLINE opens this, each VERTEX appends, SEQEND delivers + clears it.
     std::unique_ptr<DRW_Polyline> m_curPoly;
+
+    // Table-record names by record index (filled in readDwgTables). An entity's
+    // layer / an INSERT's block are stored as 1-based RS indices into these.
+    std::vector<std::string> m_layerNames;
+    std::vector<std::string> m_blockNames;
+    bool readNameTable(std::uint32_t hdrPos, std::vector<std::string>& out);
+    std::string layerName(std::uint16_t idx) const;
 };
 
 #endif // DWGREADERR11_H

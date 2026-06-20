@@ -84,8 +84,50 @@ bool dwgReaderR11::readDwgHeader(DRW_Header& /*hdr*/) {
     return true;  // header variables not needed for entity geometry (follow-up)
 }
 
+bool dwgReaderR11::readNameTable(std::uint32_t hdrPos, std::vector<std::string>& out) {
+    // Table-section header (10 bytes): size(RS) number(RS) flags(RS) address(RL).
+    // Each record is `size` bytes: flag(RC) + name(32 fixed null-padded bytes) +
+    // used(RS,R11) + per-table fields. We only need the name (at record+1).
+    if (!fileBuf->setPosition(hdrPos))
+        return false;
+    const std::uint16_t recSize = fileBuf->getRawShort16();
+    const std::uint16_t recNum = fileBuf->getRawShort16();
+    fileBuf->getRawShort16();  // flags
+    const std::uint32_t addr = fileBuf->getRawLong32();
+    if (addr == 0 || recSize < 33)
+        return true;  // absent/implausible table -> leave names empty
+    out.clear();
+    out.reserve(recNum);
+    for (std::uint16_t i = 0; i < recNum; ++i) {
+        if (!fileBuf->setPosition(addr + static_cast<std::uint64_t>(i) * recSize + 1))
+            break;  // skip flag(RC); name follows
+        std::string name;
+        bool ended = false;
+        for (int j = 0; j < 32; ++j) {
+            const char c = static_cast<char>(fileBuf->getRawChar8());
+            if (c == '\0') ended = true;
+            if (!ended) name.push_back(c);
+        }
+        out.push_back(name);
+    }
+    return true;
+}
+
+std::string dwgReaderR11::layerName(std::uint16_t idx) const {
+    // Entity layer is a 0-based RS index into the LAYER table (index 0 == "0",
+    // verified vs dwgread).
+    if (idx < m_layerNames.size())
+        return m_layerNames[idx];
+    return std::string();
+}
+
 bool dwgReaderR11::readDwgTables(DRW_Header& /*hdr*/) {
-    return true;  // tables (layer/ltype/style/block names) -> follow-up
+    // The 5 leading table-section headers (BLOCK, LAYER, STYLE, LTYPE, VIEW) are
+    // 10 bytes each starting at file offset 0x2C. Read BLOCK + LAYER names (for
+    // INSERT block resolution and entity layer attribution).
+    readNameTable(0x2C, m_blockNames);   // BLOCK table
+    readNameTable(0x36, m_layerNames);   // LAYER table (0x2C + 10)
+    return true;
 }
 
 bool dwgReaderR11::readDwgBlocks(DRW_Interface& intfa) {
@@ -131,8 +173,9 @@ bool dwgReaderR11::readEntityR11(DRW_Interface& intfa) {
 
     // Common entity header (read to consume; we apply only a subset for now).
     std::uint16_t opts = 0;
+    std::uint16_t layerIdx = 0;
     if (type != R11_JUMP) {
-        fileBuf->getRawShort16();              // layer index (resolution: follow-up)
+        layerIdx = fileBuf->getRawShort16();   // 1-based index into the LAYER table
         opts = fileBuf->getRawShort16();       // per-type optional-field flags
     }
     std::uint8_t extra = 0;
@@ -162,6 +205,7 @@ bool dwgReaderR11::readEntityR11(DRW_Interface& intfa) {
         fileBuf->getRawShort16();
 
     const bool hasElev = (flag & FLAG_HAS_ELEVATION) != 0;
+    const std::string curLayer = layerName(layerIdx);
     auto rd = [&]() { return fileBuf->getRawDouble(); };
     auto rd3 = [&]() { DRW_Coord c; c.x = fileBuf->getRawDouble();
                        c.y = fileBuf->getRawDouble(); c.z = fileBuf->getRawDouble();
@@ -179,6 +223,7 @@ bool dwgReaderR11::readEntityR11(DRW_Interface& intfa) {
                 e.secPoint = fileBuf->get2RawDouble();  e.secPoint.z = elevation;
             }
             e.thickness = thickness;
+            e.layer = curLayer;
             intfa.addLine(e);
             break; }
         case R11_POINT: {
@@ -186,6 +231,7 @@ bool dwgReaderR11::readEntityR11(DRW_Interface& intfa) {
             e.basePoint.x = rd(); e.basePoint.y = rd();
             if (!hasElev) e.basePoint.z = rd();
             e.thickness = thickness;
+            e.layer = curLayer;
             intfa.addPoint(e);
             break; }
         case R11_CIRCLE: {
@@ -194,6 +240,7 @@ bool dwgReaderR11::readEntityR11(DRW_Interface& intfa) {
             e.radious = rd();
             e.basePoint.z = elevation;
             e.thickness = thickness;
+            e.layer = curLayer;
             intfa.addCircle(e);
             break; }
         case R11_ARC: {
@@ -204,6 +251,7 @@ bool dwgReaderR11::readEntityR11(DRW_Interface& intfa) {
             e.endangle = rd();
             e.basePoint.z = elevation;
             e.thickness = thickness;
+            e.layer = curLayer;
             intfa.addArc(e);
             break; }
         case R11_TEXT: {
@@ -218,6 +266,7 @@ bool dwgReaderR11::readEntityR11(DRW_Interface& intfa) {
             e.text = s;
             if (opts & 0x01) e.angle = rd();
             e.thickness = thickness;
+            e.layer = curLayer;
             intfa.addText(e);
             break; }
         case R11_SOLID:
@@ -229,6 +278,7 @@ bool dwgReaderR11::readEntityR11(DRW_Interface& intfa) {
             e.fourPoint = fileBuf->get2RawDouble();
             e.basePoint.z = e.secPoint.z = e.thirdPoint.z = e.fourPoint.z = elevation;
             e.thickness = thickness;
+            e.layer = curLayer;
             if (type == R11_TRACE) intfa.addTrace(e); else intfa.addSolid(e);
             break; }
         case R11_3DFACE: {
@@ -244,12 +294,14 @@ bool dwgReaderR11::readEntityR11(DRW_Interface& intfa) {
                 e.thirdPoint = rd3();
                 e.fourPoint = rd3();
             }
+            e.layer = curLayer;
             intfa.add3dFace(e);
             break; }
         case R11_POLYLINE: {
             // Opens a vertex accumulation; VERTEX records append, SEQEND delivers.
             m_curPoly = std::make_unique<DRW_Polyline>();
             m_curPoly->basePoint.z = elevation;
+            m_curPoly->layer = curLayer;
             m_curPoly->thickness = thickness;
             if (opts & 0x01) m_curPoly->flags = fileBuf->getRawChar8(); // closed/3d bits
             break; }
@@ -283,6 +335,24 @@ bool dwgReaderR11::readEntityR11(DRW_Interface& intfa) {
             break; }
         case R11_ENDBLK: {
             intfa.endBlock();                   // closes the block scope
+            break; }
+        case R11_INSERT: {
+            DRW_Insert e;
+            const std::uint16_t blockIdx = fileBuf->getRawShort16(); // 1-based BLOCK index
+            e.basePoint = fileBuf->get2RawDouble();
+            e.basePoint.z = elevation;
+            if (opts & 0x01) e.xscale = rd();
+            if (opts & 0x02) e.yscale = rd();
+            if (opts & 0x04) e.angle = rd();
+            if (opts & 0x08) e.zscale = rd();
+            if (opts & 0x10) e.colcount = fileBuf->getRawShort16();
+            if (opts & 0x20) e.rowcount = fileBuf->getRawShort16();
+            if (opts & 0x40) e.colspace = rd();
+            if (opts & 0x80) e.rowspace = rd();
+            if (blockIdx < m_blockNames.size())  // 0-based, verified vs dwgread
+                e.name = m_blockNames[blockIdx];
+            e.layer = curLayer;
+            intfa.addInsert(e);
             break; }
         default:
             // Unhandled type (INSERT/ATTRIB/ATTDEF/SHAPE/DIMENSION/...) -> skipped
