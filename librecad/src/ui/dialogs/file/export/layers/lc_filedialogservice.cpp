@@ -180,6 +180,11 @@ LC_FileDialogService::FileDialogResult LC_FileDialogService::getFileDetails (Fil
     bool useQtFileDialog = LC_GET_ONE_BOOL("Defaults","UseQtFileOpenDialog");
     saveFileDialog->setOption (QFileDialog::DontUseNativeDialog, useQtFileDialog);
 
+    // Overwrite confirmation is handled once, below, on the final
+    // (extension-corrected) path. Suppress the Qt-drawn dialog's own built-in
+    // confirmation so it does not stack with ours into a double prompt.
+    saveFileDialog->setOption (QFileDialog::DontConfirmOverwrite, true);
+
     // Styling the QFileDialog widget
     std::unique_ptr<QCheckBox> checkBox_combinedSave;
 
@@ -198,6 +203,14 @@ LC_FileDialogService::FileDialogResult LC_FileDialogService::getFileDetails (Fil
        }
     }
 
+    // A native OS file panel (macOS/Windows) confirms overwrite itself and
+    // ignores DontConfirmOverwrite; only a Qt-drawn dialog needs our manual
+    // confirmation. Gate it so we never add a second prompt on top of the
+    // native panel's own (the cause of the double "replace?" dialog).
+    const bool qtDrawnDialog =
+        saveFileDialog->testOption(QFileDialog::DontUseNativeDialog) ||
+        QApplication::testAttribute(Qt::AA_DontUseNativeDialogs);
+
     FileDialogResult result{};
     while (true) {
         if (saveFileDialog->QFileDialog::exec() == QDialog::Accepted) {
@@ -211,8 +224,9 @@ LC_FileDialogService::FileDialogResult LC_FileDialogService::getFileDetails (Fil
             // update file extension info
             updateFileExtension(result, selectedFilter);
 
-            /* Confirm if the user wants to overwrite an existing file. */
-            if (QFileInfo::exists(result.filePath)) {
+            /* Confirm overwrite for the Qt-drawn dialog only; a native panel
+               already asked. */
+            if (qtDrawnDialog && QFileInfo::exists(result.filePath)) {
                 int replaceFileResponse = QMessageBox::warning(
                     QApplication::activeWindow(),
                     fileDialogTitles.at(fileDialogMode),
