@@ -8,6 +8,7 @@
 
 #include "dwgreaderR11.h"
 #include "drw_dbg.h"
+#include "../drw_objects.h"
 
 namespace {
 // Pre-R13 entity type codes (Dwg_Object_Type_r11).
@@ -122,12 +123,214 @@ std::string dwgReaderR11::layerName(std::uint16_t idx) const {
     return std::string();
 }
 
+std::string dwgReaderR11::ltypeName(std::int16_t idx) const {
+    // 0x7FFF == ByLayer, 0x7FFE == ByBlock (the standard AutoCAD sentinels;
+    // libreDWG / dwgread report these as raw values in `ltype: [2,32767,0]`).
+    // Negative or out-of-range -> empty (consumer falls back).
+    if (idx == 0x7FFF) return "BYLAYER";
+    if (idx == 0x7FFE) return "BYBLOCK";
+    if (idx >= 0 && static_cast<size_t>(idx) < m_ltypeNames.size())
+        return m_ltypeNames[idx];
+    return std::string();
+}
+
+bool dwgReaderR11::readLTypeTable(std::uint32_t hdrPos) {
+    // LTYPE record (recSize 191):
+    //   off 0: flag RC               off 1: name 32 FIXED bytes
+    //   off 33: used RSd (R11)       off 35: description 48 FIXED bytes
+    //   off 83: alignment RC ('A')   off 84: numdashes RCu (0..12)
+    //   off 85: pattern_len RD       off 93: dashes_r11 12 * RD (96B FIXED)
+    //   off 189: CRC RS
+    // Only the first `numdashes` doubles in dashes_r11 are valid; the unused
+    // slots are uninitialised garbage and MUST be truncated.
+    if (!fileBuf->setPosition(hdrPos))
+        return false;
+    const std::uint16_t recSize = fileBuf->getRawShort16();
+    const std::uint16_t recNum = fileBuf->getRawShort16();
+    fileBuf->getRawShort16();  // flags
+    const std::uint32_t addr = fileBuf->getRawLong32();
+    if (addr == 0 || recSize < 189 || recNum == 0)
+        return true;  // absent/implausible
+    m_ltypeNames.clear();
+    m_ltypeNames.reserve(recNum);
+    for (std::uint16_t i = 0; i < recNum; ++i) {
+        const std::uint64_t base = addr + static_cast<std::uint64_t>(i) * recSize;
+        if (!fileBuf->setPosition(base))
+            break;
+        const std::uint8_t flag = fileBuf->getRawChar8();
+        std::string name;
+        bool ended = false;
+        for (int j = 0; j < 32; ++j) {
+            const char c = static_cast<char>(fileBuf->getRawChar8());
+            if (c == '\0') ended = true;
+            if (!ended) name.push_back(c);
+        }
+        m_ltypeNames.push_back(name);
+        // off 33: used (signed RS, ignored — header lists "used count"
+        // sentinel; libreDWG keeps it for debugging only).
+        static_cast<void>(fileBuf->getRawShort16());
+        // off 35: description (48 FIXED null-padded bytes).
+        std::string desc;
+        ended = false;
+        for (int j = 0; j < 48; ++j) {
+            const char c = static_cast<char>(fileBuf->getRawChar8());
+            if (c == '\0') ended = true;
+            if (!ended) desc.push_back(c);
+        }
+        // off 83: alignment (always 'A' for AutoCAD ltypes); off 84: numdashes.
+        static_cast<void>(fileBuf->getRawChar8());            // alignment
+        const std::uint8_t numdashes = fileBuf->getRawChar8();
+        const double patternLen = fileBuf->getRawDouble();    // off 85
+        std::vector<double> path;
+        path.reserve(numdashes);
+        for (std::uint8_t d = 0; d < 12; ++d) {
+            const double v = fileBuf->getRawDouble();
+            if (d < numdashes) path.push_back(v);             // truncate garbage
+        }
+        auto* lt = new DRW_LType();
+        lt->name = name;
+        lt->desc = desc;
+        lt->size = numdashes;
+        lt->length = patternLen;
+        lt->path = std::move(path);
+        lt->flags = flag;
+        // Use a synthetic monotonic key; consumers do not interpret .handle.
+        const std::uint32_t key = 0x10000000u | static_cast<std::uint32_t>(i);
+        lt->handle = key;
+        ltypemap[key] = lt;
+    }
+    return true;
+}
+
+bool dwgReaderR11::readLayerTable(std::uint32_t hdrPos) {
+    // LAYER record (recSize 41):
+    //   off 0: flag RC               off 1: name 32 FIXED bytes
+    //   off 33: used RSd (R11)       off 35: color SIGNED RS (neg => OFF)
+    //   off 37: ltype-index SIGNED RS (0 => CONTINUOUS)
+    //   off 39: CRC RS
+    if (!fileBuf->setPosition(hdrPos))
+        return false;
+    const std::uint16_t recSize = fileBuf->getRawShort16();
+    const std::uint16_t recNum = fileBuf->getRawShort16();
+    fileBuf->getRawShort16();  // flags
+    const std::uint32_t addr = fileBuf->getRawLong32();
+    if (addr == 0 || recSize < 39 || recNum == 0)
+        return true;
+    m_layerNames.clear();
+    m_layerNames.reserve(recNum);
+    for (std::uint16_t i = 0; i < recNum; ++i) {
+        const std::uint64_t base = addr + static_cast<std::uint64_t>(i) * recSize;
+        if (!fileBuf->setPosition(base))
+            break;
+        const std::uint8_t flag = fileBuf->getRawChar8();
+        std::string name;
+        bool ended = false;
+        for (int j = 0; j < 32; ++j) {
+            const char c = static_cast<char>(fileBuf->getRawChar8());
+            if (c == '\0') ended = true;
+            if (!ended) name.push_back(c);
+        }
+        m_layerNames.push_back(name);
+        static_cast<void>(fileBuf->getRawShort16());          // off33 used (signed)
+        const std::int16_t color =
+            static_cast<std::int16_t>(fileBuf->getRawShort16());
+        const std::int16_t ltypeIdx =
+            static_cast<std::int16_t>(fileBuf->getRawShort16());
+        auto* ly = new DRW_Layer();
+        ly->name = name;
+        ly->color = color;        // negative => layer OFF, mirrors R2000+ path
+        ly->flags = flag;
+        ly->lineType = ltypeName(ltypeIdx);
+        if (ly->lineType.empty()) ly->lineType = "CONTINUOUS";
+        const std::uint32_t key = 0x20000000u | static_cast<std::uint32_t>(i);
+        ly->handle = key;
+        layermap[key] = ly;
+    }
+    return true;
+}
+
+bool dwgReaderR11::readStyleTable(std::uint32_t hdrPos) {
+    // STYLE record (recSize 198):
+    //   off 0: flag RC               off 1: name 32 FIXED bytes
+    //   off 33: used RSd (R11)       off 35: text_size RD
+    //   off 43: width_factor RD      off 51: oblique_angle RD (radians)
+    //   off 59: generation RC        off 60: last_height RD
+    //   off 68: font_file 64 FIXED   off 132: bigfont_file 64 FIXED
+    //   off 196: CRC RS
+    if (!fileBuf->setPosition(hdrPos))
+        return false;
+    const std::uint16_t recSize = fileBuf->getRawShort16();
+    const std::uint16_t recNum = fileBuf->getRawShort16();
+    fileBuf->getRawShort16();  // flags
+    const std::uint32_t addr = fileBuf->getRawLong32();
+    if (addr == 0 || recSize < 196 || recNum == 0)
+        return true;
+    m_styleNames.clear();
+    m_styleNames.reserve(recNum);
+    for (std::uint16_t i = 0; i < recNum; ++i) {
+        const std::uint64_t base = addr + static_cast<std::uint64_t>(i) * recSize;
+        if (!fileBuf->setPosition(base))
+            break;
+        const std::uint8_t flag = fileBuf->getRawChar8();
+        std::string name;
+        bool ended = false;
+        for (int j = 0; j < 32; ++j) {
+            const char c = static_cast<char>(fileBuf->getRawChar8());
+            if (c == '\0') ended = true;
+            if (!ended) name.push_back(c);
+        }
+        m_styleNames.push_back(name);
+        static_cast<void>(fileBuf->getRawShort16());          // off33 used (signed)
+        const double textSize = fileBuf->getRawDouble();      // off35
+        const double widthFactor = fileBuf->getRawDouble();   // off43
+        const double obliqueAngle = fileBuf->getRawDouble();  // off51
+        const std::uint8_t generation = fileBuf->getRawChar8(); // off59
+        const double lastHeight = fileBuf->getRawDouble();    // off60
+        std::string font, bigFont;
+        ended = false;
+        for (int j = 0; j < 64; ++j) {
+            const char c = static_cast<char>(fileBuf->getRawChar8());
+            if (c == '\0') ended = true;
+            if (!ended) font.push_back(c);
+        }
+        ended = false;
+        for (int j = 0; j < 64; ++j) {
+            const char c = static_cast<char>(fileBuf->getRawChar8());
+            if (c == '\0') ended = true;
+            if (!ended) bigFont.push_back(c);
+        }
+        auto* st = new DRW_Textstyle();
+        st->name = name;
+        st->height = textSize;
+        st->width = widthFactor;
+        st->oblique = obliqueAngle;
+        st->genFlag = generation;
+        st->lastHeight = lastHeight;
+        st->font = font;
+        st->bigFont = bigFont;
+        st->flags = flag;
+        const std::uint32_t key = 0x30000000u | static_cast<std::uint32_t>(i);
+        st->handle = key;
+        stylemap[key] = st;
+    }
+    return true;
+}
+
 bool dwgReaderR11::readDwgTables(DRW_Header& /*hdr*/) {
     // The 5 leading table-section headers (BLOCK, LAYER, STYLE, LTYPE, VIEW) are
-    // 10 bytes each starting at file offset 0x2C. Read BLOCK + LAYER names (for
-    // INSERT block resolution and entity layer attribution).
+    // 10 bytes each starting at file offset 0x2C.
     readNameTable(0x2C, m_blockNames);   // BLOCK table
-    readNameTable(0x36, m_layerNames);   // LAYER table (0x2C + 10)
+    // Per-record decoders only for R11/AC1009 (the validatable subset; R10 has
+    // a different record width — `used` absent, fields at off33 not off35).
+    if (version == DRW::AC1009) {
+        // Read LTYPE BEFORE LAYER so the layer's ltype-index resolves to a name.
+        readLTypeTable(0x4A);            // LTYPE table (0x2C + 30)
+        readLayerTable(0x36);            // LAYER table (0x2C + 10)
+        readStyleTable(0x40);            // STYLE table (0x2C + 20)
+    } else {
+        // R10 fallback: still capture names so entities get layer attribution.
+        readNameTable(0x36, m_layerNames);
+    }
     return true;
 }
 
@@ -186,13 +389,27 @@ bool dwgReaderR11::readEntityR11(DRW_Interface& intfa) {
         const std::uint16_t eed = fileBuf->getRawShort16();
         for (std::uint16_t i = 0; i < eed; ++i) fileBuf->getRawChar8();
     }
-    if (flag & FLAG_HAS_COLOR)
-        fileBuf->getRawChar8();
+    // Per-entity color OVERRIDE (signed RC; AutoCAD palette index). Captured
+    // into DRW_Entity.color below; 0 == ByBlock, 256 == ByLayer (the layer
+    // default); negative values mean the layer is OFF.
+    std::int8_t colorOverride = 0;
+    bool hasColorOverride = false;
+    if (flag & FLAG_HAS_COLOR) {
+        colorOverride = static_cast<std::int8_t>(fileBuf->getRawChar8());
+        hasColorOverride = true;
+    }
+    // Per-entity LTYPE OVERRIDE (signed handle: 1B RC on R10, 2B RS on R11).
+    // Resolved to a name via m_ltypeNames; ByLayer/ByBlock sentinels handled
+    // by ltypeName(). Stored on DRW_Entity.lineType below.
+    std::int16_t ltypeOverride = 0;
+    bool hasLtypeOverride = false;
     if (flag & FLAG_HAS_LTYPE) {
-        // R10 stores the LTYPE handle as a 1-byte RC; R11 widens it to a 2-byte
-        // RS. The LAYER handle remains 2B in BOTH (read above as `layerIdx`).
-        if (version == DRW::AC1006) fileBuf->getRawChar8();
-        else                        fileBuf->getRawShort16();
+        if (version == DRW::AC1006)
+            ltypeOverride =
+                static_cast<std::int16_t>(static_cast<std::int8_t>(fileBuf->getRawChar8()));
+        else
+            ltypeOverride = static_cast<std::int16_t>(fileBuf->getRawShort16());
+        hasLtypeOverride = true;
     }
     double elevation = 0.0;
     // HAS_ELEVATION is suppressed for LINE/POINT/3DFACE (their Z is in the body).
@@ -211,6 +428,17 @@ bool dwgReaderR11::readEntityR11(DRW_Interface& intfa) {
 
     const bool hasElev = (flag & FLAG_HAS_ELEVATION) != 0;
     const std::string curLayer = layerName(layerIdx);
+    // applyAttrs: stamp layer + per-entity color/ltype overrides. Color
+    // defaults to ByLayer (256); lineType defaults to "BYLAYER" (DRW_Entity's
+    // constructor). The override is applied INSTEAD of the layer default.
+    auto applyAttrs = [&](DRW_Entity& ent) {
+        ent.layer = curLayer;
+        if (hasColorOverride) ent.color = colorOverride;
+        if (hasLtypeOverride) {
+            const std::string n = ltypeName(ltypeOverride);
+            if (!n.empty()) ent.lineType = n;
+        }
+    };
     auto rd = [&]() { return fileBuf->getRawDouble(); };
     auto rd3 = [&]() { DRW_Coord c; c.x = fileBuf->getRawDouble();
                        c.y = fileBuf->getRawDouble(); c.z = fileBuf->getRawDouble();
@@ -234,7 +462,7 @@ bool dwgReaderR11::readEntityR11(DRW_Interface& intfa) {
                 e.secPoint = fileBuf->get2RawDouble();  e.secPoint.z = elevation;
             }
             e.thickness = thickness;
-            e.layer = curLayer;
+            applyAttrs(e);
             intfa.addLine(e);
             break; }
         case R11_POINT: {
@@ -242,7 +470,7 @@ bool dwgReaderR11::readEntityR11(DRW_Interface& intfa) {
             e.basePoint.x = rd(); e.basePoint.y = rd();
             if (!hasElev) e.basePoint.z = rd();
             e.thickness = thickness;
-            e.layer = curLayer;
+            applyAttrs(e);
             intfa.addPoint(e);
             break; }
         case R11_CIRCLE: {
@@ -251,7 +479,7 @@ bool dwgReaderR11::readEntityR11(DRW_Interface& intfa) {
             e.radious = rd();
             e.basePoint.z = elevation;
             e.thickness = thickness;
-            e.layer = curLayer;
+            applyAttrs(e);
             intfa.addCircle(e);
             break; }
         case R11_ARC: {
@@ -262,7 +490,7 @@ bool dwgReaderR11::readEntityR11(DRW_Interface& intfa) {
             e.endangle = rd();
             e.basePoint.z = elevation;
             e.thickness = thickness;
-            e.layer = curLayer;
+            applyAttrs(e);
             intfa.addArc(e);
             break; }
         case R11_TEXT: {
@@ -277,7 +505,7 @@ bool dwgReaderR11::readEntityR11(DRW_Interface& intfa) {
             e.text = s;
             if (opts & 0x01) e.angle = rd();
             e.thickness = thickness;
-            e.layer = curLayer;
+            applyAttrs(e);
             intfa.addText(e);
             break; }
         case R11_SOLID:
@@ -289,7 +517,7 @@ bool dwgReaderR11::readEntityR11(DRW_Interface& intfa) {
             e.fourPoint = fileBuf->get2RawDouble();
             e.basePoint.z = e.secPoint.z = e.thirdPoint.z = e.fourPoint.z = elevation;
             e.thickness = thickness;
-            e.layer = curLayer;
+            applyAttrs(e);
             if (type == R11_TRACE) intfa.addTrace(e); else intfa.addSolid(e);
             break; }
         case R11_3DFACE: {
@@ -305,14 +533,14 @@ bool dwgReaderR11::readEntityR11(DRW_Interface& intfa) {
                 e.thirdPoint = rd3();
                 e.fourPoint = rd3();
             }
-            e.layer = curLayer;
+            applyAttrs(e);
             intfa.add3dFace(e);
             break; }
         case R11_POLYLINE: {
             // Opens a vertex accumulation; VERTEX records append, SEQEND delivers.
             m_curPoly = std::make_unique<DRW_Polyline>();
             m_curPoly->basePoint.z = elevation;
-            m_curPoly->layer = curLayer;
+            applyAttrs(*m_curPoly);
             m_curPoly->thickness = thickness;
             if (opts & 0x01) m_curPoly->flags = fileBuf->getRawChar8(); // closed/3d bits
             break; }
@@ -362,7 +590,7 @@ bool dwgReaderR11::readEntityR11(DRW_Interface& intfa) {
             if (opts & 0x80) e.rowspace = rd();
             if (blockIdx < m_blockNames.size())  // 0-based, verified vs dwgread
                 e.name = m_blockNames[blockIdx];
-            e.layer = curLayer;
+            applyAttrs(e);
             intfa.addInsert(e);
             break; }
         case R11_ATTRIB:
@@ -380,7 +608,7 @@ bool dwgReaderR11::readEntityR11(DRW_Interface& intfa) {
             fileBuf->getRawChar8();            // attribute flags (RC 70)
             if (opts & 0x01) e.angle = rd();   // rotation (shared TEXT opt bit)
             e.thickness = thickness;
-            e.layer = curLayer;
+            applyAttrs(e);
             intfa.addText(e);
             break; }
         case R11_DIMENSION: {
@@ -394,7 +622,7 @@ bool dwgReaderR11::readEntityR11(DRW_Interface& intfa) {
                 DRW_Insert e;
                 e.name = m_blockNames[blockIdx];
                 e.basePoint = DRW_Coord(0.0, 0.0, 0.0);  // *D geometry is in WCS
-                e.layer = curLayer;
+                applyAttrs(e);
                 intfa.addInsert(e);
             }
             break; }
@@ -415,7 +643,7 @@ bool dwgReaderR11::readEntityR11(DRW_Interface& intfa) {
             e.pswidth = rd();                    // width
             e.psheight = rd();                   // height
             fileBuf->getRawShort16();            // viewport id (RS)
-            e.layer = curLayer;
+            applyAttrs(e);
             intfa.addViewport(e);
             break; }
         default:

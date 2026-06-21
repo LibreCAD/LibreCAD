@@ -5223,3 +5223,107 @@ TEST_CASE("DWG pre-R13: read AC1006/R10 entities section") {
   CHECK(found_2_3_to_3_4);
   CHECK(found_irrational);
 }
+
+// Pre-R13 R11 table-record decode (LTYPE/STYLE/LAYER): asserts the per-record
+// fields delivered through addLType/addLayer/addTextStyle. Ground truth from
+// `dwgread -O JSON` on the same files. The HIDDENX2 truncation assertion is
+// the load-bearing detail — the on-disk LTYPE record has 12 fixed double
+// slots, only the first `numdashes` are valid; the rest are uninitialised
+// garbage that MUST be dropped.
+namespace {
+struct R11TableCollector : public CountingIface {
+  std::vector<DRW_Layer> layers;
+  std::vector<DRW_LType> ltypes;
+  std::vector<DRW_Textstyle> styles;
+  void addLayer(const DRW_Layer &e) override {
+    CountingIface::addLayer(e);
+    layers.push_back(e);
+  }
+  void addLType(const DRW_LType &e) override {
+    CountingIface::addLType(e);
+    ltypes.push_back(e);
+  }
+  void addTextStyle(const DRW_Textstyle &e) override {
+    CountingIface::addTextStyle(e);
+    styles.push_back(e);
+  }
+};
+}  // namespace
+
+TEST_CASE("DWG pre-R13: R11 LAYER/LTYPE/STYLE table records") {
+  const char *home = getenv("HOME");
+  if (!home) {
+    SUCCEED("HOME not set; skipping");
+    return;
+  }
+  SECTION("entities-2d.dwg (minimal: 2 layers, 1 ltype, 2 styles)") {
+    const std::string path =
+        std::string(home) + "/dev/libredwg/test/test-data/r11/entities-2d.dwg";
+    std::ifstream probe(path, std::ios::binary);
+    if (!probe.good()) {
+      SUCCEED("entities-2d.dwg absent");
+      return;
+    }
+    probe.close();
+    R11TableCollector iface;
+    const DwgResult r = readDwg(path, /*verbose=*/false, &iface);
+    REQUIRE(r.ok);
+    REQUIRE(r.version == DRW::AC1009);
+    CHECK(iface.layers.size() == 2);
+    CHECK(iface.ltypes.size() == 1);
+    CHECK(iface.styles.size() == 2);
+    // CONTINUOUS: numdashes=0, no values in path.
+    auto cont = std::find_if(iface.ltypes.begin(), iface.ltypes.end(),
+                             [](const DRW_LType &l) { return l.name == "CONTINUOUS"; });
+    REQUIRE(cont != iface.ltypes.end());
+    CHECK(cont->desc == "Solid line");
+    CHECK(cont->size == 0);
+    CHECK(cont->path.empty());
+    // STANDARD style: font=txt, lastHeight=0.2 (height/textSize=0 means unset).
+    auto std_ = std::find_if(iface.styles.begin(), iface.styles.end(),
+                             [](const DRW_Textstyle &s) { return s.name == "STANDARD"; });
+    REQUIRE(std_ != iface.styles.end());
+    CHECK(std_->font == "txt");
+    CHECK(std_->bigFont == "");
+    CHECK(std_->lastHeight == 0.2);
+    CHECK(std_->width == 1.0);
+  }
+  SECTION("ACEB10.dwg (rich: 13 layers, 2 ltypes incl HIDDENX2, 3 styles)") {
+    const std::string path =
+        std::string(home) + "/dev/libredwg/test/test-data/r11/ACEB10.dwg";
+    std::ifstream probe(path, std::ios::binary);
+    if (!probe.good()) {
+      SUCCEED("ACEB10.dwg absent");
+      return;
+    }
+    probe.close();
+    R11TableCollector iface;
+    const DwgResult r = readDwg(path, /*verbose=*/false, &iface);
+    REQUIRE(r.ok);
+    REQUIRE(r.version == DRW::AC1009);
+    CHECK(iface.layers.size() == 13);
+    CHECK(iface.ltypes.size() == 2);
+    CHECK(iface.styles.size() == 3);
+    // MOUNTINGKIT-EB35DIN and MOUNTINGKIT-EB4 have signed color = -7 (off).
+    int negCount = 0;
+    for (const auto &l : iface.layers)
+      if (l.color < 0) ++negCount;
+    CHECK(negCount == 2);
+    // HIDDENX2: numdashes=2, path is exactly [0.5, -0.25] — the on-disk slots
+    // 2..11 are NaN garbage and must be truncated.
+    auto h2 = std::find_if(iface.ltypes.begin(), iface.ltypes.end(),
+                           [](const DRW_LType &l) { return l.name == "HIDDENX2"; });
+    REQUIRE(h2 != iface.ltypes.end());
+    CHECK(h2->size == 2);
+    CHECK(h2->length == 0.75);
+    REQUIRE(h2->path.size() == 2);
+    CHECK(h2->path[0] == 0.5);
+    CHECK(h2->path[1] == -0.25);
+    // ADESK1 style: font=romans, lastHeight=0.095.
+    auto a1 = std::find_if(iface.styles.begin(), iface.styles.end(),
+                           [](const DRW_Textstyle &s) { return s.name == "ADESK1"; });
+    REQUIRE(a1 != iface.styles.end());
+    CHECK(a1->font == "romans");
+    CHECK(a1->lastHeight == 0.095);
+  }
+}
