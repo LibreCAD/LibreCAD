@@ -31,6 +31,20 @@
 #include "rs_dialogfactoryinterface.h"
 #include "rs_settings.h"
 
+namespace {
+// A failed update check must never interrupt the user with a modal dialog.
+// The check runs at startup and can be re-triggered from the menu, so log a
+// warning to the console at most once per LibreCAD session, then stay silent.
+void warnUpdateCheckFailedOnce(const QString &detail) {
+    static bool warned = false;
+    if (warned)
+        return;
+    warned = true;
+    RS_Debug::Log(RS_Debug::D_WARNING)
+        << "Checking for updates failed: " << detail;
+}
+} // namespace
+
 LC_TagInfo::LC_TagInfo(int majorVer, int minorVer, int revisionNum, int bugfixVer, const QString &labelVer, const QString &tagNameVer):m_major(majorVer), m_minor(minorVer), m_revision(
                                                                                                                                            revisionNum), m_bugfix(bugfixVer), m_label(labelVer), m_tagName(tagNameVer) {
 }
@@ -108,7 +122,7 @@ void LC_ReleaseChecker::infoReceived(QNetworkReply *reply) {
         processReleasesJSON(responseContent);
     }
     else{
-        RS_DIALOGFACTORY->requestWarningDialog(tr("Sorry, some network error occurred during checking for new version."));
+        warnUpdateCheckFailedOnce(reply->errorString());
     }
     reply->deleteLater();
 }
@@ -170,8 +184,8 @@ void LC_ReleaseChecker::processReleasesJSON(const QByteArray &responseContent) {
     QJsonParseError error;
     QJsonDocument jsonDocument = QJsonDocument::fromJson(responseContent, &error);
     if (jsonDocument.isEmpty()){
-        LC_ERR << error.errorString();
-        RS_DIALOGFACTORY->requestWarningDialog(tr("Unable to parse response from the server"));
+        warnUpdateCheckFailedOnce(QStringLiteral("unable to parse response from the server: %1")
+                                  .arg(error.errorString()));
     }
     else {
         if (jsonDocument.isArray()) {
