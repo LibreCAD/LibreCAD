@@ -27,6 +27,7 @@
 #include <QApplication>
 #include <QCheckBox>
 #include <QDir>
+#include <QElapsedTimer>
 #include <QFileDialog>
 #include <QGridLayout>
 #include <QMessageBox>
@@ -199,8 +200,30 @@ LC_FileDialogService::FileDialogResult LC_FileDialogService::getFileDetails (Fil
     }
 
     FileDialogResult result{};
+    [[maybe_unused]] bool triedNativeFallback = false;
     while (true) {
-        if (saveFileDialog->QFileDialog::exec() == QDialog::Accepted) {
+        QElapsedTimer execTimer;
+        execTimer.start();
+        const int execResult = saveFileDialog->QFileDialog::exec();
+#ifdef Q_OS_MACOS
+        // macOS-first with a Qt fallback: the native Cocoa save panel can fail to
+        // open (returning Rejected within a few ms, no panel shown) on unsigned /
+        // locally-built bundles. A genuine user cancel always takes far longer
+        // than the panel needs to render and the user to react, so a fast Reject
+        // from the native dialog means it never appeared -- retry once with the
+        // reliable Qt-drawn dialog. macOS-only by design: Linux already defaults
+        // to the Qt dialog, Windows' native dialog is reliable, and the async
+        // Wayland portal can fail *slowly* (D-Bus timeout), which this timing test
+        // must never be applied to.
+        if (execResult != QDialog::Accepted && !triedNativeFallback
+            && !saveFileDialog->testOption(QFileDialog::DontUseNativeDialog)
+            && execTimer.elapsed() < 250 /* ms */) {
+            triedNativeFallback = true;
+            saveFileDialog->setOption(QFileDialog::DontUseNativeDialog, true);
+            continue;  // re-exec with the Qt-drawn dialog
+        }
+#endif
+        if (execResult == QDialog::Accepted) {
             result.filePath = QDir::toNativeSeparators(QFileInfo(saveFileDialog->QFileDialog::selectedFiles().at(0)).absoluteFilePath());
             result.dirPath = QFileInfo(result.filePath).absolutePath();
             result.fileName = QFileInfo(result.filePath).fileName();
