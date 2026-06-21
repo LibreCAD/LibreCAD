@@ -5250,6 +5250,108 @@ struct R11TableCollector : public CountingIface {
 };
 }  // namespace
 
+// Helper: pull a DRW_Variant scalar out of a header var map (by key).
+namespace {
+const DRW_Variant *hdrVar(const DRW_Header &h, const char *k) {
+  auto it = h.vars.find(k);
+  return it == h.vars.end() ? nullptr : it->second;
+}
+struct HdrCollector : public CountingIface {
+  DRW_Header hdr;
+  void addHeader(const DRW_Header *h) override { hdr = *h; }
+};
+}  // namespace
+
+// Pre-R13 R11 header-variables decode. The R11 header layout starts at file
+// offset 0x5E (5 leading 10-byte table-section headers end there) and is
+// SEQUENTIAL — every field offset is the running sum of prior widths. We
+// read the high-value drawing-state vars through PLINEWID (post-cursor
+// 0x36f); the long DIMxx/UCS/VPORT tail is intentionally skipped.
+//
+// CRITICAL: dwgRW::processDwg() calls readDwgHeader BEFORE readDwgTables,
+// so the LAYER/STYLE/LTYPE name vectors are empty at header-read time.
+// The fix is to eagerly read the table NAMES inside readDwgHeader before
+// resolving CLAYER/TEXTSTYLE/CELTYPE. The ACEB10 SECTION below is the
+// load-bearing case for this fix: its CLAYER index is 8 (== "BORDER"), so
+// a buggy "no eager read" path would silently fall back instead of
+// returning the right name (entities-2d masks the bug because CLAYER=0
+// happens to coincide with the default "0").
+TEST_CASE("DWG pre-R13: R11 header variables decode") {
+  const char *home = getenv("HOME");
+  if (!home) {
+    SUCCEED("HOME not set; skipping");
+    return;
+  }
+  SECTION("entities-2d.dwg (defaults — minimal coverage)") {
+    const std::string path =
+        std::string(home) + "/dev/libredwg/test/test-data/r11/entities-2d.dwg";
+    std::ifstream probe(path, std::ios::binary);
+    if (!probe.good()) { SUCCEED("entities-2d.dwg absent"); return; }
+    probe.close();
+    HdrCollector iface;
+    const DwgResult r = readDwg(path, /*verbose=*/false, &iface);
+    REQUIRE(r.ok);
+    REQUIRE(r.version == DRW::AC1009);
+    // doubles
+    auto *dimscale = hdrVar(iface.hdr, "DIMSCALE");
+    REQUIRE(dimscale != nullptr);
+    CHECK(dimscale->content.d == 1.0);
+    auto *ltscale = hdrVar(iface.hdr, "LTSCALE");
+    REQUIRE(ltscale != nullptr);
+    CHECK(ltscale->content.d == 1.0);
+    auto *textsize = hdrVar(iface.hdr, "TEXTSIZE");
+    REQUIRE(textsize != nullptr);
+    CHECK(textsize->content.d == 0.2);
+    // ints (CECOLOR=256 was the load-bearing oldCECOLOR-decoy trap)
+    auto *cecolor = hdrVar(iface.hdr, "CECOLOR");
+    REQUIRE(cecolor != nullptr);
+    CHECK(cecolor->content.i == 256);
+    auto *lunits = hdrVar(iface.hdr, "LUNITS");
+    REQUIRE(lunits != nullptr);
+    CHECK(lunits->content.i == 2);
+    auto *pdmode = hdrVar(iface.hdr, "PDMODE");
+    REQUIRE(pdmode != nullptr);
+    CHECK(pdmode->content.i == 0);
+    // coord (EXTMAX bit-exact to ~1 ULP; literal-precision round-trip is loose)
+    auto *extmax = hdrVar(iface.hdr, "EXTMAX");
+    REQUIRE(extmax != nullptr);
+    REQUIRE(extmax->type() == DRW_Variant::COORD);
+    auto near = [](double a, double b) { return std::abs(a - b) < 1e-12; };
+    CHECK(near(extmax->content.v->x, 9.43333333333333));
+    CHECK(near(extmax->content.v->y, 9.12727922061358));
+    CHECK(extmax->content.v->z == 5.0);
+    // resolved names
+    auto *clayer = hdrVar(iface.hdr, "CLAYER");
+    REQUIRE(clayer != nullptr);
+    CHECK(*clayer->content.s == "0");
+    auto *celtype = hdrVar(iface.hdr, "CELTYPE");
+    REQUIRE(celtype != nullptr);
+    CHECK(*celtype->content.s == "BYLAYER");
+  }
+  SECTION("ACEB10.dwg (CLAYER!=0 — exercises eager table-read fix)") {
+    const std::string path =
+        std::string(home) + "/dev/libredwg/test/test-data/r11/ACEB10.dwg";
+    std::ifstream probe(path, std::ios::binary);
+    if (!probe.good()) { SUCCEED("ACEB10.dwg absent"); return; }
+    probe.close();
+    HdrCollector iface;
+    const DwgResult r = readDwg(path, /*verbose=*/false, &iface);
+    REQUIRE(r.ok);
+    REQUIRE(r.version == DRW::AC1009);
+    auto *clayer = hdrVar(iface.hdr, "CLAYER");
+    REQUIRE(clayer != nullptr);
+    // Oracle CLAYER index = 8, m_layerNames[8] = "BORDER".
+    CHECK(*clayer->content.s == "BORDER");
+    auto *textstyle = hdrVar(iface.hdr, "TEXTSTYLE");
+    REQUIRE(textstyle != nullptr);
+    // Oracle TEXTSTYLE index = 1, m_styleNames[1] = "ADESK1".
+    CHECK(*textstyle->content.s == "ADESK1");
+    auto *pdmode = hdrVar(iface.hdr, "PDMODE");
+    REQUIRE(pdmode != nullptr);
+    CHECK(pdmode->content.i == 3);
+  }
+}
+
 TEST_CASE("DWG pre-R13: R11 LAYER/LTYPE/STYLE table records") {
   const char *home = getenv("HOME");
   if (!home) {

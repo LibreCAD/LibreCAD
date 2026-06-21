@@ -82,8 +82,141 @@ bool dwgReaderR11::readFileHeader() {
     return true;
 }
 
-bool dwgReaderR11::readDwgHeader(DRW_Header& /*hdr*/) {
-    return true;  // header variables not needed for entity geometry (follow-up)
+bool dwgReaderR11::readDwgHeader(DRW_Header& hdr) {
+    // The pre-R13 header variables block starts at file offset 0x5E (the 5
+    // leading 10-byte table-section headers end at 0x2C+50 = 0x5E). ALL fields
+    // are RAW LE; the spec runs SEQUENTIAL only — every offset is the running
+    // sum of prior fields, so a wrong width here desyncs everything that
+    // follows. We read just the high-value drawing-state vars (through
+    // PLINEWID, post-cursor 0x36f) and STOP — the long DIMxx / UCS / VPORT
+    // tail uses inline 10-byte embedded-table-headers (PRER13_SECTION_HDR) and
+    // has near-zero rendering value.
+    //
+    // CRITICAL CALL ORDER: processDwg() calls readDwgHeader BEFORE
+    // readDwgTables, so the LAYER/STYLE/LTYPE name vectors are EMPTY here.
+    // For CLAYER/TEXTSTYLE/CELTYPE name resolution we eagerly read the table
+    // name vectors up-front (idempotent; the per-record decoders run again in
+    // readDwgTables to populate ltypemap/layermap/stylemap).
+    if (version != DRW::AC1009)
+        return true;  // R10 header layout overlaps R11 but has different per-
+                      // field widths (FIELD_CMC CECOLOR, no PSLTSCALE etc.) —
+                      // out of scope.
+
+    // Eager table-name reads for CLAYER/TEXTSTYLE/CELTYPE resolution. These
+    // are seek-absolute (readNameTable does setPosition), so they do not
+    // disturb our header-walk cursor.
+    readNameTable(0x36, m_layerNames);
+    readNameTable(0x40, m_styleNames);
+    readNameTable(0x4A, m_ltypeNames);
+
+    if (!fileBuf->setPosition(0x5E))
+        return false;
+    auto rc = [&]() { return fileBuf->getRawChar8(); };
+    auto rs = [&]() { return fileBuf->getRawShort16(); };
+    auto rsd = [&]() { return static_cast<std::int16_t>(fileBuf->getRawShort16()); };
+    auto rl = [&]() { return fileBuf->getRawLong32(); };
+    auto rd = [&]() { return fileBuf->getRawDouble(); };
+    auto r2d = [&]() { DRW_Coord c; c.x = rd(); c.y = rd(); c.z = 0; return c; };
+    auto r3d = [&]() { DRW_Coord c; c.x = rd(); c.y = rd(); c.z = rd(); return c; };
+    auto skipBytes = [&](int n) {
+        fileBuf->setPosition(fileBuf->getPosition() + n);
+    };
+
+    hdr.addCoord("INSBASE", r3d(), 10);
+    rs();                                                 // PLINEGEN (unused)
+    hdr.addCoord("EXTMIN", r3d(), 10);
+    hdr.addCoord("EXTMAX", r3d(), 10);
+    hdr.addCoord("LIMMIN", r2d(), 10);
+    hdr.addCoord("LIMMAX", r2d(), 10);
+    hdr.addCoord("VIEWCTR", r3d(), 10);
+    hdr.addDouble("VIEWSIZE", rd(), 40);
+    hdr.addInt("SNAPMODE", rs(), 70);
+    r2d();                                                // SNAPUNIT (unused)
+    r2d();                                                // SNAPBASE (unused)
+    rd();                                                 // SNAPANG (unused)
+    rs();                                                 // SNAPSTYLE
+    rs();                                                 // SNAPISOPAIR
+    hdr.addInt("GRIDMODE", rs(), 70);
+    r2d();                                                // GRIDUNIT (unused)
+    hdr.addInt("ORTHOMODE", rs(), 70);
+    hdr.addInt("REGENMODE", rs(), 70);
+    hdr.addInt("FILLMODE", rs(), 70);
+    hdr.addInt("QTEXTMODE", rs(), 70);
+    rs();                                                 // DRAGMODE (unused)
+    hdr.addDouble("LTSCALE", rd(), 40);
+    hdr.addDouble("TEXTSIZE", rd(), 40);
+    hdr.addDouble("TRACEWID", rd(), 40);
+    const std::int16_t clayerIdx = rsd();                 // CLAYER (signed RS index)
+    rl(); rl();                                           // oldCECOLOR (DECOY — skip)
+    rs();                                                 // unknown_5
+    rs();                                                 // PSLTSCALE
+    rs();                                                 // TREEDEPTH
+    rs();                                                 // unknown_6
+    rd();                                                 // aspect_ratio (calculated)
+    hdr.addInt("LUNITS", rs(), 70);
+    hdr.addInt("LUPREC", rs(), 70);
+    rs();                                                 // AXISMODE
+    r2d();                                                // AXISUNIT
+    rd();                                                 // SKETCHINC
+    rd();                                                 // FILLETRAD
+    hdr.addInt("AUNITS", rs(), 70);
+    hdr.addInt("AUPREC", rs(), 70);
+    const std::int16_t textstyleIdx = rsd();              // TEXTSTYLE (signed RS index)
+    hdr.addInt("OSMODE", rs(), 70);
+    hdr.addInt("ATTMODE", rs(), 70);
+    skipBytes(15);                                        // MENU (15 fixed bytes)
+    hdr.addDouble("DIMSCALE", rd(), 40);                  // load-bearing 0x1a3 checkpoint
+    rd(); rd(); rd(); rd();                               // DIMASZ DIMEXO DIMDLI DIMEXE
+    rd(); rd(); rd(); rd(); rd();                         // DIMTP DIMTM DIMTXT DIMCEN DIMTSZ
+    rc(); rc(); rc(); rc(); rc(); rc(); rc();             // DIMTOL DIMLIM DIMTIH DIMTOH DIMSE1 DIMSE2 DIMTAD
+    rc();                                                 // LIMCHECK
+    skipBytes(46);                                        // MENUEXT (46 fixed bytes)
+    hdr.addDouble("ELEVATION", rd(), 40);
+    hdr.addDouble("THICKNESS", rd(), 40);
+    hdr.addCoord("VIEWDIR", r3d(), 10);
+    for (int i = 0; i < 6; ++i) r3d();                    // VPOINT/VPOINTALT (6 x 3RD)
+    rs();                                                 // flag_3d
+    rs();                                                 // BLIPMODE
+    rc();                                                 // DIMZIN
+    rd();                                                 // DIMRND
+    rd();                                                 // DIMDLE
+    skipBytes(33);                                        // DIMBLK_T (33 fixed)
+    rs();                                                 // circle_zoom
+    rs();                                                 // COORDS
+    hdr.addInt("CECOLOR", static_cast<std::int16_t>(rs()), 62);  // the REAL CECOLOR
+    const std::int16_t celtypeIdx = rsd();                // CELTYPE (signed RS index)
+    rl(); rl();                                           // TDCREATE (TIMERLL)
+    rl(); rl();                                           // TDUPDATE
+    rl(); rl();                                           // TDINDWG
+    rl(); rl();                                           // TDUSRTIMER
+    rs();                                                 // USRTIMER
+    rs();                                                 // FASTZOOM
+    rs();                                                 // SKPOLY
+    for (int i = 0; i < 7; ++i) rs();                     // unknown_mon..unknown_ms
+    hdr.addDouble("ANGBASE", rd(), 50);
+    hdr.addInt("ANGDIR", rs(), 70);
+    hdr.addInt("PDMODE", rs(), 70);
+    hdr.addDouble("PDSIZE", rd(), 40);
+    rd();                                                 // PLINEWID (cursor 0x36f)
+    // STOP — the long DIMxx tail, UCS/VPORT/VIEW/APPID/DIMSTYLE/VX section
+    // headers and per-record fields are not consumed (no reader-side value
+    // and the inline PRER13_SECTION_HDR layout invites desync).
+
+    // Resolve handle-references (CLAYER/TEXTSTYLE/CELTYPE) to names. Indices
+    // are 0-based; 0x7FFF/0x7FFE are the ByLayer/ByBlock sentinels.
+    auto resolveName = [&](std::int16_t idx,
+                           const std::vector<std::string>& tbl,
+                           const char* def) -> std::string {
+        if (idx == 0x7FFF) return "BYLAYER";
+        if (idx == 0x7FFE) return "BYBLOCK";
+        if (idx >= 0 && static_cast<size_t>(idx) < tbl.size())
+            return tbl[idx];
+        return def;
+    };
+    hdr.addStr("CLAYER",   resolveName(clayerIdx, m_layerNames, "0"),         8);
+    hdr.addStr("TEXTSTYLE", resolveName(textstyleIdx, m_styleNames, "STANDARD"), 7);
+    hdr.addStr("CELTYPE",  resolveName(celtypeIdx, m_ltypeNames, "BYLAYER"),  6);
+    return true;
 }
 
 bool dwgReaderR11::readNameTable(std::uint32_t hdrPos, std::vector<std::string>& out) {
