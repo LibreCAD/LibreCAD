@@ -25,6 +25,8 @@
 **********************************************************************/
 //! File: rs_arc.cpp
 
+#include <cmath>
+
 #include <QPainterPath>
 
 #include "rs_arc.h"
@@ -94,7 +96,14 @@ void RS_Arc::setReversed(bool r) {
 }
 
 bool RS_ArcData::isValid() const{
-	return (center.valid && radius>RS_TOLERANCE &&
+	return (center.valid
+            && std::isfinite(center.x)
+            && std::isfinite(center.y)
+            && std::isfinite(center.z)
+            && std::isfinite(radius)
+            && std::isfinite(angle1)
+            && std::isfinite(angle2)
+            && radius>RS_TOLERANCE &&
 			fabs(remainder(angle1-angle2, 2.*M_PI))>RS_TOLERANCE_ANGLE);
 }
 
@@ -985,14 +994,32 @@ void RS_Arc::createPainterPath(RS_Painter* painter, QPainterPath& path) const {
 }
 
 void RS_Arc::draw(RS_Painter* painter) {
+  if (painter == nullptr
+      || !data.center.valid
+      || !std::isfinite(data.center.x)
+      || !std::isfinite(data.center.y)
+      || !std::isfinite(data.center.z)
+      || !std::isfinite(data.radius)
+      || !std::isfinite(data.angle1)
+      || !std::isfinite(data.angle2)
+      || data.radius <= 0.) {
+    return;
+  }
+
   const double radiusUi = painter->toGuiDX(getRadius());
+  if (!std::isfinite(radiusUi) || radiusUi <= 0.) {
+    return;
+  }
+
   if (radiusUi < RS_Painter::getMaximumArcNonErrorRadius()) {
     painter->drawEntityArc(this);
   } else {
     QPainterPath path;
-    RS_Vector startUi = painter->toGui(getStartpoint());
-    path.moveTo(startUi.x, startUi.y);
     createPainterPath(painter, path);
+    if (path.isEmpty()) {
+      return;
+    }
+
     painter->drawPath(path);
   }
 }

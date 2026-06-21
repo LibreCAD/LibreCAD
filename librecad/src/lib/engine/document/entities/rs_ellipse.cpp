@@ -25,6 +25,8 @@
 **
 **********************************************************************/
 
+#include <cmath>
+
 #include <QPainterPath>
 #include "rs_ellipse.h"
 
@@ -54,6 +56,27 @@
 #endif
 
 namespace{
+
+bool hasFiniteValue(double value) {
+    return std::isfinite(value);
+}
+
+bool hasUsableVector(const RS_Vector& vector) {
+    return vector.valid
+        && hasFiniteValue(vector.x)
+        && hasFiniteValue(vector.y)
+        && hasFiniteValue(vector.z);
+}
+
+bool hasUsableEllipseData(const RS_EllipseData& data) {
+    return hasUsableVector(data.center)
+        && hasUsableVector(data.majorP)
+        && hasFiniteValue(data.ratio)
+        && hasFiniteValue(data.angle1)
+        && hasFiniteValue(data.angle2)
+        && data.ratio > 0.
+        && data.majorP.magnitude() > RS_TOLERANCE;
+}
 
 //functor to solve for distance, used by snapDistance
 class EllipseDistanceFunctor
@@ -2119,9 +2142,18 @@ void RS_Ellipse::draw(RS_Painter* painter) {
   if (painter == nullptr)
     return;
 
+  if (!hasUsableEllipseData(data))
+    return;
+
   const double uiRadius = painter->toGuiDX((getRatio() > 1.) ? getMajorRadius() : getMinorRadius());
+  if (!hasFiniteValue(uiRadius) || uiRadius <= 0.)
+    return;
+
   if (uiRadius <= double(RS_Painter::getMaximumArcNonErrorRadius())) {
     const double majorPDegrees = RS_Math::rad2deg(getMajorP().angle());
+    if (!hasFiniteValue(majorPDegrees))
+      return;
+
     if (isArc()) {
       painter->drawEllipseArcWCS(getCenter(), getMajorRadius(), getRatio(), majorPDegrees,
                                  RS_Math::rad2deg(getAngle1()),
@@ -2134,11 +2166,11 @@ void RS_Ellipse::draw(RS_Painter* painter) {
     return;
   }
 
-  RS_Vector startUi = painter->toGui(isArc() ? getStartpoint() : getCenter() + getMajorP());
-  QPointF startPos{startUi.x, startUi.y};
-  QPainterPath path(startPos);
-  path.moveTo(startPos);
+  QPainterPath path;
   createPainterPath(painter, path);
+  if (path.isEmpty())
+    return;
+
   // A full ellipse is a closed contour; close the subpath so the stroke uses
   // the pen's join style at the closure point rather than its cap style.
   if (!isArc())
@@ -2147,8 +2179,14 @@ void RS_Ellipse::draw(RS_Painter* painter) {
 }
 
 void RS_Ellipse::createPainterPath(RS_Painter* painter, QPainterPath& path) const {
+    if (painter == nullptr || !hasUsableEllipseData(data))
+        return;
+
     double baseAngle = getAngle1();
     double fullAngleLength = isArc() ? getAngleLength() : 2 * M_PI;
+    if (!hasFiniteValue(baseAngle) || !hasFiniteValue(fullAngleLength))
+        return;
+
     if (isArc() && isReversed())
         fullAngleLength = - fullAngleLength;
     auto getParamFunc = [this](const RS_Vector& vp) { return getEllipseAngle(vp); };
