@@ -21,6 +21,7 @@
  ******************************************************************************/
 
 
+#include <QElapsedTimer>
 #include <QFileDialog>
 #include <QImageWriter>
 #include <QMessageBox>
@@ -196,35 +197,58 @@ QPair<QString, QString> LC_AppWindowDialogsInvoker::showExportFileSelectionDialo
     }
     fileDlg.selectFile(fileName);
 
-    if (fileDlg.exec() == QDialog::Accepted) {
-        QStringList files = fileDlg.selectedFiles();
-        if (!files.isEmpty()) {
-            fileName = files[0];
-
-            // store new default settings:
-            LC_GROUP_GUARD("Export");{
-                LC_SET("ExportImage", QFileInfo(fileName).absolutePath());
-                LC_SET("ExportImageFilter",
-                       fileDlg.selectedNameFilter());
-            }
-
-            // find out extension:
-            QString filter = fileDlg.selectedNameFilter();
-            QString format = "";
-            int i = filter.indexOf("(*.");
-            if (i != -1) {
-                int i2 = filter.indexOf(QRegularExpression("[) ]"), i);
-                format = filter.mid(i + 3, i2 - (i + 3));
-                format = format.toUpper();
-            }
-
-            // append extension to file:
-            if (!QFileInfo(fileName).fileName().contains(".")) {
-                fileName.push_back("." + format.toLower());
-            }
-
-            return {fileName, format};
+    [[maybe_unused]] bool triedNativeFallback = false;
+    while (true) {
+        QElapsedTimer execTimer;
+        execTimer.start();
+        const int execResult = fileDlg.exec();
+#ifdef Q_OS_MACOS
+        // The native macOS save panel can fail to open (returning Rejected within
+        // a few ms, no panel shown) on unsigned / locally-built bundles, which
+        // would silently abort the export. A genuine user cancel takes far longer;
+        // on that fast-Reject signature, retry once with the reliable Qt-drawn
+        // dialog. Mirrors LC_FileDialogService::getFileDetails; macOS-only by
+        // design (Linux defaults to the Qt dialog, Windows native is reliable,
+        // and the async Wayland portal can fail slowly).
+        if (execResult != QDialog::Accepted && !triedNativeFallback
+            && !fileDlg.testOption(QFileDialog::DontUseNativeDialog)
+            && execTimer.elapsed() < 250 /* ms */) {
+            triedNativeFallback = true;
+            fileDlg.setOption(QFileDialog::DontUseNativeDialog, true);
+            continue;  // re-exec with the Qt-drawn dialog
         }
+#endif
+        if (execResult == QDialog::Accepted) {
+            QStringList files = fileDlg.selectedFiles();
+            if (!files.isEmpty()) {
+                fileName = files[0];
+
+                // store new default settings:
+                LC_GROUP_GUARD("Export");{
+                    LC_SET("ExportImage", QFileInfo(fileName).absolutePath());
+                    LC_SET("ExportImageFilter",
+                           fileDlg.selectedNameFilter());
+                }
+
+                // find out extension:
+                QString filter = fileDlg.selectedNameFilter();
+                QString format = "";
+                int i = filter.indexOf("(*.");
+                if (i != -1) {
+                    int i2 = filter.indexOf(QRegularExpression("[) ]"), i);
+                    format = filter.mid(i + 3, i2 - (i + 3));
+                    format = format.toUpper();
+                }
+
+                // append extension to file:
+                if (!QFileInfo(fileName).fileName().contains(".")) {
+                    fileName.push_back("." + format.toLower());
+                }
+
+                return {fileName, format};
+            }
+        }
+        break;
     }
     return {"", ""};
 }
