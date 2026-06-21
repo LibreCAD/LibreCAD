@@ -240,6 +240,31 @@ std::set<std::string> classRecordNames(const std::string &path) {
   return names;
 }
 
+// Returns the code-290 (plot flag) value of the LAYER record named `layerName`,
+// or "" if absent. In our writer code 2 (name) precedes code 290 within a
+// LAYER record, so match the name first then capture the next 290.
+std::string layerPlotFlag(const std::string &path, const std::string &layerName) {
+  std::ifstream in(path);
+  std::string codeLine, valueLine;
+  bool inLayer = false, nameMatched = false;
+  auto trim = [](std::string s) {
+    if (!s.empty() && s.back() == '\r')
+      s.pop_back();
+    size_t a = s.find_first_not_of(" \t");
+    return a == std::string::npos ? std::string() : s.substr(a);
+  };
+  while (std::getline(in, codeLine) && std::getline(in, valueLine)) {
+    const std::string c = trim(codeLine), v = trim(valueLine);
+    if (c == "0")
+      { inLayer = (v == "LAYER"); nameMatched = false; }
+    else if (inLayer && c == "2")
+      nameMatched = (v == layerName);
+    else if (inLayer && nameMatched && c == "290")
+      return v;
+  }
+  return std::string();
+}
+
 } // namespace
 
 TEST_CASE("DXF round-trip via RS_FilterDXFRW preserves unmodeled object + entity",
@@ -1328,4 +1353,73 @@ TEST_CASE("DXF import preserves a caret-bearing layer name verbatim",
   CHECK(layer->getName() == QStringLiteral("A^IB"));
 
   std::filesystem::remove(src);
+}
+
+// Audit follow-up to the DWG layer-0 plot-flag fix: the DXF LAYER plot flag
+// (code 290) used to be emitted ONLY when plotF was false, relying on
+// "absent => true". That was inconsistent with the always-emitted lineweight
+// (370)/plotstyle (390), non-conformant with AutoCAD/ezdxf (which always write
+// every R2000+ LAYER field), and dropped an explicit "290 1" written by a
+// strict external tool on re-save. It is now emitted unconditionally. Confirm a
+// plot-on layer emits 290=1 (the discriminating case: the old code emitted NO
+// 290 for it), a plot-off layer emits 290=0, and both round-trip.
+TEST_CASE("DXF export always emits the layer plot flag (290)",
+          "[dxf][roundtrip][filter][layer-plotflag]") {
+  ensureSettings();
+  const std::string src = tmpFile("plotflagsrc.dxf");
+  const std::string out = tmpFile("plotflag.dxf");
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
+
+  // Minimal valid DXF (one LINE on "0") to set the graphic up like a real
+  // import, which creates the standard "0" layer (plot-on by default).
+  const std::string dxf =
+      "0\nSECTION\n2\nENTITIES\n"
+      "0\nLINE\n8\n0\n10\n0.0\n20\n0.0\n30\n0.0\n11\n10.0\n21\n10.0\n31\n0.0\n"
+      "0\nENDSEC\n0\nEOF\n";
+  writeText(src, dxf);
+
+  RS_Graphic graphic;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(src),
+                              RS2::FormatDXFRW));
+  }
+
+  // Add a non-default plot-off layer alongside the plot-on "0".
+  {
+    auto *noplot = new RS_Layer(QStringLiteral("NOPLOT"));
+    noplot->setPrint(false);
+    graphic.addLayer(noplot);
+  }
+  REQUIRE(graphic.findLayer(QStringLiteral("0")) != nullptr);
+  REQUIRE(graphic.findLayer(QStringLiteral("0"))->isPrint());
+  REQUIRE(graphic.findLayer(QStringLiteral("NOPLOT")) != nullptr);
+  REQUIRE(!graphic.findLayer(QStringLiteral("NOPLOT"))->isPrint());
+
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out),
+                              RS2::FormatDXFRW));  // AC1021 (R2007+, > AC1014)
+  }
+
+  // Regression: with a plot-on layer the old writer emitted NO 290 at all.
+  CHECK(recordHasCode(out, "LAYER", "290"));
+  CHECK(layerPlotFlag(out, "0") == "1");        // plottable
+  CHECK(layerPlotFlag(out, "NOPLOT") == "0");   // not plottable
+
+  // Both values round-trip back through the reader.
+  RS_Graphic reloaded;
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(reloaded, QString::fromStdString(out),
+                              RS2::FormatDXFRW));
+  }
+  REQUIRE(reloaded.findLayer(QStringLiteral("0")) != nullptr);
+  REQUIRE(reloaded.findLayer(QStringLiteral("NOPLOT")) != nullptr);
+  CHECK(reloaded.findLayer(QStringLiteral("0"))->isPrint());
+  CHECK(!reloaded.findLayer(QStringLiteral("NOPLOT"))->isPrint());
+
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
 }
