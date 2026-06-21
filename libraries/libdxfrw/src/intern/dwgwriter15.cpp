@@ -1452,6 +1452,15 @@ void dwgWriter15::addLType(const DRW_LType& lt) {
 
 void dwgWriter15::addLayer(const DRW_Layer& lay) {
     std::string upper = toUpperCase(lay.name);
+    if (upper == "0") {
+        // "0" is the reserved layer at fixed handle 0x12; keep its real data
+        // (plot flag, color, linetype, ...) so it is emitted faithfully rather
+        // than as a default stub. Do not add it to m_pendingLayers (avoids a
+        // duplicate record at a second handle).
+        m_layer0 = lay;
+        m_haveLayer0 = true;
+        return;
+    }
     if (upper.empty() || m_writingCtx.layerMap.count(upper)) return;
     std::uint32_t h = m_handles.next();
     m_writingCtx.layerMap[upper] = h;
@@ -1575,7 +1584,10 @@ bool dwgWriter15::writeDwgObjects() {
         emitControlObject(oType::LAYER_CONTROL, reservedHandle::LAYER_CONTROL,
                           1 + static_cast<std::uint32_t>(m_pendingLayers.size()),
                           layerChildren);
-        emitTableRecord(oType::LAYER, 0x12, "0");
+        if (m_haveLayer0)
+            emitLayerRecord(0x12, m_layer0);   // faithful "0" (plot flag, color, ...)
+        else
+            emitTableRecord(oType::LAYER, 0x12, "0");  // fallback stub
         for (auto& p : m_pendingLayers)
             emitLayerRecord(p.first, p.second);
     }
