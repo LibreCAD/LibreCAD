@@ -745,18 +745,110 @@ bool dwgReaderR11::readEntityR11(DRW_Interface& intfa) {
             intfa.addText(e);
             break; }
         case R11_DIMENSION: {
-            // A dimension's graphics (lines/arrows/text) live in an anonymous
-            // *D block referenced by the first common field (block, HANDLE 2,2 =
-            // RS index). Render it by inserting that block; the typed dimension
-            // (defpoints/measurement) is dropped (rendering-first). The block was
-            // already delivered by readDwgBlocks.
+            // The pre-R13 DIMENSION record carries the typed dimension fields
+            // (defpoints/textpoint/dimtype/etc.) PLUS a reference to an
+            // anonymous `*D` block that holds the rendered graphics (lines,
+            // arrows, text). Until P4 this code rendered ONLY the *D block as
+            // an INSERT; now it decodes the typed dim and emits the right
+            // DRW_Dim* INSTEAD for the handled dimtypes (LINEAR + ALIGNED),
+            // falling back to the INSERT for ANG2LN/ANG3PT/RADIUS/DIAMETER/
+            // ORDINATE (no R11 oracle file for those types).
+            //
+            // Sequence (after the common header already consumed above):
+            //   block RS         -> *D block index
+            //   def_pt 3RD
+            //   text_midpt 2RD
+            //   opts&0x1: clone_ins_pt 2RD
+            //   opts&0x2: flag RC (dimtype = flag & 15)
+            //   opts&0x4: user_text TV
+            //   per-type fields (each opts-gated; see dwg.spec dimension.spec)
             const std::uint16_t blockIdx = fileBuf->getRawShort16();
-            if (blockIdx < m_blockNames.size() && !m_blockNames[blockIdx].empty()) {
-                DRW_Insert e;
-                e.name = m_blockNames[blockIdx];
-                e.basePoint = DRW_Coord(0.0, 0.0, 0.0);  // *D geometry is in WCS
-                applyAttrs(e);
-                intfa.addInsert(e);
+            DRW_Coord defPt = rd3();
+            DRW_Coord textMid = fileBuf->get2RawDouble();   // 2RD; z=0
+            DRW_Coord cloneIns(0.0, 0.0, 0.0);
+            if (opts & 0x1) cloneIns = fileBuf->get2RawDouble();
+            std::uint8_t dimFlag = 0;
+            if (opts & 0x2) dimFlag = fileBuf->getRawChar8();
+            std::string userText;
+            if (opts & 0x4) userText = readTv();
+            const std::uint8_t dimtype = dimFlag & 0x0F;
+
+            // Common DRW_Dimension setup: shared across all dimtypes; only
+            // the public setters are usable (setPt2..setPt6 etc. are
+            // protected, friend-scoped to the base reader path). The typed
+            // subclass exposes per-type public setters (setClonePoint on
+            // Aligned, setDef1Point/setDef2Point, setAngle/setOblique on
+            // Linear). Layer + per-entity overrides via applyAttrs (DRW_Dim*
+            // IS-A DRW_Entity).
+            auto setupBase = [&](DRW_Dimension& dim) {
+                dim.setDefPoint(defPt);
+                dim.setTextPoint(textMid);
+                dim.setText(userText);
+                dim.type = dimFlag;
+                dim.setStyle("");                           // consumer falls back to m_dimStyle
+                dim.setName(blockIdx < m_blockNames.size()
+                                ? m_blockNames[blockIdx]
+                                : std::string());
+                applyAttrs(dim);
+            };
+
+            const double RAD2DEG = 57.29577951308232;        // 180/pi
+
+            switch (dimtype) {
+            case 0: {  // LINEAR
+                DRW_Coord x1(0, 0, 0), x2(0, 0, 0);
+                double dim_rotation = 0.0, oblique = 0.0, text_rotation = 0.0;
+                if (opts & 0x008) x1 = rd3();
+                if (opts & 0x010) x2 = rd3();
+                if (opts & 0x100) dim_rotation = rd();      // RD radians
+                if (opts & 0x200) oblique = rd();           // RD radians
+                if (opts & 0x400) text_rotation = rd();     // RD radians
+                if (opts & 0x4000) rd3();                   // extrusion 3RD (unused)
+                if (opts & 0x8000) fileBuf->getRawShort16();// dimstyle RS index (unresolved)
+                DRW_DimLinear dim;
+                setupBase(dim);
+                dim.setClonePoint(cloneIns);                // public on Aligned/Linear
+                dim.setDef1Point(x1);
+                dim.setDef2Point(x2);
+                dim.setAngle(dim_rotation * RAD2DEG);       // consumer deg2rads
+                dim.setOblique(oblique * RAD2DEG);
+                dim.setDir(text_rotation);                  // RADIANS (consumer raw)
+                intfa.addDimLinear(&dim);
+                break; }
+            case 1: {  // ALIGNED
+                DRW_Coord x1(0, 0, 0), x2(0, 0, 0);
+                double oblique_unused = 0.0, text_rotation = 0.0;
+                if (opts & 0x008) x1 = rd3();
+                if (opts & 0x010) x2 = rd3();
+                if (opts & 0x100) oblique_unused = rd();    // 0x100 here = oblique;
+                                                            // DRW_DimAligned has no
+                                                            // public oblique setter
+                                                            // AND addDimAlign ignores
+                                                            // it -> read+discard.
+                if (opts & 0x400) text_rotation = rd();
+                if (opts & 0x8000) fileBuf->getRawShort16();
+                (void)oblique_unused;
+                DRW_DimAligned dim;
+                setupBase(dim);
+                dim.setClonePoint(cloneIns);
+                dim.setDef1Point(x1);
+                dim.setDef2Point(x2);
+                dim.setDir(text_rotation);                  // RADIANS
+                intfa.addDimAlign(&dim);
+                break; }
+            default: {
+                // Unhandled dimtype -> render via the *D block (the existing
+                // pre-P4 path). The *D block was already delivered by
+                // readDwgBlocks; an INSERT at (0,0) renders the graphics.
+                if (blockIdx < m_blockNames.size()
+                    && !m_blockNames[blockIdx].empty()) {
+                    DRW_Insert e;
+                    e.name = m_blockNames[blockIdx];
+                    e.basePoint = DRW_Coord(0.0, 0.0, 0.0);
+                    applyAttrs(e);
+                    intfa.addInsert(e);
+                }
+                break; }
             }
             break; }
         case R11_SHAPE: {

@@ -5162,6 +5162,99 @@ TEST_CASE("DWG pre-R13: read AC1009/R11 entities section") {
   CHECK(r.blocks >= 3);                 // BLOCK1 / BLOCK2 / *D
 }
 
+// Pre-R13 R11 typed DIMENSION (LINEAR + ALIGNED). Phase 4 swaps the previous
+// "render the *D block as an INSERT" path for a typed DRW_DimLinear /
+// DRW_DimAligned for the handled dimtypes (LINEAR=0, ALIGNED=1), keeping the
+// INSERT fallback for ANG2LN/ANG3PT/RADIUS/DIAMETER/ORDINATE (no R11 oracle
+// file exists for those types in the LibreDWG corpus). The swap is the
+// load-bearing check: a typed dim AND a *D INSERT for the same record would
+// double-render.
+namespace {
+struct DimCollector : public CountingIface {
+  std::vector<DRW_DimLinear> lin;
+  std::vector<DRW_DimAligned> ali;
+  int starDInserts = 0;
+  void addDimLinear(const DRW_DimLinear *e) override {
+    CountingIface::addDimLinear(e);
+    lin.push_back(*e);
+  }
+  void addDimAlign(const DRW_DimAligned *e) override {
+    CountingIface::addDimAlign(e);
+    ali.push_back(*e);
+  }
+  void addInsert(const DRW_Insert &e) override {
+    CountingIface::addInsert(e);
+    // Anonymous dim-graphics block name starts with "*D" (case-sensitive in
+    // libredwg). A non-zero count means the typed-dim swap is double-rendering.
+    if (e.name.size() >= 2 && e.name[0] == '*' && e.name[1] == 'D')
+      ++starDInserts;
+  }
+};
+}  // namespace
+
+TEST_CASE("DWG pre-R13: R11 typed DIMENSION (LINEAR + ALIGNED)") {
+  const char *home = getenv("HOME");
+  if (!home) {
+    SUCCEED("HOME not set; skipping");
+    return;
+  }
+  SECTION("entities-2d.dwg — 1 ALIGNED dim, no double-render") {
+    const std::string path =
+        std::string(home) + "/dev/libredwg/test/test-data/r11/entities-2d.dwg";
+    std::ifstream probe(path, std::ios::binary);
+    if (!probe.good()) { SUCCEED("entities-2d.dwg absent"); return; }
+    probe.close();
+    DimCollector iface;
+    const DwgResult r = readDwg(path, /*verbose=*/false, &iface);
+    REQUIRE(r.ok);
+    REQUIRE(r.version == DRW::AC1009);
+    CHECK(iface.lin.size() == 0);
+    REQUIRE(iface.ali.size() == 1);
+    // Oracle (dwgread -O JSON): def_pt=[8,8,0], text_midpt=[0,0],
+    // xline1_pt=[6,8,2], xline2_pt=[7,7,3], dimtype=1=ALIGNED.
+    // The raw on-disk doubles are at one ULP below the integers (e.g.
+    // def_pt.x bytes = fe ff ff ff ff ff 1f 40 = 7.999...); dwgread/jq
+    // pretty-prints them as "8.0" but a bit-exact reader yields
+    // 7.99999999999999822. Compare with a ULP-tolerant near().
+    const auto &d = iface.ali[0];
+    auto near = [](double a, double b) { return std::abs(a - b) < 1e-12; };
+    CHECK(near(d.getDefPoint().x, 8.0));
+    CHECK(near(d.getDefPoint().y, 8.0));
+    CHECK(near(d.getDef1Point().x, 6.0));
+    CHECK(near(d.getDef1Point().y, 8.0));
+    CHECK(near(d.getDef1Point().z, 2.0));
+    CHECK(near(d.getDef2Point().x, 7.0));
+    CHECK(near(d.getDef2Point().y, 7.0));
+    CHECK(near(d.getDef2Point().z, 3.0));
+    // Swap invariant: no `*D` INSERTs for handled dimtypes (would
+    // double-render with the typed dim).
+    CHECK(iface.starDInserts == 0);
+  }
+  SECTION("ACEB10.dwg — 15 LINEAR dims, no double-render") {
+    const std::string path =
+        std::string(home) + "/dev/libredwg/test/test-data/r11/ACEB10.dwg";
+    std::ifstream probe(path, std::ios::binary);
+    if (!probe.good()) { SUCCEED("ACEB10.dwg absent"); return; }
+    probe.close();
+    DimCollector iface;
+    const DwgResult r = readDwg(path, /*verbose=*/false, &iface);
+    REQUIRE(r.ok);
+    REQUIRE(r.version == DRW::AC1009);
+    CHECK(iface.lin.size() == 15);
+    CHECK(iface.ali.size() == 0);
+    CHECK(iface.starDInserts == 0);
+    // Spot-check first LINEAR dim against the oracle.
+    const auto &d = iface.lin[0];
+    auto near = [](double a, double b) { return std::abs(a - b) < 1e-12; };
+    CHECK(near(d.getDefPoint().x, 13.62245609657801));
+    CHECK(near(d.getDefPoint().y, 4.1236674739085));
+    CHECK(d.getDefPoint().z == 0.0);
+    CHECK(near(d.getDef1Point().x, 12.62245609657801));
+    CHECK(near(d.getDef2Point().x, 13.62245609657801));
+    CHECK(d.getAngle() == 0.0);
+  }
+}
+
 // Pre-R13 R10 (AC1006) routing parity. The R10 container is byte-identical to
 // R11 except for the LTYPE handle width in the entity common header (R10=1B
 // RC; R11=2B RS). dwgReaderR11 branches on `version`; this test exercises the
