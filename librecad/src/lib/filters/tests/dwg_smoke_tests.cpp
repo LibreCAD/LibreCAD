@@ -5522,3 +5522,85 @@ TEST_CASE("DWG pre-R13: R11 LAYER/LTYPE/STYLE table records") {
     CHECK(a1->lastHeight == 0.095);
   }
 }
+
+// Pre-R13 R10 (AC1006) parity: the table records and header variables are
+// byte-identical to R11 EXCEPT each table record omits the 2-byte `used` field
+// (recSizes R10 37/194/187 vs R11 41/198/191), and the header subset
+// (0x5E..PLINEWID) is byte-identical. Ground truth from `dwgread -O JSON` on
+// r10/entities.dwg. This is the case that proves R10 reached parity with R11.
+TEST_CASE("DWG pre-R13: R10 LAYER/LTYPE/STYLE table records + header") {
+  const char *home = getenv("HOME");
+  if (!home) {
+    SUCCEED("HOME not set; skipping");
+    return;
+  }
+  const std::string path =
+      std::string(home) + "/dev/libredwg/test/test-data/r10/entities.dwg";
+  std::ifstream probe(path, std::ios::binary);
+  if (!probe.good()) {
+    SUCCEED("pre-R13 R10 corpus absent; skipping");
+    return;
+  }
+  probe.close();
+  SECTION("table records (used field absent in R10)") {
+    R11TableCollector iface;
+    const DwgResult r = readDwg(path, /*verbose=*/false, &iface);
+    REQUIRE(r.ok);
+    REQUIRE(r.version == DRW::AC1006);
+    CHECK(iface.layers.size() == 2);
+    CHECK(iface.ltypes.size() == 1);
+    CHECK(iface.styles.size() == 2);
+    // LAYER "0" color 7; "DEFPOINTS" signed color -7 (OFF) — proves the missing
+    // `used` field did not shift the color/ltype reads.
+    auto l0 = std::find_if(iface.layers.begin(), iface.layers.end(),
+                           [](const DRW_Layer &l) { return l.name == "0"; });
+    REQUIRE(l0 != iface.layers.end());
+    CHECK(l0->color == 7);
+    auto ldp = std::find_if(iface.layers.begin(), iface.layers.end(),
+                            [](const DRW_Layer &l) { return l.name == "DEFPOINTS"; });
+    REQUIRE(ldp != iface.layers.end());
+    CHECK(ldp->color == -7);
+    // CONTINUOUS ltype, STANDARD style — same field offsets as R11 minus 2.
+    auto cont = std::find_if(iface.ltypes.begin(), iface.ltypes.end(),
+                             [](const DRW_LType &l) { return l.name == "CONTINUOUS"; });
+    REQUIRE(cont != iface.ltypes.end());
+    CHECK(cont->desc == "Solid line");
+    CHECK(cont->size == 0);
+    auto std_ = std::find_if(iface.styles.begin(), iface.styles.end(),
+                             [](const DRW_Textstyle &s) { return s.name == "STANDARD"; });
+    REQUIRE(std_ != iface.styles.end());
+    CHECK(std_->font == "txt");
+    CHECK(std_->lastHeight == 0.2);
+    CHECK(std_->width == 1.0);
+  }
+  SECTION("header variables (byte-identical to R11 in subset)") {
+    HdrCollector iface;
+    const DwgResult r = readDwg(path, /*verbose=*/false, &iface);
+    REQUIRE(r.ok);
+    REQUIRE(r.version == DRW::AC1006);
+    auto *lunits = hdrVar(iface.hdr, "LUNITS");
+    REQUIRE(lunits != nullptr);
+    CHECK(lunits->content.i == 2);
+    auto *cecolor = hdrVar(iface.hdr, "CECOLOR");
+    REQUIRE(cecolor != nullptr);
+    CHECK(cecolor->content.i == 256);
+    auto *ltscale = hdrVar(iface.hdr, "LTSCALE");
+    REQUIRE(ltscale != nullptr);
+    CHECK(ltscale->content.d == 1.0);
+    auto *pdmode = hdrVar(iface.hdr, "PDMODE");
+    REQUIRE(pdmode != nullptr);
+    CHECK(pdmode->content.i == 0);
+    // EXTMAX z=1.0 for R10 (R11's entities-2d had z=5.0) — bit-exact x/y.
+    auto *extmax = hdrVar(iface.hdr, "EXTMAX");
+    REQUIRE(extmax != nullptr);
+    REQUIRE(extmax->type() == DRW_Variant::COORD);
+    auto near = [](double a, double b) { return std::abs(a - b) < 1e-12; };
+    CHECK(near(extmax->content.v->x, 9.43333333333333));
+    CHECK(extmax->content.v->y == 10.0);
+    CHECK(extmax->content.v->z == 1.0);
+    // CLAYER resolves to "0" via the eager name-table read on the R10 path.
+    auto *clayer = hdrVar(iface.hdr, "CLAYER");
+    REQUIRE(clayer != nullptr);
+    CHECK(*clayer->content.s == "0");
+  }
+}

@@ -97,10 +97,12 @@ bool dwgReaderR11::readDwgHeader(DRW_Header& hdr) {
     // For CLAYER/TEXTSTYLE/CELTYPE name resolution we eagerly read the table
     // name vectors up-front (idempotent; the per-record decoders run again in
     // readDwgTables to populate ltypemap/layermap/stylemap).
-    if (version != DRW::AC1009)
-        return true;  // R10 header layout overlaps R11 but has different per-
-                      // field widths (FIELD_CMC CECOLOR, no PSLTSCALE etc.) —
-                      // out of scope.
+    if (version != DRW::AC1009 && version != DRW::AC1006)
+        return true;  // pre-R10 only. R10 (AC1006) is byte-IDENTICAL to R11 for
+                      // the entire implemented subset (0x5E..PLINEWID/0x36f):
+                      // the spec branches that differ (FIELD_CMC CECOLOR, the
+                      // numheader_vars<=160 early-stop) all live AFTER PLINEWID,
+                      // which we do not read. Validated vs dwgread on r10/*.dwg.
 
     // Eager table-name reads for CLAYER/TEXTSTYLE/CELTYPE resolution. These
     // are seek-absolute (readNameTable does setPosition), so they do not
@@ -268,21 +270,23 @@ std::string dwgReaderR11::ltypeName(std::int16_t idx) const {
 }
 
 bool dwgReaderR11::readLTypeTable(std::uint32_t hdrPos) {
-    // LTYPE record (recSize 191):
+    // LTYPE record (recSize R11=191 / R10=187):
     //   off 0: flag RC               off 1: name 32 FIXED bytes
-    //   off 33: used RSd (R11)       off 35: description 48 FIXED bytes
-    //   off 83: alignment RC ('A')   off 84: numdashes RCu (0..12)
-    //   off 85: pattern_len RD       off 93: dashes_r11 12 * RD (96B FIXED)
-    //   off 189: CRC RS
+    //   off 33: used RSd (R11 only)  off 35/33: description 48 FIXED bytes
+    //   alignment RC ('A')   numdashes RCu (0..12)
+    //   pattern_len RD       dashes_r11 12 * RD (96B FIXED)
+    // R10 (AC1006) is byte-identical minus the 2-byte `used` field (gated
+    // VERSION(R_11) in libreDWG COMMON_TABLE_FLAGS) -> fields shift up by 2.
     // Only the first `numdashes` doubles in dashes_r11 are valid; the unused
     // slots are uninitialised garbage and MUST be truncated.
+    const bool hasUsed = (version == DRW::AC1009);
     if (!fileBuf->setPosition(hdrPos))
         return false;
     const std::uint16_t recSize = fileBuf->getRawShort16();
     const std::uint16_t recNum = fileBuf->getRawShort16();
     fileBuf->getRawShort16();  // flags
     const std::uint32_t addr = fileBuf->getRawLong32();
-    if (addr == 0 || recSize < 189 || recNum == 0)
+    if (addr == 0 || recSize < (hasUsed ? 189 : 187) || recNum == 0)
         return true;  // absent/implausible
     m_ltypeNames.clear();
     m_ltypeNames.reserve(recNum);
@@ -300,9 +304,9 @@ bool dwgReaderR11::readLTypeTable(std::uint32_t hdrPos) {
         }
         m_ltypeNames.push_back(name);
         // off 33: used (signed RS, ignored — header lists "used count"
-        // sentinel; libreDWG keeps it for debugging only).
-        static_cast<void>(fileBuf->getRawShort16());
-        // off 35: description (48 FIXED null-padded bytes).
+        // sentinel; libreDWG keeps it for debugging only). R11 only; R10 omits.
+        if (hasUsed) static_cast<void>(fileBuf->getRawShort16());
+        // description (48 FIXED null-padded bytes).
         std::string desc;
         ended = false;
         for (int j = 0; j < 48; ++j) {
@@ -336,18 +340,19 @@ bool dwgReaderR11::readLTypeTable(std::uint32_t hdrPos) {
 }
 
 bool dwgReaderR11::readLayerTable(std::uint32_t hdrPos) {
-    // LAYER record (recSize 41):
+    // LAYER record (recSize R11=41 / R10=37):
     //   off 0: flag RC               off 1: name 32 FIXED bytes
-    //   off 33: used RSd (R11)       off 35: color SIGNED RS (neg => OFF)
-    //   off 37: ltype-index SIGNED RS (0 => CONTINUOUS)
-    //   off 39: CRC RS
+    //   off 33: used RSd (R11 only)  color SIGNED RS (neg => OFF)
+    //   ltype-index SIGNED RS (0 => CONTINUOUS)
+    // R10 (AC1006) omits the 2-byte `used` field; the rest is identical.
+    const bool hasUsed = (version == DRW::AC1009);
     if (!fileBuf->setPosition(hdrPos))
         return false;
     const std::uint16_t recSize = fileBuf->getRawShort16();
     const std::uint16_t recNum = fileBuf->getRawShort16();
     fileBuf->getRawShort16();  // flags
     const std::uint32_t addr = fileBuf->getRawLong32();
-    if (addr == 0 || recSize < 39 || recNum == 0)
+    if (addr == 0 || recSize < (hasUsed ? 39 : 37) || recNum == 0)
         return true;
     m_layerNames.clear();
     m_layerNames.reserve(recNum);
@@ -364,7 +369,7 @@ bool dwgReaderR11::readLayerTable(std::uint32_t hdrPos) {
             if (!ended) name.push_back(c);
         }
         m_layerNames.push_back(name);
-        static_cast<void>(fileBuf->getRawShort16());          // off33 used (signed)
+        if (hasUsed) static_cast<void>(fileBuf->getRawShort16()); // off33 used (R11)
         const std::int16_t color =
             static_cast<std::int16_t>(fileBuf->getRawShort16());
         const std::int16_t ltypeIdx =
@@ -383,20 +388,21 @@ bool dwgReaderR11::readLayerTable(std::uint32_t hdrPos) {
 }
 
 bool dwgReaderR11::readStyleTable(std::uint32_t hdrPos) {
-    // STYLE record (recSize 198):
+    // STYLE record (recSize R11=198 / R10=194):
     //   off 0: flag RC               off 1: name 32 FIXED bytes
-    //   off 33: used RSd (R11)       off 35: text_size RD
-    //   off 43: width_factor RD      off 51: oblique_angle RD (radians)
-    //   off 59: generation RC        off 60: last_height RD
-    //   off 68: font_file 64 FIXED   off 132: bigfont_file 64 FIXED
-    //   off 196: CRC RS
+    //   off 33: used RSd (R11 only)  text_size RD
+    //   width_factor RD      oblique_angle RD (radians)
+    //   generation RC        last_height RD
+    //   font_file 64 FIXED   bigfont_file 64 FIXED
+    // R10 (AC1006) omits the 2-byte `used` field; the rest is identical.
+    const bool hasUsed = (version == DRW::AC1009);
     if (!fileBuf->setPosition(hdrPos))
         return false;
     const std::uint16_t recSize = fileBuf->getRawShort16();
     const std::uint16_t recNum = fileBuf->getRawShort16();
     fileBuf->getRawShort16();  // flags
     const std::uint32_t addr = fileBuf->getRawLong32();
-    if (addr == 0 || recSize < 196 || recNum == 0)
+    if (addr == 0 || recSize < (hasUsed ? 196 : 194) || recNum == 0)
         return true;
     m_styleNames.clear();
     m_styleNames.reserve(recNum);
@@ -413,8 +419,8 @@ bool dwgReaderR11::readStyleTable(std::uint32_t hdrPos) {
             if (!ended) name.push_back(c);
         }
         m_styleNames.push_back(name);
-        static_cast<void>(fileBuf->getRawShort16());          // off33 used (signed)
-        const double textSize = fileBuf->getRawDouble();      // off35
+        if (hasUsed) static_cast<void>(fileBuf->getRawShort16()); // off33 used (R11)
+        const double textSize = fileBuf->getRawDouble();
         const double widthFactor = fileBuf->getRawDouble();   // off43
         const double obliqueAngle = fileBuf->getRawDouble();  // off51
         const std::uint8_t generation = fileBuf->getRawChar8(); // off59
@@ -453,17 +459,13 @@ bool dwgReaderR11::readDwgTables(DRW_Header& /*hdr*/) {
     // The 5 leading table-section headers (BLOCK, LAYER, STYLE, LTYPE, VIEW) are
     // 10 bytes each starting at file offset 0x2C.
     readNameTable(0x2C, m_blockNames);   // BLOCK table
-    // Per-record decoders only for R11/AC1009 (the validatable subset; R10 has
-    // a different record width — `used` absent, fields at off33 not off35).
-    if (version == DRW::AC1009) {
-        // Read LTYPE BEFORE LAYER so the layer's ltype-index resolves to a name.
-        readLTypeTable(0x4A);            // LTYPE table (0x2C + 30)
-        readLayerTable(0x36);            // LAYER table (0x2C + 10)
-        readStyleTable(0x40);            // STYLE table (0x2C + 20)
-    } else {
-        // R10 fallback: still capture names so entities get layer attribution.
-        readNameTable(0x36, m_layerNames);
-    }
+    // Per-record decoders for BOTH R11/AC1009 and R10/AC1006: R10 records are
+    // byte-identical minus the 2-byte `used` field, which the walkers skip via
+    // their internal hasUsed = (version == AC1009) gate.
+    // Read LTYPE BEFORE LAYER so the layer's ltype-index resolves to a name.
+    readLTypeTable(0x4A);            // LTYPE table (0x2C + 30)
+    readLayerTable(0x36);            // LAYER table (0x2C + 10)
+    readStyleTable(0x40);            // STYLE table (0x2C + 20)
     return true;
 }
 
