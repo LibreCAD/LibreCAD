@@ -5161,3 +5161,65 @@ TEST_CASE("DWG pre-R13: read AC1009/R11 entities section") {
   CHECK(r.entities >= 23);              // + inserts + attrib/attdef + dimension block
   CHECK(r.blocks >= 3);                 // BLOCK1 / BLOCK2 / *D
 }
+
+// Pre-R13 R10 (AC1006) routing parity. The R10 container is byte-identical to
+// R11 except for the LTYPE handle width in the entity common header (R10=1B
+// RC; R11=2B RS). dwgReaderR11 branches on `version`; this test exercises the
+// 1-byte path. Because the reader self-heals via setPosition(recEnd), a wrong
+// LTYPE-handle width would not change SUCCESS/entFail — geometry must be
+// bit-diffed instead. Verified vs `dwgread -O JSON` on the same file.
+namespace {
+struct R10LineCollector : public CountingIface {
+  std::vector<DRW_Line> lines;
+  void addLine(const DRW_Line &e) override {
+    CountingIface::addLine(e);
+    lines.push_back(e);
+  }
+};
+}  // namespace
+
+TEST_CASE("DWG pre-R13: read AC1006/R10 entities section") {
+  const char *home = getenv("HOME");
+  if (!home) {
+    SUCCEED("HOME not set; skipping pre-R13 R10 test");
+    return;
+  }
+  const std::string path =
+      std::string(home) + "/dev/libredwg/test/test-data/r10/entities.dwg";
+  std::ifstream probe(path, std::ios::binary);
+  if (!probe.good()) {
+    SUCCEED("pre-R13 R10 corpus absent; skipping");
+    return;
+  }
+  probe.close();
+
+  R10LineCollector iface;
+  const DwgResult r = readDwg(path, /*verbose=*/false, &iface);
+  CHECK(r.ok);                          // was BAD_VERSION before R10 routing
+  CHECK(r.version == DRW::AC1006);
+  // Oracle (dwgread -O JSON): 6 LINEs reachable from ENTITIES + BLOCKS
+  // (the 7th is past a JUMP/3DLINE pair that the reader does not chase).
+  REQUIRE(iface.lines.size() >= 6);
+  // Bit-exact check on a layered-LTYPE LINE — proves the 1B LTYPE-handle
+  // branch did NOT consume a phantom byte (would desync the body geometry).
+  // Endpoints lifted from `dwgread -O JSON` on r10/entities.dwg.
+  bool found_2_3_to_3_4 = false;
+  bool found_irrational = false;
+  for (const auto &L : iface.lines) {
+    if (L.basePoint.x == 2.0 && L.basePoint.y == 3.0 &&
+        L.secPoint.x == 3.0 && L.secPoint.y == 4.0) {
+      found_2_3_to_3_4 = true;
+    }
+    // Irrational endpoints — must be byte-exact (within ~1 ULP) to prove the
+    // 1B-vs-2B LTYPE branch read the right field width.
+    auto near = [](double a, double b) { return std::abs(a - b) < 1e-12; };
+    if (near(L.basePoint.x, 6.04419417382416) &&
+        near(L.basePoint.y, 8.04419417382416) &&
+        near(L.secPoint.x, 7.12727922061358) &&
+        near(L.secPoint.y, 9.12727922061358)) {
+      found_irrational = true;
+    }
+  }
+  CHECK(found_2_3_to_3_4);
+  CHECK(found_irrational);
+}

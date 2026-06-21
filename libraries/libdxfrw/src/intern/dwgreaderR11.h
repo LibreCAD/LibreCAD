@@ -8,8 +8,7 @@
 **  with section pointers, fixed-layout table sections, and a flat sequence  **
 **  of entity records read as RAW little-endian values. Algorithm ported     **
 **  from LibreDWG (decode_r11.c + specs); validated against dwgread on the    **
-**  AC1009 corpus. Scope: read-only, AC1009/R11 entities (the version        **
-**  dwgread can validate; AC1006/R10 has no working oracle).                  **
+**  AC1006 (R10) and AC1009 (R11) corpora. Scope: read-only.                  **
 ******************************************************************************/
 #ifndef DWGREADERR11_H
 #define DWGREADERR11_H

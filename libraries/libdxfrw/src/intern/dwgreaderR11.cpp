@@ -34,9 +34,10 @@ constexpr std::uint8_t EXTRA_HAS_VIEWPORT = 0x04;
 }
 
 bool dwgReaderR11::readMetaData() {
-    // Identify the precise pre-R13 version from the 6-byte magic. Scope is
-    // AC1009 (R11); AC1006 (R10) is accepted by the container parse but has no
-    // validation oracle, so geometry fidelity there is best-effort.
+    // Identify the precise pre-R13 version from the 6-byte magic. Both AC1006
+    // (R10) and AC1009 (R11) are validatable against dwgread; their containers
+    // are byte-identical except for the LTYPE handle width in the entity common
+    // header (R10 = 1B, R11 = 2B; branched in readEntityR11).
     if (!fileBuf->setPosition(0))
         return false;
     std::string magic;
@@ -187,8 +188,12 @@ bool dwgReaderR11::readEntityR11(DRW_Interface& intfa) {
     }
     if (flag & FLAG_HAS_COLOR)
         fileBuf->getRawChar8();
-    if (flag & FLAG_HAS_LTYPE)
-        fileBuf->getRawShort16();
+    if (flag & FLAG_HAS_LTYPE) {
+        // R10 stores the LTYPE handle as a 1-byte RC; R11 widens it to a 2-byte
+        // RS. The LAYER handle remains 2B in BOTH (read above as `layerIdx`).
+        if (version == DRW::AC1006) fileBuf->getRawChar8();
+        else                        fileBuf->getRawShort16();
+    }
     double elevation = 0.0;
     // HAS_ELEVATION is suppressed for LINE/POINT/3DFACE (their Z is in the body).
     if ((flag & FLAG_HAS_ELEVATION)
