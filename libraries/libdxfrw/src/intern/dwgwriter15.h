@@ -258,6 +258,11 @@ protected:
     /// the table-callback phase; consumed by writeDwgObjects().
     std::vector<std::pair<std::uint32_t, DRW_LType>>     m_pendingLTypes;
     std::vector<std::pair<std::uint32_t, DRW_Layer>>     m_pendingLayers;
+    // Real data for the reserved "0" layer (fixed handle 0x12). Captured in
+    // addLayer() and emitted via emitLayerRecord() so its plot flag / color /
+    // linetype round-trip, instead of a default stub that loses them.
+    DRW_Layer m_layer0;
+    bool      m_haveLayer0{false};
     std::vector<std::pair<std::uint32_t, DRW_Textstyle>> m_pendingStyles;
     std::vector<std::pair<std::uint32_t, DRW_View>>      m_pendingViews;
     std::vector<std::pair<std::uint32_t, DRW_Vport>>     m_pendingVports;

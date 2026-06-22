@@ -141,6 +141,9 @@ bool LC_ExportLayersService::selectExportFile(LC_LayersExportOptions& options, L
     saveFileDialog.setAcceptMode (QFileDialog::AcceptSave);
     saveFileDialog.setOption (QFileDialog::HideNameFilterDetails, false);
     saveFileDialog.setOption (QFileDialog::DontUseNativeDialog, true);
+    // We do our own overwrite confirmation below; suppress the dialog's built-in
+    // one so the two do not stack into a double prompt.
+    saveFileDialog.setOption (QFileDialog::DontConfirmOverwrite, true);
 
     QString sourceFileName  = options.m_sourceDrawingFileName;
     QString preselectionFileName;

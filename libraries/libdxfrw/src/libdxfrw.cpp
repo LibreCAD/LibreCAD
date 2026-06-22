@@ -486,8 +486,15 @@ bool dxfRW::writeLayer(DRW_Layer *ent){
         // LAYER fields (ezdxf acdb_symbol_table_record: all DXF2000); they did
         // not exist in R13/R14, so emitting them there is non-conformant.
         if (version > DRW::AC1014) {
-            if (! ent->plotF)
-                writer->writeBool(290, ent->plotF);
+            // Emit the plot flag unconditionally, matching lineweight (370) and
+            // plotstyle (390) below and AutoCAD/ezdxf, which always write every
+            // R2000+ LAYER field. The previous code wrote 290 only when plotF
+            // was false and relied on "absent => true"; that dropped an explicit
+            // "290 1" written by a strict external tool on re-save and was
+            // inconsistent with the sibling fields. Reading is unaffected:
+            // DRW_Layer defaults plotF=true, so legacy files without 290 still
+            // load as plot-on.
+            writer->writeBool(290, ent->plotF);
             writer->writeInt16(370, DRW_LW_Conv::lineWidth2dxfInt(ent->lWeight));
             writer->writeString(390, "F");
         }

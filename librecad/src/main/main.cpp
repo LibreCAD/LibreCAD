@@ -427,16 +427,37 @@ int main(int argc, char** argv) {
 
     QSettings settings; // fixme - direct invocation of settings
     settings.beginGroup("Defaults");
+#ifdef __APPLE__
+    // One-time migration: older builds auto-wrote UseQtFileOpenDialog=0 on macOS
+    // at first launch, pinning existing users to the native (Cocoa) panel, which
+    // can fail to open on unsigned / locally-built bundles (silently aborting
+    // Open/Save/Export). Reset that stale default to the reliable Qt dialog once;
+    // afterwards the user's own choice (Options > General) is preserved.
+    if (!settings.value("UseQtFileOpenDialogMacMigrated", false).toBool()) {
+        settings.setValue("UseQtFileOpenDialog", 1);
+        settings.setValue("UseQtFileOpenDialogMacMigrated", true);
+    }
+#endif
     if( !settings.contains("UseQtFileOpenDialog")) {
-#ifdef __linux__
-        // on Linux don't use native file dialog
-        // because of case insensitive filters (issue #791)
+#if defined(__linux__) || defined(__APPLE__)
+        // Default to the Qt-drawn file dialog rather than the native one:
+        // on Linux the native dialog has case-insensitive-filter issues (#791);
+        // on macOS the native (Cocoa) panel can fail to open on unsigned /
+        // locally-built bundles -- it returns immediately with no panel shown,
+        // silently aborting Open/Save/Export. Users can opt back into the native
+        // dialog via Options > General (takes effect on restart).
         settings.setValue("UseQtFileOpenDialog", QVariant(1));
 #else
         settings.setValue("UseQtFileOpenDialog", QVariant(0));
 #endif
     }
+    const bool useQtFileDialog = settings.value("UseQtFileOpenDialog").toBool();
     settings.endGroup();
+
+    // Honor that choice for EVERY file dialog -- including the static
+    // QFileDialog::getOpenFileName/getSaveFileName convenience calls, which
+    // cannot take a per-dialog option. Affects dialogs created after this point.
+    QApplication::setAttribute(Qt::AA_DontUseNativeDialogs, useQtFileDialog);
 
     bool maximize = LC_GET_ONE_BOOL("Startup","Maximize", false);
 

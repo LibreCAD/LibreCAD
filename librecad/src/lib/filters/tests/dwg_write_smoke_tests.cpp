@@ -4012,6 +4012,87 @@ TEST_CASE("dwgRW R2004 round-trip with custom layer",
     std::remove(path.c_str());
 }
 
+// ---------------------------------------------------------------------------
+// Regression: the reserved layer "0" must round-trip its plot flag (and the
+// sibling attributes the same code path carries). The DWG writer used to emit
+// "0" as a default stub (emitTableRecord) at the fixed handle 0x12, which
+// zeroes flag0 -> the plot bit (0x10) was lost. On reload layer "0" then read
+// back as non-printable, so File>Print / PDF export / image export rendered a
+// blank result for everything on the default layer. Fixed by capturing the
+// real "0" (m_layer0/m_haveLayer0) and emitting it via emitLayerRecord.
+// The existing "custom layer" round-trips did NOT catch this: they only send a
+// non-"0" layer to the writer, leaving "0" on the stub fallback.
+namespace {
+
+class Layer0PlotFlagIface : public EmptyIface {
+public:
+    dwgRW *m_writer {nullptr};
+
+    bool m_saw0 {false};
+    bool m_plot0 {false};
+    int  m_color0 {-99};
+
+    bool m_sawNoPlot {false};
+    bool m_plotNoPlot {true};
+
+    void writeLayers() override {
+        if (m_writer == nullptr) return;
+        // Emit "0" the way RS_FilterDXFRW::writeLayers does: explicitly, with
+        // its real attributes. plotF=true is the real-world default; the stub
+        // bug read it back false.
+        DRW_Layer zero;
+        zero.name  = "0";
+        zero.plotF = true;
+        zero.color = 5;            // sibling attr the stub also dropped
+        m_writer->addLayer(&zero);
+
+        // A non-"0" layer with plot OFF, to prove both directions round-trip.
+        DRW_Layer noplot;
+        noplot.name  = "NOPLOT";
+        noplot.plotF = false;
+        m_writer->addLayer(&noplot);
+    }
+    void addLayer(const DRW_Layer& l) override {
+        if (l.name == "0")      { m_saw0 = true;      m_plot0 = l.plotF;      m_color0 = l.color; }
+        if (l.name == "NOPLOT") { m_sawNoPlot = true; m_plotNoPlot = l.plotF; }
+    }
+};
+
+void runLayer0PlotFlagRoundTrip(DRW::Version ver, const std::string& tag) {
+    const std::string path = tempPath(("layer0_plotflag_" + tag + ".dwg").c_str());
+
+    {
+        dwgRW writer(path.c_str());
+        Layer0PlotFlagIface iface;
+        iface.m_writer = &writer;
+        REQUIRE(writer.write(&iface, ver, /*bin=*/false));
+    }
+
+    Layer0PlotFlagIface cap;
+    {
+        dwgRW reader(path.c_str());
+        REQUIRE(reader.read(&cap, /*ext=*/false));
+        REQUIRE(reader.getError() == DRW::BAD_NONE);
+    }
+
+    REQUIRE(cap.m_saw0);
+    REQUIRE(cap.m_plot0 == true);      // <- the regression: was false before the fix
+    REQUIRE(cap.m_color0 == 5);        // sibling attr preserved too
+    REQUIRE(cap.m_sawNoPlot);
+    REQUIRE(cap.m_plotNoPlot == false);
+
+    std::remove(path.c_str());
+}
+
+} // namespace
+
+TEST_CASE("dwgRW layer \"0\" plot flag round-trips (regression: stub dropped plotF)",
+          "[dwg-write][smoke][layer-plotflag]") {
+    runLayer0PlotFlagRoundTrip(DRW::AC1015, "r2000");  // R2000
+    runLayer0PlotFlagRoundTrip(DRW::AC1018, "r2004");  // R2004
+    runLayer0PlotFlagRoundTrip(DRW::AC1024, "r2010");  // R2010
+}
+
 // P4-08 — LAYER 24-bit truecolor + color/book name round-trip (R2004+).
 namespace {
 

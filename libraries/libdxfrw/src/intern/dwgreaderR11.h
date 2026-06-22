@@ -8,8 +8,7 @@
 **  with section pointers, fixed-layout table sections, and a flat sequence  **
 **  of entity records read as RAW little-endian values. Algorithm ported     **
 **  from LibreDWG (decode_r11.c + specs); validated against dwgread on the    **
-**  AC1009 corpus. Scope: read-only, AC1009/R11 entities (the version        **
-**  dwgread can validate; AC1006/R10 has no working oracle).                  **
+**  AC1006 (R10) and AC1009 (R11) corpora. Scope: read-only.                  **
 ******************************************************************************/
 #ifndef DWGREADERR11_H
 #define DWGREADERR11_H
@@ -61,11 +60,23 @@ private:
     std::unique_ptr<DRW_Polyline> m_curPoly;
 
     // Table-record names by record index (filled in readDwgTables). An entity's
-    // layer / an INSERT's block are stored as 1-based RS indices into these.
+    // layer / an INSERT's block are stored as 0-based RS indices into these.
+    // Index 0 == "0" (the default layer), verified vs dwgread.
     std::vector<std::string> m_layerNames;
     std::vector<std::string> m_blockNames;
+    std::vector<std::string> m_ltypeNames;
+    std::vector<std::string> m_styleNames;
     bool readNameTable(std::uint32_t hdrPos, std::vector<std::string>& out);
     std::string layerName(std::uint16_t idx) const;
+    std::string ltypeName(std::int16_t idx) const;  // signed: -1/sentinels -> ""
+
+    // Full per-record table decoders (R11/AC1009 only — R10 uses a different
+    // per-table layout: no `used` field, fields at off33 not off35). They
+    // heap-allocate DRW_LType/DRW_Layer/DRW_Textstyle and insert into the base
+    // ltypemap/layermap/stylemap (the base dtor's mapCleanUp deletes them).
+    bool readLTypeTable(std::uint32_t hdrPos);
+    bool readLayerTable(std::uint32_t hdrPos);
+    bool readStyleTable(std::uint32_t hdrPos);
 };
 
 #endif // DWGREADERR11_H

@@ -8,6 +8,7 @@
 
 #include "dwgreaderR11.h"
 #include "drw_dbg.h"
+#include "../drw_objects.h"
 
 namespace {
 // Pre-R13 entity type codes (Dwg_Object_Type_r11).
@@ -34,9 +35,10 @@ constexpr std::uint8_t EXTRA_HAS_VIEWPORT = 0x04;
 }
 
 bool dwgReaderR11::readMetaData() {
-    // Identify the precise pre-R13 version from the 6-byte magic. Scope is
-    // AC1009 (R11); AC1006 (R10) is accepted by the container parse but has no
-    // validation oracle, so geometry fidelity there is best-effort.
+    // Identify the precise pre-R13 version from the 6-byte magic. Both AC1006
+    // (R10) and AC1009 (R11) are validatable against dwgread; their containers
+    // are byte-identical except for the LTYPE handle width in the entity common
+    // header (R10 = 1B, R11 = 2B; branched in readEntityR11).
     if (!fileBuf->setPosition(0))
         return false;
     std::string magic;
@@ -80,8 +82,143 @@ bool dwgReaderR11::readFileHeader() {
     return true;
 }
 
-bool dwgReaderR11::readDwgHeader(DRW_Header& /*hdr*/) {
-    return true;  // header variables not needed for entity geometry (follow-up)
+bool dwgReaderR11::readDwgHeader(DRW_Header& hdr) {
+    // The pre-R13 header variables block starts at file offset 0x5E (the 5
+    // leading 10-byte table-section headers end at 0x2C+50 = 0x5E). ALL fields
+    // are RAW LE; the spec runs SEQUENTIAL only — every offset is the running
+    // sum of prior fields, so a wrong width here desyncs everything that
+    // follows. We read just the high-value drawing-state vars (through
+    // PLINEWID, post-cursor 0x36f) and STOP — the long DIMxx / UCS / VPORT
+    // tail uses inline 10-byte embedded-table-headers (PRER13_SECTION_HDR) and
+    // has near-zero rendering value.
+    //
+    // CRITICAL CALL ORDER: processDwg() calls readDwgHeader BEFORE
+    // readDwgTables, so the LAYER/STYLE/LTYPE name vectors are EMPTY here.
+    // For CLAYER/TEXTSTYLE/CELTYPE name resolution we eagerly read the table
+    // name vectors up-front (idempotent; the per-record decoders run again in
+    // readDwgTables to populate ltypemap/layermap/stylemap).
+    if (version != DRW::AC1009 && version != DRW::AC1006)
+        return true;  // pre-R10 only. R10 (AC1006) is byte-IDENTICAL to R11 for
+                      // the entire implemented subset (0x5E..PLINEWID/0x36f):
+                      // the spec branches that differ (FIELD_CMC CECOLOR, the
+                      // numheader_vars<=160 early-stop) all live AFTER PLINEWID,
+                      // which we do not read. Validated vs dwgread on r10/*.dwg.
+
+    // Eager table-name reads for CLAYER/TEXTSTYLE/CELTYPE resolution. These
+    // are seek-absolute (readNameTable does setPosition), so they do not
+    // disturb our header-walk cursor.
+    readNameTable(0x36, m_layerNames);
+    readNameTable(0x40, m_styleNames);
+    readNameTable(0x4A, m_ltypeNames);
+
+    if (!fileBuf->setPosition(0x5E))
+        return false;
+    auto rc = [&]() { return fileBuf->getRawChar8(); };
+    auto rs = [&]() { return fileBuf->getRawShort16(); };
+    auto rsd = [&]() { return static_cast<std::int16_t>(fileBuf->getRawShort16()); };
+    auto rl = [&]() { return fileBuf->getRawLong32(); };
+    auto rd = [&]() { return fileBuf->getRawDouble(); };
+    auto r2d = [&]() { DRW_Coord c; c.x = rd(); c.y = rd(); c.z = 0; return c; };
+    auto r3d = [&]() { DRW_Coord c; c.x = rd(); c.y = rd(); c.z = rd(); return c; };
+    auto skipBytes = [&](int n) {
+        fileBuf->setPosition(fileBuf->getPosition() + n);
+    };
+
+    hdr.addCoord("INSBASE", r3d(), 10);
+    rs();                                                 // PLINEGEN (unused)
+    hdr.addCoord("EXTMIN", r3d(), 10);
+    hdr.addCoord("EXTMAX", r3d(), 10);
+    hdr.addCoord("LIMMIN", r2d(), 10);
+    hdr.addCoord("LIMMAX", r2d(), 10);
+    hdr.addCoord("VIEWCTR", r3d(), 10);
+    hdr.addDouble("VIEWSIZE", rd(), 40);
+    hdr.addInt("SNAPMODE", rs(), 70);
+    r2d();                                                // SNAPUNIT (unused)
+    r2d();                                                // SNAPBASE (unused)
+    rd();                                                 // SNAPANG (unused)
+    rs();                                                 // SNAPSTYLE
+    rs();                                                 // SNAPISOPAIR
+    hdr.addInt("GRIDMODE", rs(), 70);
+    r2d();                                                // GRIDUNIT (unused)
+    hdr.addInt("ORTHOMODE", rs(), 70);
+    hdr.addInt("REGENMODE", rs(), 70);
+    hdr.addInt("FILLMODE", rs(), 70);
+    hdr.addInt("QTEXTMODE", rs(), 70);
+    rs();                                                 // DRAGMODE (unused)
+    hdr.addDouble("LTSCALE", rd(), 40);
+    hdr.addDouble("TEXTSIZE", rd(), 40);
+    hdr.addDouble("TRACEWID", rd(), 40);
+    const std::int16_t clayerIdx = rsd();                 // CLAYER (signed RS index)
+    rl(); rl();                                           // oldCECOLOR (DECOY — skip)
+    rs();                                                 // unknown_5
+    rs();                                                 // PSLTSCALE
+    rs();                                                 // TREEDEPTH
+    rs();                                                 // unknown_6
+    rd();                                                 // aspect_ratio (calculated)
+    hdr.addInt("LUNITS", rs(), 70);
+    hdr.addInt("LUPREC", rs(), 70);
+    rs();                                                 // AXISMODE
+    r2d();                                                // AXISUNIT
+    rd();                                                 // SKETCHINC
+    rd();                                                 // FILLETRAD
+    hdr.addInt("AUNITS", rs(), 70);
+    hdr.addInt("AUPREC", rs(), 70);
+    const std::int16_t textstyleIdx = rsd();              // TEXTSTYLE (signed RS index)
+    hdr.addInt("OSMODE", rs(), 70);
+    hdr.addInt("ATTMODE", rs(), 70);
+    skipBytes(15);                                        // MENU (15 fixed bytes)
+    hdr.addDouble("DIMSCALE", rd(), 40);                  // load-bearing 0x1a3 checkpoint
+    rd(); rd(); rd(); rd();                               // DIMASZ DIMEXO DIMDLI DIMEXE
+    rd(); rd(); rd(); rd(); rd();                         // DIMTP DIMTM DIMTXT DIMCEN DIMTSZ
+    rc(); rc(); rc(); rc(); rc(); rc(); rc();             // DIMTOL DIMLIM DIMTIH DIMTOH DIMSE1 DIMSE2 DIMTAD
+    rc();                                                 // LIMCHECK
+    skipBytes(46);                                        // MENUEXT (46 fixed bytes)
+    hdr.addDouble("ELEVATION", rd(), 40);
+    hdr.addDouble("THICKNESS", rd(), 40);
+    hdr.addCoord("VIEWDIR", r3d(), 10);
+    for (int i = 0; i < 6; ++i) r3d();                    // VPOINT/VPOINTALT (6 x 3RD)
+    rs();                                                 // flag_3d
+    rs();                                                 // BLIPMODE
+    rc();                                                 // DIMZIN
+    rd();                                                 // DIMRND
+    rd();                                                 // DIMDLE
+    skipBytes(33);                                        // DIMBLK_T (33 fixed)
+    rs();                                                 // circle_zoom
+    rs();                                                 // COORDS
+    hdr.addInt("CECOLOR", static_cast<std::int16_t>(rs()), 62);  // the REAL CECOLOR
+    const std::int16_t celtypeIdx = rsd();                // CELTYPE (signed RS index)
+    rl(); rl();                                           // TDCREATE (TIMERLL)
+    rl(); rl();                                           // TDUPDATE
+    rl(); rl();                                           // TDINDWG
+    rl(); rl();                                           // TDUSRTIMER
+    rs();                                                 // USRTIMER
+    rs();                                                 // FASTZOOM
+    rs();                                                 // SKPOLY
+    for (int i = 0; i < 7; ++i) rs();                     // unknown_mon..unknown_ms
+    hdr.addDouble("ANGBASE", rd(), 50);
+    hdr.addInt("ANGDIR", rs(), 70);
+    hdr.addInt("PDMODE", rs(), 70);
+    hdr.addDouble("PDSIZE", rd(), 40);
+    rd();                                                 // PLINEWID (cursor 0x36f)
+    // STOP — the long DIMxx tail, UCS/VPORT/VIEW/APPID/DIMSTYLE/VX section
+    // headers and per-record fields are not consumed (no reader-side value
+    // and the inline PRER13_SECTION_HDR layout invites desync).
+
+    // Resolve handle-references (CLAYER/TEXTSTYLE/CELTYPE) to names. Indices
+    // are 0-based; 0x7FFF/0x7FFE are the ByLayer/ByBlock sentinels.
+    auto resolveName = [&](std::int16_t idx,
+                           const std::vector<std::string>& tbl,
+                           const char* def) -> std::string {
+        if (idx == 0x7FFF) return "BYLAYER";
+        if (idx == 0x7FFE) return "BYBLOCK";
+        if (idx >= 0 && static_cast<size_t>(idx) < tbl.size())
+            return tbl[idx];
+        return def;
+    };
+    hdr.addStr("CLAYER",   resolveName(clayerIdx, m_layerNames, "0"),         8);
+    hdr.addStr("TEXTSTYLE", resolveName(textstyleIdx, m_styleNames, "STANDARD"), 7);
+    hdr.addStr("CELTYPE",  resolveName(celtypeIdx, m_ltypeNames, "BYLAYER"),  6);
+    return true;
 }
 
 bool dwgReaderR11::readNameTable(std::uint32_t hdrPos, std::vector<std::string>& out) {
@@ -121,12 +258,214 @@ std::string dwgReaderR11::layerName(std::uint16_t idx) const {
     return std::string();
 }
 
+std::string dwgReaderR11::ltypeName(std::int16_t idx) const {
+    // 0x7FFF == ByLayer, 0x7FFE == ByBlock (the standard AutoCAD sentinels;
+    // libreDWG / dwgread report these as raw values in `ltype: [2,32767,0]`).
+    // Negative or out-of-range -> empty (consumer falls back).
+    if (idx == 0x7FFF) return "BYLAYER";
+    if (idx == 0x7FFE) return "BYBLOCK";
+    if (idx >= 0 && static_cast<size_t>(idx) < m_ltypeNames.size())
+        return m_ltypeNames[idx];
+    return std::string();
+}
+
+bool dwgReaderR11::readLTypeTable(std::uint32_t hdrPos) {
+    // LTYPE record (recSize R11=191 / R10=187):
+    //   off 0: flag RC               off 1: name 32 FIXED bytes
+    //   off 33: used RSd (R11 only)  off 35/33: description 48 FIXED bytes
+    //   alignment RC ('A')   numdashes RCu (0..12)
+    //   pattern_len RD       dashes_r11 12 * RD (96B FIXED)
+    // R10 (AC1006) is byte-identical minus the 2-byte `used` field (gated
+    // VERSION(R_11) in libreDWG COMMON_TABLE_FLAGS) -> fields shift up by 2.
+    // Only the first `numdashes` doubles in dashes_r11 are valid; the unused
+    // slots are uninitialised garbage and MUST be truncated.
+    const bool hasUsed = (version == DRW::AC1009);
+    if (!fileBuf->setPosition(hdrPos))
+        return false;
+    const std::uint16_t recSize = fileBuf->getRawShort16();
+    const std::uint16_t recNum = fileBuf->getRawShort16();
+    fileBuf->getRawShort16();  // flags
+    const std::uint32_t addr = fileBuf->getRawLong32();
+    if (addr == 0 || recSize < (hasUsed ? 189 : 187) || recNum == 0)
+        return true;  // absent/implausible
+    m_ltypeNames.clear();
+    m_ltypeNames.reserve(recNum);
+    for (std::uint16_t i = 0; i < recNum; ++i) {
+        const std::uint64_t base = addr + static_cast<std::uint64_t>(i) * recSize;
+        if (!fileBuf->setPosition(base))
+            break;
+        const std::uint8_t flag = fileBuf->getRawChar8();
+        std::string name;
+        bool ended = false;
+        for (int j = 0; j < 32; ++j) {
+            const char c = static_cast<char>(fileBuf->getRawChar8());
+            if (c == '\0') ended = true;
+            if (!ended) name.push_back(c);
+        }
+        m_ltypeNames.push_back(name);
+        // off 33: used (signed RS, ignored — header lists "used count"
+        // sentinel; libreDWG keeps it for debugging only). R11 only; R10 omits.
+        if (hasUsed) static_cast<void>(fileBuf->getRawShort16());
+        // description (48 FIXED null-padded bytes).
+        std::string desc;
+        ended = false;
+        for (int j = 0; j < 48; ++j) {
+            const char c = static_cast<char>(fileBuf->getRawChar8());
+            if (c == '\0') ended = true;
+            if (!ended) desc.push_back(c);
+        }
+        // off 83: alignment (always 'A' for AutoCAD ltypes); off 84: numdashes.
+        static_cast<void>(fileBuf->getRawChar8());            // alignment
+        const std::uint8_t numdashes = fileBuf->getRawChar8();
+        const double patternLen = fileBuf->getRawDouble();    // off 85
+        std::vector<double> path;
+        path.reserve(numdashes);
+        for (std::uint8_t d = 0; d < 12; ++d) {
+            const double v = fileBuf->getRawDouble();
+            if (d < numdashes) path.push_back(v);             // truncate garbage
+        }
+        auto* lt = new DRW_LType();
+        lt->name = name;
+        lt->desc = desc;
+        lt->size = numdashes;
+        lt->length = patternLen;
+        lt->path = std::move(path);
+        lt->flags = flag;
+        // Use a synthetic monotonic key; consumers do not interpret .handle.
+        const std::uint32_t key = 0x10000000u | static_cast<std::uint32_t>(i);
+        lt->handle = key;
+        ltypemap[key] = lt;
+    }
+    return true;
+}
+
+bool dwgReaderR11::readLayerTable(std::uint32_t hdrPos) {
+    // LAYER record (recSize R11=41 / R10=37):
+    //   off 0: flag RC               off 1: name 32 FIXED bytes
+    //   off 33: used RSd (R11 only)  color SIGNED RS (neg => OFF)
+    //   ltype-index SIGNED RS (0 => CONTINUOUS)
+    // R10 (AC1006) omits the 2-byte `used` field; the rest is identical.
+    const bool hasUsed = (version == DRW::AC1009);
+    if (!fileBuf->setPosition(hdrPos))
+        return false;
+    const std::uint16_t recSize = fileBuf->getRawShort16();
+    const std::uint16_t recNum = fileBuf->getRawShort16();
+    fileBuf->getRawShort16();  // flags
+    const std::uint32_t addr = fileBuf->getRawLong32();
+    if (addr == 0 || recSize < (hasUsed ? 39 : 37) || recNum == 0)
+        return true;
+    m_layerNames.clear();
+    m_layerNames.reserve(recNum);
+    for (std::uint16_t i = 0; i < recNum; ++i) {
+        const std::uint64_t base = addr + static_cast<std::uint64_t>(i) * recSize;
+        if (!fileBuf->setPosition(base))
+            break;
+        const std::uint8_t flag = fileBuf->getRawChar8();
+        std::string name;
+        bool ended = false;
+        for (int j = 0; j < 32; ++j) {
+            const char c = static_cast<char>(fileBuf->getRawChar8());
+            if (c == '\0') ended = true;
+            if (!ended) name.push_back(c);
+        }
+        m_layerNames.push_back(name);
+        if (hasUsed) static_cast<void>(fileBuf->getRawShort16()); // off33 used (R11)
+        const std::int16_t color =
+            static_cast<std::int16_t>(fileBuf->getRawShort16());
+        const std::int16_t ltypeIdx =
+            static_cast<std::int16_t>(fileBuf->getRawShort16());
+        auto* ly = new DRW_Layer();
+        ly->name = name;
+        ly->color = color;        // negative => layer OFF, mirrors R2000+ path
+        ly->flags = flag;
+        ly->lineType = ltypeName(ltypeIdx);
+        if (ly->lineType.empty()) ly->lineType = "CONTINUOUS";
+        const std::uint32_t key = 0x20000000u | static_cast<std::uint32_t>(i);
+        ly->handle = key;
+        layermap[key] = ly;
+    }
+    return true;
+}
+
+bool dwgReaderR11::readStyleTable(std::uint32_t hdrPos) {
+    // STYLE record (recSize R11=198 / R10=194):
+    //   off 0: flag RC               off 1: name 32 FIXED bytes
+    //   off 33: used RSd (R11 only)  text_size RD
+    //   width_factor RD      oblique_angle RD (radians)
+    //   generation RC        last_height RD
+    //   font_file 64 FIXED   bigfont_file 64 FIXED
+    // R10 (AC1006) omits the 2-byte `used` field; the rest is identical.
+    const bool hasUsed = (version == DRW::AC1009);
+    if (!fileBuf->setPosition(hdrPos))
+        return false;
+    const std::uint16_t recSize = fileBuf->getRawShort16();
+    const std::uint16_t recNum = fileBuf->getRawShort16();
+    fileBuf->getRawShort16();  // flags
+    const std::uint32_t addr = fileBuf->getRawLong32();
+    if (addr == 0 || recSize < (hasUsed ? 196 : 194) || recNum == 0)
+        return true;
+    m_styleNames.clear();
+    m_styleNames.reserve(recNum);
+    for (std::uint16_t i = 0; i < recNum; ++i) {
+        const std::uint64_t base = addr + static_cast<std::uint64_t>(i) * recSize;
+        if (!fileBuf->setPosition(base))
+            break;
+        const std::uint8_t flag = fileBuf->getRawChar8();
+        std::string name;
+        bool ended = false;
+        for (int j = 0; j < 32; ++j) {
+            const char c = static_cast<char>(fileBuf->getRawChar8());
+            if (c == '\0') ended = true;
+            if (!ended) name.push_back(c);
+        }
+        m_styleNames.push_back(name);
+        if (hasUsed) static_cast<void>(fileBuf->getRawShort16()); // off33 used (R11)
+        const double textSize = fileBuf->getRawDouble();
+        const double widthFactor = fileBuf->getRawDouble();   // off43
+        const double obliqueAngle = fileBuf->getRawDouble();  // off51
+        const std::uint8_t generation = fileBuf->getRawChar8(); // off59
+        const double lastHeight = fileBuf->getRawDouble();    // off60
+        std::string font, bigFont;
+        ended = false;
+        for (int j = 0; j < 64; ++j) {
+            const char c = static_cast<char>(fileBuf->getRawChar8());
+            if (c == '\0') ended = true;
+            if (!ended) font.push_back(c);
+        }
+        ended = false;
+        for (int j = 0; j < 64; ++j) {
+            const char c = static_cast<char>(fileBuf->getRawChar8());
+            if (c == '\0') ended = true;
+            if (!ended) bigFont.push_back(c);
+        }
+        auto* st = new DRW_Textstyle();
+        st->name = name;
+        st->height = textSize;
+        st->width = widthFactor;
+        st->oblique = obliqueAngle;
+        st->genFlag = generation;
+        st->lastHeight = lastHeight;
+        st->font = font;
+        st->bigFont = bigFont;
+        st->flags = flag;
+        const std::uint32_t key = 0x30000000u | static_cast<std::uint32_t>(i);
+        st->handle = key;
+        stylemap[key] = st;
+    }
+    return true;
+}
+
 bool dwgReaderR11::readDwgTables(DRW_Header& /*hdr*/) {
     // The 5 leading table-section headers (BLOCK, LAYER, STYLE, LTYPE, VIEW) are
-    // 10 bytes each starting at file offset 0x2C. Read BLOCK + LAYER names (for
-    // INSERT block resolution and entity layer attribution).
+    // 10 bytes each starting at file offset 0x2C.
     readNameTable(0x2C, m_blockNames);   // BLOCK table
-    readNameTable(0x36, m_layerNames);   // LAYER table (0x2C + 10)
+    // Per-record decoders for BOTH R11/AC1009 and R10/AC1006: R10 records are
+    // byte-identical minus the 2-byte `used` field, which the walkers skip via
+    // their internal hasUsed = (version == AC1009) gate.
+    // Read LTYPE BEFORE LAYER so the layer's ltype-index resolves to a name.
+    readLTypeTable(0x4A);            // LTYPE table (0x2C + 30)
+    readLayerTable(0x36);            // LAYER table (0x2C + 10)
+    readStyleTable(0x40);            // STYLE table (0x2C + 20)
     return true;
 }
 
@@ -185,10 +524,28 @@ bool dwgReaderR11::readEntityR11(DRW_Interface& intfa) {
         const std::uint16_t eed = fileBuf->getRawShort16();
         for (std::uint16_t i = 0; i < eed; ++i) fileBuf->getRawChar8();
     }
-    if (flag & FLAG_HAS_COLOR)
-        fileBuf->getRawChar8();
-    if (flag & FLAG_HAS_LTYPE)
-        fileBuf->getRawShort16();
+    // Per-entity color OVERRIDE (signed RC; AutoCAD palette index). Captured
+    // into DRW_Entity.color below; 0 == ByBlock, 256 == ByLayer (the layer
+    // default); negative values mean the layer is OFF.
+    std::int8_t colorOverride = 0;
+    bool hasColorOverride = false;
+    if (flag & FLAG_HAS_COLOR) {
+        colorOverride = static_cast<std::int8_t>(fileBuf->getRawChar8());
+        hasColorOverride = true;
+    }
+    // Per-entity LTYPE OVERRIDE (signed handle: 1B RC on R10, 2B RS on R11).
+    // Resolved to a name via m_ltypeNames; ByLayer/ByBlock sentinels handled
+    // by ltypeName(). Stored on DRW_Entity.lineType below.
+    std::int16_t ltypeOverride = 0;
+    bool hasLtypeOverride = false;
+    if (flag & FLAG_HAS_LTYPE) {
+        if (version == DRW::AC1006)
+            ltypeOverride =
+                static_cast<std::int16_t>(static_cast<std::int8_t>(fileBuf->getRawChar8()));
+        else
+            ltypeOverride = static_cast<std::int16_t>(fileBuf->getRawShort16());
+        hasLtypeOverride = true;
+    }
     double elevation = 0.0;
     // HAS_ELEVATION is suppressed for LINE/POINT/3DFACE (their Z is in the body).
     if ((flag & FLAG_HAS_ELEVATION)
@@ -206,6 +563,17 @@ bool dwgReaderR11::readEntityR11(DRW_Interface& intfa) {
 
     const bool hasElev = (flag & FLAG_HAS_ELEVATION) != 0;
     const std::string curLayer = layerName(layerIdx);
+    // applyAttrs: stamp layer + per-entity color/ltype overrides. Color
+    // defaults to ByLayer (256); lineType defaults to "BYLAYER" (DRW_Entity's
+    // constructor). The override is applied INSTEAD of the layer default.
+    auto applyAttrs = [&](DRW_Entity& ent) {
+        ent.layer = curLayer;
+        if (hasColorOverride) ent.color = colorOverride;
+        if (hasLtypeOverride) {
+            const std::string n = ltypeName(ltypeOverride);
+            if (!n.empty()) ent.lineType = n;
+        }
+    };
     auto rd = [&]() { return fileBuf->getRawDouble(); };
     auto rd3 = [&]() { DRW_Coord c; c.x = fileBuf->getRawDouble();
                        c.y = fileBuf->getRawDouble(); c.z = fileBuf->getRawDouble();
@@ -229,7 +597,7 @@ bool dwgReaderR11::readEntityR11(DRW_Interface& intfa) {
                 e.secPoint = fileBuf->get2RawDouble();  e.secPoint.z = elevation;
             }
             e.thickness = thickness;
-            e.layer = curLayer;
+            applyAttrs(e);
             intfa.addLine(e);
             break; }
         case R11_POINT: {
@@ -237,7 +605,7 @@ bool dwgReaderR11::readEntityR11(DRW_Interface& intfa) {
             e.basePoint.x = rd(); e.basePoint.y = rd();
             if (!hasElev) e.basePoint.z = rd();
             e.thickness = thickness;
-            e.layer = curLayer;
+            applyAttrs(e);
             intfa.addPoint(e);
             break; }
         case R11_CIRCLE: {
@@ -246,7 +614,7 @@ bool dwgReaderR11::readEntityR11(DRW_Interface& intfa) {
             e.radious = rd();
             e.basePoint.z = elevation;
             e.thickness = thickness;
-            e.layer = curLayer;
+            applyAttrs(e);
             intfa.addCircle(e);
             break; }
         case R11_ARC: {
@@ -257,7 +625,7 @@ bool dwgReaderR11::readEntityR11(DRW_Interface& intfa) {
             e.endangle = rd();
             e.basePoint.z = elevation;
             e.thickness = thickness;
-            e.layer = curLayer;
+            applyAttrs(e);
             intfa.addArc(e);
             break; }
         case R11_TEXT: {
@@ -272,7 +640,7 @@ bool dwgReaderR11::readEntityR11(DRW_Interface& intfa) {
             e.text = s;
             if (opts & 0x01) e.angle = rd();
             e.thickness = thickness;
-            e.layer = curLayer;
+            applyAttrs(e);
             intfa.addText(e);
             break; }
         case R11_SOLID:
@@ -284,7 +652,7 @@ bool dwgReaderR11::readEntityR11(DRW_Interface& intfa) {
             e.fourPoint = fileBuf->get2RawDouble();
             e.basePoint.z = e.secPoint.z = e.thirdPoint.z = e.fourPoint.z = elevation;
             e.thickness = thickness;
-            e.layer = curLayer;
+            applyAttrs(e);
             if (type == R11_TRACE) intfa.addTrace(e); else intfa.addSolid(e);
             break; }
         case R11_3DFACE: {
@@ -300,14 +668,14 @@ bool dwgReaderR11::readEntityR11(DRW_Interface& intfa) {
                 e.thirdPoint = rd3();
                 e.fourPoint = rd3();
             }
-            e.layer = curLayer;
+            applyAttrs(e);
             intfa.add3dFace(e);
             break; }
         case R11_POLYLINE: {
             // Opens a vertex accumulation; VERTEX records append, SEQEND delivers.
             m_curPoly = std::make_unique<DRW_Polyline>();
             m_curPoly->basePoint.z = elevation;
-            m_curPoly->layer = curLayer;
+            applyAttrs(*m_curPoly);
             m_curPoly->thickness = thickness;
             if (opts & 0x01) m_curPoly->flags = fileBuf->getRawChar8(); // closed/3d bits
             break; }
@@ -357,7 +725,7 @@ bool dwgReaderR11::readEntityR11(DRW_Interface& intfa) {
             if (opts & 0x80) e.rowspace = rd();
             if (blockIdx < m_blockNames.size())  // 0-based, verified vs dwgread
                 e.name = m_blockNames[blockIdx];
-            e.layer = curLayer;
+            applyAttrs(e);
             intfa.addInsert(e);
             break; }
         case R11_ATTRIB:
@@ -375,22 +743,114 @@ bool dwgReaderR11::readEntityR11(DRW_Interface& intfa) {
             fileBuf->getRawChar8();            // attribute flags (RC 70)
             if (opts & 0x01) e.angle = rd();   // rotation (shared TEXT opt bit)
             e.thickness = thickness;
-            e.layer = curLayer;
+            applyAttrs(e);
             intfa.addText(e);
             break; }
         case R11_DIMENSION: {
-            // A dimension's graphics (lines/arrows/text) live in an anonymous
-            // *D block referenced by the first common field (block, HANDLE 2,2 =
-            // RS index). Render it by inserting that block; the typed dimension
-            // (defpoints/measurement) is dropped (rendering-first). The block was
-            // already delivered by readDwgBlocks.
+            // The pre-R13 DIMENSION record carries the typed dimension fields
+            // (defpoints/textpoint/dimtype/etc.) PLUS a reference to an
+            // anonymous `*D` block that holds the rendered graphics (lines,
+            // arrows, text). Until P4 this code rendered ONLY the *D block as
+            // an INSERT; now it decodes the typed dim and emits the right
+            // DRW_Dim* INSTEAD for the handled dimtypes (LINEAR + ALIGNED),
+            // falling back to the INSERT for ANG2LN/ANG3PT/RADIUS/DIAMETER/
+            // ORDINATE (no R11 oracle file for those types).
+            //
+            // Sequence (after the common header already consumed above):
+            //   block RS         -> *D block index
+            //   def_pt 3RD
+            //   text_midpt 2RD
+            //   opts&0x1: clone_ins_pt 2RD
+            //   opts&0x2: flag RC (dimtype = flag & 15)
+            //   opts&0x4: user_text TV
+            //   per-type fields (each opts-gated; see dwg.spec dimension.spec)
             const std::uint16_t blockIdx = fileBuf->getRawShort16();
-            if (blockIdx < m_blockNames.size() && !m_blockNames[blockIdx].empty()) {
-                DRW_Insert e;
-                e.name = m_blockNames[blockIdx];
-                e.basePoint = DRW_Coord(0.0, 0.0, 0.0);  // *D geometry is in WCS
-                e.layer = curLayer;
-                intfa.addInsert(e);
+            DRW_Coord defPt = rd3();
+            DRW_Coord textMid = fileBuf->get2RawDouble();   // 2RD; z=0
+            DRW_Coord cloneIns(0.0, 0.0, 0.0);
+            if (opts & 0x1) cloneIns = fileBuf->get2RawDouble();
+            std::uint8_t dimFlag = 0;
+            if (opts & 0x2) dimFlag = fileBuf->getRawChar8();
+            std::string userText;
+            if (opts & 0x4) userText = readTv();
+            const std::uint8_t dimtype = dimFlag & 0x0F;
+
+            // Common DRW_Dimension setup: shared across all dimtypes; only
+            // the public setters are usable (setPt2..setPt6 etc. are
+            // protected, friend-scoped to the base reader path). The typed
+            // subclass exposes per-type public setters (setClonePoint on
+            // Aligned, setDef1Point/setDef2Point, setAngle/setOblique on
+            // Linear). Layer + per-entity overrides via applyAttrs (DRW_Dim*
+            // IS-A DRW_Entity).
+            auto setupBase = [&](DRW_Dimension& dim) {
+                dim.setDefPoint(defPt);
+                dim.setTextPoint(textMid);
+                dim.setText(userText);
+                dim.type = dimFlag;
+                dim.setStyle("");                           // consumer falls back to m_dimStyle
+                dim.setName(blockIdx < m_blockNames.size()
+                                ? m_blockNames[blockIdx]
+                                : std::string());
+                applyAttrs(dim);
+            };
+
+            const double RAD2DEG = 57.29577951308232;        // 180/pi
+
+            switch (dimtype) {
+            case 0: {  // LINEAR
+                DRW_Coord x1(0, 0, 0), x2(0, 0, 0);
+                double dim_rotation = 0.0, oblique = 0.0, text_rotation = 0.0;
+                if (opts & 0x008) x1 = rd3();
+                if (opts & 0x010) x2 = rd3();
+                if (opts & 0x100) dim_rotation = rd();      // RD radians
+                if (opts & 0x200) oblique = rd();           // RD radians
+                if (opts & 0x400) text_rotation = rd();     // RD radians
+                if (opts & 0x4000) rd3();                   // extrusion 3RD (unused)
+                if (opts & 0x8000) fileBuf->getRawShort16();// dimstyle RS index (unresolved)
+                DRW_DimLinear dim;
+                setupBase(dim);
+                dim.setClonePoint(cloneIns);                // public on Aligned/Linear
+                dim.setDef1Point(x1);
+                dim.setDef2Point(x2);
+                dim.setAngle(dim_rotation * RAD2DEG);       // consumer deg2rads
+                dim.setOblique(oblique * RAD2DEG);
+                dim.setDir(text_rotation);                  // RADIANS (consumer raw)
+                intfa.addDimLinear(&dim);
+                break; }
+            case 1: {  // ALIGNED
+                DRW_Coord x1(0, 0, 0), x2(0, 0, 0);
+                double oblique_unused = 0.0, text_rotation = 0.0;
+                if (opts & 0x008) x1 = rd3();
+                if (opts & 0x010) x2 = rd3();
+                if (opts & 0x100) oblique_unused = rd();    // 0x100 here = oblique;
+                                                            // DRW_DimAligned has no
+                                                            // public oblique setter
+                                                            // AND addDimAlign ignores
+                                                            // it -> read+discard.
+                if (opts & 0x400) text_rotation = rd();
+                if (opts & 0x8000) fileBuf->getRawShort16();
+                (void)oblique_unused;
+                DRW_DimAligned dim;
+                setupBase(dim);
+                dim.setClonePoint(cloneIns);
+                dim.setDef1Point(x1);
+                dim.setDef2Point(x2);
+                dim.setDir(text_rotation);                  // RADIANS
+                intfa.addDimAlign(&dim);
+                break; }
+            default: {
+                // Unhandled dimtype -> render via the *D block (the existing
+                // pre-P4 path). The *D block was already delivered by
+                // readDwgBlocks; an INSERT at (0,0) renders the graphics.
+                if (blockIdx < m_blockNames.size()
+                    && !m_blockNames[blockIdx].empty()) {
+                    DRW_Insert e;
+                    e.name = m_blockNames[blockIdx];
+                    e.basePoint = DRW_Coord(0.0, 0.0, 0.0);
+                    applyAttrs(e);
+                    intfa.addInsert(e);
+                }
+                break; }
             }
             break; }
         case R11_SHAPE: {
@@ -410,7 +870,7 @@ bool dwgReaderR11::readEntityR11(DRW_Interface& intfa) {
             e.pswidth = rd();                    // width
             e.psheight = rd();                   // height
             fileBuf->getRawShort16();            // viewport id (RS)
-            e.layer = curLayer;
+            applyAttrs(e);
             intfa.addViewport(e);
             break; }
         default:

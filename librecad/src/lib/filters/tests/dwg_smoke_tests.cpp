@@ -5161,3 +5161,446 @@ TEST_CASE("DWG pre-R13: read AC1009/R11 entities section") {
   CHECK(r.entities >= 23);              // + inserts + attrib/attdef + dimension block
   CHECK(r.blocks >= 3);                 // BLOCK1 / BLOCK2 / *D
 }
+
+// Pre-R13 R11 typed DIMENSION (LINEAR + ALIGNED). Phase 4 swaps the previous
+// "render the *D block as an INSERT" path for a typed DRW_DimLinear /
+// DRW_DimAligned for the handled dimtypes (LINEAR=0, ALIGNED=1), keeping the
+// INSERT fallback for ANG2LN/ANG3PT/RADIUS/DIAMETER/ORDINATE (no R11 oracle
+// file exists for those types in the LibreDWG corpus). The swap is the
+// load-bearing check: a typed dim AND a *D INSERT for the same record would
+// double-render.
+namespace {
+struct DimCollector : public CountingIface {
+  std::vector<DRW_DimLinear> lin;
+  std::vector<DRW_DimAligned> ali;
+  int starDInserts = 0;
+  void addDimLinear(const DRW_DimLinear *e) override {
+    CountingIface::addDimLinear(e);
+    lin.push_back(*e);
+  }
+  void addDimAlign(const DRW_DimAligned *e) override {
+    CountingIface::addDimAlign(e);
+    ali.push_back(*e);
+  }
+  void addInsert(const DRW_Insert &e) override {
+    CountingIface::addInsert(e);
+    // Anonymous dim-graphics block name starts with "*D" (case-sensitive in
+    // libredwg). A non-zero count means the typed-dim swap is double-rendering.
+    if (e.name.size() >= 2 && e.name[0] == '*' && e.name[1] == 'D')
+      ++starDInserts;
+  }
+};
+}  // namespace
+
+TEST_CASE("DWG pre-R13: R11 typed DIMENSION (LINEAR + ALIGNED)") {
+  const char *home = getenv("HOME");
+  if (!home) {
+    SUCCEED("HOME not set; skipping");
+    return;
+  }
+  SECTION("entities-2d.dwg — 1 ALIGNED dim, no double-render") {
+    const std::string path =
+        std::string(home) + "/dev/libredwg/test/test-data/r11/entities-2d.dwg";
+    std::ifstream probe(path, std::ios::binary);
+    if (!probe.good()) { SUCCEED("entities-2d.dwg absent"); return; }
+    probe.close();
+    DimCollector iface;
+    const DwgResult r = readDwg(path, /*verbose=*/false, &iface);
+    REQUIRE(r.ok);
+    REQUIRE(r.version == DRW::AC1009);
+    CHECK(iface.lin.size() == 0);
+    REQUIRE(iface.ali.size() == 1);
+    // Oracle (dwgread -O JSON): def_pt=[8,8,0], text_midpt=[0,0],
+    // xline1_pt=[6,8,2], xline2_pt=[7,7,3], dimtype=1=ALIGNED.
+    // The raw on-disk doubles are at one ULP below the integers (e.g.
+    // def_pt.x bytes = fe ff ff ff ff ff 1f 40 = 7.999...); dwgread/jq
+    // pretty-prints them as "8.0" but a bit-exact reader yields
+    // 7.99999999999999822. Compare with a ULP-tolerant near().
+    const auto &d = iface.ali[0];
+    auto near = [](double a, double b) { return std::abs(a - b) < 1e-12; };
+    CHECK(near(d.getDefPoint().x, 8.0));
+    CHECK(near(d.getDefPoint().y, 8.0));
+    CHECK(near(d.getDef1Point().x, 6.0));
+    CHECK(near(d.getDef1Point().y, 8.0));
+    CHECK(near(d.getDef1Point().z, 2.0));
+    CHECK(near(d.getDef2Point().x, 7.0));
+    CHECK(near(d.getDef2Point().y, 7.0));
+    CHECK(near(d.getDef2Point().z, 3.0));
+    // Swap invariant: no `*D` INSERTs for handled dimtypes (would
+    // double-render with the typed dim).
+    CHECK(iface.starDInserts == 0);
+  }
+  SECTION("ACEB10.dwg — 15 LINEAR dims, no double-render") {
+    const std::string path =
+        std::string(home) + "/dev/libredwg/test/test-data/r11/ACEB10.dwg";
+    std::ifstream probe(path, std::ios::binary);
+    if (!probe.good()) { SUCCEED("ACEB10.dwg absent"); return; }
+    probe.close();
+    DimCollector iface;
+    const DwgResult r = readDwg(path, /*verbose=*/false, &iface);
+    REQUIRE(r.ok);
+    REQUIRE(r.version == DRW::AC1009);
+    CHECK(iface.lin.size() == 15);
+    CHECK(iface.ali.size() == 0);
+    CHECK(iface.starDInserts == 0);
+    // Spot-check first LINEAR dim against the oracle.
+    const auto &d = iface.lin[0];
+    auto near = [](double a, double b) { return std::abs(a - b) < 1e-12; };
+    CHECK(near(d.getDefPoint().x, 13.62245609657801));
+    CHECK(near(d.getDefPoint().y, 4.1236674739085));
+    CHECK(d.getDefPoint().z == 0.0);
+    CHECK(near(d.getDef1Point().x, 12.62245609657801));
+    CHECK(near(d.getDef2Point().x, 13.62245609657801));
+    CHECK(d.getAngle() == 0.0);
+  }
+}
+
+// Pre-R13 R10 (AC1006) routing parity. The R10 container is byte-identical to
+// R11 except for the LTYPE handle width in the entity common header (R10=1B
+// RC; R11=2B RS). dwgReaderR11 branches on `version`; this test exercises the
+// 1-byte path. Because the reader self-heals via setPosition(recEnd), a wrong
+// LTYPE-handle width would not change SUCCESS/entFail — geometry must be
+// bit-diffed instead. Verified vs `dwgread -O JSON` on the same file.
+namespace {
+struct R10LineCollector : public CountingIface {
+  std::vector<DRW_Line> lines;
+  void addLine(const DRW_Line &e) override {
+    CountingIface::addLine(e);
+    lines.push_back(e);
+  }
+};
+}  // namespace
+
+TEST_CASE("DWG pre-R13: read AC1006/R10 entities section") {
+  const char *home = getenv("HOME");
+  if (!home) {
+    SUCCEED("HOME not set; skipping pre-R13 R10 test");
+    return;
+  }
+  const std::string path =
+      std::string(home) + "/dev/libredwg/test/test-data/r10/entities.dwg";
+  std::ifstream probe(path, std::ios::binary);
+  if (!probe.good()) {
+    SUCCEED("pre-R13 R10 corpus absent; skipping");
+    return;
+  }
+  probe.close();
+
+  R10LineCollector iface;
+  const DwgResult r = readDwg(path, /*verbose=*/false, &iface);
+  CHECK(r.ok);                          // was BAD_VERSION before R10 routing
+  CHECK(r.version == DRW::AC1006);
+  // Oracle (dwgread -O JSON): 6 LINEs reachable from ENTITIES + BLOCKS
+  // (the 7th is past a JUMP/3DLINE pair that the reader does not chase).
+  REQUIRE(iface.lines.size() >= 6);
+  // Bit-exact check on a layered-LTYPE LINE — proves the 1B LTYPE-handle
+  // branch did NOT consume a phantom byte (would desync the body geometry).
+  // Endpoints lifted from `dwgread -O JSON` on r10/entities.dwg.
+  bool found_2_3_to_3_4 = false;
+  bool found_irrational = false;
+  for (const auto &L : iface.lines) {
+    if (L.basePoint.x == 2.0 && L.basePoint.y == 3.0 &&
+        L.secPoint.x == 3.0 && L.secPoint.y == 4.0) {
+      found_2_3_to_3_4 = true;
+    }
+    // Irrational endpoints — must be byte-exact (within ~1 ULP) to prove the
+    // 1B-vs-2B LTYPE branch read the right field width.
+    auto near = [](double a, double b) { return std::abs(a - b) < 1e-12; };
+    if (near(L.basePoint.x, 6.04419417382416) &&
+        near(L.basePoint.y, 8.04419417382416) &&
+        near(L.secPoint.x, 7.12727922061358) &&
+        near(L.secPoint.y, 9.12727922061358)) {
+      found_irrational = true;
+    }
+  }
+  CHECK(found_2_3_to_3_4);
+  CHECK(found_irrational);
+}
+
+// Pre-R13 R11 table-record decode (LTYPE/STYLE/LAYER): asserts the per-record
+// fields delivered through addLType/addLayer/addTextStyle. Ground truth from
+// `dwgread -O JSON` on the same files. The HIDDENX2 truncation assertion is
+// the load-bearing detail — the on-disk LTYPE record has 12 fixed double
+// slots, only the first `numdashes` are valid; the rest are uninitialised
+// garbage that MUST be dropped.
+namespace {
+struct R11TableCollector : public CountingIface {
+  std::vector<DRW_Layer> layers;
+  std::vector<DRW_LType> ltypes;
+  std::vector<DRW_Textstyle> styles;
+  void addLayer(const DRW_Layer &e) override {
+    CountingIface::addLayer(e);
+    layers.push_back(e);
+  }
+  void addLType(const DRW_LType &e) override {
+    CountingIface::addLType(e);
+    ltypes.push_back(e);
+  }
+  void addTextStyle(const DRW_Textstyle &e) override {
+    CountingIface::addTextStyle(e);
+    styles.push_back(e);
+  }
+};
+}  // namespace
+
+// Helper: pull a DRW_Variant scalar out of a header var map (by key).
+namespace {
+const DRW_Variant *hdrVar(const DRW_Header &h, const char *k) {
+  auto it = h.vars.find(k);
+  return it == h.vars.end() ? nullptr : it->second;
+}
+struct HdrCollector : public CountingIface {
+  DRW_Header hdr;
+  void addHeader(const DRW_Header *h) override { hdr = *h; }
+};
+}  // namespace
+
+// Pre-R13 R11 header-variables decode. The R11 header layout starts at file
+// offset 0x5E (5 leading 10-byte table-section headers end there) and is
+// SEQUENTIAL — every field offset is the running sum of prior widths. We
+// read the high-value drawing-state vars through PLINEWID (post-cursor
+// 0x36f); the long DIMxx/UCS/VPORT tail is intentionally skipped.
+//
+// CRITICAL: dwgRW::processDwg() calls readDwgHeader BEFORE readDwgTables,
+// so the LAYER/STYLE/LTYPE name vectors are empty at header-read time.
+// The fix is to eagerly read the table NAMES inside readDwgHeader before
+// resolving CLAYER/TEXTSTYLE/CELTYPE. The ACEB10 SECTION below is the
+// load-bearing case for this fix: its CLAYER index is 8 (== "BORDER"), so
+// a buggy "no eager read" path would silently fall back instead of
+// returning the right name (entities-2d masks the bug because CLAYER=0
+// happens to coincide with the default "0").
+TEST_CASE("DWG pre-R13: R11 header variables decode") {
+  const char *home = getenv("HOME");
+  if (!home) {
+    SUCCEED("HOME not set; skipping");
+    return;
+  }
+  SECTION("entities-2d.dwg (defaults — minimal coverage)") {
+    const std::string path =
+        std::string(home) + "/dev/libredwg/test/test-data/r11/entities-2d.dwg";
+    std::ifstream probe(path, std::ios::binary);
+    if (!probe.good()) { SUCCEED("entities-2d.dwg absent"); return; }
+    probe.close();
+    HdrCollector iface;
+    const DwgResult r = readDwg(path, /*verbose=*/false, &iface);
+    REQUIRE(r.ok);
+    REQUIRE(r.version == DRW::AC1009);
+    // doubles
+    auto *dimscale = hdrVar(iface.hdr, "DIMSCALE");
+    REQUIRE(dimscale != nullptr);
+    CHECK(dimscale->content.d == 1.0);
+    auto *ltscale = hdrVar(iface.hdr, "LTSCALE");
+    REQUIRE(ltscale != nullptr);
+    CHECK(ltscale->content.d == 1.0);
+    auto *textsize = hdrVar(iface.hdr, "TEXTSIZE");
+    REQUIRE(textsize != nullptr);
+    CHECK(textsize->content.d == 0.2);
+    // ints (CECOLOR=256 was the load-bearing oldCECOLOR-decoy trap)
+    auto *cecolor = hdrVar(iface.hdr, "CECOLOR");
+    REQUIRE(cecolor != nullptr);
+    CHECK(cecolor->content.i == 256);
+    auto *lunits = hdrVar(iface.hdr, "LUNITS");
+    REQUIRE(lunits != nullptr);
+    CHECK(lunits->content.i == 2);
+    auto *pdmode = hdrVar(iface.hdr, "PDMODE");
+    REQUIRE(pdmode != nullptr);
+    CHECK(pdmode->content.i == 0);
+    // coord (EXTMAX bit-exact to ~1 ULP; literal-precision round-trip is loose)
+    auto *extmax = hdrVar(iface.hdr, "EXTMAX");
+    REQUIRE(extmax != nullptr);
+    REQUIRE(extmax->type() == DRW_Variant::COORD);
+    auto near = [](double a, double b) { return std::abs(a - b) < 1e-12; };
+    CHECK(near(extmax->content.v->x, 9.43333333333333));
+    CHECK(near(extmax->content.v->y, 9.12727922061358));
+    CHECK(extmax->content.v->z == 5.0);
+    // resolved names
+    auto *clayer = hdrVar(iface.hdr, "CLAYER");
+    REQUIRE(clayer != nullptr);
+    CHECK(*clayer->content.s == "0");
+    auto *celtype = hdrVar(iface.hdr, "CELTYPE");
+    REQUIRE(celtype != nullptr);
+    CHECK(*celtype->content.s == "BYLAYER");
+  }
+  SECTION("ACEB10.dwg (CLAYER!=0 — exercises eager table-read fix)") {
+    const std::string path =
+        std::string(home) + "/dev/libredwg/test/test-data/r11/ACEB10.dwg";
+    std::ifstream probe(path, std::ios::binary);
+    if (!probe.good()) { SUCCEED("ACEB10.dwg absent"); return; }
+    probe.close();
+    HdrCollector iface;
+    const DwgResult r = readDwg(path, /*verbose=*/false, &iface);
+    REQUIRE(r.ok);
+    REQUIRE(r.version == DRW::AC1009);
+    auto *clayer = hdrVar(iface.hdr, "CLAYER");
+    REQUIRE(clayer != nullptr);
+    // Oracle CLAYER index = 8, m_layerNames[8] = "BORDER".
+    CHECK(*clayer->content.s == "BORDER");
+    auto *textstyle = hdrVar(iface.hdr, "TEXTSTYLE");
+    REQUIRE(textstyle != nullptr);
+    // Oracle TEXTSTYLE index = 1, m_styleNames[1] = "ADESK1".
+    CHECK(*textstyle->content.s == "ADESK1");
+    auto *pdmode = hdrVar(iface.hdr, "PDMODE");
+    REQUIRE(pdmode != nullptr);
+    CHECK(pdmode->content.i == 3);
+  }
+}
+
+TEST_CASE("DWG pre-R13: R11 LAYER/LTYPE/STYLE table records") {
+  const char *home = getenv("HOME");
+  if (!home) {
+    SUCCEED("HOME not set; skipping");
+    return;
+  }
+  SECTION("entities-2d.dwg (minimal: 2 layers, 1 ltype, 2 styles)") {
+    const std::string path =
+        std::string(home) + "/dev/libredwg/test/test-data/r11/entities-2d.dwg";
+    std::ifstream probe(path, std::ios::binary);
+    if (!probe.good()) {
+      SUCCEED("entities-2d.dwg absent");
+      return;
+    }
+    probe.close();
+    R11TableCollector iface;
+    const DwgResult r = readDwg(path, /*verbose=*/false, &iface);
+    REQUIRE(r.ok);
+    REQUIRE(r.version == DRW::AC1009);
+    CHECK(iface.layers.size() == 2);
+    CHECK(iface.ltypes.size() == 1);
+    CHECK(iface.styles.size() == 2);
+    // CONTINUOUS: numdashes=0, no values in path.
+    auto cont = std::find_if(iface.ltypes.begin(), iface.ltypes.end(),
+                             [](const DRW_LType &l) { return l.name == "CONTINUOUS"; });
+    REQUIRE(cont != iface.ltypes.end());
+    CHECK(cont->desc == "Solid line");
+    CHECK(cont->size == 0);
+    CHECK(cont->path.empty());
+    // STANDARD style: font=txt, lastHeight=0.2 (height/textSize=0 means unset).
+    auto std_ = std::find_if(iface.styles.begin(), iface.styles.end(),
+                             [](const DRW_Textstyle &s) { return s.name == "STANDARD"; });
+    REQUIRE(std_ != iface.styles.end());
+    CHECK(std_->font == "txt");
+    CHECK(std_->bigFont == "");
+    CHECK(std_->lastHeight == 0.2);
+    CHECK(std_->width == 1.0);
+  }
+  SECTION("ACEB10.dwg (rich: 13 layers, 2 ltypes incl HIDDENX2, 3 styles)") {
+    const std::string path =
+        std::string(home) + "/dev/libredwg/test/test-data/r11/ACEB10.dwg";
+    std::ifstream probe(path, std::ios::binary);
+    if (!probe.good()) {
+      SUCCEED("ACEB10.dwg absent");
+      return;
+    }
+    probe.close();
+    R11TableCollector iface;
+    const DwgResult r = readDwg(path, /*verbose=*/false, &iface);
+    REQUIRE(r.ok);
+    REQUIRE(r.version == DRW::AC1009);
+    CHECK(iface.layers.size() == 13);
+    CHECK(iface.ltypes.size() == 2);
+    CHECK(iface.styles.size() == 3);
+    // MOUNTINGKIT-EB35DIN and MOUNTINGKIT-EB4 have signed color = -7 (off).
+    int negCount = 0;
+    for (const auto &l : iface.layers)
+      if (l.color < 0) ++negCount;
+    CHECK(negCount == 2);
+    // HIDDENX2: numdashes=2, path is exactly [0.5, -0.25] — the on-disk slots
+    // 2..11 are NaN garbage and must be truncated.
+    auto h2 = std::find_if(iface.ltypes.begin(), iface.ltypes.end(),
+                           [](const DRW_LType &l) { return l.name == "HIDDENX2"; });
+    REQUIRE(h2 != iface.ltypes.end());
+    CHECK(h2->size == 2);
+    CHECK(h2->length == 0.75);
+    REQUIRE(h2->path.size() == 2);
+    CHECK(h2->path[0] == 0.5);
+    CHECK(h2->path[1] == -0.25);
+    // ADESK1 style: font=romans, lastHeight=0.095.
+    auto a1 = std::find_if(iface.styles.begin(), iface.styles.end(),
+                           [](const DRW_Textstyle &s) { return s.name == "ADESK1"; });
+    REQUIRE(a1 != iface.styles.end());
+    CHECK(a1->font == "romans");
+    CHECK(a1->lastHeight == 0.095);
+  }
+}
+
+// Pre-R13 R10 (AC1006) parity: the table records and header variables are
+// byte-identical to R11 EXCEPT each table record omits the 2-byte `used` field
+// (recSizes R10 37/194/187 vs R11 41/198/191), and the header subset
+// (0x5E..PLINEWID) is byte-identical. Ground truth from `dwgread -O JSON` on
+// r10/entities.dwg. This is the case that proves R10 reached parity with R11.
+TEST_CASE("DWG pre-R13: R10 LAYER/LTYPE/STYLE table records + header") {
+  const char *home = getenv("HOME");
+  if (!home) {
+    SUCCEED("HOME not set; skipping");
+    return;
+  }
+  const std::string path =
+      std::string(home) + "/dev/libredwg/test/test-data/r10/entities.dwg";
+  std::ifstream probe(path, std::ios::binary);
+  if (!probe.good()) {
+    SUCCEED("pre-R13 R10 corpus absent; skipping");
+    return;
+  }
+  probe.close();
+  SECTION("table records (used field absent in R10)") {
+    R11TableCollector iface;
+    const DwgResult r = readDwg(path, /*verbose=*/false, &iface);
+    REQUIRE(r.ok);
+    REQUIRE(r.version == DRW::AC1006);
+    CHECK(iface.layers.size() == 2);
+    CHECK(iface.ltypes.size() == 1);
+    CHECK(iface.styles.size() == 2);
+    // LAYER "0" color 7; "DEFPOINTS" signed color -7 (OFF) — proves the missing
+    // `used` field did not shift the color/ltype reads.
+    auto l0 = std::find_if(iface.layers.begin(), iface.layers.end(),
+                           [](const DRW_Layer &l) { return l.name == "0"; });
+    REQUIRE(l0 != iface.layers.end());
+    CHECK(l0->color == 7);
+    auto ldp = std::find_if(iface.layers.begin(), iface.layers.end(),
+                            [](const DRW_Layer &l) { return l.name == "DEFPOINTS"; });
+    REQUIRE(ldp != iface.layers.end());
+    CHECK(ldp->color == -7);
+    // CONTINUOUS ltype, STANDARD style — same field offsets as R11 minus 2.
+    auto cont = std::find_if(iface.ltypes.begin(), iface.ltypes.end(),
+                             [](const DRW_LType &l) { return l.name == "CONTINUOUS"; });
+    REQUIRE(cont != iface.ltypes.end());
+    CHECK(cont->desc == "Solid line");
+    CHECK(cont->size == 0);
+    auto std_ = std::find_if(iface.styles.begin(), iface.styles.end(),
+                             [](const DRW_Textstyle &s) { return s.name == "STANDARD"; });
+    REQUIRE(std_ != iface.styles.end());
+    CHECK(std_->font == "txt");
+    CHECK(std_->lastHeight == 0.2);
+    CHECK(std_->width == 1.0);
+  }
+  SECTION("header variables (byte-identical to R11 in subset)") {
+    HdrCollector iface;
+    const DwgResult r = readDwg(path, /*verbose=*/false, &iface);
+    REQUIRE(r.ok);
+    REQUIRE(r.version == DRW::AC1006);
+    auto *lunits = hdrVar(iface.hdr, "LUNITS");
+    REQUIRE(lunits != nullptr);
+    CHECK(lunits->content.i == 2);
+    auto *cecolor = hdrVar(iface.hdr, "CECOLOR");
+    REQUIRE(cecolor != nullptr);
+    CHECK(cecolor->content.i == 256);
+    auto *ltscale = hdrVar(iface.hdr, "LTSCALE");
+    REQUIRE(ltscale != nullptr);
+    CHECK(ltscale->content.d == 1.0);
+    auto *pdmode = hdrVar(iface.hdr, "PDMODE");
+    REQUIRE(pdmode != nullptr);
+    CHECK(pdmode->content.i == 0);
+    // EXTMAX z=1.0 for R10 (R11's entities-2d had z=5.0) — bit-exact x/y.
+    auto *extmax = hdrVar(iface.hdr, "EXTMAX");
+    REQUIRE(extmax != nullptr);
+    REQUIRE(extmax->type() == DRW_Variant::COORD);
+    auto near = [](double a, double b) { return std::abs(a - b) < 1e-12; };
+    CHECK(near(extmax->content.v->x, 9.43333333333333));
+    CHECK(extmax->content.v->y == 10.0);
+    CHECK(extmax->content.v->z == 1.0);
+    // CLAYER resolves to "0" via the eager name-table read on the R10 path.
+    auto *clayer = hdrVar(iface.hdr, "CLAYER");
+    REQUIRE(clayer != nullptr);
+    CHECK(*clayer->content.s == "0");
+  }
+}
