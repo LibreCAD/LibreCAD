@@ -66,6 +66,9 @@ LC_WidgetOptionsDialog::LC_WidgetOptionsDialog(QWidget* parent)
         if (!sheet_path.isEmpty() && QFile::exists(sheet_path))
             stylesheet_field->setText(sheet_path);
 
+        bool forceLightTheme = LC_GET_BOOL("ForceLightTheme", false);
+        cbForceLightTheme->setChecked(forceLightTheme);
+
         // bool allow_theme = LC_GET_BOOL("AllowTheme", false);
         // theme_checkbox->setChecked(allow_theme);
 
@@ -337,6 +340,8 @@ void LC_WidgetOptionsDialog::accept() {
 
         bool pickValuesButtonsFlatIcons = cbFlatPickValuesButtons->isChecked();
         LC_SET("PickValueButtonsFlatIcons", pickValuesButtonsFlatIcons);
+
+        LC_SET("ForceLightTheme", cbForceLightTheme->isChecked());
 
         bool allow_theme = false; //theme_checkbox->isChecked();
         LC_SET("AllowTheme", allow_theme);
