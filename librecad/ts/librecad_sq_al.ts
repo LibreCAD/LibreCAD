@@ -39,6 +39,67 @@
     </message>
 </context>
 <context>
+    <name>CustomToolbarCreator</name>
+    <message>
+        <location filename="../src/ui/generic/customtoolbarcreator.ui" line="14"/>
+        <source>Frame</source>
+        <translation type="unfinished">Kornizë</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/generic/customtoolbarcreator.ui" line="86"/>
+        <source>&gt;</source>
+        <translation type="unfinished">&gt;</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/generic/customtoolbarcreator.ui" line="105"/>
+        <source>&lt;</source>
+        <translation type="unfinished">&lt;</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/generic/customtoolbarcreator.ui" line="139"/>
+        <source>+</source>
+        <translation>+</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/generic/customtoolbarcreator.ui" line="149"/>
+        <source>-</source>
+        <translation>-</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/generic/customtoolbarcreator.ui" line="156"/>
+        <source>input a name and then press +</source>
+        <translation>Shtypni një emër dhe pastaj shtypni +</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/generic/customtoolbarcreator.ui" line="193"/>
+        <source>Save</source>
+        <translation type="unfinished">Save</translation>
+    </message>
+</context>
+<context>
+    <name>CustomWidgetCreator</name>
+    <message>
+        <location filename="../src/ui/generic/customwidgetcreator.ui" line="14"/>
+        <source>Frame</source>
+        <translation type="unfinished">Kornizë</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/generic/customwidgetcreator.ui" line="65"/>
+        <source>-&gt;</source>
+        <translation>-></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/generic/customwidgetcreator.ui" line="72"/>
+        <source>&lt;-</source>
+        <translation>&lt;-</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/generic/customwidgetcreator.ui" line="115"/>
+        <source>Save</source>
+        <translation type="unfinished">Save</translation>
+    </message>
+</context>
+<context>
     <name>DlgParabola</name>
     <message>
         <location filename="../src/ui/forms/LC_DlgParabola.ui" line="26"/>
@@ -1607,6 +1668,14 @@ ose [%2]</translation>
     </message>
 </context>
 <context>
+    <name>LC_CustomToolbar</name>
+    <message>
+        <location filename="../src/ui/lc_customtoolbar.cpp" line="36"/>
+        <source>Add or Remove Action</source>
+        <translation>Shtoni ose largoni veprim</translation>
+    </message>
+</context>
+<context>
     <name>LC_DeviceOptions</name>
     <message>
         <location filename="../src/ui/lc_deviceoptions.ui" line="14"/>
@@ -2580,52 +2649,51 @@ ose [%2]</translation>
         <translation>Shfaq këshillë për artikujt e tabelës</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="221"/>
         <source>Pens file:</source>
-        <translation>Skedari i stileve:</translation>
+        <translation type="vanished">Skedari i stileve:</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="244"/>
+        <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="219"/>
         <source>Show colorn name as</source>
         <translation>Shfaq emrin e ngjyrës si</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="250"/>
+        <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="225"/>
         <source>HEX</source>
         <translation>HEX</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="257"/>
+        <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="232"/>
         <source>RGB</source>
         <translation>RGB</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="264"/>
+        <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="239"/>
         <source>Natural name where possible</source>
         <translation>Emër natyral ku është e mundur</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="274"/>
+        <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="249"/>
         <source>Show info message if no entities may be selected by pen</source>
         <translation>Shfaq mesazh informativ nëse asnjë entitet nuk mund të zgjidhet me stil</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="283"/>
+        <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="258"/>
         <source>On double click on table item</source>
         <translation>Kur klikohet dy herë mbi artikullin e tabelës</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpaletteoptionsdialog.cpp" line="45"/>
+        <location filename="../src/ui/lc_penpaletteoptionsdialog.cpp" line="46"/>
         <source>Do nothing</source>
         <translation>Mos bëj asgjë</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpaletteoptionsdialog.cpp" line="46"/>
+        <location filename="../src/ui/lc_penpaletteoptionsdialog.cpp" line="47"/>
         <source>Select entities by attributes pen</source>
         <translation>Zgjidh entitetet me stilin e atributeve</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpaletteoptionsdialog.cpp" line="47"/>
+        <location filename="../src/ui/lc_penpaletteoptionsdialog.cpp" line="48"/>
         <source>Select entities by drawing pen</source>
         <translation>Zgjidh entitetet me stilin e vizatimit</translation>
     </message>
@@ -2754,61 +2822,59 @@ ose [%2]</translation>
         <translation>Fshi stilin</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpalettewidget.cpp" line="255"/>
+        <location filename="../src/ui/lc_penpalettewidget.cpp" line="245"/>
         <source>Pens Menu</source>
         <translation>Menyja e stileve</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpalettewidget.cpp" line="275"/>
+        <location filename="../src/ui/lc_penpalettewidget.cpp" line="265"/>
         <source>&amp;Apply Pen To Selection</source>
         <translation>&amp;Aplikoni stilin te zgjedhja</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpalettewidget.cpp" line="276"/>
+        <location filename="../src/ui/lc_penpalettewidget.cpp" line="266"/>
         <source>&amp;Set As Current Pen</source>
         <translation>&amp;Vendos si stil aktual</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpalettewidget.cpp" line="277"/>
+        <location filename="../src/ui/lc_penpalettewidget.cpp" line="267"/>
         <source>&amp;Apply Pen To Active Layer</source>
         <translation>&amp;Aplikoni stilin te shtresa aktive</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpalettewidget.cpp" line="278"/>
+        <location filename="../src/ui/lc_penpalettewidget.cpp" line="268"/>
         <source>&amp;Select Entities With Attributes Pen</source>
         <translation>&amp;Zgjidh entitetet me stilin e atributeve</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpalettewidget.cpp" line="279"/>
+        <location filename="../src/ui/lc_penpalettewidget.cpp" line="269"/>
         <source>&amp;Select Entities With Drawing Pen</source>
         <translation>&amp;Zgjidh entitetet me stilin e vizatimit</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpalettewidget.cpp" line="282"/>
+        <location filename="../src/ui/lc_penpalettewidget.cpp" line="272"/>
         <source>&amp;Edit Pen</source>
         <translation>&amp;Ndrysho stilin</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpalettewidget.cpp" line="283"/>
+        <location filename="../src/ui/lc_penpalettewidget.cpp" line="273"/>
         <source>&amp;Remove Pen</source>
         <translation>&amp;Hiq stilin</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpalettewidget.cpp" line="286"/>
+        <location filename="../src/ui/lc_penpalettewidget.cpp" line="276"/>
         <source>&amp;Remove Pens</source>
         <translation>&amp;Hiq stilet</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpalettewidget.cpp" line="409"/>
         <source>Pen palette</source>
-        <translation>Paleta e stileve</translation>
+        <translation type="vanished">Paleta e stileve</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpalettewidget.cpp" line="410"/>
         <source>Location of pens file is changed, please restart the application so new pens file will be used.
 
 Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
-        <translation>Lokacioni e skedarit të stilove është ndryshuar, ju lutemi të rinisni aplikacionin që skedari i ri i stileve të përdoret.
+        <translation type="vanished">Lokacioni e skedarit të stilove është ndryshuar, ju lutemi të rinisni aplikacionin që skedari i ri i stileve të përdoret.
 
 Ju lutemi të vini re se nëse ruani stilin përmes redaktorit pa e rinisur aplikacionin, stilet aktuale nga paleta do të ruhen në skedarin e ri dhe, për rrjedhojë, përmbajtja e tij ekzistuese do të zëvendësohet.</translation>
     </message>
@@ -7210,6 +7276,49 @@ so default step value required for baking</source>
     </message>
 </context>
 <context>
+    <name>QG_DlgOptionsVariables</name>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsvariables.ui" line="17"/>
+        <source>Drawing Variables</source>
+        <translation>Variabla e Figurës</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsvariables.ui" line="54"/>
+        <source>Variable</source>
+        <translation>Variabël</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsvariables.ui" line="59"/>
+        <source>Code</source>
+        <translation>Kodi</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsvariables.ui" line="64"/>
+        <source>Value</source>
+        <translation>Vlera</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsvariables.ui" line="96"/>
+        <source>&amp;OK</source>
+        <translation>&amp;OK</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsvariables.ui" line="99"/>
+        <source>Alt+O</source>
+        <translation>Alt+O</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsvariables.ui" line="112"/>
+        <source>Cancel</source>
+        <translation>Anulo</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsvariables.ui" line="115"/>
+        <source>Esc</source>
+        <translation>Esc</translation>
+    </message>
+</context>
+<context>
     <name>QG_DlgPoint</name>
     <message>
         <location filename="../src/ui/forms/qg_dlgpoint.ui" line="26"/>
@@ -9298,8 +9407,7 @@ Nëse Jo - vlerat &quot;Për Shtresë&quot; mbeten dhe, për rrjedhojë, stilola
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="153"/>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="191"/>
-        <location filename="../src/ui/lc_penpaletteoptionsdialog.cpp" line="261"/>
-        <location filename="../src/ui/lc_penpaletteoptionsdialog.cpp" line="272"/>
+        <location filename="../src/ui/lc_penpaletteoptionsdialog.cpp" line="215"/>
         <source>Error</source>
         <translation>Gabim</translation>
     </message>
@@ -9316,102 +9424,99 @@ Please specify a different value.</source>
         <translation>Vlerë e pavlefshme e dhënë për ngjyrën %1. Ju lutemi, specifikoni një vlerë tjetër.</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpaletteoptionsdialog.cpp" line="262"/>
+        <location filename="../src/ui/lc_penpaletteoptionsdialog.cpp" line="216"/>
         <source>Invalid value provided for %1 color.
 Please specify a different value.</source>
         <translation>Vlerë e pavlefshme e dhënë për ngjyrën %1. Ju lutemi, specifikoni një vlerë tjetër.</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpaletteoptionsdialog.cpp" line="273"/>
         <source>Invalid path to pens file.
 %1 
 Please specify a different value.</source>
-        <translation>Rruga e paligjshme për skedarin e stilove.
+        <translation type="vanished">Rruga e paligjshme për skedarin e stilove.
 %1
 Ju lutemi, specifikoni një vlerë tjetër.</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1320"/>
+        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1292"/>
         <source>Remove pen</source>
         <translation>Hiq stilin</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1321"/>
+        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1293"/>
         <source>Pen will be removed from palette, drawing entities will not be affected.</source>
         <translation>Stili do të hiqet nga paleta, objektet e vizatimit nuk do të preken.</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1322"/>
-        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1341"/>
+        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1294"/>
+        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1313"/>
         <source>Are you sure you&apos;d like to proceed?</source>
         <translation>A jeni i sigurt që doni të vazhdoni?</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1323"/>
+        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1295"/>
         <source>Pen for removal:</source>
         <translation>Stili për t&apos;u hequr:</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1339"/>
+        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1311"/>
         <source>Remove pens</source>
         <translation>Hiq stilat</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1340"/>
+        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1312"/>
         <source>Pens will be removed from palette, drawing entities will not be affected.</source>
         <translation>Stilet do të hiqen nga paleta, objektet e vizatimit nuk do të preken.</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1342"/>
+        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1314"/>
         <source>Pens for removal:</source>
         <translation>Stilet për t&apos;u hequr:</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1363"/>
+        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1335"/>
         <source>Select Entities </source>
         <translation>Zgjidhni objektet</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1364"/>
+        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1336"/>
         <source>There are no entities that matches pen on visible layers.</source>
         <translation>Nuk ka asnjë objekt që përputhet me stilin në shtresat e dukshme.</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1365"/>
+        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1337"/>
         <source>Such entities exist on frozen layers.
 </source>
         <translation>Objektet e tilla ekzistojnë në shtresat e ngrira.</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1366"/>
+        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1338"/>
         <source>Such entities exist on locked layers.
 </source>
         <translation>Objektet e tilla ekzistojnë në shtresat e kyçura.</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1367"/>
+        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1339"/>
         <source>Please use different pen attributes.</source>
         <translation>Ju lutemi, përdorni atribute të ndryshme të lapsit.</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1376"/>
+        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1348"/>
         <source>Set pen by entity</source>
         <translation>Vendosni lapsin sipas objektit.</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1377"/>
+        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1349"/>
         <source>Please select only one entity to pick pen setting.</source>
         <translation>Ju lutemi, zgjidhni vetëm një objekt për të zgjedhur cilësimet e lapsit.</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1387"/>
         <source>Saving Pens Data</source>
-        <translation>Ruajtja e të dhënave të lapsave.</translation>
+        <translation type="vanished">Ruajtja e të dhënave të lapsave.</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1388"/>
         <source>Unable to save pens data to specified pens file. Would you like to specify correct path to the file?</source>
-        <translation>Nuk mund të ruhen të dhënat e lapsave në skedarin e specifikuar. A dëshironi të specifikoni rrugën e saktë drejt skedarit?</translation>
+        <translation type="vanished">Nuk mund të ruhen të dhënat e lapsave në skedarin e specifikuar. A dëshironi të specifikoni rrugën e saktë drejt skedarit?</translation>
     </message>
 </context>
 <context>
@@ -13682,29 +13787,39 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawCircle</name>
     <message>
-        <location filename="../src/actions/rs_actiondrawcircle.cpp" line="189"/>
+        <location filename="../src/actions/rs_actiondrawcircle.cpp" line="241"/>
         <source>Not a valid expression</source>
         <translation>Nuk është një shprehje e vlefshme</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondrawcircle.cpp" line="201"/>
+        <location filename="../src/actions/rs_actiondrawcircle.cpp" line="173"/>
         <source>Specify center</source>
         <translation>Specifikoni qendrën</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondrawcircle.cpp" line="201"/>
+        <location filename="../src/actions/rs_actiondrawcircle.cpp" line="173"/>
         <source>Cancel</source>
         <translation>Anulo</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondrawcircle.cpp" line="204"/>
+        <location filename="../src/actions/rs_actiondrawcircle.cpp" line="176"/>
         <source>Specify point on circle</source>
         <translation>Specifikoni një pikë në rreth</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondrawcircle.cpp" line="204"/>
+        <location filename="../src/actions/rs_actiondrawcircle.cpp" line="176"/>
         <source>Back</source>
         <translation>Back</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/rs_actiondrawcircle.cpp" line="215"/>
+        <source>Please specify center first</source>
+        <translation>Ju lutemi specifikoni qendrën së pari</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/rs_actiondrawcircle.cpp" line="231"/>
+        <source>Not a valid coordinate</source>
+        <translation>Koordinatë e pavalidshme</translation>
     </message>
 </context>
 <context>
@@ -15502,24 +15617,24 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionModifyScale</name>
     <message>
-        <location filename="../src/actions/rs_actionmodifyscale.cpp" line="241"/>
+        <location filename="../src/actions/rs_actionmodifyscale.cpp" line="238"/>
         <source>Specify scale center</source>
         <translation>Specifikoni qendrën e shkallëzimit</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionmodifyscale.cpp" line="246"/>
+        <location filename="../src/actions/rs_actionmodifyscale.cpp" line="243"/>
         <source>Specify reference point</source>
         <translation>Specifikoni pikën referuese</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionmodifyscale.cpp" line="250"/>
+        <location filename="../src/actions/rs_actionmodifyscale.cpp" line="247"/>
         <source>Specify target point</source>
         <translation>Specifikoni pikën e synuar</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionmodifyscale.cpp" line="242"/>
-        <location filename="../src/actions/rs_actionmodifyscale.cpp" line="247"/>
-        <location filename="../src/actions/rs_actionmodifyscale.cpp" line="251"/>
+        <location filename="../src/actions/rs_actionmodifyscale.cpp" line="239"/>
+        <location filename="../src/actions/rs_actionmodifyscale.cpp" line="244"/>
+        <location filename="../src/actions/rs_actionmodifyscale.cpp" line="248"/>
         <source>Cancel</source>
         <translation>Anulo</translation>
     </message>
@@ -16115,6 +16230,12 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionselect.cpp" line="131"/>
         <source>Select to create block</source>
         <translation>Zgjidh për të krijuar një blok</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/rs_actionselect.cpp" line="135"/>
+        <location filename="../src/actions/rs_actionselect.cpp" line="135"/>
+        <source></source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
