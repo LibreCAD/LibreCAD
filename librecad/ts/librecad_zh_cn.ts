@@ -41,31 +41,62 @@
 <context>
     <name>CustomToolbarCreator</name>
     <message>
+        <location filename="../src/ui/generic/customtoolbarcreator.ui" line="14"/>
         <source>Frame</source>
-        <translation type="vanished">框架</translation>
+        <translation>框架</translation>
     </message>
     <message>
+        <location filename="../src/ui/generic/customtoolbarcreator.ui" line="86"/>
         <source>&gt;</source>
-        <translation type="vanished">&gt;</translation>
+        <translation>&gt;</translation>
     </message>
     <message>
+        <location filename="../src/ui/generic/customtoolbarcreator.ui" line="105"/>
         <source>&lt;</source>
-        <translation type="vanished">&lt;</translation>
+        <translation>&lt;</translation>
     </message>
     <message>
+        <location filename="../src/ui/generic/customtoolbarcreator.ui" line="139"/>
+        <source>+</source>
+        <translation>+</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/generic/customtoolbarcreator.ui" line="149"/>
+        <source>-</source>
+        <translation>-</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/generic/customtoolbarcreator.ui" line="156"/>
+        <source>input a name and then press +</source>
+        <translation>输入名称然后按 +</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/generic/customtoolbarcreator.ui" line="193"/>
         <source>Save</source>
-        <translation type="vanished">保存</translation>
+        <translation>保存</translation>
     </message>
 </context>
 <context>
     <name>CustomWidgetCreator</name>
     <message>
+        <location filename="../src/ui/generic/customwidgetcreator.ui" line="14"/>
         <source>Frame</source>
-        <translation type="vanished">框架</translation>
+        <translation>框架</translation>
     </message>
     <message>
+        <location filename="../src/ui/generic/customwidgetcreator.ui" line="65"/>
+        <source>-&gt;</source>
+        <translation>-></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/generic/customwidgetcreator.ui" line="72"/>
+        <source>&lt;-</source>
+        <translation>&lt;-</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/generic/customwidgetcreator.ui" line="115"/>
         <source>Save</source>
-        <translation type="vanished">保存</translation>
+        <translation>保存</translation>
     </message>
 </context>
 <context>
@@ -1637,6 +1668,14 @@ or [%2]</source>
     </message>
 </context>
 <context>
+    <name>LC_CustomToolbar</name>
+    <message>
+        <location filename="../src/ui/lc_customtoolbar.cpp" line="36"/>
+        <source>Add or Remove Action</source>
+        <translation>添加或删除操作</translation>
+    </message>
+</context>
+<context>
     <name>LC_DeviceOptions</name>
     <message>
         <location filename="../src/ui/lc_deviceoptions.ui" line="14"/>
@@ -2645,37 +2684,36 @@ or [%2]</source>
         <translation>显示表格项工具提示</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="221"/>
         <source>Pens file:</source>
-        <translation>笔文件：</translation>
+        <translation type="vanished">笔文件：</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="244"/>
+        <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="219"/>
         <source>Show colorn name as</source>
         <translation>颜色名称显示为</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="250"/>
+        <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="225"/>
         <source>HEX</source>
         <translation>HEX</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="257"/>
+        <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="232"/>
         <source>RGB</source>
         <translation>RGB</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="264"/>
+        <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="239"/>
         <source>Natural name where possible</source>
         <translation>尽可能使用自然名称</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="274"/>
+        <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="249"/>
         <source>Show info message if no entities may be selected by pen</source>
         <translation>如果笔无法选择任何实体则显示信息</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="283"/>
+        <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="258"/>
         <source>On double click on table item</source>
         <translation>双击表格项时</translation>
     </message>
@@ -2688,17 +2726,17 @@ or [%2]</source>
         <translation type="vanished">取消</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpaletteoptionsdialog.cpp" line="45"/>
+        <location filename="../src/ui/lc_penpaletteoptionsdialog.cpp" line="46"/>
         <source>Do nothing</source>
         <translation>不执行任何操作</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpaletteoptionsdialog.cpp" line="46"/>
+        <location filename="../src/ui/lc_penpaletteoptionsdialog.cpp" line="47"/>
         <source>Select entities by attributes pen</source>
         <translation>按属性笔选择实体</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpaletteoptionsdialog.cpp" line="47"/>
+        <location filename="../src/ui/lc_penpaletteoptionsdialog.cpp" line="48"/>
         <source>Select entities by drawing pen</source>
         <translation>按绘图笔选择实体</translation>
     </message>
@@ -2827,61 +2865,59 @@ or [%2]</source>
         <translation>删除笔</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpalettewidget.cpp" line="255"/>
+        <location filename="../src/ui/lc_penpalettewidget.cpp" line="245"/>
         <source>Pens Menu</source>
         <translation>笔菜单</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpalettewidget.cpp" line="275"/>
+        <location filename="../src/ui/lc_penpalettewidget.cpp" line="265"/>
         <source>&amp;Apply Pen To Selection</source>
         <translation>将笔应用于选择(&amp;A)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpalettewidget.cpp" line="276"/>
+        <location filename="../src/ui/lc_penpalettewidget.cpp" line="266"/>
         <source>&amp;Set As Current Pen</source>
         <translation>设为当前笔(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpalettewidget.cpp" line="277"/>
+        <location filename="../src/ui/lc_penpalettewidget.cpp" line="267"/>
         <source>&amp;Apply Pen To Active Layer</source>
         <translation>将笔应用于活动图层(&amp;A)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpalettewidget.cpp" line="278"/>
+        <location filename="../src/ui/lc_penpalettewidget.cpp" line="268"/>
         <source>&amp;Select Entities With Attributes Pen</source>
         <translation>使用属性笔选择实体(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpalettewidget.cpp" line="279"/>
+        <location filename="../src/ui/lc_penpalettewidget.cpp" line="269"/>
         <source>&amp;Select Entities With Drawing Pen</source>
         <translation>使用绘图笔选择实体(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpalettewidget.cpp" line="282"/>
+        <location filename="../src/ui/lc_penpalettewidget.cpp" line="272"/>
         <source>&amp;Edit Pen</source>
         <translation>编辑笔(&amp;E)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpalettewidget.cpp" line="283"/>
+        <location filename="../src/ui/lc_penpalettewidget.cpp" line="273"/>
         <source>&amp;Remove Pen</source>
         <translation>移除笔(&amp;R)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpalettewidget.cpp" line="286"/>
+        <location filename="../src/ui/lc_penpalettewidget.cpp" line="276"/>
         <source>&amp;Remove Pens</source>
         <translation>移除笔(&amp;R)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpalettewidget.cpp" line="409"/>
         <source>Pen palette</source>
-        <translation>笔调色板</translation>
+        <translation type="vanished">笔调色板</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpalettewidget.cpp" line="410"/>
         <source>Location of pens file is changed, please restart the application so new pens file will be used.
 
 Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
-        <translation>笔文件位置已更改，请重新启动应用程序以使用新的笔文件。
+        <translation type="vanished">笔文件位置已更改，请重新启动应用程序以使用新的笔文件。
 
 请注意，如果您在不重新启动的情况下通过编辑器保存笔，则调色板中的当前笔将被保存到新文件中，从而覆盖其现有内容。</translation>
     </message>
@@ -7230,10 +7266,15 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>导出点</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="33"/>
         <source>MakerCAM as of November 2014 does not hide SVG content
 that has been set invisibe (&quot;display: none&quot; or &quot;visibility: hidden&quot;).</source>
-        <translation>截至 2014 年 11 月，MakerCAM 不会隐藏已设置为不可见的 SVG 内容（“display: none”或“visibility: hidden”）。</translation>
+        <translation type="vanished">截至 2014 年 11 月，MakerCAM 不会隐藏已设置为不可见的 SVG 内容（“display: none”或“visibility: hidden”）。</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="33"/>
+        <source>MakerCAM as of November 2014 does not hide SVG content 
+that has been set invisibe (&quot;display: none&quot; or &quot;visibility: hidden&quot;).</source>
+        <translation>截至2014年11月，MakerCAM不会隐藏已设置为不可见的SVG内容（"display: none"或"visibility: hidden"）。</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="34"/>
@@ -7243,39 +7284,108 @@ because it does not take into account the reference point in the &lt;use&gt;.</s
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="35"/>
-        <source>MakerCAM as of March 2015 cannot display ellipses and ellipse arcs correctly,
-when they are created using the &lt;ellipse&gt; tag  with a rotation in
+        <source>MakerCAM as of March 2015 cannot display ellipses and ellipse arcs correctly, 
+when they are created using the &lt;ellipse&gt; tag  with a rotation in 
 the &lt;transform&gt; attribute or as &lt;path&gt; using elliptic arc segments.</source>
-        <translation>截至 2015 年 3 月，MakerCAM 无法正确显示椭圆和椭圆弧，尤其是在使用带有旋转的 &lt;transform&gt; 属性的 &lt;ellipse&gt; 标签创建它们，或者使用椭圆弧段作为 &lt;path&gt; 时。</translation>
+        <translation>截至2015年3月，MakerCAM无法正确显示椭圆和椭圆弧，当它们使用带有旋转的&lt;ellipse&gt;标签在&lt;transform&gt;属性中创建或作为&lt;path&gt;使用椭圆弧段创建时。</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="36"/>
-        <source>Exported images can be useful in SVG editors (Inkscape, etc),
+        <source>Exported images can be useful in SVG editors (Inkscape, etc), 
 but avoided in some CAM&apos;s.</source>
-        <translation>导出的图像可以在 SVG 编辑器（如 Inkscape）中使用，但在某些 CAM 软件中可能会出现问题。</translation>
+        <translation>导出的图像在SVG编辑器（如Inkscape等）中可能有用，但在某些CAM软件中应避免使用。</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="37"/>
-        <source>Many CAM&apos;s(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style,
+        <source>Many CAM&apos;s(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style, 
 which can be useful in lasercut of plywood or for papercraft. </source>
-        <translation>许多 CAM 软件（如 MakerCAM、EleskCAM、LaserWeb）会忽略虚线/点线样式，而这种样式在激光切割胶合板或制作纸艺时可能很有用。</translation>
+        <translation>许多CAM软件（MakerCAM、EleskCAM、LaserWeb）忽略虚线/点线样式，这在胶合板激光切割或纸艺中可能有用。</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="38"/>
-        <source>Default width of elements can affect some CAM&apos;s/SVG Editors,
+        <source>Default width of elements can affect some CAM&apos;s/SVG Editors, 
 but ignored by other</source>
-        <translation>元素的默认宽度可能会影响某些 CAM 软件/SVG 编辑器，但其他软件则会忽略。</translation>
+        <translation>元素的默认宽度可能会影响某些CAM软件/SVG编辑器，但其他软件会忽略它。</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="39"/>
+        <source>Length of line pattern related to zoom, 
+so default step value required for baking</source>
+        <translation>线型长度与缩放相关，因此需要默认步长值进行烘焙。</translation>
+    </message>
+    <message>
+        <source>MakerCAM as of March 2015 cannot display ellipses and ellipse arcs correctly,
+when they are created using the &lt;ellipse&gt; tag  with a rotation in
+the &lt;transform&gt; attribute or as &lt;path&gt; using elliptic arc segments.</source>
+        <translation type="vanished">截至 2015 年 3 月，MakerCAM 无法正确显示椭圆和椭圆弧，尤其是在使用带有旋转的 &lt;transform&gt; 属性的 &lt;ellipse&gt; 标签创建它们，或者使用椭圆弧段作为 &lt;path&gt; 时。</translation>
+    </message>
+    <message>
+        <source>Exported images can be useful in SVG editors (Inkscape, etc),
+but avoided in some CAM&apos;s.</source>
+        <translation type="vanished">导出的图像可以在 SVG 编辑器（如 Inkscape）中使用，但在某些 CAM 软件中可能会出现问题。</translation>
+    </message>
+    <message>
+        <source>Many CAM&apos;s(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style,
+which can be useful in lasercut of plywood or for papercraft. </source>
+        <translation type="vanished">许多 CAM 软件（如 MakerCAM、EleskCAM、LaserWeb）会忽略虚线/点线样式，而这种样式在激光切割胶合板或制作纸艺时可能很有用。</translation>
+    </message>
+    <message>
+        <source>Default width of elements can affect some CAM&apos;s/SVG Editors,
+but ignored by other</source>
+        <translation type="vanished">元素的默认宽度可能会影响某些 CAM 软件/SVG 编辑器，但其他软件则会忽略。</translation>
+    </message>
+    <message>
         <source>Length of line pattern related to zoom,
 so default step value required for baking</source>
-        <translation>线条图案的长度与缩放相关，因此需要为烘焙设置默认步长值。</translation>
+        <translation type="vanished">线条图案的长度与缩放相关，因此需要为烘焙设置默认步长值。</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="40"/>
         <source>Whether to export points</source>
         <translation>是否导出点。</translation>
+    </message>
+</context>
+<context>
+    <name>QG_DlgOptionsVariables</name>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsvariables.ui" line="17"/>
+        <source>Drawing Variables</source>
+        <translation>绘图变量</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsvariables.ui" line="54"/>
+        <source>Variable</source>
+        <translation>变量</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsvariables.ui" line="59"/>
+        <source>Code</source>
+        <translation>代码</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsvariables.ui" line="64"/>
+        <source>Value</source>
+        <translation>值</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsvariables.ui" line="96"/>
+        <source>&amp;OK</source>
+        <translation>&amp;OK</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsvariables.ui" line="99"/>
+        <source>Alt+O</source>
+        <translation>Alt+O</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsvariables.ui" line="112"/>
+        <source>Cancel</source>
+        <translation>取消</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsvariables.ui" line="115"/>
+        <source>Esc</source>
+        <translation>Esc</translation>
     </message>
 </context>
 <context>
@@ -9177,17 +9287,24 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.cpp" line="278"/>
+        <source>Attempt to create layer with duplicating name. Duplicated layer name is 
+[%1].
+Please specify a different name.</source>
+        <translation>尝试创建具有重复名称的图层。重复的图层名称是
+[%1]。
+请指定一个不同的名称。</translation>
+    </message>
+    <message>
         <source>Attempt to create layer with duplicating name. Duplicated layer name is
 [%1].
 Please specify a different name.</source>
-        <translation>尝试创建名称重复的图层。重复的图层名称为
+        <translation type="vanished">尝试创建名称重复的图层。重复的图层名称为
 [%1]。请指定不同的名称。</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="153"/>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="191"/>
-        <location filename="../src/ui/lc_penpaletteoptionsdialog.cpp" line="261"/>
-        <location filename="../src/ui/lc_penpaletteoptionsdialog.cpp" line="272"/>
+        <location filename="../src/ui/lc_penpaletteoptionsdialog.cpp" line="215"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
@@ -9242,19 +9359,17 @@ Clear filtering mask and repeat.</source>
         <translation>添加图层</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="1130"/>
         <source>Such child layer already exist for
 [%1].
 Please specify a different name.</source>
-        <translation>名为 [%1] 的子图层已存在。
+        <translation type="vanished">名为 [%1] 的子图层已存在。
 请指定不同的名称。</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_layertreewidget.cpp" line="1175"/>
         <source>Such child layer already exist for
 [%1].
 </source>
-        <translation>名为 [%1] 的子图层已存在。</translation>
+        <translation type="vanished">名为 [%1] 的子图层已存在。</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1183"/>
@@ -9292,6 +9407,24 @@ If No - &quot;By Layer&quot; values remains and so pen of target layer will defi
         <translation type="vanished">是否将“按图层”值替换为源图层的值？
 如果选择“是”，则具有“按图层”画笔的实体在新图层上的显示方式将与在旧图层上完全相同，并且“按图层”值将被替换为已解析的画笔。
 如果选择“否”，则“按图层”值将保持不变，因此目标图层的画笔将定义这些实体的画笔。</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="1130"/>
+        <source>Such child layer already exist for 
+[%1].
+Please specify a different name.</source>
+        <translation>此子图层已存在于
+[%1]中。
+请指定一个不同的名称。</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_layertreewidget.cpp" line="1175"/>
+        <source>Such child layer already exist for 
+[%1].
+</source>
+        <translation>此子图层已存在于
+[%1]中。
+</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1760"/>
@@ -9340,103 +9473,100 @@ If No - &quot;By Layer&quot; values remains and so pen of target layer will defi
         <translation>图层对话框</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpaletteoptionsdialog.cpp" line="262"/>
+        <location filename="../src/ui/lc_penpaletteoptionsdialog.cpp" line="216"/>
         <source>Invalid value provided for %1 color.
 Please specify a different value.</source>
         <translation>为 %1 颜色提供的无效值。
 请指定不同的值。</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpaletteoptionsdialog.cpp" line="273"/>
         <source>Invalid path to pens file.
 %1
 Please specify a different value.</source>
-        <translation>笔文件路径无效。
+        <translation type="vanished">笔文件路径无效。
 %1
 请指定不同的值。</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1320"/>
+        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1292"/>
         <source>Remove pen</source>
         <translation>移除画笔</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1321"/>
+        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1293"/>
         <source>Pen will be removed from palette, drawing entities will not be affected.</source>
         <translation>画笔将被从调色板中移除，绘图实体不受影响。</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1322"/>
-        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1341"/>
+        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1294"/>
+        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1313"/>
         <source>Are you sure you&apos;d like to proceed?</source>
         <translation>您确定要继续吗？</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1323"/>
+        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1295"/>
         <source>Pen for removal:</source>
         <translation>要移除的画笔：</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1339"/>
+        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1311"/>
         <source>Remove pens</source>
         <translation>移除画笔</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1340"/>
+        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1312"/>
         <source>Pens will be removed from palette, drawing entities will not be affected.</source>
         <translation>画笔将被从调色板中移除，绘图实体不受影响。</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1342"/>
+        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1314"/>
         <source>Pens for removal:</source>
         <translation>要移除的画笔：</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1363"/>
+        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1335"/>
         <source>Select Entities </source>
         <translation>选择实体</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1364"/>
+        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1336"/>
         <source>There are no entities that matches pen on visible layers.</source>
         <translation>在可见图层中没有与所选画笔匹配的实体。</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1365"/>
+        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1337"/>
         <source>Such entities exist on frozen layers.
 </source>
         <translation>存在于冻结图层的实体。</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1366"/>
+        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1338"/>
         <source>Such entities exist on locked layers.
 </source>
         <translation>存在于锁定图层的实体。</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1367"/>
+        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1339"/>
         <source>Please use different pen attributes.</source>
         <translation>请使用不同的画笔属性。</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1376"/>
+        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1348"/>
         <source>Set pen by entity</source>
         <translation>按实体设置画笔。</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1377"/>
+        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1349"/>
         <source>Please select only one entity to pick pen setting.</source>
         <translation>请仅选择一个实体来设置画笔。</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1387"/>
         <source>Saving Pens Data</source>
-        <translation>正在保存画笔数据。</translation>
+        <translation type="vanished">正在保存画笔数据。</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1388"/>
         <source>Unable to save pens data to specified pens file. Would you like to specify correct path to the file?</source>
-        <translation>无法将画笔数据保存到指定的画笔文件中。您是否要指定正确的路径？</translation>
+        <translation type="vanished">无法将画笔数据保存到指定的画笔文件中。您是否要指定正确的路径？</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="311"/>
@@ -13756,29 +13886,39 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawCircle</name>
     <message>
-        <location filename="../src/actions/rs_actiondrawcircle.cpp" line="189"/>
+        <location filename="../src/actions/rs_actiondrawcircle.cpp" line="241"/>
         <source>Not a valid expression</source>
         <translation>无效表达式</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondrawcircle.cpp" line="201"/>
+        <location filename="../src/actions/rs_actiondrawcircle.cpp" line="173"/>
         <source>Specify center</source>
         <translation>指定中心</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondrawcircle.cpp" line="201"/>
+        <location filename="../src/actions/rs_actiondrawcircle.cpp" line="173"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondrawcircle.cpp" line="204"/>
+        <location filename="../src/actions/rs_actiondrawcircle.cpp" line="176"/>
         <source>Specify point on circle</source>
         <translation>指定圆上的点</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondrawcircle.cpp" line="204"/>
+        <location filename="../src/actions/rs_actiondrawcircle.cpp" line="176"/>
         <source>Back</source>
         <translation>Back</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/rs_actiondrawcircle.cpp" line="215"/>
+        <source>Please specify center first</source>
+        <translation>请先指定圆心</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/rs_actiondrawcircle.cpp" line="231"/>
+        <source>Not a valid coordinate</source>
+        <translation>无效坐标</translation>
     </message>
 </context>
 <context>
@@ -15576,24 +15716,24 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionModifyScale</name>
     <message>
-        <location filename="../src/actions/rs_actionmodifyscale.cpp" line="241"/>
+        <location filename="../src/actions/rs_actionmodifyscale.cpp" line="238"/>
         <source>Specify scale center</source>
         <translation>指定缩放中心</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionmodifyscale.cpp" line="246"/>
+        <location filename="../src/actions/rs_actionmodifyscale.cpp" line="243"/>
         <source>Specify reference point</source>
         <translation>指定参照点</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionmodifyscale.cpp" line="250"/>
+        <location filename="../src/actions/rs_actionmodifyscale.cpp" line="247"/>
         <source>Specify target point</source>
         <translation>指定目标点</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionmodifyscale.cpp" line="242"/>
-        <location filename="../src/actions/rs_actionmodifyscale.cpp" line="247"/>
-        <location filename="../src/actions/rs_actionmodifyscale.cpp" line="251"/>
+        <location filename="../src/actions/rs_actionmodifyscale.cpp" line="239"/>
+        <location filename="../src/actions/rs_actionmodifyscale.cpp" line="244"/>
+        <location filename="../src/actions/rs_actionmodifyscale.cpp" line="248"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
@@ -16189,6 +16329,12 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionselect.cpp" line="131"/>
         <source>Select to create block</source>
         <translation>选择实体创建图块</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/rs_actionselect.cpp" line="135"/>
+        <location filename="../src/actions/rs_actionselect.cpp" line="135"/>
+        <source></source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

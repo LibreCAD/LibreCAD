@@ -199,5 +199,60 @@ void RS_ActionDrawCircle::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::CadCursor);
 }
 
+void RS_ActionDrawCircle::commandEvent(RS_CommandEvent* e) {
+    QString c = e->getCommand().toLower().trimmed();
+
+    if (checkCommand("help", c)) {
+        RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
+                                         + getAvailableCommands().join(", "));
+        e->accept();
+        return;
+    }
+
+    switch (getStatus()) {
+    case SetPoint: {
+        if (!data->center.valid) {
+            RS_DIALOGFACTORY->commandMessage(tr("Please specify center first"));
+            return;
+        }
+
+        if (c.contains(',')) {
+            bool okX = false, okY = false;
+            qsizetype commaPos = c.indexOf(',');
+            double x = RS_Math::eval(c.left(commaPos), &okX);
+            double y = RS_Math::eval(c.mid(commaPos + 1), &okY);
+            if (okX && okY) {
+                RS_Vector point(x, y);
+                graphicView->moveRelativeZero(point);
+                data->radius = data->center.distanceTo(point);
+                e->accept();
+                trigger();
+            } else {
+                RS_DIALOGFACTORY->commandMessage(tr("Not a valid coordinate"));
+            }
+        } else {
+            bool ok = false;
+            double r = RS_Math::eval(c, &ok);
+            if (ok && r > RS_TOLERANCE) {
+                data->radius = r;
+                e->accept();
+                trigger();
+            } else {
+                RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
+            }
+        }
+    }
+    break;
+
+    default:
+        break;
+    }
+}
+
+QStringList RS_ActionDrawCircle::getAvailableCommands() {
+    QStringList cmd;
+    return cmd;
+}
+
 // EOF
 

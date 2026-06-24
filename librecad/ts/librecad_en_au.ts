@@ -39,6 +39,67 @@
     </message>
 </context>
 <context>
+    <name>CustomToolbarCreator</name>
+    <message>
+        <location filename="../src/ui/generic/customtoolbarcreator.ui" line="14"/>
+        <source>Frame</source>
+        <translation type="unfinished">Frame</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/generic/customtoolbarcreator.ui" line="86"/>
+        <source>&gt;</source>
+        <translation type="unfinished">&gt;</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/generic/customtoolbarcreator.ui" line="105"/>
+        <source>&lt;</source>
+        <translation type="unfinished">&lt;</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/generic/customtoolbarcreator.ui" line="139"/>
+        <source>+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/generic/customtoolbarcreator.ui" line="149"/>
+        <source>-</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/generic/customtoolbarcreator.ui" line="156"/>
+        <source>input a name and then press +</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/generic/customtoolbarcreator.ui" line="193"/>
+        <source>Save</source>
+        <translation type="unfinished">Save</translation>
+    </message>
+</context>
+<context>
+    <name>CustomWidgetCreator</name>
+    <message>
+        <location filename="../src/ui/generic/customwidgetcreator.ui" line="14"/>
+        <source>Frame</source>
+        <translation type="unfinished">Frame</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/generic/customwidgetcreator.ui" line="65"/>
+        <source>-&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/generic/customwidgetcreator.ui" line="72"/>
+        <source>&lt;-</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/generic/customwidgetcreator.ui" line="115"/>
+        <source>Save</source>
+        <translation type="unfinished">Save</translation>
+    </message>
+</context>
+<context>
     <name>DlgParabola</name>
     <message>
         <location filename="../src/ui/forms/LC_DlgParabola.ui" line="26"/>
@@ -1604,6 +1665,14 @@ or [%2]</source>
     </message>
 </context>
 <context>
+    <name>LC_CustomToolbar</name>
+    <message>
+        <location filename="../src/ui/lc_customtoolbar.cpp" line="36"/>
+        <source>Add or Remove Action</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LC_DeviceOptions</name>
     <message>
         <location filename="../src/ui/lc_deviceoptions.ui" line="14"/>
@@ -2596,52 +2665,51 @@ The contents of a Construction Layer should not appear in printout.</translation
         <translation>Show tooltip for table items</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="221"/>
         <source>Pens file:</source>
-        <translation>Pens file:</translation>
+        <translation type="vanished">Pens file:</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="244"/>
+        <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="219"/>
         <source>Show colorn name as</source>
         <translation>Show colour name as</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="250"/>
+        <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="225"/>
         <source>HEX</source>
         <translation>HEX</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="257"/>
+        <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="232"/>
         <source>RGB</source>
         <translation>RGB</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="264"/>
+        <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="239"/>
         <source>Natural name where possible</source>
         <translation>Natural name where possible</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="274"/>
+        <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="249"/>
         <source>Show info message if no entities may be selected by pen</source>
         <translation>Show info message if no entities may be selected by pen</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="283"/>
+        <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="258"/>
         <source>On double click on table item</source>
         <translation>On double click on table item</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpaletteoptionsdialog.cpp" line="45"/>
+        <location filename="../src/ui/lc_penpaletteoptionsdialog.cpp" line="46"/>
         <source>Do nothing</source>
         <translation>Do nothing</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpaletteoptionsdialog.cpp" line="46"/>
+        <location filename="../src/ui/lc_penpaletteoptionsdialog.cpp" line="47"/>
         <source>Select entities by attributes pen</source>
         <translation>Select entities by attributes pen</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpaletteoptionsdialog.cpp" line="47"/>
+        <location filename="../src/ui/lc_penpaletteoptionsdialog.cpp" line="48"/>
         <source>Select entities by drawing pen</source>
         <translation>Select entities by drawing pen</translation>
     </message>
@@ -2770,61 +2838,59 @@ The contents of a Construction Layer should not appear in printout.</translation
         <translation>Delete Pen</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpalettewidget.cpp" line="255"/>
+        <location filename="../src/ui/lc_penpalettewidget.cpp" line="245"/>
         <source>Pens Menu</source>
         <translation>Pens Menu</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpalettewidget.cpp" line="275"/>
+        <location filename="../src/ui/lc_penpalettewidget.cpp" line="265"/>
         <source>&amp;Apply Pen To Selection</source>
         <translation>Apply Pen to Selection</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpalettewidget.cpp" line="276"/>
+        <location filename="../src/ui/lc_penpalettewidget.cpp" line="266"/>
         <source>&amp;Set As Current Pen</source>
         <translation>Set as Current Pen</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpalettewidget.cpp" line="277"/>
+        <location filename="../src/ui/lc_penpalettewidget.cpp" line="267"/>
         <source>&amp;Apply Pen To Active Layer</source>
         <translation>Apply Pen to Active Layer</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpalettewidget.cpp" line="278"/>
+        <location filename="../src/ui/lc_penpalettewidget.cpp" line="268"/>
         <source>&amp;Select Entities With Attributes Pen</source>
         <translation>Select Entities with Attributes Pen</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpalettewidget.cpp" line="279"/>
+        <location filename="../src/ui/lc_penpalettewidget.cpp" line="269"/>
         <source>&amp;Select Entities With Drawing Pen</source>
         <translation>Select Entities with Drawing Pen</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpalettewidget.cpp" line="282"/>
+        <location filename="../src/ui/lc_penpalettewidget.cpp" line="272"/>
         <source>&amp;Edit Pen</source>
         <translation>Edit Pen</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpalettewidget.cpp" line="283"/>
+        <location filename="../src/ui/lc_penpalettewidget.cpp" line="273"/>
         <source>&amp;Remove Pen</source>
         <translation>Remove Pen</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpalettewidget.cpp" line="286"/>
+        <location filename="../src/ui/lc_penpalettewidget.cpp" line="276"/>
         <source>&amp;Remove Pens</source>
         <translation>&amp;Remove Pens</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpalettewidget.cpp" line="409"/>
         <source>Pen palette</source>
-        <translation>Pen palette</translation>
+        <translation type="vanished">Pen palette</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpalettewidget.cpp" line="410"/>
         <source>Location of pens file is changed, please restart the application so new pens file will be used.
 
 Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
-        <translation>Location of pens file is changed, please restart the application so new pens file will be used.
+        <translation type="vanished">Location of pens file is changed, please restart the application so new pens file will be used.
 
 Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</translation>
     </message>
@@ -7223,8 +7289,44 @@ so default step value required for baking</source>
 <context>
     <name>QG_DlgOptionsVariables</name>
     <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsvariables.ui" line="17"/>
+        <source>Drawing Variables</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsvariables.ui" line="54"/>
+        <source>Variable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsvariables.ui" line="59"/>
+        <source>Code</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsvariables.ui" line="64"/>
+        <source>Value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsvariables.ui" line="96"/>
+        <source>&amp;OK</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsvariables.ui" line="99"/>
+        <source>Alt+O</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsvariables.ui" line="112"/>
         <source>Cancel</source>
-        <translation type="obsolete">Cancel</translation>
+        <translation type="unfinished">Cancel</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsvariables.ui" line="115"/>
+        <source>Esc</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9428,8 +9530,7 @@ If No - &quot;By Layer&quot; values remain, and the target layer&apos;s pen will
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="153"/>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="191"/>
-        <location filename="../src/ui/lc_penpaletteoptionsdialog.cpp" line="261"/>
-        <location filename="../src/ui/lc_penpaletteoptionsdialog.cpp" line="272"/>
+        <location filename="../src/ui/lc_penpaletteoptionsdialog.cpp" line="215"/>
         <source>Error</source>
         <translation>Error</translation>
     </message>
@@ -9446,102 +9547,99 @@ Please specify a different value.</source>
         <translation>Invalid value provided for %1 color. Please specify a different value.</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpaletteoptionsdialog.cpp" line="262"/>
+        <location filename="../src/ui/lc_penpaletteoptionsdialog.cpp" line="216"/>
         <source>Invalid value provided for %1 color.
 Please specify a different value.</source>
         <translation>Invalid value provided for %1 color. Please specify a different value.</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpaletteoptionsdialog.cpp" line="273"/>
         <source>Invalid path to pens file.
 %1 
 Please specify a different value.</source>
-        <translation>Invalid path to pens file.
+        <translation type="vanished">Invalid path to pens file.
 %1 
 Please specify a different value.</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1320"/>
+        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1292"/>
         <source>Remove pen</source>
         <translation>Remove pen</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1321"/>
+        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1293"/>
         <source>Pen will be removed from palette, drawing entities will not be affected.</source>
         <translation>The pen will be removed from the palette; drawing entities will not be affected.</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1322"/>
-        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1341"/>
+        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1294"/>
+        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1313"/>
         <source>Are you sure you&apos;d like to proceed?</source>
         <translation>Are you sure you want to proceed?</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1323"/>
+        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1295"/>
         <source>Pen for removal:</source>
         <translation>Pens to be removed:</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1339"/>
+        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1311"/>
         <source>Remove pens</source>
         <translation>Remove pens</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1340"/>
+        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1312"/>
         <source>Pens will be removed from palette, drawing entities will not be affected.</source>
         <translation>Pens will be removed from the palette; drawing entities will not be affected.</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1342"/>
+        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1314"/>
         <source>Pens for removal:</source>
         <translation>Pens to be removed:</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1363"/>
+        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1335"/>
         <source>Select Entities </source>
         <translation>Select Entities</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1364"/>
+        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1336"/>
         <source>There are no entities that matches pen on visible layers.</source>
         <translation>No entities match the pen on visible layers.</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1365"/>
+        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1337"/>
         <source>Such entities exist on frozen layers.
 </source>
         <translation>Such entities exist on frozen layers.</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1366"/>
+        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1338"/>
         <source>Such entities exist on locked layers.
 </source>
         <translation>Such entities exist on locked layers.</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1367"/>
+        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1339"/>
         <source>Please use different pen attributes.</source>
         <translation>Please use different pen attributes.</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1376"/>
+        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1348"/>
         <source>Set pen by entity</source>
         <translation>Set Pen by Entity</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1377"/>
+        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1349"/>
         <source>Please select only one entity to pick pen setting.</source>
         <translation>Please select only one entity to set the pen.</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1387"/>
         <source>Saving Pens Data</source>
-        <translation>Saving Pen Data</translation>
+        <translation type="vanished">Saving Pen Data</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_penpalettewidget.cpp" line="1388"/>
         <source>Unable to save pens data to specified pens file. Would you like to specify correct path to the file?</source>
-        <translation>Could not save pen data to the specified file. Would you like to specify the correct path?</translation>
+        <translation type="vanished">Could not save pen data to the specified file. Would you like to specify the correct path?</translation>
     </message>
 </context>
 <context>
@@ -13812,29 +13910,39 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionDrawCircle</name>
     <message>
-        <location filename="../src/actions/rs_actiondrawcircle.cpp" line="189"/>
+        <location filename="../src/actions/rs_actiondrawcircle.cpp" line="241"/>
         <source>Not a valid expression</source>
         <translation>Not a valid expression.</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondrawcircle.cpp" line="201"/>
+        <location filename="../src/actions/rs_actiondrawcircle.cpp" line="173"/>
         <source>Specify center</source>
         <translation>Specify centre</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondrawcircle.cpp" line="201"/>
+        <location filename="../src/actions/rs_actiondrawcircle.cpp" line="173"/>
         <source>Cancel</source>
         <translation>Cancel</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondrawcircle.cpp" line="204"/>
+        <location filename="../src/actions/rs_actiondrawcircle.cpp" line="176"/>
         <source>Specify point on circle</source>
         <translation>Specify a point on the circle</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondrawcircle.cpp" line="204"/>
+        <location filename="../src/actions/rs_actiondrawcircle.cpp" line="176"/>
         <source>Back</source>
         <translation>Back</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/rs_actiondrawcircle.cpp" line="215"/>
+        <source>Please specify center first</source>
+        <translation>Please specify center first</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/rs_actiondrawcircle.cpp" line="231"/>
+        <source>Not a valid coordinate</source>
+        <translation>Not a valid coordinate</translation>
     </message>
 </context>
 <context>
@@ -15632,24 +15740,24 @@ This block cannot be inserted.</source>
 <context>
     <name>RS_ActionModifyScale</name>
     <message>
-        <location filename="../src/actions/rs_actionmodifyscale.cpp" line="241"/>
+        <location filename="../src/actions/rs_actionmodifyscale.cpp" line="238"/>
         <source>Specify scale center</source>
         <translation>Specify the scale centre</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionmodifyscale.cpp" line="246"/>
+        <location filename="../src/actions/rs_actionmodifyscale.cpp" line="243"/>
         <source>Specify reference point</source>
         <translation>Specify the reference point</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionmodifyscale.cpp" line="250"/>
+        <location filename="../src/actions/rs_actionmodifyscale.cpp" line="247"/>
         <source>Specify target point</source>
         <translation>Specify the target point</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionmodifyscale.cpp" line="242"/>
-        <location filename="../src/actions/rs_actionmodifyscale.cpp" line="247"/>
-        <location filename="../src/actions/rs_actionmodifyscale.cpp" line="251"/>
+        <location filename="../src/actions/rs_actionmodifyscale.cpp" line="239"/>
+        <location filename="../src/actions/rs_actionmodifyscale.cpp" line="244"/>
+        <location filename="../src/actions/rs_actionmodifyscale.cpp" line="248"/>
         <source>Cancel</source>
         <translation>Cancel</translation>
     </message>
@@ -16245,6 +16353,12 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionselect.cpp" line="131"/>
         <source>Select to create block</source>
         <translation>Select to create block</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/rs_actionselect.cpp" line="135"/>
+        <location filename="../src/actions/rs_actionselect.cpp" line="135"/>
+        <source></source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
