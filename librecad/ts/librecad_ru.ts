@@ -240,7 +240,7 @@
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="416"/>
         <source>Specify size (width, height)</source>
-        <translation>Укажите размер (ширина,высота)</translation>
+        <translation>Укажите размер (ширина, высота)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="419"/>
@@ -263,7 +263,8 @@
         <location filename="../src/actions/drawing/draw/rect/lc_abstractactiondrawrectangle.cpp" line="428"/>
         <source>Specify edges mode
 [both|hor|vert]</source>
-        <translation>Укажите режим граней \n[both|hor|vert]</translation>
+        <translation>Укажите режим граней
+[both|hor|vert]</translation>
     </message>
 </context>
 <context>
@@ -271,12 +272,12 @@
     <message>
         <location filename="../src/actions/drawing/lc_abstractactionwithpreview.cpp" line="731"/>
         <source> is not divided as it is locked.</source>
-        <translation>не может быть разбит так как он заблокирован.</translation>
+        <translation> не может быть разбит, так как он заблокирован.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/lc_abstractactionwithpreview.cpp" line="739"/>
         <source> is not divided as it is part of polyline. Expand polyline first.</source>
-        <translation>не может быть разбит так как это часть ломаной. Сначала разбейте ломаную.</translation>
+        <translation> не может быть разбит, так как это часть ломаной. Сначала разбейте ломаную.</translation>
     </message>
 </context>
 <context>
@@ -452,7 +453,7 @@
     <message>
         <location filename="../src/ui/action_options/curve/lc_actiondrawarc2poptions.ui" line="108"/>
         <source>Angle:</source>
-        <translation>Центральный Угол:</translation>
+        <translation>Угол:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_actiondrawarc2poptions.ui" line="71"/>
@@ -490,7 +491,7 @@
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsangle.cpp" line="94"/>
         <source>Enter value of central angle</source>
-        <translation>Введите центральный угол</translation>
+        <translation>Введите значение центрального угла</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsangle.cpp" line="98"/>
@@ -580,7 +581,7 @@
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_actiondrawboundingbox.cpp" line="46"/>
         <source>Select entities for bounding box (Enter to complete)</source>
-        <translation>Выберите объекты для создания рамки (Enter -завершает выбор)</translation>
+        <translation>Выберите объекты для создания рамки (Enter завершает выбор)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_actiondrawboundingbox.cpp" line="46"/>
@@ -595,7 +596,7 @@
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_actiondrawboundingbox.cpp" line="93"/>
         <source>Note: Bounding box was created for world coordinate system.</source>
-        <translation>Внимание: Охватывающий прямоугольник был создан для Мировой Системы Координат</translation>
+        <translation>Примечание: Охватывающий прямоугольник был создан для Мировой Системы Координат.</translation>
     </message>
 </context>
 <context>
@@ -633,7 +634,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_actiondrawcirclebyarc.cpp" line="232"/>
         <source>Select arc or ellipse arc</source>
-        <translation>Выделите дугу или окружность</translation>
+        <translation>Выделите дугу или дугу эллипса</translation>
     </message>
 </context>
 <context>
@@ -649,7 +650,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="418"/>
         <source>Select base linear/aligned dimension</source>
-        <translation>Выберите начальный линейный или выровненный размер</translation>
+        <translation>Выберите базовый линейный/выровненный размер</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="418"/>
@@ -800,7 +801,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlineanglerel.cpp" line="451"/>
         <source>Select base line</source>
-        <translation>Укажите базовую линию</translation>
+        <translation>Выберите базовую линию</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlineanglerel.cpp" line="454"/>
@@ -826,50 +827,57 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="503"/>
         <source>Specify First Point</source>
-        <translation>Укажите начальную точку</translation>
+        <translation>Укажите первую точку</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="507"/>
         <source>Specify Second Point
 or [number|x|y|angle|p|edges|distance]</source>
-        <translation>Укажите конечную точку или \n [number|x|y|angle|p|edges|distance]</translation>
+        <translation>Укажите вторую точку
+или [number|x|y|angle|p|edges|distance]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="510"/>
         <source>Specify Second Point
 or [number]</source>
-        <translation>Укажите конечную точку точку или [number]</translation>
+        <translation>Укажите вторую точку точку
+или [number]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="514"/>
         <source>Specify line direction
 [x|y|angle|p|distance]</source>
-        <translation>Укажите режим направления прямой</translation>
+        <translation>Укажите направление линии
+[x|y|angle|p|distance]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="517"/>
         <source>Specify line direction angle
 or [x|y|p|number|edges|distance]</source>
-        <translation>Укажите угол прямой</translation>
+        <translation>Укажите угол направления линии
+или [x|y|p|number|edges|distance]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="520"/>
         <source>Specify edge points mode
 [none|start|end|both|distance]</source>
-        <translation>Укажите режим конечных точек</translation>
+        <translation>Укажите режим точек кромки
+[none|start|end|both|distance]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="523"/>
         <source>Specify fixed distance between points
 or[x|y|p|number|edges]</source>
-        <translation>Укажите расстояние между точками</translation>
+        <translation>Укажите фиксированное расстояние между точками
+или [x|y|p|number|edges]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="534"/>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="537"/>
         <source>Specify distance (%1)
 or [%2]</source>
-        <translation>Укажите расстояние (%1)\nили [%2]&quot;)</translation>
+        <translation>Укажите расстояние (%1)
+или [%2]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawlinepoints.cpp" line="534"/>
@@ -929,7 +937,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="196"/>
         <source>Not a valid number. Try 1..9999</source>
-        <translation>Недопустимое число вне диапазона 1..9999</translation>
+        <translation>Недопустимое число. Попробуйте от 1 до 9999</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawlinepolygonbase.cpp" line="208"/>
