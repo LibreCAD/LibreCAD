@@ -638,6 +638,8 @@ void QG_DlgOptionsGeneral::init(){
 
         m_originalShowToolbarTooltips = LC_GET_BOOL("ShowToolbarsTooltip", true);
         cbStartupTBTooltips->setChecked(m_originalShowToolbarTooltips);
+
+        cbShowCommandInMenu->setChecked(LC_GET_BOOL("ShowCommandInMenu", true));
     }
     LC_GROUP_END();
 
@@ -924,6 +926,7 @@ void QG_DlgOptionsGeneral::ok(){
             LC_SET("ExpandedToolsMenu", cbExpandToolsMenu->isChecked());
             LC_SET("ExpandedToolsMenuTillEntity", cbExpandToolsMenuTillEntity->isChecked());
             LC_SET("ShowToolbarsTooltip", cbStartupTBTooltips->isChecked());
+            LC_SET("ShowCommandInMenu", cbShowCommandInMenu->isChecked());
         }
         LC_GROUP_END();
 

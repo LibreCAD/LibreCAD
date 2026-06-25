@@ -438,6 +438,24 @@ QString RS_Commands::command(const QString& cmd) {
 
 
 
+QStringList RS_Commands::aliasesForAction(RS2::ActionType a) const {
+    QStringList res;
+    for (auto const& p : m_shortCommands) {
+        if (p.second == a) {
+            res << p.first;
+        }
+    }
+    auto it = m_actionToCommand.find(a);
+    if (it != m_actionToCommand.end()) {
+        // ensure main command present and first
+        if (!it->second.isEmpty() && !res.contains(it->second)) {
+            res.prepend(it->second);
+        }
+    }
+    return res;
+}
+
+
 /**
  * Checks if the given string 'str' matches the given command 'cmd' for action
  * 'action'.

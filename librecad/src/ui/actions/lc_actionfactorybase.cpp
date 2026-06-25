@@ -28,6 +28,7 @@
 #include "lc_shortcutinfo.h"
 #include "qc_applicationwindow.h"
 #include "qg_actionhandler.h"
+#include "rs_commands.h"
 
 LC_ActionFactoryBase::LC_ActionFactoryBase(QC_ApplicationWindow* parent, QG_ActionHandler* a_handler):
     QObject(parent), LC_AppWindowAware(parent),m_actionHandler(a_handler){
@@ -60,11 +61,14 @@ QAction * LC_ActionFactoryBase::createAction_AH(const char* name, RS2::ActionTyp
                                             QActionGroup *parent,
                                             QMap<QString, QAction *> &a_map) const{
     QAction *action = justCreateAction(a_map, name, text, iconName, themeIconName, parent);
-    // LC_ERR <<  " ** original action handler" << this->action_handler;
+    // Use the first command alias as the object name when available
+    QStringList aliases = RS_COMMANDS->aliasesForAction(actionType);
+    if (!aliases.isEmpty()) {
+        action->setObjectName(aliases.first());
+    }
     // well, a bit crazy hacky code to let the lambda properly capture action handler... without local var, class member is not captured
     QG_ActionHandler* capturedHandler = m_actionHandler;
     connect(action, &QAction::triggered, capturedHandler, [ capturedHandler, actionType](bool){ // fixme - sand - simplify by using data() on QAction and sender()
-        // LC_ERR << " ++ captured action handler "<<   capturedHandler;
         capturedHandler->setCurrentAction(actionType);
     });
     LC_ActionGroupManager::associateQActionWithActionType(action, actionType);
