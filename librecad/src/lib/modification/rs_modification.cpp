@@ -65,18 +65,19 @@ namespace {
  */
 RS_Vector getPasteScale(const RS_PasteData& data, RS_Graphic *& source, const RS_Graphic& graphic)
 {
-
-    // adjust scaling factor for units conversion in case of clipboard paste
-    double factor = (RS_TOLERANCE < std::abs(data.factor)) ? data.factor : 1.0;
-    // select source for paste
     if (source == nullptr) {
-        RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::paste: add graphic source from clipboard");
         source = RS_CLIPBOARD->getGraphic();
-        // graphics from the clipboard need to be scaled. From the part lib not:
-        RS2::Unit sourceUnit = source->getUnit();
-        RS2::Unit targetUnit = graphic.getUnit();
-        factor = RS_Units::convert(1.0, sourceUnit, targetUnit);
     }
+    // Always compute unit conversion factor
+    RS2::Unit sourceUnit = source->getUnit();
+    RS2::Unit targetUnit = graphic.getUnit();
+    double factor = RS_Units::convert(1.0, sourceUnit, targetUnit);
+
+    // Compose with user-specified scale factor if provided
+    if (std::abs(data.factor) > RS_TOLERANCE && std::abs(data.factor - 1.0) > RS_TOLERANCE) {
+        factor *= data.factor;
+    }
+
     RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::paste: pasting scale factor: %g", factor);
     // scale factor as vector
     return {factor, factor};
@@ -622,40 +623,24 @@ void RS_Modification::paste(const RS_PasteData& data, RS_Graphic* source) {
             name = m_graphic->newBlockName(name);
             b = addNewBlock(name, *m_graphic);
 
-            // add entities to block:
+            // Add entities to block in raw state - no transformations applied.
+            // All scale/rotation is handled by the outer Insert via its
+            // scaleFactor and angle properties during update().
+            // This ensures correct behavior for nested inserts at any depth,
+            // and safe block reuse across multiple pastes.
             for(RS_Entity* e: std::as_const(*source)){
                 RS_Entity* e2 = e->clone();
                 e2->reparent(b);
-
-                // For asInsert, if source entity is an insert, preserve its angle and scale
-                if (e2->rtti() == RS2::EntityInsert) {
-                    RS_Insert* origInsert = static_cast<RS_Insert*>(e);
-                    RS_Insert* newInsert = static_cast<RS_Insert*>(e2);
-                    // Preserve and compose
-                    newInsert->setAngle(origInsert->getAngle() - data.angle);
-                    newInsert->setScale(origInsert->getScale());
-                    //newInsert->setInsertionPoint(b->getBasePoint() + origInsert->getInsertionPoint());
-                    // Update to apply preserved transformations
-                    newInsert->update();
-                } else {
-                    //e2->rotate(RS_Vector(0.0, 0.0), data.angle);
-                    //e2->move(b->getBasePoint() - data.insertionPoint);
-                    if (std::abs(scale.x)>RS_TOLERANCE && std::abs(scale.y)>RS_TOLERANCE) {
-                        e2->scale(b->getBasePoint(), scale);
-                    }
-                }
-
                 b->addEntity(e2);
             }
         }
 
-        // create insert:
-        RS_InsertData d(name, data.insertionPoint, RS_Vector(1.0,1.0), data.angle, 1,1, RS_Vector(0.0,0.0), nullptr, RS2::Update);  // Use data.angle and force update
+        // create insert: outer Insert carries all transformations (scale + angle)
+        RS_InsertData d(name, data.insertionPoint, scale, data.angle, 1,1, RS_Vector(0.0,0.0), nullptr, RS2::Update);
 
         RS_Insert* i = new RS_Insert(m_graphic, d);
         i->setLayer(m_graphic->getActiveLayer());
 
-        //i->setAngle(i->getAngle() + data.angle);  // Extra composition if needed
         i->update();
         m_container->addEntity(i);
 

@@ -933,15 +933,8 @@ RS_Insert* RS_Creation::createLibraryInsert(RS_LibraryInsertData& data) {
         return nullptr;
     }
 
-    // unit conversion:
-    if (graphic) {
-        double uf = RS_Units::convert(1.0, g.getUnit(),
-                                      graphic->getUnit());
-        g.scale(RS_Vector(0.0, 0.0), RS_Vector(uf, uf));
-    }
-
-    //g.scale(RS_Vector(data.factor, data.factor));
-    //g.rotate(data.angle);
+    // Unit conversion is handled by getPasteScale -> outer Insert scale.
+    // Do NOT pre-scale the source graphic here to avoid double-scaling.
 
     QString s = QFileInfo(data.file).completeBaseName();
 
