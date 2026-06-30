@@ -640,6 +640,9 @@ void RS_Modification::paste(const RS_PasteData& data, RS_Graphic* source) {
 
         RS_Insert* i = new RS_Insert(m_graphic, d);
         i->setLayer(m_graphic->getActiveLayer());
+        // Set pen to ByLayer so that inner entities with ByBlock
+        // resolve to the insert's layer color (fixes #2522)
+        i->setPen(RS_Pen(RS_Color(RS2::FlagByLayer), RS2::WidthByLayer, RS2::LineByLayer));
 
         i->update();
         m_container->addEntity(i);
