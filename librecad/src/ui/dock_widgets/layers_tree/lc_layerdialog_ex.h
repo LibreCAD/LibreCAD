@@ -28,11 +28,11 @@
 #include <QString>
 
 #include "rs_pen.h"
+#include "lc_layertreeitem.h"
 #include "ui_lc_layerdialog_ex.h"
 
 class RS_LayerList;
 class RS_Layer;
-class LC_LayerTreeItem;
 class LC_LayerTreeModel;
 
 class LC_LayerDialogEx :public QDialog, public Ui::LC_LayerDialogEx
@@ -76,7 +76,7 @@ private:
     LC_LayerTreeItem *m_editedTreeItem {nullptr};
     RS_Layer *m_editedLayer {nullptr};
     QString m_originalLayerName;
-    int m_originalLayerType {-1};
+    int m_originalLayerType {LC_LayerTreeItem::NOT_DEFINED_LAYER_TYPE};
     RS_LayerList* m_layerList;
     bool checkForDuplicatedNames(const QStringList &newLayerNamesList) const;
 };

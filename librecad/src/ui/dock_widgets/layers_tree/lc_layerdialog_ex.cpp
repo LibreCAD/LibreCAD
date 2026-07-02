@@ -43,8 +43,10 @@ LC_LayerDialogEx::LC_LayerDialogEx(QWidget* parent, const QString& name, LC_Laye
     m_editedTreeItem = treeItem;
     if (treeItem != nullptr) {
         m_editedLayer = treeItem->getLayer();
-        m_originalLayerName = treeItem->getName();
-        m_originalLayerType = treeItem->getLayerType();
+        if (m_editedLayer != nullptr) {
+            m_originalLayerName = treeItem->getName();
+            m_originalLayerType = treeItem->getLayerType();
+        }
     }
 }
 
