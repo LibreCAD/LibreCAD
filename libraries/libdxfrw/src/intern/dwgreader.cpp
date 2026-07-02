@@ -2374,6 +2374,8 @@ bool dwgReader::readDwgObject(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                         recordName = cit->second->recName;
                         className = cit->second->className;
                         objectName = recordName.empty() ? className : recordName;
+                        const char* clsName = className.empty() ? recordName.c_str() : className.c_str();
+                        ++m_skippedCustomClasses[clsName];
                     }
                 }
                 if (objectName.empty())

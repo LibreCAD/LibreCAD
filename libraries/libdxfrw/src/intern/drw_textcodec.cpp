@@ -61,11 +61,15 @@ void DRW_TextCodec::setVersion(DRW::Version v, bool dxfFormat){
         case DRW::AC1032:
         {
             version = DRW::AC1021;
-            if (dxfFormat)
-                cp = "UTF-8";//RLZ: can be UCS2 or UTF-16 16bits per char
-            else
-                cp = "UTF-16";//RLZ: can be UCS2 or UTF-16 16bits per char
-            setCodePage( cp, dxfFormat);
+            if (dxfFormat) {
+                cp = "UTF-8";
+                setCodePage(cp, dxfFormat);
+            } else {
+                if (cp.empty() || cp == "ANSI_1252") {
+                    cp = "UTF-16";
+                    setCodePage(cp, dxfFormat);
+                }
+            }
             break;
         }
     }
@@ -86,46 +90,44 @@ void DRW_TextCodec::setVersion(const std::string &v, bool dxfFormat){
 void DRW_TextCodec::setCodePage(const std::string &c, bool dxfFormat){
     cp = correctCodePage(c);
     conv.reset();
-    if (version == DRW::AC1009 || version == DRW::AC1015) {
-        if (cp == "ANSI_874")
-            conv.reset( new DRW_ConvTable(DRW_Table874, CPLENGTHCOMMON) );
-        else if (cp == "ANSI_932")
-            conv.reset( new DRW_Conv932Table() );
-        else if (cp == "ANSI_936")
-            conv.reset( new DRW_ConvDBCSTable(DRW_Table936, DRW_LeadTable936,
-                                         DRW_DoubleTable936, CPLENGTH936) );
-        else if (cp == "ANSI_949")
-            conv.reset( new DRW_ConvDBCSTable(DRW_Table949, DRW_LeadTable949,
-                                         DRW_DoubleTable949, CPLENGTH949) );
-        else if (cp == "ANSI_950")
-            conv.reset( new DRW_ConvDBCSTable(DRW_Table950, DRW_LeadTable950,
-                                         DRW_DoubleTable950, CPLENGTH950) );
-        else if (cp == "ANSI_1250")
-            conv.reset( new DRW_ConvTable(DRW_Table1250, CPLENGTHCOMMON) );
-        else if (cp == "ANSI_1251")
-            conv.reset( new DRW_ConvTable(DRW_Table1251, CPLENGTHCOMMON) );
-        else if (cp == "ANSI_1253")
-            conv.reset( new DRW_ConvTable(DRW_Table1253, CPLENGTHCOMMON) );
-        else if (cp == "ANSI_1254")
-            conv.reset( new DRW_ConvTable(DRW_Table1254, CPLENGTHCOMMON) );
-        else if (cp == "ANSI_1255")
-            conv.reset( new DRW_ConvTable(DRW_Table1255, CPLENGTHCOMMON) );
-        else if (cp == "ANSI_1256")
-            conv.reset( new DRW_ConvTable(DRW_Table1256, CPLENGTHCOMMON) );
-        else if (cp == "ANSI_1257")
-            conv.reset( new DRW_ConvTable(DRW_Table1257, CPLENGTHCOMMON) );
-        else if (cp == "ANSI_1258")
-            conv.reset( new DRW_ConvTable(DRW_Table1258, CPLENGTHCOMMON) );
-        else if (cp == "UTF-8") { //DXF older than 2007 are write in win codepages
-            cp = "ANSI_1252";
-            conv.reset( new DRW_Converter(nullptr, 0) );
-        } else
-            conv.reset( new DRW_ConvTable(DRW_Table1252, CPLENGTHCOMMON) );
+    if (cp == "ANSI_874")
+        conv.reset( new DRW_ConvTable(DRW_Table874, CPLENGTHCOMMON) );
+    else if (cp == "ANSI_932")
+        conv.reset( new DRW_Conv932Table() );
+    else if (cp == "ANSI_936")
+        conv.reset( new DRW_ConvDBCSTable(DRW_Table936, DRW_LeadTable936,
+                                     DRW_DoubleTable936, CPLENGTH936) );
+    else if (cp == "ANSI_949")
+        conv.reset( new DRW_ConvDBCSTable(DRW_Table949, DRW_LeadTable949,
+                                     DRW_DoubleTable949, CPLENGTH949) );
+    else if (cp == "ANSI_950")
+        conv.reset( new DRW_ConvDBCSTable(DRW_Table950, DRW_LeadTable950,
+                                     DRW_DoubleTable950, CPLENGTH950) );
+    else if (cp == "ANSI_1250")
+        conv.reset( new DRW_ConvTable(DRW_Table1250, CPLENGTHCOMMON) );
+    else if (cp == "ANSI_1251")
+        conv.reset( new DRW_ConvTable(DRW_Table1251, CPLENGTHCOMMON) );
+    else if (cp == "ANSI_1253")
+        conv.reset( new DRW_ConvTable(DRW_Table1253, CPLENGTHCOMMON) );
+    else if (cp == "ANSI_1254")
+        conv.reset( new DRW_ConvTable(DRW_Table1254, CPLENGTHCOMMON) );
+    else if (cp == "ANSI_1255")
+        conv.reset( new DRW_ConvTable(DRW_Table1255, CPLENGTHCOMMON) );
+    else if (cp == "ANSI_1256")
+        conv.reset( new DRW_ConvTable(DRW_Table1256, CPLENGTHCOMMON) );
+    else if (cp == "ANSI_1257")
+        conv.reset( new DRW_ConvTable(DRW_Table1257, CPLENGTHCOMMON) );
+    else if (cp == "ANSI_1258")
+        conv.reset( new DRW_ConvTable(DRW_Table1258, CPLENGTHCOMMON) );
+    else if (cp == "UTF-8") {
+        cp = "ANSI_1252";
+        conv.reset( new DRW_Converter(nullptr, 0) );
+    } else if (cp == "UTF-16") {
+        conv.reset( new DRW_ConvUTF16() );
+    } else if (dxfFormat) {
+        conv.reset( new DRW_Converter(nullptr, 0) );
     } else {
-        if (dxfFormat)
-            conv.reset( new DRW_Converter(nullptr, 0) );//utf16 to utf8
-        else
-            conv.reset( new DRW_ConvUTF16() );//utf16 to utf8
+        conv.reset( new DRW_ConvTable(DRW_Table1252, CPLENGTHCOMMON) );
     }
 }
 

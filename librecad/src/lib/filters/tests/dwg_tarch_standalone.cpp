@@ -7,6 +7,9 @@
 #include <iomanip>
 #include <algorithm>
 #include <cctype>
+#ifdef _WIN32
+#include <Windows.h>
+#endif
 
 #include "drw_base.h"
 #include "drw_interface.h"
@@ -20,6 +23,7 @@ public:
   std::map<std::string, int> entityTypes;
   std::map<std::string, int> layerEntities;
   std::map<std::string, int> blockEntities;
+  std::map<std::string, int> skippedCustomClassNames;
   int totalEntities = 0;
   int blocks = 0;
   int layers = 0;
@@ -53,10 +57,15 @@ public:
   int dimAngular = 0;
   int dimArc = 0;
   int dimOrdinate = 0;
-  int tolerance = 0;
-  int underlays = 0;
   int attributes = 0;
   int attdefs = 0;
+  int tolerance = 0;
+  int underlays = 0;
+  int entityParseFailures = 0;
+  int objectParseFailures = 0;
+  int decodedProxyPrimitives = 0;
+  int totalExtDataCount = 0;
+  int entitiesWithExtData = 0;
 
   std::string currentBlock;
   int inBlock = 0;
@@ -84,6 +93,17 @@ public:
     layerEntities[layerName]++;
     if (currentlyInRealBlock()) {
       blockEntities[currentBlock]++;
+    }
+    if (!e.extData.empty()) {
+      ++entitiesWithExtData;
+      totalExtDataCount += e.extData.size();
+      static bool firstExtData = true;
+      if (firstExtData) {
+        std::cout << "    First entity with extData: " << typeName 
+                  << ", layer=" << layerName 
+                  << ", size=" << e.extData.size() << "\n";
+        firstExtData = false;
+      }
     }
   }
 
@@ -123,8 +143,18 @@ public:
   void addInsert(const DRW_Insert &e) override {
     ++inserts;
     trackEntity(e, "INSERT");
+    if (!e.extData.empty()) {
+      std::cout << "    INSERT '" << e.name << "' has " << e.extData.size() << " extData items\n";
+      for (size_t i = 0; i < e.extData.size() && i < 5; ++i) {
+        auto v = e.extData[i];
+        if (v) {
+          std::cout << "      [" << i << "] code=" << v->code() << "\n";
+        }
+      }
+    }
     for (const auto &a : e.attlist) {
-      if (!a) continue;
+      if (!a)
+        continue;
       if (a->eType == DRW::ATTDEF) {
         ++attdefs;
         ++totalEntities;
@@ -150,6 +180,11 @@ public:
   void add3dFace(const DRW_3Dface &e) override { ++solids; trackEntity(e, "3DFACE"); }
   void addSolid(const DRW_Solid &e) override { ++solids; trackEntity(e, "SOLID"); }
   void addMText(const DRW_MText &e) override { ++mtexts; trackEntity(e, "MTEXT"); }
+  void addUnsupportedObject(const DRW_UnsupportedObject &e) override {
+    std::cout << "    Unsupported object: " << e.m_recordName 
+              << " (className=" << e.m_className << ")\n";
+    skippedCustomClassNames[e.m_recordName]++;
+  }
   void addText(const DRW_Text &e) override { ++texts; trackEntity(e, "TEXT"); }
   void addDimAlign(const DRW_DimAligned *e) override { ++dimAligned; ++dimensions; trackEntity(*e, "DIM_ALIGNED"); }
   void addDimLinear(const DRW_DimLinear *e) override { ++dimLinear; ++dimensions; trackEntity(*e, "DIM_LINEAR"); }
@@ -306,6 +341,15 @@ bool validateFile(const std::string &path) {
     DRW::Version version = reader.getVersion();
     DRW::error error = reader.getError();
 
+    iface.entityParseFailures = reader.getEntityParseFailures();
+    iface.objectParseFailures = reader.getObjectParseFailures();
+    iface.decodedProxyPrimitives = reader.getDecodedProxyPrimitives();
+    
+    auto skippedClasses = reader.getSkippedCustomClasses();
+    for (const auto &[className, count] : skippedClasses) {
+      iface.skippedCustomClassNames[className] = count;
+    }
+
     std::cout << std::left << std::setw(50) << name << std::setw(16)
               << versionStr(version) << std::setw(20) << errorStr(error)
               << std::setw(10) << iface.totalEntities << std::setw(8)
@@ -336,6 +380,20 @@ bool validateFile(const std::string &path) {
       return false;
     }
 
+    std::cout << "\n  Debug Info:\n";
+    std::cout << "    Entity parse failures: " << iface.entityParseFailures << "\n";
+    std::cout << "    Object parse failures: " << iface.objectParseFailures << "\n";
+    std::cout << "    Decoded proxy primitives: " << iface.decodedProxyPrimitives << "\n";
+    std::cout << "    Entities with extData: " << iface.entitiesWithExtData << "\n";
+    std::cout << "    Total extData entries: " << iface.totalExtDataCount << "\n";
+    
+    if (!iface.skippedCustomClassNames.empty()) {
+      std::cout << "    Skipped custom classes:\n";
+      for (const auto &[className, count] : iface.skippedCustomClassNames) {
+        std::cout << "      " << className << ": " << count << "\n";
+      }
+    }
+
     std::cout << "  [PASSED]\n";
     return true;
 
@@ -353,6 +411,10 @@ bool validateFile(const std::string &path) {
 } // namespace
 
 int main(int argc, char *argv[]) {
+#ifdef _WIN32
+  SetConsoleOutputCP(65001);
+#endif
+
   std::string dir = "D:/data/dli/LibreCAD/librecad/src/lib/filters/tests/testdata/tarch/";
   if (argc > 1) {
     dir = argv[1];

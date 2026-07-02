@@ -1156,15 +1156,16 @@ bool DRW_Entity::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer* strBu
             switch (dxfCode){
             case 0: { //string
                 std::string s;
-                if (version > DRW::AC1018) { //R2007+: 2-byte char count + UTF-16LE
+                if (version > DRW::AC1018) { //R2007+
                     if (tmpExtDataBuf.numRemainingBytes() < 2) break;
                     std::uint16_t nChars = tmpExtDataBuf.getRawShort16();
+                    DRW_DBG(" EED string nChars: "); DRW_DBG(nChars);
                     if (nChars > 0) {
+                        // R2007+ EED strings are UTF-16LE (nChars 16-bit code units).
                         std::uint64_t byteLen = static_cast<std::uint64_t>(nChars) * 2;
                         if ((std::uint64_t)tmpExtDataBuf.numRemainingBytes() < byteLen) break;
                         std::vector<std::uint8_t> bytes(byteLen);
                         tmpExtDataBuf.getBytes(bytes.data(), byteLen);
-                        // Inline UTF-16LE → UTF-8 conversion.
                         for (std::uint16_t i = 0; i < nChars; ++i) {
                             std::uint16_t c = static_cast<std::uint16_t>(bytes[2*i]) |
                                        (static_cast<std::uint16_t>(bytes[2*i+1]) << 8);

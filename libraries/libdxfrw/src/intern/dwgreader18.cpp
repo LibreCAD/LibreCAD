@@ -343,8 +343,13 @@ bool dwgReader18::readMetaData() {
     DRW_DBG("\napp maintenance version= "); DRW_DBGH(appMaintenanceVersion);
     std::uint16_t cp = fileBuf->getRawShort16();
     DRW_DBG("\ncodepage= "); DRW_DBG(cp);
-    if (const char* cpName = dwgCodePageName(cp))
-        decoder.setCodePage(cpName, false);
+    // R2007+ (AC1021+) store all text as UTF-16LE; the DWGCODEPAGE field is only
+    // meaningful for R2004 and earlier. Applying it for 2007+ would clobber the
+    // UTF-16 decoder configured by setVersion() and corrupt Unicode names.
+    if (version <= DRW::AC1018) {
+        if (const char* cpName = dwgCodePageName(cp))
+            decoder.setCodePage(cpName, false);
+    }
     DRW_DBG("\n3 0x00 bytes(seems 0x00, appDwgV & appMaintV) = "); DRW_DBGH(fileBuf->getRawChar8()); DRW_DBG(", ");
     DRW_DBGH(fileBuf->getRawChar8()); DRW_DBG(", "); DRW_DBGH(fileBuf->getRawChar8());
     securityFlags = fileBuf->getRawLong32();

@@ -656,6 +656,8 @@ std::string dwgBuffer::getUCSText(bool nullTerm){
         return decoder->toUtf8(strData);
     }
 
+    // getUCSText is only reached for R2007+ (v > AC1018), where on-disk text is
+    // always UTF-16LE — never a single-byte/DBCS codepage. Decode as UTF-16.
     strData = get16bitStr(ts, nullTerm);
     if (!decoder)
         return strData;
