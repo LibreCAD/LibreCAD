@@ -1818,6 +1818,7 @@ if(BUILD_TESTS)
         librecad/src/lib/filters/tests/i18n_codec_tests.cpp
         librecad/src/lib/filters/tests/i18n_caret_nfc_tests.cpp
         librecad/src/lib/filters/tests/dwg_decompress18_tests.cpp
+        librecad/src/lib/filters/tests/dwg_tarch_tests.cpp
         librecad/src/lib/engine/settings/tests/rs_settings_migration_tests.cpp
         librecad/src/main/tests/console_command_utils_tests.cpp
     )
@@ -1842,7 +1843,7 @@ if(BUILD_TESTS)
     # Enable C++17 for the test target (matching LibreCAD's standard)
     target_compile_features(librecad_tests PRIVATE cxx_std_17)
     # compiling time defines
-    target_compile_definitions(librecad_tests PRIVATE BUILD_TESTS=1 DWGSUPPORT)
+    target_compile_definitions(librecad_tests PRIVATE BUILD_TESTS=1 DWGSUPPORT LIBRECAD_TEST_DIR="${CMAKE_CURRENT_SOURCE_DIR}/librecad/src/lib/filters/tests/testdata")
 
     add_test(NAME librecad_tests COMMAND $<TARGET_FILE:librecad_tests>)
     set_tests_properties(librecad_tests PROPERTIES
@@ -1850,3 +1851,24 @@ if(BUILD_TESTS)
         ENVIRONMENT "QT_QPA_PLATFORM=offscreen"
     )
 endif()
+
+qt_add_executable(dwg_tarch_test
+    librecad/src/lib/filters/tests/dwg_tarch_standalone.cpp
+)
+
+target_include_directories(dwg_tarch_test PRIVATE
+    ${SHARED_INCLUDES}
+)
+
+target_link_libraries(dwg_tarch_test PRIVATE
+    librecad_lib
+    Qt6::Core
+    Qt6::Gui
+    Qt6::Network
+    Qt6::PrintSupport
+    Qt6::Svg
+    Qt6::Widgets
+)
+
+target_compile_features(dwg_tarch_test PRIVATE cxx_std_17)
+target_compile_definitions(dwg_tarch_test PRIVATE DWGSUPPORT)
