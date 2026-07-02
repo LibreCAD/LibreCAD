@@ -41,6 +41,11 @@ LC_LayerDialogEx::LC_LayerDialogEx(QWidget* parent, const QString& name, LC_Laye
     m_layerTreeModel = model;
     m_layerList = ll;
     m_editedTreeItem = treeItem;
+    if (treeItem != nullptr) {
+        m_editedLayer = treeItem->getLayer();
+        m_originalLayerName = treeItem->getName();
+        m_originalLayerType = treeItem->getLayerType();
+    }
 }
 
 void LC_LayerDialogEx::languageChange(){
@@ -250,14 +255,20 @@ void LC_LayerDialogEx::validate() {
                 break;
             }
             case MODE_EDIT_LAYER: {
-                QString originalName = m_editedTreeItem->getName();
-                int originalLayerType = m_editedTreeItem->getLayerType();
-                bool typeChanged = newLayerType != originalLayerType;
-                bool nameChanged = originalName != layerName;
+                LC_LayerTreeItem *editedTreeItem = m_layerTreeModel->getItemForLayer(m_editedLayer);
+                if (editedTreeItem == nullptr) {
+                    QMessageBox::information(parentWidget(),
+                                             QMessageBox::tr("Layer Properties"),
+                                             QMessageBox::tr("The edited layer is no longer available."),
+                                             QMessageBox::Ok);
+                    return;
+                }
+                bool typeChanged = newLayerType != m_originalLayerType;
+                bool nameChanged = m_originalLayerName != layerName;
                 if (nameChanged || typeChanged) {
                     // inner name should be changed - so we have to check for possible duplicates.
                     newLayerNamesList = m_layerTreeModel->getLayersListForRenamedPrimary(
-                        m_editedTreeItem, layerName, newLayerType);
+                        editedTreeItem, layerName, newLayerType);
                 }
                 break;
             }

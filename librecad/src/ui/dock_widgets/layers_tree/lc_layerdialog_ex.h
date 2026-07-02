@@ -74,6 +74,9 @@ private:
     int m_mode;
     LC_LayerTreeModel* m_layerTreeModel;
     LC_LayerTreeItem *m_editedTreeItem {nullptr};
+    RS_Layer *m_editedLayer {nullptr};
+    QString m_originalLayerName;
+    int m_originalLayerType {-1};
     RS_LayerList* m_layerList;
     bool checkForDuplicatedNames(const QStringList &newLayerNamesList) const;
 };

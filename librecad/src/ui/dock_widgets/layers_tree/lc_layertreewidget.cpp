@@ -1794,10 +1794,12 @@ void LC_LayerTreeWidget::invokeLayerEditOrRenameDialog(LC_LayerTreeItem *pItem, 
     LC_LayerDialogEx dlg = LC_LayerDialogEx(this, QMessageBox::tr("Layer DialogEx"), m_layerTreeModel, pItem, m_layerList);
 
     RS_Layer* layer = nullptr;
+    int originalLayerType = LC_LayerTreeItem::NOT_DEFINED_LAYER_TYPE;
     if (edit){
         dlg.setMode(LC_LayerDialogEx::MODE_EDIT_LAYER);
         layer = pItem->getLayer();
-        dlg.setLayerType(pItem->getLayerType());
+        originalLayerType = pItem->getLayerType();
+        dlg.setLayerType(originalLayerType);
         dlg.setConstruction(layer->isConstruction());
     }
     else{
@@ -1822,8 +1824,11 @@ void LC_LayerTreeWidget::invokeLayerEditOrRenameDialog(LC_LayerTreeItem *pItem, 
           // handle rename
           QString layerName = dlg.getLayerName();
           int editedLayerType = dlg.getEditedLayerType();
-          if (originalName != layerName || editedLayerType != pItem->getLayerType()){ // layer is also renamed
-              m_layerTreeModel -> renamePrimaryLayer(pItem, layerName, editedLayerType);
+          if (originalName != layerName || editedLayerType != originalLayerType){ // layer is also renamed
+              LC_LayerTreeItem *currentLayerItem = m_layerTreeModel->getItemForLayer(layer);
+              if (currentLayerItem != nullptr){
+                  m_layerTreeModel -> renamePrimaryLayer(currentLayerItem, layerName, editedLayerType);
+              }
           }
           m_layerList->fireEdit(nullptr);
       }
