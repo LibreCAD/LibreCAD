@@ -64,6 +64,7 @@ debug/
 object_script.LibreCAD.*
 object_script.libdxfrw.*
 # Win/qmake generated project files
+*_resource.rc
 #*.vcproj
 #*.sln
 custom-windows*.*
