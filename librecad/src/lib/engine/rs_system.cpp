@@ -686,7 +686,7 @@ QStringList RS_System::getDirectoryList(const QString& _subDirectory) {
     for (QStringList::Iterator it = dirList.begin();
          it != dirList.end();
          ++it ) {
-        if (QFileInfo( *it).isDir()) {
+        if (QFileInfo(*it).isDir() && !ret.contains(*it)) {
             ret += (*it);
             RS_DEBUG->print(*it);
         }
