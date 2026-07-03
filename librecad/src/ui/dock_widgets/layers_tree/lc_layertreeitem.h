@@ -47,9 +47,9 @@ public:
 class LC_LayerTreeItem{
 public:
 
-    static constexpr int NOT_DEFINED_LAYER_TYPE = -1;
     // Layer types
-    enum {
+    enum LayerType {
+        NOT_DEFINED_LAYER_TYPE = -1,
         VIRTUAL,
         NORMAL,
         DIMENSIONAL,

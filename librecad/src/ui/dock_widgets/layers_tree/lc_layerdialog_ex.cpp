@@ -45,7 +45,7 @@ LC_LayerDialogEx::LC_LayerDialogEx(QWidget* parent, const QString& name, LC_Laye
         m_editedLayer = treeItem->getLayer();
         if (m_editedLayer != nullptr) {
             m_originalLayerName = treeItem->getName();
-            m_originalLayerType = treeItem->getLayerType();
+            m_originalLayerType = static_cast<LC_LayerTreeItem::LayerType>(treeItem->getLayerType());
         }
     }
 }
@@ -265,7 +265,7 @@ void LC_LayerDialogEx::validate() {
                                              QMessageBox::Ok);
                     return;
                 }
-                bool typeChanged = newLayerType != m_originalLayerType;
+                bool typeChanged = newLayerType != static_cast<int>(m_originalLayerType);
                 bool nameChanged = m_originalLayerName != layerName;
                 if (nameChanged || typeChanged) {
                     // inner name should be changed - so we have to check for possible duplicates.
