@@ -5040,6 +5040,14 @@ TEST_CASE("dwgRW round-trip preserves a 4-dash linetype",
 // (`[.dwg_readback]`, hidden) + skip-when-absent, so it never breaks the default
 // suite or CI runners without libreDWG. Oracle: $DWGREAD or ~/dev/libredwg/programs/dwgread.
 namespace {
+#ifdef _WIN32
+#  define LC_POPEN _popen
+#  define LC_PCLOSE _pclose
+#else
+#  define LC_POPEN popen
+#  define LC_PCLOSE pclose
+#endif
+
 struct ReadbackResult { bool found; bool ok; std::string output; };
 
 ReadbackResult dwgReadback(const std::string& path) {
@@ -5051,13 +5059,13 @@ ReadbackResult dwgReadback(const std::string& path) {
         return {false, false, ""};
     const std::string cmd = "\"" + exe + "\" \"" + path + "\" 2>&1";
     std::string out;
-    FILE* pipe = popen(cmd.c_str(), "r");
+    FILE* pipe = LC_POPEN(cmd.c_str(), "r");
     if (!pipe)
         return {true, false, "popen failed"};
     char buf[4096];
     while (fgets(buf, sizeof(buf), pipe) != nullptr)
         out += buf;
-    const int rc = pclose(pipe);
+    const int rc = LC_PCLOSE(pipe);
     // dwgread prints "ERROR 0x...." and returns non-zero on a fatal decode
     // failure (e.g. "Failed to read R2004 Section Page Map" -> 0x400). Per-object
     // "bit_read_* buffer overflow" lines are warnings, not fatal (that is the

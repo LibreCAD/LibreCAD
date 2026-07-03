@@ -3909,7 +3909,7 @@ TEST_CASE("DWG dimension field parity: measureValue + flipArrow populate",
       continue;
     FieldCaptureIface iface;
     try {
-      dwgR reader(entry.path().c_str());
+      dwgR reader(entry.path().string().c_str());
       reader.setDebug(DRW::DebugLevel::None);
       if (!reader.read(&iface, true))
         continue;

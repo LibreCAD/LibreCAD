@@ -1772,8 +1772,10 @@ option(BUILD_TESTS "Build unit tests for LibreCAD" OFF)
 if(BUILD_TESTS)
     enable_testing()
 
-    # Add Catch2 as a subdirectory (assumes Catch2 is in externals/Catch2)
-    add_subdirectory(externals/Catch2)
+    # Catch2 v3 is provided as an installed package (e.g. via vcpkg or a source
+    # install); point CMAKE_PREFIX_PATH at it. Falls back to the externals/Catch2
+    # submodule if that is present instead.
+    find_package(Catch2 3 REQUIRED)
 
     # Define test executable
     qt_add_executable(librecad_tests
@@ -1843,7 +1845,7 @@ if(BUILD_TESTS)
     # Enable C++17 for the test target (matching LibreCAD's standard)
     target_compile_features(librecad_tests PRIVATE cxx_std_17)
     # compiling time defines
-    target_compile_definitions(librecad_tests PRIVATE BUILD_TESTS=1 DWGSUPPORT LIBRECAD_TEST_DIR="${CMAKE_CURRENT_SOURCE_DIR}/librecad/src/lib/filters/tests/testdata")
+    target_compile_definitions(librecad_tests PRIVATE BUILD_TESTS=1 DWGSUPPORT _USE_MATH_DEFINES LIBRECAD_TEST_DIR="${CMAKE_CURRENT_SOURCE_DIR}/librecad/src/lib/filters/tests/testdata")
 
     add_test(NAME librecad_tests COMMAND $<TARGET_FILE:librecad_tests>)
     set_tests_properties(librecad_tests PROPERTIES
