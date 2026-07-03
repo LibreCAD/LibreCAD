@@ -2243,8 +2243,52 @@ bool dxfRW::writeViewport(DRW_Viewport *ent) {
     writer->writeDouble(41, ent->psheight);
     writer->writeInt16(68, ent->vpstatus);
     writer->writeInt16(69, ent->vpID);
-    writer->writeDouble(12, ent->centerPX);//RLZ: verify if exist in V12
-    writer->writeDouble(22, ent->centerPY);//RLZ: verify if exist in V12
+    writer->writeDouble(12, ent->centerPX);
+    writer->writeDouble(22, ent->centerPY);
+    if (version > DRW::AC1009) {
+        writer->writeDouble(15, ent->gridSpX);
+        writer->writeDouble(25, ent->gridSpY);
+        writer->writeDouble(46, ent->circleZoom);
+        writer->writeInt16(72, ent->majorGridLines);
+        writer->writeInt32(90, ent->statusFlags);
+        writer->writeUtf8String(1, ent->styleSheet);
+        writer->writeInt16(281, ent->renderMode);
+        writer->writeInt16(71, ent->ucsAtOrigin ? 1 : 0);
+        writer->writeInt16(74, ent->ucsPerViewport ? 1 : 0);
+        writer->writeDouble(110, ent->ucsOrigin.x);
+        writer->writeDouble(120, ent->ucsOrigin.y);
+        writer->writeDouble(130, ent->ucsOrigin.z);
+        writer->writeDouble(111, ent->ucsXAxis.x);
+        writer->writeDouble(121, ent->ucsXAxis.y);
+        writer->writeDouble(131, ent->ucsXAxis.z);
+        writer->writeDouble(112, ent->ucsYAxis.x);
+        writer->writeDouble(122, ent->ucsYAxis.y);
+        writer->writeDouble(132, ent->ucsYAxis.z);
+        writer->writeDouble(146, ent->ucsElevation);
+        writer->writeInt16(76, ent->ucsOrthographicType);
+        writer->writeInt16(148, ent->shadePlotMode);
+        writer->writeInt16(292, ent->useDefaultLighting ? 1 : 0);
+        writer->writeInt16(282, ent->defaultLightingType);
+        writer->writeDouble(451, ent->brightness);
+        writer->writeDouble(452, ent->contrast);
+        if (ent->ambientColorRgb >= 0)
+            writer->writeInt32(421, ent->ambientColorRgb);
+        writer->writeInt16(431, ent->ambientColorMethod);
+        if (ent->vpHeaderHandle != 0)
+            writer->writeString(331, toHexStr(static_cast<int>(ent->vpHeaderHandle)));
+        if (ent->clipBoundaryHandle != 0)
+            writer->writeString(340, toHexStr(static_cast<int>(ent->clipBoundaryHandle)));
+        if (ent->namedUcsHandle != 0)
+            writer->writeString(345, toHexStr(static_cast<int>(ent->namedUcsHandle)));
+        if (ent->baseUcsHandle != 0)
+            writer->writeString(346, toHexStr(static_cast<int>(ent->baseUcsHandle)));
+        if (ent->backgroundHandle != 0)
+            writer->writeString(347, toHexStr(static_cast<int>(ent->backgroundHandle)));
+        if (ent->visualStyleHandle != 0)
+            writer->writeString(348, toHexStr(static_cast<int>(ent->visualStyleHandle)));
+        if (ent->shadePlotHandle != 0)
+            writer->writeString(349, toHexStr(static_cast<int>(ent->shadePlotHandle)));
+    }
     return true;
 }
 
@@ -2487,8 +2531,8 @@ bool dxfRW::writePointCloudEx(DRW_PointCloudEx *ent){
     writer->writeBool(291, ent->showIntensity);
     writer->writeBool(292, ent->showCropping);
     writer->writeInt32(91, ent->croppingCount);
-    writer->writeInt32(341, ent->unknownBl0);
-    writer->writeInt32(342, ent->unknownBl1);
+    writer->writeInt32(92, ent->unknownInt0);
+    writer->writeInt32(93, ent->unknownInt1);
     writer->writeInt16(280, ent->stylizationType);
     writer->writeUtf8String(300, ent->intensityColorScheme);
     writer->writeUtf8String(301, ent->currentColorScheme);

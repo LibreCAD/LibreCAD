@@ -6751,8 +6751,8 @@ bool DRW_PointCloudEx::parseCode(int code, const std::unique_ptr<dxfReader>& rea
     case 291: showIntensity = reader->getBool(); break;
     case 292: showCropping = reader->getBool(); break;
     case 91: croppingCount = reader->getInt32(); break;
-    case 341: unknownBl0 = reader->getInt32(); break;
-    case 342: unknownBl1 = reader->getInt32(); break;
+    case 92: unknownInt0 = reader->getInt32(); break;
+    case 93: unknownInt1 = reader->getInt32(); break;
     case 280: stylizationType = reader->getInt32(); break;
     case 300: intensityColorScheme = reader->getUtf8String(); break;
     case 301: currentColorScheme = reader->getUtf8String(); break;

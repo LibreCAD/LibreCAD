@@ -1988,8 +1988,8 @@ public:
     bool showIntensity = false;
     bool showCropping = false;
     int croppingCount = 0;
-    std::uint32_t unknownBl0 = 0;
-    std::uint32_t unknownBl1 = 0;
+    int unknownInt0 = 0;
+    int unknownInt1 = 0;
     int stylizationType = 0;
     UTF8STRING intensityColorScheme;
     UTF8STRING currentColorScheme;
