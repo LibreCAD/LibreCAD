@@ -500,6 +500,26 @@ bool dwgRW::writeOle2Frame(DRW_Ole2Frame *ent) {
     return writer->encodeEntity(ent);
 }
 
+bool dwgRW::writeWipeout(DRW_Wipeout *ent) {
+    if (writer == nullptr || ent == nullptr) return false;
+    return writer->encodeEntity(ent);
+}
+
+bool dwgRW::writePointCloud(DRW_PointCloud *ent) {
+    if (writer == nullptr || ent == nullptr) return false;
+    return writer->encodeEntity(ent);
+}
+
+bool dwgRW::writePointCloudEx(DRW_PointCloudEx *ent) {
+    if (writer == nullptr || ent == nullptr) return false;
+    return writer->encodeEntity(ent);
+}
+
+bool dwgRW::writeSurface(DRW_Surface *ent) {
+    if (writer == nullptr || ent == nullptr) return false;
+    return writer->encodeEntity(ent);
+}
+
 std::uint32_t dwgRW::defineBlock(const std::string& name, const DRW_Coord& basePoint,
                            int insUnits) {
     if (writer == nullptr) return 0;

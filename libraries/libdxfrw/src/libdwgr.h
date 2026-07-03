@@ -81,6 +81,10 @@ public:
     bool writeViewport(DRW_Viewport *ent);
     bool writeShape(DRW_Shape *ent);
     bool writeOle2Frame(DRW_Ole2Frame *ent);
+    bool writeWipeout(DRW_Wipeout *ent);
+    bool writePointCloud(DRW_PointCloud *ent);
+    bool writePointCloudEx(DRW_PointCloudEx *ent);
+    bool writeSurface(DRW_Surface *ent);
 
     /// Define an empty user-block.  Allocates fresh Block_Record + Block
     /// + ENDBLK handles, emits all three into the object stream, and

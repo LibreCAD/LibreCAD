@@ -118,6 +118,9 @@ public:
     bool writeOle2Frame(DRW_Ole2Frame *ent);
     DRW_ImageDef *writeImage(DRW_Image *ent, std::string name);
     bool writeWipeout(DRW_Wipeout *ent);
+    bool writePointCloud(DRW_PointCloud *ent);
+    bool writePointCloudEx(DRW_PointCloudEx *ent);
+    bool writeSurface(DRW_Surface *ent);
     bool writeMultiLeader(DRW_MLeader *ent);
     bool writeLeader(DRW_Leader *ent);
     bool writeDimension(DRW_Dimension *ent);

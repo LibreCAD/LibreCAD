@@ -1540,7 +1540,14 @@ bool dxfRW::writeHatch(DRW_Hatch *ent){
                 writer->writeDouble(463, stop.value);
                 if (stop.aciColor != 0)
                     writer->writeInt16(63, stop.aciColor);
-                writer->writeInt32(421, stop.rgb);
+                if (stop.rgb >= 0)
+                    writer->writeInt32(421, stop.rgb);
+                if (stop.colorMethod != 0)
+                    writer->writeInt32(431, stop.colorMethod);
+                if (!stop.colorName.empty())
+                    writer->writeUtf8String(432, stop.colorName);
+                if (!stop.colorBookName.empty())
+                    writer->writeUtf8String(433, stop.colorBookName);
             }
             writer->writeUtf8String(470, ent->gradName);
         }
@@ -1705,6 +1712,30 @@ bool dxfRW::writeDimension(DRW_Dimension *ent) {
             writer->writeInt16(74, 1);
         if (ent->getFlipArrow2())
             writer->writeInt16(75, 1);
+        if (ent->genTol)
+            writer->writeInt16(76, 1);
+        if (ent->limGen)
+            writer->writeInt16(77, 1);
+        if (ent->tolPlus != 0)
+            writer->writeDouble(43, ent->tolPlus);
+        if (ent->tolMinus != 0)
+            writer->writeDouble(44, ent->tolMinus);
+        if (ent->tolScale != 0)
+            writer->writeDouble(45, ent->tolScale);
+        if (ent->tolDecimals != 0)
+            writer->writeInt16(78, ent->tolDecimals);
+        if (ent->tolAlign != 0)
+            writer->writeInt16(79, ent->tolAlign);
+        if (ent->tolZero != 0)
+            writer->writeInt16(80, ent->tolZero);
+        if (ent->altTolDecimals != 0)
+            writer->writeInt16(81, ent->altTolDecimals);
+        if (ent->altZero != 0)
+            writer->writeInt16(82, ent->altZero);
+        if (ent->altTolZero != 0)
+            writer->writeInt16(83, ent->altTolZero);
+        if (ent->textMove != 0)
+            writer->writeInt16(84, ent->textMove);
         writer->writeDouble(210, ent->getExtrusion().x);
         writer->writeDouble(220, ent->getExtrusion().y);
         writer->writeDouble(230, ent->getExtrusion().z);
@@ -2369,6 +2400,141 @@ bool dxfRW::writeWipeout(DRW_Wipeout *ent){
     // this is shared with IMAGE and is NOT a frame-display flag.  WIPEOUTFRAME
     // (whether the polygon outline is drawn) is global, in WIPEOUTVARIABLES.
     writer->writeBool(290, ent->clipMode);
+    return true;
+}
+
+bool dxfRW::writePointCloud(DRW_PointCloud *ent){
+    if (version <= DRW::AC1018) {
+        return false;
+    }
+    writer->writeString(0, "POINTCLOUD");
+    writeEntity(ent);
+    writer->writeString(100, "AcDbEntity");
+    writer->writeString(100, "AcDbPointCloud");
+    writer->writeInt32(90, ent->classVersion);
+    writer->writeDouble(10, ent->origin.x);
+    writer->writeDouble(20, ent->origin.y);
+    writer->writeDouble(30, ent->origin.z);
+    writer->writeUtf8String(1, ent->savedFilename);
+    writer->writeInt32(91, ent->sourceFileCount);
+    for (const UTF8STRING& srcFile : ent->sourceFiles) {
+        writer->writeUtf8String(300, srcFile);
+    }
+    writer->writeDouble(11, ent->extentsMin.x);
+    writer->writeDouble(21, ent->extentsMin.y);
+    writer->writeDouble(31, ent->extentsMin.z);
+    writer->writeDouble(12, ent->extentsMax.x);
+    writer->writeDouble(22, ent->extentsMax.y);
+    writer->writeDouble(32, ent->extentsMax.z);
+    writer->writeInt64(92, static_cast<std::int64_t>(ent->pointCount));
+    writer->writeUtf8String(2, ent->ucsName);
+    writer->writeDouble(13, ent->ucsOrigin.x);
+    writer->writeDouble(23, ent->ucsOrigin.y);
+    writer->writeDouble(33, ent->ucsOrigin.z);
+    writer->writeDouble(14, ent->ucsXDirection.x);
+    writer->writeDouble(24, ent->ucsXDirection.y);
+    writer->writeDouble(34, ent->ucsXDirection.z);
+    writer->writeDouble(15, ent->ucsYDirection.x);
+    writer->writeDouble(25, ent->ucsYDirection.y);
+    writer->writeDouble(35, ent->ucsYDirection.z);
+    writer->writeDouble(16, ent->ucsZDirection.x);
+    writer->writeDouble(26, ent->ucsZDirection.y);
+    writer->writeDouble(36, ent->ucsZDirection.z);
+    writer->writeString(340, toHexStr(static_cast<int>(ent->definitionHandle)));
+    writer->writeString(360, toHexStr(static_cast<int>(ent->reactorHandle)));
+    writer->writeBool(290, ent->showIntensity);
+    writer->writeInt16(280, ent->intensityScheme);
+    writer->writeDouble(441, ent->intensityStyle.minIntensity);
+    writer->writeDouble(442, ent->intensityStyle.maxIntensity);
+    writer->writeDouble(443, ent->intensityStyle.lowThreshold);
+    writer->writeDouble(444, ent->intensityStyle.highThreshold);
+    writer->writeBool(291, ent->showClipping);
+    writer->writeInt32(93, ent->clippingCount);
+    return true;
+}
+
+bool dxfRW::writePointCloudEx(DRW_PointCloudEx *ent){
+    if (version <= DRW::AC1024) {
+        return false;
+    }
+    writer->writeString(0, "POINTCLOUDEX");
+    writeEntity(ent);
+    writer->writeString(100, "AcDbEntity");
+    writer->writeString(100, "AcDbPointCloudEx");
+    writer->writeInt32(90, ent->classVersion);
+    writer->writeDouble(11, ent->extentsMin.x);
+    writer->writeDouble(21, ent->extentsMin.y);
+    writer->writeDouble(31, ent->extentsMin.z);
+    writer->writeDouble(12, ent->extentsMax.x);
+    writer->writeDouble(22, ent->extentsMax.y);
+    writer->writeDouble(32, ent->extentsMax.z);
+    writer->writeDouble(13, ent->ucsOrigin.x);
+    writer->writeDouble(23, ent->ucsOrigin.y);
+    writer->writeDouble(33, ent->ucsOrigin.z);
+    writer->writeDouble(14, ent->ucsXDirection.x);
+    writer->writeDouble(24, ent->ucsXDirection.y);
+    writer->writeDouble(34, ent->ucsXDirection.z);
+    writer->writeDouble(15, ent->ucsYDirection.x);
+    writer->writeDouble(25, ent->ucsYDirection.y);
+    writer->writeDouble(35, ent->ucsYDirection.z);
+    writer->writeDouble(16, ent->ucsZDirection.x);
+    writer->writeDouble(26, ent->ucsZDirection.y);
+    writer->writeDouble(36, ent->ucsZDirection.z);
+    writer->writeBool(290, ent->isLocked);
+    writer->writeString(340, toHexStr(static_cast<int>(ent->definitionHandle)));
+    writer->writeString(360, toHexStr(static_cast<int>(ent->reactorHandle)));
+    writer->writeUtf8String(1, ent->name);
+    writer->writeBool(291, ent->showIntensity);
+    writer->writeBool(292, ent->showCropping);
+    writer->writeInt32(91, ent->croppingCount);
+    writer->writeInt32(341, ent->unknownBl0);
+    writer->writeInt32(342, ent->unknownBl1);
+    writer->writeInt16(280, ent->stylizationType);
+    writer->writeUtf8String(300, ent->intensityColorScheme);
+    writer->writeUtf8String(301, ent->currentColorScheme);
+    writer->writeUtf8String(302, ent->classificationColorScheme);
+    writer->writeDouble(440, ent->elevationMin);
+    writer->writeDouble(441, ent->elevationMax);
+    writer->writeDouble(442, ent->intensityMin);
+    writer->writeDouble(443, ent->intensityMax);
+    writer->writeInt16(281, ent->intensityOutOfRangeBehavior);
+    writer->writeInt16(282, ent->elevationOutOfRangeBehavior);
+    writer->writeBool(293, ent->elevationApplyToFixedRange);
+    writer->writeBool(294, ent->intensityAsGradient);
+    writer->writeBool(295, ent->elevationAsGradient);
+    return true;
+}
+
+bool dxfRW::writeSurface(DRW_Surface *ent){
+    if (version <= DRW::AC1018) {
+        return false;
+    }
+    std::string entType;
+    switch (ent->eType) {
+    case DRW::PLANESURFACE: entType = "PLANESURFACE"; break;
+    case DRW::EXTRUDEDSURFACE: entType = "EXTRUDEDSURFACE"; break;
+    case DRW::REVOLVEDSURFACE: entType = "REVOLVEDSURFACE"; break;
+    case DRW::SWEPTSURFACE: entType = "SWEPTSURFACE"; break;
+    case DRW::LOFTEDSURFACE: entType = "LOFTEDSURFACE"; break;
+    case DRW::NURBSURFACE: entType = "NURBSURFACE"; break;
+    default: return false;
+    }
+    writer->writeString(0, entType);
+    writeEntity(ent);
+    writer->writeString(100, "AcDbEntity");
+    writer->writeString(100, "AcDbSurface");
+    writer->writeInt16(70, ent->modelerFormatVersion);
+    writer->writeInt16(71, ent->uIsolines);
+    writer->writeInt16(72, ent->vIsolines);
+    if (!ent->rawAcisData.empty()) {
+        std::string hexStr;
+        for (std::uint8_t byte : ent->rawAcisData) {
+            char buf[3];
+            snprintf(buf, sizeof(buf), "%02X", byte);
+            hexStr += buf;
+        }
+        writer->writeString(310, hexStr);
+    }
     return true;
 }
 
