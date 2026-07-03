@@ -2560,7 +2560,7 @@ bool dxfRW::writeSurface(DRW_Surface *ent){
     case DRW::REVOLVEDSURFACE: entType = "REVOLVEDSURFACE"; break;
     case DRW::SWEPTSURFACE: entType = "SWEPTSURFACE"; break;
     case DRW::LOFTEDSURFACE: entType = "LOFTEDSURFACE"; break;
-    case DRW::NURBSURFACE: entType = "NURBSURFACE"; break;
+    case DRW::NURBSURFACE: entType = "NURBSSURFACE"; break;
     default: return false;
     }
     writer->writeString(0, entType);
@@ -3900,6 +3900,17 @@ bool dxfRW::processEntities(bool isblock) {
             processed = processImage();
         } else if (nextentity == "WIPEOUT") {
             processed = processWipeout();
+        } else if (nextentity == "POINTCLOUD") {
+            processed = processPointCloud();
+        } else if (nextentity == "POINTCLOUDEX") {
+            processed = processPointCloudEx();
+        } else if (nextentity == "PLANESURFACE"
+                   || nextentity == "EXTRUDEDSURFACE"
+                   || nextentity == "REVOLVEDSURFACE"
+                   || nextentity == "SWEPTSURFACE"
+                   || nextentity == "LOFTEDSURFACE"
+                   || nextentity == "NURBSURFACE") {
+            processed = processSurface();
         } else if (nextentity == "MULTILEADER") {
             processed = processMultiLeader();
         } else if (nextentity == "DIMENSION") {
@@ -4529,6 +4540,85 @@ bool dxfRW::processWipeout() {
         }
 
         if (!wipeout.parseCode(code, reader)) {
+            return setError(DRW::BAD_CODE_PARSED);
+        }
+    }
+
+    return setError(DRW::BAD_READ_ENTITIES);
+}
+
+bool dxfRW::processPointCloud() {
+    DRW_DBG("dxfRW::processPointCloud");
+    int code;
+    DRW_PointCloud pc;
+    while (reader->readRec(&code)) {
+        DRW_DBG(code); DRW_DBG("\n");
+        if (0 == code) {
+            nextentity = reader->getString();
+            DRW_DBG(nextentity); DRW_DBG("\n");
+            iface->addPointCloud(&pc);
+            return true;
+        }
+
+        if (!pc.parseCode(code, reader)) {
+            return setError(DRW::BAD_CODE_PARSED);
+        }
+    }
+
+    return setError(DRW::BAD_READ_ENTITIES);
+}
+
+bool dxfRW::processPointCloudEx() {
+    DRW_DBG("dxfRW::processPointCloudEx");
+    int code;
+    DRW_PointCloudEx pce;
+    while (reader->readRec(&code)) {
+        DRW_DBG(code); DRW_DBG("\n");
+        if (0 == code) {
+            nextentity = reader->getString();
+            DRW_DBG(nextentity); DRW_DBG("\n");
+            iface->addPointCloudEx(&pce);
+            return true;
+        }
+
+        if (!pce.parseCode(code, reader)) {
+            return setError(DRW::BAD_CODE_PARSED);
+        }
+    }
+
+    return setError(DRW::BAD_READ_ENTITIES);
+}
+
+bool dxfRW::processSurface() {
+    DRW_DBG("dxfRW::processSurface");
+    int code;
+    std::unique_ptr<DRW_Surface> surf;
+    if (nextentity == "PLANESURFACE") {
+        surf = std::make_unique<DRW_PlaneSurface>();
+    } else if (nextentity == "EXTRUDEDSURFACE") {
+        surf = std::make_unique<DRW_ExtrudedSurface>();
+    } else if (nextentity == "REVOLVEDSURFACE") {
+        surf = std::make_unique<DRW_RevolvedSurface>();
+    } else if (nextentity == "SWEPTSURFACE") {
+        surf = std::make_unique<DRW_SweptSurface>();
+    } else if (nextentity == "LOFTEDSURFACE") {
+        surf = std::make_unique<DRW_LoftedSurface>();
+    } else if (nextentity == "NURBSSURFACE") {
+        surf = std::make_unique<DRW_NurbsSurface>();
+    } else {
+        return setError(DRW::BAD_READ_ENTITIES);
+    }
+
+    while (reader->readRec(&code)) {
+        DRW_DBG(code); DRW_DBG("\n");
+        if (0 == code) {
+            nextentity = reader->getString();
+            DRW_DBG(nextentity); DRW_DBG("\n");
+            iface->addSurface(surf.get());
+            return true;
+        }
+
+        if (!surf->parseCode(code, reader)) {
             return setError(DRW::BAD_CODE_PARSED);
         }
     }
@@ -5780,6 +5870,8 @@ bool dxfRW::dxfClassForRecordName(const std::string &recName, DRW_Class &out) {
         {"SWEPTSURFACE",     "AcDbSweptSurface",        "ObjectDBX Classes", 0, 1},
         {"PLANESURFACE",     "AcDbPlaneSurface",        "ObjectDBX Classes", 4095, 1},
         {"NURBSSURFACE",     "AcDbNurbSurface",         "ObjectDBX Classes", 4095, 1},
+        {"POINTCLOUD",       "AcDbPointCloud",          "ObjectDBX Classes", 4095, 1},
+        {"POINTCLOUDEX",     "AcDbPointCloudEx",        "ObjectDBX Classes", 4095, 1},
     };
     for (const Entry &e : table) {
         if (recName == e.rec) {

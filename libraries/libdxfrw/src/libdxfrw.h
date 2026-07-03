@@ -294,6 +294,9 @@ private:
     bool processImage();
     bool processImageDef();
     bool processWipeout();
+    bool processPointCloud();
+    bool processPointCloudEx();
+    bool processSurface();
     bool processMultiLeader();
     bool processDimension();
     bool processArcDimension();
