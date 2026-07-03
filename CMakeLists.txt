@@ -1775,7 +1775,19 @@ if(BUILD_TESTS)
     # Catch2 v3 is provided as an installed package (e.g. via vcpkg or a source
     # install); point CMAKE_PREFIX_PATH at it. Falls back to the externals/Catch2
     # submodule if that is present instead.
-    find_package(Catch2 3 REQUIRED)
+    find_package(Catch2 3 QUIET)
+    if(NOT Catch2_FOUND)
+        if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/externals/Catch2/CMakeLists.txt")
+            message(STATUS "Catch2 v3 package not found; using externals/Catch2 submodule")
+            add_subdirectory(externals/Catch2 EXCLUDE_FROM_ALL)
+        else()
+            message(FATAL_ERROR
+                "BUILD_TESTS=ON requires Catch2 v3, but no installed package was found "
+                "and the externals/Catch2 submodule is not checked out. Either install "
+                "Catch2 v3 (and set CMAKE_PREFIX_PATH if needed) or run: "
+                "git submodule update --init externals/Catch2")
+        endif()
+    endif()
 
     # Define test executable
     qt_add_executable(librecad_tests
