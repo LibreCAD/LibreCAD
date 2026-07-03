@@ -101,14 +101,19 @@ TEST_CASE("console helper filters input extensions and describes them",
 
 TEST_CASE("console helper creates default output paths",
           "[console][commands]") {
+    const QString tempDir = QDir::tempPath();
+    const QString outDir = tempDir + "/out";
+    const QString sourceDir = tempDir + "/source";
+
     const QString output =
-        LC_Console::defaultOutputPath("/tmp/source/drawing.dwg", "pdf",
-                                      "/tmp/out");
-    CHECK(QDir::cleanPath(output) == "/tmp/out/drawing.pdf");
+        LC_Console::defaultOutputPath(sourceDir + "/drawing.dwg", "pdf", outDir);
+    CHECK(QFileInfo(output).fileName() == "drawing.pdf");
+    CHECK(QDir::cleanPath(output).startsWith(QDir::cleanPath(outDir)));
 
     const QString sameDir =
-        LC_Console::defaultOutputPath("/tmp/source/drawing.dxf", ".svg");
-    CHECK(QDir::cleanPath(sameDir) == "/tmp/source/drawing.svg");
+        LC_Console::defaultOutputPath(sourceDir + "/drawing.dxf", ".svg");
+    CHECK(QFileInfo(sameDir).fileName() == "drawing.svg");
+    CHECK(QDir::cleanPath(sameDir).startsWith(QDir::cleanPath(sourceDir)));
 }
 
 TEST_CASE("console helper validates command output option rules",

@@ -246,6 +246,7 @@ TEST_CASE("DXF MLINE write emits expected codes", "[mline][dxf_roundtrip]") {
   CHECK(content.find("AcDbMline") != std::string::npos);
   CHECK(content.find("STANDARD") != std::string::npos);
 
+  in.close();
   std::filesystem::remove(path);
 }
 

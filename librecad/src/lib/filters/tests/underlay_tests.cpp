@@ -215,6 +215,7 @@ TEST_CASE("DXF write: PDFUNDERLAY tag emitted in output",
   CHECK(content.find("\nPDFUNDERLAY\n") != std::string::npos);
   CHECK(content.find("AcDbUnderlayReference") != std::string::npos);
 
+  in.close();
   std::filesystem::remove(path);
 }
 

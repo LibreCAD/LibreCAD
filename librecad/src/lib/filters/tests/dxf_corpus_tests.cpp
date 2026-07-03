@@ -295,6 +295,7 @@ TEST_CASE("DXF round-trip preserves a GROUP with resolved members (F3-3)",
   CHECK(memberCount == 2);
   CHECK(sawDesc);
 
+  in.close();
   std::filesystem::remove(src);
   std::filesystem::remove(out);
 }

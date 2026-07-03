@@ -392,6 +392,7 @@ TEST_CASE("DXF export re-emits DWG-read LIGHT entities", "[dxf][roundtrip][filte
   }
   CHECK(sawName);
 
+  in.close();
   std::filesystem::remove(src);
   std::filesystem::remove(out);
 }
@@ -452,6 +453,7 @@ TEST_CASE("DXF export re-emits DWG-read SHAPE entities", "[dxf][roundtrip][filte
   }
   CHECK(sawName);
 
+  in.close();
   std::filesystem::remove(src);
   std::filesystem::remove(out);
 }
@@ -1165,6 +1167,7 @@ TEST_CASE("DXF export rewrites 390/480 hard-pointer refs to remapped raw objects
   CHECK(ref390 != "14");
   CHECK(ref480 != "14");
 
+  in.close();
   std::filesystem::remove(src);
   std::filesystem::remove(out);
 }

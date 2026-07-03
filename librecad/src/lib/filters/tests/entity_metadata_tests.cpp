@@ -3430,6 +3430,7 @@ TEST_CASE("DXF round-trip: default-valued entity emits no metadata codes",
   CHECK(content.find("\n430\n") == std::string::npos);
   CHECK(content.find("\n440\n") == std::string::npos);
 
+  in.close();
   std::filesystem::remove(path);
 }
 
@@ -3465,6 +3466,7 @@ TEST_CASE("DXF write: app-data doubles preserve fractional values",
   CHECK(content.find("\n 40\n12.75\n") != std::string::npos);
   CHECK(content.find("\n102\n}\n") != std::string::npos);
 
+  in.close();
   std::filesystem::remove(path);
 }
 
