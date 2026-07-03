@@ -84,9 +84,17 @@ namespace DRW {
         UNDERLAY,
         VERTEX,
         VIEWPORT,
-//        WIPEOUT, //WIPEOUTVARIABLE
+        WIPEOUT,
         XLINE,
         MPOLYGON,
+        POINTCLOUD,
+        POINTCLOUDEX,
+        PLANESURFACE,
+        EXTRUDEDSURFACE,
+        REVOLVEDSURFACE,
+        SWEPTSURFACE,
+        LOFTEDSURFACE,
+        NURBSURFACE,
         UNKNOWN
     };
 
@@ -876,6 +884,13 @@ struct DRW_TableCellAttribute {
     UTF8STRING m_text;
 };
 
+struct DRW_TableBorder {
+    int m_lineWeight = 0;
+    bool m_visible = true;
+    int m_colorRgb = -1;
+    std::uint8_t m_colorMethod = 0;
+};
+
 struct DRW_TableCell {
     int m_flags = 0;
     int m_type = 0;
@@ -907,6 +922,16 @@ struct DRW_TableCell {
     double m_geometryHeight = 0.0;
     std::vector<DRW_TableCellAttribute> m_attributes;
     std::vector<DRW_TableCellContent> m_contents;
+
+    int m_textColorRgb = -1;
+    std::uint8_t m_textColorMethod = 0;
+    int m_fillColorRgb = -1;
+    std::uint8_t m_fillColorMethod = 0;
+    bool m_backgroundEnabled = false;
+    int m_textAlignment = 0;
+    double m_textHeight = 0.0;
+
+    std::array<DRW_TableBorder, 6> m_borders;
 };
 
 struct DRW_TableColumn {
@@ -1657,8 +1682,11 @@ public:
      */
     struct GradientStop {
         double  value {0.0};
-        int     rgb {0};
+        int     rgb {-1};
         int     aciColor {0};
+        std::uint8_t colorMethod {0};
+        UTF8STRING colorName;
+        UTF8STRING colorBookName;
     };
 
     void appendLoop (std::shared_ptr<DRW_HatchLoop> const& v) {
@@ -1846,6 +1874,195 @@ public:
 
 };
 
+//! Class to handle WIPEOUT entity (AcDbWipeout)
+/*!
+*  Class to handle WIPEOUT entity. WIPEOUT shares the AcDbRasterImage
+*  binary layout with IMAGE but carries no actual raster data — only
+*  the clip boundary polygon. Inherits from DRW_Image for code reuse.
+*  @author LibreCAD
+*/
+class DRW_Wipeout : public DRW_Image {
+    SETENTFRIENDS
+public:
+    DRW_Wipeout() {
+        eType = DRW::WIPEOUT;
+        fade = clip = 0;
+        brightness = contrast = 50;
+        m_clipBoundaryType = 2;
+    }
+
+protected:
+    bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
+    virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
+    virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0,
+                           dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
+};
+
+struct DRW_PointCloudIntensityStyle {
+    double minIntensity = 0.0;
+    double maxIntensity = 0.0;
+    double lowThreshold = 0.0;
+    double highThreshold = 0.0;
+};
+
+struct DRW_PointCloudClipping {
+    bool isInverted = false;
+    int type = 0;
+    int vertexCount = 0;
+    std::vector<DRW_Coord> vertices;
+    double zMin = 0.0;
+    double zMax = 0.0;
+};
+
+class DRW_PointCloud : public DRW_Entity {
+    SETENTFRIENDS
+public:
+    DRW_PointCloud() { eType = DRW::POINTCLOUD; }
+    void applyExtrusion() override {}
+
+protected:
+    bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
+    virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
+    virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0,
+                           dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
+
+public:
+    std::uint32_t classVersion = 0;
+    DRW_Coord origin;
+    UTF8STRING savedFilename;
+    int sourceFileCount = 0;
+    std::vector<UTF8STRING> sourceFiles;
+    DRW_Coord extentsMin;
+    DRW_Coord extentsMax;
+    std::uint64_t pointCount = 0;
+    UTF8STRING ucsName;
+    DRW_Coord ucsOrigin;
+    DRW_Coord ucsXDirection;
+    DRW_Coord ucsYDirection;
+    DRW_Coord ucsZDirection;
+    std::uint32_t definitionHandle = 0;
+    std::uint32_t reactorHandle = 0;
+    bool showIntensity = false;
+    int intensityScheme = 0;
+    DRW_PointCloudIntensityStyle intensityStyle;
+    bool showClipping = false;
+    int clippingCount = 0;
+    std::vector<DRW_PointCloudClipping> clippings;
+};
+
+struct DRW_PointCloudExCropping {
+    int type = 0;
+    bool isInside = false;
+    bool isInverted = false;
+    DRW_Coord cropPlane;
+    DRW_Coord cropXDirection;
+    DRW_Coord cropYDirection;
+    int pointCount = 0;
+    std::vector<DRW_Coord> points;
+};
+
+class DRW_PointCloudEx : public DRW_Entity {
+    SETENTFRIENDS
+public:
+    DRW_PointCloudEx() { eType = DRW::POINTCLOUDEX; }
+    void applyExtrusion() override {}
+
+protected:
+    bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
+    virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
+    virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0,
+                           dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
+
+public:
+    std::uint32_t classVersion = 0;
+    DRW_Coord extentsMin;
+    DRW_Coord extentsMax;
+    DRW_Coord ucsOrigin;
+    DRW_Coord ucsXDirection;
+    DRW_Coord ucsYDirection;
+    DRW_Coord ucsZDirection;
+    bool isLocked = false;
+    std::uint32_t definitionHandle = 0;
+    std::uint32_t reactorHandle = 0;
+    UTF8STRING name;
+    bool showIntensity = false;
+    bool showCropping = false;
+    int croppingCount = 0;
+    std::uint32_t unknownBl0 = 0;
+    std::uint32_t unknownBl1 = 0;
+    int stylizationType = 0;
+    UTF8STRING intensityColorScheme;
+    UTF8STRING currentColorScheme;
+    UTF8STRING classificationColorScheme;
+    double elevationMin = 0.0;
+    double elevationMax = 0.0;
+    double intensityMin = 0.0;
+    double intensityMax = 0.0;
+    int intensityOutOfRangeBehavior = 0;
+    int elevationOutOfRangeBehavior = 0;
+    bool elevationApplyToFixedRange = false;
+    bool intensityAsGradient = false;
+    bool elevationAsGradient = false;
+    std::vector<DRW_PointCloudExCropping> croppings;
+};
+
+class DRW_Surface : public DRW_Entity {
+    SETENTFRIENDS
+public:
+    DRW_Surface() {}
+    void applyExtrusion() override {}
+
+protected:
+    bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
+    virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
+    virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0,
+                           dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
+
+public:
+    int uIsolines = 0;
+    int vIsolines = 0;
+    int modelerFormatVersion = 0;
+    bool acisEmpty = false;
+    int acisVersion = 0;
+    std::vector<std::uint8_t> rawAcisData;
+};
+
+class DRW_PlaneSurface : public DRW_Surface {
+    SETENTFRIENDS
+public:
+    DRW_PlaneSurface() { eType = DRW::PLANESURFACE; }
+};
+
+class DRW_ExtrudedSurface : public DRW_Surface {
+    SETENTFRIENDS
+public:
+    DRW_ExtrudedSurface() { eType = DRW::EXTRUDEDSURFACE; }
+};
+
+class DRW_RevolvedSurface : public DRW_Surface {
+    SETENTFRIENDS
+public:
+    DRW_RevolvedSurface() { eType = DRW::REVOLVEDSURFACE; }
+};
+
+class DRW_SweptSurface : public DRW_Surface {
+    SETENTFRIENDS
+public:
+    DRW_SweptSurface() { eType = DRW::SWEPTSURFACE; }
+};
+
+class DRW_LoftedSurface : public DRW_Surface {
+    SETENTFRIENDS
+public:
+    DRW_LoftedSurface() { eType = DRW::LOFTEDSURFACE; }
+};
+
+class DRW_NurbsSurface : public DRW_Surface {
+    SETENTFRIENDS
+public:
+    DRW_NurbsSurface() { eType = DRW::NURBSURFACE; }
+};
+
 
 //! Base class for dimension entity
 /*!
@@ -1893,6 +2110,18 @@ public:
         hdir = d.hdir;
         flipArrow1 = d.flipArrow1;
         flipArrow2 = d.flipArrow2;
+        genTol = d.genTol;
+        limGen = d.limGen;
+        tolPlus = d.tolPlus;
+        tolMinus = d.tolMinus;
+        tolScale = d.tolScale;
+        tolDecimals = d.tolDecimals;
+        tolAlign = d.tolAlign;
+        tolZero = d.tolZero;
+        altTolDecimals = d.altTolDecimals;
+        altZero = d.altZero;
+        altTolZero = d.altTolZero;
+        textMove = d.textMove;
     }
     virtual ~DRW_Dimension() = default;
 
@@ -1980,6 +2209,19 @@ private:
     double measureValue = 0;   /*!< Real measure value (optional; read only), code 42 */
     bool flipArrow1 {false};   /*!< force flip arrow 1, code 74 */
     bool flipArrow2 {false};   /*!< force flip arrow 2, code 75 */
+
+    bool genTol {false};       /*!< generate tolerances flag, code 76 */
+    bool limGen {false};       /*!< limits generation flag, code 77 */
+    double tolPlus {0.0};      /*!< plus tolerance, code 43 */
+    double tolMinus {0.0};     /*!< minus tolerance, code 44 */
+    double tolScale {0.0};     /*!< tolerance scale factor, code 45 */
+    int tolDecimals {0};       /*!< tolerance decimal places, code 78 */
+    int tolAlign {0};          /*!< tolerance alignment, code 79 */
+    int tolZero {0};           /*!< tolerance zero handling, code 80 */
+    int altTolDecimals {0};    /*!< alternate unit tolerance decimal places, code 81 */
+    int altZero {0};           /*!< alternate unit zero handling, code 82 */
+    int altTolZero {0};        /*!< alternate unit tolerance zero handling, code 83 */
+    int textMove {0};          /*!< text movement rule, code 84 */
 
 protected:
     dwgHandle dimStyleH;
@@ -2506,9 +2748,41 @@ public:
     double twistAngle = 0.0;  /*!< view twist angle, code 51 */
     std::uint32_t m_sunHandle = 0;    /*!< R2007+ SUN hard-owner ref (DWG-only) */
 
+    double gridSpX = 0.0;        /*!< Grid spacing X, code 15 */
+    double gridSpY = 0.0;        /*!< Grid spacing Y, code 25 */
+    double circleZoom = 0.0;     /*!< Circle zoom percent, code 46 */
+    int majorGridLines = 0;      /*!< Major grid lines per minor, code 72 */
+    int statusFlags = 0;         /*!< Status flags, code 90 */
+    UTF8STRING styleSheet;       /*!< Style sheet, code 1 */
+    int renderMode = 0;          /*!< Render mode, code 281 */
+    bool ucsAtOrigin = false;    /*!< UCS at origin flag, code 71 */
+    bool ucsPerViewport = false; /*!< UCS per viewport flag, code 74 */
+    DRW_Coord ucsOrigin;         /*!< UCS origin, code 110, 120, 130 */
+    DRW_Coord ucsXAxis;          /*!< UCS X axis, code 111, 121, 131 */
+    DRW_Coord ucsYAxis;          /*!< UCS Y axis, code 112, 122, 132 */
+    double ucsElevation = 0.0;   /*!< UCS elevation, code 146 */
+    int ucsOrthographicType = 0; /*!< UCS orthographic type, code 76 */
+    int shadePlotMode = 0;       /*!< Shade plot mode, code 148 */
+    bool useDefaultLighting = false;  /*!< Use default lighting, code 292 */
+    int defaultLightingType = 0; /*!< Default lighting type, code 282 */
+    double brightness = 0.0;     /*!< Brightness, code 451 */
+    double contrast = 0.0;       /*!< Contrast, code 452 */
+    int ambientColorRgb = -1;    /*!< Ambient color RGB, code 421 */
+    std::uint8_t ambientColorMethod = 0; /*!< Ambient color method, code 431 */
+
+    std::uint32_t vpHeaderHandle = 0;   /*!< Viewport entity header handle, code 331 */
+    std::uint32_t clipBoundaryHandle = 0; /*!< Clip boundary handle, code 340 */
+    std::uint32_t namedUcsHandle = 0;   /*!< Named UCS handle, code 345 */
+    std::uint32_t baseUcsHandle = 0;    /*!< Base UCS handle, code 346 */
+    std::uint32_t backgroundHandle = 0; /*!< Background handle, code 347 */
+    std::uint32_t visualStyleHandle = 0; /*!< Visual style handle, code 348 */
+    std::uint32_t shadePlotHandle = 0;  /*!< Shade plot handle, code 349 */
+
+    std::vector<std::uint32_t> frozenLayerHandles; /*!< Frozen layer handles */
+
 private:
     std::uint32_t frozenLyCount = 0;
-};//RLZ: missing 15,25, 72, 331, 90, 340, 1, 281, 71, 74, 110, 120, 130, 111, 121,131, 112,122, 132, 345,346, and more...
+};
 
 //used  //DRW_Coord basePoint;      /*!<  base point, code 10, 20 & 30 */
 

@@ -1622,11 +1622,73 @@ bool dwgReader::readDwgEntity(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                 }
                 if (cit != classesmap.end() && cit->second
                     && cit->second->recName == "WIPEOUT") {
-                    // WIPEOUT inherits the IMAGE binary layout; reuse parser.
-                    // Polygon vertices are now stored in DRW_Image::clipPath.
-                    DRW_Image e;
+                    DRW_Wipeout e;
                     if (entryParse(e, buff, bs, ret)) {
                         intfa.addWipeout(&e);
+                    }
+                    break;
+                }
+                if (cit != classesmap.end() && cit->second
+                    && cit->second->recName == "POINTCLOUD") {
+                    DRW_PointCloud e;
+                    if (entryParse(e, buff, bs, ret)) {
+                        intfa.addPointCloud(&e);
+                    }
+                    break;
+                }
+                if (cit != classesmap.end() && cit->second
+                    && cit->second->recName == "POINTCLOUDEX") {
+                    DRW_PointCloudEx e;
+                    if (entryParse(e, buff, bs, ret)) {
+                        intfa.addPointCloudEx(&e);
+                    }
+                    break;
+                }
+                if (cit != classesmap.end() && cit->second
+                    && cit->second->recName == "PLANESURFACE") {
+                    DRW_PlaneSurface e;
+                    if (entryParse(e, buff, bs, ret)) {
+                        intfa.addSurface(&e);
+                    }
+                    break;
+                }
+                if (cit != classesmap.end() && cit->second
+                    && cit->second->recName == "EXTRUDEDSURFACE") {
+                    DRW_ExtrudedSurface e;
+                    if (entryParse(e, buff, bs, ret)) {
+                        intfa.addSurface(&e);
+                    }
+                    break;
+                }
+                if (cit != classesmap.end() && cit->second
+                    && cit->second->recName == "REVOLVEDSURFACE") {
+                    DRW_RevolvedSurface e;
+                    if (entryParse(e, buff, bs, ret)) {
+                        intfa.addSurface(&e);
+                    }
+                    break;
+                }
+                if (cit != classesmap.end() && cit->second
+                    && cit->second->recName == "SWEPTSURFACE") {
+                    DRW_SweptSurface e;
+                    if (entryParse(e, buff, bs, ret)) {
+                        intfa.addSurface(&e);
+                    }
+                    break;
+                }
+                if (cit != classesmap.end() && cit->second
+                    && cit->second->recName == "LOFTEDSURFACE") {
+                    DRW_LoftedSurface e;
+                    if (entryParse(e, buff, bs, ret)) {
+                        intfa.addSurface(&e);
+                    }
+                    break;
+                }
+                if (cit != classesmap.end() && cit->second
+                    && cit->second->recName == "NURBSURFACE") {
+                    DRW_NurbsSurface e;
+                    if (entryParse(e, buff, bs, ret)) {
+                        intfa.addSurface(&e);
                     }
                     break;
                 }

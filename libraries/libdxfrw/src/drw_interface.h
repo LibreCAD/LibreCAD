@@ -287,10 +287,26 @@ public:
     /**
      * Called for every WIPEOUT entity.  WIPEOUT shares the binary layout of
      * IMAGE (subclass AcDbWipeout); the meaningful payload is the polygon
-     * stored in DRW_Image::clipPath.  Default no-op so existing implementers
+     * stored in DRW_Wipeout::clipPath.  Default no-op so existing implementers
      * compile unchanged; override to consume.
      */
-    virtual void addWipeout(const DRW_Image *data) { (void) data; }
+    virtual void addWipeout(const DRW_Wipeout *data) { (void) data; }
+
+    /**
+     * Called for every POINTCLOUD entity. Default no-op; override to consume.
+     */
+    virtual void addPointCloud(const DRW_PointCloud *data) { (void) data; }
+
+    /**
+     * Called for every POINTCLOUDEX entity. Default no-op; override to consume.
+     */
+    virtual void addPointCloudEx(const DRW_PointCloudEx *data) { (void) data; }
+
+    /**
+     * Called for every surface entity (PLANESURFACE, EXTRUDEDSURFACE, etc.).
+     * Default no-op; override to consume.
+     */
+    virtual void addSurface(const DRW_Surface *data) { (void) data; }
 
     /**
      * Called for every MULTILEADER (MLEADER) entity.  AcDbMLeader subclass,

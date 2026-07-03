@@ -5705,7 +5705,7 @@ bool DRW_Hatch::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
     case 462:
         gradTint = reader->getDouble();
         break;
-    case 463: { // gradient stop value
+    case 463: {
         DRW_Hatch::GradientStop stop;
         stop.value = reader->getDouble();
         gradColors.push_back(stop);
@@ -5720,6 +5720,18 @@ bool DRW_Hatch::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
             gradColors.back().aciColor = reader->getInt32();
         else
             return DRW_Point::parseCode(code, reader);
+        break;
+    case 431:
+        if (!gradColors.empty())
+            gradColors.back().colorMethod = reader->getInt32();
+        break;
+    case 432:
+        if (!gradColors.empty())
+            gradColors.back().colorName = reader->getUtf8String();
+        break;
+    case 433:
+        if (!gradColors.empty())
+            gradColors.back().colorBookName = reader->getUtf8String();
         break;
     case 470:
         gradName = reader->getUtf8String();
@@ -6588,6 +6600,225 @@ bool DRW_Image::encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t b
     return true;
 }
 
+bool DRW_Wipeout::parseCode(int code, const std::unique_ptr<dxfReader>& reader) {
+    return DRW_Image::parseCode(code, reader);
+}
+
+bool DRW_Wipeout::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs) {
+    return DRW_Image::parseDwg(version, buf, bs);
+}
+
+bool DRW_Wipeout::encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs,
+                             dwgBufferW *strBuf, dwgBufferW *handleBuf) {
+    (void)bs; (void)strBuf;
+    oType = 1109;
+    if (!encodeDwgCommon(version, buf)) return false;
+
+    buf->putBitLong(0);
+    buf->putBitDouble(basePoint.x); buf->putBitDouble(basePoint.y); buf->putBitDouble(basePoint.z);
+    buf->putBitDouble(secPoint.x);  buf->putBitDouble(secPoint.y);  buf->putBitDouble(secPoint.z);
+    buf->putBitDouble(vVector.x);   buf->putBitDouble(vVector.y);   buf->putBitDouble(vVector.z);
+    buf->putRawDouble(sizeu);
+    buf->putRawDouble(sizev);
+    buf->putBitShort(static_cast<std::uint16_t>(m_displayProps));
+    buf->putBit(static_cast<std::uint8_t>(clip & 1));
+    buf->putRawChar8(static_cast<std::uint8_t>(brightness));
+    buf->putRawChar8(static_cast<std::uint8_t>(contrast));
+    buf->putRawChar8(static_cast<std::uint8_t>(fade));
+    if (version > DRW::AC1021) {
+        buf->putBit(clipMode ? 1 : 0);
+    }
+    if (clipPath.empty()) {
+        buf->putBitShort(0);
+    } else {
+        buf->putBitShort(2);
+        constexpr std::size_t kMaxClipVerts = 100000u;
+        const std::size_t emitVerts = std::min(clipPath.size(), kMaxClipVerts);
+        if (clipPath.size() > kMaxClipVerts) {
+            DRW_DBG("WIPEOUT clip vertices truncated to 100000 (was ");
+            DRW_DBG(static_cast<int>(clipPath.size())); DRW_DBG(")\n");
+        }
+        buf->putBitLong(static_cast<std::int32_t>(emitVerts));
+        for (std::size_t i = 0; i < emitVerts; ++i)
+            buf->put2RawDouble(clipPath[i]);
+    }
+
+    if (!encodeDwgEntHandle(version, buf, handleBuf)) return false;
+
+    dwgBufferW *hb = handleBuf ? handleBuf : buf;
+    auto makeHandle = [](std::uint8_t code, std::uint32_t r) {
+        dwgHandle h;
+        h.code = (r == 0) ? 0 : code;
+        h.ref  = r;
+        h.size = 0;
+        if (r != 0) { std::uint32_t t = r; while (t != 0) { t >>= 8; ++h.size; } }
+        return h;
+    };
+    hb->putHandle(makeHandle(5, ref));
+    hb->putHandle(makeHandle(3, m_imageDefReactorHandle));
+    return true;
+}
+
+bool DRW_PointCloud::parseCode(int code, const std::unique_ptr<dxfReader>& reader) {
+    switch (code) {
+    case 90: classVersion = reader->getInt32(); break;
+    case 10: origin.x = reader->getDouble(); break;
+    case 20: origin.y = reader->getDouble(); break;
+    case 30: origin.z = reader->getDouble(); break;
+    case 1: savedFilename = reader->getUtf8String(); break;
+    case 91: sourceFileCount = reader->getInt32(); break;
+    case 101:
+        sourceFiles.clear();
+        sourceFiles.reserve(static_cast<size_t>(sourceFileCount));
+        break;
+    case 300:
+        if (sourceFiles.size() < static_cast<size_t>(sourceFileCount)) {
+            sourceFiles.push_back(reader->getUtf8String());
+        }
+        break;
+    case 11: extentsMin.x = reader->getDouble(); break;
+    case 21: extentsMin.y = reader->getDouble(); break;
+    case 31: extentsMin.z = reader->getDouble(); break;
+    case 12: extentsMax.x = reader->getDouble(); break;
+    case 22: extentsMax.y = reader->getDouble(); break;
+    case 32: extentsMax.z = reader->getDouble(); break;
+    case 92: pointCount = reader->getInt64(); break;
+    case 2: ucsName = reader->getUtf8String(); break;
+    case 13: ucsOrigin.x = reader->getDouble(); break;
+    case 23: ucsOrigin.y = reader->getDouble(); break;
+    case 33: ucsOrigin.z = reader->getDouble(); break;
+    case 14: ucsXDirection.x = reader->getDouble(); break;
+    case 24: ucsXDirection.y = reader->getDouble(); break;
+    case 34: ucsXDirection.z = reader->getDouble(); break;
+    case 15: ucsYDirection.x = reader->getDouble(); break;
+    case 25: ucsYDirection.y = reader->getDouble(); break;
+    case 35: ucsYDirection.z = reader->getDouble(); break;
+    case 16: ucsZDirection.x = reader->getDouble(); break;
+    case 26: ucsZDirection.y = reader->getDouble(); break;
+    case 36: ucsZDirection.z = reader->getDouble(); break;
+    case 340: definitionHandle = static_cast<std::uint32_t>(reader->getHandleString()); break;
+    case 360: reactorHandle = static_cast<std::uint32_t>(reader->getHandleString()); break;
+    case 290: showIntensity = reader->getBool(); break;
+    case 280: intensityScheme = reader->getInt32(); break;
+    case 441: intensityStyle.minIntensity = reader->getDouble(); break;
+    case 442: intensityStyle.maxIntensity = reader->getDouble(); break;
+    case 443: intensityStyle.lowThreshold = reader->getDouble(); break;
+    case 444: intensityStyle.highThreshold = reader->getDouble(); break;
+    case 291: showClipping = reader->getBool(); break;
+    case 93: clippingCount = reader->getInt32(); break;
+    default:
+        return DRW_Entity::parseCode(code, reader);
+    }
+    return true;
+}
+
+bool DRW_PointCloud::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs) {
+    return DRW_Entity::parseDwg(version, buf, bs);
+}
+
+bool DRW_PointCloud::encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs,
+                                dwgBufferW *strBuf, dwgBufferW *handleBuf) {
+    (void)bs; (void)strBuf; (void)handleBuf;
+    oType = 1157;
+    return encodeDwgCommon(version, buf);
+}
+
+bool DRW_PointCloudEx::parseCode(int code, const std::unique_ptr<dxfReader>& reader) {
+    switch (code) {
+    case 90: classVersion = reader->getInt32(); break;
+    case 11: extentsMin.x = reader->getDouble(); break;
+    case 21: extentsMin.y = reader->getDouble(); break;
+    case 31: extentsMin.z = reader->getDouble(); break;
+    case 12: extentsMax.x = reader->getDouble(); break;
+    case 22: extentsMax.y = reader->getDouble(); break;
+    case 32: extentsMax.z = reader->getDouble(); break;
+    case 13: ucsOrigin.x = reader->getDouble(); break;
+    case 23: ucsOrigin.y = reader->getDouble(); break;
+    case 33: ucsOrigin.z = reader->getDouble(); break;
+    case 14: ucsXDirection.x = reader->getDouble(); break;
+    case 24: ucsXDirection.y = reader->getDouble(); break;
+    case 34: ucsXDirection.z = reader->getDouble(); break;
+    case 15: ucsYDirection.x = reader->getDouble(); break;
+    case 25: ucsYDirection.y = reader->getDouble(); break;
+    case 35: ucsYDirection.z = reader->getDouble(); break;
+    case 16: ucsZDirection.x = reader->getDouble(); break;
+    case 26: ucsZDirection.y = reader->getDouble(); break;
+    case 36: ucsZDirection.z = reader->getDouble(); break;
+    case 290: isLocked = reader->getBool(); break;
+    case 340: definitionHandle = static_cast<std::uint32_t>(reader->getHandleString()); break;
+    case 360: reactorHandle = static_cast<std::uint32_t>(reader->getHandleString()); break;
+    case 1: name = reader->getUtf8String(); break;
+    case 291: showIntensity = reader->getBool(); break;
+    case 292: showCropping = reader->getBool(); break;
+    case 91: croppingCount = reader->getInt32(); break;
+    case 341: unknownBl0 = reader->getInt32(); break;
+    case 342: unknownBl1 = reader->getInt32(); break;
+    case 280: stylizationType = reader->getInt32(); break;
+    case 300: intensityColorScheme = reader->getUtf8String(); break;
+    case 301: currentColorScheme = reader->getUtf8String(); break;
+    case 302: classificationColorScheme = reader->getUtf8String(); break;
+    case 440: elevationMin = reader->getDouble(); break;
+    case 441: elevationMax = reader->getDouble(); break;
+    case 442: intensityMin = reader->getDouble(); break;
+    case 443: intensityMax = reader->getDouble(); break;
+    case 281: intensityOutOfRangeBehavior = reader->getInt32(); break;
+    case 282: elevationOutOfRangeBehavior = reader->getInt32(); break;
+    case 293: elevationApplyToFixedRange = reader->getBool(); break;
+    case 294: intensityAsGradient = reader->getBool(); break;
+    case 295: elevationAsGradient = reader->getBool(); break;
+    default:
+        return DRW_Entity::parseCode(code, reader);
+    }
+    return true;
+}
+
+bool DRW_PointCloudEx::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs) {
+    return DRW_Entity::parseDwg(version, buf, bs);
+}
+
+bool DRW_PointCloudEx::encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs,
+                                  dwgBufferW *strBuf, dwgBufferW *handleBuf) {
+    (void)bs; (void)strBuf; (void)handleBuf;
+    oType = 1158;
+    return encodeDwgCommon(version, buf);
+}
+
+bool DRW_Surface::parseCode(int code, const std::unique_ptr<dxfReader>& reader) {
+    switch (code) {
+    case 70:
+        modelerFormatVersion = reader->getInt32();
+        break;
+    case 71:
+        uIsolines = reader->getInt32();
+        break;
+    case 72:
+        vIsolines = reader->getInt32();
+        break;
+    case 310:
+        {
+            std::string hexStr = reader->getString();
+            rawAcisData.resize(hexStr.size() / 2);
+            for (size_t i = 0; i < hexStr.size(); i += 2) {
+                rawAcisData[i / 2] = static_cast<std::uint8_t>(std::stoi(hexStr.substr(i, 2), nullptr, 16));
+            }
+        }
+        break;
+    default:
+        return DRW_Entity::parseCode(code, reader);
+    }
+    return true;
+}
+
+bool DRW_Surface::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs) {
+    return DRW_Entity::parseDwg(version, buf, bs);
+}
+
+bool DRW_Surface::encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs,
+                             dwgBufferW *strBuf, dwgBufferW *handleBuf) {
+    (void)bs; (void)strBuf; (void)handleBuf;
+    return encodeDwgCommon(version, buf);
+}
+
 bool DRW_Dimension::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
     switch (code) {
     case 1:
@@ -6697,6 +6928,42 @@ bool DRW_Dimension::parseCode(int code, const std::unique_ptr<dxfReader>& reader
         break;
     case 75:
         flipArrow2 = reader->getInt32() != 0;
+        break;
+    case 76:
+        genTol = reader->getInt32() != 0;
+        break;
+    case 77:
+        limGen = reader->getInt32() != 0;
+        break;
+    case 43:
+        tolPlus = reader->getDouble();
+        break;
+    case 44:
+        tolMinus = reader->getDouble();
+        break;
+    case 45:
+        tolScale = reader->getDouble();
+        break;
+    case 78:
+        tolDecimals = reader->getInt32();
+        break;
+    case 79:
+        tolAlign = reader->getInt32();
+        break;
+    case 80:
+        tolZero = reader->getInt32();
+        break;
+    case 81:
+        altTolDecimals = reader->getInt32();
+        break;
+    case 82:
+        altZero = reader->getInt32();
+        break;
+    case 83:
+        altTolZero = reader->getInt32();
+        break;
+    case 84:
+        textMove = reader->getInt32();
         break;
     default:
         return DRW_Entity::parseCode(code, reader);
@@ -8171,11 +8438,113 @@ bool DRW_Viewport::parseCode(int code, const std::unique_ptr<dxfReader>& reader)
     case 69:
         vpID = reader->getInt32();
         break;
-    case 12: {
+    case 12:
         centerPX = reader->getDouble();
-        break; }
+        break;
     case 22:
         centerPY = reader->getDouble();
+        break;
+    case 15:
+        gridSpX = reader->getDouble();
+        break;
+    case 25:
+        gridSpY = reader->getDouble();
+        break;
+    case 46:
+        circleZoom = reader->getDouble();
+        break;
+    case 72:
+        majorGridLines = reader->getInt32();
+        break;
+    case 90:
+        statusFlags = reader->getInt32();
+        break;
+    case 1:
+        styleSheet = reader->getUtf8String();
+        break;
+    case 281:
+        renderMode = reader->getInt32();
+        break;
+    case 71:
+        ucsAtOrigin = reader->getInt32() != 0;
+        break;
+    case 74:
+        ucsPerViewport = reader->getInt32() != 0;
+        break;
+    case 110:
+        ucsOrigin.x = reader->getDouble();
+        break;
+    case 120:
+        ucsOrigin.y = reader->getDouble();
+        break;
+    case 130:
+        ucsOrigin.z = reader->getDouble();
+        break;
+    case 111:
+        ucsXAxis.x = reader->getDouble();
+        break;
+    case 121:
+        ucsXAxis.y = reader->getDouble();
+        break;
+    case 131:
+        ucsXAxis.z = reader->getDouble();
+        break;
+    case 112:
+        ucsYAxis.x = reader->getDouble();
+        break;
+    case 122:
+        ucsYAxis.y = reader->getDouble();
+        break;
+    case 132:
+        ucsYAxis.z = reader->getDouble();
+        break;
+    case 146:
+        ucsElevation = reader->getDouble();
+        break;
+    case 76:
+        ucsOrthographicType = reader->getInt32();
+        break;
+    case 148:
+        shadePlotMode = reader->getInt32();
+        break;
+    case 292:
+        useDefaultLighting = reader->getInt32() != 0;
+        break;
+    case 282:
+        defaultLightingType = reader->getInt32();
+        break;
+    case 451:
+        brightness = reader->getDouble();
+        break;
+    case 452:
+        contrast = reader->getDouble();
+        break;
+    case 421:
+        ambientColorRgb = reader->getInt32();
+        break;
+    case 431:
+        ambientColorMethod = reader->getInt32();
+        break;
+    case 331:
+        vpHeaderHandle = static_cast<std::uint32_t>(reader->getHandleString());
+        break;
+    case 340:
+        clipBoundaryHandle = static_cast<std::uint32_t>(reader->getHandleString());
+        break;
+    case 345:
+        namedUcsHandle = static_cast<std::uint32_t>(reader->getHandleString());
+        break;
+    case 346:
+        baseUcsHandle = static_cast<std::uint32_t>(reader->getHandleString());
+        break;
+    case 347:
+        backgroundHandle = static_cast<std::uint32_t>(reader->getHandleString());
+        break;
+    case 348:
+        visualStyleHandle = static_cast<std::uint32_t>(reader->getHandleString());
+        break;
+    case 349:
+        shadePlotHandle = static_cast<std::uint32_t>(reader->getHandleString());
         break;
     default:
         return DRW_Point::parseCode(code, reader);

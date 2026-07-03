@@ -2330,7 +2330,7 @@ bool dxfRW::writeMultiLeader(DRW_MLeader *ent){
     return true;
 }
 
-bool dxfRW::writeWipeout(DRW_Image *ent){
+bool dxfRW::writeWipeout(DRW_Wipeout *ent){
     // WIPEOUT inherits AcDbRasterImage's group codes plus an AcDbWipeout
     // subclass marker carrying the polygon (91 + 14/24) and frame flag (290).
     // No AcDbRasterImageDef is written: WIPEOUT carries no actual raster.
@@ -4306,22 +4306,19 @@ bool dxfRW::processMultiLeader() {
 }
 
 bool dxfRW::processWipeout() {
-    // WIPEOUT shares DRW_Image's group codes (subclass marker AcDbRasterImage)
-    // plus AcDbWipeout-specific codes 91/14/24/290 already handled by
-    // DRW_Image::parseCode.  Differs from processImage only in the callback.
     DRW_DBG("dxfRW::processWipeout");
     int code;
-    DRW_Image img;
+    DRW_Wipeout wipeout;
     while (reader->readRec(&code)) {
         DRW_DBG(code); DRW_DBG("\n");
         if (0 == code) {
             nextentity = reader->getString();
             DRW_DBG(nextentity); DRW_DBG("\n");
-            iface->addWipeout(&img);
+            iface->addWipeout(&wipeout);
             return true;
         }
 
-        if (!img.parseCode(code, reader)) {
+        if (!wipeout.parseCode(code, reader)) {
             return setError(DRW::BAD_CODE_PARSED);
         }
     }
