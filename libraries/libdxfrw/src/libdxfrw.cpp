@@ -2215,6 +2215,80 @@ bool dxfRW::writeText(DRW_Text *ent){
     return true;
 }
 
+static double arcAlignedDxfValue(const UTF8STRING& value, double fallback) {
+    if (value.empty())
+        return fallback;
+    try {
+        return std::stod(value);
+    } catch (...) {
+        return fallback;
+    }
+}
+
+bool dxfRW::writeRText(DRW_RText *ent) {
+    if (version <= DRW::AC1009)
+        return true;
+    writer->writeString(0, "RTEXT");
+    writeEntity(ent);
+    writer->writeString(100, "RText");
+    writer->writeUtf8String(7, ent->style.empty() ? "Standard" : ent->style);
+    writer->writeDouble(10, ent->basePoint.x);
+    writer->writeDouble(20, ent->basePoint.y);
+    writer->writeDouble(30, ent->basePoint.z);
+    writer->writeDouble(40, ent->height);
+    writer->writeDouble(50, ent->angle);
+    writer->writeInt32(70, ent->m_rTextFlags);
+    writer->writeUtf8String(1, ent->text);
+    writer->writeDouble(210, ent->extPoint.x);
+    writer->writeDouble(220, ent->extPoint.y);
+    writer->writeDouble(230, ent->extPoint.z);
+    return true;
+}
+
+bool dxfRW::writeArcAlignedText(DRW_ArcAlignedText *ent) {
+    if (version <= DRW::AC1009)
+        return true;
+    writer->writeString(0, "ARCALIGNEDTEXT");
+    writeEntity(ent);
+    writer->writeString(100, "AcDbArcAlignedText");
+    writer->writeUtf8String(1, ent->text);
+    if (!ent->m_fontName.empty())
+        writer->writeUtf8String(2, ent->m_fontName);
+    if (!ent->m_bigFontName.empty())
+        writer->writeUtf8String(3, ent->m_bigFontName);
+    writer->writeUtf8String(7, ent->style.empty() ? "Standard" : ent->style);
+    writer->writeDouble(10, ent->m_center.x);
+    writer->writeDouble(20, ent->m_center.y);
+    writer->writeDouble(30, ent->m_center.z);
+    writer->writeDouble(40, ent->m_radius);
+    writer->writeDouble(41, arcAlignedDxfValue(
+        ent->m_xScale, ent->widthscale > 0.0 ? ent->widthscale : 1.0));
+    writer->writeDouble(42, arcAlignedDxfValue(
+        ent->m_textSize, ent->height > 0.0 ? ent->height : 0.0));
+    writer->writeDouble(43, arcAlignedDxfValue(ent->m_charSpacing, 1.0));
+    writer->writeDouble(44, arcAlignedDxfValue(ent->m_offsetFromArc, 0.0));
+    writer->writeDouble(45, arcAlignedDxfValue(ent->m_rightOffset, 0.0));
+    writer->writeDouble(46, arcAlignedDxfValue(ent->m_leftOffset, 0.0));
+    writer->writeDouble(50, ent->m_startAngle * ARAD);
+    writer->writeDouble(51, ent->m_endAngle * ARAD);
+    writer->writeInt32(90, ent->m_rawColor);
+    writer->writeInt32(77, ent->m_characterSet);
+    writer->writeInt32(78, ent->m_pitchAndFamily);
+    writer->writeInt32(79, ent->m_isShx);
+    writer->writeInt32(74, ent->m_isBold);
+    writer->writeInt32(75, ent->m_isItalic);
+    writer->writeInt32(76, ent->m_isUnderlined);
+    writer->writeInt32(72, ent->m_alignment);
+    writer->writeInt32(70, ent->m_isReverse);
+    writer->writeInt32(280, ent->m_wizardFlag);
+    writer->writeInt32(73, ent->m_textPosition);
+    writer->writeInt32(71, ent->m_textDirection);
+    writer->writeDouble(210, ent->extPoint.x);
+    writer->writeDouble(220, ent->extPoint.y);
+    writer->writeDouble(230, ent->extPoint.z);
+    return true;
+}
+
 bool dxfRW::writeTolerance(DRW_Tolerance *ent){
     writer->writeString(0, "TOLERANCE");
     writeEntity(ent);
@@ -6402,6 +6476,8 @@ bool dxfRW::dxfClassForRecordName(const std::string &recName, DRW_Class &out) {
         {"ACAD_TABLE",       "AcDbTable",               "ObjectDBX Classes", 1025, 1},
         {"HELIX",            "AcDbHelix",               "ObjectDBX Classes", 4095, 1},
         {"MESH",             "AcDbSubDMesh",            "SCENEOE",           1025, 1},
+        {"RTEXT",            "AcDbRText",               "EXPRESS",           1025, 1},
+        {"ARCALIGNEDTEXT",   "AcDbArcAlignedText",      "EXPRESS",           1025, 1},
         {"MPOLYGON",         "AcDbMPolygon",            "AcMPolygonObj15",   1025, 1},
         {"LARGE_RADIAL_DIMENSION", "AcDbRadialDimensionLarge", "ACAD",       1025, 1},
         {"SURFACE",          "AcDbSurface",             "ObjectDBX Classes", 4095, 1},

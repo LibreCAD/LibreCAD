@@ -92,6 +92,11 @@ public:
                           false, 0x1F2});
         registerDwgClass({520, 0x401, "SCENEOE",
                           "AcDbSubDMesh", "MESH", false, 0x1F2});
+        registerDwgClass({521, 0x401, "EXPRESS",
+                          "AcDbRText", "RTEXT", false, 0x1F2});
+        registerDwgClass({522, 0x401, "EXPRESS",
+                          "AcDbArcAlignedText", "ARCALIGNEDTEXT", false,
+                          0x1F2});
     }
 
     virtual ~dwgWriter() = default;

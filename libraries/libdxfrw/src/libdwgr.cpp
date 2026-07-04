@@ -441,6 +441,14 @@ bool dwgRW::writeText(DRW_Text *ent) {
     return encodeEntityForWrite(ent);
 }
 
+bool dwgRW::writeRText(DRW_RText *ent) {
+    return encodeEntityForWrite(ent);
+}
+
+bool dwgRW::writeArcAlignedText(DRW_ArcAlignedText *ent) {
+    return encodeEntityForWrite(ent);
+}
+
 bool dwgRW::writeLWPolyline(DRW_LWPolyline *ent) {
     return encodeEntityForWrite(ent);
 }

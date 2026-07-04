@@ -1393,6 +1393,7 @@ private:
 class DRW_RText : public DRW_Text {
     SETENTFRIENDS
 public:
+    static constexpr std::uint16_t kDwgClassNum = 521;
     DRW_RText() {
         eType = DRW::TEXT;
         m_rTextFlags = 0;
@@ -1400,6 +1401,8 @@ public:
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
+    bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0,
+                   dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
 public:
     int m_rTextFlags;   /*!< RTEXT flags, code 70 (bit 0: DIESEL vs xref path) */
 };
@@ -1417,6 +1420,7 @@ public:
 class DRW_ArcAlignedText : public DRW_Text {
     SETENTFRIENDS
 public:
+    static constexpr std::uint16_t kDwgClassNum = 522;
     DRW_ArcAlignedText() {
         eType = DRW::TEXT;
         m_radius = 0.0;
@@ -1442,6 +1446,8 @@ public:
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
+    bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0,
+                   dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
 public:
     DRW_Coord m_center;          /*!< arc center, code 10/20/30 */
     double m_radius;             /*!< arc radius, code 40 */

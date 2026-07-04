@@ -81,6 +81,8 @@ public:
     bool writeArc(DRW_Arc *ent);
     bool writeEllipse(DRW_Ellipse *ent);
     bool writeText(DRW_Text *ent);
+    bool writeRText(DRW_RText *ent);
+    bool writeArcAlignedText(DRW_ArcAlignedText *ent);
     bool writeLWPolyline(DRW_LWPolyline *ent);
     bool writeRay(DRW_Ray *ent);
     bool writeXline(DRW_Xline *ent);

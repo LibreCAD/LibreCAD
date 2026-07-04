@@ -135,6 +135,29 @@ void putHardPointerHandle(dwgBufferW *buf, std::uint32_t ref) {
     buf->putHandle(h);
 }
 
+void putNullableHardPointerHandle(dwgBufferW *buf, std::uint32_t ref) {
+    dwgHandle h;
+    h.code = ref == 0 ? 0 : 5;
+    h.ref = ref;
+    h.size = 0;
+    if (ref != 0) {
+        std::uint32_t t = ref;
+        while (t != 0) {
+            t >>= 8;
+            ++h.size;
+        }
+    }
+    buf->putHandle(h);
+}
+
+std::uint16_t bitShortFromInt(int value) {
+    if (value < 0)
+        return 0;
+    if (value > 0xffff)
+        return 0xffff;
+    return static_cast<std::uint16_t>(value);
+}
+
 std::uint32_t readTableHandle(dwgBuffer *hdlBuf) {
     if (hdlBuf == nullptr || !hdlBuf->isGood())
         return 0;
@@ -4473,6 +4496,25 @@ bool DRW_RText::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs)
 // ARCALIGNEDTEXT (AcDbArcAlignedText, Express Tools) — read-only, mapped onto
 // DRW_Text as a 2D approximation (text at the arc mid-point, tangent baseline).
 // ---------------------------------------------------------------------------
+bool DRW_RText::encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs,
+                          dwgBufferW *strBuf, dwgBufferW *handleBuf) {
+    (void)bs;
+    oType = kDwgClassNum;
+    if (!encodeDwgCommon(version, buf)) return false;
+
+    buf->put3BitDouble(basePoint);
+    buf->put3BitDouble(extPoint);
+    buf->putBitDouble(angle / ARAD);
+    buf->putBitDouble(height);
+    buf->putBitShort(bitShortFromInt(m_rTextFlags));
+    (strBuf ? strBuf : buf)->putVariableText(version, text);
+
+    if (!encodeDwgEntHandle(version, buf, handleBuf)) return false;
+    putHardPointerHandle(handleBuf ? handleBuf : buf,
+                         (styleH.ref == 0) ? 0x13 : styleH.ref);
+    return true;
+}
+
 void DRW_ArcAlignedText::applyArcApproximation(){
     const double mid = 0.5 * (m_startAngle + m_endAngle);
     basePoint.x = m_center.x + m_radius * std::cos(mid);
@@ -4501,6 +4543,58 @@ static std::string arcAlignedD2T(double v){
     char buf[32];
     std::snprintf(buf, sizeof(buf), "%g", v);
     return std::string(buf);
+}
+
+static std::string arcAlignedStringOrDefault(const UTF8STRING& value,
+                                             const std::string& fallback) {
+    return value.empty() ? fallback : value;
+}
+
+bool DRW_ArcAlignedText::encodeDwg(DRW::Version version, dwgBufferW *buf,
+                                   std::uint32_t bs, dwgBufferW *strBuf,
+                                   dwgBufferW *handleBuf) {
+    (void)bs;
+    oType = kDwgClassNum;
+    if (!encodeDwgCommon(version, buf)) return false;
+
+    dwgBufferW *sb = strBuf ? strBuf : buf;
+    sb->putVariableText(version, arcAlignedStringOrDefault(
+        m_textSize, arcAlignedD2T(height > 0.0 ? height : 0.0)));
+    sb->putVariableText(version, arcAlignedStringOrDefault(
+        m_xScale, arcAlignedD2T(widthscale > 0.0 ? widthscale : 1.0)));
+    sb->putVariableText(version, arcAlignedStringOrDefault(m_charSpacing, "1"));
+    sb->putVariableText(version, style.empty() ? "Standard" : style);
+    sb->putVariableText(version, m_fontName);
+    sb->putVariableText(version, m_bigFontName);
+    sb->putVariableText(version, text);
+    sb->putVariableText(version, arcAlignedStringOrDefault(m_offsetFromArc, "0"));
+    sb->putVariableText(version, arcAlignedStringOrDefault(m_rightOffset, "0"));
+    sb->putVariableText(version, arcAlignedStringOrDefault(m_leftOffset, "0"));
+
+    buf->put3BitDouble(m_center);
+    buf->putBitDouble(m_radius);
+    buf->putBitDouble(m_startAngle);
+    buf->putBitDouble(m_endAngle);
+    buf->put3BitDouble(extPoint);
+    buf->putBitLong(static_cast<std::int32_t>(m_rawColor));
+    buf->putBitShort(bitShortFromInt(m_characterSet));
+    buf->putBitShort(bitShortFromInt(m_pitchAndFamily));
+    buf->putBitShort(bitShortFromInt(m_isShx));
+    buf->putBitShort(bitShortFromInt(m_isBold));
+    buf->putBitShort(bitShortFromInt(m_isItalic));
+    buf->putBitShort(bitShortFromInt(m_isUnderlined));
+    buf->putBitShort(bitShortFromInt(m_alignment));
+    buf->putBitShort(bitShortFromInt(m_isReverse));
+    buf->putBitShort(bitShortFromInt(m_wizardFlag));
+    buf->putBitShort(bitShortFromInt(m_textPosition));
+    buf->putBitShort(bitShortFromInt(m_textDirection));
+
+    if (version <= DRW::AC1018)
+        putNullableHardPointerHandle(buf, m_arcHandle);
+    if (!encodeDwgEntHandle(version, buf, handleBuf)) return false;
+    if (version > DRW::AC1018)
+        putNullableHardPointerHandle(handleBuf ? handleBuf : buf, m_arcHandle);
+    return true;
 }
 
 bool DRW_ArcAlignedText::parseCode(int code, const std::unique_ptr<dxfReader>& reader){

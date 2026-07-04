@@ -110,6 +110,8 @@ public:
     bool writeMLine(DRW_MLine *ent);
     bool writeUnderlay(DRW_Underlay *ent);
     bool writeText(DRW_Text *ent);
+    bool writeRText(DRW_RText *ent);
+    bool writeArcAlignedText(DRW_ArcAlignedText *ent);
     bool writeTolerance(DRW_Tolerance *ent);
     bool writeHatch(DRW_Hatch *ent);
     bool writeMPolygon(DRW_MPolygon *ent);

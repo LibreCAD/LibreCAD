@@ -44,9 +44,12 @@
 #include <catch2/catch_test_macros.hpp>
 #include <catch2/catch_approx.hpp>
 
+#include <algorithm>
 #include <cmath>
+#include <cstdio>
 #include <filesystem>
 #include <fstream>
+#include <sstream>
 #include <string>
 #include <vector>
 
@@ -183,6 +186,110 @@ public:
   }
 };
 
+DRW_RText makeRText() {
+  DRW_RText text;
+  text.layer = "0";
+  text.style = "Standard";
+  text.text = "RTEXT-DIESEL-TEST";
+  text.basePoint = DRW_Coord(100.0, 200.0, 0.0);
+  text.secPoint = text.basePoint;
+  text.extPoint = DRW_Coord(0.0, 0.0, 1.0);
+  text.height = 2.5;
+  text.angle = 30.0;
+  text.m_rTextFlags = 0;
+  return text;
+}
+
+DRW_ArcAlignedText makeArcAlignedText() {
+  DRW_ArcAlignedText text;
+  text.layer = "0";
+  text.style = "Standard";
+  text.text = "ARC-TEXT-TEST";
+  text.m_fontName = "Arial";
+  text.m_center = DRW_Coord(50.0, 60.0, 0.0);
+  text.m_radius = 25.0;
+  text.m_startAngle = 0.0;
+  text.m_endAngle = M_PI / 2;
+  text.m_textSize = "2.5";
+  text.m_xScale = "1";
+  text.m_charSpacing = "1";
+  text.m_offsetFromArc = "0";
+  text.m_rightOffset = "0";
+  text.m_leftOffset = "0";
+  text.extPoint = DRW_Coord(0.0, 0.0, 1.0);
+  text.height = 2.5;
+  text.widthscale = 1.0;
+  return text;
+}
+
+void checkTextPair(const TextCapture &cap) {
+  CHECK(cap.m_textCount == 2);
+  CHECK(cap.m_mtextCount == 0);
+
+  const CapturedText *rt = cap.findRText();
+  const CapturedText *at = cap.findArcText();
+  REQUIRE(rt != nullptr);
+  REQUIRE(at != nullptr);
+
+  CHECK(rt->text == "RTEXT-DIESEL-TEST");
+  CHECK(rt->bx == Approx(100.0));
+  CHECK(rt->by == Approx(200.0));
+  CHECK(rt->height == Approx(2.5));
+  CHECK(rt->angle == Approx(30.0));
+  CHECK((rt->style == "Standard" || rt->style == "STANDARD"));
+  CHECK(rt->rtextFlags == 0);
+
+  CHECK(at->text == "ARC-TEXT-TEST");
+  CHECK(at->fontName == "Arial");
+  CHECK(at->style == "Standard");
+  CHECK(at->textSize == "2.5");
+  CHECK(at->cx == Approx(50.0));
+  CHECK(at->cy == Approx(60.0));
+  CHECK(at->radius == Approx(25.0));
+  CHECK(at->startAngle == Approx(0.0));
+  CHECK(at->endAngle == Approx(M_PI / 2));
+  const double mid = M_PI / 4;
+  CHECK(at->bx == Approx(50.0 + 25.0 * std::cos(mid)));
+  CHECK(at->by == Approx(60.0 + 25.0 * std::sin(mid)));
+}
+
+class TextPairDxfEmitter : public StubInterface {
+public:
+  DRW_RText m_rtext = makeRText();
+  DRW_ArcAlignedText m_arctext = makeArcAlignedText();
+  dxfRW *m_rw = nullptr;
+
+  void writeEntities() override {
+    REQUIRE(m_rw != nullptr);
+    REQUIRE(m_rw->writeRText(&m_rtext));
+    REQUIRE(m_rw->writeArcAlignedText(&m_arctext));
+  }
+};
+
+class TextPairDwgEmitter : public StubInterface {
+public:
+  DRW_RText m_rtext = makeRText();
+  DRW_ArcAlignedText m_arctext = makeArcAlignedText();
+  dwgRW *m_writer = nullptr;
+
+  void writeEntities() override {
+    REQUIRE(m_writer != nullptr);
+    REQUIRE(m_writer->writeRText(&m_rtext));
+    REQUIRE(m_writer->writeArcAlignedText(&m_arctext));
+  }
+};
+
+std::vector<DRW_Class> textDxfClasses() {
+  std::vector<DRW_Class> classes;
+  for (const std::string recName : {"RTEXT", "ARCALIGNEDTEXT"}) {
+    DRW_Class cls;
+    REQUIRE(dxfRW::dxfClassForRecordName(recName, cls));
+    cls.instanceCount = 1;
+    classes.push_back(cls);
+  }
+  return classes;
+}
+
 void readDxf(const std::string &dxf, DRW_Interface &cap, const char *name) {
   const auto path = std::filesystem::temp_directory_path() / name;
   std::filesystem::remove(path);
@@ -193,6 +300,32 @@ void readDxf(const std::string &dxf, DRW_Interface &cap, const char *name) {
   dxfRW r(path.string().c_str());
   REQUIRE(r.read(&cap, /*ext=*/true));
   std::filesystem::remove(path);
+}
+
+std::string writeTextPairDxf(const char *name) {
+  const auto path = std::filesystem::temp_directory_path() / name;
+  std::filesystem::remove(path);
+  {
+    dxfRW w(path.string().c_str());
+    w.setDxfClasses(textDxfClasses());
+    TextPairDxfEmitter emitter;
+    emitter.m_rw = &w;
+    REQUIRE(w.write(&emitter, DRW::AC1015, false));
+  }
+
+  std::ifstream in(path);
+  REQUIRE(in.good());
+  std::ostringstream out;
+  out << in.rdbuf();
+  in.close();
+  std::filesystem::remove(path);
+  return out.str();
+}
+
+std::string tempPath(const char *suffix) {
+  return (std::filesystem::temp_directory_path() /
+          (std::string("rtext_arctext_") + suffix))
+      .string();
 }
 
 // Inline DXF holding one RTEXT and one ARCALIGNEDTEXT with the same values as
@@ -247,6 +380,59 @@ TEST_CASE("DXF ARCALIGNEDTEXT is read as text via processArcAlignedText",
   CHECK(at->by == Approx(60.0 + 25.0 * std::sin(mid)));
   CHECK(at->angle == Approx((mid + M_PI / 2) * 57.29577951308232)); // deg
   CHECK(at->height == Approx(2.5)); // from the textSize D2T string
+}
+
+TEST_CASE("dxfRW writes RTEXT and ARCALIGNEDTEXT without degrading to TEXT",
+          "[dxf][rtext][arcalignedtext][write]") {
+  const std::string dxf = writeTextPairDxf("lc_rtext_arctext_write.dxf");
+  std::string normalized = dxf;
+  normalized.erase(std::remove(normalized.begin(), normalized.end(), '\r'),
+                   normalized.end());
+
+  CHECK(normalized.find("\n  0\nCLASS\n") != std::string::npos);
+  CHECK(normalized.find("\n  1\nRTEXT\n") != std::string::npos);
+  CHECK(normalized.find("\n  1\nARCALIGNEDTEXT\n") != std::string::npos);
+  CHECK(normalized.find("\n  0\nRTEXT\n") != std::string::npos);
+  CHECK(normalized.find("\n100\nRText\n") != std::string::npos);
+  CHECK(normalized.find("\n  0\nARCALIGNEDTEXT\n") != std::string::npos);
+  CHECK(normalized.find("\n100\nAcDbArcAlignedText\n") != std::string::npos);
+  CHECK(normalized.find("\n  0\nTEXT\n") == std::string::npos);
+
+  TextCapture cap;
+  readDxf(dxf, cap, "lc_rtext_arctext_write_read.dxf");
+  checkTextPair(cap);
+}
+
+TEST_CASE("dwgRW writes RTEXT and ARCALIGNEDTEXT as Express Tools classes",
+          "[dwg-write][rtext][arcalignedtext]") {
+  const DRW::Version versions[] = {
+      DRW::AC1015, DRW::AC1018, DRW::AC1024, DRW::AC1027, DRW::AC1032};
+
+  for (DRW::Version version : versions) {
+    INFO("version: " << static_cast<int>(version));
+    const std::string suffix =
+        std::string("write_") + std::to_string(static_cast<int>(version)) + ".dwg";
+    const std::string path = tempPath(suffix.c_str());
+    std::filesystem::remove(path);
+
+    {
+      dwgRW writer(path.c_str());
+      TextPairDwgEmitter emitter;
+      emitter.m_writer = &writer;
+      REQUIRE(writer.write(&emitter, version, /*bin=*/false));
+    }
+
+    TextCapture cap;
+    {
+      dwgR reader(path.c_str());
+      REQUIRE(reader.read(&cap, /*ext=*/true));
+      REQUIRE(reader.getVersion() == version);
+      REQUIRE(reader.getError() == DRW::BAD_NONE);
+    }
+
+    checkTextPair(cap);
+    std::remove(path.c_str());
+  }
 }
 
 TEST_CASE("DWG RTEXT + ARCALIGNEDTEXT are read as text via parseDwg",
