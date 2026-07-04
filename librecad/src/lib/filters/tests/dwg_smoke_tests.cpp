@@ -276,6 +276,18 @@ DwgResult readDwg(const std::string &path, bool verbose = false,
   }
 }
 
+std::string libredwgFixturePath(const char *release, const char *file) {
+  const char *root = getenv("LIBREDWG_TEST_DATA");
+  if (root && root[0] != '\0')
+    return (std::filesystem::path(root) / release / file).string();
+  const char *home = getenv("HOME");
+  if (!home || home[0] == '\0')
+    return {};
+  return (std::filesystem::path(home) / "dev" / "libredwg" / "test" /
+          "test-data" / release / file)
+      .string();
+}
+
 // DRW_LW_Conv::lineWidth enum -> human-readable mm
 const char *lWeightToMm(int lw) {
   switch (lw) {
@@ -5225,7 +5237,7 @@ TEST_CASE("proxy attr layer-order oracle pin", "[.dwg_proxy_attr]") {
 // Pre-R13 (AC1009/R11) minimal read support. The corpus lives in the
 // developer-local LibreDWG checkout; skip gracefully if absent. dwgReaderR11
 // reads the ENTITIES section's non-chained geometry (LINE/POINT/CIRCLE/ARC/
-// TEXT/SOLID/TRACE/3DFACE); INSERT/POLYLINE/blocks are a follow-up.
+// TEXT/SOLID/TRACE/3DLINE/3DFACE); INSERT/POLYLINE/blocks are a follow-up.
 TEST_CASE("DWG pre-R13: read AC1009/R11 entities section") {
   const char *home = getenv("HOME");
   if (!home) {
@@ -5247,6 +5259,49 @@ TEST_CASE("DWG pre-R13: read AC1009/R11 entities section") {
   CHECK(r.version == DRW::AC1009);
   CHECK(r.entities >= 23);              // + inserts + attrib/attdef + dimension block
   CHECK(r.blocks >= 3);                 // BLOCK1 / BLOCK2 / *D
+}
+
+namespace {
+struct R11LineCollector : public CountingIface {
+  std::vector<DRW_Line> lines;
+  void addLine(const DRW_Line &e) override {
+    CountingIface::addLine(e);
+    lines.push_back(e);
+  }
+};
+}  // namespace
+
+TEST_CASE("DWG pre-R13: map R11 3DLINE to DRW_Line") {
+  const std::string path = libredwgFixturePath("r11", "entities-3d.dwg");
+  if (path.empty()) {
+    SUCCEED("pre-R13 corpus root absent; skipping");
+    return;
+  }
+  std::ifstream probe(path, std::ios::binary);
+  if (!probe.good()) {
+    SUCCEED("entities-3d.dwg absent; skipping");
+    return;
+  }
+  probe.close();
+
+  R11LineCollector iface;
+  const DwgResult r = readDwg(path, /*verbose=*/false, &iface);
+  REQUIRE(r.ok);
+  REQUIRE(r.version == DRW::AC1009);
+
+  bool found3DLine = false;
+  auto near = [](double a, double b) { return std::abs(a - b) < 1e-12; };
+  for (const auto &line : iface.lines) {
+    if (near(line.basePoint.x, 2.0) && near(line.basePoint.y, 3.0) &&
+        near(line.basePoint.z, 4.0) && near(line.secPoint.x, 3.0) &&
+        near(line.secPoint.y, 4.0) && near(line.secPoint.z, 5.0)) {
+      found3DLine = true;
+      break;
+    }
+  }
+  // Oracle: LibreDWG r11/entities-3d.dxf from the same corpus emits this
+  // legacy DWG type-21 record as a DXF LINE with 3D endpoints.
+  CHECK(found3DLine);
 }
 
 // Pre-R13 R11 typed DIMENSION (LINEAR + ALIGNED). Phase 4 swaps the previous

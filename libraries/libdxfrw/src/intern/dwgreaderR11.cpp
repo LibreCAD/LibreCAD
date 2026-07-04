@@ -600,6 +600,16 @@ bool dwgReaderR11::readEntityR11(DRW_Interface& intfa) {
             applyAttrs(e);
             intfa.addLine(e);
             break; }
+        case R11_3DLINE: {
+            DRW_Line e;
+            e.basePoint = rd3();
+            e.secPoint = rd3();
+            if (opts & 0x01)
+                e.extPoint = rd3();
+            e.thickness = thickness;
+            applyAttrs(e);
+            intfa.addLine(e);
+            break; }
         case R11_POINT: {
             DRW_Point e;
             e.basePoint.x = rd(); e.basePoint.y = rd();
