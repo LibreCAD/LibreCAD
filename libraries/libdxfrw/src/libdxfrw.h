@@ -310,6 +310,8 @@ private:
     bool processDictionaryVar();
     bool processDictionaryWithDefault();
     bool processRasterVariables();
+    bool processField();
+    bool processFieldList();
     bool processSun();
     bool processLayout();
     bool processWipeoutVariables();

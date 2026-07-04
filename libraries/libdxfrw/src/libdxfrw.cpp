@@ -4822,6 +4822,12 @@ bool dxfRW::processObjects() {
         else if ("RASTERVARIABLES" == nextentity) {
             processed = processRasterVariables();
         }
+        else if ("FIELD" == nextentity || "ACDBFIELD" == nextentity) {
+            processed = processField();
+        }
+        else if ("FIELDLIST" == nextentity || "ACDBFIELDLIST" == nextentity) {
+            processed = processFieldList();
+        }
         else if ("SUN" == nextentity) {
             processed = processSun();
         }
@@ -5566,6 +5572,164 @@ bool dxfRW::processRasterVariables() {
         captureRawGroup(raw, code);
         if (!rv.parseCode(code, reader)) {
             return setError( DRW::BAD_CODE_PARSED);
+        }
+    }
+
+    return setError(DRW::BAD_READ_OBJECTS);
+}
+
+// FIELD / FIELDLIST (AcDbField / AcDbFieldList).  The DWG read path already
+// decodes these (dwgReader OBJECTS dispatch -> DRW_Field / DRW_FieldList ->
+// addField / addFieldList); this adds the matching DXF read.  The group-code
+// layout below was verified against an ODA-converted FIELD-rich DWG
+// (blocks_and_tables_-_imperial.dwg -> DXF, ODA File Converter 27.1.0):
+//   1  evaluatorId          90  child-field count       360 child-field handle
+//   2  fieldCode            97  object-id count         331 object-id handle
+//   3  fieldCode overflow   91  evaluation option flags 300 evaluation error msg
+//   92/94/95/96 flags       301 value string           98  value-string length
+// After the field-level scalars, per-child-value records begin at a code 6 (data
+// key) or 7 (cache key) and each end at code 304 "ACVALUE_END".  Codes that also
+// occur INSIDE a value sub-record (90/91/94/140/300) must not clobber the
+// field-level scalars, so a "child open" flag routes them to the child value.
+bool dxfRW::processField() {
+    DRW_DBG("dxfRW::processField");
+    int code;
+    DRW_Field field;
+    DRW_RawDxfObject raw;
+    raw.name = nextentity;
+
+    bool inSubclass = false;      // set once the AcDbField subclass marker is seen
+    bool childOpen = false;       // currently inside a per-child value sub-record
+    DRW_Field::ChildValue child;
+
+    while (reader->readRec(&code)) {
+        DRW_DBG(code); DRW_DBG("\n");
+        if (0 == code) {
+            nextentity = reader->getString();
+            DRW_DBG(nextentity); DRW_DBG("\n");
+            if (childOpen)
+                field.m_childValues.push_back(child);
+            iface->addField(field);
+            iface->addRawDxfObject(raw);
+            return true;  //found new entity or ENDSEC, terminate
+        }
+
+        captureRawGroup(raw, code);
+
+        if (100 == code) {
+            if ("AcDbField" == reader->getString())
+                inSubclass = true;
+            continue;
+        }
+        if (!inSubclass) {
+            // Common preamble: handle (5) and owner (330).
+            if (5 == code)        field.handle = reader->getHandleString();
+            else if (330 == code) field.parentHandle = reader->getHandleString();
+            continue;
+        }
+
+        switch (code) {
+        case 1:   field.m_evaluatorId = reader->getUtf8String(); break;
+        case 2:   field.m_fieldCode = reader->getUtf8String(); break;
+        case 3:   field.m_fieldCode += reader->getUtf8String(); break;
+        case 4:   field.m_formatString = reader->getUtf8String(); break;
+        case 6:
+        case 7:
+            if (childOpen)
+                field.m_childValues.push_back(child);
+            child = DRW_Field::ChildValue();
+            child.m_key = reader->getUtf8String();
+            childOpen = true;
+            break;
+        case 304:  // ACVALUE_END terminates a value sub-record
+            if (childOpen) {
+                field.m_childValues.push_back(child);
+                childOpen = false;
+            }
+            break;
+        case 90:
+            if (childOpen) child.m_value.m_dataType = reader->getInt32();
+            // field-level code 90 is the child-field count -> implicit in m_childHandles
+            break;
+        case 91:
+            if (childOpen) child.m_value.m_value.addInt(91, reader->getInt32());
+            else field.m_evaluationOptionFlags = reader->getInt32();
+            break;
+        case 92:  if (!childOpen) field.m_filingOptionFlags = reader->getInt32(); break;
+        case 94:  if (!childOpen) field.m_fieldStateFlags = reader->getInt32(); break;
+        case 95:  if (!childOpen) field.m_evaluationStatusFlags = reader->getInt32(); break;
+        case 96:  if (!childOpen) field.m_evaluationErrorCode = reader->getInt32(); break;
+        case 140: if (childOpen) child.m_value.m_value.addDouble(140, reader->getDouble()); break;
+        case 300:
+            if (childOpen) child.m_value.m_valueString = reader->getUtf8String();
+            else field.m_evaluationErrorMessage = reader->getUtf8String();
+            break;
+        case 301:
+            if (childOpen) child.m_value.m_valueString = reader->getUtf8String();
+            else field.m_valueString = reader->getUtf8String();
+            break;
+        case 98:  if (!childOpen) field.m_valueStringLength = reader->getInt32(); break;
+        case 360: {
+            int h = reader->getHandleString();
+            if (h != 0) field.m_childHandles.push_back(static_cast<std::uint32_t>(h));
+            break;
+        }
+        case 331: {
+            int h = reader->getHandleString();
+            if (h != 0) field.m_objectHandles.push_back(static_cast<std::uint32_t>(h));
+            break;
+        }
+        default: break;
+        }
+    }
+
+    return setError(DRW::BAD_READ_OBJECTS);
+}
+
+// FIELDLIST (AcDbIdSet / AcDbFieldList): num_fields (90) + an "unknown" bool
+// (290) + a soft-pointer per field.  The OBJECTS common preamble already eats
+// the first 330 (owner); every 330 after the AcDbIdSet subclass marker is a
+// field handle.
+bool dxfRW::processFieldList() {
+    DRW_DBG("dxfRW::processFieldList");
+    int code;
+    DRW_FieldList list;
+    DRW_RawDxfObject raw;
+    raw.name = nextentity;
+
+    bool inSet = false;  // set once the AcDbIdSet / AcDbFieldList marker is seen
+    while (reader->readRec(&code)) {
+        DRW_DBG(code); DRW_DBG("\n");
+        if (0 == code) {
+            nextentity = reader->getString();
+            DRW_DBG(nextentity); DRW_DBG("\n");
+            iface->addFieldList(list);
+            iface->addRawDxfObject(raw);
+            return true;  //found new entity or ENDSEC, terminate
+        }
+
+        captureRawGroup(raw, code);
+
+        if (100 == code) {
+            const std::string sub = reader->getString();
+            if ("AcDbIdSet" == sub || "AcDbFieldList" == sub)
+                inSet = true;
+            continue;
+        }
+
+        switch (code) {
+        case 5:   list.handle = reader->getHandleString(); break;
+        case 90:  break;  // num_fields == m_fieldHandles.size()
+        case 290: list.m_unknown = reader->getInt32(); break;
+        case 330: {
+            const int h = reader->getHandleString();
+            if (!inSet)
+                list.parentHandle = h;
+            else if (h != 0)
+                list.m_fieldHandles.push_back(static_cast<std::uint32_t>(h));
+            break;
+        }
+        default: break;
         }
     }
 
