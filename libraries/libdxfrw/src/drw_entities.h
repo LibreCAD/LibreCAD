@@ -1376,6 +1376,96 @@ private:
     bool hasXAxisVec; /* renamed by djm for better description */
 };
 
+//! Class to handle RTEXT (RText, AutoCAD Express Tools "reactive text").
+/*!
+*  RTEXT renders text generated at view time from a DIESEL expression (or an
+*  xref path).  libdxfrw has no RText-specific model; the entity is mapped onto
+*  DRW_Text (single-line) so it renders — the literal text if present, else the
+*  raw DIESEL/xref string rides on DRW_Text::text.  Delivered via addText.
+*  DWG type 1159 / AcDbRText; field order per the read-only dwg-ts reference
+*  decoder (insertion 3BD, extrusion 3BD, rotation BD, height BD, flags BS,
+*  text TV, then the style handle).
+*/
+class DRW_RText : public DRW_Text {
+    SETENTFRIENDS
+public:
+    DRW_RText() {
+        eType = DRW::TEXT;
+        m_rTextFlags = 0;
+    }
+protected:
+    bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
+public:
+    int m_rTextFlags;   /*!< RTEXT flags, code 70 (bit 0: DIESEL vs xref path) */
+};
+
+//! Class to handle ARCALIGNEDTEXT (AcDbArcAlignedText, Express Tools arc text).
+/*!
+*  Arc-aligned text is a legacy Express Tools entity whose glyphs follow an arc.
+*  libdxfrw has no arc-text model; it is mapped onto DRW_Text (delivered via
+*  addText) as a 2D approximation — applyArcApproximation() places the text at
+*  the arc mid-point with the baseline tangent to the arc.  The full arc/text
+*  parameters are retained on the object.  DWG type 1163; field order per the
+*  read-only dwg-ts reference decoder (ten TV strings, then center 3BD, radius
+*  BD, start/end angle BD, extrusion 3BD, colour BL, eleven BS flags, arc H).
+*/
+class DRW_ArcAlignedText : public DRW_Text {
+    SETENTFRIENDS
+public:
+    DRW_ArcAlignedText() {
+        eType = DRW::TEXT;
+        m_radius = 0.0;
+        m_startAngle = 0.0;
+        m_endAngle = 0.0;
+        m_rawColor = 0;
+        m_characterSet = 0;
+        m_pitchAndFamily = 0;
+        m_isShx = 0;
+        m_isBold = 0;
+        m_isItalic = 0;
+        m_isUnderlined = 0;
+        m_alignment = 0;
+        m_isReverse = 0;
+        m_wizardFlag = 0;
+        m_textPosition = 0;
+        m_textDirection = 0;
+        m_arcHandle = 0;
+    }
+    //! Place the text at the arc mid-point with a tangent baseline (2D approx),
+    //! deriving DRW_Text::basePoint / angle / height from the arc parameters.
+    void applyArcApproximation();
+protected:
+    bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
+public:
+    DRW_Coord m_center;          /*!< arc center, code 10/20/30 */
+    double m_radius;             /*!< arc radius, code 40 */
+    double m_startAngle;         /*!< start angle in radians, code 50 (DXF degrees) */
+    double m_endAngle;           /*!< end angle in radians, code 51 (DXF degrees) */
+    UTF8STRING m_textSize;       /*!< text size (D2T string), code 42 */
+    UTF8STRING m_xScale;         /*!< width factor (D2T), code 41 */
+    UTF8STRING m_charSpacing;    /*!< character spacing (D2T), code 43 */
+    UTF8STRING m_offsetFromArc;  /*!< offset from arc (D2T), code 44 */
+    UTF8STRING m_rightOffset;    /*!< right offset (D2T), code 45 */
+    UTF8STRING m_leftOffset;     /*!< left offset (D2T), code 46 */
+    UTF8STRING m_fontName;       /*!< font name, code 2 */
+    UTF8STRING m_bigFontName;    /*!< big-font name, code 3 */
+    int m_rawColor;              /*!< raw color, code 90 */
+    int m_characterSet;          /*!< code 77 */
+    int m_pitchAndFamily;        /*!< code 78 */
+    int m_isShx;                 /*!< code 79 */
+    int m_isBold;                /*!< code 74 */
+    int m_isItalic;              /*!< code 75 */
+    int m_isUnderlined;          /*!< code 76 */
+    int m_alignment;             /*!< code 72 */
+    int m_isReverse;             /*!< code 70 */
+    int m_wizardFlag;            /*!< code 280 */
+    int m_textPosition;          /*!< code 73 */
+    int m_textDirection;         /*!< code 71 */
+    std::uint32_t m_arcHandle;   /*!< handle of the followed arc, code 330 */
+};
+
 //! Class to handle vertex
 /*!
 *  Class to handle vertex  for polyline entity

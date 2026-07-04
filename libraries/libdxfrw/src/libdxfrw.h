@@ -283,6 +283,8 @@ private:
     bool processText();
     bool processTolerance();
     bool processMText();
+    bool processRText();
+    bool processArcAlignedText();
     bool processMLine();
     bool processUnderlay(const std::string& kind);
     bool processHatch();

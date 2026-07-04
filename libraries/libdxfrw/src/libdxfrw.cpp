@@ -3878,6 +3878,11 @@ bool dxfRW::processEntities(bool isblock) {
             processed = processText();
         } else if (nextentity == "MTEXT") {
             processed = processMText();
+        } else if (nextentity == "RTEXT") {
+            processed = processRText();
+        } else if (nextentity == "ARCALIGNEDTEXT"
+                   || nextentity == "ARC_ALIGNED_TEXT") {
+            processed = processArcAlignedText();
         } else if (nextentity == "MLINE") {
             processed = processMLine();
         } else if (nextentity == "PDFUNDERLAY"
@@ -4428,6 +4433,56 @@ bool dxfRW::processMText() {
             DRW_DBG(nextentity); DRW_DBG("\n");
             txt.updateAngle();
             iface->addMText(txt);
+            return true;  //found new entity or ENDSEC, terminate
+        }
+
+        if (!txt.parseCode(code, reader)) {
+            return setError( DRW::BAD_CODE_PARSED);
+        }
+    }
+
+    return setError(DRW::BAD_READ_ENTITIES);
+}
+
+// RTEXT (Express Tools reactive text) — read-only, mapped onto DRW_Text and
+// delivered via addText.  Its DXF group codes are a TEXT subset plus a flags
+// long (70); DRW_RText::parseCode handles the flag and delegates the rest.
+bool dxfRW::processRText() {
+    DRW_DBG("dxfRW::processRText");
+    int code;
+    DRW_RText txt;
+    while (reader->readRec(&code)) {
+        DRW_DBG(code); DRW_DBG("\n");
+        if (0 == code) {
+            nextentity = reader->getString();
+            DRW_DBG(nextentity); DRW_DBG("\n");
+            iface->addText(txt);
+            return true;  //found new entity or ENDSEC, terminate
+        }
+
+        if (!txt.parseCode(code, reader)) {
+            return setError( DRW::BAD_CODE_PARSED);
+        }
+    }
+
+    return setError(DRW::BAD_READ_ENTITIES);
+}
+
+// ARCALIGNEDTEXT (Express Tools arc-aligned text) — read-only, mapped onto
+// DRW_Text as a 2D approximation (text at the arc mid-point).  applyArcApprox-
+// imation() derives basePoint / angle / height from the arc parameters once all
+// group codes are read.
+bool dxfRW::processArcAlignedText() {
+    DRW_DBG("dxfRW::processArcAlignedText");
+    int code;
+    DRW_ArcAlignedText txt;
+    while (reader->readRec(&code)) {
+        DRW_DBG(code); DRW_DBG("\n");
+        if (0 == code) {
+            nextentity = reader->getString();
+            DRW_DBG(nextentity); DRW_DBG("\n");
+            txt.applyArcApproximation();
+            iface->addText(txt);
             return true;  //found new entity or ENDSEC, terminate
         }
 

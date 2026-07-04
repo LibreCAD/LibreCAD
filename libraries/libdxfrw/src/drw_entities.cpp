@@ -4342,6 +4342,174 @@ bool DRW_Text::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs){
     return buf->isGood();
 }
 
+// ---------------------------------------------------------------------------
+// RTEXT (RText, Express Tools) — read-only, mapped onto DRW_Text.
+// ---------------------------------------------------------------------------
+bool DRW_RText::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
+    // RTEXT's DXF layout is a TEXT subset (1 text, 7 style, 10/20/30 insertion,
+    // 40 height, 50 rotation deg, 210/220/230 extrusion) plus a flags long (70)
+    // that plain TEXT does not carry.
+    if (70 == code) {
+        m_rTextFlags = reader->getInt32();
+        return true;
+    }
+    return DRW_Text::parseCode(code, reader);
+}
+
+bool DRW_RText::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs){
+    dwgBuffer sBuff = *buf;
+    dwgBuffer *sBuf = buf;
+    if (version > DRW::AC1018)   // 2007+ strings live in a separate stream
+        sBuf = &sBuff;
+    bool ret = DRW_Entity::parseDwg(version, buf, sBuf, bs);
+    if (!ret)
+        return ret;
+    DRW_DBG("\n***************************** parsing rtext ********************************************\n");
+
+    basePoint = buf->get3BitDouble();   // insertion 3BD
+    secPoint = basePoint;               // no separate alignment point
+    extPoint = buf->get3BitDouble();    // extrusion 3BD
+    angle = buf->getBitDouble() * ARAD; // rotation BD (radians) -> degrees
+    height = buf->getBitDouble();       // height BD
+    m_rTextFlags = buf->getBitShort();  // flags BS
+    text = sBuf->getVariableText(version, false);   // TV (DIESEL or literal)
+    DRW_DBG("rtext string: "); DRW_DBG(text.c_str()); DRW_DBG("\n");
+
+    ret = DRW_Entity::parseDwgEntHandle(version, buf);
+    if (!ret)
+        return ret;
+    styleH = buf->getHandle();          // STYLE (hard pointer)
+    return buf->isGood();
+}
+
+// ---------------------------------------------------------------------------
+// ARCALIGNEDTEXT (AcDbArcAlignedText, Express Tools) — read-only, mapped onto
+// DRW_Text as a 2D approximation (text at the arc mid-point, tangent baseline).
+// ---------------------------------------------------------------------------
+void DRW_ArcAlignedText::applyArcApproximation(){
+    const double mid = 0.5 * (m_startAngle + m_endAngle);
+    basePoint.x = m_center.x + m_radius * std::cos(mid);
+    basePoint.y = m_center.y + m_radius * std::sin(mid);
+    basePoint.z = m_center.z;
+    secPoint = basePoint;
+    // Baseline tangent to the arc at the mid-point; angle stored in degrees to
+    // match DRW_Text (which the DWG path fills via `angle *= ARAD`).
+    angle = (mid + M_PI_2) * ARAD;
+    // Height from the text-size D2T string when parseable, else a fraction of
+    // the radius so the approximation is at least visible.
+    double h = 0.0;
+    try { h = std::stod(m_textSize); } catch (...) { h = 0.0; }
+    if (h > 0.0)
+        height = h;
+    else if (height <= 0.0)
+        height = 0.1 * m_radius;
+}
+
+// Format a D2T (double-to-text) field the way the ARCALIGNEDTEXT model stores
+// it: the DWG body carries these as text ("2.5", "1", "0"), while the DXF path
+// reads them as doubles (group codes 41-46 fall in the double range, so the
+// reader populates doubleData and leaves strData stale — getString() is unsafe
+// here).  %g reproduces the same compact textual form.
+static std::string arcAlignedD2T(double v){
+    char buf[32];
+    std::snprintf(buf, sizeof(buf), "%g", v);
+    return std::string(buf);
+}
+
+bool DRW_ArcAlignedText::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
+    // ARCALIGNEDTEXT repurposes several TEXT codes (2/10/40/41/50/51/70…), so it
+    // must not delegate those to DRW_Text; unknown codes fall through to the
+    // AcDbEntity common parser.  Angles (50/51) are DXF degrees -> radians.
+    switch (code) {
+    case 1:   text = reader->getUtf8String(); break;
+    case 2:   m_fontName = reader->getUtf8String(); break;
+    case 3:   m_bigFontName = reader->getUtf8String(); break;
+    case 7:   style = reader->getUtf8String(); break;
+    case 10:  m_center.x = reader->getDouble(); break;
+    case 20:  m_center.y = reader->getDouble(); break;
+    case 30:  m_center.z = reader->getDouble(); break;
+    case 40:  m_radius = reader->getDouble(); break;
+    case 41:  m_xScale = arcAlignedD2T(reader->getDouble()); break;
+    case 42:  m_textSize = arcAlignedD2T(reader->getDouble()); break;
+    case 43:  m_charSpacing = arcAlignedD2T(reader->getDouble()); break;
+    case 44:  m_offsetFromArc = arcAlignedD2T(reader->getDouble()); break;
+    case 45:  m_rightOffset = arcAlignedD2T(reader->getDouble()); break;
+    case 46:  m_leftOffset = arcAlignedD2T(reader->getDouble()); break;
+    case 50:  m_startAngle = reader->getDouble() / ARAD; break;
+    case 51:  m_endAngle = reader->getDouble() / ARAD; break;
+    case 70:  m_isReverse = reader->getInt32(); break;
+    case 71:  m_textDirection = reader->getInt32(); break;
+    case 72:  m_alignment = reader->getInt32(); break;
+    case 73:  m_textPosition = reader->getInt32(); break;
+    case 74:  m_isBold = reader->getInt32(); break;
+    case 75:  m_isItalic = reader->getInt32(); break;
+    case 76:  m_isUnderlined = reader->getInt32(); break;
+    case 77:  m_characterSet = reader->getInt32(); break;
+    case 78:  m_pitchAndFamily = reader->getInt32(); break;
+    case 79:  m_isShx = reader->getInt32(); break;
+    case 90:  m_rawColor = reader->getInt32(); break;
+    case 210: extPoint.x = reader->getDouble(); break;
+    case 220: extPoint.y = reader->getDouble(); break;
+    case 230: extPoint.z = reader->getDouble(); break;
+    case 280: m_wizardFlag = reader->getInt32(); break;
+    default:  return DRW_Entity::parseCode(code, reader);
+    }
+    return true;
+}
+
+bool DRW_ArcAlignedText::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs){
+    dwgBuffer sBuff = *buf;
+    dwgBuffer *sBuf = buf;
+    if (version > DRW::AC1018)   // 2007+ strings live in a separate stream
+        sBuf = &sBuff;
+    bool ret = DRW_Entity::parseDwg(version, buf, sBuf, bs);
+    if (!ret)
+        return ret;
+    DRW_DBG("\n***************************** parsing arcalignedtext **********************************\n");
+
+    m_textSize = sBuf->getVariableText(version, false);
+    m_xScale = sBuf->getVariableText(version, false);
+    m_charSpacing = sBuf->getVariableText(version, false);
+    style = sBuf->getVariableText(version, false);
+    m_fontName = sBuf->getVariableText(version, false);
+    m_bigFontName = sBuf->getVariableText(version, false);
+    text = sBuf->getVariableText(version, false);
+    m_offsetFromArc = sBuf->getVariableText(version, false);
+    m_rightOffset = sBuf->getVariableText(version, false);
+    m_leftOffset = sBuf->getVariableText(version, false);
+    m_center = buf->get3BitDouble();
+    m_radius = buf->getBitDouble();
+    m_startAngle = buf->getBitDouble();
+    m_endAngle = buf->getBitDouble();
+    extPoint = buf->get3BitDouble();
+    m_rawColor = buf->getBitLong();
+    m_characterSet = buf->getBitShort();
+    m_pitchAndFamily = buf->getBitShort();
+    m_isShx = buf->getBitShort();
+    m_isBold = buf->getBitShort();
+    m_isItalic = buf->getBitShort();
+    m_isUnderlined = buf->getBitShort();
+    m_alignment = buf->getBitShort();
+    m_isReverse = buf->getBitShort();
+    m_wizardFlag = buf->getBitShort();
+    m_textPosition = buf->getBitShort();
+    m_textDirection = buf->getBitShort();
+    DRW_DBG("arcalignedtext string: "); DRW_DBG(text.c_str()); DRW_DBG("\n");
+
+    // R2004- keeps the arc handle before the common handle stream; R2007+ after.
+    if (version <= DRW::AC1018)
+        m_arcHandle = (buf->numRemainingBytes() > 0) ? buf->getHandle().ref : 0;
+
+    ret = DRW_Entity::parseDwgEntHandle(version, buf);
+    if (!ret)
+        return ret;
+    if (version > DRW::AC1018)
+        m_arcHandle = (buf->numRemainingBytes() > 0) ? buf->getHandle().ref : 0;
+
+    applyArcApproximation();
+    return buf->isGood();
+}
+
 // Out-of-line special members: required because mtext is a unique_ptr<DRW_MText>
 // declared with a forward-declared element type in the header.
 DRW_Attrib::~DRW_Attrib() = default;

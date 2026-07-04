@@ -1731,6 +1731,35 @@ bool dwgReader::readDwgEntity(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                     }
                     break;
                 }
+                if (cit != classesmap.end() && cit->second
+                    && (cit->second->recName == "RTEXT"
+                        || cit->second->className == "RText"
+                        || cit->second->className == "AcDbRText")) {
+                    // RTEXT (AutoCAD Express Tools reactive text, ODA type 1159).
+                    // Mapped onto DRW_Text and delivered via addText — the
+                    // literal text if present, else the raw DIESEL/xref string.
+                    DRW_RText e;
+                    if (entryParse(e, buff, bs, ret)) {
+                        e.style = findTableName(DRW::STYLE, e.styleH.ref);
+                        intfa.addText(e);
+                    }
+                    break;
+                }
+                if (cit != classesmap.end() && cit->second
+                    && (cit->second->recName == "ARCALIGNEDTEXT"
+                        || cit->second->recName == "ARC_ALIGNED_TEXT"
+                        || cit->second->className == "AcDbArcAlignedText")) {
+                    // ARCALIGNEDTEXT (Express Tools arc-aligned text, ODA type
+                    // 1163).  Mapped onto DRW_Text as a 2D approximation placed
+                    // at the arc mid-point (see DRW_ArcAlignedText).  The style
+                    // is a name string in the DWG body, so it is NOT resolved
+                    // from a handle here.
+                    DRW_ArcAlignedText e;
+                    if (entryParse(e, buff, bs, ret)) {
+                        intfa.addText(e);
+                    }
+                    break;
+                }
                 if (version > DRW::AC1018 && cit != classesmap.end() && cit->second
                     && (cit->second->recName == "ACAD_TABLE"
                         || cit->second->className == "AcDbTable")) {
