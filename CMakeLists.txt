@@ -1812,6 +1812,7 @@ if(BUILD_TESTS)
         librecad/src/lib/filters/tests/dwg_header_encode_round_trip_tests.cpp
         librecad/src/lib/filters/tests/dwg_header_app_vars_tests.cpp
         librecad/src/lib/filters/tests/dwg_visibility_read_tests.cpp
+        librecad/src/lib/filters/tests/libdxfrw_debug_tests.cpp
         librecad/src/lib/filters/tests/libdxfrw_qt_free_tests.cpp
         librecad/src/lib/filters/tests/dwg_object_encode_round_trip_tests.cpp
         librecad/src/lib/filters/tests/dwg_smoke_tests.cpp

@@ -69,6 +69,10 @@ DRW_dbg::Level DRW_dbg::getLevel(){
     return level;
 }
 
+bool DRW_dbg::isDebugEnabled() const {
+    return level == Level::Debug;
+}
+
 void DRW_dbg::print(const std::string &s){
     currentPrinter->printS(s);
 }

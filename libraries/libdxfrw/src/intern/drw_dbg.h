@@ -16,16 +16,17 @@
 #include <string>
 #include <iostream>
 #include <memory>
+#include <utility>
 #include "../drw_base.h"
 //#include <iomanip>
 
 #define DRW_DBGSL(a) DRW_dbg::getInstance()->setLevel(a)
 #define DRW_DBGGL DRW_dbg::getInstance()->getLevel()
-#define DRW_DBG(a) DRW_dbg::getInstance()->print(a)
-#define DRW_DBGH(a) DRW_dbg::getInstance()->printH(a)
-#define DRW_DBGB(a) DRW_dbg::getInstance()->printB(a)
-#define DRW_DBGHL(a, b, c) DRW_dbg::getInstance()->printHL(a, b ,c)
-#define DRW_DBGPT(a, b, c) DRW_dbg::getInstance()->printPT(a, b, c)
+#define DRW_DBG(a) DRW_dbg::getInstance()->printIfEnabled(a)
+#define DRW_DBGH(a) DRW_dbg::getInstance()->printHIfEnabled(a)
+#define DRW_DBGB(a) DRW_dbg::getInstance()->printBIfEnabled(a)
+#define DRW_DBGHL(a, b, c) DRW_dbg::getInstance()->printHLIfEnabled(a, b ,c)
+#define DRW_DBGPT(a, b, c) DRW_dbg::getInstance()->printPTIfEnabled(a, b, c)
 
 class DRW_dbg {
 public:
@@ -40,6 +41,7 @@ public:
      */
     void setCustomDebugPrinter(std::unique_ptr<DRW::DebugPrinter> printer);
     Level getLevel();
+    bool isDebugEnabled() const;
     static DRW_dbg *getInstance();
     void print(const std::string &s);
     void print(signed char i);
@@ -55,6 +57,36 @@ public:
     void printB(int i);
     void printHL(int c, int s, int h);
     void printPT(double x, double y, double z);
+
+    template<typename T>
+    void printIfEnabled(T&& value) {
+        if (isDebugEnabled())
+            print(std::forward<T>(value));
+    }
+
+    template<typename T>
+    void printHIfEnabled(T&& value) {
+        if (isDebugEnabled())
+            printH(std::forward<T>(value));
+    }
+
+    template<typename T>
+    void printBIfEnabled(T&& value) {
+        if (isDebugEnabled())
+            printB(std::forward<T>(value));
+    }
+
+    template<typename C, typename S, typename H>
+    void printHLIfEnabled(C&& c, S&& s, H&& h) {
+        if (isDebugEnabled())
+            printHL(std::forward<C>(c), std::forward<S>(s), std::forward<H>(h));
+    }
+
+    template<typename X, typename Y, typename Z>
+    void printPTIfEnabled(X&& x, Y&& y, Z&& z) {
+        if (isDebugEnabled())
+            printPT(std::forward<X>(x), std::forward<Y>(y), std::forward<Z>(z));
+    }
 
 private:
     DRW_dbg();
