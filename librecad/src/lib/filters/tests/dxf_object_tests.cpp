@@ -765,6 +765,121 @@ bool hasConsecutive(
 }
 } // namespace
 
+TEST_CASE("DXF LAYOUT object writes plot prefix and layout body",
+          "[dxf][layout][objects]") {
+  const auto path =
+      std::filesystem::temp_directory_path() / "lc_layout_write.dxf";
+  std::filesystem::remove(path);
+
+  class LayoutEmitter : public StubInterface {
+  public:
+    dxfRW *m_rw = nullptr;
+    DRW_Layout m_layout;
+
+    void writeObjects() override { m_rw->writeLayout(&m_layout); }
+  };
+
+  LayoutEmitter em;
+  em.m_layout.handle = 0x4Fu;
+  em.m_layout.parentHandle = 0x1Au;
+  em.m_layout.pageSetupName = "My Page Setup";
+  em.m_layout.printerConfig = "DWG To PDF.pc3";
+  em.m_layout.paperSize = "ANSI_A";
+  em.m_layout.plotLayoutFlags = 688;
+  em.m_layout.marginLeft = 5.8;
+  em.m_layout.marginBottom = 6.1;
+  em.m_layout.marginRight = 5.9;
+  em.m_layout.marginTop = 6.2;
+  em.m_layout.paperWidth = 215.9;
+  em.m_layout.paperHeight = 279.4;
+  em.m_layout.plotOriginX = 1.0;
+  em.m_layout.plotOriginY = 2.0;
+  em.m_layout.paperUnits = 0;
+  em.m_layout.plotRotation = 1;
+  em.m_layout.plotType = 5;
+  em.m_layout.windowMinX = 0.5;
+  em.m_layout.windowMinY = 0.25;
+  em.m_layout.windowMaxX = 12.0;
+  em.m_layout.windowMaxY = 9.0;
+  em.m_layout.currentStyleSheet = "monochrome.ctb";
+  em.m_layout.scaleType = 16;
+  em.m_layout.scaleFactor = 1.0;
+  em.m_layout.paperImageOriginX = 0.0;
+  em.m_layout.paperImageOriginY = 0.0;
+  em.m_layout.shadePlotMode = 1;
+  em.m_layout.shadePlotResLevel = 2;
+  em.m_layout.shadePlotCustomDPI = 300;
+  em.m_layout.name = "Layout1";
+  em.m_layout.layoutFlags = 1;
+  em.m_layout.tabOrder = 2;
+  em.m_layout.limMinX = 0.0;
+  em.m_layout.limMinY = 0.0;
+  em.m_layout.limMaxX = 12.0;
+  em.m_layout.limMaxY = 9.0;
+  em.m_layout.insPoint = DRW_Coord(0.0, 0.0, 0.0);
+  em.m_layout.extMin = DRW_Coord(-1.0, -2.0, 0.0);
+  em.m_layout.extMax = DRW_Coord(13.0, 10.0, 0.0);
+  em.m_layout.ucsOrigin = DRW_Coord(1.0, 2.0, 3.0);
+  em.m_layout.ucsXAxis = DRW_Coord(1.0, 0.0, 0.0);
+  em.m_layout.ucsYAxis = DRW_Coord(0.0, 1.0, 0.0);
+  em.m_layout.elevation = 0.0;
+  em.m_layout.orthoViewType = 0;
+  em.m_layout.paperSpaceBlockRecordHandle.ref = 0x50u;
+  em.m_layout.lastActiveViewportHandle.ref = 0x51u;
+  em.m_layout.namedUcsHandle.ref = 0x52u;
+  em.m_layout.baseUcsHandle.ref = 0x53u;
+
+  {
+    dxfRW w(path.string().c_str());
+    em.m_rw = &w;
+    DRW_Dictionary layoutDict;
+    layoutDict.handle = 0x1Au;
+    layoutDict.parentHandle = 0;
+    layoutDict.cloning = 1;
+    layoutDict.m_entries.push_back({"Layout1", 0x4Fu});
+    w.setNamedDictObjects({layoutDict});
+    w.setRootDictEntries({{"ACAD_LAYOUT", "1A"}});
+    REQUIRE(w.write(&em, DRW::AC1021, false));
+  }
+
+  const auto groups = readGroups(path);
+  CHECK(hasConsecutive(groups, {{"3", "ACAD_LAYOUT"}, {"350", "1A"}}));
+  CHECK(hasConsecutive(groups,
+                       {{"0", "DICTIONARY"}, {"5", "1A"}, {"330", "C"},
+                        {"100", "AcDbDictionary"}, {"281", "1"},
+                        {"3", "Layout1"}, {"350", "4F"}}));
+  CHECK(hasConsecutive(groups,
+                       {{"0", "LAYOUT"}, {"5", "4F"}, {"330", "1A"},
+                        {"100", "AcDbPlotSettings"}}));
+  CHECK(hasConsecutive(groups,
+                       {{"100", "AcDbLayout"}, {"1", "Layout1"},
+                        {"70", "1"}, {"71", "2"}}));
+
+  LayoutCapture cap;
+  {
+    dxfRW r(path.string().c_str());
+    REQUIRE(r.read(&cap, /*ext=*/true));
+  }
+  std::filesystem::remove(path);
+
+  REQUIRE(cap.m_callCount == 1);
+  CHECK(cap.m_captured.handle == 0x4Fu);
+  CHECK(cap.m_captured.parentHandle == 0x1A);
+  CHECK(cap.m_captured.pageSetupName == "My Page Setup");
+  CHECK(cap.m_captured.plotLayoutFlags == 688);
+  CHECK(cap.m_captured.shadePlotMode == 1);
+  CHECK(cap.m_captured.name == "Layout1");
+  CHECK(cap.m_captured.layoutFlags == 1);
+  CHECK(cap.m_captured.tabOrder == 2);
+  CHECK(cap.m_captured.limMaxX == 12.0);
+  CHECK(cap.m_captured.extMin.x == -1.0);
+  CHECK(cap.m_captured.ucsOrigin.z == 3.0);
+  CHECK(cap.m_captured.paperSpaceBlockRecordHandle.ref == 0x50u);
+  CHECK(cap.m_captured.lastActiveViewportHandle.ref == 0x51u);
+  CHECK(cap.m_captured.namedUcsHandle.ref == 0x52u);
+  CHECK(cap.m_captured.baseUcsHandle.ref == 0x53u);
+}
+
 // F4f-1: dxfRW::setNamedDictObjects emits a named DICTIONARY object in the
 // OBJECTS section, owned by C (parentHandle 0 -> 330 "C"), with its entry list,
 // while setRootDictEntries re-attaches it under the root C dict. This is the

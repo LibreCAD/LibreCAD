@@ -6756,6 +6756,11 @@ bool dxfRW::writePlotSettings(DRW_PlotSettings *ent) {
         writer->writeString(330, "C");  //owner: root dict (avoids ownerless prune)
     }
     writer->writeString(100, "AcDbPlotSettings");
+    writePlotSettingsFields(ent);
+    return true;
+}
+
+void dxfRW::writePlotSettingsFields(const DRW_PlotSettings *ent) {
     // Full AcDbPlotSettings field set in ezdxf layout.py order. Previously only
     // 6/40/41/42/43 were emitted, so page size, margins, plot window, scale,
     // rotation, units and shade-plot settings were all lost on export.
@@ -6791,6 +6796,91 @@ bool dxfRW::writePlotSettings(DRW_PlotSettings *ent) {
     writer->writeDouble(147, ent->scaleFactor);
     writer->writeDouble(148, ent->paperImageOriginX);
     writer->writeDouble(149, ent->paperImageOriginY);
+}
+
+// LAYOUT is a fixed built-in OBJECT. It embeds the same AcDbPlotSettings prefix
+// as PLOTSETTINGS, followed by AcDbLayout fields.
+bool dxfRW::writeLayout(DRW_Layout *ent) {
+    const std::uint32_t handle = ent->handle != 0
+        ? static_cast<std::uint32_t>(ent->handle)
+        : m_handleAllocator.next();
+    writer->writeString(0, "LAYOUT");
+    writer->writeString(5, toHexStr(static_cast<int>(handle)));
+    writeObjectOwner(static_cast<std::uint32_t>(ent->parentHandle));
+    writer->writeString(100, "AcDbPlotSettings");
+    DRW_PlotSettings plotSettings;
+    plotSettings.pageSetupName = ent->pageSetupName;
+    plotSettings.printerConfig = ent->printerConfig;
+    plotSettings.plotLayoutFlags = ent->plotLayoutFlags;
+    plotSettings.marginLeft = ent->marginLeft;
+    plotSettings.marginBottom = ent->marginBottom;
+    plotSettings.marginRight = ent->marginRight;
+    plotSettings.marginTop = ent->marginTop;
+    plotSettings.paperWidth = ent->paperWidth;
+    plotSettings.paperHeight = ent->paperHeight;
+    plotSettings.paperSize = ent->paperSize;
+    plotSettings.plotOriginX = ent->plotOriginX;
+    plotSettings.plotOriginY = ent->plotOriginY;
+    plotSettings.paperUnits = ent->paperUnits;
+    plotSettings.plotRotation = ent->plotRotation;
+    plotSettings.plotType = ent->plotType;
+    plotSettings.windowMinX = ent->windowMinX;
+    plotSettings.windowMinY = ent->windowMinY;
+    plotSettings.windowMaxX = ent->windowMaxX;
+    plotSettings.windowMaxY = ent->windowMaxY;
+    plotSettings.plotViewName = ent->plotViewName;
+    plotSettings.realWorldUnits = ent->realWorldUnits;
+    plotSettings.drawingUnits = ent->drawingUnits;
+    plotSettings.currentStyleSheet = ent->currentStyleSheet;
+    plotSettings.scaleType = ent->scaleType;
+    plotSettings.scaleFactor = ent->scaleFactor;
+    plotSettings.paperImageOriginX = ent->paperImageOriginX;
+    plotSettings.paperImageOriginY = ent->paperImageOriginY;
+    plotSettings.shadePlotMode = ent->shadePlotMode;
+    plotSettings.shadePlotResLevel = ent->shadePlotResLevel;
+    plotSettings.shadePlotCustomDPI = ent->shadePlotCustomDPI;
+    writePlotSettingsFields(&plotSettings);
+
+    writer->writeString(100, "AcDbLayout");
+    writer->writeUtf8String(1, ent->name);
+    writer->writeInt16(70, ent->layoutFlags);
+    writer->writeInt32(71, ent->tabOrder);
+    writer->writeDouble(10, ent->limMinX);
+    writer->writeDouble(20, ent->limMinY);
+    writer->writeDouble(11, ent->limMaxX);
+    writer->writeDouble(21, ent->limMaxY);
+    writer->writeDouble(12, ent->insPoint.x);
+    writer->writeDouble(22, ent->insPoint.y);
+    writer->writeDouble(32, ent->insPoint.z);
+    writer->writeDouble(14, ent->extMin.x);
+    writer->writeDouble(24, ent->extMin.y);
+    writer->writeDouble(34, ent->extMin.z);
+    writer->writeDouble(15, ent->extMax.x);
+    writer->writeDouble(25, ent->extMax.y);
+    writer->writeDouble(35, ent->extMax.z);
+    writer->writeDouble(146, ent->elevation);
+    writer->writeDouble(13, ent->ucsOrigin.x);
+    writer->writeDouble(23, ent->ucsOrigin.y);
+    writer->writeDouble(33, ent->ucsOrigin.z);
+    writer->writeDouble(16, ent->ucsXAxis.x);
+    writer->writeDouble(26, ent->ucsXAxis.y);
+    writer->writeDouble(36, ent->ucsXAxis.z);
+    writer->writeDouble(17, ent->ucsYAxis.x);
+    writer->writeDouble(27, ent->ucsYAxis.y);
+    writer->writeDouble(37, ent->ucsYAxis.z);
+    writer->writeInt16(76, ent->orthoViewType);
+    if (ent->paperSpaceBlockRecordHandle.ref != 0)
+        writer->writeString(
+            330, toHexStr(static_cast<int>(ent->paperSpaceBlockRecordHandle.ref)));
+    if (ent->lastActiveViewportHandle.ref != 0)
+        writer->writeString(
+            331, toHexStr(static_cast<int>(ent->lastActiveViewportHandle.ref)));
+    if (ent->namedUcsHandle.ref != 0)
+        writer->writeString(
+            345, toHexStr(static_cast<int>(ent->namedUcsHandle.ref)));
+    if (ent->baseUcsHandle.ref != 0)
+        writer->writeString(
+            346, toHexStr(static_cast<int>(ent->baseUcsHandle.ref)));
     return true;
 }
 

@@ -132,6 +132,7 @@ public:
     bool writeDimension(DRW_Dimension *ent);
     void setEllipseParts(int parts){elParts = parts;} /*!< set parts number when convert ellipse to polyline */
     bool writePlotSettings(DRW_PlotSettings *ent);
+    bool writeLayout(DRW_Layout *ent);
     /*!< F4 — typed DXF emitters for the routed data-only OBJECTS the DWG reader
      * populates only into typed metadata (SUN/SCALE/DICTIONARYVAR/
      * RASTERVARIABLES). The DXF group-code shape is the inverse of each type's
@@ -361,6 +362,7 @@ private:
      * parentHandle when nonzero, else root dict "C" so it is reachable and not
      * pruned as an orphan); no-op pre-R2000 (DXF has no OBJECTS 330 then). */
     void writeObjectOwner(std::uint32_t parentHandle);
+    void writePlotSettingsFields(const DRW_PlotSettings *ent);
     /*use version from dwgutil.h*/
     std::string toHexStr(int n);//RLZ removeme
     bool writeAppData(const std::list<std::list<DRW_Variant>> &appData);

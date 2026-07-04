@@ -5579,16 +5579,19 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic& g, const QString& file, RS2::FormatT
         //SLICE 2: WIPEOUTVARIABLES is a CUSTOM class -> reserve + register CLASS.
         for (const auto &record : metadata.wipeoutVariables())
             reserveTyped(record.handle, record.replayState, "WIPEOUTVARIABLES");
-        //SLICE 1: MLINESTYLE is a FIXED built-in -> reserve its handle but
-        //register NO CLASS (it is intentionally absent from dxfClassForRecordName).
-        for (const auto &record : metadata.mlineStyles()) {
-            if (record.handle == 0
-                || record.replayState
-                       != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
-                || rawObjectHandles.count(record.handle) != 0)
-                continue;
-            m_dxfW->reserveHandle(record.handle);
-        }
+        //SLICE 1: fixed built-ins -> reserve handles but register NO CLASS.
+        auto reserveFixedTyped = [&](std::uint32_t handle,
+                                     LC_DwgAdvancedMetadata::ReplayState state) {
+            if (handle == 0
+                || state != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                || rawObjectHandles.count(handle) != 0)
+                return;
+            m_dxfW->reserveHandle(handle);
+        };
+        for (const auto &record : metadata.mlineStyles())
+            reserveFixedTyped(record.handle, record.replayState);
+        for (const auto &record : metadata.layouts())
+            reserveFixedTyped(record.handle, record.replayState);
 
         if (!classes.empty())
             m_dxfW->setDxfClasses(classes);
@@ -5687,15 +5690,14 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic& g, const QString& file, RS2::FormatT
 
         // (3b) F4-followup: DWG->DXF parent dictionaries for the data-only
         // OBJECTS. On the DWG path the only INVALID_OWNER_HANDLE fixes ezdxf
-        // applies are data-only OBJECTS (SUN / SCALE / DICTIONARYVAR /
-        // RASTERVARIABLES) whose 330 owner is a named dictionary that LibreCAD
-        // does not regenerate (e.g. ACAD_DICTIONARYVAR @0x70 owning the
-        // DICTIONARYVARs). Emit EXACTLY those parent dictionaries as real,
+        // applies are typed OBJECTS (SUN / SCALE / DICTIONARYVAR /
+        // RASTERVARIABLES / LAYOUT / ...) whose 330 owner is a named dictionary
+        // that LibreCAD does not regenerate (e.g. ACAD_DICTIONARYVAR @0x70
+        // owning the DICTIONARYVARs). Emit EXACTLY those parent dictionaries as real,
         // C-owned OBJECTS so the children resolve to a valid owner; keep ONLY the
         // entries that target an object we actually emit (the data-only children)
         // so the dict introduces no new dangling 350. We deliberately do NOT emit
-        // the dictionaries whose children are unmodeled objects LibreCAD drops
-        // (ACAD_VISUALSTYLE / ACAD_MATERIAL / ACAD_MLINESTYLE / ACAD_LAYOUT ...):
+        // the dictionaries whose children are unmodeled objects LibreCAD drops:
         // emitting those would replace one missing-owner fix with many
         // dangling-entry fixes and corrupt cross-refs.
         //
@@ -5723,6 +5725,8 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic& g, const QString& file, RS2::FormatT
         for (const auto &r : metadata.rasterVariables())
             noteDataOnly(r.handle, r.parentHandle, r.replayState);
         for (const auto &r : metadata.mlineStyles())
+            noteDataOnly(r.handle, r.parentHandle, r.replayState);
+        for (const auto &r : metadata.layouts())
             noteDataOnly(r.handle, r.parentHandle, r.replayState);
         for (const auto &r : metadata.wipeoutVariables())
             noteDataOnly(r.handle, r.parentHandle, r.replayState);
@@ -8479,6 +8483,16 @@ void RS_FilterDXFRW::writeObjects() {
             DRW_MLineStyle style = mlineStyleFromMetadata(record);
             style.parentHandle = resolveOwner(record.parentHandle);
             m_dxfW->writeMLineStyle(&style);
+        }
+        //LAYOUT is a fixed built-in object. It is typed metadata only on DXF
+        //read too, so emit it here and let the prepass materialize ACAD_LAYOUT
+        //when the source had a reachable layout dictionary.
+        for (const auto &record : metadata.layouts()) {
+            if (!emitTyped(record.handle, record.replayState))
+                continue;
+            DRW_Layout layout = layoutFromMetadata(record);
+            layout.parentHandle = resolveOwner(record.parentHandle);
+            m_dxfW->writeLayout(&layout);
         }
         //SLICE 2: WIPEOUTVARIABLES (custom, CLASS registered). Same dedup-vs-raw
         //-net + owner re-attach as the other data-only OBJECTS.
