@@ -3056,6 +3056,52 @@ bool DRW_Mesh::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
     }
 }
 
+bool DRW_Mesh::encodeDwg(DRW::Version dwgVersion, dwgBufferW *buf, std::uint32_t bs,
+                         dwgBufferW *strBuf, dwgBufferW *handleBuf) {
+    (void)bs; (void)strBuf;
+    oType = kDwgClassNum;
+    if (!encodeDwgCommon(dwgVersion, buf)) return false;
+
+    buf->putBitShort(version);
+    buf->putBit(blendCrease ? 1 : 0);
+
+    // DWG stores a subdiv-vertex vector in the slot that DXF exposes as group
+    // 91 subdivision level.  Preserve the vector exactly; DXF write keeps the
+    // public subdivisionLevel field.
+    buf->putBitLong(static_cast<std::int32_t>(subdivVertices.size()));
+    for (const DRW_Coord& vertex : subdivVertices)
+        buf->put3BitDouble(vertex);
+
+    buf->putBitLong(static_cast<std::int32_t>(vertices.size()));
+    for (const DRW_Coord& vertex : vertices)
+        buf->put3BitDouble(vertex);
+
+    std::int32_t faceStreamCount = 0;
+    for (const auto& face : faces)
+        faceStreamCount += static_cast<std::int32_t>(face.size() + 1);
+    buf->putBitLong(faceStreamCount);
+    for (const auto& face : faces) {
+        buf->putBitLong(static_cast<std::int32_t>(face.size()));
+        for (std::int32_t index : face)
+            buf->putBitLong(index);
+    }
+
+    buf->putBitLong(static_cast<std::int32_t>(edges.size()));
+    for (const auto& edge : edges) {
+        buf->putBitLong(edge.first);
+        buf->putBitLong(edge.second);
+    }
+
+    buf->putBitLong(static_cast<std::int32_t>(creases.size()));
+    for (double crease : creases)
+        buf->putBitDouble(crease);
+
+    buf->putBit(0);
+    buf->putBit(0);
+
+    return encodeDwgEntHandle(dwgVersion, buf, handleBuf);
+}
+
 bool DRW_Shape::parseDwg(DRW::Version v, dwgBuffer *buf, std::uint32_t bs){
     m_bodyBitSize = bs;
     bool ret = DRW_Entity::parseDwg(v, buf, nullptr, bs);

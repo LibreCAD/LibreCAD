@@ -115,6 +115,7 @@ public:
     bool writeMPolygon(DRW_MPolygon *ent);
     bool writeViewport(DRW_Viewport *ent);
     bool writeLight(DRW_Light *ent);
+    bool writeMesh(DRW_Mesh *ent);
     bool writeShape(DRW_Shape *ent);
     bool writeOle2Frame(DRW_Ole2Frame *ent);
     DRW_ImageDef *writeImage(DRW_Image *ent, std::string name);

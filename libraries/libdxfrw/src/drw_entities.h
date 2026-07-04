@@ -597,18 +597,22 @@ public:
 /*!
 *  Unlike ACIS solids, a MESH carries full vertex/face/edge topology, so it is
 *  decodable to real geometry. Renderable: LibreCAD decomposes the base-cage
-*  faces into polylines. R2010+ DWG (custom class "MESH"/"AcDbSubDMesh").
+*  faces into polylines. DWG custom class "MESH"/"AcDbSubDMesh" appears in
+*  real AC1018 save-downs, so writing is not gated to AC1024+.
 *  @author LibreCAD
 */
 class DRW_Mesh : public DRW_Entity {
     SETENTFRIENDS
 public:
     DRW_Mesh() { eType = DRW::MESH; }
+    static constexpr std::uint16_t kDwgClassNum = 520; /*!< AcDbSubDMesh DWG custom class id */
     void applyExtrusion() override {}
 
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     bool parseDwg(DRW::Version v, dwgBuffer *buf, std::uint32_t bs=0) override;
+    bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0,
+                   dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
 
 public:
     std::uint16_t version = 2;          /*!< subdivision-mesh version, code 71 */

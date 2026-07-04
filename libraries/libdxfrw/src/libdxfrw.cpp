@@ -2416,6 +2416,45 @@ bool dxfRW::writeLight(DRW_Light *ent) {
     return true;
 }
 
+bool dxfRW::writeMesh(DRW_Mesh *ent) {
+    if (version <= DRW::AC1009)
+        return true;
+    writer->writeString(0, "MESH");
+    writeEntity(ent);
+    writer->writeString(100, "AcDbSubDMesh");
+    writer->writeInt16(71, static_cast<int>(ent->version));
+    writer->writeInt16(72, ent->blendCrease ? 1 : 0);
+    writer->writeInt32(91, ent->subdivisionLevel);
+    writer->writeInt32(92, static_cast<int>(ent->vertices.size()));
+    for (const DRW_Coord& vertex : ent->vertices) {
+        writer->writeDouble(10, vertex.x);
+        writer->writeDouble(20, vertex.y);
+        writer->writeDouble(30, vertex.z);
+    }
+
+    std::int32_t faceStreamCount = 0;
+    for (const auto& face : ent->faces)
+        faceStreamCount += static_cast<std::int32_t>(face.size() + 1);
+    writer->writeInt32(93, faceStreamCount);
+    for (const auto& face : ent->faces) {
+        writer->writeInt32(90, static_cast<int>(face.size()));
+        for (std::int32_t index : face)
+            writer->writeInt32(90, index);
+    }
+
+    writer->writeInt32(94, static_cast<int>(ent->edges.size()));
+    for (const auto& edge : ent->edges) {
+        writer->writeInt32(90, edge.first);
+        writer->writeInt32(90, edge.second);
+    }
+
+    writer->writeInt32(95, static_cast<int>(ent->creases.size()));
+    for (double crease : ent->creases)
+        writer->writeDouble(140, crease);
+    writer->writeInt32(90, 0);
+    return true;
+}
+
 bool dxfRW::writeShape(DRW_Shape *ent) {
     // DXF SHAPE (AcDbShape). The DWG stores only a glyph index; the glyph name
     // lives in the external .shx and is unrecoverable, so group 2 carries the
@@ -6362,6 +6401,7 @@ bool dxfRW::dxfClassForRecordName(const std::string &recName, DRW_Class &out) {
         // them on load.
         {"ACAD_TABLE",       "AcDbTable",               "ObjectDBX Classes", 1025, 1},
         {"HELIX",            "AcDbHelix",               "ObjectDBX Classes", 4095, 1},
+        {"MESH",             "AcDbSubDMesh",            "SCENEOE",           1025, 1},
         {"MPOLYGON",         "AcDbMPolygon",            "AcMPolygonObj15",   1025, 1},
         {"LARGE_RADIAL_DIMENSION", "AcDbRadialDimensionLarge", "ACAD",       1025, 1},
         {"SURFACE",          "AcDbSurface",             "ObjectDBX Classes", 4095, 1},

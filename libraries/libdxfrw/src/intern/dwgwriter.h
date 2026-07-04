@@ -90,6 +90,8 @@ public:
         registerDwgClass({519, 0x401, "ACAD",
                           "AcDbRadialDimensionLarge", "LARGE_RADIAL_DIMENSION",
                           false, 0x1F2});
+        registerDwgClass({520, 0x401, "SCENEOE",
+                          "AcDbSubDMesh", "MESH", false, 0x1F2});
     }
 
     virtual ~dwgWriter() = default;

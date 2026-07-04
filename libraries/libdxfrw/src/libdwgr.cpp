@@ -570,6 +570,10 @@ bool dwgRW::writeOle2Frame(DRW_Ole2Frame *ent) {
     return encodeEntityForWrite(ent);
 }
 
+bool dwgRW::writeMesh(DRW_Mesh *ent) {
+    return encodeEntityForWrite(ent);
+}
+
 bool dwgRW::writeWipeout(DRW_Wipeout *ent) {
     return encodeEntityForWrite(ent);
 }

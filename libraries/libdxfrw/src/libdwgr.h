@@ -104,6 +104,7 @@ public:
     bool writeViewport(DRW_Viewport *ent);
     bool writeShape(DRW_Shape *ent);
     bool writeOle2Frame(DRW_Ole2Frame *ent);
+    bool writeMesh(DRW_Mesh *ent);
     bool writeWipeout(DRW_Wipeout *ent);
     bool writePointCloud(DRW_PointCloud *ent);
     bool writePointCloudEx(DRW_PointCloudEx *ent);
