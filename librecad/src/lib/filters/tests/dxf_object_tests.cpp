@@ -33,6 +33,7 @@
 #include <filesystem>
 #include <fstream>
 #include <iterator>
+#include <memory>
 #include <string>
 
 #include "drw_header.h"
@@ -361,6 +362,46 @@ public:
     dim.name = "XDIM";
     addXData(dim, "dimstyle-xdata", 1070, 12);
     m_rw->writeDimstyle(&dim);
+  }
+};
+
+class EntityXDataEmitter : public StubInterface {
+public:
+  dxfRW *m_rw = nullptr;
+
+  static void addXData(DRW_Entity &entity, const char *payload, int intCode,
+                       int intValue) {
+    entity.extData.push_back(
+        std::make_shared<DRW_Variant>(1001, std::string{"ENTITYAPP"}));
+    entity.extData.push_back(
+        std::make_shared<DRW_Variant>(1000, std::string{payload}));
+    entity.extData.push_back(
+        std::make_shared<DRW_Variant>(intCode, static_cast<std::int32_t>(intValue)));
+  }
+
+  void writeEntities() override {
+    DRW_Line line;
+    line.basePoint = DRW_Coord(0.0, 0.0, 0.0);
+    line.secPoint = DRW_Coord(1.0, 1.0, 0.0);
+    addXData(line, "line-xdata", 1070, 17);
+    m_rw->writeLine(&line);
+
+    DRW_LWPolyline lw;
+    auto v1 = lw.addVertex();
+    v1->x = 0.0;
+    v1->y = 0.0;
+    auto v2 = lw.addVertex();
+    v2->x = 2.0;
+    v2->y = 0.0;
+    addXData(lw, "lwpolyline-xdata", 1071, 18);
+    m_rw->writeLWPolyline(&lw);
+
+    DRW_Text text;
+    text.basePoint = DRW_Coord(3.0, 4.0, 0.0);
+    text.height = 0.5;
+    text.text = "XDATA text";
+    addXData(text, "text-xdata", 1070, 19);
+    m_rw->writeText(&text);
   }
 };
 
@@ -863,6 +904,25 @@ bool recordHasConsecutive(
   }
   return inRecord && matches();
 }
+
+bool recordTypeHasConsecutive(
+    const std::vector<std::pair<std::string, std::string>> &groups,
+    const std::string &recordType,
+    const std::vector<std::pair<std::string, std::string>> &seq) {
+  std::vector<std::pair<std::string, std::string>> record;
+  bool inRecord = false;
+  for (const auto &kv : groups) {
+    if (kv.first == "0") {
+      if (inRecord && hasConsecutive(record, seq))
+        return true;
+      inRecord = (kv.second == recordType);
+      record.clear();
+    }
+    if (inRecord)
+      record.push_back(kv);
+  }
+  return inRecord && hasConsecutive(record, seq);
+}
 } // namespace
 
 TEST_CASE("DXF LAYOUT object writes plot prefix and layout body",
@@ -1124,6 +1184,33 @@ TEST_CASE("DXF table record writers preserve XDATA",
   CHECK(recordHasConsecutive(groups, "DIMSTYLE", "XDIM",
                              {{"1001", "TABLEAPP"}, {"1000", "dimstyle-xdata"},
                               {"1070", "12"}}));
+}
+
+TEST_CASE("DXF selected entity writers preserve XDATA",
+          "[dxf][entity][xdata]") {
+  const auto path =
+      std::filesystem::temp_directory_path() / "lc_entity_xdata.dxf";
+  std::filesystem::remove(path);
+
+  {
+    dxfRW w(path.string().c_str());
+    EntityXDataEmitter em;
+    em.m_rw = &w;
+    REQUIRE(w.write(&em, DRW::AC1021, false));
+  }
+
+  const auto groups = readGroups(path);
+  std::filesystem::remove(path);
+
+  CHECK(recordTypeHasConsecutive(
+      groups, "LINE", {{"1001", "ENTITYAPP"}, {"1000", "line-xdata"},
+                       {"1070", "17"}}));
+  CHECK(recordTypeHasConsecutive(
+      groups, "LWPOLYLINE",
+      {{"1001", "ENTITYAPP"}, {"1000", "lwpolyline-xdata"}, {"1071", "18"}}));
+  CHECK(recordTypeHasConsecutive(
+      groups, "TEXT", {{"1001", "ENTITYAPP"}, {"1000", "text-xdata"},
+                       {"1070", "19"}}));
 }
 
 // F3-1: dxfRW::writeEntity captures source-handle -> minted-handle in the

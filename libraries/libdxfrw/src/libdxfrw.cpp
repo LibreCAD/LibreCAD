@@ -1013,6 +1013,8 @@ bool dxfRW::writeLine(DRW_Line *ent) {
         writer->writeDouble(220, crd.y);
         writer->writeDouble(230, crd.z);
     }
+    if (!ent->extData.empty())
+        writeExtData(ent->extData);
     return true;
 }
 
@@ -1270,6 +1272,8 @@ bool dxfRW::writeLWPolyline(DRW_LWPolyline *ent){
             writer->writeDouble(220, crd.y);
             writer->writeDouble(230, crd.z);
         }
+        if (!ent->extData.empty())
+            writeExtData(ent->extData);
     } else {
         //RLZ: TODO convert lwpolyline in polyline (not exist in acad 12)
     }
@@ -2416,6 +2420,8 @@ bool dxfRW::writeText(DRW_Text *ent){
     if (ent->alignV != DRW_Text::VBaseLine) {
         writer->writeInt16(73, ent->alignV);
     }
+    if (!ent->extData.empty())
+        writeExtData(ent->extData);
     return true;
 }
 
