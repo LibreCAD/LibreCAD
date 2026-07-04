@@ -477,6 +477,10 @@ bool dwgRW::writeInsert(DRW_Insert *ent) {
     return encodeEntityForWrite(ent);
 }
 
+bool dwgRW::writeTable(DRW_Table *ent) {
+    return encodeEntityForWrite(ent);
+}
+
 bool dwgRW::writeMText(DRW_MText *ent) {
     return encodeEntityForWrite(ent);
 }

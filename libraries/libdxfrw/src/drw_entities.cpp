@@ -3582,6 +3582,204 @@ bool DRW_Insert::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
     return true;
 }
 
+bool DRW_Table::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
+    auto ensureGrid = [this]() {
+        if (m_dxfRowsExpected < 0 || m_dxfColumnsExpected < 0)
+            return;
+
+        const std::uint32_t rows = static_cast<std::uint32_t>(m_dxfRowsExpected);
+        const std::uint32_t columns = static_cast<std::uint32_t>(m_dxfColumnsExpected);
+        if (rows > kMaxTableRows || columns > kMaxTableColumns
+            || (columns != 0 && rows > kMaxTableCells / columns)) {
+            return;
+        }
+
+        if (m_content.m_columns.size() != columns) {
+            m_content.m_columns.clear();
+            m_content.m_columns.resize(columns);
+            m_dxfColumnWidthsRead = 0;
+        }
+        if (m_content.m_rows.size() != rows) {
+            m_content.m_rows.clear();
+            m_content.m_rows.resize(rows);
+            m_dxfRowHeightsRead = 0;
+        }
+        for (auto& row : m_content.m_rows)
+            row.m_cells.resize(columns);
+
+        m_hasSemanticContent = true;
+        m_semanticContentComplete = true;
+    };
+
+    auto currentCell = [this]() -> DRW_TableCell* {
+        if (m_dxfCurrentCell < 0 || m_content.m_columns.empty()
+            || m_content.m_rows.empty()) {
+            return nullptr;
+        }
+
+        const std::size_t columns = m_content.m_columns.size();
+        const std::size_t cell = static_cast<std::size_t>(m_dxfCurrentCell);
+        const std::size_t row = cell / columns;
+        const std::size_t column = cell % columns;
+        if (row >= m_content.m_rows.size()
+            || column >= m_content.m_rows[row].m_cells.size()) {
+            return nullptr;
+        }
+        return &m_content.m_rows[row].m_cells[column];
+    };
+
+    auto currentContent = [&currentCell]() -> DRW_TableCellContent* {
+        DRW_TableCell *cell = currentCell();
+        if (cell == nullptr)
+            return nullptr;
+        if (cell->m_contents.empty() || cell->m_contents.back().m_type != 1) {
+            DRW_TableCellContent content;
+            content.m_type = 1;
+            cell->m_contents.push_back(content);
+        }
+        return &cell->m_contents.back();
+    };
+
+    if (code == 100) {
+        const std::string subclass = reader->getString();
+        if (subclass == "AcDbBlockReference") {
+            m_dxfSubclass = DxfSubclass::BlockReference;
+        } else if (subclass == "AcDbTable") {
+            m_dxfSubclass = DxfSubclass::Table;
+        } else if (subclass == "AcDbEntity") {
+            m_dxfSubclass = DxfSubclass::Entity;
+        }
+        return true;
+    }
+
+    if (m_dxfSubclass != DxfSubclass::Table)
+        return DRW_Insert::parseCode(code, reader);
+
+    switch (code) {
+    case 342:
+        m_tableStyleHandle = static_cast<std::uint32_t>(reader->getHandleString());
+        m_content.m_tableStyleHandle = m_tableStyleHandle;
+        break;
+    case 343:
+        reader->getHandleString();
+        break;
+    case 11:
+        m_horizontalDirection.x = reader->getDouble();
+        break;
+    case 21:
+        m_horizontalDirection.y = reader->getDouble();
+        break;
+    case 31:
+        m_horizontalDirection.z = reader->getDouble();
+        break;
+    case 90:
+        if (m_dxfInCellValue) {
+            if (DRW_TableCellContent *content = currentContent())
+                content->m_value.m_dataType = reader->getInt32();
+            else
+                reader->getInt32();
+        } else {
+            m_valueFlag = reader->getInt32();
+        }
+        break;
+    case 91:
+        if (m_dxfRowsExpected < 0 && !m_dxfInCellValue) {
+            m_dxfRowsExpected = reader->getInt32();
+            ensureGrid();
+        } else {
+            reader->getInt32();
+        }
+        break;
+    case 92:
+        if (m_dxfColumnsExpected < 0 && !m_dxfInCellValue) {
+            m_dxfColumnsExpected = reader->getInt32();
+            ensureGrid();
+        } else {
+            reader->getInt32();
+        }
+        break;
+    case 93:
+    case 94:
+    case 95:
+    case 96:
+    case 172:
+    case 173:
+    case 174:
+    case 175:
+    case 176:
+    case 178:
+        reader->getInt32();
+        break;
+    case 141:
+        ensureGrid();
+        if (m_dxfRowHeightsRead < m_content.m_rows.size())
+            m_content.m_rows[m_dxfRowHeightsRead++].m_height = reader->getDouble();
+        else
+            reader->getDouble();
+        break;
+    case 142:
+        ensureGrid();
+        if (m_dxfColumnWidthsRead < m_content.m_columns.size())
+            m_content.m_columns[m_dxfColumnWidthsRead++].m_width = reader->getDouble();
+        else
+            reader->getDouble();
+        break;
+    case 145:
+        reader->getDouble();
+        break;
+    case 171:
+        ensureGrid();
+        if (!m_content.m_rows.empty() && !m_content.m_columns.empty()
+            && m_dxfNextCell < m_content.m_rows.size() * m_content.m_columns.size()) {
+            m_dxfCurrentCell = static_cast<int>(m_dxfNextCell++);
+            if (DRW_TableCell *cell = currentCell())
+                cell->m_flags = reader->getInt32();
+            else
+                reader->getInt32();
+        } else {
+            m_dxfCurrentCell = -1;
+            reader->getInt32();
+        }
+        m_dxfInCellValue = false;
+        break;
+    case 301:
+        m_dxfInCellValue = reader->getString() == "CELL_VALUE";
+        if (m_dxfInCellValue)
+            currentContent();
+        break;
+    case 1:
+    case 302: {
+        const UTF8STRING text = reader->getUtf8String();
+        if (m_dxfInCellValue) {
+            if (DRW_TableCellContent *content = currentContent()) {
+                content->m_text = text;
+                content->m_value.m_dataType = 4;
+                content->m_value.m_value.addString(1, text);
+            }
+        }
+        break;
+    }
+    case 300:
+        if (m_dxfInCellValue) {
+            if (DRW_TableCellContent *content = currentContent())
+                content->m_value.m_valueString = reader->getUtf8String();
+            else
+                reader->getUtf8String();
+        } else {
+            reader->getUtf8String();
+        }
+        break;
+    case 304:
+        reader->getString();
+        m_dxfInCellValue = false;
+        break;
+    default:
+        return DRW_Entity::parseCode(code, reader);
+    }
+
+    return true;
+}
+
 bool DRW_Insert::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs){
     std::int32_t objCount = 0;
     bool ret = DRW_Entity::parseDwg(version, buf, NULL, bs);

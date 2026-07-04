@@ -106,6 +106,7 @@ public:
     bool writeBlockRecord(std::string name, int insUnits = 0);
     bool writeBlock(DRW_Block *ent);
     bool writeInsert(DRW_Insert *ent);
+    bool writeTable(DRW_Table *ent);
     bool writeAttrib(DRW_Attrib *ent);
     bool writeMText(DRW_MText *ent);
     bool writeMLine(DRW_MLine *ent);
@@ -281,6 +282,7 @@ private:
     bool processTrace();
     bool processSolid();
     bool processInsert();
+    bool processTable();
     bool processAttrib(DRW_Insert* insert);
     bool processLWPolyline();
     bool processPolyline();

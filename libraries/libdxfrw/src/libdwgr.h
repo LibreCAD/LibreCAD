@@ -90,6 +90,7 @@ public:
     bool writeSolid(DRW_Solid *ent);
     bool write3dface(DRW_3Dface *ent);
     bool writeInsert(DRW_Insert *ent);
+    bool writeTable(DRW_Table *ent);
     bool writeMText(DRW_MText *ent);
     bool writeSpline(DRW_Spline *ent);
     bool writeHelix(DRW_Helix *ent);

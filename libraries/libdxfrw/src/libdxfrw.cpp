@@ -80,6 +80,25 @@ void writeDxfSplineBody(dxfWriter *writer, DRW_Spline *ent) {
     }
 }
 
+std::size_t tableColumnCount(const DRW_Table& table) {
+    std::size_t columns = table.m_content.m_columns.size();
+    for (const auto& row : table.m_content.m_rows)
+        columns = std::max(columns, row.m_cells.size());
+    return columns;
+}
+
+UTF8STRING tableCellText(const DRW_TableCell& cell) {
+    for (const DRW_TableCellContent& content : cell.m_contents) {
+        if (!content.m_text.empty())
+            return content.m_text;
+        if (!content.m_value.m_valueString.empty())
+            return content.m_value.m_valueString;
+        if (content.m_value.m_value.type() == DRW_Variant::STRING)
+            return content.m_value.m_value.c_str();
+    }
+    return UTF8STRING();
+}
+
 }
 
 /*enum sections {
@@ -2164,6 +2183,94 @@ bool dxfRW::writeInsert(DRW_Insert *ent){
         writer->writeString(0, "SEQEND");
         writeEntity(ent, /*captureSourceHandle=*/false);  // parent re-entry: do not pollute the map
     }
+    return true;
+}
+
+bool dxfRW::writeTable(DRW_Table *ent){
+    writer->writeString(0, "ACAD_TABLE");
+    writeEntity(ent);
+    if (version > DRW::AC1009)
+        writer->writeString(100, "AcDbBlockReference");
+
+    const UTF8STRING blockName = ent->name.empty() ? UTF8STRING("*T1") : ent->name;
+    writer->writeUtf8String(2, blockName);
+    writer->writeDouble(10, ent->basePoint.x);
+    writer->writeDouble(20, ent->basePoint.y);
+    writer->writeDouble(30, ent->basePoint.z);
+    if (ent->xscale != 1.0)
+        writer->writeDouble(41, ent->xscale);
+    if (ent->yscale != 1.0)
+        writer->writeDouble(42, ent->yscale);
+    if (ent->zscale != 1.0)
+        writer->writeDouble(43, ent->zscale);
+    if (ent->angle != 0.0)
+        writer->writeDouble(50, ent->angle * ARAD);
+    if (ent->extPoint.x != 0 || ent->extPoint.y != 0 || ent->extPoint.z != 1) {
+        writer->writeDouble(210, ent->extPoint.x);
+        writer->writeDouble(220, ent->extPoint.y);
+        writer->writeDouble(230, ent->extPoint.z);
+    }
+
+    writer->writeString(100, "AcDbTable");
+    if (ent->m_tableStyleHandle != 0)
+        writer->writeString(342, toHexStr(static_cast<int>(ent->m_tableStyleHandle)));
+
+    DRW_Coord horizontal = ent->m_horizontalDirection;
+    if (horizontal.x == 0.0 && horizontal.y == 0.0 && horizontal.z == 0.0)
+        horizontal.x = 1.0;
+    writer->writeDouble(11, horizontal.x);
+    writer->writeDouble(21, horizontal.y);
+    writer->writeDouble(31, horizontal.z);
+
+    const std::size_t rows = ent->m_content.m_rows.size();
+    const std::size_t columns = tableColumnCount(*ent);
+    writer->writeInt32(90, ent->m_valueFlag);
+    writer->writeInt32(91, static_cast<int>(rows));
+    writer->writeInt32(92, static_cast<int>(columns));
+    writer->writeInt32(93, 0);
+    writer->writeInt32(94, 0);
+    writer->writeInt32(95, 0);
+    writer->writeInt32(96, 0);
+
+    for (const auto& row : ent->m_content.m_rows)
+        writer->writeDouble(141, row.m_height);
+    for (std::size_t column = 0; column < columns; ++column) {
+        const double width = column < ent->m_content.m_columns.size()
+            ? ent->m_content.m_columns[column].m_width
+            : 0.0;
+        writer->writeDouble(142, width);
+    }
+
+    for (std::size_t row = 0; row < rows; ++row) {
+        for (std::size_t column = 0; column < columns; ++column) {
+            const DRW_TableCell *cell = nullptr;
+            if (column < ent->m_content.m_rows[row].m_cells.size())
+                cell = &ent->m_content.m_rows[row].m_cells[column];
+            const UTF8STRING text = cell == nullptr ? UTF8STRING() : tableCellText(*cell);
+            writer->writeInt16(171, 1);
+            writer->writeInt16(172, 0);
+            writer->writeInt16(173, 0);
+            writer->writeInt16(174, 0);
+            writer->writeInt16(175, 1);
+            writer->writeInt16(176, 1);
+            writer->writeInt32(91, 0);
+            writer->writeInt16(178, 0);
+            writer->writeDouble(145, 0.0);
+            writer->writeInt32(92, 0);
+            writer->writeUtf8String(301, "CELL_VALUE");
+            writer->writeInt32(93, text.empty() ? 3 : 2);
+            writer->writeInt32(90, text.empty() ? 0 : 4);
+            if (!text.empty())
+                writer->writeUtf8String(1, text);
+            else
+                writer->writeInt32(91, 0);
+            writer->writeInt32(94, 0);
+            writer->writeUtf8String(300, "");
+            writer->writeUtf8String(302, text);
+            writer->writeUtf8String(304, "ACVALUE_END");
+        }
+    }
+
     return true;
 }
 
@@ -4276,6 +4383,8 @@ bool dxfRW::processEntities(bool isblock) {
             processed = processSolid();
         } else if (nextentity == "INSERT") {
             processed = processInsert();
+        } else if (nextentity == "ACAD_TABLE") {
+            processed = processTable();
         } else if (nextentity == "LWPOLYLINE") {
             processed = processLWPolyline();
         } else if (nextentity == "POLYLINE") {
@@ -4672,6 +4781,32 @@ bool dxfRW::processInsert() {
         }
 
         if (!insert.parseCode(code, reader)) {
+            return setError( DRW::BAD_CODE_PARSED);
+        }
+    }
+
+    return setError(DRW::BAD_READ_ENTITIES);
+}
+
+bool dxfRW::processTable() {
+    DRW_DBG("dxfRW::processTable");
+    int code;
+    DRW_Table table;
+    while (reader->readRec(&code)) {
+        DRW_DBG(code); DRW_DBG("\n");
+        if (0 == code) {
+            nextentity = reader->getString();
+            DRW_DBG(nextentity); DRW_DBG("\n");
+            if (nextentity != "ATTRIB") {
+                iface->addTable(table);
+                return true;  //found new entity or ENDSEC, terminate
+            }
+            if (!processAttrib(&table))
+                return false;
+            continue;
+        }
+
+        if (!table.parseCode(code, reader)) {
             return setError( DRW::BAD_CODE_PARSED);
         }
     }
@@ -6528,9 +6663,9 @@ bool dxfRW::dxfClassForRecordName(const std::string &recName, DRW_Class &out) {
         {"LAYER_INDEX",      "AcDbLayerIndex",          "ObjectDBX Classes", 0, 0},
         {"SPATIAL_INDEX",    "AcDbSpatialIndex",        "ObjectDBX Classes", 0, 0},
         {"DIMASSOC",         "AcDbDimAssoc",            "AcDbDimAssoc",      0, 0},
-        // Custom ENTITIES (isEntity=1) that reach the raw net (rawDxfEntities)
-        // when LibreCAD does not model them; without a CLASS, AutoCAD/ODA prune
-        // them on load.
+        // Custom ENTITIES (isEntity=1). Typed direct writers and raw-net replay
+        // both need these CLASS records; without them AutoCAD/ODA prune the
+        // entities on load.
         {"ACAD_TABLE",       "AcDbTable",               "ObjectDBX Classes", 1025, 1},
         {"HELIX",            "AcDbHelix",               "ObjectDBX Classes", 4095, 1},
         {"MESH",             "AcDbSubDMesh",            "SCENEOE",           1025, 1},

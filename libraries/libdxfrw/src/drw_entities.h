@@ -975,6 +975,7 @@ public:
     }
 
 protected:
+    bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     bool parseDwg(DRW::Version v, dwgBuffer *buf, std::uint32_t bs=0) override;
 
 public:
@@ -984,6 +985,22 @@ public:
     bool m_semanticContentComplete = false;
     std::uint32_t m_tableStyleHandle = 0;
     DRW_TableContent m_content;
+
+private:
+    enum class DxfSubclass {
+        Entity,
+        BlockReference,
+        Table
+    };
+
+    DxfSubclass m_dxfSubclass = DxfSubclass::Entity;
+    int m_dxfRowsExpected = -1;
+    int m_dxfColumnsExpected = -1;
+    std::size_t m_dxfRowHeightsRead = 0;
+    std::size_t m_dxfColumnWidthsRead = 0;
+    std::size_t m_dxfNextCell = 0;
+    int m_dxfCurrentCell = -1;
+    bool m_dxfInCellValue = false;
 };
 
 //! Class to handle standalone TABLECONTENT (AcDbTableContent) objects.
