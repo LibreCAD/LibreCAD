@@ -1032,6 +1032,9 @@ public:
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
+    bool encodeDwg(DRW::Version version, dwgBufferW *buf,
+                   dwgBufferW *strBuf = nullptr,
+                   dwgBufferW *handleBuf = nullptr) const;
 
 public:
     DRW_Coord origin;           /*!< UCS origin, codes 10/20/30 */
@@ -2674,6 +2677,7 @@ public:
     std::map<std::string, std::uint32_t> ltypeMap;    /*!< DWG: uppercase ltype name -> handle */
     std::map<std::string, std::uint32_t> layerMap;    /*!< DWG: uppercase layer name -> handle */
     std::map<std::string, std::uint32_t> styleMap;    /*!< DWG: uppercase style name -> handle */
+    std::map<std::string, std::uint32_t> ucsMap;      /*!< DWG: uppercase UCS name -> handle */
     std::map<std::string, std::uint32_t> viewMap;     /*!< DWG: uppercase view name -> handle */
     std::map<std::string, std::uint32_t> vportMap;    /*!< DWG: uppercase vport name -> handle */
     std::map<std::string, std::uint32_t> appidMap;    /*!< DWG: uppercase appid name -> handle */

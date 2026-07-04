@@ -2664,9 +2664,14 @@ namespace {
     constexpr std::uint32_t kLtypeControl   = 0x05;
     constexpr std::uint32_t kLayerControl   = 0x02;
     constexpr std::uint32_t kStyleControl   = 0x03;
+    constexpr std::uint32_t kUcsControl     = 0x07;
     constexpr std::uint32_t kViewControl    = 0x06;
     constexpr std::uint32_t kVportControl   = 0x08;
     constexpr std::uint32_t kAppIdControl   = 0x09;
+
+    bool isNonZeroCoord(const DRW_Coord& coord) {
+        return coord.x != 0.0 || coord.y != 0.0 || coord.z != 0.0;
+    }
 }
 
 bool DRW_LType::encodeDwg(DRW::Version version, dwgBufferW *buf,
@@ -2809,6 +2814,48 @@ bool DRW_Dimstyle::encodeDwg(DRW::Version version, dwgBufferW *buf,
     // Minimal encoder: name only (parseDwg reads only name and returns)
     sb->putVariableText(version, name);
     (void)buf; (void)hdlBuf;
+    return true;
+}
+
+bool DRW_UCS::encodeDwg(DRW::Version version, dwgBufferW *buf,
+                        dwgBufferW *strBuf, dwgBufferW *hdlBuf) const {
+    if (buf == nullptr)
+        return false;
+    dwgBufferW *sb = (strBuf && version > DRW::AC1018) ? strBuf : buf;
+    dwgBufferW *hb = (hdlBuf && version > DRW::AC1018) ? hdlBuf : buf;
+
+    sb->putVariableText(version, name);
+    buf->putBit(static_cast<std::uint8_t>((flags >> 6) & 1));
+    if (version < DRW::AC1021)
+        buf->putBitShort(0);  // xrefindex (2004-)
+    buf->putBit(static_cast<std::uint8_t>((flags >> 4) & 1));
+
+    buf->put3BitDouble(origin);
+    buf->put3BitDouble(xAxisDirection);
+    buf->put3BitDouble(yAxisDirection);
+
+    if (version > DRW::AC1014) {
+        buf->putBitDouble(elevation);
+        buf->putBitShort(static_cast<std::uint16_t>(orthoType));
+        if (isNonZeroCoord(orthoOrigin)) {
+            buf->putBitShort(1);
+            buf->putBitShort(static_cast<std::uint16_t>(orthoType));
+            buf->put3BitDouble(orthoOrigin);
+        } else {
+            buf->putBitShort(0);
+        }
+    }
+
+    hb->putHandle(makeRefW(kUcsControl, 4));  // owner = soft pointer (4)
+    for (std::int32_t i = 0; i < numReactors; ++i)
+        hb->putHandle(makeSoftOwnerW(0));
+    if (xDictFlag != 1)
+        hb->putHandle(makeSoftOwnerW(0));
+
+    if (version > DRW::AC1014) {
+        hb->putHandle(writeHandleOrHardPtr(baseUcsHandle));
+        hb->putHandle(writeHandleOrHardPtr(namedUcsHandle));
+    }
     return true;
 }
 

@@ -383,6 +383,7 @@ bool dwgRW::write(DRW_Interface *interface_, DRW::Version ver, bool bin) {
         iface->writeLayers();
         iface->writeTextstyles();
         iface->writeViews();
+        iface->writeUCSs();
         iface->writeVports();
         iface->writeDimstyles();
         iface->writeAppId();
@@ -646,6 +647,13 @@ bool dwgRW::addTextstyle(DRW_Textstyle *ent) {
     auto *w = asWriter15(writer);
     if (w == nullptr) return recordWriteResult(WriteSkipKind::TableRecord, false);
     w->addTextstyle(*ent);
+    return recordWriteResult(WriteSkipKind::TableRecord, true);
+}
+bool dwgRW::addUCS(DRW_UCS *ent) {
+    if (ent == nullptr) return recordWriteResult(WriteSkipKind::TableRecord, false);
+    auto *w = asWriter15(writer);
+    if (w == nullptr) return recordWriteResult(WriteSkipKind::TableRecord, false);
+    w->addUcs(*ent);
     return recordWriteResult(WriteSkipKind::TableRecord, true);
 }
 bool dwgRW::addView(DRW_View *ent) {

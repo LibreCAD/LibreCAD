@@ -54,6 +54,8 @@
 #include "intern/dwgwriter15.h"
 #include "intern/dwgutil.h"
 #include "lc_containertraverser.h"
+#include "lc_ucs.h"
+#include "lc_ucslist.h"
 #include "libdwgr.h"
 #include "rs_filterdxfrw.h"
 #include "rs_graphic.h"
@@ -911,6 +913,49 @@ void requireNamedViewRoundTrip(const DRW_View& view, DRW::Version version) {
     REQUIRE(view.ucsYAxis.y == 1.0);
     REQUIRE(view.ucsElevation == 7.0);
     REQUIRE(view.ucsOrthoType == 3);
+}
+
+class UcsRoundTripIface : public EmptyIface {
+public:
+    dwgRW *m_writer {nullptr};
+    std::vector<DRW_UCS> m_ucss;
+
+    void writeUCSs() override {
+        if (m_writer == nullptr)
+            return;
+        DRW_UCS ucs;
+        ucs.name = "SITE-UCS";
+        ucs.origin = DRW_Coord(10.0, 20.0, 2.0);
+        ucs.xAxisDirection = DRW_Coord(0.0, 1.0, 0.0);
+        ucs.yAxisDirection = DRW_Coord(-1.0, 0.0, 0.0);
+        ucs.orthoOrigin = DRW_Coord(4.0, 5.0, 6.0);
+        ucs.elevation = 3.5;
+        ucs.orthoType = 2;
+        m_writer->addUCS(&ucs);
+    }
+
+    void addUCS(const DRW_UCS& ucs) override {
+        if (ucs.name == "SITE-UCS")
+            m_ucss.push_back(ucs);
+    }
+};
+
+void requireNamedUcsRoundTrip(const DRW_UCS& ucs) {
+    REQUIRE(ucs.name == "SITE-UCS");
+    REQUIRE(ucs.origin.x == Catch::Approx(10.0));
+    REQUIRE(ucs.origin.y == Catch::Approx(20.0));
+    REQUIRE(ucs.origin.z == Catch::Approx(2.0));
+    REQUIRE(ucs.xAxisDirection.x == Catch::Approx(0.0));
+    REQUIRE(ucs.xAxisDirection.y == Catch::Approx(1.0));
+    REQUIRE(ucs.xAxisDirection.z == Catch::Approx(0.0));
+    REQUIRE(ucs.yAxisDirection.x == Catch::Approx(-1.0));
+    REQUIRE(ucs.yAxisDirection.y == Catch::Approx(0.0));
+    REQUIRE(ucs.yAxisDirection.z == Catch::Approx(0.0));
+    REQUIRE(ucs.orthoOrigin.x == Catch::Approx(4.0));
+    REQUIRE(ucs.orthoOrigin.y == Catch::Approx(5.0));
+    REQUIRE(ucs.orthoOrigin.z == Catch::Approx(6.0));
+    REQUIRE(ucs.elevation == Catch::Approx(3.5));
+    REQUIRE(ucs.orthoType == 2);
 }
 
 } // namespace
@@ -4394,6 +4439,45 @@ TEST_CASE("dwgRW named VIEW table records round-trip across writer versions",
     }
 }
 
+TEST_CASE("dwgRW named UCS table records round-trip across writer versions",
+          "[dwg-write][smoke][ucs]") {
+    struct VersionCase {
+        DRW::Version version;
+        const char *suffix;
+    };
+    const VersionCase cases[] = {
+        {DRW::AC1015, "r2000_named_ucs.dwg"},
+        {DRW::AC1018, "r2004_named_ucs.dwg"},
+        {DRW::AC1024, "r2010_named_ucs.dwg"},
+        {DRW::AC1027, "r2013_named_ucs.dwg"},
+        {DRW::AC1032, "r2018_named_ucs.dwg"}
+    };
+
+    for (const auto& item : cases) {
+        const std::string path = tempPath(item.suffix);
+
+        {
+            UcsRoundTripIface iface;
+            dwgRW writer(path.c_str());
+            iface.m_writer = &writer;
+            REQUIRE(writer.write(&iface, item.version, /*bin=*/false));
+        }
+
+        UcsRoundTripIface cap;
+        {
+            dwgRW reader(path.c_str());
+            REQUIRE(reader.read(&cap, /*ext=*/false));
+            REQUIRE(reader.getVersion() == item.version);
+            REQUIRE(reader.getError() == DRW::BAD_NONE);
+        }
+
+        REQUIRE(cap.m_ucss.size() == 1);
+        requireNamedUcsRoundTrip(cap.m_ucss[0]);
+
+        std::remove(path.c_str());
+    }
+}
+
 TEST_CASE("dwgRW empty VIEW_CONTROL round-trips with no named views",
           "[dwg-write][smoke][view]") {
     const std::string path = tempPath("empty_view_control_r2010.dwg");
@@ -5548,6 +5632,15 @@ void populateFilterRoundTripGraphic(RS_Graphic& graphic) {
     };
     addLine(RS_Vector(0.0, 0.0, 0.0), RS_Vector(10.0, 0.0, 0.0));
     addLine(RS_Vector(0.0, 0.0, 0.0), RS_Vector(0.0, 10.0, 0.0));
+
+    auto *ucs = new LC_UCS(QStringLiteral("SITE-UCS"));
+    ucs->setOrigin(RS_Vector(10.0, 20.0, 2.0));
+    ucs->setXAxis(RS_Vector(0.0, 1.0, 0.0));
+    ucs->setYAxis(RS_Vector(-1.0, 0.0, 0.0));
+    ucs->setOrthoOrigin(RS_Vector(4.0, 5.0, 6.0));
+    ucs->setElevation(3.5);
+    ucs->setOrthoType(LC_UCS::TOP);
+    graphic.addUCS(ucs);
 }
 
 std::vector<RS_Line*> collectFilterRoundTripLines(RS_Graphic& graphic) {
@@ -5618,6 +5711,19 @@ TEST_CASE("RS_FilterDXFRW round-trips DWG exports across writer versions",
                                       RS2::FormatDWG));
         }
         REQUIRE(reopened.findLayer(QStringLiteral("P1_FRAME")) != nullptr);
+        LC_UCS *ucs = reopened.getUCSList()->find(QStringLiteral("SITE-UCS"));
+        REQUIRE(ucs != nullptr);
+        CHECK(ucs->getOrigin().x == Catch::Approx(10.0));
+        CHECK(ucs->getOrigin().y == Catch::Approx(20.0));
+        CHECK(ucs->getOrigin().z == Catch::Approx(2.0));
+        CHECK(ucs->getXAxis().x == Catch::Approx(0.0));
+        CHECK(ucs->getXAxis().y == Catch::Approx(1.0));
+        CHECK(ucs->getYAxis().x == Catch::Approx(-1.0));
+        CHECK(ucs->getOrthoOrigin().x == Catch::Approx(4.0));
+        CHECK(ucs->getOrthoOrigin().y == Catch::Approx(5.0));
+        CHECK(ucs->getOrthoOrigin().z == Catch::Approx(6.0));
+        CHECK(ucs->getElevation() == Catch::Approx(3.5));
+        CHECK(ucs->getOrthoType() == LC_UCS::TOP);
 
         std::vector<RS_Line*> lines = collectFilterRoundTripLines(reopened);
         REQUIRE(lines.size() == 2);

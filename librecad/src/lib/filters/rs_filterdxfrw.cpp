@@ -6453,7 +6453,12 @@ void RS_FilterDXFRW::writeUCSs() {
         ucs.orthoType = u->getOrthoType();
         ucs.elevation = u->getElevation();
 
-        m_dxfW->writeUCS(&ucs);
+        if (m_dwgW) {
+            m_dwgW->addUCS(&ucs);
+        }
+        else {
+            m_dxfW->writeUCS(&ucs);
+        }
     }
 }
 

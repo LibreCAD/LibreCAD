@@ -86,6 +86,7 @@ namespace oType {
     constexpr std::uint16_t STYLE                      = 0x35;
     constexpr std::uint16_t LTYPE                      = 0x39;
     constexpr std::uint16_t VIEW                       = 0x3D;
+    constexpr std::uint16_t UCS                        = 0x3F;
     constexpr std::uint16_t APPID                      = 0x43;
     constexpr std::uint16_t DIMSTYLE                   = 0x45;
     constexpr std::uint16_t VPORT                      = 0x41;
@@ -768,6 +769,15 @@ void dwgWriter15::emitStyleRecord(std::uint32_t handle, const DRW_Textstyle& ts)
     emitRecordPreamble(body, m_version, oType::STYLE, handle,
                        m_objectStrings, m_objectHandles, sb, hb);
     ts.encodeDwg(m_version, &body, sb, hb);
+    finishObject();
+}
+
+void dwgWriter15::emitUcsRecord(std::uint32_t handle, const DRW_UCS& ucs) {
+    dwgBufferW& body = beginObject(handle);
+    dwgBufferW *sb, *hb;
+    emitRecordPreamble(body, m_version, oType::UCS, handle,
+                       m_objectStrings, m_objectHandles, sb, hb);
+    ucs.encodeDwg(m_version, &body, sb, hb);
     finishObject();
 }
 
@@ -1487,6 +1497,14 @@ void dwgWriter15::addTextstyle(const DRW_Textstyle& ts) {
     m_pendingStyles.emplace_back(h, ts);
 }
 
+void dwgWriter15::addUcs(const DRW_UCS& ucs) {
+    std::string upper = toUpperCase(ucs.name);
+    if (upper.empty() || m_writingCtx.ucsMap.count(upper)) return;
+    std::uint32_t h = m_handles.next();
+    m_writingCtx.ucsMap[upper] = h;
+    m_pendingUcs.emplace_back(h, ucs);
+}
+
 void dwgWriter15::addView(const DRW_View& view) {
     std::string upper = toUpperCase(view.name);
     if (upper.empty() || m_writingCtx.viewMap.count(upper)) return;
@@ -1639,8 +1657,16 @@ bool dwgWriter15::writeDwgObjects() {
             emitViewRecord(p.first, p.second);
     }
 
-    // UCS_CONTROL: no entries.
-    emitControlObject(oType::UCS_CONTROL, reservedHandle::UCS_CONTROL, 0, {});
+    // --- UCS section --- (named UCS records; no required standard record)
+    {
+        std::vector<std::uint32_t> ucsChildren;
+        for (auto& p : m_pendingUcs) ucsChildren.push_back(p.first);
+        emitControlObject(oType::UCS_CONTROL, reservedHandle::UCS_CONTROL,
+                          static_cast<std::uint32_t>(m_pendingUcs.size()),
+                          ucsChildren);
+        for (auto& p : m_pendingUcs)
+            emitUcsRecord(p.first, p.second);
+    }
 
     // --- VPORT section ---
     {

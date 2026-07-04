@@ -54,6 +54,7 @@ public:
                                     {"BYBLOCK",    0x0Fu}};
         m_writingCtx.layerMap    = {{"0",        0x12u}};
         m_writingCtx.styleMap    = {{"STANDARD", 0x13u}};
+        m_writingCtx.ucsMap      = {};
         m_writingCtx.viewMap     = {};
         m_writingCtx.appidMap    = {{"ACAD",     0x14u}};
         m_writingCtx.dimstyleMap = {{"STANDARD", 0x15u}};
@@ -83,6 +84,7 @@ public:
     void addLType(const DRW_LType& lt);
     void addLayer(const DRW_Layer& lay);
     void addTextstyle(const DRW_Textstyle& ts);
+    void addUcs(const DRW_UCS& ucs);
     void addView(const DRW_View& view);
     void addVport(const DRW_Vport& vp);
     void addDimstyle(const DRW_Dimstyle& ds);
@@ -175,6 +177,7 @@ protected:
     void emitLtypeRecord(std::uint32_t handle, const DRW_LType& lt);
     void emitLayerRecord(std::uint32_t handle, const DRW_Layer& lay);
     void emitStyleRecord(std::uint32_t handle, const DRW_Textstyle& ts);
+    void emitUcsRecord(std::uint32_t handle, const DRW_UCS& ucs);
     void emitViewRecord(std::uint32_t handle, const DRW_View& view);
     void emitVportRecord(std::uint32_t handle, const DRW_Vport& vp);
     void emitAppIdRecord(std::uint32_t handle, const DRW_AppId& ai);
@@ -269,6 +272,7 @@ protected:
     DRW_Layer m_layer0;
     bool      m_haveLayer0{false};
     std::vector<std::pair<std::uint32_t, DRW_Textstyle>> m_pendingStyles;
+    std::vector<std::pair<std::uint32_t, DRW_UCS>>        m_pendingUcs;
     std::vector<std::pair<std::uint32_t, DRW_View>>      m_pendingViews;
     std::vector<std::pair<std::uint32_t, DRW_Vport>>     m_pendingVports;
     std::vector<std::pair<std::uint32_t, DRW_Dimstyle>>  m_pendingDimstyles;

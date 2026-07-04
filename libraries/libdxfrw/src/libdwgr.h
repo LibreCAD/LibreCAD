@@ -144,6 +144,7 @@ public:
     bool addLType(DRW_LType *ent);
     bool addLayer(DRW_Layer *ent);
     bool addTextstyle(DRW_Textstyle *ent);
+    bool addUCS(DRW_UCS *ent);
     bool addView(DRW_View *ent);
     bool addVport(DRW_Vport *ent);
     bool addDimstyle(DRW_Dimstyle *ent);
