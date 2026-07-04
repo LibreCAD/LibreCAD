@@ -276,6 +276,12 @@ bool isMLeaderStyleRawObject(
         || record.className == "AcDbMLeaderStyle";
 }
 
+bool isMLineStyleRawObject(
+    const LC_DwgAdvancedMetadata::RawObjectRecord& record) {
+    return record.objectType == 73 || record.recordName == "MLINESTYLE"
+        || record.className == "AcDbMlineStyle";
+}
+
 // DICTIONARY raw-object predicate.  Fixed type 42 is the universal ODA
 // identifier; recordName / className fallbacks cover custom-class-emitted
 // dictionaries (rare but spec-allowed).
@@ -2190,7 +2196,7 @@ void RS_FilterDXFRW::addMLine(const DRW_MLine *data) {
 
     // Round-trip metadata as XDATA. Schema per the implementation plan:
     //   1001 "LibreCAD_MLINE", 1000 mlineId, 1000 styleName,
-    //   1040 scale, 1070 justification, 1070 elementCount,
+    //   1071 styleHandle, 1040 scale, 1070 justification, 1070 elementCount,
     //   1070 elementIndex, 1040 offset, 1070 flags.
     // Anchor (i==0) additionally stores per-vertex baseline + miter
     // so the export side can reconstruct without averaging.
@@ -2199,6 +2205,8 @@ void RS_FilterDXFRW::addMLine(const DRW_MLine *data) {
         std::make_shared<DRW_Variant>(1001, std::string("LibreCAD_MLINE")));
     ext.push_back(std::make_shared<DRW_Variant>(1000, mlineId.toStdString()));
     ext.push_back(std::make_shared<DRW_Variant>(1000, data->styleName));
+    ext.push_back(std::make_shared<DRW_Variant>(
+        1071, static_cast<std::int32_t>(data->styleHandle)));
     ext.push_back(std::make_shared<DRW_Variant>(1040, data->scale));
     ext.push_back(
         std::make_shared<DRW_Variant>(1070, std::int32_t{data->justification}));
@@ -7137,6 +7145,7 @@ void RS_FilterDXFRW::writeObjects() {
         std::set<std::uint32_t> nativeXRecordHandles;
         std::set<std::uint32_t> nativeLayoutHandles;
         std::set<std::uint32_t> nativeGroupHandles;
+        std::set<std::uint32_t> nativeMLineStyleHandles;
         std::set<std::uint32_t> nativeRasterVariablesHandles;
         std::set<std::uint32_t> nativeGeoDataHandles;
         std::set<std::uint32_t> nativeSpatialFilterHandles;
@@ -7159,6 +7168,7 @@ void RS_FilterDXFRW::writeObjects() {
         int nativeXRecordObjects = 0;
         int nativeLayoutObjects = 0;
         int nativeGroupObjects = 0;
+        int nativeMLineStyleObjects = 0;
         int nativeRasterVariablesObjects = 0;
         int nativeGeoDataObjects = 0;
         int nativeSpatialFilterObjects = 0;
@@ -7333,6 +7343,12 @@ void RS_FilterDXFRW::writeObjects() {
                     nativeGroupHandles.insert(record.handle);
                 }
             }
+            for (const auto& record : metadata.mlineStyles()) {
+                if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                    && record.handle != 0) {
+                    nativeMLineStyleHandles.insert(record.handle);
+                }
+            }
             for (const auto& record : metadata.layouts()) {
                 if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
                     && record.handle != 0) {
@@ -7438,6 +7454,12 @@ void RS_FilterDXFRW::writeObjects() {
             }
             if (nativeGroupHandles.count(record.handle) != 0
                 && isGroupRawObject(record)) {
+                hasBlockedReplay = true;
+                ++blockedReplaced;
+                continue;
+            }
+            if (nativeMLineStyleHandles.count(record.handle) != 0
+                && isMLineStyleRawObject(record)) {
                 hasBlockedReplay = true;
                 ++blockedReplaced;
                 continue;
@@ -7655,6 +7677,17 @@ void RS_FilterDXFRW::writeObjects() {
                 DRW_Group group = groupFromMetadata(record);
                 if (m_dwgW->writeGroup(&group)) {
                     ++nativeGroupObjects;
+                } else {
+                    hasBlockedReplay = true;
+                    ++blockedWriterRejected;
+                }
+            }
+            for (const auto& record : metadata.mlineStyles()) {
+                if (nativeMLineStyleHandles.count(record.handle) == 0)
+                    continue;
+                DRW_MLineStyle style = mlineStyleFromMetadata(record);
+                if (m_dwgW->writeMLineStyle(&style)) {
+                    ++nativeMLineStyleObjects;
                 } else {
                     hasBlockedReplay = true;
                     ++blockedWriterRejected;
@@ -7888,6 +7921,11 @@ void RS_FilterDXFRW::writeObjects() {
             RS_DEBUG->print(
                 "RS_FilterDXFRW::writeObjects: wrote %d native GROUP objects",
                 nativeGroupObjects);
+        }
+        if (nativeMLineStyleObjects > 0) {
+            RS_DEBUG->print(
+                "RS_FilterDXFRW::writeObjects: wrote %d native MLINESTYLE objects",
+                nativeMLineStyleObjects);
         }
         if (nativeRasterVariablesObjects > 0) {
             RS_DEBUG->print(
@@ -8548,6 +8586,7 @@ struct MLineEntry {
   RS_Entity *entity = nullptr;
   QString mlineId;
   QString styleName;
+  std::uint32_t styleHandle = 0;
   double scale = 1.0;
   int justification = 0;
   int elementCount = 0;
@@ -8872,6 +8911,9 @@ std::optional<MLineEntry> extractMLineMeta(RS_Entity *e) {
       ++seen1070;
       break;
     }
+    case 1071:
+      m.styleHandle = static_cast<std::uint32_t>(sp->i_val());
+      break;
     case 1011: {
       // Anchor-only baseline vertex
       const auto *c = sp->coord();
@@ -9166,6 +9208,22 @@ void RS_FilterDXFRW::reconstructMLines(RS_EntityContainer *container,
     // Build DRW_MLine from anchor metadata + baseline vertices.
     DRW_MLine ml;
     ml.styleName = anchor->styleName.toStdString();
+    if (anchor->styleHandle != 0) {
+      ml.styleHandle = anchor->styleHandle;
+    } else if (m_dwgW && m_graphic != nullptr) {
+      const auto &metadata = m_graphic->dwgAdvancedMetadata();
+      for (const auto &record : metadata.mlineStyles()) {
+        if (record.handle == 0
+            || record.replayState
+                   != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed)
+          continue;
+        if (QString::compare(QString::fromUtf8(record.name.c_str()),
+                             anchor->styleName, Qt::CaseInsensitive) == 0) {
+          ml.styleHandle = record.handle;
+          break;
+        }
+      }
+    }
     ml.scale = anchor->scale;
     ml.justification = static_cast<std::uint8_t>(anchor->justification);
     ml.openClosed = anchor->openClosed;

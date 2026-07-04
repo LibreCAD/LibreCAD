@@ -158,6 +158,7 @@ public:
     bool writeXRecord(DRW_XRecord *object);
     bool writeLayout(DRW_Layout *object);
     bool writeGroup(DRW_Group *object);
+    bool writeMLineStyle(DRW_MLineStyle *object);
     bool registerRasterVariablesObjectClass(DRW_RasterVariables *object);
     bool writeRasterVariables(DRW_RasterVariables *object);
     bool registerGeoDataObjectClass(DRW_GeoData *object);

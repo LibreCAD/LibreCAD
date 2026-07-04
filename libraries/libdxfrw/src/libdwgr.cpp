@@ -767,6 +767,15 @@ bool dwgRW::writeGroup(DRW_Group *object) {
     return recordWriteResult(WriteSkipKind::Object, w->writeGroup(*object));
 }
 
+bool dwgRW::writeMLineStyle(DRW_MLineStyle *object) {
+    if (object == nullptr)
+        return recordWriteResult(WriteSkipKind::Object, false);
+    auto *w = asWriter15(writer);
+    if (w == nullptr)
+        return recordWriteResult(WriteSkipKind::Object, false);
+    return recordWriteResult(WriteSkipKind::Object, w->writeMLineStyle(*object));
+}
+
 bool dwgRW::registerRasterVariablesObjectClass(DRW_RasterVariables *object) {
     if (object == nullptr || writer == nullptr)
         return recordWriteResult(WriteSkipKind::ClassRegistration, false);

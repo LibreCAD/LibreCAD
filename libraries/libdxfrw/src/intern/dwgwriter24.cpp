@@ -186,6 +186,14 @@ bool dwgWriter24::encodeEntity(DRW_Entity *ent) {
         if (it != m_writingCtx.ltypeMap.end())
             ent->lTypeH.ref = it->second;
     }
+    if (ent->eType == DRW::MLINE) {
+        auto *mline = dynamic_cast<DRW_MLine *>(ent);
+        if (mline != nullptr && mline->styleHandle == 0 && !mline->styleName.empty()) {
+            auto styleIt = m_writingCtx.mlineStyleMap.find(toUpperCase(mline->styleName));
+            if (styleIt != m_writingCtx.mlineStyleMap.end())
+                mline->styleHandle = styleIt->second;
+        }
+    }
 
     beginObject(ent->handle);
     m_objectStrings.reset();

@@ -59,6 +59,7 @@ public:
         m_writingCtx.appidMap    = {{"ACAD",     0x14u}};
         m_writingCtx.dimstyleMap = {{"STANDARD", 0x15u}};
         m_writingCtx.vportMap    = {{"*ACTIVE",  0x16u}};
+        m_writingCtx.mlineStyleMap = {};
     }
 
     bool writeFileHeaderStub() override;
@@ -97,6 +98,7 @@ public:
     bool writeXRecord(const DRW_XRecord& xrecord);
     bool writeLayout(const DRW_Layout& layout);
     bool writeGroup(const DRW_Group& group);
+    bool writeMLineStyle(const DRW_MLineStyle& style);
     bool writeRasterVariables(const DRW_RasterVariables& rasterVariables);
     bool writeGeoData(const DRW_GeoData& geoData);
     bool writeSpatialFilter(const DRW_SpatialFilter& filter);
@@ -190,6 +192,8 @@ protected:
     void emitXRecordObject(std::uint32_t handle, const DRW_XRecord& xrecord);
     void emitLayoutObject(std::uint32_t handle, const DRW_Layout& layout);
     void emitGroupObject(std::uint32_t handle, const DRW_Group& group);
+    void emitMLineStyleObject(std::uint32_t handle,
+                              const DRW_MLineStyle& style);
     void emitRasterVariablesObject(std::uint32_t handle,
                                    const DRW_RasterVariables& rasterVariables);
     void emitGeoDataObject(std::uint32_t handle, const DRW_GeoData& geoData);

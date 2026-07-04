@@ -4431,7 +4431,7 @@ bool DRW_MLine::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs)
     // MLINE has one extra handle in the handle stream after the standard
     // entity handles: the MLINESTYLE reference. Read if available — some
     // older files (R14) store the style name inline instead.
-    if (version > DRW::AC1014 && buf->numRemainingBytes() >= 2) {
+    if (version > DRW::AC1014 && buf->numRemainingBytes() > 0) {
         dwgHandle styleH = buf->getOffsetHandle(handle);
         styleHandle = styleH.ref;
         DRW_DBG(" MLINE style handle: ");

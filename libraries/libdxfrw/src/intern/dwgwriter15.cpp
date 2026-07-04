@@ -1000,11 +1000,49 @@ bool dwgWriter15::writeGroup(const DRW_Group& group) {
     return true;
 }
 
+// MLINESTYLE (fixed object type 73) needs no CLASS registration. Record the
+// emitted handle by style name so later MLINE entities can point at it.
+void dwgWriter15::emitMLineStyleObject(std::uint32_t handle,
+                                       const DRW_MLineStyle& style) {
+    dwgBufferW& body = beginObject(handle);
+    dwgBufferW *sb, *hb;
+    emitRecordPreamble(body, m_version, 73, handle,
+                       m_objectStrings, m_objectHandles, sb, hb);
+    style.encodeDwg(m_version, &body, sb, hb);
+    finishObject();
+}
+
+bool dwgWriter15::writeMLineStyle(const DRW_MLineStyle& style) {
+    DRW_MLineStyle object = style;
+    const std::string upper = toUpperCase(object.name);
+    auto existing = m_writingCtx.mlineStyleMap.find(upper);
+    if (!upper.empty() && existing != m_writingCtx.mlineStyleMap.end()) {
+        if (object.handle == 0 || object.handle == existing->second)
+            return true;
+    }
+    if (object.handle == 0) {
+        object.handle = m_handles.next();
+    } else {
+        m_handles.reserve(object.handle);
+    }
+    for (DRW_MLineElement& element : object.elements) {
+        if (element.linetypeHandle != 0 || element.linetype.empty())
+            continue;
+        auto lineTypeIt = m_writingCtx.ltypeMap.find(toUpperCase(element.linetype));
+        if (lineTypeIt != m_writingCtx.ltypeMap.end())
+            element.linetypeHandle = lineTypeIt->second;
+    }
+    if (!upper.empty())
+        m_writingCtx.mlineStyleMap[upper] = object.handle;
+    emitMLineStyleObject(object.handle, object);
+    return true;
+}
+
 // RASTERVARIABLES (AcDbRasterVariables, custom class 505) — class
 // registration required so the reader's CLASSES section dispatch can
-// resolve the recordName back to DRW_RasterVariables::parseDwg.  Standard
-// preamble + DRW_RasterVariables::encodeDwg sandwich.  Encoder ignores
-// strBuf (no string fields) — pass nullptr to mirror parse semantics.
+// resolve the recordName back to DRW_RasterVariables::parseDwg. Standard
+// preamble + DRW_RasterVariables::encodeDwg sandwich. Encoder ignores
+// strBuf (no string fields), so pass nullptr to mirror parse semantics.
 void dwgWriter15::emitRasterVariablesObject(
     std::uint32_t handle, const DRW_RasterVariables& rasterVariables) {
     dwgBufferW& body = beginObject(handle);
@@ -1565,6 +1603,14 @@ bool dwgWriter15::encodeEntity(DRW_Entity *ent) {
         auto it = m_writingCtx.ltypeMap.find(ltUp);
         if (it != m_writingCtx.ltypeMap.end())
             ent->lTypeH.ref = it->second;
+    }
+    if (ent->eType == DRW::MLINE) {
+        auto *mline = dynamic_cast<DRW_MLine *>(ent);
+        if (mline != nullptr && mline->styleHandle == 0 && !mline->styleName.empty()) {
+            auto styleIt = m_writingCtx.mlineStyleMap.find(toUpperCase(mline->styleName));
+            if (styleIt != m_writingCtx.mlineStyleMap.end())
+                mline->styleHandle = styleIt->second;
+        }
     }
     if (m_activeUserBlockRecordHandle != 0)
         ent->parentHandle = m_activeUserBlockRecordHandle;

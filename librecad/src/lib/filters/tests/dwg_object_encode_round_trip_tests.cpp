@@ -78,6 +78,10 @@ public:
                               dwgBufferW* buf) {
         return e.encodeDwg(v, buf);
     }
+    static bool encodeMLineStyle(const DRW_MLineStyle& e, DRW::Version v,
+                                 dwgBufferW* buf) {
+        return e.encodeDwg(v, buf);
+    }
     static bool encodeRasterVariables(const DRW_RasterVariables& e,
                                        DRW::Version v, dwgBufferW* buf) {
         return e.encodeDwg(v, buf);
@@ -729,6 +733,51 @@ TEST_CASE("DRW_MLineStyle::parseDwg captures per-element signed lt index (pre-R2
 // opaque, so we exercise only the timestamp capture.  Handle stream is
 // gated to AC1024+ in the parser; under AC1018 the handles are not read.
 // NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("DRW_MLineStyle::encodeDwg round-trips elements (pre-R2018)",
+          "[dwg-write][object-encode][mlinestyle]") {
+    DRW::Version ver = DRW::AC1015;
+    DRW_MLineStyle src;
+    src.handle = 0x401;
+    src.name = "MyStyle";
+    src.description = "desc";
+    src.flags = 3;
+    src.fillColor = 4;
+    src.startAngle = 1.0471975512;
+    src.endAngle = 2.0943951024;
+    DRW_MLineElement a;
+    a.offset = 0.5;
+    a.color = 1;
+    a.linetypeIndex = 0;
+    DRW_MLineElement b;
+    b.offset = -0.5;
+    b.color = 2;
+    b.linetypeIndex = -2;
+    src.elements.push_back(a);
+    src.elements.push_back(b);
+
+    dwgBufferW w;
+    emitObjectPreamble(w, ver, /*oType=*/73, src.handle);
+    REQUIRE(DrwObjectEncodeTestAccess::encodeMLineStyle(src, ver, &w));
+
+    auto bytes = snapshot(w);
+    dwgBuffer r(bytes.data(), bytes.size());
+    DRW_MLineStyle dst;
+    REQUIRE(DrwObjectEncodeTestAccess::parse(dst, ver, &r));
+
+    REQUIRE(dst.name == "MyStyle");
+    REQUIRE(dst.description == "desc");
+    REQUIRE(dst.flags == 3);
+    REQUIRE(dst.fillColor == 4);
+    REQUIRE(dst.elements.size() == 2u);
+    REQUIRE(dst.elements[0].offset == Approx(0.5));
+    REQUIRE(dst.elements[0].color == 1);
+    REQUIRE(dst.elements[0].linetypeIndex == 0);
+    REQUIRE(dst.elements[1].offset == Approx(-0.5));
+    REQUIRE(dst.elements[1].color == 2);
+    REQUIRE(dst.elements[1].linetypeIndex == -2);
+    REQUIRE(r.isGood());
+}
+
 TEST_CASE("DRW_SpatialIndex::parseDwg captures timestamps",
           "[dwg-read][object-encode][spatialindex]") {
     DRW::Version ver = DRW::AC1018;

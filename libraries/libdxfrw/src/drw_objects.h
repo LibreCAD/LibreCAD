@@ -1903,6 +1903,9 @@ public:
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
+    bool encodeDwg(DRW::Version version, dwgBufferW *buf,
+                   dwgBufferW *strBuf = nullptr,
+                   dwgBufferW *handleBuf = nullptr) const;
 public:
     int flags;                  /*!< style flags (BS) */
     double startAngle;          /*!< start angle (BD) */
@@ -2682,6 +2685,7 @@ public:
     std::map<std::string, std::uint32_t> vportMap;    /*!< DWG: uppercase vport name -> handle */
     std::map<std::string, std::uint32_t> appidMap;    /*!< DWG: uppercase appid name -> handle */
     std::map<std::string, std::uint32_t> dimstyleMap; /*!< DWG: uppercase dimstyle name -> handle */
+    std::map<std::string, std::uint32_t> mlineStyleMap; /*!< DWG: uppercase mlinestyle name -> handle */
     /*!< DXF write: source entity handle -> minted code-5 handle, captured in
      * dxfRW::writeEntity. Lets GROUP-emit (F3) resolve a member's SOURCE handle
      * to the handle actually written. emplace-only: a parent re-entering

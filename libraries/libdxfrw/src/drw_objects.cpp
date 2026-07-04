@@ -4296,16 +4296,71 @@ bool DRW_MLineStyle::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_
         }
         elements.push_back(std::move(e));
     }
-    // Linetype handles in the handle stream — skip resolving here; the
-    // dwgReader's table-entry handle pass populates them via the linetype map.
+    if (version > DRW::AC1018)
+        seekObjectHandleStream(version, buf, objSize);
+    if (buf->numRemainingBytes() > 0)
+        readCommonObjectHandles(buf, handle, numReactors, xDictFlag, &parentHandle);
+    if (version >= DRW::AC1032) {  // R2018+: linetypes are handles
+        for (DRW_MLineElement& e : elements) {
+            if (buf->numRemainingBytes() <= 0)
+                break;
+            dwgHandle lineTypeH = buf->getHandle();
+            e.linetypeHandle = lineTypeH.ref;
+            DRW_DBG(" mlinestyle element linetype Handle: ");
+            DRW_DBGHL(lineTypeH.code, lineTypeH.size, lineTypeH.ref); DRW_DBG("\n");
+        }
+    }
     return buf->isGood();
 }
 
-// MLEADERSTYLE per ODA spec §20.4.87.  Defensive parser following the
-// MLEADER convention: bound-check counts, treat misalignment as
-// non-fatal so the OBJECTS-section scan stays aligned even if a
-// particular style record drifts.  Handle slots are deferred to the
-// trailing handle stream and resolved by the LibreCAD-side filter.
+// MLINESTYLE fixed object type 73. Inverse of parseDwg above:
+// name/description strings, scalar fields, element bodies, common object
+// handles, then R2018+ per-element linetype handles.
+bool DRW_MLineStyle::encodeDwg(DRW::Version version, dwgBufferW *buf,
+                               dwgBufferW *strBuf, dwgBufferW *hdlBuf) const {
+    if (buf == nullptr)
+        return false;
+    dwgBufferW *sb = (strBuf && version > DRW::AC1018) ? strBuf : buf;
+    dwgBufferW *hb = (hdlBuf && version > DRW::AC1018) ? hdlBuf : buf;
+
+    sb->putVariableText(version, name);
+    sb->putVariableText(version, description);
+    buf->putBitShort(static_cast<std::uint16_t>(flags));
+    buf->putCmColor(version,
+                    static_cast<std::uint16_t>(fillColor < 0 ? 256 : fillColor));
+    buf->putBitDouble(startAngle);
+    buf->putBitDouble(endAngle);
+
+    std::size_t numLines = elements.size();
+    if (numLines > 255)
+        numLines = 255;
+    buf->putRawChar8(static_cast<std::uint8_t>(numLines));
+    for (std::size_t i = 0; i < numLines; ++i) {
+        const DRW_MLineElement& e = elements[i];
+        buf->putBitDouble(e.offset);
+        if (e.color24 >= 0) {
+            buf->putCmColor(version,
+                            static_cast<std::uint16_t>(e.color < 0 ? 256 : e.color),
+                            e.color24, "", "");
+        } else {
+            buf->putCmColor(version,
+                            static_cast<std::uint16_t>(e.color < 0 ? 256 : e.color));
+        }
+        if (version < DRW::AC1032)
+            buf->putSBitShort(static_cast<std::int16_t>(e.linetypeIndex));
+    }
+    putCommonObjectHandlePrefix(hb, static_cast<std::uint32_t>(parentHandle),
+                                numReactors, xDictFlag);
+    if (version >= DRW::AC1032) {
+        for (std::size_t i = 0; i < numLines; ++i)
+            hb->putHandle(makeRefW(elements[i].linetypeHandle, 4));
+    }
+    return true;
+}
+
+// MLEADERSTYLE per ODA spec. Defensive parser following the MLEADER
+// convention: bound-check counts and treat misalignment as non-fatal so the
+// OBJECTS-section scan stays aligned even if a particular style record drifts.
 bool DRW_MLeaderStyle::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
     // AcDbMLeaderStyle DXF.  All-scalar record (handles via 340-343); code map
     // matches the per-field comments on the class + dwgTs's MLEADERSTYLE decode.
