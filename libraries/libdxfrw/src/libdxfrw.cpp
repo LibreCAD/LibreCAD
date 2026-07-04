@@ -2970,6 +2970,97 @@ bool dxfRW::writeMultiLeader(DRW_MLeader *ent){
     writer->writeString(0, "MULTILEADER");
     writeEntity(ent);
     writer->writeString(100, "AcDbMLeader");
+
+    const DRW_MLeaderAnnotContext &ctx = ent->context;
+    const bool hasContext =
+        ctx.hasTextContents || ctx.hasContentsBlock || !ctx.roots.empty();
+    auto writeCoord = [&](int xCode, const DRW_Coord &coord) {
+        writer->writeDouble(xCode, coord.x);
+        writer->writeDouble(xCode + 10, coord.y);
+        writer->writeDouble(xCode + 20, coord.z);
+    };
+    if (hasContext) {
+        writer->writeString(300, "CONTEXT_DATA{");
+        writer->writeDouble(40, ctx.overallScale);
+        writeCoord(10, ctx.contentBasePoint);
+        writer->writeDouble(41, ctx.textHeight);
+        writer->writeDouble(140, ctx.arrowHeadSize);
+        writer->writeDouble(145, ctx.landingGap);
+        writer->writeInt16(174, ctx.styleLeftAttach);
+        writer->writeInt16(175, ctx.styleRightAttach);
+        writer->writeInt16(176, ctx.textAlignType);
+        writer->writeInt16(177, ctx.attachmentType);
+        writer->writeBool(290, ctx.hasTextContents);
+        if (ctx.hasTextContents) {
+            writer->writeUtf8String(304, ctx.textLabel);
+            writeCoord(11, ctx.textNormal);
+            writeCoord(12, ctx.textLocation);
+            writeCoord(13, ctx.textDirection);
+            writer->writeDouble(42, ctx.textRotation);
+            writer->writeDouble(43, ctx.boundaryWidth);
+            writer->writeDouble(44, ctx.boundaryHeight);
+            writer->writeDouble(45, ctx.lineSpacingFactor);
+            writer->writeInt16(170, ctx.lineSpacingStyle);
+            writer->writeInt32(90, ctx.textColor);
+            writer->writeInt16(171, ctx.alignment);
+            writer->writeInt16(172, ctx.flowDirection);
+            writer->writeInt32(91, ctx.bgFillColor);
+            writer->writeDouble(141, ctx.bgScaleFactor);
+            writer->writeInt32(92, ctx.bgTransparency);
+            writer->writeBool(291, ctx.bgFillEnabled);
+            writer->writeBool(292, ctx.bgMaskFillOn);
+            writer->writeInt16(173, ctx.columnType);
+            writer->writeBool(293, ctx.textHeightAuto);
+            writer->writeDouble(142, ctx.columnWidth);
+            writer->writeDouble(143, ctx.columnGutter);
+            writer->writeBool(294, ctx.columnFlowReversed);
+            for (double columnSize : ctx.columnSizes)
+                writer->writeDouble(144, columnSize);
+            writer->writeBool(295, ctx.wordBreak);
+        }
+        writer->writeBool(296, ctx.hasContentsBlock);
+        if (ctx.hasContentsBlock) {
+            writeCoord(14, ctx.blockNormal);
+            writeCoord(15, ctx.blockLocation);
+            writeCoord(16, ctx.blockScale);
+            writer->writeDouble(46, ctx.blockRotation);
+            writer->writeInt32(93, ctx.blockColor);
+        }
+
+        for (const DRW_MLeaderRoot &root : ctx.roots) {
+            writer->writeString(302, "LEADER{");
+            writer->writeBool(290, root.isContentValid);
+            writer->writeBool(291, root.unknown291);
+            writeCoord(10, root.connectionPoint);
+            writeCoord(11, root.direction);
+            writer->writeInt32(90, root.leaderIndex);
+            writer->writeDouble(40, root.landingDistance);
+            for (const DRW_MLeaderLeaderLine &line : root.leaderLines) {
+                writer->writeString(304, "LEADER_LINE{");
+                for (const DRW_Coord &point : line.points)
+                    writeCoord(10, point);
+                writer->writeInt32(90, line.segmentIndex);
+                writer->writeInt32(91, line.leaderLineIndex);
+                writer->writeInt32(93, line.overrideFlags);
+                writer->writeInt16(170, line.leaderType);
+                writer->writeInt32(92, line.color);
+                writer->writeInt32(171, line.lineWeight);
+                writer->writeDouble(40, line.arrowSize);
+                writer->writeString(305, "}");
+            }
+            writer->writeInt16(271, root.attachmentDirection);
+            writer->writeString(303, "}");
+        }
+
+        writeCoord(110, ctx.basePoint);
+        writeCoord(111, ctx.baseDirection);
+        writeCoord(112, ctx.baseVertical);
+        writer->writeBool(297, ctx.isNormalReversed);
+        writer->writeInt16(273, ctx.styleTopAttach);
+        writer->writeInt16(272, ctx.styleBottomAttach);
+        writer->writeString(301, "}");
+    }
+
     writer->writeInt32(90, ent->overrideFlags);
     writer->writeInt16(170, ent->leaderType);
     writer->writeInt32(91, ent->leaderColor);

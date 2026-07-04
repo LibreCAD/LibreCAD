@@ -118,6 +118,13 @@ public:
   }
 };
 
+class MLeaderEmitter : public StubInterface {
+public:
+  DRW_MLeader m_mleader;
+  dxfRW *m_rw = nullptr;
+  void writeEntities() override { m_rw->writeMultiLeader(&m_mleader); }
+};
+
 void readDxf(const std::string &dxf, DRW_Interface &cap, const char *name) {
   const auto path = std::filesystem::temp_directory_path() / name;
   std::filesystem::remove(path);
@@ -128,6 +135,50 @@ void readDxf(const std::string &dxf, DRW_Interface &cap, const char *name) {
   dxfRW r(path.string().c_str());
   REQUIRE(r.read(&cap, /*ext=*/true));
   std::filesystem::remove(path);
+}
+
+void seedMLeaderContext(DRW_MLeader &mleader) {
+  mleader.overrideFlags = 279552;
+  mleader.leaderType = 1;
+  mleader.styleContentType = 2;
+  mleader.landingEnabled = true;
+  mleader.doglegEnabled = true;
+  mleader.attachmentDirection = 0;
+  mleader.styleTopAttach = 9;
+  mleader.styleBottomAttach = 9;
+
+  DRW_MLeaderAnnotContext &ctx = mleader.context;
+  ctx.overallScale = 1.0;
+  ctx.contentBasePoint = DRW_Coord(-2239.13, 607.22, 0.0);
+  ctx.textHeight = 4.0;
+  ctx.arrowHeadSize = 4.0;
+  ctx.landingGap = 2.0;
+  ctx.hasTextContents = true;
+  ctx.textLabel = "N1";
+  ctx.textNormal = DRW_Coord(0.0, 0.0, 1.0);
+  ctx.textLocation = DRW_Coord(-2237.13, 609.22, 0.0);
+  ctx.textDirection = DRW_Coord(1.0, 0.0, 0.0);
+  ctx.boundaryWidth = 9.3;
+  ctx.lineSpacingFactor = 1.0;
+  ctx.lineSpacingStyle = 1;
+  ctx.hasContentsBlock = false;
+  ctx.basePoint = DRW_Coord(-2577.7, 142.43, 0.0);
+  ctx.baseDirection = DRW_Coord(1.0, 0.0, 0.0);
+  ctx.baseVertical = DRW_Coord(0.0, 1.0, 0.0);
+  ctx.styleTopAttach = 9;
+  ctx.styleBottomAttach = 9;
+
+  DRW_MLeaderRoot root;
+  root.isContentValid = true;
+  root.unknown291 = true;
+  root.connectionPoint = DRW_Coord(-2239.49, 607.22, 0.0);
+  root.direction = DRW_Coord(1.0, 0.0, 0.0);
+  root.landingDistance = 0.36;
+  DRW_MLeaderLeaderLine line;
+  line.points.push_back(DRW_Coord(-2577.7, 142.43, 0.0));
+  line.leaderLineIndex = 0;
+  root.leaderLines.push_back(line);
+  ctx.roots.push_back(root);
 }
 
 const char *kMLeaderText =
@@ -212,4 +263,49 @@ TEST_CASE("DXF MULTILEADER CONTEXT_DATA parses text content + leader geometry",
     CHECK(cap.m_captured.styleContentType == 2);
     CHECK(cap.m_captured.landingEnabled == true);
   }
+}
+
+TEST_CASE("DXF MULTILEADER CONTEXT_DATA writes text content + leader geometry",
+          "[mleader][dxf][context][dxf_roundtrip]") {
+  const auto path =
+      std::filesystem::temp_directory_path() / "lc_mleader_ctx_write.dxf";
+  std::filesystem::remove(path);
+
+  MLeaderEmitter emitter;
+  seedMLeaderContext(emitter.m_mleader);
+  {
+    dxfRW w(path.string().c_str());
+    emitter.m_rw = &w;
+    REQUIRE(w.write(&emitter, DRW::AC1021, false));
+  }
+
+  MLeaderCapture cap;
+  {
+    dxfRW r(path.string().c_str());
+    REQUIRE(r.read(&cap, /*ext=*/true));
+  }
+  std::filesystem::remove(path);
+
+  REQUIRE(cap.m_callCount == 1);
+  CHECK(cap.m_captured.overrideFlags == 279552);
+  CHECK(cap.m_captured.styleContentType == 2);
+  const DRW_MLeaderAnnotContext &ctx = cap.m_captured.context;
+  CHECK(approx(ctx.overallScale, 1.0));
+  CHECK(approx(ctx.contentBasePoint.x, -2239.13));
+  CHECK(approx(ctx.textHeight, 4.0));
+  CHECK(ctx.hasTextContents == true);
+  CHECK(ctx.textLabel == "N1");
+  CHECK(approx(ctx.textLocation.x, -2237.13));
+  CHECK(approx(ctx.boundaryWidth, 9.3));
+  CHECK(ctx.hasContentsBlock == false);
+  REQUIRE(ctx.roots.size() == 1);
+  const DRW_MLeaderRoot &root = ctx.roots.at(0);
+  CHECK(root.isContentValid == true);
+  CHECK(approx(root.connectionPoint.x, -2239.49));
+  CHECK(approx(root.landingDistance, 0.36));
+  REQUIRE(root.leaderLines.size() == 1);
+  const DRW_MLeaderLeaderLine &line = root.leaderLines.at(0);
+  REQUIRE(line.points.size() == 1);
+  CHECK(approx(line.points.at(0).x, -2577.7));
+  CHECK(line.leaderLineIndex == 0);
 }
