@@ -1699,8 +1699,8 @@ bool dwgReader::readDwgEntity(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                     // embedded MLeaderAnnotContext (roots, leader lines, text/
                     // block content), the entity-level fields, and the handle
                     // stream.  The DXF read path (dxfRW::processMultiLeader)
-                    // still captures only entity-level scalars — the nested
-                    // CONTEXT_DATA{} block parser is a follow-up.
+                    // decodes the same nested CONTEXT_DATA{} block via
+                    // DRW_MLeader::parseDxfContextCode (drw_entities.cpp).
                     DRW_MLeader e;
                     if (entryParse(e, buff, bs, ret)) {
                         intfa.addMLeader(&e);

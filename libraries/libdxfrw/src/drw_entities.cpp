@@ -7698,7 +7698,6 @@ bool DRW_Leader::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs
     return buf->isGood();
 }
 
-// Phase 1 placeholder: skeleton class is in place but no parser yet.
 // DXF CONTEXT_DATA{} nested-block state machine (§20.4.86).  The nested blocks
 // open with 300 "CONTEXT_DATA{" / 302 "LEADER{" / 304 "LEADER_LINE{" and close
 // with the distinct codes 301 / 303 / 305, so the open block is tracked with a
