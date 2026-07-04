@@ -297,6 +297,73 @@ public:
   }
 };
 
+class TableXDataEmitter : public StubInterface {
+public:
+  dxfRW *m_rw = nullptr;
+
+  static void addXData(DRW_TableEntry &entry, const char *payload, int intCode,
+                       int intValue) {
+    entry.extData.push_back(new DRW_Variant(1001, std::string{"TABLEAPP"}));
+    entry.extData.push_back(new DRW_Variant(1000, std::string{payload}));
+    entry.extData.push_back(
+        new DRW_Variant(intCode, static_cast<std::int32_t>(intValue)));
+  }
+
+  void writeLTypes() override {
+    DRW_LType lt;
+    lt.name = "XDASH";
+    lt.desc = "xdata ltype";
+    addXData(lt, "ltype-xdata", 1071, 42);
+    m_rw->writeLineType(&lt);
+  }
+
+  void writeTextstyles() override {
+    DRW_Textstyle style;
+    style.name = "XDATASTYLE";
+    addXData(style, "style-xdata", 1070, 7);
+    m_rw->writeTextstyle(&style);
+  }
+
+  void writeVports() override {
+    DRW_Vport vp;
+    vp.name = "XVPORT";
+    addXData(vp, "vport-xdata", 1070, 8);
+    m_rw->writeVport(&vp);
+  }
+
+  void writeViews() override {
+    DRW_View view;
+    view.name = "XVIEW";
+    addXData(view, "view-xdata", 1070, 9);
+    m_rw->writeView(&view);
+  }
+
+  void writeUCSs() override {
+    DRW_UCS ucs;
+    ucs.name = "XUCS";
+    addXData(ucs, "ucs-xdata", 1070, 10);
+    m_rw->writeUCS(&ucs);
+  }
+
+  void writeAppId() override {
+    DRW_AppId tableApp;
+    tableApp.name = "TABLEAPP";
+    m_rw->writeAppId(&tableApp);
+
+    DRW_AppId xapp;
+    xapp.name = "XAPPID";
+    addXData(xapp, "appid-xdata", 1070, 11);
+    m_rw->writeAppId(&xapp);
+  }
+
+  void writeDimstyles() override {
+    DRW_Dimstyle dim;
+    dim.name = "XDIM";
+    addXData(dim, "dimstyle-xdata", 1070, 12);
+    m_rw->writeDimstyle(&dim);
+  }
+};
+
 // Read a written DXF file back into a string for structural assertions.
 std::string slurp(const std::filesystem::path &path) {
   std::ifstream in(path);
@@ -764,6 +831,38 @@ bool hasConsecutive(
   }
   return false;
 }
+
+bool recordHasConsecutive(
+    const std::vector<std::pair<std::string, std::string>> &groups,
+    const std::string &recordType, const std::string &recordName,
+    const std::vector<std::pair<std::string, std::string>> &seq) {
+  std::vector<std::pair<std::string, std::string>> record;
+  auto matches = [&]() {
+    if (record.empty())
+      return false;
+    bool hasName = false;
+    for (const auto &kv : record) {
+      if (kv.first == "2" && kv.second == recordName) {
+        hasName = true;
+        break;
+      }
+    }
+    return hasName && hasConsecutive(record, seq);
+  };
+
+  bool inRecord = false;
+  for (const auto &kv : groups) {
+    if (kv.first == "0") {
+      if (inRecord && matches())
+        return true;
+      inRecord = (kv.second == recordType);
+      record.clear();
+    }
+    if (inRecord)
+      record.push_back(kv);
+  }
+  return inRecord && matches();
+}
 } // namespace
 
 TEST_CASE("DXF LAYOUT object writes plot prefix and layout body",
@@ -986,6 +1085,45 @@ TEST_CASE("DXF writePoint emits xAxisAngle (code 50) in degrees from radians (C-
   }
   REQUIRE(found);
   CHECK(std::fabs(angle - 90.0) < 1e-6);  // 90 deg, not ~0.0274 (the /ARAD bug)
+}
+
+TEST_CASE("DXF table record writers preserve XDATA",
+          "[dxf][table][xdata]") {
+  const auto path =
+      std::filesystem::temp_directory_path() / "lc_table_xdata.dxf";
+  std::filesystem::remove(path);
+
+  {
+    dxfRW w(path.string().c_str());
+    TableXDataEmitter em;
+    em.m_rw = &w;
+    REQUIRE(w.write(&em, DRW::AC1021, false));
+  }
+
+  const auto groups = readGroups(path);
+  std::filesystem::remove(path);
+
+  CHECK(recordHasConsecutive(groups, "LTYPE", "XDASH",
+                             {{"1001", "TABLEAPP"}, {"1000", "ltype-xdata"},
+                              {"1071", "42"}}));
+  CHECK(recordHasConsecutive(groups, "STYLE", "XDATASTYLE",
+                             {{"1001", "TABLEAPP"}, {"1000", "style-xdata"},
+                              {"1070", "7"}}));
+  CHECK(recordHasConsecutive(groups, "VPORT", "*ACTIVE",
+                             {{"1001", "TABLEAPP"}, {"1000", "vport-xdata"},
+                              {"1070", "8"}}));
+  CHECK(recordHasConsecutive(groups, "VIEW", "XVIEW",
+                             {{"1001", "TABLEAPP"}, {"1000", "view-xdata"},
+                              {"1070", "9"}}));
+  CHECK(recordHasConsecutive(groups, "UCS", "XUCS",
+                             {{"1001", "TABLEAPP"}, {"1000", "ucs-xdata"},
+                              {"1070", "10"}}));
+  CHECK(recordHasConsecutive(groups, "APPID", "XAPPID",
+                             {{"1001", "TABLEAPP"}, {"1000", "appid-xdata"},
+                              {"1070", "11"}}));
+  CHECK(recordHasConsecutive(groups, "DIMSTYLE", "XDIM",
+                             {{"1001", "TABLEAPP"}, {"1000", "dimstyle-xdata"},
+                              {"1070", "12"}}));
 }
 
 // F3-1: dxfRW::writeEntity captures source-handle -> minted-handle in the

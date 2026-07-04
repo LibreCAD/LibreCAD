@@ -522,6 +522,8 @@ bool dxfRW::writeLineType(DRW_LType *ent){
             writer->writeInt16(74, 0);
         }
     }
+    if (!ent->extData.empty())
+        writeExtData(ent->extData);
     return true;
 }
 
@@ -620,6 +622,8 @@ bool dxfRW::writeTextstyle(DRW_Textstyle *ent){
         writer->writeUtf8Caps(3, ent->font);
         writer->writeUtf8Caps(4, ent->bigFont);
     }
+    if (!ent->extData.empty())
+        writeExtData(ent->extData);
     return true;
 }
 
@@ -698,6 +702,8 @@ bool dxfRW::writeVport(DRW_Vport *ent){
             writer->writeInt32(421, 3358443);
         }
     }
+    if (!ent->extData.empty())
+        writeExtData(ent->extData);
     return true;
 }
 
@@ -851,6 +857,8 @@ bool dxfRW::writeDimstyle(DRW_Dimstyle *ent){
             default: break;
         }
     }
+    if (!ent->extData.empty())
+        writeExtData(ent->extData);
     return true;
 }
 
@@ -899,6 +907,8 @@ bool dxfRW::writeView(DRW_View *ent){
             writer->writeDouble(146, ent->ucsElevation);
         }
     }
+    if (!ent->extData.empty())
+        writeExtData(ent->extData);
     return true;
 }
 
@@ -928,6 +938,8 @@ bool dxfRW::writeUCS(DRW_UCS *ent){
     writer->writeDouble(13, ent->orthoOrigin.x);
     writer->writeDouble(23, ent->orthoOrigin.y);
     writer->writeDouble(33, ent->orthoOrigin.z);
+    if (!ent->extData.empty())
+        writeExtData(ent->extData);
     return true;
 }
 
@@ -950,6 +962,8 @@ bool dxfRW::writeAppId(DRW_AppId *ent){
         writer->writeUtf8Caps(2, ent->name);
     }
     writer->writeInt16(70, ent->flags);
+    if (!ent->extData.empty())
+        writeExtData(ent->extData);
     return true;
 }
 
