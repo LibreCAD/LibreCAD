@@ -112,6 +112,7 @@ public:
     bool writeText(DRW_Text *ent);
     bool writeTolerance(DRW_Tolerance *ent);
     bool writeHatch(DRW_Hatch *ent);
+    bool writeMPolygon(DRW_MPolygon *ent);
     bool writeViewport(DRW_Viewport *ent);
     bool writeLight(DRW_Light *ent);
     bool writeShape(DRW_Shape *ent);

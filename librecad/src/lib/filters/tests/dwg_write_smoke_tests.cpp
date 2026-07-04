@@ -1002,6 +1002,8 @@ public:
     std::vector<DRW_Circle>  m_circles;
     std::vector<DRW_Arc>     m_arcs;
     std::vector<DRW_Ellipse> m_ellipses;
+    std::vector<DRW_MPolygon> m_mpolygons;
+    std::vector<DRW_Hatch> m_hatches;
 
     void writeEntities() override {
         if (m_writer == nullptr) return;
@@ -1016,6 +1018,14 @@ public:
     void addCircle(const DRW_Circle& c) override { m_circles.push_back(c); }
     void addArc(const DRW_Arc& a) override { m_arcs.push_back(a); }
     void addEllipse(const DRW_Ellipse& e) override { m_ellipses.push_back(e); }
+    void addMPolygon(const DRW_MPolygon *p) override {
+        if (p != nullptr)
+            m_mpolygons.push_back(*p);
+    }
+    void addHatch(const DRW_Hatch *h) override {
+        if (h != nullptr)
+            m_hatches.push_back(*h);
+    }
 };
 
 bool writeRegistryPoint(dwgRW& writer) {
@@ -1063,6 +1073,29 @@ bool writeRegistryEllipse(dwgRW& writer) {
     return writer.writeEllipse(&ellipse);
 }
 
+bool writeRegistryMPolygon(dwgRW& writer) {
+    DRW_MPolygon polygon;
+    polygon.color = 2;
+    polygon.solid = 1;
+    polygon.name = "SOLID";
+    polygon.hstyle = 0;
+    polygon.hpattern = 1;
+    polygon.fillColorAci = 3;
+    polygon.extPoint = DRW_Coord{0.0, 0.0, 1.0};
+
+    auto loop = std::make_shared<DRW_HatchLoop>(3); // external + polyline
+    auto polyline = std::make_shared<DRW_LWPolyline>();
+    polyline->flags = 1;
+    polyline->addVertex(DRW_Vertex2D(0.0, 0.0, 0.0));
+    polyline->addVertex(DRW_Vertex2D(10.0, 0.0, 0.0));
+    polyline->addVertex(DRW_Vertex2D(10.0, 10.0, 0.0));
+    polyline->addVertex(DRW_Vertex2D(0.0, 10.0, 0.0));
+    loop->objlist.push_back(polyline);
+    polygon.looplist.push_back(loop);
+
+    return writer.writeMPolygon(&polygon);
+}
+
 std::size_t registryPointCount(const WholeModelRegistryIface& iface) {
     return iface.m_points.size();
 }
@@ -1081,6 +1114,10 @@ std::size_t registryArcCount(const WholeModelRegistryIface& iface) {
 
 std::size_t registryEllipseCount(const WholeModelRegistryIface& iface) {
     return iface.m_ellipses.size();
+}
+
+std::size_t registryMPolygonCount(const WholeModelRegistryIface& iface) {
+    return iface.m_mpolygons.size();
 }
 
 void assertRegistryPoint(const WholeModelRegistryIface& iface) {
@@ -1122,6 +1159,66 @@ void assertRegistryEllipse(const WholeModelRegistryIface& iface) {
     CHECK(iface.m_ellipses[0].color == 4);
 }
 
+void assertRegistryMPolygon(const WholeModelRegistryIface& iface) {
+    REQUIRE(iface.m_mpolygons.size() == 1);
+    CHECK(iface.m_hatches.empty());
+
+    const DRW_MPolygon& polygon = iface.m_mpolygons[0];
+    CHECK(polygon.eType == DRW::MPOLYGON);
+    CHECK(polygon.name == "SOLID");
+    CHECK(polygon.solid == 1);
+    CHECK(polygon.fillColorAci == 3);
+    REQUIRE(polygon.looplist.size() == 1);
+    const auto& loop = polygon.looplist[0];
+    CHECK((loop->type & 2) == 2);
+    REQUIRE_FALSE(loop->objlist.empty());
+    auto *polyline = dynamic_cast<DRW_LWPolyline*>(loop->objlist[0].get());
+    REQUIRE(polyline != nullptr);
+    CHECK((polyline->flags & 1) == 1);
+    CHECK(polyline->vertlist.size() == 4u);
+}
+
+class MPolygonOnlyIface : public EmptyIface {
+public:
+    dwgRW *m_writer {nullptr};
+    std::vector<DRW_MPolygon> m_mpolygons;
+    std::vector<DRW_Hatch> m_hatches;
+
+    void writeEntities() override {
+        if (m_writer == nullptr) return;
+        REQUIRE(writeRegistryMPolygon(*m_writer));
+    }
+
+    void addMPolygon(const DRW_MPolygon *p) override {
+        if (p != nullptr)
+            m_mpolygons.push_back(*p);
+    }
+
+    void addHatch(const DRW_Hatch *h) override {
+        if (h != nullptr)
+            m_hatches.push_back(*h);
+    }
+};
+
+void assertMPolygonOnlyRead(const MPolygonOnlyIface& iface) {
+    REQUIRE(iface.m_mpolygons.size() == 1);
+    CHECK(iface.m_hatches.empty());
+
+    const DRW_MPolygon& polygon = iface.m_mpolygons[0];
+    CHECK(polygon.eType == DRW::MPOLYGON);
+    CHECK(polygon.name == "SOLID");
+    CHECK(polygon.solid == 1);
+    CHECK(polygon.fillColorAci == 3);
+    REQUIRE(polygon.looplist.size() == 1);
+    const auto& loop = polygon.looplist[0];
+    CHECK((loop->type & 2) == 2);
+    REQUIRE_FALSE(loop->objlist.empty());
+    auto *polyline = dynamic_cast<DRW_LWPolyline*>(loop->objlist[0].get());
+    REQUIRE(polyline != nullptr);
+    CHECK((polyline->flags & 1) == 1);
+    CHECK(polyline->vertlist.size() == 4u);
+}
+
 const std::vector<WritableTypeEntry>& writableTypeRegistry() {
     static const std::vector<WritableTypeEntry> entries = {
         {"POINT", writeRegistryPoint, 1, registryPointCount, assertRegistryPoint},
@@ -1129,6 +1226,7 @@ const std::vector<WritableTypeEntry>& writableTypeRegistry() {
         {"CIRCLE", writeRegistryCircle, 1, registryCircleCount, assertRegistryCircle},
         {"ARC", writeRegistryArc, 1, registryArcCount, assertRegistryArc},
         {"ELLIPSE", writeRegistryEllipse, 1, registryEllipseCount, assertRegistryEllipse},
+        {"MPOLYGON", writeRegistryMPolygon, 1, registryMPolygonCount, assertRegistryMPolygon},
     };
     return entries;
 }
@@ -2383,7 +2481,7 @@ TEST_CASE("dwgRW writes POINT/LINE/CIRCLE/ARC and reader recovers them",
 TEST_CASE("dwgRW whole-model registry round-trips seeded writable types",
           "[dwg-write][whole-model][registry]") {
     const std::vector<WritableTypeEntry>& registry = writableTypeRegistry();
-    REQUIRE(registry.size() == 5);
+    REQUIRE(registry.size() == 6);
 
     const std::string path = tempPath("whole_model_registry.dwg");
     dwgRW::WriteSkipCounters writeSkips;
@@ -2416,6 +2514,36 @@ TEST_CASE("dwgRW whole-model registry round-trips seeded writable types",
     }
 
     std::remove(path.c_str());
+}
+
+TEST_CASE("dwgRW writes MPOLYGON as AcDbMPolygon instead of HATCH",
+          "[dwg-write][mpolygon]") {
+    const DRW::Version versions[] = {DRW::AC1015, DRW::AC1024, DRW::AC1032};
+
+    for (DRW::Version version : versions) {
+        INFO("version: " << static_cast<int>(version));
+        const std::string suffix =
+            std::string("mpolygon_") + std::to_string(static_cast<int>(version)) + ".dwg";
+        const std::string path = tempPath(suffix.c_str());
+
+        {
+            dwgRW writer(path.c_str());
+            MPolygonOnlyIface iface;
+            iface.m_writer = &writer;
+            REQUIRE(writer.write(&iface, version, /*bin=*/false));
+        }
+
+        MPolygonOnlyIface readIface;
+        {
+            dwgRW reader(path.c_str());
+            REQUIRE(reader.read(&readIface, /*ext=*/false));
+            REQUIRE(reader.getVersion() == version);
+            REQUIRE(reader.getError() == DRW::BAD_NONE);
+        }
+
+        assertMPolygonOnlyRead(readIface);
+        std::remove(path.c_str());
+    }
 }
 
 TEST_CASE("dwgRW write skip counters catch ignored entity write failures",

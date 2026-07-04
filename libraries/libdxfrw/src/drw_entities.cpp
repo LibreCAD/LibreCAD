@@ -6081,6 +6081,60 @@ bool DRW_MPolygon::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t 
 // DRW_Hatch::parseDwg so DRW_MPolygon::parseDwg reuses the identical body while
 // supplying its own differing leading (BS style) and trailing (fill CMC +
 // x-direction + degenerate count) field order.
+bool DRW_MPolygon::encodeDwg(DRW::Version version, dwgBufferW *buf,
+                             std::uint32_t bs, dwgBufferW *strBuf,
+                             dwgBufferW *handleBuf) {
+    (void)bs;
+    oType = kDwgClassNum;
+    if (!encodeDwgCommon(version, buf, strBuf))
+        return false;
+
+    dwgBufferW *sb = strBuf ? strBuf : buf;
+
+    // AcDbMPolygon has a leading style field before the HATCH-like gradient
+    // prologue. The same style is emitted again after the boundary data.
+    buf->putBitShort(static_cast<std::uint16_t>(hstyle));
+    encodeDwgGradientData(version, buf, sb);
+
+    buf->putBitDouble(basePoint.z);
+    buf->put3BitDouble(extPoint);
+    sb->putVariableText(version, name);
+    buf->putBit(static_cast<std::uint8_t>(solid));
+    buf->putBit(static_cast<std::uint8_t>(associative));
+    if (!encodeDwgBoundaryData(version, buf)) return false;
+
+    buf->putBitShort(static_cast<std::uint16_t>(hstyle));
+    buf->putBitShort(static_cast<std::uint16_t>(hpattern));
+
+    if (!solid) {
+        buf->putBitDouble(angle);
+        buf->putBitDouble(scale);
+        buf->putBit(static_cast<std::uint8_t>(doubleflag));
+        buf->putBitShort(static_cast<std::uint16_t>(patternLines.size()));
+        for (const PatternLine& pl : patternLines) {
+            buf->putBitDouble(pl.angle);
+            buf->putBitDouble(pl.baseX);
+            buf->putBitDouble(pl.baseY);
+            buf->putBitDouble(pl.offsetX);
+            buf->putBitDouble(pl.offsetY);
+            buf->putBitShort(static_cast<std::uint16_t>(pl.dashList.size()));
+            for (double dash : pl.dashList)
+                buf->putBitDouble(dash);
+        }
+    }
+
+    buf->putCmColor(version,
+                    static_cast<std::uint16_t>(fillColorAci),
+                    fillColorRgb,
+                    fillColorName,
+                    {},
+                    sb);
+    buf->put2RawDouble(DRW_Coord{xDirX, xDirY, 0.0});
+    buf->putBitLong(degenerateLoops);
+
+    return encodeDwgEntHandle(version, buf, handleBuf);
+}
+
 bool DRW_Hatch::parseDwgBoundaryData(DRW::Version version, dwgBuffer *buf,
                                      std::uint32_t &totalBoundItems, bool &havePixelSize) {
     loopsnum = buf->getBitLong();
@@ -6090,7 +6144,7 @@ bool DRW_Hatch::parseDwgBoundaryData(DRW::Version version, dwgBuffer *buf,
     //read loops
     for (std::int32_t i = 0 ; i < loopsnum; ++i){
         loop = std::make_shared<DRW_HatchLoop>(buf->getBitLong());
-        havePixelSize |= loop->type & 4;
+        havePixelSize = havePixelSize || ((loop->type & 4) != 0);
         DRW_DBG(" loop["); DRW_DBG(i); DRW_DBG("] type: "); DRW_DBG(loop->type);
         if (!(loop->type & 2)){ //Not polyline
             std::int32_t numPathSeg = buf->getBitLong();
@@ -6303,39 +6357,31 @@ bool DRW_Hatch::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs)
     return buf->isGood();
 }
 
-bool DRW_Hatch::encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {
-    (void)bs;
-    oType = 78;  // HATCH class id — see dwgreader.cpp:1380
-    if (!encodeDwgCommon(version, buf)) return false;
+void DRW_Hatch::encodeDwgGradientData(DRW::Version version, dwgBufferW *buf,
+                                      dwgBufferW *strBuf) const {
+    if (version <= DRW::AC1015)
+        return;
 
     dwgBufferW *sb = strBuf ? strBuf : buf;
-    if (version > DRW::AC1015) {
-        buf->putBitLong(isGradient);
-        buf->putBitLong(gradReserved);
-        buf->putBitDouble(gradAngle);
-        buf->putBitDouble(gradShift);
-        buf->putBitLong(singleColor);
-        buf->putBitDouble(gradTint);
-        buf->putBitLong(static_cast<std::int32_t>(gradColors.size()));
-        for (const GradientStop& stop : gradColors) {
-            buf->putBitDouble(stop.value);
-            buf->putBitShort(static_cast<std::uint16_t>(stop.aciColor));
-            buf->putBitLong(static_cast<std::uint32_t>(stop.rgb));
-            buf->putRawChar8(0);
-        }
-        sb->putVariableText(version, gradName);
+    buf->putBitLong(isGradient);
+    buf->putBitLong(gradReserved);
+    buf->putBitDouble(gradAngle);
+    buf->putBitDouble(gradShift);
+    buf->putBitLong(singleColor);
+    buf->putBitDouble(gradTint);
+    buf->putBitLong(static_cast<std::int32_t>(gradColors.size()));
+    for (const GradientStop& stop : gradColors) {
+        buf->putBitDouble(stop.value);
+        buf->putBitShort(static_cast<std::uint16_t>(stop.aciColor));
+        buf->putBitLong(static_cast<std::uint32_t>(stop.rgb));
+        buf->putRawChar8(0);
     }
+    sb->putVariableText(version, gradName);
+}
 
-    buf->putBitDouble(basePoint.z);            // BD: elevation
-    buf->put3BitDouble(extPoint);              // 3BD: extrusion (NOT BE-style for HATCH)
-    sb->putVariableText(version, name);        // TV: hatch pattern name
-    buf->putBit(static_cast<std::uint8_t>(solid));
-    buf->putBit(static_cast<std::uint8_t>(associative));
-    // Write the actual count we iterate — not loopsnum, which may be stale.
+bool DRW_Hatch::encodeDwgBoundaryData(DRW::Version version, dwgBufferW *buf) const {
     buf->putBitLong(static_cast<std::int32_t>(looplist.size()));
 
-    // Encode each boundary loop.
-    std::uint32_t totalBoundItems = 0;
     for (const auto& lp : looplist) {
         // Strip bit 4 (pixel-size flag): DRW_Hatch has no storage for the
         // associated pixelSize BD, so a reader would desync if the flag were
@@ -6343,7 +6389,6 @@ bool DRW_Hatch::encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t b
         buf->putBitLong(lp->type & ~4);
 
         if (!(lp->type & 2)) {
-            // Non-polyline path: edges
             buf->putBitLong(static_cast<std::int32_t>(lp->objlist.size()));
             for (const auto& seg : lp->objlist) {
                 if (const auto* ln = dynamic_cast<const DRW_Line*>(seg.get())) {
@@ -6354,7 +6399,7 @@ bool DRW_Hatch::encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t b
                     buf->putRawChar8(2);  // circular arc
                     buf->put2RawDouble(arc->basePoint);
                     buf->putBitDouble(arc->radious);
-                    buf->putBitDouble(arc->staangle);   // radians
+                    buf->putBitDouble(arc->staangle);
                     buf->putBitDouble(arc->endangle);
                     buf->putBit(static_cast<std::uint8_t>(arc->isccw));
                 } else if (const auto* el = dynamic_cast<const DRW_Ellipse*>(seg.get())) {
@@ -6380,14 +6425,9 @@ bool DRW_Hatch::encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t b
                         DRW_Coord c2{cp->x, cp->y, 0.0};
                         buf->put2RawDouble(c2);
                         if (isRational)
-                            buf->putBitDouble(cp->z);  // weight stored in z
+                            buf->putBitDouble(cp->z);
                     }
-                    // Fit points + start/end tangents (R2010+). The reader
-                    // unconditionally consumes this block for version>AC1021
-                    // (drw_entities.cpp ~5655), so a writer that stops after the
-                    // control points desyncs the bitstream at the next field on
-                    // every AC1024/AC1027/AC1032 spline-edge hatch. (write-review #2)
-                    if (version > DRW::AC1021) { //2010+
+                    if (version > DRW::AC1021) {
                         buf->putBitLong(static_cast<std::int32_t>(sp->fitlist.size()));
                         for (const auto& fp : sp->fitlist) {
                             DRW_Coord f2{fp->x, fp->y, 0.0};
@@ -6397,22 +6437,22 @@ bool DRW_Hatch::encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t b
                         buf->put2RawDouble(sp->tgEnd);
                     }
                 } else {
-                    return false;  // unknown edge type
+                    return false;
                 }
             }
         } else {
-            // Polyline path
             const DRW_LWPolyline* pl = nullptr;
             if (!lp->objlist.empty())
                 pl = dynamic_cast<const DRW_LWPolyline*>(lp->objlist[0].get());
-            if (!pl) return false;
+            if (!pl)
+                return false;
 
             bool asBulge = false;
             for (const auto& v : pl->vertlist)
                 if (v->bulge != 0.0) { asBulge = true; break; }
 
             buf->putBit(static_cast<std::uint8_t>(asBulge));
-            buf->putBit(static_cast<std::uint8_t>(pl->flags & 1));  // closed bit
+            buf->putBit(static_cast<std::uint8_t>(pl->flags & 1));
             buf->putBitLong(static_cast<std::int32_t>(pl->vertlist.size()));
             for (const auto& v : pl->vertlist) {
                 buf->putRawDouble(v->x);
@@ -6424,6 +6464,24 @@ bool DRW_Hatch::encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t b
 
         buf->putBitLong(0);  // numBoundHandles for this loop (0 = non-associative)
     }
+
+    return true;
+}
+
+bool DRW_Hatch::encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {
+    (void)bs;
+    oType = 78;  // HATCH class id — see dwgreader.cpp:1380
+    if (!encodeDwgCommon(version, buf)) return false;
+
+    dwgBufferW *sb = strBuf ? strBuf : buf;
+    encodeDwgGradientData(version, buf, sb);
+
+    buf->putBitDouble(basePoint.z);            // BD: elevation
+    buf->put3BitDouble(extPoint);              // 3BD: extrusion (NOT BE-style for HATCH)
+    sb->putVariableText(version, name);        // TV: hatch pattern name
+    buf->putBit(static_cast<std::uint8_t>(solid));
+    buf->putBit(static_cast<std::uint8_t>(associative));
+    if (!encodeDwgBoundaryData(version, buf)) return false;
 
     buf->putBitShort(static_cast<std::uint16_t>(hstyle));
     buf->putBitShort(static_cast<std::uint16_t>(hpattern));
@@ -6448,8 +6506,6 @@ bool DRW_Hatch::encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t b
     }
 
     if (!encodeDwgEntHandle(version, buf, handleBuf)) return false;
-    // totalBoundItems handles — 0 for non-associative hatch
-    (void)totalBoundItems;
     return true;
 }
 

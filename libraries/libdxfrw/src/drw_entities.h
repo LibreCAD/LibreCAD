@@ -1792,6 +1792,9 @@ protected:
     // while supplying its own differing leading/trailing field order.
     bool parseDwgBoundaryData(DRW::Version version, dwgBuffer *buf,
                               std::uint32_t &totalBoundItems, bool &havePixelSize);
+    void encodeDwgGradientData(DRW::Version version, dwgBufferW *buf,
+                               dwgBufferW *strBuf) const;
+    bool encodeDwgBoundaryData(DRW::Version version, dwgBufferW *buf) const;
 
 public:
     UTF8STRING name;           /*!< hatch pattern name, code 2 */
@@ -1905,6 +1908,8 @@ public:
         eType = DRW::MPOLYGON;
     }
 
+    static constexpr std::uint16_t kDwgClassNum = 518; /*!< AcDbMPolygon DWG custom class id */
+
     /* MPOLYGON-only fill color (DXF 63 ACI / 421 RGB / 430 name). Distinct from
        the entity color: the fill may differ from the boundary outline color. */
     int fillColorAci {0};      /*!< fill color ACI index, code 63 */
@@ -1917,6 +1922,8 @@ public:
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
+    virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0,
+                           dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
 };
 
 //! Class to handle image entity

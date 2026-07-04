@@ -35,10 +35,13 @@
 
 #include <catch2/catch_test_macros.hpp>
 
+#include <algorithm>
 #include <cstdint>
 #include <cstdio>
 #include <filesystem>
 #include <fstream>
+#include <memory>
+#include <sstream>
 #include <string>
 
 #include "drw_entities.h"
@@ -125,6 +128,41 @@ public:
   void addHatch(const DRW_Hatch *) override { ++m_hatchFallbackCount; }
 };
 
+DRW_MPolygon makeSolidMPolygon() {
+  DRW_MPolygon polygon;
+  polygon.color = 2;
+  polygon.solid = 1;
+  polygon.associative = 1;
+  polygon.name = "SOLID";
+  polygon.hstyle = 0;
+  polygon.hpattern = 1;
+  polygon.fillColorAci = 3;
+  polygon.extPoint = DRW_Coord(0.0, 0.0, 1.0);
+
+  auto loop = std::make_shared<DRW_HatchLoop>(3);
+  auto polyline = std::make_shared<DRW_LWPolyline>();
+  polyline->flags = 1;
+  polyline->addVertex(DRW_Vertex2D(0.0, 0.0, 0.0));
+  polyline->addVertex(DRW_Vertex2D(10.0, 0.0, 0.0));
+  polyline->addVertex(DRW_Vertex2D(10.0, 10.0, 0.0));
+  polyline->addVertex(DRW_Vertex2D(0.0, 10.0, 0.0));
+  loop->objlist.push_back(polyline);
+  polygon.looplist.push_back(loop);
+
+  return polygon;
+}
+
+class MPolygonEmitter : public StubInterface {
+public:
+  DRW_MPolygon m_polygon = makeSolidMPolygon();
+  dxfRW *m_rw = nullptr;
+
+  void writeEntities() override {
+    REQUIRE(m_rw != nullptr);
+    REQUIRE(m_rw->writeMPolygon(&m_polygon));
+  }
+};
+
 void readDxf(const std::string &dxf, DRW_Interface &cap, const char *name) {
   const auto path = std::filesystem::temp_directory_path() / name;
   std::filesystem::remove(path);
@@ -135,6 +173,26 @@ void readDxf(const std::string &dxf, DRW_Interface &cap, const char *name) {
   dxfRW r(path.string().c_str());
   REQUIRE(r.read(&cap, /*ext=*/true));
   std::filesystem::remove(path);
+}
+
+std::string writeMPolygonDxf(const char *name) {
+  const auto path = std::filesystem::temp_directory_path() / name;
+  std::filesystem::remove(path);
+
+  {
+    dxfRW w(path.string().c_str());
+    MPolygonEmitter emitter;
+    emitter.m_rw = &w;
+    REQUIRE(w.write(&emitter, DRW::AC1021, false));
+  }
+
+  std::ifstream in(path);
+  REQUIRE(in.good());
+  std::ostringstream out;
+  out << in.rdbuf();
+  in.close();
+  std::filesystem::remove(path);
+  return out.str();
 }
 
 // Exact ezdxf-emitted MPOLYGON: SOLID fill (pattern name "SOLID"), one external
@@ -185,5 +243,38 @@ TEST_CASE("DXF MPOLYGON is read into a DRW_MPolygon (solid fill, polyline bounda
   // The boundary must be closed for the hatch fill to validate.  ezdxf emits
   // 73 (closed) before 72 (bulge); this asserts the loop-flag handling keeps the
   // closed bit so RS_Hatch::validate() does not reject the area.
+  CHECK((pl->flags & 1) == 1);
+}
+
+TEST_CASE("DXF MPOLYGON writer emits MPOLYGON and reads it back as DRW_MPolygon",
+          "[dxf][mpolygon][write]") {
+  const std::string dxf = writeMPolygonDxf("lc_mpolygon_write.dxf");
+  std::string normalized = dxf;
+  normalized.erase(std::remove(normalized.begin(), normalized.end(), '\r'),
+                   normalized.end());
+  CHECK(normalized.find("\n  0\nMPOLYGON\n") != std::string::npos);
+  CHECK(normalized.find("\n  0\nHATCH\n") == std::string::npos);
+
+  MPolygonCapture cap;
+  readDxf(dxf, cap, "lc_mpolygon_write_read.dxf");
+
+  REQUIRE(cap.m_callCount == 1);
+  CHECK(cap.m_hatchFallbackCount == 0);
+
+  const DRW_MPolygon &mp = cap.m_captured;
+  CHECK(mp.eType == DRW::MPOLYGON);
+  CHECK(mp.solid == 1);
+  CHECK(mp.name == "SOLID");
+  CHECK(mp.fillColorAci == 3);
+  CHECK(mp.degenerateLoops == 0);
+
+  REQUIRE(mp.looplist.size() == 1);
+  const auto &loop = mp.looplist.at(0);
+  CHECK((loop->type & 2) == 2);
+  REQUIRE_FALSE(loop->objlist.empty());
+
+  auto *pl = dynamic_cast<DRW_LWPolyline *>(loop->objlist.at(0).get());
+  REQUIRE(pl != nullptr);
+  CHECK(pl->vertlist.size() == 4u);
   CHECK((pl->flags & 1) == 1);
 }

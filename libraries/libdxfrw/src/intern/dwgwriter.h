@@ -82,6 +82,11 @@ public:
         // siblings above. (write-review #14)
         registerDwgClass({503, 0x401, "ACAD",
                           "AcDbHelix", "HELIX", false, 0x1F2});
+        // MPOLYGON (class 518): classes 500..517 are already occupied by the
+        // writer's typed entity/object set; appName follows the DXF CLASS
+        // metadata and AutoCAD Map/Civil object naming.
+        registerDwgClass({518, 0x401, "AcMPolygonObj15",
+                          "AcDbMPolygon", "MPOLYGON", false, 0x1F2});
     }
 
     virtual ~dwgWriter() = default;

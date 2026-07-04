@@ -93,6 +93,7 @@ public:
     bool writeAttrib(DRW_Attrib *ent);
     bool writeAttdef(DRW_Attdef *ent);
     bool writeHatch(DRW_Hatch *ent);
+    bool writeMPolygon(DRW_MPolygon *ent);
     bool writeDimension(DRW_Dimension *ent);
     bool writeTolerance(DRW_Tolerance *ent);
     bool writeLight(DRW_Light *ent);

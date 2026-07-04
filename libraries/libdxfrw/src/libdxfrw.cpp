@@ -1557,6 +1557,183 @@ bool dxfRW::writeHatch(DRW_Hatch *ent){
     return true;
 }
 
+bool dxfRW::writeMPolygon(DRW_MPolygon *ent){
+    if (version > DRW::AC1009) {
+        writer->writeString(0, "MPOLYGON");
+        writeEntity(ent);
+        writer->writeString(100, "AcDbMPolygon");
+        writer->writeInt16(70, ent->solid);
+        writer->writeDouble(10, 0.0);
+        writer->writeDouble(20, 0.0);
+        writer->writeDouble(30, ent->basePoint.z);
+        writer->writeDouble(210, ent->extPoint.x);
+        writer->writeDouble(220, ent->extPoint.y);
+        writer->writeDouble(230, ent->extPoint.z);
+        writer->writeString(2, ent->name);
+        writer->writeInt16(71, ent->associative);
+        ent->loopsnum = ent->looplist.size();
+        writer->writeInt16(91, ent->loopsnum);
+        for (int i = 0; i < ent->loopsnum; ++i) {
+            DRW_HatchLoop *loop = ent->looplist.at(i).get();
+            writer->writeInt16(92, loop->type);
+            if ((loop->type & 2) == 2) {
+                DRW_LWPolyline *pl = nullptr;
+                if (!loop->objlist.empty())
+                    pl = dynamic_cast<DRW_LWPolyline*>(loop->objlist.at(0).get());
+                const bool hasBulge = pl && std::any_of(
+                    pl->vertlist.begin(), pl->vertlist.end(),
+                    [](const std::shared_ptr<DRW_Vertex2D>& v){ return v && v->bulge != 0.0; });
+                writer->writeInt16(72, hasBulge ? 1 : 0);
+                writer->writeInt16(73, pl ? (pl->flags & 1) : 0);
+                const int nv = pl ? static_cast<int>(pl->vertlist.size()) : 0;
+                writer->writeInt16(93, nv);
+                for (int v = 0; v < nv; ++v) {
+                    const auto &vtx = pl->vertlist.at(v);
+                    writer->writeDouble(10, vtx->x);
+                    writer->writeDouble(20, vtx->y);
+                    if (hasBulge)
+                        writer->writeDouble(42, vtx->bulge);
+                }
+                writer->writeInt16(97, static_cast<int>(loop->m_boundaryHandles.size()));
+                for (std::uint32_t h : loop->m_boundaryHandles)
+                    writer->writeString(330, toHexStr(static_cast<int>(h)));
+            } else {
+                loop->update();
+                writer->writeInt16(93, loop->numedges);
+                for (int j = 0; j < loop->numedges; ++j) {
+                    switch ((loop->objlist.at(j))->eType) {
+                    case DRW::LINE: {
+                        writer->writeInt16(72, 1);
+                        DRW_Line* l = (DRW_Line*)loop->objlist.at(j).get();
+                        writer->writeDouble(10, l->basePoint.x);
+                        writer->writeDouble(20, l->basePoint.y);
+                        writer->writeDouble(11, l->secPoint.x);
+                        writer->writeDouble(21, l->secPoint.y);
+                        break; }
+                    case DRW::ARC: {
+                        writer->writeInt16(72, 2);
+                        DRW_Arc* a = (DRW_Arc*)loop->objlist.at(j).get();
+                        writer->writeDouble(10, a->basePoint.x);
+                        writer->writeDouble(20, a->basePoint.y);
+                        writer->writeDouble(40, a->radious);
+                        writer->writeDouble(50, a->staangle*ARAD);
+                        writer->writeDouble(51, a->endangle*ARAD);
+                        writer->writeInt16(73, a->isccw);
+                        break; }
+                    case DRW::ELLIPSE: {
+                        writer->writeInt16(72, 3);
+                        DRW_Ellipse* a = (DRW_Ellipse*)loop->objlist.at(j).get();
+                        a->correctAxis();
+                        writer->writeDouble(10, a->basePoint.x);
+                        writer->writeDouble(20, a->basePoint.y);
+                        writer->writeDouble(11, a->secPoint.x);
+                        writer->writeDouble(21, a->secPoint.y);
+                        writer->writeDouble(40, a->ratio);
+                        writer->writeDouble(50, a->staparam*ARAD);
+                        writer->writeDouble(51, a->endparam*ARAD);
+                        writer->writeInt16(73, a->isccw);
+                        break; }
+                    case DRW::SPLINE: {
+                        writer->writeInt16(72, 4);
+                        DRW_Spline* sp = (DRW_Spline*)loop->objlist.at(j).get();
+                        writer->writeInt32(94, sp->degree);
+                        const bool rational = (sp->flags & 0x4) != 0;
+                        const bool periodic = (sp->flags & 0x2) != 0;
+                        writer->writeInt16(73, rational ? 1 : 0);
+                        writer->writeInt16(74, periodic ? 1 : 0);
+                        writer->writeInt32(95, static_cast<int>(sp->knotslist.size()));
+                        writer->writeInt32(96, static_cast<int>(sp->controllist.size()));
+                        for (double k : sp->knotslist)
+                            writer->writeDouble(40, k);
+                        for (size_t k = 0; k < sp->controllist.size(); ++k) {
+                            const auto& cp = sp->controllist[k];
+                            if (!cp) continue;
+                            writer->writeDouble(10, cp->x);
+                            writer->writeDouble(20, cp->y);
+                            if (rational) {
+                                double w = (k < sp->weightlist.size()) ? sp->weightlist[k] : 1.0;
+                                writer->writeDouble(42, w);
+                            }
+                        }
+                        writer->writeInt32(97, static_cast<int>(sp->fitlist.size()));
+                        for (const auto& fp : sp->fitlist) {
+                            if (!fp) continue;
+                            writer->writeDouble(11, fp->x);
+                            writer->writeDouble(21, fp->y);
+                        }
+                        if (sp->tgStart.x != 0.0 || sp->tgStart.y != 0.0) {
+                            writer->writeDouble(12, sp->tgStart.x);
+                            writer->writeDouble(22, sp->tgStart.y);
+                        }
+                        if (sp->tgEnd.x != 0.0 || sp->tgEnd.y != 0.0) {
+                            writer->writeDouble(13, sp->tgEnd.x);
+                            writer->writeDouble(23, sp->tgEnd.y);
+                        }
+                        break; }
+                    default:
+                        break;
+                    }
+                }
+                writer->writeInt16(97, static_cast<int>(loop->m_boundaryHandles.size()));
+                for (std::uint32_t h : loop->m_boundaryHandles)
+                    writer->writeString(330, toHexStr(static_cast<int>(h)));
+            }
+        }
+        writer->writeInt16(75, ent->hstyle);
+        writer->writeInt16(76, ent->hpattern);
+        if (!ent->solid) {
+            writer->writeDouble(52, ent->angle);
+            writer->writeDouble(41, ent->scale);
+            writer->writeInt16(77, ent->doubleflag);
+        }
+        const int nDefLines = static_cast<int>(ent->patternLines.size());
+        writer->writeInt16(78, nDefLines);
+        for (const DRW_Hatch::PatternLine &pl : ent->patternLines) {
+            writer->writeDouble(53, pl.angle);
+            writer->writeDouble(43, pl.baseX);
+            writer->writeDouble(44, pl.baseY);
+            writer->writeDouble(45, pl.offsetX);
+            writer->writeDouble(46, pl.offsetY);
+            writer->writeInt16(79, static_cast<int>(pl.dashList.size()));
+            for (double d : pl.dashList)
+                writer->writeDouble(49, d);
+        }
+        if (ent->fillColorAci != 0)
+            writer->writeInt16(63, ent->fillColorAci);
+        if (ent->fillColorRgb >= 0)
+            writer->writeInt32(421, ent->fillColorRgb);
+        if (!ent->fillColorName.empty())
+            writer->writeUtf8String(430, ent->fillColorName);
+        writer->writeDouble(11, ent->xDirX);
+        writer->writeDouble(21, ent->xDirY);
+        writer->writeInt32(99, ent->degenerateLoops);
+        if (ent->isGradient) {
+            writer->writeInt32(450, ent->isGradient);
+            writer->writeInt32(451, ent->gradReserved);
+            writer->writeDouble(460, ent->gradAngle);
+            writer->writeDouble(461, ent->gradShift);
+            writer->writeInt32(452, ent->singleColor);
+            writer->writeDouble(462, ent->gradTint);
+            writer->writeInt32(453, static_cast<int>(ent->gradColors.size()));
+            for (const DRW_Hatch::GradientStop &stop : ent->gradColors) {
+                writer->writeDouble(463, stop.value);
+                if (stop.aciColor != 0)
+                    writer->writeInt16(63, stop.aciColor);
+                if (stop.rgb >= 0)
+                    writer->writeInt32(421, stop.rgb);
+                if (stop.colorMethod != 0)
+                    writer->writeInt32(431, stop.colorMethod);
+                if (!stop.colorName.empty())
+                    writer->writeUtf8String(432, stop.colorName);
+                if (!stop.colorBookName.empty())
+                    writer->writeUtf8String(433, stop.colorBookName);
+            }
+            writer->writeUtf8String(470, ent->gradName);
+        }
+    }
+    return true;
+}
+
 bool dxfRW::writeLeader(DRW_Leader *ent){
     if (version > DRW::AC1009) {
         writer->writeString(0, "LEADER");

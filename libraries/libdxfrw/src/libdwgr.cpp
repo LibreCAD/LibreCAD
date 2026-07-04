@@ -489,6 +489,10 @@ bool dwgRW::writeHatch(DRW_Hatch *ent) {
     return encodeEntityForWrite(ent);
 }
 
+bool dwgRW::writeMPolygon(DRW_MPolygon *ent) {
+    return encodeEntityForWrite(ent);
+}
+
 bool dwgRW::writeDimension(DRW_Dimension *ent) {
     return encodeEntityForWrite(ent);
 }
