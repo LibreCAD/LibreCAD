@@ -328,6 +328,10 @@ protected:
     bool encodeDwg(DRW::Version version, dwgBufferW *buf,
                    dwgBufferW *strBuf = nullptr,
                    dwgBufferW *handleBuf = nullptr) const;
+    bool m_dxfInGeoDataSubclass = false;
+    std::size_t m_dxfSourcePointIndex = 0;
+    std::size_t m_dxfTargetPointIndex = 0;
+    std::size_t m_dxfFaceIndex = 0;
 public:
     std::int32_t m_version = 0;
     std::uint32_t m_hostBlockHandle = 0;

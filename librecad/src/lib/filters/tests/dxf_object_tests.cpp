@@ -1417,6 +1417,130 @@ TEST_CASE("DXF GEODATA is read into a DRW_GeoData (scalar geolocation fields)",
   CHECK(g.m_geoRssTag == "geo-rss-tag");
 }
 
+TEST_CASE("DXF GEODATA object writes class and geolocation fields",
+          "[dxf][geodata][objects]") {
+  const auto path =
+      std::filesystem::temp_directory_path() / "lc_geodata_write.dxf";
+  std::filesystem::remove(path);
+
+  class GeoDataEmitter : public StubInterface {
+  public:
+    dxfRW *m_rw = nullptr;
+    DRW_GeoData m_geo;
+
+    void writeObjects() override { m_rw->writeGeoData(&m_geo); }
+  };
+
+  GeoDataEmitter em;
+  em.m_geo.handle = 0xF0u;
+  em.m_geo.parentHandle = 0x1Fu;
+  em.m_geo.m_hostBlockHandle = 0x70u;
+  em.m_geo.m_version = 3;
+  em.m_geo.m_coordinatesType = 2;
+  em.m_geo.m_designPoint = DRW_Coord(100.0, 200.0, 0.0);
+  em.m_geo.m_referencePoint = DRW_Coord(12.5, 55.25, 3.0);
+  em.m_geo.m_horizontalUnitScale = 1.0;
+  em.m_geo.m_verticalUnitScale = 1.0;
+  em.m_geo.m_horizontalUnits = 6;
+  em.m_geo.m_verticalUnits = 6;
+  em.m_geo.m_upDirection = DRW_Coord(0.0, 0.0, 1.0);
+  em.m_geo.m_northDirection = DRW_Coord(0.0, 1.0, 0.0);
+  em.m_geo.m_scaleEstimationMethod = 1;
+  em.m_geo.m_userSpecifiedScaleFactor = 2.5;
+  em.m_geo.m_enableSeaLevelCorrection = true;
+  em.m_geo.m_seaLevelElevation = 123.0;
+  em.m_geo.m_coordinateProjectionRadius = 6378137.0;
+  em.m_geo.m_coordinateSystemDefinition = "EPSG:4326";
+  em.m_geo.m_geoRssTag = "geo-rss";
+  em.m_geo.m_observationFromTag = "from-tag";
+  em.m_geo.m_observationToTag = "to-tag";
+  em.m_geo.m_observationCoverageTag = "coverage-tag";
+  DRW_GeoMeshPoint point;
+  point.m_source = DRW_Coord(0.0, 0.0, 0.0);
+  point.m_destination = DRW_Coord(100.0, 200.0, 0.0);
+  em.m_geo.m_points.push_back(point);
+  point.m_source = DRW_Coord(1.0, 2.0, 0.0);
+  point.m_destination = DRW_Coord(101.0, 202.0, 0.0);
+  em.m_geo.m_points.push_back(point);
+  DRW_GeoMeshFace face;
+  face.m_index1 = 0;
+  face.m_index2 = 1;
+  face.m_index3 = 0;
+  em.m_geo.m_faces.push_back(face);
+
+  {
+    dxfRW w(path.string().c_str());
+    em.m_rw = &w;
+    DRW_Class cls;
+    REQUIRE(dxfRW::dxfClassForRecordName("GEODATA", cls));
+    cls.instanceCount = 1;
+    w.setDxfClasses({cls});
+    DRW_Dictionary geoDict;
+    geoDict.handle = 0x1Fu;
+    geoDict.parentHandle = 0;
+    geoDict.cloning = 1;
+    geoDict.m_entries.push_back({"GeoData", 0xF0u});
+    w.setNamedDictObjects({geoDict});
+    w.setRootDictEntries({{"ACAD_GEOGRAPHICDATA", "1F"}});
+    REQUIRE(w.write(&em, DRW::AC1024, false));
+  }
+
+  const auto groups = readGroups(path);
+  CHECK(hasConsecutive(groups,
+                       {{"0", "CLASS"}, {"1", "GEODATA"},
+                        {"2", "AcDbGeoData"}}));
+  CHECK(hasConsecutive(groups,
+                       {{"3", "ACAD_GEOGRAPHICDATA"}, {"350", "1F"}}));
+  CHECK(hasConsecutive(groups,
+                       {{"0", "GEODATA"}, {"5", "F0"}, {"330", "1F"},
+                        {"100", "AcDbGeoData"}, {"90", "3"}, {"330", "70"},
+                        {"70", "2"}}));
+  CHECK(hasConsecutive(groups, {{"301", "EPSG:4326"}, {"302", "geo-rss"}}));
+  CHECK(hasConsecutive(groups, {{"93", "2"}}));
+  CHECK(hasConsecutive(groups, {{"96", "1"}, {"97", "0"}, {"98", "1"},
+                                {"99", "0"}}));
+
+  GeoDataCapture cap;
+  {
+    dxfRW r(path.string().c_str());
+    REQUIRE(r.read(&cap, /*ext=*/true));
+  }
+  std::filesystem::remove(path);
+
+  REQUIRE(cap.m_callCount == 1);
+  const DRW_GeoData &g = cap.m_captured;
+  CHECK(g.handle == 0xF0u);
+  CHECK(g.parentHandle == 0x1F);
+  CHECK(g.m_hostBlockHandle == 0x70u);
+  CHECK(g.m_version == 3);
+  CHECK(g.m_coordinatesType == 2);
+  CHECK(g.m_designPoint.x == 100.0);
+  CHECK(g.m_referencePoint.z == 3.0);
+  CHECK(g.m_horizontalUnits == 6);
+  CHECK(g.m_verticalUnits == 6);
+  CHECK(g.m_upDirection.z == 1.0);
+  CHECK(g.m_northDirection.y == 1.0);
+  CHECK(g.m_scaleEstimationMethod == 1);
+  CHECK(g.m_userSpecifiedScaleFactor == 2.5);
+  CHECK(g.m_enableSeaLevelCorrection == true);
+  CHECK(g.m_seaLevelElevation == 123.0);
+  CHECK(g.m_coordinateProjectionRadius == 6378137.0);
+  CHECK(g.m_coordinateSystemDefinition == "EPSG:4326");
+  CHECK(g.m_geoRssTag == "geo-rss");
+  CHECK(g.m_observationFromTag == "from-tag");
+  CHECK(g.m_observationToTag == "to-tag");
+  CHECK(g.m_observationCoverageTag == "coverage-tag");
+  REQUIRE(g.m_points.size() == 2);
+  CHECK(g.m_points[0].m_source.x == 0.0);
+  CHECK(g.m_points[0].m_destination.y == 200.0);
+  CHECK(g.m_points[1].m_source.y == 2.0);
+  CHECK(g.m_points[1].m_destination.x == 101.0);
+  REQUIRE(g.m_faces.size() == 1);
+  CHECK(g.m_faces[0].m_index1 == 0);
+  CHECK(g.m_faces[0].m_index2 == 1);
+  CHECK(g.m_faces[0].m_index3 == 0);
+}
+
 namespace {
 class VisualStyleCapture : public StubInterface {
 public:

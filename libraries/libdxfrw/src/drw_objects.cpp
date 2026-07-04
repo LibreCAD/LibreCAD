@@ -5843,7 +5843,30 @@ bool DRW_GeoData::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
     // are left to the raw-net (their 13/23/14/24 interleave needs a point cursor
     // — a follow-up).  Code mapping cross-checked against dwgTs
     // parseObjectsGeoSpatialDxf.ts.
+    auto ensurePoint = [this](std::size_t index) {
+        if (index >= 100000)
+            return false;
+        if (m_points.size() <= index)
+            m_points.resize(index + 1);
+        return true;
+    };
+    auto ensureFace = [this](std::size_t index) {
+        if (index >= 100000)
+            return false;
+        if (m_faces.size() <= index)
+            m_faces.resize(index + 1);
+        return true;
+    };
     switch (code) {
+    case 100:
+        m_dxfInGeoDataSubclass = reader->getUtf8String() == "AcDbGeoData";
+        break;
+    case 330:
+        if (m_dxfInGeoDataSubclass)
+            m_hostBlockHandle = reader->getHandleString();
+        else
+            parentHandle = reader->getHandleString();
+        break;
     case 90:  m_version = reader->getInt32(); break;
     case 70:  m_coordinatesType = reader->getInt32(); break;
     case 10:  m_designPoint.x = reader->getDouble(); break;
@@ -5872,6 +5895,63 @@ bool DRW_GeoData::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
     case 305: m_observationFromTag = reader->getUtf8String(); break;
     case 306: m_observationToTag = reader->getUtf8String(); break;
     case 307: m_observationCoverageTag = reader->getUtf8String(); break;
+    case 93: {
+        const int count = reader->getInt32();
+        if (count < 0 || count > 100000)
+            return false;
+        m_points.clear();
+        m_points.reserve(static_cast<std::size_t>(count));
+        m_dxfSourcePointIndex = 0;
+        m_dxfTargetPointIndex = 0;
+        break;
+    }
+    case 13:
+        if (!ensurePoint(m_dxfSourcePointIndex))
+            return false;
+        m_points[m_dxfSourcePointIndex].m_source.x = reader->getDouble();
+        break;
+    case 23:
+        if (!ensurePoint(m_dxfSourcePointIndex))
+            return false;
+        m_points[m_dxfSourcePointIndex].m_source.y = reader->getDouble();
+        ++m_dxfSourcePointIndex;
+        break;
+    case 14:
+        if (!ensurePoint(m_dxfTargetPointIndex))
+            return false;
+        m_points[m_dxfTargetPointIndex].m_destination.x = reader->getDouble();
+        break;
+    case 24:
+        if (!ensurePoint(m_dxfTargetPointIndex))
+            return false;
+        m_points[m_dxfTargetPointIndex].m_destination.y = reader->getDouble();
+        ++m_dxfTargetPointIndex;
+        break;
+    case 96: {
+        const int count = reader->getInt32();
+        if (count < 0 || count > 100000)
+            return false;
+        m_faces.clear();
+        m_faces.reserve(static_cast<std::size_t>(count));
+        m_dxfFaceIndex = 0;
+        break;
+    }
+    case 97:
+        if (!ensureFace(m_dxfFaceIndex))
+            return false;
+        m_faces[m_dxfFaceIndex].m_index1 = reader->getInt32();
+        break;
+    case 98:
+        if (!ensureFace(m_dxfFaceIndex))
+            return false;
+        m_faces[m_dxfFaceIndex].m_index2 = reader->getInt32();
+        break;
+    case 99:
+        if (!ensureFace(m_dxfFaceIndex))
+            return false;
+        m_faces[m_dxfFaceIndex].m_index3 = reader->getInt32();
+        ++m_dxfFaceIndex;
+        break;
     default:
         return DRW_TableEntry::parseCode(code, reader);
     }

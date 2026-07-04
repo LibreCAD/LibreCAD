@@ -5578,6 +5578,8 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic& g, const QString& file, RS2::FormatT
             reserveTyped(record.handle, record.replayState, "RASTERVARIABLES");
         for (const auto &record : metadata.mleaderStyles())
             reserveTyped(record.handle, record.replayState, "MLEADERSTYLE");
+        for (const auto &record : metadata.geoData())
+            reserveTyped(record.handle, record.replayState, "GEODATA");
         //SLICE 2: WIPEOUTVARIABLES is a CUSTOM class -> reserve + register CLASS.
         for (const auto &record : metadata.wipeoutVariables())
             reserveTyped(record.handle, record.replayState, "WIPEOUTVARIABLES");
@@ -5727,6 +5729,8 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic& g, const QString& file, RS2::FormatT
         for (const auto &r : metadata.rasterVariables())
             noteDataOnly(r.handle, r.parentHandle, r.replayState);
         for (const auto &r : metadata.mleaderStyles())
+            noteDataOnly(r.handle, r.parentHandle, r.replayState);
+        for (const auto &r : metadata.geoData())
             noteDataOnly(r.handle, r.parentHandle, r.replayState);
         for (const auto &r : metadata.mlineStyles())
             noteDataOnly(r.handle, r.parentHandle, r.replayState);
@@ -8507,6 +8511,15 @@ void RS_FilterDXFRW::writeObjects() {
             DRW_Layout layout = layoutFromMetadata(record);
             layout.parentHandle = resolveOwner(record.parentHandle);
             m_dxfW->writeLayout(&layout);
+        }
+        //GEODATA is a custom object with a CLASS record. DWG read captures all
+        //typed fields, including mesh points/faces, so emit it on DWG->DXF.
+        for (const auto &record : metadata.geoData()) {
+            if (!emitTyped(record.handle, record.replayState))
+                continue;
+            DRW_GeoData gd = geoDataFromMetadata(record);
+            gd.parentHandle = resolveOwner(record.parentHandle);
+            m_dxfW->writeGeoData(&gd);
         }
         //SLICE 2: WIPEOUTVARIABLES (custom, CLASS registered). Same dedup-vs-raw
         //-net + owner re-attach as the other data-only OBJECTS.

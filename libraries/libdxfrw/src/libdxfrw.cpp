@@ -6966,6 +6966,71 @@ bool dxfRW::writeRasterVariables(DRW_RasterVariables *ent) {
     return true;
 }
 
+// GEODATA (AcDbGeoData, custom class). Inverse of DRW_GeoData::parseCode for
+// scalar geolocation fields and mesh point/face lists.
+bool dxfRW::writeGeoData(DRW_GeoData *ent) {
+    writer->writeString(0, "GEODATA");
+    writer->writeString(5, toHexStr(static_cast<int>(ent->handle)));
+    writeObjectOwner(static_cast<std::uint32_t>(ent->parentHandle));
+    writer->writeString(100, "AcDbGeoData");
+    writer->writeInt32(90, ent->m_version != 0 ? ent->m_version : 3);
+    if (ent->m_hostBlockHandle != 0)
+        writer->writeString(330, toHexStr(static_cast<int>(ent->m_hostBlockHandle)));
+    writer->writeInt16(70, ent->m_coordinatesType);
+    writer->writeDouble(10, ent->m_designPoint.x);
+    writer->writeDouble(20, ent->m_designPoint.y);
+    writer->writeDouble(30, ent->m_designPoint.z);
+    writer->writeDouble(11, ent->m_referencePoint.x);
+    writer->writeDouble(21, ent->m_referencePoint.y);
+    writer->writeDouble(31, ent->m_referencePoint.z);
+    writer->writeDouble(40, ent->m_horizontalUnitScale);
+    writer->writeDouble(41, ent->m_verticalUnitScale);
+    writer->writeInt32(91, ent->m_horizontalUnits);
+    writer->writeInt32(92, ent->m_verticalUnits);
+    writer->writeDouble(210, ent->m_upDirection.x);
+    writer->writeDouble(220, ent->m_upDirection.y);
+    writer->writeDouble(230, ent->m_upDirection.z);
+    writer->writeDouble(12, ent->m_northDirection.x);
+    writer->writeDouble(22, ent->m_northDirection.y);
+    writer->writeInt32(95, ent->m_scaleEstimationMethod);
+    writer->writeDouble(141, ent->m_userSpecifiedScaleFactor);
+    writer->writeBool(294, ent->m_enableSeaLevelCorrection);
+    writer->writeDouble(142, ent->m_seaLevelElevation);
+    writer->writeDouble(143, ent->m_coordinateProjectionRadius);
+
+    std::string definition = ent->m_coordinateSystemDefinition;
+    for (std::string::size_type pos = definition.find('\n');
+         pos != std::string::npos;
+         pos = definition.find('\n', pos + 2)) {
+        definition.replace(pos, 1, "^J");
+    }
+    std::string::size_type offset = 0;
+    while (definition.size() - offset > 255) {
+        writer->writeUtf8String(303, definition.substr(offset, 255));
+        offset += 255;
+    }
+    writer->writeUtf8String(301, definition.substr(offset));
+    writer->writeUtf8String(302, ent->m_geoRssTag);
+    writer->writeUtf8String(305, ent->m_observationFromTag);
+    writer->writeUtf8String(306, ent->m_observationToTag);
+    writer->writeUtf8String(307, ent->m_observationCoverageTag);
+
+    writer->writeInt32(93, static_cast<int>(ent->m_points.size()));
+    for (const DRW_GeoMeshPoint &point : ent->m_points) {
+        writer->writeDouble(13, point.m_source.x);
+        writer->writeDouble(23, point.m_source.y);
+        writer->writeDouble(14, point.m_destination.x);
+        writer->writeDouble(24, point.m_destination.y);
+    }
+    writer->writeInt32(96, static_cast<int>(ent->m_faces.size()));
+    for (const DRW_GeoMeshFace &face : ent->m_faces) {
+        writer->writeInt32(97, face.m_index1);
+        writer->writeInt32(98, face.m_index2);
+        writer->writeInt32(99, face.m_index3);
+    }
+    return true;
+}
+
 // MLEADERSTYLE (AcDbMLeaderStyle, custom class). Inverse of
 // DRW_MLeaderStyle::parseCode: common table-entry name/flags, scalar style
 // fields, and handle references 340-343.
