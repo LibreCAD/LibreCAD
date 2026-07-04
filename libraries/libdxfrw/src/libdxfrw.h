@@ -102,6 +102,7 @@ public:
     bool writeLWPolyline(DRW_LWPolyline *ent);
     bool writePolyline(DRW_Polyline *ent);
     bool writeSpline(DRW_Spline *ent);
+    bool writeHelix(DRW_Helix *ent);
     bool writeBlockRecord(std::string name, int insUnits = 0);
     bool writeBlock(DRW_Block *ent);
     bool writeInsert(DRW_Insert *ent);
@@ -294,6 +295,7 @@ private:
     bool processHatch();
     bool processMPolygon();
     bool processSpline();
+    bool processHelix();
     bool process3dface();
     bool processMesh();
     bool processViewport();

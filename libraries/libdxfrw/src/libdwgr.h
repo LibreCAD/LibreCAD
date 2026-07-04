@@ -92,6 +92,7 @@ public:
     bool writeInsert(DRW_Insert *ent);
     bool writeMText(DRW_MText *ent);
     bool writeSpline(DRW_Spline *ent);
+    bool writeHelix(DRW_Helix *ent);
     bool writeAttrib(DRW_Attrib *ent);
     bool writeAttdef(DRW_Attdef *ent);
     bool writeHatch(DRW_Hatch *ent);

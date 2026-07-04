@@ -6741,6 +6741,72 @@ bool DRW_Spline::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
     return true;
 }
 
+bool DRW_Helix::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
+    if (code == 100) {
+        const std::string subclass = reader->getString();
+        m_parsingHelixSubclass = (subclass == "AcDbHelix");
+        return true;
+    }
+
+    if (!m_parsingHelixSubclass)
+        return DRW_Spline::parseCode(code, reader);
+
+    switch (code) {
+    case 90:
+        m_majorVersion = reader->getInt32();
+        break;
+    case 91:
+        m_maintVersion = reader->getInt32();
+        break;
+    case 10:
+        axisBasePt.x = reader->getDouble();
+        break;
+    case 20:
+        axisBasePt.y = reader->getDouble();
+        break;
+    case 30:
+        axisBasePt.z = reader->getDouble();
+        break;
+    case 11:
+        startPt.x = reader->getDouble();
+        break;
+    case 21:
+        startPt.y = reader->getDouble();
+        break;
+    case 31:
+        startPt.z = reader->getDouble();
+        break;
+    case 12:
+        axisVector.x = reader->getDouble();
+        break;
+    case 22:
+        axisVector.y = reader->getDouble();
+        break;
+    case 32:
+        axisVector.z = reader->getDouble();
+        break;
+    case 40:
+        radius = reader->getDouble();
+        break;
+    case 41:
+        turns = reader->getDouble();
+        break;
+    case 42:
+        turnHeight = reader->getDouble();
+        break;
+    case 290:
+        handedness = reader->getInt32() != 0;
+        break;
+    case 280:
+        constraintType = static_cast<std::uint8_t>(reader->getInt32() & 0xff);
+        break;
+    default:
+        return DRW_Entity::parseCode(code, reader);
+    }
+
+    return true;
+}
+
 bool DRW_Spline::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs){
     bool ret = DRW_Entity::parseDwg(version, buf, NULL, bs);
     if (!ret)

@@ -485,6 +485,10 @@ bool dwgRW::writeSpline(DRW_Spline *ent) {
     return encodeEntityForWrite(ent);
 }
 
+bool dwgRW::writeHelix(DRW_Helix *ent) {
+    return encodeEntityForWrite(ent);
+}
+
 bool dwgRW::writeAttrib(DRW_Attrib *ent) {
     return encodeEntityForWrite(ent);
 }

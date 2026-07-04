@@ -29,6 +29,59 @@
 
 #define FIRSTHANDLE 48
 
+namespace {
+
+void writeDxfSplineBody(dxfWriter *writer, DRW_Spline *ent) {
+    // Normal vector is optional; omit when it is the default (0,0,1).
+    if (ent->normalVec.x != 0.0 || ent->normalVec.y != 0.0 || ent->normalVec.z != 1.0) {
+        writer->writeDouble(210, ent->normalVec.x);
+        writer->writeDouble(220, ent->normalVec.y);
+        writer->writeDouble(230, ent->normalVec.z);
+    }
+    int flags = ent->flags;
+    if (std::any_of(ent->weightlist.begin(), ent->weightlist.end(),
+                    [](double weight) { return std::fabs(weight - 1.0) > 1e-12; })) {
+        flags |= 0x04;
+    }
+    writer->writeInt16(70, flags);
+    writer->writeInt16(71, ent->degree);
+    writer->writeInt16(72, static_cast<int>(ent->knotslist.size()));
+    writer->writeInt16(73, static_cast<int>(ent->controllist.size()));
+    writer->writeInt16(74, static_cast<int>(ent->fitlist.size()));
+    writer->writeDouble(42, ent->tolknot);
+    writer->writeDouble(43, ent->tolcontrol);
+    writer->writeDouble(44, ent->tolfit);
+    for (double k : ent->knotslist)
+        writer->writeDouble(40, k);
+    // Control points with interleaved weights (when present)
+    for (std::size_t i = 0; i < ent->controllist.size(); ++i) {
+        const auto& crd = ent->controllist[i];
+        writer->writeDouble(10, crd->x);
+        writer->writeDouble(20, crd->y);
+        writer->writeDouble(30, crd->z);
+        if (i < ent->weightlist.size())
+            writer->writeDouble(41, ent->weightlist[i]);
+    }
+    for (const auto& crd : ent->fitlist) {
+        writer->writeDouble(11, crd->x);
+        writer->writeDouble(21, crd->y);
+        writer->writeDouble(31, crd->z);
+    }
+    // Start/end tangent vectors (fit-point splines, codes 12/22/32 and 13/23/33)
+    if (ent->tgStart.x != 0.0 || ent->tgStart.y != 0.0 || ent->tgStart.z != 0.0) {
+        writer->writeDouble(12, ent->tgStart.x);
+        writer->writeDouble(22, ent->tgStart.y);
+        writer->writeDouble(32, ent->tgStart.z);
+    }
+    if (ent->tgEnd.x != 0.0 || ent->tgEnd.y != 0.0 || ent->tgEnd.z != 0.0) {
+        writer->writeDouble(13, ent->tgEnd.x);
+        writer->writeDouble(23, ent->tgEnd.y);
+        writer->writeDouble(33, ent->tgEnd.z);
+    }
+}
+
+}
+
 /*enum sections {
     secUnknown,
     secHeader,
@@ -1308,54 +1361,36 @@ bool dxfRW::writeSpline(DRW_Spline *ent){
         writer->writeString(0, "SPLINE");
         writeEntity(ent);
         writer->writeString(100, "AcDbSpline");
-        // Normal vector is optional; omit when it is the default (0,0,1).
-        if (ent->normalVec.x != 0.0 || ent->normalVec.y != 0.0 || ent->normalVec.z != 1.0) {
-            writer->writeDouble(210, ent->normalVec.x);
-            writer->writeDouble(220, ent->normalVec.y);
-            writer->writeDouble(230, ent->normalVec.z);
-        }
-        int flags = ent->flags;
-        if (std::any_of(ent->weightlist.begin(), ent->weightlist.end(),
-                        [](double weight) { return std::fabs(weight - 1.0) > 1e-12; })) {
-            flags |= 0x04;
-        }
-        writer->writeInt16(70, flags);
-        writer->writeInt16(71, ent->degree);
-        writer->writeInt16(72, static_cast<int>(ent->knotslist.size()));
-        writer->writeInt16(73, static_cast<int>(ent->controllist.size()));
-        writer->writeInt16(74, static_cast<int>(ent->fitlist.size()));
-        writer->writeDouble(42, ent->tolknot);
-        writer->writeDouble(43, ent->tolcontrol);
-        writer->writeDouble(44, ent->tolfit);
-        for (double k : ent->knotslist)
-            writer->writeDouble(40, k);
-        // Control points with interleaved weights (when present)
-        for (std::size_t i = 0; i < ent->controllist.size(); ++i) {
-            const auto& crd = ent->controllist[i];
-            writer->writeDouble(10, crd->x);
-            writer->writeDouble(20, crd->y);
-            writer->writeDouble(30, crd->z);
-            if (i < ent->weightlist.size())
-                writer->writeDouble(41, ent->weightlist[i]);
-        }
-        for (const auto& crd : ent->fitlist) {
-            writer->writeDouble(11, crd->x);
-            writer->writeDouble(21, crd->y);
-            writer->writeDouble(31, crd->z);
-        }
-        // Start/end tangent vectors (fit-point splines, codes 12/22/32 and 13/23/33)
-        if (ent->tgStart.x != 0.0 || ent->tgStart.y != 0.0 || ent->tgStart.z != 0.0) {
-            writer->writeDouble(12, ent->tgStart.x);
-            writer->writeDouble(22, ent->tgStart.y);
-            writer->writeDouble(32, ent->tgStart.z);
-        }
-        if (ent->tgEnd.x != 0.0 || ent->tgEnd.y != 0.0 || ent->tgEnd.z != 0.0) {
-            writer->writeDouble(13, ent->tgEnd.x);
-            writer->writeDouble(23, ent->tgEnd.y);
-            writer->writeDouble(33, ent->tgEnd.z);
-        }
+        writeDxfSplineBody(writer.get(), ent);
     } else {
         //RLZ: TODO convert spline in polyline (not exist in acad 12)
+    }
+    return true;
+}
+
+bool dxfRW::writeHelix(DRW_Helix *ent){
+    if (version > DRW::AC1009) {
+        writer->writeString(0, "HELIX");
+        writeEntity(ent);
+        writer->writeString(100, "AcDbSpline");
+        writeDxfSplineBody(writer.get(), ent);
+        writer->writeString(100, "AcDbHelix");
+        writer->writeInt32(90, ent->m_majorVersion);
+        writer->writeInt32(91, ent->m_maintVersion);
+        writer->writeDouble(10, ent->axisBasePt.x);
+        writer->writeDouble(20, ent->axisBasePt.y);
+        writer->writeDouble(30, ent->axisBasePt.z);
+        writer->writeDouble(11, ent->startPt.x);
+        writer->writeDouble(21, ent->startPt.y);
+        writer->writeDouble(31, ent->startPt.z);
+        writer->writeDouble(12, ent->axisVector.x);
+        writer->writeDouble(22, ent->axisVector.y);
+        writer->writeDouble(32, ent->axisVector.z);
+        writer->writeDouble(40, ent->radius);
+        writer->writeDouble(41, ent->turns);
+        writer->writeDouble(42, ent->turnHeight);
+        writer->writeBool(290, ent->handedness);
+        writer->writeInt16(280, static_cast<int>(ent->constraintType));
     }
     return true;
 }
@@ -4266,6 +4301,8 @@ bool dxfRW::processEntities(bool isblock) {
             processed = processMPolygon();
         } else if (nextentity == "SPLINE") {
             processed = processSpline();
+        } else if (nextentity == "HELIX") {
+            processed = processHelix();
         } else if (nextentity == "3DFACE") {
             processed = process3dface();
         } else if (nextentity == "MESH") {
@@ -4902,6 +4939,27 @@ bool dxfRW::processSpline() {
 
         if (!sp.parseCode(code, reader)) {
             return setError( DRW::BAD_CODE_PARSED);
+        }
+    }
+
+    return setError(DRW::BAD_READ_ENTITIES);
+}
+
+bool dxfRW::processHelix() {
+    DRW_DBG("dxfRW::processHelix");
+    int code;
+    DRW_Helix helix;
+    while (reader->readRec(&code)) {
+        DRW_DBG(code); DRW_DBG("\n");
+        if (0 == code) {
+            nextentity = reader->getString();
+            DRW_DBG(nextentity); DRW_DBG("\n");
+            iface->addHelix(&helix);
+            return true;
+        }
+
+        if (!helix.parseCode(code, reader)) {
+            return setError(DRW::BAD_CODE_PARSED);
         }
     }
 

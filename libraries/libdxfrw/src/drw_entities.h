@@ -1700,6 +1700,7 @@ public:
     static constexpr std::uint16_t kDwgClassNum = 503; /*!< AcDbHelix DWG custom class id */
 
 protected:
+    bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
     virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0, dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
 
@@ -1714,6 +1715,9 @@ public:
     double turnHeight = 0.0;     /*!< turn height, code 42 */
     bool handedness = false;     /*!< 0 = left-handed, 1 = right-handed, code 290 */
     std::uint8_t constraintType = 0;   /*!< constrain type, code 280 */
+
+private:
+    bool m_parsingHelixSubclass = false;
 };
 
 //! Class to handle hatch loop

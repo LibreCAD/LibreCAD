@@ -1769,6 +1769,7 @@ if(BUILD_TESTS)
         librecad/src/lib/filters/tests/mpolygon_tests.cpp
         librecad/src/lib/filters/tests/mpolygon_dwg_tests.cpp
         librecad/src/lib/filters/tests/mesh_tests.cpp
+        librecad/src/lib/filters/tests/helix_tests.cpp
         librecad/src/lib/filters/tests/field_dxf_tests.cpp
         librecad/src/lib/filters/tests/rtext_arctext_tests.cpp
         librecad/src/lib/filters/tests/large_radial_dim_dxf_tests.cpp
