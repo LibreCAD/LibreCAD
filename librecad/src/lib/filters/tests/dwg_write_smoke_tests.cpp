@@ -26,8 +26,8 @@
  *   (b) file is the expected minimum size (~ few hundred bytes)
  *   (c) "AC1015" version string lands at byte 0
  *   (d) FILE_HEADER_END sentinel lands at the predicted offset
- *      (the libdxfrw reader's checkSentinel is a no-op, so explicit
- *      byte-compare here closes that gap)
+ *      (the explicit byte-compare keeps writer locator math covered before
+ *      the reader's own sentinel checks run)
  *   (e) HEADER and CLASSES begin sentinels appear at the addresses
  *      recorded in the file-header section locator
  *   (f) dwgRW::read() accepts the file (returns true)

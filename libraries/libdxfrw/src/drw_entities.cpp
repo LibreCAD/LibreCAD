@@ -5975,8 +5975,9 @@ bool DRW_MPolygon::parseCode(int code, const std::unique_ptr<dxfReader>& reader)
 //     count (BL) instead of HATCH's pixel-size + seed points.
 // The gradient/elevation/extrusion/name/solid/associative prologue and the whole
 // boundary-loop body are identical, so they reuse DRW_Hatch::parseDwgBoundaryData.
-// No committed real-world DWG MPOLYGON fixture exists; validated by build + the
-// ezdxf-derived DXF fixture (mpolygon_tests.cpp). DWG-runtime check deferred.
+// DWG runtime coverage uses testdata/mpolygon_solid.dwg, ODA-synthesized from
+// the ezdxf-verified inline DXF in mpolygon_tests.cpp and confirmed with the
+// dwg-parser oracle.
 bool DRW_MPolygon::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs){
     dwgBuffer sBuff = *buf;
     dwgBuffer *sBuf = buf;
