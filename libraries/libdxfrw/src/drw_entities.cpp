@@ -7812,6 +7812,26 @@ bool DRW_DimRadial::encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32
 }
 
 // ----------------------------------------------------------------------------
+// DRW_DimLargeRadial::encodeDwg  (oType=519, custom AcDbRadialDimensionLarge)
+// ----------------------------------------------------------------------------
+bool DRW_DimLargeRadial::encodeDwg(DRW::Version version, dwgBufferW *buf,
+                                   std::uint32_t bs, dwgBufferW *strBuf,
+                                   dwgBufferW *handleBuf) {
+    (void)bs;
+    oType = kDwgClassNum;
+    if (!encodeDwgCommon(version, buf)) return false;
+    if (!encodeDwgDimBase(version, buf, strBuf)) return false;
+    buf->put3BitDouble(getCenterPoint());       // definition point (code 10)
+    buf->put3BitDouble(jogPoint);               // jog vertex (code 15)
+    buf->putBitDouble(jogAngle);                // jog transverse angle (code 40)
+    buf->put3BitDouble(getChordPoint());        // chord point (code 13)
+    buf->put3BitDouble(overrideCenterPoint);    // overridden center (code 14)
+    if (!encodeDwgEntHandle(version, buf, handleBuf)) return false;
+    putDimHandles(buf, dimStyleH, blockH, handleBuf);
+    return true;
+}
+
+// ----------------------------------------------------------------------------
 // DRW_DimDiametric::encodeDwg  (oType=26)
 // ----------------------------------------------------------------------------
 bool DRW_DimDiametric::encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs, dwgBufferW *strBuf, dwgBufferW *handleBuf) {

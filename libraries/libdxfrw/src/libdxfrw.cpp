@@ -1847,9 +1847,90 @@ bool dxfRW::writeArcDimension(DRW_DimArc *d) {
     return true;
 }
 
+bool dxfRW::writeLargeRadialDimension(DRW_DimLargeRadial *d) {
+    if (version <= DRW::AC1009)
+        return true;
+    writer->writeString(0, "LARGE_RADIAL_DIMENSION");
+    writeEntity(d);
+    writer->writeString(100, "AcDbDimension");
+    if (version >= DRW::AC1024)
+        writer->writeInt16(280, 0);
+    if (!d->getName().empty())
+        writer->writeString(2, d->getName());
+    writer->writeDouble(10, d->getCenterPoint().x);
+    writer->writeDouble(20, d->getCenterPoint().y);
+    writer->writeDouble(30, d->getCenterPoint().z);
+    writer->writeDouble(11, d->getTextPoint().x);
+    writer->writeDouble(21, d->getTextPoint().y);
+    writer->writeDouble(31, d->getTextPoint().z);
+    int dimType = (d->type & ~0x07) | 4;
+    if (!(dimType & 32))
+        dimType += 32;
+    writer->writeInt16(70, dimType);
+    if (!d->getText().empty())
+        writer->writeUtf8String(1, d->getText());
+    writer->writeInt16(71, d->getAlign());
+    if (d->getTextLineStyle() != 1)
+        writer->writeInt16(72, d->getTextLineStyle());
+    if (d->getTextLineFactor() != 1)
+        writer->writeDouble(41, d->getTextLineFactor());
+    writer->writeUtf8String(3, d->getStyle());
+    if (d->measureValue != 0)
+        writer->writeDouble(42, d->measureValue);
+    if (d->getDir() != 0)
+        writer->writeDouble(53, d->getDir());
+    if (d->hdir != 0)
+        writer->writeDouble(51, d->hdir);
+    if (d->getFlipArrow1())
+        writer->writeInt16(74, 1);
+    if (d->getFlipArrow2())
+        writer->writeInt16(75, 1);
+    if (d->genTol)
+        writer->writeInt16(76, 1);
+    if (d->limGen)
+        writer->writeInt16(77, 1);
+    if (d->tolPlus != 0)
+        writer->writeDouble(43, d->tolPlus);
+    if (d->tolMinus != 0)
+        writer->writeDouble(44, d->tolMinus);
+    if (d->tolScale != 0)
+        writer->writeDouble(45, d->tolScale);
+    if (d->tolDecimals != 0)
+        writer->writeInt16(78, d->tolDecimals);
+    if (d->tolAlign != 0)
+        writer->writeInt16(79, d->tolAlign);
+    if (d->tolZero != 0)
+        writer->writeInt16(80, d->tolZero);
+    if (d->altTolDecimals != 0)
+        writer->writeInt16(81, d->altTolDecimals);
+    if (d->altZero != 0)
+        writer->writeInt16(82, d->altZero);
+    if (d->altTolZero != 0)
+        writer->writeInt16(83, d->altTolZero);
+    if (d->textMove != 0)
+        writer->writeInt16(84, d->textMove);
+    writer->writeDouble(210, d->getExtrusion().x);
+    writer->writeDouble(220, d->getExtrusion().y);
+    writer->writeDouble(230, d->getExtrusion().z);
+    writer->writeString(100, "AcDbRadialDimensionLarge");
+    writer->writeDouble(13, d->getChordPoint().x);
+    writer->writeDouble(23, d->getChordPoint().y);
+    writer->writeDouble(33, d->getChordPoint().z);
+    writer->writeDouble(14, d->overrideCenterPoint.x);
+    writer->writeDouble(24, d->overrideCenterPoint.y);
+    writer->writeDouble(34, d->overrideCenterPoint.z);
+    writer->writeDouble(15, d->jogPoint.x);
+    writer->writeDouble(25, d->jogPoint.y);
+    writer->writeDouble(35, d->jogPoint.z);
+    writer->writeDouble(40, d->jogAngle);
+    return true;
+}
+
 bool dxfRW::writeDimension(DRW_Dimension *ent) {
     if (ent->eType == DRW::DIMARC)
         return writeArcDimension(static_cast<DRW_DimArc*>(ent));
+    if (auto *largeRadial = dynamic_cast<DRW_DimLargeRadial*>(ent))
+        return writeLargeRadialDimension(largeRadial);
     if (version > DRW::AC1009) {
         writer->writeString(0, "DIMENSION");
         writeEntity(ent);
@@ -6282,6 +6363,7 @@ bool dxfRW::dxfClassForRecordName(const std::string &recName, DRW_Class &out) {
         {"ACAD_TABLE",       "AcDbTable",               "ObjectDBX Classes", 1025, 1},
         {"HELIX",            "AcDbHelix",               "ObjectDBX Classes", 4095, 1},
         {"MPOLYGON",         "AcDbMPolygon",            "AcMPolygonObj15",   1025, 1},
+        {"LARGE_RADIAL_DIMENSION", "AcDbRadialDimensionLarge", "ACAD",       1025, 1},
         {"SURFACE",          "AcDbSurface",             "ObjectDBX Classes", 4095, 1},
         {"EXTRUDEDSURFACE",  "AcDbExtrudedSurface",     "ObjectDBX Classes", 4095, 1},
         {"LOFTEDSURFACE",    "AcDbLoftedSurface",       "ObjectDBX Classes", 0, 1},

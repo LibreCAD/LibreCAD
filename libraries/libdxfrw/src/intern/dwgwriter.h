@@ -87,6 +87,9 @@ public:
         // metadata and AutoCAD Map/Civil object naming.
         registerDwgClass({518, 0x401, "AcMPolygonObj15",
                           "AcDbMPolygon", "MPOLYGON", false, 0x1F2});
+        registerDwgClass({519, 0x401, "ACAD",
+                          "AcDbRadialDimensionLarge", "LARGE_RADIAL_DIMENSION",
+                          false, 0x1F2});
     }
 
     virtual ~dwgWriter() = default;

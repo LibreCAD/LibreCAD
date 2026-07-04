@@ -2419,16 +2419,18 @@ protected:
 *  dimension whose leader is jogged for large radii.  It carries the radial
 *  center (code 10) and chord point (mapped onto the radial diameter point so it
 *  renders through the existing addDimRadial path) plus a jog vertex (15/25/35),
-*  an overridden center (14/24/34) and a jog transverse angle (40).  Read-only:
+*  an overridden center (14/24/34) and a jog transverse angle (40). It is
 *  delivered via addDimRadial (this is-a DRW_DimRadial), so no new callback or
-*  consumer override is needed; the jog fields ride along on the object but are
-*  lost if the drawing is later re-written as a plain radial dimension.
+*  consumer override is needed. The writer emits it as its own top-level DXF
+*  token / DWG custom class so the jog fields survive write-reopen.
 */
 class DRW_DimLargeRadial : public DRW_DimRadial {
     SETENTFRIENDS
 public:
     DRW_DimLargeRadial() { eType = DRW::DIMRADIAL; }
     DRW_DimLargeRadial(const DRW_Dimension& d) : DRW_DimRadial(d) { eType = DRW::DIMRADIAL; }
+
+    static constexpr std::uint16_t kDwgClassNum = 519; /*!< AcDbRadialDimensionLarge DWG custom class id */
 
     DRW_Coord getChordPoint() const { return getPt5(); }   /*!< chord point on the arc, code 13/23/33 (== radial diameter point) */
     void setChordPoint(const DRW_Coord p) { setPt5(p); }
@@ -2440,6 +2442,8 @@ public:
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
+    virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0,
+                           dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
 private:
     bool m_largeRadialSubclassSeen = false;
 };

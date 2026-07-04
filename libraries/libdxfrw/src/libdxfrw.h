@@ -340,6 +340,7 @@ private:
     // (writePolyline/writeInsert) so they do not pollute the source->minted map.
     bool writeEntity(DRW_Entity *ent, bool captureSourceHandle = true);
     bool writeArcDimension(DRW_DimArc *d);
+    bool writeLargeRadialDimension(DRW_DimLargeRadial *d);
     bool writeTables();
     bool writeBlocks();
     bool writeObjects();

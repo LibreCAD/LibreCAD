@@ -51,6 +51,7 @@
 #include <catch2/catch_test_macros.hpp>
 #include <catch2/catch_approx.hpp>
 
+#include <cstdio>
 #include <filesystem>
 #include <string>
 
@@ -144,6 +145,37 @@ public:
   }
 };
 
+DRW_DimLargeRadial makeLargeRadialDimension() {
+  DRW_DimLargeRadial dim;
+  dim.setCenterPoint(DRW_Coord(5.0, 6.0, 0.0));
+  dim.setTextPoint(DRW_Coord(2.0, 3.0, 0.0));
+  dim.setChordPoint(DRW_Coord(10.0, 0.0, 0.0));
+  dim.overrideCenterPoint = DRW_Coord(7.0, 9.0, 0.0);
+  dim.jogPoint = DRW_Coord(8.0, 2.0, 0.0);
+  dim.jogAngle = 0.7853981633974483;
+  dim.type = 4;
+  dim.setStyle("STANDARD");
+  dim.setExtrusion(DRW_Coord(0.0, 0.0, 1.0));
+  return dim;
+}
+
+class LargeRadialDwgEmitter : public StubInterface {
+public:
+  DRW_DimLargeRadial m_dimension = makeLargeRadialDimension();
+  dwgRW *m_writer = nullptr;
+
+  void writeEntities() override {
+    REQUIRE(m_writer != nullptr);
+    REQUIRE(m_writer->writeDimension(&m_dimension));
+  }
+};
+
+std::string tempPath(const char *suffix) {
+  return (std::filesystem::temp_directory_path() /
+          (std::string("large_radial_") + suffix))
+      .string();
+}
+
 } // namespace
 
 TEST_CASE("DWG LARGE_RADIAL_DIMENSION decodes via parseDwg with DXF-consistent fields",
@@ -194,4 +226,44 @@ TEST_CASE("DWG LARGE_RADIAL_DIMENSION decodes via parseDwg with DXF-consistent f
   // Jog angle (code 40): the ODA converter does not carry it into the DWG body,
   // so it decodes as 0 here (the DXF read of the same drawing shows pi/4).
   CHECK(cap.m_captured.jogAngle == Catch::Approx(0.0));
+}
+
+TEST_CASE("dwgRW writes LARGE_RADIAL_DIMENSION as AcDbRadialDimensionLarge",
+          "[dwg-write][dimension][large_radial]") {
+  const DRW::Version versions[] = {DRW::AC1015, DRW::AC1024, DRW::AC1032};
+
+  for (DRW::Version version : versions) {
+    INFO("version: " << static_cast<int>(version));
+    const std::string suffix =
+        std::string("write_") + std::to_string(static_cast<int>(version)) + ".dwg";
+    const std::string path = tempPath(suffix.c_str());
+
+    {
+      dwgRW writer(path.c_str());
+      LargeRadialDwgEmitter emitter;
+      emitter.m_writer = &writer;
+      REQUIRE(writer.write(&emitter, version, /*bin=*/false));
+    }
+
+    LargeRadialDwgCapture cap;
+    {
+      dwgR reader(path.c_str());
+      REQUIRE(reader.read(&cap, /*ext=*/true));
+      REQUIRE(reader.getVersion() == version);
+      REQUIRE(reader.getError() == DRW::BAD_NONE);
+    }
+
+    REQUIRE(cap.m_count == 1);
+    REQUIRE(cap.m_wasLarge);
+    CHECK(cap.m_center.x == Catch::Approx(5.0));
+    CHECK(cap.m_center.y == Catch::Approx(6.0));
+    CHECK(cap.m_captured.getChordPoint().x == Catch::Approx(10.0));
+    CHECK(cap.m_captured.overrideCenterPoint.x == Catch::Approx(7.0));
+    CHECK(cap.m_captured.overrideCenterPoint.y == Catch::Approx(9.0));
+    CHECK(cap.m_captured.jogPoint.x == Catch::Approx(8.0));
+    CHECK(cap.m_captured.jogPoint.y == Catch::Approx(2.0));
+    CHECK(cap.m_captured.jogAngle == Catch::Approx(0.7853981633974483));
+
+    std::remove(path.c_str());
+  }
 }

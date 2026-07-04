@@ -35,8 +35,10 @@
 #include <catch2/catch_test_macros.hpp>
 #include <catch2/catch_approx.hpp>
 
+#include <algorithm>
 #include <filesystem>
 #include <fstream>
+#include <sstream>
 #include <string>
 
 #include "drw_entities.h"
@@ -129,6 +131,31 @@ public:
   }
 };
 
+DRW_DimLargeRadial makeLargeRadialDimension() {
+  DRW_DimLargeRadial dim;
+  dim.setCenterPoint(DRW_Coord(5.0, 6.0, 0.0));
+  dim.setTextPoint(DRW_Coord(2.0, 3.0, 0.0));
+  dim.setChordPoint(DRW_Coord(10.0, 0.0, 0.0));
+  dim.overrideCenterPoint = DRW_Coord(7.0, 9.0, 0.0);
+  dim.jogPoint = DRW_Coord(8.0, 2.0, 0.0);
+  dim.jogAngle = 0.7853981633974483;
+  dim.type = 4;
+  dim.setStyle("STANDARD");
+  dim.setExtrusion(DRW_Coord(0.0, 0.0, 1.0));
+  return dim;
+}
+
+class LargeRadialEmitter : public StubInterface {
+public:
+  DRW_DimLargeRadial m_dimension = makeLargeRadialDimension();
+  dxfRW *m_rw = nullptr;
+
+  void writeEntities() override {
+    REQUIRE(m_rw != nullptr);
+    REQUIRE(m_rw->writeDimension(&m_dimension));
+  }
+};
+
 void readDxf(const std::string &dxf, DRW_Interface &cap, const char *name) {
   const auto path = std::filesystem::temp_directory_path() / name;
   std::filesystem::remove(path);
@@ -139,6 +166,26 @@ void readDxf(const std::string &dxf, DRW_Interface &cap, const char *name) {
   dxfRW r(path.string().c_str());
   REQUIRE(r.read(&cap, /*ext=*/true));
   std::filesystem::remove(path);
+}
+
+std::string writeLargeRadialDxf(const char *name) {
+  const auto path = std::filesystem::temp_directory_path() / name;
+  std::filesystem::remove(path);
+
+  {
+    dxfRW w(path.string().c_str());
+    LargeRadialEmitter emitter;
+    emitter.m_rw = &w;
+    REQUIRE(w.write(&emitter, DRW::AC1021, false));
+  }
+
+  std::ifstream in(path);
+  REQUIRE(in.good());
+  std::ostringstream out;
+  out << in.rdbuf();
+  in.close();
+  std::filesystem::remove(path);
+  return out.str();
 }
 
 // AutoCAD-style jogged radius dimension.  Every point uses a DISTINCT value so
@@ -200,4 +247,28 @@ TEST_CASE("DXF LARGE_RADIAL_DIMENSION routes to addDimRadial as a DRW_DimLargeRa
   CHECK(cap.m_captured.overrideCenterPoint.x != Catch::Approx(cap.m_center.x));
   CHECK(cap.m_captured.overrideCenterPoint.x != Catch::Approx(cap.m_diameter.x));
   CHECK(cap.m_captured.jogPoint.x != Catch::Approx(cap.m_captured.overrideCenterPoint.x));
+}
+
+TEST_CASE("DXF writer keeps LARGE_RADIAL_DIMENSION as a distinct top-level token",
+          "[dxf][dimension][large_radial][write]") {
+  const std::string dxf = writeLargeRadialDxf("lc_large_radial_write.dxf");
+  std::string normalized = dxf;
+  normalized.erase(std::remove(normalized.begin(), normalized.end(), '\r'),
+                   normalized.end());
+  CHECK(normalized.find("\n  0\nLARGE_RADIAL_DIMENSION\n") != std::string::npos);
+  CHECK(normalized.find("\n  0\nDIMENSION\n") == std::string::npos);
+
+  LargeRadialCapture cap;
+  readDxf(dxf, cap, "lc_large_radial_write_read.dxf");
+
+  REQUIRE(cap.m_count == 1);
+  REQUIRE(cap.m_wasLarge);
+  CHECK(cap.m_center.x == Catch::Approx(5.0));
+  CHECK(cap.m_center.y == Catch::Approx(6.0));
+  CHECK(cap.m_captured.getChordPoint().x == Catch::Approx(10.0));
+  CHECK(cap.m_captured.overrideCenterPoint.x == Catch::Approx(7.0));
+  CHECK(cap.m_captured.overrideCenterPoint.y == Catch::Approx(9.0));
+  CHECK(cap.m_captured.jogPoint.x == Catch::Approx(8.0));
+  CHECK(cap.m_captured.jogPoint.y == Catch::Approx(2.0));
+  CHECK(cap.m_captured.jogAngle == Catch::Approx(0.7853981633974483));
 }
