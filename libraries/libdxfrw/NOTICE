@@ -1,0 +1,28 @@
+libdxfrw provenance notice
+==========================
+
+This directory is LibreCAD's vendored in-tree fork of libdxfrw.
+
+Upstream project:
+  Name: libdxfrw
+  URL: https://github.com/LibreCAD/libdxfrw
+  Historical URL: https://sourceforge.net/projects/libdxfrw/
+  Original authors: see AUTHORS in this directory.
+
+Snapshot base:
+  Revision: 89b762bef636c90eb370cb1af3cec80fe759cb32
+  Short revision: 89b762b
+  Snapshot date recorded for this fork: 2026-05-12
+  Local marker file: .snapshot-revision
+
+The snapshot base is an upstream libdxfrw revision recorded for provenance.
+It is not expected to resolve inside LibreCAD's repository history.
+
+License:
+  libdxfrw is licensed under the GNU General Public License version 2, or
+  at your option any later version. See COPYING in this directory.
+
+Local fork notes:
+  LibreCAD maintains this copy in tree for DXF/DWG read/write integration.
+  Current DWG coverage and maintenance notes live in
+  DWG_REFERENCE_COVERAGE_STATUS.md and DWG_ROADMAP.md.
