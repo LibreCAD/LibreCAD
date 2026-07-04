@@ -920,6 +920,157 @@ public:
     void addBlock(const DRW_Block& b)    override { m_blocks.push_back(b.name); }
 };
 
+class WholeModelRegistryIface;
+
+struct WritableTypeEntry {
+    const char *name;
+    bool (*write)(dwgRW&);
+    std::size_t expectedCount;
+    std::size_t (*count)(const WholeModelRegistryIface&);
+    void (*assertRead)(const WholeModelRegistryIface&);
+};
+
+const std::vector<WritableTypeEntry>& writableTypeRegistry();
+
+class WholeModelRegistryIface : public EmptyIface {
+public:
+    dwgRW *m_writer {nullptr};
+    std::vector<DRW_Point>   m_points;
+    std::vector<DRW_Line>    m_lines;
+    std::vector<DRW_Circle>  m_circles;
+    std::vector<DRW_Arc>     m_arcs;
+    std::vector<DRW_Ellipse> m_ellipses;
+
+    void writeEntities() override {
+        if (m_writer == nullptr) return;
+        for (const WritableTypeEntry& entry : writableTypeRegistry()) {
+            INFO("writable type: " << entry.name);
+            REQUIRE(entry.write(*m_writer));
+        }
+    }
+
+    void addPoint(const DRW_Point& p) override { m_points.push_back(p); }
+    void addLine(const DRW_Line& l) override { m_lines.push_back(l); }
+    void addCircle(const DRW_Circle& c) override { m_circles.push_back(c); }
+    void addArc(const DRW_Arc& a) override { m_arcs.push_back(a); }
+    void addEllipse(const DRW_Ellipse& e) override { m_ellipses.push_back(e); }
+};
+
+bool writeRegistryPoint(dwgRW& writer) {
+    DRW_Point pt;
+    pt.basePoint = DRW_Coord{1.5, 2.5, 0.0};
+    pt.color = 2;
+    return writer.writePoint(&pt);
+}
+
+bool writeRegistryLine(dwgRW& writer) {
+    DRW_Line line;
+    line.basePoint = DRW_Coord{0.0, 0.0, 0.0};
+    line.secPoint = DRW_Coord{10.0, 5.0, 0.0};
+    line.color = 3;
+    return writer.writeLine(&line);
+}
+
+bool writeRegistryCircle(dwgRW& writer) {
+    DRW_Circle circle;
+    circle.basePoint = DRW_Coord{100.0, 100.0, 0.0};
+    circle.radious = 25.0;
+    circle.color = 5;
+    return writer.writeCircle(&circle);
+}
+
+bool writeRegistryArc(dwgRW& writer) {
+    DRW_Arc arc;
+    arc.basePoint = DRW_Coord{50.0, 50.0, 0.0};
+    arc.radious = 10.0;
+    arc.staangle = 0.0;
+    arc.endangle = 3.141592653589793;
+    arc.color = 6;
+    return writer.writeArc(&arc);
+}
+
+bool writeRegistryEllipse(dwgRW& writer) {
+    DRW_Ellipse ellipse;
+    ellipse.basePoint = DRW_Coord{200.0, 200.0, 0.0};
+    ellipse.secPoint = DRW_Coord{30.0, 0.0, 0.0};
+    ellipse.extPoint = DRW_Coord{0.0, 0.0, 1.0};
+    ellipse.ratio = 0.5;
+    ellipse.staparam = 0.0;
+    ellipse.endparam = 6.283185307179586;
+    ellipse.color = 4;
+    return writer.writeEllipse(&ellipse);
+}
+
+std::size_t registryPointCount(const WholeModelRegistryIface& iface) {
+    return iface.m_points.size();
+}
+
+std::size_t registryLineCount(const WholeModelRegistryIface& iface) {
+    return iface.m_lines.size();
+}
+
+std::size_t registryCircleCount(const WholeModelRegistryIface& iface) {
+    return iface.m_circles.size();
+}
+
+std::size_t registryArcCount(const WholeModelRegistryIface& iface) {
+    return iface.m_arcs.size();
+}
+
+std::size_t registryEllipseCount(const WholeModelRegistryIface& iface) {
+    return iface.m_ellipses.size();
+}
+
+void assertRegistryPoint(const WholeModelRegistryIface& iface) {
+    REQUIRE(iface.m_points.size() == 1);
+    CHECK(iface.m_points[0].basePoint.x == Catch::Approx(1.5));
+    CHECK(iface.m_points[0].basePoint.y == Catch::Approx(2.5));
+    CHECK(iface.m_points[0].color == 2);
+}
+
+void assertRegistryLine(const WholeModelRegistryIface& iface) {
+    REQUIRE(iface.m_lines.size() == 1);
+    CHECK(iface.m_lines[0].basePoint.x == Catch::Approx(0.0));
+    CHECK(iface.m_lines[0].secPoint.x == Catch::Approx(10.0));
+    CHECK(iface.m_lines[0].secPoint.y == Catch::Approx(5.0));
+    CHECK(iface.m_lines[0].color == 3);
+}
+
+void assertRegistryCircle(const WholeModelRegistryIface& iface) {
+    REQUIRE(iface.m_circles.size() == 1);
+    CHECK(iface.m_circles[0].basePoint.x == Catch::Approx(100.0));
+    CHECK(iface.m_circles[0].radious == Catch::Approx(25.0));
+    CHECK(iface.m_circles[0].color == 5);
+}
+
+void assertRegistryArc(const WholeModelRegistryIface& iface) {
+    REQUIRE(iface.m_arcs.size() == 1);
+    CHECK(iface.m_arcs[0].basePoint.x == Catch::Approx(50.0));
+    CHECK(iface.m_arcs[0].radious == Catch::Approx(10.0));
+    CHECK(iface.m_arcs[0].staangle == Catch::Approx(0.0));
+    CHECK(iface.m_arcs[0].endangle == Catch::Approx(3.141592653589793));
+    CHECK(iface.m_arcs[0].color == 6);
+}
+
+void assertRegistryEllipse(const WholeModelRegistryIface& iface) {
+    REQUIRE(iface.m_ellipses.size() == 1);
+    CHECK(iface.m_ellipses[0].basePoint.x == Catch::Approx(200.0));
+    CHECK(iface.m_ellipses[0].secPoint.x == Catch::Approx(30.0));
+    CHECK(iface.m_ellipses[0].ratio == Catch::Approx(0.5));
+    CHECK(iface.m_ellipses[0].color == 4);
+}
+
+const std::vector<WritableTypeEntry>& writableTypeRegistry() {
+    static const std::vector<WritableTypeEntry> entries = {
+        {"POINT", writeRegistryPoint, 1, registryPointCount, assertRegistryPoint},
+        {"LINE", writeRegistryLine, 1, registryLineCount, assertRegistryLine},
+        {"CIRCLE", writeRegistryCircle, 1, registryCircleCount, assertRegistryCircle},
+        {"ARC", writeRegistryArc, 1, registryArcCount, assertRegistryArc},
+        {"ELLIPSE", writeRegistryEllipse, 1, registryEllipseCount, assertRegistryEllipse},
+    };
+    return entries;
+}
+
 class ArcDimensionRoundTripIface : public EmptyIface {
 public:
     dwgRW *m_writer {nullptr};
@@ -2163,6 +2314,45 @@ TEST_CASE("dwgRW writes POINT/LINE/CIRCLE/ARC and reader recovers them",
     }
     REQUIRE(sawModel);
     REQUIRE(sawPaper);
+
+    std::remove(path.c_str());
+}
+
+TEST_CASE("dwgRW whole-model registry round-trips seeded writable types",
+          "[dwg-write][whole-model][registry]") {
+    const std::vector<WritableTypeEntry>& registry = writableTypeRegistry();
+    REQUIRE(registry.size() == 5);
+
+    const std::string path = tempPath("whole_model_registry.dwg");
+
+    {
+        dwgRW writer(path.c_str());
+        WholeModelRegistryIface iface;
+        iface.m_writer = &writer;
+        REQUIRE(writer.write(&iface, DRW::AC1015, /*bin=*/false));
+    }
+
+    const std::vector<std::uint8_t> bytes = slurp(path);
+    REQUIRE_FALSE(bytes.empty());
+
+    WholeModelRegistryIface readIface;
+    {
+        dwgRW reader(path.c_str());
+        REQUIRE(reader.readBuffer(bytes.data(), bytes.size(), &readIface,
+                                  /*ext=*/false));
+        REQUIRE(reader.getVersion() == DRW::AC1015);
+        REQUIRE(reader.getError() == DRW::BAD_NONE);
+        REQUIRE(reader.getEntityParseFailures() == 0);
+        REQUIRE(reader.getObjectParseFailures() == 0);
+        REQUIRE(reader.getSkippedCustomClasses().empty());
+        REQUIRE(reader.getSkippedUnsupportedObjects().empty());
+    }
+
+    for (const WritableTypeEntry& entry : registry) {
+        INFO("writable type: " << entry.name);
+        REQUIRE(entry.count(readIface) == entry.expectedCount);
+        entry.assertRead(readIface);
+    }
 
     std::remove(path.c_str());
 }
