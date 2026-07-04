@@ -166,6 +166,15 @@ public:
   }
 };
 
+class SurfaceCapture : public StubInterface {
+public:
+  int m_callCount = 0;
+  void addSurface(const DRW_Surface *d) override {
+    (void)d;
+    ++m_callCount;
+  }
+};
+
 // Emits a single INSERT (with whatever attlist it carries) on write.
 class AttribEmitter : public StubInterface {
 public:
@@ -278,6 +287,34 @@ TEST_CASE("DXF malformed ASCII group code is rejected", "[dxf][malformed]") {
   dxfRW r(path.string().c_str());
   CHECK_FALSE(r.read(&cap, /*ext=*/true));
   std::filesystem::remove(path);
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("DXF SURFACE malformed ACIS hex is rejected without throwing",
+          "[dxf][surface][malformed]") {
+  for (const char *hex : {"GG", "A"}) {
+    const std::string dxf =
+        std::string("0\nSECTION\n2\nENTITIES\n")
+        + "0\nPLANESURFACE\n8\n0\n100\nAcDbEntity\n100\nAcDbSurface\n"
+        + "70\n1\n71\n0\n72\n0\n310\n" + hex + "\n"
+        + "0\nENDSEC\n0\nEOF\n";
+
+    const auto path =
+        std::filesystem::temp_directory_path() / "lc_surface_bad_acis_hex.dxf";
+    std::filesystem::remove(path);
+    {
+      std::ofstream out(path);
+      out << dxf;
+    }
+
+    SurfaceCapture cap;
+    dxfRW r(path.string().c_str());
+    bool ok = true;
+    REQUIRE_NOTHROW(ok = r.read(&cap, /*ext=*/true));
+    CHECK_FALSE(ok);
+    CHECK(cap.m_callCount == 0);
+    std::filesystem::remove(path);
+  }
 }
 
 // NOLINTNEXTLINE(readability-identifier-naming)

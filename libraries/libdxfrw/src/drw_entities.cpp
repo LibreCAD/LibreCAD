@@ -48,6 +48,34 @@ bool isValidCount(std::int32_t count, std::int32_t maxCount) {
     return count >= 0 && count <= maxCount;
 }
 
+int hexNibble(char c) {
+    if (c >= '0' && c <= '9')
+        return c - '0';
+    if (c >= 'A' && c <= 'F')
+        return c - 'A' + 10;
+    if (c >= 'a' && c <= 'f')
+        return c - 'a' + 10;
+    return -1;
+}
+
+bool decodeHexBytes(const std::string& hex, std::vector<std::uint8_t>& out) {
+    if ((hex.size() % 2) != 0)
+        return false;
+
+    std::vector<std::uint8_t> decoded;
+    decoded.reserve(hex.size() / 2);
+    for (std::size_t i = 0; i < hex.size(); i += 2) {
+        const int hi = hexNibble(hex[i]);
+        const int lo = hexNibble(hex[i + 1]);
+        if (hi < 0 || lo < 0)
+            return false;
+        decoded.push_back(static_cast<std::uint8_t>((hi << 4) | lo));
+    }
+
+    out = std::move(decoded);
+    return true;
+}
+
 std::uint64_t currentDwgBit(const dwgBuffer *buf) {
     return buf->getPosition() * 8 + buf->getBitPos();
 }
@@ -7071,10 +7099,8 @@ bool DRW_Surface::parseCode(int code, const std::unique_ptr<dxfReader>& reader) 
     case 310:
         {
             std::string hexStr = reader->getString();
-            rawAcisData.resize(hexStr.size() / 2);
-            for (size_t i = 0; i < hexStr.size(); i += 2) {
-                rawAcisData[i / 2] = static_cast<std::uint8_t>(std::stoi(hexStr.substr(i, 2), nullptr, 16));
-            }
+            if (!decodeHexBytes(hexStr, rawAcisData))
+                return false;
         }
         break;
     default:
