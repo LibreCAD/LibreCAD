@@ -402,6 +402,252 @@ public:
     text.text = "XDATA text";
     addXData(text, "text-xdata", 1070, 19);
     m_rw->writeText(&text);
+
+    DRW_Point point;
+    point.basePoint = DRW_Coord(1.0, 2.0, 0.0);
+    addXData(point, "point-xdata", 1070, 20);
+    m_rw->writePoint(&point);
+
+    DRW_Ray ray;
+    ray.basePoint = DRW_Coord(0.0, 1.0, 0.0);
+    ray.secPoint = DRW_Coord(1.0, 0.0, 0.0);
+    addXData(ray, "ray-xdata", 1070, 21);
+    m_rw->writeRay(&ray);
+
+    DRW_Xline xline;
+    xline.basePoint = DRW_Coord(0.0, 2.0, 0.0);
+    xline.secPoint = DRW_Coord(0.0, 1.0, 0.0);
+    addXData(xline, "xline-xdata", 1070, 22);
+    m_rw->writeXline(&xline);
+
+    DRW_Circle circle;
+    circle.basePoint = DRW_Coord(4.0, 4.0, 0.0);
+    circle.radious = 2.0;
+    addXData(circle, "circle-xdata", 1070, 23);
+    m_rw->writeCircle(&circle);
+
+    DRW_Arc arc;
+    arc.basePoint = DRW_Coord(5.0, 5.0, 0.0);
+    arc.radious = 1.5;
+    arc.endangle = 1.0;
+    addXData(arc, "arc-xdata", 1070, 24);
+    m_rw->writeArc(&arc);
+
+    DRW_Ellipse ellipse;
+    ellipse.basePoint = DRW_Coord(6.0, 6.0, 0.0);
+    ellipse.secPoint = DRW_Coord(2.0, 0.0, 0.0);
+    ellipse.ratio = 0.5;
+    ellipse.endparam = 6.283185307179586;
+    addXData(ellipse, "ellipse-xdata", 1070, 25);
+    m_rw->writeEllipse(&ellipse);
+
+    DRW_Trace trace;
+    trace.basePoint = DRW_Coord(0.0, 0.0, 0.0);
+    trace.secPoint = DRW_Coord(1.0, 0.0, 0.0);
+    trace.thirdPoint = DRW_Coord(1.0, 1.0, 0.0);
+    trace.fourPoint = DRW_Coord(0.0, 1.0, 0.0);
+    addXData(trace, "trace-xdata", 1070, 26);
+    m_rw->writeTrace(&trace);
+
+    DRW_Solid solid;
+    solid.basePoint = DRW_Coord(2.0, 0.0, 0.0);
+    solid.secPoint = DRW_Coord(3.0, 0.0, 0.0);
+    solid.thirdPoint = DRW_Coord(3.0, 1.0, 0.0);
+    solid.fourPoint = DRW_Coord(2.0, 1.0, 0.0);
+    addXData(solid, "solid-xdata", 1070, 27);
+    m_rw->writeSolid(&solid);
+
+    DRW_3Dface face;
+    face.basePoint = DRW_Coord(4.0, 0.0, 0.0);
+    face.secPoint = DRW_Coord(5.0, 0.0, 0.0);
+    face.thirdPoint = DRW_Coord(5.0, 1.0, 0.0);
+    face.fourPoint = DRW_Coord(4.0, 1.0, 0.0);
+    addXData(face, "3dface-xdata", 1070, 28);
+    m_rw->write3dface(&face);
+
+    DRW_Polyline polyline;
+    DRW_Vertex pv1;
+    pv1.basePoint = DRW_Coord(0.0, 0.0, 0.0);
+    polyline.addVertex(pv1);
+    DRW_Vertex pv2;
+    pv2.basePoint = DRW_Coord(1.0, 0.0, 0.0);
+    polyline.addVertex(pv2);
+    addXData(polyline, "polyline-xdata", 1070, 29);
+    m_rw->writePolyline(&polyline);
+
+    DRW_Spline spline;
+    spline.normalVec = DRW_Coord(0.0, 0.0, 1.0);
+    spline.degree = 1;
+    spline.knotslist = {0.0, 0.0, 1.0, 1.0};
+    spline.controllist.push_back(std::make_shared<DRW_Coord>(0.0, 0.0, 0.0));
+    spline.controllist.push_back(std::make_shared<DRW_Coord>(1.0, 1.0, 0.0));
+    addXData(spline, "spline-xdata", 1070, 30);
+    m_rw->writeSpline(&spline);
+
+    DRW_Helix helix;
+    helix.normalVec = DRW_Coord(0.0, 0.0, 1.0);
+    helix.degree = 1;
+    helix.knotslist = {0.0, 0.0, 1.0, 1.0};
+    helix.controllist.push_back(std::make_shared<DRW_Coord>(0.0, 0.0, 0.0));
+    helix.controllist.push_back(std::make_shared<DRW_Coord>(1.0, 0.5, 0.0));
+    helix.radius = 0.5;
+    helix.turns = 1.0;
+    helix.turnHeight = 1.0;
+    addXData(helix, "helix-xdata", 1070, 31);
+    m_rw->writeHelix(&helix);
+
+    DRW_Hatch hatch;
+    hatch.name = "SOLID";
+    addXData(hatch, "hatch-xdata", 1070, 32);
+    m_rw->writeHatch(&hatch);
+
+    DRW_MPolygon mpolygon;
+    mpolygon.name = "SOLID";
+    addXData(mpolygon, "mpolygon-xdata", 1070, 33);
+    m_rw->writeMPolygon(&mpolygon);
+
+    DRW_Leader leader;
+    leader.vertexlist.push_back(std::make_shared<DRW_Coord>(0.0, 0.0, 0.0));
+    leader.vertexlist.push_back(std::make_shared<DRW_Coord>(1.0, 1.0, 0.0));
+    addXData(leader, "leader-xdata", 1070, 34);
+    m_rw->writeLeader(&leader);
+
+    DRW_Insert insert;
+    insert.name = "XDATA_BLOCK";
+    insert.basePoint = DRW_Coord(1.0, 1.0, 0.0);
+    addXData(insert, "insert-xdata", 1070, 35);
+    m_rw->writeInsert(&insert);
+
+    DRW_Table table;
+    table.name = "XDATA_TABLE";
+    table.basePoint = DRW_Coord(1.0, 2.0, 0.0);
+    addXData(table, "table-xdata", 1070, 36);
+    m_rw->writeTable(&table);
+
+    DRW_Attrib attrib;
+    attrib.basePoint = DRW_Coord(2.0, 2.0, 0.0);
+    attrib.height = 0.25;
+    attrib.text = "value";
+    attrib.tag = "TAG";
+    addXData(attrib, "attrib-xdata", 1070, 37);
+    m_rw->writeAttrib(&attrib);
+
+    DRW_Attdef attdef;
+    attdef.basePoint = DRW_Coord(2.0, 3.0, 0.0);
+    attdef.height = 0.25;
+    attdef.text = "default";
+    attdef.tag = "TAGDEF";
+    attdef.prompt = "Prompt";
+    addXData(attdef, "attdef-xdata", 1070, 38);
+    m_rw->writeAttdef(&attdef);
+
+    DRW_RText rtext;
+    rtext.basePoint = DRW_Coord(3.0, 3.0, 0.0);
+    rtext.height = 0.5;
+    rtext.text = "RText";
+    addXData(rtext, "rtext-xdata", 1070, 39);
+    m_rw->writeRText(&rtext);
+
+    DRW_ArcAlignedText arcText;
+    arcText.text = "Arc text";
+    arcText.m_center = DRW_Coord(4.0, 4.0, 0.0);
+    arcText.m_radius = 2.0;
+    arcText.m_endAngle = 1.0;
+    arcText.height = 0.25;
+    addXData(arcText, "arctext-xdata", 1070, 40);
+    m_rw->writeArcAlignedText(&arcText);
+
+    DRW_Tolerance tolerance;
+    tolerance.insertionPoint = DRW_Coord(5.0, 5.0, 0.0);
+    tolerance.text = "tol";
+    tolerance.xAxisDirectionVector = DRW_Coord(1.0, 0.0, 0.0);
+    addXData(tolerance, "tolerance-xdata", 1070, 41);
+    m_rw->writeTolerance(&tolerance);
+
+    DRW_DimLinear dim;
+    dim.setDimPoint(DRW_Coord(0.0, 0.0, 0.0));
+    dim.setTextPoint(DRW_Coord(0.5, 0.5, 0.0));
+    dim.setDef1Point(DRW_Coord(0.0, 0.0, 0.0));
+    dim.setDef2Point(DRW_Coord(1.0, 0.0, 0.0));
+    addXData(dim, "dimension-xdata", 1070, 42);
+    m_rw->writeDimension(&dim);
+
+    DRW_DimArc arcDim;
+    arcDim.setArcDefPoint(DRW_Coord(0.0, 0.0, 0.0));
+    arcDim.setTextPoint(DRW_Coord(0.5, 0.5, 0.0));
+    arcDim.setExtLine1(DRW_Coord(1.0, 0.0, 0.0));
+    arcDim.setExtLine2(DRW_Coord(0.0, 1.0, 0.0));
+    arcDim.setArcCenter(DRW_Coord(0.0, 0.0, 0.0));
+    addXData(arcDim, "arcdim-xdata", 1070, 43);
+    m_rw->writeDimension(&arcDim);
+
+    DRW_DimLargeRadial largeRadial;
+    largeRadial.setCenterPoint(DRW_Coord(0.0, 0.0, 0.0));
+    largeRadial.setTextPoint(DRW_Coord(1.0, 1.0, 0.0));
+    largeRadial.setChordPoint(DRW_Coord(2.0, 0.0, 0.0));
+    largeRadial.overrideCenterPoint = DRW_Coord(0.1, 0.2, 0.0);
+    largeRadial.jogPoint = DRW_Coord(1.0, 0.5, 0.0);
+    largeRadial.jogAngle = 0.25;
+    addXData(largeRadial, "largeradial-xdata", 1070, 44);
+    m_rw->writeDimension(&largeRadial);
+
+    DRW_MLeader mleader;
+    addXData(mleader, "mleader-xdata", 1070, 45);
+    m_rw->writeMultiLeader(&mleader);
+
+    DRW_Light light;
+    light.m_name = "XDATA_LIGHT";
+    addXData(light, "light-xdata", 1070, 46);
+    m_rw->writeLight(&light);
+
+    DRW_Mesh mesh;
+    addXData(mesh, "mesh-xdata", 1070, 47);
+    m_rw->writeMesh(&mesh);
+
+    DRW_Shape shape;
+    shape.m_insertionPoint = DRW_Coord(6.0, 6.0, 0.0);
+    shape.m_styleName = "STANDARD";
+    addXData(shape, "shape-xdata", 1070, 48);
+    m_rw->writeShape(&shape);
+
+    DRW_Ole2Frame ole;
+    addXData(ole, "ole2frame-xdata", 1070, 49);
+    m_rw->writeOle2Frame(&ole);
+
+    DRW_Viewport viewport;
+    viewport.basePoint = DRW_Coord(7.0, 7.0, 0.0);
+    viewport.pswidth = 2.0;
+    viewport.psheight = 1.0;
+    addXData(viewport, "viewport-xdata", 1070, 50);
+    m_rw->writeViewport(&viewport);
+
+    DRW_Image image;
+    image.basePoint = DRW_Coord(8.0, 8.0, 0.0);
+    image.secPoint = DRW_Coord(1.0, 0.0, 0.0);
+    image.vVector = DRW_Coord(0.0, 1.0, 0.0);
+    image.sizeu = 10.0;
+    image.sizev = 10.0;
+    addXData(image, "image-xdata", 1070, 51);
+    m_rw->writeImage(&image, "xdata.png");
+
+    DRW_Wipeout wipeout;
+    wipeout.basePoint = DRW_Coord(9.0, 9.0, 0.0);
+    wipeout.secPoint = DRW_Coord(1.0, 0.0, 0.0);
+    wipeout.vVector = DRW_Coord(0.0, 1.0, 0.0);
+    wipeout.sizeu = 2.0;
+    wipeout.sizev = 2.0;
+    addXData(wipeout, "wipeout-xdata", 1070, 52);
+    m_rw->writeWipeout(&wipeout);
+
+    DRW_PointCloud pointCloud;
+    pointCloud.savedFilename = "cloud.rcp";
+    addXData(pointCloud, "pointcloud-xdata", 1070, 53);
+    m_rw->writePointCloud(&pointCloud);
+
+    DRW_PlaneSurface surface;
+    surface.modelerFormatVersion = 1;
+    addXData(surface, "surface-xdata", 1070, 54);
+    m_rw->writeSurface(&surface);
   }
 };
 
@@ -1256,6 +1502,56 @@ TEST_CASE("DXF selected entity writers preserve XDATA",
   CHECK(recordTypeHasConsecutive(
       groups, "TEXT", {{"1001", "ENTITYAPP"}, {"1000", "text-xdata"},
                        {"1070", "19"}}));
+
+  struct EntityXDataExpectation {
+    const char *recordType;
+    const char *payload;
+    int value;
+  };
+  const EntityXDataExpectation expectations[] = {
+      {"POINT", "point-xdata", 20},
+      {"RAY", "ray-xdata", 21},
+      {"XLINE", "xline-xdata", 22},
+      {"CIRCLE", "circle-xdata", 23},
+      {"ARC", "arc-xdata", 24},
+      {"ELLIPSE", "ellipse-xdata", 25},
+      {"TRACE", "trace-xdata", 26},
+      {"SOLID", "solid-xdata", 27},
+      {"3DFACE", "3dface-xdata", 28},
+      {"POLYLINE", "polyline-xdata", 29},
+      {"SPLINE", "spline-xdata", 30},
+      {"HELIX", "helix-xdata", 31},
+      {"HATCH", "hatch-xdata", 32},
+      {"MPOLYGON", "mpolygon-xdata", 33},
+      {"LEADER", "leader-xdata", 34},
+      {"INSERT", "insert-xdata", 35},
+      {"ACAD_TABLE", "table-xdata", 36},
+      {"ATTRIB", "attrib-xdata", 37},
+      {"ATTDEF", "attdef-xdata", 38},
+      {"RTEXT", "rtext-xdata", 39},
+      {"ARCALIGNEDTEXT", "arctext-xdata", 40},
+      {"TOLERANCE", "tolerance-xdata", 41},
+      {"DIMENSION", "dimension-xdata", 42},
+      {"ARC_DIMENSION", "arcdim-xdata", 43},
+      {"LARGE_RADIAL_DIMENSION", "largeradial-xdata", 44},
+      {"MULTILEADER", "mleader-xdata", 45},
+      {"LIGHT", "light-xdata", 46},
+      {"MESH", "mesh-xdata", 47},
+      {"SHAPE", "shape-xdata", 48},
+      {"OLE2FRAME", "ole2frame-xdata", 49},
+      {"VIEWPORT", "viewport-xdata", 50},
+      {"IMAGE", "image-xdata", 51},
+      {"WIPEOUT", "wipeout-xdata", 52},
+      {"POINTCLOUD", "pointcloud-xdata", 53},
+      {"PLANESURFACE", "surface-xdata", 54},
+  };
+  for (const auto &expected : expectations) {
+    CAPTURE(expected.recordType);
+    CHECK(recordTypeHasConsecutive(
+        groups, expected.recordType,
+        {{"1001", "ENTITYAPP"}, {"1000", expected.payload},
+         {"1070", std::to_string(expected.value)}}));
+  }
 }
 
 TEST_CASE("DXF selected object writers preserve XDATA",

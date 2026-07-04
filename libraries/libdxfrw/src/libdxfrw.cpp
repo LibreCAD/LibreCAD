@@ -980,6 +980,8 @@ bool dxfRW::writePoint(DRW_Point *ent) {
     }
     if (ent->xAxisAngle != 0.0)
         writer->writeDouble(50, ent->xAxisAngle * ARAD);  // radians -> DXF degrees (rad * 180/pi)
+    if (!ent->extData.empty())
+        writeExtData(ent->extData);
     return true;
 }
 
@@ -1037,6 +1039,8 @@ bool dxfRW::writeRay(DRW_Ray *ent) {
         writer->writeDouble(11, crd.x);
         writer->writeDouble(21, crd.y);
     }
+    if (!ent->extData.empty())
+        writeExtData(ent->extData);
     return true;
 }
 
@@ -1059,6 +1063,8 @@ bool dxfRW::writeXline(DRW_Xline *ent) {
         writer->writeDouble(11, crd.x);
         writer->writeDouble(21, crd.y);
     }
+    if (!ent->extData.empty())
+        writeExtData(ent->extData);
     return true;
 }
 
@@ -1086,6 +1092,8 @@ bool dxfRW::writeCircle(DRW_Circle *ent) {
         writer->writeDouble(220, crd.y);
         writer->writeDouble(230, crd.z);
     }
+    if (!ent->extData.empty())
+        writeExtData(ent->extData);
     return true;
 }
 
@@ -1119,6 +1127,8 @@ bool dxfRW::writeArc(DRW_Arc *ent) {
     }
     writer->writeDouble(50, ent->staangle*ARAD);
     writer->writeDouble(51, ent->endangle*ARAD);
+    if (!ent->extData.empty())
+        writeExtData(ent->extData);
     return true;
 }
 
@@ -1149,6 +1159,8 @@ bool dxfRW::writeEllipse(DRW_Ellipse *ent){
             writer->writeDouble(220, crd.y);
             writer->writeDouble(230, crd.z);
         }
+        if (!ent->extData.empty())
+            writeExtData(ent->extData);
     } else {
         DRW_Polyline pol;
         //RLZ: copy properties
@@ -1183,6 +1195,8 @@ bool dxfRW::writeTrace(DRW_Trace *ent){
         writer->writeDouble(220, ent->extPoint.y);
         writer->writeDouble(230, ent->extPoint.z);
     }
+    if (!ent->extData.empty())
+        writeExtData(ent->extData);
     return true;
 }
 
@@ -1211,6 +1225,8 @@ bool dxfRW::writeSolid(DRW_Solid *ent){
         writer->writeDouble(220, ent->extPoint.y);
         writer->writeDouble(230, ent->extPoint.z);
     }
+    if (!ent->extData.empty())
+        writeExtData(ent->extData);
     return true;
 }
 
@@ -1233,6 +1249,8 @@ bool dxfRW::write3dface(DRW_3Dface *ent){
     writer->writeDouble(23, ent->fourPoint.y);
     writer->writeDouble(33, ent->fourPoint.z);
     writer->writeInt16(70, ent->invisibleflag);
+    if (!ent->extData.empty())
+        writeExtData(ent->extData);
     return true;
 }
 
@@ -1322,6 +1340,8 @@ bool dxfRW::writePolyline(DRW_Polyline *ent) {
         writer->writeDouble(220, crd.y);
         writer->writeDouble(230, crd.z);
     }
+    if (!ent->extData.empty())
+        writeExtData(ent->extData);
 
     int vertexnum = ent->vertlist.size();
     for (int i = 0;  i< vertexnum; i++){
@@ -1399,6 +1419,8 @@ bool dxfRW::writeSpline(DRW_Spline *ent){
         writeEntity(ent);
         writer->writeString(100, "AcDbSpline");
         writeDxfSplineBody(writer.get(), ent);
+        if (!ent->extData.empty())
+            writeExtData(ent->extData);
     } else {
         //RLZ: TODO convert spline in polyline (not exist in acad 12)
     }
@@ -1428,6 +1450,8 @@ bool dxfRW::writeHelix(DRW_Helix *ent){
         writer->writeDouble(42, ent->turnHeight);
         writer->writeBool(290, ent->handedness);
         writer->writeInt16(280, static_cast<int>(ent->constraintType));
+        if (!ent->extData.empty())
+            writeExtData(ent->extData);
     }
     return true;
 }
@@ -1623,6 +1647,8 @@ bool dxfRW::writeHatch(DRW_Hatch *ent){
             }
             writer->writeUtf8String(470, ent->gradName);
         }
+        if (!ent->extData.empty())
+            writeExtData(ent->extData);
     } else {
         //RLZ: TODO verify in acad12
     }
@@ -1802,6 +1828,8 @@ bool dxfRW::writeMPolygon(DRW_MPolygon *ent){
             }
             writer->writeUtf8String(470, ent->gradName);
         }
+        if (!ent->extData.empty())
+            writeExtData(ent->extData);
     }
     return true;
 }
@@ -1860,6 +1888,8 @@ bool dxfRW::writeLeader(DRW_Leader *ent){
             writer->writeDouble(223, ent->offsettext.y);
             writer->writeDouble(233, ent->offsettext.z);
         }
+        if (!ent->extData.empty())
+            writeExtData(ent->extData);
     } else  {
         //RLZ: todo not supported by acad 12 saved as unnamed block
     }
@@ -1916,6 +1946,8 @@ bool dxfRW::writeArcDimension(DRW_DimArc *d) {
     DRW_Coord lp2 = d->hasLeader ? d->leaderPt2      : d->getExtLine2();
     writer->writeDouble(16, lp1.x); writer->writeDouble(26, lp1.y); writer->writeDouble(36, lp1.z);
     writer->writeDouble(17, lp2.x); writer->writeDouble(27, lp2.y); writer->writeDouble(37, lp2.z);
+    if (!d->extData.empty())
+        writeExtData(d->extData);
     return true;
 }
 
@@ -1995,6 +2027,8 @@ bool dxfRW::writeLargeRadialDimension(DRW_DimLargeRadial *d) {
     writer->writeDouble(25, d->jogPoint.y);
     writer->writeDouble(35, d->jogPoint.z);
     writer->writeDouble(40, d->jogAngle);
+    if (!d->extData.empty())
+        writeExtData(d->extData);
     return true;
 }
 
@@ -2154,6 +2188,8 @@ bool dxfRW::writeDimension(DRW_Dimension *ent) {
         default:
             break;
         }
+        if (!ent->extData.empty())
+            writeExtData(ent->extData);
     } else  {
         //RLZ: todo not supported by acad 12 saved as unnamed block
     }
@@ -2192,6 +2228,8 @@ bool dxfRW::writeInsert(DRW_Insert *ent){
         writer->writeDouble(220, ent->extPoint.y);
         writer->writeDouble(230, ent->extPoint.z);
     }
+    if (!ent->extData.empty())
+        writeExtData(ent->extData);
     //Trailing block attributes + terminating SEQEND (mirrors writePolyline).
     if (hasAttribs) {
         for (const auto &att : ent->attlist) {
@@ -2289,6 +2327,8 @@ bool dxfRW::writeTable(DRW_Table *ent){
         }
     }
 
+    if (!ent->extData.empty())
+        writeExtData(ent->extData);
     return true;
 }
 
@@ -2336,6 +2376,8 @@ bool dxfRW::writeAttrib(DRW_Attrib *ent){
         writer->writeInt16(74, ent->alignV);
     if (version > DRW::AC1014)
         writer->writeInt16(280, ent->lockPosition ? 1 : 0);
+    if (!ent->extData.empty())
+        writeExtData(ent->extData);
     return true;
 }
 
@@ -2379,6 +2421,8 @@ bool dxfRW::writeAttdef(DRW_Attdef *ent){
         writer->writeInt16(74, ent->alignV);
     if (version > DRW::AC1014)
         writer->writeInt16(280, ent->lockPosition ? 1 : 0);
+    if (!ent->extData.empty())
+        writeExtData(ent->extData);
     return true;
 }
 
@@ -2452,6 +2496,8 @@ bool dxfRW::writeRText(DRW_RText *ent) {
     writer->writeDouble(210, ent->extPoint.x);
     writer->writeDouble(220, ent->extPoint.y);
     writer->writeDouble(230, ent->extPoint.z);
+    if (!ent->extData.empty())
+        writeExtData(ent->extData);
     return true;
 }
 
@@ -2496,6 +2542,8 @@ bool dxfRW::writeArcAlignedText(DRW_ArcAlignedText *ent) {
     writer->writeDouble(210, ent->extPoint.x);
     writer->writeDouble(220, ent->extPoint.y);
     writer->writeDouble(230, ent->extPoint.z);
+    if (!ent->extData.empty())
+        writeExtData(ent->extData);
     return true;
 }
 
@@ -2515,6 +2563,8 @@ bool dxfRW::writeTolerance(DRW_Tolerance *ent){
     writer->writeDouble(11, ent->xAxisDirectionVector.x);
     writer->writeDouble(21, ent->xAxisDirectionVector.y);
     writer->writeDouble(31, ent->xAxisDirectionVector.z);
+    if (!ent->extData.empty())
+        writeExtData(ent->extData);
     return true;
 }
 
@@ -2713,6 +2763,8 @@ bool dxfRW::writeLight(DRW_Light *ent) {
     writer->writeInt16(73, static_cast<int>(ent->m_shadowType));
     writer->writeInt32(91, static_cast<int>(ent->m_shadowMapSize));
     writer->writeInt16(280, static_cast<int>(ent->m_shadowMapSoftness));
+    if (!ent->extData.empty())
+        writeExtData(ent->extData);
     return true;
 }
 
@@ -2752,6 +2804,8 @@ bool dxfRW::writeMesh(DRW_Mesh *ent) {
     for (double crease : ent->creases)
         writer->writeDouble(140, crease);
     writer->writeInt32(90, 0);
+    if (!ent->extData.empty())
+        writeExtData(ent->extData);
     return true;
 }
 
@@ -2783,6 +2837,8 @@ bool dxfRW::writeShape(DRW_Shape *ent) {
         writer->writeDouble(220, ent->m_extrusion.y);
         writer->writeDouble(230, ent->m_extrusion.z);
     }
+    if (!ent->extData.empty())
+        writeExtData(ent->extData);
     return true;
 }
 
@@ -2823,6 +2879,8 @@ bool dxfRW::writeOle2Frame(DRW_Ole2Frame *ent) {
         writer->writeString(310, chunk);
     }
     writer->writeString(1, "OLE");
+    if (!ent->extData.empty())
+        writeExtData(ent->extData);
     return true;
 }
 
@@ -2886,6 +2944,8 @@ bool dxfRW::writeViewport(DRW_Viewport *ent) {
         if (ent->shadePlotHandle != 0)
             writer->writeString(349, toHexStr(static_cast<int>(ent->shadePlotHandle)));
     }
+    if (!ent->extData.empty())
+        writeExtData(ent->extData);
     return true;
 }
 
@@ -2952,6 +3012,8 @@ DRW_ImageDef* dxfRW::writeImage(DRW_Image *ent, std::string name){
         if (version >= DRW::AC1024) {
             writer->writeBool(290, ent->clipMode);  // R2010+ clip mode
         }
+        if (!ent->extData.empty())
+            writeExtData(ent->extData);
         id->reactors[idReactor] = toHexStr(ent->handle);
         return id;
     }
@@ -3090,6 +3152,8 @@ bool dxfRW::writeMultiLeader(DRW_MLeader *ent){
     writer->writeInt16(273, ent->styleTopAttach);
     writer->writeInt16(272, ent->styleBottomAttach);
     writer->writeBool(295, ent->leaderExtendedToText);
+    if (!ent->extData.empty())
+        writeExtData(ent->extData);
     return true;
 }
 
@@ -3132,6 +3196,8 @@ bool dxfRW::writeWipeout(DRW_Wipeout *ent){
     // this is shared with IMAGE and is NOT a frame-display flag.  WIPEOUTFRAME
     // (whether the polygon outline is drawn) is global, in WIPEOUTVARIABLES.
     writer->writeBool(290, ent->clipMode);
+    if (!ent->extData.empty())
+        writeExtData(ent->extData);
     return true;
 }
 
@@ -3182,6 +3248,8 @@ bool dxfRW::writePointCloud(DRW_PointCloud *ent){
     writer->writeDouble(444, ent->intensityStyle.highThreshold);
     writer->writeBool(291, ent->showClipping);
     writer->writeInt32(93, ent->clippingCount);
+    if (!ent->extData.empty())
+        writeExtData(ent->extData);
     return true;
 }
 
@@ -3234,6 +3302,8 @@ bool dxfRW::writePointCloudEx(DRW_PointCloudEx *ent){
     writer->writeBool(293, ent->elevationApplyToFixedRange);
     writer->writeBool(294, ent->intensityAsGradient);
     writer->writeBool(295, ent->elevationAsGradient);
+    if (!ent->extData.empty())
+        writeExtData(ent->extData);
     return true;
 }
 
@@ -3267,6 +3337,8 @@ bool dxfRW::writeSurface(DRW_Surface *ent){
         }
         writer->writeString(310, hexStr);
     }
+    if (!ent->extData.empty())
+        writeExtData(ent->extData);
     return true;
 }
 
