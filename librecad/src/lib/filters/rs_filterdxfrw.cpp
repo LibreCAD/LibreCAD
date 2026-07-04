@@ -5580,6 +5580,8 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic& g, const QString& file, RS2::FormatT
             reserveTyped(record.handle, record.replayState, "MLEADERSTYLE");
         for (const auto &record : metadata.geoData())
             reserveTyped(record.handle, record.replayState, "GEODATA");
+        for (const auto &record : metadata.spatialFilters())
+            reserveTyped(record.handle, record.replayState, "SPATIAL_FILTER");
         //SLICE 2: WIPEOUTVARIABLES is a CUSTOM class -> reserve + register CLASS.
         for (const auto &record : metadata.wipeoutVariables())
             reserveTyped(record.handle, record.replayState, "WIPEOUTVARIABLES");
@@ -5731,6 +5733,8 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic& g, const QString& file, RS2::FormatT
         for (const auto &r : metadata.mleaderStyles())
             noteDataOnly(r.handle, r.parentHandle, r.replayState);
         for (const auto &r : metadata.geoData())
+            noteDataOnly(r.handle, r.parentHandle, r.replayState);
+        for (const auto &r : metadata.spatialFilters())
             noteDataOnly(r.handle, r.parentHandle, r.replayState);
         for (const auto &r : metadata.mlineStyles())
             noteDataOnly(r.handle, r.parentHandle, r.replayState);
@@ -8520,6 +8524,16 @@ void RS_FilterDXFRW::writeObjects() {
             DRW_GeoData gd = geoDataFromMetadata(record);
             gd.parentHandle = resolveOwner(record.parentHandle);
             m_dxfW->writeGeoData(&gd);
+        }
+        //SPATIAL_FILTER is a custom object with a CLASS record. The parent is
+        //usually an extension dictionary; resolve it through the materialized
+        //dictionary set so exported DXF owners are reachable.
+        for (const auto &record : metadata.spatialFilters()) {
+            if (!emitTyped(record.handle, record.replayState))
+                continue;
+            DRW_SpatialFilter sf = spatialFilterFromMetadata(record);
+            sf.parentHandle = resolveOwner(record.parentHandle);
+            m_dxfW->writeSpatialFilter(&sf);
         }
         //SLICE 2: WIPEOUTVARIABLES (custom, CLASS registered). Same dedup-vs-raw
         //-net + owner re-attach as the other data-only OBJECTS.

@@ -291,6 +291,7 @@ protected:
     bool encodeDwg(DRW::Version version, dwgBufferW *buf,
                    dwgBufferW *strBuf = nullptr,
                    dwgBufferW *handleBuf = nullptr) const;
+    std::vector<double> m_dxfCode40Values;
 public:
     std::vector<DRW_Coord> m_boundaryPoints;
     DRW_Coord m_normal{0.0, 0.0, 1.0};

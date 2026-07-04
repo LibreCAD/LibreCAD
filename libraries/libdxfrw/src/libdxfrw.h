@@ -149,6 +149,7 @@ public:
     bool writeUnderlayDefinition(DRW_UnderlayDefinition *ent);
     bool writeMLeaderStyle(DRW_MLeaderStyle *ent);
     bool writeGeoData(DRW_GeoData *ent);
+    bool writeSpatialFilter(DRW_SpatialFilter *ent);
     /*!< MLINESTYLE is a FIXED built-in (no CLASS record); DWG read populates
      * only typed metadata, so the filter emits it typed on DWG->DXF, deduped vs
      * the raw net by handle. */

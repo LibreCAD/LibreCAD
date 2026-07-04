@@ -6706,6 +6706,7 @@ bool dxfRW::dxfClassForRecordName(const std::string &recName, DRW_Class &out) {
         {"CELLSTYLEMAP",     "AcDbCellStyleMap",        "ObjectDBX Classes", 1152, 0},
         {"FIELDLIST",        "AcDbFieldList",           "ObjectDBX Classes", 1152, 0},
         {"GEODATA",          "AcDbGeoData",             "ObjectDBX Classes", 4095, 0},
+        {"SPATIAL_FILTER",   "AcDbSpatialFilter",       "ObjectDBX Classes", 0, 0},
         {"SORTENTSTABLE",    "AcDbSortentsTable",       "ObjectDBX Classes", 0, 0},
         {"IDBUFFER",         "AcDbIdBuffer",            "ObjectDBX Classes", 0, 0},
         {"LAYER_INDEX",      "AcDbLayerIndex",          "ObjectDBX Classes", 0, 0},
@@ -7028,6 +7029,42 @@ bool dxfRW::writeGeoData(DRW_GeoData *ent) {
         writer->writeInt32(98, face.m_index2);
         writer->writeInt32(99, face.m_index3);
     }
+    return true;
+}
+
+// SPATIAL_FILTER (AcDbSpatialFilter, custom class). Emits the clip boundary,
+// normal/origin, clip flags/distances, and boundary-relative transforms.
+bool dxfRW::writeSpatialFilter(DRW_SpatialFilter *ent) {
+    writer->writeString(0, "SPATIAL_FILTER");
+    writer->writeString(5, toHexStr(static_cast<int>(ent->handle)));
+    writeObjectOwner(static_cast<std::uint32_t>(ent->parentHandle));
+    writer->writeString(100, "AcDbFilter");
+    writer->writeString(100, "AcDbSpatialFilter");
+    writer->writeInt16(70, static_cast<int>(ent->m_boundaryPoints.size()));
+    for (const DRW_Coord &point : ent->m_boundaryPoints) {
+        writer->writeDouble(10, point.x);
+        writer->writeDouble(20, point.y);
+    }
+    writer->writeDouble(210, ent->m_normal.x);
+    writer->writeDouble(220, ent->m_normal.y);
+    writer->writeDouble(230, ent->m_normal.z);
+    writer->writeDouble(11, ent->m_origin.x);
+    writer->writeDouble(21, ent->m_origin.y);
+    writer->writeDouble(31, ent->m_origin.z);
+    writer->writeInt16(71, ent->m_displayBoundary ? 1 : 0);
+    writer->writeInt16(72, ent->m_clipFrontPlane ? 1 : 0);
+    if (ent->m_clipFrontPlane)
+        writer->writeDouble(40, ent->m_frontDistance);
+    writer->writeInt16(73, ent->m_clipBackPlane ? 1 : 0);
+    if (ent->m_clipBackPlane)
+        writer->writeDouble(41, ent->m_backDistance);
+
+    auto writeMatrix12 = [this](const std::vector<double> &matrix) {
+        for (std::size_t i = 0; i < 12; ++i)
+            writer->writeDouble(40, i < matrix.size() ? matrix[i] : 0.0);
+    };
+    writeMatrix12(ent->m_inverseInsertTransform);
+    writeMatrix12(ent->m_insertTransform);
     return true;
 }
 

@@ -1815,6 +1815,110 @@ TEST_CASE("DXF SPATIAL_FILTER is read into a DRW_SpatialFilter",
   CHECK(f.m_backDistance == 5.5);
 }
 
+TEST_CASE("DXF SPATIAL_FILTER object writes class and clip fields",
+          "[dxf][spatialfilter][objects]") {
+  const auto path =
+      std::filesystem::temp_directory_path() / "lc_spatialfilter_write.dxf";
+  std::filesystem::remove(path);
+
+  class SpatialFilterEmitter : public StubInterface {
+  public:
+    dxfRW *m_rw = nullptr;
+    DRW_SpatialFilter m_filter;
+
+    void writeObjects() override { m_rw->writeSpatialFilter(&m_filter); }
+  };
+
+  SpatialFilterEmitter em;
+  em.m_filter.handle = 0x1B0u;
+  em.m_filter.parentHandle = 0x1AFu;
+  em.m_filter.m_boundaryPoints = {
+      DRW_Coord(0.0, 0.0, 0.0),
+      DRW_Coord(10.0, 0.0, 0.0),
+      DRW_Coord(10.0, 10.0, 0.0)};
+  em.m_filter.m_normal = DRW_Coord(0.0, 0.0, 1.0);
+  em.m_filter.m_origin = DRW_Coord(1.0, 2.0, 0.0);
+  em.m_filter.m_displayBoundary = true;
+  em.m_filter.m_clipFrontPlane = true;
+  em.m_filter.m_frontDistance = 2.25;
+  em.m_filter.m_clipBackPlane = true;
+  em.m_filter.m_backDistance = 5.5;
+  em.m_filter.m_inverseInsertTransform = {
+      1.0, 0.0, 0.0,
+      0.0, 1.0, 0.0,
+      0.0, 0.0, 1.0,
+      3.0, 4.0, 5.0};
+  em.m_filter.m_insertTransform = {
+      1.0, 0.0, 0.0,
+      0.0, 1.0, 0.0,
+      0.0, 0.0, 1.0,
+      6.0, 7.0, 8.0};
+
+  {
+    dxfRW w(path.string().c_str());
+    em.m_rw = &w;
+    DRW_Class cls;
+    REQUIRE(dxfRW::dxfClassForRecordName("SPATIAL_FILTER", cls));
+    cls.instanceCount = 1;
+    w.setDxfClasses({cls});
+    DRW_Dictionary filterDict;
+    filterDict.handle = 0x1AFu;
+    filterDict.parentHandle = 0;
+    filterDict.cloning = 1;
+    filterDict.m_entries.push_back({"SPATIAL", 0x1B0u});
+    w.setNamedDictObjects({filterDict});
+    w.setRootDictEntries({{"ACAD_SPATIALFILTERS", "1AF"}});
+    REQUIRE(w.write(&em, DRW::AC1024, false));
+  }
+
+  const auto groups = readGroups(path);
+  CHECK(hasConsecutive(groups,
+                       {{"0", "CLASS"}, {"1", "SPATIAL_FILTER"},
+                        {"2", "AcDbSpatialFilter"},
+                        {"3", "ObjectDBX Classes"}}));
+  CHECK(hasConsecutive(groups,
+                       {{"3", "ACAD_SPATIALFILTERS"}, {"350", "1AF"}}));
+  CHECK(hasConsecutive(groups,
+                       {{"0", "SPATIAL_FILTER"}, {"5", "1B0"},
+                        {"330", "1AF"}, {"100", "AcDbFilter"},
+                        {"100", "AcDbSpatialFilter"}, {"70", "3"}}));
+  CHECK(hasConsecutive(groups,
+                       {{"71", "1"}, {"72", "1"}, {"40", "2.25"},
+                        {"73", "1"}, {"41", "5.5"}}));
+  CHECK(hasConsecutive(groups, {{"40", "6"}, {"40", "7"}, {"40", "8"}}));
+
+  SpatialFilterCapture cap;
+  {
+    dxfRW r(path.string().c_str());
+    REQUIRE(r.read(&cap, /*ext=*/true));
+  }
+  std::filesystem::remove(path);
+
+  REQUIRE(cap.m_callCount == 1);
+  const DRW_SpatialFilter &f = cap.m_captured;
+  CHECK(f.handle == 0x1B0u);
+  CHECK(f.parentHandle == 0x1AF);
+  REQUIRE(f.m_boundaryPoints.size() == 3);
+  CHECK(f.m_boundaryPoints[1].x == 10.0);
+  CHECK(f.m_boundaryPoints[2].y == 10.0);
+  CHECK(f.m_normal.z == 1.0);
+  CHECK(f.m_origin.x == 1.0);
+  CHECK(f.m_origin.y == 2.0);
+  CHECK(f.m_displayBoundary == true);
+  CHECK(f.m_clipFrontPlane == true);
+  CHECK(f.m_frontDistance == 2.25);
+  CHECK(f.m_clipBackPlane == true);
+  CHECK(f.m_backDistance == 5.5);
+  REQUIRE(f.m_inverseInsertTransform.size() == 12);
+  REQUIRE(f.m_insertTransform.size() == 12);
+  CHECK(f.m_inverseInsertTransform[9] == 3.0);
+  CHECK(f.m_inverseInsertTransform[10] == 4.0);
+  CHECK(f.m_inverseInsertTransform[11] == 5.0);
+  CHECK(f.m_insertTransform[9] == 6.0);
+  CHECK(f.m_insertTransform[10] == 7.0);
+  CHECK(f.m_insertTransform[11] == 8.0);
+}
+
 TEST_CASE("DXF IMAGEDEF_REACTOR is read into a DRW_ImageDefinitionReactor",
           "[dxf][imagedefreactor][preservation]") {
   ImageDefReactorCapture cap;

@@ -5765,11 +5765,20 @@ bool DRW_ImageDefinitionReactor::parseDwg(DRW::Version version, dwgBuffer *buf, 
 
 bool DRW_SpatialFilter::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
     // AcDbSpatialFilter / AcDbFilter DXF: the clip boundary polygon, the OCS
-    // normal + origin, the display/clip-plane flags and the back clip distance.
-    // The boundary-relative insert matrices (a run of code-40 doubles) and the
-    // front-clip distance are left to the raw-net (the code-40 stream needs the
-    // ezdxf "last 24 are the two matrices" heuristic; not worth the fragility
-    // here since LibreCAD does not apply the clip).
+    // normal + origin, clip flags/distances, and the two 4x3 transform matrices.
+    auto parseCode40Stream = [this]() {
+        if (m_dxfCode40Values.size() < 24)
+            return;
+        const std::size_t matrixStart = m_dxfCode40Values.size() - 24;
+        if (matrixStart > 0)
+            m_frontDistance = m_dxfCode40Values.front();
+        m_inverseInsertTransform.assign(
+            m_dxfCode40Values.begin() + static_cast<std::ptrdiff_t>(matrixStart),
+            m_dxfCode40Values.begin() + static_cast<std::ptrdiff_t>(matrixStart + 12));
+        m_insertTransform.assign(
+            m_dxfCode40Values.begin() + static_cast<std::ptrdiff_t>(matrixStart + 12),
+            m_dxfCode40Values.begin() + static_cast<std::ptrdiff_t>(matrixStart + 24));
+    };
     switch (code) {
     case 10: m_boundaryPoints.push_back(DRW_Coord(reader->getDouble(), 0.0, 0.0)); break;
     case 20: if (!m_boundaryPoints.empty()) m_boundaryPoints.back().y = reader->getDouble(); break;
@@ -5782,6 +5791,10 @@ bool DRW_SpatialFilter::parseCode(int code, const std::unique_ptr<dxfReader>& re
     case 71: m_displayBoundary = (reader->getInt32() != 0); break;
     case 72: m_clipFrontPlane = (reader->getInt32() != 0); break;
     case 73: m_clipBackPlane = (reader->getInt32() != 0); break;
+    case 40:
+        m_dxfCode40Values.push_back(reader->getDouble());
+        parseCode40Stream();
+        break;
     case 41: m_backDistance = reader->getDouble(); break;
     case 70: reader->getInt32(); break;  // boundary vertex count (advisory)
     default:
