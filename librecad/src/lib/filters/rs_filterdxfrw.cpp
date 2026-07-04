@@ -5576,6 +5576,8 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic& g, const QString& file, RS2::FormatT
             reserveTyped(record.handle, record.replayState, "DICTIONARYVAR");
         for (const auto &record : metadata.rasterVariables())
             reserveTyped(record.handle, record.replayState, "RASTERVARIABLES");
+        for (const auto &record : metadata.mleaderStyles())
+            reserveTyped(record.handle, record.replayState, "MLEADERSTYLE");
         //SLICE 2: WIPEOUTVARIABLES is a CUSTOM class -> reserve + register CLASS.
         for (const auto &record : metadata.wipeoutVariables())
             reserveTyped(record.handle, record.replayState, "WIPEOUTVARIABLES");
@@ -5723,6 +5725,8 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic& g, const QString& file, RS2::FormatT
         for (const auto &r : metadata.dictionaryVars())
             noteDataOnly(r.handle, r.parentHandle, r.replayState);
         for (const auto &r : metadata.rasterVariables())
+            noteDataOnly(r.handle, r.parentHandle, r.replayState);
+        for (const auto &r : metadata.mleaderStyles())
             noteDataOnly(r.handle, r.parentHandle, r.replayState);
         for (const auto &r : metadata.mlineStyles())
             noteDataOnly(r.handle, r.parentHandle, r.replayState);
@@ -8473,6 +8477,16 @@ void RS_FilterDXFRW::writeObjects() {
             DRW_RasterVariables rv = rasterVariablesFromMetadata(record);
             rv.parentHandle = resolveOwner(record.parentHandle);
             m_dxfW->writeRasterVariables(&rv);
+        }
+        //MLEADERSTYLE is a custom object with a CLASS record. This is
+        //load-bearing for later MLEADER DXF completion, since MLEADER entities
+        //reference these styles by handle.
+        for (const auto &record : metadata.mleaderStyles()) {
+            if (!emitTyped(record.handle, record.replayState))
+                continue;
+            DRW_MLeaderStyle style = mleaderStyleFromMetadata(record);
+            style.parentHandle = resolveOwner(record.parentHandle);
+            m_dxfW->writeMLeaderStyle(&style);
         }
         //SLICE 1: MLINESTYLE (FIXED built-in, no CLASS). DWG read populates only
         //typed metadata; DXF read keeps it in the raw net (so emitTyped dedups by

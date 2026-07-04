@@ -6966,6 +6966,71 @@ bool dxfRW::writeRasterVariables(DRW_RasterVariables *ent) {
     return true;
 }
 
+// MLEADERSTYLE (AcDbMLeaderStyle, custom class). Inverse of
+// DRW_MLeaderStyle::parseCode: common table-entry name/flags, scalar style
+// fields, and handle references 340-343.
+bool dxfRW::writeMLeaderStyle(DRW_MLeaderStyle *ent) {
+    if (version < DRW::AC1021)
+        return false;
+    writer->writeString(0, "MLEADERSTYLE");
+    writer->writeString(5, toHexStr(static_cast<int>(ent->handle)));
+    writeObjectOwner(static_cast<std::uint32_t>(ent->parentHandle));
+    writer->writeString(100, "AcDbMLeaderStyle");
+    writer->writeUtf8String(2, ent->name);
+    writer->writeInt16(70, ent->flags);
+    writer->writeInt32(179, ent->styleVersion);
+    writer->writeInt32(170, ent->contentType);
+    writer->writeInt32(171, ent->drawMLeaderOrder);
+    writer->writeInt32(172, ent->drawLeaderOrder);
+    writer->writeInt32(90, ent->maxLeaderPoints);
+    writer->writeDouble(40, ent->firstSegmentAngle);
+    writer->writeDouble(41, ent->secondSegmentAngle);
+    writer->writeInt32(173, ent->leaderType);
+    writer->writeInt32(91, ent->leaderColor);
+    if (ent->leaderLineTypeHandle.ref != 0)
+        writer->writeString(340, toHexStr(static_cast<int>(ent->leaderLineTypeHandle.ref)));
+    writer->writeInt32(92, ent->leaderLineWeight);
+    writer->writeBool(290, ent->landingEnabled);
+    writer->writeDouble(42, ent->landingGap);
+    writer->writeBool(291, ent->autoIncludeLanding);
+    writer->writeDouble(43, ent->landingDistance);
+    writer->writeUtf8String(3, ent->description);
+    if (ent->arrowHeadBlockHandle.ref != 0)
+        writer->writeString(341, toHexStr(static_cast<int>(ent->arrowHeadBlockHandle.ref)));
+    writer->writeDouble(44, ent->arrowHeadSize);
+    writer->writeUtf8String(300, ent->textDefault);
+    if (ent->textStyleHandle.ref != 0)
+        writer->writeString(342, toHexStr(static_cast<int>(ent->textStyleHandle.ref)));
+    writer->writeInt32(174, ent->leftAttachment);
+    writer->writeInt32(178, ent->rightAttachment);
+    writer->writeInt32(175, ent->textAngleType);
+    writer->writeInt32(176, ent->textAlignmentType);
+    writer->writeInt32(93, ent->textColor);
+    writer->writeDouble(45, ent->textHeight);
+    writer->writeBool(292, ent->textFrameEnabled);
+    writer->writeBool(297, ent->alwaysAlignTextLeft);
+    writer->writeDouble(46, ent->alignSpace);
+    if (ent->blockHandle.ref != 0)
+        writer->writeString(343, toHexStr(static_cast<int>(ent->blockHandle.ref)));
+    writer->writeInt32(94, ent->blockColor);
+    writer->writeDouble(47, ent->blockScale.x);
+    writer->writeDouble(49, ent->blockScale.y);
+    writer->writeDouble(140, ent->blockScale.z);
+    writer->writeBool(293, ent->blockScaleEnabled);
+    writer->writeDouble(141, ent->blockRotation);
+    writer->writeBool(294, ent->blockRotationEnabled);
+    writer->writeInt32(177, ent->blockConnectionType);
+    writer->writeDouble(142, ent->scaleFactor);
+    writer->writeBool(295, ent->propertyChanged);
+    writer->writeBool(296, ent->isAnnotative);
+    writer->writeDouble(143, ent->breakSize);
+    writer->writeInt32(271, ent->attachmentDirection);
+    writer->writeInt32(273, ent->topAttachment);
+    writer->writeInt32(272, ent->bottomAttachment);
+    writer->writeBool(298, ent->textExtended);
+    return true;
+}
+
 //MLINESTYLE is a FIXED built-in (no CLASS record). The group-code shape is the
 //inverse of DRW_MLineStyle::parseCode (drw_objects.cpp): name 2, flags 70,
 //description 3, fill color 62 (before any element), start/end angle 51/52,

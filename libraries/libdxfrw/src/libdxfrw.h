@@ -147,6 +147,7 @@ public:
     bool writeDictionaryVar(DRW_DictionaryVar *ent);
     bool writeRasterVariables(DRW_RasterVariables *ent);
     bool writeUnderlayDefinition(DRW_UnderlayDefinition *ent);
+    bool writeMLeaderStyle(DRW_MLeaderStyle *ent);
     /*!< MLINESTYLE is a FIXED built-in (no CLASS record); DWG read populates
      * only typed metadata, so the filter emits it typed on DWG->DXF, deduped vs
      * the raw net by handle. */

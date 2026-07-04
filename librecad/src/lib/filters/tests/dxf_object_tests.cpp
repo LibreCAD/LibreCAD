@@ -1535,6 +1535,136 @@ TEST_CASE("DXF MLEADERSTYLE is read into a DRW_MLeaderStyle",
   CHECK(s.blockHandle.ref == 0x21u);
 }
 
+TEST_CASE("DXF MLEADERSTYLE object writes class and style fields",
+          "[dxf][mleaderstyle][objects]") {
+  const auto path =
+      std::filesystem::temp_directory_path() / "lc_mleaderstyle_write.dxf";
+  std::filesystem::remove(path);
+
+  class MLeaderStyleEmitter : public StubInterface {
+  public:
+    dxfRW *m_rw = nullptr;
+    DRW_MLeaderStyle m_style;
+
+    void writeObjects() override { m_rw->writeMLeaderStyle(&m_style); }
+  };
+
+  MLeaderStyleEmitter em;
+  em.m_style.handle = 0x1D0u;
+  em.m_style.parentHandle = 0x1CFu;
+  em.m_style.name = "Standard";
+  em.m_style.flags = 4;
+  em.m_style.styleVersion = 2;
+  em.m_style.contentType = 2;
+  em.m_style.drawMLeaderOrder = 1;
+  em.m_style.drawLeaderOrder = 0;
+  em.m_style.maxLeaderPoints = 7;
+  em.m_style.firstSegmentAngle = 0.5;
+  em.m_style.secondSegmentAngle = 0.75;
+  em.m_style.leaderType = 1;
+  em.m_style.leaderColor = 3;
+  em.m_style.leaderLineTypeHandle.ref = 0x1E0u;
+  em.m_style.leaderLineWeight = 29;
+  em.m_style.landingEnabled = true;
+  em.m_style.landingGap = 1.25;
+  em.m_style.autoIncludeLanding = false;
+  em.m_style.landingDistance = 2.25;
+  em.m_style.description = "Round-trip MLeader style";
+  em.m_style.arrowHeadBlockHandle.ref = 0x1E1u;
+  em.m_style.arrowHeadSize = 0.75;
+  em.m_style.textDefault = "Default leader text";
+  em.m_style.textStyleHandle.ref = 0x1E2u;
+  em.m_style.leftAttachment = 1;
+  em.m_style.rightAttachment = 2;
+  em.m_style.textAngleType = 1;
+  em.m_style.textAlignmentType = 2;
+  em.m_style.textColor = 5;
+  em.m_style.textHeight = 2.5;
+  em.m_style.textFrameEnabled = true;
+  em.m_style.alwaysAlignTextLeft = true;
+  em.m_style.alignSpace = 0.625;
+  em.m_style.blockHandle.ref = 0x1E3u;
+  em.m_style.blockColor = 6;
+  em.m_style.blockScale = DRW_Coord(1.0, 2.0, 3.0);
+  em.m_style.blockScaleEnabled = true;
+  em.m_style.blockRotation = 0.25;
+  em.m_style.blockRotationEnabled = true;
+  em.m_style.blockConnectionType = 1;
+  em.m_style.scaleFactor = 1.5;
+  em.m_style.propertyChanged = true;
+  em.m_style.isAnnotative = true;
+  em.m_style.breakSize = 0.125;
+  em.m_style.attachmentDirection = 2;
+  em.m_style.topAttachment = 9;
+  em.m_style.bottomAttachment = 10;
+  em.m_style.textExtended = true;
+
+  {
+    dxfRW w(path.string().c_str());
+    em.m_rw = &w;
+    DRW_Class cls;
+    REQUIRE(dxfRW::dxfClassForRecordName("MLEADERSTYLE", cls));
+    cls.instanceCount = 1;
+    w.setDxfClasses({cls});
+    DRW_Dictionary styleDict;
+    styleDict.handle = 0x1CFu;
+    styleDict.parentHandle = 0;
+    styleDict.cloning = 1;
+    styleDict.m_entries.push_back({"Standard", 0x1D0u});
+    w.setNamedDictObjects({styleDict});
+    w.setRootDictEntries({{"ACAD_MLEADERSTYLE", "1CF"}});
+    REQUIRE(w.write(&em, DRW::AC1021, false));
+  }
+
+  const auto groups = readGroups(path);
+  CHECK(hasConsecutive(groups,
+                       {{"0", "CLASS"}, {"1", "MLEADERSTYLE"},
+                        {"2", "AcDbMLeaderStyle"},
+                        {"3", "ACDB_MLEADERSTYLE_CLASS"}}));
+  CHECK(hasConsecutive(groups,
+                       {{"3", "ACAD_MLEADERSTYLE"}, {"350", "1CF"}}));
+  CHECK(hasConsecutive(groups,
+                       {{"0", "MLEADERSTYLE"}, {"5", "1D0"}, {"330", "1CF"},
+                        {"100", "AcDbMLeaderStyle"}, {"2", "Standard"}}));
+  CHECK(hasConsecutive(groups,
+                       {{"340", "1E0"}, {"92", "29"}, {"290", "1"}}));
+  CHECK(hasConsecutive(groups,
+                       {{"300", "Default leader text"}, {"342", "1E2"}}));
+  CHECK(hasConsecutive(groups,
+                       {{"343", "1E3"}, {"94", "6"}}));
+
+  MLeaderStyleCapture cap;
+  {
+    dxfRW r(path.string().c_str());
+    REQUIRE(r.read(&cap, /*ext=*/true));
+  }
+  std::filesystem::remove(path);
+
+  REQUIRE(cap.m_callCount == 1);
+  const DRW_MLeaderStyle &s = cap.m_captured;
+  CHECK(s.handle == 0x1D0u);
+  CHECK(s.parentHandle == 0x1CF);
+  CHECK(s.name == "Standard");
+  CHECK(s.flags == 4);
+  CHECK(s.styleVersion == 2);
+  CHECK(s.drawMLeaderOrder == 1);
+  CHECK(s.maxLeaderPoints == 7);
+  CHECK(s.leaderColor == 3);
+  CHECK(s.leaderLineTypeHandle.ref == 0x1E0u);
+  CHECK(s.landingGap == 1.25);
+  CHECK(s.autoIncludeLanding == false);
+  CHECK(s.description == "Round-trip MLeader style");
+  CHECK(s.arrowHeadBlockHandle.ref == 0x1E1u);
+  CHECK(s.textDefault == "Default leader text");
+  CHECK(s.textStyleHandle.ref == 0x1E2u);
+  CHECK(s.textFrameEnabled == true);
+  CHECK(s.blockHandle.ref == 0x1E3u);
+  CHECK(s.blockScale.z == 3.0);
+  CHECK(s.isAnnotative == true);
+  CHECK(s.bottomAttachment == 10);
+  CHECK(s.textExtended == true);
+}
+
 TEST_CASE("DXF SPATIAL_FILTER is read into a DRW_SpatialFilter",
           "[dxf][spatialfilter][preservation]") {
   SpatialFilterCapture cap;
