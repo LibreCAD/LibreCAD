@@ -159,7 +159,9 @@ protected:
     /// the BLOCK_CONTROL `+2` phantom handles (0x17, 0x18) without
     /// failing the block walk.
     void emitBlockRecord(std::uint32_t handle, const std::string& name,
+                         const DRW_Coord& basePoint,
                          std::uint32_t blockHandle, std::uint32_t endBlockHandle,
+                         const std::vector<std::uint32_t>& entityHandles,
                          int insUnits = 0);
 
     /// Phase 4d helper: emit a Block entity at `handle`.  `isEnd=true`
@@ -280,11 +282,21 @@ private:
     /// AuxHeader records.
     std::uint8_t m_numSections {6};
 
-    /// Block_Record handles for user-defined blocks (from defineBlock).
-    /// Consumed by emitDeferredBlockControl to populate BLOCK_CONTROL's
-    /// numEntries + child handle list.  +2 phantom handles for
-    /// MODEL_SPACE and PAPER_SPACE are added on top.
-    std::vector<std::uint32_t> m_userBlockRecordHandles;
+    struct PendingUserBlock {
+        std::uint32_t blockRecordHandle {0};
+        std::uint32_t blockHandle {0};
+        std::uint32_t endBlockHandle {0};
+        std::string name;
+        DRW_Coord basePoint;
+        int insUnits {0};
+        std::vector<std::uint32_t> entityHandles;
+    };
+
+    /// User-defined blocks from defineBlock().  The Block/ENDBLK entities are
+    /// emitted immediately, while the Block_Record is deferred until after
+    /// writeBlocks() has had a chance to write block-owned entities.
+    std::vector<PendingUserBlock> m_userBlocks;
+    std::uint32_t m_activeUserBlockRecordHandle {0};
 };
 
 #endif // DWGWRITER15_H

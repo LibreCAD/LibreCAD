@@ -481,6 +481,7 @@ std::uint32_t dwgWriter15::defineBlock(const std::string& name,
     bk.layerH.ref = 0x12;
     bk.color = 256;  // BYLAYER
     bk.name = name;
+    bk.parentHandle = blockRecH;
     bk.setIsEnd(false);
     {
         dwgBufferW& body = beginObject(blockH);
@@ -493,6 +494,7 @@ std::uint32_t dwgWriter15::defineBlock(const std::string& name,
     endBlk.handle = endBlockH;
     endBlk.layerH.ref = 0x12;
     endBlk.color = 256;
+    endBlk.parentHandle = blockRecH;
     endBlk.setIsEnd(true);
     {
         dwgBufferW& body = beginObject(endBlockH);
@@ -500,68 +502,32 @@ std::uint32_t dwgWriter15::defineBlock(const std::string& name,
         finishObject();
     }
 
-    // Block_Record (with the caller's basePoint).
-    {
-        dwgBufferW& body = beginObject(blockRecH);
-        body.putObjType(m_version, oType::BLOCK_RECORD);
-        if (m_version > DRW::AC1014 && m_version < DRW::AC1024) {
-            body.putRawLong32(0);              // objSize stub (R2000/R2004 only)
-        }
-        body.putHandle(makeOwnHandle(blockRecH));  // own handle: code 0 (plan 3.6)
-        body.putBitShort(0);                   // extDataSize
-        body.putBitLong(0);                    // numReactors
-        if (m_version > DRW::AC1015) {
-            body.putBit(0);                    // xDictFlag=0 (R2004+)
-        }
-        if (m_version > DRW::AC1024) {
-            body.putBit(0);                    // Have binary data (AC1027+)
-        }
-        body.putVariableText(m_version, name);
-        body.putBit(0);                        // flags bit 6 (xref-ref)
-        body.putBitShort(0);                   // xrefindex BS (R2004-)
-        body.putBit(0);                        // xdep
-        body.putBit(0);                        // anon
-        body.putBit(0);                        // attdefs
-        body.putBit(0);                        // xref
-        body.putBit(0);                        // overlaid
-        body.putBit(0);                        // R2000+ loaded-xref
-        if (m_version > DRW::AC1015) {
-            body.putBitLong(0);                // R2004+: objectCount = 0 (empty block)
-        }
-        body.put3BitDouble(basePoint);
-        body.putVariableText(m_version, std::string{});  // xrefPath
-        body.putRawChar8(0);                   // insertCount terminator
-        body.putVariableText(m_version, std::string{});  // bkdesc
-        body.putBitLong(0);                    // prevData BL
-        if (m_version > DRW::AC1018) {
-            body.putBitShort(static_cast<std::uint16_t>(insUnits));
-            body.putBit(0);                    // canExplode B (R2007+)
-            body.putRawChar8(0);               // bkScaling RC (R2007+)
-        }
-        body.putHandle(makeHardPtr(reservedHandle::BLOCK_CONTROL));
-        body.putHandle(makeSoftOwner(0));      // XDic null
-        body.putHandle(makeNullHandle());      // NullH
-        body.putHandle(makeHardPtr(blockH));   // block
-        if (m_version <= DRW::AC1015) {
-            body.putHandle(makeNullHandle());  // firstEH (R2000- chain)
-            body.putHandle(makeNullHandle());  // lastEH
-        }
-        // R2004+: objectCount=0, no entity handles.
-        body.putHandle(makeHardPtr(endBlockH));// endBlock
-        body.putHandle(makeSoftOwner(0));      // layoutH null
-        finishObject();
-    }
-
-    m_userBlockRecordHandles.push_back(blockRecH);
+    PendingUserBlock block;
+    block.blockRecordHandle = blockRecH;
+    block.blockHandle = blockH;
+    block.endBlockHandle = endBlockH;
+    block.name = name;
+    block.basePoint = basePoint;
+    block.insUnits = insUnits;
+    m_userBlocks.push_back(block);
+    m_activeUserBlockRecordHandle = blockRecH;
     return blockRecH;
 }
 
 bool dwgWriter15::emitDeferredBlockControl() {
+    for (const PendingUserBlock& block : m_userBlocks) {
+        emitBlockRecord(block.blockRecordHandle, block.name, block.basePoint,
+                        block.blockHandle, block.endBlockHandle,
+                        block.entityHandles, block.insUnits);
+    }
+    m_activeUserBlockRecordHandle = 0;
+
     // BLOCK_CONTROL: numEntries = user blocks count; +2 phantoms for
     // MODEL_SPACE + PAPER_SPACE are appended to the child handle list.
     std::vector<std::uint32_t> children;
-    children.reserve(m_userBlockRecordHandles.size() + 2);
-    for (std::uint32_t h : m_userBlockRecordHandles) children.push_back(h);
+    children.reserve(m_userBlocks.size() + 2);
+    for (const PendingUserBlock& block : m_userBlocks)
+        children.push_back(block.blockRecordHandle);
     children.push_back(reservedHandle::BLOCK_MODEL_SPACE);
     children.push_back(reservedHandle::BLOCK_PAPER_SPACE);
 
@@ -579,7 +545,7 @@ bool dwgWriter15::emitDeferredBlockControl() {
     if (m_version > DRW::AC1024) {
         body.putBit(0);   // Have binary data (AC1027+)
     }
-    body.putBitLong(static_cast<std::int32_t>(m_userBlockRecordHandles.size()));
+    body.putBitLong(static_cast<std::int32_t>(m_userBlocks.size()));
     if (m_version > DRW::AC1018) {
         body.putBit(0);   // stringBit = 0 (R2007+)
     }
@@ -611,8 +577,10 @@ void dwgWriter15::emitBlockEntity(std::uint32_t handle, const std::string& name,
 }
 
 void dwgWriter15::emitBlockRecord(std::uint32_t handle, const std::string& name,
+                                  const DRW_Coord& basePoint,
                                   std::uint32_t blockHandle,
                                   std::uint32_t endBlockHandle,
+                                  const std::vector<std::uint32_t>& entityHandles,
                                   int insUnits) {
     dwgBufferW& body = beginObject(handle);
 
@@ -652,11 +620,9 @@ void dwgWriter15::emitBlockRecord(std::uint32_t handle, const std::string& name,
     body.putBit(0);                        // overlaid xref
     body.putBit(0);                        // R2000+ loaded-xref
     if (m_version > DRW::AC1015) {
-        body.putBitLong(0);                // objectCount = 0 (R2004+)
+        body.putBitLong(static_cast<std::int32_t>(entityHandles.size()));
     }
-    DRW_Coord origin;
-    origin.x = origin.y = origin.z = 0.0;
-    body.put3BitDouble(origin);            // basePoint 3BD
+    body.put3BitDouble(basePoint);         // basePoint 3BD
     strBuf->putVariableText(m_version, std::string{});  // xrefPath empty
     body.putRawChar8(0);                   // insertCount terminator (R2000+)
     strBuf->putVariableText(m_version, std::string{});  // bkdesc empty
@@ -673,8 +639,13 @@ void dwgWriter15::emitBlockRecord(std::uint32_t handle, const std::string& name,
     hdlBuf->putHandle(makeNullHandle());                            // NullH
     hdlBuf->putHandle(makeHardPtr(blockHandle));                    // block ref
     if (m_version <= DRW::AC1015) {
-        hdlBuf->putHandle(makeNullHandle());  // firstEH
-        hdlBuf->putHandle(makeNullHandle());  // lastEH
+        const std::uint32_t first = entityHandles.empty() ? 0 : entityHandles.front();
+        const std::uint32_t last = entityHandles.empty() ? 0 : entityHandles.back();
+        hdlBuf->putHandle(first == 0 ? makeNullHandle() : makeHardPtr(first));
+        hdlBuf->putHandle(last == 0 ? makeNullHandle() : makeHardPtr(last));
+    } else {
+        for (std::uint32_t entityHandle : entityHandles)
+            hdlBuf->putHandle(makeHardPtr(entityHandle));
     }
     hdlBuf->putHandle(makeHardPtr(endBlockHandle));  // endBlock
     hdlBuf->putHandle(makeSoftOwner(0));             // layoutH null
@@ -1536,10 +1507,22 @@ bool dwgWriter15::encodeEntity(DRW_Entity *ent) {
         if (it != m_writingCtx.ltypeMap.end())
             ent->lTypeH.ref = it->second;
     }
+    if (m_activeUserBlockRecordHandle != 0)
+        ent->parentHandle = m_activeUserBlockRecordHandle;
+
     dwgBufferW& body = beginObject(handle);
     bool ok = ent->encodeDwg(m_version, &body, /*bs=*/0);
     if (!ok) return false;
     finishObject();
+
+    if (m_activeUserBlockRecordHandle != 0) {
+        for (PendingUserBlock& block : m_userBlocks) {
+            if (block.blockRecordHandle == m_activeUserBlockRecordHandle) {
+                block.entityHandles.push_back(handle);
+                break;
+            }
+        }
+    }
     return true;
 }
 
@@ -1669,10 +1652,12 @@ bool dwgWriter15::writeDwgObjects() {
     emitBlockEntity(blkPaperStart, "*Paper_Space", /*isEnd=*/false);
     emitBlockEntity(blkPaperEnd,   std::string{},   /*isEnd=*/true);
 
-    emitBlockRecord(reservedHandle::BLOCK_MODEL_SPACE, "*Model_Space",
-                    blkModelStart, blkModelEnd);
-    emitBlockRecord(reservedHandle::BLOCK_PAPER_SPACE, "*Paper_Space",
-                    blkPaperStart, blkPaperEnd);
+    const DRW_Coord origin{0.0, 0.0, 0.0};
+    const std::vector<std::uint32_t> noEntities;
+    emitBlockRecord(reservedHandle::BLOCK_MODEL_SPACE, "*Model_Space", origin,
+                    blkModelStart, blkModelEnd, noEntities);
+    emitBlockRecord(reservedHandle::BLOCK_PAPER_SPACE, "*Paper_Space", origin,
+                    blkPaperStart, blkPaperEnd, noEntities);
 
     return true;
 }

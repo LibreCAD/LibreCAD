@@ -1728,8 +1728,11 @@ bool DRW_Entity::encodeDwgCommon(DRW::Version version, dwgBufferW *buf,
     // No graphics data.
     buf->putBit(0);  // graphFlag=0
 
-    // entmode: 2 = modelspace, no owner-handle in stream.
-    buf->put2Bits(2);
+    const bool hasOwner = parentHandle != DRW::NoHandle;
+
+    // entmode: 0 = owner handle follows in the handle stream; 2 = modelspace,
+    // no owner-handle in stream.
+    buf->put2Bits(hasOwner ? 0 : 2);
 
     // numReactors (BL per spec §20.4.1). 2a.2: emit the real count; empty
     // reactorHandles → 0 → byte-identical to legacy.
@@ -1808,7 +1811,17 @@ bool DRW_Entity::encodeDwgEntHandle(DRW::Version version, dwgBufferW *buf,
     // for AC1015/AC1018, handles go into buf alongside the data.
     dwgBufferW *hb = (handleBuf != nullptr) ? handleBuf : buf;
 
-    // ownerHandle skipped — entmode=2 above.
+    // Owner handle is present only when encodeDwgCommon emitted entmode=0.
+    if (parentHandle != DRW::NoHandle) {
+        dwgHandle owner;
+        owner.code = 4;  // soft pointer owner, read via getOffsetHandle()
+        owner.ref = parentHandle;
+        owner.size = 0;
+        std::uint32_t t = parentHandle;
+        while (t != 0) { t >>= 8; ++owner.size; }
+        hb->putHandle(owner);
+    }
+
     // Reactor handles (2a.2): emitted before xdic, one per numReactors written
     // in the DATA section, as ABSOLUTE handles (reader uses getHandle()). Empty
     // reactorHandles → nothing emitted → byte-identical to legacy.

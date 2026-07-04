@@ -41,7 +41,9 @@
 #include <cstring>
 #include <filesystem>
 #include <fstream>
+#include <map>
 #include <memory>
+#include <string>
 #include <vector>
 
 #include <QCoreApplication>
@@ -474,6 +476,213 @@ TEST_CASE("dwgRW INSERT round-trips via defineBlock + writeInsert",
     REQUIRE(readIface.m_inserts[0].color       == 3);
 
     std::remove(path.c_str());
+}
+
+namespace {
+
+struct BlockVisibilityExpectation {
+    int entities;
+    int invisible;
+};
+
+const std::map<std::string, BlockVisibilityExpectation>& blockVisibilityOracle() {
+    static const std::map<std::string, BlockVisibilityExpectation> expected = {
+        {"*U6",  {4, 1}},
+        {"*U7",  {4, 2}},
+        {"*U8",  {4, 3}},
+        {"*U9",  {4, 2}},
+        {"*U11", {5, 1}},
+        {"*U12", {5, 3}},
+        {"*U13", {5, 4}},
+        {"*U14", {5, 3}},
+        {"*U16", {5, 1}},
+        {"*U17", {5, 2}},
+        {"*U18", {5, 3}},
+        {"*U19", {5, 2}},
+    };
+    return expected;
+}
+
+std::filesystem::path findFixture(const std::filesystem::path& relative) {
+    std::filesystem::path dir = std::filesystem::current_path();
+    while (true) {
+        const std::filesystem::path candidate = dir / relative;
+        if (std::filesystem::exists(candidate))
+            return candidate;
+        if (!dir.has_parent_path() || dir == dir.parent_path())
+            break;
+        dir = dir.parent_path();
+    }
+    return relative;
+}
+
+bool isAnonymousUBlock(const std::string& name) {
+    return name.size() > 2 && name[0] == '*' && name[1] == 'U';
+}
+
+struct CapturedVisibilityBlock {
+    DRW_Block block;
+    std::vector<DRW_Line> lines;
+    std::vector<DRW_Circle> circles;
+    std::vector<DRW_LWPolyline> lwpolylines;
+    int entities {0};
+    int visible {0};
+    int invisible {0};
+};
+
+class DynamicBlockVisibilityIface : public EmptyIface {
+public:
+    dwgRW *m_writer {nullptr};
+    std::map<std::string, CapturedVisibilityBlock> m_blocks;
+    std::vector<std::string> m_order;
+
+    void addBlock(const DRW_Block& block) override {
+        m_currentBlock.clear();
+        if (!isAnonymousUBlock(block.name))
+            return;
+        auto inserted = m_blocks.emplace(block.name, CapturedVisibilityBlock{});
+        if (inserted.second)
+            m_order.push_back(block.name);
+        inserted.first->second.block = block;
+        m_currentBlock = block.name;
+    }
+
+    void endBlock() override {
+        m_currentBlock.clear();
+    }
+
+    void addLine(const DRW_Line& line) override {
+        if (auto *block = currentBlock()) {
+            record(*block, line);
+            block->lines.push_back(line);
+        }
+    }
+
+    void addCircle(const DRW_Circle& circle) override {
+        if (auto *block = currentBlock()) {
+            record(*block, circle);
+            block->circles.push_back(circle);
+        }
+    }
+
+    void addLWPolyline(const DRW_LWPolyline& lwpolyline) override {
+        if (auto *block = currentBlock()) {
+            record(*block, lwpolyline);
+            block->lwpolylines.push_back(lwpolyline);
+        }
+    }
+
+    void writeBlocks() override {
+        if (m_writer == nullptr)
+            return;
+        for (const std::string& name : m_order) {
+            const auto it = m_blocks.find(name);
+            REQUIRE(it != m_blocks.end());
+            const CapturedVisibilityBlock& block = it->second;
+            const std::uint32_t blockRecord =
+                m_writer->defineBlock(name, block.block.basePoint, block.block.insUnits);
+            REQUIRE(blockRecord != 0);
+
+            for (const DRW_Line& source : block.lines) {
+                DRW_Line line = source;
+                line.handle = DRW::NoHandle;
+                line.parentHandle = DRW::NoHandle;
+                REQUIRE(m_writer->writeLine(&line));
+            }
+            for (const DRW_Circle& source : block.circles) {
+                DRW_Circle circle = source;
+                circle.handle = DRW::NoHandle;
+                circle.parentHandle = DRW::NoHandle;
+                REQUIRE(m_writer->writeCircle(&circle));
+            }
+            for (const DRW_LWPolyline& source : block.lwpolylines) {
+                DRW_LWPolyline lwpolyline = source;
+                lwpolyline.handle = DRW::NoHandle;
+                lwpolyline.parentHandle = DRW::NoHandle;
+                REQUIRE(m_writer->writeLWPolyline(&lwpolyline));
+            }
+        }
+    }
+
+private:
+    CapturedVisibilityBlock* currentBlock() {
+        if (m_currentBlock.empty())
+            return nullptr;
+        auto it = m_blocks.find(m_currentBlock);
+        return it == m_blocks.end() ? nullptr : &it->second;
+    }
+
+    static void record(CapturedVisibilityBlock& block, const DRW_Entity& entity) {
+        ++block.entities;
+        if (entity.visible)
+            ++block.visible;
+        else
+            ++block.invisible;
+    }
+
+    std::string m_currentBlock;
+};
+
+void assertBlockVisibilityOracle(const DynamicBlockVisibilityIface& iface) {
+    const auto& expected = blockVisibilityOracle();
+    REQUIRE(iface.m_blocks.size() == expected.size());
+
+    for (const auto& kv : expected) {
+        const std::string& name = kv.first;
+        const BlockVisibilityExpectation& oracle = kv.second;
+        const auto it = iface.m_blocks.find(name);
+        REQUIRE(it != iface.m_blocks.end());
+
+        const CapturedVisibilityBlock& block = it->second;
+        CAPTURE(name);
+        CHECK(block.entities == oracle.entities);
+        CHECK(block.invisible == oracle.invisible);
+        CHECK(block.visible == oracle.entities - oracle.invisible);
+        CHECK(block.circles.size() == 1u);
+        CHECK(block.lines.size() == 2u);
+        CHECK(block.lwpolylines.size()
+              == static_cast<std::size_t>(oracle.entities - 3));
+    }
+}
+
+} // namespace
+
+TEST_CASE("DWG dynamic BLOCKVISIBILITYPARAMETER baked states survive write/reopen",
+          "[dwg-write][blockvisibility]") {
+    const std::filesystem::path fixture = findFixture(
+        "librecad/src/lib/filters/tests/testdata/blockvisibility.dwg");
+    REQUIRE(std::filesystem::exists(fixture));
+    REQUIRE(std::filesystem::file_size(fixture) == 38641u);
+
+    DynamicBlockVisibilityIface source;
+    {
+        dwgRW reader(fixture.string().c_str());
+        REQUIRE(reader.read(&source, /*ext=*/false));
+        REQUIRE(reader.getError() == DRW::BAD_NONE);
+        REQUIRE(reader.getVersion() == DRW::AC1032);
+    }
+    assertBlockVisibilityOracle(source);
+
+    for (DRW::Version version : {DRW::AC1015, DRW::AC1018}) {
+        const std::string path = tempPath(
+            version == DRW::AC1015 ? "blockvisibility_r2000.dwg"
+                                   : "blockvisibility_r2004.dwg");
+        {
+            dwgRW writer(path.c_str());
+            DynamicBlockVisibilityIface writeIface = source;
+            writeIface.m_writer = &writer;
+            REQUIRE(writer.write(&writeIface, version, /*bin=*/false));
+        }
+
+        DynamicBlockVisibilityIface reopened;
+        {
+            dwgRW reader(path.c_str());
+            REQUIRE(reader.read(&reopened, /*ext=*/false));
+            REQUIRE(reader.getError() == DRW::BAD_NONE);
+        }
+        assertBlockVisibilityOracle(reopened);
+        std::remove(path.c_str());
+    }
 }
 
 namespace {
