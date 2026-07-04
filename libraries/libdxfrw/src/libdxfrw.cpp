@@ -6704,6 +6704,7 @@ bool dxfRW::dxfClassForRecordName(const std::string &recName, DRW_Class &out) {
         {"SECTIONVIEWSTYLE",     "AcDbSectionViewStyle", "ObjectDBX Classes", 1025, 0},
         {"ACDBPLACEHOLDER",  "AcDbPlaceHolder",         "ObjectDBX Classes", 0, 0},
         {"CELLSTYLEMAP",     "AcDbCellStyleMap",        "ObjectDBX Classes", 1152, 0},
+        {"FIELD",            "AcDbField",               "ObjectDBX Classes", 1152, 0},
         {"FIELDLIST",        "AcDbFieldList",           "ObjectDBX Classes", 1152, 0},
         {"GEODATA",          "AcDbGeoData",             "ObjectDBX Classes", 4095, 0},
         {"SPATIAL_FILTER",   "AcDbSpatialFilter",       "ObjectDBX Classes", 0, 0},
@@ -7119,6 +7120,89 @@ bool dxfRW::writeSortEntsTable(DRW_SortEntsTable *ent) {
         writer->writeString(331, toHexStr(static_cast<int>(entityHandle)));
         writer->writeString(5, toHexStr(static_cast<int>(sortHandle)));
     }
+    return true;
+}
+
+// FIELD (AcDbField, custom class). Emits the scalar field state, child/object
+// references, cached value string, and child value records preserved by the
+// typed FIELD model.
+bool dxfRW::writeField(DRW_Field *ent) {
+    writer->writeString(0, "FIELD");
+    writer->writeString(5, toHexStr(static_cast<int>(ent->handle)));
+    writeObjectOwner(static_cast<std::uint32_t>(ent->parentHandle));
+    writer->writeString(100, "AcDbField");
+    writer->writeUtf8String(1, ent->m_evaluatorId);
+    writer->writeUtf8String(2, ent->m_fieldCode);
+    if (!ent->m_formatString.empty())
+        writer->writeUtf8String(4, ent->m_formatString);
+    writer->writeInt32(90, static_cast<int>(ent->m_childHandles.size()));
+    for (std::uint32_t child : ent->m_childHandles)
+        writer->writeString(360, toHexStr(static_cast<int>(child)));
+    writer->writeInt32(97, static_cast<int>(ent->m_objectHandles.size()));
+    for (std::uint32_t object : ent->m_objectHandles)
+        writer->writeString(331, toHexStr(static_cast<int>(object)));
+    writer->writeInt32(91, ent->m_evaluationOptionFlags);
+    writer->writeInt32(92, ent->m_filingOptionFlags);
+    writer->writeInt32(94, ent->m_fieldStateFlags);
+    writer->writeInt32(95, ent->m_evaluationStatusFlags);
+    writer->writeInt32(96, ent->m_evaluationErrorCode);
+    writer->writeUtf8String(300, ent->m_evaluationErrorMessage);
+    writer->writeInt32(93, static_cast<int>(ent->m_childValues.size()));
+
+    auto writeChildValue = [this](const DRW_Field::ChildValue &child) {
+        writer->writeUtf8String(6, child.m_key);
+        writer->writeInt32(93, child.m_value.m_formatFlags);
+        writer->writeInt32(90, child.m_value.m_dataType);
+        switch (child.m_value.m_dataType) {
+        case 0:
+        case 1:
+            writer->writeInt32(91, child.m_value.m_value.i_val());
+            break;
+        case 2:
+            writer->writeDouble(140, child.m_value.m_value.d_val());
+            break;
+        case 4:
+        case 512: {
+            std::string valueText = child.m_value.m_valueString;
+            if (valueText.empty()
+                && child.m_value.m_value.type() == DRW_Variant::STRING
+                && child.m_value.m_value.c_str() != nullptr) {
+                valueText = child.m_value.m_value.c_str();
+            }
+            writer->writeUtf8String(300, valueText);
+            break;
+        }
+        case 64:
+            if (child.m_value.m_handle != 0)
+                writer->writeString(
+                    330, toHexStr(static_cast<int>(child.m_value.m_handle)));
+            break;
+        default:
+            break;
+        }
+        writer->writeInt32(94, child.m_value.m_unitType);
+        writer->writeUtf8String(302, child.m_value.m_formatString);
+        writer->writeUtf8String(304, "ACVALUE_END");
+    };
+    for (const DRW_Field::ChildValue &child : ent->m_childValues)
+        writeChildValue(child);
+
+    writer->writeUtf8String(301, ent->m_valueString);
+    writer->writeInt32(98, ent->m_valueStringLength);
+    return true;
+}
+
+// FIELDLIST (AcDbIdSet / AcDbFieldList, custom class).
+bool dxfRW::writeFieldList(DRW_FieldList *ent) {
+    writer->writeString(0, "FIELDLIST");
+    writer->writeString(5, toHexStr(static_cast<int>(ent->handle)));
+    writeObjectOwner(static_cast<std::uint32_t>(ent->parentHandle));
+    writer->writeString(100, "AcDbIdSet");
+    writer->writeInt32(90, static_cast<int>(ent->m_fieldHandles.size()));
+    writer->writeBool(290, ent->m_unknown != 0);
+    for (std::uint32_t field : ent->m_fieldHandles)
+        writer->writeString(330, toHexStr(static_cast<int>(field)));
+    writer->writeString(100, "AcDbFieldList");
     return true;
 }
 

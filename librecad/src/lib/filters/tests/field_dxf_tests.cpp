@@ -42,6 +42,8 @@
 #include <filesystem>
 #include <fstream>
 #include <string>
+#include <utility>
+#include <vector>
 
 #include "drw_entities.h"
 #include "drw_header.h"
@@ -142,6 +144,44 @@ void readDxf(const std::string &dxf, DRW_Interface &cap, const char *name) {
   std::filesystem::remove(path);
 }
 
+std::vector<std::pair<std::string, std::string>> readGroups(
+    const std::filesystem::path &path) {
+  std::ifstream in(path);
+  std::vector<std::pair<std::string, std::string>> groups;
+  std::string code;
+  std::string value;
+  while (std::getline(in, code) && std::getline(in, value)) {
+    auto trim = [](std::string s) {
+      const auto first = s.find_first_not_of(" \t\r");
+      const auto last = s.find_last_not_of(" \t\r");
+      if (first == std::string::npos)
+        return std::string();
+      return s.substr(first, last - first + 1);
+    };
+    groups.emplace_back(trim(code), trim(value));
+  }
+  return groups;
+}
+
+bool hasConsecutive(
+    const std::vector<std::pair<std::string, std::string>> &groups,
+    const std::vector<std::pair<std::string, std::string>> &needle) {
+  if (needle.empty() || needle.size() > groups.size())
+    return false;
+  for (std::size_t i = 0; i + needle.size() <= groups.size(); ++i) {
+    bool ok = true;
+    for (std::size_t j = 0; j < needle.size(); ++j) {
+      if (groups[i + j] != needle[j]) {
+        ok = false;
+        break;
+      }
+    }
+    if (ok)
+      return true;
+  }
+  return false;
+}
+
 // A FIELD (evaluator "_text", field code "%<\AcVar Filename>%") that resolves to
 // the cached string "drawing.dwg", plus a FIELDLIST that references it.  The
 // FIELD carries one child-field handle (0x2C) and two per-child value records:
@@ -211,4 +251,109 @@ TEST_CASE("DXF FIELDLIST is read into a DRW_FieldList via processFieldList",
   // is the field handle referencing the FIELD above.
   REQUIRE(l.m_fieldHandles.size() == 1u);
   CHECK(l.m_fieldHandles.at(0) == 0x2Au);
+}
+
+TEST_CASE("DXF FIELD and FIELDLIST objects write class and cached value data",
+          "[dxf][field][objects]") {
+  const auto path = std::filesystem::temp_directory_path() / "lc_field_write.dxf";
+  std::filesystem::remove(path);
+
+  class FieldEmitter : public StubInterface {
+  public:
+    dxfRW *m_rw = nullptr;
+    DRW_Field m_field;
+    DRW_FieldList m_list;
+
+    void writeObjects() override {
+      m_rw->writeField(&m_field);
+      m_rw->writeFieldList(&m_list);
+    }
+  };
+
+  FieldEmitter em;
+  em.m_field.handle = 0x2Au;
+  em.m_field.parentHandle = 0;
+  em.m_field.m_evaluatorId = "_text";
+  em.m_field.m_fieldCode = "%<\\AcVar Filename>%";
+  em.m_field.m_evaluationOptionFlags = 63;
+  em.m_field.m_filingOptionFlags = 0;
+  em.m_field.m_fieldStateFlags = 9;
+  em.m_field.m_evaluationStatusFlags = 2;
+  em.m_field.m_evaluationErrorCode = 0;
+  em.m_field.m_valueString = "drawing.dwg";
+  em.m_field.m_valueStringLength = 11;
+  em.m_field.m_childHandles = {0x2Cu};
+
+  DRW_Field::ChildValue attdef;
+  attdef.m_key = "ACFD_FIELDTEXT_ATTDEF";
+  attdef.m_value.m_dataType = 1;
+  attdef.m_value.m_value.addInt(91, 7);
+  em.m_field.m_childValues.push_back(attdef);
+
+  DRW_Field::ChildValue cached;
+  cached.m_key = "ACFD_FIELD_VALUE";
+  cached.m_value.m_dataType = 4;
+  cached.m_value.m_valueString = "drawing.dwg";
+  cached.m_value.m_value.addString(1, "drawing.dwg");
+  em.m_field.m_childValues.push_back(cached);
+
+  em.m_list.handle = 0x2Bu;
+  em.m_list.parentHandle = 0;
+  em.m_list.m_unknown = 0;
+  em.m_list.m_fieldHandles = {0x2Au};
+
+  {
+    dxfRW w(path.string().c_str());
+    em.m_rw = &w;
+    DRW_Class fieldCls;
+    REQUIRE(dxfRW::dxfClassForRecordName("FIELD", fieldCls));
+    fieldCls.instanceCount = 1;
+    DRW_Class fieldListCls;
+    REQUIRE(dxfRW::dxfClassForRecordName("FIELDLIST", fieldListCls));
+    fieldListCls.instanceCount = 1;
+    w.setDxfClasses({fieldCls, fieldListCls});
+    REQUIRE(w.write(&em, DRW::AC1024, false));
+  }
+
+  const auto groups = readGroups(path);
+  CHECK(hasConsecutive(groups,
+                       {{"0", "CLASS"}, {"1", "FIELD"},
+                        {"2", "AcDbField"}}));
+  CHECK(hasConsecutive(groups,
+                       {{"0", "CLASS"}, {"1", "FIELDLIST"},
+                        {"2", "AcDbFieldList"}}));
+  CHECK(hasConsecutive(groups,
+                       {{"0", "FIELD"}, {"5", "2A"}, {"330", "C"},
+                        {"100", "AcDbField"}, {"1", "_text"}}));
+  CHECK(hasConsecutive(groups, {{"90", "1"}, {"360", "2C"}, {"97", "0"}}));
+  CHECK(hasConsecutive(groups,
+                       {{"6", "ACFD_FIELD_VALUE"}, {"93", "0"}, {"90", "4"},
+                        {"300", "drawing.dwg"}}));
+  CHECK(hasConsecutive(groups, {{"301", "drawing.dwg"}, {"98", "11"}}));
+  CHECK(hasConsecutive(groups,
+                       {{"0", "FIELDLIST"}, {"5", "2B"}, {"330", "C"},
+                        {"100", "AcDbIdSet"}, {"90", "1"}, {"290", "0"},
+                        {"330", "2A"}, {"100", "AcDbFieldList"}}));
+
+  FieldCapture cap;
+  {
+    dxfRW r(path.string().c_str());
+    REQUIRE(r.read(&cap, /*ext=*/true));
+  }
+  std::filesystem::remove(path);
+
+  REQUIRE(cap.m_fieldCount == 1);
+  CHECK(cap.m_field.m_evaluatorId == "_text");
+  CHECK(cap.m_field.m_fieldCode == "%<\\AcVar Filename>%");
+  CHECK(cap.m_field.m_valueString == "drawing.dwg");
+  REQUIRE(cap.m_field.m_childHandles.size() == 1u);
+  CHECK(cap.m_field.m_childHandles.at(0) == 0x2Cu);
+  REQUIRE(cap.m_field.m_childValues.size() == 2u);
+  CHECK(cap.m_field.m_childValues.at(1).m_key == "ACFD_FIELD_VALUE");
+  CHECK(cap.m_field.m_childValues.at(1).m_value.m_dataType == 4);
+  CHECK(cap.m_field.m_childValues.at(1).m_value.m_valueString == "drawing.dwg");
+
+  REQUIRE(cap.m_fieldListCount == 1);
+  REQUIRE(cap.m_list.m_fieldHandles.size() == 1u);
+  CHECK(cap.m_list.m_fieldHandles.at(0) == 0x2Au);
 }

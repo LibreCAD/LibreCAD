@@ -5584,6 +5584,10 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic& g, const QString& file, RS2::FormatT
             reserveTyped(record.handle, record.replayState, "SPATIAL_FILTER");
         for (const auto &record : metadata.sortEntsTables())
             reserveTyped(record.handle, record.replayState, "SORTENTSTABLE");
+        for (const auto &record : metadata.fields())
+            reserveTyped(record.handle, record.replayState, "FIELD");
+        for (const auto &record : metadata.fieldLists())
+            reserveTyped(record.handle, record.replayState, "FIELDLIST");
         //SLICE 2: WIPEOUTVARIABLES is a CUSTOM class -> reserve + register CLASS.
         for (const auto &record : metadata.wipeoutVariables())
             reserveTyped(record.handle, record.replayState, "WIPEOUTVARIABLES");
@@ -5739,6 +5743,10 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic& g, const QString& file, RS2::FormatT
         for (const auto &r : metadata.spatialFilters())
             noteDataOnly(r.handle, r.parentHandle, r.replayState);
         for (const auto &r : metadata.sortEntsTables())
+            noteDataOnly(r.handle, r.parentHandle, r.replayState);
+        for (const auto &r : metadata.fields())
+            noteDataOnly(r.handle, r.parentHandle, r.replayState);
+        for (const auto &r : metadata.fieldLists())
             noteDataOnly(r.handle, r.parentHandle, r.replayState);
         for (const auto &r : metadata.mlineStyles())
             noteDataOnly(r.handle, r.parentHandle, r.replayState);
@@ -8547,6 +8555,22 @@ void RS_FilterDXFRW::writeObjects() {
             DRW_SortEntsTable se = sortEntsTableFromMetadata(record);
             se.parentHandle = resolveOwner(record.parentHandle);
             m_dxfW->writeSortEntsTable(&se);
+        }
+        //FIELD/FIELDLIST are custom objects. Emit FIELD first so FIELDLIST 330
+        //references point at an object that already exists in OBJECTS.
+        for (const auto &record : metadata.fields()) {
+            if (!emitTyped(record.handle, record.replayState))
+                continue;
+            DRW_Field field = fieldFromMetadata(record);
+            field.parentHandle = resolveOwner(record.parentHandle);
+            m_dxfW->writeField(&field);
+        }
+        for (const auto &record : metadata.fieldLists()) {
+            if (!emitTyped(record.handle, record.replayState))
+                continue;
+            DRW_FieldList fieldList = fieldListFromMetadata(record);
+            fieldList.parentHandle = resolveOwner(record.parentHandle);
+            m_dxfW->writeFieldList(&fieldList);
         }
         //SLICE 2: WIPEOUTVARIABLES (custom, CLASS registered). Same dedup-vs-raw
         //-net + owner re-attach as the other data-only OBJECTS.

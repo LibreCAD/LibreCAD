@@ -151,6 +151,8 @@ public:
     bool writeGeoData(DRW_GeoData *ent);
     bool writeSpatialFilter(DRW_SpatialFilter *ent);
     bool writeSortEntsTable(DRW_SortEntsTable *ent);
+    bool writeField(DRW_Field *ent);
+    bool writeFieldList(DRW_FieldList *ent);
     /*!< MLINESTYLE is a FIXED built-in (no CLASS record); DWG read populates
      * only typed metadata, so the filter emits it typed on DWG->DXF, deduped vs
      * the raw net by handle. */
