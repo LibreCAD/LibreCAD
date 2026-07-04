@@ -7219,6 +7219,61 @@ bool DRW_DimRadial::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t
     return buf->isGood();
 }
 
+// DRW_DimLargeRadial (AcDbRadialDimensionLarge, LARGE_RADIAL_DIMENSION).
+// DXF group-code parser: the AcDbRadialDimensionLarge subclass overloads codes
+// 13/14/15/40 (chord / override center / jog point / jog angle), so gate them on
+// the subclass marker (like DRW_DimArc). The chord point is stored as the radial
+// diameter point so the existing addDimRadial consumer renders center→chord.
+bool DRW_DimLargeRadial::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
+    if (code == 100) {
+        std::string s = reader->getString();
+        if (s == "AcDbRadialDimensionLarge") {
+            m_largeRadialSubclassSeen = true;
+            return true;
+        }
+        return DRW_Dimension::parseCode(code, reader);
+    }
+    if (m_largeRadialSubclassSeen) {
+        DRW_Coord chord;
+        switch (code) {
+        case 13: chord = getPt5(); chord.x = reader->getDouble(); setPt5(chord); return true;
+        case 23: chord = getPt5(); chord.y = reader->getDouble(); setPt5(chord); return true;
+        case 33: chord = getPt5(); chord.z = reader->getDouble(); setPt5(chord); return true;
+        case 14: overrideCenterPoint.x = reader->getDouble(); return true;
+        case 24: overrideCenterPoint.y = reader->getDouble(); return true;
+        case 34: overrideCenterPoint.z = reader->getDouble(); return true;
+        case 15: jogPoint.x = reader->getDouble(); return true;
+        case 25: jogPoint.y = reader->getDouble(); return true;
+        case 35: jogPoint.z = reader->getDouble(); return true;
+        case 40: jogAngle = reader->getDouble(); return true;
+        default: break;
+        }
+    }
+    return DRW_Dimension::parseCode(code, reader);
+}
+
+// DRW_DimLargeRadial DWG body (ODA §20.4.20): definition point, chord point, jog
+// angle, overridden center, jog point — then the dim-style and anon-block
+// handles. Field order per the read-only reference parser (parseLargeRadial-
+// Dimension). No committed DWG fixture; validated by build + inline DXF test.
+bool DRW_DimLargeRadial::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs){
+    if (!DRW_Dimension::parseDwg(version, buf, nullptr, bs)) {
+        return false;
+    }
+    setDefPoint(buf->get3BitDouble());        // center / definition point (code 10)
+    setPt5(buf->get3BitDouble());             // chord point → radial diameter point
+    jogAngle = buf->getBitDouble();           // jog transverse angle (code 40)
+    overrideCenterPoint = buf->get3BitDouble();
+    jogPoint = buf->get3BitDouble();
+    type |= 4;                                // radial dimension type bit
+    if (!DRW_Entity::parseDwgEntHandle(version, buf)) {
+        return false;
+    }
+    dimStyleH = buf->getHandle();
+    blockH    = buf->getHandle();
+    return buf->isGood();
+}
+
 bool DRW_DimDiametric::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs){
     if (!DRW_Dimension::parseDwg(version, buf, nullptr, bs)) {
         return false;

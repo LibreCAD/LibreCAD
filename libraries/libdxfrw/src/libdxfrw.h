@@ -300,6 +300,7 @@ private:
     bool processMultiLeader();
     bool processDimension();
     bool processArcDimension();
+    bool processLargeRadialDimension();
     bool processLeader();
     bool processPlotSettings();
     bool processGroup();

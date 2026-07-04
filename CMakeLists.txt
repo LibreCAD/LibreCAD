@@ -1825,6 +1825,7 @@ if(BUILD_TESTS)
         librecad/src/lib/filters/tests/dxf_attribute_tests.cpp
         librecad/src/lib/filters/tests/dxf_object_tests.cpp
         librecad/src/lib/filters/tests/mpolygon_tests.cpp
+        librecad/src/lib/filters/tests/large_radial_dim_dxf_tests.cpp
         librecad/src/lib/filters/tests/mleader_text_tests.cpp
         librecad/src/lib/filters/tests/mleader_dxf_context_tests.cpp
         librecad/src/lib/filters/tests/dxf_roundtrip_tests.cpp

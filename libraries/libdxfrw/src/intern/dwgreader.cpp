@@ -1621,6 +1621,19 @@ bool dwgReader::readDwgEntity(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                     break;
                 }
                 if (cit != classesmap.end() && cit->second
+                    && (cit->second->recName == "LARGE_RADIAL_DIMENSION"
+                        || cit->second->className == "AcDbRadialDimensionLarge")) {
+                    // Jogged radius dimension (ODA §20.4.20). Delivered via the
+                    // existing addDimRadial callback (DRW_DimLargeRadial is-a
+                    // DRW_DimRadial); the jog point/angle ride along on the object.
+                    DRW_DimLargeRadial e;
+                    if (entryParse(e, buff, bs, ret)) {
+                        e.style = findTableName(DRW::DIMSTYLE, e.dimStyleH.ref);
+                        intfa.addDimRadial(&e);
+                    }
+                    break;
+                }
+                if (cit != classesmap.end() && cit->second
                     && cit->second->recName == "WIPEOUT") {
                     DRW_Wipeout e;
                     if (entryParse(e, buff, bs, ret)) {

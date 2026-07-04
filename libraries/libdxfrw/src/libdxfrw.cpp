@@ -3917,6 +3917,8 @@ bool dxfRW::processEntities(bool isblock) {
             processed = processDimension();
         } else if (nextentity == "ARC_DIMENSION") {
             processed = processArcDimension();
+        } else if (nextentity == "LARGE_RADIAL_DIMENSION") {
+            processed = processLargeRadialDimension();
         } else if (nextentity == "LEADER") {
             processed = processLeader();
         } else if (nextentity == "RAY") {
@@ -4713,6 +4715,27 @@ bool dxfRW::processArcDimension() {
             nextentity = reader->getString();
             DRW_DBG(nextentity); DRW_DBG("\n");
             iface->addDimArc(&d);
+            return true;
+        }
+        if (!d.parseCode(code, reader))
+            return setError(DRW::BAD_CODE_PARSED);
+    }
+    return setError(DRW::BAD_READ_ENTITIES);
+}
+
+// LARGE_RADIAL_DIMENSION (AcDbRadialDimensionLarge) is a top-level entity token,
+// NOT a DIMENSION subtype, so it gets its own reader.  Delivered via the existing
+// addDimRadial callback (DRW_DimLargeRadial is-a DRW_DimRadial).
+bool dxfRW::processLargeRadialDimension() {
+    DRW_DBG("dxfRW::processLargeRadialDimension");
+    int code;
+    DRW_DimLargeRadial d;
+    while (reader->readRec(&code)) {
+        DRW_DBG(code); DRW_DBG("\n");
+        if (code == 0) {
+            nextentity = reader->getString();
+            DRW_DBG(nextentity); DRW_DBG("\n");
+            iface->addDimRadial(&d);
             return true;
         }
         if (!d.parseCode(code, reader))
