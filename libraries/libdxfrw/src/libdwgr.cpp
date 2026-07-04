@@ -15,7 +15,9 @@
 #include "libdwgr.h"
 #include <fstream>
 #include <algorithm>
+#include <cstring>
 #include <sstream>
+#include <utility>
 #include "intern/drw_dbg.h"
 #include "intern/drw_textcodec.h"
 #include "intern/dwgreader.h"
@@ -65,6 +67,7 @@ void dwgRW::setDebug(DRW::DebugLevel lvl){
 /*reads metadata and loads image preview*/
 bool dwgRW::getPreview(){
     bool isOk = false;
+    error = DRW::BAD_NONE;
 
     std::ifstream filestr;
     isOk = openFile(&filestr);
@@ -141,8 +144,10 @@ bool dwgRW::testReader(){
 /*start reading dwg file header and, if can read it, continue reading all*/
 bool dwgRW::read(DRW_Interface *interface_, bool ext){
     bool isOk = false;
+    error = DRW::BAD_NONE;
     applyExt = ext;
     iface = interface_;
+    resetReadDiagnostics();
 
 //testReader();return false;
 
@@ -151,37 +156,81 @@ bool dwgRW::read(DRW_Interface *interface_, bool ext){
     if (!isOk)
         return false;
 
-    isOk = reader->readMetaData();
+    isOk = readInstalledReader();
+    filestr.close();
+
+    return isOk;
+}
+
+bool dwgRW::readBuffer(const std::uint8_t *data, std::uint64_t size,
+                       DRW_Interface *interface_, bool ext) {
+    error = DRW::BAD_NONE;
+    applyExt = ext;
+    iface = interface_;
+    resetReadDiagnostics();
+
+    if (data == nullptr || size < 6) {
+        error = DRW::BAD_OPEN;
+        return false;
+    }
+
+    auto buffer = std::make_unique<dwgBuffer>(
+        const_cast<std::uint8_t*>(data), size);
+    if (!openBuffer(std::move(buffer)))
+        return false;
+
+    return readInstalledReader();
+}
+
+bool dwgRW::readInstalledReader() {
+    if (!reader) {
+        error = DRW::BAD_OPEN;
+        return false;
+    }
+
+    bool isOk = reader->readMetaData();
     if (isOk) {
         isOk = reader->readFileHeader();
         if (isOk) {
             isOk = processDwg();
-        }
-        else {
+        } else {
             error = DRW::BAD_READ_FILE_HEADER;
         }
-    }
-    else {
+    } else {
         error = DRW::BAD_READ_METADATA;
     }
 
-    filestr.close();
-    if (reader) {
-        // Capture per-entity failure count + skipped custom-class breakdown
-        // before destroying the reader so the public getters (post-read) can
-        // still surface them.
-        m_entityParseFailures = reader->m_entityParseFailures;
-        m_objectParseFailures = reader->m_objectParseFailures;
-        m_classesCrcMismatch = reader->m_classesCrcMismatch;
-        m_skippedCustomClasses = reader->m_skippedCustomClasses;
-        m_skippedUnsupportedObjects = reader->m_skippedUnsupportedObjects;
-        m_decodedProxyPrimitives = reader->m_decodedProxyPrimitives;
-        m_layerNameOrder = reader->m_layerNameOrder;
-        m_ltypeNameOrder = reader->m_ltypeNameOrder;
-        reader.reset();
-    }
-
+    captureReaderDiagnostics();
+    reader.reset();
     return isOk;
+}
+
+void dwgRW::captureReaderDiagnostics() {
+    if (!reader)
+        return;
+
+    // Capture per-entity failure count + skipped custom-class breakdown before
+    // destroying the reader so the public getters (post-read) can still surface
+    // them.
+    m_entityParseFailures = reader->m_entityParseFailures;
+    m_objectParseFailures = reader->m_objectParseFailures;
+    m_classesCrcMismatch = reader->m_classesCrcMismatch;
+    m_skippedCustomClasses = reader->m_skippedCustomClasses;
+    m_skippedUnsupportedObjects = reader->m_skippedUnsupportedObjects;
+    m_decodedProxyPrimitives = reader->m_decodedProxyPrimitives;
+    m_layerNameOrder = reader->m_layerNameOrder;
+    m_ltypeNameOrder = reader->m_ltypeNameOrder;
+}
+
+void dwgRW::resetReadDiagnostics() {
+    m_entityParseFailures = 0;
+    m_objectParseFailures = 0;
+    m_classesCrcMismatch = 0;
+    m_skippedCustomClasses.clear();
+    m_skippedUnsupportedObjects.clear();
+    m_decodedProxyPrimitives = 0;
+    m_layerNameOrder.clear();
+    m_ltypeNameOrder.clear();
 }
 
 /**
@@ -892,7 +941,8 @@ bool dwgRW::writeRawDwgSection(const DRW_RawDwgSection *section) {
     return writer->addRawDwgSection(*section);
 }
 
-std::unique_ptr<dwgReader> dwgRW::createReaderForVersion(DRW::Version version, std::ifstream *stream, dwgRW *p )
+std::unique_ptr<dwgReader> dwgRW::createReaderForVersion(
+    DRW::Version version, std::unique_ptr<dwgBuffer> buffer, dwgRW *p)
 {
     switch ( version ) {
        // unsupported (pre-R10 — no shared parser exists)
@@ -911,27 +961,27 @@ std::unique_ptr<dwgReader> dwgRW::createReaderForVersion(DRW::Version version, s
                            //      entity common header; dwgReaderR11 branches on
                            //      `version`). dwgread DOES read AC1006.
        case DRW::AC1009:   // R11: minimal read support (validatable vs dwgread)
-           return std::unique_ptr< dwgReader >( new dwgReaderR11( stream, p) );
+           return std::unique_ptr< dwgReader >( new dwgReaderR11(std::move(buffer), p) );
 
        case DRW::AC1012:
        case DRW::AC1014:
        case DRW::AC1015:
-           return std::unique_ptr< dwgReader >( new dwgReader15( stream, p) );
+           return std::unique_ptr< dwgReader >( new dwgReader15(std::move(buffer), p) );
 
        case DRW::AC1018:
-           return std::unique_ptr< dwgReader >( new dwgReader18( stream, p) );
+           return std::unique_ptr< dwgReader >( new dwgReader18(std::move(buffer), p) );
 
        case DRW::AC1021:
-           return std::unique_ptr< dwgReader >( new dwgReader21( stream, p) );
+           return std::unique_ptr< dwgReader >( new dwgReader21(std::move(buffer), p) );
 
        case DRW::AC1024:
-           return std::unique_ptr< dwgReader >( new dwgReader24( stream, p) );
+           return std::unique_ptr< dwgReader >( new dwgReader24(std::move(buffer), p) );
 
        case DRW::AC1027:
-           return std::unique_ptr< dwgReader >( new dwgReader27( stream, p) );
+           return std::unique_ptr< dwgReader >( new dwgReader27(std::move(buffer), p) );
 
        case DRW::AC1032:
-           return std::unique_ptr< dwgReader >( new dwgReader32( stream, p) );
+           return std::unique_ptr< dwgReader >( new dwgReader32(std::move(buffer), p) );
            break;
     }
     return nullptr;
@@ -952,8 +1002,39 @@ bool dwgRW::openFile(std::ifstream *filestr){
         return isOk;
     }
 
+    auto buffer = std::make_unique<dwgBuffer>(filestr);
+    isOk = openBuffer(std::move(buffer));
+    if (!isOk)
+        filestr->close();
+
+    return isOk;
+}
+
+bool dwgRW::openBuffer(std::unique_ptr<dwgBuffer> buffer) {
+    bool isOk = false;
+    if (!buffer || buffer->size() < 6) {
+        error = DRW::BAD_VERSION;
+        return false;
+    }
+
+    version = sniffVersion(buffer.get());
+    reader = createReaderForVersion(version, std::move(buffer), this);
+
+    if (!reader) {
+        error = DRW::BAD_VERSION;
+    } else
+        isOk = true;
+
+    return isOk;
+}
+
+DRW::Version dwgRW::sniffVersion(dwgBuffer *buffer) {
+    if (buffer == nullptr || buffer->size() < 6)
+        return DRW::UNKNOWNV;
+
     char line[7];
-    filestr->read (line, 6);
+    for (int i = 0; i < 6; ++i)
+        line[i] = static_cast<char>(buffer->getRawChar8());
     line[6]='\0';
     DRW_DBG("dwgRW::read 2\n");
     DRW_DBG("dwgRW::read line version: ");
@@ -961,24 +1042,17 @@ bool dwgRW::openFile(std::ifstream *filestr){
     DRW_DBG("\n");
 
     // check version line against known version strings
-    version = DRW::UNKNOWNV;
+    DRW::Version sniffedVersion = DRW::UNKNOWNV;
     for ( auto it = DRW::dwgVersionStrings.begin(); it != DRW::dwgVersionStrings.end(); ++it )
     {
         if ( std::strncmp( line, it->first, sizeof(line) ) == 0 ) {
-            version = it->second;
+            sniffedVersion = it->second;
             break;
         }
     }
 
-    reader = createReaderForVersion( version, filestr, this );
-
-    if (!reader) {
-        error = DRW::BAD_VERSION;
-        filestr->close();
-    } else
-        isOk = true;
-
-    return isOk;
+    buffer->resetPosition();
+    return sniffedVersion;
 }
 
 /********* Reader Process *********/

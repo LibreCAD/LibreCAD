@@ -17,6 +17,7 @@
 #include <unordered_map>
 #include <list>
 #include <memory>
+#include <utility>
 #include <vector>
 #include "drw_textcodec.h"
 #include "dwgutil.h"
@@ -143,8 +144,8 @@ class dwgReader {
     // C++ does not allow `friend class <typedef-name>;`).
     friend class dwgRW;
 public:
-    dwgReader(std::ifstream *stream, dwgRW *p)
-       :fileBuf{ new dwgBuffer(stream) }
+    dwgReader(std::unique_ptr<dwgBuffer> buffer, dwgRW *p)
+       :fileBuf{ std::move(buffer) }
        ,parent{p}
     {
         decoder.setVersion(DRW::AC1021, false);//default 2007 in utf8(no convert)

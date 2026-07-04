@@ -34,12 +34,14 @@
 
 #include <cctype>
 #include <cmath>
+#include <cstdint>
 #include <cstring>
 #include <algorithm>
 #include <filesystem>
 #include <fstream>
 #include <iomanip>
 #include <iostream>
+#include <iterator>
 #include <map>
 #include <regex>
 #include <set>
@@ -262,6 +264,36 @@ DwgResult readDwg(const std::string &path, bool verbose = false,
     if (verbose)
       reader.setDebug(DRW::DebugLevel::Debug);
     bool ok = reader.read(&iface, true);
+    return {
+        ok,           reader.getError(), reader.getVersion(), iface.entities,
+        iface.blocks, iface.layers};
+  } catch (const std::exception &e) {
+    std::cerr << "  [EXCEPTION: " << e.what() << "]\n";
+    return {false,          DRW::BAD_UNKNOWN, DRW::UNKNOWNV,
+            iface.entities, iface.blocks,     iface.layers};
+  } catch (...) {
+    std::cerr << "  [UNKNOWN EXCEPTION]\n";
+    return {false,          DRW::BAD_UNKNOWN, DRW::UNKNOWNV,
+            iface.entities, iface.blocks,     iface.layers};
+  }
+}
+
+DwgResult readDwgBuffer(const std::string &path, bool verbose = false,
+                        CountingIface *outIface = nullptr) {
+  CountingIface localIface;
+  CountingIface &iface = outIface ? *outIface : localIface;
+  try {
+    std::ifstream in(path, std::ios::binary);
+    if (!in)
+      return {false, DRW::BAD_OPEN, DRW::UNKNOWNV, 0, 0, 0};
+    std::vector<std::uint8_t> bytes(
+        (std::istreambuf_iterator<char>(in)),
+        std::istreambuf_iterator<char>());
+
+    dwgR reader(path.c_str());
+    if (verbose)
+      reader.setDebug(DRW::DebugLevel::Debug);
+    bool ok = reader.readBuffer(bytes.data(), bytes.size(), &iface, true);
     return {
         ok,           reader.getError(), reader.getVersion(), iface.entities,
         iface.blocks, iface.layers};
@@ -1055,6 +1087,31 @@ public:
 };
 
 } // namespace
+
+TEST_CASE("dwgRW::readBuffer matches file-path read for a committed fixture",
+          "[dwg][readbuffer][libdxfrw]") {
+  const std::string path =
+      std::string(LIBRECAD_TEST_DIR) + "/mpolygon_solid.dwg";
+  REQUIRE(std::filesystem::exists(path));
+
+  CountingIface fileIface;
+  const DwgResult fileRead = readDwg(path, /*verbose=*/false, &fileIface);
+  REQUIRE(fileRead.ok);
+  REQUIRE(fileRead.error == DRW::BAD_NONE);
+
+  CountingIface memoryIface;
+  const DwgResult memoryRead =
+      readDwgBuffer(path, /*verbose=*/false, &memoryIface);
+  REQUIRE(memoryRead.ok);
+  REQUIRE(memoryRead.error == DRW::BAD_NONE);
+
+  CHECK(memoryRead.version == fileRead.version);
+  CHECK(memoryRead.entities == fileRead.entities);
+  CHECK(memoryRead.blocks == fileRead.blocks);
+  CHECK(memoryRead.layers == fileRead.layers);
+  CHECK(memoryIface.entityLWeights == fileIface.entityLWeights);
+  CHECK(memoryIface.layerLWeights == fileIface.layerLWeights);
+}
 
 TEST_CASE("DWG smoke test: read ~/doc/dwg/*.dwg and report entity counts") {
   // The test corpus lives in a developer-local directory (~/doc/dwg/) and

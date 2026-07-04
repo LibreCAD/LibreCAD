@@ -14,6 +14,7 @@
 #ifndef LIBDWGR_H
 #define LIBDWGR_H
 
+#include <cstdint>
 #include <string>
 #include <memory>
 #include <set>
@@ -25,6 +26,7 @@
 #include "drw_interface.h"
 
 class dwgReader;
+class dwgBuffer;
 class dwgWriter;
 
 /// Public DWG read/write API.  Renamed from `class dwgR` (read-only)
@@ -38,6 +40,8 @@ public:
     ~dwgRW();
     //read: return true if all ok
     bool read(DRW_Interface *interface_, bool ext);
+    bool readBuffer(const std::uint8_t *data, std::uint64_t size,
+                    DRW_Interface *interface_, bool ext);
 
     /// Write the in-memory model (driven via DRW_Interface callbacks)
     /// out to the file named at construction.
@@ -198,8 +202,13 @@ bool testReader();
 
 private:
     bool openFile(std::ifstream *filestr);
+    bool openBuffer(std::unique_ptr<dwgBuffer> buffer);
+    bool readInstalledReader();
+    void captureReaderDiagnostics();
+    void resetReadDiagnostics();
     bool processDwg();
-    static std::unique_ptr< dwgReader > createReaderForVersion(DRW::Version version, std::ifstream *stream, dwgRW *p);
+    static DRW::Version sniffVersion(dwgBuffer *buffer);
+    static std::unique_ptr< dwgReader > createReaderForVersion(DRW::Version version, std::unique_ptr<dwgBuffer> buffer, dwgRW *p);
 
 private:
     DRW::Version version { DRW::UNKNOWNV };

@@ -27,7 +27,8 @@
 */
 class dwgReaderR11 : public dwgReader {
 public:
-    dwgReaderR11(std::ifstream *stream, dwgRW *p) : dwgReader(stream, p) {}
+    dwgReaderR11(std::unique_ptr<dwgBuffer> buffer, dwgRW *p)
+        : dwgReader(std::move(buffer), p) {}
     virtual ~dwgReaderR11() {}
 
     bool readMetaData() override;

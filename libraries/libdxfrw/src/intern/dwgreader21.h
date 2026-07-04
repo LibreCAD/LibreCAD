@@ -22,8 +22,8 @@
 //reader for AC1021 aka v2007, chapter 5
 class dwgReader21 : public dwgReader {
 public:
-    dwgReader21(std::ifstream *stream, dwgRW *p):dwgReader(stream, p){
-    }
+    dwgReader21(std::unique_ptr<dwgBuffer> buffer, dwgRW *p)
+        : dwgReader(std::move(buffer), p) {}
     bool readMetaData() override;
     bool readFileHeader() override;
     bool readDwgHeader(DRW_Header& hdr) override;
