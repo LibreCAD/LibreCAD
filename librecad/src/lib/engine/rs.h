@@ -115,6 +115,9 @@ namespace RS2 {
 #ifdef DWGSUPPORT
         FormatDWG,           /**< DWG format (R2000, AC1015). */
         FormatDWG2004,       /**< DWG format (R2004, AC1018). */
+        FormatDWG2010,       /**< DWG format (R2010, AC1024). */
+        FormatDWG2013,       /**< DWG format (R2013, AC1027). */
+        FormatDWG2018,       /**< DWG format (R2018, AC1032). */
 #endif
         FormatLFF,           /**< LibreCAD Font File format. */
         FormatCXF,           /**< CAM Expert Font format. */

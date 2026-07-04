@@ -5378,10 +5378,28 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic& g, const QString& file, RS2::FormatT
 #endif
 
 #ifdef DWGSUPPORT
-    if (type == RS2::FormatDWG || type == RS2::FormatDWG2004) {
-        DRW::Version dwgVer = (type == RS2::FormatDWG2004) ? DRW::AC1018 : DRW::AC1015;
-        m_version = (dwgVer == DRW::AC1018) ? 1018 : 1015;
+    auto dwgVersionForFormat = [](RS2::FormatType format) {
+        switch (format) {
+        case RS2::FormatDWG:     return DRW::AC1015;
+        case RS2::FormatDWG2004: return DRW::AC1018;
+        case RS2::FormatDWG2010: return DRW::AC1024;
+        case RS2::FormatDWG2013: return DRW::AC1027;
+        case RS2::FormatDWG2018: return DRW::AC1032;
+        default:                 return DRW::UNKNOWNV;
+        }
+    };
+    DRW::Version dwgVer = dwgVersionForFormat(type);
+    if (dwgVer != DRW::UNKNOWNV) {
+        switch (dwgVer) {
+        case DRW::AC1015: m_version = 1015; break;
+        case DRW::AC1018: m_version = 1018; break;
+        case DRW::AC1024: m_version = 1024; break;
+        case DRW::AC1027: m_version = 1027; break;
+        case DRW::AC1032: m_version = 1032; break;
+        default: break;
+        }
         m_exactColor = false;
+        m_lastDwgWriteSkipCounters = {};
         m_dwgW = new dwgRW(QFile::encodeName(file).constData());
         // P3 #1: reserve every preserved fixed-type OBJECT + raw-object handle
         // BEFORE write() so defineBlock() (which mints user-block handles from
@@ -5410,6 +5428,7 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic& g, const QString& file, RS2::FormatT
             reserveAll(md.fields());
         }
         bool success = m_dwgW->write(this, dwgVer, false);
+        m_lastDwgWriteSkipCounters = m_dwgW->getWriteSkipCounters();
         delete m_dwgW;
         m_dwgW = nullptr;
         return success;

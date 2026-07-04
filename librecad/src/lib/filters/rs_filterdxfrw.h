@@ -92,7 +92,10 @@ public:
 
     bool canExport(const QString &/*fileName*/, RS2::FormatType t) const override {
 #ifdef DWGSUPPORT
-        if (t == RS2::FormatDWG || t == RS2::FormatDWG2004) return true;
+        if (t == RS2::FormatDWG || t == RS2::FormatDWG2004
+            || t == RS2::FormatDWG2010 || t == RS2::FormatDWG2013
+            || t == RS2::FormatDWG2018)
+            return true;
 #endif
         return (t==RS2::FormatDXFRW2018 || t==RS2::FormatDXFRW || t==RS2::FormatDXFRW2004
                 || t==RS2::FormatDXFRW2000 || t==RS2::FormatDXFRW14 || t==RS2::FormatDXFRW12);
@@ -223,6 +226,11 @@ public:
 
     // Export:
     bool fileExport(RS_Graphic& g, const QString& file, RS2::FormatType type) override;
+#ifdef DWGSUPPORT
+    dwgRW::WriteSkipCounters lastDwgWriteSkipCounters() const {
+        return m_lastDwgWriteSkipCounters;
+    }
+#endif
 
     void writeHeader(DRW_Header& data) override;
     void writeDwgClasses() override;
@@ -468,6 +476,7 @@ private:
     dxfRW *m_dxfR {nullptr};
 #ifdef DWGSUPPORT
     dwgRW *m_dwgW {nullptr};
+    dwgRW::WriteSkipCounters m_lastDwgWriteSkipCounters;
 #endif
     /** If saved version are 2004 or above can save color in RGB value. */
     bool m_exactColor = false;

@@ -36,6 +36,7 @@
 #include <catch2/catch_approx.hpp>
 #include <catch2/catch_test_macros.hpp>
 
+#include <cmath>
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
@@ -56,6 +57,8 @@
 #include "libdwgr.h"
 #include "rs_filterdxfrw.h"
 #include "rs_graphic.h"
+#include "rs_layer.h"
+#include "rs_line.h"
 #include "rs_polyline.h"
 #include "rs_settings.h"
 
@@ -200,12 +203,34 @@ void requireNoWriteSkips(const dwgRW::WriteSkipCounters& skips) {
 }
 
 void requireCleanDwgWriteReopen(const dwgRW::WriteSkipCounters& writeSkips,
-                                const dwgRW& reader) {
+                                 const dwgRW& reader) {
     requireNoWriteSkips(writeSkips);
     CHECK(reader.getEntityParseFailures() == 0);
     CHECK(reader.getObjectParseFailures() == 0);
     CHECK(reader.getSkippedCustomClasses().empty());
     CHECK(reader.getSkippedUnsupportedObjects().empty());
+}
+
+void requireFilterDwgWriteReopen(const dwgRW::WriteSkipCounters& writeSkips,
+                                 const dwgRW& reader,
+                                 DRW::Version version) {
+    requireNoWriteSkips(writeSkips);
+    CHECK(reader.getEntityParseFailures() == 0);
+    CHECK(reader.getObjectParseFailures() == 0);
+    CHECK(reader.getSkippedCustomClasses().empty());
+
+    const auto skipped = reader.getSkippedUnsupportedObjects();
+    if (version == DRW::AC1015) {
+        CHECK(skipped.empty());
+        return;
+    }
+
+    INFO("AC1018+ filter DWG output currently carries one fixed type-70 "
+         "viewport-entity-header control object.");
+    REQUIRE(skipped.size() == 1);
+    const auto type70 = skipped.find("type-70");
+    REQUIRE(type70 != skipped.end());
+    CHECK(type70->second == 1);
 }
 
 } // namespace
@@ -5362,6 +5387,128 @@ TEST_CASE("dwgRW R2018 writes geometry and MTEXT then reader recovers them",
     REQUIRE(readIface.m_mtexts[0].m_r2018ColumnHeights[1] == 8.0);
 
     std::remove(path.c_str());
+}
+
+namespace {
+
+struct FilterDwgRoundTripCase {
+    RS2::FormatType format;
+    DRW::Version version;
+    const char *acadVersion;
+    const char *tag;
+};
+
+const std::vector<FilterDwgRoundTripCase>& filterDwgRoundTripCases() {
+    static const std::vector<FilterDwgRoundTripCase> cases = {
+        {RS2::FormatDWG,     DRW::AC1015, "AC1015", "AC1015"},
+        {RS2::FormatDWG2004, DRW::AC1018, "AC1018", "AC1018"},
+        {RS2::FormatDWG2010, DRW::AC1024, "AC1024", "AC1024"},
+        {RS2::FormatDWG2013, DRW::AC1027, "AC1027", "AC1027"},
+        {RS2::FormatDWG2018, DRW::AC1032, "AC1032", "AC1032"},
+    };
+    return cases;
+}
+
+void populateFilterRoundTripGraphic(RS_Graphic& graphic) {
+    graphic.newDoc();
+    graphic.addLayer(new RS_Layer(QStringLiteral("P1_FRAME")));
+
+    auto addLine = [&](const RS_Vector& start, const RS_Vector& end) {
+        auto *line = new RS_Line(&graphic, RS_LineData(start, end));
+        line->setLayer(QStringLiteral("P1_FRAME"));
+        graphic.addEntity(line);
+    };
+    addLine(RS_Vector(0.0, 0.0, 0.0), RS_Vector(10.0, 0.0, 0.0));
+    addLine(RS_Vector(0.0, 0.0, 0.0), RS_Vector(0.0, 10.0, 0.0));
+}
+
+std::vector<RS_Line*> collectFilterRoundTripLines(RS_Graphic& graphic) {
+    std::vector<RS_Line*> lines;
+    for (RS_Entity *entity :
+         lc::LC_ContainerTraverser{graphic, RS2::ResolveNone}.entities()) {
+        if (entity != nullptr && entity->rtti() == RS2::EntityLine)
+            lines.push_back(static_cast<RS_Line*>(entity));
+    }
+    return lines;
+}
+
+bool samePoint(const RS_Vector& point, double x, double y) {
+    return std::abs(point.x - x) < 1.0e-9
+        && std::abs(point.y - y) < 1.0e-9;
+}
+
+bool lineMatches(const RS_Line& line, double x1, double y1,
+                 double x2, double y2) {
+    const RS_LineData data = line.getData();
+    return samePoint(data.startpoint, x1, y1)
+        && samePoint(data.endpoint, x2, y2);
+}
+
+} // namespace
+
+TEST_CASE("RS_FilterDXFRW round-trips DWG exports across writer versions",
+          "[dwg-write][filter-roundtrip][phase1]") {
+    ensureQtSettings();
+    RS_FilterDXFRW capability;
+
+    for (const FilterDwgRoundTripCase& item : filterDwgRoundTripCases()) {
+        INFO("DWG version: " << item.tag);
+        REQUIRE(capability.canExport(QString(), item.format));
+
+        const std::string path =
+            tempPath((std::string("filter_roundtrip_") + item.tag + ".dwg").c_str());
+        dwgRW::WriteSkipCounters writeSkips;
+
+        {
+            RS_Graphic source;
+            populateFilterRoundTripGraphic(source);
+
+            RS_FilterDXFRW filter;
+            REQUIRE(filter.fileExport(source, QString::fromStdString(path),
+                                      item.format));
+            writeSkips = filter.lastDwgWriteSkipCounters();
+        }
+
+        const std::vector<std::uint8_t> bytes = slurp(path);
+        REQUIRE(bytes.size() > 6);
+        REQUIRE(std::memcmp(bytes.data(), item.acadVersion, 6) == 0);
+
+        {
+            EmptyIface readIface;
+            dwgRW reader(path.c_str());
+            REQUIRE(reader.readBuffer(bytes.data(), bytes.size(), &readIface,
+                                      /*ext=*/false));
+            REQUIRE(reader.getVersion() == item.version);
+            REQUIRE(reader.getError() == DRW::BAD_NONE);
+            requireFilterDwgWriteReopen(writeSkips, reader, item.version);
+        }
+
+        RS_Graphic reopened;
+        {
+            RS_FilterDXFRW filter;
+            REQUIRE(filter.fileImport(reopened, QString::fromStdString(path),
+                                      RS2::FormatDWG));
+        }
+        REQUIRE(reopened.findLayer(QStringLiteral("P1_FRAME")) != nullptr);
+
+        std::vector<RS_Line*> lines = collectFilterRoundTripLines(reopened);
+        REQUIRE(lines.size() == 2);
+        bool sawHorizontal = false;
+        bool sawVertical = false;
+        for (const RS_Line *line : lines) {
+            REQUIRE(line != nullptr);
+            sawHorizontal = sawHorizontal
+                || lineMatches(*line, 0.0, 0.0, 10.0, 0.0);
+            sawVertical = sawVertical
+                || lineMatches(*line, 0.0, 0.0, 0.0, 10.0);
+            REQUIRE(line->getLayer(false) != nullptr);
+            CHECK(line->getLayer(false)->getName() == QStringLiteral("P1_FRAME"));
+        }
+        REQUIRE(sawHorizontal);
+        REQUIRE(sawVertical);
+
+        std::remove(path.c_str());
+    }
 }
 
 // ---------------------------------------------------------------------------

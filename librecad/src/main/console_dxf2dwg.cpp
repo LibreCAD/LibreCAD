@@ -59,6 +59,9 @@ RS2::FormatType parseDwgVersion(const QString& ver) {
     QString v = ver.toLower().remove('r');
     if (v == "2000") return RS2::FormatDWG;
     if (v == "2004") return RS2::FormatDWG2004;
+    if (v == "2010") return RS2::FormatDWG2010;
+    if (v == "2013") return RS2::FormatDWG2013;
+    if (v == "2018") return RS2::FormatDWG2018;
     return RS2::FormatUnknown;
 }
 #endif
@@ -103,6 +106,12 @@ bool convertFile(const QString& inputFile, const QString& outputFile, RS2::Forma
         qInfo("%s -> %s OK (DWG R2000 / AC1015)", qPrintable(inputFile), qPrintable(outputFile));
     else if (outFmt == RS2::FormatDWG2004)
         qInfo("%s -> %s OK (DWG R2004 / AC1018)", qPrintable(inputFile), qPrintable(outputFile));
+    else if (outFmt == RS2::FormatDWG2010)
+        qInfo("%s -> %s OK (DWG R2010 / AC1024)", qPrintable(inputFile), qPrintable(outputFile));
+    else if (outFmt == RS2::FormatDWG2013)
+        qInfo("%s -> %s OK (DWG R2013 / AC1027)", qPrintable(inputFile), qPrintable(outputFile));
+    else if (outFmt == RS2::FormatDWG2018)
+        qInfo("%s -> %s OK (DWG R2018 / AC1032)", qPrintable(inputFile), qPrintable(outputFile));
     else
 #endif
         qInfo("%s -> %s OK", qPrintable(inputFile), qPrintable(outputFile));
@@ -171,7 +180,7 @@ int runConversion(int argc, char** argv,
 
 #ifdef DWGSUPPORT
     QCommandLineOption dwgVersionOpt(QStringList() << "V" << "dwg-version",
-        QObject::tr("DWG output version: r2000 (default), r2004."), "version");
+        QObject::tr("DWG output version: r2000 (default), r2004, r2010, r2013, r2018."), "version");
     if (outputExt == "dwg")
         parser.addOption(dwgVersionOpt);
 #endif
@@ -197,7 +206,7 @@ int runConversion(int argc, char** argv,
     if (outputExt == "dwg" && parser.isSet(dwgVersionOpt)) {
         outFmt = parseDwgVersion(parser.value(dwgVersionOpt));
         if (outFmt == RS2::FormatUnknown) {
-            qCritical("ERROR: unknown DWG version '%s'; use r2000 or r2004.",
+            qCritical("ERROR: unknown DWG version '%s'; use r2000, r2004, r2010, r2013, or r2018.",
                       qPrintable(parser.value(dwgVersionOpt)));
             return EXIT_FAILURE;
         }
