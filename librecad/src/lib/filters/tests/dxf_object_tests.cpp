@@ -27,6 +27,7 @@
 
 #include <catch2/catch_test_macros.hpp>
 
+#include <algorithm>
 #include <cstdint>
 #include <cstdio>
 #include <filesystem>
@@ -1936,10 +1937,14 @@ namespace {
 class SortEntsTableCapture : public StubInterface {
 public:
   int m_callCount = 0;
+  std::vector<DRW_RawDxfObject> m_rawObjects;
   DRW_SortEntsTable m_captured;
   void addSortEntsTable(const DRW_SortEntsTable &d) override {
     if (m_callCount == 0) m_captured = d;
     ++m_callCount;
+  }
+  void addRawDxfObject(const DRW_RawDxfObject &d) override {
+    m_rawObjects.push_back(d);
   }
 };
 class DimAssocCapture : public StubInterface {
@@ -1973,6 +1978,161 @@ TEST_CASE("DXF SORTENTSTABLE is read into a DRW_SortEntsTable (draw order)",
   CHECK(s.m_entityHandles[1] == 0x35Bu);
   CHECK(s.m_sortHandles[0] == 0x354u);
   CHECK(s.m_sortHandles[1] == 0x356u);
+  const auto rawSort = std::find_if(
+      cap.m_rawObjects.begin(), cap.m_rawObjects.end(),
+      [](const DRW_RawDxfObject &o) { return o.name == "SORTENTSTABLE"; });
+  REQUIRE(rawSort != cap.m_rawObjects.end());
+  CHECK(rawSort->handle == 0x355u);
+  CHECK(rawSort->parentHandle == 0x1Au);
+}
+
+TEST_CASE("DXF SORTENTSTABLE object writes class and draw order",
+          "[dxf][sortents][objects]") {
+  const auto path =
+      std::filesystem::temp_directory_path() / "lc_sortents_write.dxf";
+  std::filesystem::remove(path);
+
+  class SortEntsTableEmitter : public StubInterface {
+  public:
+    dxfRW *m_rw = nullptr;
+    DRW_SortEntsTable m_table;
+
+    void writeObjects() override { m_rw->writeSortEntsTable(&m_table); }
+  };
+
+  SortEntsTableEmitter em;
+  em.m_table.handle = 0x355u;
+  em.m_table.parentHandle = 0x1Au;
+  em.m_table.m_blockOwnerHandle = 0x1Fu;
+  em.m_table.m_entityHandles = {0x35Au, 0x35Bu};
+  em.m_table.m_sortHandles = {0x354u, 0x356u};
+
+  {
+    dxfRW w(path.string().c_str());
+    em.m_rw = &w;
+    DRW_Class cls;
+    REQUIRE(dxfRW::dxfClassForRecordName("SORTENTSTABLE", cls));
+    cls.instanceCount = 1;
+    w.setDxfClasses({cls});
+    DRW_Dictionary sortDict;
+    sortDict.handle = 0x1Au;
+    sortDict.parentHandle = 0;
+    sortDict.cloning = 1;
+    sortDict.m_entries.push_back({"DrawOrder", 0x355u});
+    w.setNamedDictObjects({sortDict});
+    w.setRootDictEntries({{"ACAD_SORTENTS", "1A"}});
+    REQUIRE(w.write(&em, DRW::AC1024, false));
+  }
+
+  const auto groups = readGroups(path);
+  CHECK(hasConsecutive(groups,
+                       {{"0", "CLASS"}, {"1", "SORTENTSTABLE"},
+                        {"2", "AcDbSortentsTable"},
+                        {"3", "ObjectDBX Classes"}}));
+  CHECK(hasConsecutive(groups, {{"3", "ACAD_SORTENTS"}, {"350", "1A"}}));
+  CHECK(hasConsecutive(groups,
+                       {{"0", "SORTENTSTABLE"}, {"5", "355"},
+                        {"330", "1A"}, {"100", "AcDbSortentsTable"},
+                        {"330", "1F"}, {"331", "35A"}, {"5", "354"},
+                        {"331", "35B"}, {"5", "356"}}));
+
+  SortEntsTableCapture cap;
+  {
+    dxfRW r(path.string().c_str());
+    REQUIRE(r.read(&cap, /*ext=*/true));
+  }
+  std::filesystem::remove(path);
+
+  REQUIRE(cap.m_callCount == 1);
+  const DRW_SortEntsTable &s = cap.m_captured;
+  CHECK(s.handle == 0x355u);
+  CHECK(s.parentHandle == 0x1A);
+  CHECK(s.m_blockOwnerHandle == 0x1Fu);
+  REQUIRE(s.m_entityHandles.size() == 2);
+  REQUIRE(s.m_sortHandles.size() == 2);
+  CHECK(s.m_entityHandles[0] == 0x35Au);
+  CHECK(s.m_entityHandles[1] == 0x35Bu);
+  CHECK(s.m_sortHandles[0] == 0x354u);
+  CHECK(s.m_sortHandles[1] == 0x356u);
+  const auto rawSort = std::find_if(
+      cap.m_rawObjects.begin(), cap.m_rawObjects.end(),
+      [](const DRW_RawDxfObject &o) { return o.name == "SORTENTSTABLE"; });
+  REQUIRE(rawSort != cap.m_rawObjects.end());
+  CHECK(rawSort->handle == 0x355u);
+}
+
+TEST_CASE("DXF SORTENTSTABLE remaps source entity handles on write",
+          "[dxf][sortents][objects]") {
+  const auto path =
+      std::filesystem::temp_directory_path() / "lc_sortents_remap.dxf";
+  std::filesystem::remove(path);
+
+  class SortEntsRemapEmitter : public StubInterface {
+  public:
+    dxfRW *m_rw = nullptr;
+    DRW_SortEntsTable m_table;
+
+    void writeEntities() override {
+      DRW_Point first;
+      first.basePoint = DRW_Coord(1.0, 2.0, 0.0);
+      first.handle = 0x35Au;
+      m_rw->writePoint(&first);
+      DRW_Point second;
+      second.basePoint = DRW_Coord(3.0, 4.0, 0.0);
+      second.handle = 0x35Bu;
+      m_rw->writePoint(&second);
+    }
+    void writeObjects() override { m_rw->writeSortEntsTable(&m_table); }
+  };
+
+  SortEntsRemapEmitter em;
+  em.m_table.handle = 0x355u;
+  em.m_table.parentHandle = 0;
+  em.m_table.m_blockOwnerHandle = 0x1Fu;
+  em.m_table.m_entityHandles = {0x35Au, 0x35Bu};
+  em.m_table.m_sortHandles = {0x35Bu, 0x35Au};
+
+  {
+    dxfRW w(path.string().c_str());
+    em.m_rw = &w;
+    DRW_Class cls;
+    REQUIRE(dxfRW::dxfClassForRecordName("SORTENTSTABLE", cls));
+    cls.instanceCount = 1;
+    w.setDxfClasses({cls});
+    REQUIRE(w.write(&em, DRW::AC1024, false));
+  }
+
+  const auto groups = readGroups(path);
+  std::filesystem::remove(path);
+  auto handlesForType = [](const auto &groupList, const std::string &typeName) {
+    std::vector<std::string> handles;
+    for (std::size_t i = 0; i < groupList.size(); ++i) {
+      if (groupList[i].first != "0" || groupList[i].second != typeName)
+        continue;
+      for (std::size_t j = i + 1; j < groupList.size()
+           && groupList[j].first != "0"; ++j) {
+        if (groupList[j].first == "5") {
+          handles.push_back(groupList[j].second);
+          break;
+        }
+      }
+    }
+    return handles;
+  };
+  const auto pointHandles = handlesForType(groups, "POINT");
+  REQUIRE(pointHandles.size() >= 2);
+  CHECK(hasConsecutive(groups,
+                       {{"0", "POINT"}, {"5", pointHandles[0]},
+                        {"330", "1F"}}));
+  CHECK(hasConsecutive(groups,
+                       {{"0", "POINT"}, {"5", pointHandles[1]},
+                        {"330", "1F"}}));
+  CHECK(hasConsecutive(groups,
+                       {{"0", "SORTENTSTABLE"}, {"5", "355"},
+                        {"330", "C"}, {"100", "AcDbSortentsTable"},
+                        {"330", "1F"}, {"331", pointHandles[0]},
+                        {"5", pointHandles[1]}, {"331", pointHandles[1]},
+                        {"5", pointHandles[0]}}));
 }
 
 TEST_CASE("DXF DIMASSOC is read into a DRW_DimensionAssociation",

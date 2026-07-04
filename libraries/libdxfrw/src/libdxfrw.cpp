@@ -6539,7 +6539,7 @@ void dxfRW::captureRawGroup(DRW_RawDxfObject &obj, int code) {
         obj.groups.emplace_back(code, reader->getString());
         break;
     }
-    if (5 == code) {
+    if (5 == code && obj.handle == 0) {
         obj.handle = reader->getHandleString();
     } else if (330 == code) {
         // Latch the OWNER 330 only — the one OUTSIDE any 102 {ACAD_REACTORS/
@@ -6557,7 +6557,7 @@ void dxfRW::captureRawGroup(DRW_RawDxfObject &obj, int code) {
                 else if (v && v[0] == '}') --depth;
             }
         }
-        if (depth == 0)
+        if (depth == 0 && obj.parentHandle == 0)
             obj.parentHandle = reader->getHandleString();
     }
 }
@@ -7065,6 +7065,60 @@ bool dxfRW::writeSpatialFilter(DRW_SpatialFilter *ent) {
     };
     writeMatrix12(ent->m_inverseInsertTransform);
     writeMatrix12(ent->m_insertTransform);
+    return true;
+}
+
+// SORTENTSTABLE (AcDbSortentsTable, custom class). Entity handles are remapped
+// through the source->minted map when this is emitted after ENTITIES; direct unit
+// writers with an empty map preserve the caller-provided handles verbatim.
+bool dxfRW::writeSortEntsTable(DRW_SortEntsTable *ent) {
+    writer->writeString(0, "SORTENTSTABLE");
+    writer->writeString(5, toHexStr(static_cast<int>(ent->handle)));
+    writeObjectOwner(static_cast<std::uint32_t>(ent->parentHandle));
+    writer->writeString(100, "AcDbSortentsTable");
+    const std::uint32_t blockOwner = ent->m_blockOwnerHandle != 0
+        ? ent->m_blockOwnerHandle
+        : 0x1Fu;
+    writer->writeString(330, toHexStr(static_cast<int>(blockOwner)));
+
+    const auto &srcToMinted = m_writingContext.sourceHandleToMintedMap;
+    const bool remapEntities = !srcToMinted.empty();
+    auto resolveEntity = [&](std::uint32_t source, std::uint32_t &resolved) {
+        if (source == 0)
+            return false;
+        if (!remapEntities) {
+            resolved = source;
+            return true;
+        }
+        auto it = srcToMinted.find(source);
+        if (it == srcToMinted.end())
+            return false;
+        resolved = it->second;
+        return true;
+    };
+    auto resolveSort = [&](std::uint32_t source, std::uint32_t fallback) {
+        if (source == 0)
+            return fallback;
+        if (!remapEntities)
+            return source;
+        auto it = srcToMinted.find(source);
+        return it != srcToMinted.end() ? it->second : source;
+    };
+
+    const std::size_t entryCount = std::max(
+        ent->m_entityHandles.size(), ent->m_sortHandles.size());
+    for (std::size_t i = 0; i < entryCount; ++i) {
+        const std::uint32_t entitySource =
+            i < ent->m_entityHandles.size() ? ent->m_entityHandles[i] : 0;
+        std::uint32_t entityHandle = 0;
+        if (!resolveEntity(entitySource, entityHandle))
+            continue;
+        const std::uint32_t sortSource =
+            i < ent->m_sortHandles.size() ? ent->m_sortHandles[i] : entitySource;
+        const std::uint32_t sortHandle = resolveSort(sortSource, entityHandle);
+        writer->writeString(331, toHexStr(static_cast<int>(entityHandle)));
+        writer->writeString(5, toHexStr(static_cast<int>(sortHandle)));
+    }
     return true;
 }
 
