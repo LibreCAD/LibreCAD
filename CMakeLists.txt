@@ -263,6 +263,8 @@ set(LIBRECAD_RES
     licenses/licenses.qrc
 )
 
+include("${CMAKE_CURRENT_SOURCE_DIR}/libraries/libdxfrw/libdxfrw_sources.cmake")
+
 # Shared sources: All from SOURCES except main, consoles, and tests
 set(SHARED_SOURCES
     libraries/jwwlib/src/dl_attributes.h
@@ -279,69 +281,7 @@ set(SHARED_SOURCES
     libraries/jwwlib/src/jwtype.h
     libraries/jwwlib/src/jwwdoc.cpp
     libraries/jwwlib/src/jwwdoc.h
-    libraries/libdxfrw/src/drw_base.cpp
-    libraries/libdxfrw/src/drw_base.h
-    libraries/libdxfrw/src/drw_classes.cpp
-    libraries/libdxfrw/src/drw_classes.h
-    libraries/libdxfrw/src/drw_entities.cpp
-    libraries/libdxfrw/src/drw_entities.h
-    libraries/libdxfrw/src/drw_header.cpp
-    libraries/libdxfrw/src/drw_header.h
-    libraries/libdxfrw/src/drw_interface.h
-    libraries/libdxfrw/src/drw_objects.cpp
-    libraries/libdxfrw/src/drw_objects.h
-    libraries/libdxfrw/src/intern/drw_cptable932.h
-    libraries/libdxfrw/src/intern/drw_cptable936.h
-    libraries/libdxfrw/src/intern/drw_cptable949.h
-    libraries/libdxfrw/src/intern/drw_cptable950.h
-    libraries/libdxfrw/src/intern/drw_cptables.h
-    libraries/libdxfrw/src/intern/drw_dbg.cpp
-    libraries/libdxfrw/src/intern/drw_dbg.h
-    libraries/libdxfrw/src/intern/drw_reserve.h
-    libraries/libdxfrw/src/intern/drw_textcodec.cpp
-    libraries/libdxfrw/src/intern/drw_textcodec.h
-    libraries/libdxfrw/src/intern/dwgbuffer.cpp
-    libraries/libdxfrw/src/intern/dwgbuffer.h
-    libraries/libdxfrw/src/intern/dwgbufferw.cpp
-    libraries/libdxfrw/src/intern/dwgbufferw.h
-    libraries/libdxfrw/src/intern/dwgwriter.h
-    libraries/libdxfrw/src/intern/dwgwriter15.cpp
-    libraries/libdxfrw/src/intern/dwgwriter15.h
-    libraries/libdxfrw/src/intern/dwgwriter18.cpp
-    libraries/libdxfrw/src/intern/dwgwriter18.h
-    libraries/libdxfrw/src/intern/dwgwriter24.cpp
-    libraries/libdxfrw/src/intern/dwgwriter24.h
-    libraries/libdxfrw/src/intern/dwgreader.cpp
-    libraries/libdxfrw/src/intern/dwgreader.h
-    libraries/libdxfrw/src/intern/dwgreaderR11.cpp
-    libraries/libdxfrw/src/intern/dwgreaderR11.h
-    libraries/libdxfrw/src/intern/dwgreader15.cpp
-    libraries/libdxfrw/src/intern/dwgreader15.h
-    libraries/libdxfrw/src/intern/dwgreader18.cpp
-    libraries/libdxfrw/src/intern/dwgreader18.h
-    libraries/libdxfrw/src/intern/dwgreader21.cpp
-    libraries/libdxfrw/src/intern/dwgreader21.h
-    libraries/libdxfrw/src/intern/dwgreader24.cpp
-    libraries/libdxfrw/src/intern/dwgreader24.h
-    libraries/libdxfrw/src/intern/dwgreader27.cpp
-    libraries/libdxfrw/src/intern/dwgreader27.h
-    libraries/libdxfrw/src/intern/dwgreader32.cpp
-    libraries/libdxfrw/src/intern/dwgreader32.h
-    libraries/libdxfrw/src/intern/dwgutil.cpp
-    libraries/libdxfrw/src/intern/dwgutil.h
-    libraries/libdxfrw/src/intern/proxygraphicdecoder.cpp
-    libraries/libdxfrw/src/intern/proxygraphicdecoder.h
-    libraries/libdxfrw/src/intern/dxfreader.cpp
-    libraries/libdxfrw/src/intern/dxfreader.h
-    libraries/libdxfrw/src/intern/dxfwriter.cpp
-    libraries/libdxfrw/src/intern/dxfwriter.h
-    libraries/libdxfrw/src/intern/rscodec.cpp
-    libraries/libdxfrw/src/intern/rscodec.h
-    libraries/libdxfrw/src/libdwgr.cpp
-    libraries/libdxfrw/src/libdwgr.h
-    libraries/libdxfrw/src/libdxfrw.cpp
-    libraries/libdxfrw/src/libdxfrw.h
-    libraries/libdxfrw/src/main_doc.h
+    ${LIBDXFRW_ALL_FILES}
     librecad/src/actions/dock_widgets/block/rs_actionblocksadd.cpp
     librecad/src/actions/dock_widgets/block/rs_actionblocksadd.h
     librecad/src/actions/dock_widgets/block/rs_actionblocksattributes.cpp

@@ -23,82 +23,11 @@ set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# SOURCE FILES
-set(libdxfrw_srcs
-  src/intern/drw_dbg.cpp
-  src/intern/drw_textcodec.cpp
-  src/intern/dwgbuffer.cpp
-  src/intern/dwgbufferw.cpp
-  src/intern/dwgwriter15.cpp
-  src/intern/dwgwriter18.cpp
-  src/intern/dwgwriter24.cpp
-  src/intern/dwgwriter27.cpp
-  src/intern/dwgwriter32.cpp
-  src/intern/dwgreader.cpp
-  src/intern/dwgreaderR11.cpp
-  src/intern/dwgreader15.cpp
-  src/intern/dwgreader18.cpp
-  src/intern/dwgreader21.cpp
-  src/intern/dwgreader24.cpp
-  src/intern/dwgreader27.cpp
-  src/intern/dwgreader32.cpp
-  src/intern/dwgutil.cpp
-  src/intern/proxygraphicdecoder.cpp
-  src/intern/dxfreader.cpp
-  src/intern/dxfwriter.cpp
-  src/intern/rscodec.cpp
-  src/drw_base.cpp
-  src/drw_classes.cpp
-  src/drw_entities.cpp
-  src/drw_header.cpp
-  src/drw_objects.cpp
-  src/libdwgr.cpp
-  src/libdxfrw.cpp
-)
+include("${CMAKE_CURRENT_LIST_DIR}/libdxfrw_sources.cmake")
 
-# HEADER FILES
-set(libdxfrw_hdrs
-  src/intern/drw_cptable932.h
-  src/intern/drw_cptable936.h
-  src/intern/drw_cptable949.h
-  src/intern/drw_cptable950.h
-  src/intern/drw_cptables.h
-  src/intern/drw_dbg.h
-  src/intern/drw_textcodec.h
-  src/intern/dwgbuffer.h
-  src/intern/dwgbufferw.h
-  src/intern/dwgwriter.h
-  src/intern/dwgwriter15.h
-  src/intern/dwgwriter18.h
-  src/intern/dwgwriter24.h
-  src/intern/dwgwriter27.h
-  src/intern/dwgwriter32.h
-  src/intern/dwgreader.h
-  src/intern/dwgreaderR11.h
-  src/intern/dwgreader15.h
-  src/intern/dwgreader18.h
-  src/intern/dwgreader21.h
-  src/intern/dwgreader24.h
-  src/intern/dwgreader27.h
-  src/intern/dwgreader32.h
-  src/intern/dwgutil.h
-  src/intern/proxygraphicdecoder.h
-  src/intern/dxfreader.h
-  src/intern/dxfwriter.h
-  src/intern/rscodec.h
-  src/main_doc.h
-)
-
-set(installdxfrw_hdrs
-  src/drw_base.h
-  src/drw_classes.h
-  src/drw_entities.h
-  src/drw_header.h
-  src/drw_interface.h
-  src/drw_objects.h
-  src/libdwgr.h
-  src/libdxfrw.h
-)
+set(libdxfrw_srcs ${LIBDXFRW_SOURCES})
+set(libdxfrw_hdrs ${LIBDXFRW_PRIVATE_HEADERS})
+set(installdxfrw_hdrs ${LIBDXFRW_PUBLIC_HEADERS})
 
 set(LIBDXFRW_INSTALL_INCLUDEDIR ${CMAKE_INSTALL_INCLUDEDIR}/libdxfrw)
 
