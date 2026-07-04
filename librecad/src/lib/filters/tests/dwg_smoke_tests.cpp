@@ -244,6 +244,21 @@ public:
   void writeAppId() override {}
 };
 
+struct XlineCaptureIface : public CountingIface {
+  std::vector<DRW_Xline> xlines;
+  int lineCallbacks = 0;
+
+  void addLine(const DRW_Line &e) override {
+    CountingIface::addLine(e);
+    ++lineCallbacks;
+  }
+
+  void addXline(const DRW_Xline &e) override {
+    CountingIface::addXline(e);
+    xlines.push_back(e);
+  }
+};
+
 // ---- helpers ----------------------------------------------------------------
 
 struct DwgResult {
@@ -1111,6 +1126,50 @@ TEST_CASE("dwgRW::readBuffer matches file-path read for a committed fixture",
   CHECK(memoryRead.layers == fileRead.layers);
   CHECK(memoryIface.entityLWeights == fileIface.entityLWeights);
   CHECK(memoryIface.layerLWeights == fileIface.layerLWeights);
+}
+
+TEST_CASE("DWG XLINE reads as typed construction line across LibreDWG versions",
+          "[dwg][xline]") {
+  struct Fixture {
+    const char *file;
+    DRW::Version version;
+  };
+
+  const Fixture fixtures[] = {
+      {"xline/constructionline_2000.dwg", DRW::AC1015},
+      {"xline/constructionline_2004.dwg", DRW::AC1018},
+      // LibreDWG's AC1021/R2007 ConstructionLine.dwg currently fails this
+      // reader at BAD_READ_HEADER, before any XLINE dispatch can be exercised.
+      {"xline/constructionline_2010.dwg", DRW::AC1024},
+      {"xline/constructionline_2013.dwg", DRW::AC1027},
+      {"xline/constructionline_2018.dwg", DRW::AC1032},
+  };
+
+  for (const Fixture &fixture : fixtures) {
+    const std::string path =
+        std::string(LIBRECAD_TEST_DIR) + "/" + fixture.file;
+    INFO("fixture: " << fixture.file);
+    REQUIRE(std::filesystem::is_regular_file(path));
+
+    XlineCaptureIface iface;
+    const DwgResult result = readDwg(path, /*verbose=*/false, &iface);
+    REQUIRE(result.ok);
+    REQUIRE(result.error == DRW::BAD_NONE);
+    CHECK(result.version == fixture.version);
+    CHECK(result.entities == 1);
+    CHECK(iface.lineCallbacks == 0);
+    REQUIRE(iface.xlines.size() == 1);
+
+    const DRW_Xline &xline = iface.xlines.front();
+    CHECK(xline.eType == DRW::XLINE);
+    CHECK(std::isfinite(xline.basePoint.x));
+    CHECK(std::isfinite(xline.basePoint.y));
+    CHECK(std::isfinite(xline.secPoint.x));
+    CHECK(std::isfinite(xline.secPoint.y));
+    const double dirLen =
+        std::hypot(xline.secPoint.x, xline.secPoint.y);
+    CHECK(dirLen > 0.0);
+  }
 }
 
 TEST_CASE("DWG smoke test: read ~/doc/dwg/*.dwg and report entity counts") {
