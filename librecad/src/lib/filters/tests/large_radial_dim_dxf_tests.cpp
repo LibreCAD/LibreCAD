@@ -141,9 +141,14 @@ void readDxf(const std::string &dxf, DRW_Interface &cap, const char *name) {
   std::filesystem::remove(path);
 }
 
-// AutoCAD-style jogged radius dimension: center (10) = (5,6,0); chord (13) =
-// (10,0,0); override center (14) = (5,6,0); jog point (15) = (8,2,0); jog
-// angle (40) = pi/4.
+// AutoCAD-style jogged radius dimension.  Every point uses a DISTINCT value so
+// a field mix-up (e.g. a code 10/14 swap, or chord/jog confusion) is caught:
+//   center       (code 10) = (5,6,0)
+//   text mid     (code 11) = (2,3,0)
+//   chord        (code 13) = (10,0,0)
+//   override ctr (code 14) = (7,9,0)   -- deliberately != center
+//   jog point    (code 15) = (8,2,0)
+//   jog angle    (code 40) = pi/4
 const char *kLargeRadial =
     "0\nSECTION\n2\nENTITIES\n"
     "0\nLARGE_RADIAL_DIMENSION\n5\n2A\n330\n1F\n"
@@ -154,7 +159,7 @@ const char *kLargeRadial =
     "70\n4\n3\nStandard\n"
     "100\nAcDbRadialDimensionLarge\n"
     "13\n10.0\n23\n0.0\n33\n0.0\n"
-    "14\n5.0\n24\n6.0\n34\n0.0\n"
+    "14\n7.0\n24\n9.0\n34\n0.0\n"
     "15\n8.0\n25\n2.0\n35\n0.0\n"
     "40\n0.7853981633974483\n"
     "0\nENDSEC\n0\nEOF\n";
@@ -177,13 +182,22 @@ TEST_CASE("DXF LARGE_RADIAL_DIMENSION routes to addDimRadial as a DRW_DimLargeRa
   CHECK(cap.m_diameter.x == Catch::Approx(10.0));
   CHECK(cap.m_diameter.y == Catch::Approx(0.0));
   CHECK(cap.m_captured.getChordPoint().x == Catch::Approx(10.0));
+  CHECK(cap.m_captured.getChordPoint().y == Catch::Approx(0.0));
 
-  // Jog vertex (code 15) and jog angle (code 40) are preserved on the object.
+  // Jog vertex (code 15) and jog angle (code 40) are preserved on the object,
+  // distinct from every other point.
   CHECK(cap.m_captured.jogPoint.x == Catch::Approx(8.0));
   CHECK(cap.m_captured.jogPoint.y == Catch::Approx(2.0));
   CHECK(cap.m_captured.jogAngle == Catch::Approx(0.7853981633974483));
 
-  // Overridden center (code 14).
-  CHECK(cap.m_captured.overrideCenterPoint.x == Catch::Approx(5.0));
-  CHECK(cap.m_captured.overrideCenterPoint.y == Catch::Approx(6.0));
+  // Overridden center (code 14) is captured as its OWN field with its own,
+  // distinct value -- this catches a code 10/14 swap or a drop of the override.
+  CHECK(cap.m_captured.overrideCenterPoint.x == Catch::Approx(7.0));
+  CHECK(cap.m_captured.overrideCenterPoint.y == Catch::Approx(9.0));
+
+  // Cross-field distinctness guards: the override center must not have been
+  // aliased onto the definition point (code 10) or the chord point (code 13).
+  CHECK(cap.m_captured.overrideCenterPoint.x != Catch::Approx(cap.m_center.x));
+  CHECK(cap.m_captured.overrideCenterPoint.x != Catch::Approx(cap.m_diameter.x));
+  CHECK(cap.m_captured.jogPoint.x != Catch::Approx(cap.m_captured.overrideCenterPoint.x));
 }
