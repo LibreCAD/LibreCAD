@@ -2275,6 +2275,11 @@ bool dxfRW::writeTable(DRW_Table *ent){
 }
 
 bool dxfRW::writeAttrib(DRW_Attrib *ent){
+    if (ent->eType == DRW::ATTDEF) {
+        if (auto *attdef = dynamic_cast<DRW_Attdef *>(ent))
+            return writeAttdef(attdef);
+    }
+
     writer->writeString(0, "ATTRIB");
     writeEntity(ent);
     if (version > DRW::AC1009)
@@ -2307,6 +2312,49 @@ bool dxfRW::writeAttrib(DRW_Attrib *ent){
     if (version > DRW::AC1009)
         writer->writeString(100, "AcDbAttribute");
     writer->writeUtf8String(2, ent->tag);
+    writer->writeInt16(70, ent->attribFlags);
+    writer->writeInt16(73, ent->m_fieldLength);
+    if (ent->alignV != DRW_Text::VBaseLine)
+        writer->writeInt16(74, ent->alignV);
+    if (version > DRW::AC1014)
+        writer->writeInt16(280, ent->lockPosition ? 1 : 0);
+    return true;
+}
+
+bool dxfRW::writeAttdef(DRW_Attdef *ent){
+    writer->writeString(0, "ATTDEF");
+    writeEntity(ent);
+    if (version > DRW::AC1009)
+        writer->writeString(100, "AcDbText");
+    if (ent->thickness != 0)
+        writer->writeDouble(39, ent->thickness);
+    writer->writeDouble(10, ent->basePoint.x);
+    writer->writeDouble(20, ent->basePoint.y);
+    writer->writeDouble(30, ent->basePoint.z);
+    writer->writeDouble(40, ent->height);
+    writer->writeUtf8String(1, ent->text);
+    writer->writeDouble(50, ent->angle);
+    writer->writeDouble(41, ent->widthscale);
+    writer->writeDouble(51, ent->oblique);
+    if (version > DRW::AC1009)
+        writer->writeUtf8String(7, ent->style);
+    else
+        writer->writeUtf8Caps(7, ent->style);
+    writer->writeInt16(71, ent->textgen);
+    if (ent->alignH != DRW_Text::HLeft)
+        writer->writeInt16(72, ent->alignH);
+    if (ent->alignH != DRW_Text::HLeft || ent->alignV != DRW_Text::VBaseLine) {
+        writer->writeDouble(11, ent->secPoint.x);
+        writer->writeDouble(21, ent->secPoint.y);
+        writer->writeDouble(31, ent->secPoint.z);
+    }
+    writer->writeDouble(210, ent->extPoint.x);
+    writer->writeDouble(220, ent->extPoint.y);
+    writer->writeDouble(230, ent->extPoint.z);
+    if (version > DRW::AC1009)
+        writer->writeString(100, "AcDbAttributeDefinition");
+    writer->writeUtf8String(2, ent->tag);
+    writer->writeUtf8String(3, ent->prompt);
     writer->writeInt16(70, ent->attribFlags);
     writer->writeInt16(73, ent->m_fieldLength);
     if (ent->alignV != DRW_Text::VBaseLine)

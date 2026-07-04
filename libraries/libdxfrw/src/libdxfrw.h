@@ -108,6 +108,7 @@ public:
     bool writeInsert(DRW_Insert *ent);
     bool writeTable(DRW_Table *ent);
     bool writeAttrib(DRW_Attrib *ent);
+    bool writeAttdef(DRW_Attdef *ent);
     bool writeMText(DRW_MText *ent);
     bool writeMLine(DRW_MLine *ent);
     bool writeUnderlay(DRW_Underlay *ent);

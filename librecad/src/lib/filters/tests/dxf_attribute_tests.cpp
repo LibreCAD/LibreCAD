@@ -30,8 +30,10 @@
 #include <filesystem>
 #include <fstream>
 #include <string>
+#include <vector>
 
 #include "drw_entities.h"
+#include "drw_objects.h"
 #include "libdxfrw.h"
 
 namespace {
@@ -183,6 +185,27 @@ public:
   void writeEntities() override { m_rw->writeInsert(&m_insert); }
 };
 
+class AttdefEmitter : public StubInterface {
+public:
+  DRW_Attdef m_attdef;
+  bool m_viaAttrib = false;
+  dxfRW *m_rw = nullptr;
+  void writeEntities() override {
+    if (m_viaAttrib)
+      m_rw->writeAttrib(&m_attdef);
+    else
+      m_rw->writeAttdef(&m_attdef);
+  }
+};
+
+class RawEntityCapture : public StubInterface {
+public:
+  std::vector<DRW_RawDxfObject> m_entities;
+  void addRawDxfEntity(const DRW_RawDxfObject &d) override {
+    m_entities.push_back(d);
+  }
+};
+
 // Emits a single LINE on write (for the thickness/extrusion field-drop test).
 class LineEmitter : public StubInterface {
 public:
@@ -222,6 +245,26 @@ void readDxf(const std::string &dxf, DRW_Interface &cap, const char *name) {
   dxfRW r(path.string().c_str());
   REQUIRE(r.read(&cap, /*ext=*/true));
   std::filesystem::remove(path);
+}
+
+bool hasStringGroup(const DRW_RawDxfObject &obj, int code, const char *value) {
+  for (const DRW_Variant &group : obj.groups) {
+    if (group.code() == code && group.type() == DRW_Variant::STRING &&
+        std::string(group.c_str()) == value) {
+      return true;
+    }
+  }
+  return false;
+}
+
+bool hasIntGroup(const DRW_RawDxfObject &obj, int code, int value) {
+  for (const DRW_Variant &group : obj.groups) {
+    if (group.code() == code && group.type() == DRW_Variant::INTEGER &&
+        group.i_val() == value) {
+      return true;
+    }
+  }
+  return false;
 }
 
 // Minimal ENTITIES-only DXF: INSERT (66=1) + one ATTRIB + SEQEND.
@@ -606,6 +649,54 @@ TEST_CASE("DXF ATTRIB AcDbAttribute codes 73/74 round-trip (attrib-73)",
   const DRW_Attrib &att2 = *cap2.m_captured.attlist[0];
   CHECK(att2.m_fieldLength == 7);
   CHECK(att2.alignV == DRW_Text::VMiddle);
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("DXF ATTDEF writer emits attribute definition fields",
+          "[dxf][attdef][dxf_roundtrip]") {
+  for (const bool viaAttrib : {false, true}) {
+    const auto path = std::filesystem::temp_directory_path() /
+        (viaAttrib ? "lc_attdef_via_attrib.dxf" : "lc_attdef_direct.dxf");
+    std::filesystem::remove(path);
+
+    AttdefEmitter em;
+    em.m_viaAttrib = viaAttrib;
+    em.m_attdef.layer = "0";
+    em.m_attdef.basePoint = DRW_Coord(1.0, 2.0, 0.0);
+    em.m_attdef.secPoint = DRW_Coord(3.0, 4.0, 0.0);
+    em.m_attdef.height = 0.5;
+    em.m_attdef.text = "Default";
+    em.m_attdef.tag = "PARTNO";
+    em.m_attdef.prompt = "Part number?";
+    em.m_attdef.attribFlags = 3;
+    em.m_attdef.m_fieldLength = 12;
+    em.m_attdef.alignV = DRW_Text::VMiddle;
+    em.m_attdef.lockPosition = true;
+    {
+      dxfRW w(path.string().c_str());
+      em.m_rw = &w;
+      REQUIRE(w.write(&em, DRW::AC1021, false));
+    }
+
+    RawEntityCapture cap;
+    {
+      dxfRW r(path.string().c_str());
+      REQUIRE(r.read(&cap, /*ext=*/true));
+    }
+    std::filesystem::remove(path);
+
+    REQUIRE(cap.m_entities.size() == 1);
+    const DRW_RawDxfObject &attdef = cap.m_entities[0];
+    CHECK(attdef.name == "ATTDEF");
+    CHECK(hasStringGroup(attdef, 100, "AcDbAttributeDefinition"));
+    CHECK(hasStringGroup(attdef, 1, "Default"));
+    CHECK(hasStringGroup(attdef, 2, "PARTNO"));
+    CHECK(hasStringGroup(attdef, 3, "Part number?"));
+    CHECK(hasIntGroup(attdef, 70, 3));
+    CHECK(hasIntGroup(attdef, 73, 12));
+    CHECK(hasIntGroup(attdef, 74, DRW_Text::VMiddle));
+    CHECK(hasIntGroup(attdef, 280, 1));
+  }
 }
 
 // image-wipeout-71: DXF code 71 (clip boundary type) was not stored by
