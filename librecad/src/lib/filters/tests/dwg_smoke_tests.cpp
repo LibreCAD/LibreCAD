@@ -37,6 +37,7 @@
 #include <cstring>
 #include <algorithm>
 #include <filesystem>
+#include <fstream>
 #include <iomanip>
 #include <iostream>
 #include <map>
@@ -4431,6 +4432,92 @@ TEST_CASE("DWG arch_multileaders: SCALE table delivery") {
   CHECK(byFactor.count(24.0) == 1u);
   CHECK(byFactor.count(48.0) == 1u);
   CHECK(foundUnit); // at least one 1:1 entry present
+}
+
+TEST_CASE("DWG Mechanical and Annotative: object-context data delivery",
+          "[.dwg_object_context]") {
+  const std::string targetName = "Mechanical and Annotative.dwg";
+  std::vector<std::filesystem::path> candidates;
+
+  const std::filesystem::path manifest = "D:/data/dli/doc/dwg_files.txt";
+  if (std::filesystem::is_regular_file(manifest)) {
+    std::ifstream in(manifest);
+    std::string line;
+    while (std::getline(in, line)) {
+      if (line.find(targetName) != std::string::npos)
+        candidates.emplace_back(line);
+    }
+  }
+  candidates.emplace_back("D:/data/dli/doc/dwg3/Mechanical and Annotative.dwg");
+  if (const char *home = getenv("HOME"))
+    candidates.emplace_back(std::string(home) +
+                            "/doc/dwg3/Mechanical and Annotative.dwg");
+
+  std::filesystem::path path;
+  for (const auto &candidate : candidates) {
+    if (std::filesystem::is_regular_file(candidate)) {
+      path = candidate;
+      break;
+    }
+  }
+  if (path.empty()) {
+    SUCCEED("fixture not present; skipping");
+    return;
+  }
+
+  class ObjectContextIface : public TypeTrackingIface {
+  public:
+    int typedContexts = 0;
+    int textContexts = 0;
+    int dimensionContexts = 0;
+    int scaleLinkedContexts = 0;
+    int rawObjectContexts = 0;
+    std::map<DRW_ObjectContextData::Kind, int> byKind;
+
+    void addObjectContextData(const DRW_ObjectContextData &d) override {
+      ++typedContexts;
+      ++byKind[d.m_kind];
+      if (d.isTextFamily())
+        ++textContexts;
+      if (d.isDimensionFamily())
+        ++dimensionContexts;
+      if (d.m_scaleHandle != 0)
+        ++scaleLinkedContexts;
+    }
+
+    void addUnsupportedObject(const DRW_UnsupportedObject &o) override {
+      if (o.m_recordName.find("OBJECTCONTEXTDATA") != std::string::npos ||
+          o.m_className.find("ObjectContextData") != std::string::npos) {
+        ++rawObjectContexts;
+      }
+    }
+  };
+
+  ObjectContextIface iface;
+  std::unordered_map<std::string, size_t> skippedUnsupported;
+  {
+    dwgR reader(path.string().c_str());
+    REQUIRE(reader.read(&iface, true));
+    REQUIRE(reader.getError() == DRW::BAD_NONE);
+    skippedUnsupported = reader.getSkippedUnsupportedObjects();
+  }
+
+  CHECK(iface.typedContexts >= 43);
+  CHECK(iface.textContexts >= 14);
+  CHECK(iface.dimensionContexts >= 29);
+  CHECK(iface.scaleLinkedContexts >= 43);
+  CHECK(iface.rawObjectContexts >= iface.typedContexts);
+  CHECK(iface.byKind[DRW_ObjectContextData::Kind::AlignedDimension] >= 23);
+  CHECK(iface.byKind[DRW_ObjectContextData::Kind::Text] >= 11);
+  CHECK(iface.byKind[DRW_ObjectContextData::Kind::RadialDimension] >= 6);
+  CHECK(iface.byKind[DRW_ObjectContextData::Kind::MText] >= 3);
+
+  for (const auto &kv : skippedUnsupported) {
+    CHECK(kv.first.find("ALDIMOBJECTCONTEXTDATA") == std::string::npos);
+    CHECK(kv.first.find("TEXTOBJECTCONTEXTDATA") == std::string::npos);
+    CHECK(kv.first.find("RADIMOBJECTCONTEXTDATA") == std::string::npos);
+    CHECK(kv.first.find("MTEXTOBJECTCONTEXTDATA") == std::string::npos);
+  }
 }
 
 TEST_CASE("DWG arch_multileaders: OBJECTS metadata delivery") {

@@ -4948,6 +4948,16 @@ void RS_FilterDXFRW::addTableContent(const DRW_TableContentObject &data) {
                   static_cast<int>(data.m_content.m_columns.size()));
 }
 
+void RS_FilterDXFRW::addObjectContextData(const DRW_ObjectContextData &data) {
+  if (m_graphic != nullptr) {
+    m_graphic->dwgAdvancedMetadata().addObjectContextData(data);
+  }
+  RS_DEBUG->print("RS_FilterDXFRW::addObjectContextData: %s handle %d scale %d",
+                  data.m_recordName.empty() ? "(object-context)" : data.m_recordName.c_str(),
+                  static_cast<int>(data.handle),
+                  static_cast<int>(data.m_scaleHandle));
+}
+
 void RS_FilterDXFRW::addCellStyleMap(const DRW_CellStyleMap &data) {
   if (m_graphic != nullptr) {
     m_graphic->dwgAdvancedMetadata().addCellStyleMap(data);

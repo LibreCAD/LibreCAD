@@ -83,7 +83,8 @@ namespace DRW {
          POINTCLOUDDEF,
          SUNSTUDY,
          RENDERSETTINGS,
-         SECTIONOBJ
+         SECTIONOBJ,
+         OBJECTCONTEXTDATA
      };
 
 //pending VP_ENT_HDR, LONG_TRANSACTION,
@@ -2057,6 +2058,97 @@ public:
     double  drawingUnits = 1.0;  /*!< denominator, code 141 */
     bool    isUnitScale = false; /*!< true for the 1:1 entry, code 290 */
     // name (inherited from DRW_TableEntry) carries the user-visible label, code 300
+};
+
+//! Standalone AcDb*ObjectContextData shell (annotation-scale context metadata).
+/*!
+ *  These OBJECTS records carry per-annotation-scale overrides for visible
+ *  entities (TEXT/MTEXT/DIMENSION/etc.). LibreCAD has no annotation-scale
+ *  renderer yet, so this parser deliberately captures metadata only and leaves
+ *  raw bytes replayable through DRW_UnsupportedObject. The stable common
+ *  scaffold is AcDbObjectContextData:
+ *    BS classVersion, B defaultFlag, handle stream ... scaleHandle.
+ *
+ *  Text and dimension families are decoded far enough to prove typed coverage
+ *  and expose useful placement/scale links. Leader/MLeader/FCF/BlkRef context
+ *  records remain raw-preserved until a consumer needs them.
+ */
+class DRW_ObjectContextData : public DRW_TableEntry {
+    SETOBJFRIENDS
+public:
+    enum class Kind {
+        Unknown,
+        AnnotScale,
+        Text,
+        MText,
+        MTextAttribute,
+        OrdinateDimension,
+        AlignedDimension,
+        AngularDimension,
+        RadialDimension,
+        LargeRadialDimension,
+        DiameterDimension
+    };
+
+    explicit DRW_ObjectContextData(const UTF8STRING& recordName = UTF8STRING(),
+                                   Kind kind = Kind::Unknown)
+        : m_recordName(recordName), m_kind(kind) {
+        tType = DRW::OBJECTCONTEXTDATA;
+    }
+
+    bool isTextFamily() const {
+        return m_kind == Kind::Text || m_kind == Kind::MText
+            || m_kind == Kind::MTextAttribute;
+    }
+    bool isDimensionFamily() const {
+        return m_kind == Kind::OrdinateDimension
+            || m_kind == Kind::AlignedDimension
+            || m_kind == Kind::AngularDimension
+            || m_kind == Kind::RadialDimension
+            || m_kind == Kind::LargeRadialDimension
+            || m_kind == Kind::DiameterDimension;
+    }
+
+protected:
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
+
+public:
+    UTF8STRING m_recordName;
+    Kind m_kind = Kind::Unknown;
+    std::uint16_t m_classVersion = 0;
+    bool m_defaultFlag = false;
+    std::uint32_t m_scaleHandle = 0;
+    std::uint32_t m_blockHandle = 0;       /*!< dimension contexts only */
+    std::uint32_t m_annotatedHandle = 0;   /*!< common owner/annotated object handle */
+
+    // Text/MTEXT placement subset.
+    std::uint16_t m_horizontalMode = 0;
+    std::int32_t m_attachment = 0;
+    double m_rotation = 0.0;
+    DRW_Coord m_insertionPoint;
+    DRW_Coord m_alignmentPoint;
+    DRW_Coord m_xAxisDir{1.0, 0.0, 0.0};
+    double m_rectangleWidth = 0.0;
+    double m_rectangleHeight = 0.0;
+    double m_extentsWidth = 0.0;
+    double m_extentsHeight = 0.0;
+
+    // Dimension-family common context subset.
+    DRW_Coord m_definitionPoint;
+    bool m_isDefaultTextLocation = false;
+    double m_textRotation = 0.0;
+    bool m_unknown293 = false;
+    bool m_dimTofl = false;
+    bool m_dimOsxd = false;
+    bool m_dimAtFit = false;
+    bool m_dimTix = false;
+    bool m_dimTMove = false;
+    std::uint8_t m_overrideCode = 0;
+    bool m_hasArrow2 = false;
+    bool m_flipArrow2 = false;
+    bool m_flipArrow1 = false;
+    DRW_Coord m_featureLocationPoint;      /*!< ordinate dimensions only */
+    DRW_Coord m_leaderEndpoint;            /*!< ordinate dimensions only */
 };
 
 struct DRW_DimensionAssociationOsnapRef {

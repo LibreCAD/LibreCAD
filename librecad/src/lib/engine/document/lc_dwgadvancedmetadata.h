@@ -1761,6 +1761,47 @@ public:
         ReplayState replayState = ReplayState::ReplayAllowed;
     };
 
+    /// OBJECTCONTEXTDATA annotation-scale payloads. LibreCAD has no
+    /// annotation-scale renderer yet, so this is intentionally a metadata
+    /// shell: typed enough for corpus validation and future scale resolution,
+    /// with raw DWG replay still carried by RawObjectRecord.
+    struct ObjectContextDataRecord {
+        std::uint32_t handle = 0;
+        std::uint32_t parentHandle = 0;
+        std::string recordName;
+        DRW_ObjectContextData::Kind kind = DRW_ObjectContextData::Kind::Unknown;
+        std::uint16_t classVersion = 0;
+        bool defaultFlag = false;
+        std::uint32_t scaleHandle = 0;
+        std::uint32_t blockHandle = 0;
+        std::uint32_t annotatedHandle = 0;
+        std::int16_t horizontalMode = 0;
+        std::int32_t attachment = 0;
+        double rotation = 0.0;
+        DRW_Coord insertionPoint;
+        DRW_Coord alignmentPoint;
+        DRW_Coord xAxisDir{1.0, 0.0, 0.0};
+        double rectangleWidth = 0.0;
+        double rectangleHeight = 0.0;
+        double extentsWidth = 0.0;
+        double extentsHeight = 0.0;
+        DRW_Coord definitionPoint;
+        bool isDefaultTextLocation = false;
+        bool dimTofl = false;
+        bool dimOsxd = false;
+        bool dimAtFit = false;
+        bool dimTix = false;
+        bool dimTMove = false;
+        bool hasArrow2 = false;
+        bool flipArrow2 = false;
+        bool flipArrow1 = false;
+        double textRotation = 0.0;
+        std::int32_t overrideCode = 0;
+        DRW_Coord featureLocationPoint;
+        DRW_Coord leaderEndpoint;
+        ReplayState replayState = ReplayState::ReplayAllowed;
+    };
+
     /// MLINESTYLE (AcDbMlineStyle, FIXED built-in type 73 — no CLASS record).
     /// Durable metadata so the DWG->DXF path can re-emit the style typed (the
     /// transient read cache in RS_FilterDXFRW is DXF-read-only).  Per-element
@@ -1961,6 +2002,7 @@ public:
         m_xrecords.clear();
         m_layouts.clear();
         m_scales.clear();
+        m_objectContextData.clear();
         m_mlineStyles.clear();
         m_wipeoutVariables.clear();
         m_idBuffers.clear();
@@ -2936,6 +2978,44 @@ public:
         m_scales.push_back(std::move(record));
     }
 
+    void addObjectContextData(const DRW_ObjectContextData& context) {
+        ObjectContextDataRecord record;
+        record.handle = context.handle;
+        record.parentHandle = context.parentHandle;
+        record.recordName = context.m_recordName;
+        record.kind = context.m_kind;
+        record.classVersion = context.m_classVersion;
+        record.defaultFlag = context.m_defaultFlag;
+        record.scaleHandle = context.m_scaleHandle;
+        record.blockHandle = context.m_blockHandle;
+        record.annotatedHandle = context.m_annotatedHandle;
+        record.horizontalMode = context.m_horizontalMode;
+        record.attachment = context.m_attachment;
+        record.rotation = context.m_rotation;
+        record.insertionPoint = context.m_insertionPoint;
+        record.alignmentPoint = context.m_alignmentPoint;
+        record.xAxisDir = context.m_xAxisDir;
+        record.rectangleWidth = context.m_rectangleWidth;
+        record.rectangleHeight = context.m_rectangleHeight;
+        record.extentsWidth = context.m_extentsWidth;
+        record.extentsHeight = context.m_extentsHeight;
+        record.definitionPoint = context.m_definitionPoint;
+        record.isDefaultTextLocation = context.m_isDefaultTextLocation;
+        record.dimTofl = context.m_dimTofl;
+        record.dimOsxd = context.m_dimOsxd;
+        record.dimAtFit = context.m_dimAtFit;
+        record.dimTix = context.m_dimTix;
+        record.dimTMove = context.m_dimTMove;
+        record.hasArrow2 = context.m_hasArrow2;
+        record.flipArrow2 = context.m_flipArrow2;
+        record.flipArrow1 = context.m_flipArrow1;
+        record.textRotation = context.m_textRotation;
+        record.overrideCode = context.m_overrideCode;
+        record.featureLocationPoint = context.m_featureLocationPoint;
+        record.leaderEndpoint = context.m_leaderEndpoint;
+        m_objectContextData.push_back(std::move(record));
+    }
+
     void addMLineStyle(const DRW_MLineStyle& style) {
         MLineStyleRecord record;
         record.handle = style.handle;
@@ -3161,6 +3241,9 @@ public:
     std::vector<LayoutRecord>& layouts() { return m_layouts; }
     // PR 8d.2a — five small no-storage OBJECTS families.
     const std::vector<ScaleRecord>& scales() const { return m_scales; }
+    const std::vector<ObjectContextDataRecord>& objectContextData() const {
+        return m_objectContextData;
+    }
     const std::vector<MLineStyleRecord>& mlineStyles() const { return m_mlineStyles; }
     const std::vector<WipeoutVariablesRecord>& wipeoutVariables() const { return m_wipeoutVariables; }
     const std::vector<IDBufferRecord>& idBuffers() const { return m_idBuffers; }
@@ -7403,6 +7486,7 @@ private:
         invalidateMatching(m_geoData, predicate);
         invalidateMatching(m_tableGeometry, predicate);
         invalidateMatching(m_placeholders, predicate);
+        invalidateMatching(m_objectContextData, predicate);
     }
 
     template<typename Container, typename Predicate>
@@ -7495,6 +7579,7 @@ private:
     std::vector<LayoutRecord> m_layouts;
     // PR 8d.2a — five small no-storage OBJECTS families.
     std::vector<ScaleRecord> m_scales;
+    std::vector<ObjectContextDataRecord> m_objectContextData;
     std::vector<MLineStyleRecord> m_mlineStyles;
     std::vector<WipeoutVariablesRecord> m_wipeoutVariables;
     std::vector<IDBufferRecord> m_idBuffers;

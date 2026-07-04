@@ -2446,6 +2446,79 @@ TEST_CASE("DWG advanced metadata classifies raw object families",
         == 1u);
 }
 
+TEST_CASE("DWG advanced metadata stores typed object-context shells",
+          "[entity_metadata][dwg_metadata][object-context]") {
+  LC_DwgAdvancedMetadata metadata;
+
+  DRW_ObjectContextData textContext(
+      "TEXTOBJECTCONTEXTDATA", DRW_ObjectContextData::Kind::Text);
+  textContext.handle = 0x910u;
+  textContext.parentHandle = 0x700u;
+  textContext.m_classVersion = 4u;
+  textContext.m_defaultFlag = true;
+  textContext.m_scaleHandle = 0x701u;
+  textContext.m_annotatedHandle = 0x700u;
+  textContext.m_horizontalMode = 2u;
+  textContext.m_rotation = 0.25;
+  textContext.m_insertionPoint = DRW_Coord{1.0, 2.0, 0.0};
+  textContext.m_alignmentPoint = DRW_Coord{3.0, 4.0, 0.0};
+  metadata.addObjectContextData(textContext);
+
+  DRW_ObjectContextData dimContext(
+      "ALDIMOBJECTCONTEXTDATA", DRW_ObjectContextData::Kind::AlignedDimension);
+  dimContext.handle = 0x920u;
+  dimContext.parentHandle = 0x710u;
+  dimContext.m_classVersion = 5u;
+  dimContext.m_scaleHandle = 0x711u;
+  dimContext.m_blockHandle = 0x712u;
+  dimContext.m_definitionPoint = DRW_Coord{5.0, 6.0, 0.0};
+  dimContext.m_isDefaultTextLocation = true;
+  dimContext.m_dimTofl = true;
+  dimContext.m_hasArrow2 = true;
+  dimContext.m_flipArrow1 = true;
+  dimContext.m_textRotation = 0.5;
+  dimContext.m_overrideCode = 7u;
+  metadata.addObjectContextData(dimContext);
+
+  REQUIRE(metadata.objectContextData().size() == 2u);
+  const auto &textRecord = metadata.objectContextData()[0];
+  CHECK(textRecord.handle == 0x910u);
+  CHECK(textRecord.parentHandle == 0x700u);
+  CHECK(textRecord.recordName == "TEXTOBJECTCONTEXTDATA");
+  CHECK(textRecord.kind == DRW_ObjectContextData::Kind::Text);
+  CHECK(textRecord.classVersion == 4u);
+  CHECK(textRecord.defaultFlag);
+  CHECK(textRecord.scaleHandle == 0x701u);
+  CHECK(textRecord.annotatedHandle == 0x700u);
+  CHECK(textRecord.horizontalMode == 2);
+  CHECK(textRecord.rotation == 0.25);
+  CHECK(textRecord.insertionPoint.x == 1.0);
+  CHECK(textRecord.alignmentPoint.y == 4.0);
+
+  const auto &dimRecord = metadata.objectContextData()[1];
+  CHECK(dimRecord.handle == 0x920u);
+  CHECK(dimRecord.kind == DRW_ObjectContextData::Kind::AlignedDimension);
+  CHECK(dimRecord.scaleHandle == 0x711u);
+  CHECK(dimRecord.blockHandle == 0x712u);
+  CHECK(dimRecord.definitionPoint.x == 5.0);
+  CHECK(dimRecord.isDefaultTextLocation);
+  CHECK(dimRecord.dimTofl);
+  CHECK(dimRecord.hasArrow2);
+  CHECK(dimRecord.flipArrow1);
+  CHECK(dimRecord.textRotation == 0.5);
+  CHECK(dimRecord.overrideCode == 7);
+
+  metadata.invalidateByHandle(0x910u);
+  REQUIRE(metadata.objectContextData().size() == 2u);
+  CHECK(metadata.objectContextData()[0].replayState ==
+        LC_DwgAdvancedMetadata::ReplayState::ReplayInvalidated);
+  CHECK(metadata.objectContextData()[1].replayState ==
+        LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed);
+
+  metadata.clear();
+  CHECK(metadata.objectContextData().empty());
+}
+
 TEST_CASE("DWG advanced metadata reports graph replay policy by family",
           "[entity_metadata][dwg_metadata][raw-replay][assoc]") {
   LC_DwgAdvancedMetadata metadata;

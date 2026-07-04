@@ -11,6 +11,7 @@
 **  along with this program.  If not, see <http://www.gnu.org/licenses/>.    **
 ******************************************************************************/
 
+#include <cctype>
 #include <cstdio>
 #include <cstdlib>
 #include <fstream>
@@ -44,6 +45,80 @@ namespace {
             return DRW_Entity::parseDwg(v, b, nullptr, bsz);
         }
     };
+
+    std::string normalizeDwgClassToken(const std::string& value)
+    {
+        std::string token;
+        token.reserve(value.size());
+        for (unsigned char ch : value) {
+            if (std::isalnum(ch))
+                token.push_back(static_cast<char>(std::toupper(ch)));
+        }
+        if (token.rfind("ACDB", 0) == 0)
+            token.erase(0, 4);
+        const std::string suffix = "CLASS";
+        if (token.size() >= suffix.size()
+            && token.compare(token.size() - suffix.size(), suffix.size(), suffix) == 0) {
+            token.erase(token.size() - suffix.size());
+        }
+        return token;
+    }
+
+    bool objectContextKindFromClassNames(
+        const std::string& recName,
+        const std::string& className,
+        DRW_ObjectContextData::Kind& kind)
+    {
+        const std::string rn = normalizeDwgClassToken(recName);
+        const std::string cn = normalizeDwgClassToken(className);
+        const auto matches = [&](const char* compact, const char* verbose = nullptr) {
+            return rn == compact || cn == compact
+                || (verbose != nullptr && (rn == verbose || cn == verbose));
+        };
+
+        if (matches("ANNOTSCALEOBJECTCONTEXTDATA", "ANNOTATIONSCALEOBJECTCONTEXTDATA")) {
+            kind = DRW_ObjectContextData::Kind::AnnotScale;
+            return true;
+        }
+        if (matches("TEXTOBJECTCONTEXTDATA")) {
+            kind = DRW_ObjectContextData::Kind::Text;
+            return true;
+        }
+        if (matches("MTEXTOBJECTCONTEXTDATA")) {
+            kind = DRW_ObjectContextData::Kind::MText;
+            return true;
+        }
+        if (matches("MTEXTATTRIBUTEOBJECTCONTEXTDATA")) {
+            kind = DRW_ObjectContextData::Kind::MTextAttribute;
+            return true;
+        }
+        if (matches("ORDDIMOBJECTCONTEXTDATA", "ORDINATEDIMENSIONOBJECTCONTEXTDATA")) {
+            kind = DRW_ObjectContextData::Kind::OrdinateDimension;
+            return true;
+        }
+        if (matches("ALDIMOBJECTCONTEXTDATA", "ALIGNEDDIMENSIONOBJECTCONTEXTDATA")) {
+            kind = DRW_ObjectContextData::Kind::AlignedDimension;
+            return true;
+        }
+        if (matches("ANGDIMOBJECTCONTEXTDATA", "ANGULARDIMENSIONOBJECTCONTEXTDATA")) {
+            kind = DRW_ObjectContextData::Kind::AngularDimension;
+            return true;
+        }
+        if (matches("RADIMOBJECTCONTEXTDATA", "RADIALDIMENSIONOBJECTCONTEXTDATA")) {
+            kind = DRW_ObjectContextData::Kind::RadialDimension;
+            return true;
+        }
+        if (matches("RADIMLGOBJECTCONTEXTDATA", "LARGERADIALDIMENSIONOBJECTCONTEXTDATA")) {
+            kind = DRW_ObjectContextData::Kind::LargeRadialDimension;
+            return true;
+        }
+        if (matches("DMDIMOBJECTCONTEXTDATA", "DIAMETRICDIMENSIONOBJECTCONTEXTDATA")) {
+            kind = DRW_ObjectContextData::Kind::DiameterDimension;
+            return true;
+        }
+
+        return false;
+    }
 }
 
 // DWG file-header codepage id -> DRW_TextCodec ANSI name (libreDWG
@@ -2419,6 +2494,27 @@ bool dwgReader::readDwgObject(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                         ret = e.parseDwg(version, &buff, bs);
                         if (ret) intfa.addPlotSettings(&e);
                         break;
+                    }
+                    // OBJECTCONTEXTDATA (annotative per-object context) -
+                    // metadata-only shell. Text/MTEXT and dimension-family
+                    // contexts are now typed for corpus coverage, but raw DWG
+                    // bytes are still emitted for lossless replay. Leader /
+                    // MLeader / FCF / BlockRef contexts intentionally remain
+                    // on the raw-preserved fallback path.
+                    {
+                        DRW_ObjectContextData::Kind contextKind =
+                            DRW_ObjectContextData::Kind::Unknown;
+                        if (objectContextKindFromClassNames(rn, cit->second->className,
+                                                            contextKind)) {
+                            DRW_ObjectContextData e(
+                                rn.empty() ? cit->second->className : rn, contextKind);
+                            ret = e.parseDwg(version, &buff, bs);
+                            if (ret) {
+                                intfa.addObjectContextData(e);
+                                intfa.addUnsupportedObject(makeRawObject(oType, cit->second));
+                            }
+                            break;
+                        }
                     }
                     // SCALE (AcDbScale) — annotation-scale entry, ODA §20.4.93.
                     // Lives under ACAD_SCALELIST in the named-object dictionary.

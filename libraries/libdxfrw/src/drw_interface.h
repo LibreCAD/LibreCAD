@@ -78,6 +78,8 @@ public:
     virtual void addTableStyle(const DRW_TableStyle& data) { (void) data; }
     /** Called for every standalone TABLECONTENT object. */
     virtual void addTableContent(const DRW_TableContentObject& data) { (void) data; }
+    /** Called for typed standalone *OBJECTCONTEXTDATA metadata shells. */
+    virtual void addObjectContextData(const DRW_ObjectContextData& data) { (void) data; }
     /** Called for every CELLSTYLEMAP object. */
     virtual void addCellStyleMap(const DRW_CellStyleMap& data) { (void) data; }
     /** Called for every Layout (paperspace, ODA fixed type 82). */

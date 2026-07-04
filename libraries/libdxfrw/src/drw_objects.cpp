@@ -5349,6 +5349,124 @@ bool DRW_Scale::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs)
     return buf->isGood();
 }
 
+bool DRW_ObjectContextData::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs){
+    dwgBuffer sBuff = *buf;
+    dwgBuffer *sBuf = version > DRW::AC1018 ? &sBuff : buf;
+    bool ret = DRW_TableEntry::parseDwg(version, buf, sBuf, bs);
+    DRW_DBG("\n***************************** parsing OBJECTCONTEXTDATA shell ***********\n");
+    if (!ret) return ret;
+
+    auto currentBit = [&]() -> std::uint64_t {
+        return currentObjectDwgBit(buf);
+    };
+    auto hasBody = [&]() -> bool {
+        return objSize == 0 || currentBit() < objSize;
+    };
+    auto read2RD = [&]() {
+        DRW_Coord c;
+        c.x = buf->getRawDouble();
+        c.y = buf->getRawDouble();
+        c.z = 0.0;
+        return c;
+    };
+    auto readDimensionBody = [&]() {
+        m_definitionPoint = read2RD();
+        m_isDefaultTextLocation = buf->getBit() != 0;
+        m_textRotation = buf->getBitDouble();
+        m_unknown293 = buf->getBit() != 0;
+        m_dimTofl = buf->getBit() != 0;
+        m_dimOsxd = buf->getBit() != 0;
+        m_dimAtFit = buf->getBit() != 0;
+        m_dimTix = buf->getBit() != 0;
+        m_dimTMove = buf->getBit() != 0;
+        m_overrideCode = buf->getRawChar8();
+        m_hasArrow2 = buf->getBit() != 0;
+        m_flipArrow2 = buf->getBit() != 0;
+        m_flipArrow1 = buf->getBit() != 0;
+    };
+
+    if (hasBody())
+        m_classVersion = static_cast<std::uint16_t>(buf->getBitShort());
+    if (hasBody())
+        m_defaultFlag = buf->getBit() != 0;
+
+    switch (m_kind) {
+    case Kind::Text:
+        if (hasBody()) m_horizontalMode = static_cast<std::uint16_t>(buf->getBitShort());
+        if (hasBody()) m_rotation = buf->getBitDouble();
+        if (hasBody()) m_insertionPoint = read2RD();
+        if (hasBody()) m_alignmentPoint = read2RD();
+        break;
+    case Kind::MText:
+        if (hasBody()) m_attachment = buf->getBitLong();
+        if (hasBody()) m_xAxisDir = buf->get3BitDouble();
+        if (hasBody()) m_insertionPoint = buf->get3BitDouble();
+        if (hasBody()) m_rectangleWidth = buf->getBitDouble();
+        if (hasBody()) m_rectangleHeight = buf->getBitDouble();
+        if (hasBody()) m_extentsWidth = buf->getBitDouble();
+        if (hasBody()) m_extentsHeight = buf->getBitDouble();
+        // Column data follows in some MTEXT contexts.  It is deliberately left
+        // in the raw body for now; handle-stream anchoring below keeps the read
+        // aligned without committing to that optional layout.
+        break;
+    case Kind::MTextAttribute:
+        if (hasBody()) m_horizontalMode = static_cast<std::uint16_t>(buf->getBitShort());
+        if (hasBody()) m_rotation = buf->getBitDouble();
+        if (hasBody()) m_insertionPoint = read2RD();
+        if (hasBody()) m_alignmentPoint = read2RD();
+        if (hasBody()) {
+            const bool isEnabled = buf->getBit() != 0;
+            if (isEnabled && hasBody()) {
+                buf->getBitShort();                 // embedded SCALE flag
+                (sBuf ? sBuf : buf)->getVariableText(version, false);
+                buf->getBitDouble();                // paper units
+                buf->getBitDouble();                // drawing units
+                buf->getBit();                      // has unit scale
+            }
+        }
+        break;
+    case Kind::OrdinateDimension:
+        if (hasBody()) readDimensionBody();
+        if (hasBody()) m_featureLocationPoint = buf->get3BitDouble();
+        if (hasBody()) m_leaderEndpoint = buf->get3BitDouble();
+        break;
+    case Kind::AlignedDimension:
+    case Kind::AngularDimension:
+    case Kind::RadialDimension:
+    case Kind::LargeRadialDimension:
+    case Kind::DiameterDimension:
+        if (hasBody()) readDimensionBody();
+        break;
+    case Kind::AnnotScale:
+    case Kind::Unknown:
+    default:
+        break;
+    }
+
+    // Object-context readers intentionally tolerate body under-decode: the
+    // stable metadata is in the common preamble and trailing handles, while the
+    // original raw bytes are still delivered through addUnsupportedObject.  Re-
+    // anchor to objSize whenever present (R2000+ and R2010+), matching the TS
+    // oracle's readObjectHandleData behavior and avoiding handle-shift bugs.
+    dwgBuffer hBuff = *buf;
+    if (objSize > 0) {
+        hBuff.setPosition(objSize >> 3);
+        hBuff.setBitPos(objSize & 7);
+    }
+    readCommonObjectHandles(&hBuff, handle, numReactors, xDictFlag, &parentHandle);
+    m_annotatedHandle = static_cast<std::uint32_t>(parentHandle);
+    if (hBuff.isGood())
+        m_scaleHandle = hBuff.getHandle().ref;
+    if (isDimensionFamily() && hBuff.isGood())
+        m_blockHandle = hBuff.getHandle().ref;
+
+    DRW_DBG("OBJECTCONTEXTDATA kind="); DRW_DBG(static_cast<int>(m_kind));
+    DRW_DBG(" handle="); DRW_DBG(handle);
+    DRW_DBG(" scale="); DRW_DBG(m_scaleHandle);
+    DRW_DBG("\n");
+    return buf->isGood() && hBuff.isGood();
+}
+
 bool DRW_Group::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
     switch (code) {
     case 300:
