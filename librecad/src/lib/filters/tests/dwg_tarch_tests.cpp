@@ -281,7 +281,7 @@ public:
     ++images;
     trackEntity(*e, "IMAGE");
   }
-  void addWipeout(const DRW_Image *e) override {
+  void addWipeout(const DRW_Wipeout *e) override {
     ++wipeouts;
     trackEntity(*e, "WIPEOUT");
   }

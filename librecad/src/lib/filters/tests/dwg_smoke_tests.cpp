@@ -194,7 +194,7 @@ public:
   void addHatch(const DRW_Hatch *e) override { track(*e); }
   void addViewport(const DRW_Viewport &e) override { track(e); }
   void addImage(const DRW_Image *e) override { track(*e); }
-  void addWipeout(const DRW_Image *e) override {
+  void addWipeout(const DRW_Wipeout *e) override {
     track(*e);
     wipeouts++;
     wipeoutVertices += static_cast<int>(e->clipPath.size());
@@ -544,7 +544,7 @@ public:
   void addViewport(const DRW_Viewport &e) override { trackT(e, "VIEWPORT"); }
   void addImage(const DRW_Image *e) override { trackT(*e, "IMAGE"); }
   void addMLeader(const DRW_MLeader *e) override { trackT(*e, "MLEADER"); }
-  void addWipeout(const DRW_Image *e) override {
+  void addWipeout(const DRW_Wipeout *e) override {
     trackT(*e, "WIPEOUT");
     // Surface the polygon size so tests can sanity-check that the boundary
     // actually came through — empty clipPath is the historical bug shape.

@@ -6713,7 +6713,7 @@ bool DRW_PointCloud::parseCode(int code, const std::unique_ptr<dxfReader>& reade
 }
 
 bool DRW_PointCloud::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs) {
-    return DRW_Entity::parseDwg(version, buf, bs);
+    return DRW_Entity::parseDwg(version, buf, nullptr, bs);
 }
 
 bool DRW_PointCloud::encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs,
@@ -6773,7 +6773,7 @@ bool DRW_PointCloudEx::parseCode(int code, const std::unique_ptr<dxfReader>& rea
 }
 
 bool DRW_PointCloudEx::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs) {
-    return DRW_Entity::parseDwg(version, buf, bs);
+    return DRW_Entity::parseDwg(version, buf, nullptr, bs);
 }
 
 bool DRW_PointCloudEx::encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs,
@@ -6810,7 +6810,7 @@ bool DRW_Surface::parseCode(int code, const std::unique_ptr<dxfReader>& reader) 
 }
 
 bool DRW_Surface::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs) {
-    return DRW_Entity::parseDwg(version, buf, bs);
+    return DRW_Entity::parseDwg(version, buf, nullptr, bs);
 }
 
 bool DRW_Surface::encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs,

@@ -174,7 +174,7 @@ public:
     void addViewport(const DRW_Viewport& /*data*/) override{}
     void addImage(const DRW_Image* data) override;
     void linkImage(const DRW_ImageDef* data) override;
-    void addWipeout(const DRW_Image *data) override;
+    void addWipeout(const DRW_Wipeout *data) override;
     void addMLeader(const DRW_MLeader *data) override;
     void addMLeaderStyle(const DRW_MLeaderStyle *data) override;
     void addDetailViewStyle(const DRW_DetailViewStyle &data) override;

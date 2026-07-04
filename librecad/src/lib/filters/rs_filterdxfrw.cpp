@@ -4701,7 +4701,7 @@ void RS_FilterDXFRW::addImage(const DRW_Image *data) {
  *                       + (py + 0.5) * sizev * vVector
  * (cf. ODA Open Design Specification §20.4.96; verify on samples — see plan.)
  */
-void RS_FilterDXFRW::addWipeout(const DRW_Image *data) {
+void RS_FilterDXFRW::addWipeout(const DRW_Wipeout *data) {
   RS_DEBUG->print("RS_FilterDXFRW::addWipeout");
   if (m_graphic != nullptr && data != nullptr)
     m_graphic->dwgAdvancedMetadata().addRasterImage(*data, true);
@@ -10562,7 +10562,7 @@ void RS_FilterDXFRW::writeWipeout(LC_Wipeout *w) {
   // back to v) yields exactly the original WCS vertices.  This trades
   // byte-identical round-trip of the original IMAGE-frame fields for a
   // simpler entity model in LibreCAD; the rendered geometry is preserved.
-  DRW_Image img;
+  DRW_Wipeout img;
   getEntityAttributes(&img, w);
   img.basePoint = DRW_Coord(0.0, 0.0, 0.0);
   img.secPoint = DRW_Coord(1.0, 0.0, 0.0);

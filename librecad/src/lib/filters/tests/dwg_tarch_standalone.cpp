@@ -198,7 +198,7 @@ public:
   void addHatch(const DRW_Hatch *e) override { ++hatches; trackEntity(*e, "HATCH"); }
   void addViewport(const DRW_Viewport &e) override { ++viewports; trackEntity(e, "VIEWPORT"); }
   void addImage(const DRW_Image *e) override { ++images; trackEntity(*e, "IMAGE"); }
-  void addWipeout(const DRW_Image *e) override { ++wipeouts; trackEntity(*e, "WIPEOUT"); }
+  void addWipeout(const DRW_Wipeout *e) override { ++wipeouts; trackEntity(*e, "WIPEOUT"); }
   void addMLeader(const DRW_MLeader *e) override { ++mleaders; trackEntity(*e, "MLEADER"); }
   void addTolerance(const DRW_Tolerance &e) override { ++tolerance; trackEntity(e, "TOLERANCE"); }
   void addUnderlay(const DRW_Underlay *e) override { ++underlays; trackEntity(*e, "UNDERLAY"); }

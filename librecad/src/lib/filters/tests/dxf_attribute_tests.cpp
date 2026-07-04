@@ -79,7 +79,7 @@ public:
   void addHatch(const DRW_Hatch *) override {}
   void addViewport(const DRW_Viewport &) override {}
   void addImage(const DRW_Image *) override {}
-  void addWipeout(const DRW_Image *) override {}
+  void addWipeout(const DRW_Wipeout *) override {}
   void addMLeader(const DRW_MLeader *) override {}
   void addMLeaderStyle(const DRW_MLeaderStyle *) override {}
   void linkImage(const DRW_ImageDef *) override {}
@@ -129,7 +129,7 @@ public:
     m_lastImage = *d;
     ++m_imageCount;
   }
-  void addWipeout(const DRW_Image *d) override {
+  void addWipeout(const DRW_Wipeout *d) override {
     m_lastWipeout = *d;
     ++m_wipeoutCount;
   }
@@ -138,7 +138,7 @@ public:
 // Emits a single WIPEOUT with a triangular clip path.
 class WipeoutEmitter : public StubInterface {
 public:
-  DRW_Image m_wipeout;
+  DRW_Wipeout m_wipeout;
   dxfRW *m_rw = nullptr;
   void writeEntities() override { m_rw->writeWipeout(&m_wipeout); }
 };
