@@ -1181,6 +1181,9 @@ class DRW_Underlay : public DRW_Entity {
     SETENTFRIENDS
 public:
     enum Kind { PDF, DGN, DWF };
+    static constexpr std::uint16_t kDwgClassNumPdf = 523;
+    static constexpr std::uint16_t kDwgClassNumDgn = 524;
+    static constexpr std::uint16_t kDwgClassNumDwf = 525;
     DRW_Underlay() {
         eType = DRW::UNDERLAY;
         scale = DRW_Coord(1.0, 1.0, 1.0);
@@ -1189,6 +1192,9 @@ public:
     void applyExtrusion() override {}
 protected:
     bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
+    bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0,
+                   dwgBufferW *strBuf=nullptr,
+                   dwgBufferW *handleBuf=nullptr) override;
 public:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
 public:

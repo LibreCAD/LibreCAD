@@ -97,6 +97,12 @@ public:
         registerDwgClass({522, 0x401, "EXPRESS",
                           "AcDbArcAlignedText", "ARCALIGNEDTEXT", false,
                           0x1F2});
+        registerDwgClass({523, 0x401, "ObjectDBX Classes",
+                          "AcDbPdfReference", "PDFUNDERLAY", false, 0x1F2});
+        registerDwgClass({524, 0x401, "ObjectDBX Classes",
+                          "AcDbDgnReference", "DGNUNDERLAY", false, 0x1F2});
+        registerDwgClass({525, 0x401, "ObjectDBX Classes",
+                          "AcDbDwfReference", "DWFUNDERLAY", false, 0x1F2});
     }
 
     virtual ~dwgWriter() = default;
@@ -437,6 +443,38 @@ public:
         definition.m_className = "AcDbField";
         definition.m_recordName = "FIELD";
         definition.m_entityFlagRaw = 0x1F3;  // object class (ODA item_class_id)
+        if (handle != 0
+            && m_rawClassInstanceHandles.insert({definition.m_classNum,
+                                                 handle}).second) {
+            definition.m_instanceCount = 1;
+        }
+        return registerDwgClass(definition);
+    }
+
+    bool registerUnderlayDefinitionObjectClass(DRW_UnderlayDefinition::Kind kind,
+                                               std::uint32_t handle = 0) {
+        DwgClassDefinition definition;
+        definition.m_proxyFlag = 0x401;
+        definition.m_appName = "ObjectDBX Classes";
+        definition.m_entityFlagRaw = 0x1F3;  // object class (ODA item_class_id)
+        switch (kind) {
+        case DRW_UnderlayDefinition::DGN:
+            definition.m_classNum = DRW_UnderlayDefinition::kDwgClassNumDgn;
+            definition.m_className = "AcDbDgnDefinition";
+            definition.m_recordName = "DGNDEFINITION";
+            break;
+        case DRW_UnderlayDefinition::DWF:
+            definition.m_classNum = DRW_UnderlayDefinition::kDwgClassNumDwf;
+            definition.m_className = "AcDbDwfDefinition";
+            definition.m_recordName = "DWFDEFINITION";
+            break;
+        case DRW_UnderlayDefinition::PDF:
+        default:
+            definition.m_classNum = DRW_UnderlayDefinition::kDwgClassNumPdf;
+            definition.m_className = "AcDbPdfDefinition";
+            definition.m_recordName = "PDFDEFINITION";
+            break;
+        }
         if (handle != 0
             && m_rawClassInstanceHandles.insert({definition.m_classNum,
                                                  handle}).second) {

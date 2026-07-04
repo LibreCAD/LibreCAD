@@ -2552,15 +2552,23 @@ class DRW_UnderlayDefinition : public DRW_TableEntry {
     SETOBJFRIENDS
 public:
     enum Kind { PDF, DGN, DWF };
+    static constexpr std::uint16_t kDwgClassNumPdf = 526;
+    static constexpr std::uint16_t kDwgClassNumDgn = 527;
+    static constexpr std::uint16_t kDwgClassNumDwf = 528;
     DRW_UnderlayDefinition() { reset(); }
     void reset() {
         tType = DRW::UNDERLAYDEFINITION;
         kind = PDF;
         filename.clear();
         sheetName.clear();
+        DRW_TableEntry::reset();
     }
 protected:
+    bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
+    bool encodeDwg(DRW::Version version, dwgBufferW *buf,
+                   dwgBufferW *strBuf = nullptr,
+                   dwgBufferW *handleBuf = nullptr) const;
 public:
     Kind kind = PDF;
     UTF8STRING filename;

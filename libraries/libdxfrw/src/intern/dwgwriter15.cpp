@@ -91,6 +91,19 @@ namespace oType {
     constexpr std::uint16_t VPORT                      = 0x41;
 }
 
+std::uint16_t underlayDefinitionClassNum(
+    const DRW_UnderlayDefinition& definition) {
+    switch (definition.kind) {
+    case DRW_UnderlayDefinition::DGN:
+        return DRW_UnderlayDefinition::kDwgClassNumDgn;
+    case DRW_UnderlayDefinition::DWF:
+        return DRW_UnderlayDefinition::kDwgClassNumDwf;
+    case DRW_UnderlayDefinition::PDF:
+    default:
+        return DRW_UnderlayDefinition::kDwgClassNumPdf;
+    }
+}
+
 /// Build a hard-pointer (code 4) handle with the minimum-width ref.
 dwgHandle makeHardPtr(std::uint32_t ref) {
     dwgHandle h;
@@ -1408,6 +1421,34 @@ bool dwgWriter15::writeField(const DRW_Field& field) {
         return false;
 
     emitFieldObject(object.handle, object);
+    return true;
+}
+
+void dwgWriter15::emitUnderlayDefinitionObject(
+    std::uint32_t handle, const DRW_UnderlayDefinition& definition) {
+    dwgBufferW& body = beginObject(handle);
+    dwgBufferW *sb, *hb;
+    emitRecordPreamble(body, m_version, underlayDefinitionClassNum(definition),
+                       handle, m_objectStrings, m_objectHandles, sb, hb);
+    definition.encodeDwg(m_version, &body, sb, hb);
+    finishObject();
+}
+
+bool dwgWriter15::writeUnderlayDefinition(
+    const DRW_UnderlayDefinition& definition) {
+    if (m_version < DRW::AC1015)
+        return false;
+
+    DRW_UnderlayDefinition object = definition;
+    if (object.handle == 0) {
+        object.handle = m_handles.next();
+    } else {
+        m_handles.reserve(object.handle);
+    }
+    if (!registerUnderlayDefinitionObjectClass(object.kind, object.handle))
+        return false;
+
+    emitUnderlayDefinitionObject(object.handle, object);
     return true;
 }
 

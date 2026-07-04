@@ -5290,6 +5290,38 @@ bool DRW_UnderlayDefinition::parseDwg(DRW::Version version, dwgBuffer *buf, std:
     return buf->isGood();
 }
 
+bool DRW_UnderlayDefinition::parseCode(int code,
+                                       const std::unique_ptr<dxfReader>& reader) {
+    switch (code) {
+    case 1:
+        filename = reader->getUtf8String();
+        break;
+    case 2:
+        sheetName = reader->getUtf8String();
+        break;
+    default:
+        return DRW_TableEntry::parseCode(code, reader);
+    }
+    return true;
+}
+
+bool DRW_UnderlayDefinition::encodeDwg(DRW::Version version, dwgBufferW *buf,
+                                       dwgBufferW *strBuf,
+                                       dwgBufferW *handleBuf) const {
+    if (buf == nullptr)
+        return false;
+    dwgBufferW *sb = (strBuf != nullptr && version > DRW::AC1018) ? strBuf : buf;
+    dwgBufferW *hb = (handleBuf != nullptr && version > DRW::AC1018) ? handleBuf : buf;
+
+    sb->putVariableText(version, filename);
+    sb->putVariableText(version, sheetName);
+
+    // emitRecordPreamble writes numReactors=0 and xDictFlag=0 for this path.
+    hb->putHandle(makeRefW(static_cast<std::uint32_t>(parentHandle), 4));
+    hb->putHandle(makeRefW(0, 3));
+    return true;
+}
+
 // SCALE (AcDbScale) — annotation-scale entry, ODA §20.4.93,
 // libreDWG dwg2.spec:1195-1203:
 //   BS  flag           (always 0, group code 70)

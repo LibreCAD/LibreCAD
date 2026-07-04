@@ -102,6 +102,7 @@ public:
     bool writeTolerance(DRW_Tolerance *ent);
     bool writeLight(DRW_Light *ent);
     bool writeMLine(DRW_MLine *ent);
+    bool writeUnderlay(DRW_Underlay *ent);
     bool writePolyline(DRW_Polyline *ent);
     bool writeLeader(DRW_Leader *ent);
     bool writeMLeader(DRW_MLeader *ent);
@@ -182,6 +183,8 @@ public:
     bool writeFieldList(DRW_FieldList *object);
     bool registerFieldObjectClass(DRW_Field *object);
     bool writeField(DRW_Field *object);
+    bool registerUnderlayDefinitionObjectClass(DRW_UnderlayDefinition *object);
+    bool writeUnderlayDefinition(DRW_UnderlayDefinition *object);
     bool registerRawDwgObjectClass(const DRW_UnsupportedObject *object);
     bool writeRawDwgObject(DRW_UnsupportedObject *object);
     bool writeRawDwgSection(const DRW_RawDwgSection *section);

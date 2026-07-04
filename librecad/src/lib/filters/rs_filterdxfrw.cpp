@@ -392,6 +392,16 @@ bool isFieldRawObject(
         || record.className == "AcDbField";
 }
 
+bool isUnderlayDefinitionRawObject(
+    const LC_DwgAdvancedMetadata::RawObjectRecord& record) {
+    return record.recordName == "PDFDEFINITION"
+        || record.recordName == "DGNDEFINITION"
+        || record.recordName == "DWFDEFINITION"
+        || record.className == "AcDbPdfDefinition"
+        || record.className == "AcDbDgnDefinition"
+        || record.className == "AcDbDwfDefinition";
+}
+
 bool hasReplayableRawMLeaderStyle(const LC_DwgAdvancedMetadata& metadata,
                                   std::uint32_t handle) {
     if (handle == 0)
@@ -516,6 +526,17 @@ DRW_Group groupFromMetadata(
     group.m_selectable = record.selectable;
     group.m_entityHandles = record.entityHandles;
     return group;
+}
+
+DRW_UnderlayDefinition underlayDefinitionFromMetadata(
+    const LC_DwgAdvancedMetadata::UnderlayDefinitionRecord& record) {
+    DRW_UnderlayDefinition definition;
+    definition.handle = record.handle;
+    definition.parentHandle = static_cast<int>(record.parentHandle);
+    definition.kind = static_cast<DRW_UnderlayDefinition::Kind>(record.kind);
+    definition.filename = record.path;
+    definition.sheetName = record.sheetName;
+    return definition;
 }
 
 DRW_RasterVariables rasterVariablesFromMetadata(
@@ -6063,6 +6084,7 @@ void RS_FilterDXFRW::writeDwgClasses() {
     std::set<std::uint32_t> nativeSortEntsTableHandles;
     std::set<std::uint32_t> nativeFieldListHandles;
     std::set<std::uint32_t> nativeFieldHandles;
+    std::set<std::uint32_t> nativeUnderlayDefinitionHandles;
     if (canWriteModernObjects) {
         for (const auto& record : metadata.suns()) {
             if (record.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
@@ -6225,6 +6247,16 @@ void RS_FilterDXFRW::writeDwgClasses() {
             if (m_dwgW->registerFieldObjectClass(&f))
                 nativeFieldHandles.insert(record.handle);
         }
+        for (const auto& record : metadata.underlayDefinitions()) {
+            if (record.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                || record.handle == 0) {
+                continue;
+            }
+            DRW_UnderlayDefinition definition =
+                underlayDefinitionFromMetadata(record);
+            if (m_dwgW->registerUnderlayDefinitionObjectClass(&definition))
+                nativeUnderlayDefinitionHandles.insert(record.handle);
+        }
     }
 
     for (const auto& record : metadata.rawObjects()) {
@@ -6284,6 +6316,9 @@ void RS_FilterDXFRW::writeDwgClasses() {
             continue;
         if (nativeFieldHandles.count(record.handle) != 0
             && isFieldRawObject(record))
+            continue;
+        if (nativeUnderlayDefinitionHandles.count(record.handle) != 0
+            && isUnderlayDefinitionRawObject(record))
             continue;
         DRW_UnsupportedObject object = rawObjectFromMetadata(record);
         m_dwgW->registerRawDwgObjectClass(&object);
@@ -7111,6 +7146,7 @@ void RS_FilterDXFRW::writeObjects() {
         std::set<std::uint32_t> nativeSortEntsTableHandles;
         std::set<std::uint32_t> nativeFieldListHandles;
         std::set<std::uint32_t> nativeFieldHandles;
+        std::set<std::uint32_t> nativeUnderlayDefinitionHandles;
         int nativeSunObjects = 0;
         int nativePlaceholderObjects = 0;
         int nativeMLeaderStyleObjects = 0;
@@ -7131,6 +7167,7 @@ void RS_FilterDXFRW::writeObjects() {
         int nativeSortEntsTableObjects = 0;
         int nativeFieldListObjects = 0;
         int nativeFieldObjects = 0;
+        int nativeUnderlayDefinitionObjects = 0;
         if (canWriteModernObjects) {
             for (const auto& record : metadata.suns()) {
                 if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
@@ -7253,6 +7290,12 @@ void RS_FilterDXFRW::writeObjects() {
                 if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
                     && record.handle != 0) {
                     nativeFieldHandles.insert(record.handle);
+                }
+            }
+            for (const auto& record : metadata.underlayDefinitions()) {
+                if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                    && record.handle != 0) {
+                    nativeUnderlayDefinitionHandles.insert(record.handle);
                 }
             }
         }
@@ -7464,6 +7507,12 @@ void RS_FilterDXFRW::writeObjects() {
             }
             if (nativeFieldHandles.count(record.handle) != 0
                 && isFieldRawObject(record)) {
+                hasBlockedReplay = true;
+                ++blockedReplaced;
+                continue;
+            }
+            if (nativeUnderlayDefinitionHandles.count(record.handle) != 0
+                && isUnderlayDefinitionRawObject(record)) {
                 hasBlockedReplay = true;
                 ++blockedReplaced;
                 continue;
@@ -7770,6 +7819,18 @@ void RS_FilterDXFRW::writeObjects() {
                     ++blockedWriterRejected;
                 }
             }
+            for (const auto& record : metadata.underlayDefinitions()) {
+                if (nativeUnderlayDefinitionHandles.count(record.handle) == 0)
+                    continue;
+                DRW_UnderlayDefinition definition =
+                    underlayDefinitionFromMetadata(record);
+                if (m_dwgW->writeUnderlayDefinition(&definition)) {
+                    ++nativeUnderlayDefinitionObjects;
+                } else {
+                    hasBlockedReplay = true;
+                    ++blockedWriterRejected;
+                }
+            }
         }
         if (replayedObjects > 0) {
             RS_DEBUG->print("RS_FilterDXFRW::writeObjects: replayed %d raw DWG objects",
@@ -7884,6 +7945,11 @@ void RS_FilterDXFRW::writeObjects() {
             RS_DEBUG->print(
                 "RS_FilterDXFRW::writeObjects: wrote %d native FIELD objects",
                 nativeFieldObjects);
+        }
+        if (nativeUnderlayDefinitionObjects > 0) {
+            RS_DEBUG->print(
+                "RS_FilterDXFRW::writeObjects: wrote %d native UNDERLAYDEFINITION objects",
+                nativeUnderlayDefinitionObjects);
         }
         if (modelerPayloads.recordCount > 0) {
             const RS_Debug::RS_DebugLevel level =
@@ -8380,10 +8446,8 @@ void RS_FilterDXFRW::writeEntities(){
   // Both the DXF and DWG writers expose writeRay/writeXline/writeTrace/
   // write3dface, so this runs for either output.
   reconstructTypedConversions(m_graphic, consumed);
-  // DWG writer has no UNDERLAY encoder yet — keep that reconstruction DXF-only.
-  if (!m_dwgW) {
-    reconstructUnderlays(m_graphic, consumed);
-  }
+  // Rebuild underlay sidecar metadata into native writer calls.
+  reconstructUnderlays(m_graphic, consumed);
   for (RS_Entity *e :
        lc::LC_ContainerTraverser{*m_graphic, RS2::ResolveNone}.entities()) {
     if (e->getFlag(RS2::FlagUndone))
@@ -9462,7 +9526,10 @@ void RS_FilterDXFRW::reconstructUnderlays(RS_EntityContainer *container,
       u.clipBoundary.emplace_back(rx, ry, 0.0);
     }
 
-    m_dxfW->writeUnderlay(&u);
+    if (m_dwgW)
+      m_dwgW->writeUnderlay(&u);
+    else
+      m_dxfW->writeUnderlay(&u);
     consumed.insert(e);
   }
 }

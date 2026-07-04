@@ -109,6 +109,7 @@ public:
     bool writeSortEntsTable(const DRW_SortEntsTable& sortEntsTable);
     bool writeFieldList(const DRW_FieldList& fieldList);
     bool writeField(const DRW_Field& field);
+    bool writeUnderlayDefinition(const DRW_UnderlayDefinition& definition);
 
 protected:
     /// Begin a new object in the object stream (the unsentinel'd byte
@@ -207,6 +208,8 @@ protected:
                                   const DRW_SortEntsTable& sortEntsTable);
     void emitFieldListObject(std::uint32_t handle, const DRW_FieldList& fieldList);
     void emitFieldObject(std::uint32_t handle, const DRW_Field& field);
+    void emitUnderlayDefinitionObject(std::uint32_t handle,
+                                      const DRW_UnderlayDefinition& definition);
 
 protected:
     /// Populate m_header's ctrl-handle fields with canonical reserved values

@@ -2537,6 +2537,20 @@ bool dxfRW::writeUnderlay(DRW_Underlay *ent) {
     return true;
 }
 
+bool dxfRW::writeUnderlayDefinition(DRW_UnderlayDefinition *ent) {
+    if (version <= DRW::AC1009) return true;
+    const char* tag = (ent->kind == DRW_UnderlayDefinition::DGN) ? "DGNDEFINITION"
+                    : (ent->kind == DRW_UnderlayDefinition::DWF) ? "DWFDEFINITION"
+                    : "PDFDEFINITION";
+    writer->writeString(0, tag);
+    writer->writeString(5, toHexStr(static_cast<int>(ent->handle)));
+    writeObjectOwner(static_cast<std::uint32_t>(ent->parentHandle));
+    writer->writeString(100, "AcDbUnderlayDefinition");
+    writer->writeUtf8String(1, ent->filename);
+    writer->writeUtf8String(2, ent->sheetName);
+    return true;
+}
+
 bool dxfRW::writeMText(DRW_MText *ent){
     if (version > DRW::AC1009) {
         writer->writeString(0, "MTEXT");
@@ -5417,6 +5431,11 @@ bool dxfRW::processObjects() {
         else if ("IMAGEDEF" == nextentity) {
             processed = processImageDef();
         }
+        else if ("PDFDEFINITION" == nextentity
+                 || "DGNDEFINITION" == nextentity
+                 || "DWFDEFINITION" == nextentity) {
+            processed = processUnderlayDefinition();
+        }
         else if ("PLOTSETTINGS" == nextentity) {
             processed = processPlotSettings();
         }
@@ -5960,6 +5979,32 @@ bool dxfRW::processBreakPointRef() {
         }
         captureRawGroup(raw, code);
         if (!ref.parseCode(code, reader))
+            return setError(DRW::BAD_CODE_PARSED);
+    }
+    return setError(DRW::BAD_READ_OBJECTS);
+}
+
+bool dxfRW::processUnderlayDefinition() {
+    DRW_DBG("dxfRW::processUnderlayDefinition");
+    int code;
+    DRW_UnderlayDefinition definition;
+    if (nextentity == "DGNDEFINITION")
+        definition.kind = DRW_UnderlayDefinition::DGN;
+    else if (nextentity == "DWFDEFINITION")
+        definition.kind = DRW_UnderlayDefinition::DWF;
+    DRW_RawDxfObject raw;
+    raw.name = nextentity;
+    while (reader->readRec(&code)) {
+        DRW_DBG(code); DRW_DBG("\n");
+        if (code == 0) {
+            nextentity = reader->getString();
+            DRW_DBG(nextentity); DRW_DBG("\n");
+            iface->linkUnderlay(&definition);
+            iface->addRawDxfObject(raw);
+            return true;
+        }
+        captureRawGroup(raw, code);
+        if (!definition.parseCode(code, reader))
             return setError(DRW::BAD_CODE_PARSED);
     }
     return setError(DRW::BAD_READ_OBJECTS);
@@ -6645,6 +6690,9 @@ bool dxfRW::dxfClassForRecordName(const std::string &recName, DRW_Class &out) {
         {"DICTIONARYVAR",    "AcDbDictionaryVar",       "ObjectDBX Classes", 0, 0},
         {"RASTERVARIABLES",  "AcDbRasterVariables",     "ISM",               0, 0},
         {"WIPEOUTVARIABLES", "AcDbWipeoutVariables",    "WipeOut",           0, 0},
+        {"PDFDEFINITION",    "AcDbPdfDefinition",       "ObjectDBX Classes", 1153, 0},
+        {"DGNDEFINITION",    "AcDbDgnDefinition",       "ObjectDBX Classes", 1153, 0},
+        {"DWFDEFINITION",    "AcDbDwfDefinition",       "ObjectDBX Classes", 1153, 0},
         // Common unmodeled custom OBJECTS that reach the raw net verbatim.
         {"MATERIAL",         "AcDbMaterial",            "ObjectDBX Classes", 1153, 0},
         {"VISUALSTYLE",      "AcDbVisualStyle",         "ObjectDBX Classes", 4095, 0},
@@ -6673,6 +6721,9 @@ bool dxfRW::dxfClassForRecordName(const std::string &recName, DRW_Class &out) {
         {"ARCALIGNEDTEXT",   "AcDbArcAlignedText",      "EXPRESS",           1025, 1},
         {"MPOLYGON",         "AcDbMPolygon",            "AcMPolygonObj15",   1025, 1},
         {"LARGE_RADIAL_DIMENSION", "AcDbRadialDimensionLarge", "ACAD",       1025, 1},
+        {"PDFUNDERLAY",      "AcDbPdfReference",        "ObjectDBX Classes", 4095, 1},
+        {"DGNUNDERLAY",      "AcDbDgnReference",        "ObjectDBX Classes", 4095, 1},
+        {"DWFUNDERLAY",      "AcDbDwfReference",        "ObjectDBX Classes", 4095, 1},
         {"SURFACE",          "AcDbSurface",             "ObjectDBX Classes", 4095, 1},
         {"EXTRUDEDSURFACE",  "AcDbExtrudedSurface",     "ObjectDBX Classes", 4095, 1},
         {"LOFTEDSURFACE",    "AcDbLoftedSurface",       "ObjectDBX Classes", 0, 1},

@@ -4522,6 +4522,46 @@ bool DRW_Underlay::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t 
     return buf->isGood();
 }
 
+bool DRW_Underlay::encodeDwg(DRW::Version version, dwgBufferW *buf,
+                             std::uint32_t bs, dwgBufferW *strBuf,
+                             dwgBufferW *handleBuf) {
+    (void)bs; (void)strBuf;
+    switch (kind) {
+    case DGN:
+        oType = kDwgClassNumDgn;
+        break;
+    case DWF:
+        oType = kDwgClassNumDwf;
+        break;
+    case PDF:
+    default:
+        oType = kDwgClassNumPdf;
+        break;
+    }
+    if (!encodeDwgCommon(version, buf))
+        return false;
+
+    buf->putExtrusion(extPoint, false);
+    buf->put3BitDouble(position);
+    buf->putBitDouble(rotation);
+    buf->put3BitDouble(scale);
+    buf->putRawChar8(flags);
+    buf->putRawChar8(contrast);
+    buf->putRawChar8(fade);
+    constexpr std::size_t kMaxClipVerts = 100000u;
+    const std::size_t emitVerts = std::min(clipBoundary.size(), kMaxClipVerts);
+    buf->putBitLong(static_cast<std::int32_t>(emitVerts));
+    for (std::size_t i = 0; i < emitVerts; ++i) {
+        buf->putRawDouble(clipBoundary[i].x);
+        buf->putRawDouble(clipBoundary[i].y);
+    }
+
+    if (!encodeDwgEntHandle(version, buf, handleBuf))
+        return false;
+    putNullableHardPointerHandle(handleBuf ? handleBuf : buf, definitionHandle);
+    return true;
+}
+
 
 bool DRW_Text::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
     switch (code) {

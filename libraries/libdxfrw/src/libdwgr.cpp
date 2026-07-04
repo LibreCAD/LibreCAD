@@ -525,6 +525,10 @@ bool dwgRW::writeMLine(DRW_MLine *ent) {
     return encodeEntityForWrite(ent);
 }
 
+bool dwgRW::writeUnderlay(DRW_Underlay *ent) {
+    return encodeEntityForWrite(ent);
+}
+
 bool dwgRW::writePolyline(DRW_Polyline *ent) {
     if (writer == nullptr || ent == nullptr)
         return recordWriteResult(WriteSkipKind::Entity, false);
@@ -974,6 +978,28 @@ bool dwgRW::writeField(DRW_Field *object) {
     if (w == nullptr)
         return recordWriteResult(WriteSkipKind::Object, false);
     return recordWriteResult(WriteSkipKind::Object, w->writeField(*object));
+}
+
+bool dwgRW::registerUnderlayDefinitionObjectClass(
+    DRW_UnderlayDefinition *object) {
+    if (object == nullptr || writer == nullptr)
+        return recordWriteResult(WriteSkipKind::ClassRegistration, false);
+    if (object->handle != 0)
+        writer->reserveHandle(object->handle);
+    return recordWriteResult(
+        WriteSkipKind::ClassRegistration,
+        writer->registerUnderlayDefinitionObjectClass(object->kind,
+                                                      object->handle));
+}
+
+bool dwgRW::writeUnderlayDefinition(DRW_UnderlayDefinition *object) {
+    if (object == nullptr)
+        return recordWriteResult(WriteSkipKind::Object, false);
+    auto *w = asWriter15(writer);
+    if (w == nullptr)
+        return recordWriteResult(WriteSkipKind::Object, false);
+    return recordWriteResult(WriteSkipKind::Object,
+                             w->writeUnderlayDefinition(*object));
 }
 
 bool dwgRW::registerRawDwgObjectClass(const DRW_UnsupportedObject *object) {
