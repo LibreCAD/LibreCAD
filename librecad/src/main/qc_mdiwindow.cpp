@@ -253,6 +253,7 @@ void QC_MDIWindow::closeEvent(QCloseEvent* ce) {
             break;
         case QG_ExitDialog::Cancel:
             cancel = true;
+            break;
         default:
             break;
         }
