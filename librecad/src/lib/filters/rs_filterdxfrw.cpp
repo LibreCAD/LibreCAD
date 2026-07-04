@@ -324,6 +324,12 @@ bool isRasterVariablesRawObject(
         || record.className == "AcDbRasterVariables";
 }
 
+bool isWipeoutVariablesRawObject(
+    const LC_DwgAdvancedMetadata::RawObjectRecord& record) {
+    return record.recordName == "WIPEOUTVARIABLES"
+        || record.className == "AcDbWipeoutVariables";
+}
+
 // GEODATA raw-object predicate.  Custom-class (no fixed ODA type).
 bool isGeoDataRawObject(
     const LC_DwgAdvancedMetadata::RawObjectRecord& record) {
@@ -6081,6 +6087,7 @@ void RS_FilterDXFRW::writeDwgClasses() {
     std::set<std::uint32_t> nativeSunHandles;
     std::set<std::uint32_t> nativeMLeaderStyleHandles;
     std::set<std::uint32_t> nativeRasterVariablesHandles;
+    std::set<std::uint32_t> nativeWipeoutVariablesHandles;
     std::set<std::uint32_t> nativeGeoDataHandles;
     std::set<std::uint32_t> nativeSpatialFilterHandles;
     std::set<std::uint32_t> nativeScaleHandles;
@@ -6140,6 +6147,16 @@ void RS_FilterDXFRW::writeDwgClasses() {
             DRW_RasterVariables rv = rasterVariablesFromMetadata(record);
             if (m_dwgW->registerRasterVariablesObjectClass(&rv))
                 nativeRasterVariablesHandles.insert(record.handle);
+        }
+        // WIPEOUTVARIABLES (AcDbWipeoutVariables, custom class 529).
+        for (const auto& record : metadata.wipeoutVariables()) {
+            if (record.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                || record.handle == 0) {
+                continue;
+            }
+            DRW_WipeoutVariables wv = wipeoutVariablesFromMetadata(record);
+            if (m_dwgW->registerWipeoutVariablesObjectClass(&wv))
+                nativeWipeoutVariablesHandles.insert(record.handle);
         }
         // GEODATA (AcDbGeoData, custom class 506) — PR 8d.1c + PR 13f.
         for (const auto& record : metadata.geoData()) {
@@ -6289,6 +6306,9 @@ void RS_FilterDXFRW::writeDwgClasses() {
             continue;
         if (nativeRasterVariablesHandles.count(record.handle) != 0
             && isRasterVariablesRawObject(record))
+            continue;
+        if (nativeWipeoutVariablesHandles.count(record.handle) != 0
+            && isWipeoutVariablesRawObject(record))
             continue;
         if (nativeGeoDataHandles.count(record.handle) != 0
             && isGeoDataRawObject(record))
@@ -7147,6 +7167,7 @@ void RS_FilterDXFRW::writeObjects() {
         std::set<std::uint32_t> nativeGroupHandles;
         std::set<std::uint32_t> nativeMLineStyleHandles;
         std::set<std::uint32_t> nativeRasterVariablesHandles;
+        std::set<std::uint32_t> nativeWipeoutVariablesHandles;
         std::set<std::uint32_t> nativeGeoDataHandles;
         std::set<std::uint32_t> nativeSpatialFilterHandles;
         // PR 8d.2a — five small no-storage OBJECTS families.
@@ -7170,6 +7191,7 @@ void RS_FilterDXFRW::writeObjects() {
         int nativeGroupObjects = 0;
         int nativeMLineStyleObjects = 0;
         int nativeRasterVariablesObjects = 0;
+        int nativeWipeoutVariablesObjects = 0;
         int nativeGeoDataObjects = 0;
         int nativeSpatialFilterObjects = 0;
         int nativeScaleObjects = 0;
@@ -7226,6 +7248,13 @@ void RS_FilterDXFRW::writeObjects() {
                 if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
                     && record.handle != 0) {
                     nativeRasterVariablesHandles.insert(record.handle);
+                }
+            }
+            // WIPEOUTVARIABLES (AcDbWipeoutVariables, custom class 529).
+            for (const auto& record : metadata.wipeoutVariables()) {
+                if (record.replayState == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed
+                    && record.handle != 0) {
+                    nativeWipeoutVariablesHandles.insert(record.handle);
                 }
             }
             // GEODATA (AcDbGeoData, custom class 506) — round-trip-grade
@@ -7466,6 +7495,12 @@ void RS_FilterDXFRW::writeObjects() {
             }
             if (nativeRasterVariablesHandles.count(record.handle) != 0
                 && isRasterVariablesRawObject(record)) {
+                hasBlockedReplay = true;
+                ++blockedReplaced;
+                continue;
+            }
+            if (nativeWipeoutVariablesHandles.count(record.handle) != 0
+                && isWipeoutVariablesRawObject(record)) {
                 hasBlockedReplay = true;
                 ++blockedReplaced;
                 continue;
@@ -7725,6 +7760,17 @@ void RS_FilterDXFRW::writeObjects() {
                     ++blockedWriterRejected;
                 }
             }
+            for (const auto& record : metadata.wipeoutVariables()) {
+                if (nativeWipeoutVariablesHandles.count(record.handle) == 0)
+                    continue;
+                DRW_WipeoutVariables wv = wipeoutVariablesFromMetadata(record);
+                if (m_dwgW->writeWipeoutVariables(&wv)) {
+                    ++nativeWipeoutVariablesObjects;
+                } else {
+                    hasBlockedReplay = true;
+                    ++blockedWriterRejected;
+                }
+            }
             for (const auto& record : metadata.geoData()) {
                 if (nativeGeoDataHandles.count(record.handle) == 0)
                     continue;
@@ -7931,6 +7977,11 @@ void RS_FilterDXFRW::writeObjects() {
             RS_DEBUG->print(
                 "RS_FilterDXFRW::writeObjects: wrote %d native RASTERVARIABLES objects",
                 nativeRasterVariablesObjects);
+        }
+        if (nativeWipeoutVariablesObjects > 0) {
+            RS_DEBUG->print(
+                "RS_FilterDXFRW::writeObjects: wrote %d native WIPEOUTVARIABLES objects",
+                nativeWipeoutVariablesObjects);
         }
         if (nativeGeoDataObjects > 0) {
             RS_DEBUG->print(
@@ -8295,6 +8346,7 @@ void RS_FilterDXFRW::writeObjects() {
                                 + nativeLayoutObjects
                                 + nativeGroupObjects
                                 + nativeRasterVariablesObjects
+                                + nativeWipeoutVariablesObjects
                                 + nativeGeoDataObjects
                                 + nativeSpatialFilterObjects);
         const size_t semanticOnlyRecords =

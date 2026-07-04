@@ -161,6 +161,8 @@ public:
     bool writeMLineStyle(DRW_MLineStyle *object);
     bool registerRasterVariablesObjectClass(DRW_RasterVariables *object);
     bool writeRasterVariables(DRW_RasterVariables *object);
+    bool registerWipeoutVariablesObjectClass(DRW_WipeoutVariables *object);
+    bool writeWipeoutVariables(DRW_WipeoutVariables *object);
     bool registerGeoDataObjectClass(DRW_GeoData *object);
     bool writeGeoData(DRW_GeoData *object);
     bool registerSpatialFilterObjectClass(DRW_SpatialFilter *object);

@@ -1376,6 +1376,8 @@ public:
 class DRW_WipeoutVariables : public DRW_TableEntry {
     SETOBJFRIENDS
 public:
+    static constexpr std::uint16_t kDwgClassNum = 529;
+
     DRW_WipeoutVariables() { reset(); }
     void reset(){
         tType = DRW::UNKNOWNT;
@@ -1385,6 +1387,9 @@ public:
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
+    bool encodeDwg(DRW::Version version, dwgBufferW *buf,
+                   dwgBufferW *strBuf = nullptr,
+                   dwgBufferW *handleBuf = nullptr) const;
 public:
     std::uint16_t m_displayFrame = 0;  /*!< global display-frame flag, DXF 70 */
 };

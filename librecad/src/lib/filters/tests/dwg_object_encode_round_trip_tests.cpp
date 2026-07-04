@@ -86,6 +86,10 @@ public:
                                        DRW::Version v, dwgBufferW* buf) {
         return e.encodeDwg(v, buf);
     }
+    static bool encodeWipeoutVariables(const DRW_WipeoutVariables& e,
+                                        DRW::Version v, dwgBufferW* buf) {
+        return e.encodeDwg(v, buf);
+    }
     static bool encodeSortEntsTable(const DRW_SortEntsTable& e,
                                      DRW::Version v, dwgBufferW* buf) {
         return e.encodeDwg(v, buf);
@@ -591,6 +595,34 @@ TEST_CASE("DRW_WipeoutVariables::parseDwg captures display_frame flag",
     DRW_WipeoutVariables dst;
     REQUIRE(DrwObjectEncodeTestAccess::parse(dst, ver, &r));
     REQUIRE(dst.m_displayFrame == 1);
+}
+
+// WIPEOUTVARIABLES encoder round-trip. Body: one display-frame BS plus the
+// common handle prefix, with no type-specific handle tail.
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("DRW_WipeoutVariables::encodeDwg round-trips display frame",
+          "[dwg-write][object-encode][wipeoutvariables]") {
+    DRW_WipeoutVariables src;
+    src.handle = 0x601;
+    src.parentHandle = 0xC;          // Named-objects dictionary
+    src.m_displayFrame = 1;
+    DrwObjectEncodeTestAccess::setNumReactors(src, 0);
+    DrwObjectEncodeTestAccess::setXDictFlag(src, 1);   // no xdic
+
+    DRW::Version ver = DRW::AC1018;
+    dwgBufferW w;
+    emitObjectPreamble(w, ver, /*oType=*/0 /* custom-class */, src.handle,
+                       /*numReactors=*/0, /*xDictFlag=*/1);
+    REQUIRE(DrwObjectEncodeTestAccess::encodeWipeoutVariables(src, ver, &w));
+
+    auto bytes = snapshot(w);
+    dwgBuffer r(bytes.data(), bytes.size());
+    DRW_WipeoutVariables dst;
+    REQUIRE(DrwObjectEncodeTestAccess::parse(dst, ver, &r));
+
+    REQUIRE(dst.m_displayFrame == 1);
+    REQUIRE(static_cast<std::uint32_t>(dst.parentHandle) == 0xCu);
+    REQUIRE(r.isGood());
 }
 
 // P4-13 (gap object-imagedef-uv-size-dropped): DRW_ImageDef::parseDwg read

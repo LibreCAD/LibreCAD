@@ -269,6 +269,22 @@ public:
         return registerDwgClass(definition);
     }
 
+    bool registerWipeoutVariablesObjectClass(std::uint32_t handle = 0) {
+        DwgClassDefinition definition;
+        definition.m_classNum = DRW_WipeoutVariables::kDwgClassNum;
+        definition.m_proxyFlag = 0x401;
+        definition.m_appName = "WipeOut";
+        definition.m_className = "AcDbWipeoutVariables";
+        definition.m_recordName = "WIPEOUTVARIABLES";
+        definition.m_entityFlagRaw = 0x1F3;  // object class (ODA item_class_id)
+        if (handle != 0
+            && m_rawClassInstanceHandles.insert({definition.m_classNum,
+                                                 handle}).second) {
+            definition.m_instanceCount = 1;
+        }
+        return registerDwgClass(definition);
+    }
+
     bool registerGeoDataObjectClass(std::uint32_t handle = 0) {
         DwgClassDefinition definition;
         definition.m_classNum = DRW_GeoData::kDwgClassNum;
@@ -519,6 +535,8 @@ protected:
         // matching filter-side gate (`canRegisterCustomClassObjects`)
         // already issues the registration at AC1015+.
         if (definition.m_classNum == DRW_RasterVariables::kDwgClassNum)
+            return m_version >= DRW::AC1015;
+        if (definition.m_classNum == DRW_WipeoutVariables::kDwgClassNum)
             return m_version >= DRW::AC1015;
         if (definition.m_classNum == DRW_GeoData::kDwgClassNum)
             return m_version >= DRW::AC1015;

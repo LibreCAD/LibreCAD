@@ -1078,9 +1078,42 @@ bool dwgWriter15::writeRasterVariables(
     return true;
 }
 
-// GEODATA (AcDbGeoData, custom class 506) — class registration required.
-// Standard preamble + DRW_GeoData::encodeDwg sandwich.  Encoder writes its
-// own common-handle prefix into hb (the preamble does NOT) plus several
+// WIPEOUTVARIABLES (AcDbWipeoutVariables, custom class 529). Body has one
+// display-frame flag, then the common handle prefix in the object handle
+// stream.
+void dwgWriter15::emitWipeoutVariablesObject(
+    std::uint32_t handle, const DRW_WipeoutVariables& wipeoutVariables) {
+    dwgBufferW& body = beginObject(handle);
+    dwgBufferW *sb, *hb;
+    emitRecordPreamble(body, m_version,
+                       DRW_WipeoutVariables::kDwgClassNum, handle,
+                       m_objectStrings, m_objectHandles, sb, hb);
+    DRW_UNUSED(sb);
+    wipeoutVariables.encodeDwg(m_version, &body, nullptr, hb);
+    finishObject();
+}
+
+bool dwgWriter15::writeWipeoutVariables(
+    const DRW_WipeoutVariables& wipeoutVariables) {
+    if (m_version < DRW::AC1015)
+        return false;
+
+    DRW_WipeoutVariables object = wipeoutVariables;
+    if (object.handle == 0) {
+        object.handle = m_handles.next();
+    } else {
+        m_handles.reserve(object.handle);
+    }
+    if (!registerWipeoutVariablesObjectClass(object.handle))
+        return false;
+
+    emitWipeoutVariablesObject(object.handle, object);
+    return true;
+}
+
+// GEODATA (AcDbGeoData, custom class 506) - class registration required.
+// Standard preamble + DRW_GeoData::encodeDwg sandwich. Encoder writes its own
+// common-handle prefix into hb (the preamble does not) plus several
 // variable-text fields into sb.
 void dwgWriter15::emitGeoDataObject(std::uint32_t handle, const DRW_GeoData& geoData) {
     dwgBufferW& body = beginObject(handle);

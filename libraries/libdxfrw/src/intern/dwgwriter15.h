@@ -100,6 +100,7 @@ public:
     bool writeGroup(const DRW_Group& group);
     bool writeMLineStyle(const DRW_MLineStyle& style);
     bool writeRasterVariables(const DRW_RasterVariables& rasterVariables);
+    bool writeWipeoutVariables(const DRW_WipeoutVariables& wipeoutVariables);
     bool writeGeoData(const DRW_GeoData& geoData);
     bool writeSpatialFilter(const DRW_SpatialFilter& filter);
     // PR 8d.2a — five small no-storage OBJECTS families.
@@ -196,6 +197,8 @@ protected:
                               const DRW_MLineStyle& style);
     void emitRasterVariablesObject(std::uint32_t handle,
                                    const DRW_RasterVariables& rasterVariables);
+    void emitWipeoutVariablesObject(std::uint32_t handle,
+                                    const DRW_WipeoutVariables& wipeoutVariables);
     void emitGeoDataObject(std::uint32_t handle, const DRW_GeoData& geoData);
     void emitSpatialFilterObject(std::uint32_t handle,
                                  const DRW_SpatialFilter& filter);

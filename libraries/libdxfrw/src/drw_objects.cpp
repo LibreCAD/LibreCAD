@@ -3560,9 +3560,29 @@ bool DRW_WipeoutVariables::parseDwg(DRW::Version version, dwgBuffer *buf, std::u
     if (!ret)
         return ret;
     // ODA / libreDWG WIPEOUTVARIABLES: a single BS display-frame flag (DXF 70)
-    // before START_OBJECT_HANDLE_STREAM. (No fields are consumed beyond it.)
+    // before START_OBJECT_HANDLE_STREAM.
     m_displayFrame = buf->getBitShort();
+    if (version > DRW::AC1018)
+        seekObjectHandleStream(version, buf, objSize);
+    if (buf->numRemainingBytes() > 0)
+        readCommonObjectHandles(buf, handle, numReactors, xDictFlag, &parentHandle);
     DRW_DBG("wipeout display_frame: "); DRW_DBG(m_displayFrame); DRW_DBG("\n");
+    return true;
+}
+
+bool DRW_WipeoutVariables::encodeDwg(DRW::Version version, dwgBufferW *buf,
+                                     dwgBufferW *strBuf,
+                                     dwgBufferW *handleBuf) const {
+    if (buf == nullptr)
+        return false;
+    DRW_UNUSED(strBuf);
+    dwgBufferW *hb = (handleBuf != nullptr && version > DRW::AC1018)
+        ? handleBuf
+        : buf;
+
+    buf->putBitShort(m_displayFrame);
+    putCommonObjectHandlePrefix(hb, static_cast<std::uint32_t>(parentHandle),
+                                numReactors, xDictFlag);
     return true;
 }
 

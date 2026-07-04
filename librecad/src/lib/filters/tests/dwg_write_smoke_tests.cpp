@@ -1951,6 +1951,35 @@ public:
     }
 };
 
+// WIPEOUTVARIABLES round-trip: one drawing-wide display-frame flag stored as
+// custom object metadata.
+class WipeoutVariablesRoundTripIface : public EmptyIface {
+public:
+    dwgRW *m_writer {nullptr};
+    DRW_WipeoutVariables m_wipeoutVariables;
+    std::vector<DRW_WipeoutVariables> m_wipeoutVariablesObjects;
+
+    WipeoutVariablesRoundTripIface() {
+        m_wipeoutVariables.handle = 0x7E8u;
+        m_wipeoutVariables.parentHandle = 0xCu;
+        m_wipeoutVariables.m_displayFrame = 1;
+    }
+
+    void writeDwgClasses() override {
+        if (m_writer != nullptr)
+            REQUIRE(m_writer->registerWipeoutVariablesObjectClass(&m_wipeoutVariables));
+    }
+
+    void writeObjects() override {
+        if (m_writer != nullptr)
+            REQUIRE(m_writer->writeWipeoutVariables(&m_wipeoutVariables));
+    }
+
+    void addWipeoutVariables(const DRW_WipeoutVariables& wv) override {
+        m_wipeoutVariablesObjects.push_back(wv);
+    }
+};
+
 // SPATIAL_FILTER round-trip — populates a clipped-xref filter with a
 // 4-point clip boundary, both clip planes, and identity transform
 // matrices.  Exercises PR 8d.1d's class registration + dispatch.
@@ -3415,6 +3444,44 @@ TEST_CASE("dwgRW writes and reads RASTERVARIABLES metadata",
         CHECK(found->m_imageFrame == 1);
         CHECK(found->m_imageQuality == 1);
         CHECK(found->m_units == 2);
+
+        std::remove(path.c_str());
+    }
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("dwgRW writes and reads WIPEOUTVARIABLES metadata",
+          "[dwg-write][wipeoutvariables]") {
+    const DRW::Version versions[] = {DRW::AC1015, DRW::AC1018,
+                                     DRW::AC1024, DRW::AC1027, DRW::AC1032};
+
+    for (DRW::Version version : versions) {
+        const std::string path = tempPath("native_wipeoutvariables.dwg");
+        {
+            dwgRW writer(path.c_str());
+            WipeoutVariablesRoundTripIface iface;
+            iface.m_writer = &writer;
+            REQUIRE(writer.write(&iface, version, /*bin=*/false));
+        }
+
+        WipeoutVariablesRoundTripIface readIface;
+        {
+            dwgRW reader(path.c_str());
+            REQUIRE(reader.read(&readIface, /*ext=*/false));
+            REQUIRE(reader.getVersion() == version);
+            REQUIRE(reader.getError() == DRW::BAD_NONE);
+        }
+
+        const DRW_WipeoutVariables* found = nullptr;
+        for (const DRW_WipeoutVariables& wv : readIface.m_wipeoutVariablesObjects) {
+            if (wv.handle == 0x7E8u) {
+                found = &wv;
+                break;
+            }
+        }
+        REQUIRE(found != nullptr);
+        CHECK(found->m_displayFrame == 1);
+        CHECK(static_cast<std::uint32_t>(found->parentHandle) == 0xCu);
 
         std::remove(path.c_str());
     }

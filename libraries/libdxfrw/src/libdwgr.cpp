@@ -794,6 +794,24 @@ bool dwgRW::writeRasterVariables(DRW_RasterVariables *object) {
     return recordWriteResult(WriteSkipKind::Object, w->writeRasterVariables(*object));
 }
 
+bool dwgRW::registerWipeoutVariablesObjectClass(DRW_WipeoutVariables *object) {
+    if (object == nullptr || writer == nullptr)
+        return recordWriteResult(WriteSkipKind::ClassRegistration, false);
+    if (object->handle != 0)
+        writer->reserveHandle(object->handle);
+    return recordWriteResult(WriteSkipKind::ClassRegistration,
+                             writer->registerWipeoutVariablesObjectClass(object->handle));
+}
+
+bool dwgRW::writeWipeoutVariables(DRW_WipeoutVariables *object) {
+    if (object == nullptr)
+        return recordWriteResult(WriteSkipKind::Object, false);
+    auto *w = asWriter15(writer);
+    if (w == nullptr)
+        return recordWriteResult(WriteSkipKind::Object, false);
+    return recordWriteResult(WriteSkipKind::Object, w->writeWipeoutVariables(*object));
+}
+
 bool dwgRW::registerGeoDataObjectClass(DRW_GeoData *object) {
     if (object == nullptr || writer == nullptr)
         return recordWriteResult(WriteSkipKind::ClassRegistration, false);
