@@ -7252,20 +7252,28 @@ bool DRW_DimLargeRadial::parseCode(int code, const std::unique_ptr<dxfReader>& r
     return DRW_Dimension::parseCode(code, reader);
 }
 
-// DRW_DimLargeRadial DWG body (ODA §20.4.20): definition point, chord point, jog
-// angle, overridden center, jog point — then the dim-style and anon-block
-// handles. Field order per the read-only reference parser (parseLargeRadial-
-// Dimension). No committed DWG fixture; validated by build + inline DXF test.
+// DRW_DimLargeRadial DWG body: five subclass reads then the dim-style and
+// anon-block handles.  The three subclass points are ordered
+//   definition point, JOG point, jog angle, CHORD point, OVERRIDDEN center
+// so that the decoded fields match the DXF group codes (chord=13, override=14,
+// jog=15) and libdxfrw's own DXF parseCode.  The read-only reference parser
+// (parseLargeRadialDimension) labels the 2nd/4th/5th reads chord/override/jog,
+// i.e. a cyclic rotation of the point roles; that is inconsistent with the DXF
+// semantics and with an ODA File Converter DXF↔DWG round-trip (which preserves
+// codes 13/14/15 exactly).  Verified by large_radial_dim_dwg_tests.cpp against
+// an ODA-synthesized fixture, cross-checked with the dwg-parser's DXF read.
+// Only the field labels change vs. the reference parser — the read sizes/order
+// (3BD, 3BD, BD, 3BD, 3BD) are identical, so buffer alignment is unchanged.
 bool DRW_DimLargeRadial::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs){
     if (!DRW_Dimension::parseDwg(version, buf, nullptr, bs)) {
         return false;
     }
-    setDefPoint(buf->get3BitDouble());        // center / definition point (code 10)
-    setPt5(buf->get3BitDouble());             // chord point → radial diameter point
-    jogAngle = buf->getBitDouble();           // jog transverse angle (code 40)
-    overrideCenterPoint = buf->get3BitDouble();
-    jogPoint = buf->get3BitDouble();
-    type |= 4;                                // radial dimension type bit
+    setDefPoint(buf->get3BitDouble());          // definition point (code 10)
+    jogPoint = buf->get3BitDouble();            // jog vertex (code 15)
+    jogAngle = buf->getBitDouble();             // jog transverse angle (code 40)
+    setPt5(buf->get3BitDouble());               // chord point → radial diameter point (code 13)
+    overrideCenterPoint = buf->get3BitDouble(); // overridden center (code 14)
+    type |= 4;                                  // radial dimension type bit
     if (!DRW_Entity::parseDwgEntHandle(version, buf)) {
         return false;
     }
