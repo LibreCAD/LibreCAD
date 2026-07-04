@@ -14,6 +14,7 @@
 #ifndef LIBDWGR_H
 #define LIBDWGR_H
 
+#include <cstddef>
 #include <cstdint>
 #include <string>
 #include <memory>
@@ -49,6 +50,23 @@ public:
     /// kept for API symmetry with `dxfRW::write`.  Returns true on
     /// success, false on error; error code accessible via `getError()`.
     bool write(DRW_Interface *interface_, DRW::Version ver, bool bin);
+
+    struct WriteSkipCounters {
+        std::size_t entityWrites { 0 };
+        std::size_t tableRecordWrites { 0 };
+        std::size_t objectWrites { 0 };
+        std::size_t classRegistrations { 0 };
+        std::size_t rawObjectWrites { 0 };
+        std::size_t rawSectionWrites { 0 };
+        std::size_t blockDefinitions { 0 };
+
+        std::size_t total() const {
+            return entityWrites + tableRecordWrites + objectWrites
+                + classRegistrations + rawObjectWrites + rawSectionWrites
+                + blockDefinitions;
+        }
+    };
+    WriteSkipCounters getWriteSkipCounters() const { return m_writeSkipCounters; }
 
     /// Per-entity write API — invoked from the caller's `writeEntities`
     /// iface callback.  Each method allocates a handle, populates the
@@ -201,11 +219,24 @@ bool testReader();
     void setDebug(DRW::DebugLevel lvl);
 
 private:
+    enum class WriteSkipKind {
+        Entity,
+        TableRecord,
+        Object,
+        ClassRegistration,
+        RawObject,
+        RawSection,
+        BlockDefinition
+    };
+
     bool openFile(std::ifstream *filestr);
     bool openBuffer(std::unique_ptr<dwgBuffer> buffer);
     bool readInstalledReader();
     void captureReaderDiagnostics();
     void resetReadDiagnostics();
+    void resetWriteSkipCounters();
+    bool recordWriteResult(WriteSkipKind kind, bool ok);
+    bool encodeEntityForWrite(DRW_Entity *ent);
     bool processDwg();
     static DRW::Version sniffVersion(dwgBuffer *buffer);
     static std::unique_ptr< dwgReader > createReaderForVersion(DRW::Version version, std::unique_ptr<dwgBuffer> buffer, dwgRW *p);
@@ -249,6 +280,7 @@ private:
     /// reader.reset() so the getters work post-read.
     std::vector<std::string> m_layerNameOrder;
     std::vector<std::string> m_ltypeNameOrder;
+    WriteSkipCounters m_writeSkipCounters;
 
 };
 

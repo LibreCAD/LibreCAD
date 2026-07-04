@@ -122,6 +122,16 @@ public:
     void writeAppId() override {}
 };
 
+class IgnoredEntityWriteSkipIface : public EmptyIface {
+public:
+    dwgRW *m_writer {nullptr};
+
+    void writeEntities() override {
+        if (m_writer != nullptr)
+            (void)m_writer->writePoint(static_cast<DRW_Point *>(nullptr));
+    }
+};
+
 /// Read a file fully into memory for byte-compare checks.
 std::vector<std::uint8_t> slurp(const std::string& path) {
     std::ifstream in(path, std::ios::binary);
@@ -169,6 +179,33 @@ void ensureQtSettings() {
     }();
     (void)app;
     (void)settingsReady;
+}
+
+void requireNoWriteSkips(const dwgRW::WriteSkipCounters& skips) {
+    INFO("DWG write skips: entity=" << skips.entityWrites
+         << ", table=" << skips.tableRecordWrites
+         << ", object=" << skips.objectWrites
+         << ", class=" << skips.classRegistrations
+         << ", rawObject=" << skips.rawObjectWrites
+         << ", rawSection=" << skips.rawSectionWrites
+         << ", block=" << skips.blockDefinitions);
+    CHECK(skips.entityWrites == 0);
+    CHECK(skips.tableRecordWrites == 0);
+    CHECK(skips.objectWrites == 0);
+    CHECK(skips.classRegistrations == 0);
+    CHECK(skips.rawObjectWrites == 0);
+    CHECK(skips.rawSectionWrites == 0);
+    CHECK(skips.blockDefinitions == 0);
+    CHECK(skips.total() == 0);
+}
+
+void requireCleanDwgWriteReopen(const dwgRW::WriteSkipCounters& writeSkips,
+                                const dwgRW& reader) {
+    requireNoWriteSkips(writeSkips);
+    CHECK(reader.getEntityParseFailures() == 0);
+    CHECK(reader.getObjectParseFailures() == 0);
+    CHECK(reader.getSkippedCustomClasses().empty());
+    CHECK(reader.getSkippedUnsupportedObjects().empty());
 }
 
 } // namespace
@@ -2324,12 +2361,14 @@ TEST_CASE("dwgRW whole-model registry round-trips seeded writable types",
     REQUIRE(registry.size() == 5);
 
     const std::string path = tempPath("whole_model_registry.dwg");
+    dwgRW::WriteSkipCounters writeSkips;
 
     {
         dwgRW writer(path.c_str());
         WholeModelRegistryIface iface;
         iface.m_writer = &writer;
         REQUIRE(writer.write(&iface, DRW::AC1015, /*bin=*/false));
+        writeSkips = writer.getWriteSkipCounters();
     }
 
     const std::vector<std::uint8_t> bytes = slurp(path);
@@ -2342,16 +2381,54 @@ TEST_CASE("dwgRW whole-model registry round-trips seeded writable types",
                                   /*ext=*/false));
         REQUIRE(reader.getVersion() == DRW::AC1015);
         REQUIRE(reader.getError() == DRW::BAD_NONE);
-        REQUIRE(reader.getEntityParseFailures() == 0);
-        REQUIRE(reader.getObjectParseFailures() == 0);
-        REQUIRE(reader.getSkippedCustomClasses().empty());
-        REQUIRE(reader.getSkippedUnsupportedObjects().empty());
+        requireCleanDwgWriteReopen(writeSkips, reader);
     }
 
     for (const WritableTypeEntry& entry : registry) {
         INFO("writable type: " << entry.name);
         REQUIRE(entry.count(readIface) == entry.expectedCount);
         entry.assertRead(readIface);
+    }
+
+    std::remove(path.c_str());
+}
+
+TEST_CASE("dwgRW write skip counters catch ignored entity write failures",
+          "[dwg-write][skip-counters][g3]") {
+    const std::string path = tempPath("ignored_entity_skip.dwg");
+    dwgRW::WriteSkipCounters writeSkips;
+
+    {
+        dwgRW writer(path.c_str());
+        IgnoredEntityWriteSkipIface iface;
+        iface.m_writer = &writer;
+        REQUIRE(writer.write(&iface, DRW::AC1015, /*bin=*/false));
+        writeSkips = writer.getWriteSkipCounters();
+    }
+
+    CHECK(writeSkips.entityWrites == 1);
+    CHECK(writeSkips.tableRecordWrites == 0);
+    CHECK(writeSkips.objectWrites == 0);
+    CHECK(writeSkips.classRegistrations == 0);
+    CHECK(writeSkips.rawObjectWrites == 0);
+    CHECK(writeSkips.rawSectionWrites == 0);
+    CHECK(writeSkips.blockDefinitions == 0);
+    CHECK(writeSkips.total() == 1);
+
+    const std::vector<std::uint8_t> bytes = slurp(path);
+    REQUIRE_FALSE(bytes.empty());
+
+    EmptyIface readIface;
+    {
+        dwgRW reader(path.c_str());
+        REQUIRE(reader.readBuffer(bytes.data(), bytes.size(), &readIface,
+                                  /*ext=*/false));
+        REQUIRE(reader.getVersion() == DRW::AC1015);
+        REQUIRE(reader.getError() == DRW::BAD_NONE);
+        CHECK(reader.getEntityParseFailures() == 0);
+        CHECK(reader.getObjectParseFailures() == 0);
+        CHECK(reader.getSkippedCustomClasses().empty());
+        CHECK(reader.getSkippedUnsupportedObjects().empty());
     }
 
     std::remove(path.c_str());

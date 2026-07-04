@@ -265,10 +265,51 @@ std::unordered_map<std::string, size_t> dwgRW::getSkippedUnsupportedObjects() co
     return reader ? reader->m_skippedUnsupportedObjects : m_skippedUnsupportedObjects;
 }
 
+void dwgRW::resetWriteSkipCounters() {
+    m_writeSkipCounters = {};
+}
+
+bool dwgRW::recordWriteResult(WriteSkipKind kind, bool ok) {
+    if (ok)
+        return true;
+
+    switch (kind) {
+    case WriteSkipKind::Entity:
+        ++m_writeSkipCounters.entityWrites;
+        break;
+    case WriteSkipKind::TableRecord:
+        ++m_writeSkipCounters.tableRecordWrites;
+        break;
+    case WriteSkipKind::Object:
+        ++m_writeSkipCounters.objectWrites;
+        break;
+    case WriteSkipKind::ClassRegistration:
+        ++m_writeSkipCounters.classRegistrations;
+        break;
+    case WriteSkipKind::RawObject:
+        ++m_writeSkipCounters.rawObjectWrites;
+        break;
+    case WriteSkipKind::RawSection:
+        ++m_writeSkipCounters.rawSectionWrites;
+        break;
+    case WriteSkipKind::BlockDefinition:
+        ++m_writeSkipCounters.blockDefinitions;
+        break;
+    }
+    return false;
+}
+
+bool dwgRW::encodeEntityForWrite(DRW_Entity *ent) {
+    return recordWriteResult(WriteSkipKind::Entity,
+                             writer != nullptr && ent != nullptr
+                                 && writer->encodeEntity(ent));
+}
+
 bool dwgRW::write(DRW_Interface *interface_, DRW::Version ver, bool bin) {
     // The 'bin' parameter is accepted only for signature symmetry with
     // dxfRW::write — DWG is always binary on disk.
     (void)bin;
+    resetWriteSkipCounters();
     if (ver != DRW::AC1015 && ver != DRW::AC1018 &&
         ver != DRW::AC1024 && ver != DRW::AC1027 &&
         ver != DRW::AC1032) {
@@ -377,117 +418,96 @@ bool dwgRW::write(DRW_Interface *interface_, DRW::Version ver, bool bin) {
 // virtual on the base `dwgWriter`).  Returns false if the writer isn't
 // ready (e.g., caller invoked outside `writeEntities`).
 bool dwgRW::writePoint(DRW_Point *ent) {
-    if (writer == nullptr || ent == nullptr) return false;
-    return writer->encodeEntity(ent);
+    return encodeEntityForWrite(ent);
 }
 
 bool dwgRW::writeLine(DRW_Line *ent) {
-    if (writer == nullptr || ent == nullptr) return false;
-    return writer->encodeEntity(ent);
+    return encodeEntityForWrite(ent);
 }
 
 bool dwgRW::writeCircle(DRW_Circle *ent) {
-    if (writer == nullptr || ent == nullptr) return false;
-    return writer->encodeEntity(ent);
+    return encodeEntityForWrite(ent);
 }
 
 bool dwgRW::writeArc(DRW_Arc *ent) {
-    if (writer == nullptr || ent == nullptr) return false;
-    return writer->encodeEntity(ent);
+    return encodeEntityForWrite(ent);
 }
 
 bool dwgRW::writeEllipse(DRW_Ellipse *ent) {
-    if (writer == nullptr || ent == nullptr) return false;
-    return writer->encodeEntity(ent);
+    return encodeEntityForWrite(ent);
 }
 
 bool dwgRW::writeText(DRW_Text *ent) {
-    if (writer == nullptr || ent == nullptr) return false;
-    return writer->encodeEntity(ent);
+    return encodeEntityForWrite(ent);
 }
 
 bool dwgRW::writeLWPolyline(DRW_LWPolyline *ent) {
-    if (writer == nullptr || ent == nullptr) return false;
-    return writer->encodeEntity(ent);
+    return encodeEntityForWrite(ent);
 }
 
 bool dwgRW::writeRay(DRW_Ray *ent) {
-    if (writer == nullptr || ent == nullptr) return false;
-    return writer->encodeEntity(ent);
+    return encodeEntityForWrite(ent);
 }
 
 bool dwgRW::writeXline(DRW_Xline *ent) {
-    if (writer == nullptr || ent == nullptr) return false;
-    return writer->encodeEntity(ent);
+    return encodeEntityForWrite(ent);
 }
 
 bool dwgRW::writeTrace(DRW_Trace *ent) {
-    if (writer == nullptr || ent == nullptr) return false;
-    return writer->encodeEntity(ent);
+    return encodeEntityForWrite(ent);
 }
 
 bool dwgRW::writeSolid(DRW_Solid *ent) {
-    if (writer == nullptr || ent == nullptr) return false;
-    return writer->encodeEntity(ent);
+    return encodeEntityForWrite(ent);
 }
 
 bool dwgRW::write3dface(DRW_3Dface *ent) {
-    if (writer == nullptr || ent == nullptr) return false;
-    return writer->encodeEntity(ent);
+    return encodeEntityForWrite(ent);
 }
 
 bool dwgRW::writeInsert(DRW_Insert *ent) {
-    if (writer == nullptr || ent == nullptr) return false;
-    return writer->encodeEntity(ent);
+    return encodeEntityForWrite(ent);
 }
 
 bool dwgRW::writeMText(DRW_MText *ent) {
-    if (writer == nullptr || ent == nullptr) return false;
-    return writer->encodeEntity(ent);
+    return encodeEntityForWrite(ent);
 }
 
 bool dwgRW::writeSpline(DRW_Spline *ent) {
-    if (writer == nullptr || ent == nullptr) return false;
-    return writer->encodeEntity(ent);
+    return encodeEntityForWrite(ent);
 }
 
 bool dwgRW::writeAttrib(DRW_Attrib *ent) {
-    if (writer == nullptr || ent == nullptr) return false;
-    return writer->encodeEntity(ent);
+    return encodeEntityForWrite(ent);
 }
 
 bool dwgRW::writeAttdef(DRW_Attdef *ent) {
-    if (writer == nullptr || ent == nullptr) return false;
-    return writer->encodeEntity(ent);
+    return encodeEntityForWrite(ent);
 }
 
 bool dwgRW::writeHatch(DRW_Hatch *ent) {
-    if (writer == nullptr || ent == nullptr) return false;
-    return writer->encodeEntity(ent);
+    return encodeEntityForWrite(ent);
 }
 
 bool dwgRW::writeDimension(DRW_Dimension *ent) {
-    if (writer == nullptr || ent == nullptr) return false;
-    return writer->encodeEntity(ent);
+    return encodeEntityForWrite(ent);
 }
 
 bool dwgRW::writeTolerance(DRW_Tolerance *ent) {
-    if (writer == nullptr || ent == nullptr) return false;
-    return writer->encodeEntity(ent);
+    return encodeEntityForWrite(ent);
 }
 
 bool dwgRW::writeLight(DRW_Light *ent) {
-    if (writer == nullptr || ent == nullptr) return false;
-    return writer->encodeEntity(ent);
+    return encodeEntityForWrite(ent);
 }
 
 bool dwgRW::writeMLine(DRW_MLine *ent) {
-    if (writer == nullptr || ent == nullptr) return false;
-    return writer->encodeEntity(ent);
+    return encodeEntityForWrite(ent);
 }
 
 bool dwgRW::writePolyline(DRW_Polyline *ent) {
-    if (writer == nullptr || ent == nullptr) return false;
+    if (writer == nullptr || ent == nullptr)
+        return recordWriteResult(WriteSkipKind::Entity, false);
     // Pre-allocate the polyline handle BEFORE vertex handles so that
     // readDwgEntities (which iterates ObjectMap in ascending-handle order)
     // processes the polyline first and can consume vertices via readPlineVertex.
@@ -513,66 +533,64 @@ bool dwgRW::writePolyline(DRW_Polyline *ent) {
                 v->setDwgSubtype(DRW_Vertex::DwgSubtype::Vertex2D);
             }
         }
-        if (v && !writer->encodeEntity(v.get())) return false;
+        if (v && !writer->encodeEntity(v.get()))
+            return recordWriteResult(WriteSkipKind::Entity, false);
     }
     DRW_SeqEnd seqEnd;
     seqEnd.handle = writer->allocNextHandle();
     ent->setDwgSeqEndHandle(seqEnd.handle);
-    if (!writer->encodeEntity(&seqEnd)) return false;
-    return writer->encodeEntity(ent);
+    if (!writer->encodeEntity(&seqEnd))
+        return recordWriteResult(WriteSkipKind::Entity, false);
+    return recordWriteResult(WriteSkipKind::Entity, writer->encodeEntity(ent));
 }
 
 bool dwgRW::writeLeader(DRW_Leader *ent) {
-    if (writer == nullptr || ent == nullptr) return false;
-    return writer->encodeEntity(ent);
+    return encodeEntityForWrite(ent);
 }
 
 bool dwgRW::writeMLeader(DRW_MLeader *ent) {
-    if (writer == nullptr || ent == nullptr) return false;
-    return writer->encodeEntity(ent);
+    return encodeEntityForWrite(ent);
 }
 
 bool dwgRW::writeViewport(DRW_Viewport *ent) {
-    if (writer == nullptr || ent == nullptr) return false;
-    return writer->encodeEntity(ent);
+    return encodeEntityForWrite(ent);
 }
 
 // Phase 6.1 — SHAPE passthrough (no native LibreCAD entity).
 bool dwgRW::writeShape(DRW_Shape *ent) {
-    if (writer == nullptr || ent == nullptr) return false;
-    return writer->encodeEntity(ent);
+    return encodeEntityForWrite(ent);
 }
 
 // Phase 6.2 — OLE2FRAME passthrough (opaque payload preserved by encodeDwg).
 bool dwgRW::writeOle2Frame(DRW_Ole2Frame *ent) {
-    if (writer == nullptr || ent == nullptr) return false;
-    return writer->encodeEntity(ent);
+    return encodeEntityForWrite(ent);
 }
 
 bool dwgRW::writeWipeout(DRW_Wipeout *ent) {
-    if (writer == nullptr || ent == nullptr) return false;
-    return writer->encodeEntity(ent);
+    return encodeEntityForWrite(ent);
 }
 
 bool dwgRW::writePointCloud(DRW_PointCloud *ent) {
-    if (writer == nullptr || ent == nullptr) return false;
-    return writer->encodeEntity(ent);
+    return encodeEntityForWrite(ent);
 }
 
 bool dwgRW::writePointCloudEx(DRW_PointCloudEx *ent) {
-    if (writer == nullptr || ent == nullptr) return false;
-    return writer->encodeEntity(ent);
+    return encodeEntityForWrite(ent);
 }
 
 bool dwgRW::writeSurface(DRW_Surface *ent) {
-    if (writer == nullptr || ent == nullptr) return false;
-    return writer->encodeEntity(ent);
+    return encodeEntityForWrite(ent);
 }
 
 std::uint32_t dwgRW::defineBlock(const std::string& name, const DRW_Coord& basePoint,
                            int insUnits) {
-    if (writer == nullptr) return 0;
-    return writer->defineBlock(name, basePoint, insUnits);
+    if (writer == nullptr) {
+        recordWriteResult(WriteSkipKind::BlockDefinition, false);
+        return 0;
+    }
+    const std::uint32_t handle = writer->defineBlock(name, basePoint, insUnits);
+    recordWriteResult(WriteSkipKind::BlockDefinition, handle != 0);
+    return handle;
 }
 
 // Table-record add* methods — forward to dwgWriter15 via dynamic_cast since
@@ -582,363 +600,381 @@ static dwgWriter15 *asWriter15(std::unique_ptr<dwgWriter> &w) {
 }
 
 bool dwgRW::addLType(DRW_LType *ent) {
-    if (ent == nullptr) return false;
+    if (ent == nullptr) return recordWriteResult(WriteSkipKind::TableRecord, false);
     auto *w = asWriter15(writer);
-    if (w == nullptr) return false;
+    if (w == nullptr) return recordWriteResult(WriteSkipKind::TableRecord, false);
     w->addLType(*ent);
-    return true;
+    return recordWriteResult(WriteSkipKind::TableRecord, true);
 }
 bool dwgRW::addLayer(DRW_Layer *ent) {
-    if (ent == nullptr) return false;
+    if (ent == nullptr) return recordWriteResult(WriteSkipKind::TableRecord, false);
     auto *w = asWriter15(writer);
-    if (w == nullptr) return false;
+    if (w == nullptr) return recordWriteResult(WriteSkipKind::TableRecord, false);
     w->addLayer(*ent);
-    return true;
+    return recordWriteResult(WriteSkipKind::TableRecord, true);
 }
 bool dwgRW::addTextstyle(DRW_Textstyle *ent) {
-    if (ent == nullptr) return false;
+    if (ent == nullptr) return recordWriteResult(WriteSkipKind::TableRecord, false);
     auto *w = asWriter15(writer);
-    if (w == nullptr) return false;
+    if (w == nullptr) return recordWriteResult(WriteSkipKind::TableRecord, false);
     w->addTextstyle(*ent);
-    return true;
+    return recordWriteResult(WriteSkipKind::TableRecord, true);
 }
 bool dwgRW::addView(DRW_View *ent) {
-    if (ent == nullptr) return false;
+    if (ent == nullptr) return recordWriteResult(WriteSkipKind::TableRecord, false);
     auto *w = asWriter15(writer);
-    if (w == nullptr) return false;
+    if (w == nullptr) return recordWriteResult(WriteSkipKind::TableRecord, false);
     w->addView(*ent);
-    return true;
+    return recordWriteResult(WriteSkipKind::TableRecord, true);
 }
 bool dwgRW::addVport(DRW_Vport *ent) {
-    if (ent == nullptr) return false;
+    if (ent == nullptr) return recordWriteResult(WriteSkipKind::TableRecord, false);
     auto *w = asWriter15(writer);
-    if (w == nullptr) return false;
+    if (w == nullptr) return recordWriteResult(WriteSkipKind::TableRecord, false);
     w->addVport(*ent);
-    return true;
+    return recordWriteResult(WriteSkipKind::TableRecord, true);
 }
 bool dwgRW::addDimstyle(DRW_Dimstyle *ent) {
-    if (ent == nullptr) return false;
+    if (ent == nullptr) return recordWriteResult(WriteSkipKind::TableRecord, false);
     auto *w = asWriter15(writer);
-    if (w == nullptr) return false;
+    if (w == nullptr) return recordWriteResult(WriteSkipKind::TableRecord, false);
     w->addDimstyle(*ent);
-    return true;
+    return recordWriteResult(WriteSkipKind::TableRecord, true);
 }
 bool dwgRW::addAppId(DRW_AppId *ent) {
-    if (ent == nullptr) return false;
+    if (ent == nullptr) return recordWriteResult(WriteSkipKind::TableRecord, false);
     auto *w = asWriter15(writer);
-    if (w == nullptr) return false;
+    if (w == nullptr) return recordWriteResult(WriteSkipKind::TableRecord, false);
     w->addAppId(*ent);
-    return true;
+    return recordWriteResult(WriteSkipKind::TableRecord, true);
 }
 
 bool dwgRW::writeAcDbPlaceholder(DRW_AcDbPlaceholder *object) {
     if (object == nullptr)
-        return false;
+        return recordWriteResult(WriteSkipKind::Object, false);
     auto *w = asWriter15(writer);
     if (w == nullptr)
-        return false;
-    return w->writeAcDbPlaceholder(*object);
+        return recordWriteResult(WriteSkipKind::Object, false);
+    return recordWriteResult(WriteSkipKind::Object,
+                             w->writeAcDbPlaceholder(*object));
 }
 
 bool dwgRW::registerSunObjectClass(DRW_Sun *object) {
     if (object == nullptr || writer == nullptr)
-        return false;
+        return recordWriteResult(WriteSkipKind::ClassRegistration, false);
     if (object->handle != 0)
         writer->reserveHandle(object->handle);
-    return writer->registerSunObjectClass(object->handle);
+    return recordWriteResult(WriteSkipKind::ClassRegistration,
+                             writer->registerSunObjectClass(object->handle));
 }
 
 bool dwgRW::writeSun(DRW_Sun *object) {
     if (object == nullptr)
-        return false;
+        return recordWriteResult(WriteSkipKind::Object, false);
     auto *w = asWriter15(writer);
     if (w == nullptr)
-        return false;
-    return w->writeSun(*object);
+        return recordWriteResult(WriteSkipKind::Object, false);
+    return recordWriteResult(WriteSkipKind::Object, w->writeSun(*object));
 }
 
 bool dwgRW::registerMLeaderStyleObjectClass(DRW_MLeaderStyle *object) {
     if (object == nullptr || writer == nullptr)
-        return false;
+        return recordWriteResult(WriteSkipKind::ClassRegistration, false);
     if (object->handle != 0)
         writer->reserveHandle(object->handle);
-    return writer->registerMLeaderStyleObjectClass(object->handle);
+    return recordWriteResult(WriteSkipKind::ClassRegistration,
+                             writer->registerMLeaderStyleObjectClass(object->handle));
 }
 
 bool dwgRW::writeMLeaderStyle(DRW_MLeaderStyle *object) {
     if (object == nullptr)
-        return false;
+        return recordWriteResult(WriteSkipKind::Object, false);
     auto *w = asWriter15(writer);
     if (w == nullptr)
-        return false;
-    return w->writeMLeaderStyle(*object);
+        return recordWriteResult(WriteSkipKind::Object, false);
+    return recordWriteResult(WriteSkipKind::Object, w->writeMLeaderStyle(*object));
 }
 
 bool dwgRW::writeDictionary(DRW_Dictionary *object) {
     if (object == nullptr)
-        return false;
+        return recordWriteResult(WriteSkipKind::Object, false);
     auto *w = asWriter15(writer);
     if (w == nullptr)
-        return false;
-    return w->writeDictionary(*object);
+        return recordWriteResult(WriteSkipKind::Object, false);
+    return recordWriteResult(WriteSkipKind::Object, w->writeDictionary(*object));
 }
 
 bool dwgRW::writeXRecord(DRW_XRecord *object) {
     if (object == nullptr)
-        return false;
+        return recordWriteResult(WriteSkipKind::Object, false);
     auto *w = asWriter15(writer);
     if (w == nullptr)
-        return false;
-    return w->writeXRecord(*object);
+        return recordWriteResult(WriteSkipKind::Object, false);
+    return recordWriteResult(WriteSkipKind::Object, w->writeXRecord(*object));
 }
 
 bool dwgRW::writeLayout(DRW_Layout *object) {
     if (object == nullptr)
-        return false;
+        return recordWriteResult(WriteSkipKind::Object, false);
     auto *w = asWriter15(writer);
     if (w == nullptr)
-        return false;
-    return w->writeLayout(*object);
+        return recordWriteResult(WriteSkipKind::Object, false);
+    return recordWriteResult(WriteSkipKind::Object, w->writeLayout(*object));
 }
 
 bool dwgRW::writeGroup(DRW_Group *object) {
     if (object == nullptr)
-        return false;
+        return recordWriteResult(WriteSkipKind::Object, false);
     auto *w = asWriter15(writer);
     if (w == nullptr)
-        return false;
-    return w->writeGroup(*object);
+        return recordWriteResult(WriteSkipKind::Object, false);
+    return recordWriteResult(WriteSkipKind::Object, w->writeGroup(*object));
 }
 
 bool dwgRW::registerRasterVariablesObjectClass(DRW_RasterVariables *object) {
     if (object == nullptr || writer == nullptr)
-        return false;
+        return recordWriteResult(WriteSkipKind::ClassRegistration, false);
     if (object->handle != 0)
         writer->reserveHandle(object->handle);
-    return writer->registerRasterVariablesObjectClass(object->handle);
+    return recordWriteResult(WriteSkipKind::ClassRegistration,
+                             writer->registerRasterVariablesObjectClass(object->handle));
 }
 
 bool dwgRW::writeRasterVariables(DRW_RasterVariables *object) {
     if (object == nullptr)
-        return false;
+        return recordWriteResult(WriteSkipKind::Object, false);
     auto *w = asWriter15(writer);
     if (w == nullptr)
-        return false;
-    return w->writeRasterVariables(*object);
+        return recordWriteResult(WriteSkipKind::Object, false);
+    return recordWriteResult(WriteSkipKind::Object, w->writeRasterVariables(*object));
 }
 
 bool dwgRW::registerGeoDataObjectClass(DRW_GeoData *object) {
     if (object == nullptr || writer == nullptr)
-        return false;
+        return recordWriteResult(WriteSkipKind::ClassRegistration, false);
     if (object->handle != 0)
         writer->reserveHandle(object->handle);
-    return writer->registerGeoDataObjectClass(object->handle);
+    return recordWriteResult(WriteSkipKind::ClassRegistration,
+                             writer->registerGeoDataObjectClass(object->handle));
 }
 
 bool dwgRW::writeGeoData(DRW_GeoData *object) {
     if (object == nullptr)
-        return false;
+        return recordWriteResult(WriteSkipKind::Object, false);
     auto *w = asWriter15(writer);
     if (w == nullptr)
-        return false;
-    return w->writeGeoData(*object);
+        return recordWriteResult(WriteSkipKind::Object, false);
+    return recordWriteResult(WriteSkipKind::Object, w->writeGeoData(*object));
 }
 
 bool dwgRW::registerSpatialFilterObjectClass(DRW_SpatialFilter *object) {
     if (object == nullptr || writer == nullptr)
-        return false;
+        return recordWriteResult(WriteSkipKind::ClassRegistration, false);
     if (object->handle != 0)
         writer->reserveHandle(object->handle);
-    return writer->registerSpatialFilterObjectClass(object->handle);
+    return recordWriteResult(WriteSkipKind::ClassRegistration,
+                             writer->registerSpatialFilterObjectClass(object->handle));
 }
 
 bool dwgRW::writeSpatialFilter(DRW_SpatialFilter *object) {
     if (object == nullptr)
-        return false;
+        return recordWriteResult(WriteSkipKind::Object, false);
     auto *w = asWriter15(writer);
     if (w == nullptr)
-        return false;
-    return w->writeSpatialFilter(*object);
+        return recordWriteResult(WriteSkipKind::Object, false);
+    return recordWriteResult(WriteSkipKind::Object, w->writeSpatialFilter(*object));
 }
 
 // PR 8d.2a — five small no-storage OBJECTS families.  Same wrapper shape as
 // the PR 8d.1b/c/d trio (RasterVariables/GeoData/SpatialFilter).
 bool dwgRW::registerScaleObjectClass(DRW_Scale *object) {
     if (object == nullptr || writer == nullptr)
-        return false;
+        return recordWriteResult(WriteSkipKind::ClassRegistration, false);
     if (object->handle != 0)
         writer->reserveHandle(object->handle);
-    return writer->registerScaleObjectClass(object->handle);
+    return recordWriteResult(WriteSkipKind::ClassRegistration,
+                             writer->registerScaleObjectClass(object->handle));
 }
 
 bool dwgRW::writeScale(DRW_Scale *object) {
     if (object == nullptr)
-        return false;
+        return recordWriteResult(WriteSkipKind::Object, false);
     auto *w = asWriter15(writer);
     if (w == nullptr)
-        return false;
-    return w->writeScale(*object);
+        return recordWriteResult(WriteSkipKind::Object, false);
+    return recordWriteResult(WriteSkipKind::Object, w->writeScale(*object));
 }
 
 bool dwgRW::registerIDBufferObjectClass(DRW_IDBuffer *object) {
     if (object == nullptr || writer == nullptr)
-        return false;
+        return recordWriteResult(WriteSkipKind::ClassRegistration, false);
     if (object->handle != 0)
         writer->reserveHandle(object->handle);
-    return writer->registerIDBufferObjectClass(object->handle);
+    return recordWriteResult(WriteSkipKind::ClassRegistration,
+                             writer->registerIDBufferObjectClass(object->handle));
 }
 
 bool dwgRW::writeIDBuffer(DRW_IDBuffer *object) {
     if (object == nullptr)
-        return false;
+        return recordWriteResult(WriteSkipKind::Object, false);
     auto *w = asWriter15(writer);
     if (w == nullptr)
-        return false;
-    return w->writeIDBuffer(*object);
+        return recordWriteResult(WriteSkipKind::Object, false);
+    return recordWriteResult(WriteSkipKind::Object, w->writeIDBuffer(*object));
 }
 
 bool dwgRW::registerLayerIndexObjectClass(DRW_LayerIndex *object) {
     if (object == nullptr || writer == nullptr)
-        return false;
+        return recordWriteResult(WriteSkipKind::ClassRegistration, false);
     if (object->handle != 0)
         writer->reserveHandle(object->handle);
-    return writer->registerLayerIndexObjectClass(object->handle);
+    return recordWriteResult(WriteSkipKind::ClassRegistration,
+                             writer->registerLayerIndexObjectClass(object->handle));
 }
 
 bool dwgRW::writeLayerIndex(DRW_LayerIndex *object) {
     if (object == nullptr)
-        return false;
+        return recordWriteResult(WriteSkipKind::Object, false);
     auto *w = asWriter15(writer);
     if (w == nullptr)
-        return false;
-    return w->writeLayerIndex(*object);
+        return recordWriteResult(WriteSkipKind::Object, false);
+    return recordWriteResult(WriteSkipKind::Object, w->writeLayerIndex(*object));
 }
 
 bool dwgRW::registerSpatialIndexObjectClass(DRW_SpatialIndex *object) {
     if (object == nullptr || writer == nullptr)
-        return false;
+        return recordWriteResult(WriteSkipKind::ClassRegistration, false);
     if (object->handle != 0)
         writer->reserveHandle(object->handle);
-    return writer->registerSpatialIndexObjectClass(object->handle);
+    return recordWriteResult(WriteSkipKind::ClassRegistration,
+                             writer->registerSpatialIndexObjectClass(object->handle));
 }
 
 bool dwgRW::writeSpatialIndex(DRW_SpatialIndex *object) {
     if (object == nullptr)
-        return false;
+        return recordWriteResult(WriteSkipKind::Object, false);
     auto *w = asWriter15(writer);
     if (w == nullptr)
-        return false;
-    return w->writeSpatialIndex(*object);
+        return recordWriteResult(WriteSkipKind::Object, false);
+    return recordWriteResult(WriteSkipKind::Object, w->writeSpatialIndex(*object));
 }
 
 bool dwgRW::registerDictionaryVarObjectClass(DRW_DictionaryVar *object) {
     if (object == nullptr || writer == nullptr)
-        return false;
+        return recordWriteResult(WriteSkipKind::ClassRegistration, false);
     if (object->handle != 0)
         writer->reserveHandle(object->handle);
-    return writer->registerDictionaryVarObjectClass(object->handle);
+    return recordWriteResult(WriteSkipKind::ClassRegistration,
+                             writer->registerDictionaryVarObjectClass(object->handle));
 }
 
 bool dwgRW::writeDictionaryVar(DRW_DictionaryVar *object) {
     if (object == nullptr)
-        return false;
+        return recordWriteResult(WriteSkipKind::Object, false);
     auto *w = asWriter15(writer);
     if (w == nullptr)
-        return false;
-    return w->writeDictionaryVar(*object);
+        return recordWriteResult(WriteSkipKind::Object, false);
+    return recordWriteResult(WriteSkipKind::Object, w->writeDictionaryVar(*object));
 }
 
 // PR 8d.2b — four larger no-storage OBJECTS families.  Same wrapper shape as
 // the PR 8d.2a trio.
 bool dwgRW::registerDictionaryWithDefaultObjectClass(DRW_DictionaryWithDefault *object) {
     if (object == nullptr || writer == nullptr)
-        return false;
+        return recordWriteResult(WriteSkipKind::ClassRegistration, false);
     if (object->handle != 0)
         writer->reserveHandle(object->handle);
-    return writer->registerDictionaryWithDefaultObjectClass(object->handle);
+    return recordWriteResult(WriteSkipKind::ClassRegistration,
+                             writer->registerDictionaryWithDefaultObjectClass(object->handle));
 }
 
 bool dwgRW::writeDictionaryWithDefault(DRW_DictionaryWithDefault *object) {
     if (object == nullptr)
-        return false;
+        return recordWriteResult(WriteSkipKind::Object, false);
     auto *w = asWriter15(writer);
     if (w == nullptr)
-        return false;
-    return w->writeDictionaryWithDefault(*object);
+        return recordWriteResult(WriteSkipKind::Object, false);
+    return recordWriteResult(WriteSkipKind::Object,
+                             w->writeDictionaryWithDefault(*object));
 }
 
 bool dwgRW::registerSortEntsTableObjectClass(DRW_SortEntsTable *object) {
     if (object == nullptr || writer == nullptr)
-        return false;
+        return recordWriteResult(WriteSkipKind::ClassRegistration, false);
     if (object->handle != 0)
         writer->reserveHandle(object->handle);
-    return writer->registerSortEntsTableObjectClass(object->handle);
+    return recordWriteResult(WriteSkipKind::ClassRegistration,
+                             writer->registerSortEntsTableObjectClass(object->handle));
 }
 
 bool dwgRW::writeSortEntsTable(DRW_SortEntsTable *object) {
     if (object == nullptr)
-        return false;
+        return recordWriteResult(WriteSkipKind::Object, false);
     auto *w = asWriter15(writer);
     if (w == nullptr)
-        return false;
-    return w->writeSortEntsTable(*object);
+        return recordWriteResult(WriteSkipKind::Object, false);
+    return recordWriteResult(WriteSkipKind::Object, w->writeSortEntsTable(*object));
 }
 
 bool dwgRW::registerFieldListObjectClass(DRW_FieldList *object) {
     if (object == nullptr || writer == nullptr)
-        return false;
+        return recordWriteResult(WriteSkipKind::ClassRegistration, false);
     if (object->handle != 0)
         writer->reserveHandle(object->handle);
-    return writer->registerFieldListObjectClass(object->handle);
+    return recordWriteResult(WriteSkipKind::ClassRegistration,
+                             writer->registerFieldListObjectClass(object->handle));
 }
 
 bool dwgRW::writeFieldList(DRW_FieldList *object) {
     if (object == nullptr)
-        return false;
+        return recordWriteResult(WriteSkipKind::Object, false);
     auto *w = asWriter15(writer);
     if (w == nullptr)
-        return false;
-    return w->writeFieldList(*object);
+        return recordWriteResult(WriteSkipKind::Object, false);
+    return recordWriteResult(WriteSkipKind::Object, w->writeFieldList(*object));
 }
 
 bool dwgRW::registerFieldObjectClass(DRW_Field *object) {
     if (object == nullptr || writer == nullptr)
-        return false;
+        return recordWriteResult(WriteSkipKind::ClassRegistration, false);
     if (object->handle != 0)
         writer->reserveHandle(object->handle);
-    return writer->registerFieldObjectClass(object->handle);
+    return recordWriteResult(WriteSkipKind::ClassRegistration,
+                             writer->registerFieldObjectClass(object->handle));
 }
 
 bool dwgRW::writeField(DRW_Field *object) {
     if (object == nullptr)
-        return false;
+        return recordWriteResult(WriteSkipKind::Object, false);
     auto *w = asWriter15(writer);
     if (w == nullptr)
-        return false;
-    return w->writeField(*object);
+        return recordWriteResult(WriteSkipKind::Object, false);
+    return recordWriteResult(WriteSkipKind::Object, w->writeField(*object));
 }
 
 bool dwgRW::registerRawDwgObjectClass(const DRW_UnsupportedObject *object) {
     if (object == nullptr || writer == nullptr)
-        return false;
+        return recordWriteResult(WriteSkipKind::ClassRegistration, false);
     if (object->m_handle != 0)
         writer->reserveHandle(object->m_handle);
-    return writer->registerRawObjectClass(*object);
+    return recordWriteResult(WriteSkipKind::ClassRegistration,
+                             writer->registerRawObjectClass(*object));
 }
 
 bool dwgRW::writeRawDwgObject(DRW_UnsupportedObject *object) {
     if (object == nullptr)
-        return false;
+        return recordWriteResult(WriteSkipKind::RawObject, false);
     auto *w = asWriter15(writer);
     if (w == nullptr)
-        return false;
-    return w->replayRawObject(*object);
+        return recordWriteResult(WriteSkipKind::RawObject, false);
+    return recordWriteResult(WriteSkipKind::RawObject, w->replayRawObject(*object));
 }
 
 bool dwgRW::writeRawDwgSection(const DRW_RawDwgSection *section) {
     if (section == nullptr || writer == nullptr)
-        return false;
-    return writer->addRawDwgSection(*section);
+        return recordWriteResult(WriteSkipKind::RawSection, false);
+    return recordWriteResult(WriteSkipKind::RawSection,
+                             writer->addRawDwgSection(*section));
 }
 
 std::unique_ptr<dwgReader> dwgRW::createReaderForVersion(
