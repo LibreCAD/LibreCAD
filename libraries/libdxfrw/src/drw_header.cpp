@@ -1654,7 +1654,7 @@ void DRW_Header::write(const std::unique_ptr<dxfWriter>& writer, DRW::Version ve
         else
             writer->writeDouble(40, 1.0);
         writer->writeString(9, "$NORTHDIRECTION");
-        if (getDouble("$LONGITUDE", &varDouble))
+        if (getDouble("$NORTHDIRECTION", &varDouble))
             writer->writeDouble(40, varDouble);
         else
             writer->writeDouble(40, 0.0);

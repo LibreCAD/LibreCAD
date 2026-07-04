@@ -1319,6 +1319,9 @@ TEST_CASE("DXF header write tolerates bare vs $-prefixed key convention (dxf-str
       // DWG-parse convention: bare keys, no '$'.
       h.addDouble("LTSCALE", 4.25, 40);  // default would be 1.0 -> emits "1"
       h.addInt("LUNITS", 3, 70);          // default would be 2
+      h.addDouble("LATITUDE", 11.0, 40);
+      h.addDouble("LONGITUDE", 22.0, 40);
+      h.addDouble("NORTHDIRECTION", 33.0, 40);
       h.addStr("FINGERPRINTGUID",
                "{AABBCCDD-0000-0000-0000-001122334455}", 2);
       h.addStr("VERSIONGUID",
@@ -1337,6 +1340,10 @@ TEST_CASE("DXF header write tolerates bare vs $-prefixed key convention (dxf-str
   CHECK(hasConsecutive(groups, {{"9", "$LTSCALE"}, {"40", "4.25"}}));
   // LUNITS: bare key must propagate 3, not the default 2.
   CHECK(hasConsecutive(groups, {{"9", "$LUNITS"}, {"70", "3"}}));
+  CHECK(hasConsecutive(groups, {{"9", "$LATITUDE"}, {"40", "11"}}));
+  CHECK(hasConsecutive(groups, {{"9", "$LONGITUDE"}, {"40", "22"}}));
+  // NORTHDIRECTION must use its own value, not the longitude value.
+  CHECK(hasConsecutive(groups, {{"9", "$NORTHDIRECTION"}, {"40", "33"}}));
   // GUIDs must appear (not silently skipped) when stored as bare keys.
   CHECK(hasConsecutive(groups,
       {{"9", "$FINGERPRINTGUID"},
