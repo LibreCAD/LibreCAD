@@ -39,17 +39,19 @@ $ librecad dxf2svg foo.dxf
 
 ## Releases and Milestones
 
+### Quick Downloads
+- [Latest stable release](https://github.com/LibreCAD/LibreCAD/releases/latest)
+- [Latest build from stable branch 2.2.1](https://github.com/LibreCAD/LibreCAD/releases/tag/2.2.1-latest)
+- [Latest build from master](https://github.com/LibreCAD/LibreCAD/releases/tag/2.2.2_alpha-latest)
+
 ### Releases
 - [Releases and Prereleases](https://github.com/LibreCAD/LibreCAD/releases)
-### Latest Builds
-- [2.2.2_alpha-latest](https://github.com/LibreCAD/LibreCAD/releases/tag/2.2.2_alpha-latest)
-- [2.2.1.x latest](https://github.com/LibreCAD/LibreCAD/releases/tag/2.2.1-latest)
 
-  For macOS arm64 builds, the app is __NOT__ signed. To workaround the "damaged" error ([#2162](https://github.com/LibreCAD/LibreCAD/issues/2162)):
-  ```bash
-  xattr -rc LibreCAD.app
-  sudo codesign --force --deep --sign - LibreCAD.app
-  ```
+For macOS arm64 builds, the app is __NOT__ signed. To workaround the "damaged" error ([#2162](https://github.com/LibreCAD/LibreCAD/issues/2162)):
+```bash
+xattr -rc LibreCAD.app
+sudo codesign --force --deep --sign - LibreCAD.app
+```
 
 
 ## Built with libdxfrw

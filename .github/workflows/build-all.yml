@@ -134,7 +134,6 @@ jobs:
         uses: actions/checkout@main
         with:
           fetch-depth: 0
-          ref: master
 
       - name: Install Qt6
         uses: jurplel/install-qt-action@v4
@@ -486,30 +485,88 @@ jobs:
           retention-days: 2
 
   UpdateAssets:
-    if: github.repository_owner == 'LibreCAD'
+    if: github.repository_owner == 'LibreCAD' && (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/2.2.1')
     needs: [BuildLinux, BuildLinuxAarch64, BuildMacOS, BuildMacOSArm64, BuildWindows64, BuildWindowsARM64, BuildSnap]
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Checkout code
         uses: actions/checkout@main
         with:
           fetch-depth: 0
 
-      - name: Delete existing
-        run: gh release delete "2.2.2_alpha-latest" -y
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Prepare release metadata
+        id: release_metadata
+        run: |
+          set -euo pipefail
+
+          case "${GITHUB_REF_NAME}" in
+            "2.2.1")
+              release_tag="2.2.1-latest"
+              release_name="Latest build from stable branch 2.2.1"
+              channel_description="This is the latest automated build from the maintained 2.2.1 stable release branch. For normal production use, prefer the latest stable release."
+              ;;
+            "master")
+              release_tag="2.2.2_alpha-latest"
+              release_name="Latest build from master branch"
+              channel_description="This is the latest automated development build from the master branch. Use it for testing the next LibreCAD version."
+              ;;
+            *)
+              echo "::error::Unsupported release branch: ${GITHUB_REF_NAME}"
+              exit 1
+              ;;
+          esac
+
+          {
+            echo "release_tag=${release_tag}"
+            echo "release_name=${release_name}"
+          } >> "${GITHUB_OUTPUT}"
+
+          cat > release-notes.md <<EOF
+          ## Quick Downloads
+
+          - [Latest stable release](https://github.com/LibreCAD/LibreCAD/releases/latest)
+          - [Latest build from stable branch 2.2.1](https://github.com/LibreCAD/LibreCAD/releases/tag/2.2.1-latest)
+          - [Latest build from master](https://github.com/LibreCAD/LibreCAD/releases/tag/2.2.2_alpha-latest)
+
+          ## About this build
+
+          ${channel_description}
+
+          Built from \`${GITHUB_REF_NAME}\` at commit \`${GITHUB_SHA}\`.
+          EOF
+
+          cat > downloads-latest.md <<EOF
+          ## Quick Downloads
+
+          - [Latest stable release](https://github.com/LibreCAD/LibreCAD/releases/latest)
+          - [Latest build from stable branch 2.2.1](https://github.com/LibreCAD/LibreCAD/releases/tag/2.2.1-latest)
+          - [Latest build from master](https://github.com/LibreCAD/LibreCAD/releases/tag/2.2.2_alpha-latest)
+
+          This entry keeps the current LibreCAD download links visible at the top of the releases page.
+          EOF
 
       - name: Fetch artifacts
         uses: actions/download-artifact@main
 
+      - name: Delete existing
+        run: |
+          gh release delete "${{ steps.release_metadata.outputs.release_tag }}" --cleanup-tag -y || true
+          git push origin ":refs/tags/${{ steps.release_metadata.outputs.release_tag }}" || true
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Upload latest pre-release
         uses: softprops/action-gh-release@v2
         with:
-          name: "Continuous Build: latest development"
-          tag_name: "2.2.2_alpha-latest"
+          name: ${{ steps.release_metadata.outputs.release_name }}
+          tag_name: ${{ steps.release_metadata.outputs.release_tag }}
+          target_commitish: ${{ github.sha }}
           prerelease: true
           draft: false
+          make_latest: false
+          body_path: release-notes.md
           files: |
             linuxAssets/LibreCAD*.AppImage
             linuxAssetsAarch64/LibreCAD*.AppImage
@@ -519,3 +576,15 @@ jobs:
             winARM64Assets/LibreCAD*.exe
             snapAssets/LibreCAD*.snap
             LICENSE
+
+      - name: Refresh top download links
+        run: |
+          gh release delete "downloads-latest" --cleanup-tag -y || true
+          git push origin ":refs/tags/downloads-latest" || true
+          gh release create "downloads-latest" \
+            --title "Download LibreCAD" \
+            --notes-file downloads-latest.md \
+            --prerelease \
+            --target "${GITHUB_SHA}"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
