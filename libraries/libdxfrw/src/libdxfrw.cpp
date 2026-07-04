@@ -2616,6 +2616,8 @@ bool dxfRW::writeUnderlayDefinition(DRW_UnderlayDefinition *ent) {
     writer->writeString(100, "AcDbUnderlayDefinition");
     writer->writeUtf8String(1, ent->filename);
     writer->writeUtf8String(2, ent->sheetName);
+    if (!ent->extData.empty())
+        writeExtData(ent->extData);
     return true;
 }
 
@@ -6918,6 +6920,8 @@ bool dxfRW::writePlotSettings(DRW_PlotSettings *ent) {
     }
     writer->writeString(100, "AcDbPlotSettings");
     writePlotSettingsFields(ent);
+    if (!ent->extData.empty())
+        writeExtData(ent->extData);
     return true;
 }
 
@@ -7042,6 +7046,8 @@ bool dxfRW::writeLayout(DRW_Layout *ent) {
     if (ent->baseUcsHandle.ref != 0)
         writer->writeString(
             346, toHexStr(static_cast<int>(ent->baseUcsHandle.ref)));
+    if (!ent->extData.empty())
+        writeExtData(ent->extData);
     return true;
 }
 
@@ -7087,6 +7093,8 @@ bool dxfRW::writeSun(DRW_Sun *ent) {
     writer->writeInt16(70, static_cast<int>(ent->m_shadowType));
     writer->writeInt16(71, static_cast<int>(ent->m_shadowMapSize));
     writer->writeInt16(280, static_cast<int>(ent->m_shadowSoftness));
+    if (!ent->extData.empty())
+        writeExtData(ent->extData);
     return true;
 }
 
@@ -7100,6 +7108,8 @@ bool dxfRW::writeScale(DRW_Scale *ent) {
     writer->writeDouble(140, ent->paperUnits);
     writer->writeDouble(141, ent->drawingUnits);
     writer->writeBool(290, ent->isUnitScale);
+    if (!ent->extData.empty())
+        writeExtData(ent->extData);
     return true;
 }
 
@@ -7112,6 +7122,8 @@ bool dxfRW::writeDictionaryVar(DRW_DictionaryVar *ent) {
     writer->writeString(100, "DictionaryVariables");
     writer->writeInt16(280, static_cast<int>(ent->m_schema));
     writer->writeUtf8String(1, ent->m_value);
+    if (!ent->extData.empty())
+        writeExtData(ent->extData);
     return true;
 }
 
@@ -7124,6 +7136,8 @@ bool dxfRW::writeRasterVariables(DRW_RasterVariables *ent) {
     writer->writeInt16(70, ent->m_imageFrame);
     writer->writeInt16(71, ent->m_imageQuality);
     writer->writeInt16(72, ent->m_units);
+    if (!ent->extData.empty())
+        writeExtData(ent->extData);
     return true;
 }
 
@@ -7189,6 +7203,8 @@ bool dxfRW::writeGeoData(DRW_GeoData *ent) {
         writer->writeInt32(98, face.m_index2);
         writer->writeInt32(99, face.m_index3);
     }
+    if (!ent->extData.empty())
+        writeExtData(ent->extData);
     return true;
 }
 
@@ -7225,6 +7241,8 @@ bool dxfRW::writeSpatialFilter(DRW_SpatialFilter *ent) {
     };
     writeMatrix12(ent->m_inverseInsertTransform);
     writeMatrix12(ent->m_insertTransform);
+    if (!ent->extData.empty())
+        writeExtData(ent->extData);
     return true;
 }
 
@@ -7279,6 +7297,8 @@ bool dxfRW::writeSortEntsTable(DRW_SortEntsTable *ent) {
         writer->writeString(331, toHexStr(static_cast<int>(entityHandle)));
         writer->writeString(5, toHexStr(static_cast<int>(sortHandle)));
     }
+    if (!ent->extData.empty())
+        writeExtData(ent->extData);
     return true;
 }
 
@@ -7348,6 +7368,8 @@ bool dxfRW::writeField(DRW_Field *ent) {
 
     writer->writeUtf8String(301, ent->m_valueString);
     writer->writeInt32(98, ent->m_valueStringLength);
+    if (!ent->extData.empty())
+        writeExtData(ent->extData);
     return true;
 }
 
@@ -7362,6 +7384,8 @@ bool dxfRW::writeFieldList(DRW_FieldList *ent) {
     for (std::uint32_t field : ent->m_fieldHandles)
         writer->writeString(330, toHexStr(static_cast<int>(field)));
     writer->writeString(100, "AcDbFieldList");
+    if (!ent->extData.empty())
+        writeExtData(ent->extData);
     return true;
 }
 
@@ -7427,6 +7451,8 @@ bool dxfRW::writeMLeaderStyle(DRW_MLeaderStyle *ent) {
     writer->writeInt32(273, ent->topAttachment);
     writer->writeInt32(272, ent->bottomAttachment);
     writer->writeBool(298, ent->textExtended);
+    if (!ent->extData.empty())
+        writeExtData(ent->extData);
     return true;
 }
 
@@ -7452,6 +7478,8 @@ bool dxfRW::writeMLineStyle(DRW_MLineStyle *ent) {
         writer->writeInt16(62, el.color);
         writer->writeUtf8String(6, el.linetype.empty() ? "BYLAYER" : el.linetype);
     }
+    if (!ent->extData.empty())
+        writeExtData(ent->extData);
     return true;
 }
 
@@ -7463,6 +7491,8 @@ bool dxfRW::writeWipeoutVariables(DRW_WipeoutVariables *ent) {
     writeObjectOwner(static_cast<std::uint32_t>(ent->parentHandle));
     writer->writeString(100, "AcDbWipeoutVariables");
     writer->writeInt16(70, ent->m_displayFrame);
+    if (!ent->extData.empty())
+        writeExtData(ent->extData);
     return true;
 }
 

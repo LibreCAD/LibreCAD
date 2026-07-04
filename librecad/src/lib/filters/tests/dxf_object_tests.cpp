@@ -405,6 +405,51 @@ public:
   }
 };
 
+class ObjectXDataEmitter : public StubInterface {
+public:
+  dxfRW *m_rw = nullptr;
+
+  static void addXData(DRW_TableEntry &entry, const char *payload, int value) {
+    entry.extData.push_back(new DRW_Variant(1001, std::string{"OBJECTAPP"}));
+    entry.extData.push_back(new DRW_Variant(1000, std::string{payload}));
+    entry.extData.push_back(new DRW_Variant(1070, static_cast<std::int32_t>(value)));
+  }
+
+  void writeObjects() override {
+    DRW_Scale scale;
+    scale.handle = 0x510u;
+    scale.parentHandle = 0xCu;
+    scale.name = "XOBJ_SCALE";
+    scale.paperUnits = 1.0;
+    scale.drawingUnits = 48.0;
+    addXData(scale, "scale-xdata", 21);
+    m_rw->writeScale(&scale);
+
+    DRW_MLineStyle mlineStyle;
+    mlineStyle.handle = 0x511u;
+    mlineStyle.parentHandle = 0xCu;
+    mlineStyle.name = "XOBJ_MLINESTYLE";
+    mlineStyle.description = "object xdata";
+    addXData(mlineStyle, "mlinestyle-xdata", 22);
+    m_rw->writeMLineStyle(&mlineStyle);
+
+    DRW_Field field;
+    field.handle = 0x512u;
+    field.parentHandle = 0xCu;
+    field.m_evaluatorId = "AcExpr";
+    field.m_fieldCode = "1+1";
+    addXData(field, "field-xdata", 23);
+    m_rw->writeField(&field);
+
+    DRW_WipeoutVariables vars;
+    vars.handle = 0x513u;
+    vars.parentHandle = 0xCu;
+    vars.m_displayFrame = 1;
+    addXData(vars, "wipeoutvars-xdata", 24);
+    m_rw->writeWipeoutVariables(&vars);
+  }
+};
+
 // Read a written DXF file back into a string for structural assertions.
 std::string slurp(const std::filesystem::path &path) {
   std::ifstream in(path);
@@ -1211,6 +1256,36 @@ TEST_CASE("DXF selected entity writers preserve XDATA",
   CHECK(recordTypeHasConsecutive(
       groups, "TEXT", {{"1001", "ENTITYAPP"}, {"1000", "text-xdata"},
                        {"1070", "19"}}));
+}
+
+TEST_CASE("DXF selected object writers preserve XDATA",
+          "[dxf][object][xdata]") {
+  const auto path =
+      std::filesystem::temp_directory_path() / "lc_object_xdata.dxf";
+  std::filesystem::remove(path);
+
+  {
+    dxfRW w(path.string().c_str());
+    ObjectXDataEmitter em;
+    em.m_rw = &w;
+    REQUIRE(w.write(&em, DRW::AC1021, false));
+  }
+
+  const auto groups = readGroups(path);
+  std::filesystem::remove(path);
+
+  CHECK(recordTypeHasConsecutive(
+      groups, "SCALE", {{"1001", "OBJECTAPP"}, {"1000", "scale-xdata"},
+                        {"1070", "21"}}));
+  CHECK(recordTypeHasConsecutive(
+      groups, "MLINESTYLE",
+      {{"1001", "OBJECTAPP"}, {"1000", "mlinestyle-xdata"}, {"1070", "22"}}));
+  CHECK(recordTypeHasConsecutive(
+      groups, "FIELD", {{"1001", "OBJECTAPP"}, {"1000", "field-xdata"},
+                        {"1070", "23"}}));
+  CHECK(recordTypeHasConsecutive(
+      groups, "WIPEOUTVARIABLES",
+      {{"1001", "OBJECTAPP"}, {"1000", "wipeoutvars-xdata"}, {"1070", "24"}}));
 }
 
 // F3-1: dxfRW::writeEntity captures source-handle -> minted-handle in the
