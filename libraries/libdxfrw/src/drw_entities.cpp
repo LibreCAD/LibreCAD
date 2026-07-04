@@ -5772,63 +5772,107 @@ bool DRW_MPolygon::parseCode(int code, const std::unique_ptr<dxfReader>& reader)
     return DRW_Hatch::parseCode(code, reader);
 }
 
-bool DRW_Hatch::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs){
+// DRW_MPolygon::parseDwg — AcDbMPolygon DWG body.
+// Layout mirrors HATCH except (per ACadSharp MPolygon / libreDWG dwg.spec):
+//   * a leading BS `style` (DXF group 75) precedes the gradient block, and
+//   * the trailer is a fill CMC + boundary x-direction (2RD) + degenerate-path
+//     count (BL) instead of HATCH's pixel-size + seed points.
+// The gradient/elevation/extrusion/name/solid/associative prologue and the whole
+// boundary-loop body are identical, so they reuse DRW_Hatch::parseDwgBoundaryData.
+// No committed real-world DWG MPOLYGON fixture exists; validated by build + the
+// ezdxf-derived DXF fixture (mpolygon_tests.cpp). DWG-runtime check deferred.
+bool DRW_MPolygon::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs){
     dwgBuffer sBuff = *buf;
     dwgBuffer *sBuf = buf;
     std::uint32_t totalBoundItems = 0;
     bool havePixelSize = false;
-
-    if (version > DRW::AC1018) {//2007+
+    if (version > DRW::AC1018) //2007+
         sBuf = &sBuff; //separate buffer for strings
-    }
-    bool ret = DRW_Entity::parseDwg(version, buf, sBuf, bs);
-    if (!ret)
-        return ret;
-    DRW_DBG("\n***************************** parsing hatch *********************************************\n");
+    if (!DRW_Entity::parseDwg(version, buf, sBuf, bs))
+        return false;
+    DRW_DBG("\n***************************** parsing mpolygon *********************************************\n");
 
-    //Gradient data, RLZ: is ok or if grad > 0 continue read ?
-    if (version > DRW::AC1015) { //2004+
+    // Leading BS style (group 75) — read once here and again after the loops
+    // below (HATCH has only the latter); matches the reference parser, which
+    // discards this first read.
+    hstyle = buf->getBitShort();
+
+    if (version > DRW::AC1015) { //2004+ gradient (same layout as HATCH)
         isGradient = buf->getBitLong();
-        DRW_DBG("is Gradient: "); DRW_DBG(isGradient);
         gradReserved = buf->getBitLong();
-        DRW_DBG(" reserved: "); DRW_DBG(gradReserved);
         gradAngle = buf->getBitDouble();
-        DRW_DBG(" Gradient angle: "); DRW_DBG(gradAngle);
         gradShift = buf->getBitDouble();
-        DRW_DBG(" Gradient shift: "); DRW_DBG(gradShift);
         singleColor = buf->getBitLong();
-        DRW_DBG("\nsingle color Grad: "); DRW_DBG(singleColor);
         gradTint = buf->getBitDouble();
-        DRW_DBG(" Gradient tint: "); DRW_DBG(gradTint);
         std::int32_t numCol = buf->getBitLong();
-        DRW_DBG(" num colors: "); DRW_DBG(numCol);
         if (numCol > 0)
             DRW::reserve(gradColors, numCol);
         for (std::int32_t i = 0 ; i < numCol; ++i){
-            GradientStop stop;
-            // First field is the stop position (per libreDWG: BD/unkDouble holds
-            // the stop value in [0,1]); falls back to even spacing if missing.
+            DRW_Hatch::GradientStop stop;
             stop.value = buf->getBitDouble();
-            DRW_DBG("\nstop value: "); DRW_DBG(stop.value);
-            std::uint16_t unkShort = buf->getBitShort();
-            DRW_DBG(" unkShort: "); DRW_DBG(unkShort);
+            buf->getBitShort();           // unknown short
             stop.rgb = buf->getBitLong();
-            DRW_DBG(" rgb color: "); DRW_DBG(stop.rgb);
-            std::uint8_t ignCol = buf->getRawChar8();
-            DRW_DBG(" ignored color: "); DRW_DBG(ignCol);
+            buf->getRawChar8();           // ignored color byte
             gradColors.push_back(stop);
         }
         gradName = sBuf->getVariableText(version, false);
-        DRW_DBG("\ngradient name: "); DRW_DBG(gradName.c_str()); DRW_DBG("\n");
     }
-    basePoint.z = buf->getBitDouble();
+    basePoint.z = buf->getBitDouble();    // elevation
     extPoint = buf->get3BitDouble();
-    DRW_DBG("base point: "); DRW_DBGPT(basePoint.x, basePoint.y, basePoint.z);
-    DRW_DBG("\nextrusion: "); DRW_DBGPT(extPoint.x, extPoint.y, extPoint.z);
     name = sBuf->getVariableText(version, false);
-    DRW_DBG("\nhatch pattern name: "); DRW_DBG(name.c_str()); DRW_DBG("\n");
     solid = buf->getBit();
     associative = buf->getBit();
+
+    if (!parseDwgBoundaryData(version, buf, totalBoundItems, havePixelSize))
+        return false;
+
+    hstyle = buf->getBitShort();
+    hpattern = buf->getBitShort();
+    if (!solid){
+        angle = buf->getBitDouble();
+        scale = buf->getBitDouble();
+        doubleflag = buf->getBit();
+        deflines = buf->getBitShort();
+        for (std::int32_t i = 0 ; i < deflines; ++i){
+            buf->getBitDouble();          // line angle
+            buf->getBitDouble();          // base x
+            buf->getBitDouble();          // base y
+            buf->getBitDouble();          // offset x
+            buf->getBitDouble();          // offset y
+            std::uint16_t numDashL = buf->getBitShort();
+            for (std::uint16_t d = 0 ; d < numDashL; ++d)
+                buf->getBitDouble();      // dash length
+        }
+    }
+
+    // MPOLYGON trailer (differs from HATCH): fill CMC + x-direction + degenerate
+    // path count. No pixel size / seed points here.
+    std::int32_t rgb = -1;
+    UTF8STRING colName;
+    fillColorAci = static_cast<int>(buf->getCmColor(version, &rgb, sBuf, &colName));
+    fillColorRgb = rgb;
+    fillColorName = colName;
+    DRW_Coord xdir = buf->get2RawDouble();
+    xDirX = xdir.x;
+    xDirY = xdir.y;
+    degenerateLoops = buf->getBitLong();
+
+    if (!DRW_Entity::parseDwgEntHandle(version, buf))
+        return false;
+    for (std::uint32_t i = 0 ; i < totalBoundItems; ++i)
+        buf->getHandle();                 // boundary-source handles
+    return buf->isGood();
+}
+
+// Shared DWG boundary-loop reader for HATCH and MPOLYGON (ODA §20.4.36).
+// Reads the loop count and, per loop, the derived-boundary flag plus its edge
+// list or polyline. Accumulates the running boundary-source-handle total and
+// whether any loop is derived (needs a trailing pixel size). Extracted from
+// DRW_Hatch::parseDwg so DRW_MPolygon::parseDwg reuses the identical body while
+// supplying its own differing leading (BS style) and trailing (fill CMC +
+// x-direction + degenerate count) field order.
+bool DRW_Hatch::parseDwgBoundaryData(DRW::Version version, dwgBuffer *buf,
+                                     std::uint32_t &totalBoundItems, bool &havePixelSize) {
     loopsnum = buf->getBitLong();
     DRW_DBG("solid: "); DRW_DBG(solid); DRW_DBG(" associative: "); DRW_DBG(associative);
     DRW_DBG(" loopsnum: "); DRW_DBG(loopsnum); DRW_DBG("\n");
@@ -5930,6 +5974,68 @@ bool DRW_Hatch::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs)
         totalBoundItems += buf->getBitLong();
         DRW_DBG(" totalBoundItems: "); DRW_DBG(totalBoundItems);
     } //end read loops
+    return true;
+}
+
+bool DRW_Hatch::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs){
+    dwgBuffer sBuff = *buf;
+    dwgBuffer *sBuf = buf;
+    std::uint32_t totalBoundItems = 0;
+    bool havePixelSize = false;
+
+    if (version > DRW::AC1018) {//2007+
+        sBuf = &sBuff; //separate buffer for strings
+    }
+    bool ret = DRW_Entity::parseDwg(version, buf, sBuf, bs);
+    if (!ret)
+        return ret;
+    DRW_DBG("\n***************************** parsing hatch *********************************************\n");
+
+    //Gradient data, RLZ: is ok or if grad > 0 continue read ?
+    if (version > DRW::AC1015) { //2004+
+        isGradient = buf->getBitLong();
+        DRW_DBG("is Gradient: "); DRW_DBG(isGradient);
+        gradReserved = buf->getBitLong();
+        DRW_DBG(" reserved: "); DRW_DBG(gradReserved);
+        gradAngle = buf->getBitDouble();
+        DRW_DBG(" Gradient angle: "); DRW_DBG(gradAngle);
+        gradShift = buf->getBitDouble();
+        DRW_DBG(" Gradient shift: "); DRW_DBG(gradShift);
+        singleColor = buf->getBitLong();
+        DRW_DBG("\nsingle color Grad: "); DRW_DBG(singleColor);
+        gradTint = buf->getBitDouble();
+        DRW_DBG(" Gradient tint: "); DRW_DBG(gradTint);
+        std::int32_t numCol = buf->getBitLong();
+        DRW_DBG(" num colors: "); DRW_DBG(numCol);
+        if (numCol > 0)
+            DRW::reserve(gradColors, numCol);
+        for (std::int32_t i = 0 ; i < numCol; ++i){
+            GradientStop stop;
+            // First field is the stop position (per libreDWG: BD/unkDouble holds
+            // the stop value in [0,1]); falls back to even spacing if missing.
+            stop.value = buf->getBitDouble();
+            DRW_DBG("\nstop value: "); DRW_DBG(stop.value);
+            std::uint16_t unkShort = buf->getBitShort();
+            DRW_DBG(" unkShort: "); DRW_DBG(unkShort);
+            stop.rgb = buf->getBitLong();
+            DRW_DBG(" rgb color: "); DRW_DBG(stop.rgb);
+            std::uint8_t ignCol = buf->getRawChar8();
+            DRW_DBG(" ignored color: "); DRW_DBG(ignCol);
+            gradColors.push_back(stop);
+        }
+        gradName = sBuf->getVariableText(version, false);
+        DRW_DBG("\ngradient name: "); DRW_DBG(gradName.c_str()); DRW_DBG("\n");
+    }
+    basePoint.z = buf->getBitDouble();
+    extPoint = buf->get3BitDouble();
+    DRW_DBG("base point: "); DRW_DBGPT(basePoint.x, basePoint.y, basePoint.z);
+    DRW_DBG("\nextrusion: "); DRW_DBGPT(extPoint.x, extPoint.y, extPoint.z);
+    name = sBuf->getVariableText(version, false);
+    DRW_DBG("\nhatch pattern name: "); DRW_DBG(name.c_str()); DRW_DBG("\n");
+    solid = buf->getBit();
+    associative = buf->getBit();
+    if (!parseDwgBoundaryData(version, buf, totalBoundItems, havePixelSize))
+        return false;
 
     hstyle = buf->getBitShort();
     hpattern = buf->getBitShort();

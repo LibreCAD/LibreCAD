@@ -1697,6 +1697,11 @@ protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
     virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0, dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
+    // Shared DWG boundary-loop reader (loop count + per-loop path/edge/polyline
+    // data). Extracted so DRW_MPolygon::parseDwg reuses the identical loop body
+    // while supplying its own differing leading/trailing field order.
+    bool parseDwgBoundaryData(DRW::Version version, dwgBuffer *buf,
+                              std::uint32_t &totalBoundItems, bool &havePixelSize);
 
 public:
     UTF8STRING name;           /*!< hatch pattern name, code 2 */
@@ -1796,11 +1801,12 @@ private:
 *  Civil. Its boundary loops, solid flag and pattern share HATCH's representation,
 *  so it stores into a DRW_Hatch and renders through the existing addHatch path.
 *  It only adds a trailing fill-color, an x-direction vector and a degenerate-path
-*  count that plain HATCH does not carry. The DWG binary layout also differs (a
-*  leading style field, gradient before elevation); only the DXF read path is wired
-*  here — the DWG binary parser is a follow-up (no real-world DWG sample exists to
-*  validate against). Dispatched in dxfRW::processMPolygon via classesmap recName
-*  "MPOLYGON" / className "AcDbMPolygon".
+*  count that plain HATCH does not carry. The DWG binary layout also differs from
+*  HATCH: a leading BS style field precedes the gradient block, and the trailing
+*  fields are a fill CMC + x-direction + degenerate-path count (not HATCH's pixel
+*  size + seed points). Both the DXF (dxfRW::processMPolygon) and DWG
+*  (DRW_MPolygon::parseDwg, routed by classesmap recName "MPOLYGON" / className
+*  "AcDbMPolygon") read paths are wired; both deliver via addMPolygon.
 */
 class DRW_MPolygon : public DRW_Hatch {
     SETENTFRIENDS
@@ -1820,6 +1826,7 @@ public:
 
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
+    virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
 };
 
 //! Class to handle image entity
