@@ -1414,6 +1414,34 @@ DRW_UnsupportedObject makeRawDbColorObject(DRW::Version version) {
     return object;
 }
 
+DRW_UnsupportedObject makeRawImageDefObject(DRW::Version version) {
+    constexpr std::uint16_t objectType = 102;
+    constexpr std::uint32_t handle = 0x940u;
+    dwgBufferW body;
+    putRawObjectPreamble(body, version, objectType, handle);
+    body.putBitLong(0);                // class version
+    body.putRawDouble(640.0);          // pixel width
+    body.putRawDouble(480.0);          // pixel height
+    body.putVariableText(version, std::string("image-def.png"));
+    body.putBit(1);                    // loaded
+    body.putRawChar8(2);               // resolution
+    body.putRawDouble(0.5);            // pixel size U
+    body.putRawDouble(0.75);           // pixel size V
+    body.putHandle(rawObjectHandle(4, 0x902u));
+    body.putHandle(rawObjectHandle(0, 0));      // xdictionary
+    body.putHandle(rawObjectHandle(0, 0));      // xref
+
+    DRW_UnsupportedObject object;
+    object.m_objectType = objectType;
+    object.m_handle = handle;
+    object.m_bodyBitSize = version > DRW::AC1021 ? body.bitCount() : 0;
+    object.m_objectSize = static_cast<std::uint32_t>(body.data().size());
+    object.m_isEntity = false;
+    object.m_isCustomClass = false;
+    object.m_rawBytes = body.data();
+    return object;
+}
+
 class RawObjectReplayIface : public EmptyIface {
 public:
     explicit RawObjectReplayIface(DRW::Version version)
@@ -1441,6 +1469,37 @@ public:
     }
 
     void addUnsupportedObject(const DRW_UnsupportedObject &object) override {
+        m_unsupportedObjects.push_back(object);
+    }
+};
+
+class RawImageDefReplayIface : public EmptyIface {
+public:
+    explicit RawImageDefReplayIface(DRW::Version version)
+        : m_imageDefObject(makeRawImageDefObject(version))
+    {}
+
+    dwgRW *m_writer {nullptr};
+    DRW_UnsupportedObject m_imageDefObject;
+    std::vector<DRW_ImageDef> m_imageDefs;
+    std::vector<DRW_UnsupportedObject> m_unsupportedObjects;
+
+    void writeDwgClasses() override {
+        if (m_writer != nullptr)
+            REQUIRE(m_writer->registerRawDwgObjectClass(&m_imageDefObject));
+    }
+
+    void writeObjects() override {
+        if (m_writer != nullptr)
+            REQUIRE(m_writer->writeRawDwgObject(&m_imageDefObject));
+    }
+
+    void linkImage(const DRW_ImageDef* imageDef) override {
+        if (imageDef != nullptr)
+            m_imageDefs.push_back(*imageDef);
+    }
+
+    void addUnsupportedObject(const DRW_UnsupportedObject& object) override {
         m_unsupportedObjects.push_back(object);
     }
 };
@@ -2860,6 +2919,54 @@ TEST_CASE("dwgRW replays raw custom OBJECT payloads with class metadata",
         REQUIRE(raw->m_recordName == writeIface.m_rawObject.m_recordName);
         REQUIRE(raw->m_className == writeIface.m_rawObject.m_className);
         REQUIRE(raw->m_rawBytes == writeIface.m_rawObject.m_rawBytes);
+
+        std::remove(path.c_str());
+    }
+}
+
+TEST_CASE("dwgRW dual-delivers IMAGEDEF raw payloads for same-format replay",
+          "[dwg-write][raw-replay][imagedef]") {
+    const DRW::Version versions[] = {DRW::AC1015, DRW::AC1018};
+
+    for (DRW::Version version : versions) {
+        const std::string path = tempPath("raw_imagedef_replay.dwg");
+        RawImageDefReplayIface writeIface(version);
+        {
+            dwgRW writer(path.c_str());
+            writeIface.m_writer = &writer;
+            REQUIRE(writer.write(&writeIface, version, /*bin=*/false));
+        }
+
+        RawImageDefReplayIface readIface(version);
+        {
+            dwgRW reader(path.c_str());
+            REQUIRE(reader.read(&readIface, /*ext=*/false));
+            REQUIRE(reader.getVersion() == version);
+            REQUIRE(reader.getError() == DRW::BAD_NONE);
+        }
+
+        REQUIRE(readIface.m_imageDefs.size() == 1);
+        const DRW_ImageDef& imageDef = readIface.m_imageDefs.front();
+        CHECK(imageDef.handle == writeIface.m_imageDefObject.m_handle);
+        CHECK(imageDef.name == "image-def.png");
+        CHECK(imageDef.u == 640.0);
+        CHECK(imageDef.v == 480.0);
+        CHECK(imageDef.up == 0.5);
+        CHECK(imageDef.vp == 0.75);
+        CHECK(imageDef.loaded == 1);
+        CHECK(imageDef.resolution == 2);
+
+        auto raw = std::find_if(
+            readIface.m_unsupportedObjects.begin(),
+            readIface.m_unsupportedObjects.end(),
+            [&](const DRW_UnsupportedObject& object) {
+                return object.m_handle == writeIface.m_imageDefObject.m_handle;
+            });
+        REQUIRE(raw != readIface.m_unsupportedObjects.end());
+        CHECK(raw->m_objectType == writeIface.m_imageDefObject.m_objectType);
+        CHECK_FALSE(raw->m_isCustomClass);
+        CHECK_FALSE(raw->m_isEntity);
+        CHECK(raw->m_rawBytes == writeIface.m_imageDefObject.m_rawBytes);
 
         std::remove(path.c_str());
     }

@@ -2125,8 +2125,10 @@ bool dwgReader::readDwgObject(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
         case 102: {
             DRW_ImageDef e;
             ret = e.parseDwg(version, &buff, bs);
-            if (ret)
+            if (ret) {
                 intfa.linkImage(&e);
+                intfa.addUnsupportedObject(makeRawObject(oType));
+            }
             break; }
         default:
             // Custom-class objects (oType >= 500) — look up by classesmap
