@@ -99,6 +99,64 @@ UTF8STRING tableCellText(const DRW_TableCell& cell) {
     return UTF8STRING();
 }
 
+const char *modelerGeometryDxfName(DRW::ETYPE type) {
+    switch (type) {
+    case DRW::E3DSOLID:
+        return "3DSOLID";
+    case DRW::REGION:
+        return "REGION";
+    case DRW::BODY:
+        return "BODY";
+    default:
+        return nullptr;
+    }
+}
+
+const char *modelerGeometryDxfSubclass(DRW::ETYPE type) {
+    switch (type) {
+    case DRW::E3DSOLID:
+        return "AcDb3dSolid";
+    case DRW::REGION:
+        return "AcDbRegion";
+    case DRW::BODY:
+        return "AcDbBody";
+    default:
+        return nullptr;
+    }
+}
+
+bool isTextAcisPayload(const std::vector<std::uint8_t>& data) {
+    return std::all_of(data.begin(), data.end(), [](std::uint8_t byte) {
+        return byte == '\n' || byte == '\r' || byte == '\t' ||
+               (byte >= 0x20 && byte < 0x7f);
+    });
+}
+
+void writeDxfTextChunks(dxfWriter *writer, const std::vector<std::uint8_t>& data) {
+    const std::string text(data.begin(), data.end());
+    constexpr std::size_t kChunkSize = 255;
+    for (std::size_t off = 0; off < text.size(); off += kChunkSize) {
+        const std::size_t n = std::min(kChunkSize, text.size() - off);
+        writer->writeString(off == 0 ? 1 : 3, text.substr(off, n));
+    }
+}
+
+void writeDxfBinaryChunks(dxfWriter *writer, const std::vector<std::uint8_t>& data) {
+    static const char hexd[] = "0123456789ABCDEF";
+    constexpr std::size_t kChunkBytes = 127;
+    for (std::size_t off = 0; off < data.size(); off += kChunkBytes) {
+        const std::size_t n = std::min(kChunkBytes, data.size() - off);
+        std::string chunk;
+        chunk.reserve(n * 2);
+        for (std::size_t i = 0; i < n; ++i) {
+            const std::uint8_t byte = data[off + i];
+            chunk.push_back(hexd[byte >> 4]);
+            chunk.push_back(hexd[byte & 0x0F]);
+        }
+        writer->writeString(310, chunk);
+    }
+}
+
 }
 
 /*enum sections {
@@ -3329,13 +3387,34 @@ bool dxfRW::writeSurface(DRW_Surface *ent){
     writer->writeInt16(71, ent->uIsolines);
     writer->writeInt16(72, ent->vIsolines);
     if (!ent->rawAcisData.empty()) {
-        std::string hexStr;
-        for (std::uint8_t byte : ent->rawAcisData) {
-            char buf[3];
-            snprintf(buf, sizeof(buf), "%02X", byte);
-            hexStr += buf;
-        }
-        writer->writeString(310, hexStr);
+        writeDxfBinaryChunks(writer.get(), ent->rawAcisData);
+    }
+    if (!ent->extData.empty())
+        writeExtData(ent->extData);
+    return true;
+}
+
+bool dxfRW::writeModelerGeometry(DRW_ModelerGeometry *ent) {
+    if (version <= DRW::AC1009)
+        return false;
+
+    const char *recordName = modelerGeometryDxfName(ent->eType);
+    const char *subclassName = modelerGeometryDxfSubclass(ent->eType);
+    if (recordName == nullptr || subclassName == nullptr)
+        return false;
+
+    writer->writeString(0, recordName);
+    writeEntity(ent);
+    writer->writeString(100, "AcDbModelerGeometry");
+    writer->writeString(100, subclassName);
+    writer->writeInt16(70, ent->m_modelerVersion);
+    if (ent->m_historyHandle != 0)
+        writer->writeString(350, toHexStr(static_cast<int>(ent->m_historyHandle)));
+    if (!ent->m_rawBytes.empty()) {
+        if (version <= DRW::AC1018 && isTextAcisPayload(ent->m_rawBytes))
+            writeDxfTextChunks(writer.get(), ent->m_rawBytes);
+        else
+            writeDxfBinaryChunks(writer.get(), ent->m_rawBytes);
     }
     if (!ent->extData.empty())
         writeExtData(ent->extData);
@@ -4680,6 +4759,10 @@ bool dxfRW::processEntities(bool isblock) {
                    || nextentity == "LOFTEDSURFACE"
                    || nextentity == "NURBSURFACE") {
             processed = processSurface();
+        } else if (nextentity == "3DSOLID"
+                   || nextentity == "REGION"
+                   || nextentity == "BODY") {
+            processed = processModelerGeometry();
         } else if (nextentity == "MULTILEADER") {
             processed = processMultiLeader();
         } else if (nextentity == "DIMENSION") {
@@ -5487,6 +5570,38 @@ bool dxfRW::processSurface() {
         }
 
         if (!surf->parseCode(code, reader)) {
+            return setError(DRW::BAD_CODE_PARSED);
+        }
+    }
+
+    return setError(DRW::BAD_READ_ENTITIES);
+}
+
+bool dxfRW::processModelerGeometry() {
+    DRW_DBG("dxfRW::processModelerGeometry");
+    int code;
+    DRW::ETYPE type = DRW::UNKNOWN;
+    if (nextentity == "3DSOLID") {
+        type = DRW::E3DSOLID;
+    } else if (nextentity == "REGION") {
+        type = DRW::REGION;
+    } else if (nextentity == "BODY") {
+        type = DRW::BODY;
+    } else {
+        return setError(DRW::BAD_READ_ENTITIES);
+    }
+
+    DRW_ModelerGeometry geom(type);
+    while (reader->readRec(&code)) {
+        DRW_DBG(code); DRW_DBG("\n");
+        if (0 == code) {
+            nextentity = reader->getString();
+            DRW_DBG(nextentity); DRW_DBG("\n");
+            iface->addModelerGeometry(geom);
+            return true;
+        }
+
+        if (!geom.parseCode(code, reader)) {
             return setError(DRW::BAD_CODE_PARSED);
         }
     }

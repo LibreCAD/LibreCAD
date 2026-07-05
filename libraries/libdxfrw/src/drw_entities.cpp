@@ -76,6 +76,15 @@ bool decodeHexBytes(const std::string& hex, std::vector<std::uint8_t>& out) {
     return true;
 }
 
+void appendBytes(std::vector<std::uint8_t>& out,
+                 const std::vector<std::uint8_t>& bytes) {
+    out.insert(out.end(), bytes.begin(), bytes.end());
+}
+
+void appendTextBytes(std::vector<std::uint8_t>& out, const std::string& text) {
+    out.insert(out.end(), text.begin(), text.end());
+}
+
 std::uint64_t currentDwgBit(const dwgBuffer *buf) {
     return buf->getPosition() * 8 + buf->getBitPos();
 }
@@ -2962,6 +2971,33 @@ bool DRW_ModelerGeometry::parseDwg(DRW::Version v, dwgBuffer *buf, std::uint32_t
     }
 
     return ret;
+}
+
+bool DRW_ModelerGeometry::parseCode(int code, const std::unique_ptr<dxfReader>& reader) {
+    switch (code) {
+    case 1:
+    case 3:
+        appendTextBytes(m_rawBytes, reader->getString());
+        break;
+    case 70:
+        m_modelerVersion = static_cast<std::uint16_t>(reader->getInt32());
+        break;
+    case 350:
+    case 360:
+        m_historyHandle = static_cast<std::uint32_t>(reader->getHandleString());
+        break;
+    case 310:
+        {
+            std::vector<std::uint8_t> decoded;
+            if (!decodeHexBytes(reader->getString(), decoded))
+                return false;
+            appendBytes(m_rawBytes, decoded);
+        }
+        break;
+    default:
+        return DRW_Entity::parseCode(code, reader);
+    }
+    return true;
 }
 
 // DRW_Mesh::parseDwg — AcDbSubDMesh, field order per libreDWG dwg2.spec:2523
@@ -7612,9 +7648,10 @@ bool DRW_Surface::parseCode(int code, const std::unique_ptr<dxfReader>& reader) 
         break;
     case 310:
         {
-            std::string hexStr = reader->getString();
-            if (!decodeHexBytes(hexStr, rawAcisData))
+            std::vector<std::uint8_t> decoded;
+            if (!decodeHexBytes(reader->getString(), decoded))
                 return false;
+            appendBytes(rawAcisData, decoded);
         }
         break;
     default:

@@ -8654,6 +8654,27 @@ void RS_FilterDXFRW::writeEntities(){
       DRW_RawDxfObject entity = rawEntity;
       m_dxfW->writeRawDxfObject(&entity);
     }
+    // 3DSOLID/REGION/BODY modeler shells read from DWG or typed DXF live only
+    // on the metadata shelf. Re-emit their opaque ACIS/SAB payload without
+    // attempting B-rep interpretation.
+    for (const auto &rec : m_graphic->dwgAdvancedMetadata().modelerGeometry()) {
+      if (rec.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed)
+        continue;
+      DRW_ModelerGeometry geom(rec.type);
+      geom.handle = rec.handle;
+      geom.parentHandle = rec.parentHandle;
+      geom.m_modelerVersion = rec.modelerVersion;
+      geom.m_bodyBitSize = static_cast<std::uint32_t>(rec.rawBodyByteCount * 8u);
+      geom.m_objectSize = rec.objectSize;
+      geom.m_isEmpty = rec.isEmpty;
+      geom.m_hasModelerData = rec.hasModelerData;
+      geom.m_modelerDataUnknownBit = rec.modelerDataUnknownBit;
+      geom.m_hasWireframe = rec.hasWireframe;
+      geom.m_historyHandle = rec.historyHandle;
+      geom.m_rawBytes = rec.rawBytes;
+      geom.extData = rec.extData;
+      m_dxfW->writeModelerGeometry(&geom);
+    }
     // LIGHT entities read from a DWG live only on the metadata shelf (no RS_Light
     // model), so without this loop a DWG->DXF export silently drops them. Re-emit
     // them as typed AcDbLight (R2007+; writeLight no-ops on older DXF targets).

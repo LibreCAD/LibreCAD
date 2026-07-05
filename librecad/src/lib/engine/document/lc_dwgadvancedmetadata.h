@@ -918,6 +918,7 @@ public:
         size_t rawByteCount = 0;
         std::vector<std::uint8_t> rawBytes;
         std::vector<ModelerPayloadRangeRecord> payloadRanges;
+        std::vector<std::shared_ptr<DRW_Variant>> extData;
         ReplayState replayState = ReplayState::ReplayAllowed;
     };
 
@@ -2243,6 +2244,7 @@ public:
             geometry.m_rawBytes, geometry.m_bodyBitSize,
             geometry.m_hasWireframe);
         record.rawBytes = geometry.m_rawBytes;
+        record.extData = geometry.extData;
         m_modelerGeometry.push_back(std::move(record));
     }
 

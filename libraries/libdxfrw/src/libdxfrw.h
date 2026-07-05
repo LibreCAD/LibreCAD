@@ -128,6 +128,7 @@ public:
     bool writePointCloud(DRW_PointCloud *ent);
     bool writePointCloudEx(DRW_PointCloudEx *ent);
     bool writeSurface(DRW_Surface *ent);
+    bool writeModelerGeometry(DRW_ModelerGeometry *ent);
     bool writeMultiLeader(DRW_MLeader *ent);
     bool writeLeader(DRW_Leader *ent);
     bool writeDimension(DRW_Dimension *ent);
@@ -317,6 +318,7 @@ private:
     bool processPointCloud();
     bool processPointCloudEx();
     bool processSurface();
+    bool processModelerGeometry();
     bool processMultiLeader();
     bool processDimension();
     bool processArcDimension();
