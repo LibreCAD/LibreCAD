@@ -2484,6 +2484,7 @@ bool dwgReader::readDwgObject(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                                 : (e.bookName + "$" + e.name);
                             dbColorMap[obj.handle] = { e.rgb, formatted };
                             intfa.addDbColor(e);
+                            intfa.addUnsupportedObject(makeRawObject(oType, cit->second));
                         }
                         break;
                     }

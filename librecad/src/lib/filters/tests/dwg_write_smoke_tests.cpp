@@ -1393,6 +1393,27 @@ DRW_UnsupportedObject makeRawBreakPointRefObject(DRW::Version version) {
     return object;
 }
 
+DRW_UnsupportedObject makeRawDbColorObject(DRW::Version version) {
+    constexpr std::uint16_t classNumber = 612;
+    constexpr std::uint32_t handle = 0x930u;
+    dwgBufferW body;
+    putRawObjectPreamble(body, version, classNumber, handle);
+    body.putCmColor(version, 7);
+    putRawCommonObjectHandles(body, 0x902u);
+
+    DRW_UnsupportedObject object;
+    object.m_objectType = classNumber;
+    object.m_handle = handle;
+    object.m_bodyBitSize = version > DRW::AC1021 ? body.bitCount() : 0;
+    object.m_objectSize = static_cast<std::uint32_t>(body.data().size());
+    object.m_isEntity = false;
+    object.m_isCustomClass = true;
+    object.m_recordName = "DBCOLOR";
+    object.m_className = "AcDbColor";
+    object.m_rawBytes = body.data();
+    return object;
+}
+
 class RawObjectReplayIface : public EmptyIface {
 public:
     explicit RawObjectReplayIface(DRW::Version version)
@@ -1420,6 +1441,36 @@ public:
     }
 
     void addUnsupportedObject(const DRW_UnsupportedObject &object) override {
+        m_unsupportedObjects.push_back(object);
+    }
+};
+
+class RawDbColorReplayIface : public EmptyIface {
+public:
+    explicit RawDbColorReplayIface(DRW::Version version)
+        : m_dbColorObject(makeRawDbColorObject(version))
+    {}
+
+    dwgRW *m_writer {nullptr};
+    DRW_UnsupportedObject m_dbColorObject;
+    std::vector<DRW_DbColor> m_dbColors;
+    std::vector<DRW_UnsupportedObject> m_unsupportedObjects;
+
+    void writeDwgClasses() override {
+        if (m_writer != nullptr)
+            REQUIRE(m_writer->registerRawDwgObjectClass(&m_dbColorObject));
+    }
+
+    void writeObjects() override {
+        if (m_writer != nullptr)
+            REQUIRE(m_writer->writeRawDwgObject(&m_dbColorObject));
+    }
+
+    void addDbColor(const DRW_DbColor& color) override {
+        m_dbColors.push_back(color);
+    }
+
+    void addUnsupportedObject(const DRW_UnsupportedObject& object) override {
         m_unsupportedObjects.push_back(object);
     }
 };
@@ -2809,6 +2860,52 @@ TEST_CASE("dwgRW replays raw custom OBJECT payloads with class metadata",
         REQUIRE(raw->m_recordName == writeIface.m_rawObject.m_recordName);
         REQUIRE(raw->m_className == writeIface.m_rawObject.m_className);
         REQUIRE(raw->m_rawBytes == writeIface.m_rawObject.m_rawBytes);
+
+        std::remove(path.c_str());
+    }
+}
+
+TEST_CASE("dwgRW dual-delivers DBCOLOR raw payloads for same-format replay",
+          "[dwg-write][raw-replay][dbcolor]") {
+    const DRW::Version versions[] = {DRW::AC1015, DRW::AC1018};
+
+    for (DRW::Version version : versions) {
+        const std::string path = tempPath("raw_dbcolor_replay.dwg");
+        RawDbColorReplayIface writeIface(version);
+        {
+            dwgRW writer(path.c_str());
+            writeIface.m_writer = &writer;
+            REQUIRE(writer.write(&writeIface, version, /*bin=*/false));
+        }
+
+        RawDbColorReplayIface readIface(version);
+        {
+            dwgRW reader(path.c_str());
+            REQUIRE(reader.read(&readIface, /*ext=*/false));
+            REQUIRE(reader.getVersion() == version);
+            REQUIRE(reader.getError() == DRW::BAD_NONE);
+        }
+
+        REQUIRE(readIface.m_dbColors.size() == 1);
+        const DRW_DbColor& color = readIface.m_dbColors.front();
+        CHECK(color.handle == writeIface.m_dbColorObject.m_handle);
+        CHECK(color.colorIndex == 7);
+        CHECK(color.rgb == -1);
+        CHECK(color.name.empty());
+        CHECK(color.bookName.empty());
+
+        auto raw = std::find_if(
+            readIface.m_unsupportedObjects.begin(),
+            readIface.m_unsupportedObjects.end(),
+            [&](const DRW_UnsupportedObject& object) {
+                return object.m_handle == writeIface.m_dbColorObject.m_handle;
+            });
+        REQUIRE(raw != readIface.m_unsupportedObjects.end());
+        CHECK(raw->m_recordName == "DBCOLOR");
+        CHECK(raw->m_className == "AcDbColor");
+        CHECK(raw->m_isCustomClass);
+        CHECK_FALSE(raw->m_isEntity);
+        CHECK(raw->m_rawBytes == writeIface.m_dbColorObject.m_rawBytes);
 
         std::remove(path.c_str());
     }
