@@ -2501,7 +2501,10 @@ bool dwgReader::readDwgObject(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                         || cit->second->className == "AcDbPlotSettings") {
                         DRW_PlotSettings e;
                         ret = e.parseDwg(version, &buff, bs);
-                        if (ret) intfa.addPlotSettings(&e);
+                        if (ret) {
+                            intfa.addPlotSettings(&e);
+                            intfa.addUnsupportedObject(makeRawObject(oType, cit->second));
+                        }
                         break;
                     }
                     // OBJECTCONTEXTDATA (annotative per-object context) -

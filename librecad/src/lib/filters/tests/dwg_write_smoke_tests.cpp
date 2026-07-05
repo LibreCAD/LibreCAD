@@ -1442,6 +1442,59 @@ DRW_UnsupportedObject makeRawImageDefObject(DRW::Version version) {
     return object;
 }
 
+DRW_UnsupportedObject makeRawPlotSettingsObject(DRW::Version version) {
+    constexpr std::uint16_t classNumber = 613;
+    constexpr std::uint32_t handle = 0x950u;
+    dwgBufferW body;
+    putRawObjectPreamble(body, version, classNumber, handle);
+    body.putVariableText(version, std::string("MyPrinter"));   // pageSetupName
+    body.putVariableText(version, std::string("PaperCfg"));    // printerConfig
+    body.putBitShort(688);          // plotLayoutFlags
+    body.putBitDouble(7.5);         // marginLeft
+    body.putBitDouble(7.6);         // marginBottom
+    body.putBitDouble(7.7);         // marginRight
+    body.putBitDouble(7.8);         // marginTop
+    body.putBitDouble(420.0);       // paperWidth
+    body.putBitDouble(297.0);       // paperHeight
+    body.putVariableText(version, std::string("ISO_A3"));      // paperSize
+    body.putBitDouble(1.0);         // plotOriginX
+    body.putBitDouble(2.0);         // plotOriginY
+    body.putBitShort(1);            // paperUnits
+    body.putBitShort(2);            // plotRotation
+    body.putBitShort(3);            // plotType
+    body.putBitDouble(10.0);        // windowMinX
+    body.putBitDouble(11.0);        // windowMinY
+    body.putBitDouble(110.0);       // windowMaxX
+    body.putBitDouble(111.0);       // windowMaxY
+    if (version < DRW::AC1018)
+        body.putVariableText(version, std::string("PlotView1"));
+    body.putBitDouble(25.4);        // realWorldUnits
+    body.putBitDouble(1.0);         // drawingUnits
+    body.putVariableText(version, std::string("acad.ctb"));    // currentStyleSheet
+    body.putBitShort(4);            // scaleType
+    body.putBitDouble(0.5);         // scaleFactor
+    body.putBitDouble(3.0);         // paperImageOriginX
+    body.putBitDouble(4.0);         // paperImageOriginY
+    if (version >= DRW::AC1018) {
+        body.putBitShort(5);        // shadePlotMode
+        body.putBitShort(6);        // shadePlotResLevel
+        body.putBitShort(300);      // shadePlotCustomDPI
+    }
+    putRawCommonObjectHandles(body, 0x902u);
+
+    DRW_UnsupportedObject object;
+    object.m_objectType = classNumber;
+    object.m_handle = handle;
+    object.m_bodyBitSize = version > DRW::AC1021 ? body.bitCount() : 0;
+    object.m_objectSize = static_cast<std::uint32_t>(body.data().size());
+    object.m_isEntity = false;
+    object.m_isCustomClass = true;
+    object.m_recordName = "PLOTSETTINGS";
+    object.m_className = "AcDbPlotSettings";
+    object.m_rawBytes = body.data();
+    return object;
+}
+
 class RawObjectReplayIface : public EmptyIface {
 public:
     explicit RawObjectReplayIface(DRW::Version version)
@@ -1497,6 +1550,37 @@ public:
     void linkImage(const DRW_ImageDef* imageDef) override {
         if (imageDef != nullptr)
             m_imageDefs.push_back(*imageDef);
+    }
+
+    void addUnsupportedObject(const DRW_UnsupportedObject& object) override {
+        m_unsupportedObjects.push_back(object);
+    }
+};
+
+class RawPlotSettingsReplayIface : public EmptyIface {
+public:
+    explicit RawPlotSettingsReplayIface(DRW::Version version)
+        : m_plotSettingsObject(makeRawPlotSettingsObject(version))
+    {}
+
+    dwgRW *m_writer {nullptr};
+    DRW_UnsupportedObject m_plotSettingsObject;
+    std::vector<DRW_PlotSettings> m_plotSettings;
+    std::vector<DRW_UnsupportedObject> m_unsupportedObjects;
+
+    void writeDwgClasses() override {
+        if (m_writer != nullptr)
+            REQUIRE(m_writer->registerRawDwgObjectClass(&m_plotSettingsObject));
+    }
+
+    void writeObjects() override {
+        if (m_writer != nullptr)
+            REQUIRE(m_writer->writeRawDwgObject(&m_plotSettingsObject));
+    }
+
+    void addPlotSettings(const DRW_PlotSettings* plotSettings) override {
+        if (plotSettings != nullptr)
+            m_plotSettings.push_back(*plotSettings);
     }
 
     void addUnsupportedObject(const DRW_UnsupportedObject& object) override {
@@ -2967,6 +3051,76 @@ TEST_CASE("dwgRW dual-delivers IMAGEDEF raw payloads for same-format replay",
         CHECK_FALSE(raw->m_isCustomClass);
         CHECK_FALSE(raw->m_isEntity);
         CHECK(raw->m_rawBytes == writeIface.m_imageDefObject.m_rawBytes);
+
+        std::remove(path.c_str());
+    }
+}
+
+TEST_CASE("dwgRW dual-delivers PLOTSETTINGS raw payloads for same-format replay",
+          "[dwg-write][raw-replay][plotsettings]") {
+    const DRW::Version versions[] = {DRW::AC1015, DRW::AC1018};
+
+    for (DRW::Version version : versions) {
+        const std::string path = tempPath("raw_plotsettings_replay.dwg");
+        RawPlotSettingsReplayIface writeIface(version);
+        {
+            dwgRW writer(path.c_str());
+            writeIface.m_writer = &writer;
+            REQUIRE(writer.write(&writeIface, version, /*bin=*/false));
+        }
+
+        RawPlotSettingsReplayIface readIface(version);
+        {
+            dwgRW reader(path.c_str());
+            REQUIRE(reader.read(&readIface, /*ext=*/false));
+            REQUIRE(reader.getVersion() == version);
+            REQUIRE(reader.getError() == DRW::BAD_NONE);
+        }
+
+        REQUIRE(readIface.m_plotSettings.size() == 1);
+        const DRW_PlotSettings& plotSettings = readIface.m_plotSettings.front();
+        CHECK(plotSettings.handle == writeIface.m_plotSettingsObject.m_handle);
+        CHECK(plotSettings.pageSetupName == "MyPrinter");
+        CHECK(plotSettings.printerConfig == "PaperCfg");
+        CHECK(plotSettings.plotLayoutFlags == 688);
+        CHECK(plotSettings.marginLeft == Catch::Approx(7.5));
+        CHECK(plotSettings.marginTop == Catch::Approx(7.8));
+        CHECK(plotSettings.paperWidth == Catch::Approx(420.0));
+        CHECK(plotSettings.paperHeight == Catch::Approx(297.0));
+        CHECK(plotSettings.paperSize == "ISO_A3");
+        CHECK(plotSettings.paperUnits == 1);
+        CHECK(plotSettings.plotRotation == 2);
+        CHECK(plotSettings.plotType == 3);
+        CHECK(plotSettings.windowMinX == Catch::Approx(10.0));
+        CHECK(plotSettings.windowMaxY == Catch::Approx(111.0));
+        CHECK(plotSettings.realWorldUnits == Catch::Approx(25.4));
+        CHECK(plotSettings.currentStyleSheet == "acad.ctb");
+        CHECK(plotSettings.scaleType == 4);
+        CHECK(plotSettings.scaleFactor == Catch::Approx(0.5));
+        CHECK(plotSettings.paperImageOriginX == Catch::Approx(3.0));
+        CHECK(plotSettings.paperImageOriginY == Catch::Approx(4.0));
+        if (version < DRW::AC1018) {
+            CHECK(plotSettings.plotViewName == "PlotView1");
+        } else {
+            CHECK(plotSettings.plotViewName.empty());
+            CHECK(plotSettings.shadePlotMode == 5);
+            CHECK(plotSettings.shadePlotResLevel == 6);
+            CHECK(plotSettings.shadePlotCustomDPI == 300);
+        }
+
+        auto raw = std::find_if(
+            readIface.m_unsupportedObjects.begin(),
+            readIface.m_unsupportedObjects.end(),
+            [&](const DRW_UnsupportedObject& object) {
+                return object.m_handle == writeIface.m_plotSettingsObject.m_handle;
+            });
+        REQUIRE(raw != readIface.m_unsupportedObjects.end());
+        CHECK(raw->m_objectType == writeIface.m_plotSettingsObject.m_objectType);
+        CHECK(raw->m_recordName == "PLOTSETTINGS");
+        CHECK(raw->m_className == "AcDbPlotSettings");
+        CHECK(raw->m_isCustomClass);
+        CHECK_FALSE(raw->m_isEntity);
+        CHECK(raw->m_rawBytes == writeIface.m_plotSettingsObject.m_rawBytes);
 
         std::remove(path.c_str());
     }
