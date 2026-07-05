@@ -36,7 +36,18 @@
 #include <string>
 #include <vector>
 
+#include <cmath>
+
 #include "drw_acis.h"
+
+#include "rs.h"
+#include "rs_ellipse.h"
+#include "rs_filterdxfrw.h"
+#include "rs_line.h"
+#include "rs_point.h"
+#include "rs_spline.h"
+#include "rs_vector.h"
+#include "rs_entitycontainer.h"
 
 using Catch::Approx;
 
@@ -58,6 +69,9 @@ DRW_SabToken dir(double x, double y, double z) {
 }
 DRW_SabToken dbl(double x) {
     DRW_SabToken t; t.tag = DRW_SabTag::Double; t.dval = x; return t;
+}
+DRW_SabToken inum(long long v) {
+    DRW_SabToken t; t.tag = DRW_SabTag::Int; t.ival = v; return t;
 }
 DRW_SabRecord rec(const std::string& type, std::vector<DRW_SabToken> tokens) {
     DRW_SabRecord r;
@@ -124,6 +138,37 @@ DRW_AcisBrep extractModel() {
     DRW_AcisBrep brep;
     drw_extractAcisWireframe(m, brep);
     return brep;
+}
+
+// An intcurve-curve record whose subtype carries a `nubs` B-spline control
+// polygon (mirrors geometry.ts intcurveControlPoints). Layout after the leading
+// entity-type: `nubs`, an Int (numKnots=2), two knot doubles, then the flat
+// control-point coordinate stream (2 points => 6 doubles).
+DRW_SabRecord intcurveCurveRec() {
+    return rec("intcurve-curve", {
+        et("nubs"), inum(2),
+        dbl(0.0), dbl(1.0),                     // 2 knots
+        dbl(7), dbl(8), dbl(9),                 // control point 0
+        dbl(10), dbl(11), dbl(12),              // control point 1
+    });
+}
+
+// The base model() graph EXTENDED with an intcurve edge (two fresh vertices +
+// points joined by an intcurve-curve). Kept separate from model() so the base
+// count assertions above stay pinned; this exercises the intcurve extractor
+// path (drw_acis.cpp intcurveControlPoints), unexercised by the 4.8a suite.
+DRW_SabData modelWithIntcurve() {
+    DRW_SabData d = model();
+    d.records.pop_back();   // drop End-of-ACIS-data (index 22); reappended below
+    // New indices start at 22.
+    d.records.push_back(rec("point", { loc(0, 0, 0) }));         // 22
+    d.records.push_back(rec("point", { loc(4, 0, 0) }));         // 23
+    d.records.push_back(rec("vertex", { ptr(27), ptr(22) }));    // 24 (edge=27)
+    d.records.push_back(rec("vertex", { ptr(27), ptr(23) }));    // 25
+    d.records.push_back(intcurveCurveRec());                     // 26
+    d.records.push_back(rec("edge", { ptr(24), ptr(25), ptr(26) })); // 27
+    d.records.push_back(rec("End-of-ACIS-data", {}));            // 28
+    return d;
 }
 
 bool coordEq(const DRW_Coord& c, double x, double y, double z) {
@@ -331,6 +376,31 @@ TEST_CASE("extractAcisWireframe: exact element counts", "[acis]") {
     REQUIRE(loops == 1);
 }
 
+TEST_CASE("extractAcisWireframe: intcurve edge control points", "[acis]") {
+    DRW_AcisModel m = drw_buildAcisModel(modelWithIntcurve());
+    DRW_AcisBrep g;
+    REQUIRE(drw_extractAcisWireframe(m, g));
+
+    const DRW_AcisEdge* ic = findEdge(g, DRW_AcisCurve::Intcurve);
+    REQUIRE(ic != nullptr);
+    REQUIRE(ic->hasCurve);
+    REQUIRE(ic->curveType == DRW_AcisCurve::Intcurve);
+    // Endpoints still resolve from the two fresh vertices.
+    REQUIRE(ic->hasStart);
+    REQUIRE(ic->hasEnd);
+    REQUIRE(coordEq(ic->start, 0, 0, 0));
+    REQUIRE(coordEq(ic->end, 4, 0, 0));
+    // The nubs control polygon is recovered (drw_acis intcurveControlPoints).
+    REQUIRE(ic->controlPoints.size() == 2);
+    REQUIRE(coordEq(ic->controlPoints[0], 7, 8, 9));
+    REQUIRE(coordEq(ic->controlPoints[1], 10, 11, 12));
+
+    // The base straight + ellipse edges are still present alongside the intcurve.
+    REQUIRE(findEdge(g, DRW_AcisCurve::Straight) != nullptr);
+    REQUIRE(findEdge(g, DRW_AcisCurve::Ellipse) != nullptr);
+    REQUIRE(g.edges.size() == 3);
+}
+
 TEST_CASE("drw_decodeAcisWireframe: byte-true SAB decode -> vertex [1,2,3]", "[acis]") {
     std::vector<std::uint8_t> bytes = simpleSabBytes();
 
@@ -385,4 +455,221 @@ TEST_CASE("drw_decodeAcisWireframe: null-safety on empty/garbage input", "[acis]
 TEST_CASE("drw_parseSab: null-safety on null pointer", "[acis]") {
     DRW_SabData sab;
     REQUIRE_FALSE(drw_parseSab(nullptr, 0, sab));
+}
+
+// ── Render tests: DRW_AcisBrep -> RS_* entities (4.8b) ───────────────────────
+// Exercise RS_FilterDXFRW::acisWireframeToEntities directly against a bare
+// RS_EntityContainer (no DXF import / no m_graphic), asserting entity COUNT,
+// TYPES and key geometry. Breps are hand-built so geometry is exact.
+
+namespace {
+
+DRW_AcisEdge straightEdge(const DRW_Coord& a, const DRW_Coord& b) {
+    DRW_AcisEdge e;
+    e.curveType = DRW_AcisCurve::Straight;
+    e.hasStart = e.hasEnd = true;
+    e.start = a; e.end = b;
+    e.hasCurve = true;
+    return e;
+}
+
+} // namespace
+
+TEST_CASE("acisWireframeToEntities: straight edge -> RS_Line", "[acis][render]") {
+    DRW_AcisBrep brep;
+    brep.edges.push_back(straightEdge(DRW_Coord(1, 2, 7), DRW_Coord(4, 6, 9)));
+
+    RS_EntityContainer container;
+    std::vector<RS_Entity*> ents =
+        RS_FilterDXFRW::acisWireframeToEntities(brep, &container);
+
+    REQUIRE(ents.size() == 1);
+    REQUIRE(container.count() == 1);
+    REQUIRE(ents[0]->rtti() == RS2::EntityLine);
+    auto* line = static_cast<RS_Line*>(ents[0]);
+    // Z is dropped (projection to 2D), like addMesh.
+    REQUIRE(line->getStartpoint().x == Approx(1));
+    REQUIRE(line->getStartpoint().y == Approx(2));
+    REQUIRE(line->getEndpoint().x == Approx(4));
+    REQUIRE(line->getEndpoint().y == Approx(6));
+}
+
+TEST_CASE("acisWireframeToEntities: ellipse edge -> RS_Ellipse with derived angles",
+          "[acis][render]") {
+    DRW_AcisBrep brep;
+    DRW_AcisEdge e;
+    e.curveType = DRW_AcisCurve::Ellipse;
+    e.hasCurve = true;
+    e.p0 = DRW_Coord(0, 0, 0);        // center
+    e.p1 = DRW_Coord(0, 0, 1);        // normal
+    e.p2 = DRW_Coord(4, 0, 0);        // major axis vector
+    e.ratio = 0.5;                    // minor = (0, 2)
+    e.hasStart = e.hasEnd = true;
+    e.start = DRW_Coord(4, 0, 0);     // param 0 (tip of major axis)
+    e.end = DRW_Coord(0, 2, 0);       // param pi/2 (tip of minor axis)
+    brep.edges.push_back(e);
+
+    RS_EntityContainer container;
+    std::vector<RS_Entity*> ents =
+        RS_FilterDXFRW::acisWireframeToEntities(brep, &container);
+
+    REQUIRE(ents.size() == 1);
+    REQUIRE(ents[0]->rtti() == RS2::EntityEllipse);
+    auto* ell = static_cast<RS_Ellipse*>(ents[0]);
+    REQUIRE(ell->getCenter().x == Approx(0));
+    REQUIRE(ell->getCenter().y == Approx(0));
+    REQUIRE(ell->getMajorP().x == Approx(4));
+    REQUIRE(ell->getMajorP().y == Approx(0));
+    REQUIRE(ell->getRatio() == Approx(0.5));
+    REQUIRE(ell->getAngle1() == Approx(0.0));
+    REQUIRE(ell->getAngle2() == Approx(M_PI / 2.0));
+}
+
+TEST_CASE("acisWireframeToEntities: degenerate ellipse -> RS_Line fallback",
+          "[acis][render]") {
+    DRW_AcisBrep brep;
+    DRW_AcisEdge e;
+    e.curveType = DRW_AcisCurve::Ellipse;
+    e.hasCurve = true;
+    e.p0 = DRW_Coord(0, 0, 0);
+    e.p2 = DRW_Coord(0, 0, 0);        // zero-length major axis -> degenerate
+    e.ratio = 0.0;
+    e.hasStart = e.hasEnd = true;
+    e.start = DRW_Coord(1, 1, 0);
+    e.end = DRW_Coord(5, 3, 0);
+    brep.edges.push_back(e);
+
+    RS_EntityContainer container;
+    std::vector<RS_Entity*> ents =
+        RS_FilterDXFRW::acisWireframeToEntities(brep, &container);
+
+    REQUIRE(ents.size() == 1);
+    REQUIRE(ents[0]->rtti() == RS2::EntityLine);
+    auto* line = static_cast<RS_Line*>(ents[0]);
+    REQUIRE(line->getStartpoint().x == Approx(1));
+    REQUIRE(line->getEndpoint().x == Approx(5));
+}
+
+TEST_CASE("acisWireframeToEntities: intcurve edge -> RS_Spline through control polygon",
+          "[acis][render]") {
+    DRW_AcisBrep brep;
+    DRW_AcisEdge e;
+    e.curveType = DRW_AcisCurve::Intcurve;
+    e.hasCurve = true;
+    e.hasStart = e.hasEnd = true;
+    e.start = DRW_Coord(0, 0, 0);
+    e.end = DRW_Coord(4, 0, 0);
+    e.controlPoints = {
+        DRW_Coord(0, 0, 0), DRW_Coord(1, 2, 0),
+        DRW_Coord(3, 1, 0), DRW_Coord(4, 0, 0),
+    };
+    brep.edges.push_back(e);
+
+    RS_EntityContainer container;
+    std::vector<RS_Entity*> ents =
+        RS_FilterDXFRW::acisWireframeToEntities(brep, &container);
+
+    REQUIRE(ents.size() == 1);
+    REQUIRE(ents[0]->rtti() == RS2::EntitySpline);
+    auto* spline = static_cast<RS_Spline*>(ents[0]);
+    REQUIRE(spline->getNumberOfControlPoints() == 4);
+    std::vector<RS_Vector> cps = spline->getControlPoints();
+    REQUIRE(cps.size() == 4);
+    REQUIRE(cps.front().x == Approx(0));
+    REQUIRE(cps.back().x == Approx(4));
+}
+
+TEST_CASE("acisWireframeToEntities: intcurve without control polygon -> RS_Line fallback",
+          "[acis][render]") {
+    DRW_AcisBrep brep;
+    DRW_AcisEdge e;
+    e.curveType = DRW_AcisCurve::Intcurve;
+    e.hasStart = e.hasEnd = true;
+    e.start = DRW_Coord(2, 2, 0);
+    e.end = DRW_Coord(7, 8, 0);
+    // controlPoints intentionally empty
+    brep.edges.push_back(e);
+
+    RS_EntityContainer container;
+    std::vector<RS_Entity*> ents =
+        RS_FilterDXFRW::acisWireframeToEntities(brep, &container);
+
+    REQUIRE(ents.size() == 1);
+    REQUIRE(ents[0]->rtti() == RS2::EntityLine);
+}
+
+TEST_CASE("acisWireframeToEntities: isolated vertex -> RS_Point; edge vertices skipped",
+          "[acis][render]") {
+    DRW_AcisBrep brep;
+    brep.edges.push_back(straightEdge(DRW_Coord(1, 2, 0), DRW_Coord(4, 6, 0)));
+
+    auto vtx = [](double x, double y, double z) {
+        DRW_AcisVertex v; v.valid = true; v.point = DRW_Coord(x, y, z); return v;
+    };
+    brep.vertices.push_back(vtx(1, 2, 0));   // on the edge start -> no point
+    brep.vertices.push_back(vtx(4, 6, 0));   // on the edge end   -> no point
+    brep.vertices.push_back(vtx(9, 9, 0));   // isolated          -> RS_Point
+
+    RS_EntityContainer container;
+    std::vector<RS_Entity*> ents =
+        RS_FilterDXFRW::acisWireframeToEntities(brep, &container);
+
+    REQUIRE(ents.size() == 2);   // one line + one isolated point
+    REQUIRE(ents[0]->rtti() == RS2::EntityLine);
+    REQUIRE(ents[1]->rtti() == RS2::EntityPoint);
+    auto* pt = static_cast<RS_Point*>(ents[1]);
+    REQUIRE(pt->getStartpoint().x == Approx(9));
+    REQUIRE(pt->getStartpoint().y == Approx(9));
+}
+
+TEST_CASE("acisWireframeToEntities: mixed brep entity count + type histogram",
+          "[acis][render]") {
+    DRW_AcisBrep brep;
+    // straight
+    brep.edges.push_back(straightEdge(DRW_Coord(0, 0, 0), DRW_Coord(1, 0, 0)));
+    // ellipse
+    DRW_AcisEdge el;
+    el.curveType = DRW_AcisCurve::Ellipse;
+    el.p0 = DRW_Coord(0, 0, 0); el.p2 = DRW_Coord(2, 0, 0); el.ratio = 0.5;
+    el.hasStart = el.hasEnd = true;
+    el.start = DRW_Coord(2, 0, 0); el.end = DRW_Coord(0, 1, 0);
+    brep.edges.push_back(el);
+    // intcurve (spline)
+    DRW_AcisEdge ic;
+    ic.curveType = DRW_AcisCurve::Intcurve;
+    ic.controlPoints = { DRW_Coord(0, 0, 0), DRW_Coord(1, 1, 0), DRW_Coord(2, 0, 0) };
+    brep.edges.push_back(ic);
+    // isolated vertex
+    DRW_AcisVertex v; v.valid = true; v.point = DRW_Coord(10, 10, 0);
+    brep.vertices.push_back(v);
+
+    RS_EntityContainer container;
+    std::vector<RS_Entity*> ents =
+        RS_FilterDXFRW::acisWireframeToEntities(brep, &container);
+
+    REQUIRE(ents.size() == 4);
+    REQUIRE(container.count() == 4);
+    int lines = 0, ellipses = 0, splines = 0, points = 0;
+    for (RS_Entity* e : ents) {
+        switch (e->rtti()) {
+        case RS2::EntityLine: ++lines; break;
+        case RS2::EntityEllipse: ++ellipses; break;
+        case RS2::EntitySpline: ++splines; break;
+        case RS2::EntityPoint: ++points; break;
+        default: break;
+        }
+    }
+    REQUIRE(lines == 1);
+    REQUIRE(ellipses == 1);
+    REQUIRE(splines == 1);
+    REQUIRE(points == 1);
+}
+
+TEST_CASE("acisWireframeToEntities: null container is a safe no-op",
+          "[acis][render]") {
+    DRW_AcisBrep brep;
+    brep.edges.push_back(straightEdge(DRW_Coord(0, 0, 0), DRW_Coord(1, 1, 0)));
+    std::vector<RS_Entity*> ents =
+        RS_FilterDXFRW::acisWireframeToEntities(brep, nullptr);
+    REQUIRE(ents.empty());
 }
