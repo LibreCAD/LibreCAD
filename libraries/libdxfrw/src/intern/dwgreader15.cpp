@@ -154,7 +154,10 @@ bool dwgReader15::readDwgClasses(){
     size--; //reduce 1 byte instead of check pos + bitPos
     while (size > buff.getPosition()) {
         DRW_Class *cl = new DRW_Class();
-        cl->parseDwg(version, &buff, &buff);
+        if (!cl->parseDwg(version, &buff, &buff)) {
+            delete cl;
+            return false;
+        }
         classesmap[cl->classNum] = cl;
     }
      // 1.5a: validate the R13/R15 CLASSES CRC (crc16 0xC0C1). The writer
@@ -219,4 +222,3 @@ bool dwgReader15::readDwgBlocks(DRW_Interface& intfa) {
     ret = dwgReader::readDwgBlocks(intfa, fileBuf.get());
     return ret;
 }
-

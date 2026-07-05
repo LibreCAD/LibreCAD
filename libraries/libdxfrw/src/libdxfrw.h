@@ -76,11 +76,11 @@ public:
      * @param ext should the extrusion be applied to convert in 2D?
      * @return true for success
      */
-    bool read(DRW_Interface *interface_, bool ext);
-    bool readAscii(DRW_Interface *interface_, bool ext, std::string& content);
+    [[nodiscard]] bool read(DRW_Interface *interface_, bool ext);
+    [[nodiscard]] bool readAscii(DRW_Interface *interface_, bool ext, std::string& content);
     void setBinary(bool b) {binFile = b;}
 
-    bool write(DRW_Interface *interface_, DRW::Version ver, bool bin);
+    [[nodiscard]] bool write(DRW_Interface *interface_, DRW::Version ver, bool bin);
     bool writeLineType(DRW_LType *ent);
     bool writeLayer(DRW_Layer *ent);
     bool writeDimstyle(DRW_Dimstyle *ent);

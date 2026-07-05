@@ -31,7 +31,7 @@ class DRW_Class {
 public:
 
     void write(dxfWriter *writer, DRW::Version ver);
-    bool parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer *strBuf);
+    [[nodiscard]] bool parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer *strBuf);
 
 private:
     void toDwgType();

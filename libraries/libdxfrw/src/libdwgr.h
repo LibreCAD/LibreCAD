@@ -40,8 +40,8 @@ public:
     explicit dwgRW(const char* name);
     ~dwgRW();
     //read: return true if all ok
-    bool read(DRW_Interface *interface_, bool ext);
-    bool readBuffer(const std::uint8_t *data, std::uint64_t size,
+    [[nodiscard]] bool read(DRW_Interface *interface_, bool ext);
+    [[nodiscard]] bool readBuffer(const std::uint8_t *data, std::uint64_t size,
                     DRW_Interface *interface_, bool ext);
 
     /// Write the in-memory model (driven via DRW_Interface callbacks)
@@ -49,7 +49,7 @@ public:
     /// The `bin` parameter is ignored — DWG is always binary — but
     /// kept for API symmetry with `dxfRW::write`.  Returns true on
     /// success, false on error; error code accessible via `getError()`.
-    bool write(DRW_Interface *interface_, DRW::Version ver, bool bin);
+    [[nodiscard]] bool write(DRW_Interface *interface_, DRW::Version ver, bool bin);
 
     struct WriteSkipCounters {
         std::size_t entityWrites { 0 };
@@ -242,15 +242,15 @@ private:
         BlockDefinition
     };
 
-    bool openFile(std::ifstream *filestr);
-    bool openBuffer(std::unique_ptr<dwgBuffer> buffer);
-    bool readInstalledReader();
+    [[nodiscard]] bool openFile(std::ifstream *filestr);
+    [[nodiscard]] bool openBuffer(std::unique_ptr<dwgBuffer> buffer);
+    [[nodiscard]] bool readInstalledReader();
     void captureReaderDiagnostics();
     void resetReadDiagnostics();
     void resetWriteSkipCounters();
-    bool recordWriteResult(WriteSkipKind kind, bool ok);
-    bool encodeEntityForWrite(DRW_Entity *ent);
-    bool processDwg();
+    [[nodiscard]] bool recordWriteResult(WriteSkipKind kind, bool ok);
+    [[nodiscard]] bool encodeEntityForWrite(DRW_Entity *ent);
+    [[nodiscard]] bool processDwg();
     static DRW::Version sniffVersion(dwgBuffer *buffer);
     static std::unique_ptr< dwgReader > createReaderForVersion(DRW::Version version, std::unique_ptr<dwgBuffer> buffer, dwgRW *p);
 

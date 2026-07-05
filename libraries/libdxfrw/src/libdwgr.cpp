@@ -614,11 +614,11 @@ bool dwgRW::writeSurface(DRW_Surface *ent) {
 std::uint32_t dwgRW::defineBlock(const std::string& name, const DRW_Coord& basePoint,
                            int insUnits) {
     if (writer == nullptr) {
-        recordWriteResult(WriteSkipKind::BlockDefinition, false);
+        (void)recordWriteResult(WriteSkipKind::BlockDefinition, false);
         return 0;
     }
     const std::uint32_t handle = writer->defineBlock(name, basePoint, insUnits);
-    recordWriteResult(WriteSkipKind::BlockDefinition, handle != 0);
+    (void)recordWriteResult(WriteSkipKind::BlockDefinition, handle != 0);
     return handle;
 }
 

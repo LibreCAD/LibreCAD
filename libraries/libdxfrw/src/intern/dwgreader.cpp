@@ -1648,7 +1648,8 @@ bool dwgReader::readDwgEntity(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
         case 30: {  // POLYLINE_MESH (per ODA spec sec 19.4.31)
             DRW_Polyline e;
             if (entryParse( e, buff, bs, ret)) {
-                readPlineVertex(e, dbuf);
+                if (!readPlineVertex(e, dbuf))
+                    ret = false;
                 intfa.addPolyline(e);
             }
             break; }

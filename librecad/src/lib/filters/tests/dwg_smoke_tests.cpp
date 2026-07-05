@@ -3210,7 +3210,7 @@ TEST_CASE("DWG corpus: WIPEOUT entity inventory", "[.dwg_wipeout]") {
     CountingIface iface;
     try {
       dwgR reader(p.string().c_str());
-      reader.read(&iface, true);
+      (void)reader.read(&iface, true);
     } catch (...) {
       continue;
     }
@@ -3270,7 +3270,7 @@ TEST_CASE("DWG corpus: MULTILEADER entity inventory", "[.dwg_mleader]") {
       CountingIface iface;
       try {
         dwgR reader(p.string().c_str());
-        reader.read(&iface, true);
+        (void)reader.read(&iface, true);
       } catch (...) {
         continue;
       }
@@ -3499,7 +3499,7 @@ TEST_CASE("DWG acdbcolor probe: count DBCOLOR objects + resolved entity refs",
     AcDbColorIface iface;
     try {
       dwgR reader(f.path.c_str());
-      reader.read(&iface, true);
+      (void)reader.read(&iface, true);
     } catch (...) {
       std::cout << "EXCEPTION on " << f.path << "\n";
       continue;
@@ -3564,7 +3564,7 @@ TEST_CASE("DWG acdbcolor: book color load + dbColor object inventory",
   int entities = 0;
   try {
     dwgR reader(path.c_str());
-    reader.read(&iface, true);
+    (void)reader.read(&iface, true);
     err = reader.getError();
     entities = iface.modelSpaceEntities + iface.blockSpaceEntities;
   } catch (const std::exception &ex) {
@@ -3649,7 +3649,7 @@ TEST_CASE("DWG acdbcolor: layer colorName probe",
       LayerColorIface iface;
       try {
         dwgR reader(p.string().c_str());
-        reader.read(&iface, true);
+        (void)reader.read(&iface, true);
       } catch (...) {
         continue;
       }
@@ -3736,7 +3736,7 @@ TEST_CASE("DWG plotsettings probe: count PLOTSETTINGS objects per file",
       PlotSettingsIface iface;
       try {
         dwgR reader(p.string().c_str());
-        reader.read(&iface, true);
+        (void)reader.read(&iface, true);
       } catch (...) {
         continue;
       }
@@ -3862,7 +3862,7 @@ TEST_CASE("DWG transparency probe: count entities with ENC alpha set",
       TransparencyIface iface;
       try {
         dwgR reader(p.string().c_str());
-        reader.read(&iface, true);
+        (void)reader.read(&iface, true);
       } catch (...) {
         continue;
       }
@@ -5010,7 +5010,7 @@ TEST_CASE("DWG corpus audit: per-file TSV vs oracle", "[.audit]") {
       std::string skipped;
       try {
         dwgR reader(p.string().c_str());
-        reader.read(&iface, true);
+        (void)reader.read(&iface, true);
         err = reader.getError();
         ver = reader.getVersion();
         proxyPrims = reader.getDecodedProxyPrimitives();
@@ -5062,7 +5062,7 @@ TEST_CASE("DWG MESH decoded + delivered, not skipped", "[.dwg_readback_corpus]")
       MeshProbe probe;
       try {
         dwgR reader(de.path().string().c_str());
-        reader.read(&probe, true);
+        (void)reader.read(&probe, true);
         meshCount += probe.meshCount;
         meshVerts += probe.meshVertices;
         const auto sk = reader.getSkippedCustomClasses();

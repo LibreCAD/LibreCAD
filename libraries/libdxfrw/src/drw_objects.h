@@ -182,8 +182,8 @@ public:
 
 protected:
     virtual bool parseCode(int code, const std::unique_ptr<dxfReader>& reader);
-    virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) = 0;
-    bool parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer* strBuf, std::uint32_t bs=0);
+    [[nodiscard]] virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) = 0;
+    [[nodiscard]] bool parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer* strBuf, std::uint32_t bs=0);
     void reset() {
         flags = 0;
         for (std::vector<DRW_Variant*>::iterator it = extData.begin(); it != extData.end(); ++it) {

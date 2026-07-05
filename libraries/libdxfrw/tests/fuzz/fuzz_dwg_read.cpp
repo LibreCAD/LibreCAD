@@ -143,7 +143,7 @@ void readOnce(const uint8_t* data, size_t size) {
     {
         dwgRW rw(tmpl);
         NullIface iface;
-        rw.read(&iface, /*ext=*/false);  // ignore result; crashes/UB matter
+        (void)rw.read(&iface, /*ext=*/false);  // ignore result; crashes/UB matter
     }
     ::remove(tmpl);
 }

@@ -130,7 +130,7 @@ public:
 
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader);
-    bool parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer *hBbuf, std::uint8_t mv=0);
+    [[nodiscard]] bool parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer *hBbuf, std::uint8_t mv=0);
     /// Inverse of parseDwg: emits the bit-packed body of the HEADER
     /// section.  For R2000 (AC1015), `buf` and `hBbuf` may alias the
     /// same accumulator since the handle stream is inline.  Order of
@@ -196,4 +196,3 @@ private:
 #endif
 
 // EOF
-

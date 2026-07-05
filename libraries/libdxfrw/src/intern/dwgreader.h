@@ -157,33 +157,33 @@ public:
     virtual ~dwgReader();
 
 protected:
-    virtual bool readMetaData() = 0;
-    virtual bool readPreview(){return false;}
-    virtual bool readFileHeader() = 0;
-    virtual bool readDwgHeader(DRW_Header& hdr)=0;
-    virtual bool readDwgClasses() = 0;
-    virtual bool readDwgHandles() = 0;
-    virtual bool readDwgTables(DRW_Header& hdr)=0;
-    virtual bool readDwgBlocks(DRW_Interface& intfa) = 0;
-    virtual bool readDwgEntities(DRW_Interface& intfa) = 0;
-    virtual bool readDwgObjects(DRW_Interface& intfa) = 0;
+    [[nodiscard]] virtual bool readMetaData() = 0;
+    [[nodiscard]] virtual bool readPreview(){return false;}
+    [[nodiscard]] virtual bool readFileHeader() = 0;
+    [[nodiscard]] virtual bool readDwgHeader(DRW_Header& hdr)=0;
+    [[nodiscard]] virtual bool readDwgClasses() = 0;
+    [[nodiscard]] virtual bool readDwgHandles() = 0;
+    [[nodiscard]] virtual bool readDwgTables(DRW_Header& hdr)=0;
+    [[nodiscard]] virtual bool readDwgBlocks(DRW_Interface& intfa) = 0;
+    [[nodiscard]] virtual bool readDwgEntities(DRW_Interface& intfa) = 0;
+    [[nodiscard]] virtual bool readDwgObjects(DRW_Interface& intfa) = 0;
 
-    virtual bool readDwgEntity(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& intfa);
-    bool readDwgObject(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& intfa);
+    [[nodiscard]] virtual bool readDwgEntity(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& intfa);
+    [[nodiscard]] bool readDwgObject(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& intfa);
     void parseAttribs(DRW_Entity* e);
     std::string findTableName(DRW::TTYPE table, std::int32_t handle);
 
     void setCodePage(const std::string &c){decoder.setCodePage(c, false);}
     std::string getCodePage(){ return decoder.getCodePage();}
-    bool readDwgHeader(DRW_Header& hdr, dwgBuffer *buf, dwgBuffer *hBuf);
-    bool readDwgHandles(dwgBuffer *dbuf, std::uint64_t offset, std::uint64_t size);
-    bool readDwgTables(DRW_Header& hdr, dwgBuffer *dbuf);
+    [[nodiscard]] bool readDwgHeader(DRW_Header& hdr, dwgBuffer *buf, dwgBuffer *hBuf);
+    [[nodiscard]] bool readDwgHandles(dwgBuffer *dbuf, std::uint64_t offset, std::uint64_t size);
+    [[nodiscard]] bool readDwgTables(DRW_Header& hdr, dwgBuffer *dbuf);
     bool checkSentinel(dwgBuffer *buf, enum secEnum::DWGSection, bool start);
 
-    bool readDwgBlocks(DRW_Interface& intfa, dwgBuffer *dbuf);
-    bool readDwgEntities(DRW_Interface& intfa, dwgBuffer *dbuf);
-    bool readDwgObjects(DRW_Interface& intfa, dwgBuffer *dbuf);
-    bool readPlineVertex(DRW_Polyline& pline, dwgBuffer *dbuf);
+    [[nodiscard]] bool readDwgBlocks(DRW_Interface& intfa, dwgBuffer *dbuf);
+    [[nodiscard]] bool readDwgEntities(DRW_Interface& intfa, dwgBuffer *dbuf);
+    [[nodiscard]] bool readDwgObjects(DRW_Interface& intfa, dwgBuffer *dbuf);
+    [[nodiscard]] bool readPlineVertex(DRW_Polyline& pline, dwgBuffer *dbuf);
     // Walk a block_record's child entities in firstEH..lastEH chain (pre-2004)
     // or entMap order (2004+) and dispatch each via readDwgEntity.  Used for
     // both named blocks (entities go into the active block) and modelspace /

@@ -147,11 +147,11 @@ protected:
     void calculateAxis(DRW_Coord extPoint);
     //apply extrusion to @extPoint and return data in @point
     void extrudePoint(DRW_Coord extPoint, DRW_Coord *point);
-    virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0)=0;
+    [[nodiscard]] virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0)=0;
     //parses dwg common start part to read entity
-    virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer* strBuf, std::uint32_t bs=0);
+    [[nodiscard]] virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer* strBuf, std::uint32_t bs=0);
     //parses dwg common handles part to read entity
-    bool parseDwgEntHandle(DRW::Version version, dwgBuffer *buf, bool resetHandleStream = true);
+    [[nodiscard]] bool parseDwgEntHandle(DRW::Version version, dwgBuffer *buf, bool resetHandleStream = true);
 
     // Writer-side inverses of parseDwg / parseDwgEntHandle.  Support
     // AC1015, AC1018, and AC1024 (R2010).  For AC1024, strBuf receives
