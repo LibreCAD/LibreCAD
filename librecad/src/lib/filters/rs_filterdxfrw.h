@@ -65,6 +65,8 @@ class RS_Solid;
 class RS_Spline;
 class RS_Text;
 
+struct DRW_AcisBrep;
+
 // test-only friend; defined in tests/dwg_header_app_vars_tests.cpp. Grants
 // the header-var regression suite access to the private m_graphic/
 // m_currentContainer so it can exercise addHeader against a real RS_Graphic.
@@ -158,6 +160,17 @@ public:
     void addSolid(const DRW_Solid& data) override;
     void addModelerGeometry(const DRW_ModelerGeometry &data) override;
     void addMesh(const DRW_Mesh &data) override;
+    void addSurface(const DRW_Surface *data) override;
+    //! Convert a decoded ACIS wireframe into RS_* entities, parented to and added
+    //! into `container` (projected to 2D by dropping Z, exactly like addMesh).
+    //! Straight edges -> RS_Line, ellipse edges -> RS_Ellipse (line fallback when
+    //! degenerate), intcurve edges -> RS_Spline through the control polygon (line
+    //! fallback), isolated vertices -> RS_Point. Returns the created entities
+    //! WITHOUT attributes applied, so callers can post-process them (e.g.
+    //! setEntityAttributes). Static + container-scoped so it is unit-testable
+    //! without a full DXF import (no m_graphic needed).
+    static std::vector<RS_Entity*> acisWireframeToEntities(
+        const DRW_AcisBrep &brep, RS_EntityContainer *container);
     void addLight(const DRW_Light &data) override;
     void addMText(const DRW_MText& data) override;
     /** Build an RS_MText from a DRW_MText payload, handling alignment / drawing

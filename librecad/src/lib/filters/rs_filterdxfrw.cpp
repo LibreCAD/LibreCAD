@@ -41,6 +41,7 @@
 #endif
 #include <QStringList>
 
+#include "drw_acis.h"
 #include "dxf_format.h"
 #include "lc_containertraverser.h"
 #include "lc_defaults.h"
@@ -2031,16 +2032,155 @@ void RS_FilterDXFRW::addSolid(const DRW_Solid& data) {
     addTrace(data);
 }
 
+// Convert a decoded ACIS wireframe (drw_acis.h) into 2D RS_* entities, mirroring
+// addMesh: LibreCAD is 2D, so every point is projected by dropping Z. The result
+// is added to `container`; the created entities are returned so a caller can
+// apply setEntityAttributes afterwards. Static + free of m_graphic so it can be
+// unit-tested directly against a bare RS_EntityContainer.
+std::vector<RS_Entity*> RS_FilterDXFRW::acisWireframeToEntities(
+        const DRW_AcisBrep &brep, RS_EntityContainer *container) {
+    std::vector<RS_Entity*> created;
+    if (container == nullptr)
+        return created;
+
+    auto xy = [](const DRW_Coord &c) { return RS_Vector(c.x, c.y); };
+    auto pushEntity = [&](RS_Entity *e) {
+        container->addEntity(e);
+        created.push_back(e);
+    };
+    auto addLineSeg = [&](const DRW_AcisEdge &edge) {
+        if (edge.hasStart && edge.hasEnd)
+            pushEntity(new RS_Line(container, {xy(edge.start), xy(edge.end)}));
+    };
+
+    // Parametric (eccentric) angle of a 2D point on an ellipse defined by its
+    // center, major-axis vector and minor/major ratio.
+    auto ellipseParam = [](const RS_Vector &center, const RS_Vector &majorP,
+                           double ratio, const RS_Vector &p) -> double {
+        double majLen = majorP.magnitude();
+        if (majLen < RS_TOLERANCE)
+            return 0.0;
+        RS_Vector d = p - center;
+        RS_Vector majHat = majorP / majLen;
+        RS_Vector minHat(-majHat.y, majHat.x);   // major rotated +90 deg
+        double cosT = d.dotP(majHat) / majLen;
+        double sinT = d.dotP(minHat);
+        if (ratio > RS_TOLERANCE)
+            sinT /= (majLen * ratio);
+        return RS_Math::correctAngle(std::atan2(sinT, cosT));
+    };
+
+    // Track edge endpoints so isolated vertices can be rendered as points.
+    std::vector<RS_Vector> endpoints;
+    auto noteEndpoints = [&](const DRW_AcisEdge &edge) {
+        if (edge.hasStart) endpoints.push_back(xy(edge.start));
+        if (edge.hasEnd)   endpoints.push_back(xy(edge.end));
+    };
+
+    for (const DRW_AcisEdge &edge : brep.edges) {
+        noteEndpoints(edge);
+        switch (edge.curveType) {
+        case DRW_AcisCurve::Straight:
+            addLineSeg(edge);
+            break;
+        case DRW_AcisCurve::Ellipse: {
+            RS_Vector center = xy(edge.p0);
+            RS_Vector majorP = xy(edge.p2);
+            double ratio = edge.ratio;
+            if (majorP.magnitude() < RS_TOLERANCE || ratio <= 0.0) {
+                addLineSeg(edge);   // insufficient/degenerate ellipse params
+                break;
+            }
+            double a1 = 0.0;
+            double a2 = 2.0 * M_PI;
+            if (edge.hasStart && edge.hasEnd) {
+                a1 = ellipseParam(center, majorP, ratio, xy(edge.start));
+                a2 = ellipseParam(center, majorP, ratio, xy(edge.end));
+            }
+            pushEntity(new RS_Ellipse(container, {center, majorP, ratio, a1, a2, false}));
+            break;
+        }
+        case DRW_AcisCurve::Intcurve: {
+            if (edge.controlPoints.size() >= 2) {
+                size_t n = edge.controlPoints.size();
+                int degree = (n >= 4) ? 3 : static_cast<int>(n - 1);
+                RS_SplineData d(degree, /*closed=*/false);
+                auto *spline = new RS_Spline(container, d);
+                for (const DRW_Coord &cp : edge.controlPoints)
+                    spline->addControlPointRaw(RS_Vector(cp.x, cp.y), 1.0);
+                pushEntity(spline);
+            } else {
+                addLineSeg(edge);   // no control polygon -> straight fallback
+            }
+            break;
+        }
+        case DRW_AcisCurve::Unknown:
+        default:
+            addLineSeg(edge);
+            break;
+        }
+    }
+
+    // Isolated vertices (no incident edge endpoint) -> RS_Point.
+    for (const DRW_AcisVertex &v : brep.vertices) {
+        if (!v.valid)
+            continue;
+        RS_Vector p = xy(v.point);
+        bool incident = false;
+        for (const RS_Vector &e : endpoints) {
+            if (std::fabs(e.x - p.x) < RS_TOLERANCE
+                && std::fabs(e.y - p.y) < RS_TOLERANCE) {
+                incident = true;
+                break;
+            }
+        }
+        if (!incident)
+            pushEntity(new RS_Point(container, RS_PointData(p)));
+    }
+
+    return created;
+}
+
 void RS_FilterDXFRW::addModelerGeometry(const DRW_ModelerGeometry &data) {
-    // TODO: Preserve/render ACIS SAT/SAB bodies when LibreCAD grows native
-    // modeler-geometry support. For now this shell prevents silent loss.
+    // Preserve the raw modeler payload as advanced-metadata sidecar so a native
+    // ACIS body is never silently lost on round-trip.
     if (m_graphic != nullptr) {
         m_graphic->dwgAdvancedMetadata().addModelerGeometry(data);
+    }
+    // Additionally render the decoded SAB wireframe as 2D geometry (mirrors
+    // addMesh). Guard: only touch the container when the decode yields edges, so
+    // undecodable bodies keep the previous metadata-only behavior (no regression).
+    DRW_ModelerGeometry &mut = const_cast<DRW_ModelerGeometry &>(data);
+    if (mut.decodeWireframe() && !mut.m_wireframe.edges.empty()) {
+        std::vector<RS_Entity*> ents =
+            acisWireframeToEntities(mut.m_wireframe, m_currentContainer);
+        for (RS_Entity *e : ents)
+            setEntityAttributes(e, &data);
+        RS_DEBUG->print("RS_FilterDXFRW::addModelerGeometry: rendered %zu wireframe entities",
+                        ents.size());
     }
     RS_DEBUG->print("RS_FilterDXFRW::addModelerGeometry: type %d handle %d history %d",
                     static_cast<int>(data.eType),
                     static_cast<int>(data.handle),
                     static_cast<int>(data.m_historyHandle));
+}
+
+void RS_FilterDXFRW::addSurface(const DRW_Surface *data) {
+    if (data == nullptr)
+        return;
+    // Decode the lazily-cached SAB wireframe (idempotent; never throws), then
+    // render its edges as 2D geometry via the shared helper. Guard on edges to
+    // avoid emitting anything for bodies we cannot decode (no regression over the
+    // base no-op).
+    DRW_Surface *surf = const_cast<DRW_Surface *>(data);
+    if (surf->decodeWireframe() && !surf->m_wireframe.edges.empty()) {
+        std::vector<RS_Entity*> ents =
+            acisWireframeToEntities(surf->m_wireframe, m_currentContainer);
+        for (RS_Entity *e : ents)
+            setEntityAttributes(e, data);
+        RS_DEBUG->print("RS_FilterDXFRW::addSurface: rendered %zu wireframe entities",
+                        ents.size());
+    }
 }
 
 void RS_FilterDXFRW::addLight(const DRW_Light &data) {
