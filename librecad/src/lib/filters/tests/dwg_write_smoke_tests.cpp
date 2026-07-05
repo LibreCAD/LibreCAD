@@ -1344,9 +1344,48 @@ void putRawObjectPreamble(dwgBufferW& body, DRW::Version version,
         body.putBit(0);            // xDictFlag: xdictionary handle follows
 }
 
+void putRawEntityPreamble(dwgBufferW& body, DRW::Version version,
+                          std::uint16_t oType, std::uint32_t handle) {
+    body.putObjType(version, oType);
+    if (version > DRW::AC1014 && version < DRW::AC1024)
+        body.putRawLong32(0);      // object-size-in-bits placeholder
+    body.putHandle(rawObjectHandle(0, handle));
+    body.putBitShort(0);           // EED size
+    body.putBit(0);                // graphFlag: no graphics data
+    body.put2Bits(2);              // entmode: modelspace, no owner handle
+    body.putBitLong(0);            // numReactors
+    if (version == DRW::AC1015) {
+        body.putBit(1);            // no prev/next entity links
+    } else {
+        body.putBit(0);            // xDictFlag: xdictionary handle follows
+        if (version > DRW::AC1024)
+            body.putBit(0);        // hasDsData
+    }
+    body.putEnColor(version, 256);
+    body.putBitDouble(1.0);        // ltype scale
+    body.put2Bits(0);              // linetype BYLAYER
+    body.put2Bits(0);              // plot style BYLAYER
+    if (version > DRW::AC1018) {
+        body.put2Bits(0);          // material BYLAYER
+        body.putRawChar8(0);       // shadow inherited
+    }
+    if (version > DRW::AC1021) {
+        body.putBit(0);            // no full visual style
+        body.putBit(0);            // no face visual style
+        body.putBit(0);            // no edge visual style
+    }
+    body.putBitShort(0);           // visible
+    body.putRawChar8(29);          // lineweight BYLAYER
+}
+
 void putRawCommonObjectHandles(dwgBufferW& body, std::uint32_t parentHandle) {
     body.putHandle(rawObjectHandle(4, parentHandle));
     body.putHandle(rawObjectHandle(0, 0));      // xdictionary
+}
+
+void putRawCommonEntityHandles(dwgBufferW& body, std::uint32_t layerHandle) {
+    body.putHandle(rawObjectHandle(0, 0));      // xdictionary
+    body.putHandle(rawObjectHandle(5, layerHandle));
 }
 
 DRW_UnsupportedObject makeRawBreakDataObject(DRW::Version version) {
@@ -1495,6 +1534,25 @@ DRW_UnsupportedObject makeRawPlotSettingsObject(DRW::Version version) {
     return object;
 }
 
+DRW_UnsupportedObject makeRawModelerGeometryEntity(
+    DRW::Version version, std::uint16_t objectType, std::uint32_t handle) {
+    dwgBufferW body;
+    putRawEntityPreamble(body, version, objectType, handle);
+    body.putBit(1);                    // empty modeler payload
+    body.putBit(0);                    // modeler-data unknown bit
+    putRawCommonEntityHandles(body, 0x12u);
+
+    DRW_UnsupportedObject object;
+    object.m_objectType = objectType;
+    object.m_handle = handle;
+    object.m_bodyBitSize = version > DRW::AC1021 ? body.bitCount() : 0;
+    object.m_objectSize = static_cast<std::uint32_t>(body.data().size());
+    object.m_isEntity = true;
+    object.m_isCustomClass = false;
+    object.m_rawBytes = body.data();
+    return object;
+}
+
 class RawObjectReplayIface : public EmptyIface {
 public:
     explicit RawObjectReplayIface(DRW::Version version)
@@ -1522,6 +1580,46 @@ public:
     }
 
     void addUnsupportedObject(const DRW_UnsupportedObject &object) override {
+        m_unsupportedObjects.push_back(object);
+    }
+};
+
+class RawModelerGeometryReplayIface : public EmptyIface {
+public:
+    explicit RawModelerGeometryReplayIface(DRW::Version version)
+        : m_region(makeRawModelerGeometryEntity(version, 37, 0x960u))
+        , m_solid(makeRawModelerGeometryEntity(version, 38, 0x961u))
+        , m_body(makeRawModelerGeometryEntity(version, 39, 0x962u))
+    {}
+
+    dwgRW *m_writer {nullptr};
+    DRW_UnsupportedObject m_region;
+    DRW_UnsupportedObject m_solid;
+    DRW_UnsupportedObject m_body;
+    std::vector<DRW_ModelerGeometry> m_modelerGeometry;
+    std::vector<DRW_UnsupportedObject> m_unsupportedObjects;
+
+    void writeDwgClasses() override {
+        if (m_writer != nullptr) {
+            REQUIRE(m_writer->registerRawDwgObjectClass(&m_region));
+            REQUIRE(m_writer->registerRawDwgObjectClass(&m_solid));
+            REQUIRE(m_writer->registerRawDwgObjectClass(&m_body));
+        }
+    }
+
+    void writeObjects() override {
+        if (m_writer != nullptr) {
+            REQUIRE(m_writer->writeRawDwgObject(&m_region));
+            REQUIRE(m_writer->writeRawDwgObject(&m_solid));
+            REQUIRE(m_writer->writeRawDwgObject(&m_body));
+        }
+    }
+
+    void addModelerGeometry(const DRW_ModelerGeometry& geometry) override {
+        m_modelerGeometry.push_back(geometry);
+    }
+
+    void addUnsupportedObject(const DRW_UnsupportedObject& object) override {
         m_unsupportedObjects.push_back(object);
     }
 };
@@ -3121,6 +3219,64 @@ TEST_CASE("dwgRW dual-delivers PLOTSETTINGS raw payloads for same-format replay"
         CHECK(raw->m_isCustomClass);
         CHECK_FALSE(raw->m_isEntity);
         CHECK(raw->m_rawBytes == writeIface.m_plotSettingsObject.m_rawBytes);
+
+        std::remove(path.c_str());
+    }
+}
+
+TEST_CASE("dwgRW replays fixed modeler geometry raw entity payloads",
+          "[dwg-write][raw-replay][modeler]") {
+    const DRW::Version versions[] = {DRW::AC1015, DRW::AC1018};
+
+    for (DRW::Version version : versions) {
+        const std::string path = tempPath("raw_modeler_replay.dwg");
+        RawModelerGeometryReplayIface writeIface(version);
+        {
+            dwgRW writer(path.c_str());
+            writeIface.m_writer = &writer;
+            REQUIRE(writer.write(&writeIface, version, /*bin=*/false));
+        }
+
+        RawModelerGeometryReplayIface readIface(version);
+        {
+            dwgRW reader(path.c_str());
+            REQUIRE(reader.read(&readIface, /*ext=*/false));
+            REQUIRE(reader.getVersion() == version);
+            REQUIRE(reader.getError() == DRW::BAD_NONE);
+        }
+
+        const struct {
+            const DRW_UnsupportedObject* rawObject;
+            DRW::ETYPE entityType;
+        } expected[] = {
+            {&writeIface.m_region, DRW::REGION},
+            {&writeIface.m_solid, DRW::E3DSOLID},
+            {&writeIface.m_body, DRW::BODY},
+        };
+
+        for (const auto& item : expected) {
+            auto typed = std::find_if(
+                readIface.m_modelerGeometry.begin(),
+                readIface.m_modelerGeometry.end(),
+                [&](const DRW_ModelerGeometry& geometry) {
+                    return geometry.handle == item.rawObject->m_handle;
+                });
+            REQUIRE(typed != readIface.m_modelerGeometry.end());
+            CHECK(typed->eType == item.entityType);
+            CHECK(typed->m_isEmpty);
+
+            auto raw = std::find_if(
+                readIface.m_unsupportedObjects.begin(),
+                readIface.m_unsupportedObjects.end(),
+                [&](const DRW_UnsupportedObject& object) {
+                    return object.m_handle == item.rawObject->m_handle;
+                });
+            REQUIRE(raw != readIface.m_unsupportedObjects.end());
+            CHECK(raw->m_objectType == item.rawObject->m_objectType);
+            CHECK(raw->m_isEntity);
+            CHECK_FALSE(raw->m_isCustomClass);
+            CHECK(raw->m_rawBytes == item.rawObject->m_rawBytes);
+        }
 
         std::remove(path.c_str());
     }

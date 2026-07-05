@@ -4824,13 +4824,19 @@ public:
             return ReplayBlocker::Invalidated;
         if (record.replayState == ReplayState::ReplayReplaced)
             return ReplayBlocker::Replaced;
-        if (record.isEntity)
+        if (record.isEntity && !isReplayableFixedModelerRawEntity(record))
             return ReplayBlocker::EntityReplayUnsupported;
         if (record.rawBytes.empty())
             return ReplayBlocker::MissingRawBytes;
         if (record.isCustomClass && record.recordName.empty() && record.className.empty())
             return ReplayBlocker::MissingClassMetadata;
         return ReplayBlocker::None;
+    }
+
+    static bool isReplayableFixedModelerRawEntity(const RawObjectRecord& record) {
+        return record.isEntity && !record.isCustomClass
+            && (record.objectType == 37 || record.objectType == 38
+                || record.objectType == 39);
     }
 
     static RawObjectFamily rawObjectFamilyFromNames(

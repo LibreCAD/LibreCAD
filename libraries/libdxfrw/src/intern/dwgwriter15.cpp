@@ -92,6 +92,12 @@ namespace oType {
     constexpr std::uint16_t VPORT                      = 0x41;
 }
 
+bool isReplayableFixedModelerRawEntity(const DRW_UnsupportedObject& object) {
+    return object.m_isEntity && !object.m_isCustomClass
+        && (object.m_objectType == 37 || object.m_objectType == 38
+            || object.m_objectType == 39);
+}
+
 std::uint16_t underlayDefinitionClassNum(
     const DRW_UnderlayDefinition& definition) {
     switch (definition.kind) {
@@ -1809,8 +1815,10 @@ bool dwgWriter15::writeDwgObjects() {
 }
 
 bool dwgWriter15::replayRawObject(const DRW_UnsupportedObject& object) {
-    if (object.m_isEntity || object.m_handle == 0 || object.m_rawBytes.empty())
+    if ((object.m_isEntity && !isReplayableFixedModelerRawEntity(object))
+        || object.m_handle == 0 || object.m_rawBytes.empty()) {
         return false;
+    }
 
     m_handles.reserve(object.m_handle);
     if (!registerRawObjectClass(object))

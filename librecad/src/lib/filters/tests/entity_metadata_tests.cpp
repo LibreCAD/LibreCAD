@@ -135,6 +135,13 @@ TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
   rawEntity.m_rawBytes = {0x04u};
   metadata.addUnsupportedObject(rawEntity);
 
+  DRW_UnsupportedObject rawModelerEntity;
+  rawModelerEntity.m_objectType = 37;
+  rawModelerEntity.m_handle = 0x7Au;
+  rawModelerEntity.m_isEntity = true;
+  rawModelerEntity.m_rawBytes = {0x25u, 0x01u, 0x02u};
+  metadata.addUnsupportedObject(rawModelerEntity);
+
   DRW_UnsupportedObject rawWithoutBytes;
   rawWithoutBytes.m_objectType = 79;
   rawWithoutBytes.m_handle = 0x79u;
@@ -685,7 +692,7 @@ TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
   acshObject.m_binaryBlob2 = {0x03u, 0x04u, 0x05u};
   metadata.addAcShObject(acshObject);
 
-  REQUIRE(metadata.rawObjects().size() == 3);
+  REQUIRE(metadata.rawObjects().size() == 4);
   CHECK(metadata.rawObjects().front().handle == 0x77u);
   CHECK(metadata.rawObjects().front().bodyBitSize == 128u);
   CHECK(metadata.rawObjects().front().family ==
@@ -696,6 +703,10 @@ TEST_CASE("DWG advanced metadata caches raw and semantic sidecars",
   CHECK(LC_DwgAdvancedMetadata::rawReplayBlocker(metadata.rawObjects()[1]) ==
         LC_DwgAdvancedMetadata::ReplayBlocker::EntityReplayUnsupported);
   CHECK(LC_DwgAdvancedMetadata::rawReplayBlocker(metadata.rawObjects()[2]) ==
+        LC_DwgAdvancedMetadata::ReplayBlocker::None);
+  CHECK(LC_DwgAdvancedMetadata::isReplayableFixedModelerRawEntity(
+            metadata.rawObjects()[2]));
+  CHECK(LC_DwgAdvancedMetadata::rawReplayBlocker(metadata.rawObjects()[3]) ==
         LC_DwgAdvancedMetadata::ReplayBlocker::MissingRawBytes);
   CHECK(metadata.hasBlockedRawReplay());
   CHECK(std::string(LC_DwgAdvancedMetadata::replayBlockerName(
