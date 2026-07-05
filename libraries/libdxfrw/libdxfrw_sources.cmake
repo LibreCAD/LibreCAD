@@ -21,6 +21,7 @@ set(LIBDXFRW_SOURCES
     "${CMAKE_CURRENT_LIST_DIR}/src/intern/dxfreader.cpp"
     "${CMAKE_CURRENT_LIST_DIR}/src/intern/dxfwriter.cpp"
     "${CMAKE_CURRENT_LIST_DIR}/src/intern/rscodec.cpp"
+    "${CMAKE_CURRENT_LIST_DIR}/src/drw_acis.cpp"
     "${CMAKE_CURRENT_LIST_DIR}/src/drw_base.cpp"
     "${CMAKE_CURRENT_LIST_DIR}/src/drw_classes.cpp"
     "${CMAKE_CURRENT_LIST_DIR}/src/drw_entities.cpp"
@@ -65,6 +66,7 @@ set(LIBDXFRW_PRIVATE_HEADERS
 )
 
 set(LIBDXFRW_PUBLIC_HEADERS
+    "${CMAKE_CURRENT_LIST_DIR}/src/drw_acis.h"
     "${CMAKE_CURRENT_LIST_DIR}/src/drw_base.h"
     "${CMAKE_CURRENT_LIST_DIR}/src/drw_classes.h"
     "${CMAKE_CURRENT_LIST_DIR}/src/drw_entities.h"

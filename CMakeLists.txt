@@ -1769,6 +1769,7 @@ if(BUILD_TESTS)
         librecad/src/lib/filters/tests/mpolygon_tests.cpp
         librecad/src/lib/filters/tests/mpolygon_dwg_tests.cpp
         librecad/src/lib/filters/tests/mesh_tests.cpp
+        librecad/src/lib/filters/tests/acis_wireframe_tests.cpp
         librecad/src/lib/filters/tests/helix_tests.cpp
         librecad/src/lib/filters/tests/acad_table_tests.cpp
         librecad/src/lib/filters/tests/field_dxf_tests.cpp

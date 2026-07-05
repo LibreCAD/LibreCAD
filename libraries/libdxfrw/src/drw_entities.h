@@ -23,6 +23,7 @@
 #include <vector>
 #include "drw_base.h"
 #include "drw_objects.h"
+#include "drw_acis.h"
 
 class dxfReader;
 class dwgBuffer;
@@ -592,6 +593,18 @@ public:
     std::uint32_t m_historyHandle = 0;
     std::vector<std::uint8_t> m_rawBytes;
     std::vector<DRW_ModelerPayloadRange> m_payloadRanges;
+
+    //! Lazily-decoded ACIS wireframe (from m_rawBytes SAB payload).
+    DRW_AcisBrep m_wireframe;
+    bool m_wireframeDecoded = false;
+    //! Decode the SAB wireframe from m_rawBytes on demand. Idempotent; never throws.
+    bool decodeWireframe() {
+        if (!m_wireframeDecoded) {
+            m_wireframeDecoded = true;
+            drw_decodeAcisWireframe(m_rawBytes, m_wireframe);
+        }
+        return !m_wireframe.empty();
+    }
 };
 
 //! MESH entity (AcDbSubDMesh) — subdivision-surface mesh.
@@ -2167,6 +2180,18 @@ public:
     bool acisEmpty = false;
     int acisVersion = 0;
     std::vector<std::uint8_t> rawAcisData;
+
+    //! Lazily-decoded ACIS wireframe (from rawAcisData SAB payload).
+    DRW_AcisBrep m_wireframe;
+    bool m_wireframeDecoded = false;
+    //! Decode the SAB wireframe from rawAcisData on demand. Idempotent; never throws.
+    bool decodeWireframe() {
+        if (!m_wireframeDecoded) {
+            m_wireframeDecoded = true;
+            drw_decodeAcisWireframe(rawAcisData, m_wireframe);
+        }
+        return !m_wireframe.empty();
+    }
 };
 
 class DRW_PlaneSurface : public DRW_Surface {
