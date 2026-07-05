@@ -2362,14 +2362,20 @@ bool dwgReader::readDwgObject(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                         || cit->second->className == "AcDbBreakData") {
                         DRW_BreakData e;
                         ret = e.parseDwg(version, &buff, bs);
-                        if (ret) intfa.addBreakData(e);
+                        if (ret) {
+                            intfa.addBreakData(e);
+                            intfa.addUnsupportedObject(makeRawObject(oType, cit->second));
+                        }
                         break;
                     }
                     if (rn == "BREAKPOINTREF"
                         || cit->second->className == "AcDbBreakPointRef") {
                         DRW_BreakPointRef e;
                         ret = e.parseDwg(version, &buff, bs);
-                        if (ret) intfa.addBreakPointRef(e);
+                        if (ret) {
+                            intfa.addBreakPointRef(e);
+                            intfa.addUnsupportedObject(makeRawObject(oType, cit->second));
+                        }
                         break;
                     }
                     if (rn == "GEODATA"

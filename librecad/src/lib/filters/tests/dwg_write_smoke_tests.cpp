@@ -36,6 +36,7 @@
 #include <catch2/catch_approx.hpp>
 #include <catch2/catch_test_macros.hpp>
 
+#include <algorithm>
 #include <cmath>
 #include <cstdio>
 #include <cstdlib>
@@ -1323,6 +1324,75 @@ DRW_UnsupportedObject makeRawReplayObject(DRW::Version version) {
     return object;
 }
 
+dwgHandle rawObjectHandle(std::uint8_t code, std::uint32_t ref) {
+    dwgHandle h;
+    h.code = (ref == 0) ? 0 : code;
+    h.size = 0;
+    h.ref = ref;
+    return h;
+}
+
+void putRawObjectPreamble(dwgBufferW& body, DRW::Version version,
+                          std::uint16_t oType, std::uint32_t handle) {
+    body.putObjType(version, oType);
+    if (version > DRW::AC1014 && version < DRW::AC1024)
+        body.putRawLong32(0);      // object-size-in-bits placeholder
+    body.putHandle(rawObjectHandle(4, handle));
+    body.putBitShort(0);           // EED size
+    body.putBitLong(0);            // numReactors
+    if (version > DRW::AC1015)
+        body.putBit(0);            // xDictFlag: xdictionary handle follows
+}
+
+void putRawCommonObjectHandles(dwgBufferW& body, std::uint32_t parentHandle) {
+    body.putHandle(rawObjectHandle(4, parentHandle));
+    body.putHandle(rawObjectHandle(0, 0));      // xdictionary
+}
+
+DRW_UnsupportedObject makeRawBreakDataObject(DRW::Version version) {
+    constexpr std::uint16_t classNumber = 610;
+    constexpr std::uint32_t handle = 0x910u;
+    dwgBufferW body;
+    putRawObjectPreamble(body, version, classNumber, handle);
+    body.putBitLong(2);
+    putRawCommonObjectHandles(body, 0x901u);
+    body.putHandle(rawObjectHandle(4, 0x921u));
+    body.putHandle(rawObjectHandle(4, 0x922u));
+    body.putHandle(rawObjectHandle(4, 0x923u));
+
+    DRW_UnsupportedObject object;
+    object.m_objectType = classNumber;
+    object.m_handle = handle;
+    object.m_bodyBitSize = version > DRW::AC1021 ? body.bitCount() : 0;
+    object.m_objectSize = static_cast<std::uint32_t>(body.data().size());
+    object.m_isEntity = false;
+    object.m_isCustomClass = true;
+    object.m_recordName = "BREAKDATA";
+    object.m_className = "AcDbBreakData";
+    object.m_rawBytes = body.data();
+    return object;
+}
+
+DRW_UnsupportedObject makeRawBreakPointRefObject(DRW::Version version) {
+    constexpr std::uint16_t classNumber = 611;
+    constexpr std::uint32_t handle = 0x920u;
+    dwgBufferW body;
+    putRawObjectPreamble(body, version, classNumber, handle);
+    putRawCommonObjectHandles(body, 0x910u);
+
+    DRW_UnsupportedObject object;
+    object.m_objectType = classNumber;
+    object.m_handle = handle;
+    object.m_bodyBitSize = version > DRW::AC1021 ? body.bitCount() : 0;
+    object.m_objectSize = static_cast<std::uint32_t>(body.data().size());
+    object.m_isEntity = false;
+    object.m_isCustomClass = true;
+    object.m_recordName = "BREAKPOINTREF";
+    object.m_className = "AcDbBreakPointRef";
+    object.m_rawBytes = body.data();
+    return object;
+}
+
 class RawObjectReplayIface : public EmptyIface {
 public:
     explicit RawObjectReplayIface(DRW::Version version)
@@ -1350,6 +1420,47 @@ public:
     }
 
     void addUnsupportedObject(const DRW_UnsupportedObject &object) override {
+        m_unsupportedObjects.push_back(object);
+    }
+};
+
+class RawBreakDataReplayIface : public EmptyIface {
+public:
+    explicit RawBreakDataReplayIface(DRW::Version version)
+        : m_breakDataObject(makeRawBreakDataObject(version))
+        , m_breakPointRefObject(makeRawBreakPointRefObject(version))
+    {}
+
+    dwgRW *m_writer {nullptr};
+    DRW_UnsupportedObject m_breakDataObject;
+    DRW_UnsupportedObject m_breakPointRefObject;
+    std::vector<DRW_BreakData> m_breakData;
+    std::vector<DRW_BreakPointRef> m_breakPointRefs;
+    std::vector<DRW_UnsupportedObject> m_unsupportedObjects;
+
+    void writeDwgClasses() override {
+        if (m_writer == nullptr)
+            return;
+        REQUIRE(m_writer->registerRawDwgObjectClass(&m_breakDataObject));
+        REQUIRE(m_writer->registerRawDwgObjectClass(&m_breakPointRefObject));
+    }
+
+    void writeObjects() override {
+        if (m_writer == nullptr)
+            return;
+        REQUIRE(m_writer->writeRawDwgObject(&m_breakDataObject));
+        REQUIRE(m_writer->writeRawDwgObject(&m_breakPointRefObject));
+    }
+
+    void addBreakData(const DRW_BreakData& data) override {
+        m_breakData.push_back(data);
+    }
+
+    void addBreakPointRef(const DRW_BreakPointRef& data) override {
+        m_breakPointRefs.push_back(data);
+    }
+
+    void addUnsupportedObject(const DRW_UnsupportedObject& object) override {
         m_unsupportedObjects.push_back(object);
     }
 };
@@ -2698,6 +2809,66 @@ TEST_CASE("dwgRW replays raw custom OBJECT payloads with class metadata",
         REQUIRE(raw->m_recordName == writeIface.m_rawObject.m_recordName);
         REQUIRE(raw->m_className == writeIface.m_rawObject.m_className);
         REQUIRE(raw->m_rawBytes == writeIface.m_rawObject.m_rawBytes);
+
+        std::remove(path.c_str());
+    }
+}
+
+TEST_CASE("dwgRW dual-delivers BREAKDATA raw payloads for same-format replay",
+          "[dwg-write][raw-replay][breakdata]") {
+    const DRW::Version versions[] = {DRW::AC1015, DRW::AC1018};
+
+    for (DRW::Version version : versions) {
+        const std::string path = tempPath("raw_breakdata_replay.dwg");
+        RawBreakDataReplayIface writeIface(version);
+        {
+            dwgRW writer(path.c_str());
+            writeIface.m_writer = &writer;
+            REQUIRE(writer.write(&writeIface, version, /*bin=*/false));
+        }
+
+        RawBreakDataReplayIface readIface(version);
+        {
+            dwgRW reader(path.c_str());
+            REQUIRE(reader.read(&readIface, /*ext=*/false));
+            REQUIRE(reader.getVersion() == version);
+            REQUIRE(reader.getError() == DRW::BAD_NONE);
+        }
+
+        REQUIRE(readIface.m_breakData.size() == 1);
+        const DRW_BreakData& breakData = readIface.m_breakData.front();
+        CHECK(breakData.handle == writeIface.m_breakDataObject.m_handle);
+        REQUIRE(breakData.m_pointRefHandles.size() == 2);
+
+        REQUIRE(readIface.m_breakPointRefs.size() == 1);
+        const DRW_BreakPointRef& pointRef = readIface.m_breakPointRefs.front();
+        CHECK(pointRef.handle == writeIface.m_breakPointRefObject.m_handle);
+
+        auto rawByHandle = [&](std::uint32_t handle) {
+            return std::find_if(
+                readIface.m_unsupportedObjects.begin(),
+                readIface.m_unsupportedObjects.end(),
+                [handle](const DRW_UnsupportedObject& object) {
+                    return object.m_handle == handle;
+                });
+        };
+
+        const auto rawBreak = rawByHandle(writeIface.m_breakDataObject.m_handle);
+        REQUIRE(rawBreak != readIface.m_unsupportedObjects.end());
+        CHECK(rawBreak->m_recordName == "BREAKDATA");
+        CHECK(rawBreak->m_className == "AcDbBreakData");
+        CHECK(rawBreak->m_isCustomClass);
+        CHECK_FALSE(rawBreak->m_isEntity);
+        CHECK(rawBreak->m_rawBytes == writeIface.m_breakDataObject.m_rawBytes);
+
+        const auto rawPointRef =
+            rawByHandle(writeIface.m_breakPointRefObject.m_handle);
+        REQUIRE(rawPointRef != readIface.m_unsupportedObjects.end());
+        CHECK(rawPointRef->m_recordName == "BREAKPOINTREF");
+        CHECK(rawPointRef->m_className == "AcDbBreakPointRef");
+        CHECK(rawPointRef->m_isCustomClass);
+        CHECK_FALSE(rawPointRef->m_isEntity);
+        CHECK(rawPointRef->m_rawBytes == writeIface.m_breakPointRefObject.m_rawBytes);
 
         std::remove(path.c_str());
     }
