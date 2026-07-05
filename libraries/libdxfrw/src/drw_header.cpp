@@ -323,6 +323,11 @@ void DRW_Header::write(const std::unique_ptr<dxfWriter>& writer, DRW::Version ve
             writer->writeInt16(70, varInt);
         else
             writer->writeInt16(70, 0);
+        writer->writeString(9, "$PELLIPSE");
+        if (getInt("$PELLIPSE", &varInt))
+            writer->writeInt16(70, varInt);
+        else
+            writer->writeInt16(70, 0);
     }
 
     writer->writeString(9, "$DIMSCALE");
@@ -758,6 +763,26 @@ void DRW_Header::write(const std::unique_ptr<dxfWriter>& writer, DRW::Version ve
                     writer->writeInt16(70, varInt);
                 else
                     writer->writeInt16(70, 0);
+                writer->writeString(9, "$DIMALTMZF");
+                if (getDouble("$DIMALTMZF", &varDouble))
+                    writer->writeDouble(40, varDouble);
+                else
+                    writer->writeDouble(40, 1.0);
+                writer->writeString(9, "$DIMALTMZS");
+                if (getStr("$DIMALTMZS", &varStr))
+                    writer->writeUtf8String(1, varStr);
+                else
+                    writer->writeString(1, "");
+                writer->writeString(9, "$DIMMZF");
+                if (getDouble("$DIMMZF", &varDouble))
+                    writer->writeDouble(40, varDouble);
+                else
+                    writer->writeDouble(40, 1.0);
+                writer->writeString(9, "$DIMMZS");
+                if (getStr("$DIMMZS", &varStr))
+                    writer->writeUtf8String(1, varStr);
+                else
+                    writer->writeString(1, "");
             }
         }// end post v2004 dim vars
     }//end post r12 dim vars
@@ -800,6 +825,26 @@ void DRW_Header::write(const std::unique_ptr<dxfWriter>& writer, DRW::Version ve
             writer->writeUtf8String(1, varStr);
     else
         writer->writeString(1, ".");
+    writer->writeString(9, "$TDCREATE");
+    if (getDouble("$TDCREATE", &varDouble))
+        writer->writeDouble(40, varDouble);
+    else
+        writer->writeDouble(40, 0.0);
+    writer->writeString(9, "$TDUPDATE");
+    if (getDouble("$TDUPDATE", &varDouble))
+        writer->writeDouble(40, varDouble);
+    else
+        writer->writeDouble(40, 0.0);
+    writer->writeString(9, "$TDINDWG");
+    if (getDouble("$TDINDWG", &varDouble))
+        writer->writeDouble(40, varDouble);
+    else
+        writer->writeDouble(40, 0.0);
+    writer->writeString(9, "$TDUSRTIMER");
+    if (getDouble("$TDUSRTIMER", &varDouble))
+        writer->writeDouble(40, varDouble);
+    else
+        writer->writeDouble(40, 0.0);
     writer->writeString(9, "$ELEVATION");
     if (getDouble("$ELEVATION", &varDouble))
         writer->writeDouble(40, varDouble);
@@ -1283,6 +1328,21 @@ void DRW_Header::write(const std::unique_ptr<dxfWriter>& writer, DRW::Version ve
         writer->writeInt16(70, varInt);
     else
         writer->writeInt16(70, 70);
+    writer->writeString(9, "$ISOLINES");
+    if (getInt("$ISOLINES", &varInt))
+        writer->writeInt16(70, varInt);
+    else
+        writer->writeInt16(70, 4);
+    writer->writeString(9, "$FACETRES");
+    if (getDouble("$FACETRES", &varDouble))
+        writer->writeDouble(40, varDouble);
+    else
+        writer->writeDouble(40, 0.5);
+    writer->writeString(9, "$TEXTQLTY");
+    if (getInt("$TEXTQLTY", &varInt))
+        writer->writeInt16(70, varInt);
+    else
+        writer->writeInt16(70, 50);
     writer->writeString(9, "$TILEMODE");
     if (getInt("$TILEMODE", &varInt))
         writer->writeInt16(70, varInt);
@@ -1413,7 +1473,7 @@ void DRW_Header::write(const std::unique_ptr<dxfWriter>& writer, DRW::Version ve
         else
             writer->writeDouble(40, 20.0);
         writer->writeString(9, "$PROXYGRAPHICS");
-        if (getInt("$PROXYGRAPHICS", &varInt))
+        if (getInt("$PROXYGRAPHICS", &varInt) || getInt("$PROXIGRAPHICS", &varInt))
             writer->writeInt16(70, varInt);
         else
             writer->writeInt16(70, 1);
@@ -1502,6 +1562,16 @@ void DRW_Header::write(const std::unique_ptr<dxfWriter>& writer, DRW::Version ve
             writer->writeDouble(40, varDouble);
         else
             writer->writeDouble(40, 0.0);
+        writer->writeString(9, "$TSTACKALIGN");
+        if (getInt("$TSTACKALIGN", &varInt))
+            writer->writeInt16(70, varInt);
+        else
+            writer->writeInt16(70, 1);
+        writer->writeString(9, "$TSTACKSIZE");
+        if (getInt("$TSTACKSIZE", &varInt))
+            writer->writeInt16(70, varInt);
+        else
+            writer->writeInt16(70, 70);
         writer->writeString(9, "$OLESTARTUP"); //RLZ bool flag, verify in bin version
         if (getInt("$OLESTARTUP", &varInt))
             writer->writeInt16(290, varInt);
@@ -1542,12 +1612,12 @@ void DRW_Header::write(const std::unique_ptr<dxfWriter>& writer, DRW::Version ve
         else
             writer->writeInt16(280, 0);
         writer->writeString(9, "$OBSCOLOR");
-        if (getInt("$OBSCOLOR", &varInt))
+        if (getInt("$OBSCOLOR", &varInt) || getInt("$OBSCUREDCOLOR", &varInt))
             writer->writeInt16(70, varInt);
         else
             writer->writeInt16(70, 257);
         writer->writeString(9, "$OBSLTYPE");
-        if (getInt("$OBSLTYPE", &varInt))
+        if (getInt("$OBSLTYPE", &varInt) || getInt("$OBSCUREDLTYPE", &varInt))
             writer->writeInt16(280, varInt);
         else
             writer->writeInt16(280, 0);

@@ -1918,6 +1918,23 @@ TEST_CASE("DXF header write tolerates bare vs $-prefixed key convention (dxf-str
       h.addDouble("LATITUDE", 11.0, 40);
       h.addDouble("LONGITUDE", 22.0, 40);
       h.addDouble("NORTHDIRECTION", 33.0, 40);
+      h.addInt("PELLIPSE", 1, 70);
+      h.addInt("PROXIGRAPHICS", 0, 70);
+      h.addInt("ISOLINES", 9, 70);
+      h.addDouble("FACETRES", 0.75, 40);
+      h.addInt("TEXTQLTY", 42, 70);
+      h.addDouble("TDCREATE", 2450000.25, 40);
+      h.addDouble("TDUPDATE", 2450001.5, 40);
+      h.addDouble("TDINDWG", 0.125, 40);
+      h.addDouble("TDUSRTIMER", 0.75, 40);
+      h.addInt("TSTACKALIGN", 2, 70);
+      h.addInt("TSTACKSIZE", 80, 70);
+      h.addInt("OBSCUREDCOLOR", 123, 70);
+      h.addInt("OBSCUREDLTYPE", 4, 70);
+      h.addDouble("DIMALTMZF", 1.25, 40);
+      h.addStr("DIMALTMZS", "alt-suffix", 1);
+      h.addDouble("DIMMZF", 2.5, 40);
+      h.addStr("DIMMZS", "main-suffix", 1);
       h.addStr("FINGERPRINTGUID",
                "{AABBCCDD-0000-0000-0000-001122334455}", 2);
       h.addStr("VERSIONGUID",
@@ -1927,7 +1944,7 @@ TEST_CASE("DXF header write tolerates bare vs $-prefixed key convention (dxf-str
 
   {
     dxfRW w(path.string().c_str());
-    REQUIRE(w.write(&em, DRW::AC1021, false));
+    REQUIRE(w.write(&em, DRW::AC1024, false));
   }
   const auto groups = readGroups(path);
   std::filesystem::remove(path);
@@ -1940,6 +1957,23 @@ TEST_CASE("DXF header write tolerates bare vs $-prefixed key convention (dxf-str
   CHECK(hasConsecutive(groups, {{"9", "$LONGITUDE"}, {"40", "22"}}));
   // NORTHDIRECTION must use its own value, not the longitude value.
   CHECK(hasConsecutive(groups, {{"9", "$NORTHDIRECTION"}, {"40", "33"}}));
+  CHECK(hasConsecutive(groups, {{"9", "$PELLIPSE"}, {"70", "1"}}));
+  CHECK(hasConsecutive(groups, {{"9", "$PROXYGRAPHICS"}, {"70", "0"}}));
+  CHECK(hasConsecutive(groups, {{"9", "$ISOLINES"}, {"70", "9"}}));
+  CHECK(hasConsecutive(groups, {{"9", "$FACETRES"}, {"40", "0.75"}}));
+  CHECK(hasConsecutive(groups, {{"9", "$TEXTQLTY"}, {"70", "42"}}));
+  CHECK(hasConsecutive(groups, {{"9", "$TDCREATE"}, {"40", "2450000.25"}}));
+  CHECK(hasConsecutive(groups, {{"9", "$TDUPDATE"}, {"40", "2450001.5"}}));
+  CHECK(hasConsecutive(groups, {{"9", "$TDINDWG"}, {"40", "0.125"}}));
+  CHECK(hasConsecutive(groups, {{"9", "$TDUSRTIMER"}, {"40", "0.75"}}));
+  CHECK(hasConsecutive(groups, {{"9", "$TSTACKALIGN"}, {"70", "2"}}));
+  CHECK(hasConsecutive(groups, {{"9", "$TSTACKSIZE"}, {"70", "80"}}));
+  CHECK(hasConsecutive(groups, {{"9", "$OBSCOLOR"}, {"70", "123"}}));
+  CHECK(hasConsecutive(groups, {{"9", "$OBSLTYPE"}, {"280", "4"}}));
+  CHECK(hasConsecutive(groups, {{"9", "$DIMALTMZF"}, {"40", "1.25"}}));
+  CHECK(hasConsecutive(groups, {{"9", "$DIMALTMZS"}, {"1", "alt-suffix"}}));
+  CHECK(hasConsecutive(groups, {{"9", "$DIMMZF"}, {"40", "2.5"}}));
+  CHECK(hasConsecutive(groups, {{"9", "$DIMMZS"}, {"1", "main-suffix"}}));
   // GUIDs must appear (not silently skipped) when stored as bare keys.
   CHECK(hasConsecutive(groups,
       {{"9", "$FINGERPRINTGUID"},
