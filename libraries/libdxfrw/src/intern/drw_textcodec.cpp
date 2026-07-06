@@ -131,15 +131,15 @@ void DRW_TextCodec::setCodePage(const std::string &c, bool dxfFormat){
     }
 }
 
-std::string DRW_TextCodec::toUtf8(const std::string &s) {
+std::string DRW_TextCodec::toUtf8(std::string_view s) {
     return conv->toUtf8(s);
 }
 
-std::string DRW_TextCodec::fromUtf8(const std::string &s) {
+std::string DRW_TextCodec::fromUtf8(std::string_view s) {
     return conv->fromUtf8(s);
 }
 
-std::string DRW_Converter::toUtf8(const std::string &s) {
+std::string DRW_Converter::toUtf8(std::string_view s) {
     std::string result;
     int j = 0;
     unsigned int i= 0;
@@ -148,11 +148,11 @@ std::string DRW_Converter::toUtf8(const std::string &s) {
         if (c < 0x80) { //ascii check for \U+???? or \M+cXXXX
             if (c == '\\' && i+6 < s.length() && s.at(i+1) == 'U' && s.at(i+2) == '+') {
                 result += s.substr(j,i-j);
-                result += encodeText(s.substr(i,7));
+                result += encodeText(std::string{s.substr(i,7)});
                 i +=6;
                 j = i+1;
             } else if (c == '\\' && i+7 < s.length() && s.at(i+1) == 'M' && s.at(i+2) == '+') {
-                std::string mif = encodeMifText(s.substr(i, 8));
+                std::string mif = encodeMifText(std::string{s.substr(i, 8)});
                 if (!mif.empty()) {
                     result += s.substr(j, i-j);
                     result += mif;
@@ -173,7 +173,7 @@ std::string DRW_Converter::toUtf8(const std::string &s) {
     return result;
 }
 
-std::string DRW_ConvTable::fromUtf8(const std::string &s) {
+std::string DRW_ConvTable::fromUtf8(std::string_view s) {
     std::string result;
     bool notFound;
     int code;
@@ -183,7 +183,7 @@ std::string DRW_ConvTable::fromUtf8(const std::string &s) {
         unsigned char c = s.at(i);
         if (c > 0x7F) { //need to decode
             result += s.substr(j,i-j);
-            std::string part1 = s.substr(i,4);
+            std::string part1{s.substr(i,4)};
             int l;
             code = decodeNum(part1, &l);
             j = i+l;
@@ -205,7 +205,7 @@ std::string DRW_ConvTable::fromUtf8(const std::string &s) {
     return result;
 }
 
-std::string DRW_ConvTable::toUtf8(const std::string &s) {
+std::string DRW_ConvTable::toUtf8(std::string_view s) {
     std::string res;
     for ( auto it=s.begin() ; it < s.end(); ++it ) {
         unsigned char c = *it;
@@ -351,7 +351,7 @@ int DRW_Converter::decodeNum(const std::string &s, int *b){
 }
 
 
-std::string DRW_ConvDBCSTable::fromUtf8(const std::string &s) {
+std::string DRW_ConvDBCSTable::fromUtf8(std::string_view s) {
     std::string result;
     bool notFound;
     int code;
@@ -361,7 +361,7 @@ std::string DRW_ConvDBCSTable::fromUtf8(const std::string &s) {
         unsigned char c = s.at(i);
         if (c > 0x7F) { //need to decode
             result += s.substr(j,i-j);
-            std::string part1 = s.substr(i,4);
+            std::string part1{s.substr(i,4)};
             int l;
             code = decodeNum(part1, &l);
             j = i+l;
@@ -388,7 +388,7 @@ std::string DRW_ConvDBCSTable::fromUtf8(const std::string &s) {
     return result;
 }
 
-std::string DRW_ConvDBCSTable::toUtf8(const std::string &s) {
+std::string DRW_ConvDBCSTable::toUtf8(std::string_view s) {
     std::string res;
     for (auto it=s.begin() ; it < s.end(); ++it ) {
         bool notFound = true;
@@ -441,7 +441,7 @@ DRW_Conv932Table::DRW_Conv932Table()
     :DRW_Converter(DRW_Table932, CPLENGTH932) {
 }
 
-std::string DRW_Conv932Table::fromUtf8(const std::string &s) {
+std::string DRW_Conv932Table::fromUtf8(std::string_view s) {
     std::string result;
     bool notFound;
     int code;
@@ -451,7 +451,7 @@ std::string DRW_Conv932Table::fromUtf8(const std::string &s) {
         unsigned char c = s.at(i);
         if (c > 0x7F) { //need to decode
             result += s.substr(j,i-j);
-            std::string part1 = s.substr(i,4);
+            std::string part1{s.substr(i,4)};
             int l;
             code = decodeNum(part1, &l);
             j = i+l;
@@ -486,7 +486,7 @@ std::string DRW_Conv932Table::fromUtf8(const std::string &s) {
     return result;
 }
 
-std::string DRW_Conv932Table::toUtf8(const std::string &s) {
+std::string DRW_Conv932Table::toUtf8(std::string_view s) {
     std::string res;
     for (auto it=s.begin() ; it < s.end(); ++it ) {
         bool notFound = true;
@@ -544,13 +544,13 @@ std::string DRW_Conv932Table::toUtf8(const std::string &s) {
     return res;
 }
 
-std::string DRW_ConvUTF16::fromUtf8(const std::string &s){
+std::string DRW_ConvUTF16::fromUtf8(std::string_view s){
     DRW_UNUSED(s);
     //RLZ: to be written (only needed for write dwg 2007+)
     return std::string();
 }
 
-std::string DRW_ConvUTF16::toUtf8(const std::string &s){
+std::string DRW_ConvUTF16::toUtf8(std::string_view s){
     // Decode UTF-16LE bytes to UTF-8. Combines surrogate pairs
     // 0xD800..0xDBFF + 0xDC00..0xDFFF into astral codepoints; an unpaired
     // half (high without matching low, or stray low) emits U+FFFD.
