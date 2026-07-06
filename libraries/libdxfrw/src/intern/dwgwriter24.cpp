@@ -55,7 +55,9 @@ bool dwgWriter24::writeDwgHeader() {
         dwgBufferW dataBuf;
         dwgBufferW handleBuf;
         dwgBufferW strBuf;
-        m_header->encodeDwg(m_version, &dataBuf, &handleBuf, &strBuf);
+        // Propagate encode failure: writeDwgHeader reports success as a bool.
+        if (!m_header->encodeDwg(m_version, &dataBuf, &handleBuf, &strBuf))
+            return false;
         dataBuf.alignToByte();
         strBuf.alignToByte();
         handleBuf.alignToByte();

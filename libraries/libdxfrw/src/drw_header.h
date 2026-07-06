@@ -137,7 +137,7 @@ protected:
     /// emission matches parseDwg byte-for-byte.
     /// For R2007+ (AC1021+), TV/TU header strings are written to `strBuf`
     /// (the separate string stream); dwgWriter appends them + the footer.
-    bool encodeDwg(DRW::Version version, dwgBufferW *buf, dwgBufferW *hBbuf,
+    [[nodiscard]] bool encodeDwg(DRW::Version version, dwgBufferW *buf, dwgBufferW *hBbuf,
                    dwgBufferW *strBuf = nullptr);
 private:
     bool getDouble(std::string key, double *varDouble);

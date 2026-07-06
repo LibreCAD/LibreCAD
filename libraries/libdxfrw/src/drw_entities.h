@@ -158,7 +158,7 @@ protected:
     // AC1015, AC1018, and AC1024 (R2010).  For AC1024, strBuf receives
     // string data (TV/TU) and handleBuf receives the handle stream; both
     // are null for AC1015/AC1018 (single-buffer encoding).
-    virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0,
+    [[nodiscard]] virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0,
                             dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr)
         { (void)version; (void)buf; (void)bs; (void)strBuf; (void)handleBuf; return false; }
     // Emits dwg common start part for an entity.  strBuf only used for
@@ -263,7 +263,7 @@ public:
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
-    virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0, dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
+    [[nodiscard]] virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0, dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
 
 public:
     DRW_Coord basePoint;      /*!<  base point, code 10, 20 & 30 */
@@ -288,7 +288,7 @@ public:
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
-    virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0, dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
+    [[nodiscard]] virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0, dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
 
 public:
     DRW_Coord secPoint;        /*!< second point, code 11, 21 & 31 */
@@ -307,7 +307,7 @@ public:
     }
 protected:
     virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
-    virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0, dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
+    [[nodiscard]] virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0, dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
 };
 
 //! Class to handle xline entity
@@ -339,7 +339,7 @@ public:
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
-    virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0, dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
+    [[nodiscard]] virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0, dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
 
 public:
     double radious = 0.0;           /*!< radius, code 40 */
@@ -378,7 +378,7 @@ protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     //! interpret dwg data (was already determined to be part of this object)
     virtual bool parseDwg(DRW::Version v, dwgBuffer *buf, std::uint32_t bs=0) override;
-    virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0, dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
+    [[nodiscard]] virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0, dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
 
 public:
     double staangle = 0.0;      /*!< start angle, code 50 in radians*/
@@ -409,7 +409,7 @@ protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     //! interpret dwg data (was already determined to be part of this object)
     virtual bool parseDwg(DRW::Version v, dwgBuffer *buf, std::uint32_t bs=0) override;
-    virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0, dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
+    [[nodiscard]] virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0, dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
 
 private:
     void correctAxis();
@@ -440,7 +440,7 @@ public:
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     virtual bool parseDwg(DRW::Version v, dwgBuffer *buf, std::uint32_t bs=0) override;
-    virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0, dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
+    [[nodiscard]] virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0, dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
 
 public:
     DRW_Coord thirdPoint;        /*!< third point, code 12, 22 & 32 */
@@ -462,7 +462,7 @@ public:
 protected:
     //! interpret dwg data (was already determined to be part of this object)
     virtual bool parseDwg(DRW::Version v, dwgBuffer *buf, std::uint32_t bs=0) override;
-    virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0, dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
+    [[nodiscard]] virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0, dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
 
 public:
     //! first corner (2D)
@@ -520,7 +520,7 @@ protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     //! interpret dwg data (was already determined to be part of this object)
     virtual bool parseDwg(DRW::Version v, dwgBuffer *buf, std::uint32_t bs=0) override;
-    virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0, dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
+    [[nodiscard]] virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0, dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
 
 public:
     int invisibleflag;       /*!< invisible edge flag, code 70 */
@@ -625,7 +625,7 @@ public:
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     bool parseDwg(DRW::Version v, dwgBuffer *buf, std::uint32_t bs=0) override;
-    bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0,
+    [[nodiscard]] bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0,
                    dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
 
 public:
@@ -657,7 +657,7 @@ public:
 
 protected:
     bool parseDwg(DRW::Version v, dwgBuffer *buf, std::uint32_t bs=0) override;
-    bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0,
+    [[nodiscard]] bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0,
                    dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
 
 public:
@@ -719,7 +719,7 @@ public:
     DRW_Coord     m_pt2;                /*!< DXF 11/21/31 lower-right */
 
 protected:
-    bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0,
+    [[nodiscard]] bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0,
                    dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
 };
 
@@ -735,7 +735,7 @@ public:
 
 protected:
     bool parseDwg(DRW::Version v, dwgBuffer *buf, std::uint32_t bs=0) override;
-    bool encodeDwg(DRW::Version v, dwgBufferW *buf, std::uint32_t bs=0,
+    [[nodiscard]] bool encodeDwg(DRW::Version v, dwgBufferW *buf, std::uint32_t bs=0,
                    dwgBufferW *strBuf=nullptr,
                    dwgBufferW *handleBuf=nullptr) override;
 
@@ -794,7 +794,7 @@ public:
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     virtual bool parseDwg(DRW::Version v, dwgBuffer *buf, std::uint32_t bs=0) override;
-    virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0, dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
+    [[nodiscard]] virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0, dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
 
 public:
     UTF8STRING text;                  /*!< Visual representation of the tolerance, code 1 */
@@ -824,7 +824,7 @@ public:
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     virtual bool parseDwg(DRW::Version v, dwgBuffer *buf, std::uint32_t bs=0) override;
-    virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0, dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
+    [[nodiscard]] virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0, dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
 
 public:
     UTF8STRING name;             /*!< block name, code 2 */
@@ -866,7 +866,7 @@ public:
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     virtual bool parseDwg(DRW::Version v, dwgBuffer *buf, std::uint32_t bs=0) override;
-    virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0, dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
+    [[nodiscard]] virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0, dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
 
 public:
     UTF8STRING name;         /*!< block name, code 2 */
@@ -1115,7 +1115,7 @@ public:
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     virtual bool parseDwg(DRW::Version v, dwgBuffer *buf, std::uint32_t bs=0) override;
-    virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0, dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
+    [[nodiscard]] virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0, dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
 
 public:
     int vertexnum = 0;        /*!< number of vertex, code 90 */
@@ -1164,7 +1164,7 @@ public:
     void applyExtrusion() override {}
 protected:
     bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
-    bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0, dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
+    [[nodiscard]] bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0, dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
 public:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     double scale;                  /*!< BD / DXF 40 */
@@ -1206,7 +1206,7 @@ public:
     void applyExtrusion() override {}
 protected:
     bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
-    bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0,
+    [[nodiscard]] bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0,
                    dwgBufferW *strBuf=nullptr,
                    dwgBufferW *handleBuf=nullptr) override;
 public:
@@ -1268,7 +1268,7 @@ public:
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
-    virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0, dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
+    [[nodiscard]] virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0, dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
 
 public:
     double height = 0.0;       /*!< height text, code 40 */
@@ -1311,7 +1311,7 @@ public:
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
-    virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0, dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
+    [[nodiscard]] virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0, dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
 
 public:
     UTF8STRING tag;            /*!< attribute tag, code 2 */
@@ -1343,7 +1343,7 @@ public:
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
-    virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0, dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
+    [[nodiscard]] virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0, dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
 
 public:
     UTF8STRING prompt;         /*!< prompt string, code 3 */
@@ -1386,7 +1386,7 @@ protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     void updateAngle();    // recalculate angle if 'hasXAxisVec' is true
     virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
-    virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0, dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
+    [[nodiscard]] virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0, dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
 
 public:
     double interlin;              /*!< linespacing factor, code 44 */
@@ -1438,7 +1438,7 @@ public:
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
-    bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0,
+    [[nodiscard]] bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0,
                    dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
 public:
     int m_rTextFlags;   /*!< RTEXT flags, code 70 (bit 0: DIESEL vs xref path) */
@@ -1483,7 +1483,7 @@ public:
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
-    bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0,
+    [[nodiscard]] bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0,
                    dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
 public:
     DRW_Coord m_center;          /*!< arc center, code 10/20/30 */
@@ -1554,7 +1554,7 @@ protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     using DRW_Point::parseDwg;
     bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0, double el=0);
-    bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0, dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
+    [[nodiscard]] bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0, dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
 
 public:
     double stawidth;          /*!< Start width, code 40 */
@@ -1583,7 +1583,7 @@ public:
 
 protected:
     bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
-    bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0,
+    [[nodiscard]] bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0,
                    dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
 };
 
@@ -1635,7 +1635,7 @@ public:
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
-    virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0, dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
+    [[nodiscard]] virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0, dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
 
 public:
     int flags;               /*!< polyline flag, code 70, default 0 */
@@ -1679,7 +1679,7 @@ public:
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
-    virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0, dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
+    [[nodiscard]] virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0, dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
     // Spline payload (scenario/degree/knots/ctrl/fit) WITHOUT the leading
     // common-entity parse or the trailing entity-handle data.  Shared with
     // DRW_Helix, whose AcDbHelix trailer follows the spline body (Phase 8a-1).
@@ -1739,7 +1739,7 @@ public:
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
-    virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0, dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
+    [[nodiscard]] virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0, dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
 
 public:
     std::int32_t m_majorVersion = 0;   /*!< AcDbHelix major version, code 90 */
@@ -1837,7 +1837,7 @@ public:
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
-    virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0, dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
+    [[nodiscard]] virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0, dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
     // Shared DWG boundary-loop reader (loop count + per-loop path/edge/polyline
     // data). Extracted so DRW_MPolygon::parseDwg reuses the identical loop body
     // while supplying its own differing leading/trailing field order.
@@ -1973,7 +1973,7 @@ public:
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
-    virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0,
+    [[nodiscard]] virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0,
                            dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
 };
 
@@ -1998,7 +1998,7 @@ protected:
 public:
     // SHADOWS DRW_Line::encodeDwg — without this override an IMAGE would
     // encode as a LINE (oType 19).  Emits oType 101 + the IMAGE body.
-    virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0,
+    [[nodiscard]] virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0,
                            dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
     std::uint32_t ref = 0;           /*!< Hard reference to imagedef object, code 340 */
     std::uint32_t m_imageDefReactorHandle = 0; /*!< Hard owner to imagedefreactor, code 360 (DWG) */
@@ -2049,7 +2049,7 @@ public:
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
-    virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0,
+    [[nodiscard]] virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0,
                            dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
 };
 
@@ -2078,7 +2078,7 @@ public:
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
-    virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0,
+    [[nodiscard]] virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0,
                            dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
 
 public:
@@ -2125,7 +2125,7 @@ public:
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
-    virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0,
+    [[nodiscard]] virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0,
                            dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
 
 public:
@@ -2170,7 +2170,7 @@ public:
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
-    virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0,
+    [[nodiscard]] virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0,
                            dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
 
 public:
@@ -2423,7 +2423,7 @@ public:
 
 protected:
     virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
-    virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0, dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
+    [[nodiscard]] virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0, dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
 };
 
 //! Class to handle  linear or rotated dimension entity
@@ -2446,7 +2446,7 @@ public:
     void setOblique(const double d) {setOb52(d);}
 
 protected:
-    virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0, dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
+    [[nodiscard]] virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0, dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
 };
 
 //! Class to handle radial dimension entity
@@ -2473,7 +2473,7 @@ public:
 
 protected:
     virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
-    virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0, dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
+    [[nodiscard]] virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0, dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
 };
 
 //! Class to handle large (jogged) radial dimension entity
@@ -2505,7 +2505,7 @@ public:
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
-    virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0,
+    [[nodiscard]] virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0,
                            dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
 private:
     bool m_largeRadialSubclassSeen = false;
@@ -2535,7 +2535,7 @@ public:
 
 protected:
     virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
-    virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0, dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
+    [[nodiscard]] virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0, dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
 };
 
 //! Class to handle angular dimension entity
@@ -2566,7 +2566,7 @@ public:
 
 protected:
     virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
-    virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0, dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
+    [[nodiscard]] virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0, dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
 };
 
 
@@ -2596,7 +2596,7 @@ public:
 
 protected:
     virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
-    virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0, dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
+    [[nodiscard]] virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0, dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
 };
 
 //! Class to handle arc length dimension entity (ARC_DIMENSION / AcDbArcDimension)
@@ -2628,7 +2628,7 @@ public:
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
-    virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0, dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
+    [[nodiscard]] virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0, dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
 private:
     bool m_arcSubclassSeen = false;
 };
@@ -2657,7 +2657,7 @@ public:
 
 protected:
     virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
-    virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0, dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
+    [[nodiscard]] virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0, dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
 };
 
 
@@ -2678,7 +2678,7 @@ public:
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
-    virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0, dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
+    [[nodiscard]] virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0, dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
 
 public:
     UTF8STRING style;                            /*!< Dimension style name, code 3 */
@@ -2832,7 +2832,7 @@ protected:
        false when at entity level so parseCode falls through to its own switch. */
     bool parseDxfContextCode(int code, const std::unique_ptr<dxfReader>& reader);
     virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
-    virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0,
+    [[nodiscard]] virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0,
                            dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
 
 public:
@@ -2926,7 +2926,7 @@ public:
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
-    virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0, dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
+    [[nodiscard]] virtual bool encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t bs=0, dwgBufferW *strBuf=nullptr, dwgBufferW *handleBuf=nullptr) override;
 
 public:
     double pswidth;           /*!< Width in paper space units, code 40 */

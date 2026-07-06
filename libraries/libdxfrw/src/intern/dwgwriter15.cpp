@@ -380,7 +380,9 @@ bool dwgWriter15::writeDwgHeader() {
     // For R2000 the handle stream is inline with the data stream — pass
     // the same accumulator for both buf and hBbuf.
     if (m_header != nullptr) {
-        m_header->encodeDwg(m_version, &m_buf, &m_buf);
+        // Propagate encode failure: writeDwgHeader reports success as a bool.
+        if (!m_header->encodeDwg(m_version, &m_buf, &m_buf))
+            return false;
     }
 
     endSentinelSection(sectionStart, sizeOffset, dwgSentinels::HEADER_END);
@@ -505,7 +507,8 @@ std::uint32_t dwgWriter15::defineBlock(const std::string& name,
     bk.setIsEnd(false);
     {
         dwgBufferW& body = beginObject(blockH);
-        bk.encodeDwg(m_version, &body, /*bs=*/0);
+        (void)bk.encodeDwg(m_version, &body, /*bs=*/0);  // (void): void emitter; object serializes into in-memory buffer (no failure path)
+
         finishObject();
     }
 
@@ -518,7 +521,8 @@ std::uint32_t dwgWriter15::defineBlock(const std::string& name,
     endBlk.setIsEnd(true);
     {
         dwgBufferW& body = beginObject(endBlockH);
-        endBlk.encodeDwg(m_version, &body, /*bs=*/0);
+        (void)endBlk.encodeDwg(m_version, &body, /*bs=*/0);  // (void): void emitter; object serializes into in-memory buffer (no failure path)
+
         finishObject();
     }
 
@@ -589,9 +593,11 @@ void dwgWriter15::emitBlockEntity(std::uint32_t handle, const std::string& name,
     if (m_version > DRW::AC1018) {
         m_objectStrings.reset();
         m_objectHandles.reset();
-        bk.encodeDwg(m_version, &body, 0, &m_objectStrings, &m_objectHandles);
+        (void)bk.encodeDwg(m_version, &body, 0, &m_objectStrings, &m_objectHandles);  // (void): void emitter; object serializes into in-memory buffer (no failure path)
+
     } else {
-        bk.encodeDwg(m_version, &body, 0);
+        (void)bk.encodeDwg(m_version, &body, 0);  // (void): void emitter; object serializes into in-memory buffer (no failure path)
+
     }
     finishObject();
 }
@@ -746,7 +752,8 @@ void dwgWriter15::emitLtypeRecord(std::uint32_t handle, const DRW_LType& lt) {
     dwgBufferW *sb, *hb;
     emitRecordPreamble(body, m_version, oType::LTYPE, handle,
                        m_objectStrings, m_objectHandles, sb, hb);
-    lt.encodeDwg(m_version, &body, sb, hb);
+    (void)lt.encodeDwg(m_version, &body, sb, hb);  // (void): void emitter; object serializes into in-memory buffer (no failure path)
+
     finishObject();
 }
 
@@ -765,7 +772,8 @@ void dwgWriter15::emitLayerRecord(std::uint32_t handle, const DRW_Layer& lay) {
     dwgBufferW *sb, *hb;
     emitRecordPreamble(body, m_version, oType::LAYER, handle,
                        m_objectStrings, m_objectHandles, sb, hb);
-    layerCopy.encodeDwg(m_version, &body, sb, hb);
+    (void)layerCopy.encodeDwg(m_version, &body, sb, hb);  // (void): void emitter; object serializes into in-memory buffer (no failure path)
+
     finishObject();
 }
 
@@ -774,7 +782,8 @@ void dwgWriter15::emitStyleRecord(std::uint32_t handle, const DRW_Textstyle& ts)
     dwgBufferW *sb, *hb;
     emitRecordPreamble(body, m_version, oType::STYLE, handle,
                        m_objectStrings, m_objectHandles, sb, hb);
-    ts.encodeDwg(m_version, &body, sb, hb);
+    (void)ts.encodeDwg(m_version, &body, sb, hb);  // (void): void emitter; object serializes into in-memory buffer (no failure path)
+
     finishObject();
 }
 
@@ -783,7 +792,8 @@ void dwgWriter15::emitUcsRecord(std::uint32_t handle, const DRW_UCS& ucs) {
     dwgBufferW *sb, *hb;
     emitRecordPreamble(body, m_version, oType::UCS, handle,
                        m_objectStrings, m_objectHandles, sb, hb);
-    ucs.encodeDwg(m_version, &body, sb, hb);
+    (void)ucs.encodeDwg(m_version, &body, sb, hb);  // (void): void emitter; object serializes into in-memory buffer (no failure path)
+
     finishObject();
 }
 
@@ -792,7 +802,8 @@ void dwgWriter15::emitViewRecord(std::uint32_t handle, const DRW_View& view) {
     dwgBufferW *sb, *hb;
     emitRecordPreamble(body, m_version, oType::VIEW, handle,
                        m_objectStrings, m_objectHandles, sb, hb);
-    view.encodeDwg(m_version, &body, sb, hb);
+    (void)view.encodeDwg(m_version, &body, sb, hb);  // (void): void emitter; object serializes into in-memory buffer (no failure path)
+
     finishObject();
 }
 
@@ -801,7 +812,8 @@ void dwgWriter15::emitVportRecord(std::uint32_t handle, const DRW_Vport& vp) {
     dwgBufferW *sb, *hb;
     emitRecordPreamble(body, m_version, oType::VPORT, handle,
                        m_objectStrings, m_objectHandles, sb, hb);
-    vp.encodeDwg(m_version, &body, sb, hb);
+    (void)vp.encodeDwg(m_version, &body, sb, hb);  // (void): void emitter; object serializes into in-memory buffer (no failure path)
+
     finishObject();
 }
 
@@ -810,7 +822,8 @@ void dwgWriter15::emitAppIdRecord(std::uint32_t handle, const DRW_AppId& ai) {
     dwgBufferW *sb, *hb;
     emitRecordPreamble(body, m_version, oType::APPID, handle,
                        m_objectStrings, m_objectHandles, sb, hb);
-    ai.encodeDwg(m_version, &body, sb, hb);
+    (void)ai.encodeDwg(m_version, &body, sb, hb);  // (void): void emitter; object serializes into in-memory buffer (no failure path)
+
     finishObject();
 }
 
@@ -819,7 +832,8 @@ void dwgWriter15::emitDimstyleRecord(std::uint32_t handle, const DRW_Dimstyle& d
     dwgBufferW *sb, *hb;
     emitRecordPreamble(body, m_version, oType::DIMSTYLE, handle,
                        m_objectStrings, m_objectHandles, sb, hb);
-    ds.encodeDwg(m_version, &body, sb, hb);
+    (void)ds.encodeDwg(m_version, &body, sb, hb);  // (void): void emitter; object serializes into in-memory buffer (no failure path)
+
     finishObject();
 }
 
@@ -830,7 +844,8 @@ void dwgWriter15::emitAcDbPlaceholderObject(
     emitRecordPreamble(body, m_version, 80, handle,
                        m_objectStrings, m_objectHandles, sb, hb);
     DRW_UNUSED(sb);
-    placeholder.encodeDwg(m_version, &body, hb);
+    (void)placeholder.encodeDwg(m_version, &body, hb);  // (void): void emitter; object serializes into in-memory buffer (no failure path)
+
     finishObject();
 }
 
@@ -860,7 +875,8 @@ void dwgWriter15::emitSunObject(std::uint32_t handle, const DRW_Sun& sun) {
     emitRecordPreamble(body, m_version, DRW_Sun::kDwgClassNum, handle,
                        m_objectStrings, m_objectHandles, sb, hb);
     DRW_UNUSED(sb);
-    sun.encodeDwg(m_version, &body, hb);
+    (void)sun.encodeDwg(m_version, &body, hb);  // (void): void emitter; object serializes into in-memory buffer (no failure path)
+
     finishObject();
 }
 
@@ -887,7 +903,8 @@ void dwgWriter15::emitMLeaderStyleObject(std::uint32_t handle,
     dwgBufferW *sb, *hb;
     emitRecordPreamble(body, m_version, DRW_MLeaderStyle::kDwgClassNum, handle,
                        m_objectStrings, m_objectHandles, sb, hb);
-    style.encodeDwg(m_version, &body, sb, hb);
+    (void)style.encodeDwg(m_version, &body, sb, hb);  // (void): void emitter; object serializes into in-memory buffer (no failure path)
+
     finishObject();
 }
 
@@ -918,7 +935,8 @@ void dwgWriter15::emitDictionaryObject(std::uint32_t handle,
     dwgBufferW *sb, *hb;
     emitRecordPreamble(body, m_version, 42, handle,
                        m_objectStrings, m_objectHandles, sb, hb);
-    dictionary.encodeDwg(m_version, &body, sb, hb);
+    (void)dictionary.encodeDwg(m_version, &body, sb, hb);  // (void): void emitter; object serializes into in-memory buffer (no failure path)
+
     finishObject();
 }
 
@@ -944,7 +962,8 @@ void dwgWriter15::emitXRecordObject(std::uint32_t handle,
     emitRecordPreamble(body, m_version, 79, handle,
                        m_objectStrings, m_objectHandles, sb, hb);
     DRW_UNUSED(sb);
-    xrecord.encodeDwg(m_version, &body, nullptr, hb);
+    (void)xrecord.encodeDwg(m_version, &body, nullptr, hb);  // (void): void emitter; object serializes into in-memory buffer (no failure path)
+
     finishObject();
 }
 
@@ -967,7 +986,8 @@ void dwgWriter15::emitLayoutObject(std::uint32_t handle, const DRW_Layout& layou
     dwgBufferW *sb, *hb;
     emitRecordPreamble(body, m_version, 82, handle,
                        m_objectStrings, m_objectHandles, sb, hb);
-    layout.encodeDwg(m_version, &body, sb, hb);
+    (void)layout.encodeDwg(m_version, &body, sb, hb);  // (void): void emitter; object serializes into in-memory buffer (no failure path)
+
     finishObject();
 }
 
@@ -991,7 +1011,8 @@ void dwgWriter15::emitGroupObject(std::uint32_t handle, const DRW_Group& group) 
     dwgBufferW *sb, *hb;
     emitRecordPreamble(body, m_version, 72, handle,
                        m_objectStrings, m_objectHandles, sb, hb);
-    group.encodeDwg(m_version, &body, sb, hb);
+    (void)group.encodeDwg(m_version, &body, sb, hb);  // (void): void emitter; object serializes into in-memory buffer (no failure path)
+
     finishObject();
 }
 
@@ -1014,7 +1035,8 @@ void dwgWriter15::emitMLineStyleObject(std::uint32_t handle,
     dwgBufferW *sb, *hb;
     emitRecordPreamble(body, m_version, 73, handle,
                        m_objectStrings, m_objectHandles, sb, hb);
-    style.encodeDwg(m_version, &body, sb, hb);
+    (void)style.encodeDwg(m_version, &body, sb, hb);  // (void): void emitter; object serializes into in-memory buffer (no failure path)
+
     finishObject();
 }
 
@@ -1057,7 +1079,8 @@ void dwgWriter15::emitRasterVariablesObject(
                        DRW_RasterVariables::kDwgClassNum, handle,
                        m_objectStrings, m_objectHandles, sb, hb);
     DRW_UNUSED(sb);
-    rasterVariables.encodeDwg(m_version, &body, nullptr, hb);
+    (void)rasterVariables.encodeDwg(m_version, &body, nullptr, hb);  // (void): void emitter; object serializes into in-memory buffer (no failure path)
+
     finishObject();
 }
 
@@ -1095,7 +1118,8 @@ void dwgWriter15::emitWipeoutVariablesObject(
                        DRW_WipeoutVariables::kDwgClassNum, handle,
                        m_objectStrings, m_objectHandles, sb, hb);
     DRW_UNUSED(sb);
-    wipeoutVariables.encodeDwg(m_version, &body, nullptr, hb);
+    (void)wipeoutVariables.encodeDwg(m_version, &body, nullptr, hb);  // (void): void emitter; object serializes into in-memory buffer (no failure path)
+
     finishObject();
 }
 
@@ -1126,7 +1150,8 @@ void dwgWriter15::emitGeoDataObject(std::uint32_t handle, const DRW_GeoData& geo
     dwgBufferW *sb, *hb;
     emitRecordPreamble(body, m_version, DRW_GeoData::kDwgClassNum, handle,
                        m_objectStrings, m_objectHandles, sb, hb);
-    geoData.encodeDwg(m_version, &body, sb, hb);
+    (void)geoData.encodeDwg(m_version, &body, sb, hb);  // (void): void emitter; object serializes into in-memory buffer (no failure path)
+
     finishObject();
 }
 
@@ -1162,7 +1187,8 @@ void dwgWriter15::emitSpatialFilterObject(std::uint32_t handle,
                        DRW_SpatialFilter::kDwgClassNum, handle,
                        m_objectStrings, m_objectHandles, sb, hb);
     DRW_UNUSED(sb);
-    filter.encodeDwg(m_version, &body, nullptr, hb);
+    (void)filter.encodeDwg(m_version, &body, nullptr, hb);  // (void): void emitter; object serializes into in-memory buffer (no failure path)
+
     finishObject();
 }
 
@@ -1197,7 +1223,8 @@ void dwgWriter15::emitScaleObject(std::uint32_t handle, const DRW_Scale& scale) 
     dwgBufferW *sb, *hb;
     emitRecordPreamble(body, m_version, DRW_Scale::kDwgClassNum, handle,
                        m_objectStrings, m_objectHandles, sb, hb);
-    scale.encodeDwg(m_version, &body, sb);
+    (void)scale.encodeDwg(m_version, &body, sb);  // (void): void emitter; object serializes into in-memory buffer (no failure path)
+
     // Emit the common handle prefix that the SCALE encoder skips.  emitRecordPreamble
     // wrote the data-stream numReactors as a hardcoded 0 (like every object on this
     // write path — LibreCAD does not preserve reactor lists), so the handle stream
@@ -1239,7 +1266,8 @@ void dwgWriter15::emitIDBufferObject(std::uint32_t handle, const DRW_IDBuffer& i
     emitRecordPreamble(body, m_version, DRW_IDBuffer::kDwgClassNum, handle,
                        m_objectStrings, m_objectHandles, sb, hb);
     DRW_UNUSED(sb);
-    idBuffer.encodeDwg(m_version, &body, nullptr, hb);
+    (void)idBuffer.encodeDwg(m_version, &body, nullptr, hb);  // (void): void emitter; object serializes into in-memory buffer (no failure path)
+
     finishObject();
 }
 
@@ -1273,7 +1301,8 @@ void dwgWriter15::emitLayerIndexObject(std::uint32_t handle,
     dwgBufferW *sb, *hb;
     emitRecordPreamble(body, m_version, DRW_LayerIndex::kDwgClassNum, handle,
                        m_objectStrings, m_objectHandles, sb, hb);
-    layerIndex.encodeDwg(m_version, &body, sb, hb);
+    (void)layerIndex.encodeDwg(m_version, &body, sb, hb);  // (void): void emitter; object serializes into in-memory buffer (no failure path)
+
     finishObject();
 }
 
@@ -1308,7 +1337,8 @@ void dwgWriter15::emitSpatialIndexObject(std::uint32_t handle,
     emitRecordPreamble(body, m_version, DRW_SpatialIndex::kDwgClassNum, handle,
                        m_objectStrings, m_objectHandles, sb, hb);
     DRW_UNUSED(sb);
-    spatialIndex.encodeDwg(m_version, &body, nullptr, hb);
+    (void)spatialIndex.encodeDwg(m_version, &body, nullptr, hb);  // (void): void emitter; object serializes into in-memory buffer (no failure path)
+
     finishObject();
 }
 
@@ -1343,7 +1373,8 @@ void dwgWriter15::emitDictionaryVarObject(std::uint32_t handle,
     dwgBufferW *sb, *hb;
     emitRecordPreamble(body, m_version, DRW_DictionaryVar::kDwgClassNum, handle,
                        m_objectStrings, m_objectHandles, sb, hb);
-    dictionaryVar.encodeDwg(m_version, &body, sb, hb);
+    (void)dictionaryVar.encodeDwg(m_version, &body, sb, hb);  // (void): void emitter; object serializes into in-memory buffer (no failure path)
+
     finishObject();
 }
 
@@ -1379,7 +1410,8 @@ void dwgWriter15::emitDictionaryWithDefaultObject(std::uint32_t handle,
     emitRecordPreamble(body, m_version,
                        DRW_DictionaryWithDefault::kDwgClassNum, handle,
                        m_objectStrings, m_objectHandles, sb, hb);
-    dictionary.encodeDwg(m_version, &body, sb, hb);
+    (void)dictionary.encodeDwg(m_version, &body, sb, hb);  // (void): void emitter; object serializes into in-memory buffer (no failure path)
+
     finishObject();
 }
 
@@ -1416,7 +1448,8 @@ void dwgWriter15::emitSortEntsTableObject(std::uint32_t handle,
     emitRecordPreamble(body, m_version, DRW_SortEntsTable::kDwgClassNum,
                        handle, m_objectStrings, m_objectHandles, sb, hb);
     DRW_UNUSED(sb);
-    sortEntsTable.encodeDwg(m_version, &body, nullptr, hb);
+    (void)sortEntsTable.encodeDwg(m_version, &body, nullptr, hb);  // (void): void emitter; object serializes into in-memory buffer (no failure path)
+
     finishObject();
 }
 
@@ -1451,7 +1484,8 @@ void dwgWriter15::emitFieldListObject(std::uint32_t handle, const DRW_FieldList&
     emitRecordPreamble(body, m_version, DRW_FieldList::kDwgClassNum, handle,
                        m_objectStrings, m_objectHandles, sb, hb);
     DRW_UNUSED(sb);
-    fieldList.encodeDwg(m_version, &body, nullptr, hb);
+    (void)fieldList.encodeDwg(m_version, &body, nullptr, hb);  // (void): void emitter; object serializes into in-memory buffer (no failure path)
+
     finishObject();
 }
 
@@ -1485,7 +1519,8 @@ void dwgWriter15::emitFieldObject(std::uint32_t handle, const DRW_Field& field) 
     dwgBufferW *sb, *hb;
     emitRecordPreamble(body, m_version, DRW_Field::kDwgClassNum, handle,
                        m_objectStrings, m_objectHandles, sb, hb);
-    field.encodeDwg(m_version, &body, sb, hb);
+    (void)field.encodeDwg(m_version, &body, sb, hb);  // (void): void emitter; object serializes into in-memory buffer (no failure path)
+
     finishObject();
 }
 
@@ -1517,7 +1552,8 @@ void dwgWriter15::emitUnderlayDefinitionObject(
     dwgBufferW *sb, *hb;
     emitRecordPreamble(body, m_version, underlayDefinitionClassNum(definition),
                        handle, m_objectStrings, m_objectHandles, sb, hb);
-    definition.encodeDwg(m_version, &body, sb, hb);
+    (void)definition.encodeDwg(m_version, &body, sb, hb);  // (void): void emitter; object serializes into in-memory buffer (no failure path)
+
     finishObject();
 }
 
