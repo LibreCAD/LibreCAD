@@ -466,28 +466,30 @@ void printEntityReport(const std::string &filename, const EntityValidationIface 
 } // namespace
 
 TEST_CASE("DWG tArch: validate all entities", "[.dwg_tarch]") {
-  const std::string dir = LIBRECAD_TEST_DIR "/tarch/";
-  if (!std::filesystem::is_directory(dir)) {
-    SUCCEED("DWG directory not found at " << dir << "; skipping tArch tests");
+  const std::filesystem::path manifest = "D:/data/dli/doc/dwg_files.txt";
+  if (!std::filesystem::is_regular_file(manifest)) {
+    SUCCEED("DWG manifest not found at " << manifest << "; skipping tArch tests");
     return;
   }
 
   std::vector<std::string> paths;
-  for (const auto &entry : std::filesystem::directory_iterator(dir)) {
-    if (!entry.is_regular_file())
+  std::ifstream in(manifest);
+  std::string line;
+  while (std::getline(in, line)) {
+    if (line.empty() || line.front() == '#')
       continue;
-    const auto &p = entry.path();
-    const std::string ext = p.extension().string();
-    if (ext != ".dwg" && ext != ".DWG")
+    line.erase(line.find_last_not_of(" \t\r\n") + 1);
+    line.erase(0, line.find_first_not_of(" \t\r\n"));
+    if (line.empty())
       continue;
-    if (p.filename().string().front() == '#')
-      continue;
-    paths.push_back(p.string());
+    if (std::filesystem::is_regular_file(line)) {
+      paths.push_back(line);
+    }
   }
   std::sort(paths.begin(), paths.end());
 
   if (paths.empty()) {
-    SUCCEED("No .dwg files found in " << dir << "; skipping");
+    SUCCEED("No valid .dwg files found in manifest; skipping");
     return;
   }
 
