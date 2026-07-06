@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
@@ -177,42 +177,42 @@ bool coordEq(const DRW_Coord& c, double x, double y, double z) {
 
 // ── Byte-true SAB builder (mirrors TS simpleSabBytes) ───────────────────────
 
-void pushAscii(std::vector<std::uint8_t>& out, const std::string& s) {
+void pushAscii(std::vector<unsigned char>& out, const std::string& s) {
     for (char c : s) out.push_back(static_cast<std::uint8_t>(c));
 }
-void pushInt(std::vector<std::uint8_t>& out, std::int32_t v) {
+void pushInt(std::vector<unsigned char>& out, std::int32_t v) {
     std::uint8_t b[4];
     std::memcpy(b, &v, 4);   // little-endian host
     out.insert(out.end(), b, b + 4);
 }
-void pushDouble(std::vector<std::uint8_t>& out, double v) {
+void pushDouble(std::vector<unsigned char>& out, double v) {
     std::uint8_t b[8];
     std::memcpy(b, &v, 8);
     out.insert(out.end(), b, b + 8);
 }
-void pushSabString(std::vector<std::uint8_t>& out, const std::string& s) {
+void pushSabString(std::vector<unsigned char>& out, const std::string& s) {
     out.push_back(DRW_SabTag::Str);
     out.push_back(static_cast<std::uint8_t>(s.size()));
     pushAscii(out, s);
 }
-void pushSabDouble(std::vector<std::uint8_t>& out, double v) {
+void pushSabDouble(std::vector<unsigned char>& out, double v) {
     out.push_back(DRW_SabTag::Double);
     pushDouble(out, v);
 }
-void pushEntityType(std::vector<std::uint8_t>& out, const std::string& s, bool extended = false) {
+void pushEntityType(std::vector<unsigned char>& out, const std::string& s, bool extended = false) {
     out.push_back(extended ? DRW_SabTag::EntityTypeEx : DRW_SabTag::EntityType);
     out.push_back(static_cast<std::uint8_t>(s.size()));
     pushAscii(out, s);
 }
-void pushSabVec(std::vector<std::uint8_t>& out, int tag, double x, double y, double z) {
+void pushSabVec(std::vector<unsigned char>& out, int tag, double x, double y, double z) {
     out.push_back(static_cast<std::uint8_t>(tag));
     pushDouble(out, x);
     pushDouble(out, y);
     pushDouble(out, z);
 }
 
-std::vector<std::uint8_t> simpleSabBytes() {
-    std::vector<std::uint8_t> out;
+std::vector<unsigned char> simpleSabBytes() {
+    std::vector<unsigned char> out;
     pushAscii(out, "ACIS BinaryFile");
     pushInt(out, 21200);
     pushInt(out, -1);
@@ -402,7 +402,7 @@ TEST_CASE("extractAcisWireframe: intcurve edge control points", "[acis]") {
 }
 
 TEST_CASE("drw_decodeAcisWireframe: byte-true SAB decode -> vertex [1,2,3]", "[acis]") {
-    std::vector<std::uint8_t> bytes = simpleSabBytes();
+    std::vector<unsigned char> bytes = simpleSabBytes();
 
     // Parse layers directly.
     DRW_SabData sab;
@@ -424,8 +424,8 @@ TEST_CASE("drw_decodeAcisWireframe: byte-true SAB decode -> vertex [1,2,3]", "[a
 
 TEST_CASE("drw_decodeAcisWireframe: prefixed SAB payload is located by signature", "[acis]") {
     // A real DXF/DWG blob may carry leading bytes before the ACIS signature.
-    std::vector<std::uint8_t> prefixed = { 0x00, 0xff, 0x42 };
-    std::vector<std::uint8_t> sab = simpleSabBytes();
+    std::vector<unsigned char> prefixed = { 0x00, 0xff, 0x42 };
+    std::vector<unsigned char> sab = simpleSabBytes();
     prefixed.insert(prefixed.end(), sab.begin(), sab.end());
 
     DRW_AcisBrep g;
@@ -436,16 +436,16 @@ TEST_CASE("drw_decodeAcisWireframe: prefixed SAB payload is located by signature
 
 TEST_CASE("drw_decodeAcisWireframe: null-safety on empty/garbage input", "[acis]") {
     DRW_AcisBrep g1;
-    REQUIRE_FALSE(drw_decodeAcisWireframe(std::vector<std::uint8_t>{}, g1));
+    REQUIRE_FALSE(drw_decodeAcisWireframe(std::vector<unsigned char>{}, g1));
     REQUIRE(g1.empty());
 
     DRW_AcisBrep g2;
-    REQUIRE_FALSE(drw_decodeAcisWireframe(std::vector<std::uint8_t>{ 1, 2, 3, 4, 5 }, g2));
+    REQUIRE_FALSE(drw_decodeAcisWireframe(std::vector<unsigned char>{ 1, 2, 3, 4, 5 }, g2));
     REQUIRE(g2.empty());
 
     // Signature present but truncated body -> parse fails, empty, no throw.
     DRW_AcisBrep g3;
-    std::vector<std::uint8_t> truncated;
+    std::vector<unsigned char> truncated;
     pushAscii(truncated, "ACIS BinaryFile");
     truncated.push_back(0x01);   // one stray byte, not enough for the header ints
     REQUIRE_FALSE(drw_decodeAcisWireframe(truncated, g3));

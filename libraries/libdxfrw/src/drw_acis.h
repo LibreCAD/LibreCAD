@@ -1,4 +1,4 @@
-/******************************************************************************
+﻿/******************************************************************************
 **  libDXFrw - Library to read/write DXF files (ascii & binary)              **
 **                                                                           **
 **  Copyright (C) 2026 LibreCAD (librecad.org)                                **
@@ -208,6 +208,6 @@ bool drw_extractAcisWireframe(const DRW_AcisModel& model, DRW_AcisBrep& out);
  *  Returns false (and leaves `out` empty) for non-SAB or malformed input.
  *  NEVER throws.
  */
-bool drw_decodeAcisWireframe(const std::vector<std::uint8_t>& raw, DRW_AcisBrep& out);
+bool drw_decodeAcisWireframe(const std::vector<unsigned char>& raw, DRW_AcisBrep& out);
 
 #endif // DRW_ACIS_H
