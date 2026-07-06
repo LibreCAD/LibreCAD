@@ -33,6 +33,7 @@ SOURCES += \
     src/drw_classes.cpp \
     src/drw_entities.cpp \
     src/drw_objects.cpp \
+    src/drw_acis.cpp \
     src/intern/drw_textcodec.cpp \
     src/intern/dxfreader.cpp \
     src/intern/dxfwriter.cpp \
@@ -65,6 +66,7 @@ HEADERS += \
     src/drw_classes.h \
     src/drw_entities.h \
     src/drw_objects.h \
+    src/drw_acis.h \
     src/intern/drw_textcodec.h \
     src/intern/dxfreader.h \
     src/intern/dxfwriter.h \

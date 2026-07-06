@@ -1,4 +1,4 @@
-﻿/******************************************************************************
+/******************************************************************************
 **  libDXFrw - Library to read/write DXF files (ascii & binary)              **
 **                                                                           **
 **  Copyright (C) 2026 LibreCAD (librecad.org)                                **
@@ -592,9 +592,10 @@ bool drw_extractAcisWireframe(const DRW_AcisModel& model, DRW_AcisBrep& out) {
 
 namespace {
 
-// First offset of any SAB signature in the raw blob, or -1.
+const char* const kSignaturesLocal[] = { "ACIS BinaryFile", "ASM BinaryFile4" };
+
 long long signatureOffset(const std::vector<unsigned char>& data) {
-    for (const char* sig : kSignatures) {
+    for (const char* sig : kSignaturesLocal) {
         std::size_t plen = std::strlen(sig);
         if (data.size() < plen) continue;
         for (std::size_t i = 0; i + plen <= data.size(); ++i) {
@@ -610,7 +611,7 @@ long long signatureOffset(const std::vector<unsigned char>& data) {
 
 } // namespace
 
-bool drw_decodeAcisWireframe(const std::vector<unsigned char>& raw, DRW_AcisBrep& out) {
+LIBDXFRW_EXPORT bool drw_decodeAcisWireframe(const std::vector<unsigned char>& raw, DRW_AcisBrep& out) {
     out = DRW_AcisBrep();
     try {
         long long off = signatureOffset(raw);

@@ -1,4 +1,4 @@
-﻿/******************************************************************************
+/******************************************************************************
 **  libDXFrw - Library to read/write DXF files (ascii & binary)              **
 **                                                                           **
 **  Copyright (C) 2026 LibreCAD (librecad.org)                                **
@@ -37,6 +37,12 @@
 #include <vector>
 
 #include "drw_base.h"
+
+#if defined(__APPLE__) && defined(__MACH__)
+#define LIBDXFRW_EXPORT __attribute__((visibility("default")))
+#else
+#define LIBDXFRW_EXPORT
+#endif
 
 // ── SAB low-level token/record model (sab.ts) ──────────────────────────────
 
@@ -100,7 +106,7 @@ struct DRW_SabData {
  *  Returns false on a malformed/truncated stream or missing signature (out
  *  stays partially filled / empty). Never throws.
  */
-bool drw_parseSab(const std::uint8_t* data, std::size_t length, DRW_SabData& out);
+LIBDXFRW_EXPORT bool drw_parseSab(const std::uint8_t* data, std::size_t length, DRW_SabData& out);
 
 // ── B-rep record graph (entities.ts) ───────────────────────────────────────
 
@@ -201,13 +207,13 @@ struct DRW_AcisBrep {
 };
 
 //! Extract B-rep wireframe geometry from a resolved model. Never throws.
-bool drw_extractAcisWireframe(const DRW_AcisModel& model, DRW_AcisBrep& out);
+LIBDXFRW_EXPORT bool drw_extractAcisWireframe(const DRW_AcisModel& model, DRW_AcisBrep& out);
 
 //! Convenience entry: locate the SAB signature in `raw`, parse -> build -> extract.
 /*!
  *  Returns false (and leaves `out` empty) for non-SAB or malformed input.
  *  NEVER throws.
  */
-bool drw_decodeAcisWireframe(const std::vector<unsigned char>& raw, DRW_AcisBrep& out);
+LIBDXFRW_EXPORT bool drw_decodeAcisWireframe(const std::vector<unsigned char>& raw, DRW_AcisBrep& out);
 
 #endif // DRW_ACIS_H
