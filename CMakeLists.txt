@@ -25,6 +25,53 @@ set(QT_NO_VULKAN 1)
 find_package(Qt6 COMPONENTS Gui Core Widgets PrintSupport Svg Network REQUIRED)
 find_package(Qt6 REQUIRED COMPONENTS LinguistTools)
 
+# --- macOS: drop the removed AGL.framework from Qt's link interface ---------
+# AGL.framework was deprecated long ago and is absent from recent macOS SDKs
+# (Xcode 14+). Some Qt6 binary packages (e.g. conda-forge / pixi Qt 6.8) still
+# list AGL in their imported-target link interface, so linking any Qt-based
+# target fails with: "ld: framework not found AGL". Strip AGL from the Qt6
+# targets (and their nested dependencies) so linking succeeds. No-op when AGL
+# is absent, and only runs on Apple.
+if(APPLE)
+    set_property(GLOBAL PROPERTY _lc_agl_seen "")
+    function(_lc_strip_agl _tgt)
+        if(NOT TARGET "${_tgt}")
+            return()
+        endif()
+        get_property(_seen GLOBAL PROPERTY _lc_agl_seen)
+        if("${_tgt}" IN_LIST _seen)
+            return()
+        endif()
+        set_property(GLOBAL APPEND PROPERTY _lc_agl_seen "${_tgt}")
+        get_target_property(_libs "${_tgt}" INTERFACE_LINK_LIBRARIES)
+        if(NOT _libs)
+            return()
+        endif()
+        # Handle the two-token (-framework;AGL), single-token (-framework AGL)
+        # and bare (AGL) representations, then tidy stray separators.
+        string(REGEX REPLACE "(^|;)-framework;AGL(;|$)" "\\2" _libs "${_libs}")
+        string(REGEX REPLACE "(^|;)-framework AGL(;|$)" "\\2" _libs "${_libs}")
+        string(REGEX REPLACE "(^|;)AGL(;|$)" "\\2" _libs "${_libs}")
+        string(REGEX REPLACE ";;+" ";" _libs "${_libs}")
+        string(REGEX REPLACE "^;+|;+$" "" _libs "${_libs}")
+        set_target_properties("${_tgt}" PROPERTIES INTERFACE_LINK_LIBRARIES "${_libs}")
+        foreach(_dep IN LISTS _libs)
+            _lc_strip_agl("${_dep}")
+        endforeach()
+    endfunction()
+    message(STATUS "macOS: stripping removed AGL.framework from Qt6 link interfaces")
+    # Sweep every imported target (Qt6 modules and their imported deps), plus the
+    # modules LibreCAD links directly, so AGL is removed wherever it is listed.
+    get_property(_lc_imported DIRECTORY PROPERTY IMPORTED_TARGETS)
+    foreach(_lc_t IN LISTS _lc_imported)
+        _lc_strip_agl("${_lc_t}")
+    endforeach()
+    foreach(_lc_qt_mod Qt6::Core Qt6::Gui Qt6::Widgets Qt6::PrintSupport Qt6::Svg Qt6::Network)
+        _lc_strip_agl("${_lc_qt_mod}")
+    endforeach()
+endif()
+# ---------------------------------------------------------------------------
+
 # LibreCAD only uses header-only Boost components.  The Windows CI installs
 # Boost from the source archive, which provides headers but no BoostConfig.cmake.
 find_path(Boost_INCLUDE_DIR
