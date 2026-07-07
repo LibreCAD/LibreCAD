@@ -1297,3 +1297,55 @@ TEST_CASE("snapSplineEdgeEndpoints - tiny gap closes",
   // After the snap, the seam is exactly zero.
   REQUIRE(spline->getEndpoint().distanceTo(line->getStartpoint()) == 0.0);
 }
+
+// ============================================================
+// SNAP RECURSION GUARD
+//
+// Issue #2670: Regression for a stack-overflow crash (SIGSEGV, ~65000 frames deep).
+// RS_Hatch has no getNearestPointOnEntity() of its own, so it inherits
+// RS_EntityContainer::getNearestPointOnEntity(), which finds the nearest child
+// via getNearestEntity() and then descends into it. But RS_Hatch overrides
+// getDistanceToPoint() to report the hatch *itself* as the nearest entity when
+// the cursor is inside the solid fill — so the container kept calling
+// getNearestPointOnEntity() on the same hatch forever. It was hit in the wild
+// by snap-on-entity while hovering inside a filled hatch.
+//
+// The "en != this" guard in getNearestPointOnEntity() breaks the self-
+// reference. These tests must simply RETURN — a regression makes them recurse
+// until the stack overflows.
+// ============================================================
+
+TEST_CASE("RS_Hatch snap - getNearestPointOnEntity inside solid fill terminates",
+          "[rs_hatch][snap]")
+{
+    // Mirror the real snap path: RS_Snapper::snapOnEntity() calls
+    // m_container->getNearestPointOnEntity(). The hatch is a child of the
+    // container (parent set at construction, as for a loaded drawing) so the
+    // container recurses into it exactly as it did when the crash occurred.
+    RS_EntityContainer document{nullptr, true};
+
+    auto* hatch = new RS_Hatch(&document, RS_HatchData(true, 1.0, 0.0, "SOLID"));
+    auto* loop = new RS_EntityContainer(hatch);
+    hatch->addEntity(loop);
+    loop->addEntity(new RS_Line(loop, RS_Vector(0.0,   0.0),   RS_Vector(100.0, 0.0)));
+    loop->addEntity(new RS_Line(loop, RS_Vector(100.0, 0.0),   RS_Vector(100.0, 100.0)));
+    loop->addEntity(new RS_Line(loop, RS_Vector(100.0, 100.0), RS_Vector(0.0,   100.0)));
+    loop->addEntity(new RS_Line(loop, RS_Vector(0.0,   100.0), RS_Vector(0.0,   0.0)));
+    hatch->update();
+    document.addEntity(hatch);   // document owns and will delete the hatch
+    REQUIRE(hatch->getUpdateError() == RS_Hatch::HATCH_OK);
+
+    // Dead centre of the solid fill: getDistanceToPoint() returns 0 and reports
+    // the whole hatch as nearest. Reaching the assertion at all proves the
+    // self-reference guard terminates the descent.
+    const RS_Vector insideFill(50.0, 50.0);
+    RS_Vector p = document.getNearestPointOnEntity(insideFill, true, nullptr, nullptr);
+
+    // A solid-fill hit has no snappable child point to descend to, so the
+    // result is an invalid vector (previously the call never returned).
+    CHECK_FALSE(p.valid);
+
+    // Calling directly on the hatch must likewise terminate.
+    RS_Vector pHatch = hatch->getNearestPointOnEntity(insideFill, true, nullptr, nullptr);
+    CHECK_FALSE(pHatch.valid);
+}

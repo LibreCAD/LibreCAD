@@ -1374,7 +1374,12 @@ RS_Vector RS_EntityContainer::getNearestEndpoint(const RS_Vector &coord,double *
 RS_Vector RS_EntityContainer::getNearestPointOnEntity(const RS_Vector &coord,bool onEntity, double *dist, RS_Entity **entity) const {
     RS_Vector point(false);
     RS_Entity *en = getNearestEntity(coord, dist, RS2::ResolveNone);
-    if (en && en->isVisible() && !en->getParent()->ignoredSnap() ) {
+    // Issue #2670: A container that overrides getDistanceToPoint() for hit-testing (e.g.
+    // RS_Hatch reporting a solid-fill hit) can return itself as the nearest
+    // entity. Recursing into such a self-reference loops forever and overflows
+    // the stack (crash observed when snapping inside a filled hatch), so only
+    // descend into a genuine child entity.
+    if (en && en != this && en->isVisible() && !en->getParent()->ignoredSnap() ) {
         point = en->getNearestPointOnEntity(coord, onEntity, dist, entity);
     }
     return point;
