@@ -213,4 +213,92 @@ namespace secEnum {
     DWGSection getEnum(const std::string &nameSec);
 }
 
+namespace dwgType {
+    enum Entity {
+        TEXT = 1,
+        ATTRIB = 2,
+        ATTDEF = 3,
+        SEQEND = 6,
+        INSERT = 7,
+        MINSERT = 8,
+        POLYLINE_2D = 15,
+        POLYLINE_3D = 16,
+        ARC = 17,
+        CIRCLE = 18,
+        LINE = 19,
+        DIM_ORDINATE = 20,
+        DIM_LINEAR = 21,
+        DIM_ALIGNED = 22,
+        DIM_ANGULAR3P = 23,
+        DIM_ANGULAR = 24,
+        DIM_RADIAL = 25,
+        DIM_DIAMETRIC = 26,
+        POINT = 27,
+        FACE3D = 28,
+        POLYLINE_PFACE = 29,
+        POLYLINE_MESH = 30,
+        SOLID = 31,
+        TRACE = 32,
+        SHAPE = 33,
+        VIEWPORT = 34,
+        ELLIPSE = 35,
+        SPLINE = 36,
+        REGION = 37,
+        SOLID3D = 38,
+        BODY = 39,
+        RAY = 40,
+        XLINE = 41,
+        MTEXT = 44,
+        LEADER = 45,
+        TOLERANCE = 46,
+        MLINE = 47,
+        LWPOLYLINE = 77,
+        HATCH = 78,
+        OLE2FRAME = 74,
+        IMAGE = 101,
+    };
+}
+
+namespace dwgCP {
+    enum CodePage {
+        ANSI_1250 = 28,
+        ANSI_1251 = 29,
+        ANSI_1252 = 30,
+        GBK_CP936 = 31,
+        ANSI_1253 = 32,
+        ANSI_1254 = 33,
+        ANSI_1255 = 34,
+        ANSI_1256 = 35,
+        ANSI_1257 = 36,
+        ANSI_874 = 37,
+        SHIFT_JIS = 38,
+        GBK = 39,
+        KOREAN_WANSUNG = 40,
+        BIG5 = 41,
+        ANSI_1258 = 44,
+    };
+}
+
+namespace dwgColor {
+    enum Encoding {
+        BYLAYER = 0xC0,
+        BYBLOCK = 0xC1,
+        RGB = 0xC2,
+        ACIS = 0xC3,
+        WINDOW_BG = 0xC8,
+    };
+}
+
+namespace dwgObjType {
+    enum Object {
+        DICTIONARY = 42,
+        GROUP = 72,
+        MLINESTYLE = 73,
+        XRECORD = 79,
+        ACDBPLACEHOLDER = 80,
+        LAYOUT = 82,
+        IMAGEDEF = 102,
+    };
+}
+
 #endif // DWGUTIL_H

@@ -968,32 +968,28 @@ void DRW_Entity::extrudePoint(DRW_Coord extPoint, DRW_Coord *point){
 
 bool DRW_Entity::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
     switch (code) {
-    case 5:
+    case DRW::dxfCode::HANDLE:
         handle = reader->getHandleString();
         break;
-    case 330:
+    case DRW::dxfCode::OWNER_HANDLE:
         parentHandle = reader->getHandleString();
         break;
-    case 8:
+    case DRW::dxfCode::LAYER:
         layer = reader->getUtf8String();
         break;
     case 6:
         lineType = reader->getUtf8String();
         break;
-    case 62:
+    case DRW::dxfCode::COLOR:
         color = reader->getInt32();
         break;
-    case 370:
+    case DRW::dxfCode::LINEWEIGHT:
         lWeight = DRW_LW_Conv::dxfInt2lineWidth(reader->getInt32());
         break;
     case 48:
         ltypeScale = reader->getDouble();
         break;
-    case 60:
-        // DXF code 60: 0 = visible, 1 = invisible. The previous `getBool()`
-        // inverted it (60==1 → visible=true). Match the spec + the DWG path
-        // (DRW_Entity::parseDwg `visible = (invisibleFlag & 1) == 0`). Exposed
-        // once writeEntity began emitting 60 for invisible entities.
+    case DRW::dxfCode::INVISIBLE:
         visible = (reader->getInt32() & 1) == 0;
         break;
     case 420:
@@ -1013,7 +1009,7 @@ bool DRW_Entity::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
     case 347:
         material = static_cast<std::uint32_t>(reader->getHandleString());
         break;
-    case 390:
+    case DRW::dxfCode::PLOTSTYLE:
         plotStyle = reader->getHandleString();
         break;
     case 440:

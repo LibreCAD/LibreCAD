@@ -17,6 +17,7 @@
 #include <sstream>
 #include <memory>
 #include "../drw_base.h"
+#include "dwgutil.h"
 
 class DRW_Coord;
 class DRW_TextCodec;

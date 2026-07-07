@@ -795,19 +795,16 @@ std::uint32_t dwgBuffer::getCmColor(DRW::Version v, std::int32_t* rgb24,
         if (outBookName) *outBookName = std::move(bookName);
     }
     switch (type) {
-    case 0xC0:
-        return 256;//ByLayer
-    case 0xC1:
-        return 0;//ByBlock
-    case 0xC2:
-        //true RGB: expose the 24-bit color via out-param for callers that
-        //track DXF code 420 (DRW_Layer.color24, etc.); return ByLayer
-        //sentinel for the indexed-color slot.
+    case dwgColor::BYLAYER:
+        return 256;
+    case dwgColor::BYBLOCK:
+        return 0;
+    case dwgColor::RGB:
         if (rgb24)
             *rgb24 = static_cast<std::int32_t>(rgb & 0xFFFFFF);
         return 256;
-    case 0xC3:
-        return rgb&0xFF;//ACIS
+    case dwgColor::ACIS:
+        return rgb&0xFF;
     default:
         break;
     }

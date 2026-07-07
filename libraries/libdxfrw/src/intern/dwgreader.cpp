@@ -127,22 +127,22 @@ namespace {
 // ANSI_1252 default. 31 (GB2312) maps to its CP936 superset.
 const char* dwgCodePageName(std::uint16_t cp) {
     switch (cp) {
-        case 28: return "ANSI_1250";  // Central/East European
-        case 29: return "ANSI_1251";  // Cyrillic
-        case 30: return "ANSI_1252";  // Western European
-        case 31: return "ANSI_936";   // GB2312 (Simplified Chinese, CP936 superset)
-        case 32: return "ANSI_1253";  // Greek
-        case 33: return "ANSI_1254";  // Turkish
-        case 34: return "ANSI_1255";  // Hebrew
-        case 35: return "ANSI_1256";  // Arabic
-        case 36: return "ANSI_1257";  // Baltic
-        case 37: return "ANSI_874";   // Thai
-        case 38: return "ANSI_932";   // Japanese (Shift-JIS)
-        case 39: return "ANSI_936";   // Simplified Chinese
-        case 40: return "ANSI_949";   // Korean (Wansung)
-        case 41: return "ANSI_950";   // Traditional Chinese (Big5)
-        case 44: return "ANSI_1258";  // Vietnamese
-        default: return nullptr;      // unknown id: keep ANSI_1252 default
+        case dwgCP::ANSI_1250: return "ANSI_1250";
+        case dwgCP::ANSI_1251: return "ANSI_1251";
+        case dwgCP::ANSI_1252: return "ANSI_1252";
+        case dwgCP::GBK_CP936: return "ANSI_936";
+        case dwgCP::ANSI_1253: return "ANSI_1253";
+        case dwgCP::ANSI_1254: return "ANSI_1254";
+        case dwgCP::ANSI_1255: return "ANSI_1255";
+        case dwgCP::ANSI_1256: return "ANSI_1256";
+        case dwgCP::ANSI_1257: return "ANSI_1257";
+        case dwgCP::ANSI_874: return "ANSI_874";
+        case dwgCP::SHIFT_JIS: return "ANSI_932";
+        case dwgCP::GBK: return "ANSI_936";
+        case dwgCP::KOREAN_WANSUNG: return "ANSI_949";
+        case dwgCP::BIG5: return "ANSI_950";
+        case dwgCP::ANSI_1258: return "ANSI_1258";
+        default: return nullptr;
     }
 }
 
@@ -1353,66 +1353,14 @@ bool dwgReader::readDwgEntity(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
 
     obj.type = oType;
     switch (oType) {
-        case 17: {
-            DRW_Arc e;
-            if (entryParse( e, buff, bs, ret)) {
-                intfa.addArc(e);
+        case dwgType::TEXT: {
+            DRW_Text e;
+            if (entryParse(e, buff, bs, ret)) {
+                e.style = findTableName(DRW::STYLE, e.styleH.ref);
+                intfa.addText(e);
             }
             break; }
-        case 18: {
-            DRW_Circle e;
-            if (entryParse( e, buff, bs, ret)) {
-                intfa.addCircle(e);
-            }
-            break; }
-        case 19:{
-            DRW_Line e;
-            if (entryParse( e, buff, bs, ret)) {
-                intfa.addLine(e);
-            }
-            break;}
-        case 27: {
-            DRW_Point e;
-            if (entryParse( e, buff, bs, ret)) {
-                intfa.addPoint(e);
-            }
-            break; }
-        case 35: {
-            DRW_Ellipse e;
-            if (entryParse( e, buff, bs, ret)) {
-                intfa.addEllipse(e);
-            }
-            break; }
-        case 7:
-        case 8: {//minsert = 8
-            DRW_Insert e;
-            if (entryParse( e, buff, bs, ret)) {
-                e.name = findTableName(DRW::BLOCK_RECORD,
-                                       e.blockRecH.ref);//RLZ: find as block or blockrecord (ps & ps0)
-
-                // Drain any orphan ATTRIBs already seen for this INSERT.
-                auto orphIt = m_orphanAttribs.find(e.handle);
-                if (orphIt != m_orphanAttribs.end()) {
-                    for (auto& a : orphIt->second)
-                        e.attlist.push_back(std::move(a));
-                    m_orphanAttribs.erase(orphIt);
-                }
-
-                if (e.attribHandles.empty() ||
-                    e.attlist.size() >= e.attribHandles.size()) {
-                    // No pending children — dispatch immediately.
-                    intfa.addInsert(e);
-                } else {
-                    // Defer: wait for remaining ATTRIBs (or end-of-section flush).
-                    m_pendingInserts.emplace(e.handle, std::move(e));
-                }
-            }
-            break; }
-        case 2: {//ATTRIB
-            // Per-entity parse failures are non-fatal: route to orphan cache
-            // / pending-insert at most when parse fully succeeds, but always
-            // restore ret=true so the stream-level loop continues.  (A bad
-            // ATTRIB shouldn't break sibling LINEs/ARCs in the same drawing.)
+        case dwgType::ATTRIB: {
             auto a = std::make_shared<DRW_Attrib>();
             bool localRet = true;
             entryParse(*a, buff, bs, localRet);
@@ -1434,8 +1382,7 @@ bool dwgReader::readDwgEntity(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
             }
             ret = true;
             break; }
-        case 3: {//ATTDEF — typically owned by BLOCK_RECORD; route same as ATTRIB
-                  //and rely on end-of-section flush for the orphan path.
+        case dwgType::ATTDEF: {
             auto a = std::make_shared<DRW_Attdef>();
             bool localRet = true;
             entryParse(*a, buff, bs, localRet);
@@ -1457,37 +1404,224 @@ bool dwgReader::readDwgEntity(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
             }
             ret = true;
             break; }
-        case 6:
-            //SEQEND — terminator for INSERT/POLYLINE attribute/vertex chain.
-            //Carries no geometry; pending inserts are flushed once their
-            //attlist matches attribHandles, and the end-of-section flush
-            //catches any with missing children.  Silently consumed here.
+        case dwgType::SEQEND:
             break;
-        case 77: {
-            DRW_LWPolyline e;
-            if (entryParse( e, buff, bs, ret)) {
-                intfa.addLWPolyline(e);
+        case dwgType::INSERT:
+        case dwgType::MINSERT: {
+            DRW_Insert e;
+            if (entryParse(e, buff, bs, ret)) {
+                e.name = findTableName(DRW::BLOCK_RECORD,
+                                       e.blockRecH.ref);
+
+                auto orphIt = m_orphanAttribs.find(e.handle);
+                if (orphIt != m_orphanAttribs.end()) {
+                    for (auto& a : orphIt->second)
+                        e.attlist.push_back(std::move(a));
+                    m_orphanAttribs.erase(orphIt);
+                }
+
+                if (e.attribHandles.empty() ||
+                    e.attlist.size() >= e.attribHandles.size()) {
+                    intfa.addInsert(e);
+                } else {
+                    m_pendingInserts.emplace(e.handle, std::move(e));
+                }
             }
             break; }
-        case 1: {
-            DRW_Text e;
-            if (entryParse( e, buff, bs, ret)) {
-                e.style = findTableName(DRW::STYLE, e.styleH.ref);
-                intfa.addText(e);
+        case dwgType::POLYLINE_2D:
+        case dwgType::POLYLINE_3D:
+        case dwgType::POLYLINE_PFACE:
+        case dwgType::POLYLINE_MESH: {
+            DRW_Polyline e;
+            if (entryParse(e, buff, bs, ret)) {
+                if (!readPlineVertex(e, dbuf))
+                    ret = false;
+                intfa.addPolyline(e);
             }
             break; }
-        case 44: {
+        case dwgType::ARC: {
+            DRW_Arc e;
+            if (entryParse(e, buff, bs, ret)) {
+                intfa.addArc(e);
+            }
+            break; }
+        case dwgType::CIRCLE: {
+            DRW_Circle e;
+            if (entryParse(e, buff, bs, ret)) {
+                intfa.addCircle(e);
+            }
+            break; }
+        case dwgType::LINE: {
+            DRW_Line e;
+            if (entryParse(e, buff, bs, ret)) {
+                intfa.addLine(e);
+            }
+            break; }
+        case dwgType::DIM_ORDINATE: {
+            DRW_DimOrdinate e;
+            if (entryParse(e, buff, bs, ret)) {
+                e.style = findTableName(DRW::DIMSTYLE, e.dimStyleH.ref);
+                intfa.addDimOrdinate(&e);
+            }
+            break; }
+        case dwgType::DIM_LINEAR: {
+            DRW_DimLinear e;
+            if (entryParse(e, buff, bs, ret)) {
+                e.style = findTableName(DRW::DIMSTYLE, e.dimStyleH.ref);
+                intfa.addDimLinear(&e);
+            }
+            break; }
+        case dwgType::DIM_ALIGNED: {
+            DRW_DimAligned e;
+            if (entryParse(e, buff, bs, ret)) {
+                e.style = findTableName(DRW::DIMSTYLE, e.dimStyleH.ref);
+                intfa.addDimAlign(&e);
+            }
+            break; }
+        case dwgType::DIM_ANGULAR3P: {
+            DRW_DimAngular3p e;
+            if (entryParse(e, buff, bs, ret)) {
+                e.style = findTableName(DRW::DIMSTYLE, e.dimStyleH.ref);
+                intfa.addDimAngular3P(&e);
+            }
+            break; }
+        case dwgType::DIM_ANGULAR: {
+            DRW_DimAngular e;
+            if (entryParse(e, buff, bs, ret)) {
+                e.style = findTableName(DRW::DIMSTYLE, e.dimStyleH.ref);
+                intfa.addDimAngular(&e);
+            }
+            break; }
+        case dwgType::DIM_RADIAL: {
+            DRW_DimRadial e;
+            if (entryParse(e, buff, bs, ret)) {
+                e.style = findTableName(DRW::DIMSTYLE, e.dimStyleH.ref);
+                intfa.addDimRadial(&e);
+            }
+            break; }
+        case dwgType::DIM_DIAMETRIC: {
+            DRW_DimDiametric e;
+            if (entryParse(e, buff, bs, ret)) {
+                e.style = findTableName(DRW::DIMSTYLE, e.dimStyleH.ref);
+                intfa.addDimDiametric(&e);
+            }
+            break; }
+        case dwgType::POINT: {
+            DRW_Point e;
+            if (entryParse(e, buff, bs, ret)) {
+                intfa.addPoint(e);
+            }
+            break; }
+        case dwgType::FACE3D: {
+            DRW_3Dface e;
+            if (entryParse(e, buff, bs, ret)) {
+                intfa.add3dFace(e);
+            }
+            break; }
+        case dwgType::SOLID: {
+            DRW_Solid e;
+            if (entryParse(e, buff, bs, ret)) {
+                intfa.addSolid(e);
+            }
+            break; }
+        case dwgType::TRACE: {
+            DRW_Trace e;
+            if (entryParse(e, buff, bs, ret)) {
+                intfa.addTrace(e);
+            }
+            break; }
+        case dwgType::SHAPE: {
+            DRW_Shape e;
+            if (entryParse(e, buff, bs, ret)) {
+                e.m_objectSize = static_cast<std::uint32_t>(size);
+                e.m_rawBytes = tmpByteStr;
+                e.m_styleName = findTableName(DRW::STYLE, e.m_shapeFileHandle);
+                intfa.addShape(e);
+                intfa.addUnsupportedObject(makeRawEntity(oType));
+            } else {
+                intfa.addUnsupportedObject(makeRawEntity(oType));
+            }
+            break; }
+        case dwgType::VIEWPORT: {
+            DRW_Viewport e;
+            if (entryParse(e, buff, bs, ret)) {
+                intfa.addViewport(e);
+            }
+            break; }
+        case dwgType::ELLIPSE: {
+            DRW_Ellipse e;
+            if (entryParse(e, buff, bs, ret)) {
+                intfa.addEllipse(e);
+            }
+            break; }
+        case dwgType::SPLINE: {
+            DRW_Spline e;
+            if (entryParse(e, buff, bs, ret)) {
+                intfa.addSpline(&e);
+            }
+            break; }
+        case dwgType::REGION: {
+            DRW_ModelerGeometry e(DRW::REGION);
+            if (entryParse(e, buff, bs, ret)) {
+                e.m_objectSize = static_cast<std::uint32_t>(size);
+                e.m_rawBytes = tmpByteStr;
+                intfa.addModelerGeometry(e);
+                intfa.addUnsupportedObject(makeRawEntity(oType));
+            }
+            break; }
+        case dwgType::SOLID3D: {
+            DRW_ModelerGeometry e(DRW::E3DSOLID);
+            if (entryParse(e, buff, bs, ret)) {
+                e.m_objectSize = static_cast<std::uint32_t>(size);
+                e.m_rawBytes = tmpByteStr;
+                intfa.addModelerGeometry(e);
+                intfa.addUnsupportedObject(makeRawEntity(oType));
+            }
+            break; }
+        case dwgType::BODY: {
+            DRW_ModelerGeometry e(DRW::BODY);
+            if (entryParse(e, buff, bs, ret)) {
+                e.m_objectSize = static_cast<std::uint32_t>(size);
+                e.m_rawBytes = tmpByteStr;
+                intfa.addModelerGeometry(e);
+                intfa.addUnsupportedObject(makeRawEntity(oType));
+            }
+            break; }
+        case dwgType::RAY: {
+            DRW_Ray e;
+            if (entryParse(e, buff, bs, ret)) {
+                intfa.addRay(e);
+            }
+            break; }
+        case dwgType::XLINE: {
+            DRW_Xline e;
+            if (entryParse(e, buff, bs, ret)) {
+                intfa.addXline(e);
+            }
+            break; }
+        case dwgType::MTEXT: {
             DRW_MText e;
-            if (entryParse( e, buff, bs, ret)) {
+            if (entryParse(e, buff, bs, ret)) {
                 e.style = findTableName(DRW::STYLE, e.styleH.ref);
                 intfa.addMText(e);
             }
             break; }
-        case 47: { // MLINE (ODA fixed type 0x2F)
+        case dwgType::LEADER: {
+            DRW_Leader e;
+            if (entryParse(e, buff, bs, ret)) {
+                e.style = findTableName(DRW::DIMSTYLE, e.dimStyleH.ref);
+                intfa.addLeader(&e);
+            }
+            break; }
+        case dwgType::TOLERANCE: {
+            DRW_Tolerance e;
+            if (entryParse(e, buff, bs, ret)) {
+                intfa.addTolerance(e);
+            }
+            break; }
+        case dwgType::MLINE: {
             DRW_MLine e;
             if (entryParse(e, buff, bs, ret)) {
-                // Resolve MLINESTYLE handle → name from the map populated
-                // when the OBJECTS section's MLINESTYLE entries were read.
                 if (e.styleHandle != 0) {
                     auto it = mlineStyleNameMap.find(e.styleHandle);
                     if (it != mlineStyleNameMap.end() && e.styleName.empty()) {
@@ -1497,169 +1631,7 @@ bool dwgReader::readDwgEntity(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                 intfa.addMLine(&e);
             }
             break; }
-        case 28: {
-            DRW_3Dface e;
-            if (entryParse( e, buff, bs, ret)) {
-                intfa.add3dFace(e);
-            }
-            break; }
-        case 37: {
-            DRW_ModelerGeometry e(DRW::REGION);
-            if (entryParse(e, buff, bs, ret)) {
-                e.m_objectSize = static_cast<std::uint32_t>(size);
-                e.m_rawBytes = tmpByteStr;
-                intfa.addModelerGeometry(e);
-                intfa.addUnsupportedObject(makeRawEntity(oType));
-            }
-            break; }
-        case 38: {
-            DRW_ModelerGeometry e(DRW::E3DSOLID);
-            if (entryParse(e, buff, bs, ret)) {
-                e.m_objectSize = static_cast<std::uint32_t>(size);
-                e.m_rawBytes = tmpByteStr;
-                intfa.addModelerGeometry(e);
-                intfa.addUnsupportedObject(makeRawEntity(oType));
-            }
-            break; }
-        case 39: {
-            DRW_ModelerGeometry e(DRW::BODY);
-            if (entryParse(e, buff, bs, ret)) {
-                e.m_objectSize = static_cast<std::uint32_t>(size);
-                e.m_rawBytes = tmpByteStr;
-                intfa.addModelerGeometry(e);
-                intfa.addUnsupportedObject(makeRawEntity(oType));
-            }
-            break; }
-        case 20: {
-            DRW_DimOrdinate e;
-            if (entryParse( e, buff, bs, ret)) {
-                e.style = findTableName(DRW::DIMSTYLE, e.dimStyleH.ref);
-                intfa.addDimOrdinate(&e);
-            }
-            break; }
-        case 21: {
-            DRW_DimLinear e;
-            if (entryParse( e, buff, bs, ret)) {
-                e.style = findTableName(DRW::DIMSTYLE, e.dimStyleH.ref);
-                intfa.addDimLinear(&e);
-            }
-            break; }
-        case 22: {
-            DRW_DimAligned e;
-            if (entryParse( e, buff, bs, ret)) {
-                e.style = findTableName(DRW::DIMSTYLE, e.dimStyleH.ref);
-                intfa.addDimAlign(&e);
-            }
-            break; }
-        case 23: {
-            DRW_DimAngular3p e;
-            if (entryParse( e, buff, bs, ret)) {
-                e.style = findTableName(DRW::DIMSTYLE, e.dimStyleH.ref);
-                intfa.addDimAngular3P(&e);
-            }
-            break; }
-        case 24: {
-            DRW_DimAngular e;
-            if (entryParse( e, buff, bs, ret)) {
-                e.style = findTableName(DRW::DIMSTYLE, e.dimStyleH.ref);
-                intfa.addDimAngular(&e);
-            }
-            break; }
-        case 25: {
-            DRW_DimRadial e;
-            if (entryParse( e, buff, bs, ret)) {
-                e.style = findTableName(DRW::DIMSTYLE, e.dimStyleH.ref);
-                intfa.addDimRadial(&e);
-            }
-            break; }
-        case 26: {
-            DRW_DimDiametric e;
-            if (entryParse( e, buff, bs, ret)) {
-                e.style = findTableName(DRW::DIMSTYLE, e.dimStyleH.ref);
-                intfa.addDimDiametric(&e);
-            }
-            break; }
-        case 45: {
-            DRW_Leader e;
-            if (entryParse( e, buff, bs, ret)) {
-                e.style = findTableName(DRW::DIMSTYLE, e.dimStyleH.ref);
-                intfa.addLeader(&e);
-            }
-            break; }
-        case 46: { // TOLERANCE — ODA spec sec 19.4.46
-            DRW_Tolerance e;
-            if (entryParse( e, buff, bs, ret)) {
-                intfa.addTolerance(e);
-            }
-            break; }
-        case 31: {
-            DRW_Solid e;
-            if (entryParse( e, buff, bs, ret)) {
-                intfa.addSolid(e);
-            }
-            break; }
-        case 78: {
-            DRW_Hatch e;
-            if (entryParse( e, buff, bs, ret)) {
-                intfa.addHatch(&e);
-            }
-            break; }
-        case 32: {
-            DRW_Trace e;
-            if (entryParse( e, buff, bs, ret)) {
-                intfa.addTrace(e);
-            }
-            break; }
-        case 33: {
-            DRW_Shape e;
-            if (entryParse(e, buff, bs, ret)) {
-                e.m_objectSize = static_cast<std::uint32_t>(size);
-                e.m_rawBytes = tmpByteStr;
-                // Resolve the SHAPEFILE/STYLE record name for DXF code 2 (the DWG
-                // stores only the glyph index); same findTableName pattern as MTEXT.
-                e.m_styleName = findTableName(DRW::STYLE, e.m_shapeFileHandle);
-                intfa.addShape(e);
-                intfa.addUnsupportedObject(makeRawEntity(oType));
-            } else {
-                intfa.addUnsupportedObject(makeRawEntity(oType));
-            }
-            break; }
-        case 34: {
-            DRW_Viewport e;
-            if (entryParse( e, buff, bs, ret)) {
-                intfa.addViewport(e);
-            }
-            break; }
-        case 36: {
-            DRW_Spline e;
-            if (entryParse( e, buff, bs, ret)) {
-                intfa.addSpline(&e);
-            }
-            break; }
-        case 40: {
-            DRW_Ray e;
-            if (entryParse( e, buff, bs, ret)) {
-                intfa.addRay(e);
-            }
-            break; }
-        case 15:    // pline 2D
-        case 16:    // pline 3D
-        case 29:    // pline PFACE
-        case 30: {  // POLYLINE_MESH (per ODA spec sec 19.4.31)
-            DRW_Polyline e;
-            if (entryParse( e, buff, bs, ret)) {
-                if (!readPlineVertex(e, dbuf))
-                    ret = false;
-                intfa.addPolyline(e);
-            }
-            break; }
-        case 41: {
-            DRW_Xline e;
-            if (entryParse( e, buff, bs, ret)) {
-                intfa.addXline(e);
-            }
-            break; }
-        case 74: {
+        case dwgType::OLE2FRAME: {
             DRW_Ole2Frame e;
             if (entryParse(e, buff, bs, ret)) {
                 e.m_objectSize = static_cast<std::uint32_t>(size);
@@ -1670,9 +1642,21 @@ bool dwgReader::readDwgEntity(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                 intfa.addUnsupportedObject(makeRawEntity(oType));
             }
             break; }
-        case 101: {
+        case dwgType::LWPOLYLINE: {
+            DRW_LWPolyline e;
+            if (entryParse(e, buff, bs, ret)) {
+                intfa.addLWPolyline(e);
+            }
+            break; }
+        case dwgType::HATCH: {
+            DRW_Hatch e;
+            if (entryParse(e, buff, bs, ret)) {
+                intfa.addHatch(&e);
+            }
+            break; }
+        case dwgType::IMAGE: {
             DRW_Image e;
-            if (entryParse( e, buff, bs, ret)) {
+            if (entryParse(e, buff, bs, ret)) {
                 intfa.addImage(&e);
             }
             break; }
@@ -2070,7 +2054,7 @@ bool dwgReader::readDwgObject(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
         };
 
         switch (oType){
-        case 42: { //DICTIONARY (ODA fixed type 42)
+        case dwgObjType::DICTIONARY: {
             DRW_Dictionary e;
             ret = e.parseDwg(version, &buff, bs);
             if (ret) {
@@ -2078,28 +2062,7 @@ bool dwgReader::readDwgObject(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                 intfa.addUnsupportedObject(makeRawObject(oType));
             }
             break; }
-        case 79: { //XRECORD (ODA fixed type 0x4f)
-            DRW_XRecord e;
-            ret = e.parseDwg(version, &buff, bs);
-            if (ret) {
-                intfa.addXRecord(e);
-                intfa.addUnsupportedObject(makeRawObject(oType));
-            }
-            break; }
-        case 73: { //MLINESTYLE (ODA fixed type 73)
-            DRW_MLineStyle e;
-            ret = e.parseDwg(version, &buff, bs);
-            if (ret) {
-                // Cache name by handle so DRW_MLine entities can resolve
-                // their styleHandle → styleName after the OBJECTS section
-                // is fully parsed (entries usually appear before OBJECTS,
-                // so this map is consulted in case 47 dispatch).
-                mlineStyleNameMap[obj.handle] = e.name;
-                intfa.addMLineStyle(e);
-                intfa.addUnsupportedObject(makeRawObject(oType));
-            }
-            break; }
-        case 72: { //GROUP (ODA fixed type 72)
+        case dwgObjType::GROUP: {
             DRW_Group e;
             ret = e.parseDwg(version, &buff, bs);
             if (ret) {
@@ -2107,15 +2070,24 @@ bool dwgReader::readDwgObject(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                 intfa.addUnsupportedObject(makeRawObject(oType));
             }
             break; }
-        case 82: { //LAYOUT (ODA fixed type 82)
-            DRW_Layout e;
+        case dwgObjType::MLINESTYLE: {
+            DRW_MLineStyle e;
             ret = e.parseDwg(version, &buff, bs);
             if (ret) {
-                intfa.addLayout(e);
+                mlineStyleNameMap[obj.handle] = e.name;
+                intfa.addMLineStyle(e);
                 intfa.addUnsupportedObject(makeRawObject(oType));
             }
             break; }
-        case 80: { //ACDBPLACEHOLDER (ODA fixed type 0x50)
+        case dwgObjType::XRECORD: {
+            DRW_XRecord e;
+            ret = e.parseDwg(version, &buff, bs);
+            if (ret) {
+                intfa.addXRecord(e);
+                intfa.addUnsupportedObject(makeRawObject(oType));
+            }
+            break; }
+        case dwgObjType::ACDBPLACEHOLDER: {
             DRW_AcDbPlaceholder e;
             ret = e.parseDwg(version, &buff, bs);
             if (ret) {
@@ -2123,7 +2095,15 @@ bool dwgReader::readDwgObject(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                 intfa.addUnsupportedObject(makeRawObject(oType));
             }
             break; }
-        case 102: {
+        case dwgObjType::LAYOUT: {
+            DRW_Layout e;
+            ret = e.parseDwg(version, &buff, bs);
+            if (ret) {
+                intfa.addLayout(e);
+                intfa.addUnsupportedObject(makeRawObject(oType));
+            }
+            break; }
+        case dwgObjType::IMAGEDEF: {
             DRW_ImageDef e;
             ret = e.parseDwg(version, &buff, bs);
             if (ret) {

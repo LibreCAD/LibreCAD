@@ -97,6 +97,18 @@ const std::unordered_map< const char*, DRW::Version > dwgVersionStrings {
     { "AC1032", DRW::AC1032 },
 };
 
+namespace dxfCode {
+    enum Common {
+        HANDLE = 5,
+        LAYER = 8,
+        COLOR = 62,
+        OWNER_HANDLE = 330,
+        INVISIBLE = 60,
+        LINEWEIGHT = 370,
+        PLOTSTYLE = 390
+    };
+}
+
 enum error {
 BAD_NONE,             /*!< No error. */
 BAD_UNKNOWN,          /*!< UNKNOWN. */

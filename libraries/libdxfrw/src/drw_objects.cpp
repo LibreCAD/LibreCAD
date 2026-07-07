@@ -742,10 +742,10 @@ bool xRecordCodeIsHandle(int code) {
 */
 bool DRW_TableEntry::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
     switch (code) {
-    case 5:
+    case DRW::dxfCode::HANDLE:
         handle = reader->getHandleString();
         break;
-    case 330:
+    case DRW::dxfCode::OWNER_HANDLE:
         parentHandle = reader->getHandleString();
         break;
     case 2:
@@ -1441,16 +1441,16 @@ bool DRW_Layer::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
     case 6:
         lineType = reader->getUtf8String();
         break;
-    case 62:
+    case DRW::dxfCode::COLOR:
         color = reader->getInt32();
         break;
     case 290:
         plotF = reader->getBool();
         break;
-    case 370:
+    case DRW::dxfCode::LINEWEIGHT:
         lWeight = DRW_LW_Conv::dxfInt2lineWidth(reader->getInt32());
         break;
-    case 390:
+    case DRW::dxfCode::PLOTSTYLE:
         handlePlotS = reader->getString();
         break;
     case 347:

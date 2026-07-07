@@ -455,11 +455,11 @@ int DRW_ProxyGraphicDecoder::decode(const std::string &bytes, DRW::Version versi
                 st.color = DRW::ColorByLayer;
                 st.trueColor = -1;
                 switch ((raw >> 24) & 0xFFu) {
-                case 0xC2: st.trueColor = static_cast<int>(raw & 0x00FFFFFFu); break; // RGB
-                case 0xC3: st.color = static_cast<int>(raw & 0xFFu); break;           // ACI index
-                case 0xC0: st.color = DRW::ColorByLayer; break;                       // BYLAYER
-                case 0xC1: st.color = DRW::ColorByBlock; break;                       // BYBLOCK
-                default:   break; // 0xC8 window-bg / unknown → leave reset defaults
+                case dwgColor::RGB: st.trueColor = static_cast<int>(raw & 0x00FFFFFFu); break;
+                case dwgColor::ACIS: st.color = static_cast<int>(raw & 0xFFu); break;
+                case dwgColor::BYLAYER: st.color = DRW::ColorByLayer; break;
+                case dwgColor::BYBLOCK: st.color = DRW::ColorByBlock; break;
+                default:   break;
                 }
             }
             break;
