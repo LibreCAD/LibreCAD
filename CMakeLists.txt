@@ -33,6 +33,19 @@ find_package(Qt6 REQUIRED COMPONENTS LinguistTools)
 # targets (and their nested dependencies) so linking succeeds. No-op when AGL
 # is absent, and only runs on Apple.
 if(APPLE)
+    # Strip -framework AGL from a single target property (if set).
+    function(_lc_strip_agl_prop _tgt _prop)
+        get_target_property(_val "${_tgt}" "${_prop}")
+        if(_val)
+            string(REGEX REPLACE "(^|;)-framework;AGL(;|$)" "\\2" _val "${_val}")
+            string(REGEX REPLACE "(^|;)-framework AGL(;|$)" "\\2" _val "${_val}")
+            string(REGEX REPLACE "(^|;)AGL(;|$)" "\\2" _val "${_val}")
+            string(REGEX REPLACE ";;+" ";" _val "${_val}")
+            string(REGEX REPLACE "^;+|;+$" "" _val "${_val}")
+            set_target_properties("${_tgt}" PROPERTIES "${_prop}" "${_val}")
+        endif()
+    endfunction()
+
     set_property(GLOBAL PROPERTY _lc_agl_seen "")
     function(_lc_strip_agl _tgt)
         if(NOT TARGET "${_tgt}")
@@ -43,25 +56,35 @@ if(APPLE)
             return()
         endif()
         set_property(GLOBAL APPEND PROPERTY _lc_agl_seen "${_tgt}")
-        get_target_property(_libs "${_tgt}" INTERFACE_LINK_LIBRARIES)
-        if(NOT _libs)
-            return()
-        endif()
-        # Handle the two-token (-framework;AGL), single-token (-framework AGL)
-        # and bare (AGL) representations, then tidy stray separators.
-        string(REGEX REPLACE "(^|;)-framework;AGL(;|$)" "\\2" _libs "${_libs}")
-        string(REGEX REPLACE "(^|;)-framework AGL(;|$)" "\\2" _libs "${_libs}")
-        string(REGEX REPLACE "(^|;)AGL(;|$)" "\\2" _libs "${_libs}")
-        string(REGEX REPLACE ";;+" ";" _libs "${_libs}")
-        string(REGEX REPLACE "^;+|;+$" "" _libs "${_libs}")
-        set_target_properties("${_tgt}" PROPERTIES INTERFACE_LINK_LIBRARIES "${_libs}")
-        foreach(_dep IN LISTS _libs)
-            _lc_strip_agl("${_dep}")
+
+        # Properties that may carry -framework AGL on imported Qt6 targets.
+        # IMPORTED_LINK_DEPENDENT_LIBRARIES is where conda-forge/pixi Qt 6.8
+        # lists system frameworks (AGL, AppKit, OpenGL, ...) for Qt6::Gui.
+        _lc_strip_agl_prop("${_tgt}" INTERFACE_LINK_LIBRARIES)
+        _lc_strip_agl_prop("${_tgt}" IMPORTED_LINK_DEPENDENT_LIBRARIES)
+        _lc_strip_agl_prop("${_tgt}" IMPORTED_LINK_INTERFACE_LIBRARIES)
+        _lc_strip_agl_prop("${_tgt}" INTERFACE_LINK_OPTIONS)
+        _lc_strip_agl_prop("${_tgt}" LINK_OPTIONS)
+        _lc_strip_agl_prop("${_tgt}" LINK_LIBRARIES)
+        # Config-specific variants of imported link libraries.
+        foreach(_cfg DEBUG RELEASE RELWITHDEBINFO MINSIZEREL NOCONFIG)
+            _lc_strip_agl_prop("${_tgt}" IMPORTED_LINK_DEPENDENT_LIBRARIES_${_cfg})
+            _lc_strip_agl_prop("${_tgt}" IMPORTED_LINK_INTERFACE_LIBRARIES_${_cfg})
         endforeach()
+
+        # Recurse into dependencies listed in INTERFACE_LINK_LIBRARIES so that
+        # transitive Qt6 dependencies (e.g. Qt6::Gui -> Qt6::Core) are swept.
+        get_target_property(_libs "${_tgt}" INTERFACE_LINK_LIBRARIES)
+        if(_libs)
+            foreach(_dep IN LISTS _libs)
+                _lc_strip_agl("${_dep}")
+            endforeach()
+        endif()
     endfunction()
+
     message(STATUS "macOS: stripping removed AGL.framework from Qt6 link interfaces")
-    # Sweep every imported target (Qt6 modules and their imported deps), plus the
-    # modules LibreCAD links directly, so AGL is removed wherever it is listed.
+    # Sweep every imported target (Qt6 modules and their imported deps), plus
+    # the modules LibreCAD links directly, so AGL is removed wherever listed.
     get_property(_lc_imported DIRECTORY PROPERTY IMPORTED_TARGETS)
     foreach(_lc_t IN LISTS _lc_imported)
         _lc_strip_agl("${_lc_t}")
@@ -1753,6 +1776,17 @@ endif()
 
 add_subdirectory(libraries/lciconengine)
 add_subdirectory(plugins)
+
+# --- macOS: second AGL sweep for targets created in subdirectories ------------
+# The first sweep (above) strips AGL from Qt6 imported targets.  Targets created
+# by add_subdirectory (e.g. lc_svgiconengine) inherit link dependencies from Qt6
+# at creation time, so re-sweep them here to catch any AGL that slipped through.
+if(APPLE)
+    foreach(_lc_tgt lc_svgiconengine librecad librecad_lib)
+        _lc_strip_agl("${_lc_tgt}")
+    endforeach()
+endif()
+# ---------------------------------------------------------------------------
 
 option(BUILD_TESTS "Build unit tests for LibreCAD" OFF)
 
