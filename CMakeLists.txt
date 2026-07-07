@@ -26,26 +26,14 @@ find_package(Qt6 COMPONENTS Gui Core Widgets PrintSupport Svg Network REQUIRED)
 find_package(Qt6 REQUIRED COMPONENTS LinguistTools)
 
 # --- macOS: drop the removed AGL.framework from Qt's link interface ---------
-# AGL.framework was deprecated long ago and is absent from recent macOS SDKs
-# (Xcode 14+). Some Qt6 binary packages (e.g. conda-forge / pixi Qt 6.8) still
-# list AGL in their imported-target link interface, so linking any Qt-based
-# target fails with: "ld: framework not found AGL". Strip AGL from the Qt6
-# targets (and their nested dependencies) so linking succeeds. No-op when AGL
-# is absent, and only runs on Apple.
+# AGL.framework was removed from macOS SDKs (macOS 26 / Tahoe).  Qt ≤ 6.8.3
+# and ≤ 6.9.1 still reference it via FindWrapOpenGL.cmake, which does:
+#   target_link_libraries(WrapOpenGL::WrapOpenGL INTERFACE "-framework AGL")
+# putting "-framework AGL" into INTERFACE_LINK_LIBRARIES of WrapOpenGL::WrapOpenGL,
+# which is transitively linked by Qt6::Gui, Qt6::Widgets, etc.
+# Fixed upstream in Qt 6.8.4 / 6.9.2 (commit cdb33c3d).  This workaround
+# strips any AGL reference from INTERFACE_LINK_LIBRARIES of all Qt6 targets.
 if(APPLE)
-    # Strip -framework AGL from a single target property (if set).
-    function(_lc_strip_agl_prop _tgt _prop)
-        get_target_property(_val "${_tgt}" "${_prop}")
-        if(_val)
-            string(REGEX REPLACE "(^|;)-framework;AGL(;|$)" "\\2" _val "${_val}")
-            string(REGEX REPLACE "(^|;)-framework AGL(;|$)" "\\2" _val "${_val}")
-            string(REGEX REPLACE "(^|;)AGL(;|$)" "\\2" _val "${_val}")
-            string(REGEX REPLACE ";;+" ";" _val "${_val}")
-            string(REGEX REPLACE "^;+|;+$" "" _val "${_val}")
-            set_target_properties("${_tgt}" PROPERTIES "${_prop}" "${_val}")
-        endif()
-    endfunction()
-
     set_property(GLOBAL PROPERTY _lc_agl_seen "")
     function(_lc_strip_agl _tgt)
         if(NOT TARGET "${_tgt}")
@@ -57,25 +45,20 @@ if(APPLE)
         endif()
         set_property(GLOBAL APPEND PROPERTY _lc_agl_seen "${_tgt}")
 
-        # Properties that may carry -framework AGL on imported Qt6 targets.
-        # IMPORTED_LINK_DEPENDENT_LIBRARIES is where conda-forge/pixi Qt 6.8
-        # lists system frameworks (AGL, AppKit, OpenGL, ...) for Qt6::Gui.
-        _lc_strip_agl_prop("${_tgt}" INTERFACE_LINK_LIBRARIES)
-        _lc_strip_agl_prop("${_tgt}" IMPORTED_LINK_DEPENDENT_LIBRARIES)
-        _lc_strip_agl_prop("${_tgt}" IMPORTED_LINK_INTERFACE_LIBRARIES)
-        _lc_strip_agl_prop("${_tgt}" INTERFACE_LINK_OPTIONS)
-        _lc_strip_agl_prop("${_tgt}" LINK_OPTIONS)
-        _lc_strip_agl_prop("${_tgt}" LINK_LIBRARIES)
-        # Config-specific variants of imported link libraries.
-        foreach(_cfg DEBUG RELEASE RELWITHDEBINFO MINSIZEREL NOCONFIG)
-            _lc_strip_agl_prop("${_tgt}" IMPORTED_LINK_DEPENDENT_LIBRARIES_${_cfg})
-            _lc_strip_agl_prop("${_tgt}" IMPORTED_LINK_INTERFACE_LIBRARIES_${_cfg})
-        endforeach()
-
-        # Recurse into dependencies listed in INTERFACE_LINK_LIBRARIES so that
-        # transitive Qt6 dependencies (e.g. Qt6::Gui -> Qt6::Core) are swept.
+        # AGL lives in INTERFACE_LINK_LIBRARIES (set by target_link_libraries
+        # on the INTERFACE IMPORTED target WrapOpenGL::WrapOpenGL).
+        # Use list(FILTER) to exclude any item containing "AGL" — this catches
+        # "-framework AGL", bare "AGL", and $<LINK_LIBRARY:framework,AGL>.
         get_target_property(_libs "${_tgt}" INTERFACE_LINK_LIBRARIES)
         if(_libs)
+            set(_filtered ${_libs})
+            list(FILTER _filtered EXCLUDE REGEX "AGL")
+            if(NOT "${_filtered}" STREQUAL "${_libs}")
+                set_target_properties("${_tgt}" PROPERTIES
+                    INTERFACE_LINK_LIBRARIES "${_filtered}")
+            endif()
+            # Recurse into the (unfiltered) dependency list so transitive
+            # deps like WrapOpenGL::WrapOpenGL -> Qt6::Gui are also swept.
             foreach(_dep IN LISTS _libs)
                 _lc_strip_agl("${_dep}")
             endforeach()
@@ -83,13 +66,14 @@ if(APPLE)
     endfunction()
 
     message(STATUS "macOS: stripping removed AGL.framework from Qt6 link interfaces")
-    # Sweep every imported target (Qt6 modules and their imported deps), plus
-    # the modules LibreCAD links directly, so AGL is removed wherever listed.
+    # Sweep all imported targets found by find_package(Qt6), then explicitly
+    # hit the Qt6 modules and WrapOpenGL::WrapOpenGL (the AGL source).
     get_property(_lc_imported DIRECTORY PROPERTY IMPORTED_TARGETS)
     foreach(_lc_t IN LISTS _lc_imported)
         _lc_strip_agl("${_lc_t}")
     endforeach()
-    foreach(_lc_qt_mod Qt6::Core Qt6::Gui Qt6::Widgets Qt6::PrintSupport Qt6::Svg Qt6::Network)
+    foreach(_lc_qt_mod Qt6::Core Qt6::Gui Qt6::Widgets Qt6::PrintSupport
+                     Qt6::Svg Qt6::Network WrapOpenGL::WrapOpenGL)
         _lc_strip_agl("${_lc_qt_mod}")
     endforeach()
 endif()
@@ -1776,17 +1760,6 @@ endif()
 
 add_subdirectory(libraries/lciconengine)
 add_subdirectory(plugins)
-
-# --- macOS: second AGL sweep for targets created in subdirectories ------------
-# The first sweep (above) strips AGL from Qt6 imported targets.  Targets created
-# by add_subdirectory (e.g. lc_svgiconengine) inherit link dependencies from Qt6
-# at creation time, so re-sweep them here to catch any AGL that slipped through.
-if(APPLE)
-    foreach(_lc_tgt lc_svgiconengine librecad librecad_lib)
-        _lc_strip_agl("${_lc_tgt}")
-    endforeach()
-endif()
-# ---------------------------------------------------------------------------
 
 option(BUILD_TESTS "Build unit tests for LibreCAD" OFF)
 
