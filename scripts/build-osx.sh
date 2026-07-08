@@ -52,7 +52,10 @@ fi
 echo QT_PATH="$QT_PATH"
 echo QMAKE_CMD="$QMAKE_CMD"
 
-QMAKE_OPTS=""
+# Honor a QMAKE_OPTS value inherited from the environment (CI sets
+# QMAKE_APPLE_DEVICE_ARCHS here to build a universal binary); default to empty.
+# A -q=/-qmake_opts= command-line argument still overrides this in the loop below.
+QMAKE_OPTS="${QMAKE_OPTS:-}"
 CODESIGN_IDENTITY=""
 
 for i in "$@"
