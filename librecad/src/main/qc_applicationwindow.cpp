@@ -2459,16 +2459,6 @@ void QC_ApplicationWindow::slotFilePrint(bool printPDF) {
     RS2::PaperFormat pf = graphic->getPaperFormat(&landscape);
     QPrinter::PageSize paperSizeName = LC_Printing::rsToQtPaperFormat(pf);
     RS_Vector paperSize = graphic->getPaperSize();
-    if(paperSizeName==QPrinter::Custom){
-        RS_Vector s=RS_Units::convert(paperSize, graphic->getUnit(),RS2::Millimeter);
-        if(landscape) s=s.flipXY();
-        printer.setPageSize(QPageSize{QSizeF(s.x,s.y), QPageSize::Millimeter});
-        // RS_DEBUG->print(RS_Debug::D_ERROR, "set Custom paper size to (%g, %g)\n", s.x,s.y);
-    }else{
-        printer.setPageSize(QPageSize{static_cast<QPageSize::PageSizeId>(paperSizeName)});
-    }
-    // qDebug()<<"paper size=("<<printer.paperSize(QPrinter::Millimeter).width()<<", "<<printer.paperSize(QPrinter::Millimeter).height()<<")";
-    printer.setPageOrientation(landscape ? QPageLayout::Landscape : QPageLayout::Portrait);
     // margins in mm
     QMarginsF paperMargins{graphic->getMarginLeft(),
                                             graphic->getMarginRight(),
@@ -2476,18 +2466,31 @@ void QC_ApplicationWindow::slotFilePrint(bool printPDF) {
                                             graphic->getMarginBottom()};
 
     printMargins(paperMargins, "Drawing");
-    if (printPDF) {
-        // Issue #1897, exporting PDF margins to to follow the drawing settings
-        QPageLayout layout = printer.pageLayout();
-        layout.setMode(QPageLayout::FullPageMode);
-        layout.setUnits(QPageLayout::Millimeter);
-        layout.setMinimumMargins({});
+
+    // Issue #2337: use QPageLayout to set page size, orientation, and margins
+    // together. On Linux/CUPS, setting orientation via setPageOrientation()
+    // after setPageSize() with a standard size ID may not propagate correctly,
+    // resulting in portrait-only output regardless of the landscape setting.
+    QPageLayout layout;
+    layout.setMode(QPageLayout::FullPageMode);
+    layout.setUnits(QPageLayout::Millimeter);
+
+    if(paperSizeName==QPrinter::Custom){
         RS_Vector s=RS_Units::convert(paperSize, graphic->getUnit(),RS2::Millimeter);
         if(landscape) s=s.flipXY();
         layout.setPageSize(QPageSize{QSizeF(s.x,s.y), QPageSize::Millimeter}, paperMargins);
-        printer.setPageLayout(layout);
+    }else{
+        layout.setPageSize(QPageSize{static_cast<QPageSize::PageSizeId>(paperSizeName)}, paperMargins);
     }
-    printer.setPageMargins(paperMargins, QPageLayout::Millimeter);
+    layout.setOrientation(landscape ? QPageLayout::Landscape : QPageLayout::Portrait);
+    printer.setPageLayout(layout);
+
+    if (printPDF) {
+        // Issue #1897, exporting PDF margins to to follow the drawing settings
+        QPageLayout pdfLayout = printer.pageLayout();
+        pdfLayout.setMinimumMargins({});
+        printer.setPageLayout(pdfLayout);
+    }
 
     QString strDefaultFile("");
     RS_SETTINGS->beginGroup("/Print");
