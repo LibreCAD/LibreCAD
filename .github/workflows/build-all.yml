@@ -183,51 +183,6 @@ jobs:
         with:
           version: '6.9.*'
           modules: 'qt5compat'
-
-      - name: Install boost dependencies
-        run: |
-          brew install boost
-
-      # XProtect can cause random failures if it decides that the DMG we create
-      # during the packaging phase is malware.
-      # TODO: Do it in a cleaner way
-      # Inspiration: https://github.com/servo/servo/pull/30779
-      - name: Kill XProtectBehaviorService
-        run: |
-          echo Killing XProtect.; sudo pkill -9 XProtect >/dev/null || true;
-
-      - name: Build and packaging
-        run: |
-          scripts/build-osx.sh
-          mv LibreCAD.dmg LibreCAD-`git describe --always`.dmg
-
-      - name: Upload artifact
-        id: artifact-upload-step
-        uses: actions/upload-artifact@main
-        with:
-          name: macOSAssets
-          path: LibreCAD*.dmg
-          retention-days: 2
-
-  BuildMacOSArm64:
-    runs-on: macos-14
-    outputs:
-      output1: ${{ steps.artifact-upload-step.outputs.artifact-id }}
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@main
-        with:
-          fetch-depth: 0
-
-      - name: uninstall p7zip
-        run: |
-          brew uninstall p7zip
-
-      - name: Install Qt6
-        uses: jurplel/install-qt-action@v4
-        with:
-          version: '6.9.*'
-          modules: 'qt5compat'
           arch: 'clang_64'
 
       - name: Install boost dependencies
@@ -242,18 +197,23 @@ jobs:
         run: |
           echo Killing XProtect.; sudo pkill -9 XProtect >/dev/null || true;
 
+      # Build a single universal (arm64 + x86_64) binary. The clang_64 Qt is a
+      # universal package, so one job covers both Apple Silicon and Intel Macs.
       - name: Build and packaging
         env:
-          QMAKE_OPTS: QMAKE_APPLE_DEVICE_ARCHS=arm64
+          QMAKE_OPTS: QMAKE_APPLE_DEVICE_ARCHS=arm64 QMAKE_APPLE_DEVICE_ARCHS+=x86_64
         run: |
           scripts/build-osx.sh
-          mv LibreCAD.dmg LibreCAD-`git describe --always`-arm64.dmg
+          # fail loudly if the "universal" DMG is silently thin
+          lipo -archs LibreCAD.app/Contents/MacOS/LibreCAD | tee /dev/stderr | grep -qw arm64
+          lipo -archs LibreCAD.app/Contents/MacOS/LibreCAD | grep -qw x86_64
+          mv LibreCAD.dmg LibreCAD-`git describe --always`-universal.dmg
 
       - name: Upload artifact
         id: artifact-upload-step
         uses: actions/upload-artifact@main
         with:
-          name: macOSArm64Assets
+          name: macOSAssets
           path: LibreCAD*.dmg
           retention-days: 2
 
@@ -491,7 +451,7 @@ jobs:
 
   UpdateAssets:
     if: github.repository_owner == 'LibreCAD' && (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/2.2.1')
-    needs: [BuildLinux, BuildLinuxAarch64, BuildMacOS, BuildMacOSArm64, BuildWindows64, BuildWindowsARM64, BuildSnap]
+    needs: [BuildLinux, BuildLinuxAarch64, BuildMacOS, BuildWindows64, BuildWindowsARM64, BuildSnap]
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -576,7 +536,6 @@ jobs:
             linuxAssets/LibreCAD*.AppImage
             linuxAssetsAarch64/LibreCAD*.AppImage
             macOSAssets/LibreCAD*.dmg
-            macOSArm64Assets/LibreCAD*.dmg
             win64Assets/LibreCAD*.exe
             winARM64Assets/LibreCAD*.exe
             snapAssets/LibreCAD*.snap
