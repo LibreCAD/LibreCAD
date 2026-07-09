@@ -24,7 +24,10 @@
 
 #include <map>
 
+#include <QPageLayout>
+
 #include "lc_printing.h"
+#include "rs_units.h"
 
 namespace {
 
@@ -61,4 +64,23 @@ const std::map<RS2::PaperFormat, QPrinter::PageSize> paperToPage = {
 QPrinter::PageSize LC_Printing::rsToQtPaperFormat(RS2::PaperFormat paper)
 {
     return (paperToPage.count(paper) == 1) ? paperToPage.at(paper) : QPrinter::Custom;
+}
+
+void LC_Printing::setupPageLayout(QPrinter& printer, bool landscape, QPrinter::PageSize paperSizeName,
+                                  const RS_Vector& paperSize, RS2::Unit unit, const QMarginsF& paperMargins)
+{
+    QPageLayout layout;
+    layout.setMode(QPageLayout::FullPageMode);
+    layout.setUnits(QPageLayout::Millimeter);
+
+    if (paperSizeName == QPrinter::Custom) {
+        RS_Vector s = RS_Units::convert(paperSize, unit, RS2::Millimeter);
+        if (landscape)
+            s = s.flipXY();
+        layout.setPageSize(QPageSize{QSizeF(s.x, s.y), QPageSize::Millimeter}, paperMargins);
+    } else {
+        layout.setPageSize(QPageSize{static_cast<QPageSize::PageSizeId>(paperSizeName)}, paperMargins);
+    }
+    layout.setOrientation(landscape ? QPageLayout::Landscape : QPageLayout::Portrait);
+    printer.setPageLayout(layout);
 }
