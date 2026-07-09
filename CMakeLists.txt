@@ -2238,11 +2238,38 @@ qt_add_executable (librecad
                    ${MAIN_SOURCES}
 )
 
-# On macOS, make it a bundle and set info.plist
+# On macOS, produce a proper bundle: the capitalized name (LibreCAD.app with
+# Contents/MacOS/LibreCAD) used by the qmake release build, a filled-in
+# Info.plist and the app icon. The Linux binary stays lowercase "librecad".
 if(APPLE)
+    # Info.plist.app is shared with the qmake build and uses @TOKEN@
+    # placeholders. Fill them here (configure_file @ONLY) so the bundle gets a
+    # valid identifier, name, version and icon instead of empty values.
+    set(ICON "librecad.icns")
+    set(EXECUTABLE "LibreCAD")
+    set(BUNDLEIDENTIFIER "org.librecad.librecad")
+    set(FULL_VERSION "${PROJECT_VERSION}")
+    set(TYPEINFO "????")
+    configure_file(
+        "${CMAKE_CURRENT_SOURCE_DIR}/librecad/src/Info.plist.app"
+        "${CMAKE_CURRENT_BINARY_DIR}/Info.plist"
+        @ONLY)
+    unset(ICON)
+    unset(EXECUTABLE)
+    unset(BUNDLEIDENTIFIER)
+    unset(FULL_VERSION)
+    unset(TYPEINFO)
+
+    # Copy the application icon into the bundle's Resources.
+    set(LIBRECAD_ICNS "${CMAKE_CURRENT_SOURCE_DIR}/librecad/res/images/librecad.icns")
+    set_source_files_properties("${LIBRECAD_ICNS}" PROPERTIES
+        MACOSX_PACKAGE_LOCATION "Resources")
+    target_sources(librecad PRIVATE "${LIBRECAD_ICNS}")
+
     set_target_properties(librecad PROPERTIES
         MACOSX_BUNDLE TRUE
-        MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/librecad/src/Info.plist.app"
+        MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_BINARY_DIR}/Info.plist"
+        OUTPUT_NAME LibreCAD
     )
 endif()
 
