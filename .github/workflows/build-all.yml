@@ -197,6 +197,13 @@ jobs:
         run: |
           echo Killing XProtect.; sudo pkill -9 XProtect >/dev/null || true;
 
+      # ttf2lff links Freetype, but Homebrew's is thin (single-arch), so build a
+      # minimal universal static Freetype for the universal ttf2lff to link.
+      - name: Build universal Freetype
+        run: |
+          scripts/build-universal-freetype-macos.sh "$RUNNER_TEMP/freetype"
+          echo "FREETYPE_DIR=$RUNNER_TEMP/freetype" >> "$GITHUB_ENV"
+
       # Build a single universal (arm64 + x86_64) binary. The clang_64 Qt is a
       # universal package, so one job covers both Apple Silicon and Intel Macs.
       - name: Build and packaging
