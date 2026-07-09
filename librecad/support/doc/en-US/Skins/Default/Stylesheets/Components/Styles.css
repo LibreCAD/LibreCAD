@@ -180,6 +180,11 @@ ul.menu li > a.selected
 	font-weight: bold;
 }
 
+li.emptyMenuItem
+{
+	list-style: none;
+}
+
 /* Search Results Styles */
 
 #results-heading

@@ -10,204 +10,12 @@ body
 	font-size: 16px;
 }
 
-/* Css to prevent Chrome's automatic border around active fields*/
-
-*:focus
-{
-	outline: none;
-}
-
 /* Default css class for hiding element*/
 
 .hidden
 {
 	display: none;
 }
-
-/* Topic Popup */
-
-.MCTopicPopup
-{
-	text-decoration: none;
-}
-
-.MCTopicPopupHotSpot
-{
-	cursor: pointer;
-	background-position: left center;
-	background-repeat: no-repeat;
-}
-
-.MCTopicPopup_Open.MCTopicPopupHotSpot
-{
-	
-}
-
-.MCTopicPopup_Closed.MCTopicPopupHotSpot
-{
-	
-}
-
-.MCTopicPopupContainer
-{
-	background-color: #FFFFFF;
-	padding: 10px;
-	position: fixed;
-	top: 100px;
-	left: 100px;
-	right: 100px;
-	bottom: 100px;
-	-moz-border-radius: 5px;
-	border-radius: 5px;
-	-webkit-box-shadow: 0 4px 10px #333333;
-	-moz-box-shadow: 0 4px 10px #333333;
-	box-shadow: 0 4px 10px #333333;
-	filter: alpha( opacity = 0 );
-	opacity: 0.0;
-	z-index: 10001;
-}
-
-#contentBodyInner .MCTopicPopupContainer
-{
-	position: absolute;
-}
-
-.MCTopicPopupBody
-{
-	width: 100%;
-	border: none;
-}
-
-/**/
-/* Thumbnail Popup */
-
-.MCPopupThumbnailLink
-{
-	
-}
-
-.MCPopupThumbnail
-{
-	-moz-border-radius: 5px;
-	border-radius: 5px;
-}
-
-.MCPopupContainer
-{
-	background-color: #FFFFFF;
-	border: solid 1px #000000;
-	padding: 10px;
-	position: absolute;
-	cursor: pointer;
-	-moz-border-radius: 5px;
-	border-radius: 5px;
-	z-index: 999;
-}
-
-.MCPopupContainer2
-{
-	background-color: #FFFFFF;
-	border: solid 1px #000000;
-	padding: 10px;
-	position: absolute;
-	cursor: pointer;
-	-moz-box-shadow: 2px 2px 8px #FFFFFF;
-	-webkit-box-shadow: 2px 2px 8px #FFFFFF;
-	box-shadow: 2px 2px 8px #FFFFFF;
-}
-
-.MCPopupFullImage
-{
-	width: 0px;
-	height: 0px;
-	-moz-border-radius: 5px;
-	border-radius: 5px;
-}
-
-/**/
-/* HelpControl */
-
-.MCHelpControl_Image_Icon
-{
-	border: none;
-}
-
-.MCHelpControl span
-{
-	background: url("Images/help-control.png") no-repeat left center;
-	padding-left: 18px;
-}
-
-a.MCHelpControl
-{
-	cursor: pointer;
-	text-decoration: none;
-}
-
-/**/
-/* Dialog */
-
-.MCDialog
-{
-	display: none;
-	width: 400px;
-	position: fixed;
-	top: 20px;
-	left: 20px;
-	padding: 6px;
-	background-color: #000000;
-	border: 1px solid #000000;
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
-	border-radius: 4px;
-	-moz-box-shadow: 0 3px 0 rgba(0, 0, 0, 0.1);
-	-webkit-box-shadow: 0 3px 0 rgba(0, 0, 0, 0.1);
-	box-shadow: 0 3px 0 rgba(0, 0, 0, 0.1);
-	filter: alpha( opacity = 0 );
-	opacity: 0.0;
-	z-index: 10001;
-}
-
-.MCDialogHeader
-{
-	margin: 0 0 4px;
-	padding: 5px 0 5px 5px;
-	color: #FFFFFF;
-	font-size: 15px;
-	font-family: Helvetica;
-}
-
-.MCDialogClose
-{
-	color: #FFFFFF;
-	font-family: tahoma, sans-serif;
-	font-weight: bold;
-	font-size: 16px;
-	line-height: 12px;
-	text-align: center;
-	text-decoration: none;
-	float: right;
-	width: 20px;
-	height: 18px;
-	padding-top: 2px;
-	margin-top: -2px;
-	background-color: #999999;
-	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
-	border-radius: 3px;
-}
-
-.MCDialogBody
-{
-	color: #555555;
-	padding: 10px;
-	background-color: #FFFFFF;
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
-	border-radius: 4px;
-}
-
-/**/
 
 a.glossaryTerm
 {
@@ -231,8 +39,11 @@ a.glossaryTerm
 
 /* Feedback/Pulse */
 
+.button.pulse-required,
+.button.feedback-required,
 .pulse-required,
 .feedback-required,
+.feedback-topic-required,
 .feedback-topic-required
 {
 	display: none;
@@ -242,7 +53,7 @@ a.glossaryTerm
 .feedback-active .feedback-required,
 .feedback-active.has-topic .feedback-topic-required
 {
-	display: block;
+	display: inline-flex;
 }
 
 /* Login Dialog */
@@ -308,7 +119,7 @@ a.glossaryTerm
 	/* Opera11.10+ */
 	background: url("Images/login-dialog-icon.png") no-repeat 18px center, -ms-linear-gradient(top, #5A5A5A 0%,#4A4A4A 100%);
 	/* IE10+ */
-	background: url("Images/login-dialog-icon.png") no-repeat 18px center, linear-gradient(top, #5A5A5A 0%,#4A4A4A 100%);
+	background: url("Images/login-dialog-icon.png") no-repeat 18px center, linear-gradient(#5A5A5A 0%,#4A4A4A 100%);
 	/* W3C */
 	-pie-background: url("Skins/Default/Stylesheets/Images/login-dialog-icon.png") no-repeat 18px center, linear-gradient(#5A5A5A, #4A4A4A);
 	/*PIE*/
@@ -428,7 +239,7 @@ a.glossaryTerm
 	/* Opera11.10+ */
 	background: -ms-linear-gradient(top, #595959 0%,#4A4A4A 100%);
 	/* IE10+ */
-	background: linear-gradient(top, #595959 0%,#4A4A4A 100%);
+	background: linear-gradient(#595959 0%,#4A4A4A 100%);
 	/* W3C */
 	-pie-background: linear-gradient(#595959, #4A4A4A);
 	/*PIE*/
@@ -475,6 +286,148 @@ a.glossaryTerm
 .login-dialog .status-message-box .message
 {
 	display: none;
+}
+
+.backlink-container
+{
+	position: absolute;
+	bottom: 11px;
+	right: 20px;
+}
+
+.backlink-container-topnav
+{
+	bottom: 4px;
+	right: 4px;
+}
+
+.backlink-container-sidenav
+{
+	bottom: 20px;
+	right: 20px;
+}
+
+#mc-backlink
+{
+	text-decoration: none;
+	color: #7d858a;
+	font-size: 15px;
+	font-family: Arial;
+	font-weight: normal;
+}
+
+#mc-backlink > sup
+{
+	font-size: 12px;
+}
+
+.height-container
+{
+	/* just to contain top margin of element inside */
+	padding-top: 0.1px;
+	position: relative;
+	box-sizing: border-box;
+}
+
+.height-container-no-footer
+{
+	padding-bottom: 30px;
+}
+
+.height-container-sidenav
+{
+	padding-bottom: 40px;
+}
+
+/* to contain floating elements in the div */
+
+.height-container:after
+{
+	visibility: hidden;
+	display: block;
+	font-size: 0;
+	content: " ";
+	clear: both;
+	height: 0;
+}
+
+.codeSnippet
+{
+	overflow: auto;
+}
+
+.codeSnippetBody
+{
+	margin: 0;
+	font-family: inherit;
+	overflow: auto;
+}
+
+.codeSnippetBody > pre
+{
+	font-family: inherit;
+	margin: 0;
+}
+
+.codeSnippetBody > pre > code
+{
+	font-family: inherit;
+}
+
+.codeSnippetBody span.codeSnippetLineNumbers
+{
+	text-decoration: inherit;
+	float: left;
+	margin-top: 0;
+	margin-right: 0.5rem;
+	padding-right: 1rem;
+	text-align: right;
+}
+
+.codeSnippetCopyButton
+{
+	font: inherit;
+	right: 0;
+}
+
+.multipleChoice > fieldset
+{
+	border: none;
+}
+
+.multipleChoice > .submitQuestionButton
+{
+	display: block;
+}
+
+.multipleChoiceItem
+{
+	display: flex;
+}
+
+.multipleChoiceItem > div
+{
+	display: inline-block;
+}
+
+.multipleChoiceItem > div > p:first-child
+{
+	margin-top: 0;
+}
+
+.multipleChoiceItem > input
+{
+	vertical-align: top;
+}
+
+.topicQuestionFeedback
+{
+	display: none;
+}
+
+.mc-el-hidden
+{
+	opacity: 0;
 }
 
 .MCHelpControl-Related .MCHelpControl-RelatedHotSpot_
@@ -528,57 +481,7 @@ a.glossaryTerm
 	
 }
 
-.MCConceptLinkControlListItem a:link
-{
-	
-}
-
-.MCKeywordLinkControlListItem a:link
-{
-	
-}
-
-.MCRelatedTopicsControlListItem a:link
-{
-	
-}
-
 .MCHelpControlListItem a:visited
-{
-	
-}
-
-.MCConceptLinkControlListItem a:visited
-{
-	
-}
-
-.MCKeywordLinkControlListItem a:visited
-{
-	
-}
-
-.MCRelatedTopicsControlListItem a:visited
-{
-	
-}
-
-.MCHelpControlListItem a:focus
-{
-	
-}
-
-.MCConceptLinkControlListItem a:focus
-{
-	
-}
-
-.MCKeywordLinkControlListItem a:focus
-{
-	
-}
-
-.MCRelatedTopicsControlListItem a:focus
 {
 	
 }
@@ -588,17 +491,7 @@ a.glossaryTerm
 	
 }
 
-.MCConceptLinkControlListItem a:hover
-{
-	
-}
-
-.MCKeywordLinkControlListItem a:hover
-{
-	
-}
-
-.MCRelatedTopicsControlListItem a:hover
+.MCHelpControlListItem a:focus
 {
 	
 }
@@ -618,6 +511,26 @@ a.glossaryTerm
 	
 }
 
+.MCConceptLinkControlListItem a:link
+{
+	
+}
+
+.MCConceptLinkControlListItem a:visited
+{
+	
+}
+
+.MCConceptLinkControlListItem a:hover
+{
+	
+}
+
+.MCConceptLinkControlListItem a:focus
+{
+	
+}
+
 .MCKeywordLinkControlList
 {
 	
@@ -629,6 +542,26 @@ a.glossaryTerm
 }
 
 .MCKeywordLinkControlListItem a
+{
+	
+}
+
+.MCKeywordLinkControlListItem a:link
+{
+	
+}
+
+.MCKeywordLinkControlListItem a:visited
+{
+	
+}
+
+.MCKeywordLinkControlListItem a:hover
+{
+	
+}
+
+.MCKeywordLinkControlListItem a:focus
 {
 	
 }
@@ -647,6 +580,26 @@ a.glossaryTerm
 .MCRelatedTopicsControlListItem a
 {
 	font-weight: normal;
+}
+
+.MCRelatedTopicsControlListItem a:link
+{
+	
+}
+
+.MCRelatedTopicsControlListItem a:visited
+{
+	
+}
+
+.MCRelatedTopicsControlListItem a:hover
+{
+	
+}
+
+.MCRelatedTopicsControlListItem a:focus
+{
+	
 }
 
 .relatedTopics

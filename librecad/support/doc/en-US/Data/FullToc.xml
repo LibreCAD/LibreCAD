@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CatapultToc Version="1" conditions="" DescendantCount="81">
+    <TocEntry Title="Welcome to LibreCAD for ProNest" Link="/Content/Main/Welcome.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedResetPageLayout="true" ComputedFirstTopic="true" DescendantCount="0" />
+    <TocEntry Title="Getting Started" ComputedFirstTopic="false" DescendantCount="6">
+        <TocEntry Title="Navigating the main screen" Link="/Content/Main/Getting Started/intro_overview.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Mouse and keyboard controls, zooming, and panning" Link="/Content/Main/Getting Started/intro_controls.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="LibreCAD integration with ProNest" Link="/Content/Main/Getting Started/intro_pronest.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Importing drawings into LibreCAD" Link="/Content/Main/Getting Started/intro_importDrawings.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Export a drawing to ProNest" Link="/Content/Main/Getting Started/intro_exportProNest.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Creating a new drawing" Link="/Content/Main/Getting Started/intro_newDrawing.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+    </TocEntry>
+    <TocEntry Title="Preferences" Link="/Content/Main/Preferences and Customizations/prefs_container.htm" ComputedFirstTopic="false" DescendantCount="2">
+        <TocEntry Title="Application Preferences" Link="/Content/Main/Preferences and Customizations/prefs_applicationpreferences.htm" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Drawing Preferences" Link="/Content/Main/Preferences and Customizations/prefs_drawingpreferences.htm" StartSection="false" ComputedFirstTopic="false" DescendantCount="0" />
+    </TocEntry>
+    <TocEntry Title="Snapping" Link="/Content/Main/Snapping/snapping.htm" ComputedFirstTopic="false" DescendantCount="0" />
+    <TocEntry Title="Toolbars and Widgets" ComputedFirstTopic="false" DescendantCount="10">
+        <TocEntry Title="About toolbars" Link="/Content/Main/Toolbars and Widgets/tw_general.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="About dock widgets" Link="/Content/Main/Toolbars and Widgets/tw_dockwidgets.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Layer List dock widget" Link="/Content/Main/Toolbars and Widgets/tw_layerlistdock.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Block List dock widget" Link="/Content/Main/Toolbars and Widgets/tw_blocklistdock.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Library Browser dock widget" Link="/Content/Main/Toolbars and Widgets/tw_librarybrowserdock.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Pen Wizard dock widget" Link="/Content/Main/Toolbars and Widgets/tw_penwizarddock.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Print Preview toolbar" Link="/Content/Main/Toolbars and Widgets/tw_printpreview.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Toolbar creator widget" Link="/Content/Main/Toolbars and Widgets/tw_toolbarcreator.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Reset toolbars" Link="/Content/Main/Toolbars and Widgets/tw_resettoolbars.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Menu creator widget" Link="/Content/Main/Toolbars and Widgets/tw_menucreator.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+    </TocEntry>
+    <TocEntry Title="Drawing and Modifying" Link="/Content/Main/Tools/tool_container.htm" ComputedFirstTopic="false" DescendantCount="10">
+        <TocEntry Title="Circle tools" Link="/Content/Main/Tools/tool_circles.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Curve tools" Link="/Content/Main/Tools/tool_curves.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Dimensioning tools" Link="/Content/Main/Tools/tool_dimension.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Ellipse tools" Link="/Content/Main/Tools/tool_ellipse.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Informational tools" Link="/Content/Main/Tools/tool_info.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Line tools" Link="/Content/Main/Tools/tool_lines.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Modify tools" Link="/Content/Main/Tools/tool_modify.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Polyline tools" Link="/Content/Main/Tools/tool_polyline.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Select tools" Link="/Content/Main/Tools/tool_select.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Additional tools: Text, Hatch, Point" Link="/Content/Main/Tools/tool_other.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+    </TocEntry>
+    <TocEntry Title="User Guides" Link="/Content/Main/User Guides/guide_container.htm" ComputedFirstTopic="false" DescendantCount="19">
+        <TocEntry Title="Setting up a drawing" Link="/Content/Main/User Guides/guide_drawingsetup.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Using Entities" Link="/Content/Main/User Guides/guide_entities.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Drawing a part" Link="/Content/Main/User Guides/guide_DrawingPart.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Modifying Attributes of an entity" Link="/Content/Main/User Guides/guide_drawing_attributes.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Modifying Properties of an entity" Link="/Content/Main/User Guides/guide_drawing_properties.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Using Layers" Link="/Content/Main/User Guides/guide_layers.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Using Text" Link="/Content/Main/User Guides/guide_text.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="2">
+            <TocEntry Title="Importing Microsoft and AutoCAD fonts to LibreCAD fonts" Link="/Content/Main/User Guides/guide_convertFonts.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Creating new fonts" Link="/Content/Main/User Guides/guide_createNewFont.htm" ComputedFirstTopic="false" DescendantCount="0" />
+        </TocEntry>
+        <TocEntry Title="Using Dimensions" Link="/Content/Main/User Guides/guide_dimensions.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Using Blocks" Link="/Content/Main/User Guides/guide_blocks.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Using the Command Line" Link="/Content/Main/User Guides/guide_commandline.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="3">
+            <TocEntry Title="Command Line Shortcuts" Link="/Content/Main/Appendices/append_commandline.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Command Line Aliases" Link="/Content/Main/User Guides/guide_command_aliases.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Multi-command input with variable files" Link="/Content/Main/User Guides/guide_command_multi.htm" ComputedFirstTopic="false" DescendantCount="0" />
+        </TocEntry>
+        <TocEntry Title="Using the Library Browser" Link="/Content/Main/User Guides/guide_library.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Printing" Link="/Content/Main/User Guides/guide_printing.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Using Templates" Link="/Content/Main/User Guides/guide_templates.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Using Plugins" Link="/Content/Main/User Guides/guide_plugins.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+    </TocEntry>
+    <TocEntry Title="Training Videos" Link="/Content/Main/Videos/videos_container.htm" ComputedFirstTopic="false" DescendantCount="24">
+        <TocEntry Title="1. Introduction" Link="/Content/Main/Videos/01_Introduction.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="2. Custom Hypertherm toolbar" Link="/Content/Main/Videos/02_CustomHyperthermToolbar.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="3. Preferences" Link="/Content/Main/Videos/03_Preferences.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="4. Creating and modifying entities" Link="/Content/Main/Videos/04_CreatingModifyingEntities.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="5. Using the ProNest template" Link="/Content/Main/Videos/05_ProNestTemplate.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="6. Layers" Link="/Content/Main/Videos/06_Layers.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="7. Text" Link="/Content/Main/Videos/07_Text.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="8. Converting fonts" Link="/Content/Main/Videos/08_ConvertingFonts.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="9. Shaping text" Link="/Content/Main/Videos/09_ShapingText.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="10. Command Line" Link="/Content/Main/Videos/10_CommandLine.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="11. Creating a custom font" Link="/Content/Main/Videos/11_CustomFont.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="12. Blocks" Link="/Content/Main/Videos/12_Blocks.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="13. Library Browser" Link="/Content/Main/Videos/13_LibraryBrowser.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Drawing walkthroughs" ComputedFirstTopic="false" DescendantCount="11">
+            <TocEntry Title="Arc trap with center hole" Link="/Content/Main/Videos/Drawing Walkthroughs/ArcTrapWithCenterHole.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Base plate with beveled corners" Link="/Content/Main/Videos/Drawing Walkthroughs/BasePlateWithBeveledCorners.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Base plate with slots" Link="/Content/Main/Videos/Drawing Walkthroughs/BasePlateWithSlots.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Belt guard or sheave" Link="/Content/Main/Videos/Drawing Walkthroughs/BeltGuardSheave.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Foot" Link="/Content/Main/Videos/Drawing Walkthroughs/Foot.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Notched rectangle" Link="/Content/Main/Videos/Drawing Walkthroughs/NotchedRectangle.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Rectangle with corner notches" Link="/Content/Main/Videos/Drawing Walkthroughs/RectangleWithCornerNotches.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Ring" Link="/Content/Main/Videos/Drawing Walkthroughs/Ring.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Ring with bolt hole pattern" Link="/Content/Main/Videos/Drawing Walkthroughs/RingWithBoltHolePattern.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="U-bracket" Link="/Content/Main/Videos/Drawing Walkthroughs/UBracket.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Wedge" Link="/Content/Main/Videos/Drawing Walkthroughs/Wedge.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+        </TocEntry>
+    </TocEntry>
+    <TocEntry Title="Appendices" ComputedFirstTopic="false" DescendantCount="4">
+        <TocEntry Title="Command Line Shortcuts" Link="/Content/Main/Appendices/append_commandline.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Common Drawing Scales" Link="/Content/Main/Appendices/append_drawingscales.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Calculator Operators and Functions" Link="/Content/Main/Appendices/append_calculator.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Hatches" Link="/Content/Main/Appendices/append_hatch.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+    </TocEntry>
+</CatapultToc>

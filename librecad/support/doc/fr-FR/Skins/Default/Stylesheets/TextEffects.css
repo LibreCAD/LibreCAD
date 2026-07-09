@@ -200,8 +200,10 @@ a.MCToggler_Open.MCTogglerHotSpot
 	left: 20px;
 	white-space: normal;
 	filter: alpha( opacity = 0 );
+	display: none;
 	opacity: 0.0;
 	z-index: 10001;
+	min-width: min-content;
 }
 
 .MCTextPopup_Open .MCTextPopupBody
@@ -238,6 +240,190 @@ a.MCToggler_Open.MCTogglerHotSpot
 	border-bottom: none;
 	top: auto;
 	bottom: -13px;
+}
+
+/**/
+/* Topic Popup */
+
+.MCTopicPopup
+{
+	text-decoration: none;
+}
+
+.MCTopicPopupHotSpot
+{
+	cursor: pointer;
+	background-position: left center;
+	background-repeat: no-repeat;
+}
+
+.MCTopicPopup_Open.MCTopicPopupHotSpot
+{
+	
+}
+
+.MCTopicPopup_Closed.MCTopicPopupHotSpot
+{
+	
+}
+
+.MCTopicPopupContainer
+{
+	background-color: #FFFFFF;
+	padding: 10px;
+	position: fixed;
+	top: 100px;
+	left: 100px;
+	right: 100px;
+	bottom: 100px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	-webkit-box-shadow: 0 4px 10px #333333;
+	-moz-box-shadow: 0 4px 10px #333333;
+	box-shadow: 0 4px 10px #333333;
+	filter: alpha( opacity = 0 );
+	opacity: 0.0;
+	z-index: 10001;
+}
+
+#contentBodyInner .MCTopicPopupContainer
+{
+	position: absolute;
+}
+
+.MCTopicPopupBody
+{
+	width: 100%;
+	border: none;
+}
+
+/**/
+/* Thumbnail Popup */
+
+.MCPopupThumbnailLink
+{
+	
+}
+
+.MCPopupThumbnail
+{
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}
+
+.MCPopupContainer
+{
+	background-color: #FFFFFF;
+	border: solid 1px #000000;
+	padding: 10px;
+	position: absolute;
+	cursor: pointer;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	z-index: 1001;
+}
+
+.MCPopupContainer2
+{
+	background-color: #FFFFFF;
+	border: solid 1px #000000;
+	padding: 10px;
+	position: absolute;
+	cursor: pointer;
+	-moz-box-shadow: 2px 2px 8px #FFFFFF;
+	-webkit-box-shadow: 2px 2px 8px #FFFFFF;
+	box-shadow: 2px 2px 8px #FFFFFF;
+}
+
+.MCPopupFullImage
+{
+	width: 0px;
+	height: 0px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}
+
+/**/
+/* HelpControl */
+
+.MCHelpControl_Image_Icon
+{
+	border: none;
+}
+
+.MCHelpControl span
+{
+	background: url("Images/help-control.png") no-repeat left center;
+	padding-left: 18px;
+}
+
+a.MCHelpControl
+{
+	cursor: pointer;
+	text-decoration: none;
+}
+
+/**/
+/* Dialog */
+
+.MCDialog
+{
+	display: none;
+	width: 400px;
+	position: fixed;
+	top: 20px;
+	left: 20px;
+	padding: 6px;
+	background-color: #000000;
+	border: 1px solid #000000;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+	-moz-box-shadow: 0 3px 0 rgba(0, 0, 0, 0.1);
+	-webkit-box-shadow: 0 3px 0 rgba(0, 0, 0, 0.1);
+	box-shadow: 0 3px 0 rgba(0, 0, 0, 0.1);
+	filter: alpha( opacity = 0 );
+	opacity: 0.0;
+	z-index: 10001;
+}
+
+.MCDialogHeader
+{
+	margin: 0 0 4px;
+	padding: 5px 0 5px 5px;
+	color: #FFFFFF;
+	font-size: 15px;
+	font-family: Helvetica;
+}
+
+.MCDialogClose
+{
+	color: #FFFFFF;
+	font-family: tahoma, sans-serif;
+	font-weight: bold;
+	font-size: 16px;
+	line-height: 12px;
+	text-align: center;
+	text-decoration: none;
+	float: right;
+	width: 20px;
+	height: 18px;
+	padding-top: 2px;
+	margin-top: -2px;
+	background-color: #999999;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+}
+
+.MCDialogBody
+{
+	color: #555555;
+	padding: 10px;
+	background-color: #FFFFFF;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
 }
 
 /**/
@@ -296,10 +482,10 @@ a.MCToggler_Open.MCTogglerHotSpot
 	position: absolute;
 	z-index: 50;
 	color: #707070;
-	border-top: solid 4px transparent;
-	border-right: solid 4px transparent;
-	border-bottom: solid 4px transparent;
 	border-left: solid 4px transparent;
+	border-right: solid 4px transparent;
+	border-top: solid 4px transparent;
+	border-bottom: solid 4px transparent;
 	border-top-left-radius: 4px;
 	border-top-right-radius: 4px;
 	border-bottom-right-radius: 4px;
@@ -405,10 +591,10 @@ a.MCToggler_Open.MCTogglerHotSpot
 	padding-right: 0px;
 	padding-top: 0px;
 	padding-bottom: 0px;
-	border-top: solid 1px #e1e1e1;
-	border-right: solid 1px #e1e1e1;
-	border-bottom: solid 1px #e1e1e1;
 	border-left: solid 1px #e1e1e1;
+	border-right: solid 1px #e1e1e1;
+	border-top: solid 1px #e1e1e1;
+	border-bottom: solid 1px #e1e1e1;
 	border-top-left-radius: 3px;
 	border-top-right-radius: 3px;
 	border-bottom-right-radius: 3px;
@@ -423,8 +609,27 @@ a.MCToggler_Open.MCTogglerHotSpot
 	background: -webkit-linear-gradient(top, #ffffff 0%, #ececec 100%);
 	background: -o-linear-gradient(top, #ffffff 0%,#ececec 100%);
 	background: -ms-linear-gradient(top, #ffffff 0%,#ececec 100%);
-	background: linear-gradient(top, #ffffff 0%,#ececec 100%);
+	background: linear-gradient(#ffffff 0%,#ececec 100%);
 	-pie-background: linear-gradient(#ffffff, #ececec);
+}
+
+.toolbar-buttons .button
+{
+	background: #ECECEC;
+	background: -moz-linear-gradient(top, #FFF 0%, #ECECEC 100%);
+	/* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#FFF), color-stop(100%,#ECECEC));
+	/* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #FFF 0%,#ECECEC 100%);
+	/* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, #FFF 0%,#ECECEC 100%);
+	/* Opera11.10+ */
+	background: -ms-linear-gradient(top, #FFF 0%,#ECECEC 100%);
+	/* IE10+ */
+	background: linear-gradient(#FFF 0%,#ECECEC 100%);
+	/* W3C */
+	-pie-background: linear-gradient(#FFF, #ECECEC);
+	/*PIE*/
 }
 
 .button[disabled],
@@ -433,44 +638,21 @@ a.MCToggler_Open.MCTogglerHotSpot
 	opacity: 0.5;
 }
 
-.button.previous-topic-button
+.button .button-icon
 {
-	/* Old browsers */
-	/* FF3.6+ */
-	/* Chrome,Safari4+ */
-	/* Chrome10+,Safari5.1+ */
-	/* Opera11.10+ */
-	/* IE10+ */
-	/* W3C */
-	/*PIE*/
-	background: #ececec url('Images/navigate-previous.png') no-repeat center center;
-	background: url('Images/navigate-previous.png') no-repeat center center, -moz-linear-gradient(top, #ffffff 0%, #ececec 100%);
-	background: url('Images/navigate-previous.png') no-repeat center center, -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#ececec));
-	background: url('Images/navigate-previous.png') no-repeat center center, -webkit-linear-gradient(top, #ffffff 0%, #ececec 100%);
-	background: url('Images/navigate-previous.png') no-repeat center center, -o-linear-gradient(top, #ffffff 0%,#ececec 100%);
-	background: url('Images/navigate-previous.png') no-repeat center center, -ms-linear-gradient(top, #ffffff 0%,#ececec 100%);
-	background: url('Images/navigate-previous.png') no-repeat center center, linear-gradient(top, #ffffff 0%,#ececec 100%);
-	-pie-background: url('Skins/Default/Stylesheets/Images/navigate-previous.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+	background-repeat: no-repeat !important;
 }
 
-.button.next-topic-button
+.button.previous-topic-button .button-icon
 {
-	/* Old browsers */
-	/* FF3.6+ */
-	/* Chrome,Safari4+ */
-	/* Chrome10+,Safari5.1+ */
-	/* Opera11.10+ */
-	/* IE10+ */
-	/* W3C */
-	/*PIE*/
-	background: #ececec url('Images/navigate-next.png') no-repeat center center;
-	background: url('Images/navigate-next.png') no-repeat center center, -moz-linear-gradient(top, #ffffff 0%, #ececec 100%);
-	background: url('Images/navigate-next.png') no-repeat center center, -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#ececec));
-	background: url('Images/navigate-next.png') no-repeat center center, -webkit-linear-gradient(top, #ffffff 0%, #ececec 100%);
-	background: url('Images/navigate-next.png') no-repeat center center, -o-linear-gradient(top, #ffffff 0%,#ececec 100%);
-	background: url('Images/navigate-next.png') no-repeat center center, -ms-linear-gradient(top, #ffffff 0%,#ececec 100%);
-	background: url('Images/navigate-next.png') no-repeat center center, linear-gradient(top, #ffffff 0%,#ececec 100%);
-	-pie-background: url('Skins/Default/Stylesheets/Images/navigate-next.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+	background: transparent url('Images/navigate-previous.png') no-repeat center center;
+	-pie-background: transparent url('Skins/Default/Stylesheets/Images/navigate-previous.png') no-repeat center center;
+}
+
+.button.next-topic-button .button-icon
+{
+	background: transparent url('Images/navigate-next.png') no-repeat center center;
+	-pie-background: transparent url('Skins/Default/Stylesheets/Images/navigate-next.png') no-repeat center center;
 }
 
 .button.current-topic-index-button
@@ -492,7 +674,7 @@ a.MCToggler_Open.MCTogglerHotSpot
 	background: -webkit-linear-gradient(top, #ffffff 0%, #ececec 100%);
 	background: -o-linear-gradient(top, #ffffff 0%,#ececec 100%);
 	background: -ms-linear-gradient(top, #ffffff 0%,#ececec 100%);
-	background: linear-gradient(top, #ffffff 0%,#ececec 100%);
+	background: linear-gradient(#ffffff 0%,#ececec 100%);
 	-pie-background: linear-gradient(#ffffff, #ececec);
 }
 
@@ -501,124 +683,46 @@ a.MCToggler_Open.MCTogglerHotSpot
 	display: none;
 }
 
-.button.expand-all-button
+.button.expand-all-button .button-icon
 {
-	/* Old browsers */
-	/* FF3.6+ */
-	/* Chrome,Safari4+ */
-	/* Chrome10+,Safari5.1+ */
-	/* Opera11.10+ */
-	/* IE10+ */
-	/* W3C */
-	/*PIE*/
-	background: #ececec url('Images/expand.png') no-repeat center center;
-	background: url('Images/expand.png') no-repeat center center, -moz-linear-gradient(top, #ffffff 0%, #ececec 100%);
-	background: url('Images/expand.png') no-repeat center center, -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#ececec));
-	background: url('Images/expand.png') no-repeat center center, -webkit-linear-gradient(top, #ffffff 0%, #ececec 100%);
-	background: url('Images/expand.png') no-repeat center center, -o-linear-gradient(top, #ffffff 0%,#ececec 100%);
-	background: url('Images/expand.png') no-repeat center center, -ms-linear-gradient(top, #ffffff 0%,#ececec 100%);
-	background: url('Images/expand.png') no-repeat center center, linear-gradient(top, #ffffff 0%,#ececec 100%);
-	-pie-background: url('Skins/Default/Stylesheets/Images/expand.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+	background: transparent url('Images/expand.png') no-repeat center center;
+	-pie-background: transparent url('Skins/Default/Stylesheets/Images/expand.png') no-repeat center center;
 }
 
-.button.collapse-all-button
+.button.collapse-all-button .button-icon
 {
-	/* Old browsers */
-	/* FF3.6+ */
-	/* Chrome,Safari4+ */
-	/* Chrome10+,Safari5.1+ */
-	/* Opera11.10+ */
-	/* IE10+ */
-	/* W3C */
-	/*PIE*/
-	background: #ececec url('Images/collapse.png') no-repeat center center;
-	background: url('Images/collapse.png') no-repeat center center, -moz-linear-gradient(top, #ffffff 0%, #ececec 100%);
-	background: url('Images/collapse.png') no-repeat center center, -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#ececec));
-	background: url('Images/collapse.png') no-repeat center center, -webkit-linear-gradient(top, #ffffff 0%, #ececec 100%);
-	background: url('Images/collapse.png') no-repeat center center, -o-linear-gradient(top, #ffffff 0%,#ececec 100%);
-	background: url('Images/collapse.png') no-repeat center center, -ms-linear-gradient(top, #ffffff 0%,#ececec 100%);
-	background: url('Images/collapse.png') no-repeat center center, linear-gradient(top, #ffffff 0%,#ececec 100%);
-	-pie-background: url('Skins/Default/Stylesheets/Images/collapse.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+	background: transparent url('Images/collapse.png') no-repeat center center;
+	-pie-background: transparent url('Skins/Default/Stylesheets/Images/collapse.png') no-repeat center center;
 }
 
-.button.print-button
+.button.print-button .button-icon
 {
-	/* Old browsers */
-	/* FF3.6+ */
-	/* Chrome,Safari4+ */
-	/* Chrome10+,Safari5.1+ */
-	/* Opera11.10+ */
-	/* IE10+ */
-	/* W3C */
-	/*PIE*/
-	background: #ececec url('Images/printer.png') no-repeat center center;
-	background: url('Images/printer.png') no-repeat center center, -moz-linear-gradient(top, #ffffff 0%, #ececec 100%);
-	background: url('Images/printer.png') no-repeat center center, -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#ececec));
-	background: url('Images/printer.png') no-repeat center center, -webkit-linear-gradient(top, #ffffff 0%, #ececec 100%);
-	background: url('Images/printer.png') no-repeat center center, -o-linear-gradient(top, #ffffff 0%,#ececec 100%);
-	background: url('Images/printer.png') no-repeat center center, -ms-linear-gradient(top, #ffffff 0%,#ececec 100%);
-	background: url('Images/printer.png') no-repeat center center, linear-gradient(top, #ffffff 0%,#ececec 100%);
-	-pie-background: url('Skins/Default/Stylesheets/Images/printer.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+	background: transparent url('Images/printer.png') no-repeat center center;
+	-pie-background: transparent url('Skins/Default/Stylesheets/Images/printer.png') no-repeat center center;
 }
 
-.button.remove-highlight-button
+.button.remove-highlight-button .button-icon
 {
-	/* Old browsers */
-	/* FF3.6+ */
-	/* Chrome,Safari4+ */
-	/* Chrome10+,Safari5.1+ */
-	/* Opera11.10+ */
-	/* IE10+ */
-	/* W3C */
-	/*PIE*/
-	background: #ececec url('Images/highlight.png') no-repeat center center;
-	background: url('Images/highlight.png') no-repeat center center, -moz-linear-gradient(top, #ffffff 0%, #ececec 100%);
-	background: url('Images/highlight.png') no-repeat center center, -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#ececec));
-	background: url('Images/highlight.png') no-repeat center center, -webkit-linear-gradient(top, #ffffff 0%, #ececec 100%);
-	background: url('Images/highlight.png') no-repeat center center, -o-linear-gradient(top, #ffffff 0%,#ececec 100%);
-	background: url('Images/highlight.png') no-repeat center center, -ms-linear-gradient(top, #ffffff 0%,#ececec 100%);
-	background: url('Images/highlight.png') no-repeat center center, linear-gradient(top, #ffffff 0%,#ececec 100%);
-	-pie-background: url('Skins/Default/Stylesheets/Images/highlight.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+	background: transparent url('Images/highlight.png') no-repeat center center;
+	-pie-background: transparent url('Skins/Default/Stylesheets/Images/highlight.png') no-repeat center center;
 }
 
-.button.select-skin-button
+.button.select-skin-button .button-icon
 {
-	/* Old browsers */
-	/* FF3.6+ */
-	/* Chrome,Safari4+ */
-	/* Chrome10+,Safari5.1+ */
-	/* Opera11.10+ */
-	/* IE10+ */
-	/* W3C */
-	/*PIE*/
-	background: #ececec url('Images/select-skin.png') no-repeat center center;
-	background: url('Images/select-skin.png') no-repeat center center, -moz-linear-gradient(top, #ffffff 0%, #ececec 100%);
-	background: url('Images/select-skin.png') no-repeat center center, -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#ececec));
-	background: url('Images/select-skin.png') no-repeat center center, -webkit-linear-gradient(top, #ffffff 0%, #ececec 100%);
-	background: url('Images/select-skin.png') no-repeat center center, -o-linear-gradient(top, #ffffff 0%,#ececec 100%);
-	background: url('Images/select-skin.png') no-repeat center center, -ms-linear-gradient(top, #ffffff 0%,#ececec 100%);
-	background: url('Images/select-skin.png') no-repeat center center, linear-gradient(top, #ffffff 0%,#ececec 100%);
-	-pie-background: url('Skins/Default/Stylesheets/Images/select-skin.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+	background: transparent url('Images/select-skin.png') no-repeat center center;
+	-pie-background: transparent url('Skins/Default/Stylesheets/Images/select-skin.png') no-repeat center center;
 }
 
-.button.select-language-button
+.button.select-language-button .button-icon
 {
-	/* Old browsers */
-	/* FF3.6+ */
-	/* Chrome,Safari4+ */
-	/* Chrome10+,Safari5.1+ */
-	/* Opera11.10+ */
-	/* IE10+ */
-	/* W3C */
-	/*PIE*/
-	background: #ececec url('Images/select-language.png') no-repeat center center;
-	background: url('Images/select-language.png') no-repeat center center, -moz-linear-gradient(top, #ffffff 0%, #ececec 100%);
-	background: url('Images/select-language.png') no-repeat center center, -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#ececec));
-	background: url('Images/select-language.png') no-repeat center center, -webkit-linear-gradient(top, #ffffff 0%, #ececec 100%);
-	background: url('Images/select-language.png') no-repeat center center, -o-linear-gradient(top, #ffffff 0%,#ececec 100%);
-	background: url('Images/select-language.png') no-repeat center center, -ms-linear-gradient(top, #ffffff 0%,#ececec 100%);
-	background: url('Images/select-language.png') no-repeat center center, linear-gradient(top, #ffffff 0%,#ececec 100%);
-	-pie-background: url('Skins/Default/Stylesheets/Images/select-language.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+	background: transparent url('Images/select-language.png') no-repeat center center;
+	-pie-background: transparent url('Skins/Default/Stylesheets/Images/select-language.png') no-repeat center center;
+}
+
+.invisible-label
+{
+	height: 1px;
+	font-size: 0px;
 }
 
 /* select-language-button image is dynamically set by javascript */
@@ -644,6 +748,7 @@ a.MCToggler_Open.MCTogglerHotSpot
 {
 	border: none;
 	width: 16px;
+	height: 16px;
 	margin: 0px 2px;
 	-webkit-box-shadow: none;
 	-moz-box-shadow: none;
@@ -655,10 +760,10 @@ a.MCToggler_Open.MCTogglerHotSpot
 	-webkit-box-shadow: none;
 	-moz-box-shadow: none;
 	box-shadow: none;
-	border-top: none;
-	border-right: none;
-	border-bottom: none;
 	border-left: none;
+	border-right: none;
+	border-top: none;
+	border-bottom: none;
 	width: 16px;
 	background: transparent url('Images/star-full.png') no-repeat center center;
 	-pie-background: transparent url('Skins/Default/Stylesheets/Images/star-full.png') no-repeat center center;
@@ -670,57 +775,28 @@ a.MCToggler_Open.MCTogglerHotSpot
 	-webkit-box-shadow: none;
 	-moz-box-shadow: none;
 	box-shadow: none;
-	border-top: none;
-	border-right: none;
-	border-bottom: none;
 	border-left: none;
+	border-right: none;
+	border-top: none;
+	border-bottom: none;
 	width: 16px;
 	background: transparent url('Images/star-empty.png') no-repeat center center;
 	-pie-background: transparent url('Skins/Default/Stylesheets/Images/star-empty.png') no-repeat center center;
 	background-size: 16px 16px;
 }
 
-.button.login-button
+.button.login-button .button-icon
 {
-	/* Old browsers */
-	/* FF3.6+ */
-	/* Chrome,Safari4+ */
-	/* Chrome10+,Safari5.1+ */
-	/* Opera11.10+ */
-	/* IE10+ */
-	/* W3C */
-	/*PIE*/
-	background: #ececec url('Images/login.png') no-repeat center center;
-	background: url('Images/login.png') no-repeat center center, -moz-linear-gradient(top, #ffffff 0%, #ececec 100%);
-	background: url('Images/login.png') no-repeat center center, -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#ececec));
-	background: url('Images/login.png') no-repeat center center, -webkit-linear-gradient(top, #ffffff 0%, #ececec 100%);
-	background: url('Images/login.png') no-repeat center center, -o-linear-gradient(top, #ffffff 0%,#ececec 100%);
-	background: url('Images/login.png') no-repeat center center, -ms-linear-gradient(top, #ffffff 0%,#ececec 100%);
-	background: url('Images/login.png') no-repeat center center, linear-gradient(top, #ffffff 0%,#ececec 100%);
-	-pie-background: url('Skins/Default/Stylesheets/Images/login.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+	background: transparent url('Images/login.png') no-repeat center center;
+	-pie-background: transparent url('Skins/Default/Stylesheets/Images/login.png') no-repeat center center;
 }
 
-.button.edit-user-profile-button
+.button.edit-user-profile-button .button-icon
 {
-	/* Old browsers */
-	/* FF3.6+ */
-	/* Chrome,Safari4+ */
-	/* Chrome10+,Safari5.1+ */
-	/* Opera11.10+ */
-	/* IE10+ */
-	/* W3C */
-	/*PIE*/
-	background: #ececec url('Images/edit-profile.png') no-repeat center center;
-	background: url('Images/edit-profile.png') no-repeat center center, -moz-linear-gradient(top, #ffffff 0%, #ececec 100%);
-	background: url('Images/edit-profile.png') no-repeat center center, -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#ececec));
-	background: url('Images/edit-profile.png') no-repeat center center, -webkit-linear-gradient(top, #ffffff 0%, #ececec 100%);
-	background: url('Images/edit-profile.png') no-repeat center center, -o-linear-gradient(top, #ffffff 0%,#ececec 100%);
-	background: url('Images/edit-profile.png') no-repeat center center, -ms-linear-gradient(top, #ffffff 0%,#ececec 100%);
-	background: url('Images/edit-profile.png') no-repeat center center, linear-gradient(top, #ffffff 0%,#ececec 100%);
-	-pie-background: url('Skins/Default/Stylesheets/Images/edit-profile.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+	background: transparent url('Images/edit-profile.png') no-repeat center center;
+	-pie-background: transparent url('Skins/Default/Stylesheets/Images/edit-profile.png') no-repeat center center;
 }
 
-/**/
 /* Feedback */
 
 .pulse-frame
@@ -981,48 +1057,129 @@ span.SearchHighlight10
 	font-weight: bold;
 }
 
-@media print
+.tooltip
 {
-	.tab-bar
-	{
-		display: none !important;
-	}
+	display: none;
+	position: absolute;
+	border: 1px solid #707070;
+	color: #707070;
+	background-color: white;
+	padding: .2rem .4rem .2rem .4rem;
+	font-size: .75rem;
+	z-index: 100001;
+	box-shadow: 0px 3px 9px rgba(0,0,0,0.16);
+	line-height: 1rem;
+	pointer-events: none;
+}
 
-	.topicToolbarProxy
-	{
-		display: none !important;
-	}
+button.CloseTopicPopupButton
+{
+	background: none;
+	color: #FFF;
+	border: none;
+	cursor: pointer;
+}
 
-	._Skins_SideMenu
-	{
-		display: none !important;
-	}
+button.CloseTopicPopupButton.CloseTopicOuter
+{
+	position: relative;
+	padding: 0;
+	top: -37px;
+	right: 4px;
+	display: block;
+	margin-left: auto;
+}
 
-	.menu.mc-component
-	{
-		display: none !important;
-	}
+button.CloseTopicPopupButton.CloseTopicInner
+{
+	font-size: 22px;
+}
 
-	.off-canvas-content
-	{
-		box-shadow: none !important;
-	}
+button.CloseTopicPopupButton:hover,
+button.CloseTopicPopupButton:focus
+{
+	color: #D3D3D3;
+}
 
-	.sidenav-wrapper
-	{
-		display: none !important;
-	}
+.CloseTopicPopupButtonContainer
+{
+	position: absolute;
+	width: 100%;
+}
 
-	.sidenav-layout
-	{
-		height: auto !important;
-		display: block !important;
-	}
+button.mc-dropdown-item
+{
+	border: none;
+	background: transparent;
+	text-align: left;
+	font: inherit;
+}
 
-	*
-	{
-		overflow: visible !important;
-	}
+.buttons .button
+{
+	display: inline-flex;
+	overflow: hidden;
+}
+
+.buttons .button > div
+{
+	display: inline-flex;
+	margin: auto;
+}
+
+.button .button-icon-wrapper
+{
+	position: relative;
+	margin: auto;
+	width: 22px;
+	height: 22px;
+}
+
+.button .button-icon
+{
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background-repeat: no-repeat !important;
+	background-position: center center !important;
+}
+
+.button .button-text
+{
+	margin-right: 3px;
+}
+
+.mc-dropdown-item
+{
+	display: block;
+	width: 100%;
+	padding: 5px;
+	white-space: nowrap;
+	text-decoration: none;
+	color: inherit !important;
+}
+
+.skip-to-content.fluid-skip
+{
+	position: relative;
+	width: 100%;
+	text-align: center;
+	display: block;
+	padding: 4px;
+}
+
+.skip-to-content.tripane-skip
+{
+	position: absolute;
+	left: 0;
+	overflow-wrap: break-word;
+	z-index: 20000;
+	text-align: center;
+	padding: .5rem;
+	top: 6rem;
+	width: 10rem;
 }
 
 .highlightGlossary
@@ -1095,6 +1252,241 @@ span.SearchHighlight.SearchHighlight10
 {
 	color: #ffffff;
 	background-color: #990099;
+}
+
+.button > div
+{
+	flex-direction: row;
+}
+
+.button.collapse-all-button
+{
+	background-repeat: no-repeat;
+	background: #ececec;
+	background: -moz-linear-gradient(top, #ffffff 0%, #ececec 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#ececec));
+	background: -webkit-linear-gradient(top, #ffffff 0%, #ececec 100%);
+	background: -o-linear-gradient(top, #ffffff 0%,#ececec 100%);
+	background: -ms-linear-gradient(top, #ffffff 0%,#ececec 100%);
+	background: linear-gradient(#ffffff 0%,#ececec 100%);
+	-pie-background: linear-gradient(#ffffff, #ececec);
+}
+
+.button.collapse-all-button > div
+{
+	
+}
+
+.button.collapse-all-button .button-icon-wrapper
+{
+	
+}
+
+.button.edit-user-profile-button
+{
+	background-repeat: no-repeat;
+	background: #ececec;
+	background: -moz-linear-gradient(top, #ffffff 0%, #ececec 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#ececec));
+	background: -webkit-linear-gradient(top, #ffffff 0%, #ececec 100%);
+	background: -o-linear-gradient(top, #ffffff 0%,#ececec 100%);
+	background: -ms-linear-gradient(top, #ffffff 0%,#ececec 100%);
+	background: linear-gradient(#ffffff 0%,#ececec 100%);
+	-pie-background: linear-gradient(#ffffff, #ececec);
+}
+
+.button.edit-user-profile-button > div
+{
+	
+}
+
+.button.edit-user-profile-button .button-icon-wrapper
+{
+	
+}
+
+.button.expand-all-button
+{
+	background-repeat: no-repeat;
+	background: #ececec;
+	background: -moz-linear-gradient(top, #ffffff 0%, #ececec 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#ececec));
+	background: -webkit-linear-gradient(top, #ffffff 0%, #ececec 100%);
+	background: -o-linear-gradient(top, #ffffff 0%,#ececec 100%);
+	background: -ms-linear-gradient(top, #ffffff 0%,#ececec 100%);
+	background: linear-gradient(#ffffff 0%,#ececec 100%);
+	-pie-background: linear-gradient(#ffffff, #ececec);
+}
+
+.button.expand-all-button > div
+{
+	
+}
+
+.button.expand-all-button .button-icon-wrapper
+{
+	
+}
+
+.button.login-button
+{
+	background-repeat: no-repeat;
+	background: #ececec;
+	background: -moz-linear-gradient(top, #ffffff 0%, #ececec 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#ececec));
+	background: -webkit-linear-gradient(top, #ffffff 0%, #ececec 100%);
+	background: -o-linear-gradient(top, #ffffff 0%,#ececec 100%);
+	background: -ms-linear-gradient(top, #ffffff 0%,#ececec 100%);
+	background: linear-gradient(#ffffff 0%,#ececec 100%);
+	-pie-background: linear-gradient(#ffffff, #ececec);
+}
+
+.button.login-button > div
+{
+	
+}
+
+.button.login-button .button-icon-wrapper
+{
+	
+}
+
+.button.next-topic-button
+{
+	background-repeat: no-repeat;
+	background: #ececec;
+	background: -moz-linear-gradient(top, #ffffff 0%, #ececec 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#ececec));
+	background: -webkit-linear-gradient(top, #ffffff 0%, #ececec 100%);
+	background: -o-linear-gradient(top, #ffffff 0%,#ececec 100%);
+	background: -ms-linear-gradient(top, #ffffff 0%,#ececec 100%);
+	background: linear-gradient(#ffffff 0%,#ececec 100%);
+	-pie-background: linear-gradient(#ffffff, #ececec);
+}
+
+.button.next-topic-button > div
+{
+	
+}
+
+.button.next-topic-button .button-icon-wrapper
+{
+	
+}
+
+.button.previous-topic-button
+{
+	background-repeat: no-repeat;
+	background: #ececec;
+	background: -moz-linear-gradient(top, #ffffff 0%, #ececec 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#ececec));
+	background: -webkit-linear-gradient(top, #ffffff 0%, #ececec 100%);
+	background: -o-linear-gradient(top, #ffffff 0%,#ececec 100%);
+	background: -ms-linear-gradient(top, #ffffff 0%,#ececec 100%);
+	background: linear-gradient(#ffffff 0%,#ececec 100%);
+	-pie-background: linear-gradient(#ffffff, #ececec);
+}
+
+.button.previous-topic-button > div
+{
+	
+}
+
+.button.previous-topic-button .button-icon-wrapper
+{
+	
+}
+
+.button.print-button
+{
+	background-repeat: no-repeat;
+	background: #ececec;
+	background: -moz-linear-gradient(top, #ffffff 0%, #ececec 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#ececec));
+	background: -webkit-linear-gradient(top, #ffffff 0%, #ececec 100%);
+	background: -o-linear-gradient(top, #ffffff 0%,#ececec 100%);
+	background: -ms-linear-gradient(top, #ffffff 0%,#ececec 100%);
+	background: linear-gradient(#ffffff 0%,#ececec 100%);
+	-pie-background: linear-gradient(#ffffff, #ececec);
+}
+
+.button.print-button > div
+{
+	
+}
+
+.button.print-button .button-icon-wrapper
+{
+	
+}
+
+.button.remove-highlight-button
+{
+	background-repeat: no-repeat;
+	background: #ececec;
+	background: -moz-linear-gradient(top, #ffffff 0%, #ececec 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#ececec));
+	background: -webkit-linear-gradient(top, #ffffff 0%, #ececec 100%);
+	background: -o-linear-gradient(top, #ffffff 0%,#ececec 100%);
+	background: -ms-linear-gradient(top, #ffffff 0%,#ececec 100%);
+	background: linear-gradient(#ffffff 0%,#ececec 100%);
+	-pie-background: linear-gradient(#ffffff, #ececec);
+}
+
+.button.remove-highlight-button > div
+{
+	
+}
+
+.button.remove-highlight-button .button-icon-wrapper
+{
+	
+}
+
+.button.select-language-button
+{
+	background-repeat: no-repeat;
+	background: #ececec;
+	background: -moz-linear-gradient(top, #ffffff 0%, #ececec 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#ececec));
+	background: -webkit-linear-gradient(top, #ffffff 0%, #ececec 100%);
+	background: -o-linear-gradient(top, #ffffff 0%,#ececec 100%);
+	background: -ms-linear-gradient(top, #ffffff 0%,#ececec 100%);
+	background: linear-gradient(#ffffff 0%,#ececec 100%);
+	-pie-background: linear-gradient(#ffffff, #ececec);
+}
+
+.button.select-language-button > div
+{
+	
+}
+
+.button.select-language-button .button-icon-wrapper
+{
+	
+}
+
+.button.select-skin-button
+{
+	background-repeat: no-repeat;
+	background: #ececec;
+	background: -moz-linear-gradient(top, #ffffff 0%, #ececec 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#ececec));
+	background: -webkit-linear-gradient(top, #ffffff 0%, #ececec 100%);
+	background: -o-linear-gradient(top, #ffffff 0%,#ececec 100%);
+	background: -ms-linear-gradient(top, #ffffff 0%,#ececec 100%);
+	background: linear-gradient(#ffffff 0%,#ececec 100%);
+	-pie-background: linear-gradient(#ffffff, #ececec);
+}
+
+.button.select-skin-button > div
+{
+	
+}
+
+.button.select-skin-button .button-icon-wrapper
+{
+	
 }
 
 .toolbar-button-drop-down.select-language-drop-down

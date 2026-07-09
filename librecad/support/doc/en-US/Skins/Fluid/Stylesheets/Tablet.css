@@ -268,6 +268,11 @@
 		background-color: #ffffff;
 	}
 
+	.featured-snippets-container
+	{
+		
+	}
+
 	.central-dropdown .central-account-drop
 	{
 		
@@ -297,11 +302,6 @@
 	.central-separator
 	{
 		background-color: #D5D8DA;
-	}
-
-	.featured-snippets-container
-	{
-		
 	}
 
 	.off-canvas-wrapper-inner nav.title-bar .outer-row

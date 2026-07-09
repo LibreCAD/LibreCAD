@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CatapultToc Version="1" conditions="" DescendantCount="54">
+    <TocEntry Title="Bienvenue dans LibreCAD pour ProNest" Link="/Content/Main/Welcome.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedResetPageLayout="true" ComputedFirstTopic="true" DescendantCount="0" />
+    <TocEntry Title="Aide au démarrage" ComputedFirstTopic="false" DescendantCount="6">
+        <TocEntry Title="Navigation dans l’écran principal" Link="/Content/Main/Getting Started/intro_overview.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Commandes de souris et de clavier, zoom et panoramique" Link="/Content/Main/Getting Started/intro_controls.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Intégration de LibreCAD dans ProNest" Link="/Content/Main/Getting Started/intro_pronest.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Importation de dessins dans LibreCAD" Link="/Content/Main/Getting Started/intro_importDrawings.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Exportation d’un dessin vers ProNest" Link="/Content/Main/Getting Started/intro_exportProNest.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Création d’un nouveau dessin" Link="/Content/Main/Getting Started/intro_newDrawing.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+    </TocEntry>
+    <TocEntry Title="Paramètres" Link="/Content/Main/Preferences and Customizations/prefs_container.htm" ComputedFirstTopic="false" DescendantCount="2">
+        <TocEntry Title="Paramètres de l’application" Link="/Content/Main/Preferences and Customizations/prefs_applicationpreferences.htm" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Paramètres du dessin" Link="/Content/Main/Preferences and Customizations/prefs_drawingpreferences.htm" StartSection="false" ComputedFirstTopic="false" DescendantCount="0" />
+    </TocEntry>
+    <TocEntry Title="Accrochage" Link="/Content/Main/Snapping/snapping.htm" ComputedFirstTopic="false" DescendantCount="0" />
+    <TocEntry Title="Barres d’outils et gadgets logiciels" ComputedFirstTopic="false" DescendantCount="9">
+        <TocEntry Title="À propos des barres d’outils" Link="/Content/Main/Toolbars and Widgets/tw_general.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="À propos des gadgets logiciels d’ancrage" Link="/Content/Main/Toolbars and Widgets/tw_dockwidgets.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Gadget logiciel d’ancrage de la Liste des calques" Link="/Content/Main/Toolbars and Widgets/tw_layerlistdock.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Gadget logiciel d’ancrage de la Liste de blocs" Link="/Content/Main/Toolbars and Widgets/tw_blocklistdock.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Gadget logiciel d’ancrage du Menu des bibliothèques" Link="/Content/Main/Toolbars and Widgets/tw_librarybrowserdock.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Gadget logiciel d’ancrage de l’assistant Stylet" Link="/Content/Main/Toolbars and Widgets/tw_penwizarddock.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Barre d’outils Aperçu avant impression" Link="/Content/Main/Toolbars and Widgets/tw_printpreview.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Gadget logiciel créateur de barres d’outils" Link="/Content/Main/Toolbars and Widgets/tw_toolbarcreator.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Gadget logiciel créateur de menus" Link="/Content/Main/Toolbars and Widgets/tw_menucreator.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+    </TocEntry>
+    <TocEntry Title="Dessin et modifications" Link="/Content/Main/Tools/tool_container.htm" ComputedFirstTopic="false" DescendantCount="10">
+        <TocEntry Title="Outils de cercle" Link="/Content/Main/Tools/tool_circles.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Outils de courbe" Link="/Content/Main/Tools/tool_curves.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Outils de cotation" Link="/Content/Main/Tools/tool_dimension.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Outils d’ellipse" Link="/Content/Main/Tools/tool_ellipse.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Outils informatifs" Link="/Content/Main/Tools/tool_info.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Outils de ligne" Link="/Content/Main/Tools/tool_lines.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Outils Modifier" Link="/Content/Main/Tools/tool_modify.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Outils de polyligne" Link="/Content/Main/Tools/tool_polyline.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Outils Sélectionner" Link="/Content/Main/Tools/tool_select.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Outils supplémentaires&#160;: Texte, Hachure, Point" Link="/Content/Main/Tools/tool_other.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+    </TocEntry>
+    <TocEntry Title="Guides de l’utilisateur" Link="/Content/Main/User Guides/guide_container.htm" ComputedFirstTopic="false" DescendantCount="18">
+        <TocEntry Title="Configuration d’un dessin" Link="/Content/Main/User Guides/guide_drawingsetup.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Utilisation des entités" Link="/Content/Main/User Guides/guide_entities.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Modification des attributs d’une entité" Link="/Content/Main/User Guides/guide_drawing_attributes.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Modification des propriétés d’une entité" Link="/Content/Main/User Guides/guide_drawing_properties.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Utilisation des calques" Link="/Content/Main/User Guides/guide_layers.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Utilisation du texte" Link="/Content/Main/User Guides/guide_text.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="2">
+            <TocEntry Title="Conversion des polices Microsoft et AutoCAD en polices LibreCAD" Link="/Content/Main/User Guides/guide_convertFonts.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Création de nouvelles polices" Link="/Content/Main/User Guides/guide_createNewFont.htm" ComputedFirstTopic="false" DescendantCount="0" />
+        </TocEntry>
+        <TocEntry Title="Utilisation des cotations" Link="/Content/Main/User Guides/guide_dimensions.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Utilisation de blocs" Link="/Content/Main/User Guides/guide_blocks.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Utilisation de la ligne de commande" Link="/Content/Main/User Guides/guide_commandline.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="3">
+            <TocEntry Title="Raccourcis de lignes de commande" Link="/Content/Main/Appendices/append_commandline.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Alias de lignes de commande" Link="/Content/Main/User Guides/guide_command_aliases.htm" ComputedFirstTopic="false" DescendantCount="0" />
+            <TocEntry Title="Entrée multicommande avec fichiers de variables" Link="/Content/Main/User Guides/guide_command_multi.htm" ComputedFirstTopic="false" DescendantCount="0" />
+        </TocEntry>
+        <TocEntry Title="Utilisation du Menu des bibliothèques" Link="/Content/Main/User Guides/guide_library.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Impression" Link="/Content/Main/User Guides/guide_printing.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Utilisation des modèles" Link="/Content/Main/User Guides/guide_templates.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Utilisation des plugiciels" Link="/Content/Main/User Guides/guide_plugins.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+    </TocEntry>
+    <TocEntry Title="Annexes" ComputedFirstTopic="false" DescendantCount="4">
+        <TocEntry Title="Raccourcis de lignes de commande" Link="/Content/Main/Appendices/append_commandline.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Échelles de dessin courantes" Link="/Content/Main/Appendices/append_drawingscales.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Opérateurs et fonctions de la calculatrice" Link="/Content/Main/Appendices/append_calculator.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+        <TocEntry Title="Hachures" Link="/Content/Main/Appendices/append_hatch.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" ComputedFirstTopic="false" DescendantCount="0" />
+    </TocEntry>
+</CatapultToc>

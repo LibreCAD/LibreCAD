@@ -868,6 +868,11 @@ div.central-dropdown-content > a:hover
 	-pie-background: linear-gradient(transparent, #ffffff);
 }
 
+.featured-snippets-container
+{
+	
+}
+
 .central-dropdown:hover
 {
 	
@@ -877,11 +882,6 @@ div.central-dropdown-content > a:hover
 {
 	background-repeat: no-repeat;
 	background-position: center center;
-}
-
-.featured-snippets-container
-{
-	
 }
 
 .off-canvas-wrapper-inner .title-bar-container

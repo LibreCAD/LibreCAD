@@ -1,0 +1,663 @@
+/*<meta />*/
+
+/* Prevents Safari in landscape orientation from zooming in on text*/
+
+.micro-response1519206078
+{
+	-ms-text-size-adjust: 100%;
+	-moz-text-size-adjust: 100%;
+	-webkit-text-size-adjust: 100%;
+	font-size: 16px;
+}
+
+/* Default css class for hiding element*/
+
+.micro-response1519206078 .hidden
+{
+	display: none;
+}
+
+.micro-response1519206078 a.glossaryTerm
+{
+	text-decoration: none;
+}
+
+/**/
+
+.micro-response1519206078 #ios-wrapper
+{
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	-webkit-overflow-scrolling: touch;
+}
+
+.micro-response1519206078 .img_off
+{
+	display: none;
+}
+
+/* Feedback/Pulse */
+
+.micro-response1519206078 .button.pulse-required,
+.micro-response1519206078 .button.feedback-required,
+.micro-response1519206078 .pulse-required,
+.micro-response1519206078 .feedback-required,
+.micro-response1519206078 .feedback-topic-required,
+.micro-response1519206078 .feedback-topic-required
+{
+	display: none;
+}
+
+.micro-response1519206078 .pulse-active .pulse-required,
+.micro-response1519206078 .feedback-active .feedback-required,
+.micro-response1519206078 .feedback-active.has-topic .feedback-topic-required
+{
+	display: inline-flex;
+}
+
+/* Login Dialog */
+
+.micro-response1519206078 .login-dialog
+{
+	display: none;
+	z-index: 10001;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-top: -200px;
+	margin-left: -175px;
+	width: 350px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	-webkit-box-shadow: 0 4px 10px #333333;
+	-moz-box-shadow: 0 4px 10px #333333;
+	box-shadow: 0 4px 10px #333333;
+}
+
+.micro-response1519206078 .login-dialog.pulse
+{
+	position: fixed;
+	width: 408px;
+	height: 428px;
+	margin-left: -204px;
+	margin-top: -214px;
+}
+
+.micro-response1519206078 #pulse-login-frame
+{
+	width: 100%;
+	height: 100%;
+	border: none;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	-webkit-box-shadow: 0 4px 10px #333333;
+	-moz-box-shadow: 0 4px 10px #333333;
+	box-shadow: 0 4px 10px #333333;
+}
+
+.micro-response1519206078 .login-dialog-header
+{
+	color: #FFF;
+	font-size: 13px;
+	font-weight: bold;
+	height: 36px;
+	line-height: 36px;
+	padding-left: 50px;
+	border-bottom: solid 1px #2B2B2B;
+	background: #5A5A5A url("Images/login-dialog-icon.png") no-repeat 18px center;
+	/* Old browsers */
+	background: url("Images/login-dialog-icon.png") no-repeat 18px center, -moz-linear-gradient(top, #5A5A5A 0%, #4A4A4A 100%);
+	/* FF3.6+ */
+	background: url("Images/login-dialog-icon.png") no-repeat 18px center, -webkit-gradient(linear, left top, left bottom, color-stop(0%,#5A5A5A), color-stop(100%,#4A4A4A));
+	/* Chrome,Safari4+ */
+	background: url("Images/login-dialog-icon.png") no-repeat 18px center, -webkit-linear-gradient(top, #5A5A5A 0%,#4A4A4A 100%);
+	/* Chrome10+,Safari5.1+ */
+	background: url("Images/login-dialog-icon.png") no-repeat 18px center, -o-linear-gradient(top, #5A5A5A 0%,#4A4A4A 100%);
+	/* Opera11.10+ */
+	background: url("Images/login-dialog-icon.png") no-repeat 18px center, -ms-linear-gradient(top, #5A5A5A 0%,#4A4A4A 100%);
+	/* IE10+ */
+	background: url("Images/login-dialog-icon.png") no-repeat 18px center, linear-gradient(#5A5A5A 0%,#4A4A4A 100%);
+	/* W3C */
+	-pie-background: url("Skins/Default/Stylesheets/Images/login-dialog-icon.png") no-repeat 18px center, linear-gradient(#5A5A5A, #4A4A4A);
+	/*PIE*/
+	background-repeat: no-repeat;
+	background-position: 18px center;
+	-webkit-border-radius: 3px 3px 0 0;
+	-moz-border-radius: 3px 3px 0 0;
+	border-radius: 3px 3px 0 0;
+}
+
+.micro-response1519206078 .login-dialog-content
+{
+	border-top: solid 1px #767676;
+	background: #5A5A5A;
+	background-repeat: no-repeat;
+	background-position: center center;
+	-webkit-border-radius: 0 0 3px 3px;
+	-moz-border-radius: 0 0 3px 3px;
+	border-radius: 0 0 3px 3px;
+	padding: 17px;
+}
+
+.micro-response1519206078 .login-dialog-content .profile-item-wrapper
+{
+	color: #CECECE;
+	margin-bottom: 10px;
+	height: 32px;
+	line-height: 32px;
+}
+
+.micro-response1519206078 .login-dialog-content .profile-item-wrapper .label-wrapper
+{
+	margin-bottom: 5px;
+	float: left;
+}
+
+.micro-response1519206078 .login-dialog-content .profile-item-wrapper .input-wrapper
+{
+	float: right;
+}
+
+.micro-response1519206078 .login-dialog-content .profile-item-wrapper input[type=text]
+{
+	margin: 0;
+	padding: 5px;
+	border: solid 1px #191919;
+	background: #FFF;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	-webkit-box-shadow: 0 1px #888;
+	-moz-box-shadow: 0 1px #888;
+	box-shadow: 0 1px #888;
+	outline: none;
+}
+
+.micro-response1519206078 .login-dialog-content .profile-item-wrapper.email-notifications-wrapper
+{
+	margin-top: 15px;
+	height: auto;
+	line-height: normal;
+}
+
+.micro-response1519206078 .login-dialog-content .profile-item-wrapper.email-notifications-wrapper .label-wrapper
+{
+	float: none;
+}
+
+.micro-response1519206078 .login-dialog-content .profile-item-wrapper.email-notifications-wrapper .email-notifications-group
+{
+	margin-right: 0;
+	padding: 12px;
+	background-color: #4A4A4A;
+	background-repeat: no-repeat;
+	background-position: center center;
+	border: solid 1px #2B2B2B;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	-webkit-box-shadow: 0 1px #888;
+	-moz-box-shadow: 0 1px #888;
+	box-shadow: 0 1px #888;
+}
+
+.micro-response1519206078 .login-dialog-content .profile-item-wrapper.error input,
+.micro-response1519206078 .login-dialog-content .profile-item-wrapper.error select
+{
+	border: solid 1px #F00;
+	background-color: #FEE7E7;
+}
+
+.micro-response1519206078 .login-dialog-buttons
+{
+	text-align: right;
+}
+
+.micro-response1519206078 .login-dialog button
+{
+	color: #FFF;
+	font-weight: bold;
+	margin-left: 5px;
+	margin-right: 0;
+	padding: 8px 26px;
+	border: solid 1px #2B2B2B;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	background: #595959;
+	/* Old browsers */
+	background: -moz-linear-gradient(top, #595959 0%, #4A4A4A 100%);
+	/* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#595959), color-stop(100%,#4A4A4A));
+	/* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #595959 0%,#4A4A4A 100%);
+	/* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, #595959 0%,#4A4A4A 100%);
+	/* Opera11.10+ */
+	background: -ms-linear-gradient(top, #595959 0%,#4A4A4A 100%);
+	/* IE10+ */
+	background: linear-gradient(#595959 0%,#4A4A4A 100%);
+	/* W3C */
+	-pie-background: linear-gradient(#595959, #4A4A4A);
+	/*PIE*/
+	background-repeat: no-repeat;
+	background-position: center center;
+	cursor: pointer;
+}
+
+.micro-response1519206078 .login-dialog button.close-dialog
+{
+	position: absolute;
+	top: 8px;
+	right: 8px;
+	background: none;
+	background-image: url('Images/close.png');
+	height: 16px;
+	width: 16px;
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+
+.micro-response1519206078 .login-dialog .status-message-box
+{
+	display: none;
+	color: #0F0;
+	text-align: center;
+	margin-top: 16px;
+	padding: 12px;
+	background-color: #DCFEDC;
+	border: solid 1px #0F0;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+}
+
+.micro-response1519206078 .login-dialog .status-message-box.error
+{
+	color: #F00;
+	border: solid 1px #F00;
+	background-color: #FEE7E7;
+}
+
+.micro-response1519206078 .login-dialog .status-message-box .message
+{
+	display: none;
+}
+
+.micro-response1519206078 .backlink-container
+{
+	position: absolute;
+	bottom: 11px;
+	right: 20px;
+}
+
+.micro-response1519206078 .backlink-container-topnav
+{
+	bottom: 4px;
+	right: 4px;
+}
+
+.micro-response1519206078 .backlink-container-sidenav
+{
+	bottom: 20px;
+	right: 20px;
+}
+
+.micro-response1519206078 #mc-backlink
+{
+	text-decoration: none;
+	color: #7d858a;
+	font-size: 15px;
+	font-family: Arial;
+	font-weight: normal;
+}
+
+.micro-response1519206078 #mc-backlink > sup
+{
+	font-size: 12px;
+}
+
+.micro-response1519206078 .height-container
+{
+	/* just to contain top margin of element inside */
+	padding-top: 0.1px;
+	position: relative;
+	box-sizing: border-box;
+}
+
+.micro-response1519206078 .height-container-no-footer
+{
+	padding-bottom: 30px;
+}
+
+.micro-response1519206078 .height-container-sidenav
+{
+	padding-bottom: 40px;
+}
+
+/* to contain floating elements in the div */
+
+.micro-response1519206078 .height-container:after
+{
+	visibility: hidden;
+	display: block;
+	font-size: 0;
+	content: " ";
+	clear: both;
+	height: 0;
+}
+
+.micro-response1519206078 .codeSnippet
+{
+	overflow: auto;
+}
+
+.micro-response1519206078 .codeSnippetBody
+{
+	margin: 0;
+	font-family: inherit;
+	overflow: auto;
+}
+
+.micro-response1519206078 .codeSnippetBody > pre
+{
+	font-family: inherit;
+	margin: 0;
+}
+
+.micro-response1519206078 .codeSnippetBody > pre > code
+{
+	font-family: inherit;
+}
+
+.micro-response1519206078 .codeSnippetBody span.codeSnippetLineNumbers
+{
+	text-decoration: inherit;
+	float: left;
+	margin-top: 0;
+	margin-right: 0.5rem;
+	padding-right: 1rem;
+	text-align: right;
+}
+
+.micro-response1519206078 .codeSnippetCopyButton
+{
+	font: inherit;
+	right: 0;
+}
+
+.micro-response1519206078 .multipleChoice > fieldset
+{
+	border: none;
+}
+
+.micro-response1519206078 .multipleChoice > .submitQuestionButton
+{
+	display: block;
+}
+
+.micro-response1519206078 .multipleChoiceItem
+{
+	display: flex;
+}
+
+.micro-response1519206078 .multipleChoiceItem > div
+{
+	display: inline-block;
+}
+
+.micro-response1519206078 .multipleChoiceItem > div > p:first-child
+{
+	margin-top: 0;
+}
+
+.micro-response1519206078 .multipleChoiceItem > input
+{
+	vertical-align: top;
+}
+
+.micro-response1519206078 .topicQuestionFeedback
+{
+	display: none;
+}
+
+.micro-response1519206078 .mc-el-hidden
+{
+	opacity: 0;
+}
+
+.micro-response1519206078 .MCHelpControl-Related .MCHelpControl-RelatedHotSpot_
+{
+	background-position: none;
+	background-image: none;
+	padding-left: 0;
+}
+
+.micro-response1519206078 .link-list-popup
+{
+	color: #000000;
+	background-color: #dcdcdc;
+	border: solid 1px #000000;
+	margin: 0px;
+	padding: 0px;
+}
+
+.micro-response1519206078 .link-list-popup ul li
+{
+	color: Black;
+	background-color: Transparent;
+	padding: 5px;
+	font-family: sans-serif;
+	font-size: 10pt;
+}
+
+.micro-response1519206078 .link-list-popup ul li:hover
+{
+	color: White;
+	background-color: Blue;
+}
+
+.micro-response1519206078 .MCHelpControlList
+{
+	
+}
+
+.micro-response1519206078 .MCHelpControlListItem
+{
+	
+}
+
+.micro-response1519206078 .MCHelpControlListItem a
+{
+	
+}
+
+.micro-response1519206078 .MCHelpControlListItem a:link
+{
+	
+}
+
+.micro-response1519206078 .MCHelpControlListItem a:visited
+{
+	
+}
+
+.micro-response1519206078 .MCHelpControlListItem a:hover
+{
+	
+}
+
+.micro-response1519206078 .MCHelpControlListItem a:focus
+{
+	
+}
+
+.micro-response1519206078 .MCConceptLinkControlList
+{
+	
+}
+
+.micro-response1519206078 .MCConceptLinkControlListItem
+{
+	
+}
+
+.micro-response1519206078 .MCConceptLinkControlListItem a
+{
+	
+}
+
+.micro-response1519206078 .MCConceptLinkControlListItem a:link
+{
+	
+}
+
+.micro-response1519206078 .MCConceptLinkControlListItem a:visited
+{
+	
+}
+
+.micro-response1519206078 .MCConceptLinkControlListItem a:hover
+{
+	
+}
+
+.micro-response1519206078 .MCConceptLinkControlListItem a:focus
+{
+	
+}
+
+.micro-response1519206078 .MCKeywordLinkControlList
+{
+	
+}
+
+.micro-response1519206078 .MCKeywordLinkControlListItem
+{
+	
+}
+
+.micro-response1519206078 .MCKeywordLinkControlListItem a
+{
+	
+}
+
+.micro-response1519206078 .MCKeywordLinkControlListItem a:link
+{
+	
+}
+
+.micro-response1519206078 .MCKeywordLinkControlListItem a:visited
+{
+	
+}
+
+.micro-response1519206078 .MCKeywordLinkControlListItem a:hover
+{
+	
+}
+
+.micro-response1519206078 .MCKeywordLinkControlListItem a:focus
+{
+	
+}
+
+.micro-response1519206078 .MCRelatedTopicsControlList
+{
+	
+}
+
+.micro-response1519206078 .MCRelatedTopicsControlListItem
+{
+	font-weight: normal;
+	list-style-type: square;
+}
+
+.micro-response1519206078 .MCRelatedTopicsControlListItem a
+{
+	font-weight: normal;
+}
+
+.micro-response1519206078 .MCRelatedTopicsControlListItem a:link
+{
+	
+}
+
+.micro-response1519206078 .MCRelatedTopicsControlListItem a:visited
+{
+	
+}
+
+.micro-response1519206078 .MCRelatedTopicsControlListItem a:hover
+{
+	
+}
+
+.micro-response1519206078 .MCRelatedTopicsControlListItem a:focus
+{
+	
+}
+
+.micro-response1519206078 .relatedTopics
+{
+	color: #696969;
+	font-weight: bold;
+	font-size: 12px;
+}
+
+.micro-response1519206078 .mcReset
+{
+	margin-left: 0;
+	margin-right: 0;
+	margin-top: 0;
+	margin-bottom: 0;
+	padding-left: 0;
+	padding-right: 0;
+	padding-top: 0;
+	padding-bottom: 0;
+	border-left-color: transparent;
+	border-left-style: none;
+	border-left-width: 0;
+	border-right-color: transparent;
+	border-right-style: none;
+	border-right-width: 0;
+	border-top-color: transparent;
+	border-top-style: none;
+	border-top-width: 0;
+	border-bottom-color: transparent;
+	border-bottom-style: none;
+	border-bottom-width: 0;
+	background-color: transparent;
+	background-image: none;
+	float: inherit;
+	font-size: inherit;
+	font-family: inherit;
+	font-style: inherit;
+	font-variant: inherit;
+	text-transform: inherit;
+	color: inherit;
+	letter-spacing: inherit;
+	word-spacing: inherit;
+	text-decoration: inherit;
+	text-align: inherit;
+}
+
+.micro-response1519206078 .MCWebHelpFramesetLink a
+{
+	color: #0000ee;
+}
+
+.micro-response1519206078 .MCWebHelpFramesetLink.MCWebHelpFramesetLinkTop a
+{
+	
+}
+
+.micro-response1519206078 .MCWebHelpFramesetLink.MCWebHelpFramesetLinkBottom a
+{
+	
+}
+

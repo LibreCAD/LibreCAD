@@ -53,7 +53,7 @@ textarea
     width: 60px;
 }
 
-    .menu-icon a
+    .menu-icon button
     {
         text-indent: -48px;
         width:60px;
@@ -61,9 +61,11 @@ textarea
         line-height: 33px;
         padding: 0;
         color: white;
+        border: none;
+        background: none;
     }
 
-        .menu-icon a span
+        .menu-icon button span
         {
             position: absolute;
             display: block;

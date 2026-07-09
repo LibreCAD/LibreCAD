@@ -228,14 +228,26 @@ img {
     left: 0.6667rem;
   }
 
-.submenu-toggle-container[aria-expanded='true'] > span.submenu-toggle,
+  /* Bug 183306 - making these explicit so that the behavior isn't dependant
+      on initialization
+*/
 .is-accordion-submenu-parent > a[aria-expanded='true'] > .submenu-toggle-container > span.submenu-toggle {
     -webkit-transform-origin: 50% 50%;
     -ms-transform-origin: 50% 50%;
     transform-origin: 50% 50%;
-    -webkit-transform: scaleY(-1);
-    -ms-transform: scaleY(-1);
-    transform: scaleY(-1); }
+    -webkit-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    transform: rotate(180deg);
+}
+
+.is-accordion-submenu-parent > a[aria-expanded='false'] > .submenu-toggle-container > span.submenu-toggle {
+    -webkit-transform-origin: 50% 50%;
+    -ms-transform-origin: 50% 50%;
+    transform-origin: 50% 50%;
+    -webkit-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    transform: rotate(0deg);
+}
 
 .title-bar {
   background: #0a0a0a;

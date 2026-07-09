@@ -6,5 +6,10 @@
 	{
 		width: 100%;
 	}
+
+	.knowledge-panel-container.micro-content-truncated-mode .micro-response
+	{
+		max-height: 200px;
+	}
 }
 

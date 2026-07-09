@@ -24,15 +24,15 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ;(function (window, document, $) {
   // Set the negative margin on the top menu for slide-menu pages
   var $selector1 = $('#topMenu'),
-    events = 'click.fndtn';
+  events = 'click.fndtn';
   if ($selector1.length > 0) $selector1.css("margin-top", $selector1.height() * -1);
 
   // Watch for clicks to show the sidebar
   var $selector2 = $('#sidebarButton');
   if ($selector2.length > 0) {
-    $('#sidebarButton').on(events, function (e) {
+    $selector2.on(events, function (e) {
         e.preventDefault();
-      $('body').toggleClass('active');
+        $('body').toggleClass('active');
     });
   }
 

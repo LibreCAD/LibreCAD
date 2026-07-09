@@ -12,6 +12,13 @@
 		box-shadow: none;
 	}
 
+	/* stops tooltips from hovering in the preview when entering print mode */
+
+	.tooltip
+	{
+		visibility: hidden;
+	}
+
 	*
 	{
 		overflow: visible !important;
@@ -53,6 +60,11 @@
 	}
 
 	.body-container
+	{
+		
+	}
+
+	.featured-snippets-container
 	{
 		
 	}
@@ -285,11 +297,6 @@
 	}
 
 	.central-separator
-	{
-		
-	}
-
-	.featured-snippets-container
 	{
 		
 	}

@@ -2,7 +2,7 @@
 
 /* Prevents Safari in landscape orientation from zooming in on text*/
 
-.micro-response1885824110
+.micro-response-1518182439
 {
 	-ms-text-size-adjust: 100%;
 	-moz-text-size-adjust: 100%;
@@ -12,19 +12,19 @@
 
 /* Default css class for hiding element*/
 
-.micro-response1885824110 .hidden
+.micro-response-1518182439 .hidden
 {
 	display: none;
 }
 
-.micro-response1885824110 a.glossaryTerm
+.micro-response-1518182439 a.glossaryTerm
 {
 	text-decoration: none;
 }
 
 /**/
 
-.micro-response1885824110 #ios-wrapper
+.micro-response-1518182439 #ios-wrapper
 {
 	width: 100%;
 	height: 100%;
@@ -32,33 +32,33 @@
 	-webkit-overflow-scrolling: touch;
 }
 
-.micro-response1885824110 .img_off
+.micro-response-1518182439 .img_off
 {
 	display: none;
 }
 
 /* Feedback/Pulse */
 
-.micro-response1885824110 .button.pulse-required,
-.micro-response1885824110 .button.feedback-required,
-.micro-response1885824110 .pulse-required,
-.micro-response1885824110 .feedback-required,
-.micro-response1885824110 .feedback-topic-required,
-.micro-response1885824110 .feedback-topic-required
+.micro-response-1518182439 .button.pulse-required,
+.micro-response-1518182439 .button.feedback-required,
+.micro-response-1518182439 .pulse-required,
+.micro-response-1518182439 .feedback-required,
+.micro-response-1518182439 .feedback-topic-required,
+.micro-response-1518182439 .feedback-topic-required
 {
 	display: none;
 }
 
-.micro-response1885824110 .pulse-active .pulse-required,
-.micro-response1885824110 .feedback-active .feedback-required,
-.micro-response1885824110 .feedback-active.has-topic .feedback-topic-required
+.micro-response-1518182439 .pulse-active .pulse-required,
+.micro-response-1518182439 .feedback-active .feedback-required,
+.micro-response-1518182439 .feedback-active.has-topic .feedback-topic-required
 {
 	display: inline-flex;
 }
 
 /* Login Dialog */
 
-.micro-response1885824110 .login-dialog
+.micro-response-1518182439 .login-dialog
 {
 	display: none;
 	z-index: 10001;
@@ -76,7 +76,7 @@
 	box-shadow: 0 4px 10px #333333;
 }
 
-.micro-response1885824110 .login-dialog.pulse
+.micro-response-1518182439 .login-dialog.pulse
 {
 	position: fixed;
 	width: 408px;
@@ -85,7 +85,7 @@
 	margin-top: -214px;
 }
 
-.micro-response1885824110 #pulse-login-frame
+.micro-response-1518182439 #pulse-login-frame
 {
 	width: 100%;
 	height: 100%;
@@ -98,7 +98,7 @@
 	box-shadow: 0 4px 10px #333333;
 }
 
-.micro-response1885824110 .login-dialog-header
+.micro-response-1518182439 .login-dialog-header
 {
 	color: #FFF;
 	font-size: 13px;
@@ -130,7 +130,7 @@
 	border-radius: 3px 3px 0 0;
 }
 
-.micro-response1885824110 .login-dialog-content
+.micro-response-1518182439 .login-dialog-content
 {
 	border-top: solid 1px #767676;
 	background: #5A5A5A;
@@ -142,7 +142,7 @@
 	padding: 17px;
 }
 
-.micro-response1885824110 .login-dialog-content .profile-item-wrapper
+.micro-response-1518182439 .login-dialog-content .profile-item-wrapper
 {
 	color: #CECECE;
 	margin-bottom: 10px;
@@ -150,18 +150,18 @@
 	line-height: 32px;
 }
 
-.micro-response1885824110 .login-dialog-content .profile-item-wrapper .label-wrapper
+.micro-response-1518182439 .login-dialog-content .profile-item-wrapper .label-wrapper
 {
 	margin-bottom: 5px;
 	float: left;
 }
 
-.micro-response1885824110 .login-dialog-content .profile-item-wrapper .input-wrapper
+.micro-response-1518182439 .login-dialog-content .profile-item-wrapper .input-wrapper
 {
 	float: right;
 }
 
-.micro-response1885824110 .login-dialog-content .profile-item-wrapper input[type=text]
+.micro-response-1518182439 .login-dialog-content .profile-item-wrapper input[type=text]
 {
 	margin: 0;
 	padding: 5px;
@@ -176,19 +176,19 @@
 	outline: none;
 }
 
-.micro-response1885824110 .login-dialog-content .profile-item-wrapper.email-notifications-wrapper
+.micro-response-1518182439 .login-dialog-content .profile-item-wrapper.email-notifications-wrapper
 {
 	margin-top: 15px;
 	height: auto;
 	line-height: normal;
 }
 
-.micro-response1885824110 .login-dialog-content .profile-item-wrapper.email-notifications-wrapper .label-wrapper
+.micro-response-1518182439 .login-dialog-content .profile-item-wrapper.email-notifications-wrapper .label-wrapper
 {
 	float: none;
 }
 
-.micro-response1885824110 .login-dialog-content .profile-item-wrapper.email-notifications-wrapper .email-notifications-group
+.micro-response-1518182439 .login-dialog-content .profile-item-wrapper.email-notifications-wrapper .email-notifications-group
 {
 	margin-right: 0;
 	padding: 12px;
@@ -204,19 +204,19 @@
 	box-shadow: 0 1px #888;
 }
 
-.micro-response1885824110 .login-dialog-content .profile-item-wrapper.error input,
-.micro-response1885824110 .login-dialog-content .profile-item-wrapper.error select
+.micro-response-1518182439 .login-dialog-content .profile-item-wrapper.error input,
+.micro-response-1518182439 .login-dialog-content .profile-item-wrapper.error select
 {
 	border: solid 1px #F00;
 	background-color: #FEE7E7;
 }
 
-.micro-response1885824110 .login-dialog-buttons
+.micro-response-1518182439 .login-dialog-buttons
 {
 	text-align: right;
 }
 
-.micro-response1885824110 .login-dialog button
+.micro-response-1518182439 .login-dialog button
 {
 	color: #FFF;
 	font-weight: bold;
@@ -248,7 +248,7 @@
 	cursor: pointer;
 }
 
-.micro-response1885824110 .login-dialog button.close-dialog
+.micro-response-1518182439 .login-dialog button.close-dialog
 {
 	position: absolute;
 	top: 8px;
@@ -262,7 +262,7 @@
 	border: 0;
 }
 
-.micro-response1885824110 .login-dialog .status-message-box
+.micro-response-1518182439 .login-dialog .status-message-box
 {
 	display: none;
 	color: #0F0;
@@ -276,38 +276,38 @@
 	border-radius: 3px;
 }
 
-.micro-response1885824110 .login-dialog .status-message-box.error
+.micro-response-1518182439 .login-dialog .status-message-box.error
 {
 	color: #F00;
 	border: solid 1px #F00;
 	background-color: #FEE7E7;
 }
 
-.micro-response1885824110 .login-dialog .status-message-box .message
+.micro-response-1518182439 .login-dialog .status-message-box .message
 {
 	display: none;
 }
 
-.micro-response1885824110 .backlink-container
+.micro-response-1518182439 .backlink-container
 {
 	position: absolute;
 	bottom: 11px;
 	right: 20px;
 }
 
-.micro-response1885824110 .backlink-container-topnav
+.micro-response-1518182439 .backlink-container-topnav
 {
 	bottom: 4px;
 	right: 4px;
 }
 
-.micro-response1885824110 .backlink-container-sidenav
+.micro-response-1518182439 .backlink-container-sidenav
 {
 	bottom: 20px;
 	right: 20px;
 }
 
-.micro-response1885824110 #mc-backlink
+.micro-response-1518182439 #mc-backlink
 {
 	text-decoration: none;
 	color: #7d858a;
@@ -316,12 +316,12 @@
 	font-weight: normal;
 }
 
-.micro-response1885824110 #mc-backlink > sup
+.micro-response-1518182439 #mc-backlink > sup
 {
 	font-size: 12px;
 }
 
-.micro-response1885824110 .height-container
+.micro-response-1518182439 .height-container
 {
 	/* just to contain top margin of element inside */
 	padding-top: 0.1px;
@@ -329,19 +329,19 @@
 	box-sizing: border-box;
 }
 
-.micro-response1885824110 .height-container-no-footer
+.micro-response-1518182439 .height-container-no-footer
 {
 	padding-bottom: 30px;
 }
 
-.micro-response1885824110 .height-container-sidenav
+.micro-response-1518182439 .height-container-sidenav
 {
 	padding-bottom: 40px;
 }
 
 /* to contain floating elements in the div */
 
-.micro-response1885824110 .height-container:after
+.micro-response-1518182439 .height-container:after
 {
 	visibility: hidden;
 	display: block;
@@ -351,30 +351,30 @@
 	height: 0;
 }
 
-.micro-response1885824110 .codeSnippet
+.micro-response-1518182439 .codeSnippet
 {
 	overflow: auto;
 }
 
-.micro-response1885824110 .codeSnippetBody
+.micro-response-1518182439 .codeSnippetBody
 {
 	margin: 0;
 	font-family: inherit;
 	overflow: auto;
 }
 
-.micro-response1885824110 .codeSnippetBody > pre
+.micro-response-1518182439 .codeSnippetBody > pre
 {
 	font-family: inherit;
 	margin: 0;
 }
 
-.micro-response1885824110 .codeSnippetBody > pre > code
+.micro-response-1518182439 .codeSnippetBody > pre > code
 {
 	font-family: inherit;
 }
 
-.micro-response1885824110 .codeSnippetBody span.codeSnippetLineNumbers
+.micro-response-1518182439 .codeSnippetBody span.codeSnippetLineNumbers
 {
 	text-decoration: inherit;
 	float: left;
@@ -384,60 +384,60 @@
 	text-align: right;
 }
 
-.micro-response1885824110 .codeSnippetCopyButton
+.micro-response-1518182439 .codeSnippetCopyButton
 {
 	font: inherit;
 	right: 0;
 }
 
-.micro-response1885824110 .multipleChoice > fieldset
+.micro-response-1518182439 .multipleChoice > fieldset
 {
 	border: none;
 }
 
-.micro-response1885824110 .multipleChoice > .submitQuestionButton
+.micro-response-1518182439 .multipleChoice > .submitQuestionButton
 {
 	display: block;
 }
 
-.micro-response1885824110 .multipleChoiceItem
+.micro-response-1518182439 .multipleChoiceItem
 {
 	display: flex;
 }
 
-.micro-response1885824110 .multipleChoiceItem > div
+.micro-response-1518182439 .multipleChoiceItem > div
 {
 	display: inline-block;
 }
 
-.micro-response1885824110 .multipleChoiceItem > div > p:first-child
+.micro-response-1518182439 .multipleChoiceItem > div > p:first-child
 {
 	margin-top: 0;
 }
 
-.micro-response1885824110 .multipleChoiceItem > input
+.micro-response-1518182439 .multipleChoiceItem > input
 {
 	vertical-align: top;
 }
 
-.micro-response1885824110 .topicQuestionFeedback
+.micro-response-1518182439 .topicQuestionFeedback
 {
 	display: none;
 }
 
-.micro-response1885824110 .mc-el-hidden
+.micro-response-1518182439 .mc-el-hidden
 {
 	opacity: 0;
 }
 
-.micro-response1885824110 .MCHelpControl-Related .MCHelpControl-RelatedHotSpot_
+.micro-response-1518182439 .MCHelpControl-Related .MCHelpControl-RelatedHotSpot_
 {
 	background-position: none;
 	background-image: none;
 	padding-left: 0;
 }
 
-.micro-response1885824110 .link-list-popup
+.micro-response-1518182439 .link-list-popup
 {
 	color: #000000;
 	background-color: #dcdcdc;
@@ -446,7 +446,7 @@
 	padding: 0px;
 }
 
-.micro-response1885824110 .link-list-popup ul li
+.micro-response-1518182439 .link-list-popup ul li
 {
 	color: Black;
 	background-color: Transparent;
@@ -455,161 +455,161 @@
 	font-size: 10pt;
 }
 
-.micro-response1885824110 .link-list-popup ul li:hover
+.micro-response-1518182439 .link-list-popup ul li:hover
 {
 	color: White;
 	background-color: Blue;
 }
 
-.micro-response1885824110 .MCHelpControlList
+.micro-response-1518182439 .MCHelpControlList
 {
 	
 }
 
-.micro-response1885824110 .MCHelpControlListItem
+.micro-response-1518182439 .MCHelpControlListItem
 {
 	
 }
 
-.micro-response1885824110 .MCHelpControlListItem a
+.micro-response-1518182439 .MCHelpControlListItem a
 {
 	
 }
 
-.micro-response1885824110 .MCHelpControlListItem a:link
+.micro-response-1518182439 .MCHelpControlListItem a:link
 {
 	
 }
 
-.micro-response1885824110 .MCHelpControlListItem a:visited
+.micro-response-1518182439 .MCHelpControlListItem a:visited
 {
 	
 }
 
-.micro-response1885824110 .MCHelpControlListItem a:hover
+.micro-response-1518182439 .MCHelpControlListItem a:hover
 {
 	
 }
 
-.micro-response1885824110 .MCHelpControlListItem a:focus
+.micro-response-1518182439 .MCHelpControlListItem a:focus
 {
 	
 }
 
-.micro-response1885824110 .MCConceptLinkControlList
+.micro-response-1518182439 .MCConceptLinkControlList
 {
 	
 }
 
-.micro-response1885824110 .MCConceptLinkControlListItem
+.micro-response-1518182439 .MCConceptLinkControlListItem
 {
 	
 }
 
-.micro-response1885824110 .MCConceptLinkControlListItem a
+.micro-response-1518182439 .MCConceptLinkControlListItem a
 {
 	
 }
 
-.micro-response1885824110 .MCConceptLinkControlListItem a:link
+.micro-response-1518182439 .MCConceptLinkControlListItem a:link
 {
 	
 }
 
-.micro-response1885824110 .MCConceptLinkControlListItem a:visited
+.micro-response-1518182439 .MCConceptLinkControlListItem a:visited
 {
 	
 }
 
-.micro-response1885824110 .MCConceptLinkControlListItem a:hover
+.micro-response-1518182439 .MCConceptLinkControlListItem a:hover
 {
 	
 }
 
-.micro-response1885824110 .MCConceptLinkControlListItem a:focus
+.micro-response-1518182439 .MCConceptLinkControlListItem a:focus
 {
 	
 }
 
-.micro-response1885824110 .MCKeywordLinkControlList
+.micro-response-1518182439 .MCKeywordLinkControlList
 {
 	
 }
 
-.micro-response1885824110 .MCKeywordLinkControlListItem
+.micro-response-1518182439 .MCKeywordLinkControlListItem
 {
 	
 }
 
-.micro-response1885824110 .MCKeywordLinkControlListItem a
+.micro-response-1518182439 .MCKeywordLinkControlListItem a
 {
 	
 }
 
-.micro-response1885824110 .MCKeywordLinkControlListItem a:link
+.micro-response-1518182439 .MCKeywordLinkControlListItem a:link
 {
 	
 }
 
-.micro-response1885824110 .MCKeywordLinkControlListItem a:visited
+.micro-response-1518182439 .MCKeywordLinkControlListItem a:visited
 {
 	
 }
 
-.micro-response1885824110 .MCKeywordLinkControlListItem a:hover
+.micro-response-1518182439 .MCKeywordLinkControlListItem a:hover
 {
 	
 }
 
-.micro-response1885824110 .MCKeywordLinkControlListItem a:focus
+.micro-response-1518182439 .MCKeywordLinkControlListItem a:focus
 {
 	
 }
 
-.micro-response1885824110 .MCRelatedTopicsControlList
+.micro-response-1518182439 .MCRelatedTopicsControlList
 {
 	
 }
 
-.micro-response1885824110 .MCRelatedTopicsControlListItem
+.micro-response-1518182439 .MCRelatedTopicsControlListItem
 {
 	font-weight: normal;
 	list-style-type: square;
 }
 
-.micro-response1885824110 .MCRelatedTopicsControlListItem a
+.micro-response-1518182439 .MCRelatedTopicsControlListItem a
 {
 	font-weight: normal;
 }
 
-.micro-response1885824110 .MCRelatedTopicsControlListItem a:link
+.micro-response-1518182439 .MCRelatedTopicsControlListItem a:link
 {
 	
 }
 
-.micro-response1885824110 .MCRelatedTopicsControlListItem a:visited
+.micro-response-1518182439 .MCRelatedTopicsControlListItem a:visited
 {
 	
 }
 
-.micro-response1885824110 .MCRelatedTopicsControlListItem a:hover
+.micro-response-1518182439 .MCRelatedTopicsControlListItem a:hover
 {
 	
 }
 
-.micro-response1885824110 .MCRelatedTopicsControlListItem a:focus
+.micro-response-1518182439 .MCRelatedTopicsControlListItem a:focus
 {
 	
 }
 
-.micro-response1885824110 .relatedTopics
+.micro-response-1518182439 .relatedTopics
 {
 	color: #696969;
 	font-weight: normal;
 	font-size: 0.9rem;
 }
 
-.micro-response1885824110 .mcReset
+.micro-response-1518182439 .mcReset
 {
 	margin-left: 0;
 	margin-right: 0;
@@ -646,17 +646,17 @@
 	text-align: inherit;
 }
 
-.micro-response1885824110 .MCWebHelpFramesetLink a
+.micro-response-1518182439 .MCWebHelpFramesetLink a
 {
 	
 }
 
-.micro-response1885824110 .MCWebHelpFramesetLink.MCWebHelpFramesetLinkTop a
+.micro-response-1518182439 .MCWebHelpFramesetLink.MCWebHelpFramesetLinkTop a
 {
 	
 }
 
-.micro-response1885824110 .MCWebHelpFramesetLink.MCWebHelpFramesetLinkBottom a
+.micro-response-1518182439 .MCWebHelpFramesetLink.MCWebHelpFramesetLinkBottom a
 {
 	
 }

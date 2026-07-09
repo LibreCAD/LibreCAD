@@ -1,1 +1,1 @@
-define({r:0.5,st:'Stem',n:1,t:[0],u:['../Content/Main/Appendices/append_calculator.htm'],s:['+','formend','speicher'],p:[['+',51],['bedarf',36],['der',37],['entweder',16],['in',16],['mittelpunkt',10],['sd',43],['variablennamen',45],['zugriffsmethoden',12]]});
+define({r:0.5,st:'Stem',n:1,t:[0],m:[],u:['../Content/Main/Appendices/append_calculator.htm'],s:['+','formt','sperr'],p:[['+',51],['bedarf',39],['der',38],['erforderlich',47],['in',27],['mittelpunkts',26],['sehr',49],['verfügung',38],['zum',22]]});

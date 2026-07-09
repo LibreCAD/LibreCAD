@@ -1,0 +1,328 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.4",
+  "version": 1,
+  "metadata": {
+    "timestamp": "2025-04-22T00:00:00Z",
+    "component": {
+      "type": "file",
+      "name": "HTML5 Flare output dependencies"
+    }
+  },
+  "components": [
+    {
+      "type": "library",
+      "name": "RequireJS",
+      "version": "2.3.7",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/requirejs/requirejs"
+        },
+        {
+          "type": "license",
+          "url": "https://github.com/requirejs/requirejs/blob/master/LICENSE"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "Foundation Responsive Library",
+      "version": "5.0.0",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "website",
+          "url": "https://github.com/foundation/foundation-sites/"
+        },
+        {
+          "type": "license",
+          "url": "https://github.com/foundation/foundation-sites/blob/develop/LICENSE"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "Foundation Responsive Library",
+      "version": "6.2.3",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "website",
+          "url": "https://github.com/foundation/foundation-sites/"
+        },
+        {
+          "type": "license",
+          "url": "https://github.com/foundation/foundation-sites/blob/develop/LICENSE"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "Pipwerks SCORM API Wrapper",
+      "author": "Philip Hutchison",
+      "version": "1.2",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/pipwerks/scorm-api-wrapper"
+        },
+        {
+          "type": "license",
+          "url": "http://pipwerks.mit-license.org/"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "TinCan.js",
+      "version": "0.50.0",
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/RusticiSoftware/TinCanJS"
+        },
+        {
+          "type": "license",
+          "url": "https://github.com/RusticiSoftware/TinCanJS/blob/master/LICENSE"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "xAPIWrapper",
+      "version": "1.11.0",
+      "purl": "pkg:github/adlnet/xAPIWrapper",
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/adlnet/xAPIWrapper"
+        },
+        {
+          "type": "license",
+          "url": "https://github.com/adlnet/xAPIWrapper/blob/master/LICENSE"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "Snowball Stemmer",
+      "author": "shibukawa",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/shibukawa/snowball-stemmer.jsx"
+        },
+        {
+          "type": "license",
+          "url": "https://github.com/shibukawa/snowball-stemmer.jsx/blob/master/LICENSE.md"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "jQuery",
+      "version": "3.7.1",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "license",
+          "url": "https://jquery.org/license"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "BounceFix.js",
+      "version": "0.2.1",
+      "author": "Jarid Margolin",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "license",
+          "url": "https://github.com/jaridmargolin/bouncefix.js"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "jQuery throttle/debounce",
+      "version": "1.1",
+      "author": "\"Cowboy\" Ben Alman",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        },
+        {
+          "license": {
+            "id": "GPL-2.0"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "license",
+          "url": "http://benalman.com/about/license/"
+        },
+        {
+          "type": "vcs",
+          "url": "http://github.com/cowboy/jquery-throttle-debounce/"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "Highlight",
+      "version": "4",
+      "author": "Johann Burkard",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "website",
+          "url": "http://johannburkard.de/blog/programming/javascript/highlight-javascript-text-higlighting-jquery-plugin.html"
+        },
+        {
+          "type": "license",
+          "url": "https://johannburkard.de/help/copyright/"
+        },
+        {
+          "type": "other",
+          "url": "https://johannburkard.de/resources/Johann/jquery.highlight-4.js"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "jQuery scrollintoview",
+      "version": "1.8",
+      "author": "Robert Koritnik",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "license",
+          "url": "https://github.com/litera/jquery-scrollintoview/blob/master/jquery.scrollintoview.js"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "Placeholder plugin",
+      "version": "1.8.7",
+      "author": "@mathias",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "license",
+          "url": "http://mths.be/placeholder"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "DOMPurify",
+      "version": "3.4.3",
+      "author": "Dr.-Ing. Mario Heiderich, Cure53",
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        },
+        {
+          "license": {
+            "id": "MPL-2.0"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/cure53/DOMPurify"
+        },
+        {
+          "type": "license",
+          "url": "https://github.com/cure53/DOMPurify/blob/3.4.3/LICENSE"
+        }
+      ]
+    }
+  ]
+}
