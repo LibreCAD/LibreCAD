@@ -57,7 +57,7 @@ pipeline
 				{
 					// copy installer to prod rel
 					def LibreCAD = load 'LibreCAD.groovy'
-					bat script: 'xcopy "\\\\cam-file\\devcommon\\Jenkins\\Binary Management\\VisualC++\\vc_redist.x86.exe" "%WORKSPACE%/redist" /y'
+					bat script: 'xcopy "%DEVCOMMON_FOLDER%\\Jenkins\\Binary Management\\VisualC++\\vc_redist.x86.exe" "%WORKSPACE%/redist" /y'
 					LibreCAD.BuildInstaller()
 					bat 'pwsh -NoProfile -File .\\SBOM\\sbom-generation-ms-tool.ps1'
 					def

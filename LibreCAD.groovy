@@ -9,7 +9,7 @@ def Build()
 def CopyProNestFileToWindowsFolder(fileName)
 {
 	def proNestVersion = "14.0.3"
-	def proNestFileDirectory = "\\\\cam-file\\devcommon\\Jenkins\\LibreCad\\Built by ProNest\\" + proNestVersion + "\\"
+	def proNestFileDirectory = "%DEVCOMMON_FOLDER%\\Jenkins\\LibreCad\\Built by ProNest\\" + proNestVersion + "\\"
 	bat 'copy "' + proNestFileDirectory + fileName + '" ' + '"%WORKSPACE%\\windows\\"'
 }
 def PreBuild()
@@ -25,7 +25,7 @@ def PreBuild()
 def CopyBinaryManagementFile(pathInBinaryManagement)
 {
 	def
-		binaryManagementFolder = "\\\\cam-file\\Devcommon\\Jenkins\\Binary Management\\"
+		binaryManagementFolder = "%BINARYMANAGEMENT_FOLDER%\\"
 	def 
 		filePath = binaryManagementFolder + pathInBinaryManagement
 	bat 'copy "' + filePath + '" ' + '"%WORKSPACE%\\windows\\"'
