@@ -22,6 +22,8 @@
 **
 ******************************************************************************/
 
+#include <cstdlib>
+
 #include "pdf_print_loop.h"
 
 #include <QPrinter>
@@ -42,36 +44,37 @@ static void setupPrinterAndPaper(const RS_Graphic*, QPrinter&, PdfPrintParams&);
 static void drawGraphic(RS_Graphic *graphic, QPrinter &printer, RS_Painter &painter);
 
 void PdfPrintLoop::run(){
+    int failed = 0;
     if (m_params.outFile.isEmpty()) {
-        for (auto &&f : m_params.dxfFiles) {
-            printOneDxfToOnePdf(f);
+        for (auto &&f : m_params.inputFiles) {
+            if (!printOneFileToOnePdf(f))
+                ++failed;
         }
     } else {
-        printManyDxfToOnePdf();
+        failed = printManyFilesToOnePdf();
     }
-    emit finished();
+    emit finished(failed == 0 ? EXIT_SUCCESS : EXIT_FAILURE);
 }
 
 
-void PdfPrintLoop::printOneDxfToOnePdf(const QString& dxfFile) {
+bool PdfPrintLoop::printOneFileToOnePdf(const QString& inputFile) {
 
     // Main code logic and flow for this method is originally stolen from
     // QC_ApplicationWindow::slotFilePrint(bool printPDF) method.
     // But finally it was split in to smaller parts.
 
-    const QFileInfo dxfFileInfo(dxfFile);
+    QFileInfo inputFileInfo(inputFile);
     m_params.outFile =
-        (m_params.outDir.isEmpty() ? dxfFileInfo.path() : m_params.outDir)
-        + "/" + dxfFileInfo.completeBaseName() + ".pdf";
+        (m_params.outDir.isEmpty() ? inputFileInfo.path() : m_params.outDir)
+        + "/" + inputFileInfo.completeBaseName() + ".pdf";
 
     RS_Document *doc = nullptr;
     RS_Graphic *graphic = nullptr;
 
-    if (!openDocAndSetGraphic(&doc, &graphic, dxfFile)) {
-        return;
-    }
+    if (!openDocAndSetGraphic(&doc, &graphic, inputFile))
+        return false;
 
-    qDebug() << "Printing" << dxfFile << "to" << m_params.outFile << ">>>>";
+    qDebug() << "Printing" << inputFile << "to" << m_params.outFile << ">>>>";
 
     touchGraphic(graphic, m_params);
 
@@ -89,16 +92,18 @@ void PdfPrintLoop::printOneDxfToOnePdf(const QString& dxfFile) {
 
     painter.end();
 
-    qDebug() << "Printing" << dxfFile << "to" << m_params.outFile << "DONE";
+    qDebug() << "Printing" << inputFile << "to" << m_params.outFile << "DONE";
 
     delete doc;
+    return true;
 }
 
-void PdfPrintLoop::printManyDxfToOnePdf() {
-    struct DxfContentItems {
+
+int PdfPrintLoop::printManyFilesToOnePdf() {
+    struct PrintContentItem {
         RS_Document* doc;
         RS_Graphic* graphic;
-        QString dxfFile;
+        QString inputFile;
         QPageSize::PageSizeId paperSize;
     };
 
@@ -107,27 +112,32 @@ void PdfPrintLoop::printManyDxfToOnePdf() {
         m_params.outFile = m_params.outDir + "/" + outFileInfo.fileName();
     }
 
-    QVector<DxfContentItems> contentItems;
+    QVector<PrintContentItem> contentItems;
     int nrPages = 0;
+    int failed = 0;
 
-    // FIXME: Should probably open and print all dxf files in one 'for' loop.
+    // FIXME: Should probably open and print all input files in one 'for' loop.
     // Tried but failed to do this. It looks like some 'chicken and egg'
     // situation for the QPrinter and RS_PainterQt. Therefore, first open
-    // all dxf files and apply required actions. Then run another 'for'
+    // all input files and apply required actions. Then run another 'for'
     // loop for actual printing.
-    for (const auto &dxfFile : std::as_const(m_params.dxfFiles)) {
-        DxfContentItems page;
-        page.dxfFile = dxfFile;
-        if (!openDocAndSetGraphic(&page.doc, &page.graphic, dxfFile)) {
+    for (auto inputFile : m_params.inputFiles) {
+        PrintContentItem page;
+        page.inputFile = inputFile;
+        if (!openDocAndSetGraphic(&page.doc, &page.graphic, inputFile)) {
+            ++failed;
             continue;
         }
 
-        qDebug() << "Opened" << dxfFile;
+        qDebug() << "Opened" << inputFile;
 
         touchGraphic(page.graphic, m_params);
         contentItems.append(page);
         nrPages++;
     }
+
+    if (contentItems.isEmpty())
+        return failed == 0 ? params.inputFiles.size() : failed;
 
     QPrinter printer(QPrinter::HighResolution);
 
@@ -148,12 +158,12 @@ void PdfPrintLoop::printManyDxfToOnePdf() {
     for (const auto &item : contentItems) {
         nrPages--;
 
-        qDebug() << "Printing" << item.dxfFile
+        qDebug() << "Printing" << item.inputFile
                  << "to" << m_params.outFile << ">>>>";
 
         drawGraphic(item.graphic, printer, painter);
 
-        qDebug() << "Printing" << item.dxfFile
+        qDebug() << "Printing" << item.inputFile
                  << "to" << m_params.outFile << "DONE";
 
         delete item.doc;
@@ -164,6 +174,7 @@ void PdfPrintLoop::printManyDxfToOnePdf() {
     }
 
     painter.end();
+    return failed;
 }
 
 static bool openDocAndSetGraphic(RS_Document** doc, RS_Graphic** graphic,

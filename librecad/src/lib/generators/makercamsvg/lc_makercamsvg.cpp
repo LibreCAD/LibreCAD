@@ -242,6 +242,10 @@ void LC_MakerCamSVG::writeEntity(RS_Entity* entity) {
 
 void LC_MakerCamSVG::writeInsert(const RS_Insert* insert) {
     RS_Block* block = insert->getBlockForInsert();
+    if (block == nullptr) {
+        RS_DEBUG->print("RS_MakerCamSVG::writeInsert: Insert references missing block, skipping");
+        return;
+    }
 
     const RS_Vector insertionpoint = insert->getInsertionPoint();
     // The conversion from drawing space to the svg space (column major) transform matrix(M):

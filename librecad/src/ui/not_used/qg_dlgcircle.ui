@@ -90,7 +90,7 @@
            </size>
           </property>
           <property name="toolTip">
-           <string>Radius of cricle</string>
+           <string>Radius of circle</string>
           </property>
          </widget>
         </item>

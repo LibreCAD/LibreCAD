@@ -22,6 +22,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include "lc_quickinfoentitydata.h"
 
+#include <QCoreApplication>
+
 #include "lc_containertraverser.h"
 #include "lc_dimarc.h"
 #include "lc_dimordinate.h"
@@ -51,7 +53,20 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_text.h"
 #include "rs_units.h"
 
-LC_QuickInfoEntityData::LC_QuickInfoEntityData() : m_penRegistry{LC_PenInfoRegistry::instance()} {
+namespace {
+QString formatDimensionLabelForInfo(const QString& label) {
+    if (label.isEmpty()) {
+        return QCoreApplication::translate("LC_QuickInfoEntityData", "[Automatic]");
+    }
+    if (label == " ") {
+        return QCoreApplication::translate("LC_QuickInfoEntityData", "[Suppressed]");
+    }
+    return label;
+}
+}
+
+LC_QuickInfoEntityData::LC_QuickInfoEntityData(): LC_QuickInfoBaseData(),
+                                                  m_penRegistry{LC_PenInfoRegistry::instance()} {
 }
 
 LC_QuickInfoEntityData::~LC_QuickInfoEntityData() {
@@ -439,7 +454,7 @@ QString LC_QuickInfoEntityData::generateView() {
         }
         else {
             data.append("<b>");
-            data.append(property->value);
+            data.append(property->value.toHtmlEscaped());
             data.append("</b>");
         }
         data.append("</td>");
@@ -1395,6 +1410,7 @@ QString LC_QuickInfoEntityData::prepareDimArcDescription(const LC_DimArc* dim, c
     // if (!level){
     const LC_DimArcData& data = dim->getData();
     appendValue(result, tr("Style"), getDimensionStyleString(dim));
+         appendDimensionLabelInfo(result, dim);
     appendLinear(result, tr("Radius"), data.radius);
     appendLinear(result, tr("Arc Length"), data.arcLength);
     appendWCSAbsolute(result, tr("Center"), data.centre);
@@ -1412,6 +1428,7 @@ void LC_QuickInfoEntityData::collectDimArcProperties(const LC_DimArc* dim) {
     m_entityName = tr("DIMARC");
     const LC_DimArcData& data = dim->getData();
     addProperty(tr("Style"), getDimensionStyleString(dim), PropertyType::PROPERTY_TYPE_OTHER);
+    collectDimensionLabelProperties(dim);
 
     addLinearProperty(tr("Radius"), data.radius);
     addLinearProperty(tr("Arc Length"), data.arcLength);
@@ -1428,6 +1445,7 @@ void LC_QuickInfoEntityData::collectDimArcProperties(const LC_DimArc* dim) {
 QString LC_QuickInfoEntityData::prepareDimAngularDescription(const RS_DimAngular* dim, const RS2::EntityDescriptionLevel level) {
     QString result = prepareGenericEntityDescription(dim, tr("DIMANGULAR"), level);
     appendValue(result, tr("Style"), getDimensionStyleString(dim));
+    appendDimensionLabelInfo(result, dim);
     //    appendAbsolute(result, tr("Extension Point 1"), dim->getExtensionPoint1());
     //    appendAbsolute(result, tr("Extension Point 2"), dim->getExtensionPoint1());
     return result;
@@ -1440,6 +1458,7 @@ QString LC_QuickInfoEntityData::prepareDimAngularDescription(const RS_DimAngular
 void LC_QuickInfoEntityData::collectDimAngularProperties([[maybe_unused]] const RS_DimAngular* dim) {
     m_entityName = tr("DIMANGULAR");
     addProperty(tr("Style"), getDimensionStyleString(dim), PropertyType::PROPERTY_TYPE_OTHER);
+    collectDimensionLabelProperties(dim);
     //    const RS_DimensionData &data = dimang->getData();
     //    todo - is it actually necessary to show more info here?
 }
@@ -1447,20 +1466,23 @@ void LC_QuickInfoEntityData::collectDimAngularProperties([[maybe_unused]] const 
 QString LC_QuickInfoEntityData::prepareDimDiametricDescription(const RS_DimDiametric* dim, const RS2::EntityDescriptionLevel level) {
     QString result = prepareGenericEntityDescription(dim, tr("DIMDIAMETRIC"), level);
     appendValue(result, tr("Style"), getDimensionStyleString(dim));
-    appendWCSAbsolute(result, tr("Definition Point"), dim->getDiametricDefinitionPoint());
+    appendDimensionLabelInfo(result, dim);
+    appendWCSAbsolute(result, tr("Definition Point"), dim->getDefinitionPoint());
     return result;
 }
 
 void LC_QuickInfoEntityData::collectDimDiametricProperties([[maybe_unused]] const RS_DimDiametric* dim) {
     m_entityName = tr("DIMDIAMETRIC");
-    addProperty(tr("Style"), getDimensionStyleString(dim), PropertyType::PROPERTY_TYPE_OTHER);
-    addVectorProperty(tr("Definition Point"), dim->getDiametricDefinitionPoint());
+    addProperty(tr("Style"), getDimensionStyleString(dim),PropertyType::PROPERTY_TYPE_OTHER);
+    collectDimensionLabelProperties(dim);
+    addVectorProperty(tr("Definition Point"), dim->getDefinitionPoint());
     //    addLinearProperty("Leader", dimdia->getLeader());
 }
 
 QString LC_QuickInfoEntityData::prepareDimRadialDescription(const RS_DimRadial* dim, const RS2::EntityDescriptionLevel level) {
     QString result = prepareGenericEntityDescription(dim, tr("DIMRADIAL"), level);
     appendValue(result, tr("Style"), getDimensionStyleString(dim));
+    appendDimensionLabelInfo(result, dim);
     appendWCSAbsolute(result, tr("Definition Point"), dim->getRadialDefinitionPoint());
     return result;
 }
@@ -1471,7 +1493,8 @@ QString LC_QuickInfoEntityData::prepareDimRadialDescription(const RS_DimRadial* 
  */
 void LC_QuickInfoEntityData::collectDimRadialProperties(const RS_DimRadial* dim) {
     m_entityName = tr("DIMRADIAL");
-    addProperty(tr("Style"), getDimensionStyleString(dim), PropertyType::PROPERTY_TYPE_OTHER);
+    addProperty(tr("Style"), getDimensionStyleString(dim),PropertyType::PROPERTY_TYPE_OTHER);
+    collectDimensionLabelProperties(dim);
     addVectorProperty(tr("Definition Point"), dim->getRadialDefinitionPoint());
     //    addLinearProperty("Leader", dimrad->getLeader());
 }
@@ -1484,9 +1507,19 @@ QString LC_QuickInfoEntityData::getDimensionStyleString(const RS_Dimension* dim)
     return style;
 }
 
+void LC_QuickInfoEntityData::appendDimensionLabelInfo(QString& result, RS_Dimension* dim) {
+    appendValue(result, tr("Label"), formatDimensionLabelForInfo(dim->getLabel(false)));
+}
+
+void LC_QuickInfoEntityData::collectDimensionLabelProperties(RS_Dimension* dim) {
+    addProperty(tr("Label"), formatDimensionLabelForInfo(dim->getLabel(false)), PropertyType::OTHER);
+}
+
+
 QString LC_QuickInfoEntityData::prepareDimLinearDescription(const RS_DimLinear* dim, const RS2::EntityDescriptionLevel level) {
     QString result = prepareGenericEntityDescription(dim, tr("DIMLINEAR"), level);
     appendValue(result, tr("Style"), getDimensionStyleString(dim));
+    appendDimensionLabelInfo(result, dim);
     appendWCSAbsolute(result, tr("Definition Point"), dim->getDefinitionPoint());
     appendWCSAbsolute(result, tr("Extension Point 1"), dim->getExtensionPoint1());
     appendWCSAbsolute(result, tr("Extension Point 2"), dim->getExtensionPoint2());
@@ -1502,7 +1535,8 @@ QString LC_QuickInfoEntityData::prepareDimLinearDescription(const RS_DimLinear* 
  */
 void LC_QuickInfoEntityData::collectDimLinearProperties(const RS_DimLinear* dim) {
     m_entityName = tr("DIMLINEAR");
-    addProperty(tr("Style"), getDimensionStyleString(dim), PropertyType::PROPERTY_TYPE_OTHER);
+    addProperty(tr("Style"), getDimensionStyleString(dim),PropertyType::PROPERTY_TYPE_OTHER);
+    collectDimensionLabelProperties(dim);
     addVectorProperty(tr("Definition Point"), dim->getDefinitionPoint());
     addVectorProperty(tr("Extension Point 1"), dim->getExtensionPoint1());
     addVectorProperty(tr("Extension Point 2"), dim->getExtensionPoint2());
@@ -1514,6 +1548,7 @@ void LC_QuickInfoEntityData::collectDimLinearProperties(const RS_DimLinear* dim)
 QString LC_QuickInfoEntityData::prepareDimOrdinateDescription(const LC_DimOrdinate* dim, const RS2::EntityDescriptionLevel level) {
     QString result = prepareGenericEntityDescription(dim, tr("DIMORDINATE"), level);
     appendValue(result, tr("Style"), getDimensionStyleString(dim));
+    appendDimensionLabelInfo(result, dim);
     appendValue(result, tr("Ordinate"), dim->isForXDirection() ? "X" : "Y");
     appendWCSAbsolute(result, tr("Origin Point"), dim->getGenericData().definitionPoint);
     appendWCSAngle(result, tr("Horizontal Direction"), dim->getHDir());
@@ -1526,6 +1561,7 @@ QString LC_QuickInfoEntityData::prepareDimOrdinateDescription(const LC_DimOrdina
 void LC_QuickInfoEntityData::collectDimOrdinateProperties(const LC_DimOrdinate* dim) {
     m_entityName = tr("DIMORDINATE");
     addProperty(tr("Style"), getDimensionStyleString(dim), PropertyType::PROPERTY_TYPE_OTHER);
+    collectDimensionLabelProperties(dim);
     addVectorProperty(tr("Origin Point"), dim->getDefinitionPoint());
     addAngleProperty(tr("Horizontal Direction"), dim->getHDir());
     addProperty(tr("Ordinate"), dim->isForXDirection() ? "X" : "Y", PropertyType::PROPERTY_TYPE_OTHER);
@@ -1537,6 +1573,7 @@ void LC_QuickInfoEntityData::collectDimOrdinateProperties(const LC_DimOrdinate* 
 QString LC_QuickInfoEntityData::prepareDimAlignedDescription(const RS_DimAligned* dim, const RS2::EntityDescriptionLevel level) {
     QString result = prepareGenericEntityDescription(dim, tr("DIMALIGNED"), level);
     appendValue(result, tr("Style"), getDimensionStyleString(dim));
+    appendDimensionLabelInfo(result, dim);
     appendWCSAbsolute(result, tr("Definition Point"), dim->getDefinitionPoint());
     appendWCSAbsolute(result, tr("Extension Point 1"), dim->getExtensionPoint1());
     appendWCSAbsolute(result, tr("Extension Point 2"), dim->getExtensionPoint2());
@@ -1552,6 +1589,7 @@ void LC_QuickInfoEntityData::collectDimAlignedProperties(const RS_DimAligned* di
     m_entityName = tr("DIMALIGNED");
     //    addAngleProperty("Angle", dim->getAngle());
     addProperty(tr("Style"), getDimensionStyleString(dim), PropertyType::PROPERTY_TYPE_OTHER);
+    collectDimensionLabelProperties(dim);
     addVectorProperty(tr("Definition Point"), dim->getDefinitionPoint());
     addVectorProperty(tr("Extension Point 1"), dim->getExtensionPoint1());
     addVectorProperty(tr("Extension Point 2"), dim->getExtensionPoint2());

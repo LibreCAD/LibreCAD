@@ -24,6 +24,10 @@
 #ifndef LC_DIMSTYLEITEM_H
 #define LC_DIMSTYLEITEM_H
 
+
+#include <QObject>
+#include <QString>
+
 #include "lc_dimstyle.h"
 #include "rs.h"
 

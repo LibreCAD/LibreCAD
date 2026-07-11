@@ -28,6 +28,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "lc_linemath.h"
 #include "rs_document.h"
 
+
 LC_ActionDrawLineSnake::LC_ActionDrawLineSnake(LC_ActionContext* actionContext, const RS2::ActionType actionType)
     : LC_AbstractActionDrawLine("ActionDrawSnakeLine", actionContext, actionType), m_actionData(new ActionData{}) {
     switch (actionType) {
@@ -361,8 +362,11 @@ bool LC_ActionDrawLineSnake::doProceedCommand([[maybe_unused]] int status, const
         updateActionPrompt();
     }
     else if (checkCommand("polyline", command) || checkCommand("pl", command)) {
-        polyline();
-        updateActionPrompt();
+        // Issue #2608: polyline() may switch to another action and destroy *this*;
+        // only touch this/members afterwards when it did NOT switch.
+        if (!polyline()) {
+            updateActionPrompt();
+        }
     }
     else if (checkCommand("redo", command)) {
         redo();
@@ -592,7 +596,13 @@ void LC_ActionDrawLineSnake::undo() {
             case HA_Polyline:
             case HA_SetEndpoint:
             case HA_Close:
-                switchToAction(RS2::ActionEditUndo);
+                // Issue #2608: undo via the document stack directly.
+                // switchToAction() would launch a one-shot ActionEditUndo that
+                // finishes in init() and makes LC_EventHandler destroy *this*
+                // while undo() is still on the stack, so the m_actionData access
+                // below would be a use-after-free.
+                m_document->undo(); // fixme - sand  - merge - rework undo!
+                redrawDrawing();
                 m_actionData->data.startpoint = h.prevPt;
                 setStatus(SetDirection);
                 break;
@@ -633,12 +643,17 @@ void LC_ActionDrawLineSnake::redo() {
 
             case HA_Polyline:
             case HA_SetEndpoint:
-                switchToAction(RS2::ActionEditRedo);
+                // Issue #2608: redo via the document stack directly; see undo()
+                // above for why switchToAction(RS2::ActionEditRedo) is unsafe
+                // here (it destroys *this* while redo() is still on the stack).
+                m_document->redo(); // fixme - sand - merge - rework undo
+                redrawDrawing();
                 setStatus(SetDirection);
                 break;
 
             case HA_Close:
-                switchToAction(RS2::ActionEditRedo);
+                m_document->redo(); // fixme - sand - merge - rework undo
+                redrawDrawing();
                 setStatus(SetDirection);
                 break;
 
@@ -685,15 +700,23 @@ void LC_ActionDrawLineSnake::close() {
 }
 
 // creation of polyline. This will end line drawing sequence
-void LC_ActionDrawLineSnake::polyline() {
+bool LC_ActionDrawLineSnake::polyline(){
     // fixme - add support of alternative way of polyline based on selected entities (so only drawn lines will be converted to polyline, without others found
     RS_Entity* en = catchEntity(m_actionData->data.endpoint, RS2::EntityLine, RS2::ResolveAllButTextImage);
     if (en != nullptr) {
         finishAction();
         addHistory(HA_Polyline, m_actionData->data.startpoint, m_actionData->data.endpoint, m_actionData->startOffset);
         // fixme - sand - files - direct action creation
+        // Issue #2608: switchToAction(ActionPolylineSegment) DESTROYS *this*: the
+        // segment action is a one-shot that finishes inside init() and does not
+        // support a predecessor, so LC_EventHandler resets m_currentAction and the
+        // only remaining ref to this action dies. It must be the LAST statement and
+        // the caller must not touch this/members afterwards (signalled by the true
+        // return).
         switchToAction(RS2::ActionPolylineSegment, en);
+        return true;
     }
+    return false;
 }
 
 bool LC_ActionDrawLineSnake::mayClose() const {

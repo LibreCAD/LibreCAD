@@ -1,14 +1,16 @@
-libdxfrw ![Build status](https://api.travis-ci.org/LibreCAD/libdxfrw.svg?branch=master)
+libdxfrw
 ==========
 
 libdxfrw is a free C++ library to read and write DXF files in both formats, ascii and binary form.
-It also has rudimentary capabilities to read DWG files.
-It is licensed under the terms of the GNU General Public License version 2 (or at you option
+It also has DWG read/write support maintained in LibreCAD's in-tree fork; see
+`DWG_REFERENCE_COVERAGE_STATUS.md` and `DWG_ROADMAP.md` for the current DWG
+coverage notes.
+It is licensed under the terms of the GNU General Public License version 2 (or at your option
 any later version).
 
 
 libdxfrw was created by [LibreCAD](https://github.com/LibreCAD/LibreCAD) contributors in the process of making LibreCAD.
-As the original code at [SourceForge](https://sourceforge.net/projects/libdxfrw) was no longer supported by the orignal authors, this repo has become its successor.
+As the original code at [SourceForge](https://sourceforge.net/projects/libdxfrw) was no longer supported by the original authors, this repo has become its successor.
 
 If you are looking for historical information about the project, it's still there:
 http://sourceforge.net/projects/libdxfrw
@@ -16,7 +18,9 @@ http://sourceforge.net/projects/libdxfrw
 
 Please note:
 ----------
-When you clone or download this project to build [LibreCAD_3](https://github.com/LibreCAD/LibreCAD_3) use the branch **LibreCAD_3**. The master or other branches may have incompatible interface definitions which are not yet implemented in LibreCAD_3!
+This copy is vendored by LibreCAD. The top-level LibreCAD CMake build is the
+primary build definition used by the in-tree tests; standalone CMake and qmake
+metadata may lag until the source-list reconciliation work lands.
 
 Building and installing the library
 ==========
@@ -58,4 +62,4 @@ sudo make install
 Example usage of the library
 ==========
 
-See how we use it in LibreCAD V3 : https://github.com/LibreCAD/LibreCAD_3/tree/master/persistence/libdxfrw
+See LibreCAD's DXF/DWG filter integration in `librecad/src/lib/filters/`.

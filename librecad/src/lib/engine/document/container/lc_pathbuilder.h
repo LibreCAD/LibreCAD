@@ -97,12 +97,15 @@ private:
    */
   QPointF toGuiPoint(const RS_Vector& vp) const;
 
-  void appendLine(RS_Line* line);
-  void appendArc(RS_Arc* arc);
-  void appendCircle(RS_Circle* circle);
-  void appendEllipse(RS_Ellipse* ellipse);
-  void appendSplinePoints(LC_SplinePoints* spline);
-  void appendParabola(LC_Parabola* parabola);
+  bool appendStartPoint(const RS_Vector& startPoint);
+  void updateLastPoint(const RS_Entity* entity);
+
+  bool appendLine(RS_Line* line);
+  bool appendArc(RS_Arc* arc);
+  bool appendCircle(RS_Circle* circle);
+  bool appendEllipse(RS_Ellipse* ellipse);
+  bool appendSplinePoints(LC_SplinePoints* spline);
+  bool appendParabola(LC_Parabola* parabola);
 
   RS_Painter* m_painter = nullptr;
   QPainterPath m_path;

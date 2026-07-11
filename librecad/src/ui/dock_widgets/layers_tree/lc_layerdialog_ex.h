@@ -27,11 +27,11 @@
 
 #include "lc_dialog.h"
 #include "rs_pen.h"
+#include "lc_layertreeitem.h"
 #include "ui_lc_layerdialog_ex.h"
 
 class RS_LayerList;
 class RS_Layer;
-class LC_LayerTreeItem;
 class LC_LayerTreeModel;
 
 class LC_LayerDialogEx :public LC_Dialog, public Ui::LC_LayerDialogEx{
@@ -71,6 +71,9 @@ private:
     int m_mode;
     LC_LayerTreeModel* m_layerTreeModel;
     LC_LayerTreeItem *m_editedTreeItem {nullptr};
+    RS_Layer *m_editedLayer {nullptr};
+    QString m_originalLayerName;
+    LC_LayerTreeItem::LayerType m_originalLayerType {LC_LayerTreeItem::NOT_DEFINED_LAYER_TYPE};
     RS_LayerList* m_layerList;
     bool checkForDuplicatedNames(const QStringList &newLayerNamesList) const;
 };

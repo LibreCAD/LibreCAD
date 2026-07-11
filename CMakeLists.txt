@@ -25,6 +25,11 @@ if (LOCAL_BUILD STREQUAL "sand1024")
 endif ()
 #local end ------
 
+# Set policies
+if(POLICY CMP0167)
+    cmake_policy(SET CMP0167 NEW)
+endif()
+
 set (CMAKE_INCLUDE_CURRENT_DIR ON)
 set (CMAKE_AUTOUIC_OPTIONS --connections string)
 
@@ -33,9 +38,7 @@ set (CMAKE_AUTOUIC ON)
 set (CMAKE_AUTORCC ON)
 
 add_compile_definitions(QC_APPDIR=librecad)
-add_compile_definitions (DWGSUPPORT)
 add_compile_definitions (MUPARSER_STATIC)
-
 add_compile_definitions (LC_VERSION=2.2.2.6-alpha)
 add_compile_definitions (LC_PRERELEASE=true)
 add_compile_definitions (QT_USE_QSTRINGBUILDER)
@@ -46,10 +49,87 @@ if (MSVC)
     #    add_compile_options(/Zi)
 endif ()
 
+# Suppress WrapVulkanHeaders warning
+set(WrapVulkanHeaders_FIND_QUIETLY ON)
+find_package(WrapVulkanHeaders QUIET)
 
+# Explicitly disable Vulkan to avoid warnings
+set(QT_NO_VULKAN 1)
 find_package (Qt6 COMPONENTS Gui Core Widgets PrintSupport Svg Network REQUIRED)
 find_package (Qt6 REQUIRED COMPONENTS LinguistTools)
-find_package (Boost REQUIRED)
+
+# --- macOS: drop the removed AGL.framework from Qt's link interface ---------
+# AGL.framework was removed from macOS SDKs (macOS 26 / Tahoe).  Qt ≤ 6.8.3
+# and ≤ 6.9.1 still reference it via FindWrapOpenGL.cmake, which does:
+#   target_link_libraries(WrapOpenGL::WrapOpenGL INTERFACE "-framework AGL")
+# putting "-framework AGL" into INTERFACE_LINK_LIBRARIES of WrapOpenGL::WrapOpenGL,
+# which is transitively linked by Qt6::Gui, Qt6::Widgets, etc.
+# Fixed upstream in Qt 6.8.4 / 6.9.2 (commit cdb33c3d).  This workaround
+# strips any AGL reference from INTERFACE_LINK_LIBRARIES of all Qt6 targets.
+if(APPLE)
+    set_property(GLOBAL PROPERTY _lc_agl_seen "")
+    function(_lc_strip_agl _tgt)
+        if(NOT TARGET "${_tgt}")
+            return()
+        endif()
+        get_property(_seen GLOBAL PROPERTY _lc_agl_seen)
+        if("${_tgt}" IN_LIST _seen)
+            return()
+        endif()
+        set_property(GLOBAL APPEND PROPERTY _lc_agl_seen "${_tgt}")
+
+        # AGL lives in INTERFACE_LINK_LIBRARIES (set by target_link_libraries
+        # on the INTERFACE IMPORTED target WrapOpenGL::WrapOpenGL).
+        # Use list(FILTER) to exclude any item containing "AGL" — this catches
+        # "-framework AGL", bare "AGL", and $<LINK_LIBRARY:framework,AGL>.
+        get_target_property(_libs "${_tgt}" INTERFACE_LINK_LIBRARIES)
+        if(_libs)
+            set(_filtered ${_libs})
+            list(FILTER _filtered EXCLUDE REGEX "AGL")
+            if(NOT "${_filtered}" STREQUAL "${_libs}")
+                set_target_properties("${_tgt}" PROPERTIES
+                    INTERFACE_LINK_LIBRARIES "${_filtered}")
+            endif()
+            # Recurse into the (unfiltered) dependency list so transitive
+            # deps like WrapOpenGL::WrapOpenGL -> Qt6::Gui are also swept.
+            foreach(_dep IN LISTS _libs)
+                _lc_strip_agl("${_dep}")
+            endforeach()
+        endif()
+    endfunction()
+
+    message(STATUS "macOS: stripping removed AGL.framework from Qt6 link interfaces")
+    # Sweep all imported targets found by find_package(Qt6), then explicitly
+    # hit the Qt6 modules and WrapOpenGL::WrapOpenGL (the AGL source).
+    get_property(_lc_imported DIRECTORY PROPERTY IMPORTED_TARGETS)
+    foreach(_lc_t IN LISTS _lc_imported)
+        _lc_strip_agl("${_lc_t}")
+    endforeach()
+    foreach(_lc_qt_mod Qt6::Core Qt6::Gui Qt6::Widgets Qt6::PrintSupport
+                     Qt6::Svg Qt6::Network WrapOpenGL::WrapOpenGL)
+        _lc_strip_agl("${_lc_qt_mod}")
+    endforeach()
+endif()
+# ---------------------------------------------------------------------------
+
+# LibreCAD only uses header-only Boost components.  The Windows CI installs
+# Boost from the source archive, which provides headers but no BoostConfig.cmake.
+find_path(Boost_INCLUDE_DIR
+    NAMES boost/version.hpp
+    HINTS
+        "${BOOST_ROOT}"
+        "$ENV{BOOST_ROOT}"
+        "${Boost_ROOT}"
+        "$ENV{Boost_ROOT}"
+        "${BOOST_INCLUDEDIR}"
+        "$ENV{BOOST_INCLUDEDIR}"
+    PATH_SUFFIXES include
+)
+if(NOT Boost_INCLUDE_DIR)
+    message(FATAL_ERROR "Boost headers not found. Set BOOST_ROOT or Boost_INCLUDE_DIR to a directory containing boost/version.hpp.")
+endif()
+set(Boost_INCLUDE_DIRS "${Boost_INCLUDE_DIR}")
+
 find_package (Freetype)
 
 # Define all sources (as before)
@@ -304,6 +384,8 @@ set (LIBRECAD_RES
      licenses/licenses.qrc
 )
 
+include("${CMAKE_CURRENT_SOURCE_DIR}/libraries/libdxfrw/libdxfrw_sources.cmake")
+
 # Shared sources: All from SOURCES except main, consoles, and tests
 set (SHARED_SOURCES
      libraries/jwwlib/src/dl_attributes.h
@@ -320,61 +402,7 @@ set (SHARED_SOURCES
      libraries/jwwlib/src/jwtype.h
      libraries/jwwlib/src/jwwdoc.cpp
      libraries/jwwlib/src/jwwdoc.h
-     libraries/libdxfrw/src/drw_base.cpp
-     libraries/libdxfrw/src/drw_base.h
-     libraries/libdxfrw/src/drw_classes.cpp
-     libraries/libdxfrw/src/drw_classes.h
-     libraries/libdxfrw/src/drw_entities.cpp
-     libraries/libdxfrw/src/drw_entities.h
-     libraries/libdxfrw/src/drw_header.cpp
-     libraries/libdxfrw/src/drw_header.h
-     libraries/libdxfrw/src/drw_interface.h
-     libraries/libdxfrw/src/drw_objects.cpp
-     libraries/libdxfrw/src/drw_objects.h
-     libraries/libdxfrw/src/intern/drw_cptable932.h
-     libraries/libdxfrw/src/intern/drw_cptable936.h
-     libraries/libdxfrw/src/intern/drw_cptable949.h
-     libraries/libdxfrw/src/intern/drw_cptable950.h
-     libraries/libdxfrw/src/intern/drw_cptables.h
-     libraries/libdxfrw/src/intern/drw_dbg.cpp
-     libraries/libdxfrw/src/intern/drw_dbg.h
-     libraries/libdxfrw/src/intern/drw_reserve.h
-     libraries/libdxfrw/src/intern/drw_textcodec.cpp
-     libraries/libdxfrw/src/intern/drw_textcodec.h
-     libraries/libdxfrw/src/intern/dwgbuffer.cpp
-     libraries/libdxfrw/src/intern/dwgbuffer.h
-     libraries/libdxfrw/src/intern/dwgbufferw.cpp
-    libraries/libdxfrw/src/intern/dwgbufferw.h
-    libraries/libdxfrw/src/intern/dwgwriter.h
-    libraries/libdxfrw/src/intern/dwgwriter15.cpp
-    libraries/libdxfrw/src/intern/dwgwriter15.h
-    libraries/libdxfrw/src/intern/dwgreader.cpp
-     libraries/libdxfrw/src/intern/dwgreader.h
-     libraries/libdxfrw/src/intern/dwgreader15.cpp
-     libraries/libdxfrw/src/intern/dwgreader15.h
-     libraries/libdxfrw/src/intern/dwgreader18.cpp
-     libraries/libdxfrw/src/intern/dwgreader18.h
-     libraries/libdxfrw/src/intern/dwgreader21.cpp
-     libraries/libdxfrw/src/intern/dwgreader21.h
-     libraries/libdxfrw/src/intern/dwgreader24.cpp
-     libraries/libdxfrw/src/intern/dwgreader24.h
-     libraries/libdxfrw/src/intern/dwgreader27.cpp
-     libraries/libdxfrw/src/intern/dwgreader27.h
-     libraries/libdxfrw/src/intern/dwgreader32.cpp
-    libraries/libdxfrw/src/intern/dwgreader32.h
-        libraries/libdxfrw/src/intern/dwgutil.cpp
-     libraries/libdxfrw/src/intern/dwgutil.h
-     libraries/libdxfrw/src/intern/dxfreader.cpp
-     libraries/libdxfrw/src/intern/dxfreader.h
-     libraries/libdxfrw/src/intern/dxfwriter.cpp
-     libraries/libdxfrw/src/intern/dxfwriter.h
-     libraries/libdxfrw/src/intern/rscodec.cpp
-     libraries/libdxfrw/src/intern/rscodec.h
-     libraries/libdxfrw/src/libdwgr.cpp
-     libraries/libdxfrw/src/libdwgr.h
-     libraries/libdxfrw/src/libdxfrw.cpp
-     libraries/libdxfrw/src/libdxfrw.h
-     libraries/libdxfrw/src/main_doc.h
+    ${LIBDXFRW_ALL_FILES}
      librecad/src/actions/dock_widgets/block/rs_actionblocksadd.cpp
      librecad/src/actions/dock_widgets/block/rs_actionblocksadd.h
      librecad/src/actions/dock_widgets/block/rs_actionblocksattributes.cpp
@@ -1917,6 +1945,8 @@ set (SHARED_SOURCES
      librecad/src/ui/main/persistence/lc_documentsstorage.h
      librecad/src/ui/main/qc_applicationwindow.cpp
      librecad/src/ui/main/qc_applicationwindow.h
+    librecad/src/ui/main/lc_layouttabbar.cpp
+    librecad/src/ui/main/lc_layouttabbar.h
      librecad/src/ui/main/qc_mdiwindow.cpp
      librecad/src/ui/main/qc_mdiwindow.h
      librecad/src/ui/main/release_check/lc_releasechecker.cpp
@@ -2176,6 +2206,10 @@ endif ()
 
 set (MAIN_SOURCES
      librecad/src/main/main.cpp
+    librecad/src/main/console_command_utils.cpp
+    librecad/src/main/console_command_utils.h
+    librecad/src/main/console_dxf2dwg.cpp
+    librecad/src/main/console_dxf2dwg.h
      librecad/src/main/console_dxf2pdf/console_dxf2pdf.cpp
      librecad/src/main/console_dxf2pdf/console_dxf2pdf.h
      librecad/src/main/console_dxf2pdf/pdf_print_loop.cpp
@@ -2191,15 +2225,34 @@ set (MAIN_SOURCES
 qt_add_executable (librecad
                    ${MAIN_SOURCES}
 )
+
+# On macOS, make it a bundle and set info.plist
+if(APPLE)
+    set_target_properties(librecad PROPERTIES
+        MACOSX_BUNDLE TRUE
+        MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/librecad/src/Info.plist.app"
+    )
+endif()
+
 target_include_directories (librecad PRIVATE
                             ${SHARED_INCLUDES}
 )
-
+target_compile_definitions(librecad PRIVATE
+    DWGSUPPORT
+)
 target_link_libraries (librecad PRIVATE
                        librecad_lib
                        Qt6::Core Qt6::Widgets Qt6::Gui Qt6::PrintSupport Qt6::Svg Qt6::Network
 )
+
+if(APPLE)
+    install(TARGETS librecad
+        RUNTIME DESTINATION bin
+        BUNDLE DESTINATION bin
+    )
+else()
 install (TARGETS librecad RUNTIME DESTINATION bin)
+endif()
 
 # Translations
 set (TS_DIR librecad/ts)
@@ -2270,6 +2323,8 @@ set (TS_FILES
      librecad/ts/librecad_zh_cn.ts
      librecad/ts/librecad_zh_tw.ts
 )
+
+# Use qt_add_translations normally, the language warnings are harmless
 qt_add_translations (librecad TS_FILE_DIR ${TS_DIR} TS_FILES ${TS_FILES})
 
 # Optional ttf2lff
@@ -2289,8 +2344,24 @@ add_subdirectory (plugins)
 option (BUILD_TESTS "Build unit tests for LibreCAD" OFF)
 
 if (BUILD_TESTS)
-    # Add Catch2 as a subdirectory (assumes Catch2 is in externals/Catch2)
-    add_subdirectory (externals/Catch2)
+    enable_testing()
+
+    # Catch2 v3 is provided as an installed package (e.g. via vcpkg or a source
+    # install); point CMAKE_PREFIX_PATH at it. Falls back to the externals/Catch2
+    # submodule if that is present instead.
+    find_package(Catch2 3 QUIET)
+    if(NOT Catch2_FOUND)
+        if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/externals/Catch2/CMakeLists.txt")
+            message(STATUS "Catch2 v3 package not found; using externals/Catch2 submodule")
+            add_subdirectory(externals/Catch2 EXCLUDE_FROM_ALL)
+        else()
+            message(FATAL_ERROR
+                "BUILD_TESTS=ON requires Catch2 v3, but no installed package was found "
+                "and the externals/Catch2 submodule is not checked out. Either install "
+                "Catch2 v3 (and set CMAKE_PREFIX_PATH if needed) or run: "
+                "git submodule update --init externals/Catch2")
+        endif()
+    endif()
 
     # Define test executable
     qt_add_executable(librecad_tests
@@ -2313,13 +2384,42 @@ if (BUILD_TESTS)
         librecad/src/lib/filters/tests/dwg_buffer_round_trip_tests.cpp
         librecad/src/lib/filters/tests/dwg_entity_encode_round_trip_tests.cpp
         librecad/src/lib/filters/tests/dwg_header_encode_round_trip_tests.cpp
+        librecad/src/lib/filters/tests/dwg_header_app_vars_tests.cpp
+        librecad/src/lib/filters/tests/dwg_visibility_read_tests.cpp
+        librecad/src/lib/filters/tests/libdxfrw_debug_tests.cpp
+        librecad/src/lib/filters/tests/libdxfrw_qt_free_tests.cpp
+        librecad/src/lib/filters/tests/dwg_object_encode_round_trip_tests.cpp
         librecad/src/lib/filters/tests/dwg_smoke_tests.cpp
         librecad/src/lib/filters/tests/dwg_write_smoke_tests.cpp
         librecad/src/lib/filters/tests/eed_tests.cpp
         librecad/src/lib/filters/tests/dbcolor_tests.cpp
         librecad/src/lib/filters/tests/entity_metadata_tests.cpp
+        librecad/src/lib/filters/tests/rs_graphic_layouts_tests.cpp
         librecad/src/lib/filters/tests/mline_tests.cpp
         librecad/src/lib/filters/tests/underlay_tests.cpp
+        librecad/src/lib/filters/tests/dxf_string_codec_tests.cpp
+        librecad/src/lib/filters/tests/dxf_attribute_tests.cpp
+        librecad/src/lib/filters/tests/dxf_object_tests.cpp
+        librecad/src/lib/filters/tests/mpolygon_tests.cpp
+        librecad/src/lib/filters/tests/mpolygon_dwg_tests.cpp
+        librecad/src/lib/filters/tests/mesh_tests.cpp
+        librecad/src/lib/filters/tests/acis_wireframe_tests.cpp
+        librecad/src/lib/filters/tests/helix_tests.cpp
+        librecad/src/lib/filters/tests/acad_table_tests.cpp
+        librecad/src/lib/filters/tests/field_dxf_tests.cpp
+        librecad/src/lib/filters/tests/rtext_arctext_tests.cpp
+        librecad/src/lib/filters/tests/large_radial_dim_dxf_tests.cpp
+        librecad/src/lib/filters/tests/large_radial_dim_dwg_tests.cpp
+        librecad/src/lib/filters/tests/mleader_text_tests.cpp
+        librecad/src/lib/filters/tests/mleader_dxf_context_tests.cpp
+        librecad/src/lib/filters/tests/dxf_roundtrip_tests.cpp
+        librecad/src/lib/filters/tests/dxf_corpus_tests.cpp
+        librecad/src/lib/filters/tests/i18n_codec_tests.cpp
+        librecad/src/lib/filters/tests/i18n_caret_nfc_tests.cpp
+        librecad/src/lib/filters/tests/dwg_decompress18_tests.cpp
+        librecad/src/lib/filters/tests/dwg_tarch_tests.cpp
+        librecad/src/lib/engine/settings/tests/rs_settings_migration_tests.cpp
+        librecad/src/main/tests/console_command_utils_tests.cpp
     )
 
     # Include directories for rs_math.h and other dependencies
@@ -2342,5 +2442,32 @@ if (BUILD_TESTS)
     # Enable C++17 for the test target (matching LibreCAD's standard)
     target_compile_features (librecad_tests PRIVATE cxx_std_17)
     # compiling time defines
-    target_compile_definitions (librecad_tests PRIVATE BUILD_TESTS=1 DWGSUPPORT)
+    target_compile_definitions(librecad_tests PRIVATE BUILD_TESTS=1 DWGSUPPORT _USE_MATH_DEFINES LIBRECAD_SOURCE_DIR="${CMAKE_CURRENT_SOURCE_DIR}" LIBRECAD_TEST_DIR="${CMAKE_CURRENT_SOURCE_DIR}/librecad/src/lib/filters/tests/testdata")
+
+    add_test(NAME librecad_tests COMMAND $<TARGET_FILE:librecad_tests>)
+    set_tests_properties(librecad_tests PROPERTIES
+        WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
+        ENVIRONMENT "QT_QPA_PLATFORM=offscreen"
+    )
 endif ()
+
+qt_add_executable(dwg_tarch_test
+    librecad/src/lib/filters/tests/dwg_tarch_standalone.cpp
+)
+
+target_include_directories(dwg_tarch_test PRIVATE
+    ${SHARED_INCLUDES}
+)
+
+target_link_libraries(dwg_tarch_test PRIVATE
+    librecad_lib
+    Qt6::Core
+    Qt6::Gui
+    Qt6::Network
+    Qt6::PrintSupport
+    Qt6::Svg
+    Qt6::Widgets
+)
+
+target_compile_features(dwg_tarch_test PRIVATE cxx_std_17)
+target_compile_definitions(dwg_tarch_test PRIVATE DWGSUPPORT)

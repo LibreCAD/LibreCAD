@@ -73,12 +73,13 @@ public:
   void addDimDiametric(const DRW_DimDiametric *) override {}
   void addDimAngular(const DRW_DimAngular *) override {}
   void addDimAngular3P(const DRW_DimAngular3p *) override {}
+  void addDimArc(const DRW_DimArc *) override {}
   void addDimOrdinate(const DRW_DimOrdinate *) override {}
   void addLeader(const DRW_Leader *) override {}
   void addHatch(const DRW_Hatch *) override {}
   void addViewport(const DRW_Viewport &) override {}
   void addImage(const DRW_Image *) override {}
-  void addWipeout(const DRW_Image *) override {}
+  void addWipeout(const DRW_Wipeout *) override {}
   void addMLeader(const DRW_MLeader *) override {}
   void addMLeaderStyle(const DRW_MLeaderStyle *) override {}
   void linkImage(const DRW_ImageDef *) override {}
@@ -100,11 +101,18 @@ public:
 class UnderlayCapture : public StubInterface {
 public:
   int m_callCount = 0;
+  int m_definitionCallCount = 0;
   DRW_Underlay m_captured;
+  DRW_UnderlayDefinition m_definition;
   void addUnderlay(const DRW_Underlay *d) override {
     if (d && m_callCount == 0)
       m_captured = *d;
     ++m_callCount;
+  }
+  void linkUnderlay(const DRW_UnderlayDefinition *d) override {
+    if (d && m_definitionCallCount == 0)
+      m_definition = *d;
+    ++m_definitionCallCount;
   }
 };
 
@@ -113,6 +121,19 @@ public:
   DRW_Underlay m_u;
   dxfRW *m_rw = nullptr;
   void writeEntities() override { m_rw->writeUnderlay(&m_u); }
+};
+
+class DwgUnderlayEmitter : public StubInterface {
+public:
+  DRW_Underlay m_u;
+  DRW_UnderlayDefinition m_definition;
+  dwgRW *m_rw = nullptr;
+
+  void writeDwgClasses() override {
+    m_rw->registerUnderlayDefinitionObjectClass(&m_definition);
+  }
+  void writeEntities() override { m_rw->writeUnderlay(&m_u); }
+  void writeObjects() override { m_rw->writeUnderlayDefinition(&m_definition); }
 };
 
 } // namespace
@@ -213,6 +234,71 @@ TEST_CASE("DXF write: PDFUNDERLAY tag emitted in output",
   const std::string content = buf.str();
   CHECK(content.find("\nPDFUNDERLAY\n") != std::string::npos);
   CHECK(content.find("AcDbUnderlayReference") != std::string::npos);
+
+  in.close();
+  std::filesystem::remove(path);
+}
+
+TEST_CASE("DWG round-trip: UNDERLAY reference and definition preserve fields",
+          "[underlay][dwg_write]") {
+  const auto path =
+      std::filesystem::temp_directory_path() / "librecad_underlay_roundtrip.dwg";
+  std::filesystem::remove(path);
+
+  DwgUnderlayEmitter emitter;
+  emitter.m_definition.handle = 0x340u;
+  emitter.m_definition.parentHandle = 0xCu;
+  emitter.m_definition.kind = DRW_UnderlayDefinition::PDF;
+  emitter.m_definition.filename = "fixtures/sample.pdf";
+  emitter.m_definition.sheetName = "Sheet 1";
+
+  emitter.m_u.handle = 0x341u;
+  emitter.m_u.kind = DRW_Underlay::PDF;
+  emitter.m_u.layer = "0";
+  emitter.m_u.definitionHandle = emitter.m_definition.handle;
+  emitter.m_u.position = DRW_Coord(12.5, 22.25, 0.0);
+  emitter.m_u.scale = DRW_Coord(1.5, 2.5, 1.0);
+  emitter.m_u.rotation = 0.25;
+  emitter.m_u.flags = 0x1E;
+  emitter.m_u.contrast = 67;
+  emitter.m_u.fade = 12;
+  emitter.m_u.clipBoundary.push_back(DRW_Coord(0.0, 0.0, 0.0));
+  emitter.m_u.clipBoundary.push_back(DRW_Coord(7.0, 0.0, 0.0));
+  emitter.m_u.clipBoundary.push_back(DRW_Coord(7.0, 3.0, 0.0));
+  emitter.m_u.clipBoundary.push_back(DRW_Coord(0.0, 3.0, 0.0));
+
+  {
+    dwgRW w(path.string().c_str());
+    emitter.m_rw = &w;
+    REQUIRE(w.write(&emitter, DRW::AC1018, true));
+  }
+
+  UnderlayCapture capture;
+  {
+    dwgRW r(path.string().c_str());
+    REQUIRE(r.read(&capture, /*ext=*/true));
+  }
+
+  REQUIRE(capture.m_callCount == 1);
+  REQUIRE(capture.m_definitionCallCount == 1);
+  CHECK(capture.m_definition.handle == emitter.m_definition.handle);
+  CHECK(capture.m_definition.kind == DRW_UnderlayDefinition::PDF);
+  CHECK(capture.m_definition.filename == "fixtures/sample.pdf");
+  CHECK(capture.m_definition.sheetName == "Sheet 1");
+
+  CHECK(capture.m_captured.definitionHandle == emitter.m_definition.handle);
+  CHECK(capture.m_captured.kind == DRW_Underlay::PDF);
+  CHECK(capture.m_captured.position.x == 12.5);
+  CHECK(capture.m_captured.position.y == 22.25);
+  CHECK(capture.m_captured.scale.x == 1.5);
+  CHECK(capture.m_captured.scale.y == 2.5);
+  CHECK(capture.m_captured.rotation == 0.25);
+  CHECK(capture.m_captured.flags == 0x1E);
+  CHECK(capture.m_captured.contrast == 67);
+  CHECK(capture.m_captured.fade == 12);
+  REQUIRE(capture.m_captured.clipBoundary.size() == 4);
+  CHECK(capture.m_captured.clipBoundary[2].x == 7.0);
+  CHECK(capture.m_captured.clipBoundary[2].y == 3.0);
 
   std::filesystem::remove(path);
 }

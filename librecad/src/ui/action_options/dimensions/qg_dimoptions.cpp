@@ -43,7 +43,7 @@ QG_DimOptions::QG_DimOptions(RS_Graphic *graphic):ui(std::make_unique<Ui::Ui_Dim
 
     initStylesCombobox(graphic);
 
-    connect(ui->cbStyle, &QComboBox::currentIndexChanged, this, &QG_DimOptions::onDimStyleChanged);
+    connect(ui->cbStyle, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &QG_DimOptions::onDimStyleChanged);
 
     connect(ui->leAngle, &QLineEdit::editingFinished, this, &QG_DimOptions::onAngleEditingFinished);
     connect(ui->bHor, &QToolButton::toggled, this, &QG_DimOptions::onHorClicked);

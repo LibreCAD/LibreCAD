@@ -29,7 +29,7 @@
 #include "rs_vector.h"
 
 struct PdfPrintParams {
-    QStringList dxfFiles;
+        QStringList inputFiles;
     QString outDir;
     QString outFile;
     int resolution = 1200;
@@ -56,11 +56,14 @@ class PdfPrintLoop : public QObject {
 public slots:
     void run();
 signals:
-    void finished();
+
+    void finished(int exitCode);
+
 private:
     PdfPrintParams m_params{};
-    void printOneDxfToOnePdf(const QString&);
-    void printManyDxfToOnePdf();
+
+    bool printOneFileToOnePdf(const QString&);
+    int printManyFilesToOnePdf();
 };
 
 #endif

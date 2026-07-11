@@ -23,6 +23,7 @@
 
 #include "lc_dlg_widget_creator.h"
 
+#include <QComboBox>
 #include <QLineEdit>
 #include <QMessageBox>
 #include <QSettings>
@@ -86,7 +87,7 @@ LC_DlgWidgetCreator::LC_DlgWidgetCreator(QWidget *parent, const bool forMenu, LC
         ui->pbExportToFile->setToolTip(tr("Export custom toolbars setup to file"));
         ui->pbImportFromFile->setToolTip(tr("Import custom  toolbars setup from file"));
 
-        connect(ui->cbTBPlacementArea, &QComboBox::currentIndexChanged, this, &LC_DlgWidgetCreator::onToolbarPlacementIndexChanged);
+        connect(ui->cbTBPlacementArea, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &LC_DlgWidgetCreator::onToolbarPlacementIndexChanged);
     }
 
     connect(ui->pbExportToFile, &QPushButton::clicked, this, &LC_DlgWidgetCreator::exportConfiguration);
@@ -101,7 +102,7 @@ LC_DlgWidgetCreator::LC_DlgWidgetCreator(QWidget *parent, const bool forMenu, LC
     ui->alChosenActions->setDragDropMode(QAbstractItemView::InternalMove);
     ui->alOfferredActions->setSortingEnabled(true);
 
-    connect(ui->cbCategories, &QComboBox::activated, this, &LC_DlgWidgetCreator::onCategoryActivated);
+    connect(ui->cbCategories, QOverload<int>::of(&QComboBox::activated), this, &LC_DlgWidgetCreator::onCategoryActivated);
 
     connect(ui->btnAdd, &QPushButton::released, this, &LC_DlgWidgetCreator::addChosenAction);
     connect(ui->btnAddSeparator, &QPushButton::released, this, &LC_DlgWidgetCreator::addSeparator);
@@ -111,7 +112,7 @@ LC_DlgWidgetCreator::LC_DlgWidgetCreator(QWidget *parent, const bool forMenu, LC
     connect(ui->alOfferredActions, &ActionList::itemDoubleClicked,this, &LC_DlgWidgetCreator::addChosenActionForItem);
     connect(ui->alChosenActions, &ActionList::itemDoubleClicked,this, &LC_DlgWidgetCreator::removeChosenActionForItem);
 
-    connect(ui->cbWidgetName, &QComboBox::currentIndexChanged, this, &LC_DlgWidgetCreator::loadWidgetActions);
+    connect(ui->cbWidgetName, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &LC_DlgWidgetCreator::loadWidgetActions);
 
     connect(ui->btnNew, &QToolButton::released, this, &LC_DlgWidgetCreator::newWidget);
     connect(ui->btnSave, &QToolButton::released, this, &LC_DlgWidgetCreator::saveWidget);

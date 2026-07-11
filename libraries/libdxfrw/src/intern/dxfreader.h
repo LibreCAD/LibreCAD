@@ -23,10 +23,11 @@ public:
         INT64,
         DOUBLE,
         BOOL,
+        BINARY,
         INVALID
     };
-
-    TYPE type;
+    enum TYPE type;
+public:
     dxfReader(std::istream *stream){
         filestr = stream;
         type = INVALID;
@@ -36,13 +37,13 @@ public:
 
     std::string getString() {return strData;}
     int getHandleString();//Convert hex string to int
-    std::string toUtf8String(std::string t) const {return decoder.toUtf8(t);}
-    std::string getUtf8String() const {return decoder.toUtf8(strData);}
-    double getDouble() const {return doubleData;}
-    int getInt32() const {return intData;}
-    unsigned long long int getInt64() const {return int64;}
-    bool getBool() const { return (intData==0) ? false : true;}
-    int getVersion() const {return decoder.getVersion();}
+    std::string toUtf8String(std::string t) {return decoder.toUtf8(t);}
+    std::string getUtf8String() {return decoder.toUtf8(strData);}
+    double getDouble() {return doubleData;}
+    int getInt32() {return intData;}
+    unsigned long long int getInt64() {return int64;}
+    bool getBool() { return (intData==0) ? false : true;}
+    int getVersion(){return decoder.getVersion();}
     void setVersion(const std::string &v, bool dxfFormat){decoder.setVersion(v, dxfFormat);}
     void setCodePage(const std::string &c){decoder.setCodePage(c, true);}
     std::string getCodePage(){ return decoder.getCodePage();}
@@ -59,6 +60,7 @@ protected:
     virtual bool readDouble() = 0;
     virtual bool readBool() = 0;
 
+protected:
     std::istream *filestr;
     std::string strData;
     double doubleData;
@@ -73,7 +75,7 @@ private:
 class dxfReaderBinary : public dxfReader {
 public:
     dxfReaderBinary(std::istream *stream):dxfReader(stream){skip = false; }
-    virtual ~dxfReaderBinary() {}
+    virtual ~dxfReaderBinary() = default;
     virtual bool readCode(int *code);
     virtual bool readString(std::string *text);
     virtual bool readString();
@@ -83,12 +85,22 @@ public:
     virtual bool readInt64();
     virtual bool readDouble();
     virtual bool readBool();
+};
+
+// Pre-R13 (R12/AC1009) binary DXF uses 1-byte group codes instead of the
+// 2-byte little-endian codes of R13+. Only readCode differs; every value
+// reader (string/double/int/...) is identical, so inherit them all.
+class dxfReaderBinaryR12 : public dxfReaderBinary {
+public:
+    dxfReaderBinaryR12(std::istream *stream):dxfReaderBinary(stream){}
+    virtual ~dxfReaderBinaryR12() = default;
+    virtual bool readCode(int *code) override;
 };
 
 class dxfReaderAscii : public dxfReader {
 public:
     dxfReaderAscii(std::istream *stream):dxfReader(stream){skip = true; }
-    virtual ~dxfReaderAscii(){}
+    virtual ~dxfReaderAscii() = default;
     virtual bool readCode(int *code);
     virtual bool readString(std::string *text);
     virtual bool readString();
@@ -100,4 +112,4 @@ public:
     virtual bool readBool();
 };
 
-#endif
+#endif // DXFREADER_H

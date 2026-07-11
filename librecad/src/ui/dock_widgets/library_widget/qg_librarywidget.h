@@ -28,6 +28,7 @@
 
 #include <QModelIndex>
 #include <memory>
+#include <QIcon>
 
 #include "lc_graphicviewawarewidget.h"
 

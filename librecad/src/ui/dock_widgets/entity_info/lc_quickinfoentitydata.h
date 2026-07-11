@@ -160,6 +160,8 @@ protected:
     void collectDimDiametricProperties(const RS_DimDiametric *dim);
     void collectDimRadialProperties(const RS_DimRadial *dim);
     QString getDimensionStyleString(const RS_Dimension* dim);
+    void appendDimensionLabelInfo(QString& result, RS_Dimension* dim);
+    void collectDimensionLabelProperties(RS_Dimension* dim);
     void collectDimLinearProperties(const RS_DimLinear *dim);
     void collectDimOrdinateProperties(const LC_DimOrdinate* dim);
     void collectDimAlignedProperties(const RS_DimAligned *dim);

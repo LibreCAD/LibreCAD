@@ -24,6 +24,7 @@
 #define LC_ACTIONGROUP_H
 
 #include <QActionGroup>
+#include <QIcon>
 
 class LC_ActionGroup : public QActionGroup {
     Q_OBJECT

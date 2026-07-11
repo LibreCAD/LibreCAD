@@ -23,6 +23,7 @@
 
 #include "lc_dlgnewdimstyle.h"
 
+#include <QComboBox>
 #include <QMessageBox>
 
 #include "lc_dimstyle.h"
@@ -35,8 +36,8 @@ LC_DlgNewDimStyle::LC_DlgNewDimStyle(QWidget *parent)
     , ui(new Ui::LC_DlgNewDimStyle){
     ui->setupUi(this);
 
-    connect(ui->cbUseFor, &QComboBox::currentIndexChanged, this, &LC_DlgNewDimStyle::onUsedForChanged);
-    connect(ui->cbBasedOnStyle, &QComboBox::currentIndexChanged, this, &LC_DlgNewDimStyle::onBasedOnChanged);
+    connect(ui->cbUseFor, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &LC_DlgNewDimStyle::onUsedForChanged);
+    connect(ui->cbBasedOnStyle, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &LC_DlgNewDimStyle::onBasedOnChanged);
     connect(ui->leStyleName, &QLineEdit::textEdited, this, &LC_DlgNewDimStyle::onStyleNameTextChanged);
     connect(ui->buttonBox, &QDialogButtonBox::accepted, this, &LC_DlgNewDimStyle::onAccept);
     connect(ui->buttonBox, &QDialogButtonBox::rejected, this, &QDialog::reject);

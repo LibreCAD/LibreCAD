@@ -20,7 +20,8 @@
 
 class dwgReader24 : public dwgReader18 {
 public:
-    dwgReader24(std::ifstream *stream, dwgRW *p):dwgReader18(stream, p){ }
+    dwgReader24(std::unique_ptr<dwgBuffer> buffer, dwgRW *p)
+        : dwgReader18(std::move(buffer), p) {}
     bool readFileHeader() override;
     bool readDwgHeader(DRW_Header& hdr) override;
     bool readDwgClasses() override;

@@ -28,6 +28,7 @@
 
 #include "rs_circle.h"
 
+#include <cmath>
 #include <QPainterPath>
 #include <vector>
 
@@ -59,6 +60,32 @@ namespace {
         // first(x) or second(y) column
         return isDegenerateCol(0) || isDegenerateCol(1);
     }
+
+bool hasFiniteValue(double value) {
+    return std::isfinite(value);
+}
+
+bool hasUsableVector(const RS_Vector& vector) {
+    return vector.valid
+        && hasFiniteValue(vector.x)
+        && hasFiniteValue(vector.y)
+        && hasFiniteValue(vector.z);
+}
+
+bool hasUsableCircleData(const RS_Vector& center, double radius) {
+    return hasUsableVector(center)
+        && hasFiniteValue(radius)
+        && radius > 0.;
+}
+
+bool hasUsablePainterEllipse(double x, double y, double width, double height) {
+    return hasFiniteValue(x)
+        && hasFiniteValue(y)
+        && hasFiniteValue(width)
+        && hasFiniteValue(height)
+        && width > 0.
+        && height > 0.;
+}
 }
 
 RS_CircleData::RS_CircleData(const RS_Vector& center, const double radius) : center(center), radius(radius) {
@@ -454,6 +481,10 @@ void RS_Circle::createPainterPath(RS_Painter* painter, QPainterPath& path) const
     return;
   }
 
+  if (!hasUsableCircleData(getCenter(), getRadius())) {
+    return;
+  }
+
   const LC_Rect& vpRect = painter->getWcsBoundingRect();
 
          // Quick bounding box check
@@ -473,13 +504,14 @@ void RS_Circle::createPainterPath(RS_Painter* painter, QPainterPath& path) const
   if (fullyInside) {
     const RS_Vector uiCenter = painter->toGui(getCenter());
     const double uiRadius    = painter->toGuiDX(getRadius());
+    const double uiDiameter = 2.0 * uiRadius;
+    const double x = uiCenter.x - uiRadius;
+    const double y = uiCenter.y - uiRadius;
+    if (!hasUsablePainterEllipse(x, y, uiDiameter, uiDiameter)) {
+      return;
+    }
 
-    path.addEllipse(
-        uiCenter.x - uiRadius,
-        uiCenter.y - uiRadius,
-        2.0 * uiRadius,
-        2.0 * uiRadius
-        );
+    path.addEllipse(x, y, uiDiameter, uiDiameter);
     return;
   }
 
@@ -504,7 +536,8 @@ void RS_Circle::createPainterPath(RS_Painter* painter, QPainterPath& path) const
       if (std::abs(RS_Math::correctAngle(dirEdge - dirCircle)) > RS_TOLERANCE_ANGLE) {
         const double angle = (pt - getCenter()).angle();
         double relParam = RS_Math::correctAngle(angle - baseAngle);
-        crossPoints.push_back(relParam);
+        if (hasFiniteValue(relParam))
+          crossPoints.push_back(relParam);
       }
     }
   }
@@ -544,6 +577,10 @@ void RS_Circle::draw(RS_Painter* painter)
   }
 
   const double radiusUi = painter->toGuiDX(getRadius());
+  if (!hasUsableCircleData(getCenter(), getRadius()) || !hasFiniteValue(radiusUi) || radiusUi <= 0.) {
+    return;
+  }
+
   if (radiusUi < RS_Painter::getMaximumArcNonErrorRadius()) {
     painter->drawCircleWCS(getCenter(), getRadius());
     return;
@@ -551,12 +588,11 @@ void RS_Circle::draw(RS_Painter* painter)
 
   QPainterPath path;
 
-         // Arbitrary starting point at angle=0, mainly to satisfy moveTo requirement
-  const RS_Vector centerUi = painter->toGui(getCenter() + RS_Vector{getRadius(), 0.});
-  path.moveTo(centerUi.x, centerUi.y);
-
          // Build the actual path (fast or clipped depending on visibility)
   createPainterPath(painter, path);
+  if (path.isEmpty()) {
+    return;
+  }
 
   // A circle is a closed contour; close the subpath so the stroke uses the
   // pen's join style at the closure point rather than its cap style (which

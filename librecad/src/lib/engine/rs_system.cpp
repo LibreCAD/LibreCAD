@@ -99,35 +99,44 @@ void RS_System::init(const QString& appName,
  */
 void RS_System::initLanguageList() {
     RS_DEBUG->print("RS_System::initLanguageList");
+    m_languageList.clear();
     QStringList lst = getFileList("qm", "qm");
 
     LC_GROUP("Paths"); // fixme settings
-#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
-    lst += LC_GET_STR("Translations", "").split(";", Qt::SkipEmptyParts);
-#else
-    lst += (RS_SETTINGS->readEntry("/Translations", "")).split(";", QString::SkipEmptyParts);
-#endif
+    lst += (LC_GET_STR("Translations", "")).split(";", Qt::SkipEmptyParts);
     LC_GROUP_END();
 
-    for (auto& it : lst) {
+    for (const QString& file : lst) {
 
-        RS_DEBUG->print("RS_System::initLanguageList: qm file: %s", it.toLatin1().data());
+        RS_DEBUG->print("RS_System::initLanguageList: qm file: %s",
+                        file.toLatin1().data());
 
-       const int i0 = it.lastIndexOf(QString("librecad"), -1, Qt::CaseInsensitive);
-        if (i0 == -1){
+        int i0 = file.lastIndexOf(QString("librecad"),-1,Qt::CaseInsensitive);
+        if (i0 == -1)
             continue;
-       }
-       const int i1 = it.indexOf('_', i0);
-       const int i2 = it.indexOf('.', i1);
+
+        int i1 = file.indexOf('_',i0);
+        int i2 = file.indexOf('.', i1);
         if (i1 == -1 || i2 == -1) {
             continue;
         }
-        QString l = it.mid(i1 + 1, i2 - i1 - 1);
+        QString l = file.mid(i1+1, i2-i1-1);
 
-        if (!m_languageList.contains(l) ) {
-            RS_DEBUG->print("RS_System::initLanguageList: append language: %s",
+        // Validate language code using Qt Locale
+        QLocale locale(l);
+        if (locale == QLocale::c()) {
+            RS_DEBUG->print("RS_System::initLanguageList: invalid locale: %s",
                             l.toLatin1().data());
-            m_languageList.append(l);
+            continue;
+        }
+
+        // Use Qt Locale to get the canonical language code
+        QString canonicalCode = locale.name();
+
+        if (!(m_languageList.contains(canonicalCode, Qt::CaseInsensitive)) ) {
+            RS_DEBUG->print("RS_System::initLanguageList: append language: %s",
+                            canonicalCode.toLatin1().data());
+            m_languageList.append(canonicalCode);
         }
     }
     RS_DEBUG->print("RS_System::initLanguageList: OK");
@@ -410,11 +419,7 @@ void RS_System::loadTranslation(const QString& lang, const QString& /*langCmd*/)
     QStringList lst = getDirectoryList( "qm");
 
     LC_GROUP( "Paths");
-#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
-    lst += LC_GET_STR("Translations", "").split(";", Qt::SkipEmptyParts);
-#else
-    lst += (RS_SETTINGS->readEntry( "/Translations", "")).split( ";", QString::SkipEmptyParts);
-#endif
+    lst += (LC_GET_STR("Translations", "")).split(";", Qt::SkipEmptyParts);
     LC_GROUP_END();
 
     if( tLibreCAD != nullptr) {

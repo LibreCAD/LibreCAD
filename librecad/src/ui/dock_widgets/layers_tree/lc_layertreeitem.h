@@ -49,6 +49,17 @@ public:
 class LC_LayerTreeItem{
 public:
 
+    // Layer types
+    enum LayerType { // fixme - sand - merge - remove
+        NOT_DEFINED_LAYER_TYPE = -1,
+        VIRTUAL,
+        NORMAL,
+        DIMENSIONAL,
+        INFORMATIONAL,
+        ALTERNATE_POSITION
+    };
+
+
     explicit LC_LayerTreeItem(LC_LayerTreeItem *parent = nullptr);
 
     LC_LayerTreeItem(const QString &name, RS_Layer *actualLayer , LC_LayerTreeItem *parent = nullptr);

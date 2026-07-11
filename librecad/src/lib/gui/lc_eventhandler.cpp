@@ -23,6 +23,7 @@
 
 #include "lc_eventhandler.h"
 
+#include <QAction>
 #include <QMouseEvent>
 
 #include "lc_coordinates_parser.h"
@@ -75,7 +76,14 @@ void LC_EventHandler::enter() {
 
 void LC_EventHandler::mousePressEvent(QMouseEvent* e) const {
     if (hasAction()) {
-        m_currentAction->mousePressEvent(e);
+        // Issue #2608: hold a strong ref for the duration of the dispatch. The
+        // action may switchToAction() and thereby reset/replace m_currentAction
+        // (the sole owner), which would otherwise destroy it while still on the
+        // stack (use-after-free). The methods below that follow the dispatch with
+        // checkLastActionFinishedAndUncheckQAction() release this ref first so a
+        // normally-finished action is still torn down at its original point.
+        auto current = m_currentAction;
+        current->mousePressEvent(e);
         e->accept();
     }
     else {
@@ -91,7 +99,9 @@ void LC_EventHandler::mousePressEvent(QMouseEvent* e) const {
 
 void LC_EventHandler::mouseReleaseEvent(QMouseEvent* e) {
     if (hasAction()) {
-        m_currentAction->mouseReleaseEvent(e);
+        auto current = m_currentAction; // keep alive in case it self-switches mid-dispatch
+        current->mouseReleaseEvent(e);
+        current.reset(); // release before the finished-check to preserve teardown order
         // action may be completed by click. Check this and if it is so, uncheck the action
         checkLastActionFinishedAndUncheckQAction();
         e->accept();
@@ -108,7 +118,9 @@ void LC_EventHandler::mouseReleaseEvent(QMouseEvent* e) {
 
 void LC_EventHandler::mouseMoveEvent(QMouseEvent* e) {
     if (hasAction()) {
-        m_currentAction->mouseMoveEvent(e);
+        auto current = m_currentAction; // keep alive in case it self-switches mid-dispatch
+        current->mouseMoveEvent(e);
+        current.reset(); // release before the finished-check to preserve teardown order
         checkLastActionFinishedAndUncheckQAction();
         e->accept();
     }
@@ -141,7 +153,9 @@ void LC_EventHandler::mouseEnterEvent() const {
 
 void LC_EventHandler::keyPressEvent(QKeyEvent* e) {
     if (hasAction()) {
-        m_currentAction->keyPressEvent(e);
+        auto current = m_currentAction; // keep alive in case it self-switches mid-dispatch
+        current->keyPressEvent(e);
+        current.reset(); // release before the finished-check to preserve teardown order
         checkLastActionFinishedAndUncheckQAction();
     }
     else {
@@ -156,7 +170,9 @@ void LC_EventHandler::keyPressEvent(QKeyEvent* e) {
 
 void LC_EventHandler::keyReleaseEvent(QKeyEvent* e) {
     if (hasAction()) {
-        m_currentAction->keyReleaseEvent(e);
+        auto current = m_currentAction; // keep alive in case it self-switches mid-dispatch
+        current->keyReleaseEvent(e);
+        current.reset(); // release before the finished-check to preserve teardown order
         checkLastActionFinishedAndUncheckQAction();
     }
     else {
@@ -176,12 +192,15 @@ void LC_EventHandler::commandEvent(RS_CommandEvent* e) {
     if (m_coordinateInputEnabled) {
         if (!e->isAccepted()) {
             if (hasAction()) {
+                // keep the action alive across the dispatch: a command (e.g.
+                // "polyline") may switchToAction and reset m_currentAction.
+                auto current = m_currentAction;
                 bool commandContainsCoordinate = false;
                 const QString command = e->getCommand();
                 auto coordinateEvent = m_coordinatesParser->parseCoordinate(command, commandContainsCoordinate);
                 if (commandContainsCoordinate) {
                     if (coordinateEvent.isValid()) {
-                        m_currentAction->coordinateEvent(&coordinateEvent);
+                        current->coordinateEvent(&coordinateEvent);
                     }
                     else {
                         RS_DIALOGFACTORY->commandMessage("Expression Syntax Error"); // fixme - sand - remove static
@@ -190,7 +209,8 @@ void LC_EventHandler::commandEvent(RS_CommandEvent* e) {
                 }
                 else {
                     // send command event directly to current action:
-                    m_currentAction->commandEvent(e);
+                    current->commandEvent(e);
+                    current.reset(); // release before the finished-check to preserve teardown order
                     if (e->isAccepted()) {
                         checkLastActionFinishedAndUncheckQAction();
                     }
@@ -209,11 +229,17 @@ void LC_EventHandler::commandEvent(RS_CommandEvent* e) {
 }
 
 bool LC_EventHandler::checkLastActionFinishedAndUncheckQAction() {
+    // Issue #2608: the action that was just dispatched may have switched away
+    // (e.g. via switchToAction) and reset m_currentAction to null. Nothing to
+    // finish then.
     if (m_currentAction == nullptr) {
-        // action may be null due to switch to default action.
+        // fixme - sand - merge - my code
+        /*// action may be null due to switch to default action.
         return true;
+        */
+        return false;
     }
-    const int lastActionStatus = m_currentAction->getStatus();
+    int lastActionStatus = m_currentAction->getStatus();
     bool result = false;
     if (lastActionStatus < 0 || m_currentAction->isFinished()) {
         if (m_QAction != nullptr) {
@@ -329,8 +355,11 @@ void LC_EventHandler::resumeAction(const std::shared_ptr<RS_ActionInterface>& ac
 }
 
 void LC_EventHandler::notifyLastActionFinished() {
-    // fixme - sand check that action is not null!!!
-    const int lastActionStatus = m_currentAction->getStatus();
+    // Issue #2608: m_currentAction may be null after an action switched away.
+    if (m_currentAction == nullptr) {
+        return;
+    }
+    int lastActionStatus = m_currentAction->getStatus();
     if (lastActionStatus < 0 || m_currentAction->isFinished()) {
         uncheckQAction();
     }

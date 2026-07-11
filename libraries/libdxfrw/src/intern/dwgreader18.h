@@ -42,8 +42,8 @@ static const int DRW_magicNumEnd18[] = {
 
 class dwgReader18 : public dwgReader {
 public:
-    dwgReader18(std::ifstream *stream, dwgRW *p):dwgReader(stream, p){
-    }
+    dwgReader18(std::unique_ptr<dwgBuffer> buffer, dwgRW *p)
+        : dwgReader(std::move(buffer), p) {}
     bool readMetaData() override;
     bool readFileHeader() override;
     bool readDwgHeader(DRW_Header& hdr) override;
@@ -76,18 +76,23 @@ public:
 //    }
 
 protected:
-    std::unique_ptr<duint8[]> objData;
-    duint64 uncompSize;
+    std::unique_ptr<std::uint8_t[]> objData;
+    std::uint64_t uncompSize{0};
 
-    bool parseSysPage(duint8 *decompSec, duint32 decompSize); //called: Section page map: 0x41630e3b
-    bool parseDataPage(const dwgSectionInfo &si/*, duint8 *dData*/); //called ???: Section map: 0x4163003b
+    bool captureRawDwgDataSections();
+    bool parseSysPage(std::uint8_t *decompSec, std::uint32_t decompSize); //called: Section page map: 0x41630e3b
+    bool parseDataPage(const dwgSectionInfo &si/*, std::uint8_t *dData*/); //called ???: Section map: 0x4163003b
+    bool parseDataPage(const dwgSectionInfo& si,
+                       std::unique_ptr<std::uint8_t[]>& sectionData,
+                       std::uint64_t& sectionSize);
 
 private:
     void genMagicNumber();
 //    dwgBuffer* bufObj;
-    duint32 checksum(duint32 seed, duint8* data, duint64 sz);
+    std::uint32_t checksum(std::uint32_t seed, std::uint8_t* data, std::uint64_t sz);
 
-duint32 securityFlags;
+private:
+    std::uint32_t securityFlags;
 };
 
 #endif

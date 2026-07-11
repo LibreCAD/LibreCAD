@@ -128,7 +128,11 @@ protected:
     virtual bool proceedEvent(QEvent* event);
     void tabletEvent(QTabletEvent* e) override;
     void leaveEvent(QEvent*) override;
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
     void enterEvent(QEnterEvent*) override;
+#else
+    void enterEvent(QEvent*) override;
+#endif
     void focusInEvent(QFocusEvent*) override;
     void focusOutEvent(QFocusEvent*) override;
     void wheelEvent(QWheelEvent* e) override;

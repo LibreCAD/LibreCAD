@@ -1,3 +1,8 @@
+LibreCAD in-tree fork
+The historical standalone NEWS entries below are not an exhaustive changelog for
+LibreCAD's vendored libdxfrw fork. See the LibreCAD git history and DWG roadmap
+documents for current DXF/DWG maintenance work.
+
 0.6.0
 First  version with dwg read support
 

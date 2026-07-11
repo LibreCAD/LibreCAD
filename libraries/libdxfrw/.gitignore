@@ -17,6 +17,7 @@ Makefile*
 *.dll
 *.exe
 *.cmake
+!libdxfrw_sources.cmake
 *.patch
 *~
 *bz2

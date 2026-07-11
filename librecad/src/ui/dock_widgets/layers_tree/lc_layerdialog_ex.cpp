@@ -41,6 +41,13 @@ LC_LayerDialogEx::LC_LayerDialogEx(QWidget* parent, const QString& name, LC_Laye
     m_layerTreeModel = model;
     m_layerList = layerList;
     m_editedTreeItem = treeItem;
+    if (treeItem != nullptr) {
+        m_editedLayer = treeItem->getLayer();
+        if (m_editedLayer != nullptr) {
+            m_originalLayerName = treeItem->getName();
+            m_originalLayerType = static_cast<LC_LayerTreeItem::LayerType>(treeItem->getLayerType());
+        }
+    }
 }
 
 void LC_LayerDialogEx::languageChange(){
@@ -250,14 +257,26 @@ void LC_LayerDialogEx::validate() {
                 break;
             }
             case MODE_EDIT_LAYER: {
-                const QString originalName = m_editedTreeItem->getName();
+                // fixme - sand - check now it might be?
+                LC_LayerTreeItem *editedTreeItem = m_layerTreeModel->getItemForLayer(m_editedLayer);
+                if (editedTreeItem == nullptr) {
+                    QMessageBox::information(parentWidget(),
+                                             QMessageBox::tr("Layer Properties"),
+                                             QMessageBox::tr("The edited layer is no longer available."),
+                                             QMessageBox::Ok);
+                    return;
+                }
+                const bool typeChanged = newLayerType != static_cast<int>(m_originalLayerType);
+                const bool nameChanged = m_originalLayerName != layerName;
+
+                /*const QString originalName = m_editedTreeItem->getName();
                 const int originalLayerType = m_editedTreeItem->getLayerType();
                 const bool typeChanged = newLayerType != originalLayerType;
-                const bool nameChanged = originalName != layerName;
+                const bool nameChanged = originalName != layerName;*/
                 if (nameChanged || typeChanged) {
                     // inner name should be changed - so we have to check for possible duplicates.
                     newLayerNamesList = m_layerTreeModel->getLayersListForRenamedPrimary(
-                        m_editedTreeItem, layerName, newLayerType);
+                        editedTreeItem, layerName, newLayerType);
                 }
                 break;
             }

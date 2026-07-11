@@ -18,11 +18,11 @@
 class dxfWriter {
 public:
     dxfWriter(std::ofstream *stream){filestr = stream; /*count =0;*/}
-    virtual ~dxfWriter(){}
+    virtual ~dxfWriter() = default;
     virtual bool writeString(int code, std::string text) = 0;
     bool writeUtf8String(int code, std::string text);
     bool writeUtf8Caps(int code, std::string text);
-    std::string fromUtf8String(std::string t) const {return encoder.fromUtf8(t);}
+    std::string fromUtf8String(std::string t) {return encoder.fromUtf8(t);}
     virtual bool writeInt16(int code, int data) = 0;
     virtual bool writeInt32(int code, int data) = 0;
     virtual bool writeInt64(int code, unsigned long long int data) = 0;
@@ -31,6 +31,9 @@ public:
     void setVersion(const std::string &v, bool dxfFormat){encoder.setVersion(v, dxfFormat);}
     void setCodePage(const std::string &c){encoder.setCodePage(c, true);}
     std::string getCodePage(){return encoder.getCodePage();}
+    /// Underlying output stream, used by dxfRW to record the $HANDSEED value
+    /// offset and back-patch it with the final handle high-water mark.
+    std::ofstream *stream() { return filestr; }
 protected:
     std::ofstream *filestr;
 private:
@@ -40,7 +43,7 @@ private:
 class dxfWriterBinary : public dxfWriter {
 public:
     dxfWriterBinary(std::ofstream *stream):dxfWriter(stream){}
-    virtual ~dxfWriterBinary() {}
+    virtual ~dxfWriterBinary() = default;
     virtual bool writeString(int code, std::string text);
     virtual bool writeInt16(int code, int data);
     virtual bool writeInt32(int code, int data);
@@ -52,7 +55,7 @@ public:
 class dxfWriterAscii : public dxfWriter {
 public:
     dxfWriterAscii(std::ofstream *stream);
-    virtual ~dxfWriterAscii(){}
+    virtual ~dxfWriterAscii() = default;
     virtual bool writeString(int code, std::string text);
     virtual bool writeInt16(int code, int data);
     virtual bool writeInt32(int code, int data);
@@ -61,4 +64,4 @@ public:
     virtual bool writeBool(int code, bool data);
 };
 
-#endif
+#endif // DXFWRITER_H

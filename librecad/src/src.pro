@@ -31,8 +31,9 @@ CONFIG += qt \
 QT += widgets printsupport network
 CONFIG += c++17
 
-# using qt5 connections for UI forms
-QMAKE_UIC_FLAGS += --connections string
+# Qt 6 uic can generate string-based connections. Qt 5 uic does not
+# understand this option, so keep qmake builds compatible with both.
+greaterThan(QT_MAJOR_VERSION, 5): QMAKE_UIC_FLAGS += --connections string
 
 *-g++ {
     # QMAKE_CXXFLAGS += -fext-numeric-literals
@@ -747,6 +748,7 @@ HEADERS += \
     lib/selection/metaentity/entities/lc_matchdescriptor_splinepoints.h \
     lib/math/rs_math.h \
     lib/math/lc_quadratic.h \
+    main/console_command_utils.h \
     main/console_dxf2png.h \
     test/lc_simpletests.h \
     lib/generators/makercamsvg/lc_makercamsvg.h \
@@ -1267,6 +1269,7 @@ SOURCES += \
     lib/properties/lc_property_view_descriptor.cpp \
     lib/engine/rs_color.cpp \
     lib/engine/rs_pen.cpp \
+    main/console_command_utils.cpp \
     main/console_dxf2png.cpp \
     test/lc_simpletests.cpp \
     lib/generators/makercamsvg/lc_xmlwriterqxmlstreamwriter.cpp \
@@ -1837,6 +1840,7 @@ HEADERS += ui/action_options/lc_action_options_manager.h \
     ui/main/init/lc_menufactory_main.h \
     ui/main/init/lc_menufactory_graphicview.h \
     ui/main/init/lc_toolbarfactory.h \
+    ui/main/lc_layouttabbar.h \
     ui/main/mainwindowx.h \
     ui/main/qc_applicationwindow.h \
     ui/main/qc_mdiwindow.h \
@@ -2129,6 +2133,7 @@ SOURCES +=  ui/action_options/circle/lc_circle_by_arc_options_widget.cpp \
     ui/main/init/lc_menufactory_main.cpp \
     ui/main/init/lc_menufactory_graphicview.cpp \
     ui/main/init/lc_toolbarfactory.cpp \
+    ui/main/lc_layouttabbar.cpp \
     ui/main/mainwindowx.cpp \
     ui/main/qc_applicationwindow.cpp \
     ui/main/qc_mdiwindow.cpp \
@@ -2294,6 +2299,7 @@ HEADERS += \
     plugins/intern/qc_actiongetselect.h \
     plugins/intern/qc_actiongetent.h \
     main/main.h \
+    main/console_dxf2dwg.h \
     main/console_dxf2pdf/console_dxf2pdf.h \
     main/console_dxf2pdf/pdf_print_loop.h
 
@@ -2304,6 +2310,7 @@ SOURCES += \
     plugins/intern/qc_actiongetselect.cpp \
     plugins/intern/qc_actiongetent.cpp \
     main/main.cpp \
+    main/console_dxf2dwg.cpp \
     main/console_dxf2pdf/console_dxf2pdf.cpp \
     main/console_dxf2pdf/pdf_print_loop.cpp
 

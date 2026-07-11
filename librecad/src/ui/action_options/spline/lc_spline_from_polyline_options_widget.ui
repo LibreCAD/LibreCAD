@@ -99,7 +99,7 @@
    <item row="0" column="3">
     <widget class="QCheckBox" name="cbFitPoints">
      <property name="toolTip">
-      <string>If checked, polyline vertexes are considered as spline points and spline by points will be created. Otherwise, they are considered as control points and orinary spline will be created.</string>
+      <string>If checked, polyline vertexes are considered as spline points and spline by points will be created. Otherwise, they are considered as control points and ordinary spline will be created.</string>
      </property>
      <property name="text">
       <string>Vertexes are spline points</string>

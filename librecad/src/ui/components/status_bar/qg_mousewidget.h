@@ -26,6 +26,8 @@
 #ifndef QG_MOUSEWIDGET_H
 #define QG_MOUSEWIDGET_H
 
+#include <QIcon>
+
 #include "ui_qg_mousewidget.h"
 
 class LC_ModifiersInfo;

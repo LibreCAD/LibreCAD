@@ -26,6 +26,7 @@
 #ifndef LC_UCSSTATEWIDGET_H
 #define LC_UCSSTATEWIDGET_H
 
+#include <QIcon>
 #include <QWidget>
 
 namespace Ui {

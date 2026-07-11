@@ -56,7 +56,8 @@ public:
      */
     std::unique_ptr<RS_FilterInterface> getExportFilter(const QString& fileName, RS2::FormatType t) const;
 
-    bool fileImport(RS_Graphic& graphic, const QString& file, RS2::FormatType type = RS2::FormatUnknown) const;
+    bool fileImport(RS_Graphic& graphic, const QString& file, RS2::FormatType type = RS2::FormatUnknown,
+        std::function<bool(bool /*partial*/, const QString& /*errorMsg*/)> errorCallback = nullptr) const;
 
     bool fileExport(RS_Graphic& graphic, const QString& file, RS2::FormatType type = RS2::FormatUnknown) const;
     /** \brief detectFormat detect file format type

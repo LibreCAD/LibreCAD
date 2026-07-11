@@ -26,6 +26,8 @@
 **
 **********************************************************************/
 
+#include <cstddef>
+#include <QApplication>
 #include <QFileInfo>
 #include <QTextStream>
 #include <cstddef>
@@ -33,6 +35,10 @@
 #include <QApplication>
 #include <QMessageBox>
 #endif
+#include <QTextStream>
+#include "rs_debug.h"
+#include "rs_dialogfactory.h"
+#include "rs_dialogfactoryinterface.h"
 #include "rs_fileio.h"
 
 #include "rs_debug.h"
@@ -52,7 +58,10 @@
  * @param file Path and name of the file to import.
  * @param type
  */
-bool RS_FileIO::fileImport(RS_Graphic& graphic, const QString& file, const RS2::FormatType type) const {
+bool RS_FileIO::fileImport(RS_Graphic& graphic, const QString& file,
+                           RS2::FormatType type,
+                           std::function<bool(bool, const QString&)> errorCallback) const {
+
     RS_DEBUG->print("Trying to import file '%s'...", file.toLatin1().data());
 
     RS2::FormatType t;
@@ -86,7 +95,11 @@ bool RS_FileIO::fileImport(RS_Graphic& graphic, const QString& file, const RS2::
 #endif
             const bool bImported{filter->fileImport(graphic, file, t)};
             if (!bImported) {
-                QApplication::restoreOverrideCursor(); // disable WaitCursor for massagebox
+                if (errorCallback != nullptr) {
+                    return errorCallback(!graphic.isEmpty(), filter->lastError());
+                }
+
+                QApplication::restoreOverrideCursor();  // disable WaitCursor for messagebox
 
                 const QString strTitle{QObject::tr("Error", "fileImport")};
                 QString strError{QObject::tr("Import error:", "fileImport")};

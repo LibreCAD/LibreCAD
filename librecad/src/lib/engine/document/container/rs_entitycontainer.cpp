@@ -1092,8 +1092,8 @@ int RS_EntityContainer::findEntityIndex(const RS_Entity* const entity) const {
     return m_entities.indexOf(const_cast<RS_Entity*>(entity));
 }
 
-bool RS_EntityContainer::areNeighborsEntities(const RS_Entity* const e1, const RS_Entity* const e2) const {
-    return abs(m_entities.indexOf(e1) - m_entities.indexOf(e2)) <= 1;
+bool  RS_EntityContainer::areNeighborsEntities(RS_Entity const *const  e1, RS_Entity const *const  e2) {
+   return abs(m_entities.indexOf(const_cast<RS_Entity *>(e1)) - m_entities.indexOf(const_cast<RS_Entity *>(e2))) <= 1;
 }
 
 /**
@@ -1166,8 +1166,13 @@ RS_Vector RS_EntityContainer::obtainNearestEndpoint(const RS_Vector& coord, doub
 
 RS_Vector RS_EntityContainer::doGetNearestPointOnEntity(const RS_Vector& coord, const bool onEntity, double* dist, RS_Entity** entity) const {
     RS_Vector point(false);
-    const RS_Entity* en = getNearestEntity(coord, dist, RS2::ResolveNone);
-    if (en != nullptr && en->isVisible() && !en->getParent()->ignoredSnap()) {
+    const RS_Entity *en = getNearestEntity(coord, dist, RS2::ResolveNone);
+    // Issue #2670: A container that overrides getDistanceToPoint() for hit-testing (e.g.
+    // RS_Hatch reporting a solid-fill hit) can return itself as the nearest
+    // entity. Recursing into such a self-reference loops forever and overflows
+    // the stack (crash observed when snapping inside a filled hatch), so only
+    // descend into a genuine child entity.
+    if (en && en != this && en->isVisible() && !en->getParent()->ignoredSnap() ) {
         point = en->getNearestPointOnEntity(coord, onEntity, dist, entity);
     }
     return point;

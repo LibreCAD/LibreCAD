@@ -30,6 +30,16 @@
 #include <QStringList>
 #include <fstream>
 
+#include <QTextStream>
+#include <QStringList>
+#include <QDate>
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#include <QStringConverter>
+#endif
+
+
+#include <QFile>
+
 #include "lc_containertraverser.h"
 #include "rs_arc.h"
 #include "rs_block.h"
@@ -134,7 +144,11 @@ bool RS_FilterLFF::fileExport(RS_Graphic& g, const QString& file, RS2::FormatTyp
 
     QFile f(file);
     QTextStream ts(&f);
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
     ts.setEncoding(QStringConverter::Utf8);
+#else
+    ts.setCodec("UTF-8");
+#endif
     if (f.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
         RS_DEBUG->print("RS_FilterLFF::fileExport: open: OK");
 

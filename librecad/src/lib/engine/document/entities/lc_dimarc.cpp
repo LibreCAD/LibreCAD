@@ -48,7 +48,16 @@ namespace {
 }
 
 LC_DimArcData::LC_DimArcData(const LC_DimArcData& other)
-    : centre(other.centre), endAngle(other.endAngle), startAngle(other.startAngle), radius(other.radius), arcLength(other.arcLength) {
+    :radius(other.radius),
+    arcLength(other.arcLength),
+    centre(other.centre),
+    endAngle(other.endAngle),
+    startAngle(other.startAngle),
+    arcSymbol(other.arcSymbol),
+    isPartial(other.isPartial),
+    hasLeader(other.hasLeader),
+    leaderPt1(other.leaderPt1),
+    leaderPt2(other.leaderPt2) {
 }
 
 LC_DimArcData::LC_DimArcData(const double radius, const double arcLength, const RS_Vector& centre, const RS_Vector& endAngle,
@@ -155,19 +164,30 @@ void LC_DimArc::doUpdateDim() {
     pen.setWidth(getDimensionLineWidth());
     pen.setColor(getDimensionLineColor());
 
-    m_extLine1->setPen(pen);
     m_extLine2->setPen(pen);
-
-    m_extLine1->setLayer(nullptr);
     m_extLine2->setLayer(nullptr);
-
-    addEntity(m_extLine1);
     addEntity(m_extLine2);
 
-    auto refArc = RS_Arc(this, RS_ArcData(m_dimArcData.centre, m_dimArcData.radius, m_dimArcData.startAngle.angle(),
-                                          m_dimArcData.endAngle.angle(), false));
+    if (!m_dimArcData.isPartial) {
+        m_extLine1->setPen(pen);
+        m_extLine1->setLayer(nullptr);
+        addEntity(m_extLine1);
+    } else {
+        delete m_extLine1;
+        m_extLine1 = nullptr;
+    }
 
-    arrow(m_arrowStartPoint, m_dimArcData.startAngle.angle(), +1.0, pen);
+    RS_Arc* refArc{
+        new RS_Arc(this,RS_ArcData(m_dimArcData.centre,
+                              m_dimArcData.radius,
+                              m_dimArcData.startAngle.angle(),
+                              m_dimArcData.endAngle.angle(),
+                              false)
+            )
+    };
+
+    if (!m_dimArcData.isPartial)
+        arrow(m_arrowStartPoint, m_dimArcData.startAngle.angle(), +1.0, pen);
     arrow(m_arrowEndPoint, m_dimArcData.endAngle.angle(), -1.0, pen);
 
     double textAngle{0.0};
@@ -203,7 +223,9 @@ void LC_DimArc::doUpdateDim() {
     dimLabel.toDouble(&ok);
 
     if (ok) {
-        dimLabel.prepend("∩ ");
+        if (m_dimArcData.arcSymbol == 0)
+            dimLabel.prepend("∩ ");
+        // arcSymbol == 2: no symbol; arcSymbol == 1: rendered as separate entity below
     }
 
     auto textData{
@@ -282,6 +304,34 @@ void LC_DimArc::doUpdateDim() {
     addEntity(m_dimArc1);
     addEntity(m_dimArc2);
 
+    // arcSymbol == 1: draw "∩" as a separate text entity radially outward from the main text
+    if (ok && m_dimArcData.arcSymbol == 1) {
+        const double symbolHeight = getTextHeight() * getGeneralScale();
+        const RS_Vector symbolPos = textPos
+            + RS_Vector::polar(symbolHeight * 1.1, textAngle_preliminary);
+        RS_MTextData symbolData{
+            symbolPos, symbolHeight, 30.0,
+            RS_MTextData::VABottom, RS_MTextData::HACenter,
+            RS_MTextData::LeftToRight, RS_MTextData::Exact,
+            1.0, "∩", QString("unicode"), textAngle};
+        auto* symbolText = new RS_MText(this, symbolData);
+        symbolText->setPen(RS_Pen(getTextColor(), RS2::WidthByBlock, RS2::SolidLine));
+        symbolText->setLayer(nullptr);
+        addEntity(symbolText);
+    }
+
+    // Leader lines: draw when hasLeader is true and both endpoints are valid
+    if (m_dimArcData.hasLeader
+        && m_dimArcData.leaderPt1.valid
+        && m_dimArcData.leaderPt2.valid) {
+        auto* leaderLine = new RS_Line(this,
+                                       m_dimArcData.leaderPt1,
+                                       m_dimArcData.leaderPt2);
+        leaderLine->setPen(pen);
+        leaderLine->setLayer(nullptr);
+        addEntity(leaderLine);
+    }
+
     calculateBorders();
 }
 
@@ -292,9 +342,9 @@ void LC_DimArc::update() {
 
 void LC_DimArc::move(const RS_Vector& offset) {
     RS_Dimension::move(offset);
-
     m_dimArcData.centre.move(offset);
-
+    if (m_dimArcData.leaderPt1.valid) m_dimArcData.leaderPt1.move(offset);
+    if (m_dimArcData.leaderPt2.valid) m_dimArcData.leaderPt2.move(offset);
     update();
 }
 
@@ -306,8 +356,10 @@ void LC_DimArc::rotate(const RS_Vector& center, const double angle) {
 
 void LC_DimArc::rotate(const RS_Vector& center, const RS_Vector& angleVector) {
     RS_Dimension::rotate(center, angleVector);
-
     m_dimArcData.centre.rotate(center, angleVector);
+    if (m_dimArcData.leaderPt1.valid) m_dimArcData.leaderPt1.rotate(center, angleVector);
+    if (m_dimArcData.leaderPt2.valid) m_dimArcData.leaderPt2.rotate(center, angleVector);
+
     const double arcDeltaAngle{m_dimArcData.startAngle.angleTo(m_dimArcData.endAngle)};
     m_dimArcData.startAngle = RS_Vector(m_dimGenericData.definitionPoint.angleTo(m_dimArcData.centre) - M_PI);
     m_dimArcData.endAngle = m_dimArcData.startAngle;
@@ -322,6 +374,8 @@ void LC_DimArc::scale(const RS_Vector& center, const RS_Vector& factor) {
     RS_Dimension::scale(center, adjustedFactorVector);
     m_dimArcData.centre.scale(center, adjustedFactorVector);
     m_dimArcData.radius *= adjustedFactor;
+    if (m_dimArcData.leaderPt1.valid) m_dimArcData.leaderPt1.scale(center, adjustedFactorVector);
+    if (m_dimArcData.leaderPt2.valid) m_dimArcData.leaderPt2.scale(center, adjustedFactorVector);
     update();
 }
 
@@ -329,6 +383,8 @@ void LC_DimArc::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2)
     RS_Dimension::mirror(axisPoint1, axisPoint2);
 
     m_dimArcData.centre.mirror(axisPoint1, axisPoint2);
+    if (m_dimArcData.leaderPt1.valid) m_dimArcData.leaderPt1.mirror(axisPoint1, axisPoint2);
+    if (m_dimArcData.leaderPt2.valid) m_dimArcData.leaderPt2.mirror(axisPoint1, axisPoint2);
 
     /*
         // Just another way of accomplishing the operation below this comment.

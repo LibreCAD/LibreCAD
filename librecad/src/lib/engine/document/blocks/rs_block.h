@@ -45,6 +45,7 @@ struct RS_BlockData {
      * using the insertion point of Insert entities.
      */
     RS_Vector basePoint;
+    int insUnits {0};                  //!< BLOCK_RECORD insertion units
     bool frozen{false}; //!< Frozen flag
     // fixme - sand - rework?
     mutable bool visibleInBlockList{true}; //!< Visible in block list
@@ -94,6 +95,9 @@ public:
     RS_Vector getBasePoint() const {
         return m_data.basePoint;
     }
+
+    int getInsertionUnits() const {return m_data.insUnits;}
+    void setInsertionUnits(int units) {m_data.insUnits = units;}
 
     RS_LayerList* getLayerList() override;
     RS_BlockList* getBlockList() override;

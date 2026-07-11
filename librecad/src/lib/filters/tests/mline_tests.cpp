@@ -23,6 +23,7 @@
  * fans MLINE out into N parallel polylines on import.
  */
 
+#include <catch2/catch_approx.hpp>
 #include <catch2/catch_test_macros.hpp>
 
 #include <algorithm>
@@ -36,6 +37,8 @@
 #include "drw_objects.h"
 #include "libdwgr.h"
 #include "libdxfrw.h"
+
+using Catch::Approx;
 
 namespace {
 
@@ -76,12 +79,13 @@ public:
   void addDimDiametric(const DRW_DimDiametric *) override {}
   void addDimAngular(const DRW_DimAngular *) override {}
   void addDimAngular3P(const DRW_DimAngular3p *) override {}
+  void addDimArc(const DRW_DimArc *) override {}
   void addDimOrdinate(const DRW_DimOrdinate *) override {}
   void addLeader(const DRW_Leader *) override {}
   void addHatch(const DRW_Hatch *) override {}
   void addViewport(const DRW_Viewport &) override {}
   void addImage(const DRW_Image *) override {}
-  void addWipeout(const DRW_Image *) override {}
+  void addWipeout(const DRW_Wipeout *) override {}
   void addMLeader(const DRW_MLeader *) override {}
   void addMLeaderStyle(const DRW_MLeaderStyle *) override {}
   void linkImage(const DRW_ImageDef *) override {}
@@ -116,6 +120,68 @@ public:
   DRW_MLine m_line;
   dxfRW *m_rw = nullptr;
   void writeEntities() override { m_rw->writeMLine(&m_line); }
+};
+
+class MLineDwgEmitter : public StubInterface {
+public:
+  dwgRW *m_rw = nullptr;
+  std::vector<DRW_MLineStyle> m_styles;
+  std::vector<DRW_MLine> m_lines;
+
+  void writeEntities() override {
+    DRW_MLineStyle style;
+    style.name = "WALLSTYLE";
+    style.description = "two-line wall";
+    style.flags = 1;
+    style.fillColor = 3;
+    style.startAngle = 1.0471975512;
+    style.endAngle = 2.0943951024;
+    DRW_MLineElement left;
+    left.offset = 0.5;
+    left.color = 1;
+    left.linetypeIndex = -1;
+    left.linetype = "BYLAYER";
+    DRW_MLineElement right;
+    right.offset = -0.5;
+    right.color = 2;
+    right.linetypeIndex = -1;
+    right.linetype = "BYLAYER";
+    style.elements.push_back(left);
+    style.elements.push_back(right);
+    m_rw->writeMLineStyle(&style);
+
+    DRW_MLine line;
+    line.styleName = "WALLSTYLE";
+    line.scale = 2.0;
+    line.justification = 1;
+    line.openClosed = 1;
+    line.numLines = 2;
+    line.numVerts = 2;
+    line.basePoint = DRW_Coord(0.0, 0.0, 0.0);
+    line.layer = "0";
+    for (int i = 0; i < 2; ++i) {
+      DRW_MLineVertex v;
+      v.position = DRW_Coord(static_cast<double>(i) * 10.0, 0.0, 0.0);
+      v.vertexDir = DRW_Coord(1.0, 0.0, 0.0);
+      v.miterDir = DRW_Coord(0.0, 1.0, 0.0);
+      v.segParms.resize(2);
+      v.segParms[0].push_back(0.0);
+      v.segParms[1].push_back(0.0);
+      v.areaFillParms.resize(2);
+      line.vertlist.push_back(v);
+    }
+    m_rw->writeMLine(&line);
+  }
+
+  void addMLineStyle(const DRW_MLineStyle &style) override {
+    if (style.name == "WALLSTYLE")
+      m_styles.push_back(style);
+  }
+
+  void addMLine(const DRW_MLine *line) override {
+    if (line)
+      m_lines.push_back(*line);
+  }
 };
 
 } // namespace
@@ -245,7 +311,69 @@ TEST_CASE("DXF MLINE write emits expected codes", "[mline][dxf_roundtrip]") {
   CHECK(content.find("AcDbMline") != std::string::npos);
   CHECK(content.find("STANDARD") != std::string::npos);
 
+  in.close();
   std::filesystem::remove(path);
+}
+
+TEST_CASE("DWG MLINESTYLE object resolves MLINE style handle",
+          "[mline][dwg-write][mlinestyle]") {
+  struct VersionCase {
+    DRW::Version version;
+    const char *suffix;
+  };
+  const VersionCase cases[] = {
+      {DRW::AC1015, "mline_style_r2000.dwg"},
+      {DRW::AC1018, "mline_style_r2004.dwg"},
+      {DRW::AC1024, "mline_style_r2010.dwg"},
+      {DRW::AC1027, "mline_style_r2013.dwg"},
+      {DRW::AC1032, "mline_style_r2018.dwg"},
+  };
+
+  for (const auto &item : cases) {
+    const auto path = std::filesystem::temp_directory_path() / item.suffix;
+    std::filesystem::remove(path);
+
+    {
+      MLineDwgEmitter emitter;
+      dwgRW writer(path.string().c_str());
+      emitter.m_rw = &writer;
+      REQUIRE(writer.write(&emitter, item.version, false));
+    }
+
+    MLineDwgEmitter capture;
+    {
+      dwgRW reader(path.string().c_str());
+      REQUIRE(reader.read(&capture, /*ext=*/true));
+      REQUIRE(reader.getVersion() == item.version);
+      REQUIRE(reader.getError() == DRW::BAD_NONE);
+    }
+
+    REQUIRE(capture.m_styles.size() == 1u);
+    const DRW_MLineStyle &style = capture.m_styles.front();
+    CHECK(style.name == "WALLSTYLE");
+    CHECK(style.description == "two-line wall");
+    CHECK(style.flags == 1);
+    CHECK(style.fillColor == 3);
+    CHECK(style.startAngle == Approx(1.0471975512));
+    CHECK(style.endAngle == Approx(2.0943951024));
+    REQUIRE(style.elements.size() == 2u);
+    CHECK(style.elements[0].offset == Approx(0.5));
+    CHECK(style.elements[0].color == 1);
+    CHECK(style.elements[1].offset == Approx(-0.5));
+    CHECK(style.elements[1].color == 2);
+
+    REQUIRE(capture.m_lines.size() == 1u);
+    const DRW_MLine &line = capture.m_lines.front();
+    CHECK(line.styleHandle == style.handle);
+    CHECK(line.scale == Approx(2.0));
+    CHECK(line.justification == 1);
+    CHECK(line.numLines == 2);
+    REQUIRE(line.vertlist.size() == 2u);
+    CHECK(line.vertlist[0].position.x == Approx(0.0));
+    CHECK(line.vertlist[1].position.x == Approx(10.0));
+
+    std::filesystem::remove(path);
+  }
 }
 
 // Smoke probe: hidden by [.] tag, runs against ~/doc/dwg3/Multiline.dwg

@@ -7,6 +7,9 @@
 !/.github
 !/librecad/src/lib/debug/
 
+# cmake files
+CMakeFiles/
+meta_types/
 # Apple generated directories
 build/
 LibreCAD.app/
@@ -61,6 +64,7 @@ debug/
 object_script.LibreCAD.*
 object_script.libdxfrw.*
 # Win/qmake generated project files
+*_resource.rc
 #*.vcproj
 #*.sln
 custom-windows*.*
@@ -115,3 +119,4 @@ core.*
 # pixi environments
 .pixi
 *.egg-info
+node_modules

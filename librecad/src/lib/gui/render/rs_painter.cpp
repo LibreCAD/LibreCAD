@@ -24,6 +24,9 @@
 
 #include <QPainterPath>
 
+#include <algorithm>
+#include <cmath>
+
 #include "dxf_format.h"
 #include "lc_graphicviewport.h"
 #include "lc_graphicviewportrenderer.h"
@@ -48,6 +51,44 @@ namespace {
     const auto COLOR_WHITE = RS_Color(Qt::white);
     const QColor Q_COLOR_BLACK = COLOR_BLACK.toQColor();
     const QColor Q_COLOR_WHITE = COLOR_WHITE.toQColor();
+
+    bool hasFiniteValue(double value) {
+        return std::isfinite(value);
+    }
+
+    bool hasFinitePoint(const QPointF& point) {
+        return hasFiniteValue(point.x()) && hasFiniteValue(point.y());
+    }
+
+    bool hasFiniteVector(const RS_Vector& vector) {
+        return vector.valid
+            && hasFiniteValue(vector.x)
+            && hasFiniteValue(vector.y)
+            && hasFiniteValue(vector.z);
+    }
+
+    bool hasUsableArcParameters(double x, double y, double width, double height, double startAngle, double sweepAngle) {
+        return hasFiniteValue(x)
+            && hasFiniteValue(y)
+            && hasFiniteValue(width)
+            && hasFiniteValue(height)
+            && width > 0.
+            && height > 0.
+            && hasFiniteValue(startAngle)
+            && hasFiniteValue(sweepAngle);
+    }
+
+    bool hasUsableArcParameters(const QRectF& rect, double startAngle, double sweepAngle) {
+        return hasUsableArcParameters(rect.x(), rect.y(), rect.width(), rect.height(), startAngle, sweepAngle);
+    }
+
+    bool hasUsableEllipseParameters(const QPointF& center, double radiusX, double radiusY) {
+        return hasFinitePoint(center)
+            && hasFiniteValue(radiusX)
+            && hasFiniteValue(radiusY)
+            && radiusX > 0.
+            && radiusY > 0.;
+    }
 
     // Convert from LibreCAD line style pattern to QPen Dash Pattern.
     // QPen dash pattern by default is in the unit of pixel
@@ -171,6 +212,10 @@ void RS_Painter::drawGridPoint(const RS_Vector& p) {
     drawGridPoint(p.x, p.y);
 }
 
+void RS_Painter::drawGridPoint(double x, double y) {
+    if (!hasFiniteValue(x) || !hasFiniteValue(y))
+        return;
+
 qreal RS_Painter::getDevicePixelRatio() {
     qreal dpr = device()->devicePixelRatioF();
     return dpr;
@@ -211,8 +256,11 @@ void RS_Painter::drawRefPointEntityWCS(const RS_Vector& wcsPos, const int pdMode
 /**
  * Draws a point at (x1, y1).
  */
-void RS_Painter::drawPointEntityUI(const RS_Vector& uiPos, const int pdmode, const int pdsize) {
-    const int halfPDSize = pdsize / 2;
+void RS_Painter::drawPointEntityUI(const RS_Vector& uiPos, int pdmode, int pdsize) {
+    if (!hasFiniteVector(uiPos))
+        return;
+
+    int halfPDSize = pdsize/2;
 
     /*	PDMODE values =>
      bits 0-3 = 0, centre dot
@@ -317,6 +365,9 @@ void RS_Painter::drawPolygonWCS(const RS_Vector& wcsV1, const RS_Vector& wcsV2, 
     if (wcsV5.valid) {
         uiPolygon.push_back(toGuiPointF(wcsV5));
     }
+    if (!std::all_of(uiPolygon.begin(), uiPolygon.end(), hasFinitePoint))
+        return;
+
     drawPolyline(uiPolygon);
 }
 
@@ -325,6 +376,9 @@ void RS_Painter::drawPolygonWCS(const std::vector<RS_Vector>& wcsPoints) {
     for (auto& wcsPoint : wcsPoints) {
         uiPolygon.push_back(toGuiPointF(wcsPoint));
     }
+    if (!std::all_of(uiPolygon.begin(), uiPolygon.end(), hasFinitePoint))
+        return;
+
     drawPolyline(uiPolygon);
 }
 
@@ -344,6 +398,8 @@ void RS_Painter::drawLineWCSScaled(const RS_Vector& wcsP1, const RS_Vector& wcsP
 }
 
 void RS_Painter::drawLineUIScaled(const QPointF& from, const QPointF& to, const double lineWidthFactor) {
+    if (!hasFinitePoint(from) || !hasFinitePoint(to) || !hasFiniteValue(lineWidthFactor))
+        return;
     const auto savedPen = pen();
     const auto width = savedPen.widthF();
     auto newPen = savedPen;
@@ -357,15 +413,25 @@ void RS_Painter::drawLineUIScaled(const QPointF& from, const QPointF& to, const 
  * Draws a line from (x1, y1) to (x2, y2).
  */
 void RS_Painter::drawLineUISimple(const RS_Vector& p1, const RS_Vector& p2) {
+    if (!hasFiniteVector(p1) || !hasFiniteVector(p2))
+        return;
+
     QPainter::drawLine(QPointF(p1.x, p1.y), QPointF(p2.x, p2.y));
 }
 
-void RS_Painter::drawLineUISimple(const double x1, const double y1, const double x2, const double y2) {
+void RS_Painter::drawLineUISimple(double x1, double y1, double x2, double y2){
+    if (!hasFiniteValue(x1) || !hasFiniteValue(y1) || !hasFiniteValue(x2) || !hasFiniteValue(y2))
+        return;
+
     QPainter::drawLine(QPointF(x1, y1), QPointF(x2, y2));
 }
 
-void RS_Painter::drawLineUI(const QPointF& startPoint, const QPointF& endPoint) {
-    if ((startPoint - endPoint).manhattanLength() > m_minLineDrawingLen) {
+void RS_Painter::drawLineUI(const QPointF& startPoint, const QPointF& endPoint)
+{
+    if (!hasFinitePoint(startPoint) || !hasFinitePoint(endPoint))
+        return;
+
+    if((startPoint - endPoint).manhattanLength() > minLineDrawingLen) {
         QPainter::drawLine(startPoint, endPoint);
     }
     else {
@@ -417,6 +483,16 @@ void RS_Painter::drawArcEntity(RS_Arc* arc, QPainterPath& path) {
     // convert to UI coordinates
     RS_Vector uiCenter = toGui(center);
     RS_Vector uiRadii{toGuiDX(radius), toGuiDY(radius)};
+    const double startAngleDegrees = toUCSAngleDegrees(arc->getData().startAngleDegrees);
+    const double angularLengthDegrees = arc->getData().angularLength;
+    if (!hasFiniteVector(uiCenter)
+        || !hasFiniteVector(uiRadii)
+        || uiRadii.x <= 0.
+        || uiRadii.y <= 0.
+        || !hasFiniteValue(startAngleDegrees)
+        || !hasFiniteValue(angularLengthDegrees)) {
+        return;
+    }
 
     if (uiRadii.x <= m_minArcDrawingRadius) {
         // draw just a point
@@ -424,16 +500,15 @@ void RS_Painter::drawArcEntity(RS_Arc* arc, QPainterPath& path) {
     }
     else if (m_arcRenderInterpolate) {
         // draw arc interpolated by lines
-        drawArcInterpolatedByLines(uiCenter, uiRadii.x, toUCSAngleDegrees(arc->getData().startAngleDegrees), arc->getData().angularLength,
+        drawArcInterpolatedByLines(uiCenter, uiRadii.x, startAngleDegrees, angularLengthDegrees,
                                    path);
     }
     else {
         // same as
         // if (radiusGui * RS_Painter::getMaximumArcSplineError() <= 1.) {
         // yet faster
-        if (uiRadii.x <= getMaximumArcNonErrorRadius()) {
-            // draw arc using QT
-            drawArcQT(uiCenter, uiRadii, toUCSAngleDegrees(arc->getData().startAngleDegrees), arc->getData().angularLength, path);
+        if (uiRadii.x <= getMaximumArcNonErrorRadius()){ // draw arc using QT
+            drawArcQT(uiCenter, uiRadii, startAngleDegrees, angularLengthDegrees, path);
         }
         else {
             // draw arc by visible segments, interpolation by splines
@@ -469,6 +544,9 @@ void RS_Painter::drawArcEntity(RS_Arc* arc, QPainterPath& path) {
                 std::vector<double> crossPoints(0);
 
                 double baseAngle = reversed ? arc->getAngle2() : arc->getAngle1();
+                if (!hasFiniteValue(baseAngle))
+                    return;
+
                 for (unsigned short i = 0; i < 4; i++) {
                     RS_Line line{vertex.at(i), vertex.at((i + 1) % 4)};
                     auto vpIts = RS_Information::getIntersection(arc, &line, true);
@@ -482,15 +560,19 @@ void RS_Painter::drawArcEntity(RS_Arc* arc, QPainterPath& path) {
                         if (std::abs(std::remainder(ap2 - ap1, M_PI)) < RS_TOLERANCE_ANGLE) {
                             continue;
                         }
-                        crossPoints.push_back(RS_Math::getAngleDifference(baseAngle, center.angleTo(vp)));
+                        const double crossPoint = RS_Math::getAngleDifference(baseAngle, center.angleTo(vp));
+                        if (hasFiniteValue(crossPoint))
+                            crossPoints.push_back(crossPoint);
                     }
                 }
                 // start/end points of the arc
                 if (vpStart.isInWindowOrdered(wcsBoundingMinP, wcsBoundingMaxP)) {
                     crossPoints.push_back(0.);
                 }
-                if (vpEnd.isInWindowOrdered(wcsBoundingMinP, wcsBoundingMaxP)) {
-                    crossPoints.push_back(arc->getAngleLength());
+                if (vpEnd.isInWindowOrdered(wcsBoundingBox.minP(), wcsBoundingBox.maxP())) {
+                    const double angleLength = arc->getAngleLength();
+                    if (hasFiniteValue(angleLength))
+                        crossPoints.push_back(angleLength);
                 }
 
                 std::sort(crossPoints.begin(), crossPoints.end());
@@ -523,8 +605,16 @@ void RS_Painter::drawArcEntity(RS_Arc* arc, QPainterPath& path) {
 
 #define STRAIGHT_ARC_INTERPOLATION_NO
 
-void RS_Painter::drawArcSegmentBySplinePointsUI(const RS_Vector& uiCenter, const double uiRadiusX, const double startAngleRad,
-                                                const double angularLengthRad, QPainterPath& path) {
+void RS_Painter::drawArcSegmentBySplinePointsUI(
+    const RS_Vector& uiCenter, double uiRadiusX, double startAngleRad, double angularLengthRad, QPainterPath &path) {
+    if (!hasFiniteVector(uiCenter)
+        || !hasFiniteValue(uiRadiusX)
+        || uiRadiusX <= 0.
+        || !hasFiniteValue(startAngleRad)
+        || !hasFiniteValue(angularLengthRad)) {
+        return;
+    }
+
     // Issue #2035
     // Estimate the rendering error by using a quadratic bezier to render an arc. The bezier
     // curve(lc_splinepoints) is defined by a set of equidistant arc points
@@ -535,11 +625,16 @@ void RS_Painter::drawArcSegmentBySplinePointsUI(const RS_Vector& uiCenter, const
     // dA < 2 (2/r)^{1/4}
     // The number of points needed is by angularLength/dA
     const double dA = 2. * pow(2. / uiRadiusX, 1. / 4.);
-    int arcPoints = static_cast<int>(ceil(std::abs(angularLengthRad) / dA));
+    if (!hasFiniteValue(dA) || dA <= 0.)
+        return;
+
+    int arcPoints = int(ceil(std::abs(angularLengthRad) / dA));
     // At minimum control points: 3
     arcPoints = std::max(2, arcPoints);
 
     const double deltaAngleRad = angularLengthRad / arcPoints;
+    if (!hasFiniteValue(deltaAngleRad))
+        return;
 
 #ifdef STRAIGHT_ARC_INTERPOLATION
     double angle = startAngleRad;
@@ -592,6 +687,9 @@ void RS_Painter::drawArcSplinePointsUI(const std::vector<RS_Vector>& uiControlPo
         return;
     }
 
+    if (!std::all_of(uiControlPoints.begin(), uiControlPoints.end(), hasFiniteVector))
+        return;
+
     RS_Vector vStart = uiControlPoints.front();
 
     path.moveTo(QPointF(vStart.x, vStart.y));
@@ -609,12 +707,18 @@ void RS_Painter::drawArcSplinePointsUI(const std::vector<RS_Vector>& uiControlPo
             path.quadTo(QPointF(cp1.x, cp1.y), QPointF(cp2.x, cp2.y));
         }
         else {
-            RS_Vector vEnd = (cp1 + cp2) / 2.0;
+            vEnd = (cp1 + cp2) / 2.0;
+            if (!hasFiniteVector(vEnd))
+                return;
+
             path.quadTo(QPointF(cp1.x, cp1.y), QPointF(vEnd.x, vEnd.y));
 
             for (size_t i = 2; i < n - 2; i++) {
                 const RS_Vector& cpi = uiControlPoints[i];
                 vEnd = (cpi + uiControlPoints[i + 1]) / 2.0;
+                if (!hasFiniteVector(vEnd))
+                    return;
+
                 path.quadTo(QPointF(cpi.x, cpi.y), QPointF(vEnd.x, vEnd.y));
 #ifdef DEBUG_ARC_RENDERING
                 drawPointEntityUI(cpi.x, cpi.y, 2, 15); drawPointEntityUI(vEnd.x, vEnd.y, 4, 15);
@@ -636,27 +740,44 @@ void RS_Painter::drawArcQT(const RS_Vector& uiCenter, const RS_Vector& uiRadii, 
                            const double angularLength, QPainterPath& path) {
     // at the endpoints of the arcs due to internal interpolations.
     // For some cases it's acceptable, however, so lets user's preference decide
-    const RS_Vector minCorner = uiCenter - uiRadii;
-    const RS_Vector uiSize = uiRadii + uiRadii;
+    RS_Vector minCorner = uiCenter - uiRadii;
+    RS_Vector uiSize = uiRadii + uiRadii;
+    if (!hasUsableArcParameters(minCorner.x, minCorner.y, uiSize.x, uiSize.y, uiStartAngleDegrees, angularLength))
+        return;
+
     path.arcMoveTo(minCorner.x, minCorner.y, uiSize.x, uiSize.y, uiStartAngleDegrees);
     path.arcTo(minCorner.x, minCorner.y, uiSize.x, uiSize.y, uiStartAngleDegrees, angularLength);
 }
 
-void RS_Painter::drawArcInterpolatedByLines(const RS_Vector& uiCenter, const double uiRadiusX, const double uiStartAngleDegrees,
-                                            const double angularLength, QPainterPath& path) const {
+void RS_Painter::drawArcInterpolatedByLines(const RS_Vector& uiCenter, double uiRadiusX, double uiStartAngleDegrees,
+                                            double angularLength, QPainterPath &path) const {
+    if (!hasFiniteVector(uiCenter)
+        || !hasFiniteValue(uiRadiusX)
+        || uiRadiusX <= 0.
+        || !hasFiniteValue(uiStartAngleDegrees)
+        || !hasFiniteValue(angularLength)) {
+        return;
+    }
+
     // draw arc interpolated by a set of line segments.
     // This is more precise drawing for arc's endpoints, yet in general slower(?) by performance.
     // Also, with too high allowed tolerance, arcs may be drawn not smoothly.
 
-    const double angularLengthRad = RS_Math::deg2rad(angularLength);
+    double angularLengthRad = RS_Math::deg2rad(angularLength);
+    if (!hasFiniteValue(angularLengthRad))
+        return;
+
     // actually, this is not only tolerance, but also arc's height (sagitta, https://en.wikipedia.org/wiki/Sagitta_(geometry))
     // sagitta will represent max distance between true arc and line chord that is used for interpolation
     // so, based on expected sagitta we'll calculate the angle for single line interpolation segment
 
     int stepsCount = 0;
-    if (m_arcRenderInterpolationAngleFixed) {
+    if (arcRenderInterpolationAngleFixed){
+        if (!hasFiniteValue(arcRenderInterpolationAngleValue) || std::abs(arcRenderInterpolationAngleValue) < RS_TOLERANCE_ANGLE)
+            return;
+
         // this is fixes amount of steps - based on line segment angle
-        stepsCount = static_cast<int>(angularLengthRad / m_arcRenderInterpolationAngleValue) + 2;
+        stepsCount = int(std::abs(angularLengthRad / arcRenderInterpolationAngleValue)) + 2;
     }
     else {
         // acos(x) loses significant digits, if x is close to 0
@@ -665,17 +786,29 @@ void RS_Painter::drawArcInterpolatedByLines(const RS_Vector& uiCenter, const dou
         const double relativeError = 0.5 * std::abs(m_arcRenderInterpolationMaxSagitta) / uiRadiusX;
         // avoid domain error of std::asin() by requiring: lineSegmentAngle < Pi/2
         const double lineSegmentAngle = 4. * std::asin(std::min(relativeError, std::sin(M_PI / 8.)));
-        const double stepsTolerance = std::abs(angularLengthRad) / lineSegmentAngle;
-        stepsCount = static_cast<int>(ceil(stepsTolerance)) + 2;
-    }
-    //        LC_ERR << "ARC steps: " << stepsTol <<  " " << steps << " len " << angularLength << " start " << uiStartAngleDegrees;
-    const double uiStartAngleRad = RS_Math::deg2rad(uiStartAngleDegrees);
+        if (!hasFiniteValue(lineSegmentAngle) || lineSegmentAngle <= 0.)
+            return;
 
-    const double deltaAngleRad = angularLengthRad / stepsCount;
+        double stepsTolerance = std::abs(angularLengthRad) / lineSegmentAngle;
+        stepsCount = int(ceil(stepsTolerance)) + 2;
+    }
+    if (stepsCount <= 0)
+        return;
+
+    //        LC_ERR << "ARC steps: " << stepsTol <<  " " << steps << " len " << angularLength << " start " << uiStartAngleDegrees;
+    double uiStartAngleRad = RS_Math::deg2rad(uiStartAngleDegrees);
+    if (!hasFiniteValue(uiStartAngleRad))
+        return;
+
+    double deltaAngleRad = angularLengthRad / stepsCount;
+    if (!hasFiniteValue(deltaAngleRad))
+        return;
 
     // TODO: handle ui angle orientation
     RS_Vector fromCenter = RS_Vector{-uiStartAngleRad} * uiRadiusX;
     RS_Vector uiPosition = uiCenter + fromCenter;
+    if (!hasFiniteVector(uiPosition))
+        return;
 
     path.moveTo(QPointF{uiPosition.x, uiPosition.y});
 
@@ -683,6 +816,9 @@ void RS_Painter::drawArcInterpolatedByLines(const RS_Vector& uiCenter, const dou
     for (int i = 1; i <= stepsCount; ++i) {
         double a = uiStartAngleRad + deltaAngleRad * i;
         RS_Vector uiLinePoint = uiCenter + RS_Vector{-a} * uiRadiusX;
+        if (!hasFiniteVector(uiLinePoint))
+            return;
+
         path.lineTo(QPointF(uiLinePoint.x, uiLinePoint.y));
     }
 #else
@@ -693,6 +829,9 @@ void RS_Painter::drawArcInterpolatedByLines(const RS_Vector& uiCenter, const dou
         // the approach is described, for example, here https://stackoverflow.com/a/6669751 and "Angle sum and difference identities"
         fromCenter.rotate(deltaRotation);
         uiPosition = uiCenter + fromCenter;
+        if (!hasFiniteVector(uiPosition))
+            return;
+
         path.lineTo(QPointF(uiPosition.x, uiPosition.y));
     }
     // complete interpolation - to the end point of the arc
@@ -710,8 +849,11 @@ void RS_Painter::drawCircleWCS(const RS_Vector& wcsCenter, const double wcsRadiu
     drawCircleUI(uiCenter, uiRadius);
 }
 
-void RS_Painter::drawCircleUI(const RS_Vector& uiCenter, const double uiRadius) {
-    if (uiRadius < m_minCircleDrawingRadius) {
+void RS_Painter::drawCircleUI(const RS_Vector& uiCenter, double uiRadius){
+    if (!hasFiniteVector(uiCenter) || !hasFiniteValue(uiRadius) || uiRadius <= 0.)
+        return;
+
+    if (uiRadius < minCircleDrawingRadius){
         QPainter::drawPoint(QPointF(uiCenter.x, uiCenter.y));
     }
     else {
@@ -731,8 +873,11 @@ void RS_Painter::drawCircleUI(const RS_Vector& uiCenter, const double uiRadius) 
     }
 }
 
-void RS_Painter::drawCircleUIDirect(const RS_Vector& uiPos, const double uiRadius) {
-    if (uiRadius < m_minCircleDrawingRadius) {
+void RS_Painter::drawCircleUIDirect(const RS_Vector& uiPos, double uiRadius) {
+    if (!hasFiniteVector(uiPos) || !hasFiniteValue(uiRadius) || uiRadius <= 0.)
+        return;
+
+    if (uiRadius < minCircleDrawingRadius){
         QPainter::drawPoint(QPointF(uiPos.x, uiPos.y));
     }
     else {
@@ -749,8 +894,16 @@ void RS_Painter::drawEllipseWCS(const RS_Vector& wcsCenter, const double wcsMajo
     drawEllipseUI(uiCenter, {uiMajorRadius, uiMinorRadius}, uiAngleDegrees);
 }
 
-void RS_Painter::drawEllipseUI(const RS_Vector& uiCenter, const RS_Vector& uiRadii, const double uiAngleDegrees) {
-    if (uiRadii.x < m_minEllipseMajorRadius) {
+void RS_Painter::drawEllipseUI(const RS_Vector& uiCenter, const RS_Vector& uiRadii, double uiAngleDegrees) {
+    if (!hasFiniteVector(uiCenter)
+        || !hasFiniteVector(uiRadii)
+        || uiRadii.x <= 0.
+        || uiRadii.y <= 0.
+        || !hasFiniteValue(uiAngleDegrees)) {
+        return;
+    }
+
+    if (uiRadii.x < minEllipseMajorRadius){
         // as we have everything there, no need to transform, and save/restore the painter context
         QPainter::drawPoint(QPointF(uiCenter.x, uiCenter.y));
     }
@@ -804,6 +957,16 @@ void RS_Painter::drawEllipseArcWCS(const RS_Vector& wcsCenter, double wcsMajorRa
 
 void RS_Painter::drawEllipseArcUI(const RS_Vector& uiCenter, const RS_Vector& uiRadii, double uiMajorAngleDegrees,
                                    double angle1Degrees, double angularLength, bool reversed) {
+    if (!hasFiniteVector(uiCenter)
+        || !hasFiniteVector(uiRadii)
+        || uiRadii.x <= 0.
+        || uiRadii.y <= 0.
+        || !hasFiniteValue(uiMajorAngleDegrees)
+        || !hasFiniteValue(angle1Degrees)
+        || !hasFiniteValue(angularLength)) {
+        return;
+    }
+
     // TODO - it also should be refactored to be consistent with drawEllipseUI()
     if (std::max(uiRadii.x, uiRadii.y) < m_minEllipseMajorRadius) {
         QPainter::drawPoint(QPointF(uiCenter.x, uiCenter.y));
@@ -830,8 +993,12 @@ void RS_Painter::drawEllipseArcUI(const RS_Vector& uiCenter, const RS_Vector& ui
     }
 }
 
-void RS_Painter::addEllipseArcToPath(QPainterPath& localPath, const RS_Vector& uiRadii, const double startAngleDeg,
-                                     const double angularLengthDeg, const bool useSpline) const {
+void RS_Painter::addEllipseArcToPath(QPainterPath& localPath, const RS_Vector& uiRadii, double startAngleDeg, double angularLengthDeg, bool useSpline) {
+    if (!hasFiniteVector(uiRadii) || uiRadii.x <= 0. || uiRadii.y <= 0.
+        || !hasFiniteValue(startAngleDeg) || !hasFiniteValue(angularLengthDeg)) {
+        return;
+    }
+
     if (useSpline) {
       // The active QTransform already accounts for the ellipse's major-axis
       // rotation, so startAngleDeg / angularLengthDeg are in the canonical
@@ -848,7 +1015,16 @@ void RS_Painter::addEllipseArcToPath(QPainterPath& localPath, const RS_Vector& u
     }
 }
 
-void RS_Painter::drawEllipseSegmentBySplinePointsUI(const RS_Vector& uiRadii, double startRad, double lenRad, QPainterPath &path, bool closed) const {
+void RS_Painter::drawEllipseSegmentBySplinePointsUI(const RS_Vector& uiRadii, double startRad, double lenRad, QPainterPath &path, bool closed)
+{
+  if (!hasFiniteVector(uiRadii)
+      || uiRadii.x <= 0.
+      || uiRadii.y <= 0.
+      || !hasFiniteValue(startRad)
+      || !hasFiniteValue(lenRad)) {
+    return;
+  }
+
   // The interpolating-quadratic-spline error for samples taken uniformly in the
   // ellipse angle parameter is e_max = max(a,b)^3 * h^4 / (24 * min(a,b)^2)
   // (derivation in RS_Ellipse::createPainterPath). Using just max(a,b) as in a
@@ -863,10 +1039,15 @@ void RS_Painter::drawEllipseSegmentBySplinePointsUI(const RS_Vector& uiRadii, do
                        ? (maxSemi * maxSemi * maxSemi) / (minSemi * minSemi)
                        : maxSemi;
   const double dParam = std::pow(12. / r, 1. / 4.);
+  if (!hasFiniteValue(dParam) || dParam <= 0.)
+    return;
+
   int numSegments = std::max(1, int(std::ceil(std::abs(lenRad) / dParam)));
   // Don't duplicate first point for closed
   int numPoints = closed ? numSegments : numSegments + 1;
   double delta = lenRad / numSegments;
+  if (!hasFiniteValue(delta))
+    return;
 
   LC_SplinePointsData data;
   data.closed = closed;
@@ -887,6 +1068,9 @@ void RS_Painter::drawEllipseSegmentBySplinePointsUI(const RS_Vector& uiRadii, do
     // drawEllipseArcUI, we must seed the start position here to avoid a phantom
     // segment from (0,0).
     if (!closed && !controlPoints.empty()) {
+      if (!hasFiniteVector(controlPoints.front()))
+        return;
+
       path.moveTo(QPointF(controlPoints.front().x, controlPoints.front().y));
     }
     addSplinePointsToPath(controlPoints, closed, path);
@@ -897,7 +1081,9 @@ void RS_Painter::addSplinePointsToPath(const std::vector<RS_Vector> &uiControlPo
     const size_t n = uiControlPoints.size();
     if(n < 2){
         return;
-    }
+
+    if (!std::all_of(uiControlPoints.begin(), uiControlPoints.end(), hasFiniteVector))
+        return;
 
     RS_Vector vStart = uiControlPoints.front();
     RS_Vector vControl(false), vEnd(false);
@@ -914,14 +1100,23 @@ void RS_Painter::addSplinePointsToPath(const std::vector<RS_Vector> &uiControlPo
             const RS_Vector &cp0 = uiControlPoints[0];
             const RS_Vector &cpNMinus1 = uiControlPoints[n - 1];
             vStart = (cpNMinus1 + cp0) / 2.0;
+            if (!hasFiniteVector(vStart))
+                return;
+
             qPath.moveTo(QPointF(vStart.x, vStart.y));
 
             vEnd = (cp0 + uiControlPoints[1]) / 2.0;
+            if (!hasFiniteVector(vEnd))
+                return;
+
             qPath.quadTo(QPointF(cp0.x, cp0.y), QPointF(vEnd.x, vEnd.y));
 
             for (size_t i = 1; i < n - 1; i++) {
                 const RS_Vector &cpi = uiControlPoints[i];
                 vEnd = (cpi + uiControlPoints[i + 1]) / 2.0;
+                if (!hasFiniteVector(vEnd))
+                    return;
+
                 qPath.quadTo(QPointF(cpi.x, cpi.y), QPointF(vEnd.x, vEnd.y));
             }
             qPath.quadTo(QPointF(cpNMinus1.x, cpNMinus1.y), QPointF(vStart.x, vStart.y));
@@ -939,11 +1134,17 @@ void RS_Painter::addSplinePointsToPath(const std::vector<RS_Vector> &uiControlPo
             }
             else {
                 vEnd = (cp1 + cp2) / 2.0;
+                if (!hasFiniteVector(vEnd))
+                    return;
+
                 qPath.quadTo(QPointF(cp1.x, cp1.y), QPointF(vEnd.x, vEnd.y));
 
                 for (size_t i = 2; i < n - 2; i++) {
                     const RS_Vector& cpi = uiControlPoints[i];
                     vEnd = (cpi + uiControlPoints[i + 1]) / 2.0;
+                    if (!hasFiniteVector(vEnd))
+                        return;
+
                     qPath.quadTo(QPointF(cpi.x, cpi.y), QPointF(vEnd.x, vEnd.y));
 #ifdef DEBUG_RENDER_SPLINEPOINTS
                     drawPointEntityUI(cpi.x, cpi.y, 2, 15);
@@ -986,20 +1187,26 @@ QPainterPath RS_Painter::createSolidFillPath(const RS_EntityContainer& contour) 
                 continue;
             }
 
-            if (loopPath.isEmpty()) {
-                RS_Vector startPoint = e->getStartpoint();
-                // Issue #2202: complete circles/ellipses have no start point defined
-                // getStartpoint() should return RS_Vector{false}
-                hasStart = startPoint.valid;
-                if (hasStart) {
-                    uiStart = toUiPointF(startPoint);
-                }
-                loopPath.moveTo(uiStart);
-            }
-
             switch (e->rtti()) {
-                case RS2::EntityLine: {
-                    loopPath.lineTo(toUiPointF(e->getEndpoint()));
+            case RS2::EntityLine: {
+                const QPointF uiEndpoint = toUiPointF(e->getEndpoint());
+                if (!hasFinitePoint(uiEndpoint))
+                    break;
+
+                if (loopPath.isEmpty()) {
+                    const RS_Vector startPoint = e->getStartpoint();
+                    if (!hasFiniteVector(startPoint))
+                        break;
+
+                    uiStart = toUiPointF(startPoint);
+                    if (!hasFinitePoint(uiStart))
+                        break;
+
+                    hasStart = true;
+                    loopPath.moveTo(uiStart);
+                }
+                loopPath.lineTo(uiEndpoint);
+            }
                     break;
                 }
                 case RS2::EntityArc: {
@@ -1009,6 +1216,20 @@ QPainterPath RS_Painter::createSolidFillPath(const RS_EntityContainer& contour) 
                     const double angularLength = RS_Math::rad2deg(arc->isReversed() ? -arc->getAngleLength() : arc->getAngleLength());
                     QPointF uiCenter = toUiPointF(arc->getCenter());
                     QRectF arcRect{uiCenter - QPointF{radius, radius}, QSizeF{radius, radius} * 2};
+                if (!hasUsableArcParameters(arcRect, startAngleDegrees, angularLength))
+                    break;
+
+                if (loopPath.isEmpty()) {
+                    const RS_Vector startPoint = e->getStartpoint();
+                    if (startPoint.valid) {
+                        uiStart = toUiPointF(startPoint);
+                        if (!hasFinitePoint(uiStart))
+                            break;
+
+                        hasStart = true;
+                        loopPath.moveTo(uiStart);
+                    }
+                }
                     loopPath.arcMoveTo(arcRect, startAngleDegrees);
                     loopPath.arcTo(arcRect, startAngleDegrees, angularLength);
                     break;
@@ -1016,7 +1237,10 @@ QPainterPath RS_Painter::createSolidFillPath(const RS_EntityContainer& contour) 
                 case RS2::EntityCircle: {
                     const auto* circle = static_cast<RS_Circle*>(e);
                     QPointF uiCenter = toUiPointF(circle->getCenter());
-                    const double radius = toGuiDX(circle->getRadius());
+                double radius=toGuiDX(circle->getRadius());
+                if (!hasUsableEllipseParameters(uiCenter, radius, radius))
+                    break;
+
                     loopPath.moveTo(uiCenter);
                     loopPath.addEllipse(uiCenter, radius, radius);
                     break;
@@ -1029,20 +1253,42 @@ QPainterPath RS_Painter::createSolidFillPath(const RS_EntityContainer& contour) 
                     QRectF ellipseRect{-QPointF{majorRadius, minorRadius}, QSizeF{majorRadius, minorRadius} * 2};
                     QPainterPath ellipsePath;
                     if (ellipse->isEllipticArc()) {
-                        const double startAngle = toUcsDegrees(ellipse->getAngle1());
-                        const double angularLength = RS_Math::rad2deg(
-                            ellipse->isReversed() ? -ellipse->getAngleLength() : ellipse->getAngleLength());
+                    double startAngle = toUcsDegrees(ellipse->getAngle1());
+                    double angularLength = RS_Math::rad2deg(ellipse->isReversed() ? - ellipse->getAngleLength() : ellipse->getAngleLength());
+                    if (!hasUsableArcParameters(ellipseRect, startAngle, angularLength))
+                        break;
+
                         ellipsePath.arcMoveTo(ellipseRect, startAngle);
                         ellipsePath.arcTo(ellipseRect, startAngle, angularLength);
-                    }
-                    else {
+                } else {
+                    if (!hasUsableArcParameters(ellipseRect, 0., 360.))
+                        break;
+
                         ellipsePath.addEllipse(ellipseRect);
                     }
 
                     QTransform ellipseTransform;
                     QPointF uiCenter = toUiPointF(ellipse->getCenter());
+                if (!hasFinitePoint(uiCenter))
+                    break;
+
+                if (loopPath.isEmpty() && ellipse->isEllipticArc()) {
+                    const RS_Vector startPoint = e->getStartpoint();
+                    if (startPoint.valid) {
+                        uiStart = toUiPointF(startPoint);
+                        if (!hasFinitePoint(uiStart))
+                            break;
+
+                        hasStart = true;
+                        loopPath.moveTo(uiStart);
+                    }
+                }
+
                     ellipseTransform.translate(uiCenter.x(), uiCenter.y());
                     const double ellipseAngle = toUcsDegrees(ellipse->getAngle());
+                if (!hasFiniteValue(ellipseAngle))
+                    break;
+
                     ellipseTransform.rotate(-ellipseAngle);
                     loopPath.addPath(ellipseTransform.map(ellipsePath));
                     break;
@@ -1052,7 +1298,7 @@ QPainterPath RS_Painter::createSolidFillPath(const RS_EntityContainer& contour) 
             }
         }
         // Issue #2202: circles/ellipses have no start point defined
-        if (hasStart) {
+        if (hasStart && !loopPath.isEmpty())
             loopPath.lineTo(uiStart);
         }
         path.addPath(loopPath);
@@ -1226,7 +1472,9 @@ void RS_Painter::fillRect(const int x1, const int y1, const int w, const int h, 
 void RS_Painter::fillPolygonUI(const QPolygonF& uiPolygon) {
     if (uiPolygon.size() <= 2) {
         return;
-    }
+
+    if (!std::all_of(uiPolygon.begin(), uiPolygon.end(), hasFinitePoint))
+        return;
 
     const QBrush brushSaved = brush();
     setBrushColor(RS_Color(pen().color()));
@@ -1234,7 +1482,10 @@ void RS_Painter::fillPolygonUI(const QPolygonF& uiPolygon) {
     QPainter::setBrush(brushSaved);
 }
 
-void RS_Painter::fillEllipseUI(const QPointF& point_f, const double radiusX, const double radiusY) {
+void RS_Painter::fillEllipseUI(QPointF uiCenter, double radiusX, double radiusY) {
+    if (!hasUsableEllipseParameters(uiCenter, radiusX, radiusY))
+        return;
+
     const QBrush brushSaved = brush();
     setBrushColor(RS_Color(pen().color()));
     QPainter::drawEllipse(point_f, radiusX, radiusY);
@@ -1735,7 +1986,16 @@ void RS_Painter::pathForParametricCurve(
     QPainterPath &path, const std::vector<double> &paramPoints,
     const std::function<RS_Vector(double)> &getPointAtParam,
     double approxRadius) const {
+  if (paramPoints.size() < 2 || !hasFiniteValue(approxRadius) || approxRadius <= 0.)
+    return;
+
+  if (!std::all_of(paramPoints.begin(), paramPoints.end(), hasFiniteValue))
+    return;
+
   double scale = toGuiDX(1.);
+  if (!hasFiniteValue(scale) || scale <= 0.)
+    return;
+
   double maxErrorPx = 0.5; // Max approximation error in pixels
   // Normalized error e_r = maxErrorPx / (approxRadius * scale)
   double e_r = maxErrorPx / (approxRadius * scale);
@@ -1744,12 +2004,15 @@ void RS_Painter::pathForParametricCurve(
   double theta = std::pow(24 * e_r, 0.25);
 
   RS_Vector startPos = toGui(getPointAtParam(paramPoints.front()));
+  if (!hasFiniteVector(startPos))
+    return;
+
   path.moveTo({startPos.x, startPos.y});
   for (size_t i = 1; i < paramPoints.size(); ++i) {
     double d1 = paramPoints[i - 1];
     double d2 = paramPoints[i];
     double segmentLength = d2 - d1;
-    if (segmentLength < RS_TOLERANCE_ANGLE)
+    if (!hasFiniteValue(segmentLength) || segmentLength < RS_TOLERANCE_ANGLE)
       continue;
 
     if (!std::isnormal(theta) || theta < RS_TOLERANCE_ANGLE)
@@ -1766,10 +2029,20 @@ void RS_Painter::pathForParametricCurve(
 
     std::vector<RS_Vector> samples;
     double step = segmentLength / numSamples;
+    if (!hasFiniteValue(step))
+      continue;
+
     for (int j = 0; j <= numSamples; ++j) {
       double param = d1 + j * step;
-      samples.push_back(getPointAtParam(param));
+      RS_Vector sample = getPointAtParam(param);
+      if (!hasFiniteVector(sample)) {
+        samples.clear();
+        break;
+      }
+      samples.push_back(sample);
     }
+    if (samples.empty())
+      continue;
 
     // Approximate with LC_SplinePoints (quadratic Bezier chain)
     LC_SplinePointsData spd(false, false); // Open, not cut
@@ -1784,8 +2057,16 @@ void RS_Painter::pathForParametricCurve(
 
     std::vector<RS_Vector> uiCps;
     for (const auto &cp : cps) {
-      uiCps.push_back(toGui(cp));
+      RS_Vector uiCp = toGui(cp);
+      if (!hasFiniteVector(uiCp)) {
+        uiCps.clear();
+        break;
+      }
+      uiCps.push_back(uiCp);
     }
+    if (uiCps.empty())
+      continue;
+
     addSplinePointsToPath(uiCps, false, path);
   }
 }
@@ -1800,6 +2081,14 @@ void RS_Painter::pathForEntity(
     double approxRadius
     ) const
 {
+  if (entity == nullptr
+      || !hasFiniteValue(baseAngle)
+      || !hasFiniteValue(fullAngleLength)
+      || !hasFiniteValue(approxRadius)
+      || approxRadius <= 0.) {
+    return;
+  }
+
   const LC_Rect& vpRect = getWcsBoundingRect();
   std::vector<double> crossPoints;
   // Compute intersections with viewport borders
@@ -1811,7 +2100,9 @@ void RS_Painter::pathForEntity(
       const double ap1 = entity->getTangentDirection(vp).angle();
       const double ap2 = line.getTangentDirection(vp).angle();
       if (std::abs(RS_Math::correctAngle(ap2 - ap1)) > RS_TOLERANCE_ANGLE) {
-        crossPoints.push_back(RS_Math::getAngleDifference(baseAngle, getParamFunc(vp)));
+        const double param = RS_Math::getAngleDifference(baseAngle, getParamFunc(vp));
+        if (hasFiniteValue(param))
+          crossPoints.push_back(param);
       }
     }
   }

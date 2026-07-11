@@ -28,6 +28,9 @@
 #ifndef RS_GRAPHICVIEW_H
 #define RS_GRAPHICVIEW_H
 
+#include <memory>
+
+#include <QIcon>
 #include <QWidget>
 #include <memory>
 

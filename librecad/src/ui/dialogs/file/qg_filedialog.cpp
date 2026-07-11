@@ -49,6 +49,10 @@ namespace {
                 return QString(".cxf");
 #ifdef DWGSUPPORT
             case RS2::FormatDWG:
+    case RS2::FormatDWG2004:
+    case RS2::FormatDWG2010:
+    case RS2::FormatDWG2013:
+    case RS2::FormatDWG2018:
                 return QString(".dwg");
 #endif
             default:

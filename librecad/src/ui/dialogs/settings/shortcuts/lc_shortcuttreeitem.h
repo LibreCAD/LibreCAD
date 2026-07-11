@@ -23,6 +23,8 @@
 #ifndef LC_SHORTCUTTREEITEM_H
 #define LC_SHORTCUTTREEITEM_H
 
+#include <QIcon>
+
 #include "lc_shortcutinfo.h"
 
 class LC_ShortcutTreeItem{

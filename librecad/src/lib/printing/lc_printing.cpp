@@ -128,7 +128,16 @@ void LC_Printing::print(QC_MDIWindow& mdiWindow, PrinterType printerType) {
     }
     // qDebug()<<"paper size=("<<printer.paperSize(QPrinter::Millimeter).width()<<", "<<printer.paperSize(QPrinter::Millimeter).height()<<")";
     printer.setPageOrientation(landscape ? QPageLayout::Landscape : QPageLayout::Portrait);
-    QMarginsF paperMargins{ps->getMarginLeftMm(), ps->getMarginRightMm(), ps->getMarginTopMm(), ps->getMarginBottomMm()};
+    // PR 12 — straightened argument order to match Qt's canonical
+    // QMarginsF(left, top, right, bottom) signature. Pre-PR 12 the call
+    // site passed (left, right, top, bottom) — a swap masked by the
+    // symmetric default margins most documents ship with. activeLayoutMargins()
+    // returns {left, top, right, bottom}; pass elements in the same order.
+    const auto printMargins = graphic->activeLayoutMargins();
+    QMarginsF paperMargins{printMargins[0],   // left
+                           printMargins[1],   // top
+                           printMargins[2],   // right
+                           printMargins[3]};  // bottom
     printer.setPageMargins(paperMargins, QPageLayout::Millimeter);
 
     // printer setup:

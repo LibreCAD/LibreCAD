@@ -220,9 +220,13 @@ void RS_LayerList::fireLayerEdited(RS_Layer* layer) {
  * \p nullptr if no such layer was found.
  */
 RS_Layer* RS_LayerList::find(const QString& name) {
+    // fixme - sand - merge - copypaste
+    // NFC-normalize both sides so a layer round-tripped through tools that
+    // emit decomposed (NFD) Unicode still matches a composed (NFC) lookup.
+    const QString k = name.normalized(QString::NormalizationForm_C);
     RS_Layer* ret = nullptr;
-    for (const auto l : std::as_const(m_layers)) {
-        if (l->getName() == name) {
+    for (auto l : m_layers) {
+        if (l->getName().normalized(QString::NormalizationForm_C) == k) {
             ret = l;
             break;
         }
@@ -235,9 +239,11 @@ RS_Layer* RS_LayerList::find(const QString& name) {
  * was not found.
  */
 int RS_LayerList::getIndex(const QString& name) {
+    // fixme - sand - merge - copypaste
+    const QString k = name.normalized(QString::NormalizationForm_C);
     int ret = 0;
-    for (const auto l : std::as_const(m_layers)) {
-        if (l->getName() == name) {
+    for (auto l : m_layers) {
+        if (l->getName().normalized(QString::NormalizationForm_C) == k) {
             return ret;
         }
         ret++;

@@ -213,8 +213,7 @@ public:
 */
 class Plug_Entity {
 public:
-    virtual ~Plug_Entity() {
-    }
+    virtual ~Plug_Entity() = default;
 
     virtual int getEntityType();
 
