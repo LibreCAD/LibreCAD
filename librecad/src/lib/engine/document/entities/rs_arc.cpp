@@ -844,7 +844,7 @@ void RS_Arc::createPainterPath(RS_Painter* painter, QPainterPath& path) const {
 }
 
 void RS_Arc::draw(RS_Painter* painter) {
-// fixme - sand - merge - runtime overhead. May be checked only once, not in EVERY DRAW!!!!
+// fixme - sand - merge - runtime overhead and render performance degradatation. May be checked only once, not in EVERY DRAW!!!! Just a silly check
   if (painter == nullptr
       || !m_data.center.valid
       || !std::isfinite(m_data.center.x)

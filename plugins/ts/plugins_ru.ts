@@ -29,12 +29,6 @@
     <message>
         <location filename="../pointstocsv/pointstocsv.cpp" line="41"/>
         <source>Export to csv test tip...</source>
-        <translation>Экспорт в CSV...</translation>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../pointstocsv/pointstocsv.cpp" line="41"/>
-        <source>Export to csv test tip...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -134,12 +128,6 @@ first base, second base, first target, second target.</source>
         <source>Select point for center of gear and press left mouse button.
 Then fill in the fields and press &apos;Accept&apos; button.</source>
         <translation>Выберите точку для центра шестерни и нажмите левую кнопку мыши. Затем заполните поля и нажмите кнопку «Принять».</translation>
-    </message>
-    <message>
-        <location filename="../gear/gear.cpp" line="42"/>
-        <source>Select point for center of gear and press left mouse button.
-Then fill in the fields and press &apos;Accept&apos; button.</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -691,7 +679,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
         <translation>Подсказка: разделить...</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="52"/>
+        <location filename="../divide/divide.cpp" line="53"/>
         <source>Select a line, circle or arc and press return</source>
         <translation>Выберите линию, окружность или дугу и нажмите клавишу Return</translation>
     </message>
@@ -761,8 +749,8 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
         <translation>до точки</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="484"/>
-        <location filename="../divide/divide.cpp" line="511"/>
+        <location filename="../divide/divide.cpp" line="482"/>
+        <location filename="../divide/divide.cpp" line="509"/>
         <source>length</source>
         <translation>длина</translation>
     </message>
@@ -1120,22 +1108,22 @@ anti-clockwise.</source>
         <translation>Отмена</translation>
     </message>
     <message>
-        <location filename="../sample/sample.cpp" line="106"/>
+        <location filename="../sample/sample.cpp" line="105"/>
         <source>Start X is empty</source>
         <translation>Пустая начальная X-координата</translation>
     </message>
     <message>
-        <location filename="../sample/sample.cpp" line="107"/>
+        <location filename="../sample/sample.cpp" line="106"/>
         <source>Start Y is empty</source>
         <translation>Пустая начальная Y-координата</translation>
     </message>
     <message>
-        <location filename="../sample/sample.cpp" line="108"/>
+        <location filename="../sample/sample.cpp" line="107"/>
         <source>End X is empty</source>
         <translation>Пустая конечная X-координата</translation>
     </message>
     <message>
-        <location filename="../sample/sample.cpp" line="109"/>
+        <location filename="../sample/sample.cpp" line="108"/>
         <source>End Y is empty</source>
         <translation>Пустая конечная Y-координата</translation>
     </message>

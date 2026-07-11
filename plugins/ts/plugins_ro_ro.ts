@@ -490,177 +490,177 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
 <context>
     <name>dibPunto</name>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="221"/>
+        <location filename="../asciifile/asciifile.cpp" line="220"/>
         <source>Read ascii points</source>
         <translation>Citește punctele ASCII</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="227"/>
+        <location filename="../asciifile/asciifile.cpp" line="226"/>
         <source>File...</source>
         <translation>Fișier...</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="234"/>
+        <location filename="../asciifile/asciifile.cpp" line="233"/>
         <source>Format:</source>
         <translation>Format:</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="236"/>
+        <location filename="../asciifile/asciifile.cpp" line="235"/>
         <source>Space Separator</source>
         <translation>Separator spațiu</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="236"/>
+        <location filename="../asciifile/asciifile.cpp" line="235"/>
         <source>Tab Separator</source>
         <translation>Separator tab</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="236"/>
+        <location filename="../asciifile/asciifile.cpp" line="235"/>
         <source>Comma Separator</source>
         <translation>Separator virgulă</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="236"/>
+        <location filename="../asciifile/asciifile.cpp" line="235"/>
         <source>Space in Columns</source>
         <translation>Spațiu în coloane</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="236"/>
+        <location filename="../asciifile/asciifile.cpp" line="235"/>
         <source>*.odb for Psion 2</source>
         <translation>*.odb pentru Psion 2</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="238"/>
+        <location filename="../asciifile/asciifile.cpp" line="237"/>
         <source>Connect points</source>
         <translation>Conectează punctele</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="246"/>
+        <location filename="../asciifile/asciifile.cpp" line="245"/>
         <source>2D Point</source>
         <translation>Punct 2D</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="246"/>
+        <location filename="../asciifile/asciifile.cpp" line="245"/>
         <source>Draw 2D Point</source>
         <translation>Desenează un punct 2D</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="247"/>
+        <location filename="../asciifile/asciifile.cpp" line="246"/>
         <source>3D Point</source>
         <translation>Punct 3D</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="247"/>
+        <location filename="../asciifile/asciifile.cpp" line="246"/>
         <source>Draw 3D Point</source>
         <translation>Desenează un punct 3D</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="248"/>
+        <location filename="../asciifile/asciifile.cpp" line="247"/>
         <source>Point Number</source>
         <translation>Numărul punctului</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="248"/>
+        <location filename="../asciifile/asciifile.cpp" line="247"/>
         <source>Draw point number</source>
         <translation>Desenează numărul punctului</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="249"/>
+        <location filename="../asciifile/asciifile.cpp" line="248"/>
         <source>Point Elevation</source>
         <translation>Altitudinea punctului</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="249"/>
+        <location filename="../asciifile/asciifile.cpp" line="248"/>
         <source>Draw point elevation</source>
         <translation>Desenează altitudinea punctului</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="250"/>
+        <location filename="../asciifile/asciifile.cpp" line="249"/>
         <source>Point Code</source>
         <translation>Codul punctului</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="250"/>
+        <location filename="../asciifile/asciifile.cpp" line="249"/>
         <source>Draw point code</source>
         <translation>Desenează codul punctului</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="264"/>
+        <location filename="../asciifile/asciifile.cpp" line="263"/>
         <source>Accept</source>
         <translation>Acceptă</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="269"/>
+        <location filename="../asciifile/asciifile.cpp" line="268"/>
         <source>Cancel</source>
         <translation>Anulează</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="299"/>
+        <location filename="../asciifile/asciifile.cpp" line="298"/>
         <source>Select file</source>
         <translation>Selectează fișier</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="306"/>
+        <location filename="../asciifile/asciifile.cpp" line="304"/>
         <source>Point 2D layer is empty</source>
         <translation>Stratul 2D al punctelor este gol</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="309"/>
+        <location filename="../asciifile/asciifile.cpp" line="307"/>
         <source>Point 3D layer is empty</source>
         <translation>Stratul 3D al punctelor este gol</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="312"/>
+        <location filename="../asciifile/asciifile.cpp" line="310"/>
         <source>Point elevation layer is empty</source>
         <translation>Stratul de elevație al punctelor este gol</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="313"/>
+        <location filename="../asciifile/asciifile.cpp" line="311"/>
         <source>Point elevation height is empty</source>
         <translation>Înălțimea elevației punctelor este goală</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="314"/>
+        <location filename="../asciifile/asciifile.cpp" line="312"/>
         <source>Point elevation separation is empty</source>
         <translation>Spațierea elevației punctelor este goală</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="317"/>
+        <location filename="../asciifile/asciifile.cpp" line="315"/>
         <source>Point number layer is empty</source>
         <translation>Stratul cu numărul punctelor este gol</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="318"/>
+        <location filename="../asciifile/asciifile.cpp" line="316"/>
         <source>Point number height is empty</source>
         <translation>Înălțimea numărului punctelor este goală</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="319"/>
+        <location filename="../asciifile/asciifile.cpp" line="317"/>
         <source>Point number separation is empty</source>
         <translation>Spațierea numărului punctelor este goală</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="322"/>
+        <location filename="../asciifile/asciifile.cpp" line="320"/>
         <source>Point code layer is empty</source>
         <translation>Stratul cu codul punctelor este gol</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="323"/>
+        <location filename="../asciifile/asciifile.cpp" line="321"/>
         <source>Point code height is empty</source>
         <translation>Înălțimea codului punctelor este goală</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="324"/>
+        <location filename="../asciifile/asciifile.cpp" line="322"/>
         <source>Point code separation is empty</source>
         <translation>Spațierea codului punctelor este goală</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="360"/>
+        <location filename="../asciifile/asciifile.cpp" line="358"/>
         <source>The file %1 not exist</source>
         <translation>Fișierul %1 nu există</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="365"/>
+        <location filename="../asciifile/asciifile.cpp" line="363"/>
         <source>Can&apos;t open the file %1</source>
         <translation>Nu se poate deschide fișierul %1</translation>
     </message>
@@ -694,151 +694,151 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
         <translation>n</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="441"/>
+        <location filename="../divide/divide.cpp" line="439"/>
         <source>Empty Entity</source>
         <translation>Entitate goală</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="449"/>
+        <location filename="../divide/divide.cpp" line="447"/>
         <source>X</source>
         <translation>X</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="449"/>
+        <location filename="../divide/divide.cpp" line="447"/>
         <source>Y</source>
         <translation>Y</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="457"/>
+        <location filename="../divide/divide.cpp" line="455"/>
         <source>Layer</source>
         <translation>Strat</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="459"/>
+        <location filename="../divide/divide.cpp" line="457"/>
         <source>Color</source>
         <translation>Culoare</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="460"/>
+        <location filename="../divide/divide.cpp" line="458"/>
         <source>Line type</source>
         <translation>Tip de linie</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="462"/>
+        <location filename="../divide/divide.cpp" line="460"/>
         <source>Line thickness</source>
         <translation>Grosimea liniei</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="464"/>
+        <location filename="../divide/divide.cpp" line="462"/>
         <source>ID</source>
         <translation>ID</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="471"/>
+        <location filename="../divide/divide.cpp" line="469"/>
         <source>LINE</source>
         <translation>LINIE</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="476"/>
+        <location filename="../divide/divide.cpp" line="474"/>
         <source>from point</source>
         <translation>din punct</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="479"/>
+        <location filename="../divide/divide.cpp" line="477"/>
         <source>to point</source>
         <translation>până la punct</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="484"/>
-        <location filename="../divide/divide.cpp" line="511"/>
+        <location filename="../divide/divide.cpp" line="482"/>
+        <location filename="../divide/divide.cpp" line="509"/>
         <source>length</source>
         <translation>lungime</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="489"/>
+        <location filename="../divide/divide.cpp" line="487"/>
         <source>Angle in XY plane</source>
         <translation>Unghi în planul XY</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="491"/>
+        <location filename="../divide/divide.cpp" line="489"/>
         <source>Inc.</source>
         <translation>Inc.</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="496"/>
+        <location filename="../divide/divide.cpp" line="494"/>
         <source>ARC</source>
         <translation>ARC</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="497"/>
-        <location filename="../divide/divide.cpp" line="516"/>
+        <location filename="../divide/divide.cpp" line="495"/>
+        <location filename="../divide/divide.cpp" line="514"/>
         <source>center point</source>
         <translation>punct central</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="503"/>
-        <location filename="../divide/divide.cpp" line="520"/>
-        <location filename="../divide/divide.cpp" line="542"/>
+        <location filename="../divide/divide.cpp" line="501"/>
+        <location filename="../divide/divide.cpp" line="518"/>
+        <location filename="../divide/divide.cpp" line="540"/>
         <source>radius</source>
         <translation>rază</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="504"/>
+        <location filename="../divide/divide.cpp" line="502"/>
         <source>initial angle</source>
         <translation>unghi inițial</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="506"/>
+        <location filename="../divide/divide.cpp" line="504"/>
         <source>final angle</source>
         <translation>unghi final</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="515"/>
+        <location filename="../divide/divide.cpp" line="513"/>
         <source>CIRCLE</source>
         <translation>CERC</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="521"/>
+        <location filename="../divide/divide.cpp" line="519"/>
         <source>circumference</source>
         <translation>circumferință</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="523"/>
+        <location filename="../divide/divide.cpp" line="521"/>
         <source>area</source>
         <translation>arie</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="527"/>
+        <location filename="../divide/divide.cpp" line="525"/>
         <source>POLYLINE</source>
         <translation>POLILINIE</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="528"/>
+        <location filename="../divide/divide.cpp" line="526"/>
         <source>Closed</source>
         <translation>Închis</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="530"/>
+        <location filename="../divide/divide.cpp" line="528"/>
         <source>No</source>
         <translation>Nu</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="530"/>
+        <location filename="../divide/divide.cpp" line="528"/>
         <source>Yes</source>
         <translation>Da</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="531"/>
+        <location filename="../divide/divide.cpp" line="529"/>
         <source>Vertices</source>
         <translation>Vârfuri</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="536"/>
+        <location filename="../divide/divide.cpp" line="534"/>
         <source>in point</source>
         <translation>în punct</translation>
     </message>
     <message>
-        <location filename="../divide/divide.cpp" line="552"/>
+        <location filename="../divide/divide.cpp" line="550"/>
         <source>MUST be a line, circle or arc</source>
         <translation>TREBUIE să fie o linie, cerc sau arc</translation>
     </message>
@@ -911,27 +911,27 @@ anti-clockwise.</source>
         <translation>&lt;i&gt;&quot;Nou&quot;&lt;/i&gt;&lt;br&gt;Introduceți numele pentru un nou strat (dacă este necesar) pe care să se deseneze marcajele.</translation>
     </message>
     <message>
-        <location filename="../divide/dividedlg.cpp" line="251"/>
+        <location filename="../divide/dividedlg.cpp" line="250"/>
         <source>Ticks</source>
         <translation>Marcaje</translation>
     </message>
     <message>
-        <location filename="../divide/dividedlg.cpp" line="257"/>
+        <location filename="../divide/dividedlg.cpp" line="256"/>
         <source>Above</source>
         <translation>Deasupra</translation>
     </message>
     <message>
-        <location filename="../divide/dividedlg.cpp" line="258"/>
+        <location filename="../divide/dividedlg.cpp" line="257"/>
         <source>Below</source>
         <translation>Mai jos</translation>
     </message>
     <message>
-        <location filename="../divide/dividedlg.cpp" line="262"/>
+        <location filename="../divide/dividedlg.cpp" line="261"/>
         <source>Outside</source>
         <translation>În exterior</translation>
     </message>
     <message>
-        <location filename="../divide/dividedlg.cpp" line="263"/>
+        <location filename="../divide/dividedlg.cpp" line="262"/>
         <source>Inside</source>
         <translation>În interior</translation>
     </message>
@@ -1108,27 +1108,27 @@ anti-clockwise.</source>
         <translation>Anulează</translation>
     </message>
     <message>
-        <location filename="../sample/sample.cpp" line="106"/>
+        <location filename="../sample/sample.cpp" line="105"/>
         <source>Start X is empty</source>
         <translation>Valoarea pentru Început X este goală</translation>
     </message>
     <message>
-        <location filename="../sample/sample.cpp" line="107"/>
+        <location filename="../sample/sample.cpp" line="106"/>
         <source>Start Y is empty</source>
         <translation>Valoarea pentru Început Y este goală</translation>
     </message>
     <message>
-        <location filename="../sample/sample.cpp" line="108"/>
+        <location filename="../sample/sample.cpp" line="107"/>
         <source>End X is empty</source>
         <translation>Valoarea pentru Sfârșit X este goală</translation>
     </message>
     <message>
-        <location filename="../sample/sample.cpp" line="109"/>
+        <location filename="../sample/sample.cpp" line="108"/>
         <source>End Y is empty</source>
         <translation>Valoarea pentru Sfârșit Y este goală</translation>
     </message>
     <message>
-        <location filename="../sample/sample.cpp" line="130"/>
+        <location filename="../sample/sample.cpp" line="128"/>
         <source>Sample plugin</source>
         <translation>Plugin de exemplu</translation>
     </message>
@@ -1161,38 +1161,38 @@ anti-clockwise.</source>
         <translation>Selectează fișier</translation>
     </message>
     <message>
-        <location filename="../picfile/picfile.cpp" line="119"/>
+        <location filename="../picfile/picfile.cpp" line="118"/>
         <source>Scale Factor is empty or invalid</source>
         <translation>Factorul de scalare este gol sau invalid</translation>
     </message>
     <message>
-        <location filename="../picfile/picfile.cpp" line="132"/>
+        <location filename="../picfile/picfile.cpp" line="131"/>
         <source>The file %1 not exist</source>
         <translation>Fișierul %1 nu există</translation>
     </message>
     <message>
-        <location filename="../picfile/picfile.cpp" line="137"/>
+        <location filename="../picfile/picfile.cpp" line="136"/>
         <source>Can&apos;t open the file %1</source>
         <translation>Nu se poate deschide fișierul %1</translation>
     </message>
     <message>
-        <location filename="../picfile/picfile.cpp" line="144"/>
+        <location filename="../picfile/picfile.cpp" line="143"/>
         <source>%1 objects imported</source>
         <translation>%1 obiecte importate</translation>
     </message>
     <message>
-        <location filename="../picfile/picfile.cpp" line="166"/>
+        <location filename="../picfile/picfile.cpp" line="164"/>
         <source>picPunto drawLine: first point is empty %1</source>
         <translation>picPunto drawLine: primul punct este gol %1</translation>
     </message>
     <message>
-        <location filename="../picfile/picfile.cpp" line="179"/>
+        <location filename="../picfile/picfile.cpp" line="177"/>
         <source>picPunto drawLine: next point is empty %1</source>
         <translation>CONTEXT: picPunto] picPunto drawLine: următorul punct este gol %1</translation>
     </message>
     <message>
-        <location filename="../picfile/picfile.cpp" line="262"/>
-        <location filename="../picfile/picfile.cpp" line="271"/>
+        <location filename="../picfile/picfile.cpp" line="260"/>
+        <location filename="../picfile/picfile.cpp" line="269"/>
         <source>format error in %1</source>
         <translation>CONTEXT: picPunto] eroare de format în %1</translation>
     </message>
@@ -1295,17 +1295,17 @@ Utilizați „t” sau „x” în ecuația dvs. ca variabilă/parametru.</trans
 <context>
     <name>textBox</name>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="205"/>
+        <location filename="../asciifile/asciifile.cpp" line="204"/>
         <source>Style:</source>
         <translation>Stil:</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="206"/>
+        <location filename="../asciifile/asciifile.cpp" line="205"/>
         <source>Height:</source>
         <translation>Înălțime:</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="207"/>
+        <location filename="../asciifile/asciifile.cpp" line="206"/>
         <source>Separation</source>
         <translation>Spațiere</translation>
     </message>

@@ -52,8 +52,8 @@ namespace {
             return true;
         }
         switch (entity.rtti()) {
-            case RS2::EntityCircle: // fixme - merge - sand - review why
-            case RS2::EntityEllipse: // fixme - merge - sand - review why
+            case RS2::EntityCircle:
+            case RS2::EntityEllipse:
             case RS2::EntityHyperbola:
             case RS2::EntityParabola:
                 return true;

@@ -997,6 +997,7 @@ static QString dwgVersionDisplay(DRW::Version v) {
   }
 }
 
+// fixme - sand - non informative error message (mixed file format which is known)
 QString RS_FilterDXFRW::lastError() const{
     switch (m_errorCode) {
     case DRW::BAD_NONE:

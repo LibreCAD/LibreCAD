@@ -367,7 +367,14 @@ bool LC_CopyUtils::pasteContainer(RS_Entity* entity, RS_EntityContainer* contain
         return false;
     }
     insertClone->setLayer(layer);
+    /*
     insertClone->setPen(entity->getPen(false));
+    */
+    // fixme - sand - merge - review this change to double-check that it is actually needed - potentially, it may break copying of non-blocks!
+    // Set pen to ByLayer so that inner entities with ByBlock
+    // resolve to the insert's layer color (fixes #2522)
+    insertClone->setPen(RS_Pen(RS_Color(RS2::FlagByLayer), RS2::WidthByLayer, RS2::LineByLayer));
+
 
     // get relative insertion point
     RS_Vector ip{0.0, 0.0};
@@ -419,6 +426,7 @@ bool LC_CopyUtils::pasteEntity(const RS_Entity* entity, RS_EntityContainer* cont
         RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Modification::pasteInsert: unable to select layer to paste in: %s", ln.toLatin1().data());
         return false;
     }
+
 
     RS_Entity* clone = entity->clone();
     clone->setLayer(layer);
