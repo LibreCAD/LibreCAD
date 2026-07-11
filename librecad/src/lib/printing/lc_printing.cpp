@@ -41,7 +41,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_settings.h"
 #include "rs_units.h"
 
-// fixme - sand - files - this class should not be in /lib, it has outer dependencies. Reivew!!!!
+// fixme - sand - files - this class should not be in /lib, it has outer dependencies. Review it!!!!
 namespace {
     // supported paper formats should be added here
     const std::map<RS2::PaperFormat, QPageSize::PageSizeId> PAPER_TO_PAGE = {
@@ -96,7 +96,26 @@ QPageSize::PageSizeId LC_Printing::rsToQtPaperFormat(const RS2::PaperFormat pape
     return (PAPER_TO_PAGE.count(paperFormat) == 1) ? PAPER_TO_PAGE.at(paperFormat) : QPageSize::Custom;
 }
 
-void LC_Printing::print(QC_MDIWindow& mdiWindow, PrinterType printerType) {
+void LC_Printing::setupPageLayout(QPrinter& printer, bool landscape, QPageSize::PageSizeId paperSizeName,
+                                  const RS_Vector& paperSize, RS2::Unit unit, const QMarginsF& paperMargins)
+{
+    QPageLayout layout;
+    layout.setMode(QPageLayout::FullPageMode);
+    layout.setUnits(QPageLayout::Millimeter);
+
+    if (paperSizeName == QPageSize::Custom) {
+        RS_Vector s = RS_Units::convert(paperSize, unit, RS2::Millimeter);
+        if (landscape)
+            s = s.flipXY();
+        layout.setPageSize(QPageSize{QSizeF(s.x, s.y), QPageSize::Millimeter}, paperMargins);
+    } else {
+        layout.setPageSize(QPageSize{paperSizeName}, paperMargins);
+    }
+    layout.setOrientation(landscape ? QPageLayout::Landscape : QPageLayout::Portrait);
+    printer.setPageLayout(layout);
+}
+
+void LC_Printing::print(QC_MDIWindow &mdiWindow, PrinterType printerType) {
     RS_Graphic* graphic = mdiWindow.getDocument()->getGraphic();
 
     if (graphic == nullptr) {
@@ -115,58 +134,38 @@ void LC_Printing::print(QC_MDIWindow& mdiWindow, PrinterType printerType) {
     QPageSize::PageSizeId paperSizeName = rsToQtPaperFormat(paperFormat);
     RS_Vector paperSize = ps->getPaperSize();
     RS2::Unit unit = graphic->getUnit();
-    if (paperSizeName == QPageSize::Custom) {
-        RS_Vector s = RS_Units::convert(paperSize, unit, RS2::Millimeter);
-        if (landscape) {
-            s = s.flipXY();
-        }
-        printer.setPageSize(QPageSize{QSizeF(s.x, s.y), QPageSize::Millimeter});
-        // RS_DEBUG->print(RS_Debug::D_ERROR, "set Custom paper size to (%g, %g)\n", s.x,s.y);
-    }
-    else {
-        printer.setPageSize(QPageSize{paperSizeName});
-    }
-    // qDebug()<<"paper size=("<<printer.paperSize(QPrinter::Millimeter).width()<<", "<<printer.paperSize(QPrinter::Millimeter).height()<<")";
-    printer.setPageOrientation(landscape ? QPageLayout::Landscape : QPageLayout::Portrait);
-    // PR 12 — straightened argument order to match Qt's canonical
-    // QMarginsF(left, top, right, bottom) signature. Pre-PR 12 the call
-    // site passed (left, right, top, bottom) — a swap masked by the
-    // symmetric default margins most documents ship with. activeLayoutMargins()
-    // returns {left, top, right, bottom}; pass elements in the same order.
     const auto printMargins = graphic->activeLayoutMargins();
     QMarginsF paperMargins{printMargins[0],   // left
                            printMargins[1],   // top
                            printMargins[2],   // right
                            printMargins[3]};  // bottom
-    printer.setPageMargins(paperMargins, QPageLayout::Millimeter);
+
+    // Issue #2337: use QPageLayout to set page size, orientation, and margins
+    // together. On Linux/CUPS, setting orientation via setPageOrientation()
+    // after setPageSize() with a standard size ID may not propagate correctly,
+    // resulting in portrait-only output regardless of the landscape setting.
+    LC_Printing::setupPageLayout(printer, landscape, paperSizeName, paperSize, unit, paperMargins);
+
+    // Issue #2130: populate the output file name for
+    QString defaultFile = setFileNameColor(printer, *graphic);
 
     // printer setup:
     bool bStartPrinting = false;
     if (printerType == PrinterType::PDF) {
-        // Issue #2130: populate the output file name for
-        QString defaultFile = setFileNameColor(printer, *graphic);
-
-        printer.setFullPage(true);
         printer.setOutputFormat(QPrinter::PdfFormat);
         printer.setColorMode(QPrinter::Color);
         printer.setResolution(1200);
         // Issue #1897, exporting PDF margins to to follow the drawing settings
-        QPageLayout layout = printer.pageLayout();
-        layout.setMode(QPageLayout::FullPageMode);
-        layout.setUnits(QPageLayout::Millimeter);
-        layout.setMinimumMargins({});
-        RS_Vector s = RS_Units::convert(paperSize, unit, RS2::Millimeter);
-        if (landscape) {
-            s = s.flipXY();
-        }
-        layout.setPageSize(QPageSize{QSizeF(s.x, s.y), QPageSize::Millimeter}, paperMargins);
-        printer.setPageLayout(layout);
-        QString pdfFie = QFileDialog::getSaveFileName(&mdiWindow, QObject::tr("Export to PDF"), defaultFile,
-                                                      QObject::tr("PDF files (*.pdf);;All files (*.*)"));
-
-        if (pdfFie.isEmpty()) {
+        QPageLayout pdfLayout = printer.pageLayout();
+        pdfLayout.setMinimumMargins({});
+        printer.setPageLayout(pdfLayout);
+        QString pdfFie = QFileDialog::getSaveFileName(
+            &mdiWindow,
+            QObject::tr("Export to PDF"),
+            defaultFile,
+            QObject::tr("PDF files (*.pdf);;All files (*.*)"));
+        if (pdfFie.isEmpty())
             pdfFie = defaultFile;
-        }
         printer.setOutputFileName(pdfFie);
         bStartPrinting = true;
     }
@@ -177,21 +176,21 @@ void LC_Printing::print(QC_MDIWindow& mdiWindow, PrinterType printerType) {
         QPrintDialog printDialog(&printer, &mdiWindow);
         printDialog.setOption(QAbstractPrintDialog::PrintToFile);
         printDialog.setOption(QAbstractPrintDialog::PrintShowPageSize);
-        bStartPrinting = printDialog.exec() == QDialog::Accepted;
+        bStartPrinting = (QDialog::Accepted == printDialog.exec());
 
-        auto equalPaperSize = [&printer](const RS_Vector& v0, const RS_Vector& v1) {
+        auto equalPaperSize = [&printer](const RS_Vector &v0, const RS_Vector &v1) {
             // from DPI to pixel/mm
-            const auto resolution = RS_Units::convert(1., RS2::Millimeter, RS2::Inch) * printer.resolution();
+            auto resolution = RS_Units::convert(1., RS2::Millimeter, RS2::Inch) * printer.resolution();
             // ignore difference within two pixels
             return v0.distanceTo(v1) * resolution <= 2.;
         };
-        auto equalMargins = [&printer](const QMarginsF& drawingMargins) {
-            const QMarginsF printerMarginsPixels = printer.pageLayout().marginsPixels(printer.resolution());
+        auto equalMargins = [&printer](const QMarginsF &drawingMargins) {
+            QMarginsF printerMarginsPixels = printer.pageLayout().marginsPixels(printer.resolution());
             // from DPI to pixel/mm
-            const auto resolution = RS_Units::convert(1., RS2::Millimeter, RS2::Inch) * printer.resolution();
+            auto resolution = RS_Units::convert(1., RS2::Millimeter, RS2::Inch) * printer.resolution();
             // assuming drawingMargins in mm
-            const QMarginsF drawingMarginsPixels = drawingMargins * resolution;
-            const QMarginsF diff = printerMarginsPixels - drawingMarginsPixels;
+            QMarginsF drawingMarginsPixels = drawingMargins * resolution;
+            QMarginsF diff = printerMarginsPixels - drawingMarginsPixels;
             // ignore difference within two pixels
             return std::max({std::abs(diff.left()), std::abs(diff.right()), std::abs(diff.top()), std::abs(diff.bottom())}) <= 2.;
         };

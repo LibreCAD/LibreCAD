@@ -57,6 +57,8 @@ LC_CADDockWidget::LC_CADDockWidget(QWidget *parent, const bool allTools)
   m_gridLayout->setSpacing(0);
   m_gridLayout->setContentsMargins(0, 0, 0, 0);
   m_frame->setLayout(m_gridLayout);
+ // fixme - sand - review whethere it is needed
+ setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
 }
 
 void LC_CADDockWidget::addSpacers(QGridLayout *layout, const int columns) {

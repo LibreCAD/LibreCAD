@@ -24,8 +24,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #define LC_PRINTING_H
 
 #include <QPageSize>
+#include <QPrinter>
 
 #include "rs.h"
+#include "rs_vector.h"
 
 class RS_Graphic;
 class QC_MDIWindow;
@@ -34,6 +36,8 @@ namespace LC_Printing
 {
     enum class PrinterType { Printer, PDF };
     QPageSize::PageSizeId rsToQtPaperFormat(RS2::PaperFormat paperFormat);
+    void setupPageLayout(QPrinter& printer, bool landscape, QPageSize::PageSizeId paperSizeName,
+                         const RS_Vector& paperSize, RS2::Unit unit, const QMarginsF& paperMargins);
 
     /**
      * @brief Print - the implementation of drawing printing

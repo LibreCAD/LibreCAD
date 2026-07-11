@@ -226,29 +226,15 @@ static void setupPrinterAndPaper(const RS_Graphic* graphic, QPrinter& printer,
     bool landscape = false;
     const LC_PlotSettings* ps = graphic->getPlotSettings();
     const RS2::PaperFormat pf = ps->getPaperFormat(&landscape);
-    const QPageSize::PageSizeId paperSize = LC_Printing::rsToQtPaperFormat(pf);
+    const QPageSize::PageSizeId paperSizeName = LC_Printing::rsToQtPaperFormat(pf);
 
-    if (paperSize == QPageSize::Custom){
-        const RS_Vector r = ps->getPaperSize();
-        RS_Vector s = RS_Units::convert(r, graphic->getUnit(),
-            RS2::Millimeter);
-        if (landscape) {
-            s = s.flipXY();
-        }
-#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
-        printer.setPageSize(QPageSize{QSizeF{s.x,s.y}, QPageSize::Millimeter});
-#else
-        printer.setPaperSize(QSizeF{s.x,s.y}, QPrinter::Millimeter);
-#endif
-    } else {
-        printer.setPageSize(paperSize);
-    }
+    RS_Vector paperSize = ps->getPaperSize();
+    QMarginsF paperMargins{ps->getMarginLeftMm(),
+                           ps->getMarginRightMm(),
+                           ps->getMarginTopMm(),
+                           ps->getMarginBottomMm()};
 
-#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
-    printer.setPageOrientation(landscape ? QPageLayout::Landscape : QPageLayout::Portrait);
-#else
-    printer.setOrientation(landscape ? QPrinter::Landscape : QPrinter::Portrait);
-#endif
+    LC_Printing::setupPageLayout(printer, landscape, paperSizeName, paperSize, graphic->getUnit(), paperMargins);
 
     printer.setOutputFileName(params.outFile);
     printer.setOutputFormat(QPrinter::PdfFormat);
