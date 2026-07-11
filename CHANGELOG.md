@@ -12,6 +12,8 @@
 ### Changed
 
 ### Fixed
+- spline drawing: restored the `close`/`c` command (it was disabled), which closes the loop by returning to the first control point and finalizes
+- spline drawing: finalizing with too few control points now reports a message and keeps the in-progress spline instead of silently discarding it
 - various issues in LFF font files
 - segfault with malformed LFF font files
 - CVE-2023-30259, OOB reads in importshp plugin (#1481)

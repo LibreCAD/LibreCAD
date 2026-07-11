@@ -123,15 +123,38 @@ void RS_ActionDrawSpline::onMouseLeftButtonRelease([[maybe_unused]]int status, L
 }
 
 void RS_ActionDrawSpline::onMouseRightButtonRelease(int status, [[maybe_unused]]LC_MouseEvent *e) {
-    if (status == SetNextPoint && m_actionData->spline){
-        const size_t nPoints = m_actionData->spline->getNumberOfControlPoints();
-        bool isClosed = m_actionData->spline->isClosed();
-        // Issue #1689: allow closed splines by 3 control points
-        if (nPoints > size_t(m_actionData->spline->getDegree()) || (isClosed && nPoints == 3))
-            trigger();
+    if (status == SetNextPoint){
+        // Finalize the in-progress spline. If there aren't enough control points to
+        // form a drawable curve, report it and keep the preview intact so the user
+        // can add more points, rather than silently discarding the work.
+        if (m_actionData->spline == nullptr
+            || m_actionData->spline->getNumberOfControlPoints() <= size_t(getDegree())){
+            commandMessage(tr("Cannot finalize spline: at least %1 control points required.")
+                           .arg(getDegree() + 1));
+            return;
+        }
+        trigger();
     }
     deletePreview();
     initPrevious(status);
+}
+
+void RS_ActionDrawSpline::close() {
+    // Re-issue the first control point as the closing point, then finalize. The
+    // appended point provides the (degree + 1)-th control point, so a spline with
+    // as few as 'degree' points can still be closed into a loop.
+    if (m_actionData->spline == nullptr
+        || m_actionData->history.isEmpty()
+        || m_actionData->spline->getNumberOfControlPoints() < size_t(getDegree())){
+        commandMessage(tr("Cannot close spline: at least %1 control points required.")
+                       .arg(getDegree()));
+        return;
+    }
+    fireCoordinateEvent(m_actionData->history.first());
+    trigger();
+    reset();
+    setStatus(SetStartPoint);
+    updateMouseButtonHints();
 }
 
 void RS_ActionDrawSpline::onCoordinateEvent(int status,  [[maybe_unused]]bool isZero, const RS_Vector &mouse) {
@@ -171,12 +194,11 @@ bool RS_ActionDrawSpline::doProcessCommand(int status, const QString &c) {
             break;
         }
         case SetNextPoint: {
-            /*if (checkCommand("close", c)) {
+            if (checkCommand("close", c)){
                 close();
-                updateMouseButtonHints();
-                return;
-            }*/
-            if (checkCommand("undo", c)){
+                accept = true;
+            }
+            else if (checkCommand("undo", c)){
                 undo();
                 updateMouseButtonHints();
                 accept = true;
@@ -198,7 +220,8 @@ QStringList RS_ActionDrawSpline::getAvailableCommands(){
         case SetNextPoint: {
             if (m_actionData->history.size() >= 2){
                 cmd += command("undo");
-            } else if (m_actionData->history.size() >= 3){
+            }
+            if (m_actionData->history.size() >= getDegree()){
                 cmd += command("close");
             }
             break;
@@ -218,7 +241,7 @@ void RS_ActionDrawSpline::updateMouseButtonHints(){
         case SetNextPoint: {
             QString msg = "";
 
-            if (m_actionData->history.size() >= 3){
+            if (m_actionData->history.size() >= getDegree()){
                 msg += command("close");
                 msg += "/";
             }
@@ -239,26 +262,6 @@ void RS_ActionDrawSpline::updateMouseButtonHints(){
 RS2::CursorType RS_ActionDrawSpline::doGetMouseCursor([[maybe_unused]] int status){
     return RS2::CadCursor;
 }
-
-/*
-void RS_ActionDrawSpline::close() {
-    if (history.count()>2 && start.valid) {
-        //data.endpoint = start;
-        //trigger();
-                if (spline) {
-                        RS_CoordinateEvent e(spline->getStartpoint());
-                        coordinateEvent(&e);
-                }
-                trigger();
-        setStatus(SetStartpoint);
-        graphicView->moveRelativeZero(start);
-    } else {
-        RS_DIALOGFACTORY->commandMessage(
-            tr("Cannot close sequence of lines: "
-               "Not enough entities defined yet."));
-    }
-}
-*/
 
 void RS_ActionDrawSpline::undo(){
     if (m_actionData->history.size() > 1){
