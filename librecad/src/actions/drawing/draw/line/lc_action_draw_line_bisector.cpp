@@ -141,7 +141,7 @@ void LC_ActionDrawLineBisector::onMouseMoveEvent(const int status, const LC_Mous
                 if (created) {
                     highlightHover(m_line2);
                     m_preview->addAllFromList(lines);
-                    const RS_Entity* ent = lines.front();
+                    auto ent = lines.front();
                     if (m_numberToCreate == 1) {
                         prepareEntityDescription(ent, RS2::EntityDescriptionLevel::DescriptionCreating);
                     }

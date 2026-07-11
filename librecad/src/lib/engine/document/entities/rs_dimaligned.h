@@ -79,7 +79,7 @@ public:
      */
     const RS_DimAlignedData& getEData() const;
     RS_VectorSolutions getRefPoints() const override;
-    QString getMeasuredLabel() override;
+    QString getMeasuredLabel()  override;
     const RS_Vector& getExtensionPoint1() const;
     const RS_Vector& getExtensionPoint2() const;
     void setExtensionPoint1(const RS_Vector& extensionPoint1);

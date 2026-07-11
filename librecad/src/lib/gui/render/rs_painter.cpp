@@ -212,9 +212,6 @@ void RS_Painter::drawGridPoint(const RS_Vector& p) {
     drawGridPoint(p.x, p.y);
 }
 
-void RS_Painter::drawGridPoint(double x, double y) {
-    if (!hasFiniteValue(x) || !hasFiniteValue(y))
-        return;
 
 qreal RS_Painter::getDevicePixelRatio() {
     qreal dpr = device()->devicePixelRatioF();
@@ -227,6 +224,8 @@ bool RS_Painter::isHiDPIDevice() {
 }
 
 void RS_Painter::drawGridPointHiDPI(const double x, const double y) {
+    if (!hasFiniteValue(x) || !hasFiniteValue(y))
+        return;
     // With HiDPI-aware pixmaps the painter coordinate system is in logical
     // pixels, so a cosmetic drawPoint is only 1 physical pixel — visually
     // much smaller than at 1× DPI.  Fill a 1-logical-pixel square (= dpr
@@ -431,7 +430,7 @@ void RS_Painter::drawLineUI(const QPointF& startPoint, const QPointF& endPoint)
     if (!hasFinitePoint(startPoint) || !hasFinitePoint(endPoint))
         return;
 
-    if((startPoint - endPoint).manhattanLength() > minLineDrawingLen) {
+    if((startPoint - endPoint).manhattanLength() > m_minLineDrawingLen) {
         QPainter::drawLine(startPoint, endPoint);
     }
     else {
@@ -691,6 +690,7 @@ void RS_Painter::drawArcSplinePointsUI(const std::vector<RS_Vector>& uiControlPo
         return;
 
     RS_Vector vStart = uiControlPoints.front();
+    RS_Vector vEnd(false);
 
     path.moveTo(QPointF(vStart.x, vStart.y));
     //    QPainterPath qPath(QPointF(vStart.x, vStart.y));
@@ -772,12 +772,12 @@ void RS_Painter::drawArcInterpolatedByLines(const RS_Vector& uiCenter, double ui
     // so, based on expected sagitta we'll calculate the angle for single line interpolation segment
 
     int stepsCount = 0;
-    if (arcRenderInterpolationAngleFixed){
-        if (!hasFiniteValue(arcRenderInterpolationAngleValue) || std::abs(arcRenderInterpolationAngleValue) < RS_TOLERANCE_ANGLE)
+    if (m_arcRenderInterpolationAngleFixed){
+        if (!hasFiniteValue(m_arcRenderInterpolationAngleValue) || std::abs(m_arcRenderInterpolationAngleValue) < RS_TOLERANCE_ANGLE)
             return;
 
         // this is fixes amount of steps - based on line segment angle
-        stepsCount = int(std::abs(angularLengthRad / arcRenderInterpolationAngleValue)) + 2;
+        stepsCount = int(std::abs(angularLengthRad / m_arcRenderInterpolationAngleValue)) + 2;
     }
     else {
         // acos(x) loses significant digits, if x is close to 0
@@ -853,7 +853,7 @@ void RS_Painter::drawCircleUI(const RS_Vector& uiCenter, double uiRadius){
     if (!hasFiniteVector(uiCenter) || !hasFiniteValue(uiRadius) || uiRadius <= 0.)
         return;
 
-    if (uiRadius < minCircleDrawingRadius){
+    if (uiRadius < m_minCircleDrawingRadius){
         QPainter::drawPoint(QPointF(uiCenter.x, uiCenter.y));
     }
     else {
@@ -877,7 +877,7 @@ void RS_Painter::drawCircleUIDirect(const RS_Vector& uiPos, double uiRadius) {
     if (!hasFiniteVector(uiPos) || !hasFiniteValue(uiRadius) || uiRadius <= 0.)
         return;
 
-    if (uiRadius < minCircleDrawingRadius){
+    if (uiRadius < m_minCircleDrawingRadius){
         QPainter::drawPoint(QPointF(uiPos.x, uiPos.y));
     }
     else {
@@ -903,7 +903,7 @@ void RS_Painter::drawEllipseUI(const RS_Vector& uiCenter, const RS_Vector& uiRad
         return;
     }
 
-    if (uiRadii.x < minEllipseMajorRadius){
+    if (uiRadii.x < m_minEllipseMajorRadius){
         // as we have everything there, no need to transform, and save/restore the painter context
         QPainter::drawPoint(QPointF(uiCenter.x, uiCenter.y));
     }
@@ -993,7 +993,7 @@ void RS_Painter::drawEllipseArcUI(const RS_Vector& uiCenter, const RS_Vector& ui
     }
 }
 
-void RS_Painter::addEllipseArcToPath(QPainterPath& localPath, const RS_Vector& uiRadii, double startAngleDeg, double angularLengthDeg, bool useSpline) {
+void RS_Painter::addEllipseArcToPath(QPainterPath& localPath, const RS_Vector& uiRadii, double startAngleDeg, double angularLengthDeg, bool useSpline) const {
     if (!hasFiniteVector(uiRadii) || uiRadii.x <= 0. || uiRadii.y <= 0.
         || !hasFiniteValue(startAngleDeg) || !hasFiniteValue(angularLengthDeg)) {
         return;
@@ -1015,8 +1015,7 @@ void RS_Painter::addEllipseArcToPath(QPainterPath& localPath, const RS_Vector& u
     }
 }
 
-void RS_Painter::drawEllipseSegmentBySplinePointsUI(const RS_Vector& uiRadii, double startRad, double lenRad, QPainterPath &path, bool closed)
-{
+void RS_Painter::drawEllipseSegmentBySplinePointsUI(const RS_Vector& uiRadii, double startRad, double lenRad, QPainterPath &path, bool closed) const{
   if (!hasFiniteVector(uiRadii)
       || uiRadii.x <= 0.
       || uiRadii.y <= 0.
@@ -1079,8 +1078,9 @@ void RS_Painter::drawEllipseSegmentBySplinePointsUI(const RS_Vector& uiRadii, do
 void RS_Painter::addSplinePointsToPath(const std::vector<RS_Vector> &uiControlPoints, bool closed, QPainterPath &qPath) const
 {
     const size_t n = uiControlPoints.size();
-    if(n < 2){
+    if(n < 2) {
         return;
+    }
 
     if (!std::all_of(uiControlPoints.begin(), uiControlPoints.end(), hasFiniteVector))
         return;
@@ -1164,18 +1164,17 @@ void RS_Painter::addSplinePointsToPath(const std::vector<RS_Vector> &uiControlPo
     }
 }
 
-QPainterPath RS_Painter::createSolidFillPath(const RS_EntityContainer& contour) const {
+QPainterPath RS_Painter::createSolidFillPath(const RS_EntityContainer& loops) const {
     QPainterPath path;
-    for (auto* loop : contour) {
-        if (loop == nullptr || loop->rtti() != RS2::EntityContainer) {
+    for(auto* loop: loops) {
+        if (loop == nullptr || loop->rtti()!=RS2::EntityContainer)
             continue;
-        }
 
         auto toUiPointF = [this](const RS_Vector& vp) {
-            const RS_Vector uiPos = toGui(vp);
+            RS_Vector uiPos = toGui(vp);
             return QPointF{uiPos.x, uiPos.y};
         };
-        auto toUcsDegrees = [this](const double angleRadian) {
+        auto toUcsDegrees = [this](double angleRadian) {
             return toUCSAngleDegrees(RS_Math::rad2deg(angleRadian));
         };
 
@@ -1183,9 +1182,8 @@ QPainterPath RS_Painter::createSolidFillPath(const RS_EntityContainer& contour) 
         QPointF uiStart;
         bool hasStart = false;
         for (auto* e : *static_cast<RS_EntityContainer*>(loop)) {
-            if (e == nullptr) {
+            if (e==nullptr)
                 continue;
-            }
 
             switch (e->rtti()) {
             case RS2::EntityLine: {
@@ -1208,12 +1206,11 @@ QPainterPath RS_Painter::createSolidFillPath(const RS_EntityContainer& contour) 
                 loopPath.lineTo(uiEndpoint);
             }
                     break;
-                }
                 case RS2::EntityArc: {
-                    const auto* arc = static_cast<RS_Arc*>(e);
-                    const double radius = toGuiDX(arc->getRadius());
-                    const double startAngleDegrees = toUcsDegrees(arc->getAngle1());
-                    const double angularLength = RS_Math::rad2deg(arc->isReversed() ? -arc->getAngleLength() : arc->getAngleLength());
+                auto* arc = static_cast<RS_Arc*>(e);
+                double radius = toGuiDX(arc->getRadius());
+                double startAngleDegrees = toUcsDegrees(arc->getAngle1());
+                double angularLength = RS_Math::rad2deg(arc->isReversed() ? - arc->getAngleLength() : arc->getAngleLength());
                     QPointF uiCenter = toUiPointF(arc->getCenter());
                     QRectF arcRect{uiCenter - QPointF{radius, radius}, QSizeF{radius, radius} * 2};
                 if (!hasUsableArcParameters(arcRect, startAngleDegrees, angularLength))
@@ -1232,10 +1229,10 @@ QPainterPath RS_Painter::createSolidFillPath(const RS_EntityContainer& contour) 
                 }
                     loopPath.arcMoveTo(arcRect, startAngleDegrees);
                     loopPath.arcTo(arcRect, startAngleDegrees, angularLength);
+            }
                     break;
-                }
                 case RS2::EntityCircle: {
-                    const auto* circle = static_cast<RS_Circle*>(e);
+                auto* circle = static_cast<RS_Circle*>(e);
                     QPointF uiCenter = toUiPointF(circle->getCenter());
                 double radius=toGuiDX(circle->getRadius());
                 if (!hasUsableEllipseParameters(uiCenter, radius, radius))
@@ -1243,13 +1240,13 @@ QPainterPath RS_Painter::createSolidFillPath(const RS_EntityContainer& contour) 
 
                     loopPath.moveTo(uiCenter);
                     loopPath.addEllipse(uiCenter, radius, radius);
+            }
                     break;
-                }
                 case RS2::EntityEllipse: {
-                    const auto* ellipse = static_cast<RS_Ellipse*>(e);
+                auto* ellipse = static_cast<RS_Ellipse *>(e);
 
-                    const double majorRadius = toGuiDX(ellipse->getMajorRadius());
-                    const double minorRadius = ellipse->getRatio() * majorRadius;
+                double majorRadius = toGuiDX(ellipse->getMajorRadius());
+                double minorRadius = ellipse->getRatio() * majorRadius;
                     QRectF ellipseRect{-QPointF{majorRadius, minorRadius}, QSizeF{majorRadius, minorRadius} * 2};
                     QPainterPath ellipsePath;
                     if (ellipse->isEllipticArc()) {
@@ -1300,7 +1297,6 @@ QPainterPath RS_Painter::createSolidFillPath(const RS_EntityContainer& contour) 
         // Issue #2202: circles/ellipses have no start point defined
         if (hasStart && !loopPath.isEmpty())
             loopPath.lineTo(uiStart);
-        }
         path.addPath(loopPath);
     }
     return path;
@@ -1472,9 +1468,11 @@ void RS_Painter::fillRect(const int x1, const int y1, const int w, const int h, 
 void RS_Painter::fillPolygonUI(const QPolygonF& uiPolygon) {
     if (uiPolygon.size() <= 2) {
         return;
+    }
 
-    if (!std::all_of(uiPolygon.begin(), uiPolygon.end(), hasFinitePoint))
+    if (!std::all_of(uiPolygon.begin(), uiPolygon.end(), hasFinitePoint)) {
         return;
+    }
 
     const QBrush brushSaved = brush();
     setBrushColor(RS_Color(pen().color()));
@@ -1482,13 +1480,13 @@ void RS_Painter::fillPolygonUI(const QPolygonF& uiPolygon) {
     QPainter::setBrush(brushSaved);
 }
 
-void RS_Painter::fillEllipseUI(QPointF uiCenter, double radiusX, double radiusY) {
+void RS_Painter::fillEllipseUI(const QPointF& uiCenter, double radiusX, double radiusY) {
     if (!hasUsableEllipseParameters(uiCenter, radiusX, radiusY))
         return;
 
     const QBrush brushSaved = brush();
     setBrushColor(RS_Color(pen().color()));
-    QPainter::drawEllipse(point_f, radiusX, radiusY);
+    QPainter::drawEllipse(uiCenter, radiusX, radiusY);
     QPainter::setBrush(brushSaved);
 }
 

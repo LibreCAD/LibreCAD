@@ -373,7 +373,7 @@ void RS_GraphicView::setTypeToSelect(const RS2::EntityType mType) {
     m_typeToSelect = mType;
 }
 
-QString RS_GraphicView::obtainEntityDescription([[maybe_unused]] const RS_Entity* entity, [[maybe_unused]]RS2::EntityDescriptionLevel descriptionLevel) {
+QString RS_GraphicView::obtainEntityDescription([[maybe_unused]] RS_Entity* entity, [[maybe_unused]]RS2::EntityDescriptionLevel descriptionLevel) {
     return "";
 }
 

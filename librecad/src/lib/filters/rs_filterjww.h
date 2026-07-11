@@ -27,11 +27,14 @@
 #ifndef RS_FILTERJWW_H
 #define RS_FILTERJWW_H
 
-#include "dl_creationinterface.h"
-#include "dl_jww.h"
+#include "rs_filterinterface.h"
+
 #include "rs_color.h"
 #include "rs_dimension.h"
-#include "rs_filterinterface.h"
+
+#include "dl_creationinterface.h"
+#include "dl_jww.h"
+
 
 class RS_Point;
 class RS_Line;
@@ -48,6 +51,7 @@ class RS_Text;
 class RS_Hatch;
 class RS_Image;
 class RS_Leader;
+class RS_Polyline;
 class DL_WriterA;
 
 /**
@@ -59,7 +63,7 @@ class DL_WriterA;
 class RS_FilterJWW : public RS_FilterInterface, DL_CreationInterface {
 public:
     RS_FilterJWW();
-    ~RS_FilterJWW() override;
+    ~RS_FilterJWW();
 
     /**
   * @return RS2::FormatJWW.
@@ -172,8 +176,9 @@ public:
 
     static QString toDxfString(const QString& string);
     QString toNativeString(const char* data, const QString& encoding);
-    QString getDXFEncoding() const;
+    QString getDXFEncoding();
 
+public:
     RS_Pen attributesToPen(const DL_Attributes& attrib) const;
 
     static RS_Color numberToColor(int num, bool comp = false);
@@ -194,18 +199,15 @@ public:
 
     static bool isVariableTwoDimensional(const QString& var);
 
-    bool canImport(const QString& /*fileName*/, const RS2::FormatType t) const override {
-        return t == RS2::FormatJWW;
+    bool canImport(const QString & /*fileName*/, RS2::FormatType t) const override {
+        return (t==RS2::FormatJWW);
     }
 
-    bool canExport(const QString& /*fileName*/, const RS2::FormatType t) const override {
-        return t == RS2::FormatJWW;
+    bool canExport(const QString& /*fileName*/, RS2::FormatType t) const override {
+        return (t==RS2::FormatJWW);
     }
 
-    static RS_FilterInterface* createFilter() {
-        return new RS_FilterJWW();
-    }
-
+    static RS_FilterInterface *createFilter() {return new RS_FilterJWW();}
 private:
     /** Pointer to the graphic we currently operate on. */
     RS_Graphic* graphic = nullptr;

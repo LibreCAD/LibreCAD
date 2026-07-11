@@ -174,7 +174,7 @@ void RS_ActionDefault::highlightHoveredEntities(const LC_MouseEvent *event){
     }
 
     const RS2::ResolveLevel level = controlPressed ? RS2::ResolveAll : RS2::ResolveNone;
-    const RS_Entity *entity = catchEntityByEvent(event, level);
+    auto entity = catchEntityByEvent(event, level);
 
     if (entity == nullptr) {
         m_infoCursorOverlayData->setZone2("");
@@ -1086,7 +1086,7 @@ void RS_ActionDefault::clearQuickInfoWidget(){
     }
 }
 
-void RS_ActionDefault::updateQuickInfoWidget(const RS_Entity *pEntity){
+void RS_ActionDefault::updateQuickInfoWidget(RS_Entity *pEntity){
     LC_QuickInfoWidget *entityInfoWidget = QC_ApplicationWindow::getAppWindow()->getEntityInfoWidget();
     if (entityInfoWidget != nullptr){
         entityInfoWidget->processEntity(pEntity);

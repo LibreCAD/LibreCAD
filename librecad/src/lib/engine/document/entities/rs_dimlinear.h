@@ -93,7 +93,7 @@ public:
     }
 
     RS_VectorSolutions getRefPoints() const override;
-    QString getMeasuredLabel() override;
+    QString getMeasuredLabel()  override;
 
     RS_Vector getExtensionPoint1() const {
         return m_dimLinearData.extensionPoint1;

@@ -123,7 +123,7 @@ void LC_ActionDimOrdinate::onMouseMoveEvent(const int status, const LC_MouseEven
         case SetLeaderEnd: {
             mouse = getSnapAngleAwarePoint(e, m_actionData->wcsFeaturePoint, mouse, true);
 
-            const LC_DimOrdinate* dimOrdinate = createDim(mouse, e->isControl, m_preview.get());
+            LC_DimOrdinate* dimOrdinate = createDim(mouse, e->isControl, m_preview.get());
 
             previewEntityToCreate(dimOrdinate);
             if (m_showRefEntitiesOnPreview) {

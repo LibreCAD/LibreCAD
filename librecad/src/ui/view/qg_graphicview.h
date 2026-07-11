@@ -101,7 +101,7 @@ public:
     void addScrollbars();
     bool hasScrollbars() const;
     void setCurrentQAction(QAction* q_action);
-    QString obtainEntityDescription(const RS_Entity* entity, RS2::EntityDescriptionLevel shortDescription) override;
+    QString obtainEntityDescription(RS_Entity* entity, RS2::EntityDescriptionLevel shortDescription) override;
     virtual void initView();
     const QString& getDeviceName() const {
         return m_device;

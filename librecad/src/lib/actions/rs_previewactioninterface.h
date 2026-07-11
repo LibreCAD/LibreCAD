@@ -211,8 +211,8 @@ protected:
     LC_ActionInfoMessageBuilder& msg(const QString& name) const;
     LC_ActionInfoMessageBuilder& msgStart() const;
 
-    QString obtainEntityDescriptionForInfoCursor(const RS_Entity* e, RS2::EntityDescriptionLevel level) const;
-    void prepareEntityDescription(const RS_Entity* entity, RS2::EntityDescriptionLevel level) const;
+    QString obtainEntityDescriptionForInfoCursor(RS_Entity* e, RS2::EntityDescriptionLevel level) const;
+    void prepareEntityDescription(RS_Entity* entity, RS2::EntityDescriptionLevel level) const;
     void appendInfoCursorZoneMessage(const QString& message, int zoneNumber, bool replaceContent) const;
     void appendInfoCursorEntityCreationMessage(const QString& message) const;
 
@@ -222,7 +222,7 @@ protected:
     RS_Line *previewToCreateLine(const RS_Vector &start, const RS_Vector &end) const;
     RS_Ellipse *previewToCreateEllipse(const RS_EllipseData &ellipseData) const;
     RS_Point *previewToCreatePoint(const RS_Vector &coord) const;
-    void previewEntityToCreate(const RS_Entity* en, bool addToPreview = true) const;
+    void previewEntityToCreate(RS_Entity* en, bool addToPreview = true) const;
 
     void fireCoordinateEventForSnap(const LC_MouseEvent *e);
 

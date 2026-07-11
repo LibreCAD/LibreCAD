@@ -105,8 +105,8 @@ public:
     QString getValue(int index) const;
     unsigned long getEntityId() const{return m_entityId;}
     bool updateForCoordinateViewMode(int mode) override;
-    bool processEntity(const RS_Entity* en);
-    QString getEntityDescription(const RS_Entity* en, RS2::EntityDescriptionLevel level);
+    bool processEntity(RS_Entity* en);
+    QString getEntityDescription(RS_Entity* en, RS2::EntityDescriptionLevel level);
     void clear() override;
     bool hasData() const override;
     void setOptions(LC_QuickInfoOptions *opt);
@@ -154,17 +154,17 @@ protected:
     void collectSplinePointsProperties(const LC_SplinePoints* spline);
     void collectParabolaProperties(const LC_Parabola* parabola);
     void collectHatchProperties(const RS_Hatch *hatch);
-    void collectDimLeaderProperties(const RS_Leader *leader);
-    void collectDimArcProperties(const LC_DimArc *dim);
-    void collectDimAngularProperties(const RS_DimAngular *dim);
-    void collectDimDiametricProperties(const RS_DimDiametric *dim);
-    void collectDimRadialProperties(const RS_DimRadial *dim);
-    QString getDimensionStyleString(const RS_Dimension* dim);
+    void collectDimLeaderProperties(RS_Leader *leader);
+    void collectDimArcProperties(LC_DimArc *dim);
+    void collectDimAngularProperties(RS_DimAngular *dim);
+    void collectDimDiametricProperties(RS_DimDiametric *dim);
+    void collectDimRadialProperties(RS_DimRadial *dim);
+    QString getDimensionStyleString(RS_Dimension* dim);
     void appendDimensionLabelInfo(QString& result, RS_Dimension* dim);
     void collectDimensionLabelProperties(RS_Dimension* dim);
-    void collectDimLinearProperties(const RS_DimLinear *dim);
-    void collectDimOrdinateProperties(const LC_DimOrdinate* dim);
-    void collectDimAlignedProperties(const RS_DimAligned *dim);
+    void collectDimLinearProperties(RS_DimLinear *dim);
+    void collectDimOrdinateProperties(LC_DimOrdinate* dim);
+    void collectDimAlignedProperties(RS_DimAligned *dim);
     static QString getHAlignStr(RS_TextData::HAlign align);
     static QString getVAlignStr(RS_TextData::VAlign align);
     static QString getTextGenerationStr(RS_TextData::TextGeneration generation);
@@ -201,13 +201,13 @@ protected:
     QString prepareParabolaDescription(const LC_Parabola* parabola, RS2::EntityDescriptionLevel level);
     QString prepareHatchDescription(const RS_Hatch *hatch, RS2::EntityDescriptionLevel level);
     QString prepareDimLeaderDescription(const RS_Leader *leader, RS2::EntityDescriptionLevel level);
-    QString prepareDimArcDescription(const LC_DimArc *dim, RS2::EntityDescriptionLevel level);
-    QString prepareDimAngularDescription(const RS_DimAngular *dim, RS2::EntityDescriptionLevel level);
-    QString prepareDimDiametricDescription(const RS_DimDiametric *dim, RS2::EntityDescriptionLevel level);
-    QString prepareDimRadialDescription(const RS_DimRadial *dim, RS2::EntityDescriptionLevel level);
-    QString prepareDimLinearDescription(const RS_DimLinear *dim, RS2::EntityDescriptionLevel level);
-    QString prepareDimOrdinateDescription(const LC_DimOrdinate *dim, RS2::EntityDescriptionLevel level);
-    QString prepareDimAlignedDescription(const RS_DimAligned *dim, RS2::EntityDescriptionLevel level);
+    QString prepareDimArcDescription(LC_DimArc *dim, RS2::EntityDescriptionLevel level);
+    QString prepareDimAngularDescription( RS_DimAngular *dim, RS2::EntityDescriptionLevel level);
+    QString prepareDimDiametricDescription(RS_DimDiametric* dim, RS2::EntityDescriptionLevel level);
+    QString prepareDimRadialDescription(RS_DimRadial* dim, RS2::EntityDescriptionLevel level);
+    QString prepareDimLinearDescription(RS_DimLinear* dim, RS2::EntityDescriptionLevel level);
+    QString prepareDimOrdinateDescription(LC_DimOrdinate* dim, RS2::EntityDescriptionLevel level);
+    QString prepareDimAlignedDescription(RS_DimAligned* dim, RS2::EntityDescriptionLevel level);
 };
 
 #endif

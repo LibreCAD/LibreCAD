@@ -138,7 +138,7 @@ public:
         return m_dimAngularData;
     }
 
-    QString getMeasuredLabel() override;
+    QString getMeasuredLabel()  override;
     RS_Vector getCenter() const override;
 
 

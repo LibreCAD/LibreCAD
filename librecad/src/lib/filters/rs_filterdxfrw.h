@@ -252,8 +252,8 @@ public:
 
     void writeHeader(DRW_Header& data) override;
     void writeDwgClasses() override;
-    void writeLType(const std::string& lTypeName, const std::string& ltDescription, int ltSize, double ltLength,
-                    const std::vector<double>& ltPath) const;
+    void writeLType(const UTF8STRING& lTypeName, const UTF8STRING& ltDescription, int ltSize,
+                                double ltLength, const std::vector<double>& ltPath);
     void writeEntities() override;
     void writeLTypes() override;
     void writeLayers() override;

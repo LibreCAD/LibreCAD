@@ -1775,55 +1775,61 @@ double RS_Ellipse::getMinorRadius() const {
 }
 
 void RS_Ellipse::draw(RS_Painter* painter) {
-  if (painter == nullptr) {
-      return;
-
-  if (!hasUsableEllipseData(m_data))
-    return;
-
-  const double uiRadius = painter->toGuiDX((getRatio() > 1.) ? getMajorRadius() : getMinorRadius());
-  if (!hasFiniteValue(uiRadius) || uiRadius <= 0.)
-    return;
-
-  if (uiRadius <= double(RS_Painter::getMaximumArcNonErrorRadius())) {
-    const double majorPDegrees = RS_Math::rad2deg(getMajorP().angle());
-    if (!hasFiniteValue(majorPDegrees))
-      return;
-
-    if (isArc()) {
-      painter->drawEllipseArcWCS(getCenter(), getMajorRadius(), getRatio(), majorPDegrees,
-                                 RS_Math::rad2deg(getAngle1()),
-                                 RS_Math::rad2deg(getAngleLength()),
-                                 isReversed());
-    } else {
-      painter->drawEllipseWCS(getCenter(), getMajorRadius(), getRatio(), majorPDegrees);
-
+    if (painter == nullptr) {
+        return;
     }
-    return;
-  }
+        if (!hasUsableEllipseData(m_data)) {
+            return;
+        }
 
-  QPainterPath path;
-  createPainterPath(painter, path);
-  if (path.isEmpty())
-    return;
+    const double uiRadius = painter->toGuiDX((getRatio() > 1.) ? getMajorRadius() : getMinorRadius());
+        if (!hasFiniteValue(uiRadius) || uiRadius <= 0.) {
+            return;
+        }
 
-  // A full ellipse is a closed contour; close the subpath so the stroke uses
-  // the pen's join style at the closure point rather than its cap style.
-  if (!isArc())
-    path.closeSubpath();
-  painter->drawPath(path);
+    if (uiRadius <= double(RS_Painter::getMaximumArcNonErrorRadius())) {
+            const double majorPDegrees = RS_Math::rad2deg(getMajorP().angle());
+            if (!hasFiniteValue(majorPDegrees)) {
+                return;
+            }
+
+            if (isArc()) {
+                painter->drawEllipseArcWCS(getCenter(), getMajorRadius(), getRatio(), majorPDegrees,
+                                           RS_Math::rad2deg(getAngle1()),
+                                           RS_Math::rad2deg(getAngleLength()),
+                                           isReversed());
+            } else {
+                painter->drawEllipseWCS(getCenter(), getMajorRadius(), getRatio(), majorPDegrees);
+
+            }
+            return;
+        }
+
+        QPainterPath path;
+        createPainterPath(painter, path);
+        if (path.isEmpty()) {
+            return;
+        }
+
+    // A full ellipse is a closed contour; close the subpath so the stroke uses
+        // the pen's join style at the closure point rather than its cap style.
+        if (!isArc()) {
+            path.closeSubpath();
+        }
+    painter->drawPath(path);
 }
 
 void RS_Ellipse::createPainterPath(RS_Painter* painter, QPainterPath& path) const {
-    if (painter == nullptr || !hasUsableEllipseData(m_data))
+    if (painter == nullptr || !hasUsableEllipseData(m_data)) {
         return;
+    }
 
     double baseAngle = getAngle1();
     double fullAngleLength = isArc() ? getAngleLength() : 2 * M_PI;
     if (!hasFiniteValue(baseAngle) || !hasFiniteValue(fullAngleLength))
         return;
 
-    if (isArc() && isReversed())
+    if (isArc() && isReversed()){
         fullAngleLength = - fullAngleLength;
     }
     auto getParamFunc = [this](const RS_Vector& vp) { return getEllipseAngle(vp); };

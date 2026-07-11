@@ -130,7 +130,7 @@ QString LC_QuickInfoEntityData::prepareGenericEntityDescription(const RS_Entity*
     return result;
 }
 
-QString LC_QuickInfoEntityData::getEntityDescription(const RS_Entity* en, const RS2::EntityDescriptionLevel level) {
+QString LC_QuickInfoEntityData::getEntityDescription(RS_Entity* en, const RS2::EntityDescriptionLevel level) {
     const unsigned long thisEntityId = en->getId();
     // no special value for empty id, yet according to implementation, it seems that 0 should not be used
     if (thisEntityId != 0 && thisEntityId == m_entityIdForDescription) {
@@ -143,7 +143,7 @@ QString LC_QuickInfoEntityData::getEntityDescription(const RS_Entity* en, const 
     // just processing of entity based on type
     switch (en->rtti()) {
         case RS2::EntityLine: {
-            auto* line = static_cast<const RS_Line*>(en);
+            auto* line = static_cast< RS_Line*>(en);
             m_cachedEntityDescription = prepareLineDescription(line, level);
             break;
         }
@@ -193,37 +193,37 @@ QString LC_QuickInfoEntityData::getEntityDescription(const RS_Entity* en, const 
             break;
         }
         case RS2::EntityDimAligned: {
-            auto* dim = static_cast<const RS_DimAligned*>(en);
+            auto* dim = static_cast< RS_DimAligned*>(en);
             m_cachedEntityDescription = prepareDimAlignedDescription(dim, level);
             break;
         }
         case RS2::EntityDimLinear: {
-            auto* dim = static_cast<const RS_DimLinear*>(en);
+            auto* dim = static_cast< RS_DimLinear*>(en);
             m_cachedEntityDescription = prepareDimLinearDescription(dim, level);
             break;
         }
         case RS2::EntityDimOrdinate: {
-            auto* dim = reinterpret_cast<const LC_DimOrdinate*>(en);
+            auto* dim = reinterpret_cast< LC_DimOrdinate*>(en);
             m_cachedEntityDescription = prepareDimOrdinateDescription(dim, level);
             break;
         }
         case RS2::EntityDimRadial: {
-            auto* dimrad = static_cast<const RS_DimRadial*>(en);
+            auto* dimrad = static_cast< RS_DimRadial*>(en);
             m_cachedEntityDescription = prepareDimRadialDescription(dimrad, level);
             break;
         }
         case RS2::EntityDimDiametric: {
-            auto* dimdia = static_cast<const RS_DimDiametric*>(en);
+            auto* dimdia = static_cast< RS_DimDiametric*>(en);
             m_cachedEntityDescription = prepareDimDiametricDescription(dimdia, level);
             break;
         }
         case RS2::EntityDimAngular: {
-            auto* dimang = static_cast<const RS_DimAngular*>(en);
+            auto* dimang = static_cast< RS_DimAngular*>(en);
             m_cachedEntityDescription = prepareDimAngularDescription(dimang, level);
             break;
         }
         case RS2::EntityDimArc: {
-            auto* dimarc = static_cast<const LC_DimArc*>(en);
+            auto* dimarc = static_cast< LC_DimArc*>(en);
             m_cachedEntityDescription = prepareDimArcDescription(dimarc, level);
             break;
         }
@@ -276,7 +276,7 @@ QString LC_QuickInfoEntityData::getEntityDescription(const RS_Entity* en, const 
  * @param en entity
  * @return true it view should be updated, false otherwise
  */
-bool LC_QuickInfoEntityData::processEntity(const RS_Entity* en) {
+bool LC_QuickInfoEntityData::processEntity(RS_Entity* en) {
     // no special value for empty id, yet according to implementation, it seems that 0 should not be used
     if (m_entityId != 0 && en->getId() == m_entityId) {
         // same entity... so we'll try to optimize a bit mouse move there.
@@ -342,42 +342,42 @@ bool LC_QuickInfoEntityData::processEntity(const RS_Entity* en) {
             break;
         }
         case RS2::EntityDimAligned: {
-            auto* dim = static_cast<const RS_DimAligned*>(en);
+            auto* dim = static_cast<RS_DimAligned*>(en);
             collectDimAlignedProperties(dim);
             break;
         }
         case RS2::EntityDimLinear: {
-            auto* dim = static_cast<const RS_DimLinear*>(en);
+            auto* dim = static_cast<RS_DimLinear*>(en);
             collectDimLinearProperties(dim);
             break;
         }
         case RS2::EntityDimOrdinate: {
-            auto* dim = static_cast<const LC_DimOrdinate*>(en);
+            auto* dim = static_cast<LC_DimOrdinate*>(en);
             collectDimOrdinateProperties(dim);
             break;
         }
         case RS2::EntityDimRadial: {
-            auto* dimrad = static_cast<const RS_DimRadial*>(en);
+            auto* dimrad = static_cast<RS_DimRadial*>(en);
             collectDimRadialProperties(dimrad);
             break;
         }
         case RS2::EntityDimDiametric: {
-            auto* dimdia = static_cast<const RS_DimDiametric*>(en);
+            auto* dimdia = static_cast<RS_DimDiametric*>(en);
             collectDimDiametricProperties(dimdia);
             break;
         }
         case RS2::EntityDimAngular: {
-            auto* dimang = static_cast<const RS_DimAngular*>(en);
+            auto* dimang = static_cast<RS_DimAngular*>(en);
             collectDimAngularProperties(dimang);
             break;
         }
         case RS2::EntityDimArc: {
-            auto* dimarc = static_cast<const LC_DimArc*>(en);
+            auto* dimarc = static_cast<LC_DimArc*>(en);
             collectDimArcProperties(dimarc);
             break;
         }
         case RS2::EntityDimLeader: {
-            auto* leader = static_cast<const RS_Leader*>(en);
+            auto* leader = static_cast<RS_Leader*>(en);
             collectDimLeaderProperties(leader);
             break;
         }
@@ -1399,18 +1399,18 @@ QString LC_QuickInfoEntityData::prepareDimLeaderDescription(const RS_Leader* lea
  * Dim leader properties
  * @param leader
  */
-void LC_QuickInfoEntityData::collectDimLeaderProperties(const RS_Leader* leader) {
+void LC_QuickInfoEntityData::collectDimLeaderProperties( RS_Leader* leader) {
     m_entityName = tr("DIMLEADER");
     const RS_LeaderData& data = leader->getData();
     addProperty(tr("Arrow Head"), data.arrowHead ? tr("Yes") : tr("No"), PROPERTY_TYPE_OTHER);
 }
 
-QString LC_QuickInfoEntityData::prepareDimArcDescription(const LC_DimArc* dim, const RS2::EntityDescriptionLevel level) {
+QString LC_QuickInfoEntityData::prepareDimArcDescription(LC_DimArc* dim, const RS2::EntityDescriptionLevel level) {
     QString result = prepareGenericEntityDescription(dim, tr("DIMARC"), level);
     // if (!level){
     const LC_DimArcData& data = dim->getData();
     appendValue(result, tr("Style"), getDimensionStyleString(dim));
-         appendDimensionLabelInfo(result, dim);
+    appendDimensionLabelInfo(result, dim);
     appendLinear(result, tr("Radius"), data.radius);
     appendLinear(result, tr("Arc Length"), data.arcLength);
     appendWCSAbsolute(result, tr("Center"), data.centre);
@@ -1424,7 +1424,7 @@ QString LC_QuickInfoEntityData::prepareDimArcDescription(const LC_DimArc* dim, c
  * Dim arc properties
  * @param dim
  */
-void LC_QuickInfoEntityData::collectDimArcProperties(const LC_DimArc* dim) {
+void LC_QuickInfoEntityData::collectDimArcProperties( LC_DimArc* dim) {
     m_entityName = tr("DIMARC");
     const LC_DimArcData& data = dim->getData();
     addProperty(tr("Style"), getDimensionStyleString(dim), PropertyType::PROPERTY_TYPE_OTHER);
@@ -1442,7 +1442,7 @@ void LC_QuickInfoEntityData::collectDimArcProperties(const LC_DimArc* dim) {
     //    addLinearProperty("Arrow Size",dimarc->getArrowSize());
 }
 
-QString LC_QuickInfoEntityData::prepareDimAngularDescription(const RS_DimAngular* dim, const RS2::EntityDescriptionLevel level) {
+QString LC_QuickInfoEntityData::prepareDimAngularDescription( RS_DimAngular* dim, const RS2::EntityDescriptionLevel level) {
     QString result = prepareGenericEntityDescription(dim, tr("DIMANGULAR"), level);
     appendValue(result, tr("Style"), getDimensionStyleString(dim));
     appendDimensionLabelInfo(result, dim);
@@ -1455,7 +1455,7 @@ QString LC_QuickInfoEntityData::prepareDimAngularDescription(const RS_DimAngular
  * Dimangular properties
  * @param dim
  */
-void LC_QuickInfoEntityData::collectDimAngularProperties([[maybe_unused]] const RS_DimAngular* dim) {
+void LC_QuickInfoEntityData::collectDimAngularProperties([[maybe_unused]]  RS_DimAngular* dim) {
     m_entityName = tr("DIMANGULAR");
     addProperty(tr("Style"), getDimensionStyleString(dim), PropertyType::PROPERTY_TYPE_OTHER);
     collectDimensionLabelProperties(dim);
@@ -1463,7 +1463,7 @@ void LC_QuickInfoEntityData::collectDimAngularProperties([[maybe_unused]] const 
     //    todo - is it actually necessary to show more info here?
 }
 
-QString LC_QuickInfoEntityData::prepareDimDiametricDescription(const RS_DimDiametric* dim, const RS2::EntityDescriptionLevel level) {
+QString LC_QuickInfoEntityData::prepareDimDiametricDescription( RS_DimDiametric* dim, const RS2::EntityDescriptionLevel level) {
     QString result = prepareGenericEntityDescription(dim, tr("DIMDIAMETRIC"), level);
     appendValue(result, tr("Style"), getDimensionStyleString(dim));
     appendDimensionLabelInfo(result, dim);
@@ -1471,7 +1471,7 @@ QString LC_QuickInfoEntityData::prepareDimDiametricDescription(const RS_DimDiame
     return result;
 }
 
-void LC_QuickInfoEntityData::collectDimDiametricProperties([[maybe_unused]] const RS_DimDiametric* dim) {
+void LC_QuickInfoEntityData::collectDimDiametricProperties([[maybe_unused]] RS_DimDiametric* dim) {
     m_entityName = tr("DIMDIAMETRIC");
     addProperty(tr("Style"), getDimensionStyleString(dim),PropertyType::PROPERTY_TYPE_OTHER);
     collectDimensionLabelProperties(dim);
@@ -1479,7 +1479,7 @@ void LC_QuickInfoEntityData::collectDimDiametricProperties([[maybe_unused]] cons
     //    addLinearProperty("Leader", dimdia->getLeader());
 }
 
-QString LC_QuickInfoEntityData::prepareDimRadialDescription(const RS_DimRadial* dim, const RS2::EntityDescriptionLevel level) {
+QString LC_QuickInfoEntityData::prepareDimRadialDescription( RS_DimRadial* dim, const RS2::EntityDescriptionLevel level) {
     QString result = prepareGenericEntityDescription(dim, tr("DIMRADIAL"), level);
     appendValue(result, tr("Style"), getDimensionStyleString(dim));
     appendDimensionLabelInfo(result, dim);
@@ -1491,7 +1491,7 @@ QString LC_QuickInfoEntityData::prepareDimRadialDescription(const RS_DimRadial* 
  * Dim radial properties
  * @param dim
  */
-void LC_QuickInfoEntityData::collectDimRadialProperties(const RS_DimRadial* dim) {
+void LC_QuickInfoEntityData::collectDimRadialProperties( RS_DimRadial* dim) {
     m_entityName = tr("DIMRADIAL");
     addProperty(tr("Style"), getDimensionStyleString(dim),PropertyType::PROPERTY_TYPE_OTHER);
     collectDimensionLabelProperties(dim);
@@ -1499,7 +1499,7 @@ void LC_QuickInfoEntityData::collectDimRadialProperties(const RS_DimRadial* dim)
     //    addLinearProperty("Leader", dimrad->getLeader());
 }
 
-QString LC_QuickInfoEntityData::getDimensionStyleString(const RS_Dimension* dim) {
+QString LC_QuickInfoEntityData::getDimensionStyleString( RS_Dimension* dim) {
     QString style = dim->getStyle();
     if (dim->getDimStyleOverride() != nullptr) {
         style.append(" - ").append(tr("[Override]"));
@@ -1512,11 +1512,11 @@ void LC_QuickInfoEntityData::appendDimensionLabelInfo(QString& result, RS_Dimens
 }
 
 void LC_QuickInfoEntityData::collectDimensionLabelProperties(RS_Dimension* dim) {
-    addProperty(tr("Label"), formatDimensionLabelForInfo(dim->getLabel(false)), PropertyType::OTHER);
+    addProperty(tr("Label"), formatDimensionLabelForInfo(dim->getLabel(false)), PropertyType::PROPERTY_TYPE_OTHER);
 }
 
 
-QString LC_QuickInfoEntityData::prepareDimLinearDescription(const RS_DimLinear* dim, const RS2::EntityDescriptionLevel level) {
+QString LC_QuickInfoEntityData::prepareDimLinearDescription(RS_DimLinear* dim, const RS2::EntityDescriptionLevel level) {
     QString result = prepareGenericEntityDescription(dim, tr("DIMLINEAR"), level);
     appendValue(result, tr("Style"), getDimensionStyleString(dim));
     appendDimensionLabelInfo(result, dim);
@@ -1533,7 +1533,7 @@ QString LC_QuickInfoEntityData::prepareDimLinearDescription(const RS_DimLinear* 
  * Dim linear properties
  * @param dim
  */
-void LC_QuickInfoEntityData::collectDimLinearProperties(const RS_DimLinear* dim) {
+void LC_QuickInfoEntityData::collectDimLinearProperties(RS_DimLinear* dim) {
     m_entityName = tr("DIMLINEAR");
     addProperty(tr("Style"), getDimensionStyleString(dim),PropertyType::PROPERTY_TYPE_OTHER);
     collectDimensionLabelProperties(dim);
@@ -1545,7 +1545,7 @@ void LC_QuickInfoEntityData::collectDimLinearProperties(const RS_DimLinear* dim)
     addAngleProperty(tr("Oblique"), dim->getOblique());
 }
 
-QString LC_QuickInfoEntityData::prepareDimOrdinateDescription(const LC_DimOrdinate* dim, const RS2::EntityDescriptionLevel level) {
+QString LC_QuickInfoEntityData::prepareDimOrdinateDescription( LC_DimOrdinate* dim, const RS2::EntityDescriptionLevel level) {
     QString result = prepareGenericEntityDescription(dim, tr("DIMORDINATE"), level);
     appendValue(result, tr("Style"), getDimensionStyleString(dim));
     appendDimensionLabelInfo(result, dim);
@@ -1558,7 +1558,7 @@ QString LC_QuickInfoEntityData::prepareDimOrdinateDescription(const LC_DimOrdina
     return result;
 }
 
-void LC_QuickInfoEntityData::collectDimOrdinateProperties(const LC_DimOrdinate* dim) {
+void LC_QuickInfoEntityData::collectDimOrdinateProperties(LC_DimOrdinate* dim) {
     m_entityName = tr("DIMORDINATE");
     addProperty(tr("Style"), getDimensionStyleString(dim), PropertyType::PROPERTY_TYPE_OTHER);
     collectDimensionLabelProperties(dim);
@@ -1570,7 +1570,7 @@ void LC_QuickInfoEntityData::collectDimOrdinateProperties(const LC_DimOrdinate* 
     addVectorProperty(tr("Text Middle Point"), dim->getGenericData().middleOfText);
 }
 
-QString LC_QuickInfoEntityData::prepareDimAlignedDescription(const RS_DimAligned* dim, const RS2::EntityDescriptionLevel level) {
+QString LC_QuickInfoEntityData::prepareDimAlignedDescription(RS_DimAligned* dim, const RS2::EntityDescriptionLevel level) {
     QString result = prepareGenericEntityDescription(dim, tr("DIMALIGNED"), level);
     appendValue(result, tr("Style"), getDimensionStyleString(dim));
     appendDimensionLabelInfo(result, dim);
@@ -1585,7 +1585,7 @@ QString LC_QuickInfoEntityData::prepareDimAlignedDescription(const RS_DimAligned
  * Dim Aligned properties
  * @param dim
  */
-void LC_QuickInfoEntityData::collectDimAlignedProperties(const RS_DimAligned* dim) {
+void LC_QuickInfoEntityData::collectDimAlignedProperties(RS_DimAligned* dim) {
     m_entityName = tr("DIMALIGNED");
     //    addAngleProperty("Angle", dim->getAngle());
     addProperty(tr("Style"), getDimensionStyleString(dim), PropertyType::PROPERTY_TYPE_OTHER);

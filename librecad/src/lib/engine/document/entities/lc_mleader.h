@@ -117,22 +117,6 @@ public:
     void calculateBorders() override;
     void draw(RS_Painter *painter) override;
 
-    RS_Vector getNearestEndpoint(const RS_Vector &coord,
-                                 double *dist = nullptr) const override;
-    RS_Vector
-    getNearestPointOnEntity(const RS_Vector &coord, bool onEntity = true,
-                            double *dist = nullptr,
-                            RS_Entity **entity = nullptr) const override;
-    RS_Vector getNearestCenter(const RS_Vector &coord,
-                               double *dist = nullptr) const override;
-    RS_Vector getNearestMiddle(const RS_Vector &coord, double *dist = nullptr,
-                               int middlePoints = 1) const override;
-    RS_Vector getNearestDist(double distance, const RS_Vector &coord,
-                             double *dist = nullptr) const override;
-    double getDistanceToPoint(const RS_Vector &coord,
-                              RS_Entity **entity = nullptr,
-                              RS2::ResolveLevel level = RS2::ResolveNone,
-                              double solidDist = RS_MAXDOUBLE) const override;
 
     void move(const RS_Vector &offset) override;
     void rotate(const RS_Vector &center, double angle) override;

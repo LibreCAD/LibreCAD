@@ -275,7 +275,7 @@ void LC_ActionDrawLineAngleRel::doPreparePreviewEntities(const LC_MouseEvent* e,
                 const TickData* data = prepareLineData(line, tickSnapPosition, tickEnd, m_alternativeActionMode);
 
                 // create line and add it to preview
-                const auto* previewLine = createLine(data->tickLineData.startpoint, data->tickLineData.endpoint, list);
+                auto* previewLine = createLine(data->tickLineData.startpoint, data->tickLineData.endpoint, list);
                 previewEntityToCreate(previewLine, false);
 
                 if (m_showRefEntitiesOnPreview) {
@@ -303,7 +303,7 @@ void LC_ActionDrawLineAngleRel::doPreparePreviewEntities(const LC_MouseEvent* e,
             const TickData* data = prepareLineData(m_tickData->line, m_tickData->tickSnapPosition, snap, m_alternativeActionMode);
 
             // create preview line
-            const auto* previewLine = createLine(data->tickLineData.startpoint, data->tickLineData.endpoint, list);
+            auto* previewLine = createLine(data->tickLineData.startpoint, data->tickLineData.endpoint, list);
             previewEntityToCreate(previewLine, false);
 
             if (m_showRefEntitiesOnPreview) {

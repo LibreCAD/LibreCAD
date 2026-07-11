@@ -98,7 +98,7 @@ void LC_ActionInfoProperties::highlightAndShowEntityInfo(const LC_MouseEvent *e,
     highlightHoveredEntity(e, resolveChildren);
 }
 
-bool LC_ActionInfoProperties::showEntityInfo(const RS_Entity* entity, const RS_Vector& currentMousePosition) {
+bool LC_ActionInfoProperties::showEntityInfo(RS_Entity* entity, const RS_Vector& currentMousePosition) {
     constexpr bool shouldShowQuickInfoWidget = true; // todo - read from options as there will be support
     if (!entity->isVisible() || (entity->isLocked() && !shouldShowQuickInfoWidget)){
         clearQuickInfoWidget();
@@ -148,7 +148,7 @@ bool LC_ActionInfoProperties::showEntityInfo(const RS_Entity* entity, const RS_V
 
 void LC_ActionInfoProperties::highlightHoveredEntity(const LC_MouseEvent* event, const bool resolveChildren){
     const RS_Vector currentMousePosition = event->graphPoint;
-    const RS_Entity* entity = catchEntityByEvent(event, resolveChildren ? RS2::ResolveAllButTextImage : RS2::ResolveNone);
+    RS_Entity* entity = catchEntityByEvent(event, resolveChildren ? RS2::ResolveAllButTextImage : RS2::ResolveNone);
 
     if (entity == nullptr) {
         clearQuickInfoWidget();
@@ -157,7 +157,7 @@ void LC_ActionInfoProperties::highlightHoveredEntity(const LC_MouseEvent* event,
     showEntityInfo(entity, currentMousePosition);
 }
 
-void LC_ActionInfoProperties::updateQuickInfoWidget(const RS_Entity* pEntity){
+void LC_ActionInfoProperties::updateQuickInfoWidget(RS_Entity* pEntity){
     LC_QuickInfoWidget *entityInfoWidget = QC_ApplicationWindow::getAppWindow()->getEntityInfoWidget();
     if (entityInfoWidget != nullptr){
         entityInfoWidget->processEntity(pEntity);

@@ -40,8 +40,7 @@ class RS_Line;
 /**
  * Holds the data that is common to all dimension entities.
  */
-// fixme - sand - no assignment operator!
-struct RS_DimensionData : RS_Flags {
+struct RS_DimensionData : public RS_Flags {
     /**
   * Default constructor
      */
@@ -101,7 +100,7 @@ struct RS_DimensionData : RS_Flags {
      */
     double horizontalAxisDirection = 0.0;
     bool autoText = true;
-    std::unique_ptr<LC_DimStyle> dimStyleOverride;
+    std::unique_ptr<LC_DimStyle> m_dimStyleOverride;
 
     bool flipArrow1{false};
     bool flipArrow2{false};
@@ -132,7 +131,7 @@ public:
      * Needs to be implemented by the dimension class to return the
      * measurement of the dimension (e.g. 10.5 or 15'14").
      */
-    virtual QString getMeasuredLabel() = 0;
+    virtual QString getMeasuredLabel()  = 0;
 
     /**
      * Must be overwritten by implementing dimension entity class
@@ -146,7 +145,7 @@ public:
     void clearCachedDimStyle();
     void resolveEffectiveDimStyleAndUpdateDim();
     void updateDim(bool autoText = false);
-
+    double getAngle() const {return m_dimGenericData.angle;}
     RS_Vector getDefinitionPoint() const {
         return m_dimGenericData.definitionPoint;
     }
@@ -272,15 +271,15 @@ public:
     } // TODO
 
     LC_DimStyle* getDimStyleOverride() const {
-        return m_dimGenericData.dimStyleOverride.get();
+        return m_dimGenericData.m_dimStyleOverride.get();
     }
 
     void setDimStyleOverride(const LC_DimStyle* dimStyleOverride) {
         if (dimStyleOverride == nullptr) {
-            m_dimGenericData.dimStyleOverride.reset(nullptr);
+            m_dimGenericData.m_dimStyleOverride.reset(nullptr);
         }
         else {
-            m_dimGenericData.dimStyleOverride.reset(dimStyleOverride->getCopy());
+            m_dimGenericData.m_dimStyleOverride.reset(dimStyleOverride->getCopy());
         }
     }
 

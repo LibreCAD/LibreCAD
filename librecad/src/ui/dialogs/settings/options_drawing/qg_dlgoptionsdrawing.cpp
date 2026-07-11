@@ -301,7 +301,7 @@ void QG_DlgOptionsDrawing::collectStylesUsage(QMap<QString, int>& map) const {
             if (tolerance == nullptr) {
                 continue;
             }
-            styleName = tolerance->getData().m_dimStyleName;
+            styleName = tolerance->getData().dimStyleName;
         }
         else {
             continue;

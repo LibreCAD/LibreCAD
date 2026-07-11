@@ -322,6 +322,8 @@ int main(int argc, char** argv) {
 #endif
 
 
+    const auto versionStr = XSTR(LC_VERSION);
+
     LC_Application app(argc, argv);
     QCoreApplication::setOrganizationName("LibreCAD");
     // Application name is "LibreCAD-<schemaMajor>" so each major release
@@ -329,11 +331,13 @@ int main(int argc, char** argv) {
     // up the prior-major store on first launch and copies it in.
     QCoreApplication::setApplicationName(
         QStringLiteral("LibreCAD-%1").arg(RS_Settings::LC_SETTINGS_SCHEMA_MAJOR));
-    QCoreApplication::setApplicationVersion(XSTR(LC_VERSION));
+    QCoreApplication::setApplicationVersion(versionStr);
+
+    
 
     // fixme - sand - or just altenative simpler scheme mya be used...
     /*
-    const auto versionStr = XSTR(LC_VERSION);
+
     QCoreApplication::setApplicationVersion(versionStr);
     QString version(versionStr);
     if (version.contains("alpha") || version.contains("beta")) {

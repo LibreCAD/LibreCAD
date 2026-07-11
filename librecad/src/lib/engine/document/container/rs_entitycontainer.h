@@ -117,7 +117,7 @@ public:
     virtual void setEntityAt(int index, RS_Entity* en);
     virtual int findEntity(const RS_Entity* entity);
     int findEntityIndex(const RS_Entity* entity) const;
-    bool areNeighborsEntities(const RS_Entity* e1, const RS_Entity* e2) const;
+    bool areNeighborsEntities(RS_Entity const *const  e1, RS_Entity const *const  e2) const;
     virtual void clear();
 
     //virtual unsigned long int count() {

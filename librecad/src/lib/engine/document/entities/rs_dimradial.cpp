@@ -73,7 +73,7 @@ RS_Entity* RS_DimRadial::clone() const {
  * @return Automatically created label for the default
  * measurement of this dimension.
  */
-QString RS_DimRadial::getMeasuredLabel() {
+QString RS_DimRadial::getMeasuredLabel()  {
     // Definitive dimension line:
     const double distance = m_dimGenericData.definitionPoint.distanceTo(m_dimRadialData.definitionPoint);
     m_dimMeasurement = distance;

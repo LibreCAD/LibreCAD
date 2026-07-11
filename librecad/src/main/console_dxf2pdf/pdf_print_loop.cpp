@@ -137,7 +137,7 @@ int PdfPrintLoop::printManyFilesToOnePdf() {
     }
 
     if (contentItems.isEmpty())
-        return failed == 0 ? params.inputFiles.size() : failed;
+        return failed == 0 ? m_params.inputFiles.size() : failed;
 
     QPrinter printer(QPrinter::HighResolution);
 

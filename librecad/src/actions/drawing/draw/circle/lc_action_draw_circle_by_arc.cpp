@@ -215,7 +215,7 @@ void LC_ActionDrawCircleByArc::doPreparePreviewEntities([[maybe_unused]] const L
 
                 if (ellipseArc->isEllipticArc()) {
                     const RS_EllipseData ellipseData = createEllipseData(ellipseArc);
-                    const auto ellipse = new RS_Ellipse(m_document, ellipseData);
+                    auto ellipse = new RS_Ellipse(m_document, ellipseData);
                     prepareEntityDescription(ellipse, RS2::EntityDescriptionLevel::DescriptionCreating);
                     list << ellipse;
 

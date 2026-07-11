@@ -44,8 +44,8 @@ class RS_FilterDXF1 : public RS_FilterInterface {
 public:
     RS_FilterDXF1();
 
-    bool canImport(const QString& /*fileName*/, const RS2::FormatType t) const override {
-        return t == RS2::FormatDXF1;
+    bool canImport(const QString& /*fileName*/, RS2::FormatType t) const  override {
+		return (t==RS2::FormatDXF1);
     }
 
     bool canExport(const QString& /*fileName*/, RS2::FormatType /*t*/) const override {
@@ -62,8 +62,7 @@ public:
     void resetBufP();
 
     void setBufP(int _fBufP);
-
-    int getBufP() const {
+    int     getBufP() {
         return fBufP;
     }
 
@@ -72,16 +71,14 @@ public:
 
     QString getBufLine();
     char* getBufLineCh();
-
-    char* getBuf() const {
+    char*   getBuf() {
         return fBuf;
     }
 
     void setBuf(char* _buf) {
         fBuf = _buf;
     }
-
-    void setFSize(const unsigned _s) {
+    void    setFSize(unsigned _s) {
         fSize = _s;
     }
 
@@ -89,9 +86,13 @@ public:
     bool gotoBufLine(char* _lstr);
     bool gotoBufLineString(char* _lstr);
 
-    void replaceBinaryBytesBy(char _c) const;
-    void separateBuf(char _c1 = 13, char _c2 = 10, char _c3 = 0, char _c4 = 0) const;
-    void removeComment(char _fc = '(', char _lc = ')') const;
+    void    replaceBinaryBytesBy(char _c);
+    void    separateBuf(char _c1=13,
+                        char _c2=10,
+                        char _c3=0,
+                        char _c4=0);
+    void    removeComment(char _fc='(',
+                          char _lc=')');
 
     bool readFileInBuffer(char* _name, int _bNum = -1);
     bool readFileInBuffer(int _bNum = -1);

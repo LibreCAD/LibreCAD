@@ -82,11 +82,15 @@ public:
 
     RS_VectorSolutions getRefPoints() const override;
 
-    QString getMeasuredLabel() override;
+    QString getMeasuredLabel()  override;
 
     RS_Vector getDiametricDefinitionPoint() const {
         // fixme - sand - review
         return m_dimDiametricData.definitionPoint;
+    }
+
+    double getLeader() {
+        return m_dimDiametricData.leader;
     }
 
     void setDiametricDefinitionPoint(const RS_Vector& v) {

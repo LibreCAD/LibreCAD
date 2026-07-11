@@ -113,16 +113,16 @@ RS_DimensionData::RS_DimensionData(const RS_DimensionData& other) : RS_Flags(oth
                                                                     horizontalAxisDirection(other.horizontalAxisDirection),
                                                                     autoText{other.autoText}, flipArrow1{other.flipArrow1},
                                                                     flipArrow2{other.flipArrow2} {
-    if (other.dimStyleOverride != nullptr) {
-        dimStyleOverride.reset(other.dimStyleOverride->getCopy());
+    if (other.m_dimStyleOverride != nullptr) {
+        m_dimStyleOverride.reset(other.m_dimStyleOverride->getCopy());
     }
     else {
-        dimStyleOverride.reset();
+        m_dimStyleOverride.reset();
     }
 }
 
 RS_DimensionData::RS_DimensionData() : definitionPoint(false), middleOfText(false), text(""), style("") {
-    dimStyleOverride.reset();
+    m_dimStyleOverride.reset();
 }
 
 /**
@@ -156,7 +156,7 @@ RS_DimensionData::RS_DimensionData(const RS_Vector& definitionPoint, const RS_Ve
                                                           lineSpacingFactor(lineSpacingFactor), text(text), style(style), angle(angle),
                                                           horizontalAxisDirection(hdir), autoText{autoTextLocation}, flipArrow1{flipArr1},
                                                           flipArrow2{flipArr2} {
-    dimStyleOverride.reset(dsOverride);
+    m_dimStyleOverride.reset(dsOverride);
 }
 
 std::ostream& operator <<(std::ostream& os, const RS_DimensionData& dd) {
@@ -225,7 +225,7 @@ QString RS_Dimension::getLabel(const bool resolve) {
         if (okay) {
             ret = functionalText(m_dimGenericData.text, measured);
         }
-        ret = ret.replace(QString("<>"), getMeasuredLabel());
+        ret = ret.replace(QString("<>"), measuredStr);
     }
 
     return ret;

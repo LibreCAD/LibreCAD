@@ -46,10 +46,7 @@
 #include "pdf_print_loop.h"
 
 
-static RS_Vector parsePageSizeArg(QString);
-static void parsePagesNumArg(QString, PdfPrintParams&);
-static void parseMarginsArg(QString, PdfPrintParams&);
-static RS_Vector parsePageSizeArg(const QString&);
+static RS_Vector parsePageSizeArg(const QString& arg);
 static void parsePagesNumArg(const QString&, PdfPrintParams&);
 static void parseMarginsArg(const QString&, PdfPrintParams&);
 

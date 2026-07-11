@@ -76,7 +76,7 @@ protected:
     void initFromSettings() override;
     void checkSupportOfQuickEntityInfo();
     void clearQuickInfoWidget();
-    void updateQuickInfoWidget(const RS_Entity *pEntity);
+    void updateQuickInfoWidget(RS_Entity *pEntity);
     void goToNeutralStatus();
     RS2::CursorType doGetMouseCursor(int status) override;
 

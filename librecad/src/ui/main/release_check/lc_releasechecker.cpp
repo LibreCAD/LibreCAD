@@ -36,7 +36,7 @@ namespace {
 // The check runs at startup and can be re-triggered from the menu, so log a
 // warning to the console at most once per LibreCAD session, then stay silent.
 
-// fixme - sand - well, this is actually disputable - nobody look to the console.
+// fixme - sand - well, this is actually disputable - nobody look at the console.
 // but if the user set that noficiation is expected - it might be notified.
 // probably instead of console it might be message in statusbar - yet
 // actually I don't think modal is evil there.
@@ -53,10 +53,7 @@ void warnUpdateCheckFailedOnce(const QString &detail) {
 } // namespace
 
 LC_TagInfo::LC_TagInfo(int majorVer, int minorVer, int revisionNum, int bugfixVer, const QString &labelVer, const QString &tagNameVer):m_major(majorVer), m_minor(minorVer), m_revision(
-                                                                                                                                           revisionNum), m_bugfix(bugfixVer), m_label(labelVer), m_tagName(tagNameVer) {
-LC_TagInfo::LC_TagInfo(const int majorVer, const int minorVer, const int revisionNum, const int bugfixVer, const QString& labelVer,
-                       const QString& tagNameVer) : m_major(majorVer), m_minor(minorVer), m_revision(revisionNum), m_bugfix(bugfixVer),
-                                                    m_label(labelVer), m_tagName(tagNameVer) {
+                                                                                                                                          revisionNum), m_bugfix(bugfixVer), m_label(labelVer), m_tagName(tagNameVer) {
 }
 
 QString LC_TagInfo::getLabel() const {

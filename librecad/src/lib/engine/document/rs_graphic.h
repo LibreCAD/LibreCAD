@@ -143,6 +143,7 @@ public:
      */
     void setActiveLayoutMargins(double left, double top,
                                 double right, double bottom);
+
     // Wrappers for Layer functions:
     void clearLayers() {
         m_layerList.clear();

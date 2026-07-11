@@ -147,7 +147,7 @@ LC_QuickInfoWidget::~LC_QuickInfoWidget(){
  * Will be called from corresponding actions (default action, or entity info action)
  * @param en entity
  */
-void LC_QuickInfoWidget::processEntity(const RS_Entity* en){
+void LC_QuickInfoWidget::processEntity(RS_Entity* en){
     setWidgetMode(MODE_ENTITY_INFO);
     if (en == nullptr){
         clearEntityInfo();
@@ -161,7 +161,7 @@ void LC_QuickInfoWidget::processEntity(const RS_Entity* en){
     }
  }
 
-QString LC_QuickInfoWidget::getEntityDescription(const RS_Entity* en, const RS2::EntityDescriptionLevel shortDescription) const {
+QString LC_QuickInfoWidget::getEntityDescription(RS_Entity* en, const RS2::EntityDescriptionLevel shortDescription) const {
     return m_entityData->getEntityDescription(en, shortDescription);
 }
 
@@ -218,7 +218,7 @@ void LC_QuickInfoWidget::updateEntityInfoView(const bool forceUpdate, const bool
     if (forceUpdate){
         if (m_entityData->hasData()){
             const unsigned long entityId = m_entityData->getEntityId();
-            const RS_Entity *entity = findEntityById(entityId);
+            RS_Entity *entity = findEntityById(entityId);
             if (entity != nullptr){
                 m_entityData->clear();
                 m_options->displayEntityID = LC_GET_ONE_BOOL("Appearance","ShowEntityIDs", false);
@@ -821,7 +821,7 @@ void LC_QuickInfoWidget::onEntityPropertiesEdited(const unsigned long originalId
       const unsigned long currentEntityId = m_entityData->getEntityId();
       if (currentEntityId == originalId) {  // entity that is currently displayed was edited
           if (editedCloneId > 0){ // this was editing via properties dialog, so clone was created
-              const RS_Entity *editedEntity = findEntityById(editedCloneId);
+              auto editedEntity = findEntityById(editedCloneId);
               processEntity(editedEntity);
           }
           else{

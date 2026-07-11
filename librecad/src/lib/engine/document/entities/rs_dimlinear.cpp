@@ -184,7 +184,7 @@ void RS_DimLinear::doUpdateDim() {
  * @return Automatically created label for the default
  * measurement of this dimension.
  */
-QString RS_DimLinear::getMeasuredLabel() {
+QString RS_DimLinear::getMeasuredLabel()  {
     // direction of dimension line
     const RS_Vector dirDim = RS_Vector::polar(100.0, m_dimLinearData.angle);
 

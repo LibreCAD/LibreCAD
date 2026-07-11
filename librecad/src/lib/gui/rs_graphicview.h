@@ -156,7 +156,7 @@ public:
 
     RS2::EntityType getTypeToSelect() const;
     void setTypeToSelect(RS2::EntityType mType);
-    virtual QString obtainEntityDescription(const RS_Entity* entity, RS2::EntityDescriptionLevel descriptionLevel);
+    virtual QString obtainEntityDescription(RS_Entity* entity, RS2::EntityDescriptionLevel descriptionLevel);
     LC_InfoCursorOverlayPrefs* getInfoCursorOverlayPreferences() const;
 
     bool getPanOnZoom() const;

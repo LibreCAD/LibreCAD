@@ -116,7 +116,7 @@ void LC_ActionDrawLineParallelThrough::onMouseMoveEvent([[maybe_unused]] const i
             QList<RS_Entity*> parallels;
             RS_Creation::createParallelThrough(*m_coord, m_numberToCreate, m_entity, m_symmetric, m_distributeWithin, parallels);
             if (!parallels.empty()) {
-                const auto en = parallels.front();
+                auto en = parallels.front();
                 m_preview->addAllFromList(parallels);
                 const RS_Vector nearest = m_entity->getNearestPointOnEntity(*m_coord, false);
                 moveRelativeZero(nearest); // fixme - should we restore original relzero?

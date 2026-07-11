@@ -60,10 +60,6 @@ public:
     std::unordered_map<std::uint32_t, BlockRecordInfo> blockRecordMap;
 };
 
-using DRW_TableEntryFunc = std::function<void(DRW_TableEntry*)>;
-using DRW_EntityFunc = std::function<void(DRW_Entity*)>;
-using DRW_ParseableFunc = std::function<void(DRW_ParseableEntity*)>;
-
 class dxfRW {
 public:
     dxfRW(const char* name);
@@ -86,10 +82,7 @@ public:
     void setBinary(bool b) {binFile = b;}
 
     [[nodiscard]] bool write(DRW_Interface *interface_, DRW::Version ver, bool bin);
-    bool write(DRW_Interface *interface_, DRW::Version ver, bool bin);
-    void writeHeader();
     bool writeLineType(DRW_LType *ent);
-    bool writeLineTypeGenerics(DRW_LType* ent, int handle);
     bool writeLayer(DRW_Layer *ent);
     bool writeDimstyle(DRW_Dimstyle *ent);
     bool writeTextstyle(DRW_Textstyle *ent);
@@ -140,16 +133,6 @@ public:
     bool writeMultiLeader(DRW_MLeader *ent);
     bool writeLeader(DRW_Leader *ent);
     bool writeDimension(DRW_Dimension *ent);
-    bool writeEntityExtData(DRW_Entity* ent);
-    void writeViewPortTable();
-    void writeLayerTable();
-    void writeLineTypeTable();
-    void writeStyleTable();
-    void writeUCSTable();
-    void writeViewTable();
-    void writeAppIdTable();
-    void writeBlockRecordTable();
-    void writeDimStyleTable();
     void setEllipseParts(int parts){elParts = parts;} /*!< set parts number when convert ellipse to polyline */
     bool writePlotSettings(DRW_PlotSettings *ent);
     bool writeLayout(DRW_Layout *ent);
@@ -270,8 +253,6 @@ private:
     bool processBlocks();
     bool processBlock();
     bool processEntities(bool isblock);
-    bool doProcessEntity(DRW_Entity& ent, DRW_EntityFunc applyFunc);
-    bool doProcessParseable(DRW_ParseableEntity& ent, DRW_ParseableFunc applyFunc, DRW::error sectionError = DRW::BAD_READ_ENTITIES);
     bool processObjects();
     bool processUnderlayDefinition();
     bool processDetailViewStyle();
@@ -295,9 +276,7 @@ private:
 
     bool processLType();
     bool processLayer();
-    bool doProcessTableEntry(const std::string &sectionName, DRW_TableEntry& entry,
-                         DRW_TableEntryFunc applyFunc, bool reuseEntity = true);
-    bool processDimStyle(std::vector<DRW_Dimstyle> &styles);
+    bool processDimStyle();
     bool processTextStyle();
     bool processVports();
     bool processAppId();
@@ -320,7 +299,6 @@ private:
     bool processLWPolyline();
     bool processPolyline();
     bool processVertex(DRW_Polyline* pl);
-    bool processTolerance();
     bool processText();
     bool processTolerance();
     bool processMText();
@@ -343,7 +321,6 @@ private:
     bool processSurface();
     bool processModelerGeometry();
     bool processMultiLeader();
-    bool processArcDimension();
     bool processDimension();
     bool processArcDimension();
     bool processLargeRadialDimension();
@@ -397,62 +374,20 @@ private:
     void writeObjectOwner(std::uint32_t parentHandle);
     void writePlotSettingsFields(const DRW_PlotSettings *ent);
     /*use version from dwgutil.h*/
-    std::string toHexStr(int n) const;//RLZ removeme
+    std::string toHexStr(int n);//RLZ removeme
     bool writeAppData(const std::list<std::list<DRW_Variant>> &appData);
 
-    bool setError(DRW::error lastError);
+    bool setError(const DRW::error lastError);
 
-    inline bool writeString(int code, const std::string &text) const;
-    inline bool writeDouble(int code, double d) const;
-    inline bool writeDoubleOpt(int code, double d) const;
-    inline bool writeUtf8String(int code, const std::string &text) const;
-    inline bool writeUtf8Caps(int code, const std::string& text) const;
-    inline bool writeHandle(int code, int handle) const;
-    inline bool writeInt16(int code, int val) const;
-    inline bool writeInt32(int code, int val) const;
-    inline bool writeBool(int code, bool val) const;
-    inline bool readRec(int *codeData) const;
-
-    inline std::string getString() const;
-    inline void writeSectionStart(const std::string& name);
-    inline void writeSectionEnd();
-    inline void writeSymTypeRecord(const std::string& typeName);
-    inline void writeSubClass(const std::string& typeName);
-    inline void writeSubClassOpt(const std::string& typeName);
-    inline void writeTableName(const std::string& name);
-    inline void writeDXFName(const std::string& name);
-    void writeName(const std::string& name);
-    inline void writeTableEnd();
-    inline void writeSymTable();
-    inline void writeCoord(int startCode, const DRW_Coord& coord);
-    void writeTableStart(const std::string& name, std::string handle, int maxEntriesNumber, int handleCode=5);
-    void writeVar(const std::string &name, int defaultValue, int varCode  = 70);
-    void writeVarExp(const std::string& name, int value, int varCode);
-    void writeVarOpt(const std::string& name, int varCode);
-    void writeVar(const std::string &name, double defaultValue, int varCode = 40);
-    void writeVar(const std::string &name, const std::string &defaultValue="", int varCode = 1);
-    void writeVar(const std::string& name, int startCode, const DRW_Coord& defaultCoord);
-    void writeVar2D(const std::string& name, int startCode, const DRW_Coord& defaultCoord);
-    void writeVar2DOpt(const std::string& name, int startCode);
-    bool writeDouble(int code, DRW_Dimstyle* ent, const std::string& name);
-    bool writeInt16(int code, DRW_Dimstyle* ent, const std::string& name);
-    bool writeUtf8String(int code, DRW_Dimstyle* ent, const std::string& name);
-
-    void setVersion(DRW::Version v);
-
+private:
     DRW::Version version;
-    bool afterAC1009 {false};
-    bool afterAC1012 {false};
-    bool afterAC1014 {false};
-    bool afterAC1015 {false};
-    bool afterAC1018 {false};
     DRW::error error {DRW::BAD_NONE};
     std::string fileName;
     std::string codePage;
     bool binFile;
     std::unique_ptr<dxfReader> reader;
     std::unique_ptr<dxfWriter> writer;
-    DRW_Interface *iface = nullptr;
+    DRW_Interface *iface;
     DRW_Header header;
 //    int section;
     std::string nextentity;
@@ -491,4 +426,4 @@ private:
 };
 
 
-#endif
+#endif // LIBDXFRW_H

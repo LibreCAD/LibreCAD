@@ -320,7 +320,7 @@ RS_Circle* RS_PreviewActionInterface::previewCircle(const RS_CircleData& circleD
 }
 
 void RS_PreviewActionInterface::previewToCreateCircle(const RS_CircleData& circleData) const {
-    const auto* result = previewCircle(circleData);
+    auto* result = previewCircle(circleData);
     prepareEntityDescription(result, RS2::EntityDescriptionLevel::DescriptionCreating);
 }
 
@@ -354,7 +354,7 @@ RS_Point* RS_PreviewActionInterface::previewToCreatePoint(const RS_Vector& coord
     return result;
 }
 
-void RS_PreviewActionInterface::previewEntityToCreate(const RS_Entity* en, const bool addToPreview) const {
+void RS_PreviewActionInterface::previewEntityToCreate(RS_Entity* en, const bool addToPreview) const {
     if (addToPreview) {
         previewEntity(en);
     }
@@ -683,7 +683,7 @@ RS_Entity* RS_PreviewActionInterface::catchAndDescribe(const LC_MouseEvent* e, c
     return entity;
 }
 
-void RS_PreviewActionInterface::prepareEntityDescription(const RS_Entity* entity, const RS2::EntityDescriptionLevel level) const {
+void RS_PreviewActionInterface::prepareEntityDescription(RS_Entity* entity, const RS2::EntityDescriptionLevel level) const {
     if (m_infoCursorOverlayPrefs->enabled) {
         if ((m_infoCursorOverlayPrefs->showEntityInfoOnCatch && level == RS2::EntityDescriptionLevel::DescriptionCatched) || (
             m_infoCursorOverlayPrefs->showEntityInfoOnCreation && level == RS2::EntityDescriptionLevel::DescriptionCreating) || (
@@ -789,7 +789,7 @@ void RS_PreviewActionInterface::appendInfoCursorZoneMessage(const QString& messa
     }
 }
 
-QString RS_PreviewActionInterface::obtainEntityDescriptionForInfoCursor(const RS_Entity* e, const RS2::EntityDescriptionLevel level) const {
+QString RS_PreviewActionInterface::obtainEntityDescriptionForInfoCursor(RS_Entity* e, const RS2::EntityDescriptionLevel level) const {
     return m_graphicView->obtainEntityDescription(e, level);
 }
 

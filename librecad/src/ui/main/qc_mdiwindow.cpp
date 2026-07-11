@@ -120,10 +120,10 @@ void QC_MDIWindow::setupGraphicView([[maybe_unused]]const QWidget* parent, const
     m_graphicView->setPrintPreview(printPreview);
     m_graphicView->setObjectName("graphicview");
 
-    auto receiver = dynamic_cast<QC_ApplicationWindow *>(parent->window());
-    if (receiver != nullptr) {
-        connect(m_graphicView, &RS_GraphicView::previous_zoom_state, receiver, &QC_ApplicationWindow::setPreviousZoomEnable);
-    }
+    // auto receiver = dynamic_cast<QC_ApplicationWindow *>(parent->window());
+    // if (receiver != nullptr) {
+    //     connect(m_graphicView, &RS_GraphicView::previous_zoom_state, receiver, &QC_ApplicationWindow::setPreviousZoomEnable);
+    // }
 
     if (printPreview) {
         // Print-preview windows don't show the layout tab bar — the

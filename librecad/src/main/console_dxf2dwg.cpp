@@ -74,7 +74,7 @@ bool convertFile(const QString& inputFile, const QString& outputFile, RS2::Forma
     }
 
     RS_Graphic graphic;
-    graphic.newDoc();
+    graphic.initForNewDocument();
 
     // Fix 3: pass callback so partial/full failures print to stderr, no dialog
     bool imported = RS_FileIO::instance()->fileImport(

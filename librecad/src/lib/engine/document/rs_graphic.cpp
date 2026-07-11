@@ -89,20 +89,9 @@ namespace {
  * Default constructor.
  */
 RS_Graphic::RS_Graphic(RS_EntityContainer* parent)
-    : RS_Document(parent), m_autosaveFilename{"Unnamed"}, m_plotSettings{std::make_unique<LC_PlotSettings>(this)},
+    : RS_Document(parent), m_autosaveFilename{"Unnamed"}, m_plotSettings{std::make_unique<LC_PlotSettings>(this)} {
 
-        layerList(),
-        blockList(true),
-        paperScaleFixed(false),
-        marginLeft(0.0),
-        marginTop(0.0),
-        marginRight(0.0),
-        marginBottom(0.0),
-        pagesNumH(1),
-        pagesNumV(1)
-        , autosaveFilename{ "Unnamed"}{
-
-    RS_DEBUG->print("RS_Graphic constructor: autosaveFilename initialized as '%s'", autosaveFilename.toLatin1().data());
+    RS_DEBUG->print("RS_Graphic constructor: autosaveFilename initialized as '%s'", m_autosaveFilename.toLatin1().data());
 
     LC_GROUP_GUARD("Defaults");
     {
@@ -251,14 +240,14 @@ void RS_Graphic::removeLayer(RS_Layer* layer) {
  * A default layer (0) is created.
  */
 void RS_Graphic::initForNewDocument() {
-    RS_DEBUG->print("RS_Graphic::newDoc: before clear, autosaveFilename='%s'", autosaveFilename.toLatin1().data());
+    RS_DEBUG->print("RS_Graphic::newDoc: before clear, autosaveFilename='%s'", m_autosaveFilename.toLatin1().data());
     m_dwgAdvancedMetadata.clear();
     clear();
     clearLayers();
     clearBlocks();
     addLayer(new RS_Layer("0"));
     setModified(false);
-    RS_DEBUG->print("RS_Graphic::newDoc: after clear, autosaveFilename='%s'", autosaveFilename.toLatin1().data());
+    RS_DEBUG->print("RS_Graphic::newDoc: after clear, autosaveFilename='%s'", m_autosaveFilename.toLatin1().data());
 }
 
 void RS_Graphic::clearVariables() {
@@ -734,16 +723,6 @@ int RS_Graphic::clean() {
     return howMany;
 }
 
-double RS_Graphic::getMarginBottomInUnits() {
-    return RS_Units::convert(marginBottom, RS2::Millimeter, getUnit());
-}
-
-void RS_Graphic::setPagesNum(int horiz, int vert) {
-    if (horiz > 0)
-        pagesNumH = horiz;
-    if (vert > 0)
-        pagesNumV = vert;
-}
 
 // ---- Paper-space layouts (PR 9) -----------------------------------------
 
@@ -811,7 +790,7 @@ std::array<double, 4> RS_Graphic::activeLayoutMargins() const {
                     match->marginRight, match->marginBottom};
         }
     }
-    return {marginLeft, marginTop, marginRight, marginBottom};
+    return {m_plotSettings->getMarginLeftMm(), m_plotSettings->getMarginTopMm(), m_plotSettings->getMarginRightMm(), m_plotSettings->getMarginBottomMm()};
 }
 
 void RS_Graphic::setActiveLayoutMargins(double left, double top,
@@ -822,19 +801,7 @@ void RS_Graphic::setActiveLayoutMargins(double left, double top,
     }
     // Fall through to document-singleton margins for DXF / no-layout
     // documents and for active handles that don't match a stored record.
-    setMargins(left, top, right, bottom);
-}
-
-void RS_Graphic::setPagesNum(const QString &horizXvert) {
-    if (horizXvert.contains('x')) {
-        bool ok1 = false;
-        bool ok2 = false;
-        int i = horizXvert.indexOf('x');
-        int h = (int)RS_Math::eval(horizXvert.left(i), &ok1);
-        int v = (int)RS_Math::eval(horizXvert.mid(i+1), &ok2);
-        if (ok1 && ok2)
-            setPagesNum(h, v);
-    }
+    m_plotSettings->setMarginsInMm(left, top, right, bottom);
 }
 
 QString RS_Graphic::formatAngle(const double angle) const{

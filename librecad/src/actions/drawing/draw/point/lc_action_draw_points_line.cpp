@@ -157,7 +157,7 @@ void LC_ActionDrawPointsLine::doPreparePreviewEntities([[maybe_unused]] const LC
         createPoints(possibleEndPoint, list);
         if (m_actionType == RS2::ActionDrawPointsMiddle && list.size() == 1) {
             RS_Entity* ep = list.at(0);
-            const auto* point = dynamic_cast<RS_Point*>(ep);
+            auto* point = dynamic_cast<RS_Point*>(ep);
             if (point != nullptr) {
                 previewEntityToCreate(point, false);
             }

@@ -261,7 +261,7 @@ int console_dwg2svg(int argc, char* argv[])
          LC_Console::acceptedExtensions(QStringLiteral("dwg"))});
 }
 
-static std::unique_ptr<RS_Document> openDocAndSetGraphic(QString dxfFile){
+static std::unique_ptr<RS_Document> openDocAndSetGraphic(const QString& dxfFile){
     auto doc = std::make_unique<RS_Graphic>();
     const LC_DocumentsStorage storage;
     if (!storage.loadDocument(doc.get(), dxfFile, RS2::FormatUnknown)) {

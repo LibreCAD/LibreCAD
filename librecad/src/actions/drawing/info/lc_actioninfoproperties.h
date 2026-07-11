@@ -32,11 +32,11 @@ public:
     void init(int status) override;
 private:
     RS_Entity* m_highlightedEntity = nullptr;
-    void updateQuickInfoWidget(const RS_Entity* pEntity);
+    void updateQuickInfoWidget(RS_Entity* pEntity);
     void clearQuickInfoWidget();
     void highlightHoveredEntity(const LC_MouseEvent *event, bool resolveChildren);
     void highlightAndShowEntityInfo(const LC_MouseEvent *e, bool resolveChildren);
-    bool showEntityInfo(const RS_Entity* entity, const RS_Vector& currentMousePosition);
+    bool showEntityInfo(RS_Entity* entity, const RS_Vector& currentMousePosition);
 protected:
     void doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) override;
     void onMouseLeftButtonRelease(int status, const LC_MouseEvent* e) override;
