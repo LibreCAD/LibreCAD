@@ -2472,7 +2472,8 @@ void QC_ApplicationWindow::slotFilePrint(bool printPDF) {
     // together. On Linux/CUPS, setting orientation via setPageOrientation()
     // after setPageSize() with a standard size ID may not propagate correctly,
     // resulting in portrait-only output regardless of the landscape setting.
-    LC_Printing::setupPageLayout(printer, landscape, paperSizeName, paperSize, graphic->getUnit(), paperMargins);
+    QPageSize pageSize = LC_Printing::toPageSize(paperSizeName, paperSize, graphic->getUnit());
+    LC_Printing::setupPageLayout(printer, landscape, pageSize, paperMargins);
 
     if (printPDF) {
         // Issue #1897, exporting PDF margins to to follow the drawing settings

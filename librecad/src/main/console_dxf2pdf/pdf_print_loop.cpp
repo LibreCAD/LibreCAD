@@ -227,7 +227,8 @@ static void setupPrinterAndPaper(RS_Graphic* graphic, QPrinter& printer,
                            graphic->getMarginRight(),
                            graphic->getMarginBottom()};
 
-    LC_Printing::setupPageLayout(printer, landscape, paperSizeName, paperSize, graphic->getUnit(), paperMargins);
+    QPageSize pageSize = LC_Printing::toPageSize(paperSizeName, paperSize, graphic->getUnit());
+    LC_Printing::setupPageLayout(printer, landscape, pageSize, paperMargins);
 
     printer.setOutputFileName(params.outFile);
     printer.setOutputFormat(QPrinter::PdfFormat);
