@@ -74,13 +74,19 @@ void LC_Printing::setupPageLayout(QPrinter& printer, bool landscape, QPrinter::P
     layout.setUnits(QPageLayout::Millimeter);
 
     if (paperSizeName == QPrinter::Custom) {
+        // Define custom pages in portrait; setOrientation() below applies the
+        // landscape rotation. QPageLayout drives orientation itself, so feeding
+        // it an already-rotated size would be applied twice.
         RS_Vector s = RS_Units::convert(paperSize, unit, RS2::Millimeter);
-        if (landscape)
-            s = s.flipXY();
-        layout.setPageSize(QPageSize{QSizeF(s.x, s.y), QPageSize::Millimeter}, paperMargins);
+        layout.setPageSize(QPageSize{QSizeF(qMin(s.x, s.y), qMax(s.x, s.y)), QPageSize::Millimeter});
     } else {
-        layout.setPageSize(QPageSize{static_cast<QPageSize::PageSizeId>(paperSizeName)}, paperMargins);
+        layout.setPageSize(QPageSize{static_cast<QPageSize::PageSizeId>(paperSizeName)});
     }
     layout.setOrientation(landscape ? QPageLayout::Landscape : QPageLayout::Portrait);
+    // The second argument of setPageSize() is the *minimum* margins, not the
+    // actual page margins - in FullPageMode those are never applied. Set the
+    // drawing margins explicitly so the print clip rect and PDF export honor
+    // them (issue #1897).
+    layout.setMargins(paperMargins);
     printer.setPageLayout(layout);
 }

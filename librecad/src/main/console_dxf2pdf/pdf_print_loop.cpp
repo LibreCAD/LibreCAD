@@ -221,9 +221,10 @@ static void setupPrinterAndPaper(RS_Graphic* graphic, QPrinter& printer,
     RS2::PaperFormat pf = graphic->getPaperFormat(&landscape);
     QPrinter::PageSize paperSizeName = LC_Printing::rsToQtPaperFormat(pf);
     RS_Vector paperSize = graphic->getPaperSize();
+    // QMarginsF is (left, top, right, bottom)
     QMarginsF paperMargins{graphic->getMarginLeft(),
-                           graphic->getMarginRight(),
                            graphic->getMarginTop(),
+                           graphic->getMarginRight(),
                            graphic->getMarginBottom()};
 
     LC_Printing::setupPageLayout(printer, landscape, paperSizeName, paperSize, graphic->getUnit(), paperMargins);
