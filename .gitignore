@@ -91,9 +91,30 @@ scripts/PWD
 
 # Mac store files
 .DS_Store
+.DS_Store?
+.AppleDouble
+.LSOverride
+Icon
+
+# macOS thumbnail/resource forks and metadata
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# macOS directories that might appear on network/AFP volumes
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
 
 #pkg files
-*.pkg
+
 #vim files
 *.swp
 *.orig
@@ -120,3 +141,14 @@ core.*
 .pixi
 *.egg-info
 node_modules
+
+# CLion / JetBrains IDEs
+.idea/
+*.iml
+*.iws
+.idea_modules/
+cmake-build-*/
+# CLion / JetBrains user-specific and generated files
+.clwb/
+.run/
+out/
