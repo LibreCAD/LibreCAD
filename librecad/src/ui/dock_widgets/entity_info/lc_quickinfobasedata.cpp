@@ -250,5 +250,11 @@ QString LC_QuickInfoBaseData::formatInt(const int &x) const{
 }
 
 const RS_Vector &LC_QuickInfoBaseData::getRelativeZero() const {
+    if (m_viewport == nullptr){
+        // No active viewport (e.g. during teardown, see issue #2679): return a
+        // safe default instead of dereferencing a null pointer.
+        static const RS_Vector zero{0.0, 0.0};
+        return zero;
+    }
     return m_viewport->getRelativeZero();
 }

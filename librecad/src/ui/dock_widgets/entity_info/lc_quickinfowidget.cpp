@@ -149,6 +149,14 @@ LC_QuickInfoWidget::~LC_QuickInfoWidget(){
  * @param en entity
  */
 void LC_QuickInfoWidget::processEntity(RS_Entity *en){
+    // During application/document teardown the active view is detached via
+    // setGraphicView(nullptr), leaving the entity data with a null viewport.
+    // Guard against a stale mouse-move being processed then, which would
+    // dereference the null viewport in getRelativeZero() (issue #2679). With no
+    // active view there is nothing to display anyway.
+    if (m_graphicView == nullptr){
+        return;
+    }
     setWidgetMode(MODE_ENTITY_INFO);
     if (en == nullptr){
         clearEntityInfo();

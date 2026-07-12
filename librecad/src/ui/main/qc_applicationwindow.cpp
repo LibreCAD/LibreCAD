@@ -1324,7 +1324,11 @@ bool QC_ApplicationWindow::doCloseAllFiles(){
             }
             doArrangeWindows(RS2::CurrentMode);
         }
-        qApp->processEvents(QEventLoop::AllEvents, 1000);
+        // Exclude user-input events while closing: doClose() has already detached
+        // the active view, so dispatching a stale queued mouse-move here would run
+        // hover/Quick Info against a torn-down viewport and crash (issue #2679).
+        // Repaints and deferred deletions still need to be processed.
+        qApp->processEvents(QEventLoop::ExcludeUserInputEvents, 1000);
     }
     return false;
 }
