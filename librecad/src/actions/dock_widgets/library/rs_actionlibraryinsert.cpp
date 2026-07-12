@@ -62,12 +62,6 @@ void RS_ActionLibraryInsert::setFile(const QString& file) {
     m_actionData->prev = std::make_unique<RS_Graphic>();
     if (!storage.loadDocument(m_actionData->prev.get(), file, RS2::FormatUnknown)) {
         commandMessage(tr("Cannot open file '%1'").arg(file));
-    } else {
-        double factor = RS_Units::convert(1.0, m_actionData->prev->getUnit(), m_graphic->getUnit());
-        if (std::abs(factor - 1.0) > RS_TOLERANCE) {
-            m_actionData->prev->scale(RS_Vector(), RS_Vector(factor, factor));
-            m_actionData->prev->calculateBorders();
-        }
     }
 }
 
