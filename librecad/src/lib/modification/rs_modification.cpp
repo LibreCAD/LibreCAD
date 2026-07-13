@@ -351,6 +351,17 @@ bool RS_Modification::changeAttributes(
 
         if (data.changeLayer==true) {
             cl->setLayer(data.layer);
+            if (RS_Information::isDimension(cl->rtti())) {
+                if (!data.changeColor) {
+                    pen.setColor(RS_Color(RS2::FlagByLayer));
+                }
+                if (!data.changeWidth) {
+                    pen.setWidth(RS2::WidthByLayer);
+                }
+                if (!data.changeLineType) {
+                    pen.setLineType(RS2::LineByLayer);
+                }
+            }
         }
 
         if (data.changeColor==true) {
