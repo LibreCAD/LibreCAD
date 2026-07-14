@@ -55,6 +55,8 @@
 #include "rs_graphic.h"
 #include "rs_settings.h"
 
+#include "libdxfrw_json_dump.h"
+
 namespace {
 
 void ensureSettings() {
@@ -392,4 +394,46 @@ TEST_CASE("DWG corpus: convert ~/doc/dwg{,2}/*.dwg to DXF in a tmp dir",
   std::cout << "== DWG->DXF corpus: " << ok << " ok, " << fail << " fail. Audit with:\n"
             << "   scripts/ezdxf_audit.py " << outDir.string() << "\n";
   SUCCEED("DWG->DXF conversion complete; audit the output dir externally");
+}
+
+// --- P0 read-level JSON dumper self-test (default suite; fixture-gated) ------
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("[jsondump] libdxfrw JSON dump emits canonical entities", "[jsondump]") {
+  const char *home = std::getenv("HOME");
+  const char *root = std::getenv("LIBREDWG_TEST_DATA");
+  std::filesystem::path fixture =
+      root && root[0] ? std::filesystem::path(root) / "r11" / "entities-2d.dwg"
+      : home && home[0]
+          ? std::filesystem::path(home) / "dev" / "libredwg" / "test" /
+                "test-data" / "r11" / "entities-2d.dwg"
+          : std::filesystem::path{};
+  if (fixture.empty() || !std::filesystem::exists(fixture)) {
+    SUCCEED("entities-2d.dwg fixture absent; skipping [jsondump] self-test");
+    return;
+  }
+
+  std::ostringstream oss;
+  const int rc = jsondump::dumpCadFile(fixture.string(), oss);
+  const std::string json = oss.str();
+  REQUIRE(rc == 0);
+
+  // Top-level identity (dwgread stderr = SUCCESS, "version code" AC1009).
+  REQUIRE(json.find("\"sourceFormat\":\"dwg\"") != std::string::npos);
+  REQUIRE(json.find("\"version\":\"AC1009\"")   != std::string::npos);
+
+  // Core types present (dwgread -O JSON oracle: LINE, CIRCLE, ARC, TEXT "FOO").
+  REQUIRE(json.find("\"type\":\"LINE\"")   != std::string::npos);
+  REQUIRE(json.find("\"type\":\"CIRCLE\"") != std::string::npos);
+  REQUIRE(json.find("\"type\":\"ARC\"")    != std::string::npos);
+  REQUIRE(json.find("\"type\":\"TEXT\"")   != std::string::npos);
+
+  // Exact geometry oracle (dwgread & dwgTs agree byte-for-byte):
+  //   LINE (2,3,4)->(3,4,5) ; TEXT value "FOO".
+  REQUIRE(json.find("\"start\":[2,3,4]") != std::string::npos);
+  REQUIRE(json.find("\"end\":[3,4,5]")   != std::string::npos);
+  REQUIRE(json.find("\"text\":\"FOO\"")  != std::string::npos);
+
+  // JSON is well-formed enough to parse (balanced braces, has the two arrays).
+  REQUIRE(json.find("\"entities\":[") != std::string::npos);
+  REQUIRE(json.find("\"objects\":[")  != std::string::npos);
 }

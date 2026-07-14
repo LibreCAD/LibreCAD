@@ -81,6 +81,7 @@ const std::unordered_map< const char*, DRW::Version > dwgVersionStrings {
     { "MC0.0", DRW::MC00 },
     { "AC1.2", DRW::AC12 },
     { "AC1.4", DRW::AC14 },
+    { "AC1.40", DRW::AC14 },   // R1.40 real magic is the 6-char form (sniffVersion reads 6)
     { "AC1.50", DRW::AC150 },
     { "AC2.10", DRW::AC210 },
     { "AC1002", DRW::AC1002 },

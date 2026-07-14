@@ -1,0 +1,18 @@
+{
+  "ACAD_TABLE|*|type_mismatch": 1,
+  "ACMPARTLIST|*|missing_entity": 1,
+  "ARC|*|missing_entity": 2333,
+  "CIRCLE|*|missing_entity": 65,
+  "HATCH|*|missing_entity": 4,
+  "INSERT|*|missing_entity": 1,
+  "LINE|*|missing_entity": 4755,
+  "LWPOLYLINE|*|missing_entity": 26,
+  "MTEXT|styleHandle|missing_field": 7,
+  "POINT|*|missing_entity": 113,
+  "POLYLINE|*|missing_entity": 44,
+  "STDPART2D|*|missing_entity": 120,
+  "TYPE_4|*|missing_entity": 23,
+  "TYPE_5|*|missing_entity": 23,
+  "TYPE_6|*|missing_entity": 44,
+  "VERTEX|*|missing_entity": 300
+}

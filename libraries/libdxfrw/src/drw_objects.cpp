@@ -3505,6 +3505,79 @@ bool DRW_FieldList::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t
     return true;
 }
 
+// DATATABLE (AcDbDataTable) — ODA / libreDWG dwg2.spec DATATABLE, cross-checked
+// against dwgTs parseDataTable.  Layout (both oracles agree):
+//   BS flags; BL num_cols; BL num_rows; T table_name;
+//   REPEAT num_cols { BL type; T text; REPEAT num_rows { BL data_long;
+//                                                        BD data_double;
+//                                                        T data_string } }
+// The body is a DEBUG_CLASS in libreDWG ("(varies) TODO"): its cell layout is
+// only partially documented, so a misaligned/truncated body can over-read.  We
+// decode the reliable prefix unconditionally, walk the body best-effort with
+// per-iteration isGood() guards + capped counts, and MANDATORY graceful-degrade
+// (always return true — the record is delivered and the caller keeps the raw
+// shelf for a lossless round-trip).
+bool DRW_DataTable::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs){
+    dwgBuffer sBuff = *buf;
+    dwgBuffer *sBuf = buf;
+    if (version > DRW::AC1018)     // 2007+ keep strings in a separate stream
+        sBuf = &sBuff;
+    bool ret = DRW_TableEntry::parseDwg(version, buf, sBuf, bs);
+    DRW_DBG("\n***************************** parsing DataTable ******************************\n");
+    if (!ret)
+        return ret;
+
+    auto finishSoft = [&]() {
+        if (buf->isGood()) {
+            seekObjectHandleStream(version, buf, objSize);
+            readCommonObjectHandles(buf, handle, numReactors, xDictFlag, &parentHandle);
+        }
+        return true;
+    };
+
+    flags = buf->getBitShort();
+    const std::int32_t rawCols = buf->getBitLong();
+    const std::int32_t rawRows = buf->getBitLong();
+    tableName = sBuf->getVariableText(version, false);
+
+    columnCount = rawCols < 0 ? 0 : rawCols;
+    rowCount = rawRows < 0 ? 0 : rawRows;
+
+    // Bound both counts before the body walk.  isValidAssocCount rejects
+    // negatives and absurd counts (>100000) that a corrupt/misaligned body
+    // would otherwise turn into an unbounded loop.  Prefix stays decoded.
+    if (!isValidAssocCount(columnCount) || !isValidAssocCount(rowCount)) {
+        DRW_DBG("DATATABLE column/row count out of range; keeping shell\n");
+        return finishSoft();
+    }
+
+    columns.clear();
+    columns.reserve(static_cast<std::size_t>(columnCount));
+    for (std::int32_t c = 0; c < columnCount && buf->isGood(); ++c) {
+        Column col;
+        col.type = buf->getBitLong();
+        col.text = sBuf->getVariableText(version, false);
+        col.rows.reserve(static_cast<std::size_t>(rowCount));
+        for (std::int32_t r = 0; r < rowCount && buf->isGood(); ++r) {
+            Row row;
+            row.dataLong = buf->getBitLong();
+            row.dataDouble = buf->getBitDouble();
+            row.dataString = sBuf->getVariableText(version, false);
+            col.rows.push_back(std::move(row));
+        }
+        columns.push_back(std::move(col));
+    }
+
+    DRW_DBG("datatable flags: "); DRW_DBG(flags);
+    DRW_DBG(" cols: "); DRW_DBG(columnCount);
+    DRW_DBG(" rows: "); DRW_DBG(rowCount);
+    DRW_DBG(" name: "); DRW_DBG(tableName.c_str()); DRW_DBG("\n");
+
+    seekObjectHandleStream(version, buf, objSize);
+    readCommonObjectHandles(buf, handle, numReactors, xDictFlag, &parentHandle);
+    return true;
+}
+
 bool DRW_RasterVariables::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
     switch (code) {
     case 90:
@@ -5591,6 +5664,39 @@ bool DRW_ObjectContextData::parseDwg(DRW::Version version, dwgBuffer *buf, std::
     case Kind::DiameterDimension:
         if (hasBody()) readDimensionBody();
         break;
+    case Kind::Leader:
+        // AcDbLeaderObjectContextData. Field order per LibreDWG
+        // dwg2.spec DWG_OBJECT(LEADEROBJECTCONTEXTDATA) (empirically the
+        // ground truth; note x_direction precedes b290 — dwgTs has these two
+        // swapped): BL num_points, num_points x 3BD points, 3BD x_direction,
+        // B b290, 3BD inspt_offset, 3BD endptproj.
+        if (hasBody()) {
+            std::int32_t pointCount = buf->getBitLong();
+            if (pointCount < 0) pointCount = 0;
+            // Each point is three bit-doubles; cap so a corrupt count cannot
+            // run away (the per-iteration hasBody()/isGood() guards remain the
+            // primary stop and never truncate a valid list).
+            const std::int32_t cap = 1 << 20;
+            if (pointCount > cap) pointCount = cap;
+            m_leaderPoints.reserve(
+                static_cast<std::size_t>(std::min<std::int32_t>(pointCount, 4096)));
+            for (std::int32_t i = 0; i < pointCount && hasBody() && buf->isGood(); ++i)
+                m_leaderPoints.push_back(buf->get3BitDouble());
+        }
+        if (hasBody()) m_leaderXDir = buf->get3BitDouble();
+        if (hasBody()) m_leaderUnknown290 = buf->getBit() != 0;
+        if (hasBody()) m_leaderInsertionOffset = buf->get3BitDouble();
+        if (hasBody()) m_leaderEndpointProjection = buf->get3BitDouble();
+        break;
+    case Kind::BlockReference:
+        // AcDbBlkrefObjectContextData (dwgTs parseBlockReferenceObjectContextData):
+        // BD rotation, 3RD insertionPoint, BD xScale, BD yScale, BD zScale.
+        if (hasBody()) m_blkRefRotation = buf->getBitDouble();
+        if (hasBody()) m_blkRefInsertionPoint = buf->get3BitDouble();
+        if (hasBody()) m_blkRefScale.x = buf->getBitDouble();
+        if (hasBody()) m_blkRefScale.y = buf->getBitDouble();
+        if (hasBody()) m_blkRefScale.z = buf->getBitDouble();
+        break;
     case Kind::AnnotScale:
     case Kind::Unknown:
     default:
@@ -5618,7 +5724,11 @@ bool DRW_ObjectContextData::parseDwg(DRW::Version version, dwgBuffer *buf, std::
     DRW_DBG(" handle="); DRW_DBG(handle);
     DRW_DBG(" scale="); DRW_DBG(m_scaleHandle);
     DRW_DBG("\n");
-    return buf->isGood() && hBuff.isGood();
+    // Graceful-degrade: always return true. The dispatcher adds BOTH the typed
+    // object and the raw-preservation shelf only if this returns true, so a
+    // bounds/overrun (isGood()==false) on a malformed record must not drop the
+    // raw shelf -- the body is under-decode-tolerant, the raw bytes round-trip.
+    return true;
 }
 
 bool DRW_Group::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
@@ -5754,13 +5864,18 @@ bool DRW_ImageDefinitionReactor::parseDwg(DRW::Version version, dwgBuffer *buf, 
     if (!ret)
         return ret;
 
-    dwgBuffer hBuff = *buf;
-    seekObjectHandleStream(version, &hBuff, objSize);
-    readCommonObjectHandles(&hBuff, handle, numReactors, xDictFlag, &parentHandle);
-
+    // Read the data-stream body (class_version) BEFORE the handle stream, then
+    // seek buf itself to the handle stream: a no-op for <=AC1018 (handles are
+    // inline right after the body) and a reposition for R2007+. The previous
+    // order read parent/reactor/xdict handles from a body-start copy, which the
+    // no-op <=AC1018 seek left pointing at the class_version bytes -> garbage
+    // owner handles in every pre-R2007 drawing with a raster image. This mirrors
+    // the EvaluationGraph fix (7edf47978) and the DRW_Dictionary pattern.
     m_classVersion = buf->getBitLong();
+    seekObjectHandleStream(version, buf, objSize);
+    readCommonObjectHandles(buf, handle, numReactors, xDictFlag, &parentHandle);
     DRW_UNUSED(sBuf);
-    return buf->isGood() && hBuff.isGood();
+    return true;  // graceful-degrade: typed body + raw shelf both delivered
 }
 
 bool DRW_SpatialFilter::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
@@ -6169,27 +6284,25 @@ bool DRW_EvaluationGraph::parseDwg(DRW::Version version, dwgBuffer *buf, std::ui
     if (!ret)
         return ret;
 
-    if (version <= DRW::AC1018)
-        return false;
-
-    dwgBuffer hBuff = *buf;
-    seekObjectHandleStream(version, &hBuff, objSize);
-    readCommonObjectHandles(&hBuff, handle, numReactors, xDictFlag, &parentHandle);
-
+    // Body layout (value96/97, nodes, edges) is identical at every version
+    // (matches dwgTs parseEvaluationGraph + LibreDWG DWG_OBJECT(EVALUATION_GRAPH)),
+    // and the body holds no strings, so sBuf is unused here. Read the whole body
+    // from buf, then the handle stream — seeking buf itself the same way
+    // DRW_Dictionary does — so node expression handles resolve on R2000/R2004
+    // (handles inline, seek is a no-op) and R2007+ (separate handle stream) alike.
     m_value96 = buf->getBitLong();
     m_value97 = buf->getBitLong();
 
-    const std::int32_t nodeCount = buf->getBitLong();
+    std::int32_t nodeCount = buf->getBitLong();
     if (nodeCount < 0 || nodeCount > 100000)
-        return false;
+        nodeCount = 0;  // graceful-degrade: drop the typed body, stay raw-shelved
     m_nodes.clear();
     m_nodes.reserve(static_cast<size_t>(nodeCount));
-    for (std::int32_t i = 0; i < nodeCount; ++i) {
+    for (std::int32_t i = 0; i < nodeCount && buf->isGood(); ++i) {
         DRW_EvaluationGraphNode node;
         node.m_index = buf->getBitLong();
         node.m_flags = buf->getBitLong();
         node.m_nextNodeIndex = buf->getBitLong();
-        node.m_expressionHandle = readObjectHandleRef(&hBuff);
         node.m_data1 = buf->getBitLong();
         node.m_data2 = buf->getBitLong();
         node.m_data3 = buf->getBitLong();
@@ -6197,12 +6310,12 @@ bool DRW_EvaluationGraph::parseDwg(DRW::Version version, dwgBuffer *buf, std::ui
         m_nodes.push_back(node);
     }
 
-    const std::int32_t edgeCount = buf->getBitLong();
+    std::int32_t edgeCount = buf->getBitLong();
     if (edgeCount < 0 || edgeCount > 100000)
-        return false;
+        edgeCount = 0;  // graceful-degrade: never drop the delivered object
     m_edges.clear();
     m_edges.reserve(static_cast<size_t>(edgeCount));
-    for (std::int32_t i = 0; i < edgeCount; ++i) {
+    for (std::int32_t i = 0; i < edgeCount && buf->isGood(); ++i) {
         DRW_EvaluationGraphEdge edge;
         edge.m_value92 = buf->getBitLong();
         edge.m_value93 = buf->getBitLong();
@@ -6217,10 +6330,18 @@ bool DRW_EvaluationGraph::parseDwg(DRW::Version version, dwgBuffer *buf, std::ui
         m_edges.push_back(edge);
     }
 
+    seekObjectHandleStream(version, buf, objSize);
+    readCommonObjectHandles(buf, handle, numReactors, xDictFlag, &parentHandle);
+    for (auto &node : m_nodes) {
+        if (!buf->isGood())
+            break;
+        node.m_expressionHandle = readObjectHandleRef(buf);
+    }
+
     DRW_DBG("EVALUATION_GRAPH nodes: "); DRW_DBG(static_cast<int>(m_nodes.size()));
     DRW_DBG(" edges: "); DRW_DBG(static_cast<int>(m_edges.size())); DRW_DBG("\n");
     DRW_UNUSED(sBuf);
-    return buf->isGood() && hBuff.isGood();
+    return true;  // graceful-degrade: always delivered (typed body + raw shelf)
 }
 
 bool DRW_AcDbPlaceholder::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs){
@@ -6517,9 +6638,23 @@ bool DRW_AssociativeObject::parseDwg(DRW::Version version, dwgBuffer *buf, std::
         return complete;
     };
 
-    if (m_recordName == "ACDBASSOCACTION") {
-        readActionFields();
-    } else if (m_recordName == "ACDBASSOCNETWORK") {
+    // Route the shell body by class-name suffix, mirroring dwgTs
+    // readAssociativityBody (which infers behaviour from the class /
+    // objectType and defaults unknown subclasses to a raw shell). The
+    // exact-name branches below keep the extended-field decoders
+    // (network / geom-dependency / aligned-dim action body / vertex &
+    // osnap action params / perssubent); every other ACDBASSOC* falls
+    // through to a suffix-inferred common prefix and is preserved verbatim
+    // by the raw shelf. m_recordName (== the associativity class name) is
+    // always set, so the kind stays queryable even for undecoded subclasses.
+    const std::string& rn = m_recordName;
+    const auto endsWith = [](const std::string& s, const char* suffix) {
+        const std::string suf(suffix);
+        return s.size() >= suf.size()
+            && s.compare(s.size() - suf.size(), suf.size(), suf) == 0;
+    };
+
+    if (rn == "ACDBASSOCNETWORK") {
         if (readActionFields()) {
             const std::uint64_t networkStartBit = currentObjectDwgBit(buf);
             buf->getBitShort();
@@ -6558,9 +6693,8 @@ bool DRW_AssociativeObject::parseDwg(DRW::Version version, dwgBuffer *buf, std::
                     m_classVersion, 0, 0, actionCount);
             }
         }
-    } else if (m_recordName == "ACDBASSOCDEPENDENCY"
-               || m_recordName == "ACDBASSOCGEOMDEPENDENCY") {
-        if (readDependencyFields() && m_recordName == "ACDBASSOCGEOMDEPENDENCY") {
+    } else if (rn == "ACDBASSOCGEOMDEPENDENCY") {
+        if (readDependencyFields()) {
             const std::uint64_t geomStartBit = currentObjectDwgBit(buf);
             buf->getBitShort();
             buf->getBit();
@@ -6610,8 +6744,8 @@ bool DRW_AssociativeObject::parseDwg(DRW::Version version, dwgBuffer *buf, std::
             m_osnapMode = buf->getRawChar8();
             m_parameter = buf->getBitDouble();
         }
-    } else if (m_recordName == "ACDBASSOCPERSSUBENTMANAGER"
-               || m_recordName == "ACDBPERSSUBENTMANAGER") {
+    } else if (rn == "ACDBASSOCPERSSUBENTMANAGER"
+               || rn == "ACDBPERSSUBENTMANAGER") {
         m_classVersion = static_cast<std::uint16_t>(buf->getBitLong());
         buf->getBitLong();
         buf->getBitLong();
@@ -6621,6 +6755,42 @@ bool DRW_AssociativeObject::parseDwg(DRW::Version version, dwgBuffer *buf, std::
             for (std::int32_t i = 0; i < stepCount; ++i)
                 buf->getBitLong();
         }
+    } else if (endsWith(rn, "ACTIONPARAM")) {
+        // Generic action-param subclass (edge / path / face / object /
+        // asmbody / ...): decode the shared AcDbAssocActionParam prefix, then
+        // stop — the single/compound tail layouts vary by subclass and are
+        // preserved by the raw shelf. Mirrors the VERTEX/OSNAP branches but
+        // without the variant-specific tail.
+        const std::uint64_t prefixStartBit = currentObjectDwgBit(buf);
+        m_actionParamPrefixParsed = skipAssocActionParamPrefix(version, buf, sBuf);
+        appendPrefixStatus(
+            DRW_AssociativePrefixStatus::Kind::AcDbAssocActionParam,
+            prefixStartBit, prefixStatusFromGood(m_actionParamPrefixParsed),
+            m_classVersion, 0, 0, 0);
+    } else if (endsWith(rn, "DEPENDENCY")) {
+        // ACDBASSOCDEPENDENCY + ACDBASSOCVALUEDEPENDENCY share the
+        // AcDbAssocDependency body (dwgTs cases 1228 / 1256).
+        readDependencyFields();
+    } else if (endsWith(rn, "ACTION") || endsWith(rn, "NETWORK")
+               || endsWith(rn, "VARIABLE")
+               || rn.find("2DCONSTRAINTGROUP") != std::string::npos) {
+        // Action-bodied subclass (ACDBASSOCACTION / ACDBASSOCVARIABLE /
+        // ACDBASSOC2DCONSTRAINTGROUP / ...): decode the AcDbAssocAction
+        // prefix, then stop. The per-subclass extension (workplane, group
+        // nodes, variable value, ...) is undocumented / polymorphic and is
+        // preserved verbatim by the raw shelf.
+        readActionFields();
+    } else {
+        // Any other ACDBASSOC* (surface / array action bodies, dependency
+        // bodies, array parameters, ...): the shared table-entry prefix has
+        // already run; record a Missing marker and let the raw shelf preserve
+        // the opaque body verbatim (matches dwgTs readAssociativityBody's
+        // default -> undefined -> raw-shell path).
+        appendPrefixStatus(
+            DRW_AssociativePrefixStatus::Kind::AcDbAssocActionBody,
+            currentObjectDwgBit(buf),
+            DRW_AssociativePrefixStatus::ParseStatus::Missing,
+            m_classVersion, 0, 0, 0);
     }
 
     DRW_DBG("ACDBASSOC shell: "); DRW_DBG(m_recordName.c_str()); DRW_DBG("\n");
@@ -6662,7 +6832,14 @@ bool DRW_AcShHistoryObject::parseDwg(DRW::Version version, dwgBuffer *buf, std::
             DRW_AssociativePrefixStatus::Kind::AcDbShHistoryNode, startBit,
             prefixStatusFromGood(buf->isGood() && hBuff.isGood()),
             static_cast<std::uint16_t>(m_major), 1, 0, 0);
-    } else if (m_recordName == "ACSH_SWEEP_CLASS") {
+    } else if (m_recordName == "ACSH_SWEEP_CLASS"
+               || m_recordName == "ACSH_EXTRUSION_CLASS") {
+        // ACSH_EXTRUSION_CLASS (AcDbShExtrusion) shares AcDbShSweepBase with
+        // ACSH_SWEEP_CLASS (dwg2.spec:4257 vs 4210 — only the trailing SUBCLASS
+        // marker differs), so it decodes through the same arm. The reliable
+        // fields are major/minor/direction; the tail past `direction` is an
+        // undocumented embedded sweep/path entity blob + SweepOptions and is
+        // best-effort only (matches dwgTs parseAcshSweepBaseBody).
         const std::uint64_t evalStartBit = currentObjectDwgBit(buf);
         const bool evalParsed = skipEvalExpr(version, buf, sBuf, &hBuff);
         appendPrefixStatus(
@@ -6706,11 +6883,399 @@ bool DRW_AcShHistoryObject::parseDwg(DRW::Version version, dwgBuffer *buf, std::
                 static_cast<std::uint16_t>(m_major), 0,
                 m_binaryBlob1.size() + m_binaryBlob2.size(), blob1Size);
         }
+    } else if (m_recordName == "ACSH_BOX_CLASS"
+               || m_recordName == "ACSH_WEDGE_CLASS"
+               || m_recordName == "ACSH_SPHERE_CLASS"
+               || m_recordName == "ACSH_CYLINDER_CLASS"
+               || m_recordName == "ACSH_CONE_CLASS") {
+        // Primitive-shape body = AcDbEvalExpr_fields + AcDbShHistoryNode_fields
+        // + major BL + minor BL + per-class dims (BD). Reuses the shared prefix
+        // skips from the SWEEP arm; matches dwgTs parseAcshBoxOrWedgeBody /
+        // parseAcshSphereClass / parseAcshCylinderOrConeBody.
+        const std::uint64_t evalStartBit = currentObjectDwgBit(buf);
+        const bool evalParsed = skipEvalExpr(version, buf, sBuf, &hBuff);
+        appendPrefixStatus(
+            DRW_AssociativePrefixStatus::Kind::AcDbEvalExpr, evalStartBit,
+            prefixStatusFromGood(evalParsed), 0, 1, 1, 0);
+        const std::uint64_t historyStartBit = currentObjectDwgBit(buf);
+        const bool historyParsed = evalParsed
+            && skipShHistoryNode(version, buf, sBuf, &hBuff);
+        appendPrefixStatus(
+            DRW_AssociativePrefixStatus::Kind::AcDbShHistoryNode,
+            historyStartBit, prefixStatusFromGood(historyParsed), 0, 1, 0, 0);
+        if (evalParsed && historyParsed && buf->isGood()) {
+            const std::uint64_t shapeStartBit = currentObjectDwgBit(buf);
+            m_major = static_cast<std::uint32_t>(buf->getBitLong());
+            m_minor = static_cast<std::uint32_t>(buf->getBitLong());
+            int dimCount = 3;                                   // box / wedge
+            if (m_recordName == "ACSH_SPHERE_CLASS")
+                dimCount = 1;                                   // radius
+            else if (m_recordName == "ACSH_CYLINDER_CLASS"
+                     || m_recordName == "ACSH_CONE_CLASS")
+                dimCount = 4;   // height, majorRadius, minorRadius, xRadius
+            m_shapeParams.clear();
+            m_shapeParams.reserve(static_cast<size_t>(dimCount));
+            for (int i = 0; i < dimCount && buf->isGood(); ++i)
+                m_shapeParams.push_back(buf->getBitDouble());
+            const bool shapeOk = buf->isGood()
+                && static_cast<int>(m_shapeParams.size()) == dimCount;
+            appendPrefixStatus(
+                DRW_AssociativePrefixStatus::Kind::AcShActionBody,
+                shapeStartBit, prefixStatusFromGood(shapeOk),
+                static_cast<std::uint16_t>(m_major), 0,
+                m_shapeParams.size(), dimCount);
+        }
+    } else if (m_recordName == "ACSH_BOOLEAN_CLASS"
+               || m_recordName == "ACSH_CHAMFER_CLASS"
+               || m_recordName == "ACSH_FILLET_CLASS"
+               || m_recordName == "ACSH_TORUS_CLASS"
+               || m_recordName == "ACSH_REVOLVE_CLASS"
+               || m_recordName == "ACSH_LOFT_CLASS") {
+        // ACSH shape bodies whose fields are scalar and oracle-validatable
+        // (dwgread -O JSON). All share the AcDbEvalExpr_fields +
+        // AcDbShHistoryNode_fields prefix, then per-class dims. Matches dwgTs
+        // parseAcshBooleanClass / parseAcshChamferClass / parseAcshFilletClass /
+        // parseAcshTorusClass / parseAcshRevolveClass / parseAcshLoftClass.
+        // (ACSH_BREP_CLASS is deliberately excluded: its body past the prefix is
+        //  an ACIS solid payload, not scalar fields — dwg2.spec even flags
+        //  "major // also in DWG?" — so it stays prefix-only + raw-shelved.)
+        auto parseSharedPrefix = [&]() -> bool {
+            const std::uint64_t evalStartBit = currentObjectDwgBit(buf);
+            const bool evalParsed = skipEvalExpr(version, buf, sBuf, &hBuff);
+            appendPrefixStatus(
+                DRW_AssociativePrefixStatus::Kind::AcDbEvalExpr, evalStartBit,
+                prefixStatusFromGood(evalParsed), 0, 1, 1, 0);
+            const std::uint64_t historyStartBit = currentObjectDwgBit(buf);
+            const bool historyParsed = evalParsed
+                && skipShHistoryNode(version, buf, sBuf, &hBuff);
+            appendPrefixStatus(
+                DRW_AssociativePrefixStatus::Kind::AcDbShHistoryNode,
+                historyStartBit, prefixStatusFromGood(historyParsed), 0, 1, 0, 0);
+            return evalParsed && historyParsed && buf->isGood();
+        };
+        // Bounded vector<double> reader (BD elements), graceful on short read.
+        auto readBoundedDoubles = [&](std::int32_t count,
+                                      std::vector<double>& out) {
+            out.clear();
+            if (!isValidAssocCount(count))
+                return;
+            out.reserve(static_cast<size_t>(count));
+            for (std::int32_t i = 0; i < count && buf->isGood(); ++i)
+                out.push_back(buf->getBitDouble());
+        };
+
+        if (parseSharedPrefix()) {
+            const std::uint64_t bodyStartBit = currentObjectDwgBit(buf);
+            m_major = static_cast<std::uint32_t>(buf->getBitLong());
+            m_minor = static_cast<std::uint32_t>(buf->getBitLong());
+
+            if (m_recordName == "ACSH_BOOLEAN_CLASS") {
+                m_operation = static_cast<std::int32_t>(
+                    static_cast<std::int8_t>(buf->getRawChar8()));  // RCd
+                m_operand1 = static_cast<std::uint32_t>(buf->getBitLong());
+                m_operand2 = static_cast<std::uint32_t>(buf->getBitLong());
+            } else if (m_recordName == "ACSH_CHAMFER_CLASS") {
+                m_bl92 = static_cast<std::uint32_t>(buf->getBitLong());
+                m_baseDist = buf->getBitDouble();
+                m_otherDist = buf->getBitDouble();
+                const std::int32_t numEdges = buf->getBitLong();
+                m_edges.clear();
+                if (isValidAssocCount(numEdges)) {
+                    m_edges.reserve(static_cast<size_t>(numEdges));
+                    for (std::int32_t i = 0; i < numEdges && buf->isGood(); ++i)
+                        m_edges.push_back(static_cast<std::uint32_t>(buf->getBitLong()));
+                    m_bl95 = static_cast<std::uint32_t>(buf->getBitLong());
+                }
+            } else if (m_recordName == "ACSH_FILLET_CLASS") {
+                m_bl92 = static_cast<std::uint32_t>(buf->getBitLong());
+                const std::int32_t numEdges = buf->getBitLong();
+                m_edges.clear();
+                if (isValidAssocCount(numEdges)) {
+                    m_edges.reserve(static_cast<size_t>(numEdges));
+                    for (std::int32_t i = 0; i < numEdges && buf->isGood(); ++i)
+                        m_edges.push_back(static_cast<std::uint32_t>(buf->getBitLong()));
+                    const std::int32_t numRadiuses = buf->getBitLong();
+                    readBoundedDoubles(numRadiuses, m_radiuses);
+                    const std::int32_t numStartsetbacks = buf->getBitLong();
+                    const std::int32_t numEndsetbacks = buf->getBitLong();
+                    // spec order: endsetbacks[num_endsetbacks] then
+                    // startsetbacks[num_startsetbacks].
+                    readBoundedDoubles(numEndsetbacks, m_endSetbacks);
+                    readBoundedDoubles(numStartsetbacks, m_startSetbacks);
+                }
+            } else if (m_recordName == "ACSH_TORUS_CLASS") {
+                m_shapeParams.clear();
+                m_shapeParams.push_back(buf->getBitDouble());  // major_radius
+                m_shapeParams.push_back(buf->getBitDouble());  // minor_radius
+            } else if (m_recordName == "ACSH_REVOLVE_CLASS") {
+                m_axisPoint = buf->get3BitDouble();
+                m_revolveDirection = buf->get2RawDouble();      // 2RD (finite-but-wrong if degenerate)
+                m_revolveAngle = buf->getBitDouble();
+                m_startAngle = buf->getBitDouble();
+                m_draftAngle = buf->getBitDouble();
+                m_bd44 = buf->getBitDouble();
+                m_bd45 = buf->getBitDouble();
+                m_twistAngle = buf->getBitDouble();
+                m_b290 = buf->getBit() != 0;
+                m_isCloseToAxis = buf->getBit() != 0;
+            } else if (m_recordName == "ACSH_LOFT_CLASS") {
+                const std::int32_t numCross = buf->getBitLong();
+                const std::int32_t numGuides = buf->getBitLong();
+                // crosssects[] / guides[] are CALL_SUBENT decode NOPs — the
+                // per-element handles are not in the data stream (dwgTs).
+                m_numCrossSections = isValidAssocCount(numCross)
+                    ? static_cast<std::uint32_t>(numCross) : 0;
+                m_numGuides = isValidAssocCount(numGuides)
+                    ? static_cast<std::uint32_t>(numGuides) : 0;
+            }
+
+            appendPrefixStatus(
+                DRW_AssociativePrefixStatus::Kind::AcShActionBody, bodyStartBit,
+                prefixStatusFromGood(buf->isGood()),
+                static_cast<std::uint16_t>(m_major), 0, 0, 0);
+        }
     }
 
     DRW_UNUSED(sBuf);
     DRW_DBG("ACSH shell: "); DRW_DBG(m_recordName.c_str()); DRW_DBG("\n");
     return ret;
+}
+
+namespace {
+
+bool dynBlockContains(const std::string& s, const char* sub) {
+    return s.find(sub) != std::string::npos;
+}
+
+bool dynBlockEndsWith(const std::string& s, const char* suf) {
+    const std::size_t n = std::char_traits<char>::length(suf);
+    return s.size() >= n && s.compare(s.size() - n, n, suf) == 0;
+}
+
+} // namespace
+
+// True for every dynamic-block custom-class recName.  The dynamic-block classes
+// all carry a PARAMETER / ACTION / GRIP suffix (or COMPONENT), or are one of the
+// named singletons; the structural BLOCK_HEADER / BLOCK_CONTROL / BLOCK_RECORD
+// table objects (which never reach the custom-class dispatch anyway) are rejected
+// explicitly.
+bool DRW_DynamicBlockObject::isDynamicBlockRecName(const UTF8STRING& rn) {
+    if (rn.empty() || rn == "BLOCK" || rn == "BLOCK_HEADER"
+        || rn == "BLOCK_CONTROL" || rn == "BLOCK_RECORD")
+        return false;
+    if (!dynBlockContains(rn, "BLOCK"))
+        return false;
+    return dynBlockEndsWith(rn, "PARAMETER")
+        || dynBlockEndsWith(rn, "ACTION")
+        || dynBlockEndsWith(rn, "GRIP")
+        || dynBlockEndsWith(rn, "COMPONENT")
+        || dynBlockContains(rn, "GRIPLOCATIONCOMPONENT")
+        || dynBlockContains(rn, "PROXYNODE")
+        || dynBlockContains(rn, "PURGEPREVENTER")
+        || dynBlockContains(rn, "PARAMDEPENDENCYBODY")
+        || dynBlockContains(rn, "PROPERTIESTABLE")
+        || dynBlockContains(rn, "REPRESENTATION");
+}
+
+// Map a dynamic-block recName to how much of its body layout is reliably known.
+DRW_DynamicBlockObject::Kind DRW_DynamicBlockObject::classify(const UTF8STRING& rn) {
+    // Bare first: HANDLE_UNKNOWN_BITS classes (leading unknown bits would
+    // misalign any body walk) and the non-evalexpr singletons -> shell only.
+    if (dynBlockContains(rn, "PURGEPREVENTER")
+        || dynBlockContains(rn, "PARAMDEPENDENCYBODY")
+        || dynBlockContains(rn, "REPRESENTATION")
+        || dynBlockContains(rn, "USERPARAMETER")           // AcDbBlockUserParameter
+        || dynBlockContains(rn, "PROPERTIESTABLEGRIP")     // HANDLE_UNKNOWN_BITS
+        || rn == "BLOCKPROPERTIESTABLE")
+        return Kind::Bare;
+    // Full-decode validation classes (both oracles / dwgread agree on the body).
+    if (rn == "BLOCKMOVEACTION")
+        return Kind::MoveAction;
+    if (rn == "BLOCKVISIBILITYPARAMETER")
+        return Kind::VisibilityParameter;
+    // Evalexpr-only.
+    if (dynBlockContains(rn, "PROXYNODE"))
+        return Kind::EvalExprOnly;
+    if (dynBlockContains(rn, "GRIPLOCATIONCOMPONENT")
+        || dynBlockEndsWith(rn, "COMPONENT"))
+        return Kind::GripLocationComponent;
+    // Element-based families (evalexpr + AcDbBlockElement prefix).
+    if (dynBlockEndsWith(rn, "GRIP"))
+        return Kind::Grip;
+    if (dynBlockEndsWith(rn, "ACTION"))
+        return Kind::Action;
+    if (dynBlockEndsWith(rn, "PARAMETER"))
+        return Kind::Parameter;
+    return Kind::EvalExprOnly;
+}
+
+// Dynamic-block object body decode.  Layout per libreDWG dwg2.spec
+// (AcDbEvalExpr_fields / AcDbBlockElement_fields / AcDbBlockParameter_fields /
+// AcDbBlockAction_fields / BLOCKVISIBILITYPARAMETER / BLOCKMOVEACTION),
+// ground-truthed against dwgread -O JSON.  Handle-reference vectors (deps /
+// blocks / params) live in the handle stream and are left deferred (their COUNT
+// is read inline in the data stream; the handles stay raw-shelved).  Every read
+// is isGood()-guarded, every count is bounded, and the parse ALWAYS returns true
+// (graceful degrade) — the caller keeps the raw shelf for a lossless round-trip.
+bool DRW_DynamicBlockObject::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs){
+    dwgBuffer sBuff = *buf;
+    dwgBuffer *sBuf = version > DRW::AC1018 ? &sBuff : buf;   // 2007+ string stream
+    bool ret = DRW_TableEntry::parseDwg(version, buf, sBuf, bs);
+    DRW_DBG("\n***************************** parsing DynamicBlock shell ****************\n");
+    if (!ret)
+        return ret;
+
+    // Common + object-specific handles live in the handle stream; read a copy so
+    // the data-stream walk is unaffected.  This also positions hBuff for the rare
+    // evalexpr value_code==91 handle case.  Seek hBuff to objSize explicitly for
+    // BOTH versions (not seekObjectHandleStream, which is a no-op for <=AC1018):
+    // the body here is decoded only partially (Bare early-return, deferred handle
+    // vectors), so buf never reaches the handle stream on its own, and the no-op
+    // seek would leave hBuff at body-start -> garbage owner/reactor handles on
+    // R2000/R2004. objSize is the handle-stream bit offset at every version
+    // (same technique as the ACAD_TABLE <=AC1018 fix).
+    dwgBuffer hBuff = *buf;
+    hBuff.setPosition(objSize >> 3);
+    hBuff.setBitPos(objSize & 7);
+    readCommonObjectHandles(&hBuff, handle, numReactors, xDictFlag, &parentHandle);
+
+    // Bare classes: shell + handle only (leading unknown bits would misalign a
+    // body walk); the raw shelf preserves the full byte image regardless.
+    if (m_kind == Kind::Bare)
+        return true;
+
+    // ---- AcDbEvalExpr prefix (every non-Bare class) --------------------------
+    m_parentId  = static_cast<std::uint32_t>(buf->getBitLong());   // BLd parentid
+    m_major     = static_cast<std::uint32_t>(buf->getBitLong());   // BL major (98)
+    m_minor     = static_cast<std::uint32_t>(buf->getBitLong());   // BL minor (99)
+    m_valueCode = buf->getSBitShort();                             // BSd value_code (70)
+    switch (m_valueCode) {                                         // value-code switch
+    case 40: buf->getBitDouble(); break;
+    case 10:
+    case 11: buf->get2RawDouble(); break;
+    case 1:  sBuf->getVariableText(version, false); break;
+    case 90: buf->getBitLong(); break;
+    case 91: readObjectHandleRef(&hBuff); break;   // handle stream, no data bits
+    case 70: buf->getBitShort(); break;
+    default: break;
+    }
+    m_nodeId = static_cast<std::uint32_t>(buf->getBitLong());      // BL nodeid
+    m_evalExprParsed = buf->isGood();
+    if (!m_evalExprParsed)
+        return true;
+
+    if (m_kind == Kind::EvalExprOnly)
+        return true;
+
+    if (m_kind == Kind::GripLocationComponent) {
+        // AcDbBlockGripExpr: grip_type BL(91) + grip_expr T(300).
+        m_gripType = buf->getBitLong();
+        m_gripExpr = sBuf->getVariableText(version, false);
+        return true;
+    }
+
+    // ---- AcDbBlockElement prefix (grip / parameter / action classes) ---------
+    m_elementName  = sBuf->getVariableText(version, false);        // T name (300)
+    m_elementMajor = static_cast<std::uint32_t>(buf->getBitLong()); // BL be_major (98)
+    m_elementMinor = static_cast<std::uint32_t>(buf->getBitLong()); // BL be_minor (99)
+    m_eed1071      = buf->getBitLong();                            // BL eed1071 (1071)
+    m_elementParsed = buf->isGood();
+    if (!m_elementParsed)
+        return true;
+
+    // Grip: element prefix only; deeper AcDbBlockGrip body left raw-shelved.
+    if (m_kind == Kind::Grip)
+        return true;
+
+    // AcDbBlockAction classes extend AcDbBlockElement DIRECTLY (no
+    // AcDbBlockParameter bits) — display_location follows element immediately.
+    if (m_kind == Kind::Action || m_kind == Kind::MoveAction) {
+        // Prefix-only for a plain action; the full body is decoded only for the
+        // BLOCKMOVEACTION validation class.
+        if (m_kind == Kind::Action)
+            return true;
+        // AcDbBlockAction (decoder/else branch): display_location 3BD, num_deps
+        // BL, deps handles (deferred), num_actions BL, actions[] BL.
+        m_displayLocation = buf->get3BitDouble();
+        m_dependencyCount = buf->getBitLong();                    // BL num_deps (71)
+        if (!isValidAssocCount(m_dependencyCount))
+            return true;
+        // deps[] handles are deferred (handle stream).
+        m_actionCount = buf->getBitLong();                        // BL num_actions (70)
+        if (!isValidAssocCount(m_actionCount))
+            return true;
+        m_actionIndexes.clear();
+        m_actionIndexes.reserve(static_cast<std::size_t>(m_actionCount));
+        for (std::int32_t a = 0; a < m_actionCount && buf->isGood(); ++a)
+            m_actionIndexes.push_back(buf->getBitLong());         // BL action index (91)
+        // AcDbBlockMoveAction: 2 connection points {code BL, name T}.
+        m_connectionNames.clear();
+        for (int cp = 0; cp < 2 && buf->isGood(); ++cp) {
+            buf->getBitLong();                                    // connection code BL
+            m_connectionNames.push_back(
+                sBuf->getVariableText(version, false));           // connection name T
+        }
+        // AcDbBlockAction_doubles: action_offset_x/y BD + angle_offset BD.
+        m_actionOffsetX = buf->getBitDouble();                    // BD (140)
+        m_actionOffsetY = buf->getBitDouble();                    // BD (141)
+        m_angleOffset   = buf->getBitDouble();                    // BD
+        m_bodyFullyDecoded = buf->isGood();
+        return true;
+    }
+
+    // AcDbBlockParameter: show_properties B(280) + chain_actions B(281).
+    // (Parameter / VisibilityParameter both extend AcDbBlockParameter.)
+    m_showProperties = buf->getBit() != 0;
+    m_chainActions   = buf->getBit() != 0;
+    if (!buf->isGood())
+        return true;
+
+    if (m_kind == Kind::Parameter)
+        return true;
+
+    if (m_kind == Kind::VisibilityParameter) {
+        // AcDbBlock1PtParameter: def_pt 3BD + prop1/prop2 PropInfo + num_propinfos.
+        m_defPoint = buf->get3BitDouble();
+        for (int p = 0; p < 2 && buf->isGood(); ++p) {
+            const std::int32_t numConn = buf->getBitLong();       // BL num_connections
+            if (!isValidAssocCount(numConn))
+                return true;
+            for (std::int32_t c = 0; c < numConn && buf->isGood(); ++c) {
+                buf->getBitLong();                                // connection code BL
+                sBuf->getVariableText(version, false);            // connection name T
+            }
+        }
+        buf->getBitLong();                                        // num_propinfos BL
+        // AcDbBlockVisibilityParameter body.
+        m_isInitialized = buf->getBit() != 0;                     // B is_initialized (281)
+        m_visibilityName = sBuf->getVariableText(version, false); // T blockvisi_name (301)
+        m_visibilityDescription =
+            sBuf->getVariableText(version, false);                // T blockvisi_desc (302)
+        m_unknownBool = buf->getBit() != 0;                       // B (91)
+        m_blockCount = buf->getBitLong();                         // BL num_blocks (93)
+        if (!isValidAssocCount(m_blockCount))
+            return true;
+        // blocks[] handles are deferred (handle stream) — count only here.
+        m_stateCount = buf->getBitLong();                         // BL num_states (92)
+        if (!isValidAssocCount(m_stateCount))
+            return true;
+        m_stateNames.clear();
+        m_stateNames.reserve(static_cast<std::size_t>(m_stateCount));
+        for (std::int32_t s = 0; s < m_stateCount && buf->isGood(); ++s) {
+            m_stateNames.push_back(sBuf->getVariableText(version, false)); // T name (303)
+            const std::int32_t stateBlocks = buf->getBitLong();  // BL num_blocks (94)
+            if (!isValidAssocCount(stateBlocks))
+                return true;
+            const std::int32_t stateParams = buf->getBitLong();  // BL num_params (95)
+            if (!isValidAssocCount(stateParams))
+                return true;
+            // per-state blocks[]/params[] handles are deferred (handle stream).
+        }
+        m_bodyFullyDecoded = buf->isGood();
+        return true;
+    }
+
+    return true;
 }
 
 void DRW_DetailViewStyle::reset() {
@@ -7223,6 +7788,16 @@ bool DRW_VisualStyle::parseCode(int code, const std::unique_ptr<dxfReader>& read
 
 // object is parsed from a size-bounded buffer so any unread tail is
 // safely discarded by the caller.
+//
+// Full AcDbVisualStyle body decode. Field order transcribed 1:1 from dwgTs
+// parseObjects.ts parseVisualStyle / readVisualStyleLegacyBody (1587-1627) /
+// readVisualStyleR2010bBody (1762-1832) / readVisualStyleR2013bExpansion
+// (1651-1710), cross-checked against libreDWG dwg2.spec:2119-2289.
+// Bit-primitive map: readBitLong->getBitLong, readBitDouble->getBitDouble,
+// readBitShort->getBitShort, readBit->getBit, readRawChar->getRawChar8,
+// readCmColor->readObjectCmColor, readObjectText->getVariableText.
+// Graceful degrade: always return true once the common preamble parses, so
+// dwgreader's `if(ret)` still delivers BOTH addVisualStyle and the raw shelf.
 bool DRW_VisualStyle::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs){
     dwgBuffer sBuff = *buf;
     dwgBuffer *sBuf = buf;
@@ -7232,9 +7807,142 @@ bool DRW_VisualStyle::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32
     bool ret = DRW_TableEntry::parseDwg(version, buf, sBuf, bs);
     DRW_DBG("\n***************************** parsing VISUALSTYLE *********************\n");
     if (!ret) return ret;
-    // No further field reads — the stub delivers an entry to addVisualStyle
-    // so the file's class table doesn't lose phantom entries.
-    return buf->isGood();
+
+    // hasBodyBytesRemaining (dwgTs :8033): for R2007+ the body ends at objSize
+    // (the handle-stream start, in bits); guard every optional read against it.
+    // Pre-R2007 uses numRemainingBytes() to match dwgTs's buf.remaining() > 0
+    // (isGood() stays true at EOF, giving false-positive tail admits).
+    auto bodyBytesRemaining = [&]() -> bool {
+        if (version > DRW::AC1018 && objSize > 0)
+            return currentObjectDwgBit(buf) < objSize;
+        return buf->numRemainingBytes() > 0;
+    };
+
+    if (bodyBytesRemaining())
+        desc = sBuf->getVariableText(version, false);   // FIELD_T description (2)
+    if (bodyBytesRemaining())
+        type = buf->getBitLong();                       // FIELD_BL style_type (70)
+
+    if (version < DRW::AC1024 && bodyBytesRemaining()) {
+        // ---- legacy body (< AC1024) : parseObjects.ts:1587-1627 / dwg2.spec PRE(R_2010b) ----
+        m_body.faceLightingModel     = buf->getBitLong();
+        m_body.faceLightingQuality   = buf->getBitLong();
+        m_body.faceColorMode         = buf->getBitLong();
+        m_body.faceOpacity           = buf->getBitDouble();
+        m_body.faceSpecular          = buf->getBitDouble();
+        m_body.faceMonoColor         = readObjectCmColor(version, buf, sBuf);
+        m_body.faceModifier          = buf->getBitLong();
+
+        m_body.edgeModel             = buf->getBitLong();
+        m_body.edgeStyle             = buf->getBitLong();
+        m_body.edgeIntersectionColor = readObjectCmColor(version, buf, sBuf);
+        m_body.edgeObscuredColor     = readObjectCmColor(version, buf, sBuf);
+        m_body.edgeObscuredLtype     = buf->getBitLong();
+        m_body.edgeCreaseAngle       = buf->getBitDouble();
+        m_body.edgeModifier          = buf->getBitLong();
+        m_body.edgeColor             = readObjectCmColor(version, buf, sBuf);
+        m_body.edgeOpacity           = buf->getBitDouble();
+        m_body.edgeWidth             = buf->getBitShort();   // FIELD_CAST BS->BL (2149)
+        m_body.edgeOverhang          = buf->getBitShort();   // FIELD_CAST BS->BL (2150)
+        m_body.edgeJitter            = buf->getBitLong();
+        m_body.edgeSilhouetteColor   = readObjectCmColor(version, buf, sBuf);
+        m_body.edgeSilhouetteWidth   = buf->getBitShort();   // FIELD_CAST BS->BL (2153)
+        m_body.edgeHaloGap           = buf->getRawChar8();   // FIELD_CAST RC->BL (2154)
+        m_body.edgeIsolines          = buf->getBitShort();   // FIELD_CAST BS->BL (2155)
+        m_body.edgeDoHidePrecision   = buf->getBit() != 0;
+        m_body.edgeStyleApply        = buf->getBitShort();   // FIELD_CAST BS->BL (2157)
+        m_body.edgeIntersectionLtype = buf->getBitShort();   // FIELD_CAST BS->BL (2158)
+
+        m_body.displaySettings       = buf->getBitLong();
+        m_body.displayBrightness     = static_cast<double>(buf->getBitLong()); // FIELD_BLd (2160)
+
+        if (bodyBytesRemaining()) {                          // dwg2.spec:2162 tail guard
+            m_body.displayShadowType = buf->getBitLong();
+            if (version >= DRW::AC1021)
+                buf->getBitDouble();                         // bd2007_45 (45), discarded
+            m_body.internalOnly      = buf->getBit() != 0;
+        }
+    } else if (version >= DRW::AC1024 && bodyBytesRemaining()) {
+        // ---- r2010b body (>= AC1024) : parseObjects.ts:1762-1827 / dwg2.spec SINCE(R_2010b) ----
+        m_body.extLightingModel      = buf->getBitShort();   // FIELD_BS ext_lighting_model (177)
+        m_body.internalOnly          = buf->getBit() != 0;   // FIELD_B internal_only (291)
+
+        // value + BS "_int" companion (companion consumed/discarded):
+        m_body.faceLightingModel     = buf->getBitLong();   buf->getBitShort();
+        m_body.faceLightingQuality   = buf->getBitLong();   buf->getBitShort();
+        m_body.faceColorMode         = buf->getBitLong();   buf->getBitShort();
+        m_body.faceModifier          = buf->getBitShort();  buf->getBitShort();  // FIELD_CAST BS->BL (2189)
+        m_body.faceOpacity           = buf->getBitDouble(); buf->getBitShort();
+        m_body.faceSpecular          = buf->getBitDouble(); buf->getBitShort();
+        m_body.faceMonoColor         = readObjectCmColor(version, buf, sBuf); buf->getBitShort();
+
+        m_body.edgeModel             = buf->getBitLong();   buf->getBitShort();
+        m_body.edgeStyle             = buf->getBitLong();   buf->getBitShort();
+        m_body.edgeIntersectionColor = readObjectCmColor(version, buf, sBuf); buf->getBitShort();
+        m_body.edgeObscuredColor     = readObjectCmColor(version, buf, sBuf); buf->getBitShort();
+        m_body.edgeObscuredLtype     = buf->getBitLong();   buf->getBitShort();
+        m_body.edgeIntersectionLtype = buf->getBitLong();   buf->getBitShort();
+        m_body.edgeCreaseAngle       = buf->getBitDouble(); buf->getBitShort();
+        m_body.edgeModifier          = buf->getBitLong();   buf->getBitShort();
+        m_body.edgeColor             = readObjectCmColor(version, buf, sBuf); buf->getBitShort();
+        m_body.edgeOpacity           = buf->getBitDouble(); buf->getBitShort();
+        m_body.edgeWidth             = buf->getBitLong();   buf->getBitShort();
+        m_body.edgeOverhang          = buf->getBitLong();   buf->getBitShort();
+        m_body.edgeJitter            = buf->getBitLong();   buf->getBitShort();
+        m_body.edgeSilhouetteColor   = readObjectCmColor(version, buf, sBuf); buf->getBitShort();
+        m_body.edgeSilhouetteWidth   = buf->getBitLong();   buf->getBitShort();
+        m_body.edgeHaloGap           = buf->getBitLong();   buf->getBitShort();
+        {
+            const std::int32_t isolines = buf->getBitLong();
+            m_body.edgeIsolines      = isolines > 5000 ? 5000 : isolines;  // VALUEOUTOFBOUNDS (2210)
+            buf->getBitShort();
+        }
+        m_body.edgeDoHidePrecision   = buf->getBit() != 0;  buf->getBitShort();
+
+        m_body.displaySettings       = buf->getBitLong();   buf->getBitShort();
+        m_body.displayBrightness     = buf->getBitDouble(); buf->getBitShort();
+        m_body.displayShadowType     = buf->getBitLong();   buf->getBitShort();
+
+        if (version >= DRW::AC1027) {
+            // ---- r2013b expansion : parseObjects.ts:1651-1710 / dwg2.spec SINCE(R_2013b) ----
+            m_body.hasR2013bExpansion = true;
+            m_body.bProp1c = buf->getBit() != 0;   buf->getBitShort();
+            m_body.bProp1d = buf->getBit() != 0;   buf->getBitShort();
+            m_body.bProp1e = buf->getBit() != 0;   buf->getBitShort();
+            m_body.bProp1f = buf->getBit() != 0;   buf->getBitShort();
+            m_body.bProp20 = buf->getBit() != 0;   buf->getBitShort();
+            m_body.bProp21 = buf->getBit() != 0;   buf->getBitShort();
+            m_body.bProp22 = buf->getBit() != 0;   buf->getBitShort();
+            m_body.bProp23 = buf->getBit() != 0;   buf->getBitShort();
+            m_body.bProp24 = buf->getBit() != 0;   buf->getBitShort();
+            m_body.blProp25 = buf->getBitLong();   buf->getBitShort();
+            m_body.bdProp26 = buf->getBitDouble(); buf->getBitShort();
+            m_body.bdProp27 = buf->getBitDouble(); buf->getBitShort();
+            m_body.blProp28 = buf->getBitLong();   buf->getBitShort();
+            m_body.cProp29  = readObjectCmColor(version, buf, sBuf); buf->getBitShort();
+            m_body.blProp2a = buf->getBitLong();   buf->getBitShort();
+            m_body.blProp2b = buf->getBitLong();   buf->getBitShort();
+            m_body.cProp2c  = readObjectCmColor(version, buf, sBuf); buf->getBitShort();
+            m_body.bProp2d  = buf->getBit() != 0;  buf->getBitShort();
+            m_body.blProp2e = buf->getBitLong();   buf->getBitShort();
+            m_body.blProp2f = buf->getBitLong();   buf->getBitShort();
+            m_body.blProp30 = buf->getBitLong();   buf->getBitShort();
+            m_body.bProp31  = buf->getBit() != 0;  buf->getBitShort();
+            m_body.blProp32 = buf->getBitLong();   buf->getBitShort();
+            m_body.cProp33  = readObjectCmColor(version, buf, sBuf); buf->getBitShort();
+            m_body.bdProp34 = buf->getBitDouble(); buf->getBitShort();
+            m_body.edgeWiggle = buf->getBitLong(); buf->getBitShort();       // prop 0x35
+            m_body.strokes  = sBuf->getVariableText(version, false); buf->getBitShort(); // prop 0x36
+            m_body.bProp37  = buf->getBit() != 0;  buf->getBitShort();
+            m_body.bdProp38 = buf->getBitDouble(); buf->getBitShort();
+            m_body.bdProp39 = buf->getBitDouble(); buf->getBitShort();
+        }
+    }
+
+    // m_bodyDecoded reflects whether the walk stayed inside the object; the
+    // object (typed + raw shelf) is delivered regardless (graceful degrade).
+    m_bodyDecoded = buf->isGood();
+    return true;
 }
 
 // DBCOLOR (AcDbColor) per ODA spec §20.4 / libreDWG dwg2.spec:2404-2408.

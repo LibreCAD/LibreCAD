@@ -30,6 +30,7 @@
 
 #include "intern/drw_textcodec.h"
 #include "intern/dwgreader.h"
+#include "intern/dwgreaderR11.h"
 #include "drw_base.h"
 
 namespace {
@@ -174,6 +175,28 @@ TEST_CASE("dwgCodePageId: round-trip with dwgCodePageName",
     // null + unknown name both fall back to ANSI_1252 (id 30).
     REQUIRE(dwgCodePageId(nullptr) == 30);
     REQUIRE(dwgCodePageId("nonsense") == 30);
+}
+
+TEST_CASE("preR13CodePageName resolves pre-R13 $DWGCODEPAGE",
+          "[i18n][codepage][prer13]") {
+    // Gate: numheader_vars <= 129 => no codepage field is present in the file.
+    REQUIRE(preR13CodePageName(100, 30) == nullptr);
+    REQUIRE(preR13CodePageName(129, 30) == nullptr);
+    // Undefined ids (0 / 0xff) keep the ANSI_1252 default -> nullptr.
+    REQUIRE(preR13CodePageName(205, 0) == nullptr);
+    REQUIRE(preR13CodePageName(205, 0xff) == nullptr);
+    // Supported ids resolve to the exact setCodePage() name (dwgCP enum +
+    // dwgCodePageName() switch are the oracle). nhv 205 = R11, 158 = R10.
+    REQUIRE(std::string(preR13CodePageName(205, 30)) == "ANSI_1252"); // ACEB10
+    REQUIRE(std::string(preR13CodePageName(158, 30)) == "ANSI_1252"); // R10 nhv
+    REQUIRE(std::string(preR13CodePageName(205, 29)) == "ANSI_1251"); // Cyrillic
+    REQUIRE(std::string(preR13CodePageName(205, 28)) == "ANSI_1250");
+    REQUIRE(std::string(preR13CodePageName(205, 38)) == "ANSI_932");  // SHIFT_JIS
+    REQUIRE(std::string(preR13CodePageName(205, 31)) == "ANSI_936");  // GB2312->936
+    REQUIRE(std::string(preR13CodePageName(205, 39)) == "ANSI_936");  // GBK
+    // Codepages without a libdxfrw ConvTable keep the default (nullptr).
+    REQUIRE(preR13CodePageName(205, 12) == nullptr); // CP850 (DOS Latin-1)
+    REQUIRE(preR13CodePageName(205, 1) == nullptr);  // US-ASCII
 }
 
 TEST_CASE("DRW_ConvUTF16::toUtf8 ignores odd trailing byte",

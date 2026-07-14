@@ -84,7 +84,9 @@ namespace DRW {
          SUNSTUDY,
          RENDERSETTINGS,
          SECTIONOBJ,
-         OBJECTCONTEXTDATA
+         OBJECTCONTEXTDATA,
+         DATATABLE,
+         DYNAMICBLOCKOBJECT
      };
 
 //pending VP_ENT_HDR, LONG_TRANSACTION,
@@ -1350,6 +1352,53 @@ public:
     std::vector<std::uint32_t> m_fieldHandles;
 };
 
+//! Class to handle DATATABLE (AcDbDataTable) — a hidden key/value table that
+//! carries no geometry.  ODA / libreDWG dwg2.spec DATATABLE.  The body layout
+//! (a columns×rows array of bit-packed cell values) is only partially
+//! documented — libreDWG marks it "(varies) TODO" / DEBUG_CLASS — so the body
+//! walk is best-effort with graceful degrade; the reliable prefix (flags,
+//! column/row counts, table name) always decodes and the raw shelf preserves
+//! the exact byte image for a lossless round-trip regardless.
+class DRW_DataTable : public DRW_TableEntry {
+    SETOBJFRIENDS
+public:
+    static constexpr std::uint16_t kDwgClassNum = 520;
+
+    //! One cell of a DATATABLE column.  A cell always carries all three
+    //! variants on the wire (long/double/string); the column's type selects
+    //! which one is meaningful.
+    struct Row {
+        std::int32_t dataLong = 0;    /*!< DXF 93 */
+        double dataDouble = 0.0;      /*!< DXF 40 */
+        UTF8STRING dataString;        /*!< DXF 3 */
+    };
+    //! One DATATABLE column: a cell type, a column name and the rows.
+    struct Column {
+        std::int32_t type = 0;        /*!< DXF 92 */
+        UTF8STRING text;              /*!< DXF 2 (column name) */
+        std::vector<Row> rows;
+    };
+
+    DRW_DataTable() { reset(); }
+    void reset(){
+        tType = DRW::DATATABLE;
+        flags = 0;
+        columnCount = 0;
+        rowCount = 0;
+        tableName.clear();
+        columns.clear();
+        DRW_TableEntry::reset();
+    }
+protected:
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
+public:
+    int flags = 0;                    /*!< DXF 70 */
+    int columnCount = 0;              /*!< DXF 90 (num_cols) */
+    int rowCount = 0;                 /*!< DXF 91 (num_rows) */
+    UTF8STRING tableName;             /*!< DXF 1 */
+    std::vector<Column> columns;
+};
+
 //! Class to handle RASTERVARIABLES (AcDbRasterVariables).
 class DRW_RasterVariables : public DRW_TableEntry {
     SETOBJFRIENDS
@@ -2087,9 +2136,9 @@ public:
  *  scaffold is AcDbObjectContextData:
  *    BS classVersion, B defaultFlag, handle stream ... scaleHandle.
  *
- *  Text and dimension families are decoded far enough to prove typed coverage
- *  and expose useful placement/scale links. Leader/MLeader/FCF/BlkRef context
- *  records remain raw-preserved until a consumer needs them.
+ *  Text, dimension, leader and block-reference families are decoded far enough
+ *  to prove typed coverage and expose useful placement/scale links. MLeader/FCF
+ *  context records remain raw-preserved until a consumer needs them.
  */
 class DRW_ObjectContextData : public DRW_TableEntry {
     SETOBJFRIENDS
@@ -2105,7 +2154,9 @@ public:
         AngularDimension,
         RadialDimension,
         LargeRadialDimension,
-        DiameterDimension
+        DiameterDimension,
+        Leader,
+        BlockReference
     };
 
     explicit DRW_ObjectContextData(const UTF8STRING& recordName = UTF8STRING(),
@@ -2167,6 +2218,18 @@ public:
     bool m_flipArrow1 = false;
     DRW_Coord m_featureLocationPoint;      /*!< ordinate dimensions only */
     DRW_Coord m_leaderEndpoint;            /*!< ordinate dimensions only */
+
+    // Leader context subset (LEADEROBJECTCONTEXTDATA).
+    std::vector<DRW_Coord> m_leaderPoints;
+    bool m_leaderUnknown290 = false;
+    DRW_Coord m_leaderXDir{1.0, 0.0, 0.0};
+    DRW_Coord m_leaderInsertionOffset;
+    DRW_Coord m_leaderEndpointProjection;
+
+    // Block-reference context subset (BLKREFOBJECTCONTEXTDATA).
+    double m_blkRefRotation = 0.0;
+    DRW_Coord m_blkRefInsertionPoint;
+    DRW_Coord m_blkRefScale{1.0, 1.0, 1.0};
 };
 
 struct DRW_DimensionAssociationOsnapRef {
@@ -2393,7 +2456,139 @@ public:
     double m_alignAngle = 0.0;
     std::vector<std::uint8_t> m_binaryBlob1;
     std::vector<std::uint8_t> m_binaryBlob2;
+    //! Decoded primitive dimensions for ACSH_*_CLASS shape objects.
+    //! BOX/WEDGE = {length, width, height}; SPHERE = {radius};
+    //! CYLINDER/CONE = {height, majorRadius, minorRadius, xRadius};
+    //! TORUS = {majorRadius, minorRadius}.
+    //! Empty for shape classes that are only prefix-decoded + raw-shelved.
+    std::vector<double> m_shapeParams;
+
+    // --- ACSH_BOOLEAN_CLASS body (AcDbShBoolean) ---
+    std::int32_t m_operation = 0;   //!< RCd operation (0 union, 1 intersect, 2 subtract)
+    std::uint32_t m_operand1 = 0;   //!< BL operand1 step id
+    std::uint32_t m_operand2 = 0;   //!< BL operand2 step id
+    // --- ACSH_CHAMFER_CLASS / ACSH_FILLET_CLASS shared body ---
+    std::uint32_t m_bl92 = 0;       //!< BL bl92 (chamfer + fillet)
+    std::uint32_t m_bl95 = 0;       //!< BL bl95 (chamfer only)
+    double m_baseDist = 0.0;        //!< BD base_dist (chamfer)
+    double m_otherDist = 0.0;       //!< BD other_dist (chamfer)
+    std::vector<std::uint32_t> m_edges;         //!< BL edge indices (chamfer + fillet)
+    std::vector<double> m_radiuses;             //!< BD radii (fillet)
+    std::vector<double> m_startSetbacks;        //!< BD start setbacks (fillet)
+    std::vector<double> m_endSetbacks;          //!< BD end setbacks (fillet)
+    // --- ACSH_REVOLVE_CLASS body (AcDbShRevolve) ---
+    DRW_Coord m_axisPoint;          //!< 3BD axis_pt
+    DRW_Coord m_revolveDirection;   //!< 2RD direction (x,y; z unused)
+    double m_revolveAngle = 0.0;    //!< BD revolve_angle
+    double m_startAngle = 0.0;      //!< BD start_angle
+    double m_bd44 = 0.0;            //!< BD bd44
+    double m_bd45 = 0.0;            //!< BD bd45
+    bool m_b290 = false;            //!< B b290
+    bool m_isCloseToAxis = false;   //!< B is_close_to_axis
+    // --- ACSH_LOFT_CLASS body (AcDbShLoft) ---
+    std::uint32_t m_numCrossSections = 0;  //!< BL num_crosssects
+    std::uint32_t m_numGuides = 0;         //!< BL num_guides
+
     std::vector<DRW_AssociativePrefixStatus> m_prefixStatuses;
+};
+
+//! Shell parser for the dynamic-block object family (BLOCK*PARAMETER /
+//! BLOCK*ACTION / BLOCK*GRIP / BLOCKGRIPLOCATIONCOMPONENT / DYNAMICBLOCK*
+//! and the singletons).  This is the largest custom-class family; almost none
+//! of it has a native LibreCAD consumer, so the goal is dwgTs-style typed
+//! CAPTURE: every dynamic-block recName is delivered as a DRW_DynamicBlockObject
+//! (instead of raw-only) with the SHARED, oracle-verified prefix decoded —
+//! AcDbEvalExpr for every evalexpr-bearing class, plus AcDbBlockElement /
+//! AcDbBlockParameter element data for the parameter/grip/action classes.  Two
+//! classes (BLOCKVISIBILITYPARAMETER, BLOCKMOVEACTION) additionally decode their
+//! full body as validation.  Deeper per-class params are left raw-shelved.  The
+//! parse graceful-degrades unconditionally (always returns true; every read is
+//! isGood()-guarded and counts are bounded) and the caller keeps the raw shelf,
+//! so the round-trip stays lossless regardless of how far the decode gets.
+class DRW_DynamicBlockObject : public DRW_TableEntry {
+    SETOBJFRIENDS
+public:
+    //! How much of the body layout is known for a given recName.  Selects the
+    //! decode depth in parseDwg; classify() maps a recName to a Kind.
+    enum class Kind {
+        Bare,                  /*!< HANDLE_UNKNOWN_BITS / no evalexpr — shell only */
+        EvalExprOnly,          /*!< AcDbEvalExpr prefix only (e.g. DYNAMICBLOCKPROXYNODE) */
+        GripLocationComponent, /*!< evalexpr + AcDbBlockGripExpr (grip_type + grip_expr) */
+        Grip,                  /*!< evalexpr + AcDbBlockElement prefix */
+        Parameter,             /*!< evalexpr + element + AcDbBlockParameter 2 bits */
+        Action,                /*!< evalexpr + element prefix */
+        VisibilityParameter,   /*!< full BLOCKVISIBILITYPARAMETER body */
+        MoveAction             /*!< full BLOCKMOVEACTION body */
+    };
+
+    explicit DRW_DynamicBlockObject(const UTF8STRING& recordName = UTF8STRING())
+        : m_recordName(recordName) {
+        tType = DRW::DYNAMICBLOCKOBJECT;
+        m_kind = classify(recordName);
+    }
+
+    //! True for every dynamic-block custom-class recName (PARAMETER/ACTION/GRIP
+    //! suffixes + the named singletons).  Explicitly rejects the structural
+    //! BLOCK_HEADER / BLOCK_CONTROL / BLOCK_RECORD table objects.
+    static bool isDynamicBlockRecName(const UTF8STRING& rn);
+    //! Maps a dynamic-block recName to its decode Kind.
+    static Kind classify(const UTF8STRING& rn);
+
+protected:
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
+
+public:
+    UTF8STRING m_recordName;
+    Kind m_kind = Kind::Bare;
+
+    // AcDbEvalExpr prefix (shared by every evalexpr-bearing class).
+    bool m_evalExprParsed = false;
+    std::uint32_t m_parentId = 0;      /*!< BLd evalexpr.parentid (0xFFFFFFFF = -1) */
+    std::uint32_t m_major = 0;         /*!< BL evalexpr.major (DXF 98) */
+    std::uint32_t m_minor = 0;         /*!< BL evalexpr.minor (DXF 99) */
+    std::int16_t  m_valueCode = 0;     /*!< BSd evalexpr.value_code (DXF 70; -9999 = none) */
+    std::uint32_t m_nodeId = 0;        /*!< BL evalexpr.nodeid (DXF 90) */
+
+    // AcDbBlockElement prefix (parameter/grip/action classes).
+    bool m_elementParsed = false;
+    UTF8STRING m_elementName;           /*!< T name (DXF 300) */
+    std::uint32_t m_elementMajor = 0;   /*!< BL be_major (DXF 98) */
+    std::uint32_t m_elementMinor = 0;   /*!< BL be_minor (DXF 99) */
+    std::int32_t  m_eed1071 = 0;        /*!< BL eed1071 (DXF 1071) */
+
+    // AcDbBlockParameter (parameter classes).
+    bool m_showProperties = false;      /*!< B (DXF 280) */
+    bool m_chainActions = false;        /*!< B (DXF 281) */
+
+    // AcDbBlockGripExpr (BLOCKGRIPLOCATIONCOMPONENT).
+    std::int32_t m_gripType = 0;        /*!< BL grip_type (DXF 91) */
+    UTF8STRING m_gripExpr;              /*!< T grip_expr (DXF 300) */
+
+    // AcDbBlock1PtParameter def point (BLOCKVISIBILITYPARAMETER).
+    DRW_Coord m_defPoint;              /*!< 3BD def_pt (DXF 1010) */
+
+    // AcDbBlockVisibilityParameter body.
+    bool m_isInitialized = false;       /*!< B is_initialized (DXF 281) */
+    UTF8STRING m_visibilityName;        /*!< T blockvisi_name (DXF 301) */
+    UTF8STRING m_visibilityDescription; /*!< T blockvisi_desc (DXF 302) */
+    bool m_unknownBool = false;         /*!< B (DXF 91) */
+    std::int32_t m_blockCount = 0;      /*!< BL num_blocks (DXF 93) */
+    std::int32_t m_stateCount = 0;      /*!< BL num_states (DXF 92) */
+    std::vector<UTF8STRING> m_stateNames; /*!< per-state name (DXF 303) */
+
+    // AcDbBlockAction / AcDbBlockMoveAction body.
+    DRW_Coord m_displayLocation;       /*!< 3BD display_location */
+    std::int32_t m_dependencyCount = 0; /*!< BL num_deps (DXF 71) */
+    std::int32_t m_actionCount = 0;     /*!< BL num_actions (DXF 70) */
+    std::vector<std::int32_t> m_actionIndexes; /*!< BL[] actions (DXF 91) */
+    std::vector<UTF8STRING> m_connectionNames; /*!< action connection-point names */
+    double m_actionOffsetX = 0.0;       /*!< BD action_offset_x (DXF 140) */
+    double m_actionOffsetY = 0.0;       /*!< BD action_offset_y (DXF 141) */
+    double m_angleOffset = 0.0;         /*!< BD angle_offset */
+
+    //! True only when a full validation class (VisibilityParameter / MoveAction)
+    //! decoded its whole body without hitting a short read.
+    bool m_bodyFullyDecoded = false;
 };
 
 //! Common AcDbModelDocViewStyle header shared by detail/section view styles.
@@ -2539,25 +2734,79 @@ protected:
     bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
 };
 
+//! AcDbVisualStyle body — face/edge/display property groups + r2013b expansion.
+/*!
+ *  Primary values only (named); the interleaved BS "_int" companions from the
+ *  r2010b/r2013b layout are consumed for bit-alignment and discarded (they are
+ *  near-constant 0/1 sentinels). Disjoint subsets populate per version:
+ *  legacy (< AC1024) fills face/edge/display; r2010b (>= AC1024) fills those
+ *  plus extLightingModel; r2013b (>= AC1027) additionally fills the b/bl/bd/c
+ *  prop* expansion. Colors are stored as the CMC index returned by
+ *  readObjectCmColor (matches the DRW_TableStyle color-as-int convention).
+ */
+struct DRW_VisualStyleBody {
+    // face group
+    int    faceLightingModel = 0, faceLightingQuality = 0, faceColorMode = 0, faceModifier = 0;
+    double faceOpacity = 0.0, faceSpecular = 0.0;
+    int    faceMonoColor = 0;
+    // edge group
+    int    edgeModel = 0, edgeStyle = 0, edgeIntersectionColor = 0, edgeObscuredColor = 0;
+    int    edgeObscuredLtype = 0, edgeIntersectionLtype = 0, edgeModifier = 0, edgeColor = 0;
+    int    edgeWidth = 0, edgeOverhang = 0, edgeJitter = 0, edgeSilhouetteColor = 0, edgeSilhouetteWidth = 0;
+    int    edgeHaloGap = 0, edgeIsolines = 0, edgeStyleApply = 0;
+    double edgeCreaseAngle = 0.0, edgeOpacity = 0.0;
+    bool   edgeDoHidePrecision = false;
+    // display group
+    int    displaySettings = 0, displayShadowType = 0;
+    double displayBrightness = 0.0;
+    // r2010b header
+    int    extLightingModel = 0;
+    bool   internalOnly = false;
+    // r2013b expansion (>= AC1027)
+    bool   hasR2013bExpansion = false;
+    bool   bProp1c = false, bProp1d = false, bProp1e = false, bProp1f = false;
+    bool   bProp20 = false, bProp21 = false, bProp22 = false, bProp23 = false, bProp24 = false;
+    int    blProp25 = 0;
+    double bdProp26 = 0.0, bdProp27 = 0.0;
+    int    blProp28 = 0, cProp29 = 0, blProp2a = 0, blProp2b = 0, cProp2c = 0;
+    bool   bProp2d = false;
+    int    blProp2e = 0, blProp2f = 0, blProp30 = 0;
+    bool   bProp31 = false;
+    int    blProp32 = 0, cProp33 = 0;
+    double bdProp34 = 0.0;
+    int    edgeWiggle = 0;
+    UTF8STRING strokes;
+    bool   bProp37 = false;
+    double bdProp38 = 0.0, bdProp39 = 0.0;
+};
+
 //! Class to handle VISUALSTYLE (AcDbVisualStyle) — custom-class object §20.4.95.
 /*!
- *  Stub: full ODA spec lists 60+ fields for visual styles, but LibreCAD is 2D
- *  and never consumes them. We only need round-trip identity at the OBJECTS-
- *  section dispatch boundary so the file's class table doesn't drop a phantom
- *  entry. Each object is parsed from a size-bounded buffer so misalignment
- *  within parseDwg can't propagate to neighbors.
+ *  Decodes the full AcDbVisualStyle body (legacy < AC1024 / r2010b >= AC1024 /
+ *  r2013b expansion >= AC1027) into m_body for structured-metadata parity with
+ *  dwgTs. Object is parsed from a size-bounded buffer and the raw shelf carries
+ *  the byte image, so a short-read degrades gracefully (typed metadata may be
+ *  partial; parseDwg always returns true once the common preamble parses).
  */
 class DRW_VisualStyle : public DRW_TableEntry {
     SETOBJFRIENDS
 public:
     DRW_VisualStyle() { reset(); }
-    void reset() { tType = DRW::VISUALSTYLE; desc.clear(); type = 0; }
+    void reset() {
+        tType = DRW::VISUALSTYLE;
+        desc.clear();
+        type = 0;
+        m_body = DRW_VisualStyleBody{};
+        m_bodyDecoded = false;
+    }
 protected:
     bool parseCode(int code, const std::unique_ptr<dxfReader>& reader) override;
     bool parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs=0) override;
 public:
     UTF8STRING desc;       /*!< description (TV in DWG) */
-    std::uint16_t type = 0;      /*!< visual-style type code (BS in DWG) */
+    std::int32_t type = 0;      /*!< visual-style type code (BL style_type in DWG, 70) */
+    DRW_VisualStyleBody m_body;  /*!< decoded body (DWG); empty on DXF/short-read */
+    bool m_bodyDecoded = false;  /*!< true if the body reached the handle-stream cleanly */
 };
 
 //! Class to handle UNDERLAYDEFINITION (AcDb*Definition) — custom-class object.

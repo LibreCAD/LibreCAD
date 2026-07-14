@@ -3428,6 +3428,72 @@ bool DRW_Light::encodeDwg(DRW::Version v, dwgBufferW *buf, std::uint32_t bs,
     return encodeDwgEntHandle(v, buf, handleBuf);
 }
 
+// DRW_Section::parseDwg — SECTIONOBJECT / AcDbSection, field order per
+// libreDWG dwg2.spec DWG_ENTITY(SECTIONOBJECT): BL state, BL flags, T name,
+// 3BD vert_dir, BD top/bottom height, BS indicator_alpha, CMTC indicator_color,
+// BL num_verts + verts, BL num_blverts + blverts; then the common entity handle
+// data followed by the section_settings hard reference (H 5, 360).
+bool DRW_SectionObject::parseDwg(DRW::Version v, dwgBuffer *buf, std::uint32_t bs){
+    // R2007+ keeps text in a separate string stream; read scalars from buf
+    // (data stream) and text from sBuf, exactly like DRW_Light.
+    dwgBuffer sBuff = *buf;
+    dwgBuffer *sBuf = v > DRW::AC1018 ? &sBuff : buf;
+    bool ret = DRW_Entity::parseDwg(v, buf, sBuf, bs);
+    if (!ret)
+        return true;  // graceful-degrade: keep the raw shelf
+    DRW_DBG("\n***************************** parsing SECTIONOBJECT *********************\n");
+
+    m_state = static_cast<std::uint32_t>(buf->getBitLong());
+    m_flags = static_cast<std::uint32_t>(buf->getBitLong());
+    m_name = sBuf->getVariableText(v, false);
+    m_vertDir = buf->get3BitDouble();
+    m_topHeight = buf->getBitDouble();
+    m_bottomHeight = buf->getBitDouble();
+    m_indicatorAlpha = buf->getBitShort();
+    m_indicatorColor = buf->getCmColor(v);
+
+    // num_verts / num_blverts are bounded before looping — a corrupt count must
+    // never drive an unbounded allocation, and a short read must never drop the
+    // object (raw shelf is the round-trip floor).
+    constexpr std::uint32_t kMaxSectionVerts = 1u << 20;  // 1,048,576
+    std::int32_t nv = buf->getBitLong();
+    std::uint32_t numVerts = (nv > 0) ? static_cast<std::uint32_t>(nv) : 0u;
+    if (numVerts > kMaxSectionVerts)
+        numVerts = 0;
+    m_verts.clear();
+    m_verts.reserve(numVerts);
+    for (std::uint32_t i = 0; i < numVerts && buf->isGood(); ++i)
+        m_verts.push_back(buf->get3BitDouble());
+
+    std::int32_t nb = buf->getBitLong();
+    std::uint32_t numBl = (nb > 0) ? static_cast<std::uint32_t>(nb) : 0u;
+    if (numBl > kMaxSectionVerts)
+        numBl = 0;
+    m_blVerts.clear();
+    m_blVerts.reserve(numBl);
+    for (std::uint32_t i = 0; i < numBl && buf->isGood(); ++i)
+        m_blVerts.push_back(buf->get3BitDouble());
+
+    // Handle stream: parseDwgEntHandle reads the common entity handles — it
+    // resets buf to objSize for R2007+ and reads inline (after the exact body
+    // above) for <=AC1018. The section_settings hard reference follows the
+    // common handles, so read it from buf right after (guarded by remaining
+    // bytes so a truncated object never over-reads).
+    ret = DRW_Entity::parseDwgEntHandle(v, buf);
+    // The section_settings hard reference follows the common entity handles.
+    // The R2007+ handle stream is small (a few bytes) so guard on any
+    // remaining byte rather than the 4-byte common-object slack.
+    if (ret && buf->isGood() && buf->numRemainingBytes() >= 1) {
+        dwgHandle ssH = buf->getOffsetHandle(handle);
+        m_sectionSettingsHandle = ssH.ref;
+        DRW_DBG(" section_settings Handle: ");
+        DRW_DBGHL(ssH.code, ssH.size, ssH.ref); DRW_DBG("\n");
+    }
+    DRW_DBG("SECTIONOBJECT name: "); DRW_DBG(m_name.c_str());
+    DRW_DBG(" verts: "); DRW_DBG(static_cast<int>(m_verts.size())); DRW_DBG("\n");
+    return true;  // graceful-degrade — always deliver typed add + raw shelf
+}
+
 bool DRW_Tolerance::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
     switch (code) {
     case 1:
@@ -3896,7 +3962,7 @@ bool DRW_Insert::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs
 }
 
 bool DRW_Table::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs){
-    if (version <= DRW::AC1018)
+    if (version < DRW::AC1015)
         return false;
 
     dwgBuffer sBuff = *buf;
@@ -3935,6 +4001,15 @@ bool DRW_Table::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs)
         objCount = buf->getBitLong();
 
     dwgBuffer hBuff = *buf;
+    if (version <= DRW::AC1018) {
+        // R2000/R2004: parseDwgEntHandle only re-seeks to the handle stream
+        // for version > AC1018 (2007+ string area).  For the legacy versions
+        // seek the snapshot to the handle-stream start (objSize is the
+        // bit offset of the handle stream, RL field read in
+        // DRW_Entity::parseDwg) or every handle below reads mid-DATA garbage.
+        hBuff.setPosition(objSize >> 3);
+        hBuff.setBitPos(objSize & 7);
+    }
     ret = DRW_Entity::parseDwgEntHandle(version, &hBuff);
     blockRecH = hBuff.getHandle();
 
@@ -4045,9 +4120,17 @@ bool DRW_Table::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs)
     m_tableStyleHandle = readTableHandle(&hBuff);
     m_content.m_tableStyleHandle = m_tableStyleHandle;
     m_semanticContentComplete = true;
+    // For <=AC1018 (R2000/R2004) there is no separate R2007+ string stream:
+    // DRW_Entity::parseDwg only seeks sBuf when version > AC1018 (see the
+    // `strBuf != NULL && version > DRW::AC1018` guard there), so legacy cell
+    // text is inline in `buf`.  Passing the stale sBuf copy here would read
+    // text from the wrong position and desync `buf`.  Pass nullptr so the
+    // cell readers' `textBuf = strBuf ? strBuf : buf` falls back to the
+    // inline `buf`.  R2007 (AC1021) keeps the separate sBuf stream.
+    dwgBuffer *cellStrBuf = (version > DRW::AC1018) ? sBuf : nullptr;
     for (std::uint32_t row = 0; row < rows && m_semanticContentComplete; ++row) {
         for (std::uint32_t column = 0; column < columns; ++column) {
-            if (!parseR2007TableCell(version, buf, sBuf, &hBuff,
+            if (!parseR2007TableCell(version, buf, cellStrBuf, &hBuff,
                                      m_content.m_rows[row].m_cells[column],
                                      &m_content.m_subrecordRanges)) {
                 m_semanticContentComplete = false;
@@ -4058,7 +4141,7 @@ bool DRW_Table::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs)
 
     if (m_semanticContentComplete)
         m_semanticContentComplete = skipR2007TableOverrides(
-            version, buf, sBuf, &hBuff, &m_content.m_subrecordRanges);
+            version, buf, cellStrBuf, &hBuff, &m_content.m_subrecordRanges);
     if (!m_semanticContentComplete)
         DRW_DBG("R2007 TABLE cell parse incomplete; anonymous block insert kept\n");
 

@@ -1128,6 +1128,228 @@ TEST_CASE("dwgRW::readBuffer matches file-path read for a committed fixture",
   CHECK(memoryIface.layerLWeights == fileIface.layerLWeights);
 }
 
+// Regression guard for the R2007/AC1021 header-read fix: dwgReader21 previously
+// clobbered the UTF-16 decoder with the legacy codepage, so section names
+// decoded with embedded 0x00 bytes, no section matched secEnum::getEnum(), and
+// every R2007 file failed at BAD_READ_HEADER. The committed AC1021 fixture must
+// now read clean.
+TEST_CASE("DWG R2007: section names decode via UTF-16 (no BAD_READ_HEADER)",
+          "[dwg][r2007]") {
+  const std::string path =
+      std::string(LIBRECAD_TEST_DIR) + "/visualstyle_r2007.dwg";
+  if (!std::filesystem::is_regular_file(path)) {
+    SUCCEED("visualstyle_r2007.dwg fixture absent; skipping");
+    return;
+  }
+  const DwgResult r = readDwg(path);
+  REQUIRE(r.version == DRW::AC1021);
+  REQUIRE(r.error == DRW::BAD_NONE); // was BAD_READ_HEADER before the fix
+  REQUIRE(r.ok);
+  CHECK(r.entities > 0);
+}
+
+namespace {
+// Counts POLYLINE deliveries + total vertices, over CountingIface.
+class PolyCountIface : public CountingIface {
+public:
+  int polylines = 0;
+  int polyVerts = 0;
+  void addPolyline(const DRW_Polyline &e) override {
+    CountingIface::addPolyline(e);
+    ++polylines;
+    polyVerts += static_cast<int>(e.vertlist.size());
+  }
+};
+} // namespace
+
+// Pre-R13 (R10/AC1006) JUMP + EXTRAS-section regression. entities_3.dwg holds
+// two POLYLINE_2D; the second is split by a JUMP record whose continuation
+// lives in the EXTRAS section. Before the fix, dwgReaderR11 (a) counted JUMP as
+// a parse failure and (b) never read the EXTRAS section, so only ONE polyline
+// was delivered (entityParseFailures=1). Now both are delivered, 0 failures --
+// matching dwgTs (which reads entities+blocks+extras).
+TEST_CASE("DWG pre-R13 R10: JUMP-split polyline recovered from EXTRAS section",
+          "[dwg][pre-r13][r10][jump]") {
+  const std::string path =
+      std::string(LIBRECAD_TEST_DIR) + "/pre_r13_r10_entities.dwg";
+  if (!std::filesystem::is_regular_file(path)) {
+    SUCCEED("pre_r13_r10_entities.dwg fixture absent; skipping");
+    return;
+  }
+  PolyCountIface iface;
+  dwgR reader(path.c_str());
+  REQUIRE(reader.read(&iface, /*ext=*/true));
+  REQUIRE(reader.getVersion() == DRW::AC1006);
+  REQUIRE(reader.getError() == DRW::BAD_NONE);
+  // Both POLYLINE entities are now delivered (was 1 before the EXTRAS/JUMP fix,
+  // with a spurious parse failure). The second polyline is JUMP-relocated into
+  // the EXTRAS section; per dwgTs's own note "neither libredwg nor libdxfrw
+  // follows the JUMP", so its 3 vertices are NOT relocated back onto it (dwgTs
+  // leaves them flat; dwgread delivers them as 6 separate VERTEX_2D). We
+  // therefore get 2 polylines carrying the 3 relocatable vertices of the first.
+  CHECK(iface.polylines == 2);
+  CHECK(iface.polyVerts == 3);
+}
+
+namespace {
+// Captures APPID + DIMSTYLE table-record names.
+class TableNameCapture : public CountingIface {
+public:
+  std::vector<std::string> appIds;
+  std::vector<std::string> dimStyles;
+  void addAppId(const DRW_AppId &a) override { appIds.push_back(a.name); }
+  void addDimStyle(const DRW_Dimstyle &d) override { dimStyles.push_back(d.name); }
+};
+} // namespace
+
+// Pre-R13 (R11/AC1009) EMBEDDED extended-table regression. dwgReaderR11 read
+// only LAYER/LTYPE/STYLE; the embedded APPID (@0x512) + DIMSTYLE (@0x522)
+// descriptors (present when numheader_vars@0x11 > 158) were never read. dwgTs
+// decodes these two name-only (VPORT/VIEW/UCS/VX stay dormant in dwgTs too).
+// ACEB10.dwg (R11/AC1009) carries APPID "ACAD" + DIMSTYLE "STANDARD" (dwgread).
+TEST_CASE("DWG pre-R13 R11: embedded APPID + DIMSTYLE tables decode name-only",
+          "[dwg][pre-r13][r11][tables]") {
+  const std::string path =
+      std::string(LIBRECAD_TEST_DIR) + "/pre_r13_r11_tables.dwg";
+  if (!std::filesystem::is_regular_file(path)) {
+    SUCCEED("pre_r13_r11_tables.dwg fixture absent; skipping");
+    return;
+  }
+  TableNameCapture iface;
+  dwgR reader(path.c_str());
+  REQUIRE(reader.read(&iface, /*ext=*/true));
+  REQUIRE(reader.getVersion() == DRW::AC1009);
+  REQUIRE(reader.getError() == DRW::BAD_NONE);
+  // Both embedded tables now deliver (were absent before the fix).
+  REQUIRE(iface.appIds.size() == 1);
+  CHECK(iface.appIds[0] == "ACAD");
+  REQUIRE(iface.dimStyles.size() == 1);
+  CHECK(iface.dimStyles[0] == "STANDARD");
+}
+
+namespace {
+// Captures LINE entities (count + first start point) over CountingIface.
+class LineCapture : public CountingIface {
+public:
+  int lines = 0;
+  RS_Vector firstStart{false};
+  void addLine(const DRW_Line &e) override {
+    CountingIface::addLine(e);
+    if (lines == 0)
+      firstStart = RS_Vector(e.basePoint.x, e.basePoint.y, e.basePoint.z);
+    ++lines;
+  }
+};
+} // namespace
+
+// Pre-R10 tier (R2.6/AC1003, R9/AC1004, R2.10/AC2.10) parse regression. These
+// share the R10/R11 container (dwgReaderR11) but were rejected by readMetaData
+// + the routing in libdwgr.cpp -> 0 entities. Now decoded via version-gated
+// deltas: 1-byte LTYPE handle for all pre-R11, 2D LINE/POINT/3DLINE/3DFACE
+// bodies for pre-R10, elevation-for-all, empty-ENTITIES tolerance, and
+// REPEAT/ENDREP/LOAD structural markers. Each fixture carries a 2D LINE at
+// (6,1,0) (z=0 proves the pre-R10 2D-body path; byte-identical to dwgread).
+TEST_CASE("DWG pre-R10 tier (R2.6/R9/R2.10) reads entities with 2D bodies",
+          "[dwg][pre-r13][pre-r10]") {
+  struct Case { const char *file; DRW::Version version; int minEntities; };
+  const Case cases[] = {
+      {"pre_r10_r26_entities.dwg", DRW::AC1003, 24},
+      {"pre_r10_r9_entities.dwg", DRW::AC1004, 24},
+      {"pre_r10_r210_entities.dwg", DRW::AC210, 15},
+  };
+  for (const Case &c : cases) {
+    const std::string path = std::string(LIBRECAD_TEST_DIR) + "/" + c.file;
+    INFO("fixture: " << c.file);
+    if (!std::filesystem::is_regular_file(path)) {
+      SUCCEED("fixture absent; skipping");
+      continue;
+    }
+    LineCapture iface;
+    dwgR reader(path.c_str());
+    REQUIRE(reader.read(&iface, /*ext=*/true));
+    REQUIRE(reader.getVersion() == c.version);
+    REQUIRE(reader.getError() == DRW::BAD_NONE);
+    // Entities are now delivered (was 0 before the pre-R10 fix).
+    CHECK(iface.entities >= c.minEntities);
+    REQUIRE(iface.lines >= 2);
+    // The (6,1,0) 2D LINE: z==0 confirms the pre-R10 2D-body read (a 3D read
+    // would consume the next entity's bytes as Z).
+    CHECK(iface.firstStart.x == Catch::Approx(6.0));
+    CHECK(iface.firstStart.y == Catch::Approx(1.0));
+    CHECK(iface.firstStart.z == Catch::Approx(0.0));
+  }
+}
+
+// R1.40 (magic "AC1.40") — the dedicated pre-R2.0b reader (dwgReaderR1_40).
+// Different container: no @0x14 section pointers, no per-record size/CRC; the
+// entity stream runs contiguously from 0x202 to dwg_size@0x24, each record =
+// type(RS)+layer(RS)+body. entities_4.dwg exercises all 14 types; the 9
+// renderable ones are delivered (BLOCK/ENDBLK = scope, REPEAT/ENDREP/LOAD =
+// markers). It carries a LINE (2,3)->(3,4), byte-identical to dwgread.
+TEST_CASE("DWG R1.40 (AC1.40) dedicated reader decodes the entity stream",
+          "[dwg][pre-r13][r1_40]") {
+  const std::string path =
+      std::string(LIBRECAD_TEST_DIR) + "/pre_r10_r140_entities.dwg";
+  if (!std::filesystem::is_regular_file(path)) {
+    SUCCEED("pre_r10_r140_entities.dwg fixture absent; skipping");
+    return;
+  }
+  LineCapture iface;
+  dwgR reader(path.c_str());
+  REQUIRE(reader.read(&iface, /*ext=*/true));
+  REQUIRE(reader.getVersion() == DRW::AC14);
+  REQUIRE(reader.getError() == DRW::BAD_NONE);
+  // 9 renderable entities (POINT2 LINE3 ARC CIRCLE TEXT TRACE INSERT SHAPE SOLID).
+  CHECK(iface.entities >= 9);
+  REQUIRE(iface.lines >= 3);
+  // No parse failure means the size-less walk landed exactly on dwg_size.
+  bool sawLine23 = false;
+  // firstStart is one delivered LINE start; every LINE is 2D (z==0).
+  CHECK(iface.firstStart.z == Catch::Approx(0.0));
+  // The (2,3)->(3,4) LINE proves correct body geometry vs dwgread.
+  {
+    struct L23 : public LineCapture {
+      bool found = false;
+      void addLine(const DRW_Line &e) override {
+        LineCapture::addLine(e);
+        if (std::abs(e.basePoint.x - 2.0) < 1e-9 &&
+            std::abs(e.basePoint.y - 3.0) < 1e-9)
+          found = true;
+      }
+    } cap;
+    dwgR r2(path.c_str());
+    REQUIRE(r2.read(&cap, /*ext=*/true));
+    sawLine23 = cap.found;
+  }
+  CHECK(sawLine23);
+}
+
+// Regression for BAD_READ_TABLES on a stored (incompressible) R2007 data page.
+// The $100-bill raster artwork produces an AcDb:AcDbObjects page with
+// cSize==uSize that dwgReader21::parseDataPage must memcpy, not LZ77-decompress
+// (mirrors LibreDWG read_data_page). The file is 30 MB -> developer-local, skip
+// if absent (tag hidden with leading '.').
+TEST_CASE("DWG R2007 stored-page: usa_dollar100_front.dwg reads tables",
+          "[.dwg6_stored_page]") {
+  const char *home = std::getenv("HOME");
+  if (!home) {
+    SUCCEED("HOME not set; skipping");
+    return;
+  }
+  const std::string path =
+      std::string(home) + "/doc/dwg6/usa_dollar100_front.dwg";
+  if (!std::filesystem::is_regular_file(path)) {
+    SUCCEED("usa_dollar100_front.dwg not present; skipping");
+    return;
+  }
+  CountingIface iface;
+  const DwgResult r = readDwg(path, /*verbose=*/false, &iface);
+  REQUIRE(r.error == DRW::BAD_NONE); // was BAD_READ_TABLES before the fix
+  CHECK(iface.entities == 41368);    // dwgread: 41364 POLYLINE_3D + 4 LWPOLYLINE
+  CHECK(iface.blocks == 2);
+  CHECK(iface.layers == 1);
+}
+
 TEST_CASE("DWG XLINE reads as typed construction line across LibreDWG versions",
           "[dwg][xline]") {
   struct Fixture {
@@ -1138,8 +1360,8 @@ TEST_CASE("DWG XLINE reads as typed construction line across LibreDWG versions",
   const Fixture fixtures[] = {
       {"xline/constructionline_2000.dwg", DRW::AC1015},
       {"xline/constructionline_2004.dwg", DRW::AC1018},
-      // LibreDWG's AC1021/R2007 ConstructionLine.dwg currently fails this
-      // reader at BAD_READ_HEADER, before any XLINE dispatch can be exercised.
+      // (R2007/AC1021 row omitted only because no constructionline_2007.dwg
+      //  fixture is committed; the former BAD_READ_HEADER blocker is now fixed.)
       {"xline/constructionline_2010.dwg", DRW::AC1024},
       {"xline/constructionline_2013.dwg", DRW::AC1027},
       {"xline/constructionline_2018.dwg", DRW::AC1032},
@@ -5513,6 +5735,99 @@ TEST_CASE("DWG pre-R13: R11 typed DIMENSION (LINEAR + ALIGNED)") {
   }
 }
 
+// Pre-R13 R11/R10 SHAPE style_id + ATTDEF/ATTRIB rotation decode (Phase 4b).
+// Two spec-grounded read-width / opt-bit fixes in dwgReaderR11.cpp:
+//   (a) SHAPE style_id is an RC (1 byte; dwg.spec:2338 FIELD_CAST(style_id,RC,
+//       BS,0)). Reading it as a 2-byte RS over-consumed one byte and desynced
+//       the following rotation RD -> garbage m_rotation. The fix stores it in
+//       DRW_Shape::m_shapeIndex (previously read-and-discarded).
+//   (b) ATTDEF/ATTRIB rotation is gated on R11OPTS(2) (opts & 0x02; dwg.spec
+//       :216 ATTRIB / :419 ATTDEF), NOT opts & 0x01. Every ATTDEF/ATTRIB in
+//       the corpus has opts bit0 CLEAR + bit1 SET (dwgread trace: r11 opts=0x2,
+//       r10 ATTRIB opts=0x6), so the old `opts & 0x01` gate SKIPPED the read
+//       and the rendered TEXT angle came through as 0.
+// Ground truth: `dwgread -O JSON` on r11/entities-2d.dwg and r10/entities.dwg
+// (SHAPE + ATTDEF(9,5) + ATTRIB(2,2) are byte-identical across the two files).
+namespace {
+struct R11ShapeAttribCollector : public CountingIface {
+  std::vector<DRW_Shape> shapes;
+  std::vector<DRW_Text> texts;
+  void addShape(const DRW_Shape &e) override {
+    ++entities;                 // CountingIface has no addShape override
+    shapes.push_back(e);
+  }
+  void addText(const DRW_Text &e) override {
+    CountingIface::addText(e);  // increments `entities` via track()
+    texts.push_back(e);
+  }
+};
+}  // namespace
+
+TEST_CASE("DWG pre-R13: R11/R10 SHAPE style_id + ATTDEF/ATTRIB rotation") {
+  auto near = [](double a, double b) { return std::abs(a - b) < 1e-9; };
+
+  auto checkFixture = [&](const char *release, const char *file,
+                          DRW::Version expectVer) {
+    const std::string path = libredwgFixturePath(release, file);
+    if (path.empty()) {
+      SUCCEED("pre-R13 corpus root absent; skipping");
+      return;
+    }
+    std::ifstream probe(path, std::ios::binary);
+    if (!probe.good()) {
+      SUCCEED(std::string(file) + " absent; skipping");
+      return;
+    }
+    probe.close();
+
+    R11ShapeAttribCollector iface;
+    const DwgResult r = readDwg(path, /*verbose=*/false, &iface);
+    REQUIRE(r.ok);
+    REQUIRE(r.version == expectVer);
+
+    // ---- (a) SHAPE: style_id read as 1B RC; rotation not desynced ----------
+    // Oracle (dwgread -O JSON): ins_pt=[6,6], scale=1.0, style_id=131,
+    // rotation=0.5235987755983 (== pi/6). Before the fix, style_id was read as
+    // a 2-byte RS which shifted the rotation read by one byte -> garbage, and
+    // m_shapeIndex stayed 0 (the value was discarded).
+    REQUIRE(iface.shapes.size() == 1);
+    const DRW_Shape &s = iface.shapes[0];
+    CHECK(near(s.m_insertionPoint.x, 6.0));
+    CHECK(near(s.m_insertionPoint.y, 6.0));
+    CHECK(near(s.m_scale, 1.0));
+    CHECK(s.m_shapeIndex == 131);                 // was 0 (discarded)
+    CHECK(near(s.m_rotation, 0.5235987755983));   // was garbage (desynced)
+
+    // ---- (b) ATTDEF/ATTRIB rotation via opts & 0x02 ------------------------
+    // ATTDEF/ATTRIB render as DRW_Text in the R11 reader. Find the unique
+    // ATTRIB (text "4", ins_pt [2,2], height 0.1) and one ATTDEF (text "3",
+    // ins_pt [9,5], height 0.2). Oracle rotations: ATTRIB=1.5707963267949
+    // (pi/2), ATTDEF=1.0471975511966 (pi/3). Before the fix (opts & 0x01, bit0
+    // clear) the read was skipped and both angles were 0.
+    const DRW_Text *attrib = nullptr;
+    const DRW_Text *attdef = nullptr;
+    for (const auto &t : iface.texts) {
+      if (t.text == "4" && near(t.basePoint.x, 2.0) && near(t.basePoint.y, 2.0))
+        attrib = &t;
+      if (t.text == "3" && near(t.basePoint.x, 9.0) && near(t.basePoint.y, 5.0))
+        attdef = &t;
+    }
+    REQUIRE(attrib != nullptr);
+    CHECK(near(attrib->height, 0.1));
+    CHECK(near(attrib->angle, 1.5707963267949));  // was 0.0 (gate skipped)
+    REQUIRE(attdef != nullptr);
+    CHECK(near(attdef->height, 0.2));
+    CHECK(near(attdef->angle, 1.0471975511966));  // was 0.0 (gate skipped)
+  };
+
+  SECTION("r11/entities-2d.dwg (AC1009)") {
+    checkFixture("r11", "entities-2d.dwg", DRW::AC1009);
+  }
+  SECTION("r10/entities.dwg (AC1006)") {
+    checkFixture("r10", "entities.dwg", DRW::AC1006);
+  }
+}
+
 // Pre-R13 R10 (AC1006) routing parity. The R10 container is byte-identical to
 // R11 except for the LTYPE handle width in the entity common header (R10=1B
 // RC; R11=2B RS). dwgReaderR11 branches on `version`; this test exercises the
@@ -5779,6 +6094,29 @@ TEST_CASE("DWG pre-R13: R11 LAYER/LTYPE/STYLE table records") {
     CHECK(a1->font == "romans");
     CHECK(a1->lastHeight == 0.095);
   }
+}
+
+// Pre-R13 codepage end-to-end: ACEB10.dwg stores $DWGCODEPAGE = 30 (ANSI_1252)
+// at the fixed file offset 0x3f9 (numheader_vars=205 @0x11 > 129). dwgread -O
+// JSON reports "codepage": 30. This asserts readFileHeader() reads 0x3f9 and
+// resolves it through preR13CodePageName()/setCodePage(). The value equals the
+// hard-coded readMetaData default, so it also regression-guards the seek path.
+TEST_CASE("DWG pre-R13: ACEB10 resolves $DWGCODEPAGE = ANSI_1252",
+          "[dwg][prer13][codepage]") {
+  const char *home = getenv("HOME");
+  if (!home) { SUCCEED("HOME not set; skipping"); return; }
+  const std::string path =
+      std::string(home) + "/dev/libredwg/test/test-data/r11/ACEB10.dwg";
+  std::ifstream probe(path, std::ios::binary);
+  if (!probe.good()) { SUCCEED("ACEB10.dwg absent"); return; }
+  probe.close();
+  CountingIface iface;
+  dwgR reader(path.c_str());
+  const bool ok = reader.read(&iface, true);
+  REQUIRE(ok);
+  REQUIRE(reader.getVersion() == DRW::AC1009);
+  // cp id 30 -> "ANSI_1252" (dwgread oracle: HEADER.codepage == 30).
+  CHECK(reader.getCodePage() == "ANSI_1252");
 }
 
 // Pre-R13 R10 (AC1006) parity: the table records and header variables are

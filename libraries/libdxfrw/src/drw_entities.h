@@ -72,7 +72,7 @@ namespace DRW {
         POLYLINE,
         RAY,
         REGION,
-//        SECTION,
+        SECTION,
         SEQEND,
         SHAPE,
         SOLID,
@@ -773,6 +773,38 @@ public:
     double m_extendedLightLength = 0.0;
     double m_extendedLightWidth = 0.0;
     double m_extendedLightRadius = 0.0;
+};
+
+//! SECTIONOBJECT (AcDbSection) live-section plane entity.
+/*!
+*  LibreCAD does not render the section plane, but the typed decode restores
+*  the section geometry (plane vertices + back-line vertices), the display
+*  metadata and the section_settings hard reference for parity with dwgTs.
+*  The raw shelf still preserves the object byte-for-byte for round-trip.
+*/
+class DRW_SectionObject : public DRW_Entity {
+    SETENTFRIENDS
+public:
+    DRW_SectionObject() {
+        eType = DRW::SECTION;
+    }
+    void applyExtrusion() override {}
+
+protected:
+    bool parseDwg(DRW::Version v, dwgBuffer *buf, std::uint32_t bs=0) override;
+
+public:
+    std::uint32_t m_state = 0;            /*!< state flags, code 90 */
+    std::uint32_t m_flags = 0;            /*!< section flags, code 91 */
+    UTF8STRING m_name;                    /*!< section name, code 1 */
+    DRW_Coord m_vertDir;                  /*!< vertical direction, code 10 (3BD) */
+    double m_topHeight = 0.0;             /*!< top height, code 40 */
+    double m_bottomHeight = 0.0;          /*!< bottom height, code 41 */
+    std::uint16_t m_indicatorAlpha = 0;   /*!< indicator transparency, code 70 */
+    std::uint32_t m_indicatorColor = 0;   /*!< indicator color, code 62 (CMTC) */
+    std::vector<DRW_Coord> m_verts;       /*!< section-line vertices, code 11 */
+    std::vector<DRW_Coord> m_blVerts;     /*!< back-line vertices, code 12 */
+    std::uint32_t m_sectionSettingsHandle = 0; /*!< AcDbSectionSettings, code 360 */
 };
 
 //! Class to handle TOLERANCE entries

@@ -37,6 +37,7 @@
 #include "drw_interface.h"
 #include "libdwgr.h"
 #include "libdxfrw.h"
+#include "lc_dwgadvancedmetadata.h"
 
 namespace {
 
@@ -598,4 +599,56 @@ TEST_CASE("DWG tArch: deep validation of selected files", "[.dwg_tarch_deep]") {
       FAIL_CHECK(name << ": exception: " << e.what());
     }
   }
+}
+
+namespace {
+// Reuse the complete EntityValidationIface; only capture raw carriers.
+class ViewportRawCaptureIface : public EntityValidationIface {
+public:
+  std::vector<DRW_UnsupportedObject> rawCarriers;
+  void addUnsupportedObject(const DRW_UnsupportedObject &e) override {
+    rawCarriers.push_back(e);
+  }
+};
+}  // namespace
+
+TEST_CASE("DWG tArch: VIEWPORT preserved as replayable raw carrier",
+          "[dwg_tarch_viewport][viewport]") {
+  const std::string path = LIBRECAD_TEST_DIR "/tarch/t1.dwg";
+  if (!std::filesystem::is_regular_file(path)) {
+    SUCCEED("t1.dwg fixture not found; skipping");
+    return;
+  }
+
+  ViewportRawCaptureIface iface;
+  dwgR reader(path.c_str());
+  REQUIRE(reader.read(&iface, /*ext=*/true));
+  REQUIRE(reader.getError() == DRW::BAD_NONE);
+
+  // Typed decode still delivers both viewports (addViewport unaffected).
+  // Smoke assertion; independent of the raw-shelf coverage below.
+  CHECK(iface.viewports == 2);
+
+  // ...and each is now ALSO shelved as a fixed type-34 raw carrier that both
+  // write-side gates accept.
+  int viewportCarriers = 0;
+  for (const auto &raw : iface.rawCarriers) {
+    if (raw.m_objectType != 34)
+      continue;
+    ++viewportCarriers;
+    CHECK(raw.m_isEntity);
+    CHECK_FALSE(raw.m_isCustomClass);
+    CHECK_FALSE(raw.m_rawBytes.empty());
+
+    // Real reader bytes must classify as replayable (blocker None) so
+    // DWG->DWG keeps them (edit b, on live data).
+    LC_DwgAdvancedMetadata metadata;
+    metadata.addUnsupportedObject(raw);
+    REQUIRE(metadata.rawObjects().size() == 1u);
+    const auto &rec = metadata.rawObjects().front();
+    CHECK(LC_DwgAdvancedMetadata::isReplayableFixedModelerRawEntity(rec));
+    CHECK(LC_DwgAdvancedMetadata::rawReplayBlocker(rec) ==
+          LC_DwgAdvancedMetadata::ReplayBlocker::None);
+  }
+  CHECK(viewportCarriers == 2);
 }

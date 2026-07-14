@@ -116,6 +116,14 @@ namespace {
             kind = DRW_ObjectContextData::Kind::DiameterDimension;
             return true;
         }
+        if (matches("LEADEROBJECTCONTEXTDATA")) {
+            kind = DRW_ObjectContextData::Kind::Leader;
+            return true;
+        }
+        if (matches("BLKREFOBJECTCONTEXTDATA", "BLOCKREFERENCEOBJECTCONTEXTDATA")) {
+            kind = DRW_ObjectContextData::Kind::BlockReference;
+            return true;
+        }
 
         return false;
     }
@@ -1547,6 +1555,15 @@ bool dwgReader::readDwgEntity(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
             if (entryParse(e, buff, bs, ret)) {
                 intfa.addViewport(e);
             }
+            // P1.4a: preserve VIEWPORT (fixed type 34) byte-for-byte so it
+            // survives DWG->DWG. VIEWPORT has no RS twin (unlike REGION/
+            // SOLID3D/BODY, which also get a typed addModelerGeometry), so this
+            // raw carrier is its only representation. Shelved unconditionally
+            // (mirrors the SHAPE both-branch pattern above): makeRawEntity
+            // captures tmpByteStr regardless of parse status, so the bytes
+            // survive even if entryParse failed. Fixed type 34 => isCustomClass
+            // = false => no CLASSES entry.
+            intfa.addUnsupportedObject(makeRawEntity(oType));
             break; }
         case dwgType::ELLIPSE: {
             DRW_Ellipse e;
@@ -1820,7 +1837,7 @@ bool dwgReader::readDwgEntity(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                     }
                     break;
                 }
-                if (version > DRW::AC1018 && cit != classesmap.end() && cit->second
+                if (cit != classesmap.end() && cit->second
                     && (cit->second->recName == "ACAD_TABLE"
                         || cit->second->className == "AcDbTable")) {
                     DRW_Table e;
@@ -1853,6 +1870,19 @@ bool dwgReader::readDwgEntity(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                             intfa.addLight(e);
                             intfa.addUnsupportedObject(makeRawEntity(oType, cit->second));
                         }
+                        break;
+                    }
+                    if (rn == "SECTIONOBJECT" || cn == "AcDbSection") {
+                        // SECTIONOBJECT (AcDbSection) live-section plane — typed
+                        // decode restores the section geometry + metadata + the
+                        // section_settings reference for dwgTs parity. parseDwg
+                        // graceful-degrades (always true), and the raw shelf is
+                        // emitted unconditionally as the round-trip floor.
+                        DRW_SectionObject e;
+                        if (entryParse(e, buff, bs, ret)) {
+                            intfa.addSectionObject(e);
+                        }
+                        intfa.addUnsupportedObject(makeRawEntity(oType, cit->second));
                         break;
                     }
                     if (rn == "SURFACE" || rn == "EXTRUDEDSURFACE" || rn == "REVOLVEDSURFACE"
@@ -2171,6 +2201,20 @@ bool dwgReader::readDwgObject(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                         }
                         break;
                     }
+                    if (rn == "DATATABLE"
+                        || cit->second->className == "AcDbDataTable") {
+                        DRW_DataTable e;
+                        ret = e.parseDwg(version, &buff, bs);
+                        // DATATABLE's body is a DEBUG_CLASS ("(varies)") whose
+                        // cell walk may drift; parseDwg graceful-degrades to the
+                        // decoded prefix, and the raw shelf preserves the exact
+                        // bytes so the round-trip stays faithful regardless.
+                        if (ret) {
+                            intfa.addDataTable(e);
+                            intfa.addUnsupportedObject(makeRawObject(oType, cit->second));
+                        }
+                        break;
+                    }
                     if (rn == "RASTERVARIABLES"
                         || cit->second->className == "AcDbRasterVariables") {
                         DRW_RasterVariables e;
@@ -2273,10 +2317,11 @@ bool dwgReader::readDwgObject(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                         || cit->second->className == "AcDbEvalGraph") {
                         DRW_EvaluationGraph e;
                         ret = e.parseDwg(version, &buff, bs);
-                        // Raw replay preserves the full byte image (Phase 2b.4).
-                        // Unconditional: parseDwg declines for <=AC1018 (R2007+
-                        // body layout only) — eval graphs appear since AutoCAD
-                        // 2006, so preserve verbatim rather than drop.
+                        // parseDwg now decodes the typed body at every version
+                        // (R2000/R2004 handles inline, R2007+ separate stream).
+                        // Raw replay still preserves the full byte image
+                        // (Phase 2b.4) unconditionally, so the object round-trips
+                        // verbatim even when the typed decode degrades.
                         if (ret)
                             intfa.addEvaluationGraph(e);
                         intfa.addUnsupportedObject(makeRawObject(oType, cit->second));
@@ -2292,15 +2337,17 @@ bool dwgReader::readDwgObject(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                         }
                         break;
                     }
-                    if (rn == "ACDBASSOCACTION"
-                        || rn == "ACDBASSOCNETWORK"
-                        || rn == "ACDBASSOCDEPENDENCY"
-                        || rn == "ACDBASSOCGEOMDEPENDENCY"
-                        || rn == "ACDBASSOCPERSSUBENTMANAGER"
-                        || rn == "ACDBPERSSUBENTMANAGER"
-                        || rn == "ACDBASSOCALIGNEDDIMACTIONBODY"
-                        || rn == "ACDBASSOCVERTEXACTIONPARAM"
-                        || rn == "ACDBASSOCOSNAPPOINTREFACTIONPARAM") {
+                    if (rn.rfind("ACDBASSOC", 0) == 0
+                        || rn == "ACDBPERSSUBENTMANAGER") {
+                        // Every ACDBASSOC* associativity class (plus the bare
+                        // PERSSUBENTMANAGER) routes to the shell parser:
+                        // ACTION/NETWORK/DEPENDENCY/GEOMDEPENDENCY/PERSSUBENT
+                        // and the action-param variants decode structured
+                        // fields; all other subclasses (surface/array action
+                        // bodies, generic action params, value/variable deps,
+                        // 2d-constraint groups) run the shared prefix
+                        // (suffix-inferred in parseDwg) and are preserved
+                        // byte-for-byte by the raw shelf below.
                         DRW_AssociativeObject e(rn);
                         ret = e.parseDwg(version, &buff, bs);
                         if (ret) {
@@ -2309,12 +2356,36 @@ bool dwgReader::readDwgObject(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                         }
                         break;
                     }
-                    if (rn == "ACSH_HISTORY_CLASS"
-                        || rn == "ACSH_SWEEP_CLASS") {
+                    if (rn.rfind("ACSH_", 0) == 0) {
+                        // Every ACSH_* solid-history class routes to the shell
+                        // parser and is delivered through addAcShHistoryObject.
+                        // Structured field decode covers HISTORY, SWEEP/EXTRUSION,
+                        // BOX/WEDGE/SPHERE/CYLINDER/CONE, and (dwgTs parity)
+                        // BOOLEAN/CHAMFER/FILLET/TORUS/REVOLVE/LOFT. BREP and the
+                        // remaining classes run the shared prefix (or nothing) and
+                        // are preserved byte-for-byte by the raw shelf below.
                         DRW_AcShHistoryObject e(rn);
                         ret = e.parseDwg(version, &buff, bs);
                         if (ret) {
                             intfa.addAcShHistoryObject(e);
+                            intfa.addUnsupportedObject(makeRawObject(oType, cit->second));
+                        }
+                        break;
+                    }
+                    if (DRW_DynamicBlockObject::isDynamicBlockRecName(rn)) {
+                        // The dynamic-block object family (BLOCK*PARAMETER /
+                        // BLOCK*ACTION / BLOCK*GRIP / BLOCKGRIPLOCATIONCOMPONENT /
+                        // DYNAMICBLOCK* + singletons) — the largest custom-class
+                        // family.  Every recName routes to the shell parser: the
+                        // shared AcDbEvalExpr (+ AcDbBlockElement/BlockParameter)
+                        // prefix decodes typed, BLOCKVISIBILITYPARAMETER /
+                        // BLOCKMOVEACTION decode fully, and the rest are preserved
+                        // byte-for-byte by the raw shelf below.  parseDwg
+                        // graceful-degrades so a drift never drops the object.
+                        DRW_DynamicBlockObject e(rn);
+                        ret = e.parseDwg(version, &buff, bs);
+                        if (ret) {
+                            intfa.addDynamicBlockObject(e);
                             intfa.addUnsupportedObject(makeRawObject(oType, cit->second));
                         }
                         break;
@@ -2489,11 +2560,11 @@ bool dwgReader::readDwgObject(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
                         break;
                     }
                     // OBJECTCONTEXTDATA (annotative per-object context) -
-                    // metadata-only shell. Text/MTEXT and dimension-family
-                    // contexts are now typed for corpus coverage, but raw DWG
-                    // bytes are still emitted for lossless replay. Leader /
-                    // MLeader / FCF / BlockRef contexts intentionally remain
-                    // on the raw-preserved fallback path.
+                    // metadata-only shell. Text/MTEXT, dimension-family, leader
+                    // and block-reference contexts are now typed for corpus
+                    // coverage, but raw DWG bytes are still emitted for lossless
+                    // replay. MLeader / FCF contexts intentionally remain on the
+                    // raw-preserved fallback path.
                     {
                         DRW_ObjectContextData::Kind contextKind =
                             DRW_ObjectContextData::Kind::Unknown;

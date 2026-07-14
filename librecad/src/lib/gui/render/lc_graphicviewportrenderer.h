@@ -51,6 +51,7 @@ class LC_GraphicViewportRenderer{
     void renderEntityAsChild(RS_Painter *painter, RS_Entity *e);
     void justDrawEntity(RS_Painter *painter, RS_Entity *e);
     void setBackground(const RS_Color &bg);
+    void setBackground(const RS_Color &bg, const RS_Color &backgroundForContrast);
     const LC_Rect &getBoundingClipRect() const {return m_renderBoundingClipRect;}
 
     virtual bool isTextLineNotRenderable(double uiLineHeight) const = 0;
@@ -77,6 +78,8 @@ class LC_GraphicViewportRenderer{
 
     /** background color (any color) */
     RS_Color m_colorBackground;
+    /** configured background used for entity contrast decisions */
+    RS_Color m_colorBackgroundForContrast;
     /** foreground color (black or white) */
     RS_Color m_colorForeground;
 

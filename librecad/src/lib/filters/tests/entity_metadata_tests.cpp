@@ -3872,3 +3872,55 @@ TEST_CASE("DWG IMAGEDEF_REACTOR/TABLEGEOMETRY/EVALGRAPH raw objects eligible",
           == LC_DwgAdvancedMetadata::ReplayBlocker::None);
   }
 }
+
+TEST_CASE("DWG raw-shelf: VIEWPORT (type 34) is a replayable fixed raw entity",
+          "[entity_metadata][dwg_metadata][viewport]") {
+  LC_DwgAdvancedMetadata metadata;
+
+  // (1) Well-formed VIEWPORT carrier: fixed type 34, entity, non-custom, bytes.
+  DRW_UnsupportedObject viewport;
+  viewport.m_objectType = 34;            // dwgType::VIEWPORT
+  viewport.m_handle = 0x2682u;           // t1.dwg's first viewport handle
+  viewport.m_bodyBitSize = 96u;
+  viewport.m_isEntity = true;
+  viewport.m_isCustomClass = false;
+  viewport.m_rawBytes = {0x0Au, 0x0Bu, 0x0Cu};
+  metadata.addUnsupportedObject(viewport);
+
+  // (2) Same type, no bytes: still a fixed raw entity, but blocked (bytes req'd).
+  DRW_UnsupportedObject viewportNoBytes;
+  viewportNoBytes.m_objectType = 34;
+  viewportNoBytes.m_handle = 0x2688u;
+  viewportNoBytes.m_isEntity = true;
+  metadata.addUnsupportedObject(viewportNoBytes);
+
+  // (3) A *custom-class* type-34 must NOT be treated as a fixed raw entity.
+  DRW_UnsupportedObject viewportCustom;
+  viewportCustom.m_objectType = 34;
+  viewportCustom.m_handle = 0x2690u;
+  viewportCustom.m_isEntity = true;
+  viewportCustom.m_isCustomClass = true;
+  viewportCustom.m_recordName = "ACAD_PROXY_ENTITY";
+  viewportCustom.m_rawBytes = {0x01u};
+  metadata.addUnsupportedObject(viewportCustom);
+
+  REQUIRE(metadata.rawObjects().size() == 3);
+
+  const auto& rec0 = metadata.rawObjects()[0];
+  CHECK(rec0.objectType == 34);
+  CHECK(rec0.isEntity);
+  CHECK_FALSE(rec0.isCustomClass);
+  CHECK(LC_DwgAdvancedMetadata::isReplayableFixedModelerRawEntity(rec0));
+  CHECK(LC_DwgAdvancedMetadata::rawReplayBlocker(rec0) ==
+        LC_DwgAdvancedMetadata::ReplayBlocker::None);
+
+  const auto& rec1 = metadata.rawObjects()[1];
+  CHECK(LC_DwgAdvancedMetadata::isReplayableFixedModelerRawEntity(rec1));
+  CHECK(LC_DwgAdvancedMetadata::rawReplayBlocker(rec1) ==
+        LC_DwgAdvancedMetadata::ReplayBlocker::MissingRawBytes);
+
+  const auto& rec2 = metadata.rawObjects()[2];
+  CHECK_FALSE(LC_DwgAdvancedMetadata::isReplayableFixedModelerRawEntity(rec2));
+  CHECK(LC_DwgAdvancedMetadata::rawReplayBlocker(rec2) ==
+        LC_DwgAdvancedMetadata::ReplayBlocker::EntityReplayUnsupported);
+}

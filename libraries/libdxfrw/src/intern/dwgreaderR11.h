@@ -13,10 +13,21 @@
 #ifndef DWGREADERR11_H
 #define DWGREADERR11_H
 
+#include <cstdint>
 #include <memory>
 
 #include "drw_textcodec.h"
 #include "dwgreader.h"
+
+//! Resolve a pre-R13 $DWGCODEPAGE id to a DRW_TextCodec setCodePage() name.
+/*!
+*  @param numHeaderVars  numheader_vars gate (file offset 0x11); <=129 means no
+*                        codepage field is present -> returns nullptr.
+*  @param cp             the codepage id read at file offset 0x3f9.
+*  @return the ANSI_* name for setCodePage(), or nullptr to keep the default
+*          (undefined id 0/0xff, or a codepage with no libdxfrw ConvTable).
+*/
+const char* preR13CodePageName(std::uint16_t numHeaderVars, std::uint16_t cp);
 
 //! Class to read pre-R13 (R10/R11) DWG files
 /*!
@@ -78,6 +89,10 @@ private:
     bool readLTypeTable(std::uint32_t hdrPos);
     bool readLayerTable(std::uint32_t hdrPos);
     bool readStyleTable(std::uint32_t hdrPos);
+    // Name-only reader for the EMBEDDED extended tables (APPID/DIMSTYLE). The
+    // 10-byte descriptor @hdrPos matches the @0x2C layout; records carry
+    // flag(RC)+name(32). isDimstyle selects dimstylemap (else appIdmap).
+    void readExtendedNameTable(std::uint32_t hdrPos, bool isDimstyle);
 };
 
 #endif // DWGREADERR11_H

@@ -21,6 +21,7 @@
 
 #include <algorithm>
 #include <cstdio>
+#include <cstdlib>
 #include <filesystem>
 #include <fstream>
 #include <sstream>
@@ -286,6 +287,33 @@ const char *kMinimalTableDxf =
     "301\nCELL_VALUE\n93\n2\n90\n4\n1\n3\n94\n0\n300\n\n302\n3\n304\nACVALUE_END\n"
     "0\nENDSEC\n0\nEOF\n";
 
+// Resolve a fixture under the libredwg test-data tree (LIBREDWG_TEST_DATA
+// override, else ~/dev/libredwg/test/test-data). Internal linkage (anon ns),
+// so it does not collide with the identically-named helper in
+// dwg_smoke_tests.cpp. `release` may be "" for the tree root.
+std::string libredwgFixturePath(const char *release, const char *file) {
+  const char *root = std::getenv("LIBREDWG_TEST_DATA");
+  if (root && root[0] != '\0')
+    return (std::filesystem::path(root) / release / file).string();
+  const char *home = std::getenv("HOME");
+  if (!home || home[0] == '\0')
+    return {};
+  return (std::filesystem::path(home) / "dev" / "libredwg" / "test" /
+          "test-data" / release / file)
+      .string();
+}
+
+// Every non-empty cell-content string across the whole grid, row-major.
+std::vector<std::string> collectCellTexts(const DRW_Table &table) {
+  std::vector<std::string> out;
+  for (const auto &row : table.m_content.m_rows)
+    for (const auto &cell : row.m_cells)
+      for (const auto &content : cell.m_contents)
+        if (!content.m_text.empty())
+          out.push_back(content.m_text);
+  return out;
+}
+
 } // namespace
 
 TEST_CASE("dxfRW reads ACAD_TABLE semantic rows and cells",
@@ -360,4 +388,167 @@ TEST_CASE("dwgRW writeTable degrades to INSERT fallback",
   CHECK(cap.m_insert.basePoint.y == Catch::Approx(145.0));
 
   std::remove(path.c_str());
+}
+
+// ============================================================================
+// P1.1 — R2000/R2004 ACAD_TABLE decodes and renders.
+//
+// Before the fix, the entity-dispatch gate (dwgreader.cpp) skipped ACAD_TABLE
+// for version <= AC1018 and DRW_Table::parseDwg rejected it, so addTable() was
+// never called: the table was 100% invisible. Now the legacy handle stream is
+// re-seeked to objSize (R2000/R2004 keep handles after the DATA section, but
+// parseDwgEntHandle only self-seeks for 2007+), the *T block reference
+// resolves, and the inline grid decodes end-to-end.
+//
+// Oracle notes:
+//  * TS1 values cross-validated against dwgread 0.13.3 JSON + an independent
+//    bit-level decode of the object body; block render (*T8 = 11 LINE +
+//    2 MTEXT 'some text'/'some texst') via dwg2dxf + ezdxf.
+//  * example_2004: dwgread's own TABLE decode of this file is DESYNCED (it
+//    reads num_owned unconditionally SINCE R_2004, but the field is present
+//    only when has_attribs — ACadSharp/ODA layout). The values asserted here
+//    (valueFlag=22, 9x20 grid, widths 63.5, heights 11/9, texts test/xx) come
+//    from an independent bit-level decode that lands exactly on the handle
+//    stream boundary, and are corroborated by the *T14 block content
+//    (32 LINE = 10 vertical + 21 horizontal grid borders + 1, 7 MTEXT).
+//  * AC1018+ BLOCK_RECORD stores the anonymous name WITHOUT the number
+//    ("*T"); identical to the shipping R2010+ path on this same drawing.
+//    (libreDWG's dwg2dxf renumbers it to "*T14" on DXF output.)
+// Skipped gracefully when the libredwg test-data tree is absent (set
+// LIBREDWG_TEST_DATA to override its location).
+// ============================================================================
+
+TEST_CASE("dwgRW reads R2000 ACAD_TABLE grid + resolves *T block (TS1.dwg)",
+          "[acad_table][dwg][fixture]") {
+  const std::string path = libredwgFixturePath("2000", "TS1.dwg");
+  if (path.empty() || !std::filesystem::is_regular_file(path)) {
+    SUCCEED("TS1.dwg fixture absent: " << path);
+    return;
+  }
+
+  TableCapture cap;
+  {
+    dwgRW reader(path.c_str());
+    REQUIRE(reader.read(&cap, /*ext=*/true));
+    CHECK(reader.getError() == DRW::BAD_NONE);
+    CHECK(reader.getVersion() == DRW::AC1015);
+  }
+
+  // Regression sentinel: addTable() was 0 before the dispatch-gate fix.
+  REQUIRE(cap.m_tableCount >= 1);
+  const DRW_Table &table = cap.m_table;
+  CHECK(table.eType == DRW::TABLE);
+
+  // Render sentinel: the block reference resolves to the pre-drawn *T block.
+  // RS_FilterDXFRW::addTable inserts this block => the table draws.
+  CHECK(table.blockRecH.ref == 567u);
+  REQUIRE(table.name.rfind("*T", 0) == 0);  // starts with "*T"
+  CHECK(table.name == "*T8");
+
+  // Grid geometry — dwgread JSON oracle (cross-tool match with libdxfrw).
+  CHECK(table.basePoint.x == Catch::Approx(24.02389827721959));
+  CHECK(table.basePoint.y == Catch::Approx(-4.9361383481483));
+  CHECK(table.basePoint.z == Catch::Approx(0.0));
+  CHECK(table.m_valueFlag == 22);
+  CHECK(table.m_horizontalDirection.x == Catch::Approx(1.0));
+  CHECK(table.m_horizontalDirection.y == Catch::Approx(0.0));
+  REQUIRE(table.m_content.m_columns.size() == 5u);
+  REQUIRE(table.m_content.m_rows.size() == 3u);
+  for (const auto &col : table.m_content.m_columns)
+    CHECK(col.m_width == Catch::Approx(2.5));
+  CHECK(table.m_content.m_rows[0].m_height == Catch::Approx(0.45333333333333));
+  CHECK(table.m_content.m_rows[1].m_height == Catch::Approx(0.36));
+  CHECK(table.m_content.m_rows[2].m_height == Catch::Approx(0.36));
+  CHECK(table.m_hasSemanticContent);
+  CHECK(table.m_semanticContentComplete);
+  CHECK(table.m_tableStyleHandle == 135u);
+
+  // Legacy inline cell text (cell text-style handles are NULL in this file,
+  // so the TV text is inline in the data stream — decoded end-to-end).
+  const std::vector<std::string> texts = collectCellTexts(table);
+  REQUIRE(texts.size() == 2u);
+  CHECK(texts[0] == "some text");
+  CHECK(texts[1] == "some texst");
+}
+
+TEST_CASE("dwgRW reads R2004 ACAD_TABLE + resolves *T block (example_2004.dwg)",
+          "[acad_table][dwg][fixture]") {
+  const std::string path = libredwgFixturePath("", "example_2004.dwg");
+  if (path.empty() || !std::filesystem::is_regular_file(path)) {
+    SUCCEED("example_2004.dwg fixture absent: " << path);
+    return;
+  }
+
+  TableCapture cap;
+  {
+    dwgRW reader(path.c_str());
+    REQUIRE(reader.read(&cap, /*ext=*/true));
+    CHECK(reader.getError() == DRW::BAD_NONE);
+    CHECK(reader.getVersion() == DRW::AC1018);
+  }
+
+  REQUIRE(cap.m_tableCount >= 1);
+  const DRW_Table &table = cap.m_table;
+  CHECK(table.eType == DRW::TABLE);
+
+  // AC1018 BLOCK_RECORD stores the anonymous name without the number; the
+  // shipping R2010+ path resolves the identical "*T" for this drawing.
+  CHECK(table.blockRecH.ref == 1267u);
+  REQUIRE(table.name.rfind("*T", 0) == 0);
+  CHECK(table.name == "*T");
+
+  CHECK(table.basePoint.x == Catch::Approx(3298.7947769117454));
+  CHECK(table.basePoint.y == Catch::Approx(839.6133480853896));
+  CHECK(table.basePoint.z == Catch::Approx(0.0));
+  CHECK(table.m_valueFlag == 22);
+  CHECK(table.m_horizontalDirection.x == Catch::Approx(1.0));
+  CHECK(table.m_horizontalDirection.y == Catch::Approx(0.0));
+  REQUIRE(table.m_content.m_columns.size() == 9u);
+  REQUIRE(table.m_content.m_rows.size() == 20u);
+  for (const auto &col : table.m_content.m_columns)
+    CHECK(col.m_width == Catch::Approx(63.5));
+  CHECK(table.m_content.m_rows[0].m_height == Catch::Approx(11.0));
+  for (size_t row = 1; row < table.m_content.m_rows.size(); ++row)
+    CHECK(table.m_content.m_rows[row].m_height == Catch::Approx(9.0));
+  CHECK(table.m_hasSemanticContent);
+  CHECK(table.m_semanticContentComplete);
+  CHECK(table.m_tableStyleHandle == 667u);
+
+  const std::vector<std::string> texts = collectCellTexts(table);
+  REQUIRE(texts.size() == 7u);
+  CHECK(texts[0] == "test");
+  CHECK(texts[1] == "test");
+  for (size_t i = 2; i < texts.size(); ++i)
+    CHECK(texts[i] == "xx");
+}
+
+TEST_CASE("dwgRW R2010 ACAD_TABLE read is unchanged (example_2010.dwg)",
+          "[acad_table][dwg][fixture]") {
+  // Byte-identical regression pin for the version > AC1018 path: values below
+  // are the shipping behavior captured BEFORE the R2000/R2004 fix (probe
+  // transcript, pristine tree) — the fix must not alter any of them.
+  const std::string path = libredwgFixturePath("", "example_2010.dwg");
+  if (path.empty() || !std::filesystem::is_regular_file(path)) {
+    SUCCEED("example_2010.dwg fixture absent: " << path);
+    return;
+  }
+
+  TableCapture cap;
+  {
+    dwgRW reader(path.c_str());
+    REQUIRE(reader.read(&cap, /*ext=*/true));
+    CHECK(reader.getError() == DRW::BAD_NONE);
+    CHECK(reader.getVersion() == DRW::AC1024);
+  }
+
+  REQUIRE(cap.m_tableCount == 1);
+  const DRW_Table &table = cap.m_table;
+  CHECK(table.name == "*T");
+  CHECK(table.blockRecH.ref == 1267u);
+  CHECK(table.basePoint.x == Catch::Approx(3298.7947769117454));
+  CHECK(table.basePoint.y == Catch::Approx(839.6133480853896));
+  CHECK(table.m_content.m_columns.size() == 9u);
+  CHECK(table.m_content.m_rows.empty());
+  CHECK(table.m_hasSemanticContent);
+  CHECK_FALSE(table.m_semanticContentComplete);
 }

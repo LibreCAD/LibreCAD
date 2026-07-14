@@ -6711,3 +6711,140 @@ TEST_CASE("DWG cross-tool readback: libreDWG dwgread decodes libdxfrw output",
         std::remove(path.c_str());
     }
 }
+
+// ============================================================================
+// P1.4a Test C — VIEWPORT (fixed type 34) raw carrier round-trips through the
+// libreDWG dwgread oracle. The ONLY automated coverage of the writer-side gate
+// in dwgwriter15.cpp's anonymous-namespace isReplayableFixedModelerRawEntity.
+// Read side captures the 2 type-34 raw carriers t1.dwg emits; write side
+// replays them via public writeRawDwgObject; dwgread must decode both.
+// Hidden ([.dwg_readback]) + skip-when-absent — never breaks default CI.
+// Uses the shipped `dwgReadback()` helper's oracle preference (DEV dwgread,
+// $DWGREAD or ~/dev/libredwg/programs/dwgread; NOT homebrew, which rejects
+// AC1027 with 0x840 per project MEMORY notes).
+namespace {
+
+class VpCaptureIface : public EmptyIface {
+public:
+    std::vector<DRW_UnsupportedObject> carriers;
+    void addUnsupportedObject(const DRW_UnsupportedObject &e) override {
+        if (e.m_objectType == 34)
+            carriers.push_back(e);
+    }
+};
+
+class VpReplayIface : public EmptyIface {
+public:
+    dwgRW *m_writer{nullptr};
+    std::vector<DRW_UnsupportedObject> *m_carriers{nullptr};
+    void writeObjects() override {
+        if (m_writer == nullptr || m_carriers == nullptr) return;
+        // replayRawObject self-reserves the handle (dwgwriter15.cpp:1859);
+        // no need to reserveHandle here.
+        for (auto &c : *m_carriers) {
+            m_writer->writeRawDwgObject(&c);
+        }
+    }
+};
+
+// Reuse dwgReadback's DEV-only exe resolution (no homebrew, per MEMORY note
+// on dwgread 0.13.3 rejecting libdxfrw AC1027 with 0x840). This variant runs
+// with -O JSON and captures the JSON to a file.
+std::string vpDwgreadJson(const std::string &dwgPath) {
+    const char *env = std::getenv("DWGREAD");
+    const char *home = std::getenv("HOME");
+    std::string exe = env ? std::string(env)
+                          : (std::string(home ? home : "") + "/dev/libredwg/programs/dwgread");
+    if (!std::filesystem::exists(exe)) return "";
+
+    const std::string jsonPath = tempPath("vp_readback.json");
+    const std::string cmd =
+        "\"" + exe + "\" -O JSON -o \"" + jsonPath + "\" \"" + dwgPath + "\" 2>/dev/null";
+    const int rc = std::system(cmd.c_str());
+    if (rc != 0) { std::remove(jsonPath.c_str()); return "\x01"; }
+    std::ifstream in(jsonPath, std::ios::binary);
+    std::string out((std::istreambuf_iterator<char>(in)),
+                    std::istreambuf_iterator<char>());
+    std::remove(jsonPath.c_str());
+    return out;
+}
+
+std::size_t vpCountSubstr(const std::string &hay, const std::string &needle) {
+    std::size_t n = 0, pos = 0;
+    while ((pos = hay.find(needle, pos)) != std::string::npos) {
+        ++n;
+        pos += needle.size();
+    }
+    return n;
+}
+}  // namespace
+
+TEST_CASE("DWG cross-tool: VIEWPORT raw carrier round-trips through dwgread",
+          "[.dwg_readback][viewport]") {
+    const std::string src = std::string(LIBRECAD_TEST_DIR) + "/tarch/t1.dwg";
+    if (!std::filesystem::is_regular_file(src)) {
+        SUCCEED("t1.dwg fixture not found; skipping");
+        return;
+    }
+
+    // 1) Read t1.dwg (AC1027) and capture the 2 VIEWPORT (type 34) carriers.
+    VpCaptureIface cap;
+    {
+        dwgR reader(src.c_str());
+        REQUIRE(reader.read(&cap, /*ext=*/true));
+        REQUIRE(reader.getError() == DRW::BAD_NONE);
+    }
+    REQUIRE(cap.carriers.size() == 2u);
+
+    // 2) Write a fresh AC1027 DWG replaying the carriers (source==target ver).
+    const std::string out = tempPath("vp_replay.dwg");
+    {
+        dwgRW writer(out.c_str());
+        VpReplayIface w;
+        w.m_writer = &writer;
+        w.m_carriers = &cap.carriers;
+        REQUIRE(writer.write(&w, DRW::AC1027, /*bin=*/false));
+    }
+
+    // 3) Independent reader (libreDWG DEV dwgread) must decode both VIEWPORTs.
+    const std::string json = vpDwgreadJson(out);
+    std::remove(out.c_str());
+    if (json.empty()) {
+        SUCCEED("dev dwgread not available; skipping cross-tool assertion");
+        return;
+    }
+    REQUIRE(json != "\x01");                       // dwgread ran without fatal error
+    CHECK(vpCountSubstr(json, "\"entity\": \"VIEWPORT\"") == 2u);
+    CHECK(json.find("\"type\": 34") != std::string::npos);
+    CHECK(json.find("\"center\": [ 5.25, 4.0, 0.0 ]") != std::string::npos);
+    CHECK(json.find("\"width\": 11.638") != std::string::npos);
+    CHECK(json.find("\"height\": 8.993") != std::string::npos);
+}
+
+// Alt-A: the raw-object replay version gate is widened from strict source==target
+// (the exact same version). A deep review found the earlier cross-version
+// "encoding family" widening emitted silently-malformed bytes (AC1015<->AC1018
+// differ in the common object/entity header; AC1024 differs from AC1027/AC1032),
+// so raw replay is now STRICT source==target: a cross-version save cleanly drops
+// the raw-preserved metadata rather than corrupting it.
+TEST_CASE("RS_FilterDXFRW raw-object replay allows only exact same-version replay",
+          "[dwg_write][rawfamily]") {
+    using F = RS_FilterDXFRW;
+    // identity always matches
+    for (DRW::Version v : {DRW::AC1015, DRW::AC1018, DRW::AC1021, DRW::AC1024,
+                           DRW::AC1027, DRW::AC1032})
+        CHECK(F::sameRawObjectEncodingFamily(v, v));
+    // EVERY cross-version pair is now blocked (the raw bytes were written for the
+    // source version and are not safely replayable into another version's frame).
+    CHECK_FALSE(F::sameRawObjectEncodingFamily(DRW::AC1015, DRW::AC1018)); // R2000->R2004
+    CHECK_FALSE(F::sameRawObjectEncodingFamily(DRW::AC1018, DRW::AC1015));
+    CHECK_FALSE(F::sameRawObjectEncodingFamily(DRW::AC1024, DRW::AC1027)); // R2010->R2013
+    CHECK_FALSE(F::sameRawObjectEncodingFamily(DRW::AC1024, DRW::AC1032)); // R2010->R2018
+    CHECK_FALSE(F::sameRawObjectEncodingFamily(DRW::AC1027, DRW::AC1032)); // R2013->R2018
+    CHECK_FALSE(F::sameRawObjectEncodingFamily(DRW::AC1032, DRW::AC1024));
+    // R2007 (its own container, no write target) and cross-family stay blocked
+    CHECK_FALSE(F::sameRawObjectEncodingFamily(DRW::AC1021, DRW::AC1018));
+    CHECK_FALSE(F::sameRawObjectEncodingFamily(DRW::AC1015, DRW::AC1024));
+    CHECK_FALSE(F::sameRawObjectEncodingFamily(DRW::AC1014, DRW::AC1015));
+    CHECK_FALSE(F::sameRawObjectEncodingFamily(DRW::UNKNOWNV, DRW::AC1018));
+}

@@ -174,10 +174,15 @@ void LC_GraphicViewportRenderer::updateJoinStyle(const RS_Graphic *graphic) {//0
 }
 
 void LC_GraphicViewportRenderer::setBackground(const RS_Color &bg) {
+    setBackground(bg, bg);
+}
+
+void LC_GraphicViewportRenderer::setBackground(const RS_Color &bg, const RS_Color &backgroundForContrast) {
     m_colorBackground = bg;
+    m_colorBackgroundForContrast = backgroundForContrast;
 
     const RS_Color black(0, 0, 0);
-    if (black.colorDistance(bg) >= RS_Color::MinColorDistance) {
+    if (black.colorDistance(m_colorBackgroundForContrast) >= RS_Color::MinColorDistance) {
         m_colorForeground = black;
     } else {
         m_colorForeground = RS_Color(255, 255, 255);

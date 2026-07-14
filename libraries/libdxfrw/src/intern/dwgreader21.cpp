@@ -12,6 +12,7 @@
 
 #include <algorithm>
 #include <cstdlib>
+#include <cstring>
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -40,8 +41,20 @@ bool dwgReader21::readMetaData() {
     DRW_DBG("\napp writer maintenance version= "); DRW_DBGH(appMaintenanceVersion);
     std::uint16_t cp = fileBuf->getRawShort16();
     DRW_DBG("\ncodepage= "); DRW_DBG(cp);
-    if (const char* cpName = dwgCodePageName(cp))
-        decoder.setCodePage(cpName, false);
+    // R2007+ (AC1021+) store all text — section-map names and entity strings —
+    // as UTF-16LE; the DWGCODEPAGE field is only meaningful for R2004 and
+    // earlier.  Applying it here would replace the UTF-16 decoder that
+    // setVersion(AC1021) installed with a single-byte ANSI table, leaving the
+    // interleaved 0x00 bytes in getUCSStr()'s output so section names like
+    // "AcDb:Header" never match secEnum::getEnum() -> every section collapses
+    // to UNKNOWNS, HEADER stays Id==-1, and readDwgHeader() fails with
+    // BAD_READ_HEADER (systemic across all R2007 files).  reader21 is dispatched
+    // only for AC1021, so this guard skips the override entirely; the clause
+    // mirrors dwgReader18::readFileHeader for symmetry.
+    if (version <= DRW::AC1018) {
+        if (const char* cpName = dwgCodePageName(cp))
+            decoder.setCodePage(cpName, false);
+    }
     /* UNKNOUWN SECTION 2 bytes*/
     DRW_DBG("\nUNKNOWN SECTION= "); DRW_DBG(fileBuf->getRawShort16());
     DRW_DBG("\nUNKNOUWN SECTION 3b= "); DRW_DBG(fileBuf->getRawChar8());
@@ -79,8 +92,24 @@ bool dwgReader21::parseSysPage(std::uint64_t sizeCompressed, std::uint64_t sizeU
         return false;
     }
 
-    dwgCompressor comp;
-    return comp.decompress21(tmpDataRS.data(), decompData, sizeCompressed, sizeUncompressed);
+    if (sizeCompressed < sizeUncompressed) {
+        dwgCompressor comp;
+        return comp.decompress21(tmpDataRS.data(), decompData, sizeCompressed, sizeUncompressed);
+    }
+    // Stored (incompressible) system page: sizeCompressed >= sizeUncompressed
+    // means the writer left the page (page map / section map) uncompressed, so
+    // the RS-decoded buffer is the raw payload — copy it verbatim rather than
+    // feeding non-LZ77 bytes to decompress21.  Mirrors the parseDataPage stored
+    // path and LibreDWG read_system_page.  (Defensive: R2007 system pages are
+    // small and effectively always compress, so no corpus file exercises this;
+    // it can never regress an existing read because those all take the branch
+    // above.)
+    if (sizeUncompressed > tmpDataRS.size()) {
+        DRW_DBG("\nERROR: dwgReader21::parseSysPage: stored page uSize exceeds RS buffer\n");
+        return false;
+    }
+    std::memcpy(decompData, tmpDataRS.data(), sizeUncompressed);
+    return true;
 }
 
 bool dwgReader21::parseDataPage(const dwgSectionInfo &si, std::uint8_t *dData){
@@ -139,9 +168,22 @@ bool dwgReader21::parseDataPage(const dwgSectionInfo &si, std::uint8_t *dData){
         DRW_DBG("\noffset: ");
         DRW_DBG(static_cast<unsigned long long>(pi.startOffset));
         std::uint8_t *pageData = dData + pi.startOffset;
-        dwgCompressor comp;
-        if (!comp.decompress21(tmpPageRS.data(), pageData, pi.cSize, pi.uSize)) {
-            return false;
+        if (pi.cSize < pi.uSize) {
+            dwgCompressor comp;
+            if (!comp.decompress21(tmpPageRS.data(), pageData, pi.cSize, pi.uSize)) {
+                return false;
+            }
+        } else {
+            // Stored (incompressible) page: cSize >= uSize means the writer left this
+            // page uncompressed because LZ77 would not shrink it. The RS-decoded buffer
+            // is the raw payload verbatim, so copy it rather than running the LZ77
+            // decoder on non-LZ77 bytes. Mirrors LibreDWG read_data_page
+            // (decode_r2007.c): size_comp < size_uncomp -> decompress; else memcpy.
+            if (pi.uSize > pi.size) {   // tmpPageRS holds pi.size RS-decoded bytes
+                DRW_DBG("\nERROR: dwgReader21::parseDataPage: stored page uSize exceeds raw page size\n");
+                return false;
+            }
+            std::memcpy(pageData, tmpPageRS.data(), pi.uSize);
         }
 
     #ifdef DRW_DBG_DUMP

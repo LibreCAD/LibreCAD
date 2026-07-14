@@ -15,6 +15,7 @@
 #include "drw_dbg.h"
 
 DRW_dbg *DRW_dbg::instance{nullptr};
+bool DRW_dbg::s_enabled{false};
 
 /*********private clases*************/
 
@@ -55,6 +56,7 @@ void DRW_dbg::setCustomDebugPrinter(std::unique_ptr<DRW::DebugPrinter> printer)
 
 void DRW_dbg::setLevel(Level lvl){
     level = lvl;
+    s_enabled = (lvl == Level::Debug);   // keep the fast inline flag in sync
     switch (level){
     case Level::Debug:
         currentPrinter = debugPrinter.get();

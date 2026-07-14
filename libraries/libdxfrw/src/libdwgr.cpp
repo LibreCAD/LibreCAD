@@ -21,6 +21,7 @@
 #include "intern/drw_dbg.h"
 #include "intern/drw_textcodec.h"
 #include "intern/dwgreader.h"
+#include "intern/dwgreaderR1_40.h"
 #include "intern/dwgreaderR11.h"
 #include "intern/dwgwriter.h"
 #include "intern/dwgwriter15.h"
@@ -220,6 +221,7 @@ void dwgRW::captureReaderDiagnostics() {
     m_decodedProxyPrimitives = reader->m_decodedProxyPrimitives;
     m_layerNameOrder = reader->m_layerNameOrder;
     m_ltypeNameOrder = reader->m_ltypeNameOrder;
+    codePage = reader->getCodePage();
 }
 
 void dwgRW::resetReadDiagnostics() {
@@ -1066,22 +1068,25 @@ std::unique_ptr<dwgReader> dwgRW::createReaderForVersion(
     DRW::Version version, std::unique_ptr<dwgBuffer> buffer, dwgRW *p)
 {
     switch ( version ) {
-       // unsupported (pre-R10 — no shared parser exists)
+       // unsupported (no parser exists)
        case DRW::UNKNOWNV:
        case DRW::MC00:
        case DRW::AC12:
-       case DRW::AC14:
        case DRW::AC150:
-       case DRW::AC210:
        case DRW::AC1002:
-       case DRW::AC1003:
-       case DRW::AC1004:
-           break;
-       case DRW::AC1006:   // R10: shares the pre-R13 container with R11 (the one
-                           //      real format delta is a 1B LTYPE handle in the
-                           //      entity common header; dwgReaderR11 branches on
-                           //      `version`). dwgread DOES read AC1006.
-       case DRW::AC1009:   // R11: minimal read support (validatable vs dwgread)
+           break;          // R2.5: same family as R2.6, but no corpus fixture
+                           //       to validate -> left rejected for now.
+       case DRW::AC14:     // R1.40: dedicated pre-R2.0b reader (different
+                           //   container: no @0x14 section pointers / no
+                           //   per-record size or CRC; entity stream @0x202).
+           return std::unique_ptr< dwgReader >( new dwgReaderR1_40(std::move(buffer), p) );
+       case DRW::AC210:    // R2.10, R2.6, R9: same pre-R13 container as R10 (the
+       case DRW::AC1003:   //   SINCE(R_2_0b)/PRE(R_10) branch). dwgReaderR11
+       case DRW::AC1004:   //   handles them via `version`-gated deltas (1B LTYPE
+                           //   handle, 2D LINE/POINT/3DLINE bodies, elevation-
+                           //   for-all). Validated vs dwgread.
+       case DRW::AC1006:   // R10: 1B LTYPE handle; bodies read 3D unless HAS_ELEVATION.
+       case DRW::AC1009:   // R11: 2B LTYPE handle + 2-byte table `used` field.
            return std::unique_ptr< dwgReader >( new dwgReaderR11(std::move(buffer), p) );
 
        case DRW::AC1012:

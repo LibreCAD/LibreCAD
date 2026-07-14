@@ -94,7 +94,8 @@ namespace oType {
 
 bool isReplayableFixedModelerRawEntity(const DRW_UnsupportedObject& object) {
     return object.m_isEntity && !object.m_isCustomClass
-        && (object.m_objectType == 37 || object.m_objectType == 38
+        && (object.m_objectType == 34   // VIEWPORT (paper-space; no typed RS entity)
+            || object.m_objectType == 37 || object.m_objectType == 38
             || object.m_objectType == 39);
 }
 

@@ -22,11 +22,18 @@
 
 #define DRW_DBGSL(a) DRW_dbg::getInstance()->setLevel(a)
 #define DRW_DBGGL DRW_dbg::getInstance()->getLevel()
-#define DRW_DBG(a) DRW_dbg::getInstance()->printIfEnabled(a)
-#define DRW_DBGH(a) DRW_dbg::getInstance()->printHIfEnabled(a)
-#define DRW_DBGB(a) DRW_dbg::getInstance()->printBIfEnabled(a)
-#define DRW_DBGHL(a, b, c) DRW_dbg::getInstance()->printHLIfEnabled(a, b ,c)
-#define DRW_DBGPT(a, b, c) DRW_dbg::getInstance()->printPTIfEnabled(a, b, c)
+// These route through static dbg* wrappers (below). The macro ARGUMENT is
+// always evaluated (some call sites rely on side effects, e.g.
+// DRW_DBG(buf->getRawShort16()) advances the buffer), exactly as the original
+// getInstance()->printIfEnabled(a) did. The win is that the wrapper checks the
+// fast inline s_enabled flag BEFORE calling getInstance() and printing, so the
+// disabled path (the norm) no longer pays for getInstance()/isDebugEnabled()
+// per call -- previously the two hottest functions in a large DWG read.
+#define DRW_DBG(a) DRW_dbg::dbg(a)
+#define DRW_DBGH(a) DRW_dbg::dbgH(a)
+#define DRW_DBGB(a) DRW_dbg::dbgB(a)
+#define DRW_DBGHL(a, b, c) DRW_dbg::dbgHL(a, b, c)
+#define DRW_DBGPT(a, b, c) DRW_dbg::dbgPT(a, b, c)
 
 class DRW_dbg {
 public:
@@ -43,6 +50,34 @@ public:
     Level getLevel();
     bool isDebugEnabled() const;
     static DRW_dbg *getInstance();
+
+    // Static wrappers behind the DRW_DBG* macros. The argument is evaluated by
+    // the caller (side effects such as DRW_DBG(buf->getRawShort16()) advancing
+    // the buffer are preserved), then s_enabled is checked INLINE before
+    // getInstance()/print -- so on the common disabled path there is no
+    // getInstance() call and no virtual isDebugEnabled(). Debug is off by
+    // default; these were the two hottest functions in a large DWG read.
+    template<typename T> static void dbg(T&& v) {
+        if (s_enabled) getInstance()->print(std::forward<T>(v));
+    }
+    template<typename T> static void dbgH(T&& v) {
+        if (s_enabled) getInstance()->printH(std::forward<T>(v));
+    }
+    template<typename T> static void dbgB(T&& v) {
+        if (s_enabled) getInstance()->printB(std::forward<T>(v));
+    }
+    template<typename C, typename S, typename H>
+    static void dbgHL(C&& c, S&& s, H&& h) {
+        if (s_enabled) getInstance()->printHL(std::forward<C>(c),
+                                              std::forward<S>(s),
+                                              std::forward<H>(h));
+    }
+    template<typename X, typename Y, typename Z>
+    static void dbgPT(X&& x, Y&& y, Z&& z) {
+        if (s_enabled) getInstance()->printPT(std::forward<X>(x),
+                                              std::forward<Y>(y),
+                                              std::forward<Z>(z));
+    }
     void print(const std::string &s);
     void print(signed char i);
     void print(unsigned char i);
@@ -91,6 +126,7 @@ public:
 private:
     DRW_dbg();
     static DRW_dbg *instance;
+    static bool s_enabled;   // mirror of (level == Debug); updated in setLevel
     Level level{Level::None};
     DRW::DebugPrinter silentDebug;
     std::unique_ptr< DRW::DebugPrinter > debugPrinter;

@@ -38,6 +38,7 @@ SOURCES += \
     src/intern/dxfreader.cpp \
     src/intern/dxfwriter.cpp \
     src/intern/dwgreader.cpp \
+    src/intern/dwgreaderR1_40.cpp \
     src/intern/dwgreaderR11.cpp \
     src/intern/dwgbuffer.cpp \
     src/intern/drw_dbg.cpp \
@@ -71,6 +72,7 @@ HEADERS += \
     src/intern/dxfreader.h \
     src/intern/dxfwriter.h \
     src/intern/dwgreader.h \
+    src/intern/dwgreaderR1_40.h \
     src/intern/dwgreaderR11.h \
     src/intern/dwgbuffer.h \
     src/intern/drw_cptables.h \

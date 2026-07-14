@@ -66,6 +66,10 @@ public:
     virtual void addField(const DRW_Field& data) { (void) data; }
     /** Called for every FIELDLIST object. */
     virtual void addFieldList(const DRW_FieldList& data) { (void) data; }
+    /** Called for every DATATABLE object (hidden key/value table). */
+    virtual void addDataTable(const DRW_DataTable& data) { (void) data; }
+    /** Called for every dynamic-block object (BLOCK*PARAMETER/ACTION/GRIP etc.). */
+    virtual void addDynamicBlockObject(const DRW_DynamicBlockObject& data) { (void) data; }
     /** Called for every RASTERVARIABLES object. */
     virtual void addRasterVariables(const DRW_RasterVariables& data) { (void) data; }
     /** Called for every WIPEOUTVARIABLES object (global display-frame flag). */
@@ -203,6 +207,9 @@ public:
 
     /** Called for LIGHT entity metadata. */
     virtual void addLight(const DRW_Light& data) { (void) data; }
+
+    /** Called for SECTIONOBJECT (AcDbSection) live-section plane metadata. */
+    virtual void addSectionObject(const DRW_SectionObject& data) { (void) data; }
 
     /** Called for every solid start */
     virtual void addSolid(const DRW_Solid& data) = 0;

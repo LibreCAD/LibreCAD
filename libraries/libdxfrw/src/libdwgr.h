@@ -196,6 +196,9 @@ public:
     bool getPreview();
     DRW::Version getVersion() const {return version;}
     DRW::error getError() const {return error;}
+    /// The resolved source codepage name (e.g. "ANSI_1252"), captured from the
+    /// reader's DRW_TextCodec after a successful read. Empty before any read.
+    std::string getCodePage() const { return codePage; }
     /// Per-entity parseDwg failures accumulated during the load. These
     /// are warnings — the file still loads with the surviving entities.
     /// Zero on a clean load. Surface alongside the entity count so users
@@ -254,7 +257,7 @@ private:
     static DRW::Version sniffVersion(dwgBuffer *buffer);
     static std::unique_ptr< dwgReader > createReaderForVersion(DRW::Version version, std::unique_ptr<dwgBuffer> buffer, dwgRW *p);
 
-DRW::Version version { DRW::UNKNOWNV };
+    DRW::Version version { DRW::UNKNOWNV };
     DRW::error error { DRW::BAD_NONE };
     std::string fileName;
     bool applyExt { false }; /*apply extrusion in entities to conv in 2D?*/

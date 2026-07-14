@@ -233,6 +233,8 @@ public:
     void addDictionaryWithDefault(const DRW_DictionaryWithDefault &data) override;
     void addSortEntsTable(const DRW_SortEntsTable &data) override;
     void addFieldList(const DRW_FieldList &data) override;
+    void addDataTable(const DRW_DataTable &data) override;
+    void addDynamicBlockObject(const DRW_DynamicBlockObject &data) override;
     void addField(const DRW_Field &data) override;
     void addAssociativeObject(const DRW_AssociativeObject &data) override;
     void addAcShHistoryObject(const DRW_AcShHistoryObject &data) override;
@@ -340,6 +342,19 @@ public:
     static RS2::LineType nameToLineType(const QString& name);
     static QString lineTypeToName(RS2::LineType lineType);
     //static QString lineTypeToDescription(RS2::LineType lineType);
+
+    /// True when raw-preserved OBJECT bytes captured at DWG version `src` can be
+    /// replayed verbatim into a file being written at version `tgt` — i.e. both
+    /// share the same object-body encoding family:
+    ///   {AC1015,AC1018}  R2000/R2004 — strings inline, no bodyBitSize marker
+    ///   {AC1021}         R2007 — separate string stream (its own family; note
+    ///                    there is no AC1021 write target, so it never matches)
+    ///   {AC1024,AC1027,AC1032}  R2010+ — three-stream + bodyBitSize marker
+    /// Identity always matches. Used to widen the raw-object replay version gate
+    /// from strict source==target to same-family, restoring metadata
+    /// preservation across in-family upgrades (e.g. R2000->R2004, R2010->R2018).
+    /// (Raw SECTIONS are container-level and stay strict — not covered here.)
+    static bool sameRawObjectEncodingFamily(DRW::Version src, DRW::Version tgt);
 
     static RS2::LineWidth numberToWidth(DRW_LW_Conv::lineWidth lw);
     static DRW_LW_Conv::lineWidth widthToNumber(RS2::LineWidth width);

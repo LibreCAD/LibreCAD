@@ -743,7 +743,7 @@ public:
         std::uint32_t parentHandle = 0;
         std::string name;
         std::string description;
-        std::uint16_t type = 0;
+        std::int32_t type = 0;   // mirrors DRW_VisualStyle::type widening BS->BL (P3.3)
         ReplayState replayState = ReplayState::ReplayAllowed;
     };
 
@@ -1924,6 +1924,82 @@ public:
         ReplayState replayState = ReplayState::ReplayAllowed;
     };
 
+    /// DATATABLE (AcDbDataTable, custom class 520) — a hidden key/value table
+    /// (no geometry).  We mirror the decoded prefix (flags + column/row counts
+    /// + table name) and the best-effort column/row body captured by the
+    /// parser.  The full byte image is additionally preserved on the raw shelf
+    /// (addUnsupportedObject) so the round-trip stays lossless even when the
+    /// DEBUG-class body walk drifts.
+    struct DataTableRowRecord {
+        std::int32_t dataLong = 0;
+        double dataDouble = 0.0;
+        std::string dataString;
+    };
+    struct DataTableColumnRecord {
+        std::int32_t type = 0;
+        std::string text;
+        std::vector<DataTableRowRecord> rows;
+    };
+    struct DataTableRecord {
+        std::uint32_t handle = 0;
+        std::uint32_t parentHandle = 0;
+        int flags = 0;
+        int columnCount = 0;
+        int rowCount = 0;
+        std::string tableName;
+        std::vector<DataTableColumnRecord> columns;
+        ReplayState replayState = ReplayState::ReplayAllowed;
+    };
+
+    /// Dynamic-block object family (BLOCK*PARAMETER / BLOCK*ACTION / BLOCK*GRIP /
+    /// BLOCKGRIPLOCATIONCOMPONENT / DYNAMICBLOCK* + singletons) — the largest
+    /// custom-class family.  None has a native LibreCAD consumer, so we mirror
+    /// the typed CAPTURE the parser delivers: the shared AcDbEvalExpr prefix for
+    /// every evalexpr-bearing class, plus the AcDbBlockElement / AcDbBlockParameter
+    /// element data for the parameter/grip/action classes, and the full body for
+    /// BLOCKVISIBILITYPARAMETER / BLOCKMOVEACTION.  The exact byte image is
+    /// preserved on the raw shelf (addUnsupportedObject) so the round-trip stays
+    /// lossless regardless of how deep the typed decode reached.
+    struct DynamicBlockRecord {
+        std::uint32_t handle = 0;
+        std::uint32_t parentHandle = 0;
+        std::string recordName;
+        int kind = 0;                 ///< DRW_DynamicBlockObject::Kind
+        // AcDbEvalExpr prefix.
+        bool evalExprParsed = false;
+        std::uint32_t parentId = 0;
+        std::uint32_t major = 0;
+        std::uint32_t minor = 0;
+        int valueCode = 0;
+        std::uint32_t nodeId = 0;
+        // AcDbBlockElement prefix.
+        bool elementParsed = false;
+        std::string elementName;
+        std::int32_t eed1071 = 0;
+        // AcDbBlockParameter.
+        bool showProperties = false;
+        bool chainActions = false;
+        // AcDbBlockGripExpr (BLOCKGRIPLOCATIONCOMPONENT).
+        std::int32_t gripType = 0;
+        std::string gripExpr;
+        // BLOCKVISIBILITYPARAMETER body.
+        bool isInitialized = false;
+        std::string visibilityName;
+        std::string visibilityDescription;
+        int blockCount = 0;
+        int stateCount = 0;
+        std::vector<std::string> stateNames;
+        // BLOCKMOVEACTION body.
+        int dependencyCount = 0;
+        int actionCount = 0;
+        double actionOffsetX = 0.0;
+        double actionOffsetY = 0.0;
+        double angleOffset = 0.0;
+        std::vector<std::string> connectionNames;
+        bool bodyFullyDecoded = false;
+        ReplayState replayState = ReplayState::ReplayAllowed;
+    };
+
     /// FIELD (AcDbField, custom class 516) — typed value with child field +
     /// object references and a CadValue payload.  We mirror the on-wire
     /// DRW_CadValue + ChildValue structs verbatim so the encoder can
@@ -2013,6 +2089,8 @@ public:
         m_dictionariesWithDefault.clear();
         m_sortEntsTables.clear();
         m_fieldLists.clear();
+        m_dataTables.clear();
+        m_dynamicBlockObjects.clear();
         m_fields.clear();
     }
 
@@ -3129,6 +3207,71 @@ public:
         m_fieldLists.push_back(std::move(record));
     }
 
+    void addDataTable(const DRW_DataTable& dataTable) {
+        DataTableRecord record;
+        record.handle = dataTable.handle;
+        record.parentHandle = dataTable.parentHandle;
+        record.flags = dataTable.flags;
+        record.columnCount = dataTable.columnCount;
+        record.rowCount = dataTable.rowCount;
+        record.tableName = dataTable.tableName;
+        record.columns.reserve(dataTable.columns.size());
+        for (const auto& col : dataTable.columns) {
+            DataTableColumnRecord cr;
+            cr.type = col.type;
+            cr.text = col.text;
+            cr.rows.reserve(col.rows.size());
+            for (const auto& row : col.rows) {
+                DataTableRowRecord rr;
+                rr.dataLong = row.dataLong;
+                rr.dataDouble = row.dataDouble;
+                rr.dataString = row.dataString;
+                cr.rows.push_back(std::move(rr));
+            }
+            record.columns.push_back(std::move(cr));
+        }
+        m_dataTables.push_back(std::move(record));
+    }
+
+    void addDynamicBlockObject(const DRW_DynamicBlockObject& obj) {
+        DynamicBlockRecord record;
+        record.handle = obj.handle;
+        record.parentHandle = obj.parentHandle;
+        record.recordName = obj.m_recordName;
+        record.kind = static_cast<int>(obj.m_kind);
+        record.evalExprParsed = obj.m_evalExprParsed;
+        record.parentId = obj.m_parentId;
+        record.major = obj.m_major;
+        record.minor = obj.m_minor;
+        record.valueCode = obj.m_valueCode;
+        record.nodeId = obj.m_nodeId;
+        record.elementParsed = obj.m_elementParsed;
+        record.elementName = obj.m_elementName;
+        record.eed1071 = obj.m_eed1071;
+        record.showProperties = obj.m_showProperties;
+        record.chainActions = obj.m_chainActions;
+        record.gripType = obj.m_gripType;
+        record.gripExpr = obj.m_gripExpr;
+        record.isInitialized = obj.m_isInitialized;
+        record.visibilityName = obj.m_visibilityName;
+        record.visibilityDescription = obj.m_visibilityDescription;
+        record.blockCount = obj.m_blockCount;
+        record.stateCount = obj.m_stateCount;
+        record.stateNames.reserve(obj.m_stateNames.size());
+        for (const auto& n : obj.m_stateNames)
+            record.stateNames.push_back(n);
+        record.dependencyCount = obj.m_dependencyCount;
+        record.actionCount = obj.m_actionCount;
+        record.actionOffsetX = obj.m_actionOffsetX;
+        record.actionOffsetY = obj.m_actionOffsetY;
+        record.angleOffset = obj.m_angleOffset;
+        record.connectionNames.reserve(obj.m_connectionNames.size());
+        for (const auto& n : obj.m_connectionNames)
+            record.connectionNames.push_back(n);
+        record.bodyFullyDecoded = obj.m_bodyFullyDecoded;
+        m_dynamicBlockObjects.push_back(std::move(record));
+    }
+
     static CadValueRecord cadValueFromDrw(const DRW_CadValue& v) {
         CadValueRecord c;
         c.formatFlags = v.m_formatFlags;
@@ -3258,6 +3401,8 @@ public:
     }
     const std::vector<SortEntsTableRecord>& sortEntsTables() const { return m_sortEntsTables; }
     const std::vector<FieldListRecord>& fieldLists() const { return m_fieldLists; }
+    const std::vector<DataTableRecord>& dataTables() const { return m_dataTables; }
+    const std::vector<DynamicBlockRecord>& dynamicBlockObjects() const { return m_dynamicBlockObjects; }
     const std::vector<FieldRecord>& fields() const { return m_fields; }
 
     RawObjectFamilyCounts rawObjectFamilyCounts() const {
@@ -4835,7 +4980,8 @@ public:
 
     static bool isReplayableFixedModelerRawEntity(const RawObjectRecord& record) {
         return record.isEntity && !record.isCustomClass
-            && (record.objectType == 37 || record.objectType == 38
+            && (record.objectType == 34   // VIEWPORT (paper-space; no typed RS entity)
+                || record.objectType == 37 || record.objectType == 38
                 || record.objectType == 39);
     }
 
@@ -7598,6 +7744,8 @@ private:
     std::vector<DictionaryWithDefaultRecord> m_dictionariesWithDefault;
     std::vector<SortEntsTableRecord> m_sortEntsTables;
     std::vector<FieldListRecord> m_fieldLists;
+    std::vector<DataTableRecord> m_dataTables;
+    std::vector<DynamicBlockRecord> m_dynamicBlockObjects;
     std::vector<FieldRecord> m_fields;
 };
 

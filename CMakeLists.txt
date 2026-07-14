@@ -2394,6 +2394,16 @@ if (BUILD_TESTS)
         librecad/src/lib/filters/tests/eed_tests.cpp
         librecad/src/lib/filters/tests/dbcolor_tests.cpp
         librecad/src/lib/filters/tests/entity_metadata_tests.cpp
+        librecad/src/lib/filters/tests/acsh_tests.cpp
+        librecad/src/lib/filters/tests/acsh_shapes_tests.cpp
+        librecad/src/lib/filters/tests/assoc_tests.cpp
+        librecad/src/lib/filters/tests/objectcontext_leader_tests.cpp
+        librecad/src/lib/filters/tests/datatable_tests.cpp
+        librecad/src/lib/filters/tests/dynblock_tests.cpp
+        librecad/src/lib/filters/tests/evalgraph_tests.cpp
+        librecad/src/lib/filters/tests/dwg_handle_stream_tests.cpp
+        librecad/src/lib/filters/tests/section_object_tests.cpp
+        librecad/src/lib/filters/tests/dwg_gui_import_repro_tests.cpp
         librecad/src/lib/filters/tests/rs_graphic_layouts_tests.cpp
         librecad/src/lib/filters/tests/mline_tests.cpp
         librecad/src/lib/filters/tests/underlay_tests.cpp
@@ -2410,6 +2420,7 @@ if (BUILD_TESTS)
         librecad/src/lib/filters/tests/rtext_arctext_tests.cpp
         librecad/src/lib/filters/tests/large_radial_dim_dxf_tests.cpp
         librecad/src/lib/filters/tests/large_radial_dim_dwg_tests.cpp
+        librecad/src/lib/filters/tests/visualstyle_dwg_tests.cpp
         librecad/src/lib/filters/tests/mleader_text_tests.cpp
         librecad/src/lib/filters/tests/mleader_dxf_context_tests.cpp
         librecad/src/lib/filters/tests/dxf_roundtrip_tests.cpp
@@ -2471,3 +2482,26 @@ target_link_libraries(dwg_tarch_test PRIVATE
 
 target_compile_features(dwg_tarch_test PRIVATE cxx_std_17)
 target_compile_definitions(dwg_tarch_test PRIVATE DWGSUPPORT)
+
+# P0 read-level JSON dump oracle (standalone; not a libdxfrw source, so the
+# "update libdxfrw.pro too" macOS-CI rule does NOT apply — CMake-only binary).
+qt_add_executable(libdxfrw_json_dump
+    librecad/src/lib/filters/tests/libdxfrw_json_dump.cpp
+)
+
+target_include_directories(libdxfrw_json_dump PRIVATE
+    ${SHARED_INCLUDES}
+)
+
+target_link_libraries(libdxfrw_json_dump PRIVATE
+    librecad_lib
+    Qt6::Core
+    Qt6::Gui
+    Qt6::Network
+    Qt6::PrintSupport
+    Qt6::Svg
+    Qt6::Widgets
+)
+
+target_compile_features(libdxfrw_json_dump PRIVATE cxx_std_17)
+target_compile_definitions(libdxfrw_json_dump PRIVATE DWGSUPPORT)
