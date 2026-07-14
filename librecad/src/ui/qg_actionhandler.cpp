@@ -111,12 +111,10 @@ std::shared_ptr<RS_ActionInterface> QG_ActionHandler::createActionInstance(RS2::
 QStringList QG_ActionHandler::getAvailableCommands() const {
     RS_ActionInterface* currentAction = getCurrentAction();
 
-	if (currentAction != nullptr) {
+    if (currentAction != nullptr) {
         return currentAction->getAvailableCommands();
     } else {
         QStringList cmd;
-        cmd += "line";
-        cmd += "rectangle";
         return cmd;
     }
 }
