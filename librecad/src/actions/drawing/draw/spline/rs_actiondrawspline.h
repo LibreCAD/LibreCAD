@@ -72,6 +72,13 @@ private:
     LC_ActionOptionsWidget* createOptionsWidget() override;
     void doTrigger() override;
 
+    /**
+     * Closes the spline by re-issuing the first control point as the final one,
+     * then finalizing. The appended point supplies the (degree + 1)-th control
+     * point, so a spline one short of a plain finalize can still be closed.
+     */
+    void close();
+
     struct ActionData;
     std::unique_ptr<ActionData> m_actionData;
 };
