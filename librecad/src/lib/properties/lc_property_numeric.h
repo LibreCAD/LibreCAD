@@ -28,7 +28,7 @@
 #undef min
 
 #include <limits>
-#include <QtTypes>
+ // #include <QtTypes>
 
 #include "lc_property.h"
 #include "lc_property_single.h"
