@@ -339,42 +339,34 @@ void RS_Modification::libraryInsert(const LC_LibraryInsertData& data, RS_Graphic
     const RS_Vector scaleV = LC_CopyUtils::getInterGraphicsScaleFactor(data.factor, src, destination);
 
     src->calculateBorders();
-    const RS_Vector center = (src->getMin() + src->getMax()) * 0.5; // fixme - sand - no insertion point for such block???? Why center?
 
-    // === BLOCK: Bake → angle=0 ===
-    const QString bname = data.blockName.isEmpty() ? getUniqueBlockName(destination) : data.blockName;
-    // fixme - what if the block with such name already exists???
+    // Block name – prefer provided, fallback to auto-generated
+    QString bname = data.blockName.isEmpty() ? getUniqueBlockName(destination) : data.blockName;
+    RS_Block* block = destination->findBlock(bname);
+    if (block == nullptr) {
+        bname = src->newBlockName(bname);
+        const auto blockData = RS_BlockData(bname, {0.0, 0.0}, false);
+        auto* block = new RS_Block(destination, blockData);
 
-    const auto blockData = RS_BlockData(bname, {0.0, 0.0}, false);
-    auto* block = new RS_Block(destination, blockData);
-
-    for (const RS_Entity* e : *src) {
-        if (e == nullptr || e->isDeleted()) {
-            continue;
+        for (const RS_Entity* e : *src) {
+            if (e == nullptr || e->isDeleted()) {
+                continue;
+            }
+            RS_Entity* clone = e->clone();
+            block->addByBlockEntity(clone); // **ByBlock** 👌
         }
-        RS_Entity* clone = e->clone();
-        // Bake: center→0 → scale/rot → block@0
-        clone->move(-center); // fixme - sand should the offset be used there???
-        clone->scale(RS_Vector{}, scaleV);
-        clone->rotate(RS_Vector{}, data.angle);
-        block->addByBlockEntity(clone); // **ByBlock** 👌
+
+        destination->addBlock(block);
     }
 
-    destination->addBlock(block);
-
-    // Insert (baked, **angle=0**)
-    const RS_InsertData idata(bname, data.insertionPoint, {1., 1.}, 0.0, 1, 1, {});
+    // Insert : outer Insert carries all transformations (scale + angle)
+    const RS_InsertData idata(bname, data.insertionPoint, scaleV, data.angle, 1, 1, {});
     auto* insert = new RS_Insert(nullptr, idata);
 
     ctx += insert;
 
-    // Props (inherit)
-    const RS_Entity* first = src->firstEntity(RS2::ResolveNone); // fixme - why properties for insert are from first entity?
-    if (first != nullptr) {
-        insert->setLayer(first->getLayer());
-        insert->setPen(first->getPen(true));
-    }
-
+    insert->setLayer(destination->getActiveLayer());
+    insert->setPen(RS_Pen(RS_Color(RS2::FlagByLayer), RS2::WidthByLayer, RS2::LineByLayer));
     insert->update();
 
     destination->updateInserts(); // fixme - why all inserts are updated there?

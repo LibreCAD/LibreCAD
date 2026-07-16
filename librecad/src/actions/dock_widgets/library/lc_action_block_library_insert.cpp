@@ -108,11 +108,6 @@ bool LC_ActionBlockLibraryInsert::doTriggerModifications(LC_DocumentModification
     insertData.angle = toWorldAngleFromUCSBasis(m_actionData->data.angle);
     RS_Graphic* insertGraphic = insertData.graphic;
     if (insertGraphic != nullptr) {
-        // unit conversion:
-        if (m_graphic != nullptr) {
-            const double uf = RS_Units::convert(1.0, insertGraphic->getUnit(), m_graphic->getUnit());
-            insertGraphic->scale(RS_Vector(0.0, 0.0), RS_Vector(uf, uf));
-        }
         const QString insertFileName = QFileInfo(insertData.file).completeBaseName();
         const LC_LibraryInsertData pasteData(insertData.insertionPoint, insertData.factor, insertData.angle, insertFileName, insertGraphic);
         RS_Modification::libraryInsert(pasteData, m_graphic, ctx);
