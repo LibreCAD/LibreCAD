@@ -23,7 +23,7 @@ validation, enrichment, or publication in this repository.
 4. Jenkins archives the two JSON documents and copies them beside the installer.
 
 The Jenkins `VERSION_FULL` value supplies the SBOM version. For local runs the script
-uses `git describe`, with the qmake `LC_VERSION` value as a final fallback.
+uses `git describe` with the qmake `LC_VERSION` value as a final fallback.
 
 ## Additional aspects and CPE enrichment
 
