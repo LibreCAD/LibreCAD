@@ -341,10 +341,9 @@ void RS_Modification::libraryInsert(const LC_LibraryInsertData& data, RS_Graphic
     src->calculateBorders();
 
     // Block name – prefer provided, fallback to auto-generated
-    QString bname = data.blockName.isEmpty() ? getUniqueBlockName(destination) : data.blockName;
+    const QString bname = data.blockName.isEmpty() ? getUniqueBlockName(destination) : data.blockName;
     RS_Block* block = destination->findBlock(bname);
     if (block == nullptr) {
-        bname = src->newBlockName(bname);
         const auto blockData = RS_BlockData(bname, {0.0, 0.0}, false);
         auto* block = new RS_Block(destination, blockData);
 
