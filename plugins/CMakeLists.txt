@@ -70,6 +70,7 @@ set(PLUGIN_TS_FILES
     plugins_it.ts
     plugins_ja.ts
     plugins_ko.ts
+    plugins_lo.ts
     plugins_lv.ts
     plugins_mk.ts
     plugins_nl.ts

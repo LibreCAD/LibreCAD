@@ -60,6 +60,7 @@ TRANSLATIONS = ./ts/plugins_ar.ts \
     ./ts/plugins_it.ts \
     ./ts/plugins_ja.ts \
     ./ts/plugins_ko.ts \
+    ./ts/plugins_lo.ts \
     ./ts/plugins_lv.ts \
     ./ts/plugins_mk.ts \
     ./ts/plugins_nl.ts \
