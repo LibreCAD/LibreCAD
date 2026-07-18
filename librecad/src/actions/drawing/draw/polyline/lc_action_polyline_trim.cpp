@@ -55,6 +55,7 @@ bool LC_ActionPolylineTrim::doTriggerModifications(LC_DocumentModificationBatch&
         m_polylineToModify = newPolyline;
         ctx.dontSetActiveLayerAndPen();
         select(m_polylineToModify);
+        return true;
     }
     return false;
 }
