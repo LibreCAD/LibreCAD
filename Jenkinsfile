@@ -57,16 +57,25 @@ pipeline
 				{
 					// copy installer to prod rel
 					def LibreCAD = load 'LibreCAD.groovy'
-					bat script: 'xcopy "\\\\cam-file\\devcommon\\Jenkins\\Binary Management\\VisualC++\\vc_redist.x86.exe" "%WORKSPACE%/redist" /y'
+					bat script: 'xcopy "%DEVCOMMON_FOLDER%\\Jenkins\\Binary Management\\VisualC++\\vc_redist.x86.exe" "%WORKSPACE%/redist" /y'
 					LibreCAD.BuildInstaller()
+					bat 'pwsh -NoProfile -File .\\SBOM\\sbom-generation-ms-tool.ps1'
 					def
 					    networkPath = CreateNetworkPathForInstaller()
 					
 					bat script: 'xcopy "' +LibreCAD.GetInstallerPath()+ '" "' + networkPath + '" /y'
+					bat script: 'xcopy "SBOM\\reports\\aggregate-output\\spdx_2.2\\*.json" "' + networkPath + '" /y'
 							
 					// create installer link file
 					CreateInstallerLinksFile("InstallerLinksLibreCAD.txt", networkPath + "LibreCAD-Installer.exe","")
 					stash includes: '/**/InstallerLinks*.txt', name: 'installer'
+				}
+			}
+			post
+			{
+				always
+				{
+					archiveArtifacts allowEmptyArchive: true, artifacts: 'SBOM/reports/aggregate-output/spdx_2.2/*.json'
 				}
 			}
 		}
