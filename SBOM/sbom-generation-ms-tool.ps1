@@ -307,8 +307,9 @@ try {
         throw "Microsoft SBOM Tool did not create a validation report (exit code $validationExitCode)."
     }
     $validation = Get-Content $validationOutputPath -Raw | ConvertFrom-Json
-    if ($validation.Result -ne 'Success' -or @($validation.ValidationErrors).Count -ne 0) {
-        throw "SBOM validation failed with result '$($validation.Result)' and exit code $validationExitCode."
+    $validationErrorCount = [int]$validation.ValidationErrors.Count
+    if ($validation.Result -ne 'Success' -or $validationErrorCount -ne 0) {
+        throw "SBOM validation failed with result '$($validation.Result)', $validationErrorCount validation error(s), and exit code $validationExitCode."
     }
     if ($validationExitCode -ne 0) {
         Write-Warning "Microsoft SBOM Tool returned $validationExitCode after reporting successful validation."
