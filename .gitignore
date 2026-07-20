@@ -96,3 +96,4 @@ core.*
 
 # Generated Software Bill of Materials reports
 SBOM/reports/
+SBOM/tools/

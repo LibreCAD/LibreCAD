@@ -5,8 +5,8 @@ Generates validated SPDX 2.2 and CycloneDX 1.6 SBOMs for LibreCAD for ProNest.
 .DESCRIPTION
 Generates an SPDX SBOM from the staged Windows build, merges repository-maintained
 SPDX manifests from SBOM/AdditionalAspects, validates the aggregate document, and
-converts it to CycloneDX 1.6. Microsoft SBOM Tool and CycloneDX CLI are installed
-with winget when they are not already available.
+converts it to CycloneDX 1.6. When the required command-line tools are not on PATH,
+the script downloads their official Windows x64 release binaries into SBOM/tools.
 #>
 
 [CmdletBinding()]
@@ -47,27 +47,34 @@ $aggregateSpdxPath = Join-Path $reportsPath 'aggregate-output/spdx_2.2'
 $aggregateManifestPath = Join-Path $aggregateSpdxPath 'manifest.spdx.json'
 $additionalAspectsPath = Join-Path $PSScriptRoot 'AdditionalAspects'
 $validationOutputPath = Join-Path $reportsPath 'aggregate-validation.json'
+$toolCachePath = Join-Path $PSScriptRoot 'tools'
 
-function Install-SbomToolIfMissing {
+function Resolve-SbomToolCommand {
     param(
-        [Parameter(Mandatory = $true)][string]$Command,
-        [Parameter(Mandatory = $true)][string]$PackageId
+        [Parameter(Mandatory = $true)][string[]]$CommandNames,
+        [Parameter(Mandatory = $true)][string]$DownloadUrl,
+        [Parameter(Mandatory = $true)][string]$FileName
     )
 
-    if (Get-Command $Command -ErrorAction SilentlyContinue) {
-        return
-    }
-    if (-not (Get-Command winget -ErrorAction SilentlyContinue)) {
-        throw "'$Command' is not available and winget was not found. Install $PackageId and add it to PATH."
+    foreach ($commandName in $CommandNames) {
+        $command = Get-Command $commandName -CommandType Application -ErrorAction SilentlyContinue | Select-Object -First 1
+        if ($null -ne $command) {
+            return $command.Source
+        }
     }
 
-    & winget install --exact --id $PackageId --source winget --silent --accept-package-agreements --accept-source-agreements
-    if ($LASTEXITCODE -ne 0) {
-        throw "winget failed to install $PackageId with exit code $LASTEXITCODE."
+    New-Item $toolCachePath -ItemType Directory -Force | Out-Null
+    $toolPath = Join-Path $toolCachePath $FileName
+    if (-not (Test-Path $toolPath -PathType Leaf)) {
+        Write-Host "Downloading $FileName from its official release." -ForegroundColor Yellow
+        Invoke-WebRequest -Uri $DownloadUrl -OutFile $toolPath
     }
-    if (-not (Get-Command $Command -ErrorAction SilentlyContinue)) {
-        throw "$PackageId was installed, but '$Command' is not available on PATH. Restart the agent and retry."
+
+    if (-not (Test-Path $toolPath -PathType Leaf)) {
+        throw "Unable to download '$FileName' from '$DownloadUrl'."
     }
+
+    return $toolPath
 }
 
 function Invoke-SbomCommand {
@@ -241,8 +248,12 @@ function Add-CycloneDxCpeEnrichment {
 }
 
 try {
-    Install-SbomToolIfMissing -Command 'sbom' -PackageId 'Microsoft.SBOMTool'
-    Install-SbomToolIfMissing -Command 'cyclonedx' -PackageId 'CycloneDX.CLI'
+    $sbomCommand = Resolve-SbomToolCommand -CommandNames @('sbom', 'sbom-tool') `
+        -DownloadUrl 'https://github.com/microsoft/sbom-tool/releases/latest/download/sbom-tool-win-x64.exe' `
+        -FileName 'sbom-tool-win-x64.exe'
+    $cycloneDxCommand = Resolve-SbomToolCommand -CommandNames @('cyclonedx') `
+        -DownloadUrl 'https://github.com/CycloneDX/cyclonedx-cli/releases/latest/download/cyclonedx-win-x64.exe' `
+        -FileName 'cyclonedx-win-x64.exe'
 
     if (-not (Test-Path $BuildPath -PathType Container)) {
         throw "Build path '$BuildPath' does not exist. Build LibreCAD before generating its SBOM."
@@ -262,7 +273,7 @@ try {
         '-nsb', 'https://hypertherm.com/sbom', '-m', $reportsPath,
         '-mi', 'SPDX:2.2', '-li', 'true'
     )
-    & sbom @generateArguments
+    & $sbomCommand @generateArguments
     $generationExitCode = $LASTEXITCODE
     if (-not (Test-Path $primaryManifestPath -PathType Leaf)) {
         throw "Microsoft SBOM Tool did not create an SPDX manifest (exit code $generationExitCode)."
@@ -290,7 +301,7 @@ try {
     New-Item $aggregateSpdxPath -ItemType Directory -Force | Out-Null
     $aggregate | ConvertTo-Json -Depth 100 | Set-Content $aggregateManifestPath -Encoding utf8
 
-    & sbom validate -b $BuildPath -m (Split-Path $aggregateSpdxPath -Parent) -mi 'SPDX:2.2' -im -o $validationOutputPath
+    & $sbomCommand validate -b $BuildPath -m (Split-Path $aggregateSpdxPath -Parent) -mi 'SPDX:2.2' -im -o $validationOutputPath
     $validationExitCode = $LASTEXITCODE
     if (-not (Test-Path $validationOutputPath -PathType Leaf)) {
         throw "Microsoft SBOM Tool did not create a validation report (exit code $validationExitCode)."
@@ -309,7 +320,7 @@ try {
     Move-Item $aggregateManifestPath $spdxOutput -Force
 
     $cycloneDxOutput = Join-Path $aggregateSpdxPath "${safeName}_v${safeVersion}.cdx.json"
-    Invoke-SbomCommand 'cyclonedx' @(
+    Invoke-SbomCommand $cycloneDxCommand @(
         'convert', '--input-file', $spdxOutput, '--input-format', 'spdxjson',
         '--output-file', $cycloneDxOutput, '--output-format', 'json', '--output-version', 'v1_6'
     )

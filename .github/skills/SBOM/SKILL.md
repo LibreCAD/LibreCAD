@@ -17,9 +17,10 @@ validation, enrichment, or publication in this repository.
 
 1. Build LibreCAD so `windows/` contains the staged application and runtime files.
 2. Run `SBOM/sbom-generation-ms-tool.ps1` with PowerShell 7 or later.
-3. The script installs `Microsoft.SBOMTool` and `CycloneDX.CLI` with winget when
-   necessary, generates SPDX 2.2, merges additional aspects, validates the aggregate,
-   and converts it to CycloneDX 1.6.
+3. The script uses installed tools when available. Otherwise, it downloads the official
+   Windows x64 release binaries for Microsoft SBOM Tool and CycloneDX CLI into the
+   ignored `SBOM/tools/` directory, generates SPDX 2.2, merges additional aspects,
+   validates the aggregate, and converts it to CycloneDX 1.6.
 4. Jenkins archives the two JSON documents and copies them beside the installer.
 
 The Jenkins `VERSION_FULL` value supplies the SBOM version. For local runs the script
