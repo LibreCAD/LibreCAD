@@ -334,31 +334,55 @@ RS_BoundData RS_Modification::getBoundingRect(QList<RS_Entity*>& selected) {
 void RS_Modification::libraryInsert(const LC_LibraryInsertData& data, RS_Graphic* destination, LC_DocumentModificationBatch& ctx) {
     RS_Graphic* src = data.source;
     Q_ASSERT(src != nullptr);
+    Q_ASSERT(destination != nullptr);
 
-    // Scale (units)
+    RS_LayerList* srcLayers = src->getLayerList();
+    if (srcLayers != nullptr) {
+        for (const RS_Layer* layer : *srcLayers) {
+            if (layer == nullptr) {
+                continue;
+            }
+            const QString ln = layer->getName();
+            if (destination->findLayer(ln) == nullptr) {
+                destination->addLayer(layer->clone());
+            }
+        }
+    }
+
+    // fixme - blocks - copy nested blocks from source inserts to destination
+    for (const RS_Entity* e : *src) {
+        if (e == nullptr || e->rtti() != RS2::EntityInsert) {
+            continue;
+        }
+        const auto* insert = static_cast<const RS_Insert*>(e);
+        RS_Block* block = insert->getBlockForInsert();
+        if (block != nullptr && destination->findBlock(block->getName()) == nullptr) {
+            auto* blockClone = static_cast<RS_Block*>(block->clone());
+            destination->addBlock(blockClone);
+        }
+    }
+
     const RS_Vector scaleV = LC_CopyUtils::getInterGraphicsScaleFactor(data.factor, src, destination);
 
-    src->calculateBorders();
-
-    // Block name – prefer provided, fallback to auto-generated
+    // fixme - blocks - block name: prefer provided, fallback to auto-generated
     const QString bname = data.blockName.isEmpty() ? getUniqueBlockName(destination) : data.blockName;
     RS_Block* block = destination->findBlock(bname);
     if (block == nullptr) {
         const auto blockData = RS_BlockData(bname, {0.0, 0.0}, false);
-        auto* block = new RS_Block(destination, blockData);
+        block = new RS_Block(destination, blockData);
 
         for (const RS_Entity* e : *src) {
             if (e == nullptr || e->isDeleted()) {
                 continue;
             }
             RS_Entity* clone = e->clone();
-            block->addByBlockEntity(clone); // **ByBlock** 👌
+            block->addByBlockEntity(clone);
         }
 
         destination->addBlock(block);
     }
 
-    // Insert : outer Insert carries all transformations (scale + angle)
+    // fixme - blocks - outer Insert carries all transformations (scale + angle)
     const RS_InsertData idata(bname, data.insertionPoint, scaleV, data.angle, 1, 1, {});
     auto* insert = new RS_Insert(nullptr, idata);
 
@@ -367,6 +391,8 @@ void RS_Modification::libraryInsert(const LC_LibraryInsertData& data, RS_Graphic
     insert->setLayer(destination->getActiveLayer());
     insert->setPen(RS_Pen(RS_Color(RS2::FlagByLayer), RS2::WidthByLayer, RS2::LineByLayer));
     insert->update();
+
+    ctx.dontSetActiveLayerAndPen();
 
     destination->updateInserts(); // fixme - why all inserts are updated there?
 }

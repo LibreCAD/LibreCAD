@@ -129,11 +129,9 @@ void LC_ActionBlockLibraryInsert::onMouseMoveEvent(const int status, const LC_Mo
             //if (block) {
             m_preview->addAllFrom(*m_actionData->prev, m_viewport);
             m_preview->move(data.insertionPoint);
-            m_preview->scale(data.insertionPoint, {data.factor, data.factor});
-            // unit conversion:
             if (m_graphic != nullptr) {
-                const double uf = RS_Units::convert(1.0, m_actionData->prev->getUnit(), m_graphic->getUnit());
-                m_preview->scale(data.insertionPoint, {uf, uf});
+                const RS_Vector scaleFactor = LC_CopyUtils::getInterGraphicsScaleFactor(data.factor, m_actionData->prev, m_graphic);
+                m_preview->scale(data.insertionPoint, scaleFactor);
             }
             m_preview->rotate(data.insertionPoint, toWorldAngleFromUCSBasis(data.angle));
             // too slow:
