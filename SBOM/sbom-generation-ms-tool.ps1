@@ -1,12 +1,14 @@
 <#
 .SYNOPSIS
-Generates validated SPDX 2.2 and CycloneDX 1.6 SBOMs for LibreCAD for ProNest.
+Generates SPDX 2.2 and CycloneDX 1.6 SBOMs for LibreCAD for ProNest.
 
 .DESCRIPTION
-Generates an SPDX SBOM from the staged Windows build, merges repository-maintained
-SPDX manifests from SBOM/AdditionalAspects, validates the aggregate document, and
-converts it to CycloneDX 1.6. When the required command-line tools are not on PATH,
-the script downloads their official Windows x64 release binaries into SBOM/tools.
+Generates an SPDX SBOM from the staged Windows build using Syft, merges
+repository-maintained SPDX manifests from SBOM/AdditionalAspects, runs structural
+validation checks on the aggregate document, and converts it to CycloneDX 1.6.
+When Syft is not on PATH, the script installs it using winget. When CycloneDX CLI is
+not on PATH, the script downloads its official Windows x64 release binary into
+SBOM/tools.
 #>
 
 [CmdletBinding()]
@@ -75,6 +77,65 @@ function Resolve-SbomToolCommand {
     }
 
     return $toolPath
+}
+
+function Resolve-SyftCommand {
+    $syftCommand = Get-Command syft -CommandType Application -ErrorAction SilentlyContinue | Select-Object -First 1
+    if ($null -ne $syftCommand) {
+        return $syftCommand.Source
+    }
+
+    $wingetCommand = Get-Command winget -CommandType Application -ErrorAction SilentlyContinue | Select-Object -First 1
+    if ($null -eq $wingetCommand) {
+        throw "Syft is not installed and winget was not found. Install Syft from https://github.com/anchore/syft."
+    }
+
+    Write-Host 'Installing Syft using winget package Anchore.Syft.' -ForegroundColor Yellow
+    & $wingetCommand.Source install --id Anchore.Syft --exact --accept-package-agreements --accept-source-agreements --disable-interactivity
+    if ($LASTEXITCODE -ne 0) {
+        throw "winget failed to install Syft (exit code $LASTEXITCODE)."
+    }
+
+    $candidatePaths = @(
+        (Join-Path $env:LOCALAPPDATA 'Microsoft\WinGet\Links\syft.exe'),
+        (Join-Path $env:ProgramFiles 'syft\syft.exe'),
+        (Join-Path $env:ProgramFiles 'Anchore\Syft\syft.exe')
+    )
+    foreach ($candidatePath in $candidatePaths) {
+        if (-not [string]::IsNullOrWhiteSpace($candidatePath) -and (Test-Path $candidatePath -PathType Leaf)) {
+            return $candidatePath
+        }
+    }
+
+    $syftCommand = Get-Command syft -CommandType Application -ErrorAction SilentlyContinue | Select-Object -First 1
+    if ($null -eq $syftCommand) {
+        throw 'Syft installation completed, but syft.exe was not found on PATH in this session.'
+    }
+    return $syftCommand.Source
+}
+
+function Invoke-SyftGenerate {
+    param(
+        [Parameter(Mandatory = $true)][string]$Command,
+        [Parameter(Mandatory = $true)][string]$SourcePath,
+        [Parameter(Mandatory = $true)][string]$OutputPath
+    )
+
+    $attempts = @(
+        @('scan', $SourcePath, '-o', "spdx-json=$OutputPath"),
+        @($SourcePath, '-o', "spdx-json=$OutputPath")
+    )
+
+    $lastExitCode = 1
+    foreach ($arguments in $attempts) {
+        & $Command @arguments
+        $lastExitCode = $LASTEXITCODE
+        if ($lastExitCode -eq 0 -and (Test-Path $OutputPath -PathType Leaf)) {
+            return
+        }
+    }
+
+    throw "Syft failed to generate an SPDX manifest (exit code $lastExitCode)."
 }
 
 function Invoke-SbomCommand {
@@ -247,10 +308,109 @@ function Add-CycloneDxCpeEnrichment {
     $document | ConvertTo-Json -Depth 100 | Set-Content $CycloneDxPath -Encoding utf8
 }
 
+function Set-SbomProductMetadata {
+    param(
+        [Parameter(Mandatory = $true)][hashtable]$Manifest,
+        [Parameter(Mandatory = $true)][string]$ProductName,
+        [Parameter(Mandatory = $true)][string]$ProductVersion,
+        [Parameter(Mandatory = $true)][string]$ProductSupplier
+    )
+
+    $rootPackage = $null
+    $rootPackageId = $null
+
+    if ($Manifest.ContainsKey('documentDescribes') -and @($Manifest.documentDescribes).Count -gt 0) {
+        $rootPackageId = @($Manifest.documentDescribes)[0]
+        $rootPackage = @($Manifest.packages | Where-Object { $_.SPDXID -eq $rootPackageId } | Select-Object -First 1)
+    }
+
+    if ($null -eq $rootPackage -and @($Manifest.packages).Count -gt 0) {
+        $rootPackage = @($Manifest.packages)[0]
+        $rootPackageId = $rootPackage.SPDXID
+        if ([string]::IsNullOrWhiteSpace($rootPackageId)) {
+            $rootPackageId = 'SPDXRef-RootPackage'
+            $rootPackage.SPDXID = $rootPackageId
+        }
+        $Manifest.documentDescribes = @($rootPackageId)
+    }
+
+    if ($null -ne $rootPackage) {
+        $rootPackage.name = $ProductName
+        $rootPackage.versionInfo = $ProductVersion
+        $rootPackage.supplier = "Organization: $ProductSupplier"
+    }
+
+    $Manifest.name = "$ProductName-$ProductVersion"
+    return $rootPackageId
+}
+
+function Validate-AggregateSpdxManifest {
+    param(
+        [Parameter(Mandatory = $true)][hashtable]$Manifest,
+        [Parameter(Mandatory = $true)][string]$OutputPath
+    )
+
+    $errors = [System.Collections.Generic.List[hashtable]]::new()
+
+    if (-not $Manifest.ContainsKey('SPDXID') -or [string]::IsNullOrWhiteSpace($Manifest.SPDXID)) {
+        $errors.Add(@{ code = 'MissingDocumentSpdxId'; message = 'Document SPDXID is missing.' })
+    }
+    if (-not $Manifest.ContainsKey('spdxVersion') -or [string]::IsNullOrWhiteSpace($Manifest.spdxVersion)) {
+        $errors.Add(@{ code = 'MissingSpdxVersion'; message = 'spdxVersion is missing.' })
+    }
+    if (-not $Manifest.ContainsKey('documentDescribes') -or @($Manifest.documentDescribes).Count -eq 0) {
+        $errors.Add(@{ code = 'MissingDocumentDescribes'; message = 'documentDescribes must contain at least one package SPDXID.' })
+    }
+    if (@($Manifest.packages).Count -eq 0) {
+        $errors.Add(@{ code = 'MissingPackages'; message = 'At least one package is required.' })
+    }
+
+    $allIds = [System.Collections.Generic.HashSet[string]]::new([System.StringComparer]::Ordinal)
+    foreach ($element in @($Manifest.packages) + @($Manifest.files)) {
+        if (-not [string]::IsNullOrWhiteSpace($element.SPDXID)) {
+            if (-not $allIds.Add($element.SPDXID)) {
+                $errors.Add(@{ code = 'DuplicateSpdxId'; message = "Duplicate SPDXID '$($element.SPDXID)'." })
+            }
+        }
+    }
+
+    foreach ($describedId in @($Manifest.documentDescribes)) {
+        if ([string]::IsNullOrWhiteSpace($describedId) -or -not $allIds.Contains($describedId)) {
+            $errors.Add(@{ code = 'UnknownDocumentDescribes'; message = "documentDescribes references unknown SPDXID '$describedId'." })
+        }
+    }
+
+    foreach ($relationship in @($Manifest.relationships)) {
+        if ([string]::IsNullOrWhiteSpace($relationship.spdxElementId) -or
+            [string]::IsNullOrWhiteSpace($relationship.relationshipType) -or
+            [string]::IsNullOrWhiteSpace($relationship.relatedSpdxElement)) {
+            $errors.Add(@{ code = 'InvalidRelationship'; message = 'Relationship is missing required fields.' })
+            continue
+        }
+
+        if ($relationship.spdxElementId -ne 'SPDXRef-DOCUMENT' -and -not $allIds.Contains($relationship.spdxElementId)) {
+            $errors.Add(@{ code = 'UnknownRelationshipSource'; message = "Relationship source '$($relationship.spdxElementId)' was not found." })
+        }
+        if ($relationship.relatedSpdxElement -ne 'SPDXRef-DOCUMENT' -and -not $allIds.Contains($relationship.relatedSpdxElement)) {
+            $errors.Add(@{ code = 'UnknownRelationshipTarget'; message = "Relationship target '$($relationship.relatedSpdxElement)' was not found." })
+        }
+    }
+
+    $result = if ($errors.Count -eq 0) { 'Success' } else { 'Failed' }
+    $report = @{
+        Result = $result
+        ValidationErrors = @($errors)
+        ValidationErrorCount = $errors.Count
+    }
+    $report | ConvertTo-Json -Depth 100 | Set-Content $OutputPath -Encoding utf8
+
+    if ($errors.Count -gt 0) {
+        throw "SBOM validation failed with $($errors.Count) validation error(s). See '$OutputPath'."
+    }
+}
+
 try {
-    $sbomCommand = Resolve-SbomToolCommand -CommandNames @('sbom', 'sbom-tool') `
-        -DownloadUrl 'https://github.com/microsoft/sbom-tool/releases/latest/download/sbom-tool-win-x64.exe' `
-        -FileName 'sbom-tool-win-x64.exe'
+    $syftCommand = Resolve-SyftCommand
     $cycloneDxCommand = Resolve-SbomToolCommand -CommandNames @('cyclonedx') `
         -DownloadUrl 'https://github.com/CycloneDX/cyclonedx-cli/releases/latest/download/cyclonedx-win-x64.exe' `
         -FileName 'cyclonedx-win-x64.exe'
@@ -266,54 +426,26 @@ try {
         Remove-Item $reportsPath -Recurse -Force
     }
     New-Item $reportsPath -ItemType Directory -Force | Out-Null
+    New-Item (Split-Path $primaryManifestPath -Parent) -ItemType Directory -Force | Out-Null
 
-    $generateArguments = @(
-        'generate', '-b', $BuildPath, '-bc', $repositoryRoot,
-        '-pn', $ProductName, '-pv', $ProductVersion, '-ps', $ProductSupplier,
-        '-nsb', 'https://hypertherm.com/sbom', '-m', $reportsPath,
-        '-mi', 'SPDX:2.2', '-li', 'true'
-    )
-    & $sbomCommand @generateArguments
-    $generationExitCode = $LASTEXITCODE
-    if (-not (Test-Path $primaryManifestPath -PathType Leaf)) {
-        throw "Microsoft SBOM Tool did not create an SPDX manifest (exit code $generationExitCode)."
-    }
-
-    # Component detection can return nonzero after producing a usable manifest.
-    # Aggregate validation below remains mandatory and authoritative.
+    Invoke-SyftGenerate -Command $syftCommand -SourcePath $BuildPath -OutputPath $primaryManifestPath
     $generatedManifest = Get-SbomManifest $primaryManifestPath
     if (-not $generatedManifest.ContainsKey('SPDXID') -or -not $generatedManifest.ContainsKey('packages')) {
-        throw "Microsoft SBOM Tool created an incomplete SPDX manifest (exit code $generationExitCode)."
-    }
-    if ($generationExitCode -ne 0) {
-        Write-Warning "Microsoft SBOM Tool returned $generationExitCode after creating a complete manifest. Continuing to validation."
+        throw 'Syft created an incomplete SPDX manifest.'
     }
 
     $aggregate = $generatedManifest
     Initialize-SbomCollections $aggregate
-    $rootPackageId = if (@($aggregate.documentDescribes).Count -gt 0) {
-        @($aggregate.documentDescribes)[0]
-    } else {
-        'SPDXRef-RootPackage'
+    $rootPackageId = Set-SbomProductMetadata -Manifest $aggregate -ProductName $ProductName -ProductVersion $ProductVersion -ProductSupplier $ProductSupplier
+    if ([string]::IsNullOrWhiteSpace($rootPackageId)) {
+        $rootPackageId = if (@($aggregate.documentDescribes).Count -gt 0) { @($aggregate.documentDescribes)[0] } else { 'SPDXRef-RootPackage' }
     }
     $aspectFiles = @(Merge-AdditionalAspects $aggregate $rootPackageId)
 
+    Validate-AggregateSpdxManifest -Manifest $aggregate -OutputPath $validationOutputPath
+
     New-Item $aggregateSpdxPath -ItemType Directory -Force | Out-Null
     $aggregate | ConvertTo-Json -Depth 100 | Set-Content $aggregateManifestPath -Encoding utf8
-
-    & $sbomCommand validate -b $BuildPath -m (Split-Path $aggregateSpdxPath -Parent) -mi 'SPDX:2.2' -im -o $validationOutputPath
-    $validationExitCode = $LASTEXITCODE
-    if (-not (Test-Path $validationOutputPath -PathType Leaf)) {
-        throw "Microsoft SBOM Tool did not create a validation report (exit code $validationExitCode)."
-    }
-    $validation = Get-Content $validationOutputPath -Raw | ConvertFrom-Json
-    $validationErrorCount = [int]$validation.ValidationErrors.Count
-    if ($validation.Result -ne 'Success' -or $validationErrorCount -ne 0) {
-        throw "SBOM validation failed with result '$($validation.Result)', $validationErrorCount validation error(s), and exit code $validationExitCode."
-    }
-    if ($validationExitCode -ne 0) {
-        Write-Warning "Microsoft SBOM Tool returned $validationExitCode after reporting successful validation."
-    }
 
     $safeName = $ProductName -replace '[^A-Za-z0-9._-]', '-'
     $safeVersion = $ProductVersion -replace '[^A-Za-z0-9._-]', '-'
