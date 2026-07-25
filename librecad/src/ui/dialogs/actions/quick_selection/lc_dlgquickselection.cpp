@@ -57,7 +57,7 @@ LC_DlgQuickSelection::LC_DlgQuickSelection(QWidget* parent, LC_ActionContext* ac
     connect(ui->cbEntityType, &QComboBox::currentIndexChanged, this, &LC_DlgQuickSelection::onEntityTypeIndexChanged);
     connect(ui->lvProperties, &QListWidget::currentRowChanged, this, &LC_DlgQuickSelection::onPropertyListRowChanged);
 
-    connect(ui->cbAppendToCurrentSelectionSet, &QCheckBox::checkStateChanged, this, &LC_DlgQuickSelection::onAppendToCurrentSetClicked);
+    connect(ui->cbAppendToCurrentSelectionSet, &QCheckBox::toggled, this, &LC_DlgQuickSelection::onAppendToCurrentSetClicked);
     connect(ui->rbExcludeFromSelectionSet, &QRadioButton::toggled, this, &LC_DlgQuickSelection::onAppendToCurrentSetClicked);
     connect(ui->cbOperator, &QComboBox::currentIndexChanged, this, &LC_DlgQuickSelection::onOperatorChanged);
 

@@ -24,7 +24,9 @@
 #include "lc_property_editor_utils.h"
 
 #include <QCompleter>
+#include <QCoreApplication>
 #include <QKeyEvent>
+#include <QLocale>
 #include <QWidget>
 
 #include "lc_property_view_editable.h"

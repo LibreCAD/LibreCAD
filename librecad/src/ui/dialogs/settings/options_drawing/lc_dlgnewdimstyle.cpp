@@ -27,7 +27,6 @@
 #include <QMessageBox>
 
 #include "lc_dimstyle.h"
-#include "lc_dimstyleitem.h"
 #include "lc_dimstyleslistmodel.h"
 #include "ui_lc_dlgnewdimstyle.h"
 
