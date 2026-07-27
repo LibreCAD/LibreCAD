@@ -2166,3 +2166,65 @@ TEST_CASE("DXF export always emits the layer plot flag (290)",
   std::filesystem::remove(src);
   std::filesystem::remove(out);
 }
+
+// Regression (Save-As failure on AC1021 sources, e.g. 植物.dwg): the DWG
+// writer emits its control objects at FIXED low handles (LTYPE_CONTROL=0x05,
+// UCS_CONTROL=0x07, ...) while real source files reuse those very numbers for
+// ordinary preserved OBJECTS (ACDBPLACEHOLDER@0x5, DICTIONARY@0x7). Without
+// the structural-collision remap both sides land in the object map,
+// writeDwgHandles() aborts the whole save (BAD_OPEN) and Save-As leaves a
+// zero-byte file. fileExport now remaps colliding typed objects above the
+// preserved high-water mark and rewrites typed references to them.
+TEST_CASE("DWG export remaps preserved objects colliding with fixed writer handles",
+          "[dwg][roundtrip][fixed-handle-remap]") {
+  ensureSettings();
+
+  RS_Graphic graphic;
+  graphic.initForNewDocument();
+  auto& md = graphic.dwgAdvancedMetadata();
+  DRW_AcDbPlaceholder ph;
+  ph.handle = 0x5;       // collides with the writer's LTYPE_CONTROL handle
+  ph.parentHandle = 0x7;
+  md.addAcDbPlaceholder(ph);
+  DRW_Dictionary dict;
+  dict.handle = 0x7;     // collides with the writer's UCS_CONTROL handle
+  dict.parentHandle = 0xC;
+  DRW_Dictionary::Entry entry;
+  entry.m_name = "LC_REMAP_TEST";
+  entry.m_handle = 0x5;  // reference must follow the placeholder's remap
+  dict.m_entries.push_back(entry);
+  md.addDictionary(dict);
+
+  const std::string out = tmpFile("fixed_handle_remap.dwg");
+  std::filesystem::remove(out);
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out),
+                              RS2::FormatDWG));
+  }
+  REQUIRE(std::filesystem::exists(out));
+  CHECK(std::filesystem::file_size(out) > 0);
+
+  // Re-import: the file must parse, and the preserved pair must come back on
+  // fresh handles with the dictionary entry still pointing at the placeholder.
+  RS_Graphic reloaded;
+  reloaded.initForNewDocument();
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(reloaded, QString::fromStdString(out),
+                              RS2::FormatDWG));
+  }
+  const auto& rmd = reloaded.dwgAdvancedMetadata();
+  REQUIRE(rmd.placeholders().size() == 1);
+  const std::uint32_t phHandle = rmd.placeholders().front().handle;
+  CHECK(phHandle != 0x5u);
+  CHECK(phHandle > 0x2Fu);
+  bool entryFollowsRemap = false;
+  for (const auto& d : rmd.dictionaries())
+    for (const auto& e : d.entries)
+      if (e.name == "LC_REMAP_TEST" && e.handle == phHandle)
+        entryFollowsRemap = true;
+  CHECK(entryFollowsRemap);
+
+  std::filesystem::remove(out);
+}
