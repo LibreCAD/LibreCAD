@@ -27,7 +27,8 @@ Word spacing (default: 6.75)
 Line spacing factor (default: 1.0)
 .TP
 .BR \-d ", " \-\-precision " \fIN\fR"
-Number of decimal digits (default: 6)
+Number of decimal digits kept after the point in coordinates (default: 6, minimum: 1).
+Lowering this is the main size-reduction lever; e.g. \fB\-d 2\fR emits values like \fI1.11\fR.
 .TP
 .BR \-L ", " \-\-license " \fITEXT\fR"
 Font license
@@ -53,7 +54,8 @@ Analyze for nested characters (glyphs that could reference other glyphs).
 Remove comments from glyph definitions.
 .TP
 .BR \-t ", " \-\-tuning
-Apply all tuning options at once.
+Apply all tuning options at once. This also sets the coordinate precision to 2
+decimals (equivalent to \fB\-d 2\fR) unless an explicit \fB\-d\fR is given.
 
 .TP
 .BR \-h ", " \-\-help
