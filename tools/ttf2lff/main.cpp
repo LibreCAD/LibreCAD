@@ -570,18 +570,16 @@ double roundToGrid(double value) {
 
 std::string formatCharCode(unsigned int charCode)
 {
+    // LFF readers treat leading zeros as optional ([0020] == [20]), so
+    // write the minimal hex form to save a byte or two per glyph.
     std::ostringstream stream;
-    stream << std::hex << std::nouppercase << std::setfill('0');
-    if (charCode <= 0xffff) {
-        stream << std::setw(4);
-    }
-    stream << charCode;
+    stream << std::hex << std::nouppercase << charCode;
     return stream.str();
 }
 
 bool canReferenceGlyph(unsigned int charCode)
 {
-    // LibreCAD's LFF header discovery currently extracts four hex digits.
+    // Keep nested-glyph references within the BMP for maximum reader compatibility.
     return charCode <= 0xffff;
 }
 
