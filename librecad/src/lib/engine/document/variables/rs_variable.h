@@ -28,6 +28,7 @@
 #define RS_VARIABLE_H
 
 #include <QString>
+#include <QStringBuilder>
 
 #include "rs.h"
 #include "rs_vector.h"

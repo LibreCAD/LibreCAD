@@ -23,6 +23,8 @@
 
 #include "lc_formatter.h"
 
+#include <QStringBuilder>
+
 #include "lc_graphicviewport.h"
 #include "lc_linemath.h"
 #include "rs_graphic.h"

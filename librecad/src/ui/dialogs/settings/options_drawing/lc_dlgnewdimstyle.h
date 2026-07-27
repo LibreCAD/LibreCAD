@@ -25,11 +25,11 @@
 #define LC_DLGNEWDIMSTYLE_H
 
 #include "lc_dialog.h"
+#include "lc_dimstyleitem.h"
 #include "rs.h"
 
 class LC_StylesListModel;
 class QListModel;
-class LC_DimStyleItem;
 
 namespace Ui{
     class LC_DlgNewDimStyle;

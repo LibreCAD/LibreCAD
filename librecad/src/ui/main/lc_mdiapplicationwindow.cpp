@@ -28,6 +28,7 @@
 #include <QDockWidget>
 #include <QMdiArea>
 #include <QMenu>
+#include <QStringBuilder>
 #include <QStyle>
 #include <qtabbar.h>
 

@@ -27,9 +27,10 @@
 
 #include "rs_undo.h"
 
-#include<iostream>
-#include <qassert.h>
+#include <iostream>
 #include <unordered_set>
+
+#include <QtGlobal>
 
 #include "rs_debug.h"
 #include "rs_undocycle.h"
