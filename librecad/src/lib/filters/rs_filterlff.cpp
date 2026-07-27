@@ -33,6 +33,7 @@
 #include <QTextStream>
 #include <QStringList>
 #include <QDate>
+#include <QRegularExpression>
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 #include <QStringConverter>
 #endif
@@ -207,7 +208,15 @@ bool RS_FilterLFF::fileExport(RS_Graphic& g, const QString& file, RS2::FormatTyp
             if (blk && !blk->isDeleted()) {
                 RS_DEBUG->print("002a: %s", blk->getName().toLocal8Bit().data());
 
-                ts << QString("\n%1\n").arg(blk->getName());
+                // Emit the glyph code compactly: leading zeros are optional in LFF,
+                // so "[0021] !" is written as "[21] !". The block's in-memory name
+                // stays zero-padded (the font viewer and block list rely on that);
+                // only the on-disk file is compacted. Names that do not start with a
+                // bracketed hex code pass through unchanged.
+                QString header = blk->getName();
+                static const QRegularExpression codeRe("^\\[0*([0-9A-Fa-f]+)\\]");
+                header.replace(codeRe, "[\\1]");
+                ts << QString("\n%1\n").arg(header);
 
                 // iterate through entities of this letter:
                 for (RS_Entity* e : lc::LC_ContainerTraverser{*blk, RS2::ResolveNone}.entities()) {
@@ -231,11 +240,10 @@ bool RS_FilterLFF::fileExport(RS_Graphic& g, const QString& file, RS2::FormatTyp
                         }
                         else if (e->rtti() == RS2::EntityBlock) {
                             const auto b = static_cast<RS_Block*>(e);
+                            // Reference codes are written compactly too; leading zeros
+                            // are optional and the reader parses any width.
                             QString uCode;
                             uCode.setNum(b->getName().at(0).unicode(), 16);
-                            if (uCode.length() < 4) {
-                                uCode = uCode.rightJustified(4, '0');
-                            }
                             ts << QString("C%1\n").arg(uCode);
                         }
                         else if (e->rtti() == RS2::EntityPolyline) {

@@ -61,16 +61,18 @@ namespace {
         return (okay) ? QString::fromUcs4(&ucsCode, 1) : QString::fromUcs4(&invalidCode, 1);
     }
 
-    // Extract the unicode char from LFF font line
+    // Extract the unicode char from LFF font line, e.g. "[0041]" or "[#0041]"
+    // (the '#' is optional, so files written by either convention load the same way).
+    // Up to 6 hex digits so the full Unicode range (to U+10FFFF) is accepted.
     std::pair<QString, bool> extractFontChar(const QString& line) {
         // read unicode:
-        static QRegularExpression regexp("[0-9A-Fa-f]{1,5}");
+        static QRegularExpression regexp("^\\[#?([0-9A-Fa-f]{1,6})\\]");
         const QRegularExpressionMatch match = regexp.match(line);
         if (!match.hasMatch()) {
             return {};
         }
 
-        const QString cap = match.captured(0);
+        const QString cap = match.captured(1);
         bool okay = false;
         const std::uint32_t code = cap.toUInt(&okay, 16);
 
