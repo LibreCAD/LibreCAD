@@ -535,8 +535,8 @@ TEST_CASE("DXF filter normalizes reflected planar curves once",
 
   // The first export is normalized WCS, so reading it again must not reflect
   // centers, axes, or curve parameters a second time.
-  for (const auto &[record, codes] : std::initializer_list<
-           std::pair<const char *, std::initializer_list<const char *>>>{
+  for (const auto &[record, codes] : std::vector<
+           std::pair<const char *, std::vector<const char *>>>{
            {"CIRCLE", {"10", "20", "40"}},
            {"ARC", {"10", "20", "40", "50", "51"}},
            {"ELLIPSE", {"10", "20", "11", "21", "40", "41", "42"}}}) {
@@ -582,8 +582,8 @@ TEST_CASE("DXF filter preserves WCS POINT and LINE extrusion fields",
                               RS2::FormatDXFRW));
   }
 
-  for (const auto &[record, values] : std::initializer_list<
-           std::pair<const char *, std::initializer_list<std::pair<const char *, const char *>>>>{
+  for (const auto &[record, values] : std::vector<
+           std::pair<const char *, std::vector<std::pair<const char *, const char *>>>>{
            {"POINT", {{"30", "3"}, {"39", "0.5"}, {"50", "30"}, {"210", "0.2"},
                       {"220", "0.3"}, {"230", "0.9327379053088815"}}},
            {"LINE", {{"30", "6"}, {"31", "9"}, {"39", "2.5"},
@@ -603,8 +603,8 @@ TEST_CASE("DXF filter preserves WCS POINT and LINE extrusion fields",
     REQUIRE(filter.fileExport(graphic2, QString::fromStdString(out2),
                               RS2::FormatDXFRW));
   }
-  for (const auto &[record, codes] : std::initializer_list<
-           std::pair<const char *, std::initializer_list<const char *>>>{
+  for (const auto &[record, codes] : std::vector<
+           std::pair<const char *, std::vector<const char *>>>{
            {"POINT", {"10", "20", "30", "39", "50", "210", "220", "230"}},
            {"LINE", {"10", "20", "30", "11", "21", "31", "39", "210", "220", "230"}}}) {
     for (const char *code : codes)
@@ -1009,8 +1009,8 @@ TEST_CASE("DXF filter normalizes TRACE and SOLID extrusion once",
     REQUIRE(filter.fileExport(graphic2, QString::fromStdString(out2),
                               RS2::FormatDXFRW));
   }
-  for (const auto &[record, codes] : std::initializer_list<
-           std::pair<const char *, std::initializer_list<const char *>>>{
+  for (const auto &[record, codes] : std::vector<
+           std::pair<const char *, std::vector<const char *>>>{
            {"TRACE", {"10", "20", "30", "11", "21", "31", "12", "22", "32", "13", "23", "33", "39"}},
            {"SOLID", {"10", "20", "30", "11", "21", "31", "12", "22", "32", "13", "23", "33", "39"}}}) {
     for (const char *code : codes)
