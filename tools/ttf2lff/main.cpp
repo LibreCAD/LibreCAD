@@ -1266,7 +1266,7 @@ static void usage(int eval) {
     std::cout << "  -l, --letterspacing N  Letter spacing (default: 3.0)\n";
     std::cout << "  -w, --wordspacing N    Word spacing (default: 6.75)\n";
     std::cout << "  -f, --linespacing N    Line spacing factor (default: 1.0)\n";
-    std::cout << "  -d, --precision N      Decimal precision (default: 6)\n";
+    std::cout << "  -d, --precision N      Decimal digits after the point (default: 6, min: 1)\n";
     std::cout << "  -L, --license TEXT     Font license\n";
     std::cout << "\n";
     std::cout << "Tuning options (from python-lff):\n";
@@ -1276,7 +1276,7 @@ static void usage(int eval) {
     std::cout << "  -m, --mergepath        Merge paths with same start/end vertex\n";
     std::cout << "  -e, --nestedchar       Analyze for nested characters\n";
     std::cout << "  -c, --nocomment        Remove comments from glyphs\n";
-    std::cout << "  -t, --tuning           Apply all tuning options\n";
+    std::cout << "  -t, --tuning           Apply all tuning options (implies -d 2)\n";
     std::cout << "\n";
     std::cout << "  -h, --help             Show this help message\n";
     std::cout << "\n";
@@ -1303,6 +1303,7 @@ int main(int argc, char* argv[]) {
     std::string author = "Unknown";
     std::string license = "Unknown";
     int precision = 6;
+    bool precisionExplicit = false;
 
     // Parse command line arguments
     for (int i = 1; i < argc; ++i) {
@@ -1334,6 +1335,10 @@ int main(int argc, char* argv[]) {
         else if (arg == "-d" || arg == "--precision") {
             if (++i >= argc) { std::cerr << "Error: -d requires an argument\n"; return 1; }
             precision = std::atoi(argv[i]);
+            if (precision < 1) {
+                std::cerr << "Error: -d/--precision requires a value >= 1\n"; return 1;
+            }
+            precisionExplicit = true;
         }
         else if (arg == "-L" || arg == "--license") {
             if (++i >= argc) { std::cerr << "Error: -L requires an argument\n"; return 1; }
@@ -1365,6 +1370,10 @@ int main(int argc, char* argv[]) {
             tuningOptions.mergePath = true;
             tuningOptions.nestedChar = true;
             tuningOptions.noComment = true;
+            // Reduce coordinates to 2 decimals, unless -d/--precision was given
+            if (!precisionExplicit) {
+                precision = 2;
+            }
         }
         else if (arg[0] != '-') {
             // Assume first non-option is TTF file, second is LFF file
@@ -1392,6 +1401,7 @@ int main(int argc, char* argv[]) {
     if (tuningOptions.mergePath) std::cout << "Tuning: MergePath enabled\n";
     if (tuningOptions.nestedChar) std::cout << "Tuning: NestedChar enabled\n";
     if (tuningOptions.noComment) std::cout << "Tuning: NoComment enabled\n";
+    std::cout << "Precision: " << precision << " decimal digit(s)\n";
 
     // Create converter with RAII
     TTF2LFFConverter converter;
