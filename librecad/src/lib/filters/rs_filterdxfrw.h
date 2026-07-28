@@ -536,6 +536,11 @@ private:
 #ifdef DWGSUPPORT
     dwgRW *m_dwgW {nullptr};
     dwgRW::WriteSkipCounters m_lastDwgWriteSkipCounters;
+    // Preserved-OBJECT handles that collide with the DWG writer's fixed
+    // structural handles (control objects, canonical table records), mapped
+    // to fresh handles above the preserved high-water mark. Built by
+    // fileExport before write(), applied by writeObjects at emission time.
+    std::map<std::uint32_t, std::uint32_t> m_dwgWriteHandleRemap;
 #endif
     // DRW_Interface write callbacks are void. Preserve callback failures until
     // fileExport can return them to the caller instead of reporting success.

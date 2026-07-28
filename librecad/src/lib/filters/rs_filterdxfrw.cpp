@@ -525,6 +525,25 @@ bool hasReplayableRawMLeaderStyle(const LC_DwgAdvancedMetadata& metadata,
     return false;
 }
 
+// Handles the DWG writer emits at FIXED values (HandleAllocator::seedReserved):
+// control objects 0x01-0x0B, canonical table records 0x0F-0x18 and the
+// model/paper space BLOCK/ENDBLK entities 0x1B-0x1E. Real source files
+// (notably AC1021+) reuse these very numbers for ordinary preserved OBJECTS
+// (placeholders, dictionaries, ...); emitting both sides duplicates the
+// object-map entry and writeDwgHandles() aborts the whole save (BAD_OPEN,
+// zero-byte file). Typed preserved objects are therefore remapped to fresh
+// handles above the preserved high-water mark (fileExport builds
+// m_dwgWriteHandleRemap, writeObjects applies it); raw verbatim objects
+// cannot be rewritten and their replay is blocked instead. Mirrors the DXF
+// path's kFixedStructural remap in fileExport.
+bool isFixedStructuralDwgHandle(std::uint32_t h) {
+    static const std::set<std::uint32_t> kFixed = {
+        0x01, 0x02, 0x03, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B,
+        0x0F, 0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17, 0x18,
+        0x1B, 0x1C, 0x1D, 0x1E};
+    return kFixed.count(h) != 0;
+}
+
 DRW_AcDbPlaceholder placeholderFromMetadata(
     const LC_DwgAdvancedMetadata::PlaceholderRecord& record) {
     DRW_AcDbPlaceholder placeholder;
@@ -6277,10 +6296,15 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic& g, const QString& file, const RS2::F
         // unit test.
         {
             const auto &md = g.dwgAdvancedMetadata();
+            // High-water mark over every preserved handle; remap targets are
+            // minted above it (and above 0x2F, the writer's minting floor).
+            std::uint32_t highWater = 0x2F;
             auto reserveAll = [&](const auto &records) {
                 for (const auto &r : records)
-                    if (r.handle != 0)
+                    if (r.handle != 0) {
                         m_dwgW->reserveHandle(r.handle);
+                        highWater = std::max<std::uint32_t>(highWater, r.handle);
+                    }
             };
             reserveAll(md.rawObjects());
             reserveAll(md.placeholders());
@@ -6292,6 +6316,63 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic& g, const QString& file, const RS2::F
             reserveAll(md.dictionaryVars());
             reserveAll(md.fieldLists());
             reserveAll(md.fields());
+            reserveAll(md.suns());
+            reserveAll(md.mleaderStyles());
+            reserveAll(md.rasterVariables());
+            reserveAll(md.wipeoutVariables());
+            reserveAll(md.geoData());
+            reserveAll(md.spatialFilters());
+            reserveAll(md.scales());
+            reserveAll(md.idBuffers());
+            reserveAll(md.layerIndexes());
+            reserveAll(md.spatialIndexes());
+            reserveAll(md.dictionariesWithDefault());
+            reserveAll(md.sortEntsTables());
+            reserveAll(md.underlayDefinitions());
+            // P3 #2: structural-collision remap. The writer emits its control
+            // objects / canonical table records at FIXED low handles (LTYPE
+            // control 0x05, VIEW control 0x06, UCS control 0x07, ...) that
+            // AC1021+ sources reuse for ordinary preserved OBJECTS. Reserving
+            // alone cannot break that tie (both sides want the same handle),
+            // so colliding typed objects are moved to fresh handles above the
+            // high-water mark; writeObjects rewrites the object's own handle
+            // and every typed reference to it. Colliding raw objects are
+            // blocked in writeObjects instead (verbatim bytes cannot be
+            // rewritten).
+            m_dwgWriteHandleRemap.clear();
+            auto remapIfColliding = [&](const auto &records) {
+                for (const auto &r : records) {
+                    if (r.handle == 0 || !isFixedStructuralDwgHandle(r.handle))
+                        continue;
+                    if (m_dwgWriteHandleRemap.count(r.handle) != 0)
+                        continue;
+                    const std::uint32_t target = ++highWater;
+                    m_dwgW->reserveHandle(target);
+                    m_dwgWriteHandleRemap.emplace(r.handle, target);
+                }
+            };
+            remapIfColliding(md.placeholders());
+            remapIfColliding(md.dictionaries());
+            remapIfColliding(md.xrecords());
+            remapIfColliding(md.groups());
+            remapIfColliding(md.layouts());
+            remapIfColliding(md.mlineStyles());
+            remapIfColliding(md.dictionaryVars());
+            remapIfColliding(md.fieldLists());
+            remapIfColliding(md.fields());
+            remapIfColliding(md.suns());
+            remapIfColliding(md.mleaderStyles());
+            remapIfColliding(md.rasterVariables());
+            remapIfColliding(md.wipeoutVariables());
+            remapIfColliding(md.geoData());
+            remapIfColliding(md.spatialFilters());
+            remapIfColliding(md.scales());
+            remapIfColliding(md.idBuffers());
+            remapIfColliding(md.layerIndexes());
+            remapIfColliding(md.spatialIndexes());
+            remapIfColliding(md.dictionariesWithDefault());
+            remapIfColliding(md.sortEntsTables());
+            remapIfColliding(md.underlayDefinitions());
         }
         bool success = m_dwgW->write(this, dwgVer, false) && !m_writeFailed;
         m_lastDwgWriteSkipCounters = m_dwgW->getWriteSkipCounters();
@@ -8038,6 +8119,19 @@ void RS_FilterDXFRW::prepareDRWDimStyle(DRW_Dimstyle &d,const  LC_DimStyle* ds) 
 void RS_FilterDXFRW::writeObjects() {
     if (m_dwgW) {
         const auto& metadata = m_graphic->dwgAdvancedMetadata();
+        // P3 #2: structural-collision remap built by fileExport — rewrite the
+        // handle (and typed references to it) of preserved objects that
+        // collide with the writer's fixed structural handles.
+        auto remapHandle = [this](std::uint32_t h) -> std::uint32_t {
+            auto it = m_dwgWriteHandleRemap.find(h);
+            return it == m_dwgWriteHandleRemap.end() ? h : it->second;
+        };
+        auto remapEntry = [&remapHandle](DRW_TableEntry& e) {
+            e.handle = remapHandle(e.handle);
+            if (e.parentHandle > 0)
+                e.parentHandle = static_cast<int>(remapHandle(
+                    static_cast<std::uint32_t>(e.parentHandle)));
+        };
         const bool canWriteModernObjects = m_dwgW->getVersion() >= DRW::AC1021;
         // PR 13a/b/c/d — DICTIONARY (ODA fixed type 42), XRECORD (type 79),
         // GROUP (type 72), LAYOUT (type 82), and ACDBPLACEHOLDER (type 80)
@@ -8300,6 +8394,7 @@ void RS_FilterDXFRW::writeObjects() {
         int blockedMissingClassMetadata = 0;
         int blockedWriterRejected = 0;
         int blockedVersionMismatch = 0;
+        int blockedFixedHandle = 0;
         int replayedObjects = 0;
         int replayedSections = 0;
         const LC_DwgAdvancedMetadata::RawObjectFamilyCounts rawFamilyCounts =
@@ -8485,6 +8580,17 @@ void RS_FilterDXFRW::writeObjects() {
                 ++blockedReplaced;
                 continue;
             }
+            // A raw object whose handle collides with the writer's fixed
+            // structural handles can never be replayed: its verbatim bytes
+            // cannot be rewritten to a fresh handle, and double emission
+            // duplicates the object-map entry, failing the whole save in
+            // writeDwgHandles(). Typed counterparts of these records are
+            // remapped and emitted instead (see fileExport / P3 #2).
+            if (isFixedStructuralDwgHandle(record.handle)) {
+                hasBlockedReplay = true;
+                ++blockedFixedHandle;
+                continue;
+            }
             // Raw object bytes must remain in their exact source DWG version.
             // The matching writeDwgClasses guard prevents orphan CLASSES data.
             if (!sameRawObjectEncodingFamily(record.version, m_dwgW->getVersion())) {
@@ -8530,6 +8636,7 @@ void RS_FilterDXFRW::writeObjects() {
                     continue;
                 }
                 DRW_Sun sun = sunFromMetadata(record);
+                remapEntry(sun);
                 if (m_dwgW->writeSun(&sun)) {
                     ++nativeSunObjects;
                 } else {
@@ -8545,6 +8652,7 @@ void RS_FilterDXFRW::writeObjects() {
                 if (nativeMLeaderStyleHandles.count(record.handle) == 0)
                     continue;
                 DRW_MLeaderStyle style = mleaderStyleFromMetadata(record);
+                remapEntry(style);
                 if (m_dwgW->writeMLeaderStyle(&style)) {
                     ++nativeMLeaderStyleObjects;
                 } else {
@@ -8579,6 +8687,7 @@ void RS_FilterDXFRW::writeObjects() {
                     continue;
                 }
                 DRW_AcDbPlaceholder placeholder = placeholderFromMetadata(record);
+                remapEntry(placeholder);
                 if (m_dwgW->writeAcDbPlaceholder(&placeholder)) {
                     ++nativePlaceholderObjects;
                 } else {
@@ -8590,6 +8699,9 @@ void RS_FilterDXFRW::writeObjects() {
                 if (nativeDictionaryHandles.count(record.handle) == 0)
                     continue;
                 DRW_Dictionary dictionary = dictionaryFromMetadata(record);
+                remapEntry(dictionary);
+                for (auto& en : dictionary.m_entries)
+                    en.m_handle = remapHandle(en.m_handle);
                 if (m_dwgW->writeDictionary(&dictionary)) {
                     ++nativeDictionaryObjects;
                 } else {
@@ -8601,6 +8713,9 @@ void RS_FilterDXFRW::writeObjects() {
                 if (nativeXRecordHandles.count(record.handle) == 0)
                     continue;
                 DRW_XRecord xrecord = xrecordFromMetadata(record);
+                remapEntry(xrecord);
+                for (auto& hv : xrecord.m_handleValues)
+                    hv.second = remapHandle(hv.second);
                 if (m_dwgW->writeXRecord(&xrecord)) {
                     ++nativeXRecordObjects;
                 } else {
@@ -8612,6 +8727,7 @@ void RS_FilterDXFRW::writeObjects() {
                 if (nativeGroupHandles.count(record.handle) == 0)
                     continue;
                 DRW_Group group = groupFromMetadata(record);
+                remapEntry(group);
                 if (m_dwgW->writeGroup(&group)) {
                     ++nativeGroupObjects;
                 } else {
@@ -8623,6 +8739,7 @@ void RS_FilterDXFRW::writeObjects() {
                 if (nativeMLineStyleHandles.count(record.handle) == 0)
                     continue;
                 DRW_MLineStyle style = mlineStyleFromMetadata(record);
+                remapEntry(style);
                 if (m_dwgW->writeMLineStyle(&style)) {
                     ++nativeMLineStyleObjects;
                 } else {
@@ -8634,6 +8751,7 @@ void RS_FilterDXFRW::writeObjects() {
                 if (nativeLayoutHandles.count(record.handle) == 0)
                     continue;
                 DRW_Layout layout = layoutFromMetadata(record);
+                remapEntry(layout);
                 if (m_dwgW->writeLayout(&layout)) {
                     ++nativeLayoutObjects;
                 } else {
@@ -8655,6 +8773,7 @@ void RS_FilterDXFRW::writeObjects() {
                 if (nativeRasterVariablesHandles.count(record.handle) == 0)
                     continue;
                 DRW_RasterVariables rv = rasterVariablesFromMetadata(record);
+                remapEntry(rv);
                 if (m_dwgW->writeRasterVariables(&rv)) {
                     ++nativeRasterVariablesObjects;
                 } else {
@@ -8666,6 +8785,7 @@ void RS_FilterDXFRW::writeObjects() {
                 if (nativeWipeoutVariablesHandles.count(record.handle) == 0)
                     continue;
                 DRW_WipeoutVariables wv = wipeoutVariablesFromMetadata(record);
+                remapEntry(wv);
                 if (m_dwgW->writeWipeoutVariables(&wv)) {
                     ++nativeWipeoutVariablesObjects;
                 } else {
@@ -8677,6 +8797,7 @@ void RS_FilterDXFRW::writeObjects() {
                 if (nativeGeoDataHandles.count(record.handle) == 0)
                     continue;
                 DRW_GeoData gd = geoDataFromMetadata(record);
+                remapEntry(gd);
                 if (m_dwgW->writeGeoData(&gd)) {
                     ++nativeGeoDataObjects;
                 } else {
@@ -8688,6 +8809,7 @@ void RS_FilterDXFRW::writeObjects() {
                 if (nativeSpatialFilterHandles.count(record.handle) == 0)
                     continue;
                 DRW_SpatialFilter sf = spatialFilterFromMetadata(record);
+                remapEntry(sf);
                 if (m_dwgW->writeSpatialFilter(&sf)) {
                     ++nativeSpatialFilterObjects;
                 } else {
@@ -8704,6 +8826,7 @@ void RS_FilterDXFRW::writeObjects() {
                 if (nativeScaleHandles.count(record.handle) == 0)
                     continue;
                 DRW_Scale s = scaleFromMetadata(record);
+                remapEntry(s);
                 if (m_dwgW->writeScale(&s)) {
                     ++nativeScaleObjects;
                 } else {
@@ -8715,6 +8838,7 @@ void RS_FilterDXFRW::writeObjects() {
                 if (nativeIDBufferHandles.count(record.handle) == 0)
                     continue;
                 DRW_IDBuffer b = idBufferFromMetadata(record);
+                remapEntry(b);
                 if (m_dwgW->writeIDBuffer(&b)) {
                     ++nativeIDBufferObjects;
                 } else {
@@ -8726,6 +8850,7 @@ void RS_FilterDXFRW::writeObjects() {
                 if (nativeLayerIndexHandles.count(record.handle) == 0)
                     continue;
                 DRW_LayerIndex li = layerIndexFromMetadata(record);
+                remapEntry(li);
                 if (m_dwgW->writeLayerIndex(&li)) {
                     ++nativeLayerIndexObjects;
                 } else {
@@ -8737,6 +8862,7 @@ void RS_FilterDXFRW::writeObjects() {
                 if (nativeSpatialIndexHandles.count(record.handle) == 0)
                     continue;
                 DRW_SpatialIndex si = spatialIndexFromMetadata(record);
+                remapEntry(si);
                 if (m_dwgW->writeSpatialIndex(&si)) {
                     ++nativeSpatialIndexObjects;
                 } else {
@@ -8748,6 +8874,7 @@ void RS_FilterDXFRW::writeObjects() {
                 if (nativeDictionaryVarHandles.count(record.handle) == 0)
                     continue;
                 DRW_DictionaryVar dv = dictionaryVarFromMetadata(record);
+                remapEntry(dv);
                 if (m_dwgW->writeDictionaryVar(&dv)) {
                     ++nativeDictionaryVarObjects;
                 } else {
@@ -8765,6 +8892,10 @@ void RS_FilterDXFRW::writeObjects() {
                     continue;
                 DRW_DictionaryWithDefault dwd =
                     dictionaryWithDefaultFromMetadata(record);
+                remapEntry(dwd);
+                for (auto& en : dwd.m_entries)
+                    en.m_handle = remapHandle(en.m_handle);
+                dwd.m_defaultEntryHandle = remapHandle(dwd.m_defaultEntryHandle);
                 if (m_dwgW->writeDictionaryWithDefault(&dwd)) {
                     ++nativeDictionaryWithDefaultObjects;
                 } else {
@@ -8776,6 +8907,7 @@ void RS_FilterDXFRW::writeObjects() {
                 if (nativeSortEntsTableHandles.count(record.handle) == 0)
                     continue;
                 DRW_SortEntsTable se = sortEntsTableFromMetadata(record);
+                remapEntry(se);
                 if (m_dwgW->writeSortEntsTable(&se)) {
                     ++nativeSortEntsTableObjects;
                 } else {
@@ -8787,6 +8919,9 @@ void RS_FilterDXFRW::writeObjects() {
                 if (nativeFieldListHandles.count(record.handle) == 0)
                     continue;
                 DRW_FieldList fl = fieldListFromMetadata(record);
+                remapEntry(fl);
+                for (auto& fh : fl.m_fieldHandles)
+                    fh = remapHandle(fh);
                 if (m_dwgW->writeFieldList(&fl)) {
                     ++nativeFieldListObjects;
                 } else {
@@ -8798,6 +8933,11 @@ void RS_FilterDXFRW::writeObjects() {
                 if (nativeFieldHandles.count(record.handle) == 0)
                     continue;
                 DRW_Field f = fieldFromMetadata(record);
+                remapEntry(f);
+                for (auto& ch : f.m_childHandles)
+                    ch = remapHandle(ch);
+                for (auto& oh : f.m_objectHandles)
+                    oh = remapHandle(oh);
                 if (m_dwgW->writeField(&f)) {
                     ++nativeFieldObjects;
                 } else {
@@ -8810,6 +8950,7 @@ void RS_FilterDXFRW::writeObjects() {
                     continue;
                 DRW_UnderlayDefinition definition =
                     underlayDefinitionFromMetadata(record);
+                remapEntry(definition);
                 if (m_dwgW->writeUnderlayDefinition(&definition)) {
                     ++nativeUnderlayDefinitionObjects;
                 } else {
@@ -9267,10 +9408,11 @@ void RS_FilterDXFRW::writeObjects() {
                     RS_Debug::D_WARNING,
                     "Blocked raw DWG replay: invalidated=%d replaced=%d entity=%d "
                     "missing-bytes=%d missing-class=%d writer-rejected=%d "
-                    "version-mismatch=%d (objects=%d sections=%d)",
+                    "version-mismatch=%d fixed-handle=%d (objects=%d sections=%d)",
                     blockedInvalidated, blockedReplaced, blockedEntityReplay,
                     blockedMissingRawBytes, blockedMissingClassMetadata,
                     blockedWriterRejected, blockedVersionMismatch,
+                    blockedFixedHandle,
                     replayedObjects, replayedSections);
             }
             if (semanticOnlyRecords > 0) {
