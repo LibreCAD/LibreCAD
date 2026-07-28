@@ -68,7 +68,12 @@ object_script.libdxfrw.*
 #*.vcproj
 #*.sln
 custom-windows*.*
-*.db*
+# Visual Studio browse database and its SQLite sidecars. Do not widen this to
+# *.db*: that also matches *.dbf, the ESRI Shapefile attribute table, which
+# silently dropped 26 test fixtures from test_data/shp when the SHP filter landed.
+*.db
+*.db-shm
+*.db-wal
 *.opendb
 
 #Doxygen
