@@ -72,7 +72,7 @@ void RS_ActionDrawLineOrthTan::doInitWithContextEntity(RS_Entity* contextEntity,
         // fixme - support of polyline
         setLine(entity);
     }
-    else {
+    else if (entity != nullptr) {
         const RS2::EntityType rtti = entity->rtti();
         if (g_supportedCircleEntityTypes.contains(rtti)) {
             m_actionData->setCircleFirst = true;

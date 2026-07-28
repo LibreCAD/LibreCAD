@@ -99,7 +99,10 @@ namespace {
 void RS_Creation::createParallelThrough(const RS_Vector& coord, const int number, RS_Entity* e, const bool symmetric,
                                         bool distributeWithin,
                                         QList<RS_Entity*>& createdEntities) {
-    Q_ASSERT(e != nullptr);
+    // check given entity:
+    if (e == nullptr) {
+        return;
+    }
 
     double dist = 0.;
     if (e->rtti() == RS2::EntityLine) {
@@ -137,7 +140,10 @@ void RS_Creation::createParallelThrough(const RS_Vector& coord, const int number
  */
 void RS_Creation::createParallel(const RS_Vector& coord, const double distance, const int number, RS_Entity* e, const bool symmetric,
                                  QList<RS_Entity*>& createdEntities) {
-    Q_ASSERT(e != nullptr);
+    // check given entity:
+    if (e == nullptr) {
+        return;
+    }
 
     switch (e->rtti()) {
         case RS2::EntityLine:

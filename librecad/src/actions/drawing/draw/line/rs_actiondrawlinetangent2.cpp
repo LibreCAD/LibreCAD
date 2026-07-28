@@ -73,8 +73,7 @@ void RS_ActionDrawLineTangent2::doInitWithContextEntity(RS_Entity* contextEntity
         const auto polyline = static_cast<RS_Polyline*>(contextEntity);
         entity = polyline->getNearestEntity(clickPos);
     }
-    const RS2::EntityType rtti = entity->rtti();
-    if (g_circleType.contains(rtti)) {
+    if (entity != nullptr && g_circleType.contains(entity->rtti())) {
         m_actionData->circle1 = entity;
         m_actionData->circle2 = nullptr;
         setStatus(SetCircle2);

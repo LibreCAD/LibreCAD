@@ -66,8 +66,7 @@ void LC_ActionDrawLineRelAngle::doInitWithContextEntity(RS_Entity* contextEntity
         const auto polyline = static_cast<RS_Polyline*>(contextEntity);
         entity = polyline->getNearestEntity(clickPos);
     }
-    const RS2::EntityType rtti = entity->rtti();
-    if (g_enTypeList.contains(rtti)) {
+    if (entity != nullptr && g_enTypeList.contains(entity->rtti())) {
         setEntity(entity);
     }
 }

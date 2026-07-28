@@ -337,6 +337,9 @@ int RS_ActionDimAngular::determineQuadrant(const double angle) const {
  */
 bool RS_ActionDimAngular::setData(const RS_Vector &dimPos, const bool calcCenter /*= false*/){
     bool result = false;
+    if (m_line1 == nullptr || m_line2 == nullptr) {
+        return result;
+    }
     if (m_line1->getStartpoint().valid && m_line2->getStartpoint().valid){
 
         if (!m_center.valid || calcCenter){
