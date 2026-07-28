@@ -68,16 +68,11 @@ void RS_ActionDrawLineOrthTan::doInitWithContextEntity(RS_Entity* contextEntity,
         const auto polyline = static_cast<RS_Polyline*>(contextEntity);
         entity = polyline->getNearestEntity(clickPos);
     }
-    // getNearestEntity() returns null when the polyline offers no candidate
-    // segment, or when the nearest one is invisible.
-    if (entity == nullptr) {
-        return;
-    }
     if (isLine(entity)) {
         // fixme - support of polyline
         setLine(entity);
     }
-    else {
+    else if (entity != nullptr) {
         const RS2::EntityType rtti = entity->rtti();
         if (g_supportedCircleEntityTypes.contains(rtti)) {
             m_actionData->setCircleFirst = true;

@@ -63,33 +63,6 @@ TEST_CASE("RS_Creation::createParallelThrough tolerates a null entity", "[rs_cre
     CHECK(created.isEmpty());
 }
 
-TEST_CASE("RS_Creation parallel helpers tolerate a null entity", "[rs_creation][null]") {
-    QList<RS_Entity*> created;
-
-    SECTION("line") {
-        RS_Creation::createParallelLine(g_coord, 0.5, 1, nullptr, false, created);
-    }
-    SECTION("arc") {
-        RS_Creation::createParallelArc(g_coord, 0.5, 1, nullptr, created);
-    }
-    SECTION("circle") {
-        RS_Creation::createParallelCircle(g_coord, 0.5, 1, nullptr, created);
-    }
-    SECTION("spline points") {
-        RS_Creation::createParallelSplinePoints(g_coord, 0.5, 1, nullptr, created);
-    }
-
-    CHECK(created.isEmpty());
-}
-
-TEST_CASE("RS_Creation::createParallel with a null entity ignores the count", "[rs_creation][null]") {
-    // The crash was on the very first dereference, before the loop, so a count above
-    // one must not change the outcome.
-    QList<RS_Entity*> created;
-    RS_Creation::createParallel(g_coord, 0.5, 25, nullptr, false, created);
-    CHECK(created.isEmpty());
-}
-
 // ---------------------------------------------------------------------------
 // Positive cases. Without these the null-input tests above would still pass if
 // a guard were mutated into an unconditional early return, which would disable

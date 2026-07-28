@@ -107,9 +107,7 @@ bool LC_ActionDrawLineParallel::doUpdateDistanceByInteractiveInput(const QString
 
 bool LC_ActionDrawLineParallel::doTriggerModifications(LC_DocumentModificationBatch& ctx) {
     RS_Creation::createParallel(*m_coord, m_distance, m_numberToCreate, m_entity, false, ctx.entitiesToAdd);
-    // Nothing to commit when no parallel is possible: no entity under the cursor,
-    // or an inner circle parallel whose distance exceeds the radius.
-    return !ctx.entitiesToAdd.isEmpty();
+    return true;
 }
 
 void LC_ActionDrawLineParallel::onMouseMoveEvent([[maybe_unused]] const int status, const LC_MouseEvent* e) {

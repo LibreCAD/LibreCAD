@@ -182,10 +182,7 @@ void RS_Creation::createParallel(const RS_Vector& coord, const double distance, 
  */
 void RS_Creation::createParallelLine(const RS_Vector& coord, double distance, int number, const RS_Line* e, bool symmetric,
                                      QList<RS_Entity*>& createdEntities) {
-    // check given entity:
-    if (e == nullptr) {
-        return;
-    }
+    Q_ASSERT(e != nullptr);
 
     double ang = e->getAngle1() + M_PI_2;
     RS_LineData parallelData;
@@ -245,10 +242,7 @@ void RS_Creation::createParallelLine(const RS_Vector& coord, double distance, in
  *
  */
 void RS_Creation::createParallelArc(const RS_Vector& coord, double distance, const int number, RS_Arc* e, QList<RS_Entity*>& createdEntities) {
-    // check given entity:
-    if (e == nullptr) {
-        return;
-    }
+    Q_ASSERT(e != nullptr);
 
     RS_ArcData parallelData{};
     const bool inside = e->getCenter().distanceTo(coord) < e->getRadius();
@@ -304,10 +298,7 @@ void RS_Creation::createParallelArc(const RS_Vector& coord, double distance, con
  */
 void RS_Creation::createParallelCircle(const RS_Vector& coord, double distance, const int number, const RS_Circle* e,
                                        QList<RS_Entity*>& createdEntities) {
-    // check given entity:
-    if (e == nullptr) {
-        return;
-    }
+    Q_ASSERT(e != nullptr);
 
     RS_CircleData parallelData{};
 
@@ -365,10 +356,7 @@ void RS_Creation::createParallelCircle(const RS_Vector& coord, double distance, 
  */
 void RS_Creation::createParallelSplinePoints(const RS_Vector& coord, const double distance, const int number, const LC_SplinePoints* e,
                                              QList<RS_Entity*>& createdEntities) {
-    // check given entity:
-    if (e == nullptr) {
-        return;
-    }
+    Q_ASSERT(e != nullptr);
 
     LC_SplinePoints* psp = nullptr;
     for (int i = 1; i <= number; ++i) {
