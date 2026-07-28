@@ -406,11 +406,10 @@ bool dwgRW::write(DRW_Interface *interface_, DRW::Version ver, bool bin) {
         iface->writeEntities();
         iface->writeObjects();
     }
-    if (ok) {
-        ok = writer->writeDwgHandles() &&
-             writer->writeSecondHeader() &&
-             writer->finalize();
-    }
+    ok = ok &&
+         writer->writeDwgHandles() &&
+         writer->writeSecondHeader() &&
+         writer->finalize();
     writer.reset();
     filestr.close();
     if (!ok) error = DRW::BAD_OPEN;
