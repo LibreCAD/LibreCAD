@@ -125,6 +125,20 @@ std::vector<std::string> recordGroupValues(const std::string &path,
   return values;
 }
 
+// Reads the first value of a group as a double, requiring that the group is
+// actually present. recordGroupValues() legitimately returns an empty vector
+// when the record carries no such group, and calling .front() on that is
+// undefined behaviour — on Linux a segmentation fault that aborts the whole
+// suite instead of failing one assertion. Checking that a record exists does
+// not imply any particular group inside it exists.
+double firstGroupValueAsDouble(const std::string &path,
+                               const std::string &recordName,
+                               const std::string &code) {
+  const std::vector<std::string> values = recordGroupValues(path, recordName, code);
+  REQUIRE_FALSE(values.empty());
+  return std::stod(values.front());
+}
+
 // Collects every group-5 (handle) value in a DXF file, in order. DXF is a
 // strict (code, value) pair stream, so read two lines at a time — scanning
 // line-by-line would confuse a *value* of "5" with the group-5 code.
@@ -517,10 +531,10 @@ TEST_CASE("DXF filter normalizes reflected planar curves once",
   REQUIRE(countRecords(out, "CIRCLE") == 1);
   REQUIRE(countRecords(out, "ARC") == 1);
   REQUIRE(countRecords(out, "ELLIPSE") == 1);
-  CHECK(std::stod(recordGroupValues(out, "CIRCLE", "10").front()) == -10.0);
-  CHECK(std::stod(recordGroupValues(out, "ARC", "10").front()) == -20.0);
-  CHECK(std::stod(recordGroupValues(out, "ELLIPSE", "10").front()) == -30.0);
-  CHECK(std::stod(recordGroupValues(out, "ELLIPSE", "11").front()) == -5.0);
+  CHECK(firstGroupValueAsDouble(out, "CIRCLE", "10") == -10.0);
+  CHECK(firstGroupValueAsDouble(out, "ARC", "10") == -20.0);
+  CHECK(firstGroupValueAsDouble(out, "ELLIPSE", "10") == -30.0);
+  CHECK(firstGroupValueAsDouble(out, "ELLIPSE", "11") == -5.0);
   for (const char *record : {"CIRCLE", "ARC", "ELLIPSE"})
     CHECK(recordGroupValues(out, record, "210").empty());
 
@@ -996,8 +1010,8 @@ TEST_CASE("DXF filter normalizes TRACE and SOLID extrusion once",
   for (const auto &[record, expectedX, expectedThickness] :
        {std::tuple{"TRACE", -1.0, -0.5}, std::tuple{"SOLID", -13.0, -1.5}}) {
     REQUIRE(countRecords(out, record) == 1);
-    CHECK(std::stod(recordGroupValues(out, record, "10").front()) == expectedX);
-    CHECK(std::stod(recordGroupValues(out, record, "39").front()) == expectedThickness);
+    CHECK(firstGroupValueAsDouble(out, record, "10") == expectedX);
+    CHECK(firstGroupValueAsDouble(out, record, "39") == expectedThickness);
     CHECK(recordGroupValues(out, record, "210").empty());
   }
 
