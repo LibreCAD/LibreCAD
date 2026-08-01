@@ -198,6 +198,22 @@ TEST_CASE("RS_Math solvers reject non-finite coefficients (#2722)",
     SECTION("quarticSolverFull with a single NaN coefficient") {
         CHECK(RS_Math::quarticSolverFull({1.0, 2.0, nan, 3.0, 1.0}).empty());
     }
+    SECTION("quarticSolverFull with an infinite coefficient") {
+        CHECK(RS_Math::quarticSolverFull({inf, 2.0, 3.0, 4.0, 1.0}).empty());
+        CHECK(RS_Math::quarticSolverFull({1.0, 2.0, -inf, 4.0, 1.0}).empty());
+    }
+    SECTION("quadraticSolver rejects non-finite coefficients") {
+        CHECK(RS_Math::quadraticSolver({nan, 1.0}).empty());
+        CHECK(RS_Math::quadraticSolver({1.0, nan}).empty());
+        CHECK(RS_Math::quadraticSolver({inf, 1.0}).empty());
+        CHECK(RS_Math::quadraticSolver({1.0, -inf}).empty());
+    }
+    SECTION("quarticSolver rejects non-finite coefficients") {
+        CHECK(RS_Math::quarticSolver({nan, 1.0, 2.0, 3.0}).empty());
+        CHECK(RS_Math::quarticSolver({1.0, 2.0, 3.0, nan}).empty());
+        CHECK(RS_Math::quarticSolver({inf, 1.0, 2.0, 3.0}).empty());
+        CHECK(RS_Math::quarticSolver({1.0, -inf, 2.0, 3.0}).empty());
+    }
 
     // Finite input must still solve: without these, returning empty
     // unconditionally would pass every case above while disabling the solvers.
@@ -210,6 +226,15 @@ TEST_CASE("RS_Math solvers reject non-finite coefficients (#2722)",
         CHECK(sorted[0] == Approx(1.0).margin(1e-9));
         CHECK(sorted[1] == Approx(2.0).margin(1e-9));
         CHECK(sorted[2] == Approx(3.0).margin(1e-9));
+    }
+    SECTION("finite quadratic still solves") {
+        // (x-2)(x-3) = x^2 - 5x + 6
+        const std::vector<double> roots = RS_Math::quadraticSolver({-5.0, 6.0});
+        REQUIRE(roots.size() == 2);
+        std::vector<double> sorted = roots;
+        std::sort(sorted.begin(), sorted.end());
+        CHECK(sorted[0] == Approx(2.0).margin(1e-9));
+        CHECK(sorted[1] == Approx(3.0).margin(1e-9));
     }
     SECTION("finite quartic still solves") {
         // (x-1)(x-2)(x-3)(x-4) = x^4 - 10x^3 + 35x^2 - 50x + 24
