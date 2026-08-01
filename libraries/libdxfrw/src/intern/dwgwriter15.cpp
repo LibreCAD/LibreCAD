@@ -21,6 +21,7 @@
 #include "../drw_base.h"
 #include "../drw_entities.h"
 #include "../drw_objects.h"
+#include "drw_dbg.h"
 #include "dwgbuffer.h"
 #include "dwgbufferw.h"
 #include "dwgutil.h"
@@ -2108,8 +2109,18 @@ bool dwgWriter15::writeDwgHandles() {
     // order, but the sort defends against future out-of-order emit.
     std::sort(m_objectMap.begin(), m_objectMap.end());
     for (size_t i = 1; i < m_objectMap.size(); ++i) {
-        if (m_objectMap[i - 1].first == m_objectMap[i].first)
+        if (m_objectMap[i - 1].first == m_objectMap[i].first) {
+            // Two objects were emitted with the same handle, so the object map
+            // is ambiguous and the file would be unreadable: fail the write.
+            // Naming the handle matters because this is otherwise silent - the
+            // caller sees only BAD_OPEN and a zero-byte file, with nothing to
+            // say which object collided. It is the caller's job to remap or
+            // withhold the colliding object before writing.
+            DRW_DBG("dwgWriter15::writeDwgHandles: duplicate handle ");
+            DRW_DBGH(m_objectMap[i].first);
+            DRW_DBG("\n");
             return false;
+        }
     }
 
     // Page-emit walk.  Each page is bounded at ≤2030 bytes of (size
