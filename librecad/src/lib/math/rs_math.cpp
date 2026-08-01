@@ -48,6 +48,23 @@
 namespace {
     constexpr double g_twoPi = M_PI * 2; //2*PI
 
+    // Polynomial solvers reject non-finite coefficients rather than carrying
+    // them into the algebra. A NaN or an infinity has no roots to report, and
+    // in the complex branch of cubicSolver it reaches
+    // std::pow(std::complex, 1./3) - which libstdc++ evaluates as
+    // std::polar(std::abs(x), ...). std::abs of a non-finite complex is not
+    // finite, and std::polar asserts a non-negative modulus, so the process
+    // aborts where the standard library is built with _GLIBCXX_ASSERTIONS
+    // instead of merely producing a non-finite root. See issue #2722.
+    bool isFiniteCoefficients(const std::vector<double>& ce) {
+        for (double c : ce) {
+            if (!std::isfinite(c)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     const QRegularExpression REGEXP_UNIT(R"((?P<sign>^-?))" R"((?:(?:(?:(?P<degrees>\d+\.?\d*)(?:degree[s]?|deg|[Dd]|°)))" // DMS
         R"((?:(?P<minutes>\d+\.?\d*)(?:minute[s]?|min|[Mm]|'))?)" R"((?:(?P<seconds>\d+\.?\d*)(?:second[s]?|sec|[Ss]|"))?$)|)"
         R"((?:(?:(?P<meters>\d+\.?\d*)(?:meter[s]?|m(?![m])))?)" // Metric
@@ -526,6 +543,9 @@ std::vector<double> RS_Math::quadraticSolver(const std::vector<double>& ce)
     if (ce.size() != 2) {
         return ans;
     }
+    if (!isFiniteCoefficients(ce)) {
+        return ans;
+    }
     using LDouble = long double;
     const LDouble b = -0.5L * ce[0];
     const LDouble c = ce[1];
@@ -587,6 +607,9 @@ std::vector<double> RS_Math::cubicSolver(const std::vector<double>& ce)
     std::vector<double> ans;
     ans.reserve(3);
     if (ce.size() != 3) {
+        return {};
+    }
+    if (!isFiniteCoefficients(ce)) {
         return {};
     }
 
@@ -688,6 +711,9 @@ std::vector<double> RS_Math::quarticSolver(const std::vector<double>& ce) {
     std::vector<double> ans(0, 0.);
     if (ce.size() != 4) {
         LC_ERR << "expected array size=4, got " << ce.size();
+        return ans;
+    }
+    if (!isFiniteCoefficients(ce)) {
         return ans;
     }
     //LC_LOG<<"x^4+("<<ce[0]<<")*x^3+("<<ce[1]<<")*x^2+("<<ce[2]<<")*x+("<<ce[3]<<")==0";
@@ -842,6 +868,9 @@ std::vector<double> RS_Math::quarticSolverFull(const std::vector<double>& ce) {
 
     std::vector<double> roots(0, 0.);
     if (ce.size() != 5) {
+        return roots;
+    }
+    if (!isFiniteCoefficients(ce)) {
         return roots;
     }
     std::vector<double> ce2(4, 0.);
