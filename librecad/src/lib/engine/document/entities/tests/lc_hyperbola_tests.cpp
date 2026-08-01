@@ -973,6 +973,41 @@ TEST_CASE("LC_Hyperbola: getParamFromPoint round-trips on both branches (A17)",
   }
 }
 
+TEST_CASE("LC_Hyperbola: nearest point at a vertex does not produce NaN (#2722)",
+          "[hyperbola][nearest][regression]") {
+  // At a vertex the coordinate coincides with (cx + A, cy + C), so the quartic
+  // denominator (B*dx + D*dy) is exactly zero. The coefficients were computed
+  // before that was checked, so all four came out NaN and reached
+  // RS_Math::quarticSolverFull. Inside the complex branch of the cubic solver
+  // that becomes std::pow(complex, 1./3), which libstdc++ evaluates as
+  // std::polar(abs(x), ...) - and a NaN modulus trips the library's own
+  // assertion, aborting the process where the standard library is built with
+  // _GLIBCXX_ASSERTIONS (Arch Linux ships that by default).
+  //
+  // libc++ has no such assertion, so this asserts the observable consequence
+  // rather than the abort: the vertex must come back exactly, finite, and with
+  // a finite distance.
+  auto hb = makeCanonicalHyperbola(2.0, 1.0, -1.0, 1.0);
+  const RS_Vector vertex = hb.getPoint(0.0, false);
+  REQUIRE(vertex.valid);
+
+  double dist = -1.0;
+  const RS_Vector nearest = hb.getNearestPointOnEntity(vertex, true, &dist);
+
+  REQUIRE(nearest.valid);
+  CHECK_FALSE(std::isnan(nearest.x));
+  CHECK_FALSE(std::isnan(nearest.y));
+  CHECK(nearest.x == Approx(vertex.x).margin(1e-9));
+  CHECK(nearest.y == Approx(vertex.y).margin(1e-9));
+  CHECK_FALSE(std::isnan(dist));
+  CHECK(dist == Approx(0.0).margin(1e-9));
+
+  // The parameter recovered from the vertex must also be usable.
+  const double phi = hb.getParamFromPoint(nearest, false);
+  CHECK_FALSE(std::isnan(phi));
+  CHECK(phi == Approx(0.0).margin(1e-6));
+}
+
 TEST_CASE("LC_Hyperbola: moveStartpoint is trim, not drag (A6)",
           "[hyperbola][trim][regression]") {
   auto hb = makeCanonicalHyperbola(2.0, 1.0, -1.0, 1.0);

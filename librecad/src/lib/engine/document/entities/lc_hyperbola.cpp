@@ -1301,22 +1301,31 @@ RS_Vector LC_Hyperbola::doGetNearestPointOnEntity(const RS_Vector &coord,
   double dx = cx + A - px;
   double dy = cy + C - py;
 
-  double p = 4.0 * (A * dx + C * dy) / (B * dx + D * dy);
-  double q = (dx * dx + dy * dy - aa * aa + bb * bb) / (B * dx + D * dy) * 2.0 -
-             p * p / 2.0 - 3.0;
-  double r = -p * (q + 5.0);
-  double s = -(dx * dx + dy * dy - aa * aa - bb * bb) / (B * dx + D * dy) - q;
+  // Every coefficient below divides by this. It is zero when coord lies on a
+  // vertex: the vertex is at (cx + A, cy + C), so dx and dy are both zero
+  // there, and the divisions yield NaN. The loop below already declined to use
+  // any root in that case, but only after the solver had run - and a NaN
+  // coefficient reaches std::polar() with a NaN modulus inside the complex
+  // cubic step, which aborts when the standard library is built with
+  // _GLIBCXX_ASSERTIONS. Leave the roots empty instead; the endpoint and
+  // initial-guess candidates already computed above remain the answer.
+  const double denom = B * dx + D * dy;
 
-  std::vector<double> ce = {s, r, q, p,
-                            1.0}; // t^4 + p t^3 + q t^2 + r t + s = 0
+  std::vector<double> roots;
+  if (std::abs(denom) >= RS_TOLERANCE) {
+    double p = 4.0 * (A * dx + C * dy) / denom;
+    double q = (dx * dx + dy * dy - aa * aa + bb * bb) / denom * 2.0 -
+               p * p / 2.0 - 3.0;
+    double r = -p * (q + 5.0);
+    double s = -(dx * dx + dy * dy - aa * aa - bb * bb) / denom - q;
 
-  std::vector<double> roots = RS_Math::quarticSolverFull(ce);
+    std::vector<double> ce = {s, r, q, p,
+                              1.0}; // t^4 + p t^3 + q t^2 + r t + s = 0
+    roots = RS_Math::quarticSolverFull(ce);
+  }
 
   // Evaluate all valid real roots
   for (double t : roots) {
-    if (std::abs(B * dx + D * dy) < RS_TOLERANCE)
-      continue; // degenerate case skipped
-
     double phi = std::atanh(t);
     if (std::isnan(phi) || std::isinf(phi))
       continue;

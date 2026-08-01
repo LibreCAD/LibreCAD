@@ -589,6 +589,15 @@ std::vector<double> RS_Math::cubicSolver(const std::vector<double>& ce)
     if (ce.size() != 3) {
         return {};
     }
+    // A non-finite coefficient has no roots to report, and carrying one into
+    // the complex branch below reaches std::pow(std::complex, 1./3) - which
+    // libstdc++ evaluates as std::polar(std::abs(x), ...). std::abs of a NaN
+    // complex is NaN, and std::polar asserts its modulus is non-negative, so a
+    // NaN aborts the process where the standard library is built with
+    // _GLIBCXX_ASSERTIONS rather than merely producing a NaN root.
+    if (!std::isfinite(ce[0]) || !std::isfinite(ce[1]) || !std::isfinite(ce[2])) {
+        return {};
+    }
 
     // depressed cubic, Tschirnhaus transformation, x= t - b/(3a)
     // t^3 + p t +q =0
@@ -843,6 +852,14 @@ std::vector<double> RS_Math::quarticSolverFull(const std::vector<double>& ce) {
     std::vector<double> roots(0, 0.);
     if (ce.size() != 5) {
         return roots;
+    }
+    // Reject non-finite input here too, so a bad coefficient is reported as
+    // "no roots" instead of propagating through the depressed-quartic algebra
+    // and the cubic resolvent (see RS_Math::cubicSolver).
+    for (double c : ce) {
+        if (!std::isfinite(c)) {
+            return roots;
+        }
     }
     std::vector<double> ce2(4, 0.);
 
