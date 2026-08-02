@@ -4489,7 +4489,11 @@ bool dxfRW::processDimStyle() {
             DRW_DBG(sectionstr); DRW_DBG("\n");
             if (sectionstr == "DIMSTYLE") {
                 reading = true;
-                dimSty.reset();
+                // Start from a pristine record. reset() leaves the $DIM
+                // override map and the optional string codes populated, and
+                // syncStructToVars() keeps whatever the map already holds, so
+                // reusing it imports every style with the first one's values.
+                dimSty = DRW_Dimstyle{};
             } else if (sectionstr == "ENDTAB") {
                 return true;  //found ENDTAB terminate
             }
