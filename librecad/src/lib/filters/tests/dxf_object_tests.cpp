@@ -3446,3 +3446,63 @@ TEST_CASE("DXF LWPolyline conversion retains raw elevation metadata",
   CHECK(converted.m_captured.vertlist[0]->bulge == 0.5);
   CHECK(converted.m_captured.vertlist[1]->bulge == -0.5);
 }
+
+namespace {
+struct CapturedDimStyle {
+  std::string m_name;
+  double m_dimasz = -1.0;
+  double m_dimtxt = -1.0;
+  std::string m_dimblk;
+};
+
+class DimStyleCapture : public StubInterface {
+public:
+  std::vector<CapturedDimStyle> m_captured;
+  void addDimStyle(const DRW_Dimstyle &d) override {
+    CapturedDimStyle style;
+    style.m_name = d.name;
+    // Read through get() exactly like RS_FilterDXFRW::createDimStyle does.
+    if (const DRW_Variant *var = d.get("$DIMASZ")) style.m_dimasz = var->d_val();
+    if (const DRW_Variant *var = d.get("$DIMTXT")) style.m_dimtxt = var->d_val();
+    if (const DRW_Variant *var = d.get("$DIMBLK")) style.m_dimblk = var->c_str();
+    m_captured.push_back(style);
+  }
+};
+} // namespace
+
+// Issue #2723: processDimStyle reuses one DRW_Dimstyle for every record, so each
+// record has to start from a pristine one. reset() leaves the $DIM override map
+// and the optional string codes populated, and syncStructToVars keeps whatever
+// the map already holds, so every style was imported with the first one's values.
+TEST_CASE("DXF DIMSTYLE records keep their own values (issue #2723)",
+          "[dxf][dimstyle]") {
+  DimStyleCapture cap;
+  const char *dxf =
+      "0\nSECTION\n2\nTABLES\n"
+      "0\nTABLE\n2\nDIMSTYLE\n5\n5F\n100\nAcDbSymbolTable\n70\n3\n"
+      "0\nDIMSTYLE\n105\n27\n100\nAcDbDimStyleTableRecord\n2\nStandard\n70\n0\n"
+      "5\nMYARROW\n41\n2.5\n140\n2.5\n"
+      "0\nDIMSTYLE\n105\n28\n100\nAcDbDimStyleTableRecord\n2\nARCH_MM\n70\n0\n"
+      "41\n100.0\n140\n80.0\n"
+      "0\nDIMSTYLE\n105\n29\n100\nAcDbDimStyleTableRecord\n2\nEZ_M_100\n70\n0\n"
+      "41\n0.25\n140\n0.25\n"
+      "0\nENDTAB\n0\nENDSEC\n0\nEOF\n";
+  readDxf(dxf, cap, "lc_dimstyle_multi_read.dxf");
+
+  REQUIRE(cap.m_captured.size() == 3);
+  CHECK(cap.m_captured[0].m_name == "Standard");
+  CHECK(cap.m_captured[0].m_dimasz == 2.5);
+  CHECK(cap.m_captured[0].m_dimtxt == 2.5);
+  CHECK(cap.m_captured[0].m_dimblk == "MYARROW");
+
+  // These came back as Standard's 2.5/2.5/MYARROW before the fix.
+  CHECK(cap.m_captured[1].m_name == "ARCH_MM");
+  CHECK(cap.m_captured[1].m_dimasz == 100.0);
+  CHECK(cap.m_captured[1].m_dimtxt == 80.0);
+  CHECK(cap.m_captured[1].m_dimblk.empty());
+
+  CHECK(cap.m_captured[2].m_name == "EZ_M_100");
+  CHECK(cap.m_captured[2].m_dimasz == 0.25);
+  CHECK(cap.m_captured[2].m_dimtxt == 0.25);
+  CHECK(cap.m_captured[2].m_dimblk.empty());
+}
