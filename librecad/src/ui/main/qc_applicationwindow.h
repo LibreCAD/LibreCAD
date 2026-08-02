@@ -338,6 +338,10 @@ public:
         return m_pluginDockWidgetList;
     }
 
+    QList<QToolBar*> getPluginToolbarList() const{
+        return m_pluginToolbarList;
+    }
+
     QList<QC_PluginInterface*> getLoadedPluginList() const {
         QList<QC_PluginInterface*> list = QList<QC_PluginInterface*>();
         if (m_pluginInvoker != nullptr) {
@@ -457,6 +461,7 @@ protected:
     QG_SnapToolBar* m_snapToolBar{nullptr};
     QG_PenToolBar* m_penToolBar{nullptr}; //!< for selecting the current pen
     QToolBar* m_toolOptionsToolbar{nullptr}; //!< for individual tool options
+    QList<QToolBar*> m_pluginToolbarList;
 
     // --- Actions ---
     QAction* scriptOpenIDE{nullptr};

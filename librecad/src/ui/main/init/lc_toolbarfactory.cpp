@@ -33,6 +33,7 @@
 #include "lc_ucslistwidget.h"
 #include "lc_workspacelistbutton.h"
 #include "qc_applicationwindow.h"
+#include "qc_plugininterface.h"
 #include "qg_pentoolbar.h"
 #include "qg_snaptoolbar.h"
 #include "rs_settings.h"
@@ -47,6 +48,23 @@ void LC_ToolbarFactory::initToolBars(){
     createCategoriesToolbar();
     createStandardToolbars();
     createCustomToolbars();
+}
+
+void LC_ToolbarFactory::initPluginToolbars() {
+    constexpr QSizePolicy tbPolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    bool isFirstToolbar = true;
+    for (QC_PluginInterface* plugin : m_appWin->getLoadedPluginList()) {
+        for (const PluginToolbar &tb: plugin->getCapabilities().toolbars) {
+            QToolBar *toolbar = createGenericToolbar(tb.name, tb.name, tbPolicy, {}, 1);
+            if (isFirstToolbar) {
+                m_appWin->addToolBarBreak();
+                isFirstToolbar = false;
+            }
+            toolbar->addActions(tb.actions);
+            m_appWin->m_pluginToolbarList.append(toolbar);
+            addToTop(toolbar);
+        }
+    }
 }
 
 QToolBar* LC_ToolbarFactory::createPenToolbar(const QSizePolicy &tbPolicy) const{

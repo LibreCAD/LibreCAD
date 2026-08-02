@@ -29,6 +29,8 @@
 
 #include <QtPlugin>
 
+#include <QAction>
+
 class Document_Interface;
 
 /**
@@ -48,6 +50,19 @@ class PluginMenuLocation
     QString menuEntryAction_Tip;
 };
 
+class PluginToolbar
+{
+public:
+    PluginToolbar(const QString& name, QList<QAction*> actions) {
+        this->name = name;
+        this->actions = actions;
+    }
+
+    QString name;
+    QList<QAction*> actions;
+};
+
+
 class PluginWidget
 {
 public:
@@ -63,6 +78,7 @@ public:
 class PluginCapabilities {
     public:
         QList<PluginMenuLocation> menuEntryPoints;
+        QList<PluginToolbar> toolbars;
         QList<PluginWidget> widgets;
         QList<int> paintEventPriorities;    // if set, this plugin will get it's paintEvent function called
                                         // lower numbers are drawn first

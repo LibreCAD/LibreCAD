@@ -251,6 +251,8 @@ void LC_ApplicationWindowInitializer::initPlugins(){
     m_appWin->m_pluginInvoker->loadPlugins();
     LC_WidgetFactory widgetFactory(m_appWin);
     widgetFactory.initPluginWidgets();
+    LC_ToolbarFactory toolbarFactory(m_appWin);
+    toolbarFactory.initPluginToolbars();
     m_appWin->recreateToolbarsMenu();
 }
 

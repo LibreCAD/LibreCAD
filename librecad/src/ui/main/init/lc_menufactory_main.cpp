@@ -527,6 +527,11 @@ void LC_MenuFactoryMain::prepareWorkspaceMenuComponents() const {
         }
         menuToolbars->QWidget::addAction(tb->toggleViewAction());
     }
+
+    menuToolbars->addSeparator();
+    for (const QToolBar* tb : m_appWin->getPluginToolbarList()) {
+        menuToolbars->QWidget::addAction(tb->toggleViewAction());
+    }
 }
 
 void LC_MenuFactoryMain::recreateToolbarsMenu() const {
