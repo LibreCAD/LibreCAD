@@ -121,6 +121,7 @@ void LC_ActionModifyBreakDivide::doOnLeftMouseButtonRelease(const LC_MouseEvent*
 
 bool LC_ActionModifyBreakDivide::doCheckMayTrigger(){
     bool result = false;
+    bool entireEntityRemoved = false;
     if (m_triggerData != nullptr){
         RS_Entity* en = m_triggerData->entity;
         RS_Vector snap = m_triggerData->snapPoint;
@@ -130,24 +131,24 @@ bool LC_ActionModifyBreakDivide::doCheckMayTrigger(){
             switch (rtti) {
                 case RS2::EntityLine: {
                     const auto *line = dynamic_cast<RS_Line *>(en);
-                    createEntitiesForLine(line, snap, m_triggerData->entitiesToCreate, false);
+                    entireEntityRemoved = createEntitiesForLine(line, snap, m_triggerData->entitiesToCreate, false);
                     break;
                 }
                 case RS2::EntityCircle: {
                     const auto *circle = dynamic_cast<RS_Circle *>(en);
-                    createEntitiesForCircle(circle, snap, m_triggerData->entitiesToCreate, false);
+                    entireEntityRemoved = createEntitiesForCircle(circle, snap, m_triggerData->entitiesToCreate, false);
                     break;
                 }
                 case RS2::EntityArc: {
                     auto *arc = dynamic_cast<RS_Arc *>(en);
-                    createEntitiesForArc(arc, snap, m_triggerData->entitiesToCreate, false);
+                    entireEntityRemoved = createEntitiesForArc(arc, snap, m_triggerData->entitiesToCreate, false);
                     break;
                 }
                 default:
                     break;
             }
         }
-        if (m_triggerData->entitiesToCreate.isEmpty()){
+        if (m_triggerData->entitiesToCreate.isEmpty() && !entireEntityRemoved){
             commandMessage(tr("Invalid entity selected - no segments between intersections to break/divide."));
         }
         else {
@@ -188,7 +189,8 @@ void LC_ActionModifyBreakDivide::doFinish(){
  * @param list list to which entities should be added
  * @param preview true if entities for preview
  */
-void LC_ActionModifyBreakDivide::createEntitiesForLine(const RS_Line *line, const RS_Vector &snap, QList<RS_Entity*> &list, const bool preview) const {
+bool LC_ActionModifyBreakDivide::createEntitiesForLine(const RS_Line *line, const RS_Vector &snap, QList<RS_Entity*> &list, const bool preview) const {
+    bool entireEntityRemoved = false;
     // check whether selection entity may be expanded
     if (checkMayExpandEntity(line, "")){
         // determine snap point projection on line
@@ -222,29 +224,34 @@ void LC_ActionModifyBreakDivide::createEntitiesForLine(const RS_Line *line, cons
                     }
                 }
 
+                const int segmentDisposition = data->segmentDisposition;
+                // the selected segment is the whole entity, so it has no edges to divide it at
+                // and nothing remains of it besides the selected segment itself
+                const bool entireEntity = segmentDisposition == LC_Division::SegmentDisposition::SEGMENT_ENTIRE;
+                entireEntityRemoved = !preview && entireEntity && createNonSnapSegments;
+
                 // attributes of original entity
                 const RS_Pen pen = line->getPen(false);
                 RS_Layer* layer = line->getLayer(true);
 
                 // creating snap segment (where snap was performed)
-                if (createSnapSegment){
+                if (createSnapSegment && !entireEntity){
                     createLineEntity(preview, data->snapSegmentStart, data->snapSegmentEnd, pen, layer, list);
                 }
-                const int segmentDisposition = data->segmentDisposition;
 
                 // in preview mode provide visual indication of division/break points
                 if (preview){
                     // check that start of segment is not line endpoint
-                    if (segmentDisposition != LC_Division::SegmentDisposition::SEGMENT_TO_START){
+                    if (!entireEntity && segmentDisposition != LC_Division::SegmentDisposition::SEGMENT_TO_START){
                         createRefSelectablePoint(data->snapSegmentStart, list);
                     }
 
                     // check that end of segment is not line endpoint
-                    if (segmentDisposition != LC_Division::SegmentDisposition::SEGMENT_TO_END){
+                    if (!entireEntity && segmentDisposition != LC_Division::SegmentDisposition::SEGMENT_TO_END){
                         createRefSelectablePoint(data->snapSegmentEnd, list);
                     }
 
-                    if (isInfoCursorForModificationEnabled()) {
+                    if (!entireEntity && isInfoCursorForModificationEnabled()) {
                         msg(tr("Break/Divide Line"))
                             .vector(tr("Point 1:"), data->snapSegmentStart)
                             .vector(tr("Point 2:"), data->snapSegmentEnd)
@@ -253,7 +260,7 @@ void LC_ActionModifyBreakDivide::createEntitiesForLine(const RS_Line *line, cons
                 }
 
                 // create segments of line that are outside of segment selected by the user
-                if (createNonSnapSegments){
+                if (createNonSnapSegments && !entireEntity){
                     if (segmentDisposition != LC_Division::SegmentDisposition::SEGMENT_TO_START){
                         // we don't need this segment if snap is between line start point and intersection point
                         createLineEntity(preview, line->getStartpoint(), data->snapSegmentStart, pen, layer, list);
@@ -268,6 +275,7 @@ void LC_ActionModifyBreakDivide::createEntitiesForLine(const RS_Line *line, cons
             delete data;
         }
     }
+    return entireEntityRemoved;
 }
 /**
  * Creates individual line for given coordinates. If not for preview, also assigns provided pen and layer attributes
@@ -298,7 +306,8 @@ void LC_ActionModifyBreakDivide::createLineEntity(const bool preview, const RS_V
  * @param list
  * @param preview
  */
-void LC_ActionModifyBreakDivide::createEntitiesForCircle(const RS_Circle* circle, RS_Vector &snap, QList<RS_Entity *> &list, bool preview) const {
+bool LC_ActionModifyBreakDivide::createEntitiesForCircle(const RS_Circle* circle, RS_Vector &snap, QList<RS_Entity *> &list, bool preview) const {
+    bool entireEntityRemoved = false;
     // check that we may expand the circle
     if (checkMayExpandEntity(circle, "")){
         // determine snap point projection on entity
@@ -340,17 +349,22 @@ void LC_ActionModifyBreakDivide::createEntitiesForCircle(const RS_Circle* circle
                 }
             }
 
+            // the selected segment is the whole circle, so it has no edges to divide it at
+            // and nothing remains of it besides the selected segment itself
+            const bool entireEntity = data->segmentDisposition == LC_Division::SegmentDisposition::SEGMENT_ENTIRE;
+            entireEntityRemoved = !preview && entireEntity && createNonSnapSegments;
+
             // attributes of original circle
             RS_Pen pen = circle->getPen(false);
             RS_Layer* layer = circle->getLayer();
 
             // create snap arc segment
-            if (createSnapSegment){
+            if (createSnapSegment && !entireEntity){
                 createArcEntity(arcData, preview, pen, layer, list);
             }
 
             // create complimentary non-snap arc segment, if needed
-            if (createNonSnapSegments){
+            if (createNonSnapSegments && !entireEntity){
                 RS_ArcData arcData1 = arcData;
                 arcData1.reversed = !arcData.reversed; // that ark wil be in same points, yet reversed
                 createArcEntity(arcData1, preview, pen, layer, list);
@@ -360,12 +374,13 @@ void LC_ActionModifyBreakDivide::createEntitiesForCircle(const RS_Circle* circle
             if (preview){
                 // todo - ignore refpoints visibility for divide?
                  RS_Vector dividePoint1 = center.relative(radius, data->snapSegmentStartAngle);
-                 createRefSelectablePoint(dividePoint1, list);
-
                  RS_Vector dividePoint2 = center.relative(radius, data->snapSegmentEndAngle);
-                 createRefSelectablePoint(dividePoint2, list);
+                 if (!entireEntity){
+                     createRefSelectablePoint(dividePoint1, list);
+                     createRefSelectablePoint(dividePoint2, list);
+                 }
 
-                if (isInfoCursorForModificationEnabled()){
+                if (!entireEntity && isInfoCursorForModificationEnabled()){
                     msg(tr("Break/Divide Circle"))
                         .wcsAngle(tr("Angle 1:"), data->snapSegmentStartAngle)
                         .vector(tr("Point 1:"), dividePoint1)
@@ -378,6 +393,7 @@ void LC_ActionModifyBreakDivide::createEntitiesForCircle(const RS_Circle* circle
         // don't need temporary data, so delete it
         delete data;
     }
+    return entireEntityRemoved;
 }
 /**
  * Creates segment entities for provided arc
@@ -386,7 +402,8 @@ void LC_ActionModifyBreakDivide::createEntitiesForCircle(const RS_Circle* circle
  * @param list list of entities to add
  * @param preview true if we generate entities for preview, false otherwise
  */
-void LC_ActionModifyBreakDivide::createEntitiesForArc(RS_Arc *arc, RS_Vector &snap, QList<RS_Entity *> &list, bool preview) const {
+bool LC_ActionModifyBreakDivide::createEntitiesForArc(RS_Arc *arc, RS_Vector &snap, QList<RS_Entity *> &list, bool preview) const {
+    bool entireEntityRemoved = false;
     // check that arc is expandable
     if (checkMayExpandEntity(arc, "")){
         // determine snap point
@@ -419,23 +436,27 @@ void LC_ActionModifyBreakDivide::createEntitiesForArc(RS_Arc *arc, RS_Vector &sn
                     }
                 }
 
+                // for preview and arc break/divide mode, add points that highlights places where arc will be divided/broken
+                const int segmentDisposition = data->segmentDisposition;
+                // the selected segment is the whole arc, so it has no edges to divide it at
+                // and nothing remains of it besides the selected segment itself
+                const bool entireEntity = segmentDisposition == LC_Division::SegmentDisposition::SEGMENT_ENTIRE;
+                entireEntityRemoved = !preview && entireEntity && createNonSnapSegments;
+
                 // current arc attributes
                 RS_Pen pen = arc->getPen(false);
                 RS_Layer* layer = arc->getLayer(true);
 
                 // create segment where arc was selected, if necessary
-                if (createSnapSegment){
+                if (createSnapSegment && !entireEntity){
                     RS_ArcData arcData = arc->getData();
                     arcData.angle1 = data->snapSegmentStartAngle;
                     arcData.angle2 = data->snapSegmentEndAngle;
                     createArcEntity(arcData, preview, pen, layer, list);
                 }
 
-                // for preview and arc break/divide mode, add points that highlights places where arc will be divided/broken
-                int segmentDisposition = data->segmentDisposition;
-
                 // create non-snap segments, if necessary
-                if (createNonSnapSegments){
+                if (createNonSnapSegments && !entireEntity){
                     if (segmentDisposition != LC_Division::SegmentDisposition::SEGMENT_TO_START){
                         RS_ArcData arcData1 = arc->getData();
                         arcData1.angle1 = arc->getAngle1();
@@ -455,16 +476,16 @@ void LC_ActionModifyBreakDivide::createEntitiesForArc(RS_Arc *arc, RS_Vector &sn
                     double radius = arc->getRadius();
                     RS_Vector center = arc->getCenter();
                     RS_Vector segmentStart = center.relative(radius, data->snapSegmentStartAngle);
-                    if (segmentDisposition != LC_Division::SegmentDisposition::SEGMENT_TO_START){
+                    if (!entireEntity && segmentDisposition != LC_Division::SegmentDisposition::SEGMENT_TO_START){
                         createRefSelectablePoint(segmentStart, list);
                     }
 
                     RS_Vector segmentEnd = center.relative(radius, data->snapSegmentEndAngle);
-                    if (segmentDisposition != LC_Division::SegmentDisposition::SEGMENT_TO_END){
+                    if (!entireEntity && segmentDisposition != LC_Division::SegmentDisposition::SEGMENT_TO_END){
                         createRefSelectablePoint(segmentEnd, list);
                     }
 
-                    if (isInfoCursorForModificationEnabled()){
+                    if (!entireEntity && isInfoCursorForModificationEnabled()){
                         msg(tr("Break/Divide Arc"))
                             .wcsAngle(tr("Angle 1:"), data->snapSegmentStartAngle)
                             .vector(tr("Point 1:"), segmentStart)
@@ -478,6 +499,7 @@ void LC_ActionModifyBreakDivide::createEntitiesForArc(RS_Arc *arc, RS_Vector &sn
             delete data;
         }
     }
+    return entireEntityRemoved;
 }
 
 /**

@@ -57,7 +57,7 @@ LC_Division::ArcSegmentData* LC_Division::findArcSegmentBetweenIntersections(con
         if (allowEntireArcAsSegment) {
             // allowing deletion of complete arcs
             result = new ArcSegmentData();
-            result->segmentDisposition = SEGMENT_INSIDE;
+            result->segmentDisposition = SEGMENT_ENTIRE;
             result->snapSegmentStartAngle = arc->getAngle1();
             result->snapSegmentEndAngle = arc->getAngle2();
         }
@@ -84,6 +84,7 @@ LC_Division::CircleSegmentData* LC_Division::findCircleSegmentBetweenIntersectio
     if (allIntersections.empty()) {
         if (allowEntireCircleAsSegment) {
             result = new CircleSegmentData();
+            result->segmentDisposition = SEGMENT_ENTIRE;
             result->snapSegmentStartAngle = 0;
             result->snapSegmentEndAngle = M_PI * 2;
         }
@@ -111,7 +112,7 @@ LC_Division::LineSegmentData* LC_Division::findLineSegmentBetweenIntersections(c
         if (allowEntireLine) {
             // allow to delete entire line if SHIFT is pressed
             result = new LineSegmentData();
-            result->segmentDisposition = SEGMENT_INSIDE;
+            result->segmentDisposition = SEGMENT_ENTIRE;
             result->snapSegmentStart = line->getStartpoint();
             result->snapSegmentEnd = line->getEndpoint();
             result->snap = snap;
@@ -272,7 +273,7 @@ LC_Division::LineSegmentData* LC_Division::findLineSegmentEdges(const RS_Line* l
         // there are intersections only on edges. We may return the entire line as segment if SHIFT is pressed and the user would like to delete the entire entity
         if (allowEntireLineAsSegment) {
             result = new LineSegmentData();
-            result->segmentDisposition = SEGMENT_INSIDE;
+            result->segmentDisposition = SEGMENT_ENTIRE;
             result->snapSegmentStart = line->getStartpoint();
             result->snapSegmentEnd = line->getEndpoint();
         }
@@ -394,7 +395,7 @@ LC_Division::ArcSegmentData* LC_Division::findArcSegmentEdges(const RS_Arc* arc,
         // there are intersections only on edges. We may return the entire line as segment if SHIFT is pressed and the user would like to delete the entire entity
         if (allowEntireArcAsSegment) {
             result = new ArcSegmentData();
-            result->segmentDisposition = SEGMENT_INSIDE;
+            result->segmentDisposition = SEGMENT_ENTIRE;
             result->snapSegmentStartAngle = arcStartAngle;
             result->snapSegmentEndAngle = arcEndAngle;
         }

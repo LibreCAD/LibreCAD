@@ -70,9 +70,14 @@ protected:
     void doPreparePreviewEntities(const LC_MouseEvent* e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;
     LC_ActionOptionsWidget* createOptionsWidget() override;
     LC_ActionOptionsPropertiesFiller* createOptionsFiller() override;
-    void createEntitiesForLine(const RS_Line *line, const RS_Vector &snap, QList<RS_Entity *> &list, bool preview) const;
-    void createEntitiesForCircle(const RS_Circle* circle, RS_Vector &snap, QList<RS_Entity *> &list, bool preview) const;
-    void createEntitiesForArc(RS_Arc *arc, RS_Vector &snap, QList<RS_Entity *> &list, bool preview) const;
+    /**
+     * Fill the list with the segments the entity should be replaced by.
+     * @return true if the selected segment covers the entire entity, so that nothing
+     * remains of it and it is just removed. Only meaningful for the trigger.
+     */
+    bool createEntitiesForLine(const RS_Line *line, const RS_Vector &snap, QList<RS_Entity *> &list, bool preview) const;
+    bool createEntitiesForCircle(const RS_Circle* circle, RS_Vector &snap, QList<RS_Entity *> &list, bool preview) const;
+    bool createEntitiesForArc(RS_Arc *arc, RS_Vector &snap, QList<RS_Entity *> &list, bool preview) const;
     void doOnLeftMouseButtonRelease(const LC_MouseEvent* e, int status, const RS_Vector &snapPoint) override;
     bool doCheckMayTrigger() override;
     bool doTriggerEntitiesPrepare(LC_DocumentModificationBatch& ctx) override;

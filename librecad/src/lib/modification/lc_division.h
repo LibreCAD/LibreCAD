@@ -42,7 +42,8 @@ public:
     enum SegmentDisposition{
         SEGMENT_INSIDE, // segment is between two intersection points
         SEGMENT_TO_START, // snap is between start point of entity and intersection point
-        SEGMENT_TO_END // snap is between end point of entity and intersection point
+        SEGMENT_TO_END, // snap is between end point of entity and intersection point
+        SEGMENT_ENTIRE // the entire entity is the segment, it has no intersections outside its own endpoints
     };
 
     /**
@@ -68,6 +69,8 @@ public:
      * Snap segment for circle     *
      */
     struct CircleSegmentData{
+        // the circle paths that do not set it leave the circle intact
+        SegmentDisposition segmentDisposition = SEGMENT_INSIDE;
         double snapSegmentStartAngle;
         double snapSegmentEndAngle;
     };
