@@ -1,9 +1,8 @@
 /*******************************************************************************
-*
+ *
  This file is part of the LibreCAD project, a 2D CAD program
 
- Copyright (C) 2025 LibreCAD.org
- Copyright (C) 2025 sand1024
+ Copyright (C) 2026 LibreCAD.org
 
  This program is free software; you can redistribute it and/or
  modify it under the terms of the GNU General Public License
@@ -19,30 +18,25 @@
  along with this program; if not, write to the Free Software
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
-#ifndef LC_PLUGININVOKER_H
-#define LC_PLUGININVOKER_H
 
-#include <QObject>
+#ifndef LC_PLUGINWIDGET_H
+#define LC_PLUGINWIDGET_H
 
-#include "lc_actioncontext.h"
+#include "lc_graphicviewawarewidget.h"
 
-class QC_PluginInterface;
-class QC_ApplicationWindow;
-class LC_ActionContext;
-
-class LC_PluginInvoker: public QObject{
+class LC_PluginWidget : public LC_GraphicViewAwareWidget
+{
     Q_OBJECT
 public:
-    explicit LC_PluginInvoker(QC_ApplicationWindow* appWindow, LC_ActionContext* ctx);
-    ~LC_PluginInvoker() override;
-    QList<QC_PluginInterface*> getLoadedPluginList();
-    void loadPlugins();
-public slots:
-    void execPlug() const;
+    explicit LC_PluginWidget(const QString& title, QWidget *mainWidget, QWidget *parent);
+    ~LC_PluginWidget() override = default;
+    void setGraphicView(RS_GraphicView *gv) override;
+
+protected:
+    QLayout* getTopLevelLayout() const override;
+
 private:
-    QC_ApplicationWindow* m_appWindow = nullptr;
-    QList<QC_PluginInterface*> m_loadedPluginList;
-    LC_ActionContext* m_actionContext = nullptr;
+    RS_GraphicView* m_graphicView = nullptr;
 };
 
-#endif
+#endif // LC_PLUGINWIDGET_H

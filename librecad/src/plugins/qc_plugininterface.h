@@ -48,9 +48,22 @@ class PluginMenuLocation
     QString menuEntryAction_Tip;
 };
 
+class PluginWidget
+{
+public:
+    PluginWidget(const QString& name, QWidget* widget) {
+        this->name = name;
+        this->widget = widget;
+    }
+
+    QString name;
+    QWidget* widget;
+};
+
 class PluginCapabilities {
     public:
         QList<PluginMenuLocation> menuEntryPoints;
+        QList<PluginWidget> widgets;
         QList<int> paintEventPriorities;    // if set, this plugin will get it's paintEvent function called
                                         // lower numbers are drawn first
 

@@ -480,6 +480,11 @@ void LC_MenuFactoryMain::prepareWorkspaceMenuComponents() const {
         }
     }
 
+    m_menusHolder->m_menuDockWidgets->addSeparator();
+    for (const QDockWidget* dw : m_appWin->getPluginDockWidgetList()) {
+        m_menusHolder->m_menuDockWidgets->QWidget::addAction(dw->toggleViewAction());
+    }
+
     const auto menuToolbars = doCreateSubMenu(menuWorkspace, tr("&Toolbars"), "toolbars", nullptr, m_allowTearOffMenus);
     m_menusHolder->m_menuToolbars = menuToolbars;
 

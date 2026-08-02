@@ -1,9 +1,8 @@
 /*******************************************************************************
-*
+ *
  This file is part of the LibreCAD project, a 2D CAD program
 
- Copyright (C) 2025 LibreCAD.org
- Copyright (C) 2025 sand1024
+ Copyright (C) 2026 LibreCAD.org
 
  This program is free software; you can redistribute it and/or
  modify it under the terms of the GNU General Public License
@@ -19,30 +18,26 @@
  along with this program; if not, write to the Free Software
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
-#ifndef LC_PLUGININVOKER_H
-#define LC_PLUGININVOKER_H
 
-#include <QObject>
+#include "lc_pluginwidget.h"
 
-#include "lc_actioncontext.h"
+#include <QLayout>
 
-class QC_PluginInterface;
-class QC_ApplicationWindow;
-class LC_ActionContext;
+LC_PluginWidget::LC_PluginWidget(const QString& title, QWidget *mainWidget, QWidget *parent)
+    : LC_GraphicViewAwareWidget(parent) {
+    setWindowTitle(title);
 
-class LC_PluginInvoker: public QObject{
-    Q_OBJECT
-public:
-    explicit LC_PluginInvoker(QC_ApplicationWindow* appWindow, LC_ActionContext* ctx);
-    ~LC_PluginInvoker() override;
-    QList<QC_PluginInterface*> getLoadedPluginList();
-    void loadPlugins();
-public slots:
-    void execPlug() const;
-private:
-    QC_ApplicationWindow* m_appWindow = nullptr;
-    QList<QC_PluginInterface*> m_loadedPluginList;
-    LC_ActionContext* m_actionContext = nullptr;
-};
+    QVBoxLayout *lay = new QVBoxLayout();
+    lay->addWidget(mainWidget);
+    setLayout(lay);
 
-#endif
+    updateWidgetSettings();
+}
+
+QLayout* LC_PluginWidget::getTopLevelLayout() const {
+    return layout();
+}
+
+void LC_PluginWidget::setGraphicView(RS_GraphicView* gview) {
+    m_graphicView = gview;
+}

@@ -33,6 +33,7 @@
 #include "lc_namedviewslistwidget.h"
 #include "lc_penpalettewidget.h"
 #include "lc_penwizard.h"
+#include "lc_pluginwidget.h"
 #include "lc_propertysheetwidget.h"
 #include "lc_qtstatusbarmanager.h"
 #include "lc_quickinfowidget.h"
@@ -40,6 +41,7 @@
 #include "lc_ucslistwidget.h"
 #include "lc_ucsstatewidget.h"
 #include "qc_applicationwindow.h"
+#include "qc_plugininterface.h"
 #include "qg_activelayername.h"
 #include "qg_blockwidget.h"
 #include "qg_commandwidget.h"
@@ -75,6 +77,28 @@ void LC_WidgetFactory::initWidgets(){
     initStatusBar();
     initLeftCADSidebar();
     createRightSidebar(m_appWin->m_actionHandler.get());
+}
+
+void LC_WidgetFactory::initPluginWidgets(){
+    bool isFirstDock = true;
+    QDockWidget *lastDock;
+    for (QC_PluginInterface* plugin : m_appWin->getLoadedPluginList()) {
+        for (const PluginWidget &widget: plugin->getCapabilities().widgets) {
+            QDockWidget *dock = createPluginWidget(widget);
+            if (isFirstDock) {
+                m_appWin->addDockWidget(Qt::RightDockWidgetArea, dock);
+                isFirstDock = false;
+            } else {
+                m_appWin->tabifyDockWidget(lastDock, dock);
+            }
+            lastDock = dock;
+        }
+    }
+    if (!isFirstDock) {
+        const bool verticalTitle = LC_GET_ONE_BOOL("Widgets", "DockTitleBarVertical", false);
+        updateDockWidgetsTitleBarType(m_appWin, verticalTitle);
+        initializeRightDockWidgets();
+    }
 }
 
 void LC_WidgetFactory::initLeftCADSidebar(){
@@ -161,7 +185,7 @@ void LC_WidgetFactory::createCADSidebar(const int columns, const int iconSize, c
     m_appWin->tabifyDockWidget(modify, order);
 }
 
-QDockWidget* LC_WidgetFactory::createDockWidget(const QString& horizontalTitle, const char *name, const QString& verticalTitle) const {
+QDockWidget* LC_WidgetFactory::createDockWidget(const QString& horizontalTitle, const QString& name, const QString& verticalTitle) const {
     const auto result = new LC_DockWidget(m_appWin, horizontalTitle, verticalTitle);
     result->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
     result->setWindowTitle(horizontalTitle);
@@ -319,6 +343,18 @@ QDockWidget * LC_WidgetFactory::createCmdWidget(QG_ActionHandler *actionHandler)
     // connect(dock, &QDockWidget::dockLocationChanged,m_appWin, &QC_ApplicationWindow::modifyCommandTitleBar);
     connect(dock, &QDockWidget::dockLocationChanged, widget, &LC_GraphicViewAwareWidget::onDockLocationChanged);
     m_appWin->m_commandWidget = widget;
+    return dock;
+}
+
+QDockWidget * LC_WidgetFactory::createPluginWidget(const PluginWidget &pluginWidget){
+    const auto dock = createDockWidget(pluginWidget.name, pluginWidget.name, pluginWidget.name);
+    const auto widget = new LC_PluginWidget(pluginWidget.name, pluginWidget.widget, dock);
+    widget->setFocusPolicy(Qt::NoFocus);
+    dock->setWidget(widget);
+
+    connect(m_appWin, &QC_ApplicationWindow::widgetSettingsChanged, widget, &LC_PluginWidget::updateWidgetSettings);
+    connect(dock, &QDockWidget::dockLocationChanged, widget, &LC_GraphicViewAwareWidget::onDockLocationChanged);
+    m_appWin->m_pluginDockWidgetList.append(dock);
     return dock;
 }
 

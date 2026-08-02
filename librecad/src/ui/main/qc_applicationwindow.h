@@ -334,6 +334,18 @@ public:
         return m_namedViewsWidget;
     }
 
+    QList<QDockWidget*> getPluginDockWidgetList() const{
+        return m_pluginDockWidgetList;
+    }
+
+    QList<QC_PluginInterface*> getLoadedPluginList() const {
+        QList<QC_PluginInterface*> list = QList<QC_PluginInterface*>();
+        if (m_pluginInvoker != nullptr) {
+            list = m_pluginInvoker->getLoadedPluginList();
+        }
+        return list;
+    }
+
     void commandMessage(const QString& msg) const;
     // If a freshly opened drawing has empty modelspace but at least one
     // user-named block (i.e. not a *Model_Space / *Paper_Space variant)
@@ -428,6 +440,7 @@ protected:
     LC_PenPaletteWidget* m_penPaletteWidget{nullptr};
     LC_NamedViewsListWidget* m_namedViewsWidget{nullptr};
     LC_UCSListWidget* m_ucsListWidget{nullptr};
+    QList<QDockWidget*> m_pluginDockWidgetList;
 
     // --- Statusbar ---
     QG_CoordinateWidget* m_coordinateWidget{nullptr};
