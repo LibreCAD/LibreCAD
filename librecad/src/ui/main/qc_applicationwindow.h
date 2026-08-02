@@ -53,7 +53,6 @@ class LC_MenuFactory;
 class LC_NamedViewsListWidget;
 class LC_PenPaletteWidget;
 class LC_PenWizard;
-class LC_PluginInvoker;
 class LC_QTStatusbarManager;
 class LC_QuickInfoWidget;
 class LC_RelZeroCoordinatesWidget;
@@ -304,6 +303,7 @@ public:
     void fillWorkspacesList(QList<QPair<int, QString>>& list) const;
     void applyWorkspaceById(int id) const;
     void rebuildMenuIfNecessary() const;
+    void rebuildMenu() const;
     void openFile(const QString& fileName); // Assume Unknown type
     /**
  * opens the given file.

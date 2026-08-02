@@ -59,6 +59,7 @@ class LC_MenuFactory{
 public:
     explicit LC_MenuFactory(QC_ApplicationWindow* mainWin);
     void recreateMainMenuIfNeeded(QMenuBar *menuBar) {m_menuFactoryMain.recreateMainMenuIfNeeded(menuBar);}
+    void recreateMainMenu(QMenuBar *menuBar) {m_menuFactoryMain.recreateMainMenu(menuBar);}
     void createMainMenu(QMenuBar* menuBar) {m_menuFactoryMain.createMainMenu(menuBar);}
     void onWorkspaceMenuAboutToShow(const QList<QC_MDIWindow *> &windowList) {m_menuFactoryMain.onWorkspaceMenuAboutToShow(windowList);}
     QMenu* createMainWindowPopupMenu() const {return m_menuFactoryMain.createMainWindowPopupMenu();}

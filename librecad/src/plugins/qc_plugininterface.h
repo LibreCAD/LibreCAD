@@ -50,6 +50,18 @@ class PluginMenuLocation
     QString menuEntryAction_Tip;
 };
 
+class PluginMenu
+{
+public:
+    PluginMenu(const QString& name, QMenu* menu) {
+        this->name = name;
+        this->menu = menu;
+    }
+
+    QString name;
+    QMenu* menu;
+};
+
 class PluginToolbar
 {
 public:
@@ -78,6 +90,7 @@ public:
 class PluginCapabilities {
     public:
         QList<PluginMenuLocation> menuEntryPoints;
+        QList<PluginMenu> menus;
         QList<PluginToolbar> toolbars;
         QList<PluginWidget> widgets;
         QList<int> paintEventPriorities;    // if set, this plugin will get it's paintEvent function called

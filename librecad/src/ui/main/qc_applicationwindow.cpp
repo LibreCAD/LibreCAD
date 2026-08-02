@@ -1625,6 +1625,10 @@ void QC_ApplicationWindow::rebuildMenuIfNecessary() const {
     m_menuFactory->recreateMainMenuIfNeeded(menuBar());
 }
 
+void QC_ApplicationWindow::rebuildMenu() const {
+    m_menuFactory->recreateMainMenu(menuBar());
+}
+
 /**
  * Shows the dialog for general application preferences.
  */

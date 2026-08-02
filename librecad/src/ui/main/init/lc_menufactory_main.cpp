@@ -35,6 +35,7 @@
 #include "main.h"
 #include "qc_applicationwindow.h"
 #include "qc_mdiwindow.h"
+#include "qc_plugininterface.h"
 #include "rs_settings.h"
 class QToolBar;
 
@@ -52,6 +53,11 @@ void LC_MenuFactoryMain::recreateMainMenuIfNeeded(QMenuBar* menuBar) {
         menuBar->clear();
         doCreateMenus(menuBar, false);
     }
+}
+
+void LC_MenuFactoryMain::recreateMainMenu(QMenuBar* menuBar) {
+    menuBar->clear();
+    doCreateMenus(menuBar, false);
 }
 
 void LC_MenuFactoryMain::createMainMenu(QMenuBar* menuBar) {
@@ -115,6 +121,13 @@ void LC_MenuFactoryMain::doCreateMenus(QMenuBar* menuBar, const bool firstCreati
 
     for (const auto m : std::as_const(topMenuMenus)) {
         menuBar->addMenu(m);
+    }
+
+    for (QC_PluginInterface* plugin : m_appWin->getLoadedPluginList()) {
+        for (const PluginMenu &m: plugin->getCapabilities().menus) {
+            m.menu->setTearOffEnabled(m_allowTearOffMenus);
+            menuBar->addMenu(m.menu);
+        }
     }
 }
 
