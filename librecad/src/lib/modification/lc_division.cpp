@@ -55,7 +55,7 @@ LC_Division::ArcSegmentData* LC_Division::findArcSegmentBetweenIntersections(con
     const QVector<RS_Vector> allIntersections = collectAllIntersectionsWithEntity(arc);
     if (allIntersections.empty()) {
         if (allowEntireArcAsSegment) {
-            // allowing deletion of complete arcs
+            // With no split boundary, the selected segment is the arc itself.
             result = new ArcSegmentData();
             result->segmentDisposition = SEGMENT_ENTIRE;
             result->snapSegmentStartAngle = arc->getAngle1();
@@ -83,6 +83,7 @@ LC_Division::CircleSegmentData* LC_Division::findCircleSegmentBetweenIntersectio
     const QVector<RS_Vector> allIntersections = collectAllIntersectionsWithEntity(circle);
     if (allIntersections.empty()) {
         if (allowEntireCircleAsSegment) {
+            // With no split boundary, the selected segment is the circle itself.
             result = new CircleSegmentData();
             result->segmentDisposition = SEGMENT_ENTIRE;
             result->snapSegmentStartAngle = 0;
@@ -110,7 +111,7 @@ LC_Division::LineSegmentData* LC_Division::findLineSegmentBetweenIntersections(c
     const QVector<RS_Vector> allIntersections = collectAllIntersectionsWithEntity(line);
     if (allIntersections.empty()) {
         if (allowEntireLine) {
-            // allow to delete entire line if SHIFT is pressed
+            // With no split boundary, the selected segment is the line itself.
             result = new LineSegmentData();
             result->segmentDisposition = SEGMENT_ENTIRE;
             result->snapSegmentStart = line->getStartpoint();
@@ -270,7 +271,8 @@ LC_Division::LineSegmentData* LC_Division::findLineSegmentEdges(const RS_Line* l
         }
     }
     else {
-        // there are intersections only on edges. We may return the entire line as segment if SHIFT is pressed and the user would like to delete the entire entity
+        // Endpoint intersections do not divide the line. Preserve the same
+        // whole-entity disposition as the no-intersection case.
         if (allowEntireLineAsSegment) {
             result = new LineSegmentData();
             result->segmentDisposition = SEGMENT_ENTIRE;
@@ -392,7 +394,8 @@ LC_Division::ArcSegmentData* LC_Division::findArcSegmentEdges(const RS_Arc* arc,
         }
     }
     else {
-        // there are intersections only on edges. We may return the entire line as segment if SHIFT is pressed and the user would like to delete the entire entity
+        // Endpoint intersections do not divide the arc. Preserve the same
+        // whole-entity disposition as the no-intersection case.
         if (allowEntireArcAsSegment) {
             result = new ArcSegmentData();
             result->segmentDisposition = SEGMENT_ENTIRE;

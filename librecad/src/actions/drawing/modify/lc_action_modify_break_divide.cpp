@@ -23,6 +23,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include "lc_action_modify_break_divide.h"
 
+#include <memory>
+
 #include "lc_actioninfomessagebuilder.h"
 #include "lc_break_divide_options_filler.h"
 #include "lc_break_divide_options_widget.h"
@@ -38,6 +40,26 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_pen.h"
 
 namespace {
+    struct SegmentCreationPlan {
+        bool createSelectedSegment;
+        bool createRemainingSegments;
+    };
+
+    SegmentCreationPlan makeSegmentCreationPlan(const bool preview, const bool removeSegments,
+                                                const bool removeSelected) {
+        if (!removeSegments) {
+            // Divide previews show only boundary markers; the trigger creates all pieces.
+            return {!preview, !preview};
+        }
+
+        // Break previews show what will be removed, while trigger data contains
+        // the geometry that will remain in the document.
+        if (preview) {
+            return {removeSelected, !removeSelected};
+        }
+        return {!removeSelected, removeSelected};
+    }
+
     //list of entity types supported by current action - line, arc, circle
     const auto g_enTypeList = EntityTypeList{RS2::EntityLine, RS2::EntityArc, RS2::EntityCircle/*,RS2::EntityEllipse*/};
 }
@@ -121,7 +143,7 @@ void LC_ActionModifyBreakDivide::doOnLeftMouseButtonRelease(const LC_MouseEvent*
 
 bool LC_ActionModifyBreakDivide::doCheckMayTrigger(){
     bool result = false;
-    bool entireEntityRemoved = false;
+    bool removeOriginalWithoutReplacement = false;
     if (m_triggerData != nullptr){
         RS_Entity* en = m_triggerData->entity;
         RS_Vector snap = m_triggerData->snapPoint;
@@ -131,24 +153,27 @@ bool LC_ActionModifyBreakDivide::doCheckMayTrigger(){
             switch (rtti) {
                 case RS2::EntityLine: {
                     const auto *line = dynamic_cast<RS_Line *>(en);
-                    entireEntityRemoved = createEntitiesForLine(line, snap, m_triggerData->entitiesToCreate, false);
+                    removeOriginalWithoutReplacement = createEntitiesForLine(line, snap, m_triggerData->entitiesToCreate, false);
                     break;
                 }
                 case RS2::EntityCircle: {
                     const auto *circle = dynamic_cast<RS_Circle *>(en);
-                    entireEntityRemoved = createEntitiesForCircle(circle, snap, m_triggerData->entitiesToCreate, false);
+                    removeOriginalWithoutReplacement = createEntitiesForCircle(circle, snap, m_triggerData->entitiesToCreate, false);
                     break;
                 }
                 case RS2::EntityArc: {
                     auto *arc = dynamic_cast<RS_Arc *>(en);
-                    entireEntityRemoved = createEntitiesForArc(arc, snap, m_triggerData->entitiesToCreate, false);
+                    removeOriginalWithoutReplacement = createEntitiesForArc(arc, snap, m_triggerData->entitiesToCreate, false);
                     break;
                 }
                 default:
                     break;
             }
         }
-        if (m_triggerData->entitiesToCreate.isEmpty() && !entireEntityRemoved){
+        // An empty replacement list normally means no valid split was found.
+        // Whole-entity removal is the deliberate exception: deleting the source
+        // entity is the complete operation, so no replacement can exist.
+        if (m_triggerData->entitiesToCreate.isEmpty() && !removeOriginalWithoutReplacement){
             commandMessage(tr("Invalid entity selected - no segments between intersections to break/divide."));
         }
         else {
@@ -190,92 +215,69 @@ void LC_ActionModifyBreakDivide::doFinish(){
  * @param preview true if entities for preview
  */
 bool LC_ActionModifyBreakDivide::createEntitiesForLine(const RS_Line *line, const RS_Vector &snap, QList<RS_Entity*> &list, const bool preview) const {
-    bool entireEntityRemoved = false;
-    // check whether selection entity may be expanded
-    if (checkMayExpandEntity(line, "")){
-        // determine snap point projection on line
-        const RS_Vector nearestPoint = LC_LineMath::getNearestPointOnLine(line, snap, false);
-        const RS_Vector start = line->getStartpoint();
-        const RS_Vector end = line->getEndpoint();
+    if (!checkMayExpandEntity(line, "")) {
+        return false;
+    }
 
-        // create segments only if tick snap point is between of original lines endpoints
-        if (nearestPoint != start && nearestPoint != end){
-            // calculate segments data
-            LC_Division division(m_document);
-            const bool allowEntireLineAsSegment = m_alternativeActionMode && m_removeSegments;
-            const LC_Division::LineSegmentData *data = division.findLineSegmentBetweenIntersections(line, snap, allowEntireLineAsSegment);
-            if (data != nullptr){
-                if (preview){
-                    highlightHover(line);
-                }
+    const RS_Vector nearestPoint = LC_LineMath::getNearestPointOnLine(line, snap, false);
+    const RS_Vector start = line->getStartpoint();
+    const RS_Vector end = line->getEndpoint();
+    if (nearestPoint == start || nearestPoint == end) {
+        return false;
+    }
 
-                // determine which segments should be created
-                bool createSnapSegment = !preview;
-                bool createNonSnapSegments = !preview;
+    LC_Division division(m_document);
+    const bool allowEntireLineAsSegment = m_alternativeActionMode && m_removeSegments;
+    const std::unique_ptr<LC_Division::LineSegmentData> data{
+        division.findLineSegmentBetweenIntersections(line, snap, allowEntireLineAsSegment)};
+    if (data == nullptr) {
+        return false;
+    }
 
-                if (m_removeSegments){
-                    if (preview){
-                        createSnapSegment = m_removeSelected;
-                        createNonSnapSegments = !m_removeSelected;
-                    }
-                    else{
-                        createSnapSegment = !m_removeSelected;
-                        createNonSnapSegments = m_removeSelected;
-                    }
-                }
+    if (preview) {
+        highlightHover(line);
+    }
 
-                const int segmentDisposition = data->segmentDisposition;
-                // the selected segment is the whole entity, so it has no edges to divide it at
-                // and nothing remains of it besides the selected segment itself
-                const bool entireEntity = segmentDisposition == LC_Division::SegmentDisposition::SEGMENT_ENTIRE;
-                entireEntityRemoved = !preview && entireEntity && createNonSnapSegments;
+    const SegmentCreationPlan creationPlan = makeSegmentCreationPlan(preview, m_removeSegments, m_removeSelected);
+    if (data->segmentDisposition == LC_Division::SegmentDisposition::SEGMENT_ENTIRE) {
+        // A whole selection has no cut boundaries and no complementary pieces.
+        // The only valid trigger is removing that selection, represented by an
+        // intentionally empty replacement list.
+        return !preview && creationPlan.createRemainingSegments;
+    }
 
-                // attributes of original entity
-                const RS_Pen pen = line->getPen(false);
-                RS_Layer* layer = line->getLayer(true);
+    const RS_Pen pen = line->getPen(false);
+    RS_Layer* layer = line->getLayer(true);
 
-                // creating snap segment (where snap was performed)
-                if (createSnapSegment && !entireEntity){
-                    createLineEntity(preview, data->snapSegmentStart, data->snapSegmentEnd, pen, layer, list);
-                }
+    if (creationPlan.createSelectedSegment) {
+        createLineEntity(preview, data->snapSegmentStart, data->snapSegmentEnd, pen, layer, list);
+    }
 
-                // in preview mode provide visual indication of division/break points
-                if (preview){
-                    // check that start of segment is not line endpoint
-                    if (!entireEntity && segmentDisposition != LC_Division::SegmentDisposition::SEGMENT_TO_START){
-                        createRefSelectablePoint(data->snapSegmentStart, list);
-                    }
+    if (preview) {
+        if (data->segmentDisposition != LC_Division::SegmentDisposition::SEGMENT_TO_START) {
+            createRefSelectablePoint(data->snapSegmentStart, list);
+        }
+        if (data->segmentDisposition != LC_Division::SegmentDisposition::SEGMENT_TO_END) {
+            createRefSelectablePoint(data->snapSegmentEnd, list);
+        }
 
-                    // check that end of segment is not line endpoint
-                    if (!entireEntity && segmentDisposition != LC_Division::SegmentDisposition::SEGMENT_TO_END){
-                        createRefSelectablePoint(data->snapSegmentEnd, list);
-                    }
-
-                    if (!entireEntity && isInfoCursorForModificationEnabled()) {
-                        msg(tr("Break/Divide Line"))
-                            .vector(tr("Point 1:"), data->snapSegmentStart)
-                            .vector(tr("Point 2:"), data->snapSegmentEnd)
-                            .toInfoCursorZone2(false);
-                    }
-                }
-
-                // create segments of line that are outside of segment selected by the user
-                if (createNonSnapSegments && !entireEntity){
-                    if (segmentDisposition != LC_Division::SegmentDisposition::SEGMENT_TO_START){
-                        // we don't need this segment if snap is between line start point and intersection point
-                        createLineEntity(preview, line->getStartpoint(), data->snapSegmentStart, pen, layer, list);
-                    }
-                    if (segmentDisposition != LC_Division::SegmentDisposition::SEGMENT_TO_END){
-                        // we don't need this segment if snap is between line end point and intersection point
-                        createLineEntity(preview, data->snapSegmentEnd, line->getEndpoint(), pen, layer, list);
-                    }
-                }
-            }
-            // don't need temporary data we used anymore, so delete it
-            delete data;
+        if (isInfoCursorForModificationEnabled()) {
+            msg(tr("Break/Divide Line"))
+                .vector(tr("Point 1:"), data->snapSegmentStart)
+                .vector(tr("Point 2:"), data->snapSegmentEnd)
+                .toInfoCursorZone2(false);
         }
     }
-    return entireEntityRemoved;
+
+    if (creationPlan.createRemainingSegments) {
+        if (data->segmentDisposition != LC_Division::SegmentDisposition::SEGMENT_TO_START) {
+            createLineEntity(preview, line->getStartpoint(), data->snapSegmentStart, pen, layer, list);
+        }
+        if (data->segmentDisposition != LC_Division::SegmentDisposition::SEGMENT_TO_END) {
+            createLineEntity(preview, data->snapSegmentEnd, line->getEndpoint(), pen, layer, list);
+        }
+    }
+    return false;
 }
 /**
  * Creates individual line for given coordinates. If not for preview, also assigns provided pen and layer attributes
@@ -307,93 +309,68 @@ void LC_ActionModifyBreakDivide::createLineEntity(const bool preview, const RS_V
  * @param preview
  */
 bool LC_ActionModifyBreakDivide::createEntitiesForCircle(const RS_Circle* circle, RS_Vector &snap, QList<RS_Entity *> &list, bool preview) const {
-    bool entireEntityRemoved = false;
-    // check that we may expand the circle
-    if (checkMayExpandEntity(circle, "")){
-        // determine snap point projection on entity
-        RS_Vector nearestPoint = circle->getNearestPointOnEntity(snap, true);
-
-        // compute segment data
-        LC_Division division(m_document);
-        bool allowEntireCircleAsSegment = m_alternativeActionMode && m_removeSegments;
-        LC_Division::CircleSegmentData *data = division.findCircleSegmentBetweenIntersections(circle, nearestPoint, allowEntireCircleAsSegment);
-        if (data != nullptr){
-
-            if (preview){
-                highlightHover(circle);
-            }
-
-            const RS_Vector &center = circle->getCenter();
-            double radius = circle->getRadius();
-
-            // basic arc info
-            RS_ArcData arcData;
-            arcData.radius = radius;
-            arcData.center = center;
-            arcData.angle1 = data->snapSegmentStartAngle;
-            arcData.angle2 = data->snapSegmentEndAngle;
-            arcData.reversed = false;
-
-            // determine which segments should be created of circle
-            bool createSnapSegment = !preview;
-            bool createNonSnapSegments = !preview;
-
-            if (m_removeSegments){
-                if (preview){
-                    createSnapSegment = m_removeSelected;
-                    createNonSnapSegments = !m_removeSelected;
-                }
-                else{
-                    createSnapSegment = !m_removeSelected;
-                    createNonSnapSegments = m_removeSelected;
-                }
-            }
-
-            // the selected segment is the whole circle, so it has no edges to divide it at
-            // and nothing remains of it besides the selected segment itself
-            const bool entireEntity = data->segmentDisposition == LC_Division::SegmentDisposition::SEGMENT_ENTIRE;
-            entireEntityRemoved = !preview && entireEntity && createNonSnapSegments;
-
-            // attributes of original circle
-            RS_Pen pen = circle->getPen(false);
-            RS_Layer* layer = circle->getLayer();
-
-            // create snap arc segment
-            if (createSnapSegment && !entireEntity){
-                createArcEntity(arcData, preview, pen, layer, list);
-            }
-
-            // create complimentary non-snap arc segment, if needed
-            if (createNonSnapSegments && !entireEntity){
-                RS_ArcData arcData1 = arcData;
-                arcData1.reversed = !arcData.reversed; // that ark wil be in same points, yet reversed
-                createArcEntity(arcData1, preview, pen, layer, list);
-             }
-
-            // for circle divide mode, add visual indication of divide points if we're creating preview
-            if (preview){
-                // todo - ignore refpoints visibility for divide?
-                 RS_Vector dividePoint1 = center.relative(radius, data->snapSegmentStartAngle);
-                 RS_Vector dividePoint2 = center.relative(radius, data->snapSegmentEndAngle);
-                 if (!entireEntity){
-                     createRefSelectablePoint(dividePoint1, list);
-                     createRefSelectablePoint(dividePoint2, list);
-                 }
-
-                if (!entireEntity && isInfoCursorForModificationEnabled()){
-                    msg(tr("Break/Divide Circle"))
-                        .wcsAngle(tr("Angle 1:"), data->snapSegmentStartAngle)
-                        .vector(tr("Point 1:"), dividePoint1)
-                        .wcsAngle(tr("Angle 2:"), data->snapSegmentEndAngle)
-                        .vector(tr("Point 2:"), dividePoint2)
-                        .toInfoCursorZone2(false);
-                }
-            }
-        }
-        // don't need temporary data, so delete it
-        delete data;
+    if (!checkMayExpandEntity(circle, "")) {
+        return false;
     }
-    return entireEntityRemoved;
+
+    const RS_Vector nearestPoint = circle->getNearestPointOnEntity(snap, true);
+    LC_Division division(m_document);
+    const bool allowEntireCircleAsSegment = m_alternativeActionMode && m_removeSegments;
+    const std::unique_ptr<LC_Division::CircleSegmentData> data{
+        division.findCircleSegmentBetweenIntersections(circle, nearestPoint, allowEntireCircleAsSegment)};
+    if (data == nullptr) {
+        return false;
+    }
+
+    if (preview) {
+        highlightHover(circle);
+    }
+
+    const SegmentCreationPlan creationPlan = makeSegmentCreationPlan(preview, m_removeSegments, m_removeSelected);
+    if (data->segmentDisposition == LC_Division::SegmentDisposition::SEGMENT_ENTIRE) {
+        // See the line case: no synthetic full-turn arc should stand in for
+        // intentional removal of the source circle.
+        return !preview && creationPlan.createRemainingSegments;
+    }
+
+    const RS_Vector center = circle->getCenter();
+    const double radius = circle->getRadius();
+    RS_ArcData arcData;
+    arcData.radius = radius;
+    arcData.center = center;
+    arcData.angle1 = data->snapSegmentStartAngle;
+    arcData.angle2 = data->snapSegmentEndAngle;
+    arcData.reversed = false;
+
+    const RS_Pen pen = circle->getPen(false);
+    RS_Layer* layer = circle->getLayer();
+
+    if (creationPlan.createSelectedSegment) {
+        createArcEntity(arcData, preview, pen, layer, list);
+    }
+
+    if (creationPlan.createRemainingSegments) {
+        RS_ArcData remainingArcData = arcData;
+        remainingArcData.reversed = !arcData.reversed;
+        createArcEntity(remainingArcData, preview, pen, layer, list);
+    }
+
+    if (preview) {
+        const RS_Vector dividePoint1 = center.relative(radius, data->snapSegmentStartAngle);
+        const RS_Vector dividePoint2 = center.relative(radius, data->snapSegmentEndAngle);
+        createRefSelectablePoint(dividePoint1, list);
+        createRefSelectablePoint(dividePoint2, list);
+
+        if (isInfoCursorForModificationEnabled()) {
+            msg(tr("Break/Divide Circle"))
+                .wcsAngle(tr("Angle 1:"), data->snapSegmentStartAngle)
+                .vector(tr("Point 1:"), dividePoint1)
+                .wcsAngle(tr("Angle 2:"), data->snapSegmentEndAngle)
+                .vector(tr("Point 2:"), dividePoint2)
+                .toInfoCursorZone2(false);
+        }
+    }
+    return false;
 }
 /**
  * Creates segment entities for provided arc
@@ -403,103 +380,85 @@ bool LC_ActionModifyBreakDivide::createEntitiesForCircle(const RS_Circle* circle
  * @param preview true if we generate entities for preview, false otherwise
  */
 bool LC_ActionModifyBreakDivide::createEntitiesForArc(RS_Arc *arc, RS_Vector &snap, QList<RS_Entity *> &list, bool preview) const {
-    bool entireEntityRemoved = false;
-    // check that arc is expandable
-    if (checkMayExpandEntity(arc, "")){
-        // determine snap point
-        RS_Vector nearestPoint = arc->getNearestPointOnEntity(snap, true);
-        RS_Vector start = arc->getStartpoint();
-        RS_Vector end = arc->getEndpoint();
+    if (!checkMayExpandEntity(arc, "")) {
+        return false;
+    }
 
-        // create segments only if tick snap point is between of original lines endpoints
-        if (nearestPoint != start && nearestPoint != end){
-            // determine snap segment coordinates
-            LC_Division division(m_document);
-            bool allowEntireArcAsSegment = m_alternativeActionMode && m_removeSegments;
-            LC_Division::ArcSegmentData *data = division.findArcSegmentBetweenIntersections(arc, snap, allowEntireArcAsSegment);
-            if (data != nullptr){
-                if (preview){
-                    highlightHover(arc);
-                }
+    const RS_Vector nearestPoint = arc->getNearestPointOnEntity(snap, true);
+    const RS_Vector start = arc->getStartpoint();
+    const RS_Vector end = arc->getEndpoint();
+    if (nearestPoint == start || nearestPoint == end) {
+        return false;
+    }
 
-                // determine which segment entities should be created
-                bool createSnapSegment = !preview;
-                bool createNonSnapSegments = !preview;
+    LC_Division division(m_document);
+    const bool allowEntireArcAsSegment = m_alternativeActionMode && m_removeSegments;
+    const std::unique_ptr<LC_Division::ArcSegmentData> data{
+        division.findArcSegmentBetweenIntersections(arc, snap, allowEntireArcAsSegment)};
+    if (data == nullptr) {
+        return false;
+    }
 
-                if (m_removeSegments){
-                    if (preview){
-                        createSnapSegment = m_removeSelected;
-                        createNonSnapSegments = !m_removeSelected;
-                    } else {
-                        createSnapSegment = !m_removeSelected;
-                        createNonSnapSegments = m_removeSelected;
-                    }
-                }
+    if (preview) {
+        highlightHover(arc);
+    }
 
-                // for preview and arc break/divide mode, add points that highlights places where arc will be divided/broken
-                const int segmentDisposition = data->segmentDisposition;
-                // the selected segment is the whole arc, so it has no edges to divide it at
-                // and nothing remains of it besides the selected segment itself
-                const bool entireEntity = segmentDisposition == LC_Division::SegmentDisposition::SEGMENT_ENTIRE;
-                entireEntityRemoved = !preview && entireEntity && createNonSnapSegments;
+    const SegmentCreationPlan creationPlan = makeSegmentCreationPlan(preview, m_removeSegments, m_removeSelected);
+    if (data->segmentDisposition == LC_Division::SegmentDisposition::SEGMENT_ENTIRE) {
+        // See the line case: endpoint angles describe the source arc, not two
+        // valid complementary arcs to recreate.
+        return !preview && creationPlan.createRemainingSegments;
+    }
 
-                // current arc attributes
-                RS_Pen pen = arc->getPen(false);
-                RS_Layer* layer = arc->getLayer(true);
+    const RS_Pen pen = arc->getPen(false);
+    RS_Layer* layer = arc->getLayer(true);
 
-                // create segment where arc was selected, if necessary
-                if (createSnapSegment && !entireEntity){
-                    RS_ArcData arcData = arc->getData();
-                    arcData.angle1 = data->snapSegmentStartAngle;
-                    arcData.angle2 = data->snapSegmentEndAngle;
-                    createArcEntity(arcData, preview, pen, layer, list);
-                }
+    if (creationPlan.createSelectedSegment) {
+        RS_ArcData selectedArcData = arc->getData();
+        selectedArcData.angle1 = data->snapSegmentStartAngle;
+        selectedArcData.angle2 = data->snapSegmentEndAngle;
+        createArcEntity(selectedArcData, preview, pen, layer, list);
+    }
 
-                // create non-snap segments, if necessary
-                if (createNonSnapSegments && !entireEntity){
-                    if (segmentDisposition != LC_Division::SegmentDisposition::SEGMENT_TO_START){
-                        RS_ArcData arcData1 = arc->getData();
-                        arcData1.angle1 = arc->getAngle1();
-                        arcData1.angle2 = data->snapSegmentStartAngle;
-                        createArcEntity(arcData1, preview, pen, layer, list);
-                    }
+    if (creationPlan.createRemainingSegments) {
+        if (data->segmentDisposition != LC_Division::SegmentDisposition::SEGMENT_TO_START) {
+            RS_ArcData startArcData = arc->getData();
+            startArcData.angle1 = arc->getAngle1();
+            startArcData.angle2 = data->snapSegmentStartAngle;
+            createArcEntity(startArcData, preview, pen, layer, list);
+        }
 
-                    if (segmentDisposition != LC_Division::SegmentDisposition::SEGMENT_TO_END){
-                        RS_ArcData arcData2 = arc->getData();
-                        arcData2.angle1 = data->snapSegmentEndAngle;
-                        arcData2.angle2 = arc->getAngle2();
-                        createArcEntity(arcData2, preview, pen, layer, list);
-                    }
-                }
-
-                if (preview){
-                    double radius = arc->getRadius();
-                    RS_Vector center = arc->getCenter();
-                    RS_Vector segmentStart = center.relative(radius, data->snapSegmentStartAngle);
-                    if (!entireEntity && segmentDisposition != LC_Division::SegmentDisposition::SEGMENT_TO_START){
-                        createRefSelectablePoint(segmentStart, list);
-                    }
-
-                    RS_Vector segmentEnd = center.relative(radius, data->snapSegmentEndAngle);
-                    if (!entireEntity && segmentDisposition != LC_Division::SegmentDisposition::SEGMENT_TO_END){
-                        createRefSelectablePoint(segmentEnd, list);
-                    }
-
-                    if (!entireEntity && isInfoCursorForModificationEnabled()){
-                        msg(tr("Break/Divide Arc"))
-                            .wcsAngle(tr("Angle 1:"), data->snapSegmentStartAngle)
-                            .vector(tr("Point 1:"), segmentStart)
-                            .wcsAngle(tr("Angle 2:"), data->snapSegmentEndAngle)
-                            .vector(tr("Point 2:"), segmentEnd)
-                            .toInfoCursorZone2(false);
-                    }
-                }
-            }
-            // don't need temporary data, so delete it
-            delete data;
+        if (data->segmentDisposition != LC_Division::SegmentDisposition::SEGMENT_TO_END) {
+            RS_ArcData endArcData = arc->getData();
+            endArcData.angle1 = data->snapSegmentEndAngle;
+            endArcData.angle2 = arc->getAngle2();
+            createArcEntity(endArcData, preview, pen, layer, list);
         }
     }
-    return entireEntityRemoved;
+
+    if (preview) {
+        const double radius = arc->getRadius();
+        const RS_Vector center = arc->getCenter();
+        const RS_Vector segmentStart = center.relative(radius, data->snapSegmentStartAngle);
+        if (data->segmentDisposition != LC_Division::SegmentDisposition::SEGMENT_TO_START) {
+            createRefSelectablePoint(segmentStart, list);
+        }
+
+        const RS_Vector segmentEnd = center.relative(radius, data->snapSegmentEndAngle);
+        if (data->segmentDisposition != LC_Division::SegmentDisposition::SEGMENT_TO_END) {
+            createRefSelectablePoint(segmentEnd, list);
+        }
+
+        if (isInfoCursorForModificationEnabled()) {
+            msg(tr("Break/Divide Arc"))
+                .wcsAngle(tr("Angle 1:"), data->snapSegmentStartAngle)
+                .vector(tr("Point 1:"), segmentStart)
+                .wcsAngle(tr("Angle 2:"), data->snapSegmentEndAngle)
+                .vector(tr("Point 2:"), segmentEnd)
+                .toInfoCursorZone2(false);
+        }
+    }
+    return false;
 }
 
 /**

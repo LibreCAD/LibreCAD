@@ -72,8 +72,8 @@ protected:
     LC_ActionOptionsPropertiesFiller* createOptionsFiller() override;
     /**
      * Fill the list with the segments the entity should be replaced by.
-     * @return true if the selected segment covers the entire entity, so that nothing
-     * remains of it and it is just removed. Only meaningful for the trigger.
+     * @return true only when a trigger should remove the source without creating
+     * replacement geometry. This is not a general success result.
      */
     bool createEntitiesForLine(const RS_Line *line, const RS_Vector &snap, QList<RS_Entity *> &list, bool preview) const;
     bool createEntitiesForCircle(const RS_Circle* circle, RS_Vector &snap, QList<RS_Entity *> &list, bool preview) const;

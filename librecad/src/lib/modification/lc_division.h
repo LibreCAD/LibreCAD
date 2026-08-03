@@ -43,14 +43,16 @@ public:
         SEGMENT_INSIDE, // segment is between two intersection points
         SEGMENT_TO_START, // snap is between start point of entity and intersection point
         SEGMENT_TO_END, // snap is between end point of entity and intersection point
-        SEGMENT_ENTIRE // the entire entity is the segment, it has no intersections outside its own endpoints
+        // The selected segment is the source entity itself. This is semantic
+        // operation data; consumers must not infer it from coincident endpoints.
+        SEGMENT_ENTIRE
     };
 
     /**
      * Snap segment info for line
      */
     struct LineSegmentData{
-        SegmentDisposition segmentDisposition;
+        SegmentDisposition segmentDisposition = SEGMENT_INSIDE;
         RS_Vector snap;
         RS_Vector snapSegmentStart;
         RS_Vector snapSegmentEnd;
@@ -60,7 +62,7 @@ public:
      * Snap segment for angle
      */
     struct ArcSegmentData{
-        int segmentDisposition;
+        SegmentDisposition segmentDisposition = SEGMENT_INSIDE;
         double snapSegmentStartAngle;
         double snapSegmentEndAngle;
     };
@@ -69,7 +71,6 @@ public:
      * Snap segment for circle     *
      */
     struct CircleSegmentData{
-        // the circle paths that do not set it leave the circle intact
         SegmentDisposition segmentDisposition = SEGMENT_INSIDE;
         double snapSegmentStartAngle;
         double snapSegmentEndAngle;
