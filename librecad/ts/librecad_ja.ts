@@ -7255,7 +7255,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/components/status_bar/lc_anglesbasiswidget.ui" line="105"/>
         <source>0.000</source>
-        <translation>0.000の</translation>
+        <translation>0.000</translation>
     </message>
     <message>
         <location filename="../src/ui/components/status_bar/lc_anglesbasiswidget.cpp" line="76"/>
@@ -22498,17 +22498,17 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="267"/>
         <source>0.00mm</source>
-        <translation>0.00ミリメートル</translation>
+        <translation>0.00mm</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="268"/>
         <source>0.05mm</source>
-        <translation>0.05mmの</translation>
+        <translation>0.05mm</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="269"/>
         <source>0.09mm</source>
-        <translation>0.09ミリメートル</translation>
+        <translation>0.09mm</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="270"/>
@@ -22518,7 +22518,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="271"/>
         <source>0.15mm</source>
-        <translation>0.15mmの</translation>
+        <translation>0.15mm</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="272"/>
@@ -22528,7 +22528,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="273"/>
         <source>0.20mm</source>
-        <translation>0.20ミリメートル</translation>
+        <translation>0.20mm</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="274"/>
@@ -22538,7 +22538,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="275"/>
         <source>0.30mm</source>
-        <translation>0.30mmの</translation>
+        <translation>0.30mm</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="276"/>
@@ -22548,7 +22548,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="277"/>
         <source>0.40mm</source>
-        <translation>0.40mmの</translation>
+        <translation>0.40mm</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="278"/>
@@ -22558,12 +22558,12 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="279"/>
         <source>0.53mm</source>
-        <translation>0.53mmの</translation>
+        <translation>0.53mm</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="280"/>
         <source>0.60mm</source>
-        <translation>0.60mmの</translation>
+        <translation>0.60mm</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="281"/>
@@ -22573,12 +22573,12 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="282"/>
         <source>0.80mm</source>
-        <translation>0.80ミリメートル</translation>
+        <translation>0.80mm</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="283"/>
         <source>0.90mm</source>
-        <translation>0.90mmの</translation>
+        <translation>0.90mm</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="284"/>
@@ -22588,12 +22588,12 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="285"/>
         <source>1.06mm</source>
-        <translation>1.06mmの</translation>
+        <translation>1.06mm</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="286"/>
         <source>1.20mm</source>
-        <translation>1.20ミリメートル</translation>
+        <translation>1.20mm</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="287"/>
@@ -22603,7 +22603,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="288"/>
         <source>1.58mm</source>
-        <translation>1.58ミリメートル</translation>
+        <translation>1.58mm</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="289"/>
@@ -39575,27 +39575,27 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1988"/>
         <source>5</source>
-        <translation>5月5日</translation>
+        <translation>5</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1998"/>
         <source>15</source>
-        <translation>15 日</translation>
+        <translation>15</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2013"/>
         <source>30</source>
-        <translation>30日</translation>
+        <translation>30</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2018"/>
         <source>45</source>
-        <translation>5月16日</translation>
+        <translation>45</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2023"/>
         <source>90</source>
-        <translation>90 人</translation>
+        <translation>90</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1953"/>
@@ -40766,17 +40766,17 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1993"/>
         <source>10</source>
-        <translation>10月10日</translation>
+        <translation>10</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2003"/>
         <source>18</source>
-        <translation>18歳</translation>
+        <translation>18</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2008"/>
         <source>22.5</source>
-        <translation>22.5インチ</translation>
+        <translation>22.5</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1960"/>
@@ -47996,117 +47996,117 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="64"/>
         <source>0.00mm</source>
-        <translation>0.00ミリメートル</translation>
+        <translation>0.00mm</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="65"/>
         <source>0.05mm</source>
-        <translation>0.05mmの</translation>
+        <translation>0.05mm</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="66"/>
         <source>0.09mm</source>
-        <translation>0.09ミリメートル</translation>
+        <translation>0.09mm</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="67"/>
         <source>0.13mmISO</source>
-        <translation>0.13mmISOの</translation>
+        <translation>0.13mmISO</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="68"/>
         <source>0.15mm</source>
-        <translation>0.15mmの</translation>
+        <translation>0.15mm</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="69"/>
         <source>0.18mmISO</source>
-        <translation>0.18mmISOの</translation>
+        <translation>0.18mmISO</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="70"/>
         <source>0.20mm</source>
-        <translation>0.20ミリメートル</translation>
+        <translation>0.20mm</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="71"/>
         <source>0.25mmISO</source>
-        <translation>0.25mmISOの</translation>
+        <translation>0.25mmISO</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="72"/>
         <source>0.30mm</source>
-        <translation>0.30mmの</translation>
+        <translation>0.30mm</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="73"/>
         <source>0.35mmISO</source>
-        <translation>0.35mmISOの</translation>
+        <translation>0.35mmISO</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="74"/>
         <source>0.40mm</source>
-        <translation>0.40mmの</translation>
+        <translation>0.40mm</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="75"/>
         <source>0.50mmISO</source>
-        <translation>0.50mmISOの</translation>
+        <translation>0.50mmISO</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="76"/>
         <source>0.53mm</source>
-        <translation>0.53mmの</translation>
+        <translation>0.53mm</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="77"/>
         <source>0.60mm</source>
-        <translation>0.60mmの</translation>
+        <translation>0.60mm</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="78"/>
         <source>0.70mmISO</source>
-        <translation>0.70mmISOの</translation>
+        <translation>0.70mmISO</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="79"/>
         <source>0.80mm</source>
-        <translation>0.80ミリメートル</translation>
+        <translation>0.80mm</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="80"/>
         <source>0.90mm</source>
-        <translation>0.90mmの</translation>
+        <translation>0.90mm</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="81"/>
         <source>1.00mmISO</source>
-        <translation>1.00mmISOの</translation>
+        <translation>1.00mmISO</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="82"/>
         <source>1.06mm</source>
-        <translation>1.06mmの</translation>
+        <translation>1.06mm</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="83"/>
         <source>1.20mm</source>
-        <translation>1.20ミリメートル</translation>
+        <translation>1.20mm</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="84"/>
         <source>1.40mmISO</source>
-        <translation>1.40mmISOの</translation>
+        <translation>1.40mmISO</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="85"/>
         <source>1.58mm</source>
-        <translation>1.58ミリメートル</translation>
+        <translation>1.58mm</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="86"/>
         <source>2.00mmISO</source>
-        <translation>2.00mmISOの</translation>
+        <translation>2.00mmISO</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="87"/>
