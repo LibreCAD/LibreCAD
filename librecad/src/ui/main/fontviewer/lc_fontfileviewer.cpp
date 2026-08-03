@@ -67,7 +67,11 @@ void LC_FontFileViewer::drawFontChars() const {
         currentLetterX += maxLetterWidth + sep;
         const auto in = new RS_Insert(m_document, data);
         m_document->addEntity(in);
-        QString uCode = ch->getName().mid(1,4);
+        // the code is "[hhhh]", but a code point above U+FFFF needs 5 or 6 digits
+        const QString chName = ch->getName();
+        const int closingBracket = chName.indexOf(']');
+        QString uCode = (chName.startsWith('[') && closingBracket > 1)
+                        ? chName.mid(1, closingBracket - 1) : chName;
         RS_MTextData datatx(RS_Vector(currentColumn*sep,currentLetterY-h), h, 4*h, RS_MTextData::VATop,
                            RS_MTextData::HALeft, RS_MTextData::ByStyle, RS_MTextData::AtLeast,
                            1, uCode, "standard", 0);
