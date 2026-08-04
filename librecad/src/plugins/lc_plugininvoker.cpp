@@ -79,6 +79,7 @@ void LC_PluginInvoker::loadPlugins(){
                 if (pluginInterface != nullptr) {
                     m_loadedPluginList.push_back(pluginInterface);
                     loadedPluginFileNames.push_back(fileName);
+                    pluginInterface->init(new Doc_plugin_interface(m_actionContext, m_appWindow), m_appWindow);
                     PluginCapabilities pluginCapabilities = pluginInterface->getCapabilities();
                     for (const PluginMenuLocation &loc: pluginCapabilities.menuEntryPoints) {
                         // Load from plugin's main .cpp file info:
@@ -130,17 +131,6 @@ void LC_PluginInvoker::loadPlugins(){
 void LC_PluginInvoker::execPlug() const {
     const auto *action = qobject_cast<QAction *>(sender());
     const auto plugin = qobject_cast<QC_PluginInterface *>(action->parent());
-    //get actual drawing
-    const QC_MDIWindow *w = m_appWindow->getCurrentMDIWindow();
-    if (w != nullptr) {
-        RS_Document *currdoc = w->getDocument();
-        //create document interface instance
-        QG_GraphicView *graphicView = w->getGraphicView();
-        Doc_plugin_interface pligundoc(m_actionContext, m_appWindow);
-        //execute plugin
-        LC_UndoSection undo(currdoc, graphicView->getViewPort());
-        plugin->execComm(&pligundoc, m_appWindow, action->data().toString());
-        //TODO call update view
-        graphicView->redraw();
-    }
+    //execute plugin
+    plugin->execComm(action->data().toString());
 }

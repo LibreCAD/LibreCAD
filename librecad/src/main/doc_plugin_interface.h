@@ -75,20 +75,21 @@ private:
 class Doc_plugin_interface : public Document_Interface{
 public:
     Doc_plugin_interface(LC_ActionContext* actionContext, QWidget* parent);
+    void update();
     void updateView() override;
     void addPoint(QPointF *start) override;
     void addLine(QPointF *start, QPointF *end) override;
     void addMText(const QString& txt, const QString& sty, const QPointF *start,
-            double height, double angle, DPI::HAlign ha,  DPI::VAlign va) const;
+            double height, double angle, DPI::HAlign ha,  DPI::VAlign va) override;
     void addText(QString txt, QString sty, QPointF *start,
             double height, double angle, DPI::HAlign ha,  DPI::VAlign va) override;
 
     void addCircle(QPointF *start, qreal radius) override;
     void addArc(QPointF *start, qreal radius, qreal a1, qreal a2) override;
     void addEllipse(QPointF *start, QPointF *end, qreal ratio, qreal a1, qreal a2) override;
-     void addLines(const std::vector<QPointF>& points, bool closed=false) override;
-     void addPolyline(const std::vector<Plug_VertexData>& points, bool closed=false) override;
-     void addSplinePoints(const std::vector<QPointF>& points, bool closed=false) override;
+    void addLines(const std::vector<QPointF>& points, bool closed=false) override;
+    void addPolyline(const std::vector<Plug_VertexData>& points, bool closed=false) override;
+    void addSplinePoints(const std::vector<QPointF>& points, bool closed=false) override;
     void addImage(int handle, QPointF *start, QPointF *uvr, QPointF *vvr,
                   int w, int h, QString name, int br, int con, int fade) override;
     void addInsert(QString name, QPointF ins, QPointF scale, qreal rot) override;
@@ -96,7 +97,7 @@ public:
     void addEntity(Plug_Entity *handle) override;
     Plug_Entity *newEntity( enum DPI::ETYPE type) override;
     void removeEntity(Plug_Entity *ent) override;
-    void updateEntity(RS_Entity *original, RS_Entity *clone) const;
+    void updateEntity(RS_Entity *original, RS_Entity *clone);
 
     void setLayer(QString name) override;
     QString getCurrentLayer() override;
@@ -128,7 +129,7 @@ public:
     QString realToStr(qreal num, int units = 0, int prec = 0) override;
 
     //method to handle undo in Plugin_Entity
-    bool addToUndo(RS_Entity* current, RS_Entity* modified, DPI::Disposition how) const;
+    void addToUndo(RS_Entity* current, RS_Entity* modified, DPI::Disposition how);
 private:
     // Helper for performing entity selection (API-like interface):
     // - Handles both general and typed selection via typeToSelect parameter.

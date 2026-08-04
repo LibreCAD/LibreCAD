@@ -18,9 +18,9 @@
 #include "list.h"
 
 QString LC_List::name() const
- {
-     return (tr("List entities"));
- }
+{
+    return (tr("List entities"));
+}
 
 PluginCapabilities LC_List::getCapabilities() const
 {
@@ -31,12 +31,16 @@ PluginCapabilities LC_List::getCapabilities() const
     return pluginCapabilities;
 }
 
-void LC_List::execComm(Document_Interface *doc,
-                             [[maybe_unused]] QWidget *parent, [[maybe_unused]] QString cmd)
+void LC_List::init(Document_Interface *doc, QWidget *parent) {
+    m_doc = doc;
+    m_parent = parent;
+}
+
+void LC_List::execComm([[maybe_unused]] QString cmd)
 {
-    d = doc;
+    d = m_doc;
     QList<Plug_Entity *> obj;
-    bool yes  = doc->getSelect(&obj);
+    bool yes  = m_doc->getSelect(&obj);
     if (!yes || obj.isEmpty()) return;
 
     QString text;
@@ -45,7 +49,7 @@ void LC_List::execComm(Document_Interface *doc,
         text.append( getStrData(obj.at(i)));
         text.append( "\n");
     }
-    lc_Listdlg dlg(parent);
+    lc_Listdlg dlg(m_parent);
     dlg.setText(text);
     dlg.exec();
 

@@ -110,9 +110,12 @@ public:
     virtual ~QC_PluginInterface() = default;
     virtual QString name() const = 0;
     virtual PluginCapabilities getCapabilities() const = 0;
-    virtual void execComm(Document_Interface *doc, QWidget *parent, QString cmd) = 0;
+    virtual void init(Document_Interface *doc, QWidget *parent) = 0;
+    virtual void execComm(QString cmd) = 0;
 //    virtual void paintEvent(Document_Interface *doc) = 0;
-
+protected:
+    Document_Interface *m_doc;
+    QWidget *m_parent;
 };
 
 #define LC_DocumentInterface_iid "org.librecad.PluginInterface/1.0"

@@ -43,16 +43,20 @@ PluginCapabilities LC_Gear::getCapabilities() const
     return pluginCapabilities;
 }
 
-void LC_Gear::execComm([[maybe_unused]] Document_Interface *doc,
-                        QWidget *parent, [[maybe_unused]] QString cmd)
+void LC_Gear::init(Document_Interface *doc, QWidget *parent) {
+    m_doc = doc;
+    m_parent = parent;
+}
+
+void LC_Gear::execComm([[maybe_unused]] QString cmd)
 {
     QPointF center;
-    if (!doc->getPoint(&center, QString("select center"))) {
+    if (!m_doc->getPoint(&center, QString("select center"))) {
         return;
     }
 
     if (!parameters_dialog) {
-        parameters_dialog = new lc_Geardlg(parent);
+        parameters_dialog = new lc_Geardlg(m_parent);
         if (!parameters_dialog) {
             return;
         }
@@ -60,7 +64,7 @@ void LC_Gear::execComm([[maybe_unused]] Document_Interface *doc,
 
     int result =  parameters_dialog->exec();
     if (result == QDialog::Accepted)
-        parameters_dialog->processAction(doc, cmd, center);
+        parameters_dialog->processAction(m_doc, cmd, center);
 }
 
 /*****************************/
