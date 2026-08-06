@@ -37,7 +37,6 @@ public:
         : LC_MenuFactoryBase(mainWin, actionGroupManager, menusHolder), m_actionFactory{actionFactory} {
     }
     void recreateMainMenuIfNeeded(QMenuBar *menuBar);
-    void recreateMainMenu(QMenuBar *menuBar);
     void createMainMenu(QMenuBar* menuBar);
     void onWorkspaceMenuAboutToShow(const QList<QC_MDIWindow *> &windowList);
     QMenu* createMainWindowPopupMenu() const;

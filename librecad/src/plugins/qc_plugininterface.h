@@ -74,7 +74,6 @@ public:
     QList<QAction*> actions;
 };
 
-
 class PluginWidget
 {
 public:

@@ -55,11 +55,6 @@ void LC_MenuFactoryMain::recreateMainMenuIfNeeded(QMenuBar* menuBar) {
     }
 }
 
-void LC_MenuFactoryMain::recreateMainMenu(QMenuBar* menuBar) {
-    menuBar->clear();
-    doCreateMenus(menuBar, false);
-}
-
 void LC_MenuFactoryMain::createMainMenu(QMenuBar* menuBar) {
     LC_GROUP("Startup");
     {
@@ -118,6 +113,8 @@ void LC_MenuFactoryMain::doCreateMenus(QMenuBar* menuBar, const bool firstCreati
         topMenuMenus << m_menusHolder->m_menuWorkspace;
         topMenuMenus << m_menusHolder->m_menuHelp;
     }
+
+    m_appWin->populatePluginMenu();
 
     for (const auto m : std::as_const(topMenuMenus)) {
         menuBar->addMenu(m);
@@ -410,7 +407,7 @@ void LC_MenuFactoryMain::createViewMenu(QMenuBar* menuBar, QList<QMenu*>& topMen
 
 void LC_MenuFactoryMain::createPluginsMenu(QMenuBar* menuBar, QList<QMenu*>& topMenuMenus) const {
     m_menusHolder->m_menuPlugins = menu(tr("Pl&ugins"), "plugins", menuBar);
-    m_menusHolder->m_menuPlugins ->setToolTipsVisible(true);
+    m_menusHolder->m_menuPlugins->setToolTipsVisible(true);
     topMenuMenus << m_menusHolder->m_menuPlugins;
 }
 

@@ -80,42 +80,6 @@ void LC_PluginInvoker::loadPlugins(){
                     m_loadedPluginList.push_back(pluginInterface);
                     loadedPluginFileNames.push_back(fileName);
                     pluginInterface->init(new Doc_plugin_interface(m_actionContext, m_appWindow), m_appWindow);
-                    PluginCapabilities pluginCapabilities = pluginInterface->getCapabilities();
-                    for (const PluginMenuLocation &loc: pluginCapabilities.menuEntryPoints) {
-                        // Load from plugin's main .cpp file info:
-                        // menu name, plugin name, tooltip for plugin (short manual for user)
-                        auto *actpl = new QAction(loc.menuEntryActionName, plugin);
-                        actpl->setData(loc.menuEntryActionName);
-                        actpl->setToolTip(loc.menuEntryAction_Tip);
-                        connect(actpl, &QAction::triggered, this, &LC_PluginInvoker::execPlug);
-                        connect(m_appWindow, &QC_ApplicationWindow::windowsChanged, actpl, &QAction::setEnabled);
-                        const auto menuBar = m_appWindow -> menuBar();
-                        QMenu *atMenu = m_appWindow->findMenu("/" + loc.menuEntryPoint, menuBar->children(), "");
-                        if (atMenu != nullptr) {
-                            atMenu->addAction(actpl);
-                        } else {
-                            QStringList treemenu = loc.menuEntryPoint.split('/', Qt::SkipEmptyParts);
-                            QString currentLevel = "";
-                            QMenu *parentMenu = nullptr;
-                            do {
-                                QString menuName = treemenu.at(0);
-                                treemenu.removeFirst();
-                                currentLevel = currentLevel + "/" + menuName;
-                                atMenu = m_appWindow->findMenu(currentLevel, menuBar->children(), "");
-                                if (atMenu == nullptr) {
-                                    if (parentMenu == nullptr) {
-                                        parentMenu = menuBar->addMenu(menuName);
-                                    } else {
-                                        parentMenu = parentMenu->addMenu(menuName);
-                                    }
-                                    parentMenu->setObjectName(menuName);
-                                }
-                            } while (treemenu.size() > 0);
-                            if (parentMenu) {
-                                parentMenu->addAction(actpl);
-                            }
-                        }
-                    }
                 }
             } else {
                 QMessageBox::information(m_appWindow, "Info", pluginLoader.errorString());
@@ -125,12 +89,54 @@ void LC_PluginInvoker::loadPlugins(){
     }
 }
 
+void LC_PluginInvoker::populatePluginMenu() {
+    for (QC_PluginInterface *plugin : m_loadedPluginList) {
+        PluginCapabilities pluginCapabilities = plugin->getCapabilities();
+        for (const PluginMenuLocation &loc: pluginCapabilities.menuEntryPoints) {
+            // Load from plugin's main .cpp file info:
+            // menu name, plugin name, tooltip for plugin (short manual for user)
+            auto *actpl = new QAction(loc.menuEntryActionName);
+            actpl->setData(loc.menuEntryActionName);
+            actpl->setToolTip(loc.menuEntryAction_Tip);
+            connect(actpl, &QAction::triggered, this, [this, plugin] {
+                execPlug(plugin);
+            });
+            connect(m_appWindow, &QC_ApplicationWindow::windowsChanged, actpl, &QAction::setEnabled);
+            const auto menuBar = m_appWindow -> menuBar();
+            QMenu *atMenu = m_appWindow->findMenu("/" + loc.menuEntryPoint, menuBar->children(), "");
+            if (atMenu != nullptr) {
+                atMenu->addAction(actpl);
+            } else {
+                QStringList treemenu = loc.menuEntryPoint.split('/', Qt::SkipEmptyParts);
+                QString currentLevel = "";
+                QMenu *parentMenu = nullptr;
+                do {
+                    QString menuName = treemenu.at(0);
+                    treemenu.removeFirst();
+                    currentLevel = currentLevel + "/" + menuName;
+                    atMenu = m_appWindow->findMenu(currentLevel, menuBar->children(), "");
+                    if (atMenu == nullptr) {
+                        if (parentMenu == nullptr) {
+                            parentMenu = menuBar->addMenu(menuName);
+                        } else {
+                            parentMenu = parentMenu->addMenu(menuName);
+                        }
+                        parentMenu->setObjectName(menuName);
+                    }
+                } while (treemenu.size() > 0);
+                if (parentMenu) {
+                    parentMenu->addAction(actpl);
+                }
+            }
+        }
+    }
+}
+
 /**
  * Execute the plugin.
  */
-void LC_PluginInvoker::execPlug() const {
+void LC_PluginInvoker::execPlug(QC_PluginInterface *plugin) const {
     const auto *action = qobject_cast<QAction *>(sender());
-    const auto plugin = qobject_cast<QC_PluginInterface *>(action->parent());
     //execute plugin
     plugin->execComm(action->data().toString());
 }

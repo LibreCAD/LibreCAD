@@ -48,6 +48,7 @@ void LC_ToolbarFactory::initToolBars(){
     createCategoriesToolbar();
     createStandardToolbars();
     createCustomToolbars();
+    initPluginToolbars();
 }
 
 void LC_ToolbarFactory::initPluginToolbars() {
@@ -454,7 +455,8 @@ QToolBar* LC_ToolbarFactory::createWorkspacesToolbar(const QSizePolicy &toolBarP
 }
 
 QToolBar* LC_ToolbarFactory::createGenericToolbar(const QString& title, const QString &name, const QSizePolicy& toolBarPolicy, const std::vector<QString> &actionNames, const int group) const {
-    QToolBar * result = doCreateToolBar(title, name, toolBarPolicy, group);    for (const QString& actionName: actionNames){
+    QToolBar * result = doCreateToolBar(title, name, toolBarPolicy, group);
+    for (const QString& actionName: actionNames){
         if (actionName.isEmpty()){
             result->addSeparator();
         }

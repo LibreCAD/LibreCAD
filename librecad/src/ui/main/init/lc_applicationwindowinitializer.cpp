@@ -75,6 +75,7 @@ void LC_ApplicationWindowInitializer::initApplication(){
     initIconSize();
     initActionContext();
     initActionFactory();
+    initPlugins();
     initWidgets();
     initToolbars();
     initSnapManager();
@@ -91,7 +92,6 @@ void LC_ApplicationWindowInitializer::initApplication(){
     loadCmdWidgetVariablesFile();
     initAutoSaveTimer();
     updateCommandsAlias();
-    initPlugins();
     m_appWin->showStatusMessage(qApp->applicationName() + " Ready", 2000);
     initReleaseChecker();
 }
@@ -249,12 +249,6 @@ void LC_ApplicationWindowInitializer::initToolbars() const {
 void LC_ApplicationWindowInitializer::initPlugins(){
     m_appWin->m_pluginInvoker = std::make_unique<LC_PluginInvoker>(m_appWin, m_appWin->m_actionContext);
     m_appWin->m_pluginInvoker->loadPlugins();
-    m_appWin->rebuildMenu();
-    LC_WidgetFactory widgetFactory(m_appWin);
-    widgetFactory.initPluginWidgets();
-    LC_ToolbarFactory toolbarFactory(m_appWin);
-    toolbarFactory.initPluginToolbars();
-    m_appWin->recreateToolbarsMenu();
 }
 
 void LC_ApplicationWindowInitializer::initAutoSaveTimer() const {

@@ -37,12 +37,13 @@ public:
     ~LC_PluginInvoker() override;
     QList<QC_PluginInterface*> getLoadedPluginList();
     void loadPlugins();
-public slots:
-    void execPlug() const;
+    void populatePluginMenu();
 private:
     QC_ApplicationWindow* m_appWindow = nullptr;
     QList<QC_PluginInterface*> m_loadedPluginList;
     LC_ActionContext* m_actionContext = nullptr;
+private slots:
+    void execPlug(QC_PluginInterface *plugin) const;
 };
 
 #endif

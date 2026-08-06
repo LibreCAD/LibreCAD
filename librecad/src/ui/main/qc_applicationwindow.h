@@ -303,7 +303,6 @@ public:
     void fillWorkspacesList(QList<QPair<int, QString>>& list) const;
     void applyWorkspaceById(int id) const;
     void rebuildMenuIfNecessary() const;
-    void rebuildMenu() const;
     void openFile(const QString& fileName); // Assume Unknown type
     /**
  * opens the given file.
@@ -349,6 +348,8 @@ public:
         }
         return list;
     }
+
+    void populatePluginMenu() const;
 
     void commandMessage(const QString& msg) const;
     // If a freshly opened drawing has empty modelspace but at least one

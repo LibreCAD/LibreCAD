@@ -1625,10 +1625,6 @@ void QC_ApplicationWindow::rebuildMenuIfNecessary() const {
     m_menuFactory->recreateMainMenuIfNeeded(menuBar());
 }
 
-void QC_ApplicationWindow::rebuildMenu() const {
-    m_menuFactory->recreateMainMenu(menuBar());
-}
-
 /**
  * Shows the dialog for general application preferences.
  */
@@ -2025,6 +2021,10 @@ void QC_ApplicationWindow::showBlockActivated(const RS_Block* block) const {
 
 QAction* QC_ApplicationWindow::getAction(const QString& actionName) const {
     return m_actionGroupManager->getActionByName(actionName);
+}
+
+void QC_ApplicationWindow::populatePluginMenu() const {
+    m_pluginInvoker->populatePluginMenu();
 }
 
 void QC_ApplicationWindow::commandMessage(const QString& msg) const {

@@ -77,6 +77,7 @@ void LC_WidgetFactory::initWidgets(){
     initStatusBar();
     initLeftCADSidebar();
     createRightSidebar(m_appWin->m_actionHandler.get());
+    initPluginWidgets();
 }
 
 void LC_WidgetFactory::initPluginWidgets(){
