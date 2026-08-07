@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="ja_JP">
+<TS version="2.1" language="ja">
 <context>
     <name>ColorWizard</name>
     <message>
@@ -13006,7 +13006,7 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucsproperties.cpp" line="97"/>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucsproperties.cpp" line="113"/>
         <source>Ortho</source>
-        <translation>正投影</translation>
+        <translation>正面</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucsproperties.cpp" line="100"/>
@@ -15735,12 +15735,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="560"/>
         <source>Matched item in highlight filter mode</source>
-        <translation>ハイライトフィルタモードで一致した項目</translation>
+        <translation>ハイライトフィルターモードで一致した項目</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="391"/>
         <source>Color for items that matches filter conditions</source>
-        <translation>フィルタ条件に一致する項目の色</translation>
+        <translation>フィルター条件に一致する項目の色</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="379"/>
@@ -24112,7 +24112,7 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="302"/>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="314"/>
         <source>Ortho</source>
-        <translation>正投影</translation>
+        <translation>正面</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="304"/>
@@ -25259,7 +25259,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="86"/>
         <source>Color of pen item that is matched by filter</source>
-        <translation>フィルタに一致するペン項目の色</translation>
+        <translation>フィルターに一致するペン項目の色</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="155"/>
@@ -25274,12 +25274,12 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="297"/>
         <source>If set, filter will igore the case of pen&apos;s name</source>
-        <translation>設定すると、フィルタはペン名の大文字小文字を区別しません</translation>
+        <translation>設定すると、フィルターはペン名の大文字小文字を区別しません</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="300"/>
         <source>Case-insensitive pens filtering</source>
-        <translation>大文字小文字を区別しないペンフィルタ</translation>
+        <translation>大文字小文字を区別しないペンフィルター</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="130"/>
@@ -29889,7 +29889,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_ucs.cpp" line="104"/>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_ucs.cpp" line="120"/>
         <source>Ortho</source>
-        <translation>正投影</translation>
+        <translation>直交</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_ucs.cpp" line="108"/>
@@ -32646,7 +32646,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="261"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="410"/>
         <source>SOLID</source>
-        <translation>単色塗り</translation>
+        <translation>ソリッド</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="264"/>
@@ -32664,7 +32664,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="560"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="578"/>
         <source>LINE</source>
-        <translation>線</translation>
+        <translation>線分</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="604"/>
@@ -33449,7 +33449,7 @@ Layer: </source>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1287"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1309"/>
         <source>SPLINEPOINTS</source>
-        <translation>スプラインポイント</translation>
+        <translation>スプライン (通過点)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1289"/>
@@ -33681,7 +33681,7 @@ Layer: </source>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1574"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1589"/>
         <source>DIMALIGNED</source>
-        <translation>整列寸法</translation>
+        <translation>平行寸法</translation>
     </message>
 </context>
 <context>
@@ -38747,7 +38747,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistmodel.cpp" line="241"/>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistmodel.cpp" line="253"/>
         <source>Ortho</source>
-        <translation>正投影</translation>
+        <translation>正面</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistmodel.cpp" line="243"/>
@@ -38864,7 +38864,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Filtering user coordinates by name</source>
-        <translation type="vanished">ユーザが名前で座標をフィルタリングする</translation>
+        <translation type="vanished">ユーザーが名前で座標をフィルタリングする</translation>
     </message>
     <message>
         <source>Filter...</source>
@@ -42446,7 +42446,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="576"/>
         <source>Zero base angle relative to the current user coordinate system. Affects polar coordinates input, snap to angle. 0.0 is 3pm.</source>
-        <translation>現在のユーザ座標系に対する基準角度ゼロ。極座標入力や角度スナップに影響します。0.0 は3時の方向です。</translation>
+        <translation>現在のユーザー座標系に対する基準角度ゼロ。極座標入力や角度スナップに影響します。0.0 は3時の方向です。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="586"/>
@@ -44718,7 +44718,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3588"/>
         <source>If selected, marker for coodinate system will be shown in zero point of current user coordinates system. </source>
-        <translation>選択すると、現在のユーザ座標系の原点に座標系マーカーが表示されます。 </translation>
+        <translation>選択すると、現在のユーザー座標系の原点に座標系マーカーが表示されます。 </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="675"/>
@@ -44753,7 +44753,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3578"/>
         <source>If selected and view is in user coordinate system, the marker for coodinate system will be shown in zero point of world coordinates system. </source>
-        <translation>選択し、かつビューがユーザ座標系の場合、世界座標系の原点に座標系マーカーが表示されます。 </translation>
+        <translation>選択し、かつビューがユーザー座標系の場合、世界座標系の原点に座標系マーカーが表示されます。 </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3581"/>
@@ -45612,12 +45612,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2996"/>
         <source>If set and user coordinate system is active, absolute coodinate in world coordinate system will be also shown.</source>
-        <translation>設定され、ユーザ座標系がアクティブな場合、世界座標系での絶対座標も表示されます。</translation>
+        <translation>設定され、ユーザー座標系がアクティブな場合、世界座標系での絶対座標も表示されます。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3002"/>
         <source>Show world coordinates if in user coordinate system</source>
-        <translation>ユーザ座標系の場合に世界座標を表示</translation>
+        <translation>ユーザー座標系の場合に世界座標を表示</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5450"/>
@@ -45677,7 +45677,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5221"/>
         <source>Zero base angle relative to the current user coordinate system. Affects polar coordinates input, snap to angle. 0.0 is 3pm.</source>
-        <translation>現在のユーザ座標系に対する基準角度ゼロ。極座標入力や角度スナップに影響します。0.0 は3時の方向です。</translation>
+        <translation>現在のユーザー座標系に対する基準角度ゼロ。極座標入力や角度スナップに影響します。0.0 は3時の方向です。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5260"/>
@@ -47986,7 +47986,7 @@ Clear filtering mask and repeat.</source>
 Clear filtering mask and repeat.</source>
         <translation>エンティティのないレイヤーが見つかりましたが、フィルタリングされて表示されていません。
 
-フィルタをクリアして再試行してください。</translation>
+フィルターをクリアして再試行してください。</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="973"/>
@@ -50848,7 +50848,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="384"/>
         <source>circletan2cp</source>
         <comment>circle 2 tangent point</comment>
-        <translation>接線円 (2点)</translation>
+        <translation>接線円 (2接線1点)</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="385"/>
@@ -50860,7 +50860,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="390"/>
         <source>circletan2p</source>
         <comment>circle tangent 2 points</comment>
-        <translation>接線円 (2点)</translation>
+        <translation>接線円 (1接線2点)</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="391"/>
@@ -51112,7 +51112,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="547"/>
         <source>angleline</source>
         <comment>draw angle from line</comment>
-        <translation>角度線</translation>
+        <translation>線からの角度線</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="548"/>

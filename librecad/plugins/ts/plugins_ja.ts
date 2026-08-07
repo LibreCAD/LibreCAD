@@ -43,7 +43,7 @@
         <source>Click on options to set/unset,
 Ok to accept and start alignment.</source>
         <translation>オプションをクリックして設定/解除、
-        OKをクリックして確定し、位置合わせを開始します。</translation>
+OKをクリックして確定し、位置合わせを開始します。</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="60"/>
@@ -54,12 +54,12 @@ If &apos;Specify base points first&apos; is checked,
 Align will prompt for the alignment points in the order
 first base, second base, first target, second target.</source>
         <translation>&apos;元のオブジェクトを保持&apos; がオンの場合、
-        位置合わせでは選択したオブジェクトを移動せずにコピーします。
+位置合わせでは選択したオブジェクトを移動せずにコピーします。
 
-        &apos;最初に基準点を指定&apos; がオンの場合、
-        位置合わせでは、最初の基準点、2番目の基準点、
-        最初のターゲット点、2番目のターゲット点の順に
-        位置合わせポイントの入力を促します。</translation>
+&apos;最初に基準点を指定&apos; がオンの場合、
+位置合わせでは、最初の基準点、2番目の基準点、
+最初のターゲット点、2番目のターゲット点の順に
+位置合わせポイントの入力を促します。</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="81"/>
@@ -294,7 +294,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="194"/>
         <source>Scale</source>
-        <translation>尺度</translation>
+        <translation>倍率</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="197"/>
@@ -349,7 +349,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="237"/>
         <source>SPLINEPOINTS</source>
-        <translation>スプライン制御点</translation>
+        <translation>スプライン (通過点)</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="240"/>
@@ -845,10 +845,10 @@ decimal degrees
 goes
 anti-clockwise.</source>
         <translation>開始角度を
-        10進法の度で入力
-        3時の位置が0°
-        反時計回りに
-        進みます。</translation>
+10進法の度で入力
+3時の位置が0°
+反時計回りに
+進みます。</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="246"/>
@@ -1070,7 +1070,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../picfile/picfile.cpp" line="75"/>
         <source>Scale:</source>
-        <translation>尺度:</translation>
+        <translation>倍率:</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="79"/>
@@ -1148,10 +1148,10 @@ You can use pi when you need the value of pi (i.e. (3*pi)).
 Use t or x in your equation as a variable/parameter.
 </source>
         <translation>このプラグインは数式をプロットすることができます。
-        パラメトリック形式を使用しない場合は、"Equation2" を空欄のままにしてください。
-        円周率の値が必要な場合は pi を使用できます (例: (3*pi))。
-        変数/パラメータとして、方程式内で t または x を使用してください。
-        </translation>
+パラメトリック形式を使用しない場合は、"Equation2" を空欄のままにしてください。
+円周率の値が必要な場合は pi を使用できます (例: (3*pi))。
+変数/パラメータとして、方程式内で t または x を使用してください。
+</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="22"/>
