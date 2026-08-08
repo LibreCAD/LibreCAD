@@ -311,7 +311,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="194"/>
         <source>Scale</source>
-        <translation>尺度</translation>
+        <translation>倍率</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="197"/>
@@ -366,7 +366,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="237"/>
         <source>SPLINEPOINTS</source>
-        <translation>スプライン制御点</translation>
+        <translation>スプライン (通過点)</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="240"/>
@@ -1125,7 +1125,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../picfile/picfile.cpp" line="119"/>
         <source>Scale Factor is empty or invalid</source>
-        <translation>尺度係数が空、または無効です</translation>
+        <translation>倍率係数が空、または無効です</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="132"/>
