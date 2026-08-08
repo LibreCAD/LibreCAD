@@ -23,21 +23,83 @@
 
 #include "lc_hatchpropertieseditingwidget.h"
 
+#include <array>
 #include <cmath>
 
+#include <QFontMetrics>
+#include <QLineEdit>
+
+#include "lc_convert.h"
 #include "lc_secondmoment.h"
 #include "rs_hatch.h"
 #include "rs_settings.h"
 #include "ui_lc_hatchpropertieseditingwidget.h"
+
+namespace {
+    //! Significant digits shown for every numeric field of this widget.
+    constexpr int g_precision = 8;
+
+    /**
+     * Widest text QString::number(v, 'g', g_precision) can produce: sign, leading
+     * digit, decimal point, g_precision-1 further digits and a three digit exponent.
+     */
+    const QString g_widestValue = QStringLiteral("-1.2345678e-308");
+
+    //! Every field of the widget that shows a value.
+    std::array<QLineEdit*, 13> valueFields(Ui::LC_HatchPropertiesEditingWidget* ui) {
+        return {ui->lePattern, ui->leScale, ui->leAngle,
+                ui->leArea, ui->leCentroidX, ui->leCentroidY,
+                ui->leIxx, ui->leIyy, ui->leIxy,
+                ui->leI1, ui->leI2, ui->lePrincipalAngle, ui->leDegenerate};
+    }
+}
 
 LC_HatchPropertiesEditingWidget::LC_HatchPropertiesEditingWidget(QWidget *parent)
     : LC_EntityPropertiesEditorWidget(parent)
     , ui(new Ui::LC_HatchPropertiesEditingWidget) {
     ui->setupUi(this);
 
+    setupValueFields();
+
     connect(ui->leScale, &QLineEdit::editingFinished, this, &LC_HatchPropertiesEditingWidget::onScaleEditingFinished);
     connect(ui->leAngle, &QLineEdit::editingFinished, this, &LC_HatchPropertiesEditingWidget::onAngleEditingFinished);
     connect(ui->cbSolid, &QCheckBox::toggled, this, &LC_HatchPropertiesEditingWidget::onSolidToggled);
+}
+
+/**
+ * The moments span many orders of magnitude, so the value fields have to be wide
+ * enough for the longest string g_precision digits can produce. Sizing from the
+ * font rather than from a pixel constant keeps this correct at any DPI. The two
+ * extra character widths stand in for the frame and the text margins.
+ */
+void LC_HatchPropertiesEditingWidget::setupValueFields() {
+    const QFontMetrics fm = ui->leArea->fontMetrics();
+    const int valueWidth = fm.horizontalAdvance(g_widestValue) + 2 * fm.horizontalAdvance(QLatin1Char('0'));
+
+    for (QLineEdit* ed: valueFields(ui)) {
+        ed->setMinimumWidth(valueWidth);
+    }
+}
+
+/**
+ * A QLineEdit keeps whatever scroll position it had, so a field that was once too
+ * narrow shows the tail of the number. Rewind every field so the most significant
+ * digits are the ones on screen.
+ */
+void LC_HatchPropertiesEditingWidget::showValueStarts() {
+    for (QLineEdit* ed: valueFields(ui)) {
+        ed->setCursorPosition(0);
+    }
+}
+
+//! Like toUIValue(), but at this widget's precision instead of the shared default.
+void LC_HatchPropertiesEditingWidget::setValue(double value, QLineEdit* ed) const {
+    ed->setText(LC_Convert::asString(value, g_precision));
+}
+
+//! Like toUIAngleDeg(), but at this widget's precision instead of the shared default.
+void LC_HatchPropertiesEditingWidget::setAngle(double wcsAngle, QLineEdit* ed) const {
+    ed->setText(LC_Convert::asStringAngleDeg(toUCSAngle(wcsAngle), g_precision));
 }
 
 LC_HatchPropertiesEditingWidget::~LC_HatchPropertiesEditingWidget() {
@@ -50,10 +112,11 @@ void LC_HatchPropertiesEditingWidget::setEntity(RS_Entity* entity) {
     LC_GROUP_GUARD("Draw");
     toUIBool(m_entity->isSolid(), ui->cbSolid);
     ui->lePattern->setText(m_entity->getPattern());
-    toUIValue(m_entity->getScale(), ui->leScale);
-    toUIAngleDeg(m_entity->getAngle(), ui->leAngle);
+    setValue(m_entity->getScale(), ui->leScale);
+    setAngle(m_entity->getAngle(), ui->leAngle);
 
     updateMomentFields();
+    showValueStarts();
 }
 
 void LC_HatchPropertiesEditingWidget::saveSettings() {
@@ -66,11 +129,13 @@ void LC_HatchPropertiesEditingWidget::saveSettings() {
 
 void LC_HatchPropertiesEditingWidget::updateMomentFields() {
     double area = m_entity->getTotalArea();
-    toUIValue(area, ui->leArea);
+    setValue(area, ui->leArea);
 
     RS_Vector centroid = m_entity->getCentroid();
     if (centroid.valid) {
-        toUI(centroid, ui->leCentroidX, ui->leCentroidY);
+        const RS_Vector ucsCentroid = toUCSVector(centroid);
+        setValue(ucsCentroid.x, ui->leCentroidX);
+        setValue(ucsCentroid.y, ui->leCentroidY);
     } else {
         ui->leCentroidX->setText(tr("N/A"));
         ui->leCentroidY->setText(tr("N/A"));
@@ -79,9 +144,9 @@ void LC_HatchPropertiesEditingWidget::updateMomentFields() {
     LC_SecondMoment m = m_entity->getMomentOfInertia();
 
     // Raw central moments
-    toUIValue(m.ixx, ui->leIxx);
-    toUIValue(m.iyy, ui->leIyy);
-    toUIValue(m.ixy, ui->leIxy);
+    setValue(m.ixx, ui->leIxx);
+    setValue(m.iyy, ui->leIyy);
+    setValue(m.ixy, ui->leIxy);
 
     // Principal axes: eigenvalues of the inertia tensor
     //   I = | iyy  -ixy |
@@ -108,10 +173,10 @@ void LC_HatchPropertiesEditingWidget::updateMomentFields() {
     }
     // else: degenerate case (I1 ≈ I2), keep theta = 0
 
-    toUIValue(I1, ui->leI1);
-    toUIValue(I2, ui->leI2);
-    toUIAngleDeg(theta, ui->lePrincipalAngle);
-    
+    setValue(I1, ui->leI1);
+    setValue(I2, ui->leI2);
+    setAngle(theta, ui->lePrincipalAngle);
+
     // Display degeneracy status
     ui->leDegenerate->setText(isDegenerate ? tr("Yes") : tr("No"));
     if (isDegenerate) {

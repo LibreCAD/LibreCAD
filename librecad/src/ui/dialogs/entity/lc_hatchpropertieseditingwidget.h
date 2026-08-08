@@ -26,6 +26,7 @@
 
 #include "lc_entitypropertieseditorwidget.h"
 
+class QLineEdit;
 class RS_Hatch;
 
 namespace Ui {
@@ -45,6 +46,10 @@ protected slots:
 private:
     void updateMomentFields();
     void saveSettings();
+    void setupValueFields();
+    void showValueStarts();
+    void setValue(double value, QLineEdit* ed) const;
+    void setAngle(double wcsAngle, QLineEdit* ed) const;
     Ui::LC_HatchPropertiesEditingWidget *ui;
     RS_Hatch* m_entity{nullptr};
 };
