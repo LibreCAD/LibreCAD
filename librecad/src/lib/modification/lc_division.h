@@ -25,6 +25,8 @@
 #define LC_DIVISION_H
 #include <QVector>
 
+#include <memory>
+
 #include "rs_vector.h"
 
 class RS_Line;
@@ -53,7 +55,6 @@ public:
      */
     struct LineSegmentData{
         SegmentDisposition segmentDisposition = SEGMENT_INSIDE;
-        RS_Vector snap;
         RS_Vector snapSegmentStart;
         RS_Vector snapSegmentEnd;
     };
@@ -78,9 +79,9 @@ public:
 
     explicit LC_Division(RS_EntityContainer *entityContainer);
 
-    ArcSegmentData* findArcSegmentBetweenIntersections(const RS_Arc* arc, const RS_Vector& snap, bool allowEntireArcAsSegment);
-    CircleSegmentData* findCircleSegmentBetweenIntersections(const RS_Circle* circle, const RS_Vector& snap, bool allowEntireCircleAsSegment);
-    LineSegmentData* findLineSegmentBetweenIntersections(const RS_Line* line, const RS_Vector& snap, bool allowEntireLine);
+    std::unique_ptr<ArcSegmentData> findArcSegmentBetweenIntersections(const RS_Arc* arc, const RS_Vector& snap, bool allowEntireArcAsSegment);
+    std::unique_ptr<CircleSegmentData> findCircleSegmentBetweenIntersections(const RS_Circle* circle, const RS_Vector& snap, bool allowEntireCircleAsSegment);
+    std::unique_ptr<LineSegmentData> findLineSegmentBetweenIntersections(const RS_Line* line, const RS_Vector& snap, bool allowEntireLine);
 
     LineSegmentData* findLineSegmentEdges(const RS_Line* line, const RS_Vector& snap, QVector<RS_Vector> intersections, bool allowEntireLineAsSegment);
     ArcSegmentData* findArcSegmentEdges(const RS_Arc* arc, const RS_Vector& snap, const QVector<RS_Vector>& intersections, bool allowEntireArcAsSegment);

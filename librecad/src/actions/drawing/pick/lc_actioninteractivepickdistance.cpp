@@ -120,7 +120,7 @@ void LC_ActionInteractivePickDistance::onMouseMoveEvent(const int status, const 
                         highlightHover(entity);
                         const auto line = static_cast<RS_Line*>(entity);
                         LC_Division division(m_document);
-                        const LC_Division::LineSegmentData* data = division.findLineSegmentBetweenIntersections(
+                        const auto data = division.findLineSegmentBetweenIntersections(
                             line, e->graphPoint, true);
 
                         if (data != nullptr) {
@@ -133,7 +133,6 @@ void LC_ActionInteractivePickDistance::onMouseMoveEvent(const int status, const 
                             }
                             updateInfoCursorForPoint2(start, end);
                         }
-                        delete data;
                     }
                 }
             }
@@ -220,10 +219,9 @@ void LC_ActionInteractivePickDistance::onMouseLeftButtonRelease(const int status
                     if (isLine(entity)) {
                         const auto line = static_cast<RS_Line*>(entity);
                         LC_Division division(m_document);
-                        const LC_Division::LineSegmentData *data = division.findLineSegmentBetweenIntersections(line, snap, true);
+                        const auto data = division.findLineSegmentBetweenIntersections(line, snap, true);
                         if (data != nullptr) {
                             m_distance = data->snapSegmentEnd.distanceTo(data->snapSegmentStart);
-                            delete data;
                         }
                     }
                 }

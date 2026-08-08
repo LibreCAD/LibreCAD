@@ -98,17 +98,17 @@ void LC_ActionModifyBreakDivide::doPreparePreviewEntities(const LC_MouseEvent* e
             switch (rtti) {
                 case RS2::EntityLine: { // process line
                     const auto *line = dynamic_cast<RS_Line *>(en);
-                    createEntitiesForLine(line, snap, list, true);
+                    (void)createEntitiesForLine(line, snap, list, true); // preview shows the list; the removal verdict is trigger-only
                     break;
                 }
                 case RS2::EntityCircle: { //process circle
                     const auto *circle = dynamic_cast<RS_Circle *>(en);
-                    createEntitiesForCircle(circle, snap, list, true);
+                    (void)createEntitiesForCircle(circle, snap, list, true); // preview shows the list; the removal verdict is trigger-only
                     break;
                 }
                 case RS2::EntityArc: { // process arc
                     auto *arc = dynamic_cast<RS_Arc *>(en);
-                    createEntitiesForArc(arc, snap, list, true);
+                    (void)createEntitiesForArc(arc, snap, list, true); // preview shows the list; the removal verdict is trigger-only
                     break;
                 }
                 default:

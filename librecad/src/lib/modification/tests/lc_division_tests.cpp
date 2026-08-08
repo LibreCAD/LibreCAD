@@ -82,6 +82,9 @@ TEST_CASE("LC_Division identifies an unbounded selection as the whole entity",
 
         REQUIRE(data != nullptr);
         CHECK(data->segmentDisposition == LC_Division::SEGMENT_ENTIRE);
+        // ENTIRE data must describe the source arc itself.
+        CHECK(data->snapSegmentStartAngle == arc.getAngle1());
+        CHECK(data->snapSegmentEndAngle == arc.getAngle2());
     }
 
     SECTION("circle") {
@@ -91,6 +94,8 @@ TEST_CASE("LC_Division identifies an unbounded selection as the whole entity",
 
         REQUIRE(data != nullptr);
         CHECK(data->segmentDisposition == LC_Division::SEGMENT_ENTIRE);
+        CHECK(data->snapSegmentStartAngle == 0.0);
+        CHECK(data->snapSegmentEndAngle == 2.0 * HALF_TURN);
     }
 }
 
@@ -427,4 +432,38 @@ TEST_CASE("a single tangency does not divide a circle",
         CHECK(list.isEmpty());
         qDeleteAll(list);
     }
+}
+TEST_CASE("whole-entity preview shows nothing but the hover highlight",
+          "[lc_division][break_divide][whole_entity][action]") {
+    // The guard must hold on the preview path too: a mutant restricting it to
+    // the trigger would paint division markers and a phantom segment for a
+    // click that deletes the whole entity.
+    BreakDivideFixture fixture{/*removeSelected=*/true};
+    RS_Line line{nullptr, RS_Vector{0.0, 0.0}, RS_Vector{10.0, 0.0}};
+    QList<RS_Entity*> list;
+
+    CHECK(fixture.action->createEntitiesForLine(&line, RS_Vector{5.0, 0.0}, list, true)
+          == SegmentCreation::Segments);
+    CHECK(list.isEmpty());
+
+    qDeleteAll(list);
+}
+
+TEST_CASE("divide mode never sees a whole-entity selection",
+          "[lc_division][break_divide][whole_entity][action]") {
+    // allowEntire* is m_alternativeActionMode && m_removeSegments, so plain
+    // divide on an intersection-free entity stays a no-op in both directions.
+    BreakDivideFixture fixture{/*removeSelected=*/false};
+    fixture.action->setRemoveSegment(false);
+    RS_Line line{nullptr, RS_Vector{0.0, 0.0}, RS_Vector{10.0, 0.0}};
+    QList<RS_Entity*> list;
+
+    CHECK(fixture.action->createEntitiesForLine(&line, RS_Vector{5.0, 0.0}, list, false)
+          == SegmentCreation::Segments);
+    CHECK(list.isEmpty());
+    CHECK(fixture.action->createEntitiesForLine(&line, RS_Vector{5.0, 0.0}, list, true)
+          == SegmentCreation::Segments);
+    CHECK(list.isEmpty());
+
+    qDeleteAll(list);
 }

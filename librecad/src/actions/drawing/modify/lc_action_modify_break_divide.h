@@ -83,9 +83,9 @@ protected:
      * replacement, and a deliberate no-op when the selection is kept - from the
      * ordinary case, where an empty list means no valid split was found.
      */
-    SegmentCreation createEntitiesForLine(const RS_Line *line, const RS_Vector &snap, QList<RS_Entity *> &list, bool preview) const;
-    SegmentCreation createEntitiesForCircle(const RS_Circle* circle, RS_Vector &snap, QList<RS_Entity *> &list, bool preview) const;
-    SegmentCreation createEntitiesForArc(RS_Arc *arc, RS_Vector &snap, QList<RS_Entity *> &list, bool preview) const;
+    [[nodiscard]] SegmentCreation createEntitiesForLine(const RS_Line *line, const RS_Vector &snap, QList<RS_Entity *> &list, bool preview) const;
+    [[nodiscard]] SegmentCreation createEntitiesForCircle(const RS_Circle* circle, RS_Vector &snap, QList<RS_Entity *> &list, bool preview) const;
+    [[nodiscard]] SegmentCreation createEntitiesForArc(RS_Arc *arc, RS_Vector &snap, QList<RS_Entity *> &list, bool preview) const;
     void doOnLeftMouseButtonRelease(const LC_MouseEvent* e, int status, const RS_Vector &snapPoint) override;
     bool doCheckMayTrigger() override;
     bool doTriggerEntitiesPrepare(LC_DocumentModificationBatch& ctx) override;

@@ -48,7 +48,7 @@ LC_Division::LC_Division(RS_EntityContainer* entityContainer) : m_container{enti
  * @param allowEntireArcAsSegment
  * @return segment information
  */
-LC_Division::ArcSegmentData* LC_Division::findArcSegmentBetweenIntersections(const RS_Arc* arc, const RS_Vector& snap,
+std::unique_ptr<LC_Division::ArcSegmentData> LC_Division::findArcSegmentBetweenIntersections(const RS_Arc* arc, const RS_Vector& snap,
                                                                              const bool allowEntireArcAsSegment) {
     ArcSegmentData* result = nullptr;
     // detect all intersections
@@ -66,7 +66,7 @@ LC_Division::ArcSegmentData* LC_Division::findArcSegmentBetweenIntersections(con
         // determine selected segment edges
         result = findArcSegmentEdges(arc, snap, allIntersections, allowEntireArcAsSegment);
     }
-    return result;
+    return std::unique_ptr<ArcSegmentData>{result};
 }
 
 namespace {
@@ -93,7 +93,7 @@ int countDistinctPoints(const QVector<RS_Vector>& points) {
  * @param allowEntireCircleAsSegment
  * @return segment information
  */
-LC_Division::CircleSegmentData* LC_Division::findCircleSegmentBetweenIntersections(const RS_Circle* circle, const RS_Vector& snap,
+std::unique_ptr<LC_Division::CircleSegmentData> LC_Division::findCircleSegmentBetweenIntersections(const RS_Circle* circle, const RS_Vector& snap,
                                                                                    const bool allowEntireCircleAsSegment) {
     CircleSegmentData* result = nullptr;
     // detect all intersections
@@ -114,7 +114,7 @@ LC_Division::CircleSegmentData* LC_Division::findCircleSegmentBetweenIntersectio
         // determine selected segment edges
         result = findCircleSegmentEdges(circle, snap, allIntersections);
     }
-    return result;
+    return std::unique_ptr<CircleSegmentData>{result};
 }
 
 /**
@@ -124,7 +124,7 @@ LC_Division::CircleSegmentData* LC_Division::findCircleSegmentBetweenIntersectio
  * @param allowEntireLine
  * @return segment information
  */
-LC_Division::LineSegmentData* LC_Division::findLineSegmentBetweenIntersections(const RS_Line* line, const RS_Vector& snap,
+std::unique_ptr<LC_Division::LineSegmentData> LC_Division::findLineSegmentBetweenIntersections(const RS_Line* line, const RS_Vector& snap,
                                                                                const bool allowEntireLine) {
     LineSegmentData* result = nullptr;
     // find all intersection points for line
@@ -136,14 +136,13 @@ LC_Division::LineSegmentData* LC_Division::findLineSegmentBetweenIntersections(c
             result->segmentDisposition = SEGMENT_ENTIRE;
             result->snapSegmentStart = line->getStartpoint();
             result->snapSegmentEnd = line->getEndpoint();
-            result->snap = snap;
         }
     }
     else {
         // determine segments of line that was selected by the user
         result = findLineSegmentEdges(line, snap, allIntersections, allowEntireLine);
     }
-    return result;
+    return std::unique_ptr<LineSegmentData>{result};
 }
 
 /**
