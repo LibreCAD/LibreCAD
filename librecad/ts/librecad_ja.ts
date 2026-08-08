@@ -1091,7 +1091,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="416"/>
         <source>Select base linear/aligned dimension</source>
-        <translation>基準となる直線/整列寸法を選択</translation>
+        <translation>基準となる直線/平行寸法を選択</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="416"/>
@@ -11020,7 +11020,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="163"/>
         <source>Aligned Dimension</source>
-        <translation>整列寸法</translation>
+        <translation>平行寸法</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="169"/>
@@ -11657,7 +11657,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="123"/>
         <source>Dimension Aligned</source>
-        <translation>整列寸法</translation>
+        <translation>平行寸法</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="124"/>
@@ -14181,7 +14181,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="91"/>
         <source>Dimension Aligned</source>
-        <translation>整列寸法</translation>
+        <translation>平行寸法</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="92"/>
@@ -14535,12 +14535,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_hatchpropertieseditingwidget.ui" line="41"/>
         <source>Solid Fill:</source>
-        <translation>単色塗りつぶし:</translation>
+        <translation>ソリッドつぶし:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_hatchpropertieseditingwidget.ui" line="48"/>
         <source>Toggle solid fill (no pattern)</source>
-        <translation>単色塗りつぶしを切替 (パターンなし)</translation>
+        <translation>ソリッドつぶしを切替 (パターンなし)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_hatchpropertieseditingwidget.ui" line="58"/>
@@ -18818,7 +18818,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimaligned.cpp" line="29"/>
         <source>Dimension Aligned</source>
-        <translation>整列寸法</translation>
+        <translation>平行寸法</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimaligned.cpp" line="35"/>
@@ -20646,12 +20646,12 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_hatch.cpp" line="34"/>
         <source>Is Solid</source>
-        <translation>単色塗り</translation>
+        <translation>ソリッド</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_hatch.cpp" line="34"/>
         <source>Determines whether hatch is solid or not</source>
-        <translation>ハッチングが単色塗りかどうかを決定</translation>
+        <translation>ハッチングがソリッドかどうかを決定</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_hatch.cpp" line="38"/>
@@ -27566,7 +27566,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_aligned.cpp" line="55"/>
         <source>Continues aligned dimension</source>
-        <translation>整列寸法を連続作成</translation>
+        <translation>平行寸法を連続作成</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_aligned.cpp" line="56"/>
@@ -27576,7 +27576,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_aligned.cpp" line="56"/>
         <source>Uses aligned dimension as base line and creates other dimensions</source>
-        <translation>整列寸法を基準として他の寸法を作成</translation>
+        <translation>平行寸法を基準として他の寸法を作成</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_aligned.cpp" line="64"/>
@@ -30213,12 +30213,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_hatch.cpp" line="33"/>
         <source>Is Solid</source>
-        <translation>単色塗り</translation>
+        <translation>ソリッド</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_hatch.cpp" line="33"/>
         <source>Determines whether hatch is solid or not</source>
-        <translation>ハッチングが単色塗りかどうかを決定</translation>
+        <translation>ハッチングがソリッドかどうかを決定</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_hatch.cpp" line="39"/>
@@ -31123,12 +31123,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="184"/>
         <source>Dim Aligned</source>
-        <translation>整列寸法</translation>
+        <translation>平行寸法</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="184"/>
         <source>Create aligned dimension for line</source>
-        <translation>線の整列寸法を作成</translation>
+        <translation>線の平行寸法を作成</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="185"/>
@@ -50860,7 +50860,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="390"/>
         <source>circletan2p</source>
         <comment>circle tangent 2 points</comment>
-        <translation>接線円 (1接線2点)</translation>
+        <translation>接線円 (2接線1点)</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="391"/>
