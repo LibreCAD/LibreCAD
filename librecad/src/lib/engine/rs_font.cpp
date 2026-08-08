@@ -26,7 +26,11 @@
 
 
 
+#include <cstdint>
 #include <iostream>
+#include <utility>
+
+#include <QRegularExpression>
 #include <QTextStream>
 #include <QTextCodec>
 
@@ -38,6 +42,41 @@
 #include "rs_system.h"
 #include "rs_math.h"
 #include "rs_debug.h"
+
+namespace {
+    // Encode a unicode character from its hexdecimal string
+    // "0x20" is encoded to the character '0'
+    QString charFromHex(const QString& hexCode) {
+        bool okay = false;
+        const char32_t ucsCode = hexCode.toUInt(&okay, 16);
+        //  REPLACEMENT CHARACTER for unicode
+        constexpr char32_t invalidCode = 0xFFFD;
+        return (okay) ? QString::fromUcs4(&ucsCode, 1) : QString::fromUcs4(&invalidCode, 1);
+    }
+
+    // Extract the unicode char from LFF font line, e.g. "[0041]" or "[#0041]"
+    // (the '#' is optional, so files written by either convention load the same way).
+    // Up to 6 hex digits so the full Unicode range (to U+10FFFF) is accepted.
+    std::pair<QString, bool> extractFontChar(const QString& line) {
+        // read unicode:
+        static QRegularExpression regexp("^\\[#?([0-9A-Fa-f]{1,6})\\]");
+        const QRegularExpressionMatch match = regexp.match(line);
+        if (!match.hasMatch()) {
+            return {};
+        }
+
+        const QString cap = match.captured(1);
+        bool okay = false;
+        const std::uint32_t code = cap.toUInt(&okay, 16);
+
+        if (!okay) {
+            LC_ERR << __func__ << "() line " << __LINE__ << ": invalid font code in " << line;
+            return {};
+        }
+        const char32_t ucsCode{static_cast<char32_t>(code)};
+        return {QString::fromUcs4(&ucsCode, 1), true};
+    }
+}
 
 /**
  * Constructor.
@@ -328,18 +367,9 @@ void RS_Font::readLFF(QString path) {
         else if (line.at(0)=='[') {
 
             // uniode character:
-            QChar ch;
-
-            // read unicode:
-            QRegExp regexp("[0-9A-Fa-f]{1,5}");
-            regexp.indexIn(line);
-            QString cap = regexp.cap();
-            if (!cap.isNull()) {
-				int uCode = cap.toInt(nullptr, 16);
-                ch = QChar(uCode);
-            }
+            const auto [ch, okay] = extractFontChar(line);
             // only unicode allowed
-            else {
+            if (!okay) {
                 LC_LOG(RS_Debug::D_WARNING)<<"Ignoring code from LFF font file: "<<line;
                 continue;
             }
@@ -350,9 +380,9 @@ void RS_Font::readLFF(QString path) {
                 if(line.isEmpty()) break;
                 fontData.push_back(line);
             } while(true);
-            if (0 < fontData.size()                             // valid data
-                && !rawLffFontList.contains( QString(ch))) {    // ignore duplicates
-                rawLffFontList[QString(ch)] = fontData;
+            if (0 < fontData.size()                  // valid data
+                && !rawLffFontList.contains(ch)) {   // ignore duplicates
+                rawLffFontList[ch] = fontData;
             }
         }
     }
@@ -372,7 +402,7 @@ RS_Block* RS_Font::generateLffFont(const QString& key){
         return nullptr;
 
     if (!rawLffFontList.contains( key)) {
-        LC_ERR<<QString{"RS_Font::generateLffFont([%1]): can not find the letter in LFF file "}.arg(QChar(key.front())) << fileName;
+        LC_ERR<<QString{"RS_Font::generateLffFont([%1]): can not find the letter in LFF file "}.arg(key) << fileName;
         return nullptr;
     }
 
@@ -395,9 +425,9 @@ RS_Block* RS_Font::generateLffFont(const QString& key){
         // Defined char:
         if (line.at(0)=='C') {
             line.remove(0,1);
-			int uCode = line.toInt(nullptr, 16);
-            QChar ch = QChar(uCode);
-            if (QString(ch) == key) {   // recursion, a character can't include itself
+            const uint uCode = line.toUInt(nullptr, 16);
+            const QString ch = charFromHex(line);
+            if (ch == key) {   // recursion, a character can't include itself
                 LC_ERR<<QString{"RS_Font::generateLffFont([%1]) : recursion, ignore this character from "}.arg(uCode, 4, 16)<<fileName;
                 delete letter;
                 return nullptr;
@@ -406,7 +436,7 @@ RS_Block* RS_Font::generateLffFont(const QString& key){
             RS_Block* bk = letterList.find(ch);
             if (nullptr == bk) {
                 if (!rawLffFontList.contains(ch)) {
-                LC_ERR<<QString{"RS_Font::generateLffFont([%1]) : can not find the letter %2 in LFF file "}.arg(uCode, 4, 16).arg(QChar(key.front()))<<fileName;
+                LC_ERR<<QString{"RS_Font::generateLffFont([%1]) : can not find the letter %2 in LFF file "}.arg(uCode, 4, 16).arg(key)<<fileName;
                     delete letter;
                     return nullptr;
                 }

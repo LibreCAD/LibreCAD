@@ -92,7 +92,8 @@ bool RS_FilterLFF::fileImport(RS_Graphic& g, const QString& file, RS2::FormatTyp
         RS_Block* ch = font.letterAt(i);
 
         QString uCode;
-        uCode.setNum(ch->getName().at(0).unicode(), 16);
+        // the letter name is a full code point, which is a surrogate pair above U+FFFF
+        uCode.setNum(ch->getName().toUcs4().value(0), 16);
         while (uCode.length()<4) {
 //            uCode.rightJustified(4, '0');
             uCode="0"+uCode;
@@ -100,7 +101,7 @@ bool RS_FilterLFF::fileImport(RS_Graphic& g, const QString& file, RS2::FormatTyp
         //ch->setName("[" + uCode + "] " + ch->getName());
         //letterList->rename(ch, QString("[%1]").arg(ch->getName()));
         letterList->rename(ch,
-                           QString("[%1] %2").arg(uCode).arg(ch->getName().at(0)));
+                           QString("[%1] %2").arg(uCode).arg(ch->getName()));
 
         g.addBlock(ch, false);
         ch->reparent(&g);
@@ -228,7 +229,7 @@ bool RS_FilterLFF::fileExport(RS_Graphic& g, const QString& file, RS2::FormatTyp
                         else if (e->rtti()==RS2::EntityBlock) {
                             RS_Block* b = (RS_Block*)e;
                             QString uCode;
-                            uCode.setNum(b->getName().at(0).unicode(), 16);
+                            uCode.setNum(b->getName().toUcs4().value(0), 16);
                             if (uCode.length()<4) {
                                 uCode = uCode.rightJustified(4, '0');
                             }

@@ -1,0 +1,6 @@
+CI trigger for PR #2729
+
+This file was created by GitHub Copilot to trigger CI build jobs for testing the PR:
+https://github.com/LibreCAD/LibreCAD/pull/2729
+
+Timestamp: 2026-08-05T00:00:00Z
