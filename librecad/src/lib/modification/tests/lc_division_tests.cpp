@@ -26,6 +26,9 @@
 
 #include <QApplication>
 #include <QList>
+#include <QtAlgorithms>
+
+#include <type_traits>
 
 #include "lc_action_modify_break_divide.h"
 #include "lc_actioncontext.h"
@@ -154,10 +157,9 @@ namespace {
 
 /**
  * Returns a QApplication, reusing the process-wide one if another test built it
- * first. The pointer is deliberately leaked: only one ~QApplication may run at
- * exit, and rs_graphicview_close_tests.cpp already owns it via a by-value
- * static. A second destructor tears down Qt's globals twice and crashes after
- * Catch2 has printed its summary.
+ * first. The pointer is deliberately leaked: only one QApplication may exist at
+ * a time and only one ~QApplication may run at exit, so every test file uses
+ * this reuse-or-create form and none of them destroys the instance.
  */
 QApplication* application() {
     static int argc = 1;
@@ -204,8 +206,24 @@ public:
     using LC_ActionModifyBreakDivide::createEntitiesForLine;
     using LC_ActionModifyBreakDivide::createEntitiesForCircle;
     using LC_ActionModifyBreakDivide::createEntitiesForArc;
+    using LC_ActionModifyBreakDivide::doCheckMayTrigger;
 
     void setWholeEntityMode(const bool value) { m_alternativeActionMode = value; }
+
+    // The nested TriggerData type is private, but the member is protected; its
+    // type is reachable through decltype, so no production visibility change.
+    void makeTriggerData(RS_Entity* entity, const RS_Vector& snap) {
+        clearTriggerData();
+        using TriggerDataT = std::remove_pointer_t<decltype(m_triggerData)>;
+        m_triggerData = new TriggerDataT{};
+        m_triggerData->entity = entity;
+        m_triggerData->snapPoint = snap;
+    }
+    bool triggerListIsEmpty() const { return m_triggerData->entitiesToCreate.isEmpty(); }
+    void clearTriggerData() {
+        delete m_triggerData;
+        m_triggerData = nullptr;
+    }
 };
 
 /**
@@ -267,19 +285,59 @@ TEST_CASE("whole-entity Break that keeps the selection is a no-op, not a delete"
     // Without the second conjunct the action would report "remove the source",
     // deleting the entity the user asked to keep.
     BreakDivideFixture fixture{/*removeSelected=*/false};
-    RS_Line line{nullptr, RS_Vector{0.0, 0.0}, RS_Vector{10.0, 0.0}};
     QList<RS_Entity*> list;
 
-    CHECK_FALSE(fixture.action->createEntitiesForLine(&line, RS_Vector{5.0, 0.0}, list, false));
-    CHECK(list.isEmpty());
+    SECTION("line") {
+        RS_Line line{nullptr, RS_Vector{0.0, 0.0}, RS_Vector{10.0, 0.0}};
+        CHECK_FALSE(fixture.action->createEntitiesForLine(&line, RS_Vector{5.0, 0.0}, list, false));
+        CHECK(list.isEmpty());
+    }
+
+    SECTION("circle") {
+        RS_Circle circle{nullptr, RS_CircleData{RS_Vector{0.0, 0.0}, 10.0}};
+        RS_Vector snap{10.0, 0.0};
+        CHECK_FALSE(fixture.action->createEntitiesForCircle(&circle, snap, list, false));
+        CHECK(list.isEmpty());
+    }
+
+    SECTION("arc") {
+        RS_Arc arc{nullptr, RS_ArcData{RS_Vector{0.0, 0.0}, 10.0, 0.0, HALF_TURN, false}};
+        RS_Vector snap{0.0, 10.0};
+        CHECK_FALSE(fixture.action->createEntitiesForArc(&arc, snap, list, false));
+        CHECK(list.isEmpty());
+    }
 
     qDeleteAll(list);
 }
 
+TEST_CASE("doCheckMayTrigger accepts whole-entity removal, and only that",
+          "[lc_division][break_divide][whole_entity][action]") {
+    // The acceptance below is the user-visible fix for #2700: an empty
+    // replacement list is normally a refusal, whole-entity removal is the one
+    // exception. Nothing upstream of createEntitiesForX covered it before.
+    RS_Line line{nullptr, RS_Vector{0.0, 0.0}, RS_Vector{10.0, 0.0}};
+
+    SECTION("remove-selected: empty replacement list is accepted") {
+        BreakDivideFixture fixture{/*removeSelected=*/true};
+        fixture.action->makeTriggerData(&line, RS_Vector{5.0, 0.0});
+        CHECK(fixture.action->doCheckMayTrigger());
+        CHECK(fixture.action->triggerListIsEmpty());
+        fixture.action->clearTriggerData();
+    }
+
+    SECTION("keep-selected: same click is refused, not treated as a removal") {
+        BreakDivideFixture fixture{/*removeSelected=*/false};
+        fixture.action->makeTriggerData(&line, RS_Vector{5.0, 0.0});
+        CHECK_FALSE(fixture.action->doCheckMayTrigger());
+        CHECK(fixture.action->triggerListIsEmpty());
+        fixture.action->clearTriggerData();
+    }
+}
+
 TEST_CASE("Break bounded by real intersections still creates the remaining segments",
           "[lc_division][break_divide][action]") {
-    // Catches an over-broad fix: one that keys off the flags, or off coincident
-    // endpoints, instead of off SEGMENT_ENTIRE.
+    // Catches an over-broad fix: one that keys off the flags instead of off
+    // SEGMENT_ENTIRE.
     BreakDivideFixture fixture{/*removeSelected=*/true};
     QList<RS_Entity*> list;
 
