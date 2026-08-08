@@ -6,7 +6,7 @@
     <message>
         <location filename="../src/ui/generic/colorwizard.ui" line="14"/>
         <source>Frame</source>
-        <translation>フレーム</translation>
+        <translation>枠</translation>
     </message>
     <message>
         <location filename="../src/ui/generic/colorwizard.ui" line="35"/>
@@ -25,7 +25,7 @@
     <message>
         <location filename="../src/ui/generic/comboboxoption.ui" line="14"/>
         <source>Frame</source>
-        <translation>フレーム</translation>
+        <translation>枠</translation>
     </message>
     <message>
         <location filename="../src/ui/generic/comboboxoption.ui" line="26"/>
@@ -35,7 +35,7 @@
     <message>
         <location filename="../src/ui/generic/comboboxoption.ui" line="41"/>
         <source>Set</source>
-        <translation>Set</translation>
+        <translation>設定</translation>
     </message>
 </context>
 <context>
@@ -43,7 +43,7 @@
     <message>
         <location filename="../src/ui/generic/customtoolbarcreator.ui" line="14"/>
         <source>Frame</source>
-        <translation>フレーム</translation>
+        <translation>枠</translation>
     </message>
     <message>
         <location filename="../src/ui/generic/customtoolbarcreator.ui" line="86"/>
@@ -81,12 +81,12 @@
     <message>
         <location filename="../src/ui/generic/customwidgetcreator.ui" line="14"/>
         <source>Frame</source>
-        <translation>フレーム</translation>
+        <translation>枠</translation>
     </message>
     <message>
         <location filename="../src/ui/generic/customwidgetcreator.ui" line="65"/>
         <source>-&gt;</source>
-        <translation>-></translation>
+        <translation>-&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/generic/customwidgetcreator.ui" line="72"/>
@@ -114,7 +114,7 @@
     <message>
         <location filename="../src/ui/forms/LC_DlgParabola.ui" line="95"/>
         <source>Geometry</source>
-        <translation>ジオメトリ</translation>
+        <translation>幾何</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/LC_DlgParabola.ui" line="110"/>
@@ -143,17 +143,17 @@
     <message>
         <location filename="../src/ui/forms/lc_dlgsplinepoints.ui" line="95"/>
         <source>Geometry</source>
-        <translation>図形</translation>
+        <translation>幾何</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_dlgsplinepoints.ui" line="101"/>
         <source>Closed</source>
-        <translation>閉じる</translation>
+        <translation>閉じている</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_dlgsplinepoints.ui" line="110"/>
         <source>Spline Points</source>
-        <translation>スプライン点</translation>
+        <translation>スプラインポイント</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_dlgsplinepoints.ui" line="120"/>
@@ -192,34 +192,34 @@
         <location filename="../src/actions/lc_actiondrawcircle2pr.cpp" line="195"/>
         <source>radius=%1 is too small for points selected
 distance between points=%2 is larger than diameter=%3</source>
-        <translation>半径= %1 は選択されたポイントに対して小さすぎる
-ポイントの間の距離= %2 は、直径= %3 より大きい</translation>
+        <translation>選択された点に対して半径=%1 は小さすぎます
+点間距離=%2 は直径=%3 より大きくなっています</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawcircle2pr.cpp" line="205"/>
         <source>Select from two possible circle centers</source>
-        <translation>指定した2点を通る円の中心を選択する</translation>
+        <translation>2つの候補から円の中心を選択</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawcircle2pr.cpp" line="238"/>
         <source>Specify first point</source>
-        <translation>最初の点を指定</translation>
+        <translation>始点を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawcircle2pr.cpp" line="239"/>
         <source>Cancel</source>
-        <translation>中止</translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawcircle2pr.cpp" line="242"/>
         <source>Specify second point</source>
-        <translation>次の点を指定</translation>
+        <translation>2番目の点を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawcircle2pr.cpp" line="243"/>
         <location filename="../src/actions/lc_actiondrawcircle2pr.cpp" line="247"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>戻る</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawcircle2pr.cpp" line="246"/>
@@ -247,7 +247,7 @@ or [%2]</source>
         <location filename="../src/actions/lc_actiondrawlinepoints.cpp" line="516"/>
         <location filename="../src/actions/lc_actiondrawlinepoints.cpp" line="521"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>戻る</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawlinepoints.cpp" line="516"/>
@@ -258,7 +258,7 @@ or [%2]</source>
         <location filename="../src/actions/lc_actiondrawlinepoints.cpp" line="521"/>
         <source>Specify  distance (angle %1 deg)
 or [%2]</source>
-        <translation>距離を指定 (角度 %1 度)
+        <translation>距離を指定 (角度 %1度)
 または [%2]</translation>
     </message>
 </context>
@@ -277,12 +277,12 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/lc_actiondrawlinepolygon3.cpp" line="149"/>
         <source>Enter number:</source>
-        <translation>番号を入力:</translation>
+        <translation>数を入力:</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawlinepolygon3.cpp" line="199"/>
         <source>Not a valid number. Try 1..9999</source>
-        <translation>有効な番号ではありません。1..9999 を試してください</translation>
+        <translation>有効な数値ではありません。1～9999 で入力してください</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawlinepolygon3.cpp" line="202"/>
@@ -295,7 +295,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/lc_actiondrawlinesnake.cpp" line="434"/>
         <source>Specify direction (x or y) or [%1]</source>
-        <translation>方向を指定 (x または y) または [%1]</translation>
+        <translation>方向を指定 (xまたはy) または [%1]</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawlinesnake.cpp" line="434"/>
@@ -305,7 +305,7 @@ or [%2]</source>
         <location filename="../src/actions/lc_actiondrawlinesnake.cpp" line="474"/>
         <location filename="../src/actions/lc_actiondrawlinesnake.cpp" line="486"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>戻る</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawlinesnake.cpp" line="448"/>
@@ -326,7 +326,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/lc_actiondrawlinesnake.cpp" line="459"/>
         <source>Specify distance (%1 deg) or [%2]</source>
-        <translation>距離を指定 (%1 度) または [%2]</translation>
+        <translation>距離を指定 (%1度) または [%2]</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawlinesnake.cpp" line="474"/>
@@ -336,7 +336,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/lc_actiondrawlinesnake.cpp" line="486"/>
         <source>Specify point or [%1]</source>
-        <translation>点を指定 または [%1]</translation>
+        <translation>点を指定、または [%1]</translation>
     </message>
 </context>
 <context>
@@ -344,7 +344,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/lc_actiondrawparabola4points.cpp" line="268"/>
         <source>Specify the first point on parabola</source>
-        <translation>放物線上の最初の点を指定</translation>
+        <translation>放物線上の1番目の点を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawparabola4points.cpp" line="269"/>
@@ -362,7 +362,7 @@ or [%2]</source>
         <location filename="../src/actions/lc_actiondrawparabola4points.cpp" line="284"/>
         <location filename="../src/actions/lc_actiondrawparabola4points.cpp" line="289"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>戻る</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawparabola4points.cpp" line="278"/>
@@ -377,7 +377,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/lc_actiondrawparabola4points.cpp" line="288"/>
         <source>Specify the Axis on parabola</source>
-        <translation>放物線上の軸を指定</translation>
+        <translation>放物線の軸を指定</translation>
     </message>
 </context>
 <context>
@@ -402,17 +402,17 @@ or [%2]</source>
         <location filename="../src/actions/lc_actiondrawparabolaFD.cpp" line="301"/>
         <location filename="../src/actions/lc_actiondrawparabolaFD.cpp" line="306"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>戻る</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawparabolaFD.cpp" line="300"/>
         <source>Specify the start point on parabola</source>
-        <translation>放物線上の開始点を指定</translation>
+        <translation>放物線上の始点を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawparabolaFD.cpp" line="305"/>
         <source>Specify the end point on parabola</source>
-        <translation>放物線上の終了点を指定</translation>
+        <translation>放物線上の終点を指定</translation>
     </message>
 </context>
 <context>
@@ -420,22 +420,22 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/lc_abstractactionwithpreview.cpp" line="846"/>
         <source> is not divided as it is locked.</source>
-        <translation> はロックされているため分割できません。</translation>
+        <translation> はロックされているため分割されません。</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_abstractactionwithpreview.cpp" line="854"/>
         <source> is not divided as it is part of polyline. Expand polyline first.</source>
-        <translation> はポリラインの一部であるため分割できません。まずポリラインを展開してください。</translation>
+        <translation> はポリラインの一部のため分割されません。最初にポリラインを展開してください。</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawslicedivide.cpp" line="180"/>
         <source>Line</source>
-        <translation>Line</translation>
+        <translation>線</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawslicedivide.cpp" line="190"/>
         <source>Arc</source>
-        <translation>Arc</translation>
+        <translation>円弧</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawslicedivide.cpp" line="200"/>
@@ -448,39 +448,39 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/lc_actiondrawsplinepoints.cpp" line="251"/>
         <source>Specify first control point</source>
-        <translation>１つ目の制御点指示</translation>
+        <translation>最初の制御点を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawsplinepoints.cpp" line="252"/>
         <source>Cancel</source>
-        <translation>中止</translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawsplinepoints.cpp" line="275"/>
         <source>Specify next control point or [%1]</source>
-        <translation>次の制御点指示か[%1]</translation>
+        <translation>次の制御点または [%1] を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawsplinepoints.cpp" line="276"/>
         <location filename="../src/actions/lc_actiondrawsplinepoints.cpp" line="282"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>戻る</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawsplinepoints.cpp" line="281"/>
         <source>Specify next control point</source>
-        <translation>次の制御点指示</translation>
+        <translation>次の制御点を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawsplinepoints.cpp" line="334"/>
         <location filename="../src/actions/lc_actiondrawsplinepoints.cpp" line="359"/>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation>取り消しできません:作図されていません。</translation>
+        <translation>元に戻せません: 定義された図形が不足しています。</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawsplinepoints.cpp" line="380"/>
         <source>Cannot undo: Nothing could be redone.</source>
-        <translation>取り消しできません:何もやり直すことはありません.</translation>
+        <translation>元に戻せません: やり直せる操作がありません。</translation>
     </message>
 </context>
 <context>
@@ -488,47 +488,47 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1528"/>
         <source>&amp;Window Zoom</source>
-        <translation>指定範囲を拡大表示(&amp;W)</translation>
+        <translation>ウィンドウ拡大(&amp;W)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="54"/>
         <source>Zoom &amp;Panning</source>
-        <translation>図の移動(&amp;P)</translation>
+        <translation>パン拡大(&amp;P)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="63"/>
         <source>Select Entity</source>
-        <translation>クリックで選択（解除）</translation>
+        <translation>エンティティ選択</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="70"/>
         <source>Select Window</source>
-        <translation>ウィンドウ内の要素を選択</translation>
+        <translation>ウィンドウ選択</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="77"/>
         <source>Deselect Window</source>
-        <translation>ウィンドウ内の要素を選択解除</translation>
+        <translation>ウィンドウ選択解除</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="84"/>
         <source>(De-)Select &amp;Contour</source>
-        <translation>つながった要素すべてを選択（解除）(&amp;C)</translation>
+        <translation>輪郭選択/解除(&amp;C)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="91"/>
         <source>Select Intersected Entities</source>
-        <translation>交差する要素を選択</translation>
+        <translation>交差するエンティティを選択</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="98"/>
         <source>Deselect Intersected Entities</source>
-        <translation>交差する要素を選択解除</translation>
+        <translation>交差するエンティティの選択を解除</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="105"/>
         <source>(De-)Select Layer</source>
-        <translation>レイヤーで選択（解除）</translation>
+        <translation>レイヤー選択/解除</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="114"/>
@@ -538,12 +538,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="124"/>
         <source>&amp;2 Points</source>
-        <translation>線分(&amp;2)</translation>
+        <translation>2点(&amp;2)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="131"/>
         <source>&amp;Angle</source>
-        <translation>角度指定線(&amp;A)</translation>
+        <translation>角度(&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="138"/>
@@ -554,12 +554,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="145"/>
         <source>Vertical</source>
-        <translation>垂直線</translation>
+        <translation>垂直</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="158"/>
         <source>&amp;Freehand Line</source>
-        <translation>フリーハンド(&amp;F)</translation>
+        <translation>フリーハンド線(&amp;F)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="165"/>
@@ -569,7 +569,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="172"/>
         <source>Parallel through point</source>
-        <translation>指定線との平行線</translation>
+        <translation>点を通る平行線</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="179"/>
@@ -579,27 +579,27 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="186"/>
         <source>Bisector</source>
-        <translation>角の２等分線</translation>
+        <translation>二等分線</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="193"/>
         <source>Tangent (P,C)</source>
-        <translation>接線（始点と円弧）</translation>
+        <translation>接線 (点,円)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="200"/>
         <source>Tangent (C,C)</source>
-        <translation>接線（２つの円弧）</translation>
+        <translation>接線 (円,円)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="207"/>
         <source>Tangent &amp;Orthogonal</source>
-        <translation>円弧に接する垂線(&amp;O)</translation>
+        <translation>接線・直交(&amp;O)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="214"/>
         <source>Orthogonal</source>
-        <translation>垂線</translation>
+        <translation>直交</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="221"/>
@@ -609,43 +609,43 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="228"/>
         <source>Pol&amp;ygon (Cen,Cor)</source>
-        <translation>多角形（中心と頂点）(&amp;y)</translation>
+        <translation>多角形 (中心,頂点)(&amp;Y)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="242"/>
         <source>Polygo&amp;n (Cor,Cor)</source>
-        <translation>多角形（辺の線分）(&amp;n)</translation>
+        <translation>多角形 (頂点,頂点)(&amp;N)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="251"/>
         <source>Center, &amp;Point</source>
-        <translation>中心と円周上の点(&amp;O)</translation>
+        <translation>中心・点(&amp;P)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="360"/>
         <source>Center, &amp;Radius</source>
-        <translation>中心と半径(&amp;R)</translation>
+        <translation>中心・半径(&amp;R)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="367"/>
         <source>2 Points</source>
-        <translation>直径を示す２点</translation>
+        <translation>2点</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="374"/>
         <source>2 Points, Radius</source>
-        <translation>円周上の２点と半径</translation>
+        <translation>2点・半径</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="381"/>
         <source>3 Points</source>
-        <translation>円周上の３点</translation>
+        <translation>3点</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="388"/>
         <location filename="../src/ui/lc_actionfactory.cpp" line="449"/>
         <source>&amp;Concentric</source>
-        <translation>同心円(&amp;C)</translation>
+        <translation>同心(&amp;C)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="396"/>
@@ -656,67 +656,67 @@ or [%2]</source>
         <location filename="../src/ui/lc_actionfactory.cpp" line="403"/>
         <source>Tangential 2 Circles, Radius</source>
         <comment>circle tangential with two circles, and given radius</comment>
-        <translation>接する２つ円と半径</translation>
+        <translation>2円に接線・半径指定</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="410"/>
         <source>Tangential 2 Circles, 1 Point</source>
-        <translation>接する２つ円と円周上の点</translation>
+        <translation>2円に接線・1点指定</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="417"/>
         <source>Tangential &amp;3 Circles</source>
-        <translation>接する３つの円(&amp;3)</translation>
+        <translation>3円に接線(&amp;3)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="424"/>
         <source>Tangential, 2 P&amp;oints</source>
-        <translation>接する円と円周上の２点(&amp;P)</translation>
+        <translation>接線・2点(&amp;O)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="433"/>
         <source>&amp;Center, Point, Angles</source>
-        <translation>中心と半径、始点と終点の角度(&amp;C)</translation>
+        <translation>中心・点・角度(&amp;C)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="441"/>
         <source>&amp;3 Points</source>
-        <translation>始点、円周上の点、終点の３点(&amp;3)</translation>
+        <translation>3点(&amp;3)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="457"/>
         <source>Arc &amp;Tangential</source>
-        <translation>端点に円弧(&amp;T)</translation>
+        <translation>接線円弧(&amp;T)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="467"/>
         <source>&amp;Ellipse (Axis)</source>
-        <translation>楕円の長軸と短軸(&amp;E)</translation>
+        <translation>楕円 (軸)(&amp;E)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="474"/>
         <source>Ellipse &amp;Arc (Axis)</source>
-        <translation>楕円弧（中心、長短軸、端点の角度）(&amp;A)</translation>
+        <translation>楕円弧 (軸)(&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="481"/>
         <source>Ellipse &amp;Foci Point</source>
-        <translation>楕円の焦点と円周上の点(&amp;F)</translation>
+        <translation>楕円 (焦点)(&amp;F)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="488"/>
         <source>Ellipse &amp;4 Point</source>
-        <translation>楕円の円周上の４点(&amp;4)</translation>
+        <translation>楕円 (4点)(&amp;4)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="495"/>
         <source>Ellipse Center and &amp;3 Points</source>
-        <translation>楕円の中心と円周上の３点(&amp;3)</translation>
+        <translation>楕円 (中心・3点)(&amp;3)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="502"/>
         <source>Ellipse &amp;Inscribed</source>
-        <translation>内接する楕円(&amp;I)</translation>
+        <translation>内接楕円(&amp;I)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="526"/>
@@ -726,7 +726,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="533"/>
         <source>&amp;Spline through points</source>
-        <translation>スプライン（通過点指示）(&amp;S)</translation>
+        <translation>点を通るスプライン(&amp;S)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="542"/>
@@ -741,7 +741,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="557"/>
         <source>A&amp;ppend node</source>
-        <translation>ノード結合(&amp;p)</translation>
+        <translation>ノード追加 (末尾)(&amp;P)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="565"/>
@@ -751,17 +751,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="573"/>
         <source>Delete &amp;between two nodes</source>
-        <translation>２ノード間を削除(&amp;b)</translation>
+        <translation>2ノード間を削除(&amp;B)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="581"/>
         <source>&amp;Trim segments</source>
-        <translation>セグメントの部分削除(&amp;T)</translation>
+        <translation>セグメントトリム(&amp;T)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="589"/>
         <source>Create &amp;Equidistant Polylines</source>
-        <translation>等間隔でポリラインを作成(&amp;E)</translation>
+        <translation>等距ポリライン作成(&amp;E)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="596"/>
@@ -771,7 +771,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="605"/>
         <source>&amp;MText</source>
-        <translation>マルチテキスト(&amp;M)</translation>
+        <translation>複数行テキスト(&amp;M)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="611"/>
@@ -786,7 +786,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="625"/>
         <source>Insert &amp;Image</source>
-        <translation>画像を挿入(&amp;I)</translation>
+        <translation>画像挿入(&amp;I)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="634"/>
@@ -796,7 +796,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="641"/>
         <source>&amp;Linear</source>
-        <translation>水平（垂直）寸法(&amp;L)</translation>
+        <translation>線形寸法(&amp;L)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="655"/>
@@ -806,27 +806,27 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="662"/>
         <source>&amp;Radial</source>
-        <translation>半径(&amp;R)</translation>
+        <translation>半径寸法(&amp;R)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="669"/>
         <source>&amp;Diametric</source>
-        <translation>直径(&amp;D)</translation>
+        <translation>直径寸法(&amp;D)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="676"/>
         <source>&amp;Angular</source>
-        <translation>角度(&amp;A)</translation>
+        <translation>角度寸法(&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="690"/>
         <source>&amp;Leader</source>
-        <translation>寸法補助線(&amp;L)</translation>
+        <translation>引出線(&amp;L)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="699"/>
         <source>&amp;Attributes</source>
-        <translation>（選択要素の）線種を変更(&amp;A)</translation>
+        <translation>属性(&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="707"/>
@@ -836,17 +836,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="714"/>
         <source>Delete Freehand</source>
-        <translation>フリーハンドを削除</translation>
+        <translation>フリーハンド削除</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="721"/>
         <source>&amp;Move / Copy</source>
-        <translation>移動/複写(&amp;M)</translation>
+        <translation>移動/コピー(&amp;M)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="729"/>
         <source>Re&amp;vert direction</source>
-        <translation>基準点を入れ替える(&amp;v)</translation>
+        <translation>方向反転(&amp;V)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="731"/>
@@ -867,12 +867,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="753"/>
         <source>&amp;Mirror</source>
-        <translation>反転(&amp;M)</translation>
+        <translation>ミラー(&amp;M)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="768"/>
         <source>Rotate T&amp;wo</source>
-        <translation>二点で回転(&amp;T)</translation>
+        <translation>回転 (2参照)(&amp;W)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="775"/>
@@ -887,27 +887,27 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="799"/>
         <source>&amp;Lengthen</source>
-        <translation>延長/短縮(&amp;L)</translation>
+        <translation>延長(&amp;L)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="815"/>
         <source>&amp;Divide</source>
-        <translation>切断(&amp;D)</translation>
+        <translation>分割(&amp;D)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="823"/>
         <source>&amp;Stretch</source>
-        <translation>（伸縮）ストレッチ(&amp;S)</translation>
+        <translation>ストレッチ(&amp;S)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="831"/>
         <source>&amp;Bevel</source>
-        <translation>Ｃ面取り(&amp;B)</translation>
+        <translation>面取り(&amp;B)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="839"/>
         <source>&amp;Fillet</source>
-        <translation>丸み面取り(&amp;F)</translation>
+        <translation>フィレット(&amp;F)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="847"/>
@@ -917,42 +917,42 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="913"/>
         <source>Point inside contour</source>
-        <translation>輪郭線の内部の点</translation>
+        <translation>輪郭内の点</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="919"/>
         <source>&amp;Distance Point to Point</source>
-        <translation>２点間の距離(&amp;D)</translation>
+        <translation>点間距離(&amp;D)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="926"/>
         <source>&amp;Distance Entity to Point</source>
-        <translation>垂線の長さ(&amp;D)</translation>
+        <translation>エンティティと点の距離(&amp;D)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="933"/>
         <source>An&amp;gle between two lines</source>
-        <translation>２線の間の角度(&amp;g)</translation>
+        <translation>2線間の角度(&amp;G)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="940"/>
         <source>&amp;Total length of selected entities</source>
-        <translation>選択要素の全長(&amp;T)</translation>
+        <translation>選択エンティティの全長(&amp;T)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="947"/>
         <source>Polygonal &amp;Area</source>
-        <translation>多角形の面積(&amp;A)</translation>
+        <translation>多角形面積(&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1409"/>
         <source>&amp;Selection pointer</source>
-        <translation>ポインターを選択(&amp;S)</translation>
+        <translation>選択ポインタ(&amp;S)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1419"/>
         <source>&amp;Undo</source>
-        <translation>取り消し(&amp;U)</translation>
+        <translation>元に戻す(&amp;U)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1430"/>
@@ -962,7 +962,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1441"/>
         <source>Cu&amp;t</source>
-        <translation>切り取り(&amp;t)</translation>
+        <translation>切り取り(&amp;T)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1452"/>
@@ -977,57 +977,57 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="966"/>
         <source>move to bottom</source>
-        <translation>最背面に移動</translation>
+        <translation>最背面へ移動</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="974"/>
         <source>lower after entity</source>
-        <translation>ひとつ背面に移動</translation>
+        <translation>背面へ移動</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="982"/>
         <source>raise over entity</source>
-        <translation>ひとつ前面に移動</translation>
+        <translation>前面へ移動</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="990"/>
         <source>move to top</source>
-        <translation>最前面に移動</translation>
+        <translation>最前面へ移動</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1028"/>
         <source>&amp;Add Layer</source>
-        <translation>レイヤーの追加(&amp;A)</translation>
+        <translation>レイヤー追加(&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1035"/>
         <source>&amp;Remove Layer</source>
-        <translation>レイヤーを削除(&amp;R)</translation>
+        <translation>レイヤー削除(&amp;R)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1042"/>
         <source>&amp;Edit Layer</source>
-        <translation>レイヤー設定を編集(&amp;E)</translation>
+        <translation>レイヤー編集(&amp;E)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1049"/>
         <source>Toggle Layer Loc&amp;k</source>
-        <translation>レイヤー固定の切り替え(&amp;k)</translation>
+        <translation>レイヤーロック切替(&amp;K)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1056"/>
         <source>&amp;Toggle Layer Visibility</source>
-        <translation>表示/非表示の切り替え(&amp;T)</translation>
+        <translation>レイヤー表示切替(&amp;T)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1063"/>
         <source>Toggle Layer &amp;Print</source>
-        <translation>印刷の有無を切り替え(&amp;P)</translation>
+        <translation>レイヤー印刷切替(&amp;P)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1070"/>
         <source>Toggle &amp;Construction Layer</source>
-        <translation>作図補助レイヤーの切り替え(&amp;C)</translation>
+        <translation>構築レイヤー切替(&amp;C)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1103"/>
@@ -1039,37 +1039,37 @@ or [%2]</source>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1110"/>
         <source>&amp;Remove Block</source>
         <translatorcomment>AutoCADにあわせて「ブロック」と訳すことにした</translatorcomment>
-        <translation>ブロックを削除(&amp;R)</translation>
+        <translation>ブロック削除(&amp;R)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1117"/>
         <source>&amp;Rename Block</source>
         <translatorcomment>AutoCADにあわせて「ブロック」と訳すことにした</translatorcomment>
-        <translation>ブロック名を変更(&amp;R)</translation>
+        <translation>ブロック名称変更(&amp;R)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1124"/>
         <source>&amp;Edit Block</source>
         <translatorcomment>AutoCADにあわせて「ブロック」と訳すことにした</translatorcomment>
-        <translation>ブロック設定を編集(&amp;E)</translation>
+        <translation>ブロック編集(&amp;E)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1131"/>
         <source>&amp;Save Block</source>
         <translatorcomment>AutoCADにあわせて「ブロック」と訳すことにした</translatorcomment>
-        <translation>ブロックを保存(&amp;S)</translation>
+        <translation>ブロック保存(&amp;S)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1138"/>
         <source>&amp;Insert Block</source>
         <translatorcomment>AutoCADにあわせて「ブロック」と訳すことにした</translatorcomment>
-        <translation>ブロックを挿入(&amp;I)</translation>
+        <translation>ブロック挿入(&amp;I)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1145"/>
         <source>Toggle Block &amp;Visibility</source>
         <translatorcomment>AutoCADにあわせて「ブロック」と訳すことにした</translatorcomment>
-        <translation>ブロックの表示/非表示(&amp;V)</translation>
+        <translation>ブロック表示切替(&amp;V)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1152"/>
@@ -1080,17 +1080,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="854"/>
         <source>Ex&amp;plode</source>
-        <translation>ポリラインを分解(&amp;p)</translation>
+        <translation>分解(&amp;P)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1161"/>
         <source>&amp;Application Preferences</source>
-        <translation>アプリケーションの設定(&amp;A)</translation>
+        <translation>アプリケーション設定(&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1169"/>
         <source>Current &amp;Drawing Preferences</source>
-        <translation>図面の設定(&amp;D)</translation>
+        <translation>現在の図面設定(&amp;D)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1192"/>
@@ -1105,7 +1105,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1210"/>
         <source>Deselect &amp;all</source>
-        <translation>すべて選択解除(&amp;a)</translation>
+        <translation>すべて選択解除(&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1212"/>
@@ -1116,7 +1116,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1219"/>
         <source>Invert Selection</source>
-        <translation>選択/非選択を反転</translation>
+        <translation>選択反転</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1476"/>
@@ -1131,12 +1131,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1496"/>
         <source>&amp;Auto Zoom</source>
-        <translation>画面に合わせて拡大/縮小(&amp;A)</translation>
+        <translation>自動拡大(&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1506"/>
         <source>Previous &amp;View</source>
-        <translation>前の画面(&amp;V)</translation>
+        <translation>前の表示(&amp;V)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1517"/>
@@ -1146,12 +1146,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1540"/>
         <source>&amp;New</source>
-        <translation>新規作成(&amp;N)</translation>
+        <translation>新規(&amp;N)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1550"/>
         <source>New From &amp;Template</source>
-        <translation>テンプレートから新規作成(&amp;T)</translation>
+        <translation>テンプレートから新規(&amp;T)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1559"/>
@@ -1166,12 +1166,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1579"/>
         <source>Save &amp;as...</source>
-        <translation>別名で保存(&amp;a)...</translation>
+        <translation>名前を付けて保存(&amp;A)...</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1244"/>
         <source>&amp;Export as image</source>
-        <translation>画像でエクスポート(&amp;E)</translation>
+        <translation>画像としてエクスポート(&amp;E)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1250"/>
@@ -1186,12 +1186,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1265"/>
         <source>Export as PDF</source>
-        <translation>PDFでエクスポート</translation>
+        <translation>PDFとしてエクスポート</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1610"/>
         <source>Print Pre&amp;view</source>
-        <translation>印刷プレビュー(&amp;v)</translation>
+        <translation>印刷プレビュー(&amp;V)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1621"/>
@@ -1207,7 +1207,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1279"/>
         <source>&amp;Fullscreen</source>
-        <translation>全画面表示(&amp;F)</translation>
+        <translation>全画面(&amp;F)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1290"/>
@@ -1224,7 +1224,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1300"/>
         <source>&amp;Draft</source>
-        <translation>作図(&amp;D)</translation>
+        <translation>ドラフトモード(&amp;D)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1309"/>
@@ -1241,12 +1241,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1317"/>
         <source>Focus on &amp;Command Line</source>
-        <translation>指令枠に焦点を合わせる(&amp;C)</translation>
+        <translation>コマンドラインにフォーカス(&amp;C)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1328"/>
         <source>Left</source>
-        <translation>Left</translation>
+        <translation>左</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1337"/>
@@ -1256,7 +1256,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1346"/>
         <source>Top</source>
-        <translation>Top</translation>
+        <translation>上</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1355"/>
@@ -1271,42 +1271,42 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1178"/>
         <source>Widget Options</source>
-        <translation>ウィジットオプション</translation>
+        <translation>ウィジェットオプション</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1184"/>
         <source>Device Options</source>
-        <translation>デバイスの選択</translation>
+        <translation>デバイスオプション</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1373"/>
         <source>Reload Style Sheet</source>
-        <translation>スタイルシートの再読み込み</translation>
+        <translation>スタイルシートを再読み込み</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="761"/>
         <source>Mo&amp;ve and Rotate</source>
-        <translation>移動・回転（&amp;v）</translation>
+        <translation>移動と回転(&amp;V)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="791"/>
         <source>Tr&amp;im Two</source>
-        <translation>2点トリム（&amp;i）</translation>
+        <translation>2要素間トリム(&amp;I)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="807"/>
         <source>O&amp;ffset</source>
-        <translation>オフセット（&amp;f）</translation>
+        <translation>オフセット(&amp;F)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1386"/>
         <source>Menu Creator</source>
-        <translation>メニュー新規作成</translation>
+        <translation>メニュー作成</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1393"/>
         <source>Toolbar Creator</source>
-        <translation>ツールバー新規作成</translation>
+        <translation>ツールバー作成</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1303"/>
@@ -1317,57 +1317,57 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="235"/>
         <source>Pol&amp;ygon (Cen,Tan)</source>
-        <translation>多角形 (中心,接線)</translation>
+        <translation>多角形 (中心,接線)(&amp;Y)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="683"/>
         <source>&amp;Arc</source>
-        <translation>&amp;円弧</translation>
+        <translation>円弧(&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1000"/>
         <source>&amp;Show all layers</source>
-        <translation>すべてのレイヤーを &amp;表示</translation>
+        <translation>全レイヤー表示(&amp;S)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1007"/>
         <source>&amp;Hide all layers</source>
-        <translation>すべてのレイヤーを &amp;非表示</translation>
+        <translation>全レイヤー非表示(&amp;H)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1014"/>
         <source>&amp;Unlock all</source>
-        <translation>すべて &amp;ロック解除</translation>
+        <translation>全ロック解除(&amp;U)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1021"/>
         <source>&amp;Lock all</source>
-        <translation>すべて &amp;ロック</translation>
+        <translation>全ロック(&amp;L)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1077"/>
         <source>&amp;Export Selected Layer(s)</source>
-        <translation>選択したレイヤー(群)を &amp;エクスポート</translation>
+        <translation>選択レイヤーをエクスポート(&amp;E)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1082"/>
         <source>Export &amp;Visible Layer(s)</source>
-        <translation>表示中のレイヤー(群)を &amp;エクスポート</translation>
+        <translation>表示レイヤーをエクスポート(&amp;V)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1089"/>
         <source>&amp;Show all blocks</source>
-        <translation>すべてのブロックを &amp;表示</translation>
+        <translation>全ブロック表示(&amp;S)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1096"/>
         <source>&amp;Hide all blocks</source>
-        <translation>すべてのブロックを &amp;非表示</translation>
+        <translation>全ブロック非表示(&amp;H)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1228"/>
         <source>Export as CA&amp;M/plain SVG...</source>
-        <translation>CAM/プレーン SVG としてエクスポート...</translation>
+        <translation>CAM/プレーンSVGとしてエクスポート(&amp;M)...</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1257"/>
@@ -1377,17 +1377,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1380"/>
         <source>Re-dock Widgets</source>
-        <translation>ウィジェットを再ドック</translation>
+        <translation>ウィジェットを再ドッキング</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1589"/>
         <source>Save A&amp;ll...</source>
-        <translation>すべて保存...</translation>
+        <translation>すべて保存(&amp;L)...</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="257"/>
         <source>Cross</source>
-        <translation>交差</translation>
+        <translation>十字</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="263"/>
@@ -1402,37 +1402,37 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="275"/>
         <source>Snake (Y)</source>
-        <translation>スネーク (Y)</translation>
+        <translation>スネーク (X)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="281"/>
         <source>Rectangle (1 Point)</source>
-        <translation>長方形 (1点)</translation>
+        <translation>矩形 (1 点)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="287"/>
         <source>Rectangle (2 Points)</source>
-        <translation>長方形 (2点)</translation>
+        <translation>矩形 (2 点)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="293"/>
         <source>Rectangle (3 Points)</source>
-        <translation>長方形 (3点)</translation>
+        <translation>矩形 (3 点)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="299"/>
         <source>Star</source>
-        <translation>Star</translation>
+        <translation>星</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="305"/>
         <source>Break/Divide</source>
-        <translation>分割/分割</translation>
+        <translation>分割/切断</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="311"/>
         <source>Line Gap</source>
-        <translation>線間隔</translation>
+        <translation>ラインギャップ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="317"/>
@@ -1442,7 +1442,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="323"/>
         <source>Orthogonal From Line</source>
-        <translation>線からの直交</translation>
+        <translation>直交線</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="329"/>
@@ -1452,47 +1452,47 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="335"/>
         <source>Slice/Divide Line</source>
-        <translation>線をスライス/分割</translation>
+        <translation>切り取り線/分割線</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="341"/>
         <source>Slice/Divide Circle</source>
-        <translation>円をスライス/分割</translation>
+        <translation>スライス/分割円</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="347"/>
         <source>Line of Points</source>
-        <translation>点の線</translation>
+        <translation>点線</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="353"/>
         <source>By Arc</source>
-        <translation>円弧による</translation>
+        <translation>円弧</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="510"/>
         <source>Para&amp;bola 4 points</source>
-        <translation>放物線 4 点</translation>
+        <translation>放物線 4点(&amp;B)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="517"/>
         <source>Parabola &amp;Focus Directrix</source>
-        <translation>放物線 &amp;焦点準線</translation>
+        <translation>放物線 (焦点・準線)(&amp;F)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="864"/>
         <source>&amp;Pick Pen From Entity</source>
-        <translation>エンティティから &amp;ペンを選択</translation>
+        <translation>図形からペンを取得(&amp;P)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="872"/>
         <source>&amp;Pick Pen From Entity (Resolved)</source>
-        <translation>エンティティから &amp;ペンを選択 (解決済み)</translation>
+        <translation>図形からペンを取得(解決済)(&amp;P)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="881"/>
         <source>Apply Pen to Entity</source>
-        <translation>エンティティにペンを適用</translation>
+        <translation>ペンを図形に適用</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="889"/>
@@ -1502,7 +1502,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="897"/>
         <source>Line Join</source>
-        <translation>線結合</translation>
+        <translation>線の結合</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="904"/>
@@ -1520,7 +1520,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/lc_actionfileexportmakercam.cpp" line="110"/>
         <source>Export as</source>
-        <translation>エクスポート</translation>
+        <translation>エクスポート形式</translation>
     </message>
 </context>
 <context>
@@ -1528,7 +1528,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/lc_actionlayersexport.cpp" line="281"/>
         <source>Saving layer &quot;%1&quot; as &quot;%2&quot; </source>
-        <translation>レイヤー「%1」を「%2」として保存中 </translation>
+        <translation>レイヤー &quot;%1&quot; を &quot;%2&quot; として保存中 </translation>
     </message>
 </context>
 <context>
@@ -1536,7 +1536,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/lc_actionpenapply.cpp" line="171"/>
         <source>Specify entity to pick the pen</source>
-        <translation>ペンを選択するエンティティを指定</translation>
+        <translation>ペンを取得する図形を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actionpenapply.cpp" line="172"/>
@@ -1547,7 +1547,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/lc_actionpenapply.cpp" line="175"/>
         <source>Specify entity to apply pen</source>
-        <translation>ペンを適用するエンティティを指定</translation>
+        <translation>ペンを適用する図形を指定</translation>
     </message>
 </context>
 <context>
@@ -1555,7 +1555,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/lc_actionpenpick.cpp" line="108"/>
         <source>Specify entity to pick the pen</source>
-        <translation>ペンを選択するエンティティを指定</translation>
+        <translation>ペンを取得する図形を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actionpenpick.cpp" line="109"/>
@@ -1568,7 +1568,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/lc_actionsnapmiddlemanual.cpp" line="295"/>
         <source>Specify percentage / start-point</source>
-        <translation>パーセント / 開始点を指定</translation>
+        <translation>パーセンテージ/始点を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actionsnapmiddlemanual.cpp" line="296"/>
@@ -1579,17 +1579,17 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/lc_actionsnapmiddlemanual.cpp" line="300"/>
         <source>Specify start point</source>
-        <translation>開始点を指定</translation>
+        <translation>始点を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actionsnapmiddlemanual.cpp" line="305"/>
         <source>Specify end point</source>
-        <translation>終了点を指定</translation>
+        <translation>終点を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actionsnapmiddlemanual.cpp" line="306"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>戻る</translation>
     </message>
 </context>
 <context>
@@ -1597,7 +1597,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_circlebyarcoptions.ui" line="14"/>
         <source>Form</source>
-        <translation>Form</translation>
+        <translation>フォーム</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_circlebyarcoptions.ui" line="27"/>
@@ -1609,12 +1609,12 @@ or [%2]</source>
         <location filename="../src/ui/forms/lc_circlebyarcoptions.ui" line="32"/>
         <location filename="../src/ui/forms/lc_circlebyarcoptions.ui" line="78"/>
         <source>Original</source>
-        <translation>オリジナル</translation>
+        <translation>元の図形</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_circlebyarcoptions.ui" line="37"/>
         <source>Original Resolved</source>
-        <translation>オリジナル解決済み</translation>
+        <translation>元の図形(解決済)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_circlebyarcoptions.ui" line="45"/>
@@ -1642,12 +1642,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_crossoptions.ui" line="20"/>
         <source>Form</source>
-        <translation>Form</translation>
+        <translation>フォーム</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_crossoptions.ui" line="63"/>
         <source>Extension</source>
-        <translation>拡張</translation>
+        <translation>延長</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_crossoptions.ui" line="68"/>
@@ -1672,7 +1672,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_crossoptions.ui" line="161"/>
         <source>Type</source>
-        <translation>Type</translation>
+        <translation>タイプ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_crossoptions.ui" line="168"/>
@@ -1693,7 +1693,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_deviceoptions.ui" line="14"/>
         <source>Form</source>
-        <translation>Form</translation>
+        <translation>フォーム</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_deviceoptions.ui" line="20"/>
@@ -1703,7 +1703,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_deviceoptions.ui" line="53"/>
         <source>Save</source>
-        <translation>Save</translation>
+        <translation>保存</translation>
     </message>
 </context>
 <context>
@@ -1711,7 +1711,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/LC_DlgParabola.cpp" line="112"/>
         <source>Parabola control points cannot be collinear</source>
-        <translation>放物線の制御点は共線にできません</translation>
+        <translation>放物線の制御点は同一直線上にあってはなりません</translation>
     </message>
 </context>
 <context>
@@ -1719,7 +1719,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_duplicateoptions.ui" line="14"/>
         <source>Form</source>
-        <translation>Form</translation>
+        <translation>フォーム</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_duplicateoptions.ui" line="26"/>
@@ -1729,7 +1729,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_duplicateoptions.ui" line="33"/>
         <source>In Place</source>
-        <translation>その場で</translation>
+        <translation>現位置</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_duplicateoptions.ui" line="40"/>
@@ -1746,12 +1746,12 @@ or [%2]</source>
         <location filename="../src/ui/forms/lc_duplicateoptions.ui" line="53"/>
         <location filename="../src/ui/forms/lc_duplicateoptions.ui" line="67"/>
         <source>Original</source>
-        <translation>オリジナル</translation>
+        <translation>元の図形</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_duplicateoptions.ui" line="72"/>
         <source>Original Resolved</source>
-        <translation>オリジナル解決済み</translation>
+        <translation>元の図形(解決済)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_duplicateoptions.ui" line="80"/>
@@ -1805,13 +1805,13 @@ or [%2]</source>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="133"/>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
        The contents of a Construction Layer should not appear in printout.</source>
-        <translation>建設レイヤーは幾何学的構築に使用される無限の直線エンティティを持ちます。
-       建設レイヤーの内容は印刷出力に表示されません。</translation>
+        <translation>構築レイヤーは、幾何学的構築に使用するための無限直線の図形を持ちます。
+構築レイヤーの内容は印刷出力に表示されるべきではありません。</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="137"/>
         <source>Construction Layer</source>
-        <translation>建設レイヤー</translation>
+        <translation>構築レイヤー</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="179"/>
@@ -1821,23 +1821,23 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.cpp" line="58"/>
         <source>Rename Virtual Layer</source>
-        <translation>仮想レイヤーの名前変更</translation>
+        <translation>仮想レイヤー名変更</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.cpp" line="62"/>
         <source>Add Secondary Layer</source>
-        <translation>セカンダリレイヤーを追加</translation>
+        <translation>副レイヤー追加</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.cpp" line="67"/>
         <location filename="../src/ui/forms/lc_layerdialog_ex.cpp" line="73"/>
         <source>Add Layer</source>
-        <translation>レイヤーを追加</translation>
+        <translation>レイヤー追加</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.cpp" line="78"/>
         <source>Edit Layer</source>
-        <translation>レイヤーを編集</translation>
+        <translation>レイヤー編集</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.cpp" line="165"/>
@@ -1848,7 +1848,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.cpp" line="182"/>
         <source>Rename Layer</source>
-        <translation>レイヤーの名前変更</translation>
+        <translation>レイヤー名変更</translation>
     </message>
 </context>
 <context>
@@ -1911,27 +1911,27 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="213"/>
         <source>Show full name as ToolTip</source>
-        <translation>フルネームをツールチップとして表示</translation>
+        <translation>ツールチップに完全名を表示</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="220"/>
         <source>Show layer type icons</source>
-        <translation>レイヤータイプアイコンを表示</translation>
+        <translation>レイヤータイプのアイコンを表示</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="233"/>
         <source>Show indented layer names. Ident size:</source>
-        <translation>インデントされたレイヤー名を表示。インデントサイズ:</translation>
+        <translation>インデント付きレイヤー名を表示。インデントサイズ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="266"/>
         <source>Allow restructuring via Drag&amp;Drop</source>
-        <translation>ドラッグ&amp;ドロップによる再構築を許可</translation>
+        <translation>ドラッグ＆ドロップによる再構築を許可(&amp;D)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="273"/>
         <source>Rename secondary layers on primary rename</source>
-        <translation>プライマリ名変更時にセカンダリレイヤーの名前も変更</translation>
+        <translation>プライマリ名変更時に副レイヤーも名前変更</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="281"/>
@@ -1941,7 +1941,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="384"/>
         <source>Matched item in highlight filter mode</source>
-        <translation>ハイライトフィルターモードの一致アイテム</translation>
+        <translation>ハイライトフィルターモードで一致した項目</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="416"/>
@@ -2034,7 +2034,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="201"/>
         <source>Show Secondary Layers</source>
-        <translation>セカンダリレイヤーを表示</translation>
+        <translation>副レイヤーを表示</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="212"/>
@@ -2054,7 +2054,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="240"/>
         <source>Collapse Secondary</source>
-        <translation>セカンダリを折りたたむ</translation>
+        <translation>副レイヤーを折りたたむ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="251"/>
@@ -2084,7 +2084,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="293"/>
         <source>Modify layer attributes / rename</source>
-        <translation>レイヤー属性を変更 / 名前変更</translation>
+        <translation>レイヤー属性の変更 / 名前変更</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="308"/>
@@ -2099,62 +2099,62 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="672"/>
         <source>&amp;Add Child Layer</source>
-        <translation>子レイヤーを &amp;追加</translation>
+        <translation>子レイヤーを追加(&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="673"/>
         <source>&amp;Rename</source>
-        <translation>&amp;名前変更</translation>
+        <translation>名前変更(&amp;R)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="674"/>
         <source>&amp;Remove Layers (Sub-Tree)</source>
-        <translation>レイヤーを &amp;削除 (サブツリー)</translation>
+        <translation>レイヤーを削除 (サブツリー)(&amp;R)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="676"/>
         <source>&amp;Copy Structure (Sub-Tree)</source>
-        <translation>構造を &amp;コピー (サブツリー)</translation>
+        <translation>構造をコピー (サブツリー)(&amp;C)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="677"/>
         <source>&amp;Duplicate Content (Sub-Tree)</source>
-        <translation>内容を &amp;複製 (サブツリー)</translation>
+        <translation>内容を複製 (サブツリー)(&amp;D)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="679"/>
         <source>&amp;Select Entities (Sub-Tree)</source>
-        <translation>エンティティを &amp;選択 (サブツリー)</translation>
+        <translation>図形を選択 (サブツリー)(&amp;S)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="684"/>
         <source>&amp;Edit Layer &amp;Attributes</source>
-        <translation>レイヤー &amp;属性を編集</translation>
+        <translation>レイヤー属性を編集(&amp;E)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="686"/>
         <source>&amp;Remove Layer</source>
-        <translation>レイヤーを &amp;削除</translation>
+        <translation>レイヤー削除(&amp;R)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="695"/>
         <source>&amp;Add Dimensions Sub-Layer</source>
-        <translation>寸法サブレイヤーを &amp;追加</translation>
+        <translation>寸法副レイヤーを追加(&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="699"/>
         <source>&amp;Add Info Sub-Layer</source>
-        <translation>情報サブレイヤーを &amp;追加</translation>
+        <translation>情報副レイヤーを追加(&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="703"/>
         <source>&amp;Add Alternative View Sub-Layer</source>
-        <translation>代替ビューサブレイヤーを &amp;追加</translation>
+        <translation>代替表示副レイヤーを追加(&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="709"/>
         <source>&amp;Remove Sub-layers</source>
-        <translation>サブレイヤーを &amp;削除</translation>
+        <translation>副レイヤーを削除(&amp;R)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="717"/>
@@ -2182,17 +2182,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="740"/>
         <source>&amp;Select Layer&apos;s Entities</source>
-        <translation>レイヤーのエンティティを &amp;選択</translation>
+        <translation>レイヤーの図形を選択(&amp;S)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="743"/>
         <source>&amp;Create Layer Copy</source>
-        <translation>レイヤーのコピーを作成</translation>
+        <translation>レイヤーコピーを作成(&amp;C)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="744"/>
         <source>&amp;Duplicate Layer With Content</source>
-        <translation>内容付きでレイヤーを &amp;複製</translation>
+        <translation>内容ごとレイヤーを複製(&amp;D)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="748"/>
@@ -2207,47 +2207,47 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="756"/>
         <source>&amp;Add Layer</source>
-        <translation>レイヤーを &amp;追加</translation>
+        <translation>レイヤー追加(&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="758"/>
         <source>&amp;Freeze Others Layers</source>
-        <translation>他のレイヤーを &amp;凍結</translation>
+        <translation>他のレイヤーを凍結(&amp;F)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="759"/>
         <source>&amp;Defreeze All Layers</source>
-        <translation>すべてのレイヤーの凍結を &amp;解除</translation>
+        <translation>すべてのレイヤーの凍結を解除(&amp;D)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="760"/>
         <source>&amp;Freeze All Layers</source>
-        <translation>すべてのレイヤーを &amp;凍結</translation>
+        <translation>すべてのレイヤーを凍結(&amp;F)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="761"/>
         <source>&amp;Unlock All Layers</source>
-        <translation>すべてのレイヤーのロックを &amp;解除</translation>
+        <translation>すべてのレイヤーのロックを解除(&amp;U)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="762"/>
         <source>&amp;Lock All Layers</source>
-        <translation>すべてのレイヤーを &amp;ロック</translation>
+        <translation>すべてのレイヤーをロック(&amp;L)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="763"/>
         <source>Enable &amp;Printing All Layers</source>
-        <translation>すべてのレイヤーの印刷を有効化</translation>
+        <translation>すべてのレイヤーの印刷を有効(&amp;P)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="764"/>
         <source>&amp;Disable Printing All Layers</source>
-        <translation>すべてのレイヤーの印刷を無効化</translation>
+        <translation>すべてのレイヤーの印刷を無効(&amp;D)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="766"/>
         <source>&amp;Find And Remove Empty Layers</source>
-        <translation>空のレイヤーを &amp;検索して削除</translation>
+        <translation>空のレイヤーを検索して削除(&amp;F)</translation>
     </message>
 </context>
 <context>
@@ -2255,7 +2255,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="14"/>
         <source>Form</source>
-        <translation>Form</translation>
+        <translation>フォーム</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="42"/>
@@ -2266,13 +2266,13 @@ or [%2]</source>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="50"/>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="181"/>
         <source>Free</source>
-        <translation>Free</translation>
+        <translation>自由</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="55"/>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="110"/>
         <source>Start</source>
-        <translation>開始</translation>
+        <translation>始点</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="60"/>
@@ -2284,17 +2284,17 @@ or [%2]</source>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="65"/>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="120"/>
         <source>End</source>
-        <translation>End</translation>
+        <translation>終点</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="73"/>
         <source>Line Snap:</source>
-        <translation>ラインスナップ:</translation>
+        <translation>線スナップ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="80"/>
         <source>Rel</source>
-        <translation>Rel</translation>
+        <translation>相対</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="144"/>
@@ -2327,7 +2327,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_linefrompointtolineoptions.ui" line="14"/>
         <source>Form</source>
-        <translation>Form</translation>
+        <translation>フォーム</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linefrompointtolineoptions.ui" line="48"/>
@@ -2347,7 +2347,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_linefrompointtolineoptions.ui" line="105"/>
         <source>To Intersection</source>
-        <translation>交点へ</translation>
+        <translation>交点まで</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linefrompointtolineoptions.ui" line="110"/>
@@ -2357,12 +2357,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_linefrompointtolineoptions.ui" line="139"/>
         <source>End offset:</source>
-        <translation>終了オフセット:</translation>
+        <translation>終端オフセット:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linefrompointtolineoptions.ui" line="217"/>
         <source>Start</source>
-        <translation>開始</translation>
+        <translation>始点</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linefrompointtolineoptions.ui" line="222"/>
@@ -2372,7 +2372,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_linefrompointtolineoptions.ui" line="227"/>
         <source>End</source>
-        <translation>End</translation>
+        <translation>終点</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linefrompointtolineoptions.ui" line="241"/>
@@ -2390,7 +2390,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="20"/>
         <source>Form</source>
-        <translation>Form</translation>
+        <translation>フォーム</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="51"/>
@@ -2402,7 +2402,7 @@ or [%2]</source>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="56"/>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="149"/>
         <source>Add segment</source>
-        <translation>セグメントを追加</translation>
+        <translation>セグメント追加</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="61"/>
@@ -2428,32 +2428,32 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="107"/>
         <source>Line 1</source>
-        <translation>ライン 1</translation>
+        <translation>線1</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="112"/>
         <source>Line 2</source>
-        <translation>ライン 2</translation>
+        <translation>線2</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="117"/>
         <source>Both lines</source>
-        <translation>両方のライン</translation>
+        <translation>両方の線</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="162"/>
         <source>Remove originals</source>
-        <translation>オリジナルを削除</translation>
+        <translation>元の図形を削除</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="169"/>
         <source>Line 2:</source>
-        <translation>ライン 2:</translation>
+        <translation>線2:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="176"/>
         <source>Line 1:</source>
-        <translation>ライン 1:</translation>
+        <translation>線1:</translation>
     </message>
 </context>
 <context>
@@ -2461,7 +2461,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_linepointsoptions.ui" line="20"/>
         <source>Form</source>
-        <translation>Form</translation>
+        <translation>フォーム</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linepointsoptions.ui" line="32"/>
@@ -2471,27 +2471,27 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_linepointsoptions.ui" line="73"/>
         <source>Fit Line</source>
-        <translation>ラインを合わせる</translation>
+        <translation>線に合わせる</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linepointsoptions.ui" line="128"/>
         <source>None</source>
-        <translation>None</translation>
+        <translation>なし</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linepointsoptions.ui" line="133"/>
         <source>Both</source>
-        <translation>Both</translation>
+        <translation>両方</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linepointsoptions.ui" line="138"/>
         <source>Start</source>
-        <translation>開始</translation>
+        <translation>始点</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linepointsoptions.ui" line="143"/>
         <source>End</source>
-        <translation>End</translation>
+        <translation>終点</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linepointsoptions.ui" line="183"/>
@@ -2501,7 +2501,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_linepointsoptions.ui" line="196"/>
         <source>Number of points:</source>
-        <translation>点の数:</translation>
+        <translation>点数:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linepointsoptions.ui" line="209"/>
@@ -2549,7 +2549,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_modifybreakdivideoptions.ui" line="14"/>
         <source>Form</source>
-        <translation>Form</translation>
+        <translation>フォーム</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_modifybreakdivideoptions.ui" line="39"/>
@@ -2559,7 +2559,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_modifybreakdivideoptions.ui" line="46"/>
         <source>Remove Selected</source>
-        <translation>選択したものを削除</translation>
+        <translation>選択を削除</translation>
     </message>
 </context>
 <context>
@@ -2567,7 +2567,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="14"/>
         <source>Form</source>
-        <translation>Form</translation>
+        <translation>フォーム</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="42"/>
@@ -2583,7 +2583,7 @@ or [%2]</source>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="56"/>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="87"/>
         <source>Free</source>
-        <translation>Free</translation>
+        <translation>自由</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="79"/>
@@ -2594,7 +2594,7 @@ or [%2]</source>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="92"/>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="111"/>
         <source>Start</source>
-        <translation>開始</translation>
+        <translation>始点</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="97"/>
@@ -2606,12 +2606,12 @@ or [%2]</source>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="102"/>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="121"/>
         <source>End</source>
-        <translation>End</translation>
+        <translation>終点</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="129"/>
         <source>Line Snap:</source>
-        <translation>ラインスナップ:</translation>
+        <translation>線スナップ:</translation>
     </message>
 </context>
 <context>
@@ -2664,12 +2664,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="132"/>
         <source>Active Pen Background:</source>
-        <translation>アクティブペンの背景:</translation>
+        <translation>アクティブペン背景:</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="150"/>
         <source>Entire table row is bold for active pen</source>
-        <translation>アクティブペンの行全体を太字にする</translation>
+        <translation>アクティブペンのテーブル行全体を太字にする</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="157"/>
@@ -2684,17 +2684,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="192"/>
         <source>Case-insensitive pens filtering</source>
-        <translation>大文字小文字を区別しないペンフィルタリング</translation>
+        <translation>大文字小文字を区別しないペンフィルター</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="209"/>
         <source>Controls whether tooltip will be shown for table item or not</source>
-        <translation>テーブル項目にツールチップを表示するかどうかを制御</translation>
+        <translation>テーブル項目にツールチップを表示するかどうかを制御します</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="212"/>
         <source>Show tooltip for table items</source>
-        <translation>テーブル項目にツールチップを表示</translation>
+        <translation>テーブル項目のツールチップを表示</translation>
     </message>
     <message>
         <source>Pens file:</source>
@@ -2703,7 +2703,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="219"/>
         <source>Show colorn name as</source>
-        <translation>色名を表示形式</translation>
+        <translation>色名の表示形式</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="225"/>
@@ -2718,12 +2718,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="239"/>
         <source>Natural name where possible</source>
-        <translation>可能な限り自然名</translation>
+        <translation>可能な場合は自然名</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="249"/>
         <source>Show info message if no entities may be selected by pen</source>
-        <translation>ペンでエンティティが選択できない場合に情報メッセージを表示</translation>
+        <translation>ペンで選択できる図形がない場合に情報メッセージを表示</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="258"/>
@@ -2738,12 +2738,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.cpp" line="47"/>
         <source>Select entities by attributes pen</source>
-        <translation>属性ペンでエンティティを選択</translation>
+        <translation>属性ペンで図形を選択</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.cpp" line="48"/>
         <source>Select entities by drawing pen</source>
-        <translation>描画ペンでエンティティを選択</translation>
+        <translation>描画ペンで図形を選択</translation>
     </message>
 </context>
 <context>
@@ -2776,7 +2776,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="224"/>
         <source>Type:</source>
-        <translation>タイプ:</translation>
+        <translation>線種:</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="246"/>
@@ -2791,28 +2791,28 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="290"/>
         <source>Fill Pen Editor by Entity Drawing Pen</source>
-        <translation>エンティティ描画ペンでペンエディタを埋める</translation>
+        <translation>図形の描画ペンでペンエディタを埋める</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="304"/>
         <source>Fill Pen Editor by Entity Attributes</source>
-        <translation>エンティティ属性でペンエディタを埋める</translation>
+        <translation>図形属性でペンエディタを埋める</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="318"/>
         <source>Select Entities By Drawing Pen</source>
-        <translation>描画ペンでエンティティを選択</translation>
+        <translation>描画ペンで図形を選択</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="332"/>
         <source>Select Entities By Pen Attributes</source>
-        <translation>ペン属性でエンティティを選択</translation>
+        <translation>ペン属性で図形を選択</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="349"/>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="352"/>
         <source>Save</source>
-        <translation>Save</translation>
+        <translation>保存</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="363"/>
@@ -2832,7 +2832,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="394"/>
         <source>to current</source>
-        <translation>現在へ</translation>
+        <translation>現在のペンに</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="405"/>
@@ -2842,12 +2842,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="419"/>
         <source>Fill Pen Editor from Active Layer&apos;s Pen</source>
-        <translation>アクティブレイヤーのペンからペンエディタを埋める</translation>
+        <translation>アクティブレイヤーのペンでペンエディタを埋める</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="422"/>
         <source>Pick from Active Layer</source>
-        <translation>アクティブレイヤーから選択</translation>
+        <translation>アクティブレイヤーから取得</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="433"/>
@@ -2867,7 +2867,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="450"/>
         <source>Delete Pen</source>
-        <translation>ペンを削除</translation>
+        <translation>ペン削除</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="245"/>
@@ -2877,42 +2877,42 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="265"/>
         <source>&amp;Apply Pen To Selection</source>
-        <translation>選択にペンを &amp;適用</translation>
+        <translation>選択にペンを適用(&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="266"/>
         <source>&amp;Set As Current Pen</source>
-        <translation>現在のペンとして &amp;設定</translation>
+        <translation>現在のペンとして設定(&amp;S)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="267"/>
         <source>&amp;Apply Pen To Active Layer</source>
-        <translation>アクティブレイヤーにペンを &amp;適用</translation>
+        <translation>アクティブレイヤーにペンを適用(&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="268"/>
         <source>&amp;Select Entities With Attributes Pen</source>
-        <translation>属性ペンでエンティティを &amp;選択</translation>
+        <translation>属性ペンで図形を選択(&amp;S)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="269"/>
         <source>&amp;Select Entities With Drawing Pen</source>
-        <translation>描画ペンでエンティティを &amp;選択</translation>
+        <translation>描画ペンで図形を選択(&amp;S)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="272"/>
         <source>&amp;Edit Pen</source>
-        <translation>ペンを &amp;編集</translation>
+        <translation>ペン編集(&amp;E)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="273"/>
         <source>&amp;Remove Pen</source>
-        <translation>ペンを &amp;削除</translation>
+        <translation>ペン削除(&amp;R)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="276"/>
         <source>&amp;Remove Pens</source>
-        <translation>ペンを &amp;削除</translation>
+        <translation>ペン削除(&amp;R)</translation>
     </message>
     <message>
         <source>Pen palette</source>
@@ -2938,7 +2938,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="14"/>
         <source>Form</source>
-        <translation>Form</translation>
+        <translation>フォーム</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="26"/>
@@ -2963,12 +2963,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="86"/>
         <source>Size inner</source>
-        <translation>内側サイズ</translation>
+        <translation>内寸</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="93"/>
         <source>Length X:</source>
-        <translation>長さ X:</translation>
+        <translation>X 方向長さ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="100"/>
@@ -2983,7 +2983,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="162"/>
         <source>Length Y:</source>
-        <translation>長さ Y:</translation>
+        <translation>Y方向長さ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="170"/>
@@ -2993,7 +2993,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="175"/>
         <source>Top</source>
-        <translation>Top</translation>
+        <translation>上</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="180"/>
@@ -3003,7 +3003,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="185"/>
         <source>Left</source>
-        <translation>Left</translation>
+        <translation>左</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="190"/>
@@ -3033,12 +3033,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="219"/>
         <source>Straight</source>
-        <translation>直線</translation>
+        <translation>直角</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="224"/>
         <source>Round</source>
-        <translation>丸み</translation>
+        <translation>丸</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="229"/>
@@ -3053,7 +3053,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="245"/>
         <source>Both</source>
-        <translation>Both</translation>
+        <translation>両方</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="250"/>
@@ -3081,7 +3081,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="14"/>
         <source>Form</source>
-        <translation>Form</translation>
+        <translation>フォーム</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="26"/>
@@ -3106,7 +3106,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="70"/>
         <source>End Snap:</source>
-        <translation>終了スナップ:</translation>
+        <translation>終点スナップ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="77"/>
@@ -3116,12 +3116,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="100"/>
         <source>Length X:</source>
-        <translation>長さ X:</translation>
+        <translation>X 方向長さ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="107"/>
         <source>Start Snap:</source>
-        <translation>開始スナップ:</translation>
+        <translation>始点スナップ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="131"/>
@@ -3133,13 +3133,13 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="136"/>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="183"/>
         <source>Mid-Vertical</source>
-        <translation>中央-垂直</translation>
+        <translation>垂直中点</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="141"/>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="188"/>
         <source>Mid-Horizontal</source>
-        <translation>中央-水平</translation>
+        <translation>水平中点</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="146"/>
@@ -3155,12 +3155,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="202"/>
         <source>Straight</source>
-        <translation>直線</translation>
+        <translation>直角</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="207"/>
         <source>Round</source>
-        <translation>丸み</translation>
+        <translation>丸</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="212"/>
@@ -3170,12 +3170,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="220"/>
         <source>Length Y:</source>
-        <translation>長さ Y:</translation>
+        <translation>Y方向長さ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="228"/>
         <source>Both</source>
-        <translation>Both</translation>
+        <translation>両方</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="233"/>
@@ -3193,7 +3193,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="14"/>
         <source>Form</source>
-        <translation>Form</translation>
+        <translation>フォーム</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="55"/>
@@ -3203,7 +3203,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="63"/>
         <source>Both</source>
-        <translation>Both</translation>
+        <translation>両方</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="68"/>
@@ -3223,27 +3223,27 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="88"/>
         <source>Quadrangle</source>
-        <translation>四角形</translation>
+        <translation>四辺形</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="95"/>
         <source>Fixed Base Angle:</source>
-        <translation>固定基準角度:</translation>
+        <translation>基準角度固定:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="130"/>
         <source>Length X:</source>
-        <translation>長さ X:</translation>
+        <translation>X 方向長さ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="160"/>
         <source>Straight</source>
-        <translation>直線</translation>
+        <translation>直角</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="165"/>
         <source>Round</source>
-        <translation>丸み</translation>
+        <translation>丸</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="170"/>
@@ -3263,7 +3263,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="192"/>
         <source>Length Y:</source>
-        <translation>長さ Y:</translation>
+        <translation>Y方向長さ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="243"/>
@@ -3273,7 +3273,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="312"/>
         <source>Fixed Inner Angle:</source>
-        <translation>固定内角:</translation>
+        <translation>内角固定:</translation>
     </message>
 </context>
 <context>
@@ -3281,12 +3281,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/test/lc_simpletests.cpp" line="34"/>
         <source>De&amp;bugging</source>
-        <translation>デバッグ(&amp;D)</translation>
+        <translation>デバッグ(&amp;B)</translation>
     </message>
     <message>
         <location filename="../src/test/lc_simpletests.cpp" line="78"/>
         <source>Insert Image</source>
-        <translation>画像を挿入</translation>
+        <translation>画像挿入</translation>
     </message>
 </context>
 <context>
@@ -3294,39 +3294,39 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="14"/>
         <source>Form</source>
-        <translation>Form</translation>
+        <translation>フォーム</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="48"/>
         <source>None</source>
-        <translation>None</translation>
+        <translation>なし</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="53"/>
         <source>Both</source>
-        <translation>Both</translation>
+        <translation>両方</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="58"/>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="266"/>
         <source>Start</source>
-        <translation>開始</translation>
+        <translation>始点</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="63"/>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="276"/>
         <source>End</source>
-        <translation>End</translation>
+        <translation>終点</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="71"/>
         <source>Edge Tick:</source>
-        <translation>端ティック:</translation>
+        <translation>端点目盛:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="113"/>
         <source>Rel</source>
-        <translation>Rel</translation>
+        <translation>相対</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="120"/>
@@ -3341,17 +3341,17 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="189"/>
         <source>Start Circle Angle:</source>
-        <translation>開始円角度:</translation>
+        <translation>円開始角度:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="221"/>
         <source>Tick Length:</source>
-        <translation>ティック長:</translation>
+        <translation>目盛長さ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="228"/>
         <source>Tick snap:</source>
-        <translation>ティックスナップ:</translation>
+        <translation>目盛スナップ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="235"/>
@@ -3384,7 +3384,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/forms/lc_staroptions.ui" line="14"/>
         <source>Form</source>
-        <translation>Form</translation>
+        <translation>フォーム</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_staroptions.ui" line="26"/>
@@ -3422,7 +3422,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="647"/>
         <source>Modify</source>
-        <translation>変更</translation>
+        <translation>修正</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="378"/>
@@ -3437,12 +3437,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="414"/>
         <source>Dock</source>
-        <translation>Dock</translation>
+        <translation>ドッキング</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="414"/>
         <source>Float</source>
-        <translation>フロート</translation>
+        <translation>フローティング</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="598"/>
@@ -3477,7 +3477,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="654"/>
         <source>Measure</source>
-        <translation>測定</translation>
+        <translation>計測</translation>
     </message>
 </context>
 <context>
@@ -3485,7 +3485,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/forms/lc_widgetoptionsdialog.ui" line="14"/>
         <source>Widget Options</source>
-        <translation>ウィジットオプション</translation>
+        <translation>ウィジェットオプション</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_widgetoptionsdialog.ui" line="38"/>
@@ -3500,7 +3500,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/forms/lc_widgetoptionsdialog.ui" line="109"/>
         <source>General</source>
-        <translation>縮尺</translation>
+        <translation>全般</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_widgetoptionsdialog.ui" line="121"/>
@@ -3530,12 +3530,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/forms/lc_widgetoptionsdialog.ui" line="160"/>
         <source>Input the path of a Qt style sheet.</source>
-        <translation>Qt スタイルシートのパスを入力.</translation>
+        <translation>Qtスタイルシートのパスを入力してください。</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_widgetoptionsdialog.ui" line="70"/>
         <source>side length in pixels</source>
-        <translation>ピクセル単位での辺の長さ</translation>
+        <translation>ピクセル単位の辺の長さ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_widgetoptionsdialog.ui" line="44"/>
@@ -3558,22 +3558,22 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/lg_dimzerosbox.cpp" line="37"/>
         <source>remove left</source>
-        <translation>小数点以上で取り去る</translation>
+        <translation>左側のゼロを削除</translation>
     </message>
     <message>
         <location filename="../src/ui/lg_dimzerosbox.cpp" line="41"/>
         <source>remove right</source>
-        <translation>小数以下で取り去る</translation>
+        <translation>右側のゼロを削除</translation>
     </message>
     <message>
         <location filename="../src/ui/lg_dimzerosbox.cpp" line="59"/>
         <source>remove 0&apos;</source>
-        <translation>0フィートを削除</translation>
+        <translation>0分を削除</translation>
     </message>
     <message>
         <location filename="../src/ui/lg_dimzerosbox.cpp" line="63"/>
         <source>remove 0&quot;</source>
-        <translation>0インチを削除</translation>
+        <translation>0秒を削除</translation>
     </message>
 </context>
 <context>
@@ -3581,7 +3581,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/forms/qg_polylineequidistantoptions.ui" line="32"/>
         <source>Line Relative Angle Options</source>
-        <translation>線分相対角度オプション</translation>
+        <translation>相対角度線オプション</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineequidistantoptions.ui" line="59"/>
@@ -3597,7 +3597,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/forms/qg_polylineequidistantoptions.ui" line="97"/>
         <source>Copies:</source>
-        <translation>複写:</translation>
+        <translation>コピー数:</translation>
     </message>
 </context>
 <context>
@@ -3610,7 +3610,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/plugins/intern/qc_actiongetent.cpp" line="51"/>
         <source>Cancel</source>
-        <translation>中止</translation>
+        <translation>キャンセル</translation>
     </message>
 </context>
 <context>
@@ -3618,7 +3618,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/plugins/intern/qc_actiongetpoint.cpp" line="119"/>
         <source>Cancel</source>
-        <translation>中止</translation>
+        <translation>キャンセル</translation>
     </message>
 </context>
 <context>
@@ -3627,12 +3627,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/plugins/intern/qc_actiongetselect.cpp" line="42"/>
         <location filename="../src/plugins/intern/qc_actiongetselect.cpp" line="51"/>
         <source>Select objects:</source>
-        <translation>オブジェクトを選択：</translation>
+        <translation>オブジェクトを選択:</translation>
     </message>
     <message>
         <location filename="../src/plugins/intern/qc_actiongetselect.cpp" line="62"/>
         <source>Cancel</source>
-        <translation>中止</translation>
+        <translation>キャンセル</translation>
     </message>
 </context>
 <context>
@@ -3665,7 +3665,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="761"/>
         <source>&amp;Line</source>
-        <translation>直線(&amp;L)</translation>
+        <translation>線(&amp;L)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="768"/>
@@ -3685,18 +3685,18 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="812"/>
         <source>&amp;Modify</source>
-        <translation>変更・修正(&amp;M)</translation>
+        <translation>修正(&amp;M)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="821"/>
         <source>&amp;Info</source>
-        <translation>図形情報(&amp;I)</translation>
+        <translation>情報(&amp;I)</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3047"/>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="930"/>
         <source>About</source>
-        <translation>Librecadの情報</translation>
+        <translation>LibreCAD について</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="879"/>
@@ -3706,13 +3706,13 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="345"/>
         <source>Layer List</source>
-        <translation>レイヤーの一覧</translation>
+        <translation>レイヤーリスト</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="368"/>
         <source>Block List</source>
         <translatorcomment>AutoCADにあわせて「ブロック」と訳すことにした</translatorcomment>
-        <translation>ブロックの一覧</translation>
+        <translation>ブロックリスト</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3450"/>
@@ -3722,22 +3722,22 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1219"/>
         <source>&amp;Cascade</source>
-        <translation>カスケード表示(&amp;C)</translation>
+        <translation>重ねて表示(&amp;C)</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1220"/>
         <source>&amp;Tile</source>
-        <translation>タイル表示・自動配置(&amp;T)</translation>
+        <translation>並べて表示(&amp;T)</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1222"/>
         <source>Tile &amp;Horizontally</source>
-        <translation>タイル表示：水平(&amp;H)</translation>
+        <translation>横に並べて表示(&amp;H)</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1538"/>
         <source>Creating new file...</source>
-        <translation>新しいファイルを作成...</translation>
+        <translation>新規ファイルを作成中...</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1584"/>
@@ -3748,44 +3748,46 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1586"/>
         <source>unnamed document %1</source>
-        <translation>無題 %1</translation>
+        <translation>無題のドキュメント %1</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1661"/>
         <source>New Drawing created.</source>
-        <translation>新規図面を作成しました.</translation>
+        <translation>新しい図面を作成しました。</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1791"/>
         <source>Cannot open the file
 %1
 Please check the permissions.</source>
-        <translation>ファイル %1 は開けません、権限をチェックしてください.</translation>
+        <translation>ファイルを開けません
+%1
+アクセス権限を確認してください。</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2015"/>
         <source>Loaded document: </source>
-        <translation>ドキュメントをロードしました: </translation>
+        <translation>ドキュメントを読み込みました: </translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2021"/>
         <source>Opening aborted</source>
-        <translation>開くことを中止</translation>
+        <translation>開く処理が中止されました</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="516"/>
         <source>Saving drawing...</source>
-        <translation>図面を保存...</translation>
+        <translation>図面を保存中...</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="525"/>
         <source>Saved drawing: %1</source>
-        <translation>図面 %1 を保存しました</translation>
+        <translation>図面を保存しました: %1</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2087"/>
         <source>Auto-saving drawing...</source>
-        <translation>図面を自動保存...</translation>
+        <translation>図面を自動保存中...</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2095"/>
@@ -3798,42 +3800,45 @@ Please check the permissions.</source>
 %1
 Please check the permissions.
 Auto-save disabled.</source>
-        <translation>ファイル %1 が自動保存できません、権限をチェックしてください.</translation>
+        <translation>ファイルを自動保存できません
+%1
+アクセス権限を確認してください。
+自動保存を無効にしました。</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2118"/>
         <source>Exporting drawing...</source>
-        <translation>図面をエクスポート...</translation>
+        <translation>図面をエクスポート中...</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2214"/>
         <source>Exported: %1</source>
-        <translation>エクスポート: %1</translation>
+        <translation>エクスポートしました: %1</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2254"/>
         <source>Exporting...</source>
-        <translation>エクスポート...</translation>
+        <translation>エクスポート中...</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2327"/>
         <source>Export complete</source>
-        <translation>エクスポートは完了しました</translation>
+        <translation>エクスポート完了</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2329"/>
         <source>Export failed!</source>
-        <translation>エクスポートは失敗しました！</translation>
+        <translation>エクスポートに失敗しました!</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2438"/>
         <source>Printing...</source>
-        <translation>印刷...</translation>
+        <translation>印刷中...</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2684"/>
         <source>Printing complete</source>
-        <translation>印刷を完了しました</translation>
+        <translation>印刷完了</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2760"/>
@@ -3843,7 +3848,7 @@ Auto-save disabled.</source>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2838"/>
         <source>Exiting application...</source>
-        <translation>アプリケーションを実行...</translation>
+        <translation>アプリケーションを終了中...</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="988"/>
@@ -3853,7 +3858,7 @@ Auto-save disabled.</source>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3071"/>
         <source>Compiled on: %1</source>
-        <translation>コンパイル・オン: %1</translation>
+        <translation>コンパイル日: %1</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3063"/>
@@ -3863,37 +3868,37 @@ Auto-save disabled.</source>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1891"/>
         <source>Warning: File already opened : </source>
-        <translation>警告: ファイルは開かれています: </translation>
+        <translation>警告: ファイルは既に開かれています: </translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="542"/>
         <source>Cannot save the file </source>
-        <translation>ファイルの保存ができません</translation>
+        <translation>ファイルを保存できません </translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="544"/>
         <source> , please check the filename and permissions.</source>
-        <translation>  , ファイル名、権限をチェックしてください.</translation>
+        <translation> 、ファイル名とアクセス権限を確認してください。</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1221"/>
         <source>Tile &amp;Vertically</source>
-        <translation>タイル表示：縦(&amp;V)</translation>
+        <translation>縦に並べて表示(&amp;V)</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1172"/>
         <source>Ta&amp;b mode</source>
-        <translation>タブモード(&amp;b)</translation>
+        <translation>タブモード(&amp;B)</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1727"/>
         <source>New document from template: </source>
-        <translation>テンプレートから新しいドキュメント: </translation>
+        <translation>テンプレートから新規ドキュメント: </translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1775"/>
         <source>Select Template aborted</source>
-        <translation>テンプレートの選択を中止しました</translation>
+        <translation>テンプレート選択を中止しました</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2105"/>
@@ -3903,17 +3908,17 @@ Auto-save disabled.</source>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="421"/>
         <source>File</source>
-        <translation>File</translation>
+        <translation>ファイル</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="428"/>
         <source>Edit</source>
-        <translation>Edit</translation>
+        <translation>編集</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="449"/>
         <source>View</source>
-        <translation>View</translation>
+        <translation>表示</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="464"/>
@@ -3928,7 +3933,7 @@ Auto-save disabled.</source>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2155"/>
         <source>Export as</source>
-        <translation>エクスポート</translation>
+        <translation>エクスポート形式</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3065"/>
@@ -3943,7 +3948,7 @@ Auto-save disabled.</source>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3072"/>
         <source>Qt Version: %1</source>
-        <translation>QTのバージョン: %1</translation>
+        <translation>Qt バージョン: %1</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="535"/>
@@ -3952,12 +3957,12 @@ Auto-save disabled.</source>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2882"/>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3255"/>
         <source>Draft Mode</source>
-        <translation>作図モード</translation>
+        <translation>ドラフトモード</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2490"/>
         <source>Export as PDF</source>
-        <translation>PDFでエクスポート</translation>
+        <translation>PDFとしてエクスポート</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="689"/>
@@ -3969,29 +3974,30 @@ Auto-save disabled.</source>
         <source>Cannot open the file
 %1
 Please check its existence and permissions.</source>
-        <translation>ファイル %1 が開けません
-ファイルが存在しているか、もしくは権限をチェックしてください.</translation>
+        <translation>ファイルを開けません
+%1
+ファイルの存在とアクセス権限を確認してください。</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2020"/>
         <source>File &apos;%1&apos; does not exist. Opening aborted</source>
-        <translation>ファイル &apos;%1&apos; は存在しません。ファイルを開くことを中止</translation>
+        <translation>ファイル &apos;%1&apos; が存在しません。開く処理を中止しました</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="589"/>
         <source>Categories</source>
-        <translation>CADツール選択</translation>
+        <translation>カテゴリ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="830"/>
         <source>&amp;Order</source>
-        <translation>整列(&amp;O)</translation>
+        <translation>順序(&amp;O)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="302"/>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="440"/>
         <source>Order</source>
-        <translation>整列</translation>
+        <translation>順序</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="282"/>
@@ -4003,7 +4009,7 @@ Please check its existence and permissions.</source>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="257"/>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="520"/>
         <source>Line</source>
-        <translation>Line</translation>
+        <translation>線</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="262"/>
@@ -4038,29 +4044,29 @@ Please check its existence and permissions.</source>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="287"/>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="556"/>
         <source>Dimension</source>
-        <translation>寸法記入</translation>
+        <translation>寸法</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="292"/>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="562"/>
         <source>Modify</source>
-        <translation>変更・修正</translation>
+        <translation>修正</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="297"/>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="568"/>
         <source>Info</source>
-        <translation>Info</translation>
+        <translation>情報</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="471"/>
         <source>Pen</source>
-        <translation>Pen</translation>
+        <translation>ペン</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3327"/>
         <source>Opening recent file...</source>
-        <translation>最近開いたファイル...</translation>
+        <translation>最近使用したファイルを開いています...</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="483"/>
@@ -4080,12 +4086,12 @@ Please check its existence and permissions.</source>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3300"/>
         <source>Dockwidgets</source>
-        <translation>ドック ウィジット</translation>
+        <translation>ドックウィジェット</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3509"/>
         <source>Device Options</source>
-        <translation>デバイスの選択</translation>
+        <translation>デバイスオプション</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3512"/>
@@ -4095,22 +4101,22 @@ Please check its existence and permissions.</source>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="705"/>
         <source>&amp;Options</source>
-        <translation>オプション設定（&amp;O）</translation>
+        <translation>オプション(&amp;O)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="731"/>
         <source>Pl&amp;ugins</source>
-        <translation>プラグイン（&amp;u）</translation>
+        <translation>プラグイン(&amp;U)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="804"/>
         <source>Dime&amp;nsion</source>
-        <translation>寸法記入（&amp;n）</translation>
+        <translation>寸法(&amp;N)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="961"/>
         <source>Dock Wid&amp;gets</source>
-        <translation>ドックウィジェット(&amp;g)</translation>
+        <translation>ドックウィジェット(&amp;G)</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="362"/>
@@ -4125,17 +4131,17 @@ Please check its existence and permissions.</source>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3073"/>
         <source>Boost Version: %1.%2.%3</source>
-        <translation>起動中のバージョン: %1.%2.%3</translation>
+        <translation>Boost バージョン: %1.%2.%3</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3080"/>
         <source>Copy</source>
-        <translation>Copy</translation>
+        <translation>コピー</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3091"/>
         <source>Contributors</source>
-        <translation>協力者</translation>
+        <translation>貢献者</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3092"/>
@@ -4160,7 +4166,7 @@ Please check its existence and permissions.</source>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3638"/>
         <source>Menu Assigner</source>
-        <translation>メニュー配置</translation>
+        <translation>メニュー割り当て</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="755"/>
@@ -4170,17 +4176,17 @@ Please check its existence and permissions.</source>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="869"/>
         <source>&amp;Drawings</source>
-        <translation>製図(&amp;D)</translation>
+        <translation>図面(&amp;D)</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="516"/>
         <source>Saving drawing: %1</source>
-        <translation>図面保存: %1</translation>
+        <translation>図面を保存中: %1</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="521"/>
         <source>Save cancelled</source>
-        <translation>保存がキャンセルされました</translation>
+        <translation>保存をキャンセルしました</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="652"/>
@@ -4191,48 +4197,48 @@ Please check its existence and permissions.</source>
         <location filename="../src/main/qc_applicationwindow.cpp" line="660"/>
         <source>Save changes to the following item?
 %1</source>
-        <translation>次の項目への変更を保存しますか？
+        <translation>以下の項目に変更を保存しますか？
 %1</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="674"/>
         <source>&amp;Save</source>
-        <translation>&amp;保存</translation>
+        <translation>保存(&amp;S)</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="675"/>
         <source>Save &amp;as...</source>
-        <translation>名前を付けて保存...</translation>
+        <translation>名前を付けて保存(&amp;A)...</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="679"/>
         <source>&amp;Save %1</source>
-        <translation>%1 を &amp;保存</translation>
+        <translation>%1 を保存(&amp;S)</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="680"/>
         <source>Save %1 &amp;as...</source>
-        <translation>%1 を名前を付けて &amp;保存...</translation>
+        <translation>%1 を名前を付けて保存(&amp;A)...</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1176"/>
         <source>&amp;Window mode</source>
-        <translation>&amp;ウィンドウモード</translation>
+        <translation>ウィンドウモード(&amp;W)</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1182"/>
         <source>&amp;Layout</source>
-        <translation>&amp;レイアウト</translation>
+        <translation>レイアウト(&amp;L)</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1185"/>
         <source>Rounded</source>
-        <translation>丸み付き</translation>
+        <translation>角丸</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1189"/>
         <source>Triangular</source>
-        <translation>三角形</translation>
+        <translation>三角</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1195"/>
@@ -4247,32 +4253,32 @@ Please check its existence and permissions.</source>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1203"/>
         <source>East</source>
-        <translation>East</translation>
+        <translation>東</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1207"/>
         <source>West</source>
-        <translation>West</translation>
+        <translation>西</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1212"/>
         <source>&amp;Arrange</source>
-        <translation>&amp;配置</translation>
+        <translation>配置(&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1215"/>
         <source>&amp;Maximized</source>
-        <translation>&amp;最大化</translation>
+        <translation>最大化(&amp;M)</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2062"/>
         <source>Save All cancelled</source>
-        <translation>すべて保存がキャンセルされました</translation>
+        <translation>すべて保存をキャンセルしました</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2396"/>
         <source>Close All cancelled</source>
-        <translation>すべて閉じるがキャンセルされました</translation>
+        <translation>すべて閉じるをキャンセルしました</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3093"/>
@@ -4282,68 +4288,68 @@ Please check its existence and permissions.</source>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3450"/>
         <source>Cmd</source>
-        <translation>Cmd</translation>
+        <translation>コマンド</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3451"/>
         <source>Float</source>
-        <translation>フロート</translation>
+        <translation>フローティング</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3451"/>
         <source>Dock</source>
         <comment>Dock the command widget to the main window</comment>
-        <translation>Dock</translation>
+        <translation>ドッキング</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="883"/>
         <source>&amp;Wiki</source>
-        <translation>&amp;Wiki</translation>
+        <translation>Wiki(&amp;W)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="884"/>
         <source>User&apos;s &amp;Manual</source>
-        <translation>ユーザー &amp;マニュアル</translation>
+        <translation>ユーザーマニュアル(&amp;M)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="885"/>
         <source>&amp;Commands</source>
-        <translation>&amp;コマンド</translation>
+        <translation>コマンド(&amp;C)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="886"/>
         <source>&amp;Style Sheets</source>
-        <translation>&amp;スタイルシート</translation>
+        <translation>スタイルシート(&amp;S)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="887"/>
         <source>Wid&amp;gets</source>
-        <translation>ウィジェット</translation>
+        <translation>ウィジェット(&amp;G)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="888"/>
         <source>&amp;Forum</source>
-        <translation>&amp;フォーラム</translation>
+        <translation>フォーラム(&amp;F)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="889"/>
         <source>Zulip &amp;Chat</source>
-        <translation>Zulip &amp;チャット</translation>
+        <translation>Zulipチャット(&amp;C)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="890"/>
         <source>&amp;Release Information</source>
-        <translation>&amp;リリース情報</translation>
+        <translation>リリース情報(&amp;R)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="916"/>
         <source>On&amp;line</source>
-        <translation>オンライン</translation>
+        <translation>オンライン(&amp;L)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="938"/>
         <source>&amp;Donate</source>
-        <translation>&amp;寄付</translation>
+        <translation>寄付(&amp;D)</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2426"/>
@@ -4372,12 +4378,12 @@ Please check its existence and permissions.</source>
     <message>
         <location filename="../src/ui/qg_actionhandler.cpp" line="1262"/>
         <source>Spacebar: restored snapping mode to normal</source>
-        <translation>スペースキー：スナップモードを通常に戻しました</translation>
+        <translation>スペースキー: スナップモードを通常に戻しました</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_actionhandler.cpp" line="1263"/>
         <source>Spacebar: temporarily set snapping mode to free snapping</source>
-        <translation>スペースキー：スナップモードを一時的にフリースナップに設定しました</translation>
+        <translation>スペースキー: スナップモードを一時的にフリースナップに設定</translation>
     </message>
 </context>
 <context>
@@ -4408,7 +4414,7 @@ p, li { white-space: pre-wrap; }
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;現在、編集しているレイヤー名&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;現在のアクティブレイヤーの名前&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -4429,13 +4435,13 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/forms/qg_blockdialog.cpp" line="78"/>
         <source>Renaming Block</source>
         <translatorcomment>AutoCADにあわせて「ブロック」と訳すことにした</translatorcomment>
-        <translation>ブロック名変更</translation>
+        <translation>ブロック名称変更</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_blockdialog.cpp" line="79"/>
         <source>Could not name block. A block named &quot;%1&quot; already exists.</source>
         <translatorcomment>AutoCADにあわせて「ブロック」と訳すことにした</translatorcomment>
-        <translation>指定したブロック名はつけられません。ブロック名 &quot;%1&quot; は、すでに存在しています。</translation>
+        <translation>ブロックに名前を付けられませんでした。&quot;%1&quot; という名前のブロックが既に存在します。</translation>
     </message>
 </context>
 <context>
@@ -4444,39 +4450,39 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/qg_blockwidget.cpp" line="201"/>
         <source>Rename the active block</source>
         <translatorcomment>AutoCADにあわせて「ブロック」と訳すことにした</translatorcomment>
-        <translation>選択ブロック名変更</translation>
+        <translation>アクティブなブロックの名前を変更</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_blockwidget.cpp" line="208"/>
         <source>Edit the active block
 in a separate window</source>
         <translatorcomment>AutoCADにあわせて「ブロック」と訳すことにした</translatorcomment>
-        <translation>切り離されたウインドウの
-アクティブ・ブロックを編集</translation>
+        <translation>アクティブなブロックを
+別ウィンドウで編集</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_blockwidget.cpp" line="223"/>
         <source>Insert the active block</source>
         <translatorcomment>AutoCADにあわせて「ブロック」と訳すことにした</translatorcomment>
-        <translation>選択ブロック挿入</translation>
+        <translation>アクティブなブロックを挿入</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_blockwidget.cpp" line="387"/>
         <source>Block Menu</source>
         <translatorcomment>AutoCADにあわせて「ブロック」と訳すことにした</translatorcomment>
-        <translation>ブロック メニュー</translation>
+        <translation>ブロックメニュー</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_blockwidget.cpp" line="394"/>
         <source>&amp;Defreeze all Blocks</source>
         <translatorcomment>AutoCADにあわせて「ブロック」と訳すことにした</translatorcomment>
-        <translation>全ブロック固定解除(&amp;D)</translation>
+        <translation>全ブロックの凍結を解除(&amp;D)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_blockwidget.cpp" line="396"/>
         <source>&amp;Freeze all Blocks</source>
         <translatorcomment>AutoCADにあわせて「ブロック」と訳すことにした</translatorcomment>
-        <translation>全ブロック固定(&amp;F)</translation>
+        <translation>全ブロックを凍結(&amp;F)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_blockwidget.cpp" line="407"/>
@@ -4500,7 +4506,7 @@ in a separate window</source>
         <location filename="../src/ui/qg_blockwidget.cpp" line="401"/>
         <source>&amp;Toggle Visibility</source>
         <translatorcomment>AutoCADにあわせて「ブロック」と訳すことにした</translatorcomment>
-        <translation>ブロック表示/非表示(&amp;T)</translation>
+        <translation>表示切替(&amp;T)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_blockwidget.cpp" line="166"/>
@@ -4518,7 +4524,7 @@ in a separate window</source>
         <location filename="../src/ui/qg_blockwidget.cpp" line="409"/>
         <source>&amp;Rename Block</source>
         <translatorcomment>AutoCADにあわせて「ブロック」と訳すことにした</translatorcomment>
-        <translation>ブロック名変更(&amp;R)</translation>
+        <translation>ブロック名称変更(&amp;R)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_blockwidget.cpp" line="413"/>
@@ -4553,7 +4559,7 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/qg_blockwidget.cpp" line="194"/>
         <source>Remove block</source>
-        <translation>ブロックを削除</translation>
+        <translation>ブロック削除</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_blockwidget.cpp" line="230"/>
@@ -4563,7 +4569,7 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/qg_blockwidget.cpp" line="232"/>
         <source>Looking for matching block names</source>
-        <translation>一致するブロック名を検索しています</translation>
+        <translation>一致するブロック名を検索中</translation>
     </message>
 </context>
 <context>
@@ -4572,18 +4578,18 @@ in a separate window</source>
         <location filename="../src/ui/qg_colorbox.cpp" line="106"/>
         <location filename="../src/ui/qg_colorbox.cpp" line="282"/>
         <source>By Layer</source>
-        <translation>レイヤー設定で</translation>
+        <translation>レイヤー別</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="107"/>
         <source>By Block</source>
         <translatorcomment>AutoCADにあわせて「ブロック」と訳すことにした</translatorcomment>
-        <translation>ブロック設定で</translation>
+        <translation>ブロック別</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="115"/>
         <source>Red</source>
-        <translation>Red</translation>
+        <translation>赤</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="120"/>
@@ -4598,17 +4604,17 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="124"/>
         <source>Cyan</source>
-        <translation>Cyan</translation>
+        <translation>シアン</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="126"/>
         <source>Blue</source>
-        <translation>Blue</translation>
+        <translation>青</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="128"/>
         <source>Magenta</source>
-        <translation>マゼンダ（紅紫色）</translation>
+        <translation>マゼンタ</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="133"/>
@@ -4618,52 +4624,52 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="137"/>
         <source>Gray</source>
-        <translation>Gray</translation>
+        <translation>灰色</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="139"/>
         <source>Light Gray</source>
-        <translation>明るい灰色</translation>
+        <translation>明灰色</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="103"/>
         <source>Unchanged</source>
-        <translation>未変更</translation>
+        <translation>変更なし</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="119"/>
         <source>Dark Red</source>
-        <translation>暗い赤</translation>
+        <translation>濃赤</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="121"/>
         <source>Dark Yellow</source>
-        <translation>暗い黄</translation>
+        <translation>濃黄</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="123"/>
         <source>Dark Green</source>
-        <translation>暗い緑</translation>
+        <translation>濃緑</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="125"/>
         <source>Dark Cyan</source>
-        <translation>暗いシアン</translation>
+        <translation>濃シアン</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="127"/>
         <source>Dark Blue</source>
-        <translation>暗い青</translation>
+        <translation>濃青</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="129"/>
         <source>Dark Magenta</source>
-        <translation>暗いマゼンダ</translation>
+        <translation>濃マゼンタ</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="138"/>
         <source>Dark Gray</source>
-        <translation>暗い灰色</translation>
+        <translation>濃灰色</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="111"/>
@@ -4675,12 +4681,12 @@ in a separate window</source>
         <location filename="../src/ui/qg_colorbox.cpp" line="159"/>
         <location filename="../src/ui/qg_colorbox.cpp" line="171"/>
         <source>/ColorBox</source>
-        <translation>/ColorBox</translation>
+        <translation>/カラーボックス</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="165"/>
         <source>Custom Picked</source>
-        <translation>カスタム選択</translation>
+        <translation>カスタム選択色</translation>
     </message>
 </context>
 <context>
@@ -4725,12 +4731,12 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="210"/>
         <source>Unknown command: %1</source>
-        <translation>未知のコマンド: %1</translation>
+        <translation>不明なコマンド: %1</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.ui" line="44"/>
         <source>Command history and output</source>
-        <translation>コマンドの履歴を出力</translation>
+        <translation>コマンド履歴と出力</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="254"/>
@@ -4747,12 +4753,12 @@ in a separate window</source>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="94"/>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="343"/>
         <source>Dock</source>
-        <translation>Dock</translation>
+        <translation>ドッキング</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="343"/>
         <source>Float</source>
-        <translation>フロート</translation>
+        <translation>フローティング</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="344"/>
@@ -4762,7 +4768,7 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="344"/>
         <source>Cmd</source>
-        <translation>Cmd</translation>
+        <translation>コマンド</translation>
     </message>
 </context>
 <context>
@@ -4791,7 +4797,7 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="20"/>
         <source>Dimension Label Editor</source>
-        <translation>寸法ラベル編集</translation>
+        <translation>寸法ラベルエディタ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="32"/>
@@ -4811,7 +4817,7 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="155"/>
         <source>° (Degree)</source>
-        <translation>° (角度)</translation>
+        <translation>° (度)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="160"/>
@@ -4841,7 +4847,7 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="93"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Format of the dimension text, &amp;lt;&amp;gt; can be used as a placeholder for the dimension measurement value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>寸法テキストの書式設定。`&lt; &gt;` は寸法測定値のプレースホルダーとして使用できます。</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;寸法テキストの書式設定。`&amp;lt;&amp;gt;` は寸法測定値のプレースホルダーとして使用できます&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.cpp" line="75"/>
@@ -4862,7 +4868,7 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgarc.ui" line="26"/>
         <source>Arc</source>
-        <translation>Arc</translation>
+        <translation>円弧</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgarc.ui" line="51"/>
@@ -4872,7 +4878,7 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgarc.ui" line="78"/>
         <source>Geometry</source>
-        <translation>図形</translation>
+        <translation>幾何</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgarc.ui" line="84"/>
@@ -4882,12 +4888,12 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgarc.ui" line="104"/>
         <source>Center (y):</source>
-        <translation>中心点(y):</translation>
+        <translation>中心 (y):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgarc.ui" line="124"/>
         <source>Center (x):</source>
-        <translation>中心点(x):</translation>
+        <translation>中心 (x):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgarc.ui" line="144"/>
@@ -4910,7 +4916,7 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgattributes.ui" line="26"/>
         <source>Attributes</source>
-        <translation>線種</translation>
+        <translation>属性</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgattributes.ui" line="44"/>
@@ -4921,12 +4927,13 @@ in a separate window</source>
         <location filename="../src/ui/forms/qg_dlgattributes.ui" line="69"/>
         <source>Apply attributes also to all sub-entities of selected INSERT.
 This recursively modifies all entities of the Block itself.</source>
-        <translation>選択した挿入（INSERT）のすべてのサブエンティティにも属性を適用します。これにより、ブロック自体のすべてのエンティティが再帰的に変更されます。</translation>
+        <translation>選択したINSERTのすべてのサブエンティティにも属性を適用します。
+これにより、ブロック自体のすべてのエンティティが再帰的に変更されます。</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgattributes.ui" line="73"/>
         <source>Apply attributes Block-deep</source>
-        <translation>ブロック全体に属性を適用</translation>
+        <translation>ブロック内まで属性を適用</translation>
     </message>
 </context>
 <context>
@@ -4944,7 +4951,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgcircle.ui" line="71"/>
         <source>Geometry</source>
-        <translation>図形</translation>
+        <translation>幾何</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgcircle.ui" line="77"/>
@@ -4954,12 +4961,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgcircle.ui" line="97"/>
         <source>Center (y):</source>
-        <translation>中心点(y):</translation>
+        <translation>中心 (y):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgcircle.ui" line="117"/>
         <source>Center (x):</source>
-        <translation>中心点(x):</translation>
+        <translation>中心 (x):</translation>
     </message>
 </context>
 <context>
@@ -4967,7 +4974,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgdimlinear.ui" line="20"/>
         <source>Linear Dimension</source>
-        <translation>線分寸法</translation>
+        <translation>線形寸法</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgdimlinear.ui" line="47"/>
@@ -4977,7 +4984,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgdimlinear.ui" line="79"/>
         <source>Geometry</source>
-        <translation>図形</translation>
+        <translation>幾何</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgdimlinear.ui" line="103"/>
@@ -5013,17 +5020,17 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgellipse.ui" line="78"/>
         <source>Geometry</source>
-        <translation>図形</translation>
+        <translation>幾何</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgellipse.ui" line="84"/>
         <source>Center (y):</source>
-        <translation>中心点(y):</translation>
+        <translation>中心 (y):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgellipse.ui" line="104"/>
         <source>Center (x):</source>
-        <translation>中心点(x):</translation>
+        <translation>中心 (x):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgellipse.ui" line="156"/>
@@ -5043,12 +5050,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgellipse.ui" line="226"/>
         <source>Minor:</source>
-        <translation>従:</translation>
+        <translation>短半径:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgellipse.ui" line="236"/>
         <source>Major:</source>
-        <translation>主:</translation>
+        <translation>長半径:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgellipse.ui" line="256"/>
@@ -5061,7 +5068,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/forms/qg_dlghatch.ui" line="14"/>
         <source>Choose Hatch Attributes</source>
-        <translation>ハッチ属性選択</translation>
+        <translation>ハッチング属性の選択</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlghatch.ui" line="22"/>
@@ -5081,7 +5088,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/forms/qg_dlghatch.ui" line="57"/>
         <source>Solid Fill</source>
-        <translation>塗潰し</translation>
+        <translation>塗り潰し</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlghatch.ui" line="67"/>
@@ -5091,12 +5098,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/forms/qg_dlghatch.ui" line="73"/>
         <source>Enable Preview</source>
-        <translation>プレビュー有効</translation>
+        <translation>プレビューを有効化</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlghatch.ui" line="86"/>
         <source>Area</source>
-        <translation>Area</translation>
+        <translation>面積</translation>
     </message>
 </context>
 <context>
@@ -5114,7 +5121,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgimage.ui" line="80"/>
         <source>Geometry</source>
-        <translation>図形</translation>
+        <translation>幾何</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgimage.ui" line="253"/>
@@ -5129,7 +5136,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgimage.ui" line="203"/>
         <source>insert (x):</source>
-        <translation>挿入 (x):</translation>
+        <translation>挿入位置 (x):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgimage.ui" line="226"/>
@@ -5149,7 +5156,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgimage.ui" line="110"/>
         <source>insert (y):</source>
-        <translation>挿入 (y):</translation>
+        <translation>挿入位置 (y):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgimage.ui" line="86"/>
@@ -5177,7 +5184,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/forms/qg_dlginitial.ui" line="104"/>
         <source>Default Unit:</source>
-        <translation>既定単位:</translation>
+        <translation>デフォルト単位:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlginitial.ui" line="114"/>
@@ -5187,7 +5194,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/forms/qg_dlginitial.ui" line="124"/>
         <source>Command Language:</source>
-        <translation>コマンド 言語:</translation>
+        <translation>コマンド言語:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlginitial.ui" line="64"/>
@@ -5196,11 +5203,11 @@ This recursively modifies all entities of the Block itself.</source>
 &lt;br&gt;
 Please choose the unit you want to use for new drawings and your preferred language.&lt;br&gt;
 (You can changes these settings later.)</source>
-        <translation>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;LibreCAD にようこそ&lt;/b&gt;
+        <translation>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;LibreCAD へようこそ&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
-あなたが作図で使用したいユニットと言語を設定してください&lt;br&gt;
-(ここでの設定は後で変更できます。)</translation>
+新しい図面で使用する単位と、希望する言語を選択してください。&lt;br&gt;
+(これらの設定は後から変更できます。)</translation>
     </message>
 </context>
 <context>
@@ -5218,17 +5225,17 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlginsert.ui" line="71"/>
         <source>Geometry</source>
-        <translation>図形</translation>
+        <translation>幾何</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlginsert.ui" line="129"/>
         <source>Insertion point (x):</source>
-        <translation>挿入点(x):</translation>
+        <translation>挿入点 (x):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlginsert.ui" line="139"/>
         <source>Insertion point (y):</source>
-        <translation>挿入点(y):</translation>
+        <translation>挿入点 (y):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlginsert.ui" line="189"/>
@@ -5248,7 +5255,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlginsert.ui" line="249"/>
         <source>Row Spacing:</source>
-        <translation>行間:</translation>
+        <translation>行間隔:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlginsert.ui" line="279"/>
@@ -5258,12 +5265,12 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlginsert.ui" line="159"/>
         <source>Scale X:</source>
-        <translation>縮尺 X:</translation>
+        <translation>X 倍率:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlginsert.ui" line="179"/>
         <source>Scale Y:</source>
-        <translation>縮尺 Y:</translation>
+        <translation>Y 倍率:</translation>
     </message>
 </context>
 <context>
@@ -5271,7 +5278,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgline.ui" line="29"/>
         <source>Line</source>
-        <translation>Line</translation>
+        <translation>線</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgline.ui" line="54"/>
@@ -5281,32 +5288,32 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgline.ui" line="87"/>
         <source>Geometry</source>
-        <translation>図形</translation>
+        <translation>幾何</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgline.ui" line="93"/>
         <source>End point (x):</source>
-        <translation>終点(x):</translation>
+        <translation>終点 (x):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgline.ui" line="123"/>
         <source>End point (y):</source>
-        <translation>終点(y):</translation>
+        <translation>終点 (y):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgline.ui" line="133"/>
         <source>Start point (y):</source>
-        <translation>始点(y):</translation>
+        <translation>始点 (y):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgline.ui" line="153"/>
         <source>Start point (x):</source>
-        <translation>始点(x):</translation>
+        <translation>始点 (x):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgline.ui" line="35"/>
         <source>ID: </source>
-        <translation>ID:</translation>
+        <translation>ID: </translation>
     </message>
 </context>
 <context>
@@ -5314,7 +5321,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="14"/>
         <source>MText</source>
-        <translation>マルチテキスト</translation>
+        <translation>複数行テキスト</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="45"/>
@@ -5329,7 +5336,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="132"/>
         <source>&amp;Default line spacing</source>
-        <translation>標準の行間(&amp;D)</translation>
+        <translation>デフォルトの行間隔(&amp;D)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="135"/>
@@ -5354,17 +5361,17 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="380"/>
         <source>Middle Left</source>
-        <translation>左中間</translation>
+        <translation>左中央</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="412"/>
         <source>Middle Center</source>
-        <translation>中央中間</translation>
+        <translation>中央</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="444"/>
         <source>Middle Right</source>
-        <translation>右中間</translation>
+        <translation>右中央</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="476"/>
@@ -5379,12 +5386,12 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="540"/>
         <source>Bottom Center</source>
-        <translation>中央下</translation>
+        <translation>下中央</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="572"/>
         <source>Top Center</source>
-        <translation>中央上</translation>
+        <translation>上中央</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="607"/>
@@ -5399,27 +5406,27 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="717"/>
         <source>Clear Text</source>
-        <translation>テキスト削除</translation>
+        <translation>テキストをクリア</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="731"/>
         <source>Load Text From File</source>
-        <translation>ファイルからテキストを読み込む</translation>
+        <translation>ファイルからテキストを読み込み</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="745"/>
         <source>Save Text To File</source>
-        <translation>ファイルにテキストを保存</translation>
+        <translation>テキストをファイルに保存</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="759"/>
         <source>Cut</source>
-        <translation>Cut</translation>
+        <translation>切り取り</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="773"/>
         <source>Copy</source>
-        <translation>Copy</translation>
+        <translation>コピー</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="787"/>
@@ -5429,12 +5436,12 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="834"/>
         <source>Insert Symbol</source>
-        <translation>シンボル挿入</translation>
+        <translation>記号を挿入</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="852"/>
         <source>Degree (°)</source>
-        <translation>角度 (°)</translation>
+        <translation>度 (°)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="857"/>
@@ -5449,7 +5456,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="867"/>
         <source>Hash (#)</source>
-        <translation>記号番号 (#)</translation>
+        <translation>ハッシュ (#)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="872"/>
@@ -5459,12 +5466,12 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="877"/>
         <source>Copyright (©)</source>
-        <translation>商標 (©)</translation>
+        <translation>コピーライト (©)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="882"/>
         <source>Registered (®)</source>
-        <translation>登録 (®)</translation>
+        <translation>登録商標 (®)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="887"/>
@@ -5484,7 +5491,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="902"/>
         <source>Yen (¥)</source>
-        <translation>日本円 (¥)</translation>
+        <translation>円 (¥)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="907"/>
@@ -5499,7 +5506,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="923"/>
         <source>Insert Unicode</source>
-        <translation>Unicode 挿入</translation>
+        <translation>Unicodeを挿入</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="929"/>
@@ -5514,7 +5521,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="962"/>
         <source>[0000-007F] Basic Latin</source>
-        <translation>[0000-007F] 基本ラテン文字（ASCII互換）</translation>
+        <translation>[0000-007F] 基本ラテン文字</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="967"/>
@@ -5524,17 +5531,17 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="972"/>
         <source>[0100-017F] Latin Extended-A</source>
-        <translation>[0100-017F] ラテン文字拡張A</translation>
+        <translation>[0100-017F] ラテン拡張-A</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="977"/>
         <source>[0180-024F] Latin Extended-B</source>
-        <translation>[0180-024F] ラテン文字拡張B</translation>
+        <translation>[0180-024F] ラテン拡張-B</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="982"/>
         <source>[0250-02AF] IPA Extensions</source>
-        <translation>[0250-02AF] IPA拡張（国際音声記号）</translation>
+        <translation>[0250-02AF] IPA拡張</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="987"/>
@@ -5544,22 +5551,22 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="992"/>
         <source>[0300-036F] Combining Diacritical Marks</source>
-        <translation>[0300-036F] ダイアクリティカルマーク（合成可能）</translation>
+        <translation>[0300-036F] 結合用発音区別符号</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="997"/>
         <source>[0370-03FF] Greek and Coptic</source>
-        <translation>[0370-03FF] ギリシア文字及びコプト文字</translation>
+        <translation>[0370-03FF] ギリシャ文字・コプト文字</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1002"/>
         <source>[0400-04FF] Cyrillic</source>
-        <translation>[0400-04FF] キリール文字（キリル文字）</translation>
+        <translation>[0400-04FF] キリル文字</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1007"/>
         <source>[0500-052F] Cyrillic Supplementary</source>
-        <translation>[0500-052F] キリール文字補助</translation>
+        <translation>[0500-052F] キリル文字補助</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1012"/>
@@ -5584,7 +5591,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1032"/>
         <source>[0780-07BF] Thaana</source>
-        <translation>[0780-07BF] アラビア文字補助</translation>
+        <translation>[0780-07BF] ターナ文字</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1037"/>
@@ -5604,7 +5611,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1052"/>
         <source>[0A80-0AFF] Gujarati</source>
-        <translation>[0A80-0AFF] グジャラート文字（グジャラーティー文字）</translation>
+        <translation>[0A80-0AFF] グジャラート文字</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1057"/>
@@ -5644,7 +5651,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1092"/>
         <source>[0E80-0EFF] Lao</source>
-        <translation>[0E80-0EFF] ラオス文字（ラーオ文字）</translation>
+        <translation>[0E80-0EFF] ラオ文字</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1097"/>
@@ -5654,7 +5661,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1102"/>
         <source>[1000-109F] Myanmar</source>
-        <translation>[1000-109F] ミャンマー文字（ビルマ文字）</translation>
+        <translation>[1000-109F] ミャンマー文字</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1107"/>
@@ -5669,7 +5676,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1117"/>
         <source>[1200-137F] Ethiopic</source>
-        <translation>[1200-137F] エチオピア文字（ゲエズ文字）</translation>
+        <translation>[1200-137F] エチオピア文字</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1122"/>
@@ -5679,7 +5686,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1127"/>
         <source>[1400-167F] Unified Canadian Aboriginal Syllabic</source>
-        <translation>[1400-167F] 統合カナダ先住民音節（カナダ先住民文字）</translation>
+        <translation>[1400-167F] カナダ先住民音節文字</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1132"/>
@@ -5694,7 +5701,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1142"/>
         <source>[1700-171F] Tagalog</source>
-        <translation>[1700-171F] タガログ文字（バイバイン）</translation>
+        <translation>[1700-171F] タガログ文字</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1147"/>
@@ -5709,7 +5716,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1157"/>
         <source>[1760-177F] Tagbanwa</source>
-        <translation>[1760-177F] タグバヌア文字（タグバヌワ文字）</translation>
+        <translation>[1760-177F] タグバヌア文字</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1162"/>
@@ -5724,12 +5731,12 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1172"/>
         <source>[1E00-1EFF] Latin Extended Additional</source>
-        <translation>[1E00-1EFF] ラテン文字拡張追加</translation>
+        <translation>[1E00-1EFF] ラテン拡張追加</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1177"/>
         <source>[1F00-1FFF] Greek Extended</source>
-        <translation>[1F00-1FFF] ギリシア文字拡張</translation>
+        <translation>[1F00-1FFF] ギリシャ文字拡張</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1182"/>
@@ -5739,7 +5746,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1187"/>
         <source>[2070-209F] Superscripts and Subscripts</source>
-        <translation>[2070-209F] 上付き・下付き</translation>
+        <translation>[2070-209F] 上付き文字・下付き文字</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1192"/>
@@ -5749,17 +5756,17 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1197"/>
         <source>[20D0-20FF] Combining Marks for Symbols</source>
-        <translation>[20D0-20FF] 記号用ダイアクリティカルマーク（合成可能）</translation>
+        <translation>[20D0-20FF] 記号用結合文字</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1202"/>
         <source>[2100-214F] Letterlike Symbols</source>
-        <translation>[2100-214F]  文字様記号</translation>
+        <translation>[2100-214F] 文字類似記号</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1207"/>
         <source>[2150-218F] Number Forms</source>
-        <translation>[2150-218F] 数字に準じるもの</translation>
+        <translation>[2150-218F] 数字の字形</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1212"/>
@@ -5784,7 +5791,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1232"/>
         <source>[2440-245F] Optical Character Recognition</source>
-        <translation>[2440-245F] 光学的文字認識、OCR</translation>
+        <translation>[2440-245F] OCR用記号</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1237"/>
@@ -5799,7 +5806,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1247"/>
         <source>[2580-259F] Block Elements</source>
-        <translation>[2580-259F] ブロック要素</translation>
+        <translation>[2580-259F] ブロック素片</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1252"/>
@@ -5819,27 +5826,27 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1267"/>
         <source>[27C0-27EF] Miscellaneous Mathematical Symbols-A</source>
-        <translation>[27C0-27EF] その他の数学記号A</translation>
+        <translation>[27C0-27EF] その他の数学記号-A</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1272"/>
         <source>[27F0-27FF] Supplemental Arrows-A</source>
-        <translation>[27F0-27FF] 補助矢印A</translation>
+        <translation>[27F0-27FF] 補助矢印-A</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1277"/>
         <source>[2800-28FF] Braille Patterns</source>
-        <translation>[2800-28FF] 点字図形</translation>
+        <translation>[2800-28FF] 点字パターン</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1282"/>
         <source>[2900-297F] Supplemental Arrows-B</source>
-        <translation>[2900-297F] 補助矢印B</translation>
+        <translation>[2900-297F] 補助矢印-B</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1287"/>
         <source>[2980-29FF] Miscellaneous Mathematical Symbols-B</source>
-        <translation>[2980-29FF] その他の数学記号B</translation>
+        <translation>[2980-29FF] その他の数学記号-B</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1292"/>
@@ -5854,17 +5861,17 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1302"/>
         <source>[2F00-2FDF] Kangxi Radicals</source>
-        <translation>[2F00-2FDF] 康熙部首</translation>
+        <translation>[2F00-2FDF] 康煕部首</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1307"/>
         <source>[2FF0-2FFF] Ideographic Description Characters</source>
-        <translation>[2FF0-2FFF] 漢字構成記述文字、IDC</translation>
+        <translation>[2FF0-2FFF] 表意文字記述文字</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1312"/>
         <source>[3000-303F] CJK Symbols and Punctuation</source>
-        <translation>[3000-303F] CJKの記号及び句読点</translation>
+        <translation>[3000-303F] CJK記号・句読点</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1317"/>
@@ -5879,17 +5886,17 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1327"/>
         <source>[3100-312F] Bopomofo</source>
-        <translation>[3100-312F] 注音字母（注音符号）</translation>
+        <translation>[3100-312F] 注音字母</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1332"/>
         <source>[3130-318F] Hangul Compatibility Jamo</source>
-        <translation>[3130-318F] ハングル互換字母</translation>
+        <translation>[3130-318F] ハングル字母互換用</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1337"/>
         <source>[3190-319F] Kanbun</source>
-        <translation>[3190-319F] 漢文用記号（返り点）</translation>
+        <translation>[3190-319F] 漢文用記号</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1342"/>
@@ -5919,7 +5926,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1367"/>
         <source>[A000-A48F] Yi Syllables</source>
-        <translation>[A000-A48F] イ文字（ロロ文字）</translation>
+        <translation>[A000-A48F] イ文字</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1372"/>
@@ -5929,62 +5936,62 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1377"/>
         <source>[AC00-D7AF] Hangul Syllables</source>
-        <translation>[AC00-D7AF] ハングル音節文字</translation>
+        <translation>[AC00-D7AF] ハングル音節</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1382"/>
         <source>[D800-DBFF] High Surrogates</source>
-        <translation>[D800-DBFF] 上位代用符号位置</translation>
+        <translation>[D800-DBFF] 高サロゲート</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1387"/>
         <source>[DC00-DFFF] Low Surrogate Area</source>
-        <translation>[DC00-DFFF] 下位代用符号位置</translation>
+        <translation>[DC00-DFFF] 低サロゲート領域</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1392"/>
         <source>[E000-F8FF] Private Use Area</source>
-        <translation>[E000-F8FF] 私用領域（外字領域）</translation>
+        <translation>[E000-F8FF] 私用領域</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1397"/>
         <source>[F900-FAFF] CJK Compatibility Ideographs</source>
-        <translation>[F900-FAFF] CJK互換漢字</translation>
+        <translation>[F900-FAFF] CJK互換用漢字</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1402"/>
         <source>[FB00-FB4F] Alphabetic Presentation Forms</source>
-        <translation>[FB00-FB4F] アルファベット表示形</translation>
+        <translation>[FB00-FB4F] 字母表示用字形</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1407"/>
         <source>[FB50-FDFF] Arabic Presentation Forms-A</source>
-        <translation>[FB50-FDFF] アラビア表示形A</translation>
+        <translation>[FB50-FDFF] アラビア表示用字形-A</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1412"/>
         <source>[FE00-FE0F] Variation Selectors</source>
-        <translation>[FE00-FE0F] 字形選択子（異体字セレクタ）</translation>
+        <translation>[FE00-FE0F] 異体字セレクタ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1417"/>
         <source>[FE20-FE2F] Combining Half Marks</source>
-        <translation>[FE20-FE2F] 半記号（合成可能）</translation>
+        <translation>[FE20-FE2F] 結合用半記号</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1422"/>
         <source>[FE30-FE4F] CJK Compatibility Forms</source>
-        <translation>[FE30-FE4F] CJK互換形</translation>
+        <translation>[FE30-FE4F] CJK互換用字形</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1427"/>
         <source>[FE50-FE6F] Small Form Variants</source>
-        <translation>[FE50-FE6F] 小字形</translation>
+        <translation>[FE50-FE6F] 小型字形変種</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1432"/>
         <source>[FE70-FEFF] Arabic Presentation Forms-B</source>
-        <translation>[FE70-FEFF] アラビア表示形B</translation>
+        <translation>[FE70-FEFF] アラビア表示用字形-B</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1437"/>
@@ -5994,12 +6001,12 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1442"/>
         <source>[FFF0-FFFF] Specials</source>
-        <translation>[FFF0-FFFF] 特殊用途文字</translation>
+        <translation>[FFF0-FFFF] 特殊用途</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1447"/>
         <source>[10300-1032F] Old Italic</source>
-        <translation>[10300-1032F] 古代イタリア文字（古イタリア文字）</translation>
+        <translation>[10300-1032F] 古イタリア文字</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1452"/>
@@ -6009,7 +6016,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1457"/>
         <source>[10400-1044F] Deseret</source>
-        <translation>[10400-1044F] デザレット文字</translation>
+        <translation>[10400-1044F] デセレット文字</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1462"/>
@@ -6034,7 +6041,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1482"/>
         <source>[2F800-2FA1F] CJK Compatibility Ideographs Supplement</source>
-        <translation>[2F800-2FA1F] CJK互換漢字補助</translation>
+        <translation>[2F800-2FA1F] CJK互換用漢字補助</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1487"/>
@@ -6044,12 +6051,12 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1492"/>
         <source>[F0000-FFFFD] Supplementary Private Use Area-A</source>
-        <translation>[F0000-FFFFD] 補助私用領域A</translation>
+        <translation>[F0000-FFFFD] 補助私用領域-A</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1497"/>
         <source>[100000-10FFFD] Supplementary Private Use Area-B</source>
-        <translation>[100000-10FFFD] 補助私用領域B</translation>
+        <translation>[100000-10FFFD] 補助私用領域-B</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="847"/>
@@ -6059,7 +6066,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="113"/>
         <source>&amp;Line spacing:</source>
-        <translation>行間(&amp;L):</translation>
+        <translation>行間隔(&amp;L):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="104"/>
@@ -6074,7 +6081,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="645"/>
         <source>Text Direction</source>
-        <translation>テキストの方向</translation>
+        <translation>テキスト方向</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="657"/>
@@ -6092,32 +6099,32 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgmirror.ui" line="26"/>
         <source>Mirroring Options</source>
-        <translation>鏡面オプション</translation>
+        <translation>ミラーオプション</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmirror.ui" line="70"/>
         <source>Number of copies</source>
-        <translation>複写回数</translation>
+        <translation>コピー数</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmirror.ui" line="88"/>
         <source>&amp;Delete Original</source>
-        <translation>原本削除(&amp;D)</translation>
+        <translation>元を削除(&amp;D)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmirror.ui" line="107"/>
         <source>&amp;Keep Original</source>
-        <translation>原本保持(&amp;K)</translation>
+        <translation>元を保持(&amp;K)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmirror.ui" line="39"/>
         <source>Use current &amp;attributes</source>
-        <translation>現在属性を使用(&amp;a)</translation>
+        <translation>現在の属性を使用(&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmirror.ui" line="46"/>
         <source>Use current &amp;layer</source>
-        <translation>現在のレイヤーを使用(&amp;l)</translation>
+        <translation>現在のレイヤーを使用(&amp;L)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmirror.ui" line="53"/>
@@ -6130,32 +6137,32 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgmove.ui" line="32"/>
         <source>Number of copies</source>
-        <translation>複写回数</translation>
+        <translation>コピー数</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmove.ui" line="50"/>
         <source>&amp;Delete Original</source>
-        <translation>原本削除(&amp;D)</translation>
+        <translation>元を削除(&amp;D)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmove.ui" line="69"/>
         <source>&amp;Keep Original</source>
-        <translation>原本保持(&amp;K)</translation>
+        <translation>元を保持(&amp;K)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmove.ui" line="88"/>
         <source>&amp;Multiple Copies</source>
-        <translation>複数複写(&amp;M)</translation>
+        <translation>複数コピー(&amp;M)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmove.ui" line="121"/>
         <source>Use current &amp;attributes</source>
-        <translation>現在属性使用(&amp;a)</translation>
+        <translation>現在の属性を使用(&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmove.ui" line="128"/>
         <source>Use current &amp;layer</source>
-        <translation>現在のレイヤーを使用(&amp;l)</translation>
+        <translation>現在のレイヤーを使用(&amp;L)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmove.ui" line="135"/>
@@ -6165,12 +6172,12 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgmove.ui" line="26"/>
         <source>Move/Copy Options</source>
-        <translation>移動/コピー オプション</translation>
+        <translation>移動/コピーオプション</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmove.ui" line="95"/>
         <source>Number of copies. Maximum 100</source>
-        <translation>コピー数（最大100）</translation>
+        <translation>コピー数 (最大100)</translation>
     </message>
 </context>
 <context>
@@ -6178,42 +6185,42 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgmoverotate.ui" line="26"/>
         <source>Move/Rotate Options</source>
-        <translation>移動回転オプション</translation>
+        <translation>移動/回転オプション</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmoverotate.ui" line="113"/>
         <source>Number of copies</source>
-        <translation>複写回数</translation>
+        <translation>コピー数</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmoverotate.ui" line="63"/>
         <source>&amp;Angle (a):</source>
-        <translation>角度&amp;A(a):</translation>
+        <translation>角度(&amp;A) (a):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmoverotate.ui" line="97"/>
         <source>Use current &amp;attributes</source>
-        <translation>現在属性使用(&amp;a)</translation>
+        <translation>現在の属性を使用(&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmoverotate.ui" line="104"/>
         <source>Use current &amp;layer</source>
-        <translation>現在のレイヤーを使用(&amp;l)</translation>
+        <translation>現在のレイヤーを使用(&amp;L)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmoverotate.ui" line="131"/>
         <source>&amp;Delete Original</source>
-        <translation>原本削除(&amp;D)</translation>
+        <translation>元を削除(&amp;D)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmoverotate.ui" line="150"/>
         <source>&amp;Keep Original</source>
-        <translation>原本保持(&amp;K)</translation>
+        <translation>元を保持(&amp;K)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmoverotate.ui" line="169"/>
         <source>&amp;Multiple Copies</source>
-        <translation>複数複写(&amp;M)</translation>
+        <translation>複数コピー(&amp;M)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmoverotate.ui" line="41"/>
@@ -6231,7 +6238,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="332"/>
         <source>Main Unit</source>
-        <translation>図面で用いる単位（既定値）</translation>
+        <translation>主単位</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="377"/>
@@ -6246,22 +6253,22 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="117"/>
         <source>Scientific</source>
-        <translation>指数表記（10の乗数）</translation>
+        <translation>指数表記</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="119"/>
         <source>Engineering</source>
-        <translation>工学（1インチ未満は小数）</translation>
+        <translation>工学 (1インチ未満は小数)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="120"/>
         <source>Architectural</source>
-        <translation>建築（1インチ未満は分数）</translation>
+        <translation>建築 (1インチ未満は分数)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="121"/>
         <source>Fractional</source>
-        <translation>10進数（1未満は分数）</translation>
+        <translation>分数</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="473"/>
@@ -6271,7 +6278,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="128"/>
         <source>Decimal Degrees</source>
-        <translation>度（10進数）</translation>
+        <translation>度 (10進数)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="131"/>
@@ -6288,7 +6295,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="456"/>
         <source>linear</source>
-        <translation>直線</translation>
+        <translation>線形</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="552"/>
@@ -6298,7 +6305,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1099"/>
         <source>Text Height:</source>
-        <translation>文字の高さ:</translation>
+        <translation>テキスト高さ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="913"/>
@@ -6314,17 +6321,17 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="129"/>
         <source>Deg/min/sec</source>
-        <translation>時/分/秒</translation>
+        <translation>度/分/秒</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="130"/>
         <source>Gradians</source>
-        <translation>グラード（1g=0.9度）</translation>
+        <translation>グラード (1g=0.9度)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="132"/>
         <source>Surveyor&apos;s units</source>
-        <translation>測量用単位</translation>
+        <translation>測量単位</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="494"/>
@@ -6335,22 +6342,22 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="495"/>
         <source>For the length formats &apos;Engineering&apos; and &apos;Architectural&apos;, the unit must be set to Inch.</source>
-        <translation>寸法の単位に「工学」か「建築」が指定されると、単位はフィート/インチになります。</translation>
+        <translation>&apos;工学&apos; および &apos;建築 (フィート/インチ)&apos; の長さ形式を使用するには、単位をインチに設定する必要があります。</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1337"/>
         <source>Arrow size:</source>
-        <translation>矢印のサイズ:</translation>
+        <translation>矢印サイズ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1544"/>
         <source>Dimension line gap:</source>
-        <translation>寸法線との隙間:</translation>
+        <translation>寸法線ギャップ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="14"/>
         <source>Drawing Preferences</source>
-        <translation>図面の設定</translation>
+        <translation>図面設定</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="34"/>
@@ -6360,47 +6367,47 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="108"/>
         <source>&amp;Landscape</source>
-        <translation>横置き(&amp;L)</translation>
+        <translation>横(&amp;L)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="115"/>
         <source>P&amp;ortrait</source>
-        <translation>縦置き(&amp;o)</translation>
+        <translation>縦(&amp;O)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="326"/>
         <source>&amp;Units</source>
-        <translation>単位・書式(&amp;U)</translation>
+        <translation>単位(&amp;U)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="338"/>
         <source>&amp;Main drawing unit:</source>
-        <translation>図面で用いる単位(&amp;M):</translation>
+        <translation>主図面単位(&amp;M):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="383"/>
         <source>&amp;Format:</source>
-        <translation>書式(&amp;F):</translation>
+        <translation>形式(&amp;F):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="402"/>
         <source>P&amp;recision:</source>
-        <translation>精度(&amp;r):</translation>
+        <translation>精度(&amp;R):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="479"/>
         <source>F&amp;ormat:</source>
-        <translation>書式(&amp;o):</translation>
+        <translation>形式(&amp;O):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="527"/>
         <source>Pre&amp;cision:</source>
-        <translation>精度(&amp;c):</translation>
+        <translation>精度(&amp;C):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="860"/>
         <source>&amp;Dimensions</source>
-        <translation>寸法記入(&amp;D)</translation>
+        <translation>寸法(&amp;D)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="582"/>
@@ -6415,12 +6422,12 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="741"/>
         <source>X Spacing:</source>
-        <translation>X軸の間隔:</translation>
+        <translation>X間隔:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="789"/>
         <source>Y Spacing:</source>
-        <translation>Y軸の間隔:</translation>
+        <translation>Y間隔:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="761"/>
@@ -6430,7 +6437,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="552"/>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="557"/>
         <source>auto</source>
-        <translation>auto</translation>
+        <translation>自動</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="570"/>
@@ -6440,41 +6447,41 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1617"/>
         <source>Number of line segments per spline patch:</source>
-        <translation>スプライン一区間当たりの微線分数:</translation>
+        <translation>スプラインパッチあたりの線分セグメント数:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="720"/>
         <source>Crosshair</source>
-        <translation>十字線</translation>
+        <translation>クロスヘア</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="654"/>
         <source>Left crosshair with isometric grid</source>
-        <translation>十字線は左、アイソメトリック時</translation>
+        <translation>等角グリッド (左)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="152"/>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="212"/>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="657"/>
         <source>Left</source>
-        <translation>Left</translation>
+        <translation>左</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="676"/>
         <source>Top crosshair with isometric grid</source>
-        <translation>十字線は上、アイソメトリック時</translation>
+        <translation>等角グリッド (上)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="195"/>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="228"/>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="679"/>
         <source>Top</source>
-        <translation>Top</translation>
+        <translation>上</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="698"/>
         <source>Right crosshair with isometric grid</source>
-        <translation>十字線は右、アイソメトリック時</translation>
+        <translation>等角グリッド (右)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="178"/>
@@ -6496,47 +6503,47 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="608"/>
         <source>Use isometric grid</source>
-        <translation>アイソメトリック・グリッドを使用</translation>
+        <translation>等角グリッドを使用</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="611"/>
         <source>Isometric Grid</source>
-        <translation>アイソメトリック・グリッド</translation>
+        <translation>等角グリッド</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1047"/>
         <source>Tick size:</source>
-        <translation>斜線のサイズ:</translation>
+        <translation>目盛サイズ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1116"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won&apos;t be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;斜線を末端記号で使うときのサイズ. 末端記号に斜線を使わない時は 0 に設定する. 斜線のサイズが指定されれば矢印に優先されて用いられる.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;寸法目盛のサイズ。0に設定すると寸法目盛は無効になります。寸法目盛が有効な場合、寸法矢印は描画されません。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1461"/>
         <source>Horizontal</source>
-        <translation>水平にそろえる</translation>
+        <translation>水平</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1233"/>
         <source>General Scale:</source>
-        <translation>縮尺:</translation>
+        <translation>全体倍率:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="969"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale to multiply all dimension values.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;数値の合計を計測.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;すべての寸法値に乗算する倍率です。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1178"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale to multiply all dimension geometries.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;図形寸法の合計を計測.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;すべての寸法形状に乗算する倍率です。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="885"/>
         <source>Text style:</source>
-        <translation>字体:</translation>
+        <translation>テキストスタイル:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="893"/>
@@ -6546,17 +6553,17 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="898"/>
         <source>&apos;,&apos; (Comma)</source>
-        <translation>&apos;,&apos; (コンマ)</translation>
+        <translation>&apos;,&apos; (カンマ)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="906"/>
         <source>Decimal separator:</source>
-        <translation>小数点:</translation>
+        <translation>小数点区切り:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="933"/>
         <source>Linear units:</source>
-        <translation>寸法の単位:</translation>
+        <translation>線形単位:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="949"/>
@@ -6568,42 +6575,42 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="959"/>
         <source>Length Factor:</source>
-        <translation>長さの倍率:</translation>
+        <translation>長さ係数:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1086"/>
         <source>Angular units:</source>
-        <translation>角度の単位:</translation>
+        <translation>角度単位:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1109"/>
         <source>Linear zeros:</source>
-        <translation>寸法の端数 0 :</translation>
+        <translation>線形ゼロ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1146"/>
         <source>Format units</source>
-        <translation>単位の書式</translation>
+        <translation>単位形式</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1153"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Distance gap around text&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;文字列のまわりの隙間&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;テキスト周囲の距離ギャップ&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1226"/>
         <source>Text size &amp; position</source>
-        <translation>文字のサイズと配置</translation>
+        <translation>テキストサイズと位置</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1271"/>
         <source>Length to enlarge over dimension line</source>
-        <translation>寸法線の上で拡大する長さ</translation>
+        <translation>寸法線からの延長長さ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1296"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension arrow size. &lt;a name=&quot;result_box&quot;/&gt;without effect when tick size &lt;a name=&quot;result_box&quot;/&gt;is other than 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;寸法線の矢印のサイズ. &lt;a name=&quot;result_box&quot;/&gt;斜線ときサイズ指定は効果がない &lt;a name=&quot;result_box&quot;/&gt;0 以外&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;寸法矢印のサイズ。目盛サイズが0以外の場合は効果がありません。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1350"/>
@@ -6614,22 +6621,22 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1370"/>
         <source>Dimension lines, arrows &amp; ticks</source>
-        <translation>寸法線と矢印（または斜線）</translation>
+        <translation>寸法線、矢印、目盛</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1377"/>
         <source>Angular zeros:</source>
-        <translation>角度の端数 0:</translation>
+        <translation>角度ゼロ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1391"/>
         <source>Angular precision:</source>
-        <translation>角度の精度:</translation>
+        <translation>角度精度:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1404"/>
         <source>Enlarge:</source>
-        <translation>引き伸ばす:</translation>
+        <translation>延長:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1414"/>
@@ -6639,27 +6646,27 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1427"/>
         <source>Linear precision:</source>
-        <translation>寸法精度:</translation>
+        <translation>線形精度:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1446"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignment &lt;a name=&quot;result_box&quot;/&gt;relative to the dimension line.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;文字列を並べる &lt;a name=&quot;result_box&quot;/&gt;寸法線にあわせて.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;寸法線に対するテキストの配置です。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1456"/>
         <source>Aligned</source>
-        <translation>寸法線に平行</translation>
+        <translation>両端揃え</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1502"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Offset from origin point.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;元のポイントからのオフセット値.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;原点からのオフセットです。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1534"/>
         <source>Text alignment:</source>
-        <translation>文字の配置：</translation>
+        <translation>テキスト配置:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1554"/>
@@ -6669,27 +6676,27 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1561"/>
         <source>Fixed length:</source>
-        <translation>固定された長さ:</translation>
+        <translation>固定長:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="44"/>
         <source>Format</source>
-        <translation>書式</translation>
+        <translation>形式</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="66"/>
         <source>&amp;Height:</source>
-        <translation>高さ:</translation>
+        <translation>高さ(&amp;H):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="82"/>
         <source>&amp;Width:</source>
-        <translation>幅:</translation>
+        <translation>幅(&amp;W):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="102"/>
         <source>Orientation</source>
-        <translation>向き</translation>
+        <translation>方向</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="138"/>
@@ -6700,7 +6707,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="165"/>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="185"/>
         <source>Bottom</source>
-        <translation>底</translation>
+        <translation>下</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="240"/>
@@ -6720,22 +6727,22 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1598"/>
         <source>fixed extension line length</source>
-        <translation>固定延長線長</translation>
+        <translation>延長線固定長</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1609"/>
         <source>&amp;Splines</source>
-        <translation>スプライン</translation>
+        <translation>スプライン(&amp;S)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1683"/>
         <source>&amp;Points</source>
-        <translation>ポイント</translation>
+        <translation>点(&amp;P)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1692"/>
         <source>Point Style</source>
-        <translation>ポイントのスタイル</translation>
+        <translation>点スタイル</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1733"/>
@@ -6764,7 +6771,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="2557"/>
         <source>Point Size</source>
-        <translation>ポイントサイズ</translation>
+        <translation>点サイズ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="2592"/>
@@ -6775,27 +6782,27 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="2629"/>
         <source>Size relative to screen</source>
-        <translation>画面比</translation>
+        <translation>画面に対する相対サイズ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="2642"/>
         <source>Size in drawing units</source>
-        <translation>図面単位</translation>
+        <translation>図面単位でのサイズ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="2669"/>
         <source>(0 =&gt; 5% relative to screen size)</source>
-        <translation>(0 =&gt; 画面サイズの5%相当)</translation>
+        <translation>(0 =&gt; 画面サイズの5%)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="122"/>
         <source>Architectural (metric)</source>
-        <translation>建築用（メートル法）</translation>
+        <translation>建築 (メートル法)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="505"/>
         <source>For the length format &apos;Architectural (metric)&apos;, the unit must be set to Meter.</source>
-        <translation>長さ形式「建築用（メートル法）」の場合、単位はメートルに設定する必要があります。</translation>
+        <translation>&apos;建築 (メートル法)&apos; の長さ形式を使用するには、単位をメートルに設定する必要があります。</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="1106"/>
@@ -6808,17 +6815,17 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.cpp" line="327"/>
         <source>Preferences</source>
-        <translation>参照</translation>
+        <translation>環境設定</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="922"/>
         <source>Translations:</source>
-        <translation>国際言語変換:</translation>
+        <translation>翻訳ファイル:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="932"/>
         <source>Hatch Patterns:</source>
-        <translation>ハッチングの模様:</translation>
+        <translation>ハッチングパターン:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="841"/>
@@ -6838,17 +6845,17 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="105"/>
         <source>Graphic View</source>
-        <translation>画面の表示</translation>
+        <translation>グラフィック表示</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="14"/>
         <source>Application Preferences</source>
-        <translation>アプリケーションの設定</translation>
+        <translation>アプリケーション設定</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1193"/>
         <source>Defaults for new drawings</source>
-        <translation>新規図面の既定値</translation>
+        <translation>新規図面のデフォルト</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="46"/>
@@ -6863,7 +6870,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="80"/>
         <source>&amp;Command Language:</source>
-        <translation>コマンド 言語(&amp;C):</translation>
+        <translation>コマンド言語(&amp;C):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="828"/>
@@ -6873,7 +6880,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="978"/>
         <source>&amp;Defaults</source>
-        <translation>既定値(&amp;D)</translation>
+        <translation>デフォルト(&amp;D)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1205"/>
@@ -6883,37 +6890,37 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="693"/>
         <source>Backgr&amp;ound:</source>
-        <translation>背景色(&amp;o):</translation>
+        <translation>背景(&amp;O):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="398"/>
         <source>G&amp;rid Color:</source>
-        <translation>グリッド(&amp;r):</translation>
+        <translation>グリッド色(&amp;R):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="627"/>
         <source>&amp;Meta Grid Color:</source>
-        <translation>メタグリッド(&amp;M):</translation>
+        <translation>メタグリッド色(&amp;M):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="255"/>
         <source>A&amp;utomatically scale grid</source>
-        <translation>グリッドの間隔を自動調整(&amp;u)</translation>
+        <translation>グリッドを自動拡大縮小(&amp;U)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="655"/>
         <source>S&amp;elected Color:</source>
-        <translation>選択した要素(&amp;e):</translation>
+        <translation>選択色(&amp;E):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="599"/>
         <source>&amp;Highlighted Color:</source>
-        <translation>操作する要素(&amp;H):</translation>
+        <translation>ハイライト色(&amp;H):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.cpp" line="328"/>
         <source>Please restart the application to apply all changes.</source>
-        <translation>変更は再起動後に有効になります。</translation>
+        <translation>すべての変更を適用するにはアプリケーションを再起動してください。</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="278"/>
@@ -6928,22 +6935,22 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="996"/>
         <source>Program Defaults</source>
-        <translation>初期値</translation>
+        <translation>プログラムデフォルト</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1218"/>
         <source>Drawing unit.</source>
-        <translation>作図ユニット.</translation>
+        <translation>図面単位。</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1021"/>
         <source>Time between automatic saving of the document in minutes.</source>
-        <translation>自動保存する時間（単位は分）.</translation>
+        <translation>ドキュメントの自動保存間隔 (分)。</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1002"/>
         <source>When set, LibreCAD will automatically generate a backup of your current drawing.</source>
-        <translation>設定時、LibreCADは現在の図面を自動的にバックアップする。</translation>
+        <translation>設定すると、LibreCADは現在の図面のバックアップを自動的に作成します。</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1005"/>
@@ -6958,67 +6965,67 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="683"/>
         <source>St&amp;art Handle Color:</source>
-        <translation>ハンドルの開始(&amp;a):</translation>
+        <translation>開始ハンドル色(&amp;A):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="767"/>
         <source>&amp;Handle Color:</source>
-        <translation>ハンドル(&amp;H):</translation>
+        <translation>ハンドル色(&amp;H):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="378"/>
         <source>&amp;End Handle Color:</source>
-        <translation>ハンドルの終了(&amp;E):</translation>
+        <translation>終了ハンドル色(&amp;E):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="354"/>
         <source>Graphic Colors</source>
-        <translation>画面の色</translation>
+        <translation>グラフィック色</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1263"/>
         <source>Modify layer of selected entities, at  layer activation</source>
-        <translation>レイヤーをアクティブにするときに、選択された要素のレイヤーを修正する</translation>
+        <translation>レイヤーアクティブ化時に選択エンティティのレイヤーを変更</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="777"/>
         <source>Snap indicator:</source>
-        <translation>スナップ位置を明示する線：</translation>
+        <translation>スナップインジケータ:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="199"/>
         <source>Anti-aliasing</source>
-        <translation>アンチエイリアス</translation>
+        <translation>アンチエイリアシング</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1089"/>
         <source>Clear Settings</source>
-        <translation>設定を元に戻す</translation>
+        <translation>設定をクリア</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1101"/>
         <source>restores program geometry/layout to original state</source>
-        <translation>図面/外観の設定を初期設定に戻す</translation>
+        <translation>プログラムのジオメトリ/レイアウトを元の状態に復元します</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1104"/>
         <source>Layout</source>
-        <translation>外観</translation>
+        <translation>レイアウト</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1117"/>
         <source>restores the program to its original state</source>
-        <translation>変更をすべて初期設定に戻す</translation>
+        <translation>プログラムを元の状態に復元します</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1120"/>
         <source>All</source>
-        <translation>All</translation>
+        <translation>すべて</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1143"/>
         <source>Start in tab mode</source>
-        <translation>タブモードで開始する</translation>
+        <translation>タブモードで起動</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="192"/>
@@ -7028,82 +7035,82 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="275"/>
         <source>Snap indicator lines</source>
-        <translation>スナップ位置を線で示す</translation>
+        <translation>スナップインジケータ線</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="131"/>
         <source>Snap indicator shape</source>
-        <translation>スナップ位置をshapeで示す</translation>
+        <translation>スナップインジケータ形状</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="185"/>
         <source>Hide cursor when snapping</source>
-        <translation>スナップときにカーソルを非表示にする</translation>
+        <translation>スナップ時にカーソルを非表示</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1130"/>
         <source>Startup</source>
-        <translation>スタート時の設定</translation>
+        <translation>起動</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1136"/>
         <source>Display loading screen</source>
-        <translation>画面にスクリーンをロードする</translation>
+        <translation>ローディング画面を表示</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1150"/>
         <source>Start with main window maximized</source>
-        <translation>メイン画面を最大で開始する</translation>
+        <translation>メインウィンドウを最大化して起動</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1164"/>
         <source>Enable CAD dockwidgets</source>
-        <translation>ドックウィジットを表示する</translation>
+        <translation>CADドックウィジェットを有効化</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1171"/>
         <source>Enable CAD toolbars</source>
-        <translation>ツールバーを表示する</translation>
+        <translation>CADツールバーを有効化</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="799"/>
         <source>#1E90FF</source>
-        <translation>明るい藍色</translation>
+        <translation>#1E90FF</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.cpp" line="409"/>
         <source>Clear settings</source>
-        <translation>設定を初期化</translation>
+        <translation>設定をクリア</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.cpp" line="410"/>
         <source>This will also include custom menus and toolbars. Continue?</source>
-        <translation>カスタムメニュー、ツールバーに含まれます.よろしいですか?</translation>
+        <translation>これにはカスタムメニューとツールバーも含まれます。続行しますか？</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1260"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activating a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;有効にすると、作業しているレイヤーの属性は、新しいレイヤーで選択したすべての属性を修正することになります。複数のレイヤーの属性を変更するには：最初に必要とする属性を選択します。レイヤーのウィジェット内のレイヤーを選択します。選択したすべての属性は新しいレイヤーに属するように修正させます&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;有効にすると、レイヤーをアクティブ化したときに、選択されているすべてのエンティティのレイヤーがその新しいレイヤーに変更されます。複数のエンティティのレイヤーを変更するには: まず必要なエンティティを選択し、レイヤーウィジェットでレイヤーをアクティブ化します。これにより、選択されたすべてのエンティティが新しいレイヤーに属するように変更されます。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="834"/>
         <source>Variable File:</source>
-        <translation>可変長ファイル：</translation>
+        <translation>変数ファイル:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="322"/>
         <source>Minimal Grid Spacing (p&amp;x):</source>
-        <translation>最小のグリッド間隔 (p&amp;x):</translation>
+        <translation>最小グリッド間隔 (px)(&amp;X):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="118"/>
         <source>N&amp;umber of preview entities:</source>
-        <translation>表示要素数(&amp;u)：</translation>
+        <translation>プレビューエンティティ数(&amp;U):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1036"/>
         <source>Don&apos;t use native OS file open dialog</source>
-        <translation>ネイティブOSのファイルを開くダイアログは使用しない</translation>
+        <translation>OSネイティブのファイルオープンダイアログを使用しない</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="111"/>
@@ -7113,7 +7120,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="265"/>
         <source>Hide the relative-&amp;zero marker</source>
-        <translation>相対ゼロマーカーを非表示</translation>
+        <translation>相対ゼロマーカーを非表示(&amp;Z)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="268"/>
@@ -7133,17 +7140,17 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="388"/>
         <source>&amp;Relative-Zero Marker Color:</source>
-        <translation>相対ゼロマーカーの色:</translation>
+        <translation>相対ゼロマーカー色(&amp;R):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1014"/>
         <source>Auto save time (minutes):</source>
-        <translation>自動保存時間 (分):</translation>
+        <translation>自動保存間隔 (分):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1043"/>
         <source>Inverts scrolling direction when using mouse wheel with Shift key.</source>
-        <translation>Shiftキーを押しながらマウスホイールを使用するとスクロール方向が反転します。</translation>
+        <translation>Shiftキーとマウスホイール使用時のスクロール方向を反転します。</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1046"/>
@@ -7153,7 +7160,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1053"/>
         <source>Inverts scrolling direction when using mouse wheel with Ctrl key.</source>
-        <translation>Ctrlキーを押しながらマウスホイールを使用するとスクロール方向が反転します。</translation>
+        <translation>Ctrlキーとマウスホイール使用時のスクロール方向を反転します。</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1056"/>
@@ -7163,7 +7170,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1063"/>
         <source>Inverts zoom direction when using mouse wheel.</source>
-        <translation>マウスホイールを使用するとズーム方向が反転します。</translation>
+        <translation>マウスホイール使用時のズーム方向を反転します。</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1066"/>
@@ -7178,12 +7185,12 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1234"/>
         <source>Evaluate commands when SPACE BAR is pressed</source>
-        <translation>スペースバー押下時にコマンドを評価する</translation>
+        <translation>スペースバーが押されたときにコマンドを実行</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1244"/>
         <source>Toggle free snap mode when SPACE BAR is pressed</source>
-        <translation>スペースバー押下時にフリースナップモードを切り替える</translation>
+        <translation>スペースバーが押されたときにフリースナップモードを切り替え</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1254"/>
@@ -7193,12 +7200,12 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1270"/>
         <source>Automatically zoom drawing when opening</source>
-        <translation>開く際に図面を自動ズームする</translation>
+        <translation>開くときに図面を自動拡大</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="880"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;Part library folder. The symbol library dxf files must be located in the subdirectories of this folder. The subfolder names will be displayed in the Library Browser.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;( Menu: Widgets &amp;gt; Dock Widgets &amp;gt; Library Browser)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>部品ライブラリフォルダ。シンボルライブラリのdxfファイルは、このフォルダのサブディレクトリに配置する必要があります。サブフォルダ名はライブラリブラウザに表示されます。(メニュー: ウィジェット &gt; ドックウィジェット &gt; ライブラリブラウザ)</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;パーツライブラリフォルダー。シンボルライブラリのDXFファイルは、このフォルダーのサブディレクトリに配置する必要があります。サブフォルダー名はライブラリブラウザに表示されます。&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;(メニュー: ウィジェット &gt; ドックウィジェット &gt; ライブラリブラウザ)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1157"/>
@@ -7208,7 +7215,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1241"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Temporarily toggle free snapping when the spacebar is pressed and the command window is activated&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>スペースバーが押され、コマンドウィンドウがアクティブなときに一時的にフリースナップを切り替える</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;スペースバーが押されてコマンドウィンドウがアクティブになったとき、一時的にフリースナップを切り替えます&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -7221,12 +7228,12 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="73"/>
         <source>Export invisible layers</source>
-        <translation>見えないレイヤーをエクスポート</translation>
+        <translation>非表示レイヤーをエクスポート</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="80"/>
         <source>Export visible construction layers</source>
-        <translation>可視の作図補助レイヤーをエクスポート</translation>
+        <translation>表示中の構築レイヤーをエクスポート</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="92"/>
@@ -7238,17 +7245,17 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="100"/>
         <source>Convert blocks to safe inline SVG content</source>
         <translatorcomment>AutoCADにあわせて「ブロック」と訳すことにした</translatorcomment>
-        <translation>ブロックを安全なインラインSVGの内容に変更する</translation>
+        <translation>ブロックを安全なインラインSVGコンテンツに変換</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="115"/>
         <source>Ellipses / Ellipse arcs</source>
-        <translation>楕円/楕円弧</translation>
+        <translation>楕円 / 楕円弧</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="123"/>
         <source>Approximate ellipses and ellipse arcs with cubic béziers</source>
-        <translation>おおよそ楕円と方形のベジエによる楕円の弧</translation>
+        <translation>楕円と楕円弧を3次ベジェ曲線で近似</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="20"/>
@@ -7258,7 +7265,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="48"/>
         <source>Default width of elements, mm</source>
-        <translation>要素のデフォルト幅、mm</translation>
+        <translation>要素のデフォルト幅 (mm)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="135"/>
@@ -7268,80 +7275,88 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="143"/>
         <source>Raster Image export</source>
-        <translation>ラスタ画像のエクスポート</translation>
+        <translation>ラスター画像エクスポート</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="155"/>
         <source>Dash/Dot Lines</source>
-        <translation>ダッシュ/ドット線</translation>
+        <translation>破線/点線</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="165"/>
         <source>Length of the pattern, mm</source>
-        <translation>パターンの長さ (mm)</translation>
+        <translation>パターン長さ (mm)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="187"/>
         <source>Bake dash/dot lines to SVG path</source>
-        <translation>ダッシュ/ドット線をSVGパスにベイク</translation>
+        <translation>破線/点線をSVGパスに焼き付け</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="33"/>
         <source>MakerCAM as of November 2014 does not hide SVG content 
 that has been set invisibe (&quot;display: none&quot; or &quot;visibility: hidden&quot;).</source>
-        <translation>2014年11月時点のMakerCAMでは、「display: none」または「visibility: hidden」に設定された非表示のSVGコンテンツは非表示になりません。</translation>
+        <translation>2014年11月時点のMakerCAMは、非表示に設定された
+SVGコンテンツ (&quot;display: none&quot; または &quot;visibility: hidden&quot;)を非表示にしません。</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="34"/>
         <source>MakerCAM as of November 2014 cannot correctly deal with blocks,
 because it does not take into account the reference point in the &lt;use&gt;.</source>
-        <translation>2014年11月時点のMakerCAMは、&lt;use&gt;内の参照点を考慮しないため、ブロックを正しく処理できません。</translation>
+        <translation>2014年11月時点のMakerCAMは、&lt;use&gt;内の参照点を
+考慮しないため、ブロックを正しく処理できません。</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="35"/>
         <source>MakerCAM as of March 2015 cannot display ellipses and ellipse arcs correctly, 
 when they are created using the &lt;ellipse&gt; tag  with a rotation in 
 the &lt;transform&gt; attribute or as &lt;path&gt; using elliptic arc segments.</source>
-        <translation>2015年3月時点のMakerCAMは、&lt;transform&gt;属性で回転を伴う&lt;ellipse&gt;タグ、または楕円弧セグメントを使用した&lt;path&gt;として作成された楕円や楕円弧を正しく表示できません。</translation>
+        <translation>2015年3月時点のMakerCAMは、&lt;transform&gt;属性で回転が
+指定された&lt;ellipse&gt;タグ、または楕円弧セグメントを使用した
+&lt;path&gt;として作成された楕円および楕円弧を正しく表示できません。</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="36"/>
         <source>Exported images can be useful in SVG editors (Inkscape, etc), 
 but avoided in some CAM&apos;s.</source>
-        <translation>エクスポートされた画像はSVGエディタ（Inkscapeなど）で役立ちますが、一部のCAMでは避けるべきです。</translation>
+        <translation>エクスポートされた画像はSVGエディタ (Inkscapeなど)では
+有用ですが、一部のCAMでは避けられています。</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="37"/>
         <source>Many CAM&apos;s(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style, 
 which can be useful in lasercut of plywood or for papercraft. </source>
-        <translation>多くのCAM（MakerCAM、EleskCAM、LaserWebなど）は、ダッシュ/ドット線のスタイルを無視するため、合板のレーザーカットやペーパークラフトに役立つ場合があります。</translation>
+        <translation>多くのCAM (MakerCAM、EleskCAM、LaserWeb)は破線/点線スタイルを
+無視します。これは合板のレーザーカットやペーパークラフトで有用です。 </translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="38"/>
         <source>Default width of elements can affect some CAM&apos;s/SVG Editors, 
 but ignored by other</source>
-        <translation>要素のデフォルト幅は、一部のCAM/SVGエディタに影響を与えることがありますが、他のエディタでは無視されます。</translation>
+        <translation>要素のデフォルト幅は一部のCAM/SVGエディタに影響しますが、
+他のものでは無視されます</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="39"/>
         <source>Length of line pattern related to zoom, 
 so default step value required for baking</source>
-        <translation>ラインパターンの長さはズームに関連しているため、ベイク処理にはデフォルトのステップ値が必要です。</translation>
+        <translation>線パターンの長さはズームに関連するため、
+焼き付けにはデフォルトのステップ値が必要です</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="199"/>
         <source>Points</source>
-        <translation>ポイント</translation>
+        <translation>点</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="207"/>
         <source>Export Points</source>
-        <translation>ポイントのエクスポート</translation>
+        <translation>点をエクスポート</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="40"/>
         <source>Whether to export points</source>
-        <translation>ポイントをエクスポートするかどうか</translation>
+        <translation>点をエクスポートするかどうか</translation>
     </message>
 </context>
 <context>
@@ -7379,7 +7394,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsvariables.ui" line="112"/>
         <source>Cancel</source>
-        <translation>中止</translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsvariables.ui" line="115"/>
@@ -7402,17 +7417,17 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgpoint.ui" line="71"/>
         <source>Geometry</source>
-        <translation>図形</translation>
+        <translation>幾何</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgpoint.ui" line="77"/>
         <source>Position (y):</source>
-        <translation>位置(y):</translation>
+        <translation>位置 (y):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgpoint.ui" line="97"/>
         <source>Position (x):</source>
-        <translation>位置(x):</translation>
+        <translation>位置 (x):</translation>
     </message>
 </context>
 <context>
@@ -7430,7 +7445,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgpolyline.ui" line="77"/>
         <source>Geometry</source>
-        <translation>図形</translation>
+        <translation>幾何</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgpolyline.ui" line="115"/>
@@ -7448,37 +7463,37 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgrotate.ui" line="32"/>
         <source>Number of copies</source>
-        <translation>複写回数</translation>
+        <translation>コピー数</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgrotate.ui" line="50"/>
         <source>&amp;Delete Original</source>
-        <translation>原本削除(&amp;D)</translation>
+        <translation>元を削除(&amp;D)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgrotate.ui" line="69"/>
         <source>&amp;Keep Original</source>
-        <translation>原本保持(&amp;K)</translation>
+        <translation>元を保持(&amp;K)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgrotate.ui" line="88"/>
         <source>&amp;Multiple Copies:</source>
-        <translation>複数複写(&amp;M):</translation>
+        <translation>複数コピー(&amp;M):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgrotate.ui" line="138"/>
         <source>&amp;Angle (a):</source>
-        <translation>角度&amp;A(a):</translation>
+        <translation>角度(&amp;A) (a):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgrotate.ui" line="179"/>
         <source>Use current &amp;attributes</source>
-        <translation>現在属性使用(&amp;a)</translation>
+        <translation>現在の属性を使用(&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgrotate.ui" line="186"/>
         <source>Use current &amp;layer</source>
-        <translation>現在のレイヤーを使用(&amp;l)</translation>
+        <translation>現在のレイヤーを使用(&amp;L)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgrotate.ui" line="119"/>
@@ -7491,47 +7506,47 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgrotate2.ui" line="26"/>
         <source>Rotate Two Options</source>
-        <translation>回転２オプション</translation>
+        <translation>2要素間回転オプション</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgrotate2.ui" line="32"/>
         <source>Number of copies</source>
-        <translation>複写回数</translation>
+        <translation>コピー数</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgrotate2.ui" line="50"/>
         <source>&amp;Delete Original</source>
-        <translation>原本削除(&amp;D)</translation>
+        <translation>元を削除(&amp;D)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgrotate2.ui" line="69"/>
         <source>&amp;Keep Original</source>
-        <translation>原本保持(&amp;K)</translation>
+        <translation>元を保持(&amp;K)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgrotate2.ui" line="88"/>
         <source>&amp;Multiple Copies</source>
-        <translation>複数複写(&amp;M)</translation>
+        <translation>複数コピー(&amp;M)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgrotate2.ui" line="138"/>
         <source>Angle (&amp;a):</source>
-        <translation>角度(&amp;a):</translation>
+        <translation>角度(&amp;A) (a):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgrotate2.ui" line="174"/>
         <source>Angle (&amp;b):</source>
-        <translation>角度(&amp;b):</translation>
+        <translation>角度(&amp;B) (b):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgrotate2.ui" line="208"/>
         <source>Use current &amp;attributes</source>
-        <translation>現在属性使用(&amp;a)</translation>
+        <translation>現在の属性を使用(&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgrotate2.ui" line="215"/>
         <source>Use current &amp;layer</source>
-        <translation>現在のレイヤーを使用(&amp;l)</translation>
+        <translation>現在のレイヤーを使用(&amp;L)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgrotate2.ui" line="119"/>
@@ -7544,37 +7559,37 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgscale.ui" line="26"/>
         <source>Scaling Options</source>
-        <translation>スケールオプション</translation>
+        <translation>拡大/縮小オプション</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgscale.ui" line="32"/>
         <source>Number of copies</source>
-        <translation>複写回数</translation>
+        <translation>コピー数</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgscale.ui" line="219"/>
         <source>Use current &amp;attributes</source>
-        <translation>現在属性使用(&amp;a)</translation>
+        <translation>現在の属性を使用(&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgscale.ui" line="226"/>
         <source>Use current &amp;layer</source>
-        <translation>現在のレイヤーを使用(&amp;l)</translation>
+        <translation>現在のレイヤーを使用(&amp;L)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgscale.ui" line="50"/>
         <source>&amp;Delete Original</source>
-        <translation>原本削除(&amp;D)</translation>
+        <translation>元を削除(&amp;D)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgscale.ui" line="69"/>
         <source>&amp;Keep Original</source>
-        <translation>原本保持(&amp;K)</translation>
+        <translation>元を保持(&amp;K)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgscale.ui" line="88"/>
         <source>&amp;Multiple Copies</source>
-        <translation>複数複写(&amp;M)</translation>
+        <translation>複数コピー(&amp;M)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgscale.ui" line="117"/>
@@ -7584,12 +7599,12 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgscale.ui" line="136"/>
         <source>Scale by the same factor at both x- and y- directions</source>
-        <translation>x方向、y方向とも同じ縮尺</translation>
+        <translation>X方向とY方向に同じ倍率で拡大/縮小</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgscale.ui" line="139"/>
         <source>Isotropic Scaling</source>
-        <translation>等角投影図の縮尺</translation>
+        <translation>等方性拡大/縮小</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgscale.ui" line="153"/>
@@ -7604,7 +7619,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgscale.ui" line="203"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Find the scaling ratios around the center by a reference point and a target point.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>参照点とターゲット点を使用して、中心周りのスケーリング比率を求めます。</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;参照点とターゲット点を使用して、中心周りのスケーリング比率を求めます。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -7622,17 +7637,17 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgspline.ui" line="84"/>
         <source>Geometry</source>
-        <translation>図形</translation>
+        <translation>幾何</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgspline.ui" line="122"/>
         <source>Degree:</source>
-        <translation>度数:</translation>
+        <translation>次数:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgspline.ui" line="132"/>
         <source>Closed</source>
-        <translation>閉じた</translation>
+        <translation>閉じている</translation>
     </message>
 </context>
 <context>
@@ -7640,7 +7655,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="20"/>
         <source>Text</source>
-        <translation>Text</translation>
+        <translation>テキスト</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="33"/>
@@ -7650,27 +7665,27 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="59"/>
         <source>Clear Text</source>
-        <translation>テキスト削除</translation>
+        <translation>テキストをクリア</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="73"/>
         <source>Load Text From File</source>
-        <translation>ファイルからテキストを読み込む</translation>
+        <translation>ファイルからテキストを読み込み</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="87"/>
         <source>Save Text To File</source>
-        <translation>ファイルにテキストを保存</translation>
+        <translation>テキストをファイルに保存</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="101"/>
         <source>Cut</source>
-        <translation>Cut</translation>
+        <translation>切り取り</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="115"/>
         <source>Copy</source>
-        <translation>Copy</translation>
+        <translation>コピー</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="129"/>
@@ -7695,17 +7710,17 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="542"/>
         <source>Middle Left</source>
-        <translation>左中間</translation>
+        <translation>左中央</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="751"/>
         <source>Middle Center</source>
-        <translation>中央中間</translation>
+        <translation>中央</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="472"/>
         <source>Middle Right</source>
-        <translation>右中間</translation>
+        <translation>右中央</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="507"/>
@@ -7720,27 +7735,27 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="402"/>
         <source>Bottom Center</source>
-        <translation>中央下</translation>
+        <translation>下中央</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="600"/>
         <source>Top Center</source>
-        <translation>中央上</translation>
+        <translation>上中央</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="825"/>
         <source>Insert Symbol</source>
-        <translation>シンボル挿入</translation>
+        <translation>記号を挿入</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="853"/>
         <source>At (@)</source>
-        <translation>（@）</translation>
+        <translation>アットマーク (@)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="858"/>
         <source>Hash (#)</source>
-        <translation>ハッシュ(#)</translation>
+        <translation>ハッシュ (#)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="863"/>
@@ -7750,7 +7765,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="914"/>
         <source>Insert Unicode</source>
-        <translation>Unicode 挿入</translation>
+        <translation>Unicodeを挿入</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="920"/>
@@ -7765,7 +7780,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="953"/>
         <source>[0000-007F] Basic Latin</source>
-        <translation>[0000-007F] 基本ラテン文字（ASCII互換）</translation>
+        <translation>[0000-007F] 基本ラテン文字</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="958"/>
@@ -7775,17 +7790,17 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="963"/>
         <source>[0100-017F] Latin Extended-A</source>
-        <translation>[0100-017F] ラテン文字拡張A</translation>
+        <translation>[0100-017F] ラテン拡張-A</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="968"/>
         <source>[0180-024F] Latin Extended-B</source>
-        <translation>[0180-024F] ラテン文字拡張B</translation>
+        <translation>[0180-024F] ラテン拡張-B</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="973"/>
         <source>[0250-02AF] IPA Extensions</source>
-        <translation>[0250-02AF] IPA拡張（国際音声記号）</translation>
+        <translation>[0250-02AF] IPA拡張</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="978"/>
@@ -7795,22 +7810,22 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="983"/>
         <source>[0300-036F] Combining Diacritical Marks</source>
-        <translation>[0300-036F] ダイアクリティカルマーク（合成可能）</translation>
+        <translation>[0300-036F] 結合用発音区別符号</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="988"/>
         <source>[0370-03FF] Greek and Coptic</source>
-        <translation>[0370-03FF] ギリシア文字及びコプト文字</translation>
+        <translation>[0370-03FF] ギリシャ文字・コプト文字</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="993"/>
         <source>[0400-04FF] Cyrillic</source>
-        <translation>[0400-04FF] キリール文字（キリル文字）</translation>
+        <translation>[0400-04FF] キリル文字</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="998"/>
         <source>[0500-052F] Cyrillic Supplementary</source>
-        <translation>[0500-052F] キリール文字補助</translation>
+        <translation>[0500-052F] キリル文字補助</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1003"/>
@@ -7835,7 +7850,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1023"/>
         <source>[0780-07BF] Thaana</source>
-        <translation>[0780-07BF] アラビア文字補助</translation>
+        <translation>[0780-07BF] ターナ文字</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1028"/>
@@ -7855,7 +7870,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1043"/>
         <source>[0A80-0AFF] Gujarati</source>
-        <translation>[0A80-0AFF] グジャラート文字（グジャラーティー文字）</translation>
+        <translation>[0A80-0AFF] グジャラート文字</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1048"/>
@@ -7895,7 +7910,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1083"/>
         <source>[0E80-0EFF] Lao</source>
-        <translation>[0E80-0EFF] ラオス文字（ラーオ文字）</translation>
+        <translation>[0E80-0EFF] ラオ文字</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1088"/>
@@ -7905,7 +7920,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1093"/>
         <source>[1000-109F] Myanmar</source>
-        <translation>[1000-109F] ミャンマー文字（ビルマ文字）</translation>
+        <translation>[1000-109F] ミャンマー文字</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1098"/>
@@ -7920,7 +7935,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1108"/>
         <source>[1200-137F] Ethiopic</source>
-        <translation>[1200-137F] エチオピア文字（ゲエズ文字）</translation>
+        <translation>[1200-137F] エチオピア文字</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1113"/>
@@ -7930,7 +7945,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1118"/>
         <source>[1400-167F] Unified Canadian Aboriginal Syllabic</source>
-        <translation>[1400-167F] 統合カナダ先住民音節（カナダ先住民文字）</translation>
+        <translation>[1400-167F] カナダ先住民音節文字</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1123"/>
@@ -7945,7 +7960,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1133"/>
         <source>[1700-171F] Tagalog</source>
-        <translation>[1700-171F] タガログ文字（バイバイン）</translation>
+        <translation>[1700-171F] タガログ文字</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1138"/>
@@ -7960,7 +7975,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1148"/>
         <source>[1760-177F] Tagbanwa</source>
-        <translation>[1760-177F] タグバヌア文字（タグバヌワ文字）</translation>
+        <translation>[1760-177F] タグバヌア文字</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1153"/>
@@ -7975,12 +7990,12 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1163"/>
         <source>[1E00-1EFF] Latin Extended Additional</source>
-        <translation>[1E00-1EFF] ラテン文字拡張追加</translation>
+        <translation>[1E00-1EFF] ラテン拡張追加</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1168"/>
         <source>[1F00-1FFF] Greek Extended</source>
-        <translation>[1F00-1FFF] ギリシア文字拡張</translation>
+        <translation>[1F00-1FFF] ギリシャ文字拡張</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1173"/>
@@ -7990,7 +8005,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1178"/>
         <source>[2070-209F] Superscripts and Subscripts</source>
-        <translation>[2070-209F] 上付き・下付き</translation>
+        <translation>[2070-209F] 上付き文字・下付き文字</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1183"/>
@@ -8000,17 +8015,17 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1188"/>
         <source>[20D0-20FF] Combining Marks for Symbols</source>
-        <translation>[20D0-20FF] 記号用ダイアクリティカルマーク（合成可能）</translation>
+        <translation>[20D0-20FF] 記号用結合文字</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1193"/>
         <source>[2100-214F] Letterlike Symbols</source>
-        <translation>[2100-214F] 文字様記号</translation>
+        <translation>[2100-214F] 文字類似記号</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1198"/>
         <source>[2150-218F] Number Forms</source>
-        <translation>[2150-218F] 2150-218F] 数字に準じるもの</translation>
+        <translation>[2150-218F] 数字の字形</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1203"/>
@@ -8035,7 +8050,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1223"/>
         <source>[2440-245F] Optical Character Recognition</source>
-        <translation>[2440-245F] 光学的文字認識、OCR</translation>
+        <translation>[2440-245F] OCR用記号</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1228"/>
@@ -8050,7 +8065,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1238"/>
         <source>[2580-259F] Block Elements</source>
-        <translation>[2580-259F] ブロック要素</translation>
+        <translation>[2580-259F] ブロック素片</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1243"/>
@@ -8070,27 +8085,27 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1258"/>
         <source>[27C0-27EF] Miscellaneous Mathematical Symbols-A</source>
-        <translation>[27C0-27EF] その他の数学記号A</translation>
+        <translation>[27C0-27EF] その他の数学記号-A</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1263"/>
         <source>[27F0-27FF] Supplemental Arrows-A</source>
-        <translation>[27F0-27FF] 補助矢印A</translation>
+        <translation>[27F0-27FF] 補助矢印-A</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1268"/>
         <source>[2800-28FF] Braille Patterns</source>
-        <translation>[2800-28FF] 点字図形</translation>
+        <translation>[2800-28FF] 点字パターン</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1273"/>
         <source>[2900-297F] Supplemental Arrows-B</source>
-        <translation>[2900-297F] 補助矢印B</translation>
+        <translation>[2900-297F] 補助矢印-B</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1278"/>
         <source>[2980-29FF] Miscellaneous Mathematical Symbols-B</source>
-        <translation>[2980-29FF] その他の数学記号B</translation>
+        <translation>[2980-29FF] その他の数学記号-B</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1283"/>
@@ -8105,17 +8120,17 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1293"/>
         <source>[2F00-2FDF] Kangxi Radicals</source>
-        <translation>[2F00-2FDF] 康熙部首</translation>
+        <translation>[2F00-2FDF] 康煕部首</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1298"/>
         <source>[2FF0-2FFF] Ideographic Description Characters</source>
-        <translation>[2FF0-2FFF] 漢字構成記述文字、IDC</translation>
+        <translation>[2FF0-2FFF] 表意文字記述文字</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1303"/>
         <source>[3000-303F] CJK Symbols and Punctuation</source>
-        <translation>[3000-303F] CJKの記号及び句読点</translation>
+        <translation>[3000-303F] CJK記号・句読点</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1308"/>
@@ -8130,17 +8145,17 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1318"/>
         <source>[3100-312F] Bopomofo</source>
-        <translation>[3100-312F] 注音字母（注音符号）</translation>
+        <translation>[3100-312F] 注音字母</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1323"/>
         <source>[3130-318F] Hangul Compatibility Jamo</source>
-        <translation>[3130-318F] ハングル互換字母</translation>
+        <translation>[3130-318F] ハングル字母互換用</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1328"/>
         <source>[3190-319F] Kanbun</source>
-        <translation>[3190-319F] 漢文用記号（返り点）</translation>
+        <translation>[3190-319F] 漢文用記号</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1333"/>
@@ -8170,7 +8185,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1358"/>
         <source>[A000-A48F] Yi Syllables</source>
-        <translation>[A000-A48F] イ文字（ロロ文字）</translation>
+        <translation>[A000-A48F] イ文字</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1363"/>
@@ -8180,62 +8195,62 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1368"/>
         <source>[AC00-D7AF] Hangul Syllables</source>
-        <translation>[AC00-D7AF] ハングル音節文字</translation>
+        <translation>[AC00-D7AF] ハングル音節</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1373"/>
         <source>[D800-DBFF] High Surrogates</source>
-        <translation>[D800-DBFF] 上位代用符号位置</translation>
+        <translation>[D800-DBFF] 高サロゲート</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1378"/>
         <source>[DC00-DFFF] Low Surrogate Area</source>
-        <translation>[DC00-DFFF] 下位代用符号位置</translation>
+        <translation>[DC00-DFFF] 低サロゲート領域</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1383"/>
         <source>[E000-F8FF] Private Use Area</source>
-        <translation>[E000-F8FF] 私用領域（外字領域）</translation>
+        <translation>[E000-F8FF] 私用領域</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1388"/>
         <source>[F900-FAFF] CJK Compatibility Ideographs</source>
-        <translation>[F900-FAFF] CJK互換漢字</translation>
+        <translation>[F900-FAFF] CJK互換用漢字</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1393"/>
         <source>[FB00-FB4F] Alphabetic Presentation Forms</source>
-        <translation>[FB00-FB4F] アルファベット表示形</translation>
+        <translation>[FB00-FB4F] 字母表示用字形</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1398"/>
         <source>[FB50-FDFF] Arabic Presentation Forms-A</source>
-        <translation>[FB50-FDFF] アラビア表示形A</translation>
+        <translation>[FB50-FDFF] アラビア表示用字形-A</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1403"/>
         <source>[FE00-FE0F] Variation Selectors</source>
-        <translation>[FE00-FE0F] 字形選択子（異体字セレクタ）</translation>
+        <translation>[FE00-FE0F] 異体字セレクタ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1408"/>
         <source>[FE20-FE2F] Combining Half Marks</source>
-        <translation>[FE20-FE2F] 半記号（合成可能）</translation>
+        <translation>[FE20-FE2F] 結合用半記号</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1413"/>
         <source>[FE30-FE4F] CJK Compatibility Forms</source>
-        <translation>[FE30-FE4F] CJK互換形</translation>
+        <translation>[FE30-FE4F] CJK互換用字形</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1418"/>
         <source>[FE50-FE6F] Small Form Variants</source>
-        <translation>[FE50-FE6F] 小字形</translation>
+        <translation>[FE50-FE6F] 小型字形変種</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1423"/>
         <source>[FE70-FEFF] Arabic Presentation Forms-B</source>
-        <translation>[FE70-FEFF] アラビア表示形B</translation>
+        <translation>[FE70-FEFF] アラビア表示用字形-B</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1428"/>
@@ -8245,12 +8260,12 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1433"/>
         <source>[FFF0-FFFF] Specials</source>
-        <translation>[FFF0-FFFF] 特殊用途文字</translation>
+        <translation>[FFF0-FFFF] 特殊用途</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1438"/>
         <source>[10300-1032F] Old Italic</source>
-        <translation>[10300-1032F] 古代イタリア文字（古イタリア文字）</translation>
+        <translation>[10300-1032F] 古イタリア文字</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1443"/>
@@ -8260,7 +8275,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1448"/>
         <source>[10400-1044F] Deseret</source>
-        <translation>[10400-1044F] デザレット文字</translation>
+        <translation>[10400-1044F] デセレット文字</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1453"/>
@@ -8285,7 +8300,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1473"/>
         <source>[2F800-2FA1F] CJK Compatibility Ideographs Supplement</source>
-        <translation>[2F800-2FA1F] CJK互換漢字補助</translation>
+        <translation>[2F800-2FA1F] CJK互換用漢字補助</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1478"/>
@@ -8295,12 +8310,12 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1483"/>
         <source>[F0000-FFFFD] Supplementary Private Use Area-A</source>
-        <translation>[F0000-FFFFD] 補助私用領域A</translation>
+        <translation>[F0000-FFFFD] 補助私用領域-A</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1488"/>
         <source>[100000-10FFFD] Supplementary Private Use Area-B</source>
-        <translation>[100000-10FFFD] 補助私用領域B</translation>
+        <translation>[100000-10FFFD] 補助私用領域-B</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="256"/>
@@ -8310,7 +8325,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="843"/>
         <source>Degree (°)</source>
-        <translation>角度 (°)</translation>
+        <translation>度 (°)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="848"/>
@@ -8320,12 +8335,12 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="868"/>
         <source>Copyright (©)</source>
-        <translation>商標 (©)</translation>
+        <translation>コピーライト (©)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="873"/>
         <source>Registered (®)</source>
-        <translation>登録 (®)</translation>
+        <translation>登録商標 (®)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="878"/>
@@ -8345,7 +8360,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="893"/>
         <source>Yen (¥)</source>
-        <translation>日本円 (¥)</translation>
+        <translation>円 (¥)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="898"/>
@@ -8375,12 +8390,12 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="318"/>
         <source>Oblique:</source>
-        <translation>傾き:</translation>
+        <translation>傾斜:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="328"/>
         <source>Width factor:</source>
-        <translation>倍率 幅:</translation>
+        <translation>幅係数:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="335"/>
@@ -8390,7 +8405,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="565"/>
         <source>Baseline Left</source>
-        <translation>ベースライン・左</translation>
+        <translation>ベースライン左</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="568"/>
@@ -8402,17 +8417,17 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="623"/>
         <source>Baseline Right</source>
-        <translation>ベースライン・右</translation>
+        <translation>ベースライン右</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="646"/>
         <source>Baseline Center</source>
-        <translation>ベースライン・中央</translation>
+        <translation>ベースライン中央</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="774"/>
         <source>Fit</source>
-        <translation>Fit</translation>
+        <translation>調整</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="838"/>
@@ -8422,12 +8437,12 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="784"/>
         <source>A&amp;ligned</source>
-        <translation>並列(&amp;l)</translation>
+        <translation>整列(&amp;L)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="794"/>
         <source>&amp;Middle</source>
-        <translation>中間点(&amp;M)</translation>
+        <translation>中央(&amp;M)</translation>
     </message>
 </context>
 <context>
@@ -8440,7 +8455,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_exitdialog.ui" line="44"/>
         <source>again Still No Text supplied.</source>
-        <translation>また、テキストの記述がない.</translation>
+        <translation>テキストがまだ提供されていません。</translation>
     </message>
     <message>
         <source>Close</source>
@@ -8462,65 +8477,65 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/qg_filedialog.cpp" line="127"/>
         <source>Drawing Exchange DXF 2000 %1</source>
-        <translation>図面を入れ替え DXF 2000 %1</translation>
+        <translation>図面交換 DXF 2000 %1</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_filedialog.cpp" line="129"/>
         <source>Drawing Exchange DXF R12 %1</source>
-        <translation>図面を入れ替え DXF R12 %1</translation>
+        <translation>図面交換 DXF R12 %1</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_filedialog.cpp" line="132"/>
         <source>LFF Font %1</source>
-        <translation>LFF フォント %1</translation>
+        <translation>LFFフォント %1</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_filedialog.cpp" line="136"/>
         <source>QCad Font %1</source>
-        <translation>QCad フォント %1</translation>
+        <translation>QCadフォント %1</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_filedialog.cpp" line="137"/>
         <source>Jww Drawing %1</source>
-        <translation>Jww 書式 %1</translation>
+        <translation>JWW図面 %1</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_filedialog.cpp" line="130"/>
         <source>Drawing Exchange %1</source>
-        <translation>図面を入れ替え %1</translation>
+        <translation>図面交換 %1</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_filedialog.cpp" line="138"/>
         <source>QCad 1.x file %1</source>
-        <translation>%1 はQCad 1.x ファイル</translation>
+        <translation>QCad 1.xファイル %1</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_filedialog.cpp" line="125"/>
         <source>Drawing Exchange DXF 2007 %1</source>
-        <translation>図面を入れ替え DXF 2007 %1</translation>
+        <translation>図面交換 DXF 2007 %1</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_filedialog.cpp" line="126"/>
         <source>Drawing Exchange DXF 2004 %1</source>
-        <translation>図面を入れ替え DXF 2004 %1</translation>
+        <translation>図面交換 DXF 2004 %1</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_filedialog.cpp" line="128"/>
         <source>Drawing Exchange DXF R14 %1</source>
-        <translation>図面を入れ替え DXF R14 %1</translation>
+        <translation>図面交換 DXF R14 %1</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_filedialog.cpp" line="141"/>
         <source>Block</source>
         <comment>block file</comment>
         <translatorcomment>AutoCADにあわせて「ブロック」と訳すことにした</translatorcomment>
-        <translation>ブロックファイル</translation>
+        <translation>ブロック</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_filedialog.cpp" line="144"/>
         <source>Drawing</source>
         <comment>drawing file</comment>
-        <translation>図面ファイル</translation>
+        <translation>図面</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_filedialog.cpp" line="167"/>
@@ -8530,12 +8545,12 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/qg_filedialog.cpp" line="257"/>
         <source>Save %1 As</source>
-        <translation>%1 を別名で保存</translation>
+        <translation>%1 を名前を付けて保存</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_filedialog.cpp" line="134"/>
         <source>dwg Drawing %1</source>
-        <translation>%1 はｄｗｇ書式の図面</translation>
+        <translation>dwg図面 %1</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_filedialog.cpp" line="238"/>
@@ -8548,12 +8563,12 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/qg_graphicview.cpp" line="569"/>
         <source>Edit Properties</source>
-        <translation>プロパティの編集</translation>
+        <translation>プロパティ編集</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_graphicview.cpp" line="566"/>
         <source>Edit Block</source>
-        <translation>ブロックの編集</translation>
+        <translation>ブロック編集</translation>
     </message>
 </context>
 <context>
@@ -8561,7 +8576,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="14"/>
         <source>Image Export Options</source>
-        <translation>画像で書き出すオプション</translation>
+        <translation>画像エクスポートオプション</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="23"/>
@@ -8581,7 +8596,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="203"/>
         <source>Background</source>
-        <translation>背景色</translation>
+        <translation>背景</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="209"/>
@@ -8596,47 +8611,47 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="43"/>
         <source>auto</source>
-        <translation>auto</translation>
+        <translation>自動</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="258"/>
         <source>Colouring</source>
-        <translation>色</translation>
+        <translation>色設定</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="264"/>
         <source>Black / White</source>
-        <translation>黒／白</translation>
+        <translation>黒 / 白</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="274"/>
         <source>Coloured</source>
-        <translation>色</translation>
+        <translation>カラー</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="310"/>
         <source>Borders</source>
-        <translation>境界線</translation>
+        <translation>余白</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="326"/>
         <source>Top / Bottom - Border:</source>
-        <translation>上下の境界線:</translation>
+        <translation>上下余白:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="333"/>
         <source>Left / Right - Border:</source>
-        <translation>左右の境界線:</translation>
+        <translation>左右余白:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="353"/>
         <source>set same size</source>
-        <translation>同じ大きさに設定</translation>
+        <translation>同じサイズに設定</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="219"/>
         <source>B&amp;lack</source>
-        <translation>黒(&amp;l)</translation>
+        <translation>黒(&amp;L)</translation>
     </message>
 </context>
 <context>
@@ -8644,7 +8659,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/qg_layerbox.cpp" line="71"/>
         <source>- Unchanged -</source>
-        <translation>- 未変更 -</translation>
+        <translation>- 変更なし -</translation>
     </message>
 </context>
 <context>
@@ -8662,18 +8677,19 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_layerdialog.cpp" line="65"/>
         <source>Default Pen</source>
-        <translation>既定ペン</translation>
+        <translation>デフォルトペン</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_layerdialog.ui" line="29"/>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
 The contents of a Construction Layer should not appear in printout.</source>
-        <translation>作図補助レイヤーの要素は無限のまっすぐな線であり、このレイヤーの内容は印刷されない.</translation>
+        <translation>構築レイヤーは、幾何学的な作図に使用するための無限直線エンティティを持ちます。
+構築レイヤーの内容は印刷出力に表示されるべきではありません。</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_layerdialog.ui" line="33"/>
         <source>Construction Layer</source>
-        <translation>作図補助レイヤー</translation>
+        <translation>構築レイヤー</translation>
     </message>
 </context>
 <context>
@@ -8681,22 +8697,22 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="227"/>
         <source>Show all layers</source>
-        <translation>全レイヤーを表示</translation>
+        <translation>すべてのレイヤーを表示</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="234"/>
         <source>Hide all layers</source>
-        <translation>全レイヤーを非表示</translation>
+        <translation>すべてのレイヤーを非表示</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="255"/>
         <source>Add a layer</source>
-        <translation>レイヤー追加</translation>
+        <translation>レイヤーを追加</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="269"/>
         <source>Modify layer attributes / rename</source>
-        <translation>レイヤー設定（名称・線の属性を変更）</translation>
+        <translation>レイヤー属性の変更 / 名前変更</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="549"/>
@@ -8706,12 +8722,12 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="556"/>
         <source>&amp;Defreeze all Layers</source>
-        <translation>すべてのレイヤー固定解除(&amp;D)</translation>
+        <translation>全レイヤーの凍結を解除(&amp;D)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="558"/>
         <source>&amp;Freeze all Layers</source>
-        <translation>すべてのレイヤー固定(&amp;F)</translation>
+        <translation>全レイヤーを凍結(&amp;F)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="579"/>
@@ -8726,27 +8742,27 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="278"/>
         <source>Looking for matching layer names</source>
-        <translation>レイヤー名で検索</translation>
+        <translation>一致するレイヤー名を検索中</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="581"/>
         <source>Edit Layer &amp;Attributes</source>
-        <translation>レイヤーの属性を編集(&amp;A)</translation>
+        <translation>レイヤー属性編集(&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="567"/>
         <source>Toggle Layer &amp;Visibility</source>
-        <translation>表示/非表示の切り替え(&amp;V)</translation>
+        <translation>レイヤー表示切替(&amp;V)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="571"/>
         <source>Toggle Layer &amp;Printing</source>
-        <translation>印刷の有無を切り替え(&amp;P)</translation>
+        <translation>レイヤー印刷切替(&amp;P)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="573"/>
         <source>Toggle &amp;Construction Layer</source>
-        <translation>作図補助レイヤーの切り替え(&amp;C)</translation>
+        <translation>構築レイヤー切替(&amp;C)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="241"/>
@@ -8771,27 +8787,27 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="560"/>
         <source>&amp;Unlock all Layers</source>
-        <translation>すべてのレイヤーのロックを解除</translation>
+        <translation>全レイヤーロック解除(&amp;U)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="562"/>
         <source>&amp;Lock all Layers</source>
-        <translation>すべてのレイヤーをロック</translation>
+        <translation>全レイヤーロック(&amp;L)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="569"/>
         <source>Toggle Layer Loc&amp;k</source>
-        <translation>レイヤーのロックを切り替え</translation>
+        <translation>レイヤーロック切替(&amp;K)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="586"/>
         <source>&amp;Export Selected Layer(s)</source>
-        <translation>選択したレイヤーをエクスポート</translation>
+        <translation>選択レイヤーをエクスポート(&amp;E)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="589"/>
         <source>Export &amp;Visible Layer(s)</source>
-        <translation>可視レイヤーをエクスポート</translation>
+        <translation>表示レイヤーをエクスポート(&amp;V)</translation>
     </message>
 </context>
 <context>
@@ -8823,13 +8839,13 @@ The contents of a Construction Layer should not appear in printout.</source>
         <location filename="../src/ui/qg_linetypebox.cpp" line="79"/>
         <location filename="../src/ui/qg_linetypebox.cpp" line="189"/>
         <source>By Layer</source>
-        <translation>レイヤー設定で</translation>
+        <translation>レイヤー別</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="80"/>
         <source>By Block</source>
         <translatorcomment>AutoCADにあわせて「ブロック」と訳すことにした</translatorcomment>
-        <translation>ブロック設定で</translation>
+        <translation>ブロック別</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="82"/>
@@ -8839,37 +8855,37 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="83"/>
         <source>Continuous</source>
-        <translation>実線</translation>
+        <translation>連続線</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="84"/>
         <source>Dot</source>
-        <translation>Dot</translation>
+        <translation>点</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="86"/>
         <source>Dot (small)</source>
-        <translation>点線（小）</translation>
+        <translation>点線 (小)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="87"/>
         <source>Dot (large)</source>
-        <translation>点線(大）</translation>
+        <translation>点線 (大)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="88"/>
         <source>Dash</source>
-        <translation>Dash</translation>
+        <translation>破線</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="90"/>
         <source>Dash (small)</source>
-        <translation>破線(小）</translation>
+        <translation>破線 (小)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="91"/>
         <source>Dash (large)</source>
-        <translation>破線(大）</translation>
+        <translation>破線 (大)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="92"/>
@@ -8879,42 +8895,42 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="94"/>
         <source>Dash Dot (small)</source>
-        <translation>一点鎖線（小）</translation>
+        <translation>一点鎖線 (小)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="95"/>
         <source>Dash Dot (large)</source>
-        <translation>一点鎖線（大）</translation>
+        <translation>一点鎖線 (大)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="96"/>
         <source>Divide</source>
-        <translation>分割線</translation>
+        <translation>分割</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="98"/>
         <source>Divide (small)</source>
-        <translation>分割線(小）</translation>
+        <translation>二点鎖線 (小)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="99"/>
         <source>Divide (large)</source>
-        <translation>分割線(大）</translation>
+        <translation>二点鎖線 (大)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="100"/>
         <source>Center</source>
-        <translation>中心線</translation>
+        <translation>中心</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="102"/>
         <source>Center (small)</source>
-        <translation>中心線（小）</translation>
+        <translation>中心線 (小)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="103"/>
         <source>Center (large)</source>
-        <translation>中心線(大）</translation>
+        <translation>中心線 (大)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="104"/>
@@ -8924,47 +8940,47 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="106"/>
         <source>Border (small)</source>
-        <translation>境界線（小）</translation>
+        <translation>境界線 (小)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="107"/>
         <source>Border (large)</source>
-        <translation>境界線（大）</translation>
+        <translation>境界線 (大)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="75"/>
         <source>- Unchanged -</source>
-        <translation>- 未変更 -</translation>
+        <translation>- 変更なし -</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="85"/>
         <source>Dot (tiny)</source>
-        <translation>点線（極小）</translation>
+        <translation>点線 (極小)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="89"/>
         <source>Dash (tiny)</source>
-        <translation>破線（極小）</translation>
+        <translation>破線 (極小)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="93"/>
         <source>Dash Dot (tiny)</source>
-        <translation>一点鎖線（極小）</translation>
+        <translation>一点鎖線 (極小)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="97"/>
         <source>Divide (tiny)</source>
-        <translation>分割線（極小）</translation>
+        <translation>二点鎖線 (極小)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="101"/>
         <source>Center (tiny)</source>
-        <translation>中心線（極小）</translation>
+        <translation>中心線 (極小)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="105"/>
         <source>Border (tiny)</source>
-        <translation>境界線（極小）</translation>
+        <translation>境界線 (極小)</translation>
     </message>
 </context>
 <context>
@@ -8982,7 +8998,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/forms/qg_mousewidget.ui" line="108"/>
         <source>Left</source>
-        <translation>Left</translation>
+        <translation>左</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_mousewidget.ui" line="130"/>
@@ -8995,7 +9011,7 @@ p, li { white-space: pre-wrap; }
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;; font-size:9pt;&quot;&gt;ヒント 左右のマウスボタンによる動作&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;; font-size:9pt;&quot;&gt;マウスの左/右ボタン操作のヒント&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -9021,7 +9037,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.cpp" line="103"/>
         <source>wrong action type</source>
-        <translation>間違ったアクションタイプ</translation>
+        <translation>不正なアクションタイプ</translation>
     </message>
 </context>
 <context>
@@ -9029,7 +9045,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/qg_recentfiles.cpp" line="180"/>
         <source>&amp;%1 %2</source>
-        <translation>最近使用したファイル：%1 %2</translation>
+        <translation>&amp;%1 %2</translation>
     </message>
 </context>
 <context>
@@ -9042,12 +9058,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_selectionwidget.ui" line="80"/>
         <source>Selected</source>
-        <translation>選択</translation>
+        <translation>選択数</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_selectionwidget.ui" line="114"/>
         <source>Total Length</source>
-        <translation>長さの合計</translation>
+        <translation>全長</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_selectionwidget.ui" line="139"/>
@@ -9060,7 +9076,7 @@ p, li { white-space: pre-wrap; }
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;選択された要素の値&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;選択エンティティ数&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_selectionwidget.ui" line="177"/>
@@ -9073,7 +9089,7 @@ p, li { white-space: pre-wrap; }
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;選択された要素の長さの合計&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;選択エンティティの全長&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -9081,152 +9097,152 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="26"/>
         <source>Snap</source>
-        <translation>Snap</translation>
+        <translation>スナップ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="47"/>
         <source>Snap to Endpoints</source>
-        <translation>終点へスナップ</translation>
+        <translation>端点にスナップ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="64"/>
         <source>Snap to equidistant points of entity</source>
-        <translation>2点間中点</translation>
+        <translation>エンティティの等分点にスナップ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="81"/>
         <source>Snap to center points</source>
-        <translation>中心点へスナップ</translation>
+        <translation>中心点にスナップ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="98"/>
         <source>Snap to intersections automatically</source>
-        <translation>自動的に交点へスナップ</translation>
+        <translation>交差点に自動スナップ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="115"/>
         <source>Snap to closest point on entity</source>
-        <translation>図形上の近傍点へスナップ</translation>
+        <translation>エンティティ上の最近点にスナップ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="132"/>
         <source>Snap to point with given distance to endpoint</source>
-        <translation>終点までの指定距離指示で点へスナップ</translation>
+        <translation>端点からの指定距離点にスナップ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="149"/>
         <source>Snap to intersections manually</source>
-        <translation>指定して交点へスナップ</translation>
+        <translation>交差点に手動スナップ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="166"/>
         <source>Snap to grid</source>
-        <translation>グリッドへスナップ</translation>
+        <translation>グリッドにスナップ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="183"/>
         <source>Restrict Horizontally</source>
-        <translation>（移動方向）水平制限</translation>
+        <translation>水平に制限</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="200"/>
         <source>Restrict Vertically</source>
-        <translation>（移動方向）垂直制限</translation>
+        <translation>垂直に制限</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="217"/>
         <source>Move relative Zero</source>
-        <translation>相対原点へ移動</translation>
+        <translation>相対ゼロを移動</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="234"/>
         <source>Lock relative Zero</source>
-        <translation>相対原点を固定</translation>
+        <translation>相対ゼロをロック</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="58"/>
         <source>Free Snap</source>
-        <translation>任意の場所</translation>
+        <translation>フリースナップ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="63"/>
         <source>Snap on grid</source>
-        <translation>グリッド</translation>
+        <translation>グリッドにスナップ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="68"/>
         <source>Snap on Endpoints</source>
-        <translation>終点</translation>
+        <translation>端点スナップ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="73"/>
         <source>Snap on Entity</source>
-        <translation>要素の上</translation>
+        <translation>図形スナップ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="78"/>
         <source>Snap Center</source>
-        <translation>中心点</translation>
+        <translation>中心スナップ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="83"/>
         <source>Snap Middle</source>
-        <translation>要素の中間点</translation>
+        <translation>中点スナップ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="88"/>
         <source>Snap Distance</source>
-        <translation>距離指定</translation>
+        <translation>距離スナップ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="93"/>
         <source>Snap Intersection</source>
-        <translation>交点</translation>
+        <translation>交点スナップ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="102"/>
         <source>Restrict Horizontal</source>
-        <translation>（移動方向）水平制限</translation>
+        <translation>水平制限</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="108"/>
         <source>Restrict Vertical</source>
-        <translation>（移動方向）垂直制限</translation>
+        <translation>垂直制限</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="115"/>
         <source>Restrict Orthogonal</source>
-        <translation>（移動方向）直交位置に制限</translation>
+        <translation>直交制限</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="123"/>
         <source>Restrict Nothing</source>
-        <translation>（移動方向）制限なし</translation>
+        <translation>制限なし</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="130"/>
         <source>Set relative zero position</source>
-        <translation>相対原点設定</translation>
+        <translation>相対ゼロ位置を設定</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="136"/>
         <source>Lock relative zero position</source>
-        <translation>相対原点を固定</translation>
+        <translation>相対ゼロ位置をロック</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="43"/>
         <source>Exclusive Snap Mode</source>
-        <translation>独立スナップモード</translation>
+        <translation>排他スナップモード</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="220"/>
         <source>Relative zero position is %1</source>
-        <translation>相対ゼロ位置は%1です</translation>
+        <translation>相対ゼロ位置は %1</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="220"/>
         <source>locked</source>
-        <translation>ロック</translation>
+        <translation>ロック済み</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="220"/>
@@ -9236,7 +9252,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="52"/>
         <source>Snap Middle Manual</source>
-        <translation>スナップ中央手動</translation>
+        <translation>中点スナップ(手動)</translation>
     </message>
 </context>
 <context>
@@ -9245,7 +9261,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/forms/qg_widgetpen.ui" line="26"/>
         <location filename="../src/ui/forms/qg_widgetpen.ui" line="47"/>
         <source>Pen</source>
-        <translation>Pen</translation>
+        <translation>ペン</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_widgetpen.ui" line="91"/>
@@ -9268,7 +9284,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/qg_widthbox.cpp" line="247"/>
         <source>By Layer</source>
-        <translation>レイヤー設定で</translation>
+        <translation>レイヤー別</translation>
     </message>
     <message>
         <source>By Block</source>
@@ -9401,12 +9417,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="323"/>
         <source>Layer &quot;%1&quot; can never be removed.</source>
-        <translation>レイヤー&quot;%1&quot;は削除できません。</translation>
+        <translation>レイヤー &quot;%1&quot; は削除できません。</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="465"/>
         <source>Layer Dialog</source>
-        <translation>レイヤー・ダイアログ</translation>
+        <translation>レイヤーダイアログ</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="580"/>
@@ -9418,32 +9434,32 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/qg_dialogfactory.cpp" line="581"/>
         <source>Block &quot;%1&quot; and all its entities will be removed.</source>
         <translatorcomment>AutoCADにあわせて「ブロック」と訳すことにした</translatorcomment>
-        <translation>ブロック &quot;%1&quot;と、その構成要素図形は削除されます。</translation>
+        <translation>ブロック &quot;%1&quot; とそのすべてのエンティティが削除されます。</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.cpp" line="213"/>
         <location filename="../src/ui/forms/lc_layerdialog_ex.cpp" line="277"/>
         <location filename="../src/ui/forms/qg_layerdialog.cpp" line="85"/>
         <source>Layer Properties</source>
-        <translation>レイヤーの属性</translation>
+        <translation>レイヤープロパティ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_layerdialog.cpp" line="86"/>
         <source>Layer with a name &quot;%1&quot; already exists. Please specify a different name.</source>
-        <translation>&quot;%1&quot;という名前のレイヤーは既に存在します。別な名前を指定してください。</translation>
+        <translation>&quot;%1&quot; という名前のレイヤーは既に存在します。別の名前を指定してください。</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="311"/>
         <source>Layer &quot;%1&quot; and all entities on it will be removed.
 This action can NOT be undone.</source>
-        <translation>レイヤー&quot;%1&quot;とそれに含まれる全図形が削除されます.
-この操作はやり直せません.</translation>
+        <translation>レイヤー &quot;%1&quot; とその上のすべてのエンティティが削除されます。
+この操作は元に戻せません。</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1760"/>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="385"/>
         <source>Layer &quot;0&quot; can never be removed.</source>
-        <translation>レイヤー「0」は削除できません。</translation>
+        <translation>レイヤー &quot;0&quot; は削除できません。</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1808"/>
@@ -9457,7 +9473,7 @@ This action can NOT be undone.</source>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1809"/>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="399"/>
         <source>Listed layers and all entities on them will be removed.</source>
-        <translation>リストされているレイヤーと、その上のすべてのエンティティが削除されます。</translation>
+        <translation>リストされたレイヤーとその上のすべてのエンティティが削除されます。</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1810"/>
@@ -9468,7 +9484,7 @@ This action can NOT be undone.</source>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="406"/>
         <source>Warning: layer &quot;0&quot; can never be removed.</source>
-        <translation>警告: レイヤー「0」は削除できません。</translation>
+        <translation>警告: レイヤー &quot;0&quot; は削除できません。</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1811"/>
@@ -9486,7 +9502,7 @@ This action can NOT be undone.</source>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="644"/>
         <source>Listed blocks and all their entities will be removed.</source>
-        <translation>リストされているブロックと、それらのすべてのエンティティが削除されます。</translation>
+        <translation>リストされたブロックとそのすべてのエンティティが削除されます。</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="648"/>
@@ -9496,15 +9512,16 @@ This action can NOT be undone.</source>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.cpp" line="214"/>
         <source>Layer empty name is not allowed.</source>
-        <translation>レイヤー名が空であることは許可されていません。</translation>
+        <translation>レイヤー名を空にすることはできません。</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.cpp" line="278"/>
         <source>Attempt to create layer with duplicating name. Duplicated layer name is 
 [%1].
 Please specify a different name.</source>
-        <translation>重複する名前のレイヤーを作成しようとしました。重複したレイヤー名は
-[%1]です。別の名前を指定してください。</translation>
+        <translation>重複する名前でレイヤーを作成しようとしました。重複しているレイヤー名は
+[%1] です。
+別の名前を指定してください。</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="153"/>
@@ -9517,13 +9534,15 @@ Please specify a different name.</source>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="154"/>
         <source>Layer list separator string is empty. It will not be possible to build layers tree.
 Please specify a different value.</source>
-        <translation>レイヤーリストの区切り文字列が空です。レイヤーツリーを構築できません。別の値をご指定ください。</translation>
+        <translation>レイヤーリストの区切り文字列が空です。レイヤーツリーを構築できません。
+別の値を指定してください。</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="192"/>
         <source>Invalid value provide for %1 color.
 Please specify a different value.</source>
-        <translation>%1の色として無効な値が提供されました。別の値をご指定ください。</translation>
+        <translation>%1 の色に無効な値が指定されました。
+別の値を指定してください。</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="977"/>
@@ -9540,44 +9559,48 @@ Clear filtering mask and repeat.</source>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="988"/>
         <source>No layers without entities found, nothing to remove.</source>
-        <translation>エンティティがないレイヤーは見つかりませんでした。削除するものは何もありません。</translation>
+        <translation>エンティティのないレイヤーは見つかりませんでした。削除するものはありません。</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1129"/>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1174"/>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1182"/>
         <source>Add Layer</source>
-        <translation>レイヤーを追加</translation>
+        <translation>レイヤー追加</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1130"/>
         <source>Such child layer already exist for 
 [%1].
 Please specify a different name.</source>
-        <translation>[%1]には、すでに同名の子レイヤーが存在します。別の名前を指定してください。</translation>
+        <translation>このような子レイヤーは [%1] に既に存在します。
+別の名前を指定してください。</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1175"/>
         <source>Such child layer already exist for 
 [%1].
 </source>
-        <translation>[%1]には、すでに同名の子レイヤーが存在します。</translation>
+        <translation>このような子レイヤーは既に存在します 
+[%1]。
+</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1183"/>
         <source>Dimensional layer may be added only for normal active layer.
 </source>
-        <translation>次元レイヤーは、通常の有効なレイヤーにのみ追加できます。</translation>
+        <translation>寸法レイヤーは通常のアクティブレイヤーにのみ追加できます。
+</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1246"/>
         <source>Move Selection</source>
-        <translation>選択範囲を移動</translation>
+        <translation>選択を移動</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1253"/>
         <source>Duplicate Selection</source>
-        <translation>重複選択</translation>
+        <translation>選択を複製</translation>
     </message>
     <message>
         <source>Replace &quot;By Layer&quot; value to source layers values?
@@ -9591,14 +9614,14 @@ If No - &quot;By Layer&quot; values remains and so pen of target layer will defi
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1826"/>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1877"/>
         <source>Layer DialogEx</source>
-        <translation>レイヤーダイアログエクス</translation>
+        <translation>レイヤーダイアログEx</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.cpp" line="216"/>
         <source>Invalid value provided for %1 color.
 Please specify a different value.</source>
-        <translation>%1 の色として無効な値が提供されました。
-別の値をご指定ください。</translation>
+        <translation>%1 色に無効な値が指定されました。
+別の値を指定してください。</translation>
     </message>
     <message>
         <source>Invalid path to pens file.
@@ -9611,18 +9634,18 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1292"/>
         <source>Remove pen</source>
-        <translation>ペンの削除</translation>
+        <translation>ペン削除</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1293"/>
         <source>Pen will be removed from palette, drawing entities will not be affected.</source>
-        <translation>ペンはパレットから削除されますが、描画されたエンティティには影響しません。</translation>
+        <translation>ペンはパレットから削除されますが、図面のエンティティには影響しません。</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1294"/>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1313"/>
         <source>Are you sure you&apos;d like to proceed?</source>
-        <translation>続行しますか？</translation>
+        <translation>続行してもよろしいですか？</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1295"/>
@@ -9632,12 +9655,12 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1311"/>
         <source>Remove pens</source>
-        <translation>ペンの削除</translation>
+        <translation>ペン削除</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1312"/>
         <source>Pens will be removed from palette, drawing entities will not be affected.</source>
-        <translation>ペンがパレットから削除されますが、描画エンティティには影響しません。</translation>
+        <translation>ペンはパレットから削除されますが、図面のエンティティには影響しません。</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1314"/>
@@ -9647,39 +9670,41 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1335"/>
         <source>Select Entities </source>
-        <translation>エンティティを選択</translation>
+        <translation>エンティティを選択 </translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1336"/>
         <source>There are no entities that matches pen on visible layers.</source>
-        <translation>可視レイヤー上に、指定されたペンに一致するエンティティはありません。</translation>
+        <translation>可視レイヤーにこのペンに一致するエンティティはありません。</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1337"/>
         <source>Such entities exist on frozen layers.
 </source>
-        <translation>このようなエンティティは、凍結されたレイヤーに存在します。</translation>
+        <translation>そのようなエンティティはフリーズされたレイヤーに存在します。
+</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1338"/>
         <source>Such entities exist on locked layers.
 </source>
-        <translation>このようなエンティティは、ロックされたレイヤーに存在します。</translation>
+        <translation>そのようなエンティティはロックされたレイヤーに存在します。
+</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1339"/>
         <source>Please use different pen attributes.</source>
-        <translation>異なるペン属性を使用してください。</translation>
+        <translation>別のペン属性を使用してください。</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1348"/>
         <source>Set pen by entity</source>
-        <translation>エンティティによるペン設定</translation>
+        <translation>エンティティからペンを設定</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1349"/>
         <source>Please select only one entity to pick pen setting.</source>
-        <translation>ペン設定の選択には、エンティティを一つだけ選択してください。</translation>
+        <translation>ペン設定を取得するには、エンティティを1つだけ選択してください。</translation>
     </message>
     <message>
         <source>Saving Pens Data</source>
@@ -9694,9 +9719,9 @@ Please specify a different value.</source>
         <source>Layer(s) without entities found, yet they are filtered and not visible.
 
 Clear filtering mask and repeat.</source>
-        <translation>エンティティを持たないレイヤーが見つかりましたが、フィルター処理されており、表示されていません。
+        <translation>エンティティのないレイヤーが見つかりましたが、フィルタリングされて表示されていません。
 
-フィルターマスクをクリアして、再度実行してください。</translation>
+フィルターをクリアして再試行してください。</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1270"/>
@@ -9705,11 +9730,11 @@ Clear filtering mask and repeat.</source>
 If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
 
 If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation>レイヤー別」の値を、元のレイヤーの値に置き換えますか？
+        <translation>&quot;レイヤー別&quot; の値をソースレイヤーの値に置き換えますか？
 
-「はい」の場合、「レイヤー別」のペンを持つオブジェクトは、新しいレイヤー上で以前のレイヤーと同じように表示され、「レイヤー別」の値は解決されたペンに置き換えられます。
+はいの場合 — &quot;レイヤー別&quot; ペンを持つエンティティは新しいレイヤーでも以前と同様に表示され、値は解決されたペンに置き換えられます。
 
-「いいえ」の場合、「レイヤー別」の値は変更されず、ターゲットレイヤーのペンが、これらのオブジェクトのペンを定義します。</translation>
+いいえの場合 — &quot;レイヤー別&quot; の値はそのまま残り、ターゲットレイヤーのペンがそのようなエンティティのペンを定義します。</translation>
     </message>
 </context>
 <context>
@@ -9718,13 +9743,14 @@ If No - &quot;By Layer&quot; values remains and so pen of target layer will defi
         <location filename="../src/ui/qg_filedialog.cpp" line="335"/>
         <location filename="../src/ui/qg_filedialog.cpp" line="388"/>
         <source>Save Drawing As</source>
-        <translation>別名で保存</translation>
+        <translation>図面を名前を付けて保存</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_filedialog.cpp" line="389"/>
         <source>%1 already exists.
 Do you want to replace it?</source>
-        <translation>%1は既に存在します。置き換えますか?</translation>
+        <translation>%1 は既に存在します。
+置き換えますか？</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_filedialog.cpp" line="487"/>
@@ -9734,80 +9760,80 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="711"/>
         <source>Open Image</source>
-        <translation>画像ファイルを開く</translation>
+        <translation>画像を開く</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="1793"/>
         <source>Windows Bitmap</source>
         <translatorcomment>Libreoffice の表記にあわせた</translatorcomment>
-        <translation>BPM - Windows Bitmap</translation>
+        <translation>Windows ビットマップ</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="1795"/>
         <source>Joint Photographic Experts Group</source>
         <translatorcomment>Libreoffice の表記にあわせた</translatorcomment>
-        <translation>JPEG - Joint Photographic Experts Group</translation>
+        <translation>JPEG画像</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="1799"/>
         <source>Multiple-image Network Graphics</source>
         <translatorcomment>Libreoffice の表記にあわせた</translatorcomment>
-        <translation>MNG - Multiple-image Network Graphics</translation>
+        <translation>MNG画像</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="1801"/>
         <source>Portable Bit Map</source>
-        <translation>ポータブルビットマップ</translation>
+        <translation>PBM画像</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="1803"/>
         <source>Portable Grey Map</source>
         <translatorcomment>Libreoffice の表記にあわせた</translatorcomment>
-        <translation>PGM - Portable Greymap</translation>
+        <translation>PGM画像</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="1805"/>
         <source>Portable Network Graphic</source>
         <translatorcomment>Libreoffice の表記にあわせた</translatorcomment>
-        <translation>PNG - Portable Network Graphic</translation>
+        <translation>PNG画像</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="1807"/>
         <source>Portable Pixel Map</source>
-        <translation>PPM - Portable Pixelmap</translation>
+        <translation>PPM画像</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="1809"/>
         <source>X Bitmap Format</source>
         <translatorcomment>Libreoffice の表記にあわせた</translatorcomment>
-        <translation>XBM - X Bitmap</translation>
+        <translation>XBM画像</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="1811"/>
         <source>X Pixel Map</source>
         <translatorcomment>Libreoffice の表記にあわせた</translatorcomment>
-        <translation>XPM -X PixelMap</translation>
+        <translation>XPM画像</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="704"/>
         <source>All Image Files (%1)</source>
         <translatorcomment>Libreoffice の表記にあわせた</translatorcomment>
-        <translation>＜すべての形式 (%1)＞</translation>
+        <translation>すべての画像ファイル (%1)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="1797"/>
         <source>Graphics Interchange Format</source>
-        <translation>グラフィック変換形式</translation>
+        <translation>GIF画像</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_filedialog.cpp" line="455"/>
         <source>Drawing Exchange %1</source>
-        <translation>図面を入れ替え %1</translation>
+        <translation>図面交換 %1</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_filedialog.cpp" line="460"/>
         <source>QCad 1.x file %1</source>
-        <translation>QCad 1.x ファイル %1</translation>
+        <translation>QCad 1.xファイル %1</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_filedialog.cpp" line="462"/>
@@ -9817,25 +9843,25 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="706"/>
         <source>All Files (*.*)</source>
-        <translation>全ファイル (*.*)</translation>
+        <translation>すべてのファイル (*.*)</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="206"/>
         <location filename="../src/lib/engine/rs_units.cpp" line="262"/>
         <source>Inch</source>
-        <translation>Inch</translation>
+        <translation>インチ</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="208"/>
         <location filename="../src/lib/engine/rs_units.cpp" line="264"/>
         <source>Foot</source>
-        <translation>Foot</translation>
+        <translation>フィート</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="210"/>
         <location filename="../src/lib/engine/rs_units.cpp" line="266"/>
         <source>Mile</source>
-        <translation>Mile</translation>
+        <translation>マイル</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="212"/>
@@ -9871,19 +9897,19 @@ Do you want to replace it?</source>
         <location filename="../src/lib/engine/rs_units.cpp" line="222"/>
         <location filename="../src/lib/engine/rs_units.cpp" line="278"/>
         <source>Mil</source>
-        <translation>Mil</translation>
+        <translation>ミル</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="224"/>
         <location filename="../src/lib/engine/rs_units.cpp" line="280"/>
         <source>Yard</source>
-        <translation>Yard</translation>
+        <translation>ヤード</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="226"/>
         <location filename="../src/lib/engine/rs_units.cpp" line="282"/>
         <source>Angstrom</source>
-        <translation>オングストローム(Å)</translation>
+        <translation>オングストローム</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="228"/>
@@ -9942,191 +9968,191 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/main/main.cpp" line="261"/>
         <source>Loading..</source>
-        <translation>読み込み..</translation>
+        <translation>読み込み中..</translation>
     </message>
     <message>
         <location filename="../src/main/main.cpp" line="361"/>
         <source>Loading File %1..</source>
-        <translation>ファイル %1 を読み込み..</translation>
+        <translation>ファイル %1 を読み込み中..</translation>
     </message>
     <message>
         <location filename="../src/main/main.cpp" line="325"/>
         <source>Loading...</source>
-        <translation>読み込み...</translation>
+        <translation>読み込み中...</translation>
     </message>
     <message>
         <location filename="../src/main/doc_plugin_interface.cpp" line="1354"/>
         <source>enter an integer number</source>
-        <translation>整数値を入力</translation>
+        <translation>整数を入力してください</translation>
     </message>
     <message>
         <location filename="../src/main/doc_plugin_interface.cpp" line="1358"/>
         <location filename="../src/main/doc_plugin_interface.cpp" line="1376"/>
         <location filename="../src/main/doc_plugin_interface.cpp" line="1393"/>
         <source>LibreCAD query</source>
-        <translation>LibreCADに質問する</translation>
+        <translation>LibreCAD 問い合わせ</translation>
     </message>
     <message>
         <location filename="../src/main/doc_plugin_interface.cpp" line="1372"/>
         <source>enter a number</source>
-        <translation>数値入力</translation>
+        <translation>数値を入力してください</translation>
     </message>
     <message>
         <location filename="../src/main/doc_plugin_interface.cpp" line="1389"/>
         <source>enter text</source>
-        <translation>文字列入力</translation>
+        <translation>テキストを入力してください</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_filedialog.cpp" line="461"/>
         <source>LFF Font %1</source>
-        <translation>LFF フォント %1</translation>
+        <translation>LFFフォント %1</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_filedialog.cpp" line="463"/>
         <source>Jww %1</source>
-        <translation>JW-Cad ファイル %1</translation>
+        <translation>JWW図面 %1</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="1813"/>
         <source>Scalable Vector Graphics</source>
         <translatorcomment>Libreoffice の表記にあわせた</translatorcomment>
-        <translation>SVG - Scalable Vector Graphics</translation>
+        <translation>SVG画像</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="1815"/>
         <source>SGI Black &amp; White</source>
         <translatorcomment>Libreoffice の表記にあわせた</translatorcomment>
-        <translation>BW - SGI Black &amp; White</translation>
+        <translation>SGI白黒画像</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="1817"/>
         <source>Encapsulated PostScript</source>
         <translatorcomment>Libreoffice の表記にあわせた</translatorcomment>
-        <translation>EPS - Encapsulated PostScript</translation>
+        <translation>EPS画像</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="1819"/>
         <source>Encapsulated PostScript Format</source>
         <translatorcomment>Libreoffice の表記にあわせた</translatorcomment>
-        <translation>EPSF - Encapsulated PostScript Format</translation>
+        <translation>EPS形式</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="1821"/>
         <source>Encapsulated PostScript Interchange</source>
         <translatorcomment>Libreoffice の表記にあわせた</translatorcomment>
-        <translation>EPSI - Encapsulated PostScript Interchange</translation>
+        <translation>EPSI形式</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="1823"/>
         <source>Windows Icon</source>
         <translatorcomment>Libreoffice の表記にあわせた</translatorcomment>
-        <translation>ICO - Windows Icon</translation>
+        <translation>Windowsアイコン</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="1825"/>
         <source>JPEG 2000</source>
         <translatorcomment>Libreoffice の表記にあわせた</translatorcomment>
-        <translation>JP2 - JPEG 2000</translation>
+        <translation>JPEG 2000</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="1827"/>
         <source>ZSoft Paintbrush</source>
         <translatorcomment>Libreoffice の表記にあわせた</translatorcomment>
-        <translation>PCX -ZSoft Paintbrush </translation>
+        <translation>PCX画像</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="1829"/>
         <source>PC Paint</source>
         <translatorcomment>Libreoffice の表記にあわせた</translatorcomment>
-        <translation>PIC - PC Paint</translation>
+        <translation>PCX画像</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="1831"/>
         <source>SGI-Bilddatei</source>
         <translatorcomment>Libreoffice の表記にあわせた</translatorcomment>
-        <translation>RGB - SGI-Bilddatei</translation>
+        <translation>SGI画像</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="1833"/>
         <source>Targa Image File</source>
         <translatorcomment>Libreoffice の表記にあわせた</translatorcomment>
-        <translation>TIF - Targa Image File</translation>
+        <translation>TGA画像</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="1835"/>
         <source>Tagged Image File Format</source>
         <translatorcomment>Libreoffice の表記にあわせた</translatorcomment>
-        <translation>TIFF - Tagged Image File Format</translation>
+        <translation>TIFF画像</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_filedialog.cpp" line="454"/>
         <source>Old Drawing Exchange %1</source>
-        <translation>古い図面を入れ替え %1</translation>
+        <translation>旧図面交換 %1</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="177"/>
         <source>Opened dwg file version %1.</source>
-        <translation>開いたDWGファイルのバージョン: %1.</translation>
+        <translation>dwgファイル バージョン %1 を開きました。</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4075"/>
         <source>unknown error opening dwg file</source>
-        <translation>未知のエラー： DWGファイルが開けない</translation>
+        <translation>dwgファイルを開く際に不明なエラーが発生しました</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4079"/>
         <source>can&apos;t open this dwg file</source>
-        <translation>このDWGファイルは開くことができない</translation>
+        <translation>このdwgファイルを開けません</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4083"/>
         <source>unsupported dwg version</source>
-        <translation>サポートされていないバージョンの DWGファイル</translation>
+        <translation>サポートされていないdwgバージョンです</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4091"/>
         <source>error reading file header in dwg file</source>
-        <translation>DWGファイル内のファイルヘッダーの読み込み中にエラー</translation>
+        <translation>dwgファイルのファイルヘッダー読み取りエラー</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4095"/>
         <source>error reading header vars in dwg file</source>
-        <translation>DWGファイル内のヘッダー・バージョンの読み込み中にエラー</translation>
+        <translation>dwgファイルのヘッダー変数読み取りエラー</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4099"/>
         <source>error reading classes in dwg file</source>
-        <translation>DWGファイル内のクラスの読み込み中にエラー</translation>
+        <translation>dwgファイルのクラス読み取りエラー</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4103"/>
         <source>error reading offsets in dwg file</source>
-        <translation>DWGファイル内のオフセットの読み込み中にエラー</translation>
+        <translation>dwgファイルのオフセット読み取りエラー</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4107"/>
         <source>error reading tables in dwg file</source>
-        <translation>DWGファイル内のテーブルの読み込み中にエラー</translation>
+        <translation>dwgファイルのテーブル読み取りエラー</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4115"/>
         <source>error reading entities in dwg file</source>
-        <translation>DWGファイル内の要素の読み込み中にエラー</translation>
+        <translation>dwgファイルのエンティティ読み取りエラー</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_filedialog.cpp" line="458"/>
         <source>dwg Drawing %1</source>
-        <translation>%1 はｄｗｇ書式の図面</translation>
+        <translation>dwg図面 %1</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_graphic.cpp" line="350"/>
         <source>File on disk modified. Please save to another file to avoid data loss! File modified: %1</source>
-        <translation>ファイルの内容が変更されています.データ損失を避けるために、別のファイルに保存してください！ 変更されたファイル： %1</translation>
+        <translation>ディスク上のファイルが変更されました。データ損失を避けるため、別のファイルに保存してください！変更されたファイル: %1</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_entitycontainer.cpp" line="1623"/>
         <source>Hatch failed due to a gap=%1 between (%2, %3) and (%4, %5)</source>
-        <translation>ハッチングに失敗、ギャップ=%1 隙間  (%2, %3) 及び (%4, %5) による</translation>
+        <translation>(%2, %3) と (%4, %5) の間にギャップ=%1 があるためハッチングに失敗しました</translation>
     </message>
     <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="113"/>
@@ -10137,23 +10163,23 @@ Do you want to replace it?</source>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4111"/>
         <source>error reading blocks in dwg file</source>
         <translatorcomment>AutoCADにあわせて「ブロック」と訳すことにした</translatorcomment>
-        <translation>DWGファイル内のブロックの読み込み中にエラー</translation>
+        <translation>dwgファイルのブロック読み取りエラー</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4119"/>
         <source>error reading objects in dwg file</source>
-        <translation>DWGファイル内のオブジェクトの読み込み中にエラー</translation>
+        <translation>dwgファイルのオブジェクト読み取りエラー</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="60"/>
         <source>: duplicated command: %1 is already taken by %2</source>
-        <translation>: 複写されたコマンド: %1 はすでに用いられた %2によって</translation>
+        <translation>: 重複したコマンド: %1 は既に %2 で使用されています</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="851"/>
         <source>point</source>
         <comment>draw point</comment>
-        <translation>point</translation>
+        <translation>点</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="852"/>
@@ -10165,7 +10191,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="155"/>
         <source>line</source>
         <comment>draw line</comment>
-        <translation>line</translation>
+        <translation>線</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="154"/>
@@ -10183,7 +10209,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="520"/>
         <source>polyline</source>
         <comment>draw polyline</comment>
-        <translation>polyline</translation>
+        <translation>ポリライン</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="521"/>
@@ -10195,7 +10221,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="478"/>
         <source>free</source>
         <comment>draw freehand line</comment>
-        <translation>free</translation>
+        <translation>フリーハンド</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="480"/>
@@ -10207,7 +10233,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="446"/>
         <source>spline</source>
         <comment>draw spline</comment>
-        <translation>spline</translation>
+        <translation>スプライン</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="448"/>
@@ -10219,7 +10245,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="453"/>
         <source>spline2</source>
         <comment>spline through points</comment>
-        <translation>spline2</translation>
+        <translation>点通過スプライン</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="455"/>
@@ -10237,7 +10263,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="302"/>
         <source>bisect</source>
         <comment>angle bisector</comment>
-        <translation>bisect</translation>
+        <translation>二等分線</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="301"/>
@@ -10255,19 +10281,19 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="328"/>
         <source>ortho</source>
         <comment>perpendicular line</comment>
-        <translation>ortho</translation>
+        <translation>垂線</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="202"/>
         <source>rect</source>
         <comment>draw rectangle</comment>
-        <translation>rect</translation>
+        <translation>矩形</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="354"/>
         <source>polygon2v</source>
         <comment>polygon by 2 vertices</comment>
-        <translation>polygon2v</translation>
+        <translation>2頂点多角形</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="356"/>
@@ -10279,7 +10305,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="363"/>
         <source>circle</source>
         <comment>draw circle</comment>
-        <translation>circle</translation>
+        <translation>円</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="364"/>
@@ -10315,7 +10341,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="511"/>
         <source>ellipseinscribed</source>
         <comment>inscribed ellipse</comment>
-        <translation>ellipseinscribed</translation>
+        <translation>内接楕円</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="512"/>
@@ -10333,7 +10359,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="845"/>
         <source>hatch</source>
         <comment>draw hatch</comment>
-        <translation>hatch</translation>
+        <translation>ハッチング</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="846"/>
@@ -10345,7 +10371,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="831"/>
         <source>mtext</source>
         <comment>draw mtext</comment>
-        <translation>mtext</translation>
+        <translation>複数行テキスト</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="833"/>
@@ -10357,7 +10383,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="838"/>
         <source>text</source>
         <comment>draw text</comment>
-        <translation>text</translation>
+        <translation>テキスト</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="840"/>
@@ -10369,13 +10395,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="991"/>
         <source>regen</source>
         <comment>zoom - redraw</comment>
-        <translation>regen</translation>
+        <translation>再描画</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="992"/>
         <source>redraw</source>
         <comment>zoom - redraw</comment>
-        <translation>redraw</translation>
+        <translation>再描画</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="993"/>
@@ -10393,7 +10419,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1011"/>
         <source>zoomwindow</source>
         <comment>zoom - window</comment>
-        <translation>zoomwindow</translation>
+        <translation>ウィンドウ拡大</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1012"/>
@@ -10405,7 +10431,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="999"/>
         <source>zoomauto</source>
         <comment>zoom - auto</comment>
-        <translation>zoomauto</translation>
+        <translation>自動拡大</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1000"/>
@@ -10417,7 +10443,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1017"/>
         <source>zoompan</source>
         <comment>zoom - pan</comment>
-        <translation>zoompan</translation>
+        <translation>パン拡大</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1018"/>
@@ -10429,7 +10455,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1005"/>
         <source>zoomprevious</source>
         <comment>zoom - previous</comment>
-        <translation>zoomprevious</translation>
+        <translation>前の表示</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1006"/>
@@ -10441,7 +10467,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="960"/>
         <source>kill</source>
         <comment>kill all actions</comment>
-        <translation>kill</translation>
+        <translation>全アクション終了</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="962"/>
@@ -10453,7 +10479,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="967"/>
         <source>undo</source>
         <comment>undo cycle</comment>
-        <translation>undo</translation>
+        <translation>元に戻す</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="969"/>
@@ -10465,7 +10491,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="974"/>
         <source>redo</source>
         <comment>redo cycle</comment>
-        <translation>redo</translation>
+        <translation>やり直し</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="976"/>
@@ -10477,13 +10503,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="611"/>
         <source>dimaligned</source>
         <comment>dimension - aligned</comment>
-        <translation>dimaligned</translation>
+        <translation>平行寸法</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="623"/>
         <source>dimhorizontal</source>
         <comment>dimension - horizontal</comment>
-        <translation>dimhorizontal</translation>
+        <translation>水平寸法</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="624"/>
@@ -10495,7 +10521,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="629"/>
         <source>dimvertical</source>
         <comment>dimension - vertical</comment>
-        <translation>dimvertical</translation>
+        <translation>垂直寸法</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="630"/>
@@ -10507,7 +10533,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="617"/>
         <source>dimlinear</source>
         <comment>dimension - linear</comment>
-        <translation>dimlinear</translation>
+        <translation>線形寸法</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="618"/>
@@ -10519,7 +10545,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="649"/>
         <source>dimangular</source>
         <comment>dimension - angular</comment>
-        <translation>dimangular</translation>
+        <translation>角度寸法</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="651"/>
@@ -10531,19 +10557,19 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="636"/>
         <source>dimradial</source>
         <comment>dimension - radial</comment>
-        <translation>dimradial</translation>
+        <translation>半径寸法</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="644"/>
         <source>dimdiametric</source>
         <comment>dimension - diametric</comment>
-        <translation>dimdiametric</translation>
+        <translation>直径寸法</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="642"/>
         <source>dimdiameter</source>
         <comment>dimension - diametric</comment>
-        <translation>dimdiameter</translation>
+        <translation>直径寸法</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="643"/>
@@ -10555,7 +10581,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="656"/>
         <source>dimleader</source>
         <comment>dimension - leader</comment>
-        <translation>dimleader</translation>
+        <translation>引出線</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="657"/>
@@ -10567,13 +10593,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="662"/>
         <source>dimregen</source>
         <comment>dimension - regenerate</comment>
-        <translation>dimregen</translation>
+        <translation>寸法再生成</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="933"/>
         <source>restrictnothing</source>
         <comment>restrict - nothing</comment>
-        <translation>restrictnothing</translation>
+        <translation>制限なし</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="934"/>
@@ -10585,7 +10611,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="939"/>
         <source>restrictorthogonal</source>
         <comment>restrict - orthogonal</comment>
-        <translation>restrictorthogonal</translation>
+        <translation>直交制限</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="940"/>
@@ -10597,7 +10623,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="945"/>
         <source>restricthorizontal</source>
         <comment>restrict - horizontal</comment>
-        <translation>restricthorizontal</translation>
+        <translation>水平制限</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="946"/>
@@ -10609,7 +10635,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="951"/>
         <source>restrictvertical</source>
         <comment>restrict - vertical</comment>
-        <translation>restrictvertical</translation>
+        <translation>垂直制限</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="952"/>
@@ -10621,13 +10647,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="671"/>
         <source>mv</source>
         <comment>modify - move (copy)</comment>
-        <translation>mv</translation>
+        <translation>移動/コピー</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="740"/>
         <source>bev</source>
         <comment>modify - bevel</comment>
-        <translation>bev</translation>
+        <translation>面取り</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="741"/>
@@ -10639,13 +10665,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="747"/>
         <source>fi</source>
         <comment>modify - fillet</comment>
-        <translation>fi</translation>
+        <translation>フィレット</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="753"/>
         <source>cut</source>
         <comment>modify - divide (cut)</comment>
-        <translation>cut</translation>
+        <translation>分割</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="754"/>
@@ -10657,55 +10683,55 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="689"/>
         <source>mi</source>
         <comment>modify -  mirror</comment>
-        <translation>mi</translation>
+        <translation>ミラー</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="708"/>
         <source>rev</source>
         <comment>modify -  revert direction</comment>
-        <translation>rev</translation>
+        <translation>方向反転</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="677"/>
         <source>ro</source>
         <comment>modify - rotate</comment>
-        <translation>ro</translation>
+        <translation>回転</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="683"/>
         <source>sz</source>
         <comment>modify - scale</comment>
-        <translation>sz</translation>
+        <translation>拡大/縮小</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="714"/>
         <source>tm</source>
         <comment>modify - trim (extend)</comment>
-        <translation>tm</translation>
+        <translation>トリム</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="721"/>
         <source>tm2</source>
         <comment>modify - multi trim (extend)</comment>
-        <translation>tm2</translation>
+        <translation>複数トリム</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="727"/>
         <source>le</source>
         <comment>modify - lengthen</comment>
-        <translation>le</translation>
+        <translation>延長</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="761"/>
         <source>ss</source>
         <comment>modify - stretch</comment>
-        <translation>ss</translation>
+        <translation>ストレッチ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="793"/>
         <source>er</source>
         <comment>modify - delete (erase)</comment>
-        <translation>er</translation>
+        <translation>削除</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="794"/>
@@ -10717,13 +10743,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="787"/>
         <source>xp</source>
         <comment>explode block/polyline into entities</comment>
-        <translation>xp</translation>
+        <translation>分解</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="866"/>
         <source>snapfree</source>
         <comment>snap - free</comment>
-        <translation>snapfree</translation>
+        <translation>フリースナップ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="868"/>
@@ -10735,7 +10761,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="873"/>
         <source>snapcenter</source>
         <comment>snap - center</comment>
-        <translation>snapcenter</translation>
+        <translation>中心スナップ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="874"/>
@@ -10747,7 +10773,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="879"/>
         <source>snapdist</source>
         <comment>snap - distance to endpoints</comment>
-        <translation>snapdist</translation>
+        <translation>距離スナップ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="880"/>
@@ -10759,7 +10785,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="885"/>
         <source>snapend</source>
         <comment>snap - end points</comment>
-        <translation>snapend</translation>
+        <translation>端点スナップ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="886"/>
@@ -10771,7 +10797,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="891"/>
         <source>snapgrid</source>
         <comment>snap - grid</comment>
-        <translation>snapgrid</translation>
+        <translation>グリッドスナップ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="892"/>
@@ -10783,7 +10809,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="897"/>
         <source>snapintersection</source>
         <comment>snap - intersection</comment>
-        <translation>snapintersection</translation>
+        <translation>交差点スナップ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="898"/>
@@ -10795,7 +10821,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="903"/>
         <source>snapmiddle</source>
         <comment>snap - middle points</comment>
-        <translation>snapmiddle</translation>
+        <translation>中点スナップ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="904"/>
@@ -10807,7 +10833,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="909"/>
         <source>snaponentity</source>
         <comment>snap - on entity</comment>
-        <translation>snaponentity</translation>
+        <translation>エンティティスナップ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="910"/>
@@ -10825,7 +10851,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="927"/>
         <source>setrelativezero</source>
         <comment>set relative zero position</comment>
-        <translation>setrelativezero</translation>
+        <translation>相対ゼロ設定</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="928"/>
@@ -10837,7 +10863,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="589"/>
         <source>selectall</source>
         <comment>Select all entities</comment>
-        <translation>selectall</translation>
+        <translation>すべて選択</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="590"/>
@@ -10849,7 +10875,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="595"/>
         <source>deselectall</source>
         <comment>deselect all entities</comment>
-        <translation>deselectall</translation>
+        <translation>すべて選択解除</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="597"/>
@@ -10861,7 +10887,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="774"/>
         <source>attr</source>
         <comment>modify attribute</comment>
-        <translation>attr</translation>
+        <translation>属性</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="775"/>
@@ -10873,13 +10899,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="767"/>
         <source>prop</source>
         <comment>modify properties</comment>
-        <translation>prop</translation>
+        <translation>プロパティ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="803"/>
         <source>dist</source>
         <comment>distance point to point</comment>
-        <translation>dist</translation>
+        <translation>距離計測</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="804"/>
@@ -10891,13 +10917,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="818"/>
         <source>ang</source>
         <comment>measure angle</comment>
-        <translation>ang</translation>
+        <translation>角度計測</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1063"/>
         <location filename="../src/cmd/rs_commands.cpp" line="1156"/>
         <source>angle</source>
-        <translation>angle</translation>
+        <translation>角度</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1064"/>
@@ -10908,73 +10934,73 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1065"/>
         <location filename="../src/cmd/rs_commands.cpp" line="1168"/>
         <source>close</source>
-        <translation>close</translation>
+        <translation>閉じる</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1066"/>
         <location filename="../src/cmd/rs_commands.cpp" line="1164"/>
         <source>chord length</source>
-        <translation>コード長</translation>
+        <translation>弦長</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1067"/>
         <location filename="../src/cmd/rs_commands.cpp" line="1171"/>
         <source>columns</source>
-        <translation>columns</translation>
+        <translation>列</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1068"/>
         <source>columnspacing</source>
-        <translation>columnspacing</translation>
+        <translation>列間隔</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1070"/>
         <location filename="../src/cmd/rs_commands.cpp" line="1179"/>
         <source>factor</source>
-        <translation>factor</translation>
+        <translation>係数</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1071"/>
         <source>length</source>
-        <translation>length</translation>
+        <translation>長さ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1074"/>
         <source>number</source>
-        <translation>number</translation>
+        <translation>数</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1075"/>
         <location filename="../src/cmd/rs_commands.cpp" line="1206"/>
         <source>radius</source>
-        <translation>radius</translation>
+        <translation>半径</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1076"/>
         <source>rows</source>
-        <translation>rows</translation>
+        <translation>行</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1077"/>
         <source>rowspacing</source>
-        <translation>rowspacing</translation>
+        <translation>行間隔</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1078"/>
         <location filename="../src/cmd/rs_commands.cpp" line="1221"/>
         <source>through</source>
-        <translation>through</translation>
+        <translation>通過</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1079"/>
         <source>trim</source>
-        <translation>trim</translation>
+        <translation>トリム</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1157"/>
         <source>ang</source>
         <comment>angle</comment>
-        <translation>ang</translation>
+        <translation>角度計測</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1158"/>
@@ -10985,7 +11011,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1160"/>
         <source>center</source>
-        <translation>center</translation>
+        <translation>中心</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1161"/>
@@ -11027,7 +11053,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1175"/>
         <source>columnspacing</source>
         <comment>columnspacing for inserts</comment>
-        <translation>columnspacing</translation>
+        <translation>列間隔</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1176"/>
@@ -11056,7 +11082,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1187"/>
         <source>help</source>
-        <translation>help</translation>
+        <translation>ヘルプ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1188"/>
@@ -11068,7 +11094,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1190"/>
         <source>length</source>
         <comment>length</comment>
-        <translation>length</translation>
+        <translation>長さ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1191"/>
@@ -11086,7 +11112,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1194"/>
         <source>length1</source>
         <comment>length1</comment>
-        <translation>length1</translation>
+        <translation>長さ1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1195"/>
@@ -11104,7 +11130,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1198"/>
         <source>length2</source>
         <comment>length2</comment>
-        <translation>length2</translation>
+        <translation>長さ2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1199"/>
@@ -11122,7 +11148,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1202"/>
         <source>number</source>
         <comment>number</comment>
-        <translation>number</translation>
+        <translation>数</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1203"/>
@@ -11146,26 +11172,26 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1209"/>
         <source>reversed</source>
         <comment>reversed</comment>
-        <translation>reversed</translation>
+        <translation>反転</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1210"/>
         <location filename="../src/cmd/rs_commands.cpp" line="1211"/>
         <source>rev</source>
         <comment>reversed</comment>
-        <translation>rev</translation>
+        <translation>方向反転</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1213"/>
         <source>row</source>
         <comment>row</comment>
-        <translation>row</translation>
+        <translation>行</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1215"/>
         <source>rowspacing</source>
         <comment>rowspacing for inserts</comment>
-        <translation>rowspacing</translation>
+        <translation>行間隔</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1216"/>
@@ -11176,7 +11202,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1218"/>
         <source>text</source>
-        <translation>text</translation>
+        <translation>テキスト</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1219"/>
@@ -11193,7 +11219,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1224"/>
         <source>undo</source>
-        <translation>undo</translation>
+        <translation>元に戻す</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1225"/>
@@ -11204,7 +11230,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1227"/>
         <source>redo</source>
-        <translation>redo</translation>
+        <translation>やり直し</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1228"/>
@@ -11215,7 +11241,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1230"/>
         <source>back</source>
-        <translation>back</translation>
+        <translation>戻る</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1231"/>
@@ -11226,37 +11252,37 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1236"/>
         <source>paperoffset</source>
-        <translation>paperoffset</translation>
+        <translation>用紙オフセット</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1237"/>
         <source>graphoffset</source>
-        <translation>graphoffset</translation>
+        <translation>グラフィックオフセット</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1356"/>
         <source>Command: %1 (%2)</source>
-        <translation>コマンド： %1 (%2)</translation>
+        <translation>コマンド: %1 (%2)</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1363"/>
         <source>RS_Commands:: command not found: %1</source>
-        <translation>RS_コマンド:: コマンドが見つからない： %1</translation>
+        <translation>RS_Commands:: コマンドが見つかりません: %1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1417"/>
         <source>Command not found: %1</source>
-        <translation>コマンドが見つからない： %1</translation>
+        <translation>コマンドが見つかりません: %1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1403"/>
         <source>Accepted keycode: %1</source>
-        <translation>受け入れられたキーコード: %1</translation>
+        <translation>受け付けられたキーコード: %1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1456"/>
         <source>Available commands:</source>
-        <translation>可能なコマンド:</translation>
+        <translation>利用可能なコマンド:</translation>
     </message>
     <message>
         <source>cal</source>
@@ -11272,17 +11298,17 @@ Do you want to replace it?</source>
         <location filename="../src/lib/engine/rs_units.cpp" line="204"/>
         <source>None</source>
         <comment>unknown length unit</comment>
-        <translation>None</translation>
+        <translation>なし</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4087"/>
         <source>error reading file metadata in dwg file</source>
-        <translation>ファイル読み込みエラー（dwgファイル内のメタデータ）</translation>
+        <translation>dwgファイルのメタデータ読み取りエラー</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_commandedit.cpp" line="198"/>
         <source>Calculator error for input: </source>
-        <translation>計算のための入力でエラー： </translation>
+        <translation>入力に対する計算機エラー: </translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1233"/>
@@ -11292,12 +11318,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1234"/>
         <source>blackwhite</source>
-        <translation>blackwhite</translation>
+        <translation>白黒</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1235"/>
         <source>color</source>
-        <translation>color</translation>
+        <translation>カラー</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="755"/>
@@ -11338,7 +11364,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="67"/>
         <source>Edit</source>
-        <translation>Edit</translation>
+        <translation>編集</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="68"/>
@@ -11349,17 +11375,17 @@ Do you want to replace it?</source>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="69"/>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="88"/>
         <source>File</source>
-        <translation>File</translation>
+        <translation>ファイル</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="70"/>
         <source>Dimension</source>
-        <translation>寸法記入</translation>
+        <translation>寸法</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="71"/>
         <source>Info</source>
-        <translation>Info</translation>
+        <translation>情報</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="72"/>
@@ -11369,12 +11395,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="73"/>
         <source>Line</source>
-        <translation>Line</translation>
+        <translation>線</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="74"/>
         <source>Modify</source>
-        <translation>変更・修正</translation>
+        <translation>修正</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="75"/>
@@ -11395,7 +11421,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="78"/>
         <source>Restriction</source>
-        <translation>解像度</translation>
+        <translation>制限</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="79"/>
@@ -11405,39 +11431,39 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="80"/>
         <source>Snap</source>
-        <translation>Snap</translation>
+        <translation>スナップ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="81"/>
         <source>Snap Extras</source>
-        <translation>独立スナップ</translation>
+        <translation>スナップ拡張</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="82"/>
         <source>View</source>
-        <translation>View</translation>
+        <translation>表示</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="83"/>
         <source>Widgets</source>
-        <translation>ウィジット</translation>
+        <translation>ウィジェット</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="495"/>
         <source>Creators</source>
-        <translation>新規作成</translation>
+        <translation>開発者</translation>
     </message>
     <message>
         <location filename="../src/ui/generic/widgetcreator.cpp" line="59"/>
         <location filename="../src/ui/generic/widgetcreator.cpp" line="170"/>
         <location filename="../src/ui/generic/widgetcreator.cpp" line="224"/>
         <source>All</source>
-        <translation>All</translation>
+        <translation>すべて</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1968"/>
         <source>Invalid objects removed:</source>
-        <translation>オブジェクトの削除を無効:</translation>
+        <translation>無効なオブジェクトを削除しました:</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="148"/>
@@ -11462,7 +11488,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/qg_commandedit.cpp" line="120"/>
         <source>You must input a distance first.</source>
-        <translation>最初の距離を入力すること。</translation>
+        <translation>まず距離を入力する必要があります。</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_commandedit.cpp" line="297"/>
@@ -11472,12 +11498,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/qg_commandedit.cpp" line="301"/>
         <source>Calculator mode: On</source>
-        <translation>計算モード: On</translation>
+        <translation>計算機モード: オン</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_commandedit.cpp" line="303"/>
         <source>Calculator mode: Off</source>
-        <translation>計算モード: Off</translation>
+        <translation>計算機モード: オフ</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3825"/>
@@ -11488,19 +11514,19 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/actions/lc_actionlayersexport.cpp" line="178"/>
         <source>No %1 layers found</source>
-        <translation>%1 に一致するレイヤーは見つかりませんでした。</translation>
+        <translation>%1 レイヤーが見つかりません</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="153"/>
         <source>line2p</source>
         <comment>draw line</comment>
-        <translation>line2p</translation>
+        <translation>2点線</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="182"/>
         <source>lineang</source>
         <comment>angled line</comment>
-        <translation>lineang</translation>
+        <translation>角度線</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="183"/>
@@ -11512,7 +11538,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="188"/>
         <source>linehor</source>
         <comment>horizontal line</comment>
-        <translation>linehor</translation>
+        <translation>水平線</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="189"/>
@@ -11524,7 +11550,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="194"/>
         <source>linever</source>
         <comment>vertical line</comment>
-        <translation>linever</translation>
+        <translation>垂直線</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="195"/>
@@ -11536,7 +11562,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="200"/>
         <source>linerec</source>
         <comment>draw rectangle</comment>
-        <translation>linerec</translation>
+        <translation>矩形</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="201"/>
@@ -11548,13 +11574,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="285"/>
         <source>linepar</source>
         <comment>create parallel</comment>
-        <translation>ラインパラメータ</translation>
+        <translation>平行線</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="286"/>
         <source>lineoff</source>
         <comment>create parallel</comment>
-        <translation>ラインオフセット</translation>
+        <translation>オフセット線</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="287"/>
@@ -11572,7 +11598,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="293"/>
         <source>lineparthro</source>
         <comment>parallel through point</comment>
-        <translation>ラインパラメータスロットル</translation>
+        <translation>点通過平行線</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="294"/>
@@ -11584,13 +11610,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="300"/>
         <source>linebisect</source>
         <comment>angle bisector</comment>
-        <translation>ライン二分法</translation>
+        <translation>二等分線</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="307"/>
         <source>linetancp</source>
         <comment>tangent point and circle</comment>
-        <translation>ライン接点</translation>
+        <translation>接線 (点と円)</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="308"/>
@@ -11602,7 +11628,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="314"/>
         <source>linetan2c</source>
         <comment>tangent two circles</comment>
-        <translation>linetan2c</translation>
+        <translation>接線 (2円)</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="315"/>
@@ -11614,7 +11640,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="320"/>
         <source>linetancper</source>
         <comment>tangent line and circle</comment>
-        <translation>linetancper</translation>
+        <translation>接線 (線と円)</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="321"/>
@@ -11626,7 +11652,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="326"/>
         <source>lineperp</source>
         <comment>perpendicular line</comment>
-        <translation>lineperp</translation>
+        <translation>垂線</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="327"/>
@@ -11638,7 +11664,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="333"/>
         <source>linerelang</source>
         <comment>relative line</comment>
-        <translation>linerelang</translation>
+        <translation>相対角度線</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="334"/>
@@ -11650,7 +11676,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="339"/>
         <source>polygoncencor</source>
         <comment>polygon centre point</comment>
-        <translation>polygoncencor</translation>
+        <translation>多角形 (中心・頂点)</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="340"/>
@@ -11674,7 +11700,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="347"/>
         <source>polygoncentan</source>
         <comment>polygon centre vertex</comment>
-        <translation>ポリゴン中心点</translation>
+        <translation>多角形 (中心・接線)</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="348"/>
@@ -11692,7 +11718,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="355"/>
         <source>p2</source>
         <comment>polygon by 2 vertices</comment>
-        <translation>点間</translation>
+        <translation>p2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="365"/>
@@ -11704,19 +11730,19 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="370"/>
         <source>circle2p</source>
         <comment>circle 2 points</comment>
-        <translation>円から点へ</translation>
+        <translation>2点円</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="372"/>
         <source>c2p</source>
         <comment>circle 2 points</comment>
-        <translation>円から点へ</translation>
+        <translation>c2p</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="377"/>
         <source>circle2pr</source>
         <comment>circle 2 points radius</comment>
-        <translation>円から点半径へ</translation>
+        <translation>2点・半径円</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="378"/>
@@ -11728,7 +11754,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="383"/>
         <source>circle3p</source>
         <comment>circle 3 points</comment>
-        <translation>circle3p</translation>
+        <translation>3点円</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="385"/>
@@ -11740,7 +11766,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="390"/>
         <source>circlecr</source>
         <comment>circle point radius</comment>
-        <translation>circlecr</translation>
+        <translation>中心・半径円</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="391"/>
@@ -11758,7 +11784,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="398"/>
         <source>circletan2cp</source>
         <comment>circle 2 tangent point</comment>
-        <translation>circletan2cp</translation>
+        <translation>接線円 (2接線1点)</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="399"/>
@@ -11770,7 +11796,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="404"/>
         <source>circletan2p</source>
         <comment>circle tangent 2 points</comment>
-        <translation>circletan2p</translation>
+        <translation>接線円 (1接線2点)</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="405"/>
@@ -11782,7 +11808,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="410"/>
         <source>circletan2cr</source>
         <comment>circle 2 tangent radius</comment>
-        <translation>円の接線2から円へ</translation>
+        <translation>接線円 (2円・半径)</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="411"/>
@@ -11794,19 +11820,19 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="417"/>
         <source>circletan3</source>
         <comment>circle tangent to 3</comment>
-        <translation>円の接線3</translation>
+        <translation>3接線円</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="418"/>
         <source>t3</source>
         <comment>circle tangent to 3</comment>
-        <translation>接線3</translation>
+        <translation>t3</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="427"/>
         <source>arc</source>
         <comment>arc point radius</comment>
-        <translation>arc</translation>
+        <translation>円弧 (中心・半径)</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="428"/>
@@ -11824,19 +11850,19 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="434"/>
         <source>arc3p</source>
         <comment>draw 3pt arc</comment>
-        <translation>円弧3点</translation>
+        <translation>3点円弧</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="435"/>
         <source>a3</source>
         <comment>draw 3pt arc</comment>
-        <translation>円弧3</translation>
+        <translation>a3</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="440"/>
         <source>arctan</source>
         <comment>arc tangent</comment>
-        <translation>アークタンジェント</translation>
+        <translation>接線円弧</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="441"/>
@@ -11860,7 +11886,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="460"/>
         <source>arcellc2ax</source>
         <comment>arc ellipse</comment>
-        <translation>arcellc2ax</translation>
+        <translation>楕円弧</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="461"/>
@@ -11878,7 +11904,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="487"/>
         <source>ellipsec2p</source>
         <comment>ellipse axis</comment>
-        <translation>ellipsec2p</translation>
+        <translation>楕円 (軸)</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="488"/>
@@ -11890,7 +11916,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="493"/>
         <source>ellipse3p</source>
         <comment>ellipse foci</comment>
-        <translation>ellipse3p</translation>
+        <translation>楕円 (焦点)</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="494"/>
@@ -11908,25 +11934,25 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="500"/>
         <source>e4</source>
         <comment>ellipse 4 point</comment>
-        <translation>楕円4</translation>
+        <translation>e4</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="505"/>
         <source>ellipsec3p</source>
         <comment>ellipse center 3 point</comment>
-        <translation>3点楕円</translation>
+        <translation>楕円 (中心・3点)</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="506"/>
         <source>e3</source>
         <comment>ellipse center 3 point</comment>
-        <translation>楕円3</translation>
+        <translation>e3</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="545"/>
         <source>plineadd</source>
         <comment>pl add node</comment>
-        <translation>ポリライン追加</translation>
+        <translation>ノード追加</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="546"/>
@@ -11938,7 +11964,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="551"/>
         <source>plineapp</source>
         <comment>pl append node</comment>
-        <translation>ポリライン描画</translation>
+        <translation>ノード追加 (末尾)</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="552"/>
@@ -11950,7 +11976,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="557"/>
         <source>plinedel</source>
         <comment>pl delete node</comment>
-        <translation>ポリライン削除</translation>
+        <translation>ノード削除</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="558"/>
@@ -11962,7 +11988,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="563"/>
         <source>plinedeltwn</source>
         <comment>pl del between nodes</comment>
-        <translation>線分デルタ幅</translation>
+        <translation>ノード間削除</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="564"/>
@@ -11974,7 +12000,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="569"/>
         <source>plinetrm</source>
         <comment>pl trim segments</comment>
-        <translation>線分終端</translation>
+        <translation>セグメントトリム</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="570"/>
@@ -11986,7 +12012,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="575"/>
         <source>plinepar</source>
         <comment>pl equidistant</comment>
-        <translation>線パラメータ</translation>
+        <translation>等距ポリライン</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="576"/>
@@ -11998,7 +12024,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="581"/>
         <source>plinejoin</source>
         <comment>pl join</comment>
-        <translation>線結合</translation>
+        <translation>ポリライン結合</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="582"/>
@@ -12034,7 +12060,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="635"/>
         <source>dimradius</source>
         <comment>dimension - radial</comment>
-        <translation>寸法半径</translation>
+        <translation>半径寸法</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="637"/>
@@ -12070,7 +12096,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="682"/>
         <source>modscale</source>
         <comment>modify - scale</comment>
-        <translation>スケール</translation>
+        <translation>拡大/縮小</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="688"/>
@@ -12082,7 +12108,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="694"/>
         <source>modmovrot</source>
         <comment>modify - move rotate</comment>
-        <translation>動き・回転の修正</translation>
+        <translation>移動・回転</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="695"/>
@@ -12094,19 +12120,19 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="700"/>
         <source>mod2rot</source>
         <comment>modify - rotate2</comment>
-        <translation>2つの回転の修正</translation>
+        <translation>2要素間回転</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="701"/>
         <source>r2</source>
         <comment>modify - rotate2</comment>
-        <translation>回転2</translation>
+        <translation>r2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="706"/>
         <source>modrevert</source>
         <comment>modify -  revert direction</comment>
-        <translation>元に戻すの修正</translation>
+        <translation>方向反転</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="707"/>
@@ -12118,25 +12144,25 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="713"/>
         <source>modtrim</source>
         <comment>modify - trim (extend)</comment>
-        <translation>トリミングの修正</translation>
+        <translation>トリム</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="719"/>
         <source>modtrim2</source>
         <comment>modify - multi trim (extend)</comment>
-        <translation>2つのトリミングの修正</translation>
+        <translation>複数トリム</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="726"/>
         <source>modlengthen</source>
         <comment>modify - lengthen</comment>
-        <translation>延長の修正</translation>
+        <translation>延長</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="732"/>
         <source>modoffset</source>
         <comment>modify - offset</comment>
-        <translation>オフセットの修正</translation>
+        <translation>オフセット</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="733"/>
@@ -12154,43 +12180,43 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="739"/>
         <source>modbevel</source>
         <comment>modify - bevel</comment>
-        <translation>ベベルモード</translation>
+        <translation>面取り</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="746"/>
         <source>modfillet</source>
         <comment>modify - fillet</comment>
-        <translation>フィレットモード</translation>
+        <translation>フィレット</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="752"/>
         <source>moddivide</source>
         <comment>modify - divide (cut)</comment>
-        <translation>分割モード</translation>
+        <translation>分割</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="760"/>
         <source>modstretch</source>
         <comment>modify - stretch</comment>
-        <translation>伸縮モード</translation>
+        <translation>ストレッチ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="766"/>
         <source>modproperties</source>
         <comment>modify properties</comment>
-        <translation>プロパティモード</translation>
+        <translation>プロパティ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="773"/>
         <source>modattr</source>
         <comment>modify attribute</comment>
-        <translation>属性モード</translation>
+        <translation>属性</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="780"/>
         <source>modexpltext</source>
         <comment>explode text strings</comment>
-        <translation>テキスト展開モード</translation>
+        <translation>テキスト分解</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="781"/>
@@ -12202,7 +12228,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="786"/>
         <source>modexplode</source>
         <comment>explode block/polyline into entities</comment>
-        <translation>爆発</translation>
+        <translation>分解</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="792"/>
@@ -12214,7 +12240,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="801"/>
         <source>infodistance</source>
         <comment>distance point to point</comment>
-        <translation>距離</translation>
+        <translation>点間距離</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="802"/>
@@ -12226,7 +12252,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="809"/>
         <source>infodistep</source>
         <comment>distance entity to point</comment>
-        <translation>距離ステップ</translation>
+        <translation>エンティティ-点間距離</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="810"/>
@@ -12244,7 +12270,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="816"/>
         <source>infoangle</source>
         <comment>measure angle</comment>
-        <translation>角度</translation>
+        <translation>角度計測</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="817"/>
@@ -12256,7 +12282,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="823"/>
         <source>infoarea</source>
         <comment>measure area</comment>
-        <translation>領域</translation>
+        <translation>面積計測</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="824"/>
@@ -12304,7 +12330,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="983"/>
         <source>drawpref</source>
         <comment>drawing preferences</comment>
-        <translation>drawpref</translation>
+        <translation>図面設定</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="984"/>
@@ -12442,13 +12468,13 @@ Do you want to replace it?</source>
         <location filename="../src/lib/engine/rs_units.cpp" line="960"/>
         <source>Arch E</source>
         <comment>Paper format</comment>
-        <translation>アーチ E</translation>
+        <translation>Arch E</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="978"/>
         <source>custom</source>
         <comment>Paper format</comment>
-        <translation>カスタム</translation>
+        <translation>custom</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="981"/>
@@ -12484,82 +12510,82 @@ Do you want to replace it?</source>
         <location filename="../src/lib/engine/rs_units.cpp" line="994"/>
         <source>letter</source>
         <comment>Paper format</comment>
-        <translation>レター</translation>
+        <translation>letter</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="996"/>
         <source>legal</source>
         <comment>Paper format</comment>
-        <translation>法的</translation>
+        <translation>legal</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="998"/>
         <source>tabloid</source>
         <comment>Paper format</comment>
-        <translation>タブロイド</translation>
+        <translation>tabloid</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="1005"/>
         <source>ansi c</source>
         <comment>Paper format</comment>
-        <translation>ANSI C</translation>
+        <translation>ansi c</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="1007"/>
         <source>ansi d</source>
         <comment>Paper format</comment>
-        <translation>ANSI D</translation>
+        <translation>ansi d</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="1009"/>
         <source>ansi e</source>
         <comment>Paper format</comment>
-        <translation>ANSI E</translation>
+        <translation>ansi e</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="1012"/>
         <source>arch a</source>
         <comment>Paper format</comment>
-        <translation>アーキテクチャ A</translation>
+        <translation>arch a</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="1014"/>
         <source>arch b</source>
         <comment>Paper format</comment>
-        <translation>アーキテクチャ B</translation>
+        <translation>arch b</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="1016"/>
         <source>arch c</source>
         <comment>Paper format</comment>
-        <translation>アーキテクチャ C</translation>
+        <translation>arch c</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="1018"/>
         <source>arch d</source>
         <comment>Paper format</comment>
-        <translation>アーキテクチャ D</translation>
+        <translation>arch d</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="1020"/>
         <source>arch e</source>
         <comment>Paper format</comment>
-        <translation>アーキテクチャ E</translation>
+        <translation>arch e</translation>
     </message>
     <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="74"/>
         <source>DWG support is not complete!</source>
-        <translation>DWGのサポートは未完成です！</translation>
+        <translation>DWGサポートは完全ではありません！</translation>
     </message>
     <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="76"/>
         <source>If this file fails to open try an older DWG format</source>
-        <translation>このファイルが開けない場合は、古いバージョンのDWG形式を試してください。</translation>
+        <translation>このファイルが開けない場合は、古いDWG形式を試してください</translation>
     </message>
     <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="77"/>
         <source>or try to find a converter to make it a DXF file.</source>
-        <translation>または、DXFファイルを作成するためのコンバーターを探してみてください。</translation>
+        <translation>または、DXFファイルに変換するコンバータを見つけてください。</translation>
     </message>
     <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="80"/>
@@ -12582,13 +12608,13 @@ Do you want to replace it?</source>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="107"/>
         <source>Anyhow, there are some entities identified.</source>
         <comment>dwgImport</comment>
-        <translation>とはいえ、いくつかのエンティティが識別されました。</translation>
+        <translation>いずれにしても、いくつかのエンティティが識別されました。</translation>
     </message>
     <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="108"/>
         <source>If you open the file now, the drawing may be not complete or unusable.</source>
         <comment>dwgImport</comment>
-        <translation>このままファイルを開くと、図面が不完全であるか、使用できない可能性があります。</translation>
+        <translation>今ファイルを開くと、図面が不完全であるか、使用できない可能性があります。</translation>
     </message>
     <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="110"/>
@@ -12600,13 +12626,13 @@ Do you want to replace it?</source>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="103"/>
         <source>no DXF/DWG error</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>DXF/DWGのエラーはありません</translation>
+        <translation>DXF/DWGエラーなし</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="105"/>
         <source>error opening DXF/DWG file</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>DXF/DWGファイルのオープン中にエラーが発生しました</translation>
+        <translation>DXF/DWGファイルを開く際のエラー</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="107"/>
@@ -12618,171 +12644,171 @@ Do you want to replace it?</source>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="109"/>
         <source>error reading DXF/DWG meta data</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>DXF/DWGメタデータの読み取りエラー</translation>
+        <translation>DXF/DWGメタデータ読み取りエラー</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="111"/>
         <source>error reading DXF/DWG file header</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>DXF/DWGファイルヘッダーの読み取りエラー</translation>
+        <translation>DXF/DWGファイルヘッダー読み取りエラー</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="113"/>
         <source>error reading DXF/DWG header dara</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>DXF/DWGヘッダーデータの読み取りエラー</translation>
+        <translation>DXF/DWGヘッダーデータ読み取りエラー</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="115"/>
         <source>error reading DXF/DWG object map</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>DXF/DWGオブジェクトマップの読み取りエラー</translation>
+        <translation>DXF/DWGオブジェクトマップ読み取りエラー</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="117"/>
         <source>error reading DXF/DWG classes</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>DXF/DWGクラスの読み取りエラー</translation>
+        <translation>DXF/DWGクラス読み取りエラー</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="119"/>
         <source>error reading DXF/DWG tables</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>DXF/DWGテーブルの読み取りエラー</translation>
+        <translation>DXF/DWGテーブル読み取りエラー</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="121"/>
         <source>error reading DXF/DWG blocks</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>DXF/DWGブロックの読み取りエラー</translation>
+        <translation>DXF/DWGブロック読み取りエラー</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="123"/>
         <source>error reading DXF/DWG entities</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>DXF/DWGエンティティの読み取りエラー</translation>
+        <translation>DXF/DWGエンティティ読み取りエラー</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="125"/>
         <source>error reading DXF/DWG objects</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>DXF/DWGオブジェクトの読み取りエラー</translation>
+        <translation>DXF/DWGオブジェクト読み取りエラー</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="127"/>
         <source>error reading DXF/DWG sections</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>DXF/DWGセクションの読み取りエラー</translation>
+        <translation>DXF/DWGセクション読み取りエラー</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="129"/>
         <source>error reading DXF/DWG code</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>DXF/DWGコードの読み取りエラー</translation>
+        <translation>DXF/DWGコード読み取りエラー</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterinterface.h" line="92"/>
         <source>undefined error</source>
         <comment>RS_FilterInterface</comment>
-        <translation>未定義のエラー</translation>
+        <translation>未定義エラー</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="67"/>
         <source>usage: </source>
-        <translation>使用方法:</translation>
+        <translation>使用方法: </translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="67"/>
         <source> [options] &lt;dxf_files&gt;</source>
-        <translation>[options] [オプション] &lt;dxf_ファイル&gt;</translation>
+        <translation> [オプション] &lt;dxf_files&gt;</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="74"/>
         <source> *.dxf</source>
-        <translation>*.dxf</translation>
+        <translation> *.dxf</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="75"/>
         <source>-- print all dxf files to pdf files with the same names.</source>
-        <translation>すべてのdxfファイルを同じ名前のpdfファイルに出力します。</translation>
+        <translation>-- すべてのdxfファイルを同じ名前のpdfファイルに印刷します。</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="77"/>
         <source> -o some.pdf *.dxf</source>
-        <translation>-o some.pdf *.dxf</translation>
+        <translation> -o some.pdf *.dxf</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="78"/>
         <source>-- print all dxf files to &apos;some.pdf&apos; file.</source>
-        <translation>すべてのdxfファイルを「some.pdf」ファイルに出力します。</translation>
+        <translation>-- すべてのdxfファイルを &apos;some.pdf&apos; ファイルに印刷します。</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="85"/>
         <source>Auto fit and center drawing to page.</source>
-        <translation>図面をページに自動でフィットさせ、中央に配置します。</translation>
+        <translation>図面をページに自動フィットおよびセンタリングします。</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="89"/>
         <source>Auto center drawing on page.</source>
-        <translation>図面をページの中央に自動配置します。</translation>
+        <translation>図面をページ上に自動センタリングします。</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="93"/>
         <source>Print grayscale.</source>
-        <translation>グレースケールで印刷</translation>
+        <translation>グレースケールで印刷します。</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="97"/>
         <source>Print monochrome (black/white).</source>
-        <translation>モノクロ（白黒）で印刷</translation>
+        <translation>モノクロ (白黒)で印刷します。</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="101"/>
         <source>Paper size (Width x Height) in mm.</source>
         <comment>WxH</comment>
-        <translation>用紙サイズ（幅 x 高さ）[mm]</translation>
+        <translation>用紙サイズ (幅 x 高さ) mm。</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="105"/>
         <source>Output resolution (DPI).</source>
         <comment>integer</comment>
-        <translation>出力解像度（DPI）</translation>
+        <translation>出力解像度 (DPI)。</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="109"/>
         <source>Output scale. E.g.: 0.01 (for 1:100 scale).</source>
-        <translation>出力スケール。例：0.01（縮尺 1:100 の場合）</translation>
+        <translation>出力倍率。例: 0.01 (1:100倍率の場合)。</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="113"/>
         <source>Paper margins in mm (integer or float).</source>
-        <translation>用紙の余白（mm）（整数または浮動小数点数）</translation>
+        <translation>用紙余白 (mm、整数または浮動小数点数)。</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="117"/>
         <source>Print on multiple pages (Horiz. x Vert.).</source>
-        <translation>複数ページに印刷（横 x 縦）</translation>
+        <translation>複数ページに印刷 (水平 x 垂直)。</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="121"/>
         <source>Output PDF file.</source>
         <comment>file</comment>
-        <translation>PDFファイルとして出力</translation>
+        <translation>出力PDFファイル。</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="125"/>
         <source>Target output directory.</source>
-        <translation>出力先ディレクトリ</translation>
+        <translation>出力先ディレクトリ。</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="128"/>
         <source>&lt;dxf_files&gt;</source>
-        <translation>&lt;dxfファイル&gt;</translation>
+        <translation>&lt;dxf_files&gt;</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="128"/>
         <source>Input DXF file(s)</source>
-        <translation>DXFファイルをインポート</translation>
+        <translation>入力DXFファイル</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="68"/>
@@ -12792,38 +12818,38 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="81"/>
         <source>Load command file</source>
-        <translation>コマンドファイルを読み込む</translation>
+        <translation>コマンドファイルを読み込み</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="85"/>
         <source>Paste multiple commands</source>
-        <translation>複数のコマンドを貼り付け</translation>
+        <translation>複数コマンドを貼り付け</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_filedialogservice.cpp" line="221"/>
         <source>Combine all layers</source>
-        <translation>すべてのレイヤーを結合</translation>
+        <translation>全レイヤーを統合</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_filedialogservice.cpp" line="252"/>
         <source>File &quot;%1&quot; already exists. Do you want to replace it?</source>
-        <translation>ファイル「%1」は既に存在します。上書きしますか？</translation>
+        <translation>ファイル &quot;%1&quot; は既に存在します。置き換えますか？</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="42"/>
         <source>/CustomColor%1</source>
-        <translation>/CustomColor%1</translation>
+        <translation>/カスタムカラー%1</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="43"/>
         <source>Custom Picked</source>
-        <translation>カスタム選択</translation>
+        <translation>カスタム選択色</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="236"/>
         <source>noname</source>
         <comment>default layer name</comment>
-        <translation>名前なし</translation>
+        <translation>無名</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimension.cpp" line="34"/>
@@ -12835,7 +12861,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="161"/>
         <source>sline</source>
         <comment>draw snake line</comment>
-        <translation>sライン</translation>
+        <translation>スネーク線</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="162"/>
@@ -12853,7 +12879,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="168"/>
         <source>slinex</source>
         <comment>draw snake line (X)</comment>
-        <translation>sラインX</translation>
+        <translation>slinex</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="169"/>
@@ -12871,7 +12897,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="175"/>
         <source>sliney</source>
         <comment>draw snake line (Y)</comment>
-        <translation>sラインY</translation>
+        <translation>sliney</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="176"/>
@@ -12949,7 +12975,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="237"/>
         <source>star</source>
         <comment>draw star</comment>
-        <translation>star</translation>
+        <translation>星形</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="238"/>
@@ -12961,7 +12987,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="243"/>
         <source>cross</source>
         <comment>draw cross for circle</comment>
-        <translation>交差</translation>
+        <translation>十字線</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="244"/>
@@ -12973,7 +12999,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="249"/>
         <source>linepoints</source>
         <comment>draw line of points</comment>
-        <translation>ラインポイント</translation>
+        <translation>点列線</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="250"/>
@@ -13009,7 +13035,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="267"/>
         <source>linejoin</source>
         <comment>lines join</comment>
-        <translation>ライン結合</translation>
+        <translation>線結合</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="268"/>
@@ -13021,7 +13047,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="273"/>
         <source>breakdivide</source>
         <comment>break or divide entity</comment>
-        <translation>区切り線</translation>
+        <translation>分割/切断</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="274"/>
@@ -13033,7 +13059,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="279"/>
         <source>gapline</source>
         <comment>line gap</comment>
-        <translation>隙間線</translation>
+        <translation>線ギャップ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="280"/>
@@ -13045,7 +13071,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="466"/>
         <source>parabola4p</source>
         <comment>Parabola 4 points</comment>
-        <translation>パラボラ4p</translation>
+        <translation>parabola4p</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="467"/>
@@ -13057,7 +13083,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="472"/>
         <source>parabolafd</source>
         <comment>Parabola focus directrix</comment>
-        <translation>パラボラAFD</translation>
+        <translation>parabolafd</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="473"/>
@@ -13070,13 +13096,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="527"/>
         <source>angleline</source>
         <comment>draw angle from line</comment>
-        <translation>角度線</translation>
+        <translation>線からの角度線</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="532"/>
         <source>rortoline</source>
         <comment>draw orthogonal</comment>
-        <translation>回転線</translation>
+        <translation>rortoline</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="533"/>
@@ -13088,25 +13114,25 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="538"/>
         <source>point2line</source>
         <comment>draw line from point to line</comment>
-        <translation>点から線へ</translation>
+        <translation>点から線への線</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="539"/>
         <source>p2l</source>
         <comment>draw line from point to line</comment>
-        <translation>点から線へ</translation>
+        <translation>p2l</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="918"/>
         <source>snapmiddlemanual</source>
         <comment>snap middle manual</comment>
-        <translation>中央点スナップ（手動）</translation>
+        <translation>snapmiddlemanual</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="919"/>
         <source>snapmanual</source>
         <comment>snap middle manual</comment>
-        <translation>手動スナップ</translation>
+        <translation>snapmanual</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="920"/>
@@ -13132,7 +13158,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1085"/>
         <source>anglerel</source>
-        <translation>角度相対</translation>
+        <translation>anglerel</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1086"/>
@@ -13147,12 +13173,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1090"/>
         <source>linesnap</source>
-        <translation>ラインスナップ</translation>
+        <translation>linesnap</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1091"/>
         <source>ticksnap</source>
-        <translation>タイクスナップ</translation>
+        <translation>ticksnap</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1094"/>
@@ -13172,28 +13198,28 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1097"/>
         <source>size</source>
-        <translation>size</translation>
+        <translation>サイズ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1098"/>
         <location filename="../src/cmd/rs_commands.cpp" line="1104"/>
         <source>bevels</source>
-        <translation>ベベル</translation>
+        <translation>bevels</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1099"/>
         <source>nopoly</source>
-        <translation>ポリゴン</translation>
+        <translation>nopoly</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1100"/>
         <source>usepoly</source>
-        <translation>ポリゴン使用</translation>
+        <translation>usepoly</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1101"/>
         <source>corners</source>
-        <translation>角</translation>
+        <translation>corners</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1102"/>
@@ -13203,12 +13229,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1103"/>
         <source>round</source>
-        <translation>角丸</translation>
+        <translation>round</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1105"/>
         <source>snap1</source>
-        <translation>1単位スナップ</translation>
+        <translation>snap1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1106"/>
@@ -13218,7 +13244,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1107"/>
         <source>top</source>
-        <translation>top</translation>
+        <translation>上</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1108"/>
@@ -13228,7 +13254,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1109"/>
         <source>left</source>
-        <translation>left</translation>
+        <translation>左</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1110"/>
@@ -13243,7 +13269,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1112"/>
         <source>bottoml</source>
-        <translation>左下</translation>
+        <translation>bottoml</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1113"/>
@@ -13253,27 +13279,27 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1114"/>
         <source>bottomr</source>
-        <translation>右下</translation>
+        <translation>bottomr</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1115"/>
         <source>snapcorner</source>
-        <translation>角にスナップ</translation>
+        <translation>snapcorner</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1116"/>
         <source>snapshift</source>
-        <translation>基準点にスナップ</translation>
+        <translation>snapshift</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1117"/>
         <source>sizein</source>
-        <translation>サイズ縮小</translation>
+        <translation>sizein</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1118"/>
         <source>sizeout</source>
-        <translation>サイズ拡大</translation>
+        <translation>sizeout</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1119"/>
@@ -13288,22 +13314,22 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1123"/>
         <source>snap2</source>
-        <translation>2単位スナップ</translation>
+        <translation>snap2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1124"/>
         <source>corner</source>
-        <translation>角</translation>
+        <translation>corner</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1125"/>
         <source>mid-vert</source>
-        <translation>垂直中央</translation>
+        <translation>mid-vert</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1126"/>
         <source>mid-hor</source>
-        <translation>水平中央</translation>
+        <translation>mid-hor</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1128"/>
@@ -13313,37 +13339,37 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1129"/>
         <source>noquad</source>
-        <translation>四角形ではない</translation>
+        <translation>noquad</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1130"/>
         <source>angle_inner</source>
-        <translation>内角</translation>
+        <translation>angle_inner</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1133"/>
         <source>edges</source>
-        <translation>辺</translation>
+        <translation>edges</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1134"/>
         <source>edge-none</source>
-        <translation>辺なし</translation>
+        <translation>edge-none</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1135"/>
         <source>edge-both</source>
-        <translation>両端</translation>
+        <translation>edge-both</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1136"/>
         <source>edge-start</source>
-        <translation>開始側</translation>
+        <translation>edge-start</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1137"/>
         <source>edge-end</source>
-        <translation>終了側</translation>
+        <translation>edge-end</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1138"/>
@@ -13353,32 +13379,32 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1139"/>
         <source>both</source>
-        <translation>both</translation>
+        <translation>両方</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1140"/>
         <source>none</source>
-        <translation>none</translation>
+        <translation>なし</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1141"/>
         <source>fit</source>
-        <translation>fit</translation>
+        <translation>フィット</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1142"/>
         <source>nofit</source>
-        <translation>なし</translation>
+        <translation>nofit</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1143"/>
         <source>dist_fixed</source>
-        <translation>固定</translation>
+        <translation>dist_fixed</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1144"/>
         <source>dist_flex</source>
-        <translation>柔軟</translation>
+        <translation>dist_flex</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1145"/>
@@ -13393,37 +13419,37 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1150"/>
         <source>nosym</source>
-        <translation>シンボルなし</translation>
+        <translation>nosym</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_patternlist.cpp" line="63"/>
         <source>Hatch:: no pattern found. Please set pattern path in application preferences</source>
-        <translation>ハッチング：パターンが見つかりません。アプリケーションの設定でパターンパスを設定してください</translation>
+        <translation>ハッチ:: パターンが見つかりません。アプリケーション設定でパターンパスを設定してください</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_patternlist.cpp" line="85"/>
         <source>Hatch:: loading pattern failed: %1</source>
-        <translation>ハッチング：パターンの読み込みに失敗しました：%1</translation>
+        <translation>ハッチ:: パターン読み込み失敗: %1</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="84"/>
         <source>PenTB</source>
-        <translation>ペン太さ</translation>
+        <translation>ペンツールバー</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_peninforegistry.cpp" line="204"/>
         <source>By Layer</source>
-        <translation>レイヤーによる</translation>
+        <translation>レイヤー別</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_peninforegistry.cpp" line="207"/>
         <source>By Block</source>
-        <translation>ブロックによる</translation>
+        <translation>ブロック別</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_peninforegistry.cpp" line="210"/>
         <source>- Unchanged -</source>
-        <translation>変更なし</translation>
+        <translation>- 変更なし -</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="44"/>
@@ -13434,18 +13460,18 @@ Do you want to replace it?</source>
         <location filename="../src/ui/qg_commandedit.cpp" line="258"/>
         <source>cal </source>
         <comment>command to trigger cli calculator</comment>
-        <translation>cal</translation>
+        <translation>cal </translation>
     </message>
     <message>
         <location filename="../src/ui/qg_commandedit.cpp" line="259"/>
         <source>calculate </source>
         <comment>command to trigger cli calculator</comment>
-        <translation>計算</translation>
+        <translation>calculate </translation>
     </message>
     <message>
         <location filename="../src/ui/qg_widthbox.cpp" line="35"/>
         <source>-Unchanged-</source>
-        <translation>-Unchanged-</translation>
+        <translation>-変更なし-</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_widthbox.cpp" line="37"/>
@@ -13588,12 +13614,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/actions/rs_actionblockscreate.cpp" line="149"/>
         <source>Specify reference point</source>
-        <translation>参照点定義</translation>
+        <translation>基準点を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionblockscreate.cpp" line="150"/>
         <source>Cancel</source>
-        <translation>中止</translation>
+        <translation>キャンセル</translation>
     </message>
 </context>
 <context>
@@ -13606,64 +13632,66 @@ Do you want to replace it?</source>
         <location filename="../src/actions/rs_actionblocksinsert.cpp" line="269"/>
         <location filename="../src/actions/rs_actionblocksinsert.cpp" line="282"/>
         <source>Not a valid expression</source>
-        <translation>表記に誤り</translation>
+        <translation>有効な式ではありません</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionblocksinsert.cpp" line="381"/>
         <source>Specify reference point</source>
-        <translation>参照点定義</translation>
+        <translation>基準点を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionblocksinsert.cpp" line="382"/>
         <source>Cancel</source>
-        <translation>中止</translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionblocksinsert.cpp" line="385"/>
         <source>Enter angle:</source>
-        <translation>角度入力:</translation>
+        <translation>角度を入力:</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionblocksinsert.cpp" line="389"/>
         <source>Enter factor:</source>
-        <translation>倍率:</translation>
+        <translation>係数を入力:</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionblocksinsert.cpp" line="393"/>
         <source>Enter columns:</source>
-        <translation>列数:</translation>
+        <translation>列数を入力:</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionblocksinsert.cpp" line="397"/>
         <source>Enter rows:</source>
-        <translation>行数:</translation>
+        <translation>行数を入力:</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionblocksinsert.cpp" line="401"/>
         <source>Enter column spacing:</source>
-        <translation>列幅:</translation>
+        <translation>列間隔を入力:</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionblocksinsert.cpp" line="405"/>
         <source>Enter row spacing:</source>
-        <translation>行間:</translation>
+        <translation>行間隔を入力:</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionblocksinsert.cpp" line="74"/>
         <source>Block cannot contain an insert of itself.</source>
-        <translation>ブロックは自身を挿入することはできません。</translation>
+        <translation>ブロックは自身の挿入を含むことはできません。</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionblocksinsert.cpp" line="80"/>
         <source> has nested insert of current block in:
 </source>
-        <translation>現在のブロックがネストされた挿入に含まれています:</translation>
+        <translation> は現在のブロックのネストされた挿入を含んでいます:
+</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionblocksinsert.cpp" line="82"/>
         <source>
 This block cannot be inserted.</source>
-        <translation>このブロックは挿入できません。</translation>
+        <translation>
+このブロックは挿入できません。</translation>
     </message>
 </context>
 <context>
@@ -13672,7 +13700,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionblockssave.cpp" line="96"/>
         <source>No block activated to save</source>
         <translatorcomment>AutoCADにあわせて「ブロック」と訳すことにした</translatorcomment>
-        <translation>保存できるブロックはない</translation>
+        <translation>保存するアクティブなブロックがありません</translation>
     </message>
 </context>
 <context>
@@ -13680,12 +13708,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondefault.cpp" line="500"/>
         <source>Choose second edge</source>
-        <translation>他端選択</translation>
+        <translation>2番目のエッジを選択</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondefault.cpp" line="501"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>戻る</translation>
     </message>
 </context>
 <context>
@@ -13693,33 +13721,33 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="252"/>
         <source>Specify first extension line origin</source>
-        <translation>起点設定</translation>
+        <translation>最初の補助線の起点を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="253"/>
         <source>Cancel</source>
-        <translation>中止</translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="257"/>
         <source>Specify second extension line origin</source>
-        <translation>次の点を設定</translation>
+        <translation>2番目の補助線の起点を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="258"/>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="263"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>戻る</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="262"/>
         <source>Specify dimension line location</source>
-        <translation>寸法線位置を設定</translation>
+        <translation>寸法線の位置を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="266"/>
         <source>Enter dimension text:</source>
-        <translation>寸法値入力:</translation>
+        <translation>寸法テキストを入力:</translation>
     </message>
 </context>
 <context>
@@ -13727,29 +13755,29 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimangular.cpp" line="239"/>
         <source>Select first line</source>
-        <translation>１番目の線分を選択</translation>
+        <translation>最初の線を選択</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimangular.cpp" line="240"/>
         <location filename="../src/actions/rs_actiondimangular.cpp" line="245"/>
         <location filename="../src/actions/rs_actiondimangular.cpp" line="250"/>
         <source>Cancel</source>
-        <translation>中止</translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimangular.cpp" line="244"/>
         <source>Select second line</source>
-        <translation>２番目の線分を選択</translation>
+        <translation>2番目の線を選択</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimangular.cpp" line="249"/>
         <source>Specify dimension arc line location</source>
-        <translation>角度寸法の位置を設定</translation>
+        <translation>寸法円弧線の位置を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimangular.cpp" line="254"/>
         <source>Enter dimension text:</source>
-        <translation>寸法値入力:</translation>
+        <translation>寸法テキストを入力:</translation>
     </message>
 </context>
 <context>
@@ -13757,33 +13785,33 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimdiametric.cpp" line="180"/>
         <source>Not a circle or arc entity</source>
-        <translation>円、円弧要素ではありません</translation>
+        <translation>円または円弧の図形ではありません</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimdiametric.cpp" line="258"/>
         <source>Not a valid expression</source>
-        <translation>表記誤り</translation>
+        <translation>有効な式ではありません</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimdiametric.cpp" line="286"/>
         <source>Select arc or circle entity</source>
-        <translation>円、円弧要素を選択</translation>
+        <translation>円弧または円の図形を選択</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimdiametric.cpp" line="287"/>
         <location filename="../src/actions/rs_actiondimdiametric.cpp" line="291"/>
         <source>Cancel</source>
-        <translation>中止</translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimdiametric.cpp" line="291"/>
         <source>Specify dimension line location</source>
-        <translation>寸法線位置設定</translation>
+        <translation>寸法線の位置を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimdiametric.cpp" line="294"/>
         <source>Enter dimension text:</source>
-        <translation>寸法値入力:</translation>
+        <translation>寸法テキストを入力:</translation>
     </message>
 </context>
 <context>
@@ -13791,12 +13819,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimleader.cpp" line="227"/>
         <source>Specify target point</source>
-        <translation>起点指定</translation>
+        <translation>対象点を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimleader.cpp" line="228"/>
         <source>Cancel</source>
-        <translation>中止</translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimleader.cpp" line="231"/>
@@ -13806,7 +13834,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimleader.cpp" line="232"/>
         <source>Finish</source>
-        <translation>終了</translation>
+        <translation>完了</translation>
     </message>
 </context>
 <context>
@@ -13814,43 +13842,43 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="235"/>
         <source>Not a valid expression</source>
-        <translation>表記に誤り</translation>
+        <translation>有効な式ではありません</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="283"/>
         <source>Specify first extension line origin</source>
-        <translation>引出し線起点指定</translation>
+        <translation>最初の補助線の起点を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="284"/>
         <source>Cancel</source>
-        <translation>中止</translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="288"/>
         <source>Specify second extension line origin</source>
-        <translation>２番目の引出し線の起点を指定</translation>
+        <translation>2番目の補助線の起点を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="289"/>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="294"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>戻る</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="293"/>
         <source>Specify dimension line location</source>
-        <translation>寸法線位置指定</translation>
+        <translation>寸法線の位置を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="297"/>
         <source>Enter dimension text:</source>
-        <translation>寸法値入力:</translation>
+        <translation>寸法テキストを入力:</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="301"/>
         <source>Enter dimension line angle:</source>
-        <translation>角度入力:</translation>
+        <translation>寸法線の角度を入力:</translation>
     </message>
 </context>
 <context>
@@ -13858,33 +13886,33 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimradial.cpp" line="173"/>
         <source>Not a circle or arc entity</source>
-        <translation>円、円弧ではありません</translation>
+        <translation>円または円弧の図形ではありません</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimradial.cpp" line="251"/>
         <source>Not a valid expression</source>
-        <translation>表記に誤り</translation>
+        <translation>有効な式ではありません</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimradial.cpp" line="278"/>
         <source>Select arc or circle entity</source>
-        <translation>円か円弧を選択</translation>
+        <translation>円弧または円の図形を選択</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimradial.cpp" line="279"/>
         <location filename="../src/actions/rs_actiondimradial.cpp" line="284"/>
         <source>Cancel</source>
-        <translation>中止</translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimradial.cpp" line="283"/>
         <source>Specify dimension line position or enter angle:</source>
-        <translation>寸法線位置、角度を指定:</translation>
+        <translation>寸法線の位置を指定、または角度を入力:</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimradial.cpp" line="287"/>
         <source>Enter dimension text:</source>
-        <translation>寸法値入力:</translation>
+        <translation>寸法テキストを入力:</translation>
     </message>
 </context>
 <context>
@@ -13896,27 +13924,27 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawarc.cpp" line="303"/>
         <location filename="../src/actions/rs_actiondrawarc.cpp" line="318"/>
         <source>Not a valid expression</source>
-        <translation>表記に誤り</translation>
+        <translation>有効な式ではありません</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawarc.cpp" line="315"/>
         <source>Not a valid chord length</source>
-        <translation>弦の長さが有効でありません</translation>
+        <translation>有効な弦長ではありません</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawarc.cpp" line="336"/>
         <source>Specify center</source>
-        <translation>中心指定</translation>
+        <translation>中心を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawarc.cpp" line="336"/>
         <source>Cancel</source>
-        <translation>中止</translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawarc.cpp" line="339"/>
         <source>Specify radius</source>
-        <translation>半径指定</translation>
+        <translation>半径を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawarc.cpp" line="339"/>
@@ -13925,27 +13953,27 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawarc.cpp" line="352"/>
         <location filename="../src/actions/rs_actiondrawarc.cpp" line="356"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>戻る</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawarc.cpp" line="343"/>
         <source>Specify start angle:</source>
-        <translation>開始角度指定:</translation>
+        <translation>開始角度を指定:</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawarc.cpp" line="351"/>
         <source>Specify included angle:</source>
-        <translation>内角指定:</translation>
+        <translation>中心角を指定:</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawarc.cpp" line="355"/>
         <source>Specify chord length:</source>
-        <translation>弦の長さ指定:</translation>
+        <translation>弦長を指定:</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawarc.cpp" line="347"/>
         <source>Specify end angle or [angle/chord length]</source>
-        <translation>端軸の終点[または短軸長さ]を指示</translation>
+        <translation>終了角度または [角度/弦長] を指定</translation>
     </message>
 </context>
 <context>
@@ -13953,33 +13981,33 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawarc3p.cpp" line="108"/>
         <source>Invalid arc data.</source>
-        <translation>有効でない円弧データ。</translation>
+        <translation>無効な円弧データです。</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawarc3p.cpp" line="234"/>
         <source>Cancel</source>
-        <translation>中止</translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawarc3p.cpp" line="238"/>
         <source>Specify second point</source>
-        <translation>二点目指示</translation>
+        <translation>2番目の点を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawarc3p.cpp" line="238"/>
         <location filename="../src/actions/rs_actiondrawarc3p.cpp" line="242"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>戻る</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawarc3p.cpp" line="242"/>
         <source>Specify endpoint</source>
-        <translation>終点指示</translation>
+        <translation>終点を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawarc3p.cpp" line="233"/>
         <source>Specify startpoint or [center]</source>
-        <translation>始点[または中心]を指定</translation>
+        <translation>始点または [中心] を指定</translation>
     </message>
 </context>
 <context>
@@ -13987,28 +14015,28 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawarctangential.cpp" line="226"/>
         <source>Specify base entity</source>
-        <translation>基準図形要素指示</translation>
+        <translation>基準エンティティを指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawarctangential.cpp" line="227"/>
         <source>Cancel</source>
-        <translation>中止</translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawarctangential.cpp" line="232"/>
         <source>Specify end angle</source>
-        <translation>終了角度指示</translation>
+        <translation>終了角度を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawarctangential.cpp" line="232"/>
         <location filename="../src/actions/rs_actiondrawarctangential.cpp" line="235"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>戻る</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawarctangential.cpp" line="235"/>
         <source>Specify end point</source>
-        <translation>終点指示</translation>
+        <translation>終点を指定</translation>
     </message>
 </context>
 <context>
@@ -14016,27 +14044,27 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcircle.cpp" line="241"/>
         <source>Not a valid expression</source>
-        <translation>表記に誤り</translation>
+        <translation>有効な式ではありません</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircle.cpp" line="173"/>
         <source>Specify center</source>
-        <translation>中心指定</translation>
+        <translation>中心を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircle.cpp" line="173"/>
         <source>Cancel</source>
-        <translation>中止</translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircle.cpp" line="176"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>戻る</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircle.cpp" line="176"/>
         <source>Specify point on circle</source>
-        <translation>円上の点を指定してください。</translation>
+        <translation>円上の点を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircle.cpp" line="215"/>
@@ -14054,27 +14082,27 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcircle2p.cpp" line="103"/>
         <source>Invalid Circle data.</source>
-        <translation>有効でない円データ。</translation>
+        <translation>無効な円データです。</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircle2p.cpp" line="184"/>
         <source>Specify first point</source>
-        <translation>１点目指示</translation>
+        <translation>始点を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircle2p.cpp" line="184"/>
         <source>Cancel</source>
-        <translation>中止</translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircle2p.cpp" line="188"/>
         <source>Specify second point</source>
-        <translation>２点目指示</translation>
+        <translation>2番目の点を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircle2p.cpp" line="188"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>戻る</translation>
     </message>
 </context>
 <context>
@@ -14082,33 +14110,33 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcircle3p.cpp" line="95"/>
         <source>Invalid circle data.</source>
-        <translation>有効でない円データ。</translation>
+        <translation>無効な円データです。</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircle3p.cpp" line="186"/>
         <source>Specify first point</source>
-        <translation>１点目指示</translation>
+        <translation>始点を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircle3p.cpp" line="187"/>
         <source>Cancel</source>
-        <translation>中止</translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircle3p.cpp" line="190"/>
         <source>Specify second point</source>
-        <translation>２点目指示</translation>
+        <translation>2番目の点を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircle3p.cpp" line="191"/>
         <location filename="../src/actions/rs_actiondrawcircle3p.cpp" line="195"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>戻る</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircle3p.cpp" line="194"/>
         <source>Specify third point</source>
-        <translation>３点目指示</translation>
+        <translation>3番目の点を指定</translation>
     </message>
 </context>
 <context>
@@ -14116,42 +14144,42 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcirclecr.cpp" line="193"/>
         <source>Not a valid expression</source>
-        <translation>表記に誤り</translation>
+        <translation>有効な式ではありません</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcirclecr.cpp" line="223"/>
         <source>Specify circle center</source>
-        <translation>中心指示</translation>
+        <translation>円の中心を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcirclecr.cpp" line="224"/>
         <source>Cancel</source>
-        <translation>中止</translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcirclecr.cpp" line="227"/>
         <source>Specify circle radius</source>
-        <translation>半径指示</translation>
+        <translation>円の半径を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcirclecr.cpp" line="228"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>戻る</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcirclecr.cpp" line="106"/>
         <source>radius=%1 is invalid (expression)</source>
-        <translation>半径=%1 は無効です（式）。</translation>
+        <translation>半径=%1 は無効です (式)</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcirclecr.cpp" line="108"/>
         <source>radius=%1 is invalid (negative)</source>
-        <translation>半径=%1 は無効です（負の値）。</translation>
+        <translation>半径=%1 は無効です (負の値)</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcirclecr.cpp" line="111"/>
         <source>radius=%1 is invalid (zero)</source>
-        <translation>半径=%1 は無効です（ゼロ）。</translation>
+        <translation>半径=%1 は無効です (ゼロ)</translation>
     </message>
 </context>
 <context>
@@ -14164,23 +14192,23 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcircleinscribe.cpp" line="270"/>
         <source>Cancel</source>
-        <translation>中止</translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircleinscribe.cpp" line="274"/>
         <source>Specify the second line</source>
-        <translation>2本目の線を指定</translation>
+        <translation>2番目の線を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircleinscribe.cpp" line="275"/>
         <location filename="../src/actions/rs_actiondrawcircleinscribe.cpp" line="280"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>戻る</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircleinscribe.cpp" line="279"/>
         <source>Specify the third line</source>
-        <translation>3本目の線を指定</translation>
+        <translation>3番目の線を指定</translation>
     </message>
 </context>
 <context>
@@ -14188,34 +14216,34 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan1_2p.cpp" line="426"/>
         <source>Cancel</source>
-        <translation>中止</translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan1_2p.cpp" line="430"/>
         <source>Specify the first point on the tangent circle</source>
-        <translation>最初の接する円を指定</translation>
+        <translation>接円上の最初の点を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan1_2p.cpp" line="431"/>
         <location filename="../src/actions/rs_actiondrawcircletan1_2p.cpp" line="436"/>
         <location filename="../src/actions/rs_actiondrawcircletan1_2p.cpp" line="440"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>戻る</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan1_2p.cpp" line="435"/>
         <source>Specify the second point on the tangent circle</source>
-        <translation>次の接する円を指定</translation>
+        <translation>接円上の2番目の点を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan1_2p.cpp" line="439"/>
         <source>Select the center of the tangent circle</source>
-        <translation>接する円の中心を指定</translation>
+        <translation>接円の中心を選択</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan1_2p.cpp" line="425"/>
         <source>Specify a line/arc/circle</source>
-        <translation>線/弧/円を指定</translation>
+        <translation>線/円弧/円を指定</translation>
     </message>
 </context>
 <context>
@@ -14223,53 +14251,53 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2.cpp" line="326"/>
         <source>Specify the first line/arc/circle</source>
-        <translation>最初の線/弧/円を指定</translation>
+        <translation>最初の線/円弧/円を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2.cpp" line="327"/>
         <source>Cancel</source>
-        <translation>中止</translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2.cpp" line="331"/>
         <source>Specify the second line/arc/circle</source>
-        <translation>２つ目の線/弧/円を指定</translation>
+        <translation>2番目の線/円弧/円を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2.cpp" line="332"/>
         <location filename="../src/actions/rs_actiondrawcircletan2.cpp" line="337"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>戻る</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2.cpp" line="336"/>
         <source>Select the center of the tangent circle</source>
-        <translation>接する円の中心を選択</translation>
+        <translation>接円の中心を選択</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2.cpp" line="154"/>
         <source>Invalid expression &apos;%1&apos; for radius</source>
-        <translation>半径として無効な式です：「%1」</translation>
+        <translation>半径に対する無効な式 &apos;%1&apos;</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2.cpp" line="156"/>
         <source>Invalid negative radius &apos;%1&apos;</source>
-        <translation>無効な負の半径です：「%1」</translation>
+        <translation>無効な負の半径 &apos;%1&apos;</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2.cpp" line="159"/>
         <source>Invalid zero radius &apos;%1&apos;</source>
-        <translation>無効なゼロの半径です：「%1」</translation>
+        <translation>無効なゼロ半径 &apos;%1&apos;</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2.cpp" line="167"/>
         <source>No tangent circle possible for radius &apos;%1&apos;</source>
-        <translation>半径「%1」の接線円は作成できません。</translation>
+        <translation>半径 &apos;%1&apos; では接円が作成できません</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2.cpp" line="181"/>
         <source>No common tangential circle for radius &apos;%1&apos;</source>
-        <translation>半径「%1」の共通接線円はありません。</translation>
+        <translation>半径 &apos;%1&apos; では共通接円がありません</translation>
     </message>
 </context>
 <context>
@@ -14277,34 +14305,34 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="333"/>
         <source>Specify a line/arc/circle</source>
-        <translation>線/弧/円を指定</translation>
+        <translation>線/円弧/円を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="334"/>
         <source>Cancel</source>
-        <translation>中止</translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="338"/>
         <source>Specify the another arc/circle</source>
-        <translation>別の弧/円を指定</translation>
+        <translation>別の円弧/円を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="339"/>
         <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="344"/>
         <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="348"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>戻る</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="343"/>
         <source>Specify a point on the tangent circle</source>
-        <translation>接する円を指定</translation>
+        <translation>接円上の点を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="347"/>
         <source>Select the center of the tangent circle</source>
-        <translation>接する円の中心を指定</translation>
+        <translation>接円の中心を選択</translation>
     </message>
 </context>
 <context>
@@ -14312,34 +14340,34 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan3.cpp" line="464"/>
         <source>Cancel</source>
-        <translation>中止</translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan3.cpp" line="469"/>
         <location filename="../src/actions/rs_actiondrawcircletan3.cpp" line="473"/>
         <location filename="../src/actions/rs_actiondrawcircletan3.cpp" line="478"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>戻る</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan3.cpp" line="477"/>
         <source>Select the center of the tangent circle</source>
-        <translation>接する円の中心を指定</translation>
+        <translation>接円の中心を選択</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan3.cpp" line="463"/>
         <source>Specify the first line/arc/circle</source>
-        <translation>最初の線/弧/円を指定</translation>
+        <translation>最初の線/円弧/円を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan3.cpp" line="468"/>
         <source>Specify the second line/arc/circle</source>
-        <translation>２つ目の線/弧/円を指定</translation>
+        <translation>2番目の線/円弧/円を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan3.cpp" line="472"/>
         <source>Specify the third line/arc/circle</source>
-        <translation>３つ目の線/弧/円を指定</translation>
+        <translation>3番目の線/円弧/円を指定</translation>
     </message>
 </context>
 <context>
@@ -14352,34 +14380,34 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawellipse4points.cpp" line="285"/>
         <source>Cancel</source>
-        <translation>中止</translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipse4points.cpp" line="289"/>
         <source>Specify the second point on ellipse</source>
-        <translation>楕円上の２つ目の点を指定</translation>
+        <translation>楕円上の2番目の点を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipse4points.cpp" line="290"/>
         <location filename="../src/actions/rs_actiondrawellipse4points.cpp" line="295"/>
         <location filename="../src/actions/rs_actiondrawellipse4points.cpp" line="300"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>戻る</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipse4points.cpp" line="294"/>
         <source>Specify the third point on ellipse</source>
-        <translation>楕円上の３つ目の点を指定</translation>
+        <translation>楕円上の3番目の点を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipse4points.cpp" line="299"/>
         <source>Specify the fourth point on ellipse</source>
-        <translation>楕円上の４つ目の点を指定</translation>
+        <translation>楕円上の4番目の点を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipse4points.cpp" line="156"/>
         <source>Can not determine uniquely an ellipse</source>
-        <translation>単一の楕円を指定できません</translation>
+        <translation>楕円を一意に決定できません</translation>
     </message>
 </context>
 <context>
@@ -14389,22 +14417,22 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawellipseaxis.cpp" line="325"/>
         <location filename="../src/actions/rs_actiondrawellipseaxis.cpp" line="337"/>
         <source>Not a valid expression</source>
-        <translation>表記に誤り</translation>
+        <translation>有効な式ではありません</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipseaxis.cpp" line="350"/>
         <source>Specify ellipse center</source>
-        <translation>楕円中心指示</translation>
+        <translation>楕円の中心を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipseaxis.cpp" line="351"/>
         <source>Cancel</source>
-        <translation>中止</translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipseaxis.cpp" line="355"/>
         <source>Specify endpoint of major axis</source>
-        <translation>長軸の終点指示</translation>
+        <translation>長軸の端点を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipseaxis.cpp" line="356"/>
@@ -14412,22 +14440,22 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawellipseaxis.cpp" line="367"/>
         <location filename="../src/actions/rs_actiondrawellipseaxis.cpp" line="372"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>戻る</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipseaxis.cpp" line="361"/>
         <source>Specify endpoint or length of minor axis:</source>
-        <translation>端軸の終点又は短軸長さを指示:</translation>
+        <translation>短軸の端点または長さを指定:</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipseaxis.cpp" line="366"/>
         <source>Specify start angle</source>
-        <translation>開始角指示</translation>
+        <translation>開始角度を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipseaxis.cpp" line="371"/>
         <source>Specify end angle</source>
-        <translation>終了角指示</translation>
+        <translation>終了角度を指定</translation>
     </message>
 </context>
 <context>
@@ -14441,7 +14469,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawellipsecenter3points.cpp" line="283"/>
         <location filename="../src/actions/rs_actiondrawellipsecenter3points.cpp" line="288"/>
         <source>Cancel</source>
-        <translation>中止</translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipsecenter3points.cpp" line="287"/>
@@ -14451,18 +14479,18 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawellipsecenter3points.cpp" line="291"/>
         <source>Specify the second point on ellipse</source>
-        <translation>楕円上の２つ目の点を指定</translation>
+        <translation>楕円上の2番目の点を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipsecenter3points.cpp" line="292"/>
         <location filename="../src/actions/rs_actiondrawellipsecenter3points.cpp" line="297"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>戻る</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipsecenter3points.cpp" line="296"/>
         <source>Specify the third point on ellipse</source>
-        <translation>楕円上の３つ目の点を指定</translation>
+        <translation>楕円上の3番目の点を指定</translation>
     </message>
 </context>
 <context>
@@ -14470,43 +14498,43 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawellipsefocipoint.cpp" line="223"/>
         <source>Not a valid expression</source>
-        <translation>表記に誤り</translation>
+        <translation>有効な式ではありません</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipsefocipoint.cpp" line="238"/>
         <source>Specify first focus of ellipse</source>
-        <translation>最初の楕円の焦点を指定</translation>
+        <translation>楕円の最初の焦点を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipsefocipoint.cpp" line="239"/>
         <source>Cancel</source>
-        <translation>中止</translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipsefocipoint.cpp" line="243"/>
         <source>Specify second focus of ellipse</source>
-        <translation>２つ目の楕円の焦点を指定</translation>
+        <translation>楕円の2番目の焦点を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipsefocipoint.cpp" line="244"/>
         <location filename="../src/actions/rs_actiondrawellipsefocipoint.cpp" line="250"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>戻る</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipsefocipoint.cpp" line="249"/>
         <source>Specify a point on ellipse or total distance to foci</source>
-        <translation>楕円のポイントか、焦点からポイントまでの長さの合計を指定</translation>
+        <translation>楕円上の点、または焦点までの合計距離を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipsefocipoint.cpp" line="207"/>
         <source>specify a point on ellipse, or total distance to foci</source>
-        <translation>楕円上のポイントを指定、またはフォーカスへの距離の合計</translation>
+        <translation>楕円上の点、または焦点までの合計距離を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipsefocipoint.cpp" line="221"/>
         <source>Total distance %1 is smaller than distance between foci</source>
-        <translation>距離の合計 %1 はフォーカスの間の距離より小さい</translation>
+        <translation>合計距離 %1 は焦点間距離より小さいです</translation>
     </message>
 </context>
 <context>
@@ -14519,34 +14547,34 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawellipseinscribe.cpp" line="280"/>
         <source>Cancel</source>
-        <translation>中止</translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipseinscribe.cpp" line="284"/>
         <source>Specify the second line</source>
-        <translation>2本目の線を指定</translation>
+        <translation>2番目の線を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipseinscribe.cpp" line="285"/>
         <location filename="../src/actions/rs_actiondrawellipseinscribe.cpp" line="290"/>
         <location filename="../src/actions/rs_actiondrawellipseinscribe.cpp" line="295"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>戻る</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipseinscribe.cpp" line="289"/>
         <source>Specify the third line</source>
-        <translation>3本目の線を指定</translation>
+        <translation>3番目の線を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipseinscribe.cpp" line="294"/>
         <source>Specify the fourth line</source>
-        <translation>４本目の線を指定</translation>
+        <translation>4番目の線を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipseinscribe.cpp" line="157"/>
         <source>Can not determine uniquely an ellipse</source>
-        <translation>単一の楕円を指定できません</translation>
+        <translation>楕円を一意に決定できません</translation>
     </message>
 </context>
 <context>
@@ -14554,42 +14582,42 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="179"/>
         <source>Invalid hatch area. Please check that the entities chosen form one or more closed contours.</source>
-        <translation>有効でないハッチ領域。閉じた図形かチェックしてください。</translation>
+        <translation>無効なハッチング領域です。選択したエンティティが1つ以上の閉じた輪郭を形成しているか確認してください。</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="150"/>
         <source>Hatch created successfully.</source>
-        <translation>ハッチングは成功しました.</translation>
+        <translation>ハッチングが正常に作成されました。</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="153"/>
         <source>Hatch Error: Invalid contour found!</source>
-        <translation>ハッチング・エラー: 輪郭が無効です！</translation>
+        <translation>ハッチングエラー: 無効な輪郭が見つかりました！</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="157"/>
         <source>Hatch Error: Pattern not found!</source>
-        <translation>ハッチング・エラー: パターンが見つからない!</translation>
+        <translation>ハッチングエラー: パターンが見つかりません！</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="160"/>
         <source>Hatch Error: Contour or pattern too small!</source>
-        <translation>ハッチング・エラー: パターンもしくは輪郭が小さすぎる!</translation>
+        <translation>ハッチングエラー: 輪郭またはパターンが小さすぎます！</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="163"/>
         <source>Hatch Error: Contour too big!</source>
-        <translation>ハッチング・エラー: 輪郭が大きすぎる!</translation>
+        <translation>ハッチングエラー: 輪郭が大きすぎます！</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="166"/>
         <source>Hatch Error: Undefined Error!</source>
-        <translation>ハッチング・エラー:・分類できないエラー!</translation>
+        <translation>ハッチングエラー: 未定義のエラー！</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="171"/>
         <source>Total hatch area = %1</source>
-        <translation>ハッチング面積 = %1</translation>
+        <translation>ハッチング総面積 = %1</translation>
     </message>
 </context>
 <context>
@@ -14599,32 +14627,32 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawimage.cpp" line="210"/>
         <location filename="../src/actions/rs_actiondrawimage.cpp" line="224"/>
         <source>Not a valid expression</source>
-        <translation>表記に誤り</translation>
+        <translation>有効な式ではありません</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawimage.cpp" line="308"/>
         <source>Specify reference point</source>
-        <translation>参照点指示</translation>
+        <translation>基準点を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawimage.cpp" line="309"/>
         <source>Cancel</source>
-        <translation>中止</translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawimage.cpp" line="312"/>
         <source>Enter angle:</source>
-        <translation>角度入力:</translation>
+        <translation>角度を入力:</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawimage.cpp" line="316"/>
         <source>Enter factor:</source>
-        <translation>倍率入力:</translation>
+        <translation>係数を入力:</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawimage.cpp" line="320"/>
         <source>Enter dpi:</source>
-        <translation>DPI入力:</translation>
+        <translation>dpiを入力:</translation>
     </message>
 </context>
 <context>
@@ -14632,43 +14660,43 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawline.cpp" line="313"/>
         <source>Specify first point</source>
-        <translation>１点目指示</translation>
+        <translation>始点を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawline.cpp" line="314"/>
         <source>Cancel</source>
-        <translation>中止</translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawline.cpp" line="337"/>
         <source>Specify next point or [%1]</source>
-        <translation>次点又は[%1]指示</translation>
+        <translation>次の点を指定、または [%1]</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawline.cpp" line="338"/>
         <location filename="../src/actions/rs_actiondrawline.cpp" line="342"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>戻る</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawline.cpp" line="341"/>
         <source>Specify next point</source>
-        <translation>次点指示</translation>
+        <translation>次の点を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawline.cpp" line="389"/>
         <source>Cannot close sequence of lines: Not enough entities defined yet, or already closed.</source>
-        <translation>線分を閉じることができない：要素をまだ十分に定義していなかったか、またはすでに閉まっていた。</translation>
+        <translation>線の連続を閉じられません: 十分なエンティティが定義されていないか、既に閉じています。</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawline.cpp" line="443"/>
         <source>Cannot undo: Begin of history reached</source>
-        <translation>元に戻せません：履歴の開始点に到達しました。</translation>
+        <translation>元に戻せません: 履歴の先頭に達しました</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawline.cpp" line="478"/>
         <source>Cannot redo: End of history reached</source>
-        <translation>やり直しができません：履歴の終点に到達しました。</translation>
+        <translation>やり直せません: 履歴の末尾に達しました</translation>
     </message>
 </context>
 <context>
@@ -14677,33 +14705,33 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawlineangle.cpp" line="219"/>
         <location filename="../src/actions/rs_actiondrawlineangle.cpp" line="233"/>
         <source>Not a valid expression</source>
-        <translation>表記に誤り</translation>
+        <translation>有効な式ではありません</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlineangle.cpp" line="300"/>
         <source>Specify position</source>
-        <translation>位置指示</translation>
+        <translation>位置を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlineangle.cpp" line="301"/>
         <source>Cancel</source>
-        <translation>中止</translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlineangle.cpp" line="305"/>
         <source>Enter angle:</source>
-        <translation>角度入力:</translation>
+        <translation>角度を入力:</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlineangle.cpp" line="305"/>
         <location filename="../src/actions/rs_actiondrawlineangle.cpp" line="309"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>戻る</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlineangle.cpp" line="309"/>
         <source>Enter length:</source>
-        <translation>長さ入力:</translation>
+        <translation>長さを入力:</translation>
     </message>
 </context>
 <context>
@@ -14712,45 +14740,45 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawlinebisector.cpp" line="236"/>
         <location filename="../src/actions/rs_actiondrawlinebisector.cpp" line="253"/>
         <source>Not a valid expression</source>
-        <translation>表記に誤り</translation>
+        <translation>有効な式ではありません</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinebisector.cpp" line="288"/>
         <source>Select first line</source>
-        <translation>１つ目の線分</translation>
+        <translation>最初の線を選択</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinebisector.cpp" line="289"/>
         <source>Cancel</source>
-        <translation>中止</translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinebisector.cpp" line="292"/>
         <source>Select second line</source>
-        <translation>２つ目の線分</translation>
+        <translation>2番目の線を選択</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinebisector.cpp" line="293"/>
         <location filename="../src/actions/rs_actiondrawlinebisector.cpp" line="297"/>
         <location filename="../src/actions/rs_actiondrawlinebisector.cpp" line="301"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>戻る</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinebisector.cpp" line="296"/>
         <source>Enter bisector length:</source>
-        <translation>角の２等分線長さ入力:</translation>
+        <translation>二等分線の長さを入力:</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinebisector.cpp" line="300"/>
         <source>Enter number of bisectors:</source>
-        <translation>角の２等分線の数:</translation>
+        <translation>二等分線の本数を入力:</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinebisector.cpp" line="251"/>
         <source>Number sector lines not in range: </source>
         <comment>number of bisector to create must be in [1, 200]</comment>
-        <translation>番号のセクターラインが範囲内にない:</translation>
+        <translation>セクター線の数が範囲外です: </translation>
     </message>
 </context>
 <context>
@@ -14758,12 +14786,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawlinefree.cpp" line="141"/>
         <source>Click and drag to draw a line</source>
-        <translation>クリックして作図線を引く</translation>
+        <translation>クリックしてドラッグし、線を描画</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinefree.cpp" line="141"/>
         <source>Cancel</source>
-        <translation>中止</translation>
+        <translation>キャンセル</translation>
     </message>
 </context>
 <context>
@@ -14771,22 +14799,22 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawlinehorvert.cpp" line="157"/>
         <source>Specify first point</source>
-        <translation>１点目指示</translation>
+        <translation>始点を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinehorvert.cpp" line="158"/>
         <source>Cancel</source>
-        <translation>中止</translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinehorvert.cpp" line="161"/>
         <source>Specify second point</source>
-        <translation>２点目指示</translation>
+        <translation>2番目の点を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinehorvert.cpp" line="162"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>戻る</translation>
     </message>
 </context>
 <context>
@@ -14799,17 +14827,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawlineorthtan.cpp" line="186"/>
         <source>Cancel</source>
-        <translation>中止</translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlineorthtan.cpp" line="189"/>
         <source>Select circle, arc or ellipse</source>
-        <translation>円、楕円選択</translation>
+        <translation>円、円弧、または楕円を選択</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlineorthtan.cpp" line="190"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>戻る</translation>
     </message>
 </context>
 <context>
@@ -14817,28 +14845,28 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawlineparallel.cpp" line="125"/>
         <source>Specify Distance &lt;%1&gt; or select entity or [%2]</source>
-        <translation>距離&lt;%1&gt;、図形選択、[%2]指示</translation>
+        <translation>距離 &lt;%1&gt; を指定、図形を選択、または [%2]</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlineparallel.cpp" line="127"/>
         <source>Cancel</source>
-        <translation>中止</translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlineparallel.cpp" line="131"/>
         <source>Enter number:</source>
-        <translation>数値入力:</translation>
+        <translation>数を入力:</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlineparallel.cpp" line="179"/>
         <location filename="../src/actions/rs_actiondrawlineparallel.cpp" line="198"/>
         <source>Not a valid expression</source>
-        <translation>表記に誤り</translation>
+        <translation>有効な式ではありません</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlineparallel.cpp" line="195"/>
         <source>Not a valid number. Try 1..99</source>
-        <translation>有効な数値ではありません。1..99まで</translation>
+        <translation>有効な数値ではありません。1～99 で入力してください</translation>
     </message>
 </context>
 <context>
@@ -14846,38 +14874,38 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawlineparallelthrough.cpp" line="176"/>
         <source>Select entity</source>
-        <translation>図形選択</translation>
+        <translation>エンティティを選択</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlineparallelthrough.cpp" line="176"/>
         <source>Cancel</source>
-        <translation>中止</translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlineparallelthrough.cpp" line="180"/>
         <source>Specify through point</source>
-        <translation>通過点指示</translation>
+        <translation>通過点を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlineparallelthrough.cpp" line="181"/>
         <location filename="../src/actions/rs_actiondrawlineparallelthrough.cpp" line="185"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>戻る</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlineparallelthrough.cpp" line="185"/>
         <source>Number:</source>
-        <translation>数値:</translation>
+        <translation>数:</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlineparallelthrough.cpp" line="241"/>
         <source>Not a valid number. Try 1..99</source>
-        <translation>有効な数値ではありません。1..99まで</translation>
+        <translation>有効な数値ではありません。1～99 で入力してください</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlineparallelthrough.cpp" line="245"/>
         <source>Not a valid expression</source>
-        <translation>表記に誤り</translation>
+        <translation>有効な式ではありません</translation>
     </message>
 </context>
 <context>
@@ -14885,27 +14913,27 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawlinepolygon.cpp" line="138"/>
         <source>Specify center</source>
-        <translation>中心指定</translation>
+        <translation>中心を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinepolygon.cpp" line="143"/>
         <source>Specify a corner</source>
-        <translation>コーナー指示</translation>
+        <translation>頂点を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinepolygon.cpp" line="147"/>
         <source>Enter number:</source>
-        <translation>数値入力:</translation>
+        <translation>数を入力:</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinepolygon.cpp" line="197"/>
         <source>Not a valid number. Try 1..9999</source>
-        <translation>有効な数値ではありません。1..9999まで</translation>
+        <translation>有効な数値ではありません。1～9999 で入力してください</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinepolygon.cpp" line="200"/>
         <source>Not a valid expression</source>
-        <translation>表記に誤り</translation>
+        <translation>有効な式ではありません</translation>
     </message>
 </context>
 <context>
@@ -14913,23 +14941,23 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawlinepolygon2.cpp" line="144"/>
         <source>Specify first corner</source>
-        <translation>１つ目のコーナー指示</translation>
+        <translation>最初の頂点を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinepolygon2.cpp" line="145"/>
         <source>Cancel</source>
-        <translation>中止</translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinepolygon2.cpp" line="149"/>
         <source>Specify second corner</source>
-        <translation>２つ目のコーナー指示</translation>
+        <translation>2番目の頂点を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinepolygon2.cpp" line="150"/>
         <location filename="../src/actions/rs_actiondrawlinepolygon2.cpp" line="154"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>戻る</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinepolygon2.cpp" line="154"/>
@@ -14939,12 +14967,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawlinepolygon2.cpp" line="208"/>
         <source>Not a valid number. Try 1..9999</source>
-        <translation>有効な数値ではありません。1..9999まで</translation>
+        <translation>有効な数値ではありません。1～9999 で入力してください</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinepolygon2.cpp" line="211"/>
         <source>Not a valid expression.</source>
-        <translation>表記に誤り。</translation>
+        <translation>有効な式ではありません。</translation>
     </message>
 </context>
 <context>
@@ -14952,22 +14980,22 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawlinerectangle.cpp" line="155"/>
         <source>Specify first corner</source>
-        <translation>１つ目のコーナー指示</translation>
+        <translation>最初の頂点を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinerectangle.cpp" line="156"/>
         <source>Cancel</source>
-        <translation>中止</translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinerectangle.cpp" line="159"/>
         <source>Specify second corner</source>
-        <translation>２つ目のコーナー指示</translation>
+        <translation>2番目の頂点を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinerectangle.cpp" line="160"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>戻る</translation>
     </message>
 </context>
 <context>
@@ -14976,27 +15004,27 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawlinerelangle.cpp" line="225"/>
         <location filename="../src/actions/rs_actiondrawlinerelangle.cpp" line="238"/>
         <source>Not a valid expression</source>
-        <translation>表記に誤り</translation>
+        <translation>有効な式ではありません</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinerelangle.cpp" line="274"/>
         <source>Select base entity</source>
-        <translation>基準図形選択</translation>
+        <translation>基準エンティティを選択</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinerelangle.cpp" line="275"/>
         <source>Cancel</source>
-        <translation>中止</translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinerelangle.cpp" line="278"/>
         <source>Specify position</source>
-        <translation>位置指示</translation>
+        <translation>位置を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinerelangle.cpp" line="279"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>戻る</translation>
     </message>
 </context>
 <context>
@@ -15004,22 +15032,22 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawlinetangent1.cpp" line="181"/>
         <source>Specify point</source>
-        <translation>点指示</translation>
+        <translation>点を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinetangent1.cpp" line="182"/>
         <source>Cancel</source>
-        <translation>中止</translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinetangent1.cpp" line="185"/>
         <source>Select circle, arc or ellipse</source>
-        <translation>円、楕円選択</translation>
+        <translation>円、円弧、または楕円を選択</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinetangent1.cpp" line="186"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>戻る</translation>
     </message>
 </context>
 <context>
@@ -15027,13 +15055,13 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawlinetangent2.cpp" line="283"/>
         <source>Cancel</source>
-        <translation>中止</translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinetangent2.cpp" line="287"/>
         <location filename="../src/actions/rs_actiondrawlinetangent2.cpp" line="291"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>戻る</translation>
     </message>
     <message>
         <source>Select first circle or ellipse</source>
@@ -15046,17 +15074,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawlinetangent2.cpp" line="282"/>
         <source>Select first circle/ellipse/parabola</source>
-        <translation>最初の円/楕円/放物線を選択してください。</translation>
+        <translation>最初の円/楕円/放物線を選択</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinetangent2.cpp" line="286"/>
         <source>Select second circle/ellipse/parabola</source>
-        <translation>2番目の円/楕円/放物線を選択してください。</translation>
+        <translation>2番目の円/楕円/放物線を選択</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinetangent2.cpp" line="290"/>
         <source>Select the tangent line closest to cursor</source>
-        <translation>カーソルに最も近い接線を選択してください。</translation>
+        <translation>カーソルに最も近い接線を選択</translation>
     </message>
 </context>
 <context>
@@ -15064,22 +15092,22 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawmtext.cpp" line="255"/>
         <source>Specify insertion point</source>
-        <translation>挿入点指示</translation>
+        <translation>挿入点を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawmtext.cpp" line="256"/>
         <source>Cancel</source>
-        <translation>中止</translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawmtext.cpp" line="260"/>
         <source>Enter text:</source>
-        <translation>文字列入力:</translation>
+        <translation>テキストを入力:</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawmtext.cpp" line="261"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>戻る</translation>
     </message>
 </context>
 <context>
@@ -15087,12 +15115,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawpoint.cpp" line="117"/>
         <source>Specify location</source>
-        <translation>位置指示</translation>
+        <translation>位置を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawpoint.cpp" line="117"/>
         <source>Cancel</source>
-        <translation>中止</translation>
+        <translation>キャンセル</translation>
     </message>
 </context>
 <context>
@@ -15100,50 +15128,50 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="678"/>
         <source>Specify first point</source>
-        <translation>最初のポイントを指示</translation>
+        <translation>始点を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="698"/>
         <source>Specify next point</source>
-        <translation>次のポイントを指示</translation>
+        <translation>次の点を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="694"/>
         <source>Specify next point or [%1]</source>
-        <translation>次のポイント または [%1] を指示</translation>
+        <translation>次の点を指定、または [%1]</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="679"/>
         <source>Cancel</source>
-        <translation>中止</translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="695"/>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="699"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>戻る</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="745"/>
         <source>Cannot close sequence of lines: Not enough entities defined yet.</source>
-        <translation>線分を閉じることができません: 図形の定義が不足。</translation>
+        <translation>線の連続を閉じられません: 定義された図形が不足しています。</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="772"/>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation>取り消しができません: 要素が定義されていません。</translation>
+        <translation>元に戻せません: 定義された図形が不足しています。</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="340"/>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="509"/>
         <source>Enter the end point x</source>
-        <translation>終点のX座標を入力してください。</translation>
+        <translation>終点のx座標を入力</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="375"/>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="520"/>
         <source>Enter number of polylines</source>
-        <translation>ポリラインの数を入力してください。</translation>
+        <translation>ポリラインの本数を入力</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="459"/>
@@ -15153,7 +15181,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="461"/>
         <source>Enter an equation, f(x)</source>
-        <translation>方程式 f(x) を入力してください。</translation>
+        <translation>方程式 f(x) を入力</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="479"/>
@@ -15163,22 +15191,22 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="487"/>
         <source>Enter the start point x</source>
-        <translation>開始点 x を入力してください。</translation>
+        <translation>始点のx座標を入力</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="495"/>
         <source>The entered x is invalid.</source>
-        <translation>入力された x は無効です。</translation>
+        <translation>入力されたxは無効です。</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="541"/>
         <source>The step size entered is invalid.</source>
-        <translation>ステップサイズが不正です。</translation>
+        <translation>入力されたステップサイズは無効です。</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="575"/>
         <source>The value x entered is invalid.</source>
-        <translation>入力された値 x は無効です。</translation>
+        <translation>入力されたxの値は無効です。</translation>
     </message>
 </context>
 <context>
@@ -15186,33 +15214,33 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawspline.cpp" line="276"/>
         <source>Specify first control point</source>
-        <translation>１つ目の制御点指示</translation>
+        <translation>最初の制御点を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawspline.cpp" line="277"/>
         <source>Cancel</source>
-        <translation>中止</translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawspline.cpp" line="289"/>
         <source>Specify next control point or [%1]</source>
-        <translation>次の制御点指示か[%1]</translation>
+        <translation>次の制御点または [%1] を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawspline.cpp" line="290"/>
         <location filename="../src/actions/rs_actiondrawspline.cpp" line="294"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>戻る</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawspline.cpp" line="293"/>
         <source>Specify next control point</source>
-        <translation>次の制御点指示</translation>
+        <translation>次の制御点を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawspline.cpp" line="365"/>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation>取り消しできません:作図されていません。</translation>
+        <translation>元に戻せません: 定義された図形が不足しています。</translation>
     </message>
 </context>
 <context>
@@ -15220,28 +15248,28 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawtext.cpp" line="281"/>
         <source>Specify insertion point</source>
-        <translation>挿入点指示</translation>
+        <translation>挿入点を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawtext.cpp" line="282"/>
         <location filename="../src/actions/rs_actiondrawtext.cpp" line="286"/>
         <source>Cancel</source>
-        <translation>中止</translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawtext.cpp" line="290"/>
         <source>Enter text:</source>
-        <translation>文字列入力:</translation>
+        <translation>テキストを入力:</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawtext.cpp" line="291"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>戻る</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawtext.cpp" line="285"/>
         <source>Specify second point</source>
-        <translation>２点目を指示</translation>
+        <translation>2番目の点を指定</translation>
     </message>
 </context>
 <context>
@@ -15249,12 +15277,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actioneditcopy.cpp" line="104"/>
         <source>Specify reference point</source>
-        <translation>参照点を指示</translation>
+        <translation>基準点を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actioneditcopy.cpp" line="105"/>
         <source>Cancel</source>
-        <translation>中止</translation>
+        <translation>キャンセル</translation>
     </message>
 </context>
 <context>
@@ -15262,12 +15290,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actioneditpaste.cpp" line="120"/>
         <source>Set reference point</source>
-        <translation>参照点設定</translation>
+        <translation>基準点を設定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actioneditpaste.cpp" line="121"/>
         <source>Cancel</source>
-        <translation>中止</translation>
+        <translation>キャンセル</translation>
     </message>
 </context>
 <context>
@@ -15275,12 +15303,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actioneditundo.cpp" line="65"/>
         <source>Nothing to undo!</source>
-        <translation>取り消ししない!</translation>
+        <translation>元に戻す操作がありません!</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actioneditundo.cpp" line="68"/>
         <source>Nothing to redo!</source>
-        <translation>やり直ししない!</translation>
+        <translation>やり直す操作がありません!</translation>
     </message>
 </context>
 <context>
@@ -15288,27 +15316,27 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actioninfoangle.cpp" line="97"/>
         <source>Lines are parallel</source>
-        <translation>線分は平行</translation>
+        <translation>線は平行です</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actioninfoangle.cpp" line="139"/>
         <source>Specify first line</source>
-        <translation>１つ目の線分</translation>
+        <translation>最初の線を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actioninfoangle.cpp" line="140"/>
         <source>Cancel</source>
-        <translation>中止</translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actioninfoangle.cpp" line="144"/>
         <source>Specify second line</source>
-        <translation>２つ目の線分</translation>
+        <translation>2番目の線を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actioninfoangle.cpp" line="145"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>戻る</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actioninfoangle.cpp" line="94"/>
@@ -15331,23 +15359,23 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actioninfoarea.cpp" line="165"/>
         <source>Specify first point of polygon</source>
-        <translation>多角形の１点目を指示</translation>
+        <translation>多角形の最初の点を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actioninfoarea.cpp" line="166"/>
         <location filename="../src/actions/rs_actioninfoarea.cpp" line="171"/>
         <source>Cancel</source>
-        <translation>中止</translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actioninfoarea.cpp" line="170"/>
         <source>Specify next point of polygon</source>
-        <translation>多角形の次の点を指示</translation>
+        <translation>多角形の次の点を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actioninfoarea.cpp" line="137"/>
         <source>Closing Point: %1/%2</source>
-        <translation>閉じた点: %1/%2</translation>
+        <translation>閉鎖点: %1/%2</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actioninfoarea.cpp" line="93"/>
@@ -15360,27 +15388,27 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actioninfodist.cpp" line="169"/>
         <source>Specify first point of distance</source>
-        <translation>一点目を指示</translation>
+        <translation>距離の1番目の点を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actioninfodist.cpp" line="170"/>
         <source>Cancel</source>
-        <translation>中止</translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actioninfodist.cpp" line="174"/>
         <source>Specify second point of distance</source>
-        <translation>二点目を指示</translation>
+        <translation>距離の2番目の点を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actioninfodist.cpp" line="175"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>戻る</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actioninfodist.cpp" line="80"/>
         <source>Distance: %1 Cartesian: (%2 , %3), Polar: (%4&lt;%5)</source>
-        <translation>距離: %1 XY座標: (%2 , %3), 極座標: (%4&lt;%5)</translation>
+        <translation>距離: %1 直交座標: (%2 , %3)、極座標: (%4&lt;%5)</translation>
     </message>
 </context>
 <context>
@@ -15393,22 +15421,22 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actioninfodist2.cpp" line="155"/>
         <source>Specify entity</source>
-        <translation>図形を指示</translation>
+        <translation>図形を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actioninfodist2.cpp" line="156"/>
         <source>Cancel</source>
-        <translation>中止</translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actioninfodist2.cpp" line="160"/>
         <source>Specify point</source>
-        <translation>点を指示</translation>
+        <translation>点を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actioninfodist2.cpp" line="161"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>戻る</translation>
     </message>
 </context>
 <context>
@@ -15416,22 +15444,22 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actioninfoinside.cpp" line="56"/>
         <source>Point is inside selected contour.</source>
-        <translation>点は輪郭線の内部.</translation>
+        <translation>点は選択された輪郭の内部にあります。</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actioninfoinside.cpp" line="58"/>
         <source>Point is outside selected contour.</source>
-        <translation>点は輪郭線の外部.。</translation>
+        <translation>点は選択された輪郭の外部にあります。</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actioninfoinside.cpp" line="84"/>
         <source>Specify point</source>
-        <translation>点指示</translation>
+        <translation>点を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actioninfoinside.cpp" line="85"/>
         <source>Cancel</source>
-        <translation>中止</translation>
+        <translation>キャンセル</translation>
     </message>
 </context>
 <context>
@@ -15439,12 +15467,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actioninfototallength.cpp" line="59"/>
         <source>Total Length of selected entities: %1</source>
-        <translation>選択要素の全長: %1</translation>
+        <translation>選択エンティティの全長: %1</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actioninfototallength.cpp" line="61"/>
         <source>At least one of the selected entities cannot be measured.</source>
-        <translation>図形が選択されていないため測定できません。</translation>
+        <translation>選択されたエンティティの少なくとも1つは計測できません。</translation>
     </message>
 </context>
 <context>
@@ -15452,38 +15480,38 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionlibraryinsert.cpp" line="60"/>
         <source>Insert Library Object</source>
-        <translation>ライブラリ図形を挿入</translation>
+        <translation>ライブラリオブジェクトを挿入</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionlibraryinsert.cpp" line="187"/>
         <location filename="../src/actions/rs_actionlibraryinsert.cpp" line="200"/>
         <source>Not a valid expression</source>
-        <translation>表記に誤り</translation>
+        <translation>有効な式ではありません</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionlibraryinsert.cpp" line="249"/>
         <source>Specify reference point</source>
-        <translation>参照点指示</translation>
+        <translation>基準点を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionlibraryinsert.cpp" line="250"/>
         <source>Cancel</source>
-        <translation>中止</translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionlibraryinsert.cpp" line="253"/>
         <source>Enter angle:</source>
-        <translation>角度入力:</translation>
+        <translation>角度を入力:</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionlibraryinsert.cpp" line="257"/>
         <source>Enter factor:</source>
-        <translation>倍率入力:</translation>
+        <translation>係数を入力:</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionlibraryinsert.cpp" line="79"/>
         <source>Cannot open file &apos;%1&apos;</source>
-        <translation>ファイル&apos;%1&apos; を開けません</translation>
+        <translation>ファイル &apos;%1&apos; を開けません</translation>
     </message>
 </context>
 <context>
@@ -15491,7 +15519,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionlockrelativezero.cpp" line="43"/>
         <source>(Un-)&amp;Lock Relative Zero</source>
-        <translation>(非)ロック 相対原点(&amp;L)</translation>
+        <translation>相対ゼロのロック解除/ロック(&amp;L)</translation>
     </message>
 </context>
 <context>
@@ -15500,39 +15528,39 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionmodifybevel.cpp" line="191"/>
         <location filename="../src/actions/rs_actionmodifybevel.cpp" line="204"/>
         <source>Not a valid expression</source>
-        <translation>表記に誤り</translation>
+        <translation>有効な式ではありません</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifybevel.cpp" line="270"/>
         <source>Select first entity</source>
-        <translation>１つ目の図形選択</translation>
+        <translation>最初のエンティティを選択</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifybevel.cpp" line="271"/>
         <source>Cancel</source>
-        <translation>中止</translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifybevel.cpp" line="274"/>
         <source>Select second entity</source>
-        <translation>２つ目の図形選択</translation>
+        <translation>2番目のエンティティを選択</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifybevel.cpp" line="275"/>
         <location filename="../src/actions/rs_actionmodifybevel.cpp" line="279"/>
         <location filename="../src/actions/rs_actionmodifybevel.cpp" line="283"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>戻る</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifybevel.cpp" line="278"/>
         <source>Enter length 1:</source>
-        <translation>長さ 1を入力:</translation>
+        <translation>長さ1を入力:</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifybevel.cpp" line="282"/>
         <source>Enter length 2:</source>
-        <translation>長さ 2を入力:</translation>
+        <translation>長さ2を入力:</translation>
     </message>
 </context>
 <context>
@@ -15546,37 +15574,37 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifycut.cpp" line="118"/>
         <source>Cutting point is invalid.</source>
-        <translation>切断点が有効でありません。</translation>
+        <translation>切断点が無効です。</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifycut.cpp" line="121"/>
         <source>Cutting point is not on entity.</source>
-        <translation>切断点が要素上にありません。</translation>
+        <translation>切断点がエンティティ上にありません。</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifycut.cpp" line="145"/>
         <source>Specify entity to cut</source>
-        <translation>切断する要素を選択</translation>
+        <translation>切断する図形を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifycut.cpp" line="146"/>
         <source>Cancel</source>
-        <translation>中止</translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifycut.cpp" line="149"/>
         <source>Specify cutting point</source>
-        <translation>切断点を指示</translation>
+        <translation>切断点を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifycut.cpp" line="150"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>戻る</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifycut.cpp" line="110"/>
         <source>Entity must be a line, arc, circle, ellipse or interpolation spline.</source>
-        <translation>要素は、直線、弧、円、楕円、補間スプライン.</translation>
+        <translation>図形は線、円弧、円、楕円、または補間スプラインである必要があります。</translation>
     </message>
 </context>
 <context>
@@ -15584,62 +15612,62 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="166"/>
         <source>Specify first break point on a polyline</source>
-        <translation>ポリライン上の１点目を指示</translation>
+        <translation>ポリライン上の最初の切断点を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="167"/>
         <source>Cancel</source>
-        <translation>中止</translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="170"/>
         <source>Specify second break point on the same polyline</source>
-        <translation>ポリライン上の２点目を指示</translation>
+        <translation>同じポリライン上の2番目の切断点を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="172"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>戻る</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="101"/>
         <source>Entities not in the same polyline.</source>
-        <translation>図形群は同一ポリラインにありません。</translation>
+        <translation>エンティティが同じポリライン上にありません。</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="104"/>
         <source>Parent of second entity is not a polyline</source>
-        <translation>二番目の図形の親はポリラインではありません</translation>
+        <translation>2番目のエンティティの親がポリラインではありません</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="133"/>
         <source>Parent of first entity is not a polyline</source>
-        <translation>最初の要素の親はポリラインではありません</translation>
+        <translation>最初のエンティティの親がポリラインではありません</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="107"/>
         <source>Parent of second entity is nullptr</source>
-        <translation>２番目の要素の親は nullptr</translation>
+        <translation>2番目のエンティティの親がnullptrです</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="110"/>
         <source>One of the chosen entities is nullptr</source>
-        <translation>選択要素の一つが nullptr</translation>
+        <translation>選択されたエンティティの1つがnullptrです</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="137"/>
         <source>Parent of first entity is nullptr</source>
-        <translation>最初の要素の親は nullptr</translation>
+        <translation>最初のエンティティの親がnullptrです</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="141"/>
         <source>First entity is nullptr</source>
-        <translation>最初の要素は nullptr</translation>
+        <translation>最初のエンティティがnullptrです</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="153"/>
         <source>Second entity is nullptr</source>
-        <translation>２番目の要素は nullptr</translation>
+        <translation>2番目のエンティティがnullptrです</translation>
     </message>
 </context>
 <context>
@@ -15647,12 +15675,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletequick.cpp" line="92"/>
         <source>Pick entity to delete</source>
-        <translation>削除する図形を選択</translation>
+        <translation>削除するエンティティを選択</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletequick.cpp" line="93"/>
         <source>Cancel</source>
-        <translation>中止</translation>
+        <translation>キャンセル</translation>
     </message>
 </context>
 <context>
@@ -15660,7 +15688,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifyentity.cpp" line="109"/>
         <source>Click on entity to modify</source>
-        <translation>変更するエンティティをクリック</translation>
+        <translation>修正するエンティティをクリック</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifyentity.cpp" line="109"/>
@@ -15673,22 +15701,22 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifymirror.cpp" line="161"/>
         <source>Specify first point of mirror line</source>
-        <translation>対称軸の一点目指示</translation>
+        <translation>ミラー線の最初の点を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifymirror.cpp" line="162"/>
         <source>Cancel</source>
-        <translation>中止</translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifymirror.cpp" line="166"/>
         <source>Specify second point of mirror line</source>
-        <translation>対称軸の二点目指示</translation>
+        <translation>ミラー線の2番目の点を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifymirror.cpp" line="167"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>戻る</translation>
     </message>
 </context>
 <context>
@@ -15696,27 +15724,27 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifymove.cpp" line="170"/>
         <source>Specify reference point</source>
-        <translation>参照点を指示</translation>
+        <translation>基準点を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifymove.cpp" line="171"/>
         <source>Cancel</source>
-        <translation>中止</translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifymove.cpp" line="174"/>
         <source>Specify target point</source>
-        <translation>目的点を指示</translation>
+        <translation>対象点を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifymove.cpp" line="175"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>戻る</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifymove.cpp" line="150"/>
         <source>Invalid number of copies, use %1 </source>
-        <translation>コピー数は無効, %1 を使用</translation>
+        <translation>無効なコピー数です。%1 を使用してください </translation>
     </message>
 </context>
 <context>
@@ -15724,33 +15752,33 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifymoverotate.cpp" line="177"/>
         <source>Not a valid expression</source>
-        <translation>表記に誤り</translation>
+        <translation>有効な式ではありません</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifymoverotate.cpp" line="235"/>
         <source>Specify reference point</source>
-        <translation>参照点を指示</translation>
+        <translation>基準点を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifymoverotate.cpp" line="236"/>
         <source>Cancel</source>
-        <translation>中止</translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifymoverotate.cpp" line="239"/>
         <source>Specify target point</source>
-        <translation>目的点を指示</translation>
+        <translation>対象点を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifymoverotate.cpp" line="240"/>
         <location filename="../src/actions/rs_actionmodifymoverotate.cpp" line="244"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>戻る</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifymoverotate.cpp" line="243"/>
         <source>Enter rotation angle:</source>
-        <translation>回転角度入力:</translation>
+        <translation>回転角度を入力:</translation>
     </message>
 </context>
 <context>
@@ -15763,7 +15791,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifyoffset.cpp" line="101"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>戻る</translation>
     </message>
 </context>
 <context>
@@ -15771,24 +15799,24 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifyrotate.cpp" line="149"/>
         <source>Specify reference point</source>
-        <translation>参照点を指示</translation>
+        <translation>基準点を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifyrotate.cpp" line="145"/>
         <location filename="../src/actions/rs_actionmodifyrotate.cpp" line="150"/>
         <location filename="../src/actions/rs_actionmodifyrotate.cpp" line="154"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>戻る</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifyrotate.cpp" line="144"/>
         <source>Specify rotation center</source>
-        <translation>回転の中心を指定</translation>
+        <translation>回転中心を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifyrotate.cpp" line="153"/>
         <source>Specify target point to rotate to</source>
-        <translation>回転の目標点を指定</translation>
+        <translation>回転先の対象点を指定</translation>
     </message>
 </context>
 <context>
@@ -15796,22 +15824,22 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifyrotate2.cpp" line="148"/>
         <source>Specify absolute reference point</source>
-        <translation>絶対参照点指示</translation>
+        <translation>絶対基準点を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifyrotate2.cpp" line="149"/>
         <source>Cancel</source>
-        <translation>中止</translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifyrotate2.cpp" line="152"/>
         <source>Specify relative reference point</source>
-        <translation>相対参照点指示</translation>
+        <translation>相対基準点を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifyrotate2.cpp" line="153"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>戻る</translation>
     </message>
 </context>
 <context>
@@ -15820,33 +15848,33 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionmodifyround.cpp" line="319"/>
         <location filename="../src/actions/rs_actionmodifyround.cpp" line="332"/>
         <source>Not a valid expression</source>
-        <translation>表記に誤り</translation>
+        <translation>有効な式ではありません</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifyround.cpp" line="411"/>
         <location filename="../src/actions/rs_actionmodifyround.cpp" line="415"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>戻る</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifyround.cpp" line="414"/>
         <source>Specify second entity</source>
-        <translation>二番目の図形指示</translation>
+        <translation>2番目のエンティティを指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifyround.cpp" line="418"/>
         <source>Enter radius:</source>
-        <translation>半径入力:</translation>
+        <translation>半径を入力:</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifyround.cpp" line="419"/>
         <source>Cancel</source>
-        <translation>中止</translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifyround.cpp" line="410"/>
         <source>Specify first entity or enter radius &lt;%1&gt;</source>
-        <translation>最初のエンティティを指定または半径 &lt;%1&gt; を入力</translation>
+        <translation>最初のエンティティを指定、または半径 &lt;%1&gt; を入力</translation>
     </message>
 </context>
 <context>
@@ -15854,24 +15882,24 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifyscale.cpp" line="243"/>
         <source>Specify reference point</source>
-        <translation>参照点を指示</translation>
+        <translation>基準点を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifyscale.cpp" line="239"/>
         <location filename="../src/actions/rs_actionmodifyscale.cpp" line="244"/>
         <location filename="../src/actions/rs_actionmodifyscale.cpp" line="248"/>
         <source>Cancel</source>
-        <translation>中止</translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifyscale.cpp" line="238"/>
         <source>Specify scale center</source>
-        <translation>スケール中心を指定</translation>
+        <translation>拡大/縮小の中心を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifyscale.cpp" line="247"/>
         <source>Specify target point</source>
-        <translation>目標点を指定</translation>
+        <translation>対象点を指定</translation>
     </message>
 </context>
 <context>
@@ -15879,34 +15907,34 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifystretch.cpp" line="175"/>
         <source>Specify first corner</source>
-        <translation>１つ目のコーナー指示</translation>
+        <translation>最初の頂点を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifystretch.cpp" line="176"/>
         <source>Cancel</source>
-        <translation>中止</translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifystretch.cpp" line="179"/>
         <source>Specify second corner</source>
-        <translation>２つ目のコーナー指示</translation>
+        <translation>2番目の頂点を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifystretch.cpp" line="180"/>
         <location filename="../src/actions/rs_actionmodifystretch.cpp" line="184"/>
         <location filename="../src/actions/rs_actionmodifystretch.cpp" line="188"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>戻る</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifystretch.cpp" line="183"/>
         <source>Specify reference point</source>
-        <translation>参照点を指示</translation>
+        <translation>基準点を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifystretch.cpp" line="187"/>
         <source>Specify target point</source>
-        <translation>目的点を指示</translation>
+        <translation>対象点を指定</translation>
     </message>
 </context>
 <context>
@@ -15914,34 +15942,34 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifytrim.cpp" line="177"/>
         <source>Select first trim entity</source>
-        <translation>最初のトリムする要素を選択</translation>
+        <translation>最初のトリムエンティティを選択</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifytrim.cpp" line="178"/>
         <location filename="../src/actions/rs_actionmodifytrim.cpp" line="187"/>
         <source>Cancel</source>
-        <translation>中止</translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifytrim.cpp" line="180"/>
         <source>Select limiting entity</source>
-        <translation>範囲図形選択</translation>
+        <translation>境界エンティティを選択</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifytrim.cpp" line="181"/>
         <location filename="../src/actions/rs_actionmodifytrim.cpp" line="190"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>戻る</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifytrim.cpp" line="186"/>
         <source>Select second trim entity</source>
-        <translation>２つ目のトリムする要素を選択</translation>
+        <translation>2番目のトリムエンティティを選択</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifytrim.cpp" line="189"/>
         <source>Select entity to trim</source>
-        <translation>トリムのための要素を選択</translation>
+        <translation>トリムするエンティティを選択</translation>
     </message>
 </context>
 <context>
@@ -15949,33 +15977,33 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifytrimamount.cpp" line="101"/>
         <source>No entity found. </source>
-        <translation>図形が見つかりません。</translation>
+        <translation>エンティティが見つかりません。 </translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifytrimamount.cpp" line="104"/>
         <source>The chosen Entity is in a block. Please edit the block.</source>
         <translatorcomment>AutoCADにあわせて「ブロック」と訳すことにした</translatorcomment>
-        <translation>選択された要素はブロックの中にあります。ブロックを編集してください。</translation>
+        <translation>選択されたエンティティはブロック内にあります。ブロックを編集してください。</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifytrimamount.cpp" line="108"/>
         <source>The chosen Entity is not an atomic entity or cannot be trimmed.</source>
-        <translation>選ばれた図形は基本図形でないか切除できないものです。</translation>
+        <translation>選択されたエンティティは基本エンティティではないか、トリムできません。</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifytrimamount.cpp" line="139"/>
         <source>Not a valid expression</source>
-        <translation>表記に誤り</translation>
+        <translation>有効な式ではありません</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifytrimamount.cpp" line="186"/>
         <source>Select entity to trim or enter distance:</source>
-        <translation>部分削除する図形を選択するか距離を入力:</translation>
+        <translation>トリムするエンティティを選択、または距離を入力:</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifytrimamount.cpp" line="187"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>戻る</translation>
     </message>
 </context>
 <context>
@@ -15988,12 +16016,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionorder.cpp" line="150"/>
         <source>Choose entity for order</source>
-        <translation>配置する図形を選択</translation>
+        <translation>順序変更する図形を選択</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionorder.cpp" line="151"/>
         <source>Cancel</source>
-        <translation>中止</translation>
+        <translation>キャンセル</translation>
     </message>
 </context>
 <context>
@@ -16001,12 +16029,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylineadd.cpp" line="157"/>
         <source>Specify polyline to add nodes</source>
-        <translation>ノードを挿入するポリラインを指示</translation>
+        <translation>ノードを追加するポリラインを指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineadd.cpp" line="161"/>
         <source>Specify adding node&apos;s point</source>
-        <translation>挿入するノード位置を指示</translation>
+        <translation>追加するノードの点を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineadd.cpp" line="105"/>
@@ -16017,27 +16045,27 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylineadd.cpp" line="109"/>
         <source>Entity must be a polyline.</source>
-        <translation>図形はポリラインではありません。</translation>
+        <translation>エンティティはポリラインである必要があります。</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineadd.cpp" line="123"/>
         <source>Adding point is invalid.</source>
-        <translation>指示位置が無効です。</translation>
+        <translation>追加点が無効です。</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineadd.cpp" line="158"/>
         <source>Cancel</source>
-        <translation>中止</translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineadd.cpp" line="162"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>戻る</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineadd.cpp" line="131"/>
         <source>Adding point is not on entity.</source>
-        <translation>追加点が図形上にありません。</translation>
+        <translation>追加点がエンティティ上にありません。</translation>
     </message>
 </context>
 <context>
@@ -16045,17 +16073,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="119"/>
         <source>Click somewhere near the beginning or end of existing polyline.</source>
-        <translation>ポリライン図形の開始または終了点の近傍を指示.</translation>
+        <translation>既存のポリラインの始点または終点付近をクリックしてください。</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="211"/>
         <source>Specify next point</source>
-        <translation>次のポイントを指示</translation>
+        <translation>次の点を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="207"/>
         <source>Specify next point or [%1]</source>
-        <translation>次のポイント または [%1] を指示</translation>
+        <translation>次の点を指定、または [%1]</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="91"/>
@@ -16065,33 +16093,33 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="95"/>
         <source>Entity must be a polyline.</source>
-        <translation>図形はポリラインではありません。</translation>
+        <translation>エンティティはポリラインである必要があります。</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="192"/>
         <source>Cancel</source>
-        <translation>中止</translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="208"/>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="212"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>戻る</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="191"/>
         <source>Specify the polyline somewhere near the beginning or end point</source>
-        <translation>最初または終点の近くでどこかにポリラインを指定</translation>
+        <translation>ポリラインの始点または終点付近を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="99"/>
         <source>Can not append nodes in a closed polyline.</source>
-        <translation>閉じられたポリラインのノードを追加できない.</translation>
+        <translation>閉じたポリラインにはノードを追加できません。</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="230"/>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation>取り消しできません:作図されていません。</translation>
+        <translation>元に戻せません: 定義された図形が不足しています。</translation>
     </message>
 </context>
 <context>
@@ -16099,12 +16127,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylinedel.cpp" line="158"/>
         <source>Specify polyline to delete node</source>
-        <translation>ノードを削除するポリラインを指示</translation>
+        <translation>ノードを削除するポリラインを指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedel.cpp" line="162"/>
         <source>Specify deleting node&apos;s point</source>
-        <translation>削除するノード位置を指示</translation>
+        <translation>削除するノードの点を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedel.cpp" line="108"/>
@@ -16115,27 +16143,27 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylinedel.cpp" line="112"/>
         <source>Entity must be a polyline.</source>
-        <translation>図形はポリラインではありません。</translation>
+        <translation>エンティティはポリラインである必要があります。</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedel.cpp" line="159"/>
         <source>Cancel</source>
-        <translation>中止</translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedel.cpp" line="163"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>戻る</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedel.cpp" line="129"/>
         <source>Deleting point is invalid.</source>
-        <translation>削除位置が無効.</translation>
+        <translation>削除点が無効です。</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedel.cpp" line="132"/>
         <source>Deleting point is not on entity.</source>
-        <translation>削除位置が図形上にありません。</translation>
+        <translation>削除点がエンティティ上にありません。</translation>
     </message>
 </context>
 <context>
@@ -16143,28 +16171,28 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="189"/>
         <source>Specify polyline to delete between two nodes</source>
-        <translation>二ノード間を削除するポリラインを指示</translation>
+        <translation>2つのノード間を削除するポリラインを指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="193"/>
         <source>Specify first node</source>
-        <translation>最初のノードを指示</translation>
+        <translation>最初のノードを指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="197"/>
         <source>Specify second node</source>
-        <translation>二番目のノードを指示</translation>
+        <translation>2番目のノードを指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="190"/>
         <source>Cancel</source>
-        <translation>中止</translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="194"/>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="198"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>戻る</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="119"/>
@@ -16176,19 +16204,19 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="123"/>
         <source>Entity must be a polyline.</source>
-        <translation>図形はポリラインではありません。</translation>
+        <translation>エンティティはポリラインである必要があります。</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="149"/>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="162"/>
         <source>Deleting point is not on entity.</source>
-        <translation>削除位置が図形上にありません。</translation>
+        <translation>削除点がエンティティ上にありません。</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="146"/>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="159"/>
         <source>Deleting point is invalid.</source>
-        <translation>削除位置が無効.</translation>
+        <translation>削除点が無効です。</translation>
     </message>
 </context>
 <context>
@@ -16196,7 +16224,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylineequidistant.cpp" line="369"/>
         <source>Choose the original polyline</source>
-        <translation>ポリライン図形を指示</translation>
+        <translation>元のポリラインを選択</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineequidistant.cpp" line="305"/>
@@ -16206,12 +16234,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylineequidistant.cpp" line="309"/>
         <source>Entity must be a polyline.</source>
-        <translation>図形はポリラインではありません。</translation>
+        <translation>エンティティはポリラインである必要があります。</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineequidistant.cpp" line="370"/>
         <source>Cancel</source>
-        <translation>中止</translation>
+        <translation>キャンセル</translation>
     </message>
 </context>
 <context>
@@ -16219,7 +16247,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="350"/>
         <source>Choose one of the segments on the original polyline</source>
-        <translation>元ポリライン図形のセグメントの一つを選択</translation>
+        <translation>元のポリライン上のセグメントのいずれかを選択</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="306"/>
@@ -16229,18 +16257,18 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="351"/>
         <source>Cancel</source>
-        <translation>中止</translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="309"/>
         <source>Entity can not be a closed polyline.</source>
-        <translation>要素は閉じたポリラインではない.</translation>
+        <translation>図形は閉じたポリラインではいけません。</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="65"/>
         <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="86"/>
         <source>Polyline created</source>
-        <translation>新規ポリライン</translation>
+        <translation>ポリラインを作成しました</translation>
     </message>
 </context>
 <context>
@@ -16248,17 +16276,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="181"/>
         <source>Specify polyline to trim</source>
-        <translation>部分削除するポリラインを指示</translation>
+        <translation>トリムするポリラインを指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="185"/>
         <source>Specify first segment</source>
-        <translation>最初のセグメントを指示</translation>
+        <translation>最初のセグメントを指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="189"/>
         <source>Specify second segment</source>
-        <translation>二番目のセグメントを指示</translation>
+        <translation>2番目のセグメントを指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="107"/>
@@ -16270,30 +16298,30 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="110"/>
         <source>Entity must be a polyline.</source>
-        <translation>図形はポリラインではありません。</translation>
+        <translation>エンティティはポリラインである必要があります。</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="129"/>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="148"/>
         <source>No Segment found on entity.</source>
-        <translation>図形上に指示セグメントが見つかりません。</translation>
+        <translation>エンティティ上にセグメントが見つかりません。</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="182"/>
         <source>Cancel</source>
-        <translation>中止</translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="186"/>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="190"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>戻る</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="126"/>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="145"/>
         <source>Specifying point is invalid.</source>
-        <translation>指示位置が無効です.</translation>
+        <translation>指定点が無効です。</translation>
     </message>
 </context>
 <context>
@@ -16301,47 +16329,47 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="272"/>
         <source>RS_ActionPrintPreview::fit(): Invalid paper size</source>
-        <translation>用紙サイズが無効</translation>
+        <translation>RS_ActionPrintPreview::fit(): 無効な用紙サイズ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="138"/>
         <source>Printout offset in paper coordinates by (%1, %2)</source>
-        <translation>印刷時、紙の内側のオフセット値は (%1, %2)</translation>
+        <translation>用紙座標での印刷オフセット (%1, %2)</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="141"/>
         <source>Printout offset in graph coordinates by (%1, %2)</source>
-        <translation>印刷時、画像の内側のオフセット値は (%1, %2)</translation>
+        <translation>グラフィック座標での印刷オフセット (%1, %2)</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="168"/>
         <source>Printout offset in graph coordinates</source>
-        <translation>印刷時、画像の内側のオフセット値</translation>
+        <translation>グラフィック座標での印刷オフセット</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="173"/>
         <source>Printout offset in paper coordinates</source>
-        <translation>印刷時、紙の内側のオフセット値</translation>
+        <translation>用紙座標での印刷オフセット</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="178"/>
         <source>: select printout offset coordinates</source>
-        <translation>: 印刷時、オフセット座標を選択</translation>
+        <translation>: 印刷オフセット座標を選択</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="179"/>
         <source>type in offset from command line to offset printout</source>
-        <translation>印刷時にオフセットするため、コマンドラインからオフセット値を入力</translation>
+        <translation>コマンドラインからオフセットを入力して印刷位置を調整</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="187"/>
         <source>Printout offset ignores relative zero. Ignoring &apos;@&apos;</source>
-        <translation>印刷時のオフセットは相対値 0 を無視. &apos;@&apos;を無視</translation>
+        <translation>印刷オフセットは相対ゼロを無視します。&apos;@&apos; を無視します</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="158"/>
         <source>Printout in Black/White</source>
-        <translation>モノクロ印刷</translation>
+        <translation>白黒印刷</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="163"/>
@@ -16351,7 +16379,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="356"/>
         <source>RS_ActionPrintPreview::calcPagesNum(): Limit of pages has been exceeded.</source>
-        <translation>RS_ActionPrintPreview::calcPagesNum(): ページ上限を超過。</translation>
+        <translation>RS_ActionPrintPreview::calcPagesNum(): ページ数の上限を超えました。</translation>
     </message>
 </context>
 <context>
@@ -16359,7 +16387,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="83"/>
         <source>Select to modify attributes</source>
-        <translation>属性を変更する図形を選択</translation>
+        <translation>属性を変更するために選択</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="83"/>
@@ -16380,100 +16408,100 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionselect.cpp" line="128"/>
         <location filename="../src/actions/rs_actionselect.cpp" line="131"/>
         <source>Cancel</source>
-        <translation>中止</translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="89"/>
         <source>Select to delete</source>
-        <translation>削除するときに選択</translation>
+        <translation>削除するために選択</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="92"/>
         <source>Select to delete immediately</source>
-        <translation>選択をただちに削除する</translation>
+        <translation>即座に削除するために選択</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="95"/>
         <source>Select to move</source>
-        <translation>移動するときに選択</translation>
+        <translation>移動するために選択</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="107"/>
         <source>Select to rotate</source>
-        <translation>回転するときに選択</translation>
+        <translation>回転するために選択</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="110"/>
         <source>Select to scale</source>
-        <translation>測定するときに選択</translation>
+        <translation>拡大/縮小する図形を選択</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="113"/>
         <source>Select to mirror</source>
-        <translation>鏡像複写するときに選択</translation>
+        <translation>ミラーする図形を選択</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="116"/>
         <source>Select to move and rotate</source>
-        <translation>移動と回転をするときに選択</translation>
+        <translation>移動/回転するために選択</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="122"/>
         <source>Select for two axis rotation</source>
-        <translation>2つの回転軸を選択</translation>
+        <translation>2軸回転のために選択</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="125"/>
         <source>Select to explode text</source>
-        <translation>分解するテキストを選択</translation>
+        <translation>テキストを分解するために選択</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="131"/>
         <source>Select to create block</source>
         <translatorcomment>AutoCADにあわせて「ブロック」と訳すことにした</translatorcomment>
-        <translation>ブロックを新規作成するときに選択</translation>
+        <translation>ブロックを作成するために選択</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="135"/>
         <location filename="../src/actions/rs_actionselect.cpp" line="135"/>
         <source></source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="98"/>
         <source>Select to copy</source>
-        <translation>コピーするときに選択</translation>
+        <translation>コピーするために選択</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="101"/>
         <source>Select to cut</source>
-        <translation>切り取りするときに選択</translation>
+        <translation>切断するために選択</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="75"/>
         <source>No entity selected!</source>
-        <translation>選択されていません！</translation>
+        <translation>エンティティが選択されていません！</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="119"/>
         <source>Select to create offset</source>
-        <translation>オフセットを新規作成するときに選択</translation>
+        <translation>オフセットを作成するために選択</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="86"/>
         <source>Select entities to order</source>
-        <translation>整列する要素を選択</translation>
+        <translation>順序を変更するエンティティを選択</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="128"/>
         <source>Select to explode block</source>
         <translatorcomment>AutoCADにあわせて「ブロック」と訳すことにした</translatorcomment>
-        <translation>分解するブロックを選択</translation>
+        <translation>ブロックを分解するために選択</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="104"/>
         <source>Select to revert direction</source>
-        <translation>基準点を入れ替えるため選択</translation>
+        <translation>方向を反転するために選択</translation>
     </message>
 </context>
 <context>
@@ -16481,7 +16509,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionselectcontour.cpp" line="57"/>
         <source>Entity must be an Atomic Entity.</source>
-        <translation>図形は基本図形。</translation>
+        <translation>図形は原子図形である必要があります。</translation>
     </message>
 </context>
 <context>
@@ -16489,22 +16517,22 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionselectintersected.cpp" line="140"/>
         <source>Choose first point of intersection line</source>
-        <translation>交差線分の一点目指示</translation>
+        <translation>交差線の最初の点を選択</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselectintersected.cpp" line="140"/>
         <source>Cancel</source>
-        <translation>中止</translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselectintersected.cpp" line="143"/>
         <source>Choose second point of intersection line</source>
-        <translation>交差線分の二点目指示</translation>
+        <translation>交差線の2番目の点を選択</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselectintersected.cpp" line="143"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>戻る</translation>
     </message>
 </context>
 <context>
@@ -16512,22 +16540,22 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionselectwindow.cpp" line="181"/>
         <source>Cancel</source>
-        <translation>中止</translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselectwindow.cpp" line="184"/>
         <source>Choose second edge</source>
-        <translation>２番目の端点指示</translation>
+        <translation>2番目のエッジを選択</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselectwindow.cpp" line="184"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>戻る</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselectwindow.cpp" line="181"/>
         <source>Click and drag for the selection window</source>
-        <translation>ドラッグして範囲を選択</translation>
+        <translation>クリック＆ドラッグで選択ウィンドウ</translation>
     </message>
 </context>
 <context>
@@ -16535,17 +16563,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionsetrelativezero.cpp" line="99"/>
         <source>Set relative Zero</source>
-        <translation>相対原点を設定</translation>
+        <translation>相対ゼロを設定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionsetrelativezero.cpp" line="99"/>
         <source>Cancel</source>
-        <translation>中止</translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionsetrelativezero.cpp" line="50"/>
         <source>Set &amp;Relative Zero</source>
-        <translation>相対原点を設定(&amp;R)</translation>
+        <translation>相対ゼロを設定(&amp;R)</translation>
     </message>
 </context>
 <context>
@@ -16553,23 +16581,23 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionsnapintersectionmanual.cpp" line="58"/>
         <source>I&amp;ntersection Manually</source>
-        <translation>手動で交点(&amp;n)</translation>
+        <translation>手動交差点(&amp;N)</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionsnapintersectionmanual.cpp" line="182"/>
         <source>Select first entity</source>
-        <translation>１番目の図形指示</translation>
+        <translation>最初のエンティティを選択</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionsnapintersectionmanual.cpp" line="183"/>
         <location filename="../src/actions/rs_actionsnapintersectionmanual.cpp" line="187"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>戻る</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionsnapintersectionmanual.cpp" line="186"/>
         <source>Select second entity</source>
-        <translation>２番目の図形指示</translation>
+        <translation>2番目のエンティティを選択</translation>
     </message>
 </context>
 <context>
@@ -16577,12 +16605,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiontoolregeneratedimensions.cpp" line="70"/>
         <source>Regenerated %1 dimension entities</source>
-        <translation>%1&#x3000;s寸法図形を再生成</translation>
+        <translation>%1 個の寸法エンティティを再生成しました</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiontoolregeneratedimensions.cpp" line="72"/>
         <source>No dimension entities found</source>
-        <translation>寸法図形が見つかりません</translation>
+        <translation>寸法エンティティが見つかりません</translation>
     </message>
 </context>
 <context>
@@ -16590,18 +16618,18 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionzoompan.cpp" line="119"/>
         <source>Click and drag to pan zoom</source>
-        <translation>ドラッグして移動</translation>
+        <translation>クリック＆ドラッグでパン拡大</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionzoompan.cpp" line="120"/>
         <location filename="../src/actions/rs_actionzoompan.cpp" line="124"/>
         <source>Cancel</source>
-        <translation>中止</translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionzoompan.cpp" line="123"/>
         <source>Zoom panning</source>
-        <translation>拡大図形の移動</translation>
+        <translation>パン拡大</translation>
     </message>
 </context>
 <context>
@@ -16609,22 +16637,22 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionzoomwindow.cpp" line="151"/>
         <source>Specify first edge</source>
-        <translation>初めの端点指示</translation>
+        <translation>最初の端を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionzoomwindow.cpp" line="151"/>
         <source>Cancel</source>
-        <translation>中止</translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionzoomwindow.cpp" line="154"/>
         <source>Specify second edge</source>
-        <translation>２つ目の端点指示</translation>
+        <translation>2番目の端を指定</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionzoomwindow.cpp" line="154"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>戻る</translation>
     </message>
 </context>
 <context>
@@ -16640,7 +16668,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/generic/textfileviewer.ui" line="14"/>
         <source>Frame</source>
-        <translation>フレーム</translation>
+        <translation>枠</translation>
     </message>
 </context>
 <context>
@@ -16671,12 +16699,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_arctangentialoptions.ui" line="66"/>
         <source>Radius of the tangential arc</source>
-        <translation>接線の弧の半径</translation>
+        <translation>接線円弧の半径</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_arctangentialoptions.ui" line="85"/>
         <source>Total subtending angle of the tangential arc</source>
-        <translation>接する円の全体の角度</translation>
+        <translation>接線円弧の中心角</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_arctangentialoptions.ui" line="98"/>
@@ -16696,27 +16724,27 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="32"/>
         <source>Bevel Options</source>
-        <translation>Ｃ面取りオプション</translation>
+        <translation>面取りオプション</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="53"/>
         <source>Check to trim both entities to the bevel</source>
-        <translation>Ｃ面取りする両図形をチェック</translation>
+        <translation>チェックすると両方の図形を面取りでトリムします</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="56"/>
         <source>Trim</source>
-        <translation>Trim</translation>
+        <translation>トリム</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="79"/>
         <source>Length 1:</source>
-        <translation>長さ 1:</translation>
+        <translation>長さ1:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="92"/>
         <source>Length 2:</source>
-        <translation>長さ 2:</translation>
+        <translation>長さ2:</translation>
     </message>
 </context>
 <context>
@@ -16737,12 +16765,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_circletan2options.ui" line="32"/>
         <source>Circle Tangential2 Options</source>
-        <translation>円の接線は２つのオプション</translation>
+        <translation>接円(2図形)オプション</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_circletan2options.ui" line="56"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radius of the tangential circle to draw&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;線に接した円の半径&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;描画する接円の半径&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_circletan2options.ui" line="59"/>
@@ -16752,7 +16780,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_circletan2options.ui" line="69"/>
         <source>Radius of tangential circle</source>
-        <translation>接線の円の半径</translation>
+        <translation>接円の半径</translation>
     </message>
 </context>
 <context>
@@ -16760,7 +16788,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_dimlinearoptions.ui" line="32"/>
         <source>Linear Dimension Options</source>
-        <translation>線分寸法オプション</translation>
+        <translation>線形寸法オプション</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimlinearoptions.ui" line="68"/>
@@ -16837,7 +16865,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_imageoptions.ui" line="70"/>
         <source>Factor:</source>
-        <translation>倍率:</translation>
+        <translation>係数:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_imageoptions.ui" line="86"/>
@@ -16875,7 +16903,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_insertoptions.ui" line="106"/>
         <source>Factor:</source>
-        <translation>倍率:</translation>
+        <translation>係数:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_insertoptions.ui" line="128"/>
@@ -16910,7 +16938,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_insertoptions.ui" line="276"/>
         <source>Row Spacing</source>
-        <translation>行間</translation>
+        <translation>行間隔</translation>
     </message>
 </context>
 <context>
@@ -16933,7 +16961,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_libraryinsertoptions.ui" line="70"/>
         <source>Factor:</source>
-        <translation>倍率:</translation>
+        <translation>係数:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_libraryinsertoptions.ui" line="80"/>
@@ -16946,7 +16974,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_lineangleoptions.ui" line="32"/>
         <source>Line Angle Options</source>
-        <translation>線分角度オプション</translation>
+        <translation>線角度オプション</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineangleoptions.ui" line="65"/>
@@ -16956,7 +16984,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_lineangleoptions.ui" line="90"/>
         <source>Line angle</source>
-        <translation>線分角度</translation>
+        <translation>線の角度</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineangleoptions.ui" line="109"/>
@@ -16966,12 +16994,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_lineangleoptions.ui" line="134"/>
         <source>Length of line</source>
-        <translation>線分長さ</translation>
+        <translation>線の長さ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineangleoptions.ui" line="147"/>
         <source>Snap Point:</source>
-        <translation>点スナップ:</translation>
+        <translation>スナップ点:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineangleoptions.ui" line="170"/>
@@ -16981,12 +17009,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_lineangleoptions.ui" line="175"/>
         <source>Middle</source>
-        <translation>中点</translation>
+        <translation>中央</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineangleoptions.ui" line="180"/>
         <source>End</source>
-        <translation>End</translation>
+        <translation>終点</translation>
     </message>
 </context>
 <context>
@@ -16994,7 +17022,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_linebisectoroptions.ui" line="32"/>
         <source>Line Bisector Options</source>
-        <translation>２等分線オプション</translation>
+        <translation>二等分線オプション</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_linebisectoroptions.ui" line="56"/>
@@ -17004,17 +17032,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_linebisectoroptions.ui" line="66"/>
         <source>Length of bisector</source>
-        <translation>２等分線の周長</translation>
+        <translation>二等分線の長さ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_linebisectoroptions.ui" line="73"/>
         <source>Number:</source>
-        <translation>数値:</translation>
+        <translation>数:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_linebisectoroptions.ui" line="83"/>
         <source>Number of bisectors to create</source>
-        <translation>作成する２等分線の数</translation>
+        <translation>作成する二等分線の本数</translation>
     </message>
 </context>
 <context>
@@ -17022,12 +17050,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_lineoptions.ui" line="32"/>
         <source>Line Options</source>
-        <translation>線分オプション</translation>
+        <translation>線オプション</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineoptions.ui" line="53"/>
         <source>Form a closed contour from lines drawn</source>
-        <translation>引かれた線を閉じる</translation>
+        <translation>描いた線で閉じた輪郭を形成</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineoptions.ui" line="56"/>
@@ -17037,22 +17065,22 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_lineoptions.ui" line="72"/>
         <source>Undo the last line drawing</source>
-        <translation>最後に書かれた線を取り消す</translation>
+        <translation>最後の線描画を元に戻す</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineoptions.ui" line="75"/>
         <source>Undo</source>
-        <translation>Undo</translation>
+        <translation>元に戻す</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineoptions.ui" line="82"/>
         <source>Redo the last line drawing</source>
-        <translation>取り消した線を再描画</translation>
+        <translation>最後の線描画をやり直す</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineoptions.ui" line="85"/>
         <source>Redo</source>
-        <translation>Redo</translation>
+        <translation>やり直し</translation>
     </message>
 </context>
 <context>
@@ -17090,7 +17118,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="195"/>
         <source>Rel</source>
-        <translation>Rel</translation>
+        <translation>相対</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="224"/>
@@ -17100,12 +17128,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="227"/>
         <source>Undo</source>
-        <translation>Undo</translation>
+        <translation>元に戻す</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="234"/>
         <source>Form a closed contour from lines drawn</source>
-        <translation>描画線から閉じた輪郭を作成</translation>
+        <translation>描いた線で閉じた輪郭を形成</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="237"/>
@@ -17120,7 +17148,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="256"/>
         <source>Redo</source>
-        <translation>Redo</translation>
+        <translation>やり直し</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="297"/>
@@ -17133,7 +17161,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_lineparalleloptions.ui" line="32"/>
         <source>Line Parallel Options</source>
-        <translation>平行線分オプション</translation>
+        <translation>平行線オプション</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineparalleloptions.ui" line="56"/>
@@ -17143,17 +17171,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_lineparalleloptions.ui" line="72"/>
         <source>Distance to original entity</source>
-        <translation>基準図形への距離</translation>
+        <translation>元の図形からの距離</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineparalleloptions.ui" line="85"/>
         <source>Number:</source>
-        <translation>数値:</translation>
+        <translation>数:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineparalleloptions.ui" line="95"/>
         <source>Number of parallels to create</source>
-        <translation>作成する平行線分の数</translation>
+        <translation>作成する平行線の本数</translation>
     </message>
 </context>
 <context>
@@ -17161,17 +17189,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_lineparallelthroughoptions.ui" line="32"/>
         <source>Line Parallel Through Options</source>
-        <translation>平行線分通過オプション</translation>
+        <translation>点を通る平行線オプション</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineparallelthroughoptions.ui" line="56"/>
         <source>Number:</source>
-        <translation>数値:</translation>
+        <translation>数:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineparallelthroughoptions.ui" line="66"/>
         <source>Number of parallels to create</source>
-        <translation>作成する平行線分の数</translation>
+        <translation>作成する平行線の本数</translation>
     </message>
 </context>
 <context>
@@ -17184,7 +17212,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_linepolygon2options.ui" line="56"/>
         <source>Number:</source>
-        <translation>数値:</translation>
+        <translation>数:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_linepolygon2options.ui" line="66"/>
@@ -17202,7 +17230,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_linepolygonoptions.ui" line="56"/>
         <source>Number:</source>
-        <translation>数値:</translation>
+        <translation>数:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_linepolygonoptions.ui" line="66"/>
@@ -17215,7 +17243,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_linerelangleoptions.ui" line="32"/>
         <source>Line Relative Angle Options</source>
-        <translation>線分相対角度オプション</translation>
+        <translation>相対角度線オプション</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_linerelangleoptions.ui" line="56"/>
@@ -17225,7 +17253,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_linerelangleoptions.ui" line="72"/>
         <source>Line angle</source>
-        <translation>線分角度</translation>
+        <translation>線の角度</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_linerelangleoptions.ui" line="85"/>
@@ -17235,7 +17263,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_linerelangleoptions.ui" line="101"/>
         <source>Length of line</source>
-        <translation>線分長さ</translation>
+        <translation>線の長さ</translation>
     </message>
 </context>
 <context>
@@ -17261,7 +17289,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_modifyoffsetoptions.ui" line="32"/>
         <source>Modify Offset Options</source>
-        <translation>オフセットオプションの修正</translation>
+        <translation>オフセットオプション</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_modifyoffsetoptions.ui" line="56"/>
@@ -17271,7 +17299,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_modifyoffsetoptions.ui" line="72"/>
         <source>Offset from original entity</source>
-        <translation>元の要素からオフセットする</translation>
+        <translation>元のエンティティからのオフセット</translation>
     </message>
 </context>
 <context>
@@ -17279,7 +17307,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_moverotateoptions.ui" line="32"/>
         <source>Move Rotate Options</source>
-        <translation>移動回転オプション</translation>
+        <translation>移動/回転オプション</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_moverotateoptions.ui" line="50"/>
@@ -17302,22 +17330,22 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="60"/>
         <source>Undo</source>
-        <translation>Undo</translation>
+        <translation>元に戻す</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="80"/>
         <source>Line</source>
-        <translation>Line</translation>
+        <translation>線</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="85"/>
         <source>Tangential</source>
-        <translation>タンジェント</translation>
+        <translation>接線</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="90"/>
         <source>Tan Radius</source>
-        <translation>タンジェント 半径</translation>
+        <translation>接線半径</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="95"/>
@@ -17355,37 +17383,37 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="87"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Print Scale is locked to the current value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;印刷倍率は現在の値に固定する&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;印刷倍率は現在の値にロックされています&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="90"/>
         <source>fixed</source>
-        <translation>自動合わせ</translation>
+        <translation>固定</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="145"/>
         <source>Toggle Black / White mode</source>
-        <translation>白黒反転切り替え</translation>
+        <translation>白黒モード切替</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="174"/>
         <source>Center to page</source>
-        <translation>ページの中心へ</translation>
+        <translation>ページ中央に配置</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="200"/>
         <source>Fit to page</source>
-        <translation>ページの大きさに合わせる</translation>
+        <translation>ページに合わせる</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="116"/>
         <source>Apply Print Scale to line width</source>
-        <translation>印刷スケールを線幅に適用</translation>
+        <translation>印刷倍率を線幅に適用</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="226"/>
         <source>Calculate number of pages needed to contain the drawing</source>
-        <translation>図面を含む必要ページ数を計算</translation>
+        <translation>図面を収めるために必要なページ数を計算</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="56"/>
@@ -17398,17 +17426,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="32"/>
         <source>Round Options</source>
-        <translation>丸み面取りオプション</translation>
+        <translation>フィレットオプション</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="53"/>
         <source>Check to trim both edges to the rounding</source>
-        <translation>丸み面取りするコーナ線分をチェック</translation>
+        <translation>チェックすると両方の辺をフィレットでトリムします</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="56"/>
         <source>Trim</source>
-        <translation>Trim</translation>
+        <translation>トリム</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="79"/>
@@ -17421,7 +17449,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_snapdistoptions.ui" line="32"/>
         <source>Snap Distance Options</source>
-        <translation>スナップ距離オプション</translation>
+        <translation>中点スナップオプション</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snapdistoptions.ui" line="50"/>
@@ -17434,17 +17462,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_snapmiddleoptions.ui" line="35"/>
         <source>Snap Distance Options</source>
-        <translation>スナップ距離オプション</translation>
+        <translation>中点スナップオプション</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snapmiddleoptions.ui" line="47"/>
         <source>Middle Points:</source>
-        <translation>中間点:</translation>
+        <translation>中点:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snapmiddleoptions.ui" line="63"/>
         <source>Number of equidistant division points</source>
-        <translation>等距離分割点の数</translation>
+        <translation>等分割点の数</translation>
     </message>
 </context>
 <context>
@@ -17457,17 +17485,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_splineoptions.ui" line="56"/>
         <source>Degree:</source>
-        <translation>度:</translation>
+        <translation>次数:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_splineoptions.ui" line="91"/>
         <source>Closed</source>
-        <translation>閉じる</translation>
+        <translation>閉じている</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_splineoptions.ui" line="104"/>
         <source>Undo</source>
-        <translation>Undo</translation>
+        <translation>元に戻す</translation>
     </message>
 </context>
 <context>
@@ -17493,12 +17521,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_trimamountoptions.ui" line="20"/>
         <source>Trim Amount Options</source>
-        <translation>調節量オプション</translation>
+        <translation>トリム量オプション</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_trimamountoptions.ui" line="23"/>
         <source>Distance. Negative values for trimming, positive values for extending.</source>
-        <translation>距離。負の値はトリミング、正の値は伸長。負の符号は最終的な総長さのトリミング時に無視される。</translation>
+        <translation>距離。負の値はトリム、正の値は延長。</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_trimamountoptions.ui" line="56"/>
@@ -17508,12 +17536,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_trimamountoptions.ui" line="78"/>
         <source>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</source>
-        <translation>距離。負の値はトリミング、正の値は伸長。負の符号は最終的な総長さのトリミング時に無視される。</translation>
+        <translation>距離。負の値はトリム、正の値は延長。全体長へのトリム時は負符号は無視されます。</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_trimamountoptions.ui" line="97"/>
         <source>The input length is used as total length after trimming, instead of length increase</source>
-        <translation>入力された値を全体の長さとする、増加はしない</translation>
+        <translation>入力された長さを、延長量ではなくトリム後の全体長として使用します</translation>
     </message>
 </context>
 <context>
@@ -17521,7 +17549,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/generic/widgetcreator.ui" line="14"/>
         <source>Frame</source>
-        <translation>フレーム</translation>
+        <translation>枠</translation>
     </message>
     <message>
         <location filename="../src/ui/generic/widgetcreator.ui" line="96"/>
@@ -17536,27 +17564,27 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/generic/widgetcreator.ui" line="155"/>
         <source>Name</source>
-        <translation>Name</translation>
+        <translation>名前</translation>
     </message>
     <message>
         <location filename="../src/ui/generic/widgetcreator.ui" line="196"/>
         <source>Create</source>
-        <translation>新規作成</translation>
+        <translation>作成</translation>
     </message>
     <message>
         <location filename="../src/ui/generic/widgetcreator.ui" line="209"/>
         <source>Destroy</source>
-        <translation>取り去る</translation>
+        <translation>削除</translation>
     </message>
     <message>
         <location filename="../src/ui/generic/widgetcreator.ui" line="216"/>
         <source>Assign</source>
-        <translation>割り当てる</translation>
+        <translation>割り当て</translation>
     </message>
     <message>
         <location filename="../src/ui/generic/widgetcreator.ui" line="223"/>
         <source>Update</source>
-        <translation>更新する</translation>
+        <translation>更新</translation>
     </message>
 </context>
 <context>
