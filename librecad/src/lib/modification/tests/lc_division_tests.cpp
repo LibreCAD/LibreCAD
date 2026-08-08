@@ -24,11 +24,19 @@
 
 #include <memory>
 
+#include <QApplication>
+#include <QList>
+
+#include "lc_action_modify_break_divide.h"
+#include "lc_actioncontext.h"
 #include "lc_division.h"
 #include "rs_arc.h"
 #include "rs_circle.h"
 #include "rs_entitycontainer.h"
+#include "rs_graphic.h"
+#include "rs_graphicview.h"
 #include "rs_line.h"
+#include "rs_settings.h"
 #include "rs_vector.h"
 
 namespace {
@@ -136,4 +144,169 @@ TEST_CASE("LC_Division keeps ordinary partial-segment behavior",
         REQUIRE(data != nullptr);
         CHECK(data->segmentDisposition == LC_Division::SEGMENT_TO_START);
     }
+}
+
+// The classification tests above prove LC_Division reports SEGMENT_ENTIRE. The
+// tests below prove the consumer acts on it: without them, deleting the
+// SEGMENT_ENTIRE guards from LC_ActionModifyBreakDivide leaves the suite green
+// while #2700 returns.
+namespace {
+
+/**
+ * Returns a QApplication, reusing the process-wide one if another test built it
+ * first. The pointer is deliberately leaked: only one ~QApplication may run at
+ * exit, and rs_graphicview_close_tests.cpp already owns it via a by-value
+ * static. A second destructor tears down Qt's globals twice and crashes after
+ * Catch2 has printed its summary.
+ */
+QApplication* application() {
+    static int argc = 1;
+    static char name[] = "librecad_tests";
+    static char* argv[] = {name, nullptr};
+    static QApplication* app = [] {
+        auto* existing = qobject_cast<QApplication*>(QCoreApplication::instance());
+        return existing != nullptr ? existing : new QApplication(argc, argv);
+    }();
+    static bool settingsReady = [] {
+        QCoreApplication::setOrganizationName("LibreCAD");
+        QCoreApplication::setApplicationName("LibreCAD-tests");
+        RS_Settings::init("LibreCAD", "LibreCAD-tests");
+        return true;
+    }();
+    (void)settingsReady;
+    return app;
+}
+
+class BreakDivideTestView final : public RS_GraphicView {
+public:
+    BreakDivideTestView() : RS_GraphicView(nullptr) {}
+
+    int getWidth() const override { return 640; }
+    int getHeight() const override { return 480; }
+    void redraw([[maybe_unused]] RS2::RedrawMethod method = RS2::RedrawAll,
+                [[maybe_unused]] bool immediately = false) override {}
+    void adjustOffsetControls() override {}
+    void adjustZoomControls() override {}
+    void setMouseCursor([[maybe_unused]] RS2::CursorType cursor) override {}
+    void updateGridStatusWidget([[maybe_unused]] QString status) override {}
+};
+
+/**
+ * Reaches the protected segment builders, and the protected flag that SHIFT
+ * sets: whole-entity selection needs m_alternativeActionMode && m_removeSegments,
+ * and there is no public setter for the former.
+ */
+class BreakDivideProbe final : public LC_ActionModifyBreakDivide {
+public:
+    explicit BreakDivideProbe(LC_ActionContext* actionContext)
+        : LC_ActionModifyBreakDivide(actionContext) {}
+
+    using LC_ActionModifyBreakDivide::createEntitiesForLine;
+    using LC_ActionModifyBreakDivide::createEntitiesForCircle;
+    using LC_ActionModifyBreakDivide::createEntitiesForArc;
+
+    void setWholeEntityMode(const bool value) { m_alternativeActionMode = value; }
+};
+
+/**
+ * Member order matters: the action is destroyed before the view, because
+ * ~RS_PreviewActionInterface reaches into overlay containers the view owns.
+ */
+struct BreakDivideFixture {
+    // Declared first on purpose: members are initialised before the constructor
+    // body, and RS_Graphic's own constructor already reads RS_Settings.
+    const bool qtReady{application() != nullptr};
+    RS_Graphic graphic;
+    BreakDivideTestView view;
+    LC_ActionContext context;
+    std::unique_ptr<BreakDivideProbe> action;
+
+    explicit BreakDivideFixture(const bool removeSelected) {
+        graphic.initForNewDocument();
+        view.setDocument(&graphic);
+        context.setDocumentAndView(&graphic, &view);
+        action = std::make_unique<BreakDivideProbe>(&context);
+        action->setWholeEntityMode(true);  // the SHIFT modifier
+        action->setRemoveSegment(true);    // break, not divide
+        action->setRemoveSelected(removeSelected);
+    }
+};
+
+} // namespace
+
+TEST_CASE("whole-entity Break removes the source without replacement geometry",
+          "[lc_division][break_divide][whole_entity][action]") {
+    BreakDivideFixture fixture{/*removeSelected=*/true};
+    QList<RS_Entity*> list;
+
+    SECTION("line") {
+        RS_Line line{nullptr, RS_Vector{0.0, 0.0}, RS_Vector{10.0, 0.0}};
+        CHECK(fixture.action->createEntitiesForLine(&line, RS_Vector{5.0, 0.0}, list, false));
+        CHECK(list.isEmpty());
+    }
+
+    SECTION("circle") {
+        RS_Circle circle{nullptr, RS_CircleData{RS_Vector{0.0, 0.0}, 10.0}};
+        RS_Vector snap{10.0, 0.0};
+        CHECK(fixture.action->createEntitiesForCircle(&circle, snap, list, false));
+        CHECK(list.isEmpty());
+    }
+
+    SECTION("arc") {
+        RS_Arc arc{nullptr, RS_ArcData{RS_Vector{0.0, 0.0}, 10.0, 0.0, HALF_TURN, false}};
+        RS_Vector snap{0.0, 10.0};
+        CHECK(fixture.action->createEntitiesForArc(&arc, snap, list, false));
+        CHECK(list.isEmpty());
+    }
+
+    qDeleteAll(list);
+}
+
+TEST_CASE("whole-entity Break that keeps the selection is a no-op, not a delete",
+          "[lc_division][break_divide][whole_entity][action]") {
+    // Without the second conjunct the action would report "remove the source",
+    // deleting the entity the user asked to keep.
+    BreakDivideFixture fixture{/*removeSelected=*/false};
+    RS_Line line{nullptr, RS_Vector{0.0, 0.0}, RS_Vector{10.0, 0.0}};
+    QList<RS_Entity*> list;
+
+    CHECK_FALSE(fixture.action->createEntitiesForLine(&line, RS_Vector{5.0, 0.0}, list, false));
+    CHECK(list.isEmpty());
+
+    qDeleteAll(list);
+}
+
+TEST_CASE("Break bounded by real intersections still creates the remaining segments",
+          "[lc_division][break_divide][action]") {
+    // Catches an over-broad fix: one that keys off the flags, or off coincident
+    // endpoints, instead of off SEGMENT_ENTIRE.
+    BreakDivideFixture fixture{/*removeSelected=*/true};
+    QList<RS_Entity*> list;
+
+    SECTION("line") {
+        fixture.graphic.addEntity(new RS_Line{&fixture.graphic, RS_Vector{3.0, -5.0}, RS_Vector{3.0, 5.0}});
+        fixture.graphic.addEntity(new RS_Line{&fixture.graphic, RS_Vector{7.0, -5.0}, RS_Vector{7.0, 5.0}});
+        RS_Line line{nullptr, RS_Vector{0.0, 0.0}, RS_Vector{10.0, 0.0}};
+        CHECK_FALSE(fixture.action->createEntitiesForLine(&line, RS_Vector{5.0, 0.0}, list, false));
+        CHECK(list.size() == 2);
+    }
+
+    SECTION("circle") {
+        fixture.graphic.addEntity(new RS_Line{&fixture.graphic, RS_Vector{0.0, -12.0}, RS_Vector{0.0, 12.0}});
+        RS_Circle circle{nullptr, RS_CircleData{RS_Vector{0.0, 0.0}, 10.0}};
+        RS_Vector snap{10.0, 0.0};
+        CHECK_FALSE(fixture.action->createEntitiesForCircle(&circle, snap, list, false));
+        CHECK(list.size() == 1);
+    }
+
+    SECTION("arc") {
+        fixture.graphic.addEntity(new RS_Line{&fixture.graphic, RS_Vector{-5.0, -12.0}, RS_Vector{-5.0, 12.0}});
+        fixture.graphic.addEntity(new RS_Line{&fixture.graphic, RS_Vector{5.0, -12.0}, RS_Vector{5.0, 12.0}});
+        RS_Arc arc{nullptr, RS_ArcData{RS_Vector{0.0, 0.0}, 10.0, 0.0, HALF_TURN, false}};
+        RS_Vector snap{0.0, 10.0};
+        CHECK_FALSE(fixture.action->createEntitiesForArc(&arc, snap, list, false));
+        CHECK(list.size() == 2);
+    }
+
+    qDeleteAll(list);
 }
