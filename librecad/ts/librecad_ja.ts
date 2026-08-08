@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="ja_JP">
+<TS version="2.1" language="ja">
 <context>
     <name>ColorWizard</name>
     <message>
@@ -4847,7 +4847,7 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="93"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Format of the dimension text, &amp;lt;&amp;gt; can be used as a placeholder for the dimension measurement value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;寸法テキストの書式設定。`&lt; &gt;` は寸法測定値のプレースホルダーとして使用できます&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;寸法テキストの書式設定。`&amp;lt;&amp;gt;` は寸法測定値のプレースホルダーとして使用できます&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.cpp" line="75"/>
@@ -9867,31 +9867,31 @@ Do you want to replace it?</source>
         <location filename="../src/lib/engine/rs_units.cpp" line="212"/>
         <location filename="../src/lib/engine/rs_units.cpp" line="268"/>
         <source>Millimeter</source>
-        <translation>ミリメートル</translation>
+        <translation>ミリメートル(mm)</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="214"/>
         <location filename="../src/lib/engine/rs_units.cpp" line="270"/>
         <source>Centimeter</source>
-        <translation>センチメートル</translation>
+        <translation>センチメートル(cm)</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="216"/>
         <location filename="../src/lib/engine/rs_units.cpp" line="272"/>
         <source>Meter</source>
-        <translation>メートル</translation>
+        <translation>メートル(m)</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="218"/>
         <location filename="../src/lib/engine/rs_units.cpp" line="274"/>
         <source>Kilometer</source>
-        <translation>キロメートル</translation>
+        <translation>キロメートル(km)</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="220"/>
         <location filename="../src/lib/engine/rs_units.cpp" line="276"/>
         <source>Microinch</source>
-        <translation>マイクロインチ</translation>
+        <translation>マイクロインチ(µin)</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="222"/>
@@ -9915,55 +9915,55 @@ Do you want to replace it?</source>
         <location filename="../src/lib/engine/rs_units.cpp" line="228"/>
         <location filename="../src/lib/engine/rs_units.cpp" line="284"/>
         <source>Nanometer</source>
-        <translation>ナノメートル</translation>
+        <translation>ナノメートル(nm)</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="230"/>
         <location filename="../src/lib/engine/rs_units.cpp" line="286"/>
         <source>Micron</source>
-        <translation>マイクロン</translation>
+        <translation>マイクロメートル(µm)</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="232"/>
         <location filename="../src/lib/engine/rs_units.cpp" line="288"/>
         <source>Decimeter</source>
-        <translation>デシメートル</translation>
+        <translation>デシメートル(dm)</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="234"/>
         <location filename="../src/lib/engine/rs_units.cpp" line="290"/>
         <source>Decameter</source>
-        <translation>デカメートル</translation>
+        <translation>デカメートル(dam)</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="236"/>
         <location filename="../src/lib/engine/rs_units.cpp" line="292"/>
         <source>Hectometer</source>
-        <translation>ヘクトメートル</translation>
+        <translation>ヘクトメートル(hm)</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="238"/>
         <location filename="../src/lib/engine/rs_units.cpp" line="294"/>
         <source>Gigameter</source>
-        <translation>ギガメートル</translation>
+        <translation>ギガメートル(Gm)</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="240"/>
         <location filename="../src/lib/engine/rs_units.cpp" line="296"/>
         <source>Astro</source>
-        <translation>天文単位</translation>
+        <translation>天文単位(au)</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="242"/>
         <location filename="../src/lib/engine/rs_units.cpp" line="298"/>
         <source>Lightyear</source>
-        <translation>光年</translation>
+        <translation>光年(ly)</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="244"/>
         <location filename="../src/lib/engine/rs_units.cpp" line="300"/>
         <source>Parsec</source>
-        <translation>パーセク</translation>
+        <translation>パーセク(pc)</translation>
     </message>
     <message>
         <location filename="../src/main/main.cpp" line="261"/>
@@ -11616,7 +11616,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="307"/>
         <source>linetancp</source>
         <comment>tangent point and circle</comment>
-        <translation>接線 (点と円)</translation>
+        <translation>点・円接線</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="308"/>
@@ -11628,7 +11628,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="314"/>
         <source>linetan2c</source>
         <comment>tangent two circles</comment>
-        <translation>接線 (2円)</translation>
+        <translation>2円接線</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="315"/>
@@ -11640,7 +11640,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="320"/>
         <source>linetancper</source>
         <comment>tangent line and circle</comment>
-        <translation>接線 (線と円)</translation>
+        <translation>線・円接線</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="321"/>
@@ -11676,7 +11676,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="339"/>
         <source>polygoncencor</source>
         <comment>polygon centre point</comment>
-        <translation>多角形 (中心・頂点)</translation>
+        <translation>中心・頂点多角形</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="340"/>
@@ -11688,7 +11688,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="341"/>
         <source>polycp</source>
         <comment>polygon centre point</comment>
-        <translation>polycp</translation>
+        <translation>ポリゴン中心点</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="342"/>
@@ -11700,7 +11700,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="347"/>
         <source>polygoncentan</source>
         <comment>polygon centre vertex</comment>
-        <translation>多角形 (中心・接線)</translation>
+        <translation>中心・接線多角形</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="348"/>
@@ -11712,13 +11712,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="349"/>
         <source>polyct</source>
         <comment>polygon centre vertex</comment>
-        <translation>polyct</translation>
+        <translation>ポリゴン中心接線</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="355"/>
         <source>p2</source>
         <comment>polygon by 2 vertices</comment>
-        <translation>p2</translation>
+        <translation>点間</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="365"/>
@@ -11736,7 +11736,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="372"/>
         <source>c2p</source>
         <comment>circle 2 points</comment>
-        <translation>c2p</translation>
+        <translation>円から点へ</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="377"/>
@@ -11784,7 +11784,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="398"/>
         <source>circletan2cp</source>
         <comment>circle 2 tangent point</comment>
-        <translation>接線円 (2接線1点)</translation>
+        <translation>2接線1点円</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="399"/>
@@ -11796,7 +11796,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="404"/>
         <source>circletan2p</source>
         <comment>circle tangent 2 points</comment>
-        <translation>接線円 (2接線1点)</translation>
+        <translation>1接線2点円</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="405"/>
@@ -11808,7 +11808,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="410"/>
         <source>circletan2cr</source>
         <comment>circle 2 tangent radius</comment>
-        <translation>接線円 (2円・半径)</translation>
+        <translation>2接線・半径円</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="411"/>
@@ -11826,13 +11826,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="418"/>
         <source>t3</source>
         <comment>circle tangent to 3</comment>
-        <translation>t3</translation>
+        <translation>接線3</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="427"/>
         <source>arc</source>
         <comment>arc point radius</comment>
-        <translation>円弧 (中心・半径)</translation>
+        <translation>中心・半径円弧</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="428"/>
@@ -11856,7 +11856,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="435"/>
         <source>a3</source>
         <comment>draw 3pt arc</comment>
-        <translation>a3</translation>
+        <translation>円弧3</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="440"/>
@@ -11904,7 +11904,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="487"/>
         <source>ellipsec2p</source>
         <comment>ellipse axis</comment>
-        <translation>楕円 (軸)</translation>
+        <translation>軸楕円</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="488"/>
@@ -11916,7 +11916,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="493"/>
         <source>ellipse3p</source>
         <comment>ellipse foci</comment>
-        <translation>楕円 (焦点)</translation>
+        <translation>焦点楕円</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="494"/>
@@ -11940,7 +11940,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="505"/>
         <source>ellipsec3p</source>
         <comment>ellipse center 3 point</comment>
-        <translation>楕円 (中心・3点)</translation>
+        <translation>中心・3点楕円</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="506"/>
@@ -11964,7 +11964,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="551"/>
         <source>plineapp</source>
         <comment>pl append node</comment>
-        <translation>ノード追加 (末尾)</translation>
+        <translation>ノード追加末尾</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="552"/>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="ja_JP">
+<TS version="2.1" language="ja">
 <context>
     <name>AsciiFile</name>
     <message>
@@ -1105,7 +1105,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../picfile/picfile.cpp" line="75"/>
         <source>Scale:</source>
-        <translation>尺度:</translation>
+        <translation>倍率:</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="79"/>
