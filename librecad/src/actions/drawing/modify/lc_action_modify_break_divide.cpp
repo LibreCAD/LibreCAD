@@ -128,6 +128,7 @@ void LC_ActionModifyBreakDivide::doOnLeftMouseButtonRelease(const LC_MouseEvent*
                 case RS2::EntityCircle:
                 case RS2::EntityArc:
                     // store information about entity and snap point and pass to trigger()
+                    delete m_triggerData; // a refused earlier click leaves it set
                     m_triggerData = new TriggerData();
                     m_triggerData->entity = en;
                     m_triggerData->snapPoint = snapPoint;
@@ -143,7 +144,7 @@ void LC_ActionModifyBreakDivide::doOnLeftMouseButtonRelease(const LC_MouseEvent*
 
 bool LC_ActionModifyBreakDivide::doCheckMayTrigger(){
     bool result = false;
-    bool removeOriginalWithoutReplacement = false;
+    SegmentCreation creation = SegmentCreation::Segments;
     if (m_triggerData != nullptr){
         RS_Entity* en = m_triggerData->entity;
         RS_Vector snap = m_triggerData->snapPoint;
@@ -153,31 +154,40 @@ bool LC_ActionModifyBreakDivide::doCheckMayTrigger(){
             switch (rtti) {
                 case RS2::EntityLine: {
                     const auto *line = dynamic_cast<RS_Line *>(en);
-                    removeOriginalWithoutReplacement = createEntitiesForLine(line, snap, m_triggerData->entitiesToCreate, false);
+                    creation = createEntitiesForLine(line, snap, m_triggerData->entitiesToCreate, false);
                     break;
                 }
                 case RS2::EntityCircle: {
                     const auto *circle = dynamic_cast<RS_Circle *>(en);
-                    removeOriginalWithoutReplacement = createEntitiesForCircle(circle, snap, m_triggerData->entitiesToCreate, false);
+                    creation = createEntitiesForCircle(circle, snap, m_triggerData->entitiesToCreate, false);
                     break;
                 }
                 case RS2::EntityArc: {
                     auto *arc = dynamic_cast<RS_Arc *>(en);
-                    removeOriginalWithoutReplacement = createEntitiesForArc(arc, snap, m_triggerData->entitiesToCreate, false);
+                    creation = createEntitiesForArc(arc, snap, m_triggerData->entitiesToCreate, false);
                     break;
                 }
                 default:
                     break;
             }
         }
-        // An empty replacement list normally means no valid split was found.
-        // Whole-entity removal is the deliberate exception: deleting the source
-        // entity is the complete operation, so no replacement can exist.
-        if (m_triggerData->entitiesToCreate.isEmpty() && !removeOriginalWithoutReplacement){
-            commandMessage(tr("Invalid entity selected - no segments between intersections to break/divide."));
-        }
-        else {
-            result = true;
+        switch (creation) {
+            case SegmentCreation::RemoveSource:
+                // Deleting the source entity is the complete operation, so the
+                // empty replacement list is the expected shape, not a refusal.
+                result = true;
+                break;
+            case SegmentCreation::KeepEntire:
+                commandMessage(tr("The selected segment is the whole entity - with \"Remove selected\" off there is nothing to remove."));
+                break;
+            case SegmentCreation::Segments:
+                if (m_triggerData->entitiesToCreate.isEmpty()) {
+                    commandMessage(tr("Invalid entity selected - no segments between intersections to break/divide."));
+                }
+                else {
+                    result = true;
+                }
+                break;
         }
     }
     return result;
@@ -214,16 +224,16 @@ void LC_ActionModifyBreakDivide::doFinish(){
  * @param list list to which entities should be added
  * @param preview true if entities for preview
  */
-bool LC_ActionModifyBreakDivide::createEntitiesForLine(const RS_Line *line, const RS_Vector &snap, QList<RS_Entity*> &list, const bool preview) const {
+LC_ActionModifyBreakDivide::SegmentCreation LC_ActionModifyBreakDivide::createEntitiesForLine(const RS_Line *line, const RS_Vector &snap, QList<RS_Entity*> &list, const bool preview) const {
     if (!checkMayExpandEntity(line, "")) {
-        return false;
+        return SegmentCreation::Segments;
     }
 
     const RS_Vector nearestPoint = LC_LineMath::getNearestPointOnLine(line, snap, false);
     const RS_Vector start = line->getStartpoint();
     const RS_Vector end = line->getEndpoint();
     if (nearestPoint == start || nearestPoint == end) {
-        return false;
+        return SegmentCreation::Segments;
     }
 
     LC_Division division(m_document);
@@ -231,7 +241,7 @@ bool LC_ActionModifyBreakDivide::createEntitiesForLine(const RS_Line *line, cons
     const std::unique_ptr<LC_Division::LineSegmentData> data{
         division.findLineSegmentBetweenIntersections(line, snap, allowEntireLineAsSegment)};
     if (data == nullptr) {
-        return false;
+        return SegmentCreation::Segments;
     }
 
     if (preview) {
@@ -243,7 +253,11 @@ bool LC_ActionModifyBreakDivide::createEntitiesForLine(const RS_Line *line, cons
         // A whole selection has no cut boundaries and no complementary pieces.
         // The only valid trigger is removing that selection, represented by an
         // intentionally empty replacement list.
-        return !preview && creationPlan.createRemainingSegments;
+        if (preview) {
+            return SegmentCreation::Segments;
+        }
+        return creationPlan.createRemainingSegments ? SegmentCreation::RemoveSource
+                                                    : SegmentCreation::KeepEntire;
     }
 
     const RS_Pen pen = line->getPen(false);
@@ -277,7 +291,7 @@ bool LC_ActionModifyBreakDivide::createEntitiesForLine(const RS_Line *line, cons
             createLineEntity(preview, data->snapSegmentEnd, line->getEndpoint(), pen, layer, list);
         }
     }
-    return false;
+    return SegmentCreation::Segments;
 }
 /**
  * Creates individual line for given coordinates. If not for preview, also assigns provided pen and layer attributes
@@ -308,9 +322,9 @@ void LC_ActionModifyBreakDivide::createLineEntity(const bool preview, const RS_V
  * @param list
  * @param preview
  */
-bool LC_ActionModifyBreakDivide::createEntitiesForCircle(const RS_Circle* circle, RS_Vector &snap, QList<RS_Entity *> &list, bool preview) const {
+LC_ActionModifyBreakDivide::SegmentCreation LC_ActionModifyBreakDivide::createEntitiesForCircle(const RS_Circle* circle, RS_Vector &snap, QList<RS_Entity *> &list, bool preview) const {
     if (!checkMayExpandEntity(circle, "")) {
-        return false;
+        return SegmentCreation::Segments;
     }
 
     const RS_Vector nearestPoint = circle->getNearestPointOnEntity(snap, true);
@@ -319,7 +333,7 @@ bool LC_ActionModifyBreakDivide::createEntitiesForCircle(const RS_Circle* circle
     const std::unique_ptr<LC_Division::CircleSegmentData> data{
         division.findCircleSegmentBetweenIntersections(circle, nearestPoint, allowEntireCircleAsSegment)};
     if (data == nullptr) {
-        return false;
+        return SegmentCreation::Segments;
     }
 
     if (preview) {
@@ -330,7 +344,11 @@ bool LC_ActionModifyBreakDivide::createEntitiesForCircle(const RS_Circle* circle
     if (data->segmentDisposition == LC_Division::SegmentDisposition::SEGMENT_ENTIRE) {
         // See the line case: no synthetic full-turn arc should stand in for
         // intentional removal of the source circle.
-        return !preview && creationPlan.createRemainingSegments;
+        if (preview) {
+            return SegmentCreation::Segments;
+        }
+        return creationPlan.createRemainingSegments ? SegmentCreation::RemoveSource
+                                                    : SegmentCreation::KeepEntire;
     }
 
     const RS_Vector center = circle->getCenter();
@@ -370,7 +388,7 @@ bool LC_ActionModifyBreakDivide::createEntitiesForCircle(const RS_Circle* circle
                 .toInfoCursorZone2(false);
         }
     }
-    return false;
+    return SegmentCreation::Segments;
 }
 /**
  * Creates segment entities for provided arc
@@ -379,16 +397,16 @@ bool LC_ActionModifyBreakDivide::createEntitiesForCircle(const RS_Circle* circle
  * @param list list of entities to add
  * @param preview true if we generate entities for preview, false otherwise
  */
-bool LC_ActionModifyBreakDivide::createEntitiesForArc(RS_Arc *arc, RS_Vector &snap, QList<RS_Entity *> &list, bool preview) const {
+LC_ActionModifyBreakDivide::SegmentCreation LC_ActionModifyBreakDivide::createEntitiesForArc(RS_Arc *arc, RS_Vector &snap, QList<RS_Entity *> &list, bool preview) const {
     if (!checkMayExpandEntity(arc, "")) {
-        return false;
+        return SegmentCreation::Segments;
     }
 
     const RS_Vector nearestPoint = arc->getNearestPointOnEntity(snap, true);
     const RS_Vector start = arc->getStartpoint();
     const RS_Vector end = arc->getEndpoint();
     if (nearestPoint == start || nearestPoint == end) {
-        return false;
+        return SegmentCreation::Segments;
     }
 
     LC_Division division(m_document);
@@ -396,7 +414,7 @@ bool LC_ActionModifyBreakDivide::createEntitiesForArc(RS_Arc *arc, RS_Vector &sn
     const std::unique_ptr<LC_Division::ArcSegmentData> data{
         division.findArcSegmentBetweenIntersections(arc, snap, allowEntireArcAsSegment)};
     if (data == nullptr) {
-        return false;
+        return SegmentCreation::Segments;
     }
 
     if (preview) {
@@ -407,7 +425,11 @@ bool LC_ActionModifyBreakDivide::createEntitiesForArc(RS_Arc *arc, RS_Vector &sn
     if (data->segmentDisposition == LC_Division::SegmentDisposition::SEGMENT_ENTIRE) {
         // See the line case: endpoint angles describe the source arc, not two
         // valid complementary arcs to recreate.
-        return !preview && creationPlan.createRemainingSegments;
+        if (preview) {
+            return SegmentCreation::Segments;
+        }
+        return creationPlan.createRemainingSegments ? SegmentCreation::RemoveSource
+                                                    : SegmentCreation::KeepEntire;
     }
 
     const RS_Pen pen = arc->getPen(false);
@@ -458,7 +480,7 @@ bool LC_ActionModifyBreakDivide::createEntitiesForArc(RS_Arc *arc, RS_Vector &sn
                 .toInfoCursorZone2(false);
         }
     }
-    return false;
+    return SegmentCreation::Segments;
 }
 
 /**

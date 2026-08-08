@@ -47,6 +47,13 @@ class LC_ActionModifyBreakDivide:public LC_AbstractActionWithPreview{
     };
 
 public:
+    /** What building the replacement segments concluded for one entity. */
+    enum class SegmentCreation {
+        Segments,     // the list holds the applicable segments; empty means no valid split
+        RemoveSource, // whole entity selected for removal: delete it, create nothing
+        KeepEntire    // whole entity selected but kept: a deliberate no-op
+    };
+
     explicit LC_ActionModifyBreakDivide(LC_ActionContext *actionContext);
 
     bool isRemoveSegment() const{return m_removeSegments;}
@@ -72,12 +79,13 @@ protected:
     LC_ActionOptionsPropertiesFiller* createOptionsFiller() override;
     /**
      * Fill the list with the segments the entity should be replaced by.
-     * @return true only when a trigger should remove the source without creating
-     * replacement geometry. This is not a general success result.
+     * The result distinguishes the two whole-entity outcomes - removal without
+     * replacement, and a deliberate no-op when the selection is kept - from the
+     * ordinary case, where an empty list means no valid split was found.
      */
-    bool createEntitiesForLine(const RS_Line *line, const RS_Vector &snap, QList<RS_Entity *> &list, bool preview) const;
-    bool createEntitiesForCircle(const RS_Circle* circle, RS_Vector &snap, QList<RS_Entity *> &list, bool preview) const;
-    bool createEntitiesForArc(RS_Arc *arc, RS_Vector &snap, QList<RS_Entity *> &list, bool preview) const;
+    SegmentCreation createEntitiesForLine(const RS_Line *line, const RS_Vector &snap, QList<RS_Entity *> &list, bool preview) const;
+    SegmentCreation createEntitiesForCircle(const RS_Circle* circle, RS_Vector &snap, QList<RS_Entity *> &list, bool preview) const;
+    SegmentCreation createEntitiesForArc(RS_Arc *arc, RS_Vector &snap, QList<RS_Entity *> &list, bool preview) const;
     void doOnLeftMouseButtonRelease(const LC_MouseEvent* e, int status, const RS_Vector &snapPoint) override;
     bool doCheckMayTrigger() override;
     bool doTriggerEntitiesPrepare(LC_DocumentModificationBatch& ctx) override;

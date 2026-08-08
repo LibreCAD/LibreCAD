@@ -21,6 +21,7 @@
 **********************************************************************/
 
 #include <catch2/catch_test_macros.hpp>
+#include <catch2/generators/catch_generators.hpp>
 
 #include <memory>
 
@@ -108,14 +109,19 @@ TEST_CASE("endpoint-only intersections do not masquerade as split boundaries",
         CHECK(data->segmentDisposition == LC_Division::SEGMENT_ENTIRE);
     }
 
-    SECTION("reversed arc") {
+    SECTION("arc") {
+        // The reversed flag swaps the angle bookkeeping ahead of the endpoint
+        // checks, so both orientations are distinct paths through
+        // findArcSegmentEdges.
+        const bool reversed = GENERATE(false, true);
         RS_EntityContainer container;
         addArcEndpointCutters(container);
         LC_Division division{&container};
-        RS_Arc arc{nullptr, RS_ArcData{RS_Vector{0.0, 0.0}, 10.0, 0.0, HALF_TURN, true}};
+        RS_Arc arc{nullptr, RS_ArcData{RS_Vector{0.0, 0.0}, 10.0, 0.0, HALF_TURN, reversed}};
+        const RS_Vector snap = reversed ? RS_Vector{0.0, -10.0} : RS_Vector{0.0, 10.0};
 
         const std::unique_ptr<LC_Division::ArcSegmentData> data{
-            division.findArcSegmentBetweenIntersections(&arc, RS_Vector{0.0, -10.0}, true)};
+            division.findArcSegmentBetweenIntersections(&arc, snap, true)};
 
         REQUIRE(data != nullptr);
         CHECK(data->segmentDisposition == LC_Division::SEGMENT_ENTIRE);
@@ -226,6 +232,8 @@ public:
     }
 };
 
+using SegmentCreation = LC_ActionModifyBreakDivide::SegmentCreation;
+
 /**
  * Member order matters: the action is destroyed before the view, because
  * ~RS_PreviewActionInterface reaches into overlay containers the view owns.
@@ -259,21 +267,21 @@ TEST_CASE("whole-entity Break removes the source without replacement geometry",
 
     SECTION("line") {
         RS_Line line{nullptr, RS_Vector{0.0, 0.0}, RS_Vector{10.0, 0.0}};
-        CHECK(fixture.action->createEntitiesForLine(&line, RS_Vector{5.0, 0.0}, list, false));
+        CHECK(fixture.action->createEntitiesForLine(&line, RS_Vector{5.0, 0.0}, list, false) == SegmentCreation::RemoveSource);
         CHECK(list.isEmpty());
     }
 
     SECTION("circle") {
         RS_Circle circle{nullptr, RS_CircleData{RS_Vector{0.0, 0.0}, 10.0}};
         RS_Vector snap{10.0, 0.0};
-        CHECK(fixture.action->createEntitiesForCircle(&circle, snap, list, false));
+        CHECK(fixture.action->createEntitiesForCircle(&circle, snap, list, false) == SegmentCreation::RemoveSource);
         CHECK(list.isEmpty());
     }
 
     SECTION("arc") {
         RS_Arc arc{nullptr, RS_ArcData{RS_Vector{0.0, 0.0}, 10.0, 0.0, HALF_TURN, false}};
         RS_Vector snap{0.0, 10.0};
-        CHECK(fixture.action->createEntitiesForArc(&arc, snap, list, false));
+        CHECK(fixture.action->createEntitiesForArc(&arc, snap, list, false) == SegmentCreation::RemoveSource);
         CHECK(list.isEmpty());
     }
 
@@ -289,21 +297,21 @@ TEST_CASE("whole-entity Break that keeps the selection is a no-op, not a delete"
 
     SECTION("line") {
         RS_Line line{nullptr, RS_Vector{0.0, 0.0}, RS_Vector{10.0, 0.0}};
-        CHECK_FALSE(fixture.action->createEntitiesForLine(&line, RS_Vector{5.0, 0.0}, list, false));
+        CHECK(fixture.action->createEntitiesForLine(&line, RS_Vector{5.0, 0.0}, list, false) == SegmentCreation::KeepEntire);
         CHECK(list.isEmpty());
     }
 
     SECTION("circle") {
         RS_Circle circle{nullptr, RS_CircleData{RS_Vector{0.0, 0.0}, 10.0}};
         RS_Vector snap{10.0, 0.0};
-        CHECK_FALSE(fixture.action->createEntitiesForCircle(&circle, snap, list, false));
+        CHECK(fixture.action->createEntitiesForCircle(&circle, snap, list, false) == SegmentCreation::KeepEntire);
         CHECK(list.isEmpty());
     }
 
     SECTION("arc") {
         RS_Arc arc{nullptr, RS_ArcData{RS_Vector{0.0, 0.0}, 10.0, 0.0, HALF_TURN, false}};
         RS_Vector snap{0.0, 10.0};
-        CHECK_FALSE(fixture.action->createEntitiesForArc(&arc, snap, list, false));
+        CHECK(fixture.action->createEntitiesForArc(&arc, snap, list, false) == SegmentCreation::KeepEntire);
         CHECK(list.isEmpty());
     }
 
@@ -345,16 +353,28 @@ TEST_CASE("Break bounded by real intersections still creates the remaining segme
         fixture.graphic.addEntity(new RS_Line{&fixture.graphic, RS_Vector{3.0, -5.0}, RS_Vector{3.0, 5.0}});
         fixture.graphic.addEntity(new RS_Line{&fixture.graphic, RS_Vector{7.0, -5.0}, RS_Vector{7.0, 5.0}});
         RS_Line line{nullptr, RS_Vector{0.0, 0.0}, RS_Vector{10.0, 0.0}};
-        CHECK_FALSE(fixture.action->createEntitiesForLine(&line, RS_Vector{5.0, 0.0}, list, false));
+        CHECK(fixture.action->createEntitiesForLine(&line, RS_Vector{5.0, 0.0}, list, false)
+              == SegmentCreation::Segments);
         CHECK(list.size() == 2);
+        // #2700's signature was the right count of zero-extent remnants.
+        for (const RS_Entity* e: list) {
+            CHECK(e->getLength() > RS_TOLERANCE);
+        }
     }
 
     SECTION("circle") {
         fixture.graphic.addEntity(new RS_Line{&fixture.graphic, RS_Vector{0.0, -12.0}, RS_Vector{0.0, 12.0}});
         RS_Circle circle{nullptr, RS_CircleData{RS_Vector{0.0, 0.0}, 10.0}};
         RS_Vector snap{10.0, 0.0};
-        CHECK_FALSE(fixture.action->createEntitiesForCircle(&circle, snap, list, false));
+        CHECK(fixture.action->createEntitiesForCircle(&circle, snap, list, false)
+              == SegmentCreation::Segments);
         CHECK(list.size() == 1);
+        // A zero-sweep arc reports a full-turn length, so bound it from both
+        // sides: the remainder must be a real partial arc.
+        for (const RS_Entity* e: list) {
+            CHECK(e->getLength() > RS_TOLERANCE);
+            CHECK(e->getLength() < 2.0 * HALF_TURN * 10.0 - RS_TOLERANCE);
+        }
     }
 
     SECTION("arc") {
@@ -362,9 +382,49 @@ TEST_CASE("Break bounded by real intersections still creates the remaining segme
         fixture.graphic.addEntity(new RS_Line{&fixture.graphic, RS_Vector{5.0, -12.0}, RS_Vector{5.0, 12.0}});
         RS_Arc arc{nullptr, RS_ArcData{RS_Vector{0.0, 0.0}, 10.0, 0.0, HALF_TURN, false}};
         RS_Vector snap{0.0, 10.0};
-        CHECK_FALSE(fixture.action->createEntitiesForArc(&arc, snap, list, false));
+        CHECK(fixture.action->createEntitiesForArc(&arc, snap, list, false)
+              == SegmentCreation::Segments);
         CHECK(list.size() == 2);
+        for (const RS_Entity* e: list) {
+            CHECK(e->getLength() > RS_TOLERANCE);
+            CHECK(e->getLength() < 2.0 * HALF_TURN * 10.0 - RS_TOLERANCE);
+        }
     }
 
     qDeleteAll(list);
+}
+
+TEST_CASE("a single tangency does not divide a circle",
+          "[lc_division][break_divide][whole_entity]") {
+    // One tangent line touches the circle at exactly one point. A closed curve
+    // with fewer than two distinct boundary points has no segments, so SHIFT
+    // whole-entity removal must work exactly as it does with no intersections.
+    RS_EntityContainer container;
+    container.addEntity(new RS_Line{&container, RS_Vector{10.0, -5.0}, RS_Vector{10.0, 5.0}});
+    LC_Division division{&container};
+    RS_Circle circle{nullptr, RS_CircleData{RS_Vector{0.0, 0.0}, 10.0}};
+
+    SECTION("whole-entity selection allowed: the circle itself is the segment") {
+        const std::unique_ptr<LC_Division::CircleSegmentData> data{
+            division.findCircleSegmentBetweenIntersections(&circle, RS_Vector{-10.0, 0.0}, true)};
+        REQUIRE(data != nullptr);
+        CHECK(data->segmentDisposition == LC_Division::SEGMENT_ENTIRE);
+    }
+
+    SECTION("divide mode: still nothing to split") {
+        const std::unique_ptr<LC_Division::CircleSegmentData> data{
+            division.findCircleSegmentBetweenIntersections(&circle, RS_Vector{-10.0, 0.0}, false)};
+        CHECK(data == nullptr);
+    }
+
+    SECTION("through the action: SHIFT removes the circle cleanly") {
+        BreakDivideFixture fixture{/*removeSelected=*/true};
+        fixture.graphic.addEntity(new RS_Line{&fixture.graphic, RS_Vector{10.0, -5.0}, RS_Vector{10.0, 5.0}});
+        QList<RS_Entity*> list;
+        RS_Vector snap{-10.0, 0.0};
+        CHECK(fixture.action->createEntitiesForCircle(&circle, snap, list, false)
+              == SegmentCreation::RemoveSource);
+        CHECK(list.isEmpty());
+        qDeleteAll(list);
+    }
 }

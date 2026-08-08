@@ -69,6 +69,23 @@ LC_Division::ArcSegmentData* LC_Division::findArcSegmentBetweenIntersections(con
     return result;
 }
 
+namespace {
+// Number of distinct points in the list, stopping as soon as two are found.
+int countDistinctPoints(const QVector<RS_Vector>& points) {
+    int distinct = 0;
+    for (int i = 0; i < points.size(); ++i) {
+        bool duplicate = false;
+        for (int j = 0; j < i && !duplicate; ++j) {
+            duplicate = points.at(i).distanceTo(points.at(j)) < RS_TOLERANCE;
+        }
+        if (!duplicate && ++distinct >= 2) {
+            break;
+        }
+    }
+    return distinct;
+}
+}
+
 /**
  * determines segment of circle selected by the user
  * @param circle circle
@@ -81,9 +98,12 @@ LC_Division::CircleSegmentData* LC_Division::findCircleSegmentBetweenIntersectio
     CircleSegmentData* result = nullptr;
     // detect all intersections
     const QVector<RS_Vector> allIntersections = collectAllIntersectionsWithEntity(circle);
-    if (allIntersections.empty()) {
+    // A closed curve needs two distinct boundary points before it has segments
+    // at all. A single tangency - which the intersection solver may report once
+    // or as two coincident points - divides the circle no more than no
+    // intersection does, so both cases take the whole-entity branch.
+    if (countDistinctPoints(allIntersections) < 2) {
         if (allowEntireCircleAsSegment) {
-            // With no split boundary, the selected segment is the circle itself.
             result = new CircleSegmentData();
             result->segmentDisposition = SEGMENT_ENTIRE;
             result->snapSegmentStartAngle = 0;
