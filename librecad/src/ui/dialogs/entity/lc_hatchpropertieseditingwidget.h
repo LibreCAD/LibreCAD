@@ -26,6 +26,7 @@
 
 #include "lc_entitypropertieseditorwidget.h"
 
+class QEvent;
 class QLineEdit;
 class RS_Hatch;
 
@@ -39,6 +40,8 @@ public:
     explicit LC_HatchPropertiesEditingWidget(QWidget *parent = nullptr);
     ~LC_HatchPropertiesEditingWidget() override;
     void setEntity(RS_Entity* entity) override;
+protected:
+    void changeEvent(QEvent* event) override;
 protected slots:
     void onScaleEditingFinished();
     void onAngleEditingFinished();

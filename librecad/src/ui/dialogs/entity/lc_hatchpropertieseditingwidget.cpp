@@ -26,6 +26,7 @@
 #include <array>
 #include <cmath>
 
+#include <QEvent>
 #include <QFontMetrics>
 #include <QLineEdit>
 
@@ -43,7 +44,7 @@ namespace {
      * Widest text QString::number(v, 'g', g_precision) can produce: sign, leading
      * digit, decimal point, g_precision-1 further digits and a three digit exponent.
      */
-    const QString g_widestValue = QStringLiteral("-1.2345678e-308");
+    constexpr auto g_widestValue = QLatin1StringView("-1.2345678e-308");
 
     //! Every field of the widget that shows a value.
     std::array<QLineEdit*, 13> valueFields(Ui::LC_HatchPropertiesEditingWidget* ui) {
@@ -73,11 +74,18 @@ LC_HatchPropertiesEditingWidget::LC_HatchPropertiesEditingWidget(QWidget *parent
  * extra character widths stand in for the frame and the text margins.
  */
 void LC_HatchPropertiesEditingWidget::setupValueFields() {
-    const QFontMetrics fm = ui->leArea->fontMetrics();
-    const int valueWidth = fm.horizontalAdvance(g_widestValue) + 2 * fm.horizontalAdvance(QLatin1Char('0'));
-
     for (QLineEdit* ed: valueFields(ui)) {
-        ed->setMinimumWidth(valueWidth);
+        const QFontMetrics fm = ed->fontMetrics();
+        ed->setMinimumWidth(fm.horizontalAdvance(g_widestValue)
+                            + 2 * fm.horizontalAdvance(QLatin1Char('0')));
+    }
+}
+
+//! The widths above are in font units, so they have to be redone when the font changes.
+void LC_HatchPropertiesEditingWidget::changeEvent(QEvent* event) {
+    LC_EntityPropertiesEditorWidget::changeEvent(event);
+    if (event->type() == QEvent::FontChange) {
+        setupValueFields();
     }
 }
 

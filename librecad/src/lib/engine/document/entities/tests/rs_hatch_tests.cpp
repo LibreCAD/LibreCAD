@@ -40,6 +40,7 @@
 #include <QApplication>
 #include <QCoreApplication>
 #include <QLayout>
+#include <QFont>
 #include <QLineEdit>
 
 #include "drw_entities.h"
@@ -1440,12 +1441,37 @@ TEST_CASE("LC_HatchPropertiesEditingWidget shows 8 significant digits, fully vis
         INFO("text " << text.toStdString());
         CHECK(significantDigits(text) <= 8);
 
-        // 2. the whole value fits, even with the layout squeezed
-        const int textWidth = ed->fontMetrics().horizontalAdvance(text);
-        CHECK(ed->width() >= textWidth);
-        CHECK(ed->minimumWidth() >= textWidth);
+        // 2. the whole value fits, even with the layout squeezed. The frame and
+        // the text margins are not usable width, so discount them: Qt's own
+        // sizeHint is 17 'x' advances of text plus exactly that overhead.
+        const QFontMetrics fm = ed->fontMetrics();
+        const int overhead = ed->sizeHint().width() - 17 * fm.horizontalAdvance(QLatin1Char('x'));
+        const int textWidth = fm.horizontalAdvance(text);
+        CHECK(ed->width() - overhead >= textWidth);
+        CHECK(ed->minimumWidth() - overhead >= textWidth);
 
         // and it is scrolled to the front, so the leading digits are the visible ones
         CHECK(ed->cursorPosition() == 0);
     }
+
+    // The fields must also hold the widest string 8 'g' digits can produce, not
+    // merely the values this particular hatch happened to yield.
+    auto* widest = widget.findChild<QLineEdit*>(QStringLiteral("leIxx"));
+    REQUIRE(widest != nullptr);
+    widest->setText(QStringLiteral("-1.2345678e-308"));
+    widget.layout()->activate();
+    const QFontMetrics fm = widest->fontMetrics();
+    const int overhead = widest->sizeHint().width() - 17 * fm.horizontalAdvance(QLatin1Char('x'));
+    CHECK(widest->width() - overhead >= fm.horizontalAdvance(widest->text()));
+
+    // The widths are in font units, so they must follow the font. Nothing changes
+    // the font under the dialog today, but the widget should not quietly depend
+    // on that: it is built before it is ever shown.
+    QFont bigger = widget.font();
+    bigger.setPointSize(bigger.pointSize() * 2);
+    widget.setFont(bigger);
+    widget.layout()->activate();
+    const QFontMetrics bigFm = widest->fontMetrics();
+    const int bigOverhead = widest->sizeHint().width() - 17 * bigFm.horizontalAdvance(QLatin1Char('x'));
+    CHECK(widest->minimumWidth() - bigOverhead >= bigFm.horizontalAdvance(widest->text()));
 }
