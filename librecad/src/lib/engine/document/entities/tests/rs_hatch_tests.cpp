@@ -37,11 +37,16 @@
 #include <iostream>
 #include <map>
 
+#include <QApplication>
 #include <QCoreApplication>
+#include <QLayout>
+#include <QFont>
+#include <QLineEdit>
 
 #include "drw_entities.h"
 #include "lc_containertraverser.h"
 #include "lc_graphicviewport.h"
+#include "lc_hatchpropertieseditingwidget.h"
 #include "lc_looputils.h"
 #include "lc_secondmoment.h"
 #include "lc_splinepoints.h"
@@ -1350,4 +1355,123 @@ TEST_CASE("RS_Hatch snap - getNearestPointOnEntity inside solid fill terminates"
     // Calling directly on the hatch must likewise terminate.
     RS_Vector pHatch = hatch->getNearestPointOnEntity(insideFill, true, nullptr, nullptr);
     CHECK_FALSE(pHatch.valid);
+}
+
+namespace {
+
+/**
+ * Reuse the process-wide QApplication if some other test already built one,
+ * otherwise create it. Widgets need QApplication, not just QCoreApplication.
+ */
+QApplication& widgetApplication()
+{
+    static int argc = 1;
+    static char name[] = "librecad-tests";
+    static char* argv[] = {name, nullptr};
+    static QApplication* app = [] {
+        auto* existing = qobject_cast<QApplication*>(QCoreApplication::instance());
+        return existing ? existing : new QApplication(argc, argv);
+    }();
+    static bool settingsReady = [] {
+        QCoreApplication::setOrganizationName("LibreCAD");
+        QCoreApplication::setApplicationName("LibreCAD-tests");
+        RS_Settings::init("LibreCAD", "LibreCAD-tests");
+        return true;
+    }();
+    (void)settingsReady;
+    return *app;
+}
+
+//! Significant digits in a 'g'-formatted number, ignoring sign, point and exponent.
+int significantDigits(const QString& text)
+{
+    const QString mantissa = text.section('e', 0, 0);
+    int digits = 0;
+    bool seenNonZero = false;
+    for (const QChar c: mantissa) {
+        if (!c.isDigit())
+            continue;
+        if (c != QLatin1Char('0'))
+            seenNonZero = true;
+        if (seenNonZero)
+            ++digits;
+    }
+    return digits;
+}
+
+} // namespace
+
+TEST_CASE("LC_HatchPropertiesEditingWidget shows 8 significant digits, fully visible",
+          "[hatch][properties][widget]")
+{
+    widgetApplication();
+
+    // Deliberately awkward extents: the area and the moments then need far more
+    // than eight digits to write out in full, and the moments reach ~1e12.
+    std::unique_ptr<RS_Hatch> hatch{makeRectHatch(123.456789012, 234.567890123,
+                                                  2345.678901234, 3456.789012345)};
+    REQUIRE(hatch->getTotalArea() > 0.0);
+
+    LC_GraphicViewport viewport;
+    LC_HatchPropertiesEditingWidget widget;
+    widget.setGraphicViewport(&viewport);
+    widget.setEntity(hatch.get());
+
+    const QStringList valueFieldNames{
+        QStringLiteral("leScale"), QStringLiteral("leAngle"),
+        QStringLiteral("leArea"), QStringLiteral("leCentroidX"), QStringLiteral("leCentroidY"),
+        QStringLiteral("leIxx"), QStringLiteral("leIyy"), QStringLiteral("leIxy"),
+        QStringLiteral("leI1"), QStringLiteral("leI2"), QStringLiteral("lePrincipalAngle")};
+
+    // Squeeze the widget well below its preferred width. Only a minimum width
+    // that accounts for the text keeps the fields from being shrunk to nothing,
+    // which is exactly what left the moments clipped in the dialog.
+    widget.resize(200, widget.sizeHint().height());
+    widget.layout()->activate();
+
+    for (const QString& name: valueFieldNames) {
+        auto* ed = widget.findChild<QLineEdit*>(name);
+        INFO("field " << name.toStdString());
+        REQUIRE(ed != nullptr);
+
+        const QString text = ed->text();
+        REQUIRE_FALSE(text.isEmpty());
+
+        // 1. never more than eight significant digits
+        INFO("text " << text.toStdString());
+        CHECK(significantDigits(text) <= 8);
+
+        // 2. the whole value fits, even with the layout squeezed. The frame and
+        // the text margins are not usable width, so discount them: Qt's own
+        // sizeHint is 17 'x' advances of text plus exactly that overhead.
+        const QFontMetrics fm = ed->fontMetrics();
+        const int overhead = ed->sizeHint().width() - 17 * fm.horizontalAdvance(QLatin1Char('x'));
+        const int textWidth = fm.horizontalAdvance(text);
+        CHECK(ed->width() - overhead >= textWidth);
+        CHECK(ed->minimumWidth() - overhead >= textWidth);
+
+        // and it is scrolled to the front, so the leading digits are the visible ones
+        CHECK(ed->cursorPosition() == 0);
+    }
+
+    // The fields must also hold the widest string 8 'g' digits can produce, not
+    // merely the values this particular hatch happened to yield.
+    auto* widest = widget.findChild<QLineEdit*>(QStringLiteral("leIxx"));
+    REQUIRE(widest != nullptr);
+    widest->setText(QStringLiteral("-1.2345678e-308"));
+    widget.layout()->activate();
+    const QFontMetrics fm = widest->fontMetrics();
+    const int overhead = widest->sizeHint().width() - 17 * fm.horizontalAdvance(QLatin1Char('x'));
+    CHECK(widest->width() - overhead >= fm.horizontalAdvance(widest->text()));
+
+    // The widths are in font units, so they must follow the font. Nothing changes
+    // the font under the dialog today, but the widget should not quietly depend
+    // on that: it is built before it is ever shown.
+    QFont bigger = widget.font();
+    bigger.setPointSize(bigger.pointSize() * 2);
+    widget.setFont(bigger);
+    widget.layout()->activate();
+    const QFontMetrics bigFm = widest->fontMetrics();
+    const int bigOverhead = widest->sizeHint().width() - 17 * bigFm.horizontalAdvance(QLatin1Char('x'));
+    CHECK(widest->minimumWidth() - bigOverhead >= bigFm.horizontalAdvance(widest->text()));
 }
