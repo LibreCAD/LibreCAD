@@ -827,6 +827,7 @@ librecad/ts/librecad_it.ts
 librecad/ts/librecad_ja.ts
 librecad/ts/librecad_ka.ts
 librecad/ts/librecad_ko.ts
+librecad/ts/librecad_lo.ts
 librecad/ts/librecad_lv.ts
 librecad/ts/librecad_mk.ts
 librecad/ts/librecad_nl.ts
@@ -889,6 +890,7 @@ plugins/ts/plugins_it.ts
 plugins/ts/plugins_ja.ts
 plugins/ts/plugins_ka.ts
 plugins/ts/plugins_ko.ts
+plugins/ts/plugins_lo.ts
 plugins/ts/plugins_lv.ts
 plugins/ts/plugins_mk.ts
 plugins/ts/plugins_nl.ts
