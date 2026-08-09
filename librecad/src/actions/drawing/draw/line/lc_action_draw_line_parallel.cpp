@@ -110,7 +110,7 @@ bool LC_ActionDrawLineParallel::doTriggerModifications(LC_DocumentModificationBa
     return true;
 }
 
-void LC_ActionDrawLineParallel::onMouseMoveEvent([[maybe_unused]] const int status, const LC_MouseEvent* e) {
+void LC_ActionDrawLineParallel::onMouseMoveEvent(const int status, const LC_MouseEvent* e) {
     *m_coord = {e->graphPoint}; // copy is needed there!
 
     m_entity = catchAndDescribe(e, RS2::ResolveAll);
@@ -142,8 +142,17 @@ void LC_ActionDrawLineParallel::onMouseMoveEvent([[maybe_unused]] const int stat
     }
 }
 
-void LC_ActionDrawLineParallel::onMouseLeftButtonRelease([[maybe_unused]] int status, [[maybe_unused]] const LC_MouseEvent* e) {
-    trigger();
+void LC_ActionDrawLineParallel::onMouseLeftButtonRelease(const int status, [[maybe_unused]] const LC_MouseEvent* e) {
+    switch (status) {
+        case SetEntity: {
+            if (m_entity != nullptr) {
+                trigger();
+            }
+            break;
+        }
+        default:
+            break;
+    }
 }
 
 void LC_ActionDrawLineParallel::onMouseRightButtonRelease(const int status, [[maybe_unused]] const LC_MouseEvent* e) {
