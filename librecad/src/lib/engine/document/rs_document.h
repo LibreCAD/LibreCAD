@@ -292,6 +292,9 @@ protected:
 
     bool m_inBulkUndoableCleanup = false;
     bool m_savedAutoUpdateBorders = false;
+    /** The redo-tail prune nests bulk cleanup inside the start/endUndoCycle()
+     *  bracket, so it must not share m_savedAutoUpdateBorders. */
+    bool m_savedAutoUpdateBordersBulk = false;
 
     QList<LC_DocumentModificationListener*> m_modificationListeners;
 
