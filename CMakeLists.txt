@@ -2395,6 +2395,7 @@ if (BUILD_TESTS)
         librecad/src/lib/math/tests/rs_math_tests.cpp
         librecad/src/lib/math/tests/lc_quadratic_tests.cpp
         librecad/src/lib/filters/tests/dwg_buffer_round_trip_tests.cpp
+        librecad/src/lib/creation/tests/lc_action_draw_line_parallel_tests.cpp
         librecad/src/lib/filters/tests/dwg_entity_encode_round_trip_tests.cpp
         librecad/src/lib/filters/tests/dwg_header_encode_round_trip_tests.cpp
         librecad/src/lib/filters/tests/dwg_header_app_vars_tests.cpp
