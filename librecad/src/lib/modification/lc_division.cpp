@@ -48,16 +48,16 @@ LC_Division::LC_Division(RS_EntityContainer* entityContainer) : m_container{enti
  * @param allowEntireArcAsSegment
  * @return segment information
  */
-LC_Division::ArcSegmentData* LC_Division::findArcSegmentBetweenIntersections(const RS_Arc* arc, const RS_Vector& snap,
+std::unique_ptr<LC_Division::ArcSegmentData> LC_Division::findArcSegmentBetweenIntersections(const RS_Arc* arc, const RS_Vector& snap,
                                                                              const bool allowEntireArcAsSegment) {
     ArcSegmentData* result = nullptr;
     // detect all intersections
     const QVector<RS_Vector> allIntersections = collectAllIntersectionsWithEntity(arc);
     if (allIntersections.empty()) {
         if (allowEntireArcAsSegment) {
-            // allowing deletion of complete arcs
+            // With no split boundary, the selected segment is the arc itself.
             result = new ArcSegmentData();
-            result->segmentDisposition = SEGMENT_INSIDE;
+            result->segmentDisposition = SEGMENT_ENTIRE;
             result->snapSegmentStartAngle = arc->getAngle1();
             result->snapSegmentEndAngle = arc->getAngle2();
         }
@@ -66,7 +66,24 @@ LC_Division::ArcSegmentData* LC_Division::findArcSegmentBetweenIntersections(con
         // determine selected segment edges
         result = findArcSegmentEdges(arc, snap, allIntersections, allowEntireArcAsSegment);
     }
-    return result;
+    return std::unique_ptr<ArcSegmentData>{result};
+}
+
+namespace {
+// Number of distinct points in the list, stopping as soon as two are found.
+int countDistinctPoints(const QVector<RS_Vector>& points) {
+    int distinct = 0;
+    for (int i = 0; i < points.size(); ++i) {
+        bool duplicate = false;
+        for (int j = 0; j < i && !duplicate; ++j) {
+            duplicate = points.at(i).distanceTo(points.at(j)) < RS_TOLERANCE;
+        }
+        if (!duplicate && ++distinct >= 2) {
+            break;
+        }
+    }
+    return distinct;
+}
 }
 
 /**
@@ -76,14 +93,19 @@ LC_Division::ArcSegmentData* LC_Division::findArcSegmentBetweenIntersections(con
  * @param allowEntireCircleAsSegment
  * @return segment information
  */
-LC_Division::CircleSegmentData* LC_Division::findCircleSegmentBetweenIntersections(const RS_Circle* circle, const RS_Vector& snap,
+std::unique_ptr<LC_Division::CircleSegmentData> LC_Division::findCircleSegmentBetweenIntersections(const RS_Circle* circle, const RS_Vector& snap,
                                                                                    const bool allowEntireCircleAsSegment) {
     CircleSegmentData* result = nullptr;
     // detect all intersections
     const QVector<RS_Vector> allIntersections = collectAllIntersectionsWithEntity(circle);
-    if (allIntersections.empty()) {
+    // A closed curve needs two distinct boundary points before it has segments
+    // at all. A single tangency - which the intersection solver may report once
+    // or as two coincident points - divides the circle no more than no
+    // intersection does, so both cases take the whole-entity branch.
+    if (countDistinctPoints(allIntersections) < 2) {
         if (allowEntireCircleAsSegment) {
             result = new CircleSegmentData();
+            result->segmentDisposition = SEGMENT_ENTIRE;
             result->snapSegmentStartAngle = 0;
             result->snapSegmentEndAngle = M_PI * 2;
         }
@@ -92,7 +114,7 @@ LC_Division::CircleSegmentData* LC_Division::findCircleSegmentBetweenIntersectio
         // determine selected segment edges
         result = findCircleSegmentEdges(circle, snap, allIntersections);
     }
-    return result;
+    return std::unique_ptr<CircleSegmentData>{result};
 }
 
 /**
@@ -102,26 +124,25 @@ LC_Division::CircleSegmentData* LC_Division::findCircleSegmentBetweenIntersectio
  * @param allowEntireLine
  * @return segment information
  */
-LC_Division::LineSegmentData* LC_Division::findLineSegmentBetweenIntersections(const RS_Line* line, const RS_Vector& snap,
+std::unique_ptr<LC_Division::LineSegmentData> LC_Division::findLineSegmentBetweenIntersections(const RS_Line* line, const RS_Vector& snap,
                                                                                const bool allowEntireLine) {
     LineSegmentData* result = nullptr;
     // find all intersection points for line
     const QVector<RS_Vector> allIntersections = collectAllIntersectionsWithEntity(line);
     if (allIntersections.empty()) {
         if (allowEntireLine) {
-            // allow to delete entire line if SHIFT is pressed
+            // With no split boundary, the selected segment is the line itself.
             result = new LineSegmentData();
-            result->segmentDisposition = SEGMENT_INSIDE;
+            result->segmentDisposition = SEGMENT_ENTIRE;
             result->snapSegmentStart = line->getStartpoint();
             result->snapSegmentEnd = line->getEndpoint();
-            result->snap = snap;
         }
     }
     else {
         // determine segments of line that was selected by the user
         result = findLineSegmentEdges(line, snap, allIntersections, allowEntireLine);
     }
-    return result;
+    return std::unique_ptr<LineSegmentData>{result};
 }
 
 /**
@@ -269,10 +290,11 @@ LC_Division::LineSegmentData* LC_Division::findLineSegmentEdges(const RS_Line* l
         }
     }
     else {
-        // there are intersections only on edges. We may return the entire line as segment if SHIFT is pressed and the user would like to delete the entire entity
+        // Endpoint intersections do not divide the line. Preserve the same
+        // whole-entity disposition as the no-intersection case.
         if (allowEntireLineAsSegment) {
             result = new LineSegmentData();
-            result->segmentDisposition = SEGMENT_INSIDE;
+            result->segmentDisposition = SEGMENT_ENTIRE;
             result->snapSegmentStart = line->getStartpoint();
             result->snapSegmentEnd = line->getEndpoint();
         }
@@ -391,10 +413,11 @@ LC_Division::ArcSegmentData* LC_Division::findArcSegmentEdges(const RS_Arc* arc,
         }
     }
     else {
-        // there are intersections only on edges. We may return the entire line as segment if SHIFT is pressed and the user would like to delete the entire entity
+        // Endpoint intersections do not divide the arc. Preserve the same
+        // whole-entity disposition as the no-intersection case.
         if (allowEntireArcAsSegment) {
             result = new ArcSegmentData();
-            result->segmentDisposition = SEGMENT_INSIDE;
+            result->segmentDisposition = SEGMENT_ENTIRE;
             result->snapSegmentStartAngle = arcStartAngle;
             result->snapSegmentEndAngle = arcEndAngle;
         }

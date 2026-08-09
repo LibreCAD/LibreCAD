@@ -40,7 +40,15 @@ QApplication& application() {
     static int argc = 1;
     static char name[] = "librecad-tests";
     static char* argv[] = {name, nullptr};
-    static QApplication app(argc, argv);
+    // Reuse the process-wide QApplication if another test file built it first,
+    // and leak the pointer on the create path: only one QApplication may exist
+    // at a time, and only one ~QApplication may run at exit. The old by-value
+    // static here constructed a second instance whenever another test file ran
+    // first - silently tolerated on release Qt, an abort on assert-enabled Qt.
+    static QApplication* app = [] {
+        auto* existing = qobject_cast<QApplication*>(QCoreApplication::instance());
+        return existing != nullptr ? existing : new QApplication(argc, argv);
+    }();
     static bool settingsReady = [] {
         QCoreApplication::setOrganizationName("LibreCAD");
         QCoreApplication::setApplicationName("LibreCAD-tests");
@@ -48,7 +56,7 @@ QApplication& application() {
         return true;
     }();
     (void)settingsReady;
-    return app;
+    return *app;
 }
 
 class TestGraphicView final : public RS_GraphicView {
