@@ -99,6 +99,15 @@ public:
     virtual void drawPoint(const RS_Vector& p, int pdmode, int pdsize) = 0;
     virtual void drawLine(const RS_Vector& p1, const RS_Vector& p2) = 0;
     virtual void drawRect(const RS_Vector& p1, const RS_Vector& p2);
+
+    /**
+     * Draws a rectangle that is used as the last-resort representation of an
+     * entity (a text that has no glyphs, or a draft-mode placeholder). Unlike
+     * drawRect() this guarantees the rectangle is actually painted: a NoPen
+     * line type would otherwise erase the placeholder just as thoroughly as it
+     * erases the geometry it stands in for.
+     */
+    void drawPlaceholderRect(const RS_Vector& p1, const RS_Vector& p2);
     virtual void drawArc(const RS_Vector& cp, double radius,
                          double a1, double a2,
                          bool reversed) = 0;

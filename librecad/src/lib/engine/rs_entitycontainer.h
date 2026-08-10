@@ -136,6 +136,10 @@ public:
         autoUpdateBorders = enable;
     }
     virtual void adjustBorders(RS_Entity* entity);
+	bool hasMeaningfulBorders() const override {
+		return count() > 0;
+	}
+
 	void calculateBorders() override;
 	void forcedCalculateBorders();
 	void updateDimensions( bool autoText=true);

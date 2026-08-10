@@ -564,8 +564,9 @@ void RS_EntityContainer::adjustBorders(RS_Entity* entity) {
 
     if (entity) {
         // make sure a container is not empty (otherwise the border
-        //   would get extended to 0/0):
-        if (!entity->isContainer() || entity->count()>0) {
+        //   would get extended to 0/0). Entities that derive their borders from
+        //   their own data still count when empty - see hasMeaningfulBorders().
+        if (entity->hasMeaningfulBorders()) {
             minV = RS_Vector::minimum(entity->getMin(),minV);
             maxV = RS_Vector::maximum(entity->getMax(),maxV);
         }

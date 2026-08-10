@@ -23,7 +23,8 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-#include<cmath>
+#include <algorithm>
+#include <cmath>
 
 #include<QPainterPath>
 #include<QPolygon>
@@ -32,6 +33,7 @@
 #include "rs_debug.h"
 #include "rs_math.h"
 #include "rs_painter.h"
+#include "rs_pen.h"
 
 void RS_Painter::createArc(QPolygon& pa,
                              const RS_Vector& cp, double radius,
@@ -141,11 +143,45 @@ void RS_Painter::createEllipse(QPolygon& pa,
 }
 
 void RS_Painter::drawRect(const RS_Vector& p1, const RS_Vector& p2) {
-    drawPolygon(QRect(int(p1.x+0.5), int(p1.y+0.5), int(p2.x - p1.x+0.5), int(p2.y - p1.y+0.5)));
+    // Guard against non-finite input: converting those to int is undefined
+    // behaviour, and an entity with corrupt borders must not take the painter
+    // with it.
+    if (!std::isfinite(p1.x) || !std::isfinite(p1.y)
+            || !std::isfinite(p2.x) || !std::isfinite(p2.y)) {
+        RS_DEBUG->print(RS_Debug::D_WARNING,
+                        "RS_Painter::drawRect: non-finite corner, skipping");
+        return;
+    }
+
+    // The corners arrive unordered - toGui() flips the y axis, so p2.y < p1.y
+    // for a rectangle built from getMin()/getMax(). Normalise, and keep at
+    // least one pixel in each direction: a QRect of zero width or height
+    // becomes four identical points and draws nothing at all, which would make
+    // an entity that is meant to be shown as a box disappear instead.
+    double left = std::min(p1.x, p2.x);
+    double top = std::min(p1.y, p2.y);
+    double right = std::max(p1.x, p2.x);
+    double bottom = std::max(p1.y, p2.y);
+
+    int w = std::max(1, RS_Math::round(right - left));
+    int h = std::max(1, RS_Math::round(bottom - top));
+
+    drawPolygon(QRect(RS_Math::round(left), RS_Math::round(top), w, h));
 //    drawLine(RS_Vector(p1.x, p1.y), RS_Vector(p2.x, p1.y));
 //    drawLine(RS_Vector(p2.x, p1.y), RS_Vector(p2.x, p2.y));
 //    drawLine(RS_Vector(p2.x, p2.y), RS_Vector(p1.x, p2.y));
 //    drawLine(RS_Vector(p1.x, p2.y), RS_Vector(p1.x, p1.y));
+}
+
+void RS_Painter::drawPlaceholderRect(const RS_Vector& p1, const RS_Vector& p2) {
+    RS_Pen pen = getPen();
+    if (pen.getLineType() == RS2::NoPen) {
+        // The placeholder must stay visible even when the entity asks for no
+        // stroke at all, otherwise the entity renders as nothing.
+        pen.setLineType(RS2::SolidLine);
+        setPen(pen);
+    }
+    drawRect(p1, p2);
 }
 
 void RS_Painter::drawHandle(const RS_Vector& p, const RS_Color& c, int size) {

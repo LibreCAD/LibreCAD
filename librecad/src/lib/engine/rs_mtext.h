@@ -155,6 +155,19 @@ public:
 
   void update() override;
 
+  void calculateBorders() override;
+
+  /** Borders come from the text data when there are no letters. */
+  bool hasMeaningfulBorders() const override { return true; }
+
+  /**
+   * Derives the extent of this text from its data (insertion point, height,
+   * reference width, string length, alignment, angle) instead of from its
+   * letter entities. Used whenever no letters could be generated, so that the
+   * entity still reports a usable location and size.
+   */
+  void applyFallbackBorders();
+
   int getNumberOfLines();
 
   RS_Vector getInsertionPoint() { return data.insertionPoint; }

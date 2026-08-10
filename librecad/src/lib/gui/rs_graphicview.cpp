@@ -1162,7 +1162,15 @@ void RS_GraphicView::drawEntity(RS_Painter *painter, RS_Entity* e, double& patte
         switch(e->rtti()){
         case RS2::EntityMText:
         case RS2::EntityText:
-            painter->drawRect(toGui(e->getMin()), toGui(e->getMax()));
+            // A text with no letters has no glyphs for the box to stand in for:
+            // its box reports a rendering failure and must stay visible even
+            // under a NoPen line type. A text that does have glyphs keeps its
+            // own pen, exactly as it would outside draft mode.
+            if (static_cast<RS_EntityContainer*>(e)->isEmpty()) {
+                painter->drawPlaceholderRect(toGui(e->getMin()), toGui(e->getMax()));
+            } else {
+                painter->drawRect(toGui(e->getMin()), toGui(e->getMax()));
+            }
             break;
         case RS2::EntityImage:
             // all images as rectangles:
