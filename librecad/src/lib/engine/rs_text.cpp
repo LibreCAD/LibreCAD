@@ -24,8 +24,9 @@
 **
 **********************************************************************/
 
-#include<iostream>
-#include<cmath>
+#include <algorithm>
+#include <cmath>
+#include <iostream>
 #include "rs_font.h"
 #include "rs_text.h"
 
@@ -268,6 +269,10 @@ void RS_Text::update() {
     RS_Font* font = RS_FONTLIST->requestFont(data.style);
 
     if (font==NULL) {
+        // No font at all: the text cannot be turned into letters. Keep a
+        // data-derived extent so the entity still has a location and can be
+        // drawn as a placeholder box rather than vanishing silently.
+        applyFallbackBorders();
         return;
     }
 
@@ -328,6 +333,19 @@ void RS_Text::update() {
         forcedCalculateBorders();
     }
     RS_Vector textSize = getSize();
+
+    if (isEmpty() || textSize.x <= RS_TOLERANCE || !std::isfinite(textSize.x)) {
+        // Either the string produced no letters at all (empty or whitespace-only
+        // text), or the letters carry no geometry - which is what happens when
+        // the font loaded but its letter list is empty, leaving every letter an
+        // empty insert. Both cases are the same thing as far as drawing goes, so
+        // normalise to an empty container with a data-derived extent. Stopping
+        // here also protects the HAAligned/HAFit branch below, which divides by
+        // textSize.x and would otherwise corrupt data.height.
+        clear();
+        applyFallbackBorders();
+        return;
+    }
 
     RS_DEBUG->print("RS_Text::updateAddLine: width 2: %f", textSize.x);
 
@@ -421,6 +439,83 @@ void RS_Text::update() {
     RS_DEBUG->print("RS_Text::update: OK");
 }
 
+
+/**
+ * Nominal advance width of one glyph cell, as a fraction of the text height.
+ * The LFF letters are drawn on a 9-unit grid and a typical cell including the
+ * letter spacing is about 7.5 units wide.
+ */
+static constexpr double RS_TEXT_NOMINAL_ASPECT = 7.5 / 9.0;
+
+void RS_Text::applyFallbackBorders() {
+    // Derive the extent from the text data. Falling back to the container
+    // borders is not an option here: RS_EntityContainer::calculateBorders()
+    // collapses an empty container to 0/0, which would place the placeholder at
+    // the drawing origin instead of where the text actually is.
+    double height = data.height;
+    if (!(height > RS_TOLERANCE) || !std::isfinite(height)) {
+        height = 1.0;
+    }
+    double widthRel = data.widthRel;
+    if (!(widthRel > RS_TOLERANCE) || !std::isfinite(widthRel)) {
+        widthRel = 1.0;
+    }
+    // An empty string still gets a one-character box so that the entity stays
+    // visible and selectable.
+    int chars = std::max(1, static_cast<int>(data.text.length()));
+    double width = chars * height * widthRel * RS_TEXT_NOMINAL_ASPECT;
+
+    // Local box, baseline-left at the origin.
+    double left = 0.0;
+    double bottom = 0.0;
+    switch (data.halign) {
+    case RS_TextData::HACenter:
+    case RS_TextData::HAMiddle:
+        left = -width / 2.0;
+        break;
+    case RS_TextData::HARight:
+        left = -width;
+        break;
+    default:
+        break;
+    }
+    switch (data.valign) {
+    case RS_TextData::VAMiddle:
+        bottom = -height / 2.0;
+        break;
+    case RS_TextData::VATop:
+        bottom = -height;
+        break;
+    default:
+        break;
+    }
+
+    RS_Vector corners[4] = {
+        {left,         bottom},
+        {left + width, bottom},
+        {left + width, bottom + height},
+        {left,         bottom + height}
+    };
+
+    resetBorders();
+    for (RS_Vector corner: corners) {
+        corner.rotate(RS_Vector(0.0, 0.0), data.angle);
+        corner.move(data.insertionPoint);
+        minV = RS_Vector::minimum(corner, minV);
+        maxV = RS_Vector::maximum(corner, maxV);
+    }
+}
+
+void RS_Text::calculateBorders() {
+    RS_EntityContainer::calculateBorders();
+    // No letters, or letters whose geometry collapsed to a point: in both cases
+    // the base class has just left the borders at 0/0, which is neither the
+    // right size nor the right place. Fall back to the data-derived extent.
+    if (isEmpty()
+            || (maxV.x - minV.x <= RS_TOLERANCE && maxV.y - minV.y <= RS_TOLERANCE)) {
+        applyFallbackBorders();
+    }
+}
 
 RS_Vector RS_Text::getNearestEndpoint(const RS_Vector& coord, double* dist)const {
 	if (dist) {
@@ -542,10 +637,22 @@ void RS_Text::draw(RS_Painter* painter, RS_GraphicView* view, double& /*patternO
         return;
     }
 
+    // No letters could be generated (missing font, or a string that produces no
+    // glyphs). Draw the placeholder box in every mode, including print preview
+    // and printing: silently omitting the entity would hide from the user that
+    // the drawing contains text which cannot be rendered.
+    if (isEmpty())
+    {
+        painter->drawPlaceholderRect(view->toGui(getMin()), view->toGui(getMax()));
+        return;
+    }
+
     if (!view->isPrintPreview() && !view->isPrinting())
     {
         if (view->isPanning() || view->toGuiDY(getHeight()) < 4)
         {
+            // Performance substitution for glyphs that do exist, so it keeps
+            // the entity's own pen - including a deliberate NoPen.
             painter->drawRect(view->toGui(getMin()), view->toGui(getMax()));
             return;
         }

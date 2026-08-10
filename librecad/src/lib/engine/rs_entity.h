@@ -167,6 +167,20 @@ public:
     virtual bool isContainer() const = 0;
 
     /**
+     * @retval true if this entity's borders describe a real extent and should
+     * therefore be folded into the extent of its parent container.
+     *
+     * An empty container normally has no meaningful borders, and including it
+     * would drag the parent's extent to 0/0. Entities that derive their borders
+     * from their own data rather than from child entities (RS_Text, RS_MText)
+     * override this so they still count towards the drawing extent when they
+     * hold no children.
+     */
+    virtual bool hasMeaningfulBorders() const {
+        return true;
+    }
+
+    /**
      * Must be overwritten to return true if an entity type
      * is an atomic entity.
      */

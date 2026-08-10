@@ -106,7 +106,15 @@ void RS_ActionZoomPan::mouseReleaseEvent(QMouseEvent* e) {
 		setStatus(SetPanEnd);
 		break;
 	default:
+		// A left button release ends the drag but keeps the action alive for
+		// the next drag. The panning flag must still be cleared here: it is
+		// only reset by finish(), which this path never reaches, and while it
+		// is set RS_Text/RS_MText draw themselves as a bounding box instead of
+		// glyphs. Leaving it set makes every text in the drawing view
+		// invisible until the view is recreated.
 		setStatus(SetPanStart);
+		graphicView->setPanning(false);
+		graphicView->redraw();
 	}
 	trigger();
     //RS_DEBUG->print("RS_ActionZoomPan::mousePressEvent(): %f %f", v1.x, v1.y);

@@ -24,6 +24,7 @@
 **
 **********************************************************************/
 
+#include <algorithm>
 #include <cmath>
 #include <iostream>
 
@@ -202,6 +203,10 @@ void RS_MText::update() {
 
   RS_Font *font{RS_FONTLIST->requestFont(data.style)};
   if (nullptr == font) {
+    // No font at all: the text cannot be turned into letters. Keep a
+    // data-derived extent so the entity still has a location and can be drawn
+    // as a placeholder box rather than vanishing silently.
+    applyFallbackBorders();
     return;
   }
 
@@ -377,8 +382,102 @@ void RS_MText::update() {
 
   updateAddLine(oneLine, lineCounter);
 
+  forcedCalculateBorders();
+  if (isEmpty() || getSize().x <= RS_TOLERANCE || !std::isfinite(getSize().x)) {
+    // Either the string produced no letters at all (empty or whitespace-only
+    // text), or the letters carry no geometry - which is what happens when the
+    // font loaded but its letter list is empty, leaving every letter an empty
+    // insert. Normalise both to an empty container with a data-derived extent.
+    clear();
+    applyFallbackBorders();
+    RS_DEBUG->print("RS_MText::update: no letters generated");
+    return;
+  }
+
   alignVertically();
   RS_DEBUG->print("RS_MText::update: OK");
+}
+
+/**
+ * Nominal advance width of one glyph cell, as a fraction of the text height.
+ * The LFF letters are drawn on a 9-unit grid and a typical cell including the
+ * letter spacing is about 7.5 units wide.
+ */
+static constexpr double RS_MTEXT_NOMINAL_ASPECT = 7.5 / 9.0;
+
+void RS_MText::applyFallbackBorders() {
+  // Derive the extent from the text data. Falling back to the container borders
+  // is not an option here: RS_EntityContainer::calculateBorders() collapses an
+  // empty container to 0/0, which would place the placeholder at the drawing
+  // origin instead of where the text actually is.
+  double height = data.height;
+  if (!(height > RS_TOLERANCE) || !std::isfinite(height)) {
+    height = 1.0;
+  }
+
+  // Longest line drives the width; the number of lines drives the height.
+  const QStringList lines = data.text.split('\n');
+  int columns = 1;
+  for (const QString &line : lines) {
+    columns = std::max(columns, static_cast<int>(line.length()));
+  }
+  int rows = std::max(1, static_cast<int>(lines.size()));
+
+  double width = columns * height * RS_MTEXT_NOMINAL_ASPECT;
+  if (data.width > RS_TOLERANCE && std::isfinite(data.width)) {
+    // A reference rectangle width was given, so the text wraps within it.
+    width = std::min(width, data.width);
+  }
+  double totalHeight = rows * height;
+
+  // Local box, top-left at the origin: RS_MText is laid out downwards from the
+  // insertion point (VATop is the no-op case in alignVertically()).
+  double left = 0.0;
+  double top = 0.0;
+  switch (data.halign) {
+  case RS_MTextData::HACenter:
+    left = -width / 2.0;
+    break;
+  case RS_MTextData::HARight:
+    left = -width;
+    break;
+  default:
+    break;
+  }
+  switch (data.valign) {
+  case RS_MTextData::VAMiddle:
+    top = totalHeight / 2.0;
+    break;
+  case RS_MTextData::VABottom:
+    top = totalHeight;
+    break;
+  default:
+    break;
+  }
+
+  RS_Vector corners[4] = {{left, top},
+                          {left + width, top},
+                          {left + width, top - totalHeight},
+                          {left, top - totalHeight}};
+
+  resetBorders();
+  for (RS_Vector corner : corners) {
+    corner.rotate(RS_Vector(0.0, 0.0), data.angle);
+    corner.move(data.insertionPoint);
+    minV = RS_Vector::minimum(corner, minV);
+    maxV = RS_Vector::maximum(corner, maxV);
+  }
+}
+
+void RS_MText::calculateBorders() {
+  RS_EntityContainer::calculateBorders();
+  // No letters, or letters whose geometry collapsed to a point: in both cases
+  // the base class has just left the borders at 0/0, which is neither the right
+  // size nor the right place. Fall back to the data-derived extent.
+  if (isEmpty() ||
+      (maxV.x - minV.x <= RS_TOLERANCE && maxV.y - minV.y <= RS_TOLERANCE)) {
+    applyFallbackBorders();
+  }
 }
 
 void RS_MText::alignVertically()
@@ -641,8 +740,19 @@ void RS_MText::draw(RS_Painter *painter, RS_GraphicView *view,
   if (!(painter && view))
     return;
 
+  // No letters could be generated (missing font, or a string that produces no
+  // glyphs). Draw the placeholder box in every mode, including print preview and
+  // printing: silently omitting the entity would hide from the user that the
+  // drawing contains text which cannot be rendered.
+  if (isEmpty()) {
+    painter->drawPlaceholderRect(view->toGui(getMin()), view->toGui(getMax()));
+    return;
+  }
+
   if (!view->isPrintPreview() && !view->isPrinting()) {
     if (view->isPanning() || view->toGuiDY(getHeight()) < 4) {
+      // Performance substitution for glyphs that do exist, so it keeps the
+      // entity's own pen - including a deliberate NoPen.
       painter->drawRect(view->toGui(getMin()), view->toGui(getMax()));
       return;
     }

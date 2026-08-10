@@ -96,8 +96,6 @@ RS_Font* RS_FontList::requestFont(const QString& name) {
 
     QString name2 = name.toLower();
     RS_Font* foundFont = nullptr;
-    if (name.isEmpty())
-        return foundFont;
 
     // QCAD 1 compatibility:
     if (name2.contains('#') && name2.contains('_')) {
@@ -112,14 +110,20 @@ RS_Font* RS_FontList::requestFont(const QString& name) {
 	for( auto const& f: fonts){
 
         if (f->getFileName().toLower() == name2) {
-            // Make sure this font is loaded into memory:
-            f->loadFont();
-			foundFont = f.get();
+            // Make sure this font is loaded into memory. A font that fails to
+            // load has an empty letter list, including no replacement glyph, so
+            // it is no more usable than no font at all: treat it as not found
+            // and let the "standard" fallback below have a turn.
+            if (f->loadFont()) {
+                foundFont = f.get();
+            }
             break;
         }
     }
 
-	if (!foundFont && name!="standard") {
+    // An empty style name reaches here too: it matches no font, so it also
+    // falls back to "standard" instead of leaving the text without any font.
+	if (!foundFont && name2!="standard") {
         foundFont = requestFont("standard");
     }
 
