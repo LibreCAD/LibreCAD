@@ -79,6 +79,7 @@ protected:
 
 private:
     void addUndoCycle(std::shared_ptr<RS_UndoCycle> undoCycle);
+    void pruneRedoCycles();
     //! List of undo list items. every item is something that can be undone.
     std::vector<std::shared_ptr<RS_UndoCycle>> m_undoList;
 

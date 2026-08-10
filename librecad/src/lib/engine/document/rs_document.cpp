@@ -60,8 +60,11 @@ void RS_Document::endUndoCycle(){
     if (hasUndoable()) {
         setModified(true);
     }
-    m_selectedSet->enableListeners();
+    // keep the selection listeners silent while RS_Undo::endUndoCycle()
+    // prunes the obsolete redo cycles (removeEntity() may unselect), then
+    // fire the single deferred selection-changed notification
     RS_Undo::endUndoCycle();
+    m_selectedSet->enableListeners();
     setAutoUpdateBorders(m_savedAutoUpdateBorders);
     calculateBorders();
 }
@@ -110,12 +113,12 @@ bool RS_Document::undoableModify(LC_GraphicViewport* viewport, const FunUndoable
 }
 
 void RS_Document::startBulkUndoablesCleanup() {
-    m_savedAutoUpdateBorders = getAutoUpdateBorders();
+    m_savedAutoUpdateBordersBulk = getAutoUpdateBorders();
     setAutoUpdateBorders(false);
 }
 
 void RS_Document::endBulkUndoablesCleanup() {
-    setAutoUpdateBorders(m_savedAutoUpdateBorders);
+    setAutoUpdateBorders(m_savedAutoUpdateBordersBulk);
     calculateBorders();
 }
 

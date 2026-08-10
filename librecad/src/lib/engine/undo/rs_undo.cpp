@@ -61,9 +61,8 @@ bool RS_Undo::hasUndoable() {
 }
 
 /**
- * Adds an Undo Cycle at the current position in the list.
- * All Cycles after the new one are removed and the Undoabels
- * on them deleted.
+ * Appends the committed cycle and moves the redo pointer past it.
+ * Expects the obsolete redo tail to be pruned already (pruneRedoCycles()).
  */
 void RS_Undo::addUndoCycle(std::shared_ptr<RS_UndoCycle> undoCycle) {
     RS_DEBUG->print("RS_Undo::addUndoCycle");
@@ -84,43 +83,56 @@ void RS_Undo::startUndoCycle() {
         return;
     }
 
-    // anything after the current existing undoCycle will be removed
-    // if there are undo cycles behind undoPointer
-    // remove obsolete entities and undoCycles
-    if (m_undoList.cend() != m_redoPointer) {
-        // collect remaining undoables
-        std::unordered_set<RS_Undoable*> keep;
-        for (auto it = m_undoList.begin(); it != m_redoPointer; ++it) {
-            for (RS_Undoable* undoable : (*it)->getUndoables()) {
-                keep.insert(undoable);
-            }
-        }
+    m_currentCycle = std::make_shared<RS_UndoCycle>();
+}
 
-        // collect obsolete undoables
-        std::unordered_set<RS_Undoable*> obsolete;
-        for (auto it = m_redoPointer; it != m_undoList.end(); ++it) {
-            for (RS_Undoable* undoable : (*it)->getUndoables()) {
-                obsolete.insert(undoable);
-            }
-        }
-
-        if (!obsolete.empty()) {
-            // delete obsolete undoables which are not in keep list
-            startBulkUndoablesCleanup(); // avoid document borders recalculation on each remove
-            for (RS_Undoable* undoable : obsolete) {
-                if (keep.end() == keep.find(undoable)) {
-                    removeUndoable(undoable);
-                }
-            }
-            endBulkUndoablesCleanup();
-        }
-        // clean up obsolete undoCycles
-        m_undoList.erase(m_redoPointer, m_undoList.cend());
-        m_redoPointer = m_undoList.cend();
+/**
+ * Removes the undo cycles behind the redo pointer and deletes their
+ * undoables, unless an undoable is still referenced by a remaining cycle
+ * or by the cycle about to be committed.
+ * Called only when a non-empty cycle is committed: an empty (no-op) cycle
+ * must leave the pending redo history untouched.
+ */
+void RS_Undo::pruneRedoCycles() {
+    if (m_undoList.cend() == m_redoPointer) {
+        return;
     }
 
-    // alloc new undoCycle
-    m_currentCycle = std::make_shared<RS_UndoCycle>();
+    // collect remaining undoables
+    std::unordered_set<RS_Undoable*> keep;
+    for (auto it = m_undoList.begin(); it != m_redoPointer; ++it) {
+        for (RS_Undoable* undoable : (*it)->getUndoables()) {
+            keep.insert(undoable);
+        }
+    }
+    // the cycle being committed references its undoables, keep them too
+    if (nullptr != m_currentCycle) {
+        for (RS_Undoable* undoable : m_currentCycle->getUndoables()) {
+            keep.insert(undoable);
+        }
+    }
+
+    // collect obsolete undoables
+    std::unordered_set<RS_Undoable*> obsolete;
+    for (auto it = m_redoPointer; it != m_undoList.end(); ++it) {
+        for (RS_Undoable* undoable : (*it)->getUndoables()) {
+            obsolete.insert(undoable);
+        }
+    }
+
+    if (!obsolete.empty()) {
+        // delete obsolete undoables which are not in keep list
+        startBulkUndoablesCleanup(); // avoid document borders recalculation on each remove
+        for (RS_Undoable* undoable : obsolete) {
+            if (keep.end() == keep.find(undoable)) {
+                removeUndoable(undoable);
+            }
+        }
+        endBulkUndoablesCleanup();
+    }
+    // clean up obsolete undoCycles
+    m_undoList.erase(m_redoPointer, m_undoList.cend());
+    m_redoPointer = m_undoList.cend();
 }
 
 /**
@@ -154,6 +166,7 @@ void RS_Undo::endUndoCycle() {
     }
 
     if (hasUndoable()) {
+        pruneRedoCycles();
         // only keep the undoCycle, when it contains undoables
         addUndoCycle(m_currentCycle);
     }

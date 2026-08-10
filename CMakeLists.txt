@@ -2399,6 +2399,7 @@ if (BUILD_TESTS)
         librecad/src/lib/modification/tests/rs_modification_trim_tests.cpp
         librecad/src/lib/filters/tests/dwg_buffer_round_trip_tests.cpp
         librecad/src/lib/creation/tests/lc_action_draw_line_parallel_tests.cpp
+        librecad/src/lib/engine/undo/tests/rs_undo_tests.cpp
         librecad/src/lib/filters/tests/dwg_entity_encode_round_trip_tests.cpp
         librecad/src/lib/filters/tests/dwg_header_encode_round_trip_tests.cpp
         librecad/src/lib/filters/tests/dwg_header_app_vars_tests.cpp
