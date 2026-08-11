@@ -73,6 +73,8 @@ namespace {
     using CubicPolynomial = std::array<double, 4>;
 
     constexpr double projectiveMachineTolerance = 128.0 * std::numeric_limits<double>::epsilon();
+    constexpr double projectiveRankTolerance = 1.0e-8;
+    constexpr double projectiveRootTolerance = 1.0e-10;
     constexpr double projectiveResidualTolerance = 1.0e-8;
 
     double maxAbs(const ProjectiveVector& vector) {
@@ -85,6 +87,14 @@ namespace {
             for (const double value : row) {
                 result = std::max(result, std::abs(value));
             }
+        }
+        return result;
+    }
+
+    double maxAbs(const std::vector<double>& values) {
+        double result = 0.0;
+        for (const double value : values) {
+            result = std::max(result, std::abs(value));
         }
         return result;
     }
@@ -144,24 +154,109 @@ namespace {
         }};
     }
 
+    bool normalizeConicCoefficients(const std::vector<double>& coefficients,
+                                    std::vector<double>& normalized) {
+        const double scale = maxAbs(coefficients);
+        if (!std::isfinite(scale) || scale == 0.0) {
+            return false;
+        }
+        int exponent = 0;
+        std::frexp(scale, &exponent);
+        normalized = coefficients;
+        for (double& coefficient : normalized) {
+            coefficient = std::ldexp(coefficient, -exponent);
+        }
+        return true;
+    }
+
     std::vector<double> translateConic(const std::vector<double>& coefficients,
                                        const double xOffset,
                                        const double yOffset) {
-        const double a = coefficients[0];
-        const double b = coefficients[1];
-        const double c = coefficients[2];
-        const double d = coefficients[3];
-        const double e = coefficients[4];
-        const double f = coefficients[5];
+        const long double a = coefficients[0];
+        const long double b = coefficients[1];
+        const long double c = coefficients[2];
+        const long double d = coefficients[3];
+        const long double e = coefficients[4];
+        const long double f = coefficients[5];
+        const long double x = xOffset;
+        const long double y = yOffset;
         return {
-            a,
-            b,
-            c,
-            2.0 * a * xOffset + b * yOffset + d,
-            b * xOffset + 2.0 * c * yOffset + e,
-            a * xOffset * xOffset + b * xOffset * yOffset + c * yOffset * yOffset
-                + d * xOffset + e * yOffset + f
+            static_cast<double>(a),
+            static_cast<double>(b),
+            static_cast<double>(c),
+            static_cast<double>(2.0L * a * x + b * y + d),
+            static_cast<double>(b * x + 2.0L * c * y + e),
+            static_cast<double>(a * x * x + b * x * y + c * y * y
+                                + d * x + e * y + f)
         };
+    }
+
+    std::vector<double> scaleConicCoordinates(const std::vector<double>& coefficients,
+                                              const double coordinateScale) {
+        return {
+            coefficients[0] * coordinateScale * coordinateScale,
+            coefficients[1] * coordinateScale * coordinateScale,
+            coefficients[2] * coordinateScale * coordinateScale,
+            coefficients[3] * coordinateScale,
+            coefficients[4] * coordinateScale,
+            coefficients[5]
+        };
+    }
+
+    void appendCharacteristicScales(const std::vector<double>& coefficients,
+                                    std::vector<double>& scales) {
+        double quadraticScale = std::max({std::abs(coefficients[0]),
+                                          std::abs(coefficients[1]),
+                                          std::abs(coefficients[2])});
+        double linearScale = std::max(std::abs(coefficients[3]),
+                                      std::abs(coefficients[4]));
+        double constantScale = std::abs(coefficients[5]);
+        if (constantScale <= projectiveMachineTolerance
+                             * std::max(quadraticScale, linearScale)) {
+            constantScale = 0.0;
+        }
+        if (linearScale <= projectiveMachineTolerance
+                           * std::max(quadraticScale, constantScale)) {
+            linearScale = 0.0;
+        }
+        const auto append = [&scales](const double scale) {
+            if (std::isfinite(scale) && scale > 0.0) {
+                scales.push_back(scale);
+            }
+        };
+        if (quadraticScale > 0.0) {
+            if (constantScale > 0.0) {
+                append(std::sqrt(constantScale / quadraticScale));
+            }
+            if (linearScale > 0.0) {
+                append(linearScale / quadraticScale);
+            }
+        }
+        if (linearScale > 0.0 && constantScale > 0.0) {
+            append(constantScale / linearScale);
+        }
+    }
+
+    double characteristicCoordinateScale(const std::vector<double>& first,
+                                         const std::vector<double>& second) {
+        std::vector<double> scales;
+        appendCharacteristicScales(first, scales);
+        appendCharacteristicScales(second, scales);
+        if (scales.empty()) {
+            return 1.0;
+        }
+        long double logarithmSum = 0.0L;
+        for (const double scale : scales) {
+            logarithmSum += std::log(static_cast<long double>(scale));
+        }
+        const long double logarithmicMean = logarithmSum / static_cast<long double>(scales.size());
+        const long double scale = std::exp(logarithmicMean);
+        if (!std::isfinite(scale)
+            || scale < static_cast<long double>(std::numeric_limits<double>::min())
+            || scale > static_cast<long double>(std::numeric_limits<double>::max())) {
+            return 1.0;
+        }
+        return static_cast<double>(scale);
     }
 
     bool conicCenter(const std::vector<double>& coefficients,
@@ -171,14 +266,17 @@ namespace {
         const double c = coefficients[2];
         const double d = coefficients[3];
         const double e = coefficients[4];
-        const double determinant = 4.0 * a * c - b * b;
-        const double quadraticScale = std::max({std::abs(a), std::abs(b), std::abs(c), 1.0});
-        if (std::abs(determinant) <= 1.0e-12 * quadraticScale * quadraticScale) {
+        const long double determinant = 4.0L * a * c - static_cast<long double>(b) * b;
+        const double quadraticScale = std::max({std::abs(a), std::abs(b), std::abs(c)});
+        if (quadraticScale == 0.0) {
+            return false;
+        }
+        if (std::abs(determinant) <= 1.0e-12L * quadraticScale * quadraticScale) {
             return false;
         }
         center = {{
-            (b * e - 2.0 * c * d) / determinant,
-            (b * d - 2.0 * a * e) / determinant,
+            static_cast<double>((static_cast<long double>(b) * e - 2.0L * c * d) / determinant),
+            static_cast<double>((static_cast<long double>(b) * d - 2.0L * a * e) / determinant),
             1.0
         }};
         return std::isfinite(center[0]) && std::isfinite(center[1])
@@ -195,7 +293,10 @@ namespace {
         const double c = coefficients[2];
         const double d = coefficients[3];
         const double e = coefficients[4];
-        const double quadraticScale = std::max({std::abs(a), std::abs(b), std::abs(c), 1.0});
+        const double quadraticScale = std::max({std::abs(a), std::abs(b), std::abs(c)});
+        if (quadraticScale == 0.0) {
+            return false;
+        }
         const double average = 0.5 * (a + c);
         const double halfDifference = 0.5 * (a - c);
         const double halfCross = 0.5 * b;
@@ -223,8 +324,9 @@ namespace {
         const ProjectiveVector nullDirection{{-direction[1], direction[0], 0.0}};
         const double nullLinear = conditioned[3] * nullDirection[0]
                                   + conditioned[4] * nullDirection[1];
-        if (std::abs(nullLinear) > projectiveMachineTolerance
-            * std::max({std::abs(conditioned[3]), std::abs(conditioned[4]), 1.0})) {
+        const double linearScale = std::max(std::abs(conditioned[3]), std::abs(conditioned[4]));
+        if (linearScale > 0.0
+            && std::abs(nullLinear) > projectiveMachineTolerance * linearScale) {
             const double nullOffset = -conditioned[5] / nullLinear;
             point[0] += nullOffset * nullDirection[0];
             point[1] += nullOffset * nullDirection[1];
@@ -252,7 +354,7 @@ namespace {
         const bool duplicate = std::any_of(roots.cbegin(), roots.cend(),
                                             [root, scale](const double existing) {
                                                 return std::abs(existing - root)
-                                                       <= projectiveResidualTolerance * scale;
+                                                <= projectiveRootTolerance * scale;
                                             });
         if (!duplicate) {
             roots.push_back(root);
@@ -261,7 +363,10 @@ namespace {
 
     void solveRealQuadratic(const long double a, const long double b, const long double c,
                             std::vector<double>& roots) {
-        const long double scale = std::max({std::abs(a), std::abs(b), std::abs(c), 1.0L});
+        const long double scale = std::max({std::abs(a), std::abs(b), std::abs(c)});
+        if (scale == 0.0L) {
+            return;
+        }
         if (std::abs(a) <= projectiveMachineTolerance * scale) {
             if (std::abs(b) > projectiveMachineTolerance * scale) {
                 appendUniqueRoot(roots, static_cast<double>(-c / b));
@@ -269,7 +374,7 @@ namespace {
             return;
         }
         long double discriminant = b * b - 4.0L * a * c;
-        const long double discriminantScale = std::max({b * b, std::abs(4.0L * a * c), 1.0L});
+        const long double discriminantScale = std::max(b * b, std::abs(4.0L * a * c));
         if (discriminant < -projectiveMachineTolerance * discriminantScale) {
             return;
         }
@@ -294,9 +399,13 @@ namespace {
     std::vector<double> solveRealPolynomial(const CubicPolynomial& polynomial) {
         std::vector<double> roots;
         const double scale = std::max({std::abs(polynomial[0]), std::abs(polynomial[1]),
-                                       std::abs(polynomial[2]), std::abs(polynomial[3]), 1.0});
+                                       std::abs(polynomial[2]), std::abs(polynomial[3])});
         if (!std::all_of(polynomial.cbegin(), polynomial.cend(),
                          [](const double value) { return std::isfinite(value); })) {
+            return roots;
+        }
+
+        if (scale == 0.0) {
             return roots;
         }
 
@@ -323,8 +432,8 @@ namespace {
         const long double p = b - a * a / 3.0L;
         const long double q = 2.0L * a * a * a / 27.0L - a * b / 3.0L + c;
         const long double discriminant = q * q / 4.0L + p * p * p / 27.0L;
-        const long double discriminantScale = std::max({q * q / 4.0L,
-                                                        std::abs(p * p * p / 27.0L), 1.0L});
+        const long double discriminantScale = std::max(q * q / 4.0L,
+                                                       std::abs(p * p * p / 27.0L));
         if (discriminant > projectiveMachineTolerance * discriminantScale) {
             const long double radical = std::sqrt(discriminant);
             const long double u = std::cbrt(-q / 2.0L + radical);
@@ -332,7 +441,7 @@ namespace {
             appendUniqueRoot(roots, static_cast<double>(u + v - a / 3.0L));
             return roots;
         }
-        if (std::abs(p) <= projectiveMachineTolerance * std::max(1.0L, std::abs(q))) {
+        if (std::abs(p) <= projectiveMachineTolerance * std::max(std::abs(p), std::abs(q))) {
             appendUniqueRoot(roots, static_cast<double>(-a / 3.0L));
             return roots;
         }
@@ -351,6 +460,44 @@ namespace {
                                                          - a / 3.0L));
         }
         return roots;
+    }
+
+    double polishPolynomialRoot(const CubicPolynomial& polynomial, const double initialRoot) {
+        long double root = initialRoot;
+        for (size_t iteration = 0; iteration < 5; ++iteration) {
+            const long double value = ((static_cast<long double>(polynomial[3]) * root
+                                        + polynomial[2]) * root
+                                       + polynomial[1]) * root
+                                      + polynomial[0];
+            const long double derivative = (3.0L * polynomial[3] * root
+                                             + 2.0L * polynomial[2]) * root
+                                            + polynomial[1];
+            const long double derivativeScale = std::max({
+                std::abs(3.0L * polynomial[3] * root * root),
+                std::abs(2.0L * polynomial[2] * root),
+                std::abs(static_cast<long double>(polynomial[1]))
+            });
+            if (!std::isfinite(value) || !std::isfinite(derivative)
+                || derivativeScale == 0.0L
+                || std::abs(derivative) <= projectiveMachineTolerance * derivativeScale) {
+                break;
+            }
+            const long double step = value / derivative;
+            if (!std::isfinite(step)) {
+                break;
+            }
+            root -= step;
+            if (std::abs(step) <= projectiveMachineTolerance * std::max(1.0L, std::abs(root))) {
+                break;
+            }
+        }
+        return std::isfinite(root) ? static_cast<double>(root) : initialRoot;
+    }
+
+    double projectiveDeterminant(const ProjectiveMatrix& matrix) {
+        return matrix[0][0] * (matrix[1][1] * matrix[2][2] - matrix[1][2] * matrix[2][1])
+               - matrix[0][1] * (matrix[1][0] * matrix[2][2] - matrix[1][2] * matrix[2][0])
+               + matrix[0][2] * (matrix[1][0] * matrix[2][1] - matrix[1][1] * matrix[2][0]);
     }
 
     ProjectiveMatrix pencilMatrix(const ProjectiveMatrix& first,
@@ -392,7 +539,8 @@ namespace {
                 }
             }
         }
-        if (nullScale <= projectiveMachineTolerance * std::max(1.0, maxAbs(matrix))) {
+        const double matrixScale = maxAbs(matrix);
+        if (nullScale <= projectiveRankTolerance * matrixScale) {
             // A tangent pencil can contain a rank-1 member, which is a double
             // line rather than two independent lines. Extract that line from
             // any non-zero diagonal pivot and return it twice.
@@ -403,7 +551,7 @@ namespace {
                 }
             }
             const double diagonalScale = std::abs(matrix[diagonal][diagonal]);
-            if (diagonalScale <= projectiveMachineTolerance * std::max(1.0, maxAbs(matrix))) {
+            if (diagonalScale <= projectiveRankTolerance * matrixScale) {
                 return false;
             }
             const double normalizer = std::sqrt(diagonalScale);
@@ -452,7 +600,11 @@ namespace {
         const double qa = dot(firstDirection, matrixTimesFirst);
         const double qb = dot(firstDirection, matrixTimesSecond);
         const double qc = dot(secondDirection, matrixTimesSecond);
-        const double discriminantScale = std::max({std::abs(qb * qb), std::abs(qa * qc), 1.0});
+        const double restrictedScale = std::max({std::abs(qa), std::abs(qb), std::abs(qc)});
+        if (restrictedScale == 0.0) {
+            return false;
+        }
+        const double discriminantScale = std::max(std::abs(qb * qb), std::abs(qa * qc));
         double discriminant = qb * qb - qa * qc;
         if (discriminant < -projectiveResidualTolerance * discriminantScale) {
             return false;
@@ -462,7 +614,8 @@ namespace {
         }
 
         std::array<ProjectiveVector, 2> directions{};
-        if (std::abs(qa) > projectiveMachineTolerance && std::abs(qa) >= std::abs(qc)) {
+        if (std::abs(qa) > projectiveMachineTolerance * restrictedScale
+            && std::abs(qa) >= std::abs(qc)) {
             const double radical = std::sqrt(discriminant);
             const double firstRoot = (-qb + radical) / qa;
             const double secondRoot = (-qb - radical) / qa;
@@ -473,7 +626,7 @@ namespace {
                               secondRoot * firstDirection[1] + secondDirection[1],
                               secondRoot * firstDirection[2] + secondDirection[2]}};
         }
-        else if (std::abs(qc) > projectiveMachineTolerance) {
+        else if (std::abs(qc) > projectiveMachineTolerance * restrictedScale) {
             const double radical = std::sqrt(discriminant);
             const double firstRoot = (-qb + radical) / qc;
             const double secondRoot = (-qb - radical) / qc;
@@ -484,7 +637,7 @@ namespace {
                               firstDirection[1] + secondRoot * secondDirection[1],
                               firstDirection[2] + secondRoot * secondDirection[2]}};
         }
-        else if (std::abs(qb) > projectiveMachineTolerance) {
+        else if (std::abs(qb) > projectiveMachineTolerance * restrictedScale) {
             directions[0] = firstDirection;
             directions[1] = secondDirection;
         }
@@ -525,6 +678,31 @@ namespace {
             }
         }
         return std::max(1.0, scale);
+    }
+
+    bool verifyAffineCandidate(const std::vector<double>& coefficients,
+                               const double x,
+                               const double y) {
+        const long double lx = x;
+        const long double ly = y;
+        const std::array<long double, 6> terms = {{
+            static_cast<long double>(coefficients[0]) * lx * lx,
+            static_cast<long double>(coefficients[1]) * lx * ly,
+            static_cast<long double>(coefficients[2]) * ly * ly,
+            static_cast<long double>(coefficients[3]) * lx,
+            static_cast<long double>(coefficients[4]) * ly,
+            static_cast<long double>(coefficients[5])
+        }};
+        long double value = 0.0L;
+        long double scale = 0.0L;
+        for (const long double term : terms) {
+            value += term;
+            scale += std::abs(term);
+        }
+        if (!std::isfinite(value) || !std::isfinite(scale)) {
+            return false;
+        }
+        return std::abs(value) <= projectiveResidualTolerance * std::max(1.0L, scale);
     }
 
     bool refineProjectivePoint(const ProjectiveMatrix& first,
@@ -627,6 +805,54 @@ namespace {
             }
             appendProjectiveCandidate(conic, otherConic, candidate, result);
         }
+    }
+
+    void appendSingularMemberCandidates(const ProjectiveMatrix& singular,
+                                        const ProjectiveMatrix& first,
+                                        const ProjectiveMatrix& second,
+                                        RS_VectorSolutions& result) {
+        const double scale = maxAbs(singular);
+        if (!std::isfinite(scale) || scale == 0.0) {
+            return;
+        }
+        ProjectiveMatrix normalized = singular;
+        for (auto& row : normalized) {
+            for (double& value : row) {
+                value /= scale;
+            }
+        }
+        if (std::abs(projectiveDeterminant(normalized)) > projectiveRankTolerance) {
+            return;
+        }
+        std::array<ProjectiveVector, 2> lines{};
+        if (!factorSingularConic(normalized, lines)) {
+            return;
+        }
+        const size_t initialSize = result.size();
+        for (const auto& line : lines) {
+            appendLineConicCandidates(line, first, second, result);
+        }
+        if (result.size() == initialSize) {
+            for (const auto& line : lines) {
+                appendLineConicCandidates(line, second, first, result);
+            }
+        }
+    }
+
+    void appendPencilCandidates(const ProjectiveMatrix& first,
+                                const ProjectiveMatrix& second,
+                                RS_VectorSolutions& result) {
+        const CubicPolynomial determinant = pencilDeterminant(first, second);
+        for (const double root : solveRealPolynomial(determinant)) {
+            const double parameter = polishPolynomialRoot(determinant, root);
+            appendSingularMemberCandidates(pencilMatrix(first, second, parameter),
+                                           first, second, result);
+        }
+
+        // The affine parameterization C1 + lambda*C2 omits lambda=infinity.
+        // Trying both endpoints also covers singular input conics directly.
+        appendSingularMemberCandidates(first, first, second, result);
+        appendSingularMemberCandidates(second, first, second, result);
     }
 
     const QRegularExpression REGEXP_UNIT(R"((?P<sign>^-?))" R"((?:(?:(?:(?P<degrees>\d+\.?\d*)(?:degree[s]?|deg|[Dd]|°)))" // DMS
@@ -1670,10 +1896,18 @@ RS_VectorSolutions RS_Math::simultaneousQuadraticSolverProjective(
         return result;
     }
 
+    std::vector<double> normalizedFirst;
+    std::vector<double> normalizedSecond;
+    if (!normalizeConicCoefficients(m[0], normalizedFirst)
+        || !normalizeConicCoefficients(m[1], normalizedSecond)) {
+        return result;
+    }
+    const std::array<std::vector<double>, 2> normalized = {{normalizedFirst, normalizedSecond}};
+
     double xOffset = 0.0;
     double yOffset = 0.0;
     size_t centerCount = 0;
-    for (const auto& coefficients : m) {
+    for (const auto& coefficients : normalized) {
         ProjectiveVector center{};
         if (conicConditioningPoint(coefficients, center)) {
             xOffset += center[0];
@@ -1685,8 +1919,11 @@ RS_VectorSolutions RS_Math::simultaneousQuadraticSolverProjective(
         xOffset /= static_cast<double>(centerCount);
         yOffset /= static_cast<double>(centerCount);
     }
-    const std::vector<double> conditionedFirst = translateConic(m[0], xOffset, yOffset);
-    const std::vector<double> conditionedSecond = translateConic(m[1], xOffset, yOffset);
+    const std::vector<double> translatedFirst = translateConic(normalizedFirst, xOffset, yOffset);
+    const std::vector<double> translatedSecond = translateConic(normalizedSecond, xOffset, yOffset);
+    const double coordinateScale = characteristicCoordinateScale(translatedFirst, translatedSecond);
+    const std::vector<double> conditionedFirst = scaleConicCoordinates(translatedFirst, coordinateScale);
+    const std::vector<double> conditionedSecond = scaleConicCoordinates(translatedSecond, coordinateScale);
     if (!isFiniteCoefficients(conditionedFirst) || !isFiniteCoefficients(conditionedSecond)) {
         return result;
     }
@@ -1708,20 +1945,19 @@ RS_VectorSolutions RS_Math::simultaneousQuadraticSolverProjective(
         return result;
     }
 
-    const auto determinant = pencilDeterminant(first, second);
     RS_VectorSolutions conditionedResult;
-    for (const double parameter : solveRealPolynomial(determinant)) {
-        const ProjectiveMatrix singular = pencilMatrix(first, second, parameter);
-        std::array<ProjectiveVector, 2> lines{};
-        if (!factorSingularConic(singular, lines)) {
-            continue;
-        }
-        for (const auto& line : lines) {
-            appendLineConicCandidates(line, first, second, conditionedResult);
-        }
+    appendPencilCandidates(first, second, conditionedResult);
+    if (conditionedResult.empty()) {
+        appendPencilCandidates(second, first, conditionedResult);
     }
     for (const RS_Vector& point : conditionedResult) {
-        result.push_back(RS_Vector(point.x + xOffset, point.y + yOffset));
+        const double x = std::fma(coordinateScale, point.x, xOffset);
+        const double y = std::fma(coordinateScale, point.y, yOffset);
+        if (std::isfinite(x) && std::isfinite(y)
+            && verifyAffineCandidate(normalizedFirst, x, y)
+            && verifyAffineCandidate(normalizedSecond, x, y)) {
+            result.push_back(RS_Vector(x, y));
+        }
     }
     return result;
 }
@@ -1751,7 +1987,7 @@ RS_VectorSolutions RS_Math::simultaneousQuadraticSolverFull(const std::vector<st
         return ret;
     }
     const RS_VectorSolutions projective = simultaneousQuadraticSolverProjective(m);
-    if (!projective.empty()) {
+    if (projective.size() >= 4) {
         return projective;
     }
     /** eliminate x, quartic equation of y **/
@@ -1830,8 +2066,8 @@ RS_VectorSolutions RS_Math::simultaneousQuadraticSolverFull(const std::vector<st
     //     std::cout<<"roots.size()= "<<roots.size()<<std::endl;
     // }
 
-    if (roots.empty() ) { // no intersection found
-        return ret;
+    if (roots.empty() ) { // no intersection found by the fallback
+        return projective;
     }
     std::vector<double> ce(0, 0.);
 
@@ -1898,7 +2134,16 @@ RS_VectorSolutions RS_Math::simultaneousQuadraticSolverFull(const std::vector<st
                                                             || filtered.getClosestDistance(vp) >= RS_TOLERANCE  );
 
     });
-    return filtered;
+    RS_VectorSolutions merged = projective;
+    for (const RS_Vector& point : filtered) {
+        if (merged.empty() || merged.getClosestDistance(point) >= RS_TOLERANCE) {
+            merged.push_back(point);
+            if (merged.size() == 4) {
+                break;
+            }
+        }
+    }
+    return merged;
 }
 
 RS_VectorSolutions RS_Math::simultaneousQuadraticSolverMixed(const std::vector<std::vector<double> >& m)

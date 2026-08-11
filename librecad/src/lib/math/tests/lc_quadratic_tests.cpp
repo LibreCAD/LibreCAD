@@ -26,6 +26,7 @@
 #include <catch2/matchers/catch_matchers_floating_point.hpp>
 #include <catch2/catch_approx.hpp>
 
+#include <array>
 #include <cmath>
 #include <limits>
 #include <vector>
@@ -234,6 +235,93 @@ TEST_CASE("Projective pencil solver handles translated conics", "[intersection][
                        -2.0e6 - 2.0 * inverseSqrtFive, 1e-5));
     CHECK(containsPoint(solutions, 1.0e6 - inverseSqrtFive,
                        -2.0e6 + 2.0 * inverseSqrtFive, 1e-5));
+}
+
+TEST_CASE("Projective pencil solver combines equation scaling and translation",
+          "[intersection][projective][conditioning][scale]") {
+    LC_Quadratic first({1.0, 0.0, 1.0, 0.0, 0.0, -1.0});
+    LC_Quadratic second({1.0, 2.0, 2.0, 0.0, 0.0, -1.0});
+    const RS_Vector offset(1.0e6, -2.0e6);
+    first.move(offset);
+    second.move(offset);
+    std::vector<std::vector<double>> equations = {first.getCoefficients(), second.getCoefficients()};
+    for (double& coefficient : equations[0]) {
+        coefficient *= 1.0e-20;
+    }
+    for (double& coefficient : equations[1]) {
+        coefficient *= -1.0e15;
+    }
+
+    const auto solutions = RS_Math::simultaneousQuadraticSolverProjective(equations);
+    const double inverseSqrtFive = 1.0 / std::sqrt(5.0);
+    REQUIRE(solutions.size() == 4);
+    CHECK(containsPoint(solutions, 1.0e6 + 1.0, -2.0e6, 2e-3));
+    CHECK(containsPoint(solutions, 1.0e6 - 1.0, -2.0e6, 2e-3));
+    CHECK(containsPoint(solutions, 1.0e6 + inverseSqrtFive,
+                       -2.0e6 - 2.0 * inverseSqrtFive, 2e-3));
+    CHECK(containsPoint(solutions, 1.0e6 - inverseSqrtFive,
+                       -2.0e6 + 2.0 * inverseSqrtFive, 2e-3));
+}
+
+TEST_CASE("Projective pencil solver normalizes large geometry",
+          "[intersection][projective][conditioning][large]") {
+    constexpr double radius = 1.0e8;
+    const std::vector<std::vector<double>> equations = {
+        {1.0, 0.0, 1.0, 0.0, 0.0, -radius * radius},
+        {1.0, 2.0, 2.0, 0.0, 0.0, -radius * radius}
+    };
+
+    const auto solutions = RS_Math::simultaneousQuadraticSolverProjective(equations);
+    const double inverseSqrtFive = 1.0 / std::sqrt(5.0);
+    REQUIRE(solutions.size() == 4);
+    CHECK(containsPoint(solutions, radius, 0.0, 1e-4));
+    CHECK(containsPoint(solutions, -radius, 0.0, 1e-4));
+    CHECK(containsPoint(solutions, radius * inverseSqrtFive,
+                       -2.0 * radius * inverseSqrtFive, 1e-4));
+    CHECK(containsPoint(solutions, -radius * inverseSqrtFive,
+                       2.0 * radius * inverseSqrtFive, 1e-4));
+}
+
+TEST_CASE("Projective pencil solver includes a singular member at infinity",
+          "[intersection][projective][degenerate]") {
+    // C1: -x^2 + y^2 - 1 = 0; C2: xy = 0. The only useful real
+    // singular member is C2, represented by lambda=infinity in C1+lambda*C2.
+    const std::vector<std::vector<double>> equations = {
+        {-1.0, 0.0, 1.0, 0.0, 0.0, -1.0},
+        {0.0, 1.0, 0.0, 0.0, 0.0, 0.0}
+    };
+
+    const auto solutions = RS_Math::simultaneousQuadraticSolverProjective(equations);
+    REQUIRE(solutions.size() == 2);
+    CHECK(containsPoint(solutions, 0.0, 1.0));
+    CHECK(containsPoint(solutions, 0.0, -1.0));
+}
+
+TEST_CASE("Projective pencil solver returns all prescribed real intersections",
+          "[intersection][projective][completeness]") {
+    // Two independently scaled conics constructed through the four points
+    // below. This previously returned only the last two points.
+    const std::vector<std::vector<double>> equations = {
+        {-1.8845831613810567e-7, 3.237749422672911e-8, 1.228525876264746e-7,
+         -8.152389418661034e-7, 3.2316697475342135e-8, 5.1626730493897085e-6},
+        {-8.448476484508421e-5, -3.078119828265649e-5, 1.167175132144415e-4,
+         3.932145026045648e-4, -7.604078437375504e-4, -4.8202294623243846e-4}
+    };
+
+    const auto projective = RS_Math::simultaneousQuadraticSolverProjective(equations);
+    const auto complete = RS_Math::simultaneousQuadraticSolverFull(equations);
+    const std::array<RS_Vector, 4> expected = {{
+        {11.80413838882098, 14.215848788453172},
+        {-19.0230788944347, -17.436653942853283},
+        {3.491069161017421, -0.156795776381923},
+        {-14.817796823039174, 15.955556536168544}
+    }};
+    REQUIRE(projective.size() == expected.size());
+    REQUIRE(complete.size() == expected.size());
+    for (const RS_Vector& point : expected) {
+        CHECK(containsPoint(projective, point.x, point.y, 1e-8));
+        CHECK(containsPoint(complete, point.x, point.y, 1e-8));
+    }
 }
 
 TEST_CASE("Projective pencil solver conditions translated parabolas", "[intersection][projective][conditioning][parabola]") {
