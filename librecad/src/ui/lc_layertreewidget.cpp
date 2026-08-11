@@ -382,7 +382,7 @@ void LC_LayerTreeWidget::update(){
 void LC_LayerTreeWidget::activateLayer(RS_Layer *layer){
     RS_DEBUG->print("QG_LayerWidget::activateLayer() begin");
 
-    if (!layer || !layerList){
+    if (!layer || !layerList || layer->isFrozen() || layer->isLocked()){
         RS_DEBUG->print(RS_Debug::D_ERROR, "QG_LayerWidget::activateLayer: nullptr layer or layerList");
         return;
     }
@@ -1954,5 +1954,4 @@ void LC_LayerTreeWidget::invokeSettingsDialog(){
         update();
     }
 }
-
 

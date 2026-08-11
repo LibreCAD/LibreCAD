@@ -47,6 +47,7 @@ RS_LayerList::RS_LayerList() {
  */
 void RS_LayerList::clear() {
     layers.clear();
+	activeLayer = nullptr;
 	setModified(true);
 }
 
@@ -209,9 +210,10 @@ void RS_LayerList::remove(RS_Layer* layer) {
 		
 	setModified(true);
 
-    // activate an other layer if necessary:
+    // Do not leave a dangling active-layer pointer while the layer is gone.
     if (activeLayer==layer) {
-        activate(layers.first());
+        activeLayer = nullptr;
+        ensureActiveLayerIsEditable();
     }
 
     // now it's save to delete the layer
@@ -231,6 +233,8 @@ void RS_LayerList::edit(RS_Layer* layer, const RS_Layer& source) {
     }
 
     *layer = source;
+
+    ensureActiveLayerIsEditable();
 
     fireEdit(layer);
 }
@@ -328,6 +332,7 @@ void RS_LayerList::toggle(RS_Layer* layer) {
 
     // set flags
     layer->toggle();
+    ensureActiveLayerIsEditable();
     setModified(true);
 
     // Notify listeners:
@@ -355,6 +360,7 @@ void RS_LayerList::toggleLock(RS_Layer* layer) {
     }
 
     layer->toggleLock();
+    ensureActiveLayerIsEditable();
     setModified(true);
 
     // Notify listeners:
@@ -427,6 +433,7 @@ void RS_LayerList::freezeAll(bool freeze) {
          }
     }
 
+    ensureActiveLayerIsEditable();
     fireLayerToggled();
 
 }
@@ -445,6 +452,7 @@ void RS_LayerList::lockAll(bool lock) {
              at(l)->lock(lock);
          }
     }
+    ensureActiveLayerIsEditable();
     fireLayerToggled();
 }
 
@@ -458,6 +466,7 @@ void RS_LayerList::toggleLockMulti(QList<RS_Layer*> toggleLayers){
         }
     }
 
+    ensureActiveLayerIsEditable();
     fireLayerToggled();
 }
 void RS_LayerList::togglePrintMulti(QList<RS_Layer*> toggleLayers){
@@ -497,6 +506,7 @@ void RS_LayerList::setFreezeMulti(QList<RS_Layer*> layersEnable, QList<RS_Layer*
             layer->freeze(true);
         }
     }
+    ensureActiveLayerIsEditable();
    fireLayerToggled();
 }
 
@@ -515,6 +525,7 @@ void RS_LayerList::setLockMulti(QList<RS_Layer*> layersToUnlock, QList<RS_Layer*
             layer->lock(true);
         }
     }
+    ensureActiveLayerIsEditable();
     fireLayerToggled();
 }
 
@@ -562,7 +573,40 @@ void RS_LayerList::toggleFreezeMulti(QList<RS_Layer*> toggleLayers){
             layer->toggle();
         }
     }
+    ensureActiveLayerIsEditable();
    fireLayerToggled();
+}
+
+bool RS_LayerList::isEditable(const RS_Layer* layer) const {
+    return layer != nullptr && !layer->isFrozen() && !layer->isLocked();
+}
+
+void RS_LayerList::ensureActiveLayerIsEditable() {
+    if (isEditable(activeLayer)) {
+        return;
+    }
+
+    for (RS_Layer* layer : layers) {
+        if (isEditable(layer)) {
+            activate(layer, true);
+            return;
+        }
+    }
+
+    // Keep one layer editable when a batch operation would otherwise leave
+    // the document with no valid current layer.
+    if (activeLayer == nullptr && !layers.isEmpty()) {
+        activeLayer = layers.first();
+    }
+    if (activeLayer != nullptr) {
+        activeLayer->freeze(false);
+        activeLayer->lock(false);
+        for (auto *listener : layerListListeners) {
+            if (listener != nullptr) {
+                listener->layerActivated(activeLayer);
+            }
+        }
+    }
 }
 
 
@@ -619,4 +663,3 @@ void RS_LayerList::setModified(bool m) {
 void RS_LayerList::slotUpdateLayerList(){
     setModified(true);
 }
-

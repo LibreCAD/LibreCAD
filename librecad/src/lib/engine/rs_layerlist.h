@@ -141,6 +141,9 @@ public:
 
 private:
 
+    bool isEditable(const RS_Layer* layer) const;
+    void ensureActiveLayerIsEditable();
+
     void fireLayerToggled();
 	//! layers in the graphic
     QList<RS_Layer*> layers;
