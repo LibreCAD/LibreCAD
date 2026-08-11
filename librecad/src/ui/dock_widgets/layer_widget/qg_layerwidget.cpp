@@ -437,7 +437,7 @@ void QG_LayerWidget::restoreSelections() const {
 void QG_LayerWidget::activateLayer(RS_Layer* layer, const bool updateScroll) const {
     RS_DEBUG->print("QG_LayerWidget::activateLayer() begin");
 
-    if (layer == nullptr || m_graphic == nullptr) {
+    if (layer == nullptr || m_graphic == nullptr || layer->isFrozen() || layer->isLocked()) {
         RS_DEBUG->print(RS_Debug::D_ERROR, "QG_LayerWidget::activateLayer: nullptr layer or layerList");
         return;
     }

@@ -131,6 +131,9 @@ protected:
     friend class RS_Graphic;
 
 private:
+    bool isEditable(const RS_Layer* layer) const;
+    void ensureActiveLayerIsEditable();
+
     //! layers in the graphic
     QList<RS_Layer*> m_layers;
     //! mirror of m_layers for O(1) contains(); kept in sync at every

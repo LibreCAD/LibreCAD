@@ -360,7 +360,7 @@ void LC_LayerTreeWidget::update() const {
 void LC_LayerTreeWidget::activateLayer(RS_Layer *layer) const {
     RS_DEBUG->print("QG_LayerWidget::activateLayer() begin");
 
-    if ((layer == nullptr) || (m_layerList == nullptr)){
+    if ((layer == nullptr) || (m_layerList == nullptr) || layer->isFrozen() || layer->isLocked()){
         RS_DEBUG->print(RS_Debug::D_ERROR, "QG_LayerWidget::activateLayer: nullptr layer or layerList");
         return;
     }

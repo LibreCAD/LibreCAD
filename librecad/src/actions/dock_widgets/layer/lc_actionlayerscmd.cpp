@@ -65,7 +65,10 @@ void LC_ActionLayersCmd::onMouseRightButtonRelease([[maybe_unused]]int status, [
 
 void LC_ActionLayersCmd::activateLayer() const {
     if (m_graphic != nullptr) {
-        m_graphic->activateLayer(m_layerName, true);
+        const auto layer = m_graphic->findLayer(m_layerName);
+        if (layer != nullptr && !layer->isFrozen() && !layer->isLocked()) {
+            m_graphic->activateLayer(layer, true);
+        }
     }
 }
 

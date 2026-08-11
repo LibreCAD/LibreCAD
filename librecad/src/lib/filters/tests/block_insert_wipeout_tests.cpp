@@ -1000,6 +1000,30 @@ TEST_CASE("Layer visibility refreshes expanded INSERT bounds and selection",
   graphic.removeLayerListListener(&listener);
 }
 
+TEST_CASE("Layer transitions keep an editable active layer", "[layers][active]") {
+  RS_Graphic graphic;
+  graphic.initForNewDocument();
+  auto *detailLayer = new RS_Layer(QStringLiteral("DETAIL"));
+  graphic.addLayer(detailLayer);
+  graphic.activateLayer(detailLayer);
+
+  graphic.toggleLayer(detailLayer);
+  CHECK(detailLayer->isFrozen());
+  CHECK(graphic.getActiveLayer() != detailLayer);
+  REQUIRE(graphic.getActiveLayer() != nullptr);
+  CHECK_FALSE(graphic.getActiveLayer()->isFrozen());
+  CHECK_FALSE(graphic.getActiveLayer()->isLocked());
+
+  graphic.activateLayer(detailLayer);
+  graphic.toggleLayerLock(detailLayer);
+  CHECK(detailLayer->isLocked());
+  CHECK(graphic.getActiveLayer() != detailLayer);
+
+  graphic.freezeAllLayers(true);
+  REQUIRE(graphic.getActiveLayer() != nullptr);
+  CHECK_FALSE(graphic.getActiveLayer()->isFrozen());
+}
+
 TEST_CASE("Layer changes rebuild flattened nested INSERT visibility",
           "[block-insert][layer-visibility][insert-nested]") {
   ensureTestApp();
