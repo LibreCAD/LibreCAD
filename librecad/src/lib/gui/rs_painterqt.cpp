@@ -228,15 +228,15 @@ public:
         painter.save();
         // set pen
         RS_Pen& rsPen = painter.getRsPen();
-        Qt::PenStyle styleToUse = rsPen.getLineType() == RS2::SolidLine ? Qt::SolidLine : Qt::CustomDashLine;
+        const Qt::PenStyle styleToUse = rsToQtLineType(rsPen.getLineType());
         QPen qPen = painter.pen();
-        qPen.setStyle(styleToUse);
-        qPen.setColor(rsPen.getColor());
         if (rsPen.getLineType() == RS2::NoPen)
         {
             qPen.setStyle(Qt::NoPen);
         } else if (styleToUse == Qt::CustomDashLine)
         {
+            qPen.setStyle(Qt::CustomDashLine);
+            qPen.setColor(rsPen.getColor());
             QVector<qreal> dashPattern = rsToQDashPattern(rsPen.getLineType(),
                                                           qPen.widthF(),
                                                           painter.getDpmm());
@@ -255,7 +255,13 @@ public:
             qPen.setJoinStyle(Qt::RoundJoin);
             qPen.setCapStyle(Qt::RoundCap);
         }
-        painter.QPainter::setPen(qPen);
+        // setPen() already configured solid pens.  Reapplying a copied
+        // cosmetic pen makes Qt 5.15.2's PDF engine turn hairlines into
+        // sub-pixel filled outlines instead of PDF 0-width strokes.
+        if (rsPen.getLineType() == RS2::NoPen
+            || styleToUse == Qt::CustomDashLine) {
+            painter.QPainter::setPen(qPen);
+        }
     }
 
     ~PainterGuard()
@@ -1150,4 +1156,3 @@ void RS_PainterQt::drawText(const QRect& rect, const QString& text, QRect* bound
 {
     QPainter::drawText(rect, Qt::AlignTop | Qt::AlignLeft | Qt::TextDontClip, text, boundingBox);
 }
-

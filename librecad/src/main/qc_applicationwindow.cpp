@@ -2802,15 +2802,9 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on)
                     bool bigger = graphic->isBiggerThanPaper();
                     bool fixed = graphic->getPaperScaleFixed();
 
-                    graphic->fitToPage();
-
-                    // Calling zoomPage() after fitToPage() always fits
-                    // preview paper in preview window. The only reason not
-                    // to call zoomPage() is when drawing is bigger than paper,
-                    // plus it is fixed. In that case, not calling zoomPage()
-                    // prevents displaying empty paper (when drawing is actually
-                    // outside the paper and the preview window) and displays
-                    // full drawing and smaller paper inside it.
+                    // The preview action has already fitted automatic previews.
+                    // A second fit would recenter a fixed preview and overwrite
+                    // the drawing's $PINSBASE placement.
                     if (bigger && fixed) {
                         RS_DEBUG->print("%s: don't call zoomPage()", __func__);
                     } else {
