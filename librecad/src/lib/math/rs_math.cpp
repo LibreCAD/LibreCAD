@@ -29,7 +29,10 @@
 #include <QDebug>
 #include <QRegularExpressionMatch>
 #include <QString>
+#include <algorithm>
+#include <array>
 #include <cmath>
+#include <limits>
 #include <muParser.h>
 #include <boost/math/special_functions/ellint_2.hpp>
 #include <boost/numeric/ublas/lu.hpp>
@@ -63,6 +66,567 @@ namespace {
             }
         }
         return true;
+    }
+
+    using ProjectiveVector = std::array<double, 3>;
+    using ProjectiveMatrix = std::array<std::array<double, 3>, 3>;
+    using CubicPolynomial = std::array<double, 4>;
+
+    constexpr double projectiveMachineTolerance = 128.0 * std::numeric_limits<double>::epsilon();
+    constexpr double projectiveResidualTolerance = 1.0e-8;
+
+    double maxAbs(const ProjectiveVector& vector) {
+        return std::max({std::abs(vector[0]), std::abs(vector[1]), std::abs(vector[2])});
+    }
+
+    double maxAbs(const ProjectiveMatrix& matrix) {
+        double result = 0.0;
+        for (const auto& row : matrix) {
+            for (const double value : row) {
+                result = std::max(result, std::abs(value));
+            }
+        }
+        return result;
+    }
+
+    ProjectiveVector cross(const ProjectiveVector& lhs, const ProjectiveVector& rhs) {
+        return {{
+            lhs[1] * rhs[2] - lhs[2] * rhs[1],
+            lhs[2] * rhs[0] - lhs[0] * rhs[2],
+            lhs[0] * rhs[1] - lhs[1] * rhs[0]
+        }};
+    }
+
+    double dot(const ProjectiveVector& lhs, const ProjectiveVector& rhs) {
+        return lhs[0] * rhs[0] + lhs[1] * rhs[1] + lhs[2] * rhs[2];
+    }
+
+    CubicPolynomial polynomialSubtract(const CubicPolynomial& lhs, const CubicPolynomial& rhs) {
+        CubicPolynomial result{};
+        for (size_t i = 0; i < result.size(); ++i) {
+            result[i] = lhs[i] - rhs[i];
+        }
+        return result;
+    }
+
+    CubicPolynomial polynomialMultiply(const CubicPolynomial& lhs, const CubicPolynomial& rhs) {
+        CubicPolynomial result{};
+        for (size_t i = 0; i < lhs.size(); ++i) {
+            for (size_t j = 0; j < rhs.size() && i + j < result.size(); ++j) {
+                result[i + j] += lhs[i] * rhs[j];
+            }
+        }
+        return result;
+    }
+
+    CubicPolynomial polynomialDeterminant(const std::array<std::array<CubicPolynomial, 3>, 3>& matrix) {
+        const auto term0 = polynomialMultiply(matrix[0][0],
+                                               polynomialSubtract(polynomialMultiply(matrix[1][1], matrix[2][2]),
+                                                                  polynomialMultiply(matrix[1][2], matrix[2][1])));
+        const auto term1 = polynomialMultiply(matrix[0][1],
+                                               polynomialSubtract(polynomialMultiply(matrix[1][0], matrix[2][2]),
+                                                                  polynomialMultiply(matrix[1][2], matrix[2][0])));
+        const auto term2 = polynomialMultiply(matrix[0][2],
+                                               polynomialSubtract(polynomialMultiply(matrix[1][0], matrix[2][1]),
+                                                                  polynomialMultiply(matrix[1][1], matrix[2][0])));
+        CubicPolynomial result{};
+        for (size_t i = 0; i < result.size(); ++i) {
+            result[i] = term0[i] - term1[i] + term2[i];
+        }
+        return result;
+    }
+
+    ProjectiveMatrix conicMatrix(const std::vector<double>& coefficients) {
+        return {{
+            {{coefficients[0], 0.5 * coefficients[1], 0.5 * coefficients[3]}},
+            {{0.5 * coefficients[1], coefficients[2], 0.5 * coefficients[4]}},
+            {{0.5 * coefficients[3], 0.5 * coefficients[4], coefficients[5]}}
+        }};
+    }
+
+    std::vector<double> translateConic(const std::vector<double>& coefficients,
+                                       const double xOffset,
+                                       const double yOffset) {
+        const double a = coefficients[0];
+        const double b = coefficients[1];
+        const double c = coefficients[2];
+        const double d = coefficients[3];
+        const double e = coefficients[4];
+        const double f = coefficients[5];
+        return {
+            a,
+            b,
+            c,
+            2.0 * a * xOffset + b * yOffset + d,
+            b * xOffset + 2.0 * c * yOffset + e,
+            a * xOffset * xOffset + b * xOffset * yOffset + c * yOffset * yOffset
+                + d * xOffset + e * yOffset + f
+        };
+    }
+
+    bool conicCenter(const std::vector<double>& coefficients,
+                     ProjectiveVector& center) {
+        const double a = coefficients[0];
+        const double b = coefficients[1];
+        const double c = coefficients[2];
+        const double d = coefficients[3];
+        const double e = coefficients[4];
+        const double determinant = 4.0 * a * c - b * b;
+        const double quadraticScale = std::max({std::abs(a), std::abs(b), std::abs(c), 1.0});
+        if (std::abs(determinant) <= 1.0e-12 * quadraticScale * quadraticScale) {
+            return false;
+        }
+        center = {{
+            (b * e - 2.0 * c * d) / determinant,
+            (b * d - 2.0 * a * e) / determinant,
+            1.0
+        }};
+        return std::isfinite(center[0]) && std::isfinite(center[1])
+               && std::hypot(center[0], center[1]) <= RS_MAXDOUBLE;
+    }
+
+    bool conicConditioningPoint(const std::vector<double>& coefficients,
+                                ProjectiveVector& point) {
+        if (conicCenter(coefficients, point)) {
+            return true;
+        }
+        const double a = coefficients[0];
+        const double b = coefficients[1];
+        const double c = coefficients[2];
+        const double d = coefficients[3];
+        const double e = coefficients[4];
+        const double quadraticScale = std::max({std::abs(a), std::abs(b), std::abs(c), 1.0});
+        const double average = 0.5 * (a + c);
+        const double halfDifference = 0.5 * (a - c);
+        const double halfCross = 0.5 * b;
+        const double radius = std::hypot(halfDifference, halfCross);
+        if (radius <= projectiveMachineTolerance * quadraticScale) {
+            return false;
+        }
+
+        const double firstEigenvalue = average + radius;
+        const double secondEigenvalue = average - radius;
+        const double angle = 0.5 * std::atan2(halfCross, halfDifference);
+        ProjectiveVector direction{{std::cos(angle), std::sin(angle), 0.0}};
+        double eigenvalue = firstEigenvalue;
+        if (std::abs(secondEigenvalue) > std::abs(firstEigenvalue)) {
+            direction = {{-std::sin(angle), std::cos(angle), 0.0}};
+            eigenvalue = secondEigenvalue;
+        }
+        if (std::abs(eigenvalue) <= projectiveMachineTolerance * quadraticScale) {
+            return false;
+        }
+
+        const double rangeOffset = -(d * direction[0] + e * direction[1]) / (2.0 * eigenvalue);
+        point = {{rangeOffset * direction[0], rangeOffset * direction[1], 1.0}};
+        const auto conditioned = translateConic(coefficients, point[0], point[1]);
+        const ProjectiveVector nullDirection{{-direction[1], direction[0], 0.0}};
+        const double nullLinear = conditioned[3] * nullDirection[0]
+                                  + conditioned[4] * nullDirection[1];
+        if (std::abs(nullLinear) > projectiveMachineTolerance
+            * std::max({std::abs(conditioned[3]), std::abs(conditioned[4]), 1.0})) {
+            const double nullOffset = -conditioned[5] / nullLinear;
+            point[0] += nullOffset * nullDirection[0];
+            point[1] += nullOffset * nullDirection[1];
+        }
+        return std::isfinite(point[0]) && std::isfinite(point[1])
+               && std::hypot(point[0], point[1]) <= RS_MAXDOUBLE;
+    }
+
+    CubicPolynomial pencilDeterminant(const ProjectiveMatrix& first,
+                                      const ProjectiveMatrix& second) {
+        std::array<std::array<CubicPolynomial, 3>, 3> pencil{};
+        for (size_t row = 0; row < 3; ++row) {
+            for (size_t column = 0; column < 3; ++column) {
+                pencil[row][column] = {{first[row][column], second[row][column], 0.0, 0.0}};
+            }
+        }
+        return polynomialDeterminant(pencil);
+    }
+
+    void appendUniqueRoot(std::vector<double>& roots, const double root) {
+        if (!std::isfinite(root)) {
+            return;
+        }
+        const double scale = std::max(1.0, std::abs(root));
+        const bool duplicate = std::any_of(roots.cbegin(), roots.cend(),
+                                            [root, scale](const double existing) {
+                                                return std::abs(existing - root)
+                                                       <= projectiveResidualTolerance * scale;
+                                            });
+        if (!duplicate) {
+            roots.push_back(root);
+        }
+    }
+
+    void solveRealQuadratic(const long double a, const long double b, const long double c,
+                            std::vector<double>& roots) {
+        const long double scale = std::max({std::abs(a), std::abs(b), std::abs(c), 1.0L});
+        if (std::abs(a) <= projectiveMachineTolerance * scale) {
+            if (std::abs(b) > projectiveMachineTolerance * scale) {
+                appendUniqueRoot(roots, static_cast<double>(-c / b));
+            }
+            return;
+        }
+        long double discriminant = b * b - 4.0L * a * c;
+        const long double discriminantScale = std::max({b * b, std::abs(4.0L * a * c), 1.0L});
+        if (discriminant < -projectiveMachineTolerance * discriminantScale) {
+            return;
+        }
+        if (discriminant < 0.0L) {
+            discriminant = 0.0L;
+        }
+        if (discriminant == 0.0L) {
+            appendUniqueRoot(roots, static_cast<double>(-b / (2.0L * a)));
+            return;
+        }
+        const long double radical = std::sqrt(discriminant);
+        const long double q = -0.5L * (b + std::copysign(radical, b));
+        if (q == 0.0L) {
+            appendUniqueRoot(roots, static_cast<double>((-b + radical) / (2.0L * a)));
+            appendUniqueRoot(roots, static_cast<double>((-b - radical) / (2.0L * a)));
+            return;
+        }
+        appendUniqueRoot(roots, static_cast<double>(q / a));
+        appendUniqueRoot(roots, static_cast<double>(c / q));
+    }
+
+    std::vector<double> solveRealPolynomial(const CubicPolynomial& polynomial) {
+        std::vector<double> roots;
+        const double scale = std::max({std::abs(polynomial[0]), std::abs(polynomial[1]),
+                                       std::abs(polynomial[2]), std::abs(polynomial[3]), 1.0});
+        if (!std::all_of(polynomial.cbegin(), polynomial.cend(),
+                         [](const double value) { return std::isfinite(value); })) {
+            return roots;
+        }
+
+        int degree = 3;
+        while (degree > 0 && std::abs(polynomial[static_cast<size_t>(degree)])
+               <= projectiveMachineTolerance * scale) {
+            --degree;
+        }
+        if (degree == 0) {
+            return roots;
+        }
+        if (degree == 1) {
+            appendUniqueRoot(roots, -polynomial[0] / polynomial[1]);
+            return roots;
+        }
+        if (degree == 2) {
+            solveRealQuadratic(polynomial[2], polynomial[1], polynomial[0], roots);
+            return roots;
+        }
+
+        const long double a = static_cast<long double>(polynomial[2]) / polynomial[3];
+        const long double b = static_cast<long double>(polynomial[1]) / polynomial[3];
+        const long double c = static_cast<long double>(polynomial[0]) / polynomial[3];
+        const long double p = b - a * a / 3.0L;
+        const long double q = 2.0L * a * a * a / 27.0L - a * b / 3.0L + c;
+        const long double discriminant = q * q / 4.0L + p * p * p / 27.0L;
+        const long double discriminantScale = std::max({q * q / 4.0L,
+                                                        std::abs(p * p * p / 27.0L), 1.0L});
+        if (discriminant > projectiveMachineTolerance * discriminantScale) {
+            const long double radical = std::sqrt(discriminant);
+            const long double u = std::cbrt(-q / 2.0L + radical);
+            const long double v = std::cbrt(-q / 2.0L - radical);
+            appendUniqueRoot(roots, static_cast<double>(u + v - a / 3.0L));
+            return roots;
+        }
+        if (std::abs(p) <= projectiveMachineTolerance * std::max(1.0L, std::abs(q))) {
+            appendUniqueRoot(roots, static_cast<double>(-a / 3.0L));
+            return roots;
+        }
+
+        const long double radius = 2.0L * std::sqrt(std::max(0.0L, -p / 3.0L));
+        if (radius == 0.0L) {
+            appendUniqueRoot(roots, static_cast<double>(-a / 3.0L));
+            return roots;
+        }
+        long double argument = (3.0L * q / (2.0L * p)) * std::sqrt(-3.0L / p);
+        argument = std::max(-1.0L, std::min(1.0L, argument));
+        const long double angle = std::acos(argument) / 3.0L;
+        for (int index = 0; index < 3; ++index) {
+            appendUniqueRoot(roots, static_cast<double>(radius * std::cos(angle
+                                                                         - 2.0L * M_PI * index / 3.0L)
+                                                         - a / 3.0L));
+        }
+        return roots;
+    }
+
+    ProjectiveMatrix pencilMatrix(const ProjectiveMatrix& first,
+                                  const ProjectiveMatrix& second,
+                                  const double parameter) {
+        ProjectiveMatrix result{};
+        for (size_t row = 0; row < 3; ++row) {
+            for (size_t column = 0; column < 3; ++column) {
+                result[row][column] = first[row][column] + parameter * second[row][column];
+            }
+        }
+        const double scale = maxAbs(result);
+        if (std::isfinite(scale) && scale > 0.0) {
+            for (auto& row : result) {
+                for (double& value : row) {
+                    value /= scale;
+                }
+            }
+        }
+        return result;
+    }
+
+    bool factorSingularConic(const ProjectiveMatrix& matrix,
+                             std::array<ProjectiveVector, 2>& lines) {
+        const std::array<ProjectiveVector, 3> rows = {{
+            {{matrix[0][0], matrix[0][1], matrix[0][2]}},
+            {{matrix[1][0], matrix[1][1], matrix[1][2]}},
+            {{matrix[2][0], matrix[2][1], matrix[2][2]}}
+        }};
+        ProjectiveVector nullVector{};
+        double nullScale = 0.0;
+        for (size_t first = 0; first < rows.size(); ++first) {
+            for (size_t second = first + 1; second < rows.size(); ++second) {
+                const ProjectiveVector candidate = cross(rows[first], rows[second]);
+                const double candidateScale = maxAbs(candidate);
+                if (candidateScale > nullScale) {
+                    nullScale = candidateScale;
+                    nullVector = candidate;
+                }
+            }
+        }
+        if (nullScale <= projectiveMachineTolerance * std::max(1.0, maxAbs(matrix))) {
+            // A tangent pencil can contain a rank-1 member, which is a double
+            // line rather than two independent lines. Extract that line from
+            // any non-zero diagonal pivot and return it twice.
+            size_t diagonal = 0;
+            for (size_t index = 1; index < 3; ++index) {
+                if (std::abs(matrix[index][index]) > std::abs(matrix[diagonal][diagonal])) {
+                    diagonal = index;
+                }
+            }
+            const double diagonalScale = std::abs(matrix[diagonal][diagonal]);
+            if (diagonalScale <= projectiveMachineTolerance * std::max(1.0, maxAbs(matrix))) {
+                return false;
+            }
+            const double normalizer = std::sqrt(diagonalScale);
+            ProjectiveVector line{};
+            for (size_t index = 0; index < 3; ++index) {
+                line[index] = matrix[diagonal][index] / normalizer;
+            }
+            const double lineScale = maxAbs(line);
+            if (!std::isfinite(lineScale) || lineScale <= projectiveMachineTolerance) {
+                return false;
+            }
+            for (double& value : line) {
+                value /= lineScale;
+            }
+            lines = {{line, line}};
+            return true;
+        }
+        for (double& value : nullVector) {
+            value /= nullScale;
+        }
+
+        size_t pivot = 0;
+        if (std::abs(nullVector[1]) > std::abs(nullVector[pivot])) {
+            pivot = 1;
+        }
+        if (std::abs(nullVector[2]) > std::abs(nullVector[pivot])) {
+            pivot = 2;
+        }
+        const size_t firstAxis = (pivot + 1) % 3;
+        const size_t secondAxis = (pivot + 2) % 3;
+        ProjectiveVector firstDirection{};
+        ProjectiveVector secondDirection{};
+        firstDirection[firstAxis] = 1.0;
+        secondDirection[secondAxis] = 1.0;
+
+        const auto matrixTimesFirst = ProjectiveVector{{
+            matrix[0][0] * firstDirection[0] + matrix[0][1] * firstDirection[1] + matrix[0][2] * firstDirection[2],
+            matrix[1][0] * firstDirection[0] + matrix[1][1] * firstDirection[1] + matrix[1][2] * firstDirection[2],
+            matrix[2][0] * firstDirection[0] + matrix[2][1] * firstDirection[1] + matrix[2][2] * firstDirection[2]
+        }};
+        const auto matrixTimesSecond = ProjectiveVector{{
+            matrix[0][0] * secondDirection[0] + matrix[0][1] * secondDirection[1] + matrix[0][2] * secondDirection[2],
+            matrix[1][0] * secondDirection[0] + matrix[1][1] * secondDirection[1] + matrix[1][2] * secondDirection[2],
+            matrix[2][0] * secondDirection[0] + matrix[2][1] * secondDirection[1] + matrix[2][2] * secondDirection[2]
+        }};
+        const double qa = dot(firstDirection, matrixTimesFirst);
+        const double qb = dot(firstDirection, matrixTimesSecond);
+        const double qc = dot(secondDirection, matrixTimesSecond);
+        const double discriminantScale = std::max({std::abs(qb * qb), std::abs(qa * qc), 1.0});
+        double discriminant = qb * qb - qa * qc;
+        if (discriminant < -projectiveResidualTolerance * discriminantScale) {
+            return false;
+        }
+        if (discriminant < 0.0) {
+            discriminant = 0.0;
+        }
+
+        std::array<ProjectiveVector, 2> directions{};
+        if (std::abs(qa) > projectiveMachineTolerance && std::abs(qa) >= std::abs(qc)) {
+            const double radical = std::sqrt(discriminant);
+            const double firstRoot = (-qb + radical) / qa;
+            const double secondRoot = (-qb - radical) / qa;
+            directions[0] = {{firstRoot * firstDirection[0] + secondDirection[0],
+                              firstRoot * firstDirection[1] + secondDirection[1],
+                              firstRoot * firstDirection[2] + secondDirection[2]}};
+            directions[1] = {{secondRoot * firstDirection[0] + secondDirection[0],
+                              secondRoot * firstDirection[1] + secondDirection[1],
+                              secondRoot * firstDirection[2] + secondDirection[2]}};
+        }
+        else if (std::abs(qc) > projectiveMachineTolerance) {
+            const double radical = std::sqrt(discriminant);
+            const double firstRoot = (-qb + radical) / qc;
+            const double secondRoot = (-qb - radical) / qc;
+            directions[0] = {{firstDirection[0] + firstRoot * secondDirection[0],
+                              firstDirection[1] + firstRoot * secondDirection[1],
+                              firstDirection[2] + firstRoot * secondDirection[2]}};
+            directions[1] = {{firstDirection[0] + secondRoot * secondDirection[0],
+                              firstDirection[1] + secondRoot * secondDirection[1],
+                              firstDirection[2] + secondRoot * secondDirection[2]}};
+        }
+        else if (std::abs(qb) > projectiveMachineTolerance) {
+            directions[0] = firstDirection;
+            directions[1] = secondDirection;
+        }
+        else {
+            return false;
+        }
+
+        for (size_t index = 0; index < lines.size(); ++index) {
+            lines[index] = cross(nullVector, directions[index]);
+            const double scale = maxAbs(lines[index]);
+            if (scale <= projectiveMachineTolerance || !std::isfinite(scale)) {
+                return false;
+            }
+            for (double& value : lines[index]) {
+                value /= scale;
+            }
+        }
+        return true;
+    }
+
+    double evaluateProjectiveConic(const ProjectiveMatrix& matrix,
+                                   const ProjectiveVector& point) {
+        ProjectiveVector transformed{};
+        for (size_t row = 0; row < 3; ++row) {
+            transformed[row] = matrix[row][0] * point[0]
+                               + matrix[row][1] * point[1]
+                               + matrix[row][2] * point[2];
+        }
+        return dot(point, transformed);
+    }
+
+    double projectiveResidualScale(const ProjectiveMatrix& matrix,
+                                   const ProjectiveVector& point) {
+        double scale = 0.0;
+        for (size_t row = 0; row < 3; ++row) {
+            for (size_t column = 0; column < 3; ++column) {
+                scale += std::abs(matrix[row][column] * point[row] * point[column]);
+            }
+        }
+        return std::max(1.0, scale);
+    }
+
+    bool refineProjectivePoint(const ProjectiveMatrix& first,
+                               const ProjectiveMatrix& second,
+                               ProjectiveVector& point) {
+        if (point[2] == 0.0 || !std::isfinite(point[2])) {
+            return false;
+        }
+        point[0] /= point[2];
+        point[1] /= point[2];
+        point[2] = 1.0;
+        for (size_t iteration = 0; iteration < 5; ++iteration) {
+            const double f0 = evaluateProjectiveConic(first, point);
+            const double f1 = evaluateProjectiveConic(second, point);
+            const double j00 = 2.0 * (first[0][0] * point[0] + first[0][1] * point[1] + first[0][2]);
+            const double j01 = 2.0 * (first[1][0] * point[0] + first[1][1] * point[1] + first[1][2]);
+            const double j10 = 2.0 * (second[0][0] * point[0] + second[0][1] * point[1] + second[0][2]);
+            const double j11 = 2.0 * (second[1][0] * point[0] + second[1][1] * point[1] + second[1][2]);
+            const double determinant = j00 * j11 - j01 * j10;
+            const double jacobianScale = std::max({std::abs(j00 * j11), std::abs(j01 * j10), 1.0});
+            if (!std::isfinite(f0) || !std::isfinite(f1)
+                || std::abs(determinant) <= projectiveMachineTolerance * jacobianScale) {
+                break;
+            }
+            const double dx = (-f0 * j11 + j01 * f1) / determinant;
+            const double dy = (j10 * f0 - j00 * f1) / determinant;
+            if (!std::isfinite(dx) || !std::isfinite(dy)) {
+                break;
+            }
+            point[0] += dx;
+            point[1] += dy;
+            if (std::max(std::abs(dx), std::abs(dy)) <= RS_TOLERANCE) {
+                break;
+            }
+        }
+        const double firstResidual = std::abs(evaluateProjectiveConic(first, point));
+        const double secondResidual = std::abs(evaluateProjectiveConic(second, point));
+        return std::isfinite(point[0]) && std::isfinite(point[1])
+               && std::hypot(point[0], point[1]) <= RS_MAXDOUBLE
+               && firstResidual <= projectiveResidualTolerance * projectiveResidualScale(first, point)
+               && secondResidual <= projectiveResidualTolerance * projectiveResidualScale(second, point);
+    }
+
+    void appendProjectiveCandidate(const ProjectiveMatrix& first,
+                                   const ProjectiveMatrix& second,
+                                   const ProjectiveVector& point,
+                                   RS_VectorSolutions& result) {
+        ProjectiveVector refined = point;
+        if (!refineProjectivePoint(first, second, refined)) {
+            return;
+        }
+        const RS_Vector candidate(refined[0], refined[1]);
+        const double distanceScale = std::max({1.0, std::abs(candidate.x), std::abs(candidate.y)});
+        const bool duplicate = std::any_of(result.cbegin(), result.cend(),
+                                            [&candidate, distanceScale](const RS_Vector& existing) {
+                                                return existing.distanceTo(candidate)
+                                                       <= projectiveResidualTolerance * distanceScale;
+                                            });
+        if (!duplicate) {
+            result.push_back(candidate);
+        }
+    }
+
+    void appendLineConicCandidates(const ProjectiveVector& line,
+                                   const ProjectiveMatrix& conic,
+                                   const ProjectiveMatrix& otherConic,
+                                   RS_VectorSolutions& result) {
+        const double affineNormal = std::max(std::abs(line[0]), std::abs(line[1]));
+        const double lineScale = maxAbs(line);
+        if (affineNormal <= projectiveMachineTolerance * std::max(1.0, lineScale)) {
+            return;
+        }
+
+        ProjectiveVector pointAtZero{};
+        ProjectiveVector pointPerParameter{};
+        if (std::abs(line[1]) >= std::abs(line[0])) {
+            // x=t, y=(-a*t-c)/b
+            pointAtZero = {{0.0, -line[2] / line[1], 1.0}};
+            pointPerParameter = {{1.0, -line[0] / line[1], 0.0}};
+        }
+        else {
+            // y=t, x=(-b*t-c)/a
+            pointAtZero = {{-line[2] / line[0], 0.0, 1.0}};
+            pointPerParameter = {{-line[1] / line[0], 1.0, 0.0}};
+        }
+
+        const double q2 = evaluateProjectiveConic(conic, pointPerParameter);
+        const double q1 = 2.0 * dot(pointPerParameter, ProjectiveVector{{
+            conic[0][0] * pointAtZero[0] + conic[0][1] * pointAtZero[1] + conic[0][2] * pointAtZero[2],
+            conic[1][0] * pointAtZero[0] + conic[1][1] * pointAtZero[1] + conic[1][2] * pointAtZero[2],
+            conic[2][0] * pointAtZero[0] + conic[2][1] * pointAtZero[1] + conic[2][2] * pointAtZero[2]
+        }});
+        const double q0 = evaluateProjectiveConic(conic, pointAtZero);
+        std::vector<double> parameters;
+        solveRealQuadratic(q2, q1, q0, parameters);
+        for (const double parameter : parameters) {
+            ProjectiveVector candidate = pointAtZero;
+            for (size_t index = 0; index < 3; ++index) {
+                candidate[index] += parameter * pointPerParameter[index];
+            }
+            appendProjectiveCandidate(conic, otherConic, candidate, result);
+        }
     }
 
     const QRegularExpression REGEXP_UNIT(R"((?P<sign>^-?))" R"((?:(?:(?:(?P<degrees>\d+\.?\d*)(?:degree[s]?|deg|[Dd]|°)))" // DMS
@@ -1088,6 +1652,80 @@ RS_VectorSolutions RS_Math::simultaneousQuadraticSolver(const std::vector<double
     return simultaneousQuadraticSolverFull(m1);
 }
 
+/**
+ * Solve two full quadratic equations through the projective pencil of conics.
+ *
+ * Each affine equation is lifted to a homogeneous symmetric matrix C. The
+ * singular members of C1 + lambda*C2 are found from the cubic determinant of
+ * the pencil. A real singular member factors into two projective lines; the
+ * intersections of those lines with C1 are then verified against both input
+ * equations. This is an algebraic-geometric candidate path, not a replacement
+ * for the specialised line and mixed quadratic solvers.
+ */
+RS_VectorSolutions RS_Math::simultaneousQuadraticSolverProjective(
+    const std::vector<std::vector<double>>& m) {
+    RS_VectorSolutions result;
+    if (m.size() != 2 || m[0].size() != 6 || m[1].size() != 6
+        || !isFiniteCoefficients(m[0]) || !isFiniteCoefficients(m[1])) {
+        return result;
+    }
+
+    double xOffset = 0.0;
+    double yOffset = 0.0;
+    size_t centerCount = 0;
+    for (const auto& coefficients : m) {
+        ProjectiveVector center{};
+        if (conicConditioningPoint(coefficients, center)) {
+            xOffset += center[0];
+            yOffset += center[1];
+            ++centerCount;
+        }
+    }
+    if (centerCount > 0) {
+        xOffset /= static_cast<double>(centerCount);
+        yOffset /= static_cast<double>(centerCount);
+    }
+    const std::vector<double> conditionedFirst = translateConic(m[0], xOffset, yOffset);
+    const std::vector<double> conditionedSecond = translateConic(m[1], xOffset, yOffset);
+    if (!isFiniteCoefficients(conditionedFirst) || !isFiniteCoefficients(conditionedSecond)) {
+        return result;
+    }
+    ProjectiveMatrix first = conicMatrix(conditionedFirst);
+    ProjectiveMatrix second = conicMatrix(conditionedSecond);
+    const auto normalize = [](ProjectiveMatrix& matrix) {
+        const double scale = maxAbs(matrix);
+        if (!std::isfinite(scale) || scale == 0.0) {
+            return false;
+        }
+        for (auto& row : matrix) {
+            for (double& value : row) {
+                value /= scale;
+            }
+        }
+        return true;
+    };
+    if (!normalize(first) || !normalize(second)) {
+        return result;
+    }
+
+    const auto determinant = pencilDeterminant(first, second);
+    RS_VectorSolutions conditionedResult;
+    for (const double parameter : solveRealPolynomial(determinant)) {
+        const ProjectiveMatrix singular = pencilMatrix(first, second, parameter);
+        std::array<ProjectiveVector, 2> lines{};
+        if (!factorSingularConic(singular, lines)) {
+            continue;
+        }
+        for (const auto& line : lines) {
+            appendLineConicCandidates(line, first, second, conditionedResult);
+        }
+    }
+    for (const RS_Vector& point : conditionedResult) {
+        result.push_back(RS_Vector(point.x + xOffset, point.y + yOffset));
+    }
+    return result;
+}
+
 /** solver quadratic simultaneous equations of a set of two **/
 /* solve the following quadratic simultaneous equations,
   * ma000 x^2 + ma001 xy + ma011 y^2 + mb00 x + mb01 y + mc0 =0
@@ -1103,11 +1741,18 @@ RS_VectorSolutions RS_Math::simultaneousQuadraticSolverFull(const std::vector<st
     if (m.size() != 2) {
         return ret;
     }
+    if (!isFiniteCoefficients(m[0]) || !isFiniteCoefficients(m[1])) {
+        return ret;
+    }
     if (m[0].size() == 3 || m[1].size() == 3) {
         return simultaneousQuadraticSolverMixed(m);
     }
     if (m[0].size() != 6 || m[1].size() != 6) {
         return ret;
+    }
+    const RS_VectorSolutions projective = simultaneousQuadraticSolverProjective(m);
+    if (!projective.empty()) {
+        return projective;
     }
     /** eliminate x, quartic equation of y **/
     auto& a = m[0][0];

@@ -27,12 +27,14 @@
 #include <catch2/catch_approx.hpp>
 
 #include <cmath>
+#include <limits>
 #include <vector>
 
 #include "lc_quadratic.h"
 #include "rs_vector.h"
 #include "rs_line.h"
 #include "rs_circle.h"
+#include "rs_math.h"
 
 // Helper: build a circle quadratic (coefficient form) centered at (cx,cy) with radius r
 static LC_Quadratic makeCircleCoeffs(double cx, double cy, double r) {
@@ -45,6 +47,16 @@ static LC_Quadratic makeCircleCoeffs(double cx, double cy, double r) {
     double E = -2.0 * cy;
     double F = cx * cx + cy * cy - r * r;
     return LC_Quadratic({A, B, C, D, E, F});
+}
+
+static bool containsPoint(const RS_VectorSolutions& solutions, double x, double y, double margin = 1e-8) {
+    for (const RS_Vector& point : solutions) {
+        if (point.x == Catch::Approx(x).margin(margin)
+            && point.y == Catch::Approx(y).margin(margin)) {
+            return true;
+        }
+    }
+    return false;
 }
 
 TEST_CASE("License/header sanity test present", "[meta]") {
@@ -153,6 +165,116 @@ TEST_CASE("Two circles intersection (coeff-based) gives two points (standard exa
     }
     CHECK(found_pos);
     CHECK(found_neg);
+}
+
+TEST_CASE("Projective pencil solver finds four generic real conic intersections", "[intersection][projective]") {
+    // C1: x^2 + y^2 - 1 = 0
+    // C2: x^2 + 2xy + 2y^2 - 1 = 0
+    // Their difference is y(2x + y), which exposes four real intersections.
+    const std::vector<std::vector<double>> equations = {
+        {1.0, 0.0, 1.0, 0.0, 0.0, -1.0},
+        {1.0, 2.0, 2.0, 0.0, 0.0, -1.0}
+    };
+    const auto solutions = RS_Math::simultaneousQuadraticSolverProjective(equations);
+    const double inverseSqrtFive = 1.0 / std::sqrt(5.0);
+    REQUIRE(solutions.size() == 4);
+    CHECK(containsPoint(solutions, 1.0, 0.0));
+    CHECK(containsPoint(solutions, -1.0, 0.0));
+    CHECK(containsPoint(solutions, inverseSqrtFive, -2.0 * inverseSqrtFive));
+    CHECK(containsPoint(solutions, -inverseSqrtFive, 2.0 * inverseSqrtFive));
+
+    const LC_Quadratic first(equations[0]);
+    const LC_Quadratic second(equations[1]);
+    const auto integratedSolutions = LC_Quadratic::getIntersection(first, second);
+    REQUIRE(integratedSolutions.size() == 4);
+    CHECK(containsPoint(integratedSolutions, 1.0, 0.0));
+    CHECK(containsPoint(integratedSolutions, -1.0, 0.0));
+    CHECK(containsPoint(integratedSolutions, inverseSqrtFive, -2.0 * inverseSqrtFive));
+    CHECK(containsPoint(integratedSolutions, -inverseSqrtFive, 2.0 * inverseSqrtFive));
+}
+
+TEST_CASE("Projective pencil solver preserves a tangent intersection", "[intersection][projective][tangent]") {
+    // C2 - C1 = (x - 1)^2, so the two conics touch at (1, 0).
+    const std::vector<std::vector<double>> equations = {
+        {1.0, 0.0, 1.0, 0.0, 0.0, -1.0},
+        {2.0, 0.0, 1.0, -2.0, 0.0, 0.0}
+    };
+    const auto solutions = RS_Math::simultaneousQuadraticSolverProjective(equations);
+    REQUIRE(solutions.size() == 1);
+    CHECK(containsPoint(solutions, 1.0, 0.0));
+}
+
+TEST_CASE("Projective pencil solver is invariant to independent equation scaling", "[intersection][projective][scale]") {
+    const std::vector<std::vector<double>> equations = {
+        {1.0e150, 0.0, 1.0e150, 0.0, 0.0, -1.0e150},
+        {-1.0e-120, -2.0e-120, -2.0e-120, 0.0, 0.0, 1.0e-120}
+    };
+    const auto solutions = RS_Math::simultaneousQuadraticSolverProjective(equations);
+    const double inverseSqrtFive = 1.0 / std::sqrt(5.0);
+    REQUIRE(solutions.size() == 4);
+    CHECK(containsPoint(solutions, 1.0, 0.0));
+    CHECK(containsPoint(solutions, -1.0, 0.0));
+    CHECK(containsPoint(solutions, inverseSqrtFive, -2.0 * inverseSqrtFive));
+    CHECK(containsPoint(solutions, -inverseSqrtFive, 2.0 * inverseSqrtFive));
+}
+
+TEST_CASE("Projective pencil solver handles translated conics", "[intersection][projective][conditioning]") {
+    LC_Quadratic first({1.0, 0.0, 1.0, 0.0, 0.0, -1.0});
+    LC_Quadratic second({1.0, 2.0, 2.0, 0.0, 0.0, -1.0});
+    const RS_Vector offset(1.0e6, -2.0e6);
+    first.move(offset);
+    second.move(offset);
+
+    const auto solutions = LC_Quadratic::getIntersection(first, second);
+    const double inverseSqrtFive = 1.0 / std::sqrt(5.0);
+    REQUIRE(solutions.size() == 4);
+    CHECK(containsPoint(solutions, 1.0e6 + 1.0, -2.0e6, 1e-5));
+    CHECK(containsPoint(solutions, 1.0e6 - 1.0, -2.0e6, 1e-5));
+    CHECK(containsPoint(solutions, 1.0e6 + inverseSqrtFive,
+                       -2.0e6 - 2.0 * inverseSqrtFive, 1e-5));
+    CHECK(containsPoint(solutions, 1.0e6 - inverseSqrtFive,
+                       -2.0e6 + 2.0 * inverseSqrtFive, 1e-5));
+}
+
+TEST_CASE("Projective pencil solver conditions translated parabolas", "[intersection][projective][conditioning][parabola]") {
+    LC_Quadratic first({-1.0, 0.0, 0.0, 0.0, 1.0, 0.0});
+    LC_Quadratic second({0.0, 0.0, -1.0, 1.0, 0.0, 0.0});
+    const RS_Vector offset(1.0e6, -2.0e6);
+    first.move(offset);
+    second.move(offset);
+
+    const auto solutions = LC_Quadratic::getIntersection(first, second);
+    REQUIRE(solutions.size() == 2);
+    CHECK(containsPoint(solutions, 1.0e6, -2.0e6, 1e-5));
+    CHECK(containsPoint(solutions, 1.0e6 + 1.0, -2.0e6 + 1.0, 1e-5));
+}
+
+TEST_CASE("Projective pencil solver rejects non-finite coefficients", "[intersection][projective][invalid]") {
+    const std::vector<std::vector<double>> equations = {
+        {1.0, 0.0, 1.0, 0.0, 0.0, -1.0},
+        {1.0, 2.0, 2.0, 0.0, 0.0, std::numeric_limits<double>::quiet_NaN()}
+    };
+    const auto solutions = RS_Math::simultaneousQuadraticSolverProjective(equations);
+    CHECK(solutions.empty());
+    CHECK(RS_Math::simultaneousQuadraticSolverFull(equations).empty());
+}
+
+TEST_CASE("Projective pencil solver does not invent non-real intersections", "[intersection][projective][none]") {
+    const auto solutions = RS_Math::simultaneousQuadraticSolverProjective({
+        {1.0, 0.0, 1.0, 0.0, 0.0, -1.0},
+        {1.0, 2.0, 2.0, 0.0, 0.0, 1.0}
+    });
+    CHECK(solutions.empty());
+}
+
+TEST_CASE("Projective pencil solver handles two parabolas", "[intersection][projective][parabola]") {
+    const auto solutions = RS_Math::simultaneousQuadraticSolverProjective({
+        {-1.0, 0.0, 0.0, 0.0, 1.0, 0.0}, // y - x^2 = 0
+        {0.0, 0.0, -1.0, 1.0, 0.0, 0.0}  // x - y^2 = 0
+    });
+    REQUIRE(solutions.size() == 2);
+    CHECK(containsPoint(solutions, 0.0, 0.0));
+    CHECK(containsPoint(solutions, 1.0, 1.0));
 }
 
 TEST_CASE("Line-line intersection: intersecting and parallel cases", "[intersection][line-line]") {

@@ -161,6 +161,12 @@ namespace RS_Math {
           *@return a RS_VectorSolutions contains real roots (x,y)
           */
     RS_VectorSolutions simultaneousQuadraticSolverFull(const std::vector<std::vector<double>>& m);
+    /**
+     * Solve two full quadratic equations using the projective pencil of conics.
+     * Real singular pencil members are factored into line pairs, and all
+     * candidate affine points are verified against both original equations.
+     */
+    RS_VectorSolutions simultaneousQuadraticSolverProjective(const std::vector<std::vector<double>>& m);
     RS_VectorSolutions simultaneousQuadraticSolverMixed(const std::vector<std::vector<double>>& m);
 
     /** \brief verify simultaneousQuadraticVerify a solution for simultaneousQuadratic
