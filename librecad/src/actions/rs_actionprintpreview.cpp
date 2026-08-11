@@ -60,8 +60,14 @@ RS_ActionPrintPreview::RS_ActionPrintPreview(RS_EntityContainer& container,
     RS_SETTINGS->beginGroup("/PrintPreview");
     bool fixed = (RS_SETTINGS->readNumEntry("/PrintScaleFixed", 0) != 0);
     RS_SETTINGS->endGroup();
-    fit();
+
+    // A fixed scale and insertion base are drawing settings.  Lock them
+    // before any automatic fitting so reopening preview cannot overwrite
+    // $PSVPSCALE or $PINSBASE.
     setPaperScaleFixed(fixed);
+    if (!fixed) {
+        fit();
+    }
     showOptions();
 }
 
@@ -283,6 +289,9 @@ void RS_ActionPrintPreview::fit() {
 
 bool RS_ActionPrintPreview::setScale(double f, bool autoZoom) {
     if (graphic) {
+        if (graphic->getPaperScaleFixed()) {
+            return false;
+        }
         if(std::abs(f - graphic->getPaperScale()) < RS_TOLERANCE )
             return false;
         graphic->setPaperScale(f);
