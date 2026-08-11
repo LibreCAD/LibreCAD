@@ -131,10 +131,43 @@ OUTPUT_DMG=${APP_FILE}.dmg
 
 if [[ $CODESIGN_IDENTITY ]]
 then
-	${QT_PATH}macdeployqt ${APP_FILE}.app -verbose=2 -dmg -always-overwrite -codesign=$CODESIGN_IDENTITY
+	${QT_PATH}macdeployqt ${APP_FILE}.app -verbose=2 -always-overwrite -codesign=$CODESIGN_IDENTITY
 else
-	${QT_PATH}macdeployqt ${APP_FILE}.app -verbose=2 -dmg -always-overwrite
+	${QT_PATH}macdeployqt ${APP_FILE}.app -verbose=2 -always-overwrite
 fi
+
+# macdeployqt bundles platforminputcontexts/libqtvirtualkeyboardplugin
+# unconditionally once QtGui is linked, even though LibreCAD never uses
+# virtual-keyboard input. That plugin drags in QtQuick/QtQml/QtQmlModels/
+# QtQmlWorkerScript/QtQmlMeta/QtOpenGL (~12 MB) as dead weight - and it
+# doesn't even work: macdeployqt can't resolve its own QtVirtualKeyboard[Qml]
+# framework dependencies, so the plugin would fail to load if Qt ever tried
+# it. Strip it and the frameworks it orphans before packaging the DMG.
+VKBD_PLUGIN="${APP_FILE}.app/Contents/PlugIns/platforminputcontexts/libqtvirtualkeyboardplugin.dylib"
+if [ -f "$VKBD_PLUGIN" ]
+then
+	rm -f "$VKBD_PLUGIN"
+	for fw in QtQuick QtQml QtQmlModels QtQmlWorkerScript QtQmlMeta QtOpenGL
+	do
+		rm -rf "${APP_FILE}.app/Contents/Frameworks/${fw}.framework"
+	done
+	# removing bundle contents after the fact invalidates macdeployqt's
+	# code-signature resource manifest; re-sign to match the trimmed bundle
+	if [[ $CODESIGN_IDENTITY ]]
+	then
+		codesign --force -s $CODESIGN_IDENTITY "${APP_FILE}.app"
+	else
+		codesign --force -s - "${APP_FILE}.app"
+	fi
+fi
+
+# build the DMG ourselves (macdeployqt's -dmg would redeploy from scratch,
+# undoing the plugin removal above) with the same drag-to-install layout
+DMG_STAGING_DIR=$(mktemp -d)
+cp -R "${APP_FILE}.app" "$DMG_STAGING_DIR/"
+ln -s /Applications "$DMG_STAGING_DIR/Applications"
+hdiutil create -volname "${APP_FILE}" -srcfolder "$DMG_STAGING_DIR" -ov -format UDRW -fs HFS+ "$OUTPUT_DMG"
+rm -rf "$DMG_STAGING_DIR"
 
 #bz2 compression
 hdiutil convert -shadow -format UDZO -ov -o "$OUTPUT_DMG" "$OUTPUT_DMG"

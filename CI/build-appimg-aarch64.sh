@@ -39,8 +39,43 @@ mkdir -p appdir/usr/share/librecad
 mkdir -p appdir/usr/lib/aarch64-linux-gnu/qt6
 echo "copying Qt6 plugins"
 export QPA_PLUGIN_FOLDER="$(find /usr/lib/aarch64-linux-gnu/qt6/ -type d -name plugins -print)"
-rsync -Par ${QPA_PLUGIN_FOLDER} appdir/usr/lib/aarch64-linux-gnu/qt6/
-rsync -Par ${QPA_PLUGIN_FOLDER}/platforms appdir/usr/bin/
+# See CI/build-appimg.sh for the full rationale, including which categories
+# appimagetool re-deploys wholesale regardless of what is staged here. In
+# short: the blanket copy pulled in libraries nothing in LibreCAD ever opens
+# (GTK3+Cairo+Pango+ATK, QML/Quick, the Wayland compositor side), and its
+# GTK3 platform theme plugin supplies its own font settings on GTK desktops.
+LC_QT_PLUGINS=(
+    platforms/libqxcb.so
+    platforms/libqwayland-egl.so
+    platforms/libqwayland-generic.so
+    platforms/libqminimal.so
+    platforms/libqoffscreen.so
+    xcbglintegrations/libqxcb-glx-integration.so
+    xcbglintegrations/libqxcb-egl-integration.so
+    platforminputcontexts/libcomposeplatforminputcontextplugin.so
+    platforminputcontexts/libibusplatforminputcontextplugin.so
+    iconengines/libqsvgicon.so
+    imageformats/libqgif.so
+    imageformats/libqico.so
+    imageformats/libqjpeg.so
+    imageformats/libqsvg.so
+    imageformats/libqtiff.so
+    tls/libqopensslbackend.so
+    tls/libqcertonlybackend.so
+    printsupport/libcupsprintersupport.so
+    wayland-decoration-client/libbradient.so
+    wayland-graphics-integration-client/libqt-plugin-wayland-egl.so
+    wayland-shell-integration/libxdg-shell.so
+)
+for plugin in "${LC_QT_PLUGINS[@]}"; do
+    src="${QPA_PLUGIN_FOLDER}/${plugin}"
+    if [ -f "${src}" ]; then
+        install -D "${src}" "appdir/usr/lib/aarch64-linux-gnu/qt6/plugins/${plugin}"
+    else
+        echo "warning: expected Qt6 plugin not found: ${src}" >&2
+    fi
+done
+cp -r appdir/usr/lib/aarch64-linux-gnu/qt6/plugins/platforms appdir/usr/bin/
 echo "copying xcb-cursor library"
 find /usr/lib -name "libxcb-cursor.so*" -exec cp -L {} appdir/usr/lib/ \;
 
