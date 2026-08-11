@@ -55,35 +55,28 @@ namespace {
  */
 RS_ActionPrintPreview::RS_ActionPrintPreview(LC_ActionContext* actionContext)
     : RS_ActionInterface("ActionFilePrintPreview", actionContext, RS2::ActionFilePrintPreview),
-      m_actionData(std::make_unique<ActionData>()) {
-    const bool fixed = LC_GET_ONE_BOOL("PrintPreview", "PrintScaleFixed");
-
-    if (!fixed) {
-        fit();
-        updateOptions();
-    }
-    setPaperScaleFixed(fixed);
-}
+      m_actionData(std::make_unique<ActionData>()) {}
 
 void RS_ActionPrintPreview::doSaveOptions() {
      save("ScaleLineWidth", isLineWidthScaling());
      save("BlackWhiteSet", isBlackWhite());
      save("PrintScaleFixed", isPaperScaleFixed());
-     save("PrintScaleValue", getScale());
 }
 
-// fixme - sand - storing scale and fixed in settings is obious suxx as they are part of drawing setttings...
-// fixme - sand - yet it will be reworked anywath with support of layouts later - so let it be as it was
+// Fixed mode is a global preference, while scale and placement belong to the
+// document. Layout support should eventually own all three values explicitly.
 void RS_ActionPrintPreview::doLoadOptions() {
     const bool scaleLineWidth = loadBool("ScaleLineWidth", true);
     const bool blackAndWhite = loadBool("BlackWhiteSet", false);
-    const double printScale = loadDouble("PrintScaleValue", 1.0);
-    const bool printScaleFixed = loadBool("PrintScaleFixed", false);
+    const bool legacyScaleFixed = LC_GET_ONE_BOOL("PrintPreview", "PrintScaleFixed");
+    const bool printScaleFixed = loadBool("PrintScaleFixed", legacyScaleFixed);
 
     setLineWidthScaling(scaleLineWidth);
     setBlackWhite(blackAndWhite);
     setPaperScaleFixed(printScaleFixed);
-    setScale(printScale, true);
+    if (!printScaleFixed) {
+        fit();
+    }
 }
 
 QStringList RS_ActionPrintPreview::readCustomRatios(const bool metric, int maxCount) {
@@ -345,6 +338,9 @@ void RS_ActionPrintPreview::fit() const {
 bool RS_ActionPrintPreview::setScale(const double newScale, const bool autoZoom) const {
     if (m_graphic != nullptr) {
         const LC_PlotSettings* ps = m_graphic->getPlotSettings();
+        if (ps->isPaperScaleFixed()) {
+            return false;
+        }
         const double oldScale = ps->getPaperScale();
         if (LC_LineMath::isSameValue(newScale, oldScale)) {
             return false;
