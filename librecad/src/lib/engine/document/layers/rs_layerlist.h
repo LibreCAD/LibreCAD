@@ -131,7 +131,6 @@ protected:
     friend class RS_Graphic;
 
 private:
-    bool isVisibleLayer(RS_Layer* layer) const;
     void ensureActiveLayerIsVisible();
 
     //! layers in the graphic

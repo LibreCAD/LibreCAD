@@ -95,7 +95,7 @@ void RS_LayerList::activate(const QString& name, const bool notify) {
  */
 void RS_LayerList::activate(RS_Layer* layer, const bool notify) {
     RS_DEBUG->print("RS_LayerList::activate notify: %d begin", static_cast<int>(notify));
-    if (!isVisibleLayer(layer)) {
+    if (!m_layerSet.contains(layer) || layer->isFrozen()) {
         return;
     }
     m_activeLayer = layer;
@@ -514,33 +514,29 @@ void RS_LayerList::toggleFreezeMulti(const QList<RS_Layer*>& layers) {
     fireLayerToggled();
 }
 
-bool RS_LayerList::isVisibleLayer(RS_Layer* layer) const {
-    return layer != nullptr
-        && m_layerSet.contains(layer)
-        && !layer->isFrozen();
-}
-
 void RS_LayerList::ensureActiveLayerIsVisible() {
-    if (isVisibleLayer(m_activeLayer)) {
+    if (m_layerSet.contains(m_activeLayer) && !m_activeLayer->isFrozen()) {
         return;
     }
 
+    RS_Layer* fallback = nullptr;
     for (RS_Layer* layer : std::as_const(m_layers)) {
-        if (isVisibleLayer(layer)) {
-            activate(layer);
-            return;
+        if (!layer->isFrozen()) {
+            fallback = layer;
+            break;
         }
     }
 
-    RS_Layer* fallback = m_layerSet.contains(m_activeLayer) ? m_activeLayer : nullptr;
-    if (fallback == nullptr && !m_layers.isEmpty()) {
-        fallback = m_layers.first();
-    }
-    if (fallback != nullptr) {
-        fallback->freeze(false);
-        if (fallback != m_activeLayer) {
-            activate(fallback);
+    if (fallback == nullptr) {
+        fallback = m_layerSet.contains(m_activeLayer) ? m_activeLayer
+                                                     : (m_layers.isEmpty() ? nullptr : m_layers.first());
+        if (fallback == nullptr) {
+            return;
         }
+        fallback->freeze(false);
+    }
+    if (fallback != m_activeLayer) {
+        activate(fallback);
     }
 }
 
