@@ -382,12 +382,14 @@ void LC_LayerTreeWidget::update(){
 void LC_LayerTreeWidget::activateLayer(RS_Layer *layer){
     RS_DEBUG->print("QG_LayerWidget::activateLayer() begin");
 
-    if (!layer || !layerList || layer->isFrozen() || layer->isLocked()){
+    if (!layer || !layerList){
         RS_DEBUG->print(RS_Debug::D_ERROR, "QG_LayerWidget::activateLayer: nullptr layer or layerList");
         return;
     }
 
-    layerList->activate(layer, false);
+    if (!layerList->activate(layer, false)) {
+        return;
+    }
     update();
     layerTreeView->viewport()->update();
 
@@ -836,10 +838,10 @@ void LC_LayerTreeWidget::hideOtherThanSelectedLayers(){
             RS_Layer* layer = layersToShow.at(i);
             layersToHide.removeAll(layer);
         }
-        if (count > 0){
-            layerList->activate(layersToShow.at(0), false);
-        }
         manageLayersVisibilityFlag(layersToShow, layersToHide, false);
+        if (count > 0){
+            activateLayer(layersToShow.at(0));
+        }
     }
 }
 /**
@@ -1027,7 +1029,6 @@ void LC_LayerTreeWidget::layerEdited(RS_Layer *){
 void LC_LayerTreeWidget::layerRemoved(RS_Layer *){
     RS_DEBUG->print("LC_LayerTreeWidget::layerRemoved()");
     update();
-    activateLayer(layerList->at(0));
 }
 
 void LC_LayerTreeWidget::layerToggled(RS_Layer *){
@@ -1954,4 +1955,3 @@ void LC_LayerTreeWidget::invokeSettingsDialog(){
         update();
     }
 }
-

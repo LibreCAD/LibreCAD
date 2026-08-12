@@ -33,6 +33,7 @@
 
 class RS_Layer;
 class RS_LayerListListener;
+class RS_Graphic;
 class QG_LayerWidget;
 
 /**
@@ -65,8 +66,8 @@ public:
     QList<RS_Layer*>::const_iterator begin()const;
     QList<RS_Layer*>::const_iterator end()const;
 
-    void activate(const QString& name, bool notify = false);
-    void activate(RS_Layer* layer, bool notify = false);
+    bool activate(const QString& name, bool notify = false);
+    bool activate(RS_Layer* layer, bool notify = false);
     //! @return The active layer of NULL if no layer is activated.
     RS_Layer* getActive() {
         return activeLayer;
@@ -141,8 +142,10 @@ public:
 
 private:
 
-    bool isEditable(const RS_Layer* layer) const;
-    void ensureActiveLayerIsEditable();
+    bool isVisibleLayer(const RS_Layer* layer) const;
+    void ensureActiveLayerIsVisible();
+
+    friend class RS_Graphic;
 
     void fireLayerToggled();
 	//! layers in the graphic

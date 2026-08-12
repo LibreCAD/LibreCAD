@@ -121,7 +121,6 @@ public:
   void layerEdited(RS_Layer *) override { update(); }
   void layerRemoved(RS_Layer *) override {
         update();
-        activateLayer(layerList->at(0));
     }
     void layerToggled(RS_Layer*) override {
         update();

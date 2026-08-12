@@ -81,11 +81,11 @@ public:
     RS_Layer* layerAt(unsigned i) {
         return layerList.at(i);
     }
-    void activateLayer(const QString& name) {
-        layerList.activate(name);
+    bool activateLayer(const QString& name) {
+        return layerList.activate(name);
     }
-    void activateLayer(RS_Layer* layer) {
-        layerList.activate(layer);
+    bool activateLayer(RS_Layer* layer) {
+        return layerList.activate(layer);
     }
     RS_Layer* getActiveLayer() {
         return layerList.getActive();
