@@ -142,7 +142,6 @@ public:
 
 private:
 
-    bool isVisibleLayer(const RS_Layer* layer) const;
     void ensureActiveLayerIsVisible();
 
     friend class RS_Graphic;
