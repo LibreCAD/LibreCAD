@@ -619,7 +619,7 @@ void LC_ActionDrawRectangle3Points::doUpdateMouseButtonHints(const int status){
             updatePromptTRBack(tr("Specify height"));
             break;
         case SetPoint1:
-            updatePromptTRBack(tr("Specify start point)"),MOD_SHIFT_RELATIVE_ZERO);
+            updatePromptTRBack(tr("Specify start point"),MOD_SHIFT_RELATIVE_ZERO);
             break;
         case SetPoint2:
             updatePromptTRBack(tr("Specify second point"), m_baseAngleIsFixed ? MOD_NONE: MOD_SHIFT_ANGLE_SNAP);
