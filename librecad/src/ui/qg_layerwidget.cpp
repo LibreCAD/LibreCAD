@@ -406,6 +406,9 @@ void QG_LayerWidget::activateLayer(RS_Layer* layer, bool updateScroll) {
     }
 
     layerList->activate(layer);
+    if (layerList->getActive() != layer) {
+        return;
+    }
 
     if (!layerModel) {
         RS_DEBUG->print(RS_Debug::D_ERROR, "QG_LayerWidget::activateLayer: nullptr layerModel");

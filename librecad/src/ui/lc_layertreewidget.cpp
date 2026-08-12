@@ -388,6 +388,9 @@ void LC_LayerTreeWidget::activateLayer(RS_Layer *layer){
     }
 
     layerList->activate(layer, false);
+    if (layerList->getActive() != layer) {
+        return;
+    }
     update();
     layerTreeView->viewport()->update();
 
@@ -836,10 +839,10 @@ void LC_LayerTreeWidget::hideOtherThanSelectedLayers(){
             RS_Layer* layer = layersToShow.at(i);
             layersToHide.removeAll(layer);
         }
-        if (count > 0){
-            layerList->activate(layersToShow.at(0), false);
-        }
         manageLayersVisibilityFlag(layersToShow, layersToHide, false);
+        if (count > 0){
+            activateLayer(layersToShow.at(0));
+        }
     }
 }
 /**
@@ -1027,7 +1030,6 @@ void LC_LayerTreeWidget::layerEdited(RS_Layer *){
 void LC_LayerTreeWidget::layerRemoved(RS_Layer *){
     RS_DEBUG->print("LC_LayerTreeWidget::layerRemoved()");
     update();
-    activateLayer(layerList->at(0));
 }
 
 void LC_LayerTreeWidget::layerToggled(RS_Layer *){
@@ -1954,5 +1956,4 @@ void LC_LayerTreeWidget::invokeSettingsDialog(){
         update();
     }
 }
-
 

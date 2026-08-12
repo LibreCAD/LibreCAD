@@ -33,6 +33,7 @@
 
 class RS_Layer;
 class RS_LayerListListener;
+class RS_Graphic;
 class QG_LayerWidget;
 
 /**
@@ -140,6 +141,10 @@ public:
     friend std::ostream& operator << (std::ostream& os, RS_LayerList& l);
 
 private:
+
+    void ensureActiveLayerIsVisible();
+
+    friend class RS_Graphic;
 
     void fireLayerToggled();
 	//! layers in the graphic

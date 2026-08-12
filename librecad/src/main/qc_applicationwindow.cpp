@@ -760,8 +760,8 @@ void QC_ApplicationWindow::loadPlugins() {
                     }
                 }
             } else {
-                QMessageBox::information(this, "Info", pluginLoader.errorString());
-                RS_DEBUG->print("QC_ApplicationWindow::loadPlugin: %s", pluginLoader.errorString().toLatin1().data());
+                RS_DEBUG->print(RS_Debug::D_WARNING, "QC_ApplicationWindow::loadPlugin: %s",
+                                pluginLoader.errorString().toLatin1().data());
             }
         }
     }
@@ -1828,7 +1828,8 @@ void QC_ApplicationWindow::slotFileOpen() {
     QG_FileDialog dlg(this);
     QString fileName = dlg.getOpenFile(&type);
     RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen() 003");
-    slotFileOpen(fileName, type);
+    if (!fileName.isEmpty())
+        slotFileOpen(fileName, type);
     RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen(): OK");
 }
 
