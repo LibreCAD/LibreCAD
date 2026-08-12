@@ -946,6 +946,7 @@ endif()
 set_target_properties(librecad PROPERTIES
 WIN32_EXECUTABLE ON
 MACOSX_BUNDLE ON
+MACOSX_BUNDLE_GUI_IDENTIFIER "com.librecad.app"
    AUTOUIC_OPTIONS "--connections string")
 set_property(TARGET librecad PROPERTY AUTOUIC_OPTIONS --connections string)
 find_package(Freetype REQUIRED)
