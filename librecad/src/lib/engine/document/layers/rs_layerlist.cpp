@@ -53,6 +53,7 @@ RS_LayerList::~RS_LayerList() {
 void RS_LayerList::clear() {
     m_layers.clear();
     m_layerSet.clear();
+    m_activeLayer = nullptr;
     setModified(true);
 }
 
@@ -94,6 +95,9 @@ void RS_LayerList::activate(const QString& name, const bool notify) {
  */
 void RS_LayerList::activate(RS_Layer* layer, const bool notify) {
     RS_DEBUG->print("RS_LayerList::activate notify: %d begin", static_cast<int>(notify));
+    if (!m_layerSet.contains(layer) || layer->isFrozen()) {
+        return;
+    }
     m_activeLayer = layer;
 
     if (notify) {
@@ -187,14 +191,15 @@ void RS_LayerList::remove(RS_Layer* layerToRemove) {
     m_layers.removeOne(layerToRemove);
     m_layerSet.remove(layerToRemove);
 
-    fireLayerRemoved(layerToRemove);
-
     setModified(true);
 
-    // activate an other layer if necessary:
+    // Select a survivor before notifying listeners.
     if (m_activeLayer == layerToRemove) {
-        activate(m_layers.first());
+        m_activeLayer = nullptr;
+        ensureActiveLayerIsVisible();
     }
+
+    fireLayerRemoved(layerToRemove);
 
     // now it's save to delete the layer
     delete layerToRemove;
@@ -210,6 +215,7 @@ void RS_LayerList::edit(RS_Layer* layer, const RS_Layer& source) {
         return;
     }
     *layer = source;
+    ensureActiveLayerIsVisible();
     fireLayerEdited(layer);
 }
 
@@ -284,6 +290,7 @@ void RS_LayerList::toggle(RS_Layer* layer) {
 
     // set flags
     layer->toggle();
+    ensureActiveLayerIsVisible();
     setModified(true);
 
     // Notify listeners:
@@ -364,6 +371,7 @@ void RS_LayerList::freezeAll(const bool freeze) {
             at(l)->freeze(freeze);
         }
     }
+    ensureActiveLayerIsVisible();
     fireLayerToggled();
 }
 
@@ -436,6 +444,7 @@ void RS_LayerList::setFreezeMulti(const QList<RS_Layer*>& layersEnable, const QL
             layer->freeze(true);
         }
     }
+    ensureActiveLayerIsVisible();
     fireLayerToggled();
 }
 
@@ -501,7 +510,34 @@ void RS_LayerList::toggleFreezeMulti(const QList<RS_Layer*>& layers) {
             toggled.insert(layer);
         }
     }
+    ensureActiveLayerIsVisible();
     fireLayerToggled();
+}
+
+void RS_LayerList::ensureActiveLayerIsVisible() {
+    if (m_layerSet.contains(m_activeLayer) && !m_activeLayer->isFrozen()) {
+        return;
+    }
+
+    RS_Layer* fallback = nullptr;
+    for (RS_Layer* layer : std::as_const(m_layers)) {
+        if (!layer->isFrozen()) {
+            fallback = layer;
+            break;
+        }
+    }
+
+    if (fallback == nullptr) {
+        fallback = m_layerSet.contains(m_activeLayer) ? m_activeLayer
+                                                     : (m_layers.isEmpty() ? nullptr : m_layers.first());
+        if (fallback == nullptr) {
+            return;
+        }
+        fallback->freeze(false);
+    }
+    if (fallback != m_activeLayer) {
+        activate(fallback);
+    }
 }
 
 /**

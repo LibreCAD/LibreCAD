@@ -354,7 +354,6 @@ void QG_LayerWidget::layerRemoved([[maybe_unused]]RS_Layer *layer){
     updateWidget();
     updateFiltering();
     updateWidget();
-    activateLayer(m_layerList->at(0));
 }
 
 /**
@@ -443,6 +442,9 @@ void QG_LayerWidget::activateLayer(RS_Layer* layer, const bool updateScroll) con
     }
 
     m_graphic->activateLayer(layer);
+    if (m_graphic->getActiveLayer() != layer) {
+        return;
+    }
 
     if (m_layerModel == nullptr) {
         RS_DEBUG->print(RS_Debug::D_ERROR, "QG_LayerWidget::activateLayer: nullptr layerModel");

@@ -204,6 +204,8 @@ RS_Graphic::RS_Graphic(RS_EntityContainer* parent)
 RS_Graphic::~RS_Graphic() = default;
 
 void RS_Graphic::onLoadingCompleted() {
+    m_layerList.ensureActiveLayerIsVisible();
+
     const auto fallBackDimStyleFromVars = m_dimstyleList.getFallbackDimStyleFromVars();
     fallBackDimStyleFromVars->fillByDefaults(); // cleanup (is it redundant?)
     LC_DimStyleToVariablesMapper dimStyleToVariablesMapper;

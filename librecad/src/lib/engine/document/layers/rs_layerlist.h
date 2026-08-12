@@ -131,6 +131,8 @@ protected:
     friend class RS_Graphic;
 
 private:
+    void ensureActiveLayerIsVisible();
+
     //! layers in the graphic
     QList<RS_Layer*> m_layers;
     //! mirror of m_layers for O(1) contains(); kept in sync at every

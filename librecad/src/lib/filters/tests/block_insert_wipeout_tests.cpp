@@ -1000,6 +1000,64 @@ TEST_CASE("Layer visibility refreshes expanded INSERT bounds and selection",
   graphic.removeLayerListListener(&listener);
 }
 
+TEST_CASE("Current layers remain visible while lock state stays independent", "[layers][active]") {
+  ensureTestApp();
+  RS_Graphic graphic;
+  graphic.initForNewDocument();
+  auto *zeroLayer = graphic.findLayer(QStringLiteral("0"));
+  REQUIRE(zeroLayer != nullptr);
+
+  auto *detailLayer = new RS_Layer(QStringLiteral("DETAIL"));
+  graphic.addLayer(detailLayer);
+  graphic.activateLayer(detailLayer);
+  REQUIRE(graphic.getActiveLayer() == detailLayer);
+
+  graphic.toggleLayerLock(detailLayer);
+  CHECK(detailLayer->isLocked());
+  CHECK(graphic.getActiveLayer() == detailLayer);
+  graphic.activateLayer(QStringLiteral("DETAIL"), true);
+  CHECK(graphic.getActiveLayer() == detailLayer);
+  auto *lockedLayerLine = new RS_Line(
+      &graphic, RS_LineData(RS_Vector(0.0, 0.0), RS_Vector(1.0, 1.0)));
+  graphic.addEntity(lockedLayerLine);
+  CHECK(lockedLayerLine->getLayer() == detailLayer);
+
+  graphic.toggleLayer(detailLayer);
+  CHECK(detailLayer->isFrozen());
+  CHECK(graphic.getActiveLayer() == zeroLayer);
+  graphic.activateLayer(detailLayer, true);
+  CHECK(graphic.getActiveLayer() == zeroLayer);
+  graphic.activateLayer(QStringLiteral("DETAIL"), true);
+  CHECK(graphic.getActiveLayer() == zeroLayer);
+  graphic.activateLayer(QStringLiteral("MISSING"), true);
+  CHECK(graphic.getActiveLayer() == zeroLayer);
+
+  RS_Layer foreignLayer(QStringLiteral("FOREIGN"));
+  graphic.activateLayer(&foreignLayer, true);
+  CHECK(graphic.getActiveLayer() == zeroLayer);
+
+  graphic.toggleLayer(detailLayer);
+  graphic.activateLayer(detailLayer);
+  REQUIRE(graphic.getActiveLayer() == detailLayer);
+
+  graphic.lockAllLayers(true);
+  CHECK(detailLayer->isLocked());
+  CHECK(zeroLayer->isLocked());
+  CHECK(graphic.getActiveLayer() == detailLayer);
+
+  graphic.freezeAllLayers(true);
+  CHECK(graphic.getActiveLayer() == detailLayer);
+  CHECK_FALSE(detailLayer->isFrozen());
+  CHECK(detailLayer->isLocked());
+  CHECK(zeroLayer->isFrozen());
+  CHECK(zeroLayer->isLocked());
+
+  graphic.removeLayer(detailLayer);
+  CHECK(graphic.getActiveLayer() == zeroLayer);
+  CHECK_FALSE(zeroLayer->isFrozen());
+  CHECK(zeroLayer->isLocked());
+}
+
 TEST_CASE("Layer changes rebuild flattened nested INSERT visibility",
           "[block-insert][layer-visibility][insert-nested]") {
   ensureTestApp();
