@@ -79,11 +79,11 @@ QList<RS_Layer*>::const_iterator RS_LayerList::end()const
  * 
  * @param notify Notify listeners.
  */
-bool RS_LayerList::activate(const QString& name, bool notify) {
+void RS_LayerList::activate(const QString& name, bool notify) {
     RS_DEBUG->print("RS_LayerList::activate: %s, notify: %d begin",
                                     name.toLatin1().data(), notify);
 
-    const bool activated = activate(find(name), notify);
+    activate(find(name), notify);
     /*
     if (activeLayer==nullptr) {
         RS_DEBUG->print("activeLayer is nullptr");
@@ -93,7 +93,6 @@ bool RS_LayerList::activate(const QString& name, bool notify) {
     */
 
     RS_DEBUG->print("RS_LayerList::activate: %s end", name.toLatin1().data());
-    return activated;
 }
 
 
@@ -103,13 +102,11 @@ bool RS_LayerList::activate(const QString& name, bool notify) {
  * 
  * @param notify Notify listeners.
  */
-bool RS_LayerList::activate(RS_Layer* layer, bool notify) {
+void RS_LayerList::activate(RS_Layer* layer, bool notify) {
     RS_DEBUG->print("RS_LayerList::activate notify: %d begin", notify);
 
     if (!isVisibleLayer(layer)) {
-        RS_DEBUG->print(RS_Debug::D_WARNING,
-                        "RS_LayerList::activate: refusing a null, foreign, or frozen layer");
-        return false;
+        return;
     }
 
     /*if (layer) {
@@ -131,7 +128,6 @@ bool RS_LayerList::activate(RS_Layer* layer, bool notify) {
     }
 
     RS_DEBUG->print("RS_LayerList::activate end");
-    return true;
 }
 
 
@@ -213,7 +209,7 @@ void RS_LayerList::remove(RS_Layer* layer) {
 
 	setModified(true);
 
-    // Restore a valid current layer before listeners observe the removal.
+    // Select a survivor before notifying listeners.
     if (activeLayer==layer) {
         activeLayer = nullptr;
         ensureActiveLayerIsVisible();
@@ -593,14 +589,11 @@ void RS_LayerList::ensureActiveLayerIsVisible() {
 
     for (RS_Layer* layer : layers) {
         if (isVisibleLayer(layer)) {
-            activate(layer, true);
+            activate(layer);
             return;
         }
     }
 
-    // A drawing must retain one visible current layer. Prefer the existing
-    // current layer when it still belongs to this list; otherwise use the
-    // first layer. Lock state is deliberately independent of visibility.
     RS_Layer* fallback = layers.contains(activeLayer) ? activeLayer : nullptr;
     if (fallback == nullptr && !layers.isEmpty()) {
         fallback = layers.first();
@@ -608,7 +601,7 @@ void RS_LayerList::ensureActiveLayerIsVisible() {
     if (fallback != nullptr) {
         fallback->freeze(false);
         if (fallback != activeLayer) {
-            activate(fallback, true);
+            activate(fallback);
         }
     }
 }

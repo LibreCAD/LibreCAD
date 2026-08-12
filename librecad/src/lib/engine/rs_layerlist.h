@@ -66,8 +66,8 @@ public:
     QList<RS_Layer*>::const_iterator begin()const;
     QList<RS_Layer*>::const_iterator end()const;
 
-    bool activate(const QString& name, bool notify = false);
-    bool activate(RS_Layer* layer, bool notify = false);
+    void activate(const QString& name, bool notify = false);
+    void activate(RS_Layer* layer, bool notify = false);
     //! @return The active layer of NULL if no layer is activated.
     RS_Layer* getActive() {
         return activeLayer;

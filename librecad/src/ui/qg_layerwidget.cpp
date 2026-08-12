@@ -405,7 +405,8 @@ void QG_LayerWidget::activateLayer(RS_Layer* layer, bool updateScroll) {
         return;
     }
 
-    if (!layerList->activate(layer)) {
+    layerList->activate(layer);
+    if (layerList->getActive() != layer) {
         return;
     }
 

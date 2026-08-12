@@ -387,7 +387,8 @@ void LC_LayerTreeWidget::activateLayer(RS_Layer *layer){
         return;
     }
 
-    if (!layerList->activate(layer, false)) {
+    layerList->activate(layer, false);
+    if (layerList->getActive() != layer) {
         return;
     }
     update();
@@ -1955,3 +1956,4 @@ void LC_LayerTreeWidget::invokeSettingsDialog(){
         update();
     }
 }
+
