@@ -79,12 +79,13 @@ QList<RS_Layer*>::const_iterator RS_LayerList::end() const {
  * @param name
  * @param notify Notify listeners.
  */
-void RS_LayerList::activate(const QString& name, const bool notify) {
+bool RS_LayerList::activate(const QString& name, const bool notify) {
     RS_DEBUG->print("RS_LayerList::activate: %s, notify: %d begin",
                     name.toLatin1().data(), static_cast<int>(notify));
 
-    activate(find(name), notify);
+    const bool activated = activate(find(name), notify);
     RS_DEBUG->print("RS_LayerList::activate: %s end", name.toLatin1().data());
+    return activated;
 }
 
 /**
@@ -93,14 +94,20 @@ void RS_LayerList::activate(const QString& name, const bool notify) {
  * @param layer
  * @param notify Notify listeners.
  */
-void RS_LayerList::activate(RS_Layer* layer, const bool notify) {
+bool RS_LayerList::activate(RS_Layer* layer, const bool notify) {
     RS_DEBUG->print("RS_LayerList::activate notify: %d begin", static_cast<int>(notify));
+    if (!isVisibleLayer(layer)) {
+        RS_DEBUG->print(RS_Debug::D_WARNING,
+                        "RS_LayerList::activate: refusing a null, foreign, or frozen layer");
+        return false;
+    }
     m_activeLayer = layer;
 
     if (notify) {
         fireLayerActivated();
     }
     RS_DEBUG->print("RS_LayerList::activate end");
+    return true;
 }
 
 /**
@@ -188,15 +195,15 @@ void RS_LayerList::remove(RS_Layer* layerToRemove) {
     m_layers.removeOne(layerToRemove);
     m_layerSet.remove(layerToRemove);
 
-    fireLayerRemoved(layerToRemove);
-
     setModified(true);
 
-    // Do not leave a dangling active-layer pointer while the layer is gone.
+    // Restore a valid current layer before listeners observe the removal.
     if (m_activeLayer == layerToRemove) {
         m_activeLayer = nullptr;
-        ensureActiveLayerIsEditable();
+        ensureActiveLayerIsVisible();
     }
+
+    fireLayerRemoved(layerToRemove);
 
     // now it's save to delete the layer
     delete layerToRemove;
@@ -212,7 +219,7 @@ void RS_LayerList::edit(RS_Layer* layer, const RS_Layer& source) {
         return;
     }
     *layer = source;
-    ensureActiveLayerIsEditable();
+    ensureActiveLayerIsVisible();
     fireLayerEdited(layer);
 }
 
@@ -287,7 +294,7 @@ void RS_LayerList::toggle(RS_Layer* layer) {
 
     // set flags
     layer->toggle();
-    ensureActiveLayerIsEditable();
+    ensureActiveLayerIsVisible();
     setModified(true);
 
     // Notify listeners:
@@ -306,7 +313,6 @@ void RS_LayerList::toggleLock(RS_Layer* layer) {
     }
 
     layer->toggleLock();
-    ensureActiveLayerIsEditable();
     setModified(true);
 
     // Notify listeners:
@@ -369,7 +375,7 @@ void RS_LayerList::freezeAll(const bool freeze) {
             at(l)->freeze(freeze);
         }
     }
-    ensureActiveLayerIsEditable();
+    ensureActiveLayerIsVisible();
     fireLayerToggled();
 }
 
@@ -390,7 +396,6 @@ void RS_LayerList::lockAll(const bool lock) {
             at(l)->lock(lock);
         }
     }
-    ensureActiveLayerIsEditable();
     fireLayerToggled();
 }
 
@@ -403,7 +408,6 @@ void RS_LayerList::toggleLockMulti(const QList<RS_Layer*>& layers) {
         }
     }
 
-    ensureActiveLayerIsEditable();
     fireLayerToggled();
 }
 
@@ -444,7 +448,7 @@ void RS_LayerList::setFreezeMulti(const QList<RS_Layer*>& layersEnable, const QL
             layer->freeze(true);
         }
     }
-    ensureActiveLayerIsEditable();
+    ensureActiveLayerIsVisible();
     fireLayerToggled();
 }
 
@@ -463,7 +467,6 @@ void RS_LayerList::setLockMulti(const QList<RS_Layer*>& layersToUnlock, const QL
             layer->lock(true);
         }
     }
-    ensureActiveLayerIsEditable();
     fireLayerToggled();
 }
 
@@ -511,35 +514,40 @@ void RS_LayerList::toggleFreezeMulti(const QList<RS_Layer*>& layers) {
             toggled.insert(layer);
         }
     }
-    ensureActiveLayerIsEditable();
+    ensureActiveLayerIsVisible();
     fireLayerToggled();
 }
 
-bool RS_LayerList::isEditable(const RS_Layer* layer) const {
-    return layer != nullptr && !layer->isFrozen() && !layer->isLocked();
+bool RS_LayerList::isVisibleLayer(const RS_Layer* layer) const {
+    return layer != nullptr
+        && m_layerSet.contains(layer)
+        && !layer->isFrozen();
 }
 
-void RS_LayerList::ensureActiveLayerIsEditable() {
-    if (isEditable(m_activeLayer)) {
+void RS_LayerList::ensureActiveLayerIsVisible() {
+    if (isVisibleLayer(m_activeLayer)) {
         return;
     }
 
     for (RS_Layer* layer : std::as_const(m_layers)) {
-        if (isEditable(layer)) {
+        if (isVisibleLayer(layer)) {
             activate(layer, true);
             return;
         }
     }
 
-    // Keep one layer editable when a batch operation would otherwise leave
-    // the document with no valid current layer.
-    if (m_activeLayer == nullptr && !m_layers.isEmpty()) {
-        m_activeLayer = m_layers.first();
+    // A drawing must retain one visible current layer. Prefer the existing
+    // current layer when it still belongs to this list; otherwise use the
+    // first layer. Lock state is deliberately independent of visibility.
+    RS_Layer* fallback = m_layerSet.contains(m_activeLayer) ? m_activeLayer : nullptr;
+    if (fallback == nullptr && !m_layers.isEmpty()) {
+        fallback = m_layers.first();
     }
-    if (m_activeLayer != nullptr) {
-        m_activeLayer->freeze(false);
-        m_activeLayer->lock(false);
-        fireLayerActivated();
+    if (fallback != nullptr) {
+        fallback->freeze(false);
+        if (fallback != m_activeLayer) {
+            activate(fallback, true);
+        }
     }
 }
 

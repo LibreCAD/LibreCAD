@@ -75,7 +75,7 @@ public:
     //! O(1) membership test -- use this instead of getIndex(layer) >= 0 when
     //! only "is this pointer still in the list" is needed (the common case:
     //! validating a possibly-dangling RS_Layer* before dereferencing it).
-    bool contains(RS_Layer* layer) const {
+    bool contains(const RS_Layer* layer) const {
         return m_layerSet.contains(layer);
     }
 
@@ -110,8 +110,8 @@ protected:
 
     void clear();
 
-    void activate(const QString& name, bool notify = false);
-    void activate(RS_Layer* layer, bool notify = false);
+    bool activate(const QString& name, bool notify = false);
+    bool activate(RS_Layer* layer, bool notify = false);
     void toggle(const QString& name);
     void toggle(RS_Layer* layer);
     void toggleLock(RS_Layer* layer);
@@ -131,14 +131,14 @@ protected:
     friend class RS_Graphic;
 
 private:
-    bool isEditable(const RS_Layer* layer) const;
-    void ensureActiveLayerIsEditable();
+    bool isVisibleLayer(const RS_Layer* layer) const;
+    void ensureActiveLayerIsVisible();
 
     //! layers in the graphic
     QList<RS_Layer*> m_layers;
     //! mirror of m_layers for O(1) contains(); kept in sync at every
     //! mutation point (add/remove/clear) -- sort() never changes membership.
-    QSet<RS_Layer*> m_layerSet;
+    QSet<const RS_Layer*> m_layerSet;
     //! List of registered LayerListListeners
     QList<RS_LayerListListener*> m_layerListListeners;
     RS_Layer* m_activeLayer = nullptr;

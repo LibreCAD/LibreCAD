@@ -353,8 +353,6 @@ void QG_LayerWidget::layerEdited([[maybe_unused]]RS_Layer *layer){
 void QG_LayerWidget::layerRemoved([[maybe_unused]]RS_Layer *layer){
     updateWidget();
     updateFiltering();
-    updateWidget();
-    activateLayer(m_layerList->at(0));
 }
 
 /**
@@ -437,12 +435,14 @@ void QG_LayerWidget::restoreSelections() const {
 void QG_LayerWidget::activateLayer(RS_Layer* layer, const bool updateScroll) const {
     RS_DEBUG->print("QG_LayerWidget::activateLayer() begin");
 
-    if (layer == nullptr || m_graphic == nullptr || layer->isFrozen() || layer->isLocked()) {
+    if (layer == nullptr || m_graphic == nullptr) {
         RS_DEBUG->print(RS_Debug::D_ERROR, "QG_LayerWidget::activateLayer: nullptr layer or layerList");
         return;
     }
 
-    m_graphic->activateLayer(layer);
+    if (!m_graphic->activateLayer(layer)) {
+        return;
+    }
 
     if (m_layerModel == nullptr) {
         RS_DEBUG->print(RS_Debug::D_ERROR, "QG_LayerWidget::activateLayer: nullptr layerModel");
