@@ -499,7 +499,7 @@ void LC_ActionDrawLinePoints::updateMouseButtonHints(){
             updateMouseWidgetTR("Specify edge points mode\n[none|start|end|both|distance]","Back");
             break;
         case SetFixDistance:
-            updateMouseWidgetTR("Specify fixed distance between points\nor[x|y|p|number|edges]","Back");
+            updateMouseWidgetTR("Specify fixed distance between points\nor [x|y|p|number|edges]","Back");
             break;
         case SetDistance: {
             bool toX = direction == DIRECTION_X;
@@ -518,7 +518,7 @@ void LC_ActionDrawLinePoints::updateMouseButtonHints(){
                 msg += "|" + getCommand("x");
                 msg += "|" + getCommand("y");
                 QString angleStr = RS_Math::doubleToString(angle, 1);
-                updateMouseWidget(tr("Specify  distance (angle %1 deg)\nor [%2]").arg(angleStr, msg),tr("Back"));
+                updateMouseWidget(tr("Specify distance (angle %1 deg)\nor [%2]").arg(angleStr, msg),tr("Back"));
             }
             break;
         }
@@ -579,4 +579,3 @@ void LC_ActionDrawLinePoints::setMajorStatus(){
 void LC_ActionDrawLinePoints::createOptionsWidget(){
     m_optionWidget = std::make_unique<LC_LinePointsOptions>(nullptr);
 }
-

@@ -256,7 +256,7 @@ or [%2]</source>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawlinepoints.cpp" line="521"/>
-        <source>Specify  distance (angle %1 deg)
+        <source>Specify distance (angle %1 deg)
 or [%2]</source>
         <translation>Укажите расстояние (угол %1 град.)
 или [%2]</translation>
