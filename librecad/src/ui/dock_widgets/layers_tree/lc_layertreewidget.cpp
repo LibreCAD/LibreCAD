@@ -365,7 +365,8 @@ void LC_LayerTreeWidget::activateLayer(RS_Layer *layer) const {
         return;
     }
 
-    if (!m_graphic->activateLayer(layer, false)) {
+    m_graphic->activateLayer(layer, false);
+    if (m_graphic->getActiveLayer() != layer) {
         return;
     }
     update();

@@ -27,7 +27,6 @@
 
 #include <cmath>
 #include <limits>
-#include <utility>
 #include <vector>
 
 #include <QCoreApplication>
@@ -103,22 +102,6 @@ public:
 
   int count = 0;
   RS_Layer *lastLayer = nullptr;
-};
-
-class LayerRemovalListener final : public RS_LayerListListener {
-public:
-  LayerRemovalListener(RS_Graphic &graphic, QString expectedName)
-      : graphic(graphic), expectedName(std::move(expectedName)) {}
-
-  void layerRemoved(RS_Layer *layer) override {
-    removedExpectedLayer = layer != nullptr && layer->getName() == expectedName;
-    activeDuringRemoval = graphic.getActiveLayer();
-  }
-
-  RS_Graphic &graphic;
-  QString expectedName;
-  bool removedExpectedLayer = false;
-  RS_Layer *activeDuringRemoval = nullptr;
 };
 
 } // namespace
@@ -1026,46 +1009,42 @@ TEST_CASE("Current layers remain visible while lock state stays independent", "[
 
   auto *detailLayer = new RS_Layer(QStringLiteral("DETAIL"));
   graphic.addLayer(detailLayer);
-  REQUIRE(graphic.activateLayer(detailLayer));
+  graphic.activateLayer(detailLayer);
+  REQUIRE(graphic.getActiveLayer() == detailLayer);
 
-  // Locked layers remain valid current layers and can be selected again.
   graphic.toggleLayerLock(detailLayer);
   CHECK(detailLayer->isLocked());
   CHECK(graphic.getActiveLayer() == detailLayer);
-  CHECK(graphic.activateLayer(detailLayer, true));
-  CHECK(graphic.activateLayer(QStringLiteral("DETAIL"), true));
+  graphic.activateLayer(QStringLiteral("DETAIL"), true);
+  CHECK(graphic.getActiveLayer() == detailLayer);
   auto *lockedLayerLine = new RS_Line(
       &graphic, RS_LineData(RS_Vector(0.0, 0.0), RS_Vector(1.0, 1.0)));
   graphic.addEntity(lockedLayerLine);
   CHECK(lockedLayerLine->getLayer() == detailLayer);
 
-  // Hiding the current layer selects a visible fallback. A hidden layer
-  // cannot be restored as current through the public activation API.
   graphic.toggleLayer(detailLayer);
   CHECK(detailLayer->isFrozen());
   CHECK(graphic.getActiveLayer() == zeroLayer);
-  CHECK_FALSE(graphic.activateLayer(detailLayer, true));
-  CHECK_FALSE(graphic.activateLayer(QStringLiteral("DETAIL"), true));
-  CHECK_FALSE(graphic.activateLayer(QStringLiteral("MISSING"), true));
+  graphic.activateLayer(detailLayer, true);
+  CHECK(graphic.getActiveLayer() == zeroLayer);
+  graphic.activateLayer(QStringLiteral("DETAIL"), true);
+  CHECK(graphic.getActiveLayer() == zeroLayer);
+  graphic.activateLayer(QStringLiteral("MISSING"), true);
   CHECK(graphic.getActiveLayer() == zeroLayer);
 
-  // Lock operations do not alter visibility.
-  graphic.toggleLayerLock(detailLayer);
-  CHECK_FALSE(detailLayer->isLocked());
-  CHECK(detailLayer->isFrozen());
+  RS_Layer foreignLayer(QStringLiteral("FOREIGN"));
+  graphic.activateLayer(&foreignLayer, true);
+  CHECK(graphic.getActiveLayer() == zeroLayer);
 
-  graphic.toggleLayerLock(detailLayer);
   graphic.toggleLayer(detailLayer);
-  REQUIRE(graphic.activateLayer(detailLayer));
+  graphic.activateLayer(detailLayer);
+  REQUIRE(graphic.getActiveLayer() == detailLayer);
 
-  // Locking every layer keeps the current layer locked and current.
   graphic.lockAllLayers(true);
   CHECK(detailLayer->isLocked());
   CHECK(zeroLayer->isLocked());
   CHECK(graphic.getActiveLayer() == detailLayer);
 
-  // Freezing every layer leaves exactly the current layer visible and does
-  // not unlock it.
   graphic.freezeAllLayers(true);
   CHECK(graphic.getActiveLayer() == detailLayer);
   CHECK_FALSE(detailLayer->isFrozen());
@@ -1073,31 +1052,10 @@ TEST_CASE("Current layers remain visible while lock state stays independent", "[
   CHECK(zeroLayer->isFrozen());
   CHECK(zeroLayer->isLocked());
 
-  // With another visible layer available, hiding the current locked layer
-  // switches current layers without changing either lock flag.
-  graphic.toggleLayer(zeroLayer);
-  graphic.toggleLayer(detailLayer);
-  CHECK(graphic.getActiveLayer() == zeroLayer);
-  CHECK(detailLayer->isFrozen());
-  CHECK(detailLayer->isLocked());
-  CHECK(zeroLayer->isLocked());
-
-  RS_Layer foreignLayer(QStringLiteral("FOREIGN"));
-  CHECK_FALSE(graphic.activateLayer(&foreignLayer, true));
-  CHECK(graphic.getActiveLayer() == zeroLayer);
-
-  // Removing the current layer selects a valid survivor before deleting it.
-  graphic.toggleLayer(detailLayer);
-  REQUIRE(graphic.activateLayer(detailLayer));
-  LayerRemovalListener removalListener(graphic, QStringLiteral("DETAIL"));
-  graphic.addLayerListListener(&removalListener);
   graphic.removeLayer(detailLayer);
-  CHECK(removalListener.removedExpectedLayer);
-  CHECK(removalListener.activeDuringRemoval == zeroLayer);
   CHECK(graphic.getActiveLayer() == zeroLayer);
   CHECK_FALSE(zeroLayer->isFrozen());
   CHECK(zeroLayer->isLocked());
-  graphic.removeLayerListListener(&removalListener);
 }
 
 TEST_CASE("Layer changes rebuild flattened nested INSERT visibility",

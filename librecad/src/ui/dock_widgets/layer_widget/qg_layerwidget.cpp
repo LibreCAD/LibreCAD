@@ -353,6 +353,7 @@ void QG_LayerWidget::layerEdited([[maybe_unused]]RS_Layer *layer){
 void QG_LayerWidget::layerRemoved([[maybe_unused]]RS_Layer *layer){
     updateWidget();
     updateFiltering();
+    updateWidget();
 }
 
 /**
@@ -440,7 +441,8 @@ void QG_LayerWidget::activateLayer(RS_Layer* layer, const bool updateScroll) con
         return;
     }
 
-    if (!m_graphic->activateLayer(layer)) {
+    m_graphic->activateLayer(layer);
+    if (m_graphic->getActiveLayer() != layer) {
         return;
     }
 

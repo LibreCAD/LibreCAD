@@ -151,8 +151,8 @@ public:
     }
     unsigned countLayers() const {return m_layerList.count();}
     RS_Layer* layerAt(const unsigned i) const {return m_layerList.at(i);}
-    bool activateLayer(const QString& name, const bool notify = false) {return m_layerList.activate(name, notify);}
-    bool activateLayer(RS_Layer* layer, const bool notify = false) {return m_layerList.activate(layer, notify);}
+    void activateLayer(const QString& name, const bool notify = false) {m_layerList.activate(name, notify);}
+    void activateLayer(RS_Layer* layer, const bool notify = false) {m_layerList.activate(layer, notify);}
     RS_Layer* getActiveLayer() const {return m_layerList.getActive();}
     virtual void addLayer(RS_Layer* layer) {m_layerList.add(layer);}
     void addEntity(const RS_Entity* entity) override;
