@@ -117,12 +117,12 @@
     <message>
         <location filename="../src/actions/drawing/lc_abstractactionwithpreview.cpp" line="644"/>
         <source> is not divided as it is locked.</source>
-        <translation>не может быть разбит так как он заблокирован.</translation>
+        <translation> не может быть разбит, так как он заблокирован.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/lc_abstractactionwithpreview.cpp" line="652"/>
         <source> is not divided as it is part of polyline. Expand polyline first.</source>
-        <translation>не может быть разбит так как это часть ломаной. Сначала разбейте ломаную.</translation>
+        <translation> не может быть разбит, так как это часть ломаной. Сначала разбейте ломаную.</translation>
     </message>
 </context>
 <context>
@@ -429,7 +429,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_2points_angle.cpp" line="58"/>
         <source>Enter value of central angle</source>
-        <translation>Введите центральный угол</translation>
+        <translation>Введите значение центрального угла</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_2points_angle.cpp" line="62"/>
@@ -642,7 +642,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_bounding_box.cpp" line="162"/>
         <source>Select entities for bounding box</source>
-        <translation>Выбрать объекты для охватывающей рамки</translation>
+        <translation>Выберите объекты для создания рамки</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_bounding_box.cpp" line="163"/>
@@ -657,7 +657,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_bounding_box.cpp" line="98"/>
         <source>Note: Bounding box was created for world coordinate system.</source>
-        <translation>Внимание: Охватывающий прямоугольник был создан для Мировой Системы Координат</translation>
+        <translation>Примечание: Охватывающий прямоугольник был создан для Мировой Системы Координат.</translation>
     </message>
 </context>
 <context>
@@ -797,7 +797,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_by_arc.cpp" line="246"/>
         <source>Select arc or ellipse arc</source>
-        <translation>Выделите дугу или окружность</translation>
+        <translation>Выделите дугу или дугу эллипса</translation>
     </message>
 </context>
 <context>
@@ -978,7 +978,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="416"/>
         <source>Select base linear/aligned dimension</source>
-        <translation>Выберите начальный линейный или выровненный размер</translation>
+        <translation>Выберите базовый линейный/выровненный размер</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="416"/>
@@ -1279,7 +1279,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_angle_rel.cpp" line="494"/>
         <source>Select base line</source>
-        <translation>Укажите базовую линию</translation>
+        <translation>Выберите базовую линию</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_angle_rel.cpp" line="497"/>
@@ -1998,38 +1998,43 @@ or [%2]</source>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="583"/>
         <source>Specify Second Point
 or [number|x|y|angle|p|edges|distance]</source>
-        <translation>Укажите конечную точку или
-[number|x|y|angle|p|edges|distance]</translation>
+        <translation>Укажите вторую точку
+или [number|x|y|angle|p|edges|distance]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="586"/>
         <source>Specify Second Point
 or [number]</source>
-        <translation>Укажите конечную точку точку или [number]</translation>
+        <translation>Укажите вторую точку
+или [number]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="590"/>
         <source>Specify line direction
 [x|y|angle|p|distance]</source>
-        <translation>Укажите режим направления прямой</translation>
+        <translation>Укажите направление линии
+[x|y|angle|p|distance]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="593"/>
         <source>Specify line direction angle
 or [x|y|p|number|edges|distance]</source>
-        <translation>Укажите угол прямой</translation>
+        <translation>Укажите угол направления линии
+или [x|y|p|number|edges|distance]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="596"/>
         <source>Specify edge points mode
 [none|start|end|both|distance]</source>
-        <translation>Укажите режим конечных точек</translation>
+        <translation>Укажите режим точек кромки
+[none|start|end|both|distance]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="599"/>
         <source>Specify fixed distance between points
-or[x|y|p|number|edges]</source>
-        <translation>Укажите расстояние между точками</translation>
+or [x|y|p|number|edges]</source>
+        <translation>Укажите фиксированное расстояние между точками
+или [x|y|p|number|edges]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="610"/>
@@ -2037,7 +2042,7 @@ or[x|y|p|number|edges]</source>
         <source>Specify distance (%1)
 or [%2]</source>
         <translation>Укажите расстояние (%1)
-или [%2]&quot;)</translation>
+или [%2]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="610"/>
@@ -2058,9 +2063,9 @@ or [%2]</source>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="620"/>
-        <source>Specify  distance (angle %1 deg)
+        <source>Specify distance (angle %1 deg)
 or [%2]</source>
-        <translation>Укажите  дистанцию (угол %1 град.)
+        <translation>Укажите расстояние (угол %1 град.)
 или [%2]</translation>
     </message>
     <message>
@@ -2074,7 +2079,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_action_draw_polygon_base.cpp" line="202"/>
         <source>Not a valid number. Try 1..9999</source>
-        <translation>Недопустимое число вне диапазона 1..9999</translation>
+        <translation>Недопустимое число. Попробуйте от 1 до 9999</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_action_draw_polygon_base.cpp" line="214"/>
@@ -2221,8 +2226,8 @@ or [%2]</source>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_1point.cpp" line="396"/>
-        <source>Specify size (width, height))</source>
-        <translation>Укажите размер (ширина,высота)</translation>
+        <source>Specify size (width, height)</source>
+        <translation>Укажите размер (ширина, высота)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_1point.cpp" line="399"/>
@@ -2293,7 +2298,7 @@ or [%2]</source>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_3points.cpp" line="622"/>
-        <source>Specify start point)</source>
+        <source>Specify start point</source>
         <translation>Укажите начальную точку</translation>
     </message>
     <message>
@@ -2372,7 +2377,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_abstract.cpp" line="446"/>
         <source>Specify size (width, height)</source>
-        <translation>Укажите размер (ширина,высота)</translation>
+        <translation>Укажите размер (ширина, высота)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_abstract.cpp" line="449"/>
@@ -2395,7 +2400,8 @@ or [%2]</source>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_abstract.cpp" line="458"/>
         <source>Specify edges mode
 [both|hor|vert]</source>
-        <translation>Укажите режим граней [both|hor|vert]</translation>
+        <translation>Укажите режим граней
+[both|hor|vert]</translation>
     </message>
 </context>
 <context>
@@ -11563,7 +11569,7 @@ Are you sure you are going to discard changes?</source>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="240"/>
-        <source>NNOTE: Menu assignment will be ignored. It is reserved for &apos;Select Contour&apos;.</source>
+        <source>NOTE: Menu assignment will be ignored. It is reserved for &apos;Select Contour&apos;.</source>
         <translation>Внимание: Команда будет проигнорирована. Сочетание зарезервировано для вызова действия &quot;Выбор Контура&quot;</translation>
     </message>
     <message>
@@ -11573,7 +11579,7 @@ Are you sure you are going to discard changes?</source>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="246"/>
-        <source>NOTE: This combination is reserved for Pan! Menu assignment will be ignored</source>
+        <source>NOTE: This combination is reserved for Pan! Menu assignment will be ignored.</source>
         <translation>Внимание: Команда будет проигнорирована. Сочетание зарезервировано для вызова действия &quot;Панорамирование&quot;</translation>
     </message>
     <message>
