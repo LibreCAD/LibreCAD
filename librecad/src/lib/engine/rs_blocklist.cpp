@@ -222,6 +222,9 @@ RS_Block* RS_BlockList::find(const QString& name) {
 	// Todo : reduce this from O(N) to O(log(N)) complexity based on sorted list or hash
 	//DFS
 	for(RS_Block* b: blocks) {
+		if (b->isUndone()) {
+			continue;
+		}
 		if (b->getName()==name) {
 			return b;
 		}
