@@ -222,6 +222,9 @@ const RS_Block* RS_BlockList::find(const QString& name) const {
     // emit decomposed (NFD) Unicode still matches a composed (NFC) lookup.
     const QString k = name.normalized(QString::NormalizationForm_C);
     for (const RS_Block* b : std::as_const(m_blocks)) {
+        if (b->isDeleted()) {
+            continue;
+        }
         if (b->getName().normalized(QString::NormalizationForm_C) == k) {
             return b;
         }
@@ -243,6 +246,9 @@ RS_Block* RS_BlockList::findCaseInsensitive(const QString& name) const {
     //DFS
     const QString k = name.normalized(QString::NormalizationForm_C);
     for (RS_Block* b : m_blocks) {
+        if (b->isDeleted()) {
+            continue;
+        }
         if (b->getName().normalized(QString::NormalizationForm_C)
                 .compare(k, Qt::CaseInsensitive) == 0) {
             return b;
