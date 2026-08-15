@@ -1,0 +1,112 @@
+
+Aug 7, 2026, 9:00 PM
+import logging
+import time
+
+import matlab.engine
+import requests
+from dotenv import load_dotenv
+
+load_dotenv()
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(message)s",
+)
+
+SUPPLIER_URL = (
+    "https://www.casinoplus.com.ph/home/inGame/"
+    "?name=Golden+Empire&title=Recent+Play"
+)
+
+HTTP_TIMEOUT = (10, 30)
+MATLAB_TIMEOUT_SECONDS = 3000000000
+
+eng = None
+future = None
+
+try:
+    logging.info("Checking supplier URL...")
+
+    with requests.get(
+        SUPPLIER_URL,
+        timeout=HTTP_TIMEOUT,
+        allow_redirects=True,
+        stream=True,
+    ) as response:
+        response.raise_for_status()
+        logging.info("HTTP status: %s", response.status_code)
+        logging.info("Final URL: %s", response.url)
+
+    logging.info("Starting MATLAB engine...")
+    eng = matlab.engine.start_matlab()
+    logging.info("MATLAB engine started")
+
+    # Uncomment and correct this path if needed:
+    # eng.addpath(
+    #     r"C:UsersYourNameDocumentsMATLAB",
+    #     nargout=0,
+    # )
+
+    logging.info("Calling my_function in background...")
+
+    future = eng.my_function(
+        5.0,
+        nargout=5,
+        background=True,
+    )
+
+    deadline = time.monotonic() + MATLAB_TIMEOUT_SECONDS
+
+    while not future.done():
+        if time.monotonic() >= deadline:
+            cancelled = future.cancel()
+
+            if cancelled:
+                logging.warning("MATLAB call was cancelled")
+            else:
+                logging.warning(
+                    "MATLAB call could not be cancelled; "
+                    "it may already have completed or started"
+                )
+
+            raise TimeoutError(
+                f"MATLAB call exceeded {MATLAB_TIMEOUT_SECONDS} seconds"
+            )
+
+        time.sleep(0.25)
+
+    result = future.result()
+
+    logging.info("MATLAB call completed successfully")
+    logging.info("Result: %s", result)
+
+except requests.exceptions.Timeout:
+    logging.exception("Supplier URL request timed out")
+
+except requests.exceptions.RequestException:
+    logging.exception("Supplier URL request failed")
+
+except matlab.engine.MatlabExecutionError:
+    logging.exception("MATLAB execution failed")
+
+except TimeoutError:
+    logging.exception("MATLAB call timed out")
+
+except Exception:
+    logging.exception("Python-side failure")
+
+finally:
+    if future is not None and not future.done():
+        try:
+            future.cancel()
+        except Exception:
+            logging.exception("Error cancelling MATLAB call")
+
+    if eng is not None:
+        try:
+            logging.info("Shutting down MATLAB engine...")
+            eng.quit()
+            logging.info("MATLAB engine shut down")
+        except Exception:
+            logging.exception("Error shutting down MATLAB engine")
