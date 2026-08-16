@@ -316,8 +316,14 @@ void RS_Dimension::updateCreateHorizontalTextDimensionLine(const RS_Vector& p1,
         // extend dimension line outside arrows
         if (showArrows) {
             auto dir = RS_Vector::polar(arrowSize*2, dimensionLine->getAngle1());
+            // same pen/layer as the main dimension line, so the pieces
+            // follow the dimension's layer and pen (issue #2681)
             dimensionLineOutside1 = new RS_Line{this, p1 - dir, p1};
+            dimensionLineOutside1->setPen(pen);
+            dimensionLineOutside1->setLayer(nullptr);
             dimensionLineOutside2 = new RS_Line{this, p2 + dir, p2};
+            dimensionLineOutside2->setPen(pen);
+            dimensionLineOutside2->setLayer(nullptr);
         }
 
         // move text to the side if it won't fit either
@@ -419,8 +425,13 @@ void RS_Dimension::updateCreateHorizontalTextDimensionLine(const RS_Vector& p1,
         }
 
         if (splitDimensionLine) {
+            // same pen/layer as the main dimension line (issue #2681)
             dimensionLineInside1 = new RS_Line{this, p1, s1};
+            dimensionLineInside1->setPen(pen);
+            dimensionLineInside1->setLayer(nullptr);
             dimensionLineInside2 = new RS_Line{this, s2, p2};
+            dimensionLineInside2->setPen(pen);
+            dimensionLineInside2->setLayer(nullptr);
         }
     }
 
