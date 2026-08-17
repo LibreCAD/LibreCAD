@@ -65,13 +65,19 @@ unix {
             QMAKE_CXXFLAGS += -include $$PWD/mac_arm_acle_prefix.h
         }
         TARGET = LibreCAD
-        VERSION=$$system(echo "$${LC_VERSION}" | sed -e 's/\-.*//g')
+        # CFBundleShortVersionString/CFBundleVersion must be numeric x.y.z, so
+        # reduce LC_VERSION to that ("2.2.2_alpha1-618-g27add5380" -> "2.2.2"),
+        # matching what the CMake build derives from PROJECT_VERSION. Uses cut
+        # rather than a sed regex because qmake eats the backslashes.
+        VERSION=$$system(echo "$${LC_VERSION}" | sed -e 's/^v//' | cut -d- -f1 | cut -d_ -f1 | cut -d. -f1-3)
         QMAKE_INFO_PLIST = Info.plist.app
         DEFINES += QC_APPDIR=\\\"LibreCAD\\\"
         ICON = ../res/images/librecad.icns
         contains(DISABLE_POSTSCRIPT, false) {
             QMAKE_POST_LINK = /bin/sh $$_PRO_FILE_PWD_/../../scripts/postprocess-osx.sh $$OUT_PWD/$${DESTDIR}/$${TARGET}.app/ $$[QT_INSTALL_BINS];
-            QMAKE_POST_LINK += /usr/libexec/PlistBuddy -c \"Set :CFBundleGetInfoString string $${TARGET} $${LC_VERSION}\" $$OUT_PWD/$${DESTDIR}/$${TARGET}.app/Contents/Info.plist;
+            # PlistBuddy's Set takes no type argument (only Add does), so a
+            # literal "string" here ended up in the value.
+            QMAKE_POST_LINK += /usr/libexec/PlistBuddy -c \"Set :CFBundleGetInfoString $${TARGET} $${LC_VERSION}\" $$OUT_PWD/$${DESTDIR}/$${TARGET}.app/Contents/Info.plist;
         }
     }
     else {

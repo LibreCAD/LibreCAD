@@ -20,8 +20,11 @@
 	<string>@TYPEINFO@</string>
 	<key>CFBundleExecutable</key>
 	<string>@EXECUTABLE@</string>
+	<!-- Not a @TOKEN@: qmake derives the identifier from TARGET, which would
+	     give org.librecad.LibreCAD, while the CMake build sets it directly.
+	     Spelling it out here keeps both builds on one identifier. -->
 	<key>CFBundleIdentifier</key>
-	<string>@BUNDLEIDENTIFIER@</string>
+	<string>org.librecad.librecad</string>
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>
