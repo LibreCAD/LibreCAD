@@ -47,10 +47,13 @@ $ librecad dxf2svg foo.dxf
 ### Releases
 - [Releases and Prereleases](https://github.com/LibreCAD/LibreCAD/releases)
 
-For macOS arm64 builds, the app is __NOT__ signed. To workaround the "damaged" error ([#2162](https://github.com/LibreCAD/LibreCAD/issues/2162)):
+The macOS build is a universal (Apple Silicon + Intel) app. It is ad-hoc signed
+rather than signed with an Apple Developer ID, so it is not notarized: macOS
+still shows an unidentified-developer warning on first launch. Open it once via
+right-click &rarr; Open, or clear the quarantine attribute
+([#2162](https://github.com/LibreCAD/LibreCAD/issues/2162)):
 ```bash
 xattr -rc LibreCAD.app
-sudo codesign --force --deep --sign - LibreCAD.app
 ```
 
 

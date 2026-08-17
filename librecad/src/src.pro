@@ -57,9 +57,12 @@ unix {
     LC_VERSION=$$system([ "$(which git)x" != "x" -a -d ../../.git ] && echo "$(git describe --always)" || echo "$${LC_VERSION}")
 
     macx {
-        equals(QT_ARCH, arm64):greaterThan(QT_MAJOR_VERSION, 5) {
-            # Qt6 on Apple Silicon: qyieldcpu.h uses __yield() which requires arm_acle.h
-            QMAKE_CXXFLAGS += -include arm_acle.h
+        greaterThan(QT_MAJOR_VERSION, 5) {
+            # Qt6's qyieldcpu.h uses __yield() without including <arm_acle.h>,
+            # which breaks the Apple Silicon build. Force-include a small guarded
+            # prefix header; it is a no-op on the x86_64 slice, so this also works
+            # for universal (arm64 + x86_64) builds. See mac_arm_acle_prefix.h.
+            QMAKE_CXXFLAGS += -include $$PWD/mac_arm_acle_prefix.h
         }
         TARGET = LibreCAD
         VERSION=$$system(echo "$${LC_VERSION}" | sed -e 's/\-.*//g')

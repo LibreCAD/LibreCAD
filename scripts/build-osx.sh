@@ -52,7 +52,10 @@ fi
 echo QT_PATH="$QT_PATH"
 echo QMAKE_CMD="$QMAKE_CMD"
 
-QMAKE_OPTS=""
+# Honor a QMAKE_OPTS value inherited from the environment (CI sets
+# QMAKE_APPLE_DEVICE_ARCHS here to build a universal binary); default to empty.
+# A -q=/-qmake_opts= command-line argument still overrides this in the loop below.
+QMAKE_OPTS="${QMAKE_OPTS:-}"
 CODESIGN_IDENTITY=""
 
 for i in "$@"
@@ -129,12 +132,10 @@ make -j6
 APP_FILE=LibreCAD
 OUTPUT_DMG=${APP_FILE}.dmg
 
-if [[ $CODESIGN_IDENTITY ]]
-then
-	${QT_PATH}macdeployqt ${APP_FILE}.app -verbose=2 -always-overwrite -codesign=$CODESIGN_IDENTITY
-else
-	${QT_PATH}macdeployqt ${APP_FILE}.app -verbose=2 -always-overwrite
-fi
+# Deploy the Qt frameworks into the bundle. macdeployqt rewrites Mach-O load
+# commands (install_name_tool), which invalidates any existing signature, so the
+# bundle MUST be (re)signed AFTER this step.
+${QT_PATH}macdeployqt ${APP_FILE}.app -verbose=2 -always-overwrite
 
 # macdeployqt bundles platforminputcontexts/libqtvirtualkeyboardplugin
 # unconditionally once QtGui is linked, even though LibreCAD never uses
@@ -142,7 +143,7 @@ fi
 # QtQmlWorkerScript/QtQmlMeta/QtOpenGL (~12 MB) as dead weight - and it
 # doesn't even work: macdeployqt can't resolve its own QtVirtualKeyboard[Qml]
 # framework dependencies, so the plugin would fail to load if Qt ever tried
-# it. Strip it and the frameworks it orphans before packaging the DMG.
+# it. Strip it and the frameworks it orphans before signing and packaging.
 VKBD_PLUGIN="${APP_FILE}.app/Contents/PlugIns/platforminputcontexts/libqtvirtualkeyboardplugin.dylib"
 if [ -f "$VKBD_PLUGIN" ]
 then
@@ -151,15 +152,35 @@ then
 	do
 		rm -rf "${APP_FILE}.app/Contents/Frameworks/${fw}.framework"
 	done
-	# removing bundle contents after the fact invalidates macdeployqt's
-	# code-signature resource manifest; re-sign to match the trimmed bundle
-	if [[ $CODESIGN_IDENTITY ]]
-	then
-		codesign --force -s $CODESIGN_IDENTITY "${APP_FILE}.app"
-	else
-		codesign --force -s - "${APP_FILE}.app"
-	fi
 fi
+
+# Code signing. This is the last step that touches the bundle, so it seals
+# both macdeployqt's rewrites and the plugin removal above.
+#
+# On Apple Silicon, macOS refuses to launch an arm64 binary whose signature is
+# missing or invalid ("app is damaged"), so signing after macdeployqt is
+# required. With a real Developer ID (-cert=) we sign using the hardened runtime
+# so the result can be notarized; otherwise we fall back to an ad-hoc signature,
+# which is enough for the app to launch (issue #2162).
+if [[ $CODESIGN_IDENTITY ]]
+then
+	# LibreCAD's own plugins live under Contents/Resources, which is not a
+	# nested-code location, so codesign --deep does not reach them. Sign them
+	# explicitly: otherwise notarization rejects the bundle and the hardened
+	# runtime's library validation refuses to load them at runtime.
+	find "${APP_FILE}.app/Contents/Resources" -name '*.dylib' \
+		-exec codesign --force --options runtime --timestamp \
+		--sign "$CODESIGN_IDENTITY" {} +
+	codesign --force --deep --options runtime --timestamp \
+		--sign "$CODESIGN_IDENTITY" "${APP_FILE}.app"
+else
+	echo "No signing identity supplied; applying an ad-hoc signature."
+	codesign --force --deep --sign - "${APP_FILE}.app"
+fi
+
+# The signature is what this whole ordering exists to get right, so verify it
+# rather than trusting that codesign succeeded.
+codesign --verify --deep --strict "${APP_FILE}.app"
 
 # build the DMG ourselves (macdeployqt's -dmg would redeploy from scratch,
 # undoing the plugin removal above) with the same drag-to-install layout
@@ -178,8 +199,24 @@ then
 	ls -lh "${OUTPUT_DMG}"
 fi
 
-rm -f "${TMP_DMG}"
+# With a real Developer ID, sign the DMG too and - when notarization credentials
+# are provided via the environment - notarize and staple it. Notarization is
+# skipped by default, so an ordinary build needs no Apple account. Provide either
+# a stored notarytool profile (NOTARIZE_KEYCHAIN_PROFILE) or the individual
+# credentials (NOTARIZE_APPLE_ID + NOTARIZE_TEAM_ID + NOTARIZE_PASSWORD).
 if [[ $CODESIGN_IDENTITY ]]
 then
-	codesign -s $CODESIGN_IDENTITY -v $OUTPUT_DMG
+	codesign --force --timestamp --sign "$CODESIGN_IDENTITY" "$OUTPUT_DMG"
+	if [[ ${NOTARIZE_KEYCHAIN_PROFILE:-} ]]
+	then
+		xcrun notarytool submit "$OUTPUT_DMG" --keychain-profile "$NOTARIZE_KEYCHAIN_PROFILE" --wait
+		xcrun stapler staple "$OUTPUT_DMG"
+	elif [[ ${NOTARIZE_APPLE_ID:-} && ${NOTARIZE_TEAM_ID:-} && ${NOTARIZE_PASSWORD:-} ]]
+	then
+		# subshell with tracing off: the script runs under `bash -x`, which
+		# would otherwise echo the app-specific password into the build log
+		( set +x
+		  xcrun notarytool submit "$OUTPUT_DMG" --apple-id "$NOTARIZE_APPLE_ID" --team-id "$NOTARIZE_TEAM_ID" --password "$NOTARIZE_PASSWORD" --wait )
+		xcrun stapler staple "$OUTPUT_DMG"
+	fi
 fi

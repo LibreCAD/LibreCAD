@@ -1,7 +1,17 @@
 
 unix {
-    CONFIG += link_pkgconfig
-    PKGCONFIG += freetype2
+    # Honor an explicit FREETYPE_DIR (e.g. a minimal universal static Freetype
+    # used for macOS universal builds); otherwise fall back to pkg-config.
+    FT_DIR = $$FREETYPE_DIR
+    isEmpty(FT_DIR): FT_DIR = $$(FREETYPE_DIR)
+    !isEmpty(FT_DIR):exists($${FT_DIR}/include/freetype2/ft2build.h) {
+        INCLUDEPATH += $${FT_DIR}/include/freetype2 $${FT_DIR}/include
+        LIBS += -L$${FT_DIR}/lib -lfreetype
+        message(ttf2lff using FREETYPE_DIR=$${FT_DIR})
+    } else {
+        CONFIG += link_pkgconfig
+        PKGCONFIG += freetype2
+    }
 }
 
 win32 {
