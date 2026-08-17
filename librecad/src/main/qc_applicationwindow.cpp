@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
-** 
+**
 ** Copyright (C) 2019 Shawn Curry (noneyabiz@mail.wasent.cz)
 ** Copyright (C) 2018 Simon Wells (simonrwells@gmail.com)
 ** Copyright (C) 2015-2016 ravas (github.com/r-a-v-a-s)
@@ -227,7 +227,7 @@ QC_ApplicationWindow::QC_ApplicationWindow()
 		if (tabBar)
 			tabBar->setExpanding(false);
 	}
-        
+
     bool enable_left_sidebar = settings.value("EnableLeftSidebar", 1).toBool();
     bool enable_cad_toolbars = settings.value("EnableCADToolbars", 1).toBool();
     settings.endGroup();
@@ -471,7 +471,7 @@ void QC_ApplicationWindow::doArrangeWindows(RS2::SubWindowMode m, bool actuallyD
 		slotTileVertical();
 		break;
 	}
-	
+
 	RS_SETTINGS->beginGroup("/WindowOptions");
 	RS_SETTINGS->writeEntry("/SubWindowMode", mode);
 	RS_SETTINGS->endGroup();
@@ -521,7 +521,7 @@ bool QC_ApplicationWindow::doSave(QC_MDIWindow * w, bool forceSaveAs)
 				statusBar()->showMessage(tr("Save cancelled"), 2000);
 				return false;
 			}
-			name = w->getDocument()->getFilename();			
+			name = w->getDocument()->getFilename();
 			msg = tr("Saved drawing: %1").arg(name);
 			statusBar()->showMessage(msg, 2000);
 			commandWidget->appendHistory(msg);
@@ -1177,7 +1177,7 @@ void QC_ApplicationWindow::slotWindowsMenuAboutToShow() {
 	menuItem->setCheckable(true);
 	menuItem->setChecked(!tabbed);
 
-	
+
 	if (mdiAreaCAD->viewMode() == QMdiArea::TabbedView) {
 		menu = new QMenu(tr("&Layout"), windowsMenu);
 		windowsMenu->addMenu(menu);
@@ -1221,10 +1221,10 @@ void QC_ApplicationWindow::slotWindowsMenuAboutToShow() {
         menu->addAction(tr("Tile &Vertically"), this, SLOT(slotTileVertical()));
         menu->addAction(tr("Tile &Horizontally"), this, SLOT(slotTileHorizontal()));
 	}
-	
+
 
 	RS_SETTINGS->endGroup();
-        
+
     windowsMenu->addSeparator();
     QMdiSubWindow* active= mdiAreaCAD->activeSubWindow();
     for (int i=0; i< window_list.size(); ++i) {
@@ -1357,7 +1357,7 @@ void QC_ApplicationWindow::slotTileHorizontal() {
 
     RS_DEBUG->print("QC_ApplicationWindow::slotTileHorizontal");
 	doArrangeWindows(RS2::TileHorizontal, true);
-	
+
     // primitive horizontal tiling
     QList<QMdiSubWindow *> windows = mdiAreaCAD->subWindowList();
     if (windows.count()<=1) {
@@ -1389,10 +1389,10 @@ void QC_ApplicationWindow::slotTileHorizontal() {
  * Tiles MDI windows vertically.
  */
 void QC_ApplicationWindow::slotTileVertical() {
-	
+
     RS_DEBUG->print("QC_ApplicationWindow::slotTileVertical()");
 	doArrangeWindows(RS2::TileVertical, true);
-	
+
     // primitive horizontal tiling
     QList<QMdiSubWindow *> windows = mdiAreaCAD->subWindowList();
     if (windows.count()<=1) {
@@ -2335,7 +2335,7 @@ bool QC_ApplicationWindow::slotFileExport(const QString& name,
 
 
 /**
- * Called when a sub window is about to close. 
+ * Called when a sub window is about to close.
  * If modified, show the Save/Close/Cancel dialog, then do the request.
  * If a save is needed but the user cancels, the window is not closed.
  */
@@ -2443,35 +2443,28 @@ void QC_ApplicationWindow::slotFilePrint(bool printPDF) {
     RS2::PaperFormat pf = graphic->getPaperFormat(&landscape);
     QPrinter::PageSize paperSizeName = LC_Printing::rsToQtPaperFormat(pf);
     RS_Vector paperSize = graphic->getPaperSize();
-    if(paperSizeName==QPrinter::Custom){
-        RS_Vector s=RS_Units::convert(paperSize, graphic->getUnit(),RS2::Millimeter);
-        if(landscape) s=s.flipXY();
-        printer.setPageSize(QPageSize{QSizeF(s.x,s.y), QPageSize::Millimeter});
-        // RS_DEBUG->print(RS_Debug::D_ERROR, "set Custom paper size to (%g, %g)\n", s.x,s.y);
-    }else{
-        printer.setPageSize(QPageSize{static_cast<QPageSize::PageSizeId>(paperSizeName)});
-    }
-    // qDebug()<<"paper size=("<<printer.paperSize(QPrinter::Millimeter).width()<<", "<<printer.paperSize(QPrinter::Millimeter).height()<<")";
-    printer.setPageOrientation(landscape ? QPageLayout::Landscape : QPageLayout::Portrait);
     // margins in mm
+    // QMarginsF is (left, top, right, bottom)
     QMarginsF paperMargins{graphic->getMarginLeft(),
-                                            graphic->getMarginRight(),
                                             graphic->getMarginTop(),
+                                            graphic->getMarginRight(),
                                             graphic->getMarginBottom()};
 
     printMargins(paperMargins, "Drawing");
+
+    // Issue #2337: use QPageLayout to set page size, orientation, and margins
+    // together. On Linux/CUPS, setting orientation via setPageOrientation()
+    // after setPageSize() with a standard size ID may not propagate correctly,
+    // resulting in portrait-only output regardless of the landscape setting.
+    QPageSize pageSize = LC_Printing::toPageSize(paperSizeName, paperSize, graphic->getUnit());
+    LC_Printing::setupPageLayout(printer, landscape, pageSize, paperMargins);
+
     if (printPDF) {
         // Issue #1897, exporting PDF margins to to follow the drawing settings
-        QPageLayout layout = printer.pageLayout();
-        layout.setMode(QPageLayout::FullPageMode);
-        layout.setUnits(QPageLayout::Millimeter);
-        layout.setMinimumMargins({});
-        RS_Vector s=RS_Units::convert(paperSize, graphic->getUnit(),RS2::Millimeter);
-        if(landscape) s=s.flipXY();
-        layout.setPageSize(QPageSize{QSizeF(s.x,s.y), QPageSize::Millimeter}, paperMargins);
-        printer.setPageLayout(layout);
+        QPageLayout pdfLayout = printer.pageLayout();
+        pdfLayout.setMinimumMargins({});
+        printer.setPageLayout(pdfLayout);
     }
-    printer.setPageMargins(paperMargins, QPageLayout::Millimeter);
 
     QString strDefaultFile("");
     RS_SETTINGS->beginGroup("/Print");

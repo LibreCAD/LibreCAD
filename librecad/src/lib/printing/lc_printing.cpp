@@ -24,7 +24,10 @@
 
 #include <map>
 
+#include <QPageLayout>
+
 #include "lc_printing.h"
+#include "rs_units.h"
 
 namespace {
 
@@ -61,4 +64,30 @@ const std::map<RS2::PaperFormat, QPrinter::PageSize> paperToPage = {
 QPrinter::PageSize LC_Printing::rsToQtPaperFormat(RS2::PaperFormat paper)
 {
     return (paperToPage.count(paper) == 1) ? paperToPage.at(paper) : QPrinter::Custom;
+}
+
+QPageSize LC_Printing::toPageSize(QPrinter::PageSize paperSizeName, const RS_Vector& paperSize, RS2::Unit unit)
+{
+    if (paperSizeName != QPrinter::Custom)
+        return QPageSize{static_cast<QPageSize::PageSizeId>(paperSizeName)};
+    // A custom page is defined in portrait; setupPageLayout() applies the
+    // landscape rotation via setOrientation(). Feeding QPageLayout an
+    // already-rotated size would be applied twice.
+    RS_Vector s = RS_Units::convert(paperSize, unit, RS2::Millimeter);
+    return QPageSize{QSizeF(qMin(s.x, s.y), qMax(s.x, s.y)), QPageSize::Millimeter};
+}
+
+void LC_Printing::setupPageLayout(QPrinter& printer, bool landscape,
+                                  const QPageSize& pageSize, const QMarginsF& paperMargins)
+{
+    QPageLayout layout;
+    layout.setMode(QPageLayout::FullPageMode);
+    layout.setUnits(QPageLayout::Millimeter);
+    layout.setPageSize(pageSize);
+    layout.setOrientation(landscape ? QPageLayout::Landscape : QPageLayout::Portrait);
+    // In FullPageMode the actual margins are not applied through setPageSize()'s
+    // minimum-margins argument, so set them explicitly - otherwise the print
+    // clip rect and PDF export margins are lost (issue #1897).
+    layout.setMargins(paperMargins);
+    printer.setPageLayout(layout);
 }
