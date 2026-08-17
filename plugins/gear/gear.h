@@ -77,10 +77,10 @@ class LC_Gear : public QObject, QC_PluginInterface
 
  public:
 
-    virtual PluginCapabilities getCapabilities() const Q_DECL_OVERRIDE;
-    virtual QString name() const Q_DECL_OVERRIDE;
-    virtual void execComm(Document_Interface *doc,
-                          QWidget *parent, QString cmd) Q_DECL_OVERRIDE;
+    PluginCapabilities getCapabilities() const override;
+    QString name() const override;
+    void init(Document_Interface *doc, QWidget *parent) override;
+    void execComm(QString cmd) override;
 };
 
 #endif /* GEAR_H */

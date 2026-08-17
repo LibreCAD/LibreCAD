@@ -35,6 +35,7 @@
 #include "main.h"
 #include "qc_applicationwindow.h"
 #include "qc_mdiwindow.h"
+#include "qc_plugininterface.h"
 #include "rs_settings.h"
 class QToolBar;
 
@@ -113,8 +114,17 @@ void LC_MenuFactoryMain::doCreateMenus(QMenuBar* menuBar, const bool firstCreati
         topMenuMenus << m_menusHolder->m_menuHelp;
     }
 
+    m_appWin->populatePluginMenu();
+
     for (const auto m : std::as_const(topMenuMenus)) {
         menuBar->addMenu(m);
+    }
+
+    for (QC_PluginInterface* plugin : m_appWin->getLoadedPluginList()) {
+        for (const PluginMenu &m: plugin->getCapabilities().menus) {
+            m.menu->setTearOffEnabled(m_allowTearOffMenus);
+            menuBar->addMenu(m.menu);
+        }
     }
 }
 
@@ -397,7 +407,7 @@ void LC_MenuFactoryMain::createViewMenu(QMenuBar* menuBar, QList<QMenu*>& topMen
 
 void LC_MenuFactoryMain::createPluginsMenu(QMenuBar* menuBar, QList<QMenu*>& topMenuMenus) const {
     m_menusHolder->m_menuPlugins = menu(tr("Pl&ugins"), "plugins", menuBar);
-    m_menusHolder->m_menuPlugins ->setToolTipsVisible(true);
+    m_menusHolder->m_menuPlugins->setToolTipsVisible(true);
     topMenuMenus << m_menusHolder->m_menuPlugins;
 }
 
@@ -480,6 +490,11 @@ void LC_MenuFactoryMain::prepareWorkspaceMenuComponents() const {
         }
     }
 
+    m_menusHolder->m_menuDockWidgets->addSeparator();
+    for (const QDockWidget* dw : m_appWin->getPluginDockWidgetList()) {
+        m_menusHolder->m_menuDockWidgets->QWidget::addAction(dw->toggleViewAction());
+    }
+
     const auto menuToolbars = doCreateSubMenu(menuWorkspace, tr("&Toolbars"), "toolbars", nullptr, m_allowTearOffMenus);
     m_menusHolder->m_menuToolbars = menuToolbars;
 
@@ -520,6 +535,11 @@ void LC_MenuFactoryMain::prepareWorkspaceMenuComponents() const {
             }
             previousGroup = group;
         }
+        menuToolbars->QWidget::addAction(tb->toggleViewAction());
+    }
+
+    menuToolbars->addSeparator();
+    for (const QToolBar* tb : m_appWin->getPluginToolbarList()) {
         menuToolbars->QWidget::addAction(tb->toggleViewAction());
     }
 }

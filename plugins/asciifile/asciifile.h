@@ -38,8 +38,8 @@ class AsciiFile : public QObject, QC_PluginInterface
  public:
     PluginCapabilities getCapabilities() const override;
     QString name() const override;
-    void execComm(Document_Interface *doc,
-                          QWidget *parent, QString cmd) override;
+    void init(Document_Interface *doc, QWidget *parent) override;
+    void execComm(QString cmd) override;
 };
 
 namespace DPT {
