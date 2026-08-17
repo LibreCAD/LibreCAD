@@ -2244,10 +2244,10 @@ qt_add_executable (librecad
 if(APPLE)
     # Info.plist.app is shared with the qmake build and uses @TOKEN@
     # placeholders. Fill them here (configure_file @ONLY) so the bundle gets a
-    # valid identifier, name, version and icon instead of empty values.
+    # valid name, version and icon instead of empty values. The bundle
+    # identifier is spelled out in the template itself.
     set(ICON "librecad.icns")
     set(EXECUTABLE "LibreCAD")
-    set(BUNDLEIDENTIFIER "org.librecad.librecad")
     set(FULL_VERSION "${PROJECT_VERSION}")
     set(TYPEINFO "????")
     configure_file(
@@ -2256,7 +2256,6 @@ if(APPLE)
         @ONLY)
     unset(ICON)
     unset(EXECUTABLE)
-    unset(BUNDLEIDENTIFIER)
     unset(FULL_VERSION)
     unset(TYPEINFO)
 
