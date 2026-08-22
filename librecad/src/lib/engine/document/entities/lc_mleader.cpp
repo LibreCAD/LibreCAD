@@ -164,10 +164,9 @@ bool LC_MLeader::blockContentData(RS_InsertData &out) const {
   if (!m_data.hasBlockContents || m_data.blockName.isEmpty() ||
       !m_data.blockLocation.valid)
     return false;
-  // A zero scale component would collapse the block; default such axes to 1.
-  const RS_Vector scale(m_data.blockScale.x != 0.0 ? m_data.blockScale.x : 1.0,
-                        m_data.blockScale.y != 0.0 ? m_data.blockScale.y : 1.0);
-  out = RS_InsertData(m_data.blockName, m_data.blockLocation, scale,
+  // A degenerate scale component would collapse the block; RS_InsertData
+  // defaults such axes to 1, and keeps the context's z rather than dropping it.
+  out = RS_InsertData(m_data.blockName, m_data.blockLocation, m_data.blockScale,
                       m_data.blockRotation, 1, 1, RS_Vector(0.0, 0.0), nullptr,
                       RS2::NoUpdate);
   return true;

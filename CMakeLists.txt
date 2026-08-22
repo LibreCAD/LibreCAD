@@ -2464,6 +2464,7 @@ if (BUILD_TESTS)
         librecad/src/lib/filters/tests/underlay_tests.cpp
         librecad/src/lib/filters/tests/dxf_string_codec_tests.cpp
         librecad/src/lib/filters/tests/dxf_attribute_tests.cpp
+        librecad/src/lib/filters/tests/insert_zscale_tests.cpp
         librecad/src/lib/filters/tests/block_insert_wipeout_tests.cpp
         librecad/src/lib/filters/tests/dxf_object_tests.cpp
         librecad/src/lib/filters/tests/mpolygon_tests.cpp
