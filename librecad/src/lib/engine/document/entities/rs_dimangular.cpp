@@ -30,6 +30,7 @@
 #include<iostream>
 
 #include "lc_linemath.h"
+#include "lc_rect.h"
 #include "rs_arc.h"
 #include "rs_constructionline.h"
 #include "rs_debug.h"
@@ -272,24 +273,72 @@ void RS_DimAngular::doUpdateDim() {
     double textAngle{0.0};
     double angle1{textPos.angleTo(dimCenter) - M_PI_2};
 
-    // rotate text so it's readable from the bottom or right (ISO)
-    // quadrant 1 & 4
-    if (angle1 > M_PI_2 * 3.0 + 0.001 || angle1 < M_PI_2 + 0.001) {
-        distV.setPolar(av.gap(), angle1 + M_PI_2);
-        textAngle = angle1;
-    }
-    // quadrant 2 & 3
-    else {
-        distV.setPolar(av.gap(), angle1 - M_PI_2);
-        textAngle = angle1 + M_PI;
-    }
+    // $DIMTIH: horizontal text is left unrotated on the arc, and the arc is
+    // broken around it below. Otherwise it is aligned with the arc and moved
+    // clear of it.
+    const bool horizontalText = getInsideHorizontalText();
+    if (!horizontalText) {
+        // rotate text so it's readable from the bottom or right (ISO)
+        // quadrant 1 & 4
+        if (angle1 > M_PI_2 * 3.0 + g_dimTextQuadrantTolerance || angle1 < M_PI_2 + g_dimTextQuadrantTolerance) {
+            distV.setPolar(av.gap(), angle1 + M_PI_2);
+            textAngle = angle1;
+        }
+        // quadrant 2 & 3
+        else {
+            distV.setPolar(av.gap(), angle1 - M_PI_2);
+            textAngle = angle1 + M_PI;
+        }
 
-    // move text away from dimension line:
-    textPos += distV;
+        // move text away from dimension line:
+        textPos += distV;
+    }
 
     auto text = createDimText(textPos, av.txt(), textAngle);
     if (drawFrameAroundText) {
         addBoundsAroundText(dimgap, text);
+    }
+
+    if (horizontalText) {
+        breakArcAroundText(arc, arcData, textPos, text->getUsedTextWidth(), av);
+    }
+}
+
+/**
+ * @brief Break the dimension arc so horizontal text is not drawn over
+ *
+ * @param arc  the dimension arc, reused as the piece before the text
+ * @param arcData  the unbroken arc, used to create the piece after the text
+ * @param textPos  center of the text, on the middle of the arc
+ * @param textWidth  width of the text label
+ * @param av  DXF variables, for the gap kept around the text
+ */
+void RS_DimAngular::breakArcAroundText(RS_Arc* arc, const RS_ArcData& arcData, const RS_Vector& textPos,
+                                       const double textWidth, const LC_DimAngularVars& av) {
+    const RS_Vector textHalfSize{textWidth / 2.0 + av.gap(), av.txt() / 2.0 + av.gap()};
+    const lc::geo::Area textRect{textPos - textHalfSize, textPos + textHalfSize};
+
+    // The text may be wider than the whole arc, leaving nothing to keep on
+    // either side of it. Keep the arc unbroken rather than collapsing it, as a
+    // piece with equal angles would be drawn as a full circle.
+    if (textRect.inArea(arc->getStartpoint()) || textRect.inArea(arc->getEndpoint())) {
+        return;
+    }
+
+    // The text is centered on the arc, so neither piece grows past the middle.
+    const int maxSteps{static_cast<int>(std::abs(arc->getAngleLength()) / (2.0 * g_dimArcTextStep))};
+
+    RS_Arc* arc2 = addDimArc(arcData);
+
+    // Collapse each piece onto its own end of the arc, then grow it towards
+    // the text until it reaches it, so the text is left free.
+    arc->setAngle2(arc->getAngle1());
+    for (int i = 0; i < maxSteps && !textRect.inArea(arc->getEndpoint()); ++i) {
+        arc->setAngle2(arc->getAngle2() + g_dimArcTextStep);
+    }
+    arc2->setAngle1(arc2->getAngle2());
+    for (int i = 0; i < maxSteps && !textRect.inArea(arc2->getStartpoint()); ++i) {
+        arc2->setAngle1(arc2->getAngle1() - g_dimArcTextStep);
     }
 }
 

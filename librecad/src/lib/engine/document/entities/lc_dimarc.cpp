@@ -200,12 +200,10 @@ void LC_DimArc::doUpdateDim() {
 
         constexpr double deg360{M_PI * 2.0};
 
-        constexpr double degTolerance{1.0E-3};
-
         /* With regards to Quadrants #1 and #2 */
-        if (((textAngle_preliminary >= -degTolerance) && (textAngle_preliminary <= (M_PI + degTolerance)))
-            || ((textAngle_preliminary <= -(M_PI - degTolerance)) && (textAngle_preliminary >= -(deg360 +
-                degTolerance)))) {
+        if (((textAngle_preliminary >= -g_dimTextQuadrantTolerance) && (textAngle_preliminary <= (M_PI + g_dimTextQuadrantTolerance)))
+            || ((textAngle_preliminary <= -(M_PI - g_dimTextQuadrantTolerance)) && (textAngle_preliminary >= -(deg360 +
+                g_dimTextQuadrantTolerance)))) {
             textPosOffset.setPolar(getDimensionLineGap() * getGeneralScale(), textAngle_preliminary);
             textAngle = textAngle_preliminary + M_PI + M_PI_2;
         }
@@ -293,18 +291,16 @@ void LC_DimArc::doUpdateDim() {
 
     //TODO: the current algorithm to find dimArc1/dimArc2 angles could be
     // costly.
-    constexpr double deltaOffset{1.0E-2};
-
     while (!textRectRotated.inArea(dimArc1->getEndpoint())
         && (dimArc1->getAngle2() < RS_MAXDOUBLE)
         && (dimArc1->getAngle2() > RS_MINDOUBLE)) {
-        dimArc1->setAngle2(dimArc1->getAngle2() + deltaOffset);
+        dimArc1->setAngle2(dimArc1->getAngle2() + g_dimArcTextStep);
     }
 
     while (!textRectRotated.inArea(dimArc2->getStartpoint())
         && (dimArc2->getAngle1() < RS_MAXDOUBLE)
         && (dimArc2->getAngle1() > RS_MINDOUBLE)) {
-        dimArc2->setAngle1(dimArc2->getAngle1() - deltaOffset);
+        dimArc2->setAngle1(dimArc2->getAngle1() - g_dimArcTextStep);
     }
 
     dimArc1->setPen(pen);

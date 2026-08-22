@@ -38,6 +38,20 @@ class RS_Color;
 class RS_Line;
 
 /**
+ * Angular step used when walking a dimension arc to find where it meets the
+ * text label, by RS_DimAngular and LC_DimArc.
+ */
+constexpr double g_dimArcTextStep = 1.0E-2;
+
+/**
+ * Angle by which the quadrant tests that decide the reading direction of
+ * dimension text are widened, so text sitting exactly on a quadrant boundary
+ * picks a stable side. Not a numerical tolerance - it is far larger than
+ * RS_TOLERANCE_ANGLE.
+ */
+constexpr double g_dimTextQuadrantTolerance = 1.0E-3;
+
+/**
  * Holds the data that is common to all dimension entities.
  */
 struct RS_DimensionData : public RS_Flags {
