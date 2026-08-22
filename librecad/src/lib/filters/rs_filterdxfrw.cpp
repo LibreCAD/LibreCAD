@@ -11616,9 +11616,13 @@ void RS_FilterDXFRW::writeInsert(const RS_Insert* i) {
     in.basePoint.y = i->getInsertionPoint().y;
     in.basePoint.z = i->getInsertionPoint().z;
     in.name = i->getName().toUtf8().data();
-    in.xscale = i->getScale().x;
-    in.yscale = i->getScale().y;
-    in.zscale = i->getScale().z;
+    // Inserts that bypass the RS_InsertData constructor - default constructed
+    // data, direct field assignment, or a file that already carried a bad
+    // value - are corrected at the boundary rather than written out.
+    const RS_Vector scale = RS_InsertData::usableScale(i->getScale());
+    in.xscale = scale.x;
+    in.yscale = scale.y;
+    in.zscale = scale.z;
     in.angle = i->getAngle();
     in.colcount = i->getCols();
     in.rowcount = i->getRows();
