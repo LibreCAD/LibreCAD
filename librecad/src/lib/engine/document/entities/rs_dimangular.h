@@ -196,6 +196,8 @@ private:
                        const LC_DimAngularVars& av);
     void arrow(const RS_Vector& point, double angle, double direction, bool outsideArrows,
                const LC_DimAngularVars& av);
+    void breakArcAroundText(RS_Arc* arc, const RS_ArcData& arcData, const RS_Vector& textPos, double textWidth,
+                            const LC_DimAngularVars& av);
 
     RS_Vector   dimDir1s;
     RS_Vector   dimDir1e;
