@@ -306,7 +306,9 @@ double RS_InsertData::usableScale(const double factor) {
 }
 
 RS_Vector RS_InsertData::usableScale(const RS_Vector& scale) {
-    return {usableScale(scale.x), usableScale(scale.y), usableScale(scale.z)};
+    RS_Vector result(usableScale(scale.x), usableScale(scale.y), usableScale(scale.z));
+    result.valid = scale.valid;
+    return result;
 }
 
 RS_InsertData::RS_InsertData(const RS_InsertData &other):

@@ -167,6 +167,11 @@ TEST_CASE("A degenerate X or Y scale never survives either", "[insert][zscale]")
     CHECK(kept.x == Catch::Approx(2.0));
     CHECK(kept.y == Catch::Approx(-3.0)); // a mirror, not a defect
     CHECK(kept.z == Catch::Approx(4.0));
+
+    // The repair is per-component; it must not manufacture a valid vector
+    // out of one that was explicitly marked invalid.
+    CHECK_FALSE(RS_InsertData::usableScale(RS_Vector(false)).valid);
+    CHECK(RS_InsertData::usableScale(RS_Vector(1.0, 1.0)).valid);
 }
 
 TEST_CASE("RS_InsertData keeps the Z scale non-zero", "[insert][zscale]") {
