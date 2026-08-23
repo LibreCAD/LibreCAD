@@ -2409,6 +2409,7 @@ if (BUILD_TESTS)
 	${MAIN_SOURCES}
         ${LIBRECAD_RES}
 	### The actual tests
+        librecad/src/lib/engine/document/fonts/tests/rs_font_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_splinehelper_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_hyperbola_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_parabola_tests.cpp
