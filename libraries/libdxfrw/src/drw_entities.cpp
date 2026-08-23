@@ -130,6 +130,18 @@ bool differsFromUnitWeight(double weight) {
     return std::fabs(weight - 1.0) > 1e-12;
 }
 
+//! \brief Compare two doubles by stored representation.
+//! For values a compact DWG form restores verbatim, the match has to be exact:
+//! dataFlags 3 makes the reader return exactly 1.0 and dataFlags 2 makes it
+//! return xscale for y and z (see DRW_Insert::parseDwg), so picking those forms
+//! on a tolerant match would silently round the scale that gets written. This
+//! asks the question that is actually meant - "will the reader reconstruct this
+//! value?" - without floating point comparison semantics, and as a side effect
+//! keeps -0.0 distinct from 0.0, which `==` does not.
+bool sameStoredDouble(double a, double b) {
+    return std::memcmp(&a, &b, sizeof a) == 0;
+}
+
 void putHardPointerHandle(dwgBufferW *buf, std::uint32_t ref) {
     dwgHandle h;
     h.code = 5;
@@ -2303,11 +2315,20 @@ bool DRW_Insert::encodeDwg(DRW::Version version, dwgBufferW *buf, std::uint32_t 
     //   2 → uniform scale (xscale RD only; yscale=zscale=xscale)
     //   1 → xscale defaults to 1, yscale/zscale as DD against xscale
     //   0 → xscale RD; yscale/zscale as DD against xscale
-    if (xscale == 1.0 && yscale == 1.0 && zscale == 1.0) {
+    if (sameStoredDouble(xscale, 1.0) && sameStoredDouble(yscale, 1.0)
+        && sameStoredDouble(zscale, 1.0)) {
         buf->put2Bits(3);
-    } else if (xscale == yscale && yscale == zscale) {
+    } else if (sameStoredDouble(xscale, yscale) && sameStoredDouble(yscale, zscale)) {
         buf->put2Bits(2);
         buf->putRawDouble(xscale);
+    } else if (sameStoredDouble(xscale, 1.0)) {
+        // xscale is exactly 1.0 (parseDwg leaves it at its 1.0 default and
+        // never reads it in this branch), so it can be omitted; y and z are
+        // independent and go through the same DD-against-1.0 path parseDwg
+        // reads them with.
+        buf->put2Bits(1);
+        buf->putDefaultDouble(1.0, yscale);
+        buf->putDefaultDouble(1.0, zscale);
     } else {
         // Use dataFlags=0 (general case): RD x + DD y + DD z.
         buf->put2Bits(0);
