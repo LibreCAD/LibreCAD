@@ -100,6 +100,23 @@ const char16_t kArmenian[] = {
     0x0578, 0x0579, 0x057A, 0x057B, 0x057C, 0x057D, 0x057E, 0x057F, 0x0580,
     0x0581, 0x0582, 0x0583, 0x0584, 0x0585, 0x0586, 0x0587, 0x0588, 0};
 
+// Hebrew: the 22 base letters, the 5 final forms (kaf/mem/nun/pe/tsadi),
+// and the 3 Yiddish digraph ligatures (double vav, vav-yod, double yod).
+// No niqqud/cantillation marks - those are optional in ordinary Hebrew
+// text (most Hebrew, outside children's books/poetry/liturgy, omits them
+// entirely) and would need multi-mark stacking on a single base letter,
+// a harder positioning problem than Thai/Lao's single-mark case, so left
+// out of scope here. Hebrew is RTL, but that is a layout-direction
+// concern already handled by RS_Text/RS_MText's bidi reordering
+// (RS_MText::computeBidiVisualOrder(), tested against real Hebrew
+// strings in rs_mtext_bidi_tests.cpp) - unlike Thai/Lao's combining
+// marks, these glyphs have no positioning caveat of their own.
+const char16_t kHebrew[] = {
+    0x05D0, 0x05D1, 0x05D2, 0x05D3, 0x05D4, 0x05D5, 0x05D6, 0x05D7, 0x05D8,
+    0x05D9, 0x05DA, 0x05DB, 0x05DC, 0x05DD, 0x05DE, 0x05DF, 0x05E0, 0x05E1,
+    0x05E2, 0x05E3, 0x05E4, 0x05E5, 0x05E6, 0x05E7, 0x05E8, 0x05E9, 0x05EA,
+    0x05F0, 0x05F1, 0x05F2, 0};
+
 // Georgian (Mkhedruli), the modern 33-letter unicameral alphabet.
 const char16_t kGeorgian[] = {
     0x10D0, 0x10D1, 0x10D2, 0x10D3, 0x10D4, 0x10D5, 0x10D6, 0x10D7, 0x10D8,
@@ -184,6 +201,13 @@ TEST_CASE("unicode.lff covers the Armenian alphabet", "[font][unicode][i18n]") {
     // A couple of Armenian letters run slightly wider than the default
     // envelope (e.g. Ա's crossbar reaches past x=9).
     checkRange(kArmenian, /*minX=*/-2.5, /*maxX=*/10.5);
+}
+
+TEST_CASE("unicode.lff covers Hebrew base letters, final forms and Yiddish "
+          "ligatures",
+          "[font][unicode][i18n]") {
+    ensureApp();
+    checkRange(kHebrew);
 }
 
 TEST_CASE("unicode.lff covers the modern Georgian (Mkhedruli) alphabet",
