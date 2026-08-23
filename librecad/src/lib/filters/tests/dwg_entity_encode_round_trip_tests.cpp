@@ -1916,3 +1916,93 @@ TEST_CASE("DRW_PointCloud::encodeDwg refuses stub body",
     dwgBufferW w;
     CHECK_FALSE(DrwEntityEncodeTestAccess::encode(pc, DRW::AC1024, &w));
 }
+
+// The compact scale forms (dataFlags 3 and 2) are lossless substitutions: the
+// reader restores exactly 1.0, or exactly xscale for y and z.  Selecting them
+// on a tolerant comparison would silently round the scale that is written, so
+// these two cases pin the encoder to a bit-exact match.
+TEST_CASE("DRW_Insert::encodeDwg takes the compact scale form only when exact",
+          "[dwg-write][entity-encode][insert-scale]") {
+    auto roundTrip = [](double sx, double sy, double sz, std::size_t& size) {
+        DRW_Insert src;
+        src.handle = 0x41;
+        src.color = 7;
+        src.ltypeScale = 1.0;
+        src.name = "BASE";
+        src.basePoint = DRW_Coord{1.0, 2.0, 0.0};
+        src.xscale = sx;
+        src.yscale = sy;
+        src.zscale = sz;
+        src.angle = 0.0;
+        src.extPoint = DRW_Coord{0.0, 0.0, 1.0};
+        DrwEntityEncodeTestAccess::layerH(src).ref = 0x12;
+
+        dwgBufferW w;
+        REQUIRE(DrwEntityEncodeTestAccess::encode(src, DRW::AC1015, &w));
+        auto bytes = snapshot(w);
+        size = bytes.size();
+
+        dwgBuffer r(bytes.data(), bytes.size());
+        DRW_Insert dst;
+        REQUIRE(DrwEntityEncodeTestAccess::parse(dst, DRW::AC1015, &r));
+        return dst;
+    };
+
+    std::size_t unitSize = 0;
+    const DRW_Insert unit = roundTrip(1.0, 1.0, 1.0, unitSize);
+    CHECK(unit.xscale == 1.0);
+    CHECK(unit.yscale == 1.0);
+    CHECK(unit.zscale == 1.0);
+
+    // One ULP above 1.0 is not 1.0, and must survive as itself.
+    const double justOver = std::nextafter(1.0, 2.0);
+    REQUIRE(justOver != 1.0);
+    std::size_t nearSize = 0;
+    const DRW_Insert near = roundTrip(justOver, 1.0, 1.0, nearSize);
+    CHECK(near.xscale == justOver);   // not collapsed to 1.0
+    CHECK(near.yscale == 1.0);
+    CHECK(near.zscale == 1.0);
+
+    // And the exact case really is the cheaper encoding, so the shortcut works.
+    CHECK(unitSize < nearSize);
+
+    // The uniform-scale form (dataFlags 2) needs the same exactness: x matches
+    // y bit-exact, but z is one ULP off, so this must NOT take the compact
+    // path - that would restore z as x's value instead of its own.
+    const double zJustOver = std::nextafter(2.0, 3.0);
+    REQUIRE(zJustOver != 2.0);
+    std::size_t uniformSize = 0;
+    const DRW_Insert notQuiteUniform = roundTrip(2.0, 2.0, zJustOver, uniformSize);
+    CHECK(notQuiteUniform.xscale == 2.0);
+    CHECK(notQuiteUniform.yscale == 2.0);
+    CHECK(notQuiteUniform.zscale == zJustOver);   // not collapsed onto x/y
+
+    // A genuinely uniform scale still gets the compact form (smaller than
+    // the near-uniform case above, which falls through to the general form).
+    std::size_t trueUniformSize = 0;
+    const DRW_Insert trueUniform = roundTrip(2.0, 2.0, 2.0, trueUniformSize);
+    CHECK(trueUniform.xscale == 2.0);
+    CHECK(trueUniform.yscale == 2.0);
+    CHECK(trueUniform.zscale == 2.0);
+    CHECK(trueUniformSize < uniformSize);
+
+    // dataFlags 1 (x defaults to 1, y/z independent) needs the same
+    // exactness for x: parseDwg only omits reading x, and leaves it at its
+    // constructed default, when dataFlags says so - so encodeDwg may only
+    // take that form when x really is 1.0, bit for bit.
+    std::size_t xDefaultSize = 0;
+    const DRW_Insert xDefault = roundTrip(1.0, 3.0, 4.0, xDefaultSize);
+    CHECK(xDefault.xscale == 1.0);
+    CHECK(xDefault.yscale == 3.0);
+    CHECK(xDefault.zscale == 4.0);
+
+    // General form has to write x explicitly, so the dataFlags-1 shortcut
+    // must be smaller for the same y/z.
+    std::size_t xNotDefaultSize = 0;
+    const DRW_Insert xNotDefault =
+        roundTrip(std::nextafter(1.0, 2.0), 3.0, 4.0, xNotDefaultSize);
+    CHECK(xNotDefault.xscale == std::nextafter(1.0, 2.0)); // not collapsed to 1.0
+    CHECK(xNotDefault.yscale == 3.0);
+    CHECK(xNotDefault.zscale == 4.0);
+    CHECK(xDefaultSize < xNotDefaultSize);
+}
