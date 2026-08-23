@@ -91,7 +91,26 @@ const char16_t kGeorgian[] = {
     0x10E2, 0x10E3, 0x10E4, 0x10E5, 0x10E6, 0x10E7, 0x10E8, 0x10E9, 0x10EA,
     0x10EB, 0x10EC, 0x10ED, 0x10EE, 0x10EF, 0x10F0, 0};
 
-void checkRange(const char16_t *codepoints) {
+// Thai: the 44 modern consonants (all of U+0E01-U+0E2E except the obsolete
+// KHO KHUAT/KHO KHON), the Lo/Lm vowels and marks that place correctly with
+// plain sequential glyph advance (no shaping engine involved), and the Mn
+// combining marks (tone marks, sara i/ii/ue/uee/u/uu, phinthu). The Mn
+// marks are drawn at their real vertical offset but will render at the
+// wrong *horizontal* position - after the base letter's advance width
+// rather than stacked on top of it - until RS_Text/RS_MText gain zero-
+// advance combining-mark placement; see the PR description.
+const char16_t kThai[] = {
+    0x0E01, 0x0E02, 0x0E04, 0x0E06, 0x0E07, 0x0E08, 0x0E09, 0x0E0A, 0x0E0B,
+    0x0E0C, 0x0E0D, 0x0E0E, 0x0E0F, 0x0E10, 0x0E11, 0x0E12, 0x0E13, 0x0E14,
+    0x0E15, 0x0E16, 0x0E17, 0x0E18, 0x0E19, 0x0E1A, 0x0E1B, 0x0E1C, 0x0E1D,
+    0x0E1E, 0x0E1F, 0x0E20, 0x0E21, 0x0E22, 0x0E23, 0x0E24, 0x0E25, 0x0E26,
+    0x0E27, 0x0E28, 0x0E29, 0x0E2A, 0x0E2B, 0x0E2C, 0x0E2D, 0x0E2E, 0x0E2F,
+    0x0E30, 0x0E32, 0x0E33, 0x0E40, 0x0E41, 0x0E42, 0x0E43, 0x0E44, 0x0E45,
+    0x0E46, 0x0E31, 0x0E34, 0x0E35, 0x0E36, 0x0E37, 0x0E38, 0x0E39, 0x0E3A,
+    0x0E47, 0x0E48, 0x0E49, 0x0E4A, 0x0E4B, 0x0E4C, 0x0E4D, 0x0E4E, 0};
+
+void checkRange(const char16_t *codepoints, double minX = -2.5, double maxX = 9.0,
+                 double minY = -4.5, double maxY = 15.0, double minMaxY = 1.0) {
     RS_Font &font = unicodeFont();
     for (const char16_t *cp = codepoints; *cp != 0; ++cp) {
         INFO("U+" << QString::number(*cp, 16).toUpper().toStdString());
@@ -105,11 +124,11 @@ void checkRange(const char16_t *codepoints) {
         letter->calculateBorders();
         const RS_Vector min = letter->getMin();
         const RS_Vector max = letter->getMax();
-        CHECK(max.y > 1.0);
-        CHECK(max.y <= 15.0);
-        CHECK(min.y >= -4.5);
-        CHECK(max.x <= 9.0);
-        CHECK(min.x >= -2.5);
+        CHECK(max.y > minMaxY);
+        CHECK(max.y <= maxY);
+        CHECK(min.y >= minY);
+        CHECK(max.x <= maxX);
+        CHECK(min.x >= minX);
     }
 }
 
@@ -131,6 +150,19 @@ TEST_CASE("unicode.lff covers the modern Georgian (Mkhedruli) alphabet",
           "[font][unicode][i18n]") {
     ensureApp();
     checkRange(kGeorgian);
+}
+
+TEST_CASE("unicode.lff covers Thai consonants, vowels and combining marks",
+          "[font][unicode][i18n]") {
+    ensureApp();
+    // Thai letters run wider than Latin/Cyrillic/Georgian (some consonants
+    // carry a second stroke reaching past x=9), the Mn combining marks are
+    // drawn off to the left of their base letter's own body (see the kThai
+    // comment), and three marks (sara u, sara uu, phinthu) sit entirely
+    // below the baseline with nothing above y=1, so this needs a wider
+    // envelope than checkRange's default.
+    checkRange(kThai, /*minX=*/-3.5, /*maxX=*/11.0, /*minY=*/-4.5, /*maxY=*/15.0,
+               /*minMaxY=*/-3.5);
 }
 
 TEST_CASE("unicode.lff keeps its base letters intact", "[font][unicode]") {
