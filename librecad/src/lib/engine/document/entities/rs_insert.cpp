@@ -290,13 +290,25 @@ RS_InsertData::RS_InsertData(const QString& _name,
 							 RS2::UpdateMode _updateMode ):
 	name(_name)
   ,insertionPoint(_insertionPoint)
-  ,scaleFactor(_scaleFactor)
+  // LibreCAD is 2D, so callers routinely build the scale from a two component
+  // RS_Vector, whose z defaults to 0. See usableScale().
+  ,scaleFactor(usableScale(_scaleFactor))
   ,angle(_angle)
   ,cols(_cols)
   ,rows(_rows)
   ,spacing(_spacing)
   ,blockSource(_blockSource)
   ,updateMode(_updateMode){
+}
+
+double RS_InsertData::usableScale(const double factor) {
+    return std::isfinite(factor) && factor != 0.0 ? factor : 1.0;
+}
+
+RS_Vector RS_InsertData::usableScale(const RS_Vector& scale) {
+    RS_Vector result(usableScale(scale.x), usableScale(scale.y), usableScale(scale.z));
+    result.valid = scale.valid;
+    return result;
 }
 
 RS_InsertData::RS_InsertData(const RS_InsertData &other):

@@ -73,6 +73,22 @@ struct RS_InsertData {
                   RS_BlockList* blockSource = nullptr,
 				  RS2::UpdateMode updateMode = RS2::Update);
 
+    /**
+     * @brief usableScale a scale factor safe to store and to write out.
+     * Zero, infinite and NaN leave the block transform singular or
+     * meaningless, and other CAD applications reject such an INSERT
+     * (#1428); these become 1. Tiny nonzero factors are kept: every
+     * consumer, including this codebase's own LC_InsertTransform::
+     * fromInsert, rejects only an exact zero.
+     */
+    static double usableScale(double factor);
+
+    //! \brief usableScale the same rule on every axis: any degenerate
+    //! component makes the whole block transform unusable, not just z.
+    //! Preserves scale.valid rather than manufacturing a valid vector
+    //! out of one that was explicitly marked invalid.
+    static RS_Vector usableScale(const RS_Vector& scale);
+
 	QString name;
 	RS_Vector insertionPoint;
 	RS_Vector scaleFactor;

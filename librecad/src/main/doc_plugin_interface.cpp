@@ -329,6 +329,7 @@ void Plugin_Entity::getData(QHash<int, QVariant>* data) {
             data->insert(DPI::STARTANGLE, d.angle);
             data->insert(DPI::XSCALE, d.scaleFactor.x);
             data->insert(DPI::YSCALE, d.scaleFactor.y);
+            data->insert(DPI::ZSCALE, d.scaleFactor.z);
             break;
         }
         case RS2::EntityMText: {
