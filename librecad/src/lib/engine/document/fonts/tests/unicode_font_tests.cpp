@@ -84,6 +84,13 @@ const char16_t kCyrillic[] = {
     0x0405, 0x0408, 0x0409, 0x040A, 0x040B, 0x040C, 0x040F, 0x0452, 0x0453,
     0x0455, 0x0458, 0x0459, 0x045A, 0x045B, 0x045C, 0x045F, 0};
 
+// Georgian (Mkhedruli), the modern 33-letter unicameral alphabet.
+const char16_t kGeorgian[] = {
+    0x10D0, 0x10D1, 0x10D2, 0x10D3, 0x10D4, 0x10D5, 0x10D6, 0x10D7, 0x10D8,
+    0x10D9, 0x10DA, 0x10DB, 0x10DC, 0x10DD, 0x10DE, 0x10DF, 0x10E0, 0x10E1,
+    0x10E2, 0x10E3, 0x10E4, 0x10E5, 0x10E6, 0x10E7, 0x10E8, 0x10E9, 0x10EA,
+    0x10EB, 0x10EC, 0x10ED, 0x10EE, 0x10EF, 0x10F0, 0};
+
 void checkRange(const char16_t *codepoints) {
     RS_Font &font = unicodeFont();
     for (const char16_t *cp = codepoints; *cp != 0; ++cp) {
@@ -118,6 +125,12 @@ TEST_CASE("unicode.lff covers Macedonian and Serbian Cyrillic",
           "[font][unicode][i18n]") {
     ensureApp();
     checkRange(kCyrillic);
+}
+
+TEST_CASE("unicode.lff covers the modern Georgian (Mkhedruli) alphabet",
+          "[font][unicode][i18n]") {
+    ensureApp();
+    checkRange(kGeorgian);
 }
 
 TEST_CASE("unicode.lff keeps its base letters intact", "[font][unicode]") {
