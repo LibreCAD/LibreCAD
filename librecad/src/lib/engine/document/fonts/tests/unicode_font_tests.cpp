@@ -109,6 +109,23 @@ const char16_t kThai[] = {
     0x0E46, 0x0E31, 0x0E34, 0x0E35, 0x0E36, 0x0E37, 0x0E38, 0x0E39, 0x0E3A,
     0x0E47, 0x0E48, 0x0E49, 0x0E4A, 0x0E4B, 0x0E4C, 0x0E4D, 0x0E4E, 0};
 
+// Lao: every Lo/Lm base letter (modern consonants, the Pali/Sanskrit
+// transliteration consonants, the Lo/Lm vowels/marks that place with plain
+// sequential advance, and the Khmu-language extension letters), plus the
+// 17 Mn combining marks (tone marks, vowel signs I/II/Y/YY/U/UU, semivowel
+// sign LO, cancellation mark, niggahita, yamakkan, Pali virama). Same
+// horizontal-positioning caveat as kThai applies to the Mn marks here.
+const char16_t kLao[] = {
+    0x0E81, 0x0E82, 0x0E84, 0x0E86, 0x0E87, 0x0E88, 0x0E89, 0x0E8A, 0x0E8C,
+    0x0E8D, 0x0E8E, 0x0E8F, 0x0E90, 0x0E91, 0x0E92, 0x0E93, 0x0E94, 0x0E95,
+    0x0E96, 0x0E97, 0x0E98, 0x0E99, 0x0E9A, 0x0E9B, 0x0E9C, 0x0E9D, 0x0E9E,
+    0x0E9F, 0x0EA0, 0x0EA1, 0x0EA2, 0x0EA3, 0x0EA5, 0x0EA7, 0x0EA8, 0x0EA9,
+    0x0EAA, 0x0EAB, 0x0EAC, 0x0EAD, 0x0EAE, 0x0EAF, 0x0EB0, 0x0EB2, 0x0EB3,
+    0x0EBD, 0x0EC0, 0x0EC1, 0x0EC2, 0x0EC3, 0x0EC4, 0x0EC6, 0x0EDC, 0x0EDD,
+    0x0EDE, 0x0EDF, 0x0EB1, 0x0EB4, 0x0EB5, 0x0EB6, 0x0EB7, 0x0EB8, 0x0EB9,
+    0x0EBA, 0x0EBB, 0x0EBC, 0x0EC8, 0x0EC9, 0x0ECA, 0x0ECB, 0x0ECC, 0x0ECD,
+    0x0ECE, 0};
+
 void checkRange(const char16_t *codepoints, double minX = -2.5, double maxX = 9.0,
                  double minY = -4.5, double maxY = 15.0, double minMaxY = 1.0) {
     RS_Font &font = unicodeFont();
@@ -162,6 +179,17 @@ TEST_CASE("unicode.lff covers Thai consonants, vowels and combining marks",
     // below the baseline with nothing above y=1, so this needs a wider
     // envelope than checkRange's default.
     checkRange(kThai, /*minX=*/-3.5, /*maxX=*/11.0, /*minY=*/-4.5, /*maxY=*/15.0,
+               /*minMaxY=*/-3.5);
+}
+
+TEST_CASE("unicode.lff covers Lao base letters and combining marks",
+          "[font][unicode][i18n]") {
+    ensureApp();
+    // Same shape as the Thai envelope: some Lao consonants carry a second
+    // stroke past x=9, the Mn marks are drawn off to the left of their own
+    // recentered origin, and four marks (sara u, sara uu, Pali virama,
+    // semivowel sign LO) sit entirely below the baseline.
+    checkRange(kLao, /*minX=*/-3.5, /*maxX=*/11.5, /*minY=*/-4.5, /*maxY=*/15.0,
                /*minMaxY=*/-3.5);
 }
 
