@@ -132,6 +132,17 @@ const char16_t kThaana[] = {
     0x07A4, 0x07A5, 0x07A6, 0x07A7, 0x07A8, 0x07A9, 0x07AA, 0x07AB, 0x07AC,
     0x07AD, 0x07AE, 0x07AF, 0x07B0, 0x07B1, 0};
 
+// Samaritan: the 25 base letters (an abjad, like Hebrew). Used by the
+// Samaritan community, roughly 600 people in Israel/the West Bank, for
+// both liturgical and everyday writing. RTL, already handled correctly
+// by the existing bidi reordering. No niqqud-equivalent vowel/cantillation
+// marks (18 of them, extensive) - skipped for the same reason as Hebrew's
+// niqqud: optional in ordinary text, multi-mark stacking on one letter.
+const char16_t kSamaritan[] = {
+    0x0800, 0x0801, 0x0802, 0x0803, 0x0804, 0x0805, 0x0806, 0x0807, 0x0808,
+    0x0809, 0x080A, 0x080B, 0x080C, 0x080D, 0x080E, 0x080F, 0x0810, 0x0811,
+    0x0812, 0x0813, 0x0814, 0x0815, 0x081A, 0x0824, 0x0828, 0};
+
 // Ethiopic (Ge'ez script - Amharic, Tigrinya and others): all 326 Lo
 // codepoints in the core block. An abugida, but every consonant+vowel
 // combination is its own precomposed codepoint (unlike Devanagari, there
@@ -704,6 +715,12 @@ TEST_CASE("unicode.lff covers Thaana base letters and vowel marks",
     // A couple of vowel marks sit entirely below the baseline.
     checkRange(kThaana, /*minX=*/-2.0, /*maxX=*/10.0, /*minY=*/-4.5,
                /*maxY=*/12.0, /*minMaxY=*/-3.5);
+}
+
+TEST_CASE("unicode.lff covers the Samaritan alphabet", "[font][unicode][i18n]") {
+    ensureApp();
+    checkRange(kSamaritan, /*minX=*/-2.0, /*maxX=*/14.5, /*minY=*/-4.5,
+               /*maxY=*/14.5);
 }
 
 TEST_CASE("unicode.lff covers the modern Georgian (Mkhedruli) alphabet",
