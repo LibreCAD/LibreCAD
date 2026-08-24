@@ -3,7 +3,6 @@ on:
   push:
     branches:
       - master
-      - 2.2.1
 
 jobs:
   BuildLinux:
@@ -466,7 +465,7 @@ jobs:
           retention-days: 2
 
   UpdateAssets:
-    if: github.repository_owner == 'LibreCAD' && (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/2.2.1')
+    if: github.repository_owner == 'LibreCAD' && github.ref == 'refs/heads/master'
     needs: [BuildLinux, BuildLinuxAarch64, BuildMacOS, BuildWindows64, BuildWindowsARM64, BuildSnap]
     runs-on: ubuntu-latest
     permissions:
@@ -483,11 +482,6 @@ jobs:
           set -euo pipefail
 
           case "${GITHUB_REF_NAME}" in
-            "2.2.1")
-              release_tag="2.2.1-latest"
-              release_name="Latest build from stable branch 2.2.1"
-              channel_description="This is the latest automated build from the maintained 2.2.1 stable release branch. For normal production use, prefer the latest stable release."
-              ;;
             "master")
               # "continuous" is not an arbitrary choice: appimagetool
               # (probonopd/go-appimage) embeds AppImage update information
