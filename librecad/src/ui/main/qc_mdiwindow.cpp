@@ -94,9 +94,19 @@ QC_MDIWindow::QC_MDIWindow(RS_Document* doc, QWidget* parent, const bool printPr
  */
 QC_MDIWindow::~QC_MDIWindow() {
     try {
+        // Always unregister as a modification listener, regardless of
+        // isCleanUp(): RS_GraphicView::beginClose() sets that flag
+        // unconditionally on every window close (not just full application
+        // shutdown, which is what the guard below is actually meant to
+        // detect), so gating this on it left a dangling QC_MDIWindow*
+        // in RS_Document::m_modificationListeners on every normal close.
+        // For a print-preview window - which shares its parent's document -
+        // the very next print-preview open then walks that list and derefs
+        // the freed pointer. See issue #2764.
+        removeWidgetsListeners();
+
         if (!(m_graphicView != nullptr && m_graphicView->isCleanUp())) {
             //do not clear layer/block lists, if application is being closed
-            removeWidgetsListeners();
             if (m_owner) {
                 delete m_document;
             }
