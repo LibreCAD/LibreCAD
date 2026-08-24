@@ -1044,6 +1044,15 @@ RS2::CursorType RS_ActionDefault::doGetMouseCursor(const int status){
     }
 }
 
+// Moving a whole entity or a reference/grip point both target a point via
+// the snapper, so the snap indicator should show for them (LibreCAD#2760).
+// Neutral/Dragging/SetCorner2/Panning stay excluded - that's what keeps
+// the indicator suppressed while defining a selection rectangle
+// (LibreCAD#2143), which is what isInVisualSnapStatus() was added for.
+bool RS_ActionDefault::isInVisualSnapStatus(int status) {
+    return status == Moving || status == MovingRef;
+}
+
 void RS_ActionDefault::clearHighLighting(){
     deleteHighlights();
     clearQuickInfoWidget();
