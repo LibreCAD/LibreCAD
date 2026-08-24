@@ -841,6 +841,7 @@ void RS_ActionDefault::onMouseMovingCompleted(const LC_MouseEvent* e) {
 void RS_ActionDefault::onMouseRightButtonPress([[maybe_unused]]int status, const LC_MouseEvent* e) {
     //cleanup
     goToNeutralStatus();
+    deleteSnapper();
     e->originalEvent->accept();
 }
 
@@ -963,6 +964,7 @@ void RS_ActionDefault::onMouseRightButtonRelease([[maybe_unused]]int status, [[m
     RS_DEBUG->print("RS_ActionDefault::mouseReleaseEvent()");
     //cleanup
     goToNeutralStatus();
+    deleteSnapper();
 }
 
 void RS_ActionDefault::goToNeutralStatus(){
