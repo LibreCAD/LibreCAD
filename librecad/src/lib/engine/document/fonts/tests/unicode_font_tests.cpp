@@ -166,6 +166,19 @@ const char16_t kEthiopic[] = {
     0x1350, 0x1351, 0x1352, 0x1353, 0x1354, 0x1355, 0x1356, 0x1357, 0x1358,
     0x1359, 0x135A, 0};
 
+// Ol Chiki: all 36 letters of the Santali alphabet (~7.6 million speakers,
+// an official regional language of India). A true alphabet with explicit
+// vowels and no combining marks - correct with glyphs alone. Three of the
+// codepoints (MU/GAAHLAA/MU-GAAHLAA TTUDDAG, gemination marks) are small
+// dots whose medial-axis skeleton collapses to 1-3 pixels, same as Thai's
+// phinthu and Lao's Pali virama - hand-authored as small circles at the
+// position the reference font reports rather than traced.
+const char16_t kOlChiki[] = {
+    0x1C5A, 0x1C5B, 0x1C5C, 0x1C5D, 0x1C5E, 0x1C5F, 0x1C60, 0x1C61, 0x1C62,
+    0x1C63, 0x1C64, 0x1C65, 0x1C66, 0x1C67, 0x1C68, 0x1C69, 0x1C6A, 0x1C6B,
+    0x1C6C, 0x1C6D, 0x1C6E, 0x1C6F, 0x1C70, 0x1C71, 0x1C72, 0x1C73, 0x1C74,
+    0x1C75, 0x1C76, 0x1C77, 0x1C78, 0x1C79, 0x1C7A, 0x1C7B, 0x1C7C, 0x1C7D, 0};
+
 // Cherokee: all 92 assigned codepoints in the main syllabary block -
 // the 85 original syllables Sequoyah devised plus the 6 modern
 // (YE/YI/YO/YU/YV/MV) syllables and their 6 lowercase forms added in
@@ -302,6 +315,12 @@ TEST_CASE("unicode.lff covers the Ethiopic (Ge'ez) syllabary",
     // side and run wider than the default envelope.
     checkRange(kEthiopic, /*minX=*/-2.5, /*maxX=*/16.0, /*minY=*/-4.5,
                /*maxY=*/15.0, /*minMaxY=*/1.0);
+}
+
+TEST_CASE("unicode.lff covers the Ol Chiki (Santali) alphabet",
+          "[font][unicode][i18n]") {
+    ensureApp();
+    checkRange(kOlChiki);
 }
 
 TEST_CASE("unicode.lff covers the modern Georgian (Mkhedruli) alphabet",
