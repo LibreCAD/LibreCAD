@@ -55,23 +55,12 @@ jobs:
       - name: Create AppImage
         run: |
           QT_FILE_DIR="${{github.workspace}}/../Qt" ./CI/build-appimg.sh
-          # On master, keep appimagetool's own output name (including its
-          # -x86_64 suffix) rather than renaming it away: appimagetool
-          # already embeds AppImage update information (LibreCAD#2754)
-          # whose filename pattern expects that suffix, and it writes a
+          # Keep appimagetool's own output name (including its -x86_64
+          # suffix) rather than renaming it away: appimagetool already
+          # embeds AppImage update information (LibreCAD#2754) whose
+          # filename pattern expects that suffix, and it writes a
           # same-named *.AppImage.zsync sibling that must stay paired
           # with whatever name the AppImage actually ships under.
-
-      - name: Rename AppImage (2.2.1 branch only)
-        # The 2.2.1 branch isn't part of the AppImage update-information
-        # fix above - LibreCAD#2754 / PR #2778 only cover master's
-        # "continuous" channel, and 2.2.1's own fix is a deferred
-        # follow-up (see that PR's description). Keep 2.2.1's
-        # pre-existing filename behavior unchanged until then.
-        if: github.ref == 'refs/heads/2.2.1'
-        run: |
-          mv LibreCAD*.AppImage LibreCAD-`git describe --always`.AppImage
-
       - name: List files
         run: |
           echo ${{ github.workspace }} && ls ${{ github.workspace }}
