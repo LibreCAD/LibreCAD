@@ -3,7 +3,6 @@ on:
   push:
     branches:
       - master
-      - 2.2.1
 
 jobs:
   BuildLinux:
@@ -55,7 +54,12 @@ jobs:
       - name: Create AppImage
         run: |
           QT_FILE_DIR="${{github.workspace}}/../Qt" ./CI/build-appimg.sh
-          mv LibreCAD*.AppImage LibreCAD-`git describe --always`.AppImage
+          # Keep appimagetool's own output name (including its -x86_64
+          # suffix) rather than renaming it away: appimagetool already
+          # embeds AppImage update information (LibreCAD#2754) whose
+          # filename pattern expects that suffix, and it writes a
+          # same-named *.AppImage.zsync sibling that must stay paired
+          # with whatever name the AppImage actually ships under.
       - name: List files
         run: |
           echo ${{ github.workspace }} && ls ${{ github.workspace }}
@@ -66,7 +70,9 @@ jobs:
         uses: actions/upload-artifact@main
         with:
           name: linuxAssets
-          path: LibreCAD*.AppImage
+          path: |
+            LibreCAD*.AppImage
+            LibreCAD*.AppImage.zsync
           retention-days: 2
 
   BuildLinuxAarch64:
@@ -129,7 +135,9 @@ jobs:
         uses: actions/upload-artifact@main
         with:
           name: linuxAssetsAarch64
-          path: LibreCAD*.AppImage
+          path: |
+            LibreCAD*.AppImage
+            LibreCAD*.AppImage.zsync
           retention-days: 2
 
   BuildSnap:
@@ -457,7 +465,7 @@ jobs:
           retention-days: 2
 
   UpdateAssets:
-    if: github.repository_owner == 'LibreCAD' && (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/2.2.1')
+    if: github.repository_owner == 'LibreCAD' && github.ref == 'refs/heads/master'
     needs: [BuildLinux, BuildLinuxAarch64, BuildMacOS, BuildWindows64, BuildWindowsARM64, BuildSnap]
     runs-on: ubuntu-latest
     permissions:
@@ -474,13 +482,13 @@ jobs:
           set -euo pipefail
 
           case "${GITHUB_REF_NAME}" in
-            "2.2.1")
-              release_tag="2.2.1-latest"
-              release_name="Latest build from stable branch 2.2.1"
-              channel_description="This is the latest automated build from the maintained 2.2.1 stable release branch. For normal production use, prefer the latest stable release."
-              ;;
             "master")
-              release_tag="2.2.2_alpha-latest"
+              # "continuous" is not an arbitrary choice: appimagetool
+              # (probonopd/go-appimage) embeds AppImage update information
+              # (LibreCAD#2754) that hardcodes this exact tag name for
+              # master-branch builds - renaming it would silently break
+              # AppImage delta updates again.
+              release_tag="continuous"
               release_name="Latest build from master branch"
               channel_description="This is the latest automated development build from the master branch. Use it for testing the next LibreCAD version."
               ;;
@@ -500,7 +508,7 @@ jobs:
 
           - [Latest stable release](https://github.com/LibreCAD/LibreCAD/releases/latest)
           - [Latest build from stable branch 2.2.1](https://github.com/LibreCAD/LibreCAD/releases/tag/2.2.1-latest)
-          - [Latest build from master](https://github.com/LibreCAD/LibreCAD/releases/tag/2.2.2_alpha-latest)
+          - [Latest build from master](https://github.com/LibreCAD/LibreCAD/releases/tag/continuous)
 
           ## About this build
 
@@ -514,7 +522,7 @@ jobs:
 
           - [Latest stable release](https://github.com/LibreCAD/LibreCAD/releases/latest)
           - [Latest build from stable branch 2.2.1](https://github.com/LibreCAD/LibreCAD/releases/tag/2.2.1-latest)
-          - [Latest build from master](https://github.com/LibreCAD/LibreCAD/releases/tag/2.2.2_alpha-latest)
+          - [Latest build from master](https://github.com/LibreCAD/LibreCAD/releases/tag/continuous)
 
           This entry keeps the current LibreCAD download links visible at the top of the releases page.
           EOF
@@ -541,7 +549,9 @@ jobs:
           body_path: release-notes.md
           files: |
             linuxAssets/LibreCAD*.AppImage
+            linuxAssets/LibreCAD*.AppImage.zsync
             linuxAssetsAarch64/LibreCAD*.AppImage
+            linuxAssetsAarch64/LibreCAD*.AppImage.zsync
             macOSAssets/LibreCAD*.dmg
             win64Assets/LibreCAD*.exe
             winARM64Assets/LibreCAD*.exe

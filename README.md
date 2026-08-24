@@ -42,7 +42,7 @@ $ librecad dxf2svg foo.dxf
 ### Quick Downloads
 - [Latest stable release](https://github.com/LibreCAD/LibreCAD/releases/latest)
 - [Latest build from stable branch 2.2.1](https://github.com/LibreCAD/LibreCAD/releases/tag/2.2.1-latest)
-- [Latest build from master](https://github.com/LibreCAD/LibreCAD/releases/tag/2.2.2_alpha-latest)
+- [Latest build from master](https://github.com/LibreCAD/LibreCAD/releases/tag/continuous)
 
 ### Releases
 - [Releases and Prereleases](https://github.com/LibreCAD/LibreCAD/releases)
