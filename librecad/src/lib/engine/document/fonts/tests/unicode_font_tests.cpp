@@ -613,6 +613,27 @@ const char16_t kLao[] = {
     0x0EBA, 0x0EBB, 0x0EBC, 0x0EC8, 0x0EC9, 0x0ECA, 0x0ECB, 0x0ECC, 0x0ECD,
     0x0ECE, 0};
 
+// Greek base block completion: the archaic letters (Heta, archaic Sampi,
+// Pamphylian Digamma, Yot), the symbol-form variants used in mathematics
+// and classical philology (beta/theta/upsilon-hook/phi/pi/kai symbols,
+// archaic Koppa/Stigma/Digamma/Koppa/Sampi, kappa/rho/lunate-sigma/yot
+// symbols, capital theta/lunate-epsilon symbols, Sho, San, rho-with-stroke,
+// the reversed/dotted lunate sigma symbols), two everyday punctuation marks
+// (the Greek question mark, which is shaped like a semicolon, and ano
+// teleia, the mid-height dot used as a semicolon/list separator), and the
+// 14 Coptic letters historically encoded in the Greek block (Shei, Fei,
+// Khei, Hori, Gangia, Shima, Dei) rather than the dedicated Coptic block.
+// All standalone precomposed letters/symbols, no combining marks, no
+// positioning caveat.
+const char16_t kGreekExtra[] = {
+    0x0370, 0x0371, 0x0372, 0x0373, 0x0374, 0x0376, 0x0377, 0x037A, 0x037B,
+    0x037C, 0x037D, 0x037E, 0x037F, 0x0387, 0x03CF, 0x03D0, 0x03D1, 0x03D2,
+    0x03D5, 0x03D6, 0x03D7, 0x03D8, 0x03D9, 0x03DA, 0x03DB, 0x03DC, 0x03DD,
+    0x03DE, 0x03DF, 0x03E0, 0x03E1, 0x03E2, 0x03E3, 0x03E4, 0x03E5, 0x03E6,
+    0x03E7, 0x03E8, 0x03E9, 0x03EA, 0x03EB, 0x03EC, 0x03ED, 0x03EE, 0x03EF,
+    0x03F0, 0x03F1, 0x03F2, 0x03F3, 0x03F4, 0x03F5, 0x03F7, 0x03F8, 0x03F9,
+    0x03FA, 0x03FB, 0x03FC, 0x03FD, 0x03FE, 0x03FF, 0};
+
 void checkRange(const char16_t *codepoints, double minX = -2.5, double maxX = 9.0,
                  double minY = -4.5, double maxY = 15.0, double minMaxY = 1.0) {
     RS_Font &font = unicodeFont();
@@ -786,6 +807,16 @@ TEST_CASE("unicode.lff covers Lao base letters and combining marks",
     // semivowel sign LO) sit entirely below the baseline.
     checkRange(kLao, /*minX=*/-3.5, /*maxX=*/11.5, /*minY=*/-4.5, /*maxY=*/15.0,
                /*minMaxY=*/-3.5);
+}
+
+TEST_CASE("unicode.lff covers the Greek base block completion (archaic "
+          "letters, symbol variants, and the Coptic-in-Greek-block letters)",
+          "[font][unicode][i18n]") {
+    ensureApp();
+    // The ypogegrammeni (subscript iota) mark sits entirely below the
+    // baseline, with nothing above y=1.
+    checkRange(kGreekExtra, /*minX=*/-2.0, /*maxX=*/13.0, /*minY=*/-3.5,
+               /*maxY=*/11.0, /*minMaxY=*/-3.5);
 }
 
 TEST_CASE("unicode.lff keeps its base letters intact", "[font][unicode]") {
