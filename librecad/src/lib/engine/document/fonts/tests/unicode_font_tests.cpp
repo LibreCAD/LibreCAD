@@ -476,6 +476,24 @@ const char16_t kVai[] = {
     0xA611, 0xA612, 0xA613, 0xA614, 0xA615, 0xA616, 0xA617, 0xA618, 0xA619,
     0xA61A, 0xA61B, 0xA61C, 0xA61D, 0xA61E, 0xA61F, 0xA62A, 0xA62B, 0};
 
+// Bamum: 70 Lo base letters, 10 Nl number-name letters, and 2 Mn
+// combining marks. Bamum Kingdom, Cameroon, roughly 215K-800K users,
+// cultural/traditional use with active revival efforts. Each base letter
+// takes at most one mark, no reordering - but the marks are zero-advance
+// (confirmed via FreeType: advance=0, large negative left-bearing), so
+// they carry the same Thai/Lao positioning caveat.
+const char16_t kBamum[] = {
+    0xA6A0, 0xA6A1, 0xA6A2, 0xA6A3, 0xA6A4, 0xA6A5, 0xA6A6, 0xA6A7, 0xA6A8,
+    0xA6A9, 0xA6AA, 0xA6AB, 0xA6AC, 0xA6AD, 0xA6AE, 0xA6AF, 0xA6B0, 0xA6B1,
+    0xA6B2, 0xA6B3, 0xA6B4, 0xA6B5, 0xA6B6, 0xA6B7, 0xA6B8, 0xA6B9, 0xA6BA,
+    0xA6BB, 0xA6BC, 0xA6BD, 0xA6BE, 0xA6BF, 0xA6C0, 0xA6C1, 0xA6C2, 0xA6C3,
+    0xA6C4, 0xA6C5, 0xA6C6, 0xA6C7, 0xA6C8, 0xA6C9, 0xA6CA, 0xA6CB, 0xA6CC,
+    0xA6CD, 0xA6CE, 0xA6CF, 0xA6D0, 0xA6D1, 0xA6D2, 0xA6D3, 0xA6D4, 0xA6D5,
+    0xA6D6, 0xA6D7, 0xA6D8, 0xA6D9, 0xA6DA, 0xA6DB, 0xA6DC, 0xA6DD, 0xA6DE,
+    0xA6DF, 0xA6E0, 0xA6E1, 0xA6E2, 0xA6E3, 0xA6E4, 0xA6E5, 0xA6E6, 0xA6E7,
+    0xA6E8, 0xA6E9, 0xA6EA, 0xA6EB, 0xA6EC, 0xA6ED, 0xA6EE, 0xA6EF, 0xA6F0,
+    0xA6F1, 0};
+
 // Cherokee: all 92 assigned codepoints in the main syllabary block -
 // the 85 original syllables Sequoyah devised plus the 6 modern
 // (YE/YI/YO/YU/YV/MV) syllables and their 6 lowercase forms added in
@@ -654,6 +672,14 @@ TEST_CASE("unicode.lff covers the New Tai Lue alphabet",
 TEST_CASE("unicode.lff covers the Vai syllabary", "[font][unicode][i18n]") {
     ensureApp();
     checkRange(kVai, /*minX=*/-2.0, /*maxX=*/16.0, /*minY=*/-4.5,
+               /*maxY=*/13.0);
+}
+
+TEST_CASE("unicode.lff covers Bamum base letters, numerals and combining "
+          "marks",
+          "[font][unicode][i18n]") {
+    ensureApp();
+    checkRange(kBamum, /*minX=*/-3.0, /*maxX=*/11.0, /*minY=*/-4.5,
                /*maxY=*/13.0);
 }
 
