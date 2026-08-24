@@ -634,6 +634,19 @@ const char16_t kGreekExtra[] = {
     0x03F0, 0x03F1, 0x03F2, 0x03F3, 0x03F4, 0x03F5, 0x03F7, 0x03F8, 0x03F9,
     0x03FA, 0x03FB, 0x03FC, 0x03FD, 0x03FE, 0x03FF, 0};
 
+// Ethiopic Extended-A: the Gurage-language syllables (Silt'e ~1M speakers,
+// plus Wolane and Zay) not covered by the base Ethiopic block - TTH/DDH/DZ/
+// CCHH/BB consonant families across their vowel orders. Same tractability
+// as the base Ethiopic block already shipped: every consonant+vowel order
+// has its own atomic codepoint, so it's correct with glyphs alone. The
+// block has internal gaps (not every family has all 7-8 orders) - this
+// list follows them exactly, same reasoning as kEthiopic.
+const char16_t kEthiopicExtA[] = {
+    0xAB01, 0xAB02, 0xAB03, 0xAB04, 0xAB05, 0xAB06, 0xAB09, 0xAB0A, 0xAB0B,
+    0xAB0C, 0xAB0D, 0xAB0E, 0xAB11, 0xAB12, 0xAB13, 0xAB14, 0xAB15, 0xAB16,
+    0xAB20, 0xAB21, 0xAB22, 0xAB23, 0xAB24, 0xAB25, 0xAB26, 0xAB28, 0xAB29,
+    0xAB2A, 0xAB2B, 0xAB2C, 0xAB2D, 0xAB2E, 0};
+
 void checkRange(const char16_t *codepoints, double minX = -2.5, double maxX = 9.0,
                  double minY = -4.5, double maxY = 15.0, double minMaxY = 1.0) {
     RS_Font &font = unicodeFont();
@@ -817,6 +830,13 @@ TEST_CASE("unicode.lff covers the Greek base block completion (archaic "
     // baseline, with nothing above y=1.
     checkRange(kGreekExtra, /*minX=*/-2.0, /*maxX=*/13.0, /*minY=*/-3.5,
                /*maxY=*/11.0, /*minMaxY=*/-3.5);
+}
+
+TEST_CASE("unicode.lff covers Ethiopic Extended-A (Gurage languages)",
+          "[font][unicode][i18n]") {
+    ensureApp();
+    checkRange(kEthiopicExtA, /*minX=*/-2.5, /*maxX=*/16.0, /*minY=*/-2.5,
+               /*maxY=*/12.0);
 }
 
 TEST_CASE("unicode.lff keeps its base letters intact", "[font][unicode]") {
