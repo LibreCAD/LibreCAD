@@ -647,6 +647,23 @@ const char16_t kEthiopicExtA[] = {
     0xAB20, 0xAB21, 0xAB22, 0xAB23, 0xAB24, 0xAB25, 0xAB26, 0xAB28, 0xAB29,
     0xAB2A, 0xAB2B, 0xAB2C, 0xAB2D, 0xAB2E, 0};
 
+// Old Church Slavonic / Church Slavonic liturgical letters: still printed
+// today in Russian Orthodox liturgical texts (Yat, Fita, Izhitsa, Uk, Ot
+// and the rest of this set appear throughout any modern Church Slavonic
+// service book), not merely historical. This is the well-defined core
+// liturgical set (0x0460-0x0481); the adjacent Cyrillic Extended-B block
+// mixes genuine Old Cyrillic paleographic letters with a much larger set
+// of modern minority-language Cyrillic extensions (Abkhaz, Komi, Khakas,
+// Kildin Sami, various Caucasian languages) that deserve their own
+// separate, dedicated survey rather than folding into this commit.
+// Standalone precomposed letters, no combining marks, no positioning
+// caveat.
+const char16_t kChurchSlavonic[] = {
+    0x0460, 0x0461, 0x0462, 0x0463, 0x0464, 0x0465, 0x0466, 0x0467, 0x0468,
+    0x0469, 0x046A, 0x046B, 0x046C, 0x046D, 0x046E, 0x046F, 0x0470, 0x0471,
+    0x0472, 0x0473, 0x0474, 0x0475, 0x0476, 0x0477, 0x0478, 0x0479, 0x047A,
+    0x047B, 0x047C, 0x047D, 0x047E, 0x047F, 0x0480, 0x0481, 0};
+
 void checkRange(const char16_t *codepoints, double minX = -2.5, double maxX = 9.0,
                  double minY = -4.5, double maxY = 15.0, double minMaxY = 1.0) {
     RS_Font &font = unicodeFont();
@@ -837,6 +854,13 @@ TEST_CASE("unicode.lff covers Ethiopic Extended-A (Gurage languages)",
     ensureApp();
     checkRange(kEthiopicExtA, /*minX=*/-2.5, /*maxX=*/16.0, /*minY=*/-2.5,
                /*maxY=*/12.0);
+}
+
+TEST_CASE("unicode.lff covers the Old Church Slavonic liturgical letters",
+          "[font][unicode][i18n]") {
+    ensureApp();
+    checkRange(kChurchSlavonic, /*minX=*/-2.0, /*maxX=*/16.0, /*minY=*/-3.5,
+               /*maxY=*/13.5);
 }
 
 TEST_CASE("unicode.lff keeps its base letters intact", "[font][unicode]") {
