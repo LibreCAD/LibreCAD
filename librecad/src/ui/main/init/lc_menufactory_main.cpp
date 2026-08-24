@@ -149,7 +149,7 @@ void LC_MenuFactoryMain::createHelpMenu(QMenuBar* menuBar, QList<QMenu*>& topMen
 
     if (XSTR(LC_PRERELEASE)) {
         // fixme - this is makes sense only for pre-release versions. Of course, the generation of tag included into URL should be more intelligent..
-        menuHelp->QWidget::addAction(urlActionTR(tr("&Dev Snapshot Release"), " https://github.com/LibreCAD/LibreCAD/releases/tag/2.2.2_alpha-latest"));
+        menuHelp->QWidget::addAction(urlActionTR(tr("&Dev Snapshot Release"), " https://github.com/LibreCAD/LibreCAD/releases/tag/continuous"));
         menuHelp->addSeparator();
     }
 
