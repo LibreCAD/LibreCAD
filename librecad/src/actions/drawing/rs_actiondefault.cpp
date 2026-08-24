@@ -523,16 +523,24 @@ void RS_ActionDefault::onMouseMoveEvent([[maybe_unused]] const int status, const
             m_actionData->v2 = getSnapAngleAwarePoint(e, m_actionData->v1, mouse, true);
             updateCoordinateWidgetByRelZero(m_actionData->v2);
 
+            const RS_Vector &offset = m_actionData->v2 - m_actionData->v1;
+
+            // Move each clone individually and only then add it to m_preview,
+            // rather than adding all clones first and moving the whole
+            // container - m_preview may already contain entities that must
+            // stay fixed in place, e.g. the ortho/horizontal/vertical
+            // restriction guide lines RS_PreviewActionInterface::mouseMoveEvent()
+            // adds via visualizeOrdinaryRestrictions() before this handler
+            // runs, which m_preview->move(offset) would otherwise drag along
+            // with the selection.
             QList<RS_Entity*> selection;
             if (m_document->collectSelected(selection)) {
                 for (auto ent : std::as_const(selection)) {
                     RS_Entity* clone = getClone(ent);
+                    clone->move(offset);
                     m_preview->addEntity(clone);
                 }
             }
-
-            const RS_Vector &offset = m_actionData->v2 - m_actionData->v1;
-            m_preview->move(offset);
 
             auto *line = new RS_Line(m_actionData->v1, m_actionData->v2);
             m_preview->addEntity(line);
@@ -789,6 +797,7 @@ void RS_ActionDefault::onMouseMovingRefCompleted(const LC_MouseEvent* e) {
                         });
     }
     goToNeutralStatus();
+    deleteSnapper();
     redraw();
     m_movingJustCompleted = true;
 }
@@ -832,6 +841,7 @@ void RS_ActionDefault::onMouseMovingCompleted(const LC_MouseEvent* e) {
 void RS_ActionDefault::onMouseRightButtonPress([[maybe_unused]]int status, const LC_MouseEvent* e) {
     //cleanup
     goToNeutralStatus();
+    deleteSnapper();
     e->originalEvent->accept();
 }
 
@@ -954,6 +964,7 @@ void RS_ActionDefault::onMouseRightButtonRelease([[maybe_unused]]int status, [[m
     RS_DEBUG->print("RS_ActionDefault::mouseReleaseEvent()");
     //cleanup
     goToNeutralStatus();
+    deleteSnapper();
 }
 
 void RS_ActionDefault::goToNeutralStatus(){
@@ -1042,6 +1053,15 @@ RS2::CursorType RS_ActionDefault::doGetMouseCursor(const int status){
         default:
             return RS2::NoCursorChange;
     }
+}
+
+// Moving a whole entity or a reference/grip point both target a point via
+// the snapper, so the snap indicator should show for them (LibreCAD#2760).
+// Neutral/Dragging/SetCorner2/Panning stay excluded - that's what keeps
+// the indicator suppressed while defining a selection rectangle
+// (LibreCAD#2143), which is what isInVisualSnapStatus() was added for.
+bool RS_ActionDefault::isInVisualSnapStatus(int status) {
+    return status == Moving || status == MovingRef;
 }
 
 void RS_ActionDefault::clearHighLighting(){
