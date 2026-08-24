@@ -117,6 +117,21 @@ const char16_t kHebrew[] = {
     0x05E2, 0x05E3, 0x05E4, 0x05E5, 0x05E6, 0x05E7, 0x05E8, 0x05E9, 0x05EA,
     0x05F0, 0x05F1, 0x05F2, 0};
 
+// Thaana: 39 base letters + 11 Mn vowel marks. The sole official script
+// of the Maldives, roughly 340K-540K speakers of Dhivehi. RTL, like
+// Hebrew - already handled correctly by the existing bidi reordering.
+// Unlike Hebrew's niqqud, Thaana vowel marks are NOT optional - ordinary
+// Dhivehi writing always marks the vowel - and they are zero-advance
+// (confirmed via FreeType: advance=0), so this positioning caveat will
+// show up in essentially all real Thaana text, not just an edge case.
+const char16_t kThaana[] = {
+    0x0780, 0x0781, 0x0782, 0x0783, 0x0784, 0x0785, 0x0786, 0x0787, 0x0788,
+    0x0789, 0x078A, 0x078B, 0x078C, 0x078D, 0x078E, 0x078F, 0x0790, 0x0791,
+    0x0792, 0x0793, 0x0794, 0x0795, 0x0796, 0x0797, 0x0798, 0x0799, 0x079A,
+    0x079B, 0x079C, 0x079D, 0x079E, 0x079F, 0x07A0, 0x07A1, 0x07A2, 0x07A3,
+    0x07A4, 0x07A5, 0x07A6, 0x07A7, 0x07A8, 0x07A9, 0x07AA, 0x07AB, 0x07AC,
+    0x07AD, 0x07AE, 0x07AF, 0x07B0, 0x07B1, 0};
+
 // Ethiopic (Ge'ez script - Amharic, Tigrinya and others): all 326 Lo
 // codepoints in the core block. An abugida, but every consonant+vowel
 // combination is its own precomposed codepoint (unlike Devanagari, there
@@ -681,6 +696,14 @@ TEST_CASE("unicode.lff covers Bamum base letters, numerals and combining "
     ensureApp();
     checkRange(kBamum, /*minX=*/-3.0, /*maxX=*/11.0, /*minY=*/-4.5,
                /*maxY=*/13.0);
+}
+
+TEST_CASE("unicode.lff covers Thaana base letters and vowel marks",
+          "[font][unicode][i18n]") {
+    ensureApp();
+    // A couple of vowel marks sit entirely below the baseline.
+    checkRange(kThaana, /*minX=*/-2.0, /*maxX=*/10.0, /*minY=*/-4.5,
+               /*maxY=*/12.0, /*minMaxY=*/-3.5);
 }
 
 TEST_CASE("unicode.lff covers the modern Georgian (Mkhedruli) alphabet",
