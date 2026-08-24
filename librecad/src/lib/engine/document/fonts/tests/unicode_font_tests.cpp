@@ -137,6 +137,22 @@ const char16_t kCherokee[] = {
     0x13F1, 0x13F2, 0x13F3, 0x13F4, 0x13F5, 0x13F8, 0x13F9, 0x13FA, 0x13FB,
     0x13FC, 0x13FD, 0};
 
+// Tifinagh (Berber/Amazigh): all 56 base letters (the many regional
+// variants - Berber Academy, Tuareg, Ahaggar, Ayer, Tawellemet - included,
+// same completeness policy as the other scripts here) plus the
+// labialization modifier letter. An alphabet with no joining, conjuncts
+// or reordering - correct with glyphs alone. Several letters are pure dot
+// patterns that differ only by dot count/arrangement (a real Tifinagh
+// convention, not a tracing artifact - verified pairwise, see the commit).
+const char16_t kTifinagh[] = {
+    0x2D30, 0x2D31, 0x2D32, 0x2D33, 0x2D34, 0x2D35, 0x2D36, 0x2D37, 0x2D38,
+    0x2D39, 0x2D3A, 0x2D3B, 0x2D3C, 0x2D3D, 0x2D3E, 0x2D3F, 0x2D40, 0x2D41,
+    0x2D42, 0x2D43, 0x2D44, 0x2D45, 0x2D46, 0x2D47, 0x2D48, 0x2D49, 0x2D4A,
+    0x2D4B, 0x2D4C, 0x2D4D, 0x2D4E, 0x2D4F, 0x2D50, 0x2D51, 0x2D52, 0x2D53,
+    0x2D54, 0x2D55, 0x2D56, 0x2D57, 0x2D58, 0x2D59, 0x2D5A, 0x2D5B, 0x2D5C,
+    0x2D5D, 0x2D5E, 0x2D5F, 0x2D60, 0x2D61, 0x2D62, 0x2D63, 0x2D64, 0x2D65,
+    0x2D66, 0x2D67, 0x2D6F, 0};
+
 // Georgian (Mkhedruli), the modern 33-letter unicameral alphabet.
 const char16_t kGeorgian[] = {
     0x10D0, 0x10D1, 0x10D2, 0x10D3, 0x10D4, 0x10D5, 0x10D6, 0x10D7, 0x10D8,
@@ -241,6 +257,12 @@ TEST_CASE("unicode.lff covers the Cherokee syllabary", "[font][unicode][i18n]") 
     // Several Cherokee "W"-shaped syllables run much wider than any other
     // script covered so far (up to x=15.6).
     checkRange(kCherokee, /*minX=*/-2.5, /*maxX=*/16.0);
+}
+
+TEST_CASE("unicode.lff covers the Tifinagh (Berber/Amazigh) alphabet",
+          "[font][unicode][i18n]") {
+    ensureApp();
+    checkRange(kTifinagh);
 }
 
 TEST_CASE("unicode.lff covers Thai consonants, vowels and combining marks",
