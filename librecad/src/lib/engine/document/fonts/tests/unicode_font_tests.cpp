@@ -84,6 +84,21 @@ const char16_t kCyrillic[] = {
     0x0405, 0x0408, 0x0409, 0x040A, 0x040B, 0x040C, 0x040F, 0x0452, 0x0453,
     0x0455, 0x0458, 0x0459, 0x045A, 0x045B, 0x045C, 0x045F, 0};
 
+// Extra Cyrillic letters for Turkic/Volga/Mongolian languages beyond the
+// Russian base already covered: Belarusian's short U, Macedonian's I with
+// grave (a stress marker, distinct from the base Macedonian set above),
+// Ossetian's ligature AE, and a 19-letter-pair cluster (schwa, barred O,
+// letters with a stroke/descender/breve/macron/double-acute) shared across
+// Kazakh, Tatar, Bashkir, Uzbek, Tajik, Chuvash and Mongolian Cyrillic -
+// tens of millions of speakers combined. All standalone precomposed
+// letters, no combining marks, no positioning caveat.
+const char16_t kCyrillicTurkic[] = {
+    0x040D, 0x040E, 0x0492, 0x0493, 0x0496, 0x0497, 0x0498, 0x0499, 0x049A,
+    0x049B, 0x04A0, 0x04A1, 0x04A2, 0x04A3, 0x04AA, 0x04AB, 0x04AE, 0x04AF,
+    0x04B0, 0x04B1, 0x04B2, 0x04B3, 0x04B6, 0x04B7, 0x04BA, 0x04BB, 0x04D0,
+    0x04D1, 0x04D4, 0x04D6, 0x04D7, 0x04D8, 0x04D9, 0x04E2, 0x04E3, 0x04E8,
+    0x04E9, 0x04EE, 0x04EF, 0x04F2, 0x04F3, 0x045D, 0x045E, 0x04D5, 0};
+
 // Armenian: all 39 uppercase + 39 lowercase letters (including the rare
 // TURNED AYB and YI WITH STROKE), the modifier letter left half ring, and
 // the ECH YIWN ligature. Bicameral, no joining/conjuncts/reordering, so
@@ -633,6 +648,13 @@ TEST_CASE("unicode.lff covers Macedonian and Serbian Cyrillic",
           "[font][unicode][i18n]") {
     ensureApp();
     checkRange(kCyrillic);
+}
+
+TEST_CASE("unicode.lff covers the Turkic/Volga/Mongolian Cyrillic extras",
+          "[font][unicode][i18n]") {
+    ensureApp();
+    checkRange(kCyrillicTurkic, /*minX=*/-1.0, /*maxX=*/11.0, /*minY=*/-3.0,
+               /*maxY=*/12.5);
 }
 
 TEST_CASE("unicode.lff covers the Armenian alphabet", "[font][unicode][i18n]") {
