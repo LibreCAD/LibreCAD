@@ -312,7 +312,9 @@ void QG_ColorBox::slotColorChanged(const int index) {
     }
 
     if (itemText(index) == tr("Custom")) {
-        const auto selectedColor = RS_Color(QColorDialog::getColor(*m_currentColor, this));
+        const auto selectedColor = RS_Color(QColorDialog::getColor(*m_currentColor, this,
+                                                                     tr("Select Color"),
+                                                                     QColorDialog::DontUseNativeDialog));
         if (selectedColor.isValid()) {
             *m_currentColor = selectedColor;
             const int current = addCustomColor(selectedColor);
