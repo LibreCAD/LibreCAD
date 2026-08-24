@@ -399,6 +399,27 @@ const char16_t kCans[] = {
     0x1670, 0x1671, 0x1672, 0x1673, 0x1674, 0x1675, 0x1676, 0x1677, 0x1678,
     0x1679, 0x167A, 0x167B, 0x167C, 0x167D, 0x167E, 0x167F, 0};
 
+// Tai Viet: 61 Lo/Lm base letters + 9 Mn combining marks (tone marks and
+// certain vowel signs). Tai Dam/Tai Don/Tai Daeng, spoken by roughly
+// 750K-2M people across Vietnam and Laos plus a US diaspora. Unicode
+// deliberately encodes this abugida in VISUAL order (adopted specifically
+// so vowel signs never need runtime reordering relative to the consonant
+// they attach to), so the base letters place correctly with plain
+// sequential advance. The Mn marks still have the same positioning
+// caveat as Thai/Lao though: FreeType reports advance=0 and a large
+// negative left-bearing for them (confirmed before tracing, not assumed),
+// so they render after the base letter's advance width rather than
+// stacked on it until RS_Text/RS_MText gain zero-advance placement.
+const char16_t kTaiViet[] = {
+    0xAA80, 0xAA81, 0xAA82, 0xAA83, 0xAA84, 0xAA85, 0xAA86, 0xAA87, 0xAA88,
+    0xAA89, 0xAA8A, 0xAA8B, 0xAA8C, 0xAA8D, 0xAA8E, 0xAA8F, 0xAA90, 0xAA91,
+    0xAA92, 0xAA93, 0xAA94, 0xAA95, 0xAA96, 0xAA97, 0xAA98, 0xAA99, 0xAA9A,
+    0xAA9B, 0xAA9C, 0xAA9D, 0xAA9E, 0xAA9F, 0xAAA0, 0xAAA1, 0xAAA2, 0xAAA3,
+    0xAAA4, 0xAAA5, 0xAAA6, 0xAAA7, 0xAAA8, 0xAAA9, 0xAAAA, 0xAAAB, 0xAAAC,
+    0xAAAD, 0xAAAE, 0xAAAF, 0xAAB1, 0xAAB5, 0xAAB6, 0xAAB9, 0xAABA, 0xAABB,
+    0xAABC, 0xAABD, 0xAAC0, 0xAAC2, 0xAADB, 0xAADC, 0xAADD, 0xAAB0, 0xAAB2,
+    0xAAB3, 0xAAB4, 0xAAB7, 0xAAB8, 0xAABE, 0xAABF, 0xAAC1, 0};
+
 // Cherokee: all 92 assigned codepoints in the main syllabary block -
 // the 85 original syllables Sequoyah devised plus the 6 modern
 // (YE/YI/YO/YU/YV/MV) syllables and their 6 lowercase forms added in
@@ -556,6 +577,15 @@ TEST_CASE("unicode.lff covers Canadian Aboriginal Syllabics",
     // and y=12.
     checkRange(kCans, /*minX=*/-3.0, /*maxX=*/18.0, /*minY=*/-4.5,
                /*maxY=*/13.0);
+}
+
+TEST_CASE("unicode.lff covers Tai Viet base letters and combining marks",
+          "[font][unicode][i18n]") {
+    ensureApp();
+    // TAI VIET VOWEL U sits entirely below the baseline, same as a few of
+    // the Thai/Lao marks.
+    checkRange(kTaiViet, /*minX=*/-2.0, /*maxX=*/16.0, /*minY=*/-4.5,
+               /*maxY=*/14.0, /*minMaxY=*/-3.5);
 }
 
 TEST_CASE("unicode.lff covers the modern Georgian (Mkhedruli) alphabet",
