@@ -420,6 +420,23 @@ const char16_t kTaiViet[] = {
     0xAABC, 0xAABD, 0xAAC0, 0xAAC2, 0xAADB, 0xAADC, 0xAADD, 0xAAB0, 0xAAB2,
     0xAAB3, 0xAAB4, 0xAAB7, 0xAAB8, 0xAABE, 0xAABF, 0xAAC1, 0};
 
+// New Tai Lue: all 70 assigned Lo/Lm codepoints, including the 2 tone
+// marks - unlike Thai/Lao/Tai Viet, Unicode categorizes New Tai Lue tone
+// marks as Lo (ordinary spacing letters), not Mn, and the reference font
+// gives them a normal non-zero advance width (checked before tracing).
+// So this script has no positioning caveat of any kind. Tai Lue, spoken
+// by roughly 700K-1M people in Xishuangbanna (China), Laos, Myanmar and
+// Thailand.
+const char16_t kNewTaiLue[] = {
+    0x1980, 0x1981, 0x1982, 0x1983, 0x1984, 0x1985, 0x1986, 0x1987, 0x1988,
+    0x1989, 0x198A, 0x198B, 0x198C, 0x198D, 0x198E, 0x198F, 0x1990, 0x1991,
+    0x1992, 0x1993, 0x1994, 0x1995, 0x1996, 0x1997, 0x1998, 0x1999, 0x199A,
+    0x199B, 0x199C, 0x199D, 0x199E, 0x199F, 0x19A0, 0x19A1, 0x19A2, 0x19A3,
+    0x19A4, 0x19A5, 0x19A6, 0x19A7, 0x19A8, 0x19A9, 0x19AA, 0x19AB, 0x19B0,
+    0x19B1, 0x19B2, 0x19B3, 0x19B4, 0x19B5, 0x19B6, 0x19B7, 0x19B8, 0x19B9,
+    0x19BA, 0x19BB, 0x19BC, 0x19BD, 0x19BE, 0x19BF, 0x19C0, 0x19C1, 0x19C2,
+    0x19C3, 0x19C4, 0x19C5, 0x19C6, 0x19C7, 0x19C8, 0x19C9, 0};
+
 // Cherokee: all 92 assigned codepoints in the main syllabary block -
 // the 85 original syllables Sequoyah devised plus the 6 modern
 // (YE/YI/YO/YU/YV/MV) syllables and their 6 lowercase forms added in
@@ -586,6 +603,13 @@ TEST_CASE("unicode.lff covers Tai Viet base letters and combining marks",
     // the Thai/Lao marks.
     checkRange(kTaiViet, /*minX=*/-2.0, /*maxX=*/16.0, /*minY=*/-4.5,
                /*maxY=*/14.0, /*minMaxY=*/-3.5);
+}
+
+TEST_CASE("unicode.lff covers the New Tai Lue alphabet",
+          "[font][unicode][i18n]") {
+    ensureApp();
+    checkRange(kNewTaiLue, /*minX=*/-2.0, /*maxX=*/15.0, /*minY=*/-6.0,
+               /*maxY=*/13.0);
 }
 
 TEST_CASE("unicode.lff covers the modern Georgian (Mkhedruli) alphabet",
