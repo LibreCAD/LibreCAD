@@ -261,10 +261,10 @@ const LC_CommandItem g_commandList[] = {
         },
         // draw parallel line
         {
+            {{"parallel", QObject::tr("parallel", "create parallel")}},
             {{"linepar", QObject::tr("linepar", "create parallel")},
-             {"parallel", QObject::tr("parallel", "create parallel")},
-             {"lineoff", QObject::tr("lineoff", "create parallel")}},
-            {{"pa", QObject::tr("pa", "create parallel")},
+             {"lineoff", QObject::tr("lineoff", "create parallel")},
+             {"pa", QObject::tr("pa", "create parallel")},
              {"ll", QObject::tr("ll", "create parallel")}},
             RS2::ActionDrawLineParallel
         },
@@ -721,20 +721,23 @@ const LC_CommandItem g_commandList[] = {
         },
         // rotate
         {
-            {{"modrotate", QObject::tr("modrotate", "modify - rotate")}},
-            {{"ro", QObject::tr("ro", "modify - rotate")}},
+            {{"rotate", QObject::tr("rotate", "modify - rotate")}},
+            {{"modrotate", QObject::tr("modrotate", "modify - rotate")},
+             {"ro", QObject::tr("ro", "modify - rotate")}},
             RS2::ActionModifyRotate
         },
         // scale
         {
-            {{"modscale", QObject::tr("modscale", "modify - scale")}},
-            {{"sz", QObject::tr("sz", "modify - scale")}},
+            {{"scale", QObject::tr("scale", "modify - scale")}},
+            {{"modscale", QObject::tr("modscale", "modify - scale")},
+             {"sz", QObject::tr("sz", "modify - scale")}},
             RS2::ActionModifyScale
         },
         // mirror  (Removed extra space from translation sting.)
         {
-            {{"modmirror", QObject::tr("modmirror", "modify -  mirror")}},
-            {{"mi", QObject::tr("mi", "modify -  mirror")}},
+            {{"mirror", QObject::tr("mirror", "modify -  mirror")}},
+            {{"modmirror", QObject::tr("modmirror", "modify -  mirror")},
+             {"mi", QObject::tr("mi", "modify -  mirror")}},
             RS2::ActionModifyMirror
         },
         // move and rotate - v2.2.0r2
@@ -758,8 +761,9 @@ const LC_CommandItem g_commandList[] = {
         },
         // trim
         {
-            {{"modtrim", QObject::tr("modtrim", "modify - trim (extend)")}},
-            {{"tm", QObject::tr("tm", "modify - trim (extend)")}},
+            {{"trim", QObject::tr("trim", "modify - trim (extend)")}},
+            {{"modtrim", QObject::tr("modtrim", "modify - trim (extend)")},
+             {"tm", QObject::tr("tm", "modify - trim (extend)")}},
             RS2::ActionModifyTrim
         },
         // trim2
@@ -777,26 +781,27 @@ const LC_CommandItem g_commandList[] = {
         },
         // offset
         {
+            {{"offset", QObject::tr("offset", "modify - offset")}},
             {{"modoffset", QObject::tr("modoffset", "modify - offset")},
-             {"offset", QObject::tr("offset", "modify - offset")}
-         },
-            {{"mo", QObject::tr("mo", "modify - offset")},   // - v2.2.0r2
+             {"o", QObject::tr("o", "modify - offset")},
+             {"mo", QObject::tr("mo", "modify - offset")},   // - v2.2.0r2
              {"moff", QObject::tr("moff", "modify - offset")}},
             RS2::ActionModifyOffset
         },
         // bevel
         {
-            {{"modbevel", QObject::tr("modbevel", "modify - bevel")}},
-            {{"bev", QObject::tr("bev", "modify - bevel")},
+            {{"bevel", QObject::tr("bevel", "modify - bevel")},
+             {"chamfer", QObject::tr("chamfer", "modify - bevel")}},
+            {{"modbevel", QObject::tr("modbevel", "modify - bevel")},
+             {"bev", QObject::tr("bev", "modify - bevel")},
              {"ch", QObject::tr("ch", "modify - bevel")}},
             RS2::ActionModifyBevel
         },
         // fillet
         {
-            {{"modfillet", QObject::tr("modfillet", "modify - fillet")}},
-            {{"fi", QObject::tr("fi", "modify - fillet")},
-             {"fillet", QObject::tr("fillet", "modify - fillet")},
-             {"bevel", QObject::tr("bevel", "modify - fillet")}},
+            {{"fillet", QObject::tr("fillet", "modify - fillet")}},
+            {{"modfillet", QObject::tr("modfillet", "modify - fillet")},
+             {"fi", QObject::tr("fi", "modify - fillet")}},
             RS2::ActionModifyRound
         },
         // divide
@@ -835,8 +840,9 @@ const LC_CommandItem g_commandList[] = {
         },
         // explode
         {
-            {{"modexplode", QObject::tr("modexplode", "explode block/polyline into entities")}},
-            {{"xp", QObject::tr("xp", "explode block/polyline into entities")}},
+            {{"explode", QObject::tr("explode", "explode block/polyline into entities")}},
+            {{"modexplode", QObject::tr("modexplode", "explode block/polyline into entities")},
+             {"xp", QObject::tr("xp", "explode block/polyline into entities")}},
             RS2::ActionBlocksExplode
         },
         // delete
