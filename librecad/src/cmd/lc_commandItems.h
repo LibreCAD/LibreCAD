@@ -764,6 +764,7 @@ const LC_CommandItem g_commandList[] = {
         {
             {{"offset", QObject::tr("offset", "modify - offset")}},
             {{"modoffset", QObject::tr("modoffset", "modify - offset")},
+             {"o", QObject::tr("o", "modify - offset")},
              {"mo", QObject::tr("mo", "modify - offset")},   // - v2.2.0r2
              {"moff", QObject::tr("moff", "modify - offset")}},
             RS2::ActionModifyOffset
