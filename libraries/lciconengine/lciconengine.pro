@@ -34,6 +34,15 @@ DISTFILES += src/lc_svgicons.json
 
 win32:RC_FILE = src/lc_svgicons.rc
 
+# Without this, the plugin builds to qmake's default output location and
+# never reaches windows\iconengines\ - windeployqt only knows about Qt's own
+# plugins (e.g. qsvgicon.dll, which does land there), not this custom one,
+# so nothing else copies it into the deployed tree or the NSIS installer.
+# Matches the DESTDIR convention every other plugin .pro already uses
+# (see plugins/*/*.pro), just pointed at Qt's iconengines plugin category
+# instead of LibreCAD's own resources/plugins.
+win32: DESTDIR = ../../windows/iconengines
+
 win32-msvc*: QMAKE_LFLAGS_RELEASE += /RELEASE
 
 target.path += $$[QT_INSTALL_PLUGINS]/iconengines
