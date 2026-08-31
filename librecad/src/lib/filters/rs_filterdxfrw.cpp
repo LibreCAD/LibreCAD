@@ -1586,6 +1586,12 @@ void RS_FilterDXFRW::addLayer(const DRW_Layer& data) {
 
     RS_DEBUG->print("RS_FilterDXF::addLayer: add layer to graphic");
     m_graphic->addLayer(layer);
+    // RS_LayerList::add() deletes `layer` and updates the existing layer in
+    // place instead when one with this name already exists (documented on
+    // that function) - which happens for "0" on every import, since
+    // RS_Graphic always bootstraps a default "0" layer before this runs.
+    // Re-resolve rather than trusting `layer`, which may already be freed.
+    layer = m_graphic->findLayer(name);
     m_importLayerCache.insert(key, layer);
     RS_DEBUG->print("RS_FilterDXF::addLayer: OK");
 }
