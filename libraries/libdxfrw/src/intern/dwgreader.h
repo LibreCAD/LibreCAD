@@ -113,7 +113,7 @@ struct DwgEedChunk {
 [[nodiscard]] bool
 readDwgEed(DRW::Version version, dwgBuffer &buffer,
            std::vector<DwgEedChunk> &chunks,
-           std::uint64_t endBit = std::numeric_limits<std::uint64_t>::max());
+           std::uint64_t endBit = (std::numeric_limits<std::uint64_t>::max)());
 
 /// Read one or more handle references without publishing a partial result.
 /// `offset` selects the DWG relative-handle transformation used by common
@@ -584,7 +584,7 @@ protected:
                                    dwgBuffer *hBuf);
   [[nodiscard]] bool readDwgHandles(
       dwgBuffer *dbuf, std::uint64_t offset, std::uint64_t size,
-      std::uint64_t locationLimit = std::numeric_limits<std::uint64_t>::max(),
+      std::uint64_t locationLimit = (std::numeric_limits<std::uint64_t>::max)(),
       DwgIntegrityAddressSpace offsetSpace = DwgIntegrityAddressSpace::None,
       std::int32_t sectionDescriptorId = -1);
   void addIntegrityDiagnostic(DwgIntegrityDiagnostic diagnostic) noexcept;

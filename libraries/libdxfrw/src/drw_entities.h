@@ -243,7 +243,7 @@ protected:
     [[nodiscard]] bool parseDwgEntHandle(
         DRW::Version version, dwgBuffer *buf,
         bool resetHandleStream = true,
-        std::uint64_t handleEndBit = std::numeric_limits<std::uint64_t>::max());
+        std::uint64_t handleEndBit = (std::numeric_limits<std::uint64_t>::max)());
 
     // Writer-side inverses of parseDwg / parseDwgEntHandle.  Support
     // AC1015, AC1018, and AC1024 (R2010).  For AC1024, strBuf receives
@@ -3228,7 +3228,7 @@ protected:
     void setRa40(const double d) {length = d;}
     bool parseDwgDimensionHandles(
         DRW::Version version, dwgBuffer *buf,
-        std::uint64_t handleEndBit = std::numeric_limits<std::uint64_t>::max());
+        std::uint64_t handleEndBit = (std::numeric_limits<std::uint64_t>::max)());
 public:
     int type;                  /*!< Dimension type, code 70 */
 private:

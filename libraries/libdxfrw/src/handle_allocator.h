@@ -80,7 +80,7 @@ public:
     /// Mark a specific handle as in-use.  Used during read-then-write
     /// to preserve source handles; idempotent.
     void reserve(std::uint32_t h) {
-        if (h >= m_next && h == std::numeric_limits<std::uint32_t>::max())
+        if (h >= m_next && h == (std::numeric_limits<std::uint32_t>::max)())
             throw std::overflow_error("DWG/DXF handle allocator exhausted");
         // Keep caller-owned reservations separate from handles minted during
         // a write.  This lets a codec be reused without losing source/raw
@@ -96,11 +96,11 @@ public:
     /// return the same value.
     std::uint32_t next() {
         while (isReserved(m_next)) {
-            if (m_next == std::numeric_limits<std::uint32_t>::max())
+            if (m_next == (std::numeric_limits<std::uint32_t>::max)())
                 throw std::overflow_error("DWG/DXF handle allocator exhausted");
             ++m_next;
         }
-        if (m_next == std::numeric_limits<std::uint32_t>::max())
+        if (m_next == (std::numeric_limits<std::uint32_t>::max)())
             throw std::overflow_error("DWG/DXF handle allocator exhausted");
         std::uint32_t h = m_next++;
         m_allocated.insert(h);
@@ -116,7 +116,7 @@ public:
         m_next = 0x30;
         if (!m_explicitReserved.empty()) {
             const auto highest = *m_explicitReserved.rbegin();
-            if (highest == std::numeric_limits<std::uint32_t>::max())
+            if (highest == (std::numeric_limits<std::uint32_t>::max)())
                 m_next = highest;
             else if (highest >= m_next)
                 m_next = highest + 1;

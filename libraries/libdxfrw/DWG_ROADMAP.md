@@ -26070,3 +26070,22 @@ Commit and dispatch the dedicated workflow on the PR branch, then record the
 Ubuntu, Windows x64, and Windows ARM64 conclusions here. A failed matrix leg
 must be fixed at the source/toolchain boundary and rerun without weakening
 the test selector.
+
+## Current Active Plan (rev 1313): neutralize the Windows `max` macro
+
+The general Windows build reached the DWG test targets but failed while
+compiling `dwg_tarch_standalone.cpp`: Windows headers define a function-like
+`max` macro, which rewrote `std::numeric_limits<T>::max()` in libdxfrw public
+headers. The resulting parser errors were source portability failures, not
+DWG format failures.
+
+### Implemented
+
+1. Use the macro-safe `(std::numeric_limits<T>::max)()` spelling in every
+   libdxfrw header occurrence, including entity/object headers, DWG reader and
+   writer helpers, safety arithmetic, and handle allocation.
+2. Keep the change local to the standard-library member call; no global
+   `NOMINMAX` dependency is introduced, so consumers that already include
+   Windows headers receive the same protection.
+3. Rebuild the standalone DWG target and rerun the native x64/ARM64 matrix;
+   the Linux focused lane already passed before this header-only fix.

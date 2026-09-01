@@ -156,7 +156,7 @@ public:
     void    setHandSeed(std::uint32_t h) { handSeed = h; }
 
     static constexpr std::uint32_t kInvalidDwgHandseedBitOffset =
-        std::numeric_limits<std::uint32_t>::max();
+        (std::numeric_limits<std::uint32_t>::max)();
     std::uint32_t dwgHandseedBitOffset() const {
         return m_dwgHandseedBitOffset;
     }

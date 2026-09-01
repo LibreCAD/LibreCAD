@@ -2183,7 +2183,7 @@ public:
                                    std::uint32_t bitSize,
                                    DRW::Version version) {
     if (version <= DRW::AC1018 || version == DRW::UNKNOWNV ||
-        bytes.size() > std::numeric_limits<std::uint32_t>::max() / 8u ||
+        bytes.size() > (std::numeric_limits<std::uint32_t>::max)() / 8u ||
         bitSize > bytes.size() * 8u)
       return false;
     m_rawData = std::move(bytes);
@@ -2245,7 +2245,7 @@ public:
                                    std::uint32_t bitSize,
                                    DRW::Version version) {
     if (version <= DRW::AC1018 || version == DRW::UNKNOWNV ||
-        bytes.size() > std::numeric_limits<std::uint32_t>::max() / 8u ||
+        bytes.size() > (std::numeric_limits<std::uint32_t>::max)() / 8u ||
         bitSize > bytes.size() * 8u)
       return false;
     m_rawData = std::move(bytes);
@@ -3226,7 +3226,7 @@ public:
                                    std::uint32_t bitSize,
                                    DRW::Version version) {
     if (version <= DRW::AC1018 || version == DRW::UNKNOWNV ||
-        bytes.size() > std::numeric_limits<std::uint32_t>::max() / 8u ||
+        bytes.size() > (std::numeric_limits<std::uint32_t>::max)() / 8u ||
         bitSize > bytes.size() * 8u)
       return false;
     m_rawData = std::move(bytes);
@@ -3397,7 +3397,7 @@ class DRW_PointCloudColorMap : public DRW_TableEntry {
 public:
   static constexpr std::uint16_t kDwgClassNum = 540;
   static constexpr std::int32_t kMaxClassVersion =
-      std::numeric_limits<std::uint16_t>::max();
+      (std::numeric_limits<std::uint16_t>::max)();
   static constexpr std::uint32_t kMaxRamps = 4096;
   static constexpr std::uint32_t kMaxColorsPerRamp = 65536;
   static constexpr std::size_t kMaxColorSchemeLength = 1u << 20;
@@ -3691,7 +3691,7 @@ public:
                                    std::uint32_t bitSize,
                                    DRW::Version version) {
     if (version <= DRW::AC1018 || version == DRW::UNKNOWNV ||
-        bytes.size() > std::numeric_limits<std::uint32_t>::max() / 8u ||
+        bytes.size() > (std::numeric_limits<std::uint32_t>::max)() / 8u ||
         bitSize > bytes.size() * 8u)
       return false;
     m_rawData = std::move(bytes);
@@ -3829,7 +3829,7 @@ public:
                                    std::uint32_t bitSize,
                                    DRW::Version version) {
     if (version <= DRW::AC1018 || version == DRW::UNKNOWNV ||
-        bytes.size() > std::numeric_limits<std::uint32_t>::max() / 8u ||
+        bytes.size() > (std::numeric_limits<std::uint32_t>::max)() / 8u ||
         bitSize > bytes.size() * 8u)
       return false;
     m_rawData = std::move(bytes);

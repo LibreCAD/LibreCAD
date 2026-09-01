@@ -113,7 +113,7 @@ protected:
         std::uint8_t* data, std::uint64_t size,
         std::uint64_t firstAddress,
         std::unordered_map<std::uint32_t, dwgPageInfo>& pages,
-        std::uint64_t fileSize = std::numeric_limits<std::uint64_t>::max());
+        std::uint64_t fileSize = (std::numeric_limits<std::uint64_t>::max)());
 
 private:
     void genMagicNumber();

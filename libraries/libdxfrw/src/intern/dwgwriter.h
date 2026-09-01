@@ -489,7 +489,7 @@ public:
             return false;
         std::uint32_t maxHandle = 0;
         if (!validateEmittedHandleMap(maxHandle)
-            || maxHandle == std::numeric_limits<std::uint32_t>::max())
+            || maxHandle == (std::numeric_limits<std::uint32_t>::max)())
             return false;
         const std::uint32_t requiredSeed = maxHandle + 1u;
         const std::uint32_t seed = std::max(
@@ -593,7 +593,7 @@ public:
         if (object.m_isCustomClass
             && (object.m_objectType < 500
                 || static_cast<std::uint64_t>(object.m_objectType)
-                       > std::numeric_limits<std::uint16_t>::max()))
+                       > (std::numeric_limits<std::uint16_t>::max)()))
             return false;
         if (!object.m_isCustomClass || object.m_objectType < 500) {
             // R2000's viewport-header control is emitted canonically unless a
@@ -1607,7 +1607,7 @@ protected:
             return;
         const std::uint32_t relative = m_header->dwgHandseedBitOffset();
         if (relative == DRW_Header::kInvalidDwgHandseedBitOffset
-            || relative > std::numeric_limits<std::uint32_t>::max() - dataStartBit)
+            || relative > (std::numeric_limits<std::uint32_t>::max)() - dataStartBit)
             return;
         m_headerHandseedBitOffset = dataStartBit + relative;
     }
@@ -1831,7 +1831,7 @@ protected:
                     return false;
                 }
                 constexpr std::int32_t maxInstanceCount =
-                    std::numeric_limits<std::int32_t>::max();
+                    (std::numeric_limits<std::int32_t>::max)();
                 if (existing.m_instanceCount < 0
                     || definition.m_instanceCount > maxInstanceCount
                         - existing.m_instanceCount) {

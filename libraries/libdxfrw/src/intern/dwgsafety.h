@@ -67,7 +67,7 @@ inline bool validOwnedObjectCount(std::int32_t count, int remainingBytes) {
 }
 
 inline bool add(std::uint64_t lhs, std::uint64_t rhs, std::uint64_t& result) {
-    if (rhs > std::numeric_limits<std::uint64_t>::max() - lhs)
+    if (rhs > (std::numeric_limits<std::uint64_t>::max)() - lhs)
         return false;
     result = lhs + rhs;
     return true;
@@ -75,7 +75,7 @@ inline bool add(std::uint64_t lhs, std::uint64_t rhs, std::uint64_t& result) {
 
 inline bool multiply(std::uint64_t lhs, std::uint64_t rhs,
                      std::uint64_t& result) {
-    if (lhs != 0 && rhs > std::numeric_limits<std::uint64_t>::max() / lhs)
+    if (lhs != 0 && rhs > (std::numeric_limits<std::uint64_t>::max)() / lhs)
         return false;
     result = lhs * rhs;
     return true;

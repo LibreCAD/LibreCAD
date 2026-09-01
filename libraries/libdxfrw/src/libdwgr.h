@@ -451,7 +451,7 @@ public:
     /// Mirrors `dxfRW::reserveHandle`; returns false and latches the writer if
     /// the reservation cannot be recorded. (write-review P3 #1)
     bool reserveHandle(std::uint32_t h) {
-        if (h == std::numeric_limits<std::uint32_t>::max()) {
+        if (h == (std::numeric_limits<std::uint32_t>::max)()) {
             m_handleReservationFailed = true;
             return false;
         }
